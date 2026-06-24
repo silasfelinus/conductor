@@ -1,0 +1,112 @@
+# Approval Portal — Silas's Console
+# software-kind. The "dream implementation": a web portal where Silas reviews projects,
+# picks from pitches, validates/rejects upgrade plans, confirms updates, and rolls back —
+# all as a friendly face over the repo (roadmaps + pitches + git). Built BY the loop.
+# Progress % = done weight (+ half for in-progress) / total weight.
+
+project: approval-portal
+kind: software
+
+notes_from_silas: |
+  This is the portal I actually want to live in. I log in and see projects and
+  processes; my main actions are: pick from proposed pitch directions, validate or
+  reject upgrade plans, confirm the latest updates are good, and roll back when not.
+  Core principle: the repo stays the source of truth — the portal READS roadmaps,
+  pitches, and git history and WRITES my decisions back as commits/PRs. "Roll back"
+  = git revert. Don't invent a second database of truth. Build incrementally; each
+  milestone should be usable on its own. Auth can be dead simple to start (just me).
+  House style if it helps: Nuxt/Vue/TS, but pick what's fastest to ship a read-only v1.
+
+milestones:
+  - id: m1
+    title: "Read-only dashboard: projects, progress %, tasks, pitches"
+    weight: 25
+    status: not-started
+  - id: m2
+    title: "Pitch voting: approve/reject writes back to the repo"
+    weight: 25
+    status: not-started
+  - id: m3
+    title: "Update confirmation: see open PRs, approve-merge or reject"
+    weight: 20
+    status: not-started
+  - id: m4
+    title: "Rollback: one-click revert of a merged change"
+    weight: 15
+    status: not-started
+  - id: m5
+    title: "Login + deploy (gated for Silas to approve going live)"
+    weight: 15
+    status: not-started
+
+tasks:
+  - id: t-001
+    milestone: m1
+    title: "Spec the portal: data sources, screens, and repo-write strategy"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    gate_human: true
+    approved_by_human: false
+    note: >
+      Write projects/approval-portal/SPEC.md: what the portal reads (roadmap.yaml,
+      pitches/, git log, open PRs via GitHub API), the screens for m1-m5, and exactly how
+      approvals are written back (commit to roadmap? open a PR? call GitHub API?). Propose
+      the v1 stack. Ends needs-human — Silas approves the spec before any build task unblocks.
+
+  - id: t-002
+    milestone: m1
+    title: "Build read-only dashboard from repo data"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-001
+    note: >
+      Per the approved spec, build a local-running web app that lists projects with
+      progress %, tasks by status, and pitches awaiting vote — reading the same files the
+      digest reads. Read-only; no write actions yet. Runs locally, no deploy.
+
+  - id: t-003
+    milestone: m2
+    title: "Pitch voting that writes approve/reject back to the repo"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: outward-facing
+    depends_on: t-002
+    gate_human: true
+    approved_by_human: false
+    note: >
+      Add approve/reject buttons for pitches that write the decision back (per the spec's
+      write strategy) as a commit or PR. This is the first time the portal mutates the repo,
+      so it's gated — Silas reviews the write mechanism before it's trusted.
+
+  - id: t-004
+    milestone: m4
+    title: "One-click rollback via git revert"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: outward-facing
+    depends_on: t-003
+    gate_human: true
+    approved_by_human: false
+    note: >
+      Surface recent merged changes and add a 'roll back' action that opens a revert PR
+      (never force-pushes). Gated — Silas confirms the revert flow is safe before trust.
+
+  - id: t-005
+    milestone: m5
+    title: "Plan auth + deploy (do NOT deploy)"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: irreversible
+    depends_on: t-004
+    gate_human: true
+    approved_by_human: false
+    note: >
+      Draft the simplest safe auth (just Silas) and a deploy plan. Write it up; do NOT
+      deploy or provision anything. Ends needs-human — going live is Silas's call.

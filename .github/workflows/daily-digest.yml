@@ -1,0 +1,60 @@
+name: daily-digest
+
+# Emails Silas a daily summary across all projects + pitches awaiting his vote.
+# Run via this cron OR a Claude Managed Agent pointed at scripts/build_digest.py.
+
+on:
+  schedule:
+    - cron: "0 15 * * *"   # 15:00 UTC ≈ 8am Pacific. Shifts with DST.
+  workflow_dispatch: {}
+
+jobs:
+  digest:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install pyyaml
+      - name: Build digest JSON
+        run: |
+          python scripts/build_digest.py --since "24 hours ago" > digest.json
+          cat digest.json
+      - name: Email via Resend
+        env:
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+          DIGEST_TO: ${{ secrets.DIGEST_TO }}
+          DIGEST_FROM: ${{ secrets.DIGEST_FROM }}
+        run: |
+          python - <<'PY'
+          import json, os, urllib.request
+          d = json.load(open("digest.json"))
+          def ul(items): return "<ul>" + "".join(f"<li>{i}</li>" for i in items) + "</ul>"
+          proj_html = ""
+          for p in d["projects"]:
+              proj_html += f"<h3>{p['name']} <span style='color:#888'>({p['kind']})</span> — {p['progress_pct']}%</h3>"
+              proj_html += ul([f"{m['title']} — <b>{m['status']}</b>" for m in p["milestones"]])
+              if p["in_flight"]:
+                  proj_html += "<p><i>In flight:</i></p>" + ul(p["in_flight"])
+          html = f"""
+          <h2>AI_Networker — Daily Digest ({d['date']})</h2>
+          <h3>🗳️ Awaiting your vote (pitches)</h3>{ul(d['pitches_awaiting_vote'] or ['(no pitches waiting)'])}
+          <h3>Merged in last 24h</h3>{ul(d['merges_since'] or ['(nothing merged)'])}
+          <h3>Needs your attention</h3>{ul(d['all_needs_attention'] or ['(all clear)'])}
+          <hr>{proj_html}
+          """
+          body = json.dumps({
+            "from": os.environ["DIGEST_FROM"],
+            "to": [os.environ["DIGEST_TO"]],
+            "subject": f"AI_Networker Digest {d['date']}",
+            "html": html,
+          }).encode()
+          req = urllib.request.Request(
+            "https://api.resend.com/emails", data=body, method="POST",
+            headers={"Authorization": f"Bearer {os.environ['RESEND_API_KEY']}",
+                     "Content-Type": "application/json"})
+          print(urllib.request.urlopen(req).read().decode())
+          PY

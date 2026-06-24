@@ -1,0 +1,61 @@
+# Humboldt Poop Scoop Solutions — Customer Management Software
+# New build. This is a starter roadmap — Silas, edit freely.
+# Progress % = done weight (+ half for in-progress) / total weight.
+
+project: humboldt-poop-scoop-cms
+kind: software
+
+notes_from_silas: |
+  New customer-management software for the poop-scoop service. Starter roadmap —
+  I'll refine. Think: customers, their pets/yards, recurring service schedules,
+  visit logs, and billing. Pick a stack that's simple to self-host. Do NOT wire
+  real payment or customer data without flagging me (needs-human). Build with
+  seed/dummy data only until I say otherwise.
+
+milestones:
+  - id: m1
+    title: "Stack chosen + skeleton app runs locally"
+    weight: 15
+    status: not-started
+  - id: m2
+    title: "Customer + property data model"
+    weight: 20
+    status: not-started
+  - id: m3
+    title: "Recurring service scheduling"
+    weight: 25
+    status: not-started
+  - id: m4
+    title: "Visit logging + history"
+    weight: 20
+    status: not-started
+  - id: m5
+    title: "Invoicing (draft-only, no live payments)"
+    weight: 20
+    status: not-started
+
+tasks:
+  - id: t-001
+    milestone: m1
+    title: "Propose a stack + scaffold a running skeleton"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      In projects/humboldt-poop-scoop-cms/, propose a simple self-hostable stack
+      in a short STACK.md (one recommendation + one alternative, with reasoning),
+      then scaffold a minimal app that runs locally with a health-check route.
+      Seed/dummy data only.
+
+  - id: t-002
+    milestone: m2
+    title: "Design the customer + property schema"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Draft the data model (customers, properties/yards, pets, service plans) as a
+      schema file + a short SCHEMA.md explaining choices. No migrations against a
+      real DB — definition + seed data only.

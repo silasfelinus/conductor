@@ -1,0 +1,7 @@
+# Which project leads when multiple have ready tasks. Top of list wins.
+order:
+  - humboldt-scoop
+  - humboldt-poop-scoop-cms
+  - approval-portal
+  - digital-storefront
+  - kind-robots

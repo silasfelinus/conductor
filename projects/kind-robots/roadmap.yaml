@@ -1,0 +1,36 @@
+# Kind Robots — App(s)
+# Stub. Silas will write the full roadmap later. The important part now is the
+# BOUNDARY note so agents don't wander into the main Kind Robots repo/backend.
+# Progress % = done weight (+ half for in-progress) / total weight.
+
+project: kind-robots
+kind: software
+
+notes_from_silas: |
+  STUB — full roadmap coming later. Key boundary: the Kind Robots app(s) should
+  develop their OWN system here, but CONSUME our existing database, backend, and
+  core offerings rather than reimplementing or modifying them. Agents: treat the
+  shared backend (kind-robots.vercel.app / the main repo) as read-only and external.
+  Build app-owned logic in this folder. Do not propose changes to the shared
+  backend here — if you think one is needed, write a pitch to pitches/ instead.
+  Nuxt 4 / Vue 3 / TypeScript / Prisma / Pinia 3 / DaisyUI house style applies.
+
+milestones:
+  - id: m1
+    title: "App scope + boundary defined (what's app-owned vs shared backend)"
+    weight: 100
+    status: not-started
+
+tasks:
+  - id: t-001
+    milestone: m1
+    title: "Draft the app/backend boundary doc for Silas to approve"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Write projects/kind-robots/BOUNDARY.md proposing exactly which concerns the
+      app owns vs which it consumes from the shared backend (auth, data models,
+      generation endpoints, mana/billing). This is the foundation for the real
+      roadmap. Set needs-human when drafted — Silas approves before app work starts.

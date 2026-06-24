@@ -1,0 +1,57 @@
+# Humboldt Scoop Solutions — Site
+# Existing site; Silas will drop the current codebase in projects/humboldt-scoop/site.
+# Progress % = done weight (+ half for in-progress) / total weight.
+
+project: humboldt-scoop
+kind: software
+
+notes_from_silas: |
+  This is the existing Humboldt Scoop site — I'll add the current codebase to
+  projects/humboldt-scoop/site. First real test of the loop. Do NOT deploy or
+  touch DNS unattended (status: needs-human). PRs piling up is fine.
+
+milestones:
+  - id: m1
+    title: "Loop proven end-to-end on this repo"
+    weight: 10
+    status: in-progress
+  - id: m2
+    title: "Existing site imported + building cleanly"
+    weight: 20
+    status: not-started
+  - id: m3
+    title: "Content + copy refresh"
+    weight: 25
+    status: not-started
+  - id: m4
+    title: "Contact / quote-request flow"
+    weight: 25
+    status: not-started
+  - id: m5
+    title: "SEO + analytics"
+    weight: 20
+    status: not-started
+
+tasks:
+  - id: t-001
+    milestone: m1
+    title: "Confirm the loop: trivial no-op PR through the full cycle"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Smoke test. Add a line to projects/humboldt-scoop/CHANGELOG.md noting the
+      loop is live, open a PR, let the reviewer merge it.
+
+  - id: t-002
+    milestone: m2
+    title: "Audit the imported site and report build/run steps"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Once Silas adds the site under /site, read it, document how to build/run it
+      in projects/humboldt-scoop/site/NOTES.md, and flag anything broken as new tasks.
+      Do not change site code yet — just inventory.
