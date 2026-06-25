@@ -6,98 +6,197 @@
   <title>Conductor Workspace</title>
   <style>
     :root {
-      --bg: #0f172a;
-      --surface: #1e293b;
-      --border: #334155;
-      --text: #e2e8f0;
-      --muted: #94a3b8;
-      --primary: #6366f1;
-      --success: #22c55e;
-      --warning: #f59e0b;
-      --error: #ef4444;
-      --info: #3b82f6;
-      --accent: #a855f7;
+      --bg: #0f172a; --surface: #1e293b; --border: #334155;
+      --text: #e2e8f0; --muted: #94a3b8; --primary: #6366f1;
+      --success: #22c55e; --warning: #f59e0b; --error: #ef4444;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { background: var(--bg); color: var(--text); font-family: system-ui, sans-serif; padding: 1.5rem; }
     h1 { font-size: 1.5rem; font-weight: 800; margin-bottom: 0.25rem; }
     .subtitle { color: var(--muted); font-size: 0.875rem; margin-bottom: 2rem; }
-    h2 { font-size: 1rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 1rem; }
-    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
+    h2 { font-size: 1rem; font-weight: 700; color: var(--muted); text-transform: uppercase;
+          letter-spacing: 0.05em; margin-bottom: 1rem; margin-top: 2rem; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem; }
     .card { background: var(--surface); border: 1px solid var(--border); border-radius: 1rem; padding: 1rem; }
     .card-title { font-weight: 700; font-size: 0.95rem; margin-bottom: 0.5rem; }
     .badges { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-bottom: 0.75rem; }
     .badge { font-size: 0.7rem; font-weight: 600; padding: 0.15rem 0.5rem; border-radius: 99px; border: 1px solid; }
-    .badge-software { color: var(--primary); border-color: var(--primary); }
-    .badge-content { color: var(--accent); border-color: var(--accent); }
-    .badge-proposal { color: var(--info); border-color: var(--info); }
-    .progress-bar { height: 6px; background: var(--border); border-radius: 99px; overflow: hidden; margin-bottom: 0.5rem; }
-    .progress-fill { height: 100%; background: var(--primary); border-radius: 99px; transition: width 0.3s; }
-    .progress-label { font-size: 0.75rem; color: var(--muted); }
-    .task-row { font-size: 0.8rem; color: var(--muted); padding: 0.25rem 0; border-top: 1px solid var(--border); display: flex; justify-content: space-between; }
-    .status-ready { color: var(--info); }
-    .status-done { color: var(--success); }
-    .status-blocked { color: var(--error); }
-    .status-needs-human { color: var(--accent); }
-    .status-claimed, .status-review { color: var(--warning); }
-    .pitch-card { background: var(--surface); border: 1px solid var(--warning); border-radius: 1rem; padding: 1rem; }
+    .progress-bar { height: 6px; background: var(--border); border-radius: 99px; overflow: hidden; margin-bottom: 0.4rem; }
+    .progress-fill { height: 100%; background: var(--primary); border-radius: 99px; }
+    .progress-label { font-size: 0.75rem; color: var(--muted); margin-bottom: 0.5rem; }
+    .task-row { font-size: 0.8rem; color: var(--muted); padding: 0.25rem 0;
+                 border-top: 1px solid var(--border); display: flex; justify-content: space-between; gap: 0.5rem; }
+    .task-row span:first-child { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .pitch-card { background: var(--surface); border: 1px solid var(--warning);
+                   border-radius: 1rem; padding: 1rem; }
     .pitch-title { font-weight: 700; font-size: 0.9rem; margin-bottom: 0.25rem; }
     .pitch-meta { font-size: 0.75rem; color: var(--muted); margin-bottom: 0.5rem; }
-    .pitch-idea { font-size: 0.8rem; color: var(--text); opacity: 0.8; }
-    .footer { margin-top: 2rem; font-size: 0.75rem; color: var(--muted); text-align: center; }
+    .pitch-idea { font-size: 0.8rem; opacity: 0.8; }
+    footer { margin-top: 2.5rem; font-size: 0.75rem; color: var(--muted); text-align: center; }
   </style>
 </head>
 <body>
   <h1>⚡ Conductor Workspace</h1>
-  <p class="subtitle">Auto-generated — regenerate with <code>python scripts/build_workspace.py</code></p>
+  <p class="subtitle">Generated 2026-06-25T04:37:59Z · <code>python scripts/build_workspace.py</code></p>
 
   <h2>Projects</h2>
-  <div class="grid" id="projects-grid">
-    <!-- Populated by build_workspace.py -->
+  <div class="grid">
+    
     <div class="card">
-      <div class="card-title">humboldt-scoop</div>
-      <div class="badges"><span class="badge badge-software">software</span></div>
-      <div class="progress-bar"><div class="progress-fill" style="width: 5%"></div></div>
-      <div class="progress-label">5% complete</div>
-      <div class="task-row"><span>Confirm the loop (smoke test)</span><span class="status-ready">ready</span></div>
-      <div class="task-row"><span>Audit imported site</span><span class="status-ready">ready</span></div>
-    </div>
-    <div class="card">
-      <div class="card-title">kind-robots</div>
-      <div class="badges"><span class="badge badge-software">software</span></div>
-      <div class="progress-bar"><div class="progress-fill" style="width: 0%"></div></div>
-      <div class="progress-label">stub — roadmap pending</div>
+      <div class="card-title">approval-portal</div>
+      <div class="badges"><span class="badge" style="color:#6366f1;border-color:#6366f1">software</span></div>
+      <div class="progress-bar"><div class="progress-fill" style="width:0.0%"></div></div>
+      <div class="progress-label">0.0% complete · 5 milestones · 5 tasks</div>
+      
+        <div class="task-row">
+          <span>Spec the portal: data sources, screens, and repo-write strat</span>
+          <span style="color:#3b82f6">ready</span>
+        </div>
+        <div class="task-row">
+          <span>Build read-only dashboard from repo data</span>
+          <span style="color:#64748b">waiting</span>
+        </div>
+        <div class="task-row">
+          <span>Pitch voting that writes approve/reject back to the repo</span>
+          <span style="color:#64748b">waiting</span>
+        </div>
+        <div class="task-row">
+          <span>One-click rollback via git revert</span>
+          <span style="color:#64748b">waiting</span>
+        </div>
+        <div class="task-row">
+          <span>Plan auth + deploy (do NOT deploy)</span>
+          <span style="color:#64748b">waiting</span>
+        </div>
     </div>
     <div class="card">
       <div class="card-title">brainstorm</div>
-      <div class="badges"><span class="badge badge-proposal">proposal</span></div>
-      <div class="progress-bar"><div class="progress-fill" style="width: 0%"></div></div>
-      <div class="progress-label">ongoing (recurring)</div>
+      <div class="badges"><span class="badge" style="color:#3b82f6;border-color:#3b82f6">proposal</span></div>
+      <div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div>
+      <div class="progress-label">0% complete · 1 milestones · 1 tasks</div>
+      
+        <div class="task-row">
+          <span>Generate this cycle's pitches</span>
+          <span style="color:#3b82f6">ready</span>
+        </div>
+    </div>
+    <div class="card">
+      <div class="card-title">coat-dance</div>
+      <div class="badges"><span class="badge" style="color:#a855f7;border-color:#a855f7">content</span></div>
+      <div class="progress-bar"><div class="progress-fill" style="width:0.0%"></div></div>
+      <div class="progress-label">0.0% complete · 3 milestones · 1 tasks</div>
+      
+        <div class="task-row">
+          <span>Draft concept brief for Silas to review</span>
+          <span style="color:#ec4899">needs-human</span>
+        </div>
+    </div>
+    <div class="card">
+      <div class="card-title">digital-storefront</div>
+      <div class="badges"><span class="badge" style="color:#a855f7;border-color:#a855f7">content</span></div>
+      <div class="progress-bar"><div class="progress-fill" style="width:0.0%"></div></div>
+      <div class="progress-label">0.0% complete · 5 milestones · 5 tasks</div>
+      
+        <div class="task-row">
+          <span>Research candidate stores/platforms and recommend a shortlis</span>
+          <span style="color:#3b82f6">ready</span>
+        </div>
+        <div class="task-row">
+          <span>Brainstorm content concepts for the chosen stores</span>
+          <span style="color:#64748b">waiting</span>
+        </div>
+        <div class="task-row">
+          <span>Create first product drafts from approved concepts</span>
+          <span style="color:#64748b">waiting</span>
+        </div>
+        <div class="task-row">
+          <span>Identify organic marketing channels for the products</span>
+          <span style="color:#64748b">waiting</span>
+        </div>
+        <div class="task-row">
+          <span>Draft paid-ad plans for human-budgeted channels</span>
+          <span style="color:#64748b">waiting</span>
+        </div>
+    </div>
+    <div class="card">
+      <div class="card-title">humboldt-poop-scoop-cms</div>
+      <div class="badges"><span class="badge" style="color:#6366f1;border-color:#6366f1">software</span></div>
+      <div class="progress-bar"><div class="progress-fill" style="width:0.0%"></div></div>
+      <div class="progress-label">0.0% complete · 5 milestones · 2 tasks</div>
+      
+        <div class="task-row">
+          <span>Propose a stack + scaffold a running skeleton</span>
+          <span style="color:#3b82f6">ready</span>
+        </div>
+        <div class="task-row">
+          <span>Design the customer + property schema</span>
+          <span style="color:#3b82f6">ready</span>
+        </div>
+    </div>
+    <div class="card">
+      <div class="card-title">humboldt-scoop</div>
+      <div class="badges"><span class="badge" style="color:#6366f1;border-color:#6366f1">software</span></div>
+      <div class="progress-bar"><div class="progress-fill" style="width:5.0%"></div></div>
+      <div class="progress-label">5.0% complete · 5 milestones · 2 tasks</div>
+      
+        <div class="task-row">
+          <span>Confirm the loop: trivial no-op PR through the full cycle</span>
+          <span style="color:#3b82f6">ready</span>
+        </div>
+        <div class="task-row">
+          <span>Audit the imported site and report build/run steps</span>
+          <span style="color:#3b82f6">ready</span>
+        </div>
+    </div>
+    <div class="card">
+      <div class="card-title">kind-robots</div>
+      <div class="badges"><span class="badge" style="color:#6366f1;border-color:#6366f1">software</span></div>
+      <div class="progress-bar"><div class="progress-fill" style="width:0.0%"></div></div>
+      <div class="progress-label">0.0% complete · 1 milestones · 1 tasks</div>
+      
+        <div class="task-row">
+          <span>Draft the app/backend boundary doc for Silas to approve</span>
+          <span style="color:#3b82f6">ready</span>
+        </div>
+    </div>
+    <div class="card">
+      <div class="card-title">mermaids-of-venice</div>
+      <div class="badges"><span class="badge" style="color:#a855f7;border-color:#a855f7">content</span></div>
+      <div class="progress-bar"><div class="progress-fill" style="width:0.0%"></div></div>
+      <div class="progress-label">0.0% complete · 3 milestones · 1 tasks</div>
+      
+        <div class="task-row">
+          <span>Draft concept brief for Silas to review</span>
+          <span style="color:#ec4899">needs-human</span>
+        </div>
     </div>
   </div>
 
   <h2>Pitches Awaiting Vote</h2>
-  <div class="grid" id="pitches-grid">
+  <div class="grid">
+    
     <div class="pitch-card">
-      <div class="pitch-title">Add CI Gate</div>
-      <div class="pitch-meta">2026-06-24 · target: conductor</div>
-      <div class="pitch-idea">Add a CI check to verify roadmap YAML is valid before merging.</div>
+      <div class="pitch-title">Add a CI build/lint gate for software projects</div>
+      <div class="pitch-meta">2026-06-24 · target: ai-networker-itself</div>
+      <div class="pitch-idea">Add a lightweight GitHub Actions CI check (lint + build) that runs on every worker/* PR,
+so the Reviewer has a green-checks signal to merge against instead of judging by eye.</div>
     </div>
     <div class="pitch-card">
-      <div class="pitch-title">Coloring Book — Kindness Series</div>
+      <div class="pitch-title">"Acts of Kindness" coloring book (PDF + POD)</div>
       <div class="pitch-meta">2026-06-24 · target: digital-storefront</div>
-      <div class="pitch-idea">A gentle all-ages coloring book series around acts of kindness.</div>
+      <div class="pitch-idea">A coloring book where each page illustrates a small act of kindness — feeding a stray,
+planting a tree, helping a neighbor — with a one-line prompt to do that act this week.
+Ties directly to the Kind </div>
     </div>
     <div class="pitch-card">
-      <div class="pitch-title">Networker Cost Guard</div>
-      <div class="pitch-meta">2026-06-24 · target: conductor</div>
-      <div class="pitch-idea">Add per-cycle token tracking and a cost cap to prevent runaway spend.</div>
+      <div class="pitch-title">Per-cycle cost + run-budget guard for AI_Networker</div>
+      <div class="pitch-meta">2026-06-24 · target: ai-networker-itself</div>
+      <div class="pitch-idea">A small check the Worker runs each cycle that tracks how many agent runs/PRs happened
+today and pauses new work (writing a notice to STATUS.md) if a daily budget is hit —
+protecting against the Pro-ti</div>
     </div>
   </div>
 
-  <div class="footer">Generated by Conductor · <span id="gen-time">bootstrap</span></div>
-  <script>
-    document.getElementById('gen-time').textContent = new Date().toLocaleString()
-  </script>
+  <footer>Conductor · 2026-06-25T04:37:59Z</footer>
 </body>
 </html>
