@@ -1,0 +1,53 @@
+# repos.yaml — External repositories tracked by Conductor
+# Maps GitHub repos to their Conductor project slugs.
+# Format:
+#   - slug: <project-slug matching projects/<slug>/>
+#     repo: <owner/repo>
+#     kind: software | content | proposal
+#     description: one line
+
+repos:
+  - slug: conductor
+    repo: silasfelinus/conductor
+    kind: software
+    description: This repo — the coordination system itself
+
+  - slug: kind-robots
+    repo: silasfelinus/kind_robots
+    kind: software
+    description: Kind Robots — Silas's personal frontend + AI art platform
+
+  - slug: humboldt-scoop
+    repo: silasfelinus/humboldt-scoop
+    kind: software
+    description: Humboldt Scoop Solutions public website
+
+  - slug: humboldt-poop-scoop-cms
+    repo: silasfelinus/humboldt-poop-scoop-cms
+    kind: software
+    description: Internal customer-management tool for the poop-scoop business
+
+  - slug: approval-portal
+    repo: silasfelinus/approval-portal
+    kind: software
+    description: Admin console — review pitches, approve tasks, confirm updates
+
+  - slug: digital-storefront
+    repo: silasfelinus/digital-storefront
+    kind: content
+    description: Research + content pipeline for digital products
+
+  - slug: brainstorm
+    repo: null
+    kind: proposal
+    description: Pitch-generation project — no external repo needed
+
+  - slug: mermaids-of-venice
+    repo: null
+    kind: content
+    description: Mermaids of Venice creative content project
+
+  - slug: coat-dance
+    repo: null
+    kind: content
+    description: Coat Dance creative content project

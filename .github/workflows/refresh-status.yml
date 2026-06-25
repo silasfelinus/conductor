@@ -1,0 +1,43 @@
+name: Refresh Status
+
+on:
+  push:
+    paths:
+      - 'projects/*/roadmap.yaml'
+      - 'pitches/*.md'
+  workflow_dispatch:
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: pip install pyyaml
+
+      - name: Regenerate STATUS.md
+        run: python scripts/build_status.py
+
+      - name: Regenerate workspace.html
+        run: python scripts/build_workspace.py
+
+      - name: Commit if changed
+        run: |
+          git config user.name "conductor-bot"
+          git config user.email "conductor-bot@users.noreply.github.com"
+          git add STATUS.md workspace.html
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "chore: refresh STATUS.md and workspace.html [skip ci]"
+            git push
+          fi

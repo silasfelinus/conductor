@@ -1,51 +1,66 @@
 # Conductor
-A service-agnostic integration spot for AI agents to coordinate projects
-collaboratively, with or without human intervention.
 
-## How it works
-- **Worker** (OpenAI, hourly): runs scripts/resolve_deps.py, then reads AGENTS.md +
-  roadmaps, claims the top `ready` task, does it on a `worker/*` branch, opens a PR.
-- **Reviewer** (Claude Code Routine, on `worker/*` PR opened): merges reversible software
-  PRs; escalates content/proposal/gated/outward-facing work to `needs-human`.
-- **Digest** (daily): emails Silas progress %, what merged, what needs attention, and
-  pitches awaiting his vote.
+Conductor is a project management repo built around AI agents doing real work. An AI Worker picks up tasks, does them on a branch, and opens a PR. A Reviewer (me, Claude) looks at the PR and either merges it or flags it for Silas. Silas steers things by editing roadmap files and approving gates — he stays out of the routine loop unless something actually needs him.
+
+The whole thing runs on plain YAML files checked into git. No database, no dashboard to maintain. Git is the source of truth; rollback is just `git revert`.
+
+## The basic loop
+
+1. **Worker** runs on a schedule, reads `AGENTS.md` and the project roadmaps, claims the top available task, does the work on a `worker/*` branch, and opens a PR.
+2. **Reviewer** fires when a PR lands. It merges straightforward software work automatically. Anything involving content, proposals, or outward-facing changes gets escalated to `needs-human` for Silas to look at.
+3. **Digest** goes out daily — a summary of what's progressing, what merged, and what needs Silas's attention or vote.
 
 ## Project kinds
-- **software** — output is a merged PR
-- **content** — drafts/deliverables, never auto-published (always needs-human)
-- **proposal** — the work is a pitch to `pitches/` for Silas to vet
 
-## Pipelines & human gates
-Tasks can declare `depends_on` and stay `status: waiting` until upstreams are done.
-A task with `gate_human: true` blocks its dependents until Silas sets
-`approved_by_human: true`. The Worker runs `resolve_deps.py` each cycle to auto-unblock
-satisfied tasks. This is how staged flows work: research → (Silas picks) → create →
-market → advertise, each stage gated.
+Every project has a `kind` that controls how the Reviewer handles finished work:
 
-## Layout
+- **software** — output is a merged PR. Low-stakes reversible work merges automatically; everything else gets escalated.
+- **content** — output is a file (copy, marketing plans, etc.). Nothing goes live without Silas approving it first.
+- **proposal** — the work *is* a pitch. The Worker writes it to `pitches/` and stops; Silas decides whether to act on it.
+
+When in doubt the Reviewer treats work as the more cautious kind.
+
+## How Silas steers
+
+Edit `notes_from_silas` in any project's `roadmap.yaml` to give direction. Change task statuses directly to reprioritize. For gated tasks, set `approved_by_human: true` on the upstream task to unlock the next stage. Drop new project ideas into `pitches/` or `intake/`. That's it.
+
+## Pipelines and gates
+
+Tasks can declare `depends_on` to form a pipeline — a task stays `waiting` until its upstreams are done. If an upstream task has `gate_human: true`, it also needs `approved_by_human: true` before dependents unlock. This is how multi-stage flows work: research → Silas picks a direction → create → review → ship, each stage only proceeding with explicit sign-off.
+
+The Worker runs `scripts/resolve_deps.py` at the start of every cycle to flip any newly-unblocked `waiting` tasks to `ready`.
+
+## Repo layout
+
 ```
-AGENTS.md                       # operating manual (CLAUDE.md points here)
-projects/<name>/roadmap.yaml    # one queue per project; Silas steers here
-projects/<name>/product-types.yaml   # (storefront) Silas-owned vocabulary
-projects/priority.yaml          # which project leads
-pitches/                        # proposal agents drop ideas for vetting
-scripts/build_digest.py         # progress + pitches + summary
-scripts/resolve_deps.py         # unblocks pipeline tasks
-.github/workflows/daily-digest.yml
-docs/SETUP.md
+AGENTS.md                           operating manual for all agents
+CONTROL.md                          Silas's current intent — overrides roadmaps
+projects/<name>/roadmap.yaml        one task queue per project; this is where Silas steers
+projects/priority.yaml              which project leads
+pitches/                            proposals waiting for Silas's vote
+intake/                             new project requests before they're scaffolded
+scripts/resolve_deps.py             unblocks pipeline tasks each cycle
+scripts/build_status.py             regenerates STATUS.md
+scripts/build_workspace.py          regenerates workspace.html
+scripts/topology.py                 prints dependency graphs
+scripts/intake.py                   scaffolds a new project from a request file
+docs/TOPOLOGY.md                    how to read and declare dependencies
+STATUS.md                           auto-generated snapshot — do not edit
+workspace.html                      auto-generated dashboard — do not edit
 ```
 
-## Projects
-- **humboldt-scoop** — existing site (add codebase under /site). software.
-- **humboldt-poop-scoop-cms** — new customer-management software. software.
-- **digital-storefront** — research→create→market→advertise pipeline. content. Builds
-  only within product-types.yaml (Silas owns that list); nothing publishes/spends unattended.
-- **approval-portal** — the console Silas lives in: pick pitches, validate upgrades,
-  confirm updates, roll back. A face over the repo (git = source of truth). software.
-- **kind-robots** — app(s) owning their logic, consuming the shared KR backend (read-only).
-  Full roadmap TBD; see BOUNDARY note. software.
+## Current projects
 
-## Steering (Silas)
-Edit `notes_from_silas` and tasks in any roadmap; set pitch `status:` to approved/rejected;
-approve a gated task with `approved_by_human: true` + `status: done` to unblock its
-pipeline. Everything routes through PRs; rollback = git revert.
+| Project | What it is | Kind |
+|---|---|---|
+| humboldt-scoop | Existing site — adding the codebase under /site | software |
+| humboldt-poop-scoop-cms | New customer management software | software |
+| digital-storefront | Research → create → market → advertise pipeline; nothing publishes unattended | content |
+| approval-portal | The console Silas lives in: pick pitches, validate upgrades, confirm updates | software |
+| kind-robots | Apps consuming the shared KR backend (read-only) | software |
+| coat-dance | Content project, awaiting Silas's direction | content |
+| mermaids-of-venice | Content project, awaiting Silas's direction | content |
+
+## Pitches
+
+Any agent (or Silas) can drop a pitch into `pitches/` as a markdown file. The daily digest surfaces ones with `status: awaiting-silas`. Silas sets the status to `approved` or `rejected` — approved pitches can become new projects via `scripts/intake.py`.
