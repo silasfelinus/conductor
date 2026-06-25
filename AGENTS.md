@@ -31,9 +31,12 @@ When unsure which bucket applies, treat it as the more cautious one (proposal > 
 software) and escalate.
 
 ## Picking what to work on
-1. Read this file, then `projects/priority.yaml`, then every `projects/*/roadmap.yaml`
-   (skip `_template`).
-2. Honor each project's `notes_from_silas` over default ordering.
+1. **Read `CONTROL.md` first** — its global overview, then the block for the project you'll
+   work on. CONTROL.md holds Silas's current intent and OVERRIDES anything in a roadmap it
+   conflicts with. Then read this file, `projects/priority.yaml`, and the relevant
+   `projects/*/roadmap.yaml` (skip `_template`).
+2. Honor CONTROL.md's direction and notes, then each project's `notes_from_silas`, over
+   default ordering. (STATUS.md is auto-generated and read-only — never edit it.)
 3. Within the chosen project, take the highest-priority task with `status: ready`.
    If none anywhere, stop — do not invent work. (Exception: a proposal-kind project may
    have a standing instruction to generate N pitches per cycle — follow its roadmap.)
@@ -63,6 +66,13 @@ resolver treats a gated task as still blocking until `approved_by_human: true`.
 - **proposal:** write `pitches/<date>-<slug>.md` using the pitch template, open a PR, set
   `status: needs-human`.
 - Never merge your own PR. Never push to `main` except the claim commit. One task at a time.
+
+**Recurring tasks** (`recurring: true`, e.g. brainstorm/t-001): these never reach `done`.
+After doing the work and opening the PR, set the task's `status` back to `ready` (not
+`review`/`needs-human`) so it re-arms for a future cycle. The pitches it produces are the
+output that goes to Silas — the task itself just keeps cycling. A recurring task that
+produced nothing this cycle (e.g. pitch queue full) still re-arms to `ready`; note "no-op"
+in the PR. Recurring tasks don't count toward milestone progress.
 
 ### Reviewer (Claude, event-triggered on `worker/*` PR opened)
 - Read the project's `kind` first.

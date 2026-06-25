@@ -1,0 +1,41 @@
+project: brainstorm
+kind: proposal
+notes_from_silas: "Generate ideas for me to vote on. I want to log in and see things like: 5 STL project\n\
+  ideas, 5 comic pitches under the genre guidelines I gave, lists of potential revenue\nstreams, ways\
+  \ to improve AI_Networker. QUALITY OVER QUANTITY \u2014 a few strong, specific,\nbuildable pitches beat\
+  \ a pile of vague ones. Don't repeat ideas already in pitches/.\nRespect my genre/direction guidance\
+  \ in CONTROL.md. Tie product ideas to our approved\nproduct types where relevant (see digital-storefront/product-types.yaml);\
+  \ if an idea\nneeds a new product type, say so explicitly in the pitch.\n"
+pitch_policy:
+  max_new_pitches_per_cycle: 3
+  max_open_awaiting_pitches: 12
+  dedup: true
+  categories:
+  - new-products
+  - content-series
+  - revenue-streams
+  - ai-networker-upgrades
+  - cross-project
+milestones:
+- id: m1
+  title: Idea engine running and producing votable pitches
+  weight: 0
+  status: in-progress
+tasks:
+- id: t-001
+  milestone: m1
+  title: Generate this cycle's pitches
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  recurring: true
+  note: 'Read CONTROL.md (global + any brainstorm/genre notes) and pitch_policy above. Count existing
+    pitches/*.md with status: awaiting-silas. If that count >= max_open_awaiting_pitches, write NOTHING
+    and leave a one-line note in the PR that the queue is full. Otherwise pick 1-2 categories (rotate
+    from last cycle), and write up to max_new_pitches_per_cycle NEW pitches to pitches/<date>-<slug>.md
+    using the pitch template in AGENTS.md. Each pitch must be specific and buildable, name a project-target
+    (existing project / "new" / "ai-networker-itself"), and not duplicate an existing pitch. Open one
+    PR with all new pitches; set status back to ready (this task is recurring). Never set it to done.
+
+    '
