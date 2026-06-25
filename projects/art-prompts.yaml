@@ -1,0 +1,80 @@
+# art-prompts.yaml — Image catalog for Conductor project cards
+#
+# Each entry defines the DALL-E prompt to generate a card illustration for
+# a project, and where the resulting image lives in the workspace.
+#
+# Workflow:
+#   1. Use the prompt below in ChatGPT (DALL-E 3 or GPT-4o image gen).
+#   2. Export the result as .webp at 512×512px minimum, 1:1 aspect ratio.
+#   3. Save to projects/images/<slug>.webp (replace <slug> with the project field value).
+#   4. Rebuild: python scripts/build_workspace.py
+#      The workspace card will automatically switch from the placeholder to your image.
+#
+# Status values: pending | done
+# image_path is relative to repo root.
+
+images:
+  - project: conductor
+    status: pending
+    image_path: projects/images/conductor.webp
+    prompt: >
+      flat minimal icon of an orchestral conductor robot directing a glowing
+      network of nodes with circuit-board lines, teal and deep indigo palette,
+      clean vector style, no text
+
+  - project: kind-robots
+    status: pending
+    image_path: projects/images/kind-robots.webp
+    prompt: >
+      flat minimal icon of a friendly smiling purple robot giving a thumbs up,
+      warm purple and mint green tones, rounded shapes, no text
+
+  - project: humboldt-scoop
+    status: pending
+    image_path: projects/images/humboldt-scoop.webp
+    prompt: >
+      flat minimal illustration of a vintage news camera in front of giant
+      redwood trees, earthy greens and warm amber, no text
+
+  - project: humboldt-poop-scoop-cms
+    status: pending
+    image_path: projects/images/humboldt-poop-scoop-cms.webp
+    prompt: >
+      flat minimal icon of a clipboard with a cheerful cartoon paw print,
+      soft blues and white, playful rounded style, no text
+
+  - project: approval-portal
+    status: pending
+    image_path: projects/images/approval-portal.webp
+    prompt: >
+      flat minimal icon of a sleek dark dashboard screen with a large glowing
+      green checkmark, clean professional interface feel, no text
+
+  - project: digital-storefront
+    status: pending
+    image_path: projects/images/digital-storefront.webp
+    prompt: >
+      flat minimal icon of a shopping bag with sparkle stars and small digital
+      product icons floating around it, warm amber and teal, no text
+
+  - project: brainstorm
+    status: pending
+    image_path: projects/images/brainstorm.webp
+    prompt: >
+      flat minimal icon of a glowing lightbulb with colorful thought bubbles
+      radiating outward, bright warm yellow and purple, no text
+
+  - project: mermaids-of-venice
+    status: pending
+    image_path: projects/images/mermaids-of-venice.webp
+    prompt: >
+      flat minimal illustration of a mermaid silhouette in a Venice canal at
+      golden hour with gondola shadows, deep blues teals and warm gold, no text
+
+  - project: coat-dance
+    status: pending
+    image_path: projects/images/coat-dance.webp
+    prompt: >
+      flat minimal illustration of a flowing coat caught mid-spin showing
+      graceful fabric motion, abstract arc lines suggesting dance, navy and
+      cream palette, no text
