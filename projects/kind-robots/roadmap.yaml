@@ -21,6 +21,11 @@ milestones:
     weight: 100
     status: not-started
 
+  - id: m2
+    title: "Workspace UI — project card images"
+    weight: 10
+    status: not-started
+
 tasks:
   - id: t-001
     milestone: m1
@@ -34,3 +39,63 @@ tasks:
       app owns vs which it consumes from the shared backend (auth, data models,
       generation endpoints, mana/billing). This is the foundation for the real
       roadmap. Set needs-human when drafted — Silas approves before app work starts.
+
+  - id: t-002
+    milestone: m2
+    title: "Generate project card images for the workspace UI (ChatGPT/DALL-E)"
+    status: needs-human
+    owner: null
+    passes: 0
+    stakes: reversible
+    gate_human: true
+    note: >
+      Use ChatGPT (DALL-E 3 or GPT-4o image generation) to create a flat minimal
+      card illustration for each of the 9 Conductor projects. Style: clean flat
+      icon/illustration, brand-matching palette, 1:1 aspect ratio, 512px minimum,
+      exported as .webp. Upload each image to the kind_robots repo at
+      public/images/conductor/{slug}.webp, then add the path as the `image` field
+      on the matching entry in rawProjects inside
+      components/content/workspace-page.vue.
+
+      Suggested DALL-E prompts per project:
+
+      conductor:
+        "flat minimal icon of an orchestral conductor robot directing a glowing
+        network of nodes with circuit-board lines, teal and deep indigo palette,
+        clean vector style, no text"
+
+      kind-robots:
+        "flat minimal icon of a friendly smiling purple robot giving a thumbs up,
+        warm purple and mint green tones, rounded shapes, no text"
+
+      humboldt-scoop:
+        "flat minimal illustration of a vintage news camera in front of giant
+        redwood trees, earthy greens and warm amber, no text"
+
+      humboldt-poop-scoop-cms:
+        "flat minimal icon of a clipboard with a cheerful cartoon paw print,
+        soft blues and white, playful rounded style, no text"
+
+      approval-portal:
+        "flat minimal icon of a sleek dark dashboard screen with a large glowing
+        green checkmark, clean professional interface feel, no text"
+
+      digital-storefront:
+        "flat minimal icon of a shopping bag with sparkle stars and small digital
+        product icons floating around it, warm amber and teal, no text"
+
+      brainstorm:
+        "flat minimal icon of a glowing lightbulb with colorful thought bubbles
+        radiating outward, bright warm yellow and purple, no text"
+
+      mermaids-of-venice:
+        "flat minimal illustration of a mermaid silhouette in a Venice canal at
+        golden hour with gondola shadows, deep blues teals and warm gold, no text"
+
+      coat-dance:
+        "flat minimal illustration of a flowing coat caught mid-spin showing
+        graceful fabric motion, abstract arc lines suggesting dance, navy and
+        cream palette, no text"
+
+      Once images are generated and uploaded, set this task to done.
+      This task is needs-human because image generation requires a ChatGPT session.
