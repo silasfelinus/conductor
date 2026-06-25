@@ -26,6 +26,8 @@ Configure these under **Settings → Secrets and variables → Actions → Secre
 
 `DIGEST_TO`, `DIGEST_FROM`, `DIGEST_TO_NAME`, and `DIGEST_FROM_NAME` may also be repository variables if you prefer keeping only the API key secret. `BREVO_API_KEY` must stay secret.
 
+Each run uploads `daily-digest-json` as a workflow artifact so the generated payload can be inspected even if Brevo rejects the send. The workflow also prints which required and optional configuration names are present or missing without printing any secret values.
+
 ## Project kinds
 
 Every project has a `kind` that controls how the Reviewer handles finished work:
