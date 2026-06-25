@@ -23,38 +23,85 @@ jobs:
         run: |
           python scripts/build_digest.py --since "24 hours ago" > digest.json
           cat digest.json
-      - name: Email via Resend
+      - name: Email via Brevo
         env:
-          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
-          DIGEST_TO: ${{ secrets.DIGEST_TO }}
-          DIGEST_FROM: ${{ secrets.DIGEST_FROM }}
+          BREVO_API_KEY: ${{ secrets.BREVO_API_KEY }}
+          DIGEST_TO: ${{ secrets.DIGEST_TO || vars.DIGEST_TO }}
+          DIGEST_TO_NAME: ${{ secrets.DIGEST_TO_NAME || vars.DIGEST_TO_NAME }}
+          DIGEST_FROM: ${{ secrets.DIGEST_FROM || vars.DIGEST_FROM }}
+          DIGEST_FROM_NAME: ${{ secrets.DIGEST_FROM_NAME || vars.DIGEST_FROM_NAME }}
         run: |
           python - <<'PY'
-          import json, os, urllib.request
-          d = json.load(open("digest.json"))
-          def ul(items): return "<ul>" + "".join(f"<li>{i}</li>" for i in items) + "</ul>"
-          proj_html = ""
-          for p in d["projects"]:
-              proj_html += f"<h3>{p['name']} <span style='color:#888'>({p['kind']})</span> — {p['progress_pct']}%</h3>"
-              proj_html += ul([f"{m['title']} — <b>{m['status']}</b>" for m in p["milestones"]])
-              if p["in_flight"]:
-                  proj_html += "<p><i>In flight:</i></p>" + ul(p["in_flight"])
-          html = f"""
-          <h2>AI_Networker — Daily Digest ({d['date']})</h2>
-          <h3>🗳️ Awaiting your vote (pitches)</h3>{ul(d['pitches_awaiting_vote'] or ['(no pitches waiting)'])}
-          <h3>Merged in last 24h</h3>{ul(d['merges_since'] or ['(nothing merged)'])}
-          <h3>Needs your attention</h3>{ul(d['all_needs_attention'] or ['(all clear)'])}
-          <hr>{proj_html}
+          import html
+          import json
+          import os
+          import sys
+          import urllib.error
+          import urllib.request
+
+          required = ["BREVO_API_KEY", "DIGEST_TO", "DIGEST_FROM"]
+          missing = [name for name in required if not os.environ.get(name)]
+          if missing:
+              print("Missing required digest configuration: " + ", ".join(missing), file=sys.stderr)
+              print("Add these as GitHub Actions repository secrets before running daily-digest.", file=sys.stderr)
+              sys.exit(1)
+
+          with open("digest.json", encoding="utf-8") as digest_file:
+              digest = json.load(digest_file)
+
+          def ul(items):
+              safe_items = [html.escape(str(item)) for item in items]
+              return "<ul>" + "".join(f"<li>{item}</li>" for item in safe_items) + "</ul>"
+
+          project_html = ""
+          for project in digest["projects"]:
+              project_name = html.escape(str(project["name"]))
+              project_kind = html.escape(str(project["kind"]))
+              project_html += f"<h3>{project_name} <span style='color:#888'>({project_kind})</span> — {project['progress_pct']}%</h3>"
+              project_html += ul([f"{milestone['title']} — {milestone['status']}" for milestone in project["milestones"]])
+              if project["in_flight"]:
+                  project_html += "<p><i>In flight:</i></p>" + ul(project["in_flight"])
+
+          digest_date = html.escape(str(digest["date"]))
+          html_content = f"""
+          <h2>AI_Networker — Daily Digest ({digest_date})</h2>
+          <h3>🗳️ Awaiting your vote (pitches)</h3>{ul(digest['pitches_awaiting_vote'] or ['(no pitches waiting)'])}
+          <h3>Merged in last 24h</h3>{ul(digest['merges_since'] or ['(nothing merged)'])}
+          <h3>Needs your attention</h3>{ul(digest['all_needs_attention'] or ['(all clear)'])}
+          <hr>{project_html}
           """
-          body = json.dumps({
-            "from": os.environ["DIGEST_FROM"],
-            "to": [os.environ["DIGEST_TO"]],
-            "subject": f"AI_Networker Digest {d['date']}",
-            "html": html,
-          }).encode()
-          req = urllib.request.Request(
-            "https://api.resend.com/emails", data=body, method="POST",
-            headers={"Authorization": f"Bearer {os.environ['RESEND_API_KEY']}",
-                     "Content-Type": "application/json"})
-          print(urllib.request.urlopen(req).read().decode())
+
+          payload = {
+              "sender": {
+                  "email": os.environ["DIGEST_FROM"],
+                  "name": os.environ.get("DIGEST_FROM_NAME") or "AI_Networker",
+              },
+              "to": [
+                  {
+                      "email": os.environ["DIGEST_TO"],
+                      "name": os.environ.get("DIGEST_TO_NAME") or "Silas",
+                  }
+              ],
+              "subject": f"AI_Networker Digest {digest['date']}",
+              "htmlContent": html_content,
+          }
+
+          request = urllib.request.Request(
+              "https://api.brevo.com/v3/smtp/email",
+              data=json.dumps(payload).encode("utf-8"),
+              method="POST",
+              headers={
+                  "api-key": os.environ["BREVO_API_KEY"],
+                  "accept": "application/json",
+                  "Content-Type": "application/json",
+              },
+          )
+
+          try:
+              with urllib.request.urlopen(request) as response:
+                  print(response.read().decode("utf-8"))
+          except urllib.error.HTTPError as error:
+              error_body = error.read().decode("utf-8", errors="replace")
+              print(f"Brevo email request failed with HTTP {error.code}: {error_body}", file=sys.stderr)
+              sys.exit(1)
           PY
