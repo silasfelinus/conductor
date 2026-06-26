@@ -58,4 +58,28 @@ projects/priority.yaml              which project leads
 pitches/                            proposals waiting for Silas's vote
 intake/                             new project requests before they're scaffolded
 scripts/resolve_deps.py             unblocks pipeline tasks each cycle
+scripts/build_status.py             regenerates STATUS.md
+scripts/build_digest.py             builds the daily digest JSON
+scripts/build_workspace.py          regenerates workspace.html
+scripts/topology.py                 prints dependency graphs
+scripts/intake.py                   scaffolds a new project from a request file
+docs/TOPOLOGY.md                    how to read and declare dependencies
+STATUS.md                           auto-generated snapshot — do not edit
+workspace.html                      auto-generated dashboard — do not edit
 ```
+
+## Current projects
+
+| Project | What it is | Kind |
+|---|---|---|
+| humboldt-scoop | Existing site — adding the codebase under /site | software |
+| humboldt-poop-scoop-cms | New customer management software | software |
+| digital-storefront | Research → create → market → advertise pipeline; nothing publishes unattended | content |
+| approval-portal | The console Silas lives in: pick pitches, validate upgrades, confirm updates | software |
+| kind-robots | Apps consuming the shared KR backend (read-only) | software |
+| coat-dance | Content project, awaiting Silas's direction | content |
+| mermaids-of-venice | Content project, awaiting Silas's direction | content |
+
+## Pitches
+
+Any agent (or Silas) can drop a pitch into `pitches/` as a markdown file. The daily digest surfaces ones with `status: awaiting-silas`. Silas sets the status to `approved` or `rejected` — approved pitches can become new projects via `scripts/intake.py`.
