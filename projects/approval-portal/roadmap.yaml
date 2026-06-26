@@ -43,7 +43,7 @@ tasks:
   - id: t-001
     milestone: m1
     title: "Spec the portal: data sources, screens, and repo-write strategy"
-    status: claimed
+    status: needs-human
     owner: worker
     updated: "2026-06-26T12:20:26Z"
     passes: 0
@@ -51,10 +51,9 @@ tasks:
     gate_human: true
     approved_by_human: false
     note: >
-      Write projects/approval-portal/SPEC.md: what the portal reads (roadmap.yaml,
-      pitches/, git log, open PRs via GitHub API), the screens for m1-m5, and exactly how
-      approvals are written back (commit to roadmap? open a PR? call GitHub API?). Propose
-      the v1 stack. Ends needs-human — Silas approves the spec before any build task unblocks.
+      Wrote projects/approval-portal/SPEC.md covering data sources, m1-m5 screens,
+      GitHub/repo write strategy, safety boundaries, and open decisions for Silas.
+      Ends needs-human because this task is human-gated before portal build work unblocks.
 
   - id: t-002
     milestone: m1
