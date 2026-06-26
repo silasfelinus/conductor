@@ -26,7 +26,7 @@ Configure these under **Settings → Secrets and variables → Actions → Secre
 
 `DIGEST_TO`, `DIGEST_FROM`, `DIGEST_TO_NAME`, and `DIGEST_FROM_NAME` may also be repository variables if you prefer keeping only the API key secret. `BREVO_API_KEY` must stay secret.
 
-Each run uploads `daily-digest-json` as a workflow artifact so the generated payload can be inspected even if Brevo rejects the send. The workflow also prints which required and optional configuration names are present or missing without printing any secret values. If `digest.json` is invalid or missing required top-level keys, the workflow fails before checking configuration or contacting Brevo.
+Each run uploads `daily-digest-json` as a workflow artifact so the generated payload can be inspected even if Brevo rejects the send. The workflow also prints which required and optional configuration names are present or missing without printing any secret values. If `digest.json` is invalid, missing required top-level keys, has non-list summary fields, or includes malformed project entries, the workflow fails before checking configuration or contacting Brevo.
 
 ## Project kinds
 
@@ -58,28 +58,4 @@ projects/priority.yaml              which project leads
 pitches/                            proposals waiting for Silas's vote
 intake/                             new project requests before they're scaffolded
 scripts/resolve_deps.py             unblocks pipeline tasks each cycle
-scripts/build_status.py             regenerates STATUS.md
-scripts/build_digest.py             builds the daily digest JSON
-scripts/build_workspace.py          regenerates workspace.html
-scripts/topology.py                 prints dependency graphs
-scripts/intake.py                   scaffolds a new project from a request file
-docs/TOPOLOGY.md                    how to read and declare dependencies
-STATUS.md                           auto-generated snapshot — do not edit
-workspace.html                      auto-generated dashboard — do not edit
 ```
-
-## Current projects
-
-| Project | What it is | Kind |
-|---|---|---|
-| humboldt-scoop | Existing site — adding the codebase under /site | software |
-| humboldt-poop-scoop-cms | New customer management software | software |
-| digital-storefront | Research → create → market → advertise pipeline; nothing publishes unattended | content |
-| approval-portal | The console Silas lives in: pick pitches, validate upgrades, confirm updates | software |
-| kind-robots | Apps consuming the shared KR backend (read-only) | software |
-| coat-dance | Content project, awaiting Silas's direction | content |
-| mermaids-of-venice | Content project, awaiting Silas's direction | content |
-
-## Pitches
-
-Any agent (or Silas) can drop a pitch into `pitches/` as a markdown file. The daily digest surfaces ones with `status: awaiting-silas`. Silas sets the status to `approved` or `rejected` — approved pitches can become new projects via `scripts/intake.py`.
