@@ -51,7 +51,7 @@ def resolve_card_image(slug, art_prompts):
     if entry:
         image_path = REPO_ROOT / entry["image_path"]
         if image_path.exists():
-            return entry["image_path"], entry.get("status", "pending")
+            return entry["image_path"], "done"
     for ext in (".webp", ".png", ".jpg", ".jpeg", ".svg"):
         candidate = IMAGES_DIR / f"{slug}{ext}"
         if candidate.exists():
