@@ -85,6 +85,23 @@ in the PR. Recurring tasks don't count toward milestone progress.
   draft or pitch is well-formed, then leave at `status: needs-human` for Silas. (You may
   merge the file into main so it's visible, but never trigger publish/deploy/send.)
 
+## Project art
+
+Every project has three visual assets displayed in the kind_robots Workspace panel:
+- **icon** (256×256, 1:1) — used in the detail header
+- **card** (512×768, 2:3) — shown on the project card
+- **hero** (1280×720, 16:9) — shown as a banner when a project is selected
+
+Files are stored as `projects/images/{slug}-{type}.webp`. The workspace derives image URLs
+from the slug automatically; missing files degrade gracefully to a placeholder.
+
+**When creating or merging a new project**, add an entry to `projects/art-prompts.yaml`
+with all three image blocks set to `status: pending`. See `ART-PROMPTS.md` at the repo
+root for the template and all existing prompts.
+
+Do not commit generated image binaries from agent runs — images are generated manually by
+Silas using the prompts in `ART-PROMPTS.md` and uploaded directly.
+
 ## Hard safety rules (all agents, all kinds)
 1. PRs only into `main` (except the Worker's atomic claim commit).
 2. Drafts not live actions when stakes are high → `needs-human`, never auto-fire.
