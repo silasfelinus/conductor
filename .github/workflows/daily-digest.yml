@@ -98,9 +98,8 @@ jobs:
                       print(f"digest.json projects[{index}].{key} must be a list", file=sys.stderr)
                       sys.exit(1)
 
-          print("digest.json validated with " + str(len(digest["projects"])) + " projects")
+          print("digest.json validated with " + str(len(digest["projects"]) + " projects")
           PY
-      - name: Upload digest artifact
       - name: Build Brevo payload preview
         run: |
           python - <<'PY'
