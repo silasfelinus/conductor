@@ -6,11 +6,19 @@ name: daily-digest
 on:
   schedule:
     - cron: "0 15 * * *"   # 15:00 UTC ≈ 8am Pacific. Shifts with DST.
-  workflow_dispatch: {}
+  workflow_dispatch:
+    inputs:
+      send_email:
+        description: "Actually send the Brevo email. Leave false for a safe dry run."
+        required: false
+        default: false
+        type: boolean
 
 jobs:
   digest:
     runs-on: ubuntu-latest
+    env:
+      SHOULD_SEND_EMAIL: ${{ github.event_name == 'schedule' || inputs.send_email == true }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -23,64 +31,11 @@ jobs:
         run: |
           python scripts/build_digest.py --since "24 hours ago" > digest.json
           cat digest.json
-      - name: Upload digest artifact
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: daily-digest-json
-          path: digest.json
-          if-no-files-found: warn
-      - name: Check digest configuration
-        env:
-          BREVO_API_KEY: ${{ secrets.BREVO_API_KEY }}
-          DIGEST_TO: ${{ secrets.DIGEST_TO || vars.DIGEST_TO }}
-          DIGEST_TO_NAME: ${{ secrets.DIGEST_TO_NAME || vars.DIGEST_TO_NAME }}
-          DIGEST_FROM: ${{ secrets.DIGEST_FROM || vars.DIGEST_FROM }}
-          DIGEST_FROM_NAME: ${{ secrets.DIGEST_FROM_NAME || vars.DIGEST_FROM_NAME }}
-        run: |
-          python - <<'PY'
-          import os
-          import sys
-
-          required = ["BREVO_API_KEY", "DIGEST_TO", "DIGEST_FROM"]
-          optional = ["DIGEST_TO_NAME", "DIGEST_FROM_NAME"]
-          missing = [name for name in required if not os.environ.get(name)]
-          configured_optional = [name for name in optional if os.environ.get(name)]
-
-          if configured_optional:
-              print("Optional digest configuration present: " + ", ".join(configured_optional))
-          else:
-              print("Optional digest configuration present: none")
-
-          if missing:
-              print("Missing required digest configuration: " + ", ".join(missing), file=sys.stderr)
-              print("Add missing values as GitHub Actions repository secrets or variables before running daily-digest.", file=sys.stderr)
-              sys.exit(1)
-
-          print("Required digest configuration present: " + ", ".join(required))
-          PY
-      - name: Email via Brevo
-        env:
-          BREVO_API_KEY: ${{ secrets.BREVO_API_KEY }}
-          DIGEST_TO: ${{ secrets.DIGEST_TO || vars.DIGEST_TO }}
-          DIGEST_TO_NAME: ${{ secrets.DIGEST_TO_NAME || vars.DIGEST_TO_NAME }}
-          DIGEST_FROM: ${{ secrets.DIGEST_FROM || vars.DIGEST_FROM }}
-          DIGEST_FROM_NAME: ${{ secrets.DIGEST_FROM_NAME || vars.DIGEST_FROM_NAME }}
+      - name: Build Brevo payload preview
         run: |
           python - <<'PY'
           import html
           import json
-          import os
-          import sys
-          import urllib.error
-          import urllib.request
-
-          required = ["BREVO_API_KEY", "DIGEST_TO", "DIGEST_FROM"]
-          missing = [name for name in required if not os.environ.get(name)]
-          if missing:
-              print("Missing required digest configuration: " + ", ".join(missing), file=sys.stderr)
-              print("Add these as GitHub Actions repository secrets before running daily-digest.", file=sys.stderr)
-              sys.exit(1)
 
           with open("digest.json", encoding="utf-8") as digest_file:
               digest = json.load(digest_file)
@@ -107,20 +62,98 @@ jobs:
           <hr>{project_html}
           """
 
-          payload = {
-              "sender": {
-                  "email": os.environ["DIGEST_FROM"],
-                  "name": os.environ.get("DIGEST_FROM_NAME") or "AI_Networker",
-              },
-              "to": [
-                  {
-                      "email": os.environ["DIGEST_TO"],
-                      "name": os.environ.get("DIGEST_TO_NAME") or "Silas",
-                  }
-              ],
+          payload_preview = {
               "subject": f"AI_Networker Digest {digest['date']}",
               "htmlContent": html_content,
           }
+
+          with open("digest-email.json", "w", encoding="utf-8") as payload_file:
+              json.dump(payload_preview, payload_file, indent=2)
+
+          print("Built digest-email.json payload preview without recipient, sender, or API key values.")
+          PY
+      - name: Upload digest artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: daily-digest-artifacts
+          path: |
+            digest.json
+            digest-email.json
+          if-no-files-found: warn
+      - name: Check digest configuration
+        env:
+          BREVO_API_KEY: ${{ secrets.BREVO_API_KEY }}
+          DIGEST_TO: ${{ secrets.DIGEST_TO || vars.DIGEST_TO }}
+          DIGEST_TO_NAME: ${{ secrets.DIGEST_TO_NAME || vars.DIGEST_TO_NAME }}
+          DIGEST_FROM: ${{ secrets.DIGEST_FROM || vars.DIGEST_FROM }}
+          DIGEST_FROM_NAME: ${{ secrets.DIGEST_FROM_NAME || vars.DIGEST_FROM_NAME }}
+        run: |
+          python - <<'PY'
+          import os
+          import sys
+
+          should_send = os.environ.get("SHOULD_SEND_EMAIL", "false").lower() == "true"
+          required = ["BREVO_API_KEY", "DIGEST_TO", "DIGEST_FROM"]
+          optional = ["DIGEST_TO_NAME", "DIGEST_FROM_NAME"]
+          missing = [name for name in required if not os.environ.get(name)]
+          configured_optional = [name for name in optional if os.environ.get(name)]
+
+          if configured_optional:
+              print("Optional digest configuration present: " + ", ".join(configured_optional))
+          else:
+              print("Optional digest configuration present: none")
+
+          if missing:
+              print("Missing required digest configuration: " + ", ".join(missing), file=sys.stderr)
+              if should_send:
+                  print("Add missing values as GitHub Actions repository secrets or variables before running daily-digest.", file=sys.stderr)
+                  sys.exit(1)
+              print("Email send disabled for this run; missing send configuration does not fail the dry run.")
+          else:
+              print("Required digest configuration present: " + ", ".join(required))
+
+          if should_send:
+              print("Email send enabled for this run.")
+          else:
+              print("Email send disabled for this run. Inspect daily-digest-artifacts before enabling send_email.")
+          PY
+      - name: Email via Brevo
+        if: ${{ env.SHOULD_SEND_EMAIL == 'true' }}
+        env:
+          BREVO_API_KEY: ${{ secrets.BREVO_API_KEY }}
+          DIGEST_TO: ${{ secrets.DIGEST_TO || vars.DIGEST_TO }}
+          DIGEST_TO_NAME: ${{ secrets.DIGEST_TO_NAME || vars.DIGEST_TO_NAME }}
+          DIGEST_FROM: ${{ secrets.DIGEST_FROM || vars.DIGEST_FROM }}
+          DIGEST_FROM_NAME: ${{ secrets.DIGEST_FROM_NAME || vars.DIGEST_FROM_NAME }}
+        run: |
+          python - <<'PY'
+          import json
+          import os
+          import sys
+          import urllib.error
+          import urllib.request
+
+          required = ["BREVO_API_KEY", "DIGEST_TO", "DIGEST_FROM"]
+          missing = [name for name in required if not os.environ.get(name)]
+          if missing:
+              print("Missing required digest configuration: " + ", ".join(missing), file=sys.stderr)
+              print("Add these as GitHub Actions repository secrets before running daily-digest.", file=sys.stderr)
+              sys.exit(1)
+
+          with open("digest-email.json", encoding="utf-8") as payload_file:
+              payload = json.load(payload_file)
+
+          payload["sender"] = {
+              "email": os.environ["DIGEST_FROM"],
+              "name": os.environ.get("DIGEST_FROM_NAME") or "AI_Networker",
+          }
+          payload["to"] = [
+              {
+                  "email": os.environ["DIGEST_TO"],
+                  "name": os.environ.get("DIGEST_TO_NAME") or "Silas",
+              }
+          ]
 
           request = urllib.request.Request(
               "https://api.brevo.com/v3/smtp/email",
