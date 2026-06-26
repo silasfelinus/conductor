@@ -14,7 +14,7 @@ milestones:
   - id: m1
     title: "Loop proven end-to-end on this repo"
     weight: 10
-    status: in-progress
+    status: done
   - id: m2
     title: "Existing site imported + building cleanly"
     weight: 20
@@ -36,9 +36,9 @@ tasks:
   - id: t-001
     milestone: m1
     title: "Confirm the loop: trivial no-op PR through the full cycle"
-    status: claimed
+    status: done
     owner: worker
-    updated: "2026-06-25T20:49:05-07:00"
+    updated: "2026-06-26T00:00:00Z"
     passes: 0
     stakes: reversible
     note: >
@@ -48,12 +48,14 @@ tasks:
   - id: t-002
     milestone: m2
     title: "Audit the imported site and report build/run steps"
-    status: claimed
-    owner: worker
-    updated: "2026-06-25T22:10:00-07:00"
+    status: ready
+    owner: null
+    updated: "2026-06-26T00:00:00Z"
     passes: 0
     stakes: reversible
     note: >
-      Once Silas adds the site under /site, read it, document how to build/run it
-      in projects/humboldt-scoop/scoops/NOTES.md, and flag anything broken as new tasks.
-      Do not change site code yet — just inventory.
+      Site is now at projects/humboldt-scoop/scoops/ (WordPress, Docker-based).
+      Read the files, document how to build/run it in
+      projects/humboldt-scoop/scoops/NOTES.md, and flag anything that needs
+      attention as new tasks. Do not change site code — just inventory.
+      Previous worker attempt (PR #12) was done before the site landed; closed.
