@@ -76,15 +76,16 @@ tasks:
   - id: t-004
     milestone: m2
     title: "Confirm imported theme, plugins, uploads, and database assets"
-    status: claimed
+    status: review
     owner: worker
-    updated: "2026-06-26T11:23:21Z"
+    updated: "2026-06-26T11:29:00Z"
     passes: 0
     stakes: reversible
     note: >
-      Do a full recursive inventory when local clone/listing access is available.
-      Verify whether the business-specific theme, plugins, uploads, and database dump
-      are present, then document any missing assets before build work continues.
+      Wrote projects/humboldt-scoop/scoops/ASSET-INVENTORY.md. Targeted GitHub file
+      reads show only WordPress core/config scaffolding, with theme/plugin guard files
+      present but no verified business theme, plugins, uploads, or database import.
+      Local recursive listing is still recommended when local clone access is available.
 
   - id: t-005
     milestone: m2
