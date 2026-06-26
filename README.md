@@ -12,7 +12,8 @@ The whole thing runs on plain YAML files checked into git. No database, no dashb
 
 ## Daily digest email
 
-The `daily-digest` GitHub Actions workflow builds `digest.json` with `scripts/build_digest.py` and sends it through Brevo transactional email.
+The `daily-digest` GitHub Actions workflow builds `digest.json` with `scripts/build_digest.py`, validates the JSON shape, and sends it through Brevo transactional email.
+The `daily-digest` GitHub Actions workflow builds `digest.json` with `scripts/build_digest.py`, renders a Brevo payload preview, and sends scheduled runs through Brevo transactional email.
 
 Configure these under **Settings → Secrets and variables → Actions → Secrets → New repository secret**:
 
@@ -25,6 +26,11 @@ Configure these under **Settings → Secrets and variables → Actions → Secre
 | `DIGEST_FROM_NAME` | no | Defaults to `AI_Networker`. |
 
 `DIGEST_TO`, `DIGEST_FROM`, `DIGEST_TO_NAME`, and `DIGEST_FROM_NAME` may also be repository variables if you prefer keeping only the API key secret. `BREVO_API_KEY` must stay secret.
+
+Each run uploads `daily-digest-json` as a workflow artifact so the generated payload can be inspected even if Brevo rejects the send. The workflow also prints which required and optional configuration names are present or missing without printing any secret values. If `digest.json` is invalid, missing required top-level keys, has non-list summary fields, or includes malformed project entries, the workflow fails before checking configuration or contacting Brevo.
+Manual `workflow_dispatch` runs default to a safe dry run and do not send email. They still build and upload the digest artifacts so the JSON payload and rendered email body can be inspected. To intentionally send a manual test email, run the workflow with `send_email` enabled.
+
+Each run uploads `daily-digest-artifacts` containing `digest.json` and `digest-email.json`. The generated `digest-email.json` preview omits recipient, sender, and API key values. The workflow also prints which required and optional configuration names are present or missing without printing any secret values. Scheduled runs still require `BREVO_API_KEY`, `DIGEST_TO`, and `DIGEST_FROM` before sending.
 
 ## Project kinds
 
