@@ -30,16 +30,14 @@ tasks:
   - id: t-001
     milestone: m1
     title: "Draft the app/backend boundary doc for Silas to approve"
-    status: claimed
+    status: needs-human
     owner: worker
     updated: "2026-06-26T14:20:11Z"
     passes: 0
     stakes: reversible
     note: >
-      Write projects/kind-robots/BOUNDARY.md proposing exactly which concerns the
-      app owns vs which it consumes from the shared backend (auth, data models,
-      generation endpoints, mana/billing). This is the foundation for the real
-      roadmap. Set needs-human when drafted — Silas approves before app work starts.
+      Wrote projects/kind-robots/BOUNDARY.md defining app-owned concerns versus
+      shared backend responsibilities. Needs Silas approval before app work starts.
 
   - id: t-002
     milestone: m2
