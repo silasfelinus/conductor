@@ -1,80 +1,186 @@
 # art-prompts.yaml — Image catalog for Conductor project cards
 #
-# Each entry defines the DALL-E prompt to generate a card illustration for
-# a project, and where the resulting image lives in the workspace.
+# Two images per project:
+#   card  — portrait 2:3 (512×768 min). Shown on the workspace project card.
+#   hero  — landscape 16:9 (1280×720 min). Shown as a banner/header in the project view.
 #
 # Workflow:
-#   1. Use the prompt below in ChatGPT (DALL-E 3 or GPT-4o image gen).
-#   2. Export the result as .webp at 512×512px minimum, 1:1 aspect ratio.
-#   3. Save to projects/images/<slug>.webp (replace <slug> with the project field value).
-#   4. Rebuild: python scripts/build_workspace.py
-#      The workspace card will automatically switch from the placeholder to your image.
+#   1. Copy the prompt into ChatGPT (DALL-E 3 or GPT-4o image gen).
+#   2. Set the correct aspect ratio in the generation UI (2:3 for card, 16:9 for hero).
+#   3. Export as .webp at the minimum size listed above.
+#   4. Save to the image_path listed below (relative to repo root).
+#   5. Run: python scripts/build_workspace.py
+#      The placeholder swaps to your image automatically.
 #
 # Status values: pending | done
-# image_path is relative to repo root.
 
 images:
+
   - project: conductor
-    status: pending
-    image_path: projects/images/conductor.webp
-    prompt: >
-      flat minimal icon of an orchestral conductor robot directing a glowing
-      network of nodes with circuit-board lines, teal and deep indigo palette,
-      clean vector style, no text
+    card:
+      image_path: projects/images/conductor-card.webp
+      status: pending
+      size: "512x768"
+      prompt: >
+        flat minimal portrait illustration, orchestral conductor robot gesturing
+        upward directing a glowing circuit-node network, teal and deep indigo
+        palette, subject centered with dark atmospheric backdrop, no text,
+        2:3 portrait composition
+    hero:
+      image_path: projects/images/conductor-hero.webp
+      status: pending
+      size: "1280x720"
+      prompt: >
+        flat minimal wide panoramic, orchestral conductor robot before a vast
+        network of glowing circuit-board constellations spanning the horizon,
+        teal and deep indigo, cinematic scale, no text, 16:9 landscape
 
   - project: kind-robots
-    status: pending
-    image_path: projects/images/kind-robots.webp
-    prompt: >
-      flat minimal icon of a friendly smiling purple robot giving a thumbs up,
-      warm purple and mint green tones, rounded shapes, no text
+    card:
+      image_path: projects/images/kind-robots-card.webp
+      status: pending
+      size: "512x768"
+      prompt: >
+        flat minimal portrait of a friendly smiling purple robot giving a
+        thumbs up, warm purple and mint green tones, rounded shapes, centered
+        subject on soft gradient backdrop, no text, 2:3 portrait composition
+    hero:
+      image_path: projects/images/kind-robots-hero.webp
+      status: pending
+      size: "1280x720"
+      prompt: >
+        flat minimal wide scene of cheerful purple robots collaborating and
+        waving in a bright modern workshop, warm purple and mint green, playful
+        detail across the full frame, no text, 16:9 landscape
 
   - project: humboldt-scoop
-    status: pending
-    image_path: projects/images/humboldt-scoop.webp
-    prompt: >
-      flat minimal illustration of a vintage news camera in front of giant
-      redwood trees, earthy greens and warm amber, no text
+    card:
+      image_path: projects/images/humboldt-scoop-card.webp
+      status: pending
+      size: "512x768"
+      prompt: >
+        flat minimal portrait illustration of a vintage news camera centered in
+        frame with towering redwood trees rising behind it, earthy greens and
+        warm amber, no text, 2:3 portrait composition
+    hero:
+      image_path: projects/images/humboldt-scoop-hero.webp
+      status: pending
+      size: "1280x720"
+      prompt: >
+        flat minimal wide panoramic of a vintage newsroom overlaid with giant
+        California redwood forest silhouettes, warm amber light filtering
+        through the canopy, dramatic scale, earthy greens and amber, no text,
+        16:9 landscape
 
   - project: humboldt-poop-scoop-cms
-    status: pending
-    image_path: projects/images/humboldt-poop-scoop-cms.webp
-    prompt: >
-      flat minimal icon of a clipboard with a cheerful cartoon paw print,
-      soft blues and white, playful rounded style, no text
+    card:
+      image_path: projects/images/humboldt-poop-scoop-cms-card.webp
+      status: pending
+      size: "512x768"
+      prompt: >
+        flat minimal portrait illustration of a clipboard with a cheerful
+        cartoon paw print centered on it, soft blues and white, playful rounded
+        style, clean backdrop, no text, 2:3 portrait composition
+    hero:
+      image_path: projects/images/humboldt-poop-scoop-cms-hero.webp
+      status: pending
+      size: "1280x720"
+      prompt: >
+        flat minimal wide illustration of a cheerful pet care scene: clipboard,
+        paw prints, a happy dog and a service route map spread across a sunny
+        neighborhood, soft blues and white, no text, 16:9 landscape
 
   - project: approval-portal
-    status: pending
-    image_path: projects/images/approval-portal.webp
-    prompt: >
-      flat minimal icon of a sleek dark dashboard screen with a large glowing
-      green checkmark, clean professional interface feel, no text
+    card:
+      image_path: projects/images/approval-portal-card.webp
+      status: pending
+      size: "512x768"
+      prompt: >
+        flat minimal portrait illustration of a sleek dark dashboard screen
+        with a large glowing green checkmark, clean professional style,
+        centered composition on a deep dark surface, no text,
+        2:3 portrait composition
+    hero:
+      image_path: projects/images/approval-portal-hero.webp
+      status: pending
+      size: "1280x720"
+      prompt: >
+        flat minimal wide cinematic dashboard panorama with multiple dark screen
+        panels and a sweeping green approval arc across the horizon, teal
+        accents, professional interface aesthetic, no text, 16:9 landscape
 
   - project: digital-storefront
-    status: pending
-    image_path: projects/images/digital-storefront.webp
-    prompt: >
-      flat minimal icon of a shopping bag with sparkle stars and small digital
-      product icons floating around it, warm amber and teal, no text
+    card:
+      image_path: projects/images/digital-storefront-card.webp
+      status: pending
+      size: "512x768"
+      prompt: >
+        flat minimal portrait illustration of a shopping bag centered in frame
+        with sparkle stars and small floating digital product icons orbiting it,
+        warm amber and teal, no text, 2:3 portrait composition
+    hero:
+      image_path: projects/images/digital-storefront-hero.webp
+      status: pending
+      size: "1280x720"
+      prompt: >
+        flat minimal wide storefront scene with a row of glowing digital product
+        cards, floating sparkles and shopping bags arranged across a warm
+        panoramic backdrop, amber and teal palette, inviting atmosphere,
+        no text, 16:9 landscape
 
   - project: brainstorm
-    status: pending
-    image_path: projects/images/brainstorm.webp
-    prompt: >
-      flat minimal icon of a glowing lightbulb with colorful thought bubbles
-      radiating outward, bright warm yellow and purple, no text
+    card:
+      image_path: projects/images/brainstorm-card.webp
+      status: pending
+      size: "512x768"
+      prompt: >
+        flat minimal portrait illustration of a large glowing lightbulb centered
+        in frame with colorful thought bubbles radiating upward and outward,
+        bright warm yellow and purple, no text, 2:3 portrait composition
+    hero:
+      image_path: projects/images/brainstorm-hero.webp
+      status: pending
+      size: "1280x720"
+      prompt: >
+        flat minimal wide panoramic creative idea landscape: dozens of
+        lightbulbs, floating concept bubbles, and sketch lines spreading across
+        the horizon, bright yellow and purple, energetic and expansive,
+        no text, 16:9 landscape
 
   - project: mermaids-of-venice
-    status: pending
-    image_path: projects/images/mermaids-of-venice.webp
-    prompt: >
-      flat minimal illustration of a mermaid silhouette in a Venice canal at
-      golden hour with gondola shadows, deep blues teals and warm gold, no text
+    card:
+      image_path: projects/images/mermaids-of-venice-card.webp
+      status: pending
+      size: "512x768"
+      prompt: >
+        flat minimal portrait illustration of a mermaid silhouette rising from
+        a Venice canal with a gondola and arched bridge in soft focus behind
+        her, deep blues teals and warm gold, no text, 2:3 portrait composition
+    hero:
+      image_path: projects/images/mermaids-of-venice-hero.webp
+      status: pending
+      size: "1280x720"
+      prompt: >
+        flat minimal wide panoramic of a Venice canal at golden hour with
+        multiple mermaid silhouettes gliding among gondolas under arched
+        bridges, warm lantern light reflected in the water, deep blues teals
+        and warm gold, no text, 16:9 landscape
 
   - project: coat-dance
-    status: pending
-    image_path: projects/images/coat-dance.webp
-    prompt: >
-      flat minimal illustration of a flowing coat caught mid-spin showing
-      graceful fabric motion, abstract arc lines suggesting dance, navy and
-      cream palette, no text
+    card:
+      image_path: projects/images/coat-dance-card.webp
+      status: pending
+      size: "512x768"
+      prompt: >
+        flat minimal portrait illustration of a flowing coat caught mid-spin in
+        a dramatic upward swirl, abstract arc lines suggesting dance, navy and
+        cream palette, tall portrait composition, no text
+    hero:
+      image_path: projects/images/coat-dance-hero.webp
+      status: pending
+      size: "1280x720"
+      prompt: >
+        flat minimal wide panoramic of a coat in full flight across an open
+        stage, sweeping fabric arcs filling the landscape frame, abstract
+        motion lines, navy and cream with warm gold accents, no text,
+        16:9 landscape

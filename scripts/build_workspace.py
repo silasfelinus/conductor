@@ -17,7 +17,8 @@ PITCHES_DIR = REPO_ROOT / "pitches"
 WORKSPACE_FILE = REPO_ROOT / "workspace.html"
 ART_PROMPTS_FILE = REPO_ROOT / "projects" / "art-prompts.yaml"
 IMAGES_DIR = REPO_ROOT / "projects" / "images"
-PLACEHOLDER_IMAGE = "projects/images/coming-soon.svg"
+PLACEHOLDER_CARD  = "projects/images/coming-soon-card.svg"
+PLACEHOLDER_HERO  = "projects/images/coming-soon-hero.svg"
 
 STATUS_COLORS = {
     "ready": "#3b82f6",
@@ -46,17 +47,26 @@ def load_art_prompts():
     return {entry["project"]: entry for entry in data.get("images", [])}
 
 
-def resolve_card_image(slug, art_prompts):
-    entry = art_prompts.get(slug, {})
-    if entry:
-        image_path = REPO_ROOT / entry["image_path"]
-        if image_path.exists():
-            return entry["image_path"], "done"
-    for ext in (".webp", ".png", ".jpg", ".jpeg", ".svg"):
-        candidate = IMAGES_DIR / f"{slug}{ext}"
+def _resolve_image(slug, variant, entry, placeholder):
+    """Return (src_path, is_done) for one image variant (card or hero)."""
+    sub = (entry or {}).get(variant, {})
+    if sub:
+        path = REPO_ROOT / sub["image_path"]
+        if path.exists():
+            return sub["image_path"], True
+    for ext in (".webp", ".png", ".jpg", ".jpeg"):
+        candidate = IMAGES_DIR / f"{slug}-{variant}{ext}"
         if candidate.exists():
-            return f"projects/images/{slug}{ext}", "done"
-    return PLACEHOLDER_IMAGE, "pending"
+            return f"projects/images/{slug}-{variant}{ext}", True
+    return placeholder, False
+
+
+def resolve_card_image(slug, art_prompts):
+    return _resolve_image(slug, "card", art_prompts.get(slug), PLACEHOLDER_CARD)
+
+
+def resolve_hero_image(slug, art_prompts):
+    return _resolve_image(slug, "hero", art_prompts.get(slug), PLACEHOLDER_HERO)
 
 
 def compute_progress(milestones):
@@ -87,8 +97,8 @@ def render_project_card(slug, roadmap, art_prompts):
     progress = compute_progress(milestones)
     name = roadmap.get("project", slug)
 
-    img_src, img_status = resolve_card_image(slug, art_prompts)
-    img_title = "Art coming soon — see projects/art-prompts.yaml" if img_status == "pending" else f"{name} card image"
+    img_src, img_done = resolve_card_image(slug, art_prompts)
+    img_title = f"{name} card image" if img_done else "Card art pending — see projects/art-prompts.yaml"
     img_html = f'<img class="card-img" src="{img_src}" alt="{name}" title="{img_title}" />'
 
     task_rows = ""
@@ -116,31 +126,39 @@ def render_project_card(slug, roadmap, art_prompts):
     </div>"""
 
 
-def render_art_prompts_section(art_prompts):
-    if not art_prompts:
-        return ""
-    entries = sorted(art_prompts.values(), key=lambda e: (e.get("status", "pending") == "done", e["project"]))
-    rows = ""
-    for entry in entries:
-        slug = entry["project"]
-        image_path = entry.get("image_path", f"projects/images/{slug}.webp")
-        actual = REPO_ROOT / image_path
-        if actual.exists():
-            thumb_src = image_path
-            status_html = '<span class="art-status-done">done</span>'
-        else:
-            thumb_src = PLACEHOLDER_IMAGE
-            status_html = '<span class="art-status-pending">pending</span>'
-        prompt_text = (entry.get("prompt") or "").strip().replace("\n", " ")
-        rows += f"""
+def _art_row(slug, variant, sub, placeholder):
+    image_path = sub.get("image_path", f"projects/images/{slug}-{variant}.webp")
+    actual = REPO_ROOT / image_path
+    if actual.exists():
+        thumb_src = image_path
+        status_html = '<span class="art-status-done">done</span>'
+    else:
+        thumb_src = placeholder
+        status_html = '<span class="art-status-pending">pending</span>'
+    size = sub.get("size", "")
+    prompt_text = (sub.get("prompt") or "").strip().replace("\n", " ")
+    label = f"{slug} · {variant} ({size})" if size else f"{slug} · {variant}"
+    return f"""
     <div class="art-card">
-      <img class="art-thumb" src="{thumb_src}" alt="{slug}" />
+      <img class="art-thumb art-thumb-{variant}" src="{thumb_src}" alt="{slug} {variant}" />
       <div>
-        <div class="art-slug">{slug} {status_html}</div>
+        <div class="art-slug">{label} {status_html}</div>
         <div class="art-path">{image_path}</div>
         <div class="art-prompt">{prompt_text}</div>
       </div>
     </div>"""
+
+
+def render_art_prompts_section(art_prompts):
+    if not art_prompts:
+        return ""
+    rows = ""
+    for entry in sorted(art_prompts.values(), key=lambda e: e["project"]):
+        slug = entry["project"]
+        if "card" in entry:
+            rows += _art_row(slug, "card", entry["card"], PLACEHOLDER_CARD)
+        if "hero" in entry:
+            rows += _art_row(slug, "hero", entry["hero"], PLACEHOLDER_HERO)
     return rows
 
 
@@ -209,7 +227,7 @@ def build_workspace():
           letter-spacing: 0.05em; margin-bottom: 1rem; margin-top: 2rem; }}
     .grid {{ display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem; }}
     .card {{ background: var(--surface); border: 1px solid var(--border); border-radius: 1rem; padding: 1rem; }}
-    .card-img {{ width: 100%; aspect-ratio: 1/1; object-fit: cover; border-radius: 0.6rem; margin-bottom: 0.75rem; background: var(--bg); }}
+    .card-img {{ width: 100%; aspect-ratio: 2/3; object-fit: cover; border-radius: 0.6rem; margin-bottom: 0.75rem; background: var(--bg); }}
     .card-title {{ font-weight: 700; font-size: 0.95rem; margin-bottom: 0.5rem; }}
     .badges {{ display: flex; flex-wrap: wrap; gap: 0.35rem; margin-bottom: 0.75rem; }}
     .badge {{ font-size: 0.7rem; font-weight: 600; padding: 0.15rem 0.5rem; border-radius: 99px; border: 1px solid; }}
@@ -225,7 +243,9 @@ def build_workspace():
     .pitch-meta {{ font-size: 0.75rem; color: var(--muted); margin-bottom: 0.5rem; }}
     .pitch-idea {{ font-size: 0.8rem; opacity: 0.8; }}
     .art-card {{ background: var(--surface); border: 1px solid #4f46e5; border-radius: 1rem; padding: 1rem; display: flex; gap: 1rem; align-items: flex-start; }}
-    .art-thumb {{ width: 72px; height: 72px; flex-shrink: 0; object-fit: cover; border-radius: 0.5rem; background: var(--bg); }}
+    .art-thumb {{ flex-shrink: 0; object-fit: cover; border-radius: 0.5rem; background: var(--bg); }}
+    .art-thumb-card {{ width: 52px; height: 78px; }}
+    .art-thumb-hero {{ width: 112px; height: 63px; }}
     .art-slug {{ font-weight: 700; font-size: 0.85rem; margin-bottom: 0.25rem; }}
     .art-path {{ font-size: 0.7rem; color: var(--muted); font-family: monospace; margin-bottom: 0.4rem; }}
     .art-prompt {{ font-size: 0.75rem; color: var(--muted); font-style: italic; line-height: 1.4; }}
@@ -245,8 +265,10 @@ def build_workspace():
 
   <h2>Art Prompts</h2>
   <p style="color:#94a3b8;font-size:0.8rem;margin-bottom:1rem">
-    Generate each image with DALL-E 3 using the prompt below, export as .webp (512px, 1:1),
-    and save to the listed path. Cards update automatically on next build.
+    Two images per project: <strong style="color:#e2e8f0">card</strong> (2:3 portrait, 512×768 min) and
+    <strong style="color:#e2e8f0">hero</strong> (16:9 landscape, 1280×720 min).
+    Generate in ChatGPT/DALL-E 3 at the correct ratio, export .webp, drop into the listed path —
+    placeholders swap automatically on next build.
   </p>
   <div class="grid" style="grid-template-columns: repeat(auto-fill, minmax(360px, 1fr))">
     {art_section_html or '<p style="color:#64748b">No art prompts found (add projects/art-prompts.yaml).</p>'}
