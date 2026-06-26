@@ -18,6 +18,7 @@
           letter-spacing: 0.05em; margin-bottom: 1rem; margin-top: 2rem; }
     .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem; }
     .card { background: var(--surface); border: 1px solid var(--border); border-radius: 1rem; padding: 1rem; }
+    .card-img { width: 100%; aspect-ratio: 1/1; object-fit: cover; border-radius: 0.6rem; margin-bottom: 0.75rem; background: var(--bg); }
     .card-title { font-weight: 700; font-size: 0.95rem; margin-bottom: 0.5rem; }
     .badges { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-bottom: 0.75rem; }
     .badge { font-size: 0.7rem; font-weight: 600; padding: 0.15rem 0.5rem; border-radius: 99px; border: 1px solid; }
@@ -32,17 +33,25 @@
     .pitch-title { font-weight: 700; font-size: 0.9rem; margin-bottom: 0.25rem; }
     .pitch-meta { font-size: 0.75rem; color: var(--muted); margin-bottom: 0.5rem; }
     .pitch-idea { font-size: 0.8rem; opacity: 0.8; }
+    .art-card { background: var(--surface); border: 1px solid #4f46e5; border-radius: 1rem; padding: 1rem; display: flex; gap: 1rem; align-items: flex-start; }
+    .art-thumb { width: 72px; height: 72px; flex-shrink: 0; object-fit: cover; border-radius: 0.5rem; background: var(--bg); }
+    .art-slug { font-weight: 700; font-size: 0.85rem; margin-bottom: 0.25rem; }
+    .art-path { font-size: 0.7rem; color: var(--muted); font-family: monospace; margin-bottom: 0.4rem; }
+    .art-prompt { font-size: 0.75rem; color: var(--muted); font-style: italic; line-height: 1.4; }
+    .art-status-done { color: #22c55e; font-size: 0.7rem; font-weight: 600; }
+    .art-status-pending { color: #f59e0b; font-size: 0.7rem; font-weight: 600; }
     footer { margin-top: 2.5rem; font-size: 0.75rem; color: var(--muted); text-align: center; }
   </style>
 </head>
 <body>
   <h1>⚡ Conductor Workspace</h1>
-  <p class="subtitle">Generated 2026-06-25T21:46:57Z · <code>python scripts/build_workspace.py</code></p>
+  <p class="subtitle">Generated 2026-06-26T01:37:16Z · <code>python scripts/build_workspace.py</code></p>
 
   <h2>Projects</h2>
   <div class="grid">
     
     <div class="card">
+      <img class="card-img" src="projects/images/coming-soon.svg" alt="approval-portal" title="Art coming soon — see projects/art-prompts.yaml" />
       <div class="card-title">approval-portal</div>
       <div class="badges"><span class="badge" style="color:#6366f1;border-color:#6366f1">software</span></div>
       <div class="progress-bar"><div class="progress-fill" style="width:0.0%"></div></div>
@@ -70,6 +79,7 @@
         </div>
     </div>
     <div class="card">
+      <img class="card-img" src="projects/images/coming-soon.svg" alt="brainstorm" title="Art coming soon — see projects/art-prompts.yaml" />
       <div class="card-title">brainstorm</div>
       <div class="badges"><span class="badge" style="color:#3b82f6;border-color:#3b82f6">proposal</span></div>
       <div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div>
@@ -81,6 +91,7 @@
         </div>
     </div>
     <div class="card">
+      <img class="card-img" src="projects/images/coming-soon.svg" alt="coat-dance" title="Art coming soon — see projects/art-prompts.yaml" />
       <div class="card-title">coat-dance</div>
       <div class="badges"><span class="badge" style="color:#a855f7;border-color:#a855f7">content</span></div>
       <div class="progress-bar"><div class="progress-fill" style="width:0.0%"></div></div>
@@ -92,6 +103,7 @@
         </div>
     </div>
     <div class="card">
+      <img class="card-img" src="projects/images/coming-soon.svg" alt="digital-storefront" title="Art coming soon — see projects/art-prompts.yaml" />
       <div class="card-title">digital-storefront</div>
       <div class="badges"><span class="badge" style="color:#a855f7;border-color:#a855f7">content</span></div>
       <div class="progress-bar"><div class="progress-fill" style="width:0.0%"></div></div>
@@ -119,6 +131,7 @@
         </div>
     </div>
     <div class="card">
+      <img class="card-img" src="projects/images/coming-soon.svg" alt="humboldt-poop-scoop-cms" title="Art coming soon — see projects/art-prompts.yaml" />
       <div class="card-title">humboldt-poop-scoop-cms</div>
       <div class="badges"><span class="badge" style="color:#6366f1;border-color:#6366f1">software</span></div>
       <div class="progress-bar"><div class="progress-fill" style="width:0.0%"></div></div>
@@ -134,6 +147,7 @@
         </div>
     </div>
     <div class="card">
+      <img class="card-img" src="projects/images/coming-soon.svg" alt="humboldt-scoop" title="Art coming soon — see projects/art-prompts.yaml" />
       <div class="card-title">humboldt-scoop</div>
       <div class="badges"><span class="badge" style="color:#6366f1;border-color:#6366f1">software</span></div>
       <div class="progress-bar"><div class="progress-fill" style="width:5.0%"></div></div>
@@ -149,6 +163,7 @@
         </div>
     </div>
     <div class="card">
+      <img class="card-img" src="projects/images/coming-soon.svg" alt="kind-robots" title="Art coming soon — see projects/art-prompts.yaml" />
       <div class="card-title">kind-robots</div>
       <div class="badges"><span class="badge" style="color:#6366f1;border-color:#6366f1">software</span></div>
       <div class="progress-bar"><div class="progress-fill" style="width:0.0%"></div></div>
@@ -164,6 +179,7 @@
         </div>
     </div>
     <div class="card">
+      <img class="card-img" src="projects/images/coming-soon.svg" alt="mermaids-of-venice" title="Art coming soon — see projects/art-prompts.yaml" />
       <div class="card-title">mermaids-of-venice</div>
       <div class="badges"><span class="badge" style="color:#a855f7;border-color:#a855f7">content</span></div>
       <div class="progress-bar"><div class="progress-fill" style="width:0.0%"></div></div>
@@ -173,6 +189,87 @@
           <span>Draft concept brief for Silas to review</span>
           <span style="color:#ec4899">needs-human</span>
         </div>
+    </div>
+  </div>
+
+  <h2>Art Prompts</h2>
+  <p style="color:#94a3b8;font-size:0.8rem;margin-bottom:1rem">
+    Generate each image with DALL-E 3 using the prompt below, export as .webp (512px, 1:1),
+    and save to the listed path. Cards update automatically on next build.
+  </p>
+  <div class="grid" style="grid-template-columns: repeat(auto-fill, minmax(360px, 1fr))">
+    
+    <div class="art-card">
+      <img class="art-thumb" src="projects/images/coming-soon.svg" alt="approval-portal" />
+      <div>
+        <div class="art-slug">approval-portal <span class="art-status-pending">pending</span></div>
+        <div class="art-path">projects/images/approval-portal.webp</div>
+        <div class="art-prompt">flat minimal icon of a sleek dark dashboard screen with a large glowing green checkmark, clean professional interface feel, no text</div>
+      </div>
+    </div>
+    <div class="art-card">
+      <img class="art-thumb" src="projects/images/coming-soon.svg" alt="brainstorm" />
+      <div>
+        <div class="art-slug">brainstorm <span class="art-status-pending">pending</span></div>
+        <div class="art-path">projects/images/brainstorm.webp</div>
+        <div class="art-prompt">flat minimal icon of a glowing lightbulb with colorful thought bubbles radiating outward, bright warm yellow and purple, no text</div>
+      </div>
+    </div>
+    <div class="art-card">
+      <img class="art-thumb" src="projects/images/coming-soon.svg" alt="coat-dance" />
+      <div>
+        <div class="art-slug">coat-dance <span class="art-status-pending">pending</span></div>
+        <div class="art-path">projects/images/coat-dance.webp</div>
+        <div class="art-prompt">flat minimal illustration of a flowing coat caught mid-spin showing graceful fabric motion, abstract arc lines suggesting dance, navy and cream palette, no text</div>
+      </div>
+    </div>
+    <div class="art-card">
+      <img class="art-thumb" src="projects/images/coming-soon.svg" alt="conductor" />
+      <div>
+        <div class="art-slug">conductor <span class="art-status-pending">pending</span></div>
+        <div class="art-path">projects/images/conductor.webp</div>
+        <div class="art-prompt">flat minimal icon of an orchestral conductor robot directing a glowing network of nodes with circuit-board lines, teal and deep indigo palette, clean vector style, no text</div>
+      </div>
+    </div>
+    <div class="art-card">
+      <img class="art-thumb" src="projects/images/coming-soon.svg" alt="digital-storefront" />
+      <div>
+        <div class="art-slug">digital-storefront <span class="art-status-pending">pending</span></div>
+        <div class="art-path">projects/images/digital-storefront.webp</div>
+        <div class="art-prompt">flat minimal icon of a shopping bag with sparkle stars and small digital product icons floating around it, warm amber and teal, no text</div>
+      </div>
+    </div>
+    <div class="art-card">
+      <img class="art-thumb" src="projects/images/coming-soon.svg" alt="humboldt-poop-scoop-cms" />
+      <div>
+        <div class="art-slug">humboldt-poop-scoop-cms <span class="art-status-pending">pending</span></div>
+        <div class="art-path">projects/images/humboldt-poop-scoop-cms.webp</div>
+        <div class="art-prompt">flat minimal icon of a clipboard with a cheerful cartoon paw print, soft blues and white, playful rounded style, no text</div>
+      </div>
+    </div>
+    <div class="art-card">
+      <img class="art-thumb" src="projects/images/coming-soon.svg" alt="humboldt-scoop" />
+      <div>
+        <div class="art-slug">humboldt-scoop <span class="art-status-pending">pending</span></div>
+        <div class="art-path">projects/images/humboldt-scoop.webp</div>
+        <div class="art-prompt">flat minimal illustration of a vintage news camera in front of giant redwood trees, earthy greens and warm amber, no text</div>
+      </div>
+    </div>
+    <div class="art-card">
+      <img class="art-thumb" src="projects/images/coming-soon.svg" alt="kind-robots" />
+      <div>
+        <div class="art-slug">kind-robots <span class="art-status-pending">pending</span></div>
+        <div class="art-path">projects/images/kind-robots.webp</div>
+        <div class="art-prompt">flat minimal icon of a friendly smiling purple robot giving a thumbs up, warm purple and mint green tones, rounded shapes, no text</div>
+      </div>
+    </div>
+    <div class="art-card">
+      <img class="art-thumb" src="projects/images/coming-soon.svg" alt="mermaids-of-venice" />
+      <div>
+        <div class="art-slug">mermaids-of-venice <span class="art-status-pending">pending</span></div>
+        <div class="art-path">projects/images/mermaids-of-venice.webp</div>
+        <div class="art-prompt">flat minimal illustration of a mermaid silhouette in a Venice canal at golden hour with gondola shadows, deep blues teals and warm gold, no text</div>
+      </div>
     </div>
   </div>
 
@@ -201,6 +298,6 @@ protecting against the Pro-ti</div>
     </div>
   </div>
 
-  <footer>Conductor · 2026-06-25T21:46:57Z</footer>
+  <footer>Conductor · 2026-06-26T01:37:16Z</footer>
 </body>
 </html>

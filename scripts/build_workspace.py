@@ -15,6 +15,9 @@ REPO_ROOT = Path(__file__).parent.parent
 PROJECTS_DIR = REPO_ROOT / "projects"
 PITCHES_DIR = REPO_ROOT / "pitches"
 WORKSPACE_FILE = REPO_ROOT / "workspace.html"
+ART_PROMPTS_FILE = REPO_ROOT / "projects" / "art-prompts.yaml"
+IMAGES_DIR = REPO_ROOT / "projects" / "images"
+PLACEHOLDER_IMAGE = "projects/images/coming-soon.svg"
 
 STATUS_COLORS = {
     "ready": "#3b82f6",
@@ -33,6 +36,27 @@ KIND_COLORS = {
     "content": "#a855f7",
     "proposal": "#3b82f6",
 }
+
+
+def load_art_prompts():
+    if not ART_PROMPTS_FILE.exists():
+        return {}
+    with open(ART_PROMPTS_FILE) as f:
+        data = yaml.safe_load(f) or {}
+    return {entry["project"]: entry for entry in data.get("images", [])}
+
+
+def resolve_card_image(slug, art_prompts):
+    entry = art_prompts.get(slug, {})
+    if entry:
+        image_path = REPO_ROOT / entry["image_path"]
+        if image_path.exists():
+            return entry["image_path"], "done"
+    for ext in (".webp", ".png", ".jpg", ".jpeg", ".svg"):
+        candidate = IMAGES_DIR / f"{slug}{ext}"
+        if candidate.exists():
+            return f"projects/images/{slug}{ext}", "done"
+    return PLACEHOLDER_IMAGE, "pending"
 
 
 def compute_progress(milestones):
@@ -56,12 +80,16 @@ def kind_badge(kind):
     return f'<span class="badge" style="color:{color};border-color:{color}">{kind}</span>'
 
 
-def render_project_card(slug, roadmap):
+def render_project_card(slug, roadmap, art_prompts):
     kind = roadmap.get("kind", "software")
     milestones = roadmap.get("milestones") or []
     tasks = roadmap.get("tasks") or []
     progress = compute_progress(milestones)
     name = roadmap.get("project", slug)
+
+    img_src, img_status = resolve_card_image(slug, art_prompts)
+    img_title = "Art coming soon — see projects/art-prompts.yaml" if img_status == "pending" else f"{name} card image"
+    img_html = f'<img class="card-img" src="{img_src}" alt="{name}" title="{img_title}" />'
 
     task_rows = ""
     for t in tasks[:6]:
@@ -79,12 +107,41 @@ def render_project_card(slug, roadmap):
 
     return f"""
     <div class="card">
+      {img_html}
       <div class="card-title">{name}</div>
       <div class="badges">{kind_badge(kind)}</div>
       <div class="progress-bar"><div class="progress-fill" style="width:{progress}%"></div></div>
       <div class="progress-label">{progress}% complete · {len(milestones)} milestones · {len(tasks)} tasks</div>
       {task_rows}
     </div>"""
+
+
+def render_art_prompts_section(art_prompts):
+    if not art_prompts:
+        return ""
+    entries = sorted(art_prompts.values(), key=lambda e: (e.get("status", "pending") == "done", e["project"]))
+    rows = ""
+    for entry in entries:
+        slug = entry["project"]
+        image_path = entry.get("image_path", f"projects/images/{slug}.webp")
+        actual = REPO_ROOT / image_path
+        if actual.exists():
+            thumb_src = image_path
+            status_html = '<span class="art-status-done">done</span>'
+        else:
+            thumb_src = PLACEHOLDER_IMAGE
+            status_html = '<span class="art-status-pending">pending</span>'
+        prompt_text = (entry.get("prompt") or "").strip().replace("\n", " ")
+        rows += f"""
+    <div class="art-card">
+      <img class="art-thumb" src="{thumb_src}" alt="{slug}" />
+      <div>
+        <div class="art-slug">{slug} {status_html}</div>
+        <div class="art-path">{image_path}</div>
+        <div class="art-prompt">{prompt_text}</div>
+      </div>
+    </div>"""
+    return rows
 
 
 def render_pitch_card(filename, text):
@@ -109,6 +166,7 @@ def build_workspace():
     now = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
     project_cards_html = ""
     pitch_cards_html = ""
+    art_prompts = load_art_prompts()
 
     for project_dir in sorted((REPO_ROOT / "projects").iterdir()):
         if not project_dir.is_dir() or project_dir.name.startswith("_"):
@@ -118,7 +176,9 @@ def build_workspace():
             continue
         with open(roadmap_path) as f:
             roadmap = yaml.safe_load(f)
-        project_cards_html += render_project_card(project_dir.name, roadmap or {})
+        project_cards_html += render_project_card(project_dir.name, roadmap or {}, art_prompts)
+
+    art_section_html = render_art_prompts_section(art_prompts)
 
     for pitch_file in sorted(PITCHES_DIR.glob("*.md")):
         if pitch_file.name == "README.md":
@@ -149,6 +209,7 @@ def build_workspace():
           letter-spacing: 0.05em; margin-bottom: 1rem; margin-top: 2rem; }}
     .grid {{ display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem; }}
     .card {{ background: var(--surface); border: 1px solid var(--border); border-radius: 1rem; padding: 1rem; }}
+    .card-img {{ width: 100%; aspect-ratio: 1/1; object-fit: cover; border-radius: 0.6rem; margin-bottom: 0.75rem; background: var(--bg); }}
     .card-title {{ font-weight: 700; font-size: 0.95rem; margin-bottom: 0.5rem; }}
     .badges {{ display: flex; flex-wrap: wrap; gap: 0.35rem; margin-bottom: 0.75rem; }}
     .badge {{ font-size: 0.7rem; font-weight: 600; padding: 0.15rem 0.5rem; border-radius: 99px; border: 1px solid; }}
@@ -163,6 +224,13 @@ def build_workspace():
     .pitch-title {{ font-weight: 700; font-size: 0.9rem; margin-bottom: 0.25rem; }}
     .pitch-meta {{ font-size: 0.75rem; color: var(--muted); margin-bottom: 0.5rem; }}
     .pitch-idea {{ font-size: 0.8rem; opacity: 0.8; }}
+    .art-card {{ background: var(--surface); border: 1px solid #4f46e5; border-radius: 1rem; padding: 1rem; display: flex; gap: 1rem; align-items: flex-start; }}
+    .art-thumb {{ width: 72px; height: 72px; flex-shrink: 0; object-fit: cover; border-radius: 0.5rem; background: var(--bg); }}
+    .art-slug {{ font-weight: 700; font-size: 0.85rem; margin-bottom: 0.25rem; }}
+    .art-path {{ font-size: 0.7rem; color: var(--muted); font-family: monospace; margin-bottom: 0.4rem; }}
+    .art-prompt {{ font-size: 0.75rem; color: var(--muted); font-style: italic; line-height: 1.4; }}
+    .art-status-done {{ color: #22c55e; font-size: 0.7rem; font-weight: 600; }}
+    .art-status-pending {{ color: #f59e0b; font-size: 0.7rem; font-weight: 600; }}
     footer {{ margin-top: 2.5rem; font-size: 0.75rem; color: var(--muted); text-align: center; }}
   </style>
 </head>
@@ -173,6 +241,15 @@ def build_workspace():
   <h2>Projects</h2>
   <div class="grid">
     {project_cards_html}
+  </div>
+
+  <h2>Art Prompts</h2>
+  <p style="color:#94a3b8;font-size:0.8rem;margin-bottom:1rem">
+    Generate each image with DALL-E 3 using the prompt below, export as .webp (512px, 1:1),
+    and save to the listed path. Cards update automatically on next build.
+  </p>
+  <div class="grid" style="grid-template-columns: repeat(auto-fill, minmax(360px, 1fr))">
+    {art_section_html or '<p style="color:#64748b">No art prompts found (add projects/art-prompts.yaml).</p>'}
   </div>
 
   <h2>Pitches Awaiting Vote</h2>
