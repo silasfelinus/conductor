@@ -1,0 +1,1 @@
+(function(a){document.addEventListener("wpcf7mailsent",function(d){var b=d.detail.contactFormId;var c=d.detail.apiResponse.redirection_url;if(c!=""&&c!=undefined){window.location=c}});jQuery(document).ready(function(){jQuery(".wpcf7 form.wpcf7-form.cf7sa").off("submit")})})(jQuery);

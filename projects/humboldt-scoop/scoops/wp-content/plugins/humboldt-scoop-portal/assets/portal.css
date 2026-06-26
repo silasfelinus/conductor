@@ -1,0 +1,108 @@
+/* Humboldt Scoop Solutions — customer portal
+   Reuses the theme's CSS variables; provides safe fallbacks if the
+   plugin is used with another theme. */
+:root {
+	--redwood: var(--redwood, #8a3b2c);
+}
+.hss-portal {
+	--rw: #8a3b2c; --rw-dark: #6b2c20; --oc: #14617a; --oc-dark: #0e4a5d;
+	--sf: #6fbfa6; --line: #e4ddd4; --ink: #2a2320; --muted: #5d534d;
+	--paper: #fbf9f5; --white: #fff;
+	max-width: 960px; margin: 0 auto; padding: 1rem 0 3rem;
+}
+.hss-portal * { box-sizing: border-box; }
+
+.hss-portal .hss-muted { color: var(--muted); margin: .25rem 0; }
+.hss-portal-notice { padding: .9rem 1.1rem; border-radius: 10px; margin-bottom: 1.4rem; font-weight: 600; }
+.hss-portal .hss-ok   { background: #e7f3ee; color: #1d6b52; border: 1px solid #b9e0d0; }
+.hss-portal .hss-warn { background: #fdf3e7; color: #8a5a1c; border: 1px solid #f0d8b4; }
+.hss-portal .hss-err  { background: #fbeae7; color: #8a3b2c; border: 1px solid #eec4bb; }
+.hss-portal-intent { text-align: center; color: var(--muted); margin-bottom: 1rem; }
+
+/* Buttons (fallbacks; theme buttons override where present) */
+.hss-portal .hss-btn { display: inline-block; font-weight: 700; padding: .7rem 1.3rem; border-radius: 999px; border: 2px solid transparent; cursor: pointer; text-decoration: none; font-size: 1rem; }
+.hss-portal .hss-btn[disabled] { opacity: .6; cursor: default; }
+.hss-portal .hss-btn-primary { background: var(--rw); color: #fff; }
+.hss-portal .hss-btn-primary:hover { background: var(--rw-dark); }
+.hss-portal .hss-btn-secondary { background: var(--oc); color: #fff; }
+.hss-portal .hss-btn-secondary:hover { background: var(--oc-dark); }
+.hss-portal .hss-btn-ghost { background: transparent; color: var(--rw); border-color: #b9684f; }
+
+/* ── Auth ─────────────────────────────────────────────── */
+.hss-auth { max-width: 440px; margin: 1rem auto; background: var(--white); border: 1px solid var(--line); border-radius: 14px; box-shadow: 0 6px 20px rgba(42,35,32,.10); overflow: hidden; }
+.hss-auth-tabs { display: flex; }
+.hss-tab { flex: 1; padding: 1rem; background: var(--paper); border: 0; border-bottom: 2px solid transparent; font-weight: 700; cursor: pointer; color: var(--muted); font-size: 1rem; }
+.hss-tab.is-active { color: var(--rw-dark); border-bottom-color: var(--rw); background: var(--white); }
+.hss-auth-panel { padding: 1.6rem; display: flex; flex-direction: column; gap: .9rem; }
+.hss-auth-panel.is-hidden { display: none; }
+.hss-auth-panel label { display: flex; flex-direction: column; gap: .3rem; font-weight: 700; font-size: .88rem; }
+.hss-auth-panel input { font: inherit; padding: .7rem .8rem; border: 1px solid var(--line); border-radius: 9px; }
+.hss-auth-panel input:focus { outline: 2px solid var(--sf); border-color: var(--sf); }
+.hss-auth-row { display: grid; grid-template-columns: 1fr 1fr; gap: .9rem; }
+.hss-checkbox { flex-direction: row !important; align-items: center; gap: .5rem !important; font-weight: 600 !important; }
+.hss-checkbox input { width: auto; }
+.hss-auth-forgot { text-align: center; font-size: .88rem; color: var(--oc); }
+
+/* ── Dashboard ────────────────────────────────────────── */
+.hss-dash-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; margin-bottom: 1.6rem; }
+.hss-dash-head h2 { margin: 0; color: var(--rw-dark); }
+.hss-dash-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.4rem; margin-bottom: 1.4rem; }
+.hss-card { background: var(--white); border: 1px solid var(--line); border-radius: 14px; padding: 1.6rem; box-shadow: 0 1px 3px rgba(42,35,32,.08); }
+.hss-dash-card h3 { margin: 0 0 .8rem; color: var(--oc-dark); }
+.hss-plan-current { font-size: 1.3rem; font-weight: 800; color: var(--rw-dark); margin: 0; }
+.hss-plan-rate { font-size: 1.05rem; font-weight: 700; color: var(--oc-dark); margin: .2rem 0 .6rem; }
+
+.hss-pill { display: inline-block; padding: .2rem .7rem; border-radius: 999px; font-size: .78rem; font-weight: 700; text-transform: capitalize; }
+.hss-pill-active, .hss-pill-paid, .hss-pill-trialing { background: #e7f3ee; color: #1d6b52; }
+.hss-pill-past_due, .hss-pill-open, .hss-pill-unpaid { background: #fdf3e7; color: #8a5a1c; }
+.hss-pill-canceled, .hss-pill-void, .hss-pill-uncollectible { background: #f1efec; color: #6d635c; }
+.hss-pill-completed { background: #e7f3ee; color: #1d6b52; }
+.hss-pill-scheduled { background: #eef4f2; color: #0e4a5d; }
+.hss-pill-enroute   { background: #fdf3e7; color: #8a5a1c; }
+.hss-pill-skipped   { background: #f1efec; color: #6d635c; }
+.hss-pill-new      { background: #fdf3e7; color: #8a5a1c; }
+.hss-pill-approved { background: #e7f3ee; color: #1d6b52; }
+.hss-pill-declined { background: #fbeae7; color: #8a3b2c; }
+
+/* ── Change requests ──────────────────────────────────── */
+.hss-cr-form { display: flex; flex-direction: column; gap: .9rem; margin-top: .6rem; }
+.hss-cr-form label { display: flex; flex-direction: column; gap: .3rem; font-weight: 700; font-size: .88rem; }
+.hss-cr-form select, .hss-cr-form textarea { font: inherit; padding: .6rem .7rem; border: 1px solid var(--line); border-radius: 9px; }
+.hss-cr-form .hss-muted { font-weight: 400; }
+.hss-cr-form .hss-btn { align-self: flex-start; }
+.hss-cr-pending { background: var(--paper); border: 1px solid var(--line); border-left: 4px solid #8a5a1c; border-radius: 10px; padding: .9rem 1.1rem; }
+.hss-cr-pending .hss-muted { margin: .5rem 0 0; }
+.hss-cr-history { margin-top: 1rem; }
+
+/* ── Visits ───────────────────────────────────────────── */
+.hss-visit-next { background: var(--paper); border: 1px solid var(--line); border-left: 4px solid var(--sf); border-radius: 10px; padding: .9rem 1.1rem; margin-bottom: 1rem; }
+.hss-visit-label { display: block; font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); margin-bottom: .15rem; }
+.hss-visit-when { font-size: 1.15rem; font-weight: 800; color: var(--rw-dark); margin-right: .5rem; }
+.hss-visit-next .hss-muted { margin: .5rem 0 0; }
+.hss-visit-history { margin-top: .4rem; }
+
+.hss-confirm { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap;
+	background: linear-gradient(150deg, #14617a, #0e4a5d); color: #fff; padding: 1.4rem 1.6rem; border-radius: 14px; margin-bottom: 1.6rem; }
+.hss-confirm h3 { color: #fff; margin: 0 0 .2rem; }
+.hss-confirm .hss-muted { color: rgba(255,255,255,.85); }
+.hss-confirm .hss-btn-primary { background: #fff; color: var(--oc-dark); }
+
+.hss-service-details form { display: flex; flex-direction: column; gap: .9rem; margin-top: .5rem; }
+.hss-service-details label { display: flex; flex-direction: column; gap: .3rem; font-weight: 700; font-size: .88rem; }
+.hss-service-details input, .hss-service-details select, .hss-service-details textarea {
+	font: inherit; padding: .6rem .7rem; border: 1px solid var(--line); border-radius: 9px; }
+.hss-sms-optin { font-weight: 600 !important; font-size: .9rem; color: var(--muted); }
+.hss-sms-optin input { width: auto; padding: 0; }
+
+.hss-invoice-table { width: 100%; border-collapse: collapse; font-size: .92rem; }
+.hss-invoice-table th, .hss-invoice-table td { text-align: left; padding: .6rem .5rem; border-bottom: 1px solid var(--line); }
+.hss-invoice-table th { color: var(--muted); font-size: .78rem; text-transform: uppercase; letter-spacing: .05em; }
+
+.hss-form-status { font-weight: 600; margin-left: .6rem; }
+.hss-form-status.ok { color: #1d6b52; }
+.hss-form-status.err { color: #8a3b2c; }
+
+@media (max-width: 700px) {
+	.hss-dash-grid, .hss-auth-row { grid-template-columns: 1fr; }
+	.hss-dash-head { flex-direction: column; }
+}
