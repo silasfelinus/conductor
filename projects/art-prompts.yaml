@@ -1,23 +1,25 @@
-# art-prompts.yaml — Image queue for Conductor project assets
+# art-prompts.yaml — Image queue for Conductor project assets and Kind Robots missing-image requests
 #
-# Three images per project:
+# Project assets use `images:` and are pruned automatically when matching files
+# exist in this repo's projects/images/ folder.
+#
+# Site-wide missing-image reports use `requests:`. Kind Robots writes those
+# requests here when an admin sees a missing image. Requests should be removed
+# once the image has been generated and committed to the target repo.
+#
+# Project image variants:
 #   icon  — square 1:1 (256×256 min). Used in nav, sidebar, card headers, favicons.
 #   card  — portrait 2:3 (512×768 min). Shown on the workspace project card.
 #   hero  — landscape 16:9 (1280×720 min). Shown as a banner/header in project view.
 #
-# This file is a generation queue. It should only list files that still need to
-# be generated. `python scripts/build_workspace.py` prunes entries automatically
-# when the matching image exists in projects/images/.
-#
 # Workflow:
 #   1. Copy the prompt into ChatGPT (image generation) or call the OpenAI Images API (model: gpt-image-1).
 #   2. Set the correct aspect ratio in the generation UI (1:1 / 2:3 / 16:9).
-#   3. Export as .webp at the minimum size listed above.
-#   4. Save to the image_path listed below (relative to repo root).
-#      OR — easier — run `python scripts/serve_workspace.py`, open
-#      http://localhost:8000, and click any placeholder image to upload directly.
-#   5. The workspace rebuilds and removes completed entries automatically.
+#   3. Export as .webp at the minimum size listed.
+#   4. Save to the image_path listed below.
+#   5. Run `python scripts/build_workspace.py` to refresh the workspace.
 #
 # Status values: pending
 
 images: []
+requests: []
