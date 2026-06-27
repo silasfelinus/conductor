@@ -59,7 +59,7 @@
 </head>
 <body>
   <h1>⚡ Conductor Workspace</h1>
-  <p class="subtitle">Generated 2026-06-26T18:23:01Z · <code>python scripts/build_workspace.py</code></p>
+  <p class="subtitle">Generated 2026-06-27T01:55:36Z · <code>python scripts/build_workspace.py</code></p>
   <p id="upload-hint">To replace images, run <code>python scripts/serve_workspace.py</code> and open http://localhost:8000/ — then click any image to upload.</p>
 
   <h2>Projects</h2>
@@ -511,9 +511,48 @@ protecting against the Pro-ti</div>
       <div class="pitch-meta">2026-06-26 · target: humboldt-poop-scoop-cms</div>
       <div class="pitch-idea">Create a lightweight printable and digital "route card" system for recurring poop-scoop visits: one card per service day with customer, neighborhood, pets, yard notes, gate details placeholder, and vi</div>
     </div>
+    <div class="pitch-card">
+      <div class="pitch-title">Alexa Integration — voice commands to Conductor via Unraid</div>
+      <div class="pitch-meta">2026-06-27 · target: conductor</div>
+      <div class="pitch-idea">A custom Alexa skill with a unique wake phrase routes voice commands through
+a lightweight relay service running on Unraid. Commands fan out to:
+- Conductor task creation / status queries
+- kind_robot</div>
+    </div>
+    <div class="pitch-card">
+      <div class="pitch-title">Art Generator Connect — conductor-driven image generation</div>
+      <div class="pitch-meta">2026-06-27 · target: kind-robots</div>
+      <div class="pitch-idea">Wire conductor Worker cycles into the existing SD / ComfyUI automated pipelines
+already running in kind_robots. Workers can request image generation (character
+art, scene headers, coloring-book pages,</div>
+    </div>
+    <div class="pitch-card">
+      <div class="pitch-title">Conductor App — native mobile/desktop client</div>
+      <div class="pitch-meta">2026-06-27 · target: conductor</div>
+      <div class="pitch-idea">A native app (Flutter recommended for write-once cross-platform) that gives
+Silas a polished UI for the Conductor system:
+- Login via kind_robots auth (JWT / session token)
+- Dashboard: active project</div>
+    </div>
+    <div class="pitch-card">
+      <div class="pitch-title">Media Watchlist — 10+ years of consumption data, made useful</div>
+      <div class="pitch-meta">2026-06-27 · target: kind-robots</div>
+      <div class="pitch-idea">Silas has kept a running text log of every book, game, movie, TV series, comic,
+and podcast consumed since ~2014 (one or two years missing). Parse and import
+this into a structured DB, then surface it</div>
+    </div>
+    <div class="pitch-card">
+      <div class="pitch-title">Storymaker — collaborative storytelling phase 3</div>
+      <div class="pitch-meta">2026-06-27 · target: kind-robots</div>
+      <div class="pitch-idea">Phase 3 of Kind Robots: a full collaborative storytelling engine built on top
+of Bots, Characters, Dreams, Rewards, Scenarios, and Chats already in the DB.
+
+Two play modes:
+- **Exquisite Corpse** — pl</div>
+    </div>
   </div>
 
-  <footer>Conductor · 2026-06-26T18:23:01Z</footer>
+  <footer>Conductor · 2026-06-27T01:55:36Z</footer>
   
 <script>
 (function () {

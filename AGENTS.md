@@ -13,7 +13,7 @@ and stays out of routine cycles.
 
 Each project lives in `projects/<name>/` with its own `roadmap.yaml`.
 
-## Project kinds — this changes what “done” means
+## Project kinds — this changes what "done" means
 
 Every roadmap declares a `kind`. It tells the Reviewer how to handle finished work:
 
@@ -30,16 +30,40 @@ Every roadmap declares a `kind`. It tells the Reviewer how to handle finished wo
 When unsure which bucket applies, treat it as the more cautious one (proposal > content >
 software) and escalate.
 
+## Todos — Silas's priority overrides
+
+Silas creates Todos in the kind_robots workspace as lightweight, one-off tasks for agents
+to handle. They are not tied to a project roadmap and archive themselves when done. Todos
+take priority over roadmap tasks — if any are OPEN, handle the top one first.
+
+**At the start of every Worker cycle:**
+1. Run `python scripts/fetch_todos.py` (requires `KR_API_TOKEN` env var).
+2. If it outputs any OPEN todos, handle **the first one** (sorted HIGH→NORMAL→LOW,
+   newest first within the same priority) before touching any roadmap.
+3. Treat the todo's `title` as the task description. The `description` field may name
+   a specific project or provide context — follow it.
+4. Apply normal project-kind rules: if the todo implies code work, open a PR;
+   if it implies a draft/content, write the file; if it's a pitch, write to `pitches/`.
+5. When the work is done (PR opened, file written, etc.), run:
+   `python scripts/complete_todo.py <todo_id>`
+   to mark it DONE in kind_robots. Silas will archive it when he's satisfied.
+6. If `KR_API_TOKEN` is missing, log the warning and proceed to roadmap tasks normally.
+
+**Todos are one-offs:** do not create follow-on roadmap tasks from a todo unless the
+todo explicitly asks for it. Scope is exactly what the title/description says.
+
 ## Picking what to work on
-1. **Read `CONTROL.md` first** — its global overview, then the block for the project you'll
+1. **Check Todos first** — run `scripts/fetch_todos.py` and handle the top OPEN todo
+   before continuing to roadmap tasks (see "Todos" section above).
+2. **Read `CONTROL.md` first** — its global overview, then the block for the project you'll
    work on. CONTROL.md holds Silas's current intent and OVERRIDES anything in a roadmap it
    conflicts with. Then read this file, `projects/priority.yaml`, and the relevant
    `projects/*/roadmap.yaml` (skip `_template`).
-2. **Check `project-overrides.yaml`** — skip any project where `status != active`. Paused,
+3. **Check `project-overrides.yaml`** — skip any project where `status != active`. Paused,
    retired, and finished projects are off-limits; do not claim tasks for them.
-3. Honor CONTROL.md's direction and notes, then each project's `notes_from_silas`, over
+4. Honor CONTROL.md's direction and notes, then each project's `notes_from_silas`, over
    default ordering. (STATUS.md is auto-generated and read-only — never edit it.)
-4. Within the chosen project, take the highest-priority task with `status: ready`.
+5. Within the chosen project, take the highest-priority task with `status: ready`.
    If none anywhere, stop — do not invent work. (Exception: a proposal-kind project may
    have a standing instruction to generate N pitches per cycle — follow its roadmap.)
 
@@ -60,8 +84,11 @@ resolver treats a gated task as still blocking until `approved_by_human: true`.
 ## The two roles
 
 ### Worker (OpenAI, hourly)
-- Atomically claim: set `status: claimed`, `owner: worker`, bump `updated`, commit that
-  one change to `main` with message `claim: <project>/<task-id>`.
+- **Step 0 — Todos**: run `python scripts/fetch_todos.py`. Handle the top OPEN todo if
+  any exist (see "Todos" section). Call `complete_todo.py <id>` when done.
+- **Step 1 — Resolve deps**: run `python scripts/resolve_deps.py`.
+- **Step 2 — Claim**: atomically set `status: claimed`, `owner: worker`, bump `updated`,
+  commit that one change to `main` with message `claim: <project>/<task-id>`.
 - Branch `worker/<project>-<task-id>`. Do ONLY that task.
 - **software:** open a PR into `main`, fill the handoff template, set task `status: review`.
 - **content:** write the draft file, open a PR, set `status: needs-human`.
