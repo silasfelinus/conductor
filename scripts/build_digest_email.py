@@ -29,10 +29,15 @@ def build_payload(digest):
 
     open_branches = digest.get("open_branches", [])
     digest_date = html.escape(str(digest["date"]))
+    greeting = html.escape(str(digest.get("greeting", "Hello, Silas!")))
+    activity_since = [html.escape(s) for s in digest.get("activity_since", [])]
+    autonomous = [html.escape(s) for s in digest.get("autonomous_work", [])]
     html_content = f"""
+    <p style="font-size:1.15em;color:#444;margin-bottom:4px">{greeting}</p>
     <h2>AI_Networker — Daily Digest ({digest_date})</h2>
     <h3>🗳️ Awaiting your vote (pitches)</h3>{ul(digest['pitches_awaiting_vote'] or ['(no pitches waiting)'])}
-    <h3>Merged in last 24h</h3>{ul(digest['merges_since'] or ['(nothing merged)'])}
+    <h3>📋 Activity in last 24h</h3>{ul(activity_since or ['(nothing recorded — most work may have landed earlier)'])}
+    <h3>🤖 What your agents did autonomously</h3>{ul(autonomous or ['(no autonomous activity in this window)'])}
     <h3>Needs your attention</h3>{ul(digest['all_needs_attention'] or ['(all clear)'])}
     <h3>🌿 Open branches</h3>{ul(open_branches or ['(none — all merged)'])}
     <hr>{project_html}
