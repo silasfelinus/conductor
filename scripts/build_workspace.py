@@ -17,6 +17,33 @@ WORKSPACE_FILE = REPO_ROOT / "workspace.html"
 ART_PROMPTS_FILE = REPO_ROOT / "projects" / "art-prompts.yaml"
 IMAGES_DIR = REPO_ROOT / "projects" / "images"
 
+ART_VARIANTS = ("icon", "card", "hero")
+ALLOWED_IMAGE_EXTS = (".webp", ".png", ".jpg", ".jpeg")
+
+ART_PROMPTS_HEADER = """# art-prompts.yaml — Image queue for Conductor project assets
+#
+# Three images per project:
+#   icon  — square 1:1 (256×256 min). Used in nav, sidebar, card headers, favicons.
+#   card  — portrait 2:3 (512×768 min). Shown on the workspace project card.
+#   hero  — landscape 16:9 (1280×720 min). Shown as a banner/header in project view.
+#
+# This file is a generation queue. It should only list files that still need to
+# be generated. `python scripts/build_workspace.py` prunes entries automatically
+# when the matching image exists in projects/images/.
+#
+# Workflow:
+#   1. Copy the prompt into ChatGPT (image generation) or call the OpenAI Images API (model: gpt-image-1).
+#   2. Set the correct aspect ratio in the generation UI (1:1 / 2:3 / 16:9).
+#   3. Export as .webp at the minimum size listed above.
+#   4. Save to the image_path listed below (relative to repo root).
+#      OR — easier — run `python scripts/serve_workspace.py`, open
+#      http://localhost:8000, and click any placeholder image to upload directly.
+#   5. The workspace rebuilds and removes completed entries automatically.
+#
+# Status values: pending
+
+"""
+
 PLACEHOLDER = {
     "icon": "projects/images/coming-soon-icon.svg",
     "card": "projects/images/coming-soon-card.svg",
@@ -105,12 +132,79 @@ UPLOAD_JS = """
 """
 
 
+def default_image_path(slug, variant):
+    return f"projects/images/{slug}-{variant}.webp"
+
+
+def image_exists(slug, variant, sub):
+    image_path = sub.get("image_path") or default_image_path(slug, variant)
+    if (REPO_ROOT / image_path).exists():
+        return True
+
+    for ext in ALLOWED_IMAGE_EXTS:
+        candidate = IMAGES_DIR / f"{slug}-{variant}{ext}"
+        if candidate.exists():
+            return True
+
+    return False
+
+
+def normalize_pending_variant(slug, variant, sub):
+    normalized = dict(sub)
+    normalized["image_path"] = normalized.get("image_path") or default_image_path(slug, variant)
+    normalized["status"] = "pending"
+    return normalized
+
+
+def pending_art_prompt_entries(data):
+    pending = []
+
+    for entry in data.get("images") or []:
+        if not isinstance(entry, dict):
+            continue
+
+        slug = entry.get("project")
+        if not slug:
+            continue
+
+        pending_entry = {"project": slug}
+
+        for variant in ART_VARIANTS:
+            sub = entry.get(variant)
+            if not isinstance(sub, dict):
+                continue
+
+            if not image_exists(slug, variant, sub):
+                pending_entry[variant] = normalize_pending_variant(slug, variant, sub)
+
+        if len(pending_entry) > 1:
+            pending.append(pending_entry)
+
+    return pending
+
+
+def write_art_prompts(entries):
+    if entries:
+        body = yaml.safe_dump({"images": entries}, sort_keys=False, allow_unicode=True, width=88)
+    else:
+        body = "images: []\n"
+
+    ART_PROMPTS_FILE.write_text(ART_PROMPTS_HEADER + body)
+
+
 def load_art_prompts():
     if not ART_PROMPTS_FILE.exists():
         return {}
+
     with open(ART_PROMPTS_FILE) as f:
         data = yaml.safe_load(f) or {}
-    return {entry["project"]: entry for entry in data.get("images", [])}
+
+    pending_entries = pending_art_prompt_entries(data)
+
+    if (data.get("images") or []) != pending_entries:
+        write_art_prompts(pending_entries)
+
+    return {entry["project"]: entry for entry in pending_entries}
 
 
 def resolve_image(slug, variant, entry):
@@ -119,7 +213,7 @@ def resolve_image(slug, variant, entry):
         path = REPO_ROOT / sub["image_path"]
         if path.exists():
             return sub["image_path"], True
-    for ext in (".webp", ".png", ".jpg", ".jpeg"):
+    for ext in ALLOWED_IMAGE_EXTS:
         candidate = IMAGES_DIR / f"{slug}-{variant}{ext}"
         if candidate.exists():
             return f"projects/images/{slug}-{variant}{ext}", True
@@ -218,7 +312,7 @@ def render_art_prompts_section(art_prompts):
     rows = ""
     for entry in sorted(art_prompts.values(), key=lambda e: e["project"]):
         slug = entry["project"]
-        for variant in ("icon", "card", "hero"):
+        for variant in ART_VARIANTS:
             if variant in entry:
                 rows += render_art_row(slug, variant, entry[variant], variant)
     return rows
@@ -348,7 +442,7 @@ def build_workspace():
     — or click any placeholder while running <code style="color:#a5b4fc">serve_workspace.py</code>.
   </p>
   <div class="grid" style="grid-template-columns: repeat(auto-fill, minmax(380px, 1fr))">
-    {art_section_html or '<p style="color:#64748b">No art prompts found.</p>'}
+    {art_section_html or '<p style="color:#64748b">No art prompts pending.</p>'}
   </div>
 
   <h2>Pitches Awaiting Vote</h2>
