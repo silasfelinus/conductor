@@ -17,6 +17,34 @@ WORKSPACE_FILE = REPO_ROOT / "workspace.html"
 ART_PROMPTS_FILE = REPO_ROOT / "projects" / "art-prompts.yaml"
 IMAGES_DIR = REPO_ROOT / "projects" / "images"
 
+ART_VARIANTS = ("icon", "card", "hero")
+ALLOWED_IMAGE_EXTS = (".webp", ".png", ".jpg", ".jpeg")
+
+ART_PROMPTS_HEADER = """# art-prompts.yaml — Image queue for Conductor project assets and Kind Robots missing-image requests
+#
+# Project assets use `images:` and are pruned automatically when matching files
+# exist in this repo's projects/images/ folder.
+#
+# Site-wide missing-image reports use `requests:`. Kind Robots writes those
+# requests here when an admin sees a missing image. Requests should be removed
+# once the image has been generated and committed to the target repo.
+#
+# Project image variants:
+#   icon  — square 1:1 (256×256 min). Used in nav, sidebar, card headers, favicons.
+#   card  — portrait 2:3 (512×768 min). Shown on the workspace project card.
+#   hero  — landscape 16:9 (1280×720 min). Shown as a banner/header in project view.
+#
+# Workflow:
+#   1. Copy the prompt into ChatGPT (image generation) or call the OpenAI Images API (model: gpt-image-1).
+#   2. Set the correct aspect ratio in the generation UI (1:1 / 2:3 / 16:9).
+#   3. Export as .webp at the minimum size listed.
+#   4. Save to the image_path listed below.
+#   5. Run `python scripts/build_workspace.py` to refresh the workspace.
+#
+# Status values: pending
+
+"""
+
 PLACEHOLDER = {
     "icon": "projects/images/coming-soon-icon.svg",
     "card": "projects/images/coming-soon-card.svg",
@@ -105,12 +133,132 @@ UPLOAD_JS = """
 """
 
 
+def default_image_path(slug, variant):
+    return f"projects/images/{slug}-{variant}.webp"
+
+
+def image_exists(slug, variant, sub):
+    image_path = sub.get("image_path") or default_image_path(slug, variant)
+    if (REPO_ROOT / image_path).exists():
+        return True
+
+    for ext in ALLOWED_IMAGE_EXTS:
+        candidate = IMAGES_DIR / f"{slug}-{variant}{ext}"
+        if candidate.exists():
+            return True
+
+    return False
+
+
+def normalize_pending_variant(slug, variant, sub):
+    normalized = dict(sub)
+    normalized["image_path"] = normalized.get("image_path") or default_image_path(slug, variant)
+    normalized["status"] = "pending"
+    return normalized
+
+
+def pending_art_prompt_entries(data):
+    pending = []
+
+    for entry in data.get("images") or []:
+        if not isinstance(entry, dict):
+            continue
+
+        slug = entry.get("project")
+        if not slug:
+            continue
+
+        pending_entry = {"project": slug}
+
+        for variant in ART_VARIANTS:
+            sub = entry.get(variant)
+            if not isinstance(sub, dict):
+                continue
+
+            if not image_exists(slug, variant, sub):
+                pending_entry[variant] = normalize_pending_variant(slug, variant, sub)
+
+        if len(pending_entry) > 1:
+            pending.append(pending_entry)
+
+    return pending
+
+
+def request_is_complete(request):
+    status = str(request.get("status") or "pending").strip().lower()
+    if status == "done":
+        return True
+
+    target_repo = str(request.get("target_repo") or request.get("repo") or "").strip()
+    image_path = str(request.get("image_path") or "").strip()
+
+    if image_path and target_repo in ("", "silasfelinus/conductor"):
+        return (REPO_ROOT / image_path).exists()
+
+    return False
+
+
+def normalize_art_requests(data):
+    requests = []
+    seen = set()
+
+    for request in data.get("requests") or []:
+        if not isinstance(request, dict):
+            continue
+
+        if request_is_complete(request):
+            continue
+
+        image_path = str(request.get("image_path") or "").strip()
+        source_url = str(request.get("source_url") or "").strip()
+        if not image_path and not source_url:
+            continue
+
+        target_repo = str(request.get("target_repo") or request.get("repo") or "").strip()
+        key = (target_repo, image_path, source_url)
+        if key in seen:
+            continue
+        seen.add(key)
+
+        normalized = dict(request)
+        normalized["id"] = str(normalized.get("id") or image_path or source_url).strip()
+        normalized["status"] = "pending"
+        if image_path:
+            normalized["image_path"] = image_path
+        if target_repo:
+            normalized["target_repo"] = target_repo
+        if source_url:
+            normalized["source_url"] = source_url
+
+        requests.append(normalized)
+
+    return requests
+
+
+def write_art_prompts(image_entries, request_entries):
+    body = yaml.safe_dump(
+        {"images": image_entries, "requests": request_entries},
+        sort_keys=False,
+        allow_unicode=True,
+        width=88,
+    )
+    ART_PROMPTS_FILE.write_text(ART_PROMPTS_HEADER + body)
+
+
 def load_art_prompts():
     if not ART_PROMPTS_FILE.exists():
-        return {}
+        return {}, []
+
     with open(ART_PROMPTS_FILE) as f:
         data = yaml.safe_load(f) or {}
-    return {entry["project"]: entry for entry in data.get("images", [])}
+
+    image_entries = pending_art_prompt_entries(data)
+    request_entries = normalize_art_requests(data)
+
+    if (data.get("images") or []) != image_entries or (data.get("requests") or []) != request_entries:
+        write_art_prompts(image_entries, request_entries)
+
+    return {entry["project"]: entry for entry in image_entries}, request_entries
 
 
 def resolve_image(slug, variant, entry):
@@ -119,7 +267,7 @@ def resolve_image(slug, variant, entry):
         path = REPO_ROOT / sub["image_path"]
         if path.exists():
             return sub["image_path"], True
-    for ext in (".webp", ".png", ".jpg", ".jpeg"):
+    for ext in ALLOWED_IMAGE_EXTS:
         candidate = IMAGES_DIR / f"{slug}-{variant}{ext}"
         if candidate.exists():
             return f"projects/images/{slug}-{variant}{ext}", True
@@ -212,15 +360,42 @@ def render_art_row(slug, variant, sub, placeholder_key):
     </div>"""
 
 
-def render_art_prompts_section(art_prompts):
-    if not art_prompts:
-        return ""
+def render_request_row(request):
+    request_id = str(request.get("id") or "missing-image")
+    variant = str(request.get("variant") or "image")
+    size = str(request.get("size") or "")
+    image_path = str(request.get("image_path") or "")
+    target_repo = str(request.get("target_repo") or request.get("repo") or "")
+    source_url = str(request.get("source_url") or "")
+    page_url = str(request.get("page_url") or "")
+    prompt_text = str(request.get("prompt") or "").strip().replace("\n", " ")
+    label = f"{request_id} · {variant}" + (f" ({size})" if size else "")
+    path_bits = [value for value in (target_repo, image_path, source_url, page_url) if value]
+    thumb_key = variant if variant in PLACEHOLDER else "card"
+    thumb = img_tag(PLACEHOLDER[thumb_key], False, request_id, variant, f"art-thumb art-thumb-{thumb_key}", request_id)
+
+    return f"""
+    <div class="art-card">
+      {thumb}
+      <div>
+        <div class="art-slug">{label} <span class="art-status-pending">pending</span></div>
+        <div class="art-path">{' · '.join(path_bits)}</div>
+        <div class="art-prompt">{prompt_text}</div>
+      </div>
+    </div>"""
+
+
+def render_art_prompts_section(art_prompts, art_requests):
     rows = ""
     for entry in sorted(art_prompts.values(), key=lambda e: e["project"]):
         slug = entry["project"]
-        for variant in ("icon", "card", "hero"):
+        for variant in ART_VARIANTS:
             if variant in entry:
                 rows += render_art_row(slug, variant, entry[variant], variant)
+
+    for request in art_requests:
+        rows += render_request_row(request)
+
     return rows
 
 
@@ -245,7 +420,7 @@ def build_workspace():
     now = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
     project_cards_html = ""
     pitch_cards_html = ""
-    art_prompts = load_art_prompts()
+    art_prompts, art_requests = load_art_prompts()
 
     for project_dir in sorted((REPO_ROOT / "projects").iterdir()):
         if not project_dir.is_dir() or project_dir.name.startswith("_"):
@@ -257,7 +432,7 @@ def build_workspace():
             roadmap = yaml.safe_load(f)
         project_cards_html += render_project_card(project_dir.name, roadmap or {}, art_prompts)
 
-    art_section_html = render_art_prompts_section(art_prompts)
+    art_section_html = render_art_prompts_section(art_prompts, art_requests)
 
     for pitch_file in sorted(PITCHES_DIR.glob("*.md")):
         if pitch_file.name == "README.md":
@@ -348,7 +523,7 @@ def build_workspace():
     — or click any placeholder while running <code style="color:#a5b4fc">serve_workspace.py</code>.
   </p>
   <div class="grid" style="grid-template-columns: repeat(auto-fill, minmax(380px, 1fr))">
-    {art_section_html or '<p style="color:#64748b">No art prompts found.</p>'}
+    {art_section_html or '<p style="color:#64748b">No art prompts pending.</p>'}
   </div>
 
   <h2>Pitches Awaiting Vote</h2>
