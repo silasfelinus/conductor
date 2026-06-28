@@ -1,7 +1,7 @@
 # Pitch: Add a CI build/lint gate for software projects
 date: 2026-06-24
 project-target: ai-networker-itself
-status: awaiting-silas
+status: approved
 
 ## The idea
 Add a lightweight GitHub Actions CI check (lint + build) that runs on every worker/* PR,
