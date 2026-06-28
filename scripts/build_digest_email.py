@@ -32,8 +32,17 @@ def build_payload(digest):
     greeting = html.escape(str(digest.get("greeting", "Hello, Silas!")))
     activity_since = [html.escape(s) for s in digest.get("activity_since", [])]
     autonomous = [html.escape(s) for s in digest.get("autonomous_work", [])]
+    spark = digest.get("daily_spark", {})
+    spark_label = html.escape(str(spark.get("label", "✨ Daily spark")))
+    spark_text = html.escape(str(spark.get("text", "")))
+    spark_html = (
+        f'<p style="background:#f0f7ff;border-left:4px solid #7ab;padding:10px 14px;'
+        f'border-radius:0 6px 6px 0;font-style:italic;color:#335">'
+        f'<strong>{spark_label}:</strong> {spark_text}</p>'
+    ) if spark_text else ""
     html_content = f"""
     <p style="font-size:1.15em;color:#444;margin-bottom:4px">{greeting}</p>
+    {spark_html}
     <h2>AI_Networker — Daily Digest ({digest_date})</h2>
     <h3>🗳️ Awaiting your vote (pitches)</h3>{ul(digest['pitches_awaiting_vote'] or ['(no pitches waiting)'])}
     <h3>📋 Activity in last 24h</h3>{ul(activity_since or ['(nothing recorded — most work may have landed earlier)'])}

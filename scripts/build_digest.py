@@ -18,16 +18,87 @@ except ImportError:
 def git(*args):
     return subprocess.run(["git", *args], capture_output=True, text=True).stdout.strip()
 
-def time_greeting():
-    hour = datetime.datetime.now().hour
+try:
+    from zoneinfo import ZoneInfo
+    _TZ = ZoneInfo("America/Los_Angeles")
+except ImportError:
+    # Python < 3.9 fallback — hardcoded PDT; close enough
+    _TZ = datetime.timezone(datetime.timedelta(hours=-7))
+
+def _pacific_hour():
+    return datetime.datetime.now(_TZ).hour
+
+def _pacific_time_of_day():
+    hour = _pacific_hour()
     if 5 <= hour < 12:
-        return "Good morning, Silas!"
+        return "morning"
     elif 12 <= hour < 17:
-        return "Good afternoon, Silas!"
+        return "afternoon"
     elif 17 <= hour < 21:
-        return "Good evening, Silas!"
+        return "evening"
     else:
-        return "Hey Silas! Burning the midnight oil?"
+        return "night"
+
+def _openai_generate(prompt, fallback=""):
+    """Call OpenAI chat completions; return the text or fallback if unavailable."""
+    api_key = os.environ.get("OPENAI_API_KEY", "")
+    if not api_key:
+        return fallback
+    try:
+        import openai
+        client = openai.OpenAI(api_key=api_key)
+        resp = client.chat.completions.create(
+            model="gpt-4o-mini",
+            messages=[{"role": "user", "content": prompt}],
+            max_tokens=120,
+            temperature=1.0,
+        )
+        return resp.choices[0].message.content.strip()
+    except Exception as e:
+        print(f"[digest] OpenAI call failed: {e}", file=sys.stderr)
+        return fallback
+
+def time_greeting():
+    tod = _pacific_time_of_day()
+    date_str = datetime.date.today().strftime("%A, %B %-d")
+    prompt = (
+        f"Write a single short greeting for Silas Knight, a creative developer who runs an "
+        f"AI coordination system called AI_Networker on the Humboldt coast. "
+        f"It's {tod} on {date_str}. "
+        f"Be warm, a little funny, and specific — reference the time of day, the coast, robots, "
+        f"or his work. One or two sentences max. No quotes around your response."
+    )
+    fallback = f"Good {tod}, Silas."
+    return _openai_generate(prompt, fallback=fallback)
+
+def daily_spark(context=""):
+    """Ask OpenAI for a fresh daily spark: character, dream, or wild project idea."""
+    date_str = datetime.date.today().strftime("%A, %B %-d, %Y")
+    prompt = (
+        f"Today is {date_str}. You're writing a fun daily spark for Silas Knight's AI digest. "
+        f"He runs an AI coordination system, does creative/AI art, lives on the Humboldt coast, "
+        f"and has projects like Kind Robots, Mermaids of Venice, a coloring book, and a poop-scoop CMS.\n"
+        f"{('Active context: ' + context + chr(10)) if context else ''}"
+        f"Generate ONE of the following (your choice, vary it across categories):\n"
+        f"- A quirky fictional character that would fit his world\n"
+        f"- A whimsical dream scenario for him to ponder\n"
+        f"- A wild creative project idea worth considering\n\n"
+        f"Respond in exactly this format (no extra text):\n"
+        f"LABEL: [emoji + short label, e.g. '🎭 Today's character' or '🌊 Dream scenario' or '💡 Wild idea']\n"
+        f"TEXT: [one or two vivid, specific, imaginative sentences]\n"
+    )
+    raw = _openai_generate(prompt, fallback="")
+    if not raw:
+        return {}
+    label, text = "", ""
+    for line in raw.splitlines():
+        if line.startswith("LABEL:"):
+            label = line[6:].strip()
+        elif line.startswith("TEXT:"):
+            text = line[5:].strip()
+    if not label or not text:
+        return {}
+    return {"label": label, "text": text}
 
 _SEP = "|||CDSEP|||"
 
@@ -138,6 +209,9 @@ def main():
     payload = {
         "date": datetime.date.today().isoformat(),
         "greeting": time_greeting(),
+        "daily_spark": daily_spark(
+            context=", ".join(p["name"] for p in projects) if projects else ""
+        ),
         "commits_since": (git("log", f"--since={args.since}", "--pretty=format:%h %s (%an)") or "").splitlines(),
         "merges_since": (git("log", f"--since={args.since}", "--merges", "--pretty=format:%h %s") or "").splitlines(),
         "activity_since": significant_activity(args.since),
