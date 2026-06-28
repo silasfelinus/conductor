@@ -12,12 +12,27 @@
 #   card  — portrait 2:3 (512×768 min). Shown on the workspace project card.
 #   hero  — landscape 16:9 (1280×720 min). Shown as a banner/header in project view.
 #
+# Prompt standard:
+#   Write for modern OpenAI image generation, not legacy flat placeholders.
+#   Kind Robots represents a consortium of projects aimed at multi-genre,
+#   cross-dimensional experiences. When a scene includes people, characters,
+#   teams, families, players, operators, or companions, represent a diverse array
+#   across genders, races, ages, body sizes, body shapes, presentation styles,
+#   and species. Mix humans, robots, animal-like beings, fantasy creatures, and
+#   original nonhuman companions when it fits the asset.
+#   Do this naturally and respectfully, without tokenism or stereotypes.
+#   Icons should read instantly at small sizes: premium app-icon polish, strong silhouette.
+#   Cards should feel like professional portrait key art for a polished product.
+#   Heroes should feel like studio-quality game/product illustration with cinematic depth.
+#   Always avoid readable text, logos, watermarks, contact sheets, and collages.
+#
 # Workflow:
-#   1. Copy the prompt into ChatGPT (image generation) or call the OpenAI Images API (model: gpt-image-1).
-#   2. Set the correct aspect ratio in the generation UI (1:1 / 2:3 / 16:9).
-#   3. Export as .webp at the minimum size listed.
-#   4. Save to the image_path listed below.
-#   5. Run `python scripts/build_workspace.py` to refresh the workspace.
+#   1. Copy the generator prompt from ART-PROMPTS.md into ChatGPT.
+#   2. Paste one batch of up to ten entries from this file.
+#   3. Generate exactly one unique image per entry with the listed aspect ratio.
+#   4. Export as .webp at the minimum size listed.
+#   5. Save to the image_path listed below.
+#   6. Run `python scripts/build_workspace.py` to refresh the workspace.
 #
 # Status values: pending
 
@@ -28,114 +43,114 @@ images:
       size: "256x256"
       status: pending
       prompt: >
-        flat minimal app icon, friendly pencil and sparkle over a small sketchbook page, bold clean vector shapes, square composition, no text
+        Premium app icon for Sketchy, a charming graphite pencil character gliding across a luminous sketchbook page, a tiny golden creativity spark catching at the pencil tip, tactile 3D product illustration, soft studio lighting, polished rounded-square composition, expressive readable silhouette, modern OpenAI image generation quality, no text, no logo, no watermark, no collage
     card:
       image_path: projects/images/sketchy-card.webp
       size: "512x768"
       status: pending
       prompt: >
-        flat minimal portrait illustration, an inviting drawing desk with a sketchbook, pencil, simple practice shapes, and a tiny helpful robot critique badge, subject on soft gradient backdrop, no text, 2:3 portrait composition
+        Professional portrait card illustration for Sketchy, a warm artist practice desk staged like a tiny creative sanctuary: open sketchbook with cubes, spheres, gesture lines, and early character studies, pencils and erasers arranged naturally, a small robot mentor badge glowing with gentle encouragement, cinematic soft lighting, premium educational app artwork, no text, no logo, no watermark, no collage, 2:3 portrait composition
     hero:
       image_path: projects/images/sketchy-hero.webp
       size: "1280x720"
       status: pending
       prompt: >
-        flat minimal wide panoramic, cozy digital art practice studio where sketch assignments flow from simple shapes into expressive character drawings while a gentle AI coach observes, cinematic scale, no text, 16:9 landscape
+        High-end wide hero illustration for Sketchy, a cozy digital drawing studio at golden hour where simple geometric exercises transform through a floating ribbon of sketches into lively character designs, an elegant AI mentor robot watches quietly from the side with a tablet, professional game-studio key art quality, cinematic depth, warm atmosphere, no text, no logo, no watermark, no collage, 16:9 landscape composition
   - project: art-generator-connect
     icon:
       image_path: projects/images/art-generator-connect-icon.webp
       size: "256x256"
       status: pending
       prompt: >
-        flat minimal app icon, glowing image node connected to a small robot paintbrush, bold clean vector shapes, square composition, no text
+        Premium app icon for Art Generator Connect, a glowing image-generation node linked by a neon cable to a tiny robot paintbrush companion, electric blue light on dark polished glass, crisp memorable silhouette, tactile 3D finish, modern AI product icon, no text, no logo, no watermark, no collage, square composition
     card:
       image_path: projects/images/art-generator-connect-card.webp
       size: "512x768"
       status: pending
       prompt: >
-        flat minimal portrait illustration, a conductor console sending prompt cards into a luminous art generator pipeline, subject on soft gradient backdrop, no text, 2:3 portrait composition
+        Professional portrait card illustration for Art Generator Connect, a sleek creative command console feeding prompt cards into a luminous image-generation engine, holographic thumbnails rising through glass tubes, glowing buttons and sliders in saturated cyan, violet, and amber, premium sci-fi product art, modern post-Flux polish, no text, no logo, no watermark, no collage, 2:3 portrait composition
     hero:
       image_path: projects/images/art-generator-connect-hero.webp
       size: "1280x720"
       status: pending
       prompt: >
-        flat minimal wide panoramic, autonomous agents routing creative prompts through glowing image-generation machines into organized project asset folders, cinematic scale, no text, 16:9 landscape
+        High-quality wide hero illustration for Art Generator Connect, autonomous robot agents orchestrating a futuristic creative factory where prompt cards become polished image assets, neon data streams route into generation machines and organized project folders, cinematic sci-fi production pipeline, professional illustration and game UI concept art quality, no text, no logo, no watermark, no collage, 16:9 landscape composition
   - project: storymaker
     icon:
       image_path: projects/images/storymaker-icon.webp
       size: "256x256"
       status: pending
       prompt: >
-        flat minimal app icon, branching storybook with a tiny robot narrator star, bold clean vector shapes, square composition, no text
+        Premium app icon for Storymaker, an open storybook blooming into branching golden paths, tiny glowing portals to forest, sea, castle, and volcano worlds, a cheerful robot narrator star hovering above the pages, rich magical lighting, iconic readable silhouette, no text, no logo, no watermark, no collage, square composition
     card:
       image_path: projects/images/storymaker-card.webp
       size: "512x768"
       status: pending
       prompt: >
-        flat minimal portrait illustration, a magical collaborative story table with character tokens, branching choice cards, and a friendly narrator bot, subject on soft gradient backdrop, no text, 2:3 portrait composition
+        Professional portrait card illustration for Storymaker, a magical tabletop storytelling scene with friends and creature companions gathered around a glowing narrative board, character tokens, branching choice cards, and a friendly robot narrator in a starry cloak, warm enchanted lighting, premium cozy fantasy game art, no text, no logo, no watermark, no collage, 2:3 portrait composition
     hero:
       image_path: projects/images/storymaker-hero.webp
       size: "1280x720"
       status: pending
       prompt: >
-        flat minimal wide panoramic, players building a shared fantasy story as branches, rewards, characters, and locations bloom from a glowing narrative map, cinematic scale, no text, 16:9 landscape
+        High-end wide hero illustration for Storymaker, a shared fantasy world erupting from a glowing tabletop map as branching storylines become castles, forests, airships, dragons, treasure paths, and character quests, players silhouetted around the table shaping the world together, cinematic game-studio key art, epic but inviting, no text, no logo, no watermark, no collage, 16:9 landscape composition
   - project: media-watchlist
     icon:
       image_path: projects/images/media-watchlist-icon.webp
       size: "256x256"
       status: pending
       prompt: >
-        flat minimal app icon, stacked book film reel and game controller checklist, bold clean vector shapes, square composition, no text
+        Premium app icon for Media Watchlist, a stack of beloved media objects fused into one clean symbol: book, film reel, game controller, comic card, and checklist marks, glossy dimensional app-icon rendering, deep navy backdrop with subtle glow, elegant readable silhouette, no text, no logo, no watermark, no collage, square composition
     card:
       image_path: projects/images/media-watchlist-card.webp
       size: "512x768"
       status: pending
       prompt: >
-        flat minimal portrait illustration, a cozy personal media archive dashboard with books, films, games, comics, and podcast tiles arranged like a smart library, subject on soft gradient backdrop, no text, 2:3 portrait composition
+        Professional portrait card illustration for Media Watchlist, a cozy cross-dimensional media observatory where books, films, games, comics, and podcasts orbit a smart library dashboard like curated constellations; a diverse circle of human, robot, animal-like, and fantasy-creature media fans of varied ages, genders, races, body sizes, and presentation styles compare recommendations together under warm archival light, polished editorial app art, no text, no logo, no watermark, no collage, 2:3 portrait composition
     hero:
       image_path: projects/images/media-watchlist-hero.webp
       size: "1280x720"
       status: pending
       prompt: >
-        flat minimal wide panoramic, decade-spanning media timeline transforming books movies games comics and podcasts into a beautiful searchable knowledge dashboard, cinematic scale, no text, 16:9 landscape
+        High-end wide hero illustration for Media Watchlist, a decade-spanning multi-genre media timeline unfolding into a beautiful searchable knowledge atlas; books, movies, games, comics, and podcasts become glowing paths through a personal memory library where diverse humans, robots, creatures, elders, kids, and oddball companions explore different story portals together, premium product storytelling artwork, cinematic depth, no text, no logo, no watermark, no collage, 16:9 landscape composition
   - project: conductor-app
     icon:
       image_path: projects/images/conductor-app-icon.webp
       size: "256x256"
       status: pending
       prompt: >
-        flat minimal app icon, mobile phone showing tiny project cards and a conductor baton sparkle, bold clean vector shapes, square composition, no text
+        Premium app icon for Conductor App, a sleek mobile phone showing tiny abstract project cards and approval chips, a luminous conductor baton spark arcing above the screen, subtle hints of many project worlds in miniature icons, polished glass, clean futuristic silhouette, modern productivity app icon, no readable text, no logo, no watermark, no collage, square composition
     card:
       image_path: projects/images/conductor-app-card.webp
       size: "512x768"
       status: pending
       prompt: >
-        flat minimal portrait illustration, a polished phone dashboard for agent projects, todos, approvals, and art requests glowing in the user's hand, subject on soft gradient backdrop, no text, 2:3 portrait composition
+        Professional portrait card illustration for Conductor App, a polished phone dashboard surrounded by several different hands, paws, claws, and robot fingers selecting agent projects, todos, approvals, image requests, and status pulses as elegant abstract cards; the operators represent a spectrum of humans, robots, creatures, ages, genders, races, body types, and presentation styles, premium mobile product artwork, luminous interface glow without readable text, confident futuristic atmosphere, no logo, no watermark, no collage, 2:3 portrait composition
     hero:
       image_path: projects/images/conductor-app-hero.webp
       size: "1280x720"
       status: pending
       prompt: >
-        flat minimal wide panoramic, native mobile and desktop control room for Conductor with project cards, approvals, notifications, and agent status flowing across screens, cinematic scale, no text, 16:9 landscape
+        High-end wide hero illustration for Conductor App, a native mobile and desktop command center where project cards, approvals, notifications, and agent status streams flow across synchronized screens; a diverse multi-species crew of humans, robots, animal-like beings, and fantasy companions across genders, ages, races, body sizes, and shapes coordinate calmly across many project worlds, premium software launch key art, cinematic lighting, no readable text, no logo, no watermark, no collage, 16:9 landscape composition
   - project: alexa-integration
     icon:
       image_path: projects/images/alexa-integration-icon.webp
       size: "256x256"
       status: pending
       prompt: >
-        flat minimal app icon, voice wave entering a small home server cube, bold clean vector shapes, square composition, no text
+        Premium app icon for Alexa Integration, a sculptural voice wave flowing into a compact glowing home server cube, soft cyan sound rings carrying tiny abstract signals for many kinds of homes and project worlds, warm smart-home lighting, crisp friendly automation silhouette, polished 3D product icon, no text, no logo, no watermark, no collage, square composition
     card:
       image_path: projects/images/alexa-integration-card.webp
       size: "512x768"
       status: pending
       prompt: >
-        flat minimal portrait illustration, a cozy workshop voice assistant sending commands to a home relay and Conductor task board, subject on soft gradient backdrop, no text, 2:3 portrait composition
+        Professional portrait card illustration for Alexa Integration, a cozy night workshop where a smart speaker sends luminous voice commands through a home relay box into a Conductor task board; around the bench, a diverse household-and-robot maker crew of varied ages, genders, races, body sizes, presentation styles, and species collaborates comfortably, cables tidy, LEDs glowing, practical hacker-home charm, premium product illustration, no readable text, no logo, no watermark, no collage, 2:3 portrait composition
     hero:
       image_path: projects/images/alexa-integration-hero.webp
       size: "1280x720"
       status: pending
       prompt: >
-        flat minimal wide panoramic, hands-free voice commands flowing from a smart speaker through a home server into Conductor projects, todos, and art requests, cinematic scale, no text, 16:9 landscape
+        High-quality wide hero illustration for Alexa Integration, hands-free voice commands travel as luminous sound ribbons from a smart speaker through a home server into Conductor projects, todos, approvals, and art requests; the scene spans multiple connected rooms and workspaces inhabited by a diverse cross-dimensional community of humans, robots, creatures, elders, children, makers, and caretakers, cinematic smart-home automation, professional product key art, no readable text, no logo, no watermark, no collage, 16:9 landscape composition
 requests:
   - id: "kind-robots-overview-card-5c53bbd4"
     source: "kind-robots-missing-image"
@@ -148,7 +163,7 @@ requests:
     size: "512x768"
     label: "Overview"
     prompt: >
-      polished portrait illustration for Overview, centered subject, rich Kind Robots visual style, no text, 2:3 portrait composition
+      Professional portrait card illustration for the Kind Robots Overview panel, a welcoming cross-dimensional command-table scene where friendly robots, project cards, creative tools, and glowing navigation paths orbit a calm central hub; include a diverse consortium of humans, robots, animal-like beings, fantasy creatures, and other original companions across genders, races, ages, body sizes, body shapes, and presentation styles, cohesive Kind Robots visual language, polished product artwork, no readable text, no logo, no watermark, no collage, 2:3 portrait composition
   - id: "kind-robots-tasks-card-f167a119"
     source: "kind-robots-missing-image"
     status: "pending"
@@ -160,7 +175,7 @@ requests:
     size: "512x768"
     label: "Tasks"
     prompt: >
-      polished portrait illustration for Tasks, centered subject, rich Kind Robots visual style, no text, 2:3 portrait composition
+      Professional portrait card illustration for the Kind Robots Tasks panel, a satisfying task-management scene where stacked cards, progress tokens, tiny helper robots, approval stamps, and glowing completion trails move between a diverse multi-species team of organizers, makers, elders, kids, humans, robots, and creatures with varied genders, races, body sizes, shapes, and presentation styles, premium productivity game-art feel, clear focal subject, no readable text, no logo, no watermark, no collage, 2:3 portrait composition
   - id: "conductor-conductor-missing-image-pipeline-test-hero-c2e8b995"
     source: "kind-robots-missing-image"
     status: "pending"
@@ -172,7 +187,7 @@ requests:
     size: "1280x720"
     label: "Conductor missing image pipeline test hero"
     prompt: >
-      wide cinematic hero image for Conductor missing image pipeline test hero, expressive scene with clear atmosphere and personality, no text, 16:9 landscape composition
+      Wide cinematic hero illustration for a Conductor missing-image pipeline test, a dramatic but playful asset-recovery machine discovering placeholder silhouettes and transforming them into polished image cards; a diverse crew of tiny robot operators, human technicians, creature assistants, and cross-dimensional helpers of varied ages, genders, races, body types, and species gathers around glowing diagnostics, professional sci-fi product key art, no readable text, no logo, no watermark, no collage, 16:9 landscape composition
   - id: "kind-robots-workspace-image-db545c5b"
     source: "kind-robots-missing-image"
     status: "pending"
@@ -183,7 +198,7 @@ requests:
     variant: "image"
     label: "Conductor Workspace"
     prompt: >
-      polished web illustration for Conductor Workspace, clear subject, cohesive Kind Robots visual style, no text
+      Polished web illustration for Conductor Workspace, a warm futuristic workspace where project cards, approvals, bot helpers, and image requests orbit a clear central command surface; show a diverse multi-genre consortium of humans, robots, animal-like beings, fantasy creatures, elders, young makers, and oddball companions across genders, races, body sizes, body shapes, and presentation styles, cohesive Kind Robots style, premium software dashboard artwork, no readable text, no logo, no watermark, no collage
   - id: "conductor-tasks-hero-1ea39026"
     source: "kind-robots-missing-image"
     status: "pending"
@@ -195,4 +210,4 @@ requests:
     size: "1280x720"
     label: "Tasks"
     prompt: >
-      wide cinematic hero image for Tasks, expressive scene with clear atmosphere and personality, no text, 16:9 landscape composition
+      High-quality wide hero illustration for Tasks, a cinematic productivity command board where priorities, approvals, and completed work move along glowing rails between helpful robots, organized project stations, and a diverse multi-species team of humans, robots, creatures, elders, kids, makers, and caretakers across genders, races, body sizes, body shapes, and presentation styles, satisfying sense of momentum and clarity, professional product/game key art, no readable text, no logo, no watermark, no collage, 16:9 landscape composition
