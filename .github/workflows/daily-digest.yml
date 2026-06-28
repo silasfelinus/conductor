@@ -26,11 +26,13 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - run: pip install pyyaml
+      - run: pip install pyyaml openai
       - name: Build digest JSON
         run: |
           python scripts/build_digest.py --since "24 hours ago" > digest.json
           cat digest.json
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
       - name: Validate digest JSON
         run: python scripts/validate_digest.py digest.json
       - name: Build Brevo payload preview

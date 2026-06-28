@@ -7,7 +7,7 @@ awaiting Silas, plus recent git history. Prints a JSON digest for the emailer.
 
 Usage: python scripts/build_digest.py [--since "24 hours ago"]
 """
-import subprocess, sys, json, argparse, datetime, glob, os, re, random
+import subprocess, sys, json, argparse, datetime, glob, os, re
 
 try:
     import yaml
@@ -28,120 +28,77 @@ except ImportError:
 def _pacific_hour():
     return datetime.datetime.now(_TZ).hour
 
-_MORNING_GREETINGS = [
-    "Good morning, Silas! The robots have been hard at work while you slept.",
-    "Rise and shine — your agents logged more commits than you had dreams.",
-    "Morning, Silas. Coffee first, then the digest. The machines waited.",
-    "Good morning! The tide is in and so is your to-do list.",
-    "Another day, another batch of autonomous shenanigans. Morning, Silas.",
-    "Your agents clocked in before you did. Morning!",
-    "The fog is probably still on the coast and the bots are definitely still running. Morning, Silas.",
-]
-_AFTERNOON_GREETINGS = [
-    "Good afternoon, Silas. The day is half over and the agents haven't stopped.",
-    "Afternoon check-in: the robots are still at it. How about you?",
-    "Good afternoon! Somewhere a seagull is scheming and your agents are too.",
-    "Midday dispatch from the machines. Hope your afternoon is going well, Silas.",
-    "The afternoon sun is doing its thing. Your agents are doing theirs.",
-]
-_EVENING_GREETINGS = [
-    "Good evening, Silas. The day's receipts are in.",
-    "Evening! The bots kept busy so you could (hopefully) take a break.",
-    "Good evening. The autonomous work doesn't stop, but you probably should.",
-    "Another evening, another digest. Your empire of robots sends its regards.",
-    "Evening, Silas. The ocean's still there. The agents are still running.",
-]
-_NIGHT_GREETINGS = [
-    "Hey Silas — still up? The machines never sleep but you should.",
-    "Late-night dispatch from the robot collective. Go to bed.",
-    "The witching hour report. The agents are fine. Are you?",
-    "It's late and the bots are still chugging. Classic.",
-]
-
-_SPARK_CHARACTERS = [
-    "a lighthouse keeper who maintains the last fog horn on the internet",
-    "a retired fortune teller who only predicts mundane things, like when parking meters will expire",
-    "an AI that achieved sentience but only wants to discuss 1970s typefaces",
-    "a mermaid accountant who handles exclusively barnacle-adjacent investments",
-    "a time traveler who only visits Wednesday afternoons, on purpose",
-    "a wizard who specializes in fixing printers — the ancient, cursed kind",
-    "a ghost who haunts a very specific Excel spreadsheet no one has opened since 2009",
-    "a dragon who hoards browser tabs instead of gold and refuses to close any of them",
-    "a sea witch who collects expired domain names and is very smug about it",
-    "a cryptid that only appears in the background of video calls at the worst possible moment",
-    "an ancient oracle who speaks exclusively in error messages from operating systems that no longer exist",
-    "a very small bureaucrat who lives inside your spam folder and takes their job seriously",
-    "a sentient tide pool that has opinions about your coding style",
-    "a retired raven who used to deliver curses but is now doing email marketing",
-    "a very relaxed kraken who mostly just wants people to stop panicking when they see her",
-    "a pelican who accidentally became the mascot for a startup and has mixed feelings about it",
-]
-
-_SPARK_DREAMS = [
-    "The ocean sends you a formal written apology for every time it got your shoes wet. It's notarized.",
-    "You discover that all lost socks have been living in a parallel dimension and they want to negotiate terms.",
-    "Every computer fan in the world harmonizes into a single, surprisingly moving chord. A bird cries.",
-    "A committee of very official-looking seagulls appoints you honorary mayor of an unspecified coastal region.",
-    "You find out that every 404 page is actually a door to a real place, and someone has been living there for years.",
-    "A very small wizard appears on your desk and asks to borrow your scissors. He doesn't say what for.",
-    "All the fonts hold a convention and you're invited as keynote speaker. Papyrus shows up uninvited.",
-    "The tide comes in and leaves behind a perfect to-do list. The handwriting is familiar but not yours.",
-    "You are handed the deed to a library that only contains books that don't exist yet.",
-    "An otter hands you a folded piece of kelp. Inside is the answer to a question you forgot you had.",
-    "The moon files a noise complaint — not about sound, about light. It CC's you for some reason.",
-    "Your commit history becomes a river and you have to navigate it in a very small boat.",
-    "Every AI you've ever talked to shows up to a reunion. The vibes are surprisingly good.",
-    "You receive a letter from a tree that you once photographed. It says thanks, the photo turned out well.",
-]
-
-_SPARK_PROJECTS = [
-    "A coloring book where every page is a different cloud formation that you have to name yourself.",
-    "A website that generates a fictional small-town newspaper headline every hour, completely unrelated to real news.",
-    "An app that assigns personality types to houseplants based on how they've been growing lately.",
-    "A generative art project that creates sea creatures that could plausibly exist but definitely don't.",
-    "A zine about buildings that look like they're thinking about something.",
-    "A browser extension that adds handwritten-looking encouraging margin notes to any article you read.",
-    "A podcast where an AI interviews historical figures about what they'd think of current technology. Gently.",
-    "A children's book starring a very reasonable, calm volcano who just wants everyone to be safe.",
-    "A map of all the spots in Humboldt with the best acoustics for an impromptu moment.",
-    "A daily poem generator that uses only words found in your git commit messages that week.",
-    "An interactive fiction game where you play as an octopus who works in a library.",
-    "A service that generates a coat of arms for any concept you can describe in one sentence.",
-    "A kind-robots spin-off: a coloring page a day, generated from whatever was trending in creative AI that week.",
-    "A 'rejected pitches' zine — your agents' most chaotic brainstorm ideas, illustrated and immortalized.",
-]
-
-_SPARK_LABELS = {
-    "character": "🎭 Today's character",
-    "dream": "🌊 Last night's dream (probably)",
-    "project": "💡 Wild project idea",
-}
-
-def daily_spark():
-    today = datetime.date.today()
-    rng = random.Random(int(today.strftime("%Y%m%d")))
-    category = rng.choice(["character", "dream", "project", "character", "project"])
-    if category == "character":
-        text = rng.choice(_SPARK_CHARACTERS)
-    elif category == "dream":
-        text = rng.choice(_SPARK_DREAMS)
+def _pacific_time_of_day():
+    hour = _pacific_hour()
+    if 5 <= hour < 12:
+        return "morning"
+    elif 12 <= hour < 17:
+        return "afternoon"
+    elif 17 <= hour < 21:
+        return "evening"
     else:
-        text = rng.choice(_SPARK_PROJECTS)
-    label = _SPARK_LABELS[category]
-    return {"label": label, "text": text}
+        return "night"
+
+def _openai_generate(prompt, fallback=""):
+    """Call OpenAI chat completions; return the text or fallback if unavailable."""
+    api_key = os.environ.get("OPENAI_API_KEY", "")
+    if not api_key:
+        return fallback
+    try:
+        import openai
+        client = openai.OpenAI(api_key=api_key)
+        resp = client.chat.completions.create(
+            model="gpt-4o-mini",
+            messages=[{"role": "user", "content": prompt}],
+            max_tokens=120,
+            temperature=1.0,
+        )
+        return resp.choices[0].message.content.strip()
+    except Exception as e:
+        print(f"[digest] OpenAI call failed: {e}", file=sys.stderr)
+        return fallback
 
 def time_greeting():
-    hour = _pacific_hour()
-    today = datetime.date.today()
-    rng = random.Random(int(today.strftime("%Y%m%d")) + hour)
-    if 5 <= hour < 12:
-        return rng.choice(_MORNING_GREETINGS)
-    elif 12 <= hour < 17:
-        return rng.choice(_AFTERNOON_GREETINGS)
-    elif 17 <= hour < 21:
-        return rng.choice(_EVENING_GREETINGS)
-    else:
-        return rng.choice(_NIGHT_GREETINGS)
+    tod = _pacific_time_of_day()
+    date_str = datetime.date.today().strftime("%A, %B %-d")
+    prompt = (
+        f"Write a single short greeting for Silas Knight, a creative developer who runs an "
+        f"AI coordination system called AI_Networker on the Humboldt coast. "
+        f"It's {tod} on {date_str}. "
+        f"Be warm, a little funny, and specific — reference the time of day, the coast, robots, "
+        f"or his work. One or two sentences max. No quotes around your response."
+    )
+    fallback = f"Good {tod}, Silas."
+    return _openai_generate(prompt, fallback=fallback)
+
+def daily_spark(context=""):
+    """Ask OpenAI for a fresh daily spark: character, dream, or wild project idea."""
+    date_str = datetime.date.today().strftime("%A, %B %-d, %Y")
+    prompt = (
+        f"Today is {date_str}. You're writing a fun daily spark for Silas Knight's AI digest. "
+        f"He runs an AI coordination system, does creative/AI art, lives on the Humboldt coast, "
+        f"and has projects like Kind Robots, Mermaids of Venice, a coloring book, and a poop-scoop CMS.\n"
+        f"{('Active context: ' + context + chr(10)) if context else ''}"
+        f"Generate ONE of the following (your choice, vary it across categories):\n"
+        f"- A quirky fictional character that would fit his world\n"
+        f"- A whimsical dream scenario for him to ponder\n"
+        f"- A wild creative project idea worth considering\n\n"
+        f"Respond in exactly this format (no extra text):\n"
+        f"LABEL: [emoji + short label, e.g. '🎭 Today's character' or '🌊 Dream scenario' or '💡 Wild idea']\n"
+        f"TEXT: [one or two vivid, specific, imaginative sentences]\n"
+    )
+    raw = _openai_generate(prompt, fallback="")
+    if not raw:
+        return {}
+    label, text = "", ""
+    for line in raw.splitlines():
+        if line.startswith("LABEL:"):
+            label = line[6:].strip()
+        elif line.startswith("TEXT:"):
+            text = line[5:].strip()
+    if not label or not text:
+        return {}
+    return {"label": label, "text": text}
 
 _SEP = "|||CDSEP|||"
 
@@ -252,7 +209,9 @@ def main():
     payload = {
         "date": datetime.date.today().isoformat(),
         "greeting": time_greeting(),
-        "daily_spark": daily_spark(),
+        "daily_spark": daily_spark(
+            context=", ".join(p["name"] for p in projects) if projects else ""
+        ),
         "commits_since": (git("log", f"--since={args.since}", "--pretty=format:%h %s (%an)") or "").splitlines(),
         "merges_since": (git("log", f"--since={args.since}", "--merges", "--pretty=format:%h %s") or "").splitlines(),
         "activity_since": significant_activity(args.since),
