@@ -1,7 +1,7 @@
 # Pitch: "Acts of Kindness" coloring book (PDF + POD)
 date: 2026-06-24
 project-target: digital-storefront
-status: passed
+status: approved
 
 ## The idea
 A coloring book where each page illustrates a small act of kindness — feeding a stray,
