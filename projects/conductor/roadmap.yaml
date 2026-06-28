@@ -19,6 +19,10 @@ milestones:
     title: "Ops tooling (triage, cost guards, monitoring)"
     weight: 30
     status: not-started
+  - id: m3
+    title: "Per-project kaizen prompts + honey-do lists for Silas"
+    weight: 25
+    status: not-started
 
 tasks:
   - id: t-001
@@ -47,3 +51,30 @@ tasks:
       PR metadata and writes PR-TRIAGE.md as a generated, reviewable snapshot
       of open worker PRs with their status, mergeability, human gates, and next
       action. Pitch ref: pitches/2026-06-26-conductor-pr-triage-board.md (approved).
+
+  - id: t-003
+    milestone: m3
+    title: "Add per-project kaizen prompts and honey-do lists to triage output"
+    status: ready
+    owner: null
+    updated: "2026-06-28T00:00:00Z"
+    passes: 0
+    stakes: reversible
+    note: >
+      Extend scripts/build_pr_triage.py (or a new scripts/build_kaizen.py) to
+      emit, for each active project:
+
+      1. KAIZEN PROMPT — the single most impactful action Silas can take right
+         now to move the project forward (one sentence, framed as a direct
+         instruction: "Approve the spec in approval-portal/t-001").
+         Derived by ranking: open needs-human tasks > gate_human gates with
+         approved_by_human: false > passes==3 blocked tasks > stale claims.
+
+      2. HONEY-DO LIST — all other actions only Silas can unblock, as a
+         markdown checkbox list, ordered by downstream impact. Each item maps
+         to a specific task id and the exact decision or file Silas needs to
+         touch. Agent-workable items are excluded.
+
+      Output lands in a KAIZEN.md at the repo root, regenerated each cycle.
+      The approval-portal (when built) should consume this same data structure
+      to render the lists as interactive checkboxes on each project card.
