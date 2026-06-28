@@ -1,7 +1,7 @@
 # Pitch: Media Watchlist — 10+ years of consumption data, made useful
 date: 2026-06-27
 project-target: kind-robots
-status: awaiting-silas
+status: approved
 
 ## The idea
 Silas has kept a running text log of every book, game, movie, TV series, comic,
