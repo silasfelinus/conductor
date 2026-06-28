@@ -9,13 +9,13 @@ Paste each prompt directly into ChatGPT (image generation). Save the output to `
 ## Pending requests
 
 ### `sketchy-icon.webp` · 256×256 · 1:1
-> flat minimal app icon, friendly pencil and sparkle over a small sketchbook page, bold clean vector shapes, square composition, no text
+> flat minimal app icon, golden pencil arcing across a cream sketchbook page leaving a trail of small glowing stars, warm amber and soft sky-blue palette, bold clean vector shapes, square composition, no text
 
 ### `sketchy-card.webp` · 512×768 · 2:3
-> flat minimal portrait illustration, an inviting drawing desk with a sketchbook, pencil, simple practice shapes, and a tiny helpful robot critique badge, subject on soft gradient backdrop, no text, 2:3 portrait composition
+> flat minimal portrait illustration, cozy art nook with three framed drawings pinned to a warm stone wall showing the same subject evolving from a wobbly beginner sketch to a confident polished portrait, a small cheerful robot mascot holds up a glowing star badge beside the finished piece, soft peach-to-lavender gradient backdrop, no text, 2:3 portrait composition
 
 ### `sketchy-hero.webp` · 1280×720 · 16:9
-> flat minimal wide panoramic, cozy digital art practice studio where sketch assignments flow from simple shapes into expressive character drawings while a gentle AI coach observes, cinematic scale, no text, 16:9 landscape
+> flat minimal wide panoramic, bright airy studio with a glowing drawing tablet at center, walls lined with pinned sketches arranged left-to-right from rough geometric shapes to expressive finished figures, a small friendly robot floats near the right edge offering an encouraging thumbs-up, warm amber morning light with soft teal accents, cinematic scale, no text, 16:9 landscape
 
 ### `conductor-icon.webp` · 256×256 · 1:1
 > flat minimal app icon, a small glowing circuit board shaped like a conductor's baton, bold clean vector shapes, square composition, no text
