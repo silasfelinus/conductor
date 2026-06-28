@@ -1,7 +1,7 @@
 # Pitch: Per-cycle cost + run-budget guard for AI_Networker
 date: 2026-06-24
 project-target: ai-networker-itself
-status: awaiting-silas
+status: passed
 
 ## The idea
 A small check the Worker runs each cycle that tracks how many agent runs/PRs happened
