@@ -1,0 +1,49 @@
+# Alexa Integration — voice commands to Conductor via Unraid
+# Progress % = done weight (+ half for in-progress) / total weight.
+
+project: alexa-integration
+kind: software
+
+notes_from_silas: |
+  Custom Alexa skill with a unique wake phrase routing voice commands through
+  a relay service on Unraid. Commands: Conductor task creation/status, kind_robots
+  art generation, direct LLM conversation, quick site actions.
+  Auth via KR_API_TOKEN (same as fetch_todos.py). HTTPS endpoint required
+  (Unraid reverse proxy or ngrok for dev). Do NOT publish the Alexa skill
+  or expose any real endpoint without needs-human.
+
+milestones:
+  - id: m1
+    title: "Intent schema + relay server skeleton"
+    weight: 25
+    status: not-started
+  - id: m2
+    title: "Intent handlers (create-todo, request-art, ask-llm, check-status)"
+    weight: 35
+    status: not-started
+  - id: m3
+    title: "HTTPS endpoint + Unraid Docker container"
+    weight: 25
+    status: not-started
+  - id: m4
+    title: "Alexa Developer Console skill submission (gated)"
+    weight: 15
+    status: not-started
+
+tasks:
+  - id: t-001
+    milestone: m1
+    title: "Draft Alexa intent schema and relay server skeleton"
+    status: ready
+    owner: null
+    updated: "2026-06-28T00:00:00Z"
+    passes: 0
+    stakes: reversible
+    note: >
+      Draft the Alexa skill intent schema (5-8 intents, sample utterances) in
+      docs/alexa-intent-schema.json and the Unraid relay server skeleton
+      (Node or Python). No live Alexa account changes. Ends needs-human for
+      Silas to review before m2 work starts.
+      Pitch ref: pitches/2026-06-27-alexa-integration.md (approved).
+    gate_human: true
+    approved_by_human: false

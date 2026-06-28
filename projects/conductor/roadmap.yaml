@@ -1,0 +1,49 @@
+# Conductor / AI_Networker — System Improvements
+# Tasks targeting the conductor system itself (ci, tooling, ops).
+# Progress % = done weight (+ half for in-progress) / total weight.
+
+project: conductor
+kind: software
+
+notes_from_silas: |
+  Improvements to the conductor / AI_Networker system itself — CI, scripts,
+  ops tooling. Keep changes small and reversible. Nothing that touches billing,
+  secrets, or deploys without needs-human.
+
+milestones:
+  - id: m1
+    title: "CI + branch protection gates"
+    weight: 20
+    status: not-started
+  - id: m2
+    title: "Ops tooling (triage, cost guards, monitoring)"
+    weight: 30
+    status: not-started
+
+tasks:
+  - id: t-001
+    milestone: m1
+    title: "Add GitHub Actions CI lint/build gate for worker/* PRs"
+    status: ready
+    owner: null
+    updated: "2026-06-28T00:00:00Z"
+    passes: 0
+    stakes: reversible
+    note: >
+      Add .github/workflows/ci.yml that installs deps and runs lint + build
+      per project kind. Update branch protection to require the status check.
+      Pitch ref: pitches/2026-06-24-add-ci-gate.md (approved).
+
+  - id: t-002
+    milestone: m2
+    title: "Build PR triage board script"
+    status: ready
+    owner: null
+    updated: "2026-06-28T00:00:00Z"
+    passes: 0
+    stakes: reversible
+    note: >
+      Create scripts/build_pr_triage.py that reads roadmaps plus recent GitHub
+      PR metadata and writes PR-TRIAGE.md as a generated, reviewable snapshot
+      of open worker PRs with their status, mergeability, human gates, and next
+      action. Pitch ref: pitches/2026-06-26-conductor-pr-triage-board.md (approved).

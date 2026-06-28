@@ -1,0 +1,43 @@
+# Art Generator Connect — conductor-driven image generation via kind_robots
+# Progress % = done weight (+ half for in-progress) / total weight.
+
+project: art-generator-connect
+kind: software
+
+notes_from_silas: |
+  Wire conductor Worker cycles into the existing SD / ComfyUI pipelines in
+  kind_robots. Workers POST to the art API; result URL is committed back to the
+  project or stored as an ArtImage record. Auth via KR_API_TOKEN.
+  No new rendering infrastructure — consume existing kind_robots endpoints.
+  Treat the shared backend as read-only/external; if a backend change is needed,
+  write a pitch instead of touching it directly.
+
+milestones:
+  - id: m1
+    title: "Art API documented + request_art.py wrapper written"
+    weight: 30
+    status: not-started
+  - id: m2
+    title: "Worker integration: generate art on request, commit result URL"
+    weight: 40
+    status: not-started
+  - id: m3
+    title: "End-to-end test: Worker requests art, URL lands in project notes"
+    weight: 30
+    status: not-started
+
+tasks:
+  - id: t-001
+    milestone: m1
+    title: "Document kind_robots art generation API endpoints"
+    status: ready
+    owner: null
+    updated: "2026-06-28T00:00:00Z"
+    passes: 0
+    stakes: reversible
+    note: >
+      Read the existing kind_robots art generation API endpoints and document
+      their request/response shape in docs/art-api.md so Workers know exactly
+      what to send. Cover SD and ComfyUI paths, auth, polling, and ArtImage
+      record structure. Read-only research; no code changes.
+      Pitch ref: pitches/2026-06-27-art-generator-connect.md (approved).

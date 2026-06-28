@@ -1,0 +1,55 @@
+# Media Watchlist — 10+ years of consumption data, structured and surfaced
+# Progress % = done weight (+ half for in-progress) / total weight.
+
+project: media-watchlist
+kind: software
+
+notes_from_silas: |
+  Parse and import 10+ years of personal media consumption logs (books, games,
+  movies, TV, comics, podcasts) into a structured DB. Surface with browse/filter,
+  stats dashboards, and integrations (Letterboxd, Comic Vine, Tautulli, Amazon
+  affiliate). Optional public review editor.
+  First step: Silas shares the raw log file. Workers parse a sample and propose
+  a schema. DO NOT add affiliate links or publish reviews without needs-human.
+  Amazon affiliate tracking = irreversible/outward-facing; always gate it.
+
+milestones:
+  - id: m1
+    title: "Raw log parsed + DB schema proposed"
+    weight: 20
+    status: not-started
+  - id: m2
+    title: "Import pipeline + browse/filter UI"
+    weight: 30
+    status: not-started
+  - id: m3
+    title: "Stats dashboard"
+    weight: 20
+    status: not-started
+  - id: m4
+    title: "External integrations (Letterboxd, Comic Vine, Tautulli)"
+    weight: 20
+    status: not-started
+  - id: m5
+    title: "Affiliate links + public review editor (gated)"
+    weight: 10
+    status: not-started
+
+tasks:
+  - id: t-001
+    milestone: m1
+    title: "Parse raw log sample and propose DB schema"
+    status: needs-human
+    owner: null
+    updated: "2026-06-28T00:00:00Z"
+    passes: 0
+    stakes: reversible
+    gate_human: true
+    approved_by_human: false
+    note: >
+      WAITING ON SILAS: share the raw media consumption text log file.
+      Once shared, Worker parses the first ~100 entries, identifies format
+      patterns, and proposes a DB schema + import script plan in
+      projects/media-watchlist/SCHEMA.md. Ends needs-human for Silas to
+      review before import work starts.
+      Pitch ref: pitches/2026-06-27-media-watchlist.md (approved).

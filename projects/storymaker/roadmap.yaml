@@ -1,0 +1,54 @@
+# Storymaker — collaborative storytelling engine for Kind Robots (Phase 3)
+# Progress % = done weight (+ half for in-progress) / total weight.
+
+project: storymaker
+kind: software
+
+notes_from_silas: |
+  Full collaborative storytelling engine built on top of existing Kind Robots
+  data models (Bots, Characters, Dreams, Rewards, Scenarios, Chats).
+  Two modes: Exquisite Corpse (async turn-based) and Guided Adventure
+  (LLM narrator, branching choices, inventory, solo or group).
+  House style: Nuxt 4 / Vue 3 / TypeScript / Prisma / Pinia 3 / DaisyUI.
+  Treat shared backend as read-only/external. App-owned logic only here.
+  Backend changes become pitches, not direct edits.
+
+milestones:
+  - id: m1
+    title: "Session data model designed and approved"
+    weight: 15
+    status: not-started
+  - id: m2
+    title: "Exquisite Corpse mode: turn-taking, shared narrative state"
+    weight: 30
+    status: not-started
+  - id: m3
+    title: "Guided Adventure mode: Scenario picker, LLM narrator, branching"
+    weight: 35
+    status: not-started
+  - id: m4
+    title: "Inventory, stat checks, rewards unlock"
+    weight: 15
+    status: not-started
+  - id: m5
+    title: "Genre remix + rare rewards"
+    weight: 5
+    status: not-started
+
+tasks:
+  - id: t-001
+    milestone: m1
+    title: "Design the Storymaker session data model"
+    status: ready
+    owner: null
+    updated: "2026-06-28T00:00:00Z"
+    passes: 0
+    stakes: reversible
+    note: >
+      Design the session data model: what persists between turns (participants,
+      current narrative state, inventory changes, branch history). Draft as
+      docs/storymaker-session-model.md for Silas to review.
+      Ends needs-human (gate_human) because the model shapes all subsequent work.
+      Pitch ref: pitches/2026-06-27-storymaker.md (approved).
+    gate_human: true
+    approved_by_human: false
