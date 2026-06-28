@@ -1,7 +1,7 @@
 # Pitch: Storymaker — collaborative storytelling phase 3
 date: 2026-06-27
 project-target: kind-robots
-status: awaiting-silas
+status: approved
 
 ## The idea
 Phase 3 of Kind Robots: a full collaborative storytelling engine built on top
