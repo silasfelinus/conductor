@@ -1,53 +1,75 @@
-# Conductor App — native mobile/desktop client (Flutter)
-# Progress % = done weight (+ half for in-progress) / total weight.
-
+# Conductor App — native mobile and desktop client
 project: conductor-app
 kind: software
 
 notes_from_silas: |
-  Flutter app (iOS + Android + macOS + web) giving a polished UI for the Conductor
-  system. Login via kind_robots auth (JWT). Features: dashboard, todos, push
-  notifications, art generation requests, voice-to-todo.
-  Auth, API keys, and push notification credentials are needs-human.
-  Do NOT publish to any app store without explicit approval.
+  Build a polished native client for Conductor. The first pass should define the
+  app shape, the API client, project dashboard, todos, approvals, art requests,
+  and notification strategy before implementation starts.
 
 milestones:
   - id: m1
-    title: "Flutter scaffold + auth flow + home dashboard"
-    weight: 30
-    status: not-started
-  - id: m2
-    title: "Todo list + project cards + agent status feed"
+    title: "App shell and API contract"
     weight: 25
     status: not-started
+  - id: m2
+    title: "Dashboard and project views"
+    weight: 30
+    status: not-started
   - id: m3
-    title: "Push notifications (FCM or self-hosted ntfy)"
-    weight: 20
+    title: "Todos, approvals, and art requests"
+    weight: 25
     status: not-started
   - id: m4
-    title: "Art generation request screen"
-    weight: 15
-    status: not-started
-  - id: m5
-    title: "App store submission (gated)"
-    weight: 10
+    title: "Notifications"
+    weight: 20
     status: not-started
 
 tasks:
   - id: t-001
     milestone: m1
-    title: "Scaffold Flutter project and implement auth flow + home dashboard"
+    title: "Draft app architecture and API contract"
     status: ready
     owner: null
-    updated: "2026-06-28T00:00:00Z"
     passes: 0
     stakes: reversible
-    note: >
-      Scaffold the Flutter project in conductor-app/ (or a sub-repo as a subdir).
-      Implement the auth flow (login screen → JWT in secure storage) and home
-      dashboard reading from kind_robots /api/conductor/projects and /api/todos.
-      Dummy/mock data fallback if API is unreachable. Ends needs-human for Silas
-      to review before m2 work.
-      Pitch ref: pitches/2026-06-27-conductor-app.md (approved).
     gate_human: true
-    approved_by_human: false
+    note: >
+      Draft the Conductor App architecture, screen list, data flow, and API
+      endpoints needed for projects, todos, agent status, approvals, and art
+      requests. Keep implementation gated until Silas approves the app shape.
+
+  - id: t-002
+    milestone: m2
+    title: "Scaffold first dashboard shell"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-001
+    note: >
+      Create the first app shell and dashboard after the architecture is approved.
+
+  - id: t-003
+    milestone: m3
+    title: "Design mobile todo and approval flows"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-001
+    note: >
+      Specify create/edit todo, pitch voting, task approval, and art request flows
+      for small screens.
+
+  - id: t-004
+    milestone: m4
+    title: "Choose notification strategy"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-001
+    note: >
+      Compare practical notification approaches for agent completions, blocked
+      tasks, and approvals needing review.
