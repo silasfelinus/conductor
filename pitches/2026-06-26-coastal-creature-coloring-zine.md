@@ -2,7 +2,7 @@
 
 date: 2026-06-26
 project-target: digital-storefront
-status: awaiting-silas
+status: passed
 
 ## The idea
 Make a short PDF coloring zine of whimsical Humboldt coast creatures doing tiny useful jobs: tidepool janitors, fog-herding cats, redwood mushroom librarians, and harbor-seal mail carriers. The tone should be cozy, queer-positive, all-ages, and easy to expand into themed volumes.
