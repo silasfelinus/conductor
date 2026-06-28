@@ -1,54 +1,98 @@
-# Storymaker — collaborative storytelling engine for Kind Robots (Phase 3)
-# Progress % = done weight (+ half for in-progress) / total weight.
-
+# Storymaker — collaborative storytelling phase 3
 project: storymaker
 kind: software
 
 notes_from_silas: |
-  Full collaborative storytelling engine built on top of existing Kind Robots
-  data models (Bots, Characters, Dreams, Rewards, Scenarios, Chats).
-  Two modes: Exquisite Corpse (async turn-based) and Guided Adventure
-  (LLM narrator, branching choices, inventory, solo or group).
-  House style: Nuxt 4 / Vue 3 / TypeScript / Prisma / Pinia 3 / DaisyUI.
-  Treat shared backend as read-only/external. App-owned logic only here.
-  Backend changes become pitches, not direct edits.
+  Build the collaborative storytelling experience layer on top of the existing
+  Kind Robots Bots, Characters, Dreams, Rewards, Scenarios, and Chats models.
+  Support Exquisite Corpse and Guided Adventure modes with async-first play,
+  branching choices, custom inputs, rewards, inventory, and reusable story state.
 
 milestones:
   - id: m1
-    title: "Session data model designed and approved"
-    weight: 15
-    status: not-started
-  - id: m2
-    title: "Exquisite Corpse mode: turn-taking, shared narrative state"
+    title: "Session model and boundaries"
     weight: 30
     status: not-started
+
+  - id: m2
+    title: "Turn engine and branching state"
+    weight: 30
+    status: not-started
+
   - id: m3
-    title: "Guided Adventure mode: Scenario picker, LLM narrator, branching"
-    weight: 35
+    title: "Player rewards and reusable artifacts"
+    weight: 20
     status: not-started
+
   - id: m4
-    title: "Inventory, stat checks, rewards unlock"
-    weight: 15
-    status: not-started
-  - id: m5
-    title: "Genre remix + rare rewards"
-    weight: 5
+    title: "Prototype UX"
+    weight: 20
     status: not-started
 
 tasks:
   - id: t-001
     milestone: m1
-    title: "Design the Storymaker session data model"
+    title: "Draft Storymaker session data model"
     status: ready
     owner: null
-    updated: "2026-06-28T00:00:00Z"
     passes: 0
     stakes: reversible
-    note: >
-      Design the session data model: what persists between turns (participants,
-      current narrative state, inventory changes, branch history). Draft as
-      docs/storymaker-session-model.md for Silas to review.
-      Ends needs-human (gate_human) because the model shapes all subsequent work.
-      Pitch ref: pitches/2026-06-27-storymaker.md (approved).
     gate_human: true
-    approved_by_human: false
+    note: >
+      Design the Storymaker session data model: participants, narrator Bot,
+      Scenario variables, current narrative state, inventory changes, branch
+      history, turn ownership, and persistence between turns. Draft as
+      docs/storymaker-session-model.md for Silas to review.
+
+  - id: t-002
+    milestone: m2
+    title: "Define Guided Adventure turn lifecycle"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-001
+    note: >
+      Specify the server-side lifecycle for a Guided Adventure turn: prompt build,
+      branch options, custom-input handling, stat or reward spends, safety limits,
+      state mutation, and next-turn handoff.
+
+  - id: t-003
+    milestone: m2
+    title: "Define Exquisite Corpse collaboration rules"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-001
+    note: >
+      Draft the async collaboration rules for Exquisite Corpse mode, including
+      turn order, what each player can see, mutation permissions, and how story,
+      character, or world elements are merged.
+
+  - id: t-004
+    milestone: m3
+    title: "Map rewards, locations, items, and characters back to profiles"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-001
+    note: >
+      Define what session outputs become reusable profile objects and how rarity,
+      unlocks, genre remixes, and future-session reuse should work.
+
+  - id: t-005
+    milestone: m4
+    title: "Sketch first Storymaker UX flow"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on:
+      - t-002
+      - t-003
+    note: >
+      Create a lightweight UX plan for starting a session, choosing a narrator,
+      seeing branch options, entering custom actions, and reviewing collected
+      artifacts. Keep it implementation-ready but not overbuilt.

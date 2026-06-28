@@ -1,49 +1,60 @@
-# Alexa Integration — voice commands to Conductor via Unraid
-# Progress % = done weight (+ half for in-progress) / total weight.
-
+# Alexa Integration
 project: alexa-integration
 kind: software
 
 notes_from_silas: |
-  Custom Alexa skill with a unique wake phrase routing voice commands through
-  a relay service on Unraid. Commands: Conductor task creation/status, kind_robots
-  art generation, direct LLM conversation, quick site actions.
-  Auth via KR_API_TOKEN (same as fetch_todos.py). HTTPS endpoint required
-  (Unraid reverse proxy or ngrok for dev). Do NOT publish the Alexa skill
-  or expose any real endpoint without needs-human.
+  Define a safe voice-command interface for Conductor. The first work should be
+  design-only: command list, user flows, project status readouts, todo creation,
+  art request handoff, and review gates before any live service work.
 
 milestones:
   - id: m1
-    title: "Intent schema + relay server skeleton"
-    weight: 25
-    status: not-started
-  - id: m2
-    title: "Intent handlers (create-todo, request-art, ask-llm, check-status)"
+    title: "Command design"
     weight: 35
     status: not-started
-  - id: m3
-    title: "HTTPS endpoint + Unraid Docker container"
-    weight: 25
+  - id: m2
+    title: "Relay design"
+    weight: 30
     status: not-started
-  - id: m4
-    title: "Alexa Developer Console skill submission (gated)"
-    weight: 15
+  - id: m3
+    title: "Review and rollout plan"
+    weight: 35
     status: not-started
 
 tasks:
   - id: t-001
     milestone: m1
-    title: "Draft Alexa intent schema and relay server skeleton"
+    title: "Draft voice command list"
     status: ready
     owner: null
-    updated: "2026-06-28T00:00:00Z"
     passes: 0
     stakes: reversible
-    note: >
-      Draft the Alexa skill intent schema (5-8 intents, sample utterances) in
-      docs/alexa-intent-schema.json and the Unraid relay server skeleton
-      (Node or Python). No live Alexa account changes. Ends needs-human for
-      Silas to review before m2 work starts.
-      Pitch ref: pitches/2026-06-27-alexa-integration.md (approved).
     gate_human: true
-    approved_by_human: false
+    note: >
+      Draft the first command list and sample phrases for creating todos, checking
+      project status, reviewing approvals, requesting art, and getting an agent
+      activity summary. Leave the result for Silas to approve before build work.
+
+  - id: t-002
+    milestone: m2
+    title: "Draft relay design note"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-001
+    note: >
+      Design a small relay layer that maps approved voice commands to existing
+      Conductor and kind_robots actions. Keep it as a document-only plan first.
+
+  - id: t-003
+    milestone: m3
+    title: "Write rollout and safety checklist"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-002
+    note: >
+      Write a checklist for testing, disabling, logging, and reviewing the voice
+      command integration before it is used for real work.
