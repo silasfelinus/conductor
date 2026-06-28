@@ -1,4 +1,4 @@
-# Humboldt Poop Scoop CMS — Customer and Property Schema
+# Humboldt Scoop CMS — Customer and Property Schema
 
 This schema is a TypeScript definition-first model for the early CMS. It does not create database migrations, touch a real database, import real customers, or wire payments. The companion file is `src/schema.ts`, with dummy seed data for local development.
 

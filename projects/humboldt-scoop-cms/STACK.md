@@ -1,4 +1,4 @@
-# Humboldt Poop Scoop CMS — Stack Proposal
+# Humboldt Scoop CMS — Stack Proposal
 
 ## Recommendation: small TypeScript HTTP app with Hono
 
