@@ -1,45 +1,90 @@
-# art-generate.yaml — Active image-generation queue
+# art-generate.yaml — Active image-generation batch
 #
-# This file is the live send-this-next list for generator batches.
-# Keep reusable prompt libraries in ART-PROMPTS.md and projects/art-prompts.yaml.
-# Remove or mark entries done after the images are generated and saved.
-#
-# Batch rule: send up to ten queued entries at a time. Every entry must become one
-# standalone image file. No collages, contact sheets, grids, text, logos, or watermarks.
+# Send this file to ChatGPT along with the system prompt from ART-PROMPTS.md.
+# Generate exactly one standalone image per entry. No collages, grids, or contact sheets.
+# After generating: save each file to its target_repo at the listed image_path, then remove
+# its entry from this file. Pull the next batch (up to 10 entries) from pending entries in
+# projects/art-prompts.yaml (images: and inspirations: sections).
 
-status_values:
-  - pending
-  - sent
-  - done
+batch:
+  entries:
+    - image_path: projects/images/media-watchlist-icon.webp
+      target_repo: silasfelinus/conductor
+      size: "256x256"
+      prompt: >
+        Premium app icon for Media Watchlist, a stack of beloved media objects fused into one
+        clean symbol: book, film reel, game controller, comic card, and checklist marks, glossy
+        dimensional app-icon rendering, deep navy backdrop with subtle glow, elegant readable
+        silhouette, no text, no logo, no watermark, no collage, square composition
 
-queues:
-  project_assets:
-    description: Static Conductor workspace assets saved to projects/images/.
-    source: projects/art-prompts.yaml
-    status: pending
-    entries:
-      - project: media-watchlist
-        variants: [icon]
+    - image_path: public/images/artcollections/sketchy/sketchy-inspiration-01.webp
+      target_repo: silasfelinus/kind_robots
+      size: "1280x720"
+      prompt: >
+        A luminous sketch-practice room where simple shapes become confident character drawings
+        on floating transparent layers, an encouraging tiny robot art coach gesturing toward
+        the next exercise, premium cozy creative-tool concept art, no text, no collage
 
-  dream_artcollection_starters:
-    description: New Kind Robots Dreams get card/icon/hero ArtImage starter records and matching filesystem paths automatically.
-    target_repo: silasfelinus/kind_robots
-    folder_template: public/images/artcollections/{dream_slug}/
-    public_path_template: /images/artcollections/{dream_slug}/{dream_slug}-{variant}.webp
-    generated_by: server/api/dreams/batch.post.ts
-    variants: [card, icon, hero]
-    status: automated-for-new-dreams
+    - image_path: public/images/artcollections/sketchy/sketchy-inspiration-02.webp
+      target_repo: silasfelinus/kind_robots
+      size: "1280x720"
+      prompt: >
+        Close-up of a tactile sketchbook page with graphite studies, eraser crumbs, gesture
+        thumbnails, and one charming character breaking out of the page into the real desk
+        light, crisp professional illustration, no text, no collage
 
-  new_project_inspiration:
-    description: For every new Dream/project, queue 3-5 inspiration or screenshot/mockup prompts after the starter card/icon/hero set.
-    target_repo: silasfelinus/kind_robots
-    folder_template: public/images/artcollections/{dream_slug}/
-    public_path_template: /images/artcollections/{dream_slug}/{dream_slug}-inspiration-{index}.webp
-    count: 3-5
-    status: pending-on-new-project
-    prompt_requirements:
-      - Use the Dream title, description, pitch, and artPrompt as the visual brief.
-      - Include screenshots or mockups before build-out when that helps communicate the feature.
-      - Keep the images inspirational, standalone, and useful as ArtCollection gallery material.
-      - No readable UI text unless Silas explicitly requests a screenshot with labels.
-      - No collage, contact sheet, logo, watermark, or accidental typography.
+    - image_path: public/images/artcollections/sketchy/sketchy-inspiration-03.webp
+      target_repo: silasfelinus/kind_robots
+      size: "1280x720"
+      prompt: >
+        A friendly critique interface imagined as physical art objects: pinned sketches, color
+        chips, tiny spark badges, and a pencil companion guiding improvement without judgment,
+        polished product key art, no text, no collage
+
+    - image_path: public/images/artcollections/art-generator-connect/art-generator-connect-inspiration-01.webp
+      target_repo: silasfelinus/kind_robots
+      size: "1280x720"
+      prompt: >
+        A conductor-like robot routing prompt cards through glowing image machines into neatly
+        labeled visual asset folders, cinematic creative pipeline energy without readable UI
+        text, professional sci-fi product art, no collage
+
+    - image_path: public/images/artcollections/art-generator-connect/art-generator-connect-inspiration-02.webp
+      target_repo: silasfelinus/kind_robots
+      size: "1280x720"
+      prompt: >
+        Macro view of generated thumbnails crystallizing from light inside transparent tubes,
+        each landing into a project collection tray, premium post-Flux image-generation visual
+        metaphor, no text, no collage
+
+    - image_path: public/images/artcollections/art-generator-connect/art-generator-connect-inspiration-03.webp
+      target_repo: silasfelinus/kind_robots
+      size: "1280x720"
+      prompt: >
+        A calm operations desk where failed placeholders are transformed into finished art
+        assets by small robot technicians and luminous validation rails, crisp studio
+        illustration, no text, no collage
+
+    - image_path: public/images/artcollections/storymaker/storymaker-inspiration-01.webp
+      target_repo: silasfelinus/kind_robots
+      size: "1280x720"
+      prompt: >
+        A tabletop map blooming into multiple possible scenes at once: forest, airship, castle,
+        sea cave, and dragon trail, with players shaping the story through glowing choice
+        tokens, high-end cozy fantasy game art, no text, no collage
+
+    - image_path: public/images/artcollections/storymaker/storymaker-inspiration-02.webp
+      target_repo: silasfelinus/kind_robots
+      size: "1280x720"
+      prompt: >
+        A robot narrator opening a starry book while diverse adventurers step from the pages
+        into a shared world, expressive character design and cinematic depth, no text, no
+        collage
+
+    - image_path: public/images/artcollections/storymaker/storymaker-inspiration-03.webp
+      target_repo: silasfelinus/kind_robots
+      size: "1280x720"
+      prompt: >
+        A branching story tree made of portals and miniature scenes, each branch held by
+        different hands, paws, claws, and robot fingers, polished collaborative storytelling
+        key art, no text, no collage

@@ -14,26 +14,44 @@ When asked for a batch, generate up to ten images in the same order as the queue
 
 ## Active queue vs prompt catalog
 
-- `projects/art-generate.yaml` is the active send-this-to-the-generator queue. Keep only assets that still need generation there.
-- `projects/art-prompts.yaml` is the canonical prompt catalog and missing-image request ledger. It can keep reusable prompts even when they are not in the active generator batch.
+- `projects/art-generate.yaml` is the active send-this-to-the-generator queue — a concrete flat list of up to 10 images ready to generate now. File path, destination repo, size, and prompt are all self-contained. Remove each entry once its file is saved.
+- `projects/art-prompts.yaml` is the full prompt catalog: `images:` for project icon/card/hero assets, `inspirations:` for ArtCollection gallery images, and `requests:` for missing-image reports. Pull the next batch from pending entries here.
 - ArtCollection parity folders use `public/images/artcollections/<dream-slug>/` in Kind Robots. Public URLs omit `public`, for example `/images/artcollections/<dream-slug>/<dream-slug>-card.webp`.
 
-## Current starter asset sets
+## Current pending
 
-Pending project asset sets currently cataloged in `projects/art-prompts.yaml`:
+**Project assets** (`projects/art-prompts.yaml` → `images:`):
 
-- `media-watchlist` — icon
+- `media-watchlist` — icon → `projects/images/media-watchlist-icon.webp` in `silasfelinus/conductor`
 
-Save generated project files to `projects/images/{slug}-{type}.webp`, then run:
+**Inspiration images** (`projects/art-prompts.yaml` → `inspirations:`, 3 each):
+
+- `sketchy` — inspiration-01, 02, 03
+- `art-generator-connect` — inspiration-01, 02, 03
+- `storymaker` — inspiration-01, 02, 03
+- `media-watchlist` — inspiration-01, 02, 03
+- `conductor-app` — inspiration-01, 02, 03
+- `alexa-integration` — inspiration-01, 02, 03
+- `approval-portal` — inspiration-01, 02, 03
+- `brainstorm` — inspiration-01, 02, 03
+- `coat-dance` — inspiration-01, 02, 03
+- `conductor` — inspiration-01, 02, 03
+- `digital-storefront` — inspiration-01, 02, 03
+- `humboldt-scoop` — inspiration-01, 02, 03
+- `humboldt-scoop-cms` — inspiration-01, 02, 03
+- `kind-robots` — inspiration-01, 02, 03
+- `mermaids-of-venice` — inspiration-01, 02, 03
+
+All inspiration images save to `silasfelinus/kind_robots` at:
+
+```text
+public/images/artcollections/<slug>/<slug>-inspiration-0{n}.webp
+```
+
+Project asset files save to `silasfelinus/conductor` at `projects/images/{slug}-{type}.webp`, then run:
 
 ```bash
 python scripts/build_workspace.py
-```
-
-For Kind Robots ArtCollection images, save generated files to:
-
-```text
-public/images/artcollections/<dream-slug>/<dream-slug>-<variant>.webp
 ```
 
 ## Existing project inspiration prompt backlog
@@ -75,3 +93,57 @@ These are not automatically queued for legacy projects. Generate them manually w
 - `alexa-integration-inspiration-01.webp` — Luminous voice ribbons traveling from a smart speaker through a home server into project cards, todos, approvals, and art requests, cinematic smart-home automation art, no text, no collage.
 - `alexa-integration-inspiration-02.webp` — Cozy workshop bench with a relay box, tidy cables, glowing audio waveforms, and household helpers testing hands-free task control, practical hacker-home charm, no text, no collage.
 - `alexa-integration-inspiration-03.webp` — A cross-room home automation scene where spoken requests become gentle light paths connecting family spaces, maker tools, and Conductor workflows, warm polished product art, no text, no collage.
+
+### approval-portal
+
+- `approval-portal-inspiration-01.webp` — A calm glass-enclosed decision chamber where project cards, pitch proposals, and progress rings float above a single approval console; a lone operator navigates quietly between options, cinematic productivity key art, no readable text, no collage.
+- `approval-portal-inspiration-02.webp` — Close-up of a confident approval gesture over a glowing project card stack, nearby thumbnails show PR diffs, roadmaps, and milestone rings, premium editorial software art, no text, no collage.
+- `approval-portal-inspiration-03.webp` — A control room scene where approved and rejected cards flow into orderly git history stacks, a robot archivist logs each decision as a crystalline commit record, polished software product illustration, no text, no collage.
+
+### brainstorm
+
+- `brainstorm-inspiration-01.webp` — A luminous idea factory where concept sparks become fully-formed pitch cards sorted by category — products, content, revenue, upgrades — diverse robots and humans collaborating in a warm creative engine space, premium product art, no text, no collage.
+- `brainstorm-inspiration-02.webp` — A diverse voting circle of humans, robots, and creatures casting approval tokens toward rising pitch proposals in a warm strategic planning space, polished collaborative product illustration, no text, no collage.
+- `brainstorm-inspiration-03.webp` — Close-up of AI-generated ideas crystallizing from light into tangible product concepts and content series cards on a reviewer's desk, cinematic creative technology art, no text, no collage.
+
+### coat-dance
+
+- `coat-dance-inspiration-01.webp` — An expressive stage where coats and garments choreograph themselves into sweeping abstract dance formations, luminous movement trails, high-fashion surrealism, editorial art direction, no text, no collage.
+- `coat-dance-inspiration-02.webp` — A behind-the-scenes creative atelier where a director and ensemble craft the coat-dance concept, mood boards and fabric swatches pinned under warm studio lighting, no text, no collage.
+- `coat-dance-inspiration-03.webp` — A surreal cityscape where figure and coat become one flowing performance across rooftops, bridges, and courtyards, cinematic dance film visual language, no text, no collage.
+
+### conductor
+
+- `conductor-inspiration-01.webp` — An elevated conductor's podium overlooking a vast agent network, robot workers and AI threads streaming across a luminous stage under precise baton direction, orchestral metaphor for software coordination, cinematic art, no text, no collage.
+- `conductor-inspiration-02.webp` — A living dependency graph rendered as interconnected glowing orbs and task bridges, agents claiming and completing work nodes in real time, futuristic project management visualization art, no text, no collage.
+- `conductor-inspiration-03.webp` — A control tower where a calm AI director dispatches Workers, receives Reviewer signals, and escalates one glowing task to a lit human desk, premium sci-fi ops center art, no text, no collage.
+
+### digital-storefront
+
+- `digital-storefront-inspiration-01.webp` — A gleaming multi-genre digital marketplace where product tiles for printables, courses, and digital goods float in elegant showcase columns, diverse shoppers and creator-robots browsing, premium e-commerce product art, no text, no collage.
+- `digital-storefront-inspiration-02.webp` — A content creation pipeline room where raw ideas on one wall become finished digital products on the other through illustrated production stages, satisfying factory-to-shelf visual storytelling, no text, no collage.
+- `digital-storefront-inspiration-03.webp` — A marketing launch scene with glowing channel portals opening as polished digital products travel through them into growing audience clusters, cinematic digital marketing art, no text, no collage.
+
+### humboldt-scoop
+
+- `humboldt-scoop-inspiration-01.webp` — A bright professional yard-care crew finishing a clean sweep of a sunny residential property while pets play freely in the background, warm neighborhood service art with a friendly team of varied ages and backgrounds, no text, no collage.
+- `humboldt-scoop-inspiration-02.webp` — Happy dogs and cats of every breed enjoying a freshly maintained backyard, playful and expressive character designs, idyllic neighborhood setting, premium pet-friendly service brand illustration, no text, no collage.
+- `humboldt-scoop-inspiration-03.webp` — A cheerful service route map showing scheduled yard visits flowing across a neighborhood grid, tiny crew icons completing each property with satisfaction checkmarks, polished local business illustration, no text, no collage.
+
+### humboldt-scoop-cms
+
+- `humboldt-scoop-cms-inspiration-01.webp` — A friendly CMS dashboard rendered as a warm physical desk: customer cards with pet profiles, service calendars, and billing summaries arranged for a smiling service coordinator, premium small business software art, no text, no collage.
+- `humboldt-scoop-cms-inspiration-02.webp` — A field tech logs a completed yard visit on a tablet while a dog watches happily nearby, the submission linking to a customer profile with pet records, visit history, and upcoming schedule, polished service app art, no text, no collage.
+- `humboldt-scoop-cms-inspiration-03.webp` — A scheduling visualization where recurring service routes ripple across a calendar-map hybrid, crew assignments color-coded, customer preferences noted on each card, satisfying operational clarity art, no text, no collage.
+
+### kind-robots
+
+- `kind-robots-inspiration-01.webp` — A grand Kind Robots hub where portals to every project world open across a luminous consortium floor, a diverse array of robots, humans, creatures, and companions navigating between sketching studios, storytelling tables, media archives, and orchestration towers, epic welcome key art, no text, no collage.
+- `kind-robots-inspiration-02.webp` — The Kind Robots world-tree: branching platforms where every project is a distinct zone — a pencil tower, a story map table, a film archive, an image factory, a voice relay station — interconnected by glowing paths, premium world-building illustration, no text, no collage.
+- `kind-robots-inspiration-03.webp` — A Kind Robots community gathering where agents, creators, reviewers, and users of all species interact across project portals, trade work tokens, and celebrate shipped milestones, warm cinematic consortium art, no text, no collage.
+
+### mermaids-of-venice
+
+- `mermaids-of-venice-inspiration-01.webp` — Mermaids gliding through the submerged streets of a moonlit Venice, lanterns casting golden ripples across flooded piazzas, gondolas drifting above their tails, lush fantasy editorial illustration, no text, no collage.
+- `mermaids-of-venice-inspiration-02.webp` — An underwater view of a Venetian canal ceiling — gondola keels, trailing scarves, and bridges silhouetted above while mermaids gather in an ancient mosaic hall below, cinematic fantasy depth, no text, no collage.
+- `mermaids-of-venice-inspiration-03.webp` — A Carnival scene where mermaids emerge at dusk, masked and costumed among Venetian revelers, seamlessly blending myth and history in luminous pageant key art, no text, no collage.
