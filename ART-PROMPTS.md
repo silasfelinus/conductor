@@ -22,6 +22,7 @@ When asked for a batch, generate up to ten images in the same order as the queue
 
 **Project assets** (`projects/art-prompts.yaml` → `images:`):
 
+- `global-ui` — icon, card, hero → `projects/images/global-ui-{type}.webp` in `silasfelinus/conductor`
 - `engagement` — icon, card, hero → `projects/images/engagement-{type}.webp` in `silasfelinus/conductor`
 - `wishmaster` — icon, card, hero → `projects/images/wishmaster-{type}.webp` in `silasfelinus/conductor`
 - `media-watchlist` — icon → `projects/images/media-watchlist-icon.webp` in `silasfelinus/conductor`
