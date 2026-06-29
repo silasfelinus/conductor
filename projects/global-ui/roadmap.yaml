@@ -35,6 +35,11 @@ notes_from_silas: |
   supports AGENT, KAIZEN, and HONEYDO categories globally, but Todos are not scoped to
   a dream/project and desired features are not modeled as an orderable project list yet.
 
+  Promote a recurring site-audit agent that does the same kind of check: compare the
+  roadmap/conductor vocabulary against the actual Kind Robots frontend/backend, identify
+  support gaps, and propose small reversible tasks. Weekly is a reasonable starting
+  interval; slow it down once the surfaces are stable.
+
 tasks:
   - id: t-001
     milestone: m1
@@ -112,11 +117,12 @@ tasks:
       - t-004
       - t-007
       - t-008
+      - t-009
     note: >
       Produce the final navigation/presentation map for projects, roadmaps, Todos,
-      desired feature lists, honeydos, kaizens, approvals, and completion history.
-      Identify any follow-up tasks as separate scoped work rather than expanding
-      this task.
+      desired feature lists, honeydos, kaizens, approvals, completion history, and
+      the recurring site-audit agent loop. Identify any follow-up tasks as separate
+      scoped work rather than expanding this task.
 
   - id: t-006
     milestone: m4
@@ -165,6 +171,23 @@ tasks:
       UI needed for a selected dream/project to show its own kaizens and orderable
       desired feature list. Preserve store-mediated component interactions and avoid
       direct component API calls.
+
+  - id: t-009
+    milestone: m5
+    title: "Promote a recurring site-audit agent"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-001
+    note: >
+      Define and promote an important recurring agent that periodically audits Kind
+      Robots and related sites the way Silas just requested: compare active roadmap
+      concepts against actual frontend/backend support, find mismatches, and propose
+      small reversible follow-up tasks. Start with a weekly interval. The agent should
+      report what exists, what is missing, and what should be promoted into the next
+      scoped task, without rewriting project roadmaps or making broad implementation
+      changes automatically.
 
 milestones:
   - id: m1
