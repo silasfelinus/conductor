@@ -131,4 +131,4 @@ Start with the session data model (needs-human gate) before any play-mode code.
 - **Priority:** also update projects/priority.yaml (or tell an agent to sync it).
 - **Approve a gated task / pitch:** edit the task in its roadmap (`approved_by_human: true`,
   `status: done`) or set a pitch's `status:` to approved/rejected. The resolver unblocks
-  dependents next cycle.
+dependents next cycle.
