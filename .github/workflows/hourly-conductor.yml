@@ -1,0 +1,65 @@
+name: Hourly Conductor
+
+# Runs every hour. Checks both repos (conductor + kind_robots) via GitHub API,
+# scans local roadmaps for blockers, fetches open todos, and uses Claude to
+# produce a brief actionable summary written to CONDUCTOR-REPORT.md.
+
+on:
+  schedule:
+    - cron: "0 * * * *"   # every hour on the hour
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Print report to log only — do not commit"
+        required: false
+        default: "false"
+        type: string
+
+jobs:
+  conductor:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install pyyaml
+
+      - name: Run conductor assessment
+        run: |
+          FLAG=""
+          if [ "${{ inputs.dry_run }}" = "true" ]; then FLAG="--dry-run"; fi
+          python scripts/build_conductor_summary.py $FLAG
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          KR_API_TOKEN: ${{ secrets.KR_API_TOKEN }}
+
+      - name: Upload report artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: conductor-report
+          path: CONDUCTOR-REPORT.md
+          if-no-files-found: ignore
+
+      - name: Commit conductor report
+        if: ${{ inputs.dry_run != 'true' }}
+        run: |
+          git config user.name "conductor-bot"
+          git config user.email "conductor-bot@users.noreply.github.com"
+          git add CONDUCTOR-REPORT.md
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "chore: conductor report $(date -u '+%Y-%m-%d %H:%M UTC') [skip ci]"
+            git push
+          fi
