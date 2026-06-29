@@ -1,0 +1,60 @@
+name: Reviewer (Hourly)
+
+# Runs every hour at :45. Finds the oldest open worker/* PR, reads the diff
+# and project context, calls Claude (claude-sonnet-4-6) via tool use to decide:
+# merge / reject / escalate. On merge, squash-merges directly; on conflict,
+# rebases and asks Claude Haiku to resolve before retrying. Updates the roadmap
+# and appends a TALKBACK entry after every decision.
+#
+# Also triggers immediately when a worker/* PR is opened, so the Reviewer
+# doesn't have to wait up to 45 minutes.
+#
+# Requires secrets: ANTHROPIC_API_KEY, GITHUB_TOKEN (or GH_PAT for branch bypass).
+
+on:
+  schedule:
+    - cron: "45 * * * *"   # :45 past every hour (15 min after Worker at :30)
+  pull_request:
+    types: [opened, synchronize]
+    branches:
+      - main
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Dry run — no merges, no comments, no roadmap updates"
+        required: false
+        default: "false"
+        type: string
+
+jobs:
+  reviewer:
+    runs-on: ubuntu-latest
+    # On PR events, only run for worker/* branches targeting main
+    if: ${{ github.event_name != 'pull_request' || startsWith(github.head_ref, 'worker/') }}
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GH_PAT || secrets.GITHUB_TOKEN }}
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install pyyaml
+
+      - name: Run reviewer cycle
+        run: |
+          FLAG=""
+          if [ "${{ inputs.dry_run }}" = "true" ]; then FLAG="--dry-run"; fi
+          python scripts/run_reviewer.py $FLAG
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GH_PAT || secrets.GITHUB_TOKEN }}
+          GIT_USER_NAME: "reviewer-bot"
+          GIT_USER_EMAIL: "reviewer-bot@users.noreply.github.com"
