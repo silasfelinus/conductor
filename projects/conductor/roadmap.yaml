@@ -1,5 +1,5 @@
 # Conductor / AI_Networker — System Improvements
-# Tasks targeting the conductor system itself (ci, tooling, ops).
+# Tasks targeting the conductor system itself (ci, tooling, ops, security).
 # Progress % = done weight (+ half for in-progress) / total weight.
 
 project: conductor
@@ -7,8 +7,9 @@ kind: software
 
 notes_from_silas: |
   Improvements to the conductor / AI_Networker system itself — CI, scripts,
-  ops tooling. Keep changes small and reversible. Nothing that touches billing,
-  secrets, or deploys without needs-human.
+  ops tooling, recurring security audits, and agent access boundaries. Keep
+  changes small and reversible. Nothing that touches billing, secrets, deploys,
+  auth policy, production data, or write permissions without needs-human.
 
 milestones:
   - id: m1
@@ -22,6 +23,10 @@ milestones:
   - id: m3
     title: 'Per-project kaizen prompts + honey-do lists for Silas'
     weight: 50
+    status: not-started
+  - id: m4
+    title: 'Security auditor + privacy boundary manager'
+    weight: 80
     status: not-started
 
 tasks:
@@ -65,17 +70,91 @@ tasks:
       Build scripts/build_kaizen.py. For each active project it emits:
 
       1. KAIZEN PROMPT — the single most impactful action Silas can take right
-         now, one sentence framed as a direct instruction
-         (e.g. "Approve the stack spec in humboldt-scoop-cms/t-001").
-         Priority order: needs-human tasks first, then gate_human gates with
-         approved_by_human: false, then passes==3 blocked tasks, then stale
-         claimed tasks with no recent commit.
+      now, one sentence framed as a direct instruction
+      (e.g. "Approve the stack spec in humboldt-scoop-cms/t-001").
+      Priority order: needs-human tasks first, then gate_human gates with
+      approved_by_human: false, then passes==3 blocked tasks, then stale
+      claimed tasks with no recent commit.
 
       2. HONEY-DO LIST — every other action only Silas can unblock, as a
-         markdown checkbox list ordered by downstream impact. Each item names
-         the task id and the exact decision or file to touch.
-         Agent-workable items are excluded entirely.
+      markdown checkbox list ordered by downstream impact. Each item names
+      the task id and the exact decision or file to touch.
+      Agent-workable items are excluded entirely.
 
       Output: KAIZEN.md at the repo root, regenerated each cycle alongside
       PR-TRIAGE.md. The approval-portal (when built) reads the same data
       to render interactive checkboxes on each project card.
+
+  - id: t-004
+    milestone: m4
+    title: 'Write SECURITY-MANAGER.md threat model and audit runbook'
+    status: ready
+    owner: null
+    updated: '2026-06-29T00:00:00Z'
+    passes: 0
+    stakes: needs-human
+    gate_human: true
+    note: >
+      Create SECURITY-MANAGER.md at repo root. Define the security manager role,
+      threat model, protected assets, severity ladder, escalation rules, and safe
+      automation boundaries. Explicitly cover Dreams, projects, private files,
+      family-only access, agent write access, source-code rewrite risk, Vercel,
+      GitHub Actions, secrets, production data, and deployment gates. This is a
+      policy/runbook task only; do not change live auth, secrets, deploys, billing,
+      DNS, or production data. Leave it needs-human until Silas approves the
+      boundary model.
+
+  - id: t-005
+    milestone: m4
+    title: 'Add automated authz regression tests for Dreams and projects'
+    status: waiting
+    owner: null
+    updated: '2026-06-29T00:00:00Z'
+    passes: 0
+    stakes: reversible
+    depends_on: t-004
+    note: >
+      After Silas approves SECURITY-MANAGER.md, add tests that prove anonymous,
+      non-owner, non-family, and normal-user accounts cannot read private Dreams,
+      private project files, private project metadata, private generated assets,
+      or family-only resources. Include negative tests for write/update/delete,
+      project influence, prompt injection into project instructions, and API route
+      bypass attempts. Use fixtures/mocks only; do not use production secrets or
+      real private user data.
+
+  - id: t-006
+    milestone: m4
+    title: 'Add GitHub Actions security audit workflow'
+    status: waiting
+    owner: null
+    updated: '2026-06-29T00:00:00Z'
+    passes: 0
+    stakes: needs-human
+    gate_human: true
+    depends_on:
+      - t-004
+      - t-005
+    note: >
+      Add a scheduled GitHub Actions workflow that runs dependency audit, static
+      checks, authz regression tests, and a safe site smoke-test matrix on a cron.
+      Design it so routine checks can run automatically, but anything requiring
+      secrets, production writes, authenticated scans, Vercel deployment changes,
+      or external vulnerability probing stays gated behind needs-human. The first
+      implementation should be PR-only and non-destructive.
+
+  - id: t-007
+    milestone: m4
+    title: 'Build security report artifact and maintenance queue'
+    status: waiting
+    owner: null
+    updated: '2026-06-29T00:00:00Z'
+    passes: 0
+    stakes: reversible
+    depends_on: t-006
+    note: >
+      Create a script or workflow step that writes SECURITY-REPORT.md from the
+      latest audit results: pass/fail summary, new dependency vulnerabilities,
+      failed authz boundaries, stale secrets/config warnings, open security PRs,
+      and a prioritized maintenance queue. The report should never include secret
+      values, private file contents, tokens, or personal data; only names, ids,
+      severities, and recommended next actions.
