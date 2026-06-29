@@ -16,7 +16,7 @@ happened. Don't edit it; edit here.
 reversible until the first clean cycle is done. Nothing publishes, deploys, or spends
 money without my explicit approval (set `approved_by_human: true` on the gated task).
 
-**Priority order this week:** humboldt-scoop → humboldt-poop-scoop-cms → approval-portal
+**Priority order this week:** humboldt-scoop → humboldt-scoop-cms → approval-portal
 → digital-storefront → kind-robots. (Mirror changes into projects/priority.yaml.)
 
 **Standing rules for all agents:** Respect each project's `kind`. Honor `depends_on` gates.
@@ -36,7 +36,7 @@ Don't redesign — modernize and fix.
 **Notes:**
 - (your notes)
 
-### humboldt-poop-scoop-cms  (software)
+### humboldt-scoop-cms  (software)
 **Direction:** Build the customer-management tool for the poop-scoop business. Simple,
 self-hostable. Dummy data only until I say otherwise.
 **Notes:**

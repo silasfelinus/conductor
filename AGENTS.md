@@ -19,7 +19,7 @@ Every roadmap declares a `kind`. It tells the Reviewer how to handle finished wo
 
 - **software** — code work. Output is a PR. Reviewer merges reversible low-stakes PRs,
   bounces back the rest, escalates outward-facing/irreversible to `needs-human`.
-  (humboldt-scoop, humboldt-poop-scoop-cms, kind-robots)
+  (humboldt-scoop, humboldt-scoop-cms, kind-robots)
 - **content** — deliverables, not code (marketing plans, copy, content-pipeline output).
   Output is a file in the project folder. The Reviewer does NOT auto-publish anything;
   finished drafts go to `needs-human` for Silas to approve before anything goes live.

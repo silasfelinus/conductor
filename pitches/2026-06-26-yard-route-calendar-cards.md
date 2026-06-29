@@ -1,7 +1,7 @@
 # Pitch: Yard Route Calendar Cards
 
 date: 2026-06-26
-project-target: humboldt-poop-scoop-cms
+project-target: humboldt-scoop-cms
 status: approved
 
 ## The idea
@@ -14,4 +14,4 @@ It connects directly to the service-scheduling roadmap without touching live cus
 small
 
 ## Suggested first task
-Add a dummy route-card export spec under `projects/humboldt-poop-scoop-cms/` with fields, sample cards, and no real customer data.
+Add a dummy route-card export spec under `projects/humboldt-scoop-cms/` with fields, sample cards, and no real customer data.

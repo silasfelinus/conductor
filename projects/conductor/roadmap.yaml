@@ -12,25 +12,25 @@ notes_from_silas: |
 
 milestones:
   - id: m1
-    title: "CI + branch protection gates"
+    title: 'CI + branch protection gates'
     weight: 20
     status: not-started
   - id: m2
-    title: "Ops tooling (triage, cost guards, monitoring)"
+    title: 'Ops tooling (triage, cost guards, monitoring)'
     weight: 30
     status: not-started
   - id: m3
-    title: "Per-project kaizen prompts + honey-do lists for Silas"
+    title: 'Per-project kaizen prompts + honey-do lists for Silas'
     weight: 50
     status: not-started
 
 tasks:
   - id: t-001
     milestone: m1
-    title: "Add GitHub Actions CI lint/build gate for worker/* PRs"
+    title: 'Add GitHub Actions CI lint/build gate for worker/* PRs'
     status: ready
     owner: null
-    updated: "2026-06-28T00:00:00Z"
+    updated: '2026-06-28T00:00:00Z'
     passes: 0
     stakes: reversible
     note: >
@@ -40,10 +40,10 @@ tasks:
 
   - id: t-002
     milestone: m2
-    title: "Build PR triage board script"
+    title: 'Build PR triage board script'
     status: ready
     owner: null
-    updated: "2026-06-28T00:00:00Z"
+    updated: '2026-06-28T00:00:00Z'
     passes: 0
     stakes: reversible
     note: >
@@ -54,10 +54,10 @@ tasks:
 
   - id: t-003
     milestone: m3
-    title: "Build scripts/build_kaizen.py — per-project kaizen prompt + honey-do list"
+    title: 'Build scripts/build_kaizen.py — per-project kaizen prompt + honey-do list'
     status: waiting
     owner: null
-    updated: "2026-06-28T00:00:00Z"
+    updated: '2026-06-28T00:00:00Z'
     passes: 0
     stakes: reversible
     depends_on: t-002
@@ -66,7 +66,7 @@ tasks:
 
       1. KAIZEN PROMPT — the single most impactful action Silas can take right
          now, one sentence framed as a direct instruction
-         (e.g. "Approve the stack spec in humboldt-poop-scoop-cms/t-001").
+         (e.g. "Approve the stack spec in humboldt-scoop-cms/t-001").
          Priority order: needs-human tasks first, then gate_human gates with
          approved_by_human: false, then passes==3 blocked tasks, then stale
          claimed tasks with no recent commit.
