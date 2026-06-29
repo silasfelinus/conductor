@@ -1,0 +1,102 @@
+project: engagement
+kind: software
+
+notes_from_silas: |
+  The engagement and referral economy for Kind Robots. Governs how karma and
+  mana flow through community interaction: referrals, bounties, content creation,
+  reactions, and social sharing.
+
+  Core principles:
+  - Interaction is always rewarded, never punished. Posting a bounty (asking for
+    help) is a social good — when someone fills it using house resources, the
+    POSTER gets mana back from the house. Both sides are celebrated.
+  - Bounties live IN the Prompt model (isBounty flag) — no separate model.
+    A bounty is just a public prompt request with a status and claim system.
+  - Karma and mana are separate registers with separate transaction tables.
+    Karma = social standing (non-purchasable, earned by being a good citizen).
+    Mana = generation fuel (rechargeable, purchasable, the energy economy).
+  - Referrals earn karma + mana upfront, PLUS an ongoing cut of future payouts
+    from the referred user (like patronage). The referral tree is permanent.
+  - Karma and mana reward rates are Silas-set parameters — agents propose
+    values, Silas approves before anything goes live. Always needs-human for
+    rate changes.
+
+  Anti-abuse: rate limits on all reward triggers. Circular referral rings,
+  bot farms, and reaction spam need detection before any economy goes live.
+  Gate every rate-setting task with gate_human: true.
+
+milestones:
+  - id: m1
+    title: "Referral model + User.referralCode + signup attribution"
+    weight: 20
+    status: not-started
+
+  - id: m2
+    title: "KarmaTransaction register + trigger wiring"
+    weight: 25
+    status: not-started
+
+  - id: m3
+    title: "Bounty flow in Prompt (isBounty, claim, fulfill, house reward)"
+    weight: 25
+    status: not-started
+
+  - id: m4
+    title: "Ongoing referrer revenue cut (rate-gated by Silas)"
+    weight: 20
+    status: not-started
+    gate_human: true
+
+  - id: m5
+    title: "Anti-abuse guards + economy parameter sign-off"
+    weight: 10
+    status: not-started
+    gate_human: true
+
+tasks:
+  - id: t-001
+    milestone: m1
+    title: "Design and add Referral model to schema"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: "2026-06-29T00:00:00Z"
+    note: >
+      Add Referral model: referrerId (User), referredId (User, unique — one
+      referrer per user), referralCode used (String), signedUpAt, cutRate
+      (Float default 0.05). Add referralCode String? @unique to User.
+      No payment logic yet — just the attribution model and the signup hook.
+      Write migration and update schema. PR only; no UI.
+
+  - id: t-002
+    milestone: m2
+    title: "Add KarmaTransaction model and wire first triggers"
+    status: waiting
+    depends_on: t-001
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: "2026-06-29T00:00:00Z"
+    note: >
+      KarmaTransaction: userId, amount, reason (KarmaReason enum), balanceAfter,
+      refId, note. Update User.karma balance on each transaction.
+      Wire triggers (small placeholder amounts — Silas will tune):
+      reaction given +1, public content created +1, bounty fulfilled +5,
+      referral signed up +10. All amounts as named constants, not magic numbers.
+
+  - id: t-003
+    milestone: m3
+    title: "Add isBounty fields to Prompt + bounty API"
+    status: waiting
+    depends_on: t-001
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: "2026-06-29T00:00:00Z"
+    note: >
+      Add to Prompt: isBounty Boolean @default(false), bountyStatus
+      (OPEN|CLAIMED|FULFILLED|EXPIRED|CANCELLED enum), claimerId Int?,
+      Claimer User? relation. When fulfilled via house server: award mana
+      to BOTH poster and fulfiller from house pool. Draft amounts, mark
+      needs-human before going live.

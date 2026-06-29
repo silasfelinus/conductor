@@ -22,11 +22,13 @@ When asked for a batch, generate up to ten images in the same order as the queue
 
 **Project assets** (`projects/art-prompts.yaml` → `images:`):
 
+- `engagement` — icon, card, hero → `projects/images/engagement-{type}.webp` in `silasfelinus/conductor`
 - `wishmaster` — icon, card, hero → `projects/images/wishmaster-{type}.webp` in `silasfelinus/conductor`
 - `media-watchlist` — icon → `projects/images/media-watchlist-icon.webp` in `silasfelinus/conductor`
 
 **Inspiration images** (`projects/art-prompts.yaml` → `inspirations:`, 3 each):
 
+- `engagement` — inspiration-01, 02, 03
 - `wishmaster` — inspiration-01, 02, 03
 - `sketchy` — inspiration-01, 02, 03
 - `art-generator-connect` — inspiration-01, 02, 03
@@ -143,6 +145,12 @@ These are not automatically queued for legacy projects. Generate them manually w
 - `kind-robots-inspiration-01.webp` — A grand Kind Robots hub where portals to every project world open across a luminous consortium floor, a diverse array of robots, humans, creatures, and companions navigating between sketching studios, storytelling tables, media archives, and orchestration towers, epic welcome key art, no text, no collage.
 - `kind-robots-inspiration-02.webp` — The Kind Robots world-tree: branching platforms where every project is a distinct zone — a pencil tower, a story map table, a film archive, an image factory, a voice relay station — interconnected by glowing paths, premium world-building illustration, no text, no collage.
 - `kind-robots-inspiration-03.webp` — A Kind Robots community gathering where agents, creators, reviewers, and users of all species interact across project portals, trade work tokens, and celebrate shipped milestones, warm cinematic consortium art, no text, no collage.
+
+### engagement
+
+- `engagement-inspiration-01.webp` — A luminous referral tree where each glowing node represents a user, connected by warm light trails; downstream activity pulses upward through the tree as karma and mana flow toward the roots, beautiful network visualization as cinematic art, no text, no collage.
+- `engagement-inspiration-02.webp` — A community bounty board where art requests float like glowing wanted posters, diverse users of every species, age, gender, and presentation style step forward to claim and fulfill them, warm mutual-aid energy, polished platform illustration, no text, no collage.
+- `engagement-inspiration-03.webp` — A karma ceremony where contributors of all backgrounds receive glowing stars for creating, sharing, referring, and responding — the stars orbit a central community hearth and slowly crystallize into lasting reputation badges, warm celebratory key art, no text, no collage.
 
 ### wishmaster
 
