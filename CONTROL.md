@@ -17,7 +17,7 @@ reversible until the first clean cycle is done. Nothing publishes, deploys, or s
 money without my explicit approval (set `approved_by_human: true` on the gated task).
 
 **Priority order this week:** humboldt-scoop → humboldt-scoop-cms → approval-portal
-→ digital-storefront → kind-robots. (Mirror changes into projects/priority.yaml.)
+→ digital-storefront → kind-robots → global-ui. (Mirror changes into projects/priority.yaml.)
 
 **Standing rules for all agents:** Respect each project's `kind`. Honor `depends_on` gates.
 Never expand product-types.yaml — pitch it. When unsure, do less and escalate to
@@ -61,6 +61,14 @@ gated on me.
 backend is read-only/external. Backend changes become pitches, never direct edits.
 **Notes:**
 - (your notes)
+
+### global-ui  (software)
+**Direction:** Define and build the shared user-facing interface for projects, tasks,
+front-end TODOs, honeydos, kaizens, approvals, and completion history. Honeydos are global
+LLM-assigned user tasks; kaizens are project-specific prompts shown while viewing a project.
+Keep task creation visible on the front end without creating a second source of truth.
+**Notes:**
+- Start by approving the vocabulary and presentation model before implementation.
 
 ### brainstorm  (proposal)
 **Direction:** Generate a few strong, specific, buildable pitches each cycle for me to vote
