@@ -1,0 +1,216 @@
+# Global UI — Front-End Task Orchestration
+# software-kind. Defines how Kind Robots presents projects, tasks, honeydos,
+# kaizens, approvals, and front-end TODO prompts across the workspace.
+# Progress % = done weight (+ half for in-progress) / total weight.
+
+project: global-ui
+kind: software
+
+notes_from_silas: |
+  Create the shared Kind Robots interface system for presenting projects, tasks,
+  honeydos, kaizens, approvals, and front-end TODO prompts.
+
+  A honeydo is a task the LLM assigns to the user to help projects along. Honeydos
+  are not project-specific for viewing; they should surface in a global user-facing
+  queue or inbox.
+
+  A kaizen is shown while viewing an individual project. It gives the user a prompt
+  to move that specific project forward.
+
+  Front-end task creation should register visibly in the workspace UI and connect
+  cleanly to the conductor/todo flow without inventing a second source of truth.
+  Prefer app-owned UI/store/API logic that consumes existing backend and conductor
+  files safely.
+
+  Implementation seed: the project view should include a specific field/prompt that
+  asks, "How can I make this look better?" This should invite user-facing polish ideas
+  for the currently viewed project and can feed the kaizen/task creation flow.
+
+  Desired features should be an orderable list on each dream/project. Humans and AI
+  should both be able to add, adjust, reorder, promote, or retire desired features
+  without rewriting the whole project spec or roadmap. Treat it as a lightweight
+  feature wishlist/backlog that can later graduate into concrete tasks.
+
+  Kind Robots audit note: current frontend/backend support is partial. Todo already
+  supports AGENT, KAIZEN, and HONEYDO categories globally, but Todos are not scoped to
+  a dream/project and desired features are not modeled as an orderable project list yet.
+
+  Promote a recurring site-audit agent that does the same kind of check: compare the
+  roadmap/conductor vocabulary against the actual Kind Robots frontend/backend, identify
+  support gaps, and propose small reversible tasks. Weekly is a reasonable starting
+  interval; slow it down once the surfaces are stable.
+
+tasks:
+  - id: t-001
+    milestone: m1
+    title: "Spec task surfaces for projects, honeydos, kaizens, and TODOs"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    gate_human: true
+    approved_by_human: false
+    note: >
+      Draft a concise product/interface spec that defines the user-facing task
+      taxonomy and presentation rules: normal project tasks, front-end TODOs,
+      desired feature lists, honeydos, kaizens, approvals, and archived/completed
+      states. Include where each appears, what actions the user can take, how it
+      registers on the front end, what remains the source of truth, and how desired
+      features graduate into concrete tasks without rewriting the project spec. End
+      needs-human so Silas can approve the language before implementation.
+
+  - id: t-002
+    milestone: m2
+    title: "Build the task creation flow that registers on the front end"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-001
+    note: >
+      Implement the app-owned flow for creating a task from the front end and
+      showing it immediately in the workspace UI. Use the approved spec from
+      t-001. Route data through Pinia/store-owned interactions rather than calling
+      API routes directly from components. Preserve the conductor source-of-truth
+      boundary.
+
+  - id: t-003
+    milestone: m3
+    title: "Design and wire the global honeydo inbox"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-001
+    note: >
+      Create the global user-facing surface for honeydos: LLM-assigned tasks for
+      the user that help projects along but are not viewed as project-specific.
+      Define empty states, completion behavior, priority display, and how honeydos
+      relate to existing Todos.
+
+  - id: t-004
+    milestone: m4
+    title: "Design and wire project-specific kaizen prompts"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-001
+    note: >
+      Create the project-detail kaizen surface: a contextual prompt that helps the
+      user move the currently viewed project forward. It should feel lightweight,
+      actionable, and clearly tied to the selected project without polluting the
+      global honeydo queue. Include a project-view field/prompt that asks, "How can
+      I make this look better?" and uses the user's answer as a possible kaizen or
+      task seed for that project.
+
+  - id: t-005
+    milestone: m5
+    title: "Map the unified global UI for project and task presentation"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on:
+      - t-002
+      - t-003
+      - t-004
+      - t-007
+      - t-008
+      - t-009
+    note: >
+      Produce the final navigation/presentation map for projects, roadmaps, Todos,
+      desired feature lists, honeydos, kaizens, approvals, completion history, and
+      the recurring site-audit agent loop. Identify any follow-up tasks as separate
+      scoped work rather than expanding this task.
+
+  - id: t-006
+    milestone: m4
+    title: "Add the project-view improvement prompt field"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-001
+    note: >
+      Add a visible field to the project view that specifically asks, "How can I make
+      this look better?" The field should be scoped to the currently viewed project,
+      feel like a friendly polish/UX prompt, and route submitted ideas through the
+      approved kaizen or task-creation flow rather than storing disconnected notes.
+
+  - id: t-007
+    milestone: m2
+    title: "Add an orderable desired-features list to each project view"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-001
+    note: >
+      Add a visible, orderable desired-features list to each dream/project view.
+      Humans and AI should be able to add new feature ideas, edit wording, reorder
+      by importance, mark items as promoted/retired, and convert an item into a
+      scoped task when ready. This should avoid rewriting the project spec or
+      roadmap every time a new feature idea appears; the list is a lightweight
+      feature wishlist/backlog that can later graduate into tasks through the
+      approved task-creation flow.
+
+  - id: t-008
+    milestone: m2
+    title: "Add Kind Robots support for project-scoped task and feature surfaces"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-001
+    note: >
+      Update Kind Robots so the frontend/backend can support project-scoped kaizens
+      and desired features. Current Todo support has AGENT, KAIZEN, and HONEYDO
+      categories, but no dreamId/projectId, order index, or desired-feature model.
+      Add the minimal app-owned data model, store methods, API routes, and project-view
+      UI needed for a selected dream/project to show its own kaizens and orderable
+      desired feature list. Preserve store-mediated component interactions and avoid
+      direct component API calls.
+
+  - id: t-009
+    milestone: m5
+    title: "Promote a recurring site-audit agent"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-001
+    note: >
+      Define and promote an important recurring agent that periodically audits Kind
+      Robots and related sites the way Silas just requested: compare active roadmap
+      concepts against actual frontend/backend support, find mismatches, and propose
+      small reversible follow-up tasks. Start with a weekly interval. The agent should
+      report what exists, what is missing, and what should be promoted into the next
+      scoped task, without rewriting project roadmaps or making broad implementation
+      changes automatically.
+
+milestones:
+  - id: m1
+    title: "Task language + presentation model"
+    weight: 20
+    status: not-started
+
+  - id: m2
+    title: "Front-end task creation registers in the workspace"
+    weight: 30
+    status: not-started
+
+  - id: m3
+    title: "Global honeydo inbox"
+    weight: 20
+    status: not-started
+
+  - id: m4
+    title: "Project-specific kaizen prompts"
+    weight: 20
+    status: not-started
+
+  - id: m5
+    title: "Unified project/task navigation design"
+    weight: 10
+    status: not-started
