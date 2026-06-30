@@ -99,3 +99,21 @@ tasks:
     note: >
       Completed in PR #48. WordPress config now requires environment-provided auth material
       instead of committed fallback strings. Deployment and DNS remain gated for Silas.
+
+  - id: t-006
+    milestone: m2
+    title: "Remove fallback dev-credential defaults from compose.yaml auth key/salt entries"
+    status: ready
+    owner: null
+    updated: "2026-06-30T05:30:00Z"
+    passes: 0
+    stakes: reversible
+    depends_on: t-005
+    note: >
+      compose.yaml currently passes ${WORDPRESS_AUTH_KEY:-dev-auth-key-change-me} (and
+      all other seven WORDPRESS_*_KEY / WORDPRESS_*_SALT vars) with hardcoded dev
+      fallback values. This defeats the getenv_docker_required() guard added in t-005
+      because Docker Compose supplies the fallback value to the container — wp-config.php
+      sees a value and proceeds. Remove the :- fallback defaults from all eight entries
+      so the container cannot start without real secrets. Also update .env.example to
+      prompt clearly for these values. Do not deploy or touch DNS.
