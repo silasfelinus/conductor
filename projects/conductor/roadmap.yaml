@@ -33,29 +33,34 @@ tasks:
   - id: t-001
     milestone: m1
     title: 'Add GitHub Actions CI lint/build gate for worker/* PRs'
-    status: ready
-    owner: null
-    updated: '2026-06-28T00:00:00Z'
+    status: done
+    owner: worker
+    updated: '2026-06-30T00:00:00Z'
     passes: 0
     stakes: reversible
     note: >
-      Add .github/workflows/ci.yml that installs deps and runs lint + build
-      per project kind. Update branch protection to require the status check.
-      Pitch ref: pitches/2026-06-24-add-ci-gate.md (approved).
+      Created .github/workflows/ci.yml with three jobs: validate-yaml (all
+      roadmap.yaml + project-overrides.yaml), lint-python (py_compile check
+      for scripts/*.py), build-ts-projects (npm ci + build + lint for any
+      TypeScript subproject touched in the PR). Skips STATUS.md and
+      workspace.html paths. Branch protection update is a human action
+      (requires GitHub admin settings).
 
   - id: t-002
     milestone: m2
     title: 'Build PR triage board script'
-    status: ready
-    owner: null
-    updated: '2026-06-28T00:00:00Z'
+    status: done
+    owner: worker
+    updated: '2026-06-30T00:00:00Z'
     passes: 0
     stakes: reversible
     note: >
-      Create scripts/build_pr_triage.py that reads roadmaps plus recent GitHub
-      PR metadata and writes PR-TRIAGE.md as a generated, reviewable snapshot
-      of open worker PRs with their status, mergeability, human gates, and next
-      action. Pitch ref: pitches/2026-06-26-conductor-pr-triage-board.md (approved).
+      Created scripts/build_pr_triage.py. Reads project-overrides.yaml for
+      active slugs, loads all roadmaps, calls GitHub PR API (GITHUB_TOKEN env
+      var) for open worker/* PRs, and writes PR-TRIAGE.md with three sections:
+      open PRs table (mergeability, gate status, next action), in-flight tasks
+      roadmap snapshot, and pending human approval gates. Degrades gracefully
+      when GITHUB_TOKEN is absent. Run: python scripts/build_pr_triage.py
 
   - id: t-003
     milestone: m3

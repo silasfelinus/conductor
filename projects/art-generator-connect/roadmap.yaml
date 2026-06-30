@@ -85,15 +85,18 @@ tasks:
   - id: t-005
     milestone: m1
     title: "Scan ART-PROMPTS.md and produce a pending-requests status table"
-    status: ready
-    owner: null
+    status: done
+    owner: worker
     updated: "2026-06-30T00:00:00Z"
     passes: 0
     stakes: reversible
     note: >
-      Runs parallel to t-001's human gate. Read ART-PROMPTS.md at the repo root and
-      cross-reference against projects/images/. Produce docs/art-request-status.md
-      with a table: project slug, asset type (icon/card/hero), prompt present (Y/N),
-      image file present (Y/N), and status (pending/done/missing-prompt). This gives
+      Written docs/art-request-status.md. Cross-referenced ART-PROMPTS.md against
+      projects/images/ (conductor) and kind_robots/public/images/artcollections/.
+      Findings: 18/20 project asset sets complete; pinball-hero and career-transition
+      are missing all 3 project images. 17/17 queued inspiration sets complete (3-4
+      images each); pinball-hero and career-transition also have no artcollection dir
+      or prompts written yet. global-ui has no inspiration prompts queued either.
+      Summary table and immediate actions for Silas are in the doc.
       the Worker a clear picture of which art requests are queued vs. fulfilled without
       needing the live art API contract.

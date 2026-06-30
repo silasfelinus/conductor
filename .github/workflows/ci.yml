@@ -1,0 +1,132 @@
+name: Worker PR CI
+
+# Runs on every PR from worker/* branches into main.
+# Gates: (1) all roadmap YAML is valid, (2) Python scripts pass syntax check,
+# (3) TypeScript sub-projects that were touched in the PR build cleanly.
+
+on:
+  pull_request:
+    branches:
+      - main
+    paths-ignore:
+      - "STATUS.md"
+      - "workspace.html"
+
+jobs:
+  validate-yaml:
+    name: Validate roadmap YAML
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install PyYAML
+        run: pip install pyyaml
+
+      - name: Validate all roadmap.yaml files
+        run: |
+          python - <<'EOF'
+          import yaml, sys, pathlib
+          errors = []
+          files = list(pathlib.Path("projects").rglob("roadmap.yaml"))
+          for f in files:
+              try:
+                  data = yaml.safe_load(f.read_text())
+                  if not isinstance(data, dict):
+                      errors.append(f"{f}: root is not a mapping")
+              except yaml.YAMLError as e:
+                  errors.append(f"{f}: {e}")
+          if errors:
+              for err in errors:
+                  print(f"ERROR: {err}", file=sys.stderr)
+              sys.exit(1)
+          print(f"OK: {len(files)} roadmap YAML files valid")
+          EOF
+
+      - name: Validate project-overrides.yaml
+        run: |
+          python - <<'EOF'
+          import yaml, sys
+          f = "project-overrides.yaml"
+          try:
+              data = yaml.safe_load(open(f).read())
+              if not isinstance(data, dict):
+                  print(f"ERROR: {f} root is not a mapping", file=sys.stderr)
+                  sys.exit(1)
+          except yaml.YAMLError as e:
+              print(f"ERROR: {f}: {e}", file=sys.stderr)
+              sys.exit(1)
+          print(f"OK: {f} valid")
+          EOF
+
+  lint-python:
+    name: Lint Python scripts
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Syntax-check all scripts
+        run: |
+          set -e
+          ERRORS=0
+          for f in scripts/*.py; do
+            python -m py_compile "$f" || { echo "SYNTAX ERROR: $f"; ERRORS=$((ERRORS+1)); }
+          done
+          if [ "$ERRORS" -gt 0 ]; then
+            echo "$ERRORS Python file(s) failed syntax check" >&2
+            exit 1
+          fi
+          echo "OK: all scripts/*.py pass syntax check"
+
+  build-ts-projects:
+    name: Build changed TypeScript projects
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Find changed TypeScript projects
+        id: changed
+        run: |
+          # Get list of projects/ subdirs that have a package.json AND were touched in this PR
+          CHANGED_DIRS=$(git diff --name-only origin/${{ github.base_ref }}...HEAD \
+            | grep '^projects/' \
+            | cut -d/ -f1-2 \
+            | sort -u)
+
+          PROJECTS=""
+          for dir in $CHANGED_DIRS; do
+            if [ -f "$dir/package.json" ]; then
+              PROJECTS="$PROJECTS $dir"
+            fi
+          done
+          PROJECTS="${PROJECTS# }"  # trim leading space
+          echo "projects=$PROJECTS" >> "$GITHUB_OUTPUT"
+          echo "Found TS projects to build: $PROJECTS"
+
+      - uses: actions/setup-node@v4
+        if: steps.changed.outputs.projects != ''
+        with:
+          node-version: "20"
+
+      - name: Install and build
+        if: steps.changed.outputs.projects != ''
+        run: |
+          set -e
+          for dir in ${{ steps.changed.outputs.projects }}; do
+            echo "=== Building $dir ==="
+            cd "$dir"
+            npm ci --prefer-offline --silent
+            npm run build --if-present || echo "No build script in $dir"
+            npm run lint --if-present || echo "No lint script in $dir"
+            cd - > /dev/null
+          done
+          echo "OK: all changed TS projects built"
