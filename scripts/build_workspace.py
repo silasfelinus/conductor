@@ -16,6 +16,7 @@ PITCHES_DIR = REPO_ROOT / "pitches"
 WORKSPACE_FILE = REPO_ROOT / "workspace.html"
 ART_PROMPTS_FILE = REPO_ROOT / "projects" / "art-prompts.yaml"
 IMAGES_DIR = REPO_ROOT / "projects" / "images"
+KIND_ROBOTS_ROOT = REPO_ROOT.parent / "kind_robots"
 
 ART_VARIANTS = ("icon", "card", "hero")
 ALLOWED_IMAGE_EXTS = (".webp", ".png", ".jpg", ".jpeg")
@@ -24,6 +25,9 @@ ART_PROMPTS_HEADER = """# art-prompts.yaml — Image queue for Conductor project
 #
 # Project assets use `images:` and are pruned automatically when matching files
 # exist in this repo's projects/images/ folder.
+#
+# Inspiration images use `inspirations:`. Pruned automatically when matching files
+# exist in the kind_robots repo at ../kind_robots/public/images/artcollections/.
 #
 # Site-wide missing-image reports use `requests:`. Kind Robots writes those
 # requests here when an admin sees a missing image. Requests should be removed
@@ -250,9 +254,34 @@ def normalize_art_requests(data):
     return requests
 
 
-def write_art_prompts(image_entries, request_entries):
+def inspiration_is_complete(image_path):
+    """True if the inspiration image file exists in the kind_robots repo."""
+    return (KIND_ROBOTS_ROOT / image_path).exists()
+
+
+def pending_inspiration_entries(data):
+    """Return inspiration entries whose image files are not yet in kind_robots."""
+    pending = []
+    for project in data.get("inspirations") or []:
+        if not isinstance(project, dict):
+            continue
+        remaining_images = [
+            img for img in (project.get("images") or [])
+            if isinstance(img, dict) and not inspiration_is_complete(img.get("image_path", ""))
+        ]
+        if remaining_images:
+            entry = {k: v for k, v in project.items() if k != "images"}
+            entry["images"] = remaining_images
+            pending.append(entry)
+    return pending
+
+
+def write_art_prompts(image_entries, inspiration_entries, request_entries):
+    sections = {"images": image_entries, "requests": request_entries}
+    if inspiration_entries:
+        sections["inspirations"] = inspiration_entries
     body = yaml.safe_dump(
-        {"images": image_entries, "requests": request_entries},
+        sections,
         sort_keys=False,
         allow_unicode=True,
         width=88,
@@ -268,9 +297,14 @@ def load_art_prompts():
         data = yaml.safe_load(f) or {}
 
     image_entries = pending_art_prompt_entries(data)
+    inspiration_entries = pending_inspiration_entries(data)
     request_entries = normalize_art_requests(data)
 
-    if (data.get("images") or []) != image_entries or (data.get("requests") or []) != request_entries:
-        write_art_prompts(image_entries, request_entries)
+    if (
+        (data.get("images") or []) != image_entries
+        or (data.get("inspirations") or []) != inspiration_entries
+        or (data.get("requests") or []) != request_entries
+    ):
+        write_art_prompts(image_entries, inspiration_entries, request_entries)
 
     return {entry["project"]: entry for entry in image_entries}, request_entries

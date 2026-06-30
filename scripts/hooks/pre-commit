@@ -1,0 +1,16 @@
+#!/bin/sh
+# Auto-distribute images from projects/process/ before committing.
+# Runs distribute_images.py if any files are staged under projects/process/.
+
+REPO_ROOT="$(git rev-parse --show-toplevel)"
+
+if git diff --cached --name-only | grep -q "^projects/process/"; then
+    echo "[pre-commit] projects/process/ has staged files — running distribute_images.py..."
+    python3 "$REPO_ROOT/scripts/distribute_images.py"
+    if [ $? -ne 0 ]; then
+        echo "[pre-commit] distribute_images.py failed — aborting commit"
+        exit 1
+    fi
+    git add projects/images/ projects/process/ projects/art-generate.yaml projects/art-prompts.yaml
+    echo "[pre-commit] Distribution done."
+fi

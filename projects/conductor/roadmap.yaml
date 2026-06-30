@@ -158,3 +158,21 @@ tasks:
       and a prioritized maintenance queue. The report should never include secret
       values, private file contents, tokens, or personal data; only names, ids,
       severities, and recommended next actions.
+
+  - id: t-008
+    milestone: m2
+    title: 'Cross-repo image distribution pipeline (distribute_images.py)'
+    status: done
+    owner: worker
+    updated: '2026-06-30T00:00:00Z'
+    passes: 0
+    stakes: reversible
+    note: >
+      Added scripts/distribute_images.py (three-tier routing from projects/process/),
+      scripts/setup_hooks.py + scripts/hooks/pre-commit (git hook installer),
+      and build_workspace.py updates (inspirations: section preservation,
+      KIND_ROBOTS_ROOT awareness). Distributed 10 conductor project assets
+      (engagement, global-ui, wishmaster, media-watchlist icon/card/hero).
+      Merged via PR #52 (branch claude/cross-repo-image-organization-flm391).
+      Protocol violations (no task claim, wrong branch prefix, Claude acting as
+      Worker) documented in TALKBACK.md and projects/conductor/TALKBACK.md.
