@@ -27,6 +27,7 @@ When asked for a batch, generate up to ten images in the same order as the queue
 - `wishmaster` — icon, card, hero → `projects/images/wishmaster-{type}.webp` in `silasfelinus/conductor`
 - `media-watchlist` — icon → `projects/images/media-watchlist-icon.webp` in `silasfelinus/conductor`
 - `pinball-hero` — icon, card, hero → `projects/images/pinball-hero-{type}.webp` in `silasfelinus/conductor`
+- `career-transition` — icon, card, hero → `projects/images/career-transition-{type}.webp` in `silasfelinus/conductor`
 
 **Inspiration images** (`projects/art-prompts.yaml` → `inspirations:`, 3 each):
 
@@ -147,6 +148,12 @@ These are not automatically queued for legacy projects. Generate them manually w
 - `kind-robots-inspiration-01.webp` — A grand Kind Robots hub where portals to every project world open across a luminous consortium floor, a diverse array of robots, humans, creatures, and companions navigating between sketching studios, storytelling tables, media archives, and orchestration towers, epic welcome key art, no text, no collage.
 - `kind-robots-inspiration-02.webp` — The Kind Robots world-tree: branching platforms where every project is a distinct zone — a pencil tower, a story map table, a film archive, an image factory, a voice relay station — interconnected by glowing paths, premium world-building illustration, no text, no collage.
 - `kind-robots-inspiration-03.webp` — A Kind Robots community gathering where agents, creators, reviewers, and users of all species interact across project portals, trade work tokens, and celebrate shipped milestones, warm cinematic consortium art, no text, no collage.
+
+### career-transition
+
+- `career-transition-icon.webp` — Premium app icon for Career Transition, a glowing launchpad with a single confident figure stepping forward onto a luminous bridge connecting two worlds — a familiar past and a bright tech-lit horizon — crisp readable silhouette, warm optimistic energy, polished product app-icon composition, no text, no logo, no watermark, no collage, square composition.
+- `career-transition-card.webp` — Professional portrait card for Career Transition, a person at a well-used desk surrounded by artifacts of an eclectic life — a TRS-80, a chai mug, a deck of playing cards, a keyboard glowing with code — all lit by a warm monitor showing a portfolio site coming together, cinematic biographical key art celebrating a nontraditional path, no readable text, no logo, no watermark, no collage, 2:3 portrait composition.
+- `career-transition-hero.webp` — Wide hero illustration for Career Transition, a panoramic bridge scene where one side holds the symbols of a lived life (performance stage, casino floor, chai kettles, a school hallway) and the other opens into a luminous technology landscape of code editors, AI flow diagrams, and glowing interfaces — a solitary figure walks confidently across, portfolio in hand, premium hopeful career-change visual narrative, no readable text, no logo, no watermark, no collage, 16:9 landscape composition.
 
 ### pinball-hero
 

@@ -92,6 +92,17 @@ upgrades. Quality over quantity. Don't repeat existing pitches.
 **Notes:**
 - (your notes)
 
+### career-transition  (content)
+**Direction:** Help me land a better-paying tech job that pays me for the AI and dev skills I
+already use as a hobby. Produce research, resume drafts, cover letter templates, and prep
+materials. HARD GATE: nothing goes out, nothing gets posted, no applications are sent without
+my explicit approval. Every task that produces outward-facing material ends at needs-human.
+**Notes:**
+- I've been coding since 1989 (TRS-80) and working with AI since 2001. Lead with that.
+- The casino dealer background is 11 years of financial reliability and high-stakes composure — frame it, don't bury it.
+- Remote-first roles, base >= $70k, AI-adjacent strongly preferred.
+- kind_robots (Nuxt 3 / Vue / Prisma / TypeScript) and conductor (multi-agent orchestration) are the portfolio anchors.
+
 ### conductor  (software)
 **Direction:** Improvements to the conductor / AI_Networker system itself — CI, scripts,
 ops tooling. Keep changes small and reversible. Nothing outward-facing without needs-human.
