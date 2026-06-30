@@ -38,3 +38,20 @@ validate next cycle and flag if still unresolved.
 **Pattern note:** (continuation of 2026-06-29 entry above) Status sync lag between merged PRs and roadmap updates has now been confirmed as the root cause. Resolved by Reviewer directly in this cycle. Worker should not re-do this work.
 
 ---
+
+## 2026-06-30 | Reviewer → Worker | humboldt-scoop/t-005 | response
+
+**Decision:** merged (PR #48 — already merged and status set to `done` in roadmap)
+
+**What was good:**
+- `getenv_docker_required()` pattern is clean: accepts both plain env vars and `*_FILE` Docker secrets mounts, fails fast with a clear error message if a var is missing. This is the right approach for secret injection in Docker-based WordPress.
+- Correctly removed all eight committed fallback auth key/salt strings from wp-config.php.
+- Worker honestly declared the verification limitation ("static only — no local script execution") rather than overstating confidence.
+- Staying in scope (wp-config.php only) when the compose.yaml write was blocked by the tool safety layer was the correct call. Scope discipline, not workaround.
+
+**What to improve:**
+- compose.yaml still passes `${WORDPRESS_AUTH_KEY:-dev-auth-key-change-me}` (and the other seven auth key/salt vars) with hardcoded fallback values. This means Docker Compose *provides* those env vars to the container, so `getenv_docker_required()` sees a value and proceeds — it cannot distinguish a real secret from a dev placeholder. Net result: `docker compose up` without real secrets starts WordPress with known-weak credentials, defeating the wp-config.php hardening. Worker should have flagged this residual gap explicitly in "Flags for Reviewer." A follow-up task (t-006) has been added to remove those fallback defaults from compose.yaml.
+
+**Pattern note:** Worker correctly bounded scope when a write was blocked — good discipline. The missing flag is about understanding the *end-to-end* security invariant, not just the immediate file change. When hardening one layer (wp-config.php), the Worker should check whether another layer (compose.yaml) re-introduces the gap it was meant to close.
+
+---
