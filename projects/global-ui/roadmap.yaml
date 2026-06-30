@@ -129,31 +129,37 @@ tasks:
 - id: t-008
   milestone: m2
   title: Add Kind Robots support for project-scoped task and feature surfaces
-  status: ready
-  owner: null
+  status: needs-human
+  owner: worker
   passes: 0
   stakes: reversible
+  gate_human: true
   depends_on: t-001
-  note: 'Update Kind Robots so the frontend/backend can support project-scoped kaizens and desired features.
-    Current Todo support has AGENT, KAIZEN, and HONEYDO categories, but no dreamId/projectId, order index,
-    or desired-feature model. Add the minimal app-owned data model, store methods, API routes, and project-view
-    UI needed for a selected dream/project to show its own kaizens and orderable desired feature list.
-    Preserve store-mediated component interactions and avoid direct component API calls.
+  updated: '2026-06-30T00:00:00Z'
+  note: 'Added DESIRED_FEATURE to TodoCategory enum and dreamId/order fields to Todo model in schema.prisma.
+    Added Dream.Todos back-relation. Updated todoStore.ts: Todo interface gets dreamId/order, TodoCategory
+    adds DESIRED_FEATURE, TodoCreate/Update types updated, added dreamKaizens()/dreamFeatures() computed
+    helpers, fetchDreamTodos() method, all exported. New API route GET /api/todos/dream/:dreamId. Updated
+    index.post.ts and [id].patch.ts to accept dreamId, order, and DESIRED_FEATURE category. NEEDS MIGRATION:
+    Silas must run `prisma migrate dev` before these fields are live. No UI component changes yet (t-002
+    through t-007 handle that). Review schema changes and approve migration before deploying.
 
     '
 - id: t-009
   milestone: m5
   title: Promote a recurring site-audit agent
-  status: ready
-  owner: null
+  status: needs-human
+  owner: worker
   passes: 0
   stakes: reversible
+  gate_human: true
   depends_on: t-001
-  note: 'Define and promote an important recurring agent that periodically audits Kind Robots and related
-    sites the way Silas just requested: compare active roadmap concepts against actual frontend/backend
-    support, find mismatches, and propose small reversible follow-up tasks. Start with a weekly interval.
-    The agent should report what exists, what is missing, and what should be promoted into the next scoped
-    task, without rewriting project roadmaps or making broad implementation changes automatically.
+  updated: '2026-06-30T00:00:00Z'
+  note: 'Wrote projects/global-ui/SITE-AUDIT-AGENT.md defining the agent prompt, weekly cron schedule
+    (Mondays 09:00 UTC, expression "0 9 * * 1"), scope of reads (roadmaps, API routes, stores, schema),
+    output format (AUDIT-REPORT-YYYY-MM-DD.md + up to 3 new ready tasks), and hard boundaries (no live
+    URLs, no main-branch pushes, no gate_human tasks). Setup instructions for Silas to activate via Claude
+    Code Remote create_trigger. Needs Silas approval before the trigger is created.
 
     '
 - id: t-010
