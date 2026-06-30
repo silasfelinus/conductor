@@ -56,27 +56,35 @@ tasks:
 - id: t-002
   milestone: m2
   title: Add KarmaTransaction model and wire first triggers
-  status: ready
+  status: done
   depends_on: t-001
-  owner: null
+  owner: worker
   passes: 0
   stakes: reversible
-  updated: '2026-06-29T00:00:00Z'
-  note: "KarmaTransaction: userId, amount, reason (KarmaReason enum), balanceAfter, refId, note. Update\
-    \ User.karma balance on each transaction. Wire triggers (small placeholder amounts \u2014 Silas will\
-    \ tune): reaction given +1, public content created +1, bounty fulfilled +5, referral signed up +10.\
-    \ All amounts as named constants, not magic numbers.\n"
+  updated: '2026-06-30T00:00:00Z'
+  note: "All karma infrastructure was already in place: KarmaTransaction model, KarmaReason enum, awardKarma()\
+    \ utility, KARMA_LIVE=false gate, and KARMA_AMOUNTS constants in server/utils/karma.ts. Existing triggers\
+    \ already wired: REACTION_GIVEN (reactions/index.post.ts), CONTENT_CREATED_PUBLIC (prompts/index.post.ts),\
+    \ REFERRAL_SIGNUP (users/register.post.ts). Added missing trigger: REACTION_RECEIVED (content owner\
+    \ awarded when someone reacts to their content) in reactions/index.post.ts via getContentOwnerId()\
+    \ helper. Skips self-reactions (ownerId !== reactor.id). Component model has no userId so returns null\
+    \ for that category. All awards are fire-and-forget; gated by KARMA_LIVE=false until Silas approves rates.\n"
 - id: t-003
   milestone: m3
   title: Add isBounty fields to Prompt + bounty API
-  status: ready
+  status: needs-human
   depends_on: t-001
-  owner: null
+  owner: worker
   passes: 0
   stakes: reversible
-  updated: '2026-06-29T00:00:00Z'
-  note: 'Add to Prompt: isBounty Boolean @default(false), bountyStatus (OPEN|CLAIMED|FULFILLED|EXPIRED|CANCELLED
-    enum), claimerId Int?, Claimer User? relation. When fulfilled via house server: award mana to BOTH
-    poster and fulfiller from house pool. Draft amounts, mark needs-human before going live.
+  gate_human: true
+  updated: '2026-06-30T00:00:00Z'
+  note: 'Schema already complete: isBounty, bountyStatus (BountyStatus enum), claimerId, Claimer relation
+    all present in Prompt model. Built two new API routes: POST /api/prompts/:id/bounty/claim (sets CLAIMED
+    + claimerId, awards BOUNTY_CLAIMED karma) and POST /api/prompts/:id/bounty/fulfill (sets FULFILLED,
+    awards BOUNTY_REWARD mana to fulfiller + poster from house, awards BOUNTY_FULFILLED karma to fulfiller).
+    PLACEHOLDER AMOUNTS: BOUNTY_MANA_FULFILLER=50, BOUNTY_MANA_POSTER=25. All mana/karma awards fire-and-forget
+    and gated by KARMA_LIVE=false. Needs Silas to review and approve amounts before flipping KARMA_LIVE
+    to true.
 
     '
