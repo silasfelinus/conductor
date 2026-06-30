@@ -45,51 +45,63 @@ tasks:
 - id: t-002
   milestone: m2
   title: Design parser normalization rules
-  status: ready
-  owner: null
+  status: done
+  owner: worker
+  updated: "2026-06-30T00:00:00Z"
   passes: 0
   stakes: reversible
   depends_on: t-001
-  note: 'Define how raw entries normalize into medium, title, creator, year, consumed date, rating, source,
-    notes, and external IDs. Include ambiguous-entry handling.
+  note: 'Wrote projects/media-watchlist/PARSER-RULES.md. Covers all 7 media types (MOVIE, TV, BOOK, NOVELLA,
+    AUDIOBOOK, COMIC, VIDEO_GAME) with 2025 vs. 2026 format variants, field priority rules, ambiguous-entry
+    handling (double-slash typo, "(15th s)" duration, unknown dates, re-watches), and regex patterns.
+    Feeds into import_media.py implementation.
 
     '
 - id: t-003
   milestone: m3
   title: Draft watchlist browse and stats UX
-  status: ready
-  owner: null
+  status: done
+  owner: worker
+  updated: "2026-06-30T00:00:00Z"
   passes: 0
   stakes: reversible
   depends_on: t-001
-  note: 'Plan the first UI: browse by medium/year/rating/genre, yearly stats, genre breakdowns, completion
-    tracking, and a review editor that can stay private until Silas approves publishing.
+  note: 'Wrote projects/media-watchlist/BROWSE-UX.md. Covers 5 views: summary dashboard (stats bar + recent
+    entries + quick filter chips), browse/list (filter by year/type/starred/month/season, sort options,
+    compact cards), entry detail panel, stats view (yearly totals, by-type bars, month sparkline, audiobook
+    hours, pages read), and review editor (private-by-default markdown editor). Identifies 4 schema
+    additions needed: review, reviewPublic, rating, rewatch, externalId, externalUrl.
 
     '
 - id: t-004
   milestone: m4
   title: Scope Letterboxd, Comic Vine, and Tautulli integrations
-  status: ready
-  owner: null
+  status: done
+  owner: worker
+  updated: "2026-06-30T00:00:00Z"
   passes: 0
   stakes: reversible
   depends_on: t-001
-  note: 'Document the API/data requirements for Letterboxd import/export, Comic Vine metadata enrichment,
-    and Tautulli Plex watch-history backfill.
+  note: 'Wrote projects/media-watchlist/INTEGRATIONS.md. Documents Letterboxd (CSV-only, no public REST
+    API), Goodreads (CSV-only, API shut down 2020), Comic Vine (REST API, free key, enrichment use case),
+    and Tautulli (local API, deferred). Defines per-service field mappings, rate limits, auth requirements,
+    and schema additions (externalId, externalUrl, publisher). All enrichment scripts are dry-run by
+    default with --commit flag for write operations.
 
     '
 - id: t-005
   milestone: m2
   title: Cross-reference Silas's log format against Letterboxd/Goodreads export formats
-  status: ready
-  owner: null
-  updated: '2026-06-30T00:00:00Z'
+  status: done
+  owner: worker
+  updated: "2026-06-30T00:00:00Z"
   passes: 0
   stakes: reversible
   depends_on: t-001
-  note: 'After t-001 proposes the schema, compare Silas''s hand-written log format against Letterboxd
-    CSV and Goodreads CSV export shapes. Identify where the formats align (can auto-import) vs. where
-    they diverge (needs manual mapping or a one-time conversion pass). This informs the importer normalization
-    rules in t-002.
+  note: 'Wrote projects/media-watchlist/FORMAT-COMPARISON.md. Compared Silas hand log against Letterboxd
+    CSV and Goodreads CSV export shapes. Key divergences: title punctuation (Letterboxd adds colons/subtitles),
+    release year vs. consumed year, Goodreads conflates NOVELLA/AUDIOBOOK as "book", rating scales differ
+    (LB: 0.5-5, GR: 0-5, log: none). Import rule: log is authoritative; external services fill gaps only,
+    never destructive overwrites. Recommends 2 schema additions (releaseYear, publisher).
 
     '

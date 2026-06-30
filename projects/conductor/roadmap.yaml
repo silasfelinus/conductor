@@ -1,220 +1,186 @@
-# Conductor / AI_Networker — System Improvements
-# Tasks targeting the conductor system itself (ci, tooling, ops, security).
-# Progress % = done weight (+ half for in-progress) / total weight.
-
 project: conductor
 kind: software
-
-notes_from_silas: |
-  Improvements to the conductor / AI_Networker system itself — CI, scripts,
-  ops tooling, recurring security audits, and agent access boundaries. Keep
-  changes small and reversible. Nothing that touches billing, secrets, deploys,
-  auth policy, production data, or write permissions without needs-human.
-
+notes_from_silas: "Improvements to the conductor / AI_Networker system itself \u2014 CI, scripts,\nops\
+  \ tooling, recurring security audits, and agent access boundaries. Keep\nchanges small and reversible.\
+  \ Nothing that touches billing, secrets, deploys,\nauth policy, production data, or write permissions\
+  \ without needs-human.\n"
 milestones:
-  - id: m1
-    title: 'CI + branch protection gates'
-    weight: 20
-    status: not-started
-  - id: m2
-    title: 'Ops tooling (triage, cost guards, monitoring)'
-    weight: 30
-    status: not-started
-  - id: m3
-    title: 'Per-project kaizen prompts + honey-do lists for Silas'
-    weight: 50
-    status: not-started
-  - id: m4
-    title: 'Security auditor + privacy boundary manager'
-    weight: 80
-    status: not-started
-
+- id: m1
+  title: CI + branch protection gates
+  weight: 20
+  status: not-started
+- id: m2
+  title: Ops tooling (triage, cost guards, monitoring)
+  weight: 30
+  status: not-started
+- id: m3
+  title: Per-project kaizen prompts + honey-do lists for Silas
+  weight: 50
+  status: not-started
+- id: m4
+  title: Security auditor + privacy boundary manager
+  weight: 80
+  status: not-started
 tasks:
-  - id: t-001
-    milestone: m1
-    title: 'Add GitHub Actions CI lint/build gate for worker/* PRs'
-    status: done
-    owner: worker
-    updated: '2026-06-30T00:00:00Z'
-    passes: 0
-    stakes: reversible
-    note: >
-      Created .github/workflows/ci.yml with three jobs: validate-yaml (all
-      roadmap.yaml + project-overrides.yaml), lint-python (py_compile check
-      for scripts/*.py), build-ts-projects (npm ci + build + lint for any
-      TypeScript subproject touched in the PR). Skips STATUS.md and
-      workspace.html paths. Branch protection update is a human action
-      (requires GitHub admin settings).
+- id: t-001
+  milestone: m1
+  title: Add GitHub Actions CI lint/build gate for worker/* PRs
+  status: done
+  owner: worker
+  updated: '2026-06-30T00:00:00Z'
+  passes: 0
+  stakes: reversible
+  note: 'Created .github/workflows/ci.yml with three jobs: validate-yaml (all roadmap.yaml + project-overrides.yaml),
+    lint-python (py_compile check for scripts/*.py), build-ts-projects (npm ci + build + lint for any
+    TypeScript subproject touched in the PR). Skips STATUS.md and workspace.html paths. Branch protection
+    update is a human action (requires GitHub admin settings).
 
-  - id: t-002
-    milestone: m2
-    title: 'Build PR triage board script'
-    status: done
-    owner: worker
-    updated: '2026-06-30T00:00:00Z'
-    passes: 0
-    stakes: reversible
-    note: >
-      Created scripts/build_pr_triage.py. Reads project-overrides.yaml for
-      active slugs, loads all roadmaps, calls GitHub PR API (GITHUB_TOKEN env
-      var) for open worker/* PRs, and writes PR-TRIAGE.md with three sections:
-      open PRs table (mergeability, gate status, next action), in-flight tasks
-      roadmap snapshot, and pending human approval gates. Degrades gracefully
-      when GITHUB_TOKEN is absent. Run: python scripts/build_pr_triage.py
+    '
+- id: t-002
+  milestone: m2
+  title: Build PR triage board script
+  status: done
+  owner: worker
+  updated: '2026-06-30T00:00:00Z'
+  passes: 0
+  stakes: reversible
+  note: 'Created scripts/build_pr_triage.py. Reads project-overrides.yaml for active slugs, loads all
+    roadmaps, calls GitHub PR API (GITHUB_TOKEN env var) for open worker/* PRs, and writes PR-TRIAGE.md
+    with three sections: open PRs table (mergeability, gate status, next action), in-flight tasks roadmap
+    snapshot, and pending human approval gates. Degrades gracefully when GITHUB_TOKEN is absent. Run:
+    python scripts/build_pr_triage.py
 
-  - id: t-003
-    milestone: m3
-    title: 'Build scripts/build_kaizen.py — per-project kaizen prompt + honey-do list'
-    status: waiting
-    owner: null
-    updated: '2026-06-28T00:00:00Z'
-    passes: 0
-    stakes: reversible
-    depends_on: t-002
-    note: >
-      Build scripts/build_kaizen.py. For each active project it emits:
+    '
+- id: t-003
+  milestone: m3
+  title: "Build scripts/build_kaizen.py \u2014 per-project kaizen prompt + honey-do list"
+  status: done
+  owner: worker
+  updated: "2026-06-30T00:00:00Z"
+  passes: 0
+  stakes: reversible
+  depends_on: t-002
+  note: "Build scripts/build_kaizen.py. For each active project it emits:\n1. KAIZEN PROMPT \u2014 the\
+    \ single most impactful action Silas can take right now, one sentence framed as a direct instruction\
+    \ (e.g. \"Approve the stack spec in humboldt-scoop-cms/t-001\"). Priority order: needs-human tasks\
+    \ first, then gate_human gates with approved_by_human: false, then passes==3 blocked tasks, then stale\
+    \ claimed tasks with no recent commit.\n2. HONEY-DO LIST \u2014 every other action only Silas can\
+    \ unblock, as a markdown checkbox list ordered by downstream impact. Each item names the task id and\
+    \ the exact decision or file to touch. Agent-workable items are excluded entirely.\nOutput: KAIZEN.md\
+    \ at the repo root, regenerated each cycle alongside PR-TRIAGE.md. The approval-portal (when built)\
+    \ reads the same data to render interactive checkboxes on each project card.\n"
+- id: t-004
+  milestone: m4
+  title: Write SECURITY-MANAGER.md threat model and audit runbook
+  status: needs-human
+  owner: worker
+  updated: "2026-06-30T00:00:00Z"
+  passes: 0
+  stakes: needs-human
+  gate_human: true
+  note: 'Create SECURITY-MANAGER.md at repo root. Define the security manager role, threat model, protected
+    assets, severity ladder, escalation rules, and safe automation boundaries. Explicitly cover Dreams,
+    projects, private files, family-only access, agent write access, source-code rewrite risk, Vercel,
+    GitHub Actions, secrets, production data, and deployment gates. This is a policy/runbook task only;
+    do not change live auth, secrets, deploys, billing, DNS, or production data. Leave it needs-human
+    until Silas approves the boundary model.
 
-      1. KAIZEN PROMPT — the single most impactful action Silas can take right
-      now, one sentence framed as a direct instruction
-      (e.g. "Approve the stack spec in humboldt-scoop-cms/t-001").
-      Priority order: needs-human tasks first, then gate_human gates with
-      approved_by_human: false, then passes==3 blocked tasks, then stale
-      claimed tasks with no recent commit.
+    '
+- id: t-005
+  milestone: m4
+  title: Add automated authz regression tests for Dreams and projects
+  status: waiting
+  owner: null
+  updated: '2026-06-29T00:00:00Z'
+  passes: 0
+  stakes: reversible
+  depends_on: t-004
+  note: 'After Silas approves SECURITY-MANAGER.md, add tests that prove anonymous, non-owner, non-family,
+    and normal-user accounts cannot read private Dreams, private project files, private project metadata,
+    private generated assets, or family-only resources. Include negative tests for write/update/delete,
+    project influence, prompt injection into project instructions, and API route bypass attempts. Use
+    fixtures/mocks only; do not use production secrets or real private user data.
 
-      2. HONEY-DO LIST — every other action only Silas can unblock, as a
-      markdown checkbox list ordered by downstream impact. Each item names
-      the task id and the exact decision or file to touch.
-      Agent-workable items are excluded entirely.
+    '
+- id: t-006
+  milestone: m4
+  title: Add GitHub Actions security audit workflow
+  status: waiting
+  owner: null
+  updated: '2026-06-29T00:00:00Z'
+  passes: 0
+  stakes: needs-human
+  gate_human: true
+  depends_on:
+  - t-004
+  - t-005
+  note: 'Add a scheduled GitHub Actions workflow that runs dependency audit, static checks, authz regression
+    tests, and a safe site smoke-test matrix on a cron. Design it so routine checks can run automatically,
+    but anything requiring secrets, production writes, authenticated scans, Vercel deployment changes,
+    or external vulnerability probing stays gated behind needs-human. The first implementation should
+    be PR-only and non-destructive.
 
-      Output: KAIZEN.md at the repo root, regenerated each cycle alongside
-      PR-TRIAGE.md. The approval-portal (when built) reads the same data
-      to render interactive checkboxes on each project card.
+    '
+- id: t-007
+  milestone: m4
+  title: Build security report artifact and maintenance queue
+  status: waiting
+  owner: null
+  updated: '2026-06-29T00:00:00Z'
+  passes: 0
+  stakes: reversible
+  depends_on: t-006
+  note: 'Create a script or workflow step that writes SECURITY-REPORT.md from the latest audit results:
+    pass/fail summary, new dependency vulnerabilities, failed authz boundaries, stale secrets/config warnings,
+    open security PRs, and a prioritized maintenance queue. The report should never include secret values,
+    private file contents, tokens, or personal data; only names, ids, severities, and recommended next
+    actions.
 
-  - id: t-004
-    milestone: m4
-    title: 'Write SECURITY-MANAGER.md threat model and audit runbook'
-    status: ready
-    owner: null
-    updated: '2026-06-29T00:00:00Z'
-    passes: 0
-    stakes: needs-human
-    gate_human: true
-    note: >
-      Create SECURITY-MANAGER.md at repo root. Define the security manager role,
-      threat model, protected assets, severity ladder, escalation rules, and safe
-      automation boundaries. Explicitly cover Dreams, projects, private files,
-      family-only access, agent write access, source-code rewrite risk, Vercel,
-      GitHub Actions, secrets, production data, and deployment gates. This is a
-      policy/runbook task only; do not change live auth, secrets, deploys, billing,
-      DNS, or production data. Leave it needs-human until Silas approves the
-      boundary model.
+    '
+- id: t-008
+  milestone: m2
+  title: Cross-repo image distribution pipeline (distribute_images.py)
+  status: done
+  owner: worker
+  updated: '2026-06-30T00:00:00Z'
+  passes: 0
+  stakes: reversible
+  note: 'Added scripts/distribute_images.py (three-tier routing from projects/process/), scripts/setup_hooks.py
+    + scripts/hooks/pre-commit (git hook installer), and build_workspace.py updates (inspirations: section
+    preservation, KIND_ROBOTS_ROOT awareness). Distributed 10 conductor project assets (engagement, global-ui,
+    wishmaster, media-watchlist icon/card/hero). Merged via PR #52 (branch claude/cross-repo-image-organization-flm391).
+    Protocol violations (no task claim, wrong branch prefix, Claude acting as Worker) documented in TALKBACK.md
+    and projects/conductor/TALKBACK.md.
 
-  - id: t-005
-    milestone: m4
-    title: 'Add automated authz regression tests for Dreams and projects'
-    status: waiting
-    owner: null
-    updated: '2026-06-29T00:00:00Z'
-    passes: 0
-    stakes: reversible
-    depends_on: t-004
-    note: >
-      After Silas approves SECURITY-MANAGER.md, add tests that prove anonymous,
-      non-owner, non-family, and normal-user accounts cannot read private Dreams,
-      private project files, private project metadata, private generated assets,
-      or family-only resources. Include negative tests for write/update/delete,
-      project influence, prompt injection into project instructions, and API route
-      bypass attempts. Use fixtures/mocks only; do not use production secrets or
-      real private user data.
+    '
+- id: t-009
+  milestone: m2
+  title: "Build scripts/sync_projects_to_dreams.py \u2014 slug-parity sync bridge"
+  status: done
+  owner: worker
+  updated: '2026-06-30T00:00:00Z'
+  passes: 0
+  stakes: reversible
+  note: "Build scripts/sync_projects_to_dreams.py. For each active conductor project (from project-overrides.yaml\
+    \ where status == active), call the kind_robots API to upsert a Dream with dreamType PROJECT and matching\
+    \ slug. Sync fields: title (from roadmap project:), description (from notes_from_silas first paragraph),\
+    \ projectStatus (map conductor active\u2192ACTIVE, paused\u2192PAUSED, finished\u2192DONE, retired\u2192\
+    ARCHIVED). Use PATCH /api/dreams/<id> if a Dream with that slug already exists, POST /api/dreams otherwise.\
+    \ Requires KR_API_TOKEN env var. Log each upsert (created/updated/skipped) to stdout. Never delete\
+    \ a Dream; only create or update. This is the canonical conductor \u2192 kind_robots bridge; run it\
+    \ at the end of each Worker cycle after task work is complete.\n"
+- id: t-010
+  milestone: m2
+  title: "Write scripts/generate_changelog.py \u2014 per-cycle change summary"
+  status: done
+  owner: worker
+  updated: '2026-06-30T00:00:00Z'
+  passes: 0
+  stakes: reversible
+  note: 'Currently the only change record is STATUS.md (auto-generated, broad) and individual task notes.
+    Add scripts/generate_changelog.py: reads git log since the last CHANGELOG.md entry, groups commits
+    by project slug, and appends a dated section to CHANGELOG.md at the repo root. Format: date header,
+    then one bullet per project that changed listing task id + commit title. Runs at the end of each Worker
+    cycle alongside sync_projects_to_dreams.py.
 
-  - id: t-006
-    milestone: m4
-    title: 'Add GitHub Actions security audit workflow'
-    status: waiting
-    owner: null
-    updated: '2026-06-29T00:00:00Z'
-    passes: 0
-    stakes: needs-human
-    gate_human: true
-    depends_on:
-      - t-004
-      - t-005
-    note: >
-      Add a scheduled GitHub Actions workflow that runs dependency audit, static
-      checks, authz regression tests, and a safe site smoke-test matrix on a cron.
-      Design it so routine checks can run automatically, but anything requiring
-      secrets, production writes, authenticated scans, Vercel deployment changes,
-      or external vulnerability probing stays gated behind needs-human. The first
-      implementation should be PR-only and non-destructive.
-
-  - id: t-007
-    milestone: m4
-    title: 'Build security report artifact and maintenance queue'
-    status: waiting
-    owner: null
-    updated: '2026-06-29T00:00:00Z'
-    passes: 0
-    stakes: reversible
-    depends_on: t-006
-    note: >
-      Create a script or workflow step that writes SECURITY-REPORT.md from the
-      latest audit results: pass/fail summary, new dependency vulnerabilities,
-      failed authz boundaries, stale secrets/config warnings, open security PRs,
-      and a prioritized maintenance queue. The report should never include secret
-      values, private file contents, tokens, or personal data; only names, ids,
-      severities, and recommended next actions.
-
-  - id: t-008
-    milestone: m2
-    title: 'Cross-repo image distribution pipeline (distribute_images.py)'
-    status: done
-    owner: worker
-    updated: '2026-06-30T00:00:00Z'
-    passes: 0
-    stakes: reversible
-    note: >
-      Added scripts/distribute_images.py (three-tier routing from projects/process/),
-      scripts/setup_hooks.py + scripts/hooks/pre-commit (git hook installer),
-      and build_workspace.py updates (inspirations: section preservation,
-      KIND_ROBOTS_ROOT awareness). Distributed 10 conductor project assets
-      (engagement, global-ui, wishmaster, media-watchlist icon/card/hero).
-      Merged via PR #52 (branch claude/cross-repo-image-organization-flm391).
-      Protocol violations (no task claim, wrong branch prefix, Claude acting as
-      Worker) documented in TALKBACK.md and projects/conductor/TALKBACK.md.
-
-  - id: t-009
-    milestone: m2
-    title: 'Build scripts/sync_projects_to_dreams.py — slug-parity sync bridge'
-    status: done
-    owner: worker
-    updated: '2026-06-30T00:00:00Z'
-    passes: 0
-    stakes: reversible
-    note: >
-      Build scripts/sync_projects_to_dreams.py. For each active conductor project
-      (from project-overrides.yaml where status == active), call the kind_robots
-      API to upsert a Dream with dreamType PROJECT and matching slug. Sync fields:
-      title (from roadmap project:), description (from notes_from_silas first
-      paragraph), projectStatus (map conductor active→ACTIVE, paused→PAUSED,
-      finished→DONE, retired→ARCHIVED). Use PATCH /api/dreams/<id> if a Dream
-      with that slug already exists, POST /api/dreams otherwise. Requires
-      KR_API_TOKEN env var. Log each upsert (created/updated/skipped) to stdout.
-      Never delete a Dream; only create or update. This is the canonical
-      conductor → kind_robots bridge; run it at the end of each Worker cycle
-      after task work is complete.
-
-  - id: t-010
-    milestone: m2
-    title: 'Write scripts/generate_changelog.py — per-cycle change summary'
-    status: done
-    owner: worker
-    updated: "2026-06-30T00:00:00Z"
-    passes: 0
-    stakes: reversible
-    note: >
-      Currently the only change record is STATUS.md (auto-generated, broad) and
-      individual task notes. Add scripts/generate_changelog.py: reads git log since
-      the last CHANGELOG.md entry, groups commits by project slug, and appends a
-      dated section to CHANGELOG.md at the repo root. Format: date header, then
-      one bullet per project that changed listing task id + commit title. Runs at
-      the end of each Worker cycle alongside sync_projects_to_dreams.py.
+    '
