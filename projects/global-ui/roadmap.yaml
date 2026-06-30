@@ -40,6 +40,10 @@ notes_from_silas: |
   support gaps, and propose small reversible tasks. Weekly is a reasonable starting
   interval; slow it down once the surfaces are stable.
 
+  Gate note (2026-06-30): t-001 gate removed. Silas pre-approves the spec direction —
+  write the task surface spec and merge without another approval round. Downstream
+  tasks unblock automatically when t-001 reaches done.
+
 tasks:
   - id: t-001
     milestone: m1
@@ -48,7 +52,7 @@ tasks:
     owner: null
     passes: 0
     stakes: reversible
-    gate_human: true
+    gate_human: false
     approved_by_human: false
     note: >
       Draft a concise product/interface spec that defines the user-facing task
@@ -56,8 +60,9 @@ tasks:
       desired feature lists, honeydos, kaizens, approvals, and archived/completed
       states. Include where each appears, what actions the user can take, how it
       registers on the front end, what remains the source of truth, and how desired
-      features graduate into concrete tasks without rewriting the project spec. End
-      needs-human so Silas can approve the language before implementation.
+      features graduate into concrete tasks without rewriting the project spec. Gate
+      removed 2026-06-30 — Silas pre-approves the direction; complete and merge
+      without an additional human review round.
 
   - id: t-002
     milestone: m2

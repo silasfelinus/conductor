@@ -1,13 +1,12 @@
 # Kind Robots — App(s)
-# Stub. Silas will write the full roadmap later. The important part now is the
-# BOUNDARY note so agents don't wander into the main Kind Robots repo/backend.
+# BOUNDARY.md approved 2026-06-30. Slug parity is now a standing rule.
 # Progress % = done weight (+ half for in-progress) / total weight.
 
 project: kind-robots
 kind: software
 
 notes_from_silas: |
-  STUB — full roadmap coming later. Key boundary: the Kind Robots app(s) should
+  BOUNDARY.md approved (2026-06-30). Key boundary: the Kind Robots app(s) should
   develop their OWN system here, but CONSUME our existing database, backend, and
   core offerings rather than reimplementing or modifying them. Agents: treat the
   shared backend (kind-robots.vercel.app / the main repo) as read-only and external.
@@ -15,29 +14,43 @@ notes_from_silas: |
   backend here — if you think one is needed, write a pitch to pitches/ instead.
   Nuxt 4 / Vue 3 / TypeScript / Prisma / Pinia 3 / DaisyUI house style applies.
 
+  Slug parity: Dream.slug is the universal key linking conductor projects to
+  kind_robots Dreams. Do not add redundant FK fields — enforce slug matching
+  between conductor project directory names and Dream.slug values. The sync script
+  (conductor/t-008) handles conductor → Dream writes; this project handles the
+  Dream → conductor notification flow (creating a Todo when a new PROJECT Dream
+  is added so the Worker can scaffold the matching roadmap.yaml).
+
 milestones:
   - id: m1
     title: "App scope + boundary defined (what's app-owned vs shared backend)"
     weight: 100
-    status: not-started
+    status: done
 
   - id: m2
     title: "Workspace UI — project card images"
     weight: 10
     status: done
 
+  - id: m3
+    title: "Slug parity + project creation surfaces"
+    weight: 40
+    status: not-started
+
 tasks:
   - id: t-001
     milestone: m1
     title: "Draft the app/backend boundary doc for Silas to approve"
-    status: needs-human
+    status: done
     owner: worker
-    updated: "2026-06-26T14:20:11Z"
+    updated: "2026-06-30T00:00:00Z"
     passes: 0
     stakes: reversible
+    gate_human: true
+    approved_by_human: true
     note: >
       Wrote projects/kind-robots/BOUNDARY.md defining app-owned concerns versus
-      shared backend responsibilities. Needs Silas approval before app work starts.
+      shared backend responsibilities. Approved by Silas 2026-06-30.
 
   - id: t-002
     milestone: m2
@@ -52,3 +65,44 @@ tasks:
       All 9 projects now have card, hero, and icon images committed to
       projects/images/ in the conductor repo. Workspace loads them via GitHub
       raw CDN with coming-soon fallback.
+
+  - id: t-003
+    milestone: m3
+    title: "Audit slug parity between conductor projects and kind_robots Dreams"
+    status: ready
+    owner: null
+    updated: "2026-06-30T00:00:00Z"
+    passes: 0
+    stakes: reversible
+    note: >
+      Read all active conductor project slugs (from project-overrides.yaml) and
+      compare against kind_robots Dreams of dreamType PROJECT (via read-only API
+      call to https://kind-robots.vercel.app/api/dreams?dreamType=PROJECT).
+      Write projects/kind-robots/SLUG-AUDIT.md listing: (a) conductor projects
+      with no matching Dream, (b) PROJECT Dreams with no conductor project,
+      (c) any slug mismatches. Do not create or modify Dreams — document gaps
+      only. The sync script (conductor/t-008) will act on these findings.
+
+  - id: t-004
+    milestone: m3
+    title: "Spec the three project-creation surfaces (conductor file, front-end, LLM)"
+    status: ready
+    owner: null
+    updated: "2026-06-30T00:00:00Z"
+    passes: 0
+    stakes: reversible
+    gate_human: true
+    approved_by_human: false
+    depends_on: t-003
+    note: >
+      Write projects/kind-robots/PROJECT-CREATION.md defining how a project is
+      created from each of three surfaces:
+      1. Conductor file format — a new roadmap.yaml in projects/<slug>/ triggers
+         Dream creation via the sync script on the next conductor run.
+      2. Kind Robots front-end — UI creates a PROJECT-type Dream with a chosen
+         slug; this posts a Todo (category: AGENT) so the Worker scaffolds the
+         matching roadmap.yaml in conductor.
+      3. LLM — same as front-end: LLM creates a PROJECT Dream, Todo interrupt
+         carries the slug to the Worker.
+      In all cases: Dream.slug === conductor project directory name. Ends
+      needs-human for Silas to approve before implementation begins.

@@ -24,7 +24,16 @@ Never expand product-types.yaml — pitch it. When unsure, do less and escalate 
 needs-human.
 
 **Global notes (free-form, agents read these):**
-- (add notes here anytime — e.g. "deprioritize SEO for now", "I like the comic pitch, run with it")
+- Slug parity is a standing rule: every conductor project must have a matching
+  kind_robots Dream of dreamType PROJECT sharing the same slug. The slug is the
+  universal key across conductor file system, kind_robots database, front-end UI,
+  and LLM. When creating a project from any surface (conductor roadmap, front-end
+  form, LLM), produce a Dream with the matching slug and update conductor accordingly.
+  The sync_projects_to_dreams.py script (conductor/t-008) is the canonical
+  conductor → Dream bridge. Do not add redundant FK fields — enforce via slug match.
+- Do not invent a second source of project truth. Conductor roadmap.yaml is the
+  authoritative task record; kind_robots Dream is the authoritative display/identity
+  record. Slug is the join key.
 
 ---
 
@@ -47,7 +56,7 @@ self-hostable. Dummy data only until I say otherwise.
 confirm updates, roll back. A face over the repo; git stays the source of truth. Build
 incrementally, each milestone usable alone.
 **Notes:**
-- (your notes)
+- t-001 (SPEC.md) approved 2026-06-30. t-002 (read-only dashboard) is now unblocked.
 
 ### digital-storefront  (content)
 **Direction:** Research stores → brainstorm content (only within approved product types) →
@@ -57,10 +66,18 @@ gated on me.
 - (your notes)
 
 ### kind-robots  (software)
-**Direction:** STUB until I write the full roadmap. App owns its own logic; the shared KR
+**Direction:** BOUNDARY.md approved (2026-06-30). App owns its own logic; the shared KR
 backend is read-only/external. Backend changes become pitches, never direct edits.
+Full roadmap is now active — see projects/kind-robots/roadmap.yaml.
 **Notes:**
-- (your notes)
+- Slug parity: Dream.slug is the universal key. Conductor project directory names must
+  match Dream.slug values for PROJECT-type Dreams. No redundant FK fields — enforce
+  via slug matching. The sync script (conductor/t-008) is the canonical
+  conductor → kind_robots bridge; it upserts Dreams by slug and writes projectStatus.
+- Project creation from front-end or LLM should produce a Todo for the Worker to
+  scaffold the matching roadmap.yaml in conductor. Same slug, three surfaces.
+- Treat the shared kind_robots backend as read-only/external. Propose backend
+  changes as pitches in pitches/ — never edit the shared backend directly.
 
 ### global-ui  (software)
 **Direction:** Define and build the shared user-facing interface for projects, tasks,
@@ -71,6 +88,8 @@ or AI can add/adjust/reorder/promote without rewriting the project spec. Keep ta
 visible on the front end without creating a second source of truth.
 **Notes:**
 - Start by approving the vocabulary and presentation model before implementation.
+- t-001 gate removed 2026-06-30: Silas pre-approves the spec direction — no additional
+  human approval needed after the Worker writes the task surface spec.
 
 ### pinball-hero  (content)
 **Direction:** Create practical build plans for a high-quality, efficient, partly 3D-printed

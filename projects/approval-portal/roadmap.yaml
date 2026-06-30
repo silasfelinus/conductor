@@ -43,23 +43,24 @@ tasks:
   - id: t-001
     milestone: m1
     title: "Spec the portal: data sources, screens, and repo-write strategy"
-    status: needs-human
+    status: done
     owner: worker
-    updated: "2026-06-26T12:20:26Z"
+    updated: "2026-06-30T00:00:00Z"
     passes: 0
     stakes: reversible
     gate_human: true
-    approved_by_human: false
+    approved_by_human: true
     note: >
       Wrote projects/approval-portal/SPEC.md covering data sources, m1-m5 screens,
       GitHub/repo write strategy, safety boundaries, and open decisions for Silas.
-      Ends needs-human because this task is human-gated before portal build work unblocks.
+      Approved by Silas 2026-06-30. t-002 now unblocked.
 
   - id: t-002
     milestone: m1
     title: "Build read-only dashboard from repo data"
-    status: waiting
+    status: ready
     owner: null
+    updated: "2026-06-30T00:00:00Z"
     passes: 0
     stakes: reversible
     depends_on: t-001
