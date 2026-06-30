@@ -139,3 +139,18 @@ tasks:
       to include stakes (string), dependsOn (string | string[] | null), and
       approvedByHuman (boolean) — the raw YAML already has these fields, the
       parser just needs to extract them.
+
+  - id: t-007
+    milestone: m3
+    title: "Show relative 'updated' timestamp on task cards in conductor-page.vue"
+    status: ready
+    owner: null
+    updated: "2026-06-30T00:00:00Z"
+    passes: 0
+    stakes: reversible
+    note: >
+      Task cards currently show no time information, making it hard to spot stale
+      claimed tasks or recently updated items. The `updated` field is already returned
+      by /api/conductor/projects (part of ConductorTask). Add a relative timestamp
+      display (e.g. "2h ago", "3 days ago") below the task title row using a simple
+      computed helper — no new dependencies needed. Runs parallel to t-005 and t-006.

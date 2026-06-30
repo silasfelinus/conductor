@@ -100,3 +100,20 @@ tasks:
     Pitch ref: pitches/2026-06-24-coloring-book-kindness.md (approved).
   gate_human: true
   approved_by_human: false
+
+- id: t-007
+  milestone: m2
+  title: Map approved product types against existing concept files and flag gaps
+  status: ready
+  owner: null
+  updated: "2026-06-30T00:00:00Z"
+  passes: 0
+  stakes: reversible
+  note: >
+    Runs parallel to t-001 and t-006 human gates — no dependency on Silas picking
+    stores or concepts. Read product-types.yaml approved types. Cross-reference
+    against projects/digital-storefront/concepts/ and pitches/ to list: (a) product
+    types with no concept file yet, (b) types with a concept file but no approved
+    pitch, (c) types fully blocked on store selection. Write
+    projects/digital-storefront/PRODUCT-GAP-AUDIT.md. Ensures the brainstorming
+    pipeline has a clear backlog regardless of which store Silas approves.

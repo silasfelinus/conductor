@@ -79,3 +79,20 @@ tasks:
     note: >
       Document the API/data requirements for Letterboxd import/export, Comic Vine
       metadata enrichment, and Tautulli Plex watch-history backfill.
+
+  - id: t-005
+    milestone: m1
+    title: "Draft portable schema from common media export formats"
+    status: ready
+    owner: null
+    updated: "2026-06-30T00:00:00Z"
+    passes: 0
+    stakes: reversible
+    note: >
+      t-001 is blocked until Silas provides his raw log, but schema design can proceed
+      now using public export formats. Download sample Letterboxd CSV, Goodreads CSV,
+      and a Tautulli history export spec. Propose a normalized media schema in
+      projects/media-watchlist/SCHEMA-DRAFT.md covering: medium, title, creator, year,
+      consumed_date, rating (0-10), source platform, notes, and external IDs. Include
+      notes on how Silas's hand-written log will likely deviate from these formats.
+      This unblocks importer design regardless of when the raw log arrives.

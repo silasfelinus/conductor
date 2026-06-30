@@ -103,3 +103,20 @@ tasks:
     note: >
       Add or refine pending icon/card/hero prompts for sketchy in ART-PROMPTS.md. Do not
       commit generated image binaries from agent runs.
+
+  - id: t-006
+    milestone: m3
+    title: "Survey AI image analysis APIs suitable for drawing critique"
+    status: ready
+    owner: null
+    updated: "2026-06-30T00:00:00Z"
+    passes: 0
+    stakes: reversible
+    note: >
+      Runs parallel to t-001's human gate. Research available vision/image-analysis
+      APIs (Claude vision, GPT-4o vision, Google Vision AI) for suitability as a
+      drawing critique engine: cost per image, latency, quality of freehand-drawing
+      analysis vs. photo recognition, privacy considerations for user uploads, and
+      any content-policy constraints relevant to figure drawing. Write
+      docs/ai-critique-apis.md with a comparison table and a recommendation.
+      This feeds directly into t-003 (AI critique rubric) once t-001 is approved.

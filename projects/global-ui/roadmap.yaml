@@ -194,6 +194,23 @@ tasks:
       scoped task, without rewriting project roadmaps or making broad implementation
       changes automatically.
 
+  - id: t-010
+    milestone: m1
+    title: "Write GLOSSARY.md defining the task surface vocabulary"
+    status: ready
+    owner: null
+    updated: "2026-06-30T00:00:00Z"
+    passes: 0
+    stakes: reversible
+    note: >
+      Runs parallel to and ahead of t-001 — no dependency. Write
+      projects/global-ui/GLOSSARY.md defining each term precisely: task, todo,
+      honeydo, kaizen, desired-feature, approval, and completion. For each: one
+      sentence definition, who creates it (human/LLM/agent), where it lives (conductor
+      roadmap / kind_robots DB / front-end only), who can act on it, and how it
+      differs from the adjacent terms. This scopes t-001's spec so it can be precise
+      rather than re-litigating vocabulary during spec writing.
+
 milestones:
   - id: m1
     title: "Task language + presentation model"
