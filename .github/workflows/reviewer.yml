@@ -1,23 +1,10 @@
 name: Reviewer (Hourly)
 
-# Runs every hour at :45. Finds the oldest open worker/* PR, reads the diff
-# and project context, calls Claude (claude-sonnet-4-6) via tool use to decide:
-# merge / reject / escalate. On merge, squash-merges directly; on conflict,
-# rebases and asks Claude Haiku to resolve before retrying. Updates the roadmap
-# and appends a TALKBACK entry after every decision.
-#
-# Also triggers immediately when a worker/* PR is opened, so the Reviewer
-# doesn't have to wait up to 45 minutes.
-#
-# Requires secrets: ANTHROPIC_API_KEY, GITHUB_TOKEN (or GH_PAT for branch bypass).
+# DISABLED — schedule and PR trigger removed. Review happens inside Claude Code
+# sessions, not via GitHub Actions, to avoid independent API fees. Manual
+# dispatch kept for debugging. Re-add triggers if a self-hosted runner is used.
 
 on:
-  schedule:
-    - cron: "45 * * * *"   # :45 past every hour (15 min after Worker at :30)
-  pull_request:
-    types: [opened, synchronize]
-    branches:
-      - main
   workflow_dispatch:
     inputs:
       dry_run:

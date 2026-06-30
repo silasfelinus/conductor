@@ -1,18 +1,10 @@
 name: Worker (Hourly)
 
-# Runs every hour at :30. Picks the highest-priority ready task, generates the
-# work via OpenAI (gpt-4o), commits to a worker/* branch, opens a PR, and
-# attempts to auto-merge it. On conflict, rebases and asks OpenAI to resolve
-# before retrying. Only leaves the PR open if it cannot merge after retries.
-#
-# Requires secrets: OPENAI_API_KEY, GITHUB_TOKEN (auto-provided, but needs
-# branch-protection bypass for push to main — add github-actions[bot] to the
-# bypass list, or use a PAT stored as GH_PAT instead).
-# Optional: KR_API_TOKEN (kind_robots todos)
+# DISABLED — schedule removed. Workers come from Claude Code / ChatGPT sessions,
+# not from GitHub Actions, to avoid independent API fees. Manual dispatch kept
+# for debugging. Re-add schedule if a self-hosted LLM runner is set up.
 
 on:
-  schedule:
-    - cron: "30 * * * *"   # :30 past every hour
   workflow_dispatch:
     inputs:
       dry_run:
