@@ -103,17 +103,13 @@ tasks:
   - id: t-006
     milestone: m2
     title: "Remove fallback dev-credential defaults from compose.yaml auth key/salt entries"
-    status: claimed
+    status: review
     owner: worker
-    updated: "2026-06-30T05:55:00Z"
+    updated: "2026-06-30T05:58:00Z"
     passes: 0
     stakes: reversible
     depends_on: t-005
     note: >
-      compose.yaml currently passes ${WORDPRESS_AUTH_KEY:-dev-auth-key-change-me} (and
-      all other seven WORDPRESS_*_KEY / WORDPRESS_*_SALT vars) with hardcoded dev
-      fallback values. This defeats the getenv_docker_required() guard added in t-005
-      because Docker Compose supplies the fallback value to the container — wp-config.php
-      sees a value and proceeds. Remove the :- fallback defaults from all eight entries
-      so the container cannot start without real secrets. Also update .env.example to
-      prompt clearly for these values. Do not deploy or touch DNS.
+      Removed Compose fallback defaults from all eight WORDPRESS_*_KEY / WORDPRESS_*_SALT
+      entries and updated .env.example to tell local users to generate unique values.
+      Do not deploy or touch DNS.
