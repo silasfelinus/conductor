@@ -107,6 +107,22 @@ also blocked.
 
 On a **hard** `needs-human`: stop. Do not pick another task. Flag clearly for Silas.
 
+### Writing needs-human task notes for Silas (not for agents)
+
+When a task ends at `needs-human`, rewrite the `note:` field so Silas can act on it
+without reading the surrounding code or roadmap. Use this structure:
+
+```
+FOR SILAS: What was produced and where to find it (file path, one sentence).
+What it contains (2-3 specific things, not agent jargon).
+TO APPROVE: What Silas needs to read, decide, or change — and the exact edit
+to make (set approved_by_human: true and status: done, or add a note with X).
+What unblocks when he does (next task id + what it will do).
+```
+
+Do NOT write the note for the next agent to read. The agent reads the roadmap;
+Silas reads the note. Agent-facing context belongs in the PR description.
+
 ## Security model — who can do what
 
 Every agent operates within a strict permission boundary. Acting outside it is a safety

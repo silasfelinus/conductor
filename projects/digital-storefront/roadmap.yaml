@@ -37,7 +37,19 @@ tasks:
   stakes: reversible
   gate_human: true
   approved_by_human: false
-  note: "Research print-on-demand, PDF marketplaces, and 3D-printable stores. Produce projects/digital-storefront/research/stores.md: options, fees, audience, pros/cons, and a recommended shortlist. Research only — no account creation. Ends needs-human; Silas picks which stores to pursue before brainstorming unblocks.\n"
+  note: >
+    FOR SILAS: Platform research is complete — read
+    projects/digital-storefront/research/stores.md for the full comparison.
+    The short version: the recommendation is to start with Gumroad (direct PDF
+    sales, simple) + itch.io (indie RPGs, zines, coloring packs, experiments).
+    For print-on-demand merch, evaluate Printful vs Printify later once you
+    have a design. For STL files, try Cults first, MyMiniFactory for polished
+    collections. No accounts were created; this is research only.
+    TO APPROVE: Add a short note here saying which platforms sound right to you
+    (even just "yes, Gumroad + itch.io for now"), then set approved_by_human: true
+    and status: done. That unblocks t-002 which will brainstorm specific content
+    ideas for whichever platforms you choose. You do not need to commit to all
+    platforms — one or two is fine to start.
 - id: t-002
   milestone: m2
   title: Brainstorm content concepts for the chosen stores
@@ -91,13 +103,16 @@ tasks:
   passes: 0
   stakes: reversible
   note: >
-    Added projects/digital-storefront/concepts/acts-of-kindness-coloring-book.md
-    with 12 page concepts, one-line kindness prompts, cover direction,
-    audience notes, and an art-generation brief. Product types remain
-    pdf-coloring + pod-text-art. No publishing, storefront upload, customer
-    data, ad spend, or external account action was performed. Human gate
-    remains required before concept selection moves to draft production.
-    Pitch ref: pitches/2026-06-24-coloring-book-kindness.md (approved).
+    FOR SILAS: An "Acts of Kindness" coloring book concept document is ready at
+    projects/digital-storefront/concepts/acts-of-kindness-coloring-book.md.
+    It has 12 page concepts (e.g. "Leave a kind note", "Hold the door", "Share
+    your lunch") with one-line prompts, a cover direction, and notes on who
+    the audience is (adults, all-ages, therapeutic/gift market).
+    TO APPROVE: Read the concept file. If you want the Worker to start creating
+    actual draft coloring pages from these concepts, set approved_by_human: true
+    and status: done. If you want to change the theme or direction first, add
+    a note here. Nothing gets published or uploaded either way — the next step
+    is just draft artwork, which also ends at needs-human before anything goes live.
   gate_human: true
   approved_by_human: false
 

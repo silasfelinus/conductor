@@ -32,16 +32,21 @@ milestones:
 tasks:
   - id: t-001
     milestone: m1
-    title: "Request source log and propose import schema"
-    status: needs-human
+    title: "Parse media_list.md and propose import schema"
+    status: ready
     owner: null
     passes: 0
     stakes: reversible
-    gate_human: true
     note: >
-      Silas needs to provide the raw text log before parsing can begin. Once the
-      sample exists, parse the first 100 entries, identify format patterns, and
-      propose a DB schema plus import script plan.
+      The raw log is at projects/media-watchlist/media_list.md. Format: plain text,
+      organized by medium headers (MOVIES, TV, BOOKS, NOVELLAE, AUDIOBOOKS, COMICS,
+      VIDEO GAMES). Each entry is "Title date" where date is m/dd (2026). Asterisks
+      (*) prefix entries. Parse all entries, identify format patterns and edge cases
+      (missing dates, asterisk meaning, issue numbers in comics, duration in
+      audiobooks), and propose a normalized DB schema in
+      projects/media-watchlist/SCHEMA-DRAFT.md. Cover fields: medium, title, creator
+      (where present), consumed_date, rating, notes, external IDs. No gate needed —
+      this is research and schema design only.
 
   - id: t-002
     milestone: m2
@@ -81,18 +86,16 @@ tasks:
       metadata enrichment, and Tautulli Plex watch-history backfill.
 
   - id: t-005
-    milestone: m1
-    title: "Draft portable schema from common media export formats"
-    status: ready
+    milestone: m2
+    title: "Cross-reference Silas's log format against Letterboxd/Goodreads export formats"
+    status: waiting
     owner: null
     updated: "2026-06-30T00:00:00Z"
     passes: 0
     stakes: reversible
+    depends_on: t-001
     note: >
-      t-001 is blocked until Silas provides his raw log, but schema design can proceed
-      now using public export formats. Download sample Letterboxd CSV, Goodreads CSV,
-      and a Tautulli history export spec. Propose a normalized media schema in
-      projects/media-watchlist/SCHEMA-DRAFT.md covering: medium, title, creator, year,
-      consumed_date, rating (0-10), source platform, notes, and external IDs. Include
-      notes on how Silas's hand-written log will likely deviate from these formats.
-      This unblocks importer design regardless of when the raw log arrives.
+      After t-001 proposes the schema, compare Silas's hand-written log format against
+      Letterboxd CSV and Goodreads CSV export shapes. Identify where the formats align
+      (can auto-import) vs. where they diverge (needs manual mapping or a one-time
+      conversion pass). This informs the importer normalization rules in t-002.

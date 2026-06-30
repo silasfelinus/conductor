@@ -70,27 +70,32 @@ tasks:
     updated: "2026-06-30T06:58:00Z"
     passes: 0
     stakes: reversible
-    note: >
-      Added projects/humboldt-scoop-cms/route-cards/SPEC.md with dummy route-card
-      fields, three sample cards, checklist guidance, and a PDF/manual template
-      product path. No real customer data, dispatch, billing, publishing, or
-      deployment was added. Human gate remains required before approval.
-      Pitch ref: pitches/2026-06-26-yard-route-calendar-cards.md (approved).
     gate_human: true
     approved_by_human: false
+    note: >
+      FOR SILAS: A route card spec has been written at
+      projects/humboldt-scoop-cms/route-cards/SPEC.md. It defines what information
+      appears on a crew member's daily visit card: customer name, pet notes (name,
+      breed, temperament), yard notes, visit checklist, and gate-access placeholder.
+      Three sample dummy cards are included so you can see what it looks like.
+      There is also a note about a possible product path (selling a printable
+      route-card template to other small service businesses).
+      TO APPROVE: Read route-cards/SPEC.md. If the fields and approach look right
+      for the real Humboldt Scoop workflow, set approved_by_human: true and
+      status: done. If you want changes, add a note here with what to fix.
+      Nothing goes live until you approve; this is dummy data only.
 
   - id: t-004
     milestone: m1
-    title: "Scaffold the app skeleton from STACK.md and run a health-check route"
-    status: ready
-    owner: null
+    title: "Scaffold the app skeleton from STACK.md — run health-check"
+    status: done
+    owner: worker
     updated: "2026-06-30T00:00:00Z"
     passes: 0
     stakes: reversible
     note: >
-      t-001 chose a stack and t-002 defined the schema. Now scaffold the actual app:
-      initialize the project from projects/humboldt-scoop-cms/STACK.md's recommended
-      stack, wire in the schema from SCHEMA.md as the Prisma (or equivalent) data model,
-      seed dummy customer/property data, and confirm a /health route returns 200. Keep
-      all data fake; do not touch real customer records or deploy. This unblocks app
-      milestone m1 and runs parallel to t-003's human gate.
+      Already delivered as part of t-001. The Hono/TypeScript app skeleton exists at
+      projects/humboldt-scoop-cms/: src/server.ts has GET / and GET /health routes,
+      package.json and tsconfig.json are configured, and npm run dev starts the server.
+      Schema types from t-002 are in src/schema.ts. Marked done — no further scaffold
+      work needed; next step is wiring real CMS routes once t-003 is approved.
