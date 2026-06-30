@@ -1,0 +1,111 @@
+project: pinball-hero
+kind: content
+
+notes_from_silas: |
+  Plan a high-quality but efficient homebuilt pinball machine with a practical parts strategy.
+  The end product should be build plans at multiple price points: parts lists, 3D printable
+  models, wiring/electronics guidance, and step-by-step instructions. Optimize printed parts
+  for a Bambu Lab A1-class printer and prefer comfortable/common off-the-shelf parts where
+  they improve reliability, cost, or buildability.
+
+milestones:
+  - id: m1
+    title: "Feasibility and architecture"
+    weight: 15
+    status: not-started
+  - id: m2
+    title: "Parts and price tiers"
+    weight: 20
+    status: not-started
+  - id: m3
+    title: "Printable mechanical system"
+    weight: 25
+    status: not-started
+  - id: m4
+    title: "Electronics and control plan"
+    weight: 20
+    status: not-started
+  - id: m5
+    title: "Build instructions package"
+    weight: 20
+    status: not-started
+
+tasks:
+  - id: t-001
+    milestone: m1
+    title: "Define the pinball machine architecture and constraints"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: 2026-06-29
+    gate_human: true
+    note: >
+      Produce a first design brief for a compact, durable, partly 3D-printed pinball machine.
+      Define the target cabinet/playfield size, mechanical scope, what should be printed vs
+      purchased, Bambu A1 print constraints, safety constraints, and the likely build variants.
+      Include assumptions and open questions for Silas before downstream BOM/model work begins.
+
+  - id: t-002
+    milestone: m2
+    title: "Research BOM tiers and common-source parts"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: 2026-06-29
+    depends_on: t-001
+    note: >
+      Create starter, solid, and deluxe bill-of-materials tiers. Favor reliable common parts:
+      plywood or MDF cabinet material, acrylic/polycarbonate, commodity switches/sensors,
+      buttons, wiring, fasteners, power supplies, coils/solenoids where appropriate, microcontroller
+      options, LED options, and printed hardware. Call out where used/salvaged pinball parts are
+      better than printing.
+
+  - id: t-003
+    milestone: m3
+    title: "Specify the 3D printable model set"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: 2026-06-29
+    depends_on: t-001
+    note: >
+      Define the printable model catalog: brackets, guides, wireforms substitutes, lane plastics,
+      posts, target housings, ball trough helpers, ramps if feasible, playfield fixtures, cable clips,
+      and cabinet helpers. Include recommended materials, orientations, tolerances, heat/wear notes,
+      and whether each part should be STL, 3MF, or editable CAD source.
+
+  - id: t-004
+    milestone: m4
+    title: "Design the electronics and control plan"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: 2026-06-29
+    depends_on:
+      - t-001
+      - t-002
+    note: >
+      Draft the control architecture for lights, sensors, buttons, audio, scoring, and solenoid-safe
+      actuation if included. Compare microcontroller and SBC options, identify safe power domains,
+      fuse/protection needs, and document what should remain low-voltage beginner-friendly.
+
+  - id: t-005
+    milestone: m5
+    title: "Assemble the first build-plan package outline"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: 2026-06-29
+    depends_on:
+      - t-002
+      - t-003
+      - t-004
+    note: >
+      Produce the outline for the final deliverable: parts list by tier, printable files index,
+      assembly order, calibration/testing steps, safety checklist, maintenance notes, and upgrade
+      paths. This is still a draft package and should stay needs-human before publishing.
