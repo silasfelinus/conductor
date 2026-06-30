@@ -29,7 +29,7 @@ needs-human.
   universal key across conductor file system, kind_robots database, front-end UI,
   and LLM. When creating a project from any surface (conductor roadmap, front-end
   form, LLM), produce a Dream with the matching slug and update conductor accordingly.
-  The sync_projects_to_dreams.py script (conductor/t-008) is the canonical
+  The sync_projects_to_dreams.py script (conductor/t-009) is the canonical
   conductor → Dream bridge. Do not add redundant FK fields — enforce via slug match.
 - Do not invent a second source of project truth. Conductor roadmap.yaml is the
   authoritative task record; kind_robots Dream is the authoritative display/identity
@@ -52,11 +52,16 @@ self-hostable. Dummy data only until I say otherwise.
 - (your notes)
 
 ### approval-portal  (software)
-**Direction:** The console I want to live in — read projects/pitches, approve/reject,
-confirm updates, roll back. A face over the repo; git stays the source of truth. Build
-incrementally, each milestone usable alone.
+**Direction:** This IS `conductor-page.vue` in kind_robots — not a separate app.
+The workspace already has project gallery (cards/heroes/icons/list), pitch voting,
+todo management, Dream linking, priority controls, and project status editing.
+Do NOT build a standalone Nuxt app in conductor. Future tasks for this project
+belong in the kind_robots roadmap as improvements to conductor-page.vue.
 **Notes:**
-- t-001 (SPEC.md) approved 2026-06-30. t-002 (read-only dashboard) is now unblocked.
+- t-001 (SPEC.md) approved. t-002 (dashboard) built in kind_robots — done.
+- t-003 (pitch voting) already live in kind_robots — done.
+- t-004/t-005 redirected: future rollback and deploy work goes in kind_robots roadmap.
+- Standalone approval-portal app in projects/approval-portal/ is a redundant artifact; ignore it.
 
 ### digital-storefront  (content)
 **Direction:** Research stores → brainstorm content (only within approved product types) →
@@ -72,7 +77,7 @@ Full roadmap is now active — see projects/kind-robots/roadmap.yaml.
 **Notes:**
 - Slug parity: Dream.slug is the universal key. Conductor project directory names must
   match Dream.slug values for PROJECT-type Dreams. No redundant FK fields — enforce
-  via slug matching. The sync script (conductor/t-008) is the canonical
+  via slug matching. The sync script (conductor/t-009) is the canonical
   conductor → kind_robots bridge; it upserts Dreams by slug and writes projectStatus.
 - Project creation from front-end or LLM should produce a Todo for the Worker to
   scaffold the matching roadmap.yaml in conductor. Same slug, three surfaces.

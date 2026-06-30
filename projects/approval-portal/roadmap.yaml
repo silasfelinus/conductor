@@ -76,42 +76,41 @@ tasks:
   - id: t-003
     milestone: m2
     title: "Pitch voting that writes approve/reject back to the repo"
-    status: waiting
-    owner: null
+    status: done
+    owner: worker
+    updated: "2026-06-30T00:00:00Z"
     passes: 0
     stakes: outward-facing
     depends_on: t-002
-    gate_human: true
-    approved_by_human: false
     note: >
-      Add approve/reject buttons for pitches that write the decision back (per the spec's
-      write strategy) as a commit or PR. This is the first time the portal mutates the repo,
-      so it's gated — Silas reviews the write mechanism before it's trusted.
+      Already live in kind_robots: conductor-page.vue brainstorm section has
+      approve/pass/undo pitch voting wired to /api/conductor/pitch-vote.post.ts.
+      No work needed here — this task is done in kind_robots, not as a standalone app.
 
   - id: t-004
     milestone: m4
     title: "One-click rollback via git revert"
-    status: waiting
+    status: needs-human
     owner: null
     passes: 0
     stakes: outward-facing
-    depends_on: t-003
     gate_human: true
     approved_by_human: false
     note: >
-      Surface recent merged changes and add a 'roll back' action that opens a revert PR
-      (never force-pushes). Gated — Silas confirms the revert flow is safe before trust.
+      Redirected to kind_robots. Any rollback UI belongs in conductor-page.vue,
+      not in a standalone approval-portal app. Create a task in projects/kind-robots/roadmap.yaml
+      when Silas is ready to build this. Ends needs-human until that decision is made.
 
   - id: t-005
     milestone: m5
     title: "Plan auth + deploy (do NOT deploy)"
-    status: waiting
+    status: needs-human
     owner: null
     passes: 0
     stakes: irreversible
-    depends_on: t-004
     gate_human: true
     approved_by_human: false
     note: >
-      Draft the simplest safe auth (just Silas) and a deploy plan. Write it up; do NOT
-      deploy or provision anything. Ends needs-human — going live is Silas's call.
+      Redirected to kind_robots. Auth and deploy for the workspace belong to kind_robots,
+      not a separate app. Create a task in projects/kind-robots/roadmap.yaml when ready.
+      Ends needs-human until Silas decides to proceed.

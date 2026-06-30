@@ -106,3 +106,36 @@ tasks:
          carries the slug to the Worker.
       In all cases: Dream.slug === conductor project directory name. Ends
       needs-human for Silas to approve before implementation begins.
+
+  - id: t-005
+    milestone: m3
+    title: "Show task note text in conductor-page.vue task cards"
+    status: ready
+    owner: null
+    updated: "2026-06-30T00:00:00Z"
+    passes: 0
+    stakes: reversible
+    note: >
+      conductor-page.vue task cards (in the project detail view) currently show id,
+      milestone, gateHuman, owner, and passes but NOT the task note text. Add a
+      collapsible or truncated note display below the task title row. The note field
+      is already returned by /api/conductor/projects — no API change needed, just
+      a template addition to the task card in conductor-page.vue in kind_robots.
+
+  - id: t-006
+    milestone: m3
+    title: "Surface stakes, depends_on, and approved_by_human in task detail"
+    status: ready
+    owner: null
+    updated: "2026-06-30T00:00:00Z"
+    passes: 0
+    stakes: reversible
+    depends_on: t-005
+    note: >
+      conductor-page.vue task cards do not currently show stakes, depends_on, or
+      approved_by_human. These are critical for Silas to understand what's blocking
+      what. Add them to the task card metadata row (alongside owner/passes/gate).
+      Requires extending the ConductorTask type in /api/conductor/projects.get.ts
+      to include stakes (string), dependsOn (string | string[] | null), and
+      approvedByHuman (boolean) — the raw YAML already has these fields, the
+      parser just needs to extract them.
