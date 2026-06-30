@@ -56,14 +56,16 @@ tasks:
 - id: t-003
   milestone: m3
   title: Design and wire the global honeydo inbox
-  status: ready
-  owner: null
+  status: done
+  owner: worker
   passes: 0
   stakes: reversible
   depends_on: t-001
-  note: 'Create the global user-facing surface for honeydos: LLM-assigned tasks for the user that help
-    projects along but are not viewed as project-specific. Define empty states, completion behavior, priority
-    display, and how honeydos relate to existing Todos.
+  updated: '2026-06-30T00:00:00Z'
+  note: 'Added Honey-Do Queue context banner to the HONEYDO tab in the tasks view: explains what honeydos
+    are, shows high-priority count alert, and provides a friendly empty state with icon when the queue
+    is clear. High-priority honeydos get a distinct error-tinted card background. Completion uses existing
+    toggleDone. Archive/delete available per item.
 
     '
 - id: t-004
