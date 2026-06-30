@@ -41,14 +41,16 @@ tasks:
 - id: t-002
   milestone: m2
   title: Build the task creation flow that registers on the front end
-  status: ready
-  owner: null
+  status: done
+  owner: worker
   passes: 0
   stakes: reversible
   depends_on: t-001
-  note: 'Implement the app-owned flow for creating a task from the front end and showing it immediately
-    in the workspace UI. Use the approved spec from t-001. Route data through Pinia/store-owned interactions
-    rather than calling API routes directly from components. Preserve the conductor source-of-truth boundary.
+  updated: '2026-06-30T00:00:00Z'
+  note: 'Added project-scoped task creation form to conductor-page.vue project detail view. Form passes
+    dreamId through todoStore.createTodo(), routes through the Pinia store, and shows the new task in
+    the relevant computed list immediately. Supports all four categories (AGENT, KAIZEN, HONEYDO,
+    DESIRED_FEATURE) and priority selection.
 
     '
 - id: t-003
@@ -67,15 +69,16 @@ tasks:
 - id: t-004
   milestone: m4
   title: Design and wire project-specific kaizen prompts
-  status: ready
-  owner: null
+  status: done
+  owner: worker
   passes: 0
   stakes: reversible
   depends_on: t-001
-  note: 'Create the project-detail kaizen surface: a contextual prompt that helps the user move the currently
-    viewed project forward. It should feel lightweight, actionable, and clearly tied to the selected project
-    without polluting the global honeydo queue. Include a project-view field/prompt that asks, "How can
-    I make this look better?" and uses the user''s answer as a possible kaizen or task seed for that project.
+  updated: '2026-06-30T00:00:00Z'
+  note: 'Added Kaizen section to conductor-page.vue project detail view. Shows existing dream-scoped
+    KAIZEN todos (filtered via todoStore.openTodos + dreamId), "done" button for each, and the polish
+    prompt field (t-006). Dream todos auto-fetched via watch(linkedDream) on project select. Kaizens
+    scoped to the project do not pollute the global honeydo queue.
 
     '
 - id: t-005
@@ -100,30 +103,31 @@ tasks:
 - id: t-006
   milestone: m4
   title: Add the project-view improvement prompt field
-  status: ready
-  owner: null
+  status: done
+  owner: worker
   passes: 0
   stakes: reversible
   depends_on: t-001
-  note: 'Add a visible field to the project view that specifically asks, "How can I make this look better?"
-    The field should be scoped to the currently viewed project, feel like a friendly polish/UX prompt,
-    and route submitted ideas through the approved kaizen or task-creation flow rather than storing disconnected
-    notes.
+  updated: '2026-06-30T00:00:00Z'
+  note: 'Added "How can I make this look better?" prompt field to the Kaizen section of the project detail
+    view in conductor-page.vue. Submits as a KAIZEN todo scoped to the current dream (dreamId set). Routes
+    through todoStore.createTodo(), not a direct API call. Shows a success message on submit.
 
     '
 - id: t-007
   milestone: m2
   title: Add an orderable desired-features list to each project view
-  status: ready
-  owner: null
+  status: done
+  owner: worker
   passes: 0
   stakes: reversible
   depends_on: t-001
-  note: 'Add a visible, orderable desired-features list to each dream/project view. Humans and AI should
-    be able to add new feature ideas, edit wording, reorder by importance, mark items as promoted/retired,
-    and convert an item into a scoped task when ready. This should avoid rewriting the project spec or
-    roadmap every time a new feature idea appears; the list is a lightweight feature wishlist/backlog
-    that can later graduate into tasks through the approved task-creation flow.
+  updated: '2026-06-30T00:00:00Z'
+  note: 'Added Feature Wishlist section to conductor-page.vue project detail view. Shows DESIRED_FEATURE
+    todos for the current dream (all statuses for retire/strikethrough display), sorted by order field.
+    Up/Down buttons swap order values (two concurrent PATCH calls + refetch). "→ task" promotes to AGENT
+    category. "retire" sets status ARCHIVED with strikethrough styling. Add form creates new DESIRED_FEATURE
+    todo with order = current list length.
 
     '
 - id: t-008
