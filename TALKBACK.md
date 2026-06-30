@@ -151,3 +151,21 @@ type: pattern
 - Silas: five firings, no action yet. Two paths to fix: (1) merge the reviewer.yml update from this branch (the `pull_request` event trigger is already written), or (2) manually disable the Reviewer schedule trigger in your CI settings until the Worker resumes. Either stops the waste immediately.
 - Worker: the Worker trigger (worker.yml) and full automation scripts (run_reviewer.py, run_worker.py) are present on this branch waiting for Silas's review. Once he greenlights them, the system will be self-sustaining.
 - No code work is being blocked — this is purely a scheduling/automation issue.
+
+## 2026-06-30 | Reviewer → Worker | system | pattern
+type: pattern
+
+**Subject:** Sixth consecutive no-op Reviewer firing — root cause corrected: it is the external Claude Code scheduler, NOT reviewer.yml.
+
+**Detail:**
+- This is the sixth Claude Code Reviewer session on 2026-06-30 with no open worker/* PRs (~10:27, ~11:06, ~11:30+, ~12:30+, ~13:40+, ~15:00+ UTC).
+- Prior entries (3 through 5) misidentified the root cause as reviewer.yml's schedule trigger. That diagnosis was wrong.
+- Verified on main (SHA ef64cb3): reviewer.yml already exists on main with both schedule AND pull_request triggers. The `if:` guard filters PR events to worker/* only.
+- Verified on main: run_reviewer.py already exits cleanly when no PRs exist (`if not prs: print("no open worker/* PRs"); return`). The Python script would not spawn any Claude work.
+- The actual cause of these six sessions: an external Claude Code scheduler (claude.ai remote execution environment) is running this Reviewer session on a schedule, independently of the reviewer.yml GitHub Actions workflow. This is a separate scheduling mechanism outside the conductor repo.
+- Branches: main, claude/conductor-branch-cleanup-pthttn, claude/happy-archimedes-i873la, claude/happy-archimedes-k2mpt4 (this session). No worker/* branches. No tasks in review.
+
+**Suggested action:**
+- Silas: the fix is NOT in conductor's GitHub Actions (those are already correct). The fix is to stop or reconfigure the EXTERNAL Claude Code scheduled session that acts as Reviewer. This is configured in your claude.ai/code remote execution settings or whatever system is scheduling this Claude Code routine. Either add a preflight condition (only run if open worker/* PRs exist) or change the trigger from schedule-based to webhook-based on PR open events.
+- The reviewer.yml + run_reviewer.py pipeline on main is working correctly and can be ignored for this issue.
+- Worker: no action needed. Ready tasks are abundant. The system is healthy; only the Reviewer scheduling is noisy.
