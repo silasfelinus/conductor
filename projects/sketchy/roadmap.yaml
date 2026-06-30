@@ -96,27 +96,29 @@ tasks:
   - id: t-005
     milestone: m5
     title: "Generate Sketchy workspace image prompts"
-    status: ready
-    owner: null
-    passes: 0
-    stakes: reversible
-    note: >
-      Add or refine pending icon/card/hero prompts for sketchy in ART-PROMPTS.md. Do not
-      commit generated image binaries from agent runs.
-
-  - id: t-006
-    milestone: m3
-    title: "Survey AI image analysis APIs suitable for drawing critique"
-    status: ready
-    owner: null
+    status: done
+    owner: worker
     updated: "2026-06-30T00:00:00Z"
     passes: 0
     stakes: reversible
     note: >
-      Runs parallel to t-001's human gate. Research available vision/image-analysis
-      APIs (Claude vision, GPT-4o vision, Google Vision AI) for suitability as a
-      drawing critique engine: cost per image, latency, quality of freehand-drawing
-      analysis vs. photo recognition, privacy considerations for user uploads, and
-      any content-policy constraints relevant to figure drawing. Write
-      docs/ai-critique-apis.md with a comparison table and a recommendation.
-      This feeds directly into t-003 (AI critique rubric) once t-001 is approved.
+      Icon/card/hero images already exist in projects/images/ (sketchy-icon.webp,
+      sketchy-card.webp, sketchy-hero.webp). Added icon/card/hero prompts to the
+      ART-PROMPTS.md backlog under the sketchy section for documentation and future
+      regeneration reference. Inspiration prompts were already present.
+
+  - id: t-006
+    milestone: m3
+    title: "Survey AI image analysis APIs suitable for drawing critique"
+    status: done
+    owner: worker
+    updated: "2026-06-30T00:00:00Z"
+    passes: 0
+    stakes: reversible
+    note: >
+      Wrote docs/ai-critique-apis.md. Compared Claude Vision, GPT-4o Vision, Gemini 1.5
+      Pro, and Google Vision AI across: drawing critique quality, cost per image call,
+      latency, privacy/training data policies, and content-policy fit for figure drawing.
+      Recommendation: Claude (claude-sonnet-4-6) as primary critique engine for quality
+      and encouraging tone; GPT-4o as fallback/A-B test. Google Vision AI excluded (object
+      detection only). Cost estimate: ~$0.005–0.01/critique at Sketchy's expected scale.

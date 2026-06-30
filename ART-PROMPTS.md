@@ -67,6 +67,12 @@ These are not automatically queued for legacy projects. Generate them manually w
 
 ### sketchy
 
+**Project assets (icon/card/hero) — already generated, prompts documented here for reference:**
+- `sketchy-icon.webp` — A cheerful pencil with a small glowing AI spark at its tip, confident stroke underline, clean app-icon silhouette on a warm neutral ground, premium product icon polish, no text, no collage.
+- `sketchy-card.webp` — A sketchbook open to a half-finished character study with glowing critique annotations floating beside it, a friendly robot coach perched on the page corner, warm studio lighting, professional portrait key art, no text, no collage.
+- `sketchy-hero.webp` — Wide-angle view of a cozy drawing studio where a diverse group of artists practice at illuminated tablets, each canvas showing gestural progress from rough to refined, an encouraging AI tutor presence woven through the light, cinematic creative-tool banner, no text, no collage.
+
+**Inspiration images:**
 - `sketchy-inspiration-01.webp` — A luminous sketch-practice room where simple shapes become confident character drawings on floating transparent layers, an encouraging tiny robot art coach gesturing toward the next exercise, premium cozy creative-tool concept art, no text, no collage.
 - `sketchy-inspiration-02.webp` — Close-up of a tactile sketchbook page with graphite studies, eraser crumbs, gesture thumbnails, and one charming character breaking out of the page into the real desk light, crisp professional illustration, no text, no collage.
 - `sketchy-inspiration-03.webp` — A friendly critique interface imagined as physical art objects: pinned sketches, color chips, tiny spark badges, and a pencil companion guiding improvement without judgment, polished product key art, no text, no collage.
