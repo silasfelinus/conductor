@@ -58,16 +58,17 @@ tasks:
   - id: t-002
     milestone: m1
     title: "Build read-only dashboard from repo data"
-    status: claimed
+    status: needs-human
     owner: worker
-    updated: "2026-06-30T07:53:27Z"
+    updated: "2026-06-30T08:17:00Z"
     passes: 0
     stakes: reversible
     depends_on: t-001
     note: >
-      Per the approved spec, build a local-running web app that lists projects with
-      progress %, tasks by status, and pitches awaiting vote — reading the same files the
-      digest reads. Read-only; no write actions yet. Runs locally, no deploy.
+      Worker cycle was blocked after the claim commit. The GitHub connector accepted
+      several file-write commits on temporary worker branches, then reported those branches
+      as missing when updating the roadmap or opening the PR. No PR was mergeable. Silas
+      should reset this task to ready after checking branch/ref state.
 
   - id: t-003
     milestone: m2
