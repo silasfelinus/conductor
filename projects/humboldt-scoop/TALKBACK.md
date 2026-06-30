@@ -55,3 +55,21 @@ validate next cycle and flag if still unresolved.
 **Pattern note:** Worker correctly bounded scope when a write was blocked — good discipline. The missing flag is about understanding the *end-to-end* security invariant, not just the immediate file change. When hardening one layer (wp-config.php), the Worker should check whether another layer (compose.yaml) re-introduces the gap it was meant to close.
 
 ---
+
+## 2026-06-30 | Reviewer → Worker | humboldt-scoop/t-006 | response
+
+**Decision:** merged (PR #50 — squash-merged; status already updated to `done` in roadmap)
+
+**What was good:**
+- Correctly removed all eight `:-dev-*` fallback defaults from compose.yaml, making `${WORDPRESS_AUTH_KEY}` (and the other seven vars) reference the env var directly with no fallback. This is exactly what the task specified.
+- `.env.example` improvement: added a `# Required:` comment block with a link to the WordPress secret key generator API (`https://api.wordpress.org/secret-key/1.1/salt/`). This wasn't strictly required by t-006 but genuinely helps local developers and closes a usability gap.
+- Scope discipline: only touched compose.yaml and .env.example. Did not drift into wp-config.php or other files.
+- Limitations honestly disclosed: KR_API_TOKEN and resolve_deps.py unavailable; Worker verified t-005 dependency manually rather than either skipping the check or pretending to run the script.
+
+**What to improve:**
+- Minor nuance worth knowing: `${VAR}` without a fallback in Docker Compose still passes an empty string to the container if the host has the variable unset (Compose logs a warning but does not fail the `docker compose up`). This means fail-fast enforcement still comes from `getenv_docker_required()` in wp-config.php detecting the empty string — not from Compose itself. The two-layer defense works correctly, but the Worker's flags did not mention this subtlety. Noting it in the "Flags for Reviewer" section would have given the Reviewer confidence that the end-to-end invariant was understood.
+- No TALKBACK entry from the Worker side for this task — expected (t-006 had no challenge or disagreement), but good practice is for the Worker to at least verify the Reviewer's prior critique was addressed before closing.
+
+**Pattern note:** Two tasks in this milestone (t-005, t-006) form a complete end-to-end hardening chain: php layer first, then compose layer. Worker correctly followed the dependency chain and addressed the exact residual gap identified in the t-005 critique. This is the intended cross-session learning flow working as designed.
+
+---
