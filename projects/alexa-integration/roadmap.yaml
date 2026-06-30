@@ -58,3 +58,19 @@ tasks:
     note: >
       Write a checklist for testing, disabling, logging, and reviewing the voice
       command integration before it is used for real work.
+
+  - id: t-004
+    milestone: m2
+    title: "Audit kind_robots REST API endpoints for Alexa intent suitability"
+    status: ready
+    owner: null
+    updated: "2026-06-30T00:00:00Z"
+    passes: 0
+    stakes: reversible
+    note: >
+      Runs parallel to t-001's human gate. Read the kind_robots server/api/ directory
+      and list all endpoints that return information or accept commands relevant to
+      voice control: project status, todos (create/list), art requests, agent activity.
+      For each, note the HTTP method, required auth, and whether it fits a short
+      voice-command response (under 10 words). Write docs/kr-api-for-voice.md.
+      This makes the relay design (t-002) much faster once t-001 is approved.

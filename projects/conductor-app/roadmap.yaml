@@ -73,3 +73,19 @@ tasks:
     note: >
       Compare practical notification approaches for agent completions, blocked
       tasks, and approvals needing review.
+
+  - id: t-005
+    milestone: m1
+    title: "Map kind_robots API surface available for the app"
+    status: ready
+    owner: null
+    updated: "2026-06-30T00:00:00Z"
+    passes: 0
+    stakes: reversible
+    note: >
+      Runs parallel to t-001's human gate. Read kind_robots/server/api/ and list
+      all endpoints the Conductor App would need: projects, todos (CRUD), dreams,
+      art requests, pitch voting. For each: method, path, auth requirement, and
+      whether it already exists or needs to be built. Write docs/kr-api-surface.md.
+      This means the architecture spec (t-001) can be precise and the scaffold
+      (t-002) can start immediately once t-001 is approved.

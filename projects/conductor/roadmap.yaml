@@ -197,3 +197,19 @@ tasks:
       Never delete a Dream; only create or update. This is the canonical
       conductor → kind_robots bridge; run it at the end of each Worker cycle
       after task work is complete.
+
+  - id: t-010
+    milestone: m2
+    title: 'Write scripts/generate_changelog.py — per-cycle change summary'
+    status: ready
+    owner: null
+    updated: "2026-06-30T00:00:00Z"
+    passes: 0
+    stakes: reversible
+    note: >
+      Currently the only change record is STATUS.md (auto-generated, broad) and
+      individual task notes. Add scripts/generate_changelog.py: reads git log since
+      the last CHANGELOG.md entry, groups commits by project slug, and appends a
+      dated section to CHANGELOG.md at the repo root. Format: date header, then
+      one bullet per project that changed listing task id + commit title. Runs at
+      the end of each Worker cycle alongside sync_projects_to_dreams.py.

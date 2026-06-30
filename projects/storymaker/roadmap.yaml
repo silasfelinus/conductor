@@ -96,3 +96,19 @@ tasks:
       Create a lightweight UX plan for starting a session, choosing a narrator,
       seeing branch options, entering custom actions, and reviewing collected
       artifacts. Keep it implementation-ready but not overbuilt.
+
+  - id: t-006
+    milestone: m1
+    title: "Audit kind_robots Bots, Characters, Scenarios, and Chats models for session compatibility"
+    status: ready
+    owner: null
+    updated: "2026-06-30T00:00:00Z"
+    passes: 0
+    stakes: reversible
+    note: >
+      Runs parallel to t-001's human gate. Read the kind_robots Prisma schema and
+      relevant API routes for Bot, Character, Scenario, Reward, and Chat models.
+      Write docs/kr-model-audit.md listing: what fields each model has, what a
+      Storymaker session would need that's already there, and what's missing or would
+      require a backend pitch. This preloads the session model design (t-001) with
+      real data instead of guesses.
