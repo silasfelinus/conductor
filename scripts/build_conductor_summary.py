@@ -454,7 +454,7 @@ def main() -> None:
     art_queue = fetch_art_queue()
 
     print("  checking vercel status...", file=sys.stderr)
-    vercel = fetch_vercel_status(github_token)
+    vercel = fetch_vercel_status(kr_token)
 
     state = {
         "as_of": as_of,
