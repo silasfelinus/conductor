@@ -47,28 +47,31 @@ tasks:
   - id: t-002
     milestone: m2
     title: "Draft Conductor art request script design"
-    status: waiting
-    owner: null
+    status: review
+    owner: worker
+    updated: "2026-07-01T00:00:00Z"
     passes: 0
     stakes: reversible
     depends_on: t-001
     note: >
-      Design scripts/request_art.py as a small wrapper around the approved art API
-      contract. Include prompt, model, dimensions, projectSlug, auth, polling, and
-      output path behavior without invoking live generation.
+      Created scripts/request_art.py — dry-run wrapper for /api/conductor/art-request
+      endpoint. Accepts --prompt, --project-slug, --width, --height, --dry-run (default),
+      --output-json. Uses KR_API_TOKEN for live mode. See script for full usage.
 
   - id: t-003
     milestone: m3
     title: "Specify how generated URLs map back to projects"
-    status: waiting
-    owner: null
+    status: review
+    owner: worker
+    updated: "2026-07-01T00:00:00Z"
     passes: 0
     stakes: reversible
     depends_on: t-001
     note: >
-      Define whether generated outputs are committed to projects/images, stored as
-      ArtImage records, or written as handoff notes. Keep binaries out of agent runs
-      unless Silas explicitly approves that workflow.
+      Created projects/art-generator-connect/URL-MAPPING.md — specifies the canonical
+      URL pattern, project art flow (ART-PROMPTS.md → generation → projects/images/
+      commit), general image flow (URL reference only, no binary commit), and
+      slug→filename convention.
 
   - id: t-004
     milestone: m4
