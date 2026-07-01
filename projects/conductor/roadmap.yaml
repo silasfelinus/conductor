@@ -184,3 +184,25 @@ tasks:
     cycle alongside sync_projects_to_dreams.py.
 
     '
+- id: t-011
+  milestone: m2
+  title: Add .claude/hooks/session-start.sh SessionStart hook to automate the conductor sweep
+  status: done
+  owner: silasfelinus
+  updated: '2026-07-01T07:26:15Z'
+  passes: 0
+  stakes: reversible
+  note: 'Retroactive task. PR #73 (branch claude/startup-sweep-test-bh0w3s, Claude-authored commit)
+    added .claude/hooks/session-start.sh + .claude/settings.json: a SessionStart hook that runs
+    only when CLAUDE_CODE_REMOTE=true, gathers git branch/status/log, scans all roadmap.yaml
+    files for ready/needs-human/claimed tasks, and tails TALKBACK.md, then injects it as a JSON
+    message. Silas opened and merged this himself (not via worker/* flow) before the Reviewer
+    session reached it, so no Reviewer merge action was taken or needed. Same role-boundary
+    pattern as PR #52 (t-008): a claude/* branch bypassing the Worker/Reviewer roadmap loop —
+    but this time merged by the human owner directly, not by the Reviewer, so it is not a
+    Reviewer-side violation. Noted in projects/conductor/TALKBACK.md. This hook duplicates the
+    manual "Session startup" steps already added to CLAUDE.md directly on main (commit b0f664e)
+    a few minutes earlier in a separate session — worth Silas deciding whether to trim the
+    CLAUDE.md manual instructions now that the hook automates the same sweep.
+
+    '
