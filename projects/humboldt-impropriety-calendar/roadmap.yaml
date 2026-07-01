@@ -1,0 +1,113 @@
+project: humboldt-impropriety-calendar
+kind: content
+notes_from_silas: >
+  First custom-calendar project. Mature/spicy is a preset, not a separate product type.
+  Historical scope: Club Risqué -> Reasons to Say Yes -> Humboldt Impropriety Society
+  in Humboldt County, California. Private performance videos may inform research but must
+  never be shared publicly, uploaded to storefronts, or used in previews without separate
+  written consent. Public storefront assets must stay safe-ish-for-work. Credit model(s),
+  artist(s), photographer(s), director(s), and historical contributors where approved.
+  Default 12-month royalty model: 12/20 of net profit allocated to month contributors,
+  one 1/20 share per month, split by signed month-level payout preset or custom split.
+  No contributor outreach, public posting, vendor upload, payment setup, printing, or
+  publication without explicit human approval.
+milestones:
+  - id: m1
+    title: Compliance, consent, and fulfillment foundation
+    weight: 25
+    status: not-started
+  - id: m2
+    title: Contributor packet and historical creative bible
+    weight: 25
+    status: not-started
+  - id: m3
+    title: Safe storefront and preorder plan
+    weight: 25
+    status: not-started
+  - id: m4
+    title: Prototype calendar issue drafted
+    weight: 25
+    status: not-started
+tasks:
+  - id: t-001
+    milestone: m1
+    title: Research adult-tolerant calendar fulfillment and payment constraints
+    status: ready
+    owner: null
+    passes: 0
+    stakes: outward-facing
+    gate_human: true
+    approved_by_human: false
+    note: >
+      Compare short-run printers, print-on-demand vendors, preorder workflows, and payment
+      processors for a mature but public-safe art/history calendar. Include risks around
+      adult content, refunds, chargebacks, sample ordering, per-unit cost, and local-vs-POD
+      tradeoffs. Write the brief under projects/humboldt-impropriety-calendar/research/.
+      No accounts, uploads, purchases, payments, or vendor contact. Ends needs-human.
+  - id: t-002
+    milestone: m2
+    title: Draft contributor release and payout packet
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: outward-facing
+    depends_on: t-001
+    gate_human: true
+    approved_by_human: false
+    note: >
+      Draft model/artist/photographer/director release language, credit-role approval,
+      payout election, month-level payout split presets, caption approval, public bio
+      approval, and private-archive boundary policy. Include the 12/20 net-profit model.
+      Save under projects/humboldt-impropriety-calendar/legal-drafts/. No contributor
+      outreach or signature collection. Ends needs-human.
+  - id: t-003
+    milestone: m2
+    title: Write calendar creative bible and safety rules
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: outward-facing
+    depends_on: t-001
+    gate_human: true
+    approved_by_human: false
+    note: >
+      Define the calendar tone, safe-ish-for-work preview standards, content ceiling,
+      credit formatting, month structure, caption style, historical framing, and spicy
+      preset rules. Save as projects/humboldt-impropriety-calendar/CREATIVE-BIBLE.md.
+      No public assets or posts. Ends needs-human.
+  - id: t-004
+    milestone: m3
+    title: Draft safe storefront and preorder specification
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: outward-facing
+    depends_on:
+      - t-001
+      - t-002
+      - t-003
+    gate_human: true
+    approved_by_human: false
+    note: >
+      Design the public-safe landing page, 18+ notice, FAQ, contributor credit display,
+      preorder CTA, sample asset rules, admin needs, and payout ledger needs. Treat this
+      as a spec only; no public page or checkout changes. Ends needs-human.
+  - id: t-005
+    milestone: m4
+    title: Prototype one calendar month with placeholder assets
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: outward-facing
+    depends_on:
+      - t-002
+      - t-003
+      - t-004
+    gate_human: true
+    approved_by_human: false
+    note: >
+      Create a one-month layout prototype using placeholder/safe dummy art only. Include
+      sample credits, caption area, payout ledger example, and public-preview crop rules.
+      Save under projects/humboldt-impropriety-calendar/prototypes/. No real private
+      footage, private images, or contributor identities unless Silas explicitly provides
+      approved public-safe placeholders. Ends needs-human.
