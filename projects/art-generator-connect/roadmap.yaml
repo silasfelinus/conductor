@@ -47,15 +47,16 @@ tasks:
   - id: t-002
     milestone: m2
     title: "Draft Conductor art request script design"
-    status: waiting
-    owner: null
+    status: review
+    owner: worker
+    updated: "2026-07-01T00:00:00Z"
     passes: 0
     stakes: reversible
     depends_on: t-001
     note: >
-      Design scripts/request_art.py as a small wrapper around the approved art API
-      contract. Include prompt, model, dimensions, projectSlug, auth, polling, and
-      output path behavior without invoking live generation.
+      Created scripts/request_art.py — dry-run wrapper for /api/conductor/art-request
+      endpoint. Accepts --prompt, --project-slug, --width, --height, --dry-run (default),
+      --output-json. Uses KR_API_TOKEN for live mode. See script for full usage.
 
   - id: t-003
     milestone: m3
