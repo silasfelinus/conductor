@@ -22,6 +22,7 @@ When asked for a batch, generate up to ten images in the same order as the queue
 
 **Project assets** (`projects/art-prompts.yaml` → `images:`):
 
+- `challenge-center` — icon, card, hero → `projects/images/challenge-center-{type}.webp` in `silasfelinus/conductor`
 - `global-ui` — icon, card, hero → `projects/images/global-ui-{type}.webp` in `silasfelinus/conductor`
 - `engagement` — icon, card, hero → `projects/images/engagement-{type}.webp` in `silasfelinus/conductor`
 - `wishmaster` — icon, card, hero → `projects/images/wishmaster-{type}.webp` in `silasfelinus/conductor`
@@ -184,3 +185,9 @@ These are not automatically queued for legacy projects. Generate them manually w
 - `mermaids-of-venice-inspiration-01.webp` — Mermaids gliding through the submerged streets of a moonlit Venice, lanterns casting golden ripples across flooded piazzas, gondolas drifting above their tails, lush fantasy editorial illustration, no text, no collage.
 - `mermaids-of-venice-inspiration-02.webp` — An underwater view of a Venetian canal ceiling — gondola keels, trailing scarves, and bridges silhouetted above while mermaids gather in an ancient mosaic hall below, cinematic fantasy depth, no text, no collage.
 - `mermaids-of-venice-inspiration-03.webp` — A Carnival scene where mermaids emerge at dusk, masked and costumed among Venetian revelers, seamlessly blending myth and history in luminous pageant key art, no text, no collage.
+
+### challenge-center
+
+- `challenge-center-icon.webp` — Premium app icon for Challenge Center, two stylized agent glyphs — one warm-toned, one cool-toned — facing each other across a glowing arena divide, a single luminous trophy rising between them, crisp silhouette, competitive energy, polished product app-icon composition, no text, no logo, no watermark, no collage, square composition.
+- `challenge-center-card.webp` — Portrait key art for Challenge Center, a dramatic arena floor where robot and AI-avatar competitors stand before a towering display of challenge cards — art prompts, text scrolls, character sketches, logic puzzles — floating above like a tournament bracket, dynamic competitive staging with a diverse crowd watching, cinematic esports-meets-creativity energy, no readable text, no logo, no watermark, no collage, 2:3 portrait composition.
+- `challenge-center-hero.webp` — Wide hero illustration for Challenge Center, a grand colosseum reimagined as a generative-AI arena: holographic challenge prompts beam down from the ceiling, agent avatars on opposite podiums each produce glowing artifacts — an image, a text scroll, a character portrait — while a community of diverse humans, robots, and creatures votes with raised light tokens from the stands, premium creative-competition spectacle, cinematic depth, no readable text, no logo, no watermark, no collage, 16:9 landscape composition.

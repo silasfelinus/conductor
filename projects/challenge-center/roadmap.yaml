@@ -1,0 +1,288 @@
+project: challenge-center
+kind: software
+
+notes_from_silas: |
+  A personal benchmark arena for Silas's two agent stacks to compete on creative and
+  generative tasks. Conductor (silasfelinus/conductor) runs Claude-based agents; port0s
+  (silasfelinus/portos) runs a different agent stack. Both are Silas's own projects.
+
+  Core mechanic: issue a challenge prompt → agents produce an artifact → Kind Robots users
+  vote via reactions (LOVED/CLAPPED/BOOED/HATED) → leaderboard aggregates scores.
+
+  Challenge types we want:
+    - ART: "produce an icon/card/hero for X concept" — submission becomes a KR ArtImage
+    - TEXT: "write a scene / poem / description" — submission stored as text
+    - CHARACTER: "design a character for genre Y" — submission links to KR Character
+    - SCENARIO: "build a scenario/encounter for Z" — submission links to KR Scenario
+    - REASONING: "solve this puzzle / answer this question" — auto-scored, no reaction voting
+
+  Judging: reactions on ChallengeSubmission entities (reuse KR reaction system).
+  Leaderboard: aggregate net reaction scores per agent across all challenges.
+  Kind Robots is the database, voting platform, and display layer.
+
+  Agent identity: each competing agent registers as a Bot record in kind_robots so
+  reaction aggregation can use existing Bot→Reaction infrastructure.
+
+  Cross-repo split:
+    - kind_robots: new Prisma models, API routes, seeded challenge library, voting UI
+    - conductor: challenge runner scripts, agent dispatch tooling, this roadmap
+    - portos: its own submission script (separate repo, same pattern as conductor's)
+
+milestones:
+  - id: m1
+    title: "Schema & data foundation in kind_robots"
+    weight: 25
+    status: not-started
+
+  - id: m2
+    title: "API layer and challenge library"
+    weight: 25
+    status: not-started
+
+  - id: m3
+    title: "Voting UI and leaderboard in kind_robots"
+    weight: 25
+    status: not-started
+
+  - id: m4
+    title: "Agent integration and runner automation"
+    weight: 25
+    status: not-started
+
+tasks:
+  # ── M1: Schema ─────────────────────────────────────────────────────────────────────
+
+  - id: t-001
+    milestone: m1
+    title: "Add Challenge and ChallengeSubmission Prisma models to kind_robots"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: irreversible
+    gate_human: true
+    note: >
+      Add two new models to silasfelinus/kind_robots prisma/schema.prisma:
+
+      Challenge { id, slug (unique), title, description, challengeType (enum:
+      ART|TEXT|CHARACTER|SCENARIO|REASONING|CODE), status (enum: DRAFT|OPEN|JUDGING|CLOSED|ARCHIVED),
+      difficulty (Int 1-5), promptText (the task sent to agents), judgeNotes (what voters
+      consider), imagePath, isPublic, isActive, isMature, userId, opensAt?, closesAt?,
+      Submissions ChallengeSubmission[] }
+
+      ChallengeSubmission { id, challengeId, Challenge, botId (FK to Bot — agent identity),
+      agentModel (String? — model identifier e.g. "claude-sonnet-4-6"), agentRepo (String?),
+      outputText (Text?), artImageId (FK to ArtImage? — for ART challenges),
+      characterId (FK to Character? — for CHARACTER challenges),
+      status (enum: PENDING|READY|SCORED|REJECTED), score (Float? computed from reactions),
+      rank (Int?), isPublic, Reactions Reaction[], @@unique([challengeId, botId]) }
+
+      Also extend the Reaction model: add challengeSubmissionId Int? and
+      ChallengeSubmission ChallengeSubmission? @relation; add CHALLENGE_SUBMISSION to
+      Reaction_reactionCategory enum.
+
+      Add Challenge and ChallengeSubmission relations to User (userId FK on Challenge).
+      Run `npx prisma migrate dev --name add_challenge_center` in kind_robots.
+
+      FOR SILAS: This is a DB migration (irreversible) — review the schema additions above
+      then set approved_by_human: true and status: done to unblock t-002.
+
+  - id: t-002
+    milestone: m1
+    title: "Register conductor and port0s as Bot records in kind_robots"
+    status: waiting
+    depends_on: t-001
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Create Bot records in kind_robots (via seed script or API) for each competing agent:
+        - slug: "conductor-claude", name: "Conductor (Claude)", BotType: "CHALLENGE_AGENT",
+          designer: "silasfelinus", description: "Claude-powered agent from silasfelinus/conductor"
+        - slug: "portos-agent", name: "Port0s", BotType: "CHALLENGE_AGENT",
+          designer: "silasfelinus", description: "Agent from silasfelinus/portos"
+
+      Write the seed as scripts/seed_challenge_bots.ts (or .py) in kind_robots.
+      These Bot records become the identity anchor for all leaderboard aggregation.
+
+  # ── M2: API & challenge library ──────────────────────────────────────────────────
+
+  - id: t-003
+    milestone: m2
+    title: "Create /api/challenges CRUD and submission routes in kind_robots"
+    status: waiting
+    depends_on: t-001
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      In silasfelinus/kind_robots, add API routes under server/api/challenges/:
+
+        GET  /api/challenges         — list open challenges (filter: type, status)
+        GET  /api/challenges/[slug]  — one challenge with submissions and scores
+        POST /api/challenges         — create challenge (admin only)
+
+        POST /api/challenges/[slug]/submissions
+          body: { botSlug, agentModel?, outputText?, artImageId?, characterId? }
+          creates ChallengeSubmission, sets status: READY
+          returns submission id
+
+        GET  /api/challenges/[slug]/leaderboard
+          returns agents ranked by net score (loved+clapped - booed-hated) on their
+          submission for this challenge
+
+        GET  /api/challenges/leaderboard
+          global leaderboard: aggregate scores across all challenges per Bot
+
+      Use existing auth/session patterns from kind_robots. Bot submissions should
+      be accepted with an API key (reuse Server.apiKey pattern or a new env var).
+
+  - id: t-004
+    milestone: m2
+    title: "Seed 10 initial challenges in kind_robots"
+    status: waiting
+    depends_on: t-003
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Write and run a seed script (scripts/seed_challenges.ts) that creates 10 challenges
+      covering at least 3 types. Suggested starting set:
+
+      ART (3):
+        - "Design an icon for a neon-lit ramen bar in a cyberpunk city" (difficulty 2)
+        - "Paint a hero banner for a cozy magical library that exists between dimensions" (3)
+        - "Create a card-art portrait of a shipwrecked robot building a raft from circuit boards" (3)
+
+      TEXT (3):
+        - "Write the opening paragraph of a noir detective story set on a generation ship" (2)
+        - "Describe the smell, sound, and feel of a forest after it rains on an alien planet" (2)
+        - "Write a villain's internal monologue the moment they realize they've already lost" (3)
+
+      CHARACTER (2):
+        - "Design a character: a retired circus acrobat who now teaches quantum mechanics" (2)
+        - "Design a character: the last living ambassador to a civilization that vanished" (3)
+
+      REASONING (2):
+        - "You have 3 jars: 8L, 5L, 3L. Starting with the 8L full, measure exactly 4L." (2)
+        - "A message arrives in a dead language. The only key is a recipe. Decode the intent." (4)
+
+      Each challenge must have a clear promptText (sent verbatim to agents), judgeNotes
+      (what voters should weigh), and status: OPEN.
+
+  # ── M3: Voting UI ────────────────────────────────────────────────────────────────
+
+  - id: t-005
+    milestone: m3
+    title: "Build /challenges browser page in kind_robots"
+    status: waiting
+    depends_on: t-003
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      In silasfelinus/kind_robots, add pages/challenges/index.vue (or equivalent Nuxt route).
+      Show challenge cards: title, type badge, difficulty stars, open/closed status,
+      submission count, top-ranked agent preview.
+      Filter by type (ART/TEXT/CHARACTER/etc) and status (OPEN/JUDGING/CLOSED).
+      Link to /challenges/[slug] for the detail view.
+      Reuse existing Kind Robots card/grid component patterns.
+
+  - id: t-006
+    milestone: m3
+    title: "Build /challenges/[slug] voting page in kind_robots"
+    status: waiting
+    depends_on: t-004, t-005
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Challenge detail page. Show the challenge prompt and judgeNotes at top.
+      Below: all submissions side by side (or stacked on mobile).
+      Each submission card shows: agent name/avatar (from Bot), the output (art image
+      or text block), and reaction buttons (LOVED/CLAPPED/BOOED/HATED) using the
+      existing KR Reaction component — category: CHALLENGE_SUBMISSION.
+      Show net score and current rank on each card once scored.
+      For ART challenges, render the ArtImage thumbnail.
+      For TEXT challenges, render the outputText with a read-more expander.
+      For CHARACTER challenges, render the Character card.
+
+  - id: t-007
+    milestone: m3
+    title: "Build leaderboard page in kind_robots"
+    status: waiting
+    depends_on: t-006
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Add /challenges/leaderboard page. Two views:
+        - Global: top agents by total net score across all challenges (table/podium)
+        - Per-type: filter to ART/TEXT/CHARACTER etc., show rankings for that type
+      Agent row shows: Bot avatar, name, challenges attempted, challenges won,
+      total score, win rate.
+      Also show on each /challenges/[slug] page: a mini leaderboard for that challenge.
+      Link back to /challenges browser.
+
+  # ── M4: Agent integration ────────────────────────────────────────────────────────
+
+  - id: t-008
+    milestone: m4
+    title: "Write scripts/challenge_submit.py in conductor"
+    status: waiting
+    depends_on: t-003
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      In silasfelinus/conductor, write scripts/challenge_submit.py.
+      Usage: python scripts/challenge_submit.py <challenge-slug> [--bot conductor-claude]
+      Steps:
+        1. Fetch challenge from KR API (GET /api/challenges/<slug>)
+        2. Print promptText to stdout / pipe to agent
+        3. Accept agent output via stdin or --output flag
+        4. POST to /api/challenges/<slug>/submissions with bot slug + output
+        5. Print submission id and current leaderboard standing
+      Reads KR_API_TOKEN and KR_BASE_URL from env.
+      This becomes the bridge between conductor agent runs and the challenge system.
+
+  - id: t-009
+    milestone: m4
+    title: "Write challenge submission script in silasfelinus/portos"
+    status: waiting
+    depends_on: t-008
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      In silasfelinus/portos, add a challenge submission script mirroring the conductor one.
+      Usage: (whatever invocation pattern portos uses) challenge_submit <challenge-slug>
+      Steps:
+        1. Fetch challenge from KR API (GET /api/challenges/<slug>)
+        2. Pass promptText to the portos agent
+        3. Collect agent output
+        4. POST to /api/challenges/<slug>/submissions with botSlug "portos-agent" + output
+        5. Return submission id
+      Reads KR_API_TOKEN and KR_BASE_URL from env (same vars as conductor).
+      Worker should look at silasfelinus/portos to understand its agent invocation pattern
+      before writing this — don't assume it matches conductor's.
+
+  - id: t-010
+    milestone: m4
+    title: "Build auto-runner: dispatch active challenges to all registered agents"
+    status: waiting
+    depends_on: t-008, t-009
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      In silasfelinus/conductor, write scripts/challenge_runner.py.
+      Usage: python scripts/challenge_runner.py [--challenge <slug>] [--all]
+      Steps:
+        1. Fetch open challenges from KR API
+        2. For each challenge, skip if conductor-claude already has a submission
+        3. Build the challenge prompt (from promptText + any system context)
+        4. Call the conductor agent (via Claude API or existing agent invocation pattern)
+        5. Submit the output via challenge_submit.py
+        6. Print summary: challenges attempted, submissions created
+      This lets conductor auto-participate in challenges without manual intervention.
+      Designed to run on a schedule (e.g. nightly cron via AGENTS.md todo mechanism).
