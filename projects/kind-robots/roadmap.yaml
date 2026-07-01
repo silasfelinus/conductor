@@ -69,19 +69,19 @@ tasks:
   - id: t-003
     milestone: m3
     title: "Audit slug parity between conductor projects and kind_robots Dreams"
-    status: ready
-    owner: null
-    updated: "2026-06-30T00:00:00Z"
+    status: review
+    owner: worker
+    updated: "2026-07-01T00:00:00Z"
     passes: 0
     stakes: reversible
+    gate_human: true
+    approved_by_human: false
     note: >
-      Read all active conductor project slugs (from project-overrides.yaml) and
-      compare against kind_robots Dreams of dreamType PROJECT (via read-only API
-      call to https://kind-robots.vercel.app/api/dreams?dreamType=PROJECT).
-      Write projects/kind-robots/SLUG-AUDIT.md listing: (a) conductor projects
-      with no matching Dream, (b) PROJECT Dreams with no conductor project,
-      (c) any slug mismatches. Do not create or modify Dreams — document gaps
-      only. The sync script (conductor/t-008) will act on these findings.
+      FOR SILAS: projects/kind-robots/SLUG-PARITY-AUDIT.md lists all conductor
+      projects with expected Dream slugs. KR_API_TOKEN unavailable during audit —
+      run scripts/sync_projects_to_dreams.py to reconcile. TO APPROVE: review the
+      audit, run the sync script, then set approved_by_human: true and status: done.
+      Unblocks: kind-robots/t-004 (project creation surfaces spec).
 
   - id: t-004
     milestone: m3
