@@ -1,128 +1,126 @@
-# Sketchy — AI drawing practice coach
 project: sketchy
 kind: software
+notes_from_silas: 'Sketchy is a web app that gives drawing assignments adjusted for the user''s skill
+  level,
 
-notes_from_silas: |
-  Sketchy is a web app that gives drawing assignments adjusted for the user's skill level,
   then uses AI to judge the submitted result and offer the next assignment. Free users get
+
   a limited number of critique/generation requests per day or period; paid users get higher
+
   token/request limits. The token/background economy should align with Kind Robots rather
+
   than creating a separate economy.
 
+
   Product direction: keep the interface friendly, minimalist, and encouraging. The AI judge
+
   should critique constructively, identify skill growth, and recommend specific next studies;
+
   it should not be a cruel art-school goblin unless explicitly themed that way.
 
+  '
 milestones:
-  - id: m1
-    title: "Product spec and boundaries"
-    weight: 30
-    status: not-started
-
-  - id: m2
-    title: "Skill ladder and assignment engine"
-    weight: 30
-    status: not-started
-
-  - id: m3
-    title: "AI critique and next-assignment loop"
-    weight: 25
-    status: not-started
-
-  - id: m4
-    title: "Token tiers and Kind Robots integration"
-    weight: 15
-    status: not-started
-
-  - id: m5
-    title: "Workspace UI project art"
-    weight: 10
-    status: not-started
-
+- id: m1
+  title: Product spec and boundaries
+  weight: 30
+  status: not-started
+- id: m2
+  title: Skill ladder and assignment engine
+  weight: 30
+  status: not-started
+- id: m3
+  title: AI critique and next-assignment loop
+  weight: 25
+  status: not-started
+- id: m4
+  title: Token tiers and Kind Robots integration
+  weight: 15
+  status: not-started
+- id: m5
+  title: Workspace UI project art
+  weight: 10
+  status: not-started
 tasks:
-  - id: t-001
-    milestone: m1
-    title: "Draft Sketchy product spec and app-owned schema"
-    status: needs-human
-    owner: worker
-    updated: "2026-07-01T00:00:00Z"
-    passes: 0
-    stakes: reversible
-    gate_human: true
-    note: >
-      FOR SILAS: projects/sketchy/PRODUCT-SPEC.md contains the product spec and app-owned schema.
-      It covers the drawing assignment loop, user skill calibration, AI critique flow (Claude Vision
-      as primary engine per docs/ai-critique-apis.md), free/paid request limits, and Kind Robots
-      token integration. Any shared-backend changes are flagged as pitches, not direct edits.
-      TO APPROVE: Read projects/sketchy/PRODUCT-SPEC.md. Set approved_by_human: true and
-      status: done here. Unblocks: sketchy/t-002 (skill ladder), t-003 (AI critique rubric),
-      t-004 (token tiers).
+- id: t-001
+  milestone: m1
+  title: Draft Sketchy product spec and app-owned schema
+  status: done
+  owner: worker
+  updated: '2026-07-01T00:00:00Z'
+  passes: 0
+  stakes: reversible
+  gate_human: true
+  approved_by_human: true
+  note: 'FOR SILAS: projects/sketchy/PRODUCT-SPEC.md contains the product spec and app-owned schema. It
+    covers the drawing assignment loop, user skill calibration, AI critique flow (Claude Vision as primary
+    engine per docs/ai-critique-apis.md), free/paid request limits, and Kind Robots token integration.
+    Any shared-backend changes are flagged as pitches, not direct edits. TO APPROVE: Read projects/sketchy/PRODUCT-SPEC.md.
+    Set approved_by_human: true and status: done here. Unblocks: sketchy/t-002 (skill ladder), t-003 (AI
+    critique rubric), t-004 (token tiers).
 
-  - id: t-002
-    milestone: m2
-    title: "Define the initial drawing skill ladder and assignment taxonomy"
-    status: waiting
-    owner: null
-    passes: 0
-    stakes: reversible
-    depends_on: t-001
-    note: >
-      Create the first assignment taxonomy: fundamentals, gesture, shape, value, perspective,
-      anatomy, character design, environments, style studies, and finished pieces. Include
-      beginner/intermediate/advanced difficulty knobs and sample assignments.
+    '
+- id: t-002
+  milestone: m2
+  title: Define the initial drawing skill ladder and assignment taxonomy
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  depends_on: t-001
+  note: 'Create the first assignment taxonomy: fundamentals, gesture, shape, value, perspective, anatomy,
+    character design, environments, style studies, and finished pieces. Include beginner/intermediate/advanced
+    difficulty knobs and sample assignments.
 
-  - id: t-003
-    milestone: m3
-    title: "Spec the AI critique rubric and follow-up assignment logic"
-    status: waiting
-    owner: null
-    passes: 0
-    stakes: reversible
-    depends_on: t-001
-    note: >
-      Define how uploaded drawings are evaluated, what dimensions the critique scores, how
-      the assistant stays encouraging, and how critique results select the next assignment.
-      Include safety/privacy notes for image uploads.
+    '
+- id: t-003
+  milestone: m3
+  title: Spec the AI critique rubric and follow-up assignment logic
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  depends_on: t-001
+  note: 'Define how uploaded drawings are evaluated, what dimensions the critique scores, how the assistant
+    stays encouraging, and how critique results select the next assignment. Include safety/privacy notes
+    for image uploads.
 
-  - id: t-004
-    milestone: m4
-    title: "Spec free and paid token/request tiers using Kind Robots economy"
-    status: waiting
-    owner: null
-    passes: 0
-    stakes: reversible
-    depends_on: t-001
-    note: >
-      Define practical request limits for free and paid tiers, how critique and assignment
-      generation consume tokens, and how Sketchy should display remaining usage without
-      adding a competing token system.
+    '
+- id: t-004
+  milestone: m4
+  title: Spec free and paid token/request tiers using Kind Robots economy
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  depends_on: t-001
+  note: 'Define practical request limits for free and paid tiers, how critique and assignment generation
+    consume tokens, and how Sketchy should display remaining usage without adding a competing token system.
 
-  - id: t-005
-    milestone: m5
-    title: "Generate Sketchy workspace image prompts"
-    status: done
-    owner: worker
-    updated: "2026-06-30T00:00:00Z"
-    passes: 0
-    stakes: reversible
-    note: >
-      Icon/card/hero images already exist in projects/images/ (sketchy-icon.webp,
-      sketchy-card.webp, sketchy-hero.webp). Added icon/card/hero prompts to the
-      ART-PROMPTS.md backlog under the sketchy section for documentation and future
-      regeneration reference. Inspiration prompts were already present.
+    '
+- id: t-005
+  milestone: m5
+  title: Generate Sketchy workspace image prompts
+  status: done
+  owner: worker
+  updated: '2026-06-30T00:00:00Z'
+  passes: 0
+  stakes: reversible
+  note: 'Icon/card/hero images already exist in projects/images/ (sketchy-icon.webp, sketchy-card.webp,
+    sketchy-hero.webp). Added icon/card/hero prompts to the ART-PROMPTS.md backlog under the sketchy section
+    for documentation and future regeneration reference. Inspiration prompts were already present.
 
-  - id: t-006
-    milestone: m3
-    title: "Survey AI image analysis APIs suitable for drawing critique"
-    status: done
-    owner: worker
-    updated: "2026-06-30T00:00:00Z"
-    passes: 0
-    stakes: reversible
-    note: >
-      Wrote docs/ai-critique-apis.md. Compared Claude Vision, GPT-4o Vision, Gemini 1.5
-      Pro, and Google Vision AI across: drawing critique quality, cost per image call,
-      latency, privacy/training data policies, and content-policy fit for figure drawing.
-      Recommendation: Claude (claude-sonnet-4-6) as primary critique engine for quality
-      and encouraging tone; GPT-4o as fallback/A-B test. Google Vision AI excluded (object
-      detection only). Cost estimate: ~$0.005–0.01/critique at Sketchy's expected scale.
+    '
+- id: t-006
+  milestone: m3
+  title: Survey AI image analysis APIs suitable for drawing critique
+  status: done
+  owner: worker
+  updated: '2026-06-30T00:00:00Z'
+  passes: 0
+  stakes: reversible
+  note: "Wrote docs/ai-critique-apis.md. Compared Claude Vision, GPT-4o Vision, Gemini 1.5 Pro, and Google\
+    \ Vision AI across: drawing critique quality, cost per image call, latency, privacy/training data\
+    \ policies, and content-policy fit for figure drawing. Recommendation: Claude (claude-sonnet-4-6)\
+    \ as primary critique engine for quality and encouraging tone; GPT-4o as fallback/A-B test. Google\
+    \ Vision AI excluded (object detection only). Cost estimate: ~$0.005\u20130.01/critique at Sketchy's\
+    \ expected scale.\n"

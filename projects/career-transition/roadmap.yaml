@@ -1,255 +1,188 @@
 project: career-transition
 kind: content
-notes_from_silas: |
-  Help me land a better-paying tech job. I've been a hobbyist programmer since 1989 (started
-  with a TRS-80), worked with AI since 2001, and I'm actively building multiple full-stack
-  projects (kind_robots: Nuxt/Vue/Prisma/TypeScript), running this agent orchestration system
-  (conductor), and developing a nonprofit.
-
-  My non-tech background is broad: 11 years casino dealer (~$70k current salary), adult
-  support worker for people with developmental disabilities, co-owner of a chai brewing
-  company (brewer + bookkeeper), bookkeeper for a carpet company, IT admin for a grade
-  school, street performer. Degrees in dance, performing arts, and massage therapy.
-
-  Target roles (in rough preference order):
-    1. AI engineer / AI wrangler / prompt engineer / AI product roles
-    2. Junior full-stack dev (Nuxt/Vue/TypeScript/Node ecosystem strongly preferred)
-    3. Developer relations / developer advocate
-    4. Technical community manager
-    5. No-code/low-code platform specialist
-
-  Hard constraints:
-    - Do NOT apply to anything, post anything public, or send any communication on my behalf.
-      Every outward action is gated. Drafts and plans only until I approve.
-    - Target base >= $70k; growth path toward $100k+ in 2-3 years is the real goal.
-    - Remote-first strongly preferred.
-    - I love what I do — this is about getting paid better for skills I already have, not
-      pivoting away from building with AI.
-
+notes_from_silas: "Help me land a better-paying tech job. I've been a hobbyist programmer since 1989 (started\n\
+  with a TRS-80), worked with AI since 2001, and I'm actively building multiple full-stack\nprojects (kind_robots:\
+  \ Nuxt/Vue/Prisma/TypeScript), running this agent orchestration system\n(conductor), and developing\
+  \ a nonprofit.\n\nMy non-tech background is broad: 11 years casino dealer (~$70k current salary), adult\n\
+  support worker for people with developmental disabilities, co-owner of a chai brewing\ncompany (brewer\
+  \ + bookkeeper), bookkeeper for a carpet company, IT admin for a grade\nschool, street performer. Degrees\
+  \ in dance, performing arts, and massage therapy.\n\nTarget roles (in rough preference order):\n  1.\
+  \ AI engineer / AI wrangler / prompt engineer / AI product roles\n  2. Junior full-stack dev (Nuxt/Vue/TypeScript/Node\
+  \ ecosystem strongly preferred)\n  3. Developer relations / developer advocate\n  4. Technical community\
+  \ manager\n  5. No-code/low-code platform specialist\n\nHard constraints:\n  - Do NOT apply to anything,\
+  \ post anything public, or send any communication on my behalf.\n    Every outward action is gated.\
+  \ Drafts and plans only until I approve.\n  - Target base >= $70k; growth path toward $100k+ in 2-3\
+  \ years is the real goal.\n  - Remote-first strongly preferred.\n  - I love what I do \u2014 this is\
+  \ about getting paid better for skills I already have, not\n    pivoting away from building with AI.\n"
 milestones:
-  - id: m1
-    title: Skills inventory and positioning strategy
-    weight: 20
-    status: not-started
-
-  - id: m2
-    title: Resume and LinkedIn profile
-    weight: 25
-    status: not-started
-
-  - id: m3
-    title: Portfolio documentation and GitHub presence
-    weight: 25
-    status: not-started
-
-  - id: m4
-    title: Job targeting, cover letters, and interview prep
-    weight: 30
-    status: not-started
-
+- id: m1
+  title: Skills inventory and positioning strategy
+  weight: 20
+  status: not-started
+- id: m2
+  title: Resume and LinkedIn profile
+  weight: 25
+  status: not-started
+- id: m3
+  title: Portfolio documentation and GitHub presence
+  weight: 25
+  status: not-started
+- id: m4
+  title: Job targeting, cover letters, and interview prep
+  weight: 30
+  status: not-started
 tasks:
-  - id: t-001
-    milestone: m1
-    title: Build skills inventory and employer-value translation map
-    status: needs-human
-    owner: worker
-    passes: 0
-    stakes: reversible
-    gate_human: true
-    approved_by_human: false
-    updated: "2026-07-01T00:00:00Z"
-    note: >
-      FOR SILAS: projects/career-transition/skills-map.md is your skills inventory and
-      employer-value translation map. Three sections: (1) technical skills with honest ratings
-      and evidence from kind_robots/conductor/AI work; (2) transferable skills from
-      casino/bookkeeper/IT/support work mapped to employer value; (3) positioning strategy
-      for AI engineer, junior dev, and DevRel roles. HARD GATE — content kind, outward-facing.
-      TO APPROVE: Read projects/career-transition/skills-map.md and verify framing and ratings
-      are accurate for you. Set approved_by_human: true and status: done here. Unblocks:
-      career-transition/t-002 (resume first draft), t-003 (job targeting research).
-
-      3. HONEST GAPS — skills commonly listed in junior dev / AI roles that Silas doesn't
-         have yet, with a one-line note on how closeable each gap is (e.g. "no formal CS
-         degree — closeable via portfolio" vs "no cloud infra experience — would need 2-3 months").
-
-      End at needs-human so Silas can correct or add anything before downstream tasks proceed.
-
-  - id: t-002
-    milestone: m2
-    title: Write resume first draft (tech-targeted)
-    status: waiting
-    owner: null
-    passes: 0
-    stakes: reversible
-    depends_on: t-001
-    gate_human: true
-    approved_by_human: false
-    note: >
-      Using the approved skills-map.md, write projects/career-transition/resume-v1.md.
-
-      Format it as a clean, ATS-friendly markdown resume. Sections: Summary (3 sentences:
-      who Silas is technically, what he's built, what he's looking for), Technical Skills
-      (grouped by category), Projects (kind_robots, conductor, nonprofit — each with a
-      one-line impact statement and tech stack), Experience (reverse-chron, lead with
-      IT/tech-adjacent roles, frame others for transferable value — don't bury 11 years
-      casino dealing but don't lead with it either), Education (degrees + any self-directed
-      learning worth naming).
-
-      Key framing guidance: "AI practitioner since 2001" is a genuine differentiator — lead
-      with it in the summary. Running a multi-agent autonomous system (conductor) is senior-
-      adjacent work even for a "junior" application. Frame non-tech experience as evidence
-      of reliability and people skills, not a liability.
-
-      End at needs-human. Silas will edit before this is used anywhere.
-
-  - id: t-003
-    milestone: m1
-    title: Research and rank specific job roles and companies to target
-    status: waiting
-    owner: null
-    passes: 0
-    stakes: reversible
-    depends_on: t-001
-    gate_human: true
-    approved_by_human: false
-    note: >
-      Using the approved skills-map.md, produce projects/career-transition/job-targeting.md.
-
-      For each of the 5 target role types in notes_from_silas:
-        - Typical title variations used in job postings
-        - Realistic salary range (remote, US market, 2025–2026)
-        - Core skills hiring managers screen for — which does Silas have, which is he missing
-        - Types of companies most likely to hire someone with a nontraditional background
-          (startups, AI-first companies, developer-tools companies, nonprofits, agencies)
-        - 5-10 specific companies worth watching that are known to value demonstrated skill
-          over credentials (include AI startups, developer-tools, and Anthropic/OpenAI partner
-          ecosystem companies if relevant)
-        - Honest assessment: is this realistic now, in 3 months with portfolio work, or in
-          6+ months
-
-      End at needs-human so Silas can steer which roles to prioritize before downstream tasks.
-
-  - id: t-004
-    milestone: m3
-    title: Write GitHub profile README and pinned repo recommendations
-    status: waiting
-    owner: null
-    passes: 0
-    stakes: reversible
-    depends_on: t-002
-    gate_human: true
-    approved_by_human: false
-    note: >
-      Produce projects/career-transition/github-profile.md with two sections:
-
-      1. PROFILE README — a complete draft of a GitHub profile README (markdown, meant to
-         be pasted into github.com/silasfelinus/silasfelinus/README.md). Should lead with
-         the AI-since-2001 differentiator, name the active projects with one-line descriptions,
-         call out the tech stack, and feel like a person rather than a keyword list. Warm,
-         confident, slightly quirky — matches the breadth of Silas's actual personality.
-
-      2. PINNED REPO STRATEGY — recommend which 6 repos to pin and what the repo description
-         should say for each. For any repo where the README is thin or missing, note what
-         a 10-minute README improvement would look like (don't write the full READMEs here —
-         those become separate tasks if Silas wants them).
-
-      End at needs-human. Silas posts nothing without approving first.
-
-  - id: t-005
-    milestone: m3
-    title: Write portfolio writeups for kind_robots and conductor
-    status: waiting
-    owner: null
-    passes: 0
-    stakes: reversible
-    depends_on: t-003
-    gate_human: true
-    approved_by_human: false
-    note: >
-      Produce projects/career-transition/portfolio-writeups.md with one case-study-style
-      writeup per major project. For each project:
-        - What it is (one paragraph, non-jargon)
-        - The technical problem it solves and how (architecture, key decisions)
-        - Technologies and why they were chosen
-        - What Silas built specifically (not "we", not the AI agents — Silas's contribution)
-        - A quantifiable outcome or notable capability if one exists
-        - A link to the live site or repo
-
-      Projects to cover: kind_robots (the app), conductor / AI_Networker (this system),
-      and the nonprofit if it has a technical component. If additional portfolio pieces
-      are worth building from scratch (e.g. a small standalone AI demo), flag them as
-      suggestions, not completed work.
-
-      End at needs-human. These writeups feed into the resume and LinkedIn.
-
-  - id: t-006
-    milestone: m4
-    title: Write cover letter templates for the top 3 role types
-    status: waiting
-    owner: null
-    passes: 0
-    stakes: reversible
-    depends_on:
-      - t-002
-      - t-003
-    gate_human: true
-    approved_by_human: false
-    note: >
-      Produce projects/career-transition/cover-letters/ with one template per role type
-      (Silas will have indicated which 3 to prioritize from t-003's output).
-
-      Each template should:
-        - Be genuinely personalized to Silas's actual background (not generic)
-        - Open with a hook that frames the nontraditional path as a feature, not a gap
-        - Name a specific project or capability that's relevant to this role type
-        - Be 3 short paragraphs, under 300 words, suitable for direct pasting
-        - Include [COMPANY] and [ROLE] placeholders for easy customization
-
-      End at needs-human. No applications are sent without Silas's explicit approval.
-
-  - id: t-007
-    milestone: m4
-    title: Build interview prep guide for junior dev and AI roles
-    status: waiting
-    owner: null
-    passes: 0
-    stakes: reversible
-    depends_on: t-003
-    gate_human: false
-    note: >
-      Produce projects/career-transition/interview-prep.md.
-
-      Sections:
-        1. HOW TO FRAME THE BACKGROUND — talking points for "you don't have a CS degree"
-           and "you've been a casino dealer for 11 years." Concrete, honest, confident.
-        2. BEHAVIORAL QUESTIONS — 10 common ones (Tell me about a time you...) with
-           suggested answer outlines that pull from Silas's actual experience.
-        3. TECHNICAL SCREENING — what junior dev and AI roles typically test (data structures,
-           algorithms at what depth, system design at what scope, AI/ML concepts). Honest
-           assessment of what Silas probably knows vs. needs to brush up on, with specific
-           resource recommendations (free, no paywalls preferred).
-        4. QUESTIONS TO ASK — 10 good questions that signal real experience and interest,
-           calibrated to someone who has actually been building systems.
-        5. RED FLAGS — job descriptions and interview patterns that suggest a company won't
-           value a nontraditional background (saves time).
-
-      No gate_human on this one — it's self-directed prep material Silas can use immediately.
-      Still set status: needs-human on completion (it's a content task).
-
-  - id: t-008
-    milestone: m1
-    title: "Survey active AI engineer and junior dev job postings"
-    status: needs-human
-    owner: worker
-    updated: "2026-06-30T00:00:00Z"
-    passes: 0
-    stakes: reversible
-    note: >
-      Runs parallel to t-001 — no dependency on Silas approving the skills map.
-      Search current job boards (LinkedIn, Indeed, Wellfound, HN Who's Hiring) for
-      postings matching: AI engineer, prompt engineer, AI product, junior full-stack
-      (Nuxt/Vue/TypeScript), and developer advocate. Write
-      projects/career-transition/job-postings-survey.md with: top required skills
-      (frequency count), salary ranges by role type, common red flags in JDs, and 5+
-      specific companies that appear promising for Silas's nontraditional background.
-      No applications, no account creation. Ends needs-human.
+- id: t-001
+  milestone: m1
+  title: Build skills inventory and employer-value translation map
+  status: done
+  owner: worker
+  passes: 0
+  stakes: reversible
+  gate_human: true
+  approved_by_human: true
+  updated: '2026-07-01T00:00:00Z'
+  note: "FOR SILAS: projects/career-transition/skills-map.md is your skills inventory and employer-value\
+    \ translation map. Three sections: (1) technical skills with honest ratings and evidence from kind_robots/conductor/AI\
+    \ work; (2) transferable skills from casino/bookkeeper/IT/support work mapped to employer value; (3)\
+    \ positioning strategy for AI engineer, junior dev, and DevRel roles. HARD GATE \u2014 content kind,\
+    \ outward-facing. TO APPROVE: Read projects/career-transition/skills-map.md and verify framing and\
+    \ ratings are accurate for you. Set approved_by_human: true and status: done here. Unblocks: career-transition/t-002\
+    \ (resume first draft), t-003 (job targeting research).\n3. HONEST GAPS \u2014 skills commonly listed\
+    \ in junior dev / AI roles that Silas doesn't\n   have yet, with a one-line note on how closeable\
+    \ each gap is (e.g. \"no formal CS\n   degree \u2014 closeable via portfolio\" vs \"no cloud infra\
+    \ experience \u2014 would need 2-3 months\").\n\nEnd at needs-human so Silas can correct or add anything\
+    \ before downstream tasks proceed.\n"
+- id: t-002
+  milestone: m2
+  title: Write resume first draft (tech-targeted)
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  depends_on: t-001
+  gate_human: true
+  approved_by_human: false
+  note: "Using the approved skills-map.md, write projects/career-transition/resume-v1.md.\nFormat it as\
+    \ a clean, ATS-friendly markdown resume. Sections: Summary (3 sentences: who Silas is technically,\
+    \ what he's built, what he's looking for), Technical Skills (grouped by category), Projects (kind_robots,\
+    \ conductor, nonprofit \u2014 each with a one-line impact statement and tech stack), Experience (reverse-chron,\
+    \ lead with IT/tech-adjacent roles, frame others for transferable value \u2014 don't bury 11 years\
+    \ casino dealing but don't lead with it either), Education (degrees + any self-directed learning worth\
+    \ naming).\nKey framing guidance: \"AI practitioner since 2001\" is a genuine differentiator \u2014\
+    \ lead with it in the summary. Running a multi-agent autonomous system (conductor) is senior- adjacent\
+    \ work even for a \"junior\" application. Frame non-tech experience as evidence of reliability and\
+    \ people skills, not a liability.\nEnd at needs-human. Silas will edit before this is used anywhere.\n"
+- id: t-003
+  milestone: m1
+  title: Research and rank specific job roles and companies to target
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  depends_on: t-001
+  gate_human: true
+  approved_by_human: false
+  note: "Using the approved skills-map.md, produce projects/career-transition/job-targeting.md.\nFor each\
+    \ of the 5 target role types in notes_from_silas:\n  - Typical title variations used in job postings\n\
+    \  - Realistic salary range (remote, US market, 2025\u20132026)\n  - Core skills hiring managers screen\
+    \ for \u2014 which does Silas have, which is he missing\n  - Types of companies most likely to hire\
+    \ someone with a nontraditional background\n    (startups, AI-first companies, developer-tools companies,\
+    \ nonprofits, agencies)\n  - 5-10 specific companies worth watching that are known to value demonstrated\
+    \ skill\n    over credentials (include AI startups, developer-tools, and Anthropic/OpenAI partner\n\
+    \    ecosystem companies if relevant)\n  - Honest assessment: is this realistic now, in 3 months with\
+    \ portfolio work, or in\n    6+ months\n\nEnd at needs-human so Silas can steer which roles to prioritize\
+    \ before downstream tasks.\n"
+- id: t-004
+  milestone: m3
+  title: Write GitHub profile README and pinned repo recommendations
+  status: waiting
+  owner: null
+  passes: 0
+  stakes: reversible
+  depends_on: t-002
+  gate_human: true
+  approved_by_human: false
+  note: "Produce projects/career-transition/github-profile.md with two sections:\n1. PROFILE README \u2014\
+    \ a complete draft of a GitHub profile README (markdown, meant to\n   be pasted into github.com/silasfelinus/silasfelinus/README.md).\
+    \ Should lead with\n   the AI-since-2001 differentiator, name the active projects with one-line descriptions,\n\
+    \   call out the tech stack, and feel like a person rather than a keyword list. Warm,\n   confident,\
+    \ slightly quirky \u2014 matches the breadth of Silas's actual personality.\n\n2. PINNED REPO STRATEGY\
+    \ \u2014 recommend which 6 repos to pin and what the repo description\n   should say for each. For\
+    \ any repo where the README is thin or missing, note what\n   a 10-minute README improvement would\
+    \ look like (don't write the full READMEs here \u2014\n   those become separate tasks if Silas wants\
+    \ them).\n\nEnd at needs-human. Silas posts nothing without approving first.\n"
+- id: t-005
+  milestone: m3
+  title: Write portfolio writeups for kind_robots and conductor
+  status: waiting
+  owner: null
+  passes: 0
+  stakes: reversible
+  depends_on: t-003
+  gate_human: true
+  approved_by_human: false
+  note: "Produce projects/career-transition/portfolio-writeups.md with one case-study-style writeup per\
+    \ major project. For each project:\n  - What it is (one paragraph, non-jargon)\n  - The technical\
+    \ problem it solves and how (architecture, key decisions)\n  - Technologies and why they were chosen\n\
+    \  - What Silas built specifically (not \"we\", not the AI agents \u2014 Silas's contribution)\n \
+    \ - A quantifiable outcome or notable capability if one exists\n  - A link to the live site or repo\n\
+    \nProjects to cover: kind_robots (the app), conductor / AI_Networker (this system), and the nonprofit\
+    \ if it has a technical component. If additional portfolio pieces are worth building from scratch\
+    \ (e.g. a small standalone AI demo), flag them as suggestions, not completed work.\nEnd at needs-human.\
+    \ These writeups feed into the resume and LinkedIn.\n"
+- id: t-006
+  milestone: m4
+  title: Write cover letter templates for the top 3 role types
+  status: waiting
+  owner: null
+  passes: 0
+  stakes: reversible
+  depends_on:
+  - t-002
+  - t-003
+  gate_human: true
+  approved_by_human: false
+  note: "Produce projects/career-transition/cover-letters/ with one template per role type (Silas will\
+    \ have indicated which 3 to prioritize from t-003's output).\nEach template should:\n  - Be genuinely\
+    \ personalized to Silas's actual background (not generic)\n  - Open with a hook that frames the nontraditional\
+    \ path as a feature, not a gap\n  - Name a specific project or capability that's relevant to this\
+    \ role type\n  - Be 3 short paragraphs, under 300 words, suitable for direct pasting\n  - Include\
+    \ [COMPANY] and [ROLE] placeholders for easy customization\n\nEnd at needs-human. No applications\
+    \ are sent without Silas's explicit approval.\n"
+- id: t-007
+  milestone: m4
+  title: Build interview prep guide for junior dev and AI roles
+  status: waiting
+  owner: null
+  passes: 0
+  stakes: reversible
+  depends_on: t-003
+  gate_human: false
+  note: "Produce projects/career-transition/interview-prep.md.\nSections:\n  1. HOW TO FRAME THE BACKGROUND\
+    \ \u2014 talking points for \"you don't have a CS degree\"\n     and \"you've been a casino dealer\
+    \ for 11 years.\" Concrete, honest, confident.\n  2. BEHAVIORAL QUESTIONS \u2014 10 common ones (Tell\
+    \ me about a time you...) with\n     suggested answer outlines that pull from Silas's actual experience.\n\
+    \  3. TECHNICAL SCREENING \u2014 what junior dev and AI roles typically test (data structures,\n \
+    \    algorithms at what depth, system design at what scope, AI/ML concepts). Honest\n     assessment\
+    \ of what Silas probably knows vs. needs to brush up on, with specific\n     resource recommendations\
+    \ (free, no paywalls preferred).\n  4. QUESTIONS TO ASK \u2014 10 good questions that signal real\
+    \ experience and interest,\n     calibrated to someone who has actually been building systems.\n \
+    \ 5. RED FLAGS \u2014 job descriptions and interview patterns that suggest a company won't\n     value\
+    \ a nontraditional background (saves time).\n\nNo gate_human on this one \u2014 it's self-directed\
+    \ prep material Silas can use immediately. Still set status: needs-human on completion (it's a content\
+    \ task).\n"
+- id: t-008
+  milestone: m1
+  title: Survey active AI engineer and junior dev job postings
+  status: needs-human
+  owner: worker
+  updated: '2026-06-30T00:00:00Z'
+  passes: 0
+  stakes: reversible
+  note: "Runs parallel to t-001 \u2014 no dependency on Silas approving the skills map. Search current\
+    \ job boards (LinkedIn, Indeed, Wellfound, HN Who's Hiring) for postings matching: AI engineer, prompt\
+    \ engineer, AI product, junior full-stack (Nuxt/Vue/TypeScript), and developer advocate. Write projects/career-transition/job-postings-survey.md\
+    \ with: top required skills (frequency count), salary ranges by role type, common red flags in JDs,\
+    \ and 5+ specific companies that appear promising for Silas's nontraditional background. No applications,\
+    \ no account creation. Ends needs-human.\n"

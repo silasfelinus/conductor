@@ -20,7 +20,7 @@
 
 | Project | Kind | Progress | Ready | Done | Blocked |
 |---|---|---|---|---|---|
-| alexa-integration | software | 25.0% | 0 | 1 | 0 |
+| alexa-integration | software | 50.0% | 1 | 2 | 0 |
 | approval-portal | software | 60.0% | 0 | 3 | 0 |
 | art-generator-connect | software | 80.0% | 1 | 4 | 0 |
 | brainstorm | proposal | 0.0% | 1 | 0 | 0 |
@@ -35,12 +35,12 @@
 | humboldt-impropriety-calendar | content | 0.0% | 1 | 0 | 0 |
 | humboldt-scoop | software | 10.0% | 0 | 7 | 0 |
 | humboldt-scoop-cms | software | 100.0% | 0 | 5 | 0 |
-| kind-robots | software | 73.3% | 0 | 5 | 0 |
+| kind-robots | software | 73.3% | 0 | 6 | 0 |
 | media-watchlist | software | 100.0% | 0 | 5 | 0 |
 | mermaids-of-venice | content | 0.0% | 0 | 0 | 0 |
-| pinball-hero | content | 16.7% | 0 | 1 | 0 |
-| sketchy | software | 33.3% | 0 | 2 | 0 |
-| storymaker | software | 16.7% | 0 | 1 | 0 |
+| pinball-hero | content | 33.3% | 2 | 2 | 0 |
+| sketchy | software | 50.0% | 3 | 3 | 0 |
+| storymaker | software | 33.3% | 3 | 2 | 0 |
 | wishmaster | software | 0.0% | 0 | 0 | 0 |
 
 ## Pitches awaiting vote

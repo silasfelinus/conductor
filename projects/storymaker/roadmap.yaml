@@ -1,123 +1,115 @@
-# Storymaker — collaborative storytelling phase 3
 project: storymaker
 kind: software
+notes_from_silas: 'Build the collaborative storytelling experience layer on top of the existing
 
-notes_from_silas: |
-  Build the collaborative storytelling experience layer on top of the existing
   Kind Robots Bots, Characters, Dreams, Rewards, Scenarios, and Chats models.
+
   Support Exquisite Corpse and Guided Adventure modes with async-first play,
+
   branching choices, custom inputs, rewards, inventory, and reusable story state.
 
+  '
 milestones:
-  - id: m1
-    title: "Session model and boundaries"
-    weight: 30
-    status: not-started
-
-  - id: m2
-    title: "Turn engine and branching state"
-    weight: 30
-    status: not-started
-
-  - id: m3
-    title: "Player rewards and reusable artifacts"
-    weight: 20
-    status: not-started
-
-  - id: m4
-    title: "Prototype UX"
-    weight: 20
-    status: not-started
-
+- id: m1
+  title: Session model and boundaries
+  weight: 30
+  status: not-started
+- id: m2
+  title: Turn engine and branching state
+  weight: 30
+  status: not-started
+- id: m3
+  title: Player rewards and reusable artifacts
+  weight: 20
+  status: not-started
+- id: m4
+  title: Prototype UX
+  weight: 20
+  status: not-started
 tasks:
-  - id: t-001
-    milestone: m1
-    title: "Draft Storymaker session data model"
-    status: needs-human
-    owner: worker
-    updated: "2026-07-01T00:00:00Z"
-    passes: 0
-    stakes: reversible
-    gate_human: true
-    note: >
-      FOR SILAS: docs/storymaker-session-model.md contains the session data model (informed by
-      docs/kr-model-audit.md). It specifies participants, narrator Bot, Scenario variables,
-      narrative state, branch history, and turn ownership for both Guided Adventure and Exquisite
-      Corpse modes. Notes what exists in kind_robots vs what needs new app-owned schema.
-      TO APPROVE: Read docs/storymaker-session-model.md. Set approved_by_human: true and
-      status: done here. Unblocks: storymaker/t-002 (turn lifecycle), t-003 (Exquisite Corpse
-      rules), t-004 (rewards/inventory mapping).
-      ORIGINAL TASK: Design the Storymaker session data model: participants, narrator Bot,
-      Scenario variables, current narrative state, inventory changes, branch
-      history, turn ownership, and persistence between turns. Draft as
-      docs/storymaker-session-model.md for Silas to review.
+- id: t-001
+  milestone: m1
+  title: Draft Storymaker session data model
+  status: done
+  owner: worker
+  updated: '2026-07-01T00:00:00Z'
+  passes: 0
+  stakes: reversible
+  gate_human: true
+  approved_by_human: true
+  note: 'FOR SILAS: docs/storymaker-session-model.md contains the session data model (informed by docs/kr-model-audit.md).
+    It specifies participants, narrator Bot, Scenario variables, narrative state, branch history, and
+    turn ownership for both Guided Adventure and Exquisite Corpse modes. Notes what exists in kind_robots
+    vs what needs new app-owned schema. TO APPROVE: Read docs/storymaker-session-model.md. Set approved_by_human:
+    true and status: done here. Unblocks: storymaker/t-002 (turn lifecycle), t-003 (Exquisite Corpse rules),
+    t-004 (rewards/inventory mapping). ORIGINAL TASK: Design the Storymaker session data model: participants,
+    narrator Bot, Scenario variables, current narrative state, inventory changes, branch history, turn
+    ownership, and persistence between turns. Draft as docs/storymaker-session-model.md for Silas to review.
 
-  - id: t-002
-    milestone: m2
-    title: "Define Guided Adventure turn lifecycle"
-    status: waiting
-    owner: null
-    passes: 0
-    stakes: reversible
-    depends_on: t-001
-    note: >
-      Specify the server-side lifecycle for a Guided Adventure turn: prompt build,
-      branch options, custom-input handling, stat or reward spends, safety limits,
-      state mutation, and next-turn handoff.
+    '
+- id: t-002
+  milestone: m2
+  title: Define Guided Adventure turn lifecycle
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  depends_on: t-001
+  note: 'Specify the server-side lifecycle for a Guided Adventure turn: prompt build, branch options,
+    custom-input handling, stat or reward spends, safety limits, state mutation, and next-turn handoff.
 
-  - id: t-003
-    milestone: m2
-    title: "Define Exquisite Corpse collaboration rules"
-    status: waiting
-    owner: null
-    passes: 0
-    stakes: reversible
-    depends_on: t-001
-    note: >
-      Draft the async collaboration rules for Exquisite Corpse mode, including
-      turn order, what each player can see, mutation permissions, and how story,
-      character, or world elements are merged.
+    '
+- id: t-003
+  milestone: m2
+  title: Define Exquisite Corpse collaboration rules
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  depends_on: t-001
+  note: 'Draft the async collaboration rules for Exquisite Corpse mode, including turn order, what each
+    player can see, mutation permissions, and how story, character, or world elements are merged.
 
-  - id: t-004
-    milestone: m3
-    title: "Map rewards, locations, items, and characters back to profiles"
-    status: waiting
-    owner: null
-    passes: 0
-    stakes: reversible
-    depends_on: t-001
-    note: >
-      Define what session outputs become reusable profile objects and how rarity,
-      unlocks, genre remixes, and future-session reuse should work.
+    '
+- id: t-004
+  milestone: m3
+  title: Map rewards, locations, items, and characters back to profiles
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  depends_on: t-001
+  note: 'Define what session outputs become reusable profile objects and how rarity, unlocks, genre remixes,
+    and future-session reuse should work.
 
-  - id: t-005
-    milestone: m4
-    title: "Sketch first Storymaker UX flow"
-    status: waiting
-    owner: null
-    passes: 0
-    stakes: reversible
-    depends_on:
-      - t-002
-      - t-003
-    note: >
-      Create a lightweight UX plan for starting a session, choosing a narrator,
-      seeing branch options, entering custom actions, and reviewing collected
-      artifacts. Keep it implementation-ready but not overbuilt.
+    '
+- id: t-005
+  milestone: m4
+  title: Sketch first Storymaker UX flow
+  status: waiting
+  owner: null
+  passes: 0
+  stakes: reversible
+  depends_on:
+  - t-002
+  - t-003
+  note: 'Create a lightweight UX plan for starting a session, choosing a narrator, seeing branch options,
+    entering custom actions, and reviewing collected artifacts. Keep it implementation-ready but not overbuilt.
 
-  - id: t-006
-    milestone: m1
-    title: "Audit kind_robots Bots, Characters, Scenarios, and Chats models for session compatibility"
-    status: done
-    owner: worker
-    updated: "2026-06-30T00:00:00Z"
-    passes: 0
-    stakes: reversible
-    note: >
-      Wrote docs/kr-model-audit.md. All 5 models audited (Bot, Character, Scenario, Chat,
-      Reward). Rich and ready: narrator system (narrativeVoice, forgeIntro, NarratorThread),
-      character stat system (6 Rarity stats + level/XP + Rewards inventory), scenario
-      setting (intros/locations/genres/cast JSON/outputType enum), chat threading (originId
-      for session grouping), reward item system. Two must-pitch backend additions: (1)
-      StorySession model (lifecycle, participants, mode, status), (2) TurnChoice model
-      (branch option log). No MVP blockers in existing schema.
+    '
+- id: t-006
+  milestone: m1
+  title: Audit kind_robots Bots, Characters, Scenarios, and Chats models for session compatibility
+  status: done
+  owner: worker
+  updated: '2026-06-30T00:00:00Z'
+  passes: 0
+  stakes: reversible
+  note: 'Wrote docs/kr-model-audit.md. All 5 models audited (Bot, Character, Scenario, Chat, Reward).
+    Rich and ready: narrator system (narrativeVoice, forgeIntro, NarratorThread), character stat system
+    (6 Rarity stats + level/XP + Rewards inventory), scenario setting (intros/locations/genres/cast JSON/outputType
+    enum), chat threading (originId for session grouping), reward item system. Two must-pitch backend
+    additions: (1) StorySession model (lifecycle, participants, mode, status), (2) TurnChoice model (branch
+    option log). No MVP blockers in existing schema.
+
+    '
