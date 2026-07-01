@@ -1,97 +1,91 @@
-# Conductor App — native mobile and desktop client
 project: conductor-app
 kind: software
+notes_from_silas: 'Build a polished native client for Conductor. The first pass should define the
 
-notes_from_silas: |
-  Build a polished native client for Conductor. The first pass should define the
   app shape, the API client, project dashboard, todos, approvals, art requests,
+
   and notification strategy before implementation starts.
 
+  '
 milestones:
-  - id: m1
-    title: "App shell and API contract"
-    weight: 25
-    status: not-started
-  - id: m2
-    title: "Dashboard and project views"
-    weight: 30
-    status: not-started
-  - id: m3
-    title: "Todos, approvals, and art requests"
-    weight: 25
-    status: not-started
-  - id: m4
-    title: "Notifications"
-    weight: 20
-    status: not-started
-
+- id: m1
+  title: App shell and API contract
+  weight: 25
+  status: not-started
+- id: m2
+  title: Dashboard and project views
+  weight: 30
+  status: not-started
+- id: m3
+  title: Todos, approvals, and art requests
+  weight: 25
+  status: not-started
+- id: m4
+  title: Notifications
+  weight: 20
+  status: not-started
 tasks:
-  - id: t-001
-    milestone: m1
-    title: "Draft app architecture and API contract"
-    status: needs-human
-    owner: worker
-    updated: "2026-07-01T00:00:00Z"
-    passes: 0
-    stakes: reversible
-    gate_human: true
-    note: >
-      FOR SILAS: projects/conductor-app/app-architecture.md contains the Flutter app architecture
-      and API contract. It covers the screen list (dashboard, project detail, todo management,
-      art requests, approvals), data flow, and the kind_robots REST endpoints the app needs
-      (informed by docs/kr-api-surface.md). No implementation was done — design only.
-      TO APPROVE: Read projects/conductor-app/app-architecture.md. Set approved_by_human: true
-      and status: done here. Unblocks: conductor-app/t-002 (dashboard shell), t-003 (mobile
-      flows), t-004 (notifications).
+- id: t-001
+  milestone: m1
+  title: Draft app architecture and API contract
+  status: done
+  owner: worker
+  updated: '2026-07-01T00:00:00Z'
+  passes: 0
+  stakes: reversible
+  gate_human: true
+  approved_by_human: true
+  note: "FOR SILAS: projects/conductor-app/app-architecture.md contains the Flutter app architecture and\
+    \ API contract. It covers the screen list (dashboard, project detail, todo management, art requests,\
+    \ approvals), data flow, and the kind_robots REST endpoints the app needs (informed by docs/kr-api-surface.md).\
+    \ No implementation was done \u2014 design only. TO APPROVE: Read projects/conductor-app/app-architecture.md.\
+    \ Set approved_by_human: true and status: done here. Unblocks: conductor-app/t-002 (dashboard shell),\
+    \ t-003 (mobile flows), t-004 (notifications).\n"
+- id: t-002
+  milestone: m2
+  title: Scaffold first dashboard shell
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  depends_on: t-001
+  note: 'Create the first app shell and dashboard after the architecture is approved.
 
-  - id: t-002
-    milestone: m2
-    title: "Scaffold first dashboard shell"
-    status: waiting
-    owner: null
-    passes: 0
-    stakes: reversible
-    depends_on: t-001
-    note: >
-      Create the first app shell and dashboard after the architecture is approved.
+    '
+- id: t-003
+  milestone: m3
+  title: Design mobile todo and approval flows
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  depends_on: t-001
+  note: 'Specify create/edit todo, pitch voting, task approval, and art request flows for small screens.
 
-  - id: t-003
-    milestone: m3
-    title: "Design mobile todo and approval flows"
-    status: waiting
-    owner: null
-    passes: 0
-    stakes: reversible
-    depends_on: t-001
-    note: >
-      Specify create/edit todo, pitch voting, task approval, and art request flows
-      for small screens.
+    '
+- id: t-004
+  milestone: m4
+  title: Choose notification strategy
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  depends_on: t-001
+  note: 'Compare practical notification approaches for agent completions, blocked tasks, and approvals
+    needing review.
 
-  - id: t-004
-    milestone: m4
-    title: "Choose notification strategy"
-    status: waiting
-    owner: null
-    passes: 0
-    stakes: reversible
-    depends_on: t-001
-    note: >
-      Compare practical notification approaches for agent completions, blocked
-      tasks, and approvals needing review.
-
-  - id: t-005
-    milestone: m1
-    title: "Map kind_robots API surface available for the app"
-    status: done
-    owner: worker
-    updated: "2026-06-30T00:00:00Z"
-    passes: 0
-    stakes: reversible
-    note: >
-      Wrote docs/kr-api-surface.md. Full map across 8 feature areas: auth, projects
-      (conductor), todos, dreams, art requests, pitch voting, user profile, notifications.
-      Key findings: projects/todos/dreams/auth/pitch-voting all exist and are sufficient.
-      Three gaps: (1) todos have no projectSlug field (pitch needed for project-scoped
-      todos), (2) no pending art requests endpoint (YAML-only, not DB), (3) no push
-      notification infrastructure (polling for MVP, pitch for native push). Task state
-      is YAML/GitHub-only — the app can read but not write task status directly.
+    '
+- id: t-005
+  milestone: m1
+  title: Map kind_robots API surface available for the app
+  status: done
+  owner: worker
+  updated: '2026-06-30T00:00:00Z'
+  passes: 0
+  stakes: reversible
+  note: "Wrote docs/kr-api-surface.md. Full map across 8 feature areas: auth, projects (conductor), todos,\
+    \ dreams, art requests, pitch voting, user profile, notifications. Key findings: projects/todos/dreams/auth/pitch-voting\
+    \ all exist and are sufficient. Three gaps: (1) todos have no projectSlug field (pitch needed for\
+    \ project-scoped todos), (2) no pending art requests endpoint (YAML-only, not DB), (3) no push notification\
+    \ infrastructure (polling for MVP, pitch for native push). Task state is YAML/GitHub-only \u2014 the\
+    \ app can read but not write task status directly.\n"

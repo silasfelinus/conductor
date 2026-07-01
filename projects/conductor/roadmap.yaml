@@ -56,7 +56,7 @@ tasks:
   title: "Build scripts/build_kaizen.py \u2014 per-project kaizen prompt + honey-do list"
   status: done
   owner: worker
-  updated: "2026-06-30T00:00:00Z"
+  updated: '2026-06-30T00:00:00Z'
   passes: 0
   stakes: reversible
   depends_on: t-002
@@ -72,24 +72,25 @@ tasks:
 - id: t-004
   milestone: m4
   title: Write SECURITY-MANAGER.md threat model and audit runbook
-  status: needs-human
+  status: done
   owner: worker
-  updated: "2026-07-01T00:00:00Z"
+  updated: '2026-07-01T00:00:00Z'
   passes: 0
   stakes: needs-human
   gate_human: true
-  note: 'FOR SILAS: SECURITY-MANAGER.md is at the repo root. It defines the security manager
-    role, threat model covering Dreams/projects/private files/family-only access/agent write
-    boundaries, a severity ladder, and safe automation rules for agents (Vercel, GitHub Actions,
-    secrets, production data, deployment gates). No live auth, secrets, or deploys were touched.
-    TO APPROVE: Read SECURITY-MANAGER.md. Set approved_by_human: true and status: done in this
-    task. Unblocks: conductor/t-005 (authz regression tests).
+  approved_by_human: true
+  note: 'FOR SILAS: SECURITY-MANAGER.md is at the repo root. It defines the security manager role, threat
+    model covering Dreams/projects/private files/family-only access/agent write boundaries, a severity
+    ladder, and safe automation rules for agents (Vercel, GitHub Actions, secrets, production data, deployment
+    gates). No live auth, secrets, or deploys were touched. TO APPROVE: Read SECURITY-MANAGER.md. Set
+    approved_by_human: true and status: done in this task. Unblocks: conductor/t-005 (authz regression
+    tests).
 
     '
 - id: t-005
   milestone: m4
   title: Add automated authz regression tests for Dreams and projects
-  status: waiting
+  status: ready
   owner: null
   updated: '2026-06-29T00:00:00Z'
   passes: 0
@@ -177,30 +178,44 @@ tasks:
   updated: '2026-07-01T00:00:00Z'
   passes: 0
   stakes: reversible
-  note: 'Added .claude/hooks/session-start.sh and .claude/settings.json. Hook fires only
-    in remote Claude Code sessions (CLAUDE_CODE_REMOTE guard), collects git state,
-    roadmap ready/needs-human/claimed tasks, and TALKBACK tail. Merged via PR #73
-    (branch claude/startup-sweep-test-bh0w3s). Automates the session startup steps
-    defined in CLAUDE.md. Gap: no open-PR check (requires GitHub API credentials from
-    within the hook) \u2014 tracked as t-012.
+  note: 'Added .claude/hooks/session-start.sh and .claude/settings.json. Hook fires only in remote Claude
+    Code sessions (CLAUDE_CODE_REMOTE guard), collects git state, roadmap ready/needs-human/claimed tasks,
+    and TALKBACK tail. Merged via PR #73 (branch claude/startup-sweep-test-bh0w3s). Automates the session
+    startup steps defined in CLAUDE.md. Gap: no open-PR check (requires GitHub API credentials from within
+    the hook) \u2014 tracked as t-012.
 
     '
 - id: t-012
   milestone: m2
-  title: "Add open-PR check to session startup sweep hook"
+  title: Add open-PR check to session startup sweep hook
   status: done
   owner: worker
   updated: '2026-07-01T00:00:00Z'
   passes: 0
   stakes: reversible
   depends_on: t-011
-  note: 'The session-start.sh sweep (t-011) collects git state, roadmap tasks, and
-    TALKBACK tail but skips step 3 from CLAUDE.md (check for open PRs). Add a curl
-    call to the GitHub API using GITHUB_TOKEN env var to list open worker/* and claude/*
-    PRs and include them in the sweep output. Degrade gracefully if GITHUB_TOKEN is
-    absent. Output format should match the existing sections in the hook.
+  note: 'The session-start.sh sweep (t-011) collects git state, roadmap tasks, and TALKBACK tail but skips
+    step 3 from CLAUDE.md (check for open PRs). Add a curl call to the GitHub API using GITHUB_TOKEN env
+    var to list open worker/* and claude/* PRs and include them in the sweep output. Degrade gracefully
+    if GITHUB_TOKEN is absent. Output format should match the existing sections in the hook.
 
     '
+- id: t-013
+  milestone: m2
+  title: "Add GitHub Actions workflow to auto-run sync_projects_to_dreams.py on push to main"
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  depends_on: t-009
+  note: >
+    Silas should never have to run scripts manually. Wire sync_projects_to_dreams.py into a
+    GitHub Actions workflow that triggers on push to main (and optionally on a daily schedule).
+    Use KR_API_TOKEN from GitHub Actions secrets (already set by Silas). Log each upsert result
+    as a workflow step summary. Degrade gracefully if KR_API_TOKEN is absent (skip with a
+    warning, do not fail the workflow). This replaces the manual reconciliation step in the
+    kind-robots/t-003 audit checklist.
+
 - id: t-010
   milestone: m2
   title: "Write scripts/generate_changelog.py \u2014 per-cycle change summary"
