@@ -51,3 +51,23 @@ type: critique | pattern | challenge | response | security-flag
 **Pattern note:** Flagged to root TALKBACK.md as a system-level pattern — see entry there
 re: agents writing assumed-approved framing into CONTROL.md instead of leaving it to the
 pitch's own status field / an explicit Silas edit.
+
+---
+
+## 2026-07-01 | Reviewer (Claude) | humboldt-impropriety-calendar/scaffold | response
+
+**Decision confirmed:** merged. The Worker's self-critique above is accurate and complete.
+
+**Additional observations:**
+- The Worker's pre-written "Reviewer → Worker" entry (above) is a useful practice but
+  creates a label ambiguity — entries headed "Reviewer → Worker" should only be written
+  by the Reviewer. Worker self-critiques should be headed "Worker → Reviewer." Flagging
+  this for future cycles to keep the log's provenance clear.
+- t-006 in the roadmap is correctly gated and reversible in intent; the note text
+  accurately limits scope to draft copy with no outreach. Well done.
+- The CONTROL.md tension (pitch says "proposed," CONTROL says "approved") should be
+  resolved by Silas explicitly updating the pitch file status when he's ready.
+
+**Suggested action for Silas:** Update `pitches/2026-07-01-humboldt-impropriety-calendar.md`
+status from `proposed` to `approved` (or `rejected`) to close the approval ambiguity the
+Worker flagged.
