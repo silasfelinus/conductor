@@ -127,11 +127,26 @@ def load_priority() -> list[str]:
 
 
 def load_roadmaps() -> list[dict]:
+    # Load overrides to filter inactive projects; fail open if file is missing.
+    overrides: dict[str, dict] = {}
+    try:
+        ov = yaml.safe_load(Path("project-overrides.yaml").read_text()) or {}
+        for entry in ov.get("overrides", []):
+            slug = entry.get("slug")
+            if slug:
+                overrides[slug] = entry
+    except Exception:
+        pass
+
     roadmaps = []
     for path in sorted(glob.glob("projects/*/roadmap.yaml")):
         if "_template" in path:
             continue
         rm = yaml.safe_load(open(path)) or {}
+        slug = rm.get("project")
+        if overrides and slug:
+            if overrides.get(slug, {}).get("status", "active") != "active":
+                continue
         rm["_path"] = path
         roadmaps.append(rm)
     return roadmaps

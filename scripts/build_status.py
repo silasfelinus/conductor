@@ -27,15 +27,20 @@ def load_roadmap(project_dir: Path) -> dict | None:
         return yaml.safe_load(f)
 
 
-def compute_progress(milestones: list[dict]) -> float:
-    if not milestones:
-        return 0.0
-    total = sum(m.get("weight", 10) for m in milestones)
-    done = sum(
+def compute_progress(milestones: list[dict], tasks: list[dict] | None = None) -> float:
+    tasks = tasks or []
+    total_m = sum(m.get("weight", 10) for m in milestones)
+    done_m = sum(
         m.get("weight", 10) * (1.0 if m.get("status") == "done" else 0.5 if m.get("status") == "in-progress" else 0.0)
         for m in milestones
     )
-    return round(done / total * 100, 1) if total else 0.0
+    if total_m and done_m > 0:
+        return round(done_m / total_m * 100, 1)
+    # Fall back to task-completion ratio when milestones are uninformative.
+    if tasks:
+        done_t = sum(1 for t in tasks if t.get("status") == "done")
+        return round(done_t / len(tasks) * 100, 1)
+    return 0.0
 
 
 def count_tasks(tasks: list[dict]) -> dict[str, int]:
@@ -87,7 +92,7 @@ def build_status():
         milestones = roadmap.get("milestones") or []
         tasks = roadmap.get("tasks") or []
         kind = roadmap.get("kind", "software")
-        progress = compute_progress(milestones)
+        progress = compute_progress(milestones, tasks)
         counts = count_tasks(tasks)
 
         for k, v in counts.items():
