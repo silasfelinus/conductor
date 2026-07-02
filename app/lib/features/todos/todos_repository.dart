@@ -153,6 +153,7 @@ class TodosController extends AsyncNotifier<List<Todo>> {
     ref.invalidateSelf();
   }
 
+  @override
   Future<void> update(Todo todo, Map<String, dynamic> patch) async {
     final repo = ref.read(todosRepositoryProvider);
     if (repo == null) return;

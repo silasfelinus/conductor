@@ -271,7 +271,7 @@ class _EnumPicker extends StatelessWidget {
   Widget build(BuildContext context) {
     return DropdownButtonFormField<String>(
       decoration: InputDecoration(labelText: label),
-      value: options.contains(value) ? value : options.first,
+      initialValue: options.contains(value) ? value : options.first,
       items: [
         for (final option in options)
           DropdownMenuItem(value: option, child: Text(option)),

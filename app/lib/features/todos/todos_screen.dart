@@ -192,7 +192,7 @@ class _TodoComposerState extends State<_TodoComposer> {
               Expanded(
                 child: DropdownButtonFormField<String>(
                   decoration: const InputDecoration(labelText: 'Priority'),
-                  value: _priority,
+                  initialValue: _priority,
                   items: const [
                     DropdownMenuItem(value: 'HIGH', child: Text('High')),
                     DropdownMenuItem(value: 'NORMAL', child: Text('Normal')),
@@ -205,7 +205,7 @@ class _TodoComposerState extends State<_TodoComposer> {
               Expanded(
                 child: DropdownButtonFormField<String>(
                   decoration: const InputDecoration(labelText: 'Category'),
-                  value: _category,
+                  initialValue: _category,
                   items: const [
                     DropdownMenuItem(value: 'HONEYDO', child: Text('Honey-do')),
                     DropdownMenuItem(value: 'AGENT', child: Text('Agent')),
