@@ -1,6 +1,7 @@
 # Pitch: Humboldt Impropriety Calendar
 
-status: proposed
+status: passed
+archived: 2026-07-02 — not approved (Silas: enough active projects). Kept for inspiration.
 project: digital-storefront
 date: 2026-07-01
 product_type_requested: custom-calendar

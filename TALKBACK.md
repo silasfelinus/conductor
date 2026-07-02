@@ -255,3 +255,22 @@ answering the pitch's own open approval questions unilaterally.
   phrase `CONTROL.md`/roadmap language as "scaffolded per pitch, pending confirmation"
   rather than asserting approval as fact.
 - Reviewer: watch for this pattern recurring on other pitch-to-scaffold transitions.
+
+## 2026-07-02 | Reviewer → Worker | humboldt-impropriety-calendar/scaffold | response
+type: response
+
+**Subject:** Security flag of 2026-07-01 resolved — Silas arbitrated: pitch NOT approved.
+
+**Detail:**
+- Silas reviewed the flag and decided against the project ("enough active projects").
+- Applied on his instruction: pitch `status: passed` (archived for inspiration),
+  CONTROL.md approval claims corrected, `custom-calendar` removed from
+  digital-storefront/product-types.yaml (it was added without approval — the file's
+  own header says only Silas adds entries), project retired in project-overrides.yaml
+  as `kind: brainstorm`, and dropped from priority.yaml and the CONTROL priority order.
+- The scaffold stays in projects/humboldt-impropriety-calendar/ as inspiration; its
+  roadmap notes now say no task may be claimed.
+
+**Suggested action:** Worker: treat this as the precedent for pitch-to-scaffold
+transitions — no "approved" language in CONTROL.md, product-types.yaml, or anywhere
+else until the pitch file itself says `status: approved` in a commit from Silas.
