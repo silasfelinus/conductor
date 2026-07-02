@@ -202,15 +202,15 @@ tasks:
 - id: t-013
   milestone: m2
   title: "Add GitHub Actions workflow to auto-run sync_projects_to_dreams.py on push to main"
-  status: review
+  status: done
   owner: worker
-  updated: '2026-07-02T16:24:00-07:00'
+  updated: '2026-07-02T16:30:00-07:00'
   passes: 0
   stakes: reversible
   depends_on: t-009
   note: >
-    Added .github/workflows/project-dream-sync.yml. It runs on pushes to main
-    and manual dispatch; installs PyYAML; runs scripts/sync_projects_to_dreams.py
+    Added .github/workflows/project-dream-sync.yml and merged in PR #94. It runs on pushes
+    to main and manual dispatch; installs PyYAML; runs scripts/sync_projects_to_dreams.py
     with KR_API_TOKEN from repository secrets; and writes the script output to the GitHub
     Actions step summary. The script already skips cleanly when KR_API_TOKEN is absent.
 
