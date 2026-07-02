@@ -168,3 +168,16 @@ tasks:
     action by Silas.
 
     '
+- id: t-011
+  milestone: m1
+  title: Add CI guard that every conductor write endpoint in kind_robots calls an auth guard
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  note: 'Kaizen from Reviewer on the kind_robots PR #70 security-fix merge (2026-07-02): a lint or test
+    check over server/api/conductor/*.post.ts that fails CI if a route does not call requireApiUser or
+    requireAdminApiUser, so a missing auth guard on a new endpoint is caught before merge instead of by
+    manual audit.
+
+    '
