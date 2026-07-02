@@ -1,6 +1,6 @@
 project: conductor
 kind: software
-notes_from_silas: "Improvements to the conductor / AI_Networker system itself \u2014 CI, scripts,\nops\
+notes_from_silas: "Improvements to the conductor / AI_Networker system itself — CI, scripts,\nops\
   \ tooling, recurring security audits, and agent access boundaries. Keep\nchanges small and reversible.\
   \ Nothing that touches billing, secrets, deploys,\nauth policy, production data, or write permissions\
   \ without needs-human.\n"
@@ -53,18 +53,18 @@ tasks:
     '
 - id: t-003
   milestone: m3
-  title: "Build scripts/build_kaizen.py \u2014 per-project kaizen prompt + honey-do list"
+  title: "Build scripts/build_kaizen.py — per-project kaizen prompt + honey-do list"
   status: done
   owner: worker
   updated: '2026-06-30T00:00:00Z'
   passes: 0
   stakes: reversible
   depends_on: t-002
-  note: "Build scripts/build_kaizen.py. For each active project it emits:\n1. KAIZEN PROMPT \u2014 the\
+  note: "Build scripts/build_kaizen.py. For each active project it emits:\n1. KAIZEN PROMPT — the\
     \ single most impactful action Silas can take right now, one sentence framed as a direct instruction\
     \ (e.g. \"Approve the stack spec in humboldt-scoop-cms/t-001\"). Priority order: needs-human tasks\
     \ first, then gate_human gates with approved_by_human: false, then passes==3 blocked tasks, then stale\
-    \ claimed tasks with no recent commit.\n2. HONEY-DO LIST \u2014 every other action only Silas can\
+    \ claimed tasks with no recent commit.\n2. HONEY-DO LIST — every other action only Silas can\
     \ unblock, as a markdown checkbox list ordered by downstream impact. Each item names the task id and\
     \ the exact decision or file to touch. Agent-workable items are excluded entirely.\nOutput: KAIZEN.md\
     \ at the repo root, regenerated each cycle alongside PR-TRIAGE.md. The approval-portal (when built)\
@@ -90,9 +90,9 @@ tasks:
 - id: t-005
   milestone: m4
   title: Add automated authz regression tests for Dreams and projects
-  status: ready
-  owner: null
-  updated: '2026-06-29T00:00:00Z'
+  status: claimed
+  owner: worker
+  updated: '2026-07-02T15:12:48-07:00'
   passes: 0
   stakes: reversible
   depends_on: t-004
@@ -156,7 +156,7 @@ tasks:
     '
 - id: t-009
   milestone: m2
-  title: "Build scripts/sync_projects_to_dreams.py \u2014 slug-parity sync bridge"
+  title: "Build scripts/sync_projects_to_dreams.py — slug-parity sync bridge"
   status: done
   owner: worker
   updated: '2026-06-30T00:00:00Z'
@@ -165,10 +165,10 @@ tasks:
   note: "Build scripts/sync_projects_to_dreams.py. For each active conductor project (from project-overrides.yaml\
     \ where status == active), call the kind_robots API to upsert a Dream with dreamType PROJECT and matching\
     \ slug. Sync fields: title (from roadmap project:), description (from notes_from_silas first paragraph),\
-    \ projectStatus (map conductor active\u2192ACTIVE, paused\u2192PAUSED, finished\u2192DONE, retired\u2192\
+    \ projectStatus (map conductor active→ACTIVE, paused→PAUSED, finished→DONE, retired→\
     ARCHIVED). Use PATCH /api/dreams/<id> if a Dream with that slug already exists, POST /api/dreams otherwise.\
     \ Requires KR_API_TOKEN env var. Log each upsert (created/updated/skipped) to stdout. Never delete\
-    \ a Dream; only create or update. This is the canonical conductor \u2192 kind_robots bridge; run it\
+    \ a Dream; only create or update. This is the canonical conductor → kind_robots bridge; run it\
     \ at the end of each Worker cycle after task work is complete.\n"
 - id: t-011
   milestone: m2
@@ -182,7 +182,7 @@ tasks:
     Code sessions (CLAUDE_CODE_REMOTE guard), collects git state, roadmap ready/needs-human/claimed tasks,
     and TALKBACK tail. Merged via PR #73 (branch claude/startup-sweep-test-bh0w3s). Automates the session
     startup steps defined in CLAUDE.md. Gap: no open-PR check (requires GitHub API credentials from within
-    the hook) \u2014 tracked as t-012.
+    the hook) — tracked as t-012.
 
     '
 - id: t-012
@@ -218,7 +218,7 @@ tasks:
 
 - id: t-010
   milestone: m2
-  title: "Write scripts/generate_changelog.py \u2014 per-cycle change summary"
+  title: "Write scripts/generate_changelog.py — per-cycle change summary"
   status: done
   owner: worker
   updated: '2026-06-30T00:00:00Z'
