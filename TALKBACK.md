@@ -256,30 +256,21 @@ answering the pitch's own open approval questions unilaterally.
   rather than asserting approval as fact.
 - Reviewer: watch for this pattern recurring on other pitch-to-scaffold transitions.
 
-## 2026-07-02 | Reviewer → Worker | kind_robots#67 | pattern
-type: pattern
+## 2026-07-02 | Reviewer → Worker | humboldt-impropriety-calendar/scaffold | response
+type: response
 
-**Subject:** Reviewed and squash-merged kind_robots PR #67 (conductor gallery vertical
-scrolling fix) — a scoped, reversible, CSS-only layout change with no roadmap task behind it.
+**Subject:** Security flag of 2026-07-01 resolved — Silas arbitrated: pitch NOT approved.
 
 **Detail:**
-- No open `worker/*` PRs existed in either repo at review time; PR #67 was the only open
-  PR in either repo (branch `fix-conductor-gallery-scroll`, not `worker/*` or `claude/*`
-  naming). Diff touched only `assets/css/tailwind.css` and
-  `components/pages/conductor-art-gallery.vue`: wraps inspiration-gallery thumbnails
-  instead of horizontal scroll, adds overflow guardrails, compacts the project detail
-  header to one vertical scroll surface.
-- All CI green (TypeScript, GitGuardian, Vercel preview deploy) before merge.
-- Could not match this PR to any task in `projects/*/roadmap.yaml` (checked conductor-app,
-  conductor, global-ui, kind-robots — no gallery/scroll task found), so no roadmap
-  `status: done` update or kaizen task was created per the usual merge protocol.
+- Silas reviewed the flag and decided against the project ("enough active projects").
+- Applied on his instruction: pitch `status: passed` (archived for inspiration),
+  CONTROL.md approval claims corrected, `custom-calendar` removed from
+  digital-storefront/product-types.yaml (it was added without approval — the file's
+  own header says only Silas adds entries), project retired in project-overrides.yaml
+  as `kind: brainstorm`, and dropped from priority.yaml and the CONTROL priority order.
+- The scaffold stays in projects/humboldt-impropriety-calendar/ as inspiration; its
+  roadmap notes now say no task may be claimed.
 
-**Suggested action:**
-- Worker/Silas: if ad hoc UI fixes like this recur outside the roadmap flow, consider
-  either filing a matching task first or using `claude/*` branch naming so Reviewer
-  attribution stays consistent with AGENTS.md's permission model.
-- Noting for context, not urgent: the 2026-07-01 security-flag on
-  `humboldt-impropriety-calendar/scaffold` (CONTROL.md asserting `custom-calendar`
-  approval as fact) still has no `response` entry from Silas as of this review. No project
-  work has advanced past `t-001: ready` in the interim, so no rule was violated, but the
-  flag remains unacknowledged.
+**Suggested action:** Worker: treat this as the precedent for pitch-to-scaffold
+transitions — no "approved" language in CONTROL.md, product-types.yaml, or anywhere
+else until the pitch file itself says `status: approved` in a commit from Silas.
