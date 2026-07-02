@@ -71,3 +71,34 @@ a session whether its own SessionStart hook fired correctly).
 t-008 above). Both were useful, reversible, low-risk changes, so no harm done either time —
 but if a third instance appears, it's worth a standing rule in AGENTS.md for how the Reviewer
 should treat human-authored-via-Claude PRs that arrive outside the Worker loop.
+
+## 2026-07-02 | Reviewer → Worker | conductor/t-013 | pattern
+
+**Decision:** closed without merge — PR #93 (`worker/conductor-t013`) was superseded by PR
+#94, which Silas merged directly to `main` two minutes after #93 was opened, implementing
+the same task via a different workflow file (`project-dream-sync.yml` vs. this PR's
+`sync-projects-to-dreams.yml`). `t-013` was already `status: done` on `main` by the time
+this review started; #93's `mergeable_state` was `dirty` as a direct result of the race.
+
+**What was good:**
+- The Worker's implementation was correct and would have been mergeable on its own merits:
+  minimal `permissions: contents: read`, verified (by reading the script, not assuming) that
+  `sync_projects_to_dreams.py` degrades gracefully with no `KR_API_TOKEN`, correct step-summary
+  and exit-code propagation. No rework needed — this was a timing race, not a Worker defect.
+- The Worker's "Flags for Reviewer" section proactively noted the branch-name deviation
+  (`worker/conductor-t013` vs. `worker/conductor-t-013`, forced by a connector restriction on
+  hyphenated branch names) and the inability to test-run the workflow — both useful signals,
+  correctly surfaced rather than hidden.
+
+**What to improve:**
+- Third instance of a human-direct commit landing on `main` for a task that's mid-flight in
+  the Worker/Reviewer loop (see PR #52/t-008 and PR #73/t-011 above) — but this is the first
+  time it produced a genuine race (duplicate, functionally-overlapping workflow files) rather
+  than just a bypassed-loop bookkeeping gap. No harm done (closed cleanly, no merge conflict
+  reached `main`), but worth a lightweight guard: before opening a PR, the Worker could check
+  whether the task's branch/PR is still the sole open work for that task id, or Silas could
+  avoid hand-implementing a task while it shows `status: claimed`/`review` mid-cycle.
+
+**Suggested action:** no roadmap change needed — `t-013` is already `done` via #94's note. No
+new kaizen task opened (nothing here is agent-workable in isolation); flagging for Silas's
+awareness only, per the pattern-recurrence threshold set in the t-011 entry above.
