@@ -90,17 +90,17 @@ tasks:
 - id: t-005
   milestone: m4
   title: Add automated authz regression tests for Dreams and projects
-  status: claimed
+  status: review
   owner: worker
   updated: '2026-07-02T15:12:48-07:00'
   passes: 0
   stakes: reversible
   depends_on: t-004
-  note: 'After Silas approves SECURITY-MANAGER.md, add tests that prove anonymous, non-owner, non-family,
-    and normal-user accounts cannot read private Dreams, private project files, private project metadata,
-    private generated assets, or family-only resources. Include negative tests for write/update/delete,
-    project influence, prompt injection into project instructions, and API route bypass attempts. Use
-    fixtures/mocks only; do not use production secrets or real private user data.
+  note: 'Added fixture-only authz regression checks in scripts/authz_regression.py and tests/test_authz_regression.py.
+    Coverage includes anonymous, non-owner, non-family, normal-user, family-member, agent, and admin access
+    for private Dreams, project files, project metadata, generated assets, family-only resources, prompt
+    instruction influence, write/delete boundaries, and claimed-user-id API bypass attempts. No production
+    secrets, network calls, DB writes, or real private data are used.
 
     '
 - id: t-006
