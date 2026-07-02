@@ -170,6 +170,17 @@ the real log is shared.
 **Notes:**
 - (your notes)
 
+### serendipity  (software)
+**Direction:** Story-weaving experience inside kind_robots, directed by Silas (2026-07-02).
+The Serendipity bot uses dream vibes, LOCATION and GENRE dreams to spin a
+second-person story with the user as protagonist; the story's questions advance the
+real honey-dos and human-gated tasks of a chosen project. Build on existing
+infrastructure (chat streams, Bots, Dreams, Todos). This project has write access to
+develop the Serendipity component in kind_robots. Design brief first (t-001,
+needs-human gate) before any code; task write-back (t-006) is also human-gated.
+**Notes:**
+- (your notes)
+
 ### storymaker  (software)
 **Direction:** Collaborative storytelling engine built on top of existing Kind Robots
 data models. App-owned logic only; shared backend is read-only/external.
