@@ -1,0 +1,140 @@
+project: serendipity
+kind: software
+
+notes_from_silas: |
+  Serendipity is the fun one: a story-weaving experience inside kind_robots.
+  The Serendipity bot uses our task-manager systems to weave a narrative around
+  a theme the user picks (dream vibes, locations, genres). The user is the
+  protagonist of a colorful, engaging story — and the questions the story asks
+  them quietly advance the real honey-dos and human-gated tasks of a project.
+  Build on existing infrastructure: chat streams, Bots, Dreams (LOCATION/GENRE
+  dream types), Todos (HONEYDO category), and the conductor roadmap task gates.
+  This project has write access to develop the Serendipity component in
+  kind_robots. Delight first: the story should feel like a gift, not a chore list.
+
+milestones:
+  - id: m1
+    title: "Experience design and data contract"
+    weight: 25
+    status: not-started
+  - id: m2
+    title: "Serendipity component scaffold on chat streams"
+    weight: 20
+    status: not-started
+  - id: m3
+    title: "Story weaving engine (vibes, locations, genres)"
+    weight: 25
+    status: not-started
+  - id: m4
+    title: "Task weaving: honey-dos and human gates as story beats"
+    weight: 20
+    status: not-started
+  - id: m5
+    title: "Polish and first full playthrough"
+    weight: 10
+    status: not-started
+
+tasks:
+  - id: t-001
+    milestone: m1
+    title: "Draft Serendipity experience brief and data contract"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    gate_human: true
+    note: >
+      Write docs/serendipity-experience.md: the shape of one Serendipity session.
+      Cover (1) theme selection — how dream vibes, LOCATION dreams, and GENRE
+      dreams combine into a story seed; (2) the protagonist frame — second-person
+      narrative with the user as hero; (3) the question loop — how a story beat
+      poses a question whose answer maps to a real HONEYDO todo or a needs-human
+      conductor task; (4) what existing kind_robots infrastructure is reused
+      (chat streams, Bots, Todos, Dreams) and what is new; (5) session
+      persistence and tone/safety guardrails. Silas approves before any code.
+
+  - id: t-002
+    milestone: m2
+    title: "Scaffold Serendipity component in kind_robots"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-001
+    note: >
+      Create components/pages/serendipity-page.vue (plus store if needed) wired
+      into the kind_robots chat stream infrastructure: a themed intro screen,
+      a streaming story panel using chatStore.generateText, and a Serendipity
+      bot persona. No task integration yet — just a working streamed story
+      experience behind the approved design.
+
+  - id: t-003
+    milestone: m3
+    title: "Build theme picker from dream vibes, locations, and genres"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-001
+    note: >
+      Surface LOCATION and GENRE dreams (plus vibe/flavor text) as pickable
+      story ingredients. A user choice produces a story seed object the engine
+      can expand. Include a "surprise me" serendipity roll.
+
+  - id: t-004
+    milestone: m3
+    title: "Implement the story weaving loop"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on:
+      - t-002
+      - t-003
+    note: >
+      The engine turns a story seed into an ongoing second-person narrative via
+      the chat stream: scene, color, momentum, then a question to the
+      protagonist. Answers steer the next beat. Keep beats short, vivid, and
+      kind. Persist session state so a story can be resumed.
+
+  - id: t-005
+    milestone: m4
+    title: "Weave real tasks into story questions"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-004
+    note: >
+      Map open HONEYDO todos and needs-human conductor tasks for the chosen
+      project into story beats: the story's questions present the real decision
+      or action in-world. Read-only in this task — surfacing and phrasing only,
+      no writes back to todos or roadmaps yet.
+
+  - id: t-006
+    milestone: m4
+    title: "Write story answers back to task progress"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    gate_human: true
+    depends_on: t-005
+    note: >
+      When the protagonist answers a woven question, record the outcome: mark
+      the honey-do done or capture the human decision for the gated task. This
+      touches Silas's real task queue, so the wiring design is human-gated:
+      demo the flow, then Silas approves before it goes live.
+
+  - id: t-007
+    milestone: m5
+    title: "Polish pass and first full playthrough"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-006
+    note: >
+      Run one full session end-to-end (theme pick → story → woven tasks →
+      write-back) and polish tone, pacing, and visuals. Deliver a short
+      playthrough report with screenshots for Silas.

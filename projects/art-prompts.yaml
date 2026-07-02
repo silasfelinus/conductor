@@ -39,7 +39,45 @@
 #
 # Status values: pending
 
-images: []
+images:
+  - project: serendipity
+    icon:
+      image_path: projects/images/serendipity-icon.webp
+      size: "256x256"
+      status: pending
+      prompt: >
+        Premium app icon for Serendipity, a swirling storybook compass whose needle is a
+        shooting star trailing ribbons of narrative — tiny scenes of adventure glinting in
+        the ribbon loops, iridescent teal, violet and warm gold palette, crisp iconic
+        app-icon polish with a strong silhouette, no text, no logo, no watermark, no
+        collage, square composition
+    card:
+      image_path: projects/images/serendipity-card.webp
+      size: "512x768"
+      status: pending
+      prompt: >
+        Professional portrait card illustration for Serendipity, a delighted protagonist
+        stepping through an open storybook door into a swirling landscape woven from many
+        genres — fairytale forest, neon city, starlit sea — while a friendly robot narrator
+        weaves glowing story-threads that loop back into small everyday task cards being
+        gently checked off; include a diverse cast of humans, robots, animal-like beings,
+        fantasy creatures and original companions across genders, races, ages, body sizes
+        and presentation styles, premium studio illustration, warm hopeful magic, no text,
+        no logo, no watermark, no collage, 2:3 portrait composition
+    hero:
+      image_path: projects/images/serendipity-hero.webp
+      size: "1280x720"
+      status: pending
+      prompt: >
+        High-end wide hero illustration for Serendipity, a panoramic story-weaving
+        workshop where a warm robot storyteller spins a giant loom of glowing narrative
+        threads — each thread flowing through scenes of different genres and dreamlike
+        locations, with a diverse protagonist at the center choosing their next path,
+        and small luminous task-lanterns lighting up as story choices complete real
+        to-dos; a diverse consortium of humans, robots, creatures, and companions
+        watching the tale unfold, cinematic lighting, premium game-studio key art,
+        hopeful and playful tone, no text, no logo, no watermark, no collage, 16:9
+        widescreen composition
 requests:
 - id: kind-robots-overview-card-5c53bbd4
   source: kind-robots-missing-image
@@ -259,3 +297,27 @@ requests:
   label: "Challenge Center"
   prompt: >
     polished portrait illustration for Challenge Center, centered subject, rich Kind Robots visual style, no text, 2:3 portrait composition
+- id: "conductor-humboldt-impropriety-calendar-hero-538f9d46"
+  source: "kind-robots-missing-image"
+  status: "pending"
+  target_repo: "silasfelinus/conductor"
+  image_path: "projects/images/humboldt-impropriety-calendar-hero.webp"
+  source_url: "https://raw.githubusercontent.com/silasfelinus/conductor/main/projects/images/humboldt-impropriety-calendar-hero.webp"
+  page_url: "https://kind-robots.vercel.app/conductor"
+  variant: "hero"
+  size: "1280x720"
+  label: "Humboldt Impropriety Calendar"
+  prompt: >
+    wide cinematic hero image for Humboldt Impropriety Calendar, expressive scene with clear atmosphere and personality, no text, 16:9 landscape composition
+- id: "conductor-challenge-center-hero-e580f692"
+  source: "kind-robots-missing-image"
+  status: "pending"
+  target_repo: "silasfelinus/conductor"
+  image_path: "projects/images/challenge-center-hero.webp"
+  source_url: "https://raw.githubusercontent.com/silasfelinus/conductor/main/projects/images/challenge-center-hero.webp"
+  page_url: "https://kind-robots.vercel.app/conductor"
+  variant: "hero"
+  size: "1280x720"
+  label: "Challenge Center"
+  prompt: >
+    wide cinematic hero image for Challenge Center, expressive scene with clear atmosphere and personality, no text, 16:9 landscape composition
