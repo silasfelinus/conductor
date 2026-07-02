@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../todos/todo_models.dart';
 import '../todos/todos_repository.dart';
 import 'project_models.dart';
 import 'projects_repository.dart';
@@ -271,7 +270,7 @@ class _EnumPicker extends StatelessWidget {
   Widget build(BuildContext context) {
     return DropdownButtonFormField<String>(
       decoration: InputDecoration(labelText: label),
-      value: options.contains(value) ? value : options.first,
+      initialValue: options.contains(value) ? value : options.first,
       items: [
         for (final option in options)
           DropdownMenuItem(value: option, child: Text(option)),
