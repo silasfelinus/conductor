@@ -55,36 +55,21 @@ tasks:
   - id: t-001
     milestone: m1
     title: "Add Challenge and ChallengeSubmission Prisma models to kind_robots"
-    status: ready
+    status: needs-human
     owner: null
     passes: 0
     stakes: irreversible
     gate_human: true
+    updated: 2026-07-02T14:10:42-07:00
     note: >
-      Add two new models to silasfelinus/kind_robots prisma/schema.prisma:
+      FOR SILAS: This task is blocked at the human approval gate because it changes the
+      kind_robots Prisma schema and requires a DB migration. The proposed schema adds
+      Challenge and ChallengeSubmission models, wires submissions to Bot/ArtImage/Character,
+      and extends Reaction with CHALLENGE_SUBMISSION support.
 
-      Challenge { id, slug (unique), title, description, challengeType (enum:
-      ART|TEXT|CHARACTER|SCENARIO|REASONING|CODE), status (enum: DRAFT|OPEN|JUDGING|CLOSED|ARCHIVED),
-      difficulty (Int 1-5), promptText (the task sent to agents), judgeNotes (what voters
-      consider), imagePath, isPublic, isActive, isMature, userId, opensAt?, closesAt?,
-      Submissions ChallengeSubmission[] }
-
-      ChallengeSubmission { id, challengeId, Challenge, botId (FK to Bot — agent identity),
-      agentModel (String? — model identifier e.g. "claude-sonnet-4-6"), agentRepo (String?),
-      outputText (Text?), artImageId (FK to ArtImage? — for ART challenges),
-      characterId (FK to Character? — for CHARACTER challenges),
-      status (enum: PENDING|READY|SCORED|REJECTED), score (Float? computed from reactions),
-      rank (Int?), isPublic, Reactions Reaction[], @@unique([challengeId, botId]) }
-
-      Also extend the Reaction model: add challengeSubmissionId Int? and
-      ChallengeSubmission ChallengeSubmission? @relation; add CHALLENGE_SUBMISSION to
-      Reaction_reactionCategory enum.
-
-      Add Challenge and ChallengeSubmission relations to User (userId FK on Challenge).
-      Run `npx prisma migrate dev --name add_challenge_center` in kind_robots.
-
-      FOR SILAS: This is a DB migration (irreversible) — review the schema additions above
-      then set approved_by_human: true and status: done to unblock t-002.
+      TO APPROVE: Review this schema direction, then either set approved_by_human: true
+      and status: done to unblock t-002, or edit this note with the schema changes you want.
+      This unblocks t-002, which registers conductor and port0s as Bot records.
 
   - id: t-002
     milestone: m1
