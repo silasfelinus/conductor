@@ -27,6 +27,15 @@ class ServerConfig {
         ServerMode.local => '',
       };
 
+  /// Turns a server-relative asset path (e.g. /images/foo.webp) into a
+  /// fetchable URL. Returns null in local mode or for empty paths.
+  String? resolveAssetUrl(String? path) {
+    if (path == null || path.isEmpty || isLocal) return null;
+    if (path.startsWith('http')) return path;
+    final base = effectiveBaseUrl;
+    return path.startsWith('/') ? '$base$path' : '$base/$path';
+  }
+
   String toJsonString() =>
       jsonEncode({'mode': mode.name, 'baseUrl': baseUrl});
 

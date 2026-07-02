@@ -36,6 +36,30 @@ class ApiClient {
 
   Future<dynamic> delete(String path) => _send('DELETE', path);
 
+  /// POSTs and yields the raw lines of a server-sent-event response.
+  /// Callers parse the `data:` payloads themselves.
+  Stream<String> postEventStream(String path, {Object? body}) async* {
+    final request = http.Request('POST', Uri.parse('$baseUrl$path'));
+    request.headers['Accept'] = 'text/event-stream';
+    final token = await tokenProvider();
+    if (token != null && token.isNotEmpty) {
+      request.headers['Authorization'] = 'Bearer $token';
+    }
+    if (body != null) {
+      request.headers['Content-Type'] = 'application/json';
+      request.body = jsonEncode(body);
+    }
+    final response = await _inner.send(request);
+    if (response.statusCode >= 400) {
+      final text = await response.stream.bytesToString();
+      throw ApiException(
+          response.statusCode, text.isEmpty ? 'Stream request failed' : text);
+    }
+    yield* response.stream
+        .transform(utf8.decoder)
+        .transform(const LineSplitter());
+  }
+
   Future<dynamic> _send(
     String method,
     String path, {

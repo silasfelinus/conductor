@@ -1,8 +1,10 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../agent_ops/agent_ops_repository.dart';
+import '../auth/auth_controller.dart';
 import 'project_models.dart';
 import 'projects_repository.dart';
 
@@ -100,10 +102,26 @@ class _ProjectCard extends ConsumerWidget {
     final done =
         project.waypoints.where((w) => w.status == WaypointStatus.done).length;
     final total = project.waypoints.length;
+    final thumbUrl = ref
+        .watch(serverConfigProvider)
+        ?.resolveAssetUrl(project.imagePath ?? project.cardPath);
     return Card(
       margin: const EdgeInsets.symmetric(vertical: 6),
       child: ListTile(
         contentPadding: const EdgeInsets.all(16),
+        leading: thumbUrl == null
+            ? null
+            : ClipRRect(
+                borderRadius: BorderRadius.circular(8),
+                child: CachedNetworkImage(
+                  imageUrl: thumbUrl,
+                  width: 56,
+                  height: 56,
+                  fit: BoxFit.cover,
+                  errorWidget: (context, url, error) =>
+                      const Icon(Icons.folder, size: 40),
+                ),
+              ),
         title: Row(
           children: [
             Expanded(

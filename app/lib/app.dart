@@ -9,6 +9,7 @@ import 'features/agent_ops/agent_ops_repository.dart';
 import 'features/agent_ops/approvals_screen.dart';
 import 'features/auth/auth_controller.dart';
 import 'features/auth/login_screen.dart';
+import 'features/chat/project_chat_screen.dart';
 import 'features/onboarding/server_picker_screen.dart';
 import 'features/projects/dashboard_screen.dart';
 import 'features/projects/project_detail_screen.dart';
@@ -48,6 +49,12 @@ final routerProvider = Provider<GoRouter>((ref) {
           GoRoute(
             path: '/projects/:id',
             builder: (context, state) => ProjectDetailScreen(
+                projectId:
+                    int.tryParse(state.pathParameters['id'] ?? '') ?? 0),
+          ),
+          GoRoute(
+            path: '/projects/:id/chat',
+            builder: (context, state) => ProjectChatScreen(
                 projectId:
                     int.tryParse(state.pathParameters['id'] ?? '') ?? 0),
           ),

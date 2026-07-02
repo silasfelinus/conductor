@@ -1,6 +1,9 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
+import '../auth/auth_controller.dart';
 import '../todos/todos_repository.dart';
 import 'project_models.dart';
 import 'projects_repository.dart';
@@ -27,6 +30,12 @@ class ProjectDetailScreen extends ConsumerWidget {
       appBar: AppBar(
         title: Text(project.title),
         actions: [
+          if (ref.watch(serverConfigProvider)?.isLocal == false)
+            IconButton(
+              icon: const Icon(Icons.chat_bubble_outline),
+              tooltip: 'Project assistant',
+              onPressed: () => context.go('/projects/${project.id}/chat'),
+            ),
           IconButton(
             icon: const Icon(Icons.edit),
             tooltip: 'Edit details',
@@ -46,6 +55,25 @@ class ProjectDetailScreen extends ConsumerWidget {
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
+          if (ref
+                  .watch(serverConfigProvider)
+                  ?.resolveAssetUrl(project.heroPath ?? project.imagePath)
+              case final heroUrl?)
+            Padding(
+              padding: const EdgeInsets.only(bottom: 16),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(12),
+                child: AspectRatio(
+                  aspectRatio: 16 / 9,
+                  child: CachedNetworkImage(
+                    imageUrl: heroUrl,
+                    fit: BoxFit.cover,
+                    errorWidget: (context, url, error) =>
+                        const SizedBox.shrink(),
+                  ),
+                ),
+              ),
+            ),
           if (project.goal?.isNotEmpty == true) ...[
             Text('Goal', style: Theme.of(context).textTheme.titleSmall),
             Text(project.goal!),

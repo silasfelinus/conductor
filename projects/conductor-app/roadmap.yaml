@@ -143,13 +143,16 @@ tasks:
 - id: t-009
   milestone: m3
   title: 'App: per-project AI chat and art gallery / art request flow'
-  status: waiting
-  owner: null
+  status: review
+  owner: claude
+  updated: '2026-07-02T00:00:00Z'
   passes: 0
   stakes: reversible
   depends_on: t-006
-  note: 'Per-project assistant on the dream-<id>-assistant chat channel, art inspiration gallery from
-    ArtCollection by slug, and the admin-gated art-request submission.
+  note: 'Partially done on branch claude/conductor-app-dev-wd4rcc: per-project assistant chat
+    (dream-<id>-assistant channel, streaming replies, history persistence) and project artwork
+    (dashboard thumbnails, detail hero banners). Remaining: ArtCollection inspiration gallery and
+    the admin art-request submission form.
 
     '
 - id: t-010
