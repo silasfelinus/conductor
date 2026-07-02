@@ -78,7 +78,7 @@ Future<void> editTodo(BuildContext context, WidgetRef ref, Todo todo) async {
     builder: (ctx) => _TodoComposer(initial: todo),
   );
   if (result == null) return;
-  await ref.read(todosControllerProvider.notifier).update(todo, result);
+  await ref.read(todosControllerProvider.notifier).patchTodo(todo, result);
 }
 
 class _TodoTile extends ConsumerWidget {

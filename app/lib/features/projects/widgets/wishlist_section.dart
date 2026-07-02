@@ -91,7 +91,7 @@ class WishlistSection extends ConsumerWidget {
     final controller = ref.read(todosControllerProvider.notifier);
     for (final (index, todo) in reordered.indexed) {
       if (todo.order != index) {
-        await controller.update(todo, {'order': index});
+        await controller.patchTodo(todo, {'order': index});
       }
     }
   }
@@ -102,13 +102,13 @@ class WishlistSection extends ConsumerWidget {
     switch (action) {
       case 'promote':
         await controller
-            .update(item, {'category': 'AGENT', 'priority': 'HIGH'});
+            .patchTodo(item, {'category': 'AGENT', 'priority': 'HIGH'});
         if (context.mounted) {
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
               content: Text('"${item.title}" promoted to agent task')));
         }
       case 'retire':
-        await controller.update(item, {'status': 'ARCHIVED'});
+        await controller.patchTodo(item, {'status': 'ARCHIVED'});
     }
   }
 

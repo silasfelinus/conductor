@@ -153,7 +153,8 @@ class TodosController extends AsyncNotifier<List<Todo>> {
     ref.invalidateSelf();
   }
 
-  Future<void> update(Todo todo, Map<String, dynamic> patch) async {
+  /// Named patchTodo (not update) — AsyncNotifier already defines `update`.
+  Future<void> patchTodo(Todo todo, Map<String, dynamic> patch) async {
     final repo = ref.read(todosRepositoryProvider);
     if (repo == null) return;
     await repo.update(todo, patch);
