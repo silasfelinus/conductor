@@ -17,7 +17,7 @@ reversible until the first clean cycle is done. Nothing publishes, deploys, or s
 money without my explicit approval (set `approved_by_human: true` on the gated task).
 
 **Priority order this week:** humboldt-scoop → humboldt-scoop-cms → approval-portal
-→ digital-storefront → humboldt-impropriety-calendar → kind-robots → global-ui.
+→ digital-storefront → kind-robots → global-ui.
 (Mirror changes into projects/priority.yaml.)
 
 **Standing rules for all agents:** Respect each project's `kind`. Honor `depends_on` gates.
@@ -69,22 +69,14 @@ belong in the kind_robots roadmap as improvements to conductor-page.vue.
 I pick → create drafts → market → advertise on budgeted channels. Every outward step is
 gated on me.
 **Notes:**
-- `custom-calendar` is approved after the Humboldt Impropriety Calendar pitch.
-- Mature/spicy calendars are a preset under `custom-calendar`, not a separate product type.
+- `custom-calendar` is NOT approved. The Humboldt Impropriety Calendar pitch was passed
+  (2026-07-02) — I have enough active projects. Pitch and scaffold are archived as
+  brainstorm/inspiration; do not build calendar product types on their strength.
 
-### humboldt-impropriety-calendar  (content)
-**Direction:** Build the first custom-calendar project as a mature, consent-first,
-public-safe historical calendar for the Humboldt adult play-party/performance scene:
-Club Risqué → Reasons to Say Yes → Humboldt Impropriety Society. Private archival videos
-may inform internal research only and must not be published, uploaded, used in storefront
-previews, or shared without separate written consent. Credit model(s), artist(s),
-photographer(s), director(s), and historical contributors where approved. Default royalty
-model: 12/20 of net profit allocated to the twelve months, one 1/20 share per month,
-split by signed preset or custom month ledger. No contributor outreach, vendor upload,
-payment setup, printing, publication, or public listing without explicit approval.
-**Notes:**
-- Start with compliance/fulfillment research, release packet, creative bible, and safe storefront spec.
-- Use placeholder/safe dummy assets until Silas provides approved public-safe material.
+### humboldt-impropriety-calendar  (brainstorm — archived)
+**Direction:** Not approved (2026-07-02). Retired in project-overrides.yaml; kept in
+projects/ and pitches/ purely as inspiration. No task claims, no research, no outreach.
+If I ever revive this, I will re-approve the pitch and answer its open questions myself.
 
 ### kind-robots  (software)
 **Direction:** BOUNDARY.md approved (2026-06-30). App owns its own logic; the shared KR
