@@ -1,0 +1,51 @@
+name: Sync conductor projects to Dreams
+
+on:
+  push:
+    branches:
+      - main
+  schedule:
+    - cron: "17 10 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  sync-projects-to-dreams:
+    name: Sync project slugs
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install Python dependencies
+        run: python -m pip install --upgrade pyyaml
+
+      - name: Sync projects to Kind Robots Dreams
+        env:
+          KR_API_TOKEN: ${{ secrets.KR_API_TOKEN }}
+        shell: bash
+        run: |
+          set +e
+          output="$(python scripts/sync_projects_to_dreams.py 2>&1)"
+          status=$?
+          {
+            echo "## Project → Dream sync"
+            echo
+            echo "Triggered by: ${{ github.event_name }}"
+            echo
+            echo '```text'
+            echo "$output"
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+          echo "$output"
+          if [ "$status" -ne 0 ]; then
+            echo "sync_projects_to_dreams.py exited with status $status" >&2
+            exit "$status"
+          fi
