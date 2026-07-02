@@ -13,3 +13,15 @@
   kind_robots branch (see TALKBACK security flag).
 - Roadmap: t-002 in review; added t-006 (v2 approval gate), t-007 (votes/priorities to DB),
   t-008 (wishlist/intent editor), t-009 (project chat + art), t-010 (store readiness, gated).
+
+## 2026-07-02 (round 2)
+- Project intent editor (title/goal/description/pitch/flavorText/liveUrl/repoUrl).
+- Feature wishlist: ordered DESIRED_FEATURE todos with move/promote/retire.
+- Waypoints: long-press to reorder or remove.
+- Todos: tap to edit; DESIRED_FEATURE selectable in composer.
+- Offline resilience: remote projects/todos fall back to last-good cached data
+  on network failure (server auth errors still surface).
+- Approvals badge on the nav bar with 5-minute foreground polling (MVP
+  notification strategy from t-004).
+- Fixed a ThemeData.cardTheme API that breaks newer Flutter versions.
+- Tests: ServerConfig, model round-trips, local repository CRUD.

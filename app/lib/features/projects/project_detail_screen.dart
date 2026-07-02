@@ -5,6 +5,8 @@ import '../todos/todo_models.dart';
 import '../todos/todos_repository.dart';
 import 'project_models.dart';
 import 'projects_repository.dart';
+import 'widgets/intent_editor_sheet.dart';
+import 'widgets/wishlist_section.dart';
 
 class ProjectDetailScreen extends ConsumerWidget {
   const ProjectDetailScreen({super.key, required this.projectId});
@@ -19,11 +21,25 @@ class ProjectDetailScreen extends ConsumerWidget {
       return const Scaffold(body: Center(child: CircularProgressIndicator()));
     }
     final todos = (ref.watch(todosControllerProvider).valueOrNull ?? [])
-        .where((t) => t.dreamId == project.id)
+        .where((t) => t.dreamId == project.id && t.category != 'DESIRED_FEATURE')
         .toList();
 
     return Scaffold(
-      appBar: AppBar(title: Text(project.title)),
+      appBar: AppBar(
+        title: Text(project.title),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.edit),
+            tooltip: 'Edit details',
+            onPressed: () async {
+              final patch = await IntentEditorSheet.show(context, project);
+              if (patch != null && patch.isNotEmpty) {
+                await _patch(ref, project, patch);
+              }
+            },
+          ),
+        ],
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => _addTask(context, ref, project),
         child: const Icon(Icons.add_task),
@@ -85,6 +101,7 @@ class ProjectDetailScreen extends ConsumerWidget {
               }),
               title: Text(waypoint.label),
               onTap: () => _cycleWaypoint(ref, project, i),
+              onLongPress: () => _waypointActions(context, ref, project, i),
             ),
           TextButton.icon(
             icon: const Icon(Icons.add),
@@ -111,9 +128,60 @@ class ProjectDetailScreen extends ConsumerWidget {
                   .read(todosControllerProvider.notifier)
                   .setStatus(todo, checked == true ? 'DONE' : 'OPEN'),
             ),
+          const SizedBox(height: 24),
+          WishlistSection(project: project),
+          const SizedBox(height: 48),
         ],
       ),
     );
+  }
+
+  Future<void> _waypointActions(
+      BuildContext context, WidgetRef ref, Project project, int index) async {
+    final waypoints = project.waypoints;
+    final action = await showModalBottomSheet<String>(
+      context: context,
+      builder: (ctx) => SafeArea(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ListTile(
+              title: Text(waypoints[index].label,
+                  style: Theme.of(ctx).textTheme.titleSmall),
+            ),
+            if (index > 0)
+              ListTile(
+                leading: const Icon(Icons.arrow_upward),
+                title: const Text('Move up'),
+                onTap: () => Navigator.of(ctx).pop('up'),
+              ),
+            if (index < waypoints.length - 1)
+              ListTile(
+                leading: const Icon(Icons.arrow_downward),
+                title: const Text('Move down'),
+                onTap: () => Navigator.of(ctx).pop('down'),
+              ),
+            ListTile(
+              leading: const Icon(Icons.delete_outline),
+              title: const Text('Remove'),
+              onTap: () => Navigator.of(ctx).pop('remove'),
+            ),
+          ],
+        ),
+      ),
+    );
+    if (action == null) return;
+    final updated = [...waypoints];
+    switch (action) {
+      case 'up':
+        updated.insert(index - 1, updated.removeAt(index));
+      case 'down':
+        updated.insert(index + 1, updated.removeAt(index));
+      case 'remove':
+        updated.removeAt(index);
+    }
+    await _patch(
+        ref, project, {'waypoints': Waypoint.serializeList(updated)});
   }
 
   Future<void> _patch(

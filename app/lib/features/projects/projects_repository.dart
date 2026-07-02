@@ -14,22 +14,40 @@ abstract class ProjectsRepository {
 }
 
 class RemoteProjectsRepository implements ProjectsRepository {
-  RemoteProjectsRepository(this._api);
+  RemoteProjectsRepository(this._api, this._storage);
 
+  static const _cacheKey = 'cache_projects';
   final ApiClient _api;
+  final AppStorage _storage;
 
   @override
   Future<List<Project>> list() async {
-    final res = await _api.get('/api/dreams', query: {
-      'dreamType': 'PROJECT',
-      'mine': '1',
-      'take': '100',
-    });
-    final items = unwrap(res, ['dreams', 'data']);
-    return (items as List)
-        .whereType<Map<String, dynamic>>()
-        .map(Project.fromJson)
-        .toList();
+    try {
+      final res = await _api.get('/api/dreams', query: {
+        'dreamType': 'PROJECT',
+        'mine': '1',
+        'take': '100',
+      });
+      final items = unwrap(res, ['dreams', 'data']);
+      final projects = (items as List)
+          .whereType<Map<String, dynamic>>()
+          .map(Project.fromJson)
+          .toList();
+      await _storage.writeBlob(
+          _cacheKey, jsonEncode(projects.map((p) => p.toJson()).toList()));
+      return projects;
+    } on ApiException {
+      rethrow; // server said no — don't mask auth/permission errors with cache
+    } catch (_) {
+      // Network failure: serve the last good response so the app stays usable
+      // offline; writes will fail loudly until connectivity returns.
+      final cached = _storage.readBlob(_cacheKey);
+      if (cached == null) rethrow;
+      return (jsonDecode(cached) as List)
+          .whereType<Map<String, dynamic>>()
+          .map(Project.fromJson)
+          .toList();
+    }
   }
 
   @override
@@ -111,7 +129,9 @@ final projectsRepositoryProvider = Provider<ProjectsRepository?>((ref) {
     return LocalProjectsRepository(ref.watch(appStorageProvider));
   }
   final api = ref.watch(apiClientProvider);
-  return api == null ? null : RemoteProjectsRepository(api);
+  return api == null
+      ? null
+      : RemoteProjectsRepository(api, ref.watch(appStorageProvider));
 });
 
 final projectsProvider = FutureProvider<List<Project>>((ref) async {

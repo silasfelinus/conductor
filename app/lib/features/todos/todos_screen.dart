@@ -71,6 +71,16 @@ class _TodosScreenState extends ConsumerState<TodosScreen> {
   }
 }
 
+Future<void> editTodo(BuildContext context, WidgetRef ref, Todo todo) async {
+  final result = await showModalBottomSheet<Map<String, dynamic>>(
+    context: context,
+    isScrollControlled: true,
+    builder: (ctx) => _TodoComposer(initial: todo),
+  );
+  if (result == null) return;
+  await ref.read(todosControllerProvider.notifier).update(todo, result);
+}
+
 class _TodoTile extends ConsumerWidget {
   const _TodoTile({required this.todo});
 
@@ -119,23 +129,28 @@ class _TodoTile extends ConsumerWidget {
           label: Text(todo.category, style: const TextStyle(fontSize: 10)),
           visualDensity: VisualDensity.compact,
         ),
+        onTap: () => editTodo(context, ref, todo),
       ),
     );
   }
 }
 
 class _TodoComposer extends StatefulWidget {
-  const _TodoComposer();
+  const _TodoComposer({this.initial});
+
+  /// When set, the sheet edits this todo instead of composing a new one.
+  final Todo? initial;
 
   @override
   State<_TodoComposer> createState() => _TodoComposerState();
 }
 
 class _TodoComposerState extends State<_TodoComposer> {
-  final _title = TextEditingController();
-  final _description = TextEditingController();
-  String _priority = 'NORMAL';
-  String _category = 'HONEYDO';
+  late final _title = TextEditingController(text: widget.initial?.title ?? '');
+  late final _description =
+      TextEditingController(text: widget.initial?.description ?? '');
+  late String _priority = widget.initial?.priority ?? 'NORMAL';
+  late String _category = widget.initial?.category ?? 'HONEYDO';
 
   @override
   void dispose() {
@@ -157,7 +172,8 @@ class _TodoComposerState extends State<_TodoComposer> {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Text('New todo', style: Theme.of(context).textTheme.titleLarge),
+          Text(widget.initial == null ? 'New todo' : 'Edit todo',
+              style: Theme.of(context).textTheme.titleLarge),
           const SizedBox(height: 16),
           TextField(
             controller: _title,
@@ -194,6 +210,8 @@ class _TodoComposerState extends State<_TodoComposer> {
                     DropdownMenuItem(value: 'HONEYDO', child: Text('Honey-do')),
                     DropdownMenuItem(value: 'AGENT', child: Text('Agent')),
                     DropdownMenuItem(value: 'KAIZEN', child: Text('Kaizen')),
+                    DropdownMenuItem(
+                        value: 'DESIRED_FEATURE', child: Text('Wishlist')),
                   ],
                   onChanged: (v) => setState(() => _category = v ?? 'HONEYDO'),
                 ),
@@ -211,10 +229,11 @@ class _TodoComposerState extends State<_TodoComposer> {
                     : _description.text.trim(),
                 'priority': _priority,
                 'category': _category,
-                'status': 'OPEN',
+                // New todos start OPEN; edits keep their current status.
+                if (widget.initial == null) 'status': 'OPEN',
               });
             },
-            child: const Text('Add'),
+            child: Text(widget.initial == null ? 'Add' : 'Save'),
           ),
         ],
       ),

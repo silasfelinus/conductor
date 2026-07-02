@@ -15,19 +15,40 @@ abstract class TodosRepository {
 }
 
 class RemoteTodosRepository implements TodosRepository {
-  RemoteTodosRepository(this._api);
+  RemoteTodosRepository(this._api, this._storage);
 
+  static const _cacheKey = 'cache_todos';
   final ApiClient _api;
+  final AppStorage _storage;
 
   @override
   Future<List<Todo>> list({bool includeArchived = false}) async {
-    final res = await _api.get('/api/todos',
-        query: includeArchived ? {'includeArchived': '1'} : null);
-    final items = unwrap(res, ['todos', 'data']);
-    return (items as List)
-        .whereType<Map<String, dynamic>>()
-        .map(Todo.fromJson)
-        .toList();
+    try {
+      final res = await _api.get('/api/todos',
+          query: includeArchived ? {'includeArchived': '1'} : null);
+      final items = unwrap(res, ['todos', 'data']);
+      final todos = (items as List)
+          .whereType<Map<String, dynamic>>()
+          .map(Todo.fromJson)
+          .toList();
+      if (includeArchived) {
+        await _storage.writeBlob(
+            _cacheKey, jsonEncode(todos.map((t) => t.toJson()).toList()));
+      }
+      return todos;
+    } on ApiException {
+      rethrow;
+    } catch (_) {
+      final cached = _storage.readBlob(_cacheKey);
+      if (cached == null) rethrow;
+      final todos = (jsonDecode(cached) as List)
+          .whereType<Map<String, dynamic>>()
+          .map(Todo.fromJson)
+          .toList();
+      return includeArchived
+          ? todos
+          : todos.where((t) => t.status != 'ARCHIVED').toList();
+    }
   }
 
   @override
@@ -101,7 +122,9 @@ final todosRepositoryProvider = Provider<TodosRepository?>((ref) {
   if (config == null) return null;
   if (config.isLocal) return LocalTodosRepository(ref.watch(appStorageProvider));
   final api = ref.watch(apiClientProvider);
-  return api == null ? null : RemoteTodosRepository(api);
+  return api == null
+      ? null
+      : RemoteTodosRepository(api, ref.watch(appStorageProvider));
 });
 
 class TodosController extends AsyncNotifier<List<Todo>> {
@@ -127,6 +150,13 @@ class TodosController extends AsyncNotifier<List<Todo>> {
     final repo = ref.read(todosRepositoryProvider);
     if (repo == null) return;
     await repo.update(todo, {'status': status});
+    ref.invalidateSelf();
+  }
+
+  Future<void> update(Todo todo, Map<String, dynamic> patch) async {
+    final repo = ref.read(todosRepositoryProvider);
+    if (repo == null) return;
+    await repo.update(todo, patch);
     ref.invalidateSelf();
   }
 

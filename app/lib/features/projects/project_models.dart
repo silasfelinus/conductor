@@ -8,6 +8,9 @@ class Project {
     this.description,
     this.goal,
     this.pitch,
+    this.flavorText,
+    this.liveUrl,
+    this.repoUrl,
     this.projectStatus = 'ACTIVE',
     this.priority = 'NORMAL',
     this.imagePath,
@@ -23,6 +26,9 @@ class Project {
   final String? description;
   final String? goal;
   final String? pitch;
+  final String? flavorText;
+  final String? liveUrl;
+  final String? repoUrl;
   final String projectStatus; // ACTIVE | PAUSED | BRAINSTORM | DONE | ARCHIVED
   final String priority; // LOW | NORMAL | HIGH
   final String? imagePath;
@@ -38,6 +44,9 @@ class Project {
         description: json['description'] as String?,
         goal: json['goal'] as String?,
         pitch: json['pitch'] as String?,
+        flavorText: json['flavorText'] as String?,
+        liveUrl: json['liveUrl'] as String?,
+        repoUrl: json['repoUrl'] as String?,
         projectStatus: (json['projectStatus'] as String?) ?? 'ACTIVE',
         priority: (json['priority'] as String?) ?? 'NORMAL',
         imagePath: json['imagePath'] as String?,
@@ -54,6 +63,9 @@ class Project {
         'description': description,
         'goal': goal,
         'pitch': pitch,
+        'flavorText': flavorText,
+        'liveUrl': liveUrl,
+        'repoUrl': repoUrl,
         'projectStatus': projectStatus,
         'priority': priority,
         'imagePath': imagePath,

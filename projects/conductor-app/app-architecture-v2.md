@@ -101,10 +101,10 @@ user's todos for a dream (not userId-scoped) ✅ now scoped to the caller.
 |---|---|---|
 | Project gallery + priority sort | Dashboard | scaffolded |
 | New project (Dream) + project cap | Dashboard FAB | scaffolded |
-| Project status/priority/intent editing | Project detail | scaffolded (status, priority; intent fields next) |
-| Waypoints (add/cycle/reorder) | Project detail | scaffolded (add/cycle) |
-| Todos: create, filter, done/archive, categories | Todos tab | scaffolded |
-| Feature wishlist (DESIRED_FEATURE + order) | Project detail | follow-up task |
+| Project status/priority/intent editing | Project detail | scaffolded (status, priority, full intent editor) |
+| Waypoints (add/cycle/reorder/remove) | Project detail | scaffolded |
+| Todos: create, edit, filter, done/archive, categories | Todos tab | scaffolded |
+| Feature wishlist (DESIRED_FEATURE + order, promote/retire) | Project detail | scaffolded |
 | Brainstorm / pitch voting | Approvals tab (Agent Ops) | scaffolded |
 | Needs-human approvals queue | Approvals tab (Agent Ops) | scaffolded |
 | Conductor inbox messages | Approvals tab reply action | scaffolded |

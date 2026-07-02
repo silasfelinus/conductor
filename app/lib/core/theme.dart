@@ -7,7 +7,6 @@ ThemeData conductorTheme(Brightness brightness) {
   return ThemeData(
     colorScheme: scheme,
     useMaterial3: true,
-    cardTheme: const CardTheme(clipBehavior: Clip.antiAlias),
     inputDecorationTheme: const InputDecorationTheme(border: OutlineInputBorder()),
   );
 }
