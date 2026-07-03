@@ -75,11 +75,12 @@ tasks:
 - id: t-007
   milestone: m4
   title: Add a script that prints the first unblocked ready task across roadmaps
-  status: ready
-  owner: null
+  status: review
+  owner: worker
+  updated: '2026-07-03T01:14:25-07:00'
   passes: 0
   stakes: reversible
-  note: 'Kaizen from t-005 (PR #106): connector-based Worker runs sometimes can not execute scripts/resolve_deps.py or shell commands to verify task selection. A read-only helper script that walks projects/*/roadmap.yaml, applies the depends_on/waiting rules, and prints the first eligible ready task would let a connector-only run confirm its claim without local shell access.'
+  note: 'Added scripts/next_ready_task.py to print the first active, priority-ordered, unblocked ready task. Read-only helper for connector-only Worker runs; no roadmap writes, deploys, secrets, or live endpoints.'
 - id: t-006
   milestone: m1
   title: Audit kind_robots Bots, Characters, Scenarios, and Chats models for session compatibility
