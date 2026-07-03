@@ -99,18 +99,23 @@ tasks:
   - id: t-006
     milestone: m4
     title: Wire LLM chat and Character role intents
-    status: claimed
+    status: needs-human
     owner: worker
     updated: '2026-07-03T16:12:52-07:00'
     passes: 0
     stakes: reversible
     depends_on: t-005
     note: >-
-      Connect the voice router in silasfelinus/serendipity-voice to safe Kind
-      Robots chat/Character adapters so requests like "Serendipity: ask AMI..."
-      or "Serendipity: have <Character> explain..." produce short spoken answers
-      and optional longer transcripts. Use app-owned APIs/stores; do not bypass
-      auth or write production data.
+      FOR SILAS: I could not apply the actual serendipity-voice code patch because
+      the GitHub connector blocked creating the required worker branch in
+      silasfelinus/serendipity-voice. I preserved the intended implementation at
+      projects/alexa-integration/docs/t-006-chat-character-adapters.md. It includes
+      the exact adapter file, adapter tests, package.json test-script update, and
+      local verification commands. TO APPROVE: apply that patch in a local-code or
+      Claude session with serendipity-voice branch-write access, then set this task
+      back to ready or done depending on whether another Worker pass should finish
+      it. No live skill, endpoint, deploy, DNS, secrets, billing, or production
+      data were touched.
   - id: t-007
     milestone: m4
     title: Wire Dream story intents using goal and waypoints
