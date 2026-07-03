@@ -5,14 +5,16 @@ notes_from_silas: >-
   devices. The stable user-facing contract is "Serendipity: <request>" — Alexa's
   actual invocation may be "ask Serendipity to..." or an opened Serendipity
   session, but the relay should route the request after the Serendipity prefix.
-  When finished, it should support custom LLM chat, taking on a role as a
-  Character, telling/continuing a story in a Dream, generating art through safe
-  draft/queued paths, playing approved local music files, and creating/working
-  on projects through safe draft/read paths. Project Dreams now have goal and
-  waypoints fields; use them as the friendly voice/UI project state while
-  keeping Conductor roadmap.yaml as the authoritative agent task queue.
-  Prototype locally first. Do not publish the skill, expose a live endpoint,
-  touch DNS/secrets/billing, or bypass human gates without explicit needs-human
+  The deployable voice runtime now lives in silasfelinus/serendipity-voice;
+  Conductor remains the roadmap and coordination source of truth. When finished,
+  it should support custom LLM chat, taking on a role as a Character,
+  telling/continuing a story in a Dream, generating art through safe draft/queued
+  paths, playing approved local music files, and creating/working on projects
+  through safe draft/read paths. Project Dreams now have goal and waypoints
+  fields; use them as the friendly voice/UI project state while keeping
+  Conductor roadmap.yaml as the authoritative agent task queue. Prototype
+  locally first. Do not publish the skill, expose a live endpoint, touch
+  DNS/secrets/billing, or bypass human gates without explicit needs-human
   approval.
 milestones:
   - id: m1
@@ -92,7 +94,8 @@ tasks:
       scripts/test_serendipity_voice_router.py. The local-only router parses the
       "Serendipity: <request>" contract into chat, character, dream, art, music,
       project, or unknown domains; asks one short clarification for unknown or
-      ambiguous input; and performs no live Alexa endpoint or adapter work.
+      ambiguous input; and performs no live Alexa endpoint or adapter work. The
+      deployable TypeScript runtime copy now lives in silasfelinus/serendipity-voice.
   - id: t-006
     milestone: m4
     title: Wire LLM chat and Character role intents
@@ -103,10 +106,11 @@ tasks:
     stakes: reversible
     depends_on: t-005
     note: >-
-      Connect the voice router to safe Kind Robots chat/Character adapters so
-      requests like "Serendipity: ask AMI..." or "Serendipity: have <Character>
-      explain..." produce short spoken answers and optional longer transcripts.
-      Use app-owned APIs/stores; do not bypass auth or write production data.
+      Connect the voice router in silasfelinus/serendipity-voice to safe Kind
+      Robots chat/Character adapters so requests like "Serendipity: ask AMI..."
+      or "Serendipity: have <Character> explain..." produce short spoken answers
+      and optional longer transcripts. Use app-owned APIs/stores; do not bypass
+      auth or write production data.
   - id: t-007
     milestone: m4
     title: Wire Dream story intents using goal and waypoints
@@ -118,10 +122,10 @@ tasks:
     depends_on: t-005
     note: >-
       Connect requests like "Serendipity: start a story in <location>" or
-      "Serendipity: what is next for <project>" to Dream ingredients and
-      PROJECT Dream goal/waypoints. Dream.goal is the definition of done;
-      Dream.waypoints is the friendly ordered step list. Conductor roadmap.yaml
-      remains the authoritative agent task queue.
+      "Serendipity: what is next for <project>" from silasfelinus/serendipity-voice
+      to Dream ingredients and PROJECT Dream goal/waypoints. Dream.goal is the
+      definition of done; Dream.waypoints is the friendly ordered step list.
+      Conductor roadmap.yaml remains the authoritative agent task queue.
   - id: t-008
     milestone: m5
     title: Prototype local music playback adapter
@@ -132,10 +136,11 @@ tasks:
     stakes: reversible
     depends_on: t-005
     note: >-
-      Build a local-only music adapter behind a feature flag for requests like
-      "Serendipity: play <music target>". It may read only configured music
-      library roots and must never delete, rename, tag, move, or expose arbitrary
-      files. If multiple matches exist, ask a short clarification.
+      Build a local-only music adapter in silasfelinus/serendipity-voice behind a
+      feature flag for requests like "Serendipity: play <music target>". It may
+      read only configured music library roots and must never delete, rename,
+      tag, move, or expose arbitrary files. If multiple matches exist, ask a
+      short clarification.
   - id: t-009
     milestone: m5
     title: Draft project-work actions from voice
@@ -181,7 +186,8 @@ tasks:
     stakes: reversible
     depends_on: t-005
     note: >-
-      Connect voice requests like "Serendipity: generate art of <prompt>" to the
-      approved Kind Robots art generation path. Start with draft or queued jobs,
-      require clarification for missing style/size/gallery details, and never
-      publish generated images publicly from voice alone.
+      Connect voice requests like "Serendipity: generate art of <prompt>" from
+      silasfelinus/serendipity-voice to the approved Kind Robots art generation
+      path. Start with draft or queued jobs, require clarification for missing
+      style/size/gallery details, and never publish generated images publicly
+      from voice alone.
