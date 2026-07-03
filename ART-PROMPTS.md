@@ -30,6 +30,7 @@ When asked for a batch, generate up to ten images in the same order as the queue
 - `media-watchlist` — icon → `projects/images/media-watchlist-icon.webp` in `silasfelinus/conductor`
 - `pinball-hero` — icon, card, hero → `projects/images/pinball-hero-{type}.webp` in `silasfelinus/conductor`
 - `career-transition` — icon, card, hero → `projects/images/career-transition-{type}.webp` in `silasfelinus/conductor`
+- `appmaker` — icon, card, hero → `projects/images/appmaker-{type}.webp` in `silasfelinus/conductor`
 
 **Inspiration images** (`projects/art-prompts.yaml` → `inspirations:`, 3 each):
 

@@ -1,0 +1,121 @@
+project: appmaker
+kind: software
+notes_from_silas: 'The obvious extension of conductor-app: a manager and app creator — effectively a
+
+  conductor project manager focused on apps. It gets an app itself, plus a front end on
+
+  kind_robots (the primary way I expect to use it). Apps live inside the conductor repo,
+
+  each in its own folder under apps/. We might end up making a lot of these. GitHub
+
+  integration uses permission-based git for git projects.
+
+  '
+milestones:
+- id: m1
+  title: Product brief and architecture
+  weight: 20
+  status: in-progress
+- id: m2
+  title: App workspace convention and scaffolder
+  weight: 25
+  status: not-started
+- id: m3
+  title: GitHub permission model
+  weight: 20
+  status: not-started
+- id: m4
+  title: kind_robots AppMaker front-end
+  weight: 20
+  status: not-started
+- id: m5
+  title: AppMaker mobile surface
+  weight: 15
+  status: not-started
+tasks:
+- id: t-001
+  milestone: m1
+  title: Approve the AppMaker brief and architecture
+  status: needs-human
+  owner: claude
+  updated: '2026-07-02T00:00:00Z'
+  passes: 0
+  stakes: reversible
+  gate_human: true
+  approved_by_human: false
+  note: 'FOR SILAS: projects/appmaker/BRIEF.md records your direction as an approvable brief.
+    It contains the three surfaces (kind_robots page as primary, an AppMaker app, the conductor
+    repo as workshop), the apps/<slug>/ layout with one-slug parity across code folder, roadmap,
+    and Dream, and the two-phase permission-based GitHub model (monorepo roles now; per-user
+    GitHub App/fine-grained tokens for hosted users later). TO APPROVE: read the brief, answer
+    its three open questions in this note, then set approved_by_human: true and status: done.
+    Unblocks t-002 (scaffolder), t-003 (GitHub permission design), t-004 (front-end page).
+
+    '
+- id: t-002
+  milestone: m2
+  title: Define apps/ convention and build scripts/new_app.py scaffolder
+  status: waiting
+  owner: null
+  passes: 0
+  stakes: reversible
+  depends_on: t-001
+  note: 'One command creates a new app: apps/<slug>/ (Flutter template wired like app/),
+    projects/<slug>/roadmap.yaml from the template, icon/card/hero entries in art-prompts.yaml,
+    and an AGENT todo to sync the matching PROJECT Dream. Generalize app-ci.yml to cover apps/**.
+    apps/README.md documents the convention.
+
+    '
+- id: t-003
+  milestone: m3
+  title: Design the permission-based GitHub integration
+  status: waiting
+  owner: null
+  passes: 0
+  stakes: reversible
+  depends_on: t-001
+  note: 'Design doc: GitHub App vs fine-grained PAT for per-user repo access on the hosted tier,
+    encrypted server-side credential storage in kind_robots, slug -> repo mapping for apps that
+    graduate out of the monorepo, and how Worker/Reviewer roles map onto external repos. Design
+    only — no live credentials, no new scopes without needs-human.
+
+    '
+- id: t-004
+  milestone: m4
+  title: Build the AppMaker page in kind_robots
+  status: waiting
+  owner: null
+  passes: 0
+  stakes: reversible
+  depends_on: t-001
+  note: 'Workspace surface: browse apps (from Dreams + conductor data), create-an-app form that
+    files the scaffold request as an AGENT todo, per-app status (roadmap progress, CI state,
+    release gates). Follows the conductor-page.vue patterns; admin-gated until Silas opens it up.
+
+    '
+- id: t-005
+  milestone: m5
+  title: 'AppMaker surface in the Flutter app'
+  status: waiting
+  owner: null
+  passes: 0
+  stakes: reversible
+  depends_on:
+  - t-002
+  - t-004
+  note: 'Add app management to the mobile client: list apps, create (files the same AGENT todo
+    as the web form), view app project status. Reuses conductor_app auth/server modes.
+
+    '
+- id: t-006
+  milestone: m1
+  title: Create the appmaker PROJECT Dream (slug parity)
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  note: 'Run scripts/sync_projects_to_dreams.py (or create the Dream via the API) so kind_robots
+    has a PROJECT Dream with slug "appmaker" matching this project, per the standing slug-parity
+    rule in CONTROL.md.
+
+    '
