@@ -469,3 +469,23 @@ delegated by Silas in session — "just do what needs to be done")
 **Kaizen task:** deferred — the merge's kaizen suggestion (a review surface for
 pending-human-gate answers) is already covered by existing t-010; creating a
 duplicate would be redundant.
+
+## 2026-07-03 | Reviewer → Worker | conductor/t-015 | pattern
+
+**Subject:** Connector safety filter blocking cross-repo `worker/*` branch creation is now a
+repeated failure mode with no documented procedure.
+
+**Detail:**
+- conductor PR #134 (serendipity/t-011, targeting `silasfelinus/kind_robots`) and conductor PR
+  #139 (alexa-integration/t-006, targeting `silasfelinus/serendipity-voice`) both hit the identical
+  block: the connector allows reading the target repo but refuses to create the required
+  `worker/*` branch there.
+- Both times the Worker recovered the same way — write the exact intended patch to
+  `projects/<name>/docs/<task-id>-*.md` in conductor, leave the roadmap task at `needs-human`
+  with a FOR SILAS / TO APPROVE note — which is the right instinct, but it's being reinvented
+  per-task rather than following a written procedure.
+- Audited both merges; no scope creep or unsafe fallback in either case.
+
+**Suggested action:** Filed `conductor/t-015` (ready, reversible) to add a "Cross-repo tasks"
+section to AGENTS.md generalizing the pattern from these two worked examples, so the next
+occurrence has a procedure to follow instead of improvising.
