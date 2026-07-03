@@ -10,7 +10,7 @@ Serendipity: <request>
 
 In Alexa's actual phrasing this may become `Alexa, ask Serendipity to <request>` or an opened session where the user says `<request>` after launch. In our project vocabulary, `Serendipity: ____` is the stable command prefix: the words after the colon are routed by the relay.
 
-The goal is not a generic Alexa novelty skill. It is a local voice doorway into Kind Robots and Conductor: chat, characters, dreams, music, and project work, with the same human gates the rest of the system already respects.
+The goal is not a generic Alexa novelty skill. It is a local voice doorway into Kind Robots and Conductor: chat, characters, dreams, art generation, music, and project work, with the same human gates the rest of the system already respects.
 
 ## What exists now
 
@@ -31,6 +31,7 @@ Relevant current facts:
 | LLM chat | `Serendipity: ask AMI why my relay is cranky` | Route the request into a normal Kind Robots chat stream and return a short spoken answer plus optional longer UI transcript. | read/draft |
 | Character role | `Serendipity: have Professor Sparklebiscuit explain this as a dungeon quest` | Select a Character persona and run the request through that role. | read/draft |
 | Dream story | `Serendipity: start a cozy mystery in the redwood library` | Start or continue a Serendipity Dream session using LOCATION, GENRE, vibe, goal, and waypoints as context. | read/draft |
+| Art generation | `Serendipity: generate art of a robot fox painting a portal` | Route a spoken art request into the approved Kind Robots art generation path and return a short acknowledgement plus optional gallery/transcript link. | draft/queued |
 | Local music | `Serendipity: play the rainy day coding playlist` | Ask the local relay to find and play an approved local music file, folder, or playlist. | local-only prototype |
 | Project work | `Serendipity: move Alexa integration forward` | Read Dream.goal/waypoints and Conductor roadmap state, then draft a Todo or next-step note instead of editing roadmap YAML directly. | draft |
 
@@ -41,11 +42,12 @@ The relay should parse the command after `Serendipity:` into this shape:
 ```ts
 type SerendipityVoiceRequest = {
   rawText: string
-  domain: 'chat' | 'character' | 'dream' | 'music' | 'project' | 'unknown'
+  domain: 'chat' | 'character' | 'dream' | 'music' | 'project' | 'art' | 'unknown'
   projectSlug?: string
   dreamSlug?: string
   characterSlug?: string
   musicTarget?: string
+  artPrompt?: string
   userIntent: string
   requiresConfirmation: boolean
 }
@@ -83,8 +85,31 @@ Adapters should stay separate:
 - `chatAdapter`: creates or continues a Kind Robots chat request.
 - `characterAdapter`: resolves a Character and adds role/persona context.
 - `dreamAdapter`: reads Dreams, LOCATION/GENRE ingredients, goal, and waypoints.
+- `artAdapter`: queues or drafts art generation requests through the approved Kind Robots art path.
 - `projectAdapter`: reads Conductor roadmap and drafts AGENT/HONEYDO Todos.
 - `musicAdapter`: indexes and plays approved local music targets from a configured library root.
+
+## Runtime and repository shape
+
+We do not need to run our own Alexa replacement. Alexa devices still invoke an Alexa skill through Amazon's cloud path. The code we own is the skill handler plus a relay/adapters runtime.
+
+Recommended split for now:
+
+- Keep planning, contract docs, router harness, and project status in `conductor/projects/alexa-integration`.
+- Keep any app-owned Kind Robots integration behind existing Kind Robots APIs/stores.
+- Create a separate repo only when the runtime becomes a deployable service with its own package manifest, environment contract, CI, and release lifecycle.
+
+That later repo should probably be named around the product surface, such as `serendipity-voice-relay` or `kind-robots-voice-relay`, not just `serendipity`, to avoid collision with the separate Serendipity story/task project.
+
+## Art guardrails
+
+Art generation by voice should queue or draft requests first:
+
+- Capture the spoken prompt as `artPrompt`.
+- Confirm style, size, and target gallery when missing.
+- Prefer drafts/queued jobs over immediate generation until the adapter policy is approved.
+- Never publish generated images publicly from voice alone.
+- Never mutate existing gallery records without an explicit approved adapter path.
 
 ## Music guardrails
 
@@ -125,7 +150,8 @@ Build the first Serendipity voice prototype with these commands only:
 3. `Serendipity: ask <character> <question>`
 4. `Serendipity: start a <genre> story in <location>`
 5. `Serendipity: draft a task for <project> to <request>`
-6. `Serendipity: play <music target>` behind a local-only feature flag
+6. `Serendipity: generate art of <prompt>`
+7. `Serendipity: play <music target>` behind a local-only feature flag
 
 The prototype is successful when each request produces a short spoken answer, a logged structured intent, and no blocked action can call its adapter.
 
@@ -135,3 +161,4 @@ The prototype is successful when each request produces a short spoken answer, a 
 - Should music playback target the Echo speaker, an existing local player, or a server-side player on Unraid?
 - Which Character should be the default when the user says `Serendipity:` without naming one?
 - Should Dream story sessions persist to the database immediately, or start local/draft-only until the play loop feels right?
+- Should the first art adapter create draft Art records, queue jobs, or only return prompt previews until the gallery workflow is approved?
