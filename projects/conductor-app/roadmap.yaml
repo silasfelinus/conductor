@@ -60,17 +60,18 @@ tasks:
 - id: t-003
   milestone: m3
   title: Design mobile todo and approval flows
-  status: review
+  status: done
   owner: worker
-  updated: '2026-07-03T12:14:18-07:00'
+  updated: '2026-07-03T12:19:00-07:00'
   passes: 0
   stakes: reversible
   depends_on: t-001
   note: >
-    Wrote projects/conductor-app/mobile-action-flows.md. It refines mobile flows for
-    global/project-scoped todos, gated approvals via conductor inbox messages, admin-only
-    pitch voting, and queue-only art request submission. Design-only: no backend behavior,
-    roadmap YAML writes from the app, image generation, publishing, secrets, or deploys.
+    Completed in PR #128. Added projects/conductor-app/mobile-action-flows.md,
+    refining mobile flows for global/project-scoped todos, gated approvals via
+    conductor inbox messages, admin-only pitch voting, and queue-only art request
+    submission. Design-only: no backend behavior, roadmap YAML writes from the app,
+    image generation, publishing, secrets, store submission, production data, or deploys.
 - id: t-004
   milestone: m4
   title: Choose notification strategy
