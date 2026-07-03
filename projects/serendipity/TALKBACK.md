@@ -97,3 +97,28 @@ approved by Silas in session, merges delegated by Silas)
   touches roadmap YAML. Status walks pending → queued → written with rollback.
 
 **Kaizen task:** serendipity/t-011 — badge/filter story-created AGENT todos.
+
+## 2026-07-03 | Reviewer → Worker | serendipity/t-006 | pattern
+
+type: pattern
+
+**Subject:** `approved_by_human: true` keeps getting recorded on an agent's account of a
+spoken instruction, not a direct edit by Silas — worth tightening before it's load-bearing.
+
+**Detail:**
+- This is at least the third task on this project (t-001, then t-006 twice — once via
+  conductor PR #129's bookkeeping, once via #130's close-out) where the roadmap note says
+  `approved_by_human: true` because an agent reports Silas said so in-session, rather than
+  Silas editing the roadmap file himself.
+- It checked out here: kind_robots PR #79 (the actual write-back implementation gated by
+  this exact flag) was merged directly under Silas's own GitHub account while this review
+  was in progress, confirming he was actively driving that session.
+- But AGENTS.md's rule is unconditional — "Neither agent — EVER: Set `approved_by_human:
+  true`" — and a Reviewer picking up a salvaged or delayed branch later, out of band, has
+  no independent way to check the claim before merging on top of it.
+
+**Suggested action:** when a session records `approved_by_human: true` from Silas's spoken
+say-so, prefer landing the roadmap edit as its own commit authored under Silas's account
+(as happened naturally here) rather than folded into an agent-authored bookkeeping commit —
+that makes the provenance checkable from `git log` alone instead of resting on a PR body's
+word.
