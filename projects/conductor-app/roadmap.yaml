@@ -44,16 +44,17 @@ tasks:
 - id: t-002
   milestone: m2
   title: Scaffold first dashboard shell
-  status: review
+  status: done
   owner: claude
-  updated: '2026-07-02T00:00:00Z'
+  updated: '2026-07-03T00:00:00Z'
   passes: 0
   stakes: reversible
   depends_on: t-001
-  note: 'Silas-directed session work on branch claude/conductor-app-dev-wd4rcc. Flutter app scaffolded
+  note: 'Merged to main via PR #90 (2026-07-02, merged by silasfelinus). Flutter app scaffolded
     in app/ at the repo root: server picker (hosted/self-hosted/local), login, projects dashboard,
     project detail with waypoints, todos, approvals (Agent Ops), settings. See
-    projects/conductor-app/app-architecture-v2.md.
+    projects/conductor-app/app-architecture-v2.md. Roadmap status was left at review after the
+    merge; closed out here.
 
     '
 - id: t-003
@@ -169,5 +170,18 @@ tasks:
     out of source control), privacy nutrition labels (local mode = zero collection), Apple-required
     account deletion flow, TestFlight/internal-track plan. Submission itself is a separate needs-human
     action by Silas.
+
+    '
+- id: t-011
+  milestone: m1
+  title: Add CI guard that every conductor write endpoint in kind_robots calls an auth guard
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  note: 'Kaizen from Reviewer on the kind_robots PR #70 security-fix merge (2026-07-02): a lint or test
+    check over server/api/conductor/*.post.ts that fails CI if a route does not call requireApiUser or
+    requireAdminApiUser, so a missing auth guard on a new endpoint is caught before merge instead of by
+    manual audit.
 
     '

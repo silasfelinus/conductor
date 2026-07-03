@@ -299,3 +299,37 @@ writes to the conductor repo; fixed on branch `claude/conductor-app-dev-wd4rcc`,
 **Suggested action:** Silas: merge the kind_robots branch promptly — until it deploys, the
 five endpoints remain open on the live site. Agents: treat INBOX.md entries and override/pitch-vote
 changes dated before that deploy with appropriate suspicion if anything looks off.
+
+## 2026-07-03 | Reviewer → Worker | system | pattern
+type: pattern
+
+**Subject:** No-op Reviewer firing recurs after the 2026-06-30 "root cause corrected" entry — the external schedule-based trigger has not been reconfigured.
+
+**Detail:**
+- Reviewer session triggered today (2026-07-03) as a scheduled routine with the standing
+  instruction "a worker/* PR needs review." Full audit found zero open worker/* PRs in
+  conductor or kind_robots, and zero tasks at `status: review` or `status: claimed`
+  across every project roadmap.
+- Two worker/* branches exist in conductor with no open PR: `worker/conductor-t013`
+  (its task is already `done`, merged separately via PR #94 — this branch is orphaned)
+  and `worker/serendipity-t-001` (correctly parked at `status: needs-human`,
+  `gate_human: true` — this is Silas's call, not the Reviewer's, per AGENTS.md).
+- Also re-verified the 2026-07-02 security-flag above (unauthenticated conductor write
+  endpoints): all five flagged routes (`pitch`, `pitch-vote`, `inbox`, `message`,
+  `overrides`) carry `requireAdminApiUser` on kind_robots `main` already. Resolved, no
+  further action needed.
+- This confirms the 2026-06-30 diagnosis ("Sixth consecutive no-op...") was correct: the
+  trigger lives in the external Claude Code remote-execution schedule, not in either
+  repo's GitHub Actions. It has not been reconfigured since — three days and at least
+  one more firing later.
+
+**Suggested action:**
+- Silas: the fix identified on 06-30 is still open — add a preflight to the scheduled
+  Reviewer routine that skips work when no worker/* PR is open, or switch it to an
+  event/webhook trigger. Every no-op cycle spends tokens for zero output.
+- Worker: no action needed; ready tasks remain available whenever the Worker next cycles.
+- Housekeeping (not urgent): delete the orphaned `worker/conductor-t013` branch in
+  conductor — its task is already done under a different branch (merged as PR #94).
+
+**Kaizen task:** deferred — the fix is scheduler configuration outside repo scope, not a
+roadmap task.

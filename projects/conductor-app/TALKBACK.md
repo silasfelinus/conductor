@@ -20,3 +20,57 @@ type: critique | pattern | challenge | response | security-flag
 
 ---
 <!-- Entries below. Newest at the bottom. Never edit or delete existing entries. -->
+
+## 2026-07-02 | Reviewer → Worker | conductor-app/t-006 | response
+
+**Decision:** merged (kind_robots PR #70, squash, sha 80f1efa)
+
+**What was good:**
+- Fix is exactly scoped to the flagged vulnerability: five conductor write endpoints
+  (`pitch`, `pitch-vote`, `inbox`, `message`, `overrides`) now require
+  `requireAdminApiUser`, which correctly layers the existing JWT/beta-admin-token
+  check with an `isAdmin` gate.
+- Cross-user data leak in `GET /api/todos/dream/[dreamId]` fixed by scoping the
+  Prisma query to `auth.user.id` — minimal, surgical diff.
+- `conductorStore.voteOnPitch` switched from bare `$fetch` to `performFetch` so the
+  signed-in user's JWT rides along; confirmed via code search this was the only
+  client call site among the five newly-gated routes, so nothing else on the
+  frontend silently breaks.
+- Single commit, clean diff, no scope creep.
+
+**What to improve:**
+- No PR description "Flags for Reviewer" section calling out that the Vercel preview
+  deploy check was failing — I had to independently confirm it was a pre-existing,
+  unrelated infra issue (PR #69, merged immediately before this one, has the same
+  Vercel failure with TypeScript/GitGuardian green). Flag known-red CI context
+  explicitly next time so the Reviewer doesn't have to re-derive it.
+
+**Kaizen task:** conductor-app/t-011 — add a lint/test guard that every
+`server/api/conductor/*.post.ts` route in kind_robots calls `requireApiUser` or
+`requireAdminApiUser`, so a missing auth guard on a new endpoint fails CI instead of
+shipping open to production.
+
+**Pattern note:** This is the second time an auth gap on a new endpoint reached
+main before being caught by manual audit rather than CI (see the original
+security-flag entry above). The kaizen task targets that recurring gap directly.
+
+## 2026-07-03 | Reviewer → System | conductor-app/t-002 | response
+
+**Decision:** status corrected to done (no new merge action — PR #90 already merged 2026-07-02)
+
+**Detail:**
+- Routine Reviewer sweep found no open `worker/*` PRs anywhere in the conductor or
+  kind_robots repos — a healthy idle state (consistent with the repeated no-op pattern
+  logged in the root TALKBACK.md).
+- While confirming that, found `conductor-app/t-002` still at `status: review` even
+  though its PR (#90, `claude/conductor-app-dev-wd4rcc` → `main`, +3173/-8, 34 files)
+  was merged directly by Silas on 2026-07-02T22:20:24Z. The Flutter app scaffold
+  (dashboard, login, todos, approvals, project detail, settings) is confirmed on
+  main. This is pure roadmap bookkeeping catch-up, not a fresh review decision.
+- No new kaizen task created — the natural follow-ons (mobile flow design, per-user
+  persistence, store readiness) are already tracked as t-003/t-007/t-008/t-009/t-010.
+
+**Suggested action:** none — system is healthy. Worker/Reviewer: when a PR is merged
+directly by Silas outside the normal Worker→PR→Reviewer flow, remember to flip the
+roadmap task status in the same session so it doesn't sit stale.
+
