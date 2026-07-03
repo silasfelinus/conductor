@@ -63,7 +63,7 @@ tasks:
 - id: t-005
   milestone: m4
   title: Sketch first Storymaker UX flow
-  status: review
+  status: needs-human
   owner: worker
   updated: '2026-07-02T22:11:12-07:00'
   passes: 0
@@ -71,7 +71,7 @@ tasks:
   depends_on:
   - t-002
   - t-003
-  note: 'Written projects/storymaker/docs/first-ux-flow.md. It sketches the first Storymaker UX flow for session start, narrator and seed choice, Guided Adventure turns, limited-visibility collaboration turns, artifact review, resume states, component boundaries, and MVP/deferred scope. Spec only — no schema, API, live data, deploy, or publishing changes.'
+  note: 'FOR SILAS: The UX flow spec is complete in projects/storymaker/docs/first-ux-flow.md on PR #106. It covers session start, narrator and seed choice, turn screens, artifact review, resume states, component boundaries, and MVP/deferred scope. TO APPROVE: Merge PR #106 if the flow looks right, then set status: done. The only blocker is connector inability to perform the final merge action from this run.'
 - id: t-006
   milestone: m1
   title: Audit kind_robots Bots, Characters, Scenarios, and Chats models for session compatibility
