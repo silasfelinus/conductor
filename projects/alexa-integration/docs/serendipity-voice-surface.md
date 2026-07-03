@@ -18,6 +18,7 @@ The project already has design work for safe voice commands, the relay layer, an
 
 Relevant current facts:
 
+- The runtime repo now exists at `silasfelinus/serendipity-voice`.
 - The relay is a small service between Alexa and existing Conductor / Kind Robots surfaces.
 - The relay already separates Alexa handling, policy checks, upstream adapters, and short voice responses.
 - Dream records now have `goal` and `waypoints` fields for project direction.
@@ -74,7 +75,7 @@ The first useful build should run locally before any public exposure:
 ```text
 Echo device
   → Alexa skill invocation: Serendipity
-  → local/dev HTTPS relay endpoint
+  → skill handler from serendipity-voice
   → policy router
   → Kind Robots / Conductor / local music adapters
   → short spoken response
@@ -91,15 +92,15 @@ Adapters should stay separate:
 
 ## Runtime and repository shape
 
-We do not need to run our own Alexa replacement. Alexa devices still invoke an Alexa skill through Amazon's cloud path. The code we own is the skill handler plus a relay/adapters runtime.
+We do not need to run our own Alexa replacement. Alexa devices still invoke an Alexa skill through Amazon's skill path. The code we own is the skill handler plus a relay/adapters runtime.
 
-Recommended split for now:
+Current split:
 
-- Keep planning, contract docs, router harness, and project status in `conductor/projects/alexa-integration`.
-- Keep any app-owned Kind Robots integration behind existing Kind Robots APIs/stores.
-- Create a separate repo only when the runtime becomes a deployable service with its own package manifest, environment contract, CI, and release lifecycle.
+- `silasfelinus/serendipity-voice` owns deployable/runtime code: skill handler glue, request router, relay/adapters, local harnesses, and tests.
+- `silasfelinus/conductor/projects/alexa-integration` owns planning, task state, docs, rollout gates, and coordination.
+- Kind Robots integration should stay behind existing Kind Robots APIs/stores unless a separate approved task changes that boundary.
 
-That later repo should probably be named around the product surface, such as `serendipity-voice-relay` or `kind-robots-voice-relay`, not just `serendipity`, to avoid collision with the separate Serendipity story/task project.
+The repo name intentionally uses `serendipity-voice`, not plain `serendipity`, to avoid collision with the separate Serendipity story/task project.
 
 ## Art guardrails
 
