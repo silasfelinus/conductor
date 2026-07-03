@@ -39,13 +39,13 @@ tasks:
 - id: t-002
   milestone: m2
   title: Draft relay design note
-  status: review
+  status: done
   owner: worker
-  updated: '2026-07-03T09:14:36-07:00'
+  updated: '2026-07-03T09:19:00-07:00'
   passes: 0
   stakes: reversible
   depends_on: t-001
-  note: 'Drafted projects/alexa-integration/docs/relay-design.md. It maps Alexa intents to a safe relay policy layer, separates read/draft/blocked commands, keeps write actions disabled until auth is approved, and recommends a read-only first prototype.'
+  note: 'Completed in PR #125. Added projects/alexa-integration/docs/relay-design.md: a document-only Alexa relay plan with intent policy, read/draft/blocked modes, adapter boundaries, short voice responses, audit logging, and a read-only first prototype. No live skill, endpoint, deploy, external configuration, or production data changes.'
 - id: t-003
   milestone: m3
   title: Write rollout and safety checklist
