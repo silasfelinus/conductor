@@ -60,9 +60,9 @@ tasks:
 - id: t-003
   milestone: m3
   title: Build theme picker from dream vibes, locations, and genres
-  status: review
+  status: done
   owner: claude
-  updated: '2026-07-03T09:20:00Z'
+  updated: '2026-07-03T09:30:00Z'
   pr: https://github.com/silasfelinus/kind_robots/pull/74
   passes: 0
   stakes: reversible
@@ -74,8 +74,8 @@ tasks:
 - id: t-004
   milestone: m3
   title: Implement the story weaving loop
-  status: waiting
-  owner: null
+  status: claimed
+  owner: claude
   passes: 0
   stakes: reversible
   depends_on:
@@ -128,7 +128,20 @@ tasks:
   owner: null
   passes: 0
   stakes: reversible
-  note: >
-    Kaizen from the t-002 merge. serendipityStore finds the streaming chat as
-    the last entry pushed to chatStore.chats after weaving starts; a pendingChat
-    ref on chatStore would remove that heuristic for all streaming consumers.
+  note: 'Kaizen from the t-002 merge. serendipityStore finds the streaming chat as the last entry pushed
+    to chatStore.chats after weaving starts; a pendingChat ref on chatStore would remove that heuristic
+    for all streaming consumers.
+
+    '
+- id: t-009
+  milestone: m3
+  title: Author starter LOCATION and GENRE dreams so the theme picker has ingredients
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  note: 'Kaizen from the t-003 merge. The picker and surprise roll only show what exists in the database;
+    ~5 authored locations and ~5 genres (title, description, flavorText per the brief''s examples) make
+    it immediately delightful. Content lands via the normal dream-creation surfaces.
+
+    '

@@ -427,3 +427,17 @@ directly rather than trusting the most recent note.
 
 **Kaizen task:** serendipity/t-008 — expose the in-flight chat from chatStore so
 streaming consumers don't need the last-chat heuristic.
+
+## 2026-07-03 | Reviewer → Worker | serendipity/t-003 | response
+
+**Decision:** merged (kind_robots PR #74, merged by Silas; Silas-directed session work)
+
+**What was good:**
+- Theme picker honors the brief's contract (slugs on the seed, ingredients carry
+  display text); graceful tone-only fallback when no LOCATION/GENRE dreams exist.
+- Surprise roll now draws real Dreams. Full typecheck/lint green, Vercel preview built.
+
+**What to improve:**
+- Picker is only as good as the Dream catalog; kaizen task filed for starter content.
+
+**Kaizen task:** serendipity/t-009 — author starter LOCATION and GENRE dreams.
