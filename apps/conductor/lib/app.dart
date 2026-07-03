@@ -7,6 +7,7 @@ import 'package:go_router/go_router.dart';
 import 'core/theme.dart';
 import 'features/agent_ops/agent_ops_repository.dart';
 import 'features/agent_ops/approvals_screen.dart';
+import 'features/appmaker/appmaker_screen.dart';
 import 'features/auth/auth_controller.dart';
 import 'features/auth/login_screen.dart';
 import 'features/chat/project_chat_screen.dart';
@@ -60,6 +61,9 @@ final routerProvider = Provider<GoRouter>((ref) {
           ),
           GoRoute(
               path: '/todos', builder: (context, state) => const TodosScreen()),
+          GoRoute(
+              path: '/apps',
+              builder: (context, state) => const AppmakerScreen()),
           GoRoute(
               path: '/approvals',
               builder: (context, state) => const ApprovalsScreen()),
@@ -120,6 +124,7 @@ class _AppShellState extends ConsumerState<_AppShell> {
   Widget build(BuildContext context) {
     final location = GoRouterState.of(context).matchedLocation;
     final user = ref.watch(currentUserProvider);
+    final isRemote = ref.watch(serverConfigProvider)?.isLocal == false;
     final approvalsCount =
         ref.watch(agentOpsDataProvider).valueOrNull?.approvals.length ?? 0;
     final destinations = [
@@ -131,6 +136,11 @@ class _AppShellState extends ConsumerState<_AppShell> {
           icon: Icon(Icons.check_circle_outline),
           selectedIcon: Icon(Icons.check_circle),
           label: 'Todos'),
+      if (isRemote)
+        const NavigationDestination(
+            icon: Icon(Icons.apps_outlined),
+            selectedIcon: Icon(Icons.apps),
+            label: 'Apps'),
       if (user?.isAdmin == true)
         NavigationDestination(
             icon: Badge.count(
@@ -148,6 +158,7 @@ class _AppShellState extends ConsumerState<_AppShell> {
     final paths = [
       '/projects',
       '/todos',
+      if (isRemote) '/apps',
       if (user?.isAdmin == true) '/approvals',
       '/settings',
     ];

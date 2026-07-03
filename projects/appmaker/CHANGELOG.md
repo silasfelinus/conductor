@@ -22,3 +22,11 @@
 - New endpoints: GET /api/appmaker/apps, POST /api/appmaker/scaffold-request
   (Dream + worker-queued AGENT todo, project cap enforced).
 - Reachable from the workspace gallery via the new 'appmaker' card.
+
+## 2026-07-03 (t-005 + fleet scaffolding)
+- Apps tab in the Flutter app: fleet browser, pending chips, new-app sheet.
+- Scaffolder gains --existing-project mode (adds an app workspace to a project
+  that already has a roadmap; skips art entries when images exist).
+- Fleet scaffolded and verified (analyze+test green each): appmaker,
+  kind-robots, humboldt-scoop-cms (Humboldt Scoop Solutions), storymaker,
+  wishmaster, sketchy, media-watchlist — joining conductor and recipe-box.

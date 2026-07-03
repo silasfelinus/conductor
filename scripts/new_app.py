@@ -226,7 +226,7 @@ def fail(message: str) -> None:
     sys.exit(1)
 
 
-def plan_files(slug: str, title: str, description: str) -> dict:
+def plan_files(slug: str, title: str, description: str, existing_project: bool) -> dict:
     package = slug.replace("-", "_")
     app_class = "".join(part.capitalize() for part in slug.split("-")) + "App"
     from datetime import date
@@ -240,7 +240,7 @@ def plan_files(slug: str, title: str, description: str) -> dict:
         art_hint=description or f"an evocative scene expressing what {title} does",
     )
     app_dir = f"apps/{slug}"
-    return {
+    files = {
         f"{app_dir}/pubspec.yaml": PUBSPEC.format(**fmt),
         f"{app_dir}/analysis_options.yaml": ANALYSIS_OPTIONS,
         f"{app_dir}/.gitignore": GITIGNORE,
@@ -249,16 +249,26 @@ def plan_files(slug: str, title: str, description: str) -> dict:
         # files, so this blocks its MyApp boilerplate test from appearing.
         f"{app_dir}/lib/main.dart": MAIN_DART.format(**fmt),
         f"{app_dir}/test/widget_test.dart": SMOKE_TEST.format(**fmt),
-        f"projects/{slug}/roadmap.yaml": ROADMAP.format(**fmt),
-        f"projects/{slug}/CHANGELOG.md": CHANGELOG.format(**fmt),
-    }, fmt
+    }
+    # --existing-project: the roadmap/changelog already exist and stay
+    # authoritative; only the app workspace is new.
+    if not existing_project:
+        files[f"projects/{slug}/roadmap.yaml"] = ROADMAP.format(**fmt)
+        files[f"projects/{slug}/CHANGELOG.md"] = CHANGELOG.format(**fmt)
+    return files, fmt
 
 
 def append_registries(slug: str, fmt: dict, dry: bool) -> None:
     art = ROOT / "projects/art-prompts.yaml"
     text = art.read_text()
     marker = "\nrequests:"
-    if f"- project: {slug}\n" not in text and marker in text:
+    has_art_files = any(
+        (ROOT / "projects/images" / f"{slug}-{variant}.webp").exists()
+        for variant in ("icon", "card", "hero")
+    )
+    if has_art_files:
+        print(f"  ~ art-prompts.yaml: skipped ({slug} images already exist)")
+    elif f"- project: {slug}\n" not in text and marker in text:
         entry = ART_ENTRY.format(**fmt)
         text = text.replace(marker, f"\n{entry}{marker}", 1)
         if not dry:
@@ -314,6 +324,11 @@ def main() -> None:
     parser.add_argument("slug", help="kebab-case app slug, e.g. recipe-box")
     parser.add_argument("--title", required=True, help="Human name, e.g. 'Recipe Box'")
     parser.add_argument("--description", default="", help="One line used in art prompts")
+    parser.add_argument(
+        "--existing-project",
+        action="store_true",
+        help="Add an app workspace to a project that already has projects/<slug>/",
+    )
     parser.add_argument("--dry-run", action="store_true", help="print the plan, write nothing")
     args = parser.parse_args()
 
@@ -322,10 +337,13 @@ def main() -> None:
         fail(f"slug must match {SLUG_RE.pattern}")
     if (ROOT / "apps" / slug).exists():
         fail(f"apps/{slug}/ already exists")
-    if (ROOT / "projects" / slug).exists():
-        fail(f"projects/{slug}/ already exists")
+    project_exists = (ROOT / "projects" / slug).exists()
+    if args.existing_project and not project_exists:
+        fail(f"--existing-project given but projects/{slug}/ does not exist")
+    if not args.existing_project and project_exists:
+        fail(f"projects/{slug}/ already exists (use --existing-project to add an app to it)")
 
-    files, fmt = plan_files(slug, args.title, args.description)
+    files, fmt = plan_files(slug, args.title, args.description, args.existing_project)
     print(f"{'DRY RUN — ' if args.dry_run else ''}scaffolding '{slug}' ({args.title})")
     for rel, content in files.items():
         path = ROOT / rel
@@ -334,7 +352,10 @@ def main() -> None:
             path.write_text(content)
         print(f"  + {rel}")
     append_registries(slug, fmt, args.dry_run)
-    file_dream_todo(slug, args.title, args.dry_run)
+    if args.existing_project:
+        print("  ~ Dream-sync todo skipped (existing project; parity assumed)")
+    else:
+        file_dream_todo(slug, args.title, args.dry_run)
     print(
         f"\nNext steps:\n"
         f"  1. cd apps/{slug} && flutter create . --org org.kindrobots "

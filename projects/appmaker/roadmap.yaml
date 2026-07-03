@@ -159,15 +159,17 @@ tasks:
 - id: t-005
   milestone: m5
   title: 'AppMaker surface in the Flutter app'
-  status: waiting
-  owner: null
+  status: review
+  owner: claude
+  updated: '2026-07-03T00:00:00Z'
   passes: 0
   stakes: reversible
   depends_on:
   - t-002
   - t-004
-  note: 'Add app management to the mobile client: list apps, create (files the same AGENT todo
-    as the web form), view app project status. Reuses conductor_app auth/server modes.
+  note: 'Built on branch claude/conductor-app-dev-wd4rcc: Apps tab in apps/conductor (fleet
+    list with roadmap progress for admins, pending-scaffold chips, new-app sheet posting to
+    /api/appmaker/scaffold-request). Shown in remote server modes; hidden in local mode.
 
     '
 - id: t-006
