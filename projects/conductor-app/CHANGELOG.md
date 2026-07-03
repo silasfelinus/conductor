@@ -25,3 +25,12 @@
   notification strategy from t-004).
 - Fixed a ThemeData.cardTheme API that breaks newer Flutter versions.
 - Tests: ServerConfig, model round-trips, local repository CRUD.
+
+## 2026-07-02 (round 3)
+- Per-project AI chat (t-009): streaming assistant on the dream-<id>-assistant
+  channel with history, project-context system prompt, and reply persistence.
+- Project artwork: dashboard thumbnails and detail hero banners, resolved
+  against the configured server URL (hidden in local mode).
+- CI: app-ci.yml runs flutter analyze + test on every push touching app/.
+- Toolchain now runs in the agent container too: analyze + 18 tests green
+  before every push.

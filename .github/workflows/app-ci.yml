@@ -1,0 +1,51 @@
+name: app-ci
+
+on:
+  push:
+    paths:
+      - 'apps/**'
+      - '.github/workflows/app-ci.yml'
+  pull_request:
+    paths:
+      - 'apps/**'
+      - '.github/workflows/app-ci.yml'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+      - name: Detect changed apps
+        id: changed
+        run: |
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            BASE="${{ github.event.pull_request.base.sha }}"
+          else
+            BASE="${{ github.event.before }}"
+          fi
+          CANDIDATES=$(git diff --name-only "$BASE" "${{ github.sha }}" 2>/dev/null \
+            | grep '^apps/' | cut -d/ -f2 | sort -u || true)
+          # Fallback (force push, new branch, workflow edit): test every app.
+          if [ -z "$CANDIDATES" ]; then
+            CANDIDATES=$(ls apps)
+          fi
+          APPS=""
+          for a in $CANDIDATES; do
+            [ -f "apps/$a/pubspec.yaml" ] && APPS="$APPS $a"
+          done
+          echo "Apps to test:$APPS"
+          echo "list=$APPS" >> "$GITHUB_OUTPUT"
+      - name: Analyze and test each app
+        if: steps.changed.outputs.list != ''
+        run: |
+          for a in ${{ steps.changed.outputs.list }}; do
+            echo "::group::$a"
+            (cd "apps/$a" && flutter pub get && flutter analyze --fatal-infos && flutter test)
+            echo "::endgroup::"
+          done
