@@ -60,17 +60,17 @@ tasks:
 - id: t-003
   milestone: m3
   title: Design mobile todo and approval flows
-  status: claimed
+  status: review
   owner: worker
   updated: '2026-07-03T12:14:18-07:00'
   passes: 0
   stakes: reversible
   depends_on: t-001
-  note: 'Specify create/edit todo, pitch voting, task approval, and art request flows for small screens.
-    First-pass implementations of all of these exist in app/ (branch claude/conductor-app-dev-wd4rcc);
-    this task is now a design-refinement pass over them rather than a from-scratch spec.
-
-    '
+  note: >
+    Wrote projects/conductor-app/mobile-action-flows.md. It refines mobile flows for
+    global/project-scoped todos, gated approvals via conductor inbox messages, admin-only
+    pitch voting, and queue-only art request submission. Design-only: no backend behavior,
+    roadmap YAML writes from the app, image generation, publishing, secrets, or deploys.
 - id: t-004
   milestone: m4
   title: Choose notification strategy
@@ -95,7 +95,7 @@ tasks:
     \ dreams, art requests, pitch voting, user profile, notifications. Key findings: projects/todos/dreams/auth/pitch-voting\
     \ all exist and are sufficient. Three gaps: (1) todos have no projectSlug field (pitch needed for\
     \ project-scoped todos), (2) no pending art requests endpoint (YAML-only, not DB), (3) no push notification\
-    \ infrastructure (polling for MVP, pitch for native push). Task state is YAML/GitHub-only — the\
+    \ infrastructure (polling for MVP, as v1 planned). Task state is YAML/GitHub-only — the\
     \ app can read but not write task status directly.\n"
 - id: t-006
   milestone: m1
