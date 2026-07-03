@@ -22,8 +22,8 @@ PROJECT_PATTERNS = (
     re.compile(r"\bdraft a task for (?P<project>[a-z0-9][a-z0-9 _-]*) to (?P<intent>.+)$", re.I),
 )
 CHARACTER_PATTERNS = (
-    re.compile(r"\bask (?P<character>[a-z0-9][a-z0-9 _-]*) (?P<intent>.+)$", re.I),
-    re.compile(r"\bhave (?P<character>[a-z0-9][a-z0-9 _-]*) (?P<intent>.+)$", re.I),
+    re.compile(r"\bask (?P<character>[a-z0-9][a-z0-9_-]*) (?P<intent>.+)$", re.I),
+    re.compile(r"\bhave (?P<character>.+?) (?P<intent>(?:explain|tell|answer|describe|summarize|help)\b.+)$", re.I),
 )
 DREAM_PATTERNS = (
     re.compile(r"\bstart (?:a |an )?(?P<genre>[a-z0-9][a-z0-9 _-]*) story in (?P<location>[a-z0-9][a-z0-9 _-]*)\b", re.I),
