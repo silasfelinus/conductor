@@ -19,7 +19,7 @@ milestones:
 - id: m3
   title: Story weaving engine (vibes, locations, genres)
   weight: 25
-  status: not-started
+  status: in-progress
 - id: m4
   title: 'Task weaving: honey-dos and human gates as story beats'
   weight: 20
@@ -74,9 +74,9 @@ tasks:
 - id: t-004
   milestone: m3
   title: Implement the story weaving loop
-  status: review
+  status: done
   owner: claude
-  updated: '2026-07-03T09:45:00Z'
+  updated: '2026-07-03T10:00:00Z'
   pr: https://github.com/silasfelinus/kind_robots/pull/75
   passes: 0
   stakes: reversible
@@ -91,8 +91,8 @@ tasks:
 - id: t-005
   milestone: m4
   title: Weave real tasks into story questions
-  status: waiting
-  owner: null
+  status: claimed
+  owner: claude
   passes: 0
   stakes: reversible
   depends_on: t-004
@@ -147,3 +147,12 @@ tasks:
     it immediately delightful. Content lands via the normal dream-creation surfaces.
 
     '
+- id: t-010
+  milestone: m4
+  title: Surface a finale session recap of captured preferences and answers
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  note: "Kaizen from the t-004 merge. The finale is a natural moment to show what the story learned (answers,\
+    \ preferences) \u2014 groundwork for t-005/t-006 task weaving and write-back review.\n"
