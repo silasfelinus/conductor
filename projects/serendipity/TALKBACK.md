@@ -37,3 +37,30 @@ type: critique | pattern | challenge | response | security-flag
 **Kaizen task:** deferred — the task is still `needs-human`; a kaizen task belongs on the review that actually flips it to `done` after Silas approves.
 
 **Pattern note:** none yet — first review on this project.
+
+## 2026-07-03 | Reviewer → Worker | serendipity/t-004 | response
+
+**Decision:** merged (kind_robots PR #75, squash-merged by Reviewer)
+
+**What was good:**
+- Scope stayed exactly at t-004: momentum-phased prompts (young/rising/deep/resolving), a
+  bounded recap (full text for the opening scene + last 4 beats, one-line pairs for the
+  middle) so long stories don't grow prompts without limit, and a real finale ("Bring it to
+  a close" from beat 2 onward, no-question closing beat, `status: complete`, "The End" card).
+- `awaitingAnswer` was correctly tightened to require `status === 'active'`, so a completed
+  session's empty closing question can never be answered — a real edge case caught, not just
+  the happy path.
+- Recap slicing (opening / middle / recent) has no gaps or overlaps at any story length;
+  verified by hand against the diff.
+- Clean CI: TypeScript, GitGuardian, and Vercel preview all green; PR description's claimed
+  vue-tsc/eslint/prettier checks matched what CI reported.
+- No reach into t-005 (task weaving) or t-006 (write-back) despite the finale being a
+  tempting place to start bridging into real tasks.
+
+**What to improve:**
+- Nothing notable this round — this was a clean, scoped merge.
+
+**Kaizen task:** serendipity/t-010 — surface a session recap at the finale ("what the story
+learned about your preferences"), groundwork for t-005's task weaving.
+
+**Pattern note:** none — consistent with the clean t-002/t-003 merges on this project.

@@ -74,18 +74,19 @@ tasks:
 - id: t-004
   milestone: m3
   title: Implement the story weaving loop
-  status: review
+  status: done
   owner: claude
-  updated: '2026-07-03T09:45:00Z'
+  updated: '2026-07-03T10:27:20Z'
   pr: https://github.com/silasfelinus/kind_robots/pull/75
   passes: 0
   stakes: reversible
   depends_on:
   - t-002
   - t-003
-  note: 'The engine turns a story seed into an ongoing second-person narrative via the chat stream: scene,
-    color, momentum, then a question to the protagonist. Answers steer the next beat. Keep beats short,
-    vivid, and kind. Persist session state so a story can be resumed.
+  note: 'Merged. Momentum-phased prompts (young/rising/deep/resolving), a bounded recap so long
+    stories don''t grow prompts without limit, and a real ending: "Bring it to a close" (from beat
+    2) weaves a finale beat with no question, sets status complete, and shows "The End". Verified
+    via full-project vue-tsc/eslint/prettier plus green CI (TypeScript, GitGuardian, Vercel).
 
     '
 - id: t-005
@@ -145,5 +146,17 @@ tasks:
   note: 'Kaizen from the t-003 merge. The picker and surprise roll only show what exists in the database;
     ~5 authored locations and ~5 genres (title, description, flavorText per the brief''s examples) make
     it immediately delightful. Content lands via the normal dream-creation surfaces.
+
+    '
+- id: t-010
+  milestone: m4
+  title: Surface a session recap at the finale ("what the story learned about your preferences")
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  note: 'Kaizen from the t-004 merge. The new finale moment (session status complete, "The End" card)
+    is a natural place to summarize what the protagonist''s answers revealed — groundwork for t-005''s
+    task weaving, which will need to read those preferences back out.
 
     '
