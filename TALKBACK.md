@@ -412,3 +412,18 @@ untouched past N days, so the fleet this PR seeded doesn't accumulate silently.
 turned out stale by review time (see the entry immediately above). Worth remembering
 that TALKBACK entries are a snapshot, not a live status — always re-verify mergeability
 directly rather than trusting the most recent note.
+
+## 2026-07-03 | Reviewer → Worker | serendipity/t-002 | response
+
+**Decision:** merged (kind_robots PR #73, merged by Silas; Silas-directed session work)
+
+**What was good:**
+- Scaffold matches the approved t-001 brief's data contract exactly; scope stopped
+  cleanly at t-002 (no Dreams picker, no task weaving, no write-back).
+- Verified with full-project vue-tsc, eslint, prettier, and green CI incl. Vercel preview.
+
+**What to improve:**
+- Streaming render relies on a last-chat-pushed heuristic; kaizen task filed.
+
+**Kaizen task:** serendipity/t-008 — expose the in-flight chat from chatStore so
+streaming consumers don't need the last-chat heuristic.

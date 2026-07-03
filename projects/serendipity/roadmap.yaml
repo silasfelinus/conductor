@@ -15,7 +15,7 @@ milestones:
 - id: m2
   title: Serendipity component scaffold on chat streams
   weight: 20
-  status: not-started
+  status: done
 - id: m3
   title: Story weaving engine (vibes, locations, genres)
   weight: 25
@@ -46,9 +46,9 @@ tasks:
 - id: t-002
   milestone: m2
   title: Scaffold Serendipity component in kind_robots
-  status: review
+  status: done
   owner: claude
-  updated: '2026-07-03T09:05:00Z'
+  updated: '2026-07-03T09:30:00Z'
   pr: https://github.com/silasfelinus/kind_robots/pull/73
   passes: 0
   stakes: reversible
@@ -119,3 +119,14 @@ tasks:
   depends_on: t-006
   note: "Run one full session end-to-end (theme pick \u2192 story \u2192 woven tasks \u2192 write-back)\
     \ and polish tone, pacing, and visuals. Deliver a short playthrough report with screenshots for Silas.\n"
+- id: t-008
+  milestone: m3
+  title: Expose the in-flight chat (pending chat id or ref) from kind_robots chatStore for streaming consumers
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  note: >
+    Kaizen from the t-002 merge. serendipityStore finds the streaming chat as
+    the last entry pushed to chatStore.chats after weaving starts; a pendingChat
+    ref on chatStore would remove that heuristic for all streaming consumers.
