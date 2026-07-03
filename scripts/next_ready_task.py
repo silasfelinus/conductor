@@ -1,0 +1,147 @@
+#!/usr/bin/env python3
+"""
+next_ready_task.py — print the first unblocked ready task across conductor roadmaps.
+
+Usage:
+    python scripts/next_ready_task.py
+    python scripts/next_ready_task.py --json
+
+This is intentionally read-only. It mirrors the Worker selection rules closely enough
+for connector-only runs to confirm which task should be claimed without mutating any
+roadmap files.
+"""
+
+from __future__ import annotations
+
+import argparse
+import json
+from pathlib import Path
+from typing import Any
+
+import yaml
+
+
+ROOT = Path(__file__).resolve().parents[1]
+PROJECTS_DIR = ROOT / "projects"
+PRIORITY_FILE = ROOT / "projects" / "priority.yaml"
+OVERRIDES_FILE = ROOT / "project-overrides.yaml"
+
+
+Task = dict[str, Any]
+Roadmap = dict[str, Any]
+
+
+def load_yaml(path: Path) -> Any:
+    if not path.exists():
+        return None
+    with path.open("r", encoding="utf-8") as handle:
+        return yaml.safe_load(handle) or {}
+
+
+def as_list(value: Any) -> list[Any]:
+    if value is None:
+        return []
+    if isinstance(value, list):
+        return value
+    return [value]
+
+
+def load_priority_order() -> list[str]:
+    raw = load_yaml(PRIORITY_FILE) or {}
+    order = raw.get("order", [])
+    return [slug for slug in order if isinstance(slug, str)]
+
+
+def load_active_overrides() -> dict[str, dict[str, Any]]:
+    raw = load_yaml(OVERRIDES_FILE) or {}
+    entries = raw.get("overrides") or []
+    if isinstance(entries, dict):
+        return {
+            slug: cfg
+            for slug, cfg in entries.items()
+            if isinstance(slug, str) and isinstance(cfg, dict) and cfg.get("status") == "active"
+        }
+    if isinstance(entries, list):
+        return {
+            entry["slug"]: entry
+            for entry in entries
+            if isinstance(entry, dict)
+            and isinstance(entry.get("slug"), str)
+            and entry.get("status") == "active"
+        }
+    return {}
+
+
+def load_roadmap(slug: str) -> Roadmap | None:
+    if slug == "_template":
+        return None
+    path = PROJECTS_DIR / slug / "roadmap.yaml"
+    raw = load_yaml(path)
+    if not isinstance(raw, dict):
+        return None
+    return raw
+
+
+def dependency_satisfied(task: Task | None) -> bool:
+    if not task or task.get("status") != "done":
+        return False
+    if task.get("gate_human"):
+        return bool(task.get("approved_by_human"))
+    return True
+
+
+def task_is_unblocked(task: Task, tasks_by_id: dict[str, Task]) -> bool:
+    deps = as_list(task.get("depends_on"))
+    return all(dependency_satisfied(tasks_by_id.get(str(dep))) for dep in deps)
+
+
+def first_ready_task(order: list[str], active: dict[str, dict[str, Any]]) -> dict[str, Any] | None:
+    ordered_slugs = [slug for slug in order if slug in active]
+    unordered_slugs = sorted(slug for slug in active if slug not in set(ordered_slugs))
+
+    for slug in [*ordered_slugs, *unordered_slugs]:
+        roadmap = load_roadmap(slug)
+        if not roadmap:
+            continue
+        tasks = [task for task in roadmap.get("tasks", []) if isinstance(task, dict)]
+        tasks_by_id = {str(task.get("id")): task for task in tasks if task.get("id")}
+
+        for task in tasks:
+            if task.get("status") != "ready":
+                continue
+            if not task_is_unblocked(task, tasks_by_id):
+                continue
+            return {
+                "project": roadmap.get("project") or slug,
+                "kind": roadmap.get("kind"),
+                "task_id": task.get("id"),
+                "title": task.get("title"),
+                "stakes": task.get("stakes"),
+                "path": str(PROJECTS_DIR / slug / "roadmap.yaml"),
+            }
+    return None
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--json", action="store_true", help="Print machine-readable JSON.")
+    args = parser.parse_args()
+
+    result = first_ready_task(load_priority_order(), load_active_overrides())
+    if args.json:
+        print(json.dumps(result or {"task": None}, indent=2, sort_keys=True))
+        return 0 if result else 1
+
+    if not result:
+        print("No unblocked ready tasks found.")
+        return 1
+
+    print(f"{result['project']}/{result['task_id']}: {result['title']}")
+    print(f"kind: {result.get('kind') or 'unknown'}")
+    print(f"stakes: {result.get('stakes') or 'unknown'}")
+    print(f"roadmap: {result['path']}")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
