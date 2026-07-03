@@ -30,7 +30,7 @@ milestones:
   - id: m4
     title: Serendipity voice surface
     weight: 25
-    status: not-started
+    status: in-progress
   - id: m5
     title: Local adapters and project actions
     weight: 20
@@ -79,27 +79,26 @@ tasks:
   - id: t-005
     milestone: m4
     title: Build Serendipity voice request router
-    status: claimed
+    status: done
     owner: worker
-    updated: '2026-07-03T12:00:00-07:00'
+    updated: '2026-07-03T15:15:00-07:00'
     passes: 0
     stakes: reversible
     depends_on:
       - t-002
       - t-003
     note: >-
-      Implement a local-only request parser for the "Serendipity: <request>"
-      contract described in docs/serendipity-voice-surface.md. Route requests
-      into chat, character, dream, art, music, project, or unknown domains.
-      Unknown or ambiguous requests should ask one short clarification. No live
-      skill publishing, public endpoint, DNS, secrets, billing, or production
-      deploy.
+      Completed in PR #137. Added scripts/serendipity_voice_router.py and
+      scripts/test_serendipity_voice_router.py. The local-only router parses the
+      "Serendipity: <request>" contract into chat, character, dream, art, music,
+      project, or unknown domains; asks one short clarification for unknown or
+      ambiguous input; and performs no live Alexa endpoint or adapter work.
   - id: t-006
     milestone: m4
     title: Wire LLM chat and Character role intents
-    status: waiting
+    status: ready
     owner: null
-    updated: '2026-07-03T22:20:00-07:00'
+    updated: '2026-07-03T15:15:00-07:00'
     passes: 0
     stakes: reversible
     depends_on: t-005
@@ -111,9 +110,9 @@ tasks:
   - id: t-007
     milestone: m4
     title: Wire Dream story intents using goal and waypoints
-    status: waiting
+    status: ready
     owner: null
-    updated: '2026-07-03T22:20:00-07:00'
+    updated: '2026-07-03T15:15:00-07:00'
     passes: 0
     stakes: reversible
     depends_on: t-005
@@ -126,9 +125,9 @@ tasks:
   - id: t-008
     milestone: m5
     title: Prototype local music playback adapter
-    status: waiting
+    status: ready
     owner: null
-    updated: '2026-07-03T22:20:00-07:00'
+    updated: '2026-07-03T15:15:00-07:00'
     passes: 0
     stakes: reversible
     depends_on: t-005
@@ -175,9 +174,9 @@ tasks:
   - id: t-011
     milestone: m5
     title: Wire art generation intents
-    status: waiting
+    status: ready
     owner: null
-    updated: '2026-07-03T12:00:00-07:00'
+    updated: '2026-07-03T15:15:00-07:00'
     passes: 0
     stakes: reversible
     depends_on: t-005
