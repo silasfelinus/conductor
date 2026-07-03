@@ -75,12 +75,12 @@ tasks:
 - id: t-007
   milestone: m4
   title: Add a script that prints the first unblocked ready task across roadmaps
-  status: review
+  status: needs-human
   owner: worker
-  updated: '2026-07-03T01:14:25-07:00'
+  updated: '2026-07-03T01:20:00-07:00'
   passes: 0
   stakes: reversible
-  note: 'Added scripts/next_ready_task.py to print the first active, priority-ordered, unblocked ready task. Read-only helper for connector-only Worker runs; no roadmap writes, deploys, secrets, or live endpoints.'
+  note: 'FOR SILAS: PR #110 adds scripts/next_ready_task.py, a read-only helper that prints the first active, priority-ordered, unblocked ready task. It checks project-overrides.yaml, projects/priority.yaml, and roadmap dependencies. TO APPROVE: Squash-merge PR #110, then set status: done on storymaker/t-007. This unblocks safer connector-only Worker task selection in future cycles.'
 - id: t-006
   milestone: m1
   title: Audit kind_robots Bots, Characters, Scenarios, and Chats models for session compatibility
