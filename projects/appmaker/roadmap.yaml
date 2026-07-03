@@ -69,16 +69,74 @@ tasks:
 - id: t-003
   milestone: m3
   title: Design the permission-based GitHub integration (GitHub App)
-  status: ready
+  status: needs-human
+  owner: claude
+  updated: '2026-07-03T00:00:00Z'
+  passes: 0
+  stakes: reversible
+  gate_human: true
+  approved_by_human: false
+  note: 'FOR SILAS: projects/appmaker/GITHUB-APP-DESIGN.md is the full design. Load-bearing
+    sections to read: 2 (app permissions — contents/PRs/checks read-write, nothing more),
+    4 (GithubInstallation + AppRepo data model; AppRepo is the slug->repo mapping), and
+    6 (security invariants — no credentials in clients or DB, HMAC''d webhooks, signed
+    install nonce). TO APPROVE: set approved_by_human: true and status: done. Unblocks
+    t-007 (you register the app — it lives under your GitHub account) then t-008..t-010.
+
+    '
+- id: t-007
+  milestone: m3
+  title: Register the AppMaker GitHub App and store its secrets in server env
+  status: waiting
+  owner: null
+  passes: 0
+  stakes: outward-facing
+  gate_human: true
+  approved_by_human: false
+  depends_on: t-003
+  note: 'SILAS DOES THIS ONE: create the GitHub App per GITHUB-APP-DESIGN.md section 2
+    (permissions: contents rw, pull_requests rw, metadata r, checks r, actions r; webhook
+    events push/pull_request/check_suite/installation), then put APPMAKER_GH_APP_KEY,
+    APPMAKER_GH_WEBHOOK_SECRET, and the app id into Vercel env. Agents never hold the key.
+
+    '
+- id: t-008
+  milestone: m3
+  title: 'kind_robots: installation models, connect flow, webhook endpoint'
+  status: waiting
   owner: null
   passes: 0
   stakes: reversible
-  depends_on: t-001
-  note: 'Silas chose GitHub App (2026-07-02). Design doc: app manifest and permission set,
-    per-user installation flow from kind_robots, encrypted server-side installation-token
-    handling, slug -> repo mapping for apps that graduate out of the monorepo, and how
-    Worker/Reviewer roles map onto external repos. Design only — no live credentials, no app
-    registration without needs-human.
+  depends_on: t-007
+  note: 'GithubInstallation + AppRepo Prisma models, GET connect redirect with signed state
+    nonce, setup callback, HMAC-verified POST /api/appmaker/github/webhook, and the granted-repo
+    list API. Per design sections 4, 5a, 5e, 6.
+
+    '
+- id: t-009
+  milestone: m3
+  title: 'Worker external-repo support: installation tokens + scaffold PR flow'
+  status: waiting
+  owner: null
+  passes: 0
+  stakes: reversible
+  depends_on: t-008
+  note: 'Mint installation tokens server-side, push worker/scaffold-<slug> branches to user
+    repos, open PRs. Worker role rules from design section 5d apply unchanged.
+
+    '
+- id: t-010
+  milestone: m3
+  title: Graduation flow (monorepo app to its own repo)
+  status: waiting
+  owner: null
+  passes: 0
+  stakes: irreversible
+  gate_human: true
+  approved_by_human: false
+  depends_on: t-009
+  note: 'git subtree split to preserve history, push via installation token, flip the AppRepo
+    row, removal PR in the monorepo. Both PRs are needs-human per design section 5c.
 
     '
 - id: t-004
