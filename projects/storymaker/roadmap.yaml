@@ -63,15 +63,23 @@ tasks:
 - id: t-005
   milestone: m4
   title: Sketch first Storymaker UX flow
-  status: needs-human
+  status: done
   owner: worker
-  updated: '2026-07-02T22:11:12-07:00'
+  updated: '2026-07-03T00:00:00Z'
   passes: 0
   stakes: reversible
   depends_on:
   - t-002
   - t-003
-  note: 'FOR SILAS: The UX flow spec is complete in projects/storymaker/docs/first-ux-flow.md on PR #106. It covers session start, narrator and seed choice, turn screens, artifact review, resume states, component boundaries, and MVP/deferred scope. TO APPROVE: Merge PR #106 if the flow looks right, then set status: done. The only blocker is connector inability to perform the final merge action from this run.'
+  note: 'Written and merged in PR #106: projects/storymaker/docs/first-ux-flow.md. Covers session start, narrator and seed choice, turn screens, artifact review, resume states, component boundaries, and MVP/deferred scope. Spec only — no schema, API, live data, deploy, or publishing changes. The needs-human status the Worker left this at was a soft escalation (connector could not merge), not a content gate — Reviewer merged and closed it out.'
+- id: t-007
+  milestone: m4
+  title: Add a script that prints the first unblocked ready task across roadmaps
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  note: 'Kaizen from t-005 (PR #106): connector-based Worker runs sometimes can not execute scripts/resolve_deps.py or shell commands to verify task selection. A read-only helper script that walks projects/*/roadmap.yaml, applies the depends_on/waiting rules, and prints the first eligible ready task would let a connector-only run confirm its claim without local shell access.'
 - id: t-006
   milestone: m1
   title: Audit kind_robots Bots, Characters, Scenarios, and Chats models for session compatibility
