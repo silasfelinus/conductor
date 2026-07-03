@@ -105,7 +105,7 @@ tasks:
 - id: t-006
   milestone: m4
   title: Add GitHub Actions security audit workflow
-  status: claimed
+  status: review
   owner: worker
   updated: '2026-07-02T17:12:52-07:00'
   passes: 0
@@ -114,11 +114,12 @@ tasks:
   depends_on:
   - t-004
   - t-005
-  note: 'Add a scheduled GitHub Actions workflow that runs dependency audit, static checks, authz regression
-    tests, and a safe site smoke-test matrix on a cron. Design it so routine checks can run automatically,
-    but anything requiring secrets, production writes, authenticated scans, Vercel deployment changes,
-    or external vulnerability probing stays gated behind needs-human. The first implementation should
-    be PR-only and non-destructive.
+  note: 'Added .github/workflows/security-audit.yml. It runs on PRs to main, manual dispatch,
+    and a weekly cron. Checks include dependency audits where lockfiles exist, roadmap YAML
+    validation, Python syntax checks, fixture authz regression tests, a simple secret-pattern
+    smoke check, and safe no-token smoke runs for conductor scripts. It does not use secrets,
+    call live authenticated endpoints, probe external targets, change Vercel, deploy, publish,
+    or touch production data.
 
     '
 - id: t-007

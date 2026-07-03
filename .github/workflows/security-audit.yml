@@ -1,0 +1,172 @@
+name: Security Audit
+
+on:
+  pull_request:
+    branches:
+      - main
+    paths-ignore:
+      - "STATUS.md"
+      - "workspace.html"
+  workflow_dispatch:
+  schedule:
+    - cron: "17 10 * * 1"
+
+permissions:
+  contents: read
+
+jobs:
+  dependency-audit:
+    name: Dependency audit
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Check Python package metadata
+        run: |
+          set -euo pipefail
+          python -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then
+            python -m pip install pip-audit
+            pip-audit -r requirements.txt
+          else
+            echo "No root requirements.txt found; skipping Python dependency audit."
+          fi
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Audit JavaScript projects with lockfiles
+        run: |
+          set -euo pipefail
+          found=0
+          while IFS= read -r lockfile; do
+            found=1
+            dir="$(dirname "$lockfile")"
+            echo "=== npm audit: $dir ==="
+            (cd "$dir" && npm audit --audit-level=high)
+          done < <(find . -path './.git' -prune -o -name package-lock.json -print)
+          if [ "$found" -eq 0 ]; then
+            echo "No package-lock.json files found; skipping npm audit."
+          fi
+
+  static-checks:
+    name: Static checks
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install PyYAML
+        run: python -m pip install pyyaml
+
+      - name: Validate roadmap and override YAML
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import pathlib
+          import sys
+          import yaml
+
+          paths = [pathlib.Path('project-overrides.yaml'), *pathlib.Path('projects').rglob('roadmap.yaml')]
+          errors = []
+          for path in paths:
+              if '_template' in path.parts:
+                  continue
+              try:
+                  data = yaml.safe_load(path.read_text())
+              except yaml.YAMLError as exc:
+                  errors.append(f'{path}: {exc}')
+                  continue
+              if not isinstance(data, dict):
+                  errors.append(f'{path}: root is not a mapping')
+          if errors:
+              print('\n'.join(errors), file=sys.stderr)
+              raise SystemExit(1)
+          print(f'Validated {len(paths)} YAML files.')
+          PY
+
+      - name: Python syntax check
+        run: |
+          set -euo pipefail
+          if ls scripts/*.py >/dev/null 2>&1; then
+            python -m py_compile scripts/*.py
+          else
+            echo "No scripts/*.py files found."
+          fi
+
+      - name: Secret pattern smoke check
+        run: |
+          set -euo pipefail
+          if grep -RInE '(AKIA[0-9A-Z]{16}|ghp_[A-Za-z0-9_]{36,}|BEGIN (RSA|OPENSSH|DSA|EC) PRIVATE KEY)' \
+            --exclude-dir=.git \
+            --exclude='security-audit.yml' \
+            .; then
+            echo "Potential secret-like value found. Review before merging." >&2
+            exit 1
+          fi
+          echo "No obvious secret patterns found."
+
+  authz-regression:
+    name: Authz regression tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install pytest
+        run: python -m pip install pytest
+
+      - name: Run fixture authz regression tests
+        run: pytest tests/test_authz_regression.py
+
+  safe-smoke-matrix:
+    name: Safe smoke matrix
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        check:
+          - fetch-todos-no-token
+          - sync-projects-no-token
+          - build-kaizen
+          - build-pr-triage-no-token
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install PyYAML
+        run: python -m pip install pyyaml
+
+      - name: Run safe smoke check
+        run: |
+          set -euo pipefail
+          case "${{ matrix.check }}" in
+            fetch-todos-no-token)
+              python scripts/fetch_todos.py
+              ;;
+            sync-projects-no-token)
+              python scripts/sync_projects_to_dreams.py
+              ;;
+            build-kaizen)
+              python scripts/build_kaizen.py
+              test -f KAIZEN.md
+              ;;
+            build-pr-triage-no-token)
+              python scripts/build_pr_triage.py
+              test -f PR-TRIAGE.md
+              ;;
+          esac
