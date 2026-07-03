@@ -99,12 +99,13 @@ tasks:
 - id: t-006
   milestone: m4
   title: Add a unit test for queue_missing_project_art.py using a temp prompt catalog and fake images folder
-  status: claimed
+  status: review
   owner: worker
   updated: '2026-07-03T15:12:21-07:00'
   passes: 0
   stakes: reversible
-  note: 'Kaizen from PR #124 (t-004): verify dry-run queue behavior (skip-existing, prompt normalization,
-    output shape) without depending on live image assets.
+  note: 'Added tests/test_queue_missing_project_art.py covering skip-existing behavior, prompt normalization,
+    default icon/card/hero sizes, and dry-run queue YAML shape. Verification was limited to source review
+    because this connector runtime cannot execute the repo test suite.
 
     '
