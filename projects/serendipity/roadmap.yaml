@@ -38,21 +38,21 @@ tasks:
   - id: t-001
     milestone: m1
     title: "Draft Serendipity experience brief and data contract"
-    status: claimed
+    status: needs-human
     owner: worker
     passes: 0
     stakes: reversible
     gate_human: true
-    updated: "2026-07-02T18:13:00-07:00"
+    updated: "2026-07-02T18:18:00-07:00"
     note: >
-      Write docs/serendipity-experience.md: the shape of one Serendipity session.
-      Cover (1) theme selection — how dream vibes, LOCATION dreams, and GENRE
-      dreams combine into a story seed; (2) the protagonist frame — second-person
-      narrative with the user as hero; (3) the question loop — how a story beat
-      poses a question whose answer maps to a real HONEYDO todo or a needs-human
-      conductor task; (4) what existing kind_robots infrastructure is reused
-      (chat streams, Bots, Todos, Dreams) and what is new; (5) session
-      persistence and tone/safety guardrails. Silas approves before any code.
+      FOR SILAS: The Serendipity experience brief is ready at
+      projects/serendipity/docs/serendipity-experience.md. It defines the session
+      shape, theme picker, protagonist frame, question loop, data contract,
+      persistence plan, and guardrails.
+
+      TO APPROVE: Read docs/serendipity-experience.md. If it looks right, set
+      approved_by_human: true and status: done. If it needs changes, add a note
+      here with the adjustment. Approval unblocks t-002 and t-003.
 
   - id: t-002
     milestone: m2
