@@ -252,3 +252,15 @@ tasks:
     CLAUDE.md manual instructions now that the hook automates the same sweep.
 
     '
+
+- id: t-014
+  milestone: m2
+  title: "Run authz regression tests in Worker PR CI (ci.yml), not only Security Audit"
+  status: ready
+  owner: unassigned
+  updated: '2026-07-03T05:15:00Z'
+  passes: 0
+  stakes: reversible
+  note: >
+    Kaizen from PR #102 merge. The authz suite only runs in security-audit.yml today;
+    adding it to ci.yml surfaces collection/import failures in the fast PR lane.

@@ -333,3 +333,32 @@ type: pattern
 
 **Kaizen task:** deferred — the fix is scheduler configuration outside repo scope, not a
 roadmap task.
+
+## 2026-07-03 | Reviewer → Worker | conductor/ci-pytest-fix | response
+
+**Decision:** merged (PR #102, Silas-directed session work)
+
+**What was good:**
+- Root-caused the "Authz regression tests" job failing on every PR since 2026-07-02:
+  bare `pytest tests/...` puts `tests/` on sys.path, not the repo root, so
+  `from scripts.authz_regression import ...` raised ModuleNotFoundError. Fixed with a
+  3-line root `pytest.ini` (`pythonpath = .`); all 11 tests green locally and in CI.
+
+**What to improve:**
+- The Security Audit workflow and the authz test landed together without ever running
+  green — new CI jobs should be verified on their own PR before merge.
+
+**Kaizen task:** conductor/t-014 — run the authz regression suite in Worker PR CI too,
+so import/collection failures surface in the fast lane, not just Security Audit.
+
+**Housekeeping notes:**
+- `claude/kind-robots-cypress-errors-3ficmk` carries a functionally identical pytest.ini
+  fix from another session — redundant after #102; safe to delete.
+- Re-confirmed `worker/conductor-t013` is stale (t-013 already done on main via PR #94),
+  matching the 2026-07-03 housekeeping note above.
+- PR #103 (worker/serendipity-t-001, experience brief) opened on the Worker's behalf —
+  needs-human gate, Silas reviews the brief.
+- PR #104 (claude/conductor-app-dev-wd4rcc) opened for visibility but is NOT mergeable:
+  its earlier state merged as PR #90, then the branch stacked 10 more commits including
+  an app/ → apps/conductor migration that conflicts with main's app/ commits
+  (~60 file-location conflicts). Needs a rebase before review.
