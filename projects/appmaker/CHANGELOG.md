@@ -15,3 +15,10 @@
   server-only credential handling, GithubInstallation/AppRepo data model
   (slug->repo mapping), connect/create/graduate flows, agent-role mapping for
   external repos, security invariants, and implementation tasks t-007..t-010.
+
+## 2026-07-03 (t-004)
+- AppMaker workspace page in kind_robots: fleet browser (roadmap progress,
+  needs-you badges), self-serve create-an-app form, pending-scaffold chips.
+- New endpoints: GET /api/appmaker/apps, POST /api/appmaker/scaffold-request
+  (Dream + worker-queued AGENT todo, project cap enforced).
+- Reachable from the workspace gallery via the new 'appmaker' card.

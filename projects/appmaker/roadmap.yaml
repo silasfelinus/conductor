@@ -142,15 +142,18 @@ tasks:
 - id: t-004
   milestone: m4
   title: Build the AppMaker page in kind_robots
-  status: ready
-  owner: null
+  status: review
+  owner: claude
+  updated: '2026-07-03T00:00:00Z'
   passes: 0
   stakes: reversible
   depends_on: t-001
-  note: 'Workspace surface: browse apps (from Dreams + conductor data), create-an-app form that
-    files the scaffold request as an AGENT todo, per-app status (roadmap progress, CI state,
-    release gates). Follows the conductor-page.vue patterns. Per Silas 2026-07-02: build the
-    end state — self-serve creation with server-side caps/limits, not an admin-only interim.
+  note: 'Built on kind_robots branch claude/conductor-app-dev-wd4rcc: appmaker-page.vue
+    (fleet browser with roadmap progress + needs-you badges, self-serve create form, pending
+    scaffold indicators), GET /api/appmaker/apps (apps/ dir + open scaffold todos), POST
+    /api/appmaker/scaffold-request (Dream with slug parity + AGENT todo filed under the worker
+    account; project cap enforced). Reached via workspace card ''appmaker''. CI state display
+    deferred to t-008 (needs webhooks).
 
     '
 - id: t-005
