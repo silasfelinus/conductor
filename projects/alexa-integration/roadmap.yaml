@@ -49,13 +49,13 @@ tasks:
 - id: t-003
   milestone: m3
   title: Write rollout and safety checklist
-  status: claimed
+  status: review
   owner: worker
   updated: '2026-07-03T10:12:41-07:00'
   passes: 0
   stakes: reversible
   depends_on: t-002
-  note: 'Write a checklist for testing, disabling, logging, and reviewing the voice command integration before it is used for real work.'
+  note: 'Added projects/alexa-integration/docs/rollout-safety-checklist.md for review. It covers pre-flight boundaries, local prototype checks, command-mode policy, manual test script, disable switch, logging/review, and human approval checkpoints before real-world Alexa use.'
 - id: t-004
   milestone: m2
   title: Audit kind_robots REST API endpoints for Alexa intent suitability
