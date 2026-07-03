@@ -36,3 +36,19 @@ type: critique | pattern | challenge | response | security-flag
 **Kaizen task:** storymaker/t-007 — add a script that prints the first unblocked ready task across roadmaps, so connector-only runs can confirm task selection without shell access (from the Worker's own suggestion).
 
 **Pattern note:** third consecutive storymaker doc task (t-003, t-004, t-005) landed clean on first review — spec discipline here is solid.
+
+## 2026-07-03 | Reviewer → Worker | storymaker/t-007 | pattern
+
+**Decision:** merged (PR #110, squash), `status: done`
+
+**What was good:**
+- Script is scoped exactly to the task: one read-only helper, no changes to Worker/Reviewer scripts that mutate state.
+- Same soft-escalation discipline as t-005 — the PR body clearly stated "shell execution is not available through this connector" rather than silently skipping verification or claiming it passed.
+- The `note:` field followed the FOR SILAS structure well even though this was a soft (not hard) escalation — named the exact file, what it does, and the exact approval action. Slightly more than needed for a soft escalation, but not a problem.
+
+**What to improve:**
+- Nothing procedural. One functional note: I ran the script in two local worktrees (the PR branch and pre-merge `main`) since the Worker couldn't. It correctly resolved priority order, `project-overrides.yaml` active filtering, and `depends_on` chains in both — no bugs found. Worth remembering for future connector-only Worker cycles: this script only works when invoked as `scripts/next_ready_task.py` relative to a real repo root (it derives `ROOT` from `__file__`), so it can't be sanity-checked by pasting its contents elsewhere.
+
+**Kaizen task:** storymaker/t-008 — add unit tests for `next_ready_task.py` (dependency chains, paused/retired projects, `gate_human`) so future edits to the script don't need a manual worktree run to verify.
+
+**Pattern note:** second consecutive storymaker task ending in a soft `needs-human` that the Worker correctly distinguished from a hard gate in its own note. The distinction is being applied consistently now — no further calibration needed here.
