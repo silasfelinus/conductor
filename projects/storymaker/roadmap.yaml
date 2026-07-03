@@ -84,12 +84,12 @@ tasks:
 - id: t-008
   milestone: m4
   title: Add unit tests for scripts/next_ready_task.py covering dependency chains, paused/retired projects, and gate_human tasks
-  status: claimed
+  status: review
   owner: worker
   updated: '2026-07-03T02:13:53-07:00'
   passes: 0
   stakes: reversible
-  note: 'Kaizen from t-007 (PR #110): the script was only verified by manual worktree runs against live roadmap state, not automated tests. A small pytest suite with synthetic roadmap/priority/override fixtures would catch regressions (e.g. a future edit breaking gate_human handling) without needing a full repo scan to notice.'
+  note: 'Added tests/test_next_ready_task.py with synthetic pytest fixtures covering priority order, paused/retired project skipping, dependency chains, unapproved gate_human dependencies, and approved gate_human unblocking.'
 - id: t-006
   milestone: m1
   title: Audit kind_robots Bots, Characters, Scenarios, and Chats models for session compatibility
