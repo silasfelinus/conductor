@@ -42,7 +42,7 @@ def main():
     check(
         "Serendipity: start a cozy mystery story in the redwood library",
         domain="dream",
-        dreamSlug="cozy-mystery-redwood-library",
+        dreamSlug="cozy-mystery-the-redwood-library",
         requiresConfirmation=False,
     )
     check(
