@@ -1,0 +1,56 @@
+project: recipe-box
+kind: software
+notes_from_silas: 'Recipe Box: scaffolded by AppMaker. Define what this app is before building.
+
+  '
+milestones:
+- id: m1
+  title: Concept and spec
+  weight: 30
+  status: not-started
+- id: m2
+  title: MVP build
+  weight: 50
+  status: not-started
+- id: m3
+  title: Store readiness
+  weight: 20
+  status: not-started
+tasks:
+- id: t-001
+  milestone: m1
+  title: Write the app spec (what it is, who it serves, MVP screens)
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  gate_human: true
+  approved_by_human: false
+  note: 'Produce projects/recipe-box/SPEC.md. Ends at needs-human for Silas to approve before build.
+
+    '
+- id: t-002
+  milestone: m2
+  title: Build the MVP in apps/recipe-box/
+  status: waiting
+  owner: null
+  passes: 0
+  stakes: reversible
+  depends_on: t-001
+  note: 'Implement the approved spec. CI (app-ci.yml) must stay green.
+
+    '
+- id: t-003
+  milestone: m3
+  title: 'Store readiness checklist (do NOT submit)'
+  status: waiting
+  owner: null
+  passes: 0
+  stakes: outward-facing
+  gate_human: true
+  approved_by_human: false
+  depends_on: t-002
+  note: 'Signing docs, privacy labels, release checklist. Submission itself is a separate
+    needs-human action by Silas.
+
+    '

@@ -245,8 +245,10 @@ def plan_files(slug: str, title: str, description: str) -> dict:
         f"{app_dir}/analysis_options.yaml": ANALYSIS_OPTIONS,
         f"{app_dir}/.gitignore": GITIGNORE,
         f"{app_dir}/README.md": APP_README.format(**fmt),
+        # Named widget_test.dart deliberately: flutter create skips existing
+        # files, so this blocks its MyApp boilerplate test from appearing.
         f"{app_dir}/lib/main.dart": MAIN_DART.format(**fmt),
-        f"{app_dir}/test/smoke_test.dart": SMOKE_TEST.format(**fmt),
+        f"{app_dir}/test/widget_test.dart": SMOKE_TEST.format(**fmt),
         f"projects/{slug}/roadmap.yaml": ROADMAP.format(**fmt),
         f"projects/{slug}/CHANGELOG.md": CHANGELOG.format(**fmt),
     }, fmt
