@@ -67,18 +67,18 @@ tasks:
 - id: t-004
   milestone: m4
   title: Add a dry-run project image request flow
-  status: review
+  status: done
   owner: worker
-  updated: '2026-07-03T08:12:29-07:00'
+  updated: '2026-07-03T08:18:30-07:00'
   passes: 0
   stakes: reversible
   depends_on:
   - t-002
   - t-003
   note: >
-    Added scripts/queue_missing_project_art.py. It reads projects/art-prompts.yaml, checks
-    missing project icon/card/hero files under projects/images, and writes a dry-run
-    projects/art-generate.yaml batch without calling the live art generator.
+    Completed in PR #124. Added scripts/queue_missing_project_art.py. It reads
+    projects/art-prompts.yaml, checks missing project icon/card/hero files under
+    projects/images, and writes projects/art-generate.yaml in dry-run mode.
 - id: t-005
   milestone: m1
   title: Scan ART-PROMPTS.md and produce a pending-requests status table
