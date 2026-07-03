@@ -137,16 +137,20 @@ tasks:
 - id: t-008
   milestone: m3
   title: Expose the in-flight chat (pending chat id or ref) from kind_robots chatStore for streaming consumers
-  status: claimed
+  status: needs-human
   owner: worker
   updated: '2026-07-03T05:14:12-07:00'
   passes: 0
   stakes: reversible
-  note: 'Kaizen from the t-002 merge. serendipityStore finds the streaming chat as the last entry pushed
-    to chatStore.chats after weaving starts; a pendingChat ref on chatStore would remove that heuristic
-    for all streaming consumers.
-
-    '
+  note: >
+    FOR SILAS: I claimed this task, read kind_robots stores/chatStore.ts and the current
+    serendipityStore streaming heuristic, and attempted the smallest safe helper file for
+    exposing a pending chat reference. The GitHub connector safety filter blocked the write
+    to silasfelinus/kind_robots before a PR could be opened.
+    TO APPROVE: Either make the tiny helper manually in kind_robots or return this task to
+    status: ready for a local-code Worker/Claude session with patch access. The intended
+    change is to expose pendingChat, pendingChatId, and pendingText from chatStore so
+    serendipityStore does not read the last chat array entry while streaming.
 - id: t-009
   milestone: m3
   title: Author starter LOCATION and GENRE dreams so the theme picker has ingredients
