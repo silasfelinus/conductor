@@ -6,13 +6,14 @@ notes_from_silas: >-
   actual invocation may be "ask Serendipity to..." or an opened Serendipity
   session, but the relay should route the request after the Serendipity prefix.
   When finished, it should support custom LLM chat, taking on a role as a
-  Character, telling/continuing a story in a Dream, playing approved local music
-  files, and creating/working on projects through safe draft/read paths. Project
-  Dreams now have goal and waypoints fields; use them as the friendly voice/UI
-  project state while keeping Conductor roadmap.yaml as the authoritative agent
-  task queue. Prototype locally first. Do not publish the skill, expose a live
-  endpoint, touch DNS/secrets/billing, or bypass human gates without explicit
-  needs-human approval.
+  Character, telling/continuing a story in a Dream, generating art through safe
+  draft/queued paths, playing approved local music files, and creating/working
+  on projects through safe draft/read paths. Project Dreams now have goal and
+  waypoints fields; use them as the friendly voice/UI project state while
+  keeping Conductor roadmap.yaml as the authoritative agent task queue.
+  Prototype locally first. Do not publish the skill, expose a live endpoint,
+  touch DNS/secrets/billing, or bypass human gates without explicit needs-human
+  approval.
 milestones:
   - id: m1
     title: Command design
@@ -89,9 +90,10 @@ tasks:
     note: >-
       Implement a local-only request parser for the "Serendipity: <request>"
       contract described in docs/serendipity-voice-surface.md. Route requests
-      into chat, character, dream, music, project, or unknown domains. Unknown
-      or ambiguous requests should ask one short clarification. No live skill
-      publishing, public endpoint, DNS, secrets, billing, or production deploy.
+      into chat, character, dream, art, music, project, or unknown domains.
+      Unknown or ambiguous requests should ask one short clarification. No live
+      skill publishing, public endpoint, DNS, secrets, billing, or production
+      deploy.
   - id: t-006
     milestone: m4
     title: Wire LLM chat and Character role intents
@@ -163,9 +165,24 @@ tasks:
       - t-007
       - t-008
       - t-009
+      - t-011
     note: >-
       Before real-world use, capture a local dry-run transcript proving the
-      router, chat/Character, Dream story, local music, and project-work paths.
-      FOR SILAS: approve only after reviewing the transcript, auth model,
-      disable switch, and exact endpoint exposure plan. No public skill or live
-      endpoint before this gate.
+      router, chat/Character, Dream story, art generation, local music, and
+      project-work paths. FOR SILAS: approve only after reviewing the transcript,
+      auth model, disable switch, and exact endpoint exposure plan. No public
+      skill or live endpoint before this gate.
+  - id: t-011
+    milestone: m5
+    title: Wire art generation intents
+    status: waiting
+    owner: null
+    updated: '2026-07-03T12:00:00-07:00'
+    passes: 0
+    stakes: reversible
+    depends_on: t-005
+    note: >-
+      Connect voice requests like "Serendipity: generate art of <prompt>" to the
+      approved Kind Robots art generation path. Start with draft or queued jobs,
+      require clarification for missing style/size/gallery details, and never
+      publish generated images publicly from voice alone.
