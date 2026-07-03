@@ -13,8 +13,16 @@ An app named `<slug>` always has three artifacts sharing that slug:
 | `projects/<slug>/roadmap.yaml` | conductor projects | drives Worker/Reviewer cycles |
 | Dream (`dreamType: PROJECT`, same slug) | kind_robots DB | identity + display |
 
-Use `scripts/new_app.py` (appmaker/t-002) to create all three consistently —
-don't hand-roll the trio.
+Use `scripts/new_app.py` to create all three consistently — don't hand-roll
+the trio:
+
+```sh
+python scripts/new_app.py recipe-box --title "Recipe Box" --description "a cozy cooking companion"
+```
+
+It scaffolds the app skeleton, the roadmap, art prompts, and registry entries,
+and files the Dream-sync todo when `KR_API_TOKEN` is set. Platform folders are
+generated afterwards with `flutter create` (the script prints the command).
 
 ## Conventions
 
@@ -27,6 +35,5 @@ don't hand-roll the trio.
 - An app can "graduate" to its own repository (permission-based git,
   appmaker/t-003); AppMaker keeps the slug → repo mapping when it does.
 
-Note: the Conductor companion app predates this convention and lives at
-`app/` in the repo root. Whether it migrates to `apps/conductor/` is an open
-question on appmaker/t-001.
+The Conductor companion app lives at `apps/conductor/` (migrated from the
+repo-root `app/` on 2026-07-02 per Silas's t-001 decision — consistency wins).

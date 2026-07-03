@@ -43,54 +43,56 @@ tasks:
   stakes: reversible
   gate_human: true
   approved_by_human: false
-  note: 'FOR SILAS: projects/appmaker/BRIEF.md records your direction as an approvable brief.
-    It contains the three surfaces (kind_robots page as primary, an AppMaker app, the conductor
-    repo as workshop), the apps/<slug>/ layout with one-slug parity across code folder, roadmap,
-    and Dream, and the two-phase permission-based GitHub model (monorepo roles now; per-user
-    GitHub App/fine-grained tokens for hosted users later). TO APPROVE: read the brief, answer
-    its three open questions in this note, then set approved_by_human: true and status: done.
-    Unblocks t-002 (scaffolder), t-003 (GitHub permission design), t-004 (front-end page).
+  note: 'FOR SILAS: You answered the brief''s three questions in-session 2026-07-02 (migrate
+    app/ to apps/conductor — done; GitHub App for phase 2; build self-serve as the end state).
+    The decisions are recorded in projects/appmaker/BRIEF.md. Agents may not set
+    approved_by_human themselves, so TO FORMALIZE: set approved_by_human: true and
+    status: done here. Dependent tasks were already un-gated on your verbal direction.
 
     '
 - id: t-002
   milestone: m2
   title: Define apps/ convention and build scripts/new_app.py scaffolder
-  status: waiting
-  owner: null
+  status: review
+  owner: claude
+  updated: '2026-07-02T00:00:00Z'
   passes: 0
   stakes: reversible
   depends_on: t-001
-  note: 'One command creates a new app: apps/<slug>/ (Flutter template wired like app/),
-    projects/<slug>/roadmap.yaml from the template, icon/card/hero entries in art-prompts.yaml,
-    and an AGENT todo to sync the matching PROJECT Dream. Generalize app-ci.yml to cover apps/**.
-    apps/README.md documents the convention.
+  note: 'Done on branch claude/conductor-app-dev-wd4rcc: scripts/new_app.py creates apps/<slug>/
+    skeleton + projects/<slug>/roadmap + art prompts + registry entries and files the Dream-sync
+    todo (KR_API_TOKEN). Verified end-to-end: scaffolded test app passed analyze+test, then was
+    removed. app-ci.yml generalized to apps/** with per-app change detection. app/ migrated to
+    apps/conductor/.
 
     '
 - id: t-003
   milestone: m3
-  title: Design the permission-based GitHub integration
-  status: waiting
+  title: Design the permission-based GitHub integration (GitHub App)
+  status: ready
   owner: null
   passes: 0
   stakes: reversible
   depends_on: t-001
-  note: 'Design doc: GitHub App vs fine-grained PAT for per-user repo access on the hosted tier,
-    encrypted server-side credential storage in kind_robots, slug -> repo mapping for apps that
-    graduate out of the monorepo, and how Worker/Reviewer roles map onto external repos. Design
-    only — no live credentials, no new scopes without needs-human.
+  note: 'Silas chose GitHub App (2026-07-02). Design doc: app manifest and permission set,
+    per-user installation flow from kind_robots, encrypted server-side installation-token
+    handling, slug -> repo mapping for apps that graduate out of the monorepo, and how
+    Worker/Reviewer roles map onto external repos. Design only — no live credentials, no app
+    registration without needs-human.
 
     '
 - id: t-004
   milestone: m4
   title: Build the AppMaker page in kind_robots
-  status: waiting
+  status: ready
   owner: null
   passes: 0
   stakes: reversible
   depends_on: t-001
   note: 'Workspace surface: browse apps (from Dreams + conductor data), create-an-app form that
     files the scaffold request as an AGENT todo, per-app status (roadmap progress, CI state,
-    release gates). Follows the conductor-page.vue patterns; admin-gated until Silas opens it up.
+    release gates). Follows the conductor-page.vue patterns. Per Silas 2026-07-02: build the
+    end state — self-serve creation with server-side caps/limits, not an admin-only interim.
 
     '
 - id: t-005

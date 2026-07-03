@@ -43,20 +43,16 @@ implementations, so local mode is a first-class citizen rather than a cache.
 
 ## Getting started
 
-The `android/` and `ios/` platform folders are generated, not hand-written.
-First checkout:
-
 ```sh
-cd app
-flutter create . --org org.kindrobots --project-name conductor_app --platforms ios,android
+cd apps/conductor
 flutter pub get
 flutter test
 flutter run
 ```
 
-Commit the generated platform folders after the first `flutter create .`.
-Never commit keystores, provisioning profiles, or `key.properties` (see
-`.gitignore`).
+Platform folders (`android/`, `ios/`) are committed; run `flutter create .`
+again only when adding a new platform target. Never commit keystores,
+provisioning profiles, or `key.properties` (see `.gitignore`).
 
 ## Store release (gated)
 

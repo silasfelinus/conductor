@@ -1,9 +1,20 @@
 # AppMaker — Project Brief
 
 Date: 2026-07-02
-Status: awaiting Silas's approval (appmaker/t-001)
+Status: direction approved by Silas in-session 2026-07-02 (see Decisions below);
+formal roadmap flip pending on appmaker/t-001.
 Source: Silas's direction, in-session. This brief records that direction and the
-architecture it implies; approve t-001 to unlock the build tasks.
+architecture it implies.
+
+## Decisions (Silas, 2026-07-02)
+
+1. **Migrate `app/` → `apps/conductor/`** — consistency wins. Done same day.
+2. **GitHub App** is the phase-2 credential mechanism (per-repo install,
+   revocable, no token expiry chores).
+3. **Build it as it should look in the end** — design for self-serve app
+   creation on the hosted tier from the start, rather than an admin-only
+   interim. (Server-side role/limit checks still apply: project caps for
+   non-members, release gates for everyone.)
 
 ## What it is
 
@@ -73,10 +84,6 @@ mapping schema) is appmaker/t-003.
 - Quality: per-app CI (the app-ci.yml pattern generalizes to `apps/**`)
 - Release: store-readiness checklists, always `needs-human` before submission
 
-## Open questions for Silas (answer in t-001 approval note)
+## Open questions
 
-1. Migrate `app/` → `apps/conductor/` now, later, or never?
-2. Phase 2 credential mechanism preference: GitHub App (recommended — per-repo
-   install, revocable, no expiry management) vs fine-grained PATs?
-3. Should app creation from the kind_robots page be self-serve for members on
-   the hosted tier, or admin-only until AppMaker matures?
+All three original questions were answered 2026-07-02 — see Decisions above.

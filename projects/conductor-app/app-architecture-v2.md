@@ -23,11 +23,12 @@ v2's goals (from Silas, 2026-07-02):
 
 ## Where the code lives
 
-`app/` at the conductor repo root. A Flutter project needs its own package
-root (pubspec.yaml, platform folders), so it cannot merge into the repo base
-folder; a subfolder keeps app + roadmaps + agent ops in one repo and CI can
-path-filter. `projects/conductor-app/` remains the roadmap/design home; code
-lives in `app/`.
+`apps/conductor/` (originally `app/` at the repo root; migrated 2026-07-02
+when AppMaker introduced the `apps/<slug>/` convention — see `apps/README.md`).
+A Flutter project needs its own package root, so it cannot merge into the repo
+base folder; a subfolder keeps app + roadmaps + agent ops in one repo and CI
+path-filters on `apps/**`. `projects/conductor-app/` remains the
+roadmap/design home.
 
 ## The two data layers (key architectural insight)
 
