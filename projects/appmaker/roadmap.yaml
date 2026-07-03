@@ -19,7 +19,7 @@ milestones:
 - id: m2
   title: App workspace convention and scaffolder
   weight: 25
-  status: not-started
+  status: done
 - id: m3
   title: GitHub permission model
   weight: 20
@@ -27,11 +27,11 @@ milestones:
 - id: m4
   title: kind_robots AppMaker front-end
   weight: 20
-  status: not-started
+  status: done
 - id: m5
   title: AppMaker mobile surface
   weight: 15
-  status: not-started
+  status: done
 tasks:
 - id: t-001
   milestone: m1
@@ -53,13 +53,13 @@ tasks:
 - id: t-002
   milestone: m2
   title: Define apps/ convention and build scripts/new_app.py scaffolder
-  status: review
+  status: done
   owner: claude
-  updated: '2026-07-02T00:00:00Z'
+  updated: '2026-07-03T00:00:00Z'
   passes: 0
   stakes: reversible
   depends_on: t-001
-  note: 'Done on branch claude/conductor-app-dev-wd4rcc: scripts/new_app.py creates apps/<slug>/
+  note: 'Merged to main via PR #104 (2026-07-03): scripts/new_app.py creates apps/<slug>/
     skeleton + projects/<slug>/roadmap + art prompts + registry entries and files the Dream-sync
     todo (KR_API_TOKEN). Verified end-to-end: scaffolded test app passed analyze+test, then was
     removed. app-ci.yml generalized to apps/** with per-app change detection. app/ migrated to
@@ -142,13 +142,13 @@ tasks:
 - id: t-004
   milestone: m4
   title: Build the AppMaker page in kind_robots
-  status: review
+  status: done
   owner: claude
   updated: '2026-07-03T00:00:00Z'
   passes: 0
   stakes: reversible
   depends_on: t-001
-  note: 'Built on kind_robots branch claude/conductor-app-dev-wd4rcc: appmaker-page.vue
+  note: 'Merged to kind_robots main via PR #72 (2026-07-03T05:05:10Z): appmaker-page.vue
     (fleet browser with roadmap progress + needs-you badges, self-serve create form, pending
     scaffold indicators), GET /api/appmaker/apps (apps/ dir + open scaffold todos), POST
     /api/appmaker/scaffold-request (Dream with slug parity + AGENT todo filed under the worker
@@ -159,7 +159,7 @@ tasks:
 - id: t-005
   milestone: m5
   title: 'AppMaker surface in the Flutter app'
-  status: review
+  status: done
   owner: claude
   updated: '2026-07-03T00:00:00Z'
   passes: 0
@@ -167,7 +167,7 @@ tasks:
   depends_on:
   - t-002
   - t-004
-  note: 'Built on branch claude/conductor-app-dev-wd4rcc: Apps tab in apps/conductor (fleet
+  note: 'Merged to main via PR #104 (2026-07-03): Apps tab in apps/conductor (fleet
     list with roadmap progress for admins, pending-scaffold chips, new-app sheet posting to
     /api/appmaker/scaffold-request). Shown in remote server modes; hidden in local mode.
 
@@ -182,5 +182,20 @@ tasks:
   note: 'Run scripts/sync_projects_to_dreams.py (or create the Dream via the API) so kind_robots
     has a PROJECT Dream with slug "appmaker" matching this project, per the standing slug-parity
     rule in CONTROL.md.
+
+    '
+- id: t-011
+  milestone: m2
+  title: Flag bare-scaffold apps that go stale so the fleet doesn't accumulate untouched shells
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  note: 'Kaizen from Reviewer on the PR #104 merge (2026-07-03): PR #104 scaffolded apps/ for
+    every existing active project (humboldt-scoop-cms, kind-robots, media-watchlist, sketchy,
+    storymaker, wishmaster) as bare `flutter create` shells with no roadmap task driving them
+    to build-out. Add a check (script or CI note) that surfaces apps/<slug>/ folders whose
+    lib/ has never grown past main.dart after N days, so Silas can decide build vs. retire
+    instead of the fleet growing silently.
 
     '

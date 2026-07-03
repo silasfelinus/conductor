@@ -143,17 +143,29 @@ tasks:
     '
 - id: t-009
   milestone: m3
-  title: 'App: per-project AI chat and art gallery / art request flow'
-  status: review
+  title: 'App: per-project AI chat and artwork display'
+  status: done
   owner: claude
-  updated: '2026-07-02T00:00:00Z'
+  updated: '2026-07-03T00:00:00Z'
   passes: 0
   stakes: reversible
   depends_on: t-006
-  note: 'Partially done on branch claude/conductor-app-dev-wd4rcc: per-project assistant chat
+  note: 'Merged to main via PR #104 (2026-07-03): per-project assistant chat
     (dream-<id>-assistant channel, streaming replies, history persistence) and project artwork
-    (dashboard thumbnails, detail hero banners). Remaining: ArtCollection inspiration gallery and
-    the admin art-request submission form.
+    (dashboard thumbnails, detail hero banners). Split from the original scope: the ArtCollection
+    inspiration gallery and admin art-request submission form move to t-012.
+
+    '
+- id: t-012
+  milestone: m3
+  title: 'App: ArtCollection inspiration gallery and admin art-request submission form'
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  depends_on: t-009
+  note: 'Remaining scope split off t-009: browse ArtCollection by project slug for inspiration,
+    and an admin-gated form to submit a new art request into the art-prompts.yaml queue.
 
     '
 - id: t-010

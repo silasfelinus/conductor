@@ -362,3 +362,53 @@ so import/collection failures surface in the fast lane, not just Security Audit.
   its earlier state merged as PR #90, then the branch stacked 10 more commits including
   an app/ → apps/conductor migration that conflicts with main's app/ commits
   (~60 file-location conflicts). Needs a rebase before review.
+
+## 2026-07-03 | Reviewer → System | conductor/appmaker+conductor-app | response
+
+**Decision:** merged (PR #104, squash, `claude/conductor-app-dev-wd4rcc` → `main`, Silas-directed session work)
+
+**Detail:**
+- Corrects the same-day note above: PR #104 was flagged "NOT mergeable... ~60
+  file-location conflicts, needs a rebase." By the time this review ran, the branch's
+  head commit (`9917ebe`, "Merge main into claude/conductor-app-dev-wd4rcc, keep
+  apps/conductor layout") had already resolved that — confirmed via a local
+  `git merge-tree` against current `origin/main`: zero conflicts. All 12 CI checks
+  green (Dependency audit, Static checks, Authz regression, app-ci, GitGuardian, etc).
+- Diff is 643 files / +15978/-24, but almost entirely additive Flutter platform
+  boilerplate: 8 apps under `apps/` (conductor, appmaker, humboldt-scoop-cms,
+  kind-robots, media-watchlist, recipe-box, sketchy, storymaker, wishmaster), most as
+  bare `flutter create` shells except `apps/conductor` (full client: auth, dashboard,
+  todos, approvals, chat, appmaker fleet browser) and `apps/appmaker` (scaffolder
+  template). Only 8 non-`apps/` files touched, all metadata (`.gitignore`,
+  `project-overrides.yaml`, `priority.yaml`, roadmap/changelog). No secrets found
+  (checked `apps/conductor/lib` for hardcoded tokens — clean, JWT-only per the
+  2026-07-02 security-flag fix).
+- Verified outward-facing/irreversible work stayed correctly gated: appmaker t-001,
+  t-003, t-007, t-010 and conductor-app t-006, t-010 are all `needs-human` with
+  `gate_human: true` — nothing in this PR silently unblocked them.
+- Status updates: appmaker t-002/t-004/t-005 → done (t-004's actual code merged
+  separately via kind_robots PR #72); conductor-app t-009 → done, with the
+  undelivered ArtCollection-gallery/art-request-form portion split into new task t-012
+  rather than left ambiguously "partial."
+
+**What was good:**
+- Honest scope tracking: t-009's note explicitly said what shipped vs. what didn't,
+  which made the split-into-t-012 call straightforward instead of guesswork.
+- Every irreversible/outward-facing task correctly parked at `needs-human` — zero
+  scope creep into gated territory despite the size of the diff.
+- Self-flagged the size and conflict risk in the PR body rather than asserting it was
+  ready to rubber-stamp.
+
+**What to improve:**
+- The self-flag ("too large for rubber-stamp, needs a rebase") was stale by the time
+  the PR was opened — the rebase had already happened. Re-check merge-tree/CI state
+  right before opening the PR, not from memory of an earlier session state, so the
+  Reviewer isn't chasing a already-fixed problem.
+
+**Kaizen task:** appmaker/t-011 — flag bare-scaffold `apps/<slug>/` folders that go
+untouched past N days, so the fleet this PR seeded doesn't accumulate silently.
+
+**Pattern note:** Second time in one day a same-day TALKBACK note about this exact PR
+turned out stale by review time (see the entry immediately above). Worth remembering
+that TALKBACK entries are a snapshot, not a live status — always re-verify mergeability
+directly rather than trusting the most recent note.
