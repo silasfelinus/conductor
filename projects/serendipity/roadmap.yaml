@@ -92,9 +92,9 @@ tasks:
 - id: t-005
   milestone: m4
   title: Weave real tasks into story questions
-  status: review
+  status: done
   owner: claude
-  updated: '2026-07-03T10:35:00Z'
+  updated: '2026-07-03T10:50:00Z'
   pr: https://github.com/silasfelinus/kind_robots/pull/76
   passes: 0
   stakes: reversible
@@ -105,17 +105,25 @@ tasks:
 - id: t-006
   milestone: m4
   title: Write story answers back to task progress
-  status: waiting
-  owner: null
+  status: needs-human
+  owner: claude
+  updated: '2026-07-03T11:05:00Z'
+  pr: https://github.com/silasfelinus/kind_robots/pull/77
   passes: 0
   stakes: reversible
   gate_human: true
   depends_on: t-005
-  note: 'When the protagonist answers a woven question, record the outcome: mark the honey-do done or
-    capture the human decision for the gated task. This touches Silas''s real task queue, so the wiring
-    design is human-gated: demo the flow, then Silas approves before it goes live.
-
-    '
+  note: >
+    FOR SILAS: The write-back wiring design is at
+    projects/serendipity/docs/write-back-design.md, and the working demo (the
+    Story ledger, dry-run only) is kind_robots PR #77 — safe to merge, it
+    writes nothing. It proposes: honey-do answers mark the todo done via an
+    explicit per-item Apply button; needs-human task decisions become AGENT
+    todos (the app never edits roadmap YAML); preference answers stay
+    app-owned. TO APPROVE: read the doc, try the ledger on the PR preview,
+    set approved_by_human: true and status: done here. That unblocks t-007
+    (full playthrough) and green-lights implementing the Apply buttons. To
+    change the wiring, add a note here instead and it returns to ready.
 - id: t-007
   milestone: m5
   title: Polish pass and first full playthrough
