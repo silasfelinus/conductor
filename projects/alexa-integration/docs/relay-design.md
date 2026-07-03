@@ -6,9 +6,15 @@ This is a document-only design for a small relay layer between an Alexa skill an
 
 The relay's job is intentionally narrow: translate approved voice intents into safe reads or draft-only actions, apply guardrails, and return short voice-friendly responses.
 
+The updated product target is the Serendipity voice surface: local Echo devices should be able to route `Serendipity: <request>` into Kind Robots chat, Character roleplay, Dream story sessions, approved local music playback, and safe project-work drafts. See `projects/alexa-integration/docs/serendipity-voice-surface.md` for the command contract.
+
 ## Goals
 
 - Let Silas ask for project status, pending approvals, recent activity, and safe task summaries by voice.
+- Let Silas ask custom LLM questions through Kind Robots chat streams.
+- Let Silas route a voice request through a selected Character role/persona.
+- Let Silas start or continue a Serendipity Dream story using LOCATION, GENRE, vibe, goal, and waypoints.
+- Let Silas play approved local music files through a local-only adapter.
 - Let Silas create draft agent todos through a controlled relay path once authentication is approved.
 - Keep voice output short enough for Alexa while preserving richer detail in logs or linked UI surfaces.
 - Separate Alexa-specific interaction handling from Conductor roadmap files and Kind Robots backend details.
@@ -33,9 +39,9 @@ Example payload:
 
 ```json
 {
-  "intent": "ProjectStatusIntent",
+  "intent": "SerendipityRequestIntent",
   "slots": {
-    "projectSlug": "serendipity"
+    "requestText": "what is next for alexa integration"
   },
   "requestId": "amzn1.echo-api.request.example",
   "userId": "amzn1.ask.account.example"
@@ -56,8 +62,13 @@ The relay validates the request, maps the intent to an approved action, calls th
 
 Adapters keep upstream calls isolated:
 
+- `serendipityRouter`: parses `Serendipity: <request>` text into chat, character, dream, music, project, or unknown domains.
+- `chatAdapter`: creates or continues a Kind Robots chat request.
+- `characterAdapter`: resolves a Character and adds role/persona context to the request.
+- `dreamAdapter`: reads Dream ingredients, PROJECT Dream `goal`, and PROJECT Dream `waypoints`.
 - `conductorAdapter`: reads project status, roadmaps, pending approval summaries, and activity summaries.
 - `kindRobotsAdapter`: reads Dream/project display data and, later, creates Todos if machine auth is approved.
+- `musicAdapter`: resolves approved local music file, folder, or playlist targets from configured library roots only.
 - `artAdapter`: queues or drafts art requests only when explicitly approved by the command policy.
 
 Adapters should return normalized relay objects instead of leaking raw API responses into voice formatting.
@@ -71,7 +82,7 @@ Suggested policy fields:
 ```ts
 type RelayPolicy = {
   intent: string
-  mode: 'read' | 'draft' | 'blocked'
+  mode: 'read' | 'draft' | 'local' | 'blocked'
   requiresConfirmation: boolean
   allowedWithApiKey: boolean
   allowedWithUserJwt: boolean
@@ -79,20 +90,24 @@ type RelayPolicy = {
 }
 ```
 
-This makes it obvious which commands are safe reads and which commands are not allowed until Silas approves the auth model.
+This makes it obvious which commands are safe reads, which commands are local-only, and which commands are not allowed until Silas approves the auth model.
 
 ## Intent mapping
 
 | Voice action | Intent | Relay mode | Upstream surface | Safety rule |
 | --- | --- | --- | --- | --- |
-| "What is next for Serendipity?" | `ProjectStatusIntent` | read | Conductor project status / roadmap | Read only |
-| "What needs my approval?" | `PendingApprovalsIntent` | read | Conductor roadmaps / pending gates | Read only |
-| "What changed today?" | `ActivitySummaryIntent` | read | Conductor changelog / status artifact | Read only |
-| "Add a task for the Worker" | `CreateAgentTodoIntent` | draft | Kind Robots Todo API | Block until JWT or machine auth is approved |
-| "Queue art for this project" | `QueueArtRequestIntent` | draft | Conductor art request dry-run | Draft only; no live generation without approval |
-| "Approve this task" | `ApproveTaskIntent` | blocked | Roadmap human gate | Always blocked by voice; Alexa can say where to approve manually |
-| "Merge this PR" | `MergePrIntent` | blocked | GitHub | Always blocked by voice |
-| "Publish this" | `PublishIntent` | blocked | External surfaces | Always blocked by voice |
+| `Serendipity: what is next for Serendipity?` | `ProjectStatusIntent` | read | Dream.goal / Dream.waypoints + Conductor roadmap | Read only |
+| `Serendipity: ask AMI why the relay is cranky` | `ChatIntent` | read/draft | Kind Robots chat stream | No production mutation |
+| `Serendipity: have Captain Whisker explain this as a quest` | `CharacterIntent` | read/draft | Character + chat stream | No production mutation |
+| `Serendipity: start a cozy mystery in the redwood library` | `DreamStoryIntent` | read/draft | Serendipity Dream story loop | Persist only after approved write path |
+| `Serendipity: play rainy day coding` | `LocalMusicIntent` | local | Local music adapter | Configured library roots only |
+| `Serendipity: draft a task for Alexa integration to add tests` | `CreateAgentTodoIntent` | draft | Kind Robots Todo API | Requires confirmation and approved auth |
+| `Serendipity: what needs my approval?` | `PendingApprovalsIntent` | read | Conductor roadmaps / pending gates | Read only |
+| `Serendipity: what changed today?` | `ActivitySummaryIntent` | read | Conductor changelog / status artifact | Read only |
+| `Serendipity: queue art for this project` | `QueueArtRequestIntent` | draft | Conductor art request dry-run | Draft only; no live generation without approval |
+| `Serendipity: approve this task` | `ApproveTaskIntent` | blocked | Roadmap human gate | Always blocked by voice; Alexa can say where to approve manually |
+| `Serendipity: merge this PR` | `MergePrIntent` | blocked | GitHub | Always blocked by voice |
+| `Serendipity: publish this` | `PublishIntent` | blocked | External surfaces | Always blocked by voice |
 
 ## Authentication model
 
@@ -110,6 +125,8 @@ KR_API_TOKEN=
 KR_USER_JWT=
 CONDUCTOR_REPO=silasfelinus/conductor
 GITHUB_TOKEN=
+SERENDIPITY_MUSIC_ROOTS=
+SERENDIPITY_MUSIC_ENABLED=false
 ```
 
 `KR_USER_JWT` should not be required for the first read-only relay prototype. Todo creation should remain disabled until Silas explicitly chooses a long-lived user auth strategy or a dedicated machine-auth route exists.
@@ -120,8 +137,11 @@ Voice responses should be short, concrete, and confirm whether an action happene
 
 Examples:
 
-- Project status: "Serendipity is blocked on one approval: write-back design. Next agent task unlocks after approval."
+- Project status: "Alexa integration is working toward local Serendipity voice control. Next waypoint: build the request router."
 - Pending approvals: "You have four approval gates. Top priority: digital storefront platform choice."
+- Chat answer: "AMI says the relay is cranky because it needs a policy table before adapters. Classic goblin behavior."
+- Dream story: "The redwood library opens under your feet. A moth librarian asks which task you came to rescue."
+- Music clarification: "I found three rainy day playlists. Do you want coding, piano, or thunderstorm?"
 - Create todo blocked: "I can draft that later, but todo creation needs approved user authentication first."
 - Blocked action: "I can't approve or merge by voice. Open the conductor page and approve it there."
 
@@ -130,6 +150,7 @@ The relay can include longer debug detail in logs, but Alexa should speak the sh
 ## Guardrails
 
 - Read-only commands are allowed first.
+- Local music commands are local-only, feature-flagged, and restricted to configured library roots.
 - Draft commands must say "draft" or "queue" and may not publish, deploy, spend, send, approve, or merge.
 - Voice cannot set `approved_by_human: true`.
 - Voice cannot edit roadmap YAML directly.
@@ -140,13 +161,17 @@ The relay can include longer debug detail in logs, but Alexa should speak the sh
 
 ## Minimal first prototype
 
-Build the first relay prototype with only read intents:
+Build the first relay prototype with only the Serendipity router and safe local responses:
 
 1. `ProjectStatusIntent`
 2. `PendingApprovalsIntent`
-3. `ActivitySummaryIntent`
+3. `ChatIntent`
+4. `CharacterIntent`
+5. `DreamStoryIntent`
+6. `CreateAgentTodoIntent` as confirmation-only/draft-only
+7. `LocalMusicIntent` behind `SERENDIPITY_MUSIC_ENABLED=false` by default
 
-Stub all write/draft intents as policy-blocked with clear responses. This proves the voice loop without any production mutation risk.
+Stub all write/draft intents as policy-blocked until the relevant auth and confirmation path is approved. This proves the voice loop without mutation risk.
 
 ## Suggested file layout for a later implementation
 
@@ -157,18 +182,25 @@ projects/alexa-integration/relay/
   src/server.ts
   src/policy.ts
   src/intents.ts
+  src/serendipity-router.ts
+  src/adapters/chat.ts
+  src/adapters/character.ts
   src/adapters/conductor.ts
+  src/adapters/dream.ts
   src/adapters/kind-robots.ts
+  src/adapters/music.ts
   src/voice-response.ts
 ```
 
 ## Verification plan for the later implementation
 
 - Unit-test every intent against the policy table.
-- Snapshot-test Alexa response text for the three read-only intents.
+- Unit-test `Serendipity: <request>` domain routing.
+- Snapshot-test Alexa response text for the safe read/draft intents.
 - Test that blocked intents never call adapters.
 - Test that missing credentials produce safe "not configured" messages.
-- Test that no route can approve, merge, publish, deploy, or spend.
+- Test that no route can approve, merge, publish, deploy, spend, or touch secrets.
+- Test that local music cannot escape configured library roots.
 - Run locally only until Silas approves a rollout checklist.
 
 ## Open questions for Silas
@@ -176,8 +208,10 @@ projects/alexa-integration/relay/
 - Should the relay live inside conductor, inside kind_robots, or as a tiny separate self-hosted service on Unraid?
 - Should Todo creation use a long-lived user JWT, a new machine-auth route, or stay manual-only?
 - Should Alexa ever be allowed to queue dry-run art requests, or should it only report art queue status?
+- Should local music play through Echo, an existing local player, or the Unraid host?
+- Which Character is the default when the user says `Serendipity:` without naming one?
 - What phrase should Alexa use when redirecting approval actions to the web UI?
 
 ## Next task unlocked
 
-After this design is accepted, the next safe step is the rollout and safety checklist: testing, disabling, logging, and review procedures before any real voice command integration is used.
+After this design is accepted, the next safe step is the Serendipity voice request router: parse `Serendipity: <request>`, classify the domain, apply policy, and return a short local response without live publishing or production mutation.

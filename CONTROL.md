@@ -35,6 +35,10 @@ needs-human.
 - Do not invent a second source of project truth. Conductor roadmap.yaml is the
   authoritative task record; kind_robots Dream is the authoritative display/identity
   record. Slug is the join key.
+- Project Dreams now expose `goal` and `waypoints`. Treat `goal` as the friendly
+  definition of done and `waypoints` as the lightweight user-facing step list.
+  Conductor roadmap.yaml remains the authoritative agent task queue; Dream waypoints
+  are the UI/voice layer and should not replace roadmap tasks.
 
 ---
 
@@ -142,11 +146,17 @@ ops tooling. Keep changes small and reversible. Nothing outward-facing without n
 - (your notes)
 
 ### alexa-integration  (software)
-**Direction:** Custom Alexa skill + Unraid relay server. Draft and prototype only — do NOT
-publish the skill to the Alexa store or expose a live endpoint without needs-human.
-Auth via KR_API_TOKEN (same token as fetch_todos.py).
+**Direction:** Custom Alexa skill + local relay server for the Serendipity voice surface.
+The stable product contract is `Serendipity: <request>` from local Echo devices. Support
+custom LLM chat, Character roleplay, Dream story sessions, approved local music playback,
+and safe project work. Use Dream.goal and Dream.waypoints for friendly project state;
+use Conductor roadmaps for authoritative agent tasks. Draft/prototype locally first — do NOT
+publish the skill, expose a live endpoint, touch DNS/secrets/billing, or bypass human gates
+without needs-human approval. Auth via KR_API_TOKEN where appropriate, with user/JWT or
+machine-auth questions handled explicitly before write actions.
 **Notes:**
-- (your notes)
+- This project should now build toward `projects/alexa-integration/docs/serendipity-voice-surface.md`.
+- Voice can read goals/waypoints and draft Todos, but cannot approve, merge, deploy, publish, spend, or silently edit roadmap YAML.
 
 ### conductor-app  (software)
 **Direction:** Flutter app (iOS/Android/macOS/web) over the kind_robots REST API.
@@ -179,7 +189,8 @@ infrastructure (chat streams, Bots, Dreams, Todos). This project has write acces
 develop the Serendipity component in kind_robots. Design brief first (t-001,
 needs-human gate) before any code; task write-back (t-006) is also human-gated.
 **Notes:**
-- (your notes)
+- Coordinate with alexa-integration for the voice surface. Alexa owns the Echo/relay
+  interface; Serendipity owns the story/chat/task-weaving experience.
 
 ### storymaker  (software)
 **Direction:** Collaborative storytelling engine built on top of existing Kind Robots
