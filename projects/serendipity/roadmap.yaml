@@ -114,9 +114,9 @@ tasks:
 - id: t-006
   milestone: m4
   title: Write story answers back to task progress
-  status: review
+  status: done
   owner: claude
-  updated: '2026-07-03T15:55:00Z'
+  updated: '2026-07-03T19:35:00Z'
   pr: https://github.com/silasfelinus/kind_robots/pull/79
   passes: 0
   stakes: reversible
@@ -124,17 +124,20 @@ tasks:
   approved_by_human: true
   depends_on: t-005
   note: >
-    Wiring design (projects/serendipity/docs/write-back-design.md, demoed on
-    kind_robots PR #77) approved by Silas in a Claude Code session on
-    2026-07-03 on his explicit instruction ("update t-006 so we keep moving
-    on it"). Implementation of the per-item Apply write path is now in
-    progress under this task: honey-do answers mark the todo done; needs-human
-    task decisions become AGENT todos; the app never edits roadmap YAML.
+    Merged (kind_robots PR #79, merged directly by Silas): per-item Apply
+    write-back implemented exactly per the approved design
+    (projects/serendipity/docs/write-back-design.md) — honey-do answers mark
+    the todo DONE with the answer appended as a note; needs-human conductor
+    decisions become an AGENT todo; the app never edits roadmap YAML.
+    Reviewed post-merge by Claude: verified todoStore.updateTodo/createTodo
+    call shapes match their signatures, write-back status walks
+    pending-human-gate -> queued -> written with rollback on failure, and
+    scope stayed exactly at the approved wiring. Unblocks t-007.
 
 - id: t-007
   milestone: m5
   title: Polish pass and first full playthrough
-  status: waiting
+  status: ready
   owner: null
   passes: 0
   stakes: reversible
@@ -185,3 +188,18 @@ tasks:
     Completed in kind_robots PR #78. The Serendipity finale now shows a local session recap titled
     "What the story learned," summarizing tone, place, genre, vibe tags, preference clues, and real-world
     threads held for review. No backend writes, Todo writes, roadmap writes, live deploys, or publishing actions.
+
+- id: t-011
+  milestone: m5
+  title: Surface Apply write-back failures inline on the ledger item, not only in the global error banner
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  note: >
+    Kaizen from t-006 (PR #79): applyWriteBack() sets store.errorMessage on failure, but the
+    Story ledger only renders a single global error line above the input form — on a long
+    story with several pending items the failure isn't visually tied to which item didn't
+    land. Show the failure message (or a retry hint) directly on the ledger article for that
+    beatId instead of (or in addition to) the global banner. Small, reversible UI change,
+    good fit for t-007's polish pass.
