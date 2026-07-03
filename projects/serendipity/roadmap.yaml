@@ -1,16 +1,12 @@
 project: serendipity
 kind: software
-notes_from_silas: |
-  Serendipity is the fun one: a story-weaving experience inside kind_robots.
-  The Serendipity bot uses our task-manager systems to weave a narrative around
-  a theme the user picks (dream vibes, locations, genres). The user is the
-  protagonist of a colorful, engaging story — and the questions the story asks
-  them quietly advance the real honey-dos and human-gated tasks of a project.
-  Build on existing infrastructure: chat streams, Bots, Dreams (LOCATION/GENRE
-  dream types), Todos (HONEYDO category), and the conductor roadmap task gates.
-  This project has write access to develop the Serendipity component in
-  kind_robots. Delight first: the story should feel like a gift, not a chore list.
-
+notes_from_silas: "Serendipity is the fun one: a story-weaving experience inside kind_robots.\nThe Serendipity\
+  \ bot uses our task-manager systems to weave a narrative around\na theme the user picks (dream vibes,\
+  \ locations, genres). The user is the\nprotagonist of a colorful, engaging story \u2014 and the questions\
+  \ the story asks\nthem quietly advance the real honey-dos and human-gated tasks of a project.\nBuild\
+  \ on existing infrastructure: chat streams, Bots, Dreams (LOCATION/GENRE\ndream types), Todos (HONEYDO\
+  \ category), and the conductor roadmap task gates.\nThis project has write access to develop the Serendipity\
+  \ component in\nkind_robots. Delight first: the story should feel like a gift, not a chore list.\n"
 milestones:
 - id: m1
   title: Experience design and data contract
@@ -27,12 +23,11 @@ milestones:
 - id: m4
   title: 'Task weaving: honey-dos and human gates as story beats'
   weight: 20
-  status: not-started
+  status: done
 - id: m5
   title: Polish and first full playthrough
   weight: 10
   status: not-started
-
 tasks:
 - id: t-001
   milestone: m1
@@ -44,10 +39,10 @@ tasks:
   gate_human: true
   approved_by_human: true
   updated: '2026-07-03T06:45:00Z'
-  note: >
-    Approved by Silas in a Claude Code session on 2026-07-03 after reading the full brief (landed
+  note: 'Approved by Silas in a Claude Code session on 2026-07-03 after reading the full brief (landed
     on main via PR #107). Approval recorded on his explicit instruction. Unblocks t-002 and t-003.
 
+    '
 - id: t-002
   milestone: m2
   title: Scaffold Serendipity component in kind_robots
@@ -58,12 +53,10 @@ tasks:
   passes: 0
   stakes: reversible
   depends_on: t-001
-  note: >
-    Create components/pages/serendipity-page.vue (plus store if needed) wired into the kind_robots
-    chat stream infrastructure: a themed intro screen, a streaming story panel using chatStore.generateText,
-    and a Serendipity bot persona. No task integration yet — just a working streamed story experience
-    behind the approved design.
-
+  note: "Create components/pages/serendipity-page.vue (plus store if needed) wired into the kind_robots\
+    \ chat stream infrastructure: a themed intro screen, a streaming story panel using chatStore.generateText,\
+    \ and a Serendipity bot persona. No task integration yet \u2014 just a working streamed story experience\
+    \ behind the approved design.\n"
 - id: t-003
   milestone: m3
   title: Build theme picker from dream vibes, locations, and genres
@@ -74,10 +67,10 @@ tasks:
   passes: 0
   stakes: reversible
   depends_on: t-001
-  note: >
-    Surface LOCATION and GENRE dreams (plus vibe/flavor text) as pickable story ingredients. A user
+  note: 'Surface LOCATION and GENRE dreams (plus vibe/flavor text) as pickable story ingredients. A user
     choice produces a story seed object the engine can expand. Include a "surprise me" serendipity roll.
 
+    '
 - id: t-004
   milestone: m3
   title: Implement the story weaving loop
@@ -90,12 +83,12 @@ tasks:
   depends_on:
   - t-002
   - t-003
-  note: >
-    Merged. Momentum-phased prompts (young/rising/deep/resolving), a bounded recap so long stories
-    don't grow prompts without limit, and a real ending: "Bring it to a close" (from beat 2) weaves a
+  note: 'Merged. Momentum-phased prompts (young/rising/deep/resolving), a bounded recap so long stories
+    don''t grow prompts without limit, and a real ending: "Bring it to a close" (from beat 2) weaves a
     finale beat with no question, sets status complete, and shows "The End". Verified via full-project
     vue-tsc/eslint/prettier plus green CI (TypeScript, GitGuardian, Vercel).
 
+    '
 - id: t-005
   milestone: m4
   title: Weave real tasks into story questions
@@ -106,43 +99,38 @@ tasks:
   passes: 0
   stakes: reversible
   depends_on: t-004
-  note: >
-    Map open HONEYDO todos and needs-human conductor tasks for the chosen project into story beats:
-    the story's questions present the real decision or action in-world. Read-only in this task —
-    surfacing and phrasing only, no writes back to todos or roadmaps yet.
-
+  note: "Map open HONEYDO todos and needs-human conductor tasks for the chosen project into story beats:\
+    \ the story's questions present the real decision or action in-world. Read-only in this task \u2014\
+    \ surfacing and phrasing only, no writes back to todos or roadmaps yet.\n"
 - id: t-006
   milestone: m4
   title: Write story answers back to task progress
-  status: review
+  status: done
   owner: claude
-  updated: '2026-07-03T15:55:00Z'
+  updated: '2026-07-03T19:30:00Z'
   pr: https://github.com/silasfelinus/kind_robots/pull/79
   passes: 0
   stakes: reversible
   gate_human: true
   approved_by_human: true
   depends_on: t-005
-  note: >
-    Wiring design (projects/serendipity/docs/write-back-design.md, demoed on
-    kind_robots PR #77) approved by Silas in a Claude Code session on
-    2026-07-03 on his explicit instruction ("update t-006 so we keep moving
-    on it"). Implementation of the per-item Apply write path is now in
-    progress under this task: honey-do answers mark the todo done; needs-human
-    task decisions become AGENT todos; the app never edits roadmap YAML.
+  note: 'Wiring design (projects/serendipity/docs/write-back-design.md, demoed on kind_robots PR #77)
+    approved by Silas in a Claude Code session on 2026-07-03 on his explicit instruction ("update t-006
+    so we keep moving on it"). Implementation of the per-item Apply write path is now in progress under
+    this task: honey-do answers mark the todo done; needs-human task decisions become AGENT todos; the
+    app never edits roadmap YAML.
 
+    '
 - id: t-007
   milestone: m5
   title: Polish pass and first full playthrough
-  status: waiting
+  status: ready
   owner: null
   passes: 0
   stakes: reversible
   depends_on: t-006
-  note: >
-    Run one full session end-to-end (theme pick → story → woven tasks → write-back)
-    and polish tone, pacing, and visuals. Deliver a short playthrough report with screenshots for Silas.
-
+  note: "Run one full session end-to-end (theme pick \u2192 story \u2192 woven tasks \u2192 write-back)\
+    \ and polish tone, pacing, and visuals. Deliver a short playthrough report with screenshots for Silas.\n"
 - id: t-008
   milestone: m3
   title: Expose the in-flight chat (pending chat id or ref) from kind_robots chatStore for streaming consumers
@@ -151,16 +139,15 @@ tasks:
   updated: '2026-07-03T05:14:12-07:00'
   passes: 0
   stakes: reversible
-  note: >
-    FOR SILAS: I claimed this task, read kind_robots stores/chatStore.ts and the current
-    serendipityStore streaming heuristic, and attempted the smallest safe helper file for
-    exposing a pending chat reference. The GitHub connector safety filter blocked the write
-    to silasfelinus/kind_robots before a PR could be opened.
-    TO APPROVE: Either make the tiny helper manually in kind_robots or return this task to
-    status: ready for a local-code Worker/Claude session with patch access. The intended
-    change is to expose pendingChat, pendingChatId, and pendingText from chatStore so
-    serendipityStore does not read the last chat array entry while streaming.
+  note: 'FOR SILAS: I claimed this task, read kind_robots stores/chatStore.ts and the current serendipityStore
+    streaming heuristic, and attempted the smallest safe helper file for exposing a pending chat reference.
+    The GitHub connector safety filter blocked the write to silasfelinus/kind_robots before a PR could
+    be opened. TO APPROVE: Either make the tiny helper manually in kind_robots or return this task to
+    status: ready for a local-code Worker/Claude session with patch access. The intended change is to
+    expose pendingChat, pendingChatId, and pendingText from chatStore so serendipityStore does not read
+    the last chat array entry while streaming.
 
+    '
 - id: t-009
   milestone: m3
   title: Author starter LOCATION and GENRE dreams so the theme picker has ingredients
@@ -169,9 +156,11 @@ tasks:
   updated: '2026-07-03T06:16:00-07:00'
   passes: 0
   stakes: reversible
-  note: >
-    Completed in PR #122. Added projects/serendipity/dreams/starter-ingredients.json with five LOCATION and five GENRE starter Dream ingredients for the theme picker. No live database write or endpoint call was performed.
+  note: 'Completed in PR #122. Added projects/serendipity/dreams/starter-ingredients.json with five LOCATION
+    and five GENRE starter Dream ingredients for the theme picker. No live database write or endpoint
+    call was performed.
 
+    '
 - id: t-010
   milestone: m4
   title: Surface a session recap at the finale ("what the story learned about your preferences")
@@ -181,7 +170,20 @@ tasks:
   passes: 0
   stakes: reversible
   pr: https://github.com/silasfelinus/kind_robots/pull/78
-  note: >
-    Completed in kind_robots PR #78. The Serendipity finale now shows a local session recap titled
+  note: 'Completed in kind_robots PR #78. The Serendipity finale now shows a local session recap titled
     "What the story learned," summarizing tone, place, genre, vibe tags, preference clues, and real-world
-    threads held for review. No backend writes, Todo writes, roadmap writes, live deploys, or publishing actions.
+    threads held for review. No backend writes, Todo writes, roadmap writes, live deploys, or publishing
+    actions.
+
+    '
+- id: t-011
+  milestone: m5
+  title: Badge and filter Serendipity-created AGENT todos in the Todos surface
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  note: 'Kaizen from the t-006 merge. Story decisions now land as AGENT todos; a story-source badge/filter
+    makes them easy to find and act on among other agent todos.
+
+    '

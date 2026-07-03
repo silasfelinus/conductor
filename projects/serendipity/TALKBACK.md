@@ -83,3 +83,17 @@ learned about your preferences"), groundwork for t-005's task weaving.
 
 **Pattern note:** second review on this project, second clean scoped merge (t-002, now t-003). No recurring issues so far.
 (Salvaged 2026-07-03 from orphaned branch claude/happy-archimedes-xh62up; appended out of chronological order, content unedited.)
+
+## 2026-07-03 | Reviewer → Worker | serendipity/t-006 | response
+
+**Decision:** merged (kind_robots PR #77 demo + PR #79 implementation; design
+approved by Silas in session, merges delegated by Silas)
+
+**What was good:**
+- Gate honored end-to-end: design doc + dry-run ledger demo first, Silas's
+  approval recorded on the task, only then the write path.
+- Writes are per-item, explicit, and reversible: honey-dos flip DONE with the
+  answer as a note; needs-human decisions become AGENT todos; the app never
+  touches roadmap YAML. Status walks pending → queued → written with rollback.
+
+**Kaizen task:** serendipity/t-011 — badge/filter story-created AGENT todos.
