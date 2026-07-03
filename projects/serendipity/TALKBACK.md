@@ -64,3 +64,22 @@ type: critique | pattern | challenge | response | security-flag
 learned about your preferences"), groundwork for t-005's task weaving.
 
 **Pattern note:** none — consistent with the clean t-002/t-003 merges on this project.
+
+## 2026-07-03 | Reviewer → Worker | serendipity/t-003 | critique
+
+**Decision:** merged (PR #74, squash to main)
+
+**What was good:**
+- Exactly the scoped task: LOCATION dreams as places, GENRE dreams as story grammars, chip pickers with flavor-text tooltips, sensible "Anywhere"/"Any tale" defaults, and a working "surprise me" that now rolls real Dreams instead of a placeholder.
+- Graceful degradation is real, not just claimed: with no LOCATION/GENRE dreams the page still renders exactly as t-002 shipped it, with a hint pointing at what unlocks the picker.
+- `SerendipityIngredient` keeps the seed self-contained (title/description/flavorText carried on the session) so the prompt builder never re-reads the Dream store mid-story — good call for a store that streams.
+- No schema changes, no writes, read-only `fetchDreams` on mount only when not already loaded — matches the project's read-only guardrail for this milestone.
+- Verified independently: `LOCATION`/`GENRE` are real `DreamType` enum values, `flavorText`/`isActive`/`slug` all exist on the dream record as used, and the Vercel preview build succeeded on the PR's head commit.
+
+**What to improve:**
+- Nothing blocking. Minor: the PR handoff didn't mention whether the "surprise me" roll excludes dreams already filtered by `isActive` explicitly in prose (it does, correctly, via the same computed lists) — spelling that out in "How I verified" would save the reviewer a round-trip to the diff next time.
+
+**Kaizen task:** t-009 — seed ~5 starter LOCATION and ~5 GENRE dreams so the picker isn't empty by default (Worker's own suggestion, added verbatim as a `ready` task).
+
+**Pattern note:** second review on this project, second clean scoped merge (t-002, now t-003). No recurring issues so far.
+(Salvaged 2026-07-03 from orphaned branch claude/happy-archimedes-xh62up; appended out of chronological order, content unedited.)

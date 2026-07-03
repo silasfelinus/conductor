@@ -114,25 +114,22 @@ tasks:
 - id: t-006
   milestone: m4
   title: Write story answers back to task progress
-  status: needs-human
+  status: claimed
   owner: claude
-  updated: '2026-07-03T11:05:00Z'
+  updated: '2026-07-03T15:40:00Z'
   pr: https://github.com/silasfelinus/kind_robots/pull/77
   passes: 0
   stakes: reversible
   gate_human: true
+  approved_by_human: true
   depends_on: t-005
   note: >
-    FOR SILAS: The write-back wiring design is at
-    projects/serendipity/docs/write-back-design.md, and the working demo (the
-    Story ledger, dry-run only) is kind_robots PR #77 — safe to merge, it
-    writes nothing. It proposes: honey-do answers mark the todo done via an
-    explicit per-item Apply button; needs-human task decisions become AGENT
-    todos (the app never edits roadmap YAML); preference answers stay
-    app-owned. TO APPROVE: read the doc, try the ledger on the PR preview,
-    set approved_by_human: true and status: done here. That unblocks t-007
-    (full playthrough) and green-lights implementing the Apply buttons. To
-    change the wiring, add a note here instead and it returns to ready.
+    Wiring design (projects/serendipity/docs/write-back-design.md, demoed on
+    kind_robots PR #77) approved by Silas in a Claude Code session on
+    2026-07-03 on his explicit instruction ("update t-006 so we keep moving
+    on it"). Implementation of the per-item Apply write path is now in
+    progress under this task: honey-do answers mark the todo done; needs-human
+    task decisions become AGENT todos; the app never edits roadmap YAML.
 
 - id: t-007
   milestone: m5
