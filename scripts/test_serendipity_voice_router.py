@@ -33,6 +33,13 @@ def main():
         requiresConfirmation=False,
     )
     check(
+        "Serendipity: have Professor Sparklebiscuit explain this as a dungeon quest",
+        domain="character",
+        characterSlug="professor-sparklebiscuit",
+        userIntent="explain this as a dungeon quest",
+        requiresConfirmation=False,
+    )
+    check(
         "Serendipity: start a cozy mystery story in the redwood library",
         domain="dream",
         dreamSlug="cozy-mystery-redwood-library",
@@ -62,7 +69,7 @@ def main():
         domain="unknown",
         requiresConfirmation=True,
     )
-    print("serendipity_voice_router: 8 checks passed")
+    print("serendipity_voice_router: 9 checks passed")
 
 
 if __name__ == "__main__":
