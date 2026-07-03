@@ -50,16 +50,13 @@ tasks:
 - id: t-002
   milestone: m2
   title: Define Guided Adventure turn lifecycle
-  status: review
+  status: done
   owner: worker
   updated: '2026-07-02T19:14:32-07:00'
   passes: 0
   stakes: reversible
   depends_on: t-001
-  note: 'Specify the server-side lifecycle for a Guided Adventure turn: prompt build, branch options,
-    custom-input handling, stat or reward spends, safety limits, state mutation, and next-turn handoff.
-
-    '
+  note: 'Written projects/storymaker/docs/guided-adventure-turn-lifecycle.md. It defines prompt assembly, branch option generation, custom input handling, optional reward/stat spends, safety limits, state mutation, persistence, and next-turn handoff for Guided Adventure mode. This is documentation/spec work only; no backend schema, API, live data, deploy, or publishing changes.'
 - id: t-003
   milestone: m2
   title: Define Exquisite Corpse collaboration rules
