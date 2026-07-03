@@ -154,15 +154,12 @@ tasks:
 - id: t-009
   milestone: m3
   title: Author starter LOCATION and GENRE dreams so the theme picker has ingredients
-  status: ready
-  owner: null
+  status: done
+  owner: worker
+  updated: '2026-07-03T06:16:00-07:00'
   passes: 0
   stakes: reversible
-  note: 'Kaizen from the t-003 merge. The picker and surprise roll only show what exists in the database;
-    ~5 authored locations and ~5 genres (title, description, flavorText per the brief''s examples) make
-    it immediately delightful. Content lands via the normal dream-creation surfaces.
-
-    '
+  note: 'Completed in PR #122. Added projects/serendipity/dreams/starter-ingredients.json with five LOCATION and five GENRE starter Dream ingredients for the theme picker. No live database write or endpoint call was performed.'
 - id: t-010
   milestone: m4
   title: Surface a session recap at the finale ("what the story learned about your preferences")
