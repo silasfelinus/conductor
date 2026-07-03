@@ -84,12 +84,12 @@ tasks:
 - id: t-008
   milestone: m4
   title: Add unit tests for scripts/next_ready_task.py covering dependency chains, paused/retired projects, and gate_human tasks
-  status: review
+  status: done
   owner: worker
   updated: '2026-07-03T02:13:53-07:00'
   passes: 0
   stakes: reversible
-  note: 'Added tests/test_next_ready_task.py with synthetic pytest fixtures covering priority order, paused/retired project skipping, dependency chains, unapproved gate_human dependencies, and approved gate_human unblocking.'
+  note: 'Merged in PR #116: tests/test_next_ready_task.py covers priority order, paused/retired project skipping, dependency chains, unapproved gate_human dependencies, and approved gate_human unblocking for scripts/next_ready_task.py.'
 - id: t-006
   milestone: m1
   title: Audit kind_robots Bots, Characters, Scenarios, and Chats models for session compatibility
