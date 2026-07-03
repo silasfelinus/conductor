@@ -70,16 +70,13 @@ tasks:
 - id: t-004
   milestone: m3
   title: Map rewards, locations, items, and characters back to profiles
-  status: claimed
+  status: review
   owner: worker
-  updated: '2026-07-02T21:14:11-07:00'
+  updated: '2026-07-02T21:18:00-07:00'
   passes: 0
   stakes: reversible
   depends_on: t-001
-  note: 'Define what session outputs become reusable profile objects and how rarity, unlocks, genre remixes,
-    and future-session reuse should work.
-
-    '
+  note: 'Written projects/storymaker/docs/profile-artifact-mapping.md. It defines which session outputs become reusable profile artifacts, rarity and unlock rules, genre remix modes, future-session reuse, and conservative persistence boundaries. Spec only — no schema, API, live data, deploy, or publishing changes.'
 - id: t-005
   milestone: m4
   title: Sketch first Storymaker UX flow
