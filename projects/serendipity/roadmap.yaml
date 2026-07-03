@@ -179,12 +179,9 @@ tasks:
 - id: t-011
   milestone: m5
   title: Badge and filter Serendipity-created AGENT todos in the Todos surface
-  status: claimed
+  status: needs-human
   owner: worker
   updated: '2026-07-03T14:14:24-07:00'
   passes: 0
   stakes: reversible
-  note: 'Kaizen from the t-006 merge. Story decisions now land as AGENT todos; a story-source badge/filter
-    makes them easy to find and act on among other agent todos.
-
-    '
+  note: 'FOR SILAS: I could not apply the actual Kind Robots UI patch because the GitHub connector safety filter blocked creating a worker branch in silasfelinus/kind_robots. I preserved the intended implementation at projects/serendipity/docs/t-011-serendipity-agent-todo-badge-filter.md. It explains the exact todoStore helpers, conductor-page.vue Story tab/filter, todo card badge, Serendipity metadata tweak, and verification checklist. TO APPROVE: apply that patch in a local-code/Claude session with kind_robots patch access, then set this task back to ready or done depending on whether you want another Worker pass. This is a soft tooling block; no live data, deploys, or roadmap YAML outside conductor were changed.'
