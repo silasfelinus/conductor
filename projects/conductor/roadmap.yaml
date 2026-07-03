@@ -105,21 +105,21 @@ tasks:
 - id: t-006
   milestone: m4
   title: Add GitHub Actions security audit workflow
-  status: review
+  status: done
   owner: worker
-  updated: '2026-07-02T17:12:52-07:00'
+  updated: '2026-07-02T17:22:00-07:00'
   passes: 0
   stakes: needs-human
   gate_human: true
   depends_on:
   - t-004
   - t-005
-  note: 'Added .github/workflows/security-audit.yml. It runs on PRs to main, manual dispatch,
-    and a weekly cron. Checks include dependency audits where lockfiles exist, roadmap YAML
-    validation, Python syntax checks, fixture authz regression tests, a simple secret-pattern
-    smoke check, and safe no-token smoke runs for conductor scripts. It does not use secrets,
-    call live authenticated endpoints, probe external targets, change Vercel, deploy, publish,
-    or touch production data.
+  note: 'Added .github/workflows/security-audit.yml and merged in PR #95. It runs on PRs
+    to main, manual dispatch, and a weekly cron. Checks include dependency audits where
+    lockfiles exist, roadmap YAML validation, Python syntax checks, fixture authz regression
+    tests, a simple secret-pattern smoke check, and safe no-token smoke runs for conductor
+    scripts. It does not use secrets, call live authenticated endpoints, probe external
+    targets, change Vercel, deploy, publish, or touch production data.
 
     '
 - id: t-007
