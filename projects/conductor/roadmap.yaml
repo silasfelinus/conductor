@@ -256,11 +256,11 @@ tasks:
 - id: t-014
   milestone: m2
   title: "Run authz regression tests in Worker PR CI (ci.yml), not only Security Audit"
-  status: review
+  status: done
   owner: worker
-  updated: '2026-07-02T23:12:17-07:00'
+  updated: '2026-07-02T23:17:30-07:00'
   passes: 0
   stakes: reversible
   note: >
-    Kaizen from PR #102 merge. The authz suite only runs in security-audit.yml today;
-    adding it to ci.yml surfaces collection/import failures in the fast PR lane.
+    Completed in PR #108. Worker PR CI now includes an authz-regression job that installs pytest
+    and runs tests/test_authz_regression.py, matching the fixture command from security-audit.yml.
