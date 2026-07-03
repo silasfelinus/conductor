@@ -125,19 +125,18 @@ tasks:
 - id: t-007
   milestone: m4
   title: Build security report artifact and maintenance queue
-  status: waiting
-  owner: null
-  updated: '2026-06-29T00:00:00Z'
+  status: done
+  owner: worker
+  updated: '2026-07-03T03:11:45-07:00'
   passes: 0
   stakes: reversible
   depends_on: t-006
-  note: 'Create a script or workflow step that writes SECURITY-REPORT.md from the latest audit results:
-    pass/fail summary, new dependency vulnerabilities, failed authz boundaries, stale secrets/config warnings,
-    open security PRs, and a prioritized maintenance queue. The report should never include secret values,
-    private file contents, tokens, or personal data; only names, ids, severities, and recommended next
-    actions.
+  note: >
+    Completed in PR #109. Added scripts/build_security_report.py and SECURITY-REPORT.md.
+    The report builder writes a safe summary with audit status, authz fixture findings,
+    configuration-marker warnings, open security PRs, and a prioritized maintenance queue.
+    It avoids including credential values, private file contents, personal data, or live endpoint probes.
 
-    '
 - id: t-008
   milestone: m2
   title: Cross-repo image distribution pipeline (distribute_images.py)
