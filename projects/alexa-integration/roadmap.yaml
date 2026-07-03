@@ -33,25 +33,19 @@ tasks:
   approved_by_human: true
   note: 'FOR SILAS: docs/alexa-voice-commands.md contains the voice command list. It covers todo creation,
     project status readouts, approval reviews, art request handoffs, and activity summaries with sample
-    phrases. Also documents the auth model (KR_API_TOKEN for project reads; JWT gap for todo creation
-    flagged as a blocker). Also see docs/kr-api-for-voice.md for the full REST endpoint suitability audit.
+    phrases. Also documents the auth model. Also see docs/kr-api-for-voice.md for the full REST endpoint suitability audit.
     TO APPROVE: Read docs/alexa-voice-commands.md. Set approved_by_human: true and status: done here.
-    Unblocks: alexa-integration/t-002 (relay design note).
-
-    '
+    Unblocks: alexa-integration/t-002 (relay design note).'
 - id: t-002
   milestone: m2
   title: Draft relay design note
-  status: claimed
+  status: review
   owner: worker
   updated: '2026-07-03T09:14:36-07:00'
   passes: 0
   stakes: reversible
   depends_on: t-001
-  note: 'Design a small relay layer that maps approved voice commands to existing Conductor and kind_robots
-    actions. Keep it as a document-only plan first.
-
-    '
+  note: 'Drafted projects/alexa-integration/docs/relay-design.md. It maps Alexa intents to a safe relay policy layer, separates read/draft/blocked commands, keeps write actions disabled until auth is approved, and recommends a read-only first prototype.'
 - id: t-003
   milestone: m3
   title: Write rollout and safety checklist
@@ -60,10 +54,7 @@ tasks:
   passes: 0
   stakes: reversible
   depends_on: t-002
-  note: 'Write a checklist for testing, disabling, logging, and reviewing the voice command integration
-    before it is used for real work.
-
-    '
+  note: 'Write a checklist for testing, disabling, logging, and reviewing the voice command integration before it is used for real work.'
 - id: t-004
   milestone: m2
   title: Audit kind_robots REST API endpoints for Alexa intent suitability
@@ -72,10 +63,4 @@ tasks:
   updated: '2026-06-30T00:00:00Z'
   passes: 0
   stakes: reversible
-  note: "Wrote docs/kr-api-for-voice.md. Mapped 14 endpoints across todos, projects, conductor, and dreams.\
-    \ Key findings: GET/POST /api/todos require user JWT (not static API key) \u2014 relay needs long-lived\
-    \ JWT or machine auth route. Conductor endpoints (projects, pitch-vote, message, inbox) work cleanly\
-    \ with admin API key. Dreams endpoint (public) good for project status readouts. Two gaps to pitch:\
-    \ GET /api/conductor/status (short agent activity phrase) and GET /api/conductor/ pending-approvals\
-    \ (count of gated tasks). All 14 endpoints fit \u226410-word voice response patterns with relay-side\
-    \ formatting.\n"
+  note: 'Wrote docs/kr-api-for-voice.md. Mapped endpoints across todos, projects, conductor, and dreams. Key findings: Todo routes need user-scoped auth; conductor endpoints work cleanly for project reads; dreams endpoint is good for project status readouts; two gaps to pitch are short agent activity and pending approval counts.'
