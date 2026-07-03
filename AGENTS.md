@@ -7,8 +7,9 @@ Reviewer, for every project.
 ## What this repo is
 
 A service-agnostic spot where AI agents coordinate work on projects collaboratively, with
-or without a human in the loop. The Worker (OpenAI) proposes work; the Reviewer (Claude)
-reviews, critiques, and merges or escalates. The human (Silas) steers via each project's
+or without a human in the loop. The Worker (OpenAI) proposes work, implements scoped
+changes, resolves merge friction, and may merge safe PRs. The Reviewer (Claude) reviews,
+critiques, merges when appropriate, and escalates. The human (Silas) steers via each project's
 `roadmap.yaml` and stays out of routine cycles.
 
 Agents are not silent partners. Each role actively vets the other's output and methods —
@@ -20,10 +21,11 @@ Each project lives in `projects/<name>/` with its own `roadmap.yaml`.
 
 ## Project kinds — this changes what "done" means
 
-Every roadmap declares a `kind`. It tells the Reviewer how to handle finished work:
+Every roadmap declares a `kind`. It tells agents how to handle finished work:
 
-- **software** — code work. Output is a PR. Reviewer merges reversible low-stakes PRs,
-  bounces back the rest, escalates outward-facing/irreversible to `needs-human`.
+- **software** — code work. Output is a PR. Reversible, scoped, low-stakes PRs may be
+  merged by the Worker or Reviewer after verification. Outward-facing/irreversible work
+  escalates to `needs-human`.
 - **content** — deliverables, not code (marketing plans, copy, content-pipeline output).
   Output is a file in the project folder. The Reviewer does NOT auto-publish anything;
   finished drafts go to `needs-human` for Silas to approve before anything goes live.
@@ -46,9 +48,10 @@ take priority over roadmap tasks — if any are OPEN, handle the top one first.
    newest first within the same priority) before touching any roadmap.
 3. Treat the todo's `title` as the task description. The `description` field may name
    a specific project or provide context — follow it.
-4. Apply normal project-kind rules: if the todo implies code work, open a PR;
-   if it implies a draft/content, write the file; if it's a pitch, write to `pitches/`.
-5. When the work is done (PR opened, file written, etc.), run:
+4. Apply normal project-kind rules: if the todo implies code work, open a PR and merge it
+   when it is safe; if it implies a draft/content, write the file; if it's a pitch, write
+   to `pitches/`.
+5. When the work is done (PR merged/opened, file written, etc.), run:
    `python scripts/complete_todo.py <todo_id>`
    to mark it DONE in kind_robots. Silas will archive it when he's satisfied.
 6. If `KR_API_TOKEN` is missing, log the warning and proceed to roadmap tasks normally.
@@ -132,20 +135,21 @@ violation regardless of whether the action seems helpful.
 - Push to `worker/*` branches
 - Make exactly ONE atomic claim commit to `main` per task cycle (message: `claim: <project>/<task-id>`)
 - Open PRs from `worker/*` into `main`
-- Set `status: claimed`, `status: review`, `status: needs-human`, `status: ready` (on retry)
+- Merge its own reversible, scoped, verified PRs when they are not human-gated, outward-facing, irreversible, or otherwise unsafe
+- Smartly fix merge conflicts before merging; preserve independent valid changes and never delete conflicting work just to make Git happy
+- Set `status: claimed`, `status: review`, `status: needs-human`, `status: ready` (on retry), and `status: done` after a successful safe merge
 - Append entries to `TALKBACK.md` (global) or `projects/<name>/TALKBACK.md` — never overwrite
 - Set `status: challenged` on a task where it disagrees with the Reviewer's rejection
 - Run `scripts/fetch_todos.py`, `complete_todo.py`, `resolve_deps.py`
 - Create new `ready` tasks in roadmap.yaml for out-of-scope issues discovered during work
 
 ### Worker (OpenAI) — CANNOT
-- Merge any PR, including its own
-- Push to `main` beyond the single claim commit
+- Merge work that is human-gated, outward-facing, irreversible, security-sensitive, or blocked by failed verification unless Silas explicitly approves it
+- Push to `main` beyond the single claim commit and normal PR merges
 - Push to branches named anything other than `worker/*`
 - Set `approved_by_human: true` (Silas only)
-- Set `status: done` directly (Reviewer does this on merge)
 - Edit or delete another agent's TALKBACK entries
-- Close, reopen, or force-push PRs
+- Close, reopen, or force-push PRs unless Silas explicitly directs it in the current session
 
 ### Reviewer (Claude) — CAN
 - Merge reversible, scoped, software PRs from `worker/*` branches
@@ -184,18 +188,23 @@ violation regardless of whether the action seems helpful.
   commit that one change to `main` with message `claim: <project>/<task-id>`.
 - Branch `worker/<project>-<task-id>`. Do ONLY that task.
 - **software:** open a PR into `main`, fill the handoff template (including "Flags for
-  Reviewer"), set task `status: review`.
+  Reviewer"), set task `status: review`, verify it, resolve conflicts if present, and merge
+  it when safe. After a successful safe merge, set task `status: done`.
 - **content:** write the draft file, open a PR, set `status: needs-human`.
 - **proposal:** write `pitches/<date>-<slug>.md` using the pitch template, open a PR, set
   `status: needs-human`.
-- Never merge your own PR. Never push to `main` except the claim commit. One task at a time.
+- Keep the default outcome as an updated `main` branch unless the task is unsafe, human-gated,
+  outward-facing, irreversible, or genuinely blocked. One task at a time.
+- **Merge conflicts:** resolve them intelligently. Keep both sides when they are independent,
+  follow CONTROL.md and Silas notes when they conflict, and for `STATUS.md` / `workspace.html`
+  accept the latest generated/main version. Re-check relevant verification after fixing conflicts.
 - **After a Reviewer rejection:** read the Reviewer's feedback carefully. If you agree,
   fix and resubmit. If you disagree, write your case to the project's `TALKBACK.md` and
   set `status: challenged` — do not silently retry a disputed decision.
 
 **Recurring tasks** (`recurring: true`, e.g. brainstorm/t-001): these never reach `done`.
-After doing the work and opening the PR, set the task's `status` back to `ready` (not
-`review`/`needs-human`) so it re-arms for a future cycle. The pitches it produces are the
+After doing the work and opening/merging the PR, set the task's `status` back to `ready`
+(not `review`/`needs-human`) so it re-arms for a future cycle. The pitches it produces are the
 output that goes to Silas — the task itself just keeps cycling. A recurring task that
 produced nothing this cycle (e.g. pitch queue full) still re-arms to `ready`; note "no-op"
 in the PR. Recurring tasks don't count toward milestone progress.
@@ -204,13 +213,14 @@ in the PR. Recurring tasks don't count toward milestone progress.
 - Read the project's `kind` first.
 - **Before reviewing:** check the project's `TALKBACK.md` for any prior critique context
   on this task or recurring Worker patterns. Use it to calibrate your review.
-- **software, reversible, does the task, scoped:** approve, merge, `status: done`, bump updated.
+- **software, reversible, does the task, scoped:** approve and merge if the Worker has not
+  already merged it; otherwise audit the result and append TALKBACK if useful.
 - **Needs changes:** comment specifically, set `status: ready`, increment `passes`.
   At `passes == 3`, set `status: blocked` instead. Do NOT re-implement.
 - **content / proposal / outward-facing / irreversible:** do NOT merge to live. Confirm the
   draft or pitch is well-formed, then leave at `status: needs-human` for Silas. (You may
   merge the file into main so it's visible, but never trigger publish/deploy/send.)
-- **After every review decision** (merge, reject, or escalate): append a brief entry to
+- **After every review decision** (merge, reject, audit, or escalate): append a brief entry to
   the project's `TALKBACK.md` noting your reasoning, any patterns you observed in the
   Worker's output, and any suggestions for how the Worker could improve. This is not
   optional — the critique log is how the system learns.
@@ -239,6 +249,7 @@ This section defines how.
 - Template discipline (missing or thin sections in the handoff)
 - Recurring mistakes across tasks (same error in multiple cycles)
 - Dependency shortcuts (doing work before a gate is properly cleared)
+- Merge discipline problems (dropping valid changes, skipping conflicts, or failing to re-check after conflict fixes)
 
 ### How to write a talkback entry
 
@@ -348,7 +359,7 @@ The Reviewer decides whether to create a task from it or defer.
 ```
 ## YYYY-MM-DD | Reviewer → Worker | <project>/<task-id> | <critique|pattern|response>
 
-**Decision:** merged | rejected (pass N) | escalated to needs-human | challenge resolved
+**Decision:** merged | rejected (pass N) | escalated to needs-human | challenge resolved | audited already-merged work
 
 **What was good:**
 - specific things the Worker did well
@@ -383,7 +394,7 @@ What the Worker would do first if you approve.
 ```
 
 ## Status lifecycle
-`ready` → `claimed` → `review` → `done`
+`ready` → `claimed` → (`review` optional) → `done`
 
 Side exits:
 - `blocked` — iteration budget exhausted (passes == 3)
