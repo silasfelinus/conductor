@@ -263,3 +263,25 @@ tasks:
   note: >
     Completed in PR #108. Worker PR CI now includes an authz-regression job that installs pytest
     and runs tests/test_authz_regression.py, matching the fixture command from security-audit.yml.
+
+- id: t-015
+  milestone: m2
+  title: "Document a cross-repo task mode in AGENTS.md for connector branch-creation blocks"
+  status: ready
+  owner: null
+  updated: '2026-07-03T23:30:00-07:00'
+  passes: 0
+  stakes: reversible
+  note: >
+    Kaizen task from Reviewer audit of conductor PR #139 (alexa-integration/t-006), echoing the
+    same pattern already seen in conductor PR #134 (serendipity/t-011): the GitHub connector's
+    safety filter blocks creating a worker/* branch in a repo other than conductor, so both tasks
+    fell back to writing the intended patch as a doc under projects/<name>/docs/ and setting
+    status: needs-human. The fallback is sound but undocumented — each Worker pass reinvents it.
+    Add a "Cross-repo tasks" section to AGENTS.md covering: how to name the target-repo branch,
+    where the PR should be opened when conductor-only write access is available, the preserve-
+    as-doc fallback shape (doc path convention, what to include) when branch creation is blocked
+    in the target repo, and how the roadmap note should read so Silas can apply the patch and
+    flip the task back to ready/done. See projects/alexa-integration/TALKBACK.md 2026-07-03 entry
+    and projects/serendipity/docs/t-011-serendipity-agent-todo-badge-filter.md for two worked
+    examples to generalize from.
