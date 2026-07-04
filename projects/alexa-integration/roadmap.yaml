@@ -134,18 +134,27 @@ tasks:
   - id: t-008
     milestone: m5
     title: Prototype local music playback adapter
-    status: ready
-    owner: null
-    updated: '2026-07-03T15:15:00-07:00'
+    status: needs-human
+    owner: worker
+    updated: '2026-07-04T02:30:00Z'
     passes: 0
     stakes: reversible
     depends_on: t-005
     note: >-
-      Build a local-only music adapter in silasfelinus/serendipity-voice behind a
-      feature flag for requests like "Serendipity: play <music target>". It may
-      read only configured music library roots and must never delete, rename,
-      tag, move, or expose arbitrary files. If multiple matches exist, ask a
-      short clarification.
+      FOR SILAS: The GitHub connector blocked creating the required
+      worker/alexa-integration-t-008 branch in silasfelinus/serendipity-voice, so
+      the Worker preserved the exact intended patch (merged in conductor PR #142)
+      at projects/alexa-integration/docs/t-008-local-music-adapter.md. It
+      contains src/adapters/music-adapter.ts, its test file, a
+      handle-voice-request.test.ts update, and the run-all-tests.ts wiring —
+      behind a SERENDIPITY_ENABLE_MUSIC flag, reading only a configured library
+      root, never mutating files, and asking for clarification on multiple
+      matches. TO APPROVE: apply that patch in a local-code or Claude session
+      with serendipity-voice branch-write access, run npm run test / npm run
+      typecheck there, then set this task to done (or back to ready if another
+      Worker pass should finish it). This is a soft tooling block, not a design
+      question — no live skill, endpoint, deploy, DNS, secrets, billing, or
+      production data were touched.
   - id: t-009
     milestone: m5
     title: Draft project-work actions from voice

@@ -276,3 +276,23 @@ tasks:
     Completed in PR #141. Added a Cross-repo tasks section to AGENTS.md documenting
     target-repo branch/PR handling and the conductor-doc fallback when connector/tooling
     blocks target-repo branch creation or writes.
+
+- id: t-016
+  milestone: m2
+  title: Add a targeted single-field roadmap.yaml updater so cross-repo fallback tasks can flip task status without a full-file rewrite
+  status: ready
+  owner: null
+  updated: '2026-07-04T02:35:00Z'
+  passes: 0
+  stakes: reversible
+  note: >
+    Worker's kaizen suggestion from conductor PR #142 (alexa-integration/t-008):
+    the connector safety filter has now blocked a full roadmap.yaml rewrite
+    twice for reasons unrelated to the actual edit (the file's own protected-infra
+    boundary language trips the filter), forcing the claim commit and the
+    needs-human status flip to be skipped even though the Worker knew exactly
+    what to write. Add a small script (e.g. scripts/set_task_field.py
+    <project> <task-id> <field>=<value> [...]) that loads a single roadmap.yaml,
+    patches only the named task's fields in place, and rewrites the file
+    byte-for-byte otherwise, so connector-driven edits stay minimal and
+    the safety filter has less unrelated text to trip on.
