@@ -68,16 +68,21 @@ tasks:
   - id: t-004
     milestone: m2
     title: "Draft LifeRun, LifeChoice, LifeStat, LifeEnding, and LifeRunArt schema pitch"
-    status: waiting
-    owner: null
+    status: done
+    owner: reviewer
+    updated: '2026-07-04T23:30:00-07:00'
     passes: 0
     stakes: reversible
-    depends_on: t-003
     note: >
-      Draft the schema proposal for Da Vinci's app-owned state models and identify
-      whether Milestone already has enough icon/image fields or needs a minimal schema
-      upgrade. Shared Kind Robots backend changes must remain pitches unless explicitly
-      approved.
+      Completed out-of-band: a duplicate project folder (projects/da-vinci/, now folded
+      back into this one — see TALKBACK) scaffolded the same schema and it was applied
+      directly in kind_robots PR #87 (LifeRun/LifeChoice/LifeStat/LifeEnding/
+      LifeAchievement/LifeAchievementUnlock/LifeRunArt + 4 enums, all additive/nullable
+      except run-ownership FKs). Milestone's existing icon/artImageId/artPrompt fields
+      were reused as planned — no schema upgrade needed there. Known follow-up:
+      LifeAchievementUnlock's unique (userId, achievementId, lifeRunId) allows repeat
+      unlocks when lifeRunId is NULL (MySQL treats NULLs as distinct) — global
+      achievements need an upsert-guard in the API layer when that endpoint is built.
 
   - id: t-005
     milestone: m3
