@@ -66,3 +66,69 @@ def test_dry_run_does_not_call_github_or_git(monkeypatch, capsys):
     output = capsys.readouterr().out
     assert "would squash-merge silasfelinus/conductor PR #123" in output
     assert "would mark conductor/t-021 done" in output
+
+
+def test_already_merged_pr_still_marks_task_done(monkeypatch):
+    """Re-running after a partial cycle (merged, but status flip failed) must recover."""
+    module = load_module()
+    calls = []
+
+    def fake_gh(repo, path, token, *, method="GET", body=None):
+        calls.append(("gh", path, method))
+        if method == "PUT" and path == "pulls/123/merge":
+            raise module.WorkerMergeError(
+                "GitHub PUT pulls/123/merge failed: HTTP 405: Pull Request is already merged",
+                status=405,
+            )
+        if method == "GET" and path == "pulls/123":
+            return {"merged": True, "merge_commit_sha": "abc123"}
+        raise AssertionError(f"unexpected call {method} {path}")
+
+    def fake_run(command, cwd=None, text=False, capture_output=False):
+        calls.append(("subprocess", command))
+        return subprocess.CompletedProcess(command, 0, "", "")
+
+    monkeypatch.setattr(module, "_gh", fake_gh)
+    monkeypatch.setattr(module.subprocess, "run", fake_run)
+    monkeypatch.setattr(module, "run_git", lambda *args: calls.append(("git", args)) or "")
+
+    result = module.main(["123", "conductor", "t-021", "--token", "token"])
+
+    assert result == 0
+    assert ("gh", "pulls/123", "GET") in calls
+    assert any(
+        call[0] == "subprocess" and "worker_task_status.py" in str(call[1]) for call in calls
+    )
+    assert ("git", ("push", "origin", "main")) in calls
+
+
+def test_not_mergeable_405_still_errors_without_status_flip(monkeypatch, capsys):
+    """A 405 for a dirty (unmergeable) PR must NOT be treated as merged."""
+    module = load_module()
+    calls = []
+
+    def fake_gh(repo, path, token, *, method="GET", body=None):
+        calls.append(("gh", path, method))
+        if method == "PUT" and path == "pulls/123/merge":
+            raise module.WorkerMergeError(
+                "GitHub PUT pulls/123/merge failed: HTTP 405: Pull Request is not mergeable",
+                status=405,
+            )
+        if method == "GET" and path == "pulls/123":
+            return {"merged": False}
+        raise AssertionError(f"unexpected call {method} {path}")
+
+    monkeypatch.setattr(module, "_gh", fake_gh)
+    monkeypatch.setattr(
+        module.subprocess, "run",
+        lambda *a, **k: (_ for _ in ()).throw(AssertionError("status flip must not run")),
+    )
+    monkeypatch.setattr(
+        module, "run_git",
+        lambda *args: (_ for _ in ()).throw(AssertionError("git must not run")),
+    )
+
+    result = module.main(["123", "conductor", "t-021", "--token", "token"])
+
+    assert result == 1
+    assert "not mergeable" in capsys.readouterr().err

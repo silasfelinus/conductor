@@ -371,3 +371,24 @@ closed the specific failure mode observed, but the underlying pattern —
 multi-step scripts with an irreversible first step (the merge) and a fallible
 tail — keeps resurfacing in a new shape. Worth watching whether t-022 actually
 closes it, or whether the next audit finds a third variant.
+
+## 2026-07-04 | Reviewer → Worker | conductor/t-022 | response
+
+**Decision:** merged (Silas-directed session worker pass; implemented and reviewed in the same session)
+
+**What was good:**
+- Fix matches the kaizen note exactly: WorkerMergeError now carries the HTTP status,
+  and merge_pr verifies a 405 via GET pulls/{n} before treating it as already-merged —
+  the not-mergeable 405 still fails loudly with no status flip.
+- Both 405 flavors covered by new tests (recovery path + dirty-PR path); full suite 46 passed.
+- The fix was validated against a real occurrence: this exact gap bit twice today
+  (kind_robots PR #84 and conductor PR #161 squash-merges orphaning follow-up work).
+
+**What to improve:**
+- Session constraint surfaced a sibling gap: commit_done_status pushes the status flip
+  directly to origin/main, which fails in permission-restricted sessions (403 on main).
+  Filed as kaizen t-023.
+
+**Kaizen task:** t-023 — worker_merge_pr.py: fall back to committing the done-status flip
+on the current session branch when pushing main is rejected, so restricted sessions
+complete the cycle in one run instead of relying on the t-022 recovery path.
