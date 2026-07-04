@@ -7,7 +7,16 @@ For each image in projects/process/, determines the destination by:
   2. Checking projects/art-prompts.yaml (images:, inspirations:, requests: sections)
   3. Falling back to filename convention:
        {slug}-icon/card/hero.webp  → conductor:  projects/images/{file}
-       {slug}-inspiration-{n}.webp → kind_robots: public/images/artcollections/{slug}/{file}
+       {slug}-inspiration-{n}.webp → kind_robots: public/images/{slug}/{file}
+  4. Falling back to slug match: a file whose name starts with a known slug
+     (a conductor project or an existing kind_robots public/images/ folder) but
+     has no specific resolution becomes a new inspiration:
+       kind_robots: public/images/{slug}/{slug}-inspiration-{n}.webp
+
+If a destination file already exists, the original is preserved as a new
+inspiration in its slug's folder (kind_robots public/images/{slug}/) and the
+new image replaces it. Each touched slug folder gets its gallery.json manifest
+regenerated so the folder's contents are machine-readable as an art collection.
 
 Kind Robots repo is expected at ../kind_robots relative to the conductor root.
 
@@ -96,7 +105,63 @@ def build_lookup(gen_data, prompts_data):
     return lookup
 
 
-def infer_destination(filename):
+def known_slugs():
+    """Slugs a loose file can match: conductor projects + kind_robots image folders."""
+    slugs = set()
+    projects_dir = REPO_ROOT / "projects"
+    if projects_dir.exists():
+        for d in projects_dir.iterdir():
+            if d.is_dir() and not d.name.startswith("_") and d.name not in ("images", "process"):
+                slugs.add(d.name)
+    kr_images = KIND_ROBOTS_ROOT / "public" / "images"
+    if kr_images.exists():
+        for d in kr_images.iterdir():
+            if d.is_dir():
+                slugs.add(d.name)
+    return slugs
+
+
+def slug_for_stem(stem, slugs):
+    """Longest known slug that the stem equals or starts with (separator-delimited)."""
+    matches = [
+        s for s in slugs
+        if stem == s or stem.startswith(f"{s}-") or stem.startswith(f"{s}_")
+    ]
+    return max(matches, key=len) if matches else None
+
+
+def next_inspiration_path(slug, suffix):
+    """Next free public/images/{slug}/{slug}-inspiration-{n}{suffix} in kind_robots."""
+    folder = KIND_ROBOTS_ROOT / "public" / "images" / slug
+    n = 1
+    while (folder / f"{slug}-inspiration-{n}{suffix}").exists():
+        n += 1
+    return f"public/images/{slug}/{slug}-inspiration-{n}{suffix}"
+
+
+def slug_from_dest_filename(filename, slugs):
+    """Slug for preserving an overwritten file: strip variant suffixes, else stem."""
+    stem = Path(filename).stem
+    stem = re.sub(r"[-_](icon|card|hero)$", "", stem)
+    stem = re.sub(r"[-_]inspiration[-_]\d+$", "", stem)
+    return slug_for_stem(stem, slugs) or stem
+
+
+def write_gallery_manifest(slug):
+    """Regenerate gallery.json for a slug folder (array of image stems)."""
+    import json
+
+    folder = KIND_ROBOTS_ROOT / "public" / "images" / slug
+    if not folder.exists():
+        return
+    stems = sorted(
+        f.stem for f in folder.iterdir()
+        if f.is_file() and f.suffix.lower() in IMAGE_EXTS
+    )
+    (folder / "gallery.json").write_text(json.dumps(stems) + "\n")
+
+
+def infer_destination(filename, slugs):
     """Infer destination from filename convention when not in any yaml."""
     stem = Path(filename).stem
     for variant in ("icon", "card", "hero"):
@@ -109,7 +174,13 @@ def infer_destination(filename):
     if m:
         slug = m.group(1)
         return {
-            "image_path": f"public/images/artcollections/{slug}/{filename}",
+            "image_path": f"public/images/{slug}/{filename}",
+            "target_repo": "silasfelinus/kind_robots",
+        }
+    slug = slug_for_stem(stem, slugs)
+    if slug:
+        return {
+            "image_path": next_inspiration_path(slug, Path(filename).suffix.lower()),
             "target_repo": "silasfelinus/kind_robots",
         }
     return None
@@ -171,6 +242,12 @@ def prune_art_prompts(prompts_data, moved_filenames):
     inspiration_entries = pending_inspiration_entries(prompts_data)
     request_entries = normalize_art_requests(prompts_data)
 
+    orig_req = len(request_entries)
+    request_entries = [
+        e for e in request_entries
+        if Path(str(e.get("image_path") or "")).name not in moved_filenames
+    ]
+
     orig_img = len(prompts_data.get("images") or [])
     orig_ins = sum(len(p.get("images") or []) for p in (prompts_data.get("inspirations") or []))
     new_ins = sum(len(p.get("images") or []) for p in inspiration_entries)
@@ -184,8 +261,9 @@ def prune_art_prompts(prompts_data, moved_filenames):
 
     removed_img = orig_img - len(image_entries)
     removed_ins = orig_ins - new_ins
-    if removed_img or removed_ins:
-        print(f"  art-prompts.yaml: removed {removed_img} project asset entry/entries, {removed_ins} inspiration entry/entries")
+    removed_req = orig_req - len(request_entries)
+    if removed_img or removed_ins or removed_req:
+        print(f"  art-prompts.yaml: removed {removed_img} project asset entry/entries, {removed_ins} inspiration entry/entries, {removed_req} request entry/entries")
 
 
 def distribute():
@@ -201,6 +279,8 @@ def distribute():
     prompts_data = load_yaml(ART_PROMPTS_FILE) if ART_PROMPTS_FILE.exists() else {}
 
     lookup = build_lookup(gen_data, prompts_data)
+    slugs = known_slugs()
+    touched_slugs = set()
 
     files = sorted(
         f for f in PROCESS_DIR.iterdir()
@@ -219,7 +299,7 @@ def distribute():
 
     for src in files:
         fname = src.name
-        match = lookup.get(fname) or infer_destination(fname)
+        match = lookup.get(fname) or infer_destination(fname, slugs)
 
         if not match:
             UNMATCHED_DIR.mkdir(parents=True, exist_ok=True)
@@ -239,15 +319,44 @@ def distribute():
             skipped_missing_repo.append(fname)
             continue
 
+        # Destination occupied by different content: the original becomes a new
+        # inspiration in its slug's folder before the new image replaces it.
+        preserve_path = None
+        if dest.exists() and dest.read_bytes() != src.read_bytes():
+            if not KIND_ROBOTS_ROOT.exists():
+                print(f"  SKIP (would replace {match['image_path']} but no kind_robots repo to preserve original)  {fname}")
+                skipped_missing_repo.append(fname)
+                continue
+            slug = slug_from_dest_filename(fname, slugs)
+            preserve_path = next_inspiration_path(slug, dest.suffix.lower())
+
         if DRY_RUN:
+            if preserve_path:
+                print(f"  would preserve original  {match['image_path']}  →  silasfelinus/kind_robots:{preserve_path}")
             print(f"  would move  {fname}  →  {match['target_repo']}:{match['image_path']}")
             moved.append((fname, match))
         else:
+            if preserve_path:
+                preserve_dest = KIND_ROBOTS_ROOT / preserve_path
+                preserve_dest.parent.mkdir(parents=True, exist_ok=True)
+                shutil.move(str(dest), preserve_dest)
+                touched_slugs.add(Path(preserve_path).parent.name)
+                print(f"  preserved original  {match['image_path']}  →  silasfelinus/kind_robots:{preserve_path}")
             dest.parent.mkdir(parents=True, exist_ok=True)
             shutil.copy2(src, dest)
             src.unlink()
             print(f"  moved  {fname}  →  {match['target_repo']}:{match['image_path']}")
             moved.append((fname, match))
+
+        if match["target_repo"] == "silasfelinus/kind_robots":
+            parts = Path(match["image_path"]).parts
+            if len(parts) == 4 and parts[:2] == ("public", "images"):
+                touched_slugs.add(parts[2])
+
+    if not DRY_RUN:
+        for slug in sorted(touched_slugs):
+            write_gallery_manifest(slug)
+            print(f"  gallery.json refreshed for public/images/{slug}/")
 
     if not DRY_RUN and moved:
         moved_names = {fname for fname, _ in moved}
@@ -265,7 +374,7 @@ def distribute():
             print("  conductor:   git add projects/images/ && git commit -m 'chore: add generated images'")
             print("  conductor:   python scripts/build_workspace.py  # prunes art-prompts.yaml")
         if kr_moved:
-            print("  kind_robots: git add public/images/artcollections/ && git commit -m 'chore: add generated images'")
+            print("  kind_robots: git add public/ && git commit -m 'chore: add generated images'")
 
     if unmatched:
         print(f"\nUnmatched files (no yaml entry or known naming convention):")

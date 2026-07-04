@@ -1,0 +1,83 @@
+name: Distribute Images
+
+# Auto-processes images dropped into projects/process/. Runs whenever a push to
+# main touches that folder (e.g. Silas committing a generated batch), routes each
+# file via scripts/distribute_images.py, commits conductor-side results back to
+# main, and pushes kind_robots-target images to kind_robots main.
+#
+# This replaces reliance on the local pre-commit hook (scripts/setup_hooks.py),
+# which only works on clones where it has been installed. The hook is still fine
+# locally; this workflow is the safety net that makes processing automatic.
+#
+# Loop safety: the conductor commit is pushed with the default GITHUB_TOKEN,
+# which does not trigger workflows. Even if re-triggered, an empty
+# projects/process/ makes the run a no-op.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "projects/process/**"
+  workflow_dispatch:
+
+jobs:
+  distribute:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: conductor
+          fetch-depth: 0
+
+      # Needs GH_PAT (repo scope on kind_robots). If unavailable, the checkout
+      # fails softly and kind_robots-target files stay in projects/process/
+      # for the next run.
+      - uses: actions/checkout@v4
+        id: kr-checkout
+        continue-on-error: true
+        with:
+          repository: silasfelinus/kind_robots
+          path: kind_robots
+          token: ${{ secrets.GH_PAT }}
+          persist-credentials: true
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install pyyaml
+
+      - name: Distribute images
+        working-directory: conductor
+        run: python scripts/distribute_images.py
+
+      - name: Commit conductor results
+        working-directory: conductor
+        run: |
+          git config user.name "conductor-bot"
+          git config user.email "conductor-bot@users.noreply.github.com"
+          git add projects/images/ projects/process/ projects/art-generate.yaml projects/art-prompts.yaml
+          if git diff --staged --quiet; then
+            echo "No conductor-side changes."
+          else
+            git commit -m "chore: distribute images from projects/process [skip ci]"
+            git push
+          fi
+
+      - name: Commit kind_robots results
+        if: steps.kr-checkout.outcome == 'success'
+        working-directory: kind_robots
+        run: |
+          git config user.name "conductor-bot"
+          git config user.email "conductor-bot@users.noreply.github.com"
+          git add public/
+          if git diff --staged --quiet; then
+            echo "No kind_robots-side changes."
+          else
+            git commit -m "chore: distribute images from conductor projects/process"
+            git push
+          fi

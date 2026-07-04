@@ -332,6 +332,16 @@ Every project has three visual assets displayed in the kind_robots Workspace pan
 Files live in `projects/images/`. The workspace derives URLs from the project slug; missing
 files fall back to a placeholder automatically.
 
+**Image intake pipeline** (`projects/process/` → `scripts/distribute_images.py`, run
+automatically by the distribute-images workflow on pushes to main): each file routes by
+art-generate.yaml / art-prompts.yaml entry, then filename convention. A file that matches a
+known slug but has no specific resolution (e.g. `{slug}-inspiration.webp`, `{slug}-sketch.webp`)
+becomes a new inspiration at kind_robots `public/images/{slug}/{slug}-inspiration-{n}.webp` —
+a slug's folder there IS its art collection, tracked by a `gallery.json` manifest the script
+maintains. If a distributed image would replace an existing file, the original is moved into
+its slug's inspiration folder first and the new image takes its place. Files that match
+nothing land in `projects/process/unmatched/` for Silas.
+
 **When creating or merging a new project**, append three image request entries to
 `ART-PROMPTS.md` at the repo root using the template in that file. Remove each entry once
 its image file is committed to `projects/images/`. Do not commit generated image binaries
