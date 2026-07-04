@@ -280,14 +280,14 @@ tasks:
 - id: t-016
   milestone: m2
   title: Add a targeted single-field roadmap.yaml updater so cross-repo fallback tasks can flip task status without a full-file rewrite
-  status: review
+  status: done
   owner: worker
   updated: '2026-07-04T00:11:14-07:00'
   passes: 1
   stakes: reversible
   note: >
-    Added scripts/set_task_field.py as the direct utility requested. It updates one
-    scalar field on one task using a line-oriented edit instead of YAML reserialization,
-    so it preserves comments, ordering, quoted strings, and folded notes around the
-    targeted field. Test-file creation was blocked by the connector safety filter;
+    Completed in PR #148. Added scripts/set_task_field.py as the direct utility requested.
+    It updates one scalar field on one task using a line-oriented edit instead of YAML
+    reserialization, so it preserves comments, ordering, quoted strings, and folded notes
+    around the targeted field. Test-file creation was blocked by the connector safety filter;
     verification was source review plus GitHub commit/PR diff inspection.
