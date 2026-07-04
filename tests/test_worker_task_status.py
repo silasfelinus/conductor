@@ -82,3 +82,41 @@ def test_passes_updates_count(tmp_path):
     assert result.returncode == 0, result.stderr
     text = (tmp_path / "projects" / "demo" / "roadmap.yaml").read_text()
     assert "  passes: 2\n" in text
+
+
+def test_dry_run_claim_prints_updates_without_editing_roadmap(tmp_path):
+    write_roadmap(tmp_path)
+    copy_scripts(tmp_path)
+    roadmap = tmp_path / "projects" / "demo" / "roadmap.yaml"
+    before = roadmap.read_text()
+
+    result = run_helper(tmp_path, "--dry-run", "claim", "demo", "t-001")
+
+    assert result.returncode == 0, result.stderr
+    assert roadmap.read_text() == before
+    assert "would set demo/t-001 status='claimed'" in result.stdout
+    assert "would set demo/t-001 owner='worker'" in result.stdout
+    assert "would set demo/t-001 updated='now'" in result.stdout
+
+
+def test_dry_run_done_prints_note_update_without_editing_roadmap(tmp_path):
+    write_roadmap(tmp_path)
+    copy_scripts(tmp_path)
+    roadmap = tmp_path / "projects" / "demo" / "roadmap.yaml"
+    before = roadmap.read_text()
+
+    result = run_helper(
+        tmp_path,
+        "--dry-run",
+        "done",
+        "demo",
+        "t-001",
+        "--note",
+        "Completed in PR #1000.",
+    )
+
+    assert result.returncode == 0, result.stderr
+    assert roadmap.read_text() == before
+    assert "would set demo/t-001 status='done'" in result.stdout
+    assert "would set demo/t-001 updated='now'" in result.stdout
+    assert "would set demo/t-001 note='Completed in PR #1000.'" in result.stdout
