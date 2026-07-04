@@ -110,6 +110,13 @@ also blocked.
 
 On a **hard** `needs-human`: stop. Do not pick another task. Flag clearly for Silas.
 
+**Scope gates on NEW projects are soft** (Silas, 2026-07-04): when a fresh project or
+pitched idea lands, do not park it behind scope approval. Build the design brief and
+start working immediately; raise the scope-confirmation task as a soft needs-human that
+runs in parallel with development. Course correction after Silas responds is cheap and
+expected — the bias is toward making things happen. (Outward-facing/irreversible steps
+remain hard gates as always.)
+
 ### Writing needs-human task notes for Silas (not for agents)
 
 When a task ends at `needs-human`, rewrite the `note:` field so Silas can act on it
