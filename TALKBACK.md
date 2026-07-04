@@ -489,3 +489,31 @@ repeated failure mode with no documented procedure.
 **Suggested action:** Filed `conductor/t-015` (ready, reversible) to add a "Cross-repo tasks"
 section to AGENTS.md generalizing the pattern from these two worked examples, so the next
 occurrence has a procedure to follow instead of improvising.
+
+## 2026-07-04 | Reviewer → system | kind_robots infra | response
+
+**Decision:** merged (kind_robots PR #83, squash-merged by Reviewer; Silas-directed session
+work, `claude/snapshot-workflow-secrets-gtcl2p` → `main`)
+
+**What was good:**
+- Nightly snapshot fallback wired consistently into all 7 remaining stores (character,
+  scenario, reward, resource, milestone, component, smartbar), each guarding with the
+  store's existing cache-check (`hasLoaded`/length) so a snapshot never shadows a
+  successful live fetch, and never gets persisted to localStorage.
+- `fallback-snapshot.yml` hardening is root-caused, not cargo-culted: job serialization
+  (`dump` needs `snapshot`) documents a confirmed anti-flood collision, `pipefail` closes
+  a real silent-empty-artifact bug, and the dump-size check backs it up.
+- Prisma `connectTimeout` fix respects an explicit query-param override before applying
+  the default — won't clobber a future manual tune.
+- CI green (TypeScript, GitGuardian, Vercel preview), `mergeable_state: clean`, diff
+  scoped exactly to what the PR body describes.
+
+**What to improve:** nothing significant; diff was clean and self-documenting.
+
+**Pattern note:** This PR isn't tied to any project's `roadmap.yaml` task — it's direct
+infra reliability work Silas ran in a session against `kind_robots` outside the
+task-cycle system, same shape as the conductor-app/database work has taken before.
+No project home exists to file a kaizen task against, so skipping the usual
+"one kaizen task per merge" step rather than inventing an artificial home for it.
+If this kind of ad hoc infra work becomes frequent, worth a lightweight
+`kind-robots-infra` project so it has a roadmap to log against.
