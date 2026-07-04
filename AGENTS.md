@@ -253,6 +253,9 @@ in the PR. Recurring tasks don't count toward milestone progress.
   the project's `TALKBACK.md` noting your reasoning, any patterns you observed in the
   Worker's output, and any suggestions for how the Worker could improve. This is not
   optional — the critique log is how the system learns.
+- **Log commits must reach main**: TALKBACK/roadmap commits made on a session branch are only
+  preserved if that branch gets a PR — never end a session with log commits stranded on an
+  unPR'd branch.
 - **Kaizen on merge**: after every successful merge, create exactly one new `ready` task
   in the project's roadmap from the Worker's kaizen suggestion (or substitute your own if
   theirs is weak). One sentence title, `stakes: reversible`. This compounds improvement

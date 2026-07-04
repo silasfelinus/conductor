@@ -20,3 +20,7 @@ Then report:
 - **Any unresolved escalations** from TALKBACK
 
 After the report, ask Silas what he wants to work on — or proceed directly if his first message is already a clear task.
+
+## Session end
+
+Before ending: push any TALKBACK/roadmap log commits and make sure the session branch has a PR — log commits stranded on an unPR'd session branch never reach main and get lost.
