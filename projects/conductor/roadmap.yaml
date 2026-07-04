@@ -303,20 +303,19 @@ tasks:
 - id: t-018
   milestone: m2
   title: Wire scripts/set_task_field.py into the Worker cycle for claim and status roadmap updates
-  status: ready
+  status: done
   owner: null
-  updated: '2026-07-04T09:35:00Z'
+  updated: '2026-07-04T10:26:14Z'
   passes: 1
   stakes: reversible
-  note: >
-    Reviewer audit of merged PR #151 (pass 1): the PR added scripts/worker_task_status.py
-    (a tested CLI wrapper around set_task_field.py) but never actually wired it into the
-    Worker cycle. scripts/run_worker.py's claim_task() and set_task_status() (~line 205-222)
-    still mutate the in-memory roadmap dict directly and call write_roadmap(), which does a
-    full yaml.safe_dump() of the whole file on every claim/status change — exactly the
-    full-file-rewrite behavior this task exists to eliminate. Remaining work: replace those
-    two functions' write_roadmap() calls with subprocess calls into worker_task_status.py
-    (claim / review / done / ready / needs-human / blocked / challenged / passes), so a
-    single-field CLI update happens instead of a full re-dump. Verify by claiming a task
-    locally and confirming only that task's block changes in the git diff (not just field
-    values matching). PR #151's script and tests are sound and can stay as-is.
+  note: 'Reviewer audit (pass 2, PR #153): confirmed. write_roadmap() removed from run_worker.py; claim_task() and set_task_status() now shell into scripts/worker_task_status.py, exactly the remaining work called out in the prior audit note. Verified: 21 tests pass (test_run_worker_status_integration.py + test_worker_task_status.py + test_set_task_field.py), py_compile clean, and a live --dry-run of set_task_field.py against this roadmap confirms only this task''s status line changes. Merged to main as PR #153.'
+
+- id: t-019
+  milestone: m2
+  title: Add a --dry-run mode to worker_task_status.py that prints the fields it would change without writing
+  status: ready
+  owner: null
+  updated: '2026-07-04T10:26:14Z'
+  passes: 0
+  stakes: reversible
+  note: 'Kaizen from PR #153 (t-018): future Worker cycles could verify lifecycle status transitions (claim/review/done/etc.) without touching the roadmap file, mirroring set_task_field.py''s existing --dry-run behavior one layer up.'
