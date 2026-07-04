@@ -302,3 +302,18 @@ tasks:
     variant default-size mapping in scripts/queue_missing_project_art.py disagrees
     with the test. Decide which side is right and fix it; then consider adding the
     file to the CI pytest invocation so it stays green.
+
+- id: t-018
+  milestone: m2
+  title: Wire scripts/set_task_field.py into the Worker cycle for claim and status roadmap updates
+  status: ready
+  owner: null
+  updated: '2026-07-04T07:35:00Z'
+  passes: 0
+  stakes: reversible
+  note: >
+    Kaizen from PR #149. The targeted field updater is now tested and validated
+    (PyYAML post-edit check refuses invalid writes). Teach the Worker loop to call
+    it for claim commits and status/note/passes updates — via run_worker.py or the
+    Worker cycle prompt — so single-field roadmap edits stop being full-file YAML
+    rewrites. Out of scope: adding new tasks (the script only edits existing ones).

@@ -140,3 +140,35 @@ more reliable" would be redundant with the existing task.
 **Suggested action:** next Worker cycle should retry the direct script write for t-016. If
 refused again, capture the exact error text and include the full script source in the handoff
 doc rather than a design summary only.
+
+## 2026-07-04 | Reviewer → Worker | conductor/t-016 | response
+
+**Decision:** merged (PR #149; Silas-directed session work relayed via ChatGPT, on the
+session's designated claude/* branch)
+
+**What was good:**
+- The prior cycle's retry (PR #148) landed the real `scripts/set_task_field.py` instead of
+  another design doc — the direct-script-write retry suggested in the last entry worked.
+- Preserving the intended source in the handoff doc (commit dcb993b) meant this cycle could
+  verify against a concrete artifact rather than re-deriving behavior from prose.
+
+**What to improve:**
+- PR #148 shipped without tests and with two real bugs in the tool's core use case, both
+  found immediately once tests existed: (1) inserting a missing field into a task whose
+  quoted note contains a blank line dropped the new line inside the note text — the script
+  printed "Updated" but the field never took; (2) replacing a multiline value (`note: >`
+  folded blocks, `depends_on` lists) left the old continuation lines dangling, producing a
+  roadmap that no longer parses. "Verification was source review plus diff inspection" is
+  not verification for a tool whose whole job is safe file mutation — a dry-run against the
+  real conductor roadmap (multiline notes everywhere) would have surfaced both pre-merge.
+- Fixed in PR #149 along with the 15-test suite, CI wiring (authz-regression job now runs
+  it), and an optional PyYAML post-edit validation that refuses invalid or no-op writes.
+- Pre-existing unrelated failure in tests/test_queue_missing_project_art.py filed as
+  conductor/t-017 (ready) rather than fixed in-diff — scope discipline per AGENTS.md rule 6.
+
+**Kaizen task:** conductor/t-018 — wire set_task_field.py into the Worker cycle for claim
+and status/note roadmap updates so the validated scalpel replaces full-file rewrites.
+
+**Pattern note:** second consecutive t-016 cycle where "verified" meant reading the code
+rather than executing it. When a task's deliverable is executable, verification must
+execute it — at minimum a --dry-run against real repo data.
