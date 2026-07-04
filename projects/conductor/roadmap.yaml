@@ -164,7 +164,7 @@ tasks:
   note: "Build scripts/sync_projects_to_dreams.py. For each active conductor project (from project-overrides.yaml\
     \ where status == active), call the kind_robots API to upsert a Dream with dreamType PROJECT and matching\
     \ slug. Sync fields: title (from roadmap project:), description (from notes_from_silas first paragraph),\
-    \ projectStatus (map conductor active→ACTIVE, paused→PAUSED, finished→\
+    \ projectStatus (map conductor active→ACTIVE, paused→\
     ARCHIVED). Use PATCH /api/dreams/<id> if a Dream with that slug already exists, POST /api/dreams otherwise.\
     \ Requires KR_API_TOKEN env var. Log each upsert (created/updated/skipped) to stdout. Never delete\
     \ a Dream; only create or update. This is the canonical conductor → kind_robots bridge; run it\
@@ -263,3 +263,59 @@ tasks:
   note: >
     Completed in PR #108. Worker PR CI now includes an authz-regression job that installs pytest
     and runs tests/test_authz_regression.py, matching the fixture command from security-audit.yml.
+
+- id: t-015
+  milestone: m2
+  title: "Document a cross-repo task mode in AGENTS.md for connector branch-creation blocks"
+  status: done
+  owner: worker
+  updated: '2026-07-03T17:11:19-07:00'
+  passes: 0
+  stakes: reversible
+  note: >
+    Completed in PR #141. Added a Cross-repo tasks section to AGENTS.md documenting
+    target-repo branch/PR handling and the conductor-doc fallback when connector/tooling
+    blocks target-repo branch creation or writes.
+
+- id: t-016
+  milestone: m2
+  title: Add a targeted single-field roadmap.yaml updater so cross-repo fallback tasks can flip task status without a full-file rewrite
+  status: done
+  owner: worker
+  updated: '2026-07-04T00:11:14-07:00'
+  passes: 1
+  stakes: reversible
+  note: 'Completed in PR #148 (script) and PR #149 (tests + multiline-safety fixes). scripts/set_task_field.py updates one scalar field on one task with a line-oriented edit, preserving surrounding YAML; when PyYAML is available it re-parses the result and refuses invalid writes. Verified by tests/test_set_task_field.py, run in Worker PR CI. This note was itself written by the script as a live multiline-note replacement test.'
+
+- id: t-017
+  milestone: m2
+  title: Fix failing test_queue_missing_project_art ordering/default-size assertion
+  status: done
+  owner: worker
+  updated: '2026-07-04T01:18:00-07:00'
+  passes: 0
+  stakes: reversible
+  note: >
+    Completed in PR #150. The queue script behavior was kept project-first/variant-order;
+    the brittle test now looks entries up by (project, variant) before asserting default
+    sizes, and Worker PR CI now includes tests/test_queue_missing_project_art.py.
+
+- id: t-018
+  milestone: m2
+  title: Wire scripts/set_task_field.py into the Worker cycle for claim and status roadmap updates
+  status: done
+  owner: null
+  updated: '2026-07-04T10:26:14Z'
+  passes: 1
+  stakes: reversible
+  note: 'Reviewer audit (pass 2, PR #153): confirmed. write_roadmap() removed from run_worker.py; claim_task() and set_task_status() now shell into scripts/worker_task_status.py, exactly the remaining work called out in the prior audit note. Verified: 21 tests pass (test_run_worker_status_integration.py + test_worker_task_status.py + test_set_task_field.py), py_compile clean, and a live --dry-run of set_task_field.py against this roadmap confirms only this task''s status line changes. Merged to main as PR #153.'
+
+- id: t-019
+  milestone: m2
+  title: Add a --dry-run mode to worker_task_status.py that prints the fields it would change without writing
+  status: claimed
+  owner: worker
+  updated: '2026-07-04T04:14:28-07:00'
+  passes: 0
+  stakes: reversible
+  note: 'Kaizen from PR #153 (t-018): future Worker cycles could verify lifecycle status transitions (claim/review/done/etc.) without touching the roadmap file, mirroring set_task_field.py''s existing --dry-run behavior one layer up.'

@@ -97,10 +97,10 @@ jobs:
           python-version: "3.12"
 
       - name: Install pytest
-        run: python -m pip install pytest
+        run: python -m pip install pytest pyyaml
 
       - name: Run fixture authz regression tests
-        run: pytest tests/test_authz_regression.py
+        run: pytest tests/test_authz_regression.py tests/test_set_task_field.py tests/test_queue_missing_project_art.py
 
   build-ts-projects:
     name: Build changed TypeScript projects

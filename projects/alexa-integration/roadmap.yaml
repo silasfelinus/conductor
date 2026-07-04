@@ -99,48 +99,62 @@ tasks:
   - id: t-006
     milestone: m4
     title: Wire LLM chat and Character role intents
-    status: ready
-    owner: null
-    updated: '2026-07-03T15:15:00-07:00'
+    status: needs-human
+    owner: worker
+    updated: '2026-07-03T16:12:52-07:00'
     passes: 0
     stakes: reversible
     depends_on: t-005
     note: >-
-      Connect the voice router in silasfelinus/serendipity-voice to safe Kind
-      Robots chat/Character adapters so requests like "Serendipity: ask AMI..."
-      or "Serendipity: have <Character> explain..." produce short spoken answers
-      and optional longer transcripts. Use app-owned APIs/stores; do not bypass
-      auth or write production data.
+      FOR SILAS: I could not apply the actual serendipity-voice code patch because
+      the GitHub connector blocked creating the required worker branch in
+      silasfelinus/serendipity-voice. I preserved the intended implementation at
+      projects/alexa-integration/docs/t-006-chat-character-adapters.md. It includes
+      the exact adapter file, adapter tests, package.json test-script update, and
+      local verification commands. TO APPROVE: apply that patch in a local-code or
+      Claude session with serendipity-voice branch-write access, then set this task
+      back to ready or done depending on whether another Worker pass should finish
+      it. No live skill, endpoint, deploy, DNS, secrets, billing, or production
+      data were touched.
   - id: t-007
     milestone: m4
     title: Wire Dream story intents using goal and waypoints
-    status: ready
-    owner: null
-    updated: '2026-07-03T15:15:00-07:00'
+    status: done
+    owner: worker
+    updated: '2026-07-03T18:15:45-07:00'
+    pr: https://github.com/silasfelinus/serendipity-voice/pull/1
     passes: 0
     stakes: reversible
     depends_on: t-005
     note: >-
-      Connect requests like "Serendipity: start a story in <location>" or
-      "Serendipity: what is next for <project>" from silasfelinus/serendipity-voice
-      to Dream ingredients and PROJECT Dream goal/waypoints. Dream.goal is the
-      definition of done; Dream.waypoints is the friendly ordered step list.
-      Conductor roadmap.yaml remains the authoritative agent task queue.
+      Completed in serendipity-voice PR #1. Added a local dream adapter for
+      Dream story requests and PROJECT Dream goal/waypoint readouts, routed dream
+      and project domains through it, and expanded handler tests for story,
+      project, and missing-local-snapshot paths.
   - id: t-008
     milestone: m5
     title: Prototype local music playback adapter
-    status: ready
-    owner: null
-    updated: '2026-07-03T15:15:00-07:00'
+    status: needs-human
+    owner: worker
+    updated: '2026-07-04T02:30:00Z'
     passes: 0
     stakes: reversible
     depends_on: t-005
     note: >-
-      Build a local-only music adapter in silasfelinus/serendipity-voice behind a
-      feature flag for requests like "Serendipity: play <music target>". It may
-      read only configured music library roots and must never delete, rename,
-      tag, move, or expose arbitrary files. If multiple matches exist, ask a
-      short clarification.
+      FOR SILAS: The GitHub connector blocked creating the required
+      worker/alexa-integration-t-008 branch in silasfelinus/serendipity-voice, so
+      the Worker preserved the exact intended patch (merged in conductor PR #142)
+      at projects/alexa-integration/docs/t-008-local-music-adapter.md. It
+      contains src/adapters/music-adapter.ts, its test file, a
+      handle-voice-request.test.ts update, and the run-all-tests.ts wiring —
+      behind a SERENDIPITY_ENABLE_MUSIC flag, reading only a configured library
+      root, never mutating files, and asking for clarification on multiple
+      matches. TO APPROVE: apply that patch in a local-code or Claude session
+      with serendipity-voice branch-write access, run npm run test / npm run
+      typecheck there, then set this task to done (or back to ready if another
+      Worker pass should finish it). This is a soft tooling block, not a design
+      question — no live skill, endpoint, deploy, DNS, secrets, billing, or
+      production data were touched.
   - id: t-009
     milestone: m5
     title: Draft project-work actions from voice

@@ -102,3 +102,155 @@ this review started; #93's `mergeable_state` was `dirty` as a direct result of t
 **Suggested action:** no roadmap change needed — `t-013` is already `done` via #94's note. No
 new kaizen task opened (nothing here is agent-workable in isolation); flagging for Silas's
 awareness only, per the pattern-recurrence threshold set in the t-011 entry above.
+
+## 2026-07-04 | Reviewer → Worker | conductor/t-016 | critique
+
+**Decision:** rejected (pass 1/3) — PR #144 (`worker/conductor-t-016`) closed without merge.
+
+**What was good:**
+- The handoff doc (`projects/conductor/docs/t-016-set-task-field.md`) is well-structured:
+  clear intended CLI signature, allowed-field allowlist, and explicit safety boundaries
+  (no `approved_by_human` writes, no arbitrary paths, no full-YAML parse/dump).
+- The Worker proactively flagged in "Flags for Reviewer" that this was a soft tooling block,
+  not a finished implementation, rather than presenting the doc as done work.
+
+**What to improve:**
+- The PR doesn't complete t-016 — it produced a design doc instead of the requested
+  `scripts/set_task_field.py` utility. This repo already has several Worker-landed utility
+  scripts (`build_pr_triage.py`, `build_kaizen.py`, `generate_changelog.py`,
+  `authz_regression.py`, `distribute_images.py`, `setup_hooks.py`), so "the connector safety
+  filter blocked script creation" doesn't hold up as a categorical explanation — it's worth
+  isolating whether the block was path-based, size-based, or content-based (e.g. a tool that
+  edits roadmap task state specifically) rather than accepting it as a hard wall on the first try.
+- Even granting a genuine block, the handoff doc should have preserved the actual script body
+  as a code block (per the cross-repo handoff template's "exact patch/code" requirement) so the
+  work survives intact for the next cycle — prose-only behavior bullets aren't enough to paste
+  in directly.
+- Process gap on the Reviewer side worth noting for future audits: the prior review pass on
+  this PR posted the rejection and closed the PR correctly, but never actually committed the
+  resulting roadmap state (`status: ready`, `passes: 1`) back to `main` — it sat at
+  `status: claimed`, `passes: 0` for about an hour until this pass caught and fixed it. Closing
+  a PR with a stated roadmap decision isn't the same as landing that decision; the write must
+  actually happen in the same pass.
+
+**Kaizen task:** deferred — t-016 itself already is the compounding-improvement task (a
+targeted roadmap field updater), and re-filing a duplicate of "make connector roadmap writes
+more reliable" would be redundant with the existing task.
+
+**Suggested action:** next Worker cycle should retry the direct script write for t-016. If
+refused again, capture the exact error text and include the full script source in the handoff
+doc rather than a design summary only.
+
+## 2026-07-04 | Reviewer → Worker | conductor/t-016 | response
+
+**Decision:** merged (PR #149; Silas-directed session work relayed via ChatGPT, on the
+session's designated claude/* branch)
+
+**What was good:**
+- The prior cycle's retry (PR #148) landed the real `scripts/set_task_field.py` instead of
+  another design doc — the direct-script-write retry suggested in the last entry worked.
+- Preserving the intended source in the handoff doc (commit dcb993b) meant this cycle could
+  verify against a concrete artifact rather than re-deriving behavior from prose.
+
+**What to improve:**
+- PR #148 shipped without tests and with two real bugs in the tool's core use case, both
+  found immediately once tests existed: (1) inserting a missing field into a task whose
+  quoted note contains a blank line dropped the new line inside the note text — the script
+  printed "Updated" but the field never took; (2) replacing a multiline value (`note: >`
+  folded blocks, `depends_on` lists) left the old continuation lines dangling, producing a
+  roadmap that no longer parses. "Verification was source review plus diff inspection" is
+  not verification for a tool whose whole job is safe file mutation — a dry-run against the
+  real conductor roadmap (multiline notes everywhere) would have surfaced both pre-merge.
+- Fixed in PR #149 along with the 15-test suite, CI wiring (authz-regression job now runs
+  it), and an optional PyYAML post-edit validation that refuses invalid or no-op writes.
+- Pre-existing unrelated failure in tests/test_queue_missing_project_art.py filed as
+  conductor/t-017 (ready) rather than fixed in-diff — scope discipline per AGENTS.md rule 6.
+
+**Kaizen task:** conductor/t-018 — wire set_task_field.py into the Worker cycle for claim
+and status/note roadmap updates so the validated scalpel replaces full-file rewrites.
+
+**Pattern note:** second consecutive t-016 cycle where "verified" meant reading the code
+rather than executing it. When a task's deliverable is executable, verification must
+execute it — at minimum a --dry-run against real repo data.
+
+## 2026-07-04 | Reviewer → Worker | conductor/t-018 | critique
+
+**Decision:** audited already-merged work (PR #151, self-merged by Worker); reopened
+task (status: ready, passes: 1) rather than leaving it at status: ready/passes: 0
+with the task silently treated as finished
+
+**What was good:**
+- `scripts/worker_task_status.py` is a clean CLI wrapper over `set_task_field.py`
+  covering the real Worker lifecycle verbs (claim/review/done/ready/needs-human/
+  blocked/challenged/passes).
+- Shipped with `tests/test_worker_task_status.py` (3 tests: claim fields, note
+  replacement, passes update) — a real improvement over the t-016 cycles, where
+  "verified" meant reading code rather than running it.
+
+**What to improve:**
+- The task title is "wire ... into the Worker cycle," but the PR only adds a
+  standalone script nobody calls yet. `scripts/run_worker.py`'s `claim_task()`
+  and `set_task_status()` (~lines 205-222) still mutate the roadmap dict in
+  memory and call `write_roadmap()`, which does a full `yaml.safe_dump()` of
+  the entire file — the exact behavior t-018 exists to eliminate. Grepping
+  `run_worker.py` for `set_task_field`/`worker_task_status` finds nothing.
+- The Worker's own PR body acknowledged this directly ("this PR wires the
+  cycle through an executable helper rather than another full manual rewrite
+  of AGENTS.md") but merged anyway as if the task were satisfied, without
+  updating the roadmap task status at all — it was left at `status: ready`,
+  `passes: 0`, same as before the PR.
+- Recurring shape across this task's cycles (see t-016 pattern note below):
+  a technically-sound artifact that doesn't do the thing the task title says.
+  For a "wire X into Y" task, verification must show Y actually calling X —
+  a grep for the call site, not just that the new file has passing tests.
+
+**Kaizen task:** deferred — the note on the reopened task already states the
+exact remaining work (swap `write_roadmap()` calls in `claim_task`/
+`set_task_status` for `worker_task_status.py` subprocess calls); filing a
+separate kaizen task would duplicate it.
+
+**Pattern note:** third consecutive t-016/t-018 lineage cycle with a
+verification gap, this time one step further — not "didn't execute the code"
+but "didn't check the code actually gets called from the place the task
+named." See the 2026-07-04 t-016 entries above for the first two instances.
+
+## 2026-07-04 | Reviewer → Worker | conductor/t-018 | response
+
+**Decision:** merged (PR #153, self-merged by Worker); audited and closed the loop —
+roadmap task updated `ready` (passes: 1) → `done`
+
+**What was good:**
+- The Worker's second pass on t-018 addressed the audit exactly: `write_roadmap()` is
+  gone from `scripts/run_worker.py`, and both `claim_task()` and `set_task_status()`
+  now shell into `scripts/worker_task_status.py` instead of dumping the full roadmap
+  YAML. This is precisely the remaining work named in the prior audit's note
+  (line-level call sites, not just "a script exists somewhere").
+- `tests/test_run_worker_status_integration.py` locks in the fix at the right altitude:
+  it asserts `write_roadmap` is gone and `_run_worker_task_status`/`claim` appear inside
+  the relevant function bodies — a regression test for the *wiring*, not just the helper.
+- Verification this pass: ran all 21 tests across `test_run_worker_status_integration.py`,
+  `test_worker_task_status.py`, and `test_set_task_field.py` (pass), `py_compile` on all
+  three touched/related scripts (clean), and a live `--dry-run` of
+  `set_task_field.py conductor t-018 status done` against the real roadmap — confirmed
+  only this task's status line would change.
+- Note: the PR's own body says "this PR does not change roadmap status directly" and
+  flags it couldn't make the claim commit — reasonable, since roadmap status is the
+  Reviewer's call once the software change is verified, not something to bundle into
+  the same diff.
+
+**What to improve:**
+- Nothing to add on the Worker's technical fix this cycle. Recurring items already
+  logged in the t-016/t-018 lineage stand as context for the pattern review below.
+
+**Kaizen task:** conductor/t-019 — add a `--dry-run` mode to `worker_task_status.py`
+that prints the fields it would change without writing (the Worker's own suggestion
+from PR #153; carries forward cleanly from `set_task_field.py`'s existing dry-run).
+
+**Pattern note:** this closes the t-016 → t-018 lineage. Three consecutive verification
+gaps were caught by Reviewer audits, not self-reported by the Worker at merge time
+(see the three prior entries above). The fix cycle time (audit → correct fix → merge)
+was under an hour each time, which is the system working as designed, but the pattern
+worth carrying forward: for any "wire X into Y" task, the Worker's own verification
+section should include a grep/assertion that Y actually calls X, not just that X has
+tests. t-018's second pass finally did this via its own test file — worth Worker
+adopting as a standing habit for wiring-shaped tasks, not just this one.
