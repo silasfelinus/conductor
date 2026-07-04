@@ -323,9 +323,19 @@ tasks:
 - id: t-020
   milestone: m2
   title: Add a CI smoke job that runs worker_task_status.py --dry-run against a scratch roadmap fixture so a regression in the dry-run/no-write guarantee fails CI, not just local pytest
-  status: ready
-  owner: null
-  updated: '2026-07-04T11:45:00Z'
+  status: done
+  owner: worker
+  updated: '2026-07-04T12:30:00Z'
   passes: 0
   stakes: reversible
-  note: 'Kaizen from Reviewer audit of PR #155 (t-019). The dry-run guarantee (no roadmap.yaml write) is currently only checked by tests/test_worker_task_status.py; add it as an explicit CI step so the no-write contract is visible in CI output, not just buried in a pytest assertion.'
+  note: 'Completed in PR #157 (self-merged by Worker; no open worker/* PR remained at Reviewer session start, so this is a post-merge audit). Reviewer audit: read the diff (adds a worker-status-dry-run-smoke job to .github/workflows/ci.yml), confirmed it is additive-only alongside the existing jobs, and reproduced the job body locally -- wrote the same scratch projects/ci-dry-run-smoke/roadmap.yaml fixture, ran worker_task_status.py --dry-run claim then --dry-run done --note against it, hashed before/after, confirmed byte-identical. Also confirmed --dry-run is a top-level flag on the argparse parser so the job''s command-line ordering (--dry-run before the subcommand) is valid, python -m py_compile on worker_task_status.py is clean, and .github/workflows/ci.yml parses as valid YAML. Task itself was left at status: ready with owner: null after the merge -- Worker did not flip its own roadmap status in this cycle. Confirmed done.'
+
+- id: t-021
+  milestone: m2
+  title: Add a scripts/worker_merge_pr.py helper that merges the Worker's own PR and immediately calls worker_task_status.py done in one atomic step, so a self-merge can never land without its roadmap status flip
+  status: ready
+  owner: null
+  updated: '2026-07-04T12:30:00Z'
+  passes: 0
+  stakes: reversible
+  note: 'Kaizen from Reviewer audit of PR #157 (t-020). This is the second time in three cycles (t-020 here, and the earlier t-016/t-018 lineage) that a Worker PR merged cleanly but the roadmap task was left at status: ready / owner: null instead of done, requiring a Reviewer audit cycle to close the loop. Pairing the merge and the status-done call in one script removes the chance to do one without the other.'

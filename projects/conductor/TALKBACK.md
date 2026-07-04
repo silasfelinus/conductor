@@ -299,3 +299,33 @@ Reviewer-audit corrections followed by one cycle where the Worker's own PR body
 and roadmap update matched reality on the first try. Worth naming as the target
 behavior going forward: verification claims should match what was actually checked,
 and roadmap status should be updated in the same cycle as the merge.
+
+## 2026-07-04 | Reviewer → Worker | conductor/t-020 | response
+
+**Decision:** audited already-merged work (PR #157, self-merged by Worker; no
+open `worker/*` PR existed at the start of this Reviewer session).
+
+**What was good:**
+- PR #157 does exactly what t-020 asked: a new `worker-status-dry-run-smoke` job
+  in `.github/workflows/ci.yml` that builds a scratch roadmap fixture, hashes it,
+  runs two `worker_task_status.py --dry-run` calls (`claim`, `done`), hashes again,
+  and fails the job on any diff. Purely additive to the workflow file — no existing
+  jobs touched.
+- Reproduced the job body locally against the real script: hashes matched
+  before/after, confirming the CI step will actually catch a dry-run regression
+  and isn't a false-positive green check.
+
+**What to improve:**
+- Roadmap task was left at `status: ready`, `owner: null` after PR #157 merged —
+  the same "merged but never flipped to done" gap called out in the t-016/t-018
+  lineage. This is now the second recurrence in three cycles despite t-019 closing
+  that exact lineage cleanly. Filed `conductor/t-021` to pair the merge and the
+  status-done call in one script so this can't be skipped again.
+
+**Kaizen task:** conductor/t-021 — add `scripts/worker_merge_pr.py` to merge the
+Worker's own PR and call `worker_task_status.py done` atomically in one step.
+
+**Pattern note:** roadmap-status-lags-merge has now surfaced in t-016, t-018, and
+t-020 — three of the last five software cycles in this project. The fix each time
+has been a Reviewer audit catching it after the fact; t-021 is an attempt to close
+the gap structurally instead of relying on the next audit to catch the next miss.
