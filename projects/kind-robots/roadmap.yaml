@@ -89,24 +89,23 @@ tasks:
     title: "Spec the three project-creation surfaces (conductor file, front-end, LLM)"
     status: needs-human
     owner: worker
-    updated: "2026-06-30T00:00:00Z"
+    updated: "2026-07-04T21:00:00Z"
     passes: 0
     stakes: reversible
     gate_human: true
     approved_by_human: false
     depends_on: t-003
     note: >
-      Write projects/kind-robots/PROJECT-CREATION.md defining how a project is
-      created from each of three surfaces:
-      1. Conductor file format — a new roadmap.yaml in projects/<slug>/ triggers
-         Dream creation via the sync script on the next conductor run.
-      2. Kind Robots front-end — UI creates a PROJECT-type Dream with a chosen
-         slug; this posts a Todo (category: AGENT) so the Worker scaffolds the
-         matching roadmap.yaml in conductor.
-      3. LLM — same as front-end: LLM creates a PROJECT Dream, Todo interrupt
-         carries the slug to the Worker.
-      In all cases: Dream.slug === conductor project directory name. Ends
-      needs-human for Silas to approve before implementation begins.
+      FOR SILAS: PROJECT-CREATION.md is written and three of your four decisions are
+      recorded in it (2026-07-04): server-side hook for the auto-Todo; unlimited
+      project creation with processing metered separately (computed charge by expected
+      processing volume/frequency — free/paid tokens on our infra, or bring-your-own
+      server); 409 + re-prompt on slug collision, with a two-word-slug-preferred
+      guideline. REMAINING: bless or amend the proposed default roadmap scaffold —
+      three standard milestones (SHAPE / BUILD / POLISH & SHIP) mapping your creative
+      lifecycle, with a gate_human "outline and scope brief" starter task in SHAPE.
+      TO APPROVE: confirm the scaffold, then set approved_by_human: true and
+      status: done. That clears the way for implementing the three surfaces.
 
   - id: t-005
     milestone: m3

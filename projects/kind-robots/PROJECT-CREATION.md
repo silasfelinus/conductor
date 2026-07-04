@@ -129,9 +129,37 @@ The reconciler runs:
 
 ---
 
-## Open Questions for Silas
+## Decisions (Silas, 2026-07-04)
 
-1. **Auto-Todo on Dream creation**: Should this be a server-side hook in the Dream API route, or a separate scheduled job? (Server-side hook is simpler and more immediate)
-2. **Who can create PROJECT Dreams?** Currently any authenticated user can POST a Dream. Should PROJECT-type Dreams be restricted to specific roles (admin, conductor-worker)?
-3. **Slug collision handling**: If a user picks a slug that already exists as a conductor project directory, who wins? (Recommendation: return a 409 and prompt for a different slug)
-4. **roadmap.yaml scaffold template**: When a Worker scaffolds a new roadmap.yaml from an Auto-Todo, what's the default template? (A single m1 milestone + one t-001 "define scope" task seems right as the universal starter)
+1. **Auto-Todo on Dream creation**: server-side hook in the Dream API route. DECIDED.
+
+2. **Who can create PROJECT Dreams?** Unlimited creation for any authenticated user —
+   no cap and no role restriction on *creating* projects. The metered thing is not
+   creation but **processing**: getting our servers/agents to handle a project's
+   updates is a separate, computed charge based on how much processing is expected
+   and how often (paid or free tokens on our infrastructure, or the user brings
+   their own server/generator and pays nothing). The general "what happens when the
+   bots find us" abuse problem is acknowledged but explicitly NOT solved at this
+   surface — creation is not where the limitation belongs. DECIDED.
+
+3. **Slug collision handling**: return 409 and prompt for a different slug. DECIDED.
+
+   **Slug naming guideline (Silas)**: two-word slugs are preferred
+   (`challenge-center`, `recipe-box`, `coat-dance`). Not a rule — one word or
+   three-plus is fine when it genuinely fits — but surfaces that derive slugs
+   (UI auto-generation, bot slug derivation) should aim for two words.
+
+4. **roadmap.yaml scaffold template**: under discussion — Silas wants a three-part
+   milestone process reflecting a creative lifecycle (outline → brainstorm →
+   roadmap → actualization/adjustment → testing → aesthetic polish →
+   completion/performance/deliverable). Proposed default (awaiting Silas's
+   blessing): three standard milestones —
+
+     - **m1 SHAPE** — outline the idea, gather brainstorms/inspiration, write the
+       plan. Ends at a human gate: Silas approves the brief before building.
+     - **m2 BUILD** — actualize, adjust as reality pushes back, test as you go.
+     - **m3 POLISH & SHIP** — aesthetic polish, performance, completion and
+       delivery. Outward-facing steps stay human-gated.
+
+   Scaffold ships with m1/m2/m3 and one starter task: t-001 "Write the outline
+   and scope brief" (gate_human: true) in m1.
