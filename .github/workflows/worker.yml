@@ -1,32 +1,18 @@
-name: Worker (Hourly)
-
-# DISABLED — schedule removed. Workers come from Claude Code / ChatGPT sessions,
-# not from GitHub Actions, to avoid independent API fees. Manual dispatch kept
-# for debugging. Re-add schedule if a self-hosted LLM runner is set up.
+name: Worker Healthcheck
 
 on:
   workflow_dispatch:
-    inputs:
-      dry_run:
-        description: "Dry run — no commits, no PRs, no merges"
-        required: false
-        default: "false"
-        type: string
 
 jobs:
-  worker:
+  worker-healthcheck:
     runs-on: ubuntu-latest
     permissions:
-      contents: write
-      pull-requests: write
+      contents: read
 
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-          # Use GH_PAT if set (needed if branch protection blocks github-actions[bot]).
-          # Otherwise falls back to the default GITHUB_TOKEN.
-          token: ${{ secrets.GH_PAT || secrets.GITHUB_TOKEN }}
 
       - uses: actions/setup-python@v5
         with:
@@ -35,14 +21,7 @@ jobs:
       - name: Install dependencies
         run: pip install pyyaml
 
-      - name: Run worker cycle
-        run: |
-          FLAG=""
-          if [ "${{ inputs.dry_run }}" = "true" ]; then FLAG="--dry-run"; fi
-          python scripts/run_worker.py $FLAG
+      - name: Run worker healthcheck
+        run: python scripts/run_worker.py --dry-run
         env:
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-          GITHUB_TOKEN: ${{ secrets.GH_PAT || secrets.GITHUB_TOKEN }}
           KR_API_TOKEN: ${{ secrets.KR_API_TOKEN }}
-          GIT_USER_NAME: "worker-bot"
-          GIT_USER_EMAIL: "worker-bot@users.noreply.github.com"

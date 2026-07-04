@@ -210,3 +210,18 @@ data models. App-owned logic only; shared backend is read-only/external.
 Start with the session data model (needs-human gate) before any play-mode code.
 **Notes:**
 - (your notes)
+
+### davinci  (software)
+**Direction:** Life simulator app/game/webgame built around branching life narrative,
+pass/fail victory conditions, 1024 achievements/endpoints, milestone unlocks, ending
+icons/heroes, and generated story art collections. Integrate with Kind Robots Characters,
+Dreams, Chat, Art, and Milestones. Focus development on the achievement/milestone/ending
+engine first so narrative generation has concrete targets.
+**Notes:**
+- Da Vinci may later share primitives with Storymaker, but do not merge them yet.
+  Storymaker is the broader collaborative storytelling engine; Da Vinci is the playable
+  life-sim ruleset with deterministic endpoints.
+- Reuse the existing milestone system where possible. Each ending should link to a
+  milestone icon/image path before proposing schema changes.
+- The AI narrator can generate prose, choices, and art prompts; the app must own durable
+  state, pass/fail outcome math, achievement rules, and unlock records.

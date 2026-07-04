@@ -67,9 +67,50 @@ Appointment
 
 Store money as cents and time as minutes. Calculate totals from stored values rather than trusting manually entered totals.
 
+## Customer data security baseline
+
+Client appointment data is sensitive business data and may include customer personal information. The MVP must stay local-first/private by default, and the paid-app path must treat this as customer data, not casual app state.
+
+### Data minimization
+
+- Store only the fields needed for the calculator, appointment history, and receipt preparation.
+- Do not store client email by default unless Superkate explicitly approves it in the MVP spec review.
+- Do not add free-form client notes, photos, formulas, analytics identifiers, or marketing tags in the MVP.
+- Do not log client names, receipt bodies, appointment totals tied to a client, or raw appointment records to console/server logs.
+
+### Storage and access
+
+- Appointment history should use local persistence for MVP; no cloud sync, public pages, analytics, telemetry, or multi-device backend until explicitly approved.
+- Do not store customer appointment data in browser `localStorage` for a paid release unless Superkate explicitly accepts the risk; prefer a local database/storage layer protected by the operating system.
+- If the app target supports it, add an app lock or device-auth gate before showing saved client history.
+- Keep all secrets out of source control and client bundles. The MVP should not require backend email credentials.
+
+### Receipt safety
+
+- The MVP prepares a user-reviewed email in the device mail app or email composer; it must not silently send receipts from a backend.
+- Receipt text should include only appointment facts Superkate entered for that appointment.
+- If client email storage is later approved, make it optional and editable per receipt.
+
+### Data lifecycle
+
+- Provide a path to delete an appointment record before paid release.
+- Plan for export/backup only after Superkate chooses whether the MVP is one-device-only or sync-enabled.
+- Do not add destructive bulk-delete behavior without a confirmation step.
+
+### Paid-app release gates
+
+Before release as a paid app, the project needs a privacy/security review covering:
+
+- where appointment data is stored;
+- whether device/app lock is required;
+- whether client email is stored or receipt-only;
+- deletion/export/backup expectations;
+- whether any crash reporting or analytics exists, and whether it is configured to avoid customer data;
+- privacy copy for the app listing or handoff notes.
+
 ## Privacy and safety
 
-Client appointment data is sensitive business data. The MVP should be local-first/private by default. Do not add cloud sync, public pages, analytics, or direct email-sending credentials without explicit human approval.
+Client appointment data is sensitive business data. The MVP should be local-first/private by default. Do not add cloud sync, public pages, analytics, telemetry, direct email-sending credentials, payment processing, or shared backend storage without explicit human approval.
 
 ## Email receipt behavior
 
@@ -98,6 +139,9 @@ Dark theme with purple and teal accents. It should feel polished, salon-friendly
 - Public website changes
 - GlossGenius import/export
 - Automated email sending without user review
+- Cloud sync without explicit approval
+- Analytics or telemetry that can capture customer data
+- Storing client email before Superkate approves it
 
 ## Open questions for Superkate
 
@@ -106,3 +150,5 @@ Dark theme with purple and teal accents. It should feel polished, salon-friendly
 - Does the receipt need the client's email address stored, or should email be entered only when sending?
 - Should receipts include salon name/contact info and any legal/disclaimer text?
 - Should appointment history stay on one device only for MVP, or sync later?
+- Should the paid app require an app lock or device authentication before showing saved client history?
+- Should deletion/export/backup be part of the first paid version or a post-MVP release?
