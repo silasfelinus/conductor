@@ -11,6 +11,14 @@ Usage:
 
 This is intentionally line-oriented instead of yaml.safe_dump so agents can flip a single
 roadmap task field without rewriting quoted strings, multiline notes, comments, or ordering.
+
+Multiline field values (folded `note: >` blocks, quoted notes spanning lines, and
+`depends_on` block lists) are replaced as a whole; new fields are inserted at the end of
+the task block so they can never land inside another field's value. Newlines in a new
+value are flattened to spaces — the writer emits exactly one line per field.
+
+If PyYAML is importable, the result is re-parsed after the edit and the write is refused
+unless the document is valid YAML and the target task actually carries the field.
 """
 
 from __future__ import annotations
@@ -37,6 +45,8 @@ ALLOWED_FIELDS = {
     "depends_on",
     "note",
 }
+# Bare words YAML 1.1 parsers read as booleans; quote them so the value stays a string.
+YAML11_BOOL_WORDS = {"yes", "no", "on", "off", "y", "n"}
 
 
 class TaskFieldError(Exception):
@@ -44,7 +54,7 @@ class TaskFieldError(Exception):
 
 
 def normalize_scalar(value: str) -> str:
-    raw = value.strip()
+    raw = re.sub(r"\s*\n\s*", " ", value).strip()
     lowered = raw.lower()
 
     if lowered == "now":
@@ -55,7 +65,7 @@ def normalize_scalar(value: str) -> str:
         return lowered
     if re.fullmatch(r"-?\d+", raw):
         return raw
-    if re.fullmatch(r"[A-Za-z0-9_.:/@+-]+", raw):
+    if lowered not in YAML11_BOOL_WORDS and re.fullmatch(r"[A-Za-z0-9_.:/@+-]+", raw):
         return raw
 
     escaped = raw.replace("'", "''")
@@ -66,6 +76,10 @@ def roadmap_path(project: str) -> pathlib.Path:
     if not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9_-]*", project):
         raise TaskFieldError(f"Invalid project slug: {project!r}")
     return PROJECTS_DIR / project / "roadmap.yaml"
+
+
+def line_indent(line: str) -> int:
+    return len(line) - len(line.lstrip(" "))
 
 
 def find_task_block(lines: list[str], task_id: str) -> tuple[int, int, int]:
@@ -91,9 +105,43 @@ def find_task_block(lines: list[str], task_id: str) -> tuple[int, int, int]:
         if match and len(match.group("indent")) == task_indent:
             end = idx
             break
+        key_match = KEY_RE.match(lines[idx])
+        if key_match and len(key_match.group("indent")) <= task_indent:
+            # A mapping key at or above the task's own indent means the task
+            # list ended (for example a new top-level section).
+            end = idx
+            break
 
     field_indent = task_indent + 2
     return start, end, field_indent
+
+
+def field_value_end(lines: list[str], key_idx: int, block_end: int, field_indent: int) -> int:
+    """Index one past the last line of the field's value block.
+
+    Continuation lines are anything indented deeper than the key (folded/quoted
+    scalars), blank lines inside the value, and block-list items (`- item`) at
+    or below the key's own indent level, as `depends_on:` lists use.
+    """
+    idx = key_idx + 1
+    while idx < block_end:
+        line = lines[idx]
+        stripped = line.strip()
+        if not stripped:
+            idx += 1
+            continue
+        indent = line_indent(line)
+        if indent > field_indent:
+            idx += 1
+            continue
+        if indent >= field_indent and stripped.startswith("- "):
+            idx += 1
+            continue
+        break
+    # Blank lines at the tail are separators between fields/tasks, not value.
+    while idx > key_idx + 1 and not lines[idx - 1].strip():
+        idx -= 1
+    return idx
 
 
 def set_task_field_text(text: str, task_id: str, field: str, value: str) -> str:
@@ -121,18 +169,56 @@ def set_task_field_text(text: str, task_id: str, field: str, value: str) -> str:
             break
 
     if found_field_idx is not None:
-        lines[found_field_idx] = replacement
+        # Replace the key line AND its whole value block, so a multiline note
+        # or a depends_on list cannot leave dangling continuation lines behind.
+        value_end = field_value_end(lines, found_field_idx, end, field_indent)
+        lines[found_field_idx:value_end] = [replacement]
     else:
-        insert_at = start + 1
-        while insert_at < end:
-            stripped = lines[insert_at].strip()
-            if stripped and not stripped.startswith("#"):
-                insert_at += 1
-                continue
-            break
+        # Insert at the end of the task block (before trailing blank separators)
+        # so the new line can never split another field's multiline value.
+        insert_at = end
+        while insert_at > start + 1 and not lines[insert_at - 1].strip():
+            insert_at -= 1
+        if not lines[insert_at - 1].endswith("\n"):
+            lines[insert_at - 1] += "\n"
         lines.insert(insert_at, replacement)
 
     return "".join(lines)
+
+
+def verify_result(text: str, task_id: str, field: str) -> bool | None:
+    """Re-parse the edited document when PyYAML is available.
+
+    Returns True when the document parses and the task carries the field,
+    None when PyYAML is not importable (stdlib-only environments skip this).
+    Raises TaskFieldError when the edit produced invalid or incomplete YAML.
+    """
+    try:
+        import yaml
+    except ImportError:
+        return None
+
+    try:
+        data = yaml.safe_load(text)
+    except yaml.YAMLError as exc:
+        raise TaskFieldError(f"Edit produced invalid YAML, refusing to write: {exc}")
+
+    def walk(node):
+        if isinstance(node, dict):
+            if str(node.get("id")) == task_id:
+                yield node
+            for child in node.values():
+                yield from walk(child)
+        elif isinstance(node, list):
+            for item in node:
+                yield from walk(item)
+
+    for task in walk(data):
+        if field in task:
+            return True
+    raise TaskFieldError(
+        f"Edit did not take: {task_id}.{field} is absent after parsing, refusing to write"
+    )
 
 
 def build_diff(path: pathlib.Path, before: str, after: str) -> str:
@@ -165,6 +251,10 @@ def main() -> int:
     before = path.read_text()
     try:
         after = set_task_field_text(before, args.task_id, args.field, args.value)
+        if before != after:
+            verified = verify_result(after, args.task_id, args.field)
+            if verified is None:
+                print("note: PyYAML not available; skipped post-edit validation", file=sys.stderr)
     except TaskFieldError as exc:
         print(f"ERROR: {exc}", file=sys.stderr)
         return 1
