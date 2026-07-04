@@ -1,7 +1,7 @@
 name: daily-digest
 
 # Emails Silas a daily summary across all projects + pitches awaiting his vote.
-# Run via this cron OR a Claude Managed Agent pointed at scripts/build_digest.py.
+# Run via this cron OR from a managed assistant session pointed at scripts/build_digest.py.
 
 on:
   schedule:
@@ -26,13 +26,11 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - run: pip install pyyaml openai
+      - run: pip install pyyaml
       - name: Build digest JSON
         run: |
           python scripts/build_digest.py --since "24 hours ago" > digest.json
           cat digest.json
-        env:
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
       - name: Validate digest JSON
         run: python scripts/validate_digest.py digest.json
       - name: Build Brevo payload preview
