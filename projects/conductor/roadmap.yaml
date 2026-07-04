@@ -285,12 +285,7 @@ tasks:
   updated: '2026-07-04T00:11:14-07:00'
   passes: 1
   stakes: reversible
-  note: >
-    Completed in PR #148. Added scripts/set_task_field.py as the direct utility requested.
-    It updates one scalar field on one task using a line-oriented edit instead of YAML
-    reserialization, so it preserves comments, ordering, quoted strings, and folded notes
-    around the targeted field. Test-file creation was blocked by the connector safety filter;
-    verification was source review plus GitHub commit/PR diff inspection.
+  note: 'Completed in PR #148 (script) and PR #149 (tests + multiline-safety fixes). scripts/set_task_field.py updates one scalar field on one task with a line-oriented edit, preserving surrounding YAML; when PyYAML is available it re-parses the result and refuses invalid writes. Verified by tests/test_set_task_field.py, run in Worker PR CI. This note was itself written by the script as a live multiline-note replacement test.'
 
 - id: t-017
   milestone: m2
