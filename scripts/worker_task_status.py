@@ -1,20 +1,5 @@
 #!/usr/bin/env python3
-"""Worker-cycle helper for safe roadmap task field updates.
-
-This script wraps scripts/set_task_field.py for the common Worker lifecycle
-transitions so agents can make small, targeted roadmap edits instead of
-rewriting full roadmap.yaml files.
-
-Examples:
-    python scripts/worker_task_status.py claim conductor t-018
-    python scripts/worker_task_status.py review conductor t-018
-    python scripts/worker_task_status.py done conductor t-018 --note "Completed in PR #123."
-    python scripts/worker_task_status.py needs-human conductor t-018 --note "Blocked by ..."
-    python scripts/worker_task_status.py passes conductor t-018 2
-
-The helper intentionally shells into set_task_field.py once per scalar field so
-it inherits that script's line-oriented edit behavior and YAML validation.
-"""
+"""Worker-cycle helper for safe roadmap task field updates."""
 
 from __future__ import annotations
 
@@ -32,7 +17,18 @@ class WorkerTaskStatusError(Exception):
     pass
 
 
-def run_set_task_field(project: str, task_id: str, field: str, value: str) -> None:
+def run_set_task_field(
+    project: str,
+    task_id: str,
+    field: str,
+    value: str,
+    *,
+    dry_run: bool = False,
+) -> None:
+    if dry_run:
+        print(f"would set {project}/{task_id} {field}={value!r}")
+        return
+
     command = [sys.executable, str(SET_TASK_FIELD), project, task_id, field, value]
     result = subprocess.run(command, cwd=ROOT, text=True)
     if result.returncode != 0:
@@ -41,12 +37,18 @@ def run_set_task_field(project: str, task_id: str, field: str, value: str) -> No
         )
 
 
-def set_many(project: str, task_id: str, updates: list[tuple[str, str]]) -> None:
+def set_many(
+    project: str,
+    task_id: str,
+    updates: list[tuple[str, str]],
+    *,
+    dry_run: bool = False,
+) -> None:
     for field, value in updates:
-        run_set_task_field(project, task_id, field, value)
+        run_set_task_field(project, task_id, field, value, dry_run=dry_run)
 
 
-def handle_claim(project: str, task_id: str) -> None:
+def handle_claim(project: str, task_id: str, *, dry_run: bool = False) -> None:
     set_many(
         project,
         task_id,
@@ -55,23 +57,36 @@ def handle_claim(project: str, task_id: str) -> None:
             ("owner", "worker"),
             ("updated", "now"),
         ],
+        dry_run=dry_run,
     )
 
 
-def handle_status(project: str, task_id: str, status: str, note: str | None) -> None:
+def handle_status(
+    project: str,
+    task_id: str,
+    status: str,
+    note: str | None,
+    *,
+    dry_run: bool = False,
+) -> None:
     updates = [("status", status), ("updated", "now")]
     if note is not None:
         updates.append(("note", note))
-    set_many(project, task_id, updates)
+    set_many(project, task_id, updates, dry_run=dry_run)
 
 
-def handle_passes(project: str, task_id: str, passes: str) -> None:
-    set_many(project, task_id, [("passes", passes), ("updated", "now")])
+def handle_passes(project: str, task_id: str, passes: str, *, dry_run: bool = False) -> None:
+    set_many(project, task_id, [("passes", passes), ("updated", "now")], dry_run=dry_run)
 
 
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         description="Apply Worker lifecycle roadmap updates via scripts/set_task_field.py."
+    )
+    parser.add_argument(
+        "--dry-run",
+        action="store_true",
+        help="Print the field updates that would be applied without editing roadmap.yaml.",
     )
     subparsers = parser.add_subparsers(dest="command", required=True)
 
@@ -104,11 +119,11 @@ def main() -> int:
     args = build_parser().parse_args()
     try:
         if args.command == "claim":
-            handle_claim(args.project, args.task_id)
+            handle_claim(args.project, args.task_id, dry_run=args.dry_run)
         elif args.command == "passes":
-            handle_passes(args.project, args.task_id, args.count)
+            handle_passes(args.project, args.task_id, args.count, dry_run=args.dry_run)
         else:
-            handle_status(args.project, args.task_id, args.command, args.note)
+            handle_status(args.project, args.task_id, args.command, args.note, dry_run=args.dry_run)
     except WorkerTaskStatusError as exc:
         print(f"ERROR: {exc}", file=sys.stderr)
         return 1
