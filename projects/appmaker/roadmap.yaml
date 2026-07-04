@@ -1,16 +1,10 @@
 project: appmaker
 kind: software
-notes_from_silas: 'The obvious extension of conductor-app: a manager and app creator — effectively a
-
-  conductor project manager focused on apps. It gets an app itself, plus a front end on
-
-  kind_robots (the primary way I expect to use it). Apps live inside the conductor repo,
-
-  each in its own folder under apps/. We might end up making a lot of these. GitHub
-
-  integration uses permission-based git for git projects.
-
-  '
+notes_from_silas: "The obvious extension of conductor-app: a manager and app creator \u2014 effectively\
+  \ a\nconductor project manager focused on apps. It gets an app itself, plus a front end on\nkind_robots\
+  \ (the primary way I expect to use it). Apps live inside the conductor repo,\neach in its own folder\
+  \ under apps/. We might end up making a lot of these. GitHub\nintegration uses permission-based git\
+  \ for git projects.\n"
 milestones:
 - id: m1
   title: Product brief and architecture
@@ -43,13 +37,11 @@ tasks:
   stakes: reversible
   gate_human: true
   approved_by_human: true
-  note: 'FOR SILAS: You answered the brief''s three questions in-session 2026-07-02 (migrate
-    app/ to apps/conductor — done; GitHub App for phase 2; build self-serve as the end state).
-    The decisions are recorded in projects/appmaker/BRIEF.md. Agents may not set
-    approved_by_human themselves, so TO FORMALIZE: set approved_by_human: true and
-    status: done here. Dependent tasks were already un-gated on your verbal direction.
-
-    '
+  note: "FOR SILAS: You answered the brief's three questions in-session 2026-07-02 (migrate app/ to apps/conductor\
+    \ \u2014 done; GitHub App for phase 2; build self-serve as the end state). The decisions are recorded\
+    \ in projects/appmaker/BRIEF.md. Agents may not set approved_by_human themselves, so TO FORMALIZE:\
+    \ set approved_by_human: true and status: done here. Dependent tasks were already un-gated on your\
+    \ verbal direction.\n"
 - id: t-002
   milestone: m2
   title: Define apps/ convention and build scripts/new_app.py scaffolder
@@ -59,45 +51,42 @@ tasks:
   passes: 0
   stakes: reversible
   depends_on: t-001
-  note: 'Merged to main via PR #104 (2026-07-03): scripts/new_app.py creates apps/<slug>/
-    skeleton + projects/<slug>/roadmap + art prompts + registry entries and files the Dream-sync
-    todo (KR_API_TOKEN). Verified end-to-end: scaffolded test app passed analyze+test, then was
-    removed. app-ci.yml generalized to apps/** with per-app change detection. app/ migrated to
-    apps/conductor/.
+  note: 'Merged to main via PR #104 (2026-07-03): scripts/new_app.py creates apps/<slug>/ skeleton + projects/<slug>/roadmap
+    + art prompts + registry entries and files the Dream-sync todo (KR_API_TOKEN). Verified end-to-end:
+    scaffolded test app passed analyze+test, then was removed. app-ci.yml generalized to apps/** with
+    per-app change detection. app/ migrated to apps/conductor/.
 
     '
 - id: t-003
   milestone: m3
   title: Design the permission-based GitHub integration (GitHub App)
-  status: needs-human
+  status: done
   owner: claude
   updated: '2026-07-03T00:00:00Z'
   passes: 0
   stakes: reversible
   gate_human: true
-  approved_by_human: false
-  note: 'FOR SILAS: projects/appmaker/GITHUB-APP-DESIGN.md is the full design. Load-bearing
-    sections to read: 2 (app permissions — contents/PRs/checks read-write, nothing more),
-    4 (GithubInstallation + AppRepo data model; AppRepo is the slug->repo mapping), and
-    6 (security invariants — no credentials in clients or DB, HMAC''d webhooks, signed
-    install nonce). TO APPROVE: set approved_by_human: true and status: done. Unblocks
-    t-007 (you register the app — it lives under your GitHub account) then t-008..t-010.
-
-    '
+  approved_by_human: true
+  note: "APPROVED by Silas 2026-07-04. Design: projects/appmaker/GITHUB-APP-DESIGN.md. Load-bearing sections\
+    \ to read: 2 (app permissions \u2014 contents/PRs/checks read-write, nothing more), 4 (GithubInstallation\
+    \ + AppRepo data model; AppRepo is the slug->repo mapping), and 6 (security invariants \u2014 no credentials\
+    \ in clients or DB, HMAC'd webhooks, signed install nonce). TO APPROVE: set approved_by_human: true\
+    \ and status: done. Unblocks t-007 (you register the app \u2014 it lives under your GitHub account)\
+    \ then t-008..t-010.\n"
 - id: t-007
   milestone: m3
   title: Register the AppMaker GitHub App and store its secrets in server env
-  status: waiting
+  status: ready
   owner: null
   passes: 0
   stakes: outward-facing
   gate_human: true
-  approved_by_human: false
+  approved_by_human: true
   depends_on: t-003
-  note: 'SILAS DOES THIS ONE: create the GitHub App per GITHUB-APP-DESIGN.md section 2
-    (permissions: contents rw, pull_requests rw, metadata r, checks r, actions r; webhook
-    events push/pull_request/check_suite/installation), then put APPMAKER_GH_APP_KEY,
-    APPMAKER_GH_WEBHOOK_SECRET, and the app id into Vercel env. Agents never hold the key.
+  note: 'SILAS DOES THIS ONE: create the GitHub App per GITHUB-APP-DESIGN.md section 2 (permissions: contents
+    rw, pull_requests rw, metadata r, checks r, actions r; webhook events push/pull_request/check_suite/installation),
+    then put APPMAKER_GH_APP_KEY, APPMAKER_GH_WEBHOOK_SECRET, and the app id into Vercel env. Agents never
+    hold the key.
 
     '
 - id: t-008
@@ -108,9 +97,9 @@ tasks:
   passes: 0
   stakes: reversible
   depends_on: t-007
-  note: 'GithubInstallation + AppRepo Prisma models, GET connect redirect with signed state
-    nonce, setup callback, HMAC-verified POST /api/appmaker/github/webhook, and the granted-repo
-    list API. Per design sections 4, 5a, 5e, 6.
+  note: 'GithubInstallation + AppRepo Prisma models, GET connect redirect with signed state nonce, setup
+    callback, HMAC-verified POST /api/appmaker/github/webhook, and the granted-repo list API. Per design
+    sections 4, 5a, 5e, 6.
 
     '
 - id: t-009
@@ -121,8 +110,8 @@ tasks:
   passes: 0
   stakes: reversible
   depends_on: t-008
-  note: 'Mint installation tokens server-side, push worker/scaffold-<slug> branches to user
-    repos, open PRs. Worker role rules from design section 5d apply unchanged.
+  note: 'Mint installation tokens server-side, push worker/scaffold-<slug> branches to user repos, open
+    PRs. Worker role rules from design section 5d apply unchanged.
 
     '
 - id: t-010
@@ -133,10 +122,10 @@ tasks:
   passes: 0
   stakes: irreversible
   gate_human: true
-  approved_by_human: false
+  approved_by_human: true
   depends_on: t-009
-  note: 'git subtree split to preserve history, push via installation token, flip the AppRepo
-    row, removal PR in the monorepo. Both PRs are needs-human per design section 5c.
+  note: 'git subtree split to preserve history, push via installation token, flip the AppRepo row, removal
+    PR in the monorepo. Both PRs are needs-human per design section 5c.
 
     '
 - id: t-004
@@ -148,17 +137,16 @@ tasks:
   passes: 0
   stakes: reversible
   depends_on: t-001
-  note: 'Merged to kind_robots main via PR #72 (2026-07-03T05:05:10Z): appmaker-page.vue
-    (fleet browser with roadmap progress + needs-you badges, self-serve create form, pending
-    scaffold indicators), GET /api/appmaker/apps (apps/ dir + open scaffold todos), POST
-    /api/appmaker/scaffold-request (Dream with slug parity + AGENT todo filed under the worker
-    account; project cap enforced). Reached via workspace card ''appmaker''. CI state display
-    deferred to t-008 (needs webhooks).
+  note: 'Merged to kind_robots main via PR #72 (2026-07-03T05:05:10Z): appmaker-page.vue (fleet browser
+    with roadmap progress + needs-you badges, self-serve create form, pending scaffold indicators), GET
+    /api/appmaker/apps (apps/ dir + open scaffold todos), POST /api/appmaker/scaffold-request (Dream with
+    slug parity + AGENT todo filed under the worker account; project cap enforced). Reached via workspace
+    card ''appmaker''. CI state display deferred to t-008 (needs webhooks).
 
     '
 - id: t-005
   milestone: m5
-  title: 'AppMaker surface in the Flutter app'
+  title: AppMaker surface in the Flutter app
   status: done
   owner: claude
   updated: '2026-07-03T00:00:00Z'
@@ -167,9 +155,9 @@ tasks:
   depends_on:
   - t-002
   - t-004
-  note: 'Merged to main via PR #104 (2026-07-03): Apps tab in apps/conductor (fleet
-    list with roadmap progress for admins, pending-scaffold chips, new-app sheet posting to
-    /api/appmaker/scaffold-request). Shown in remote server modes; hidden in local mode.
+  note: 'Merged to main via PR #104 (2026-07-03): Apps tab in apps/conductor (fleet list with roadmap
+    progress for admins, pending-scaffold chips, new-app sheet posting to /api/appmaker/scaffold-request).
+    Shown in remote server modes; hidden in local mode.
 
     '
 - id: t-006
@@ -179,9 +167,8 @@ tasks:
   owner: null
   passes: 0
   stakes: reversible
-  note: 'Run scripts/sync_projects_to_dreams.py (or create the Dream via the API) so kind_robots
-    has a PROJECT Dream with slug "appmaker" matching this project, per the standing slug-parity
-    rule in CONTROL.md.
+  note: 'Run scripts/sync_projects_to_dreams.py (or create the Dream via the API) so kind_robots has a
+    PROJECT Dream with slug "appmaker" matching this project, per the standing slug-parity rule in CONTROL.md.
 
     '
 - id: t-011
@@ -191,11 +178,10 @@ tasks:
   owner: null
   passes: 0
   stakes: reversible
-  note: 'Kaizen from Reviewer on the PR #104 merge (2026-07-03): PR #104 scaffolded apps/ for
-    every existing active project (humboldt-scoop-cms, kind-robots, media-watchlist, sketchy,
-    storymaker, wishmaster) as bare `flutter create` shells with no roadmap task driving them
-    to build-out. Add a check (script or CI note) that surfaces apps/<slug>/ folders whose
-    lib/ has never grown past main.dart after N days, so Silas can decide build vs. retire
-    instead of the fleet growing silently.
+  note: 'Kaizen from Reviewer on the PR #104 merge (2026-07-03): PR #104 scaffolded apps/ for every existing
+    active project (humboldt-scoop-cms, kind-robots, media-watchlist, sketchy, storymaker, wishmaster)
+    as bare `flutter create` shells with no roadmap task driving them to build-out. Add a check (script
+    or CI note) that surfaces apps/<slug>/ folders whose lib/ has never grown past main.dart after N days,
+    so Silas can decide build vs. retire instead of the fleet growing silently.
 
     '
