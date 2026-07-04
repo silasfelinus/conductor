@@ -313,9 +313,9 @@ tasks:
 - id: t-019
   milestone: m2
   title: Add a --dry-run mode to worker_task_status.py that prints the fields it would change without writing
-  status: ready
-  owner: null
-  updated: '2026-07-04T10:26:14Z'
+  status: claimed
+  owner: worker
+  updated: '2026-07-04T04:14:28-07:00'
   passes: 0
   stakes: reversible
   note: 'Kaizen from PR #153 (t-018): future Worker cycles could verify lifecycle status transitions (claim/review/done/etc.) without touching the roadmap file, mirroring set_task_field.py''s existing --dry-run behavior one layer up.'
