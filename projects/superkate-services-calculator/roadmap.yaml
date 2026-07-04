@@ -50,23 +50,23 @@ tasks:
     approved_by_human: false
     note: >
       FOR SILAS/SUPERKATE: Review projects/superkate-services-calculator/SPEC.md.
-      Confirm time-entry format, receipt copy, whether to store client email, and whether the
+      Confirm time-entry format, receipt copy, whether to store client email, whether the
+      paid app needs device/app lock before showing appointment history, and whether the
       MVP should stay local-only. Set approved_by_human: true and status: done when approved.
       Unblocks implementation tasks.
 
   - id: t-009
     milestone: m1
     title: Add paid-app customer data security baseline to the MVP spec
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
     updated: 2026-07-04
     note: >
-      Tighten SPEC.md so the services calculator has explicit privacy/security requirements
-      before appointment persistence begins: data minimization, local-first storage,
-      no analytics, no plaintext secrets, safe receipt behavior, deletion/export expectations,
-      and paid-app release gates for customer appointment data.
+      Added an explicit customer data security baseline to SPEC.md covering data minimization,
+      local-first storage, no analytics, no plaintext secrets, safe receipt behavior,
+      deletion/export expectations, and paid-app release gates before appointment persistence begins.
 
   - id: t-003
     milestone: m2
@@ -75,11 +75,15 @@ tasks:
     owner: null
     passes: 0
     stakes: reversible
-    depends_on: t-002
+    depends_on:
+      - t-002
+      - t-009
     note: >
       Implement an Appointment model storing clientName, appointmentDate, hourlyRateCents,
       timeSpentMinutes, productCostCents, appointmentTotalCents, createdAt, and updatedAt.
-      Money must be stored as cents and totals calculated from inputs.
+      Money must be stored as cents and totals calculated from inputs. Follow SPEC.md's
+      customer data security baseline; do not use browser localStorage for a paid release
+      unless Superkate explicitly accepts that risk.
 
   - id: t-004
     milestone: m2
@@ -144,4 +148,5 @@ tasks:
     depends_on: t-007
     note: >
       Prepare a handoff checklist for device install/test, data backup expectations, privacy notes,
-      and app-store readiness. Do not submit to any app store without explicit human approval.
+      customer data security review, and app-store readiness. Do not submit to any app store
+      without explicit human approval.
