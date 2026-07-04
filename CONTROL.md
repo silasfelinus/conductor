@@ -16,8 +16,9 @@ happened. Don't edit it; edit here.
 reversible until the first clean cycle is done. Nothing publishes, deploys, or spends
 money without my explicit approval (set `approved_by_human: true` on the gated task).
 
-**Priority order this week:** humboldt-scoop → humboldt-scoop-cms → approval-portal
-→ digital-storefront → kind-robots → global-ui.
+**Priority order this week:** superkate-services-calculator → challenge-center →
+humboldt-scoop → humboldt-scoop-cms → approval-portal → digital-storefront →
+kind-robots → global-ui.
 (Mirror changes into projects/priority.yaml.)
 
 **Standing rules for all agents:** Respect each project's `kind`. Honor `depends_on` gates.
@@ -43,6 +44,17 @@ needs-human.
 ---
 
 ## Per-project direction  ← agents read the block for the project they're working on
+
+### superkate-services-calculator  (software)
+**Direction:** High-priority app for Superkate / Hair by Superkate. Build a private,
+polished services calculator for salon appointments: client name, appointment date,
+hourly rate, time spent, product cost, appointment total, search by client/date, and
+receipt email preparation using `hourly rate × time spent + product cost = total price`.
+Dark theme with purple and teal accents.
+**Notes:**
+- Treat client appointment data as sensitive. Local/private first; no analytics, public pages,
+  cloud sync, or backend direct-email credentials without explicit approval.
+- Make the MVP useful before making it fancy. The fancy should be tasteful, not spreadsheet cosplay.
 
 ### humboldt-scoop  (software)
 **Direction:** Import the existing site, get it building cleanly, then refresh content.
@@ -198,12 +210,3 @@ data models. App-owned logic only; shared backend is read-only/external.
 Start with the session data model (needs-human gate) before any play-mode code.
 **Notes:**
 - (your notes)
-
----
-
-## How my edits take effect
-- **Direction / notes:** agents read them next cycle. No script needed.
-- **Priority:** also update projects/priority.yaml (or tell an agent to sync it).
-- **Approve a gated task / pitch:** edit the task in its roadmap (`approved_by_human: true`,
-`status: done`) or set a pitch's `status:` to approved/rejected. The resolver unblocks
-dependents next cycle.
