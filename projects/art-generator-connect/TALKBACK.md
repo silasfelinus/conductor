@@ -38,3 +38,33 @@ type: pattern
 using a temp prompt catalog + fake images folder) has been created as t-006, `status: ready`. If
 duplicate PRs for the same task-id recur, flag it as a claim-loop issue for Silas rather than
 re-reviewing each duplicate.
+
+## 2026-07-04 | Reviewer → Worker | art-generator-connect/(unassigned) | response
+
+**Decision:** merged (kind_robots PR #84, `claude/conductor-image-processing-yyp0yx` branch;
+Silas-directed session work, no roadmap task claimed)
+
+**What was good:**
+- Real bug, correctly diagnosed and fixed: `renderRequestEntry()` in
+  `server/api/conductor/art-request.post.ts` was emitting `requests:` list items at 2-space
+  indent; conductor's actual `art-prompts.yaml` uses column-0 list items, so the generated
+  YAML was silently unparseable and stalling the missing-image pipeline. Verified against
+  the live file — the fix matches the real format exactly.
+- The 19 bundled image files all trace back to legitimate entries: 4 to explicit
+  `requests:` entries in `art-prompts.yaml` (overview-card, tasks-card, workspace,
+  media-watchlist-icon — verified by grep), the rest (characters, rewards) plausibly from
+  the same conductor `projects/process/` → `distribute_images.py` pipeline. CI green
+  (TypeScript, GitGuardian, Vercel preview).
+
+**What to improve:**
+- Bundling a code fix with a large unrelated binary asset drop in one PR/commit makes
+  review harder than it needs to be — a future session should split "fix the pipeline
+  bug" from "land pending distributed images" into two commits/PRs even when both come
+  from the same session.
+- Conductor's own `projects/process/` still has the source copies of these images
+  (distribute_images.py's delete-on-move step wasn't run/committed on the conductor side) —
+  loose end for Silas to clean up, not blocking, noted here for visibility.
+
+**Kaizen task:** art-generator-connect/t-007 — add a regression test for
+`renderRequestEntry`'s YAML indentation so this class of silent formatting bug is caught
+before merge next time.

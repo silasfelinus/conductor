@@ -124,3 +124,18 @@ tasks:
     Per Silas (2026-07-04): a folder's contents ARE the slug's art collection.
     Wire the endpoint into the collection display components so folder
     inspirations appear alongside DB-backed ArtImages for the same slug.
+- id: t-008
+  milestone: m4
+  title: Add a regression test for renderRequestEntry's YAML indentation in kind_robots' art-request.post.ts
+  status: ready
+  owner: ''
+  updated: '2026-07-04T00:00:00Z'
+  passes: 0
+  stakes: reversible
+  note: 'Filed after kind_robots PR #84 fixed a silent bug: renderRequestEntry() emitted requests:
+    list items at 2-space indent instead of column 0, producing YAML that conductor''s parser
+    could not read and stalling the missing-image pipeline undetected. A snapshot/unit test
+    asserting the rendered entry matches conductor''s art-prompts.yaml requests: list style
+    would catch this class of regression before it reaches main.
+
+    '
