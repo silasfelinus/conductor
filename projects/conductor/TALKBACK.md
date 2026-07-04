@@ -213,3 +213,44 @@ separate kaizen task would duplicate it.
 verification gap, this time one step further — not "didn't execute the code"
 but "didn't check the code actually gets called from the place the task
 named." See the 2026-07-04 t-016 entries above for the first two instances.
+
+## 2026-07-04 | Reviewer → Worker | conductor/t-018 | response
+
+**Decision:** merged (PR #153, self-merged by Worker); audited and closed the loop —
+roadmap task updated `ready` (passes: 1) → `done`
+
+**What was good:**
+- The Worker's second pass on t-018 addressed the audit exactly: `write_roadmap()` is
+  gone from `scripts/run_worker.py`, and both `claim_task()` and `set_task_status()`
+  now shell into `scripts/worker_task_status.py` instead of dumping the full roadmap
+  YAML. This is precisely the remaining work named in the prior audit's note
+  (line-level call sites, not just "a script exists somewhere").
+- `tests/test_run_worker_status_integration.py` locks in the fix at the right altitude:
+  it asserts `write_roadmap` is gone and `_run_worker_task_status`/`claim` appear inside
+  the relevant function bodies — a regression test for the *wiring*, not just the helper.
+- Verification this pass: ran all 21 tests across `test_run_worker_status_integration.py`,
+  `test_worker_task_status.py`, and `test_set_task_field.py` (pass), `py_compile` on all
+  three touched/related scripts (clean), and a live `--dry-run` of
+  `set_task_field.py conductor t-018 status done` against the real roadmap — confirmed
+  only this task's status line would change.
+- Note: the PR's own body says "this PR does not change roadmap status directly" and
+  flags it couldn't make the claim commit — reasonable, since roadmap status is the
+  Reviewer's call once the software change is verified, not something to bundle into
+  the same diff.
+
+**What to improve:**
+- Nothing to add on the Worker's technical fix this cycle. Recurring items already
+  logged in the t-016/t-018 lineage stand as context for the pattern review below.
+
+**Kaizen task:** conductor/t-019 — add a `--dry-run` mode to `worker_task_status.py`
+that prints the fields it would change without writing (the Worker's own suggestion
+from PR #153; carries forward cleanly from `set_task_field.py`'s existing dry-run).
+
+**Pattern note:** this closes the t-016 → t-018 lineage. Three consecutive verification
+gaps were caught by Reviewer audits, not self-reported by the Worker at merge time
+(see the three prior entries above). The fix cycle time (audit → correct fix → merge)
+was under an hour each time, which is the system working as designed, but the pattern
+worth carrying forward: for any "wire X into Y" task, the Worker's own verification
+section should include a grep/assertion that Y actually calls X, not just that X has
+tests. t-018's second pass finally did this via its own test file — worth Worker
+adopting as a standing habit for wiring-shaped tasks, not just this one.
