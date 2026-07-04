@@ -171,6 +171,12 @@ def prune_art_prompts(prompts_data, moved_filenames):
     inspiration_entries = pending_inspiration_entries(prompts_data)
     request_entries = normalize_art_requests(prompts_data)
 
+    orig_req = len(request_entries)
+    request_entries = [
+        e for e in request_entries
+        if Path(str(e.get("image_path") or "")).name not in moved_filenames
+    ]
+
     orig_img = len(prompts_data.get("images") or [])
     orig_ins = sum(len(p.get("images") or []) for p in (prompts_data.get("inspirations") or []))
     new_ins = sum(len(p.get("images") or []) for p in inspiration_entries)
@@ -184,8 +190,9 @@ def prune_art_prompts(prompts_data, moved_filenames):
 
     removed_img = orig_img - len(image_entries)
     removed_ins = orig_ins - new_ins
-    if removed_img or removed_ins:
-        print(f"  art-prompts.yaml: removed {removed_img} project asset entry/entries, {removed_ins} inspiration entry/entries")
+    removed_req = orig_req - len(request_entries)
+    if removed_img or removed_ins or removed_req:
+        print(f"  art-prompts.yaml: removed {removed_img} project asset entry/entries, {removed_ins} inspiration entry/entries, {removed_req} request entry/entries")
 
 
 def distribute():
