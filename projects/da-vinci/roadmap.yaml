@@ -1,0 +1,60 @@
+# Scaffolded 2026-07-04 from the SHAPE/BUILD/POLISH template (PROJECT-CREATION.md).
+project: da-vinci
+kind: software
+
+notes_from_silas: |
+  A life-simulation game on kind_robots: a seeded playthrough (LifeRun) advances
+  chapter by chapter through choices (LifeChoice) that move stats (LifeStat),
+  generates art along the way (LifeRunArt via the existing art system), and
+  resolves to an ending (LifeEnding) with achievements (LifeAchievement /
+  LifeAchievementUnlock). Schema drafted by the Worker, applied by the Reviewer
+  in kind_robots PR #87; Silas runs the migration manually.
+
+  Skillset segment (per the ecosystem principle): stateful narrative progression —
+  seeded, resumable, stat-driven story state that other projects (storymaker,
+  serendipity, challenge-center SCENARIO challenges) can reuse.
+
+milestones:
+  - id: m1
+    title: "SHAPE — outline, brainstorm, design brief"
+    weight: 25
+    status: in-progress
+
+  - id: m2
+    title: "BUILD — actualize, adjust, test"
+    weight: 50
+    status: not-started
+
+  - id: m3
+    title: "POLISH & SHIP — aesthetics, performance, delivery"
+    weight: 25
+    status: not-started
+
+tasks:
+  - id: t-001
+    milestone: m1
+    title: "Write the design brief and start building"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Schema already exists (kind_robots PR #87) — the brief should document the
+      game loop it implies: run creation (seed, protagonist, genre), the
+      chapter/choice/stat cycle, art generation moments (LifeArtSceneType), endings
+      and achievements, and how runs tie into Dream/Character/Bot/ArtCollection.
+      Write DESIGN-BRIEF.md, then create the first BUILD tasks (API routes, seed
+      content, play surface) and keep going. Blocked only on Silas's migration
+      report for actual DB work — design and API scaffolding can start now.
+
+  - id: t-002
+    milestone: m1
+    title: "Confirm scope with Silas"
+    status: needs-human
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      FOR SILAS: soft checkpoint, nothing is blocked on it. The schema you approved
+      implies a full life-sim loop; read DESIGN-BRIEF.md when it lands and confirm
+      or redirect. Development continues in parallel.
