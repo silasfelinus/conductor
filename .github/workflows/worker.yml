@@ -23,3 +23,5 @@ jobs:
 
       - name: Run worker healthcheck
         run: python scripts/run_worker.py --dry-run
+        env:
+          KR_API_TOKEN: ${{ secrets.KR_API_TOKEN }}
