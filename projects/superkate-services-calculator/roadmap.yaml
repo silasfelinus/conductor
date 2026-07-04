@@ -54,6 +54,20 @@ tasks:
       MVP should stay local-only. Set approved_by_human: true and status: done when approved.
       Unblocks implementation tasks.
 
+  - id: t-009
+    milestone: m1
+    title: Add paid-app customer data security baseline to the MVP spec
+    status: claimed
+    owner: worker
+    passes: 0
+    stakes: reversible
+    updated: 2026-07-04
+    note: >
+      Tighten SPEC.md so the services calculator has explicit privacy/security requirements
+      before appointment persistence begins: data minimization, local-first storage,
+      no analytics, no plaintext secrets, safe receipt behavior, deletion/export expectations,
+      and paid-app release gates for customer appointment data.
+
   - id: t-003
     milestone: m2
     title: Build the appointment data model and local persistence
