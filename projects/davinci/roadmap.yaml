@@ -1,0 +1,123 @@
+project: davinci
+kind: software
+notes_from_silas: |
+  Da Vinci is a life simulator app/game/webgame: a branching life narrative with pass/fail victory conditions and 1024 achievements/endpoints. It integrates with Kind Robots characters, Dreams, Chat, generated art collections, and the existing milestone system. Focus development on milestone/achievement/ending generation first, so narrative generation has concrete targets. This may later share pieces with Storymaker, but do not merge it prematurely.
+
+milestones:
+  - id: m1
+    title: "SHAPE — endpoint framework and design brief"
+    weight: 25
+    status: not-started
+
+  - id: m2
+    title: "BUILD — life run, choice, and ending engine"
+    weight: 35
+    status: not-started
+
+  - id: m3
+    title: "INTEGRATE — milestones, Dreams, characters, Chat, and art collections"
+    weight: 25
+    status: not-started
+
+  - id: m4
+    title: "POLISH — ending reveal, achievement gallery, and Storymaker alignment"
+    weight: 15
+    status: not-started
+
+tasks:
+  - id: t-001
+    milestone: m1
+    title: "Write Da Vinci design brief and endpoint plan"
+    status: done
+    owner: worker
+    updated: '2026-07-04T15:00:00-07:00'
+    passes: 0
+    stakes: reversible
+    note: >
+      Added projects/davinci/docs/design-brief.md with the product shape, core loop,
+      1024 endpoint strategy, milestone integration, art collection flow, and first
+      implementation slices. Spec only — no schema, API, live data, deploy, or
+      publishing changes.
+
+  - id: t-002
+    milestone: m1
+    title: "Confirm Da Vinci scope with Silas"
+    status: needs-human
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      FOR SILAS: soft checkpoint, nothing is blocked on it. Read
+      projects/davinci/docs/design-brief.md and confirm whether Da Vinci should remain
+      a separate playable ruleset from Storymaker for now. TO APPROVE: set
+      approved_by_human: true and status: done, or add corrections in this note.
+      Development can continue while this is open.
+
+  - id: t-003
+    milestone: m1
+    title: "Define Da Vinci ending dimensions and deterministic endpoint keys"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Create the canonical 10 outcome dimensions, pass/fail threshold rules, 10-bit
+      endpoint key format, and generation rules for the 1024 ending records. Keep it
+      app-owned and deterministic so AI narration targets known outcomes.
+
+  - id: t-004
+    milestone: m2
+    title: "Draft LifeRun, LifeChoice, LifeStat, LifeEnding, and LifeRunArt schema pitch"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-003
+    note: >
+      Draft the schema proposal for Da Vinci's app-owned state models and identify
+      whether Milestone already has enough icon/image fields or needs a minimal schema
+      upgrade. Shared Kind Robots backend changes must remain pitches unless explicitly
+      approved.
+
+  - id: t-005
+    milestone: m3
+    title: "Map Da Vinci endings to existing Kind Robots milestones"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-004
+    note: >
+      Define how each ending unlocks or links to a Milestone, including title,
+      description, icon path, hero path, achievement metadata, and user unlock state.
+      Prefer existing milestone fields where possible.
+
+  - id: t-006
+    milestone: m3
+    title: "Define generated art collection flow for life runs"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-004
+    note: >
+      Specify how story moment art, dream art, character encounter art, ending icons,
+      and ending heroes are generated, saved, and attached to a user's Da Vinci art
+      collection.
+
+  - id: t-007
+    milestone: m4
+    title: "Compare Da Vinci and Storymaker boundaries after endpoint engine exists"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on:
+      - t-003
+      - t-005
+      - t-006
+    note: >
+      Revisit whether Da Vinci should remain a playable ruleset built near Storymaker,
+      become a Storymaker mode, or share primitives while staying a separate project.
+      Do not merge the project concepts before the endpoint and milestone engine is
+      concrete.
