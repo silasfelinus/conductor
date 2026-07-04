@@ -133,3 +133,32 @@ with freeform overrides.
 ---
 
 *Authored by Claude agent on 2026-06-29. Reviewed by: needs-human.*
+
+
+---
+
+## Decisions (Silas, 2026-07-04)
+
+**Scope APPROVED.** MVP = additions 1-5 in one additive schema change (shipped to
+Composition in kind_robots PR #87; Silas migrates manually). Gap 6 (WishIngredient
+join table) deferred pending separate design review.
+
+**Convergence confirmed:** a project-shaped wish flows into the project-creation
+LLM surface (PROJECT-CREATION.md surface 3) — Wishmaster creates the PROJECT Dream,
+the auto-Todo scaffolds the SHAPE/BUILD/POLISH roadmap, and building starts
+immediately per the bias-to-action rule. Small wishes (a character, a scene) remain
+plain Compositions. One brain, two output sizes.
+
+**Ecosystem principle (Silas):** most projects are attempts to focus one specific
+skillset used throughout the ecosystem. The goal is to segment those moments out so
+each becomes (a) a tool of particular skill for our own use, and (b) a candidate
+standalone app/tool feature specializing in that skillset — hopefully useful and
+possibly lucrative. Wishmaster's skillset is intent-to-assembly: turning a natural-
+language desire into a structured, costed, executable plan.
+
+**Cost estimation principle (Silas):** a user is generally shown a cost estimate
+before any paid service runs. For recurring/scheduled services the confirmation is
+duration-and-cap shaped: "I approve one or more usages through duration D, with a
+max spend of X per cycle or Y total, before I must confirm more." userApproved/
+approvedAt gate execution; manaCharged records what actually happened. Free/local
+generation may skip the confirmation.
