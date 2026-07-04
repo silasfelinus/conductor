@@ -23,6 +23,17 @@ notes_from_silas: |
   Agent identity: each competing agent registers as a Bot record in kind_robots so
   reaction aggregation can use existing Bot→Reaction infrastructure.
 
+  APPROVED in full by Silas (2026-07-04) — all four milestones, portos integration
+  included. portos is highly evolved (built by Silas's brother, a stronger programmer)
+  — treat it as a first-class competitor, and per t-009, learn its invocation pattern
+  from the repo rather than assuming it mirrors conductor's.
+
+  FRONT-END DIRECTION (Silas, 2026-07-04): the challenge UI must be stellar — designed
+  like a heavyweight title-fight promo or a Street Fighter-style character/game select
+  screen. Think: VS layouts, agent "fighter cards" with avatars and records, bold type,
+  dramatic matchup presentation. Not a plain CRUD table. This applies to t-005 (browser),
+  t-006 (voting page), and t-007 (leaderboard).
+
   Cross-repo split:
     - kind_robots: new Prisma models, API routes, seeded challenge library, voting UI
     - conductor: challenge runner scripts, agent dispatch tooling, this roadmap
@@ -55,21 +66,21 @@ tasks:
   - id: t-001
     milestone: m1
     title: "Add Challenge and ChallengeSubmission Prisma models to kind_robots"
-    status: needs-human
+    status: ready
     owner: null
     passes: 0
     stakes: irreversible
     gate_human: true
-    updated: 2026-07-02T14:10:42-07:00
+    approved_by_human: true
+    updated: 2026-07-04T19:30:00Z
     note: >
-      FOR SILAS: This task is blocked at the human approval gate because it changes the
-      kind_robots Prisma schema and requires a DB migration. The proposed schema adds
-      Challenge and ChallengeSubmission models, wires submissions to Bot/ArtImage/Character,
-      and extends Reaction with CHALLENGE_SUBMISSION support.
-
-      TO APPROVE: Review this schema direction, then either set approved_by_human: true
-      and status: done to unblock t-002, or edit this note with the schema changes you want.
-      This unblocks t-002, which registers conductor and port0s as Bot records.
+      APPROVED by Silas 2026-07-04 (project approved in full, milestone 4 included):
+      add Challenge and ChallengeSubmission Prisma models to kind_robots, wire
+      submissions to Bot/ArtImage/Character, extend Reaction with CHALLENGE_SUBMISSION
+      support. The migration must be additive only (new models, new enum value, new
+      nullable FK on Reaction) — no destructive changes, per hard safety rule 10.
+      Worker: implement in kind_robots on a worker/* branch and open the PR there;
+      t-002 unblocks when this is genuinely done (schema merged), not merely approved.
 
   - id: t-002
     milestone: m1
@@ -171,6 +182,8 @@ tasks:
       Filter by type (ART/TEXT/CHARACTER/etc) and status (OPEN/JUDGING/CLOSED).
       Link to /challenges/[slug] for the detail view.
       Reuse existing Kind Robots card/grid component patterns.
+      DESIGN DIRECTION (Silas): heavyweight fight-promo / Street Fighter select-screen
+      aesthetic — see notes_from_silas. Challenge cards read like fight matchups.
 
   - id: t-006
     milestone: m3
@@ -190,6 +203,8 @@ tasks:
       For ART challenges, render the ArtImage thumbnail.
       For TEXT challenges, render the outputText with a read-more expander.
       For CHARACTER challenges, render the Character card.
+      DESIGN DIRECTION (Silas): this is the VS screen — submissions face off side by side
+      like a title bout, agent avatars as fighter portraits. See notes_from_silas.
 
   - id: t-007
     milestone: m3
@@ -207,6 +222,8 @@ tasks:
       total score, win rate.
       Also show on each /challenges/[slug] page: a mini leaderboard for that challenge.
       Link back to /challenges browser.
+      DESIGN DIRECTION (Silas): championship presentation — podium, belts, win records,
+      fighter cards. See notes_from_silas.
 
   # ── M4: Agent integration ────────────────────────────────────────────────────────
 
