@@ -333,9 +333,9 @@ tasks:
 - id: t-021
   milestone: m2
   title: Add a scripts/worker_merge_pr.py helper that merges the Worker's own PR and immediately calls worker_task_status.py done in one atomic step, so a self-merge can never land without its roadmap status flip
-  status: claimed
+  status: done
   owner: worker
-  updated: '2026-07-04T06:10:54-07:00'
+  updated: '2026-07-04T06:19:00-07:00'
   passes: 0
   stakes: reversible
-  note: 'Kaizen from Reviewer audit of PR #157 (t-020). This is the second time in three cycles (t-020 here, and the earlier t-016/t-018 lineage) that a Worker PR merged cleanly but the roadmap task was left at status: ready / owner: null instead of done, requiring a Reviewer audit cycle to close the loop. Pairing the merge and the status-done call in one script removes the chance to do one without the other.'
+  note: 'Completed in PR #159. Added scripts/worker_merge_pr.py plus tests/test_worker_merge_pr.py. The helper squash-merges a Worker PR, pulls main, calls scripts/worker_task_status.py done, commits the roadmap status update, and pushes main as one CLI path so the merge/status flip are paired.'
