@@ -1,0 +1,133 @@
+project: superkate-services-calculator
+kind: software
+notes_from_silas: |
+  High priority request from Superkate for Hair by Superkate.
+  Build a private appointment services calculator with a dark theme, purple and teal accents,
+  appointment history, search by client/date, and receipt email preparation.
+  Required fields: client name, appointment date, hourly rate, time spent, product cost, appointment total.
+  Core formula: hourly rate × time spent + product cost = total price.
+
+milestones:
+  - id: m1
+    title: Project identity and MVP spec
+    weight: 20
+    status: in-progress
+  - id: m2
+    title: Local appointment database and calculator
+    weight: 35
+    status: not-started
+  - id: m3
+    title: Search and receipt email flow
+    weight: 30
+    status: not-started
+  - id: m4
+    title: Polish and handoff
+    weight: 15
+    status: not-started
+
+tasks:
+  - id: t-001
+    milestone: m1
+    title: Create the matching PROJECT Dream for slug parity
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Run scripts/sync_projects_to_dreams.py or create the Dream via the kind_robots API so
+      kind_robots has a PROJECT Dream with slug "superkate-services-calculator", priority HIGH,
+      projectStatus ACTIVE, and the friendly title "Superkate Services Calculator".
+      This is the display/identity record for the app.
+
+  - id: t-002
+    milestone: m1
+    title: Review and finalize the MVP spec with Superkate
+    status: needs-human
+    owner: null
+    passes: 0
+    stakes: reversible
+    gate_human: true
+    approved_by_human: false
+    note: >
+      FOR SILAS/SUPERKATE: Review projects/superkate-services-calculator/SPEC.md.
+      Confirm time-entry format, receipt copy, whether to store client email, and whether the
+      MVP should stay local-only. Set approved_by_human: true and status: done when approved.
+      Unblocks implementation tasks.
+
+  - id: t-003
+    milestone: m2
+    title: Build the appointment data model and local persistence
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-002
+    note: >
+      Implement an Appointment model storing clientName, appointmentDate, hourlyRateCents,
+      timeSpentMinutes, productCostCents, appointmentTotalCents, createdAt, and updatedAt.
+      Money must be stored as cents and totals calculated from inputs.
+
+  - id: t-004
+    milestone: m2
+    title: Build calculator form with live totals
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-003
+    note: >
+      Add the new appointment form for client name, appointment date, hourly rate, time spent,
+      and product cost. Show the live total as hourly rate × time spent + product cost.
+
+  - id: t-005
+    milestone: m3
+    title: Add client/date appointment search
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-003
+    note: >
+      Add searchable appointment history with client-name search and date filtering.
+      Results should show client, date, and appointment total.
+
+  - id: t-006
+    milestone: m3
+    title: Add receipt email composer
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on:
+      - t-004
+      - t-005
+    note: >
+      Add a receipt action that opens an email composer with client name, appointment date,
+      hourly rate, time spent, product cost, total price, and the formula line prefilled.
+      Do not add backend direct-send credentials without explicit human approval.
+
+  - id: t-007
+    milestone: m4
+    title: Polish the dark purple/teal salon UI
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-006
+    note: >
+      Make the app feel polished and salon-friendly with a dark base, purple and teal accents,
+      clear touch targets, calm spacing, and receipt screens that look professional.
+
+  - id: t-008
+    milestone: m4
+    title: Prepare handoff checklist without store submission
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: outward-facing
+    gate_human: true
+    approved_by_human: false
+    depends_on: t-007
+    note: >
+      Prepare a handoff checklist for device install/test, data backup expectations, privacy notes,
+      and app-store readiness. Do not submit to any app store without explicit human approval.
