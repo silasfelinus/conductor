@@ -87,25 +87,23 @@ tasks:
   - id: t-004
     milestone: m3
     title: "Spec the three project-creation surfaces (conductor file, front-end, LLM)"
-    status: needs-human
+    status: done
     owner: worker
-    updated: "2026-07-04T21:00:00Z"
+    updated: "2026-07-04T21:30:00Z"
     passes: 0
     stakes: reversible
     gate_human: true
-    approved_by_human: false
+    approved_by_human: true
     depends_on: t-003
     note: >
-      FOR SILAS: PROJECT-CREATION.md is written and three of your four decisions are
-      recorded in it (2026-07-04): server-side hook for the auto-Todo; unlimited
-      project creation with processing metered separately (computed charge by expected
-      processing volume/frequency — free/paid tokens on our infra, or bring-your-own
-      server); 409 + re-prompt on slug collision, with a two-word-slug-preferred
-      guideline. REMAINING: bless or amend the proposed default roadmap scaffold —
-      three standard milestones (SHAPE / BUILD / POLISH & SHIP) mapping your creative
-      lifecycle, with a gate_human "outline and scope brief" starter task in SHAPE.
-      TO APPROVE: confirm the scaffold, then set approved_by_human: true and
-      status: done. That clears the way for implementing the three surfaces.
+      APPROVED by Silas 2026-07-04, all four decisions: (1) server-side hook for the
+      auto-Todo; (2) unlimited project creation, processing metered separately
+      (computed charge by expected volume/frequency; free/paid tokens or
+      bring-your-own-server); (3) 409 + re-prompt on slug collision, two-word slugs
+      preferred; (4) SHAPE / BUILD / POLISH & SHIP default scaffold with a
+      NON-BLOCKING scope gate — agents build the design brief and start working
+      immediately, scope confirmation runs in parallel as a soft needs-human.
+      Full spec: projects/kind-robots/PROJECT-CREATION.md.
 
   - id: t-005
     milestone: m3

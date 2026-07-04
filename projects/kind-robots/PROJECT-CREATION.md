@@ -149,17 +149,24 @@ The reconciler runs:
    three-plus is fine when it genuinely fits — but surfaces that derive slugs
    (UI auto-generation, bot slug derivation) should aim for two words.
 
-4. **roadmap.yaml scaffold template**: under discussion — Silas wants a three-part
-   milestone process reflecting a creative lifecycle (outline → brainstorm →
-   roadmap → actualization/adjustment → testing → aesthetic polish →
-   completion/performance/deliverable). Proposed default (awaiting Silas's
-   blessing): three standard milestones —
+4. **roadmap.yaml scaffold template**: DECIDED (Silas, 2026-07-04). Three standard
+   milestones mapping the creative lifecycle (outline → brainstorm → roadmap →
+   actualization/adjustment → testing → aesthetic polish → completion/delivery):
 
      - **m1 SHAPE** — outline the idea, gather brainstorms/inspiration, write the
-       plan. Ends at a human gate: Silas approves the brief before building.
+       design brief.
      - **m2 BUILD** — actualize, adjust as reality pushes back, test as you go.
      - **m3 POLISH & SHIP** — aesthetic polish, performance, completion and
-       delivery. Outward-facing steps stay human-gated.
+       delivery. Outward-facing steps stay human-gated (hard).
 
-   Scaffold ships with m1/m2/m3 and one starter task: t-001 "Write the outline
-   and scope brief" (gate_human: true) in m1.
+   **The scope gate does not block development** (Silas, 2026-07-04): when a new
+   project arrives, agents take the idea, build out the design brief, and START
+   WORKING immediately. Silas always wants a prompt to establish and confirm
+   scope — but as a soft, parallel checkpoint, never a stop sign. Re-establishing
+   from a corrected idea is cheap; agents and processing are plentiful; the bias
+   is toward making things happen.
+
+   Scaffold ships with m1/m2/m3 and two starter tasks:
+     - t-001 "Write the design brief and start building" — ready, NOT gated
+     - t-002 "Confirm scope with Silas" — soft needs-human, no dependents; when
+       Silas responds, fold his direction into the roadmap and keep moving
