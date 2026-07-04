@@ -1,36 +1,44 @@
 # Conductor
 
-Conductor is a project management repo built around AI agents doing real work. An AI Worker picks up tasks, does them on a branch, and opens a PR. A Reviewer (me, Claude) looks at the PR and either merges it or flags it for Silas. Silas steers things by editing roadmap files and approving gates — he stays out of the routine loop unless something actually needs him.
+Conductor is a project management repo built around AI agents doing real work. A session-driven Worker picks up tasks, does them on a branch, and opens a PR. A Reviewer looks at the PR and either merges it or flags it for Silas. Silas steers things by editing roadmap files and approving gates — he stays out of the routine loop unless something actually needs him.
+
+The repo itself does not call model-provider APIs from GitHub Actions. Agent judgment and implementation happen from interactive assistant sessions using GitHub tools/connectors. Actions are for deterministic checks, digest generation, and safe plumbing.
 
 The whole thing runs on plain YAML files checked into git. No database, no dashboard to maintain. Git is the source of truth; rollback is just `git revert`.
 
 ## The basic loop
 
-1. **Worker** runs on a schedule, reads `AGENTS.md` and the project roadmaps, claims the top available task, does the work on a branch, and opens a PR.
-2. **Reviewer** fires when a PR lands. It merges straightforward software work automatically. Anything involving content, proposals, or outward-facing changes gets escalated to `needs-human` for Silas to look at.
-3. **Digest** goes out daily — a summary of what's progressing, what merged, and what needs Silas's attention or vote.
+1. **Worker session** reads `AGENTS.md`, `CONTROL.md`, and the project roadmaps, claims the top available task, does the work on a branch, and opens a PR.
+2. **Reviewer session** fires when a PR lands. It merges straightforward software work automatically. Anything involving content, proposals, or outward-facing changes gets escalated to `needs-human` for Silas to look at.
+3. **Actions healthcheck** validates the queue, dependency resolver, and digest plumbing without calling a model-provider API.
+4. **Digest** goes out daily — a summary of what's progressing, what merged, and what needs Silas's attention or vote.
 
-## Daily digest email
+## Action secrets
 
-The `daily-digest` GitHub Actions workflow builds `digest.json` with `scripts/build_digest.py`, validates the JSON shape, and sends it through Brevo transactional email.
-The `daily-digest` GitHub Actions workflow builds `digest.json` with `scripts/build_digest.py`, renders a Brevo payload preview, and sends scheduled runs through Brevo transactional email.
-
-Configure these under **Settings → Secrets and variables → Actions → Secrets → New repository secret**:
+Configure these under **Settings → Secrets and variables → Actions → Repository secrets → New repository secret**:
 
 | Name | Required | Notes |
 |---|---:|---|
-| `BREVO_API_KEY` | yes | Brevo transactional email API key. |
-| `DIGEST_TO` | yes | Recipient email address. |
-| `DIGEST_FROM` | yes | Sender email address allowed by Brevo. |
-| `DIGEST_TO_NAME` | no | Defaults to `Silas`. |
-| `DIGEST_FROM_NAME` | no | Defaults to `AI_Networker`. |
+| `KR_API_TOKEN` | recommended | Kind Robots app/JWT token used by repo plumbing for Todo checks and optional Dream sync. Not a GitHub token. |
+| `BREVO_API_KEY` | yes for scheduled digest email | Brevo transactional email API key. |
+| `DIGEST_TO` | yes for scheduled digest email | Recipient email address. May also be a repository variable. |
+| `DIGEST_FROM` | yes for scheduled digest email | Sender email address allowed by Brevo. May also be a repository variable. |
+| `DIGEST_TO_NAME` | no | Defaults to `Silas`. May also be a repository variable. |
+| `DIGEST_FROM_NAME` | no | Defaults to `AI_Networker`. May also be a repository variable. |
 
-`DIGEST_TO`, `DIGEST_FROM`, `DIGEST_TO_NAME`, and `DIGEST_FROM_NAME` may also be repository variables if you prefer keeping only the API key secret. `BREVO_API_KEY` must stay secret.
+Do not add a model-provider API key to this repo for routine worker or digest operation. If a future task genuinely needs one, make that a separate human-approved design change instead of quietly adding it to Actions.
 
-Each run uploads `daily-digest-json` as a workflow artifact so the generated payload can be inspected even if Brevo rejects the send. The workflow also prints which required and optional configuration names are present or missing without printing any secret values. If `digest.json` is invalid, missing required top-level keys, has non-list summary fields, or includes malformed project entries, the workflow fails before checking configuration or contacting Brevo.
-Manual `workflow_dispatch` runs default to a safe dry run and do not send email. They still build and upload the digest artifacts so the JSON payload and rendered email body can be inspected. To intentionally send a manual test email, run the workflow with `send_email` enabled.
+## Daily digest email
+
+The `daily-digest` GitHub Actions workflow builds `digest.json` with `scripts/build_digest.py`, validates the JSON shape, renders a Brevo payload preview, and sends scheduled runs through Brevo transactional email.
 
 Each run uploads `daily-digest-artifacts` containing `digest.json` and `digest-email.json`. The generated `digest-email.json` preview omits recipient, sender, and API key values. The workflow also prints which required and optional configuration names are present or missing without printing any secret values. Scheduled runs still require `BREVO_API_KEY`, `DIGEST_TO`, and `DIGEST_FROM` before sending.
+
+Manual `workflow_dispatch` runs default to a safe dry run and do not send email. They still build and upload the digest artifacts so the JSON payload and rendered email body can be inspected. To intentionally send a manual test email, run the workflow with `send_email` enabled.
+
+## Worker healthcheck
+
+The `Worker Healthcheck` workflow runs `scripts/run_worker.py --dry-run`. It checks Todo visibility when `KR_API_TOKEN` is available, runs dependency resolution in dry-run mode, builds and validates the daily digest JSON, and prints the highest-priority ready task. It does not claim tasks, open PRs, merge branches, or call model-provider APIs.
 
 ## Project kinds
 
@@ -50,7 +58,7 @@ Edit `notes_from_silas` in any project's `roadmap.yaml` to give direction. Chang
 
 Tasks can declare `depends_on` to form a pipeline — a task stays `waiting` until its upstreams are done. If an upstream task has `gate_human: true`, it also needs `approved_by_human: true` before dependents unlock. This is how multi-stage flows work: research → Silas picks a direction → create → review → ship, each stage only proceeding with explicit sign-off.
 
-The Worker runs `scripts/resolve_deps.py` at the start of every cycle to flip any newly-unblocked `waiting` tasks to `ready`.
+The Worker healthcheck runs `scripts/resolve_deps.py --dry-run` so dependency changes are visible without mutating roadmaps from Actions.
 
 ## Repo layout
 
@@ -86,4 +94,4 @@ workspace.html                      auto-generated dashboard — do not edit
 
 ## Pitches
 
-Any agent (or Silas) can drop a pitch into `pitches/` as a markdown file. The daily digest surfaces ones with `status: awaiting-silas`. Silas sets the status to `approved` or `rejected` — approved pitches can become new projects via `scripts/intake.py`.
+Any agent or Silas can drop a pitch into `pitches/` as a markdown file. The daily digest surfaces ones with `status: awaiting-silas`. Silas sets the status to `approved` or `rejected` — approved pitches can become new projects via `scripts/intake.py`.
