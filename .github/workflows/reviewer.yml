@@ -1,47 +1,10 @@
-name: Reviewer (Hourly)
-
-# DISABLED — schedule and PR trigger removed. Review happens inside Claude Code
-# sessions, not via GitHub Actions, to avoid independent API fees. Manual
-# dispatch kept for debugging. Re-add triggers if a self-hosted runner is used.
+name: reviewer
 
 on:
   workflow_dispatch:
-    inputs:
-      dry_run:
-        description: "Dry run — no merges, no comments, no roadmap updates"
-        required: false
-        default: "false"
-        type: string
 
 jobs:
   reviewer:
     runs-on: ubuntu-latest
-    # On PR events, only run for worker/* branches targeting main
-    if: ${{ github.event_name != 'pull_request' || startsWith(github.head_ref, 'worker/') }}
-    permissions:
-      contents: write
-      pull-requests: write
-
     steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-          token: ${{ secrets.GH_PAT || secrets.GITHUB_TOKEN }}
-
-      - uses: actions/setup-python@v5
-        with:
-          python-version: "3.12"
-
-      - name: Install dependencies
-        run: pip install pyyaml
-
-      - name: Run reviewer cycle
-        run: |
-          FLAG=""
-          if [ "${{ inputs.dry_run }}" = "true" ]; then FLAG="--dry-run"; fi
-          python scripts/run_reviewer.py $FLAG
-        env:
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-          GITHUB_TOKEN: ${{ secrets.GH_PAT || secrets.GITHUB_TOKEN }}
-          GIT_USER_NAME: "reviewer-bot"
-          GIT_USER_EMAIL: "reviewer-bot@users.noreply.github.com"
+      - run: echo reviewer action disabled
