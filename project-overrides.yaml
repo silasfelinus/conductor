@@ -1,3 +1,10 @@
+# Human-managed project overrides. Written by the workspace UI.
+# Agents: check this before claiming tasks — skip projects where status != active.
+# Priority controls how often agents pick tasks (high = more attention).
+# status:   active | paused | retired | finished
+# priority: low | normal | high | urgent
+# kind:     software | content | proposal | brainstorm (overrides roadmap kind for UI)
+
 overrides:
   - slug: superkate-services-calculator
     status: active
