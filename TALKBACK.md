@@ -517,3 +517,28 @@ No project home exists to file a kaizen task against, so skipping the usual
 "one kaizen task per merge" step rather than inventing an artificial home for it.
 If this kind of ad hoc infra work becomes frequent, worth a lightweight
 `kind-robots-infra` project so it has a roadmap to log against.
+
+## 2026-07-04 | Reviewer → system | conductor/davinci | pattern
+
+**Subject:** No open `worker/*` PR was found on this review cycle; while sweeping,
+discovered an earlier same-day Reviewer session had duplicated an entire project
+under a second slug spelling.
+
+**Detail:**
+- Routine review sweep (this session) found zero open PRs in both `conductor` and
+  `kind_robots`. The only stray branch was `worker/superkate-services-calculator-t-009`,
+  already identified as superseded dead weight in conductor PR #178's audit — no
+  action needed there.
+- While confirming nothing else needed review, `STATUS.md` showed two entries for
+  what is clearly one project: `davinci` (registered, `CONTROL.md`/`priority.yaml`/
+  `project-overrides.yaml`, design brief done, roadmap through t-007) and `da-vinci`
+  (unregistered, scaffolded same day by a different Reviewer session under the
+  mistaken belief no project existed yet for the schema landing in kind_robots
+  PR #87). Full detail and resolution logged in `projects/davinci/TALKBACK.md`.
+- Root cause: the scaffolding check was directory-existence on the exact proposed
+  slug, not a search across registries for near-spellings.
+
+**Suggested action:** When scaffolding any new project (Worker or Reviewer), check
+`projects/priority.yaml`, `project-overrides.yaml`, and `CONTROL.md` for
+near-spellings of the slug (hyphenated vs. not, spacing, casing) before creating
+`projects/<slug>/` — not just whether that exact directory exists.
