@@ -164,7 +164,7 @@ tasks:
   note: "Build scripts/sync_projects_to_dreams.py. For each active conductor project (from project-overrides.yaml\
     \ where status == active), call the kind_robots API to upsert a Dream with dreamType PROJECT and matching\
     \ slug. Sync fields: title (from roadmap project:), description (from notes_from_silas first paragraph),\
-    \ projectStatus (map conductor active→ACTIVE, paused→PAUSED, finished→\
+    \ projectStatus (map conductor active→ACTIVE, paused→\
     ARCHIVED). Use PATCH /api/dreams/<id> if a Dream with that slug already exists, POST /api/dreams otherwise.\
     \ Requires KR_API_TOKEN env var. Log each upsert (created/updated/skipped) to stdout. Never delete\
     \ a Dream; only create or update. This is the canonical conductor → kind_robots bridge; run it\
@@ -290,9 +290,9 @@ tasks:
 - id: t-017
   milestone: m2
   title: Fix failing test_queue_missing_project_art ordering/default-size assertion
-  status: ready
-  owner: null
-  updated: '2026-07-04T00:00:00Z'
+  status: claimed
+  owner: worker
+  updated: '2026-07-04T01:11:05-07:00'
   passes: 0
   stakes: reversible
   note: >
