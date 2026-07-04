@@ -305,12 +305,18 @@ tasks:
   title: Wire scripts/set_task_field.py into the Worker cycle for claim and status roadmap updates
   status: ready
   owner: null
-  updated: '2026-07-04T07:35:00Z'
-  passes: 0
+  updated: '2026-07-04T09:35:00Z'
+  passes: 1
   stakes: reversible
   note: >
-    Kaizen from PR #149. The targeted field updater is now tested and validated
-    (PyYAML post-edit check refuses invalid writes). Teach the Worker loop to call
-    it for claim commits and status/note/passes updates — via run_worker.py or the
-    Worker cycle prompt — so single-field roadmap edits stop being full-file YAML
-    rewrites. Out of scope: adding new tasks (the script only edits existing ones).
+    Reviewer audit of merged PR #151 (pass 1): the PR added scripts/worker_task_status.py
+    (a tested CLI wrapper around set_task_field.py) but never actually wired it into the
+    Worker cycle. scripts/run_worker.py's claim_task() and set_task_status() (~line 205-222)
+    still mutate the in-memory roadmap dict directly and call write_roadmap(), which does a
+    full yaml.safe_dump() of the whole file on every claim/status change — exactly the
+    full-file-rewrite behavior this task exists to eliminate. Remaining work: replace those
+    two functions' write_roadmap() calls with subprocess calls into worker_task_status.py
+    (claim / review / done / ready / needs-human / blocked / challenged / passes), so a
+    single-field CLI update happens instead of a full re-dump. Verify by claiming a task
+    locally and confirming only that task's block changes in the git diff (not just field
+    values matching). PR #151's script and tests are sound and can stay as-is.

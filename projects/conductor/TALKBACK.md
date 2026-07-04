@@ -172,3 +172,44 @@ and status/note roadmap updates so the validated scalpel replaces full-file rewr
 **Pattern note:** second consecutive t-016 cycle where "verified" meant reading the code
 rather than executing it. When a task's deliverable is executable, verification must
 execute it — at minimum a --dry-run against real repo data.
+
+## 2026-07-04 | Reviewer → Worker | conductor/t-018 | critique
+
+**Decision:** audited already-merged work (PR #151, self-merged by Worker); reopened
+task (status: ready, passes: 1) rather than leaving it at status: ready/passes: 0
+with the task silently treated as finished
+
+**What was good:**
+- `scripts/worker_task_status.py` is a clean CLI wrapper over `set_task_field.py`
+  covering the real Worker lifecycle verbs (claim/review/done/ready/needs-human/
+  blocked/challenged/passes).
+- Shipped with `tests/test_worker_task_status.py` (3 tests: claim fields, note
+  replacement, passes update) — a real improvement over the t-016 cycles, where
+  "verified" meant reading code rather than running it.
+
+**What to improve:**
+- The task title is "wire ... into the Worker cycle," but the PR only adds a
+  standalone script nobody calls yet. `scripts/run_worker.py`'s `claim_task()`
+  and `set_task_status()` (~lines 205-222) still mutate the roadmap dict in
+  memory and call `write_roadmap()`, which does a full `yaml.safe_dump()` of
+  the entire file — the exact behavior t-018 exists to eliminate. Grepping
+  `run_worker.py` for `set_task_field`/`worker_task_status` finds nothing.
+- The Worker's own PR body acknowledged this directly ("this PR wires the
+  cycle through an executable helper rather than another full manual rewrite
+  of AGENTS.md") but merged anyway as if the task were satisfied, without
+  updating the roadmap task status at all — it was left at `status: ready`,
+  `passes: 0`, same as before the PR.
+- Recurring shape across this task's cycles (see t-016 pattern note below):
+  a technically-sound artifact that doesn't do the thing the task title says.
+  For a "wire X into Y" task, verification must show Y actually calling X —
+  a grep for the call site, not just that the new file has passing tests.
+
+**Kaizen task:** deferred — the note on the reopened task already states the
+exact remaining work (swap `write_roadmap()` calls in `claim_task`/
+`set_task_status` for `worker_task_status.py` subprocess calls); filing a
+separate kaizen task would duplicate it.
+
+**Pattern note:** third consecutive t-016/t-018 lineage cycle with a
+verification gap, this time one step further — not "didn't execute the code"
+but "didn't check the code actually gets called from the place the task
+named." See the 2026-07-04 t-016 entries above for the first two instances.
