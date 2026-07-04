@@ -150,3 +150,17 @@ tasks:
       Prepare a handoff checklist for device install/test, data backup expectations, privacy notes,
       customer data security review, and app-store readiness. Do not submit to any app store
       without explicit human approval.
+
+  - id: t-010
+    milestone: m2
+    title: Write a pre-implementation architecture note for local storage and app-lock
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-002
+    note: >
+      Once Superkate approves the MVP spec, write a short architecture note selecting the
+      local storage target (e.g. SQLite/Hive/Isar) and the app-lock/device-auth approach
+      required by SPEC.md's customer data security baseline, before coding appointment
+      persistence (t-003). Scope is a decision record, not implementation.
