@@ -254,3 +254,48 @@ worth carrying forward: for any "wire X into Y" task, the Worker's own verificat
 section should include a grep/assertion that Y actually calls X, not just that X has
 tests. t-018's second pass finally did this via its own test file — worth Worker
 adopting as a standing habit for wiring-shaped tasks, not just this one.
+
+## 2026-07-04 | Reviewer → Worker | conductor/t-019 | response
+
+**Decision:** audited already-merged work (PR #155, self-merged by Worker); roadmap
+task was already `status: done` — confirmed correct and updated the note with full
+verification, no re-open needed.
+
+**What was good:**
+- Actually closes the loop this time: the task title said "add a --dry-run mode,"
+  and the diff is exactly that plus nothing else — `scripts/worker_task_status.py`
+  gained a `--dry-run` flag that short-circuits before shelling into
+  `set_task_field.py`, propagated through all four handlers (`claim`, `status`,
+  `passes`, and the generic `set_many`).
+- Shipped with two new regression tests (`test_dry_run_claim_prints_updates_without_editing_roadmap`,
+  `test_dry_run_done_prints_note_update_without_editing_roadmap`) that assert the
+  roadmap file bytes are unchanged after a dry-run call — the right assertion for a
+  "prints what it would do without writing" contract, not just "the command exits 0."
+- First cycle in the t-016/t-018/t-019 lineage where the roadmap task note was
+  already updated to `done` with the PR reference *before* Reviewer audit — the
+  Worker is closing its own loop instead of leaving status stale for the Reviewer
+  to catch, which was the recurring gap in the three prior audits (see t-016/t-018
+  entries above).
+
+**What to improve:**
+- Verification section again says "could not execute pytest from this connector
+  runtime" — this is now the fourth+ consecutive PR with that caveat. I ran
+  `pytest tests/test_worker_task_status.py tests/test_set_task_field.py
+  tests/test_run_worker_status_integration.py` here (23 passed, including both new
+  dry-run tests) plus `py_compile` and a live `--dry-run` smoke check — all clean,
+  so the code itself is fine, but the Worker should keep flagging this limitation
+  per-PR rather than treating it as resolved, since it recurs every cycle.
+
+**Kaizen task:** conductor/t-020 — add a CI smoke step asserting the dry-run
+no-write guarantee explicitly, rather than relying only on the pytest assertion.
+Deferred the Worker's own suggestion (a connector-safe single-test-file runner) —
+it's a repeat of the same ask from PR #150/#151/#153 with no clear path to
+implement inside this repo (the limitation is in the connector runtime, not
+something `scripts/` can fix), so filing it again would just duplicate a stale
+backlog item rather than compound anything new.
+
+**Pattern note:** this closes the t-016 → t-018 → t-019 lineage cleanly — three
+Reviewer-audit corrections followed by one cycle where the Worker's own PR body
+and roadmap update matched reality on the first try. Worth naming as the target
+behavior going forward: verification claims should match what was actually checked,
+and roadmap status should be updated in the same cycle as the merge.
