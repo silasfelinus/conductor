@@ -26,7 +26,9 @@ MAX_MERGE_ATTEMPTS = 3
 
 
 class WorkerMergeError(Exception):
-    pass
+    def __init__(self, message: str, status: int | None = None):
+        super().__init__(message)
+        self.status = status
 
 
 def _gh(
@@ -51,7 +53,9 @@ def _gh(
             return json.loads(response.read())
     except urllib.error.HTTPError as exc:
         detail = exc.read().decode(errors="replace")[:500]
-        raise WorkerMergeError(f"GitHub {method} {path} failed: HTTP {exc.code}: {detail}") from exc
+        raise WorkerMergeError(
+            f"GitHub {method} {path} failed: HTTP {exc.code}: {detail}", status=exc.code
+        ) from exc
     except Exception as exc:
         raise WorkerMergeError(f"GitHub {method} {path} failed: {exc}") from exc
 
@@ -68,16 +72,37 @@ def run_git(*args: str) -> str:
     return result.stdout.strip()
 
 
+def already_merged_sha(repo: str, pr_number: int, token: str | None) -> str | None:
+    """Return the merge commit sha if GitHub says the PR is already merged, else None."""
+    pr = _gh(repo, f"pulls/{pr_number}", token)
+    if pr.get("merged"):
+        return str(pr.get("merge_commit_sha") or "")
+    return None
+
+
 def merge_pr(repo: str, pr_number: int, token: str | None) -> str:
     last_error = "merge was not accepted"
     for attempt in range(1, MAX_MERGE_ATTEMPTS + 1):
-        result = _gh(
-            repo,
-            f"pulls/{pr_number}/merge",
-            token,
-            method="PUT",
-            body={"merge_method": "squash"},
-        )
+        try:
+            result = _gh(
+                repo,
+                f"pulls/{pr_number}/merge",
+                token,
+                method="PUT",
+                body={"merge_method": "squash"},
+            )
+        except WorkerMergeError as exc:
+            # GitHub answers 405 both for "already merged" and "not mergeable".
+            # A re-run after a partially completed cycle (merge succeeded, status
+            # flip didn't) hits the former — verify via GET and treat it as
+            # success so mark_task_done still runs. Anything else re-raises.
+            if exc.status == 405:
+                merged_sha = already_merged_sha(repo, pr_number, token)
+                if merged_sha is not None:
+                    print(f"PR #{pr_number} was already merged; continuing to status flip.")
+                    return merged_sha
+            raise
+
         if result.get("merged"):
             return str(result.get("sha") or "")
 

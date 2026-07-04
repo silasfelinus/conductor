@@ -1,207 +1,192 @@
 project: alexa-integration
 kind: software
-notes_from_silas: >-
-  Build the Alexa work as the Serendipity voice surface for local Amazon Echo
-  devices. The stable user-facing contract is "Serendipity: <request>" — Alexa's
-  actual invocation may be "ask Serendipity to..." or an opened Serendipity
-  session, but the relay should route the request after the Serendipity prefix.
-  The deployable voice runtime now lives in silasfelinus/serendipity-voice;
-  Conductor remains the roadmap and coordination source of truth. When finished,
-  it should support custom LLM chat, taking on a role as a Character,
-  telling/continuing a story in a Dream, generating art through safe draft/queued
-  paths, playing approved local music files, and creating/working on projects
-  through safe draft/read paths. Project Dreams now have goal and waypoints
-  fields; use them as the friendly voice/UI project state while keeping
-  Conductor roadmap.yaml as the authoritative agent task queue. Prototype
-  locally first. Do not publish the skill, expose a live endpoint, touch
-  DNS/secrets/billing, or bypass human gates without explicit needs-human
-  approval.
+notes_from_silas: "Build the Alexa work as the Serendipity voice surface for local Amazon Echo devices.\
+  \ The stable user-facing contract is \"Serendipity: <request>\" \u2014 Alexa's actual invocation may\
+  \ be \"ask Serendipity to...\" or an opened Serendipity session, but the relay should route the request\
+  \ after the Serendipity prefix. The deployable voice runtime now lives in silasfelinus/serendipity-voice;\
+  \ Conductor remains the roadmap and coordination source of truth. When finished, it should support custom\
+  \ LLM chat, taking on a role as a Character, telling/continuing a story in a Dream, generating art through\
+  \ safe draft/queued paths, playing approved local music files, and creating/working on projects through\
+  \ safe draft/read paths. Project Dreams now have goal and waypoints fields; use them as the friendly\
+  \ voice/UI project state while keeping Conductor roadmap.yaml as the authoritative agent task queue.\
+  \ Prototype locally first. Do not publish the skill, expose a live endpoint, touch DNS/secrets/billing,\
+  \ or bypass human gates without explicit needs-human approval."
 milestones:
-  - id: m1
-    title: Command design
-    weight: 20
-    status: done
-  - id: m2
-    title: Relay design
-    weight: 20
-    status: done
-  - id: m3
-    title: Review and rollout plan
-    weight: 15
-    status: done
-  - id: m4
-    title: Serendipity voice surface
-    weight: 25
-    status: in-progress
-  - id: m5
-    title: Local adapters and project actions
-    weight: 20
-    status: not-started
+- id: m1
+  title: Command design
+  weight: 20
+  status: done
+- id: m2
+  title: Relay design
+  weight: 20
+  status: done
+- id: m3
+  title: Review and rollout plan
+  weight: 15
+  status: done
+- id: m4
+  title: Serendipity voice surface
+  weight: 25
+  status: in-progress
+- id: m5
+  title: Local adapters and project actions
+  weight: 20
+  status: not-started
 tasks:
-  - id: t-001
-    milestone: m1
-    title: Draft voice command list
-    status: done
-    owner: worker
-    updated: '2026-07-01T00:00:00Z'
-    passes: 0
-    stakes: reversible
-    gate_human: true
-    approved_by_human: true
-    note: 'FOR SILAS: docs/alexa-voice-commands.md contains the voice command list. It covers todo creation, project status readouts, approval reviews, art request handoffs, and activity summaries with sample phrases. Also documents the auth model. Also see docs/kr-api-for-voice.md for the full REST endpoint suitability audit. TO APPROVE: Read docs/alexa-voice-commands.md. Set approved_by_human: true and status: done here. Unblocks: alexa-integration/t-002 (relay design note).'
-  - id: t-002
-    milestone: m2
-    title: Draft relay design note
-    status: done
-    owner: worker
-    updated: '2026-07-03T09:19:00-07:00'
-    passes: 0
-    stakes: reversible
-    depends_on: t-001
-    note: 'Completed in PR #125. Added projects/alexa-integration/docs/relay-design.md: a document-only Alexa relay plan with intent policy, read/draft/blocked modes, adapter boundaries, short voice responses, audit logging, and a read-only first prototype. No live skill, endpoint, deploy, external configuration, or production data changes.'
-  - id: t-003
-    milestone: m3
-    title: Write rollout and safety checklist
-    status: done
-    owner: worker
-    updated: '2026-07-03T10:17:00-07:00'
-    passes: 0
-    stakes: reversible
-    depends_on: t-002
-    note: 'Completed in PR #126.'
-  - id: t-004
-    milestone: m2
-    title: Audit kind_robots REST API endpoints for Alexa intent suitability
-    status: done
-    owner: worker
-    updated: '2026-06-30T00:00:00Z'
-    passes: 0
-    stakes: reversible
-    note: 'Wrote docs/kr-api-for-voice.md. Mapped endpoints across todos, projects, conductor, and dreams. Key findings: Todo routes need user-scoped auth; conductor endpoints work cleanly for project reads; dreams endpoint is good for project status readouts; two gaps to pitch are short agent activity and pending approval counts.'
-  - id: t-005
-    milestone: m4
-    title: Build Serendipity voice request router
-    status: done
-    owner: worker
-    updated: '2026-07-03T15:15:00-07:00'
-    passes: 0
-    stakes: reversible
-    depends_on:
-      - t-002
-      - t-003
-    note: >-
-      Completed in PR #137. Added scripts/serendipity_voice_router.py and
-      scripts/test_serendipity_voice_router.py. The local-only router parses the
-      "Serendipity: <request>" contract into chat, character, dream, art, music,
-      project, or unknown domains; asks one short clarification for unknown or
-      ambiguous input; and performs no live Alexa endpoint or adapter work. The
-      deployable TypeScript runtime copy now lives in silasfelinus/serendipity-voice.
-  - id: t-006
-    milestone: m4
-    title: Wire LLM chat and Character role intents
-    status: needs-human
-    owner: worker
-    updated: '2026-07-03T16:12:52-07:00'
-    passes: 0
-    stakes: reversible
-    depends_on: t-005
-    note: >-
-      FOR SILAS: I could not apply the actual serendipity-voice code patch because
-      the GitHub connector blocked creating the required worker branch in
-      silasfelinus/serendipity-voice. I preserved the intended implementation at
-      projects/alexa-integration/docs/t-006-chat-character-adapters.md. It includes
-      the exact adapter file, adapter tests, package.json test-script update, and
-      local verification commands. TO APPROVE: apply that patch in a local-code or
-      Claude session with serendipity-voice branch-write access, then set this task
-      back to ready or done depending on whether another Worker pass should finish
-      it. No live skill, endpoint, deploy, DNS, secrets, billing, or production
-      data were touched.
-  - id: t-007
-    milestone: m4
-    title: Wire Dream story intents using goal and waypoints
-    status: done
-    owner: worker
-    updated: '2026-07-03T18:15:45-07:00'
-    pr: https://github.com/silasfelinus/serendipity-voice/pull/1
-    passes: 0
-    stakes: reversible
-    depends_on: t-005
-    note: >-
-      Completed in serendipity-voice PR #1. Added a local dream adapter for
-      Dream story requests and PROJECT Dream goal/waypoint readouts, routed dream
-      and project domains through it, and expanded handler tests for story,
-      project, and missing-local-snapshot paths.
-  - id: t-008
-    milestone: m5
-    title: Prototype local music playback adapter
-    status: needs-human
-    owner: worker
-    updated: '2026-07-04T02:30:00Z'
-    passes: 0
-    stakes: reversible
-    depends_on: t-005
-    note: >-
-      FOR SILAS: The GitHub connector blocked creating the required
-      worker/alexa-integration-t-008 branch in silasfelinus/serendipity-voice, so
-      the Worker preserved the exact intended patch (merged in conductor PR #142)
-      at projects/alexa-integration/docs/t-008-local-music-adapter.md. It
-      contains src/adapters/music-adapter.ts, its test file, a
-      handle-voice-request.test.ts update, and the run-all-tests.ts wiring —
-      behind a SERENDIPITY_ENABLE_MUSIC flag, reading only a configured library
-      root, never mutating files, and asking for clarification on multiple
-      matches. TO APPROVE: apply that patch in a local-code or Claude session
-      with serendipity-voice branch-write access, run npm run test / npm run
-      typecheck there, then set this task to done (or back to ready if another
-      Worker pass should finish it). This is a soft tooling block, not a design
-      question — no live skill, endpoint, deploy, DNS, secrets, billing, or
-      production data were touched.
-  - id: t-009
-    milestone: m5
-    title: Draft project-work actions from voice
-    status: waiting
-    owner: null
-    updated: '2026-07-03T22:20:00-07:00'
-    passes: 0
-    stakes: reversible
-    depends_on: t-007
-    note: >-
-      Let voice requests create safe draft work items: read project goal, read
-      next waypoint, summarize human gates, and draft AGENT/HONEYDO Todos.
-      Voice must not set approved_by_human, merge PRs, publish, deploy, spend,
-      change secrets, or silently edit roadmap YAML.
-  - id: t-010
-    milestone: m3
-    title: Capture local Echo dry-run transcript and approval checklist
-    status: waiting
-    owner: null
-    updated: '2026-07-03T22:20:00-07:00'
-    passes: 0
-    stakes: reversible
-    gate_human: true
-    depends_on:
-      - t-006
-      - t-007
-      - t-008
-      - t-009
-      - t-011
-    note: >-
-      Before real-world use, capture a local dry-run transcript proving the
-      router, chat/Character, Dream story, art generation, local music, and
-      project-work paths. FOR SILAS: approve only after reviewing the transcript,
-      auth model, disable switch, and exact endpoint exposure plan. No public
-      skill or live endpoint before this gate.
-  - id: t-011
-    milestone: m5
-    title: Wire art generation intents
-    status: ready
-    owner: null
-    updated: '2026-07-03T15:15:00-07:00'
-    passes: 0
-    stakes: reversible
-    depends_on: t-005
-    note: >-
-      Connect voice requests like "Serendipity: generate art of <prompt>" from
-      silasfelinus/serendipity-voice to the approved Kind Robots art generation
-      path. Start with draft or queued jobs, require clarification for missing
-      style/size/gallery details, and never publish generated images publicly
-      from voice alone.
+- id: t-001
+  milestone: m1
+  title: Draft voice command list
+  status: done
+  owner: worker
+  updated: '2026-07-01T00:00:00Z'
+  passes: 0
+  stakes: reversible
+  gate_human: true
+  approved_by_human: true
+  note: 'FOR SILAS: docs/alexa-voice-commands.md contains the voice command list. It covers todo creation,
+    project status readouts, approval reviews, art request handoffs, and activity summaries with sample
+    phrases. Also documents the auth model. Also see docs/kr-api-for-voice.md for the full REST endpoint
+    suitability audit. TO APPROVE: Read docs/alexa-voice-commands.md. Set approved_by_human: true and
+    status: done here. Unblocks: alexa-integration/t-002 (relay design note).'
+- id: t-002
+  milestone: m2
+  title: Draft relay design note
+  status: done
+  owner: worker
+  updated: '2026-07-03T09:19:00-07:00'
+  passes: 0
+  stakes: reversible
+  depends_on: t-001
+  note: 'Completed in PR #125. Added projects/alexa-integration/docs/relay-design.md: a document-only
+    Alexa relay plan with intent policy, read/draft/blocked modes, adapter boundaries, short voice responses,
+    audit logging, and a read-only first prototype. No live skill, endpoint, deploy, external configuration,
+    or production data changes.'
+- id: t-003
+  milestone: m3
+  title: Write rollout and safety checklist
+  status: done
+  owner: worker
+  updated: '2026-07-03T10:17:00-07:00'
+  passes: 0
+  stakes: reversible
+  depends_on: t-002
+  note: 'Completed in PR #126.'
+- id: t-004
+  milestone: m2
+  title: Audit kind_robots REST API endpoints for Alexa intent suitability
+  status: done
+  owner: worker
+  updated: '2026-06-30T00:00:00Z'
+  passes: 0
+  stakes: reversible
+  note: 'Wrote docs/kr-api-for-voice.md. Mapped endpoints across todos, projects, conductor, and dreams.
+    Key findings: Todo routes need user-scoped auth; conductor endpoints work cleanly for project reads;
+    dreams endpoint is good for project status readouts; two gaps to pitch are short agent activity and
+    pending approval counts.'
+- id: t-005
+  milestone: m4
+  title: Build Serendipity voice request router
+  status: done
+  owner: worker
+  updated: '2026-07-03T15:15:00-07:00'
+  passes: 0
+  stakes: reversible
+  depends_on:
+  - t-002
+  - t-003
+  note: 'Completed in PR #137. Added scripts/serendipity_voice_router.py and scripts/test_serendipity_voice_router.py.
+    The local-only router parses the "Serendipity: <request>" contract into chat, character, dream, art,
+    music, project, or unknown domains; asks one short clarification for unknown or ambiguous input; and
+    performs no live Alexa endpoint or adapter work. The deployable TypeScript runtime copy now lives
+    in silasfelinus/serendipity-voice.'
+- id: t-006
+  milestone: m4
+  title: Wire LLM chat and Character role intents
+  status: needs-human
+  owner: worker
+  updated: '2026-07-03T16:12:52-07:00'
+  passes: 0
+  stakes: reversible
+  depends_on: t-005
+  note: 'FOR SILAS: I could not apply the actual serendipity-voice code patch because the GitHub connector
+    blocked creating the required worker branch in silasfelinus/serendipity-voice. I preserved the intended
+    implementation at projects/alexa-integration/docs/t-006-chat-character-adapters.md. It includes the
+    exact adapter file, adapter tests, package.json test-script update, and local verification commands.
+    TO APPROVE: apply that patch in a local-code or Claude session with serendipity-voice branch-write
+    access, then set this task back to ready or done depending on whether another Worker pass should finish
+    it. No live skill, endpoint, deploy, DNS, secrets, billing, or production data were touched.'
+- id: t-007
+  milestone: m4
+  title: Wire Dream story intents using goal and waypoints
+  status: done
+  owner: worker
+  updated: '2026-07-03T18:15:45-07:00'
+  pr: https://github.com/silasfelinus/serendipity-voice/pull/1
+  passes: 0
+  stakes: reversible
+  depends_on: t-005
+  note: 'Completed in serendipity-voice PR #1. Added a local dream adapter for Dream story requests and
+    PROJECT Dream goal/waypoint readouts, routed dream and project domains through it, and expanded handler
+    tests for story, project, and missing-local-snapshot paths.'
+- id: t-008
+  milestone: m5
+  title: Prototype local music playback adapter
+  status: needs-human
+  owner: worker
+  updated: '2026-07-04T02:30:00Z'
+  passes: 0
+  stakes: reversible
+  depends_on: t-005
+  note: "FOR SILAS: The GitHub connector blocked creating the required worker/alexa-integration-t-008\
+    \ branch in silasfelinus/serendipity-voice, so the Worker preserved the exact intended patch (merged\
+    \ in conductor PR #142) at projects/alexa-integration/docs/t-008-local-music-adapter.md. It contains\
+    \ src/adapters/music-adapter.ts, its test file, a handle-voice-request.test.ts update, and the run-all-tests.ts\
+    \ wiring \u2014 behind a SERENDIPITY_ENABLE_MUSIC flag, reading only a configured library root, never\
+    \ mutating files, and asking for clarification on multiple matches. TO APPROVE: apply that patch in\
+    \ a local-code or Claude session with serendipity-voice branch-write access, run npm run test / npm\
+    \ run typecheck there, then set this task to done (or back to ready if another Worker pass should\
+    \ finish it). This is a soft tooling block, not a design question \u2014 no live skill, endpoint,\
+    \ deploy, DNS, secrets, billing, or production data were touched."
+- id: t-009
+  milestone: m5
+  title: Draft project-work actions from voice
+  status: ready
+  owner: null
+  updated: '2026-07-03T22:20:00-07:00'
+  passes: 0
+  stakes: reversible
+  depends_on: t-007
+  note: 'Let voice requests create safe draft work items: read project goal, read next waypoint, summarize
+    human gates, and draft AGENT/HONEYDO Todos. Voice must not set approved_by_human, merge PRs, publish,
+    deploy, spend, change secrets, or silently edit roadmap YAML.'
+- id: t-010
+  milestone: m3
+  title: Capture local Echo dry-run transcript and approval checklist
+  status: waiting
+  owner: null
+  updated: '2026-07-03T22:20:00-07:00'
+  passes: 0
+  stakes: reversible
+  gate_human: true
+  depends_on:
+  - t-006
+  - t-007
+  - t-008
+  - t-009
+  - t-011
+  note: 'Before real-world use, capture a local dry-run transcript proving the router, chat/Character,
+    Dream story, art generation, local music, and project-work paths. FOR SILAS: approve only after reviewing
+    the transcript, auth model, disable switch, and exact endpoint exposure plan. No public skill or live
+    endpoint before this gate.'
+- id: t-011
+  milestone: m5
+  title: Wire art generation intents
+  status: ready
+  owner: null
+  updated: '2026-07-03T15:15:00-07:00'
+  passes: 0
+  stakes: reversible
+  depends_on: t-005
+  note: 'Connect voice requests like "Serendipity: generate art of <prompt>" from silasfelinus/serendipity-voice
+    to the approved Kind Robots art generation path. Start with draft or queued jobs, require clarification
+    for missing style/size/gallery details, and never publish generated images publicly from voice alone.'
