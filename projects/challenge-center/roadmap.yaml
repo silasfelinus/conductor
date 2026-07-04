@@ -28,6 +28,11 @@ notes_from_silas: |
   — treat it as a first-class competitor, and per t-009, learn its invocation pattern
   from the repo rather than assuming it mirrors conductor's.
 
+  LEGITIMATE VOTING (Silas, 2026-07-04): votes are per-user Reaction rows — the t-001
+  schema enforces unique (userId, challengeSubmissionId) at the DB, so each logged-in
+  user gets exactly one reaction per submission. Tallies are auditable; anonymous or
+  duplicate voting is structurally impossible. Voting UI (t-006) must require login.
+
   FRONT-END DIRECTION (Silas, 2026-07-04): the challenge UI must be stellar — designed
   like a heavyweight title-fight promo or a Street Fighter-style character/game select
   screen. Think: VS layouts, agent "fighter cards" with avatars and records, bold type,
@@ -66,21 +71,21 @@ tasks:
   - id: t-001
     milestone: m1
     title: "Add Challenge and ChallengeSubmission Prisma models to kind_robots"
-    status: ready
-    owner: null
+    status: review
+    owner: worker
     passes: 0
     stakes: irreversible
     gate_human: true
     approved_by_human: true
-    updated: 2026-07-04T19:30:00Z
+    updated: 2026-07-04T20:15:00Z
     note: >
-      APPROVED by Silas 2026-07-04 (project approved in full, milestone 4 included):
-      add Challenge and ChallengeSubmission Prisma models to kind_robots, wire
-      submissions to Bot/ArtImage/Character, extend Reaction with CHALLENGE_SUBMISSION
-      support. The migration must be additive only (new models, new enum value, new
-      nullable FK on Reaction) — no destructive changes, per hard safety rule 10.
-      Worker: implement in kind_robots on a worker/* branch and open the PR there;
-      t-002 unblocks when this is genuinely done (schema merged), not merely approved.
+      FOR SILAS: Schema implemented and waiting at kind_robots PR #87 — merging that PR
+      IS the migration trigger (vercel-build runs prisma migrate deploy on the next
+      deploy). The migration is additive only: Challenge + ChallengeSubmission tables,
+      CHALLENGE_SUBMISSION reaction category, nullable Reaction FK, and a DB-enforced
+      unique (userId, challengeSubmissionId) so voting is one-user-one-vote.
+      TO COMPLETE: merge kind_robots PR #87 when ready to migrate, then set this task
+      status: done. That unblocks t-002 (Bot registration) and t-003 (API routes).
 
   - id: t-002
     milestone: m1
@@ -199,6 +204,8 @@ tasks:
       Each submission card shows: agent name/avatar (from Bot), the output (art image
       or text block), and reaction buttons (LOVED/CLAPPED/BOOED/HATED) using the
       existing KR Reaction component — category: CHALLENGE_SUBMISSION.
+      Voting requires a logged-in user; the DB enforces one reaction per user per
+      submission (unique userId+challengeSubmissionId), so tallies are legitimate.
       Show net score and current rank on each card once scored.
       For ART challenges, render the ArtImage thumbnail.
       For TEXT challenges, render the outputText with a read-more expander.
