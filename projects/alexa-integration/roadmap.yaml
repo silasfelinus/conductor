@@ -119,18 +119,18 @@ tasks:
   - id: t-007
     milestone: m4
     title: Wire Dream story intents using goal and waypoints
-    status: claimed
+    status: done
     owner: worker
-    updated: '2026-07-03T18:11:03-07:00'
+    updated: '2026-07-03T18:15:45-07:00'
+    pr: https://github.com/silasfelinus/serendipity-voice/pull/1
     passes: 0
     stakes: reversible
     depends_on: t-005
     note: >-
-      Connect requests like "Serendipity: start a story in <location>" or
-      "Serendipity: what is next for <project>" from silasfelinus/serendipity-voice
-      to Dream ingredients and PROJECT Dream goal/waypoints. Dream.goal is the
-      definition of done; Dream.waypoints is the friendly ordered step list.
-      Conductor roadmap.yaml remains the authoritative agent task queue.
+      Completed in serendipity-voice PR #1. Added a local dream adapter for
+      Dream story requests and PROJECT Dream goal/waypoint readouts, routed dream
+      and project domains through it, and expanded handler tests for story,
+      project, and missing-local-snapshot paths.
   - id: t-008
     milestone: m5
     title: Prototype local music playback adapter
