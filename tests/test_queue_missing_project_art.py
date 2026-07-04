@@ -74,8 +74,9 @@ def test_iter_missing_project_assets_normalizes_prompt_and_default_sizes(tmp_pat
     monkeypatch.setattr(art_queue, "ROOT", tmp_path)
 
     entries = art_queue.iter_missing_project_assets(make_catalog())
+    by_project_variant = {(entry["project"], entry["variant"]): entry for entry in entries}
 
-    alpha_icon = entries[0]
+    alpha_icon = by_project_variant[("alpha", "icon")]
     assert alpha_icon == {
         "project": "alpha",
         "variant": "icon",
@@ -86,12 +87,10 @@ def test_iter_missing_project_assets_normalizes_prompt_and_default_sizes(tmp_pat
         "prompt": "bright alpha icon",
     }
 
-    beta_icon = entries[1]
-    beta_card = entries[2]
-    beta_hero = entries[3]
-    assert beta_icon["size"] == "256x256"
-    assert beta_card["size"] == "512x768"
-    assert beta_hero["size"] == "1280x720"
+    assert by_project_variant[("alpha", "hero")]["size"] == "1280x720"
+    assert by_project_variant[("beta", "icon")]["size"] == "256x256"
+    assert by_project_variant[("beta", "card")]["size"] == "512x768"
+    assert by_project_variant[("beta", "hero")]["size"] == "1280x720"
 
 
 def test_write_queue_outputs_expected_dry_run_shape(tmp_path: Path) -> None:
