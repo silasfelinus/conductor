@@ -86,6 +86,41 @@ jobs:
           fi
           echo "OK: all scripts/*.py pass syntax check"
 
+  worker-status-dry-run-smoke:
+    name: Worker status dry-run smoke
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Assert worker_task_status.py --dry-run does not write roadmap YAML
+        run: |
+          set -euo pipefail
+          mkdir -p projects/ci-dry-run-smoke
+          cat > projects/ci-dry-run-smoke/roadmap.yaml <<'YAML'
+          project: ci-dry-run-smoke
+          kind: software
+          tasks:
+            - id: t-001
+              milestone: m1
+              title: Scratch dry-run fixture
+              status: ready
+              owner: null
+              updated: '2026-07-04T00:00:00Z'
+              passes: 0
+              stakes: reversible
+              note: Scratch fixture used only by Worker PR CI.
+          YAML
+          before=$(sha256sum projects/ci-dry-run-smoke/roadmap.yaml)
+          python scripts/worker_task_status.py --dry-run claim ci-dry-run-smoke t-001
+          python scripts/worker_task_status.py --dry-run done ci-dry-run-smoke t-001 --note "dry-run smoke note"
+          after=$(sha256sum projects/ci-dry-run-smoke/roadmap.yaml)
+          test "$before" = "$after"
+          echo "OK: worker_task_status.py --dry-run left scratch roadmap unchanged"
+
   authz-regression:
     name: Authz regression tests
     runs-on: ubuntu-latest
