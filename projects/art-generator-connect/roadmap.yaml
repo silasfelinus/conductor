@@ -109,3 +109,18 @@ tasks:
     to source review because this connector runtime cannot execute the repo test suite.
 
     '
+- id: t-007
+  milestone: m4
+  title: Surface folder-based art collections (public/images/{slug}/) in kind_robots collection views
+  status: ready
+  owner: null
+  updated: '2026-07-04T12:10:00Z'
+  passes: 0
+  stakes: reversible
+  note: >
+    The image pipeline now drops inspiration files into kind_robots
+    public/images/{slug}/ (with a gallery.json manifest per folder), and
+    GET /api/art/collection/folder/{slug} returns that folder's images.
+    Per Silas (2026-07-04): a folder's contents ARE the slug's art collection.
+    Wire the endpoint into the collection display components so folder
+    inspirations appear alongside DB-backed ArtImages for the same slug.
