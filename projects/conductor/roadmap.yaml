@@ -164,7 +164,7 @@ tasks:
   note: "Build scripts/sync_projects_to_dreams.py. For each active conductor project (from project-overrides.yaml\
     \ where status == active), call the kind_robots API to upsert a Dream with dreamType PROJECT and matching\
     \ slug. Sync fields: title (from roadmap project:), description (from notes_from_silas first paragraph),\
-    \ projectStatus (map conductor active→ACTIVE, paused→\
+    \ projectStatus (map conductor active→\
     ARCHIVED). Use PATCH /api/dreams/<id> if a Dream with that slug already exists, POST /api/dreams otherwise.\
     \ Requires KR_API_TOKEN env var. Log each upsert (created/updated/skipped) to stdout. Never delete\
     \ a Dream; only create or update. This is the canonical conductor → kind_robots bridge; run it\
@@ -333,9 +333,9 @@ tasks:
 - id: t-021
   milestone: m2
   title: Add a scripts/worker_merge_pr.py helper that merges the Worker's own PR and immediately calls worker_task_status.py done in one atomic step, so a self-merge can never land without its roadmap status flip
-  status: ready
-  owner: null
-  updated: '2026-07-04T12:30:00Z'
+  status: claimed
+  owner: worker
+  updated: '2026-07-04T06:10:54-07:00'
   passes: 0
   stakes: reversible
   note: 'Kaizen from Reviewer audit of PR #157 (t-020). This is the second time in three cycles (t-020 here, and the earlier t-016/t-018 lineage) that a Worker PR merged cleanly but the roadmap task was left at status: ready / owner: null instead of done, requiring a Reviewer audit cycle to close the loop. Pairing the merge and the status-done call in one script removes the chance to do one without the other.'
