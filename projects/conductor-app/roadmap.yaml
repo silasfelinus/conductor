@@ -75,17 +75,18 @@ tasks:
 - id: t-004
   milestone: m4
   title: Choose notification strategy
-  status: review
+  status: done
   owner: worker
-  updated: '2026-07-03T21:14:34-07:00'
+  updated: '2026-07-03T21:24:00-07:00'
   passes: 0
   stakes: reversible
   depends_on: t-001
   note: >
-    Added projects/conductor-app/notification-strategy.md. It chooses local polling,
-    local notifications, and badge counts for MVP; defers FCM/APNs push until event
-    types and server auth boundaries are proven; and includes event priorities,
-    notification channels, deep links, implementation outline, and verification checklist.
+    Completed in PR #145. Added projects/conductor-app/notification-strategy.md.
+    The MVP strategy is local polling, local notifications, and badge counts;
+    server push via FCM/APNs is deferred until event types, usage, and auth
+    boundaries are proven. No live notification service, app store setup, deploy,
+    secrets, billing, DNS, or production data were touched.
 - id: t-005
   milestone: m1
   title: Map kind_robots API surface available for the app
