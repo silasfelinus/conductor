@@ -151,6 +151,35 @@ violation regardless of whether the action seems helpful.
 - Edit or delete another agent's TALKBACK entries
 - Close, reopen, or force-push PRs unless Silas explicitly directs it in the current session
 
+### Cross-repo tasks
+
+Some roadmap tasks describe changes in another Silas-owned repository, such as `kind_robots`,
+`serendipity-voice`, or `portos`. The conductor roadmap still owns the task state, but the
+code patch belongs in the target repository.
+
+When a cross-repo task is selected:
+1. Claim the conductor roadmap task exactly as usual on `main`.
+2. Create the implementation branch in the target repository as `worker/<project>-<task-id>`
+   when the connector/tooling allows it. Open the PR against that repository's `main` branch,
+   then update the conductor roadmap task from the conductor repo branch.
+3. If the connector blocks target-repo branch creation or writes, do not improvise a live
+   workaround and do not switch to a non-`worker/*` branch. Preserve the intended patch as a
+   conductor documentation handoff instead.
+4. Use `projects/<project>/docs/<task-id>-<short-slug>.md` for the fallback handoff. Include:
+   the target repository, intended branch name, files that would change, exact patch/code or
+   implementation steps, verification that was possible, verification still needed, and any
+   safety boundaries.
+5. Open the conductor PR with the handoff document and set the roadmap task to soft
+   `needs-human` unless the task output is fully complete in conductor. The note should tell
+   Silas where the handoff lives, what it contains, what blocked the direct target-repo PR,
+   and whether the next action is "apply this patch in the target repo" or "flip back to
+   ready after access is fixed."
+6. Never treat a preserved handoff as a live implementation. Do not mark target-repo code work
+   `done` unless the actual target-repo change was merged or Silas explicitly marks it done.
+
+This keeps blocked cross-repo work visible and reviewable without bypassing branch, repo,
+secret, deploy, or human-gate boundaries.
+
 ### Reviewer (Claude) — CAN
 - Merge reversible, scoped, software PRs from `worker/*` branches
 - Merge reversible, scoped, software PRs from `claude/*` branches when the work was
