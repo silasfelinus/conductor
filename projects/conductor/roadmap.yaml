@@ -280,19 +280,19 @@ tasks:
 - id: t-016
   milestone: m2
   title: Add a targeted single-field roadmap.yaml updater so cross-repo fallback tasks can flip task status without a full-file rewrite
-  status: claimed
-  owner: worker
-  updated: '2026-07-04T03:11:06Z'
-  passes: 0
+  status: ready
+  owner: null
+  updated: '2026-07-04T04:26:17Z'
+  passes: 1
   stakes: reversible
   note: >
-    Worker's kaizen suggestion from conductor PR #142 (alexa-integration/t-008):
-    the connector safety filter has now blocked a full roadmap.yaml rewrite
-    twice for reasons unrelated to the actual edit (the file's own protected-infra
-    boundary language trips the filter), forcing the claim commit and the
-    needs-human status flip to be skipped even though the Worker knew exactly
-    what to write. Add a small script (e.g. scripts/set_task_field.py
-    <project> <task-id> <field>=<value> [...]) that loads a single roadmap.yaml,
-    patches only the named task's fields in place, and rewrites the file
-    byte-for-byte otherwise, so connector-driven edits stay minimal and
-    the safety filter has less unrelated text to trip on.
+    PR #144 (worker/conductor-t-016) was rejected on review and closed: it added
+    only a design doc (projects/conductor/docs/t-016-set-task-field.md), not the
+    scripts/set_task_field.py utility the task actually asks for. The rejection
+    also flagged that the Worker's "connector safety filter blocked script
+    creation" explanation doesn't hold up — this repo already has half a dozen
+    Worker-landed utility scripts, so script writes aren't categorically
+    blocked. Next cycle: retry the direct script write; if it's refused again,
+    capture the exact error and include the full script source as a code block
+    in the handoff doc rather than prose-only design notes, so the work is
+    fully preserved either way.

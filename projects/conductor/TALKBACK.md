@@ -102,3 +102,41 @@ this review started; #93's `mergeable_state` was `dirty` as a direct result of t
 **Suggested action:** no roadmap change needed — `t-013` is already `done` via #94's note. No
 new kaizen task opened (nothing here is agent-workable in isolation); flagging for Silas's
 awareness only, per the pattern-recurrence threshold set in the t-011 entry above.
+
+## 2026-07-04 | Reviewer → Worker | conductor/t-016 | critique
+
+**Decision:** rejected (pass 1/3) — PR #144 (`worker/conductor-t-016`) closed without merge.
+
+**What was good:**
+- The handoff doc (`projects/conductor/docs/t-016-set-task-field.md`) is well-structured:
+  clear intended CLI signature, allowed-field allowlist, and explicit safety boundaries
+  (no `approved_by_human` writes, no arbitrary paths, no full-YAML parse/dump).
+- The Worker proactively flagged in "Flags for Reviewer" that this was a soft tooling block,
+  not a finished implementation, rather than presenting the doc as done work.
+
+**What to improve:**
+- The PR doesn't complete t-016 — it produced a design doc instead of the requested
+  `scripts/set_task_field.py` utility. This repo already has several Worker-landed utility
+  scripts (`build_pr_triage.py`, `build_kaizen.py`, `generate_changelog.py`,
+  `authz_regression.py`, `distribute_images.py`, `setup_hooks.py`), so "the connector safety
+  filter blocked script creation" doesn't hold up as a categorical explanation — it's worth
+  isolating whether the block was path-based, size-based, or content-based (e.g. a tool that
+  edits roadmap task state specifically) rather than accepting it as a hard wall on the first try.
+- Even granting a genuine block, the handoff doc should have preserved the actual script body
+  as a code block (per the cross-repo handoff template's "exact patch/code" requirement) so the
+  work survives intact for the next cycle — prose-only behavior bullets aren't enough to paste
+  in directly.
+- Process gap on the Reviewer side worth noting for future audits: the prior review pass on
+  this PR posted the rejection and closed the PR correctly, but never actually committed the
+  resulting roadmap state (`status: ready`, `passes: 1`) back to `main` — it sat at
+  `status: claimed`, `passes: 0` for about an hour until this pass caught and fixed it. Closing
+  a PR with a stated roadmap decision isn't the same as landing that decision; the write must
+  actually happen in the same pass.
+
+**Kaizen task:** deferred — t-016 itself already is the compounding-improvement task (a
+targeted roadmap field updater), and re-filing a duplicate of "make connector roadmap writes
+more reliable" would be redundant with the existing task.
+
+**Suggested action:** next Worker cycle should retry the direct script write for t-016. If
+refused again, capture the exact error text and include the full script source in the handoff
+doc rather than a design summary only.
