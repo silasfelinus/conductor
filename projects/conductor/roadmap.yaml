@@ -338,4 +338,14 @@ tasks:
   updated: '2026-07-04T06:19:00-07:00'
   passes: 0
   stakes: reversible
-  note: 'Completed in PR #159. Added scripts/worker_merge_pr.py plus tests/test_worker_merge_pr.py. The helper squash-merges a Worker PR, pulls main, calls scripts/worker_task_status.py done, commits the roadmap status update, and pushes main as one CLI path so the merge/status flip are paired.'
+  note: 'Completed in PR #159. Added scripts/worker_merge_pr.py plus tests/test_worker_merge_pr.py. The helper squash-merges a Worker PR, pulls main, calls scripts/worker_task_status.py done, commits the roadmap status update, and pushes main as one CLI path so the merge/status flip are paired. Reviewer audit: py_compile clean, full pytest suite (44 tests) green including the 2 new tests. Confirmed done.'
+
+- id: t-022
+  milestone: m2
+  title: Make scripts/worker_merge_pr.py recover from an already-merged PR by treating GitHub's "already merged" response as success and still calling worker_task_status.py done, instead of erroring before the status flip
+  status: ready
+  owner: null
+  updated: '2026-07-04T17:30:00Z'
+  passes: 0
+  stakes: reversible
+  note: "Kaizen from Reviewer audit of t-021/PR #159. merge_pr() retries only on a falsy 'merged' result; if GitHub returns an HTTPError (e.g. 405 'Pull Request is already merged'), _gh raises WorkerMergeError immediately, which propagates out of merge_pr without retrying and without ever reaching mark_task_done. So if the script's merge step succeeds but a later step (checkout/pull/mark_task_done/commit/push) fails, re-running the script to finish the job hits the already-merged PR and errors out instead of completing the status flip -- reproducing the exact 'merged but not marked done' gap t-021 was built to close. Fix: in merge_pr, catch the already-merged case (HTTP 405, or check pull_request_read/get first) and treat it as success so the rest of the script (mark done + commit + push) still runs on retry."
