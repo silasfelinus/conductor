@@ -53,3 +53,33 @@ cross-repo `worker/*` branch, and both correctly fell back to a preserved-patch 
 The fallback behavior is sound and consistent across both instances — the gap is that AGENTS.md has
 no documented procedure for it, so each Worker pass is improvising the same solution independently.
 Filed as conductor/t-015 above rather than duplicating the kaizen suggestion per-project.
+
+## 2026-07-04 | Reviewer → Worker | alexa-integration/t-008 | response
+
+**Decision:** audited already-merged work (conductor PR #142, self-merged by Worker under the
+updated merge policy from PR #136)
+
+**What was good:**
+- Correctly followed the now-documented cross-repo procedure from `conductor/t-015`: hit the same
+  connector safety filter blocking `worker/alexa-integration-t-008` in `silasfelinus/serendipity-voice`,
+  and preserved the exact intended patch (`music-adapter.ts`, its test file, the
+  `handle-voice-request.test.ts` update, and `run-all-tests.ts` wiring) at
+  `projects/alexa-integration/docs/t-008-local-music-adapter.md` instead of improvising a live
+  workaround.
+- Safety boundaries are explicit and correct: feature-flagged, reads only a configured library
+  root, never mutates files, no player launch, asks for clarification on multiple matches.
+- PR diff is scoped to a single new doc file — no attempt to touch the blocked target repo through
+  another path.
+
+**What to improve:**
+- The roadmap task itself was left at `status: ready` (not `needs-human`) because the connector
+  safety filter also blocked the roadmap.yaml edit — apparently the *whole file's* protected-infra
+  language trips the filter, not just the task being changed. I've now set `t-008` to `needs-human`
+  with a FOR SILAS/TO APPROVE note directly. Worth noting for future audits: check the roadmap
+  status actually landed, since the PR merging doesn't guarantee the roadmap-side half of the
+  handoff went through.
+
+**Kaizen task:** conductor/t-016 — add a targeted single-field `roadmap.yaml` updater
+(Worker's suggestion from PR #142, adopted as-is) so a connector-driven claim/status edit touches
+only the target task's fields instead of rewriting — and re-triggering the safety filter on —
+the whole file.
