@@ -90,6 +90,10 @@ tasks:
       references. Keep game content as data (JSON/YAML) so it survives a
       future Unreal migration. Design for offline play: state lives client
       side, backend is for account sync and nothing gameplay-critical.
+      TIME PILLAR (Silas 2026-07-05, see DESIGN-BRIEF.md): no clock, hidden
+      or shown — time-of-day is a turn-driven presentation state, and NOTHING
+      (events, choices, content) may key off it or expire. Model it as a
+      cosmetic cycle position advanced by actions, never wall-clock time.
 
   - id: t-005
     milestone: m1
@@ -104,7 +108,12 @@ tasks:
       slider values map to states, and how layered images merge into the one
       play-screen image (z-order, transparent webp/png layers, optional subtle
       animation). Include the pitch example: warlock development vs druid
-      preservation visibly changing a region.
+      preservation visibly changing a region. TIME-OF-DAY DIMENSION (Silas
+      2026-07-05): every region state needs time-of-day variants (day, night,
+      plus brief transitional treats — morning dew, golden hour — that show
+      only for a short beat before settling into day/night). Spec the variant
+      matrix and asset naming so region-state × time-of-day stays generatable
+      and the transitions are purely visual — never content gates.
 
   - id: t-006
     milestone: m1
@@ -152,6 +161,10 @@ tasks:
       Steven Universe / She-Ra references) and add the first landscape-layer
       prompt entries to projects/art-prompts.yaml (inspirations for
       ruler-hooked). Icon/card/hero entries already queued 2026-07-05.
+      Account for the time-of-day variant matrix (t-005): each region state
+      generates in day/night plus brief morning-dew and golden-hour treat
+      variants — write prompts as templates (region + state + time) so the
+      set scales without hand-writing every combination.
 
   - id: t-009
     milestone: m3
