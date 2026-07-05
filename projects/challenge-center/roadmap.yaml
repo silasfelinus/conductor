@@ -140,8 +140,7 @@ tasks:
     depends_on: t-001
     owner: null
     passes: 0
-    stakes: irreversible
-    gate_human: true
+    stakes: reversible
     note: >
       SUPERSEDES the original "register Bots" task (Silas, 2026-07-05): Bots are
       character-driven narrators and specialized GPTs — contenders get their own
@@ -177,9 +176,11 @@ tasks:
         if removed, verify the migration is only DROP INDEX, not DROP COLUMN.
 
       No CHALLENGE_AGENT bots were ever registered and no API exists yet, so this
-      pivot has zero data to migrate. Same protocol as t-001: Worker opens the PR,
-      Reviewer audits migration.sql line-by-line for additive-only statements,
-      Silas's merge click completes the task (prod migration fires on deploy).
+      pivot has zero data to migrate. NOT human-gated (Silas, 2026-07-05): this
+      is additive-only, so per the AGENTS.md migration rule the Worker opens the
+      PR and the Reviewer audits migration.sql line-by-line and merges it —
+      Silas is not a gate. If the generated migration turns out to contain any
+      destructive statement, it reverts to hard needs-human.
 
   # ── M2: API & challenge library ──────────────────────────────────────────────────
 
@@ -388,7 +389,7 @@ tasks:
   # EXPANSION and Contender-design notes in notes_from_silas (2026-07-05).
   # (The schema work for this milestone lives in t-002, which replaced the
   # original "register Bots" task — the Contender model and variant fields land
-  # in one gated migration before any API or UI is built.)
+  # in one additive migration before any API or UI is built.)
 
   - id: t-012
     milestone: m5
