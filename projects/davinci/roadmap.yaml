@@ -210,32 +210,55 @@ tasks:
   - id: t-011
     milestone: m2
     title: "Add LifeRun status-transition guard and an end-to-end play-loop API test"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on:
+      - t-009
+      - t-013
+    note: >
+      Kaizen from t-009 merge: resolveLifeRunEnding currently recomputes on every
+      call, including for runs already COMPLETE. Once the play loop (t-013) lands,
+      add an explicit status transition guard (ACTIVE -> COMPLETE only, or a
+      documented re-resolve policy) plus a test that drives create-run -> set-stats
+      -> resolve end-to-end. Folded in from the t-012 kaizen: a small headless tsx
+      driver for resolveLifeRunEnding would let the davinci-seed-verify CI job
+      exercise the resolution/award path too, without dev-server auth.
+
+  - id: t-012
+    milestone: m2
+    title: "Nightly CI job running the Da Vinci generator + seed verifier end-to-end"
+    status: done
+    owner: reviewer
+    updated: '2026-07-05T07:40:00-07:00'
+    passes: 0
+    stakes: reversible
+    depends_on: t-010
+    note: >
+      Done in kind_robots PR #94 (Silas-directed session work). Hosting decision:
+      kind_robots owns the workflow (.github/workflows/davinci-seed-verify.yml)
+      since it has the schema, npm scripts, and Prisma tooling; conductor's
+      generator arrives via public checkout. Nightly 09:17 UTC + workflow_dispatch,
+      MariaDB 11 service container, prisma db push, then seed:davinci:verify.
+      Verified live: dispatched run #1 on main completed green in ~2 minutes.
+
+  - id: t-013
+    milestone: m2
+    title: "Build minimal Da Vinci play-loop API (create run, record choice, update stats)"
     status: ready
     owner: null
     passes: 0
     stakes: reversible
     depends_on: t-009
     note: >
-      Kaizen from t-009 merge: resolveLifeRunEnding currently recomputes on every
-      call, including for runs already COMPLETE. When the play loop lands, add an
-      explicit status transition guard (ACTIVE -> COMPLETE only, or a documented
-      re-resolve policy) plus a Cypress/API test that drives create-run -> set-stats
-      -> resolve end-to-end in CI, replacing the manual dev-server matrix used
-      during t-009 verification.
-
-  - id: t-012
-    milestone: m2
-    title: "Nightly CI job running the Da Vinci generator + seed verifier end-to-end"
-    status: ready
-    owner: null
-    passes: 0
-    stakes: reversible
-    depends_on: t-010
-    note: >
-      Kaizen from t-010 merge: seed:davinci:verify needs a database, so it is
-      manual-only today. Add a GitHub Actions job (nightly or on-demand) with a
-      MariaDB service container that generates fresh seed output with conductor's
-      generate_davinci_endings.py, applies the kind_robots schema via prisma db
-      push, and runs npm run seed:davinci:verify — catching payload-shape drift
-      between the two repos automatically. Decide which repo hosts the workflow
-      before implementing.
+      Discovered gap while closing out the resolution engine: m2 promises "life
+      run, choice, and ending engine" but only the ending half exists. Add the
+      app-owned endpoints to (1) create a LifeRun for the authenticated user
+      (title, seed, optional protagonist/genre/character/dream links), (2) record
+      a LifeChoice with its stat effects, applying LifeStat deltas atomically, and
+      (3) read a run with stats/choices for resume. Follow the conventions in
+      server/api/davinci/runs/[id]/resolve.post.ts (requireApiUser, errorHandler,
+      ownership checks). AI narration stays out of scope — these endpoints are the
+      durable-state substrate the Chat narrator will call later. Respect the
+      boundary rules in docs/storymaker-boundary-comparison.md.

@@ -142,3 +142,49 @@ independent audit still welcome.
 
 **Kaizen task:** t-012 — nightly CI job with a MariaDB service container that
 runs the generator + seed:davinci:verify end-to-end across both repos.
+
+## 2026-07-05 | Reviewer → system | davinci/t-007 | response
+
+**Decision:** merged (conductor PR #207)
+
+**Context:** Silas-directed overnight session work; analysis doc, zero code
+risk. Same-agent build-and-merge, documented per the running pattern.
+
+**What was good:**
+- The task's own timing condition was honored: the comparison waited until
+  the endpoint engine was concretely merged and verified, so the boundary
+  argument rests on real code (custody checks, unlock guards, regression
+  suite) rather than intentions.
+- Ends with an explicit re-open condition (both MVPs merged) instead of a
+  vague "revisit later."
+
+**What to improve:**
+- The doc's proposed standing boundary rules only bind if they're visible
+  from Storymaker's side too — that gap is this merge's kaizen.
+
+**Kaizen task:** storymaker/t-009 — cross-link the Da Vinci boundary rules
+from Storymaker's roadmap so future session-schema work reads them first.
+
+## 2026-07-05 | Reviewer → system | davinci/t-012 | response
+
+**Decision:** merged (kind_robots PR #94), then verified live
+
+**Context:** Silas-directed overnight session work, same standing authority.
+Unlike the earlier same-agent merges, this one got a true post-merge
+verification: the workflow was dispatched on main and run #1 completed
+green in ~2 minutes (MariaDB service up, conductor checkout, 1024-line
+generation, prisma db push, all 15 verify checks passed on GitHub's infra).
+
+**What was good:**
+- The t-012 open question (which repo hosts) was answered with a reasoned
+  decision in the PR rather than an escalation stall.
+- Merge-then-dispatch closed the "can't test Actions locally" gap the same
+  hour it was created.
+
+**What to improve:**
+- The workflow only covers the seed path; the resolution/award path still has
+  no CI coverage. Folded into t-011 (headless tsx driver) rather than a new
+  task, to avoid near-duplicate roadmap entries.
+
+**Kaizen task:** deferred — folded into t-011's note (headless resolution
+driver for the CI job); creating a separate task would duplicate it.
