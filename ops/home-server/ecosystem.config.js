@@ -37,7 +37,7 @@ module.exports = {
       kill_timeout: 15000,
       out_file: `${LOG_DIR}/comfyui.out.log`,
       error_file: `${LOG_DIR}/comfyui.err.log`,
-      merge_logs: true,
+      merge_logs: true
     },
     {
       // Stable Diffusion WebUI (forge-neo) at D:\code\sd-webui-forge-neo.
@@ -53,20 +53,25 @@ module.exports = {
         '--api',
         '--listen',
         '--cuda-malloc',
-        '--ckpt-dir', 'Z:/ai/models/Stable-diffusion',
+        '--ckpt-dir',
+        'Z:/ai/models/Stable-diffusion',
         '--cors-allow-origins',
         'https://kindrobots.org,https://kind-robots.vercel.app,http://localhost:3000,http://localhost:3001',
-        '--lora-dir', 'Z:/ai/models/Lora',
-        '--vae-dir', 'Z:/ai/models/vae',
-        '--controlnet-dir', 'Z:/ai/models/controlnet',
+        '--lora-dir',
+        'Z:/ai/models/Lora',
+        '--vae-dir',
+        'Z:/ai/models/vae',
+        '--controlnet-dir',
+        'Z:/ai/models/controlnet',
         '--xformers',
         '--skip-python-version-check',
-        '--reserve-vram', '2',
+        '--reserve-vram',
+        '2',
         // --listen makes forge lock the Extensions tab (AssertionError:
         // "extension access disabled because of command line flags").
         // The box is only reachable via LAN/tailscale, so re-enabling
         // extension management is fine here.
-        '--enable-insecure-extension-access',
+        '--enable-insecure-extension-access'
       ].join(' '),
       interpreter: 'none',
       windowsHide: true,
@@ -77,7 +82,7 @@ module.exports = {
       kill_timeout: 15000,
       out_file: `${LOG_DIR}/sd-webui.out.log`,
       error_file: `${LOG_DIR}/sd-webui.err.log`,
-      merge_logs: true,
+      merge_logs: true
     },
     // kr-relay — pull-based bridge between the kind_robots ArtJob queue and the
     // local engines (see relay_agent.py). The queue endpoints are LIVE (PR #90
@@ -88,23 +93,23 @@ module.exports = {
     //   2. Open a NEW shell (setx doesn't affect the current one)
     //   3. Uncomment this block, then: pm2 start ecosystem.config.js --only kr-relay ; pm2 save
     // NEVER paste the real token into this file — it is committed to git.
-    // {
-    //   name: 'kr-relay',
-    //   cwd: __dirname,
-    //   script: 'C:/Python312/python.exe', // any Python 3.9+; stdlib only
-    //   args: 'relay_agent.py',
-    //   interpreter: 'none',
-    //   windowsHide: true,
-    //   autorestart: true,
-    //   restart_delay: 10000,
-    //   env: {
-    //     KR_RELAY_TOKEN: process.env.KR_RELAY_TOKEN || '',
-    //     KR_RELAY_USER_ID: process.env.KR_RELAY_USER_ID || '',
-    //     // KR_BASE_URL: 'https://kindrobots.org',
-    //   },
-    //   out_file: `${LOG_DIR}/kr-relay.out.log`,
-    //   error_file: `${LOG_DIR}/kr-relay.err.log`,
-    //   merge_logs: true,
-    // },
-  ],
+    {
+      name: 'kr-relay',
+      cwd: __dirname,
+      script: 'C:/Python312/python.exe', // any Python 3.9+; stdlib only
+      args: 'relay_agent.py',
+      interpreter: 'none',
+      windowsHide: true,
+      autorestart: true,
+      restart_delay: 10000,
+      env: {
+        KR_RELAY_TOKEN: process.env.KR_RELAY_TOKEN || '',
+        KR_RELAY_USER_ID: process.env.KR_RELAY_USER_ID || ''
+        // KR_BASE_URL: 'https://kindrobots.org',
+      },
+      out_file: `${LOG_DIR}/kr-relay.out.log`,
+      error_file: `${LOG_DIR}/kr-relay.err.log`,
+      merge_logs: true
+    }
+  ]
 }
