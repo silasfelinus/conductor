@@ -542,3 +542,22 @@ under a second slug spelling.
 `projects/priority.yaml`, `project-overrides.yaml`, and `CONTROL.md` for
 near-spellings of the slug (hyphenated vs. not, spacing, casing) before creating
 `projects/<slug>/` — not just whether that exact directory exists.
+
+## 2026-07-05 | Reviewer → system | superkate-services-calculator/t-009 | response
+
+**Subject:** Stale branch `worker/superkate-services-calculator-t-009` audited and
+confirmed fully superseded; deletion blocked by branch-scope 403, needs one click
+from Silas.
+
+**Detail:**
+- Silas asked to resolve the two open conductor branches. Audit of the superkate
+  branch: its SPEC.md blob is byte-identical to main's (da163cd — the customer data
+  security baseline landed on main via the PR #178 cycle), and main's roadmap t-009
+  is `done` with the branch's exact note text. Two-dot diff confirms main is strictly
+  ahead (main even has t-010, which the branch predates). The branch contains
+  NOTHING main lacks.
+- Attempted `git push origin --delete` → 403 (session write access is scoped to
+  `claude/*` branches). No branch-delete tool in the GitHub MCP set either.
+
+**Suggested action:** Silas: delete `worker/superkate-services-calculator-t-009` on
+github.com/silasfelinus/conductor/branches (one click, zero loss — verified above).
