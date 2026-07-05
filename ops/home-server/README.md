@@ -11,6 +11,7 @@ Files in this folder:
 | `ecosystem.config.js` | pm2 process definitions for `comfyui` and `sd-webui` (plus an opt-in `kr-relay`) |
 | `healthcheck.ps1` | optional watchdog — probes the HTTP health endpoints and `pm2 restart`s a hung process |
 | `relay_agent.py` | pull-based bridge: claims ArtJobs from kind_robots and drives local ComfyUI/A1111 (enable after art-generator-connect/t-010 deploys) |
+| `start-engines.bat` | double-click launcher: starts both engines (no-op if running) and attaches the live log stream — the old bats' echo, without owning the processes |
 
 ---
 
