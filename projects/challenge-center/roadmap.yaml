@@ -469,3 +469,23 @@ tasks:
       Facet data comes from the t-011 fields; grouping is a query-level change,
       not new schema. Keep the championship presentation — a generator facet is
       just a different weight class.
+
+  - id: t-016
+    milestone: m5
+    title: "Write docs/comparison-axes.md summarizing the five M5 comparison axes"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Kaizen from the Reviewer's M5-expansion merge (conductor PR #188): t-011 through
+      t-015 each restate pieces of the comparison-axes design inline (provider vs
+      provider, model vs model, generator vs generator, prompt vs prompt via random
+      substitution, settings vs settings) and the contender split (Bot = leaderboard
+      identity, ChallengeSubmission = the "how": variantKey/generator/promptUsed/
+      settings/randomSelections). Write projects/challenge-center/docs/comparison-axes.md
+      as the one canonical reference doc — pull the axis list and contender-design
+      paragraph from notes_from_silas verbatim, then a short table mapping each axis to
+      the task(s) that implement it (t-011 schema, t-012 roster, t-013 runner, t-014
+      variants, t-015 leaderboards). Future task notes and PR reviews should check
+      against this doc instead of re-deriving the design from scattered task notes.
