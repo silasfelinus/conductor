@@ -52,9 +52,10 @@ tasks:
       FOR SILAS/SUPERKATE: Review projects/superkate-services-calculator/SPEC.md.
       Silas has decided hours/minutes with preset chips, optional product cost defaulting
       to zero, a customer database with stored email for repeat clientele, warm receipts
-      including "Superkate loves you!", cloud sync as an initial beta expectation, and
-      optional app/device lock. Confirm these with Superkate and decide the deletion/export
-      backup expectations. Set approved_by_human: true and status: done when approved.
+      including "Superkate loves you!", cloud sync as an initial beta expectation, optional
+      app/device lock, receipt contact details as configurable salon/contact fields, delete/edit
+      plus CSV export for paid v1, and backend direct-send receipts as future-only. Set
+      approved_by_human: true and status: done when Superkate/Silas approve the whole spec.
       Unblocks implementation tasks.
 
   - id: t-009
@@ -82,6 +83,20 @@ tasks:
       product cost optional defaulting to zero, customer database and email storage as a reasonable
       local-business feature, cloud sync as an initial beta expectation, warm receipts with
       "Superkate loves you!", and optional app/device lock.
+
+  - id: t-012
+    milestone: m1
+    title: Record Silas's final open-question approvals in the MVP spec
+    status: claimed
+    owner: worker
+    passes: 0
+    stakes: reversible
+    updated: 2026-07-05
+    note: >
+      Record Silas's approval of the remaining recommendation package: configurable receipt
+      contact fields, app-lock onboarding prompt with settings toggle, appointment deletion,
+      customer edit/delete, cloud sync backup, CSV export in paid v1, no bulk delete in v1,
+      and backend direct-send receipts as a future roadmap option rather than beta behavior.
 
   - id: t-003
     milestone: m2
