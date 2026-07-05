@@ -42,21 +42,17 @@ tasks:
   - id: t-002
     milestone: m1
     title: Review and finalize the MVP spec with Superkate
-    status: needs-human
-    owner: null
+    status: done
+    owner: worker
     passes: 0
     stakes: reversible
     gate_human: true
-    approved_by_human: false
+    approved_by_human: true
+    updated: 2026-07-05
     note: >
-      FOR SILAS/SUPERKATE: Review projects/superkate-services-calculator/SPEC.md.
-      Silas has decided hours/minutes with preset chips, optional product cost defaulting
-      to zero, a customer database with stored email for repeat clientele, warm receipts
-      including "Superkate loves you!", cloud sync as an initial beta expectation, optional
-      app/device lock, receipt contact details as configurable salon/contact fields, delete/edit
-      plus CSV export for paid v1, and backend direct-send receipts as future-only. Set
-      approved_by_human: true and status: done when Superkate/Silas approve the whole spec.
-      Unblocks implementation tasks.
+      Silas explicitly cleared the finalized MVP spec in the current session. SPEC.md captures
+      the approved beta direction and implementation standards. This approval unblocks the
+      pre-implementation architecture note.
 
   - id: t-009
     milestone: m1
@@ -201,7 +197,7 @@ tasks:
   - id: t-010
     milestone: m2
     title: Write a pre-implementation architecture note for customer database and cloud sync
-    status: waiting
+    status: ready
     owner: null
     passes: 0
     stakes: reversible
