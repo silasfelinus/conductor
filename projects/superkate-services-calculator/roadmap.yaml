@@ -13,7 +13,7 @@ milestones:
     weight: 20
     status: in-progress
   - id: m2
-    title: Local appointment database and calculator
+    title: Customer database, sync, and calculator
     weight: 35
     status: not-started
   - id: m3
@@ -50,9 +50,11 @@ tasks:
     approved_by_human: false
     note: >
       FOR SILAS/SUPERKATE: Review projects/superkate-services-calculator/SPEC.md.
-      Confirm time-entry format, receipt copy, whether to store client email, whether the
-      paid app needs device/app lock before showing appointment history, and whether the
-      MVP should stay local-only. Set approved_by_human: true and status: done when approved.
+      Silas has decided hours/minutes with preset chips, optional product cost defaulting
+      to zero, a customer database with stored email for repeat clientele, warm receipts
+      including "Superkate loves you!", cloud sync as an initial beta expectation, and
+      optional app/device lock. Confirm these with Superkate and decide the deletion/export
+      backup expectations. Set approved_by_human: true and status: done when approved.
       Unblocks implementation tasks.
 
   - id: t-009
@@ -68,9 +70,23 @@ tasks:
       local-first storage, no analytics, no plaintext secrets, safe receipt behavior,
       deletion/export expectations, and paid-app release gates before appointment persistence begins.
 
+  - id: t-011
+    milestone: m1
+    title: Record Silas's beta product decisions in the MVP spec
+    status: claimed
+    owner: worker
+    passes: 0
+    stakes: reversible
+    updated: 2026-07-05
+    note: >
+      Update SPEC.md and roadmap notes from Silas's feedback: hours/minutes with preset chips,
+      product cost optional defaulting to zero, customer database and email storage as a reasonable
+      local-business feature, cloud sync as an initial beta expectation, warm receipts with
+      "Superkate loves you!", and optional app/device lock.
+
   - id: t-003
     milestone: m2
-    title: Build the appointment data model and local persistence
+    title: Build the appointment and customer data model with persistence
     status: waiting
     owner: null
     passes: 0
@@ -78,12 +94,13 @@ tasks:
     depends_on:
       - t-002
       - t-009
+      - t-010
     note: >
-      Implement an Appointment model storing clientName, appointmentDate, hourlyRateCents,
-      timeSpentMinutes, productCostCents, appointmentTotalCents, createdAt, and updatedAt.
-      Money must be stored as cents and totals calculated from inputs. Follow SPEC.md's
-      customer data security baseline; do not use browser localStorage for a paid release
-      unless Superkate explicitly accepts that risk.
+      Implement Appointment and Customer models. Appointment stores customerId/clientName snapshot,
+      appointmentDate, hourlyRateCents, timeSpentMinutes, productCostCents, appointmentTotalCents,
+      createdAt, and updatedAt. Customer stores name and optional email for repeat clientele.
+      Money must be stored as cents and totals calculated from inputs. Follow SPEC.md's customer
+      data security baseline and the cloud-sync architecture note.
 
   - id: t-004
     milestone: m2
@@ -94,8 +111,9 @@ tasks:
     stakes: reversible
     depends_on: t-003
     note: >
-      Add the new appointment form for client name, appointment date, hourly rate, time spent,
-      and product cost. Show the live total as hourly rate × time spent + product cost.
+      Add the new appointment form for client/customer, appointment date, hourly rate, time spent,
+      and optional product cost defaulting to $0. Show the live total as hourly rate × time spent
+      + product cost.
 
   - id: t-005
     milestone: m3
@@ -111,7 +129,7 @@ tasks:
 
   - id: t-006
     milestone: m3
-    title: Add receipt email composer
+    title: Add warm receipt email composer
     status: waiting
     owner: null
     passes: 0
@@ -120,9 +138,10 @@ tasks:
       - t-004
       - t-005
     note: >
-      Add a receipt action that opens an email composer with client name, appointment date,
-      hourly rate, time spent, product cost, total price, and the formula line prefilled.
-      Do not add backend direct-send credentials without explicit human approval.
+      Add a receipt action that opens an email composer with customer email prefilled when known,
+      client name, appointment date, hourly rate, time spent, product cost, total price, the formula
+      line, and the slogan "Superkate loves you!" Do not add backend direct-send credentials without
+      explicit human approval.
 
   - id: t-007
     milestone: m4
@@ -148,19 +167,19 @@ tasks:
     depends_on: t-007
     note: >
       Prepare a handoff checklist for device install/test, data backup expectations, privacy notes,
-      customer data security review, and app-store readiness. Do not submit to any app store
-      without explicit human approval.
+      customer data security review, cloud-sync readiness, and app-store readiness. Do not submit
+      to any app store without explicit human approval.
 
   - id: t-010
     milestone: m2
-    title: Write a pre-implementation architecture note for local storage and app-lock
+    title: Write a pre-implementation architecture note for customer database and cloud sync
     status: waiting
     owner: null
     passes: 0
     stakes: reversible
     depends_on: t-002
     note: >
-      Once Superkate approves the MVP spec, write a short architecture note selecting the
-      local storage target (e.g. SQLite/Hive/Isar) and the app-lock/device-auth approach
-      required by SPEC.md's customer data security baseline, before coding appointment
-      persistence (t-003). Scope is a decision record, not implementation.
+      Once Superkate approves the MVP spec, write a short architecture note selecting the customer
+      database, appointment storage, cloud sync approach, auth/tenant model, conflict handling,
+      backup/export path, and optional app-lock/device-auth approach required by SPEC.md before
+      coding appointment persistence (t-003). Scope is a decision record, not implementation.
