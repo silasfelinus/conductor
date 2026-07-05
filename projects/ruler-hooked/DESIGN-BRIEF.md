@@ -49,8 +49,29 @@ castle and start fishing, while the kingdom keeps interrupting.
 Cartoony and goofy. Exaggerated stereotypes of good and evil — but always
 with wry twists, and characters that are nuanced underneath the archetype.
 Reference points from Silas: Monkey Island, Bakshi, Treasure Planet, Steven
-Universe, She-Ra: Princess of Power, "prime monster" (as written — confirm
-the exact reference with Silas; possibly Primal).
+Universe, She-Ra: Princess of Power, and Prime Monster (see below).
+
+## Primary UI/structure reference: Prime Monster
+
+Prime Monster (Steam: https://store.steampowered.com/app/3214480/Prime_Monster/)
+is the closest existing model for how this game should *work*, per Silas
+(2026-07-05, in session — he's played it and found it charming):
+
+- **Card-based selections** with a playful interface.
+- **Delightful moral decisions from the perspective of honestly evil
+  characters** — its hunting-versus-farming debate is whether humans should
+  be hunted as food or farmed as a sustainable crop. That register (comically
+  frank villainy with real decision weight) is the tone target for our
+  warlock/druid-style choices.
+- **Vibrantly alive without a controllable character animation:** everything
+  is pre-baked, presented as navigable screens. No avatar to steer — the
+  world feels alive through the screens themselves.
+- "It works and it was fun" — treat it as proof that the slideshow/card/
+  composited-image format carries a full game, not just a prototype.
+
+Agents implementing the play loop should study its store page/screenshots for
+the goal-type UI feel; the PoC's bar is that same navigable-screens
+liveliness.
 
 ## Characters and narrative decks
 
