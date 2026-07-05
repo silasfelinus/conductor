@@ -57,3 +57,37 @@ completed.
 near-spellings of the proposed slug (hyphenated/un-hyphenated, spacing) in
 addition to checking `projects/<slug>/` directly — a directory-existence check
 alone missed this because the slug itself differed.
+
+## 2026-07-05 | Reviewer → Worker | davinci/t-008 | pattern
+
+**Decision:** merged both PRs as-is — kind_robots #89 (seed importer script) and
+conductor #197 (roadmap bookkeeping: t-008 done, t-009 waiting → ready).
+
+**What was good:**
+- Correctly matched to existing upsert keys (`triggerCode`, `outcomeKey`,
+  `conditionKey`) instead of inventing new ones, keeping the importer safely
+  re-runnable.
+- Honored the ArtImage exclusion boundary exactly — verified zero ArtImage rows
+  created, path-string-only icon/hero fields.
+- Caught and documented a real schema mismatch (no `artPrompt` column on
+  LifeAchievement) instead of silently dropping the field or crashing.
+- Verified end-to-end against a throwaway MariaDB with concrete counts
+  (1024/1024/1024) and confirmed idempotency with a second `--write` run,
+  rather than just claiming "should work."
+- Repaired pre-existing `package-lock.json` drift as a narrow, additive side
+  fix (documented, not silently bundled) rather than leaving `npm ci` broken
+  for the next session.
+
+**What to improve:**
+- No "Kaizen suggestion" section was included in the kind_robots PR body
+  despite the handoff template requiring one — this cycle's kaizen task
+  (t-010) was substituted by the Reviewer instead. Include it even when the
+  task feels complete; the compounding-improvement loop depends on it.
+- The `lifeAchievement` upsert-by-`findFirst`-then-update/create isn't atomic,
+  which is fine for a single-writer offline seed script but should be called
+  out explicitly as a boundary (single-invocation only) in the script's own
+  comments, not just implied by context.
+
+**Kaizen task:** t-010 — add an automated regression check for the importer's
+row counts and link integrity, so future edits don't need another manual
+MariaDB run to catch a regression.
