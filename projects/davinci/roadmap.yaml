@@ -185,13 +185,51 @@ tasks:
   - id: t-010
     milestone: m2
     title: "Add an automated regression check for the Da Vinci seed importer's row counts and link integrity"
+    status: done
+    owner: reviewer
+    updated: '2026-07-05T07:15:00-07:00'
+    passes: 0
+    stakes: reversible
+    note: >
+      Done in kind_robots PR #93 (Silas-directed session work):
+      utils/scripts/verifyDaVinciSeed.ts (npm run seed:davinci:verify), a 15-check
+      pass/fail suite covering payload shape, import counts, link integrity with a
+      matching-row spot-check, the no-ArtImage boundary, and double-import
+      idempotency; exits non-zero on failure. seedDaVinciEndings.ts refactored to
+      export shared pieces behind a direct-execution guard (CLI unchanged) and now
+      documents its single-invocation boundary per the t-008 TALKBACK critique.
+      Verified green against the seeded throwaway MariaDB; failure path verified
+      with a truncated seed file (exit 1).
+
+  - id: t-011
+    milestone: m2
+    title: "Add LifeRun status-transition guard and an end-to-end play-loop API test"
     status: ready
     owner: null
     passes: 0
     stakes: reversible
+    depends_on: t-009
     note: >
-      Kaizen from t-008 review: the importer was verified once by hand against a
-      throwaway MariaDB (1024/1024/1024 rows, links populated, zero ArtImage rows,
-      idempotent re-run). Turn that manual check into a script or test so future
-      edits to seedDaVinciEndings.ts or the generator payload shape get automatic
-      regression coverage instead of relying on another manual run.
+      Kaizen from t-009 merge: resolveLifeRunEnding currently recomputes on every
+      call, including for runs already COMPLETE. When the play loop lands, add an
+      explicit status transition guard (ACTIVE -> COMPLETE only, or a documented
+      re-resolve policy) plus a Cypress/API test that drives create-run -> set-stats
+      -> resolve end-to-end in CI, replacing the manual dev-server matrix used
+      during t-009 verification.
+
+  - id: t-012
+    milestone: m2
+    title: "Nightly CI job running the Da Vinci generator + seed verifier end-to-end"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-010
+    note: >
+      Kaizen from t-010 merge: seed:davinci:verify needs a database, so it is
+      manual-only today. Add a GitHub Actions job (nightly or on-demand) with a
+      MariaDB service container that generates fresh seed output with conductor's
+      generate_davinci_endings.py, applies the kind_robots schema via prisma db
+      push, and runs npm run seed:davinci:verify — catching payload-shape drift
+      between the two repos automatically. Decide which repo hosts the workflow
+      before implementing.
