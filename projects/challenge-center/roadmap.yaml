@@ -2,12 +2,36 @@ project: challenge-center
 kind: software
 
 notes_from_silas: |
-  A personal benchmark arena for Silas's two agent stacks to compete on creative and
-  generative tasks. Conductor (silasfelinus/conductor) runs Claude-based agents; port0s
-  (silasfelinus/portos) runs a different agent stack. Both are Silas's own projects.
+  A comparison arena for generative work. Core mechanic: issue a challenge prompt →
+  CONTENDERS each produce an artifact → Kind Robots users vote via reactions
+  (LOVED/CLAPPED/BOOED/HATED) → leaderboards aggregate scores.
 
-  Core mechanic: issue a challenge prompt → agents produce an artifact → Kind Robots users
-  vote via reactions (LOVED/CLAPPED/BOOED/HATED) → leaderboard aggregates scores.
+  EXPANSION (Silas, 2026-07-05): this is NOT primarily a sibling-competition tool.
+  The original inspiration — Silas's conductor (Claude agents) vs his brother's
+  port0s stack — remains a flagship matchup, but it is one instance of the general
+  mechanic. A contender is ANY distinct way of producing an artifact, and the
+  framework must support comparing along every axis:
+
+    - Provider vs provider: the same prompt to OpenAI vs Claude.
+    - Model vs model within a provider: Fable vs Opus.
+    - Generator vs generator for art: the same prompt to SD, ComfyUI
+      (flux/sdxl/kontext/ltx), and OpenAI image generation — all already live in
+      kind_robots (server/api/art/sd, server/api/comfy/*, server/api/art/generate).
+    - Prompt vs prompt on the same generator: terse vs detailed phrasing, or
+      randomized variables via the kind_robots random-list feature (randomStore's
+      keyed pools — adjective/animal/genre/species/etc from stores/helpers/
+      randomHelper.ts — plus user-created RANDOMLIST dreams).
+    - Settings vs settings: same model + prompt, different temperature/sampler/
+      steps/cfg.
+
+  Contender design: the Bot record stays the leaderboard identity (the "who" —
+  conductor-claude, portos-agent, claude-fable, claude-opus, openai-gpt, art-sd,
+  art-comfy-flux, art-openai...), reusing Bot→Reaction infrastructure and the
+  fighter-card UI. The "how" of each individual entry (exact prompt used, settings,
+  random substitutions, variant label) lives on the ChallengeSubmission. The current
+  unique (challengeId, botId) allows one submission per bot per challenge — the
+  expansion adds a variantKey so one bot can enter multiple prompt/settings variants
+  in the same challenge (see t-011). Matchups can be 2-way duels or N-way grids.
 
   Challenge types we want:
     - ART: "produce an icon/card/hero for X concept" — submission becomes a KR ArtImage
@@ -27,6 +51,11 @@ notes_from_silas: |
   included. portos is highly evolved (built by Silas's brother, a stronger programmer)
   — treat it as a first-class competitor, and per t-009, learn its invocation pattern
   from the repo rather than assuming it mirrors conductor's.
+
+  M5 EXPANSION direction (Silas, 2026-07-05): the comparison-matrix milestone below
+  generalizes the arena per the expansion note above. M1–M4 tasks proceed as written
+  (they are the foundation either way); where an M1–M4 task note now mentions
+  variant fields, treat those as forward-compatibility so M5 lands without rework.
 
   LEGITIMATE VOTING (Silas, 2026-07-04): votes are per-user Reaction rows — the t-001
   schema enforces unique (userId, challengeSubmissionId) at the DB, so each logged-in
@@ -62,6 +91,11 @@ milestones:
 
   - id: m4
     title: "Agent integration and runner automation"
+    weight: 25
+    status: not-started
+
+  - id: m5
+    title: "Comparison matrix: providers, models, generators, prompt variants"
     weight: 25
     status: not-started
 
@@ -102,6 +136,8 @@ tasks:
 
       Write the seed as scripts/seed_challenge_bots.ts (or .py) in kind_robots.
       These Bot records become the identity anchor for all leaderboard aggregation.
+      Make the seed script idempotent and easy to extend — t-012 (M5) adds a roster
+      of provider/model/generator contender Bots through the same script.
 
   # ── M2: API & challenge library ──────────────────────────────────────────────────
 
@@ -134,6 +170,12 @@ tasks:
 
       Use existing auth/session patterns from kind_robots. Bot submissions should
       be accepted with an API key (reuse Server.apiKey pattern or a new env var).
+
+      FORWARD-COMPAT (M5): accept optional fields in the submission body now —
+      { variantKey?, generator?, settings?, promptUsed?, randomSelections? } —
+      validating but ignoring any the schema can't store yet, so t-011's migration
+      doesn't force an API-shape change. Leaderboard responses should group by
+      botId (identity), never by submission row, so variant rows aggregate cleanly.
 
   - id: t-004
     milestone: m2
@@ -210,6 +252,9 @@ tasks:
       For CHARACTER challenges, render the Character card.
       DESIGN DIRECTION (Silas): this is the VS screen — submissions face off side by side
       like a title bout, agent avatars as fighter portraits. See notes_from_silas.
+      Design the layout for N contenders, not exactly two: a duel renders as the classic
+      VS split, 3+ renders as a select-screen grid. M5 matchups (model-vs-model,
+      generator-vs-generator, prompt-variant grids) reuse this page unchanged.
 
   - id: t-007
     milestone: m3
@@ -293,3 +338,134 @@ tasks:
         6. Print summary: challenges attempted, submissions created
       This lets conductor auto-participate in challenges without manual intervention.
       Designed to run on a schedule (e.g. nightly cron via AGENTS.md todo mechanism).
+
+  # ── M5: Comparison matrix ────────────────────────────────────────────────────────
+  # Generalizes the arena beyond agent-vs-agent: providers, models, generators,
+  # prompt variants, and settings all become comparable contenders. See the
+  # EXPANSION note in notes_from_silas (2026-07-05).
+
+  - id: t-011
+    milestone: m5
+    title: "Schema: add submission variant fields and relax one-per-bot constraint"
+    status: waiting
+    depends_on: t-003
+    owner: null
+    passes: 0
+    stakes: irreversible
+    gate_human: true
+    note: >
+      In silasfelinus/kind_robots, extend ChallengeSubmission with an additive
+      migration (same care as t-001 — every statement ADD/CREATE, no DROP of data):
+
+        variantKey       String  @default("default") @db.VarChar(128)
+          — distinguishes multiple entries by the same Bot in one challenge
+            (e.g. "terse", "detailed", "random-seed-3", "temp-0.2")
+        generator        String? @db.VarChar(128)
+          — which pipeline produced it: claude-api | openai-api | art-sd |
+            comfy-flux | comfy-sdxl | comfy-kontext | ...
+        promptUsed       String? @db.Text
+          — the exact final prompt sent (post variant edits / random substitution);
+            Challenge.promptText stays the canonical base prompt
+        settings         Json?
+          — temperature/sampler/steps/cfg or whatever the generator took
+        randomSelections Json?
+          — the randomStore key→value substitutions used, so a variant is
+            reproducible and displayable ("species: axolotl, mood: wistful")
+
+      Replace @@unique([challengeId, botId]) with
+      @@unique([challengeId, botId, variantKey]). Existing rows keep working via
+      the "default" value; MySQL allows this as DROP INDEX + ADD UNIQUE INDEX with
+      no data loss, but the Worker must verify the generated migration contains no
+      destructive statement beyond the index swap.
+
+      gate_human because this is a prod DB migration, same protocol as t-001:
+      Worker opens the PR, Reviewer audits migration.sql line-by-line, Silas's
+      merge click completes the task.
+
+  - id: t-012
+    milestone: m5
+    title: "Seed contender Bot roster: providers, models, and art generators"
+    status: waiting
+    depends_on: t-002
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Extend the t-002 seed script with contender Bots (BotType: CHALLENGE_AGENT)
+      so leaderboards can rank identities beyond the two agent stacks. Starting
+      roster — text/reasoning: "claude-fable", "claude-opus", "openai-gpt";
+      art: "art-sd", "art-comfy-flux", "art-comfy-sdxl", "art-openai".
+      Each gets a name, designer: "silasfelinus", and a description naming the
+      exact backend it fronts. Keep the script idempotent (upsert by slug).
+      These are the fighter cards for M5 matchups — avatar art can come later
+      through the normal ART-PROMPTS pipeline.
+
+  - id: t-013
+    milestone: m5
+    title: "Matchup runner: dispatch one challenge across a contender matrix"
+    status: waiting
+    depends_on: t-010, t-011, t-012
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      In silasfelinus/conductor, write scripts/challenge_matchup.py — the
+      generalization of t-010's runner. Input: a challenge slug plus a matchup
+      spec (inline JSON or a YAML file):
+
+        contenders:
+          - { bot: claude-fable,  generator: claude-api, model: claude-fable-5 }
+          - { bot: claude-opus,   generator: claude-api, model: claude-opus-4-8 }
+          - { bot: openai-gpt,    generator: openai-api, model: gpt-5 }
+          - { bot: conductor-claude, variantKey: detailed, promptSuffix: "..." }
+
+      For each contender: build the final prompt (base promptText + any variant
+      edits), call the right backend (Claude API, OpenAI API, or a kind_robots
+      art endpoint for ART challenges), and POST the submission with the t-011
+      variant fields filled in (variantKey, generator, settings, promptUsed).
+      ART challenge outputs go through the existing kind_robots art save path so
+      the submission gets a real artImageId. Print a matchup summary table.
+      Reads KR_API_TOKEN, KR_BASE_URL, ANTHROPIC_API_KEY, OPENAI_API_KEY from env;
+      skip (with a clear note) any contender whose key/backend is unavailable.
+
+  - id: t-014
+    milestone: m5
+    title: "Prompt-variant generator using kind_robots random lists"
+    status: waiting
+    depends_on: t-011
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Support "same generator, different prompts" matchups where the difference is
+      randomized variables. In silasfelinus/kind_robots, add a server util (and a
+      small API route, e.g. POST /api/challenges/variants) that takes a base prompt
+      containing placeholder keys and a variant count N, and returns N concrete
+      prompts by substituting from the random pools in stores/helpers/
+      randomHelper.ts (adjective, animal, backstory, class, color, genre,
+      honorific, inventory, item, material, name, noun, personality, quirk, skill,
+      species, verb) and, when a placeholder names one, a user RANDOMLIST dream.
+      Each returned variant includes the key→value map so the caller can store it
+      as randomSelections on the submission (t-011) — variants must be auditable
+      and reproducible, not mystery rolls.
+      The conductor matchup runner (t-013) consumes this to enter one bot N times
+      with variantKey "random-1"..."random-N".
+
+  - id: t-015
+    milestone: m5
+    title: "Faceted leaderboards: rank by model, generator, and prompt strategy"
+    status: waiting
+    depends_on: t-007, t-011
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Extend the t-007 leaderboard (page + API) with facets beyond per-Bot:
+        - per-generator: SD vs Comfy vs OpenAI images across all ART challenges
+        - per-model: aggregate submissions by agentModel (Fable vs Opus vs GPT)
+        - per-variant within a challenge: on /challenges/[slug], when one bot has
+          multiple variantKeys, show which prompt variant won and surface its
+          promptUsed / randomSelections so the comparison teaches something
+      Facet data comes from the t-011 fields; grouping is a query-level change,
+      not new schema. Keep the championship presentation — a generator facet is
+      just a different weight class.
