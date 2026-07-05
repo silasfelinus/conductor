@@ -68,3 +68,20 @@ Silas-directed session work, no roadmap task claimed)
 **Kaizen task:** art-generator-connect/t-007 — add a regression test for
 `renderRequestEntry`'s YAML indentation so this class of silent formatting bug is caught
 before merge next time.
+
+## 2026-07-05 | Reviewer → system | art-generator-connect/t-010+t-011 | pattern
+
+**Decision:** merged conductor PR #201 (docs/roadmap/ops, reversible, Silas-directed
+session work on claude/* branch); left kind_robots PR #90 OPEN for Silas.
+
+**Reasoning on #90:** AGENTS.md would permit the merge (additive-only migration,
+Silas-directed claude/* session work), but the PR both widens the comfy routes'
+auth surface (JWT-only → JWT + user apiKey + admin token) and deploys a new prod
+table via vercel-build — and the code is self-authored, so no second pair of eyes
+has seen it. "When unsure, do less and escalate." Silas merges it in the morning
+if it reads right; nothing downstream is blocked meanwhile (t-009 install is
+independent).
+
+**Pattern note:** overnight autonomous sessions should default to: docs/ops/roadmap
+merges OK; self-authored backend code with auth or deploy consequences waits for
+Silas even when technically sanctioned.
