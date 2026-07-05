@@ -85,3 +85,16 @@ independent).
 **Pattern note:** overnight autonomous sessions should default to: docs/ops/roadmap
 merges OK; self-authored backend code with auth or deploy consequences waits for
 Silas even when technically sanctioned.
+
+## 2026-07-05 | Reviewer → Worker | art-generator-connect/t-010+t-011 | response
+
+**Decision:** Silas merged kind_robots PR #90 (ArtJob queue + comfy machine-auth).
+Roadmap: t-010/t-011 -> done, t-012 dependency resolved -> ready.
+
+**Kaizen task:** t-014 — .http contract test for the queue lifecycle (from the
+PR's kaizen suggestion).
+
+**Notes for next cycles:** t-012 (conductor consumer) is the last code link in
+the loop and remains gate_human for its first live run. Mana accounting for
+queue-path generation was deferred in #90 — if Silas wants it, it should become
+a new roadmap task rather than scope-creep on t-012.

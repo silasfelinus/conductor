@@ -164,7 +164,7 @@ tasks:
 - id: t-010
   milestone: m5
   title: 'kind_robots ArtJob queue: model, enqueue/claim/complete endpoints, home relay agent'
-  status: review
+  status: done
   owner: null
   updated: '2026-07-05T00:00:00Z'
   passes: 0
@@ -181,12 +181,12 @@ tasks:
     the backend-changes-become-pitches default; normal PR review still
     applies. Implemented in kind_robots PR #90 (with t-011) on branch
     claude/comfy-diffusion-pipeline-restart-kufwrx; relay agent shipped at
-    conductor ops/home-server/relay_agent.py. Awaiting Silas merge - note
-    merging deploys the additive ArtJob migration via vercel-build.
+    conductor ops/home-server/relay_agent.py. Merged by Silas 2026-07-05;
+    additive ArtJob migration deploys via vercel-build.
 - id: t-011
   milestone: m5
   title: Accept user apiKey auth on comfy endpoints (machine-auth parity with /api/art/generate)
-  status: review
+  status: done
   owner: null
   updated: '2026-07-05T00:00:00Z'
   passes: 0
@@ -199,11 +199,12 @@ tasks:
     (prisma.user.findFirst on apiKey). Small, additive, unblocks automated
     Flux generation independently of the t-010 queue. Implemented in
     kind_robots PR #90: new requireMachineUser (JWT, user apiKey, or beta
-    admin token) wired into comfyGate.authAndGate. Awaiting Silas merge.
+    admin token) wired into comfyGate.authAndGate. Merged by Silas 2026-07-05
+    in kind_robots PR #90.
 - id: t-012
   milestone: m5
   title: 'Conductor consumer: submit approved art-generate.yaml jobs and land results in projects/process/'
-  status: waiting
+  status: ready
   owner: null
   updated: '2026-07-05T00:00:00Z'
   passes: 0
@@ -236,3 +237,18 @@ tasks:
     (resolve nested context/slug then flat slug then artcollections),
     and gallery.json regeneration. No bulk moves of existing folders -
     flat public/images/{slug}/ stays valid; migrate opportunistically.
+- id: t-014
+  milestone: m5
+  title: Add an .http contract test file for the ArtJob queue (enqueue -> claim -> complete)
+  status: ready
+  owner: null
+  updated: '2026-07-05T00:00:00Z'
+  passes: 0
+  stakes: reversible
+  note: >
+    Kaizen from the kind_robots PR #90 merge. Silas already keeps .http test
+    files for comfy/sd handshakes; add one covering the queue lifecycle
+    (POST /api/art/queue, POST /api/art/queue/claim, POST
+    /api/art/queue/{id}/complete, GET /api/art/queue/{id}) against a dev DB
+    so the queue contract is exercisable end-to-end and regressions surface
+    before the relay hits them.
