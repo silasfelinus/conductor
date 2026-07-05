@@ -104,8 +104,10 @@ module.exports = {
       restart_delay: 10000,
       env: {
         KR_RELAY_TOKEN: process.env.KR_RELAY_TOKEN || '',
-        KR_RELAY_USER_ID: process.env.KR_RELAY_USER_ID || ''
-        // KR_BASE_URL: 'https://kindrobots.org',
+        KR_RELAY_USER_ID: process.env.KR_RELAY_USER_ID || '',
+        // Prod currently lives on the vercel.app host; switch to
+        // kindrobots.org when that domain points at prod.
+        KR_BASE_URL: 'https://kind-robots.vercel.app'
       },
       out_file: `${LOG_DIR}/kr-relay.out.log`,
       error_file: `${LOG_DIR}/kr-relay.err.log`,
