@@ -84,7 +84,10 @@ def claim_job():
         bearer=KR_RELAY_TOKEN,
     )
     if status == 404:
-        log("queue endpoints not deployed yet (404) — waiting")
+        detail = ""
+        if isinstance(resp, dict):
+            detail = str(resp.get("message") or resp.get("error") or "")[:200]
+        log(f"claim got 404 — body: {detail or '(non-JSON body)'} — waiting")
         return None
     if status != 200 or not resp or not resp.get("success"):
         log(f"claim failed: HTTP {status} {resp and resp.get('message')}")
