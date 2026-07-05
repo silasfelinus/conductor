@@ -2,20 +2,58 @@ project: coat-dance
 kind: content
 
 notes_from_silas: |
-  Coat Dance is a creative content project. Roadmap TBD — Silas will fill in direction
-  before the first cycle runs on this project.
+  Coat Dance is an active creative content project based on Silas's experimental
+  avant-garde duet with a black Goodwill trench coat, created around 2006 while
+  finishing a dance major at Humboldt State University. The original piece mixed
+  physical theater, object manipulation, juggling vocabulary, spins, pantomime,
+  and deliberate weirdness.
+
+  The goal is to use the original video recording as the choreographic spine for
+  a hybrid AI-assisted music video. The finished piece should preserve the strange
+  intimate relationship between performer and coat while expanding it with AI
+  animation, perspective shifts, style changes, artistic flourishes, and remixed
+  sequences. Likely tools include ComfyUI, LAX, Wan, and related video/image
+  generation pipelines.
+
+  This project needs many small planning and production steps: ingest the source
+  video, break it into beats or sections, describe the movement and emotional arc,
+  plan style treatments per section, generate/remap shots in Comfy-style pipelines,
+  restitch the sections, sound/music-align the result, and review/export a full
+  music-video cut.
+
+creative_constraints:
+  - Use the original coat dance recording as inspiration and structural source, not disposable b-roll.
+  - Preserve the experimental physical-theater feel; do not flatten it into generic AI spectacle.
+  - Treat the trench coat as a duet partner, character, shadow, relic, ghost, or trickster as useful per section.
+  - Prefer modular tests and reversible edits before committing to long renders.
+  - No public posting, paid tool spend, or final release without explicit Silas approval.
+
+assets_needed:
+  - Original coat dance video file.
+  - Any available audio or music used in the original performance.
+  - Desired final music track or mood reference.
+  - Optional still frames, program notes, or memories from the performance.
+  - Local tool inventory: ComfyUI workflows, LAX/Wan availability, GPU constraints, and installed video utilities.
 
 milestones:
   - id: m1
-    title: "Define concept and scope"
-    weight: 10
+    title: "Source ingest and beat map"
+    weight: 20
     status: not-started
   - id: m2
-    title: "First content draft"
-    weight: 30
+    title: "Creative treatment and section plan"
+    weight: 20
     status: not-started
   - id: m3
-    title: "Silas review and approval"
+    title: "Pipeline tests and style frames"
+    weight: 20
+    status: not-started
+  - id: m4
+    title: "Section remixes and assembly"
+    weight: 30
+    status: not-started
+  - id: m5
+    title: "Final review, export, and release decision"
     weight: 10
     status: not-started
     gate_human: true
@@ -23,13 +61,130 @@ milestones:
 tasks:
   - id: t-001
     milestone: m1
-    title: "Draft concept brief for Silas to review"
+    title: "Draft production brief and asset checklist"
     status: ready
     owner: null
     passes: 0
     stakes: reversible
     gate_human: true
     note: >
-      Write a one-page concept brief covering the Coat Dance project's theme, target
-      audience, and content type. Leave at needs-human for Silas to approve direction
-      before any content work begins.
+      Turn Silas's pitch into a one-page production brief with the core premise,
+      target runtime assumptions, required source assets, suggested working folders,
+      and open questions. End at needs-human so Silas can provide the original video
+      and confirm the desired music/video direction before production starts.
+
+  - id: t-002
+    milestone: m1
+    title: "Research video beat transcription and shot-slicing tools"
+    status: blocked
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on:
+      - t-001
+    note: >
+      Identify practical tools or scripts for segmenting the source dance video by
+      movement beats, shot changes, audio events, and pose/action changes. Compare
+      options such as ffmpeg scene detection, optical-flow/pose analysis, transcript
+      notes, manual beat sheets, and any Comfy/LAX/Wan-friendly preprocessing.
+
+  - id: t-003
+    milestone: m1
+    title: "Create source-video beat map template"
+    status: blocked
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on:
+      - t-002
+    note: >
+      Create a reusable beat-map table format with timestamp ranges, movement/action
+      description, coat behavior, camera/framing notes, emotional tone, candidate AI
+      treatment, generation method, and restitch notes.
+
+  - id: t-004
+    milestone: m2
+    title: "Write section-by-section creative treatment"
+    status: blocked
+    owner: null
+    passes: 0
+    stakes: reversible
+    gate_human: true
+    depends_on:
+      - t-003
+    note: >
+      Propose a music-video structure that remixes the dance in sections: faithful
+      reconstruction moments, animated transformations, impossible perspective shifts,
+      silhouette/shadow passages, object-manipulation flourishes, and a final return
+      to the human performer and coat. End at needs-human for Silas's creative approval.
+
+  - id: t-005
+    milestone: m3
+    title: "Design first style-frame prompt pack"
+    status: blocked
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on:
+      - t-004
+    note: >
+      Produce prompts and negative prompts for 6-10 visual treatments using still frames
+      from the source video as references. Include options for black-box theater,
+      charcoal animation, surreal stage lighting, rotoscoped ink, VHS memory, ghost-coat
+      partner, and theatrical object-manipulation energy.
+
+  - id: t-006
+    milestone: m3
+    title: "Prototype short remix pipeline"
+    status: blocked
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on:
+      - t-005
+    note: >
+      Select one 5-10 second source segment and document a minimal reproducible path
+      through ComfyUI, LAX, Wan, or available video tools. Capture settings, inputs,
+      outputs, failure modes, render time, and whether the motion stays faithful enough.
+
+  - id: t-007
+    milestone: m4
+    title: "Build section production queue"
+    status: blocked
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on:
+      - t-006
+    note: >
+      Convert the approved beat map into a queue of renderable sections with source
+      timestamps, treatment, pipeline choice, prompt pack, expected output format,
+      dependencies, and review status.
+
+  - id: t-008
+    milestone: m4
+    title: "Assemble rough cut from remixed sections"
+    status: blocked
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on:
+      - t-007
+    note: >
+      Restitch rendered sections into a rough cut aligned to the chosen music or
+      original audio. Track gaps, transitions, sections needing regeneration, and
+      places where the AI treatment overpowers the dance.
+
+  - id: t-009
+    milestone: m5
+    title: "Prepare final review package"
+    status: blocked
+    owner: null
+    passes: 0
+    stakes: reversible
+    gate_human: true
+    depends_on:
+      - t-008
+    note: >
+      Prepare an export checklist, review notes, credits/source notes, and release
+      decision options. Nothing is published or promoted until Silas explicitly approves.

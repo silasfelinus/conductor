@@ -184,6 +184,20 @@ Backend changes become pitches, not direct code edits.
 **Notes:**
 - (your notes)
 
+### coat-dance  (content)
+**Direction:** Revived as an active creative content project. Use Silas's original circa-2006
+Humboldt State experimental coat dance video as the choreographic spine for an AI-assisted
+hybrid music video. The source piece is a weird avant-garde physical-theater duet between
+Silas and a black Goodwill trench coat, with object manipulation, juggling-adjacent movement,
+spins, pantomime, and theatrical strangeness. Plan it in small, reversible steps: source
+video ingest, beat/section mapping, style treatment, ComfyUI/LAX/Wan pipeline tests, section
+remixes, restitching, music alignment, and final review.
+**Notes:**
+- Preserve the human/coat duet as the soul of the project; AI should expand and remix it, not erase it.
+- First useful deliverable is a production brief and asset checklist so Silas can provide the source video and confirm music/style direction.
+- Research practical beat transcription and slicing tools before rendering. Likely candidates include ffmpeg scene detection, manual beat sheets, pose/action analysis, and video-to-video workflow notes.
+- No public release, paid tool spend, or final export decision without explicit Silas approval.
+
 ### media-watchlist  (software)
 **Direction:** Parse + import Silas's personal media log, then surface it with browse,
 stats, and integrations (Letterboxd, Comic Vine, Tautulli). HARD GATE: no affiliate
