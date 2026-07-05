@@ -72,20 +72,17 @@ tasks:
 - id: t-003
   milestone: m3
   title: Add isBounty fields to Prompt + bounty API
-  status: review
+  status: done
   depends_on: t-001
   owner: worker
   passes: 0
   stakes: reversible
   gate_human: true
   approved_by_human: true
-  updated: '2026-06-30T00:00:00Z'
-  note: 'Schema already complete: isBounty, bountyStatus (BountyStatus enum), claimerId, Claimer relation
-    all present in Prompt model. Built two new API routes: POST /api/prompts/:id/bounty/claim (sets CLAIMED
-    + claimerId, awards BOUNTY_CLAIMED karma) and POST /api/prompts/:id/bounty/fulfill (sets FULFILLED,
-    awards BOUNTY_REWARD mana to fulfiller + poster from house, awards BOUNTY_FULFILLED karma to fulfiller).
-    PLACEHOLDER AMOUNTS: BOUNTY_MANA_FULFILLER=50, BOUNTY_MANA_POSTER=25. All mana/karma awards fire-and-forget
-    and gated by KARMA_LIVE=false. Needs Silas to review and approve amounts before flipping KARMA_LIVE
-    to true.
+  updated: '2026-07-05T00:00:00Z'
+  note: 'Complete: Silas approved the bounty amounts (BOUNTY_MANA_FULFILLER=50, BOUNTY_MANA_POSTER=25,
+    conductor PR #177) and KARMA_LIVE=true rode kind_robots PR #87, which merged 2026-07-04 with a
+    successful Vercel deploy. The bounty API (POST /api/prompts/:id/bounty/claim and /fulfill) is live
+    and awarding real karma/mana.
 
     '

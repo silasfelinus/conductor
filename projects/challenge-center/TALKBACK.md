@@ -34,3 +34,22 @@ merging #87, not on further agent action.
 `merge_requires_human: true` flag distinct from `gate_human` would remove the ambiguity for
 future prod-migration tasks.
 
+
+## 2026-07-05 | Reviewer → system | challenge-center/t-001 | response
+
+**Decision:** audited already-merged work — flipped `status: review` → `done`
+
+**What was good:**
+- Confirmed kind_robots PR #87 merged (2026-07-04T22:51:19Z) and the Vercel deploy
+  status for that commit reports `success`, meaning `prisma migrate deploy` ran the
+  additive migration reviewed in the prior TALKBACK entry.
+- `approved_by_human: true` was already set by Silas; the only remaining gap was the
+  roadmap status not reflecting that the merge (the completion condition named in the
+  task's own `note:`) had actually happened.
+
+**What to improve:** nothing on this cycle — this closes the loop flagged in the prior
+entry's process note (Silas's own merge click completing the task rather than an agent
+merge).
+
+**Kaizen task:** deferred — no new Worker code merged this cycle; t-002/t-003 unblock
+via the Worker's next `resolve_deps.py` run, not further Reviewer action.
