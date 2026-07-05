@@ -1,146 +1,246 @@
 project: digital-storefront
-kind: content
-notes_from_silas: "The store/content engine. Pipeline: research stores -> brainstorm content per\napproved\
-  \ product type -> (I pick) -> create -> market on discovered channels ->\nadvertise on channels I've\
-  \ budgeted. HARD RULES: only build within\nproduct-types.yaml (I own that list — new types need\
-  \ a pitch). Never publish a\nlisting, post marketing, or spend ad money unattended — those are\
-  \ needs-human.\nTreat every outward action as gated until I explicitly approve it.\n"
+kind: software
+notes_from_silas: >
+  REWRITTEN 2026-07-05 from my session direction. The store is ACTIVE again. We have
+  Stripe — this is now the digital giftshop that replaces or expands the site's current
+  gift shop, built in kind_robots. The v1 catalog is fixed (I chose it, no more
+  concept-picking loop): (1) Mermaids of Venice PDF, available immediately once I supply
+  the file — it terrifies me, but it's technically a third printing; (2) Kind Robots
+  logo on whatever print-on-demand item is orderable first, with waypoints toward
+  gallery coordination and an automated user-art swag pipeline; (3) monthly supporter
+  subscription; (4) one-time mana top-ups at reasonable levels; (5) an Against Malaria
+  giving page that urges users to donate DIRECTLY at https://againstmalaria.com/amibot;
+  (6) an example digital website unlock — two DLC packs of generated content built by
+  the new packmaker project (working names Uncanny Valor / Arcane Whimsy). HARD RULES
+  unchanged: no live Stripe products/prices/webhooks in production, no POD account
+  creation, no publishing, no spend without my explicit approval. Old m1/m2 research
+  tasks (t-001..t-007) are kept below as history; old waiting tasks t-003/t-004/t-005
+  from the concept-picking pipeline were superseded by this direction and removed.
 milestones:
 - id: m1
-  title: Store/platform landscape researched
+  title: Store foundation (audit + design brief)
   weight: 20
   status: not-started
 - id: m2
-  title: Content concepts brainstormed (per approved product type)
-  weight: 20
-  status: not-started
-- id: m3
-  title: First products created (drafts)
+  title: First sellable item live — Mermaids of Venice PDF
   weight: 25
   status: not-started
+- id: m3
+  title: Support & donations (subscription, mana top-ups, Against Malaria page)
+  weight: 20
+  status: not-started
 - id: m4
-  title: Organic marketing on discovered channels
+  title: Print-on-demand & gallery coordination (KR logo item first)
   weight: 20
   status: not-started
 - id: m5
-  title: Paid advertising (within human-set budget)
+  title: DLC website unlocks (packmaker packs purchasable)
   weight: 15
   status: not-started
 tasks:
 - id: t-001
   milestone: m1
-  title: Research candidate stores/platforms and recommend a shortlist
+  title: Research candidate stores/platforms and recommend a shortlist (legacy)
   status: done
   owner: worker
-  updated: '2026-06-30T00:00:00Z'
+  updated: '2026-07-05T00:00:00Z'
   passes: 0
   stakes: reversible
   gate_human: true
-  approved_by_human: false
+  approved_by_human: true
   note: >
-    FOR SILAS: Platform research is complete — read
-    projects/digital-storefront/research/stores.md for the full comparison.
-    The short version: the recommendation is to start with Gumroad (direct PDF
-    sales, simple) + itch.io (indie RPGs, zines, coloring packs, experiments).
-    For print-on-demand merch, evaluate Printful vs Printify later once you
-    have a design. For STL files, try Cults first, MyMiniFactory for polished
-    collections. No accounts were created; this is research only.
-    TO APPROVE: Add a short note here saying which platforms sound right to you
-    (even just "yes, Gumroad + itch.io for now"), then set approved_by_human: true
-    and status: done. That unblocks t-002 which will brainstorm specific content
-    ideas for whichever platforms you choose. You do not need to commit to all
-    platforms — one or two is fine to start.
+    Legacy research task from the first store incarnation — see
+    research/stores.md. Direction has since changed (2026-07-05): the store is
+    being built INTO kind_robots with Stripe rather than on Gumroad/itch.io.
+    The research remains useful background for the POD provider choice (m4).
+    Closed per Silas's 2026-07-05 in-session redirection (CONTROL.md clearance rule).
 - id: t-002
-  milestone: m2
-  title: Brainstorm content concepts for the chosen stores
-  status: needs-human
+  milestone: m1
+  title: Brainstorm content concepts for the chosen stores (legacy)
+  status: done
   owner: worker
-  updated: '2026-06-30T00:00:00Z'
+  updated: '2026-07-05T00:00:00Z'
   passes: 0
   stakes: reversible
   depends_on: t-001
   gate_human: true
+  approved_by_human: true
+  note: >
+    Superseded 2026-07-05: Silas answered the "which concepts?" question directly
+    in-session by fixing the v1 catalog (novel PDF, KR-logo swag, subscription,
+    mana top-ups, malaria giving page, DLC packs). Concept files in concepts/
+    remain as a future-product idea bank. Closed per CONTROL.md clearance rule.
+- id: t-006
+  milestone: m1
+  title: Write 'Acts of Kindness' coloring book concept file (legacy)
+  status: done
+  owner: worker
+  updated: '2026-06-30T00:00:00Z'
+  passes: 0
+  stakes: reversible
+  gate_human: true
+  approved_by_human: true
+  note: >
+    Approved concept at concepts/acts-of-kindness-coloring-book.md. Not part of
+    the v1 catalog — a strong candidate for the first post-v1 addition.
+- id: t-007
+  milestone: m1
+  title: Map approved product types against existing concept files and flag gaps (legacy)
+  status: done
+  owner: worker
+  updated: '2026-06-30T00:00:00Z'
+  passes: 0
+  stakes: reversible
+  note: >
+    PRODUCT-GAP-AUDIT.md written. Partially superseded by the 2026-07-05 catalog;
+    product-types.yaml was expanded the same day per Silas's direction.
+- id: t-008
+  milestone: m1
+  title: Audit the existing kind_robots giftshop/Stripe surface and write STORE-AUDIT.md
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  note: >
+    kind_robots already has stripe + @stripe/stripe-js in package.json, existing
+    server routes at server/api/stripe/checkout.post.ts and subscribe.post.ts
+    (both instantiate Stripe at module load from STRIPE_SECRET_KEY — the server
+    crashes on boot without it, worth fixing to lazy init), and a
+    components/giftshop/ suite (giftshop-manager, giftshop-interact,
+    cart-interact, shopping-cart, credit-purchase, mana-wallet, subscription-manager,
+    print-swag, social-publisher) plus stores/seeds/cartItems.ts. Map what exists,
+    what is wired to real data vs seeded/stubbed, and what each v1 catalog item still
+    needs (server routes, models, webhook handling). Output:
+    projects/digital-storefront/STORE-AUDIT.md. No code changes.
+- id: t-009
+  milestone: m1
+  title: Write the digital giftshop v1 design brief (SPEC.md)
+  status: waiting
+  owner: null
+  passes: 0
+  stakes: reversible
+  depends_on: t-008
+  note: >
+    SPEC.md covering: Stripe architecture (Checkout Sessions + webhook -> fulfillment;
+    test mode until Silas flips live), catalog/product data model, entitlement model
+    for digital goods (PDF download, DLC unlocks), secure delivery of paid files
+    (authenticated endpoint — the novel PDF must NEVER sit in public/ or a public
+    repo path), mana crediting, subscription handling, and admin vs user views.
+    Per the 2026-07-04 soft-scope rule: raise scope confirmation to Silas as a soft
+    needs-human note while work continues.
+- id: t-010
+  milestone: m2
+  title: 'Novel PDF intake: Silas supplies the file and sets the price'
+  status: needs-human
+  owner: null
+  passes: 0
+  stakes: reversible
+  gate_human: true
   approved_by_human: false
   note: >
-    FOR SILAS: Concept brainstorm is complete.
-    concepts/gumroad.md has 6 ideas (pdf-manual x4, pdf-coloring x2).
-    concepts/itchio.md has 6 ideas (pdf-rpg x5, pdf-coloring experiment x1).
-    Read both files and pick which concept(s) to greenlight.
-    TO APPROVE: Add a note here naming the concepts you want created
-    (e.g. "Gumroad concept 2 + itch concept 1"), then set approved_by_human: true
-    and status: done. That unblocks t-003 which will draft the actual product assets.
-- id: t-003
-  milestone: m3
-  title: Create first product drafts from approved concepts
+    FOR SILAS: This is the hard gate for the store's first product — only you can
+    provide the manuscript. Drop the PDF at
+    projects/mermaids-of-venice/manuscript/ (it also feeds the editorial pipeline
+    there), and add a note here with: the price you want, and confirmation this is
+    the third-printing file you intend to sell. The sale copy will label it a third
+    printing (minor word-choice/pacing edits in the first two chapters).
+    TO APPROVE: add the price note, set approved_by_human: true and status: done.
+    That unblocks t-011 (build the purchase flow in kind_robots, test mode only —
+    nothing goes live to real buyers without a separate explicit approval from you).
+- id: t-011
+  milestone: m2
+  title: Build the Mermaids of Venice PDF product page and purchase flow (kind_robots, Stripe test mode)
   status: waiting
   owner: null
   passes: 0
   stakes: outward-facing
-  depends_on: t-002
+  depends_on:
+  - t-009
+  - t-010
   gate_human: true
   approved_by_human: false
-  note: "Produce DRAFT assets for the concepts Silas approved (design briefs, PDF drafts, STL specs/scripts\
-    \ — whatever the type needs), saved under products/. Do NOT upload or list anything. Ends needs-human\
-    \ for Silas to review before anything is published.\n"
-- id: t-004
+  note: >
+    Cross-repo task (kind_robots). Product page linking from the mermaids landing
+    page and giftshop, Stripe Checkout in TEST MODE, webhook -> entitlement ->
+    authenticated download delivery. The PDF is stored server-side, never in
+    public/. Going live (live Stripe keys/products, real charges) is a separate
+    hard needs-human for Silas.
+- id: t-012
+  milestone: m3
+  title: Wire one-time mana top-ups to Stripe checkout (test mode)
+  status: waiting
+  owner: null
+  passes: 0
+  stakes: reversible
+  depends_on: t-009
+  note: >
+    Cross-repo (kind_robots). A few reasonable tiers per Silas; reuse
+    credit-purchase.vue / mana-wallet.vue where sensible. Webhook credits mana.
+    Test mode only; live activation is gated.
+- id: t-013
+  milestone: m3
+  title: Wire the monthly supporter subscription to Stripe (test mode)
+  status: waiting
+  owner: null
+  passes: 0
+  stakes: reversible
+  depends_on: t-009
+  note: >
+    Cross-repo (kind_robots). Recurring donation plan(s) via Stripe subscriptions;
+    reuse subscription-manager.vue. Test mode only; live activation is gated.
+- id: t-014
+  milestone: m3
+  title: Build the Against Malaria giving page
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  note: >
+    Cross-repo (kind_robots). A dedicated giving page whose PRIMARY call to action
+    urges users to donate directly at https://againstmalaria.com/amibot (Silas's
+    AMF fundraiser page) — we should not be the middleman for charity money. The
+    existing $1-net cart item may remain as a convenience, but the page leads with
+    the direct link. Content + layout only; no payment code changes required.
+- id: t-015
   milestone: m4
-  title: Identify organic marketing channels for the products
+  title: 'Recommend a print-on-demand provider for the KR-logo item'
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  note: >
+    Compare Printful vs Printify (and any clearly better option) specifically for:
+    API-driven order automation from a Nuxt/Vercel app, per-order economics on a
+    mug/tee/sticker, and putting the Kind Robots logo on whatever item is easiest
+    to make orderable FIRST. Builds on research/stores.md. Output:
+    research/pod-provider.md with a single recommendation. NO account creation —
+    that is a needs-human step for Silas.
+- id: t-016
+  milestone: m4
+  title: Design the gallery-to-swag pipeline (user art on POD products)
   status: waiting
   owner: null
   passes: 0
   stakes: reversible
-  depends_on: t-003
-  gate_human: true
-  approved_by_human: false
-  note: 'Research where these products'' audiences gather (subreddits, forums, communities, makers'' sites).
-    Write marketing/organic-channels.md with channels, norms, and a suggested non-spammy approach per
-    channel. No posting. Ends needs-human.
-
-    '
-- id: t-005
+  depends_on: t-015
+  note: >
+    Design doc for automating swag orders printed with art created on the site
+    (or uploaded), coordinating with the kind_robots art gallery: art selection UX,
+    print-file requirements, POD API order flow, moderation/rights considerations,
+    plus curated "specifically chosen pieces" support. Doc first; implementation
+    tasks get created from it.
+- id: t-017
   milestone: m5
-  title: Draft paid-ad plans for human-budgeted channels
+  title: Design DLC unlock purchase mechanics (packmaker packs as store items)
   status: waiting
   owner: null
   passes: 0
-  stakes: irreversible
-  depends_on: t-004
-  gate_human: true
-  approved_by_human: false
-  note: "ONLY for channels Silas has explicitly budgeted. Draft ad creative + targeting + spend plan in\
-    \ marketing/paid-<channel>.md. Absolutely no ad account changes or spend — this is a plan for\
-    \ Silas to execute or approve. Ends needs-human.\n"
-- id: t-006
-  milestone: m2
-  title: Write 'Acts of Kindness' coloring book concept file
-  status: done
-  owner: worker
-  updated: '2026-06-30T00:00:00Z'
-  passes: 0
   stakes: reversible
+  depends_on: t-011
   note: >
-    FOR SILAS: An "Acts of Kindness" coloring book concept document is ready at
-    projects/digital-storefront/concepts/acts-of-kindness-coloring-book.md.
-    It has 12 page concepts (e.g. "Leave a kind note", "Hold the door", "Share
-    your lunch") with one-line prompts, a cover direction, and notes on who
-    the audience is (adults, all-ages, therapeutic/gift market).
-    TO APPROVE: Read the concept file. If you want the Worker to start creating
-    actual draft coloring pages from these concepts, set approved_by_human: true
-    and status: done. If you want to change the theme or direction first, add
-    a note here. Nothing gets published or uploaded either way — the next step
-    is just draft artwork, which also ends at needs-human before anything goes live.
-  gate_human: true
-  approved_by_human: true
-- id: t-007
-  milestone: m2
-  title: Map approved product types against existing concept files and flag gaps
-  status: done
-  owner: worker
-  updated: '2026-06-30T00:00:00Z'
-  passes: 0
-  stakes: reversible
-  note: >
-    Written PRODUCT-GAP-AUDIT.md. Summary: pdf-coloring has one approved concept
-    (acts-of-kindness). pod-text-art, pdf-rpg, pdf-manual, stl-3d have no concept
-    files yet. All platforms unblocked after t-001 approval. stl-3d is lowest priority
-    — needs design direction from Silas before any concept work makes sense.
+    Entitlement design tying purchased DLC packs (packmaker project: Uncanny Valor,
+    Arcane Whimsy) to per-user unlocks of generated content (locations, genres,
+    characters, rewards). ALSO BLOCKED ON (cross-project, note-level dependency —
+    resolver only sees in-project deps): kind-robots t-008 private-but-shared
+    content/ACL design, and packmaker t-003 draft pack contents. This slice is the
+    deliberate low-stakes security proving ground for private-but-shared content.

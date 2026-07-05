@@ -1,35 +1,179 @@
 project: mermaids-of-venice
 kind: content
-
-notes_from_silas: |
-  Mermaids of Venice is a creative content project. Roadmap TBD — Silas will fill in
-  direction before the first cycle runs on this project.
-
+notes_from_silas: >
+  REWRITTEN 2026-07-05 from my session direction. Scrap the earlier plans: this
+  project has NO AI in the front end, and no selective ordering of parts. The book's
+  prose is mine — every word is my craftsmanship and I won't give it up, culturally
+  it's important. AI may act as an editor (insights, notes, catches), but never
+  drafts prose intended for the book. What I need: (1) a simple kind_robots landing
+  page that offers the book, with a personal note I will write myself, plus a note
+  that no AI was used to write the book other than the words of that paragraph
+  itself — ending on a punchline about reality/existence/originality; (2) when I
+  drop the manuscript PDF into manuscript/, produce editorial outputs: general
+  impressions, editorial notes, cultural-awareness notes (gaps in gaze or
+  privilege), and a VERY-IMPORTANT.md for actual typos and grammar errors (I edited
+  by hand and caught many between printings — there will be more); (3) later,
+  build/expand the full site at mermaidsofvenice.com — currently a parked WordPress
+  address; it stays parked until I'm comfortable selling the book as-is. The PDF
+  edition is also the digital-storefront's first product.
 milestones:
-  - id: m1
-    title: "Define concept and scope"
-    weight: 10
-    status: not-started
-  - id: m2
-    title: "First content draft"
-    weight: 30
-    status: not-started
-  - id: m3
-    title: "Silas review and approval"
-    weight: 10
-    status: not-started
-    gate_human: true
-
+- id: m1
+  title: Kind Robots landing page (book offer, personal note, no-AI note)
+  weight: 25
+  status: not-started
+- id: m2
+  title: Editorial review pipeline (manuscript PDF -> four outputs)
+  weight: 40
+  status: not-started
+- id: m3
+  title: Revision dialogue with Silas (docs/revision-questions.md)
+  weight: 15
+  status: not-started
+- id: m4
+  title: mermaidsofvenice.com full site (parked until Silas unparks it)
+  weight: 20
+  status: not-started
 tasks:
-  - id: t-001
-    milestone: m1
-    title: "Draft concept brief for Silas to review"
-    status: ready
-    owner: null
-    passes: 0
-    stakes: reversible
-    gate_human: true
-    note: >
-      Write a one-page concept brief covering the Mermaids of Venice project's theme,
-      target audience, and content type. Leave at needs-human for Silas to approve
-      direction before any content work begins.
+- id: t-001
+  milestone: m1
+  title: Build the kind_robots mermaids landing page
+  status: needs-human
+  owner: reviewer
+  updated: '2026-07-05T00:00:00Z'
+  passes: 0
+  stakes: reversible
+  gate_human: true
+  approved_by_human: false
+  note: >
+    FOR SILAS: The landing page is built and merged to kind_robots main —
+    content/mermaids.md + components/pages/mermaids-page.vue (kind_robots PR #91).
+    It offers the book (cover, blurb, Amazon paperback link), holds a clearly
+    marked placeholder where your personal note goes (t-002), and carries the
+    no-AI disclosure paragraph with the punchline you asked for.
+    TO APPROVE: Visit /mermaids once deployed and confirm it reads the way you
+    want. This is content reaching a live, reader-facing surface, so per AGENTS.md
+    it stops here for your sign-off rather than auto-closing as done — set
+    approved_by_human: true and status: done when you're happy with it. Nothing
+    else is blocked on this; t-002 (your personal note) is tracked separately and
+    doesn't gate anything either.
+- id: t-002
+  milestone: m1
+  title: 'Personal note for the landing page (Silas writes it)'
+  status: needs-human
+  owner: null
+  passes: 0
+  stakes: reversible
+  gate_human: true
+  approved_by_human: false
+  note: >
+    FOR SILAS: The landing page ships with a marked placeholder where your
+    personal note goes (components/pages/mermaids-page.vue, look for
+    "PERSONAL NOTE PLACEHOLDER"). Only you can write this one.
+    TO APPROVE: Send the note text in any session (or edit the component
+    directly), then set approved_by_human: true and status: done. Nothing else
+    is blocked on this — the page works with the placeholder meanwhile.
+- id: t-003
+  milestone: m2
+  title: 'Manuscript intake: Silas drops the PDF into manuscript/'
+  status: needs-human
+  owner: null
+  passes: 0
+  stakes: reversible
+  gate_human: true
+  approved_by_human: false
+  note: >
+    FOR SILAS: Editorial work needs the book. Put the PDF at
+    projects/mermaids-of-venice/manuscript/ (see the README there — the folder
+    also feeds digital-storefront t-010, where you set the sale price).
+    TO APPROVE: Commit the PDF, then set approved_by_human: true and
+    status: done. That unblocks t-004 through t-007 (impressions, editorial
+    notes, cultural awareness, and the typo/grammar VERY-IMPORTANT.md).
+- id: t-004
+  milestone: m2
+  title: Write general impressions of the manuscript
+  status: waiting
+  owner: null
+  passes: 0
+  stakes: reversible
+  depends_on: t-003
+  note: >
+    Read the full manuscript; write editorial/general-impressions.md — honest
+    reader-level reactions: what works, what lands, pacing, characters, voice.
+    Advisory only; never draft replacement prose. Ends needs-human for Silas.
+- id: t-005
+  milestone: m2
+  title: Write editorial notes on the manuscript
+  status: waiting
+  owner: null
+  passes: 0
+  stakes: reversible
+  depends_on: t-003
+  note: >
+    editorial/editorial-notes.md — structural and line-level editorial notes:
+    pacing, clarity, continuity, scene-level suggestions (described, not
+    rewritten). Include the known flagged areas from docs/revision-questions.md
+    where relevant (e.g. Venice/ocean geography hand-waving). Ends needs-human.
+- id: t-006
+  milestone: m2
+  title: Write cultural-awareness notes (gaze and privilege gaps)
+  status: waiting
+  owner: null
+  passes: 0
+  stakes: reversible
+  depends_on: t-003
+  note: >
+    editorial/cultural-awareness.md — a careful, specific pass for gaps in gaze
+    or privilege: moments of male gaze, the magical-negro pattern around the
+    discarded character (see docs/revision-questions.md for Silas's own framing
+    and his three candidate directions), and anything else observed. Descriptive
+    and specific, page/chapter-referenced, respectful of the fact that Silas
+    will make the calls. Ends needs-human.
+- id: t-007
+  milestone: m2
+  title: Write VERY-IMPORTANT.md — actual typos and grammar errors
+  status: waiting
+  owner: null
+  passes: 0
+  stakes: reversible
+  depends_on: t-003
+  note: >
+    editorial/VERY-IMPORTANT.md — ONLY objective mechanical errors: typos,
+    grammar, punctuation, doubled words, with page/line context for each so
+    Silas can fix them in his own hand. He proofread solo between printings and
+    expects more to surface. No style opinions in this file. Ends needs-human.
+- id: t-008
+  milestone: m3
+  title: Revision dialogue prep — keep docs/revision-questions.md current
+  status: needs-human
+  owner: reviewer
+  updated: '2026-07-05T00:00:00Z'
+  passes: 0
+  stakes: reversible
+  gate_human: true
+  approved_by_human: false
+  note: >
+    FOR SILAS: docs/revision-questions.md captures, in your own framing, the
+    revision questions you said you want to dialogue about as this project
+    evolves — the character-origin question with your three candidate
+    directions (researched new origin / an iteration of Arlecchino / keeping
+    him with the issue addressed on the page), the third-act changes, tone
+    (preachy, too-noble heroes, forced origins), the pre-cell-phone setting,
+    and the geography hand-wave. Nothing in it is a task list; no agent will
+    "fix" the book from it.
+    TO APPROVE: Read it when you're ready; the dialogue happens with you, in
+    session, whenever you want to have it. Edit or annotate the doc freely.
+- id: t-009
+  milestone: m4
+  title: Plan the mermaidsofvenice.com full site (PARKED)
+  status: needs-human
+  owner: null
+  passes: 0
+  stakes: outward-facing
+  gate_human: true
+  approved_by_human: false
+  note: >
+    FOR SILAS: Hard-parked at your direction — you're not comfortable selling
+    the book as-is yet, and the domain currently points at an empty WordPress.
+    No agent touches DNS, hosting, or the domain.
+    TO APPROVE: When (if) you're ready, say so and set approved_by_human: true;
+    the first task will be a site plan document, not a deploy.
