@@ -56,14 +56,17 @@ tasks:
   - id: t-003
     milestone: m1
     title: "Define Da Vinci ending dimensions and deterministic endpoint keys"
-    status: ready
-    owner: null
+    status: done
+    owner: worker
+    updated: '2026-07-04T16:10:00-07:00'
     passes: 0
     stakes: reversible
     note: >
-      Create the canonical 10 outcome dimensions, pass/fail threshold rules, 10-bit
-      endpoint key format, and generation rules for the 1024 ending records. Keep it
-      app-owned and deterministic so AI narration targets known outcomes.
+      Added projects/davinci/data/ending-dimensions.yaml and
+      scripts/generate_davinci_endings.py. The dimension order, threshold notes,
+      victory classification, 10-bit outcomeKey format, DB seed payload, milestone
+      mapping payload, achievement payload, and optional local-generator queue output
+      are now deterministic. This does not generate images or enqueue all 1024 images.
 
   - id: t-004
     milestone: m2
@@ -87,33 +90,41 @@ tasks:
   - id: t-005
     milestone: m3
     title: "Map Da Vinci endings to existing Kind Robots milestones"
-    status: ready
-    owner: null
+    status: done
+    owner: worker
+    updated: '2026-07-04T16:10:00-07:00'
     passes: 0
     stakes: reversible
     depends_on: t-004
     note: >
-      Define how each ending unlocks or links to a Milestone, including title,
-      description, icon path, hero path, achievement metadata, and user unlock state.
-      Prefer existing milestone fields where possible.
+      Documented in projects/davinci/docs/ending-seed-and-art-flow.md and encoded in
+      scripts/generate_davinci_endings.py. Each ending maps to a Milestone using
+      triggerCode davinci-ending-{outcomeKey}, icon path, imagePath hero path,
+      artPrompt, non-repeatable status, and linked LifeAchievement metadata. The
+      importer should upsert LifeEnding by outcomeKey, Milestone by triggerCode, and
+      LifeAchievement by slug or conditionKey.
 
   - id: t-006
     milestone: m3
     title: "Define generated art collection flow for life runs"
-    status: ready
-    owner: null
+    status: done
+    owner: worker
+    updated: '2026-07-04T16:10:00-07:00'
     passes: 0
     stakes: reversible
     depends_on: t-004
     note: >
-      Specify how story moment art, dream art, character encounter art, ending icons,
-      and ending heroes are generated, saved, and attached to a user's Da Vinci art
-      collection.
+      Documented in projects/davinci/docs/ending-seed-and-art-flow.md. Ending icon and
+      hero path strings are seeded immediately, but iconArtImageId and heroArtImageId
+      stay null until local generator files exist. The script can emit small explicit
+      local-generator queue batches with --format art-queue; it intentionally does not
+      write all 1024 endings into projects/art-generate.yaml or create empty ArtImage
+      rows.
 
   - id: t-007
     milestone: m4
     title: "Compare Da Vinci and Storymaker boundaries after endpoint engine exists"
-    status: waiting
+    status: ready
     owner: null
     passes: 0
     stakes: reversible
@@ -126,3 +137,33 @@ tasks:
       become a Storymaker mode, or share primitives while staying a separate project.
       Do not merge the project concepts before the endpoint and milestone engine is
       concrete.
+
+  - id: t-008
+    milestone: m2
+    title: "Build Da Vinci seed importer in kind_robots"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on:
+      - t-003
+      - t-004
+      - t-005
+    note: >
+      Add an idempotent script or admin-only route in kind_robots that consumes the
+      generate_davinci_endings.py JSON/JSONL output and upserts LifeEnding,
+      Milestone, and LifeAchievement rows. Do not create ArtImage rows until real
+      local-generator files exist.
+
+  - id: t-009
+    milestone: m2
+    title: "Build minimal Da Vinci ending resolution API"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-008
+    note: >
+      Add the first app-owned endpoint helpers to resolve a test LifeRun's stats into
+      an outcomeKey, find the matching LifeEnding, and award the matching Milestone
+      and LifeAchievement with an API-layer guard for global unlock uniqueness.
