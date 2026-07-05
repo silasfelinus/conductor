@@ -24,6 +24,10 @@ milestones:
   title: Project asset generation loop
   weight: 20
   status: not-started
+- id: m5
+  title: Reliable autonomous generation (supervision, queue, machine auth)
+  weight: 30
+  status: in-progress
 tasks:
 - id: t-001
   milestone: m1
@@ -139,3 +143,73 @@ tasks:
     would catch this class of regression before it reaches main.
 
     '
+- id: t-009
+  milestone: m5
+  title: Install pm2 supervision for ComfyUI and A1111 on the home server
+  status: needs-human
+  owner: null
+  updated: '2026-07-05T00:00:00Z'
+  passes: 0
+  stakes: reversible
+  gate_human: true
+  note: >
+    FOR SILAS: Auto-restart kit delivered at ops/home-server/ (README.md,
+    ecosystem.config.js, healthcheck.ps1). It replaces hand-launched .bat
+    files with pm2: crash auto-restart, start-on-boot, optional hung-process
+    watchdog. TO APPROVE: on the Windows box, edit the two install paths at
+    the top of ecosystem.config.js, then follow README "One-time setup"
+    (about 10 minutes), then set approved_by_human: true and status: done.
+    What unblocks: the pipeline stops dying silently whenever ComfyUI/SD
+    crash or the machine reboots; t-012's live loop becomes trustworthy.
+- id: t-010
+  milestone: m5
+  title: 'kind_robots ArtJob queue: model, enqueue/claim/complete endpoints, home relay agent'
+  status: ready
+  owner: null
+  updated: '2026-07-05T00:00:00Z'
+  passes: 0
+  stakes: reversible
+  note: >
+    Cross-repo (kind_robots). Design in
+    projects/art-generator-connect/docs/pipeline-architecture.md section 4.
+    Additive-only migration (ArtJob model + enum), three endpoints
+    (POST /api/art/queue, GET /api/art/queue/claim, POST
+    /api/art/queue/[id]/complete), and a small pull-based relay script that
+    runs on the home box under pm2 and drives localhost ComfyUI/A1111.
+    Claim must be atomic; stale RUNNING jobs re-claimable. Silas directed
+    building the queue in kind_robots (2026-07-05 session) - this overrides
+    the backend-changes-become-pitches default; normal PR review still
+    applies. Branch worker/art-generator-connect-t-010 in kind_robots.
+- id: t-011
+  milestone: m5
+  title: Accept user apiKey auth on comfy endpoints (machine-auth parity with /api/art/generate)
+  status: ready
+  owner: null
+  updated: '2026-07-05T00:00:00Z'
+  passes: 0
+  stakes: reversible
+  note: >
+    Cross-repo (kind_robots). /api/comfy/flux/generate (and siblings under
+    /api/comfy/) gate on session JWT via authAndGate, so conductor's static
+    tokens cannot call them. Extend the gate to also accept a user apiKey
+    Bearer token, exactly like /api/art/generate does
+    (prisma.user.findFirst on apiKey). Small, additive, unblocks automated
+    Flux generation independently of the t-010 queue.
+- id: t-012
+  milestone: m5
+  title: 'Conductor consumer: submit approved art-generate.yaml jobs and land results in projects/process/'
+  status: waiting
+  owner: null
+  updated: '2026-07-05T00:00:00Z'
+  passes: 0
+  stakes: reversible
+  gate_human: true
+  depends_on:
+  - t-010
+  note: >
+    Consumes the approved queue: read projects/art-generate.yaml, submit
+    each entry via the t-010 queue API (KR_API_TOKEN), poll for completion,
+    download results into projects/process/ where distribute_images.py
+    already routes them to project folders and kind_robots collections.
+    gate_human because it is the first fully autonomous generation run -
+    Silas approves the first live cycle before it becomes routine.
