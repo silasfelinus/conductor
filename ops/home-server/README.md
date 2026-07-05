@@ -67,13 +67,33 @@ npm run setup
 # then, back as your user: pm2 save  (the service resurrects the saved list)
 ```
 
-**Option B — start at logon (simplest, fine if the box auto-logs-in):**
+**Option B — start at logon (RECOMMENDED — simplest, fine if the box gets logged into):**
 
 ```powershell
 npm install -g pm2-windows-startup
 pm2-startup install
 pm2 save
 ```
+
+> Field note (2026-07-05): Option A's `npm run setup` looped "Stopped…" on
+> Silas-PC — pm2-installer's service fails to start unless `npm run configure`
+> ran first (it unifies `PM2_HOME` at `C:\ProgramData\pm2\home` for the service
+> AND your shell; otherwise the service resurrects from an empty home while
+> your `pm2 save` wrote to your user profile → reboot brings up nothing).
+> To back out a half-installed service: `cd pm2-installer; npm run deconfigure;
+> npm run remove`, then use Option B. Tradeoff: Option B starts apps at
+> *logon*, not boot — a machine idling at the login screen runs nothing.
+
+### Gotcha: WSL pm2 ≠ Windows pm2
+
+There are two pm2 worlds on this box and they don't see each other. A shell
+prompt like `silasfelinus@Silas-PC:/mnt/d/...$` means WSL — its pm2 daemon
+(`/home/<user>/.pm2`) has its own empty process list, and `pm2 status` there
+will happily show a blank table while the Windows engines are running fine.
+The engines are Windows apps: **always run pm2 commands for them from
+PowerShell/cmd**, and if a fresh Windows daemon comes up empty after a
+reboot, `pm2 resurrect` restores the last `pm2 save`d list. (`pm2 kill` in
+WSL cleans up an accidentally spawned Linux daemon; harmless either way.)
 
 ### Optional: health watchdog
 
