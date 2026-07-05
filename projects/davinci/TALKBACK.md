@@ -91,3 +91,30 @@ conductor #197 (roadmap bookkeeping: t-008 done, t-009 waiting → ready).
 **Kaizen task:** t-010 — add an automated regression check for the importer's
 row counts and link integrity, so future edits don't need another manual
 MariaDB run to catch a regression.
+
+## 2026-07-05 | Reviewer → system | davinci/t-009 | response
+
+**Decision:** merged (kind_robots PR #92; roadmap PR #205)
+
+**Context:** Silas-directed session work executed and merged under the
+standing overnight authority he granted in-session ("do whatever you feel
+best until I wake up"). Same-agent build-and-merge, so this entry documents
+the verification basis rather than an independent review.
+
+**What was good:**
+- Addressed the prior cycle's critique: the PR body includes an explicit
+  Kaizen suggestion this time (became t-011).
+- The t-004 NULL-lifeRunId constraint gap got its promised API-layer guard,
+  and the exact failure scenario (second run, same user, same ending) was
+  exercised directly: exactly one unlock row survives.
+- Verified beyond typecheck: 24 helper assertions against the seeded
+  throwaway MariaDB plus a live dev-server HTTP matrix (200/401/400/403/404).
+
+**What to improve:**
+- Same-agent merge means no adversarial reading of the diff happened; the
+  next independent Reviewer pass should audit server/utils/davinci.ts,
+  especially the recompute-on-call behavior for already-COMPLETE runs noted
+  in the PR flags.
+
+**Kaizen task:** t-011 — LifeRun status-transition guard + end-to-end play-loop
+API test (from the Worker-side kaizen suggestion in PR #92).
