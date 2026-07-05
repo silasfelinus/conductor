@@ -102,8 +102,11 @@ tasks:
   passes: 0
   stakes: reversible
   note: >
-    kind_robots already has stripe + @stripe/stripe-js in package.json (no server
-    usage yet) and a components/giftshop/ suite (giftshop-manager, giftshop-interact,
+    kind_robots already has stripe + @stripe/stripe-js in package.json, existing
+    server routes at server/api/stripe/checkout.post.ts and subscribe.post.ts
+    (both instantiate Stripe at module load from STRIPE_SECRET_KEY — the server
+    crashes on boot without it, worth fixing to lazy init), and a
+    components/giftshop/ suite (giftshop-manager, giftshop-interact,
     cart-interact, shopping-cart, credit-purchase, mana-wallet, subscription-manager,
     print-swag, social-publisher) plus stores/seeds/cartItems.ts. Map what exists,
     what is wired to real data vs seeded/stubbed, and what each v1 catalog item still
