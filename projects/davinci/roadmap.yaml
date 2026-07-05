@@ -164,16 +164,23 @@ tasks:
   - id: t-009
     milestone: m2
     title: "Build minimal Da Vinci ending resolution API"
-    status: ready
-    owner: null
+    status: done
+    owner: reviewer
+    updated: '2026-07-05T06:00:00-07:00'
     passes: 0
     stakes: reversible
     depends_on: t-008
     note: >
-      Add the first app-owned endpoint helpers to resolve a test LifeRun's stats into
-      an outcomeKey, find the matching LifeEnding, and award the matching Milestone
-      and LifeAchievement with an API-layer guard for global unlock uniqueness
-      (MySQL allows repeat NULL lifeRunId in the unique constraint — see t-004 note).
+      Done in kind_robots (Silas-directed session work): server/utils/davinci.ts
+      (dimension order, resolveOutcomeKey, resolveLifeRunEnding transaction) and
+      POST /api/davinci/runs/:id/resolve. Resolves LifeStat rows into the 10-bit
+      outcomeKey, marks the run COMPLETE with endingId + statsSnapshot, awards the
+      linked Milestone (MilestoneRecord) and LifeAchievement (LifeAchievementUnlock)
+      once per user — explicit (userId, achievementId) API-layer guard covers the
+      MySQL NULL-lifeRunId unique-constraint gap from t-004. Verified against the
+      seeded throwaway MariaDB: 24 helper assertions (idempotent re-resolve, cross-run
+      duplicate-award prevention, SECRET/MIXED/VICTORY classification, 403/404 guards)
+      plus live HTTP checks on the dev server (200/401/400/403/404).
 
   - id: t-010
     milestone: m2
