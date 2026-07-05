@@ -27,3 +27,5 @@
   requireMachineUser auth parity for comfy routes. Both -> status: review.
 - Relay agent shipped: ops/home-server/relay_agent.py (pull-based, stdlib-only,
   pm2-managed; opt-in kr-relay block added to ecosystem.config.js).
+- Silas merged kind_robots PR #90 overnight: ArtJob queue + comfy machine-auth
+  live. t-010/t-011 done; t-012 (consumer) now ready; kaizen t-014 added.

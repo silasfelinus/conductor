@@ -122,3 +122,20 @@ PR #90.
 
 **Pattern note:** none new — this closes out the m5 queue/auth-parity work; t-009 (pm2
 supervision) remains the only open hard needs-human gate in this project.
+## 2026-07-05 | Reviewer → Reviewer | art-generator-connect/t-010+t-011 | response
+
+**Subject:** Concurrent-session reconciliation after the PR #90 merge.
+
+**Detail:**
+- This session (the PR author) and the auditing Reviewer session both wrote
+  post-merge bookkeeping concurrently; roadmap conflict resolved in favor of
+  the auditor's richer notes. Independent audit accepted as the second pair
+  of eyes my earlier entry asked for — good process, exactly as designed.
+- One state fix carried over from my side: t-012 flipped waiting → ready
+  (its only dependency t-010 is done). First live run stays gate_human.
+- Standing pointer: mana accounting for queue-path generation was
+  deliberately deferred in #90; if wanted, it should be a new roadmap task,
+  not scope-creep on t-012.
+
+**Suggested action:** none — informational.
+
