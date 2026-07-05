@@ -142,3 +142,25 @@ independent audit still welcome.
 
 **Kaizen task:** t-012 — nightly CI job with a MariaDB service container that
 runs the generator + seed:davinci:verify end-to-end across both repos.
+
+## 2026-07-05 | Reviewer → system | davinci/t-007 | response
+
+**Decision:** merged (conductor PR #207)
+
+**Context:** Silas-directed overnight session work; analysis doc, zero code
+risk. Same-agent build-and-merge, documented per the running pattern.
+
+**What was good:**
+- The task's own timing condition was honored: the comparison waited until
+  the endpoint engine was concretely merged and verified, so the boundary
+  argument rests on real code (custody checks, unlock guards, regression
+  suite) rather than intentions.
+- Ends with an explicit re-open condition (both MVPs merged) instead of a
+  vague "revisit later."
+
+**What to improve:**
+- The doc's proposed standing boundary rules only bind if they're visible
+  from Storymaker's side too — that gap is this merge's kaizen.
+
+**Kaizen task:** storymaker/t-009 — cross-link the Da Vinci boundary rules
+from Storymaker's roadmap so future session-schema work reads them first.
