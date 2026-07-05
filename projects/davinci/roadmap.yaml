@@ -141,8 +141,9 @@ tasks:
   - id: t-008
     milestone: m2
     title: "Build Da Vinci seed importer in kind_robots"
-    status: ready
-    owner: null
+    status: done
+    owner: reviewer
+    updated: '2026-07-05T03:30:00-07:00'
     passes: 0
     stakes: reversible
     depends_on:
@@ -150,15 +151,20 @@ tasks:
       - t-004
       - t-005
     note: >
-      Add an idempotent script or admin-only route in kind_robots that consumes the
-      generate_davinci_endings.py JSON/JSONL output and upserts LifeEnding,
-      Milestone, and LifeAchievement rows. Do not create ArtImage rows until real
-      local-generator files exist.
+      Done in kind_robots (Silas-directed session work): utils/scripts/seedDaVinciEndings.ts
+      (npm run seed:davinci), an idempotent tsx importer that consumes the
+      generate_davinci_endings.py JSON/JSONL output and upserts Milestone by
+      triggerCode, LifeEnding by outcomeKey, and LifeAchievement by conditionKey,
+      linking milestoneId/endingId. Verified end-to-end against a throwaway MariaDB:
+      1024/1024/1024 rows, all links populated, zero ArtImage rows, re-run confirmed
+      idempotent (counts unchanged). Note: LifeAchievement has no artPrompt column —
+      prompts live on Milestone and LifeEnding only. Used .ts+tsx instead of the
+      suggested .mjs because the generated Prisma client is TypeScript.
 
   - id: t-009
     milestone: m2
     title: "Build minimal Da Vinci ending resolution API"
-    status: waiting
+    status: ready
     owner: null
     passes: 0
     stakes: reversible
@@ -166,4 +172,5 @@ tasks:
     note: >
       Add the first app-owned endpoint helpers to resolve a test LifeRun's stats into
       an outcomeKey, find the matching LifeEnding, and award the matching Milestone
-      and LifeAchievement with an API-layer guard for global unlock uniqueness.
+      and LifeAchievement with an API-layer guard for global unlock uniqueness
+      (MySQL allows repeat NULL lifeRunId in the unique constraint — see t-004 note).
