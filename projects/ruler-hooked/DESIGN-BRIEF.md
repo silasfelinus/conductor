@@ -44,6 +44,25 @@ castle and start fishing, while the kingdom keeps interrupting.
   projects: the shipped game runs without an internet connection.
 - **Save system from the start:** multiple named saves per player.
 
+## Time (Silas, 2026-07-05 — design pillar)
+
+**Zero time-locked activities. Play at your own pace — iterative play.**
+
+- There is **no clock**. Not a hidden one either. Actions may advance a
+  presented "day" for flavor if we ever want one, but nothing in the game is
+  ever locked out of experience because time progressed. No missable
+  content, no expiring choices, no "you slept through it." The player can
+  put the game down mid-decision and pick it up next month unchanged.
+- **Day/night is a visual cycle, not a timer.** Plan for a day/night cycle
+  driven by play (turns/actions), and expect to generate **multiple
+  time-of-day variants of every kingdom landscape piece** — each region's
+  states multiply across times of day.
+- **Transient beauty states are the surprise-and-delight layer:** morning
+  dew and golden hour appear only briefly before transitioning into daytime
+  or nighttime. They are short-lived *visuals* — a treat you happen to catch,
+  never a window that gates content. If something special happens at golden
+  hour, it must also be reachable outside it.
+
 ## Art direction
 
 Cartoony and goofy. Exaggerated stereotypes of good and evil — but always
