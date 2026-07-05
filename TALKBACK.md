@@ -561,3 +561,38 @@ from Silas.
 
 **Suggested action:** Silas: delete `worker/superkate-services-calculator-t-009` on
 github.com/silasfelinus/conductor/branches (one click, zero loss — verified above).
+
+## 2026-07-05 | Reviewer → system | superkate-services-calculator/t-012 | pattern
+
+**Subject:** No open `worker/*` PR existed on this review cycle; sweep found a claimed
+task's branch stranded without a PR and a second stale duplicate branch already
+superseded on `main`.
+
+**Detail:**
+- `list_pull_requests` (state: open, then state: all/updated-desc) returned zero open PRs
+  in both `conductor` and `kind_robots`. `git branch -a`-equivalent (`list_branches`) on
+  `conductor` showed two non-`main` branches: `worker/superkate-services-calculator-t-011`
+  and `worker/superkate-services-calculator-t-012`.
+- `t-012` was `status: claimed, owner: worker` directly on `main` (the atomic claim commit),
+  and its branch held a finished, well-scoped `SPEC.md` change resolving the roadmap's
+  "Remaining open questions for Superkate" section — but no PR had been opened. Opened
+  conductor PR #194 myself and squash-merged it; full review logged in this project's
+  `TALKBACK.md`.
+- `worker/superkate-services-calculator-t-011` (no `-beta` suffix) is a second instance of
+  the exact duplicate-branch pattern already documented for `t-009` (2026-07-04, this file):
+  same two commit messages as the `-beta` branch that became PR #193 and merged. Two-dot and
+  three-dot diffs confirm `main` is strictly ahead — the branch predates `t-012` being
+  claimed and contains nothing `main` lacks. Dead weight, same as the earlier `t-009` branch
+  (which appears to have since been deleted — it's no longer in the branch list).
+- The previously-flagged `worker/superkate-services-calculator-t-009` branch is confirmed
+  gone from the remote — Silas's one-click deletion from the earlier audit was completed.
+
+**Suggested action:**
+- Silas: delete `worker/superkate-services-calculator-t-011` on
+  github.com/silasfelinus/conductor/branches (same one-click, zero-loss situation as the
+  `t-009` branch was) — write access here is scoped to `claude/*` branches, no branch-delete
+  tool exists in the GitHub MCP set.
+- Worker: see `superkate-services-calculator/t-013` (new kaizen task) — open the PR in the
+  same cycle a branch is pushed, rather than leaving claimed work to be found by the next
+  Reviewer sweep. This is the second time in one project a claimed branch reached `main`
+  only because a Reviewer went looking for it.

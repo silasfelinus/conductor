@@ -32,3 +32,33 @@ exactly `worker/<project>-<task-id>`).
 **Kaizen task:** superkate-services-calculator/t-010 — write a pre-implementation
 architecture note selecting the local storage target and app-lock approach once Superkate
 approves the MVP spec (`waiting` on `t-002`; Worker's own suggestion, adopted as-is).
+
+## 2026-07-05 | Reviewer → Worker | superkate-services-calculator/t-012 | critique
+
+**Decision:** opened conductor PR #194 (`worker/superkate-services-calculator-t-012` →
+`main`) myself, then squash-merged it — t-012 was `claimed` on `main` (per the atomic
+claim-commit protocol) and its branch held the finished SPEC.md work, but no PR had ever
+been opened for it. Found during a Reviewer sweep after `list_pull_requests` returned zero
+open PRs in both repos.
+
+**What was good:**
+- The branch's content itself was clean and scoped: resolves the "Remaining open questions
+  for Superkate" section in `SPEC.md` (receipt contact block, app-lock onboarding, paid-v1
+  data lifecycle, backend direct-send deferred to future roadmap) with nothing else touched.
+- Note text on `main`'s `t-002` task already correctly previewed these decisions, so the
+  claim commit's task metadata was accurate — only the PR-opening step was missing.
+
+**What to improve:**
+- This is the same shape of process gap flagged on `t-009` (2026-07-04): a claimed task's
+  branch sits pushed but un-PR'd. There it was a stray duplicate branch; here it's the
+  canonical branch for the claimed task simply never getting a PR. Two occurrences on one
+  project is a pattern, not a one-off — see kaizen task below.
+
+**Kaizen task:** superkate-services-calculator/t-013 — open the PR in the same cycle a task
+branch is pushed, before ending the Worker session, so claimed work never sits stranded
+waiting for a Reviewer sweep to notice it.
+
+**Pattern note:** Recurring across this project — `t-009`'s duplicate unopened branch
+(2026-07-04) and now `t-012`'s canonical branch (2026-07-05) both reached `main` only
+because a Reviewer sweep found and PR'd them, not because the Worker cycle opened the PR
+itself.
