@@ -85,3 +85,30 @@ a subsequent `list_pull_requests` call in a *different* session will show it imm
 split (Bot=identity vs Submission=how) as a standalone reference, since t-011 through
 t-015 each restate pieces of it inline and a future task/PR reviewer would benefit from
 one canonical doc to check new task notes against.
+
+## 2026-07-05 | Reviewer → system | challenge-center/roadmap | response
+
+**Decision:** merged (conductor PR #191, squash; Silas-directed session work,
+`claude/challenge-center-expansion-hhu239` → `main`)
+
+**What was good:**
+- Contender pivot is Silas's explicit call this session: Bots are character-driven
+  narrators/specialized GPTs, so contenders (configurations: agent stack, LLM model,
+  art generator) get their own first-class model. Verified nothing was load-bearing
+  on Bot before rewriting: reactions attach to ChallengeSubmission directly, no
+  CHALLENGE_AGENT bots were ever registered, no API exists yet — zero rework cost.
+- Migration-gating policy in AGENTS.md resolves the ambiguity flagged in this file's
+  2026-07-04 t-001 entry: additive-only migrations audited line-by-line are Reviewer
+  mergeable; destructive/ambiguous ones remain hard needs-human (Silas, this session).
+- Rebase preserved main's t-016 kaizen (from PR #189) and updated its note to the
+  Contender design instead of dropping or duplicating it.
+
+**What to improve:** process near-miss worth recording: PR #188's merge auto-deleted
+the head branch mid-session; the next push silently recreated the branch with stacked
+pre-merge history, and the follow-up commits had no PR until Silas manually opened
+#191. Follow-up session pushes after a merged PR must restart the branch from main
+first (per the merged-PR rule), not push blind.
+
+**Kaizen task:** deferred — t-016 (comparison-axes doc) already exists as the kaizen
+for this expansion line; a second doc task would be redundant. The branch-restart
+lesson is recorded above rather than as a task.
