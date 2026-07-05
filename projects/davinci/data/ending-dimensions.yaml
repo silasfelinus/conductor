@@ -1,0 +1,122 @@
+# Da Vinci ending dimensions
+#
+# These 10 dimensions resolve into the deterministic 10-bit outcomeKey used by
+# LifeEnding. They are seed-generation data only; they do not generate images.
+# Bit order is stable. Do not reorder without migrating existing endings.
+
+dimensions:
+  - key: legacy
+    bit: 0
+    pass_label: remembered
+    fail_label: forgotten
+    pass_summary: The life leaves a durable trace beyond its final chapter.
+    fail_summary: The life fades quickly, meaningful in the moment but hard to find later.
+    positive_prompt_token: ancestral light, monuments of memory, heirlooms, records, continuity
+    negative_prompt_token: erased footprints, weathered ruins, vanishing records, forgotten rooms
+
+  - key: wealth
+    bit: 1
+    pass_label: prosperous
+    fail_label: wanting
+    pass_summary: Material needs are met and resources can be directed with intention.
+    fail_summary: Scarcity shapes the ending and narrows the final set of choices.
+    positive_prompt_token: golden practical abundance, secure workshop, generous resources
+    negative_prompt_token: empty ledger, patched tools, fragile shelter, scarcity atmosphere
+
+  - key: love
+    bit: 2
+    pass_label: beloved
+    fail_label: alone
+    pass_summary: The life is held by bonds of affection, trust, and chosen family.
+    fail_summary: The life arrives at its ending without enough tenderness nearby.
+    positive_prompt_token: warm companions, chosen family, affectionate gestures, soft light
+    negative_prompt_token: empty chairs, distant silhouettes, cold rooms, unspoken letters
+
+  - key: wisdom
+    bit: 3
+    pass_label: wise
+    fail_label: foolish
+    pass_summary: The life learns from pain and turns experience into discernment.
+    fail_summary: The life repeats old patterns and mistakes insight for certainty.
+    positive_prompt_token: luminous library, reflective eyes, symbolic compass, patient mentor
+    negative_prompt_token: broken compass, scattered notes, looping corridor, misleading mirror
+
+  - key: health
+    bit: 4
+    pass_label: vital
+    fail_label: diminished
+    pass_summary: The body and mind carry the protagonist through the final season with strength.
+    fail_summary: Neglected limits, injury, or exhaustion become part of the ending.
+    positive_prompt_token: living garden, steady breath, resilient body, sunrise restoration
+    negative_prompt_token: wilted garden, cracked mask, exhausted posture, dim clinical light
+
+  - key: freedom
+    bit: 5
+    pass_label: free
+    fail_label: bound
+    pass_summary: The protagonist keeps agency and chooses the shape of the final path.
+    fail_summary: Obligation, fear, debt, or control decide too much of the ending.
+    positive_prompt_token: open road, unlocked gate, wind, horizon, self-directed motion
+    negative_prompt_token: locked gate, strings, contract chains, narrow hallway, caged light
+
+  - key: fame
+    bit: 6
+    pass_label: renowned
+    fail_label: obscure
+    pass_summary: The world knows the protagonist's name, work, or myth.
+    fail_summary: The life remains mostly private, seen deeply by few or not at all.
+    positive_prompt_token: stage glow, public mural, constellation audience, mythic silhouette
+    negative_prompt_token: small private room, unnoticed masterpiece, dim street, hidden face
+
+  - key: creation
+    bit: 7
+    pass_label: creator
+    fail_label: barren
+    pass_summary: The protagonist makes something real: art, work, children, systems, or worlds.
+    fail_summary: The life ends with its best creations unrealized or abandoned.
+    positive_prompt_token: blooming studio, finished artifact, living machine, painted universe
+    negative_prompt_token: blank canvas, unfinished sculpture, silent tools, abandoned blueprint
+
+  - key: community
+    bit: 8
+    pass_label: rooted
+    fail_label: exiled
+    pass_summary: The life becomes part of a shared place, practice, movement, or network.
+    fail_summary: The protagonist remains outside the circle when belonging would have mattered.
+    positive_prompt_token: welcoming village, shared table, cooperative workshop, braided paths
+    negative_prompt_token: closed circle, empty town square, distant windows, solitary road
+
+  - key: mystery
+    bit: 9
+    pass_label: awakened
+    fail_label: mundane
+    pass_summary: The life touches the strange, sacred, uncanny, or unknowable and is changed.
+    fail_summary: The hidden door remains closed and the ending stays bound to ordinary surfaces.
+    positive_prompt_token: dream portal, impossible stars, symbolic animal, glowing threshold
+    negative_prompt_token: sealed door, dull sky, extinguished candle, sleeping oracle
+
+threshold:
+  default_pass_value: 1
+  note: >
+    The app may tune thresholds later. The seed system only assumes each dimension
+    resolves to pass/fail before producing a 10-bit outcomeKey.
+
+victory_rules:
+  victory:
+    min_passes: 8
+    require_any:
+      - love
+      - wisdom
+      - creation
+  failure:
+    max_passes: 2
+  secret:
+    require_all:
+      - mystery
+      - creation
+      - freedom
+    require_not_all:
+      - fame
+      - wealth
+  mixed:
+    default: true
