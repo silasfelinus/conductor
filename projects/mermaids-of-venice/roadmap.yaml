@@ -37,18 +37,25 @@ tasks:
 - id: t-001
   milestone: m1
   title: Build the kind_robots mermaids landing page
-  status: review
+  status: needs-human
   owner: reviewer
   updated: '2026-07-05T00:00:00Z'
   passes: 0
   stakes: reversible
+  gate_human: true
+  approved_by_human: false
   note: >
-    Done in the 2026-07-05 Silas-directed session — kind_robots PR #91
-    (branch claude/digital-store-mermaids-plans-x9qrf4): content/mermaids.md
-    + components/pages/mermaids-page.vue — offers the book, holds a clearly marked
-    placeholder for Silas's personal note (t-002), and carries the no-AI paragraph
-    with punchline. Replaces the prior concept-brief task; the concept came from
-    Silas directly.
+    FOR SILAS: The landing page is built and merged to kind_robots main —
+    content/mermaids.md + components/pages/mermaids-page.vue (kind_robots PR #91).
+    It offers the book (cover, blurb, Amazon paperback link), holds a clearly
+    marked placeholder where your personal note goes (t-002), and carries the
+    no-AI disclosure paragraph with the punchline you asked for.
+    TO APPROVE: Visit /mermaids once deployed and confirm it reads the way you
+    want. This is content reaching a live, reader-facing surface, so per AGENTS.md
+    it stops here for your sign-off rather than auto-closing as done — set
+    approved_by_human: true and status: done when you're happy with it. Nothing
+    else is blocked on this; t-002 (your personal note) is tracked separately and
+    doesn't gate anything either.
 - id: t-002
   milestone: m1
   title: 'Personal note for the landing page (Silas writes it)'

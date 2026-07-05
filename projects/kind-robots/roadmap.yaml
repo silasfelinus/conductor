@@ -179,3 +179,19 @@ tasks:
       design, not the migration. Silas framed the packmaker DLC slice as a deliberate
       low-stakes security test of exactly this infrastructure; see packmaker/roadmap
       and digital-storefront t-017.
+
+  - id: t-009
+    milestone: m2
+    title: "Lazy-init the Stripe client in checkout/subscribe routes"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Kaizen task from kind_robots PR #91 review. server/api/stripe/checkout.post.ts
+      and server/api/stripe/subscribe.post.ts instantiate the Stripe client at
+      module load, so the server crashes on boot whenever STRIPE_SECRET_KEY is
+      unset (e.g. local dev, preview environments). Move client construction inside
+      the request handler (or a lazily-evaluated singleton) so a missing key
+      degrades to a clean 500 on those two routes instead of killing the whole
+      server. No behavior change when the key is present.
