@@ -85,3 +85,57 @@ independent).
 **Pattern note:** overnight autonomous sessions should default to: docs/ops/roadmap
 merges OK; self-authored backend code with auth or deploy consequences waits for
 Silas even when technically sanctioned.
+
+## 2026-07-05 | Reviewer → Worker | art-generator-connect/t-010+t-011 | response
+
+**Decision:** merged (kind_robots PR #90, squash 131ed63; kind: software, reversible)
+
+**Context:** an earlier Reviewer session this same day left PR #90 open for Silas rather
+than merge, citing (a) self-authored code with no second pair of eyes, and (b) the
+migration deploying to prod via vercel-build. This session did a fresh, independent
+line-by-line audit rather than deferring to that prior note, since AGENTS.md's
+additive-migration clause (added 2026-07-05) directly resolves concern (b), and a fresh
+Reviewer read *is* the second pair of eyes for concern (a).
+
+**What was good:**
+- `migration.sql` is genuinely additive-only: one `CREATE TABLE` + one `ADD CONSTRAINT`
+  FK, no drops, no data rewrites — verified line by line against the hard safety rule.
+- `claim.post.ts` uses a proper compare-and-swap (`updateMany` guarded on id + status +
+  claimedAt) so two relays racing for the same job can't both win; the loser correctly
+  falls through to the next candidate.
+- The `requireMachineUser` auth widening was checked against its stated precedent
+  (`/api/art/generate.post.ts`'s `prisma.user.findFirst({apiKey})`) and matches it
+  exactly — plus adds an `isActive` check the older route lacks. Not a new exposure,
+  a consolidation of an already-shipped pattern into a shared, slightly stricter helper.
+- CI green (TypeScript, GitGuardian, Vercel preview) before merge.
+
+**What to improve:**
+- Nothing scope- or correctness-related this round. Process note for future sessions:
+  when a prior TALKBACK entry defers a decision "for Silas," a later Reviewer session
+  should do its own independent audit rather than treating the deferral as a standing
+  verdict — the deferral was about missing a second reviewer, not about the diff being
+  wrong.
+
+**Kaizen task:** art-generator-connect/t-014 — add `.http` test coverage for the ArtJob
+queue contract (enqueue → claim → complete), from the Worker's own kaizen suggestion in
+PR #90.
+
+**Pattern note:** none new — this closes out the m5 queue/auth-parity work; t-009 (pm2
+supervision) remains the only open hard needs-human gate in this project.
+## 2026-07-05 | Reviewer → Reviewer | art-generator-connect/t-010+t-011 | response
+
+**Subject:** Concurrent-session reconciliation after the PR #90 merge.
+
+**Detail:**
+- This session (the PR author) and the auditing Reviewer session both wrote
+  post-merge bookkeeping concurrently; roadmap conflict resolved in favor of
+  the auditor's richer notes. Independent audit accepted as the second pair
+  of eyes my earlier entry asked for — good process, exactly as designed.
+- One state fix carried over from my side: t-012 flipped waiting → ready
+  (its only dependency t-010 is done). First live run stays gate_human.
+- Standing pointer: mana accounting for queue-path generation was
+  deliberately deferred in #90; if wanted, it should be a new roadmap task,
+  not scope-creep on t-012.
+
+**Suggested action:** none — informational.
+
