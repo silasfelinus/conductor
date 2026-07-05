@@ -124,8 +124,9 @@ tasks:
   - id: t-007
     milestone: m4
     title: "Compare Da Vinci and Storymaker boundaries after endpoint engine exists"
-    status: ready
-    owner: null
+    status: done
+    owner: reviewer
+    updated: '2026-07-05T07:45:00-07:00'
     passes: 0
     stakes: reversible
     depends_on:
@@ -133,10 +134,15 @@ tasks:
       - t-005
       - t-006
     note: >
-      Revisit whether Da Vinci should remain a playable ruleset built near Storymaker,
-      become a Storymaker mode, or share primitives while staying a separate project.
-      Do not merge the project concepts before the endpoint and milestone engine is
-      concrete.
+      FOR SILAS: written now that the endpoint engine is real —
+      projects/davinci/docs/storymaker-boundary-comparison.md. Recommendation:
+      keep the projects separate through Da Vinci's play-loop MVP and
+      Storymaker's m1 schema; share only via existing KR models now and small
+      extracted utilities later (narration prompt assembly is the first real
+      duplication risk); never merged tables. The merge question re-opens only
+      after both MVPs land. Soft decision point: if you instead want Da Vinci
+      as a Storymaker mode from day one, say so before the play-loop task is
+      scoped — otherwise no action needed.
 
   - id: t-008
     milestone: m2
