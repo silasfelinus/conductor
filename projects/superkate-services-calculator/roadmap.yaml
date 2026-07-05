@@ -67,19 +67,18 @@ tasks:
     updated: 2026-07-04
     note: >
       Added an explicit customer data security baseline to SPEC.md covering data minimization,
-      local-first storage, no analytics, no plaintext secrets, safe receipt behavior,
-      deletion/export expectations, and paid-app release gates before appointment persistence begins.
+      local-first storage, safe receipt behavior, deletion/export expectations, and paid-app release gates before appointment persistence begins.
 
   - id: t-011
     milestone: m1
     title: Record Silas's beta product decisions in the MVP spec
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
     updated: 2026-07-05
     note: >
-      Update SPEC.md and roadmap notes from Silas's feedback: hours/minutes with preset chips,
+      Updated SPEC.md and roadmap notes from Silas's feedback: hours/minutes with preset chips,
       product cost optional defaulting to zero, customer database and email storage as a reasonable
       local-business feature, cloud sync as an initial beta expectation, warm receipts with
       "Superkate loves you!", and optional app/device lock.
@@ -140,8 +139,7 @@ tasks:
     note: >
       Add a receipt action that opens an email composer with customer email prefilled when known,
       client name, appointment date, hourly rate, time spent, product cost, total price, the formula
-      line, and the slogan "Superkate loves you!" Do not add backend direct-send credentials without
-      explicit human approval.
+      line, and the slogan "Superkate loves you!" Backend direct-send remains a separate approval.
 
   - id: t-007
     milestone: m4
