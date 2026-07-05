@@ -189,6 +189,13 @@ secret, deploy, or human-gate boundaries.
 
 ### Reviewer (Claude) — CAN
 - Merge reversible, scoped, software PRs from `worker/*` branches
+- Merge additive-only database migration PRs after auditing `migration.sql`
+  line-by-line — every statement must be `CREATE TABLE` / `ADD COLUMN` /
+  `CREATE INDEX` / `ADD CONSTRAINT` / `DROP INDEX` (constraint swaps only);
+  no `DROP` of tables/columns/data, no data rewrites. This holds even though
+  merge-to-main deploys the migration to prod (Silas, 2026-07-05 — resolves the
+  gate_human ambiguity flagged in challenge-center t-001's TALKBACK). Destructive
+  or ambiguous migrations remain hard `needs-human`.
 - Merge reversible, scoped, software PRs from `claude/*` branches when the work was
   directed by Silas in the session (e.g. conductor tooling improvements, startup hooks,
   ops scripts). Treat these identically to Worker PRs for review purposes.
