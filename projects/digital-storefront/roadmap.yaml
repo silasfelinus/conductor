@@ -131,22 +131,23 @@ tasks:
 - id: t-010
   milestone: m2
   title: 'Novel PDF intake: Silas supplies the file and sets the price'
-  status: needs-human
+  status: done
   owner: null
   passes: 0
   stakes: reversible
   gate_human: true
-  approved_by_human: false
+  approved_by_human: true
+  updated: 2026-07-05
   note: >
-    FOR SILAS: This is the hard gate for the store's first product — only you can
-    provide the manuscript. Drop the PDF at
-    projects/mermaids-of-venice/manuscript/ (it also feeds the editorial pipeline
-    there), and add a note here with: the price you want, and confirmation this is
-    the third-printing file you intend to sell. The sale copy will label it a third
-    printing (minor word-choice/pacing edits in the first two chapters).
-    TO APPROVE: add the price note, set approved_by_human: true and status: done.
-    That unblocks t-011 (build the purchase flow in kind_robots, test mode only —
-    nothing goes live to real buyers without a separate explicit approval from you).
+    CLEARED by Silas in session 2026-07-05. File: projects/mermaids-of-venice/
+    manuscript/"mermaids of venice second edition.pdf". PRICE: $9.99.
+    IMPORTANT correction to earlier assumption: this is the SECOND EDITION file
+    (not a "third printing") — sale copy must label it second edition. Silas's
+    edition-3 revision is in progress ("Mermaids of Venice Revision.doc",
+    same folder) and is NOT for sale and NOT to be edited by agents. The PDF is
+    served from authenticated server-side storage only, never public/.
+    Unblocks t-011 (purchase flow, Stripe TEST MODE only — going live to real
+    buyers remains a separate hard needs-human).
 - id: t-011
   milestone: m2
   title: Build the Mermaids of Venice PDF product page and purchase flow (kind_robots, Stripe test mode)
