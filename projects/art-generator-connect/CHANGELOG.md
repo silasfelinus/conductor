@@ -17,3 +17,13 @@
 - New milestone m5 with t-009 (install kit), t-010 (kind_robots ArtJob queue
   + pull relay agent), t-011 (comfy apiKey auth parity), t-012 (conductor
   consumer, waiting on t-010, human-gated first run).
+
+## 2026-07-05 (overnight session, continued)
+- URL-MAPPING.md revised per Silas: canonical placement is
+  public/images/{schema_or_project}/{slug}/{slug}-{utility}-{n}; artcollections/
+  demoted to unsorted fallback. New t-013 aligns tooling.
+- t-010 + t-011 implemented in kind_robots PR #90: ArtJob queue (additive
+  migration, enqueue/claim/complete/list/poll endpoints, atomic claiming) and
+  requireMachineUser auth parity for comfy routes. Both -> status: review.
+- Relay agent shipped: ops/home-server/relay_agent.py (pull-based, stdlib-only,
+  pm2-managed; opt-in kr-relay block added to ecosystem.config.js).

@@ -164,7 +164,7 @@ tasks:
 - id: t-010
   milestone: m5
   title: 'kind_robots ArtJob queue: model, enqueue/claim/complete endpoints, home relay agent'
-  status: ready
+  status: review
   owner: null
   updated: '2026-07-05T00:00:00Z'
   passes: 0
@@ -179,11 +179,14 @@ tasks:
     Claim must be atomic; stale RUNNING jobs re-claimable. Silas directed
     building the queue in kind_robots (2026-07-05 session) - this overrides
     the backend-changes-become-pitches default; normal PR review still
-    applies. Branch worker/art-generator-connect-t-010 in kind_robots.
+    applies. Implemented in kind_robots PR #90 (with t-011) on branch
+    claude/comfy-diffusion-pipeline-restart-kufwrx; relay agent shipped at
+    conductor ops/home-server/relay_agent.py. Awaiting Silas merge - note
+    merging deploys the additive ArtJob migration via vercel-build.
 - id: t-011
   milestone: m5
   title: Accept user apiKey auth on comfy endpoints (machine-auth parity with /api/art/generate)
-  status: ready
+  status: review
   owner: null
   updated: '2026-07-05T00:00:00Z'
   passes: 0
@@ -194,7 +197,9 @@ tasks:
     tokens cannot call them. Extend the gate to also accept a user apiKey
     Bearer token, exactly like /api/art/generate does
     (prisma.user.findFirst on apiKey). Small, additive, unblocks automated
-    Flux generation independently of the t-010 queue.
+    Flux generation independently of the t-010 queue. Implemented in
+    kind_robots PR #90: new requireMachineUser (JWT, user apiKey, or beta
+    admin token) wired into comfyGate.authAndGate. Awaiting Silas merge.
 - id: t-012
   milestone: m5
   title: 'Conductor consumer: submit approved art-generate.yaml jobs and land results in projects/process/'
@@ -213,3 +218,21 @@ tasks:
     already routes them to project folders and kind_robots collections.
     gate_human because it is the first fully autonomous generation run -
     Silas approves the first live cycle before it becomes routine.
+- id: t-013
+  milestone: m5
+  title: Align image tooling with the canonical placement convention (context/slug nesting, iterated numbering)
+  status: ready
+  owner: null
+  updated: '2026-07-05T00:00:00Z'
+  passes: 0
+  stakes: reversible
+  note: >
+    Silas directive (2026-07-05): ideal placement is
+    public/images/{most_relevant_schema_or_project}/{slug}/{slug}-{utility}-{n};
+    artcollections/ is an unsorted fallback, not a home. URL-MAPPING.md
+    section 1 now codifies this. Align scripts/distribute_images.py
+    (write nested paths, iterated {utility}-{n} numbering beyond
+    inspiration), kind_robots GET /api/art/collection/folder/[slug]
+    (resolve nested context/slug then flat slug then artcollections),
+    and gallery.json regeneration. No bulk moves of existing folders -
+    flat public/images/{slug}/ stays valid; migrate opportunistically.

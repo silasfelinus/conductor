@@ -54,5 +54,28 @@ module.exports = {
       error_file: `${LOG_DIR}/sd-webui.err.log`,
       merge_logs: true,
     },
+    // kr-relay — pull-based bridge between the kind_robots ArtJob queue and the
+    // local engines (see relay_agent.py). UNCOMMENT after the queue endpoints
+    // (art-generator-connect/t-010) are merged and deployed, and fill in the
+    // two env values. Harmless if enabled early — it just logs "not deployed
+    // yet" and waits — but there's nothing for it to do until then.
+    // {
+    //   name: 'kr-relay',
+    //   cwd: __dirname,
+    //   script: 'C:/Python311/python.exe', // any Python 3.9+; stdlib only
+    //   args: 'relay_agent.py',
+    //   interpreter: 'none',
+    //   windowsHide: true,
+    //   autorestart: true,
+    //   restart_delay: 10000,
+    //   env: {
+    //     KR_RELAY_TOKEN: 'YOUR-ADMIN-USER-APIKEY',
+    //     KR_RELAY_USER_ID: '1',
+    //     // KR_BASE_URL: 'https://kindrobots.org',
+    //   },
+    //   out_file: `${LOG_DIR}/kr-relay.out.log`,
+    //   error_file: `${LOG_DIR}/kr-relay.err.log`,
+    //   merge_logs: true,
+    // },
   ],
 }

@@ -8,8 +8,9 @@ Files in this folder:
 
 | File | What it is |
 |---|---|
-| `ecosystem.config.js` | pm2 process definitions for `comfyui` and `sd-webui` |
+| `ecosystem.config.js` | pm2 process definitions for `comfyui` and `sd-webui` (plus an opt-in `kr-relay`) |
 | `healthcheck.ps1` | optional watchdog — probes the HTTP health endpoints and `pm2 restart`s a hung process |
+| `relay_agent.py` | pull-based bridge: claims ArtJobs from kind_robots and drives local ComfyUI/A1111 (enable after art-generator-connect/t-010 deploys) |
 
 ---
 
@@ -93,6 +94,19 @@ pm2 stop all                # free the GPU (e.g. before gaming)
 pm2 start all
 pm2 logs sd-webui --lines 200
 ```
+
+## The relay agent (kr-relay) — enable after t-010 deploys
+
+`relay_agent.py` closes the autonomous loop: it polls the kind_robots ArtJob
+queue outward (claim → generate on localhost → upload via
+`/api/art/save-generated` → complete). Pull model, so nothing dials into your
+network and queued jobs simply wait whenever the box is down.
+
+To enable once the queue endpoints are live: uncomment the `kr-relay` block in
+`ecosystem.config.js`, set `KR_RELAY_TOKEN` (your admin user's apiKey) and
+`KR_RELAY_USER_ID` (that user's id), then `pm2 start ecosystem.config.js
+--only kr-relay && pm2 save`. Needs any Python 3.9+ — stdlib only, no pip
+installs. Watch it with `pm2 logs kr-relay`.
 
 ## Notes & gotchas
 
