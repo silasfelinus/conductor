@@ -1,6 +1,6 @@
 # Superkate Services Calculator — SPEC
 
-Status: draft for Superkate/Silas review  
+Status: draft for Superkate/Silas final review  
 Priority: high  
 Slug: `superkate-services-calculator`  
 Kind: software
@@ -42,6 +42,21 @@ Customer records should include:
 
 Customer email storage is approved as a reasonable feature when implemented with the app's security baseline. Email should remain editable per receipt, and storing email should never imply automated backend sending.
 
+## Receipt contact block
+
+Receipts should include a concise configurable contact block rather than hardcoded one-off copy.
+
+Default structure:
+
+```txt
+Hair by Superkate
+[preferred booking/contact link]
+[preferred reply contact]
+Superkate loves you!
+```
+
+The salon name defaults to `Hair by Superkate`. The booking/contact link and preferred reply contact should be editable settings so Superkate can choose whether clients should use a booking URL, phone number, email address, or another preferred contact method.
+
 ## MVP screens
 
 1. **Calculator / New Appointment**
@@ -63,11 +78,16 @@ Customer email storage is approved as a reasonable feature when implemented with
    - Display the saved appointment.
    - Show receipt math in this form: `hourly rate × time spent + product cost = total price`.
    - Open an email composer with the customer email prefilled when known.
-   - Include warm receipt copy and the slogan: `Superkate loves you!`
+   - Include warm receipt copy, the configurable contact block, and the slogan: `Superkate loves you!`
 
 4. **Sync / Account Status**
    - Show whether the app is synced, offline, or has pending changes.
    - Surface sync errors clearly without exposing customer data in logs or UI internals.
+
+5. **Security / App Lock Onboarding**
+   - During onboarding, ask whether to protect saved customer history with device/app lock.
+   - Keep app lock optional and adjustable in settings.
+   - Use the device's secure authentication where supported.
 
 ## Data model
 
@@ -128,21 +148,28 @@ Client appointment data is sensitive business data and may include customer pers
 
 - Appointment and customer history should use a real local database/storage layer for app state, not browser `localStorage`, for any paid or customer-data beta release.
 - Cloud sync must go through authenticated API routes with authorization checks; never expose a public customer-data endpoint.
-- If the app target supports it, add optional app lock or device-auth before showing saved customer history.
+- App/device lock should be offered during onboarding, remain optional, and stay editable in settings.
 - Keep all secrets out of source control and client bundles. The MVP should not require backend email credentials for receipt preparation.
 
 ### Receipt safety
 
-- The MVP prepares a user-reviewed email in the device mail app or email composer; it must not silently send receipts from a backend.
-- Receipt text should include only appointment facts Superkate entered for that appointment, salon contact details, and warm receipt copy.
+- Beta receipts use a user-reviewed email composer only; the app must not silently send receipts from a backend.
+- Receipt text should include only appointment facts Superkate entered for that appointment, the configurable salon contact block, and warm receipt copy.
 - Customer email may prefill the composer when known, but the user should be able to edit it before sending.
+- Backend direct-send receipts may be considered later only after auth, audit logging, sender identity, rate limits, and safe secret handling are designed.
 
 ### Data lifecycle
 
-- Provide a path to delete an appointment record before paid release.
-- Provide a path to delete or update a customer record before paid release.
-- Decide export/backup expectations during the sync architecture note.
-- Do not add destructive bulk-delete behavior without a confirmation step.
+Paid v1 should include:
+
+- delete appointment;
+- edit customer;
+- delete customer;
+- cloud sync backup;
+- CSV export for customers and appointments;
+- deletion propagation across synced devices.
+
+Do not include destructive bulk-delete behavior in paid v1. Bulk delete can be considered later with strong confirmation UX.
 
 ### Paid-app release gates
 
@@ -150,9 +177,9 @@ Before release as a paid app, the project needs a privacy/security review coveri
 
 - where appointment and customer data is stored locally;
 - how cloud sync authenticates users and scopes customer data;
-- whether optional device/app lock is enabled by default;
+- app-lock onboarding and settings behavior;
 - how customer email is stored and edited;
-- deletion/export/backup expectations;
+- appointment deletion, customer edit/delete, cloud backup, CSV export, and deletion propagation;
 - whether any crash reporting or analytics exists, and whether it is configured to avoid customer data;
 - privacy copy for the app listing or handoff notes.
 
@@ -162,11 +189,13 @@ Client appointment data is sensitive business data. The app should be local-firs
 
 ## Email receipt behavior
 
-The MVP should prepare an email in the user's mail app rather than silently sending email from a backend. A later version can support direct sending if Superkate wants that and credentials/secrets are handled safely.
+The beta should prepare an email in the user's mail app rather than silently sending email from a backend. Backend direct-send receipts are a future roadmap option, not beta behavior.
 
 Receipt body should include:
 
 - Hair by Superkate / Superkate salon contact details
+- Preferred booking/contact link
+- Preferred reply contact
 - Client name
 - Appointment date
 - Hourly rate
@@ -180,7 +209,7 @@ Receipt body should include:
 
 Dark theme with purple and teal accents. It should feel polished, salon-friendly, calm, and professional — not enterprise beige spreadsheet purgatory.
 
-## Non-goals for MVP
+## Non-goals for beta
 
 - Payment processing
 - Online booking
@@ -191,6 +220,7 @@ Dark theme with purple and teal accents. It should feel polished, salon-friendly
 - Automated email sending without user review
 - Analytics or telemetry that can capture customer data
 - Legal/disclaimer-heavy receipt language
+- Destructive bulk-delete behavior
 
 ## Decided product choices
 
@@ -198,12 +228,15 @@ Dark theme with purple and teal accents. It should feel polished, salon-friendly
 - Product cost is optional and defaults to `$0.00`.
 - A customer database with optional stored email is expected for repeat clientele.
 - Receipt copy should be warm and include `Superkate loves you!`.
+- Receipts should use configurable salon contact fields: salon name, booking/contact link, and preferred reply contact.
 - Cloud sync is part of the initial beta expectation and may later be gated to paying customers.
-- App/device lock should be optional where supported.
+- App/device lock should be offered during onboarding and remain optional in settings.
+- Paid v1 should include appointment delete, customer edit/delete, cloud sync backup, and CSV export.
+- Destructive bulk-delete behavior should not ship in paid v1.
+- Beta receipts should remain user-reviewed composer receipts; backend direct-send belongs on the future roadmap only after the security model is designed.
 
-## Remaining open questions for Superkate
+## Implementation configuration values to collect
 
-- What exact salon contact details should appear on receipts?
-- Should optional app/device lock be enabled by default or simply available in settings?
-- What deletion/export/backup behavior is required for the first paid version?
-- Should backend direct-send receipts ever be part of the roadmap, or should user-reviewed composer remain the product stance?
+- Exact booking/contact link to show on receipts.
+- Exact preferred reply contact to show on receipts.
+- Whether the onboarding app-lock prompt should use recommended language or a softer privacy explanation.
