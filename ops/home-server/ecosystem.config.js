@@ -1,28 +1,33 @@
 // pm2 process definitions for the home art backends.
-// Fill in the three *_DIR paths for this machine, then: pm2 start ecosystem.config.js
+// Paths and args below are taken from the real launcher bats (startcomfyfast.bat,
+// webui-user.bat, 2026-07-05) — verify they still match, then: pm2 start ecosystem.config.js
 //
 // Each app points pm2 at the SAME Python command the launcher .bat runs, so pm2
 // supervises the real process (crash detection + clean restarts) instead of a
-// cmd.exe wrapper. See README.md in this folder.
+// cmd.exe wrapper. Tailscale Serve is NOT managed here — `tailscale serve --bg`
+// config persists across reboots; see README "Tailscale Serve" for the one-time
+// setup. The pip-repair bootstrap from webui-user.bat is also intentionally not
+// here (one-time repair job — keep the old bat around for that).
 
-// ---- EDIT THESE THREE PATHS ------------------------------------------------
-const COMFY_DIR = 'C:/AI/ComfyUI_windows_portable' // folder containing python_embeded/ and ComfyUI/
-const SD_DIR = 'C:/AI/stable-diffusion-webui' // A1111 checkout (contains launch.py and venv/)
+// ---- VERIFY THESE PATHS ----------------------------------------------------
+const COMFY_DIR = 'D:/comfy/comfy-fast'
+const SD_DIR = 'D:/code/sd-webui-forge-neo'
 const LOG_DIR = `${__dirname}/logs`
 // ----------------------------------------------------------------------------
 
 module.exports = {
   apps: [
     {
-      // ComfyUI — portable/standalone install.
-      // Mirrors run_nvidia_gpu.bat:
-      //   .\python_embeded\python.exe -s ComfyUI\main.py --windows-standalone-build
-      // If ComfyUI lives in a plain git checkout + venv instead, set script to
-      // <checkout>/venv/Scripts/python.exe and args to 'main.py --listen 0.0.0.0 --port 8188'.
+      // ComfyUI — venv install at D:\comfy\comfy-fast.
+      // Mirrors startcomfyfast.bat:
+      //   call venv\Scripts\activate
+      //   python main.py --listen 127.0.0.1 --port 8188 --enable-cors-header
+      // Binds 127.0.0.1 on purpose: Tailscale Serve (443) fronts it for remote
+      // access, and the relay agent talks to localhost directly.
       name: 'comfyui',
       cwd: COMFY_DIR,
-      script: `${COMFY_DIR}/python_embeded/python.exe`,
-      args: '-s ComfyUI/main.py --windows-standalone-build --listen 0.0.0.0 --port 8188',
+      script: `${COMFY_DIR}/venv/Scripts/python.exe`,
+      args: 'main.py --listen 127.0.0.1 --port 8188 --enable-cors-header',
       interpreter: 'none',
       windowsHide: true,
       autorestart: true,
@@ -35,14 +40,29 @@ module.exports = {
       merge_logs: true,
     },
     {
-      // Stable Diffusion WebUI (A1111).
-      // Mirrors webui-user.bat -> webui.bat -> launch.py, using the venv python.
+      // Stable Diffusion WebUI (forge-neo) at D:\code\sd-webui-forge-neo.
+      // Mirrors webui-user.bat's COMMANDLINE_ARGS, passed straight to launch.py
+      // via the venv python (webui.bat's only supervision-relevant job).
       // --api is REQUIRED for the kind_robots /sdapi/v1/txt2img handshake.
-      // Add --medvram here if sharing the GPU with ComfyUI.
+      // If venv/ doesn't exist yet, run the old webui-user.bat once to bootstrap.
       name: 'sd-webui',
       cwd: SD_DIR,
       script: `${SD_DIR}/venv/Scripts/python.exe`,
-      args: 'launch.py --api --listen --port 7860',
+      args: [
+        'launch.py',
+        '--api',
+        '--listen',
+        '--cuda-malloc',
+        '--ckpt-dir', 'Z:/ai/models/Stable-diffusion',
+        '--cors-allow-origins',
+        'https://kindrobots.org,https://kind-robots.vercel.app,http://localhost:3000,http://localhost:3001',
+        '--lora-dir', 'Z:/ai/models/Lora',
+        '--vae-dir', 'Z:/ai/models/vae',
+        '--controlnet-dir', 'Z:/ai/models/controlnet',
+        '--xformers',
+        '--skip-python-version-check',
+        '--reserve-vram', '2',
+      ].join(' '),
       interpreter: 'none',
       windowsHide: true,
       autorestart: true,
@@ -55,14 +75,13 @@ module.exports = {
       merge_logs: true,
     },
     // kr-relay — pull-based bridge between the kind_robots ArtJob queue and the
-    // local engines (see relay_agent.py). UNCOMMENT after the queue endpoints
-    // (art-generator-connect/t-010) are merged and deployed, and fill in the
-    // two env values. Harmless if enabled early — it just logs "not deployed
-    // yet" and waits — but there's nothing for it to do until then.
+    // local engines (see relay_agent.py). The queue endpoints are LIVE (PR #90
+    // merged 2026-07-05) — uncomment, fill in the two env values, and
+    // `pm2 start ecosystem.config.js --only kr-relay`.
     // {
     //   name: 'kr-relay',
     //   cwd: __dirname,
-    //   script: 'C:/Python311/python.exe', // any Python 3.9+; stdlib only
+    //   script: 'C:/Python312/python.exe', // any Python 3.9+; stdlib only
     //   args: 'relay_agent.py',
     //   interpreter: 'none',
     //   windowsHide: true,

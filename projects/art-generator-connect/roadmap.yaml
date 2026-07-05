@@ -156,9 +156,11 @@ tasks:
     FOR SILAS: Auto-restart kit delivered at ops/home-server/ (README.md,
     ecosystem.config.js, healthcheck.ps1). It replaces hand-launched .bat
     files with pm2: crash auto-restart, start-on-boot, optional hung-process
-    watchdog. TO APPROVE: on the Windows box, edit the two install paths at
-    the top of ecosystem.config.js, then follow README "One-time setup"
-    (about 10 minutes), then set approved_by_human: true and status: done.
+    watchdog. Config now mirrors the real bats (2026-07-05): comfy-fast venv
+    + forge-neo with CORS/model-dir/vram args verbatim; tailscale serve is
+    one-time persistent config (see README checklist). TO APPROVE: verify the
+    two *_DIR paths, follow README "One-time setup" (~10 min), then set
+    approved_by_human: true and status: done.
     What unblocks: the pipeline stops dying silently whenever ComfyUI/SD
     crash or the machine reboots; t-012's live loop becomes trustworthy.
 - id: t-010
@@ -217,6 +219,11 @@ tasks:
     already routes them to project folders and kind_robots collections.
     gate_human because it is the first fully autonomous generation run -
     Silas approves the first live cycle before it becomes routine.
+    Option on record (Silas 2026-07-05): engines, kind_robots, and conductor
+    share one physical drive on the home box, so the relay/consumer may
+    later write images directly to the local kind_robots public/images tree
+    (plus DB record) instead of base64-uploading through the API - a fast
+    path worth a task if generation volume grows.
 - id: t-013
   milestone: m5
   title: Align image tooling with the canonical placement convention (context/slug nesting, iterated numbering)
