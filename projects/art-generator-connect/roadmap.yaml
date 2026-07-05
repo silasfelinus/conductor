@@ -146,23 +146,21 @@ tasks:
 - id: t-009
   milestone: m5
   title: Install pm2 supervision for ComfyUI and A1111 on the home server
-  status: needs-human
+  status: done
   owner: null
-  updated: '2026-07-05T00:00:00Z'
+  updated: '2026-07-05T23:30:00Z'
   passes: 0
   stakes: reversible
   gate_human: true
+  approved_by_human: true
   note: >
-    FOR SILAS: Auto-restart kit delivered at ops/home-server/ (README.md,
-    ecosystem.config.js, healthcheck.ps1). It replaces hand-launched .bat
-    files with pm2: crash auto-restart, start-on-boot, optional hung-process
-    watchdog. Config now mirrors the real bats (2026-07-05): comfy-fast venv
-    + forge-neo with CORS/model-dir/vram args verbatim; tailscale serve is
-    one-time persistent config (see README checklist). TO APPROVE: verify the
-    two *_DIR paths, follow README "One-time setup" (~10 min), then set
-    approved_by_human: true and status: done.
-    What unblocks: the pipeline stops dying silently whenever ComfyUI/SD
-    crash or the machine reboots; t-012's live loop becomes trustworthy.
+    Done and verified live by Silas in the 2026-07-05 session (clearance per
+    CONTROL.md in-session rule): pm2 supervises comfyui (venv, 127.0.0.1:8188)
+    and sd-webui (forge-neo, full args) on the home box; survived a reboot via
+    pm2-windows-startup after backing out a misconfigured pm2-installer
+    service; health endpoints answering; kr-relay also enabled and polling
+    kind-robots.vercel.app (bonus - part of t-010's runtime). Field notes and
+    troubleshooting captured in ops/home-server/README.md.
 - id: t-010
   milestone: m5
   title: 'kind_robots ArtJob queue: model, enqueue/claim/complete endpoints, home relay agent'
