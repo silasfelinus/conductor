@@ -25,6 +25,13 @@ kind-robots → global-ui.
 Never expand product-types.yaml — pitch it. When unsure, do less and escalate to
 needs-human.
 
+**Human gate clearance rule:** If Silas explicitly clears a human-gated task in the current
+ChatGPT/GitHub session and the agent verifies that the roadmap standards are complete, the
+agent may set `approved_by_human: true` and `status: done` with a note citing that clearance.
+This does not authorize publishing, deploys, billing changes, DNS/secrets work, app-store
+submission, destructive database actions, or other irreversible/outward-facing actions unless
+Silas explicitly approves that concrete action too.
+
 **Global notes (free-form, agents read these):**
 - Slug parity is a standing rule: every conductor project must have a matching
   kind_robots Dream of dreamType PROJECT sharing the same slug. The slug is the
@@ -52,8 +59,10 @@ hourly rate, time spent, product cost, appointment total, search by client/date,
 receipt email preparation using `hourly rate × time spent + product cost = total price`.
 Dark theme with purple and teal accents.
 **Notes:**
-- Treat client appointment data as sensitive. Local/private first; no analytics, public pages,
-  cloud sync, or backend direct-email credentials without explicit approval.
+- Treat client appointment data as sensitive. Build the customer database, beta cloud sync,
+  receipt prep, and app/device lock according to the approved SPEC.md security baseline.
+- No analytics, public pages, direct backend email sending, app-store submission, or store
+  billing without explicit approval for that concrete action.
 - Make the MVP useful before making it fancy. The fancy should be tasteful, not spreadsheet cosplay.
 
 ### humboldt-scoop  (software)
