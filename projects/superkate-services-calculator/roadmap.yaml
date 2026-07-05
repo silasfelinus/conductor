@@ -98,6 +98,21 @@ tasks:
       customer edit/delete, cloud sync backup, CSV export in paid v1, no bulk delete in v1,
       and backend direct-send receipts as a future roadmap option rather than beta behavior.
 
+  - id: t-013
+    milestone: m1
+    title: Open the PR in the same cycle a task branch is pushed, before ending the Worker session
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Kaizen from a Reviewer sweep (2026-07-05): t-012's branch (worker/superkate-services-calculator-t-012)
+      was claimed on main and fully implemented, but no PR was ever opened — the Reviewer found it
+      stranded and opened conductor PR #194 to land it. This is the second time this has happened on
+      this project (t-009 also left a duplicate unopened branch, see this project's TALKBACK). Add a
+      last-step check to the Worker's software-task flow: after pushing a task branch, open its PR
+      into main before the cycle ends, even if merging is deferred.
+
   - id: t-003
     milestone: m2
     title: Build the appointment and customer data model with persistence
