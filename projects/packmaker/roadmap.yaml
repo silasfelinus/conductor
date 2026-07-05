@@ -1,0 +1,102 @@
+project: packmaker
+kind: software
+notes_from_silas: >
+  Created 2026-07-05 from my session direction. A dedicated project for the DLC /
+  builder-item generator: it will be accessible and repeatable, generating DLC packs
+  or general builder items with something that knows the pipeline — a handle tool /
+  front end. Packs are collections of generated website items: locations, genres,
+  characters, and rewards. Different views for admin and user. Packs can be tied to
+  me but private — this is a deliberate, low-stakes proving ground for our
+  private-but-shared content security. First deliverable: the two digital-storefront
+  launch packs. Working names (two words each, no alliteration, per my naming rule):
+  "Uncanny Valor" (the super-powers pack) and "Arcane Whimsy" (the magic-powers pack)
+  — I may rename them.
+milestones:
+- id: m1
+  title: Design brief and pack manifest schema
+  weight: 30
+  status: not-started
+- id: m2
+  title: Two launch packs drafted (Uncanny Valor, Arcane Whimsy)
+  weight: 35
+  status: not-started
+- id: m3
+  title: Generator front end (admin + user views)
+  weight: 35
+  status: not-started
+tasks:
+- id: t-001
+  milestone: m1
+  title: Write the packmaker design brief (SPEC.md)
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  note: >
+    SPEC.md covering: what a "pack" is (a manifest of generated website items —
+    locations, genres, characters, rewards — mapped to existing kind_robots models
+    like Dreams and Rewards); how generation reuses the existing kind_robots
+    pipelines (chat/art/dream APIs — shared backend is read-only per BOUNDARY.md,
+    backend changes become pitches); admin view (create/generate/review/publish a
+    pack) vs user view (browse/preview/own unlocked packs); ownership and privacy
+    (packs tied to Silas, private until released — coordinate with kind-robots
+    t-008 sharing/ACL design, do NOT invent a parallel permission system); and how
+    the digital-storefront purchases map to pack entitlements (storefront t-017).
+    Per the 2026-07-04 soft-scope rule: start immediately, raise scope confirmation
+    to Silas as a soft needs-human in parallel.
+- id: t-002
+  milestone: m1
+  title: Define the pack manifest schema with one worked example
+  status: waiting
+  owner: null
+  passes: 0
+  stakes: reversible
+  depends_on: t-001
+  note: >
+    A versioned manifest format (YAML or JSON) listing pack id, title, description,
+    owner, visibility, price hook, and item entries (type: location | genre |
+    character | reward; generation prompt; art prompt; target model/fields).
+    Include one small worked example pack in projects/packmaker/packs/.
+- id: t-003
+  milestone: m2
+  title: Draft the contents of the two launch packs (Uncanny Valor, Arcane Whimsy)
+  status: waiting
+  owner: null
+  passes: 0
+  stakes: reversible
+  depends_on: t-002
+  gate_human: true
+  approved_by_human: false
+  note: >
+    Draft full manifests for both packs in projects/packmaker/packs/: Uncanny Valor
+    (super-powers theme) and Arcane Whimsy (magic-powers theme), each with a themed
+    set of locations, genres, characters, and rewards (names, descriptions,
+    generation prompts, art prompts). Drafts only — nothing is generated into the
+    live database or published. Ends needs-human: Silas approves the pack names
+    (he may rename) and contents before any generation runs.
+- id: t-004
+  milestone: m3
+  title: Build the pack generator admin view in kind_robots
+  status: waiting
+  owner: null
+  passes: 0
+  stakes: reversible
+  depends_on: t-003
+  note: >
+    Cross-repo (kind_robots). Admin-only surface to load a manifest, run/re-run
+    generation per item through existing pipelines, review results, and mark a
+    pack ready. Repeatability is the point — the tool must make generating the
+    NEXT pack cheap. Depends at note-level on kind-robots t-008 (ACL) for
+    private-pack storage.
+- id: t-005
+  milestone: m3
+  title: Build the user-facing pack view (browse, preview, owned unlocks)
+  status: waiting
+  owner: null
+  passes: 0
+  stakes: reversible
+  depends_on: t-004
+  note: >
+    Cross-repo (kind_robots). Users see released packs and preview their contents;
+    owned/unlocked packs expose their items in the relevant site surfaces.
+    Purchase wiring itself belongs to digital-storefront t-017.
