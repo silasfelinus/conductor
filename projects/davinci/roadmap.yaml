@@ -174,3 +174,17 @@ tasks:
       an outcomeKey, find the matching LifeEnding, and award the matching Milestone
       and LifeAchievement with an API-layer guard for global unlock uniqueness
       (MySQL allows repeat NULL lifeRunId in the unique constraint — see t-004 note).
+
+  - id: t-010
+    milestone: m2
+    title: "Add an automated regression check for the Da Vinci seed importer's row counts and link integrity"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Kaizen from t-008 review: the importer was verified once by hand against a
+      throwaway MariaDB (1024/1024/1024 rows, links populated, zero ArtImage rows,
+      idempotent re-run). Turn that manual check into a script or test so future
+      edits to seedDaVinciEndings.ts or the generator payload shape get automatic
+      regression coverage instead of relying on another manual run.
