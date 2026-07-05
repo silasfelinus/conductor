@@ -62,6 +62,11 @@ module.exports = {
         '--xformers',
         '--skip-python-version-check',
         '--reserve-vram', '2',
+        // --listen makes forge lock the Extensions tab (AssertionError:
+        // "extension access disabled because of command line flags").
+        // The box is only reachable via LAN/tailscale, so re-enabling
+        // extension management is fine here.
+        '--enable-insecure-extension-access',
       ].join(' '),
       interpreter: 'none',
       windowsHide: true,
