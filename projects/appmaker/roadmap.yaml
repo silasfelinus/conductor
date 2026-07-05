@@ -76,23 +76,23 @@ tasks:
 - id: t-007
   milestone: m3
   title: Register the AppMaker GitHub App and store its secrets in server env
-  status: ready
+  status: done
   owner: null
   passes: 0
   stakes: outward-facing
   gate_human: true
   approved_by_human: true
   depends_on: t-003
-  note: 'SILAS DOES THIS ONE: create the GitHub App per GITHUB-APP-DESIGN.md section 2 (permissions: contents
-    rw, pull_requests rw, metadata r, checks r, actions r; webhook events push/pull_request/check_suite/installation),
-    then put APPMAKER_GH_APP_KEY, APPMAKER_GH_WEBHOOK_SECRET, and the app id into Vercel env. Agents never
-    hold the key.
-
-    '
+  note: "DONE per Silas 2026-07-05 \u2014 GitHub App created at /silasfelinus/app-maker. If APPMAKER_GH_APP_KEY\
+    \ / APPMAKER_GH_WEBHOOK_SECRET / app id are not yet in Vercel env, the first webhook-endpoint task\
+    \ will surface it. Original instructions: create the GitHub App per GITHUB-APP-DESIGN.md section 2\
+    \ (permissions: contents rw, pull_requests rw, metadata r, checks r, actions r; webhook events push/pull_request/check_suite/installation),\
+    \ then put APPMAKER_GH_APP_KEY, APPMAKER_GH_WEBHOOK_SECRET, and the app id into Vercel env. Agents\
+    \ never hold the key.\n"
 - id: t-008
   milestone: m3
   title: 'kind_robots: installation models, connect flow, webhook endpoint'
-  status: waiting
+  status: ready
   owner: null
   passes: 0
   stakes: reversible
