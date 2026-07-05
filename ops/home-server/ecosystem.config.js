@@ -81,8 +81,13 @@ module.exports = {
     },
     // kr-relay — pull-based bridge between the kind_robots ArtJob queue and the
     // local engines (see relay_agent.py). The queue endpoints are LIVE (PR #90
-    // merged 2026-07-05) — uncomment, fill in the two env values, and
-    // `pm2 start ecosystem.config.js --only kr-relay`.
+    // merged 2026-07-05). To enable:
+    //   1. One-time, in PowerShell (keeps the secret OUT of this tracked file):
+    //        setx KR_RELAY_TOKEN "your-admin-apikey"
+    //        setx KR_RELAY_USER_ID "1"
+    //   2. Open a NEW shell (setx doesn't affect the current one)
+    //   3. Uncomment this block, then: pm2 start ecosystem.config.js --only kr-relay ; pm2 save
+    // NEVER paste the real token into this file — it is committed to git.
     // {
     //   name: 'kr-relay',
     //   cwd: __dirname,
@@ -93,8 +98,8 @@ module.exports = {
     //   autorestart: true,
     //   restart_delay: 10000,
     //   env: {
-    //     KR_RELAY_TOKEN: 'YOUR-ADMIN-USER-APIKEY',
-    //     KR_RELAY_USER_ID: '1',
+    //     KR_RELAY_TOKEN: process.env.KR_RELAY_TOKEN || '',
+    //     KR_RELAY_USER_ID: process.env.KR_RELAY_USER_ID || '',
     //     // KR_BASE_URL: 'https://kindrobots.org',
     //   },
     //   out_file: `${LOG_DIR}/kr-relay.out.log`,
