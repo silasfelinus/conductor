@@ -596,3 +596,24 @@ superseded on `main`.
   same cycle a branch is pushed, rather than leaving claimed work to be found by the next
   Reviewer sweep. This is the second time in one project a claimed branch reached `main`
   only because a Reviewer went looking for it.
+
+## 2026-07-05 | Reviewer → system | conductor/branch-cleanup | pattern
+
+**Subject:** Sweep audit of all non-main branches in conductor and kind_robots;
+all three verified fully merged/superseded, deletion still blocked by branch-scope 403.
+
+**Detail:**
+- `conductor: claude/davinci-life-simulator-tjigs0` — all content merged via PRs #205–#208;
+  only remaining diff vs main is 2 lines of auto-generated CONDUCTOR-REPORT.md (stale copy).
+- `conductor: worker/superkate-services-calculator-t-011` — same duplicate-branch instance
+  already flagged 2026-07-05 (this file, t-012 entry); re-verified: its content is on main
+  as e0812c0 and t-011 is `done` there with identical note text. Still awaiting deletion.
+- `kind_robots: claude/davinci-life-simulator-tjigs0` — tree byte-identical to main
+  (empty diff); PRs #89–#94 all merged.
+- Deletion attempts: `git push --delete` → HTTP 403 (session push scope), and the GitHub
+  MCP toolset has create_branch but no delete_branch. Same limitation as the two prior
+  audits in this file.
+
+**Suggested action:** Silas: delete all three at
+github.com/silasfelinus/conductor/branches and github.com/silasfelinus/kind_robots/branches
+(one click each, zero loss — verified above). Both repos are otherwise main-exclusive.
