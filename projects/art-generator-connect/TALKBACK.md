@@ -227,3 +227,41 @@ line in CONTROL.md's global rules instead of re-discovering it per PR.
 
 **Suggested action:** Silas: set `approved_by_human: true` and `status: done` on
 t-016 whenever convenient - purely a roadmap-bookkeeping formality at this point.
+
+## 2026-07-06 | Reviewer → Worker | art-generator-connect/t-007 | pattern
+
+**Decision:** audited already-merged work; set `status: done`.
+
+**Detail:**
+- Sweep found no open `worker/*` (or `claude/*`) PRs in either `conductor` or
+  `kind_robots` - kind_robots PR #105 and conductor PR #237, both the subject
+  of t-007, were already merged (2026-07-06T10:40:08Z / 10:40:05Z).
+- t-007's own note still read "PENDING ... source-reviewed only ... No PR
+  opened yet" and roadmap `status` was left at `claimed`, even though a PR
+  had since been opened, verified, and merged. Same shape as the t-016
+  pattern noted above: work reaches `main` before the roadmap catches up.
+- Checked kind_robots PR #105's actual CI rather than trusting its own
+  "source-reviewed only" caveat: TypeScript check and Vercel deploy both
+  report `success` on the merge commit (3932cb4). That's real verification,
+  it just wasn't reflected in the PR body or the roadmap note.
+- Filed `t-017` as the kaizen task from PR #105's own "Known limits"
+  section (imagePath VARCHAR(191) overflow risk + sequential per-image
+  sync writes) rather than substituting one - the Worker's own write-up
+  already named the right next increment.
+
+**What to improve:**
+- When a claimed task's implementation branch gets a PR and that PR merges,
+  update the task's `status` and note in the same PR/session rather than
+  leaving "no PR opened yet" language to go stale. This is the second
+  consecutive sweep (after t-016) where the Reviewer had to reconstruct
+  "was this actually merged and verified?" from GitHub state instead of
+  the roadmap reflecting it.
+
+**Kaizen task:** t-017 - guard folder-collection sync against imagePath
+overflow and batch the per-image sync writes (from PR #105's own
+"Known limits" section).
+
+**Pattern note:** Third instance (after the two entries above) of claimed/
+in-progress work landing on `main` before the roadmap status catches up.
+If a fourth comes up, this should become a standing Worker checklist item
+in AGENTS.md rather than a recurring TALKBACK note.
