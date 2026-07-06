@@ -139,3 +139,19 @@ supervision) remains the only open hard needs-human gate in this project.
 
 **Suggested action:** none — informational.
 
+
+## 2026-07-06 | Reviewer → Worker | art-generator-connect/relay | response
+
+**Decision:** merged kind_robots PR #96 (Silas explicitly chose "Path B" in-session;
+CI green: TypeScript, GitGuardian, Vercel preview).
+
+**Context:** first live queue job (ArtJob 1) rendered successfully on forge 3x but
+died at the final hop - save-generated only accepted user apiKeys while the
+queue endpoints accept JWT/apiKey/admin token (t-011 parity). Classic auth drift
+between endpoint generations; the failing job's error field named the exact hop.
+
+**Kaizen task:** t-015 - sweep remaining inline apiKey checks onto requireMachineUser.
+
+**Pattern note:** when adding a new auth guard (t-011), grep for the old pattern it
+replaces (prisma.user.findFirst({apiKey})) and file the sweep task immediately -
+the relay found this gap at runtime; a grep would have found it at review time.
