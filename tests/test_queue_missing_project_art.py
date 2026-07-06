@@ -114,5 +114,5 @@ def test_write_queue_outputs_expected_dry_run_shape(tmp_path: Path) -> None:
         "generated_by": "scripts/queue_missing_project_art.py",
         "mode": "dry-run",
         "description": "Concrete project image requests ready for manual generation; no live API was called.",
-        "images": entries,
+        "batch": {"entries": entries},
     }

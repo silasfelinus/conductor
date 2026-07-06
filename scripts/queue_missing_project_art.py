@@ -97,7 +97,11 @@ def write_queue(entries: list[dict[str, Any]], output_path: Path) -> None:
         "generated_by": "scripts/queue_missing_project_art.py",
         "mode": "dry-run",
         "description": "Concrete project image requests ready for manual generation; no live API was called.",
-        "images": entries,
+        # Canonical batch shape consumed by consume_art_queue.py and
+        # distribute_images.py (both read batch.entries). Previously this
+        # emitted a top-level `images:` list that no reader consumed, so a
+        # freshly queued batch silently produced "nothing to do".
+        "batch": {"entries": entries},
     }
     output_path.parent.mkdir(parents=True, exist_ok=True)
     with output_path.open("w", encoding="utf-8") as handle:
