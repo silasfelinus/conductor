@@ -62,6 +62,16 @@ Echo ──Alexa custom skill──▶ serendipity-voice runtime
   local development.
 - No Alexa skill was published and no live endpoint was exposed.
 
+## Extensions (t-013)
+
+The bridge now covers three command targets, not just animation:
+
+- **animation** — `on` / `off` / `toggle` / `clear`, plus **`surprise`** ("surprise me" → the view picks a random generation-safe effect).
+- **theme** — `set` ("set theme to synthwave", "use the retro theme") → `themeStore.setActiveTheme`, validated against daisyUI/shared themes on the view.
+- **art** — `draft` ("generate art of …") → relays prompt/style/size/gallery to an art-drafts panel on the view for review. Never generates or publishes from voice.
+
+The `SerendipityCommand` contract carries the target-specific fields (`effect`/`effectId`/`surface`, `theme`, `prompt`/`style`/`size`/`gallery`). The Kind Robots `serendipityVoiceStore.applyCommand` dispatches by target. All changes are reversible and client-side.
+
 ## Not done (human-gated — see t-010)
 
 Binding a physical Echo needs an Amazon custom skill pointed at a publicly
