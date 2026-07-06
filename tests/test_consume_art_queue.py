@@ -27,6 +27,36 @@ def test_entry_to_job_maps_fields():
     assert job["payload"]["width"] == 1280
     assert job["payload"]["height"] == 720
     assert job["payload"]["collection"] == "coat-dance"
+    # quality defaults applied when the entry says nothing
+    assert job["payload"]["steps"] == consumer.DEFAULT_STEPS
+    assert job["payload"]["cfg"] == consumer.DEFAULT_CFG
+    assert job["payload"]["negativePrompt"] == consumer.DEFAULT_NEGATIVE_PROMPT
+    # optional knobs stay off so the relay's own defaults apply
+    assert "sampler" not in job["payload"]
+    assert "seed" not in job["payload"]
+
+
+def test_entry_to_job_honors_per_entry_quality_overrides():
+    job = consumer.entry_to_job(
+        {
+            "project": "alpha",
+            "image_path": "projects/images/alpha-hero.webp",
+            "size": "1280x720",
+            "prompt": "a hero shot",
+            "engine": "comfy",
+            "steps": 45,
+            "cfg": 5,
+            "sampler": "DPM++ 2M Karras",
+            "seed": 12345,
+            "negative_prompt": "text, blur",
+        }
+    )
+    assert job["engine"] == "COMFY"
+    assert job["payload"]["steps"] == 45
+    assert job["payload"]["cfg"] == 5
+    assert job["payload"]["sampler"] == "DPM++ 2M Karras"
+    assert job["payload"]["seed"] == 12345
+    assert job["payload"]["negativePrompt"] == "text, blur"
 
 
 def test_load_entries_skips_malformed(tmp_path, monkeypatch):
