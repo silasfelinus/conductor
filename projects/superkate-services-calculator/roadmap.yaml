@@ -116,14 +116,15 @@ tasks:
   - id: t-003
     milestone: m2
     title: Build the appointment and customer data model with persistence
-    status: waiting
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     depends_on:
       - t-002
       - t-009
       - t-010
+    updated: 2026-07-06
     note: >
       Implement Appointment and Customer models. Appointment stores customerId/clientName snapshot,
       appointmentDate, hourlyRateCents, timeSpentMinutes, productCostCents, appointmentTotalCents,
