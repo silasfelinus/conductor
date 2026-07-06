@@ -116,7 +116,7 @@ tasks:
 - id: t-007
   milestone: m4
   title: Surface folder-based art collections (public/images/{slug}/) in kind_robots collection views
-  status: claimed
+  status: done
   owner: worker
   updated: '2026-07-06T00:00:00Z'
   passes: 0
@@ -129,18 +129,22 @@ tasks:
     Wire the endpoint into the collection display components so folder
     inspirations appear alongside DB-backed ArtImages for the same slug.
 
-    IMPLEMENTED 2026-07-06 on branch claude/conductor-worker-image-gen-zbvhbn
-    (kind_robots), extended per Silas to also SYNC folders into saved
-    collections. Backend: server/utils/folderCollections.ts (shared
-    nested->flat->artcollections resolution + listFolderCollections enum),
-    GET /api/art/collection/folders (list), POST
-    /api/art/collection/folder/[slug]/sync (materialize folder -> DB
-    ArtCollection, idempotent, machine auth). Frontend: collectionStore
+    IMPLEMENTED 2026-07-06 on branch claude/conductor-worker-image-gen-zbvhbn:
+    kind_robots PR #105 (merged) + conductor PR #237 (merged). Backend:
+    server/utils/folderCollections.ts (shared nested->flat->artcollections
+    resolution + listFolderCollections enum), GET /api/art/collection/folders
+    (list), POST /api/art/collection/folder/[slug]/sync (materialize folder ->
+    DB ArtCollection, idempotent, machine auth). Frontend: collectionStore
     fetchFolderCollections/syncFolderCollection + art-gallery renders folder
     collections alongside DB ones with a "Sync to collection" action.
-    PENDING: kind_robots has no runnable toolchain in the conductor session
-    (node_modules absent) so this is source-reviewed only - needs vue-tsc +
-    a real gallery run before merge. No PR opened yet.
+
+    REVIEWER AUDIT 2026-07-06: kind_robots PR #105 was merged with the PR
+    body still marked "source-reviewed only, please let CI validate" (the
+    manual gallery-click checklist was left unchecked). Confirmed after the
+    fact that CI actually did validate it: TypeScript check and Vercel
+    deploy both report `success` on the merge commit (3932cb4). Treating
+    this as sufficient verification for a reversible, additive-only change
+    and closing the task rather than leaving it stranded at `claimed`.
 - id: t-008
   milestone: m4
   title: Add a regression test for renderRequestEntry's YAML indentation in kind_robots' art-request.post.ts
@@ -314,3 +318,20 @@ tasks:
     closed automatically because only you can set approved_by_human on a
     gate_human task; the Reviewer is not overriding the gate, just
     recording that you already cleared it.
+- id: t-017
+  milestone: m4
+  title: Guard folder-collection sync against long imagePath overflow and batch the per-image writes
+  status: ready
+  owner: null
+  updated: '2026-07-06T00:00:00Z'
+  passes: 0
+  stakes: reversible
+  note: >
+    Kaizen from kind_robots PR #105 (t-007)'s own "Known limits" section:
+    ArtImage.imagePath is the default VARCHAR(191) and a very deeply nested
+    long slug path could overflow it, and POST
+    /api/art/collection/folder/[slug]/sync currently writes rows
+    sequentially (2 queries per image) with the list endpoint resolving all
+    folders' images per call - fine at current folder counts but worth
+    hardening before folder counts grow. Add a length guard/truncation (or
+    widen the column) and batch the sync writes.
