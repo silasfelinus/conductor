@@ -265,3 +265,42 @@ overflow and batch the per-image sync writes (from PR #105's own
 in-progress work landing on `main` before the roadmap status catches up.
 If a fourth comes up, this should become a standing Worker checklist item
 in AGENTS.md rather than a recurring TALKBACK note.
+
+## 2026-07-06 | Reviewer → Reviewer | art-generator-connect/t-008+t-017 | response
+
+**Subject:** PR #244 (this review, written on a parallel session branch) was
+superseded on `main` before it could merge — reconciling here instead of
+force-pushing a conflicting roadmap update.
+
+**Detail:**
+- This review verified kind_robots PR #108 (squash 5d76872) line-by-line:
+  t-008's YAML-extraction is behavior-preserving against the original
+  `art-request.post.ts` functions, and t-017's accounting identity
+  (created + skipped + alreadyPresent = total) holds in every branch,
+  including all-skipped. Both trace to pre-existing kaizen items (PR #84
+  regression, PR #105's "Known limits"), not untracked scope creep.
+- By the time this branch tried to merge, a different session had already
+  landed the same t-008/t-017 `status: done` updates on `main`, plus closed
+  out t-018 (CI wiring for `test:art-request-yaml`, kind_robots PR #109) —
+  so this PR's roadmap diff is now a stale duplicate and is being closed
+  without merging the roadmap.yaml side. Recording the critique here so it
+  isn't lost.
+- One finding from the original review didn't make it into the version that
+  landed: `ArtQueueEntry.variant` was narrowed from a specific `ArtVariant`
+  union (in the original `art-request.post.ts`) to plain `string` in the new
+  `server/utils/artRequestYaml.ts`. Harmless today — CI/tsc is green and all
+  call sites still pass `ArtVariant` values — but it quietly loosens the
+  compile-time contract on a module whose whole purpose is contract
+  enforcement. Filed as t-020 (t-019 was already taken by a live
+  auto-art-generate verification task by the time this landed).
+
+**Kaizen task:** t-020 - re-tighten `ArtQueueEntry.variant` back to the
+`ArtVariant` union type in kind_robots' `server/utils/artRequestYaml.ts`.
+
+**Pattern note:** Same underlying issue as the three entries above (work
+landing on `main` before the roadmap/TALKBACK catch up), but this time it
+bit a Reviewer session instead of a Worker one — two parallel review
+sessions produced overlapping `status: done` updates for the same tasks.
+Fourth-plus instance overall; still not promoting to a standing AGENTS.md
+checklist item since each case has resolved cleanly on its own, but worth
+Silas knowing this class of race isn't unique to the Worker.

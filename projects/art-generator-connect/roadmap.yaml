@@ -428,3 +428,20 @@ tasks:
     HARDENING IDEAS if issues surface: surface generation results in the daily
     digest, and add a mark-consumed path so refresh_queue=false runs of the
     committed queue do not re-generate the same entries.
+- id: t-020
+  milestone: m4
+  title: Re-tighten ArtQueueEntry.variant from string back to the ArtVariant union in kind_robots' server/utils/artRequestYaml.ts
+  status: ready
+  owner: null
+  updated: '2026-07-06T21:00:00Z'
+  passes: 0
+  stakes: reversible
+  note: >
+    Kaizen from reviewing kind_robots PR #108 (t-008/t-017): when
+    renderRequestEntry's YAML logic was extracted out of
+    server/api/conductor/art-request.post.ts into server/utils/artRequestYaml.ts,
+    ArtQueueEntry.variant was quietly widened from a specific ArtVariant union
+    to plain string. Harmless today (CI/tsc green, all call sites still pass
+    ArtVariant values) but it loosens the compile-time contract on a module
+    whose whole purpose is enforcing a contract. Narrow it back to the
+    ArtVariant union and confirm tsc + test:art-request-yaml stay green.
