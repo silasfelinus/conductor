@@ -253,3 +253,19 @@ tasks:
     comfy/sd .http test style Silas uses; cover POST /api/art/queue,
     POST /api/art/queue/claim, POST /api/art/queue/[id]/complete
     end-to-end so the queue contract is exercisable without a live relay.
+- id: t-015
+  milestone: m5
+  title: Unify art endpoint machine auth on requireMachineUser (sweep remaining inline apiKey checks)
+  status: ready
+  owner: null
+  updated: '2026-07-06T00:50:00Z'
+  passes: 0
+  stakes: reversible
+  note: >
+    Kaizen from kind_robots PR #96 (save-generated 401'd the relay's admin
+    token while the queue endpoints accepted it - auth drift between
+    generations of endpoints). Sweep the remaining bespoke inline
+    apiKey-only checks (/api/art/generate, textGate consumers, any others
+    matching prisma.user.findFirst({apiKey})) onto the shared
+    requireMachineUser guard so machine auth is uniform and defined in one
+    place. Behavior-preserving for existing JWT/apiKey callers.

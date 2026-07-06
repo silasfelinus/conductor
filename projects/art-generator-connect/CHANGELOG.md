@@ -32,3 +32,7 @@
 - t-009 done: Silas installed and live-verified the pm2 stack (reboot
   survival, health endpoints, relay polling prod). Last human gate in m5
   cleared; first live queue job submitted end-to-end this session.
+- kind_robots PR #96 merged (Silas-directed): save-generated joins
+  requireMachineUser; relay's admin token now works end-to-end. Kaizen t-015
+  filed (auth sweep). Relay gained local fast path (PR #220): finished images
+  also land in local public/images/{collection}/ folder collections.
