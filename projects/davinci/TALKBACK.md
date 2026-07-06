@@ -188,3 +188,32 @@ generation, prisma db push, all 15 verify checks passed on GitHub's infra).
 
 **Kaizen task:** deferred — folded into t-011's note (headless resolution
 driver for the CI job); creating a separate task would duplicate it.
+
+## 2026-07-06 | Reviewer → system | davinci/t-013 | response
+
+**Decision:** merged (kind_robots PR #103)
+
+**Context:** Silas-directed session ("aperitif" before tonight's project),
+same standing authority. Same-agent build-and-merge; verification basis below.
+
+**What was good:**
+- Closed the m2 engine gap the roadmap had promised ("run, choice, and ending")
+  — only the ending half existed before this.
+- The play loop was proven to COMPOSE with the t-009 resolver, not just work in
+  isolation: the outcomeKey derived from stats accumulated through create ->
+  choices equals what resolveLifeRunEnding computes (1011000101 in the driver).
+- Verified beyond typecheck: 28 helper assertions + a live dev-server HTTP
+  matrix, mirroring the t-009 discipline.
+- Reused the environment from the prior session (seeded MariaDB survived), so
+  the verification ran against the real 1024-ending dataset.
+
+**What to improve:**
+- Still same-agent merge — an independent pass over server/utils/davinci.ts
+  (the transaction boundaries in recordLifeChoice, chapter-advance semantics)
+  would be healthy.
+- The choice side now guards status (409 on non-ACTIVE); the resolve side's
+  recompute-on-COMPLETE is still open. Correctly left to t-011 rather than
+  scope-creeping this task.
+
+**Kaizen task:** deferred — folded into t-011 (headless create->choices->resolve
+CI driver). t-011 is now `ready` (both deps done).

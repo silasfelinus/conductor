@@ -210,7 +210,7 @@ tasks:
   - id: t-011
     milestone: m2
     title: "Add LifeRun status-transition guard and an end-to-end play-loop API test"
-    status: waiting
+    status: ready
     owner: null
     passes: 0
     stakes: reversible
@@ -219,12 +219,13 @@ tasks:
       - t-013
     note: >
       Kaizen from t-009 merge: resolveLifeRunEnding currently recomputes on every
-      call, including for runs already COMPLETE. Once the play loop (t-013) lands,
-      add an explicit status transition guard (ACTIVE -> COMPLETE only, or a
-      documented re-resolve policy) plus a test that drives create-run -> set-stats
-      -> resolve end-to-end. Folded in from the t-012 kaizen: a small headless tsx
-      driver for resolveLifeRunEnding would let the davinci-seed-verify CI job
-      exercise the resolution/award path too, without dev-server auth.
+      call, including for runs already COMPLETE. Now unblocked (t-013 landed a
+      play loop that already guards the CHOICE side — choices on a non-ACTIVE run
+      return 409). Remaining scope: guard/document the RESOLVE side's
+      recompute-on-COMPLETE behavior, and add a headless tsx driver that runs
+      create-run -> record-choices -> resolve against the scratch DB, wired into
+      the davinci-seed-verify CI job so the whole play loop gets coverage without
+      dev-server auth (folds in the t-012 kaizen).
 
   - id: t-012
     milestone: m2
@@ -246,19 +247,20 @@ tasks:
   - id: t-013
     milestone: m2
     title: "Build minimal Da Vinci play-loop API (create run, record choice, update stats)"
-    status: ready
-    owner: null
+    status: done
+    owner: reviewer
+    updated: '2026-07-06T01:30:00-07:00'
     passes: 0
     stakes: reversible
     depends_on: t-009
     note: >
-      Discovered gap while closing out the resolution engine: m2 promises "life
-      run, choice, and ending engine" but only the ending half exists. Add the
-      app-owned endpoints to (1) create a LifeRun for the authenticated user
-      (title, seed, optional protagonist/genre/character/dream links), (2) record
-      a LifeChoice with its stat effects, applying LifeStat deltas atomically, and
-      (3) read a run with stats/choices for resume. Follow the conventions in
-      server/api/davinci/runs/[id]/resolve.post.ts (requireApiUser, errorHandler,
-      ownership checks). AI narration stays out of scope — these endpoints are the
-      durable-state substrate the Chat narrator will call later. Respect the
-      boundary rules in docs/storymaker-boundary-comparison.md.
+      Done in kind_robots PR #103 (Silas-directed session work). server/utils/davinci.ts
+      gains createLifeRun, recordLifeChoice, getLifeRunForUser; handlers:
+      POST /api/davinci/runs, GET /api/davinci/runs/:id, POST /api/davinci/runs/:id/choices.
+      recordLifeChoice applies stat effects atomically (LifeStat upsert-increment in a
+      transaction), stores effects on the LifeChoice, advances currentChapter, and rejects
+      choices on non-ACTIVE runs (409). Completes the m2 run/choice half; composes with the
+      t-009 resolver (outcomeKey from accumulated play-loop stats matches resolve). AI
+      narration out of scope; stays inside Life* models per the Storymaker boundary doc.
+      Verified: 28 helper assertions + live HTTP matrix (201/200/401/400/404/409) against
+      the seeded MariaDB; vue-tsc + lint clean. Docs: docs/notes/davinci-play-loop-api.md.
