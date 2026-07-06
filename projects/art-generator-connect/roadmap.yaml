@@ -202,7 +202,7 @@ tasks:
 - id: t-012
   milestone: m5
   title: 'Conductor consumer: submit approved art-generate.yaml jobs and land results in projects/process/'
-  status: ready
+  status: needs-human
   owner: null
   updated: '2026-07-05T00:00:00Z'
   passes: 0
@@ -215,17 +215,20 @@ tasks:
     each entry via the t-010 queue API (KR_API_TOKEN), poll for completion,
     download results into projects/process/ where distribute_images.py
     already routes them to project folders and kind_robots collections.
-    gate_human because it is the first fully autonomous generation run -
-    Silas approves the first live cycle before it becomes routine.
-    Option on record (Silas 2026-07-05): engines, kind_robots, and conductor
-    share one physical drive on the home box, so the relay/consumer may
-    later write images directly to the local kind_robots public/images tree
-    (plus DB record) instead of base64-uploading through the API - a fast
-    path worth a task if generation volume grows.
+    FOR SILAS: scripts/consume_art_queue.py is built and merged (dry-run
+    default, 6 unit tests). TO APPROVE the first live cycle: populate a
+    batch (python scripts/queue_missing_project_art.py), review
+    projects/art-generate.yaml, then KR_API_TOKEN=... python
+    scripts/consume_art_queue.py --live --limit 1 and watch the relay log.
+    When satisfied, set approved_by_human: true and status: done.
+    What unblocks: the Worker may run the consumer in cycles - missing
+    project art then generates without any human enqueueing.
+    (Local fast path note retained: relay already writes collection copies
+    on the home box; direct-write for the consumer stays a future option.)
 - id: t-013
   milestone: m5
   title: Align image tooling with the canonical placement convention (context/slug nesting, iterated numbering)
-  status: ready
+  status: done
   owner: null
   updated: '2026-07-05T00:00:00Z'
   passes: 0
@@ -240,10 +243,15 @@ tasks:
     (resolve nested context/slug then flat slug then artcollections),
     and gallery.json regeneration. No bulk moves of existing folders -
     flat public/images/{slug}/ stays valid; migrate opportunistically.
+    DONE 2026-07-06: distribute_images.py gained slug_folder_rel /
+    next_numbered_path / collections.json master index (5 unit tests);
+    kind_robots folder endpoint resolves nested -> flat -> artcollections
+    (PR #98). Webp-at-source conversion handled by the t-012 consumer via
+    optional Pillow.
 - id: t-014
   milestone: m5
   title: Add .http test coverage for the ArtJob queue contract (enqueue → claim → complete) against a dev DB
-  status: ready
+  status: done
   owner: null
   updated: '2026-07-05T13:30:00Z'
   passes: 0
@@ -256,7 +264,7 @@ tasks:
 - id: t-015
   milestone: m5
   title: Unify art endpoint machine auth on requireMachineUser (sweep remaining inline apiKey checks)
-  status: ready
+  status: done
   owner: null
   updated: '2026-07-06T00:50:00Z'
   passes: 0
@@ -269,3 +277,6 @@ tasks:
     matching prisma.user.findFirst({apiKey})) onto the shared
     requireMachineUser guard so machine auth is uniform and defined in one
     place. Behavior-preserving for existing JWT/apiKey callers.
+    DONE 2026-07-06 in kind_robots PR #97: art/generate,
+    chats/openai/images/generate, textGate swapped; the three comfy routes'
+    inline checks were redundant second auths and were removed.

@@ -155,3 +155,21 @@ between endpoint generations; the failing job's error field named the exact hop.
 **Pattern note:** when adding a new auth guard (t-011), grep for the old pattern it
 replaces (prisma.user.findFirst({apiKey})) and file the sweep task immediately -
 the relay found this gap at runtime; a grep would have found it at review time.
+
+## 2026-07-06 | Reviewer → Worker | art-generator-connect/t-012..t-015 | response
+
+**Decision:** merged kind_robots PR #97 (t-015 sweep + t-014 contract tests,
+CI green); kind_robots PR #98 (t-013 endpoint) pending CI; conductor changes
+(t-013 distribute half, t-012 consumer) in session PR. All Silas-directed.
+
+**What was notable:**
+- The three comfy routes (characterSheet, hunyuan3d, ltx/image2Video) carried
+  an inline apiKey check AND authAndGate on the same header - mutually
+  unsatisfiable before t-011, i.e. those routes were likely broken for pure
+  API callers. The sweep removed the redundant check outright.
+- distribute_images.py + folder endpoint now share the collections.json
+  contract; the conductor side owns writing it, kind_robots only reads.
+
+**Kaizen task:** conductor/t-024 (pre-existing worker-status test failures)
+filed instead of an art-generator-connect task - the drift is in conductor
+tooling, not this project.
