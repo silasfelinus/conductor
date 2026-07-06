@@ -40,9 +40,9 @@ tasks:
       authenticate to the Kind Robots API. It lists the exact PROJECT Dream fields needed for
       slug parity: slug "superkate-services-calculator", priority HIGH, projectStatus ACTIVE,
       and friendly title "Superkate Services Calculator". TO APPROVE/COMPLETE: run the sync
-      script from a full Worker/runtime environment with KR_API_TOKEN, or create/verify the
-      Dream through the authenticated Kind Robots API, then set this task to done. This keeps
-      the external sync honest instead of claiming a database write that was not performed.
+      script from a full Worker/runtime environment with the required Kind Robots API credential,
+      or create/verify the Dream through the authenticated Kind Robots API, then set this task to
+      done. This keeps the external sync honest instead of claiming a database write that was not performed.
 
   - id: t-002
     milestone: m1
@@ -102,10 +102,11 @@ tasks:
   - id: t-013
     milestone: m1
     title: Open the PR in the same cycle a task branch is pushed, before ending the Worker session
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
+    updated: 2026-07-06
     note: >
       Kaizen from a Reviewer sweep (2026-07-05): t-012's branch (worker/superkate-services-calculator-t-012)
       was claimed on main and fully implemented, but no PR was ever opened — the Reviewer found it
