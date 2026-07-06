@@ -1,10 +1,101 @@
-# art-generate.yaml — Active image-generation batch
-#
-# Send this file to ChatGPT along with the system prompt from ART-PROMPTS.md.
-# Generate exactly one standalone image per entry. No collages, grids, or contact sheets.
-# After generating: save each file to its target_repo at the listed image_path, then remove
-# its entry from this file. Pull the next batch (up to 10 entries) from pending entries in
-# projects/art-prompts.yaml (images: and inspirations: sections).
-
-batch:
-  entries: []
+generated_by: scripts/queue_missing_project_art.py
+mode: dry-run
+description: Concrete project image requests ready for manual generation; no live API was called.
+images:
+- project: packmaker
+  variant: icon
+  target_repo: silasfelinus/conductor
+  image_path: projects/images/packmaker-icon.webp
+  size: 256x256
+  status: pending
+  prompt: Premium app icon for Packmaker, a glowing treasure chest opening into neatly arranged content
+    cards — a tiny landscape, a masked character, a spellbook, a medal — crisp app-icon polish with a
+    strong silhouette, no text, no logo, no watermark, no collage, square composition
+- project: packmaker
+  variant: card
+  target_repo: silasfelinus/conductor
+  image_path: projects/images/packmaker-card.webp
+  size: 512x768
+  status: pending
+  prompt: Professional portrait card illustration for Packmaker, a workshop where a diverse crew of humans,
+    robots, and inventive companions assembles themed content packs on a luminous conveyor — location
+    dioramas, character figures, genre tomes, and reward tokens being boxed into elegant collector cases,
+    cinematic key-art staging, tactile detail, no readable text, no logos, no watermark, portrait composition
+- project: packmaker
+  variant: hero
+  target_repo: silasfelinus/conductor
+  image_path: projects/images/packmaker-hero.webp
+  size: 1280x720
+  status: pending
+  prompt: Studio-quality widescreen hero illustration for Packmaker, a grand pack-forging atelier with
+    two showcase display cases — one radiating heroic super-powered energy, one swirling with arcane magic
+    — while diverse makers and small robot artisans generate locations, characters, genres, and rewards
+    along glowing pipeline rails, layered depth and cinematic lighting, rich but uncluttered, no readable
+    text, no logos, no watermark, landscape composition
+- project: ruler-hooked
+  variant: icon
+  target_repo: silasfelinus/conductor
+  image_path: projects/images/ruler-hooked-icon.webp
+  size: 256x256
+  status: pending
+  prompt: Premium app icon for The Ruler is Hooked, a goofy cartoon monarch seen from behind slouched
+    happily on a throne-turned-fishing-chair at a lake's edge, oversized crown tilted, fishing rod arcing
+    out over sparkling water with the line making a heart-shaped loop, tiny castle silhouette in the distance,
+    bold storybook-cartoon shapes with a Monkey Island wink, instantly readable silhouette at small sizes,
+    no readable text, no logos, no watermark, square composition
+- project: ruler-hooked
+  variant: card
+  target_repo: silasfelinus/conductor
+  image_path: projects/images/ruler-hooked-card.webp
+  size: 512x768
+  status: pending
+  prompt: 'Portrait key art for The Ruler is Hooked, a cartoony fishing/kingdom simulator: a contented
+    ruler of any gender perched on the grassy bank of a beautiful lake behind their castle, rod in hand,
+    while a comically sinister warlock land developer with blueprints and a serene druid preservationist
+    with sprouting staff lean into frame from either side awaiting a decision, half the scene lush nature
+    and half drifting toward whimsical overdevelopment, exaggerated good-and-evil archetypes with wry
+    warmth, Treasure Planet and She-Ra energy, painterly storybook lighting, no readable text, no logos,
+    no watermark, portrait composition'
+- project: ruler-hooked
+  variant: hero
+  target_repo: silasfelinus/conductor
+  image_path: projects/images/ruler-hooked-hero.webp
+  size: 1280x720
+  status: pending
+  prompt: 'Studio-quality widescreen hero illustration for The Ruler is Hooked: a wide layered storybook
+    landscape composited from distinct regions — castle grounds, village edge, treeline, far shore, sky
+    — each region caught mid-transformation between thriving druid-kept wilderness and goofy warlock real-estate
+    sprawl, while in the foreground the happily oblivious ruler fishes from a small dock, a royal messenger
+    waving an urgent scroll behind them, diverse quirky townsfolk and creatures dotting the mid-ground,
+    cartoony exaggerated good-versus-evil staging with nuanced wry details, cinematic depth and warm lighting,
+    rich but uncluttered, no readable text, no logos, no watermark, landscape composition'
+- project: ecosystem-map
+  variant: icon
+  target_repo: silasfelinus/conductor
+  image_path: projects/images/ecosystem-map-icon.webp
+  size: 256x256
+  status: pending
+  prompt: Premium app icon for Ecosystem Map, a luminous constellation of project nodes connected by clean
+    glowing paths around a central compass-like robot eye, crisp readable silhouette, elegant systems-map
+    symbolism, no text, no logo, no watermark, no collage, square composition
+- project: ecosystem-map
+  variant: card
+  target_repo: silasfelinus/conductor
+  image_path: projects/images/ecosystem-map-card.webp
+  size: 512x768
+  status: pending
+  prompt: Professional portrait card illustration for Ecosystem Map, a calm map-room command table where
+    diverse humans, robots, and creature collaborators align project cards, bot portraits, image folders,
+    and narrator threads into one coherent blueprint, premium product key art, cinematic lighting, no
+    readable text, no logos, no watermark, portrait composition
+- project: ecosystem-map
+  variant: hero
+  target_repo: silasfelinus/conductor
+  image_path: projects/images/ecosystem-map-hero.webp
+  size: 1280x720
+  status: pending
+  prompt: Studio-quality widescreen hero illustration for Ecosystem Map, a grand Kind Robots architecture
+    atlas where portals to many project worlds are connected by shared rails for Dreams, Bots, ArtCollections,
+    narrator threads, and menus, with a composed manager-bot guide tracing reuse paths across the network,
+    layered cinematic depth, rich but uncluttered, no readable text, no logos, no watermark, landscape
+    composition
