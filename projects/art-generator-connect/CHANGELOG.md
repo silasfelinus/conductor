@@ -45,3 +45,18 @@
   end-to-end. Remaining m5 work is enrichment: t-012 (consumer feeds queue
   from art-generate.yaml), t-013 (placement/webp/gallery.json), t-014
   (contract tests), t-015 (auth sweep).
+
+## 2026-07-06 (night session, continued)
+- t-015 done (kind_robots PR #97): machine-auth sweep - art/generate,
+  openai images, textGate onto requireMachineUser; three comfy routes'
+  redundant inline checks removed.
+- t-014 done (kind_robots PR #97): server/api/art/queue/queue.http contract
+  tests (lifecycle + negatives).
+- t-013 done: distribute_images.py nested folders + {utility}-{n} numbering
+  + collections.json master index (5 tests); kind_robots folder endpoint
+  resolves nested -> flat -> artcollections (PR #98).
+- t-012 built: scripts/consume_art_queue.py (dry-run default, 6 tests,
+  Pillow webp conversion w/ png fallback) -> needs-human for the first
+  live cycle.
+- Filed conductor/t-024: pre-existing test_run_worker_status_integration
+  failures found on clean main.
