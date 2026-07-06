@@ -181,15 +181,22 @@ tasks:
 - id: t-011
   milestone: m5
   title: Wire art generation intents
-  status: ready
-  owner: null
-  updated: '2026-07-03T15:15:00-07:00'
+  status: done
+  owner: claude
+  updated: '2026-07-06T22:30:00Z'
   passes: 0
   stakes: reversible
   depends_on: t-005
-  note: 'Connect voice requests like "Serendipity: generate art of <prompt>" from silasfelinus/serendipity-voice
-    to the approved Kind Robots art generation path. Start with draft or queued jobs, require clarification
-    for missing style/size/gallery details, and never publish generated images publicly from voice alone.'
+  note: 'Done. Voice art requests now submit to the real Kind Robots art API. Added src/art-submit.ts
+    in silasfelinus/serendipity-voice: an authenticated client for POST /api/art/queue (default,
+    Alexa-safe) or POST /api/art/generate (synchronous A1111), using the KR service/beta-admin token via
+    the x-admin-token header (free, no mana). voice-bridge became async and, when SERENDIPITY_ENABLE_ART
+    plus a token are set, submits the request and speaks the real outcome. Also broadened the art parser
+    so natural phrasing resolves ("generate me an image of a fox", "make me a picture of a dragon",
+    "draw a fox"). Fully gated: with art off or no token it stays draft-only. No KR code change needed.
+    Verified with 104 tests + typecheck and a live Alexa-event -> real POST /api/art/queue against a mock
+    KR. Deploy/runbook for the physical Echo is in docs/physical-echo-runbook.md; the go-live approval
+    itself is still the t-010 human gate.'
 - id: t-012
   milestone: m4
   title: Wire front-end control intents (Serendipity view + animation bridge)

@@ -1,6 +1,7 @@
 # alexa-integration changelog
 
 ## 2026-07-06
+- Wired real art generation (t-011 done): voice art requests now submit to the Kind Robots art API (POST /api/art/queue by default, or /api/art/generate) using the service token; broadened the art parser for natural phrasing ("generate me an image of a fox"). Gated behind SERENDIPITY_ENABLE_ART + a token. Operator steps for the physical Echo in docs/physical-echo-runbook.md.
 - Extended the voice bridge (t-013): theme control ("set theme to synthwave"), "surprise me" random animation, and art drafts relayed to a review panel on the Serendipity view. Command contract now spans animation | theme | art. Draft-only/client-side; verified via tests, vue-tsc/eslint/prettier, live curl, and headless browser.
 - First working end-to-end voice-to-front-end call (t-012): "Serendipity, turn butterflies on" from an Alexa event drives the Kind Robots butterfly animation.
 - serendipity-voice: added `control` domain, control adapter, in-memory relay bus, and CORS relay endpoints (`/api/alexa`, `/api/commands`, `/api/messages`).
