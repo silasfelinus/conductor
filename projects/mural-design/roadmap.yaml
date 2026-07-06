@@ -23,11 +23,11 @@ milestones:
   - id: m1
     title: Direction capture
     weight: 20
-    status: in-progress
+    status: done
   - id: m2
     title: Design iteration
     weight: 35
-    status: not-started
+    status: in-progress
   - id: m3
     title: Final mural plan
     weight: 30
@@ -40,19 +40,19 @@ tasks:
   - id: t-001
     milestone: m1
     title: Write the mural design brief from Silas's current direction
-    status: ready
-    owner: null
+    status: done
+    owner: worker
     passes: 0
     stakes: reversible
     updated: '2026-07-06T00:00:00Z'
     note: >
-      Produce projects/mural-design/DESIGN-BRIEF.md capturing the current preferred
-      composition, constraints, palette direction, iteration history, and what to avoid.
-      Include the preferred prompt language for the next generator pass.
+      Wrote projects/mural-design/DESIGN-BRIEF.md capturing the current preferred
+      composition, constraints, palette direction, iteration history, what to avoid,
+      and prompt language for the next generator pass.
   - id: t-002
     milestone: m2
     title: Generate a cleaner minimal alien-garden mural variation set
-    status: waiting
+    status: ready
     owner: null
     passes: 0
     stakes: reversible
