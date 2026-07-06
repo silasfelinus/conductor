@@ -99,7 +99,11 @@ def load_entries():
     if not ART_GENERATE_FILE.exists():
         return []
     data = yaml.safe_load(ART_GENERATE_FILE.read_text()) or {}
-    entries = (data.get("batch") or {}).get("entries") or []
+    # Canonical shape is batch.entries. Tolerate a legacy top-level `images:`
+    # list too, so a batch written by an older queue_missing_project_art.py
+    # (or one already sitting on disk) is still consumed rather than silently
+    # skipped.
+    entries = (data.get("batch") or {}).get("entries") or data.get("images") or []
     return [
         e
         for e in entries

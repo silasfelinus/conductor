@@ -47,6 +47,55 @@ batch:
     assert entries[0]["image_path"] == "projects/images/alpha-icon.webp"
 
 
+def test_load_entries_reads_legacy_images_shape(tmp_path, monkeypatch):
+    # A batch written by an older queue_missing_project_art.py used a
+    # top-level images: list instead of batch.entries. The consumer must
+    # still read it (the file may already be on disk).
+    art_file = tmp_path / "art-generate.yaml"
+    art_file.write_text(
+        """
+generated_by: scripts/queue_missing_project_art.py
+mode: dry-run
+images:
+  - image_path: projects/images/alpha-icon.webp
+    prompt: alpha icon
+    size: 256x256
+    project: alpha
+"""
+    )
+    monkeypatch.setattr(consumer, "ART_GENERATE_FILE", art_file)
+    entries = consumer.load_entries()
+    assert len(entries) == 1
+    assert entries[0]["project"] == "alpha"
+
+
+def test_builder_output_is_consumable(tmp_path, monkeypatch):
+    # End-to-end shape contract: what queue_missing_project_art.write_queue
+    # emits must be exactly what consume_art_queue.load_entries reads.
+    import scripts.queue_missing_project_art as builder
+
+    entries = [
+        {
+            "project": "alpha",
+            "variant": "icon",
+            "target_repo": "silasfelinus/conductor",
+            "image_path": "projects/images/alpha-icon.webp",
+            "size": "256x256",
+            "status": "pending",
+            "prompt": "bright alpha icon",
+        }
+    ]
+    art_file = tmp_path / "art-generate.yaml"
+    builder.write_queue(entries, art_file)
+
+    monkeypatch.setattr(consumer, "ART_GENERATE_FILE", art_file)
+    loaded = consumer.load_entries()
+    assert len(loaded) == 1
+    job = consumer.entry_to_job(loaded[0])
+    assert job["payload"]["width"] == 256
+    assert job["projectSlug"] == "alpha"
+
+
 def test_save_result_falls_back_to_png_without_pillow(tmp_path, monkeypatch):
     monkeypatch.setattr(consumer, "PROCESS_DIR", tmp_path / "process")
     # simulate Pillow being unavailable regardless of the environment
