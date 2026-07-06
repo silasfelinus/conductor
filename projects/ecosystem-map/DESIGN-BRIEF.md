@@ -29,10 +29,10 @@ That is powerful, but it also creates clone-risk. If one project builds a custom
 | Agent task queue | Conductor `projects/<slug>/roadmap.yaml` | Authoritative for Worker/Reviewer execution. |
 | Project identity/display | Kind Robots Dream with `dreamType: PROJECT` | Slug matches Conductor project directory. |
 | Friendly project progress | Dream `goal` and `waypoints` | UI/voice layer only, not a replacement for roadmap tasks. |
-| Project visual assets | Conductor `projects/images/` for icon/card/hero | Distributed into the workspace by existing scripts. |
-| Inspiration gallery | Kind Robots `public/images/artcollections/<slug>/` | ArtCollection-style folder and manifest layer. |
+| Project visual assets | Conductor `projects/images/` for icon/card/hero | Distributed into the workspace by existing scripts only after approval. |
+| Inspiration gallery | Kind Robots `public/images/artcollections/<slug>/` | ArtCollection-style folder and manifest layer; generated candidates require approval before becoming canonical. |
 | Project bot | Existing Bot framework | One Manager or Assistant bot per project Dream unless explicitly skipped. |
-| Bot avatar/emotions/actions | Existing bot image framework | Avatar plus twenty thin portrait images. Avoid a new asset model. |
+| Bot avatar/emotions/actions | Existing bot image framework | Avatar plus twenty thin portrait images. Avoid a new asset model; generated portraits require approval. |
 | Project-specific navigation | Narrator topics and threads | Menus should be generated/configured through the existing narrator structure. |
 | Shared content packs | Packmaker + Kind Robots sharing/ACL layer | Do not invent parallel permissions. |
 
@@ -64,11 +64,32 @@ Every active project should eventually have:
 
 Agents should write prompts and routing metadata, not commit generated binaries from agent runs.
 
+### Image approval gate
+
+Until the art generator consistently produces high-quality, on-brief assets, all generated images are candidates, not canonical assets. The system may be aggressively populated with requests and prompts, but any generated output that would become a project icon/card/hero, inspiration image, mock screenshot, bot avatar, or bot emotion/action portrait must stop for human approval before replacing placeholders, updating gallery manifests, attaching to Dreams/Bots, or becoming the displayed default.
+
+The intended flow is:
+
+1. Queue many requests with clear `image_path`, size, variant, project slug, and prompt quality criteria.
+2. Generate candidate images into a review/staging location.
+3. Present candidates for approval, rejection, or regeneration.
+4. Promote only approved images into the canonical destination paths and manifests.
+5. Preserve rejected or alternate generations only when they are useful as references; otherwise keep them out of the main project surfaces.
+
+Quality criteria should be explicit enough to reject mush without debate:
+
+- correct aspect ratio and destination variant;
+- no readable text, accidental UI labels, logos, watermarks, contact sheets, or collages;
+- clear focal subject and professional composition;
+- matches the project’s visual intent rather than generic “AI art” vibes;
+- consistent enough with the Kind Robots ecosystem to share visual language;
+- technically clean at display size, especially for icons and thin portrait bot images.
+
 ## Duplication risks to audit first
 
 1. **Project navigation** — custom menus should flow through narrator topics/threads, not bespoke per-project menu tables.
 2. **Project status** — Conductor owns task status; Dreams own friendly display. Do not sync in both directions without a clear rule.
-3. **Image storage** — project hero/icon/card, ArtCollection inspirations, and bot portraits need a documented destination split.
+3. **Image storage** — project hero/icon/card, ArtCollection inspirations, and bot portraits need a documented destination split plus a review/staging path.
 4. **Pack permissions** — Packmaker, digital-storefront, and Kind Robots sharing/ACL work should reuse one permission model.
 5. **Project assistant logic** — Manager/Assistant bot behavior should be configured data-first, not copied into one-off components.
 6. **Mock screenshots** — useful as inspiration assets, but should not become fake UI source files or compete with actual components.
@@ -79,6 +100,7 @@ Agents should write prompts and routing metadata, not commit generated binaries 
 2. Manager/Assistant bot parity spec.
 3. Shared-layer reuse map showing where duplicate work is likely.
 4. Follow-up tasks routed to the owning project: `kind-robots`, `global-ui`, `packmaker`, `art-generator-connect`, or project-specific roadmaps.
+5. Image approval workflow spec covering request population, candidate staging, review, and promotion.
 
 ## Non-goals
 
@@ -87,7 +109,8 @@ Agents should write prompts and routing metadata, not commit generated binaries 
 - Do not generate or commit binary images.
 - Do not publish, deploy, spend, create live products, or touch DNS/secrets.
 - Do not replace Conductor roadmaps with Dream waypoints.
+- Do not auto-promote generated images to canonical paths before approval.
 
 ## Tone
 
-This project is the map room: tidy, opinionated, and allergic to duplicate wheels. We can have many portals, but one floor plan.
+This project is the map room: tidy, opinionated, and allergic to duplicate wheels. We can have many portals, but one floor plan. Image generation can be prolific, but the velvet rope stays up until the art earns it.
