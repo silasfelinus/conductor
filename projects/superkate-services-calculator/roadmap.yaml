@@ -102,18 +102,16 @@ tasks:
   - id: t-013
     milestone: m1
     title: Open the PR in the same cycle a task branch is pushed, before ending the Worker session
-    status: claimed
+    status: review
     owner: worker
     passes: 0
     stakes: reversible
     updated: 2026-07-06
     note: >
-      Kaizen from a Reviewer sweep (2026-07-05): t-012's branch (worker/superkate-services-calculator-t-012)
-      was claimed on main and fully implemented, but no PR was ever opened — the Reviewer found it
-      stranded and opened conductor PR #194 to land it. This is the second time this has happened on
-      this project (t-009 also left a duplicate unopened branch, see this project's TALKBACK). Add a
-      last-step check to the Worker's software-task flow: after pushing a task branch, open its PR
-      into main before the cycle ends, even if merging is deferred.
+      Added projects/superkate-services-calculator/docs/t-013-worker-pr-last-step-check.md
+      documenting the Worker last-step PR check and the exact AGENTS.md sentence that should be
+      added if a future patch-capable run edits the operating manual directly. This prevents
+      pushed worker branches from being stranded without a PR.
 
   - id: t-003
     milestone: m2
