@@ -107,7 +107,11 @@ module.exports = {
         KR_RELAY_USER_ID: process.env.KR_RELAY_USER_ID || '',
         // Prod currently lives on the vercel.app host; switch to
         // kindrobots.org when that domain points at prod.
-        KR_BASE_URL: 'https://kind-robots.vercel.app'
+        KR_BASE_URL: 'https://kind-robots.vercel.app',
+        // Local fast path: set (via setx) to your kind_robots checkout's
+        // public/images folder to also land finished files there, e.g.
+        //   setx KR_LOCAL_IMAGES_DIR "D:/code/kind_robots/public/images"
+        KR_LOCAL_IMAGES_DIR: process.env.KR_LOCAL_IMAGES_DIR || ''
       },
       out_file: `${LOG_DIR}/kr-relay.out.log`,
       error_file: `${LOG_DIR}/kr-relay.err.log`,
