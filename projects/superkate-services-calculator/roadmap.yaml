@@ -116,7 +116,7 @@ tasks:
   - id: t-003
     milestone: m2
     title: Build the appointment and customer data model with persistence
-    status: claimed
+    status: needs-human
     owner: worker
     passes: 0
     stakes: reversible
@@ -126,11 +126,14 @@ tasks:
       - t-010
     updated: 2026-07-06
     note: >
-      Implement Appointment and Customer models. Appointment stores customerId/clientName snapshot,
-      appointmentDate, hourlyRateCents, timeSpentMinutes, productCostCents, appointmentTotalCents,
-      createdAt, and updatedAt. Customer stores name and optional email for repeat clientele.
-      Money must be stored as cents and totals calculated from inputs. Follow SPEC.md's customer
-      data security baseline and the cloud-sync architecture note.
+      FOR SILAS: I added projects/superkate-services-calculator/docs/t-003-data-model-persistence-handoff.md
+      because this GitHub-only Worker run can update conductor but cannot locate/write/test the actual
+      Superkate app repository or runtime. It contains the exact Customer and Appointment model contracts,
+      cents/minutes total calculation, local-first persistence service shape, Pinia/store boundary, safe
+      error handling, and verification checklist. TO APPROVE/COMPLETE: point this task at the actual app
+      repository/path or run a patch-capable Worker against that repo, then set this task back to ready for
+      implementation or mark done only after the live app code is merged. This blocks t-004 and t-005 until
+      real persistence code exists.
 
   - id: t-004
     milestone: m2
