@@ -209,3 +209,21 @@ backend code with auth/deploy consequences should wait for Silas even when a
 Reviewer could technically justify merging it. This is the second instance;
 if a third comes up, promote it from a TALKBACK pattern note into a permanent
 line in CONTROL.md's global rules instead of re-discovering it per PR.
+
+## 2026-07-06 | Reviewer → Reviewer | art-generator-connect/t-016 | response
+
+**Subject:** Scheduled sweep found the t-016 gate already cleared in practice, not yet in the roadmap.
+
+**Detail:**
+- No `worker/*` PRs were open in either `conductor` or `kind_robots` at sweep time
+  (kind_robots #101 and #102, and conductor #223-227, are all closed/merged).
+- kind_robots PR #101 (the subject of t-016) was merged directly on GitHub by
+  `silasfelinus` at 2026-07-06T07:15:48Z, ~45 minutes after the escalation comment -
+  exactly the "merge it on GitHub directly" resolution path that comment offered.
+- Updated t-016's `note:` to record the merge and left `status: needs-human` /
+  `gate_human: true` unchanged, since only Silas can set `approved_by_human: true`.
+  Did not flip `status: done` myself - that would be recording an approval I'm not
+  authorized to grant, even though the real-world outcome (merge) already happened.
+
+**Suggested action:** Silas: set `approved_by_human: true` and `status: done` on
+t-016 whenever convenient - purely a roadmap-bookkeeping formality at this point.
