@@ -36,3 +36,12 @@
   requireMachineUser; relay's admin token now works end-to-end. Kaizen t-015
   filed (auth sweep). Relay gained local fast path (PR #220): finished images
   also land in local public/images/{collection}/ folder collections.
+
+## 2026-07-06
+- FIRST FULLY AUTONOMOUS GENERATION: ArtJob 2 -> claim -> forge render ->
+  save-generated (ArtImage 4032) -> DONE -> local copy at
+  kind_robots public/images/comfy/comfy-4032.png. Verified live by Silas.
+  The m5 loop (supervision + queue + machine auth + relay) is operational
+  end-to-end. Remaining m5 work is enrichment: t-012 (consumer feeds queue
+  from art-generate.yaml), t-013 (placement/webp/gallery.json), t-014
+  (contract tests), t-015 (auth sweep).
