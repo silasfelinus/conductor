@@ -116,9 +116,9 @@ tasks:
 - id: t-007
   milestone: m4
   title: Surface folder-based art collections (public/images/{slug}/) in kind_robots collection views
-  status: ready
-  owner: null
-  updated: '2026-07-04T12:10:00Z'
+  status: claimed
+  owner: worker
+  updated: '2026-07-06T00:00:00Z'
   passes: 0
   stakes: reversible
   note: >
@@ -128,6 +128,19 @@ tasks:
     Per Silas (2026-07-04): a folder's contents ARE the slug's art collection.
     Wire the endpoint into the collection display components so folder
     inspirations appear alongside DB-backed ArtImages for the same slug.
+
+    IMPLEMENTED 2026-07-06 on branch claude/conductor-worker-image-gen-zbvhbn
+    (kind_robots), extended per Silas to also SYNC folders into saved
+    collections. Backend: server/utils/folderCollections.ts (shared
+    nested->flat->artcollections resolution + listFolderCollections enum),
+    GET /api/art/collection/folders (list), POST
+    /api/art/collection/folder/[slug]/sync (materialize folder -> DB
+    ArtCollection, idempotent, machine auth). Frontend: collectionStore
+    fetchFolderCollections/syncFolderCollection + art-gallery renders folder
+    collections alongside DB ones with a "Sync to collection" action.
+    PENDING: kind_robots has no runnable toolchain in the conductor session
+    (node_modules absent) so this is source-reviewed only - needs vue-tsc +
+    a real gallery run before merge. No PR opened yet.
 - id: t-008
   milestone: m4
   title: Add a regression test for renderRequestEntry's YAML indentation in kind_robots' art-request.post.ts

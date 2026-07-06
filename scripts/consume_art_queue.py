@@ -51,6 +51,23 @@ KR_API_TOKEN = os.environ.get("KR_API_TOKEN", "").strip()
 
 POLL_SECONDS = 5
 
+# Generation quality defaults. Each is overridable per art-generate.yaml entry
+# (steps, cfg, sampler, negative_prompt, seed, engine) so a batch can spend
+# more on hero key art than on throwaway icons. Keys emitted below are
+# KR-style; the home relay's run_a1111 consumes them directly.
+DEFAULT_ENGINE = "A1111"
+DEFAULT_STEPS = 30
+DEFAULT_CFG = 7
+# A broad quality/cleanliness negative. The prompts already say "no text, no
+# watermark, no collage"; this reinforces that on the sampler side and knocks
+# back the usual SD failure modes (bad anatomy, artifacts, borders).
+DEFAULT_NEGATIVE_PROMPT = (
+    "text, watermark, signature, logo, caption, letters, words, "
+    "blurry, low quality, lowres, jpeg artifacts, deformed, disfigured, "
+    "extra limbs, bad anatomy, bad hands, cropped, out of frame, "
+    "collage, frame, border, ugly, grainy"
+)
+
 
 def http_json(method, url, body=None, timeout=60):
     data = json.dumps(body).encode() if body is not None else None
@@ -78,20 +95,39 @@ def parse_size(size, default=(512, 512)):
 
 
 def entry_to_job(entry):
-    """Map an art-generate.yaml entry to an ArtJob enqueue body."""
+    """Map an art-generate.yaml entry to an ArtJob enqueue body.
+
+    Quality knobs (steps, cfg, negative prompt, sampler, seed) default to the
+    module constants and may be overridden per entry. The optional knobs
+    (sampler, seed) are only sent when the entry sets them, so the relay keeps
+    its own safe defaults (sampler "Euler a", random seed) otherwise."""
     width, height = parse_size(entry.get("size"))
+
+    payload = {
+        "promptString": " ".join(str(entry.get("prompt") or "").split()),
+        "negativePrompt": " ".join(
+            str(entry.get("negative_prompt") or DEFAULT_NEGATIVE_PROMPT).split()
+        ),
+        "width": width,
+        "height": height,
+        "steps": int(entry.get("steps") or DEFAULT_STEPS),
+        "cfg": entry.get("cfg", DEFAULT_CFG),
+        # the relay's local fast path files its copy under the
+        # project's collection folder
+        "collection": entry.get("project") or "comfy",
+    }
+
+    # Optional per-entry knobs: only send when set, so an untouched batch runs
+    # on the relay's proven defaults rather than a possibly-unsupported sampler.
+    if entry.get("sampler"):
+        payload["sampler"] = str(entry["sampler"])
+    if entry.get("seed") is not None:
+        payload["seed"] = entry["seed"]
+
     return {
-        "engine": "A1111",
+        "engine": str(entry.get("engine") or DEFAULT_ENGINE).upper(),
         "projectSlug": entry.get("project") or None,
-        "payload": {
-            "promptString": " ".join(str(entry.get("prompt") or "").split()),
-            "width": width,
-            "height": height,
-            "steps": 20,
-            # the relay's local fast path files its copy under the
-            # project's collection folder
-            "collection": entry.get("project") or "comfy",
-        },
+        "payload": payload,
     }
 
 
@@ -200,6 +236,7 @@ def main():
             print(
                 f"  would queue {entry['image_path']}"
                 f"  [{job['payload']['width']}x{job['payload']['height']}]"
+                f"  {job['payload']['steps']}steps"
                 f"  \"{job['payload']['promptString'][:60]}\""
             )
         print("\nRe-run with --live to queue for real (requires KR_API_TOKEN).")
