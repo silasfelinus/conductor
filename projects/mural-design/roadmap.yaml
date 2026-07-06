@@ -1,0 +1,102 @@
+project: mural-design
+kind: content
+goal: >
+  Iterate toward the perfect hand-paintable mural design for Silas's fence update,
+  then turn the chosen concept into a practical grid, palette, and paint plan.
+waypoints:
+  - Capture the current preferred direction and constraints.
+  - Generate focused design variations through the art pipeline.
+  - Select and refine a final mural composition.
+  - Produce a flat-color palette, grid plan, and execution checklist for repainting.
+notes_from_silas: >
+  This is one of Silas's most heartfelt projects: update the fence mural that became
+  a Pokestop. Continue iterating on designs until the right mural emerges. The core
+  direction is a refreshed Catbus on the right, a secret Totoro-like spirit in an ivy
+  portal on the left, normal-sized hidden soot sprites, rainbow butterflies, Kind
+  Robots-style robots, and stylized greenery with a slightly alien landscape feel.
+
+  The mural must remain achievable for a non-expert painter using a grid. Prefer flat
+  single-color sections, thick black outlines, minimal shading, strong silhouettes,
+  and clear paintable shapes. Avoid overcomplicated detail and avoid the giant soot
+  sprite direction; small hidden sprites work better.
+milestones:
+  - id: m1
+    title: Direction capture
+    weight: 20
+    status: done
+  - id: m2
+    title: Design iteration
+    weight: 35
+    status: in-progress
+  - id: m3
+    title: Final mural plan
+    weight: 30
+    status: not-started
+  - id: m4
+    title: Painting prep
+    weight: 15
+    status: not-started
+tasks:
+  - id: t-001
+    milestone: m1
+    title: Write the mural design brief from Silas's current direction
+    status: done
+    owner: worker
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-06T00:00:00Z'
+    note: >
+      Wrote projects/mural-design/DESIGN-BRIEF.md capturing the current preferred
+      composition, constraints, palette direction, iteration history, what to avoid,
+      and prompt language for the next generator pass.
+  - id: t-002
+    milestone: m2
+    title: Generate a cleaner minimal alien-garden mural variation set
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-06T00:00:00Z'
+    depends_on: t-001
+    note: >
+      Use the art generator pipeline to create a small batch of flat-color, thick-outline
+      mural mockups based on the brief. Keep normal-sized hidden soot sprites, add more
+      small robots, preserve the Catbus-right and Totoro-left structure, and reduce clutter.
+  - id: t-003
+    milestone: m2
+    title: Compare generated mural variations and choose the strongest direction
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-06T00:00:00Z'
+    depends_on: t-002
+    gate_human: true
+    note: >
+      Prepare a comparison note for Silas that calls out what is working and what should
+      change. This is a human preference gate: Silas chooses the next direction before
+      final paint planning.
+  - id: t-004
+    milestone: m3
+    title: Turn the selected mural into a flat-color paint specification
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-06T00:00:00Z'
+    depends_on: t-003
+    note: >
+      Create a paintable specification with exact color roles, simplified shape groups,
+      line-weight guidance, and per-section notes for the fence boards.
+  - id: t-005
+    milestone: m4
+    title: Create the grid transfer and painting checklist
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-06T00:00:00Z'
+    depends_on: t-004
+    note: >
+      Produce the practical execution plan: grid transfer method, masking/chalk workflow,
+      painting order, supply list, and touch-up strategy for Silas to use on the fence.
