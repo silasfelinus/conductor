@@ -184,6 +184,49 @@ tasks:
     DB vs front-end), who acts on it, and how it differs from adjacent terms.
 
     '
+- id: t-011
+  milestone: m5
+  title: Ship the UI gallery + shared style plan
+  status: done
+  owner: worker
+  passes: 0
+  stakes: reversible
+  depends_on: t-001
+  updated: '2026-07-06T00:00:00Z'
+  note: 'Added a living style guide at the /ui route in kind_robots, built to the app''s conventions:
+    content/ui.md (front matter + :ui-gallery MDC body, routed through pages/[...slug].vue) renders
+    components/ui/ui-gallery.vue. The gallery drives the real themeStore (setActiveTheme) with a live
+    theme switcher across all DaisyUI presets, and documents the style plan: a Conventions section
+    (surface rules: base-200 canvas / base-100 raised / base-300 borders; primary/secondary/accent for
+    action only; status colors for status only) plus a Design-tokens swatch grid teaching the semantic
+    vocabulary. Introduced reusable container/surface classes in assets/css/tailwind.css
+    (.kr-page, .kr-container, .kr-container-wide, .kr-section, .kr-panel, .kr-panel-muted, .kr-panel-flat)
+    so components stop reinventing padding/rounding/background per file. Verified end-to-end: dev server
+    renders /ui at HTTP 200 and the switcher flips data-theme (retro to synthwave) live; screenshotted
+    both themes. Directly answers the global-ui "How can I make this look better?" prompt by making the
+    design observable and giving humans + AI a shared token/class vocabulary to iterate in. Companion
+    recommendation to Silas: adopt code-native design (DaisyUI tokens + this gallery + screenshot-driven
+    iteration) as the primary path; Canva for marketing art only; Figma optional/later.
+
+    '
+- id: t-012
+  milestone: m5
+  title: Migrate existing components onto the kr-* container/surface classes
+  status: ready
+  owner: worker
+  passes: 0
+  stakes: reversible
+  depends_on: t-011
+  updated: '2026-07-06T00:00:00Z'
+  note: 'The style plan (t-011) only pays off once components adopt it. Incrementally migrate existing
+    panels/cards/pages to the shared .kr-* classes and the surface rules, replacing ad-hoc
+    rounded-2xl/border/bg-base-100 clusters and inconsistent bg-primary/secondary usage. Do it in small,
+    reversible passes (a few components per PR), screenshotting /ui and the touched views before/after to
+    confirm no regressions across themes. Prioritise the highest-traffic surfaces first (workspace header,
+    workspace sheet, project/dream cards, task creation form). Keep the gallery in sync as new patterns
+    are standardised.
+
+    '
 milestones:
 - id: m1
   title: Task language + presentation model
