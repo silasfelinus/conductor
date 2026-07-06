@@ -359,6 +359,15 @@ maintains. If a distributed image would replace an existing file, the original i
 its slug's inspiration folder first and the new image takes its place. Files that match
 nothing land in `projects/process/unmatched/` for Silas.
 
+**Approval gate for generated images:** until Silas explicitly lifts this gate, all generated
+images are candidates. Agents may populate `art-prompts.yaml`, `art-generate.yaml`, missing-image
+requests, and review metadata freely, but generated outputs must not auto-promote into canonical
+project images, ArtCollection inspirations, Dream images, Bot avatars, or Bot emotion/action
+portraits. Put generated outputs in a review/staging path, preserve enough metadata to trace the
+request, and require Silas approval before moving or attaching them to the canonical destination.
+Rejected images may be kept only as references if useful; otherwise keep them out of main display
+surfaces.
+
 **When creating or merging a new project**, append three image request entries to
 `ART-PROMPTS.md` at the repo root using the template in that file. Remove each entry once
 its image file is committed to `projects/images/`. Do not commit generated image binaries
