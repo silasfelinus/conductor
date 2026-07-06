@@ -190,3 +190,22 @@ tasks:
   note: 'Connect voice requests like "Serendipity: generate art of <prompt>" from silasfelinus/serendipity-voice
     to the approved Kind Robots art generation path. Start with draft or queued jobs, require clarification
     for missing style/size/gallery details, and never publish generated images publicly from voice alone.'
+- id: t-012
+  milestone: m4
+  title: Wire front-end control intents (Serendipity view + animation bridge)
+  status: done
+  owner: claude
+  updated: '2026-07-06T20:45:00Z'
+  passes: 0
+  stakes: reversible
+  depends_on: t-005
+  note: 'First working end-to-end call from an Echo utterance to a live Kind Robots front-end change.
+    Added a control domain + control adapter + in-memory relay bus + CORS relay endpoints in
+    silasfelinus/serendipity-voice, and a Serendipity Voice view (stores/serendipityVoiceStore.ts,
+    components/pages/serendipity-voice-page.vue, content/serendipity-voice.md at /serendipity-voice)
+    in silasfelinus/kind_robots. "Serendipity, turn butterflies on" now toggles the butterfly screen
+    animation via animationStore. Verified: serendipity-voice npm test (65 checks) + typecheck green;
+    kind_robots vue-tsc + eslint + prettier green; live curl proof through POST /api/alexa; and a
+    headless-browser proof (0 to 20 to 0 butterflies, no console errors). Design at
+    docs/animation-control-bridge.md. Reversible visual toggles only: no writes, publishing, spend,
+    or roadmap edits, and no physical Echo binding (that stays behind the t-010 human gate).'
