@@ -219,12 +219,32 @@ tasks:
   depends_on: t-011
   updated: '2026-07-06T00:00:00Z'
   note: 'The style plan (t-011) only pays off once components adopt it. Incrementally migrate existing
-    panels/cards/pages to the shared .kr-* classes and the surface rules, replacing ad-hoc
-    rounded-2xl/border/bg-base-100 clusters and inconsistent bg-primary/secondary usage. Do it in small,
-    reversible passes (a few components per PR), screenshotting /ui and the touched views before/after to
-    confirm no regressions across themes. Prioritise the highest-traffic surfaces first (workspace header,
-    workspace sheet, project/dream cards, task creation form). Keep the gallery in sync as new patterns
-    are standardised.
+    panels/cards/pages to the shared .kr-* classes and the surface rules. IMPORTANT FINDING (2026-07-06):
+    most high-traffic surfaces are intentionally bespoke, NOT generic panels — the workspace header is a
+    translucent bg-base-100/95 + backdrop-blur chrome, login-page is glassmorphism (bg-base-100/88 +
+    backdrop-blur-xl + gradient border + rounded-4xl), and the "generic" panels are mostly dashed-border
+    empty-states. Do NOT force these onto .kr-panel; that regresses crafted UI. Scope real migration to
+    (a) genuinely-generic solid panels and (b) status-callout usages (see t-013). This work needs human
+    eyes in a preview deploy per surface — the dev sandbox has no DB, so most data-heavy pages cannot be
+    visually verified here. Do it in small reversible passes, screenshotting /ui and the touched views.
+
+    '
+- id: t-013
+  milestone: m5
+  title: Canonical status-callout classes (.kr-note-*) + gallery
+  status: done
+  owner: worker
+  passes: 0
+  stakes: reversible
+  depends_on: t-011
+  updated: '2026-07-06T00:00:00Z'
+  note: 'Standardised the most-repeated inconsistent surface in the app. Audit found 100+ hand-written
+    status-tint callouts with drifting opacities (border-info/30 vs /40, bg-info/5 vs /10 vs /15, likewise
+    success/warning/error). Added canonical .kr-note + .kr-note-info/success/warning/error classes to
+    assets/css/tailwind.css (border-{status}/40 + bg-{status}/10 + text-{status}) and a new Callouts
+    section to the /ui gallery documenting them, with a note to prefer DaisyUI `alert` for loud banners.
+    Verified rendering across themes (emerald, synthwave) via headless screenshots. Migrating the 100+
+    existing usages onto .kr-note-* is folded into t-012 (needs preview-deploy verification per surface).
 
     '
 milestones:
