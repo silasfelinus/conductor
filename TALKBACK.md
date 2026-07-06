@@ -596,3 +596,51 @@ superseded on `main`.
   same cycle a branch is pushed, rather than leaving claimed work to be found by the next
   Reviewer sweep. This is the second time in one project a claimed branch reached `main`
   only because a Reviewer went looking for it.
+
+## 2026-07-05 | Reviewer → system | conductor/branch-cleanup | pattern
+
+**Subject:** Sweep audit of all non-main branches in conductor and kind_robots;
+all three verified fully merged/superseded, deletion still blocked by branch-scope 403.
+
+**Detail:**
+- `conductor: claude/davinci-life-simulator-tjigs0` — all content merged via PRs #205–#208;
+  only remaining diff vs main is 2 lines of auto-generated CONDUCTOR-REPORT.md (stale copy).
+- `conductor: worker/superkate-services-calculator-t-011` — same duplicate-branch instance
+  already flagged 2026-07-05 (this file, t-012 entry); re-verified: its content is on main
+  as e0812c0 and t-011 is `done` there with identical note text. Still awaiting deletion.
+- `kind_robots: claude/davinci-life-simulator-tjigs0` — tree byte-identical to main
+  (empty diff); PRs #89–#94 all merged.
+- Deletion attempts: `git push --delete` → HTTP 403 (session push scope), and the GitHub
+  MCP toolset has create_branch but no delete_branch. Same limitation as the two prior
+  audits in this file.
+
+**Suggested action:** Silas: delete all three at
+github.com/silasfelinus/conductor/branches and github.com/silasfelinus/kind_robots/branches
+(one click each, zero loss — verified above). Both repos are otherwise main-exclusive.
+
+## 2026-07-05 | Reviewer → system | session 2026-07-05 (evening) | response
+
+**Subject:** Silas-directed session work: Dependabot triage fixed, manuscript
+gates cleared with his in-session approval, new project ruler-hooked created.
+
+**Detail:**
+- Dependabot (4 alerts: 3 high, 1 moderate) triaged by reproducing floor-version
+  npm audits per manifest: hono + @hono/node-server (humboldt-scoop-cms, high) and
+  nuxt (high) + yaml (moderate) (approval-portal, retired). Raised manifest floors
+  to the patched versions (hono ^4.12.27, @hono/node-server ^1.19.14, nuxt ^4.4.8,
+  yaml ^2.9.0); humboldt-scoop-cms verified with a clean install + tsc build and a
+  zero-vulnerability audit. approval-portal is retired — manifest bump only, no build run.
+- mermaids-of-venice t-003 and digital-storefront t-010 cleared per the CONTROL.md
+  human-gate clearance rule: Silas committed both manuscript files (9dd84c8) and
+  set the price ($9.99) in session. Correction recorded: the sellable file is the
+  SECOND EDITION, not the previously assumed "third printing"; the .doc is
+  edition-3 WIP. Both files are sacrosanct — never edited by agents (README updated).
+  resolve_deps.py released mermaids t-004..t-007 to ready; storefront t-011
+  (purchase flow, test mode) is next in the dependency chain.
+- New project projects/ruler-hooked/ ("The Ruler is Hooked") scaffolded from
+  Silas's in-session pitch: DESIGN-BRIEF.md, roadmap (9 tasks, soft scope gate per
+  the 2026-07-04 rule), icon/card/hero art requests queued.
+
+**Suggested action:** Worker next cycles: mermaids editorial tasks are
+long-read-heavy — claim one at a time; ruler-hooked t-004/t-005/t-006 are
+spec tasks that can proceed independently.

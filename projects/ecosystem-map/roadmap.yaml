@@ -1,0 +1,120 @@
+project: ecosystem-map
+kind: software
+
+notes_from_silas: |
+  Build an ecosystem-level map of Kind Robots projects so agents reuse shared layers instead of rebuilding the same concepts in parallel. Each project should have inspiration images, mock screenshot concepts, a title image, and a matching Manager or Assistant bot connected to the project Dream. Manager bots should use the existing bot/image framework: generated avatar plus twenty thin portrait emotion/action images, tied into narrator topics and threads so project-specific navigation can be customized without inventing a second menu system.
+
+  Art generation should be request-rich but approval-gated. Populate the generator queue aggressively with high-quality prompts and metadata, but treat generated images as candidates until Silas approves them. Do not promote generated candidates into canonical project, gallery, Dream, or Bot image slots automatically.
+
+milestones:
+  - id: m1
+    title: "SHAPE — inventory the ecosystem and define shared primitives"
+    weight: 30
+    status: not-started
+
+  - id: m2
+    title: "BUILD — route assets, bots, dreams, and menus through shared layers"
+    weight: 45
+    status: not-started
+
+  - id: m3
+    title: "POLISH & SHIP — clean duplication and document ownership boundaries"
+    weight: 25
+    status: not-started
+
+tasks:
+  - id: t-001
+    milestone: m1
+    title: "Write the ecosystem design brief"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Produce DESIGN-BRIEF.md for ecosystem-map. Cover the shared resource graph across
+      Conductor projects, Kind Robots Dreams, Bots, ArtCollections, narrator topics,
+      threads, menus, generated images, and project UI. Identify what should be shared,
+      what should remain project-owned, and where duplicate systems are likely forming.
+
+  - id: t-002
+    milestone: m1
+    title: "Confirm scope with Silas"
+    status: needs-human
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      FOR SILAS: soft checkpoint, nothing is blocked on it. Confirm whether
+      ecosystem-map should own the cross-project asset/bot/resource audit, or redirect
+      it into an existing project such as kind-robots or global-ui. Development can
+      continue while you decide.
+
+  - id: t-003
+    milestone: m1
+    title: "Inventory project visual asset coverage"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Compare conductor project slugs, project Dreams, ArtCollections, icon/card/hero
+      prompts, inspiration images, mock screenshot concepts, and title-image needs.
+      Produce a matrix showing missing assets and the canonical destination path for
+      each generated file. Do not generate image binaries.
+
+  - id: t-004
+    milestone: m1
+    title: "Specify Manager and Assistant bot parity"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Document how each project Dream should receive a Manager or Assistant bot using
+      the existing bot framework. Include botType selection, avatar image prompt rules,
+      twenty thin portrait emotion/action image slots, narrator topic/thread wiring,
+      and the custom project navigation menu contract.
+
+  - id: t-005
+    milestone: m2
+    title: "Audit shared layers for duplicate development"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Analyze active projects for overlapping systems: galleries, project menus,
+      narrator threads, pack/content permissions, task surfaces, Dream waypoints,
+      ArtCollections, bot images, and project metadata. Produce a reuse map with
+      specific recommendations for which layer owns each primitive.
+
+  - id: t-006
+    milestone: m2
+    title: "Create implementation tasks for confirmed gaps"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on:
+      - t-003
+      - t-004
+      - t-005
+      - t-007
+    note: >
+      Turn the asset matrix, bot parity spec, duplication audit, and image approval
+      workflow into scoped follow-up roadmap tasks. Prefer shared infrastructure tasks
+      over per-project one-offs when a primitive will be reused across multiple projects.
+
+  - id: t-007
+    milestone: m1
+    title: "Specify the image approval workflow"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Define how generated images move from request queue to candidate staging to human
+      review to approved promotion. Include quality criteria, metadata fields, rejection
+      and regeneration handling, and how approved images become canonical project,
+      ArtCollection, Dream, and Bot assets without allowing auto-promotion before Silas
+      approves them.

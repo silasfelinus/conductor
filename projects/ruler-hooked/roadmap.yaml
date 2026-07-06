@@ -1,0 +1,180 @@
+project: ruler-hooked
+kind: software
+
+notes_from_silas: |
+  "The Ruler is Hooked" — fishing/kingdom management simulator, told in
+  slideshow format. You play the King (or Queen) (or other) of a country, but
+  you don't want to rule, you just want to fish all day. Perched at the edge
+  of a beautiful lake behind your castle, you fish while kingdom tasks are
+  occasionally handed to you as choices that affect the environment (e.g. a
+  warlock land developer vs Druid preservationists). Choices move kingdom
+  health and swap specific landscape regions, merged together into one play
+  screen image. Web app/app first (JavaScript + backend) as proof of concept;
+  future expansion to a full Steam game via Unreal. Cartoony and goofy,
+  exaggerated good/evil stereotypes with wry twists, always nuanced
+  characters — think Monkey Island, Bakshi, Treasure Planet, Steven Universe,
+  She-Ra. Characters use the kind_robots Character model (reuse existing when
+  they fit); different characters/events appear on different runs (e.g. the
+  ruler's child wants to elope). Multiple saves required. AI for assets and
+  inspiration during development, but the final game is playable OFFLINE — no
+  live LLM interactions. Bucket-list project.
+
+milestones:
+  - id: m1
+    title: "SHAPE — design brief, specs, art direction"
+    weight: 25
+    status: in-progress
+  - id: m2
+    title: "BUILD — slideshow play-loop proof of concept (web)"
+    weight: 50
+    status: not-started
+  - id: m3
+    title: "POLISH & SHIP — content depth, app packaging, Steam/Unreal research"
+    weight: 25
+    status: not-started
+
+tasks:
+  - id: t-001
+    milestone: m1
+    title: Write the design brief
+    status: done
+    owner: reviewer
+    passes: 0
+    stakes: reversible
+    updated: 2026-07-05
+    note: >
+      DESIGN-BRIEF.md written by the Reviewer in session 2026-07-05 directly
+      from Silas's pitch. Includes core loop, PoC exit criteria, art
+      direction, and the offline-at-runtime rule.
+
+  - id: t-002
+    milestone: m1
+    title: Confirm scope with Silas
+    status: needs-human
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      FOR SILAS: soft checkpoint, nothing is blocked on it — you pitched this
+      in session so it's mostly a fidelity check. Read DESIGN-BRIEF.md and
+      confirm the PoC exit criteria. (The "prime monster" question is
+      resolved: it's the Steam game Prime Monster, now the brief's primary
+      UI/structure reference — card selections, navigable pre-baked screens,
+      honestly-evil moral decisions.) TO APPROVE: set approved_by_human: true
+      and status: done, or correct the brief in a note here. Development
+      continues meanwhile.
+
+  - id: t-003
+    milestone: m1
+    title: Create the matching kind_robots PROJECT Dream (slug parity)
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Standing slug-parity rule: create a Dream of dreamType PROJECT with slug
+      ruler-hooked via scripts/sync_projects_to_dreams.py (needs KR_API_TOKEN).
+      Set goal (friendly definition of done: playable slideshow fishing/kingdom
+      PoC on the web) and waypoints from the milestones.
+
+  - id: t-004
+    milestone: m1
+    title: Spec the play-loop data model and save system
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      docs/data-model.md — runs, save slots (multiple named saves), kingdom
+      health axes/sliders, region states, event/choice records, character
+      references. Keep game content as data (JSON/YAML) so it survives a
+      future Unreal migration. Design for offline play: state lives client
+      side, backend is for account sync and nothing gameplay-critical.
+      TIME PILLAR (Silas 2026-07-05, see DESIGN-BRIEF.md): no clock, hidden
+      or shown — time-of-day is a turn-driven presentation state, and NOTHING
+      (events, choices, content) may key off it or expire. Model it as a
+      cosmetic cycle position advanced by actions, never wall-clock time.
+
+  - id: t-005
+    milestone: m1
+    title: Spec the environment layer compositing (regions, states, merge)
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      docs/compositing.md — name the landscape regions (sky, treeline, far
+      shore, village edge, castle grounds...), the states each can be in, how
+      slider values map to states, and how layered images merge into the one
+      play-screen image (z-order, transparent webp/png layers, optional subtle
+      animation). Include the pitch example: warlock development vs druid
+      preservation visibly changing a region. TIME-OF-DAY DIMENSION (Silas
+      2026-07-05): every region state needs time-of-day variants (day, night,
+      plus brief transitional treats — morning dew, golden hour — that show
+      only for a short beat before settling into day/night). Spec the variant
+      matrix and asset naming so region-state × time-of-day stays generatable
+      and the transitions are purely visual — never content gates.
+
+  - id: t-006
+    milestone: m1
+    title: Spec the event/character card deck format
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      docs/decks.md — the card/deck data format for kingdom tasks and
+      narrative arcs: trigger conditions, choices, slider effects, region
+      effects, character hooks (kind_robots Character model — reuse existing
+      Characters where they fit), and per-run variation so different
+      characters/events appear on different playthroughs (example arc: the
+      ruler's child wants to elope). Adding an arc must be a content task,
+      not a code task.
+
+  - id: t-007
+    milestone: m2
+    title: Build the slideshow play-loop proof of concept in kind_robots
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on:
+      - t-004
+      - t-005
+      - t-006
+    note: >
+      Cross-repo task (kind_robots). Slideshow/card play screen with live
+      layer compositing, event cards with choices, kingdom-health sliders,
+      and save/load with multiple slots. Placeholder art is fine until the
+      art pipeline delivers. PoC exit criteria are in DESIGN-BRIEF.md.
+
+  - id: t-008
+    milestone: m1
+    title: Write the art direction doc and first landscape prompt pack
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      docs/art-direction.md — pin the look (cartoony, goofy, exaggerated
+      good/evil with wry twists; Monkey Island / Bakshi / Treasure Planet /
+      Steven Universe / She-Ra references) and add the first landscape-layer
+      prompt entries to projects/art-prompts.yaml (inspirations for
+      ruler-hooked). Icon/card/hero entries already queued 2026-07-05.
+      Account for the time-of-day variant matrix (t-005): each region state
+      generates in day/night plus brief morning-dew and golden-hour treat
+      variants — write prompts as templates (region + state + time) so the
+      set scales without hand-writing every combination.
+
+  - id: t-009
+    milestone: m3
+    title: Research the Unreal/Steam migration path (note only)
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      docs/unreal-migration.md — what the web PoC's data-first content
+      (decks, regions, saves) needs to look like to port cleanly to Unreal;
+      what does NOT port (DOM compositing) and its Unreal equivalent; rough
+      effort tiers. Research note only — no engine work, no Steam page.

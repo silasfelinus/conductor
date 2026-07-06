@@ -1,30 +1,41 @@
 # Manuscript drop folder
 
-Silas: put the **Mermaids of Venice** PDF here (any filename is fine —
-`mermaids-of-venice.pdf` suggested). This is the third-printing file: the text you
-hand-edited, with the minor word-choice and pacing edits in the first two chapters.
+**Delivered 2026-07-05.** This folder holds two files, both Silas's alone:
 
-Committing it here unblocks two things:
+- **`mermaids of venice second edition.pdf`** — the finished, sellable text.
+  This is the store product (digital-storefront t-010, price **$9.99**) and the
+  reference text for the editorial pipeline below. Sale copy labels it the
+  **second edition**.
+- **`Mermaids of Venice Revision.doc`** — Silas's in-progress **edition-3**
+  revision work. Context only: it shows where the book is heading. It is not
+  for sale and not the target text for editorial deliverables.
 
-1. **Editorial pipeline** (this project, tasks t-004..t-007). Agents read the
-   manuscript and produce four separate files in `../editorial/`:
-   - `general-impressions.md` — honest reader-level reactions
-   - `editorial-notes.md` — structural and line-level notes (described, never rewritten)
-   - `cultural-awareness.md` — gaze/privilege gaps, handled with care
-   - `VERY-IMPORTANT.md` — actual typos and grammar errors only, with page/line
-     context so you can fix them in your own hand
+## SACROSANCT — read this twice
 
-   Also set `approved_by_human: true` and `status: done` on task t-003 in
-   `../roadmap.yaml` so the dependency resolver releases those tasks.
+Neither file is ever edited, reformatted, re-saved, converted, or "fixed" by
+any agent, for any reason. Silas keeps backups, but that is beside the point:
+the barrier itself is the rule. All editorial output lives in separate files
+under `../editorial/`.
 
-2. **The store's first product** (digital-storefront t-010) — add your price note
-   there when you're ready.
+## Editorial pipeline (tasks t-004..t-007)
+
+Agents read the **second edition PDF** and produce four separate files in
+`../editorial/`:
+
+- `general-impressions.md` — honest reader-level reactions
+- `editorial-notes.md` — structural and line-level notes (described, never rewritten)
+- `cultural-awareness.md` — gaze/privilege gaps, handled with care
+- `VERY-IMPORTANT.md` — actual typos and grammar errors only, with page/line
+  context so Silas can fix them in his own hand
+
+The revision `.doc` may be consulted to avoid flagging things Silas is already
+reworking for edition 3 — note such overlaps as "already in revision" rather
+than omitting them.
 
 ## Ground rules for agents
 
 - The prose is Silas's alone. Advise as an editor; **never** draft replacement
   prose intended for the book.
-- This PDF is a **sale product**. If/when it is wired for delivery in
-  kind_robots, it is served from authenticated server-side storage — it must
-  never be copied into `public/`, a public repo path, or any URL reachable
-  without purchase.
+- The PDF is a **sale product**. It is served from authenticated server-side
+  storage in kind_robots — it must never be copied into `public/`, a public
+  repo path, or any URL reachable without purchase.

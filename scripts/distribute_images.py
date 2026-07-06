@@ -118,6 +118,10 @@ def known_slugs():
         for d in kr_images.iterdir():
             if d.is_dir():
                 slugs.add(d.name)
+                # nested collections: public/images/{context}/{slug}/
+                for sub in d.iterdir():
+                    if sub.is_dir():
+                        slugs.add(sub.name)
     return slugs
 
 
@@ -130,28 +134,71 @@ def slug_for_stem(stem, slugs):
     return max(matches, key=len) if matches else None
 
 
-def next_inspiration_path(slug, suffix):
-    """Next free public/images/{slug}/{slug}-inspiration-{n}{suffix} in kind_robots."""
-    folder = KIND_ROBOTS_ROOT / "public" / "images" / slug
+def slug_folder_rel(slug):
+    """Folder (relative to public/images) that owns a slug's collection.
+
+    Placement convention (Silas, 2026-07-05): nested {context}/{slug} is
+    canonical, flat {slug} stays valid, artcollections/{slug} is the
+    legacy/unsorted fallback. An existing nested folder wins; otherwise an
+    existing flat folder; otherwise new files start a flat folder (nesting
+    is adopted opportunistically, never by bulk move).
+    """
+    images_root = KIND_ROBOTS_ROOT / "public" / "images"
+    if images_root.exists():
+        for ctx in sorted(images_root.iterdir()):
+            if not ctx.is_dir() or ctx.name in (slug, "artcollections"):
+                continue
+            if (ctx / slug).is_dir():
+                return f"{ctx.name}/{slug}"
+    return slug
+
+
+def next_numbered_path(slug, utility, suffix):
+    """Next free {folder}/{slug}-{utility}-{n}{suffix}, honoring nesting."""
+    folder_rel = slug_folder_rel(slug)
+    folder = KIND_ROBOTS_ROOT / "public" / "images" / folder_rel
     n = 1
-    while (folder / f"{slug}-inspiration-{n}{suffix}").exists():
+    while (folder / f"{slug}-{utility}-{n}{suffix}").exists():
         n += 1
-    return f"public/images/{slug}/{slug}-inspiration-{n}{suffix}"
+    return f"public/images/{folder_rel}/{slug}-{utility}-{n}{suffix}"
+
+
+def next_inspiration_path(slug, suffix):
+    """Back-compat wrapper: next free inspiration slot for a slug."""
+    return next_numbered_path(slug, "inspiration", suffix)
+
+
+def slug_and_utility_from_dest_filename(filename, slugs):
+    """(slug, utility) for preserving an overwritten file.
+
+    {slug}-icon.webp -> (slug, icon); {slug}-inspiration-3.webp ->
+    (slug, inspiration); unrecognized names preserve as inspiration.
+    """
+    stem = Path(filename).stem
+    utility = "inspiration"
+    m = re.search(r"[-_](icon|card|hero)$", stem)
+    if m:
+        utility = m.group(1)
+        stem = stem[: m.start()]
+    else:
+        m = re.search(r"[-_]([a-z]+)[-_]\d+$", stem)
+        if m:
+            utility = m.group(1)
+            stem = stem[: m.start()]
+    return (slug_for_stem(stem, slugs) or stem), utility
 
 
 def slug_from_dest_filename(filename, slugs):
-    """Slug for preserving an overwritten file: strip variant suffixes, else stem."""
-    stem = Path(filename).stem
-    stem = re.sub(r"[-_](icon|card|hero)$", "", stem)
-    stem = re.sub(r"[-_]inspiration[-_]\d+$", "", stem)
-    return slug_for_stem(stem, slugs) or stem
+    """Back-compat wrapper returning just the slug."""
+    return slug_and_utility_from_dest_filename(filename, slugs)[0]
 
 
-def write_gallery_manifest(slug):
-    """Regenerate gallery.json for a slug folder (array of image stems)."""
+def write_gallery_manifest(folder_rel):
+    """Regenerate gallery.json for a collection folder (flat "slug" or
+    nested "context/slug" relative to public/images)."""
     import json
 
-    folder = KIND_ROBOTS_ROOT / "public" / "images" / slug
+    folder = KIND_ROBOTS_ROOT / "public" / "images" / folder_rel
     if not folder.exists():
         return
     stems = sorted(
@@ -159,6 +206,45 @@ def write_gallery_manifest(slug):
         if f.is_file() and f.suffix.lower() in IMAGE_EXTS
     )
     (folder / "gallery.json").write_text(json.dumps(stems) + "\n")
+
+
+def write_collections_index():
+    """Regenerate public/images/collections.json: slug -> folder path
+    (relative to public/images). Lets the kind_robots folder-collection
+    endpoint resolve nested folders on the CDN, where it cannot glob.
+    Precedence per the placement convention: nested > flat > artcollections.
+    """
+    import json
+
+    images_root = KIND_ROBOTS_ROOT / "public" / "images"
+    if not images_root.exists():
+        return
+
+    def has_images(d):
+        return any(
+            f.is_file() and f.suffix.lower() in IMAGE_EXTS for f in d.iterdir()
+        )
+
+    index = {}
+    # Lowest precedence first; later assignments overwrite.
+    legacy = images_root / "artcollections"
+    if legacy.is_dir():
+        for d in sorted(legacy.iterdir()):
+            if d.is_dir() and has_images(d):
+                index[d.name] = f"artcollections/{d.name}"
+    for d in sorted(images_root.iterdir()):
+        if d.is_dir() and d.name != "artcollections" and has_images(d):
+            index[d.name] = d.name
+    for ctx in sorted(images_root.iterdir()):
+        if not ctx.is_dir() or ctx.name == "artcollections":
+            continue
+        for d in sorted(ctx.iterdir()):
+            if d.is_dir() and has_images(d):
+                index[d.name] = f"{ctx.name}/{d.name}"
+
+    (images_root / "collections.json").write_text(
+        json.dumps(index, indent=2, sort_keys=True) + "\n"
+    )
 
 
 def infer_destination(filename, slugs):
@@ -174,7 +260,7 @@ def infer_destination(filename, slugs):
     if m:
         slug = m.group(1)
         return {
-            "image_path": f"public/images/{slug}/{filename}",
+            "image_path": f"public/images/{slug_folder_rel(slug)}/{filename}",
             "target_repo": "silasfelinus/kind_robots",
         }
     slug = slug_for_stem(stem, slugs)
@@ -327,8 +413,8 @@ def distribute():
                 print(f"  SKIP (would replace {match['image_path']} but no kind_robots repo to preserve original)  {fname}")
                 skipped_missing_repo.append(fname)
                 continue
-            slug = slug_from_dest_filename(fname, slugs)
-            preserve_path = next_inspiration_path(slug, dest.suffix.lower())
+            slug, utility = slug_and_utility_from_dest_filename(fname, slugs)
+            preserve_path = next_numbered_path(slug, utility, dest.suffix.lower())
 
         if DRY_RUN:
             if preserve_path:
@@ -340,7 +426,9 @@ def distribute():
                 preserve_dest = KIND_ROBOTS_ROOT / preserve_path
                 preserve_dest.parent.mkdir(parents=True, exist_ok=True)
                 shutil.move(str(dest), preserve_dest)
-                touched_slugs.add(Path(preserve_path).parent.name)
+                touched_slugs.add(
+                    str(Path(preserve_path).parent.relative_to("public/images"))
+                )
                 print(f"  preserved original  {match['image_path']}  →  silasfelinus/kind_robots:{preserve_path}")
             dest.parent.mkdir(parents=True, exist_ok=True)
             shutil.copy2(src, dest)
@@ -350,13 +438,16 @@ def distribute():
 
         if match["target_repo"] == "silasfelinus/kind_robots":
             parts = Path(match["image_path"]).parts
-            if len(parts) == 4 and parts[:2] == ("public", "images"):
-                touched_slugs.add(parts[2])
+            if parts[:2] == ("public", "images") and len(parts) in (4, 5):
+                touched_slugs.add("/".join(parts[2:-1]))
 
     if not DRY_RUN:
-        for slug in sorted(touched_slugs):
-            write_gallery_manifest(slug)
-            print(f"  gallery.json refreshed for public/images/{slug}/")
+        for folder_rel in sorted(touched_slugs):
+            write_gallery_manifest(folder_rel)
+            print(f"  gallery.json refreshed for public/images/{folder_rel}/")
+        if touched_slugs and KIND_ROBOTS_ROOT.exists():
+            write_collections_index()
+            print("  collections.json index regenerated")
 
     if not DRY_RUN and moved:
         moved_names = {fname for fname, _ in moved}

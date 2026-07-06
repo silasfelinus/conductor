@@ -29,3 +29,34 @@
   pm2-managed; opt-in kr-relay block added to ecosystem.config.js).
 - Silas merged kind_robots PR #90 overnight: ArtJob queue + comfy machine-auth
   live. t-010/t-011 done; t-012 (consumer) now ready; kaizen t-014 added.
+- t-009 done: Silas installed and live-verified the pm2 stack (reboot
+  survival, health endpoints, relay polling prod). Last human gate in m5
+  cleared; first live queue job submitted end-to-end this session.
+- kind_robots PR #96 merged (Silas-directed): save-generated joins
+  requireMachineUser; relay's admin token now works end-to-end. Kaizen t-015
+  filed (auth sweep). Relay gained local fast path (PR #220): finished images
+  also land in local public/images/{collection}/ folder collections.
+
+## 2026-07-06
+- FIRST FULLY AUTONOMOUS GENERATION: ArtJob 2 -> claim -> forge render ->
+  save-generated (ArtImage 4032) -> DONE -> local copy at
+  kind_robots public/images/comfy/comfy-4032.png. Verified live by Silas.
+  The m5 loop (supervision + queue + machine auth + relay) is operational
+  end-to-end. Remaining m5 work is enrichment: t-012 (consumer feeds queue
+  from art-generate.yaml), t-013 (placement/webp/gallery.json), t-014
+  (contract tests), t-015 (auth sweep).
+
+## 2026-07-06 (night session, continued)
+- t-015 done (kind_robots PR #97): machine-auth sweep - art/generate,
+  openai images, textGate onto requireMachineUser; three comfy routes'
+  redundant inline checks removed.
+- t-014 done (kind_robots PR #97): server/api/art/queue/queue.http contract
+  tests (lifecycle + negatives).
+- t-013 done: distribute_images.py nested folders + {utility}-{n} numbering
+  + collections.json master index (5 tests); kind_robots folder endpoint
+  resolves nested -> flat -> artcollections (PR #98).
+- t-012 built: scripts/consume_art_queue.py (dry-run default, 6 tests,
+  Pillow webp conversion w/ png fallback) -> needs-human for the first
+  live cycle.
+- Filed conductor/t-024: pre-existing test_run_worker_status_integration
+  failures found on clean main.

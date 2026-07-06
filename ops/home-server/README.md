@@ -11,6 +11,7 @@ Files in this folder:
 | `ecosystem.config.js` | pm2 process definitions for `comfyui` and `sd-webui` (plus an opt-in `kr-relay`) |
 | `healthcheck.ps1` | optional watchdog — probes the HTTP health endpoints and `pm2 restart`s a hung process |
 | `relay_agent.py` | pull-based bridge: claims ArtJobs from kind_robots and drives local ComfyUI/A1111 (enable after art-generator-connect/t-010 deploys) |
+| `start-engines.bat` | double-click launcher: starts both engines (no-op if running) and attaches the live log stream — the old bats' echo, without owning the processes |
 
 ---
 
@@ -33,9 +34,11 @@ bottom if you'd rather not unpack a bat.)
 # 1. Install pm2 (needs Node.js; you already have it for kind_robots)
 npm install -g pm2
 
-# 2. Edit ecosystem.config.js — fix the three PATH placeholders at the top
+# 2. Verify the two *_DIR paths at the top of ecosystem.config.js
+#    (pre-filled from startcomfyfast.bat / webui-user.bat, 2026-07-05:
+#     D:\comfy\comfy-fast and D:\code\sd-webui-forge-neo)
 
-# 3. Start both backends under pm2
+# 3. Stop any copies still running from the old bats, then start under pm2
 cd <this folder>   # wherever you checked out conductor/ops/home-server
 pm2 start ecosystem.config.js
 
@@ -65,13 +68,33 @@ npm run setup
 # then, back as your user: pm2 save  (the service resurrects the saved list)
 ```
 
-**Option B — start at logon (simplest, fine if the box auto-logs-in):**
+**Option B — start at logon (RECOMMENDED — simplest, fine if the box gets logged into):**
 
 ```powershell
 npm install -g pm2-windows-startup
 pm2-startup install
 pm2 save
 ```
+
+> Field note (2026-07-05): Option A's `npm run setup` looped "Stopped…" on
+> Silas-PC — pm2-installer's service fails to start unless `npm run configure`
+> ran first (it unifies `PM2_HOME` at `C:\ProgramData\pm2\home` for the service
+> AND your shell; otherwise the service resurrects from an empty home while
+> your `pm2 save` wrote to your user profile → reboot brings up nothing).
+> To back out a half-installed service: `cd pm2-installer; npm run deconfigure;
+> npm run remove`, then use Option B. Tradeoff: Option B starts apps at
+> *logon*, not boot — a machine idling at the login screen runs nothing.
+
+### Gotcha: WSL pm2 ≠ Windows pm2
+
+There are two pm2 worlds on this box and they don't see each other. A shell
+prompt like `silasfelinus@Silas-PC:/mnt/d/...$` means WSL — its pm2 daemon
+(`/home/<user>/.pm2`) has its own empty process list, and `pm2 status` there
+will happily show a blank table while the Windows engines are running fine.
+The engines are Windows apps: **always run pm2 commands for them from
+PowerShell/cmd**, and if a fresh Windows daemon comes up empty after a
+reboot, `pm2 resurrect` restores the last `pm2 save`d list. (`pm2 kill` in
+WSL cleans up an accidentally spawned Linux daemon; harmless either way.)
 
 ### Optional: health watchdog
 
@@ -95,6 +118,29 @@ pm2 start all
 pm2 logs sd-webui --lines 200
 ```
 
+## What carried over from the old bats (and what deliberately didn't)
+
+Checklist against `startcomfyfast.bat` / `webui-user.bat` (2026-07-05):
+
+| Old bat behavior | In the pm2 kit? |
+|---|---|
+| ComfyUI: venv python, `--listen 127.0.0.1 --port 8188 --enable-cors-header` | ✅ verbatim in `ecosystem.config.js` |
+| Forge: full `COMMANDLINE_ARGS` — `--api --listen --cuda-malloc`, Z:\ model dirs, `--cors-allow-origins` (kindrobots.org, vercel, localhost:3000/3001), `--xformers --skip-python-version-check --reserve-vram 2` | ✅ verbatim, passed straight to `launch.py` |
+| Tailscale Serve (`serve --bg` → 443 for comfy, `--https=8443` for forge) | ⚠️ **not pm2-managed — it doesn't need to be.** `tailscale serve --bg` config persists in tailscaled across reboots. Run the two commands once (below), confirm with `tailscale serve status`, done. |
+| pip repair / ensurepip bootstrap (webui-user.bat) | ❌ intentionally left out — that's a one-time repair job, not supervision. Keep the old bat around; if Python ever breaks, run it once by hand. |
+| `pause` at the end | ❌ dropped — it's what makes bats un-automatable. |
+
+### Tailscale Serve (one-time)
+
+```powershell
+& "C:\Program Files\Tailscale\tailscale.exe" serve --bg http://127.0.0.1:8188
+& "C:\Program Files\Tailscale\tailscale.exe" serve --bg --https=8443 http://127.0.0.1:7860
+& "C:\Program Files\Tailscale\tailscale.exe" serve status   # verify both mappings
+```
+
+If both mappings already show in `serve status` from your old bat runs, there's
+nothing to do — the config is already persistent.
+
 ## The relay agent (kr-relay) — enable after t-010 deploys
 
 `relay_agent.py` closes the autonomous loop: it polls the kind_robots ArtJob
@@ -102,11 +148,20 @@ queue outward (claim → generate on localhost → upload via
 `/api/art/save-generated` → complete). Pull model, so nothing dials into your
 network and queued jobs simply wait whenever the box is down.
 
-To enable once the queue endpoints are live: uncomment the `kr-relay` block in
-`ecosystem.config.js`, set `KR_RELAY_TOKEN` (your admin user's apiKey) and
-`KR_RELAY_USER_ID` (that user's id), then `pm2 start ecosystem.config.js
---only kr-relay && pm2 save`. Needs any Python 3.9+ — stdlib only, no pip
-installs. Watch it with `pm2 logs kr-relay`.
+The queue endpoints are **live** (kind_robots PR #90, merged 2026-07-05). To
+enable: uncomment the `kr-relay` block in `ecosystem.config.js`, set
+`KR_RELAY_TOKEN` (your admin user's apiKey) and `KR_RELAY_USER_ID` (that
+user's id), then `pm2 start ecosystem.config.js --only kr-relay && pm2 save`.
+Needs any Python 3.9+ — stdlib only, no pip installs. Watch it with
+`pm2 logs kr-relay`.
+
+**Future option — local fast path:** the engines, kind_robots, and conductor
+checkouts all live on the same physical drive, so the relay could someday
+write finished images straight into the local kind_robots
+`public/images/{...}` folder (and just POST the DB record) instead of
+round-tripping base64 through the API. Skipped for now — the API path is
+simpler and works from anywhere — but the option is recorded in
+art-generator-connect/t-012's note if generation volume ever makes it worth it.
 
 ## Notes & gotchas
 
