@@ -148,12 +148,24 @@ tasks:
 - id: t-008
   milestone: m4
   title: Add a regression test for renderRequestEntry's YAML indentation in kind_robots' art-request.post.ts
-  status: ready
-  owner: ''
-  updated: '2026-07-04T00:00:00Z'
+  status: review
+  owner: reviewer
+  updated: '2026-07-06T20:00:00Z'
   passes: 0
   stakes: reversible
-  note: 'Filed after kind_robots PR #84 fixed a silent bug: renderRequestEntry() emitted requests:
+  note: >
+    IMPLEMENTED 2026-07-06 (Silas-directed session, pipeline hardening) on
+    branch claude/daily-standup-priorities-gdvhjr. Extracted the pure YAML
+    rendering logic (yamlQuoted/yamlFolded/renderRequestEntry/appendRequest +
+    ArtQueueEntry) out of server/api/conductor/art-request.post.ts into a new
+    dependency-free module server/utils/artRequestYaml.ts, and added a tsx
+    regression verifier utils/scripts/verifyArtRequestYaml.ts (npm run
+    test:art-request-yaml) asserting: column-0 list marker, exactly-2-space
+    continuation keys, folded prompt scalar, optional-field omission, and
+    appendRequest column-0 output + idempotency across all three requests:
+    seed shapes. Verified the rendering logic green via a plain-node mirror
+    (no node_modules in the fresh clone); vue-tsc/CI validates on the PR.
+    ORIGINAL: Filed after kind_robots PR #84 fixed a silent bug: renderRequestEntry() emitted requests:
     list items at 2-space indent instead of column 0, producing YAML that conductor''s parser
     could not read and stalling the missing-image pipeline undetected. A snapshot/unit test
     asserting the rendered entry matches conductor''s art-prompts.yaml requests: list style
@@ -300,13 +312,18 @@ tasks:
 - id: t-016
   milestone: m5
   title: 'Decide whether kind_robots PR #101 (Comfy direct smoke-test endpoints) may merge'
-  status: needs-human
+  status: done
   owner: null
-  updated: '2026-07-06T07:30:00Z'
+  updated: '2026-07-06T20:00:00Z'
   passes: 0
   stakes: outward-facing
   gate_human: true
+  approved_by_human: true
   note: >
+    CLEARED 2026-07-06 (Silas in-session, daily standup): Silas confirmed
+    closing this formality. approved_by_human set + status done per the
+    CONTROL.md in-session clearance rule; the underlying decision was already
+    made when Silas merged PR #101 himself.
     FOR SILAS: kind_robots PR #101 has already been merged directly on
     GitHub (merged_by: silasfelinus, 2026-07-06T07:15:48Z) -
     https://github.com/silasfelinus/kind_robots/pull/101 - via the
@@ -321,12 +338,25 @@ tasks:
 - id: t-017
   milestone: m4
   title: Guard folder-collection sync against long imagePath overflow and batch the per-image writes
-  status: ready
-  owner: null
-  updated: '2026-07-06T00:00:00Z'
+  status: review
+  owner: reviewer
+  updated: '2026-07-06T20:00:00Z'
   passes: 0
   stakes: reversible
   note: >
+    IMPLEMENTED 2026-07-06 (Silas-directed session, pipeline hardening) on
+    branch claude/daily-standup-priorities-gdvhjr. In kind_robots
+    server/api/art/collection/folder/[slug]/sync.post.ts: (1) added a
+    MAX_IMAGE_PATH=191 guard that splits off any folder URL whose imagePath
+    would overflow ArtImage's default VarChar(191), skips it, logs a warning,
+    and reports a `skipped` count in the response instead of failing the whole
+    batch insert; (2) replaced the per-image loop (2 queries per image:
+    create + connect) with a single batched nested `ArtCollection.update ->
+    ArtImages.create[]` write. Accounting stays exact: created + skipped +
+    alreadyPresent = total. Permanent fix noted in-code = widen imagePath to
+    VarChar(764) via migration (deferred; needs its own migration PR). vue-tsc/
+    CI validates on the PR. ORIGINAL note follows:
+    ---
     Kaizen from kind_robots PR #105 (t-007)'s own "Known limits" section:
     ArtImage.imagePath is the default VARCHAR(191) and a very deeply nested
     long slug path could overflow it, and POST
