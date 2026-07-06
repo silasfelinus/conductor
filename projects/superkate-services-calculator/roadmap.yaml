@@ -29,16 +29,20 @@ tasks:
   - id: t-001
     milestone: m1
     title: Create the matching PROJECT Dream for slug parity
-    status: claimed
+    status: needs-human
     owner: worker
     passes: 0
     stakes: reversible
     updated: 2026-07-06
     note: >
-      Run scripts/sync_projects_to_dreams.py or create the Dream via the kind_robots API so
-      kind_robots has a PROJECT Dream with slug "superkate-services-calculator", priority HIGH,
-      projectStatus ACTIVE, and the friendly title "Superkate Services Calculator".
-      This is the display/identity record for the app.
+      FOR SILAS: I added projects/superkate-services-calculator/docs/t-001-dream-sync-handoff.md
+      because this GitHub-only Worker run cannot execute scripts/sync_projects_to_dreams.py or
+      authenticate to the Kind Robots API. It lists the exact PROJECT Dream fields needed for
+      slug parity: slug "superkate-services-calculator", priority HIGH, projectStatus ACTIVE,
+      and friendly title "Superkate Services Calculator". TO APPROVE/COMPLETE: run the sync
+      script from a full Worker/runtime environment with KR_API_TOKEN, or create/verify the
+      Dream through the authenticated Kind Robots API, then set this task to done. This keeps
+      the external sync honest instead of claiming a database write that was not performed.
 
   - id: t-002
     milestone: m1
