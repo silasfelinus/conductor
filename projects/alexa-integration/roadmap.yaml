@@ -209,3 +209,21 @@ tasks:
     headless-browser proof (0 to 20 to 0 butterflies, no console errors). Design at
     docs/animation-control-bridge.md. Reversible visual toggles only: no writes, publishing, spend,
     or roadmap edits, and no physical Echo binding (that stays behind the t-010 human gate).'
+- id: t-013
+  milestone: m4
+  title: Extend the voice bridge (theme control, art drafts on the view, surprise-me)
+  status: done
+  owner: claude
+  updated: '2026-07-06T21:30:00Z'
+  passes: 0
+  stakes: reversible
+  depends_on: t-012
+  note: 'Broadened the control bridge beyond animations. New voice paths: theme control ("set theme to
+    synthwave" / "use the retro theme") applied via themeStore.setActiveTheme; "surprise me" picks a
+    random generation-safe effect; and art requests now relay a draft (prompt/style/size/gallery) to a
+    new art-drafts panel on the Serendipity view for review. The command contract now spans
+    animation | theme | art targets. Draft-only and client-side: theme/animation are reversible visual
+    changes, art never generates or publishes from voice. Verified: serendipity-voice npm test (75
+    checks) + typecheck green; kind_robots vue-tsc + eslint + prettier green; live curl round-trip for
+    theme/surprise/art through POST /api/alexa; headless-browser proof (butterflies + synthwave theme +
+    art draft + random surprise effect, no console errors).'
