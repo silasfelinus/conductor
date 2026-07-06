@@ -4,6 +4,8 @@ kind: software
 notes_from_silas: |
   Build an ecosystem-level map of Kind Robots projects so agents reuse shared layers instead of rebuilding the same concepts in parallel. Each project should have inspiration images, mock screenshot concepts, a title image, and a matching Manager or Assistant bot connected to the project Dream. Manager bots should use the existing bot/image framework: generated avatar plus twenty thin portrait emotion/action images, tied into narrator topics and threads so project-specific navigation can be customized without inventing a second menu system.
 
+  Art generation should be request-rich but approval-gated. Populate the generator queue aggressively with high-quality prompts and metadata, but treat generated images as candidates until Silas approves them. Do not promote generated candidates into canonical project, gallery, Dream, or Bot image slots automatically.
+
 milestones:
   - id: m1
     title: "SHAPE — inventory the ecosystem and define shared primitives"
@@ -97,7 +99,22 @@ tasks:
       - t-003
       - t-004
       - t-005
+      - t-007
     note: >
-      Turn the asset matrix, bot parity spec, and duplication audit into scoped
-      follow-up roadmap tasks. Prefer shared infrastructure tasks over per-project
-      one-offs when a primitive will be reused across multiple projects.
+      Turn the asset matrix, bot parity spec, duplication audit, and image approval
+      workflow into scoped follow-up roadmap tasks. Prefer shared infrastructure tasks
+      over per-project one-offs when a primitive will be reused across multiple projects.
+
+  - id: t-007
+    milestone: m1
+    title: "Specify the image approval workflow"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Define how generated images move from request queue to candidate staging to human
+      review to approved promotion. Include quality criteria, metadata fields, rejection
+      and regeneration handling, and how approved images become canonical project,
+      ArtCollection, Dream, and Bot assets without allowing auto-promotion before Silas
+      approves them.
