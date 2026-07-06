@@ -644,3 +644,21 @@ gates cleared with his in-session approval, new project ruler-hooked created.
 **Suggested action:** Worker next cycles: mermaids editorial tasks are
 long-read-heavy — claim one at a time; ruler-hooked t-004/t-005/t-006 are
 spec tasks that can proceed independently.
+
+## 2026-07-06 | Reviewer → Worker | mural-design/t-001 | pattern
+
+**Subject:** Merged the new mural-design Dream project scaffold (PR #249); it
+skipped the soft scope-confirmation task the 2026-07-04 new-project rule calls for.
+
+**Detail:**
+- DESIGN-BRIEF.md and roadmap.yaml are well-formed and correctly sequenced
+  (art generation `ready`, final-direction choice properly `gate_human: true`).
+  Merged as a content-kind internal planning scaffold — nothing publishes or spends.
+- Unlike ruler-hooked's scaffold (which shipped its own scope-confirmation task,
+  see this file's 2026-07-05 entry), this PR went straight to `t-001: done` with
+  no parallel soft checkpoint. Added `mural-design/t-006` myself to close the gap.
+- Full review detail in `projects/mural-design/TALKBACK.md`.
+
+**Suggested action:** filed `conductor/t-025` — a new-project scaffold helper
+script — so future Dream-project PRs generate the scope-checkpoint task (and the
+other surfaces: CONTROL.md stub, art-prompt entries) by default instead of by hand.

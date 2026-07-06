@@ -377,3 +377,19 @@ tasks:
     checkout, unrelated to any current diff. Diagnose whether the tests
     drifted from run_worker.py's current lifecycle-helper interface or the
     helper regressed, and fix whichever is wrong.
+- id: t-025
+  milestone: m2
+  title: Build a new-project scaffold helper script
+  status: ready
+  owner: null
+  updated: '2026-07-06T00:00:00Z'
+  passes: 0
+  stakes: reversible
+  note: >
+    Kaizen from Worker's mural-design/t-001 PR (#249, reviewed 2026-07-06). Worker
+    noted that scaffolding a new Dream project currently means separately touching
+    projects/priority.yaml, project-overrides.yaml, projects/<slug>/roadmap.yaml,
+    projects/<slug>/DESIGN-BRIEF.md, and ART-PROMPTS.md — easy to miss a surface (this
+    PR skipped a CONTROL.md block and the art-prompt entries). Build a script that
+    takes a slug/title/goal and generates all of the above in one pass so future
+    project scaffolds don't drop a surface.
