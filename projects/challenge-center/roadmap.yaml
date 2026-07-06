@@ -139,7 +139,7 @@ tasks:
     status: ready
     depends_on: t-001
     owner: null
-    passes: 0
+    passes: 1
     stakes: reversible
     note: >
       SUPERSEDES the original "register Bots" task (Silas, 2026-07-05): Bots are
@@ -181,6 +181,19 @@ tasks:
       PR and the Reviewer audits migration.sql line-by-line and merges it —
       Silas is not a gate. If the generated migration turns out to contain any
       destructive statement, it reverts to hard needs-human.
+
+      REVIEWER (pass 1/3, 2026-07-06): kind_robots PR #107 closed without merge.
+      migration.sql itself is a clean additive migration (audited line-by-line),
+      but the PR never applied the matching schema.prisma patch — it only left
+      docs/challenge-center-t-002-schema-patch.md describing what schema.prisma
+      needs. That drift is why the PR's Vercel deployment check failed. Next
+      attempt must include the actual schema.prisma edit (Contender model,
+      ContenderKind enum, ArtImage.Contenders relation, ChallengeSubmission
+      field/relation additions — see the doc above for the exact patch) in the
+      same PR, then `npx prisma validate && npx prisma generate` before opening
+      for review again. Also: no `claim: challenge-center/t-002` commit was found
+      on conductor main before this PR was opened — make sure the claim step
+      actually runs.
 
   # ── M2: API & challenge library ──────────────────────────────────────────────────
 

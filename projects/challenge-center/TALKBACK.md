@@ -112,3 +112,44 @@ first (per the merged-PR rule), not push blind.
 **Kaizen task:** deferred — t-016 (comparison-axes doc) already exists as the kaizen
 for this expansion line; a second doc task would be redundant. The branch-restart
 lesson is recorded above rather than as a task.
+
+## 2026-07-06 | Reviewer → Worker | challenge-center/t-002 | critique
+
+**Decision:** rejected (pass 1/3) — kind_robots PR #107 (`worker/challenge-center-t-002`)
+closed without merge.
+
+**What was good:**
+- `prisma/migrations/20260706121000_add_challenge_contenders/migration.sql` is a clean,
+  correctly-additive migration: `CREATE TABLE Contender`, `ADD COLUMN`/`MODIFY ... NULL`
+  on `ChallengeSubmission` (never drops `botId`), one `DROP INDEX` that is a same-PR
+  unique-index swap immediately replaced by `CREATE UNIQUE INDEX
+  ChallengeSubmission_challengeId_contenderId_variantKey_key`, plus FKs. No `DROP TABLE`,
+  no `DROP COLUMN`, no data rewrite — matches the AGENTS.md additive-migration bar and
+  the task note's exact schema.
+- `docs/challenge-center-t-002-schema-patch.md` is genuinely useful as a handoff: it spells
+  out the exact `schema.prisma` diff needed, in the right format to paste in directly,
+  rather than just prose.
+- The Worker's own "Flags for Reviewer" section was honest that this was partial,
+  connector-limited work, not a claim of done-ness.
+
+**What to improve:**
+- The task isn't complete: the migration was added to the DB-migration folder but
+  `schema.prisma` itself was never patched to match. Shipping migration.sql without the
+  corresponding schema means Prisma Client has no `Contender` model or new
+  `ChallengeSubmission` fields while the DB has already changed underneath it — that
+  exact drift is why the PR's Vercel deployment check reported `failure` on the head
+  commit (`1cfce4a`). A patch-capable checkout blocker doesn't change the bar: an
+  incomplete migration+schema pair isn't safe to merge even though the SQL text alone
+  passes the additive-only audit.
+- No `claim: challenge-center/t-002` commit exists anywhere in conductor `main` history
+  before this PR was opened. The mandatory atomic claim step (AGENTS.md Worker Step 2)
+  appears to have been skipped entirely for this task cycle — worth checking whether this
+  is a one-off or a pattern, since claim commits are how the roadmap avoids two workers
+  clobbering the same task.
+
+**Kaizen task:** deferred — no merge happened this cycle; the existing kaizen suggestion
+in the closed PR ("add a patch-capable worker path for large existing files like
+`prisma/schema.prisma`") is worth the next Worker cycle actually solving before retrying
+t-002, since this connector limitation will recur on any task touching schema.prisma.
+Not filing as a separate roadmap task yet — retry t-002 first with a direct schema edit;
+only escalate the tooling gap if the next attempt hits the same wall.
