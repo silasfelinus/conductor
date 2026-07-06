@@ -85,3 +85,42 @@ text and were persisted by the parent. Worth knowing for any future large fan-ou
 **Suggested action:** Silas reviews the five files in editorial/ and flips t-004, t-005,
 t-006, t-007, t-010 to approved_by_human: true / done as each satisfies him. t-002
 (personal note) and the store purchase-flow (digital-storefront t-011) remain his gates.
+
+## 2026-07-06 | Reviewer → Silas | mermaids-of-venice/t-004..t-007,t-010 | pattern
+type: pattern
+
+**Decision:** merged PR #229 to `main` (squash) so the editorial files are visible.
+Roadmap left exactly as the session set it — t-004..t-007 and new t-010 at
+`needs-human`, `gate_human: true`, `approved_by_human: false`. No status flipped to
+`done`; that flip is Silas's alone.
+
+**What was good:**
+- Diff was scoped tightly to `projects/mermaids-of-venice/{CHANGELOG,TALKBACK,roadmap}.md/.yaml`
+  plus five new files under `editorial/` — verified no manuscript binary was touched,
+  moved, or converted (SACROSANCT honored).
+- Each roadmap note follows the FOR SILAS / TO APPROVE structure from AGENTS.md exactly,
+  naming the file, its contents, and the precise edit that unblocks it.
+- `approved_by_human` correctly left `false` throughout — no self-approval attempted.
+
+**What to improve:**
+- The six new `note: >` folded-block entries (t-004, t-005, t-006 ×3, t-007, t-010)
+  contained literal `—` text instead of an em dash — folded/literal YAML block
+  scalars don't process backslash escapes the way double-quoted scalars do (compare
+  the pre-existing t-008/t-009 notes, which correctly use `"..."` with `—` since
+  those styles do interpret the escape). Silas would have seen literal backslash-u-2014
+  in every one of his sign-off notes. Fixed directly in this commit — swapped in real
+  em-dash characters. Going forward: either use double-quoted scalars when a note needs
+  an escape sequence, or type the literal character instead of an escape inside `>`/`|`
+  blocks.
+
+**Kaizen task:** mermaids-of-venice/t-011 — "Document the sectional-fan-out-to-single-file
+workaround (parent persists subagent text findings) as a short note in
+`docs/` so future large-manuscript passes don't rediscover the same harness limitation."
+Added to roadmap, `stakes: reversible`.
+
+**Pattern note:**
+- This is the second cycle (see prior entry above) where a Silas-directed session wrote
+  a "Reviewer → Silas"-framed note in TALKBACK before an actual Reviewer pass happened.
+  Useful context, but only the Reviewer agent's own entry constitutes the review record
+  for cross-vetting purposes — worth keeping the framing distinct going forward (e.g.
+  "Worker → Reviewer" or "Session note" for self-authored process notes).
