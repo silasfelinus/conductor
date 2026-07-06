@@ -148,23 +148,24 @@ tasks:
 - id: t-008
   milestone: m4
   title: Add a regression test for renderRequestEntry's YAML indentation in kind_robots' art-request.post.ts
-  status: review
+  status: done
   owner: reviewer
-  updated: '2026-07-06T20:00:00Z'
+  updated: '2026-07-06T21:00:00Z'
   passes: 0
   stakes: reversible
   note: >
-    IMPLEMENTED 2026-07-06 (Silas-directed session, pipeline hardening) on
-    branch claude/daily-standup-priorities-gdvhjr. Extracted the pure YAML
-    rendering logic (yamlQuoted/yamlFolded/renderRequestEntry/appendRequest +
-    ArtQueueEntry) out of server/api/conductor/art-request.post.ts into a new
-    dependency-free module server/utils/artRequestYaml.ts, and added a tsx
-    regression verifier utils/scripts/verifyArtRequestYaml.ts (npm run
-    test:art-request-yaml) asserting: column-0 list marker, exactly-2-space
-    continuation keys, folded prompt scalar, optional-field omission, and
-    appendRequest column-0 output + idempotency across all three requests:
-    seed shapes. Verified the rendering logic green via a plain-node mirror
-    (no node_modules in the fresh clone); vue-tsc/CI validates on the PR.
+    MERGED 2026-07-06: kind_robots PR #108 (squash 5d76872), CI green
+    (TypeScript, GitGuardian, Vercel preview). Reviewer diffed the extraction
+    line-by-line against the original art-request.post.ts functions
+    (yamlQuoted/yamlFolded/renderRequestEntry/requestAlreadyQueued/appendRequest)
+    and confirmed it's behavior-preserving; new tsx verifier
+    (utils/scripts/verifyArtRequestYaml.ts, npm run test:art-request-yaml)
+    covers column-0 indentation, folded prompt scalar, optional-field
+    omission, and idempotency across all three requests: seed shapes.
+    Note: ArtQueueEntry.variant narrowed from a specific ArtVariant union to
+    `string` in the new module — harmless today (values are still assigned
+    from ArtVariant call sites and CI/tsc is green) but slightly loosens the
+    compile-time contract; worth tightening back to a union in a future pass.
     ORIGINAL: Filed after kind_robots PR #84 fixed a silent bug: renderRequestEntry() emitted requests:
     list items at 2-space indent instead of column 0, producing YAML that conductor''s parser
     could not read and stalling the missing-image pipeline undetected. A snapshot/unit test
@@ -338,12 +339,23 @@ tasks:
 - id: t-017
   milestone: m4
   title: Guard folder-collection sync against long imagePath overflow and batch the per-image writes
-  status: review
+  status: done
   owner: reviewer
-  updated: '2026-07-06T20:00:00Z'
+  updated: '2026-07-06T21:00:00Z'
   passes: 0
   stakes: reversible
   note: >
+    MERGED 2026-07-06: kind_robots PR #108 (squash 5d76872), CI green
+    (TypeScript, GitGuardian, Vercel preview). Reviewer traced the accounting
+    identity by hand: created + skipped + alreadyPresent = total holds for
+    every branch (including the all-skipped case where created is 0 and the
+    update call is skipped entirely). The per-image loop's 2-queries-per-image
+    is now one nested ArtCollection.update -> ArtImages.create[] call per
+    sync, a real round-trip reduction. imagePath VarChar(764) migration is
+    still deferred, correctly, to its own migration PR (no schema change
+    here). Silas-directed session (daily-standup pipeline hardening); both
+    t-008 and t-017 trace to pre-existing kaizen tasks (PR #84, PR #105
+    Known Limits), not untracked backend scope-creep.
     IMPLEMENTED 2026-07-06 (Silas-directed session, pipeline hardening) on
     branch claude/daily-standup-priorities-gdvhjr. In kind_robots
     server/api/art/collection/folder/[slug]/sync.post.ts: (1) added a
@@ -365,3 +377,19 @@ tasks:
     folders' images per call - fine at current folder counts but worth
     hardening before folder counts grow. Add a length guard/truncation (or
     widen the column) and batch the sync writes.
+- id: t-018
+  milestone: m4
+  title: Wire test:art-request-yaml (and the davinci verifiers) into a CI job instead of running them on demand
+  status: ready
+  owner: null
+  updated: '2026-07-06T21:00:00Z'
+  passes: 0
+  stakes: reversible
+  note: >
+    Kaizen from kind_robots PR #108 (t-008)'s own suggestion: the new tsx
+    contract test (npm run test:art-request-yaml) and the existing davinci
+    seed verifiers currently only run when someone remembers to invoke them
+    manually. Add a CI workflow step (or extend an existing one) that runs
+    them on every PR so regressions in the YAML indentation contract or
+    the seed data fail CI automatically instead of waiting for the next
+    hand-run.

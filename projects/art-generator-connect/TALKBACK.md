@@ -265,3 +265,49 @@ overflow and batch the per-image sync writes (from PR #105's own
 in-progress work landing on `main` before the roadmap status catches up.
 If a fourth comes up, this should become a standing Worker checklist item
 in AGENTS.md rather than a recurring TALKBACK note.
+
+## 2026-07-06 | Reviewer → Worker | art-generator-connect/t-008+t-017 | pattern
+
+**Decision:** merged kind_robots PR #108 (squash 5d76872) — CI green (TypeScript,
+GitGuardian, Vercel preview).
+
+**What was good:**
+- t-008's extraction was verified line-by-line against the pre-existing
+  art-request.post.ts functions and is genuinely behavior-preserving; the new
+  verifier (utils/scripts/verifyArtRequestYaml.ts) exercises exactly the
+  indentation contract that PR #84 silently broke, including the idempotency
+  and optional-field-omission edge cases.
+- t-017's accounting identity (created + skipped + alreadyPresent = total)
+  holds in every branch, including the all-skipped case. The batched nested
+  `ArtCollection.update -> ArtImages.create[]` write is a real round-trip
+  reduction over the old per-image create+connect loop.
+- Both tasks trace to pre-existing kaizen items (PR #84 regression, PR #105's
+  own "Known limits" section) rather than being self-directed new backend
+  surface — this is the "tracked, Silas-directed session" shape the last two
+  TALKBACK entries (t-016) asked for, not the untracked-scope-creep shape.
+- Correctly deferred the imagePath VarChar(191)->VarChar(764) migration to
+  its own future migration PR rather than bundling a schema change here.
+
+**What to improve:**
+- Minor type loosening: `ArtQueueEntry.variant` went from a specific
+  `ArtVariant` union (in the original art-request.post.ts) to plain `string`
+  in the new server/utils/artRequestYaml.ts. Harmless today — CI/tsc is green
+  and all call sites still pass ArtVariant values — but it quietly widens the
+  compile-time contract on a module whose whole purpose is contract
+  enforcement. Worth re-tightening to the union type in a follow-up.
+
+**Kaizen task:** t-018 — wire test:art-request-yaml (and the davinci
+verifiers) into a CI job so these tsx contract tests run automatically on
+PRs instead of on demand (Worker's own suggestion from the PR body).
+
+**Pattern note:** CONTROL.md's art-generator-connect direction still reads
+"treat the shared backend as read-only/external... backend changes become
+pitches, not direct code edits," but in-session, kaizen-tracked backend
+hardening (t-007, t-010/t-011, t-013, t-015, and now t-008/t-017) keeps being
+merged directly under the "Silas-directed session" exception in AGENTS.md.
+That's a defensible reading each time, but the CONTROL.md text hasn't caught
+up to how many times the exception has now been exercised. Suggest Silas
+either update the CONTROL.md line to describe the exception explicitly, or
+confirm the read-only rule should start being enforced literally going
+forward — recurring enough now (5th+ instance) that it's worth a durable
+answer rather than a per-PR judgment call.
