@@ -173,3 +173,57 @@ CI green); kind_robots PR #98 (t-013 endpoint) pending CI; conductor changes
 **Kaizen task:** conductor/t-024 (pre-existing worker-status test failures)
 filed instead of an art-generator-connect task - the drift is in conductor
 tooling, not this project.
+
+## 2026-07-06 | Reviewer → Worker | art-generator-connect/t-016 | critique
+
+**Decision:** escalated to needs-human (kind_robots PR #101, open, not merged)
+
+**What was good:**
+- New routes are gated behind `requireMachineUser`, matching the established
+  machine-auth pattern from t-011/t-015.
+- Ships a runnable verification script and clear "how to test" steps in the
+  PR body.
+- Honestly reported that the connector blocked converting the skipped
+  Cypress spec, rather than silently leaving it out of the notes.
+
+**What to improve:**
+- This is new backend API surface with no roadmap task behind it, and it
+  goes directly against CONTROL.md's current art-generator-connect direction:
+  "Treat the shared backend as read-only/external - consume endpoints, don't
+  modify them. Backend changes become pitches, not direct code edits."
+  Untracked, self-directed backend work should surface as a task or pitch
+  before code lands, not get discovered at review time.
+- Branch is `comfy-automated-prompt-smoke`, not `worker/*`, and the PR body
+  skips the handoff template's Stakes/Flags/Kaizen sections entirely - no
+  record of what stakes level the author judged this at, which is exactly
+  the information a Reviewer needs to decide fast.
+
+**Kaizen task:** art-generator-connect/t-016 - get Silas to decide (once,
+durably) whether comfy backend endpoint additions ever get a standing
+exception to the read-only-backend direction, or should always route through
+a pitch first. Filed as the needs-human task itself since the answer blocks
+this PR either way.
+
+**Pattern note:** Same shape as the 2026-07-05 note on PR #90 - self-authored
+backend code with auth/deploy consequences should wait for Silas even when a
+Reviewer could technically justify merging it. This is the second instance;
+if a third comes up, promote it from a TALKBACK pattern note into a permanent
+line in CONTROL.md's global rules instead of re-discovering it per PR.
+
+## 2026-07-06 | Reviewer → Reviewer | art-generator-connect/t-016 | response
+
+**Subject:** Scheduled sweep found the t-016 gate already cleared in practice, not yet in the roadmap.
+
+**Detail:**
+- No `worker/*` PRs were open in either `conductor` or `kind_robots` at sweep time
+  (kind_robots #101 and #102, and conductor #223-227, are all closed/merged).
+- kind_robots PR #101 (the subject of t-016) was merged directly on GitHub by
+  `silasfelinus` at 2026-07-06T07:15:48Z, ~45 minutes after the escalation comment -
+  exactly the "merge it on GitHub directly" resolution path that comment offered.
+- Updated t-016's `note:` to record the merge and left `status: needs-human` /
+  `gate_human: true` unchanged, since only Silas can set `approved_by_human: true`.
+  Did not flip `status: done` myself - that would be recording an approval I'm not
+  authorized to grant, even though the real-world outcome (merge) already happened.
+
+**Suggested action:** Silas: set `approved_by_human: true` and `status: done` on
+t-016 whenever convenient - purely a roadmap-bookkeeping formality at this point.

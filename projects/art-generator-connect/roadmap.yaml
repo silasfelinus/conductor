@@ -280,3 +280,24 @@ tasks:
     DONE 2026-07-06 in kind_robots PR #97: art/generate,
     chats/openai/images/generate, textGate swapped; the three comfy routes'
     inline checks were redundant second auths and were removed.
+- id: t-016
+  milestone: m5
+  title: 'Decide whether kind_robots PR #101 (Comfy direct smoke-test endpoints) may merge'
+  status: needs-human
+  owner: null
+  updated: '2026-07-06T07:30:00Z'
+  passes: 0
+  stakes: outward-facing
+  gate_human: true
+  note: >
+    FOR SILAS: kind_robots PR #101 has already been merged directly on
+    GitHub (merged_by: silasfelinus, 2026-07-06T07:15:48Z) -
+    https://github.com/silasfelinus/kind_robots/pull/101 - via the
+    "merge it on GitHub directly" option this task's original note offered,
+    so the underlying decision is resolved and nothing is blocked in
+    practice. TO CLOSE: this task only needs the roadmap formality - set
+    approved_by_human: true and status: done (citing the direct merge as
+    the clearance) whenever convenient. Left at needs-human rather than
+    closed automatically because only you can set approved_by_human on a
+    gate_human task; the Reviewer is not overriding the gate, just
+    recording that you already cleared it.

@@ -136,7 +136,7 @@ tasks:
     stakes: reversible
     depends_on: t-003
     note: >
-      Add the new appointment form for client/customer, appointment date, hourly rate, time spent,
+      Add the new appointment form for client/customer, appointment date, hourly rate, time spent
       and optional product cost defaulting to $0. Show the live total as hourly rate × time spent
       + product cost.
 
@@ -197,13 +197,14 @@ tasks:
   - id: t-010
     milestone: m2
     title: Write a pre-implementation architecture note for customer database and cloud sync
-    status: ready
-    owner: null
+    status: done
+    owner: worker
     passes: 0
     stakes: reversible
     depends_on: t-002
+    updated: 2026-07-06
     note: >
-      Once Superkate approves the MVP spec, write a short architecture note selecting the customer
-      database, appointment storage, cloud sync approach, auth/tenant model, conflict handling,
-      backup/export path, and optional app-lock/device-auth approach required by SPEC.md before
-      coding appointment persistence (t-003). Scope is a decision record, not implementation.
+      Added projects/superkate-services-calculator/docs/customer-sync-architecture.md selecting a
+      local-first database plus authenticated cloud sync approach, tenant/authorization model,
+      conflict strategy, CSV export path, and optional app/device lock behavior. This unblocks
+      t-003 after the next dependency-resolution pass.
