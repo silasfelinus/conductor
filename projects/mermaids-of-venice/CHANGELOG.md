@@ -1,5 +1,15 @@
 # mermaids-of-venice CHANGELOG
 
+## 2026-07-06
+- Editorial pipeline executed from the delivered second-edition PDF (338pp): full
+  13-part sectional read synthesized into editorial/general-impressions.md,
+  editorial-notes.md, cultural-awareness.md, and VERY-IMPORTANT.md (~140+ mechanical
+  items). Source files never edited (SACROSANCT rule).
+- Added editorial/guest-reviews.md (Silas's request): three honest star-rated reads —
+  Princess Donut (DCC), a 20yo SF Heinlein fan, a 32yo queer POC academic.
+- Roadmap: t-004..t-007 → needs-human (done, awaiting Silas sign-off); new t-010
+  (guest reviews) added and left at needs-human.
+
 ## 2026-07-05
 - Direction received from Silas; project reactivated (paused/brainstorm → active/content).
 - Roadmap rewritten: no AI in the front end, no selective ordering of parts.

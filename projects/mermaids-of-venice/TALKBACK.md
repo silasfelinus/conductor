@@ -54,3 +54,34 @@ to needs-human rather than left at review/closed as done
 - Watch for "review" being used as a stand-in for "done" on content-kind tasks going
   forward — the kind determines the terminal state, not how confident the Worker/
   session is that the work is finished.
+
+## 2026-07-06 | Reviewer → Silas | mermaids-of-venice/t-004..t-007,t-010 | note
+type: response
+
+**Subject:** Editorial pipeline executed end-to-end from the second-edition PDF; five deliverables written, all left at needs-human.
+
+**Detail:**
+- Ran a 13-part sectional read of "mermaids of venice second edition.pdf" (338 pp,
+  ~86k words) via parallel subagents, then synthesized four editorial files plus a
+  guest-reviews file under editorial/. The source PDF and the edition-3 revision .doc
+  were never edited, converted, or copied out of manuscript/ (SACROSANCT rule honored);
+  all analysis is derivative page-referenced notes only.
+- t-007 VERY-IMPORTANT.md is the mechanical list Silas asked for (~140+ items,
+  page+quote+fix, deliberate garbling excluded, intentional/artifact suspects marked).
+- t-006 cultural-awareness.md handles the magical-negro (Hermes/Eshu) question Silas
+  named. Independent confirmation: the queer-POC-academic guest reviewer surfaced the
+  exact same Eshu/minstrel + "whose story is it" read with no knowledge of Silas's
+  concern. Left for Silas to make every call; no direction is prescribed.
+- t-010 (guest reviews) was added this session at Silas's explicit request (Princess
+  Donut / Heinlein-fan / bell-hooks-academic). New task id, m2, gate_human.
+- A mechanical diff of second-edition vs the edition-3 draft shows edition 3 reworks
+  327 of 338 pages, so many notes may already be addressed; files say so where relevant
+  and reference the second-edition page numbers throughout.
+
+**Process note (not a critique of the Worker — this was a Silas-directed session):**
+Subagents are blocked from writing report files in this harness; findings came back as
+text and were persisted by the parent. Worth knowing for any future large fan-out read.
+
+**Suggested action:** Silas reviews the five files in editorial/ and flips t-004, t-005,
+t-006, t-007, t-010 to approved_by_human: true / done as each satisfies him. t-002
+(personal note) and the store purchase-flow (digital-storefront t-011) remain his gates.

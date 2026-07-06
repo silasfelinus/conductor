@@ -80,49 +80,106 @@ tasks:
 - id: t-004
   milestone: m2
   title: Write general impressions of the manuscript
-  status: ready
-  owner: null
+  status: needs-human
+  owner: reviewer
+  updated: '2026-07-06T00:00:00Z'
   passes: 0
   stakes: reversible
   depends_on: t-003
-  note: "Read the full manuscript; write editorial/general-impressions.md \u2014 honest reader-level reactions:\
-    \ what works, what lands, pacing, characters, voice. Advisory only; never draft replacement prose.\
-    \ Ends needs-human for Silas.\n"
+  gate_human: true
+  approved_by_human: false
+  note: >
+    FOR SILAS: Done \u2014 editorial/general-impressions.md. A full 13-part read of the
+    second-edition PDF, synthesized into honest reader-level reactions: the one-
+    paragraph verdict, what genuinely works (voice/invention, Bernard, the Vida/Maya
+    love, the ending), what holds it back (comedy fighting the tenderness, the
+    vocabulary tic, lore landing at tense moments, the title-vs-Amsterdam gap, the
+    aftermath-only action climax), and the tonal signature stated plainly.
+    TO APPROVE: read it; set approved_by_human: true and status: done if it's fair.
 - id: t-005
   milestone: m2
   title: Write editorial notes on the manuscript
-  status: ready
-  owner: null
+  status: needs-human
+  owner: reviewer
+  updated: '2026-07-06T00:00:00Z'
   passes: 0
   stakes: reversible
   depends_on: t-003
-  note: "editorial/editorial-notes.md \u2014 structural and line-level editorial notes: pacing, clarity,\
-    \ continuity, scene-level suggestions (described, not rewritten). Include the known flagged areas\
-    \ from docs/revision-questions.md where relevant (e.g. Venice/ocean geography hand-waving). Ends needs-human.\n"
+  gate_human: true
+  approved_by_human: false
+  note: >
+    FOR SILAS: Done \u2014 editorial/editorial-notes.md. Structural + scene-level notes,
+    page-referenced, described never rewritten: the five whole-book patterns (lore
+    placement, the vocabulary device, tonal whiplash, title/setting, verbal tics),
+    a continuity checklist (Vida's age reset, the cats-speech rule, motel/hotel,
+    injured foot, suitcase count, Sunday/Saturday, decibels, the framing-narrator
+    seam at ch.1 vs ch.66), scene-level craft notes, and factual checks (what holds,
+    what's soft). The geography hand-wave and the Arlechino thread are flagged.
+    TO APPROVE: read it; set approved_by_human: true and status: done.
 - id: t-006
   milestone: m2
   title: Write cultural-awareness notes (gaze and privilege gaps)
-  status: ready
-  owner: null
+  status: needs-human
+  owner: reviewer
+  updated: '2026-07-06T00:00:00Z'
   passes: 0
   stakes: reversible
   depends_on: t-003
-  note: "editorial/cultural-awareness.md \u2014 a careful, specific pass for gaps in gaze or privilege:\
-    \ moments of male gaze, the magical-negro pattern around the discarded character (see docs/revision-questions.md\
-    \ for Silas's own framing and his three candidate directions), and anything else observed. Descriptive\
-    \ and specific, page/chapter-referenced, respectful of the fact that Silas will make the calls. Ends\
-    \ needs-human.\n"
+  gate_human: true
+  approved_by_human: false
+  note: >
+    FOR SILAS: Done, and handled with care \u2014 editorial/cultural-awareness.md. The
+    Hermes/Eshu magical-negro question you named is section 1 (an independent guest
+    reader reached it unprompted \u2014 it's not in your head; the "gold teeth / road to
+    Oz" surface coding is the sharp part, and your three candidate directions are
+    weighed without picking for you). Also: two sexualized-minor beats to look at
+    regardless of edition (p.114, pp.228-231), the male gaze as a reflex (with the
+    genuine counter-note that the finale distributes it), the cumulative
+    instrumental-use pattern, and loaded words ("drapetomania" p.49). Nothing here
+    changes the book for you \u2014 you make every call. TO APPROVE: read when ready;
+    set approved_by_human: true and status: done.
 - id: t-007
   milestone: m2
   title: "Write VERY-IMPORTANT.md \u2014 actual typos and grammar errors"
-  status: ready
-  owner: null
+  status: needs-human
+  owner: reviewer
+  updated: '2026-07-06T00:00:00Z'
   passes: 0
   stakes: reversible
   depends_on: t-003
-  note: "editorial/VERY-IMPORTANT.md \u2014 ONLY objective mechanical errors: typos, grammar, punctuation,\
-    \ doubled words, with page/line context for each so Silas can fix them in his own hand. He proofread\
-    \ solo between printings and expects more to surface. No style opinions in this file. Ends needs-human.\n"
+  gate_human: true
+  approved_by_human: false
+  note: >
+    FOR SILAS: Done \u2014 editorial/VERY-IMPORTANT.md. ~140+ objective mechanical items
+    (typos, grammar, punctuation, doubled/dropped words) with page + quote + fix for
+    each, grouped by chapter range, no style opinions. Deliberate garbling (jester's
+    Italian, Billy Chen, scrambled epigraphs) was recognized and NOT flagged; likely-
+    intentional bits are marked "(intentional?)" and extraction-suspects "(possible
+    artifact)" for you to verify against your master. You were right that more would
+    surface. A targeted pass on three repeating patterns (dialogue-tag commas,
+    Esteban/Estoban + Katharine/Katherine names, its/it's + than/then) clears a big
+    fraction at once. TO APPROVE: fix in your own hand; set approved_by_human: true
+    and status: done when the list is worked through.
+- id: t-010
+  milestone: m2
+  title: Guest reader reviews (Silas's quirky request)
+  status: needs-human
+  owner: reviewer
+  updated: '2026-07-06T00:00:00Z'
+  passes: 0
+  stakes: reversible
+  depends_on: t-003
+  gate_human: true
+  approved_by_human: false
+  note: >
+    FOR SILAS: Done \u2014 editorial/guest-reviews.md. Three honest, star-rated outside
+    reads you asked for: Princess Donut (DCC) at 3.5 salmon treats, a 20-year-old SF
+    Heinlein fan at 3/5 ("mechanism vs mood"), and a 32-year-old queer POC academic
+    fresh off bell hooks at 3.5/5 ("gorgeous, glutted, guilty about whose story it's
+    telling"). They converge: everyone admires the prose/invention, everyone snags on
+    the vocabulary flexing, and the academic independently surfaced the Eshu and
+    "whose story is it" concerns. TO APPROVE: read for pleasure; set
+    approved_by_human: true and status: done.
 - id: t-008
   milestone: m3
   title: "Revision dialogue prep \u2014 keep docs/revision-questions.md current"
