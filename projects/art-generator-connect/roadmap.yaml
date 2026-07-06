@@ -370,12 +370,20 @@ tasks:
 - id: t-018
   milestone: m5
   title: Run the tsx contract verifiers (art-request YAML + davinci seed) in a kind_robots CI job
-  status: ready
-  owner: null
-  updated: '2026-07-06T20:25:00Z'
+  status: done
+  owner: reviewer
+  updated: '2026-07-06T20:47:00Z'
   passes: 0
   stakes: reversible
   note: >
+    DONE 2026-07-06: merged in kind_robots PR #109 (squash ef2ada1). Added
+    .github/workflows/contract-tests.yml - a lean DB-free "Contract verifiers"
+    job (checkout -> node 24 -> npm ci -> npm run test:art-request-yaml) that
+    runs on every PR + push to main + dispatch. Self-validated: the new
+    Contract verifiers check ran green on its own PR (#109) alongside
+    TypeScript + GitGuardian. Davinci verifiers left for a future fold-in when
+    the scratch-DB cost is worthwhile (already covered nightly by
+    davinci-seed-verify.yml). ORIGINAL:
     Kaizen from t-008 merge (kind_robots PR #108): the new
     `npm run test:art-request-yaml` verifier (and the existing
     seed:davinci:verify) currently only run on demand. Add a lightweight GitHub
