@@ -280,3 +280,33 @@ tasks:
     DONE 2026-07-06 in kind_robots PR #97: art/generate,
     chats/openai/images/generate, textGate swapped; the three comfy routes'
     inline checks were redundant second auths and were removed.
+- id: t-016
+  milestone: m5
+  title: 'Decide whether kind_robots PR #101 (Comfy direct smoke-test endpoints) may merge'
+  status: needs-human
+  owner: null
+  updated: '2026-07-06T06:30:00Z'
+  passes: 0
+  stakes: outward-facing
+  gate_human: true
+  note: >
+    FOR SILAS: kind_robots PR #101 (branch comfy-automated-prompt-smoke,
+    open, not merged - https://github.com/silasfelinus/kind_robots/pull/101)
+    adds two new backend routes, GET /api/comfy/test/info and POST
+    /api/comfy/test/generate, plus utils/scripts/test-comfy-direct.mjs, so a
+    machine-auth caller can smoke-test a Comfy server's system_stats/queue
+    and run a live Flux Schnell generation directly against production.
+    It forwards Authorization/x-admin-token/x-api-key headers into
+    /api/comfy/flux/generate and the script is meant to run with a real
+    COMFY_TEST_AUTH_TOKEN against kind-robots.vercel.app.
+    TO APPROVE: this is new backend API surface with no roadmap task behind
+    it, and it runs against CONTROL.md's current art-generator-connect
+    direction ("treat the shared backend as read-only/external... backend
+    changes become pitches, not direct code edits") plus the 2026-07-05
+    TALKBACK pattern note that self-authored backend/auth code waits for you
+    even when technically sanctioned. Read the diff yourself; either merge
+    it on GitHub directly (or set approved_by_human: true / status: done
+    here citing that clearance) or tell me to have it reworked as a pitch.
+    What unblocks: the PR's own "Stage 2" follow-up (prompt presets,
+    seed capture, negative-prompt/model quality profiles) once Stage 1 is
+    cleared; nothing else in this roadmap depends on it.
