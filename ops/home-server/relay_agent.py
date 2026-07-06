@@ -26,6 +26,12 @@ Environment:
   POLL_SECONDS       default 10 (idle wait between claim attempts)
   GEN_TIMEOUT        default 600 (max seconds per generation)
   AGENT_ID           default hostname (shows up as ArtJob.claimedBy)
+  KR_LOCAL_IMAGES_DIR  optional — local kind_robots checkout's public/images
+                     folder (e.g. D:/code/kind_robots/public/images). When set,
+                     each finished image is ALSO written there as
+                     {collection}/{collection}-{artImageId}.png so the file
+                     lands in a folder collection (payload.collection picks
+                     the folder, default "comfy"). Commit/push to publish.
 
 A1111 job payload: either raw txt2img keys (prompt, negative_prompt,
 cfg_scale, sampler_name, ...) or KR-style keys (promptString, negativePrompt,
@@ -46,6 +52,7 @@ import urllib.request
 KR_BASE_URL = os.environ.get("KR_BASE_URL", "https://kindrobots.org").rstrip("/")
 KR_RELAY_TOKEN = os.environ.get("KR_RELAY_TOKEN", "").strip()
 KR_RELAY_USER_ID = int(os.environ.get("KR_RELAY_USER_ID", "0") or 0)
+KR_LOCAL_IMAGES_DIR = os.environ.get("KR_LOCAL_IMAGES_DIR", "").strip()
 COMFY_URL = os.environ.get("COMFY_URL", "http://127.0.0.1:8188").rstrip("/")
 SD_URL = os.environ.get("SD_URL", "http://127.0.0.1:7860").rstrip("/")
 POLL_SECONDS = float(os.environ.get("POLL_SECONDS", "10"))
@@ -195,6 +202,29 @@ def upload_result(job, image_b64):
     return (resp.get("data") or {}).get("id")
 
 
+def write_local_copy(job, art_image_id, image_b64):
+    """Local fast path: engines, kind_robots, and conductor share a drive, so
+    drop the finished file straight into the local checkout's folder
+    collection (a folder IS a collection). No-op unless KR_LOCAL_IMAGES_DIR
+    is set. Failures here never fail the job - the DB record is the source
+    of truth; this is a convenience copy awaiting commit."""
+    if not KR_LOCAL_IMAGES_DIR:
+        return
+    try:
+        payload = job.get("payload") or {}
+        collection = str(payload.get("collection") or "comfy").strip().lower()
+        if not collection.replace("-", "").replace("_", "").isalnum():
+            collection = "comfy"
+        folder = os.path.join(KR_LOCAL_IMAGES_DIR, collection)
+        os.makedirs(folder, exist_ok=True)
+        file_path = os.path.join(folder, f"{collection}-{art_image_id}.png")
+        with open(file_path, "wb") as f:
+            f.write(base64.b64decode(image_b64))
+        log(f"local copy: {file_path}")
+    except Exception as e:  # noqa: BLE001
+        log(f"local copy failed (job still DONE): {e}")
+
+
 def complete_job(job_id, success, art_image_id=None, error=None):
     body = {"success": success}
     if art_image_id:
@@ -224,6 +254,7 @@ def process(job):
     if not art_image_id:
         raise RuntimeError("upload returned no ArtImage id")
     complete_job(job_id, True, art_image_id=art_image_id)
+    write_local_copy(job, art_image_id, image_b64)
     log(f"job {job_id}: DONE (ArtImage {art_image_id})")
 
 
