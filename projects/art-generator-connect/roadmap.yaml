@@ -148,13 +148,14 @@ tasks:
 - id: t-008
   milestone: m4
   title: Add a regression test for renderRequestEntry's YAML indentation in kind_robots' art-request.post.ts
-  status: review
+  status: done
   owner: reviewer
-  updated: '2026-07-06T20:00:00Z'
+  updated: '2026-07-06T20:25:00Z'
   passes: 0
   stakes: reversible
   note: >
-    IMPLEMENTED 2026-07-06 (Silas-directed session, pipeline hardening) on
+    DONE 2026-07-06: merged in kind_robots PR #108 (squash 5d76872), TypeScript
+    (vue-tsc) check green. IMPLEMENTED (Silas-directed session, pipeline hardening) on
     branch claude/daily-standup-priorities-gdvhjr. Extracted the pure YAML
     rendering logic (yamlQuoted/yamlFolded/renderRequestEntry/appendRequest +
     ArtQueueEntry) out of server/api/conductor/art-request.post.ts into a new
@@ -338,13 +339,14 @@ tasks:
 - id: t-017
   milestone: m4
   title: Guard folder-collection sync against long imagePath overflow and batch the per-image writes
-  status: review
+  status: done
   owner: reviewer
-  updated: '2026-07-06T20:00:00Z'
+  updated: '2026-07-06T20:25:00Z'
   passes: 0
   stakes: reversible
   note: >
-    IMPLEMENTED 2026-07-06 (Silas-directed session, pipeline hardening) on
+    DONE 2026-07-06: merged in kind_robots PR #108 (squash 5d76872), TypeScript
+    (vue-tsc) check green. IMPLEMENTED (Silas-directed session, pipeline hardening) on
     branch claude/daily-standup-priorities-gdvhjr. In kind_robots
     server/api/art/collection/folder/[slug]/sync.post.ts: (1) added a
     MAX_IMAGE_PATH=191 guard that splits off any folder URL whose imagePath
@@ -365,3 +367,20 @@ tasks:
     folders' images per call - fine at current folder counts but worth
     hardening before folder counts grow. Add a length guard/truncation (or
     widen the column) and batch the sync writes.
+- id: t-018
+  milestone: m5
+  title: Run the tsx contract verifiers (art-request YAML + davinci seed) in a kind_robots CI job
+  status: ready
+  owner: null
+  updated: '2026-07-06T20:25:00Z'
+  passes: 0
+  stakes: reversible
+  note: >
+    Kaizen from t-008 merge (kind_robots PR #108): the new
+    `npm run test:art-request-yaml` verifier (and the existing
+    seed:davinci:verify) currently only run on demand. Add a lightweight GitHub
+    Actions job in kind_robots that runs `npm run test:art-request-yaml` (no DB
+    needed - it is pure string assertions) on PRs, so the art-prompts.yaml
+    indentation contract is enforced automatically rather than relying on a
+    human to run it. Optionally fold in the davinci verifiers where a scratch
+    DB is available.
