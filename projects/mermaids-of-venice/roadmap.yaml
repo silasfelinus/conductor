@@ -89,7 +89,7 @@ tasks:
   gate_human: true
   approved_by_human: false
   note: >
-    FOR SILAS: Done \u2014 editorial/general-impressions.md. A full 13-part read of the
+    FOR SILAS: Done — editorial/general-impressions.md. A full 13-part read of the
     second-edition PDF, synthesized into honest reader-level reactions: the one-
     paragraph verdict, what genuinely works (voice/invention, Bernard, the Vida/Maya
     love, the ending), what holds it back (comedy fighting the tenderness, the
@@ -108,7 +108,7 @@ tasks:
   gate_human: true
   approved_by_human: false
   note: >
-    FOR SILAS: Done \u2014 editorial/editorial-notes.md. Structural + scene-level notes,
+    FOR SILAS: Done — editorial/editorial-notes.md. Structural + scene-level notes,
     page-referenced, described never rewritten: the five whole-book patterns (lore
     placement, the vocabulary device, tonal whiplash, title/setting, verbal tics),
     a continuity checklist (Vida's age reset, the cats-speech rule, motel/hotel,
@@ -128,15 +128,15 @@ tasks:
   gate_human: true
   approved_by_human: false
   note: >
-    FOR SILAS: Done, and handled with care \u2014 editorial/cultural-awareness.md. The
+    FOR SILAS: Done, and handled with care — editorial/cultural-awareness.md. The
     Hermes/Eshu magical-negro question you named is section 1 (an independent guest
-    reader reached it unprompted \u2014 it's not in your head; the "gold teeth / road to
+    reader reached it unprompted — it's not in your head; the "gold teeth / road to
     Oz" surface coding is the sharp part, and your three candidate directions are
     weighed without picking for you). Also: two sexualized-minor beats to look at
     regardless of edition (p.114, pp.228-231), the male gaze as a reflex (with the
     genuine counter-note that the finale distributes it), the cumulative
     instrumental-use pattern, and loaded words ("drapetomania" p.49). Nothing here
-    changes the book for you \u2014 you make every call. TO APPROVE: read when ready;
+    changes the book for you — you make every call. TO APPROVE: read when ready;
     set approved_by_human: true and status: done.
 - id: t-007
   milestone: m2
@@ -150,7 +150,7 @@ tasks:
   gate_human: true
   approved_by_human: false
   note: >
-    FOR SILAS: Done \u2014 editorial/VERY-IMPORTANT.md. ~140+ objective mechanical items
+    FOR SILAS: Done — editorial/VERY-IMPORTANT.md. ~140+ objective mechanical items
     (typos, grammar, punctuation, doubled/dropped words) with page + quote + fix for
     each, grouped by chapter range, no style opinions. Deliberate garbling (jester's
     Italian, Billy Chen, scrambled epigraphs) was recognized and NOT flagged; likely-
@@ -172,7 +172,7 @@ tasks:
   gate_human: true
   approved_by_human: false
   note: >
-    FOR SILAS: Done \u2014 editorial/guest-reviews.md. Three honest, star-rated outside
+    FOR SILAS: Done — editorial/guest-reviews.md. Three honest, star-rated outside
     reads you asked for: Princess Donut (DCC) at 3.5 salmon treats, a 20-year-old SF
     Heinlein fan at 3/5 ("mechanism vs mood"), and a 32-year-old queer POC academic
     fresh off bell hooks at 3.5/5 ("gorgeous, glutted, guilty about whose story it's
@@ -210,3 +210,15 @@ tasks:
     \ yet, and the domain currently points at an empty WordPress. No agent touches DNS, hosting, or the\
     \ domain. TO APPROVE: When (if) you're ready, say so and set approved_by_human: true; the first task\
     \ will be a site plan document, not a deploy.\n"
+- id: t-011
+  milestone: m2
+  title: "Document the subagent fan-out-to-single-file workaround for future large manuscript passes"
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  note: "Kaizen task from Reviewer review of PR #229: subagents in this harness can't write report files\
+    \ directly, so the t-004..t-007/t-010 editorial pass had the parent session collect each subagent's\
+    \ text findings and persist them itself. Write a short note (e.g. docs/subagent-fanout-notes.md)\
+    \ describing this pattern so a future large-manuscript or large-document pass doesn't rediscover it\
+    \ from scratch."
