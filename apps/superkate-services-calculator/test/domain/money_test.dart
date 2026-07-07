@@ -3,7 +3,7 @@ import 'package:superkate_services_calculator/domain/money.dart';
 
 void main() {
   group('calculateAppointmentTotalCents', () {
-    test('rate x time + product (SPEC example: $100 x 90m + $25 = $175)', () {
+    test(r'rate x time + product (SPEC example: $100 x 90m + $25 = $175)', () {
       expect(
         calculateAppointmentTotalCents(
           hourlyRateCents: 10000,
@@ -14,7 +14,7 @@ void main() {
       );
     });
 
-    test('product cost defaults to zero when omitted (SPEC: $80 x 45m)', () {
+    test(r'product cost defaults to zero when omitted (SPEC: $80 x 45m)', () {
       expect(
         calculateAppointmentTotalCents(
           hourlyRateCents: 8000,
@@ -35,7 +35,7 @@ void main() {
       );
     });
 
-    test('rounds the labour term once (half a minute at $60/hr)', () {
+    test(r'rounds the labour term once (half a minute at $60/hr)', () {
       // 6000 * 1 / 60 = 100 exactly; 6000 * 25 / 60 = 2500 exactly.
       expect(
         calculateAppointmentTotalCents(
