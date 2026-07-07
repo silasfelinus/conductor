@@ -52,7 +52,7 @@ entry's process note (Silas's own merge click completing the task rather than an
 merge).
 
 **Kaizen task:** deferred — no new Worker code merged this cycle; t-002/t-003 unblock
-via the Worker's next `resolve_deps.py` run, not further Reviewer action.
+via the Worker's next `resolve_deps.py` run.
 
 ## 2026-07-05 | Reviewer → Worker | challenge-center/M5 | pattern
 
@@ -153,3 +153,42 @@ in the closed PR ("add a patch-capable worker path for large existing files like
 t-002, since this connector limitation will recur on any task touching schema.prisma.
 Not filing as a separate roadmap task yet — retry t-002 first with a direct schema edit;
 only escalate the tooling gap if the next attempt hits the same wall.
+
+## 2026-07-07 | Reviewer → system | challenge-center/t-002 | response
+
+**Decision:** audited already-merged work — flipped `status: ready` (passes 1/3) → `done`
+
+**What was good:**
+- kind_robots PR #116 (Silas-directed session, `claude/challenge-center-contenders-t002`
+  → `main`, merged 2026-07-07T07:54:58Z) fully resolved the pass-1 gap: it re-applied
+  the same additive `migration.sql` (re-audited line-by-line here — still CREATE TABLE
+  Contender / ADD COLUMN/MODIFY...NULL / one DROP INDEX immediately replaced by the new
+  unique index / FKs, no DROP TABLE/COLUMN/data rewrite) **and** actually patched
+  `schema.prisma` this time, using the exact patch text from
+  `docs/challenge-center-t-002-schema-patch.md`.
+- Verified directly against current `kind_robots` main (not just trusting the PR body):
+  `ContenderKind` enum present, `Contender` model present with all fields/indexes from
+  the task note, `ArtImage.Contenders` back-relation present, and `ChallengeSubmission`
+  carries `contenderId`/`variantKey`/`promptUsed`/`settings`/`randomSelections` plus the
+  `@@unique([challengeId, contenderId, variantKey])` constraint. Schema and migration
+  now agree — the exact drift that failed pass 1 is closed.
+
+**What to improve:**
+- kind_robots PR #118 (`worker/challenge-center-t-002` — the original stale branch from
+  the rejected pass-1 attempt) was opened and merged by Silas about ten minutes after
+  PR #116 landed the real fix. Its diff was identical to content already on `main`, so it
+  merged as a harmless no-op, but PR #116's own body explicitly said the stale branch
+  "can be deleted" once it landed — instead it got merged separately. A diverged (rather
+  than identical) stale branch in the same situation could have reintroduced already-
+  superseded schema/migration content. Filed `challenge-center/t-017` (ready, reversible)
+  so rescue/salvage PRs delete the branch they supersede in the same session, not leave
+  it for a later PR to accidentally reopen.
+- No `claim: challenge-center/t-002` commit ever appeared in conductor `main` for this
+  task (flagged in the pass-1 entry above) — still true; the task was completed entirely
+  through Silas-directed rescue sessions rather than a normal Worker claim→PR→merge cycle,
+  so this is now moot for t-002 specifically, but the claim-step gap noted in pass 1
+  remains worth watching on future tasks.
+
+**Kaizen task:** filed `challenge-center/t-017` — delete a superseded `worker/*`/`claude/*`
+branch in the same session a rescue PR merges its work, rather than letting the stale
+branch linger to be opened and merged separately later.
