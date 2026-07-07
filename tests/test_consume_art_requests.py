@@ -115,6 +115,6 @@ def test_entry_to_job_reused_for_a_request():
     )
     assert job["engine"] == "A1111"
     assert job["payload"]["promptString"] == "a fox"
-    # no size on an image request => consumer's 512x512 default
-    assert job["payload"]["width"] == 512
-    assert job["payload"]["height"] == 512
+    # no size on an image request => consumer's 1024x1024 default
+    assert job["payload"]["width"] == 1024
+    assert job["payload"]["height"] == 1024

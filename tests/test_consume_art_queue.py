@@ -7,8 +7,8 @@ import scripts.consume_art_queue as consumer
 def test_parse_size():
     assert consumer.parse_size("1280x720") == (1280, 720)
     assert consumer.parse_size("512X512") == (512, 512)
-    assert consumer.parse_size(None) == (512, 512)
-    assert consumer.parse_size("garbage") == (512, 512)
+    assert consumer.parse_size(None) == (1024, 1024)
+    assert consumer.parse_size("garbage") == (1024, 1024)
 
 
 def test_entry_to_job_maps_fields():

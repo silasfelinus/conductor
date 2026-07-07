@@ -86,7 +86,7 @@ def http_json(method, url, body=None, timeout=60):
         return e.code, payload
 
 
-def parse_size(size, default=(512, 512)):
+def parse_size(size, default=(1024, 1024)):
     """'1280x720' -> (1280, 720); tolerates junk by falling back."""
     m = re.match(r"^\s*(\d+)\s*[xX]\s*(\d+)\s*$", str(size or ""))
     if not m:
