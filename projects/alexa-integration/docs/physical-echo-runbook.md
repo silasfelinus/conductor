@@ -6,38 +6,56 @@ token, exposing the voice endpoint publicly, and registering the Alexa skill.
 
 The go-live approval is the t-010 human gate — this doc is that review.
 
-## The end-to-end path
+## The end-to-end path (default: conductor mode)
+
+Requests go THROUGH kind_robots per the art-generator-connect routing policy,
+using the documented producer that `scripts/request_art.py` wraps:
 
 ```
 Echo → Alexa custom skill → (public) POST /api/alexa on the serendipity-voice runtime
      → parse "generate me an image of a fox" → art command
-     → POST /api/art/queue on Kind Robots  (x-admin-token, {engine:'A1111', payload:{promptString:'a fox'}})
-     → Kind Robots enqueues an ArtJob → a home relay claims it → A1111 renders → saved to your gallery
+     → POST /api/conductor/art-request on Kind Robots (X-KR-API-Token, {src, prompt, label, variant})
+     → Kind Robots appends the request to projects/art-prompts.yaml (conductor)
+     → a worker/consumer claims it and generates → image lands in the gallery
 ```
+
+The **producer half is done** (this is what serendipity-voice now sends). The
+**consumer half** — turning a queued `art-prompts.yaml` request into a generated
+image — is the piece still being finished (art-generator-connect t-010/t-012:
+the ArtJob queue + a home relay agent; today `/api/conductor/art-request` only
+appends to the YAML and nothing drains it). Silas is closing that loop; the voice
+side already speaks the request into the canonical queue.
+
+Alternative submit modes if you'd rather skip the YAML lane:
+`SERENDIPITY_ART_SUBMIT_MODE=queue` → `POST /api/art/queue` (durable ArtJob DB
+queue), or `=generate` → `POST /api/art/generate` (synchronous A1111).
 
 ## Step 1 — Kind Robots prerequisites (no code change)
 
 On the Kind Robots server env:
 
 - `JWT_SECRET` — already required for auth.
-- `BETA_ADMIN_TOKEN=<a long random secret>` — the service token. Optional
-  `BETA_ADMIN_USER_ID` (defaults to 1) sets which user owns voice-made art.
-- One **active `serverType='A1111'` Server row** reachable at its `baseUrl` +
-  `/sdapi/v1/txt2img` (your Stable Diffusion box). Without it KR returns
-  "No available server was found."
-- Optional `ART_SERVER_PROXY_TOKEN` if your A1111 box needs an auth header.
+- The admin token conductor already uses (`KR_API_TOKEN` / `BETA_ADMIN_TOKEN`) —
+  this is what `X-KR-API-Token` is checked against by `validateApiKey` +
+  `userIsAdmin`. Optional `BETA_ADMIN_USER_ID` (defaults to 1) sets the owner.
+- `CONDUCTOR_GITHUB_TOKEN` (or `GITHUB_TOKEN`) — `/api/conductor/art-request`
+  needs it to commit the request into `projects/art-prompts.yaml`.
+- For the `queue`/`generate` modes only: one **active `serverType='A1111'` Server
+  row** reachable at its `baseUrl` + `/sdapi/v1/txt2img`, and optional
+  `ART_SERVER_PROXY_TOKEN` if your box needs an auth header.
 
-Sanity check from a machine that can reach KR:
+Sanity check the conductor request path from a machine that can reach KR:
 
 ```bash
-curl -s -X POST https://<kind-robots-host>/api/art/queue \
-  -H 'content-type: application/json' -H "x-admin-token: $BETA_ADMIN_TOKEN" \
-  --data '{"engine":"A1111","payload":{"promptString":"a fox"}}'
-# expect: {"success":true,"data":{... job ...}}
+curl -s -X POST https://<kind-robots-host>/api/conductor/art-request \
+  -H 'content-type: application/json' -H "X-KR-API-Token: $KR_API_TOKEN" \
+  --data '{"src":"/images/serendipity/a-fox.webp","prompt":"a fox","variant":"image"}'
+# expect: {"success":true,"message":"Art request added to Conductor.", ...}
 ```
 
-(For synchronous testing use `/api/art/generate` with `{"promptString":"a fox"}`;
-it returns the saved ArtImage with base64 in `data.imageData`.)
+(For the DB-queue lane use `/api/art/queue` with
+`{"engine":"A1111","payload":{"promptString":"a fox"}}`; for synchronous render
+use `/api/art/generate` with `{"promptString":"a fox"}`.)
 
 ## Step 2 — Configure the voice runtime
 
@@ -45,9 +63,9 @@ it returns the saved ArtImage with base64 in `data.imageData`.)
 
 ```bash
 SERENDIPITY_ENABLE_ART=true
-SERENDIPITY_KR_SERVICE_TOKEN=<same value as BETA_ADMIN_TOKEN>
+SERENDIPITY_KR_SERVICE_TOKEN=<the KR admin token: KR_API_TOKEN / BETA_ADMIN_TOKEN>
 SERENDIPITY_KIND_ROBOTS_BASE_URL=https://<kind-robots-host>
-SERENDIPITY_ART_SUBMIT_MODE=queue     # Alexa-safe; use 'generate' only if fast/local
+SERENDIPITY_ART_SUBMIT_MODE=conductor   # default; or 'queue' / 'generate'
 ```
 
 ## Step 3 — Expose POST /api/alexa publicly (pick one)
