@@ -1,0 +1,384 @@
+#!/usr/bin/env python3
+"""
+parity_migrate.py — reverse-parity migration for the kind_robots art library.
+
+Runs ON the home box (needs disk access to the local kind_robots checkout AND
+outbound HTTPS to kind_robots). It closes the gaps the Vercel side can't: it
+writes real files, converts PNG->WebP, and generates thumbnails, then patches
+the DB over the KR API. Work is pulled from GET /api/art/image/needs-work so we
+never download every row's base64 up front.
+
+Three independent passes (default: all three):
+  --materialize  imageData-only rows -> write a .webp on disk, PATCH imagePath.
+                 Deduped: if the exact bytes already exist on disk, link that
+                 file instead of writing a copy.
+  --png2webp     existing .png files -> .webp; delete the png; PATCH the row;
+                 rewrite refs in collections.json / gallery.json; REPORT any
+                 code refs (never auto-edits source).
+  --thumbnails   rows with no thumbnail -> write a thumb .webp + PATCH
+                 thumbnailPath and thumbnailData.
+
+SAFE BY DEFAULT: dry-run unless you pass --live. Dry-run makes zero changes; it
+reports exactly what --live would do (materialize even reports true-new vs
+duplicate-of-existing-file).
+
+Environment (same token model as relay_agent.py):
+  KR_BASE_URL          default https://kindrobots.org
+  KR_RELAY_TOKEN       admin apiKey / beta-admin token (Bearer)
+  KR_LOCAL_IMAGES_DIR  the local checkout's public/images dir (e.g.
+                       D:/code/kind_robots/public/images)
+Pillow is required for --live (image conversion/thumbnails); dry-run runs
+stdlib-only.
+
+Examples:
+  python parity_migrate.py                          # dry-run, all passes
+  python parity_migrate.py --png2webp               # dry-run, just PNG->WebP
+  python parity_migrate.py --materialize --live     # actually write files
+"""
+
+import argparse
+import base64
+import hashlib
+import io
+import json
+import os
+import sys
+import urllib.error
+import urllib.request
+
+KR_BASE_URL = os.environ.get("KR_BASE_URL", "https://kindrobots.org").rstrip("/")
+KR_TOKEN = os.environ.get("KR_RELAY_TOKEN", "").strip()
+IMAGES_DIR = os.environ.get("KR_LOCAL_IMAGES_DIR", "").strip().replace("\\", "/").rstrip("/")
+
+THUMB_MAX = 384  # px, longest edge
+
+
+def log(msg):
+    print(msg, flush=True)
+
+
+def http_json(method, url, body=None, timeout=120):
+    data = json.dumps(body).encode() if body is not None else None
+    req = urllib.request.Request(url, data=data, method=method)
+    req.add_header("Content-Type", "application/json")
+    if KR_TOKEN:
+        req.add_header("Authorization", f"Bearer {KR_TOKEN}")
+    try:
+        with urllib.request.urlopen(req, timeout=timeout) as resp:
+            return resp.status, json.loads(resp.read().decode() or "null")
+    except urllib.error.HTTPError as e:
+        try:
+            payload = json.loads(e.read().decode() or "null")
+        except (ValueError, OSError):
+            payload = None
+        return e.code, payload
+
+
+# ---- path helpers --------------------------------------------------------
+
+def url_to_local(url):
+    """/images/comfy/x.webp -> {IMAGES_DIR}/comfy/x.webp"""
+    if not url:
+        return None
+    rel = url.split("?")[0].lstrip("/")
+    if rel.startswith("images/"):
+        rel = rel[len("images/"):]
+    return f"{IMAGES_DIR}/{rel}"
+
+
+def local_to_url(path):
+    p = path.replace("\\", "/")
+    if p.startswith(IMAGES_DIR):
+        p = p[len(IMAGES_DIR):]
+    return "/images/" + p.lstrip("/")
+
+
+# ---- image encoding (Pillow, lazy) --------------------------------------
+
+def _pil():
+    from PIL import Image  # noqa: WPS433 — optional dep, only for --live
+    return Image
+
+
+def to_webp(raw):
+    img = _pil()
+    with img.open(io.BytesIO(raw)) as im:
+        buf = io.BytesIO()
+        im.save(buf, format="WEBP", quality=90, method=6)
+        return buf.getvalue()
+
+
+def to_thumb(raw):
+    img = _pil()
+    with img.open(io.BytesIO(raw)) as im:
+        im.thumbnail((THUMB_MAX, THUMB_MAX))
+        buf = io.BytesIO()
+        im.save(buf, format="WEBP", quality=82, method=6)
+        return buf.getvalue()
+
+
+# ---- KR API --------------------------------------------------------------
+
+def iter_needs_work(kind, limit=200):
+    cursor = 0
+    while True:
+        status, resp = http_json(
+            "GET", f"{KR_BASE_URL}/api/art/image/needs-work?kind={kind}&limit={limit}&cursorId={cursor}"
+        )
+        if status != 200 or not resp or not resp.get("success"):
+            log(f"  ! needs-work({kind}) failed: HTTP {status} {resp and resp.get('message')}")
+            return
+        data = resp.get("data") or {}
+        for item in data.get("items") or []:
+            yield item
+        if data.get("done") or data.get("nextCursor") is None:
+            return
+        cursor = data["nextCursor"]
+
+
+def get_image(image_id):
+    status, resp = http_json("GET", f"{KR_BASE_URL}/api/art/image/{image_id}")
+    if status != 200 or not resp:
+        return None
+    return resp.get("data") or resp
+
+
+def patch_image(image_id, fields, live):
+    if not live:
+        return True
+    status, resp = http_json("PATCH", f"{KR_BASE_URL}/api/art/image/{image_id}", fields)
+    if status != 200 or not resp or not resp.get("success"):
+        log(f"  ! patch #{image_id} failed: HTTP {status} {resp and resp.get('message')}")
+        return False
+    return True
+
+
+# ---- disk dedup index ----------------------------------------------------
+
+IMAGE_EXTS = (".webp", ".png", ".jpg", ".jpeg", ".gif")
+
+
+def build_disk_hash_index():
+    """sha256(file bytes) -> public url, for every image already on disk."""
+    index = {}
+    if not IMAGES_DIR or not os.path.isdir(IMAGES_DIR):
+        return index
+    for root, _dirs, files in os.walk(IMAGES_DIR):
+        for name in files:
+            if not name.lower().endswith(IMAGE_EXTS):
+                continue
+            full = os.path.join(root, name)
+            try:
+                with open(full, "rb") as f:
+                    h = hashlib.sha256(f.read()).hexdigest()
+                index.setdefault(h, local_to_url(full))
+            except OSError:
+                continue
+    return index
+
+
+# ---- passes --------------------------------------------------------------
+
+def pass_materialize(live, collection):
+    log(f"\n== materialize {'(LIVE)' if live else '(dry-run)'} ==")
+    disk = build_disk_hash_index()
+    log(f"  indexed {len(disk)} on-disk file(s) for dedup")
+    written = linked = missing = failed = 0
+    for item in iter_needs_work("materialize"):
+        rec = get_image(item["id"])
+        raw_b64 = (rec or {}).get("imageData")
+        if not raw_b64:
+            missing += 1
+            continue
+        try:
+            raw = base64.b64decode(raw_b64)
+        except (ValueError, TypeError):
+            failed += 1
+            continue
+        h = hashlib.sha256(raw).hexdigest()
+        if h in disk:  # dedup: bytes already on disk -> just link
+            url = disk[h]
+            linked += 1
+            log(f"  #{item['id']} -> link existing {url}")
+            patch_image(item["id"], {"imagePath": url, "path": url, "fileType": url.rsplit('.', 1)[-1]}, live)
+            continue
+        rel = f"{collection}/{collection}-{item['id']}.webp"
+        url = f"/images/{rel}"
+        written += 1
+        log(f"  #{item['id']} -> write {url}")
+        if live:
+            try:
+                webp = to_webp(raw)
+                dest = url_to_local(url)
+                os.makedirs(os.path.dirname(dest), exist_ok=True)
+                with open(dest, "wb") as f:
+                    f.write(webp)
+                disk[hashlib.sha256(webp).hexdigest()] = url
+                if not patch_image(item["id"], {"imagePath": url, "path": url, "fileType": "webp"}, live):
+                    failed += 1
+            except Exception as e:  # noqa: BLE001
+                log(f"  ! #{item['id']} write failed: {e}")
+                failed += 1
+    log(f"  materialize: {written} to write, {linked} linked (dup), {missing} no-data, {failed} failed")
+
+
+def pass_png2webp(live):
+    log(f"\n== png2webp {'(LIVE)' if live else '(dry-run)'} ==")
+    converted = missing = failed = 0
+    changed_urls = {}  # old_url -> new_url, for manifest rewrite
+    for item in iter_needs_work("png"):
+        old_url = item.get("imagePath") or item.get("path")
+        if not old_url or not old_url.lower().endswith(".png"):
+            # fileType said png but path isn't a .png file — just fix fileType.
+            if live:
+                patch_image(item["id"], {"fileType": "webp"}, live)
+            continue
+        src = url_to_local(old_url)
+        if not src or not os.path.isfile(src):
+            missing += 1
+            log(f"  #{item['id']} png file missing on disk: {old_url}")
+            continue
+        new_url = old_url[:-4] + ".webp"
+        converted += 1
+        log(f"  #{item['id']} {old_url} -> {new_url}")
+        changed_urls[old_url] = new_url
+        if live:
+            try:
+                with open(src, "rb") as f:
+                    webp = to_webp(f.read())
+                dest = url_to_local(new_url)
+                with open(dest, "wb") as f:
+                    f.write(webp)
+                os.remove(src)
+                if not patch_image(item["id"], {"imagePath": new_url, "path": new_url, "fileType": "webp"}, live):
+                    failed += 1
+            except Exception as e:  # noqa: BLE001
+                log(f"  ! #{item['id']} convert failed: {e}")
+                failed += 1
+    _rewrite_manifests(changed_urls, live)
+    _report_code_refs()
+    log(f"  png2webp: {converted} converted, {missing} missing-on-disk, {failed} failed")
+
+
+def _rewrite_manifests(changed_urls, live):
+    """Swap .png -> .webp in collections.json and per-folder gallery.json."""
+    if not IMAGES_DIR:
+        return
+    targets = [os.path.join(IMAGES_DIR, "collections.json")]
+    for root, _dirs, files in os.walk(IMAGES_DIR):
+        if "gallery.json" in files:
+            targets.append(os.path.join(root, "gallery.json"))
+    touched = 0
+    for path in targets:
+        if not os.path.isfile(path):
+            continue
+        try:
+            with open(path, "r", encoding="utf-8") as f:
+                text = f.read()
+        except OSError:
+            continue
+        if ".png" not in text:
+            continue
+        new_text = text.replace(".png", ".webp")
+        touched += 1
+        log(f"  manifest: {os.path.basename(path)} (.png -> .webp)")
+        if live:
+            with open(path, "w", encoding="utf-8") as f:
+                f.write(new_text)
+    if touched:
+        log(f"  manifests {'rewritten' if live else 'to rewrite'}: {touched}")
+
+
+def _report_code_refs():
+    """We deliberately do NOT auto-edit source. Remind the operator to grep the
+    repo for any hardcoded .png references (components/content) and fix by hand."""
+    log("  note: source code .png refs are NOT auto-edited — grep the repo and fix by hand")
+
+
+def pass_thumbnails(live):
+    log(f"\n== thumbnails {'(LIVE)' if live else '(dry-run)'} ==")
+    made = missing = failed = 0
+    for item in iter_needs_work("thumbnail"):
+        src_url = item.get("imagePath") or item.get("path")
+        raw = None
+        if src_url:
+            local = url_to_local(src_url)
+            if local and os.path.isfile(local):
+                with open(local, "rb") as f:
+                    raw = f.read()
+        if raw is None:  # fall back to DB bytes
+            rec = get_image(item["id"])
+            b64 = (rec or {}).get("imageData")
+            if b64:
+                try:
+                    raw = base64.b64decode(b64)
+                except (ValueError, TypeError):
+                    raw = None
+        if raw is None:
+            missing += 1
+            continue
+        base_url = (src_url or f"/images/generated/generated-{item['id']}.webp")
+        folder, name = base_url.rsplit("/", 1)
+        thumb_url = f"{folder}/thumb/{name.rsplit('.', 1)[0]}.webp"
+        made += 1
+        log(f"  #{item['id']} -> thumb {thumb_url}")
+        if live:
+            try:
+                tb = to_thumb(raw)
+                dest = url_to_local(thumb_url)
+                os.makedirs(os.path.dirname(dest), exist_ok=True)
+                with open(dest, "wb") as f:
+                    f.write(tb)
+                fields = {
+                    "thumbnailPath": thumb_url,
+                    "thumbnailData": "data:image/webp;base64," + base64.b64encode(tb).decode(),
+                }
+                if not patch_image(item["id"], fields, live):
+                    failed += 1
+            except Exception as e:  # noqa: BLE001
+                log(f"  ! #{item['id']} thumb failed: {e}")
+                failed += 1
+    log(f"  thumbnails: {made} to make, {missing} no-source, {failed} failed")
+
+
+def main():
+    ap = argparse.ArgumentParser(description="Reverse-parity art migration (dry-run by default).")
+    ap.add_argument("--live", action="store_true", help="apply changes (default: dry-run)")
+    ap.add_argument("--materialize", action="store_true", help="run the materialize pass")
+    ap.add_argument("--png2webp", action="store_true", help="run the PNG->WebP pass")
+    ap.add_argument("--thumbnails", action="store_true", help="run the thumbnail pass")
+    ap.add_argument("--materialize-collection", default="generated",
+                    help="folder for newly-written files (default: generated)")
+    args = ap.parse_args()
+
+    if not KR_TOKEN:
+        log("KR_RELAY_TOKEN is required (admin apiKey / beta-admin token).")
+        sys.exit(1)
+    if not IMAGES_DIR or not os.path.isdir(IMAGES_DIR):
+        log(f"KR_LOCAL_IMAGES_DIR must point at the local public/images dir (got: {IMAGES_DIR!r}).")
+        sys.exit(1)
+    if args.live:
+        try:
+            _pil()
+        except Exception:  # noqa: BLE001
+            log("--live needs Pillow: pip install Pillow")
+            sys.exit(1)
+
+    # Default: all passes.
+    run_all = not (args.materialize or args.png2webp or args.thumbnails)
+    log(f"parity_migrate {'LIVE' if args.live else 'DRY-RUN'} against {KR_BASE_URL}")
+    if not args.live:
+        log("(dry-run: no files or DB rows will change; pass --live to apply)")
+
+    if run_all or args.materialize:
+        pass_materialize(args.live, args.materialize_collection)
+    if run_all or args.png2webp:
+        pass_png2webp(args.live)
+    if run_all or args.thumbnails:
+        pass_thumbnails(args.live)
+
+    log("\nDone. Review the plan above; re-run with --live to apply. Commit + push public/images after a live run.")
+
+
+if __name__ == "__main__":
+    main()
