@@ -7,7 +7,10 @@ name: Auto Art Generate
 #      makes the loop self-draining: once an image lands, it stops being queued.
 #   2. submits each queued entry to the kind_robots ArtJob queue on Vercel
 #      (public endpoint, machine-auth via KR_API_TOKEN — no Tailscale needed for
-#      this direction).
+#      this direction). This covers BOTH lanes: the self-draining project-art
+#      batch (art-generate.yaml) and the requests: block of art-prompts.yaml
+#      (ad-hoc / missing-image / voice requests), so everything funnels through
+#      the same queue.
 #   3. the home-box relay agent (already under pm2) claims each job outward,
 #      renders on localhost ComfyUI/A1111, and uploads the result.
 #   4. downloads finished images into projects/process/, routes them with
@@ -86,6 +89,20 @@ jobs:
             --limit ${{ github.event.inputs.limit || '5' }} \
             --timeout ${{ github.event.inputs.timeout || '300' }}
 
+      # Drain the requests: block of art-prompts.yaml (ad-hoc / missing-image /
+      # voice requests) through the same ArtJob queue. Marks each done. Fails
+      # soft like the batch consume: an offline box just leaves them pending.
+      - name: Submit + wait + download art requests (live)
+        id: consume_requests
+        continue-on-error: true
+        working-directory: conductor
+        env:
+          KR_API_TOKEN: ${{ secrets.KR_API_TOKEN }}
+        run: |
+          python scripts/consume_art_requests.py --live \
+            --limit ${{ github.event.inputs.limit || '5' }} \
+            --timeout ${{ github.event.inputs.timeout || '300' }}
+
       - name: Route downloaded images
         working-directory: conductor
         run: python scripts/distribute_images.py
@@ -119,8 +136,11 @@ jobs:
 
       - name: Report generation outcome
         run: |
-          if [ "${{ steps.consume.outcome }}" = "success" ]; then
-            echo "Consume step succeeded."
-          else
-            echo "::warning::Consume step did not fully succeed — the home render box may be offline, or some jobs failed/timed out. Queued jobs wait in the kind_robots ArtJob queue and will be picked up on the next run when the box is back online."
-          fi
+          for step in "batch:${{ steps.consume.outcome }}" "requests:${{ steps.consume_requests.outcome }}"; do
+            name="${step%%:*}"; outcome="${step#*:}"
+            if [ "$outcome" = "success" ]; then
+              echo "$name consume step succeeded."
+            else
+              echo "::warning::$name consume step did not fully succeed — the home render box may be offline, or some jobs failed/timed out. Queued jobs wait in the kind_robots ArtJob queue and will be picked up on the next run when the box is back online."
+            fi
+          done
