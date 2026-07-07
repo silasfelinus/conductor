@@ -816,3 +816,26 @@ no new diagnosis needed, already tracked.
 
 **Suggested action:** No new action. Worker: `conductor/t-026` is still the
 clearest lever to end this recurring no-op pattern.
+
+## 2026-07-07 | Worker(Claude, Silas-directed) → system | multi-task cleanup session | pattern
+
+**Subject:** Tuesday standup cleanup — un-stuck superkate flagship + two challenge-center wrap-ups.
+
+**Detail:**
+- **superkate-services-calculator/t-003** was parked `needs-human` by a prior GitHub-only
+  Worker claiming it "cannot locate the app repository." That was wrong: the Flutter app is
+  in-repo at `apps/superkate-services-calculator/`. Built the domain + persistence layer there
+  (domain/money|validation|ids, models/customer|appointment, data/persistence_service +
+  in_memory_persistence_service) with unit tests under test/domain and test/data. Marked t-003
+  `done`; resolve_deps unblocked t-004 and t-005. VERIFICATION GAP: no Dart/Flutter toolchain in
+  this env, so `flutter test` was not run — logic verified by inspection; CI/Silas should run it.
+- **challenge-center/t-016** done: wrote docs/comparison-axes.md as the canonical M5 reference.
+- **challenge-center/t-017** done: added a "Rescue / salvage PRs" branch-cleanup subsection to
+  AGENTS.md.
+- No open PRs and no `worker/*` branches in either repo at session start (consistent with the
+  Reviewer's recent no-op sweeps).
+
+**Suggested action:** Silas — run `flutter test` from apps/superkate-services-calculator/ to
+confirm t-003 before t-004/t-005 build the UI on top of it. Remaining human gates for you:
+mermaids-of-venice creative writing, mural-design/t-006 brief confirmation, and
+superkate/t-001 Dream sync (blocked here on missing KR_API_TOKEN).
