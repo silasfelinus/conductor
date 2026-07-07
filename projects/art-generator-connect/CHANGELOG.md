@@ -1,5 +1,31 @@
 # art-generator-connect CHANGELOG
 
+## 2026-07-07 — Flux output-quality upgrade (Silas-directed)
+Art now fires end-to-end, but the output was ugly. Root cause was in the live
+generation path (`kind_robots /api/comfy/flux/generate`), not the model:
+
+- **Resolution**: default was 1024x512 (0.5MP, a 2:1 letterbox) — below Flux's
+  ~1MP native training resolution, which is the #1 cause of cramped/distorted,
+  low-detail Flux images. Raised default to 1024x1024 (native 1MP) for both
+  dev and schnell. Callers still pass their own dimensions; documented the
+  proper 1MP aspect buckets (1216x832 for 3:2 card, 1344x768 for 16:9 hero,
+  832x1216 for portrait) so icon/card/hero variants stay on-model.
+- **Scheduler**: `normal` (SD-era) -> `beta`, which resolves Flux's
+  flow-matching noise schedule properly — crisper detail, cleaner composition.
+- **Guidance (dev)**: 4 -> 3.5, Flux-dev's aesthetic sweet spot (4+ burns
+  contrast / over-bakes detail on illustrative prompts).
+- Left correct as-is: steps (dev 30 / schnell 8), cfg 1, base `flux1-dev-Q8_0`
+  GGUF (Q8 is ~fp16 quality — no model swap needed).
+- Shipped on kind_robots branch `claude/art-generator-quality-kz5oml`.
+
+**Base-model note for Silas**: the current dev-Q8 base is already excellent;
+the ugliness was parameters, not the checkpoint. If you want a more painterly
+/ illustrative default *without* prompt engineering, an optional drop-in is
+**PixelWave (Flux dev)** in Q8 GGUF — same node graph, just swap `unet_name`.
+Otherwise no download is needed. A per-style **aesthetic LoRA** (the workflow's
+ImpactWildcardEncode already supports LoRAs) is usually a better lever than a
+base swap for dialing in the Kind Robots visual language.
+
 ## 2026-07-06 (later)
 - Closed the second art lane (t-021): added scripts/consume_art_requests.py to
   drain the requests: block of art-prompts.yaml through the same kind_robots
