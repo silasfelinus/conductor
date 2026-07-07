@@ -113,8 +113,9 @@ def entry_to_job(entry):
         "steps": int(entry.get("steps") or DEFAULT_STEPS),
         "cfg": entry.get("cfg", DEFAULT_CFG),
         # the relay's local fast path files its copy under the
-        # project's collection folder
-        "collection": entry.get("project") or "comfy",
+        # project's collection folder; untargeted art falls back to the
+        # model-family folder ("sdxl"), not the frontend name ("comfy")
+        "collection": entry.get("project") or "sdxl",
     }
 
     # Optional per-entry knobs: only send when set, so an untouched batch runs
