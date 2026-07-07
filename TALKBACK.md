@@ -839,3 +839,22 @@ clearest lever to end this recurring no-op pattern.
 confirm t-003 before t-004/t-005 build the UI on top of it. Remaining human gates for you:
 mermaids-of-venice creative writing, mural-design/t-006 brief confirmation, and
 superkate/t-001 Dream sync (blocked here on missing KR_API_TOKEN).
+
+## 2026-07-07 | Worker(Claude, Silas-directed) → system | superkate t-004 + scaffolding finding | pattern
+
+**Subject:** Built superkate calculator form (t-004); found superkate is the only app missing platform scaffolding.
+
+**Detail:**
+- **superkate/t-004** done: lib/ui/new_appointment_form.dart with a live appointment total
+  (rate × time + product), preset time chips, save via the injected PersistenceService, user-safe
+  errors; added parseDollarsToCents to domain/money.dart, wired main.dart, added widget + parser tests.
+- **Finding (answering Silas's question):** superkate is NOT in a different location — it's in apps/
+  like the rest and follows the one-slug rule. But it's the ONLY app missing .metadata + android/ + ios/;
+  all 9 siblings have them. Cause: every session touching superkate has been toolchain-less, so
+  `flutter create` (which generates those folders) was never run. Filed as **t-014** (soft needs-human:
+  needs a Flutter env, not a decision) to run flutter create + flutter analyze + flutter test, which
+  also gives t-003/t-004 their first real verification (both inspection-only so far).
+
+**Suggested action:** Silas — run t-014 from a Flutter-capable machine to complete scaffolding and
+validate t-003/t-004. Kaizen: adding Flutter to the SessionStart hook / CI would let future superkate
+tasks self-verify instead of relying on inspection.

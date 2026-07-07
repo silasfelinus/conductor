@@ -82,4 +82,24 @@ void main() {
       expect(toMinutes(hours: 2), 120);
     });
   });
+
+  group('parseDollarsToCents', () {
+    test('blank / null defaults to zero cents', () {
+      expect(parseDollarsToCents(''), 0);
+      expect(parseDollarsToCents('   '), 0);
+      expect(parseDollarsToCents(null), 0);
+    });
+
+    test('parses plain and decorated dollar strings', () {
+      expect(parseDollarsToCents('80'), 8000);
+      expect(parseDollarsToCents('80.5'), 8050);
+      expect(parseDollarsToCents(r'$1,234.50'), 123450);
+      expect(parseDollarsToCents('0.05'), 5);
+    });
+
+    test('returns null for non-money text so callers can flag it', () {
+      expect(parseDollarsToCents('abc'), isNull);
+      expect(parseDollarsToCents('12.34.56'), isNull);
+    });
+  });
 }

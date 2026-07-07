@@ -41,3 +41,16 @@ String formatCents(int cents) {
 /// Converts whole hours and minutes into a total minute count.
 /// Used by the calculator's hours/minutes chips (SPEC.md).
 int toMinutes({int hours = 0, int minutes = 0}) => hours * 60 + minutes;
+
+/// Parses a user-typed dollar string (e.g. "80", "80.5", "$1,234.50") into
+/// integer cents. Blank/`null` returns `0` (product cost defaults to zero).
+///
+/// Returns `null` when the text is present but not a valid money amount, so the
+/// caller can show a user-safe validation message rather than guessing a value.
+int? parseDollarsToCents(String? raw) {
+  final text = (raw ?? '').trim().replaceAll(RegExp(r'[\$,\s]'), '');
+  if (text.isEmpty) return 0;
+  final dollars = double.tryParse(text);
+  if (dollars == null || dollars.isNaN || dollars.isInfinite) return null;
+  return (dollars * 100).round();
+}
