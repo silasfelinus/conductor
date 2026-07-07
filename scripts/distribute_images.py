@@ -15,8 +15,9 @@ For each image in projects/process/, determines the destination by:
 
 If a destination file already exists, the original is preserved as a new
 inspiration in its slug's folder (kind_robots public/images/{slug}/) and the
-new image replaces it. Each touched slug folder gets its gallery.json manifest
-regenerated so the folder's contents are machine-readable as an art collection.
+new image replaces it. On every run, collections.json and a gallery.json for
+every indexed folder are regenerated (with full filenames) so folder<->collection
+parity holds and each collection resolves on Vercel, where the CDN can't be globbed.
 
 Kind Robots repo is expected at ../kind_robots relative to the conductor root.
 
@@ -195,17 +196,23 @@ def slug_from_dest_filename(filename, slugs):
 
 def write_gallery_manifest(folder_rel):
     """Regenerate gallery.json for a collection folder (flat "slug" or
-    nested "context/slug" relative to public/images)."""
+    nested "context/slug" relative to public/images).
+
+    Writes FULL filenames (name, not stem). The kind_robots reader
+    (server/utils/folderCollections.ts -> stemsToUrls) appends .webp to any
+    entry lacking an image extension, so a bare stem like "comfy-4032" would
+    resolve to comfy-4032.webp and 404 a .png. Keeping the extension makes
+    .png/.jpg/.gif folders resolve correctly."""
     import json
 
     folder = KIND_ROBOTS_ROOT / "public" / "images" / folder_rel
     if not folder.exists():
         return
-    stems = sorted(
-        f.stem for f in folder.iterdir()
+    names = sorted(
+        f.name for f in folder.iterdir()
         if f.is_file() and f.suffix.lower() in IMAGE_EXTS
     )
-    (folder / "gallery.json").write_text(json.dumps(stems) + "\n")
+    (folder / "gallery.json").write_text(json.dumps(names) + "\n")
 
 
 def write_collections_index():
@@ -245,6 +252,7 @@ def write_collections_index():
     (images_root / "collections.json").write_text(
         json.dumps(index, indent=2, sort_keys=True) + "\n"
     )
+    return index
 
 
 def infer_destination(filename, slugs):
@@ -441,13 +449,20 @@ def distribute():
             if parts[:2] == ("public", "images") and len(parts) in (4, 5):
                 touched_slugs.add("/".join(parts[2:-1]))
 
-    if not DRY_RUN:
-        for folder_rel in sorted(touched_slugs):
+    if not DRY_RUN and KIND_ROBOTS_ROOT.exists():
+        # Regenerate the index, then a gallery.json for EVERY indexed folder —
+        # not just the ones touched this run. This keeps collections.json and
+        # the per-folder manifests in parity (the folder<->collection two-way
+        # parity Silas wants): a folder that got images by any path (e.g. the
+        # relay's local copy) still gets a resolvable manifest, so it shows up
+        # on Vercel where the filesystem can't be globbed. Idempotent: unchanged
+        # folders produce byte-identical manifests, so no commit churn.
+        index = write_collections_index()
+        print("  collections.json index regenerated")
+        folders = sorted(set(index.values()))
+        for folder_rel in folders:
             write_gallery_manifest(folder_rel)
-            print(f"  gallery.json refreshed for public/images/{folder_rel}/")
-        if touched_slugs and KIND_ROBOTS_ROOT.exists():
-            write_collections_index()
-            print("  collections.json index regenerated")
+        print(f"  gallery.json refreshed for {len(folders)} folder(s)")
 
     if not DRY_RUN and moved:
         moved_names = {fname for fname, _ in moved}

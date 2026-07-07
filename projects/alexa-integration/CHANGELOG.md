@@ -1,5 +1,23 @@
 # alexa-integration changelog
 
+## 2026-07-07
+- Physical Echo went live end-to-end: a real Alexa custom skill ("serendipity please")
+  reaches the serendipity-voice runtime over a Cloudflare quick tunnel. Runbook updated
+  with the hard-won console gotchas: must be a **standard custom skill, not Alexa
+  Conversations** (Conversations requires AMAZON.FallbackIntent and forbids
+  AMAZON.SearchQuery → the opaque `invalid JsonArtifact` build error); two-word,
+  serendipity-first invocation name; carrier-word utterances incl. the natural
+  `will she {request}`; trycloudflare wildcard-cert endpoint option; where to find the
+  Skill ID.
+- Added per-person personalization (t-014, serendipity-voice PR #13): map each Alexa
+  voice-profile personId → a Kind Robots user (SERENDIPITY_PERSON_MAP + default), so a
+  shared Echo attributes art to the right person and greets them by name. Unmapped voices
+  self-announce their personId on the view feed. KR-side owner-on-behalf-of is the
+  remaining follow-up.
+- serendipity-voice reliability: added a zero-dependency .env auto-loader (PR #12) so art
+  vars actually reach the dev:web process (fixes draft-instead-of-queued). Normalized the
+  home relay's local-copy path to forward slashes (conductor PR #259).
+
 ## 2026-07-06 (later)
 - Added Alexa request-signature verification to serendipity-voice
   (src/alexa/verify-request.ts): cert-chain URL + cert SAN/validity + RSA body
