@@ -393,3 +393,22 @@ tasks:
     PR skipped a CONTROL.md block and the art-prompt entries). Build a script that
     takes a slug/title/goal and generates all of the above in one pass so future
     project scaffolds don't drop a surface.
+- id: t-026
+  milestone: m2
+  title: Reviewer trigger fires with no open worker/* PR to review, repeatedly
+  status: ready
+  owner: null
+  updated: '2026-07-07T05:00:00Z'
+  passes: 0
+  stakes: reversible
+  note: >
+    Pattern across at least 4 Reviewer sessions now (root TALKBACK.md 2026-07-05
+    evening through 2026-07-07): the Reviewer is triggered expecting a worker/*
+    PR to review, but list_pull_requests(state=open) returns zero results in both
+    conductor and kind_robots, and no roadmap task anywhere is at status: review
+    or status: claimed. Each session burns a full sweep (git log, PR list, roadmap
+    grep, TALKBACK tail) to reach the same "nothing to do" conclusion, already
+    flagged twice as a likely scheduler/trigger cadence mismatch with no fix filed.
+    Investigate what fires the Reviewer session (cron/webhook cadence vs. actual
+    Worker PR volume) and either slow the trigger interval, or make it conditional
+    on an open worker/* PR existing before spinning up a full session.
