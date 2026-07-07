@@ -84,9 +84,17 @@ Alexa must reach a public HTTPS endpoint (valid CA cert) or an AWS Lambda.
 - **C. Small always-on host (Fly/Render/VPS/Pi).** Deploy the node server, put
   it behind HTTPS, point the skill at `https://host/api/alexa`.
 
-Note: the current `/api/alexa` does not yet verify Alexa's request signature —
-fine behind a private tunnel, but before a public/production endpoint add
-signature validation (I can add this; it's a small, well-defined addition).
+Note: `/api/alexa` supports Amazon request-signature verification (built in
+serendipity-voice `src/alexa/verify-request.ts`). It is **off by default** so
+local/simulation testing works. Turn it ON before the endpoint is public:
+
+```bash
+SERENDIPITY_ALEXA_VERIFY_SIGNATURE=true
+SERENDIPITY_ALEXA_SKILL_ID=amzn1.ask.skill.<your-skill-id>   # optional but recommended
+```
+
+It checks the cert chain URL, the certificate validity + SAN, the RSA body
+signature, the request timestamp (±150s replay window), and the applicationId.
 
 ## Step 4 — Create the Alexa custom skill
 
@@ -119,6 +127,6 @@ shortly." and the image shows up in Kind Robots once the home relay renders it.
   user). Keep it in env only; never commit it. Rotate if leaked.
 - Prefer `queue` mode: the endpoint returns fast (under Alexa's ~8s timeout) and
   generation happens on your relay, off the request path.
-- Add Alexa request-signature verification before any public exposure.
+- Turn on Alexa request-signature verification (`SERENDIPITY_ALEXA_VERIFY_SIGNATURE=true`) before any public exposure — it is built and off by default.
 - Voice still cannot approve, merge, publish, spend, delete, or edit roadmap
   YAML — only enqueue a reversible art job.
