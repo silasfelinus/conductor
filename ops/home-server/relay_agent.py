@@ -215,9 +215,14 @@ def write_local_copy(job, art_image_id, image_b64):
         collection = str(payload.get("collection") or "comfy").strip().lower()
         if not collection.replace("-", "").replace("_", "").isalnum():
             collection = "comfy"
-        folder = os.path.join(KR_LOCAL_IMAGES_DIR, collection)
+        # Normalize to forward slashes throughout. os.path.join on Windows
+        # emits backslashes, which mixed with a forward-slash KR_LOCAL_IMAGES_DIR
+        # produced ugly "D:/code/kind_robots/public/images\comfy\comfy-1.png".
+        # Forward slashes are valid on Windows too, so keep one style everywhere.
+        base = KR_LOCAL_IMAGES_DIR.replace("\\", "/").rstrip("/")
+        folder = f"{base}/{collection}"
         os.makedirs(folder, exist_ok=True)
-        file_path = os.path.join(folder, f"{collection}-{art_image_id}.png")
+        file_path = f"{folder}/{collection}-{art_image_id}.png"
         with open(file_path, "wb") as f:
             f.write(base64.b64decode(image_b64))
         log(f"local copy: {file_path}")
