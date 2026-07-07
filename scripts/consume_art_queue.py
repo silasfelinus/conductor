@@ -11,8 +11,9 @@ Closes the autonomous art loop (art-generator-connect t-012):
     -> GET  {KR}/api/art/image/{artImageId}?includeImageData=true
     -> projects/process/{basename}      (distribute_images.py routes from there)
 
-Dry-run by default: prints what would be queued and touches nothing.
-The first live run is human-gated (Silas approves; see roadmap t-012).
+Dry-run by default: prints what would be queued and touches nothing. Pass
+--live to run for real — Silas has authorized the automatic loop; no separate
+per-run approval is required.
 
 Environment:
   KR_API_TOKEN   required for --live (machine auth: user apiKey or admin token)
