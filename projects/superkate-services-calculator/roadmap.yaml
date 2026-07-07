@@ -1,218 +1,249 @@
 project: superkate-services-calculator
 kind: software
-notes_from_silas: |
-  High priority request from Superkate for Hair by Superkate.
-  Build a private appointment services calculator with a dark theme, purple and teal accents,
-  appointment history, search by client/date, and receipt email preparation.
-  Required fields: client name, appointment date, hourly rate, time spent, product cost, appointment total.
-  Core formula: hourly rate × time spent + product cost = total price.
-
+notes_from_silas: "High priority request from Superkate for Hair by Superkate.\nBuild a private appointment\
+  \ services calculator with a dark theme, purple and teal accents,\nappointment history, search by client/date,\
+  \ and receipt email preparation.\nRequired fields: client name, appointment date, hourly rate, time\
+  \ spent, product cost, appointment total.\nCore formula: hourly rate \xD7 time spent + product cost\
+  \ = total price.\n"
 milestones:
-  - id: m1
-    title: Project identity and MVP spec
-    weight: 20
-    status: in-progress
-  - id: m2
-    title: Customer database, sync, and calculator
-    weight: 35
-    status: not-started
-  - id: m3
-    title: Search and receipt email flow
-    weight: 30
-    status: not-started
-  - id: m4
-    title: Polish and handoff
-    weight: 15
-    status: not-started
-
+- id: m1
+  title: Project identity and MVP spec
+  weight: 20
+  status: in-progress
+- id: m2
+  title: Customer database, sync, and calculator
+  weight: 35
+  status: not-started
+- id: m3
+  title: Search and receipt email flow
+  weight: 30
+  status: not-started
+- id: m4
+  title: Polish and handoff
+  weight: 15
+  status: not-started
 tasks:
-  - id: t-001
-    milestone: m1
-    title: Create the matching PROJECT Dream for slug parity
-    status: needs-human
-    owner: worker
-    passes: 0
-    stakes: reversible
-    updated: 2026-07-06
-    note: >
-      FOR SILAS: I added projects/superkate-services-calculator/docs/t-001-dream-sync-handoff.md
-      because this GitHub-only Worker run cannot execute scripts/sync_projects_to_dreams.py or
-      authenticate to the Kind Robots API. It lists the exact PROJECT Dream fields needed for
-      slug parity: slug "superkate-services-calculator", priority HIGH, projectStatus ACTIVE,
-      and friendly title "Superkate Services Calculator". TO APPROVE/COMPLETE: run the sync
-      script from a full Worker/runtime environment with the required Kind Robots API credential,
-      or create/verify the Dream through the authenticated Kind Robots API, then set this task to
-      done. This keeps the external sync honest instead of claiming a database write that was not performed.
+- id: t-001
+  milestone: m1
+  title: Create the matching PROJECT Dream for slug parity
+  status: needs-human
+  owner: worker
+  passes: 0
+  stakes: reversible
+  updated: 2026-07-06
+  note: 'FOR SILAS: I added projects/superkate-services-calculator/docs/t-001-dream-sync-handoff.md because
+    this GitHub-only Worker run cannot execute scripts/sync_projects_to_dreams.py or authenticate to the
+    Kind Robots API. It lists the exact PROJECT Dream fields needed for slug parity: slug "superkate-services-calculator",
+    priority HIGH, projectStatus ACTIVE, and friendly title "Superkate Services Calculator". TO APPROVE/COMPLETE:
+    run the sync script from a full Worker/runtime environment with the required Kind Robots API credential,
+    or create/verify the Dream through the authenticated Kind Robots API, then set this task to done.
+    This keeps the external sync honest instead of claiming a database write that was not performed.
 
-  - id: t-002
-    milestone: m1
-    title: Review and finalize the MVP spec with Superkate
-    status: done
-    owner: worker
-    passes: 0
-    stakes: reversible
-    gate_human: true
-    approved_by_human: true
-    updated: 2026-07-05
-    note: >
-      Silas explicitly cleared the finalized MVP spec in the current session. SPEC.md captures
-      the approved beta direction and implementation standards. This approval unblocks the
-      pre-implementation architecture note.
+    '
+- id: t-002
+  milestone: m1
+  title: Review and finalize the MVP spec with Superkate
+  status: done
+  owner: worker
+  passes: 0
+  stakes: reversible
+  gate_human: true
+  approved_by_human: true
+  updated: 2026-07-05
+  note: 'Silas explicitly cleared the finalized MVP spec in the current session. SPEC.md captures the
+    approved beta direction and implementation standards. This approval unblocks the pre-implementation
+    architecture note.
 
-  - id: t-009
-    milestone: m1
-    title: Add paid-app customer data security baseline to the MVP spec
-    status: done
-    owner: worker
-    passes: 0
-    stakes: reversible
-    updated: 2026-07-04
-    note: >
-      Added an explicit customer data security baseline to SPEC.md covering data minimization,
-      local-first storage, safe receipt behavior, deletion/export expectations, and paid-app release gates before appointment persistence begins.
+    '
+- id: t-009
+  milestone: m1
+  title: Add paid-app customer data security baseline to the MVP spec
+  status: done
+  owner: worker
+  passes: 0
+  stakes: reversible
+  updated: 2026-07-04
+  note: 'Added an explicit customer data security baseline to SPEC.md covering data minimization, local-first
+    storage, safe receipt behavior, deletion/export expectations, and paid-app release gates before appointment
+    persistence begins.
 
-  - id: t-011
-    milestone: m1
-    title: Record Silas's beta product decisions in the MVP spec
-    status: done
-    owner: worker
-    passes: 0
-    stakes: reversible
-    updated: 2026-07-05
-    note: >
-      Updated SPEC.md and roadmap notes from Silas's feedback: hours/minutes with preset chips,
-      product cost optional defaulting to zero, customer database and email storage as a reasonable
-      local-business feature, cloud sync as an initial beta expectation, warm receipts with
-      "Superkate loves you!", and optional app/device lock.
+    '
+- id: t-011
+  milestone: m1
+  title: Record Silas's beta product decisions in the MVP spec
+  status: done
+  owner: worker
+  passes: 0
+  stakes: reversible
+  updated: 2026-07-05
+  note: 'Updated SPEC.md and roadmap notes from Silas''s feedback: hours/minutes with preset chips, product
+    cost optional defaulting to zero, customer database and email storage as a reasonable local-business
+    feature, cloud sync as an initial beta expectation, warm receipts with "Superkate loves you!", and
+    optional app/device lock.
 
-  - id: t-012
-    milestone: m1
-    title: Record Silas's final open-question approvals in the MVP spec
-    status: done
-    owner: worker
-    passes: 0
-    stakes: reversible
-    updated: 2026-07-05
-    note: >
-      Recorded Silas's approval of the remaining recommendation package in SPEC.md: configurable
-      receipt contact fields, app-lock onboarding prompt with settings toggle, appointment deletion,
-      customer edit/delete, cloud sync backup, CSV export in paid v1, no bulk delete in v1,
-      and backend direct-send receipts as a future roadmap option rather than beta behavior.
+    '
+- id: t-012
+  milestone: m1
+  title: Record Silas's final open-question approvals in the MVP spec
+  status: done
+  owner: worker
+  passes: 0
+  stakes: reversible
+  updated: 2026-07-05
+  note: 'Recorded Silas''s approval of the remaining recommendation package in SPEC.md: configurable receipt
+    contact fields, app-lock onboarding prompt with settings toggle, appointment deletion, customer edit/delete,
+    cloud sync backup, CSV export in paid v1, no bulk delete in v1, and backend direct-send receipts as
+    a future roadmap option rather than beta behavior.
 
-  - id: t-013
-    milestone: m1
-    title: Open the PR in the same cycle a task branch is pushed, before ending the Worker session
-    status: done
-    owner: worker
-    passes: 0
-    stakes: reversible
-    updated: 2026-07-06
-    note: >
-      Added projects/superkate-services-calculator/docs/t-013-worker-pr-last-step-check.md
-      documenting the Worker last-step PR check and the exact AGENTS.md sentence that should be
-      added if a future patch-capable run edits the operating manual directly. This prevents
-      pushed worker branches from being stranded without a PR.
+    '
+- id: t-013
+  milestone: m1
+  title: Open the PR in the same cycle a task branch is pushed, before ending the Worker session
+  status: done
+  owner: worker
+  passes: 0
+  stakes: reversible
+  updated: 2026-07-06
+  note: 'Added projects/superkate-services-calculator/docs/t-013-worker-pr-last-step-check.md documenting
+    the Worker last-step PR check and the exact AGENTS.md sentence that should be added if a future patch-capable
+    run edits the operating manual directly. This prevents pushed worker branches from being stranded
+    without a PR.
 
-  - id: t-003
-    milestone: m2
-    title: Build the appointment and customer data model with persistence
-    status: needs-human
-    owner: worker
-    passes: 0
-    stakes: reversible
-    depends_on:
-      - t-002
-      - t-009
-      - t-010
-    updated: 2026-07-06
-    note: >
-      FOR SILAS: I added projects/superkate-services-calculator/docs/t-003-data-model-persistence-handoff.md
-      because this GitHub-only Worker run can update conductor but cannot locate/write/test the actual
-      Superkate app repository or runtime. It contains the exact Customer and Appointment model contracts,
-      cents/minutes total calculation, local-first persistence service shape, Pinia/store boundary, safe
-      error handling, and verification checklist. TO APPROVE/COMPLETE: point this task at the actual app
-      repository/path or run a patch-capable Worker against that repo, then set this task back to ready for
-      implementation or mark done only after the live app code is merged. This blocks t-004 and t-005 until
-      real persistence code exists.
+    '
+- id: t-003
+  milestone: m2
+  title: Build the appointment and customer data model with persistence
+  status: done
+  owner: worker
+  passes: 0
+  stakes: reversible
+  depends_on:
+  - t-002
+  - t-009
+  - t-010
+  updated: 2026-07-07
+  note: "Implemented in apps/superkate-services-calculator/ (Silas-directed session 2026-07-07). The prior\
+    \ handoff wrongly parked this as \"cannot locate the app repository\" \u2014 the Flutter app is in-repo\
+    \ at apps/superkate-services-calculator/, so the domain + persistence layer was built directly there\
+    \ against the SPEC.md data model: - domain/money.dart (cents/minutes math, appointment-total formula,\
+    \ display formatting),\n  domain/validation.dart (user-safe validation), domain/ids.dart (sync-ready\
+    \ local ids);\n- models/customer.dart, models/appointment.dart (immutable value objects, toMap/fromMap);\
+    \ - data/persistence_service.dart (interface + input/filter types),\n  data/in_memory_persistence_service.dart\
+    \ (local-first source of truth);\n- unit tests under test/domain and test/data covering the total\
+    \ formula, product-cost-defaults-to-zero,\n  UI-total-is-ignored-and-recomputed, validation, clientNameSnapshot\
+    \ survival on customer delete,\n  and client-name / date-range search filters.\nMoney is cents, time\
+    \ is minutes, totals are always recalculated, customer delete detaches (not cascades). VERIFICATION\
+    \ GAP: no Dart/Flutter toolchain in this environment, so `flutter test` was NOT run here \u2014 logic\
+    \ was verified by inspection and the tests are written to pass. Silas/CI should run `flutter test`\
+    \ from apps/superkate-services-calculator/ to confirm. Follow-on: a durable SQLite adapter behind\
+    \ the same PersistenceService interface. Unblocks t-004 (calculator form) and t-005 (search) via resolve_deps.\n"
+- id: t-004
+  milestone: m2
+  title: Build calculator form with live totals
+  status: done
+  owner: worker
+  passes: 0
+  stakes: reversible
+  depends_on: t-003
+  updated: 2026-07-07
+  note: "DONE (2026-07-07, Silas-directed session): built lib/ui/new_appointment_form.dart — client name,\
+    \ appointment date picker, hourly rate, time spent (hours/minutes steppers + preset chips 30m/45m/1h/1h30m/2h),\
+    \ optional product cost defaulting to $0. Live appointment total recomputes on every keystroke via the\
+    \ t-003 domain layer (parseDollarsToCents -> calculateAppointmentTotalCents -> formatCents) and is shown\
+    \ in a total card with the formula line. Save delegates to the injected PersistenceService (total is\
+    \ recalculated at save, never trusted from UI); errors are user-safe. Added parseDollarsToCents to\
+    \ domain/money.dart, wired main.dart to host the form with a save confirmation snackbar, and added\
+    \ widget tests (boot, live-total updates from rate+preset+product, save persists the calculated total)\
+    \ plus money parser unit tests. VERIFICATION GAP: no Flutter toolchain here, so flutter test/analyze\
+    \ not run — verified by inspection; see t-014 (run flutter create + flutter test in a toolchain env).\n"
+- id: t-005
+  milestone: m3
+  title: Add client/date appointment search
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  depends_on: t-003
+  note: 'Add searchable appointment history with client-name search and date filtering. Results should
+    show client, date, and appointment total.
 
-  - id: t-004
-    milestone: m2
-    title: Build calculator form with live totals
-    status: waiting
-    owner: null
-    passes: 0
-    stakes: reversible
-    depends_on: t-003
-    note: >
-      Add the new appointment form for client/customer, appointment date, hourly rate, time spent
-      and optional product cost defaulting to $0. Show the live total as hourly rate × time spent
-      + product cost.
+    '
+- id: t-006
+  milestone: m3
+  title: Add warm receipt email composer
+  status: waiting
+  owner: null
+  passes: 0
+  stakes: reversible
+  depends_on:
+  - t-004
+  - t-005
+  note: 'Add a receipt action that opens an email composer with customer email prefilled when known, client
+    name, appointment date, hourly rate, time spent, product cost, total price, the formula line, and
+    the slogan "Superkate loves you!" Backend direct-send remains a separate approval.
 
-  - id: t-005
-    milestone: m3
-    title: Add client/date appointment search
-    status: waiting
-    owner: null
-    passes: 0
-    stakes: reversible
-    depends_on: t-003
-    note: >
-      Add searchable appointment history with client-name search and date filtering.
-      Results should show client, date, and appointment total.
+    '
+- id: t-007
+  milestone: m4
+  title: Polish the dark purple/teal salon UI
+  status: waiting
+  owner: null
+  passes: 0
+  stakes: reversible
+  depends_on: t-006
+  note: 'Make the app feel polished and salon-friendly with a dark base, purple and teal accents, clear
+    touch targets, calm spacing, and receipt screens that look professional.
 
-  - id: t-006
-    milestone: m3
-    title: Add warm receipt email composer
-    status: waiting
-    owner: null
-    passes: 0
-    stakes: reversible
-    depends_on:
-      - t-004
-      - t-005
-    note: >
-      Add a receipt action that opens an email composer with customer email prefilled when known,
-      client name, appointment date, hourly rate, time spent, product cost, total price, the formula
-      line, and the slogan "Superkate loves you!" Backend direct-send remains a separate approval.
+    '
+- id: t-008
+  milestone: m4
+  title: Prepare handoff checklist without store submission
+  status: waiting
+  owner: null
+  passes: 0
+  stakes: outward-facing
+  gate_human: true
+  approved_by_human: false
+  depends_on: t-007
+  note: 'Prepare a handoff checklist for device install/test, data backup expectations, privacy notes,
+    customer data security review, cloud-sync readiness, and app-store readiness. Do not submit to any
+    app store without explicit human approval.
 
-  - id: t-007
-    milestone: m4
-    title: Polish the dark purple/teal salon UI
-    status: waiting
-    owner: null
-    passes: 0
-    stakes: reversible
-    depends_on: t-006
-    note: >
-      Make the app feel polished and salon-friendly with a dark base, purple and teal accents,
-      clear touch targets, calm spacing, and receipt screens that look professional.
+    '
+- id: t-010
+  milestone: m2
+  title: Write a pre-implementation architecture note for customer database and cloud sync
+  status: done
+  owner: worker
+  passes: 0
+  stakes: reversible
+  depends_on: t-002
+  updated: 2026-07-06
+  note: 'Added projects/superkate-services-calculator/docs/customer-sync-architecture.md selecting a local-first
+    database plus authenticated cloud sync approach, tenant/authorization model, conflict strategy, CSV
+    export path, and optional app/device lock behavior. This unblocks t-003 after the next dependency-resolution
+    pass.
 
-  - id: t-008
-    milestone: m4
-    title: Prepare handoff checklist without store submission
-    status: waiting
-    owner: null
-    passes: 0
-    stakes: outward-facing
-    gate_human: true
-    approved_by_human: false
-    depends_on: t-007
-    note: >
-      Prepare a handoff checklist for device install/test, data backup expectations, privacy notes,
-      customer data security review, cloud-sync readiness, and app-store readiness. Do not submit
-      to any app store without explicit human approval.
-
-  - id: t-010
-    milestone: m2
-    title: Write a pre-implementation architecture note for customer database and cloud sync
-    status: done
-    owner: worker
-    passes: 0
-    stakes: reversible
-    depends_on: t-002
-    updated: 2026-07-06
-    note: >
-      Added projects/superkate-services-calculator/docs/customer-sync-architecture.md selecting a
-      local-first database plus authenticated cloud sync approach, tenant/authorization model,
-      conflict strategy, CSV export path, and optional app/device lock behavior. This unblocks
-      t-003 after the next dependency-resolution pass.
+    '
+- id: t-014
+  milestone: m1
+  title: Run flutter create to complete platform scaffolding and run the test suite
+  status: needs-human
+  owner: worker
+  passes: 0
+  stakes: reversible
+  updated: 2026-07-07
+  note: >
+    FOR SILAS: superkate is the ONLY app in apps/ missing its platform scaffolding — it has no
+    .metadata, android/, or ios/ folders, while all 9 sibling apps have them. It is NOT in the wrong
+    location (apps/superkate-services-calculator/ follows the one-slug rule correctly); it was just
+    never finished, because every session that has touched it (including the t-003/t-004 builds) ran
+    without a Flutter toolchain, so the toolchain-dependent completion step was never run. TO COMPLETE:
+    from a machine with Flutter installed, run
+      cd apps/superkate-services-calculator
+      flutter create . --org org.kindrobots --project-name superkate_services_calculator --platforms ios,android
+      flutter pub get && flutter analyze --fatal-infos && flutter test
+    then commit the generated platform folders and set this task done. This also runs the first real
+    verification of the t-003 domain layer and t-004 form (both were verified by inspection only, no
+    toolchain here). SOFT gate: it needs a Flutter environment, not a decision — flip to ready for any
+    toolchain-capable Worker run.

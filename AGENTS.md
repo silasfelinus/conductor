@@ -194,6 +194,20 @@ When a cross-repo task is selected:
 This keeps blocked cross-repo work visible and reviewable without bypassing branch, repo,
 secret, deploy, or human-gate boundaries.
 
+### Rescue / salvage PRs — delete the superseded branch in the same session
+
+When a rescue or salvage PR rebuilds stranded work from a stale `worker/*` or `claude/*`
+branch onto current `main` and supersedes that branch, **delete the superseded branch in
+the same session the rescue PR merges** — do not leave it for a later cycle to rediscover.
+A stale branch that has diverged from the rescue merge can be reopened as its own PR and
+reintroduce already-superseded or conflicting content. (It only merges as a harmless no-op
+when its diff is byte-identical to what the rescue already landed — don't count on that.)
+If the rescue PR's own body says a branch "can be deleted," treat that as the instruction to
+delete it now, not an observation for later. (Kaizen from challenge-center/t-002 resolution,
+2026-07-07: kind_robots PR #116 rescued t-002's work and said the old
+`worker/challenge-center-t-002` branch could be deleted, but it was instead reopened as PR
+#118 and merged separately ~10 minutes later.)
+
 ### Reviewer (Claude) — CAN
 - Merge reversible, scoped, software PRs from `worker/*` branches
 - Merge additive-only database migration PRs after auditing `migration.sql`

@@ -796,3 +796,65 @@ no new diagnosis needed, already tracked.
 
 **Suggested action:** No new action. Worker: `conductor/t-026` is still the
 clearest lever to end this recurring no-op pattern.
+
+## 2026-07-07 | Reviewer → system | session sweep (6) | pattern
+
+**Subject:** Eighth consecutive Reviewer sweep with no `worker/*` PR to review —
+no new diagnosis needed, already tracked.
+
+**Detail:**
+- Same result as all seven prior sweeps: `list_pull_requests` (state: open) is
+  empty in both `conductor` and `kind_robots`; `state: all` (10 most recent per
+  repo) shows nothing newer than what's already reviewed and merged — every
+  recent PR in both repos (conductor #264–#273, kind_robots #117–#126) was
+  opened and merged within the same Silas-directed session that created it,
+  none from a `worker/*` head.
+- Full roadmap grep across every `projects/*/roadmap.yaml`: zero tasks at
+  `status: review` or `status: claimed`.
+- `conductor/t-026` (the trigger-cadence fix task) is still `status: ready`,
+  `owner: null` — unclaimed by the Worker after four full sweeps.
+
+**Suggested action:** No new action. Worker: `conductor/t-026` is still the
+clearest lever to end this recurring no-op pattern.
+
+## 2026-07-07 | Worker(Claude, Silas-directed) → system | multi-task cleanup session | pattern
+
+**Subject:** Tuesday standup cleanup — un-stuck superkate flagship + two challenge-center wrap-ups.
+
+**Detail:**
+- **superkate-services-calculator/t-003** was parked `needs-human` by a prior GitHub-only
+  Worker claiming it "cannot locate the app repository." That was wrong: the Flutter app is
+  in-repo at `apps/superkate-services-calculator/`. Built the domain + persistence layer there
+  (domain/money|validation|ids, models/customer|appointment, data/persistence_service +
+  in_memory_persistence_service) with unit tests under test/domain and test/data. Marked t-003
+  `done`; resolve_deps unblocked t-004 and t-005. VERIFICATION GAP: no Dart/Flutter toolchain in
+  this env, so `flutter test` was not run — logic verified by inspection; CI/Silas should run it.
+- **challenge-center/t-016** done: wrote docs/comparison-axes.md as the canonical M5 reference.
+- **challenge-center/t-017** done: added a "Rescue / salvage PRs" branch-cleanup subsection to
+  AGENTS.md.
+- No open PRs and no `worker/*` branches in either repo at session start (consistent with the
+  Reviewer's recent no-op sweeps).
+
+**Suggested action:** Silas — run `flutter test` from apps/superkate-services-calculator/ to
+confirm t-003 before t-004/t-005 build the UI on top of it. Remaining human gates for you:
+mermaids-of-venice creative writing, mural-design/t-006 brief confirmation, and
+superkate/t-001 Dream sync (blocked here on missing KR_API_TOKEN).
+
+## 2026-07-07 | Worker(Claude, Silas-directed) → system | superkate t-004 + scaffolding finding | pattern
+
+**Subject:** Built superkate calculator form (t-004); found superkate is the only app missing platform scaffolding.
+
+**Detail:**
+- **superkate/t-004** done: lib/ui/new_appointment_form.dart with a live appointment total
+  (rate × time + product), preset time chips, save via the injected PersistenceService, user-safe
+  errors; added parseDollarsToCents to domain/money.dart, wired main.dart, added widget + parser tests.
+- **Finding (answering Silas's question):** superkate is NOT in a different location — it's in apps/
+  like the rest and follows the one-slug rule. But it's the ONLY app missing .metadata + android/ + ios/;
+  all 9 siblings have them. Cause: every session touching superkate has been toolchain-less, so
+  `flutter create` (which generates those folders) was never run. Filed as **t-014** (soft needs-human:
+  needs a Flutter env, not a decision) to run flutter create + flutter analyze + flutter test, which
+  also gives t-003/t-004 their first real verification (both inspection-only so far).
+
+**Suggested action:** Silas — run t-014 from a Flutter-capable machine to complete scaffolding and
+validate t-003/t-004. Kaizen: adding Flutter to the SessionStart hook / CI would let future superkate
+tasks self-verify instead of relying on inspection.
