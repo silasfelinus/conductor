@@ -117,7 +117,15 @@ jobs:
             echo "No conductor-side changes."
           else
             git commit -m "chore: auto-generate project art [skip ci]"
-            git push
+            # This job runs for ~an hour, so main almost always moves under it.
+            # Rebase onto the latest main and retry, so a genuine render never
+            # gets stranded on a non-fast-forward push.
+            for attempt in 1 2 3 4 5; do
+              if git push; then break; fi
+              echo "push rejected (attempt $attempt); rebasing onto origin/main…"
+              git pull --rebase --autostash origin main || exit 1
+              sleep $((attempt * 3))
+            done
           fi
 
       - name: Commit kind_robots results
@@ -131,7 +139,12 @@ jobs:
             echo "No kind_robots-side changes."
           else
             git commit -m "chore: auto-generated art from conductor queue"
-            git push
+            for attempt in 1 2 3 4 5; do
+              if git push; then break; fi
+              echo "push rejected (attempt $attempt); rebasing onto origin/main…"
+              git pull --rebase --autostash origin main || exit 1
+              sleep $((attempt * 3))
+            done
           fi
 
       - name: Report generation outcome
