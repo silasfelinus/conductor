@@ -219,6 +219,27 @@ tasks:
     headless-browser proof (0 to 20 to 0 butterflies, no console errors). Design at
     docs/animation-control-bridge.md. Reversible visual toggles only: no writes, publishing, spend,
     or roadmap edits, and no physical Echo binding (that stays behind the t-010 human gate).'
+- id: t-014
+  milestone: m4
+  title: Per-person personalization (Alexa voice profile -> Kind Robots user)
+  status: done
+  owner: claude
+  updated: '2026-07-07T00:00:00Z'
+  passes: 0
+  stakes: reversible
+  depends_on: t-011
+  note: 'Voice side done (serendipity-voice PR #13). A shared household Echo now attributes each request
+    to the right Kind Robots user via Alexa personalization: the recognized speaker''s stable personId
+    (context.System.person.personId) is mapped to a KR user through SERENDIPITY_PERSON_MAP (full or
+    "personId: userId" shorthand), with SERENDIPITY_DEFAULT_KR_USER_ID as guest fallback. The resolved
+    userId is attached to art submissions (payload.userId for queue/generate; userId in the conductor
+    body), replies greet by name ("On it, Silas."), and an unmapped voice prints its personId on the
+    Serendipity view feed for easy onboarding. Added src/identity.ts + extractPersonId/extractApplicationId;
+    verified with a new identity suite + extended config/skill-event/art-submit/voice-bridge tests +
+    typecheck. FOLLOW-UP (needs-human / kind_robots): to make ownership real, the KR art endpoints
+    (/api/art/queue, /api/art/generate, /api/conductor/art-request, save-generated) must accept the
+    admin-supplied userId as owner-on-behalf-of instead of defaulting to the token user. Until then the
+    field rides along harmlessly (ignored). Distinct from account linking (OAuth), which is per-account.'
 - id: t-013
   milestone: m4
   title: Extend the voice bridge (theme control, art drafts on the view, surprise-me)
