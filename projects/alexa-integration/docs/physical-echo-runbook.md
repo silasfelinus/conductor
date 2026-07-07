@@ -100,23 +100,33 @@ signature, the request timestamp (±150s replay window), and the applicationId.
 
 In developer.amazon.com → Alexa → Create Skill (Custom, provision your own):
 
-1. **Invocation name:** `serendipity`.
+1. **Invocation name:** `hey serendipity`. Amazon rejects single-word custom
+   invocation names, so a two-word name is required — `serendipity` alone will
+   not save. The invocation name is independent of our parser (it only reads the
+   request text), so any two-word name is fine.
 2. **Intent:** `SerendipityRequestIntent` with one slot `request` of type
    `AMAZON.SearchQuery`, sample utterances:
-   - `{request}`
    - `to {request}`
    - `generate {request}`
-   (AMAZON.SearchQuery captures the free-form tail, e.g. "generate me an image of
-   a fox".)
+   - `create {request}`
+   - `for {request}`
+   - `about {request}`
+   Every utterance needs at least one carrier word before the slot: Amazon
+   rejects a bare `{request}` (an `AMAZON.SearchQuery` slot may not be the whole
+   utterance). The carrier word is consumed by the invocation phrase, so the slot
+   still captures the free-form tail, e.g. "generate me an image of a fox".
 3. **Endpoint:** HTTPS → your Step-3 URL `.../api/alexa` (or the Lambda ARN).
-   For HTTPS pick the cert option matching your host (Cloudflare/most PaaS: "has
-   a certificate from a trusted authority").
-4. Save + Build Model. Test in the console's Test tab first ("ask serendipity to
-   generate me an image of a fox").
+   For HTTPS pick the cert option matching your host. A `trycloudflare.com` quick
+   tunnel is a sub-domain under a CA wildcard cert, so choose "My development
+   endpoint is a sub-domain of a domain that has a wildcard certificate from a
+   certificate authority". Most other PaaS hosts: "has a certificate from a
+   trusted authority".
+4. Save + Build Model. Test in the console's Test tab first ("ask hey serendipity
+   to generate me an image of a fox").
 
 ## Step 5 — Say it to the Echo
 
-> "Alexa, ask Serendipity to generate me an image of a fox."
+> "Alexa, ask hey serendipity to generate me an image of a fox."
 
 Expected: Alexa replies "On it. I queued a fox. It will appear in your gallery
 shortly." and the image shows up in Kind Robots once the home relay renders it.
