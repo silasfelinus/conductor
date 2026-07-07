@@ -113,7 +113,8 @@ def test_entry_to_job_reused_for_a_request():
     job = cr.consumer.entry_to_job(
         {"image_path": "public/images/serendipity/a-fox.webp", "prompt": "a fox", "variant": "image"}
     )
-    assert job["engine"] == "A1111"
+    # default engine is Flux (a COMFY job carrying the workflow graph)
+    assert job["engine"] == "COMFY"
     assert job["payload"]["promptString"] == "a fox"
     # no size on an image request => consumer's 1024x1024 default
     assert job["payload"]["width"] == 1024

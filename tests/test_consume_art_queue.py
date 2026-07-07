@@ -21,19 +21,67 @@ def test_entry_to_job_maps_fields():
             "prompt": "  a   coat   dancing  ",
         }
     )
-    assert job["engine"] == "A1111"
+    # default engine is Flux, emitted as a COMFY job carrying the workflow graph
+    assert job["engine"] == "COMFY"
     assert job["projectSlug"] == "coat-dance"
     assert job["payload"]["promptString"] == "a coat dancing"
     assert job["payload"]["width"] == 1280
     assert job["payload"]["height"] == 720
     assert job["payload"]["collection"] == "coat-dance"
     # quality defaults applied when the entry says nothing
-    assert job["payload"]["steps"] == consumer.DEFAULT_STEPS
-    assert job["payload"]["cfg"] == consumer.DEFAULT_CFG
+    assert job["payload"]["steps"] == consumer.FLUX_MODELS["dev"]["steps"]
     assert job["payload"]["negativePrompt"] == consumer.DEFAULT_NEGATIVE_PROMPT
     # optional knobs stay off so the relay's own defaults apply
     assert "sampler" not in job["payload"]
     assert "seed" not in job["payload"]
+    # the Flux graph is present and carries the quality settings
+    wf = job["payload"]["workflow"]
+    assert wf["6"]["inputs"]["width"] == 1280
+    assert wf["52"]["inputs"]["scheduler"] == "beta"
+    assert wf["52"]["inputs"]["cfg"] == 1
+    assert wf["46"]["inputs"]["guidance"] == 3.5
+    assert wf["24"]["inputs"]["unet_name"] == "flux1-dev-Q8_0.gguf"
+
+
+def test_entry_to_job_flux_untargeted_lands_in_flux_folder():
+    job = consumer.entry_to_job(
+        {"image_path": "public/images/x.webp", "prompt": "a fox"}
+    )
+    assert job["engine"] == "COMFY"
+    assert job["payload"]["collection"] == "flux"
+    assert "workflow" in job["payload"]
+
+
+def test_entry_to_job_a1111_override_emits_raw_keys():
+    job = consumer.entry_to_job(
+        {
+            "project": "alpha",
+            "image_path": "projects/images/alpha-hero.webp",
+            "size": "1024x1024",
+            "prompt": "a hero shot",
+            "engine": "a1111",
+        }
+    )
+    assert job["engine"] == "A1111"
+    # A1111 path stays txt2img — no ComfyUI workflow graph
+    assert "workflow" not in job["payload"]
+    assert job["payload"]["steps"] == consumer.DEFAULT_STEPS
+    assert job["payload"]["cfg"] == consumer.DEFAULT_CFG
+
+
+def test_entry_to_job_flux_schnell_variant():
+    job = consumer.entry_to_job(
+        {
+            "image_path": "public/images/x.webp",
+            "prompt": "quick sketch",
+            "flux_variant": "schnell",
+        }
+    )
+    assert job["payload"]["steps"] == 8
+    assert (
+        job["payload"]["workflow"]["24"]["inputs"]["unet_name"]
+        == "flux1-schnell-Q8_0.gguf"
+    )
 
 
 def test_entry_to_job_honors_per_entry_quality_overrides():

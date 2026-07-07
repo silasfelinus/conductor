@@ -33,6 +33,7 @@ import argparse
 import base64
 import json
 import os
+import random
 import re
 import sys
 import time
@@ -53,11 +54,28 @@ POLL_SECONDS = 5
 
 # Generation quality defaults. Each is overridable per art-generate.yaml entry
 # (steps, cfg, sampler, negative_prompt, seed, engine) so a batch can spend
-# more on hero key art than on throwaway icons. Keys emitted below are
-# KR-style; the home relay's run_a1111 consumes them directly.
-DEFAULT_ENGINE = "A1111"
+# more on hero key art than on throwaway icons.
+#
+# Default engine is FLUX (dev) — the beautiful-by-default path. A flux entry is
+# emitted as a COMFY job carrying the full Flux workflow graph below, which the
+# home relay's run_comfy drives on ComfyUI. Set `engine: a1111` on an entry to
+# fall back to the A1111 txt2img path (raw KR-style keys the relay consumes
+# directly) — useful when ComfyUI is down or for quick SD-only tests.
+DEFAULT_ENGINE = "flux"
 DEFAULT_STEPS = 30
 DEFAULT_CFG = 7
+
+# Flux workflow defaults — mirror kind_robots /api/comfy/flux/generate so the
+# queue path renders identically to the interactive endpoint: native 1MP,
+# `beta` scheduler, guidance 3.5, GGUF Q8 base. cfg is fixed at 1 (Flux uses
+# the guidance embedding, not CFG). Keep these in sync with that endpoint.
+FLUX_VARIANT = "dev"
+FLUX_SAMPLER = "euler"
+FLUX_SCHEDULER = "beta"
+FLUX_MODELS = {
+    "dev": {"unet": "flux1-dev-Q8_0.gguf", "steps": 30, "guidance": 3.5},
+    "schnell": {"unet": "flux1-schnell-Q8_0.gguf", "steps": 8, "guidance": 3.5},
+}
 # A broad quality/cleanliness negative. The prompts already say "no text, no
 # watermark, no collage"; this reinforces that on the sampler side and knocks
 # back the usual SD failure modes (bad anatomy, artifacts, borders).
@@ -94,28 +112,134 @@ def parse_size(size, default=(1024, 1024)):
     return int(m.group(1)), int(m.group(2))
 
 
+def resolve_seed(seed):
+    """A concrete, in-range seed. Reuse a caller-supplied non-negative int;
+    otherwise pick a random one (matches the KR endpoint's -1 -> random)."""
+    if isinstance(seed, int) and not isinstance(seed, bool) and seed >= 0:
+        return seed
+    return random.randint(0, 1_000_000_000_000_000)
+
+
+def build_flux_workflow(prompt, width, height, steps, guidance, seed, unet):
+    """Full ComfyUI API-format Flux graph — a Python mirror of buildFluxWorkflow
+    in kind_robots server/api/comfy/flux/generate.post.ts. The relay's run_comfy
+    POSTs this straight to ComfyUI /prompt. Keep node ids/keys in sync with that
+    endpoint so queue art and interactive art render identically."""
+    text = prompt or "a beautiful, richly detailed illustration"
+    sampler_seed = resolve_seed(seed)
+    wildcard_seed = resolve_seed(None)
+    return {
+        "4": {
+            "inputs": {
+                "clip_name1": "umt5_xxl_fp8_e4m3fn_scaled.safetensors",
+                "clip_name2": "clip_l.safetensors",
+                "type": "flux",
+                "device": "default",
+            },
+            "class_type": "DualCLIPLoader",
+            "_meta": {"title": "DualCLIPLoader"},
+        },
+        "6": {
+            "inputs": {"width": width, "height": height, "batch_size": 1},
+            "class_type": "EmptyLatentImage",
+            "_meta": {"title": "Empty Latent Image"},
+        },
+        "7": {
+            "inputs": {"samples": ["52", 0], "vae": ["8", 0]},
+            "class_type": "VAEDecode",
+            "_meta": {"title": "VAE Decode"},
+        },
+        "8": {
+            "inputs": {"vae_name": "ae.safetensors"},
+            "class_type": "VAELoader",
+            "_meta": {"title": "Load VAE"},
+        },
+        "24": {
+            "inputs": {"unet_name": unet},
+            "class_type": "UnetLoaderGGUF",
+            "_meta": {"title": "Unet Loader (GGUF)"},
+        },
+        "46": {
+            "inputs": {"guidance": guidance, "conditioning": ["59", 2]},
+            "class_type": "FluxGuidance",
+            "_meta": {"title": "FluxGuidance"},
+        },
+        "52": {
+            "inputs": {
+                "seed": sampler_seed,
+                "steps": steps,
+                "cfg": 1,
+                "sampler_name": FLUX_SAMPLER,
+                "scheduler": FLUX_SCHEDULER,
+                "denoise": 1,
+                "model": ["59", 0],
+                "positive": ["46", 0],
+                "negative": ["46", 0],
+                "latent_image": ["6", 0],
+            },
+            "class_type": "KSampler",
+            "_meta": {"title": "KSampler"},
+        },
+        "57": {
+            "inputs": {"filename_prefix": "kindrobots_flux_dev", "images": ["7", 0]},
+            "class_type": "SaveImage",
+            "_meta": {"title": "Save Image"},
+        },
+        "59": {
+            "inputs": {
+                "wildcard_text": text,
+                "populated_text": text,
+                "mode": "populate",
+                "Select to add LoRA": "Select the LoRA to add to the text",
+                "Select to add Wildcard": "Select the Wildcard to add to the text",
+                "seed": wildcard_seed,
+                "model": ["24", 0],
+                "clip": ["4", 0],
+            },
+            "class_type": "ImpactWildcardEncode",
+            "_meta": {"title": "ImpactWildcardEncode"},
+        },
+    }
+
+
 def entry_to_job(entry):
     """Map an art-generate.yaml entry to an ArtJob enqueue body.
 
+    Default engine is Flux: the entry becomes a COMFY job whose payload carries
+    the full Flux workflow graph (native 1MP, beta scheduler, guidance 3.5).
+    `engine: a1111` on an entry instead emits KR-style txt2img keys the relay's
+    run_a1111 consumes directly.
+
     Quality knobs (steps, cfg, negative prompt, sampler, seed) default to the
-    module constants and may be overridden per entry. The optional knobs
-    (sampler, seed) are only sent when the entry sets them, so the relay keeps
-    its own safe defaults (sampler "Euler a", random seed) otherwise."""
+    module constants and may be overridden per entry. Optional knobs (sampler,
+    seed) are only sent when set, so an untouched batch keeps the relay's own
+    defaults."""
+    engine = str(entry.get("engine") or DEFAULT_ENGINE).strip().lower()
     width, height = parse_size(entry.get("size"))
+    prompt = " ".join(str(entry.get("prompt") or "").split())
+    negative = " ".join(
+        str(entry.get("negative_prompt") or DEFAULT_NEGATIVE_PROMPT).split()
+    )
+
+    if engine == "flux":
+        variant = str(entry.get("flux_variant") or FLUX_VARIANT).strip().lower()
+        if variant not in FLUX_MODELS:
+            variant = FLUX_VARIANT
+        steps = int(entry.get("steps") or FLUX_MODELS[variant]["steps"])
+    else:
+        steps = int(entry.get("steps") or DEFAULT_STEPS)
 
     payload = {
-        "promptString": " ".join(str(entry.get("prompt") or "").split()),
-        "negativePrompt": " ".join(
-            str(entry.get("negative_prompt") or DEFAULT_NEGATIVE_PROMPT).split()
-        ),
+        "promptString": prompt,
+        "negativePrompt": negative,
         "width": width,
         "height": height,
-        "steps": int(entry.get("steps") or DEFAULT_STEPS),
+        "steps": steps,
         "cfg": entry.get("cfg", DEFAULT_CFG),
-        # the relay's local fast path files its copy under the
-        # project's collection folder; untargeted art falls back to the
-        # model-family folder ("sdxl"), not the frontend name ("comfy")
-        "collection": entry.get("project") or "sdxl",
+        # the relay's local fast path files its copy under the project's
+        # collection folder; untargeted art falls back to the model-family
+        # folder (the engine name), not the frontend name ("comfy")
+        "collection": entry.get("project") or engine,
     }
 
     # Optional per-entry knobs: only send when set, so an untouched batch runs
@@ -125,8 +249,23 @@ def entry_to_job(entry):
     if entry.get("seed") is not None:
         payload["seed"] = entry["seed"]
 
+    if engine == "flux":
+        # Emit a COMFY job carrying the Flux graph; the relay drives ComfyUI.
+        payload["workflow"] = build_flux_workflow(
+            prompt=prompt,
+            width=width,
+            height=height,
+            steps=steps,
+            guidance=entry.get("guidance", FLUX_MODELS[variant]["guidance"]),
+            seed=entry.get("seed"),
+            unet=FLUX_MODELS[variant]["unet"],
+        )
+        relay_engine = "COMFY"
+    else:
+        relay_engine = engine.upper()
+
     return {
-        "engine": str(entry.get("engine") or DEFAULT_ENGINE).upper(),
+        "engine": relay_engine,
         "projectSlug": entry.get("project") or None,
         "payload": payload,
     }
