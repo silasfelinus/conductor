@@ -29,10 +29,12 @@ Environment:
   KR_LOCAL_IMAGES_DIR  optional — local kind_robots checkout's public/images
                      folder (e.g. D:/code/kind_robots/public/images). When set,
                      each finished image is ALSO written there as
-                     {collection}/{collection}-{artImageId}.png so the file
+                     {collection}/{collection}-{artImageId}.webp so the file
                      lands in a folder collection (payload.collection picks
                      the folder, default "sdxl" — the model family, not the
-                     "comfy" frontend). Commit/push to publish.
+                     "comfy" frontend). Commit/push to publish. Engines emit
+                     PNG; the copy is re-encoded to WebP when Pillow is
+                     installed (pip install Pillow), else it falls back to .png.
 
 A1111 job payload: either raw txt2img keys (prompt, negative_prompt,
 cfg_scale, sampler_name, ...) or KR-style keys (promptString, negativePrompt,
@@ -42,6 +44,7 @@ optional "promptString" for the ArtImage record.
 """
 
 import base64
+import io
 import json
 import os
 import socket
@@ -205,12 +208,31 @@ def upload_result(job, image_b64):
     return (resp.get("data") or {}).get("id")
 
 
+def encode_webp(raw):
+    """Re-encode raw image bytes (engines emit PNG) to WebP. Returns
+    (bytes, ext). Uses Pillow when available; if Pillow isn't installed or the
+    decode fails, falls back to the original bytes as .png so the relay still
+    works stdlib-only. WebP keeps the site's images small and consistent."""
+    try:
+        from PIL import Image  # optional dependency
+
+        with Image.open(io.BytesIO(raw)) as im:
+            buf = io.BytesIO()
+            # method=6 = best compression; quality 90 is visually lossless-ish.
+            im.save(buf, format="WEBP", quality=90, method=6)
+            return buf.getvalue(), "webp"
+    except Exception as e:  # noqa: BLE001 — Pillow missing or undecodable
+        log(f"webp encode skipped ({e}); keeping png")
+        return raw, "png"
+
+
 def write_local_copy(job, art_image_id, image_b64):
     """Local fast path: engines, kind_robots, and conductor share a drive, so
     drop the finished file straight into the local checkout's folder
-    collection (a folder IS a collection). No-op unless KR_LOCAL_IMAGES_DIR
-    is set. Failures here never fail the job - the DB record is the source
-    of truth; this is a convenience copy awaiting commit."""
+    collection (a folder IS a collection). Re-encoded to WebP (see encode_webp)
+    so we stop minting new PNGs. No-op unless KR_LOCAL_IMAGES_DIR is set.
+    Failures here never fail the job - the DB record is the source of truth;
+    this is a convenience copy awaiting commit."""
     if not KR_LOCAL_IMAGES_DIR:
         return
     try:
@@ -225,9 +247,10 @@ def write_local_copy(job, art_image_id, image_b64):
         base = KR_LOCAL_IMAGES_DIR.replace("\\", "/").rstrip("/")
         folder = f"{base}/{collection}"
         os.makedirs(folder, exist_ok=True)
-        file_path = f"{folder}/{collection}-{art_image_id}.png"
+        data, ext = encode_webp(base64.b64decode(image_b64))
+        file_path = f"{folder}/{collection}-{art_image_id}.{ext}"
         with open(file_path, "wb") as f:
-            f.write(base64.b64decode(image_b64))
+            f.write(data)
         log(f"local copy: {file_path}")
     except Exception as e:  # noqa: BLE001
         log(f"local copy failed (job still DONE): {e}")
