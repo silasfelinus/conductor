@@ -19,6 +19,20 @@ notes_from_silas: >
   single-color sections, thick black outlines, minimal shading, strong silhouettes,
   and clear paintable shapes. Avoid overcomplicated detail and avoid the giant soot
   sprite direction; small hidden sprites work better.
+
+  Silas uploaded current and first-draft image files in the project root. Future design
+  and comparison work should use the current image as the physical fence baseline and
+  the first-draft image as the rough design/color reference to improve.
+
+  Palette update from Silas, 2026-07-07: choose specific non-sun-fading exterior colors
+  from the PPG Voice of Color deck. The palette needs three greens for leaves
+  (yellowish green, true green-green, and blueish green), thick black linework,
+  off-white for random beings and Totoro's belly, yellow for Catbus eyes, orange for
+  Catbus skin, brown for Catbus secondary color, robin blue/teal for Catbus windows,
+  purple and violet for butterfly accents, and gray for robot parts plus Totoro body.
+  The background was brick red, but should move closer to purple, magenta, or wine-red
+  if the foreground colors can still pop. Favor an overall blueish tint to account for
+  outdoor sun-fading limits.
 milestones:
   - id: m1
     title: Direction capture
@@ -56,12 +70,14 @@ tasks:
     owner: null
     passes: 0
     stakes: reversible
-    updated: '2026-07-06T00:00:00Z'
+    updated: '2026-07-07T00:00:00Z'
     depends_on: t-001
     note: >
       Use the art generator pipeline to create a small batch of flat-color, thick-outline
-      mural mockups based on the brief. Keep normal-sized hidden soot sprites, add more
-      small robots, preserve the Catbus-right and Totoro-left structure, and reduce clutter.
+      mural mockups based on the brief and the uploaded current/first-draft image files.
+      Keep normal-sized hidden soot sprites, add more small robots, preserve the Catbus-right
+      and Totoro-left structure, reduce clutter, and respect the updated PPG Voice of Color
+      palette direction with a slightly blueish outdoor-fade-aware tint.
   - id: t-003
     milestone: m2
     title: Compare generated mural variations and choose the strongest direction
@@ -83,11 +99,14 @@ tasks:
     owner: null
     passes: 0
     stakes: reversible
-    updated: '2026-07-06T00:00:00Z'
+    updated: '2026-07-07T00:00:00Z'
     depends_on: t-003
     note: >
-      Create a paintable specification with exact color roles, simplified shape groups,
-      line-weight guidance, and per-section notes for the fence boards.
+      Create a paintable specification with exact PPG Voice of Color swatch names/numbers
+      for every color role, simplified shape groups, line-weight guidance, and per-section
+      notes for the fence boards. Color roles must include three greens, black, off-white,
+      yellow, dark purple-red/magenta background, orange, brown, robin blue/teal, purple,
+      violet, and gray.
   - id: t-005
     milestone: m4
     title: Create the grid transfer and painting checklist
@@ -107,12 +126,13 @@ tasks:
     owner: null
     passes: 0
     stakes: reversible
-    updated: '2026-07-06T00:00:00Z'
+    updated: '2026-07-07T00:00:00Z'
     note: >
       FOR SILAS: soft checkpoint per the new-project scope rule — nothing is blocked on
       this, t-002 (art generation) proceeds in parallel. Read
       projects/mural-design/DESIGN-BRIEF.md and confirm it faithfully captures your fence
-      mural direction (Catbus right, Totoro-ivy portal left, normal-sized hidden soot
-      sprites, small Kind Robots-style robots, rainbow butterflies, alien-garden foliage,
-      flat-color/thick-outline/grid-paintable style). TO APPROVE: set
-      approved_by_human: true and status: done, or leave a correction note here.
+      mural direction, uploaded current/first-draft image references, Catbus right,
+      Totoro-ivy portal left, normal-sized hidden soot sprites, small Kind Robots-style
+      robots, rainbow butterflies, alien-garden foliage, flat-color/thick-outline/grid-paintable
+      style, and the updated PPG Voice of Color exterior-paint palette requirements.
+      TO APPROVE: set approved_by_human: true and status: done, or leave a correction note here.
