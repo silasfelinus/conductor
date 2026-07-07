@@ -140,14 +140,22 @@ tasks:
 - id: t-004
   milestone: m2
   title: Build calculator form with live totals
-  status: ready
-  owner: null
+  status: done
+  owner: worker
   passes: 0
   stakes: reversible
   depends_on: t-003
-  note: "Add the new appointment form for client/customer, appointment date, hourly rate, time spent and\
-    \ optional product cost defaulting to $0. Show the live total as hourly rate \xD7 time spent + product\
-    \ cost.\n"
+  updated: 2026-07-07
+  note: "DONE (2026-07-07, Silas-directed session): built lib/ui/new_appointment_form.dart — client name,\
+    \ appointment date picker, hourly rate, time spent (hours/minutes steppers + preset chips 30m/45m/1h/1h30m/2h),\
+    \ optional product cost defaulting to $0. Live appointment total recomputes on every keystroke via the\
+    \ t-003 domain layer (parseDollarsToCents -> calculateAppointmentTotalCents -> formatCents) and is shown\
+    \ in a total card with the formula line. Save delegates to the injected PersistenceService (total is\
+    \ recalculated at save, never trusted from UI); errors are user-safe. Added parseDollarsToCents to\
+    \ domain/money.dart, wired main.dart to host the form with a save confirmation snackbar, and added\
+    \ widget tests (boot, live-total updates from rate+preset+product, save persists the calculated total)\
+    \ plus money parser unit tests. VERIFICATION GAP: no Flutter toolchain here, so flutter test/analyze\
+    \ not run — verified by inspection; see t-014 (run flutter create + flutter test in a toolchain env).\n"
 - id: t-005
   milestone: m3
   title: Add client/date appointment search
@@ -217,3 +225,25 @@ tasks:
     pass.
 
     '
+- id: t-014
+  milestone: m1
+  title: Run flutter create to complete platform scaffolding and run the test suite
+  status: needs-human
+  owner: worker
+  passes: 0
+  stakes: reversible
+  updated: 2026-07-07
+  note: >
+    FOR SILAS: superkate is the ONLY app in apps/ missing its platform scaffolding — it has no
+    .metadata, android/, or ios/ folders, while all 9 sibling apps have them. It is NOT in the wrong
+    location (apps/superkate-services-calculator/ follows the one-slug rule correctly); it was just
+    never finished, because every session that has touched it (including the t-003/t-004 builds) ran
+    without a Flutter toolchain, so the toolchain-dependent completion step was never run. TO COMPLETE:
+    from a machine with Flutter installed, run
+      cd apps/superkate-services-calculator
+      flutter create . --org org.kindrobots --project-name superkate_services_calculator --platforms ios,android
+      flutter pub get && flutter analyze --fatal-infos && flutter test
+    then commit the generated platform folders and set this task done. This also runs the first real
+    verification of the t-003 domain layer and t-004 form (both were verified by inspection only, no
+    toolchain here). SOFT gate: it needs a Flutter environment, not a decision — flip to ready for any
+    toolchain-capable Worker run.

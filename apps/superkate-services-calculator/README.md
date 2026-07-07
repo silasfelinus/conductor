@@ -36,6 +36,9 @@ lib/
   data/
     persistence_service.dart            the PersistenceService interface + input/filter types
     in_memory_persistence_service.dart  local-first implementation (source of truth today)
+  ui/
+    new_appointment_form.dart           New Appointment screen with a live total (t-004)
+  main.dart                             app shell + theme; hosts the form
 ```
 
 Invariants enforced here:
@@ -51,8 +54,11 @@ Invariants enforced here:
   local store does not fight the future beta sync design.
 
 Next steps (follow-on tasks): a durable **SQLite adapter** behind the same
-`PersistenceService` interface, then the calculator form (t-004) and
-client/date search UI (t-005) wired to a store, not to storage directly.
+`PersistenceService` interface, and the client/date search UI (t-005). The
+calculator form (t-004) is done and hosted in `main.dart`. Before layering more
+UI on top, the app needs `flutter create` run once to add its platform folders
+and a real `flutter test` pass (roadmap **t-014**) — this workspace has no
+Flutter toolchain, so t-003/t-004 were verified by inspection only.
 
 Run the unit tests with `flutter test` (covers the total formula, validation,
 and the in-memory service including search filters and snapshot preservation).
