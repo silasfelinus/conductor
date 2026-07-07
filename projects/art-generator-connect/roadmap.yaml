@@ -445,3 +445,31 @@ tasks:
     ArtVariant values) but it loosens the compile-time contract on a module
     whose whole purpose is enforcing a contract. Narrow it back to the
     ArtVariant union and confirm tsc + test:art-request-yaml stay green.
+- id: t-021
+  milestone: m5
+  title: 'Consume the requests: block of art-prompts.yaml (close the second art lane)'
+  status: done
+  owner: claude
+  updated: '2026-07-06T23:30:00Z'
+  passes: 0
+  stakes: reversible
+  depends_on:
+  - t-012
+  note: >
+    DONE. The automated loop (auto-art-generate.yml) drained only
+    art-generate.yaml (self-draining project icon/card/hero art); the requests:
+    block of art-prompts.yaml — written by /api/conductor/art-request,
+    scripts/request_art.py, and now the Serendipity voice runtime — had no
+    consumer ("nothing consumes it", per pipeline-architecture.md section 2).
+    Added scripts/consume_art_requests.py: reads pending requests, submits each
+    through the SAME kind_robots ArtJob queue as consume_art_queue.py (reuses its
+    enqueue/poll/fetch/save so generation is identical), lands results in
+    projects/process/ where distribute_images.py already routes them by
+    image_path/target_repo, and marks each request status: done with a
+    comment-preserving edit. Idempotent: a request whose target image already
+    exists is marked done, never regenerated (the "mark-consumed path" t-019
+    flagged). Wired as a step in auto-art-generate.yml before distribute_images;
+    the commit step already includes art-prompts.yaml. Dry-run default; 8 unit
+    tests (22 total green); dry-run verified against the live 18-entry requests
+    block. First live drain is the existing scheduled KR_API_TOKEN workflow run.
+    This is the pipeline half the Alexa/Serendipity voice art path funnels into.

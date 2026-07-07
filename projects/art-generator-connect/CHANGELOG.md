@@ -1,5 +1,14 @@
 # art-generator-connect CHANGELOG
 
+## 2026-07-06 (later)
+- Closed the second art lane (t-021): added scripts/consume_art_requests.py to
+  drain the requests: block of art-prompts.yaml through the same kind_robots
+  ArtJob queue as the project-art batch, mark each request done
+  (comment-preserving, idempotent skip-if-exists), and hand results to
+  distribute_images.py. Wired into auto-art-generate.yml. Now every art request
+  — project assets, missing-image reports, and Serendipity voice — funnels
+  through one queue with a consumer. 8 new unit tests (22 total green).
+
 ## 2026-06-28
 - Project promoted from approved pitch.
 - Initial roadmap scaffolded.
