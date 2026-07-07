@@ -128,19 +128,20 @@ tasks:
     note: >
       Complete: kind_robots PR #87 merged 2026-07-04 (Vercel deploy succeeded), which
       ran the additive migration (Challenge + ChallengeSubmission tables,
-      CHALLENGE_SUBMISSION reaction category, nullable Reaction FK, DB-enforced unique
-      (userId, challengeSubmissionId)). Unblocks t-002 (originally Bot registration,
+      CHALLENGE_SUBMISSION reaction category, nullable Reaction FK, DB-enforced
+      unique (userId, challengeSubmissionId)). Unblocks t-002 (originally Bot registration,
       since redefined as the Contender migration — see its note) once the Worker's
       next cycle runs resolve_deps.py.
 
   - id: t-002
     milestone: m1
     title: "Schema: add Contender model and submission variant fields"
-    status: ready
+    status: done
     depends_on: t-001
-    owner: null
+    owner: worker
     passes: 1
     stakes: reversible
+    updated: 2026-07-07T08:30:00Z
     note: >
       SUPERSEDES the original "register Bots" task (Silas, 2026-07-05): Bots are
       character-driven narrators and specialized GPTs — contenders get their own
@@ -194,6 +195,26 @@ tasks:
       for review again. Also: no `claim: challenge-center/t-002` commit was found
       on conductor main before this PR was opened — make sure the claim step
       actually runs.
+
+      REVIEWER (resolved, 2026-07-07): kind_robots PR #116 (Silas-directed session,
+      `claude/challenge-center-contenders-t002` → main, merged 2026-07-07T07:54:58Z)
+      rebuilt the stranded work cleanly on current main: applied the exact
+      migration.sql from the original branch verbatim (re-audited line-by-line —
+      still additive-only: CREATE TABLE Contender, ADD COLUMN/MODIFY...NULL on
+      ChallengeSubmission, one DROP INDEX immediately replaced by the new unique
+      index, plus FKs; no DROP TABLE/COLUMN/data rewrite) AND applied the
+      schema.prisma patch from docs/challenge-center-t-002-schema-patch.md
+      (ContenderKind enum, Contender model, ArtImage.Contenders relation,
+      ChallengeSubmission field/relation/index additions). Confirmed directly
+      against current kind_robots main: schema.prisma now matches migration.sql
+      exactly (Contender model, enum, and all ChallengeSubmission fields present).
+      Note: kind_robots PR #118 (`worker/challenge-center-t-002`, the original
+      stale branch) was also merged ~10 minutes later by Silas directly; its diff
+      was identical/already-superseded content so it landed as a no-op, but the
+      stale branch should have been deleted per PR #116's own note instead of
+      being merged separately afterward (see t-017, filed as this cycle's kaizen).
+      Task is genuinely complete now — t-003, t-005, t-008, t-012, and t-014 all
+      unblock via the Worker's next `resolve_deps.py` run.
 
   # ── M2: API & challenge library ──────────────────────────────────────────────────
 
@@ -522,3 +543,25 @@ tasks:
       the task(s) that implement it (t-002 schema, t-012 roster, t-013 runner, t-014
       variants, t-015 leaderboards). Future task notes and PR reviews should check
       against this doc instead of re-deriving the design from scattered task notes.
+
+  - id: t-017
+    milestone: m1
+    title: "Delete superseded worker/* branches right after a rescue PR merges the same task"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Kaizen from the Reviewer's t-002 resolution (2026-07-07): kind_robots PR #116
+      (a Silas-directed session branch) rescued t-002's stranded migration+schema
+      work onto current main and explicitly said in its own PR body "the old
+      worker/challenge-center-t-002 branch can be deleted" once it landed. Instead,
+      that exact stale branch was opened as PR #118 and merged separately about ten
+      minutes later — harmless here only because its content was byte-identical to
+      what #116 had already landed, so it merged as a no-op, but a stale worker
+      branch that has DIVERGED from a rescue merge could just as easily reintroduce
+      already-superseded or conflicting content. Add a habit/checklist step (in
+      AGENTS.md's cross-repo or rescue-PR guidance): whenever a rescue/salvage PR
+      supersedes a stranded worker/* or claude/* branch, delete that branch in the
+      same session the rescue PR merges, rather than leaving it for a later PR to
+      accidentally reopen and merge.
