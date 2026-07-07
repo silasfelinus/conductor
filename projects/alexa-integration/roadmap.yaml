@@ -187,16 +187,19 @@ tasks:
   passes: 0
   stakes: reversible
   depends_on: t-005
-  note: 'Done. Voice art requests now submit to the real Kind Robots art API. Added src/art-submit.ts
-    in silasfelinus/serendipity-voice: an authenticated client for POST /api/art/queue (default,
-    Alexa-safe) or POST /api/art/generate (synchronous A1111), using the KR service/beta-admin token via
-    the x-admin-token header (free, no mana). voice-bridge became async and, when SERENDIPITY_ENABLE_ART
-    plus a token are set, submits the request and speaks the real outcome. Also broadened the art parser
-    so natural phrasing resolves ("generate me an image of a fox", "make me a picture of a dragon",
-    "draw a fox"). Fully gated: with art off or no token it stays draft-only. No KR code change needed.
-    Verified with 104 tests + typecheck and a live Alexa-event -> real POST /api/art/queue against a mock
-    KR. Deploy/runbook for the physical Echo is in docs/physical-echo-runbook.md; the go-live approval
-    itself is still the t-010 human gate.'
+  note: 'Done. Voice art requests now submit to the real Kind Robots art API, THROUGH kind_robots per the
+    art-generator-connect routing policy. Added src/art-submit.ts in silasfelinus/serendipity-voice: an
+    authenticated client with three modes, default "conductor" = POST /api/conductor/art-request
+    (mirrors scripts/request_art.py; queues into projects/art-prompts.yaml for a worker to generate),
+    plus "queue" (POST /api/art/queue ArtJob) and "generate" (POST /api/art/generate sync A1111). Token
+    sent under every alias the KR guards accept (X-KR-API-Token/x-admin-token/x-api-key/Bearer).
+    voice-bridge became async and, when SERENDIPITY_ENABLE_ART + a token are set, submits and speaks the
+    real outcome. Broadened the art parser for natural phrasing ("generate me an image of a fox", "make
+    me a picture of a dragon", "draw a fox"). Fully gated: art off or no token stays draft-only. No KR
+    code change needed. Verified with 119 tests + typecheck and live Alexa-event -> real POST
+    /api/conductor/art-request against a mock KR. NOTE: the consumer that drains art-prompts.yaml requests
+    into generated images is the remaining loop (art-generator-connect t-010/t-012); the voice producer
+    is complete. Deploy/runbook: docs/physical-echo-runbook.md; go-live is the t-010 human gate.'
 - id: t-012
   milestone: m4
   title: Wire front-end control intents (Serendipity view + animation bridge)
