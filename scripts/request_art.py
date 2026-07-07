@@ -19,7 +19,7 @@ Usage examples:
     --prompt "A glowing robot with a paintbrush, clean icon style" \\
     --project-slug pinball-hero \\
     --variant icon \\
-    --width 512 --height 512
+    --width 1024 --height 1024
 
   # Live mode — send the request (requires KR_API_TOKEN in env):
   python scripts/request_art.py \\

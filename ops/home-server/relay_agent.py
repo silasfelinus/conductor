@@ -31,7 +31,8 @@ Environment:
                      each finished image is ALSO written there as
                      {collection}/{collection}-{artImageId}.png so the file
                      lands in a folder collection (payload.collection picks
-                     the folder, default "comfy"). Commit/push to publish.
+                     the folder, default "sdxl" — the model family, not the
+                     "comfy" frontend). Commit/push to publish.
 
 A1111 job payload: either raw txt2img keys (prompt, negative_prompt,
 cfg_scale, sampler_name, ...) or KR-style keys (promptString, negativePrompt,
@@ -212,9 +213,9 @@ def write_local_copy(job, art_image_id, image_b64):
         return
     try:
         payload = job.get("payload") or {}
-        collection = str(payload.get("collection") or "comfy").strip().lower()
+        collection = str(payload.get("collection") or "sdxl").strip().lower()
         if not collection.replace("-", "").replace("_", "").isalnum():
-            collection = "comfy"
+            collection = "sdxl"
         # Normalize to forward slashes throughout. os.path.join on Windows
         # emits backslashes, which mixed with a forward-slash KR_LOCAL_IMAGES_DIR
         # produced ugly "D:/code/kind_robots/public/images\comfy\comfy-1.png".
