@@ -62,7 +62,9 @@ AGENT_ID = os.environ.get("AGENT_ID", socket.gethostname())
 
 
 def log(msg):
-    print(f"[relay] {msg}", flush=True)
+    # Local timestamp so `pm2 logs` shows at a glance whether a line is recent.
+    ts = time.strftime("%Y-%m-%d %H:%M:%S")
+    print(f"[relay {ts}] {msg}", flush=True)
 
 
 def http_json(method, url, body=None, bearer=None, timeout=60):
