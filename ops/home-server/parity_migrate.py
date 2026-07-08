@@ -193,6 +193,24 @@ def decode_b64(s):
     return base64.b64decode(s)
 
 
+def slug_name(text, limit=48):
+    """Filesystem-safe slug from a prompt: lowercase alnum, single dashes."""
+    out = []
+    for ch in (text or "").lower():
+        if ch.isalnum():
+            out.append(ch)
+        elif out and out[-1] != "-":
+            out.append("-")
+    return "".join(out).strip("-")[:limit].strip("-")
+
+
+def name_for(rec, image_id):
+    """A readable stem for a materialized file: <prompt-slug>-<id> (id keeps it
+    unique across identical prompts), falling back to art-<id>."""
+    base = slug_name((rec or {}).get("promptString") or (rec or {}).get("artPrompt"))
+    return f"{base}-{image_id}" if base else f"art-{image_id}"
+
+
 def pass_materialize(live, collection):
     log(f"\n== materialize {'(LIVE)' if live else '(dry-run)'} ==")
     # Cheap plan first (metadata only, no byte fetches).
@@ -223,7 +241,7 @@ def pass_materialize(live, collection):
             log(f"  #{item['id']} -> link existing {url}")
             patch_image(item["id"], {"imagePath": url, "path": url, "fileType": url.rsplit('.', 1)[-1]}, live)
             continue
-        rel = f"{collection}/{collection}-{item['id']}.webp"
+        rel = f"{collection}/{name_for(rec, item['id'])}.webp"
         url = f"/images/{rel}"
         written += 1
         log(f"  #{item['id']} -> write {url}")
@@ -411,6 +429,44 @@ def pass_clear_data(live):
     log(f"  clear-data: {cleared} cleared, {skipped} skipped (no local file), {failed} failed")
 
 
+def pass_rename(live, collection):
+    """Give already-materialized files readable names: rename
+    {collection}/{collection}-{id}.ext -> {collection}/<prompt-slug>-{id}.ext
+    (on disk) and PATCH imagePath/path to match. Opt-in; run before you commit
+    the materialized files (or expect a rename churn in git if already committed)."""
+    log(f"\n== rename {'(LIVE)' if live else '(dry-run)'} ==")
+    folder = f"{IMAGES_DIR}/{collection}"
+    if not os.path.isdir(folder):
+        log(f"  no '{collection}/' folder on disk — nothing to rename")
+        return
+    prefix = f"{collection}-"
+    renamed = skipped = failed = 0
+    for fname in sorted(os.listdir(folder)):
+        stem, ext = os.path.splitext(fname)
+        if not stem.startswith(prefix) or not stem[len(prefix):].isdigit():
+            continue  # not an auto-named file
+        image_id = int(stem[len(prefix):])
+        rec = get_image(image_id)  # promptString is in the default select
+        new_stem = name_for(rec, image_id)
+        if new_stem == stem:
+            skipped += 1
+            continue
+        new_fname = f"{new_stem}{ext}"
+        old_url = f"/images/{collection}/{fname}"
+        new_url = f"/images/{collection}/{new_fname}"
+        renamed += 1
+        log(f"  #{image_id} {fname} -> {new_fname}")
+        if live:
+            try:
+                os.rename(os.path.join(folder, fname), os.path.join(folder, new_fname))
+                if not patch_image(image_id, {"imagePath": new_url, "path": new_url}, live):
+                    failed += 1
+            except Exception as e:  # noqa: BLE001
+                log(f"  ! #{image_id} rename failed: {e}")
+                failed += 1
+    log(f"  rename: {renamed} renamed, {skipped} already-named, {failed} failed")
+
+
 def main():
     ap = argparse.ArgumentParser(description="Reverse-parity art migration (dry-run by default).")
     ap.add_argument("--live", action="store_true", help="apply changes (default: dry-run)")
@@ -419,6 +475,8 @@ def main():
     ap.add_argument("--thumbnails", action="store_true", help="run the thumbnail pass")
     ap.add_argument("--clear-data", dest="clear_data", action="store_true",
                     help="null imageData for rows that already have a file (opt-in; run after deploy)")
+    ap.add_argument("--rename", action="store_true",
+                    help="rename already-materialized {collection}-{id} files to <prompt-slug>-{id} (opt-in)")
     ap.add_argument("--materialize-collection", default="generated",
                     help="folder for newly-written files (default: generated)")
     args = ap.parse_args()
@@ -430,9 +488,11 @@ def main():
         log(f"KR_LOCAL_IMAGES_DIR must point at the local public/images dir (got: {IMAGES_DIR!r}).")
         sys.exit(1)
 
-    # The three file-writing passes run by default; clear-data is opt-in only
-    # (it deletes DB bytes, so it never rides along with a default run).
-    run_default = not (args.materialize or args.png2webp or args.thumbnails or args.clear_data)
+    # The three file-writing passes run by default; clear-data and rename are
+    # opt-in only, so they never ride along with a default run.
+    run_default = not (
+        args.materialize or args.png2webp or args.thumbnails or args.clear_data or args.rename
+    )
     do_materialize = run_default or args.materialize
     do_png2webp = run_default or args.png2webp
     do_thumbnails = run_default or args.thumbnails
@@ -455,6 +515,8 @@ def main():
         pass_png2webp(args.live)
     if do_thumbnails:
         pass_thumbnails(args.live)
+    if args.rename:
+        pass_rename(args.live, args.materialize_collection)
     if args.clear_data:
         pass_clear_data(args.live)
 
