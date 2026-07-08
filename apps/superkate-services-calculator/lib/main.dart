@@ -75,15 +75,15 @@ class SuperkateServicesCalculatorApp extends StatelessWidget {
             borderSide: BorderSide(color: SuperkateStyle.teal, width: 1.8),
           ),
         ),
-        chipTheme: ChipThemeData(
+        chipTheme: const ChipThemeData(
           backgroundColor: SuperkateStyle.plum,
-          selectedColor: SuperkateStyle.hotPink.withValues(alpha: 0.22),
-          labelStyle: const TextStyle(
+          selectedColor: Color(0x38FF4FD8),
+          labelStyle: TextStyle(
             color: SuperkateStyle.soft,
             fontWeight: FontWeight.w700,
           ),
-          side: const BorderSide(color: SuperkateStyle.cardBorder),
-          shape: const StadiumBorder(),
+          side: BorderSide(color: SuperkateStyle.cardBorder),
+          shape: StadiumBorder(),
         ),
         snackBarTheme: const SnackBarThemeData(
           behavior: SnackBarBehavior.floating,
@@ -229,10 +229,10 @@ class _GlowOrb extends StatelessWidget {
         height: size,
         decoration: BoxDecoration(
           shape: BoxShape.circle,
-          color: color.withValues(alpha: 0.16),
+          color: color.withAlpha(41),
           boxShadow: [
             BoxShadow(
-              color: color.withValues(alpha: 0.34),
+              color: color.withAlpha(87),
               blurRadius: 90,
               spreadRadius: 18,
             ),
