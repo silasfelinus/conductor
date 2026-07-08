@@ -1,0 +1,51 @@
+name: Superkate Flutter CI
+
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - "apps/superkate-services-calculator/**"
+      - ".github/workflows/superkate-flutter-ci.yml"
+  push:
+    branches:
+      - main
+    paths:
+      - "apps/superkate-services-calculator/**"
+      - ".github/workflows/superkate-flutter-ci.yml"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: superkate-flutter-ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  analyze-and-test:
+    name: Flutter analyze/test
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: apps/superkate-services-calculator
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      - name: Show Flutter version
+        run: flutter --version
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Analyze
+        run: flutter analyze --fatal-infos
+
+      - name: Test
+        run: flutter test
