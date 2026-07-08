@@ -4,14 +4,8 @@ import '../data/persistence_service.dart';
 import '../domain/money.dart';
 import '../domain/validation.dart';
 import '../models/appointment.dart';
+import 'superkate_style.dart';
 
-/// New Appointment / Calculator screen (roadmap t-004).
-///
-/// Collects client name, appointment date, hourly rate, time spent (hours +
-/// minutes with preset chips), and optional product cost (defaults to $0), and
-/// shows the **live total** as `hourly rate × time spent + product cost`
-/// recomputed on every keystroke. Saving delegates to a [PersistenceService];
-/// the total is always recalculated at save time and never trusted from the UI.
 class NewAppointmentForm extends StatefulWidget {
   const NewAppointmentForm({
     super.key,
@@ -26,7 +20,6 @@ class NewAppointmentForm extends StatefulWidget {
   State<NewAppointmentForm> createState() => _NewAppointmentFormState();
 }
 
-/// Preset time chips (SPEC.md: "hours/minutes with preset chips").
 const _timePresets = <({String label, int minutes})>[
   (label: '30m', minutes: 30),
   (label: '45m', minutes: 45),
@@ -34,10 +27,6 @@ const _timePresets = <({String label, int minutes})>[
   (label: '1h 30m', minutes: 90),
   (label: '2h', minutes: 120),
 ];
-
-const _cardColor = Color(0xFF171224);
-const _cardBorder = Color(0xFF3B2A5B);
-const _softText = Color(0xFFCAC2DF);
 
 class _NewAppointmentFormState extends State<NewAppointmentForm> {
   final _clientName = TextEditingController();
@@ -74,7 +63,6 @@ class _NewAppointmentFormState extends State<NewAppointmentForm> {
 
   int get _timeSpentMinutes => toMinutes(hours: _hours, minutes: _minutes);
 
-  /// Live total in cents, or `null` when inputs aren't yet a valid amount.
   int? get _liveTotalCents {
     final rateCents = parseDollarsToCents(_hourlyRate.text);
     final productCents = parseDollarsToCents(_productCost.text);
@@ -120,7 +108,6 @@ class _NewAppointmentFormState extends State<NewAppointmentForm> {
     } on ValidationException catch (e) {
       if (mounted) setState(() => _error = e.message);
     } catch (_) {
-      // Never surface raw errors / customer data (SPEC.md security baseline).
       if (mounted) {
         setState(() => _error = 'Could not save the appointment. Please try again.');
       }
@@ -160,7 +147,7 @@ class _NewAppointmentFormState extends State<NewAppointmentForm> {
       children: [
         Center(
           child: ConstrainedBox(
-            constraints: const BoxConstraints(maxWidth: 720),
+            constraints: const BoxConstraints(maxWidth: 740),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
@@ -169,13 +156,15 @@ class _NewAppointmentFormState extends State<NewAppointmentForm> {
                 _SectionCard(
                   icon: Icons.auto_awesome_outlined,
                   title: 'New appointment',
-                  subtitle: 'Simple inputs, calm receipts, no spreadsheet cosplay.',
+                  subtitle:
+                      'Gender-affirming cuts, rainbow transformations, and clean math while the color processes.',
                   children: [
                     TextField(
                       controller: _clientName,
                       textCapitalization: TextCapitalization.words,
                       decoration: const InputDecoration(
                         labelText: 'Client name',
+                        prefixIcon: Icon(Icons.person_outline),
                       ),
                     ),
                     const SizedBox(height: 14),
@@ -184,9 +173,9 @@ class _NewAppointmentFormState extends State<NewAppointmentForm> {
                 ),
                 const SizedBox(height: 16),
                 _SectionCard(
-                  icon: Icons.payments_outlined,
+                  icon: Icons.palette_outlined,
                   title: 'Rate, time, and product',
-                  subtitle: 'The total updates as Superkate works.',
+                  subtitle: 'For fades, vivid color, glitter goblin magic, and everything between.',
                   children: [
                     TextField(
                       controller: _hourlyRate,
@@ -195,14 +184,15 @@ class _NewAppointmentFormState extends State<NewAppointmentForm> {
                       decoration: const InputDecoration(
                         labelText: 'Hourly rate',
                         prefixText: '\$ ',
+                        prefixIcon: Icon(Icons.bolt_outlined),
                       ),
                     ),
                     const SizedBox(height: 18),
                     Text(
                       'Time spent',
                       style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                            color: _softText,
-                            fontWeight: FontWeight.w700,
+                            color: SuperkateStyle.muted,
+                            fontWeight: FontWeight.w800,
                           ),
                     ),
                     const SizedBox(height: 10),
@@ -251,6 +241,7 @@ class _NewAppointmentFormState extends State<NewAppointmentForm> {
                       decoration: const InputDecoration(
                         labelText: 'Product cost (optional)',
                         prefixText: '\$ ',
+                        prefixIcon: Icon(Icons.color_lens_outlined),
                         hintText: '0.00',
                       ),
                     ),
@@ -263,19 +254,25 @@ class _NewAppointmentFormState extends State<NewAppointmentForm> {
                 ),
                 if (_error != null) ...[
                   const SizedBox(height: 12),
-                  Text(_error!, style: TextStyle(color: colors.error)),
+                  _ErrorBanner(message: _error!),
                 ],
                 const SizedBox(height: 16),
-                FilledButton.icon(
-                  onPressed: _saving ? null : _save,
-                  icon: _saving
-                      ? const SizedBox(
-                          width: 16,
-                          height: 16,
-                          child: CircularProgressIndicator(strokeWidth: 2),
-                        )
-                      : const Icon(Icons.save_outlined),
-                  label: Text(_saving ? 'Saving…' : 'Save appointment'),
+                DecoratedBox(
+                  decoration: const BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(22)),
+                    boxShadow: SuperkateStyle.softGlow,
+                  ),
+                  child: FilledButton.icon(
+                    onPressed: _saving ? null : _save,
+                    icon: _saving
+                        ? const SizedBox(
+                            width: 16,
+                            height: 16,
+                            child: CircularProgressIndicator(strokeWidth: 2),
+                          )
+                        : const Icon(Icons.save_outlined),
+                    label: Text(_saving ? 'Saving…' : 'Save appointment'),
+                  ),
                 ),
               ],
             ),
@@ -291,52 +288,64 @@ class _IntroCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      color: const Color(0xFF201633),
-      elevation: 0,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(Radius.circular(28)),
-        side: BorderSide(color: _cardBorder),
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: const BorderRadius.all(Radius.circular(32)),
+        gradient: const LinearGradient(
+          colors: [Color(0xFF32104D), Color(0xFF1A1028)],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
+        border: Border.all(color: SuperkateStyle.cardBorder),
+        boxShadow: SuperkateStyle.edgeGlow,
       ),
-      child: Padding(
-        padding: const EdgeInsets.all(20),
-        child: Row(
+      child: const Padding(
+        padding: EdgeInsets.all(20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Container(
-              width: 54,
-              height: 54,
-              decoration: const BoxDecoration(
-                shape: BoxShape.circle,
-                gradient: LinearGradient(
-                  colors: [Color(0xFF8B5CF6), Color(0xFF14B8A6)],
+            RainbowRail(),
+            SizedBox(height: 18),
+            Row(
+              children: [
+                RainbowBadge(icon: Icons.content_cut),
+                SizedBox(width: 16),
+                Expanded(
+                  child: _IntroCopy(),
                 ),
-              ),
-              child: const Icon(Icons.content_cut, color: Color(0xFF0B0712)),
-            ),
-            const SizedBox(width: 16),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Private salon calculator',
-                    style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                          fontWeight: FontWeight.w800,
-                        ),
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    'Track the visit, calculate the total, then prepare a warm receipt.',
-                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          color: _softText,
-                        ),
-                  ),
-                ],
-              ),
+              ],
             ),
           ],
         ),
       ),
+    );
+  }
+}
+
+class _IntroCopy extends StatelessWidget {
+  const _IntroCopy();
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'Rainbow hair math lab',
+          style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                fontWeight: FontWeight.w900,
+                letterSpacing: -0.4,
+              ),
+        ),
+        const SizedBox(height: 6),
+        Text(
+          'Private appointment totals for Superkate’s gender-affirming cuts, vivid color, and wild little masterpieces.',
+          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                color: SuperkateStyle.muted,
+                height: 1.35,
+              ),
+        ),
+      ],
     );
   }
 }
@@ -356,15 +365,10 @@ class _SectionCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = Theme.of(context).colorScheme;
-
     return Card(
-      color: _cardColor,
+      color: SuperkateStyle.card,
       elevation: 0,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(Radius.circular(24)),
-        side: BorderSide(color: _cardBorder),
-      ),
+      shape: SuperkateStyle.cardShape(),
       child: Padding(
         padding: const EdgeInsets.all(18),
         child: Column(
@@ -372,8 +376,17 @@ class _SectionCard extends StatelessWidget {
           children: [
             Row(
               children: [
-                Icon(icon, color: colors.secondary),
-                const SizedBox(width: 10),
+                Container(
+                  width: 38,
+                  height: 38,
+                  decoration: BoxDecoration(
+                    borderRadius: const BorderRadius.all(Radius.circular(14)),
+                    gradient: SuperkateStyle.electricGradient,
+                    boxShadow: SuperkateStyle.softGlow,
+                  ),
+                  child: Icon(icon, color: SuperkateStyle.ink, size: 21),
+                ),
+                const SizedBox(width: 12),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -381,14 +394,15 @@ class _SectionCard extends StatelessWidget {
                       Text(
                         title,
                         style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                              fontWeight: FontWeight.w800,
+                              fontWeight: FontWeight.w900,
                             ),
                       ),
-                      const SizedBox(height: 2),
+                      const SizedBox(height: 3),
                       Text(
                         subtitle,
                         style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                              color: _softText,
+                              color: SuperkateStyle.muted,
+                              height: 1.3,
                             ),
                       ),
                     ],
@@ -416,11 +430,12 @@ class _DateField extends StatelessWidget {
     final label =
         '${date.year}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}';
     return InkWell(
-      borderRadius: const BorderRadius.all(Radius.circular(18)),
+      borderRadius: const BorderRadius.all(Radius.circular(22)),
       onTap: onTap,
       child: InputDecorator(
         decoration: const InputDecoration(
           labelText: 'Appointment date',
+          prefixIcon: Icon(Icons.event_available_outlined),
           suffixIcon: Icon(Icons.calendar_today_outlined),
         ),
         child: Text(label),
@@ -451,11 +466,18 @@ class _Stepper extends StatelessWidget {
         children: [
           IconButton(
             icon: const Icon(Icons.remove),
+            color: SuperkateStyle.hotPink,
             onPressed: () => onChanged(value - step),
           ),
-          Text('$value', style: Theme.of(context).textTheme.titleMedium),
+          Text(
+            '$value',
+            style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                  fontWeight: FontWeight.w900,
+                ),
+          ),
           IconButton(
             icon: const Icon(Icons.add),
+            color: SuperkateStyle.teal,
             onPressed: () => onChanged(value + step),
           ),
         ],
@@ -472,18 +494,24 @@ class _TotalCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      color: const Color(0xFF102623),
-      elevation: 0,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(Radius.circular(28)),
-        side: BorderSide(color: Color(0xFF1F766E)),
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: const BorderRadius.all(Radius.circular(32)),
+        gradient: const LinearGradient(
+          colors: [Color(0xFF0C332F), Color(0xFF23103A)],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
+        border: Border.all(color: SuperkateStyle.tealBorder),
+        boxShadow: SuperkateStyle.softGlow,
       ),
       child: Padding(
         padding: const EdgeInsets.all(20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            const RainbowRail(height: 4),
+            const SizedBox(height: 14),
             Row(
               children: [
                 Icon(Icons.receipt_long_outlined, color: secondary),
@@ -491,8 +519,8 @@ class _TotalCard extends StatelessWidget {
                 Text(
                   'Appointment total',
                   style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                        color: _softText,
-                        fontWeight: FontWeight.w800,
+                        color: SuperkateStyle.muted,
+                        fontWeight: FontWeight.w900,
                       ),
                 ),
               ],
@@ -502,18 +530,41 @@ class _TotalCard extends StatelessWidget {
               totalCents == null ? '—' : formatCents(totalCents!),
               style: Theme.of(context).textTheme.displaySmall?.copyWith(
                     color: secondary,
-                    fontWeight: FontWeight.bold,
+                    fontWeight: FontWeight.w900,
+                    letterSpacing: -0.8,
                   ),
             ),
             const SizedBox(height: 4),
             Text(
               'hourly rate × time spent + product cost',
               style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                    color: _softText,
+                    color: SuperkateStyle.muted,
                   ),
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class _ErrorBanner extends StatelessWidget {
+  const _ErrorBanner({required this.message});
+
+  final String message;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(14),
+      decoration: BoxDecoration(
+        color: const Color(0xFF371122),
+        borderRadius: const BorderRadius.all(Radius.circular(18)),
+        border: Border.all(color: const Color(0xFFFF8FA3)),
+      ),
+      child: Text(
+        message,
+        style: const TextStyle(color: Color(0xFFFFC2D0)),
       ),
     );
   }

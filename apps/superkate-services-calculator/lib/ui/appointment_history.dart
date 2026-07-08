@@ -6,10 +6,7 @@ import '../domain/receipt_email.dart';
 import '../models/appointment.dart';
 import '../models/customer.dart';
 import 'receipt_email_launcher.dart';
-
-const _cardColor = Color(0xFF171224);
-const _cardBorder = Color(0xFF3B2A5B);
-const _softText = Color(0xFFCAC2DF);
+import 'superkate_style.dart';
 
 Future<bool> _launchReceiptEmail(Uri uri) =>
     const PlatformReceiptEmailLauncher().launch(uri);
@@ -126,7 +123,7 @@ class _AppointmentHistoryState extends State<AppointmentHistory> {
       children: [
         Center(
           child: ConstrainedBox(
-            constraints: const BoxConstraints(maxWidth: 720),
+            constraints: const BoxConstraints(maxWidth: 740),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
@@ -156,22 +153,7 @@ class _AppointmentHistoryState extends State<AppointmentHistory> {
 
                     final appointments = snapshot.data ?? const <Appointment>[];
                     if (appointments.isEmpty) {
-                      return Card(
-                        color: _cardColor,
-                        elevation: 0,
-                        shape: const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(24)),
-                          side: BorderSide(color: _cardBorder),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(18),
-                          child: Text(
-                            _hasFilters
-                                ? 'No appointments match those filters.'
-                                : 'No saved appointments yet.',
-                          ),
-                        ),
-                      );
+                      return _EmptyHistoryCard(hasFilters: _hasFilters);
                     }
 
                     return Column(
@@ -207,52 +189,62 @@ class _HistoryIntroCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      color: const Color(0xFF201633),
-      elevation: 0,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(Radius.circular(28)),
-        side: BorderSide(color: _cardBorder),
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: const BorderRadius.all(Radius.circular(32)),
+        gradient: const LinearGradient(
+          colors: [Color(0xFF123B3A), Color(0xFF26103D)],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
+        border: Border.all(color: SuperkateStyle.cardBorder),
+        boxShadow: SuperkateStyle.edgeGlow,
       ),
-      child: Padding(
-        padding: const EdgeInsets.all(20),
-        child: Row(
+      child: const Padding(
+        padding: EdgeInsets.all(20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Container(
-              width: 54,
-              height: 54,
-              decoration: const BoxDecoration(
-                shape: BoxShape.circle,
-                gradient: LinearGradient(
-                  colors: [Color(0xFF14B8A6), Color(0xFF8B5CF6)],
-                ),
-              ),
-              child: const Icon(Icons.history, color: Color(0xFF0B0712)),
-            ),
-            const SizedBox(width: 16),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Appointment history',
-                    style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                          fontWeight: FontWeight.w800,
-                        ),
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    'Find a visit, review the total, and prepare a polished receipt.',
-                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          color: _softText,
-                        ),
-                  ),
-                ],
-              ),
+            RainbowRail(),
+            SizedBox(height: 18),
+            Row(
+              children: [
+                RainbowBadge(icon: Icons.history),
+                SizedBox(width: 16),
+                Expanded(child: _HistoryIntroCopy()),
+              ],
             ),
           ],
         ),
       ),
+    );
+  }
+}
+
+class _HistoryIntroCopy extends StatelessWidget {
+  const _HistoryIntroCopy();
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'Appointment history',
+          style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                fontWeight: FontWeight.w900,
+                letterSpacing: -0.4,
+              ),
+        ),
+        const SizedBox(height: 6),
+        Text(
+          'Find the visit, celebrate the transformation, and prep a receipt without turning the vibe into tax software.',
+          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                color: SuperkateStyle.muted,
+                height: 1.35,
+              ),
+        ),
+      ],
     );
   }
 }
@@ -277,12 +269,9 @@ class _FilterCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: _cardColor,
+      color: SuperkateStyle.card,
       elevation: 0,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(Radius.circular(24)),
-        side: BorderSide(color: _cardBorder),
-      ),
+      shape: SuperkateStyle.cardShape(),
       child: Padding(
         padding: const EdgeInsets.all(18),
         child: Column(
@@ -329,6 +318,29 @@ class _FilterCard extends StatelessWidget {
   }
 }
 
+class _EmptyHistoryCard extends StatelessWidget {
+  const _EmptyHistoryCard({required this.hasFilters});
+
+  final bool hasFilters;
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      color: SuperkateStyle.card,
+      elevation: 0,
+      shape: SuperkateStyle.cardShape(),
+      child: Padding(
+        padding: const EdgeInsets.all(18),
+        child: Text(
+          hasFilters
+              ? 'No appointments match those filters.'
+              : 'No saved appointments yet.',
+        ),
+      ),
+    );
+  }
+}
+
 class _AppointmentResultCard extends StatelessWidget {
   const _AppointmentResultCard({
     required this.appointment,
@@ -344,12 +356,12 @@ class _AppointmentResultCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final colors = Theme.of(context).colorScheme;
 
-    return Card(
-      color: _cardColor,
-      elevation: 0,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(Radius.circular(24)),
-        side: BorderSide(color: _cardBorder),
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: const BorderRadius.all(Radius.circular(28)),
+        color: SuperkateStyle.card,
+        border: Border.all(color: SuperkateStyle.cardBorder),
+        boxShadow: SuperkateStyle.softGlow,
       ),
       child: Padding(
         padding: const EdgeInsets.all(18),
@@ -365,15 +377,15 @@ class _AppointmentResultCard extends StatelessWidget {
                     children: [
                       Text(
                         appointment.clientNameSnapshot,
-                        style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                              fontWeight: FontWeight.w800,
+                        style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                              fontWeight: FontWeight.w900,
                             ),
                       ),
                       const SizedBox(height: 6),
                       Text(
                         formatReceiptDate(appointment.appointmentDate),
                         style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                              color: _softText,
+                              color: SuperkateStyle.muted,
                             ),
                       ),
                     ],
@@ -383,11 +395,13 @@ class _AppointmentResultCard extends StatelessWidget {
                   formatCents(appointment.appointmentTotalCents),
                   style: Theme.of(context).textTheme.titleLarge?.copyWith(
                         color: colors.secondary,
-                        fontWeight: FontWeight.bold,
+                        fontWeight: FontWeight.w900,
                       ),
                 ),
               ],
             ),
+            const SizedBox(height: 12),
+            const RainbowRail(height: 3),
             const SizedBox(height: 14),
             Wrap(
               spacing: 8,
@@ -448,12 +462,16 @@ class _AppointmentResultCard extends StatelessWidget {
     showDialog<void>(
       context: context,
       builder: (context) => AlertDialog(
+        backgroundColor: SuperkateStyle.cardStrong,
+        shape: SuperkateStyle.cardShape(),
         title: const Text('Receipt ready'),
         content: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
+              const RainbowRail(),
+              const SizedBox(height: 16),
               const Text(
                 'Email composer was not available. Copy this receipt instead.',
               ),
@@ -486,9 +504,9 @@ class _DetailPill extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
       decoration: BoxDecoration(
-        color: const Color(0xFF201633),
+        color: SuperkateStyle.plum,
         borderRadius: const BorderRadius.all(Radius.circular(999)),
-        border: Border.all(color: const Color(0xFF3B2A5B)),
+        border: Border.all(color: SuperkateStyle.cardBorder),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
@@ -498,8 +516,8 @@ class _DetailPill extends StatelessWidget {
           Text(
             label,
             style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                  color: _softText,
-                  fontWeight: FontWeight.w600,
+                  color: SuperkateStyle.muted,
+                  fontWeight: FontWeight.w700,
                 ),
           ),
         ],

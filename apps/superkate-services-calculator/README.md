@@ -14,10 +14,43 @@ First checkout on a dev machine:
 
 ```sh
 cd apps/superkate-services-calculator
-flutter create . --org org.kindrobots --project-name superkate_services_calculator --platforms ios,android
+flutter create . --org org.kindrobots --project-name superkate_services_calculator --platforms ios,android,windows,linux
 flutter pub get
 flutter test
 ```
+
+Default Flutter app scaffolding should include `ios`, `android`, `windows`, and `linux` targets unless a project explicitly narrows its install targets.
+
+## Desktop targets
+
+Windows and Linux are first-class local install targets for the Superkate app.
+
+From a Windows Flutter environment:
+
+```powershell
+cd apps\superkate-services-calculator
+flutter config --enable-windows-desktop
+flutter pub get
+flutter build windows --debug
+```
+
+From a Linux Flutter environment with desktop dependencies installed:
+
+```sh
+cd apps/superkate-services-calculator
+flutter config --enable-linux-desktop
+flutter pub get
+flutter build linux --debug
+```
+
+The Superkate Flutter CI keeps the normal analyzer/test pass and also runs debug desktop builds for `windows` and `linux` when app files or the workflow change.
+
+## Reference material
+
+Project-specific visual/reference material lives in the conductor project folder:
+
+- `projects/superkate-services-calculator/examples/` — Superkate hair-work examples for visual inspiration.
+- `projects/superkate-services-calculator/hairpress/` — current Hair by Superkate WordPress front end, for reference only. It may be updated or replaced later.
 
 ## Architecture (domain + persistence layer — roadmap t-003)
 
@@ -54,11 +87,7 @@ Invariants enforced here:
   local store does not fight the future beta sync design.
 
 Next steps (follow-on tasks): a durable **SQLite adapter** behind the same
-`PersistenceService` interface, and the client/date search UI (t-005). The
-calculator form (t-004) is done and hosted in `main.dart`. Before layering more
-UI on top, the app needs `flutter create` run once to add its platform folders
-and a real `flutter test` pass (roadmap **t-014**) — this workspace has no
-Flutter toolchain, so t-003/t-004 were verified by inspection only.
+`PersistenceService` interface, cloud sync, app/device lock, and export flows before real customer records.
 
 Run the unit tests with `flutter test` (covers the total formula, validation,
 and the in-memory service including search filters and snapshot preservation).
