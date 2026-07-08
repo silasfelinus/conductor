@@ -7,6 +7,13 @@ import '../models/appointment.dart';
 import '../models/customer.dart';
 import 'receipt_email_launcher.dart';
 
+const _cardColor = Color(0xFF171224);
+const _cardBorder = Color(0xFF3B2A5B);
+const _softText = Color(0xFFCAC2DF);
+
+Future<bool> _launchReceiptEmail(Uri uri) =>
+    const PlatformReceiptEmailLauncher().launch(uri);
+
 class AppointmentHistory extends StatefulWidget {
   const AppointmentHistory({
     super.key,
@@ -112,95 +119,78 @@ class _AppointmentHistoryState extends State<AppointmentHistory> {
   @override
   Widget build(BuildContext context) {
     final colors = Theme.of(context).colorScheme;
-    final launcher = widget.launchReceiptEmail ??
-        const PlatformReceiptEmailLauncher().launch;
+    final launcher = widget.launchReceiptEmail ?? _launchReceiptEmail;
 
     return ListView(
-      padding: const EdgeInsets.all(20),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
       children: [
-        Text(
-          'Appointment history',
-          style: Theme.of(context)
-              .textTheme
-              .headlineSmall
-              ?.copyWith(fontWeight: FontWeight.bold),
-        ),
-        const SizedBox(height: 16),
-        TextField(
-          controller: _clientNameQuery,
-          textCapitalization: TextCapitalization.words,
-          decoration: const InputDecoration(
-            labelText: 'Search by client name',
-            prefixIcon: Icon(Icons.search),
-            border: OutlineInputBorder(),
-          ),
-        ),
-        const SizedBox(height: 12),
-        Wrap(
-          spacing: 12,
-          runSpacing: 12,
-          children: [
-            OutlinedButton.icon(
-              onPressed: _pickFromDate,
-              icon: const Icon(Icons.event_available_outlined),
-              label: Text(_from == null
-                  ? 'From any date'
-                  : 'From ${_formatDate(_from!)}'),
-            ),
-            OutlinedButton.icon(
-              onPressed: _pickToDate,
-              icon: const Icon(Icons.event_outlined),
-              label:
-                  Text(_to == null ? 'To any date' : 'To ${_formatDate(_to!)}'),
-            ),
-            TextButton.icon(
-              onPressed: _clearFilters,
-              icon: const Icon(Icons.filter_alt_off_outlined),
-              label: const Text('Clear filters'),
-            ),
-          ],
-        ),
-        const SizedBox(height: 20),
-        FutureBuilder<List<Appointment>>(
-          future: _appointments,
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Center(child: CircularProgressIndicator());
-            }
-            if (snapshot.hasError) {
-              return Text(
-                'Could not load appointments. Please try again.',
-                style: TextStyle(color: colors.error),
-              );
-            }
-
-            final appointments = snapshot.data ?? const <Appointment>[];
-            if (appointments.isEmpty) {
-              return Card(
-                child: Padding(
-                  padding: const EdgeInsets.all(18),
-                  child: Text(
-                    _hasFilters
-                        ? 'No appointments match those filters.'
-                        : 'No saved appointments yet.',
-                  ),
-                ),
-              );
-            }
-
-            return Column(
+        Center(
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 720),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                for (final appointment in appointments) ...[
-                  _AppointmentResultCard(
-                    appointment: appointment,
-                    service: widget.service,
-                    launchReceiptEmail: launcher,
-                  ),
-                  const SizedBox(height: 12),
-                ],
+                const _HistoryIntroCard(),
+                const SizedBox(height: 16),
+                _FilterCard(
+                  clientNameQuery: _clientNameQuery,
+                  from: _from,
+                  to: _to,
+                  onPickFromDate: _pickFromDate,
+                  onPickToDate: _pickToDate,
+                  onClearFilters: _clearFilters,
+                ),
+                const SizedBox(height: 20),
+                FutureBuilder<List<Appointment>>(
+                  future: _appointments,
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const Center(child: CircularProgressIndicator());
+                    }
+                    if (snapshot.hasError) {
+                      return Text(
+                        'Could not load appointments. Please try again.',
+                        style: TextStyle(color: colors.error),
+                      );
+                    }
+
+                    final appointments = snapshot.data ?? const <Appointment>[];
+                    if (appointments.isEmpty) {
+                      return Card(
+                        color: _cardColor,
+                        elevation: 0,
+                        shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(24)),
+                          side: BorderSide(color: _cardBorder),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(18),
+                          child: Text(
+                            _hasFilters
+                                ? 'No appointments match those filters.'
+                                : 'No saved appointments yet.',
+                          ),
+                        ),
+                      );
+                    }
+
+                    return Column(
+                      children: [
+                        for (final appointment in appointments) ...[
+                          _AppointmentResultCard(
+                            appointment: appointment,
+                            service: widget.service,
+                            launchReceiptEmail: launcher,
+                          ),
+                          const SizedBox(height: 12),
+                        ],
+                      ],
+                    );
+                  },
+                ),
               ],
-            );
-          },
+            ),
+          ),
         ),
       ],
     );
@@ -209,8 +199,134 @@ class _AppointmentHistoryState extends State<AppointmentHistory> {
   bool get _hasFilters =>
       _clientNameQuery.text.trim().isNotEmpty || _from != null || _to != null;
 
-  static String _formatDate(DateTime date) =>
-      '${date.year}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}';
+  static String _formatDate(DateTime date) => formatReceiptDate(date);
+}
+
+class _HistoryIntroCard extends StatelessWidget {
+  const _HistoryIntroCard();
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      color: const Color(0xFF201633),
+      elevation: 0,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(Radius.circular(28)),
+        side: BorderSide(color: _cardBorder),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Row(
+          children: [
+            Container(
+              width: 54,
+              height: 54,
+              decoration: const BoxDecoration(
+                shape: BoxShape.circle,
+                gradient: LinearGradient(
+                  colors: [Color(0xFF14B8A6), Color(0xFF8B5CF6)],
+                ),
+              ),
+              child: const Icon(Icons.history, color: Color(0xFF0B0712)),
+            ),
+            const SizedBox(width: 16),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Appointment history',
+                    style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                          fontWeight: FontWeight.w800,
+                        ),
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    'Find a visit, review the total, and prepare a polished receipt.',
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                          color: _softText,
+                        ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _FilterCard extends StatelessWidget {
+  const _FilterCard({
+    required this.clientNameQuery,
+    required this.from,
+    required this.to,
+    required this.onPickFromDate,
+    required this.onPickToDate,
+    required this.onClearFilters,
+  });
+
+  final TextEditingController clientNameQuery;
+  final DateTime? from;
+  final DateTime? to;
+  final VoidCallback onPickFromDate;
+  final VoidCallback onPickToDate;
+  final VoidCallback onClearFilters;
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      color: _cardColor,
+      elevation: 0,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(Radius.circular(24)),
+        side: BorderSide(color: _cardBorder),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(18),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            TextField(
+              controller: clientNameQuery,
+              textCapitalization: TextCapitalization.words,
+              decoration: const InputDecoration(
+                labelText: 'Search by client name',
+                prefixIcon: Icon(Icons.search),
+              ),
+            ),
+            const SizedBox(height: 12),
+            Wrap(
+              spacing: 12,
+              runSpacing: 12,
+              children: [
+                OutlinedButton.icon(
+                  onPressed: onPickFromDate,
+                  icon: const Icon(Icons.event_available_outlined),
+                  label: Text(from == null
+                      ? 'From any date'
+                      : 'From ${_AppointmentHistoryState._formatDate(from!)}'),
+                ),
+                OutlinedButton.icon(
+                  onPressed: onPickToDate,
+                  icon: const Icon(Icons.event_outlined),
+                  label: Text(to == null
+                      ? 'To any date'
+                      : 'To ${_AppointmentHistoryState._formatDate(to!)}'),
+                ),
+                TextButton.icon(
+                  onPressed: onClearFilters,
+                  icon: const Icon(Icons.filter_alt_off_outlined),
+                  label: const Text('Clear filters'),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 }
 
 class _AppointmentResultCard extends StatelessWidget {
@@ -229,6 +345,12 @@ class _AppointmentResultCard extends StatelessWidget {
     final colors = Theme.of(context).colorScheme;
 
     return Card(
+      color: _cardColor,
+      elevation: 0,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(Radius.circular(24)),
+        side: BorderSide(color: _cardBorder),
+      ),
       child: Padding(
         padding: const EdgeInsets.all(18),
         child: Column(
@@ -243,13 +365,17 @@ class _AppointmentResultCard extends StatelessWidget {
                     children: [
                       Text(
                         appointment.clientNameSnapshot,
-                        style: Theme.of(context)
-                            .textTheme
-                            .titleMedium
-                            ?.copyWith(fontWeight: FontWeight.bold),
+                        style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                              fontWeight: FontWeight.w800,
+                            ),
                       ),
                       const SizedBox(height: 6),
-                      Text(_formatDate(appointment.appointmentDate)),
+                      Text(
+                        formatReceiptDate(appointment.appointmentDate),
+                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                              color: _softText,
+                            ),
+                      ),
                     ],
                   ),
                 ),
@@ -262,10 +388,29 @@ class _AppointmentResultCard extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: 12),
+            const SizedBox(height: 14),
+            Wrap(
+              spacing: 8,
+              runSpacing: 8,
+              children: [
+                _DetailPill(
+                  icon: Icons.schedule_outlined,
+                  label: formatDurationMinutes(appointment.timeSpentMinutes),
+                ),
+                _DetailPill(
+                  icon: Icons.payments_outlined,
+                  label: '${formatCents(appointment.hourlyRateCents)}/hour',
+                ),
+                _DetailPill(
+                  icon: Icons.inventory_2_outlined,
+                  label: 'Products ${formatCents(appointment.productCostCents)}',
+                ),
+              ],
+            ),
+            const SizedBox(height: 14),
             Align(
               alignment: Alignment.centerRight,
-              child: TextButton.icon(
+              child: FilledButton.tonalIcon(
                 onPressed: () => _prepareReceipt(context),
                 icon: const Icon(Icons.mail_outline),
                 label: const Text('Prepare receipt'),
@@ -305,9 +450,16 @@ class _AppointmentResultCard extends StatelessWidget {
       builder: (context) => AlertDialog(
         title: const Text('Receipt ready'),
         content: SingleChildScrollView(
-          child: SelectableText(
-            'Email composer was not available. Copy this receipt instead.\n\n'
-            '${draft.subject}\n\n${draft.body}',
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Text(
+                'Email composer was not available. Copy this receipt instead.',
+              ),
+              const SizedBox(height: 16),
+              SelectableText('${draft.subject}\n\n${draft.body}'),
+            ],
           ),
         ),
         actions: [
@@ -319,7 +471,39 @@ class _AppointmentResultCard extends StatelessWidget {
       ),
     );
   }
+}
 
-  static String _formatDate(DateTime date) =>
-      '${date.year}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}';
+class _DetailPill extends StatelessWidget {
+  const _DetailPill({required this.icon, required this.label});
+
+  final IconData icon;
+  final String label;
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = Theme.of(context).colorScheme;
+
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+      decoration: BoxDecoration(
+        color: const Color(0xFF201633),
+        borderRadius: const BorderRadius.all(Radius.circular(999)),
+        border: Border.all(color: const Color(0xFF3B2A5B)),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(icon, size: 16, color: colors.secondary),
+          const SizedBox(width: 6),
+          Text(
+            label,
+            style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                  color: _softText,
+                  fontWeight: FontWeight.w600,
+                ),
+          ),
+        ],
+      ),
+    );
+  }
 }
