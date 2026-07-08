@@ -136,8 +136,11 @@ def iter_needs_work(kind, limit=200):
         cursor = data["nextCursor"]
 
 
-def get_image(image_id):
-    status, resp = http_json("GET", f"{KR_BASE_URL}/api/art/image/{image_id}")
+def get_image(image_id, include_data=False):
+    # imageData/thumbnailData are opt-in on the GET (LongText); only ask for the
+    # bytes when we actually need them (i.e. on --live).
+    q = "?includeImageData=true&includeThumbnailData=true" if include_data else ""
+    status, resp = http_json("GET", f"{KR_BASE_URL}/api/art/image/{image_id}{q}")
     if status != 200 or not resp:
         return None
     return resp.get("data") or resp
@@ -179,21 +182,35 @@ def build_disk_hash_index():
 
 # ---- passes --------------------------------------------------------------
 
+def decode_b64(s):
+    """Decode base64 that may be a bare string or a data: URI."""
+    if not s:
+        return None
+    if s.startswith("data:") and "," in s:
+        s = s.split(",", 1)[1]
+    return base64.b64decode(s)
+
+
 def pass_materialize(live, collection):
     log(f"\n== materialize {'(LIVE)' if live else '(dry-run)'} ==")
+    # Cheap plan first (metadata only, no byte fetches).
+    items = list(iter_needs_work("materialize"))
+    log(f"  {len(items)} DB-only image(s) (imageData present, no file)")
+    if not live:
+        log(f"  dry-run: --live content-hashes each, then links an identical")
+        log(f"  existing file or writes a new .webp under '{collection}/'.")
+        return
     disk = build_disk_hash_index()
     log(f"  indexed {len(disk)} on-disk file(s) for dedup")
     written = linked = missing = failed = 0
-    for item in iter_needs_work("materialize"):
-        rec = get_image(item["id"])
-        raw_b64 = (rec or {}).get("imageData")
-        if not raw_b64:
-            missing += 1
-            continue
+    for item in items:
+        rec = get_image(item["id"], include_data=True)
         try:
-            raw = base64.b64decode(raw_b64)
+            raw = decode_b64((rec or {}).get("imageData"))
         except (ValueError, TypeError):
-            failed += 1
+            raw = None
+        if raw is None:
+            missing += 1
             continue
         h = hashlib.sha256(raw).hexdigest()
         if h in disk:  # dedup: bytes already on disk -> just link
@@ -310,8 +327,16 @@ def _report_code_refs():
 
 def pass_thumbnails(live):
     log(f"\n== thumbnails {'(LIVE)' if live else '(dry-run)'} ==")
+    # Cheap plan first (metadata only). Every candidate has a source per the
+    # needs-work filter (a path or imageData), so the count is the plan.
+    items = list(iter_needs_work("thumbnail"))
+    log(f"  {len(items)} image(s) need a thumbnail")
+    if not live:
+        log("  dry-run: --live reads each source (on-disk file, else DB bytes),")
+        log("  writes a thumb .webp, and patches thumbnailPath + thumbnailData.")
+        return
     made = missing = failed = 0
-    for item in iter_needs_work("thumbnail"):
+    for item in items:
         src_url = item.get("imagePath") or item.get("path")
         raw = None
         if src_url:
@@ -319,39 +344,36 @@ def pass_thumbnails(live):
             if local and os.path.isfile(local):
                 with open(local, "rb") as f:
                     raw = f.read()
-        if raw is None:  # fall back to DB bytes
-            rec = get_image(item["id"])
-            b64 = (rec or {}).get("imageData")
-            if b64:
-                try:
-                    raw = base64.b64decode(b64)
-                except (ValueError, TypeError):
-                    raw = None
+        if raw is None:  # fall back to DB bytes (opt-in include)
+            rec = get_image(item["id"], include_data=True)
+            try:
+                raw = decode_b64((rec or {}).get("imageData"))
+            except (ValueError, TypeError):
+                raw = None
         if raw is None:
             missing += 1
             continue
-        base_url = (src_url or f"/images/generated/generated-{item['id']}.webp")
+        base_url = src_url or f"/images/generated/generated-{item['id']}.webp"
         folder, name = base_url.rsplit("/", 1)
         thumb_url = f"{folder}/thumb/{name.rsplit('.', 1)[0]}.webp"
         made += 1
         log(f"  #{item['id']} -> thumb {thumb_url}")
-        if live:
-            try:
-                tb = to_thumb(raw)
-                dest = url_to_local(thumb_url)
-                os.makedirs(os.path.dirname(dest), exist_ok=True)
-                with open(dest, "wb") as f:
-                    f.write(tb)
-                fields = {
-                    "thumbnailPath": thumb_url,
-                    "thumbnailData": "data:image/webp;base64," + base64.b64encode(tb).decode(),
-                }
-                if not patch_image(item["id"], fields, live):
-                    failed += 1
-            except Exception as e:  # noqa: BLE001
-                log(f"  ! #{item['id']} thumb failed: {e}")
+        try:
+            tb = to_thumb(raw)
+            dest = url_to_local(thumb_url)
+            os.makedirs(os.path.dirname(dest), exist_ok=True)
+            with open(dest, "wb") as f:
+                f.write(tb)
+            fields = {
+                "thumbnailPath": thumb_url,
+                "thumbnailData": "data:image/webp;base64," + base64.b64encode(tb).decode(),
+            }
+            if not patch_image(item["id"], fields, live):
                 failed += 1
-    log(f"  thumbnails: {made} to make, {missing} no-source, {failed} failed")
+        except Exception as e:  # noqa: BLE001
+            log(f"  ! #{item['id']} thumb failed: {e}")
+            failed += 1
+    log(f"  thumbnails: {made} made, {missing} no-source, {failed} failed")
 
 
 def main():
