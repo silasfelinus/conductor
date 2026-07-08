@@ -183,16 +183,12 @@ tasks:
   - id: t-009
     milestone: m2
     title: "Lazy-init the Stripe client in checkout/subscribe routes"
-    status: claimed
+    status: done
     owner: worker
-    updated: "2026-07-08T09:30:00Z"
+    updated: "2026-07-08T09:48:00Z"
     passes: 0
     stakes: reversible
     note: >
-      Kaizen task from kind_robots PR #91 review. server/api/stripe/checkout.post.ts
-      and server/api/stripe/subscribe.post.ts instantiate the Stripe client at
-      module load, so the server crashes on boot whenever STRIPE_SECRET_KEY is
-      unset (e.g. local dev, preview environments). Move client construction inside
-      the request handler (or a lazily-evaluated singleton) so a missing key
-      degrades to a clean 500 on those two routes instead of killing the whole
-      server. No behavior change when the key is present.
+      Merged kind_robots PR #132. checkout.post.ts and subscribe.post.ts now lazy-init
+      the Stripe client per route request instead of constructing it at module load.
+      Contract Tests and TypeScript Type Check passed on the PR head before squash merge.
