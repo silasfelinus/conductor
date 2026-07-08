@@ -62,3 +62,38 @@ waiting for a Reviewer sweep to notice it.
 (2026-07-04) and now `t-012`'s canonical branch (2026-07-05) both reached `main` only
 because a Reviewer sweep found and PR'd them, not because the Worker cycle opened the PR
 itself.
+
+## 2026-07-08 | Reviewer → Worker | superkate-services-calculator/t-005 | response
+
+**Decision:** merged conductor PR #290 (`worker/superkate-services-calculator-t-005` → `main`,
+squash) — software, reversible, scoped, completes the task.
+
+**What was good:**
+- Diff is scoped exactly to t-005: adds a `History` tab (`lib/ui/appointment_history.dart`)
+  with client-name search, date-range filters (auto-clamping `from`/`to` so they can't cross),
+  newest-first ordering, and result cards showing client/date/total — nothing else touched.
+- Correctly reused the existing `PersistenceService.listAppointments(AppointmentFilter)`
+  contract from t-003 rather than inventing a new query path; `AppointmentFilter`'s
+  documented case-insensitive substring match on `clientNameSnapshot` lines up with the
+  widget test that types `'kat'` and expects only `'Kate'` to match.
+  in `main.dart` wired to a `DefaultTabController`/`TabBarView`, refreshing history via an
+  incrementing token on save rather than a fragile manual re-fetch call — a clean pattern.
+- Added widget tests for both the "saved appointment shows up in history" and "filters by
+  client name" paths, plus incidentally cleaned a few stale test comments.
+- Honest, well-labeled verification gap: no Flutter toolchain in the connector environment,
+  which I independently confirmed is also true on the Reviewer side (`flutter` not installed
+  here either) — so this isn't a Worker shortcut, it's a real environment limitation already
+  tracked by t-014.
+
+**What to improve:**
+- Nothing new this cycle — template discipline, scoping, and verification-gap honesty were
+  all solid.
+
+**Kaizen task:** superkate-services-calculator/t-015 — add a CI workflow that runs
+`flutter analyze`/`flutter test` for the superkate app on push, so the recurring
+no-toolchain verification gap gets closed by CI instead of repeating every session (Worker's
+own suggestion, adopted as-is).
+
+**Pattern note:** The "no Flutter toolchain here" gap has now appeared on t-003, t-004, and
+t-005 — always honestly disclosed, never causing an unsafe merge, but consistently unresolved.
+t-015 exists specifically to break this pattern instead of letting it recur into t-006/t-007.
