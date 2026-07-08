@@ -138,10 +138,15 @@ def iter_needs_work(kind, limit=200):
         cursor = data["nextCursor"]
 
 
-def get_image(image_id, include_data=False):
-    # imageData/thumbnailData are opt-in on the GET (LongText); only ask for the
-    # bytes when we actually need them (i.e. on --live).
-    q = "?includeImageData=true&includeThumbnailData=true" if include_data else ""
+def get_image(image_id, include_data=False, include_collections=False):
+    # imageData/thumbnailData/collections are opt-in on the GET; only ask for
+    # what we need (bytes on --live, collections when naming files).
+    params = []
+    if include_data:
+        params += ["includeImageData=true", "includeThumbnailData=true"]
+    if include_collections:
+        params.append("includeCollections=true")
+    q = ("?" + "&".join(params)) if params else ""
     status, resp = http_json("GET", f"{KR_BASE_URL}/api/art/image/{image_id}{q}")
     if status != 200 or not resp:
         return None
@@ -211,6 +216,18 @@ def name_for(rec, image_id):
     return f"{base}-{image_id}" if base else f"art-{image_id}"
 
 
+def target_for(rec, image_id, default_collection):
+    """Return (folder, stem) for a materialized file. Prefer the image's art
+    collection — file lands in that slug's folder as {slug}-inspiration-{id},
+    matching the site's inspiration-art naming. Fall back to the default folder
+    with a prompt-based name when the image has no slugged collection."""
+    for c in (rec or {}).get("ArtCollections") or []:
+        s = c.get("slug")
+        if s:
+            return s, f"{s}-inspiration-{image_id}"
+    return default_collection, name_for(rec, image_id)
+
+
 def pass_materialize(live, collection):
     log(f"\n== materialize {'(LIVE)' if live else '(dry-run)'} ==")
     # Cheap plan first (metadata only, no byte fetches).
@@ -226,7 +243,7 @@ def pass_materialize(live, collection):
     for seen, item in enumerate(items, 1):
         if seen % 100 == 0:
             log(f"  … {seen}/{len(items)} ({written} written, {linked} linked)")
-        rec = get_image(item["id"], include_data=True)
+        rec = get_image(item["id"], include_data=True, include_collections=True)
         try:
             raw = decode_b64((rec or {}).get("imageData"))
         except (ValueError, TypeError):
@@ -241,8 +258,8 @@ def pass_materialize(live, collection):
             log(f"  #{item['id']} -> link existing {url}")
             patch_image(item["id"], {"imagePath": url, "path": url, "fileType": url.rsplit('.', 1)[-1]}, live)
             continue
-        rel = f"{collection}/{name_for(rec, item['id'])}.webp"
-        url = f"/images/{rel}"
+        folder_slug, stem = target_for(rec, item["id"], collection)
+        url = f"/images/{folder_slug}/{stem}.webp"
         written += 1
         log(f"  #{item['id']} -> write {url}")
         if live:
@@ -446,19 +463,21 @@ def pass_rename(live, collection):
         if not stem.startswith(prefix) or not stem[len(prefix):].isdigit():
             continue  # not an auto-named file
         image_id = int(stem[len(prefix):])
-        rec = get_image(image_id)  # promptString is in the default select
-        new_stem = name_for(rec, image_id)
-        if new_stem == stem:
-            skipped += 1
-            continue
+        rec = get_image(image_id, include_collections=True)
+        folder_slug, new_stem = target_for(rec, image_id, collection)
         new_fname = f"{new_stem}{ext}"
         old_url = f"/images/{collection}/{fname}"
-        new_url = f"/images/{collection}/{new_fname}"
+        new_url = f"/images/{folder_slug}/{new_fname}"
+        if new_url == old_url:
+            skipped += 1
+            continue
         renamed += 1
-        log(f"  #{image_id} {fname} -> {new_fname}")
+        log(f"  #{image_id} {old_url} -> {new_url}")
         if live:
             try:
-                os.rename(os.path.join(folder, fname), os.path.join(folder, new_fname))
+                dest_abs = url_to_local(new_url)
+                os.makedirs(os.path.dirname(dest_abs), exist_ok=True)
+                os.rename(os.path.join(folder, fname), dest_abs)  # may cross folders
                 if not patch_image(image_id, {"imagePath": new_url, "path": new_url}, live):
                     failed += 1
             except Exception as e:  # noqa: BLE001
