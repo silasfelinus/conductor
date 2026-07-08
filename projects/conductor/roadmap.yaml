@@ -365,18 +365,23 @@ tasks:
 - id: t-024
   milestone: m1
   title: Fix pre-existing failures in tests/test_run_worker_status_integration.py
-  status: ready
-  owner: null
-  updated: '2026-07-06T02:30:00Z'
-  passes: 0
+  status: done
+  owner: claude
+  updated: '2026-07-08T00:00:00Z'
+  passes: 1
   stakes: reversible
   note: >
-    Found during art-generator-connect t-013 verification (2026-07-06):
-    test_claim_task_calls_lifecycle_helper and
-    test_set_task_status_calls_lifecycle_helper fail on a clean main
-    checkout, unrelated to any current diff. Diagnose whether the tests
-    drifted from run_worker.py's current lifecycle-helper interface or the
-    helper regressed, and fix whichever is wrong.
+    DONE (Claude, 2026-07-08): Diagnosis — stale tests, not a regression.
+    conductor #254 rewrote run_worker.py from a task-claiming worker into a
+    read-only healthcheck; claim_task/set_task_status/_run_worker_task_status
+    were removed but the tests still scraped for them, so they raised
+    ValueError('substring not found') on clean main. Rewrote the file to pin
+    the CURRENT contract: no task-status mutation surface, never serializes
+    YAML back out, only write_text is the transient digest, plus a
+    py_compile smoke test. Full suite now green (72 passed). Bonus: found and
+    fixed a second stale test of the same kind — test_distribute_images.py
+    test_write_gallery_manifest_nested still asserted stem-only manifest
+    entries after conductor #260 deliberately switched to full filenames.
 - id: t-025
   milestone: m2
   title: Build a new-project scaffold helper script

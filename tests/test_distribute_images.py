@@ -95,4 +95,7 @@ def test_write_gallery_manifest_nested(tmp_path, monkeypatch):
     manifest = json.loads(
         (kr / "public" / "images" / "dreams" / "coat-dance" / "gallery.json").read_text()
     )
-    assert manifest == ["coat-dance-hero-1"]
+    # write_gallery_manifest emits FULL filenames (with extension), not stems —
+    # see the function docstring: the kind_robots reader appends .webp to any
+    # bare stem, so entries must carry their real extension. (conductor #260)
+    assert manifest == ["coat-dance-hero-1.webp"]
