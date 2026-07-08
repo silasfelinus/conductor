@@ -179,22 +179,28 @@ tasks:
 - id: t-006
   milestone: m3
   title: Add warm receipt email composer
-  status: ready
-  owner: null
+  status: done
+  owner: worker
   passes: 0
   stakes: reversible
   depends_on:
   - t-004
   - t-005
-  note: 'Add a receipt action that opens an email composer with customer email prefilled when known, client
-    name, appointment date, hourly rate, time spent, product cost, total price, the formula line, and
-    the slogan "Superkate loves you!" Backend direct-send remains a separate approval.
+  updated: 2026-07-08
+  note: 'DONE (2026-07-08, PR #295): added a local, user-reviewed receipt email composer
+    for saved appointments. History cards now expose Prepare receipt, which builds a mailto
+    draft with saved customer email when available, client name, appointment date, hourly
+    rate, time spent, product cost, total price, the formula line, and "Superkate loves you!".
+    The implementation uses Android/iOS platform mail composer handoff plus a local copyable
+    fallback dialog; it does not send backend email, add analytics, or call external customer-data
+    services. Silas explicitly clarified the workflow: agents merge scoped PRs to main, then
+    Silas tests from main as the end-user path.
 
     '
 - id: t-007
   milestone: m4
   title: Polish the dark purple/teal salon UI
-  status: waiting
+  status: ready
   owner: null
   passes: 0
   stakes: reversible
