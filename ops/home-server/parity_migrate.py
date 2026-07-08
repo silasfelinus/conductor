@@ -205,7 +205,9 @@ def pass_materialize(live, collection):
     disk = build_disk_hash_index()
     log(f"  indexed {len(disk)} on-disk file(s) for dedup")
     written = linked = missing = failed = 0
-    for item in items:
+    for seen, item in enumerate(items, 1):
+        if seen % 100 == 0:
+            log(f"  … {seen}/{len(items)} ({written} written, {linked} linked)")
         rec = get_image(item["id"], include_data=True)
         try:
             raw = decode_b64((rec or {}).get("imageData"))
@@ -243,12 +245,15 @@ def pass_materialize(live, collection):
 
 def pass_png2webp(live):
     log(f"\n== png2webp {'(LIVE)' if live else '(dry-run)'} ==")
-    converted = missing = failed = 0
+    converted = missing = failed = fixed = 0
     changed_urls = {}  # old_url -> new_url, for manifest rewrite
-    for item in iter_needs_work("png"):
+    for seen, item in enumerate(iter_needs_work("png"), 1):
+        if seen % 100 == 0:
+            log(f"  … {seen} processed ({converted} converted, {fixed} fileType-only)")
         old_url = item.get("imagePath") or item.get("path")
         if not old_url or not old_url.lower().endswith(".png"):
             # fileType said png but path isn't a .png file — just fix fileType.
+            fixed += 1
             if live:
                 patch_image(item["id"], {"fileType": "webp"}, live)
             continue
@@ -276,7 +281,7 @@ def pass_png2webp(live):
                 failed += 1
     _rewrite_manifests(changed_urls, live)
     _report_code_refs()
-    log(f"  png2webp: {converted} converted, {missing} missing-on-disk, {failed} failed")
+    log(f"  png2webp: {converted} converted, {fixed} fileType-only, {missing} missing-on-disk, {failed} failed")
 
 
 def _rewrite_manifests(changed_urls, live):
@@ -338,7 +343,9 @@ def pass_thumbnails(live):
         log("  writes a thumb .webp, and patches thumbnailPath + thumbnailData.")
         return
     made = missing = failed = 0
-    for item in items:
+    for seen, item in enumerate(items, 1):
+        if seen % 100 == 0:
+            log(f"  … {seen}/{len(items)} ({made} made, {missing} no-source)")
         src_url = item.get("imagePath") or item.get("path")
         raw = None
         if src_url:
@@ -390,7 +397,9 @@ def pass_clear_data(live):
         log("  (run ONLY after those files are committed + deployed).")
         return
     cleared = skipped = failed = 0
-    for item in items:
+    for seen, item in enumerate(items, 1):
+        if seen % 100 == 0:
+            log(f"  … {seen}/{len(items)} ({cleared} cleared, {skipped} skipped)")
         local = url_to_local(item.get("imagePath") or item.get("path"))
         if not local or not os.path.isfile(local):
             skipped += 1  # no local file — don't drop the only copy
