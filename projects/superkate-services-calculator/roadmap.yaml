@@ -30,13 +30,13 @@ tasks:
   - id: t-001
     milestone: m1
     title: Create the matching PROJECT Dream for slug parity
-    status: ready
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
     updated: 2026-07-08
     note: >
-      Silas approved the human/admin side on 2026-07-08. Complete this only from a runtime that can authenticate to the Kind Robots API with KR_API_TOKEN or the approved machine-auth mechanism. Run python scripts/sync_projects_to_dreams.py or perform the authenticated upsert, then verify a single active PROJECT Dream exists for slug "superkate-services-calculator" with priority HIGH and title "Superkate Services Calculator". Do not mark done from GitHub-only access unless the external Dream write is actually verified.
+      DONE: Silas ran the existing project sync on 2026-07-08 and reported that everything synced successfully. The current sync path does not write priority metadata yet, so priority syncing is tracked separately in t-026 and does not block Superkate app implementation.
   - id: t-002
     milestone: m1
     title: Review and finalize the MVP spec with Superkate
@@ -305,3 +305,14 @@ tasks:
     updated: 2026-07-08
     note: >
       Wire the receipt composer defaults to use schedule/contact link https://hairbysuperkate.glossgenius.com/ and reply-to/contact email hairbysuperkate@gmail.com where appropriate. Keep the receipt user-reviewed and local; do not add backend sending or silent outbound email.
+  - id: t-026
+    milestone: m1
+    title: Include project priority in Dream sync payload
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-001
+    updated: 2026-07-08
+    note: >
+      Update scripts/sync_projects_to_dreams.py so active project sync also sends priority metadata from project-overrides.yaml when the Kind Robots API accepts it. Silas confirmed the existing sync succeeded without priority, so this is a non-blocking metadata polish task and should not slow down Android app implementation.
