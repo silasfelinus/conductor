@@ -261,9 +261,19 @@ def pass_png2webp(live):
 
 
 def _rewrite_manifests(changed_urls, live):
-    """Swap .png -> .webp in collections.json and per-folder gallery.json."""
-    if not IMAGES_DIR:
+    """Rewrite ONLY the filenames we actually converted (old .png basename ->
+    new .webp basename) in collections.json / per-folder gallery.json. Never a
+    blanket .png->.webp replace: that would repoint manifests at .webp files
+    that don't exist for pngs this run didn't convert."""
+    if not IMAGES_DIR or not changed_urls:
         return
+    renames = {}
+    for old_url, new_url in changed_urls.items():
+        old_base = old_url.rsplit("/", 1)[-1]
+        new_base = new_url.rsplit("/", 1)[-1]
+        renames[old_base] = new_base
+        renames[old_base.rsplit(".", 1)[0] + ".png"] = new_base  # be explicit
+
     targets = [os.path.join(IMAGES_DIR, "collections.json")]
     for root, _dirs, files in os.walk(IMAGES_DIR):
         if "gallery.json" in files:
@@ -277,11 +287,14 @@ def _rewrite_manifests(changed_urls, live):
                 text = f.read()
         except OSError:
             continue
-        if ".png" not in text:
+        new_text = text
+        for old_base, new_base in renames.items():
+            if old_base in new_text:
+                new_text = new_text.replace(old_base, new_base)
+        if new_text == text:
             continue
-        new_text = text.replace(".png", ".webp")
         touched += 1
-        log(f"  manifest: {os.path.basename(path)} (.png -> .webp)")
+        log(f"  manifest: {os.path.basename(path)}")
         if live:
             with open(path, "w", encoding="utf-8") as f:
                 f.write(new_text)
