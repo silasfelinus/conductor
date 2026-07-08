@@ -364,16 +364,40 @@ def pass_thumbnails(live):
             os.makedirs(os.path.dirname(dest), exist_ok=True)
             with open(dest, "wb") as f:
                 f.write(tb)
-            fields = {
-                "thumbnailPath": thumb_url,
-                "thumbnailData": "data:image/webp;base64," + base64.b64encode(tb).decode(),
-            }
-            if not patch_image(item["id"], fields, live):
+            # Path-first: set thumbnailPath only; the file is the source of
+            # truth, so we do NOT store base64 thumbnailData in the DB.
+            if not patch_image(item["id"], {"thumbnailPath": thumb_url}, live):
                 failed += 1
         except Exception as e:  # noqa: BLE001
             log(f"  ! #{item['id']} thumb failed: {e}")
             failed += 1
     log(f"  thumbnails: {made} made, {missing} no-source, {failed} failed")
+
+
+def pass_clear_data(live):
+    """Path-first DB shrink: null imageData for rows that already have a served
+    file path (kind=clearable). Opt-in only, never part of the default run.
+    Guarded: only clears a row whose file actually exists on local disk, so we
+    never drop the bytes for an image that isn't really on disk yet. Run this
+    only AFTER the files are committed + deployed."""
+    log(f"\n== clear-data {'(LIVE)' if live else '(dry-run)'} ==")
+    items = list(iter_needs_work("clearable"))
+    log(f"  {len(items)} row(s) carry imageData while also having a file path")
+    if not live:
+        log("  dry-run: --live nulls imageData for rows whose file exists on disk")
+        log("  (run ONLY after those files are committed + deployed).")
+        return
+    cleared = skipped = failed = 0
+    for item in items:
+        local = url_to_local(item.get("imagePath") or item.get("path"))
+        if not local or not os.path.isfile(local):
+            skipped += 1  # no local file — don't drop the only copy
+            continue
+        if patch_image(item["id"], {"imageData": None}, live):
+            cleared += 1
+        else:
+            failed += 1
+    log(f"  clear-data: {cleared} cleared, {skipped} skipped (no local file), {failed} failed")
 
 
 def main():
@@ -382,6 +406,8 @@ def main():
     ap.add_argument("--materialize", action="store_true", help="run the materialize pass")
     ap.add_argument("--png2webp", action="store_true", help="run the PNG->WebP pass")
     ap.add_argument("--thumbnails", action="store_true", help="run the thumbnail pass")
+    ap.add_argument("--clear-data", dest="clear_data", action="store_true",
+                    help="null imageData for rows that already have a file (opt-in; run after deploy)")
     ap.add_argument("--materialize-collection", default="generated",
                     help="folder for newly-written files (default: generated)")
     args = ap.parse_args()
@@ -392,25 +418,34 @@ def main():
     if not IMAGES_DIR or not os.path.isdir(IMAGES_DIR):
         log(f"KR_LOCAL_IMAGES_DIR must point at the local public/images dir (got: {IMAGES_DIR!r}).")
         sys.exit(1)
-    if args.live:
+
+    # The three file-writing passes run by default; clear-data is opt-in only
+    # (it deletes DB bytes, so it never rides along with a default run).
+    run_default = not (args.materialize or args.png2webp or args.thumbnails or args.clear_data)
+    do_materialize = run_default or args.materialize
+    do_png2webp = run_default or args.png2webp
+    do_thumbnails = run_default or args.thumbnails
+
+    # Pillow is only needed by the byte-processing passes, not clear-data.
+    if args.live and (do_materialize or do_png2webp or do_thumbnails):
         try:
             _pil()
         except Exception:  # noqa: BLE001
-            log("--live needs Pillow: pip install Pillow")
+            log("--live needs Pillow for image conversion: pip install Pillow")
             sys.exit(1)
 
-    # Default: all passes.
-    run_all = not (args.materialize or args.png2webp or args.thumbnails)
     log(f"parity_migrate {'LIVE' if args.live else 'DRY-RUN'} against {KR_BASE_URL}")
     if not args.live:
         log("(dry-run: no files or DB rows will change; pass --live to apply)")
 
-    if run_all or args.materialize:
+    if do_materialize:
         pass_materialize(args.live, args.materialize_collection)
-    if run_all or args.png2webp:
+    if do_png2webp:
         pass_png2webp(args.live)
-    if run_all or args.thumbnails:
+    if do_thumbnails:
         pass_thumbnails(args.live)
+    if args.clear_data:
+        pass_clear_data(args.live)
 
     log("\nDone. Review the plan above; re-run with --live to apply. Commit + push public/images after a live run.")
 
