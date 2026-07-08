@@ -2,17 +2,22 @@ import 'package:flutter/material.dart';
 
 import '../data/persistence_service.dart';
 import '../domain/money.dart';
+import '../domain/receipt_email.dart';
 import '../models/appointment.dart';
+import '../models/customer.dart';
+import 'receipt_email_launcher.dart';
 
 class AppointmentHistory extends StatefulWidget {
   const AppointmentHistory({
     super.key,
     required this.service,
     this.refreshToken = 0,
+    this.launchReceiptEmail,
   });
 
   final PersistenceService service;
   final int refreshToken;
+  final ReceiptEmailLauncher? launchReceiptEmail;
 
   @override
   State<AppointmentHistory> createState() => _AppointmentHistoryState();
@@ -107,6 +112,8 @@ class _AppointmentHistoryState extends State<AppointmentHistory> {
   @override
   Widget build(BuildContext context) {
     final colors = Theme.of(context).colorScheme;
+    final launcher = widget.launchReceiptEmail ??
+        const PlatformReceiptEmailLauncher().launch;
 
     return ListView(
       padding: const EdgeInsets.all(20),
@@ -184,7 +191,11 @@ class _AppointmentHistoryState extends State<AppointmentHistory> {
             return Column(
               children: [
                 for (final appointment in appointments) ...[
-                  _AppointmentResultCard(appointment: appointment),
+                  _AppointmentResultCard(
+                    appointment: appointment,
+                    service: widget.service,
+                    launchReceiptEmail: launcher,
+                  ),
                   const SizedBox(height: 12),
                 ],
               ],
@@ -203,9 +214,15 @@ class _AppointmentHistoryState extends State<AppointmentHistory> {
 }
 
 class _AppointmentResultCard extends StatelessWidget {
-  const _AppointmentResultCard({required this.appointment});
+  const _AppointmentResultCard({
+    required this.appointment,
+    required this.service,
+    required this.launchReceiptEmail,
+  });
 
   final Appointment appointment;
+  final PersistenceService service;
+  final ReceiptEmailLauncher launchReceiptEmail;
 
   @override
   Widget build(BuildContext context) {
@@ -214,34 +231,91 @@ class _AppointmentResultCard extends StatelessWidget {
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(18),
-        child: Row(
+        child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    appointment.clientNameSnapshot,
-                    style: Theme.of(context)
-                        .textTheme
-                        .titleMedium
-                        ?.copyWith(fontWeight: FontWeight.bold),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        appointment.clientNameSnapshot,
+                        style: Theme.of(context)
+                            .textTheme
+                            .titleMedium
+                            ?.copyWith(fontWeight: FontWeight.bold),
+                      ),
+                      const SizedBox(height: 6),
+                      Text(_formatDate(appointment.appointmentDate)),
+                    ],
                   ),
-                  const SizedBox(height: 6),
-                  Text(_formatDate(appointment.appointmentDate)),
-                ],
-              ),
+                ),
+                Text(
+                  formatCents(appointment.appointmentTotalCents),
+                  style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                        color: colors.secondary,
+                        fontWeight: FontWeight.bold,
+                      ),
+                ),
+              ],
             ),
-            Text(
-              formatCents(appointment.appointmentTotalCents),
-              style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                    color: colors.secondary,
-                    fontWeight: FontWeight.bold,
-                  ),
+            const SizedBox(height: 12),
+            Align(
+              alignment: Alignment.centerRight,
+              child: TextButton.icon(
+                onPressed: () => _prepareReceipt(context),
+                icon: const Icon(Icons.mail_outline),
+                label: const Text('Prepare receipt'),
+              ),
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  Future<void> _prepareReceipt(BuildContext context) async {
+    Customer? customer;
+    if (appointment.customerId != null) {
+      customer = await service.getCustomer(appointment.customerId!);
+    }
+
+    final draft = buildReceiptEmail(
+      appointment: appointment,
+      customer: customer,
+    );
+
+    var opened = false;
+    try {
+      opened = await launchReceiptEmail(draft.mailtoUri);
+    } catch (_) {
+      opened = false;
+    }
+
+    if (!context.mounted) return;
+    if (!opened) _showReceiptFallback(context, draft);
+  }
+
+  void _showReceiptFallback(BuildContext context, ReceiptEmailDraft draft) {
+    showDialog<void>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Receipt ready'),
+        content: SingleChildScrollView(
+          child: SelectableText(
+            'Email composer was not available. Copy this receipt instead.\n\n'
+            '${draft.subject}\n\n${draft.body}',
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: const Text('Close'),
+          ),
+        ],
       ),
     );
   }
