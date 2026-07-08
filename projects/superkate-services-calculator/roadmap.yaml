@@ -159,14 +159,13 @@ tasks:
 - id: t-005
   milestone: m3
   title: Add client/date appointment search
-  status: claimed
+  status: review
   owner: worker
   passes: 0
   stakes: reversible
   depends_on: t-003
   updated: 2026-07-08
-  note: 'Add searchable appointment history with client-name search and date filtering. Results should
-    show client, date, and appointment total.
+  note: 'Implemented a History tab in apps/superkate-services-calculator/ with client-name search, date-range filter controls, newest-first appointment results, and cards showing client, date, and appointment total. Added widget coverage for saved appointments appearing in history and client-name filtering. VERIFICATION GAP: no Flutter toolchain in this connector environment, so flutter analyze/test were not run here; run them with t-014 platform scaffolding/toolchain work before merging if CI does not cover it.
 
     '
 - id: t-006
