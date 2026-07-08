@@ -216,7 +216,7 @@ tasks:
 - id: t-008
   milestone: m4
   title: Prepare handoff checklist without store submission
-  status: claimed
+  status: needs-human
   owner: worker
   passes: 0
   stakes: outward-facing
@@ -224,9 +224,14 @@ tasks:
   approved_by_human: false
   depends_on: t-007
   updated: 2026-07-08
-  note: 'Prepare a handoff checklist for device install/test, data backup expectations, privacy notes,
-    customer data security review, cloud-sync readiness, and app-store readiness. Do not submit to any
-    app store without explicit human approval.
+  note: 'FOR SILAS: I added projects/superkate-services-calculator/docs/t-008-handoff-checklist.md.
+    It contains a local install/test checklist, manual fake-data workflow tests, device install smoke steps,
+    backup expectations, privacy/security review items, app-store readiness gates, and configuration values
+    still needed from Silas/Superkate. It explicitly flags the current in-memory persistence as a blocker
+    before real customer records. TO APPROVE: review the checklist with Superkate. If it matches the desired
+    handoff/release gates, set approved_by_human: true and status: done; otherwise add requested edits to
+    this note or the PR. This closes the current handoff checklist task and leaves future durable storage,
+    cloud sync, app-lock, export, and store submission work for explicit follow-up tasks/approval.
 
     '
 - id: t-010
