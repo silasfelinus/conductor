@@ -3,8 +3,18 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:superkate_services_calculator/data/in_memory_persistence_service.dart';
 import 'package:superkate_services_calculator/main.dart';
 
+/// Give tests a tall surface so the whole scrolling form (including the total
+/// card and save button) is laid out and hit-testable, not pushed offstage.
+void _useTallSurface(WidgetTester tester) {
+  tester.view.physicalSize = const Size(1200, 2400);
+  tester.view.devicePixelRatio = 1.0;
+  addTearDown(tester.view.resetPhysicalSize);
+  addTearDown(tester.view.resetDevicePixelRatio);
+}
+
 void main() {
   testWidgets('app boots into the new-appointment form', (tester) async {
+    _useTallSurface(tester);
     await tester.pumpWidget(const SuperkateServicesCalculatorApp());
 
     expect(find.text('Superkate Services Calculator'), findsWidgets);
@@ -15,20 +25,21 @@ void main() {
 
   testWidgets('live total updates from hourly rate and a preset chip',
       (tester) async {
+    _useTallSurface(tester);
     await tester.pumpWidget(const MaterialApp(home: SuperkateHomePage()));
 
-    // Default time is 1h (60m); enter $80/hr -> $80.00 total, product $0.
+    // Default time is 1h (60m); enter 80/hr -> 80.00 total, product 0.
     await tester.enterText(
         find.widgetWithText(TextField, 'Hourly rate'), '80');
     await tester.pump();
     expect(find.text(r'$80.00'), findsOneWidget);
 
-    // Switch to the 45m preset -> 8000 * 45 / 60 = 6000c = $60.00.
+    // Switch to the 45m preset -> 8000 * 45 / 60 = 6000c = 60.00.
     await tester.tap(find.text('45m'));
     await tester.pump();
     expect(find.text(r'$60.00'), findsOneWidget);
 
-    // Add $25 product cost -> $85.00.
+    // Add 25 product cost -> 85.00.
     await tester.enterText(
         find.widgetWithText(TextField, 'Product cost (optional)'), '25');
     await tester.pump();
@@ -37,8 +48,10 @@ void main() {
 
   testWidgets('saving persists an appointment with the calculated total',
       (tester) async {
+    _useTallSurface(tester);
     final service = InMemoryPersistenceService();
-    await tester.pumpWidget(MaterialApp(home: SuperkateHomePage(service: service)));
+    await tester
+        .pumpWidget(MaterialApp(home: SuperkateHomePage(service: service)));
 
     await tester.enterText(
         find.widgetWithText(TextField, 'Client name'), 'Kate');
@@ -53,7 +66,7 @@ void main() {
     final appointments = await service.listAppointments();
     expect(appointments.length, 1);
     expect(appointments.single.clientNameSnapshot, 'Kate');
-    // $100/hr * 90m = $150.00.
+    // 100/hr * 90m = 150.00.
     expect(appointments.single.appointmentTotalCents, 15000);
   });
 }
