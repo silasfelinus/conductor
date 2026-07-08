@@ -38,3 +38,17 @@ minimal steering context.
 before m1 (app/backend boundary) is approved and implementation tasks unlock.
 
 ---
+
+## 2026-07-08 | Worker → Reviewer | kind-robots/t-009 | pattern
+type: pattern
+
+**Subject:** Stripe route env handling is now request-scoped, but the helper should be centralized next.
+
+**Detail:**
+- Merged kind_robots PR #132 with a scoped lazy-init change for `server/api/stripe/checkout.post.ts` and `server/api/stripe/subscribe.post.ts`.
+- Contract Tests and TypeScript Type Check passed before squash merge.
+- The safe implementation duplicates a small `getStripeClient()` helper in both files to avoid expanding scope during this task.
+
+**Suggested action:** If more Stripe routes appear, prefer one server-side Stripe helper module so all payment routes share the same lazy env handling and error shape.
+
+---
