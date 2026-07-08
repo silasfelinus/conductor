@@ -127,4 +127,52 @@ void main() {
     expect(find.text('Kate'), findsOneWidget);
     expect(find.text('Ronin'), findsNothing);
   });
+
+  testWidgets('prepare receipt opens a local mailto draft with customer email',
+      (tester) async {
+    _useTallSurface(tester);
+    final service = InMemoryPersistenceService();
+    final customer = await service.upsertCustomer(
+      const UpsertCustomerInput(
+        name: 'Kate',
+        email: 'kate@example.com',
+      ),
+    );
+    await service.createAppointment(
+      CreateAppointmentInput(
+        customerId: customer.id,
+        clientName: customer.name,
+        appointmentDate: DateTime(2026, 7, 8),
+        hourlyRateCents: 10000,
+        timeSpentMinutes: 90,
+        productCostCents: 2500,
+      ),
+    );
+
+    Uri? launchedUri;
+    await tester.pumpWidget(
+      MaterialApp(
+        home: SuperkateHomePage(
+          service: service,
+          launchReceiptEmail: (uri) async {
+            launchedUri = uri;
+            return true;
+          },
+        ),
+      ),
+    );
+    await tester.tap(find.text('History'));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('Prepare receipt'));
+    await tester.pumpAndSettle();
+
+    expect(launchedUri, isNotNull);
+    expect(launchedUri!.scheme, 'mailto');
+    expect(launchedUri!.path, 'kate@example.com');
+    expect(launchedUri!.queryParameters['subject'],
+        'Hair by Superkate receipt for Kate');
+    expect(launchedUri!.queryParameters['body'], contains('Client: Kate'));
+    expect(launchedUri!.queryParameters['body'], contains('Superkate loves you!'));
+  });
 }

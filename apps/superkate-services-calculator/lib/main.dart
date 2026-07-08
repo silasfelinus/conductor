@@ -5,6 +5,7 @@ import 'data/persistence_service.dart';
 import 'domain/money.dart';
 import 'ui/appointment_history.dart';
 import 'ui/new_appointment_form.dart';
+import 'ui/receipt_email_launcher.dart';
 
 void main() => runApp(const SuperkateServicesCalculatorApp());
 
@@ -37,10 +38,15 @@ class SuperkateServicesCalculatorApp extends StatelessWidget {
 }
 
 class SuperkateHomePage extends StatefulWidget {
-  const SuperkateHomePage({super.key, this.service});
+  const SuperkateHomePage({
+    super.key,
+    this.service,
+    this.launchReceiptEmail,
+  });
 
   /// Injectable for tests; defaults to the local-first in-memory service.
   final PersistenceService? service;
+  final ReceiptEmailLauncher? launchReceiptEmail;
 
   @override
   State<SuperkateHomePage> createState() => _SuperkateHomePageState();
@@ -91,6 +97,7 @@ class _SuperkateHomePageState extends State<SuperkateHomePage> {
               AppointmentHistory(
                 service: _service,
                 refreshToken: _historyRefreshToken,
+                launchReceiptEmail: widget.launchReceiptEmail,
               ),
             ],
           ),
