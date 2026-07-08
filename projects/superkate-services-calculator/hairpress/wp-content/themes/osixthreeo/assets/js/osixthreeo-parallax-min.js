@@ -1,0 +1,1 @@
+!function(o){"use strict";o(window).scroll((function(){o(".osixthreeo-parallax-header .custom-header-image").css("background-position","center "+(40+-.125*o(this).scrollTop())+"%")})).scroll()}(jQuery);

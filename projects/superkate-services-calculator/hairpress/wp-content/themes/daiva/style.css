@@ -1,0 +1,432 @@
+/*
+Theme Name: Daiva
+Theme URI: https://wpkoi.com/daiva-wpkoi-wordpress-theme/
+Template: lalita
+Author: wpkoithemes
+Author URI: https://wpkoi.com
+Description: Daiva is a child theme for Lalita WPKoi theme. You can find theme demos at wpkoi.com. Daiva has a colorful, clean style and design for portfolio, business or agency content. The theme is multipurpose, so if You like the style, You can use it to represent Your art, business, an event, show Your portfolio, start a blog, start a webshop and sell Your products etc. The demos use Elementor, WooCommerce and Contact Form 7 plugins. The premium demo uses the Daiva premium plugin also. Daiva has an easy to use admin with a lot of customizer functions, so You can build Your dream without coding knowledge. The theme is responsive so looks good on almost every devices. You can setup multiple header styles, navigation styles and layouts. Build You site with Daiva Theme and share it with the world! You can also find a documentation with an install guide and a tutorial for the screenshot look on wpkoi.com/docs.
+Version: 1.0.0
+Tested up to: 5.8
+Requires PHP: 7.0
+License: GNU General Public License v2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: daiva
+Tags: two-columns, three-columns, one-column, right-sidebar, left-sidebar, footer-widgets, blog, e-commerce, flexible-header, full-width-template, custom-header, custom-background, custom-menu, custom-colors, sticky-post, threaded-comments, translation-ready, featured-images
+
+*/
+
+body {
+	background-color: #222222;
+	padding: 0;
+}
+
+body,
+button,
+input,
+select,
+textarea {
+	font-size: 20px;
+	font-weight: 500;
+}
+
+.inside-top-bar {
+	padding: 15px 80px 0;
+}
+
+.top-bar {
+	font-weight: 500;
+	font-size: 18px;
+	text-transform: none;
+}
+
+.inside-header {
+	padding: 10px 75px 5px 80px;
+}
+
+.main-title {
+	text-transform: uppercase;
+	font-weight: 900;
+	font-size: 45px;
+	line-height: 1.2;
+	position: relative;
+}
+
+.main-navigation a {
+	font-weight: 700;
+	text-transform: uppercase;
+	font-size: 20px;
+}
+
+.main-navigation .main-nav ul li a,
+.main-navigation .mobile-bar-items a,
+.menu-toggle {
+	padding-left: 10px;
+	padding-right: 10px;
+	line-height: 55px;
+}
+
+.menu-item-has-children .dropdown-menu-toggle {
+	padding-left: 10px;
+}
+
+button.menu-toggle:hover,
+button.menu-toggle:focus {
+	background-color: inherit;
+}
+
+.sticky-enabled .main-navigation.is_stuck {
+	box-shadow: none !important;
+}
+
+.fluid-header.sticky-enabled .main-navigation.is_stuck .inside-navigation {
+	padding-left: 80px !important;
+	padding-right: 80px !important;
+}
+
+.button,
+.woocommerce a.button,
+.woocommerce button.button {
+	padding: 12px 25px;
+}
+
+.button,
+.button:visited,
+button:not(.menu-toggle),
+html input[type="button"],
+input[type="reset"],
+input[type="submit"],
+.woocommerce a.button {
+	font-size: 22px;
+	font-weight: 700;
+	text-transform: none;
+}
+
+button,
+html input[type="button"],
+input[type="reset"],
+input[type="submit"],
+a.button,
+a.button:visited {
+	-webkit-transition: all 0.3s;
+	transition: all 0.3s;
+	-o-transition: all 0.3s;
+	transition: all 0.3s;
+}
+
+button:hover,
+html input[type="button"]:hover,
+input[type="reset"]:hover,
+input[type="submit"]:hover,
+a.button:hover,
+button:focus,
+html input[type="button"]:focus,
+input[type="reset"]:focus,
+input[type="submit"]:focus,
+a.button:focus {
+	transform: scale(1.1);
+}
+
+.one-container .site-content,
+.separate-containers .comments-area,
+.separate-containers .inside-article,
+.separate-containers .page-header,
+.separate-containers .paging-navigation {
+	padding: 25px 80px 20px;
+}
+
+.site-info {
+	font-size: 18px;
+	font-weight: 500;
+	padding: 10px 80px;
+}
+
+.lalita-side-left-content {
+	font-size: 22px;
+	font-weight: 700;
+	margin: 150px 0px 0px 0px;
+}
+
+.lalita-side-left-content .lalita-side-left-socials ul,
+.lalita-side-left-content .lalita-side-left-text {
+	padding: 5px 10px;
+	margin-top: 50px;
+}
+
+.page-header-blog-content-h,
+.page-header-blog-content-b {
+	display: inline-block;
+	padding: 0;
+	height: auto;
+	vertical-align: middle;
+}
+
+.page-header-blog-content-h {
+	width: 65%;
+}
+
+.page-header-blog-content.page-header-blog-content-b {
+	width: 32%;
+}
+
+.page-header-blog-content-h .page-header-blog-content {
+	margin: 0;
+	text-align: center;
+	padding: 0;
+}
+
+.page-header-blog-text,
+.page-header-blog-button {
+	display: block;
+	width: 100%;
+	text-align: left;
+}
+
+.page-header-blog-content h2 {
+	font-size: 95px;
+	font-weight: 900;
+	padding: 0;
+	line-height: 1.2;
+	margin-bottom: 5%;
+	margin-left: 80px;
+}
+
+.page-header-blog-text p {
+	font-size: 22px;
+	font-weight: 600;
+	padding: 0;
+	line-height: 1.2;
+	margin-bottom: 0;
+	margin-left: 30px;
+}
+
+.page-header-blog-button a.button {
+	border-radius: 0;
+	margin-bottom: 10px;
+	text-transform: none;
+	font-weight: 700;
+	margin-left: 30px;
+}
+
+.page-header-blog {
+	padding: 0;
+	background-size: cover;
+	background-position: center center;
+	margin: 0;
+}
+
+.page-header-noiseoverlay {
+	position: absolute;
+	height: 100%;
+	width: 100%;
+	opacity: 0.25;
+	background-color: #000000;
+}
+
+.page-header-blog-inner {
+	max-width: 2000px;
+	margin: auto;
+	padding: 5% 0;
+	z-index: 2;
+}
+
+.site-footer .footer-widgets-container .inner-padding {
+	padding: 0 0 20px 40px;
+}
+
+.footer-widgets {
+	padding: 40px 80px;
+}
+
+.widget-title {
+	font-weight: 700;
+}
+
+.elementor-page .screen-reader-text {
+	top: inherit;
+}
+
+.post-type-archive-product.post-image-above-header.woocommerce-page .post-image {
+	display: none;
+}
+
+.entry-summary a,
+.entry-content a,
+.comment-content a,
+.textwidget a {
+	text-decoration: underline;
+}
+
+body .grid-container {
+	max-width: 2000px;
+}
+
+.inside-top-bar .textwidget i {
+	margin-right: 5px;
+}
+
+.daiva-blog-title-effect article .entry-header .entry-title a {
+	padding-right: 10px;
+	background-size: 0;
+	background-repeat: no-repeat;
+	display: inline;
+	transition: 0.5s ease;
+}
+
+.daiva-blog-title-effect article .entry-header .entry-title:hover a {
+	background-size: 100%;
+	color: #ffffff;
+}
+
+.top-bar p {
+	margin-bottom: 0;
+}
+
+.inside-navigation .search-form input[type="search"]:focus {
+	color: #ffffff !important;
+}
+
+.lalita-back-to-top {
+	border-radius: 0;
+	border: 2px solid;
+	right: 10px;
+}
+
+.transparent-header.home .main-navigation.is_stuck {
+	background-color: transparent;
+}
+
+.main-navigation.sticky-navigation-transition .navigation-logo img {
+	padding-left: 0;
+}
+
+.daiva-frame {
+	position: fixed;
+	z-index: 555555;
+}
+
+.daiva-frame-top {
+	top: 0;
+	width: 100%;
+	border: 8px solid;
+	border-bottom: 0;
+}
+
+.daiva-frame-right {
+	top: 0;
+	right: 0;
+	width: 0;
+	height: 100%;
+	border: 8px solid;
+	border-left: 0;
+}
+
+.daiva-frame-bottom {
+	bottom: 0px;
+	width: calc(100% - 8px);
+	border: 8px solid;
+	border-top: 0;
+	border-left: 0;
+}
+
+.daiva-frame-left {
+	top: 0;
+	left: 0;
+	height: calc(100% - 16px);
+	border: 8px solid;
+	border-right: 0;
+}
+
+@media (max-width: 1200px) {
+	.page-header-blog-content-h .page-header-blog-content {
+		padding: 0;
+	}
+	.page-header-blog-content-h h2 {
+		font-size: 50px;
+	}
+}
+
+@media (max-width: 1024px) {
+	.main-navigation .main-nav ul li a,
+	.main-navigation .mobile-bar-items a,
+	.menu-toggle {
+		padding-left: 5px;
+		padding-right: 5px;
+	}
+}
+
+@media (max-width: 768px) {
+	body {
+		padding: 0;
+	}
+	.page-header-blog-content-h,
+	.page-header-blog-content.page-header-blog-content-b {
+		display: block;
+		width: 100%;
+	}
+	.page-header-blog img {
+		width: 80%;
+		margin-top: 40px;
+		margin-left: 5%;
+	}
+	.page-header-blog-content-h h2 {
+		font-size: 40px;
+		margin-top: 30px;
+		margin-left: 30px;
+	}
+	.page-header-blog-content-h p {
+		font-size: 22px;
+		width: 90%;
+	}
+	.page-header-blog-content-h .page-header-blog-content,
+	.page-header-blog-image {
+		width: initial;
+		margin: 0;
+	}
+	.page-header-blog-content a.button {
+		margin-left: 30px;
+	}
+	.main-navigation.toggled .main-nav li.wpkoi-nav-btn-h {
+		display: inline-block !important;
+	}
+	.main-navigation.toggled .main-nav li.wpkoi-nav-btn-h .wpkoi-nav-btn {
+		padding: 0 25px;
+	}
+	body {
+		padding: 0;
+	}
+	.lalita-side-left-cover,
+	.lalita-side-right-cover {
+		width: 0;
+	}
+	.footer-bar .widget,
+	.footer-bar .lalita-social-bar {
+		float: none;
+		margin: 0 10px;
+	}
+	button:hover,
+	html input[type="button"]:hover,
+	input[type="reset"]:hover,
+	input[type="submit"]:hover,
+	a.button:hover,
+	button:focus,
+	html input[type="button"]:focus,
+	input[type="reset"]:focus,
+	input[type="submit"]:focus,
+	a.button:focus,
+	header .main-navigation .main-nav ul li a.wpkoi-nav-btn {
+		transform: scale(1);
+	}
+	.elementor-page #page::-webkit-scrollbar,
+	.elementor-template-canvas .elementor-inner::-webkit-scrollbar,
+	.elementor-template-canvas .elementor-section-wrap::-webkit-scrollbar {
+		display: none;
+	}
+	.inside-top-bar,
+	.site-info {
+		padding-left: 20px !important;
+		padding-right: 20px !important;
+	}
+	.daiva-frame {
+		border: none;
+	}
+}
