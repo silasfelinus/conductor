@@ -229,10 +229,10 @@ class _GlowOrb extends StatelessWidget {
         height: size,
         decoration: BoxDecoration(
           shape: BoxShape.circle,
-          color: color.withAlpha(41),
+          color: color.withValues(alpha: 0.16),
           boxShadow: [
             BoxShadow(
-              color: color.withAlpha(87),
+              color: color.withValues(alpha: 0.34),
               blurRadius: 90,
               spreadRadius: 18,
             ),
