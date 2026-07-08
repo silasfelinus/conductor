@@ -36,7 +36,6 @@ class _NewAppointmentFormState extends State<NewAppointmentForm> {
   DateTime _appointmentDate = _today();
   int _hours = 1;
   int _minutes = 0;
-
   bool _saving = false;
   String? _error;
 
@@ -66,8 +65,9 @@ class _NewAppointmentFormState extends State<NewAppointmentForm> {
   int? get _liveTotalCents {
     final rateCents = parseDollarsToCents(_hourlyRate.text);
     final productCents = parseDollarsToCents(_productCost.text);
-    if (rateCents == null || productCents == null) return null;
-    if (_timeSpentMinutes <= 0) return null;
+    if (rateCents == null || productCents == null || _timeSpentMinutes <= 0) {
+      return null;
+    }
     return calculateAppointmentTotalCents(
       hourlyRateCents: rateCents,
       timeSpentMinutes: _timeSpentMinutes,
@@ -140,6 +140,7 @@ class _NewAppointmentFormState extends State<NewAppointmentForm> {
   @override
   Widget build(BuildContext context) {
     final colors = Theme.of(context).colorScheme;
+    final palette = SuperkateTheme.of(context);
     final totalCents = _liveTotalCents;
 
     return ListView(
@@ -191,7 +192,7 @@ class _NewAppointmentFormState extends State<NewAppointmentForm> {
                     Text(
                       'Time spent',
                       style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                            color: SuperkateStyle.muted,
+                            color: palette.muted,
                             fontWeight: FontWeight.w800,
                           ),
                     ),
@@ -219,7 +220,9 @@ class _NewAppointmentFormState extends State<NewAppointmentForm> {
                           child: _Stepper(
                             label: 'Hours',
                             value: _hours,
-                            onChanged: (v) => setState(() => _hours = v.clamp(0, 24)),
+                            onChanged: (v) => setState(
+                              () => _hours = v.clamp(0, 24).toInt(),
+                            ),
                           ),
                         ),
                         const SizedBox(width: 12),
@@ -228,7 +231,9 @@ class _NewAppointmentFormState extends State<NewAppointmentForm> {
                             label: 'Minutes',
                             value: _minutes,
                             step: 5,
-                            onChanged: (v) => setState(() => _minutes = v.clamp(0, 55)),
+                            onChanged: (v) => setState(
+                              () => _minutes = v.clamp(0, 55).toInt(),
+                            ),
                           ),
                         ),
                       ],
@@ -258,9 +263,9 @@ class _NewAppointmentFormState extends State<NewAppointmentForm> {
                 ],
                 const SizedBox(height: 16),
                 DecoratedBox(
-                  decoration: const BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(22)),
-                    boxShadow: SuperkateStyle.softGlow,
+                  decoration: BoxDecoration(
+                    borderRadius: const BorderRadius.all(Radius.circular(22)),
+                    boxShadow: palette.softGlow,
                   ),
                   child: FilledButton.icon(
                     onPressed: _saving ? null : _save,
@@ -288,16 +293,14 @@ class _IntroCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final palette = SuperkateTheme.of(context);
+
     return Container(
       decoration: BoxDecoration(
         borderRadius: const BorderRadius.all(Radius.circular(32)),
-        gradient: const LinearGradient(
-          colors: [Color(0xFF32104D), Color(0xFF1A1028)],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ),
-        border: Border.all(color: SuperkateStyle.cardBorder),
-        boxShadow: SuperkateStyle.edgeGlow,
+        gradient: palette.introGradient,
+        border: Border.all(color: palette.cardBorder),
+        boxShadow: palette.edgeGlow,
       ),
       child: const Padding(
         padding: EdgeInsets.all(20),
@@ -310,9 +313,7 @@ class _IntroCard extends StatelessWidget {
               children: [
                 RainbowBadge(icon: Icons.content_cut),
                 SizedBox(width: 16),
-                Expanded(
-                  child: _IntroCopy(),
-                ),
+                Expanded(child: _IntroCopy()),
               ],
             ),
           ],
@@ -327,6 +328,8 @@ class _IntroCopy extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final palette = SuperkateTheme.of(context);
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -341,7 +344,7 @@ class _IntroCopy extends StatelessWidget {
         Text(
           'Private appointment totals for Superkate’s gender-affirming cuts, vivid color, and wild little masterpieces.',
           style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                color: SuperkateStyle.muted,
+                color: palette.muted,
                 height: 1.35,
               ),
         ),
@@ -365,10 +368,12 @@ class _SectionCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final palette = SuperkateTheme.of(context);
+
     return Card(
-      color: SuperkateStyle.card,
+      color: palette.card,
       elevation: 0,
-      shape: SuperkateStyle.cardShape(),
+      shape: SuperkateStyle.cardShape(border: palette.cardBorder),
       child: Padding(
         padding: const EdgeInsets.all(18),
         child: Column(
@@ -381,10 +386,10 @@ class _SectionCard extends StatelessWidget {
                   height: 38,
                   decoration: BoxDecoration(
                     borderRadius: const BorderRadius.all(Radius.circular(14)),
-                    gradient: SuperkateStyle.electricGradient,
-                    boxShadow: SuperkateStyle.softGlow,
+                    gradient: palette.electricGradient,
+                    boxShadow: palette.softGlow,
                   ),
-                  child: Icon(icon, color: SuperkateStyle.ink, size: 21),
+                  child: Icon(icon, color: palette.ink, size: 21),
                 ),
                 const SizedBox(width: 12),
                 Expanded(
@@ -401,7 +406,7 @@ class _SectionCard extends StatelessWidget {
                       Text(
                         subtitle,
                         style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                              color: SuperkateStyle.muted,
+                              color: palette.muted,
                               height: 1.3,
                             ),
                       ),
@@ -459,6 +464,8 @@ class _Stepper extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final palette = SuperkateTheme.of(context);
+
     return InputDecorator(
       decoration: InputDecoration(labelText: label),
       child: Row(
@@ -466,7 +473,7 @@ class _Stepper extends StatelessWidget {
         children: [
           IconButton(
             icon: const Icon(Icons.remove),
-            color: SuperkateStyle.hotPink,
+            color: palette.primary,
             onPressed: () => onChanged(value - step),
           ),
           Text(
@@ -477,7 +484,7 @@ class _Stepper extends StatelessWidget {
           ),
           IconButton(
             icon: const Icon(Icons.add),
-            color: SuperkateStyle.teal,
+            color: palette.secondary,
             onPressed: () => onChanged(value + step),
           ),
         ],
@@ -494,16 +501,15 @@ class _TotalCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final palette = SuperkateTheme.of(context);
+    final total = totalCents;
+
     return Container(
       decoration: BoxDecoration(
         borderRadius: const BorderRadius.all(Radius.circular(32)),
-        gradient: const LinearGradient(
-          colors: [Color(0xFF0C332F), Color(0xFF23103A)],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ),
-        border: Border.all(color: SuperkateStyle.tealBorder),
-        boxShadow: SuperkateStyle.softGlow,
+        gradient: palette.totalGradient,
+        border: Border.all(color: palette.accentBorder),
+        boxShadow: palette.softGlow,
       ),
       child: Padding(
         padding: const EdgeInsets.all(20),
@@ -519,7 +525,7 @@ class _TotalCard extends StatelessWidget {
                 Text(
                   'Appointment total',
                   style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                        color: SuperkateStyle.muted,
+                        color: palette.muted,
                         fontWeight: FontWeight.w900,
                       ),
                 ),
@@ -527,7 +533,7 @@ class _TotalCard extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             Text(
-              totalCents == null ? '—' : formatCents(totalCents!),
+              total == null ? '—' : formatCents(total),
               style: Theme.of(context).textTheme.displaySmall?.copyWith(
                     color: secondary,
                     fontWeight: FontWeight.w900,
@@ -538,7 +544,7 @@ class _TotalCard extends StatelessWidget {
             Text(
               'hourly rate × time spent + product cost',
               style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                    color: SuperkateStyle.muted,
+                    color: palette.muted,
                   ),
             ),
           ],
@@ -555,17 +561,16 @@ class _ErrorBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final palette = SuperkateTheme.of(context);
+
     return Container(
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
-        color: const Color(0xFF371122),
+        color: palette.error.withAlpha(35),
         borderRadius: const BorderRadius.all(Radius.circular(18)),
-        border: Border.all(color: const Color(0xFFFF8FA3)),
+        border: Border.all(color: palette.error),
       ),
-      child: Text(
-        message,
-        style: const TextStyle(color: Color(0xFFFFC2D0)),
-      ),
+      child: Text(message, style: TextStyle(color: palette.soft)),
     );
   }
 }
