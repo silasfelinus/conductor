@@ -290,12 +290,12 @@ tasks:
 - id: t-017
   milestone: m1
   title: Add desktop Flutter target CI coverage
-  status: claimed
+  status: review
   owner: worker
   passes: 0
   stakes: reversible
   depends_on: t-015
   updated: 2026-07-08
-  note: 'Silas clarified that Windows and Linux have been added to Flutter and should be default app installation targets going forward. Update Superkate docs and CI so desktop target support is visible and checked without changing app behavior, customer data, sync, deploy, billing, or app-store behavior.
+  note: 'PR opened from worker/superkate-services-calculator-t-017. Adds Windows and Linux debug desktop build checks to the Superkate Flutter CI and documents desktop build commands in the app README. This treats desktop scaffolding as first-class install coverage without changing app behavior, persistence, customer data, sync, deploy, billing, or app-store behavior.
 
     '
