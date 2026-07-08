@@ -274,3 +274,14 @@ tasks:
   note: 'DONE (2026-07-08, PR #298): added .github/workflows/superkate-flutter-ci.yml, scoped to pull_request and push events that touch apps/superkate-services-calculator/** or the workflow file itself. The workflow installs stable Flutter with cache, runs flutter pub get, flutter analyze --fatal-infos, and flutter test from apps/superkate-services-calculator/. Merged to main with no deploy, secrets, publishing, customer data, DNS, billing, or app-store behavior touched.
 
     '
+- id: t-016
+  milestone: m4
+  title: Add rainbow, queer-alt Superkate visual styling pass
+  status: review
+  owner: worker
+  passes: 0
+  stakes: reversible
+  updated: 2026-07-08
+  note: 'PR opened from worker/superkate-services-calculator-rainbow-style. Adds a style-only Flutter pass inspired by Silas''s direction that Superkate is a queer/genderqueer alternative barber focused on rainbow hair, gender-affirming cuts, wild designs, and spunk. The pass adds shared rainbow style tokens, updates the app shell, appointment form, history cards, and fallback receipt dialog with stronger rainbow gradients/glow/copy while preserving tested labels and customer-data behavior. No persistence, sync, analytics, backend email, billing, deploy, or app-store behavior is touched.
+
+    '
