@@ -8,6 +8,7 @@ notes_from_silas: |
   Core formula: hourly rate × time spent + product cost = total price.
   Reference sources added by Silas: projects/superkate-services-calculator/examples/ contains Superkate hair-work examples; projects/superkate-services-calculator/hairpress/ contains her current WordPress front end for reference and may be replaced later.
   Default Flutter app scaffolding should include ios, android, windows, and linux targets going forward.
+  Silas cleared the current human gates on 2026-07-08 and approved the next reversible build runway. First app target is Android. Receipt/contact schedule link is https://hairbysuperkate.glossgenius.com/ and reply-to contact is hairbysuperkate@gmail.com. Cloud sync ownership is not decided yet; Silas can self-host on Unraid and already hosts Postgres and MariaDB for the Hair by Superkate site and Kind Robots backend.
 milestones:
   - id: m1
     title: Project identity and MVP spec
@@ -16,11 +17,11 @@ milestones:
   - id: m2
     title: Customer database, sync, and calculator
     weight: 35
-    status: not-started
+    status: in-progress
   - id: m3
     title: Search and receipt email flow
     weight: 30
-    status: not-started
+    status: in-progress
   - id: m4
     title: Polish and handoff
     weight: 15
@@ -29,13 +30,13 @@ tasks:
   - id: t-001
     milestone: m1
     title: Create the matching PROJECT Dream for slug parity
-    status: needs-human
+    status: ready
     owner: worker
     passes: 0
     stakes: reversible
-    updated: 2026-07-06
+    updated: 2026-07-08
     note: >
-      FOR SILAS: I added projects/superkate-services-calculator/docs/t-001-dream-sync-handoff.md because this GitHub-only Worker run cannot execute scripts/sync_projects_to_dreams.py or authenticate to the Kind Robots API. It lists the exact PROJECT Dream fields needed for slug parity: slug "superkate-services-calculator", priority HIGH, projectStatus ACTIVE, and friendly title "Superkate Services Calculator". TO APPROVE/COMPLETE: run the sync script from a full Worker/runtime environment with the required Kind Robots API credential, or create/verify the Dream through the authenticated Kind Robots API, then set this task to done. This keeps the external sync honest instead of claiming a database write that was not performed.
+      Silas approved the human/admin side on 2026-07-08. Complete this only from a runtime that can authenticate to the Kind Robots API with KR_API_TOKEN or the approved machine-auth mechanism. Run python scripts/sync_projects_to_dreams.py or perform the authenticated upsert, then verify a single active PROJECT Dream exists for slug "superkate-services-calculator" with priority HIGH and title "Superkate Services Calculator". Do not mark done from GitHub-only access unless the external Dream write is actually verified.
   - id: t-002
     milestone: m1
     title: Review and finalize the MVP spec with Superkate
@@ -151,16 +152,16 @@ tasks:
   - id: t-008
     milestone: m4
     title: Prepare handoff checklist without store submission
-    status: needs-human
+    status: done
     owner: worker
     passes: 0
     stakes: outward-facing
     gate_human: true
-    approved_by_human: false
+    approved_by_human: true
     depends_on: t-007
     updated: 2026-07-08
     note: >
-      FOR SILAS: I added projects/superkate-services-calculator/docs/t-008-handoff-checklist.md. It contains a local install/test checklist, manual fake-data workflow tests, device install smoke steps, backup expectations, privacy/security review items, app-store readiness gates, and configuration values still needed from Silas/Superkate. It explicitly flags the current in-memory persistence as a blocker before real customer records. TO APPROVE: review the checklist with Superkate. If it matches the desired handoff/release gates, set approved_by_human: true and status: done; otherwise add requested edits to this note or the PR. This closes the current handoff checklist task and leaves future durable storage, cloud sync, app-lock, export, and store submission work for explicit follow-up tasks/approval.
+      Silas approved the handoff gate in-session on 2026-07-08 and supplied the current release decisions: first app target is Android, receipt/contact schedule link is https://hairbysuperkate.glossgenius.com/, reply-to contact is hairbysuperkate@gmail.com, and cloud sync ownership is undecided with self-hosted Unraid Postgres/MariaDB available. The checklist remains the safety reference: do not use real customer records until durable persistence lands, and do not submit to stores, publish, bill, deploy, or send backend email without explicit concrete approval.
   - id: t-010
     milestone: m2
     title: Write a pre-implementation architecture note for customer database and cloud sync
@@ -213,3 +214,94 @@ tasks:
     updated: 2026-07-08
     note: >
       DONE (2026-07-08, PR #303): merged Windows and Linux debug desktop build checks into the Superkate Flutter CI and documented local desktop build commands in the app README. This treats desktop scaffolding as first-class install coverage while keeping the normal analyze/test job intact. The change was scoped to CI/docs plus an analyzer-friendly Flutter alpha API update; it did not change persistence, sync, customer-data behavior, backend email, deploy, billing, secrets, DNS, app-store behavior, or analytics.
+  - id: t-018
+    milestone: m2
+    title: Add durable local SQLite persistence adapter
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-003
+    updated: 2026-07-08
+    note: >
+      Replace test-only in-memory persistence with a durable local SQLite-backed adapter behind the existing PersistenceService interface. Keep customer data local-first, do not add cloud sync yet, and include tests/migration-safe behavior for customers, appointments, totals, search filters, and restart persistence.
+  - id: t-019
+    milestone: m2
+    title: Add customer profile edit and delete UI
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-018
+    updated: 2026-07-08
+    note: >
+      Build customer profile screens or flows for viewing, editing, and deleting saved customers after durable storage exists. Preserve appointment history by detaching deleted customers rather than cascading appointment deletion unless Silas explicitly changes that rule.
+  - id: t-020
+    milestone: m3
+    title: Add appointment delete flow
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-018
+    updated: 2026-07-08
+    note: >
+      Add a safe appointment delete path for fake/local data with confirmation copy and tests. Do not add bulk delete in v1. Keep receipt/history behavior predictable after deletion.
+  - id: t-021
+    milestone: m4
+    title: Add CSV export for customers and appointments
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on:
+      - t-018
+      - t-019
+      - t-020
+    updated: 2026-07-08
+    note: >
+      Add local CSV export for customers and appointments after durable storage and edit/delete flows exist. Export stays local/user-initiated, contains no analytics, and should be protected by the future app/device lock when that lands.
+  - id: t-022
+    milestone: m4
+    title: Add app/device lock onboarding and settings toggle
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-018
+    updated: 2026-07-08
+    note: >
+      Add an optional app/device lock prompt and settings toggle protecting saved customer history, email/contact details, export, and sensitive settings. Use clear, warm Superkate-friendly language; Silas has not supplied final onboarding copy yet, so use tasteful placeholder copy and keep it editable.
+  - id: t-023
+    milestone: m2
+    title: Draft cloud sync ownership and self-hosted backend decision note
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-010
+    updated: 2026-07-08
+    note: >
+      Draft a decision note comparing cloud sync ownership options for the Superkate app. Include self-hosted Unraid Postgres/MariaDB options, possible reuse of the Kind Robots backend/auth, a separate Hair by Superkate backend, tenant/owner scoping, backup/restore expectations, and why no production sync should be implemented until Silas chooses the owner/auth path.
+  - id: t-024
+    milestone: m3
+    title: Add Android-first beta install notes
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-014
+    updated: 2026-07-08
+    note: >
+      Document the Android-first local beta path: debug build/install steps, fake-data-only warning until durable persistence lands, device smoke test checklist, and what remains before any Play Store/TestFlight/public distribution work. Do not submit or prepare a live app-store listing.
+  - id: t-025
+    milestone: m3
+    title: Add schedule link and reply-to receipt defaults
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-006
+    updated: 2026-07-08
+    note: >
+      Wire the receipt composer defaults to use schedule/contact link https://hairbysuperkate.glossgenius.com/ and reply-to/contact email hairbysuperkate@gmail.com where appropriate. Keep the receipt user-reviewed and local; do not add backend sending or silent outbound email.
