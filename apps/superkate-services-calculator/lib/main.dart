@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'data/in_memory_persistence_service.dart';
 import 'data/persistence_service.dart';
 import 'domain/money.dart';
+import 'ui/appointment_history.dart';
 import 'ui/new_appointment_form.dart';
 
 void main() => runApp(const SuperkateServicesCalculatorApp());
@@ -48,32 +49,51 @@ class SuperkateHomePage extends StatefulWidget {
 class _SuperkateHomePageState extends State<SuperkateHomePage> {
   late final PersistenceService _service =
       widget.service ?? InMemoryPersistenceService();
+  int _historyRefreshToken = 0;
 
   @override
   Widget build(BuildContext context) {
     final colors = Theme.of(context).colorScheme;
 
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Superkate Services Calculator'),
-        backgroundColor: Colors.transparent,
-        foregroundColor: colors.onSurface,
-      ),
-      body: SafeArea(
-        child: NewAppointmentForm(
-          service: _service,
-          onSaved: (appointment) {
-            ScaffoldMessenger.of(context)
-              ..clearSnackBars()
-              ..showSnackBar(
-                SnackBar(
-                  content: Text(
-                    'Saved ${appointment.clientNameSnapshot} — '
-                    '${formatCents(appointment.appointmentTotalCents)}',
-                  ),
-                ),
-              );
-          },
+    return DefaultTabController(
+      length: 2,
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text('Superkate Services Calculator'),
+          backgroundColor: Colors.transparent,
+          foregroundColor: colors.onSurface,
+          bottom: const TabBar(
+            tabs: [
+              Tab(text: 'New'),
+              Tab(text: 'History'),
+            ],
+          ),
+        ),
+        body: SafeArea(
+          child: TabBarView(
+            children: [
+              NewAppointmentForm(
+                service: _service,
+                onSaved: (appointment) {
+                  setState(() => _historyRefreshToken++);
+                  ScaffoldMessenger.of(context)
+                    ..clearSnackBars()
+                    ..showSnackBar(
+                      SnackBar(
+                        content: Text(
+                          'Saved ${appointment.clientNameSnapshot} — '
+                          '${formatCents(appointment.appointmentTotalCents)}',
+                        ),
+                      ),
+                    );
+                },
+              ),
+              AppointmentHistory(
+                service: _service,
+                refreshToken: _historyRefreshToken,
+              ),
+            ],
+          ),
         ),
       ),
     );
