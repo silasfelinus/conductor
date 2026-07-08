@@ -10,102 +10,120 @@ import 'ui/superkate_style.dart';
 
 void main() => runApp(const SuperkateServicesCalculatorApp());
 
-class SuperkateServicesCalculatorApp extends StatelessWidget {
+class SuperkateServicesCalculatorApp extends StatefulWidget {
   const SuperkateServicesCalculatorApp({super.key});
 
   @override
+  State<SuperkateServicesCalculatorApp> createState() =>
+      _SuperkateServicesCalculatorAppState();
+}
+
+class _SuperkateServicesCalculatorAppState
+    extends State<SuperkateServicesCalculatorApp> {
+  SuperkatePalette _selectedPalette = SuperkatePalettes.rainbowConnection;
+
+  @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Superkate Services Calculator',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        brightness: Brightness.dark,
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: SuperkateStyle.hotPink,
-          brightness: Brightness.dark,
-          primary: SuperkateStyle.hotPink,
-          secondary: SuperkateStyle.teal,
-          tertiary: SuperkateStyle.violet,
-          surface: SuperkateStyle.cardStrong,
-          error: const Color(0xFFFF8FA3),
+    final palette = _selectedPalette;
+
+    return SuperkateTheme(
+      palette: palette,
+      child: MaterialApp(
+        title: 'Superkate Services Calculator',
+        debugShowCheckedModeBanner: false,
+        theme: _buildTheme(palette),
+        home: SuperkateHomePage(
+          selectedPalette: palette,
+          onThemeChanged: (next) => setState(() => _selectedPalette = next),
         ),
-        scaffoldBackgroundColor: SuperkateStyle.ink,
-        useMaterial3: true,
-        textTheme: ThemeData.dark().textTheme.apply(
-              bodyColor: SuperkateStyle.soft,
-              displayColor: SuperkateStyle.soft,
-            ),
-        appBarTheme: const AppBarTheme(
-          centerTitle: false,
-          elevation: 0,
-          scrolledUnderElevation: 0,
-          backgroundColor: Colors.transparent,
-          foregroundColor: SuperkateStyle.soft,
-          titleTextStyle: TextStyle(
-            color: SuperkateStyle.soft,
-            fontSize: 20,
+      ),
+    );
+  }
+
+  ThemeData _buildTheme(SuperkatePalette palette) {
+    return ThemeData(
+      brightness: Brightness.dark,
+      colorScheme: ColorScheme.fromSeed(
+        seedColor: palette.primary,
+        brightness: Brightness.dark,
+        primary: palette.primary,
+        secondary: palette.secondary,
+        tertiary: palette.tertiary,
+        surface: palette.cardStrong,
+        error: palette.error,
+      ),
+      scaffoldBackgroundColor: palette.ink,
+      useMaterial3: true,
+      textTheme: ThemeData.dark().textTheme.apply(
+            bodyColor: palette.soft,
+            displayColor: palette.soft,
+          ),
+      appBarTheme: AppBarTheme(
+        centerTitle: false,
+        elevation: 0,
+        scrolledUnderElevation: 0,
+        backgroundColor: Colors.transparent,
+        foregroundColor: palette.soft,
+        titleTextStyle: TextStyle(
+          color: palette.soft,
+          fontSize: 20,
+          fontWeight: FontWeight.w900,
+          letterSpacing: 0.2,
+        ),
+      ),
+      inputDecorationTheme: InputDecorationTheme(
+        filled: true,
+        fillColor: palette.cardStrong,
+        labelStyle: TextStyle(color: palette.muted),
+        hintStyle: TextStyle(color: palette.quiet),
+        prefixIconColor: palette.secondary,
+        suffixIconColor: palette.primary,
+        prefixStyle: TextStyle(color: palette.soft),
+        border: const OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(22)),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: const BorderRadius.all(Radius.circular(22)),
+          borderSide: BorderSide(color: palette.cardBorder),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: const BorderRadius.all(Radius.circular(22)),
+          borderSide: BorderSide(color: palette.secondary, width: 1.8),
+        ),
+      ),
+      chipTheme: ChipThemeData(
+        backgroundColor: palette.plum,
+        selectedColor: palette.selectedChip,
+        labelStyle: TextStyle(
+          color: palette.soft,
+          fontWeight: FontWeight.w700,
+        ),
+        side: BorderSide(color: palette.cardBorder),
+        shape: const StadiumBorder(),
+      ),
+      snackBarTheme: SnackBarThemeData(
+        behavior: SnackBarBehavior.floating,
+        backgroundColor: palette.plum,
+        contentTextStyle: TextStyle(color: palette.soft),
+      ),
+      popupMenuTheme: PopupMenuThemeData(
+        color: palette.cardStrong,
+        textStyle: TextStyle(color: palette.soft),
+      ),
+      filledButtonTheme: FilledButtonThemeData(
+        style: FilledButton.styleFrom(
+          minimumSize: const Size.fromHeight(56),
+          foregroundColor: palette.ink,
+          backgroundColor: palette.secondary,
+          textStyle: const TextStyle(
             fontWeight: FontWeight.w900,
             letterSpacing: 0.2,
           ),
-        ),
-        tabBarTheme: const TabBarThemeData(
-          dividerColor: Colors.transparent,
-          indicatorColor: SuperkateStyle.teal,
-          labelColor: SuperkateStyle.teal,
-          unselectedLabelColor: SuperkateStyle.muted,
-          labelStyle: TextStyle(fontWeight: FontWeight.w800),
-        ),
-        inputDecorationTheme: const InputDecorationTheme(
-          filled: true,
-          fillColor: Color(0xCC211633),
-          labelStyle: TextStyle(color: SuperkateStyle.muted),
-          hintStyle: TextStyle(color: SuperkateStyle.quiet),
-          prefixIconColor: SuperkateStyle.teal,
-          suffixIconColor: SuperkateStyle.hotPink,
-          prefixStyle: TextStyle(color: SuperkateStyle.soft),
-          border: OutlineInputBorder(
+          shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(22)),
-          ),
-          enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(22)),
-            borderSide: BorderSide(color: SuperkateStyle.cardBorder),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(22)),
-            borderSide: BorderSide(color: SuperkateStyle.teal, width: 1.8),
-          ),
-        ),
-        chipTheme: const ChipThemeData(
-          backgroundColor: SuperkateStyle.plum,
-          selectedColor: Color(0x38FF4FD8),
-          labelStyle: TextStyle(
-            color: SuperkateStyle.soft,
-            fontWeight: FontWeight.w700,
-          ),
-          side: BorderSide(color: SuperkateStyle.cardBorder),
-          shape: StadiumBorder(),
-        ),
-        snackBarTheme: const SnackBarThemeData(
-          behavior: SnackBarBehavior.floating,
-          backgroundColor: SuperkateStyle.plum,
-          contentTextStyle: TextStyle(color: SuperkateStyle.soft),
-        ),
-        filledButtonTheme: FilledButtonThemeData(
-          style: FilledButton.styleFrom(
-            minimumSize: const Size.fromHeight(56),
-            foregroundColor: SuperkateStyle.ink,
-            backgroundColor: SuperkateStyle.teal,
-            textStyle: const TextStyle(
-              fontWeight: FontWeight.w900,
-              letterSpacing: 0.2,
-            ),
-            shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(22)),
-            ),
           ),
         ),
       ),
-      home: const SuperkateHomePage(),
     );
   }
 }
@@ -115,10 +133,14 @@ class SuperkateHomePage extends StatefulWidget {
     super.key,
     this.service,
     this.launchReceiptEmail,
+    this.selectedPalette = SuperkatePalettes.rainbowConnection,
+    this.onThemeChanged,
   });
 
   final PersistenceService? service;
   final ReceiptEmailLauncher? launchReceiptEmail;
+  final SuperkatePalette selectedPalette;
+  final ValueChanged<SuperkatePalette>? onThemeChanged;
 
   @override
   State<SuperkateHomePage> createState() => _SuperkateHomePageState();
@@ -131,83 +153,100 @@ class _SuperkateHomePageState extends State<SuperkateHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 2,
-      child: Scaffold(
-        extendBodyBehindAppBar: true,
-        appBar: AppBar(
-          title: const Text('Superkate Services Calculator'),
-          bottom: const PreferredSize(
-            preferredSize: Size.fromHeight(56),
-            child: Column(
+    final palette = widget.selectedPalette;
+
+    return SuperkateTheme(
+      palette: palette,
+      child: DefaultTabController(
+        length: 2,
+        child: Scaffold(
+          extendBodyBehindAppBar: true,
+          appBar: AppBar(
+            title: const Text('Superkate Services Calculator'),
+            actions: [
+              _ThemePickerButton(
+                selectedPalette: palette,
+                onThemeChanged: widget.onThemeChanged,
+              ),
+            ],
+            bottom: PreferredSize(
+              preferredSize: const Size.fromHeight(56),
+              child: Column(
+                children: [
+                  const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 16),
+                    child: RainbowRail(height: 4),
+                  ),
+                  const SizedBox(height: 8),
+                  TabBar(
+                    indicatorWeight: 3,
+                    indicatorColor: palette.secondary,
+                    labelColor: palette.secondary,
+                    unselectedLabelColor: palette.muted,
+                    labelStyle: const TextStyle(fontWeight: FontWeight.w800),
+                    tabs: const [
+                      Tab(text: 'New'),
+                      Tab(text: 'History'),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ),
+          body: Container(
+            decoration: BoxDecoration(gradient: palette.nightGradient),
+            child: Stack(
               children: [
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 16),
-                  child: RainbowRail(height: 4),
+                Positioned(
+                  top: -80,
+                  right: -70,
+                  child: _GlowOrb(
+                    size: 210,
+                    fillColor: palette.orbFillPrimary,
+                    shadowColor: palette.orbShadowPrimary,
+                  ),
                 ),
-                SizedBox(height: 8),
-                TabBar(
-                  indicatorWeight: 3,
-                  tabs: [
-                    Tab(text: 'New'),
-                    Tab(text: 'History'),
-                  ],
+                Positioned(
+                  bottom: 80,
+                  left: -90,
+                  child: _GlowOrb(
+                    size: 240,
+                    fillColor: palette.orbFillSecondary,
+                    shadowColor: palette.orbShadowSecondary,
+                  ),
+                ),
+                SafeArea(
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 58),
+                    child: TabBarView(
+                      children: [
+                        NewAppointmentForm(
+                          service: _service,
+                          onSaved: (appointment) {
+                            setState(() => _historyRefreshToken++);
+                            ScaffoldMessenger.of(context)
+                              ..clearSnackBars()
+                              ..showSnackBar(
+                                SnackBar(
+                                  content: Text(
+                                    'Saved ${appointment.clientNameSnapshot} — '
+                                    '${formatCents(appointment.appointmentTotalCents)}',
+                                  ),
+                                ),
+                              );
+                          },
+                        ),
+                        AppointmentHistory(
+                          service: _service,
+                          refreshToken: _historyRefreshToken,
+                          launchReceiptEmail: widget.launchReceiptEmail,
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
               ],
             ),
-          ),
-        ),
-        body: Container(
-          decoration: const BoxDecoration(gradient: SuperkateStyle.nightGradient),
-          child: Stack(
-            children: [
-              const Positioned(
-                top: -80,
-                right: -70,
-                child: _GlowOrb(
-                  size: 210,
-                  color: SuperkateStyle.hotPink,
-                ),
-              ),
-              const Positioned(
-                bottom: 80,
-                left: -90,
-                child: _GlowOrb(
-                  size: 240,
-                  color: SuperkateStyle.teal,
-                ),
-              ),
-              SafeArea(
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 58),
-                  child: TabBarView(
-                    children: [
-                      NewAppointmentForm(
-                        service: _service,
-                        onSaved: (appointment) {
-                          setState(() => _historyRefreshToken++);
-                          ScaffoldMessenger.of(context)
-                            ..clearSnackBars()
-                            ..showSnackBar(
-                              SnackBar(
-                                content: Text(
-                                  'Saved ${appointment.clientNameSnapshot} — '
-                                  '${formatCents(appointment.appointmentTotalCents)}',
-                                ),
-                              ),
-                            );
-                        },
-                      ),
-                      AppointmentHistory(
-                        service: _service,
-                        refreshToken: _historyRefreshToken,
-                        launchReceiptEmail: widget.launchReceiptEmail,
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ],
           ),
         ),
       ),
@@ -215,11 +254,90 @@ class _SuperkateHomePageState extends State<SuperkateHomePage> {
   }
 }
 
+class _ThemePickerButton extends StatelessWidget {
+  const _ThemePickerButton({
+    required this.selectedPalette,
+    required this.onThemeChanged,
+  });
+
+  final SuperkatePalette selectedPalette;
+  final ValueChanged<SuperkatePalette>? onThemeChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    final palette = SuperkateTheme.of(context);
+
+    return PopupMenuButton<SuperkatePalette>(
+      tooltip: 'Choose theme',
+      onSelected: onThemeChanged,
+      icon: const Icon(Icons.auto_awesome),
+      itemBuilder: (context) => [
+        for (final option in SuperkatePalettes.all)
+          PopupMenuItem<SuperkatePalette>(
+            value: option,
+            child: Row(
+              children: [
+                _ThemeSwatch(palette: option),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        option.name,
+                        style: TextStyle(
+                          color: palette.soft,
+                          fontWeight: FontWeight.w900,
+                        ),
+                      ),
+                      const SizedBox(height: 2),
+                      Text(
+                        option.description,
+                        style: TextStyle(color: palette.muted, fontSize: 12),
+                      ),
+                    ],
+                  ),
+                ),
+                if (option == selectedPalette)
+                  Icon(Icons.check, color: palette.secondary, size: 18),
+              ],
+            ),
+          ),
+      ],
+    );
+  }
+}
+
+class _ThemeSwatch extends StatelessWidget {
+  const _ThemeSwatch({required this.palette});
+
+  final SuperkatePalette palette;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 36,
+      height: 36,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        gradient: palette.spectrumGradient,
+        border: Border.all(color: palette.cardBorder),
+      ),
+    );
+  }
+}
+
 class _GlowOrb extends StatelessWidget {
-  const _GlowOrb({required this.size, required this.color});
+  const _GlowOrb({
+    required this.size,
+    required this.fillColor,
+    required this.shadowColor,
+  });
 
   final double size;
-  final Color color;
+  final Color fillColor;
+  final Color shadowColor;
 
   @override
   Widget build(BuildContext context) {
@@ -229,10 +347,10 @@ class _GlowOrb extends StatelessWidget {
         height: size,
         decoration: BoxDecoration(
           shape: BoxShape.circle,
-          color: color.withValues(alpha: 0.16),
+          color: fillColor,
           boxShadow: [
             BoxShadow(
-              color: color.withValues(alpha: 0.34),
+              color: shadowColor,
               blurRadius: 90,
               spreadRadius: 18,
             ),
