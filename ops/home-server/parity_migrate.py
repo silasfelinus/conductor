@@ -223,7 +223,9 @@ def target_for(rec, image_id, default_collection):
     with a prompt-based name when the image has no slugged collection."""
     for c in (rec or {}).get("ArtCollections") or []:
         s = c.get("slug")
-        if s:
+        # Skip the catch-all "unsorted-uN" buckets — those aren't a real
+        # collection identity, so fall through to a prompt-based name instead.
+        if s and not s.startswith("unsorted-"):
             return s, f"{s}-inspiration-{image_id}"
     return default_collection, name_for(rec, image_id)
 
