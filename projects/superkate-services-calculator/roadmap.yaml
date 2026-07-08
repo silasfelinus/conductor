@@ -179,7 +179,7 @@ tasks:
 - id: t-006
   milestone: m3
   title: Add warm receipt email composer
-  status: waiting
+  status: ready
   owner: null
   passes: 0
   stakes: reversible
@@ -236,25 +236,17 @@ tasks:
 - id: t-014
   milestone: m1
   title: Run flutter create to complete platform scaffolding and run the test suite
-  status: needs-human
+  status: done
   owner: worker
   passes: 0
   stakes: reversible
-  updated: 2026-07-07
+  updated: 2026-07-08
   note: >
-    FOR SILAS: superkate is the ONLY app in apps/ missing its platform scaffolding — it has no
-    .metadata, android/, or ios/ folders, while all 9 sibling apps have them. It is NOT in the wrong
-    location (apps/superkate-services-calculator/ follows the one-slug rule correctly); it was just
-    never finished, because every session that has touched it (including the t-003/t-004 builds) ran
-    without a Flutter toolchain, so the toolchain-dependent completion step was never run. TO COMPLETE:
-    from a machine with Flutter installed, run
-      cd apps/superkate-services-calculator
-      flutter create . --org org.kindrobots --project-name superkate_services_calculator --platforms ios,android
-      flutter pub get && flutter analyze --fatal-infos && flutter test
-    then commit the generated platform folders and set this task done. This also runs the first real
-    verification of the t-003 domain layer and t-004 form (both were verified by inspection only, no
-    toolchain here). SOFT gate: it needs a Flutter environment, not a decision — flip to ready for any
-    toolchain-capable Worker run.
+    DONE (2026-07-08): PR #293 scaffolded apps/superkate-services-calculator with .metadata,
+    android/, and ios/ after running Flutter locally on Windows. The merged PR reported successful
+    verification with D:\dev\flutter\bin\flutter.bat pub get, D:\dev\flutter\bin\flutter.bat analyze
+    --fatal-infos, and D:\dev\flutter\bin\flutter.bat test. Main now includes the platform metadata
+    and generated Android/iOS project files, so the toolchain/scaffolding blocker is cleared.
 - id: t-015
   milestone: m1
   title: Add a CI workflow that runs flutter analyze/test for superkate on push
