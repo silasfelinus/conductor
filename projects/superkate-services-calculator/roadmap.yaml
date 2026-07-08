@@ -159,13 +159,21 @@ tasks:
 - id: t-005
   milestone: m3
   title: Add client/date appointment search
-  status: review
+  status: done
   owner: worker
   passes: 0
   stakes: reversible
   depends_on: t-003
   updated: 2026-07-08
-  note: 'Implemented a History tab in apps/superkate-services-calculator/ with client-name search, date-range filter controls, newest-first appointment results, and cards showing client, date, and appointment total. Added widget coverage for saved appointments appearing in history and client-name filtering. VERIFICATION GAP: no Flutter toolchain in this connector environment, so flutter analyze/test were not run here; run them with t-014 platform scaffolding/toolchain work before merging if CI does not cover it.
+  note: 'DONE (2026-07-08, Reviewer-merged conductor PR #290). Implemented a History tab in
+    apps/superkate-services-calculator/ with client-name search (case-insensitive substring
+    on clientNameSnapshot), date-range filter controls (auto-clamping from/to), newest-first
+    appointment results, and cards showing client, date, and appointment total. Uses the
+    existing PersistenceService.listAppointments(AppointmentFilter) contract unchanged. Added
+    widget coverage for saved appointments appearing in history and client-name filtering.
+    VERIFICATION GAP (carried, not new): no Flutter toolchain in this connector environment,
+    so flutter analyze/test were not run here either; still tracked by t-014. Unblocks t-006
+    (receipt composer) via resolve_deps.
 
     '
 - id: t-006
@@ -247,3 +255,18 @@ tasks:
     verification of the t-003 domain layer and t-004 form (both were verified by inspection only, no
     toolchain here). SOFT gate: it needs a Flutter environment, not a decision — flip to ready for any
     toolchain-capable Worker run.
+- id: t-015
+  milestone: m1
+  title: Add a CI workflow that runs flutter analyze/test for superkate on push
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  note: 'Kaizen from t-005 (2026-07-08, PR #290): every superkate task so far has shipped with an
+    honest "no Flutter toolchain here" verification gap because this connector environment has no
+    Dart/Flutter install. Add a GitHub Actions workflow scoped to changes under
+    apps/superkate-services-calculator/** that runs `flutter pub get && flutter analyze --fatal-infos
+    && flutter test` (mirroring the pattern other apps/* already use, if any do) so CI catches
+    regressions even when the agent session itself cannot run the toolchain. Depends on t-014''s
+    platform scaffolding existing so `flutter analyze`/`flutter test` have something to run against.
+    '
