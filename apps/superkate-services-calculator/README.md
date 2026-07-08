@@ -14,10 +14,19 @@ First checkout on a dev machine:
 
 ```sh
 cd apps/superkate-services-calculator
-flutter create . --org org.kindrobots --project-name superkate_services_calculator --platforms ios,android
+flutter create . --org org.kindrobots --project-name superkate_services_calculator --platforms ios,android,windows,linux
 flutter pub get
 flutter test
 ```
+
+Default Flutter app scaffolding should include `ios`, `android`, `windows`, and `linux` targets unless a project explicitly narrows its install targets.
+
+## Reference material
+
+Project-specific visual/reference material lives in the conductor project folder:
+
+- `projects/superkate-services-calculator/examples/` — Superkate hair-work examples for visual inspiration.
+- `projects/superkate-services-calculator/hairpress/` — current Hair by Superkate WordPress front end, for reference only. It may be updated or replaced later.
 
 ## Architecture (domain + persistence layer — roadmap t-003)
 
