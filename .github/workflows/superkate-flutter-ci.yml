@@ -49,3 +49,49 @@ jobs:
 
       - name: Test
         run: flutter test
+
+  desktop-builds:
+    name: Flutter desktop build (${{ matrix.target }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - target: linux
+            os: ubuntu-latest
+            enable_flag: linux-desktop
+            build_command: flutter build linux --debug
+          - target: windows
+            os: windows-latest
+            enable_flag: windows-desktop
+            build_command: flutter build windows --debug
+    defaults:
+      run:
+        working-directory: apps/superkate-services-calculator
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Linux desktop dependencies
+        if: matrix.target == 'linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y clang cmake ninja-build pkg-config libgtk-3-dev liblzma-dev
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      - name: Enable desktop target
+        run: flutter config --enable-${{ matrix.enable_flag }}
+
+      - name: Show Flutter version
+        run: flutter --version
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Build desktop target
+        run: ${{ matrix.build_command }}
