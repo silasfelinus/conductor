@@ -260,11 +260,11 @@ tasks:
 - id: t-015
   milestone: m1
   title: Add a CI workflow that runs flutter analyze/test for superkate on push
-  status: review
+  status: done
   owner: worker
   passes: 0
   stakes: reversible
   updated: 2026-07-08
-  note: 'PR opened from worker/superkate-t-015. Adds .github/workflows/superkate-flutter-ci.yml, scoped to pull_request and push events that touch apps/superkate-services-calculator/** or the workflow file itself. The workflow installs stable Flutter with cache, runs flutter pub get, flutter analyze --fatal-infos, and flutter test from apps/superkate-services-calculator/. No deploy, secrets, publishing, customer data, DNS, billing, or app-store behavior is touched.
+  note: 'DONE (2026-07-08, PR #298): added .github/workflows/superkate-flutter-ci.yml, scoped to pull_request and push events that touch apps/superkate-services-calculator/** or the workflow file itself. The workflow installs stable Flutter with cache, runs flutter pub get, flutter analyze --fatal-infos, and flutter test from apps/superkate-services-calculator/. Merged to main with no deploy, secrets, publishing, customer data, DNS, billing, or app-store behavior touched.
 
     '
