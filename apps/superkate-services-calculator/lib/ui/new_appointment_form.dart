@@ -35,6 +35,10 @@ const _timePresets = <({String label, int minutes})>[
   (label: '2h', minutes: 120),
 ];
 
+const _cardColor = Color(0xFF171224);
+const _cardBorder = Color(0xFF3B2A5B);
+const _softText = Color(0xFFCAC2DF);
+
 class _NewAppointmentFormState extends State<NewAppointmentForm> {
   final _clientName = TextEditingController();
   final _hourlyRate = TextEditingController();
@@ -152,105 +156,251 @@ class _NewAppointmentFormState extends State<NewAppointmentForm> {
     final totalCents = _liveTotalCents;
 
     return ListView(
-      padding: const EdgeInsets.all(20),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
       children: [
-        Text('New appointment',
-            style: Theme.of(context)
-                .textTheme
-                .headlineSmall
-                ?.copyWith(fontWeight: FontWeight.bold)),
-        const SizedBox(height: 16),
-        TextField(
-          controller: _clientName,
-          textCapitalization: TextCapitalization.words,
-          decoration: const InputDecoration(
-            labelText: 'Client name',
-            border: OutlineInputBorder(),
-          ),
-        ),
-        const SizedBox(height: 16),
-        _DateField(date: _appointmentDate, onTap: _pickDate),
-        const SizedBox(height: 16),
-        TextField(
-          controller: _hourlyRate,
-          keyboardType: const TextInputType.numberWithOptions(decimal: true),
-          decoration: const InputDecoration(
-            labelText: 'Hourly rate',
-            prefixText: '\$ ',
-            border: OutlineInputBorder(),
-          ),
-        ),
-        const SizedBox(height: 20),
-        Text('Time spent', style: Theme.of(context).textTheme.labelLarge),
-        const SizedBox(height: 8),
-        Wrap(
-          spacing: 8,
-          children: [
-            for (final preset in _timePresets)
-              ChoiceChip(
-                label: Text(preset.label),
-                selected: _timeSpentMinutes == preset.minutes,
-                onSelected: (_) => setState(() {
-                  _hours = preset.minutes ~/ 60;
-                  _minutes = preset.minutes % 60;
-                }),
-              ),
-          ],
-        ),
-        const SizedBox(height: 12),
-        Row(
-          children: [
-            Expanded(
-              child: _Stepper(
-                label: 'Hours',
-                value: _hours,
-                onChanged: (v) => setState(() => _hours = v.clamp(0, 24)),
-              ),
+        Center(
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 720),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                const _IntroCard(),
+                const SizedBox(height: 16),
+                _SectionCard(
+                  icon: Icons.auto_awesome_outlined,
+                  title: 'New appointment',
+                  subtitle: 'Simple inputs, calm receipts, no spreadsheet cosplay.',
+                  children: [
+                    TextField(
+                      controller: _clientName,
+                      textCapitalization: TextCapitalization.words,
+                      decoration: const InputDecoration(
+                        labelText: 'Client name',
+                      ),
+                    ),
+                    const SizedBox(height: 14),
+                    _DateField(date: _appointmentDate, onTap: _pickDate),
+                  ],
+                ),
+                const SizedBox(height: 16),
+                _SectionCard(
+                  icon: Icons.payments_outlined,
+                  title: 'Rate, time, and product',
+                  subtitle: 'The total updates as Superkate works.',
+                  children: [
+                    TextField(
+                      controller: _hourlyRate,
+                      keyboardType:
+                          const TextInputType.numberWithOptions(decimal: true),
+                      decoration: const InputDecoration(
+                        labelText: 'Hourly rate',
+                        prefixText: '\$ ',
+                      ),
+                    ),
+                    const SizedBox(height: 18),
+                    Text(
+                      'Time spent',
+                      style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                            color: _softText,
+                            fontWeight: FontWeight.w700,
+                          ),
+                    ),
+                    const SizedBox(height: 10),
+                    Wrap(
+                      spacing: 8,
+                      runSpacing: 8,
+                      children: [
+                        for (final preset in _timePresets)
+                          ChoiceChip(
+                            label: Text(preset.label),
+                            selected: _timeSpentMinutes == preset.minutes,
+                            showCheckmark: false,
+                            onSelected: (_) => setState(() {
+                              _hours = preset.minutes ~/ 60;
+                              _minutes = preset.minutes % 60;
+                            }),
+                          ),
+                      ],
+                    ),
+                    const SizedBox(height: 14),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: _Stepper(
+                            label: 'Hours',
+                            value: _hours,
+                            onChanged: (v) => setState(() => _hours = v.clamp(0, 24)),
+                          ),
+                        ),
+                        const SizedBox(width: 12),
+                        Expanded(
+                          child: _Stepper(
+                            label: 'Minutes',
+                            value: _minutes,
+                            step: 5,
+                            onChanged: (v) => setState(() => _minutes = v.clamp(0, 55)),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 14),
+                    TextField(
+                      controller: _productCost,
+                      keyboardType:
+                          const TextInputType.numberWithOptions(decimal: true),
+                      decoration: const InputDecoration(
+                        labelText: 'Product cost (optional)',
+                        prefixText: '\$ ',
+                        hintText: '0.00',
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 16),
+                _TotalCard(
+                  totalCents: totalCents,
+                  secondary: colors.secondary,
+                ),
+                if (_error != null) ...[
+                  const SizedBox(height: 12),
+                  Text(_error!, style: TextStyle(color: colors.error)),
+                ],
+                const SizedBox(height: 16),
+                FilledButton.icon(
+                  onPressed: _saving ? null : _save,
+                  icon: _saving
+                      ? const SizedBox(
+                          width: 16,
+                          height: 16,
+                          child: CircularProgressIndicator(strokeWidth: 2),
+                        )
+                      : const Icon(Icons.save_outlined),
+                  label: Text(_saving ? 'Saving…' : 'Save appointment'),
+                ),
+              ],
             ),
-            const SizedBox(width: 12),
-            Expanded(
-              child: _Stepper(
-                label: 'Minutes',
-                value: _minutes,
-                step: 5,
-                onChanged: (v) => setState(() => _minutes = v.clamp(0, 55)),
-              ),
-            ),
-          ],
-        ),
-        const SizedBox(height: 16),
-        TextField(
-          controller: _productCost,
-          keyboardType: const TextInputType.numberWithOptions(decimal: true),
-          decoration: const InputDecoration(
-            labelText: 'Product cost (optional)',
-            prefixText: '\$ ',
-            hintText: '0.00',
-            border: OutlineInputBorder(),
           ),
-        ),
-        const SizedBox(height: 24),
-        _TotalCard(
-          totalCents: totalCents,
-          secondary: colors.secondary,
-        ),
-        if (_error != null) ...[
-          const SizedBox(height: 12),
-          Text(_error!, style: TextStyle(color: colors.error)),
-        ],
-        const SizedBox(height: 16),
-        FilledButton.icon(
-          onPressed: _saving ? null : _save,
-          icon: _saving
-              ? const SizedBox(
-                  width: 16,
-                  height: 16,
-                  child: CircularProgressIndicator(strokeWidth: 2),
-                )
-              : const Icon(Icons.save_outlined),
-          label: Text(_saving ? 'Saving…' : 'Save appointment'),
         ),
       ],
+    );
+  }
+}
+
+class _IntroCard extends StatelessWidget {
+  const _IntroCard();
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      color: const Color(0xFF201633),
+      elevation: 0,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(Radius.circular(28)),
+        side: BorderSide(color: _cardBorder),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Row(
+          children: [
+            Container(
+              width: 54,
+              height: 54,
+              decoration: const BoxDecoration(
+                shape: BoxShape.circle,
+                gradient: LinearGradient(
+                  colors: [Color(0xFF8B5CF6), Color(0xFF14B8A6)],
+                ),
+              ),
+              child: const Icon(Icons.content_cut, color: Color(0xFF0B0712)),
+            ),
+            const SizedBox(width: 16),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Private salon calculator',
+                    style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                          fontWeight: FontWeight.w800,
+                        ),
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    'Track the visit, calculate the total, then prepare a warm receipt.',
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                          color: _softText,
+                        ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _SectionCard extends StatelessWidget {
+  const _SectionCard({
+    required this.icon,
+    required this.title,
+    required this.subtitle,
+    required this.children,
+  });
+
+  final IconData icon;
+  final String title;
+  final String subtitle;
+  final List<Widget> children;
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = Theme.of(context).colorScheme;
+
+    return Card(
+      color: _cardColor,
+      elevation: 0,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(Radius.circular(24)),
+        side: BorderSide(color: _cardBorder),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(18),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Row(
+              children: [
+                Icon(icon, color: colors.secondary),
+                const SizedBox(width: 10),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        title,
+                        style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                              fontWeight: FontWeight.w800,
+                            ),
+                      ),
+                      const SizedBox(height: 2),
+                      Text(
+                        subtitle,
+                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                              color: _softText,
+                            ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 16),
+            ...children,
+          ],
+        ),
+      ),
     );
   }
 }
@@ -266,11 +416,11 @@ class _DateField extends StatelessWidget {
     final label =
         '${date.year}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}';
     return InkWell(
+      borderRadius: const BorderRadius.all(Radius.circular(18)),
       onTap: onTap,
       child: InputDecorator(
         decoration: const InputDecoration(
           labelText: 'Appointment date',
-          border: OutlineInputBorder(),
           suffixIcon: Icon(Icons.calendar_today_outlined),
         ),
         child: Text(label),
@@ -295,10 +445,7 @@ class _Stepper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InputDecorator(
-      decoration: InputDecoration(
-        labelText: label,
-        border: const OutlineInputBorder(),
-      ),
+      decoration: InputDecoration(labelText: label),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -326,14 +473,31 @@ class _TotalCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+      color: const Color(0xFF102623),
+      elevation: 0,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(Radius.circular(28)),
+        side: BorderSide(color: Color(0xFF1F766E)),
+      ),
       child: Padding(
-        padding: const EdgeInsets.all(18),
+        padding: const EdgeInsets.all(20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Appointment total',
-                style: Theme.of(context).textTheme.labelLarge),
-            const SizedBox(height: 4),
+            Row(
+              children: [
+                Icon(Icons.receipt_long_outlined, color: secondary),
+                const SizedBox(width: 10),
+                Text(
+                  'Appointment total',
+                  style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                        color: _softText,
+                        fontWeight: FontWeight.w800,
+                      ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 8),
             Text(
               totalCents == null ? '—' : formatCents(totalCents!),
               style: Theme.of(context).textTheme.displaySmall?.copyWith(
@@ -342,8 +506,12 @@ class _TotalCard extends StatelessWidget {
                   ),
             ),
             const SizedBox(height: 4),
-            Text('hourly rate × time spent + product cost',
-                style: Theme.of(context).textTheme.bodySmall),
+            Text(
+              'hourly rate × time spent + product cost',
+              style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                    color: _softText,
+                  ),
+            ),
           ],
         ),
       ),

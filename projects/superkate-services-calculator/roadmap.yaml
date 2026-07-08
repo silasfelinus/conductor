@@ -21,7 +21,7 @@ milestones:
 - id: m4
   title: Polish and handoff
   weight: 15
-  status: not-started
+  status: in-progress
 tasks:
 - id: t-001
   milestone: m1
@@ -200,19 +200,23 @@ tasks:
 - id: t-007
   milestone: m4
   title: Polish the dark purple/teal salon UI
-  status: ready
-  owner: null
+  status: done
+  owner: worker
   passes: 0
   stakes: reversible
   depends_on: t-006
-  note: 'Make the app feel polished and salon-friendly with a dark base, purple and teal accents, clear
-    touch targets, calm spacing, and receipt screens that look professional.
+  updated: 2026-07-08
+  note: 'DONE (2026-07-08): polished the Superkate Flutter UI with a richer dark
+    purple/teal theme, gradient app shell, centered mobile/tablet-friendly content width,
+    salon-styled cards for the appointment form, clearer touch targets, more professional
+    history result cards with rate/time/product details, and a cleaner receipt fallback dialog.
+    No persistence, analytics, backend email sending, or customer-data flow changed.
 
     '
 - id: t-008
   milestone: m4
   title: Prepare handoff checklist without store submission
-  status: waiting
+  status: ready
   owner: null
   passes: 0
   stakes: outward-facing
