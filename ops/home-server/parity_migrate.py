@@ -163,6 +163,16 @@ def patch_image(image_id, fields, live):
     return True
 
 
+def delete_image(image_id, live):
+    if not live:
+        return True
+    status, resp = http_json("DELETE", f"{KR_BASE_URL}/api/art/image/{image_id}")
+    if status != 200 or not resp or not resp.get("success"):
+        log(f"  ! delete #{image_id} failed: HTTP {status} {resp and resp.get('message')}")
+        return False
+    return True
+
+
 # ---- disk dedup index ----------------------------------------------------
 
 IMAGE_EXTS = (".webp", ".png", ".jpg", ".jpeg", ".gif")
@@ -448,6 +458,31 @@ def pass_clear_data(live):
     log(f"  clear-data: {cleared} cleared, {skipped} skipped (no local file), {failed} failed")
 
 
+def pass_prune_unreachable(live):
+    """Delete dead ArtImage rows that point at nothing: no file path AND no
+    imageData (kind=unreachable). Opt-in and destructive — dry-run lists them
+    so you can eyeball before deleting."""
+    log(f"\n== prune-unreachable {'(LIVE)' if live else '(dry-run)'} ==")
+    items = list(iter_needs_work("unreachable"))
+    log(f"  {len(items)} dead row(s) (no file path, no imageData)")
+    if not live:
+        for item in items[:20]:
+            log(f"  would delete #{item['id']}")
+        if len(items) > 20:
+            log(f"  … and {len(items) - 20} more")
+        log("  dry-run: --live DELETEs these ArtImage rows.")
+        return
+    deleted = failed = 0
+    for seen, item in enumerate(items, 1):
+        if seen % 100 == 0:
+            log(f"  … {seen}/{len(items)} ({deleted} deleted)")
+        if delete_image(item["id"], live):
+            deleted += 1
+        else:
+            failed += 1
+    log(f"  prune-unreachable: {deleted} deleted, {failed} failed")
+
+
 def pass_rename(live, collection):
     """Give already-materialized files readable names: rename
     {collection}/{collection}-{id}.ext -> {collection}/<prompt-slug>-{id}.ext
@@ -498,6 +533,8 @@ def main():
                     help="null imageData for rows that already have a file (opt-in; run after deploy)")
     ap.add_argument("--rename", action="store_true",
                     help="rename already-materialized {collection}-{id} files to <prompt-slug>-{id} (opt-in)")
+    ap.add_argument("--prune-unreachable", dest="prune_unreachable", action="store_true",
+                    help="DELETE dead rows with no file and no data (opt-in, destructive)")
     ap.add_argument("--materialize-collection", default="generated",
                     help="folder for newly-written files (default: generated)")
     args = ap.parse_args()
@@ -512,7 +549,8 @@ def main():
     # The three file-writing passes run by default; clear-data and rename are
     # opt-in only, so they never ride along with a default run.
     run_default = not (
-        args.materialize or args.png2webp or args.thumbnails or args.clear_data or args.rename
+        args.materialize or args.png2webp or args.thumbnails
+        or args.clear_data or args.rename or args.prune_unreachable
     )
     do_materialize = run_default or args.materialize
     do_png2webp = run_default or args.png2webp
@@ -538,6 +576,8 @@ def main():
         pass_thumbnails(args.live)
     if args.rename:
         pass_rename(args.live, args.materialize_collection)
+    if args.prune_unreachable:
+        pass_prune_unreachable(args.live)
     if args.clear_data:
         pass_clear_data(args.live)
 
