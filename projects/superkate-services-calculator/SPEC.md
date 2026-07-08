@@ -9,6 +9,17 @@ Kind: software
 
 Build a polished services calculator app for Hair by Superkate that records customer and appointment pricing details, calculates the appointment total, supports customer/date search, syncs customer data safely across devices for the initial beta path, and prepares a warm appointment receipt email.
 
+## Reference material
+
+Use the project-local references before making visual/design changes:
+
+- `projects/superkate-services-calculator/examples/` contains Superkate hair-work examples.
+- `projects/superkate-services-calculator/hairpress/` contains the current Hair by Superkate WordPress front end for reference. It may be updated or replaced later.
+
+## Install targets
+
+Default Flutter app scaffolding should include `ios`, `android`, `windows`, and `linux` targets unless a future project explicitly narrows its supported install targets.
+
 ## Core formula
 
 ```txt
@@ -209,6 +220,8 @@ Receipt body should include:
 
 Dark theme with purple and teal accents. It should feel polished, salon-friendly, calm, and professional — not enterprise beige spreadsheet purgatory.
 
+Use `projects/superkate-services-calculator/examples/` as the strongest local visual reference for Superkate's actual hair work. Use `projects/superkate-services-calculator/hairpress/` as the current WordPress/front-end reference, but do not treat it as permanent architecture.
+
 ## Non-goals for beta
 
 - Payment processing
@@ -234,6 +247,7 @@ Dark theme with purple and teal accents. It should feel polished, salon-friendly
 - Paid v1 should include appointment delete, customer edit/delete, cloud sync backup, and CSV export.
 - Destructive bulk-delete behavior should not ship in paid v1.
 - Beta receipts should remain user-reviewed composer receipts; backend direct-send belongs on the future roadmap only after the security model is designed.
+- Default Flutter scaffolding includes `ios`, `android`, `windows`, and `linux` targets.
 
 ## Implementation configuration values to collect
 
