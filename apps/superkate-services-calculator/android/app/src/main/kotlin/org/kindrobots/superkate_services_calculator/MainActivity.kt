@@ -33,7 +33,7 @@ class MainActivity : FlutterActivity() {
             try {
                 startActivity(intent)
                 result.success(true)
-            } catch (_: ActivityNotFoundException) {
+            } catch (error: ActivityNotFoundException) {
                 result.success(false)
             }
         }
