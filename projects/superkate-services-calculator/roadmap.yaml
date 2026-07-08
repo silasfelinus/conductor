@@ -287,3 +287,15 @@ tasks:
   note: 'DONE (2026-07-08, PR #300): merged the style-only Flutter pass inspired by Silas''s direction that Superkate is a queer/genderqueer alternative barber focused on rainbow hair, gender-affirming cuts, wild designs, and spunk. The pass adds shared rainbow style tokens, updates the app shell, appointment form, history cards, and fallback receipt dialog with stronger rainbow gradients/glow/copy while preserving tested labels and customer-data behavior. No persistence, sync, analytics, backend email, billing, deploy, or app-store behavior is touched.
 
     '
+- id: t-017
+  milestone: m1
+  title: Add desktop Flutter target CI coverage
+  status: claimed
+  owner: worker
+  passes: 0
+  stakes: reversible
+  depends_on: t-015
+  updated: 2026-07-08
+  note: 'Silas clarified that Windows and Linux have been added to Flutter and should be default app installation targets going forward. Update Superkate docs and CI so desktop target support is visible and checked without changing app behavior, customer data, sync, deploy, billing, or app-store behavior.
+
+    '
