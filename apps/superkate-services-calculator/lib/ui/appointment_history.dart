@@ -59,7 +59,9 @@ class _AppointmentHistoryState extends State<AppointmentHistory> {
 
   void _reload() {
     if (!mounted) return;
-    setState(() => _appointments = _searchAppointments());
+    setState(() {
+      _appointments = _searchAppointments();
+    });
   }
 
   Future<void> _pickFromDate() => _pickDate(
@@ -134,12 +136,15 @@ class _AppointmentHistoryState extends State<AppointmentHistory> {
             OutlinedButton.icon(
               onPressed: _pickFromDate,
               icon: const Icon(Icons.event_available_outlined),
-              label: Text(_from == null ? 'From any date' : 'From ${_formatDate(_from!)}'),
+              label: Text(_from == null
+                  ? 'From any date'
+                  : 'From ${_formatDate(_from!)}'),
             ),
             OutlinedButton.icon(
               onPressed: _pickToDate,
               icon: const Icon(Icons.event_outlined),
-              label: Text(_to == null ? 'To any date' : 'To ${_formatDate(_to!)}'),
+              label:
+                  Text(_to == null ? 'To any date' : 'To ${_formatDate(_to!)}'),
             ),
             TextButton.icon(
               onPressed: _clearFilters,
