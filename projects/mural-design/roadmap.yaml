@@ -2,11 +2,13 @@ project: mural-design
 kind: content
 goal: >
   Iterate toward the perfect hand-paintable mural design for Silas's fence update,
-  then turn the chosen concept into a practical grid, palette, and paint plan.
+  then turn the chosen concept into a practical grid, palette, paint plan, and
+  companion WonderLab coloring tool for testing color assignments before painting.
 waypoints:
   - Capture the current preferred direction and constraints.
-  - Generate focused design variations through the art pipeline.
-  - Select and refine a final mural composition.
+  - Generate a fence-only coloring-page asset set from the first-draft mural image.
+  - Build a WonderLab coloring page that lets fence sections be assigned by reusable color id.
+  - Select and refine a final mural composition and color assignment set.
   - Produce a flat-color palette, grid plan, and execution checklist for repainting.
 notes_from_silas: >
   This is one of Silas's most heartfelt projects: update the fence mural that became
@@ -33,6 +35,13 @@ notes_from_silas: >
   The background was brick red, but should move closer to purple, magenta, or wine-red
   if the foreground colors can still pop. Favor an overall blueish tint to account for
   outdoor sun-fading limits.
+
+  Product direction from Silas, 2026-07-09: build a front-end page under the Kind Robots
+  wonder key / WonderLab that uses projects/mural-design/firstdraft.jpg as the source
+  reference, turns the painted fence into a coloring-page layer, lets each fillable
+  mural section be assigned by color id, and supports setting or globally swapping color
+  ids. The surrounding environment must remain colored; only the actual fence and
+  anything painted on it changes color, including the fence background.
 milestones:
   - id: m1
     title: Direction capture
@@ -65,45 +74,52 @@ tasks:
       and prompt language for the next generator pass.
   - id: t-002
     milestone: m2
-    title: Generate a cleaner minimal alien-garden mural variation set
+    title: Create the fence-only coloring-page source assets from firstdraft
     status: ready
     owner: null
     passes: 0
     stakes: reversible
-    updated: '2026-07-07T00:00:00Z'
+    updated: '2026-07-09T00:00:00Z'
     depends_on: t-001
     note: >
-      Use the art generator pipeline to create a small batch of flat-color, thick-outline
-      mural mockups based on the brief and the uploaded current/first-draft image files.
-      Keep normal-sized hidden soot sprites, add more small robots, preserve the Catbus-right
-      and Totoro-left structure, reduce clutter, and respect the updated PPG Voice of Color
-      palette direction with a slightly blueish outdoor-fade-aware tint.
+      Use the existing Kontext pipeline with projects/mural-design/firstdraft.jpg to
+      produce the source assets for the interactive coloring workflow: a locked colored
+      environment/backplate, fence-only black linework, a starter fillable section map,
+      section metadata keyed by stable ids, and a palette JSON keyed by reusable color
+      ids. Do not turn the whole photo into a coloring page: the sky, house, sidewalk,
+      curb, street, and off-fence greenery stay colored. Editable areas are anything on
+      the actual fence, including the background, foliage, Catbus, spirits, sprites,
+      robots, butterflies, sparkles, and other mural details. See
+      projects/mural-design/WONDERLAB-COLORING-SPEC.md.
   - id: t-003
     milestone: m2
-    title: Compare generated mural variations and choose the strongest direction
+    title: Review the section map and choose color-workflow adjustments
     status: waiting
     owner: null
     passes: 0
     stakes: reversible
-    updated: '2026-07-06T00:00:00Z'
+    updated: '2026-07-09T00:00:00Z'
     depends_on: t-002
     gate_human: true
     note: >
-      Prepare a comparison note for Silas that calls out what is working and what should
-      change. This is a human preference gate: Silas chooses the next direction before
-      final paint planning.
+      Prepare a comparison/checkpoint note for Silas showing the generated coloring-page
+      assets, which regions are fillable, how the fence/background split works, and any
+      section groups that need retracing before final paint planning. This is a human
+      preference gate: Silas decides whether the section map is good enough for palette
+      iteration or needs another Kontext/manual-tracing pass.
   - id: t-004
     milestone: m3
-    title: Turn the selected mural into a flat-color paint specification
+    title: Turn the chosen color assignments into a flat-color paint specification
     status: waiting
     owner: null
     passes: 0
     stakes: reversible
-    updated: '2026-07-07T00:00:00Z'
+    updated: '2026-07-09T00:00:00Z'
     depends_on: t-003
     note: >
-      Create a paintable specification with exact PPG Voice of Color swatch names/numbers
-      for every color role, simplified shape groups, line-weight guidance, and per-section
+      Create a paintable specification from the approved coloring-page section map and
+      exported color assignments. Include exact PPG Voice of Color swatch names/numbers
+      for every color id, simplified shape groups, line-weight guidance, and per-section
       notes for the fence boards. Color roles must include three greens, black, off-white,
       yellow, dark purple-red/magenta background, orange, brown, robin blue/teal, purple,
       violet, and gray.
@@ -126,13 +142,35 @@ tasks:
     owner: null
     passes: 0
     stakes: reversible
-    updated: '2026-07-07T00:00:00Z'
+    updated: '2026-07-09T00:00:00Z'
     note: >
       FOR SILAS: soft checkpoint per the new-project scope rule — nothing is blocked on
-      this, t-002 (art generation) proceeds in parallel. Read
-      projects/mural-design/DESIGN-BRIEF.md and confirm it faithfully captures your fence
-      mural direction, uploaded current/first-draft image references, Catbus right,
-      Totoro-ivy portal left, normal-sized hidden soot sprites, small Kind Robots-style
-      robots, rainbow butterflies, alien-garden foliage, flat-color/thick-outline/grid-paintable
-      style, and the updated PPG Voice of Color exterior-paint palette requirements.
-      TO APPROVE: set approved_by_human: true and status: done, or leave a correction note here.
+      this, t-002 (coloring-page asset generation) proceeds in parallel. Read
+      projects/mural-design/DESIGN-BRIEF.md and
+      projects/mural-design/WONDERLAB-COLORING-SPEC.md and confirm they faithfully
+      capture your fence mural direction, uploaded current/first-draft image references,
+      Catbus right, Totoro-ivy portal left, normal-sized hidden soot sprites, small Kind
+      Robots-style robots, rainbow butterflies, alien-garden foliage, flat-color/thick-outline/grid-paintable
+      style, the updated PPG Voice of Color exterior-paint palette requirements, and the
+      WonderLab coloring-page direction where the off-fence environment remains colored
+      while only actual fence sections are recolored by color id. TO APPROVE: set
+      approved_by_human: true and status: done, or leave a correction note here.
+  - id: t-007
+    milestone: m2
+    title: Build the WonderLab mural coloring page in kind_robots
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-09T00:00:00Z'
+    depends_on: t-002
+    note: >
+      Cross-repo software task for kind_robots: add a WonderLab tab/page under the
+      existing wonder dashboard key that renders the mural coloring tool described in
+      projects/mural-design/WONDERLAB-COLORING-SPEC.md. The page should use a Pinia store
+      for palette/section assignment, support selecting sections, setting section color
+      ids, globally swapping color ids, restoring defaults, and exporting assignment JSON.
+      Components should not call API routes directly; generation or import work should go
+      through store actions or existing art/comfy patterns. Keep this waiting until t-002
+      produces at least starter source assets, unless Silas explicitly asks for a pure UI
+      scaffold first.
