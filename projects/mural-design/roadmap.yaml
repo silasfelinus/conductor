@@ -158,19 +158,19 @@ tasks:
   - id: t-007
     milestone: m2
     title: Build the WonderLab mural coloring page in kind_robots
-    status: waiting
-    owner: null
+    status: done
+    owner: worker
     passes: 0
     stakes: reversible
-    updated: '2026-07-09T00:00:00Z'
+    updated: '2026-07-09T22:18:00Z'
     depends_on: t-002
     note: >
-      Cross-repo software task for kind_robots: add a WonderLab tab/page under the
-      existing wonder dashboard key that renders the mural coloring tool described in
-      projects/mural-design/WONDERLAB-COLORING-SPEC.md. The page should use a Pinia store
-      for palette/section assignment, support selecting sections, setting section color
-      ids, globally swapping color ids, restoring defaults, and exporting assignment JSON.
-      Components should not call API routes directly; generation or import work should go
-      through store actions or existing art/comfy patterns. Keep this waiting until t-002
-      produces at least starter source assets, unless Silas explicitly asks for a pure UI
-      scaffold first.
+      Implemented and merged the first frontend color-studio pass in kind_robots PR #135.
+      The shipped /mural page includes a Pinia/localStorage mural store, saved colors,
+      add/remove swatches, clickable SVG sections, group fill controls, individual section
+      overrides, reset-to-default behavior, WonderLab card bridge wiring, tutorial wiring,
+      and required mural asset paths. This was intentionally a starter/manual UI scaffold
+      rather than the final generated fence-only asset workflow. Follow-up work should
+      replace placeholder WebP payloads with real artwork, promote mural into the canonical
+      dashboardConfigs.wonder.tabs registry, remove the temporary labCards bridge, add
+      palette/assignment JSON import-export, and add named paint schemes.
