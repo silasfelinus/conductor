@@ -179,4 +179,38 @@ void main() {
     expect(launchedUri!.queryParameters['body'], contains('Client: Kate'));
     expect(launchedUri!.queryParameters['body'], contains('Superkate loves you!'));
   });
+
+  testWidgets('background pattern changes independently from theme',
+      (tester) async {
+    _useTallSurface(tester);
+    final service = InMemoryPersistenceService();
+    await tester.pumpWidget(
+      SuperkateServicesCalculatorApp(service: Future.value(service)),
+    );
+    await tester.pumpAndSettle();
+
+    expect(find.byKey(const ValueKey('background-circles')), findsOneWidget);
+
+    await tester.tap(find.byTooltip('Choose background'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Hearts'));
+    await tester.pumpAndSettle();
+
+    expect(find.byKey(const ValueKey('background-hearts')), findsOneWidget);
+
+    await tester.tap(find.byTooltip('Choose theme'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Classic'));
+    await tester.pumpAndSettle();
+
+    expect(find.byKey(const ValueKey('background-hearts')), findsOneWidget);
+
+    await tester.tap(find.byTooltip('Choose background'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Grid'));
+    await tester.pumpAndSettle();
+
+    expect(find.byKey(const ValueKey('background-grid')), findsOneWidget);
+    expect(find.text('Client name'), findsOneWidget);
+  });
 }
