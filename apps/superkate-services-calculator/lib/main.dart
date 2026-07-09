@@ -22,7 +22,8 @@ class SuperkateServicesCalculatorApp extends StatefulWidget {
 class _SuperkateServicesCalculatorAppState
     extends State<SuperkateServicesCalculatorApp> {
   SuperkatePalette _selectedPalette = SuperkatePalettes.rainbowConnection;
-  late final Future<PersistenceService> _service = SqlitePersistenceService.open();
+  late final Future<PersistenceService> _service =
+      SqlitePersistenceService.open();
 
   @override
   Widget build(BuildContext context) {
@@ -41,14 +42,12 @@ class _SuperkateServicesCalculatorAppState
               return SuperkateHomePage(
                 service: snapshot.requireData,
                 selectedPalette: palette,
-                onThemeChanged: (next) => setState(() => _selectedPalette = next),
+                onThemeChanged: (next) =>
+                    setState(() => _selectedPalette = next),
               );
             }
             if (snapshot.hasError) {
-              return _StartupErrorPage(
-                error: snapshot.error,
-                selectedPalette: palette,
-              );
+              return _StartupErrorPage(selectedPalette: palette);
             }
             return _StartupLoadingPage(selectedPalette: palette);
           },
@@ -293,12 +292,8 @@ class _StartupLoadingPage extends StatelessWidget {
 }
 
 class _StartupErrorPage extends StatelessWidget {
-  const _StartupErrorPage({
-    required this.error,
-    required this.selectedPalette,
-  });
+  const _StartupErrorPage({required this.selectedPalette});
 
-  final Object? error;
   final SuperkatePalette selectedPalette;
 
   @override
