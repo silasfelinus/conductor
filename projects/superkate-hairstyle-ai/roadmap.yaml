@@ -22,7 +22,7 @@ milestones:
   - id: m1
     title: "SHAPE — brief, backend contract, prompt design"
     weight: 25
-    status: in-progress
+    status: done
 
   - id: m2
     title: "BUILD — tab, intake, controls, async generate, gallery"
@@ -30,7 +30,7 @@ milestones:
     status: in-progress
 
   - id: m3
-    title: "POLISH & SHIP — states, monetization plan, launch gate"
+    title: "POLISH & SHIP — aesthetics, monetization plan, launch gate"
     weight: 25
     status: not-started
 
@@ -86,13 +86,13 @@ tasks:
   - id: t-004
     milestone: m2
     title: "Build the Hair Studio tab shell + navigation entry (staged/flagged)"
-    status: review
+    status: done
     owner: claude
     passes: 0
     stakes: reversible
     updated: 2026-07-09
     note: >
-      IN REVIEW (kind_robots branch claude/superkate-hairstyle-ai-nse06o): added content/stylist.md
+      DONE (PR #133 merged by Silas 2026-07-09): added content/stylist.md
       (/stylist page embedding :stylist-manager), a "stylist"/"Hair Studio" tab under the art
       dashboard (dashboardHelper, route /stylist), an art tutorial-channel "stylist" section, and
       placeholder tab/tutorial webp images (real art queued in art-prompts.yaml requests). The tab
@@ -103,14 +103,14 @@ tasks:
   - id: t-005
     milestone: m2
     title: "Image intake — upload + camera capture tied to a client"
-    status: review
+    status: done
     owner: claude
     passes: 0
     stakes: reversible
     depends_on: t-004
     updated: 2026-07-09
     note: >
-      IN REVIEW: stylist-manager.vue has upload (click + drag/drop) and camera capture
+      DONE (PR #133 merged by Silas 2026-07-09): stylist-manager.vue has upload (click + drag/drop) and camera capture
       (getUserMedia → canvas → data URL) with a preview and a free-text Client field, plus a
       camera-unavailable fallback to upload. Produces the data URL the Kontext endpoint expects.
       Follow-up: bind the Client field to real calculator customer profiles instead of free text
@@ -119,7 +119,7 @@ tasks:
   - id: t-006
     milestone: m2
     title: "Transformation controls → prompt builder (color / style / enhance, any combo)"
-    status: review
+    status: done
     owner: claude
     passes: 0
     stakes: reversible
@@ -128,7 +128,7 @@ tasks:
       - t-004
     updated: 2026-07-09
     note: >
-      IN REVIEW: three independent checkboxes (change color + color field, change style + style
+      DONE (PR #133 merged by Silas 2026-07-09): three independent checkboxes (change color + color field, change style + style
       field, improve overall image) plus a free-text notes field, merged by buildPrompt() into
       one Kontext prompt with the identity-preservation suffix. A plain-language changeSummary
       previews what will change; Style-it is disabled until a photo is present AND at least one
@@ -137,7 +137,7 @@ tasks:
   - id: t-007
     milestone: m2
     title: "Async generation with navigable loading state"
-    status: review
+    status: done
     owner: claude
     passes: 0
     stakes: reversible
@@ -146,7 +146,7 @@ tasks:
       - t-006
     updated: 2026-07-09
     note: >
-      IN REVIEW (kind_robots PR #134): DONE — job state moved to a dedicated stylistStore, so a
+      DONE (PR #134 merged by Silas 2026-07-09): job state moved to a dedicated stylistStore, so a
       styling job keeps running and its result still lands even when Superkate leaves and returns
       to the /stylist tab (the component is now a view over the store; store actions outlive
       component unmount). jobs[] carry pending/done/failed with retry + dismiss, filtered per
@@ -156,14 +156,14 @@ tasks:
   - id: t-008
     milestone: m2
     title: "Per-client transformation gallery (before/after + metadata)"
-    status: review
+    status: done
     owner: claude
     passes: 0
     stakes: reversible
     depends_on: t-005
     updated: 2026-07-09
     note: >
-      IN REVIEW (kind_robots PR #134): first cut DONE — a durable "Past looks for <client>"
+      DONE first cut (PR #134 merged by Silas 2026-07-09): a durable "Past looks for <client>"
       gallery loads the user's saved private stylist results across sessions (GET
       /api/art/user/:id, filtered by the "stylist:" designer tag, grouped by client) alongside
       the live before/after session grid. REMAINING (a follow-up, see t-013): the *before* image
@@ -175,14 +175,14 @@ tasks:
   - id: t-009
     milestone: m2
     title: "Kontext API client — mana/gate handling, error + timeout states"
-    status: review
+    status: done
     owner: claude
     passes: 0
     stakes: reversible
     depends_on: t-007
     updated: 2026-07-09
     note: >
-      IN REVIEW (kind_robots PR #134): the store already routes through artStore.generateArt →
+      DONE (PR #134 merged by Silas 2026-07-09): the store already routes through artStore.generateArt →
       /api/comfy/kontext/generate (performFetch retries + 180s timeout), and every failure lands
       on the job tile with a Retry action. Added friendlyError() mapping the real first-run
       failure modes — insufficient mana, no active Comfy/Kontext server, timeout, and

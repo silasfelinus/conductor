@@ -86,3 +86,29 @@ dedicated stylistStore. kind_robots PR #134.
 **Suggested action:** Silas — merge #134 after a local /stylist smoke test. Next up unless you
 redirect: t-009 (harden Kontext API client error/timeout/mana states) and t-010 (polish
 empty/loading/error + before/after compare), then t-013.
+
+## 2026-07-09 | Claude (Silas-directed) → system | superkate-hairstyle-ai dashboard bugfix | pattern
+
+**Subject:** Live-run feedback from Silas surfaced two dashboard bugs; diagnosed and fixed in
+kind_robots PR #136. PRs #133/#134 merged by Silas — t-004..t-009 are done.
+
+**Detail:**
+- Bug 1: selecting the Hair Studio tab still showed the image generator. The dashboard header's
+  tab buttons only set store state (no navigation); art-manager renders the active tab
+  internally and its validTabs didn't include "stylist", so it fell back to "generate". Fix:
+  stylist renders inline in art-manager like every other art tab.
+- Bug 2: returning to the Art channel forgot the remembered tab. content/art.md pinned
+  dashboardTab: generate — a VALID art tab — so every /art visit force-reset tab memory via
+  setDashboardShellFromContent + the header's route-enforced watch. Other channels' landing
+  pages carry non-tab hints (bots.md → "overview"), which is why only Art misbehaved. Fix:
+  setDashboardShellFromContent only enforces a frontmatter tab that names a real tab of that
+  dashboard (page-as-tab identity, e.g. /stylist, /memory); otherwise it preserves the
+  remembered tab. art.md no longer pins a tab.
+- Ops note: the git relay's push path failed persistently this session (hangups/413); the fix
+  went up via the GitHub API (push_files), which also normalized navStore.ts and
+  art-manager.vue from legacy CRLF to the .gitattributes-declared LF — PR #136 flags to review
+  with whitespace hidden.
+
+**Suggested action:** Silas — merge #136, hard-refresh, and retest: pick Hair Studio (should
+render in place), hop to Rewards and back to Art (should return to Hair Studio). Worker — next
+up: t-013 (durable before/after source persistence + real client link) and t-010 (state polish).
