@@ -53,9 +53,9 @@ class _SuperkateServicesCalculatorAppState
 
   Future<_StartupBundle> _openStartup() async {
     final service = await (widget.service ?? SqlitePersistenceService.open());
-    final onboardingService = await (
-      widget.onboardingService ?? FileOnboardingService.open(),
-    );
+    final onboardingFuture =
+        widget.onboardingService ?? FileOnboardingService.open();
+    final onboardingService = await onboardingFuture;
     final onboardingCompleted =
         await onboardingService.hasCompletedOnboarding();
 
