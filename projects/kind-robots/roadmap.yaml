@@ -21,6 +21,12 @@ notes_from_silas: |
   Dream → conductor notification flow (creating a Todo when a new PROJECT Dream
   is added so the Worker can scaffold the matching roadmap.yaml).
 
+  Mural coloring direction from Silas, 2026-07-09: add a WonderLab page/tab under
+  the existing wonder dashboard key for the mural-design project. It should turn
+  the firstdraft mural into fillable fence sections, assign sections by reusable
+  color id, support global color-id swaps, and keep the off-fence environment
+  colored while only actual fence content changes color.
+
 milestones:
   - id: m1
     title: "App scope + boundary defined (what's app-owned vs shared backend)"
@@ -40,6 +46,11 @@ milestones:
   - id: m4
     title: "Sharing & access control (private-but-shared content, project grants)"
     weight: 30
+    status: not-started
+
+  - id: m5
+    title: "WonderLab mural coloring tool"
+    weight: 20
     status: not-started
 
 tasks:
@@ -192,3 +203,24 @@ tasks:
       Merged kind_robots PR #132. checkout.post.ts and subscribe.post.ts now lazy-init
       the Stripe client per route request instead of constructing it at module load.
       Contract Tests and TypeScript Type Check passed on the PR head before squash merge.
+
+  - id: t-010
+    milestone: m5
+    title: "Build WonderLab mural coloring prototype for mural-design"
+    status: ready
+    owner: null
+    updated: "2026-07-09T00:00:00Z"
+    passes: 0
+    stakes: reversible
+    note: >
+      Build a front-end-only prototype in kind_robots under the existing wonder dashboard
+      key / WonderLab. Add a mural-design tab to dashboardConfigs.wonder, render it from
+      components/wonderlab/lab-manager.vue, and put the interactive UI in a dedicated
+      component such as components/wonderlab/mural-coloring-page.vue. Use a Pinia store
+      for all interactions and persistence: palette colors keyed by color id, section
+      selection, section-to-color assignment, global color-id swapping, restore defaults,
+      and assignment JSON export. Do not call API routes directly from the component.
+      Use static starter data/assets under public/data/mural-design and public/images/mural-design;
+      the first pass may use a starter/manual section map while mural-design/t-002 refines
+      the Kontext-generated fence-only coloring assets. The off-fence environment stays
+      colored; only actual fence sections, including the background, are recolored.
