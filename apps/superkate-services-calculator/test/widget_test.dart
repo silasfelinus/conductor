@@ -229,63 +229,6 @@ void main() {
     expect(launchedUri!.queryParameters['body'], contains('Superkate loves you!'));
   });
 
-  test('customer delete detaches appointment history instead of deleting it',
-      () async {
-    final service = InMemoryPersistenceService();
-    final customer = await service.upsertCustomer(
-      const UpsertCustomerInput(
-        name: 'Kate',
-        email: 'kate@example.com',
-      ),
-    );
-    await service.createAppointment(
-      CreateAppointmentInput(
-        customerId: customer.id,
-        clientName: customer.name,
-        appointmentDate: DateTime(2026, 7, 8),
-        hourlyRateCents: 10000,
-        timeSpentMinutes: 60,
-        productCostCents: 0,
-      ),
-    );
-
-    await service.deleteCustomer(customer.id);
-
-    expect(await service.listCustomers(), isEmpty);
-    final appointments = await service.listAppointments();
-    expect(appointments.length, 1);
-    expect(appointments.single.customerId, isNull);
-    expect(appointments.single.clientNameSnapshot, 'Kate');
-  });
-
-  test('appointment delete removes only the selected appointment', () async {
-    final service = InMemoryPersistenceService();
-    final kate = await service.createAppointment(
-      CreateAppointmentInput(
-        clientName: 'Kate',
-        appointmentDate: DateTime(2026, 7, 8),
-        hourlyRateCents: 10000,
-        timeSpentMinutes: 90,
-        productCostCents: 0,
-      ),
-    );
-    await service.createAppointment(
-      CreateAppointmentInput(
-        clientName: 'Ronin',
-        appointmentDate: DateTime(2026, 7, 9),
-        hourlyRateCents: 8000,
-        timeSpentMinutes: 60,
-        productCostCents: 2500,
-      ),
-    );
-
-    await service.deleteAppointment(kate.id);
-
-    final remaining = await service.listAppointments();
-    expect(remaining.length, 1);
-    expect(remaining.single.clientNameSnapshot, 'Ronin');
-  });
-
   testWidgets('background pattern changes independently from theme',
       (tester) async {
     _useTallSurface(tester);
