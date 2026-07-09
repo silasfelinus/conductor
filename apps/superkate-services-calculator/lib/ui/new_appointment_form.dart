@@ -158,7 +158,7 @@ class _NewAppointmentFormState extends State<NewAppointmentForm> {
                   icon: Icons.auto_awesome_outlined,
                   title: 'New appointment',
                   subtitle:
-                      'Gender-affirming cuts, rainbow transformations, and clean math while the color processes.',
+                      'Cuts, rainbow transformations, and clean math while the color processes.',
                   children: [
                     TextField(
                       controller: _clientName,
@@ -176,7 +176,7 @@ class _NewAppointmentFormState extends State<NewAppointmentForm> {
                 _SectionCard(
                   icon: Icons.palette_outlined,
                   title: 'Rate, time, and product',
-                  subtitle: 'For fades, vivid color, glitter goblin magic, and everything between.',
+                  subtitle: 'For fades, vivid color, detailed designs, and everything between.',
                   children: [
                     TextField(
                       controller: _hourlyRate,
@@ -342,7 +342,7 @@ class _IntroCopy extends StatelessWidget {
         ),
         const SizedBox(height: 6),
         Text(
-          'Private appointment totals for Superkate’s gender-affirming cuts, vivid color, and wild little masterpieces.',
+          'Private appointment totals for Superkate’s cuts, vivid color, and wild little masterpieces.',
           style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                 color: palette.muted,
                 height: 1.35,
@@ -435,7 +435,6 @@ class _DateField extends StatelessWidget {
     final label =
         '${date.year}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}';
     return InkWell(
-      borderRadius: const BorderRadius.all(Radius.circular(22)),
       onTap: onTap,
       child: InputDecorator(
         decoration: const InputDecoration(
