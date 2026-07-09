@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 
+import 'data/file_onboarding_service.dart';
 import 'data/in_memory_persistence_service.dart';
+import 'data/onboarding_service.dart';
 import 'data/persistence_service.dart';
 import 'data/sqlite_persistence_service.dart';
 import 'domain/money.dart';
 import 'ui/appointment_history.dart';
 import 'ui/new_appointment_form.dart';
 import 'ui/receipt_email_launcher.dart';
+import 'ui/superkate_onboarding.dart';
 import 'ui/superkate_style.dart';
 
 void main() => runApp(const SuperkateServicesCalculatorApp());
@@ -24,9 +27,14 @@ enum SuperkateBackgroundPattern {
 }
 
 class SuperkateServicesCalculatorApp extends StatefulWidget {
-  const SuperkateServicesCalculatorApp({super.key, this.service});
+  const SuperkateServicesCalculatorApp({
+    super.key,
+    this.service,
+    this.onboardingService,
+  });
 
   final Future<PersistenceService>? service;
+  final Future<OnboardingService>? onboardingService;
 
   @override
   State<SuperkateServicesCalculatorApp> createState() =>
@@ -38,8 +46,44 @@ class _SuperkateServicesCalculatorAppState
   SuperkatePalette _selectedPalette = SuperkatePalettes.rainbowConnection;
   SuperkateBackgroundPattern _selectedBackground =
       SuperkateBackgroundPattern.circles;
-  late final Future<PersistenceService> _service =
-      widget.service ?? SqlitePersistenceService.open();
+  bool _isCompletingOnboarding = false;
+  bool? _onboardingCompletedOverride;
+
+  late final Future<_StartupBundle> _startup = _openStartup();
+
+  Future<_StartupBundle> _openStartup() async {
+    final service = await (widget.service ?? SqlitePersistenceService.open());
+    final onboardingService = await (
+      widget.onboardingService ?? FileOnboardingService.open(),
+    );
+    final onboardingCompleted =
+        await onboardingService.hasCompletedOnboarding();
+
+    return _StartupBundle(
+      service: service,
+      onboardingService: onboardingService,
+      onboardingCompleted: onboardingCompleted,
+    );
+  }
+
+  Future<void> _completeOnboarding(OnboardingService onboardingService) async {
+    setState(() => _isCompletingOnboarding = true);
+    try {
+      await onboardingService.completeOnboarding();
+      if (!mounted) {
+        return;
+      }
+      setState(() {
+        _onboardingCompletedOverride = true;
+        _isCompletingOnboarding = false;
+      });
+    } catch (_) {
+      if (mounted) {
+        setState(() => _isCompletingOnboarding = false);
+      }
+      rethrow;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,12 +95,23 @@ class _SuperkateServicesCalculatorAppState
         title: 'Superkate Services Calculator',
         debugShowCheckedModeBanner: false,
         theme: _buildTheme(palette),
-        home: FutureBuilder<PersistenceService>(
-          future: _service,
+        home: FutureBuilder<_StartupBundle>(
+          future: _startup,
           builder: (context, snapshot) {
             if (snapshot.hasData) {
+              final startup = snapshot.requireData;
+              final onboardingCompleted =
+                  _onboardingCompletedOverride ?? startup.onboardingCompleted;
+
+              if (!onboardingCompleted) {
+                return SuperkateOnboardingScreen(
+                  isWorking: _isCompletingOnboarding,
+                  onStart: () => _completeOnboarding(startup.onboardingService),
+                );
+              }
+
               return SuperkateHomePage(
-                service: snapshot.requireData,
+                service: startup.service,
                 selectedPalette: palette,
                 selectedBackground: _selectedBackground,
                 onThemeChanged: (next) =>
@@ -161,6 +216,18 @@ class _SuperkateServicesCalculatorAppState
       ),
     );
   }
+}
+
+class _StartupBundle {
+  const _StartupBundle({
+    required this.service,
+    required this.onboardingService,
+    required this.onboardingCompleted,
+  });
+
+  final PersistenceService service;
+  final OnboardingService onboardingService;
+  final bool onboardingCompleted;
 }
 
 class SuperkateHomePage extends StatefulWidget {
@@ -295,8 +362,41 @@ class _StartupLoadingPage extends StatelessWidget {
       child: Scaffold(
         body: Container(
           decoration: BoxDecoration(gradient: selectedPalette.nightGradient),
-          child: const Center(
-            child: CircularProgressIndicator(),
+          child: Center(
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: 360),
+              child: Card(
+                color: selectedPalette.card,
+                shape: SuperkateStyle.cardShape(
+                  border: selectedPalette.cardBorder,
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(24),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const RainbowBadge(icon: Icons.content_cut),
+                      const SizedBox(height: 18),
+                      Text(
+                        'Hair by Superkate',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: selectedPalette.soft,
+                          fontSize: 28,
+                          fontWeight: FontWeight.w900,
+                        ),
+                      ),
+                      const SizedBox(height: 10),
+                      const RainbowRail(height: 5),
+                      const SizedBox(height: 18),
+                      CircularProgressIndicator(
+                        color: selectedPalette.secondary,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
           ),
         ),
       ),
@@ -320,6 +420,10 @@ class _StartupErrorPage extends StatelessWidget {
             child: ConstrainedBox(
               constraints: const BoxConstraints(maxWidth: 520),
               child: Card(
+                color: selectedPalette.card,
+                shape: SuperkateStyle.cardShape(
+                  border: selectedPalette.cardBorder,
+                ),
                 child: Padding(
                   padding: const EdgeInsets.all(24),
                   child: Column(
@@ -631,7 +735,10 @@ class _FloatingMark extends StatelessWidget {
 }
 
 class _GridPatternPainter extends CustomPainter {
-  const _GridPatternPainter({required this.lineColor, required this.accentColor});
+  const _GridPatternPainter({
+    required this.lineColor,
+    required this.accentColor,
+  });
 
   final Color lineColor;
   final Color accentColor;
