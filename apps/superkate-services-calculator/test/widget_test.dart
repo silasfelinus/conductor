@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:superkate_services_calculator/data/in_memory_onboarding_service.dart';
 import 'package:superkate_services_calculator/data/in_memory_persistence_service.dart';
 import 'package:superkate_services_calculator/data/persistence_service.dart';
 import 'package:superkate_services_calculator/main.dart';
@@ -14,11 +15,59 @@ void _useTallSurface(WidgetTester tester) {
 }
 
 void main() {
-  testWidgets('app boots into the new-appointment form', (tester) async {
+  testWidgets('app shows the splash onramp before first use', (tester) async {
     _useTallSurface(tester);
     final service = InMemoryPersistenceService();
+    final onboarding = InMemoryOnboardingService();
+
     await tester.pumpWidget(
-      SuperkateServicesCalculatorApp(service: Future.value(service)),
+      SuperkateServicesCalculatorApp(
+        service: Future.value(service),
+        onboardingService: Future.value(onboarding),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    expect(find.text('Hair by Superkate'), findsOneWidget);
+    expect(find.text('Private services calculator beta'), findsOneWidget);
+    expect(find.text('Start local beta'), findsOneWidget);
+    expect(find.text('Client name'), findsNothing);
+  });
+
+  testWidgets('onboarding start persists the choice and opens the calculator',
+      (tester) async {
+    _useTallSurface(tester);
+    final service = InMemoryPersistenceService();
+    final onboarding = InMemoryOnboardingService();
+
+    await tester.pumpWidget(
+      SuperkateServicesCalculatorApp(
+        service: Future.value(service),
+        onboardingService: Future.value(onboarding),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.byKey(const ValueKey('start-local-beta-button')));
+    await tester.pumpAndSettle();
+
+    expect(await onboarding.hasCompletedOnboarding(), isTrue);
+    expect(find.text('New appointment'), findsOneWidget);
+    expect(find.text('Client name'), findsOneWidget);
+    expect(find.text('Appointment total'), findsOneWidget);
+  });
+
+  testWidgets('app boots into the new-appointment form after onboarding',
+      (tester) async {
+    _useTallSurface(tester);
+    final service = InMemoryPersistenceService();
+    final onboarding = InMemoryOnboardingService(completed: true);
+
+    await tester.pumpWidget(
+      SuperkateServicesCalculatorApp(
+        service: Future.value(service),
+        onboardingService: Future.value(onboarding),
+      ),
     );
     await tester.pumpAndSettle();
 
@@ -184,8 +233,13 @@ void main() {
       (tester) async {
     _useTallSurface(tester);
     final service = InMemoryPersistenceService();
+    final onboarding = InMemoryOnboardingService(completed: true);
+
     await tester.pumpWidget(
-      SuperkateServicesCalculatorApp(service: Future.value(service)),
+      SuperkateServicesCalculatorApp(
+        service: Future.value(service),
+        onboardingService: Future.value(onboarding),
+      ),
     );
     await tester.pumpAndSettle();
 
