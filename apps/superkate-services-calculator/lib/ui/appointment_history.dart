@@ -129,6 +129,7 @@ class _AppointmentHistoryState extends State<AppointmentHistory> {
             child: const Text('Keep appointment'),
           ),
           FilledButton.tonalIcon(
+            key: const ValueKey('confirm-delete-appointment-button'),
             onPressed: () => Navigator.of(context).pop(true),
             icon: const Icon(Icons.delete_outline),
             label: const Text('Delete appointment'),
