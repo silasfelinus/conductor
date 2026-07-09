@@ -27,7 +27,7 @@ milestones:
   - id: m2
     title: "BUILD — tab, intake, controls, async generate, gallery"
     weight: 50
-    status: not-started
+    status: in-progress
 
   - id: m3
     title: "POLISH & SHIP — states, monetization plan, launch gate"
@@ -55,72 +55,72 @@ tasks:
   - id: t-002
     milestone: m1
     title: "Confirm scope + build surface with Silas (web-first vs Flutter-first)"
-    status: needs-human
+    status: done
     owner: null
     passes: 0
     stakes: reversible
     updated: 2026-07-09
     note: >
-      FOR SILAS: soft checkpoint — nothing is blocked on it, the team builds on the web-first
-      assumption meanwhile. The recommendation (DESIGN-BRIEF.md) is to ship Hair Studio first
-      as a tab in the Kind Robots web app, because the Kontext backend and the gallery infra
-      already live there and Flutter build/verify is human-gated (calculator t-014), which
-      keeps stalling that roadmap. Bridge into the Flutter Superkate app later.
-      TO CONFIRM: reply "web-first, yes" to lock it in, or "Flutter-first" to redirect. Either
-      way the team folds your answer into the roadmap and keeps moving. This does NOT approve
-      any paid gating, public launch, or the surprise reveal — those stay hard-gated (t-011,
-      t-012). Confirming unblocks nothing new; redirecting just re-points t-004+.
+      RESOLVED (2026-07-09): Silas confirmed web-first in-session — "we should have a kind
+      robots page for that anyway." Hair Studio ships as a tab in the Kind Robots web app
+      (/stylist), calling the existing Kontext backend; a Flutter bridge stays a later option.
+      This did NOT approve paid gating, public launch, or the surprise reveal — those remain
+      hard-gated (t-011, t-012).
 
   - id: t-003
     milestone: m1
     title: "Design the color/style/enhance prompt builder + Kontext param mapping"
-    status: ready
-    owner: null
+    status: done
+    owner: claude
     passes: 0
     stakes: reversible
     updated: 2026-07-09
     note: >
-      Define the prompt templates for the three toggles (change color, change style, enhance
-      image) and how any combination merges into a single Kontext prompt, always with an
-      identity-preservation suffix (same person/face, photorealistic). Include a free-text
-      refinement slot. Map to the /api/comfy/kontext/generate request fields (prompt, and any
-      sensible defaults for steps/guidance/denoise for a portrait edit). Deliverable is a spec
-      doc in projects/superkate-hairstyle-ai/docs/ — no code required yet. Pure design, safe.
+      DONE (2026-07-09): implemented directly in stylist-manager.vue rather than a standalone
+      doc. buildPrompt() merges the three toggle clauses (change hair color to X / restyle as Y
+      / improve overall photo quality+lighting+sharpness) with a free-text slot and a fixed
+      identity-preservation suffix ("keep the same person, same face and identity, natural
+      photorealistic result"), routed through artStore.generateArt engine:'kontext' →
+      /api/comfy/kontext/generate. The templates + contract are documented in DESIGN-BRIEF.md.
 
   - id: t-004
     milestone: m2
     title: "Build the Hair Studio tab shell + navigation entry (staged/flagged)"
-    status: ready
-    owner: null
+    status: review
+    owner: claude
     passes: 0
     stakes: reversible
     updated: 2026-07-09
     note: >
-      Create the Hair Studio surface and its nav entry behind a preview flag so it is NOT
-      visible in anything Superkate sees yet (surprise). Empty shell + layout only. Web-first
-      in Kind Robots per t-002 unless Silas redirects. No backend calls yet, no real client
-      data. Reversible UI scaffold.
+      IN REVIEW (kind_robots branch claude/superkate-hairstyle-ai-nse06o): added content/stylist.md
+      (/stylist page embedding :stylist-manager), a "stylist"/"Hair Studio" tab under the art
+      dashboard (dashboardHelper, route /stylist), an art tutorial-channel "stylist" section, and
+      placeholder tab/tutorial webp images (real art queued in art-prompts.yaml requests). NOTE:
+      not yet gated behind a preview flag — the tab is registered in the art dashboard config.
+      Follow-up (see t-012): add an explicit preview/role flag so nothing reveals to Superkate
+      before Silas approves. Not verified in a running app (no local build env / live Comfy server).
 
   - id: t-005
     milestone: m2
     title: "Image intake — upload + camera capture tied to a client"
-    status: waiting
-    owner: null
+    status: review
+    owner: claude
     passes: 0
     stakes: reversible
     depends_on: t-004
     updated: 2026-07-09
     note: >
-      Let Superkate upload a photo or capture one from the camera, preview it, and associate it
-      with a selected/typed client (the calculator customer profile is the identity anchor).
-      Produce the data URL the Kontext endpoint expects. Handle no-camera / permission-denied
-      fallbacks. No generation yet.
+      IN REVIEW: stylist-manager.vue has upload (click + drag/drop) and camera capture
+      (getUserMedia → canvas → data URL) with a preview and a free-text Client field, plus a
+      camera-unavailable fallback to upload. Produces the data URL the Kontext endpoint expects.
+      Follow-up: bind the Client field to real calculator customer profiles instead of free text
+      (coordination with superkate-services-calculator) — tracked under t-008.
 
   - id: t-006
     milestone: m2
     title: "Transformation controls → prompt builder (color / style / enhance, any combo)"
-    status: waiting
-    owner: null
+    status: review
+    owner: claude
     passes: 0
     stakes: reversible
     depends_on:
@@ -128,15 +128,16 @@ tasks:
       - t-004
     updated: 2026-07-09
     note: >
-      Implement the three independent toggles plus optional free text, wired to the t-003
-      prompt templates so any combination (one, two, or all three) produces one merged Kontext
-      prompt. Show the user a plain-language summary of what will change. Pure client-side
-      prompt assembly.
+      IN REVIEW: three independent checkboxes (change color + color field, change style + style
+      field, improve overall image) plus a free-text notes field, merged by buildPrompt() into
+      one Kontext prompt with the identity-preservation suffix. A plain-language changeSummary
+      previews what will change; Style-it is disabled until a photo is present AND at least one
+      option is selected.
 
   - id: t-007
     milestone: m2
     title: "Async generation with navigable loading state"
-    status: waiting
+    status: ready
     owner: null
     passes: 0
     stakes: reversible
@@ -145,24 +146,29 @@ tasks:
       - t-006
     updated: 2026-07-09
     note: >
-      Submit the photo + prompt as a BACKGROUND job to /api/comfy/kontext/generate, show a
-      loading indicator on the pending result tile, and keep the whole app navigable while it
-      runs (Kontext can take ~180s). Superkate can leave the tab and come back; the result
-      lands when ready. Handle the pending → done/error transition on a per-client pending slot.
+      BASELINE LANDED (in the same branch): generate is async/non-blocking — a pending result
+      tile with a spinner is pushed immediately, the rest of the app stays interactive while the
+      Kontext job runs, and the tile flips to done/failed via patchResult(). REMAINING (this
+      task): promote the job to STORE level so it survives leaving and returning to the /stylist
+      tab (currently the pending list is component-local and resets on unmount), and key pending
+      slots per client. That's the true "leave and come back" requirement.
 
   - id: t-008
     milestone: m2
     title: "Per-client transformation gallery (before/after + metadata)"
-    status: waiting
+    status: ready
     owner: null
     passes: 0
     stakes: reversible
     depends_on: t-005
     updated: 2026-07-09
     note: >
-      Reuse the Kind Robots ArtCollection/gallery pattern for a per-client before/after gallery
-      keyed to the customer identity. Each entry stores original photo, result, the toggles +
-      prompt used, and mana/prompt metadata (traceable/reproducible per AGENTS.md art rules).
+      SESSION-LOCAL GRID LANDED: stylist-manager.vue shows a before/after results grid tagged by
+      client, and every generated ArtImage is persisted with isPublic:false and designer
+      "stylist:<client>" so records are private and client-tagged. REMAINING (this task): a
+      durable per-client gallery that loads a client's past transformations across sessions —
+      reuse the ArtCollection/gallery pattern keyed to the customer identity, storing original +
+      result + toggles/prompt + mana metadata (traceable/reproducible per AGENTS.md art rules).
       Coordinate the identity key with the calculator's customer profile — if that requires a
       calculator-side change, open a cross-repo/coordination task rather than widening scope here.
 
