@@ -26,9 +26,10 @@ show a client the color or cut on their *own face* in under a couple of minutes.
 - **Later (separate gate):** a paid feature behind a free trial + service charge — possibly
   spun into its own app. That decision is Silas's and is human-gated; nothing here commits to it.
 
-**It's a surprise for Superkate.** Keep it out of anything she can see in her current app
-build until Silas is ready to reveal it. Don't wire the new tab into a shipped Superkate
-release; stage it behind a flag / preview surface until Silas says go.
+**It's a surprise for Superkate** — but that's flavor, not a technical requirement (Silas,
+2026-07-09). She doesn't know it's coming; there's no need to hide the tab behind a preview
+flag or gate it. Build it normally. The real hard gates are the *outward-facing* ones —
+charging money and any public launch beyond Superkate (see `t-011`/`t-012`).
 
 ## Recommended surface (the main scope question for Silas)
 
@@ -120,7 +121,7 @@ scale* stops at a human gate — it never auto-fires.
 
 ## MVP definition of done (Superkate-only, web-first)
 
-1. A Hair Studio tab exists (staged/flagged, not in a shipped Superkate release).
+1. A Hair Studio tab exists in the Kind Robots web app (`/stylist`).
 2. Upload or camera-capture a client photo, tied to a client.
 3. Pick any combination of color / style / enhance, with optional free text.
 4. Submit → background job → transformed photo returns, app stays navigable, loading shown.
