@@ -16,7 +16,11 @@ void _useTallSurface(WidgetTester tester) {
 void main() {
   testWidgets('app boots into the new-appointment form', (tester) async {
     _useTallSurface(tester);
-    await tester.pumpWidget(const SuperkateServicesCalculatorApp());
+    final service = InMemoryPersistenceService();
+    await tester.pumpWidget(
+      SuperkateServicesCalculatorApp(service: Future.value(service)),
+    );
+    await tester.pumpAndSettle();
 
     expect(find.text('Superkate Services Calculator'), findsWidgets);
     expect(find.text('New appointment'), findsOneWidget);

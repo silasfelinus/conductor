@@ -217,14 +217,14 @@ tasks:
   - id: t-018
     milestone: m2
     title: Add durable local SQLite persistence adapter
-    status: claimed
+    status: review
     owner: worker
     passes: 0
     stakes: reversible
     depends_on: t-003
     updated: 2026-07-08
     note: >
-      Replace test-only in-memory persistence with a durable local SQLite-backed adapter behind the existing PersistenceService interface. Keep customer data local-first, do not add cloud sync yet, and include tests/migration-safe behavior for customers, appointments, totals, search filters, and restart persistence.
+      Implemented a local SQLite-backed PersistenceService adapter in apps/superkate-services-calculator, wired the production app startup to open the durable local database by default, and added focused in-memory SQLite unit coverage for customers, appointments, totals, filters, deletion behavior, and restart-safe schema migration shape. No cloud sync, analytics, backend email, app-store, billing, deploy, secrets, or live customer-data service was added.
   - id: t-019
     milestone: m2
     title: Add customer profile edit and delete UI

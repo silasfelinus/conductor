@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'data/in_memory_persistence_service.dart';
 import 'data/persistence_service.dart';
+import 'data/sqlite_persistence_service.dart';
 import 'domain/money.dart';
 import 'ui/appointment_history.dart';
 import 'ui/new_appointment_form.dart';
@@ -11,7 +12,9 @@ import 'ui/superkate_style.dart';
 void main() => runApp(const SuperkateServicesCalculatorApp());
 
 class SuperkateServicesCalculatorApp extends StatefulWidget {
-  const SuperkateServicesCalculatorApp({super.key});
+  const SuperkateServicesCalculatorApp({super.key, this.service});
+
+  final Future<PersistenceService>? service;
 
   @override
   State<SuperkateServicesCalculatorApp> createState() =>
@@ -21,6 +24,8 @@ class SuperkateServicesCalculatorApp extends StatefulWidget {
 class _SuperkateServicesCalculatorAppState
     extends State<SuperkateServicesCalculatorApp> {
   SuperkatePalette _selectedPalette = SuperkatePalettes.rainbowConnection;
+  late final Future<PersistenceService> _service =
+      widget.service ?? SqlitePersistenceService.open();
 
   @override
   Widget build(BuildContext context) {
@@ -32,9 +37,22 @@ class _SuperkateServicesCalculatorAppState
         title: 'Superkate Services Calculator',
         debugShowCheckedModeBanner: false,
         theme: _buildTheme(palette),
-        home: SuperkateHomePage(
-          selectedPalette: palette,
-          onThemeChanged: (next) => setState(() => _selectedPalette = next),
+        home: FutureBuilder<PersistenceService>(
+          future: _service,
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              return SuperkateHomePage(
+                service: snapshot.requireData,
+                selectedPalette: palette,
+                onThemeChanged: (next) =>
+                    setState(() => _selectedPalette = next),
+              );
+            }
+            if (snapshot.hasError) {
+              return _StartupErrorPage(selectedPalette: palette);
+            }
+            return _StartupLoadingPage(selectedPalette: palette);
+          },
         ),
       ),
     );
@@ -246,6 +264,79 @@ class _SuperkateHomePageState extends State<SuperkateHomePage> {
                   ),
                 ),
               ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _StartupLoadingPage extends StatelessWidget {
+  const _StartupLoadingPage({required this.selectedPalette});
+
+  final SuperkatePalette selectedPalette;
+
+  @override
+  Widget build(BuildContext context) {
+    return SuperkateTheme(
+      palette: selectedPalette,
+      child: Scaffold(
+        body: Container(
+          decoration: BoxDecoration(gradient: selectedPalette.nightGradient),
+          child: const Center(
+            child: CircularProgressIndicator(),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _StartupErrorPage extends StatelessWidget {
+  const _StartupErrorPage({required this.selectedPalette});
+
+  final SuperkatePalette selectedPalette;
+
+  @override
+  Widget build(BuildContext context) {
+    return SuperkateTheme(
+      palette: selectedPalette,
+      child: Scaffold(
+        body: Container(
+          decoration: BoxDecoration(gradient: selectedPalette.nightGradient),
+          child: Center(
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: 520),
+              child: Card(
+                child: Padding(
+                  padding: const EdgeInsets.all(24),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(
+                        Icons.lock_clock,
+                        color: selectedPalette.secondary,
+                        size: 40,
+                      ),
+                      const SizedBox(height: 16),
+                      const Text(
+                        'Superkate needs a second',
+                        style: TextStyle(
+                          fontSize: 22,
+                          fontWeight: FontWeight.w900,
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      Text(
+                        'The local appointment database could not open. Restart the app and try again.',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(color: selectedPalette.muted),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
             ),
           ),
         ),
