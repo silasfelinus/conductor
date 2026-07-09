@@ -8,7 +8,7 @@ notes_from_silas: |
   Core formula: hourly rate × time spent + product cost = total price.
   Reference sources added by Silas: projects/superkate-services-calculator/examples/ contains Superkate hair-work examples; projects/superkate-services-calculator/hairpress/ contains her current WordPress front end for reference and may be replaced later.
   Default Flutter app scaffolding should include ios, android, windows, and linux targets going forward.
-  Silas cleared the current human gates on 2026-07-08 and approved the next reversible build runway. First app target is Android. Receipt/contact schedule link is https://hairbysuperkate.glossgenius.com/ and reply-to contact is hairbysuperkate@gmail.com. Cloud sync ownership is not decided yet; Silas can self-host on Unraid and already hosts Postgres and MariaDB for the Hair by Superkate site and Kind Robots backend.
+  Silas cleared the current human gates on 2026-07-08 and approved the next reversible build runway. First app target is Android. Receipt/contact schedule link is https://hairbysuperkate.glossgenius.com/ and reply-to contact is hairbysuperkate@gmail.com. Cloud sync ownership is now chosen: build a dedicated Hair by Superkate backend backed by Silas's self-hosted Postgres/MariaDB-capable Unraid infrastructure. Keep the Android beta local-only until durable persistence, export, app-lock, and fake-data backend sync are safe.
 milestones:
   - id: m1
     title: Project identity and MVP spec
@@ -161,7 +161,7 @@ tasks:
     depends_on: t-007
     updated: 2026-07-08
     note: >
-      Silas approved the handoff gate in-session on 2026-07-08 and supplied the current release decisions: first app target is Android, receipt/contact schedule link is https://hairbysuperkate.glossgenius.com/, reply-to contact is hairbysuperkate@gmail.com, and cloud sync ownership is undecided with self-hosted Unraid Postgres/MariaDB available. The checklist remains the safety reference: do not use real customer records until durable persistence lands, and do not submit to stores, publish, bill, deploy, or send backend email without explicit concrete approval.
+      Silas approved the handoff gate in-session on 2026-07-08 and supplied the current release decisions: first app target is Android, receipt/contact schedule link is https://hairbysuperkate.glossgenius.com/, reply-to contact is hairbysuperkate@gmail.com, and cloud sync ownership is now a dedicated Hair by Superkate backend. The checklist remains the safety reference: do not use real customer records until durable persistence lands, and do not submit to stores, publish, bill, deploy, or send backend email without explicit concrete approval.
   - id: t-010
     milestone: m2
     title: Write a pre-implementation architecture note for customer database and cloud sync
@@ -282,7 +282,7 @@ tasks:
     depends_on: t-010
     updated: 2026-07-08
     note: >
-      DONE (2026-07-08, PR #307): added projects/superkate-services-calculator/docs/cloud-sync-ownership-decision.md comparing local-only beta, Kind Robots-owned sync/auth, and a separate Hair by Superkate backend. Recommendation: local-only Android beta first, then Kind Robots-owned sync/auth for the first private cloud beta unless Silas wants a dedicated Hair by Superkate backend from the start. No production sync, secrets, deploy, DNS, billing, analytics, backend email, or app-store behavior was implemented.
+      DONE (2026-07-08, PR #307, later amended by Silas decision): added projects/superkate-services-calculator/docs/cloud-sync-ownership-decision.md and recorded the final direction that cloud sync/auth should be owned by a dedicated Hair by Superkate backend. Immediate Android beta remains local-only until durable persistence, export, app-lock, and fake-data backend sync are safe. No production sync, secrets, deploy, DNS, billing, analytics, backend email, or app-store behavior was implemented.
   - id: t-024
     milestone: m3
     title: Add Android-first beta install notes
@@ -316,3 +316,49 @@ tasks:
     updated: 2026-07-08
     note: >
       Split decorative background patterns from theme/color selection. Theme should control color palette and related visual tokens; background should be an independently selectable setting with options such as circles, hearts, grid, and none. Preserve the current circle background as one selectable option, but do not couple it to the active theme. Include tests or clear UI verification that changing the theme does not force a background pattern change and changing the background pattern does not alter the theme.
+  - id: t-027
+    milestone: m2
+    title: Define dedicated Hair by Superkate backend API and schema contract
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-023
+    updated: 2026-07-08
+    note: >
+      Write the dedicated backend contract before implementation. Define customer and appointment tables/models, local-to-server ID mapping, sync/tombstone fields, auth boundary, owner/business scoping, validation rules for money/time, and fake-data-only endpoint examples. Do not create secrets, DNS, deploys, production database connections, direct-send email, analytics, or public admin surfaces.
+  - id: t-028
+    milestone: m2
+    title: Scaffold dedicated Hair by Superkate backend locally without deploy or secrets
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-027
+    updated: 2026-07-08
+    note: >
+      Create the smallest dedicated backend app or service scaffold for Hair by Superkate sync using fake/local configuration only. Include health check, test database configuration, customer/appointment model placeholders, and automated tests. Do not touch production Unraid services, DNS, secrets, real databases, deploy settings, billing, analytics, or customer data.
+  - id: t-029
+    milestone: m2
+    title: Add app-side sync client interfaces without enabling production sync
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on:
+      - t-018
+      - t-027
+    updated: 2026-07-08
+    note: >
+      Add Dart interfaces and fake/test implementations for future cloud sync against the dedicated Hair by Superkate backend. Keep the app local-first and production sync disabled. No live endpoint, secrets, customer-data upload, direct-send email, analytics, or deploy behavior.
+  - id: t-030
+    milestone: m2
+    title: Plan dedicated backend deployment, secrets, and backup gates
+    status: needs-human
+    owner: human
+    passes: 0
+    stakes: needs-human
+    depends_on: t-028
+    updated: 2026-07-08
+    note: >
+      Human-gated planning task only. Before any production sync uses real customer data, Silas must choose hosting location, database engine, domain/subdomain if any, secrets handling, backup schedule, restore test process, and access policy. Workers must not touch DNS, secrets, production deploy settings, production databases, billing, analytics, or real customer sync under this task without explicit concrete approval.
