@@ -137,8 +137,8 @@ tasks:
   - id: t-007
     milestone: m2
     title: "Async generation with navigable loading state"
-    status: ready
-    owner: null
+    status: review
+    owner: claude
     passes: 0
     stakes: reversible
     depends_on:
@@ -146,31 +146,31 @@ tasks:
       - t-006
     updated: 2026-07-09
     note: >
-      BASELINE LANDED (in the same branch): generate is async/non-blocking — a pending result
-      tile with a spinner is pushed immediately, the rest of the app stays interactive while the
-      Kontext job runs, and the tile flips to done/failed via patchResult(). REMAINING (this
-      task): promote the job to STORE level so it survives leaving and returning to the /stylist
-      tab (currently the pending list is component-local and resets on unmount), and key pending
-      slots per client. That's the true "leave and come back" requirement.
+      IN REVIEW (kind_robots PR #134): DONE — job state moved to a dedicated stylistStore, so a
+      styling job keeps running and its result still lands even when Superkate leaves and returns
+      to the /stylist tab (the component is now a view over the store; store actions outlive
+      component unmount). jobs[] carry pending/done/failed with retry + dismiss, filtered per
+      client. This is the true "leave and come back" behavior the task asked for. Pending runtime
+      verification (no local build env / live Comfy server in the authoring environment).
 
   - id: t-008
     milestone: m2
     title: "Per-client transformation gallery (before/after + metadata)"
-    status: ready
-    owner: null
+    status: review
+    owner: claude
     passes: 0
     stakes: reversible
     depends_on: t-005
     updated: 2026-07-09
     note: >
-      SESSION-LOCAL GRID LANDED: stylist-manager.vue shows a before/after results grid tagged by
-      client, and every generated ArtImage is persisted with isPublic:false and designer
-      "stylist:<client>" so records are private and client-tagged. REMAINING (this task): a
-      durable per-client gallery that loads a client's past transformations across sessions —
-      reuse the ArtCollection/gallery pattern keyed to the customer identity, storing original +
-      result + toggles/prompt + mana metadata (traceable/reproducible per AGENTS.md art rules).
-      Coordinate the identity key with the calculator's customer profile — if that requires a
-      calculator-side change, open a cross-repo/coordination task rather than widening scope here.
+      IN REVIEW (kind_robots PR #134): first cut DONE — a durable "Past looks for <client>"
+      gallery loads the user's saved private stylist results across sessions (GET
+      /api/art/user/:id, filtered by the "stylist:" designer tag, grouped by client) alongside
+      the live before/after session grid. REMAINING (a follow-up, see t-013): the *before* image
+      isn't persisted across sessions — save-generated only stores the generated result — so the
+      durable view shows past RESULTS, not durable before/after pairs; and the client key is
+      still a free-text tag rather than a real calculator customer-profile link. Full durable
+      before/after needs the source image saved too (coordinate with the calculator project).
 
   - id: t-009
     milestone: m2
@@ -234,3 +234,22 @@ tasks:
       lift (Silas, 2026-07-09). This task is the launch decision: public rollout beyond
       Superkate (or the separate-app split) and any production deploy. No agent ships it publicly
       or deploys without Silas approving here; showing Superkate is a social step, not a code gate.
+
+  - id: t-013
+    milestone: m2
+    title: "Persist the source photo for durable before/after + real client link"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-008
+    updated: 2026-07-09
+    note: >
+      Kaizen from t-008 (PR #134): the durable "Past looks" gallery shows saved RESULTS only —
+      save-generated persists just the generated image, so the before photo is lost across
+      sessions and durable before/after pairs aren't possible. Also save the source photo (e.g.
+      a private ArtImage linked via sourceImageId, or store its data URL alongside the result) so
+      the gallery can show true before/after later. Same task: replace the free-text client tag
+      with a real client-identity link so a client's history is unambiguous — coordinate the key
+      with the calculator's customer profile rather than widening scope here. Keep everything
+      private (isPublic:false) and reversible; no billing, deploy, or public surface.
