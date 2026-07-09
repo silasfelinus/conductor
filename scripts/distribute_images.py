@@ -8,14 +8,17 @@ For each image in projects/process/, determines the destination by:
   3. Falling back to filename convention:
        {slug}-icon/card/hero.webp  → conductor:  projects/images/{file}
        {slug}-inspiration-{n}.webp → kind_robots: public/images/{slug}/{file}
+                                   → conductor:  projects/{slug}/inspirations/{file}
   4. Falling back to slug match: a file whose name starts with a known slug
      (a conductor project or an existing kind_robots public/images/ folder) but
      has no specific resolution becomes a new inspiration:
        kind_robots: public/images/{slug}/{slug}-inspiration-{n}.webp
+       conductor:  projects/{slug}/inspirations/{slug}-inspiration-{n}.webp
 
 If a destination file already exists, the original is preserved as a new
-inspiration in its slug's folder (kind_robots public/images/{slug}/) and the
-new image replaces it. On every run, collections.json and a gallery.json for
+inspiration in its slug's folder (kind_robots public/images/{slug}/) and,
+when the slug is a conductor project, also copied to projects/{slug}/inspirations/.
+The new image replaces it. On every run, collections.json and a gallery.json for
 every indexed folder are regenerated (with full filenames) so folder<->collection
 parity holds and each collection resolves on Vercel, where the CDN can't be globbed.
 
@@ -29,8 +32,9 @@ Usage:
 import re
 import shutil
 import sys
-import yaml
 from pathlib import Path
+
+import yaml
 
 REPO_ROOT = Path(__file__).parent.parent
 PROCESS_DIR = REPO_ROOT / "projects" / "process"
@@ -55,7 +59,6 @@ def build_lookup(gen_data, prompts_data):
     """
     lookup = {}
 
-    # art-prompts.yaml: images: section (conductor project assets)
     for project in prompts_data.get("images") or []:
         for variant in ("icon", "card", "hero"):
             entry = project.get(variant)
@@ -68,7 +71,6 @@ def build_lookup(gen_data, prompts_data):
                     "target_repo": "silasfelinus/conductor",
                 }
 
-    # art-prompts.yaml: inspirations: section (kind_robots artcollections)
     for project in prompts_data.get("inspirations") or []:
         target = project.get("target_repo", "silasfelinus/kind_robots")
         for img in project.get("images") or []:
@@ -81,7 +83,6 @@ def build_lookup(gen_data, prompts_data):
                     "target_repo": target,
                 }
 
-    # art-prompts.yaml: requests: section (various kind_robots paths)
     for entry in prompts_data.get("requests") or []:
         if not isinstance(entry, dict):
             continue
@@ -92,7 +93,6 @@ def build_lookup(gen_data, prompts_data):
                 "target_repo": entry.get("target_repo", "silasfelinus/kind_robots"),
             }
 
-    # art-generate.yaml: active batch — takes priority, overrides above
     for entry in (gen_data.get("batch") or {}).get("entries") or []:
         if not isinstance(entry, dict):
             continue
@@ -106,20 +106,24 @@ def build_lookup(gen_data, prompts_data):
     return lookup
 
 
-def known_slugs():
-    """Slugs a loose file can match: conductor projects + kind_robots image folders."""
+def conductor_project_slugs():
     slugs = set()
     projects_dir = REPO_ROOT / "projects"
     if projects_dir.exists():
         for d in projects_dir.iterdir():
             if d.is_dir() and not d.name.startswith("_") and d.name not in ("images", "process"):
                 slugs.add(d.name)
+    return slugs
+
+
+def known_slugs():
+    """Slugs a loose file can match: conductor projects + kind_robots image folders."""
+    slugs = conductor_project_slugs()
     kr_images = KIND_ROBOTS_ROOT / "public" / "images"
     if kr_images.exists():
         for d in kr_images.iterdir():
             if d.is_dir():
                 slugs.add(d.name)
-                # nested collections: public/images/{context}/{slug}/
                 for sub in d.iterdir():
                     if sub.is_dir():
                         slugs.add(sub.name)
@@ -169,6 +173,14 @@ def next_inspiration_path(slug, suffix):
     return next_numbered_path(slug, "inspiration", suffix)
 
 
+def next_project_numbered_path(slug, utility, suffix):
+    folder = REPO_ROOT / "projects" / slug / "inspirations"
+    n = 1
+    while (folder / f"{slug}-{utility}-{n}{suffix}").exists():
+        n += 1
+    return folder / f"{slug}-{utility}-{n}{suffix}"
+
+
 def slug_and_utility_from_dest_filename(filename, slugs):
     """(slug, utility) for preserving an overwritten file.
 
@@ -192,6 +204,62 @@ def slug_and_utility_from_dest_filename(filename, slugs):
 def slug_from_dest_filename(filename, slugs):
     """Back-compat wrapper returning just the slug."""
     return slug_and_utility_from_dest_filename(filename, slugs)[0]
+
+
+def project_inspiration_dest_for_match(match, slugs, src_path):
+    """Return a conductor project inspiration path for a kind_robots image.
+
+    Only mirrors images whose slug maps to an actual conductor project. The
+    kind_robots ArtCollection remains the app/UI copy; this mirror keeps each
+    project folder friendly when opened directly.
+    """
+    if match.get("target_repo") != "silasfelinus/kind_robots":
+        return None
+
+    image_path = str(match.get("image_path") or "")
+    parts = Path(image_path).parts
+    if len(parts) < 4 or parts[:2] != ("public", "images"):
+        return None
+
+    filename = parts[-1]
+    project_slugs = conductor_project_slugs()
+    slug = slug_for_stem(Path(filename).stem, project_slugs)
+
+    if slug is None:
+        if len(parts) >= 5 and parts[-2] in project_slugs:
+            slug = parts[-2]
+        elif len(parts) == 4 and parts[-2] in project_slugs:
+            slug = parts[-2]
+
+    if slug is None:
+        return None
+
+    dest = REPO_ROOT / "projects" / slug / "inspirations" / filename
+    if not dest.exists() or dest.read_bytes() == src_path.read_bytes():
+        return dest
+
+    _, utility = slug_and_utility_from_dest_filename(filename, slugs)
+    return next_project_numbered_path(slug, utility, Path(filename).suffix.lower())
+
+
+def mirror_project_inspiration(src_path, match, slugs):
+    dest = project_inspiration_dest_for_match(match, slugs, src_path)
+    if dest is None:
+        return None
+
+    if DRY_RUN:
+        action = "already exists" if dest.exists() else "would copy"
+        print(f"  {action} project inspiration  {dest.relative_to(REPO_ROOT)}")
+        return dest
+
+    dest.parent.mkdir(parents=True, exist_ok=True)
+    if dest.exists() and dest.read_bytes() == src_path.read_bytes():
+        print(f"  project inspiration already exists  {dest.relative_to(REPO_ROOT)}")
+        return dest
+
+    shutil.copy2(src_path, dest)
+    print(f"  copied project inspiration  {dest.relative_to(REPO_ROOT)}")
+    return dest
 
 
 def write_gallery_manifest(folder_rel):
@@ -225,7 +293,7 @@ def write_collections_index():
 
     images_root = KIND_ROBOTS_ROOT / "public" / "images"
     if not images_root.exists():
-        return
+        return {}
 
     def has_images(d):
         return any(
@@ -233,7 +301,6 @@ def write_collections_index():
         )
 
     index = {}
-    # Lowest precedence first; later assignments overwrite.
     legacy = images_root / "artcollections"
     if legacy.is_dir():
         for d in sorted(legacy.iterdir()):
@@ -321,17 +388,18 @@ def prune_art_generate(gen_data, moved_filenames):
 
 def prune_art_prompts(prompts_data, moved_filenames):
     """Remove moved entries from art-prompts.yaml images: and inspirations: sections."""
-    import importlib.util, sys as _sys
-    _spec = importlib.util.spec_from_file_location(
+    import importlib.util
+
+    spec = importlib.util.spec_from_file_location(
         "build_workspace", Path(__file__).parent / "build_workspace.py"
     )
-    _bw = importlib.util.module_from_spec(_spec)
-    _spec.loader.exec_module(_bw)
+    bw = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(bw)
 
-    ART_PROMPTS_HEADER = _bw.ART_PROMPTS_HEADER
-    pending_art_prompt_entries = _bw.pending_art_prompt_entries
-    pending_inspiration_entries = _bw.pending_inspiration_entries
-    normalize_art_requests = _bw.normalize_art_requests
+    art_prompts_header = bw.ART_PROMPTS_HEADER
+    pending_art_prompt_entries = bw.pending_art_prompt_entries
+    pending_inspiration_entries = bw.pending_inspiration_entries
+    normalize_art_requests = bw.normalize_art_requests
     image_entries = pending_art_prompt_entries(prompts_data)
     inspiration_entries = pending_inspiration_entries(prompts_data)
     request_entries = normalize_art_requests(prompts_data)
@@ -351,13 +419,18 @@ def prune_art_prompts(prompts_data, moved_filenames):
         sections["inspirations"] = inspiration_entries
 
     body = yaml.safe_dump(sections, sort_keys=False, allow_unicode=True, width=88)
-    ART_PROMPTS_FILE.write_text(ART_PROMPTS_HEADER + body)
+    ART_PROMPTS_FILE.write_text(art_prompts_header + body)
 
     removed_img = orig_img - len(image_entries)
     removed_ins = orig_ins - new_ins
     removed_req = orig_req - len(request_entries)
     if removed_img or removed_ins or removed_req:
-        print(f"  art-prompts.yaml: removed {removed_img} project asset entry/entries, {removed_ins} inspiration entry/entries, {removed_req} request entry/entries")
+        print(
+            "  art-prompts.yaml: removed "
+            f"{removed_img} project asset entry/entries, "
+            f"{removed_ins} inspiration entry/entries, "
+            f"{removed_req} request entry/entries"
+        )
 
 
 def distribute():
@@ -388,6 +461,7 @@ def distribute():
     print(f"Found {len(files)} file(s) in projects/process/\n")
 
     moved = []
+    mirrored = []
     skipped_missing_repo = []
     unmatched = []
 
@@ -413,8 +487,6 @@ def distribute():
             skipped_missing_repo.append(fname)
             continue
 
-        # Destination occupied by different content: the original becomes a new
-        # inspiration in its slug's folder before the new image replaces it.
         preserve_path = None
         if dest.exists() and dest.read_bytes() != src.read_bytes():
             if not KIND_ROBOTS_ROOT.exists():
@@ -426,11 +498,26 @@ def distribute():
 
         if DRY_RUN:
             if preserve_path:
+                preserve_match = {
+                    "image_path": preserve_path,
+                    "target_repo": "silasfelinus/kind_robots",
+                }
+                mirror_project_inspiration(dest, preserve_match, slugs)
                 print(f"  would preserve original  {match['image_path']}  →  silasfelinus/kind_robots:{preserve_path}")
+            mirrored_dest = mirror_project_inspiration(src, match, slugs)
+            if mirrored_dest:
+                mirrored.append(str(mirrored_dest.relative_to(REPO_ROOT)))
             print(f"  would move  {fname}  →  {match['target_repo']}:{match['image_path']}")
             moved.append((fname, match))
         else:
             if preserve_path:
+                preserve_match = {
+                    "image_path": preserve_path,
+                    "target_repo": "silasfelinus/kind_robots",
+                }
+                mirrored_dest = mirror_project_inspiration(dest, preserve_match, slugs)
+                if mirrored_dest:
+                    mirrored.append(str(mirrored_dest.relative_to(REPO_ROOT)))
                 preserve_dest = KIND_ROBOTS_ROOT / preserve_path
                 preserve_dest.parent.mkdir(parents=True, exist_ok=True)
                 shutil.move(str(dest), preserve_dest)
@@ -438,6 +525,11 @@ def distribute():
                     str(Path(preserve_path).parent.relative_to("public/images"))
                 )
                 print(f"  preserved original  {match['image_path']}  →  silasfelinus/kind_robots:{preserve_path}")
+
+            mirrored_dest = mirror_project_inspiration(src, match, slugs)
+            if mirrored_dest:
+                mirrored.append(str(mirrored_dest.relative_to(REPO_ROOT)))
+
             dest.parent.mkdir(parents=True, exist_ok=True)
             shutil.copy2(src, dest)
             src.unlink()
@@ -450,13 +542,6 @@ def distribute():
                 touched_slugs.add("/".join(parts[2:-1]))
 
     if not DRY_RUN and KIND_ROBOTS_ROOT.exists():
-        # Regenerate the index, then a gallery.json for EVERY indexed folder —
-        # not just the ones touched this run. This keeps collections.json and
-        # the per-folder manifests in parity (the folder<->collection two-way
-        # parity Silas wants): a folder that got images by any path (e.g. the
-        # relay's local copy) still gets a resolvable manifest, so it shows up
-        # on Vercel where the filesystem can't be globbed. Idempotent: unchanged
-        # folders produce byte-identical manifests, so no commit churn.
         index = write_collections_index()
         print("  collections.json index regenerated")
         folders = sorted(set(index.values()))
@@ -472,18 +557,22 @@ def distribute():
     conductor_moved = [m for _, m in moved if m["target_repo"] == "silasfelinus/conductor"]
     kr_moved = [m for _, m in moved if m["target_repo"] == "silasfelinus/kind_robots"]
 
-    print(f"\n{'[dry run] ' if DRY_RUN else ''}{len(moved)} moved, {len(unmatched)} unmatched, {len(skipped_missing_repo)} skipped")
+    print(
+        f"\n{'[dry run] ' if DRY_RUN else ''}"
+        f"{len(moved)} moved, {len(mirrored)} mirrored to project inspirations, "
+        f"{len(unmatched)} unmatched, {len(skipped_missing_repo)} skipped"
+    )
 
     if not DRY_RUN and moved:
         print("\nNext steps:")
-        if conductor_moved:
-            print("  conductor:   git add projects/images/ && git commit -m 'chore: add generated images'")
+        if conductor_moved or mirrored:
+            print("  conductor:   git add projects/images/ projects/*/inspirations/ && git commit -m 'chore: add generated images'")
             print("  conductor:   python scripts/build_workspace.py  # prunes art-prompts.yaml")
         if kr_moved:
             print("  kind_robots: git add public/ && git commit -m 'chore: add generated images'")
 
     if unmatched:
-        print(f"\nUnmatched files (no yaml entry or known naming convention):")
+        print("\nUnmatched files (no yaml entry or known naming convention):")
         for f in unmatched:
             print(f"  {f}")
 
