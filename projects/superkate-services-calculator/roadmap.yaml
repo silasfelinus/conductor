@@ -297,25 +297,25 @@ tasks:
   - id: t-025
     milestone: m3
     title: Add schedule link and reply-to receipt defaults
-    status: ready
-    owner: null
+    status: done
+    owner: worker
     passes: 0
     stakes: reversible
     depends_on: t-006
-    updated: 2026-07-08
+    updated: 2026-07-09
     note: >
-      Wire the receipt composer defaults to use schedule/contact link https://hairbysuperkate.glossgenius.com/ and reply-to/contact email hairbysuperkate@gmail.com where appropriate. Keep the receipt user-reviewed and local; do not add backend sending or silent outbound email.
+      DONE (2026-07-09, PR #311): added Hair by Superkate receipt defaults using the booking link https://hairbysuperkate.glossgenius.com/ and reply-to/contact email hairbysuperkate@gmail.com. Receipt drafts remain local and user-reviewed with no backend sending, silent outbound email, live endpoint, analytics, production sync, secrets, DNS, deploy settings, billing, or app-store behavior.
   - id: t-026
     milestone: m4
     title: Add independent background pattern selector
-    status: ready
-    owner: null
+    status: done
+    owner: worker
     passes: 0
     stakes: reversible
     depends_on: t-016
-    updated: 2026-07-08
+    updated: 2026-07-09
     note: >
-      Split decorative background patterns from theme/color selection. Theme should control color palette and related visual tokens; background should be an independently selectable setting with options such as circles, hearts, grid, and none. Preserve the current circle background as one selectable option, but do not couple it to the active theme. Include tests or clear UI verification that changing the theme does not force a background pattern change and changing the background pattern does not alter the theme.
+      DONE (2026-07-09, PR #312): added an independent background selector with Circles, Hearts, Grid, and None options. Theme changes no longer force the decorative background pattern, and background changes do not alter the theme. Added widget coverage for theme/background independence. Security Audit, Worker PR CI, app-ci, and Superkate Flutter CI all passed before squash merge. No persistence, customer-data schema, backend sync, live endpoint, direct-send email, analytics, production deploy, secrets, DNS, billing, or app-store behavior changed.
   - id: t-027
     milestone: m2
     title: Define dedicated Hair by Superkate backend API and schema contract
