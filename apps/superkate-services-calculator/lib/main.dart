@@ -12,7 +12,9 @@ import 'ui/superkate_style.dart';
 void main() => runApp(const SuperkateServicesCalculatorApp());
 
 class SuperkateServicesCalculatorApp extends StatefulWidget {
-  const SuperkateServicesCalculatorApp({super.key});
+  const SuperkateServicesCalculatorApp({super.key, this.service});
+
+  final Future<PersistenceService>? service;
 
   @override
   State<SuperkateServicesCalculatorApp> createState() =>
@@ -23,7 +25,7 @@ class _SuperkateServicesCalculatorAppState
     extends State<SuperkateServicesCalculatorApp> {
   SuperkatePalette _selectedPalette = SuperkatePalettes.rainbowConnection;
   late final Future<PersistenceService> _service =
-      SqlitePersistenceService.open();
+      widget.service ?? SqlitePersistenceService.open();
 
   @override
   Widget build(BuildContext context) {
