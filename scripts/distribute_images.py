@@ -29,8 +29,10 @@ Usage:
   python scripts/distribute_images.py --dry-run  # preview without moving
 """
 
+import os
 import re
 import shutil
+import subprocess
 import sys
 from pathlib import Path
 
@@ -553,6 +555,11 @@ def distribute():
         moved_names = {fname for fname, _ in moved}
         prune_art_generate(gen_data, moved_names)
         prune_art_prompts(prompts_data, moved_names)
+
+    if not DRY_RUN and mirrored and os.getenv("GITHUB_ACTIONS") == "true":
+        mirror_paths = sorted({str((REPO_ROOT / m).parent.relative_to(REPO_ROOT)) for m in mirrored})
+        subprocess.run(["git", "add", *mirror_paths], cwd=REPO_ROOT, check=True)
+        print("  project inspiration mirrors staged for workflow commit")
 
     conductor_moved = [m for _, m in moved if m["target_repo"] == "silasfelinus/conductor"]
     kr_moved = [m for _, m in moved if m["target_repo"] == "silasfelinus/kind_robots"]
