@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:superkate_services_calculator/data/in_memory_onboarding_service.dart';
 import 'package:superkate_services_calculator/data/in_memory_persistence_service.dart';
 import 'package:superkate_services_calculator/data/persistence_service.dart';
 import 'package:superkate_services_calculator/main.dart';
+import 'package:superkate_services_calculator/ui/customer_profiles.dart';
+import 'package:superkate_services_calculator/ui/superkate_style.dart';
 
 /// Give tests a tall surface so the whole scrolling form (including the total
 /// card and save button) is laid out and hit-testable, not pushed offstage.
@@ -13,10 +16,84 @@ void _useTallSurface(WidgetTester tester) {
   addTearDown(tester.view.resetDevicePixelRatio);
 }
 
+Future<void> _pumpCustomerProfiles(
+  WidgetTester tester,
+  PersistenceService service,
+) async {
+  await tester.pumpWidget(
+    MaterialApp(
+      home: SuperkateTheme(
+        palette: SuperkatePalettes.rainbowConnection,
+        child: Scaffold(body: CustomerProfiles(service: service)),
+      ),
+    ),
+  );
+  await tester.pumpAndSettle();
+}
+
+Future<void> _tapVisible(WidgetTester tester, Finder finder) async {
+  await tester.ensureVisible(finder);
+  await tester.pumpAndSettle();
+  await tester.tap(finder);
+  await tester.pumpAndSettle();
+}
+
 void main() {
-  testWidgets('app boots into the new-appointment form', (tester) async {
+  testWidgets('app shows the splash onramp before first use', (tester) async {
     _useTallSurface(tester);
-    await tester.pumpWidget(const SuperkateServicesCalculatorApp());
+    final service = InMemoryPersistenceService();
+    final onboarding = InMemoryOnboardingService();
+
+    await tester.pumpWidget(
+      SuperkateServicesCalculatorApp(
+        service: Future.value(service),
+        onboardingService: Future.value(onboarding),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    expect(find.text('Hair by Superkate'), findsOneWidget);
+    expect(find.text('Private services calculator beta'), findsOneWidget);
+    expect(find.text('Start local beta'), findsOneWidget);
+    expect(find.text('Client name'), findsNothing);
+  });
+
+  testWidgets('onboarding start persists the choice and opens the calculator',
+      (tester) async {
+    _useTallSurface(tester);
+    final service = InMemoryPersistenceService();
+    final onboarding = InMemoryOnboardingService();
+
+    await tester.pumpWidget(
+      SuperkateServicesCalculatorApp(
+        service: Future.value(service),
+        onboardingService: Future.value(onboarding),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.byKey(const ValueKey('start-local-beta-button')));
+    await tester.pumpAndSettle();
+
+    expect(await onboarding.hasCompletedOnboarding(), isTrue);
+    expect(find.text('New appointment'), findsOneWidget);
+    expect(find.text('Client name'), findsOneWidget);
+    expect(find.text('Appointment total'), findsOneWidget);
+  });
+
+  testWidgets('app boots into the new-appointment form after onboarding',
+      (tester) async {
+    _useTallSurface(tester);
+    final service = InMemoryPersistenceService();
+    final onboarding = InMemoryOnboardingService(completed: true);
+
+    await tester.pumpWidget(
+      SuperkateServicesCalculatorApp(
+        service: Future.value(service),
+        onboardingService: Future.value(onboarding),
+      ),
+    );
+    await tester.pumpAndSettle();
 
     expect(find.text('Superkate Services Calculator'), findsWidgets);
     expect(find.text('New appointment'), findsOneWidget);
@@ -128,6 +205,47 @@ void main() {
     expect(find.text('Ronin'), findsNothing);
   });
 
+  testWidgets('appointment history delete supports cancel and confirm paths',
+      (tester) async {
+    _useTallSurface(tester);
+    final service = InMemoryPersistenceService();
+    final appointment = await service.createAppointment(
+      CreateAppointmentInput(
+        clientName: 'Kate',
+        appointmentDate: DateTime(2026, 7, 9),
+        hourlyRateCents: 10000,
+        timeSpentMinutes: 90,
+        productCostCents: 0,
+      ),
+    );
+
+    await tester
+        .pumpWidget(MaterialApp(home: SuperkateHomePage(service: service)));
+    await tester.tap(find.text('History'));
+    await tester.pumpAndSettle();
+
+    final deleteButton =
+        find.byKey(ValueKey('delete-appointment-${appointment.id}'));
+    await _tapVisible(tester, deleteButton);
+    expect(find.text('Delete appointment?'), findsOneWidget);
+    await tester.tap(
+        find.byKey(ValueKey('cancel-delete-appointment-${appointment.id}')));
+    await tester.pumpAndSettle();
+
+    var appointments = await service.listAppointments();
+    expect(appointments, hasLength(1));
+    expect(find.text('Kate'), findsOneWidget);
+
+    await _tapVisible(tester, deleteButton);
+    await tester.tap(
+        find.byKey(ValueKey('confirm-delete-appointment-${appointment.id}')));
+    await tester.pumpAndSettle();
+
+    appointments = await service.listAppointments();
+    expect(appointments, isEmpty);
+    expect(find.text('No saved appointments yet.'), findsOneWidget);
+  });
+
   testWidgets('prepare receipt opens a local mailto draft with customer email',
       (tester) async {
     _useTallSurface(tester);
@@ -174,5 +292,159 @@ void main() {
         'Hair by Superkate receipt for Kate');
     expect(launchedUri!.queryParameters['body'], contains('Client: Kate'));
     expect(launchedUri!.queryParameters['body'], contains('Superkate loves you!'));
+  });
+
+  testWidgets('background pattern changes independently from theme',
+      (tester) async {
+    _useTallSurface(tester);
+    final service = InMemoryPersistenceService();
+    final onboarding = InMemoryOnboardingService(completed: true);
+
+    await tester.pumpWidget(
+      SuperkateServicesCalculatorApp(
+        service: Future.value(service),
+        onboardingService: Future.value(onboarding),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    expect(find.byKey(const ValueKey('background-circles')), findsOneWidget);
+
+    await tester.tap(find.byTooltip('Choose background'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Hearts'));
+    await tester.pumpAndSettle();
+
+    expect(find.byKey(const ValueKey('background-hearts')), findsOneWidget);
+
+    await tester.tap(find.byTooltip('Choose theme'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Classic'));
+    await tester.pumpAndSettle();
+
+    expect(find.byKey(const ValueKey('background-hearts')), findsOneWidget);
+
+    await tester.tap(find.byTooltip('Choose background'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Grid'));
+    await tester.pumpAndSettle();
+
+    expect(find.byKey(const ValueKey('background-grid')), findsOneWidget);
+    expect(find.text('Client name'), findsOneWidget);
+  });
+
+  testWidgets('customer profiles can save a new profile', (tester) async {
+    _useTallSurface(tester);
+    final service = InMemoryPersistenceService();
+    await _pumpCustomerProfiles(tester, service);
+
+    await tester.enterText(
+        find.widgetWithText(TextField, 'Customer name'), 'Hannah');
+    await tester.enterText(
+        find.widgetWithText(TextField, 'Receipt email (optional)'),
+        'hannah@example.com');
+    await _tapVisible(tester, find.byKey(const ValueKey('save-customer-button')));
+
+    final customers = await service.listCustomers();
+    expect(customers, hasLength(1));
+    expect(customers.single.name, 'Hannah');
+    expect(customers.single.email, 'hannah@example.com');
+  });
+
+  testWidgets('customer profiles can edit an existing profile', (tester) async {
+    _useTallSurface(tester);
+    final service = InMemoryPersistenceService();
+    final customer = await service.upsertCustomer(
+      const UpsertCustomerInput(
+        name: 'Hannah',
+        email: 'hannah@example.com',
+      ),
+    );
+    await _pumpCustomerProfiles(tester, service);
+
+    await _tapVisible(tester, find.byKey(ValueKey('edit-customer-${customer.id}')));
+
+    final nameField = tester.widget<TextField>(
+      find.widgetWithText(TextField, 'Customer name'),
+    );
+    final emailField = tester.widget<TextField>(
+      find.widgetWithText(TextField, 'Receipt email (optional)'),
+    );
+    expect(nameField.controller?.text, 'Hannah');
+    expect(emailField.controller?.text, 'hannah@example.com');
+
+    await tester.enterText(
+        find.widgetWithText(TextField, 'Customer name'), 'Hannah Knight');
+    await tester.enterText(
+        find.widgetWithText(TextField, 'Receipt email (optional)'),
+        'hannah.knight@example.com');
+    await _tapVisible(tester, find.byKey(const ValueKey('save-customer-button')));
+
+    final customers = await service.listCustomers();
+    expect(customers, hasLength(1));
+    expect(customers.single.id, customer.id);
+    expect(customers.single.name, 'Hannah Knight');
+    expect(customers.single.email, 'hannah.knight@example.com');
+  });
+
+  testWidgets('customer profile delete supports cancel and confirm paths',
+      (tester) async {
+    _useTallSurface(tester);
+    final service = InMemoryPersistenceService();
+    final customer = await service.upsertCustomer(
+      const UpsertCustomerInput(
+        name: 'Hannah',
+        email: 'hannah@example.com',
+      ),
+    );
+    await _pumpCustomerProfiles(tester, service);
+
+    await _tapVisible(tester, find.byKey(ValueKey('delete-customer-${customer.id}')));
+    await tester.tap(find.text('Keep profile'));
+    await tester.pumpAndSettle();
+
+    var customers = await service.listCustomers();
+    expect(customers, hasLength(1));
+
+    await _tapVisible(tester, find.byKey(ValueKey('delete-customer-${customer.id}')));
+    await tester.tap(find.text('Delete profile'));
+    await tester.pumpAndSettle();
+
+    customers = await service.listCustomers();
+    expect(customers, isEmpty);
+  });
+
+  testWidgets('deleting a customer detaches appointment history safely',
+      (tester) async {
+    _useTallSurface(tester);
+    final service = InMemoryPersistenceService();
+    final customer = await service.upsertCustomer(
+      const UpsertCustomerInput(
+        name: 'Hannah',
+        email: 'hannah@example.com',
+      ),
+    );
+    await service.createAppointment(
+      CreateAppointmentInput(
+        customerId: customer.id,
+        clientName: customer.name,
+        appointmentDate: DateTime(2026, 7, 9),
+        hourlyRateCents: 12000,
+        timeSpentMinutes: 60,
+        productCostCents: 3000,
+      ),
+    );
+    await _pumpCustomerProfiles(tester, service);
+
+    await _tapVisible(tester, find.byKey(ValueKey('delete-customer-${customer.id}')));
+    await tester.tap(find.text('Delete profile'));
+    await tester.pumpAndSettle();
+
+    final customers = await service.listCustomers();
+    final appointments = await service.listAppointments();
+    expect(customers, isEmpty);
+    expect(appointments, hasLength(1));
+    expect(appointments.single.customerId, isNull);
+    expect(appointments.single.clientNameSnapshot, 'Hannah');
   });
 }

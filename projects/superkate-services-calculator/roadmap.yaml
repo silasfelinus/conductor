@@ -217,25 +217,34 @@ tasks:
   - id: t-018
     milestone: m2
     title: Add durable local SQLite persistence adapter
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
     depends_on: t-003
     updated: 2026-07-08
     note: >
-      Replace test-only in-memory persistence with a durable local SQLite-backed adapter behind the existing PersistenceService interface. Keep customer data local-first, do not add cloud sync yet, and include tests/migration-safe behavior for customers, appointments, totals, search filters, and restart persistence.
+      DONE (2026-07-08, PR #306): merged a local SQLite-backed PersistenceService adapter in apps/superkate-services-calculator, wired production startup to open the durable local database by default, and added app-level persistence injection so widget tests do not hit platform SQLite startup. Superkate Flutter analyze/test and Linux desktop build passed in CI; Windows desktop build reached a successful build step before post-action cleanup. No cloud sync, analytics, backend email, app-store, billing, deploy, secrets, or live customer-data service was added.
   - id: t-019
     milestone: m2
     title: Add customer profile edit and delete UI
-    status: waiting
-    owner: null
+    status: done
+    owner: worker
     passes: 0
     stakes: reversible
     depends_on: t-018
-    updated: 2026-07-08
+    updated: 2026-07-09
     note: >
-      Build customer profile screens or flows for viewing, editing, and deleting saved customers after durable storage exists. Preserve appointment history by detaching deleted customers rather than cascading appointment deletion unless Silas explicitly changes that rule.
+      DONE (2026-07-09, Reviewer-merged conductor PR #314, squash). Adds a "Manage customers"
+      AppBar sheet (lib/ui/customer_profiles.dart) for add/edit/delete of local customer
+      profiles, reusing the validated upsertCustomer/deleteCustomer contract from t-018
+      unchanged; delete detaches appointments rather than cascading, per spec. CI (Flutter
+      analyze/test, Linux/Windows desktop builds, security scans) all green. Reviewer fixed
+      up this roadmap entry and the claim bookkeeping after merge: the Worker branch
+      (worker/superkate-management-flows) never ran the claim step, never touched this
+      roadmap file, and used a non-task-scoped branch name instead of
+      worker/superkate-services-calculator-t-019. No widget tests were added for the new
+      add/edit/delete flow itself — see TALKBACK for the coverage gap and t-031 kaizen task.
   - id: t-020
     milestone: m3
     title: Add appointment delete flow
@@ -286,58 +295,58 @@ tasks:
   - id: t-024
     milestone: m3
     title: Add Android-first beta install notes
-    status: ready
-    owner: null
+    status: done
+    owner: worker
     passes: 0
     stakes: reversible
     depends_on: t-014
     updated: 2026-07-08
     note: >
-      Document the Android-first local beta path: debug build/install steps, fake-data-only warning until durable persistence lands, device smoke test checklist, and what remains before any Play Store/TestFlight/public distribution work. Do not submit or prepare a live app-store listing.
+      DONE (2026-07-08, PR #310): added projects/superkate-services-calculator/docs/android-first-beta-install.md and linked it from the app README. The doc covers Android debug build/install commands, USB device install flow, fake-data-only beta warnings, a local device smoke test checklist, and explicit blockers before wider beta/store distribution. No release signing, app-store listing, production backend, real customer data, DNS, secrets, billing, analytics, or backend email sending was added.
   - id: t-025
     milestone: m3
     title: Add schedule link and reply-to receipt defaults
-    status: ready
-    owner: null
+    status: done
+    owner: worker
     passes: 0
     stakes: reversible
     depends_on: t-006
-    updated: 2026-07-08
+    updated: 2026-07-09
     note: >
-      Wire the receipt composer defaults to use schedule/contact link https://hairbysuperkate.glossgenius.com/ and reply-to/contact email hairbysuperkate@gmail.com where appropriate. Keep the receipt user-reviewed and local; do not add backend sending or silent outbound email.
+      DONE (2026-07-09, PR #311): added Hair by Superkate receipt defaults using the booking link https://hairbysuperkate.glossgenius.com/ and reply-to/contact email hairbysuperkate@gmail.com. Receipt drafts remain local and user-reviewed with no backend sending, silent outbound email, live endpoint, analytics, production sync, secrets, DNS, deploy settings, billing, or app-store behavior.
   - id: t-026
     milestone: m4
     title: Add independent background pattern selector
-    status: ready
-    owner: null
+    status: done
+    owner: worker
     passes: 0
     stakes: reversible
     depends_on: t-016
-    updated: 2026-07-08
+    updated: 2026-07-09
     note: >
-      Split decorative background patterns from theme/color selection. Theme should control color palette and related visual tokens; background should be an independently selectable setting with options such as circles, hearts, grid, and none. Preserve the current circle background as one selectable option, but do not couple it to the active theme. Include tests or clear UI verification that changing the theme does not force a background pattern change and changing the background pattern does not alter the theme.
+      DONE (2026-07-09, PR #312): added an independent background selector with Circles, Hearts, Grid, and None options. Theme changes no longer force the decorative background pattern, and background changes do not alter the theme. Added widget coverage for theme/background independence. Security Audit, Worker PR CI, app-ci, and Superkate Flutter CI all passed before squash merge. No persistence, customer-data schema, backend sync, live endpoint, direct-send email, analytics, production deploy, secrets, DNS, billing, or app-store behavior changed.
   - id: t-027
     milestone: m2
     title: Define dedicated Hair by Superkate backend API and schema contract
-    status: ready
-    owner: null
+    status: done
+    owner: worker
     passes: 0
     stakes: reversible
     depends_on: t-023
     updated: 2026-07-08
     note: >
-      Write the dedicated backend contract before implementation. Define customer and appointment tables/models, local-to-server ID mapping, sync/tombstone fields, auth boundary, owner/business scoping, validation rules for money/time, and fake-data-only endpoint examples. Do not create secrets, DNS, deploys, production database connections, direct-send email, analytics, or public admin surfaces.
+      DONE (2026-07-08, PR #308): added projects/superkate-services-calculator/docs/backend-api-schema-contract.md defining the dedicated Hair by Superkate backend contract: customer and appointment schema, owner/business scoping, local-to-server ID mapping, sync tombstones, validation rules for money/time/dates, fake-data endpoints, and t-028 scaffold guidance. No secrets, DNS, deploy settings, production database connections, direct-send email, analytics, billing, app-store behavior, or public admin surfaces were created.
   - id: t-028
     milestone: m2
     title: Scaffold dedicated Hair by Superkate backend locally without deploy or secrets
-    status: waiting
-    owner: null
+    status: done
+    owner: worker
     passes: 0
     stakes: reversible
     depends_on: t-027
     updated: 2026-07-08
     note: >
-      Create the smallest dedicated backend app or service scaffold for Hair by Superkate sync using fake/local configuration only. Include health check, test database configuration, customer/appointment model placeholders, and automated tests. Do not touch production Unraid services, DNS, secrets, real databases, deploy settings, billing, analytics, or customer data.
+      DONE (2026-07-08, PR #309): merged the fake/local-only Hair by Superkate backend scaffold in apps/hairbysuperkate-backend/ with health, bootstrap, push, pull, reset-test-data, fake auth, in-memory store, validation, models, and unittest coverage. The same PR also fixed the repo Security Audit workflow so pull requests scan changed lockfiles/files while scheduled/manual runs retain repo-wide coverage. No secrets, DNS, deploy settings, production DB connections, real customer sync, analytics, billing, backend email sending, or app-store behavior was added.
   - id: t-029
     milestone: m2
     title: Add app-side sync client interfaces without enabling production sync
@@ -362,3 +371,19 @@ tasks:
     updated: 2026-07-08
     note: >
       Human-gated planning task only. Before any production sync uses real customer data, Silas must choose hosting location, database engine, domain/subdomain if any, secrets handling, backup schedule, restore test process, and access policy. Workers must not touch DNS, secrets, production deploy settings, production databases, billing, analytics, or real customer sync under this task without explicit concrete approval.
+  - id: t-031
+    milestone: m2
+    title: Add widget test coverage for the customer profile add/edit/delete UI
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-019
+    updated: 2026-07-09
+    note: >
+      Kaizen from t-019 (PR #314): lib/ui/customer_profiles.dart shipped with no widget
+      tests for save/edit/delete, breaking the pattern every prior UI task (t-004, t-005,
+      t-006, t-007, t-025, t-026) followed. Add coverage for: saving a new profile, editing
+      an existing one (form prefill + update), deleting a profile (confirm dialog cancel and
+      confirm paths), and the delete-detach invariant (appointment history keeps its client
+      name after the linked customer is deleted).

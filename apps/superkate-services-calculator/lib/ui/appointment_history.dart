@@ -163,6 +163,7 @@ class _AppointmentHistoryState extends State<AppointmentHistory> {
                             appointment: appointment,
                             service: widget.service,
                             launchReceiptEmail: launcher,
+                            onDeleted: _reload,
                           ),
                           const SizedBox(height: 12),
                         ],
@@ -346,11 +347,13 @@ class _AppointmentResultCard extends StatelessWidget {
     required this.appointment,
     required this.service,
     required this.launchReceiptEmail,
+    required this.onDeleted,
   });
 
   final Appointment appointment;
   final PersistenceService service;
   final ReceiptEmailLauncher launchReceiptEmail;
+  final VoidCallback onDeleted;
 
   @override
   Widget build(BuildContext context) {
@@ -424,15 +427,77 @@ class _AppointmentResultCard extends StatelessWidget {
             const SizedBox(height: 14),
             Align(
               alignment: Alignment.centerRight,
-              child: FilledButton.tonalIcon(
-                onPressed: () => _prepareReceipt(context),
-                icon: const Icon(Icons.mail_outline),
-                label: const Text('Prepare receipt'),
+              child: Wrap(
+                alignment: WrapAlignment.end,
+                spacing: 8,
+                runSpacing: 8,
+                children: [
+                  TextButton.icon(
+                    key: ValueKey('delete-appointment-${appointment.id}'),
+                    onPressed: () => _confirmDelete(context),
+                    style: TextButton.styleFrom(
+                      foregroundColor: colors.error,
+                    ),
+                    icon: const Icon(Icons.delete_outline),
+                    label: const Text('Delete appointment'),
+                  ),
+                  FilledButton.tonalIcon(
+                    onPressed: () => _prepareReceipt(context),
+                    icon: const Icon(Icons.mail_outline),
+                    label: const Text('Prepare receipt'),
+                  ),
+                ],
               ),
             ),
           ],
         ),
       ),
+    );
+  }
+
+  Future<void> _confirmDelete(BuildContext context) async {
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        backgroundColor: SuperkateStyle.cardStrong,
+        shape: SuperkateStyle.cardShape(),
+        title: const Text('Delete appointment?'),
+        content: const Text(
+          'This removes this saved appointment from local history. Other appointments, customer profiles, and receipt drafts stay unchanged.',
+        ),
+        actions: [
+          TextButton(
+            key: ValueKey('cancel-delete-appointment-${appointment.id}'),
+            onPressed: () => Navigator.of(context).pop(false),
+            child: const Text('Keep appointment'),
+          ),
+          TextButton(
+            key: ValueKey('confirm-delete-appointment-${appointment.id}'),
+            onPressed: () => Navigator.of(context).pop(true),
+            child: const Text('Delete appointment'),
+          ),
+        ],
+      ),
+    );
+
+    if (confirmed != true) return;
+
+    try {
+      await service.deleteAppointment(appointment.id);
+    } catch (_) {
+      if (!context.mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Could not delete appointment. Please try again.'),
+        ),
+      );
+      return;
+    }
+
+    if (!context.mounted) return;
+    onDeleted();
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Appointment deleted.')),
     );
   }
 
