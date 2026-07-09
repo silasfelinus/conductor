@@ -7,6 +7,7 @@ import 'data/persistence_service.dart';
 import 'data/sqlite_persistence_service.dart';
 import 'domain/money.dart';
 import 'ui/appointment_history.dart';
+import 'ui/customer_profiles.dart';
 import 'ui/new_appointment_form.dart';
 import 'ui/receipt_email_launcher.dart';
 import 'ui/superkate_onboarding.dart';
@@ -70,17 +71,13 @@ class _SuperkateServicesCalculatorAppState
     setState(() => _isCompletingOnboarding = true);
     try {
       await onboardingService.completeOnboarding();
-      if (!mounted) {
-        return;
-      }
+      if (!mounted) return;
       setState(() {
         _onboardingCompletedOverride = true;
         _isCompletingOnboarding = false;
       });
     } catch (_) {
-      if (mounted) {
-        setState(() => _isCompletingOnboarding = false);
-      }
+      if (mounted) setState(() => _isCompletingOnboarding = false);
       rethrow;
     }
   }
@@ -257,6 +254,33 @@ class _SuperkateHomePageState extends State<SuperkateHomePage> {
       widget.service ?? InMemoryPersistenceService();
   int _historyRefreshToken = 0;
 
+  void _refreshHistory() => setState(() => _historyRefreshToken++);
+
+  void _openCustomerProfiles() {
+    final palette = widget.selectedPalette;
+    showModalBottomSheet<void>(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (context) => FractionallySizedBox(
+        heightFactor: 0.92,
+        child: SuperkateTheme(
+          palette: palette,
+          child: ClipRRect(
+            borderRadius: const BorderRadius.vertical(top: Radius.circular(32)),
+            child: Material(
+              color: palette.ink,
+              child: CustomerProfiles(
+                service: _service,
+                onChanged: _refreshHistory,
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final palette = widget.selectedPalette;
@@ -270,6 +294,11 @@ class _SuperkateHomePageState extends State<SuperkateHomePage> {
           appBar: AppBar(
             title: const Text('Superkate Services Calculator'),
             actions: [
+              IconButton(
+                tooltip: 'Manage customers',
+                onPressed: _openCustomerProfiles,
+                icon: const Icon(Icons.people_alt_outlined),
+              ),
               _BackgroundPickerButton(
                 selectedBackground: widget.selectedBackground,
                 onBackgroundChanged: widget.onBackgroundChanged,
@@ -319,7 +348,7 @@ class _SuperkateHomePageState extends State<SuperkateHomePage> {
                         NewAppointmentForm(
                           service: _service,
                           onSaved: (appointment) {
-                            setState(() => _historyRefreshToken++);
+                            _refreshHistory();
                             ScaffoldMessenger.of(context)
                               ..clearSnackBars()
                               ..showSnackBar(
