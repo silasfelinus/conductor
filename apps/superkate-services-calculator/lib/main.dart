@@ -365,7 +365,6 @@ class _SuperkateHomePageState extends State<SuperkateHomePage> {
                           service: _service,
                           refreshToken: _historyRefreshToken,
                           launchReceiptEmail: widget.launchReceiptEmail,
-                          onChanged: _refreshHistory,
                         ),
                       ],
                     ),
