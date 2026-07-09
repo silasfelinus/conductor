@@ -4,6 +4,8 @@ import 'package:superkate_services_calculator/data/in_memory_onboarding_service.
 import 'package:superkate_services_calculator/data/in_memory_persistence_service.dart';
 import 'package:superkate_services_calculator/data/persistence_service.dart';
 import 'package:superkate_services_calculator/main.dart';
+import 'package:superkate_services_calculator/ui/customer_profiles.dart';
+import 'package:superkate_services_calculator/ui/superkate_style.dart';
 
 /// Give tests a tall surface so the whole scrolling form (including the total
 /// card and save button) is laid out and hit-testable, not pushed offstage.
@@ -12,6 +14,21 @@ void _useTallSurface(WidgetTester tester) {
   tester.view.devicePixelRatio = 1.0;
   addTearDown(tester.view.resetPhysicalSize);
   addTearDown(tester.view.resetDevicePixelRatio);
+}
+
+Future<void> _pumpCustomerProfiles(
+  WidgetTester tester,
+  PersistenceService service,
+) async {
+  await tester.pumpWidget(
+    MaterialApp(
+      home: SuperkateTheme(
+        palette: SuperkatePalettes.rainbowConnection,
+        child: Scaffold(body: CustomerProfiles(service: service)),
+      ),
+    ),
+  );
+  await tester.pumpAndSettle();
 }
 
 void main() {
@@ -271,11 +288,8 @@ void main() {
   testWidgets('customer profiles can save a new profile', (tester) async {
     _useTallSurface(tester);
     final service = InMemoryPersistenceService();
-    await tester
-        .pumpWidget(MaterialApp(home: SuperkateHomePage(service: service)));
+    await _pumpCustomerProfiles(tester, service);
 
-    await tester.tap(find.byTooltip('Manage customers'));
-    await tester.pumpAndSettle();
     await tester.enterText(
         find.widgetWithText(TextField, 'Customer name'), 'Hannah');
     await tester.enterText(
@@ -300,11 +314,8 @@ void main() {
         email: 'hannah@example.com',
       ),
     );
-    await tester
-        .pumpWidget(MaterialApp(home: SuperkateHomePage(service: service)));
+    await _pumpCustomerProfiles(tester, service);
 
-    await tester.tap(find.byTooltip('Manage customers'));
-    await tester.pumpAndSettle();
     await tester.tap(find.byKey(ValueKey('edit-customer-${customer.id}')));
     await tester.pumpAndSettle();
 
@@ -344,11 +355,8 @@ void main() {
         email: 'hannah@example.com',
       ),
     );
-    await tester
-        .pumpWidget(MaterialApp(home: SuperkateHomePage(service: service)));
+    await _pumpCustomerProfiles(tester, service);
 
-    await tester.tap(find.byTooltip('Manage customers'));
-    await tester.pumpAndSettle();
     await tester.tap(find.byKey(ValueKey('delete-customer-${customer.id}')));
     await tester.pumpAndSettle();
     await tester.tap(find.text('Keep profile'));
@@ -387,11 +395,8 @@ void main() {
         productCostCents: 3000,
       ),
     );
-    await tester
-        .pumpWidget(MaterialApp(home: SuperkateHomePage(service: service)));
+    await _pumpCustomerProfiles(tester, service);
 
-    await tester.tap(find.byTooltip('Manage customers'));
-    await tester.pumpAndSettle();
     await tester.tap(find.byKey(ValueKey('delete-customer-${customer.id}')));
     await tester.pumpAndSettle();
     await tester.tap(find.text('Delete profile'));
