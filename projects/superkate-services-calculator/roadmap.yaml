@@ -319,14 +319,14 @@ tasks:
   - id: t-027
     milestone: m2
     title: Define dedicated Hair by Superkate backend API and schema contract
-    status: claimed
+    status: review
     owner: worker
     passes: 0
     stakes: reversible
     depends_on: t-023
     updated: 2026-07-08
     note: >
-      Write the dedicated backend contract before implementation. Define customer and appointment tables/models, local-to-server ID mapping, sync/tombstone fields, auth boundary, owner/business scoping, validation rules for money/time, and fake-data-only endpoint examples. Do not create secrets, DNS, deploys, production database connections, direct-send email, analytics, or public admin surfaces.
+      REVIEW: Added projects/superkate-services-calculator/docs/backend-api-schema-contract.md defining the dedicated Hair by Superkate backend contract: customer and appointment schema, owner/business scoping, local-to-server ID mapping, sync tombstones, validation rules for money/time/dates, fake-data endpoints, and t-028 scaffold guidance. No secrets, DNS, deploy settings, production database connections, direct-send email, analytics, or public admin surfaces were created.
   - id: t-028
     milestone: m2
     title: Scaffold dedicated Hair by Superkate backend locally without deploy or secrets
