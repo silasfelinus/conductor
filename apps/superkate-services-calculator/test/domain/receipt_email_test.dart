@@ -40,10 +40,17 @@ void main() {
     expect(draft.body, contains('Product cost: \$25.00'));
     expect(draft.body, contains('Total price: \$175.00'));
     expect(draft.body, contains('\$100.00 × 1h 30m + \$25.00 = \$175.00'));
+    expect(draft.body, contains(hairBySuperkateScheduleUrl));
+    expect(draft.body, contains(hairBySuperkateReplyToEmail));
     expect(draft.body, contains('Superkate loves you!'));
+    expect(draft.replyToEmail, hairBySuperkateReplyToEmail);
     expect(draft.mailtoUri.scheme, 'mailto');
     expect(draft.mailtoUri.path, 'kate@example.com');
     expect(draft.mailtoUri.queryParameters['body'], draft.body);
+    expect(
+      draft.mailtoUri.queryParameters['reply-to'],
+      hairBySuperkateReplyToEmail,
+    );
   });
 
   test('buildReceiptEmail leaves recipient blank when no email is known', () {
@@ -67,5 +74,11 @@ void main() {
     expect(draft.mailtoUri.path, isEmpty);
     expect(draft.body, contains('Product cost: \$0.00'));
     expect(draft.body, contains('\$80.00 × 45m + \$0.00 = \$60.00'));
+    expect(draft.body, contains(hairBySuperkateScheduleUrl));
+    expect(draft.body, contains(hairBySuperkateReplyToEmail));
+    expect(
+      draft.mailtoUri.queryParameters['reply-to'],
+      hairBySuperkateReplyToEmail,
+    );
   });
 }
