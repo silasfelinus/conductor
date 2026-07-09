@@ -183,7 +183,11 @@ void main() {
   testWidgets('background pattern changes independently from theme',
       (tester) async {
     _useTallSurface(tester);
-    await tester.pumpWidget(const MaterialApp(home: SuperkateHomePage()));
+    final service = InMemoryPersistenceService();
+    await tester.pumpWidget(
+      SuperkateServicesCalculatorApp(service: Future.value(service)),
+    );
+    await tester.pumpAndSettle();
 
     expect(find.byKey(const ValueKey('background-circles')), findsOneWidget);
 
