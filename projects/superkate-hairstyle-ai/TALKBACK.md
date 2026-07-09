@@ -112,3 +112,29 @@ kind_robots PR #136. PRs #133/#134 merged by Silas — t-004..t-009 are done.
 **Suggested action:** Silas — merge #136, hard-refresh, and retest: pick Hair Studio (should
 render in place), hop to Rewards and back to Art (should return to Hair Studio). Worker — next
 up: t-013 (durable before/after source persistence + real client link) and t-010 (state polish).
+
+## 2026-07-09 | Claude (Silas-directed) → system | superkate-hairstyle-ai/t-014 | pattern
+
+**Subject:** Production styling failed (ENOTFOUND on the ts.net Comfy host from Vercel).
+Root-caused and re-routed through the durable ArtJob queue. kind_robots PR #138 + relay
+change on conductor PR #320. Silas also expanded scope: full Superkate app replica on the
+Hair Studio page (t-015, claimed).
+
+**Detail:**
+- The direct /api/comfy/kontext/generate route dials the Comfy box from the deployed backend,
+  which is not on the home tailnet — ts.net names don't resolve there. The repo already had
+  the working pattern: the ArtJob queue that ops/home-server/relay_agent.py claims OUTWARD
+  (pull model, no inbound path, "all policy lives in kind_robots").
+- New /api/comfy/kontext/enqueue: mana-gated at enqueue, job payload carries the kontext
+  workflow + input image + a save block. relay_agent.py gained stdlib multipart upload of
+  payload images to ComfyUI's input folder (LoadImage support — image-to-image jobs).
+- Ownership subtlety: save-generated rejects foreign userIds, so relay uploads land owned by
+  the relay machine user. The queue COMPLETE endpoint (already admin-gated) now applies the
+  job's save block + ownership by the enqueuing user — keeping stylist photos private and in
+  Superkate's Past-looks history. Legacy jobs without a save block are untouched.
+- DEPLOY STEP FOR SILAS: restart the home relay agent with the updated relay_agent.py after
+  merging, or queued stylist jobs will fail at the LoadImage node.
+
+**Suggested action:** Silas — merge kind_robots #138 + conductor #320, update the home relay
+agent, then run /stylist on the deployed site end-to-end. Claude — t-015 (full app replica
+suite on /stylist: Calculator | Clients | History | Hair Studio) is in progress.

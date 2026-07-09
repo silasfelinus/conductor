@@ -18,6 +18,12 @@ notes_from_silas: |
   Collab: ChatGPT (Worker) builds, Claude (Reviewer) reviews and hard-gates every step toward
   charging money / going public / touching real client data at scale.
 
+  2026-07-09 additions from Silas: (1) production generation must use the tailnet-safe path —
+  the deployed backend cannot resolve ts.net hostnames; the durable ArtJob queue + home relay
+  agent is the working bypass. (2) The Hair Studio page should host a REPLICA OF THE ENTIRE
+  Superkate app (calculator, clients, appointment history), not just the hair redesign — an
+  easy mock is fine where 1:1 backend parity isn't there yet, since Kind Robots is the backend.
+
 milestones:
   - id: m1
     title: "SHAPE — brief, backend contract, prompt design"
@@ -255,3 +261,40 @@ tasks:
       with a real client-identity link so a client's history is unambiguous — coordinate the key
       with the calculator's customer profile rather than widening scope here. Keep everything
       private (isPublic:false) and reversible; no billing, deploy, or public surface.
+
+  - id: t-014
+    milestone: m2
+    title: "Route generation through the ArtJob queue (prod tailnet fix)"
+    status: review
+    owner: claude
+    passes: 0
+    stakes: reversible
+    depends_on: t-007
+    updated: 2026-07-09
+    note: >
+      IN REVIEW (kind_robots PR #138 + relay change on conductor PR #320): production styling
+      failed with ENOTFOUND on the ts.net Comfy hostname — the deployed backend is not on the
+      home tailnet. Fix uses the existing durable ArtJob queue: new /api/comfy/kontext/enqueue
+      (mana-gated, workflow + input image + save block in the job payload), stylistStore
+      enqueues and polls /api/art/queue/:id, the queue complete endpoint applies
+      isPublic:false + designer + ownership to the uploaded ArtImage, and relay_agent.py gains
+      input-image upload to ComfyUI. TO VERIFY: deploy updated relay_agent.py on the home
+      server, merge both PRs, then run /stylist on the deployed site end-to-end.
+
+  - id: t-015
+    milestone: m2
+    title: "Replicate the full Superkate app on the Hair Studio page"
+    status: claimed
+    owner: claude
+    passes: 0
+    stakes: reversible
+    updated: 2026-07-09
+    note: >
+      Silas (2026-07-09): the Hair Studio page should carry a replica of the ENTIRE Superkate
+      app — services calculator, client profiles, appointment history/receipts — alongside the
+      hair restyler, not just the redesign feature. Kind Robots is the backend, so an easy mock
+      is acceptable where 1:1 parity is missing. Plan: a sub-tabbed suite on /stylist
+      (Calculator | Clients | History | Hair Studio) implementing the calculator SPEC's core
+      formula (hourly rate x time + product cost), customer records with optional email,
+      receipt text with the configurable contact block and "Superkate loves you!", persisted
+      locally first (client-side store), with KR-model-backed sync as a follow-up.
