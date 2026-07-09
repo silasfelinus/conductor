@@ -15,16 +15,18 @@ Port: 5433
 Network exposure: no public access; internal/private only
 Data path target: /mnt/user/appdata/hairbysuperkate-postgres
 Timezone: UTC
+Tailscale: reachable on Silas's Tailscale network from approved workers/agents that have explicit access
 ```
 
 Do not store the database password in this repository, GitHub, roadmap notes, PR bodies, issue comments, or chat logs.
 
 ## Intended architecture
 
-- The future Hair by Superkate backend service connects to this database over Silas's private Unraid/Docker network.
+- The future Hair by Superkate backend service connects to this database over Silas's private Unraid/Docker/Tailscale network.
 - The Android app must never connect directly to Postgres.
 - The phone app should talk only to the dedicated backend API after sync is explicitly enabled.
 - Local Android beta remains local-only until durable local persistence, export, app/device lock, and fake-data backend sync are verified.
+- GitHub workers or LLM agents may use the Tailscale database route only for explicitly approved fake-data migrations, schema checks, connectivity checks, and non-destructive verification.
 
 ## First backend environment shape
 
@@ -36,7 +38,7 @@ HBS_BUSINESS_SLUG=hair-by-superkate
 HBS_ENV=local
 ```
 
-If the backend container shares a Docker network with the database container, prefer the internal container name as host. If the backend runs outside that Docker network, use the private Unraid host/IP and keep the port firewalled to the LAN/private network only.
+If the backend container shares a Docker network with the database container, prefer the internal container name as host. If the backend or an approved worker runs from Tailscale instead, use the Tailscale/private host and keep the port private to the tailnet/LAN only.
 
 ## Minimum schema direction
 
@@ -67,3 +69,5 @@ Use `business_slug = hair-by-superkate` even if the backend starts single-tenant
 ## Safety gates
 
 Workers may document, scaffold local/fake-data backend code, and write tests. Workers must not touch DNS, secrets, production deploy settings, public exposure, billing, analytics, direct-send email, or real customer-data sync without Silas explicitly approving that concrete action in-session.
+
+Even with Tailscale access, agents must not run destructive database commands such as `DROP DATABASE`, `DROP TABLE`, `TRUNCATE`, production data rewrites, bulk deletes, or reset-style migration commands. Schema work should start with fake data and additive, reversible migrations.
