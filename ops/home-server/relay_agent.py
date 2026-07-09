@@ -40,7 +40,12 @@ A1111 job payload: either raw txt2img keys (prompt, negative_prompt,
 cfg_scale, sampler_name, ...) or KR-style keys (promptString, negativePrompt,
 cfg, sampler) — both accepted, KR-style is translated.
 COMFY job payload: {"workflow": <full ComfyUI API-format graph>} plus
-optional "promptString" for the ArtImage record.
+optional "promptString" for the ArtImage record, and optional
+"images": [{"name", "imageData"}] — input images (base64 or data URL)
+uploaded to ComfyUI's input folder before the workflow runs, so LoadImage
+nodes can reference them (image-to-image, e.g. Flux Kontext / Hair Studio).
+An optional "save" block ({isPublic, isMature, designer}) is applied by
+kind_robots' complete endpoint, not by this agent.
 """
 
 import base64
@@ -134,11 +139,64 @@ def run_a1111(payload):
     return resp["images"][0]
 
 
+def upload_comfy_input_images(payload):
+    """Upload payload["images"] entries ({name, imageData}) to ComfyUI's input
+    folder so LoadImage nodes can reference them by name. imageData may be a
+    raw base64 string or a data URL. Image-to-image workflows (e.g. Flux
+    Kontext from kind_robots' /api/comfy/kontext/enqueue) depend on this."""
+    images = payload.get("images") or []
+    if not isinstance(images, list):
+        raise ValueError('COMFY payload "images" must be a list')
+    for entry in images:
+        name = (entry or {}).get("name")
+        data = (entry or {}).get("imageData") or ""
+        if not name or not data:
+            raise ValueError('each images entry needs "name" and "imageData"')
+        if data.lstrip().lower().startswith("data:") and "," in data:
+            data = data.split(",", 1)[1]
+        raw = base64.b64decode(data)
+
+        boundary = "krrelay" + base64.b16encode(os.urandom(12)).decode().lower()
+        ext = os.path.splitext(name)[1].lstrip(".").lower() or "png"
+        mime = "image/jpeg" if ext in ("jpg", "jpeg") else f"image/{ext}"
+        parts = []
+        parts.append(
+            (
+                f"--{boundary}\r\n"
+                f'Content-Disposition: form-data; name="image"; filename="{name}"\r\n'
+                f"Content-Type: {mime}\r\n\r\n"
+            ).encode()
+        )
+        parts.append(raw)
+        parts.append(
+            (
+                f"\r\n--{boundary}\r\n"
+                'Content-Disposition: form-data; name="type"\r\n\r\ninput\r\n'
+                f"--{boundary}\r\n"
+                'Content-Disposition: form-data; name="overwrite"\r\n\r\ntrue\r\n'
+                f"--{boundary}--\r\n"
+            ).encode()
+        )
+        body = b"".join(parts)
+
+        req = urllib.request.Request(
+            f"{COMFY_URL}/upload/image", data=body, method="POST"
+        )
+        req.add_header("Content-Type", f"multipart/form-data; boundary={boundary}")
+        with urllib.request.urlopen(req, timeout=120) as resp:
+            uploaded = json.loads(resp.read().decode() or "null")
+        if not uploaded or not uploaded.get("name"):
+            raise RuntimeError(f"ComfyUI input upload failed for {name}")
+        log(f"uploaded input image {uploaded['name']}")
+
+
 def run_comfy(payload):
     """Submit a ComfyUI workflow, poll history, download the first output image."""
     workflow = payload.get("workflow")
     if not isinstance(workflow, dict) or not workflow:
         raise ValueError('COMFY payload needs a "workflow" object (API format)')
+
+    upload_comfy_input_images(payload)
 
     status, resp = http_json(
         "POST", f"{COMFY_URL}/prompt", {"prompt": workflow, "client_id": AGENT_ID}
