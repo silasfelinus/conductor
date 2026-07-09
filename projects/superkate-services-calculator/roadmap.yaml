@@ -305,3 +305,14 @@ tasks:
     updated: 2026-07-08
     note: >
       Wire the receipt composer defaults to use schedule/contact link https://hairbysuperkate.glossgenius.com/ and reply-to/contact email hairbysuperkate@gmail.com where appropriate. Keep the receipt user-reviewed and local; do not add backend sending or silent outbound email.
+  - id: t-026
+    milestone: m4
+    title: Add independent background pattern selector
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-016
+    updated: 2026-07-08
+    note: >
+      Split decorative background patterns from theme/color selection. Theme should control color palette and related visual tokens; background should be an independently selectable setting with options such as circles, hearts, grid, and none. Preserve the current circle background as one selectable option, but do not couple it to the active theme. Include tests or clear UI verification that changing the theme does not force a background pattern change and changing the background pattern does not alter the theme.
