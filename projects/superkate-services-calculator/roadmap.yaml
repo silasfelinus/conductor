@@ -286,14 +286,14 @@ tasks:
   - id: t-024
     milestone: m3
     title: Add Android-first beta install notes
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
     depends_on: t-014
     updated: 2026-07-08
     note: >
-      Document the Android-first local beta path: debug build/install steps, fake-data-only warning until durable persistence lands, device smoke test checklist, and what remains before any Play Store/TestFlight/public distribution work. Do not submit or prepare a live app-store listing.
+      DONE (2026-07-08, PR #310): added projects/superkate-services-calculator/docs/android-first-beta-install.md and linked it from the app README. The doc covers Android debug build/install commands, USB device install flow, fake-data-only beta warnings, a local device smoke test checklist, and explicit blockers before wider beta/store distribution. No release signing, app-store listing, production backend, real customer data, DNS, secrets, billing, analytics, or backend email sending was added.
   - id: t-025
     milestone: m3
     title: Add schedule link and reply-to receipt defaults
