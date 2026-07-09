@@ -256,6 +256,31 @@ class _SuperkateHomePageState extends State<SuperkateHomePage> {
 
   void _refreshHistory() => setState(() => _historyRefreshToken++);
 
+  void _openCustomerProfiles() {
+    final palette = widget.selectedPalette;
+    showModalBottomSheet<void>(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (context) => FractionallySizedBox(
+        heightFactor: 0.92,
+        child: SuperkateTheme(
+          palette: palette,
+          child: ClipRRect(
+            borderRadius: const BorderRadius.vertical(top: Radius.circular(32)),
+            child: Material(
+              color: palette.ink,
+              child: CustomerProfiles(
+                service: _service,
+                onChanged: _refreshHistory,
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final palette = widget.selectedPalette;
@@ -263,12 +288,17 @@ class _SuperkateHomePageState extends State<SuperkateHomePage> {
     return SuperkateTheme(
       palette: palette,
       child: DefaultTabController(
-        length: 3,
+        length: 2,
         child: Scaffold(
           extendBodyBehindAppBar: true,
           appBar: AppBar(
             title: const Text('Superkate Services Calculator'),
             actions: [
+              IconButton(
+                tooltip: 'Manage customers',
+                onPressed: _openCustomerProfiles,
+                icon: const Icon(Icons.people_alt_outlined),
+              ),
               _BackgroundPickerButton(
                 selectedBackground: widget.selectedBackground,
                 onBackgroundChanged: widget.onBackgroundChanged,
@@ -295,7 +325,6 @@ class _SuperkateHomePageState extends State<SuperkateHomePage> {
                     labelStyle: const TextStyle(fontWeight: FontWeight.w800),
                     tabs: const [
                       Tab(text: 'New'),
-                      Tab(text: 'Customers'),
                       Tab(text: 'History'),
                     ],
                   ),
@@ -331,10 +360,6 @@ class _SuperkateHomePageState extends State<SuperkateHomePage> {
                                 ),
                               );
                           },
-                        ),
-                        CustomerProfiles(
-                          service: _service,
-                          onChanged: _refreshHistory,
                         ),
                         AppointmentHistory(
                           service: _service,
