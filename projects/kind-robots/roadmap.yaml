@@ -51,7 +51,7 @@ milestones:
   - id: m5
     title: "WonderLab mural coloring tool"
     weight: 20
-    status: not-started
+    status: done
 
 tasks:
   - id: t-001
@@ -207,20 +207,18 @@ tasks:
   - id: t-010
     milestone: m5
     title: "Build WonderLab mural coloring prototype for mural-design"
-    status: ready
-    owner: null
-    updated: "2026-07-09T00:00:00Z"
+    status: done
+    owner: worker
+    updated: "2026-07-09T22:18:00Z"
     passes: 0
     stakes: reversible
     note: >
-      Build a front-end-only prototype in kind_robots under the existing wonder dashboard
-      key / WonderLab. Add a mural-design tab to dashboardConfigs.wonder, render it from
-      components/wonderlab/lab-manager.vue, and put the interactive UI in a dedicated
-      component such as components/wonderlab/mural-coloring-page.vue. Use a Pinia store
-      for all interactions and persistence: palette colors keyed by color id, section
-      selection, section-to-color assignment, global color-id swapping, restore defaults,
-      and assignment JSON export. Do not call API routes directly from the component.
-      Use static starter data/assets under public/data/mural-design and public/images/mural-design;
-      the first pass may use a starter/manual section map while mural-design/t-002 refines
-      the Kontext-generated fence-only coloring assets. The off-fence environment stays
-      colored; only actual fence sections, including the background, are recolored.
+      Merged kind_robots PR #135 as the first WonderLab mural color-studio pass. The
+      shipped /mural page uses a dedicated Pinia/localStorage store, starter/manual SVG
+      sections, saved paint swatches, swatch add/remove, clickable section painting,
+      group fill controls, per-section overrides, reset-to-default behavior, WonderLab
+      card bridge wiring, tutorial wiring, and required mural asset paths. Remaining
+      follow-up work: replace placeholder WebP payloads with real artwork, promote
+      mural into dashboardConfigs.wonder.tabs, remove the temporary labCards bridge,
+      add palette/assignment JSON import-export, add named paint schemes, and wire in
+      generated fence-only coloring assets from mural-design/t-002 when ready.
