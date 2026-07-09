@@ -17,11 +17,13 @@ class AppointmentHistory extends StatefulWidget {
     required this.service,
     this.refreshToken = 0,
     this.launchReceiptEmail,
+    this.onChanged,
   });
 
   final PersistenceService service;
   final int refreshToken;
   final ReceiptEmailLauncher? launchReceiptEmail;
+  final VoidCallback? onChanged;
 
   @override
   State<AppointmentHistory> createState() => _AppointmentHistoryState();
@@ -68,9 +70,7 @@ class _AppointmentHistoryState extends State<AppointmentHistory> {
 
   void _reload() {
     if (!mounted) return;
-    setState(() {
-      _appointments = _searchAppointments();
-    });
+    setState(() => _appointments = _searchAppointments());
   }
 
   Future<void> _pickFromDate() => _pickDate(
@@ -111,6 +111,52 @@ class _AppointmentHistoryState extends State<AppointmentHistory> {
       _to = null;
       _appointments = _searchAppointments();
     });
+  }
+
+  Future<void> _confirmDelete(Appointment appointment) async {
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        backgroundColor: SuperkateStyle.cardStrong,
+        shape: SuperkateStyle.cardShape(),
+        title: const Text('Delete appointment?'),
+        content: Text(
+          'Remove ${appointment.clientNameSnapshot} from local history? This only deletes this appointment, not the customer profile.',
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(false),
+            child: const Text('Keep appointment'),
+          ),
+          FilledButton.tonalIcon(
+            onPressed: () => Navigator.of(context).pop(true),
+            icon: const Icon(Icons.delete_outline),
+            label: const Text('Delete appointment'),
+          ),
+        ],
+      ),
+    );
+
+    if (confirmed != true) return;
+
+    try {
+      await widget.service.deleteAppointment(appointment.id);
+      if (!mounted) return;
+      _reload();
+      widget.onChanged?.call();
+      ScaffoldMessenger.of(context)
+        ..clearSnackBars()
+        ..showSnackBar(
+          SnackBar(content: Text('Deleted ${appointment.clientNameSnapshot}.')),
+        );
+    } catch (_) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context)
+        ..clearSnackBars()
+        ..showSnackBar(
+          const SnackBar(content: Text('Could not delete that appointment.')),
+        );
+    }
   }
 
   @override
@@ -163,6 +209,7 @@ class _AppointmentHistoryState extends State<AppointmentHistory> {
                             appointment: appointment,
                             service: widget.service,
                             launchReceiptEmail: launcher,
+                            onDelete: () => _confirmDelete(appointment),
                           ),
                           const SizedBox(height: 12),
                         ],
@@ -189,62 +236,53 @@ class _HistoryIntroCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final palette = SuperkateTheme.of(context);
+
     return Container(
       decoration: BoxDecoration(
         borderRadius: const BorderRadius.all(Radius.circular(32)),
-        gradient: const LinearGradient(
-          colors: [Color(0xFF123B3A), Color(0xFF26103D)],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ),
-        border: Border.all(color: SuperkateStyle.cardBorder),
-        boxShadow: SuperkateStyle.edgeGlow,
+        gradient: palette.introGradient,
+        border: Border.all(color: palette.cardBorder),
+        boxShadow: palette.edgeGlow,
       ),
-      child: const Padding(
-        padding: EdgeInsets.all(20),
+      child: Padding(
+        padding: const EdgeInsets.all(20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            RainbowRail(),
-            SizedBox(height: 18),
+            const RainbowRail(),
+            const SizedBox(height: 18),
             Row(
               children: [
-                RainbowBadge(icon: Icons.history),
-                SizedBox(width: 16),
-                Expanded(child: _HistoryIntroCopy()),
+                const RainbowBadge(icon: Icons.history),
+                const SizedBox(width: 16),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Appointment history',
+                        style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                              fontWeight: FontWeight.w900,
+                              letterSpacing: -0.4,
+                            ),
+                      ),
+                      const SizedBox(height: 6),
+                      Text(
+                        'Find the visit, celebrate the transformation, prep a receipt, or delete one local appointment when the math goblin gets messy.',
+                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                              color: palette.muted,
+                              height: 1.35,
+                            ),
+                      ),
+                    ],
+                  ),
+                ),
               ],
             ),
           ],
         ),
       ),
-    );
-  }
-}
-
-class _HistoryIntroCopy extends StatelessWidget {
-  const _HistoryIntroCopy();
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          'Appointment history',
-          style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                fontWeight: FontWeight.w900,
-                letterSpacing: -0.4,
-              ),
-        ),
-        const SizedBox(height: 6),
-        Text(
-          'Find the visit, celebrate the transformation, and prep a receipt without turning the vibe into tax software.',
-          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                color: SuperkateStyle.muted,
-                height: 1.35,
-              ),
-        ),
-      ],
     );
   }
 }
@@ -268,10 +306,12 @@ class _FilterCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final palette = SuperkateTheme.of(context);
+
     return Card(
-      color: SuperkateStyle.card,
+      color: palette.card,
       elevation: 0,
-      shape: SuperkateStyle.cardShape(),
+      shape: SuperkateStyle.cardShape(border: palette.cardBorder),
       child: Padding(
         padding: const EdgeInsets.all(18),
         child: Column(
@@ -325,10 +365,12 @@ class _EmptyHistoryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final palette = SuperkateTheme.of(context);
+
     return Card(
-      color: SuperkateStyle.card,
+      color: palette.card,
       elevation: 0,
-      shape: SuperkateStyle.cardShape(),
+      shape: SuperkateStyle.cardShape(border: palette.cardBorder),
       child: Padding(
         padding: const EdgeInsets.all(18),
         child: Text(
@@ -346,22 +388,25 @@ class _AppointmentResultCard extends StatelessWidget {
     required this.appointment,
     required this.service,
     required this.launchReceiptEmail,
+    required this.onDelete,
   });
 
   final Appointment appointment;
   final PersistenceService service;
   final ReceiptEmailLauncher launchReceiptEmail;
+  final VoidCallback onDelete;
 
   @override
   Widget build(BuildContext context) {
     final colors = Theme.of(context).colorScheme;
+    final palette = SuperkateTheme.of(context);
 
     return Container(
       decoration: BoxDecoration(
         borderRadius: const BorderRadius.all(Radius.circular(28)),
-        color: SuperkateStyle.card,
-        border: Border.all(color: SuperkateStyle.cardBorder),
-        boxShadow: SuperkateStyle.softGlow,
+        color: palette.card,
+        border: Border.all(color: palette.cardBorder),
+        boxShadow: palette.softGlow,
       ),
       child: Padding(
         padding: const EdgeInsets.all(18),
@@ -385,7 +430,7 @@ class _AppointmentResultCard extends StatelessWidget {
                       Text(
                         formatReceiptDate(appointment.appointmentDate),
                         style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                              color: SuperkateStyle.muted,
+                              color: palette.muted,
                             ),
                       ),
                     ],
@@ -424,10 +469,23 @@ class _AppointmentResultCard extends StatelessWidget {
             const SizedBox(height: 14),
             Align(
               alignment: Alignment.centerRight,
-              child: FilledButton.tonalIcon(
-                onPressed: () => _prepareReceipt(context),
-                icon: const Icon(Icons.mail_outline),
-                label: const Text('Prepare receipt'),
+              child: Wrap(
+                spacing: 8,
+                runSpacing: 8,
+                alignment: WrapAlignment.end,
+                children: [
+                  TextButton.icon(
+                    key: ValueKey('delete-appointment-${appointment.id}'),
+                    onPressed: onDelete,
+                    icon: const Icon(Icons.delete_outline),
+                    label: const Text('Delete appointment'),
+                  ),
+                  FilledButton.tonalIcon(
+                    onPressed: () => _prepareReceipt(context),
+                    icon: const Icon(Icons.mail_outline),
+                    label: const Text('Prepare receipt'),
+                  ),
+                ],
               ),
             ),
           ],
@@ -500,13 +558,14 @@ class _DetailPill extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = Theme.of(context).colorScheme;
+    final palette = SuperkateTheme.of(context);
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
       decoration: BoxDecoration(
-        color: SuperkateStyle.plum,
+        color: palette.plum,
         borderRadius: const BorderRadius.all(Radius.circular(999)),
-        border: Border.all(color: SuperkateStyle.cardBorder),
+        border: Border.all(color: palette.cardBorder),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
@@ -516,7 +575,7 @@ class _DetailPill extends StatelessWidget {
           Text(
             label,
             style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                  color: SuperkateStyle.muted,
+                  color: palette.muted,
                   fontWeight: FontWeight.w700,
                 ),
           ),
