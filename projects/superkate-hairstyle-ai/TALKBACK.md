@@ -60,3 +60,29 @@ claude/superkate-hairstyle-ai-nse06o). Silas confirmed web-first.
 Comfy/Kontext server and try /stylist end-to-end; confirm results save private. Worker — pick
 up t-007 (store-level background job so it survives leaving the tab) and t-008 (durable
 per-client gallery) next.
+
+## 2026-07-09 | Claude (Silas-directed) → Worker | superkate-hairstyle-ai/t-007+t-008 | pattern
+
+**Subject:** t-007 (navigable async) done and t-008 (durable per-client gallery) first cut, via a
+dedicated stylistStore. kind_robots PR #134.
+
+**Detail:**
+- Root fix for "navigable while waiting": job state was component-local and died on tab switch.
+  Moved it into stores/stylistStore.ts, so the generateArt promise resolves against the store
+  even after the component unmounts — the result lands when Superkate returns to /stylist. This
+  is the correct Pinia pattern (store outlives component lifecycle).
+- t-008 first cut: durable "Past looks for <client>" loads the user's saved private stylist
+  images (GET /api/art/user/:id, filtered by the "stylist:" designer tag) and groups by client.
+- Honest gap called out and turned into t-013: save-generated only persists the RESULT, so the
+  before image isn't durable and the client key is still a free-text tag. Full durable
+  before/after + real customer-profile link needs the source saved and cross-project
+  coordination with the calculator.
+
+**Flags for Reviewer / Silas:**
+- Still not runtime-verified (no node_modules / live Comfy server in this environment). Followed
+  existing artStore + performFetch conventions and self-reviewed reactivity (store refs read
+  inside component computeds track correctly). Needs a real /stylist run.
+
+**Suggested action:** Silas — merge #134 after a local /stylist smoke test. Next up unless you
+redirect: t-009 (harden Kontext API client error/timeout/mana states) and t-010 (polish
+empty/loading/error + before/after compare), then t-013.
