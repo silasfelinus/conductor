@@ -2,16 +2,21 @@ import '../models/appointment.dart';
 import '../models/customer.dart';
 import 'money.dart';
 
+const hairBySuperkateScheduleUrl = 'https://hairbysuperkate.glossgenius.com/';
+const hairBySuperkateReplyToEmail = 'hairbysuperkate@gmail.com';
+
 class ReceiptEmailDraft {
   const ReceiptEmailDraft({
     required this.toEmail,
     required this.subject,
     required this.body,
+    this.replyToEmail = hairBySuperkateReplyToEmail,
   });
 
   final String? toEmail;
   final String subject;
   final String body;
+  final String replyToEmail;
 
   Uri get mailtoUri => Uri(
         scheme: 'mailto',
@@ -19,6 +24,7 @@ class ReceiptEmailDraft {
         queryParameters: {
           'subject': subject,
           'body': body,
+          'reply-to': replyToEmail,
         },
       );
 }
@@ -55,6 +61,12 @@ ReceiptEmailDraft buildReceiptEmail({
       '',
       'Formula:',
       '$hourlyRate × $timeSpent + $productCost = $total',
+      '',
+      'Need to book or adjust your next visit?',
+      hairBySuperkateScheduleUrl,
+      '',
+      'Questions or receipt tweaks? Reply to:',
+      hairBySuperkateReplyToEmail,
       '',
       'Superkate loves you!',
     ].join('\n'),
