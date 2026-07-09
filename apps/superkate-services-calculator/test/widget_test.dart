@@ -205,6 +205,47 @@ void main() {
     expect(find.text('Ronin'), findsNothing);
   });
 
+  testWidgets('appointment history delete supports cancel and confirm paths',
+      (tester) async {
+    _useTallSurface(tester);
+    final service = InMemoryPersistenceService();
+    final appointment = await service.createAppointment(
+      CreateAppointmentInput(
+        clientName: 'Kate',
+        appointmentDate: DateTime(2026, 7, 9),
+        hourlyRateCents: 10000,
+        timeSpentMinutes: 90,
+        productCostCents: 0,
+      ),
+    );
+
+    await tester
+        .pumpWidget(MaterialApp(home: SuperkateHomePage(service: service)));
+    await tester.tap(find.text('History'));
+    await tester.pumpAndSettle();
+
+    final deleteButton =
+        find.byKey(ValueKey('delete-appointment-${appointment.id}'));
+    await _tapVisible(tester, deleteButton);
+    expect(find.text('Delete appointment?'), findsOneWidget);
+    await tester.tap(
+        find.byKey(ValueKey('cancel-delete-appointment-${appointment.id}')));
+    await tester.pumpAndSettle();
+
+    var appointments = await service.listAppointments();
+    expect(appointments, hasLength(1));
+    expect(find.text('Kate'), findsOneWidget);
+
+    await _tapVisible(tester, deleteButton);
+    await tester.tap(
+        find.byKey(ValueKey('confirm-delete-appointment-${appointment.id}')));
+    await tester.pumpAndSettle();
+
+    appointments = await service.listAppointments();
+    expect(appointments, isEmpty);
+    expect(find.text('No saved appointments yet.'), findsOneWidget);
+  });
+
   testWidgets('prepare receipt opens a local mailto draft with customer email',
       (tester) async {
     _useTallSurface(tester);
