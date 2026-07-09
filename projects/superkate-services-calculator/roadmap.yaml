@@ -275,14 +275,14 @@ tasks:
   - id: t-023
     milestone: m2
     title: Draft cloud sync ownership and self-hosted backend decision note
-    status: claimed
+    status: review
     owner: worker
     passes: 0
     stakes: reversible
     depends_on: t-010
     updated: 2026-07-08
     note: >
-      Draft a decision note comparing cloud sync ownership options for the Superkate app. Include self-hosted Unraid Postgres/MariaDB options, possible reuse of the Kind Robots backend/auth, a separate Hair by Superkate backend, tenant/owner scoping, backup/restore expectations, and why no production sync should be implemented until Silas chooses the owner/auth path.
+      Added projects/superkate-services-calculator/docs/cloud-sync-ownership-decision.md comparing local-only beta, Kind Robots-owned sync/auth, and a separate Hair by Superkate backend. Recommendation: local-only Android beta first, then Kind Robots-owned sync/auth for the first private cloud beta unless Silas wants a dedicated Hair by Superkate backend from the start. No production sync, secrets, deploy, DNS, billing, analytics, backend email, or app-store behavior was implemented.
   - id: t-024
     milestone: m3
     title: Add Android-first beta install notes
