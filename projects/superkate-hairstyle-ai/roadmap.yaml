@@ -1,0 +1,229 @@
+project: superkate-hairstyle-ai
+kind: software
+
+notes_from_silas: |
+  Surprise feature for Hair by Superkate — a "Hair Studio" tab. Superkate uploads/snaps a
+  client photo, picks color / style / enhance (any combination), and it comes back with the
+  new hair via the Kind Robots Kontext Comfy backend. Loading indicator while it works, but
+  the app must stay navigable while waiting. Per-client before/after gallery.
+
+  Superkate-only for now — don't over-index on security until we plan the public launch. It
+  would eventually gate behind a service charge + free trial, and might become a separate app.
+  Keep it a SURPRISE: do not reveal it in anything Superkate can see until Silas says go.
+
+  Sibling of superkate-services-calculator; the calculator's customer profile is the client
+  identity anchor. Backend already exists (POST /api/comfy/kontext/generate) — MVP is frontend
+  + prompt building + gallery, no backend build. See DESIGN-BRIEF.md.
+
+  Collab: ChatGPT (Worker) builds, Claude (Reviewer) reviews and hard-gates every step toward
+  charging money / going public / touching real client data at scale.
+
+milestones:
+  - id: m1
+    title: "SHAPE — brief, backend contract, prompt design"
+    weight: 25
+    status: in-progress
+
+  - id: m2
+    title: "BUILD — tab, intake, controls, async generate, gallery"
+    weight: 50
+    status: not-started
+
+  - id: m3
+    title: "POLISH & SHIP — states, monetization plan, launch gate"
+    weight: 25
+    status: not-started
+
+tasks:
+  - id: t-001
+    milestone: m1
+    title: "Write the design brief and start building"
+    status: done
+    owner: claude
+    passes: 0
+    stakes: reversible
+    updated: 2026-07-09
+    note: >
+      DONE (2026-07-09, Silas-directed Claude session): wrote DESIGN-BRIEF.md — what Hair
+      Studio is, who it serves, the surprise constraint, the web-first-in-Kind-Robots surface
+      recommendation, the existing Kontext backend contract, the color/style/enhance prompt
+      builder, the async/navigable-loading requirement, the per-client gallery decision (reuse
+      the ArtCollection pattern anchored to the calculator customer profile), and the
+      ChatGPT/Claude/Silas responsibility split. Registered the project in priority.yaml and
+      project-overrides.yaml and queued icon/card/hero art in ART-PROMPTS.md + art-prompts.yaml.
+
+  - id: t-002
+    milestone: m1
+    title: "Confirm scope + build surface with Silas (web-first vs Flutter-first)"
+    status: needs-human
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: 2026-07-09
+    note: >
+      FOR SILAS: soft checkpoint — nothing is blocked on it, the team builds on the web-first
+      assumption meanwhile. The recommendation (DESIGN-BRIEF.md) is to ship Hair Studio first
+      as a tab in the Kind Robots web app, because the Kontext backend and the gallery infra
+      already live there and Flutter build/verify is human-gated (calculator t-014), which
+      keeps stalling that roadmap. Bridge into the Flutter Superkate app later.
+      TO CONFIRM: reply "web-first, yes" to lock it in, or "Flutter-first" to redirect. Either
+      way the team folds your answer into the roadmap and keeps moving. This does NOT approve
+      any paid gating, public launch, or the surprise reveal — those stay hard-gated (t-011,
+      t-012). Confirming unblocks nothing new; redirecting just re-points t-004+.
+
+  - id: t-003
+    milestone: m1
+    title: "Design the color/style/enhance prompt builder + Kontext param mapping"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: 2026-07-09
+    note: >
+      Define the prompt templates for the three toggles (change color, change style, enhance
+      image) and how any combination merges into a single Kontext prompt, always with an
+      identity-preservation suffix (same person/face, photorealistic). Include a free-text
+      refinement slot. Map to the /api/comfy/kontext/generate request fields (prompt, and any
+      sensible defaults for steps/guidance/denoise for a portrait edit). Deliverable is a spec
+      doc in projects/superkate-hairstyle-ai/docs/ — no code required yet. Pure design, safe.
+
+  - id: t-004
+    milestone: m2
+    title: "Build the Hair Studio tab shell + navigation entry (staged/flagged)"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: 2026-07-09
+    note: >
+      Create the Hair Studio surface and its nav entry behind a preview flag so it is NOT
+      visible in anything Superkate sees yet (surprise). Empty shell + layout only. Web-first
+      in Kind Robots per t-002 unless Silas redirects. No backend calls yet, no real client
+      data. Reversible UI scaffold.
+
+  - id: t-005
+    milestone: m2
+    title: "Image intake — upload + camera capture tied to a client"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-004
+    updated: 2026-07-09
+    note: >
+      Let Superkate upload a photo or capture one from the camera, preview it, and associate it
+      with a selected/typed client (the calculator customer profile is the identity anchor).
+      Produce the data URL the Kontext endpoint expects. Handle no-camera / permission-denied
+      fallbacks. No generation yet.
+
+  - id: t-006
+    milestone: m2
+    title: "Transformation controls → prompt builder (color / style / enhance, any combo)"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on:
+      - t-003
+      - t-004
+    updated: 2026-07-09
+    note: >
+      Implement the three independent toggles plus optional free text, wired to the t-003
+      prompt templates so any combination (one, two, or all three) produces one merged Kontext
+      prompt. Show the user a plain-language summary of what will change. Pure client-side
+      prompt assembly.
+
+  - id: t-007
+    milestone: m2
+    title: "Async generation with navigable loading state"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on:
+      - t-005
+      - t-006
+    updated: 2026-07-09
+    note: >
+      Submit the photo + prompt as a BACKGROUND job to /api/comfy/kontext/generate, show a
+      loading indicator on the pending result tile, and keep the whole app navigable while it
+      runs (Kontext can take ~180s). Superkate can leave the tab and come back; the result
+      lands when ready. Handle the pending → done/error transition on a per-client pending slot.
+
+  - id: t-008
+    milestone: m2
+    title: "Per-client transformation gallery (before/after + metadata)"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-005
+    updated: 2026-07-09
+    note: >
+      Reuse the Kind Robots ArtCollection/gallery pattern for a per-client before/after gallery
+      keyed to the customer identity. Each entry stores original photo, result, the toggles +
+      prompt used, and mana/prompt metadata (traceable/reproducible per AGENTS.md art rules).
+      Coordinate the identity key with the calculator's customer profile — if that requires a
+      calculator-side change, open a cross-repo/coordination task rather than widening scope here.
+
+  - id: t-009
+    milestone: m2
+    title: "Kontext API client — mana/gate handling, error + timeout states"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-007
+    updated: 2026-07-09
+    note: >
+      Harden the client for /api/comfy/kontext/generate: surface auth/mana-gate failures,
+      insufficient-balance, 502/504 timeouts, and Comfy node errors as friendly retryable
+      states. Runs under Superkate's / the studio KR account for now; do NOT build real
+      per-client billing here (that's t-011, human-gated).
+
+  - id: t-010
+    milestone: m3
+    title: "Polish empty / loading / error / retry states + before-after compare"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on:
+      - t-007
+      - t-008
+    updated: 2026-07-09
+    note: >
+      Finish the UX: clean empty state, loading affordance, error + retry, and a before/after
+      compare (slider or toggle) on gallery entries. Reversible polish.
+
+  - id: t-011
+    milestone: m3
+    title: "PLAN paid gating + free trial (do NOT implement billing)"
+    status: needs-human
+    owner: human
+    passes: 0
+    stakes: outward-facing
+    updated: 2026-07-09
+    note: >
+      FOR SILAS: human-gated PLANNING only. Before Hair Studio charges anyone, Silas decides:
+      free-trial shape (how many free generations), price/service charge, whether this stays
+      inside Hair by Superkate or spins into a separate app, which account/billing rails
+      (Kind Robots mana vs external), and access control for non-Superkate users. Agents may
+      write the plan doc but must NOT wire real billing, payment, signup, or production access.
+      TO APPROVE a build step: Silas leaves a concrete decision in this note and creates a
+      scoped reversible follow-up task; nothing bills money without that.
+
+  - id: t-012
+    milestone: m3
+    title: "Public launch + surprise-reveal readiness review"
+    status: needs-human
+    owner: human
+    passes: 0
+    stakes: outward-facing
+    depends_on: t-011
+    updated: 2026-07-09
+    note: >
+      FOR SILAS: human-gated. When the MVP is built and demoable (Superkate-only, staged), this
+      task is the reveal/launch decision: show Superkate the surprise, decide the public rollout
+      (or separate-app split), and only then lift the preview flag. No agent unflags the feature,
+      deploys it publicly, or reveals it to Superkate without Silas explicitly approving here.
