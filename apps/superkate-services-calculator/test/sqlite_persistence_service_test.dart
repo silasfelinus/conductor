@@ -62,7 +62,12 @@ void main() {
     );
 
     final saved = await service.listAppointments();
-    expect(saved.single, appointment);
+    expect(saved.single.id, appointment.id);
+    expect(saved.single.customerId, customer.id);
+    expect(saved.single.clientNameSnapshot, 'Kate');
+    expect(saved.single.hourlyRateCents, 10000);
+    expect(saved.single.timeSpentMinutes, 90);
+    expect(saved.single.productCostCents, 2500);
     expect(saved.single.appointmentTotalCents, 17500);
   });
 
