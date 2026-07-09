@@ -7,6 +7,7 @@ import 'data/persistence_service.dart';
 import 'data/sqlite_persistence_service.dart';
 import 'domain/money.dart';
 import 'ui/appointment_history.dart';
+import 'ui/customer_profiles.dart';
 import 'ui/new_appointment_form.dart';
 import 'ui/receipt_email_launcher.dart';
 import 'ui/superkate_onboarding.dart';
@@ -70,17 +71,13 @@ class _SuperkateServicesCalculatorAppState
     setState(() => _isCompletingOnboarding = true);
     try {
       await onboardingService.completeOnboarding();
-      if (!mounted) {
-        return;
-      }
+      if (!mounted) return;
       setState(() {
         _onboardingCompletedOverride = true;
         _isCompletingOnboarding = false;
       });
     } catch (_) {
-      if (mounted) {
-        setState(() => _isCompletingOnboarding = false);
-      }
+      if (mounted) setState(() => _isCompletingOnboarding = false);
       rethrow;
     }
   }
@@ -257,6 +254,8 @@ class _SuperkateHomePageState extends State<SuperkateHomePage> {
       widget.service ?? InMemoryPersistenceService();
   int _historyRefreshToken = 0;
 
+  void _refreshHistory() => setState(() => _historyRefreshToken++);
+
   @override
   Widget build(BuildContext context) {
     final palette = widget.selectedPalette;
@@ -264,7 +263,7 @@ class _SuperkateHomePageState extends State<SuperkateHomePage> {
     return SuperkateTheme(
       palette: palette,
       child: DefaultTabController(
-        length: 2,
+        length: 3,
         child: Scaffold(
           extendBodyBehindAppBar: true,
           appBar: AppBar(
@@ -296,6 +295,7 @@ class _SuperkateHomePageState extends State<SuperkateHomePage> {
                     labelStyle: const TextStyle(fontWeight: FontWeight.w800),
                     tabs: const [
                       Tab(text: 'New'),
+                      Tab(text: 'Customers'),
                       Tab(text: 'History'),
                     ],
                   ),
@@ -319,7 +319,7 @@ class _SuperkateHomePageState extends State<SuperkateHomePage> {
                         NewAppointmentForm(
                           service: _service,
                           onSaved: (appointment) {
-                            setState(() => _historyRefreshToken++);
+                            _refreshHistory();
                             ScaffoldMessenger.of(context)
                               ..clearSnackBars()
                               ..showSnackBar(
@@ -332,10 +332,15 @@ class _SuperkateHomePageState extends State<SuperkateHomePage> {
                               );
                           },
                         ),
+                        CustomerProfiles(
+                          service: _service,
+                          onChanged: _refreshHistory,
+                        ),
                         AppointmentHistory(
                           service: _service,
                           refreshToken: _historyRefreshToken,
                           launchReceiptEmail: widget.launchReceiptEmail,
+                          onChanged: _refreshHistory,
                         ),
                       ],
                     ),
