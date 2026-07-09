@@ -284,17 +284,18 @@ tasks:
   - id: t-015
     milestone: m2
     title: "Replicate the full Superkate app on the Hair Studio page"
-    status: claimed
+    status: review
     owner: claude
     passes: 0
     stakes: reversible
     updated: 2026-07-09
     note: >
-      Silas (2026-07-09): the Hair Studio page should carry a replica of the ENTIRE Superkate
-      app — services calculator, client profiles, appointment history/receipts — alongside the
-      hair restyler, not just the redesign feature. Kind Robots is the backend, so an easy mock
-      is acceptable where 1:1 parity is missing. Plan: a sub-tabbed suite on /stylist
-      (Calculator | Clients | History | Hair Studio) implementing the calculator SPEC's core
-      formula (hourly rate x time + product cost), customer records with optional email,
-      receipt text with the configurable contact block and "Superkate loves you!", persisted
-      locally first (client-side store), with KR-model-backed sync as a follow-up.
+      IN REVIEW (kind_robots PR #138, same branch as the queue fix): built the sub-tabbed
+      suite on /stylist — Hair Studio | Calculator | Clients | History — backed by a new
+      localStorage-persisted superkateStore (the approved easy mock; KR-model sync is the
+      follow-up). Implements the calculator SPEC core formula (rate x time + products, cents),
+      hours/minutes preset chips, optional product cost defaulting to $0.00, client book with
+      optional email, appointment search by client/date, warm receipts with the configurable
+      contact block + "Superkate loves you!" and a mailto composer with email prefill, and the
+      delete-detach invariant. The restyler's client field suggests known clients from the
+      book. Not runtime-verified in this environment.

@@ -138,3 +138,25 @@ Hair Studio page (t-015, claimed).
 **Suggested action:** Silas — merge kind_robots #138 + conductor #320, update the home relay
 agent, then run /stylist on the deployed site end-to-end. Claude — t-015 (full app replica
 suite on /stylist: Calculator | Clients | History | Hair Studio) is in progress.
+
+## 2026-07-09 | Claude (Silas-directed) → system | superkate-hairstyle-ai/t-015 | pattern
+
+**Subject:** Full Superkate app replica built on /stylist (kind_robots PR #138, part 2).
+
+**Detail:**
+- New suite shell on /stylist: Hair Studio | Calculator | Clients | History, view choice held
+  at store level so it survives navigation (consistent with the dashboard-tab fix).
+- superkateStore is the approved "easy mock": localStorage-persisted customers, appointments,
+  and receipt settings. Calculator SPEC honored — rate x time + products in cents, hours/
+  minutes preset chips, product cost optional defaulting to $0.00, warm receipt with the
+  configurable contact block (glossgenius link + reply email) and "Superkate loves you!",
+  mailto composer with client email prefill, and the delete-detach invariant from calculator
+  t-031's test list.
+- Cross-feature tie-in: the restyler's Client field now suggests names from the client book —
+  first step toward the t-013 real client-identity link.
+- Follow-up (not this PR): replace localStorage with KR-model-backed persistence so Superkate's
+  book syncs across devices; that is where the "1-1 it somehow" upgrade lands.
+
+**Suggested action:** Silas — one review pass on kind_robots #138 covers both the prod
+generation fix and the suite; remember to restart the home relay agent with the updated
+relay_agent.py (conductor #320) or queued styling jobs will fail at the LoadImage node.
