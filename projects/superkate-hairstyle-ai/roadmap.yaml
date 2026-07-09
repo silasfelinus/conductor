@@ -175,17 +175,19 @@ tasks:
   - id: t-009
     milestone: m2
     title: "Kontext API client — mana/gate handling, error + timeout states"
-    status: waiting
-    owner: null
+    status: review
+    owner: claude
     passes: 0
     stakes: reversible
     depends_on: t-007
     updated: 2026-07-09
     note: >
-      Harden the client for /api/comfy/kontext/generate: surface auth/mana-gate failures,
-      insufficient-balance, 502/504 timeouts, and Comfy node errors as friendly retryable
-      states. Runs under Superkate's / the studio KR account for now; do NOT build real
-      per-client billing here (that's t-011, human-gated).
+      IN REVIEW (kind_robots PR #134): the store already routes through artStore.generateArt →
+      /api/comfy/kontext/generate (performFetch retries + 180s timeout), and every failure lands
+      on the job tile with a Retry action. Added friendlyError() mapping the real first-run
+      failure modes — insufficient mana, no active Comfy/Kontext server, timeout, and
+      not-signed-in — to actionable messages. Still runs under the studio KR account; no
+      per-client billing (that's t-011, human-gated). Pending runtime verification.
 
   - id: t-010
     milestone: m3
