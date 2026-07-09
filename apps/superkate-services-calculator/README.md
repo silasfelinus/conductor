@@ -21,6 +21,35 @@ flutter test
 
 Default Flutter app scaffolding should include `ios`, `android`, `windows`, and `linux` targets unless a project explicitly narrows its install targets.
 
+## Android-first local beta
+
+Android is the first beta install target for Superkate. The current beta path is local/debug only and fake-data only until the remaining persistence, export, app/device lock, and fake backend sync safety work lands.
+
+Build and test locally before installing:
+
+```sh
+cd apps/superkate-services-calculator
+flutter pub get
+flutter analyze --fatal-infos
+flutter test
+flutter build apk --debug
+```
+
+Install to a USB-connected Android device with developer mode and USB debugging enabled:
+
+```sh
+flutter devices
+flutter run -d <device-id>
+```
+
+Or install the debug APK directly:
+
+```sh
+adb install -r build/app/outputs/flutter-apk/app-debug.apk
+```
+
+The full local beta checklist lives at `projects/superkate-services-calculator/docs/android-first-beta-install.md`.
+
 ## Desktop targets
 
 Windows and Linux are first-class local install targets for the Superkate app.
