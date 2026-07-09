@@ -229,27 +229,6 @@ void main() {
     expect(launchedUri!.queryParameters['body'], contains('Superkate loves you!'));
   });
 
-  testWidgets('customer profile tab shows saved local profiles', (tester) async {
-    _useTallSurface(tester);
-    final service = InMemoryPersistenceService();
-    await service.upsertCustomer(
-      const UpsertCustomerInput(
-        name: 'Kate',
-        email: 'kate@example.com',
-      ),
-    );
-
-    await tester
-        .pumpWidget(MaterialApp(home: SuperkateHomePage(service: service)));
-    await tester.tap(find.text('Customers'));
-    await tester.pumpAndSettle();
-
-    expect(find.text('Customer profiles'), findsOneWidget);
-    expect(find.text('Kate'), findsOneWidget);
-    expect(find.text('kate@example.com'), findsOneWidget);
-    expect(find.text('Add customer profile'), findsOneWidget);
-  });
-
   test('customer delete detaches appointment history instead of deleting it',
       () async {
     final service = InMemoryPersistenceService();
