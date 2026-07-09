@@ -217,14 +217,14 @@ tasks:
   - id: t-018
     milestone: m2
     title: Add durable local SQLite persistence adapter
-    status: review
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
     depends_on: t-003
     updated: 2026-07-08
     note: >
-      Implemented a local SQLite-backed PersistenceService adapter in apps/superkate-services-calculator, wired the production app startup to open the durable local database by default, and added focused in-memory SQLite unit coverage for customers, appointments, totals, filters, deletion behavior, and restart-safe schema migration shape. No cloud sync, analytics, backend email, app-store, billing, deploy, secrets, or live customer-data service was added.
+      DONE (2026-07-08, PR #306): merged a local SQLite-backed PersistenceService adapter in apps/superkate-services-calculator, wired production startup to open the durable local database by default, and added app-level persistence injection so widget tests do not hit platform SQLite startup. Superkate Flutter analyze/test and Linux desktop build passed in CI; Windows desktop build reached a successful build step before post-action cleanup. No cloud sync, analytics, backend email, app-store, billing, deploy, secrets, or live customer-data service was added.
   - id: t-019
     milestone: m2
     title: Add customer profile edit and delete UI
