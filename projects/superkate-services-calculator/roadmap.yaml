@@ -228,14 +228,23 @@ tasks:
   - id: t-019
     milestone: m2
     title: Add customer profile edit and delete UI
-    status: waiting
-    owner: null
+    status: done
+    owner: worker
     passes: 0
     stakes: reversible
     depends_on: t-018
-    updated: 2026-07-08
+    updated: 2026-07-09
     note: >
-      Build customer profile screens or flows for viewing, editing, and deleting saved customers after durable storage exists. Preserve appointment history by detaching deleted customers rather than cascading appointment deletion unless Silas explicitly changes that rule.
+      DONE (2026-07-09, Reviewer-merged conductor PR #314, squash). Adds a "Manage customers"
+      AppBar sheet (lib/ui/customer_profiles.dart) for add/edit/delete of local customer
+      profiles, reusing the validated upsertCustomer/deleteCustomer contract from t-018
+      unchanged; delete detaches appointments rather than cascading, per spec. CI (Flutter
+      analyze/test, Linux/Windows desktop builds, security scans) all green. Reviewer fixed
+      up this roadmap entry and the claim bookkeeping after merge: the Worker branch
+      (worker/superkate-management-flows) never ran the claim step, never touched this
+      roadmap file, and used a non-task-scoped branch name instead of
+      worker/superkate-services-calculator-t-019. No widget tests were added for the new
+      add/edit/delete flow itself — see TALKBACK for the coverage gap and t-031 kaizen task.
   - id: t-020
     milestone: m3
     title: Add appointment delete flow
@@ -362,3 +371,19 @@ tasks:
     updated: 2026-07-08
     note: >
       Human-gated planning task only. Before any production sync uses real customer data, Silas must choose hosting location, database engine, domain/subdomain if any, secrets handling, backup schedule, restore test process, and access policy. Workers must not touch DNS, secrets, production deploy settings, production databases, billing, analytics, or real customer sync under this task without explicit concrete approval.
+  - id: t-031
+    milestone: m2
+    title: Add widget test coverage for the customer profile add/edit/delete UI
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-019
+    updated: 2026-07-09
+    note: >
+      Kaizen from t-019 (PR #314): lib/ui/customer_profiles.dart shipped with no widget
+      tests for save/edit/delete, breaking the pattern every prior UI task (t-004, t-005,
+      t-006, t-007, t-025, t-026) followed. Add coverage for: saving a new profile, editing
+      an existing one (form prefill + update), deleting a profile (confirm dialog cancel and
+      confirm paths), and the delete-detach invariant (appointment history keeps its client
+      name after the linked customer is deleted).
