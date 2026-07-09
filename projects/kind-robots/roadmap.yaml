@@ -222,3 +222,26 @@ tasks:
       mural into dashboardConfigs.wonder.tabs, remove the temporary labCards bridge,
       add palette/assignment JSON import-export, add named paint schemes, and wire in
       generated fence-only coloring assets from mural-design/t-002 when ready.
+
+  - id: t-011
+    milestone: m3
+    title: "Build reconcile_expressions.py — expression folders → ExpressionMedia rows"
+    status: ready
+    owner: null
+    updated: "2026-07-09T23:45:00Z"
+    passes: 0
+    stakes: reversible
+    note: >
+      Silas-approved 2026-07-09 (session). Full spec:
+      projects/kind-robots/EXPRESSION-RECONCILE.md. Build
+      scripts/reconcile_expressions.py (house style: fetch_todos.py) that scans
+      kind_robots public/images/bots/expressions/{slug}/ (and the
+      characters/expressions mirror), diffs against ExpressionMedia rows, and
+      repairs drift folder→rows through the existing batch API
+      (POST /api/bots/expressions, dryRun first): create rows for unregistered
+      files, fix imagePath mismatches, and report rows whose files are gone
+      (soft isActive:false only behind --apply --deactivate). Never writes
+      image files, never raw SQL, never creates ArtImage rows, never touches
+      message/label/emoticon/artPrompt on existing rows. Default mode is a
+      dry-run report; --check exits nonzero on drift for CI use. File
+      convention reference: kind_robots sample/generation/expressions.md.
