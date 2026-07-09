@@ -95,10 +95,10 @@ tasks:
       IN REVIEW (kind_robots branch claude/superkate-hairstyle-ai-nse06o): added content/stylist.md
       (/stylist page embedding :stylist-manager), a "stylist"/"Hair Studio" tab under the art
       dashboard (dashboardHelper, route /stylist), an art tutorial-channel "stylist" section, and
-      placeholder tab/tutorial webp images (real art queued in art-prompts.yaml requests). NOTE:
-      not yet gated behind a preview flag — the tab is registered in the art dashboard config.
-      Follow-up (see t-012): add an explicit preview/role flag so nothing reveals to Superkate
-      before Silas approves. Not verified in a running app (no local build env / live Comfy server).
+      placeholder tab/tutorial webp images (real art queued in art-prompts.yaml requests). The tab
+      is registered in the art dashboard normally — Silas clarified (2026-07-09) the "surprise" is
+      just flavor (Superkate doesn't know it's coming); it needs NO preview/role gating. Not
+      verified in a running app (no local build env / live Comfy server).
 
   - id: t-005
     milestone: m2
@@ -221,7 +221,7 @@ tasks:
 
   - id: t-012
     milestone: m3
-    title: "Public launch + surprise-reveal readiness review"
+    title: "Public launch readiness review"
     status: needs-human
     owner: human
     passes: 0
@@ -229,7 +229,8 @@ tasks:
     depends_on: t-011
     updated: 2026-07-09
     note: >
-      FOR SILAS: human-gated. When the MVP is built and demoable (Superkate-only, staged), this
-      task is the reveal/launch decision: show Superkate the surprise, decide the public rollout
-      (or separate-app split), and only then lift the preview flag. No agent unflags the feature,
-      deploys it publicly, or reveals it to Superkate without Silas explicitly approving here.
+      FOR SILAS: human-gated on the OUTWARD-FACING launch, not on hiding the tab. The "surprise"
+      is just flavor — Superkate doesn't know it's coming, but there's no technical gating to
+      lift (Silas, 2026-07-09). This task is the launch decision: public rollout beyond
+      Superkate (or the separate-app split) and any production deploy. No agent ships it publicly
+      or deploys without Silas approving here; showing Superkate is a social step, not a code gate.
