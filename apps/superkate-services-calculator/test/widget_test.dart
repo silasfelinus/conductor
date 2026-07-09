@@ -314,7 +314,7 @@ void main() {
 
     await tester.tap(find.byKey(ValueKey('delete-appointment-${kate.id}')));
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Delete appointment').last);
+    await tester.tap(find.widgetWithText(FilledButton, 'Delete appointment'));
     await tester.pumpAndSettle();
 
     final remaining = await service.listAppointments();
