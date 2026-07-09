@@ -399,7 +399,7 @@ class _CustomerProfileCard extends StatelessWidget {
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                RainbowBadge(icon: Icons.person_outline, size: 44),
+                const RainbowBadge(icon: Icons.person_outline, size: 44),
                 const SizedBox(width: 14),
                 Expanded(
                   child: Column(
