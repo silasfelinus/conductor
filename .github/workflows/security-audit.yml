@@ -20,6 +20,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - uses: actions/setup-python@v5
         with:
@@ -43,22 +45,34 @@ jobs:
       - name: Audit JavaScript projects with lockfiles
         run: |
           set -euo pipefail
-          found=0
-          while IFS= read -r lockfile; do
-            found=1
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            base_sha="${{ github.event.pull_request.base.sha }}"
+            head_sha="${{ github.event.pull_request.head.sha }}"
+            echo "Auditing package-lock.json files changed in this PR only."
+            mapfile -t lockfiles < <(git diff --name-only "$base_sha" "$head_sha" -- '**/package-lock.json' 'package-lock.json')
+          else
+            echo "Auditing all package-lock.json files for scheduled/manual run."
+            mapfile -t lockfiles < <(find . -path './.git' -prune -o -name package-lock.json -print | sed 's#^./##')
+          fi
+
+          if [ "${#lockfiles[@]}" -eq 0 ]; then
+            echo "No package-lock.json files to audit for this run."
+            exit 0
+          fi
+
+          for lockfile in "${lockfiles[@]}"; do
             dir="$(dirname "$lockfile")"
             echo "=== npm audit: $dir ==="
             (cd "$dir" && npm audit --audit-level=high)
-          done < <(find . -path './.git' -prune -o -name package-lock.json -print)
-          if [ "$found" -eq 0 ]; then
-            echo "No package-lock.json files found; skipping npm audit."
-          fi
+          done
 
   static-checks:
     name: Static checks
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - uses: actions/setup-python@v5
         with:
@@ -96,19 +110,34 @@ jobs:
       - name: Python syntax check
         run: |
           set -euo pipefail
-          if ls scripts/*.py >/dev/null 2>&1; then
-            python -m py_compile scripts/*.py
-          else
-            echo "No scripts/*.py files found."
+          mapfile -t python_files < <(find scripts apps/hairbysuperkate-backend -name '*.py' -print 2>/dev/null || true)
+          if [ "${#python_files[@]}" -eq 0 ]; then
+            echo "No Python files found for syntax check."
+            exit 0
           fi
+          python -m py_compile "${python_files[@]}"
 
       - name: Secret pattern smoke check
         run: |
           set -euo pipefail
-          if grep -RInE '(AKIA[0-9A-Z]{16}|ghp_[A-Za-z0-9_]{36,}|BEGIN (RSA|OPENSSH|DSA|EC) PRIVATE KEY)' \
-            --exclude-dir=.git \
-            --exclude='security-audit.yml' \
-            .; then
+          pattern='(AKIA[0-9A-Z]{16}|ghp_[A-Za-z0-9_]{36,}|BEGIN (RSA|OPENSSH|DSA|EC) PRIVATE KEY)'
+
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            base_sha="${{ github.event.pull_request.base.sha }}"
+            head_sha="${{ github.event.pull_request.head.sha }}"
+            echo "Scanning files changed in this PR for obvious secret patterns."
+            mapfile -t files < <(git diff --name-only "$base_sha" "$head_sha" --diff-filter=ACMR)
+          else
+            echo "Scanning repository for obvious secret patterns."
+            mapfile -t files < <(find . -path './.git' -prune -o -type f -print | sed 's#^./##')
+          fi
+
+          if [ "${#files[@]}" -eq 0 ]; then
+            echo "No files to scan."
+            exit 0
+          fi
+
+          if grep -InE "$pattern" "${files[@]}"; then
             echo "Potential secret-like value found. Review before merging." >&2
             exit 1
           fi
