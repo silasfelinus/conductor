@@ -21,7 +21,9 @@ ai-art-academy → coloring-book → humboldt-scoop → humboldt-scoop-cms →
 digital-storefront → packmaker → mermaids-of-venice → kind-robots → global-ui.
 (Mirror changes into projects/priority.yaml. Updated 2026-07-10: ai-art-academy and
 coloring-book created per Silas's session direction — ai-art-academy is the autonomous
-initiative test run and should get Worker attention early while it's being proven.)
+initiative test run and should get Worker attention early while it's being proven.
+dream-cycle sits last on purpose: it's the idle fallback, never a competitor for
+real ready work.)
 
 **Standing rules for all agents:** Respect each project's `kind`. Honor `depends_on` gates.
 Never expand product-types.yaml — pitch it. When unsure, do less and escalate to
@@ -53,6 +55,14 @@ Silas explicitly approves that concrete action too.
   Those projects keep running without my input under the "never idle" rule in AGENTS.md
   (style pass / roadmap upgrade / more inspirations / content expansion when nothing is
   ready). ai-art-academy is the test run. Escalate only actual human gates.
+- Creation-a-day idle fallback (2026-07-10): dream-cycle sits LAST in priority.yaml.
+  When no other active project has ready work, its recurring task builds the site's
+  next creation (~one per day, art included) from the human-steerable backlog in
+  projects/dream-cycle/backlog/. Creation types are pluggable playbooks: dreams
+  (location + vibe, characters, rewards, scenarios, optional narrator with
+  expressions/topics/threads) and coloring-book production days, more later. Silas
+  steers by leaving notes in those files; agents fold notes in before every stage
+  and never edit them.
 
 ---
 
@@ -184,6 +194,31 @@ and pre-approved. Surface only actual human gates; keep running without my input
 - Living-artist/brand styles (Disney, Gorillaz, DB4RZ…) may stay in the free-play
   Style Lab but are excluded from the taught curriculum.
 
+### dream-cycle  (software, autonomous: true)
+**Direction (2026-07-10, new project; generalized same day):** The creation-a-day
+idle fallback — testing a new option for conductor sweeps. When there isn't
+anything better to do, agents make something for the site, ONE creation at a time,
+~a day each including all art generation. Creation types are pluggable playbooks
+in `projects/dream-cycle/specs/`; v1 types:
+- **dream** — a location and a vibe, each with characters, rewards, and scenarios;
+  optionally a bot narrator with expressions, topics, and threads.
+- **coloring-book** — "spend today drafting and making a coloring book": advance a
+  book set through the coloring-book project's production sequence. First book:
+  Monster Recast (gender-bending Hollywood movie monsters, already design-ready in
+  projects/coloring-book/sets/monster-recast/).
+The backlog of outlines lives in `projects/dream-cycle/backlog/` — accessible files
+where I leave notes and flip status/priority to steer, park, or veto ideas.
+**Notes:**
+- Infrastructure first: API audit (t-003), CREATION-SPEC + dream playbook (t-004),
+  coloring-book playbook (t-009). The recurring build task (t-006) waits on t-004.
+- Only ONE creation may be `building` at a time. Backlog stays ≥5 buildable outlines.
+- Delegation rule: types owned by a home project (coloring-book) keep content in
+  that project; the backlog file is only the scheduler card + my steering surface.
+  Never double-claim a home task the Worker already holds.
+- All kind_robots data models already exist — no schema work. API gaps become
+  kind_robots tasks/pitches, never direct backend edits.
+- My backlog-file notes are agent-read-only: fold them in, never edit or delete them.
+
 ### coloring-book  (software)
 **Direction (2026-07-10, new project):** Front-end coloring book app of AI-generated
 coloring pages in kind_robots. Normal coloring-book uses plus AI: users generate their
@@ -199,6 +234,9 @@ projects/coloring-book/sets/monster-recast/). Every page we create is
 digital-storefront inventory — set up toward a print-on-demand service selling
 physical coloring books (POD accounts, listings, and spend remain hard-gated).
 **Notes:**
+- The dream-cycle idler may spend idle days advancing this project's set-production
+  tasks (Monster Recast first) under its delegation rule: content stays here, the
+  idler updates both records, and never double-claims a task the Worker holds.
 - Tech seed: the mural-design WonderLab color studio (kind_robots /mural, PR #135) —
   generalize/share the engine, don't fork it; mural-design keeps working.
 - Humboldt Impropriety Society coloring book/calendar stay archived inspiration; no
