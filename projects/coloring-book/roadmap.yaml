@@ -289,12 +289,21 @@ tasks:
   - id: t-018
     milestone: m2
     title: 'kind_robots: implement raster-flood coloring mode (engine step 9)'
-    status: ready
-    owner: null
+    status: done
+    owner: reviewer
     passes: 0
     stakes: reversible
-    updated: '2026-07-10T11:00:00Z'
+    updated: '2026-07-10T13:15:00Z'
     note: >
+      DONE 2026-07-10: kind_robots PR #146 merged. Pure DOM-free scanline flood
+      fill (stores/helpers/floodFill.ts: tolerance matching, line-art walls,
+      4-connectivity), fillOps persistence in coloringStore with undo/reset,
+      ColoringCanvas raster branch (controlled replay, incremental appends),
+      and the first raster sampler page (Rocket to the Moon, scripted PIL line
+      art). Verified with 26 passing Node checks including runs against the
+      actual shipped PNG — which caught and fixed a real leak in the first
+      cloud design, validating the pipeline doc's leak-QA requirement.
+      In-app coloring of generated raster pages is now unblocked. Original spec:
       The t-004 verdict chose raster flood fill for generated pages: add the
       mode: 'raster-flood' branch to ColoringCanvas (canvas seeded from
       fillBase, flood fill with tolerance per docs/generation-pipeline.md,
