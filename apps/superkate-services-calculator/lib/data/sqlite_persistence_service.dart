@@ -11,6 +11,23 @@ import '../models/appointment.dart';
 import '../models/customer.dart';
 import 'persistence_service.dart';
 
+/// A pending deletion tombstone awaiting sync propagation
+/// (docs/sync-engine-design.md §2). `serverId` is null when the row was
+/// never synced — the engine may drop those without a network round-trip.
+class SyncOutboxEntry {
+  const SyncOutboxEntry({
+    required this.entity,
+    required this.localId,
+    required this.serverId,
+    required this.deletedAt,
+  });
+
+  final String entity; // 'customer' | 'appointment'
+  final String localId;
+  final String? serverId;
+  final DateTime deletedAt;
+}
+
 class SqlitePersistenceService implements PersistenceService {
   SqlitePersistenceService._(
     this._db, {
@@ -42,6 +59,19 @@ class SqlitePersistenceService implements PersistenceService {
     return SqlitePersistenceService._(
       sqlite3.openInMemory(),
       clock: clock,
+    );
+  }
+
+  /// Wraps an already-open database (e.g. a test-seeded older-schema DB) and
+  /// runs migrations on it. The caller keeps ownership of [db].
+  factory SqlitePersistenceService.forDatabase(
+    Database db, {
+    DateTime Function()? clock,
+  }) {
+    return SqlitePersistenceService._(
+      db,
+      clock: clock,
+      ownsDatabase: false,
     );
   }
 
@@ -125,6 +155,7 @@ class SqlitePersistenceService implements PersistenceService {
   Future<void> deleteCustomer(String customerId) async {
     _db.execute('BEGIN IMMEDIATE TRANSACTION');
     try {
+      _writeOutboxTombstone('customer', customerId, 'customers');
       _db.execute('DELETE FROM customers WHERE id = ?', [customerId]);
       _db.execute(
         '''
@@ -242,7 +273,52 @@ class SqlitePersistenceService implements PersistenceService {
 
   @override
   Future<void> deleteAppointment(String appointmentId) async {
-    _db.execute('DELETE FROM appointments WHERE id = ?', [appointmentId]);
+    _db.execute('BEGIN IMMEDIATE TRANSACTION');
+    try {
+      _writeOutboxTombstone('appointment', appointmentId, 'appointments');
+      _db.execute('DELETE FROM appointments WHERE id = ?', [appointmentId]);
+      _db.execute('COMMIT');
+    } catch (_) {
+      _db.execute('ROLLBACK');
+      rethrow;
+    }
+  }
+
+  /// Records a deletion tombstone for the future SyncEngine
+  /// (docs/sync-engine-design.md §2). Rows are physically deleted locally;
+  /// the outbox is what lets the deletion propagate to other devices later.
+  /// The engine may drop entries whose server_id is null (never synced).
+  void _writeOutboxTombstone(String entity, String localId, String table) {
+    final rows = _db.select(
+      'SELECT server_id FROM $table WHERE id = ? LIMIT 1',
+      [localId],
+    );
+    if (rows.isEmpty) return; // nothing deleted → nothing to propagate
+    _db.execute(
+      '''
+      INSERT OR REPLACE INTO sync_outbox (entity, local_id, server_id, deleted_at)
+      VALUES (?, ?, ?, ?)
+      ''',
+      [entity, localId, rows.single['server_id'] as String?, _toIso(_now())],
+    );
+  }
+
+  /// Pending deletion tombstones, oldest first. Not part of
+  /// [PersistenceService] — this is the SyncEngine's (and tests') window
+  /// into sync bookkeeping.
+  List<SyncOutboxEntry> listSyncOutbox() {
+    final rows = _db.select(
+      'SELECT entity, local_id, server_id, deleted_at FROM sync_outbox '
+      'ORDER BY deleted_at ASC, local_id ASC',
+    );
+    return rows
+        .map((row) => SyncOutboxEntry(
+              entity: row['entity'] as String,
+              localId: row['local_id'] as String,
+              serverId: row['server_id'] as String?,
+              deletedAt: _parseIso(row['deleted_at']),
+            ))
+        .toList();
   }
 
   void _configure() {
@@ -288,6 +364,40 @@ class SqlitePersistenceService implements PersistenceService {
           'CREATE INDEX IF NOT EXISTS idx_appointments_date ON appointments(appointment_date)',
         );
         _db.userVersion = 1;
+        _db.execute('COMMIT');
+      } catch (_) {
+        _db.execute('ROLLBACK');
+        rethrow;
+      }
+    }
+    if (_db.userVersion < 2) {
+      // Schema v2 (docs/sync-engine-design.md §1-2): sync bookkeeping columns
+      // and the deletion outbox. Additive only; existing rows stay untouched
+      // with NULL sync state, which correctly reads as "never synced".
+      _db.execute('BEGIN IMMEDIATE TRANSACTION');
+      try {
+        _db.execute('ALTER TABLE customers ADD COLUMN synced_at TEXT');
+        _db.execute('ALTER TABLE customers ADD COLUMN server_id TEXT');
+        _db.execute('ALTER TABLE appointments ADD COLUMN server_id TEXT');
+        _db.execute('''
+          CREATE TABLE IF NOT EXISTS sync_outbox (
+            entity TEXT NOT NULL,
+            local_id TEXT NOT NULL,
+            server_id TEXT,
+            deleted_at TEXT NOT NULL,
+            PRIMARY KEY (entity, local_id)
+          )
+          ''');
+        _db.execute('''
+          CREATE TABLE IF NOT EXISTS sync_state (
+            id INTEGER PRIMARY KEY CHECK (id = 1),
+            last_server_version INTEGER NOT NULL DEFAULT 0
+          )
+          ''');
+        _db.execute(
+          'INSERT OR IGNORE INTO sync_state (id, last_server_version) VALUES (1, 0)',
+        );
+        _db.userVersion = 2;
         _db.execute('COMMIT');
       } catch (_) {
         _db.execute('ROLLBACK');
