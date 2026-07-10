@@ -93,8 +93,12 @@ def api(path, payload=None, method=None, timeout=30):
 
 
 def fetch_owner_ids(owner_type):
-    """slug -> id for all bots or characters. Paginates defensively: the bots
-    endpoint may ignore paging params, so stop as soon as a page adds nothing new."""
+    """slug -> id for all bots or characters — the FALLBACK for owners the
+    narrator endpoint can't serve (inactive/private). Paginates defensively:
+    the bots endpoint has historically ignored paging params (it read
+    event.context.query), so stop as soon as a page adds nothing new; with
+    the broken endpoint this map only covers the first 100 rows, which is
+    why per-slug narrator lookup is the primary resolution path."""
     path = "/api/bots" if owner_type == "bot" else "/api/characters"
     ids, page = {}, 1
     while True:
@@ -112,18 +116,22 @@ def fetch_owner_ids(owner_type):
         page += 1
 
 
-def fetch_existing_rows(owner_type, slug):
-    """Active ExpressionMedia rows for one owner via the narrator endpoint.
-    Returns dict key->row, or None when the owner isn't readable there
-    (inactive/private owners 404 — rows unknown, not empty)."""
+def fetch_narrator(owner_type, slug):
+    """(owner_id, {key: row}) via the narrator endpoint — a per-slug lookup
+    that dodges list pagination entirely and returns the active rows in the
+    same call. (None, None) when the owner isn't readable there (404 =
+    inactive/private/unknown). NB: for characters the payload's `id` is the
+    default narrator BOT id — the real id is sourceCharacterId."""
     try:
         body = api(f"/api/narrators/{owner_type}/{slug}")
     except urllib.error.HTTPError as e:
         if e.code == 404:
-            return None
+            return None, None
         raise
-    rows = (body.get("data") or {}).get("ExpressionMedia") or []
-    return {r["expressionKey"]: r for r in rows if r.get("expressionKey")}
+    data = body.get("data") or {}
+    owner_id = data.get("sourceCharacterId") if owner_type == "character" else data.get("id")
+    rows = data.get("ExpressionMedia") or []
+    return owner_id, {r["expressionKey"]: r for r in rows if r.get("expressionKey")}
 
 
 def scan_folder(folder):
@@ -259,11 +267,7 @@ def main():
             print(f"ℹ️  no {owner_type} expressions dir ({rel}) — skipping.", file=sys.stderr)
             continue
 
-        try:
-            owner_ids = fetch_owner_ids(owner_type)
-        except Exception as e:
-            print(f"❌ could not list {owner_type}s from the API: {e}", file=sys.stderr)
-            return 1
+        owner_ids = None  # fetched lazily, only if some narrator lookup 404s
 
         for folder in sorted(p for p in base.iterdir() if p.is_dir()):
             slug = folder.name
@@ -274,19 +278,31 @@ def main():
                 totals["unrecognized"] += 1
                 print(f"⚠️  {owner_type}/{slug}: unrecognized file {name}", file=sys.stderr)
 
-            owner_id = owner_ids.get(slug)
+            # Primary: per-slug narrator lookup (id + rows in one call).
+            try:
+                owner_id, existing = fetch_narrator(owner_type, slug)
+            except Exception as e:
+                print(f"⚠️  {owner_type}/{slug}: narrator lookup failed ({e}) — "
+                      "falling back to list", file=sys.stderr)
+                owner_id, existing = None, None
+
+            # Fallback: bulk list, for inactive/private owners (rows unknown).
+            if not owner_id:
+                if owner_ids is None:
+                    try:
+                        owner_ids = fetch_owner_ids(owner_type)
+                    except Exception as e:
+                        print(f"❌ could not list {owner_type}s from the API: {e}",
+                              file=sys.stderr)
+                        return 1
+                owner_id = owner_ids.get(slug)
+                existing = None
+
             if not owner_id:
                 totals["unmatched"] += 1
                 print(f"⚠️  {owner_type}/{slug}: folder matches no {owner_type} slug — skipped",
                       file=sys.stderr)
                 continue
-
-            try:
-                existing = fetch_existing_rows(owner_type, slug)
-            except Exception as e:
-                print(f"⚠️  {owner_type}/{slug}: rows unreadable ({e}) — treating as unknown",
-                      file=sys.stderr)
-                existing = None
 
             creates, updates, missing, notes = plan_owner(
                 owner_type, slug, owner_id, scanned, existing)
