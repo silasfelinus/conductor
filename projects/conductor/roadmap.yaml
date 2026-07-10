@@ -406,3 +406,20 @@ tasks:
       so active project sync also sends priority metadata from project-overrides.yaml when
       the Kind Robots API accepts it. Silas confirmed the existing sync succeeded without
       priority, so this is non-blocking metadata polish.
+  - id: t-028
+    milestone: m1
+    title: Bake the Flutter SDK into the web-session startup hook so app tasks self-verify
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-10T13:05:00Z'
+    note: >
+      Kaizen from superkate/t-022 (PR #343, merged 2026-07-10) and a recurring
+      TALKBACK theme: web sessions historically lacked a Flutter toolchain, so
+      apps/* tasks were inspected rather than verified. This cycle proved a
+      plain SDK download works in the session container (3.32.5, ~5 min,
+      storage.googleapis.com is reachable). Add it to the SessionStart hook or
+      a cached setup script (guard: skip when flutter is already on PATH, and
+      set git safe.directory for the SDK checkout) so flutter analyze/test run
+      in every future cycle.

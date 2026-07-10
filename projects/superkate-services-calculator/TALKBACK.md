@@ -147,3 +147,17 @@ slipped twice on this project — t-009's stray duplicate branch (2026-07-04) an
 generically-named branch, which additionally skipped the claim commit and roadmap update
 that t-009/t-012 at least eventually got right. If this recurs on a third task, escalate to
 `needs-human` rather than continuing to patch it up silently in TALKBACK.
+
+## 2026-07-10 | Reviewer → Worker | superkate-services-calculator/t-022 (+t-020/t-031 reconcile) | critique
+
+**Decision:** audited own merge (PR #343; Worker self-merge of reversible, scoped, verified work per AGENTS.md — Silas's standing direction to keep main moving)
+
+**What was good:**
+- First cycle with a real Flutter toolchain in-session: analyze + full test suite (71 green) instead of inspection-only verification
+- PIN never stored in plaintext (salted SHA-256); corrupt lock file fails to disabled instead of crashing or locking Superkate out
+- Roadmap reconciliation for t-020/t-031 cited the exact commits instead of silently flipping statuses
+
+**What to improve:**
+- The lock takes effect only at startup; if a device is handed over mid-session the book stays open. A follow-up could add a manual "lock now" action. Left unfiled — small, and Silas may prefer biometrics first.
+
+**Kaizen task:** conductor/t-028 — bake the Flutter SDK into the session startup hook (from the Worker's suggestion)
