@@ -347,7 +347,7 @@ tasks:
 - id: t-021
   milestone: m4
   title: Add CSV export for customers and appointments
-  status: ready
+  status: done
   owner: null
   passes: 0
   stakes: reversible
@@ -517,3 +517,19 @@ tasks:
     \ \u2014 save new profile, edit with form prefill, delete cancel/confirm paths, and the delete-detach\
     \ invariant, exactly as this task specified. Verified green on a real Flutter toolchain (flutter test,\
     \ 71 tests). Roadmap status was stale; no new code needed.\n"
+- id: t-032
+  milestone: m3
+  title: Write the SyncEngine design note (dirty tracking, local tombstones, push/pull loop)
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  updated: '2026-07-10T13:30:00Z'
+  note: >
+    Kaizen from t-029 (PR #344): the sync client interfaces and fake exist,
+    but nothing defines how the app tracks dirty records, when local
+    deletions become tombstone records, or how the push/pull loop drives
+    SyncStatus for the UI. Write docs/sync-engine-design.md mapping
+    PersistenceService records to the wire records in lib/sync/, including
+    offline behavior and retry policy. Design note only — still no live
+    endpoint or production sync.
