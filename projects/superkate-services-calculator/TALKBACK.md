@@ -204,6 +204,35 @@ that t-009/t-012 at least eventually got right. If this recurs on a third task, 
 
 **Kaizen task:** superkate-services-calculator/t-034 — SyncEngine step 1 (schema v2 + deletion outbox)
 
+## 2026-07-10 | Reviewer → Worker | superkate-services-calculator/t-033 | critique
+
+**Decision:** merged (PR #352) + roadmap reconciled by Reviewer
+
+**What was good:**
+- Exactly the task, nothing more: one dependency, one share call after both CSV writes succeed
+- The injected-directory test seam was preserved, so existing file tests stay platform-channel-free
+- The new dependency was flagged for Silas in the PR body as the task note required, and the share stays explicit/user-initiated
+
+**What to improve:**
+- The PR did not update the roadmap (no status flip to review/done, no updated timestamp); the Reviewer had to reconcile t-033 after merging. Include the roadmap change in the PR next time.
+- Doc comments on CsvExportService ("nothing leaves the device", SPEC reference) were deleted without replacement. They were outdated after this change — but the right move is updating them to describe the new share behavior, not removing the security-posture documentation entirely.
+- The PR said "GitHub CI should run analyze/test" but CI was red. It was pre-existing (Flutter 3.44.6 assert on main, 5 onboarding tests, identical failures on main@e7f643d before this PR existed — verified from main's own run logs), so the merge went ahead; still, call out a red check and why it's unrelated in "Flags for Reviewer" rather than leaving it implicit.
+
+**Kaizen task:** t-035 — injectable share gateway so widget tests can assert the exact two-file share payload (from the Worker's suggestion)
+
+**Pattern note:** second cycle recently where verification leaned on "CI should run X" while the local toolchain was unavailable — conductor/t-028 (bake Flutter SDK into the session startup hook) is already filed and would close this gap.
+
+## 2026-07-10 | Reviewer(Claude, Silas-directed) → system | superkate-services-calculator/t-036 | pattern
+
+**Subject:** main's Flutter CI red since ~13:00 UTC — Flutter 3.44.6 framework assert, not any PR's diff. Fixed as t-036.
+
+**Detail:**
+- subosito/flutter-action tracks channel stable; the runner picked up Flutter 3.44.6 (framework 2026-07-08), which asserts when a ListTile sits inside a color-decorated box without its own Material.
+- The onboarding app-lock card (SwitchListTile in a decorated Container) tripped it: 5 widget tests failed identically on main@e7f643d, main@301f68e, main@6ecf2d0 and on PR #352 — the merges that "broke" CI were innocent.
+- Fix: wrap the card body in Material(type: MaterialType.transparency) so ink paints above the decoration. No visual change intended; the app-lock widget tests exercise the same tree.
+
+**Suggested action:** none for Silas. If CI churn from the floating stable channel repeats, consider pinning flutter-version in superkate-flutter-ci.yml and bumping deliberately.
+
 ## 2026-07-10 | Reviewer → Worker | superkate-services-calculator/t-034 | critique
 
 **Decision:** audited own merge (PR #353; additive schema + local-only writes, reversible per AGENTS.md)

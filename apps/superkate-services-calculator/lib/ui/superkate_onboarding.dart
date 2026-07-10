@@ -167,67 +167,74 @@ class _SuperkateOnboardingScreenState extends State<SuperkateOnboardingScreen> {
                                 borderRadius: BorderRadius.circular(24),
                                 border: Border.all(color: palette.cardBorder),
                               ),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.stretch,
-                                children: [
-                                  SwitchListTile(
-                                    key: const ValueKey(
-                                        'onboarding-app-lock-switch'),
-                                    contentPadding: EdgeInsets.zero,
-                                    value: _wantsLock,
-                                    onChanged: widget.isWorking
-                                        ? null
-                                        : (next) => setState(
-                                            () => _wantsLock = next),
-                                    title: Text(
-                                      'Keep the client book private',
-                                      style: TextStyle(
-                                        color: palette.soft,
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.w900,
-                                      ),
-                                    ),
-                                    subtitle: Text(
-                                      'Ask for a PIN when the app opens. '
-                                      'Optional, and changeable anytime in settings.',
-                                      style: TextStyle(
-                                        color: palette.muted,
-                                        fontSize: 13,
-                                        height: 1.3,
-                                      ),
-                                    ),
-                                  ),
-                                  if (_wantsLock) ...[
-                                    const SizedBox(height: 4),
-                                    TextField(
+                              // The tile paints its background and ink on the
+                              // nearest Material; without this one it would
+                              // paint underneath the decorated container
+                              // (asserts on Flutter >= 3.44).
+                              child: Material(
+                                type: MaterialType.transparency,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                                  children: [
+                                    SwitchListTile(
                                       key: const ValueKey(
-                                          'onboarding-app-lock-pin'),
-                                      controller: _pinController,
-                                      keyboardType: TextInputType.number,
-                                      obscureText: true,
-                                      maxLength: 8,
-                                      decoration: const InputDecoration(
-                                        labelText: 'Choose a PIN (4-8 digits)',
-                                        counterText: '',
+                                          'onboarding-app-lock-switch'),
+                                      contentPadding: EdgeInsets.zero,
+                                      value: _wantsLock,
+                                      onChanged: widget.isWorking
+                                          ? null
+                                          : (next) => setState(
+                                              () => _wantsLock = next),
+                                      title: Text(
+                                        'Keep the client book private',
+                                        style: TextStyle(
+                                          color: palette.soft,
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.w900,
+                                        ),
+                                      ),
+                                      subtitle: Text(
+                                        'Ask for a PIN when the app opens. '
+                                        'Optional, and changeable anytime in settings.',
+                                        style: TextStyle(
+                                          color: palette.muted,
+                                          fontSize: 13,
+                                          height: 1.3,
+                                        ),
                                       ),
                                     ),
-                                    const SizedBox(height: 10),
-                                    TextField(
-                                      key: const ValueKey(
-                                          'onboarding-app-lock-repeat-pin'),
-                                      controller: _repeatPinController,
-                                      keyboardType: TextInputType.number,
-                                      obscureText: true,
-                                      maxLength: 8,
-                                      decoration: InputDecoration(
-                                        labelText: 'Repeat the PIN',
-                                        counterText: '',
-                                        errorText: _pinError,
+                                    if (_wantsLock) ...[
+                                      const SizedBox(height: 4),
+                                      TextField(
+                                        key: const ValueKey(
+                                            'onboarding-app-lock-pin'),
+                                        controller: _pinController,
+                                        keyboardType: TextInputType.number,
+                                        obscureText: true,
+                                        maxLength: 8,
+                                        decoration: const InputDecoration(
+                                          labelText: 'Choose a PIN (4-8 digits)',
+                                          counterText: '',
+                                        ),
                                       ),
-                                    ),
-                                    const SizedBox(height: 8),
+                                      const SizedBox(height: 10),
+                                      TextField(
+                                        key: const ValueKey(
+                                            'onboarding-app-lock-repeat-pin'),
+                                        controller: _repeatPinController,
+                                        keyboardType: TextInputType.number,
+                                        obscureText: true,
+                                        maxLength: 8,
+                                        decoration: InputDecoration(
+                                          labelText: 'Repeat the PIN',
+                                          counterText: '',
+                                          errorText: _pinError,
+                                        ),
+                                      ),
+                                      const SizedBox(height: 8),
+                                    ],
                                   ],
-                                ],
+                                ),
                               ),
                             ),
                             const SizedBox(height: 24),
