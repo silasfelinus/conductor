@@ -76,3 +76,36 @@ corrected a PR-number citation error in the roadmap note; left at soft `needs-hu
 
 **Kaizen task:** deferred — this is a citation fix + a pre-existing access gate, not a new
 systemic issue; no new roadmap task warranted.
+
+---
+
+## 2026-07-10 | Reviewer → Worker | kind-robots/t-011 follow-up | critique
+
+**Decision:** merged (conductor PR #360 + companion kind_robots PR #152, merge commits)
+
+**What was good:**
+- Correct root-cause diagnosis of Silas's live `--apply` false negatives: the bots list
+  endpoint read `event.context.query` (never populated in Nitro), silently capping every
+  caller at the first 100 bots — narrator ids run past 400.
+- The script fix stands alone (narrator-first per-slug resolution, lazy bulk fallback),
+  so it works even against the unfixed endpoint; the endpoint fix is one line and matches
+  the dreams endpoint's existing `getQuery` idiom.
+- Handled the character payload nuance (`data.id` is the default narrator BOT id; the
+  real owner id is `sourceCharacterId`) — verified against
+  server/api/narrators/[type]/[slug].get.ts:193 before merge.
+- Offline-harness re-verification simulating the first-100 truncation, plus an honest
+  "Flags for Reviewer" side observation (bot gallery cap) that became kind-robots/t-013.
+
+**What to improve:**
+- Nothing substantive. Minor: conductor PR #360's body had no explicit Kaizen section;
+  the Reviewer substituted one (conductor/t-029, harness → pytest).
+
+**Kaizen task:** kind-robots/t-013 — surface the full 400+ bot roster in the app now that
+pagination works (from #152's flag); conductor/t-029 — promote the reconcile offline
+harness into the pytest suite (for #360).
+
+**Review verification:** py_compile on the PR head, kind_robots grep confirming the lone
+`event.context.query` usage and the narrator endpoint's sourceCharacterId, Vercel check
+green on #152. Roadmap t-011 note updated: Silas should re-run `--apply` and expect the
+~37 skipped folders (~700 creates) to register; stays soft needs-human (sandbox proxy
+still 403s kind-robots.vercel.app — confirmed again this session).

@@ -440,3 +440,21 @@ tasks:
       a cached setup script (guard: skip when flutter is already on PATH, and
       set git safe.directory for the SDK checkout) so flutter analyze/test run
       in every future cycle.
+
+  - id: t-029
+    milestone: m1
+    title: Promote the reconcile_expressions offline harness into the pytest suite
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: "2026-07-10T19:30:00Z"
+    note: >
+      Kaizen from conductor PR #360 (Reviewer, 2026-07-10): the script's
+      narrator-first/bulk-fallback resolution order was verified with a
+      throwaway stubbed-API harness twice now (t-011 original + the #360
+      pagination fix). Turn that harness into a real test under tests/ (repo
+      already runs pytest) covering: narrator lookup wins and skips the bulk
+      list, 404 falls back to the list with rows-unknown create-only
+      semantics, character owner id comes from sourceCharacterId, and the
+      first-100-truncation regression stays caught.
