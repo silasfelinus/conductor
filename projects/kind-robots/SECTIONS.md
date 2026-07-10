@@ -2,7 +2,9 @@
 
 Process doc for the conductor loop. Whenever a task — Silas's or a project's
 — requires a new section in the kind_robots app, follow this so it happens
-the same way every time. The canonical implementation framework (full
+the same way every time. (For generating *content objects* — bots, dreams,
+characters, rewards, scenarios, threads, expressions, pitch sheets — see
+`GENERATION.md` in this folder.) The canonical implementation framework (full
 recipes, code templates, image checklist) lives in the kind_robots repo at
 **`sample/new-section.md`**; this doc is the policy layer plus the condensed
 checklist for planning without the other repo open.
