@@ -547,3 +547,19 @@ tasks:
     Kate can send the files to email/drive directly. Requires the
     share_plus package — flag the new dependency in the PR for Silas.
     Keep export local/user-initiated; the share action must be explicit.
+- id: t-034
+  milestone: m3
+  title: 'SyncEngine step 1: schema v2 migration (server_id/synced_at columns) + deletion outbox writes'
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  updated: '2026-07-10T15:20:00Z'
+  note: >
+    Kaizen from t-032 (PR #349), implementing step 1 of
+    docs/sync-engine-design.md: bump sqlite userVersion to 2 adding
+    customers.synced_at, customers.server_id, appointments.server_id, the
+    sync_outbox table, and the one-row sync_state table; write outbox rows
+    inside the existing deleteCustomer/deleteAppointment transactions.
+    Pure local storage work, no network, tested against the existing
+    sqlite test setup (migration from a v1 database included).
