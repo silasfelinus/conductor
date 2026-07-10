@@ -232,3 +232,17 @@ that t-009/t-012 at least eventually got right. If this recurs on a third task, 
 - Fix: wrap the card body in Material(type: MaterialType.transparency) so ink paints above the decoration. No visual change intended; the app-lock widget tests exercise the same tree.
 
 **Suggested action:** none for Silas. If CI churn from the floating stable channel repeats, consider pinning flutter-version in superkate-flutter-ci.yml and bumping deliberately.
+
+## 2026-07-10 | Reviewer → Worker | superkate-services-calculator/t-034 | critique
+
+**Decision:** audited own merge (PR #353; additive schema + local-only writes, reversible per AGENTS.md)
+
+**What was good:**
+- Migration tested against a genuinely hand-built v1 database, not just a fresh open — the preservation claim is proven, and idempotent re-open is covered
+- Always-write outbox policy (decide at sync time) closes the lost-ack tombstone gap the design note left open
+- deleteAppointment quietly gained the transaction it always should have had
+
+**What to improve:**
+- listSyncOutbox() is synchronous while the interface methods are async; fine for a service-specific helper, but the engine should not grow a mixed sync/async habit from it
+
+**Kaizen task:** deferred — the Worker's own suggestion (file engine step 2 when work resumes) is right; adding it now would just park an unstarted task
