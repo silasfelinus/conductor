@@ -234,3 +234,19 @@ tasks:
       hollywood-recast-2) being untouchable until Silas activates them. Once
       this lands, backlog/monster-recast.md (approved, high) becomes buildable
       by t-006.
+  - id: t-010
+    milestone: m2
+    title: Add a scheduler-card drift check (backlog cards vs home sets) runnable in CI
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-10T12:55:00Z'
+    note: >
+      Kaizen from PR #339 (merged 2026-07-10): extend
+      scripts/coloring_approved_status.py or add a sibling script that diffs
+      each dream-cycle backlog scheduler card against its home set's reality
+      (page counts, approved-pair lists, stage map, parked/active status,
+      rating) so card drift is caught by CI instead of a manual audit pass.
+      Emit a non-zero exit with a readable diff summary; wire it into the
+      existing conductor CI checks.

@@ -1,389 +1,521 @@
 project: superkate-services-calculator
 kind: software
-notes_from_silas: |
-  High priority request from Superkate for Hair by Superkate.
-  Build a private appointment services calculator with a dark theme, purple and teal accents,
-  appointment history, search by client/date, and receipt email preparation.
-  Required fields: client name, appointment date, hourly rate, time spent, product cost, appointment total.
-  Core formula: hourly rate × time spent + product cost = total price.
-  Reference sources added by Silas: projects/superkate-services-calculator/examples/ contains Superkate hair-work examples; projects/superkate-services-calculator/hairpress/ contains her current WordPress front end for reference and may be replaced later.
-  Default Flutter app scaffolding should include ios, android, windows, and linux targets going forward.
-  Silas cleared the current human gates on 2026-07-08 and approved the next reversible build runway. First app target is Android. Receipt/contact schedule link is https://hairbysuperkate.glossgenius.com/ and reply-to contact is hairbysuperkate@gmail.com. Cloud sync ownership is now chosen: build a dedicated Hair by Superkate backend backed by Silas's self-hosted Postgres/MariaDB-capable Unraid infrastructure. Keep the Android beta local-only until durable persistence, export, app-lock, and fake-data backend sync are safe.
+notes_from_silas: "High priority request from Superkate for Hair by Superkate.\nBuild a private appointment\
+  \ services calculator with a dark theme, purple and teal accents,\nappointment history, search by client/date,\
+  \ and receipt email preparation.\nRequired fields: client name, appointment date, hourly rate, time\
+  \ spent, product cost, appointment total.\nCore formula: hourly rate \xD7 time spent + product cost\
+  \ = total price.\nReference sources added by Silas: projects/superkate-services-calculator/examples/\
+  \ contains Superkate hair-work examples; projects/superkate-services-calculator/hairpress/ contains\
+  \ her current WordPress front end for reference and may be replaced later.\nDefault Flutter app scaffolding\
+  \ should include ios, android, windows, and linux targets going forward.\nSilas cleared the current\
+  \ human gates on 2026-07-08 and approved the next reversible build runway. First app target is Android.\
+  \ Receipt/contact schedule link is https://hairbysuperkate.glossgenius.com/ and reply-to contact is\
+  \ hairbysuperkate@gmail.com. Cloud sync ownership is now chosen: build a dedicated Hair by Superkate\
+  \ backend backed by Silas's self-hosted Postgres/MariaDB-capable Unraid infrastructure. Keep the Android\
+  \ beta local-only until durable persistence, export, app-lock, and fake-data backend sync are safe.\n"
 milestones:
-  - id: m1
-    title: Project identity and MVP spec
-    weight: 20
-    status: in-progress
-  - id: m2
-    title: Customer database, sync, and calculator
-    weight: 35
-    status: in-progress
-  - id: m3
-    title: Search and receipt email flow
-    weight: 30
-    status: in-progress
-  - id: m4
-    title: Polish and handoff
-    weight: 15
-    status: in-progress
+- id: m1
+  title: Project identity and MVP spec
+  weight: 20
+  status: in-progress
+- id: m2
+  title: Customer database, sync, and calculator
+  weight: 35
+  status: in-progress
+- id: m3
+  title: Search and receipt email flow
+  weight: 30
+  status: in-progress
+- id: m4
+  title: Polish and handoff
+  weight: 15
+  status: in-progress
 tasks:
-  - id: t-001
-    milestone: m1
-    title: Create the matching PROJECT Dream for slug parity
-    status: done
-    owner: worker
-    passes: 0
-    stakes: reversible
-    updated: 2026-07-08
-    note: >
-      DONE: Silas ran the existing project sync on 2026-07-08 and reported that everything synced successfully. Future improvements to the shared project-to-Dream sync script belong in the conductor roadmap, not the Superkate app roadmap.
-  - id: t-002
-    milestone: m1
-    title: Review and finalize the MVP spec with Superkate
-    status: done
-    owner: worker
-    passes: 0
-    stakes: reversible
-    gate_human: true
-    approved_by_human: true
-    updated: 2026-07-05
-    note: >
-      Silas explicitly cleared the finalized MVP spec in the current session. SPEC.md captures the approved beta direction and implementation standards. This approval unblocks the pre-implementation architecture note.
-  - id: t-009
-    milestone: m1
-    title: Add paid-app customer data security baseline to the MVP spec
-    status: done
-    owner: worker
-    passes: 0
-    stakes: reversible
-    updated: 2026-07-04
-    note: >
-      Added an explicit customer data security baseline to SPEC.md covering data minimization, local-first storage, safe receipt behavior, deletion/export expectations, and paid-app release gates before appointment persistence begins.
-  - id: t-011
-    milestone: m1
-    title: Record Silas's beta product decisions in the MVP spec
-    status: done
-    owner: worker
-    passes: 0
-    stakes: reversible
-    updated: 2026-07-05
-    note: >
-      Updated SPEC.md and roadmap notes from Silas's feedback: hours/minutes with preset chips, product cost optional defaulting to zero, customer database and email storage as a reasonable local-business feature, cloud sync as an initial beta expectation, warm receipts with "Superkate loves you!", and optional app/device lock.
-  - id: t-012
-    milestone: m1
-    title: Record Silas's final open-question approvals in the MVP spec
-    status: done
-    owner: worker
-    passes: 0
-    stakes: reversible
-    updated: 2026-07-05
-    note: >
-      Recorded Silas's approval of the remaining recommendation package in SPEC.md: configurable receipt contact fields, app-lock onboarding prompt with settings toggle, appointment deletion, customer edit/delete, cloud sync backup, CSV export in paid v1, no bulk delete in v1, and backend direct-send receipts as a future roadmap option rather than beta behavior.
-  - id: t-013
-    milestone: m1
-    title: Open the PR in the same cycle a task branch is pushed, before ending the Worker session
-    status: done
-    owner: worker
-    passes: 0
-    stakes: reversible
-    updated: 2026-07-06
-    note: >
-      Added projects/superkate-services-calculator/docs/t-013-worker-pr-last-step-check.md documenting the Worker last-step PR check and the exact AGENTS.md sentence that should be added if a future patch-capable run edits the operating manual directly. This prevents pushed worker branches from being stranded without a PR.
-  - id: t-003
-    milestone: m2
-    title: Build the appointment and customer data model with persistence
-    status: done
-    owner: worker
-    passes: 0
-    stakes: reversible
-    depends_on:
-      - t-002
-      - t-009
-      - t-010
-    updated: 2026-07-07
-    note: >
-      Implemented in apps/superkate-services-calculator/ (Silas-directed session 2026-07-07). The prior handoff wrongly parked this as "cannot locate the app repository" — the Flutter app is in-repo at apps/superkate-services-calculator/, so the domain + persistence layer was built directly there against the SPEC.md data model: domain money/validation/ids, customer and appointment models, PersistenceService, in-memory persistence, and unit tests for totals, product-cost defaults, recomputation, validation, customer-delete snapshots, and search filters. Money is cents, time is minutes, totals are always recalculated, customer delete detaches rather than cascades. Verification gap from that run was later cleared by t-014.
-  - id: t-004
-    milestone: m2
-    title: Build calculator form with live totals
-    status: done
-    owner: worker
-    passes: 0
-    stakes: reversible
-    depends_on: t-003
-    updated: 2026-07-07
-    note: >
-      DONE (2026-07-07, Silas-directed session): built lib/ui/new_appointment_form.dart — client name, appointment date picker, hourly rate, time spent with steppers and preset chips, optional product cost defaulting to $0, live appointment total recomputed through the t-003 domain layer, save through PersistenceService, user-safe errors, main.dart wiring, widget tests, and money parser tests. Verification gap from that run was later cleared by t-014.
-  - id: t-005
-    milestone: m3
-    title: Add client/date appointment search
-    status: done
-    owner: worker
-    passes: 0
-    stakes: reversible
-    depends_on: t-003
-    updated: 2026-07-08
-    note: >
-      DONE (2026-07-08, Reviewer-merged conductor PR #290). Implemented a History tab in apps/superkate-services-calculator/ with client-name search, date-range filter controls, newest-first appointment results, and cards showing client, date, and appointment total. Uses the existing PersistenceService.listAppointments(AppointmentFilter) contract unchanged. Added widget coverage for saved appointments appearing in history and client-name filtering.
-  - id: t-006
-    milestone: m3
-    title: Add warm receipt email composer
-    status: done
-    owner: worker
-    passes: 0
-    stakes: reversible
-    depends_on:
-      - t-004
-      - t-005
-    updated: 2026-07-08
-    note: >
-      DONE (2026-07-08, PR #295): added a local, user-reviewed receipt email composer for saved appointments. History cards now expose Prepare receipt, which builds a mailto draft with saved customer email when available, client name, appointment date, hourly rate, time spent, product cost, total price, the formula line, and "Superkate loves you!". The implementation uses Android/iOS platform mail composer handoff plus a local copyable fallback dialog; it does not send backend email, add analytics, or call external customer-data services.
-  - id: t-007
-    milestone: m4
-    title: Polish the dark purple/teal salon UI
-    status: done
-    owner: worker
-    passes: 0
-    stakes: reversible
-    depends_on: t-006
-    updated: 2026-07-08
-    note: >
-      DONE (2026-07-08): polished the Superkate Flutter UI with a richer dark purple/teal theme, gradient app shell, centered mobile/tablet-friendly content width, salon-styled cards for the appointment form, clearer touch targets, more professional history result cards with rate/time/product details, and a cleaner receipt fallback dialog. No persistence, analytics, backend email sending, or customer-data flow changed.
-  - id: t-008
-    milestone: m4
-    title: Prepare handoff checklist without store submission
-    status: done
-    owner: worker
-    passes: 0
-    stakes: outward-facing
-    gate_human: true
-    approved_by_human: true
-    depends_on: t-007
-    updated: 2026-07-08
-    note: >
-      Silas approved the handoff gate in-session on 2026-07-08 and supplied the current release decisions: first app target is Android, receipt/contact schedule link is https://hairbysuperkate.glossgenius.com/, reply-to contact is hairbysuperkate@gmail.com, and cloud sync ownership is now a dedicated Hair by Superkate backend. The checklist remains the safety reference: do not use real customer records until durable persistence lands, and do not submit to stores, publish, bill, deploy, or send backend email without explicit concrete approval.
-  - id: t-010
-    milestone: m2
-    title: Write a pre-implementation architecture note for customer database and cloud sync
-    status: done
-    owner: worker
-    passes: 0
-    stakes: reversible
-    depends_on: t-002
-    updated: 2026-07-06
-    note: >
-      Added projects/superkate-services-calculator/docs/customer-sync-architecture.md selecting a local-first database plus authenticated cloud sync approach, tenant/authorization model, conflict strategy, CSV export path, and optional app/device lock behavior. This unblocks t-003 after the next dependency-resolution pass.
-  - id: t-014
-    milestone: m1
-    title: Run flutter create to complete platform scaffolding and run the test suite
-    status: done
-    owner: worker
-    passes: 0
-    stakes: reversible
-    updated: 2026-07-08
-    note: >
-      DONE (2026-07-08): PR #293 scaffolded apps/superkate-services-calculator with .metadata, android/, and ios/ after running Flutter locally on Windows. The merged PR reported successful verification with D:\dev\flutter\bin\flutter.bat pub get, D:\dev\flutter\bin\flutter.bat analyze --fatal-infos, and D:\dev\flutter\bin\flutter.bat test. Main now includes the platform metadata and generated Android/iOS project files, so the toolchain/scaffolding blocker is cleared.
-  - id: t-015
-    milestone: m1
-    title: Add a CI workflow that runs flutter analyze/test for superkate on push
-    status: done
-    owner: worker
-    passes: 0
-    stakes: reversible
-    updated: 2026-07-08
-    note: >
-      DONE (2026-07-08, PR #298): added .github/workflows/superkate-flutter-ci.yml, scoped to pull_request and push events that touch apps/superkate-services-calculator/** or the workflow file itself. The workflow installs stable Flutter with cache, runs flutter pub get, flutter analyze --fatal-infos, and flutter test from apps/superkate-services-calculator/. Merged to main with no deploy, secrets, publishing, customer data, DNS, billing, or app-store behavior touched.
-  - id: t-016
-    milestone: m4
-    title: Add rainbow, queer-alt Superkate visual styling pass
-    status: done
-    owner: worker
-    passes: 0
-    stakes: reversible
-    updated: 2026-07-08
-    note: >
-      DONE (2026-07-08, PR #300): merged the style-only Flutter pass inspired by Silas's direction that Superkate is a queer/genderqueer alternative barber focused on rainbow hair, gender-affirming cuts, wild designs, and spunk. The pass adds shared rainbow style tokens, updates the app shell, appointment form, history cards, and fallback receipt dialog with stronger rainbow gradients/glow/copy while preserving tested labels and customer-data behavior. No persistence, sync, analytics, backend email, billing, deploy, or app-store behavior is touched.
-  - id: t-017
-    milestone: m1
-    title: Add desktop Flutter target CI coverage
-    status: done
-    owner: worker
-    passes: 0
-    stakes: reversible
-    depends_on: t-015
-    updated: 2026-07-08
-    note: >
-      DONE (2026-07-08, PR #303): merged Windows and Linux debug desktop build checks into the Superkate Flutter CI and documented local desktop build commands in the app README. This treats desktop scaffolding as first-class install coverage while keeping the normal analyze/test job intact. The change was scoped to CI/docs plus an analyzer-friendly Flutter alpha API update; it did not change persistence, sync, customer-data behavior, backend email, deploy, billing, secrets, DNS, app-store behavior, or analytics.
-  - id: t-018
-    milestone: m2
-    title: Add durable local SQLite persistence adapter
-    status: done
-    owner: worker
-    passes: 0
-    stakes: reversible
-    depends_on: t-003
-    updated: 2026-07-08
-    note: >
-      DONE (2026-07-08, PR #306): merged a local SQLite-backed PersistenceService adapter in apps/superkate-services-calculator, wired production startup to open the durable local database by default, and added app-level persistence injection so widget tests do not hit platform SQLite startup. Superkate Flutter analyze/test and Linux desktop build passed in CI; Windows desktop build reached a successful build step before post-action cleanup. No cloud sync, analytics, backend email, app-store, billing, deploy, secrets, or live customer-data service was added.
-  - id: t-019
-    milestone: m2
-    title: Add customer profile edit and delete UI
-    status: done
-    owner: worker
-    passes: 0
-    stakes: reversible
-    depends_on: t-018
-    updated: 2026-07-09
-    note: >
-      DONE (2026-07-09, Reviewer-merged conductor PR #314, squash). Adds a "Manage customers"
-      AppBar sheet (lib/ui/customer_profiles.dart) for add/edit/delete of local customer
-      profiles, reusing the validated upsertCustomer/deleteCustomer contract from t-018
-      unchanged; delete detaches appointments rather than cascading, per spec. CI (Flutter
-      analyze/test, Linux/Windows desktop builds, security scans) all green. Reviewer fixed
-      up this roadmap entry and the claim bookkeeping after merge: the Worker branch
-      (worker/superkate-management-flows) never ran the claim step, never touched this
-      roadmap file, and used a non-task-scoped branch name instead of
-      worker/superkate-services-calculator-t-019. No widget tests were added for the new
-      add/edit/delete flow itself — see TALKBACK for the coverage gap and t-031 kaizen task.
-  - id: t-020
-    milestone: m3
-    title: Add appointment delete flow
-    status: waiting
-    owner: null
-    passes: 0
-    stakes: reversible
-    depends_on: t-018
-    updated: 2026-07-08
-    note: >
-      Add a safe appointment delete path for fake/local data with confirmation copy and tests. Do not add bulk delete in v1. Keep receipt/history behavior predictable after deletion.
-  - id: t-021
-    milestone: m4
-    title: Add CSV export for customers and appointments
-    status: waiting
-    owner: null
-    passes: 0
-    stakes: reversible
-    depends_on:
-      - t-018
-      - t-019
-      - t-020
-    updated: 2026-07-08
-    note: >
-      Add local CSV export for customers and appointments after durable storage and edit/delete flows exist. Export stays local/user-initiated, contains no analytics, and should be protected by the future app/device lock when that lands.
-  - id: t-022
-    milestone: m4
-    title: Add app/device lock onboarding and settings toggle
-    status: waiting
-    owner: null
-    passes: 0
-    stakes: reversible
-    depends_on: t-018
-    updated: 2026-07-08
-    note: >
-      Add an optional app/device lock prompt and settings toggle protecting saved customer history, email/contact details, export, and sensitive settings. Use clear, warm Superkate-friendly language; Silas has not supplied final onboarding copy yet, so use tasteful placeholder copy and keep it editable.
-  - id: t-023
-    milestone: m2
-    title: Draft cloud sync ownership and self-hosted backend decision note
-    status: done
-    owner: worker
-    passes: 0
-    stakes: reversible
-    depends_on: t-010
-    updated: 2026-07-08
-    note: >
-      DONE (2026-07-08, PR #307, later amended by Silas decision): added projects/superkate-services-calculator/docs/cloud-sync-ownership-decision.md and recorded the final direction that cloud sync/auth should be owned by a dedicated Hair by Superkate backend. Immediate Android beta remains local-only until durable persistence, export, app-lock, and fake-data backend sync are safe. No production sync, secrets, deploy, DNS, billing, analytics, backend email, or app-store behavior was implemented.
-  - id: t-024
-    milestone: m3
-    title: Add Android-first beta install notes
-    status: done
-    owner: worker
-    passes: 0
-    stakes: reversible
-    depends_on: t-014
-    updated: 2026-07-08
-    note: >
-      DONE (2026-07-08, PR #310): added projects/superkate-services-calculator/docs/android-first-beta-install.md and linked it from the app README. The doc covers Android debug build/install commands, USB device install flow, fake-data-only beta warnings, a local device smoke test checklist, and explicit blockers before wider beta/store distribution. No release signing, app-store listing, production backend, real customer data, DNS, secrets, billing, analytics, or backend email sending was added.
-  - id: t-025
-    milestone: m3
-    title: Add schedule link and reply-to receipt defaults
-    status: done
-    owner: worker
-    passes: 0
-    stakes: reversible
-    depends_on: t-006
-    updated: 2026-07-09
-    note: >
-      DONE (2026-07-09, PR #311): added Hair by Superkate receipt defaults using the booking link https://hairbysuperkate.glossgenius.com/ and reply-to/contact email hairbysuperkate@gmail.com. Receipt drafts remain local and user-reviewed with no backend sending, silent outbound email, live endpoint, analytics, production sync, secrets, DNS, deploy settings, billing, or app-store behavior.
-  - id: t-026
-    milestone: m4
-    title: Add independent background pattern selector
-    status: done
-    owner: worker
-    passes: 0
-    stakes: reversible
-    depends_on: t-016
-    updated: 2026-07-09
-    note: >
-      DONE (2026-07-09, PR #312): added an independent background selector with Circles, Hearts, Grid, and None options. Theme changes no longer force the decorative background pattern, and background changes do not alter the theme. Added widget coverage for theme/background independence. Security Audit, Worker PR CI, app-ci, and Superkate Flutter CI all passed before squash merge. No persistence, customer-data schema, backend sync, live endpoint, direct-send email, analytics, production deploy, secrets, DNS, billing, or app-store behavior changed.
-  - id: t-027
-    milestone: m2
-    title: Define dedicated Hair by Superkate backend API and schema contract
-    status: done
-    owner: worker
-    passes: 0
-    stakes: reversible
-    depends_on: t-023
-    updated: 2026-07-08
-    note: >
-      DONE (2026-07-08, PR #308): added projects/superkate-services-calculator/docs/backend-api-schema-contract.md defining the dedicated Hair by Superkate backend contract: customer and appointment schema, owner/business scoping, local-to-server ID mapping, sync tombstones, validation rules for money/time/dates, fake-data endpoints, and t-028 scaffold guidance. No secrets, DNS, deploy settings, production database connections, direct-send email, analytics, billing, app-store behavior, or public admin surfaces were created.
-  - id: t-028
-    milestone: m2
-    title: Scaffold dedicated Hair by Superkate backend locally without deploy or secrets
-    status: done
-    owner: worker
-    passes: 0
-    stakes: reversible
-    depends_on: t-027
-    updated: 2026-07-08
-    note: >
-      DONE (2026-07-08, PR #309): merged the fake/local-only Hair by Superkate backend scaffold in apps/hairbysuperkate-backend/ with health, bootstrap, push, pull, reset-test-data, fake auth, in-memory store, validation, models, and unittest coverage. The same PR also fixed the repo Security Audit workflow so pull requests scan changed lockfiles/files while scheduled/manual runs retain repo-wide coverage. No secrets, DNS, deploy settings, production DB connections, real customer sync, analytics, billing, backend email sending, or app-store behavior was added.
-  - id: t-029
-    milestone: m2
-    title: Add app-side sync client interfaces without enabling production sync
-    status: waiting
-    owner: null
-    passes: 0
-    stakes: reversible
-    depends_on:
-      - t-018
-      - t-027
-    updated: 2026-07-08
-    note: >
-      Add Dart interfaces and fake/test implementations for future cloud sync against the dedicated Hair by Superkate backend. Keep the app local-first and production sync disabled. No live endpoint, secrets, customer-data upload, direct-send email, analytics, or deploy behavior.
-  - id: t-030
-    milestone: m2
-    title: Plan dedicated backend deployment, secrets, and backup gates
-    status: needs-human
-    owner: human
-    passes: 0
-    stakes: needs-human
-    depends_on: t-028
-    updated: 2026-07-08
-    note: >
-      Human-gated planning task only. Before any production sync uses real customer data, Silas must choose hosting location, database engine, domain/subdomain if any, secrets handling, backup schedule, restore test process, and access policy. Workers must not touch DNS, secrets, production deploy settings, production databases, billing, analytics, or real customer sync under this task without explicit concrete approval.
-  - id: t-031
-    milestone: m2
-    title: Add widget test coverage for the customer profile add/edit/delete UI
-    status: ready
-    owner: null
-    passes: 0
-    stakes: reversible
-    depends_on: t-019
-    updated: 2026-07-09
-    note: >
-      Kaizen from t-019 (PR #314): lib/ui/customer_profiles.dart shipped with no widget
-      tests for save/edit/delete, breaking the pattern every prior UI task (t-004, t-005,
-      t-006, t-007, t-025, t-026) followed. Add coverage for: saving a new profile, editing
-      an existing one (form prefill + update), deleting a profile (confirm dialog cancel and
-      confirm paths), and the delete-detach invariant (appointment history keeps its client
-      name after the linked customer is deleted).
+- id: t-001
+  milestone: m1
+  title: Create the matching PROJECT Dream for slug parity
+  status: done
+  owner: worker
+  passes: 0
+  stakes: reversible
+  updated: 2026-07-08
+  note: 'DONE: Silas ran the existing project sync on 2026-07-08 and reported that everything synced successfully.
+    Future improvements to the shared project-to-Dream sync script belong in the conductor roadmap, not
+    the Superkate app roadmap.
+
+    '
+- id: t-002
+  milestone: m1
+  title: Review and finalize the MVP spec with Superkate
+  status: done
+  owner: worker
+  passes: 0
+  stakes: reversible
+  gate_human: true
+  approved_by_human: true
+  updated: 2026-07-05
+  note: 'Silas explicitly cleared the finalized MVP spec in the current session. SPEC.md captures the
+    approved beta direction and implementation standards. This approval unblocks the pre-implementation
+    architecture note.
+
+    '
+- id: t-009
+  milestone: m1
+  title: Add paid-app customer data security baseline to the MVP spec
+  status: done
+  owner: worker
+  passes: 0
+  stakes: reversible
+  updated: 2026-07-04
+  note: 'Added an explicit customer data security baseline to SPEC.md covering data minimization, local-first
+    storage, safe receipt behavior, deletion/export expectations, and paid-app release gates before appointment
+    persistence begins.
+
+    '
+- id: t-011
+  milestone: m1
+  title: Record Silas's beta product decisions in the MVP spec
+  status: done
+  owner: worker
+  passes: 0
+  stakes: reversible
+  updated: 2026-07-05
+  note: 'Updated SPEC.md and roadmap notes from Silas''s feedback: hours/minutes with preset chips, product
+    cost optional defaulting to zero, customer database and email storage as a reasonable local-business
+    feature, cloud sync as an initial beta expectation, warm receipts with "Superkate loves you!", and
+    optional app/device lock.
+
+    '
+- id: t-012
+  milestone: m1
+  title: Record Silas's final open-question approvals in the MVP spec
+  status: done
+  owner: worker
+  passes: 0
+  stakes: reversible
+  updated: 2026-07-05
+  note: 'Recorded Silas''s approval of the remaining recommendation package in SPEC.md: configurable receipt
+    contact fields, app-lock onboarding prompt with settings toggle, appointment deletion, customer edit/delete,
+    cloud sync backup, CSV export in paid v1, no bulk delete in v1, and backend direct-send receipts as
+    a future roadmap option rather than beta behavior.
+
+    '
+- id: t-013
+  milestone: m1
+  title: Open the PR in the same cycle a task branch is pushed, before ending the Worker session
+  status: done
+  owner: worker
+  passes: 0
+  stakes: reversible
+  updated: 2026-07-06
+  note: 'Added projects/superkate-services-calculator/docs/t-013-worker-pr-last-step-check.md documenting
+    the Worker last-step PR check and the exact AGENTS.md sentence that should be added if a future patch-capable
+    run edits the operating manual directly. This prevents pushed worker branches from being stranded
+    without a PR.
+
+    '
+- id: t-003
+  milestone: m2
+  title: Build the appointment and customer data model with persistence
+  status: done
+  owner: worker
+  passes: 0
+  stakes: reversible
+  depends_on:
+  - t-002
+  - t-009
+  - t-010
+  updated: 2026-07-07
+  note: "Implemented in apps/superkate-services-calculator/ (Silas-directed session 2026-07-07). The prior\
+    \ handoff wrongly parked this as \"cannot locate the app repository\" \u2014 the Flutter app is in-repo\
+    \ at apps/superkate-services-calculator/, so the domain + persistence layer was built directly there\
+    \ against the SPEC.md data model: domain money/validation/ids, customer and appointment models, PersistenceService,\
+    \ in-memory persistence, and unit tests for totals, product-cost defaults, recomputation, validation,\
+    \ customer-delete snapshots, and search filters. Money is cents, time is minutes, totals are always\
+    \ recalculated, customer delete detaches rather than cascades. Verification gap from that run was\
+    \ later cleared by t-014.\n"
+- id: t-004
+  milestone: m2
+  title: Build calculator form with live totals
+  status: done
+  owner: worker
+  passes: 0
+  stakes: reversible
+  depends_on: t-003
+  updated: 2026-07-07
+  note: "DONE (2026-07-07, Silas-directed session): built lib/ui/new_appointment_form.dart \u2014 client\
+    \ name, appointment date picker, hourly rate, time spent with steppers and preset chips, optional\
+    \ product cost defaulting to $0, live appointment total recomputed through the t-003 domain layer,\
+    \ save through PersistenceService, user-safe errors, main.dart wiring, widget tests, and money parser\
+    \ tests. Verification gap from that run was later cleared by t-014.\n"
+- id: t-005
+  milestone: m3
+  title: Add client/date appointment search
+  status: done
+  owner: worker
+  passes: 0
+  stakes: reversible
+  depends_on: t-003
+  updated: 2026-07-08
+  note: 'DONE (2026-07-08, Reviewer-merged conductor PR #290). Implemented a History tab in apps/superkate-services-calculator/
+    with client-name search, date-range filter controls, newest-first appointment results, and cards showing
+    client, date, and appointment total. Uses the existing PersistenceService.listAppointments(AppointmentFilter)
+    contract unchanged. Added widget coverage for saved appointments appearing in history and client-name
+    filtering.
+
+    '
+- id: t-006
+  milestone: m3
+  title: Add warm receipt email composer
+  status: done
+  owner: worker
+  passes: 0
+  stakes: reversible
+  depends_on:
+  - t-004
+  - t-005
+  updated: 2026-07-08
+  note: 'DONE (2026-07-08, PR #295): added a local, user-reviewed receipt email composer for saved appointments.
+    History cards now expose Prepare receipt, which builds a mailto draft with saved customer email when
+    available, client name, appointment date, hourly rate, time spent, product cost, total price, the
+    formula line, and "Superkate loves you!". The implementation uses Android/iOS platform mail composer
+    handoff plus a local copyable fallback dialog; it does not send backend email, add analytics, or call
+    external customer-data services.
+
+    '
+- id: t-007
+  milestone: m4
+  title: Polish the dark purple/teal salon UI
+  status: done
+  owner: worker
+  passes: 0
+  stakes: reversible
+  depends_on: t-006
+  updated: 2026-07-08
+  note: 'DONE (2026-07-08): polished the Superkate Flutter UI with a richer dark purple/teal theme, gradient
+    app shell, centered mobile/tablet-friendly content width, salon-styled cards for the appointment form,
+    clearer touch targets, more professional history result cards with rate/time/product details, and
+    a cleaner receipt fallback dialog. No persistence, analytics, backend email sending, or customer-data
+    flow changed.
+
+    '
+- id: t-008
+  milestone: m4
+  title: Prepare handoff checklist without store submission
+  status: done
+  owner: worker
+  passes: 0
+  stakes: outward-facing
+  gate_human: true
+  approved_by_human: true
+  depends_on: t-007
+  updated: 2026-07-08
+  note: 'Silas approved the handoff gate in-session on 2026-07-08 and supplied the current release decisions:
+    first app target is Android, receipt/contact schedule link is https://hairbysuperkate.glossgenius.com/,
+    reply-to contact is hairbysuperkate@gmail.com, and cloud sync ownership is now a dedicated Hair by
+    Superkate backend. The checklist remains the safety reference: do not use real customer records until
+    durable persistence lands, and do not submit to stores, publish, bill, deploy, or send backend email
+    without explicit concrete approval.
+
+    '
+- id: t-010
+  milestone: m2
+  title: Write a pre-implementation architecture note for customer database and cloud sync
+  status: done
+  owner: worker
+  passes: 0
+  stakes: reversible
+  depends_on: t-002
+  updated: 2026-07-06
+  note: 'Added projects/superkate-services-calculator/docs/customer-sync-architecture.md selecting a local-first
+    database plus authenticated cloud sync approach, tenant/authorization model, conflict strategy, CSV
+    export path, and optional app/device lock behavior. This unblocks t-003 after the next dependency-resolution
+    pass.
+
+    '
+- id: t-014
+  milestone: m1
+  title: Run flutter create to complete platform scaffolding and run the test suite
+  status: done
+  owner: worker
+  passes: 0
+  stakes: reversible
+  updated: 2026-07-08
+  note: 'DONE (2026-07-08): PR #293 scaffolded apps/superkate-services-calculator with .metadata, android/,
+    and ios/ after running Flutter locally on Windows. The merged PR reported successful verification
+    with D:\dev\flutter\bin\flutter.bat pub get, D:\dev\flutter\bin\flutter.bat analyze --fatal-infos,
+    and D:\dev\flutter\bin\flutter.bat test. Main now includes the platform metadata and generated Android/iOS
+    project files, so the toolchain/scaffolding blocker is cleared.
+
+    '
+- id: t-015
+  milestone: m1
+  title: Add a CI workflow that runs flutter analyze/test for superkate on push
+  status: done
+  owner: worker
+  passes: 0
+  stakes: reversible
+  updated: 2026-07-08
+  note: 'DONE (2026-07-08, PR #298): added .github/workflows/superkate-flutter-ci.yml, scoped to pull_request
+    and push events that touch apps/superkate-services-calculator/** or the workflow file itself. The
+    workflow installs stable Flutter with cache, runs flutter pub get, flutter analyze --fatal-infos,
+    and flutter test from apps/superkate-services-calculator/. Merged to main with no deploy, secrets,
+    publishing, customer data, DNS, billing, or app-store behavior touched.
+
+    '
+- id: t-016
+  milestone: m4
+  title: Add rainbow, queer-alt Superkate visual styling pass
+  status: done
+  owner: worker
+  passes: 0
+  stakes: reversible
+  updated: 2026-07-08
+  note: 'DONE (2026-07-08, PR #300): merged the style-only Flutter pass inspired by Silas''s direction
+    that Superkate is a queer/genderqueer alternative barber focused on rainbow hair, gender-affirming
+    cuts, wild designs, and spunk. The pass adds shared rainbow style tokens, updates the app shell, appointment
+    form, history cards, and fallback receipt dialog with stronger rainbow gradients/glow/copy while preserving
+    tested labels and customer-data behavior. No persistence, sync, analytics, backend email, billing,
+    deploy, or app-store behavior is touched.
+
+    '
+- id: t-017
+  milestone: m1
+  title: Add desktop Flutter target CI coverage
+  status: done
+  owner: worker
+  passes: 0
+  stakes: reversible
+  depends_on: t-015
+  updated: 2026-07-08
+  note: 'DONE (2026-07-08, PR #303): merged Windows and Linux debug desktop build checks into the Superkate
+    Flutter CI and documented local desktop build commands in the app README. This treats desktop scaffolding
+    as first-class install coverage while keeping the normal analyze/test job intact. The change was scoped
+    to CI/docs plus an analyzer-friendly Flutter alpha API update; it did not change persistence, sync,
+    customer-data behavior, backend email, deploy, billing, secrets, DNS, app-store behavior, or analytics.
+
+    '
+- id: t-018
+  milestone: m2
+  title: Add durable local SQLite persistence adapter
+  status: done
+  owner: worker
+  passes: 0
+  stakes: reversible
+  depends_on: t-003
+  updated: 2026-07-08
+  note: 'DONE (2026-07-08, PR #306): merged a local SQLite-backed PersistenceService adapter in apps/superkate-services-calculator,
+    wired production startup to open the durable local database by default, and added app-level persistence
+    injection so widget tests do not hit platform SQLite startup. Superkate Flutter analyze/test and Linux
+    desktop build passed in CI; Windows desktop build reached a successful build step before post-action
+    cleanup. No cloud sync, analytics, backend email, app-store, billing, deploy, secrets, or live customer-data
+    service was added.
+
+    '
+- id: t-019
+  milestone: m2
+  title: Add customer profile edit and delete UI
+  status: done
+  owner: worker
+  passes: 0
+  stakes: reversible
+  depends_on: t-018
+  updated: 2026-07-09
+  note: "DONE (2026-07-09, Reviewer-merged conductor PR #314, squash). Adds a \"Manage customers\" AppBar\
+    \ sheet (lib/ui/customer_profiles.dart) for add/edit/delete of local customer profiles, reusing the\
+    \ validated upsertCustomer/deleteCustomer contract from t-018 unchanged; delete detaches appointments\
+    \ rather than cascading, per spec. CI (Flutter analyze/test, Linux/Windows desktop builds, security\
+    \ scans) all green. Reviewer fixed up this roadmap entry and the claim bookkeeping after merge: the\
+    \ Worker branch (worker/superkate-management-flows) never ran the claim step, never touched this roadmap\
+    \ file, and used a non-task-scoped branch name instead of worker/superkate-services-calculator-t-019.\
+    \ No widget tests were added for the new add/edit/delete flow itself \u2014 see TALKBACK for the coverage\
+    \ gap and t-031 kaizen task.\n"
+- id: t-020
+  milestone: m3
+  title: Add appointment delete flow
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  depends_on: t-018
+  updated: 2026-07-08
+  note: 'Add a safe appointment delete path for fake/local data with confirmation copy and tests. Do not
+    add bulk delete in v1. Keep receipt/history behavior predictable after deletion.
+
+    '
+- id: t-021
+  milestone: m4
+  title: Add CSV export for customers and appointments
+  status: waiting
+  owner: null
+  passes: 0
+  stakes: reversible
+  depends_on:
+  - t-018
+  - t-019
+  - t-020
+  updated: 2026-07-08
+  note: 'Add local CSV export for customers and appointments after durable storage and edit/delete flows
+    exist. Export stays local/user-initiated, contains no analytics, and should be protected by the future
+    app/device lock when that lands.
+
+    '
+- id: t-022
+  milestone: m4
+  title: Add app/device lock onboarding and settings toggle
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  depends_on: t-018
+  updated: 2026-07-08
+  note: 'Add an optional app/device lock prompt and settings toggle protecting saved customer history,
+    email/contact details, export, and sensitive settings. Use clear, warm Superkate-friendly language;
+    Silas has not supplied final onboarding copy yet, so use tasteful placeholder copy and keep it editable.
+
+    '
+- id: t-023
+  milestone: m2
+  title: Draft cloud sync ownership and self-hosted backend decision note
+  status: done
+  owner: worker
+  passes: 0
+  stakes: reversible
+  depends_on: t-010
+  updated: 2026-07-08
+  note: 'DONE (2026-07-08, PR #307, later amended by Silas decision): added projects/superkate-services-calculator/docs/cloud-sync-ownership-decision.md
+    and recorded the final direction that cloud sync/auth should be owned by a dedicated Hair by Superkate
+    backend. Immediate Android beta remains local-only until durable persistence, export, app-lock, and
+    fake-data backend sync are safe. No production sync, secrets, deploy, DNS, billing, analytics, backend
+    email, or app-store behavior was implemented.
+
+    '
+- id: t-024
+  milestone: m3
+  title: Add Android-first beta install notes
+  status: done
+  owner: worker
+  passes: 0
+  stakes: reversible
+  depends_on: t-014
+  updated: 2026-07-08
+  note: 'DONE (2026-07-08, PR #310): added projects/superkate-services-calculator/docs/android-first-beta-install.md
+    and linked it from the app README. The doc covers Android debug build/install commands, USB device
+    install flow, fake-data-only beta warnings, a local device smoke test checklist, and explicit blockers
+    before wider beta/store distribution. No release signing, app-store listing, production backend, real
+    customer data, DNS, secrets, billing, analytics, or backend email sending was added.
+
+    '
+- id: t-025
+  milestone: m3
+  title: Add schedule link and reply-to receipt defaults
+  status: done
+  owner: worker
+  passes: 0
+  stakes: reversible
+  depends_on: t-006
+  updated: 2026-07-09
+  note: 'DONE (2026-07-09, PR #311): added Hair by Superkate receipt defaults using the booking link https://hairbysuperkate.glossgenius.com/
+    and reply-to/contact email hairbysuperkate@gmail.com. Receipt drafts remain local and user-reviewed
+    with no backend sending, silent outbound email, live endpoint, analytics, production sync, secrets,
+    DNS, deploy settings, billing, or app-store behavior.
+
+    '
+- id: t-026
+  milestone: m4
+  title: Add independent background pattern selector
+  status: done
+  owner: worker
+  passes: 0
+  stakes: reversible
+  depends_on: t-016
+  updated: 2026-07-09
+  note: 'DONE (2026-07-09, PR #312): added an independent background selector with Circles, Hearts, Grid,
+    and None options. Theme changes no longer force the decorative background pattern, and background
+    changes do not alter the theme. Added widget coverage for theme/background independence. Security
+    Audit, Worker PR CI, app-ci, and Superkate Flutter CI all passed before squash merge. No persistence,
+    customer-data schema, backend sync, live endpoint, direct-send email, analytics, production deploy,
+    secrets, DNS, billing, or app-store behavior changed.
+
+    '
+- id: t-027
+  milestone: m2
+  title: Define dedicated Hair by Superkate backend API and schema contract
+  status: done
+  owner: worker
+  passes: 0
+  stakes: reversible
+  depends_on: t-023
+  updated: 2026-07-08
+  note: 'DONE (2026-07-08, PR #308): added projects/superkate-services-calculator/docs/backend-api-schema-contract.md
+    defining the dedicated Hair by Superkate backend contract: customer and appointment schema, owner/business
+    scoping, local-to-server ID mapping, sync tombstones, validation rules for money/time/dates, fake-data
+    endpoints, and t-028 scaffold guidance. No secrets, DNS, deploy settings, production database connections,
+    direct-send email, analytics, billing, app-store behavior, or public admin surfaces were created.
+
+    '
+- id: t-028
+  milestone: m2
+  title: Scaffold dedicated Hair by Superkate backend locally without deploy or secrets
+  status: done
+  owner: worker
+  passes: 0
+  stakes: reversible
+  depends_on: t-027
+  updated: 2026-07-08
+  note: 'DONE (2026-07-08, PR #309): merged the fake/local-only Hair by Superkate backend scaffold in
+    apps/hairbysuperkate-backend/ with health, bootstrap, push, pull, reset-test-data, fake auth, in-memory
+    store, validation, models, and unittest coverage. The same PR also fixed the repo Security Audit workflow
+    so pull requests scan changed lockfiles/files while scheduled/manual runs retain repo-wide coverage.
+    No secrets, DNS, deploy settings, production DB connections, real customer sync, analytics, billing,
+    backend email sending, or app-store behavior was added.
+
+    '
+- id: t-029
+  milestone: m2
+  title: Add app-side sync client interfaces without enabling production sync
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  depends_on:
+  - t-018
+  - t-027
+  updated: 2026-07-08
+  note: 'Add Dart interfaces and fake/test implementations for future cloud sync against the dedicated
+    Hair by Superkate backend. Keep the app local-first and production sync disabled. No live endpoint,
+    secrets, customer-data upload, direct-send email, analytics, or deploy behavior.
+
+    '
+- id: t-030
+  milestone: m2
+  title: Plan dedicated backend deployment, secrets, and backup gates
+  status: needs-human
+  owner: human
+  passes: 0
+  stakes: needs-human
+  depends_on: t-028
+  updated: 2026-07-08
+  note: 'Human-gated planning task only. Before any production sync uses real customer data, Silas must
+    choose hosting location, database engine, domain/subdomain if any, secrets handling, backup schedule,
+    restore test process, and access policy. Workers must not touch DNS, secrets, production deploy settings,
+    production databases, billing, analytics, or real customer sync under this task without explicit concrete
+    approval.
+
+    '
+- id: t-031
+  milestone: m2
+  title: Add widget test coverage for the customer profile add/edit/delete UI
+  status: claimed
+  owner: null
+  passes: 0
+  stakes: reversible
+  depends_on: t-019
+  updated: 2026-07-09
+  note: 'Kaizen from t-019 (PR #314): lib/ui/customer_profiles.dart shipped with no widget tests for save/edit/delete,
+    breaking the pattern every prior UI task (t-004, t-005, t-006, t-007, t-025, t-026) followed. Add
+    coverage for: saving a new profile, editing an existing one (form prefill + update), deleting a profile
+    (confirm dialog cancel and confirm paths), and the delete-detach invariant (appointment history keeps
+    its client name after the linked customer is deleted).
+
+    '
