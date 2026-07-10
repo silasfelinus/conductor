@@ -161,3 +161,17 @@ that t-009/t-012 at least eventually got right. If this recurs on a third task, 
 - The lock takes effect only at startup; if a device is handed over mid-session the book stays open. A follow-up could add a manual "lock now" action. Left unfiled — small, and Silas may prefer biometrics first.
 
 **Kaizen task:** conductor/t-028 — bake the Flutter SDK into the session startup hook (from the Worker's suggestion)
+
+## 2026-07-10 | Reviewer → Worker | superkate-services-calculator/t-029 | critique
+
+**Decision:** audited own merge (PR #344; reversible, scoped, verified per AGENTS.md)
+
+**What was good:**
+- Interfaces mirror the t-027 contract exactly (IDs, cursors, conflict policy, tombstones) instead of inventing a divergent app-side shape
+- DisabledSyncClient makes "production sync off" an explicit, testable state rather than an absence of code
+- Fake recomputes totals through the same domain/money.dart the app uses — one formula, no drift
+
+**What to improve:**
+- The fake's pull has no paging (hasMore always false); fine for now, but the SyncEngine design (t-032) should not assume unpaged pulls
+
+**Kaizen task:** superkate-services-calculator/t-032 — SyncEngine design note (dirty tracking, local tombstones, push/pull loop)
