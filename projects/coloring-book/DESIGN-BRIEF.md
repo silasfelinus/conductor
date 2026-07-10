@@ -2,7 +2,7 @@
 
 date: 2026-07-10
 status: active
-author: Claude (Silas-directed session)
+author: Claude + OpenAI Worker (Silas-directed sessions)
 
 ## What it is
 
@@ -28,9 +28,10 @@ This grew out of two earlier threads Silas started under different names:
 1. **Coloring surface** — open a page, tap/click regions to fill, palette
    management, undo/reset, save progress locally (account-synced later), export
    as image. Generalize the mural color-studio engine into a reusable component.
-2. **Book library** — coloring pages organized into **sets** (books). Launch sets,
-   per Silas: **"Kind Robots"** (generated from existing KR art assets) and
-   **"Spooktacular Monster Drag Party"**. More sets follow continuously.
+2. **Book library** — coloring pages organized into **sets** (books). Launch sets:
+   **Kind Robots** (generated from existing KR art assets) and **Monster Recast**
+   (`monster-recast`), the evolved replacement for the earlier generic monster-drag
+   plan. More sets follow continuously.
 3. **Page generator** — users generate their own pages via Kontext
    ("convert to coloring book line art": clean black outlines, white fill regions,
    no shading) and/or a coloring-book LoRA. Free tier includes a small number of
@@ -39,6 +40,53 @@ This grew out of two earlier threads Silas started under different names:
    **tokens** are storefront items (hard-gated at the go-live step as always).
 4. **Art channel tab** — the app gets a tab in the kind_robots art channel
    (`dashboardConfigs.art` in stores/helpers/dashboardHelper.ts).
+
+## Launch set: Monster Recast
+
+Monster Recast is an original gallery of cinema-monster archetypes reimagined through
+gender swap, drag performance, queer theatricality, and old-Hollywood spectacle.
+The project begins with familiar lineages — vampire, stitched revenant, werewolf,
+mummy, lagoon creature, invisible illusionist, opera phantom, alien terror, slasher,
+giant creature, haunted doll, and related classics — then deliberately moves each
+one into an original name, biography, silhouette, costume language, and setting.
+
+V1 targets **28 illustrated interior pages** plus a separate full-color cover:
+
+- 24 solo character pages
+- 2 duo pages
+- 1 cosmic trio page
+- 1 full-cast premiere page
+
+The production order is intentional:
+
+1. lock names, bios, designs, Kind Robots Character seed fields, and concept prompts;
+2. generate several full-color candidates per character in varied visual traditions;
+3. select and revise the strongest original designs;
+4. create private Kind Robots Character entries for the complete selected cast;
+5. convert approved art into clean, closed-region coloring pages;
+6. assemble the digital and print-ready book package;
+7. pause publishing/POD until the coloring app and storefront are ready.
+
+The source package lives in `sets/monster-recast/`:
+
+- `README.md` — production plan and originality rules
+- `characters.yaml` — 24 cast members and Character-ready seed data
+- `pages.yaml` — cover prompt and 28-page book plan
+
+## Originality and copyright distance
+
+Monster Recast is genre conversation, not near-copy parody. Every design must evoke
+an archetype without reproducing a protected character.
+
+- Never use franchise names, actor likenesses, studio logos, exact masks, signature
+  costumes, signature weapons, or famous scene/poster compositions.
+- Change multiple foundational anchors: silhouette, anatomy, era, wardrobe, props,
+  setting, motive, personality, movement, and color language.
+- Prefer public-domain folklore where possible. Later-cinema archetypes receive the
+  strongest transformation and explicit avoid-lists in `characters.yaml`.
+- Concept prompts may use broad media, historical periods, and public-domain art
+  movements, but do not imitate living artists or request copyrighted studio styles.
+- V1 remains theatrical and all-ages: spooky, glamorous, funny, and strange without gore.
 
 ## Generation pipeline (the hard part, spec'd in t-004)
 
@@ -69,18 +117,19 @@ The **Humboldt Impropriety Society** coloring book + calendar ideas remain
 archived inspiration (CONTROL.md: humboldt-impropriety-calendar was not
 approved). This app is the machinery that would make an HIS book cheap to
 produce if Silas ever revives it — but no HIS set gets built until he
-explicitly re-approves that content. Launch sets are the two he named.
+explicitly re-approves that content.
 
 ## Content rating
 
-Launch sets are all-ages. "Spooktacular Monster Drag Party" is playful-spooky
-and celebratory — glamorous monster performers, big hair, bigger boas —
-kept all-ages in v1. Any mature set (HIS territory) is a separate,
-Silas-approved decision with proper gating.
+Launch sets are all-ages. Monster Recast is celebratory and queer-positive, with
+monster drag, gender play, theatrical peril, and macabre comedy but no gore or
+sexualized adult content. Any mature set is a separate, Silas-approved decision
+with proper gating.
 
 ## Background asset generation (pre-authorized)
 
 Silas authorized generating art assets in the background for this project:
-multiple coloring book sets, app/front-end assets, icon/card/hero. Generated
-art rule applies (traceable, reversible, metadata kept). Reuse kind_robots art
-assets freely as source images for the Kind Robots set.
+multiple coloring book sets, app/front-end assets, icon/card/hero, Monster Recast
+concept art, and coloring conversions. Generated-art rules apply: keep the source,
+prompt, model, seed or job ID, destination, and selection status traceable. Reuse
+kind_robots art assets freely as source images for the Kind Robots set.
