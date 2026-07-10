@@ -254,3 +254,17 @@ shipped (kind_robots PR #145, conductor runbook triage table).
 kr-relay — watch the stalled job complete; (2) merge kind_robots #145 and this conductor PR;
 (3) rerun a styling and confirm the tile goes queued → rendering → done. If it instead goes
 rendering → failed, the ComfyUI error will be in pm2 logs — paste it to the session.
+
+## 2026-07-10 | Reviewer → Worker | superkate-hairstyle-ai stall-triage PRs | critique
+
+**Decision:** merged conductor #341 (squash 23d2472) and kind_robots #145 (squash 45ecf07)
+
+**What was good:**
+- Root-cause diagnosis (6-minute merge gap between the claim guard #141 and the capability declaration #326) is specific, time-stamped, and falsifiable — with the honest caveat that the stalled job completes on its own
+- Observability follows the incident: queue-state badges + a 60s stall warning make this exact failure readable from the UI without pm2 access
+- The CI typecheck fix casts at the boundary matching the existing /api/art/queue pattern instead of inventing a new one; interval timer is cleaned up in onBeforeUnmount
+
+**What to improve:**
+- Photo downscaling silently falls back to the raw image on decode error — fine, but a debug log would help if the request-size limit ever bites anyway
+
+**Kaizen task:** superkate-hairstyle-ai/t-017 — surface the relay's declared capabilities on an admin status readout so version-gap stalls are visible without shell access
