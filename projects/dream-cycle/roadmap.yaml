@@ -138,11 +138,14 @@ tasks:
       Four seeds exist (dreams tidepool-arcade, lantern-post, static-garden;
       coloring-book monster-recast). Add six more full outlines using the type
       templates — mostly dreams (varied vibes/locations, at least two
-      narratorless) plus 1-2 new coloring-book concepts (all-ages, clearing the
-      coloring-book project's originality guardrails). No duplicates of existing
-      kind_robots Dreams, home-project sets, or backlog entries (check all).
-      All-ages, on-brand whimsy per the seed tone unless a Silas note steers
-      otherwise. Quality over speed: each outline should be buildable as-is.
+      narratorless) plus 1-2 new coloring-book concepts (content rating is
+      per-set per CONTROL.md — default all-ages unless Silas says otherwise —
+      and every concept must clear the coloring-book project's originality
+      guardrails). No duplicates of existing kind_robots Dreams, home-project
+      sets, or backlog entries (check all; hollywood-recast-2 is parked, not
+      available). Dreams stay all-ages, on-brand whimsy per the seed tone unless
+      a Silas note steers otherwise. Quality over speed: each outline should be
+      buildable as-is.
   - id: t-006
     milestone: m4
     title: 'Creation-a-day: advance the active creation build one stage'
@@ -221,5 +224,13 @@ tasks:
       double-claiming a task the Worker holds), per-stage verification, and the
       originality-guardrail checkpoint before any art generation. Coordinate with
       coloring-book t-003/t-004 (engine + generation pipeline specs) — reference,
-      don't fork. Once this lands, backlog/monster-recast.md (approved, high)
-      becomes buildable by t-006.
+      don't fork. Bake in the home project's production law (2026-07-10): the
+      paired-master workflow per sets/monster-recast/STYLE-GUIDE.md (colored
+      graphic master first, faithful B/W conversion second), the MANDATORY
+      preflight (`python scripts/coloring_approved_status.py --check`) before
+      any set work, approved/manifest.yaml as the source of truth for confirmed
+      masters (never regenerate an approved design for production), per-set
+      content ratings, and parked sets (status: parked cards like
+      hollywood-recast-2) being untouchable until Silas activates them. Once
+      this lands, backlog/monster-recast.md (approved, high) becomes buildable
+      by t-006.

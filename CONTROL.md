@@ -229,18 +229,31 @@ coloring book sets and whatever the app/front end needs. First two digital books
 **"Kind Robots"** (reuse kind_robots art assets as sources) and **"Monster Recast"**
 (renamed from the working title "Spooktacular Monster Drag Party" in Silas's
 2026-07-10 Worker session: an original gallery of gender-swapped, drag-reimagined
-Hollywood monster archetypes — cast bible and 28-page plan live in
-projects/coloring-book/sets/monster-recast/). Every page we create is
-digital-storefront inventory — set up toward a print-on-demand service selling
-physical coloring books (POD accounts, listings, and spend remain hard-gated).
+Hollywood monster archetypes — now a 34-concept homage pool targeting 32–38
+interior pages, produced colored-master-first per sets/monster-recast/STYLE-GUIDE.md).
+A third book, **"Hollywood Recast 2"** (classic movie-scene grammar recast through
+gender/body/age/presentation; first seed Highland Heatwave), is scaffolded but
+PARKED in sets/hollywood-recast-2/ — no claims, generation, or scheduling until
+Silas activates it. Every page we create is digital-storefront inventory — set up
+toward a print-on-demand service selling physical coloring books (POD accounts,
+listings, and spend remain hard-gated).
 **Notes:**
+- Approved designs are locked: sets/monster-recast/approved/manifest.yaml is the
+  source of truth for Silas's confirmed masters. Run
+  `python scripts/coloring_approved_status.py --check` before set work; never
+  regenerate an approved design for production (exploratory queue stays active).
 - The dream-cycle idler may spend idle days advancing this project's set-production
   tasks (Monster Recast first) under its delegation rule: content stays here, the
   idler updates both records, and never double-claims a task the Worker holds.
 - Tech seed: the mural-design WonderLab color studio (kind_robots /mural, PR #135) —
   generalize/share the engine, don't fork it; mural-design keeps working.
 - Humboldt Impropriety Society coloring book/calendar stay archived inspiration; no
-  HIS set unless I explicitly re-approve. Launch sets are all-ages.
+  HIS set unless I explicitly re-approve.
+- Content ratings are per-set (updated 2026-07-10 from Silas's direct commits,
+  superseding the earlier "launch sets are all-ages" note): "Kind Robots" stays
+  all-ages; Monster Recast is progressive teen horror (~PG-13) per its README;
+  Hollywood Recast 2 is teen/adult (~PG-13). New sets default all-ages unless
+  Silas's set README says otherwise.
 
 ### humboldt-impropriety-calendar  (brainstorm — archived)
 **Direction:** Not approved (2026-07-02). Retired in project-overrides.yaml; kept in
