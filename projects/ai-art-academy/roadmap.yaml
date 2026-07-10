@@ -35,15 +35,15 @@ milestones:
   - id: m2
     title: Style registry and LoRA/knowledge evaluation
     weight: 20
-    status: not-started
+    status: in-progress
   - id: m3
     title: Curriculum content (movements, styles, artists)
     weight: 20
-    status: not-started
+    status: done
   - id: m4
     title: Academy front end in kind_robots (art-styler evolution)
     weight: 30
-    status: not-started
+    status: in-progress
   - id: m5
     title: Project art and inspiration assets
     weight: 5
@@ -85,12 +85,21 @@ tasks:
   - id: t-003
     milestone: m2
     title: Hunt publicly available style LoRAs and build the style-LoRA registry
-    status: ready
-    owner: null
+    status: done
+    owner: reviewer
     passes: 0
     stakes: reversible
-    updated: '2026-07-10T00:00:00Z'
+    updated: '2026-07-10T08:30:00Z'
     note: >
+      DONE 2026-07-10: docs/style-lora-registry.md written. 8 of 16 target styles
+      LoRA-backed + 2 bonus (Van Gogh, Pop Art); 8 prompt-mode (fine per brief). Best
+      find: Owen777/Kontext-Style-Loras, a 22-style pack trained natively on Kontext
+      dev for restyling. Ethics catches applied (living-artist LoRAs excluded;
+      cubism ships movement-only). LICENSING FLAG spun out to t-011 (needs-human):
+      most LoRAs are FLUX.1-dev NON-COMMERCIAL license. Civitai candidates parked in
+      a needs-Silas table (login-gated downloads). Environment note: proxy blocked
+      direct Civitai/HF fetches, so unverified licenses are marked; re-verify at
+      download time. Original spec follows:
       Survey openly licensed, publicly downloadable style LoRAs compatible with
       FLUX/Kontext (Civitai open-license filters, Hugging Face) that communicate
       historical movements or dead-artist styles: impressionism, ukiyo-e, art nouveau,
@@ -119,15 +128,27 @@ tasks:
       comparison images as traceable evidence (prompt/model/seed metadata per the
       generated-art rule). If any must-have style fails on Kontext entirely, document
       the SDXL+IP-Adapter fallback case in the same file rather than building it.
+      STATUS NOTE 2026-07-10: still ready but requires the generation backend;
+      KR_API_TOKEN is absent in web sessions, so this needs a token-bearing Worker
+      cycle (or Silas's environment). Registry input from t-003 is complete.
   - id: t-005
     milestone: m3
     title: Write the art-history curriculum outline (movements, styles, artists)
-    status: ready
-    owner: null
+    status: done
+    owner: reviewer
     passes: 0
     stakes: reversible
-    updated: '2026-07-10T00:00:00Z'
+    updated: '2026-07-10T08:30:00Z'
     note: >
+      DONE 2026-07-10: docs/curriculum-outline.md written — 14 movements (Greek vase
+      painting through De Stijl), YAML skeleton + full prose, all artists died 1953
+      or earlier, 14/14 movements have one verified open-access source URL (Met x6,
+      AIC x5, NGA, Rijksmuseum, Wikimedia); remaining examples marked unverified for
+      batch re-check at seed time. Cubism uses Gris/Gleizes (Picasso/Braque are
+      inside the 70-year window — prose context only). Front-end seed
+      (kind_robots stores/seeds/academyStyles.ts, PR #143) uses matching slugs.
+      Remix-quality flags: cubism and de-stijl may remix poorly — t-004 will judge.
+      Original spec follows:
       Draft the v1 curriculum: 10-16 movements spanning the timeline (e.g. Renaissance,
       Baroque, Ukiyo-e, Romanticism, Impressionism, Post-Impressionism, Art Nouveau,
       Expressionism, Cubism, Bauhaus, Surrealism-era public domain works...), each with
@@ -140,12 +161,19 @@ tasks:
   - id: t-006
     milestone: m3
     title: Write the public-domain policy and curate the starter image library plan
-    status: ready
-    owner: null
+    status: done
+    owner: reviewer
     passes: 0
     stakes: reversible
-    updated: '2026-07-10T00:00:00Z'
+    updated: '2026-07-10T08:30:00Z'
     note: >
+      DONE 2026-07-10: PUBLIC-DOMAIN-POLICY.md (verified 2026 US cutoff: published
+      1930 or earlier, rolling year-96 rule; conservative combined rule: artist died
+      before 1956 AND work within US cutoff, default-deny; provenance JSON schema;
+      anti-style-laundering clause; Style Lab exemption) and
+      docs/starter-image-library.md (21 starters across 7 subject groups, 11 verified
+      against live official open-access pages, local-copies-plus-manifest hosting
+      plan targeting kind_robots public/images/academy/starters/). Original spec follows:
       PUBLIC-DOMAIN-POLICY.md: the concrete rule set for what art and artists the
       Academy may include (death-year thresholds, US public-domain cutoffs, open-access
       license types we accept, how to record provenance). Plus the starter-image plan:
@@ -156,12 +184,19 @@ tasks:
   - id: t-007
     milestone: m4
     title: 'kind_robots: scaffold the Art Academy surface wrapping art-styler'
-    status: ready
-    owner: null
+    status: done
+    owner: reviewer
     passes: 0
     stakes: reversible
-    updated: '2026-07-10T00:00:00Z'
+    updated: '2026-07-10T08:30:00Z'
     note: >
+      DONE 2026-07-10: kind_robots PR #143 merged (squash 78bb545). /academy page
+      with academy dashboard channel (Timeline / Styles / Remix Studio / Style Lab),
+      14-movement seed registry (stores/seeds/academyStyles.ts), academyStore
+      progress persistence, and art-styler extended for external registries +
+      prompt-mode styles with builtin behavior unchanged. Verified: eslint,
+      prettier, vue-tsc (zero new errors). Academy tab images queued in
+      art-prompts.yaml requests. Original spec follows:
       Cross-repo task (kind_robots). Create the Academy front end: an academy dashboard
       channel or /academy page with tabs for Timeline, Styles, Remix Studio, and Style
       Lab (the existing art-styler.vue mounted as-is for free play). Follow the
@@ -173,19 +208,23 @@ tasks:
       project (Silas 2026-07-10); keep the component reusable for the plain styler use.
   - id: t-008
     milestone: m4
-    title: 'kind_robots: drive Academy style entries from the registry with lesson context'
-    status: waiting
+    title: 'kind_robots: Academy lesson example-works strips + starter image library'
+    status: ready
     owner: null
     passes: 0
     stakes: reversible
-    updated: '2026-07-10T00:00:00Z'
+    updated: '2026-07-10T08:30:00Z'
     depends_on: t-007
     note: >
-      Cross-repo task (kind_robots). Replace the Academy's copy of hardcoded
-      BUILTIN_STYLES with the registry-driven list (mode-aware: prompt-only styles need
-      no loraPath), attach the movement/artist lesson blurb and example-works strip to
-      each style card, and exclude living-artist/brand entries from the Academy list
-      (they remain in Style Lab only, per DESIGN-BRIEF.md ethical boundary).
+      Cross-repo task (kind_robots). RESCOPED after t-007 shipped further than
+      planned (the Academy is already registry-driven with lesson context; PR #143):
+      (1) download the 21 public-domain starter images per
+      docs/starter-image-library.md into public/images/academy/starters/ with the
+      provenance manifest (starters.manifest.json), re-verifying each source URL at
+      download time per PUBLIC-DOMAIN-POLICY.md; (2) add an example-works strip to
+      the lesson detail (real public-domain images per movement from the curriculum
+      outline's verified sources); (3) wire the starter library into the Remix
+      Studio source picker as a third tab next to Upload/Gallery.
   - id: t-009
     milestone: m5
     title: Generate project art and Academy inspiration images
@@ -200,6 +239,28 @@ tasks:
       3+ Academy inspiration images (e.g. one landmark public-domain work re-imagined
       across several movements as a teaching strip). Keep prompt/model/source metadata.
       Remove ART-PROMPTS.md entries once files land in projects/images/.
+  - id: t-011
+    milestone: m2
+    title: Decide the commercial-licensing posture for FLUX-dev/Kontext LoRAs
+    status: needs-human
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-10T08:30:00Z'
+    note: >
+      FOR SILAS (soft gate — development continues; this only gates MONETIZED
+      generation): the LoRA hunt (docs/style-lora-registry.md, section "S-0") found
+      that FLUX.1-dev and most style LoRAs carry the FLUX.1-dev NON-COMMERCIAL
+      license. Free-tier educational remixing on your own servers is arguably fine;
+      charging tokens for generations that run dev-based weights is the gray zone.
+      The coloring-book research (projects/coloring-book/docs/generation-pipeline.md)
+      hit the same issue and lists licensed API endpoints (fal/Replicate) as the
+      clean path for paid tiers. TO DECIDE: (a) keep paid tiers off Academy/coloring
+      generation until licensing is resolved, (b) route paid generations through a
+      licensed API endpoint, or (c) get/confirm a commercial FLUX license. Write your
+      call here and set status: done. Nothing else is blocked meanwhile — both
+      projects keep building on the free/eval path.
+
   - id: t-010
     milestone: m6
     title: Academy continuous improvement pass

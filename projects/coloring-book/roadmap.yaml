@@ -39,7 +39,7 @@ milestones:
   - id: m3
     title: Page generation pipeline (Kontext / coloring LoRA)
     weight: 20
-    status: not-started
+    status: in-progress
   - id: m4
     title: Launch sets — Kind Robots + Monster Recast
     weight: 20
@@ -51,7 +51,7 @@ milestones:
   - id: m6
     title: Storefront + print-on-demand bridge
     weight: 10
-    status: not-started
+    status: in-progress
 tasks:
   - id: t-001
     milestone: m1
@@ -84,13 +84,20 @@ tasks:
   - id: t-003
     milestone: m1
     title: Spec the shared coloring engine (generalize the mural color studio)
-    status: ready
-    owner: null
+    status: done
+    owner: reviewer
     passes: 0
     stakes: reversible
-    updated: '2026-07-10T00:00:00Z'
+    updated: '2026-07-10T08:30:00Z'
     note: >
-      Cross-repo analysis task. Study the shipped kind_robots /mural color studio
+      DONE 2026-07-10: docs/coloring-engine-spec.md written. Key findings: the
+      shipped mural engine is pure inline SVG (20 hand-authored paths in
+      muralStore.ts), color-id fills, localStorage persistence — no export, no undo.
+      Proposal: controlled ColoringCanvas component + page-keyed coloringStore taking
+      a ColoringPageDefinition supporting BOTH svg-regions and raster-flood modes (so
+      t-004's verdict slots in without contract changes), with a 10-step reversible
+      migration plan that keeps /mural working. Works for Monster Recast pages too —
+      the set format is set-agnostic. Original spec: cross-repo analysis task. Study the shipped kind_robots /mural color studio
       (PR #135: Pinia/localStorage store, clickable SVG sections, group fills, swatch
       management) and spec how it generalizes into a reusable coloring-page component
       serving both mural-design and this app: input formats (SVG regions vs raster
@@ -101,13 +108,21 @@ tasks:
   - id: t-004
     milestone: m3
     title: Spec and prototype the coloring-page generation pipeline
-    status: ready
-    owner: null
+    status: done
+    owner: reviewer
     passes: 0
     stakes: reversible
-    updated: '2026-07-10T00:00:00Z'
+    updated: '2026-07-10T08:30:00Z'
     note: >
-      Survey publicly available coloring-book/line-art LoRAs for FLUX/Kontext (license,
+      DONE (spec) 2026-07-10: docs/generation-pipeline.md written. v1 verdict: raster
+      flood fill on the line-art PNG (threshold, despeckle, dilated boundary mask,
+      leak QA); regionMap/svg slots kept for upgrades. 4 Kontext conversion prompt
+      templates; benchmark LoRA renderartist Coloring Book Flux (trigger c0l0ringb00k,
+      0.7-0.9); cleanest commercial license COLORINGBOOK-REDMOND-FLUXKLEIN9B (Apache
+      2.0). Print spec verified: 2550x3300px @300dpi. VERIFICATION GAP: live prototype
+      not run (no KR_API_TOKEN this session) — first t-006/t-007 generations double as
+      validation. Licensing flag shared with ai-art-academy/t-011. Original spec:
+      survey publicly available coloring-book/line-art LoRAs for FLUX/Kontext (license,
       trigger, source) and test Kontext prompt-only conversion ("convert to coloring
       book page: clean black outlines, white regions, no shading") using the generation
       backend (pre-approved). Prototype the full path: source image (KR art asset) →
@@ -182,13 +197,19 @@ tasks:
   - id: t-009
     milestone: m6
     title: Spec the print-on-demand physical coloring book path
-    status: ready
-    owner: null
+    status: done
+    owner: reviewer
     passes: 0
     stakes: reversible
-    updated: '2026-07-10T00:00:00Z'
+    updated: '2026-07-10T08:30:00Z'
     note: >
-      With digital-storefront (its m4 owns the POD provider): spec how a finished set
+      DONE 2026-07-10: docs/pod-coloring-books.md written. Recommendation: Lulu as v1
+      provider (verified real public Print API at developers.lulu.com with free
+      sandbox — set-to-book pipeline buildable gate-free), 8.5x11 perfect bound,
+      48-64pp single-sided, 60# uncoated; KDP channel #2 (verified $2.84 flat print
+      cost, no API); Bookvault API-capable alternative. Monster Recast's 28-page plan
+      fits this format. Hard gates unchanged: accounts, listings, pricing, spend.
+      Original spec: with digital-storefront (its m4 owns the POD provider): spec how a finished set
       becomes a sellable physical book — interior PDF assembly from print-ready pages,
       cover layout, provider candidates (Lulu, Amazon KDP, Printful et al. from
       research/stores.md), cost/price estimates, and what remains hard-gated (account

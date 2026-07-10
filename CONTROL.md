@@ -191,10 +191,13 @@ own pages via kontext and/or a coloring-book LoRA. Include coloring book sets an
 tokens for generator use beyond a free tier (aligned with the KR economy). Deserves a
 tab in the art channel. Background art-asset generation is authorized: multiple
 coloring book sets and whatever the app/front end needs. First two digital books:
-**"Kind Robots"** (reuse kind_robots art assets as sources) and **"Spooktacular
-Monster Drag Party"**. Every page we create is digital-storefront inventory — set up
-toward a print-on-demand service selling physical coloring books (POD accounts,
-listings, and spend remain hard-gated).
+**"Kind Robots"** (reuse kind_robots art assets as sources) and **"Monster Recast"**
+(renamed from the working title "Spooktacular Monster Drag Party" in Silas's
+2026-07-10 Worker session: an original gallery of gender-swapped, drag-reimagined
+Hollywood monster archetypes — cast bible and 28-page plan live in
+projects/coloring-book/sets/monster-recast/). Every page we create is
+digital-storefront inventory — set up toward a print-on-demand service selling
+physical coloring books (POD accounts, listings, and spend remain hard-gated).
 **Notes:**
 - Tech seed: the mural-design WonderLab color studio (kind_robots /mural, PR #135) —
   generalize/share the engine, don't fork it; mural-design keeps working.

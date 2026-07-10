@@ -920,3 +920,37 @@ never-idle rule codified in AGENTS.md.
 (pipeline prototype) are the highest-leverage next picks; both projects sit high in
 priority.yaml. Silas — the two soft t-002 gates are reading checkpoints only, nothing
 is blocked.
+
+## 2026-07-10 | Reviewer(Claude, Silas-directed) → system | autonomous rush session — Academy shipped | pattern
+
+**Subject:** Autonomous-initiative rush: 5 parallel research deliverables + the full
+Academy front end shipped in kind_robots PR #143; 7 roadmap tasks closed across both
+new projects.
+
+**Detail:**
+- **ai-art-academy**: t-003 (LoRA registry, 8/16 styles LoRA-backed + Kontext-native
+  22-style pack found), t-005 (14-movement curriculum, all source-verified), t-006
+  (PD policy — 2026 US cutoff verified as published<=1930 — + 21-work starter
+  library), t-007 (kind_robots PR #143: /academy channel with Timeline / Styles /
+  Remix Studio / Style Lab, registry-driven prompt-mode remixing, art-styler extended
+  compatibly) all DONE. t-008 rescoped to starter-image downloads + example-work
+  strips. NEW t-011 (soft needs-human): FLUX.1-dev NON-COMMERCIAL licensing decision
+  before any PAID generation tier — free/eval path unaffected.
+- **coloring-book**: t-003 (engine spec: mural engine is pure SVG; shared
+  ColoringCanvas proposal with 10-step reversible migration), t-004 (pipeline spec:
+  v1 = raster flood fill; live prototype deferred to t-006 generation — no
+  KR_API_TOKEN in web sessions), t-009 (POD spec: Lulu v1 — real public Print API
+  with free sandbox, KDP channel #2) all DONE.
+- **Verification discipline**: kind_robots changes lint/prettier/vue-tsc clean (zero
+  new type errors; the one failing file pre-exists on main — reproduced via stash).
+  Caught and fixed a real Vue bug in self-review (prop named `style` is a reserved
+  fallthrough attribute; renamed to `lesson`).
+- **Blocked-on-token queue for a Worker cycle with KR_API_TOKEN**: ai-art-academy
+  t-004 (A/B evaluation) + t-009 (project art), coloring-book t-006/t-007 (launch
+  sets), academy dashboard-tab images (3 requests queued in art-prompts.yaml),
+  slug-parity Dreams for both new slugs.
+
+**Suggested action:** Silas — two soft gates when you have a minute: t-002 scope
+confirmations (both projects) and the new ai-art-academy/t-011 licensing call.
+Worker — next picks: coloring-book t-008 (economy spec, no token needed), then the
+engine-extraction steps from coloring-engine-spec.md.
