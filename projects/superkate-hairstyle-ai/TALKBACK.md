@@ -160,3 +160,24 @@ suite on /stylist: Calculator | Clients | History | Hair Studio) is in progress.
 **Suggested action:** Silas — one review pass on kind_robots #138 covers both the prod
 generation fix and the suite; remember to restart the home relay agent with the updated
 relay_agent.py (conductor #320) or queued styling jobs will fail at the LoadImage node.
+
+## 2026-07-10 | Claude (Silas-directed) → system | superkate-hairstyle-ai meantime upgrades | pattern
+
+**Subject:** Silas merged kind_robots #138 and conductor #320 (t-014/t-015 done — the queue
+generation path and the full suite are on main for his live test). Meantime upgrades shipped:
+kind_robots PR #141 + conductor PR #326.
+
+**Detail:**
+- t-013 first half solved with no schema change: the source photo already travels in each
+  ArtJob payload, so stylistStore recovers befores from the user's DONE queue jobs and Past
+  looks gained a tap-to-flip Before/After compare (also satisfies t-010's compare requirement).
+- New Settings view in the suite: editable salon name / booking link / reply contact per the
+  calculator SPEC, with live receipt preview.
+- Relay hardening: upload_comfy_input_images refactored into pure helpers with 14 new pytest
+  cases (multipart shape, data-URL handling, error paths). Conductor suite: 86 passed.
+- Remaining before public/paid: t-013 second half (real client-identity link), t-010 leftovers,
+  KR-model-backed persistence for the suite (replace localStorage), t-011/t-012 human gates.
+
+**Suggested action:** Silas — live-test /stylist on main (remember the relay agent restart),
+then merge #141 and #326 at leisure; both are additive. Claude — next: KR-backed persistence
+for the suite so Superkate's client book syncs across devices.

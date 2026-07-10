@@ -246,33 +246,31 @@ tasks:
   - id: t-013
     milestone: m2
     title: "Persist the source photo for durable before/after + real client link"
-    status: ready
+    status: review
     owner: null
     passes: 0
     stakes: reversible
     depends_on: t-008
     updated: 2026-07-09
     note: >
-      Kaizen from t-008 (PR #134): the durable "Past looks" gallery shows saved RESULTS only —
-      save-generated persists just the generated image, so the before photo is lost across
-      sessions and durable before/after pairs aren't possible. Also save the source photo (e.g.
-      a private ArtImage linked via sourceImageId, or store its data URL alongside the result) so
-      the gallery can show true before/after later. Same task: replace the free-text client tag
-      with a real client-identity link so a client's history is unambiguous — coordinate the key
-      with the calculator's customer profile rather than widening scope here. Keep everything
-      private (isPublic:false) and reversible; no billing, deploy, or public surface.
+      FIRST HALF IN REVIEW (kind_robots PR #141): durable before/after achieved with no schema
+      change — the source photo already travels in each ArtJob payload, so stylistStore recovers
+      befores from the user's DONE queue jobs and Past looks gained a tap-to-flip Before/After
+      compare. REMAINING: replace the free-text client tag with a real client-identity link
+      (the suite's client book is the natural key now — coordinate with the calculator's
+      customer profile). Keep everything private (isPublic:false) and reversible.
 
   - id: t-014
     milestone: m2
     title: "Route generation through the ArtJob queue (prod tailnet fix)"
-    status: review
+    status: done
     owner: claude
     passes: 0
     stakes: reversible
     depends_on: t-007
     updated: 2026-07-09
     note: >
-      IN REVIEW (kind_robots PR #138 + relay change on conductor PR #320): production styling
+      DONE (kind_robots PR #138 + conductor PR #320, both merged by Silas 2026-07-09/10): production styling
       failed with ENOTFOUND on the ts.net Comfy hostname — the deployed backend is not on the
       home tailnet. Fix uses the existing durable ArtJob queue: new /api/comfy/kontext/enqueue
       (mana-gated, workflow + input image + save block in the job payload), stylistStore
@@ -284,13 +282,13 @@ tasks:
   - id: t-015
     milestone: m2
     title: "Replicate the full Superkate app on the Hair Studio page"
-    status: review
+    status: done
     owner: claude
     passes: 0
     stakes: reversible
     updated: 2026-07-09
     note: >
-      IN REVIEW (kind_robots PR #138, same branch as the queue fix): built the sub-tabbed
+      DONE (kind_robots PR #138, merged by Silas 2026-07-10): built the sub-tabbed
       suite on /stylist — Hair Studio | Calculator | Clients | History — backed by a new
       localStorage-persisted superkateStore (the approved easy mock; KR-model sync is the
       follow-up). Implements the calculator SPEC core formula (rate x time + products, cents),
