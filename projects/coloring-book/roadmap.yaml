@@ -35,7 +35,7 @@ milestones:
   - id: m2
     title: Coloring engine and app surface in kind_robots
     weight: 25
-    status: not-started
+    status: in-progress
   - id: m3
     title: Page generation pipeline (Kontext / coloring LoRA)
     weight: 20
@@ -47,7 +47,7 @@ milestones:
   - id: m5
     title: Economy — free tier, tokens, purchasable sets
     weight: 10
-    status: not-started
+    status: in-progress
   - id: m6
     title: Storefront + print-on-demand bridge
     weight: 10
@@ -133,12 +133,23 @@ tasks:
   - id: t-005
     milestone: m2
     title: 'kind_robots: build the coloring book app surface + art channel tab'
-    status: ready
-    owner: null
+    status: done
+    owner: reviewer
     passes: 0
     stakes: reversible
-    updated: '2026-07-10T00:00:00Z'
+    updated: '2026-07-10T11:00:00Z'
     note: >
+      DONE 2026-07-10: kind_robots PR #144 merged. Shared coloring engine
+      (engine-spec migration steps 1-3, pure additions — /mural untouched):
+      stores/helpers/coloring.ts types + storage, stores/coloringStore.ts
+      (page-keyed fills, group fills, custom colors, color swap, undo,
+      diff-only persistence, assignment JSON export/import),
+      components/coloring/coloring-canvas.vue (controlled SVG renderer), and
+      coloring-book-manager.vue library+surface. Ships with the 2-page
+      hand-authored Starter Sampler set (placeholder until generated sets land).
+      'coloring' tab registered in canonical dashboardConfigs.art.tabs. Verified:
+      eslint/prettier/vue-tsc clean. Follow-ups filed as t-017 (mural migration
+      steps 4-8) and t-018 (raster-flood mode). Original spec:
       Cross-repo task (kind_robots). Build the coloring book app page: library view
       (sets → pages), coloring surface (per t-003 spec — reuse/extract the mural engine
       rather than duplicating it), save/export. Register a coloring-book tab in the art
@@ -182,12 +193,24 @@ tasks:
   - id: t-008
     milestone: m5
     title: Spec the free tier, tokens, and purchasable set economy
-    status: ready
-    owner: null
+    status: done
+    owner: reviewer
     passes: 0
     stakes: reversible
-    updated: '2026-07-10T00:00:00Z'
+    updated: '2026-07-10T11:00:00Z'
     note: >
+      DONE 2026-07-10: docs/economy-spec.md written. Key findings/recommendations:
+      KR mana is real on the SPEND side (User.mana/manaCap 500, daily refill,
+      manaGate in 13 endpoints, 1 mana = $0.001 peg) but the PURCHASE side is
+      stubbed — no Stripe webhook credits mana, credit-purchase.vue is a fake
+      alert, and manaGate's commit() skips the ManaTransaction ledger (filed as
+      kind-robots/t-012). Recommendations: free tier = existing daily refill (no
+      new counter), 25 mana per generated page (~20 free pages/day), coloring
+      already-available pages always free, 4 free sampler pages per launch set,
+      sets as one-time unlocks riding storefront t-017 / kind-robots t-008
+      entitlements, show "N pages remaining today" never raw mana, paid
+      generation behind a default-off flag until ai-art-academy/t-011 resolves
+      FLUX licensing. Original spec:
       Define: free-tier generation allowance, token cost per generated page, how
       purchased sets unlock, and how this aligns with the existing KR mana/token
       economy (no second economy — same rule as sketchy t-004; compare notes with that
@@ -244,6 +267,42 @@ tasks:
       (b) style/polish pass on the coloring app surface, (c) roadmap upgrade, (d)
       improve pipeline quality (cleaner lines, better region separation). Note which
       option ran in the PR. Never reaches done; doesn't count toward milestones.
+  - id: t-017
+    milestone: m2
+    title: 'kind_robots: migrate /mural onto the shared coloring engine (steps 4-8)'
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-10T11:00:00Z'
+    note: >
+      Follow docs/coloring-engine-spec.md section 4, steps 4-8, as SMALL SEPARATE
+      PRs with /mural working at every merge point: (4) move mural geometry to
+      public/data/mural-design/mural-page.json with inline fallback; (5) swap
+      mural-manager's inline SVG for ColoringCanvas + coloringStore with the
+      one-time kindRobotsMuralState migration shim; (6) shrink muralStore to a
+      wrapper; (7) promote mural into canonical dashboardConfigs.wonder.tabs and
+      delete the labCards bridge; (8) add export-to-image (spec section 2.5) to
+      the engine. Coordinate with mural-design t-007 follow-up notes — this
+      task IS that migration, tracked here because the engine lives with
+      coloring-book.
+  - id: t-018
+    milestone: m2
+    title: 'kind_robots: implement raster-flood coloring mode (engine step 9)'
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-10T11:00:00Z'
+    note: >
+      The t-004 verdict chose raster flood fill for generated pages: add the
+      mode: 'raster-flood' branch to ColoringCanvas (canvas seeded from
+      fillBase, flood fill with tolerance per docs/generation-pipeline.md,
+      lineArt composited above) and fillOps persistence to coloringStore, per
+      engine-spec sections 2.2/2.3/3.2. Prefer regionMap support so raster pages
+      get stable region ids like SVG pages. SVG mode untouched. Unblocks
+      coloring the generated Kind Robots (t-006) and Monster Recast (t-015)
+      pages in-app.
   - id: t-012
     milestone: m4
     title: Define Monster Recast v1 cast, bios, and concept-art prompts
