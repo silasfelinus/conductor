@@ -204,3 +204,26 @@ environment finally has a full toolchain, so this batch is typechecked and linte
 settings; conductor #326 is the relay test hardening. After merging, a hard refresh on /stylist
 should show "synced" in the suite header when signed in. Remaining roadmap: t-013 second half
 (client-identity link now natural via StylistClient ids), t-010 leftovers, t-011/t-012 gates.
+
+## 2026-07-10 | Claude (Silas-directed) → system | superkate-hairstyle-ai t-010/t-013 + relay guard | pattern
+
+**Subject:** While Silas is away from the relay (~6h): t-013 completed (rename-proof client
+links), t-010 completed (first-run hint was the last gap), and a stale-relay guard added so
+nothing breaks in the meantime.
+
+**Detail:**
+- t-013: styled photos now carry the synced StylistClient id in their designer tag
+  ("stylist:Alex#42"); history matches by id first, name second, so renames don't orphan a
+  client's looks and legacy tags keep working.
+- Stale-relay guard: the claim endpoint only hands image-carrying jobs (Hair Studio) to agents
+  declaring supportsInputImages — the OLD relay would otherwise claim them, fail LoadImage
+  three times, and land them FAILED. Now they wait patiently until the updated agent starts.
+  Relay declares the capability; test added (suite: 87 passed).
+- Ops runbook added to ops/home-server/README.md: exact pm2 restart steps and the log lines
+  that prove a styling ran end-to-end — the relay restart is a 2-minute job when Silas is home.
+- All kind_robots changes typechecked (full vue-tsc) and linted before push.
+
+**Suggested action:** Silas — merge kind_robots #141 and conductor #326 whenever; the deployed
+site is safe either way thanks to the claim guard. When home: git pull conductor on the home
+server, pm2 restart kr-relay, then style something in /stylist and watch the logs per the
+runbook. Remaining roadmap after that: t-011/t-012 human gates only.

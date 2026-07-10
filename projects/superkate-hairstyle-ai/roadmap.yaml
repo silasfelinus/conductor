@@ -198,8 +198,8 @@ tasks:
   - id: t-010
     milestone: m3
     title: "Polish empty / loading / error / retry states + before-after compare"
-    status: waiting
-    owner: null
+    status: review
+    owner: claude
     passes: 0
     stakes: reversible
     depends_on:
@@ -207,8 +207,9 @@ tasks:
       - t-008
     updated: 2026-07-09
     note: >
-      Finish the UX: clean empty state, loading affordance, error + retry, and a before/after
-      compare (slider or toggle) on gallery entries. Reversible polish.
+      IN REVIEW (kind_robots PR #141): complete — friendly error states with Retry (t-009),
+      loading affordances on jobs and history, tap-to-flip before/after compare on Past looks,
+      and a first-run "how it works" hint when the studio is empty. Typecheck + eslint pass.
 
   - id: t-011
     milestone: m3
