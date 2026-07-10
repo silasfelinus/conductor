@@ -198,18 +198,20 @@ tasks:
   - id: t-010
     milestone: m3
     title: "Polish empty / loading / error / retry states + before-after compare"
-    status: review
+    status: done
     owner: claude
     passes: 0
     stakes: reversible
     depends_on:
       - t-007
       - t-008
-    updated: 2026-07-09
+    updated: "2026-07-10T14:00:00Z"
     note: >
-      IN REVIEW (kind_robots PR #141): complete — friendly error states with Retry (t-009),
-      loading affordances on jobs and history, tap-to-flip before/after compare on Past looks,
-      and a first-run "how it works" hint when the studio is empty. Typecheck + eslint pass.
+      DONE — kind_robots PR #141 merged (2026-07-10 08:47): friendly error states with Retry
+      (t-009), loading affordances on jobs and history, tap-to-flip before/after compare on
+      Past looks, and a first-run "how it works" hint when the studio is empty. Typecheck +
+      eslint passed pre-merge. Reviewer audit (2026-07-10): closing out — roadmap had been left
+      at status: review after the PR merged.
 
   - id: t-011
     milestone: m3
@@ -247,19 +249,21 @@ tasks:
   - id: t-013
     milestone: m2
     title: "Persist the source photo for durable before/after + real client link"
-    status: review
-    owner: null
+    status: done
+    owner: claude
     passes: 0
     stakes: reversible
     depends_on: t-008
-    updated: 2026-07-09
+    updated: "2026-07-10T14:00:00Z"
     note: >
-      FIRST HALF IN REVIEW (kind_robots PR #141): durable before/after achieved with no schema
-      change — the source photo already travels in each ArtJob payload, so stylistStore recovers
-      befores from the user's DONE queue jobs and Past looks gained a tap-to-flip Before/After
-      compare. REMAINING: replace the free-text client tag with a real client-identity link
-      (the suite's client book is the natural key now — coordinate with the calculator's
-      customer profile). Keep everything private (isPublic:false) and reversible.
+      DONE — kind_robots PR #141 merged (2026-07-10 08:47): durable before/after achieved with
+      no schema change (source photo already travels in each ArtJob payload; stylistStore
+      recovers befores from DONE queue jobs; Past looks gained tap-to-flip Before/After
+      compare), AND the real client-identity link landed in the same PR — styled photos now
+      carry the synced StylistClient id in their designer tag ("stylist:Alex#42"); history
+      matches by id first, name second, so renames don't orphan a client's looks and legacy
+      tags keep working. Reviewer audit (2026-07-10): closing out — roadmap had been left at
+      status: review after the PR merged.
 
   - id: t-014
     milestone: m2
@@ -302,21 +306,23 @@ tasks:
   - id: t-016
     milestone: m2
     title: "KR-backed persistence for the suite (synced client book)"
-    status: review
+    status: done
     owner: claude
     passes: 0
     stakes: reversible
     depends_on: t-015
-    updated: 2026-07-10
+    updated: "2026-07-10T14:00:00Z"
     note: >
-      IN REVIEW (kind_robots PR #141): replaces the suite's localStorage mock for signed-in
-      users with real Kind Robots persistence — new additive-only StylistClient +
-      StylistAppointment tables (migration 20260710020000, CREATE TABLE + FKs only),
-      owner-checked /api/stylist/* CRUD (server owns the money math), and a write-through
-      store that migrates pre-existing local data up on first sync and falls back to
-      local-only for guests/offline. VERIFIED STATICALLY: full vue-tsc typecheck and eslint
-      pass (toolchain restored this session); prisma client regenerated and committed.
-      Pending: live migration deploy (runs on merge) + end-to-end /stylist pass by Silas.
+      DONE — kind_robots PR #141 merged (2026-07-10 08:47): replaces the suite's localStorage
+      mock for signed-in users with real Kind Robots persistence — new additive-only
+      StylistClient + StylistAppointment tables (migration 20260710020000, CREATE TABLE +
+      FKs only), owner-checked /api/stylist/* CRUD (server owns the money math), and a
+      write-through store that migrates pre-existing local data up on first sync and falls
+      back to local-only for guests/offline. Reviewer audit (2026-07-10): read
+      migration.sql line-by-line — two CREATE TABLE statements + three ADD CONSTRAINT (FK)
+      statements only, no DROP/rewrite of existing data; satisfies the additive-only bar for
+      Reviewer-mergeable migrations. Migration deployed via prisma migrate deploy on merge.
+      Closing out — roadmap had been left at status: review after the PR merged.
 
   - id: t-017
     milestone: m4

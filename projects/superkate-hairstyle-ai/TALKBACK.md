@@ -268,3 +268,33 @@ rendering → failed, the ComfyUI error will be in pm2 logs — paste it to the 
 - Photo downscaling silently falls back to the raw image on decode error — fine, but a debug log would help if the request-size limit ever bites anyway
 
 **Kaizen task:** superkate-hairstyle-ai/t-017 — surface the relay's declared capabilities on an admin status readout so version-gap stalls are visible without shell access
+
+## 2026-07-10 | Reviewer → system | superkate-hairstyle-ai t-010/t-013/t-016 | pattern
+type: pattern
+
+**Decision:** audited already-merged work (kind_robots PR #141, merged by Silas 08:47) — no
+new merge to perform, roadmap reconciled to match reality.
+
+**Detail:**
+- This Reviewer session was triggered expecting an open worker/* PR; none existed in either
+  repo (list_pull_requests returned zero for conductor and kind_robots), matching the pattern
+  already flagged in conductor/t-026.
+- Instead found real stale state: t-010, t-013, and t-016 were still `status: review` even
+  though PR #141 — and the TALKBACK entries describing t-010/t-013 as "completed" — landed on
+  main over 5 hours earlier. The roadmap was never flipped after the PR merged.
+- Audited the migration this session hadn't yet reviewed: `20260710020000_add_stylist_suite`
+  is exactly two `CREATE TABLE` statements + three `ADD CONSTRAINT` (FK) statements, no
+  `DROP`/rewrite of existing data — satisfies the additive-only bar for a Reviewer-mergeable
+  migration (it already shipped to prod via `prisma migrate deploy` on merge; audit here is
+  after the fact but the migration reads exactly as documented in the PR body and TALKBACK).
+- Set t-010, t-013, t-016 to `status: done` with notes citing PR #141 directly.
+
+**What to improve:**
+- When a Silas-directed session merges its own PR and marks work "completed" in TALKBACK, it
+  should flip the roadmap task status in the same commit — don't leave that for a future
+  Reviewer sweep to discover by cross-referencing TALKBACK against roadmap.yaml.
+
+**Kaizen task:** deferred — conductor/t-026 already covers the broader "Reviewer triggered
+with nothing to review" pattern; no new task needed for this specific staleness, since it's
+a one-time reconciliation rather than a recurring gap (the sessions that did this work were
+Silas-directed, not a repeating Worker mistake).
