@@ -297,3 +297,23 @@ tasks:
       contact block + "Superkate loves you!" and a mailto composer with email prefill, and the
       delete-detach invariant. The restyler's client field suggests known clients from the
       book. Not runtime-verified in this environment.
+
+  - id: t-016
+    milestone: m2
+    title: "KR-backed persistence for the suite (synced client book)"
+    status: review
+    owner: claude
+    passes: 0
+    stakes: reversible
+    depends_on: t-015
+    updated: 2026-07-10
+    note: >
+      IN REVIEW (kind_robots PR #141): replaces the suite's localStorage mock for signed-in
+      users with real Kind Robots persistence — new additive-only StylistClient +
+      StylistAppointment tables (migration 20260710020000, CREATE TABLE + FKs only),
+      owner-checked /api/stylist/* CRUD (server owns the money math), and a write-through
+      store that migrates pre-existing local data up on first sync and falls back to
+      local-only for guests/offline. VERIFIED STATICALLY: full vue-tsc typecheck and eslint
+      pass (toolchain restored this session); prisma client regenerated and committed.
+      Pending: live migration deploy (runs on merge) + end-to-end /stylist pass by Silas.
+

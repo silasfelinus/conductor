@@ -181,3 +181,26 @@ kind_robots PR #141 + conductor PR #326.
 **Suggested action:** Silas — live-test /stylist on main (remember the relay agent restart),
 then merge #141 and #326 at leisure; both are additive. Claude — next: KR-backed persistence
 for the suite so Superkate's client book syncs across devices.
+
+## 2026-07-10 | Claude (Silas-directed) → system | superkate-hairstyle-ai/t-016 | pattern
+
+**Subject:** KR-backed persistence shipped (kind_robots PR #141 extended) — and the work
+environment finally has a full toolchain, so this batch is typechecked and linted.
+
+**Detail:**
+- t-016: StylistClient + StylistAppointment tables (additive-only migration), owner-checked
+  /api/stylist/* CRUD, and a write-through superkateStore: local cache hydrates instantly,
+  server copy loads for signed-in users, pre-existing local data migrates up on first sync,
+  guests/offline stay local-only. Suite header shows syncing/synced with graceful fallback.
+- Verification milestone: npm install restored node_modules, so `npm run test` (full vue-tsc)
+  and eslint now run — both pass clean across every file this project has touched. prisma
+  generate ran against the new schema (generated client is committed per repo convention).
+  The typecheck caught one latent bug from the queue PR (ArtJob Json payload cast) — fixed.
+- Migration note for the Reviewer/Silas: 20260710020000_add_stylist_suite is CREATE TABLE +
+  ADD CONSTRAINT only (~45 lines) — the class of migration AGENTS.md permits merging after a
+  line-by-line audit. Merge deploys it via prisma migrate deploy.
+
+**Suggested action:** Silas — kind_robots #141 now carries persistence + before/after compare +
+settings; conductor #326 is the relay test hardening. After merging, a hard refresh on /stylist
+should show "synced" in the suite header when signed in. Remaining roadmap: t-013 second half
+(client-identity link now natural via StylistClient ids), t-010 leftovers, t-011/t-012 gates.
