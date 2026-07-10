@@ -90,18 +90,38 @@ See `STYLE-GUIDE.md` for the authoritative production standard, including:
 - one independent file per image, never a collage or contact sheet
 - specific lessons for the laboratory creation, she-wolf, Broadcast Giant, Pound Foolish, bath ritual, and burned dream killer
 
+## Approved-design preflight
+
+Before generating, selecting, revising, or converting production art, run:
+
+```bash
+python scripts/coloring_approved_status.py --check
+```
+
+The preflight reads `approved/manifest.yaml`, scans every WebP physically present in `approved/`, and reports confirmed approvals, complete pairs, incomplete pairs, likely filename typos, and unmanifested files. The `Coloring approved preflight` GitHub Actions workflow runs this analysis automatically whenever the coloring-book project changes and publishes the inventory in the workflow summary.
+
+Approval and exploration are intentionally separate:
+
+- **Production:** reuse an approved colored master and its BW partner rather than starting the accepted design over.
+- **Exploration:** keep the existing 34-pitch/four-variant queue in its current order, including concepts that already have an approved design.
+- A later queued image for an approved concept is inspiration or an optional alternate; it does not replace the approved master unless Silas explicitly promotes it.
+- Files in `approved/` that are not yet in the confirmation manifest are surfaced for review rather than silently treated as a new decision.
+
+Current user-confirmed approvals are Freida Krueger, TV Boy, and Masking Up. The current filesystem also contains a complete Perfect Woman pair inside `approved/`; the preflight reports it separately because it was not part of the three approvals named in the 2026-07-10 direction. Masking Up currently has its color file under `inspiration/` and still needs its BW file and final move into `approved/`.
+
 ## Production sequence
 
 1. **Creative direction** — use `CREATIVE-DIRECTION.md`, `STYLE-GUIDE.md`, and `homage-concepts.yaml` to lock tone, framing, body diversity, and concept hooks.
-2. **Rough studies** — generate internal composition studies that may stay closer to the named movie lineage so the idea is readable.
-3. **Ranking** — score each study for instant recognition, gender recast, horror, camp, originality potential, anatomy/perspective coherence, and coloring-page viability.
-4. **Originalization** — replace protected expression with original names, biographies, masks, faces, silhouettes, costume systems, props, settings, and mythology.
-5. **Colored masters** — generate and revise the finished thick-line, flat-color graphic illustrations for selected original characters and scenes.
-6. **Selection** — choose the strongest composition and reject images with weak silhouettes, accidental mutation, impossible spatial logic, excessive jokiness, or copyright dependence.
-7. **Character creation** — create a private Kind Robots `Character` entry for every original recurring figure who appears in the finished set.
-8. **Coloring conversion** — translate the selected colored masters into detailed black line work without changing composition or character design.
-9. **Book assembly** — build the digital set manifest, print-ready interiors, cover, credits, and storefront-ready package.
-10. **Pause** — hold publishing and POD setup until the coloring app and digital storefront are ready.
+2. **Approval preflight** — run the approved-design report and preserve accepted production masters without altering the exploratory queue.
+3. **Rough studies** — generate internal composition studies that may stay closer to the named movie lineage so the idea is readable.
+4. **Ranking** — score each study for instant recognition, gender recast, horror, camp, originality potential, anatomy/perspective coherence, and coloring-page viability.
+5. **Originalization** — replace protected expression with original names, biographies, masks, faces, silhouettes, costume systems, props, settings, and mythology.
+6. **Colored masters** — generate and revise the finished thick-line, flat-color graphic illustrations for selected original characters and scenes, reusing approved masters where present.
+7. **Selection** — choose the strongest composition and reject images with weak silhouettes, accidental mutation, impossible spatial logic, excessive jokiness, or copyright dependence.
+8. **Character creation** — create a private Kind Robots `Character` entry for every original recurring figure who appears in the finished set.
+9. **Coloring conversion** — translate the selected colored masters into detailed black line work without changing composition or character design.
+10. **Book assembly** — build the digital set manifest, print-ready interiors, cover, credits, and storefront-ready package.
+11. **Pause** — hold publishing and POD setup until the coloring app and digital storefront are ready.
 
 Movie-still and traditional painted variants may remain useful staging or mood experiments, but they are secondary references. The production book is built from the colored-master/coloring-page pair.
 
@@ -151,6 +171,8 @@ These are seed records, not production database writes. The later Character-impo
 - `homage-concepts.yaml` — 34 movie-lineage concept briefs and six group-page seeds
 - `characters.yaml` — first-pass original recurring cast and Character seed bank
 - `pages.yaml` — earlier 28-page draft; revise after ranking the expanded pool
+- `approved/manifest.yaml` — user-confirmed approvals and explicit no-queue-suppression policy
+- `approved/*.webp` — production-master inventory scanned by `scripts/coloring_approved_status.py`
 - `art-modeler-request.yaml` — scene prompts
 - `art-modeler-four-variant-request.yaml` — exploratory render matrix; production priority is now colored master followed by faithful line conversion
 - `README.md` — product shape, workflow, and originality rules
