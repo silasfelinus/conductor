@@ -375,30 +375,37 @@ tasks:
   - id: t-026
     milestone: m2
     title: Reviewer trigger fires with no open worker/* PR to review, repeatedly
-    status: ready
+    status: needs-human
     owner: null
-    updated: '2026-07-10T14:35:00Z'
+    updated: '2026-07-10T15:35:00Z'
     passes: 0
     stakes: reversible
     note: >
-      Pattern across at least 4 Reviewer sessions now (root TALKBACK.md 2026-07-05
-      evening through 2026-07-07): the Reviewer is triggered expecting a worker/*
-      PR to review, but list_pull_requests(state=open) returns zero results in both
-      conductor and kind_robots, and no roadmap task anywhere is at status: review
-      or status: claimed. Each session burns a full sweep (git log, PR list, roadmap
-      grep, TALKBACK tail) to reach the same "nothing to do" conclusion, already
-      flagged twice as a likely scheduler/trigger cadence mismatch with no fix filed.
-      Investigate what fires the Reviewer session (cron/webhook cadence vs. actual
-      Worker PR volume) and either slow the trigger interval, or make it conditional
-      on an open worker/* PR existing before spinning up a full session.
+      FOR SILAS: The Reviewer session trigger is firing far more often than there
+      is Worker PR volume to review — this is a platform/scheduling issue, not
+      something fixable from inside the repo.
 
-      Recurrence 2026-07-10 14:35 UTC: fired again minutes after the prior session's
-      "chore: conductor report" commit (65373a2), immediately following a stretch of
-      rapid-fire Worker PRs (#338-347) that were all already merged. Confirmed via
-      list_pull_requests(state=open) = [] on both repos and a grep of every
-      projects/*/roadmap.yaml for status: review/claimed = none. Unlike the
-      2026-07-07 audit (PR #345), no stale roadmap state existed to reconcile this
-      time, so this session made no other changes — logging the recurrence here
+      What's happening: at least 5 Reviewer sessions now (root TALKBACK.md
+      2026-07-05 evening, 2026-07-07 PR #345, 2026-07-10 14:35 PR #348, and this
+      session ~15:35) have fired expecting a worker/* PR to review, found zero
+      open PRs in both conductor and kind_robots via list_pull_requests, and
+      confirmed no roadmap task anywhere is at status: review or status: claimed.
+      Each occurrence burns a full sweep (git log, PR list, roadmap grep, TALKBACK
+      tail) to reach the same "nothing to do" conclusion. The 14:35 and ~15:35
+      recurrences were only about an hour apart despite no new worker/* PR having
+      opened in between.
+
+      TO APPROVE: This needs a change to how/how-often the Reviewer session is
+      triggered (cron cadence, or a webhook/condition gate that only fires the
+      Reviewer when an actual worker/* PR is opened) — that configuration lives
+      outside this repo, so no agent can fix it directly. Please check the trigger
+      config for this session and either slow its interval or make it conditional
+      on an open worker/* PR existing. Once addressed, set status: done here (or
+      leave a note if you want the roadmap task kept open to track effectiveness).
+
+      What unblocks: nothing depends on this — it's pure session-cost waste, not
+      a blocker. Logging the recurrence here (rather than yet another passive
+      pattern note) since two prior soft notes did not surface a fix; escalating
       instead of repeating a full redundant sweep, per this task's own point about
       the cost of doing that every cycle.
   - id: t-027

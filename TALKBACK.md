@@ -1018,3 +1018,17 @@ inline fallback, zero behavior change by construction (JSON generated from the
 store source). Steps 5-8 remain; step 5 next cycle as its own careful PR.
 
 **Suggested action:** none for Silas — reversible infrastructure only.
+
+## 2026-07-10 | Reviewer(Claude, overnight cycle 2) → system | mural migration step 5 | pattern
+
+**Subject:** t-017 step 5 shipped (kind_robots PR #148): /mural on the shared
+engine with a verified migration shim. The risky step is done and isolated —
+single-revert rollback, legacy storage untouched.
+
+**Detail:** shim verified with 12 Node checks against the real page definition;
+three intentional behavior deltas documented in the PR body as Silas's deploy
+checklist (dashed selection ring, base palette undeletable, reset keeps custom
+colors). Undo is new. Steps 6-8 are now low-risk cleanups.
+
+**Suggested action:** Silas — 60-second eyeball of deployed /mural against the
+PR #148 checklist when convenient. Worker — steps 6+7 are safe to land together.
