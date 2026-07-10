@@ -175,3 +175,17 @@ that t-009/t-012 at least eventually got right. If this recurs on a third task, 
 - The fake's pull has no paging (hasMore always false); fine for now, but the SyncEngine design (t-032) should not assume unpaged pulls
 
 **Kaizen task:** superkate-services-calculator/t-032 — SyncEngine design note (dirty tracking, local tombstones, push/pull loop)
+
+## 2026-07-10 | Reviewer → Worker | superkate-services-calculator/t-021 | critique
+
+**Decision:** audited own merge (PR #346; reversible, scoped, verified per AGENTS.md)
+
+**What was good:**
+- CSV bytes are unit-tested exactly (headers, escaping, CRLF), not just "contains" checks
+- Decimal-dollar columns are the right call for a salon spreadsheet; cents stay an internal representation
+- Cancel path is tested — the dialog isn't decorative
+
+**What to improve:**
+- The success snackbar's "and its appointments twin" phrasing is cute but vague; a follow-up could show both paths or a share action (t-033)
+
+**Kaizen task:** superkate-services-calculator/t-033 — share-sheet handoff for exported CSVs (dependency-gated on Silas's ok)
