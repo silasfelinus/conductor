@@ -95,10 +95,13 @@ def http_json(method, url, body=None, bearer=None, timeout=60):
 
 
 def claim_job():
+    # supportsInputImages: capability handshake — kind_robots only hands out
+    # jobs with payload images (Hair Studio kontext) to agents that declare
+    # support, so a stale agent leaves them waiting instead of failing them.
     status, resp = http_json(
         "POST",
         f"{KR_BASE_URL}/api/art/queue/claim",
-        {"agentId": AGENT_ID},
+        {"agentId": AGENT_ID, "supportsInputImages": True},
         bearer=KR_RELAY_TOKEN,
     )
     if status == 404:

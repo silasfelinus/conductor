@@ -126,3 +126,21 @@ def test_upload_comfy_input_images_raises_on_bad_upload(monkeypatch):
         relay.upload_comfy_input_images(
             {"images": [{"name": "photo.png", "imageData": PNG_B64}]}
         )
+
+
+def test_claim_job_declares_input_image_support(monkeypatch):
+    captured = {}
+
+    def fake_http_json(method, url, body=None, bearer=None, timeout=60):
+        captured["method"] = method
+        captured["url"] = url
+        captured["body"] = body
+        return 200, {"success": True, "data": {"job": None}}
+
+    monkeypatch.setattr(relay, "http_json", fake_http_json)
+
+    assert relay.claim_job() is None
+    assert captured["method"] == "POST"
+    assert captured["url"].endswith("/api/art/queue/claim")
+    # The capability handshake keeps stale agents from claiming image jobs.
+    assert captured["body"]["supportsInputImages"] is True

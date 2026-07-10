@@ -155,6 +155,29 @@ user's id), then `pm2 start ecosystem.config.js --only kr-relay && pm2 save`.
 Needs any Python 3.9+ — stdlib only, no pip installs. Watch it with
 `pm2 logs kr-relay`.
 
+### Updating a running relay (e.g. the 2026-07-10 Hair Studio upgrade)
+
+The agent runs whatever `relay_agent.py` was on disk when pm2 started it —
+it does not hot-reload. After pulling a conductor update:
+
+```powershell
+cd D:\code\conductor   # or wherever the checkout lives
+git pull
+pm2 restart kr-relay
+pm2 logs kr-relay --lines 20   # expect: "claim got 404/None — waiting" idle loop
+```
+
+Why the 2026-07-10 update matters: Hair Studio (kind_robots `/stylist`)
+enqueues image-to-image Kontext jobs whose payload carries
+`images: [{name, imageData}]`. The updated agent uploads those to ComfyUI's
+input folder before posting the workflow. **A stale agent will claim these
+jobs and fail them** (Comfy errors on the missing LoadImage file, and after
+3 attempts the job lands FAILED) — so restart the relay before anyone tries
+the deployed Hair Studio. Verify end-to-end by running a styling in
+`/stylist` and watching `pm2 logs kr-relay` for
+`uploaded input image kr_kontext_queue_...` followed by the save-generated
+upload line.
+
 **Future option — local fast path:** the engines, kind_robots, and conductor
 checkouts all live on the same physical drive, so the relay could someday
 write finished images straight into the local kind_robots
