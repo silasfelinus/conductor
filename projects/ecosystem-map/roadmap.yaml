@@ -6,6 +6,8 @@ notes_from_silas: |
 
   Art generation should be request-rich but approval-gated. Populate the generator queue aggressively with high-quality prompts and metadata, but treat generated images as candidates until Silas approves them. Do not promote generated candidates into canonical project, gallery, Dream, or Bot image slots automatically.
 
+  Front-end surface rule (Silas, 2026-07-10): most active product, content, game, and creative-tool projects should have a useful page inside Kind Robots, even when their deeper implementation lives elsewhere. Every PROJECT Dream should use its existing liveUrl as the canonical launch pointer. The individual project view must expose that link prominently as an Open Project action or tab. Infrastructure-only projects may be explicitly classified as internal rather than receiving fake placeholder pages.
+
 milestones:
   - id: m1
     title: "SHAPE — inventory the ecosystem and define shared primitives"
@@ -106,20 +108,25 @@ tasks:
       - t-005
       - t-007
     note: >
-      Turn the asset matrix, bot parity spec, duplication audit, and image approval
-      workflow into scoped follow-up roadmap tasks. Prefer shared infrastructure tasks
-      over per-project one-offs when a primitive will be reused across multiple projects.
+      Turn the confirmed ecosystem gaps into small project-owned implementation tasks.
+      Route shared UI work to global-ui or kind-robots and project-specific surfaces to
+      their home roadmaps. Do not implement the gaps inside ecosystem-map itself.
 
   - id: t-007
     milestone: m1
-    title: "Specify the image approval workflow"
+    title: "Map project front-end surfaces and canonical launch links"
     status: ready
     owner: null
     passes: 0
     stakes: reversible
     note: >
-      Define how generated images move from request queue to candidate staging to human
-      review to approved promotion. Include quality criteria, metadata fields, rejection
-      and regeneration handling, and how approved images become canonical project,
-      ArtCollection, Dream, and Bot assets without allowing auto-promotion before Silas
-      approves them.
+      Produce FRONTEND-SURFACE-MAP.md covering every active project. Classify each as:
+      (a) a useful Kind Robots page, (b) an external app/site with a Kind Robots bridge
+      page, (c) an internal infrastructure project that does not need a public product
+      page, or (d) missing a surface. Record the intended Kind Robots route and the
+      PROJECT Dream liveUrl value. Most product, content, game, and creative-tool
+      projects should land in category (a) or (b). Confirm that the individual project
+      view exposes liveUrl as a prominent Open Project link or tab. For each missing
+      useful surface, create a scoped follow-up task in the owning project roadmap;
+      avoid empty placeholder pages that provide no interaction, status, gallery,
+      documentation, or launch value.
