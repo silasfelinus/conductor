@@ -568,18 +568,16 @@ tasks:
 - id: t-035
   milestone: m3
   title: Injectable share gateway so widget tests can assert the exported share payload
-  status: ready
-  owner: null
+  status: done
+  owner: worker
   passes: 0
   stakes: reversible
-  updated: '2026-07-10T18:30:00Z'
+  updated: '2026-07-10T22:31:48Z'
   note: >
-    Kaizen from t-033 (PR #352): FileCsvExportService calls
-    SharePlus.instance directly, so the share step is only reachable in
-    production and widget tests cannot assert the exact two-file payload.
-    Extract a small share gateway interface (real SharePlus impl + fake),
-    inject it like the directory/clock seams, and add a widget test that
-    the export flow shares exactly the two written CSV paths.
+    DONE (2026-07-10, PR #365): added an injectable CsvShareGateway with
+    production SharePlus and in-memory fake implementations, wired it into
+    FileCsvExportService, and added widget coverage asserting that the export
+    flow shares exactly the two written CSV paths. PR #365 merged to main.
 - id: t-036
   milestone: m3
   title: Fix Flutter 3.44 ListTile-in-DecoratedBox assert breaking 5 onboarding widget tests
