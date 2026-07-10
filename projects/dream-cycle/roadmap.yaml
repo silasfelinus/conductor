@@ -71,24 +71,20 @@ tasks:
   - id: t-002
     milestone: m1
     title: Confirm scope and content-write authority with Silas
-    status: needs-human
+    status: done
+    approved_by_human: true
     owner: null
     passes: 0
     stakes: reversible
-    updated: '2026-07-10T00:00:00Z'
+    updated: '2026-07-10T20:00:00Z'
     note: >
-      FOR SILAS: soft checkpoint — nothing is blocked; m2 infrastructure work
-      proceeds in parallel. Read projects/dream-cycle/DESIGN-BRIEF.md (~2 pages)
-      and skim backlog/README.md plus one seed outline. It contains: the 8-stage
-      one-dream-a-day loop, the backlog file format you steer through, and the
-      assumption that agents may CREATE CONTENT ROWS (Dreams, Characters, Rewards,
-      Scenarios, narrator Bots, expressions, topics, threads) in the kind_robots
-      database via existing API endpoints — reversible, traceable, deletable rows,
-      like the pre-approved generated art they carry.
-      TO APPROVE: set approved_by_human: true and status: done, or leave a
-      correction note here (especially if content rows should land as seed-file
-      PRs instead of API writes, or if the first dreams should be isPublic: false
-      until you review them). Nothing unblocks — this only steers.
+      APPROVED by Silas in-session 2026-07-10 (recorded by Reviewer per the
+      human-gate clearance rule): API writes approved, definitely — requiring
+      Silas to approve every content row would be unwieldy, and once the site is
+      publicly used there will be many people creating with AI, so this loop
+      deliberately TESTS that write-access path. No private-first review gate:
+      content lands with each outline's normal isPublic/isMature flags. Scope
+      confirmed as briefed.
   - id: t-003
     milestone: m2
     title: Audit the kind_robots API surface for every dream-build model
