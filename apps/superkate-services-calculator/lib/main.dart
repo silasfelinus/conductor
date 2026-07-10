@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 
+import 'data/app_lock_service.dart';
+import 'data/file_app_lock_service.dart';
 import 'data/file_onboarding_service.dart';
 import 'data/in_memory_persistence_service.dart';
 import 'data/onboarding_service.dart';
 import 'data/persistence_service.dart';
 import 'data/sqlite_persistence_service.dart';
 import 'domain/money.dart';
+import 'ui/app_lock_screen.dart';
+import 'ui/app_lock_settings.dart';
 import 'ui/appointment_history.dart';
 import 'ui/customer_profiles.dart';
 import 'ui/new_appointment_form.dart';
@@ -32,10 +36,12 @@ class SuperkateServicesCalculatorApp extends StatefulWidget {
     super.key,
     this.service,
     this.onboardingService,
+    this.appLockService,
   });
 
   final Future<PersistenceService>? service;
   final Future<OnboardingService>? onboardingService;
+  final Future<AppLockService>? appLockService;
 
   @override
   State<SuperkateServicesCalculatorApp> createState() =>
@@ -49,6 +55,8 @@ class _SuperkateServicesCalculatorAppState
       SuperkateBackgroundPattern.circles;
   bool _isCompletingOnboarding = false;
   bool? _onboardingCompletedOverride;
+  bool _unlockedThisSession = false;
+  bool? _lockEnabledOverride;
 
   late final Future<_StartupBundle> _startup = _openStartup();
 
@@ -59,21 +67,36 @@ class _SuperkateServicesCalculatorAppState
     final onboardingService = await onboardingFuture;
     final onboardingCompleted =
         await onboardingService.hasCompletedOnboarding();
+    final appLockService =
+        await (widget.appLockService ?? FileAppLockService.open());
+    final lockEnabled = await appLockService.isEnabled();
 
     return _StartupBundle(
       service: service,
       onboardingService: onboardingService,
       onboardingCompleted: onboardingCompleted,
+      appLockService: appLockService,
+      lockEnabled: lockEnabled,
     );
   }
 
-  Future<void> _completeOnboarding(OnboardingService onboardingService) async {
+  Future<void> _completeOnboarding(
+    OnboardingService onboardingService,
+    AppLockService appLockService, {
+    String? pin,
+  }) async {
     setState(() => _isCompletingOnboarding = true);
     try {
+      if (pin != null) {
+        await appLockService.enable(pin);
+      }
       await onboardingService.completeOnboarding();
       if (!mounted) return;
       setState(() {
         _onboardingCompletedOverride = true;
+        // She just set the PIN herself — don't lock her out immediately.
+        _lockEnabledOverride = pin != null;
+        _unlockedThisSession = true;
         _isCompletingOnboarding = false;
       });
     } catch (_) {
@@ -103,12 +126,33 @@ class _SuperkateServicesCalculatorAppState
               if (!onboardingCompleted) {
                 return SuperkateOnboardingScreen(
                   isWorking: _isCompletingOnboarding,
-                  onStart: () => _completeOnboarding(startup.onboardingService),
+                  onStart: ({String? pin}) => _completeOnboarding(
+                    startup.onboardingService,
+                    startup.appLockService,
+                    pin: pin,
+                  ),
+                );
+              }
+
+              final lockEnabled =
+                  _lockEnabledOverride ?? startup.lockEnabled;
+              if (lockEnabled && !_unlockedThisSession) {
+                return SuperkateAppLockScreen(
+                  lockService: startup.appLockService,
+                  onUnlocked: () =>
+                      setState(() => _unlockedThisSession = true),
                 );
               }
 
               return SuperkateHomePage(
                 service: startup.service,
+                appLockService: startup.appLockService,
+                onAppLockChanged: () async {
+                  final enabled = await startup.appLockService.isEnabled();
+                  if (mounted) {
+                    setState(() => _lockEnabledOverride = enabled);
+                  }
+                },
                 selectedPalette: palette,
                 selectedBackground: _selectedBackground,
                 onThemeChanged: (next) =>
@@ -220,17 +264,23 @@ class _StartupBundle {
     required this.service,
     required this.onboardingService,
     required this.onboardingCompleted,
+    required this.appLockService,
+    required this.lockEnabled,
   });
 
   final PersistenceService service;
   final OnboardingService onboardingService;
   final bool onboardingCompleted;
+  final AppLockService appLockService;
+  final bool lockEnabled;
 }
 
 class SuperkateHomePage extends StatefulWidget {
   const SuperkateHomePage({
     super.key,
     this.service,
+    this.appLockService,
+    this.onAppLockChanged,
     this.launchReceiptEmail,
     this.selectedPalette = SuperkatePalettes.rainbowConnection,
     this.selectedBackground = SuperkateBackgroundPattern.circles,
@@ -239,6 +289,8 @@ class SuperkateHomePage extends StatefulWidget {
   });
 
   final PersistenceService? service;
+  final AppLockService? appLockService;
+  final VoidCallback? onAppLockChanged;
   final ReceiptEmailLauncher? launchReceiptEmail;
   final SuperkatePalette selectedPalette;
   final SuperkateBackgroundPattern selectedBackground;
@@ -255,6 +307,30 @@ class _SuperkateHomePageState extends State<SuperkateHomePage> {
   int _historyRefreshToken = 0;
 
   void _refreshHistory() => setState(() => _historyRefreshToken++);
+
+  void _openAppLockSettings() {
+    final lockService = widget.appLockService;
+    if (lockService == null) return;
+    final palette = widget.selectedPalette;
+    showModalBottomSheet<void>(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (context) => SuperkateTheme(
+        palette: palette,
+        child: ClipRRect(
+          borderRadius: const BorderRadius.vertical(top: Radius.circular(32)),
+          child: Material(
+            color: palette.ink,
+            child: AppLockSettingsSheet(
+              lockService: lockService,
+              onChanged: widget.onAppLockChanged,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
 
   void _openCustomerProfiles() {
     final palette = widget.selectedPalette;
@@ -299,6 +375,13 @@ class _SuperkateHomePageState extends State<SuperkateHomePage> {
                 onPressed: _openCustomerProfiles,
                 icon: const Icon(Icons.people_alt_outlined),
               ),
+              if (widget.appLockService != null)
+                IconButton(
+                  key: const ValueKey('app-lock-settings-button'),
+                  tooltip: 'App lock',
+                  onPressed: _openAppLockSettings,
+                  icon: const Icon(Icons.lock_outline),
+                ),
               _BackgroundPickerButton(
                 selectedBackground: widget.selectedBackground,
                 onBackgroundChanged: widget.onBackgroundChanged,

@@ -333,16 +333,14 @@ tasks:
 - id: t-020
   milestone: m3
   title: Add appointment delete flow
-  status: ready
+  status: done
   owner: null
   passes: 0
   stakes: reversible
   depends_on: t-018
-  updated: 2026-07-08
-  note: 'Add a safe appointment delete path for fake/local data with confirmation copy and tests. Do not
-    add bulk delete in v1. Keep receipt/history behavior predictable after deletion.
-
-    '
+  updated: '2026-07-10T13:00:00Z'
+  note: >
+    Reconciled 2026-07-10 (hourly Worker): the delete flow already shipped in commit 86db3d3 (confirmation dialog, no bulk delete, history/receipt behavior preserved, widget tests for cancel and confirm paths). Full suite passes on a real Flutter toolchain (71 tests). Roadmap status was stale; no new code needed.
 - id: t-021
   milestone: m4
   title: Add CSV export for customers and appointments
@@ -363,17 +361,14 @@ tasks:
 - id: t-022
   milestone: m4
   title: Add app/device lock onboarding and settings toggle
-  status: ready
+  status: done
   owner: null
   passes: 0
   stakes: reversible
   depends_on: t-018
-  updated: 2026-07-08
-  note: 'Add an optional app/device lock prompt and settings toggle protecting saved customer history,
-    email/contact details, export, and sensitive settings. Use clear, warm Superkate-friendly language;
-    Silas has not supplied final onboarding copy yet, so use tasteful placeholder copy and keep it editable.
-
-    '
+  updated: '2026-07-10T13:00:00Z'
+  note: >
+    Done 2026-07-10 (hourly Worker, PR from claude/hourly-conductor-worker-wcv547): optional PIN app lock — onboarding step (switch + PIN confirm), startup lock screen, and an app-bar settings sheet (turn on/off, change PIN; current PIN required to disable or change). PIN stored as salted SHA-256 only, never plaintext; local-only. Placeholder warm copy is editable. Verified: flutter analyze clean, 71 tests pass including 7 new lock widget tests and file/in-memory service tests.
 - id: t-023
   milestone: m2
   title: Draft cloud sync ownership and self-hosted backend decision note
@@ -506,16 +501,11 @@ tasks:
 - id: t-031
   milestone: m2
   title: Add widget test coverage for the customer profile add/edit/delete UI
-  status: claimed
+  status: done
   owner: null
   passes: 0
   stakes: reversible
   depends_on: t-019
-  updated: 2026-07-09
-  note: 'Kaizen from t-019 (PR #314): lib/ui/customer_profiles.dart shipped with no widget tests for save/edit/delete,
-    breaking the pattern every prior UI task (t-004, t-005, t-006, t-007, t-025, t-026) followed. Add
-    coverage for: saving a new profile, editing an existing one (form prefill + update), deleting a profile
-    (confirm dialog cancel and confirm paths), and the delete-detach invariant (appointment history keeps
-    its client name after the linked customer is deleted).
-
-    '
+  updated: '2026-07-10T13:00:00Z'
+  note: >
+    Reconciled 2026-07-10 (hourly Worker): coverage already shipped in commits e5af760 + bb7c6a8 — save new profile, edit with form prefill, delete cancel/confirm paths, and the delete-detach invariant, exactly as this task specified. Verified green on a real Flutter toolchain (flutter test, 71 tests). Roadmap status was stale; no new code needed.
