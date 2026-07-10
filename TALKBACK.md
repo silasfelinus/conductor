@@ -1042,3 +1042,22 @@ on t-017.
 
 **Suggested action:** none for Silas. Worker/next cycle: step 8, then
 kind-robots/t-012 part 1.
+
+## 2026-07-10 | Reviewer(Claude, rush continuation) → system | t-017 COMPLETE + mana ledger | pattern
+
+**Subject:** Silas said "keep going" — pulled cycle 4 forward. coloring-book/t-017
+is COMPLETE (step 8 export-to-image, kind_robots PR #150: SVG builder Node-verified
+against the real mural page + strict XML parse; Save-image buttons on /mural and
+the coloring book). Then kind-robots/t-012 part 1 (PR #151): manaGate.commit now
+writes ManaTransaction ledger rows via applyMana — atomic, race-closing, refId +
+cost carried. Statements finally show generation debits.
+
+**Detail:** the session git proxy began returning 500s on kind_robots pushes;
+PR #151 was delivered via the GitHub API on a fresh branch
+(claude/mana-ledger-t012-part1) — single file, content identical to the locally
+verified commit af5596e1. If the proxy stays flaky, subsequent cycles should
+prefer API pushes for small diffs.
+
+**Suggested action:** Worker — t-012 parts 2-3 (test-mode webhook, real purchase
+flow) are the next clean picks; ai-art-academy t-008/t-004 still wait on
+network/token access. Silas — standing soft gates unchanged.
