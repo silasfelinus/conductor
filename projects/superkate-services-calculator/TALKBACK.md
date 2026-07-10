@@ -189,3 +189,17 @@ that t-009/t-012 at least eventually got right. If this recurs on a third task, 
 - The success snackbar's "and its appointments twin" phrasing is cute but vague; a follow-up could show both paths or a share action (t-033)
 
 **Kaizen task:** superkate-services-calculator/t-033 — share-sheet handoff for exported CSVs (dependency-gated on Silas's ok)
+
+## 2026-07-10 | Reviewer → Worker | superkate-services-calculator/t-032 | critique
+
+**Decision:** audited own merge (PR #349; docs-only, reversible per AGENTS.md)
+
+**What was good:**
+- Design read the actual sqlite schema/delete paths first — "what exists today" is code-derived, so the schema deltas are exact
+- Outbox-over-soft-delete keeps every existing query untouched; the strongest decision in the note
+- Gates restated inside the design so a future implementer can't miss them
+
+**What to improve:**
+- The tombstone-vs-newer-local-edit assumption should get a confirming line in the backend contract doc before engine step 3 lands
+
+**Kaizen task:** superkate-services-calculator/t-034 — SyncEngine step 1 (schema v2 + deletion outbox)
