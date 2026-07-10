@@ -27,13 +27,63 @@ abstract class CsvExportService {
   });
 }
 
+abstract class CsvShareGateway {
+  Future<void> shareCsvFiles({
+    required String customersPath,
+    required String appointmentsPath,
+  });
+}
+
+class SharePlusCsvShareGateway implements CsvShareGateway {
+  const SharePlusCsvShareGateway();
+
+  @override
+  Future<void> shareCsvFiles({
+    required String customersPath,
+    required String appointmentsPath,
+  }) async {
+    await SharePlus.instance.share(
+      ShareParams(
+        subject: 'Superkate customer and appointment exports',
+        text: 'Two local CSV exports from Superkate Services Calculator.',
+        files: [
+          XFile(customersPath, mimeType: 'text/csv'),
+          XFile(appointmentsPath, mimeType: 'text/csv'),
+        ],
+      ),
+    );
+  }
+}
+
+class InMemoryCsvShareGateway implements CsvShareGateway {
+  int shareCount = 0;
+  String? lastCustomersPath;
+  String? lastAppointmentsPath;
+
+  @override
+  Future<void> shareCsvFiles({
+    required String customersPath,
+    required String appointmentsPath,
+  }) async {
+    shareCount++;
+    lastCustomersPath = customersPath;
+    lastAppointmentsPath = appointmentsPath;
+  }
+}
+
 class FileCsvExportService implements CsvExportService {
-  FileCsvExportService({Directory? directory, DateTime Function()? clock})
-      : _directory = directory,
-        _clock = clock ?? (() => DateTime.now());
+  FileCsvExportService({
+    Directory? directory,
+    DateTime Function()? clock,
+    CsvShareGateway? shareGateway,
+  })  : _directory = directory,
+        _clock = clock ?? (() => DateTime.now()),
+        _shareGateway = shareGateway ??
+            (directory == null ? const SharePlusCsvShareGateway() : null);
 
   final Directory? _directory;
   final DateTime Function() _clock;
+  final CsvShareGateway? _shareGateway;
 
   Future<Directory> _exportDir() async {
     if (_directory != null) return _directory;
@@ -65,18 +115,10 @@ class FileCsvExportService implements CsvExportService {
       appointmentsPath: appointmentsFile.path,
     );
 
-    if (_directory == null) {
-      await SharePlus.instance.share(
-        ShareParams(
-          subject: 'Superkate customer and appointment exports',
-          text: 'Two local CSV exports from Superkate Services Calculator.',
-          files: [
-            XFile(result.customersPath, mimeType: 'text/csv'),
-            XFile(result.appointmentsPath, mimeType: 'text/csv'),
-          ],
-        ),
-      );
-    }
+    await _shareGateway?.shareCsvFiles(
+      customersPath: result.customersPath,
+      appointmentsPath: result.appointmentsPath,
+    );
 
     return result;
   }
