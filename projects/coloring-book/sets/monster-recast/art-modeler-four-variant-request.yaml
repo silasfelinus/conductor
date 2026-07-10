@@ -1,0 +1,224 @@
+request:
+  project: coloring-book
+  set: monster-recast
+  requested_by: Silas
+  requested_at: '2026-07-10'
+  status: requested
+  purpose: >
+    Render every approved Monster Recast pitch in four deliberately different visual modes:
+    full-color illustration, finished coloring-book line art, cinematic movie still, and
+    traditional painted illustration.
+  source_scene_manifest: art-modeler-request.yaml
+  creative_direction: CREATIVE-DIRECTION.md
+  concept_count: 34
+  variants_per_concept: 4
+  total_jobs: 136
+  target_repo: silasfelinus/conductor
+  output_directory: projects/process/monster-recast/four-variant-studies/
+  execution:
+    strategy: batch-by-concept
+    concepts_per_batch: 4
+    images_per_full_batch: 16
+    partial_final_batch_images: 8
+    preserve_metadata: true
+    generate_as_separate_files: true
+    collage: false
+    contact_sheet: false
+    stop_on_systemic_failure: true
+    continue_on_single_prompt_failure: true
+    retry_failed_job_once: true
+    review_after_each_batch: true
+    note: >
+      Each four-image family must preserve the same core character, action, staging, body type,
+      scars, disfigurement, age, creature anatomy, and comic hook. The four jobs are format
+      explorations, not four unrelated redesigns.
+
+prompt_assembly:
+  formula: >
+    final_prompt = scene prompt from art-modeler-request.yaml + variant prompt below +
+    universal readability and safety requirements below
+  scene_prompt_field: batch.entries[].prompt
+  id_formula: '{concept_id}-{variant_id}-v1'
+  path_formula: >
+    projects/process/monster-recast/four-variant-studies/{concept_id}/{concept_id}-{variant_id}-v1.webp
+  metadata_fields:
+    - concept_id
+    - concept_label
+    - variant_id
+    - final_prompt
+    - negative_prompt
+    - model
+    - workflow
+    - seed
+    - width
+    - height
+    - created_at
+    - source_scene_manifest
+    - creative_direction
+
+universal_readability_requirements: >
+  One coherent vertical composition and one unmistakable focal action. The premise, gender recast,
+  horror threat, and camp joke must read at thumbnail size before the viewer notices secondary detail.
+  Use a strong silhouette and clear separation between foreground, subject, and background. Complexity
+  should reward a teen or adult viewer without burying the image: one dominant subject or group, two to
+  four meaningful secondary motifs, and restrained background storytelling. Preserve intentional body
+  diversity, scars, burns, age, fatness, muscle, gauntness, disability, and fully monstrous anatomy.
+  Never replace an ugly or disfigured design with a conventionally pretty substitute. No generated text,
+  captions, logos, signatures, watermarks, panels, borders, or collages. No actor likeness, exact protected
+  mask, exact movie costume, copied poster typography, or exact franchise creature design.
+
+universal_safety_requirements: >
+  Progressive queer-positive camp horror for teens and adults, approximately PG-13. Adult sensuality may
+  be playful, alluring, or tastefully titillating where the concept requires it, but show no visible nipples,
+  genitals, explicit sex, sexual violence, or fetish framing. Implied adult nudity must remain strategically
+  obscured. Every child or teenage character is nonsexualized, age-appropriate, and framed around horror,
+  identity, or supernatural menace rather than desirability. Allow scars, burns, decay, blood accents, and
+  body horror, but no exposed viscera or graphic gore.
+
+shared_negative_prompt: >
+  unreadable premise, visual clutter, excessive micro-detail, busy wallpaper everywhere, weak silhouette,
+  flat staging, neutral character turnaround, tiny subject, duplicated subject, accidental extra limbs,
+  malformed hands, disconnected anatomy, airbrushed scars, beautified burns, erased age, uniformly thin cast,
+  generic sexy costume, frilly feminization by default, visible nipples, explicit genitals, sexualized minor,
+  explicit sex, sexual violence, graphic gore, exposed viscera, actor likeness, exact copyrighted mask,
+  exact movie costume, exact franchise creature, copied movie poster, readable text, caption, logo, signature,
+  watermark, collage, multiple panels, border, low resolution, blur
+
+variant_profiles:
+  - id: full-color-illustration
+    label: Full-color illustrated concept
+    format_role: polished design-and-composition reference
+    default_size: 1024x1536
+    default_model: flux-dev
+    prompt: >
+      Render this as a polished full-color contemporary horror illustration suitable for a premium teen-and-adult
+      coloring-book cover gallery or high-end game art book. Use crisp, confident shapes, saturated but controlled
+      color, expressive faces, dimensional practical-effects textures, and sophisticated theatrical lighting.
+      Favor clean color separation and readable edges over painterly haze. Include enough costume, environment,
+      surface, and prop detail to make the image rewarding, but organize it into large, medium, and small visual
+      masses so the focal action remains immediate. This should look fully finished, not like a sketch, photograph,
+      movie screenshot, flat vector icon, or traditional oil painting.
+
+  - id: coloring-book
+    label: Teen-and-adult coloring-book line art
+    format_role: printable production candidate
+    default_size: 2550x3300
+    target_print: 8.5x11 inches at 300 DPI
+    default_model: approved-coloring-pipeline
+    prompt: >
+      Render this as sophisticated black-and-white line art for a teen-and-adult coloring book. Pure white page,
+      clean bold black outer contours, varied medium interior line weight, no gray, no color, no halftone, no
+      crosshatched shading, and no large muddy black areas. Preserve the exact focal pose, facial identity, horror
+      clue, gender recast, body type, and visual joke. Build clearly closed colorable regions with a deliberate mix:
+      approximately 25 percent large relaxing regions, 50 percent medium regions, and 25 percent intricate accent
+      regions. Put the highest detail on the face, hands, signature prop, monster texture, and immediate costume;
+      simplify the background by roughly one third and keep open breathing space around the silhouette. Use two to
+      four iconic environmental motifs, not a wall of tiny objects. Complex enough to entertain an adult colorist,
+      clear enough that the scene reads instantly and remains practical to color. No grayscale, blur, text, border,
+      panel, decorative frame, or micro-pattern filling every surface.
+
+  - id: movie-still
+    label: Cinematic movie still
+    format_role: live-action mood and staging experiment
+    default_size: 1024x1536
+    default_model: flux-dev
+    prompt: >
+      Render this as a convincing frame from an original live-action horror film, photographed rather than illustrated.
+      Use believable adult casting, practical makeup, prosthetics, wardrobe construction, physical sets, atmospheric
+      haze, motivated lighting, subtle film grain, realistic skin and creature surfaces, and a decisive lens choice.
+      Stage it as a narrative moment caught mid-action, not a posed publicity portrait. Preserve the camp idea, but
+      let performers play it sincerely so the humor emerges from the situation. Favor practical-effects credibility
+      over glossy cosplay. No recognizable actor, franchise costume, studio logo, subtitle, poster title, or fake
+      interface. The result should resemble a restored 35mm or modern large-format production still, not concept art,
+      painting, or coloring-book line art.
+
+  - id: painted-illustration
+    label: Traditional illustrated painting
+    format_role: painterly poster and fine-art interpretation
+    default_size: 1024x1536
+    default_model: flux-dev
+    prompt: >
+      Render this as a richly painted horror illustration with visible human-like brushwork, layered pigment, selective
+      lost-and-found edges, dramatic value design, and luminous color. Draw from the broad tradition of hand-painted
+      genre posters, pulp covers, theatrical portraiture, gouache, tempera, and oil illustration without imitating any
+      named living artist or copying an existing poster. Permit atmospheric exaggeration and symbolic shapes, but keep
+      the subject, action, anatomy, and comic hook unmistakably readable. Concentrate fine brush detail around the face,
+      hands, monster feature, and key prop; allow quieter passages elsewhere so complexity feels intentional rather than
+      noisy. This must look like an original finished painting, clearly distinct from the crisp full-color illustration
+      and from a photoreal movie still.
+
+quality_gates:
+  all_variants:
+    - core pitch is readable in one second
+    - horror engine remains genuinely threatening or uncanny
+    - camp engine remains legible without becoming a gag-only cartoon
+    - gender recast is more thoughtful than clothing and makeup
+    - specified body type, age, scars, burns, fatness, muscle, gauntness, or creature anatomy is preserved
+    - composition has one primary focal action
+    - no protected actor likeness, exact mask, costume, logo, or copied poster layout
+  coloring_book_only:
+    - silhouette remains readable when viewed at 15 percent size
+    - all major color regions are closed or intentionally bounded
+    - background detail is subordinate to the figure
+    - no grayscale, soft shading, dense crosshatching, or photographic texture
+    - at least three region scales are present
+    - no more than four secondary storytelling motifs
+    - facial expression and signature visual hook survive line conversion
+  movie_still_only:
+    - reads as photographed physical reality
+    - practical makeup and props appear buildable
+    - no illustration or poster typography
+  painted_illustration_only:
+    - visible painterly surface and edge variation
+    - not merely a photo with a paint filter
+  full_color_illustration_only:
+    - crisp deliberate color design
+    - not a flat coloring-page fill and not a painterly blur
+
+concept_matrix:
+  - {id: mr-001, label: The Perfect Woman}
+  - {id: mr-002, label: Sweet Dreams Darling}
+  - {id: mr-003, label: Broadcast Giant}
+  - {id: mr-004, label: Masking Up at Moon Lake}
+  - {id: mr-005, label: Moon-Torn}
+  - {id: mr-006, label: Screwhead}
+  - {id: mr-007, label: Pound Foolish}
+  - {id: mr-008, label: The Little Game Mistress}
+  - {id: mr-009, label: Draculina and Her Three Husbands}
+  - {id: mr-010, label: The Madam in the Hat}
+  - {id: mr-011, label: The Alien King}
+  - {id: mr-012, label: Hush Darling}
+  - {id: mr-013, label: Ansel Bell}
+  - {id: mr-014, label: Ghostface Gets Ready}
+  - {id: mr-015, label: Unraveled on the Red Carpet}
+  - {id: mr-016, label: Creature in Drag}
+  - {id: mr-017, label: Trophy Queen}
+  - {id: mr-018, label: Doctor Feast}
+  - {id: mr-019, label: Countess Vermin}
+  - {id: mr-020, label: Fly Girl Summer}
+  - {id: mr-021, label: The Invisible Exhibitionist}
+  - {id: mr-022, label: Prom King Ascendant}
+  - {id: mr-023, label: Babs O'Blob}
+  - {id: mr-024, label: Madame Phantasm}
+  - {id: mr-025, label: Little Miss Omen}
+  - {id: mr-026, label: Madam Satan}
+  - {id: mr-027, label: Half Possessed}
+  - {id: mr-028, label: Backward Boy}
+  - {id: mr-029, label: Madame Close-Shave}
+  - {id: mr-030, label: Honeyed Hook}
+  - {id: mr-031, label: The Tall Woman}
+  - {id: mr-032, label: The Shape at Home}
+  - {id: mr-033, label: The Hallway Boys}
+  - {id: mr-034, label: Mother of the Patch}
+  all_variants: [full-color-illustration, coloring-book, movie-still, painted-illustration]
+
+batch_plan:
+  - {batch: 1, concepts: [mr-001, mr-002, mr-003, mr-004], job_count: 16}
+  - {batch: 2, concepts: [mr-005, mr-006, mr-007, mr-008], job_count: 16}
+  - {batch: 3, concepts: [mr-009, mr-010, mr-011, mr-012], job_count: 16}
+  - {batch: 4, concepts: [mr-013, mr-014, mr-015, mr-016], job_count: 16}
+  - {batch: 5, concepts: [mr-017, mr-018, mr-019, mr-020], job_count: 16}
+  - {batch: 6, concepts: [mr-021, mr-022, mr-023, mr-024], job_count: 16}
+  - {batch: 7, concepts: [mr-025, mr-026, mr-027, mr-028], job_count: 16}
+  - {batch: 8, concepts: [mr-029, mr-030, mr-031, mr-032], job_count: 16}
+  - {batch: 9, concepts: [mr-033, mr-034], job_count: 8}
