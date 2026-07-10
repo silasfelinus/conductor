@@ -56,7 +56,7 @@ The pool includes:
 - the eerie hotel hallway boys
 - the summoned female harvest vengeance monster
 
-`homage-concepts.yaml` is the authoritative pool for the next concept-art round. It names source lineages internally so the cinematic joke and framing are not lost. Those source names are not the final commercial identities.
+`homage-concepts.yaml` is the authoritative pool for the next concept-art round. It names source lineages internally so the cinematic idea and framing are not lost. Those source names are not the final commercial identities.
 
 ## Book shape
 
@@ -71,24 +71,45 @@ Working target:
 
 One illustration should sit on each right-hand page in print so marker bleed does not ruin another drawing. The page count may split into later volumes if the strongest concepts exceed a coherent first book.
 
+## Canonical art workflow
+
+The book is produced from a paired master system:
+
+1. **Colored graphic master** — a finished high-detail horror illustration with thick black linework, flat bounded color, strong perspective, and many enclosed shapes.
+2. **Coloring-page conversion** — the same composition translated faithfully into clean black line art, preserving pose, anatomy, identity, scene detail, and visual hook.
+
+The colored pass is not merely reference art. It is the canonical composition and design master. The coloring page should look like the uncolored ink stage of that same artwork, not a separate simplified redesign.
+
+See `STYLE-GUIDE.md` for the authoritative production standard, including:
+
+- serious camp rather than joke-heavy novelty art
+- thick outlines and flat color with no gradients or painterly haze
+- dense but organized detail for teen and adult coloring
+- anatomy, contact-point, prop-angle, and portal-perspective checks
+- no accidental extra limbs
+- one independent file per image, never a collage or contact sheet
+- specific lessons for the laboratory creation, she-wolf, Broadcast Giant, Pound Foolish, bath ritual, and burned dream killer
+
 ## Production sequence
 
-1. **Creative direction** — use `CREATIVE-DIRECTION.md` and `homage-concepts.yaml` to lock tone, framing, body diversity, and concept hooks.
-2. **Rough studies** — generate internal composition studies that may stay closer to the named movie lineage so the joke is readable.
-3. **Ranking** — score each study for instant recognition, gender recast, horror, camp, originality potential, and coloring-page viability.
+1. **Creative direction** — use `CREATIVE-DIRECTION.md`, `STYLE-GUIDE.md`, and `homage-concepts.yaml` to lock tone, framing, body diversity, and concept hooks.
+2. **Rough studies** — generate internal composition studies that may stay closer to the named movie lineage so the idea is readable.
+3. **Ranking** — score each study for instant recognition, gender recast, horror, camp, originality potential, anatomy/perspective coherence, and coloring-page viability.
 4. **Originalization** — replace protected expression with original names, biographies, masks, faces, silhouettes, costume systems, props, settings, and mythology.
-5. **Concept art** — generate several strong full-color candidates for each selected original character or scene across varied visual traditions.
-6. **Selection** — choose and revise the strongest design; reject concepts that remain dependent on protected character expression.
+5. **Colored masters** — generate and revise the finished thick-line, flat-color graphic illustrations for selected original characters and scenes.
+6. **Selection** — choose the strongest composition and reject images with weak silhouettes, accidental mutation, impossible spatial logic, excessive jokiness, or copyright dependence.
 7. **Character creation** — create a private Kind Robots `Character` entry for every original recurring figure who appears in the finished set.
-8. **Coloring conversion** — convert selected art into clean black line work with closed, colorable regions and simplified backgrounds.
+8. **Coloring conversion** — translate the selected colored masters into detailed black line work without changing composition or character design.
 9. **Book assembly** — build the digital set manifest, print-ready interiors, cover, credits, and storefront-ready package.
 10. **Pause** — hold publishing and POD setup until the coloring app and digital storefront are ready.
+
+Movie-still and traditional painted variants may remain useful staging or mood experiments, but they are secondary references. The production book is built from the colored-master/coloring-page pair.
 
 ## Originality guardrails
 
 Every sellable piece should evoke a genre lineage without reproducing a protected character.
 
-- Internal briefs may identify films, poster frames, and trope scenes to preserve the creative joke.
+- Internal briefs may identify films, poster frames, and trope scenes to preserve the creative idea.
 - Final art must not use actor likenesses, studio logos, exact masks, exact makeup, exact costumes, signature weapons, quoted text, or copied poster layouts.
 - Change multiple major anchors: silhouette, face, anatomy, clothing era, color language, setting, prop, origin, personality, movement, and mythology.
 - Public-domain and folkloric monsters allow closer archetypal treatment than modern franchise-specific masks, dolls, aliens, and slashers.
@@ -97,18 +118,18 @@ Every sellable piece should evoke a genre lineage without reproducing a protecte
 
 ## Visual direction
 
-The collection should feel curated rather than uniform. Concept art may range across:
+The final set should feel like one curated graphic-horror collection. Individual pages can vary in era, architecture, costume, and palette, but the production treatment remains consistent:
 
-- Gothic portraiture and Art Nouveau poster work
-- German Expressionist stage design
-- 1950s pulp science fiction and creature-feature color
-- 1960s cheesecake photography and beach-poster graphics
-- 1970s Hammer-style color, occult screen print, glam rock, and airbrush fantasy
-- 1980s practical-effects spectacle and neon video-store posters
-- Victorian engraving, botanical plates, and entomology illustration
-- woodblock-inspired monster prints, linocut, paper-cut theatre, watercolor, risograph, and stop-motion maquettes
+- thick clean black linework
+- flat separated color areas
+- hard-edged secondary color shapes instead of soft shading
+- substantial graphic-novel detail
+- bold poses and decisive camera angles
+- clear enclosed regions suitable for later coloring
+- no text, captions, labels, grids, panels, or collages
+- serious menace with theatrical camp rather than slapstick
 
-The final coloring pages should unify those sources through bold contours, mostly closed regions, clean white space, printable detail, readable scars and creature texture, and no gray shading.
+Historical and genre references may inform palette, costume, and production design, including Gothic portraiture, Expressionist stage design, creature-feature color, occult screen print, practical-effects spectacle, Victorian engraving, botanical and entomology plates, woodblock, linocut, and paper theatre. They should not replace the unified graphic-master treatment.
 
 ## Character data
 
@@ -126,7 +147,10 @@ These are seed records, not production database writes. The later Character-impo
 ## Files
 
 - `CREATIVE-DIRECTION.md` — authoritative tone, rating, body-diversity, framing, and homage-to-original workflow
+- `STYLE-GUIDE.md` — authoritative rendering, detail, anatomy, anti-collage, and colored-master conversion standard
 - `homage-concepts.yaml` — 34 movie-lineage concept briefs and six group-page seeds
 - `characters.yaml` — first-pass original recurring cast and Character seed bank
 - `pages.yaml` — earlier 28-page draft; revise after ranking the expanded pool
+- `art-modeler-request.yaml` — scene prompts
+- `art-modeler-four-variant-request.yaml` — exploratory render matrix; production priority is now colored master followed by faithful line conversion
 - `README.md` — product shape, workflow, and originality rules
