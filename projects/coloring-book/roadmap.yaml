@@ -276,7 +276,15 @@ tasks:
     stakes: reversible
     updated: '2026-07-10T14:30:00Z'
     note: >
-      PROGRESS 2026-07-10: STEP 4 DONE (kind_robots PR #147) — mural geometry/
+      PROGRESS 2026-07-10 (cycle 2): STEP 5 DONE (kind_robots PR #148) — /mural
+      now renders through ColoringCanvas + coloringStore with the one-time
+      kindRobotsMuralState migration shim (pure-function, 12 Node checks
+      against the real page definition; legacy key left in place — single
+      revert restores the old page). Intentional deltas noted in the PR for
+      Silas to eyeball on deploy: dashed selection ring, base palette
+      undeletable, reset keeps custom colors; Undo added. Remaining: step 6
+      (shrink muralStore), 7 (canonical wonder tab + delete labCards bridge),
+      8 (export-to-image). STEP 4 DONE (kind_robots PR #147) — mural geometry/
       palette now live in public/data/mural-design/mural-page.json (generated
       from the store source, zero drift) with the inline constants kept as
       fallback; muralStore.initialize hydrates from data. Remaining: step 5
