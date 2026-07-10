@@ -60,14 +60,16 @@ Silas explicitly approves that concrete action too.
   Recast's 32-38 page homage pool replacing its original 28-page plan), run with
   the newer reality and refresh the brief opportunistically — don't stall on or
   re-litigate the older document.
-- Paid-generation licensing rule (Silas, 2026-07-10, from ai-art-academy t-011):
-  NO monetized generation on non-commercially-licensed weights, ever — FLUX.1 dev,
-  Kontext dev, and dev-trained LoRAs are excluded from every paid path. FLUX.1
-  schnell (Apache 2.0) is approved for paid text-to-image on our own servers; paid
-  remix/edit routes through officially supported endpoints (BFL Kontext pro/max
-  API, fal/Replicate licensed hosting, or OpenAI images — commercial use of
-  outputs allowed). Free-tier, educational, and internal generation continue
-  unchanged on the current stack.
+- Commercial-generation licensing rule (Silas, 2026-07-10, refined same day from
+  ai-art-academy t-011): STANDING DEFAULT, no per-case debate needed — anything
+  generated for commercial use (paid generation tiers, storefront/POD inventory,
+  DLC packs) runs on either a license-unencumbered backend we host (e.g. FLUX.1
+  schnell, Apache 2.0) or OpenAI/ChatGPT image generation otherwise (its terms
+  allow commercial use of outputs; it's already the art-prompts.yaml pipeline).
+  Officially supported licensed endpoints (BFL Kontext pro/max API, fal/Replicate)
+  remain an approved variant of "otherwise" where OpenAI doesn't fit. FLUX.1 dev,
+  Kontext dev, and dev-trained LoRAs never touch commercial output. Free-tier,
+  educational, and internal generation continue unchanged on the current stack.
 - Creation-a-day idle fallback (2026-07-10): dream-cycle sits LAST in priority.yaml.
   When no other active project has ready work, its recurring task builds the site's
   next creation (~one per day, art included) from the human-steerable backlog in
