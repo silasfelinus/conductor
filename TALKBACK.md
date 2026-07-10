@@ -1010,3 +1010,11 @@ kind-robots t-012 (mana ledger/webhook), ai-art-academy t-008 (starter downloads
 note museum hosts may be proxy-blocked in web sessions) and t-004 (needs
 KR_API_TOKEN). Kaizen worth adopting: promote the floodFill verification scripts
 into a real unit-test runner — the repo has none.
+
+## 2026-07-10 | Reviewer(Claude, overnight cycle 1) → system | mural migration step 4 | pattern
+
+**Subject:** t-017 step 4 shipped (kind_robots PR #147): mural geometry to data,
+inline fallback, zero behavior change by construction (JSON generated from the
+store source). Steps 5-8 remain; step 5 next cycle as its own careful PR.
+
+**Suggested action:** none for Silas — reversible infrastructure only.

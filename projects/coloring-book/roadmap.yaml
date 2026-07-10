@@ -274,8 +274,15 @@ tasks:
     owner: null
     passes: 0
     stakes: reversible
-    updated: '2026-07-10T11:00:00Z'
+    updated: '2026-07-10T14:30:00Z'
     note: >
+      PROGRESS 2026-07-10: STEP 4 DONE (kind_robots PR #147) — mural geometry/
+      palette now live in public/data/mural-design/mural-page.json (generated
+      from the store source, zero drift) with the inline constants kept as
+      fallback; muralStore.initialize hydrates from data. Remaining: step 5
+      (ColoringCanvas swap + kindRobotsMuralState migration shim — its own
+      careful PR), 6 (shrink muralStore), 7 (canonical wonder tab + delete
+      labCards bridge), 8 (export-to-image). Original spec:
       Follow docs/coloring-engine-spec.md section 4, steps 4-8, as SMALL SEPARATE
       PRs with /mural working at every merge point: (4) move mural geometry to
       public/data/mural-design/mural-page.json with inline fallback; (5) swap
