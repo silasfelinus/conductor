@@ -71,8 +71,9 @@ todo explicitly asks for it. Scope is exactly what the title/description says.
 4. Honor CONTROL.md's direction and notes, then each project's `notes_from_silas`, over
    default ordering. (STATUS.md is auto-generated and read-only — never edit it.)
 5. Within the chosen project, take the highest-priority task with `status: ready`.
-   If none anywhere, stop — do not invent work. (Exception: a proposal-kind project may
-   have a standing instruction to generate N pitches per cycle — follow its roadmap.)
+   If none anywhere, stop — do not invent work. (Exceptions: a proposal-kind project may
+   have a standing instruction to generate N pitches per cycle — follow its roadmap; and
+   `autonomous: true` projects follow the "Autonomous projects — never idle" rule below.)
 
 ### Task dependencies (pipelines)
 A task may declare `depends_on: <task-id>` (or a list). A task is only workable when every
@@ -116,6 +117,24 @@ start working immediately; raise the scope-confirmation task as a soft needs-hum
 runs in parallel with development. Course correction after Silas responds is cheap and
 expected — the bias is toward making things happen. (Outward-facing/irreversible steps
 remain hard gates as always.)
+
+**Autonomous projects — never idle** (Silas, 2026-07-10): a roadmap may declare
+`autonomous: true` (first test run: ai-art-academy). These projects must keep moving
+without Silas's input:
+- Escalate only ACTUAL human gates — spend, publishing, outward-facing/irreversible
+  steps, licensing doubts, backend schema needs. Everything else: decide, record the
+  decision in the task note or docs, and keep building. Scope confirmations are soft
+  gates that run in parallel; course-correct when Silas replies.
+- When an autonomous project has no `ready` task, the Worker does NOT stop or invent
+  arbitrary work — it may create and immediately claim exactly ONE improvement task
+  from the standing menu: (a) a style/polish pass on the project's front end, (b) a
+  roadmap upgrade (refine tasks, detail the next milestone, prune stale notes), (c)
+  generate more art inspirations or content assets, (d) expand the project's
+  docs/curriculum/content. `stakes: reversible`, normal PR flow, one per cycle.
+  Prefer a recurring roadmap task that encodes this menu (e.g. ai-art-academy/t-010)
+  over ad-hoc task creation when one exists.
+- All other safety rules still apply unchanged — autonomy widens WHAT gets worked on,
+  never WHO can approve gates.
 
 **Generated art is pre-approved** (Silas, 2026-07-06): internal auto-generated project art
 is not a human gate. Agents may request, create, commit, and promote generated images for

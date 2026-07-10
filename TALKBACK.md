@@ -885,3 +885,38 @@ slate + a fresh ChatGPT Worker handoff.
 **Suggested action:** Silas confirmed he WANTS the Worker opening PRs and merging into main —
 handoff message to the incoming ChatGPT Worker was written to encourage exactly that. No
 blockers introduced this session.
+
+## 2026-07-10 | Reviewer(Claude, Silas-directed) → system | ai-art-academy + coloring-book creation | pattern
+
+**Subject:** Two new projects created from Silas's session direction; autonomous
+never-idle rule codified in AGENTS.md.
+
+**Detail:**
+- **ai-art-academy** (software, `autonomous: true` — the FIRST autonomous-initiative
+  test run): teaches art history/styles/creators using only public-domain art and dead
+  artists; users remix a starter or uploaded image in learned styles via Kontext.
+  kind_robots art-styler.vue is the front-end seed and Claude has standing full reign
+  over it for this project. DESIGN-BRIEF.md answers Silas's engine question:
+  Kontext-first (dead famous artists are the best case for base-model knowledge;
+  prompt-mode needs no LoRA), curated public LoRAs where t-004's A/B evaluation wins,
+  SDXL+IP-Adapter documented as unbuilt fallback. t-003 is the LoRA hunt Silas asked for.
+- **coloring-book** (software): AI-generated coloring book app in kind_robots; engine
+  seed is the mural-design WonderLab color studio (kind_robots PR #135) — generalize,
+  don't fork. Launch sets per Silas: "Kind Robots" (from existing KR art) and
+  "Spooktacular Monster Drag Party". Free tier + tokens aligned with KR economy; art
+  channel tab; digital-storefront t-018 added for the digital + print-on-demand bridge.
+  Humboldt Impropriety Society material stays archived unless Silas re-approves.
+- **AGENTS.md**: new "Autonomous projects — never idle" rule (roadmap flag
+  `autonomous: true`): when no ready task exists, Worker creates+claims exactly one
+  improvement task from the menu (style pass / roadmap upgrade / more inspirations /
+  content expansion); prefer the project's recurring task when one exists. Autonomy
+  widens WHAT gets worked on, never WHO approves gates.
+- Both projects: priority.yaml + project-overrides.yaml registered (high priority),
+  icon/card/hero prompts queued in projects/art-prompts.yaml + ART-PROMPTS.md,
+  soft scope-confirmation gates (t-002 in each) running in parallel per the 2026-07-04
+  rule. Slug parity Dreams need the sync script (KR_API_TOKEN) — next Worker cycle.
+
+**Suggested action:** Worker — ai-art-academy/t-003 (LoRA hunt) and coloring-book/t-004
+(pipeline prototype) are the highest-leverage next picks; both projects sit high in
+priority.yaml. Silas — the two soft t-002 gates are reading checkpoints only, nothing
+is blocked.
