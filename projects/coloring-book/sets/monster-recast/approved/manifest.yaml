@@ -1,0 +1,43 @@
+set: monster-recast
+updated: '2026-07-10'
+source_of_truth:
+  confirmed_approvals: this manifest
+  discovered_assets: approved directory scan
+  note: >
+    Confirmed approvals and files physically present in approved/ are reported separately.
+    This prevents a misplaced or misspelled file from silently changing Silas's design decisions.
+queue_policy:
+  exploratory_queue_remains_active: true
+  approved_designs_are_not_regenerated_for_production: true
+  note: >
+    Keep the existing full pitch/variant queue in its current order. New renders for an approved
+    concept remain exploratory references or optional alternates unless Silas explicitly promotes
+    one. Production work must reuse the approved colored master and BW partner first.
+confirmed_approvals:
+  - concept_id: mr-002
+    slug: freida-krueger
+    label: Freida Krueger
+    status: approved-pair
+    color: approved/freida-krueger-color.webp
+    bw: approved/frienda-krueger-bw.webp
+    notes:
+      - Silas explicitly approved the design and colored/BW pair.
+      - The BW filename currently says "frienda" while the color filename says "freida"; retained as-is and surfaced by preflight.
+  - concept_id: mr-003
+    slug: tv-boy
+    label: TV Boy
+    status: approved-pair
+    color: approved/tv-boy-color.webp
+    bw: approved/tv-boy-bw.webp
+    notes:
+      - Silas explicitly approved the final emergence perspective and hair treatment.
+  - concept_id: mr-004
+    slug: masking-up
+    label: Masking Up
+    status: approved-color-awaiting-bw
+    color: inspiration/masking-up-color.webp
+    bw: null
+    notes:
+      - Silas explicitly approved this design.
+      - The color file is currently under inspiration/ rather than approved/.
+      - No masking-up BW file was present in the 2026-07-10 upload commit; add or move it later without changing queue order.
