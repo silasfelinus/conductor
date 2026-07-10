@@ -1,0 +1,370 @@
+request:
+  project: coloring-book
+  set: monster-recast
+  requested_by: Silas
+  requested_at: '2026-07-10'
+  status: requested
+  purpose: rough full-color concept studies before commercial originalization
+  target_repo: silasfelinus/conductor
+  output_directory: projects/process/monster-recast/
+  candidate_strategy:
+    initial_pass: 1 image per concept
+    shortlist_pass: 2 additional materially different candidates for selected concepts
+    reason: Test whether the horror lineage, gender recast, camp joke, and composition read before spending 102 renders.
+  defaults:
+    engine: flux
+    flux_variant: dev
+    size: 1024x1536
+    orientation: portrait
+    steps: 30
+    guidance: 3.5
+    status: pending
+    negative_prompt: >
+      readable text, caption, logo, watermark, signature, collage, multiple panels, border,
+      explicit genitals, visible nipples, sexualized minor, graphic gore, exposed viscera,
+      actor likeness, exact copyrighted mask, exact movie costume, copied poster typography,
+      blurry, low resolution, malformed hands, accidental extra limbs, duplicate subject
+  global_prompt_suffix: >
+    Single cinematic portrait illustration, one coherent scene, progressive queer-positive
+    camp horror, approximately PG-13, alluring only where the concept calls for adult sensuality.
+    Preserve scars, disfigurement, age, muscle, fatness, gauntness and creature anatomy.
+    Strong readable silhouette, decisive camera perspective, practical-effects texture,
+    sophisticated theatrical lighting, designed to later simplify into a coloring-book page.
+    No generated text, logo, watermark, actor likeness, or exact protected mask, costume or poster.
+
+batch:
+  entries:
+    - id: mr-001
+      label: The Perfect Woman
+      image_path: projects/process/monster-recast/mr-001-perfect-woman.webp
+      prompt: >
+        Low wide view from the foot of a lightning-struck laboratory slab. A brilliant adult woman
+        Doctor Frankenstein and her devoted hunchbacked assistant Ivorian activate their creation:
+        a magnificent adult woman, Amazonian, statuesque, extremely tall, broad-shouldered and heavily
+        muscled, visibly stitched and scarred, rising hard enough to bend the steel restraint frame.
+        She is the monumental original-style monster, never a bride. Implied nudity is fully obscured
+        by straps, smoke, cables, foreground machinery and a strategically draped sheet. The doctor is
+        triumphant and awestruck; Ivorian wrestles an absurdly oversized switch.
+
+    - id: mr-002
+      label: Sweet Dreams Darling
+      image_path: projects/process/monster-recast/mr-002-dream-killer.webp
+      prompt: >
+        Mattress-height bedroom-threshold shot. An adult woman dream killer poses with lethal perfume-ad
+        confidence, slightly voluptuous and athletic, but unmistakably a severe burn survivor with healed
+        burns and contractures across face, scalp, neck, chest and arms. Sparse damaged hair, asymmetric lips,
+        scarred bare shoulder, scorched knit lounge clothing and an original articulated dream-cutting device.
+        Her vanity-mirror reflection smiles before she does. Dangerous, alluring, disfigured and frightening;
+        never beautify away the burns.
+
+    - id: mr-003
+      label: Broadcast Giant
+      image_path: projects/process/monster-recast/mr-003-broadcast-giant.webp
+      prompt: >
+        Floor-level forced perspective in an ordinary room. A small television sits in front while an
+        impossibly gigantic adult young man emerges from it, muscular pallid shoulders and wet torso filling
+        the architecture. Short wet black hair, bruised uncanny face, clinging torn shirt, geometric static
+        scars, one colossal hand resting on the tiny TV frame. Furniture looks toy-sized and wet footprints
+        appear on walls. Beautiful in a troubling way, direct dead stare, scale so wrong it becomes horror.
+
+    - id: mr-004
+      label: Masking Up at Moon Lake
+      image_path: projects/process/monster-recast/mr-004-mask-up.webp
+      prompt: >
+        Foreground three-quarter view of a powerful broad-backed adult woman lake killer raising an original
+        battered rescue mask over her visibly disfigured face. Solid work-hardened body, scarred scalp and jaw,
+        soaked practical work clothes and calm ritual menace. Behind her, adult skinny dippers scramble from
+        moonlit water; every naughty bit is comically blocked by reeds, towels, coolers, floats and crossed limbs.
+        Funny obstruction, real danger. No famous hockey mask or signature weapon.
+
+    - id: mr-005
+      label: Moon-Torn
+      image_path: projects/process/monster-recast/mr-005-moon-torn.webp
+      prompt: >
+        Extreme low-angle portrait of a colossal adult she-wolf howling from a rooftop. An impossibly huge
+        cratered moon fills nearly the entire background. Enormous thighs and shoulders, powerful muzzle,
+        saliva, long claws breaking the frame, dense textured fur, crescent mane and clothes shredded by
+        transformation into broad tatters. Fur and fabric cover anatomy. Feral female power, not a soft pinup.
+
+    - id: mr-006
+      label: Screwhead
+      image_path: projects/process/monster-recast/mr-006-screwhead.webp
+      prompt: >
+        Severe symmetrical frontal portrait of a tall muscular adult woman ritual figure. Hundreds of varied
+        screws enter scarred flesh across face, scalp, neck, shoulders and body in deliberate geometric patterns.
+        Structured black ceremonial leather exposes selected scar designs without explicit anatomy. She presents
+        a polished mechanical sphere opening into nested metal petals, echoed by the screws. No pins, grid-cut
+        head or puzzle cube. Religious stillness, clinical gaze, elegant body horror.
+
+    - id: mr-007
+      label: Pound Foolish
+      image_path: projects/process/monster-recast/mr-007-pound-foolish.webp
+      prompt: >
+        View from the foot of an ordinary bedroom toward a closet receding impossibly into a demonic carnival.
+        Pound Foolish fills most of the closet and far room: a gigantic adult clown woman, curvy, zaftig,
+        Botticellian, soft and powerful, six elegant arms, immense hips, tiny crown and cosmic harlequin bodice.
+        Her skirts merge with midway tents, balloons and darkness. She is the carnival itself, not a thin acrobat.
+        Original frightening face and makeup; the room stretches far beyond physics.
+
+    - id: mr-008
+      label: The Little Game Mistress
+      image_path: projects/process/monster-recast/mr-008-game-mistress.webp
+      prompt: >
+        Low institutional-hallway angle. A thin angular adult female mechanical doll brakes a tiny original
+        wheeled vehicle and turns sharply toward the viewer. Carved game-host face, stiff articulated joints,
+        raised painted eyebrow, dapper tuxedo, patent shoes and mischievous puppet grin. Treat the tiny vehicle
+        like a dramatic sports car. No spiral cheeks, copied tricycle or recognizable doll face.
+
+    - id: mr-009
+      label: Draculina and Her Three Husbands
+      image_path: projects/process/monster-recast/mr-009-draculina-husbands.webp
+      prompt: >
+        Saturated 1970s gothic vampire-film family portrait in a velvet crypt lounge. A commanding mature
+        vampire woman stands central, tall, lush and authoritative in decadent velvet and jewels. Three handsome,
+        well-built adult husbands surround her, slightly zombified and bloodless: one muscular, one lean, one broad,
+        each with a different bite mark and vacant adoration. Open shirts, bare chests, candles, theatrical cleavage
+        and possessive posing, sensual but not explicit. Original faces, costumes and court mythology.
+
+    - id: mr-010
+      label: The Madam in the Hat
+      image_path: projects/process/monster-recast/mr-010-madam-hat.webp
+      prompt: >
+        Child-height doorway view of an extremely tall, narrow adult woman apparition dressed as an impossible
+        undertaker-governess. Body folded from black paper, unnatural long fingers, fan-shaped mourning hat and
+        absurdly overdesigned coat. Face glimpsed only between sharp shadows. Her coat shadow contains a second
+        smiling profile that her body does not. Grief-haunted domestic room, severe expressionist geometry,
+        terrifying silhouette with camp excess, not a direct copy of any existing hat monster.
+
+    - id: mr-011
+      label: The Alien King
+      image_path: projects/process/monster-recast/mr-011-alien-king.webp
+      prompt: >
+        Low coronation portrait in an alien egg chamber. A masculinized extraterrestrial hive king leans forward:
+        broad upper carriage, narrow armored waist, long powerful limbs, mineral-black exoskeleton, lantern throat
+        and ceremonial radial crest opening like a crown. Sleek masculine body language but no human anatomy.
+        Predatory stillness and severe monarchy. No familiar elongated skull, ribbed body, inner jaw or industrial nest.
+
+    - id: mr-012
+      label: Hush Darling
+      image_path: projects/process/monster-recast/mr-012-hush-dummy.webp
+      prompt: >
+        Extreme close-up poster composition, mostly face and one raised finger. A female ventriloquist dummy
+        presses a carved wooden finger to painted lips and stares directly through glossy eyes. Delicate eerie
+        adult-feminine doll face, old-fashioned coiffure, lacquer cracks and jaw beginning to open. Tiny hint she
+        enjoys commanding silence. The finger has different wood grain, suggesting she assembled herself.
+        Preserve face-and-shush framing but create a completely original doll sculpt, hair, collar and crack map.
+
+    - id: mr-013
+      label: Ansel Bell
+      image_path: projects/process/monster-recast/mr-013-ansel-bell.webp
+      prompt: >
+        Haunted nursery portrait from slightly below rocking-chair height. A beautiful antique boy doll sits
+        centered in immaculate Sunday-best clothes with pageboy hair, porcelain skin, asymmetric glass eyes and
+        an expression too calm to trust. Child doll proportions, no sexualization. The room leans toward him;
+        toys arrange themselves in rows. Every toy animal faces the viewer while his head faces away but his eyes
+        still meet the camera. Original porcelain design and outfit.
+
+    - id: mr-014
+      label: Ghostface Gets Ready
+      image_path: projects/process/monster-recast/mr-014-bathtub-shave.webp
+      prompt: >
+        Three-quarter adult bathtub glamour pose in a steamy bathroom. A woman slasher remains clothed and covered
+        in a soaked black robe-like garment and bubbles, wearing an original elongated scream-like mask. One bare
+        leg rises from the bath with comically short visible stubble, not heavy hair. She seriously uses her real
+        gleaming knife as a razor, leaving one tiny strip perfectly smooth. Phone off hook, open door into darkness.
+        Tasteful pinup framing, silly self-care joke, dangerous knife and intruder.
+
+    - id: mr-015
+      label: Unraveled on the Red Carpet
+      image_path: projects/process/monster-recast/mr-015-red-carpet-mummy.webp
+      prompt: >
+        Mid-stride red-carpet premiere catastrophe. A glamorous strong-bodied adult woman mummy in ancient jewelry
+        and layered wraps poses for paparazzi as someone behind steps on one long bandage and she begins unraveling.
+        Ancient dead face and hands remain visible. Accidental exposure is tastefully blocked by a trophy, handbag,
+        photographer, crossed ribbons and flash equipment. The living bandage snakes through paparazzi while several
+        photographers begin turning to stone.
+
+    - id: mr-016
+      label: Creature in Drag
+      image_path: projects/process/monster-recast/mr-016-creature-drag.webp
+      prompt: >
+        Backstage aquatic dressing-room mirror scene. A broad heavy fully monstrous amphibious creature with wet
+        practical-effects scales, gills, fins, webbed claws and frightening face sincerely prepares for drag,
+        adjusting seaweed boa, shell crown and pearls hanging from every fin. Tiny fish assistants help. Keep the
+        creature monstrous, not a human fish woman. In the mirror reflection it is already performing onstage.
+        Black lagoon water beyond the mirror, eerie and joyful.
+
+    - id: mr-017
+      label: Trophy Queen
+      image_path: projects/process/monster-recast/mr-017-trophy-queen.webp
+      prompt: >
+        Low jungle-canopy portrait of a visibly feminine adult alien hunter, extremely athletic, powerful,
+        broad-shouldered and scarred. She lifts an original helmet and turns her bare frightening face toward the
+        viewer: full nonhuman mandibles, complex teeth and alien eyes preserved, never softened into a pretty human.
+        Ceremonial armor, exposed armored midriff and thighs, braided trophy cords like a cape, camouflage shimmer
+        and original weapons. Lethal intensity first, femininity through body, pose and armor.
+
+    - id: mr-018
+      label: Doctor Feast
+      image_path: projects/process/monster-recast/mr-018-doctor-feast.webp
+      prompt: >
+        Symmetrical frontal transfer shot through cage bars. A mature late-middle-aged woman psychiatrist and
+        cannibal is restrained upright on an original gurney inside a high-security cage. Ordinary body, longer
+        graying hair, intelligent controlled eyes and original severe restraint mask. She looks impeccably dignified
+        despite absurd straps. One loose strand of hair is the only uncontrolled line. Dead serious, elegant and
+        terrifying; no actor likeness or copied mask.
+
+    - id: mr-019
+      label: Countess Vermin
+      image_path: projects/process/monster-recast/mr-019-countess-vermin.webp
+      prompt: >
+        Expressionist side-lit window portrait of an absolutely ugly, gaunt adult female vampire. Bald or sparsely
+        haired, skeletal, stooped, ratlike, ancient and genuinely repulsive, with corpse skin, rodent teeth and long
+        nails. Do not make her gothic-pretty. She wears one tiny exquisite jewel with grand-duchess vanity. Her huge
+        claw shadow stretches up the wall, but the shadow has a voluptuous glamorous silhouette unlike her starved body.
+
+    - id: mr-020
+      label: Fly Girl Summer
+      image_path: projects/process/monster-recast/mr-020-fly-girl-summer.webp
+      prompt: >
+        Bright mid-century cheesecake swimsuit image rendered as lush creature-feature art. A conventionally curvy
+        adult woman poses confidently in a stylish high-waisted swimsuit, one hand on hip, human body with freckles,
+        moles, stretch detail and subtle vitiligo-like patches. Her head is a fully detailed giant fly with enormous
+        compound eyes, antennae, bristles and complex mouthparts, not a cute mask. The eyes reflect hundreds of tiny
+        photographers. Maximum pinup glamour paired with maximum insect head.
+
+    - id: mr-021
+      label: The Invisible Exhibitionist
+      image_path: projects/process/monster-recast/mr-021-invisible-flasher.webp
+      prompt: >
+        Direct frontal adult doorway pose. An invisible woman throws open a dramatic trenchcoat as though flashing
+        the viewer. Her absent body is defined only by negative space, lingerie edges, stockings, garters, heels,
+        gloves and jewelry, so the gesture is suggestive but no anatomy is visible. Floating lipstick smile and warped
+        wallpaper prove she occupies the space. Independent footprints approach behind her. Playful sex-positive joke,
+        adult lingerie glamour, impossible optics, no bandaged head or explicit nudity.
+
+    - id: mr-022
+      label: Prom King Ascendant
+      image_path: projects/process/monster-recast/mr-022-prom-king.webp
+      prompt: >
+        Low center-aisle view of a ruined school gym after a supernatural prom catastrophe. A late-teen trans boy
+        stands perfectly still as prom king in age-appropriate masculine formalwear and cheap plastic crown,
+        drenched in dark non-graphic ceremonial fluid, his face the only unharmed face visible. Collapsed bleachers,
+        smoke, sparks and telekinetic debris hang in air; one anonymous hand lies under distant rubble, no bodies or
+        gore. Every banner letter has fallen except KING. Identity, humiliation and eerie control, never sexualized.
+
+    - id: mr-023
+      label: Babs O'Blob
+      image_path: projects/process/monster-recast/mr-023-babs-blob.webp
+      prompt: >
+        Theatre-curtain star entrance. Babs O'Blob is a huge voluptuous translucent sentient mass whose body becomes
+        performer, sweeping train, red carpet and velvet curtains simultaneously. Many elegant hands and expressive
+        faces emerge from glossy raspberry protoplasm; jewelry, shoes and props float inside. Brief absorbed faces add
+        horror while she pauses to pose and accidentally engulfs the orchestra pit. Amorphous volume and curves, not
+        a woman merely wearing a blob dress.
+
+    - id: mr-024
+      label: Madame Phantasm
+      image_path: projects/process/monster-recast/mr-024-madame-phantasm.webp
+      prompt: >
+        Grand opera-house staircase descent. A commanding mature woman composer and subterranean phantom, tall,
+        angular and severe in an original conductor gown shaped by organ-pipe architecture. One visibly disfigured
+        cheek is partly revealed while several masks orbit her face, each showing an emotion she refuses to display.
+        She conducts chandeliers and singing masks with a tuning-fork baton. Adult gothic glamour with actual facial
+        difference; no plain white half-mask, copied costume or famous chandelier scene.
+
+    - id: mr-025
+      label: Little Miss Omen
+      image_path: projects/process/monster-recast/mr-025-little-miss-omen.webp
+      prompt: >
+        Vintage 1970s occult-poster portrait from child eye level. A malevolent young girl stands centered in precise
+        London private-school fashion: immaculate dark coat, formal uniform, blunt pageboy haircut and small knowing
+        grin. Never sexualized. Long black triangular shadows from architecture, trees and distant adults point toward
+        her like knives; accidents are implied at frame edges and animals recoil. Hide 666 subtly in negative space,
+        shadow intersections and ironwork, never obvious typography. Dark, pointy, elegant and gleefully evil.
+
+    - id: mr-026
+      label: Madam Satan
+      image_path: projects/process/monster-recast/mr-026-madam-satan.webp
+      prompt: >
+        Low formal view down a very long banquet table. Satan herself is an adult woman at the far end: mature,
+        physically commanding, almost human but barely containing ancient authority. Not a demoness, succubus,
+        bride or subordinate devil. Immaculate severe tailoring, adult allure, charm, glee and danger. Contracts
+        write themselves as guests realize who hosts them. Her visible form has only subtle clues, while her enormous
+        shadow contains every traditional Satan shape. No red lingerie, goat body or branded occult symbol.
+
+    - id: mr-027
+      label: Half Possessed
+      image_path: projects/process/monster-recast/mr-027-half-possessed.webp
+      prompt: >
+        Bedside three-quarter horror scene of a teenage boy exactly halfway between himself and an invading entity.
+        Age-appropriate body, school tie and pajamas, no sexualization. He levitates unevenly: one hand grips the
+        mattress in terrified panic while the other casts an impossible adult claw shadow. One eye is frightened and
+        human; the other looks at the viewer with ancient amusement. Frost covers the room and objects point in
+        contradictory directions as gravity argues with itself. No copied makeup or pose.
+
+    - id: mr-028
+      label: Backward Boy
+      image_path: projects/process/monster-recast/mr-028-backward-boy.webp
+      prompt: >
+        Camera at the foot of a domestic staircase. A pale lanky adult young man descends in an impossible backward
+        bridge-walk, long limbs bent disturbingly but believably, wet short-to-medium black hair hanging down,
+        upside-down face staring at the viewer. Neat black trousers and tucked shirt remain absurdly formal. His shadow
+        walks normally down the stairs while his body does not. Restrained ghost-horror atmosphere, original face and house.
+
+    - id: mr-029
+      label: Madame Close-Shave
+      image_path: projects/process/monster-recast/mr-029-madame-close-shave.webp
+      prompt: >
+        Point of view from a barber chair. A severe older woman barber leans close with a straight razor crossing the
+        foreground, strong forearms, mature lined face, silver-streaked hair, rolled sleeves and fitted waistcoat. She
+        looks appalled by the customer's split ends while planning something worse. Multiple mirrors show different
+        haircuts and possible fates; one reflection moves independently. Locked old shop, dark red rinse water, mature
+        charisma and intimate menace, no youthful pinup styling.
+
+    - id: mr-030
+      label: Honeyed Hook
+      image_path: projects/process/monster-recast/mr-030-honeyed-hook.webp
+      prompt: >
+        Mirror-facing portrait in an abandoned luxury apartment. A tall, elegant, full-bodied, middle-aged Black woman
+        urban legend appears behind the viewer, visibly scarred and regal, wearing an original dramatic coat and carrying
+        an original ceremonial hook. Bees emerge from coat seams and mouth shadow around her throat and shoulders. She
+        has celebrity poise answering a predictable invitation. Honey forms a second smiling face on the mirror. Original
+        legend, costume and myth, no actor likeness.
+
+    - id: mr-031
+      label: The Tall Woman
+      image_path: projects/process/monster-recast/mr-031-tall-woman.webp
+      prompt: >
+        Floor-level funeral-home corridor view. An unnaturally tall older woman mortician walks toward the viewer,
+        extremely tall, narrow but imposing, mature severe face, structured black suit, immense shoulders and very long
+        hands. Original polished silver spheres hover at different depths like unruly pets. Doorways are too small for her;
+        one sphere reflects normal height while every other reflection stretches her farther. Mortuary stillness, age and authority.
+
+    - id: mr-032
+      label: The Shape at Home
+      image_path: projects/process/monster-recast/mr-032-shape-at-home.webp
+      prompt: >
+        Long-lens suburban backyard view through moving white laundry sheets. A middle-aged woman killer with an
+        average-to-broad credible body stands motionless in practical work clothes and an original blank mask. A knife-like
+        tool is glimpsed through fabric. One sheet has cheerful seasonal pumpkins, resembling a cozy home-decor ad until
+        each movement reveals a different part of her although she never moves. Warm kitchen behind, cold evening yard,
+        no copied mask or jumpsuit.
+
+    - id: mr-033
+      label: The Hallway Boys
+      image_path: projects/process/monster-recast/mr-033-hallway-boys.webp
+      prompt: >
+        Perfectly symmetrical haunted-hotel corridor. Two eerily polite young boys hold hands beneath a vanishing-point
+        chandelier, one stocky and one slight, coordinated pageboy suits but not identical. Child characters, no sexualization.
+        Carpet geometry becomes arrows pointing toward them, elevator glow burns in the distance and shadows imply unseen
+        adults. One boy smiles while only the other boy's shadow smiles. Terrifying junior hotel managers, original hotel and faces.
+
+    - id: mr-034
+      label: Mother of the Patch
+      image_path: projects/process/monster-recast/mr-034-mother-patch.webp
+      prompt: >
+        Ground-level view from inside a moonlit pumpkin patch. A towering female harvest vengeance monster rises behind a
+        grieving adult summoner: skeletal but powerfully maternal architecture, long arms, strong haunches, rootlike spine,
+        elongated claws, riblike vines and a vast vine bonnet like a severe farm widow. Pumpkins open like eyes. Vines form
+        a cradle beneath one claw and a gallows beneath the other. No human glamour; femininity through presence and maternal vengeance.
