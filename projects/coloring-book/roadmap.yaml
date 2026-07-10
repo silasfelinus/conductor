@@ -270,12 +270,23 @@ tasks:
   - id: t-017
     milestone: m2
     title: 'kind_robots: migrate /mural onto the shared coloring engine (steps 4-8)'
-    status: ready
-    owner: null
+    status: done
+    owner: reviewer
     passes: 0
     stakes: reversible
-    updated: '2026-07-10T14:30:00Z'
+    updated: '2026-07-10T20:00:00Z'
     note: >
+      DONE 2026-07-10: all steps complete across four small PRs — step 4
+      (#147 geometry to data + fallback), step 5 (#148 ColoringCanvas swap +
+      verified migration shim), steps 6-7 (#149 muralStore deleted, mural
+      canonical in wonder tabs, labCards bridge removed), step 8 (#150
+      export-to-image, SVG builder Node-verified against the real page +
+      strict XML parse; Save-image buttons on /mural and the coloring book).
+      The engine-spec migration section is fully executed; /mural runs
+      entirely on the shared engine with export, undo, and per-page
+      persistence. Silas's deploy checklist for the visual deltas is in the
+      PR #148 body. Also closes mural-design t-007's follow-up items.
+      Progress log:
       PROGRESS 2026-07-10 (cycle 3): STEPS 6+7 DONE (kind_robots PR #149) —
       useMuralStore deleted (module is now just loadMuralPageDefinition with
       inline fallback); mural registered in canonical

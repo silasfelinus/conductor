@@ -259,8 +259,15 @@ tasks:
     owner: null
     passes: 0
     stakes: reversible
-    updated: '2026-07-10T11:00:00Z'
+    updated: '2026-07-10T20:30:00Z'
     note: >
+      PROGRESS 2026-07-10: PART 1 DONE (kind_robots PR #151) — manaGate.commit
+      now routes through applyMana: atomic debit + ManaTransaction ledger row
+      (reason-mapped, refId + cost carried), also closing the check-then-spend
+      race. The /api/mana statement endpoint now shows generation debits.
+      REMAINING (this task stays ready): part 2 test-mode Stripe webhook
+      crediting PURCHASE rows; part 3 make credit-purchase.vue drive the real
+      test-mode flow. Live Stripe objects stay hard-gated. Original spec:
       Found by the coloring-book economy audit (projects/coloring-book/docs/
       economy-spec.md, 2026-07-10): the mana economy is fully wired on the SPEND
       side (User.mana/manaCap, daily refill, manaGate in 13 endpoints) but the
