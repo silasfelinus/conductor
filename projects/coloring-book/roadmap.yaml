@@ -6,25 +6,27 @@ goal: >
   pages feeding print-on-demand physical books through the digital storefront.
 waypoints:
   - Open a coloring page and fill sections with your palette.
-  - Browse the launch sets — Kind Robots and Spooktacular Monster Drag Party.
+  - Browse the launch sets — Kind Robots and Monster Recast.
   - Generate a page of your own from a prompt or an image.
   - Save and export your colored creations.
-  - Find the printed books in the gift shop.
+  - Meet the Monster Recast cast as Kind Robots Characters.
+  - Find the digital and printed books in the gift shop.
 notes_from_silas: >
   New project 2026-07-10, formalizing ideas that started under other names: the
   mural-design WonderLab coloring page is the tech seed, and this relates to
   digital-storefront (and the archived Humboldt Impropriety Society coloring
-  book/calendar inspiration — NOT revived; launch sets are the two named below).
-  I want a front-end coloring book app of AI-generated coloring pages. Normal
-  coloring-book-app uses, PLUS leveraging AI so users can use the kind robots
-  kontext and/or a coloring book lora to generate their own pages. Coloring book
-  sets and tokens for generator use beyond a free tier will have to be included.
-  Art assets generated in the background are authorized — multiple coloring book
-  sets and whatever the app/front end needs. This deserves a tab in the art channel.
-  First two digital coloring books: "Kind Robots" and "Spooktacular Monster Drag
-  Party". Feel free to use kind robots art assets to generate coloring pages.
-  Whatever pages we create should be part of the digital storefront project —
-  including a print-on-demand service selling physical coloring books.
+  book/calendar inspiration — NOT revived). I want a front-end coloring book app
+  of AI-generated coloring pages, plus Kontext and/or a coloring-book LoRA so users
+  can generate their own. Coloring book sets and tokens beyond a free tier must use
+  the existing KR economy. Art generation for sets and app assets is authorized.
+  The first two digital books are Kind Robots and Monster Recast (slug:
+  monster-recast), which replaces the earlier generic monster-drag plan. Monster
+  Recast is an original gallery of gender-swapped and drag-reimagined Hollywood
+  monster archetypes. First lock original names, bios, designs, varied concept-art
+  prompts, and Kind Robots Character seed data; then generate concept art, select
+  the strongest original designs, create Character entries, and convert the winners
+  into a 28-page physical/digital coloring book. Once the package is complete, pause
+  outward publishing and POD work until the coloring app and storefront are ready.
 milestones:
   - id: m1
     title: Design brief and specs (engine + generation pipeline)
@@ -39,9 +41,9 @@ milestones:
     weight: 20
     status: not-started
   - id: m4
-    title: Launch sets — Kind Robots + Spooktacular Monster Drag Party
+    title: Launch sets — Kind Robots + Monster Recast
     weight: 20
-    status: not-started
+    status: in-progress
   - id: m5
     title: Economy — free tier, tokens, purchasable sets
     weight: 10
@@ -60,9 +62,10 @@ tasks:
     stakes: reversible
     updated: '2026-07-10T00:00:00Z'
     note: >
-      DESIGN-BRIEF.md written 2026-07-10 from Silas's session direction: product shape,
-      mural-engine reuse, generation pipeline options, launch sets, economy, storefront
-      /POD bridge, HIS-stays-archived boundary, all-ages content rating for v1.
+      DESIGN-BRIEF.md written 2026-07-10 from Silas's session direction and updated
+      for Monster Recast: product shape, mural-engine reuse, generation pipeline,
+      launch sets, originality guardrails, economy, storefront/POD bridge, and
+      all-ages content rating.
   - id: t-002
     milestone: m1
     title: Confirm the coloring book brief matches Silas's intent
@@ -70,15 +73,14 @@ tasks:
     owner: null
     passes: 0
     stakes: reversible
-    updated: '2026-07-10T00:00:00Z'
+    updated: '2026-07-10T05:16:50Z'
     note: >
       FOR SILAS: soft checkpoint — nothing is blocked on this; development proceeds in
-      parallel. Read projects/coloring-book/DESIGN-BRIEF.md (2 pages). It contains: the
-      app shape (coloring surface from the mural engine, book library, AI page
-      generator with free tier + tokens), the two launch sets you named, and the
-      storefront/POD bridge — with Humboldt Impropriety Society kept as archived
-      inspiration, not built. TO APPROVE: set approved_by_human: true and status: done,
-      or leave a correction note here (especially if you DO want an HIS set queued).
+      parallel. Read projects/coloring-book/DESIGN-BRIEF.md. It now contains the app
+      shape, Kind Robots and Monster Recast launch sets, Monster Recast's 28-page plan,
+      Kind Robots Character stage, originality rules, and storefront/POD bridge.
+      TO APPROVE: set approved_by_human: true and status: done, or leave a correction
+      note here. This does not approve publishing, POD accounts, listings, or spend.
   - id: t-003
     milestone: m1
     title: Spec the shared coloring engine (generalize the mural color studio)
@@ -127,7 +129,7 @@ tasks:
       rather than duplicating it), save/export. Register a coloring-book tab in the art
       channel via the canonical dashboardConfigs.art tabs registry in
       stores/helpers/dashboardHelper.ts (no temporary bridges), with a tab image at the
-      dashboard-tabs path convention. Ship with whatever pages exist from t-006/t-007
+      dashboard-tabs path convention. Ship with whatever pages exist from t-006/t-015
       (even 2-3 pages is a valid first library).
   - id: t-006
     milestone: m4
@@ -147,18 +149,21 @@ tasks:
       generation — no human gate on the generation itself.
   - id: t-007
     milestone: m4
-    title: Generate the "Spooktacular Monster Drag Party" coloring book set v1
+    title: Generate Monster Recast concept-art candidates
     status: ready
     owner: null
     passes: 0
     stakes: reversible
-    updated: '2026-07-10T00:00:00Z'
-    depends_on: t-004
+    updated: '2026-07-10T05:16:50Z'
+    depends_on: t-012
     note: >
-      Same pipeline as t-006, 10-16 pages, generated from prompts: glamorous,
-      celebratory monster drag performers — vampires, werewolves, swamp creatures,
-      ghosts — in gowns, wigs, and boas on stage and backstage. All-ages, joyful,
-      bold clean outlines suited to coloring. Cover + manifest + metadata as t-006.
+      Use sets/monster-recast/characters.yaml and pages.yaml. Generate at least three
+      materially different full-color concept candidates for each of the 24 cast members,
+      in manageable batches, preserving prompt/model/source/job metadata. Use the varied
+      historical media directions in each artPrompt but prioritize strong silhouettes and
+      original designs over literal style matching. No coloring conversion yet. Generated
+      art is pre-approved, internal, reversible, and must not copy franchise characters,
+      masks, costumes, actors, posters, or signature scenes.
   - id: t-008
     milestone: m5
     title: Spec the free tier, tokens, and purchasable set economy
@@ -221,14 +226,81 @@ tasks:
   - id: t-012
     milestone: m4
     title: Define Monster Recast v1 cast, bios, and concept-art prompts
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
     updated: '2026-07-10T05:16:50Z'
     note: >
-      Replace the earlier generic monster-drag launch set with Monster Recast
-      (slug: monster-recast): an original, copyright-conscious gallery of gender-swapped
-      and drag-reimagined cinema-monster archetypes. Produce the v1 cast bible,
-      Kind Robots Character seed data, varied concept-art prompts, and a physical/digital
-      page plan before any art generation begins.
+      Produced sets/monster-recast/README.md, characters.yaml, and pages.yaml. The package
+      defines the two-word title/slug Monster Recast, 24 original cast members with bios,
+      copyright-distance rules, varied full-color art prompts, Kind Robots Character seed
+      fields, a full-color cover prompt, and a 28-page interior plan (24 solos, 2 duos,
+      1 trio, 1 ensemble). Updated DESIGN-BRIEF.md and staged generation, selection,
+      Character creation, coloring conversion, and final packaging as separate tasks.
+  - id: t-013
+    milestone: m4
+    title: Select and finalize the Monster Recast character designs
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-10T05:16:50Z'
+    depends_on: t-007
+    note: >
+      Review the t-007 candidates, choose one design per character, and perform focused
+      revision passes where a silhouette is weak, details are uncolorable, or copyright
+      distance is insufficient. Record selected asset, final prompt, model/job metadata,
+      rejected alternatives, and a short originality check in the set manifest. Selection
+      is internal and reversible; do not publish.
+  - id: t-014
+    milestone: m4
+    title: 'kind_robots: create the Monster Recast Character collection'
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-10T05:16:50Z'
+    depends_on: t-013
+    note: >
+      Cross-repo task (kind_robots). Verify the current Character API/schema, then create
+      one private Character entry for each selected cast member using characters.yaml as
+      seed data and the approved art as imagePath/artImage. Preserve name, slug, honorific,
+      gender, presentation, role, title, species, class, genre, alignment, backstory, drive,
+      quirks, personality, artPrompt, and designer where supported. Do not use isActive as
+      deletion semantics. Keep isPublic false until an outward release is explicitly approved.
+  - id: t-015
+    milestone: m4
+    title: Convert selected Monster Recast art into coloring pages
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-10T05:16:50Z'
+    depends_on:
+      - t-004
+      - t-013
+    note: >
+      Use the t-004 pipeline and the shared conversion prompt in pages.yaml to produce the
+      28 interior pages: 24 solos, 2 duos, 1 trio, and 1 full ensemble. Generate the separate
+      full-color cover source as well. Prioritize bold clean contours, closed regions, white
+      backgrounds, readable facial identity, 8.5x11 proportions, 0.375-inch safe margins,
+      and no gray/shading. Preserve print-ready originals and all generation metadata.
+  - id: t-016
+    milestone: m6
+    title: Assemble the Monster Recast digital and print-ready package
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-10T05:16:50Z'
+    depends_on:
+      - t-009
+      - t-014
+      - t-015
+    note: >
+      Assemble the final set manifest, digital page bundle, interior PDF, cover files,
+      credits, source/prompt metadata, and Character links. Verify page order, one-sided
+      print layout, resolution, margins, and set completeness. This finishes the content
+      package only. Do not create POD accounts, publish listings, deploy storefront changes,
+      spend money, or make Characters public; those remain hard-gated in their owning projects.
