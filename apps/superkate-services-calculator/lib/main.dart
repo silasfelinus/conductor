@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'data/app_lock_service.dart';
+import 'data/csv_export_service.dart';
 import 'data/file_app_lock_service.dart';
 import 'data/file_onboarding_service.dart';
 import 'data/in_memory_persistence_service.dart';
@@ -281,6 +282,7 @@ class SuperkateHomePage extends StatefulWidget {
     this.service,
     this.appLockService,
     this.onAppLockChanged,
+    this.exportService,
     this.launchReceiptEmail,
     this.selectedPalette = SuperkatePalettes.rainbowConnection,
     this.selectedBackground = SuperkateBackgroundPattern.circles,
@@ -291,6 +293,7 @@ class SuperkateHomePage extends StatefulWidget {
   final PersistenceService? service;
   final AppLockService? appLockService;
   final VoidCallback? onAppLockChanged;
+  final CsvExportService? exportService;
   final ReceiptEmailLauncher? launchReceiptEmail;
   final SuperkatePalette selectedPalette;
   final SuperkateBackgroundPattern selectedBackground;
@@ -307,6 +310,73 @@ class _SuperkateHomePageState extends State<SuperkateHomePage> {
   int _historyRefreshToken = 0;
 
   void _refreshHistory() => setState(() => _historyRefreshToken++);
+
+  Future<void> _exportCsv() async {
+    final exportService = widget.exportService ?? FileCsvExportService();
+    final palette = widget.selectedPalette;
+
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (context) => SuperkateTheme(
+        palette: palette,
+        child: AlertDialog(
+          backgroundColor: palette.cardStrong,
+          title: Text('Export your books?',
+              style: TextStyle(color: palette.soft)),
+          content: Text(
+            'Saves two CSV files — customers and appointments — to this '
+            'device so you can open them in any spreadsheet. Nothing is '
+            'uploaded or sent anywhere.',
+            style: TextStyle(color: palette.muted),
+          ),
+          actions: [
+            TextButton(
+              key: const ValueKey('cancel-export-button'),
+              onPressed: () => Navigator.of(context).pop(false),
+              child: const Text('Not now'),
+            ),
+            FilledButton(
+              key: const ValueKey('confirm-export-button'),
+              onPressed: () => Navigator.of(context).pop(true),
+              child: const Text('Export CSV'),
+            ),
+          ],
+        ),
+      ),
+    );
+    if (confirmed != true || !mounted) return;
+
+    try {
+      final customers = await _service.listCustomers();
+      final appointments = await _service.listAppointments();
+      final result = await exportService.exportAll(
+        customers: customers,
+        appointments: appointments,
+      );
+      if (!mounted) return;
+      ScaffoldMessenger.of(context)
+        ..clearSnackBars()
+        ..showSnackBar(
+          SnackBar(
+            duration: const Duration(seconds: 8),
+            content: Text(
+              'Exported ${customers.length} customers and '
+              '${appointments.length} appointments to '
+              '${result.customersPath} and its appointments twin.',
+            ),
+          ),
+        );
+    } catch (_) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context)
+        ..clearSnackBars()
+        ..showSnackBar(
+          const SnackBar(
+            content: Text('The export could not be saved. Try again.'),
+          ),
+        );
+    }
+  }
 
   void _openAppLockSettings() {
     final lockService = widget.appLockService;
@@ -374,6 +444,12 @@ class _SuperkateHomePageState extends State<SuperkateHomePage> {
                 tooltip: 'Manage customers',
                 onPressed: _openCustomerProfiles,
                 icon: const Icon(Icons.people_alt_outlined),
+              ),
+              IconButton(
+                key: const ValueKey('export-csv-button'),
+                tooltip: 'Export CSV',
+                onPressed: _exportCsv,
+                icon: const Icon(Icons.ios_share_outlined),
               ),
               if (widget.appLockService != null)
                 IconButton(
