@@ -1,0 +1,220 @@
+project: coloring-book
+kind: software
+goal: >
+  A kind_robots coloring book app: color AI-generated pages like any coloring book,
+  browse themed sets, and generate new pages with the Kontext network — with the same
+  pages feeding print-on-demand physical books through the digital storefront.
+waypoints:
+  - Open a coloring page and fill sections with your palette.
+  - Browse the launch sets — Kind Robots and Spooktacular Monster Drag Party.
+  - Generate a page of your own from a prompt or an image.
+  - Save and export your colored creations.
+  - Find the printed books in the gift shop.
+notes_from_silas: >
+  New project 2026-07-10, formalizing ideas that started under other names: the
+  mural-design WonderLab coloring page is the tech seed, and this relates to
+  digital-storefront (and the archived Humboldt Impropriety Society coloring
+  book/calendar inspiration — NOT revived; launch sets are the two named below).
+  I want a front-end coloring book app of AI-generated coloring pages. Normal
+  coloring-book-app uses, PLUS leveraging AI so users can use the kind robots
+  kontext and/or a coloring book lora to generate their own pages. Coloring book
+  sets and tokens for generator use beyond a free tier will have to be included.
+  Art assets generated in the background are authorized — multiple coloring book
+  sets and whatever the app/front end needs. This deserves a tab in the art channel.
+  First two digital coloring books: "Kind Robots" and "Spooktacular Monster Drag
+  Party". Feel free to use kind robots art assets to generate coloring pages.
+  Whatever pages we create should be part of the digital storefront project —
+  including a print-on-demand service selling physical coloring books.
+milestones:
+  - id: m1
+    title: Design brief and specs (engine + generation pipeline)
+    weight: 15
+    status: in-progress
+  - id: m2
+    title: Coloring engine and app surface in kind_robots
+    weight: 25
+    status: not-started
+  - id: m3
+    title: Page generation pipeline (Kontext / coloring LoRA)
+    weight: 20
+    status: not-started
+  - id: m4
+    title: Launch sets — Kind Robots + Spooktacular Monster Drag Party
+    weight: 20
+    status: not-started
+  - id: m5
+    title: Economy — free tier, tokens, purchasable sets
+    weight: 10
+    status: not-started
+  - id: m6
+    title: Storefront + print-on-demand bridge
+    weight: 10
+    status: not-started
+tasks:
+  - id: t-001
+    milestone: m1
+    title: Write the coloring book design brief
+    status: done
+    owner: reviewer
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-10T00:00:00Z'
+    note: >
+      DESIGN-BRIEF.md written 2026-07-10 from Silas's session direction: product shape,
+      mural-engine reuse, generation pipeline options, launch sets, economy, storefront
+      /POD bridge, HIS-stays-archived boundary, all-ages content rating for v1.
+  - id: t-002
+    milestone: m1
+    title: Confirm the coloring book brief matches Silas's intent
+    status: needs-human
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-10T00:00:00Z'
+    note: >
+      FOR SILAS: soft checkpoint — nothing is blocked on this; development proceeds in
+      parallel. Read projects/coloring-book/DESIGN-BRIEF.md (2 pages). It contains: the
+      app shape (coloring surface from the mural engine, book library, AI page
+      generator with free tier + tokens), the two launch sets you named, and the
+      storefront/POD bridge — with Humboldt Impropriety Society kept as archived
+      inspiration, not built. TO APPROVE: set approved_by_human: true and status: done,
+      or leave a correction note here (especially if you DO want an HIS set queued).
+  - id: t-003
+    milestone: m1
+    title: Spec the shared coloring engine (generalize the mural color studio)
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-10T00:00:00Z'
+    note: >
+      Cross-repo analysis task. Study the shipped kind_robots /mural color studio
+      (PR #135: Pinia/localStorage store, clickable SVG sections, group fills, swatch
+      management) and spec how it generalizes into a reusable coloring-page component
+      serving both mural-design and this app: input formats (SVG regions vs raster
+      flood fill), page/set data model, save-progress model, export. Decide the v1
+      region-fill approach in concert with t-004 (bias: cheapest thing that ships).
+      Output: docs/coloring-engine-spec.md. Coordinate, don't fork: mural keeps
+      working; shared engine extraction becomes follow-up kind_robots tasks.
+  - id: t-004
+    milestone: m3
+    title: Spec and prototype the coloring-page generation pipeline
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-10T00:00:00Z'
+    note: >
+      Survey publicly available coloring-book/line-art LoRAs for FLUX/Kontext (license,
+      trigger, source) and test Kontext prompt-only conversion ("convert to coloring
+      book page: clean black outlines, white regions, no shading") using the generation
+      backend (pre-approved). Prototype the full path: source image (KR art asset) →
+      line-art page → fillable page per the t-003 approach → print-ready page
+      (8.5x11-proportioned, clean margins). Keep test generations with prompt/model/
+      source metadata. Output: docs/generation-pipeline.md + a recommended per-page
+      generation config.
+  - id: t-005
+    milestone: m2
+    title: 'kind_robots: build the coloring book app surface + art channel tab'
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-10T00:00:00Z'
+    note: >
+      Cross-repo task (kind_robots). Build the coloring book app page: library view
+      (sets → pages), coloring surface (per t-003 spec — reuse/extract the mural engine
+      rather than duplicating it), save/export. Register a coloring-book tab in the art
+      channel via the canonical dashboardConfigs.art tabs registry in
+      stores/helpers/dashboardHelper.ts (no temporary bridges), with a tab image at the
+      dashboard-tabs path convention. Ship with whatever pages exist from t-006/t-007
+      (even 2-3 pages is a valid first library).
+  - id: t-006
+    milestone: m4
+    title: Generate the "Kind Robots" coloring book set v1
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-10T00:00:00Z'
+    depends_on: t-004
+    note: >
+      Using the t-004 pipeline: produce a 10-16 page "Kind Robots" set from existing
+      kind_robots art assets (bot avatars, project heroes, gallery picks — Silas
+      explicitly authorized reuse). Include a cover, per-page metadata (source image,
+      prompt, model), and a set manifest. Commit pages through the image intake
+      pipeline with print-ready originals preserved. Pre-approved background art
+      generation — no human gate on the generation itself.
+  - id: t-007
+    milestone: m4
+    title: Generate the "Spooktacular Monster Drag Party" coloring book set v1
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-10T00:00:00Z'
+    depends_on: t-004
+    note: >
+      Same pipeline as t-006, 10-16 pages, generated from prompts: glamorous,
+      celebratory monster drag performers — vampires, werewolves, swamp creatures,
+      ghosts — in gowns, wigs, and boas on stage and backstage. All-ages, joyful,
+      bold clean outlines suited to coloring. Cover + manifest + metadata as t-006.
+  - id: t-008
+    milestone: m5
+    title: Spec the free tier, tokens, and purchasable set economy
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-10T00:00:00Z'
+    note: >
+      Define: free-tier generation allowance, token cost per generated page, how
+      purchased sets unlock, and how this aligns with the existing KR mana/token
+      economy (no second economy — same rule as sketchy t-004; compare notes with that
+      spec). Purchasable sets/tokens become storefront catalog candidates — the spec
+      is reversible; creating live Stripe products stays hard-gated in
+      digital-storefront as always. Output: docs/economy-spec.md.
+  - id: t-009
+    milestone: m6
+    title: Spec the print-on-demand physical coloring book path
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-10T00:00:00Z'
+    note: >
+      With digital-storefront (its m4 owns the POD provider): spec how a finished set
+      becomes a sellable physical book — interior PDF assembly from print-ready pages,
+      cover layout, provider candidates (Lulu, Amazon KDP, Printful et al. from
+      research/stores.md), cost/price estimates, and what remains hard-gated (account
+      creation, listings, spend). Output: docs/pod-coloring-books.md, cross-linked from
+      the digital-storefront roadmap task added 2026-07-10. No accounts, no listings,
+      no spend.
+  - id: t-010
+    milestone: m1
+    title: Generate coloring-book project art (icon, card, hero)
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-10T00:00:00Z'
+    note: >
+      Icon/card/hero prompts queued in projects/art-prompts.yaml (added 2026-07-10).
+      Generate and commit via the auto art pipeline (pre-approved). Remove ART-PROMPTS.md
+      entries once files land in projects/images/.
+  - id: t-011
+    milestone: m4
+    title: Coloring book continuous set-growth pass
+    status: ready
+    recurring: true
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-10T00:00:00Z'
+    depends_on: t-006
+    note: >
+      Standing recurring task (re-arms to ready after every completion). Each cycle
+      pick ONE: (a) add pages to an existing set or start a new all-ages themed set,
+      (b) style/polish pass on the coloring app surface, (c) roadmap upgrade, (d)
+      improve pipeline quality (cleaner lines, better region separation). Note which
+      option ran in the PR. Never reaches done; doesn't count toward milestones.

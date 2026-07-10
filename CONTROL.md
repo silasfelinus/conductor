@@ -17,10 +17,11 @@ reversible until the first clean cycle is done. Nothing publishes, deploys, or s
 money without my explicit approval (set `approved_by_human: true` on the gated task).
 
 **Priority order this week:** superkate-services-calculator → challenge-center →
-humboldt-scoop → humboldt-scoop-cms → digital-storefront → packmaker →
-mermaids-of-venice → kind-robots → global-ui.
-(Mirror changes into projects/priority.yaml. Updated 2026-07-05: digital-storefront
-reactivated, packmaker created, mermaids-of-venice reactivated, approval-portal retired.)
+ai-art-academy → coloring-book → humboldt-scoop → humboldt-scoop-cms →
+digital-storefront → packmaker → mermaids-of-venice → kind-robots → global-ui.
+(Mirror changes into projects/priority.yaml. Updated 2026-07-10: ai-art-academy and
+coloring-book created per Silas's session direction — ai-art-academy is the autonomous
+initiative test run and should get Worker attention early while it's being proven.)
 
 **Standing rules for all agents:** Respect each project's `kind`. Honor `depends_on` gates.
 Never expand product-types.yaml — pitch it. When unsure, do less and escalate to
@@ -48,6 +49,10 @@ Silas explicitly approves that concrete action too.
   definition of done and `waypoints` as the lightweight user-facing step list.
   Conductor roadmap.yaml remains the authoritative agent task queue; Dream waypoints
   are the UI/voice layer and should not replace roadmap tasks.
+- Autonomous project initiative (2026-07-10): roadmaps may declare `autonomous: true`.
+  Those projects keep running without my input under the "never idle" rule in AGENTS.md
+  (style pass / roadmap upgrade / more inspirations / content expansion when nothing is
+  ready). ai-art-academy is the test run. Escalate only actual human gates.
 
 ---
 
@@ -160,6 +165,41 @@ Silas; he may rename).
   coordinate with kind-robots sharing/ACL design (kind-robots t-008) rather than
   inventing a parallel permission system.
 - Slug parity: create the matching PROJECT Dream via the sync script, slug `packmaker`.
+
+### ai-art-academy  (software, autonomous: true)
+**Direction (2026-07-10, new project):** Teach the history of art — movements, styles,
+and creators — using ONLY public-domain art and dead artists; we don't rip off living
+creators. Users pick a starter image or upload their own and remix it in a learned
+style via the kontext network. kind_robots `components/art/art-styler.vue` is the
+groundwork and becomes this project's front end at much bigger scope; the plain
+art-styling tool stays available inside the Academy. One task hunts publicly available
+LoRAs; agents may recommend a different engine if kontext loses on LoRA availability
+vs model knowledge (current recommendation: Kontext-first — see DESIGN-BRIEF.md).
+**This is the test run of the autonomous project initiative.** Claude has full reign
+over this project and art-styler.vue. Art generation on our backend is fully supported
+and pre-approved. Surface only actual human gates; keep running without my input
+(never-idle rule). I'll check in occasionally to clarify.
+**Notes:**
+- Adjacent to sketchy (drawing instruction); shared KR token economy, separate projects.
+- Living-artist/brand styles (Disney, Gorillaz, DB4RZ…) may stay in the free-play
+  Style Lab but are excluded from the taught curriculum.
+
+### coloring-book  (software)
+**Direction (2026-07-10, new project):** Front-end coloring book app of AI-generated
+coloring pages in kind_robots. Normal coloring-book uses plus AI: users generate their
+own pages via kontext and/or a coloring-book LoRA. Include coloring book sets and
+tokens for generator use beyond a free tier (aligned with the KR economy). Deserves a
+tab in the art channel. Background art-asset generation is authorized: multiple
+coloring book sets and whatever the app/front end needs. First two digital books:
+**"Kind Robots"** (reuse kind_robots art assets as sources) and **"Spooktacular
+Monster Drag Party"**. Every page we create is digital-storefront inventory — set up
+toward a print-on-demand service selling physical coloring books (POD accounts,
+listings, and spend remain hard-gated).
+**Notes:**
+- Tech seed: the mural-design WonderLab color studio (kind_robots /mural, PR #135) —
+  generalize/share the engine, don't fork it; mural-design keeps working.
+- Humboldt Impropriety Society coloring book/calendar stay archived inspiration; no
+  HIS set unless I explicitly re-approve. Launch sets are all-ages.
 
 ### humboldt-impropriety-calendar  (brainstorm — archived)
 **Direction:** Not approved (2026-07-02). Retired in project-overrides.yaml; kept in

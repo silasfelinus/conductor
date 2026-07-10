@@ -1,0 +1,219 @@
+project: ai-art-academy
+kind: software
+autonomous: true
+goal: >
+  Teach people the history of art — movements, styles, and public-domain creators —
+  and let them remix a starter image or their own upload in any style they learn
+  about, powered by the Kind Robots Kontext network.
+waypoints:
+  - Learn how the Academy works and what it will (and won't) teach.
+  - Browse the art-history timeline and explore a style page.
+  - Pick a starter image or upload your own.
+  - Remix it in a historical style and save the result.
+  - Keep exploring — every style is a lesson with a payoff.
+notes_from_silas: >
+  New project 2026-07-10. Adjacent to sketchy (which teaches drawing): AI Art Academy
+  teaches the history of art, art styles, and creators. ONLY publicly available art and
+  dead artists — we don't rip off real creators. Users choose a starter image or upload
+  their own, then remix in a learned style via our kontext network. The groundwork is
+  kind_robots components/art/art-styler.vue — that becomes the new front end for this
+  project with a much bigger scope (plain art-styling stays as an option inside the
+  Academy). One task must track down publicly available LoRAs that communicate styles;
+  if kontext isn't best due to LoRA availability versus model knowledge, agents may
+  recommend another engine (see DESIGN-BRIEF.md: recommendation is Kontext-first,
+  prompt-mode for famous dead artists, LoRAs where evaluation shows they win).
+  This is the TEST RUN of the autonomous project initiative: Claude has full reign over
+  this project and art-styler.vue. Art generation via our backend is fully supported and
+  pre-approved. Escalate only actual human gates. Keep the project running even without
+  my input — when there's nothing to do, do a style pass, upgrade the roadmap, or
+  generate more art inspirations (never-idle rule, AGENTS.md).
+milestones:
+  - id: m1
+    title: Design brief, policy, and model strategy
+    weight: 15
+    status: in-progress
+  - id: m2
+    title: Style registry and LoRA/knowledge evaluation
+    weight: 20
+    status: not-started
+  - id: m3
+    title: Curriculum content (movements, styles, artists)
+    weight: 20
+    status: not-started
+  - id: m4
+    title: Academy front end in kind_robots (art-styler evolution)
+    weight: 30
+    status: not-started
+  - id: m5
+    title: Project art and inspiration assets
+    weight: 5
+    status: not-started
+  - id: m6
+    title: Continuous improvement loop
+    weight: 10
+    status: in-progress
+tasks:
+  - id: t-001
+    milestone: m1
+    title: Write the AI Art Academy design brief and model strategy
+    status: done
+    owner: reviewer
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-10T00:00:00Z'
+    note: >
+      DESIGN-BRIEF.md written 2026-07-10 from Silas's session direction: scope,
+      public-domain-only ethical boundary, Kontext-first model strategy (prompt-mode
+      for canonical dead-artist styles, curated LoRAs where evaluation wins,
+      SDXL+IP-Adapter documented as unbuilt fallback), product shape, autonomy contract.
+  - id: t-002
+    milestone: m1
+    title: Confirm the Academy scope and brief match Silas's intent
+    status: needs-human
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-10T00:00:00Z'
+    note: >
+      FOR SILAS: soft checkpoint per the new-project scope rule — NOTHING is blocked on
+      this; development proceeds in parallel. Read projects/ai-art-academy/DESIGN-BRIEF.md
+      (2 pages). It contains: the public-domain/dead-artists-only boundary, the
+      Kontext-first answer to your "kontext vs another engine" question, and the plan to
+      grow art-styler.vue into the Academy front end with Style Lab kept inside it.
+      TO APPROVE: set approved_by_human: true and status: done, or leave a correction
+      note here. Nothing unblocks — this only steers course correction.
+  - id: t-003
+    milestone: m2
+    title: Hunt publicly available style LoRAs and build the style-LoRA registry
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-10T00:00:00Z'
+    note: >
+      Survey openly licensed, publicly downloadable style LoRAs compatible with
+      FLUX/Kontext (Civitai open-license filters, Hugging Face) that communicate
+      historical movements or dead-artist styles: impressionism, ukiyo-e, art nouveau,
+      baroque chiaroscuro, cubism, woodblock, stained glass, illuminated manuscript,
+      etc. Record license, download source, trigger phrase, and suggested weight.
+      Cross-reference the LoRAs already on the art server (resource store + art-styler
+      BUILTIN_STYLES). Output: projects/ai-art-academy/docs/style-lora-registry.md with
+      a machine-readable YAML block per style. Respect the ethical boundary: skip LoRAs
+      named for living artists or active brands. No downloads/spend — registry only;
+      flag any LoRA that would require paid access as a line item for Silas.
+  - id: t-004
+    milestone: m2
+    title: Evaluate prompt-only Kontext vs LoRA per style and record remix configs
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-10T00:00:00Z'
+    depends_on: t-003
+    note: >
+      Using the generation backend (pre-approved), A/B a fixed test image through each
+      candidate Academy style: prompt-only instruction vs LoRA (where available in the
+      registry from t-003). Judge composition preservation and style fidelity. Record a
+      winning remix config per style (mode: prompt|lora|hybrid, prompt template,
+      loraPath/trigger/weight) in docs/style-remix-configs.yaml, keeping the generated
+      comparison images as traceable evidence (prompt/model/seed metadata per the
+      generated-art rule). If any must-have style fails on Kontext entirely, document
+      the SDXL+IP-Adapter fallback case in the same file rather than building it.
+  - id: t-005
+    milestone: m3
+    title: Write the art-history curriculum outline (movements, styles, artists)
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-10T00:00:00Z'
+    note: >
+      Draft the v1 curriculum: 10-16 movements spanning the timeline (e.g. Renaissance,
+      Baroque, Ukiyo-e, Romanticism, Impressionism, Post-Impressionism, Art Nouveau,
+      Expressionism, Cubism, Bauhaus, Surrealism-era public domain works...), each with
+      era, key ideas, recognition cues, 2-4 dead public-domain artists with short bios,
+      and 3-6 example works referenced from open-access collections (Met CC0, AIC CC0,
+      NGA, Rijksmuseum, Smithsonian, Wikimedia PD) with source+license per image.
+      Output: docs/curriculum-outline.md structured so it can convert directly into
+      front-end seed data. Every style entry must map to a remix config (t-004) or
+      explicitly note "lesson-only, no remix yet."
+  - id: t-006
+    milestone: m3
+    title: Write the public-domain policy and curate the starter image library plan
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-10T00:00:00Z'
+    note: >
+      PUBLIC-DOMAIN-POLICY.md: the concrete rule set for what art and artists the
+      Academy may include (death-year thresholds, US public-domain cutoffs, open-access
+      license types we accept, how to record provenance). Plus the starter-image plan:
+      a curated set of public-domain works users can remix without uploading, with
+      per-image source/license metadata and download list (hotlink vs local copy
+      decision). Flag any genuinely ambiguous licensing question as a needs-human line
+      item; do not park the task on it.
+  - id: t-007
+    milestone: m4
+    title: 'kind_robots: scaffold the Art Academy surface wrapping art-styler'
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-10T00:00:00Z'
+    note: >
+      Cross-repo task (kind_robots). Create the Academy front end: an academy dashboard
+      channel or /academy page with tabs for Timeline, Styles, Remix Studio, and Style
+      Lab (the existing art-styler.vue mounted as-is for free play). Follow the
+      dashboardConfigs pattern in stores/helpers/dashboardHelper.ts (canonical tab
+      registry — no temporary bridges). Remix Studio reuses art-styler's source-image
+      machinery but drives its style list from the Academy style registry (curriculum
+      seed from t-005 + remix configs from t-004) with a historical-context blurb per
+      style. Claude has standing authority over art-styler.vue refactors for this
+      project (Silas 2026-07-10); keep the component reusable for the plain styler use.
+  - id: t-008
+    milestone: m4
+    title: 'kind_robots: drive Academy style entries from the registry with lesson context'
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-10T00:00:00Z'
+    depends_on: t-007
+    note: >
+      Cross-repo task (kind_robots). Replace the Academy's copy of hardcoded
+      BUILTIN_STYLES with the registry-driven list (mode-aware: prompt-only styles need
+      no loraPath), attach the movement/artist lesson blurb and example-works strip to
+      each style card, and exclude living-artist/brand entries from the Academy list
+      (they remain in Style Lab only, per DESIGN-BRIEF.md ethical boundary).
+  - id: t-009
+    milestone: m5
+    title: Generate project art and Academy inspiration images
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-10T00:00:00Z'
+    note: >
+      Icon/card/hero prompts are queued in projects/art-prompts.yaml (added 2026-07-10).
+      Generate and commit them via the auto art pipeline (pre-approved), then generate
+      3+ Academy inspiration images (e.g. one landmark public-domain work re-imagined
+      across several movements as a teaching strip). Keep prompt/model/source metadata.
+      Remove ART-PROMPTS.md entries once files land in projects/images/.
+  - id: t-010
+    milestone: m6
+    title: Academy continuous improvement pass
+    status: ready
+    recurring: true
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-10T00:00:00Z'
+    note: >
+      Standing never-idle task (re-arms to ready after every completion, per the
+      recurring-task rule). Each cycle pick ONE: (a) front-end style/polish pass on
+      Academy or art-styler surfaces, (b) roadmap upgrade — refine tasks, detail the
+      next milestone, prune stale notes, (c) generate more art inspirations or style
+      preview thumbnails, (d) expand the curriculum with a new movement/artist entry
+      (respecting PUBLIC-DOMAIN-POLICY.md). Note which option ran in the PR. This task
+      never reaches done and does not count toward milestone progress.

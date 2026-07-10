@@ -245,3 +245,23 @@ tasks:
     resolver only sees in-project deps): kind-robots t-008 private-but-shared
     content/ACL design, and packmaker t-003 draft pack contents. This slice is the
     deliberate low-stakes security proving ground for private-but-shared content.
+- id: t-018
+  milestone: m4
+  title: Add digital + POD coloring books from the coloring-book project to the catalog plan
+  status: waiting
+  owner: null
+  passes: 0
+  stakes: reversible
+  updated: '2026-07-10T00:00:00Z'
+  depends_on: t-015
+  note: >
+    New 2026-07-10 per Silas: whatever coloring pages the coloring-book project
+    creates are storefront inventory, digital (set unlocks / PDF downloads) and
+    physical (print-on-demand paper coloring books). ALSO BLOCKED ON (cross-project,
+    note-level dependency — resolver only sees in-project deps): coloring-book t-006
+    and t-007 (the "Kind Robots" and "Spooktacular Monster Drag Party" launch sets)
+    and coloring-book t-009 (the POD path spec, which this task consumes; the POD
+    provider choice from t-015 serves both books and KR-logo swag). Deliverable:
+    extend the catalog plan/SPEC with the two coloring book products — pricing
+    approach, digital vs physical variants, and the exact hard-gated go-live steps
+    (POD account, listings, live Stripe products remain needs-human for Silas).
