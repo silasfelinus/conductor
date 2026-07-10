@@ -170,13 +170,29 @@ pm2 logs kr-relay --lines 20   # expect: "claim got 404/None — waiting" idle l
 Why the 2026-07-10 update matters: Hair Studio (kind_robots `/stylist`)
 enqueues image-to-image Kontext jobs whose payload carries
 `images: [{name, imageData}]`. The updated agent uploads those to ComfyUI's
-input folder before posting the workflow. **A stale agent will claim these
-jobs and fail them** (Comfy errors on the missing LoadImage file, and after
-3 attempts the job lands FAILED) — so restart the relay before anyone tries
-the deployed Hair Studio. Verify end-to-end by running a styling in
+input folder before posting the workflow AND declares
+`supportsInputImages: true` when claiming — kind_robots only hands image
+jobs to agents that declare it, so a stale agent leaves them waiting
+instead of failing them. Verify end-to-end by running a styling in
 `/stylist` and watching `pm2 logs kr-relay` for
 `uploaded input image kr_kontext_queue_...` followed by the save-generated
 upload line.
+
+### Triage: a Hair Studio job enqueues but never completes (2026-07-10 incident)
+
+Observed on the first live test: the job appeared as an ArtJob and sat
+there. The /stylist job tile shows which case you're in:
+
+| Tile says | Meaning | Fix |
+| --- | --- | --- |
+| `queued` (never flips) | No capable agent is claiming. The relay is offline, OR it's running a pre-handshake script (pulled before conductor PR #326 merged) — capable or not, it isn't *declaring* `supportsInputImages`, so kind_robots skips it. | `git pull` (must include #326), `pm2 restart kr-relay`. The stalled job is still PENDING and completes on its own within ~10s of the new agent starting. |
+| `rendering` then `failed` | An agent claimed it and the workflow errored. | `pm2 logs kr-relay` has the ComfyUI error (missing model/custom node, upload failure). The tile's Retry re-enqueues. |
+| `failed` with a mana/auth message | Enqueue-side problem, nothing to do with the relay. | Check the signed-in user's mana balance / session. |
+
+Timeline of the incident: kind_robots #141 (claim guard) merged 08:47,
+conductor #326 (agent declares the capability) merged 08:53 — a relay
+pulled/restarted between the two knows *how* to handle image jobs but never
+*receives* them. One more pull + restart resolves it.
 
 **Future option — local fast path:** the engines, kind_robots, and conductor
 checkouts all live on the same physical drive, so the relay could someday

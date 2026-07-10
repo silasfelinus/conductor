@@ -227,3 +227,30 @@ nothing breaks in the meantime.
 site is safe either way thanks to the claim guard. When home: git pull conductor on the home
 server, pm2 restart kr-relay, then style something in /stylist and watch the logs per the
 runbook. Remaining roadmap after that: t-011/t-012 human gates only.
+
+## 2026-07-10 | Claude (Silas-directed) → system | superkate-hairstyle-ai first live test | pattern
+
+**Subject:** First live styling stalled — job enqueued, never completed. Diagnosed overnight;
+most probable cause is a handshake version gap, not a code defect. Fixes + observability
+shipped (kind_robots PR #145, conductor runbook triage table).
+
+**Detail:**
+- Evidence: "it is adding as an art job" = enqueue path (mana gate, workflow build, ArtJob
+  create) works in production, including the new tables/migration. The job then never left
+  PENDING (or was never observed completing).
+- Probable cause: kind_robots #141 (claim guard requiring supportsInputImages) merged 08:47;
+  conductor #326 (the agent DECLARING that capability) merged 08:53. A relay pulled/restarted
+  between those knows how to upload input images but never receives image jobs — the guard
+  skips it by design. One more conductor pull + pm2 restart resolves it, and the stalled job
+  completes on its own (durable queue doing its job).
+- Shipped while Silas sleeps (kind_robots PR #145): job tiles now show live queue state
+  (queued vs rendering) + a stalled-queue warning after 60s, so this exact triage is readable
+  from the UI; client-side photo downscaling (1280px JPEG) to preempt request-size limits on
+  phone photos; and a CI fix — main's `satisfies Prisma.InputJsonValue` refactor of
+  enqueue.post.ts didn't compile (runtime unaffected; builds don't typecheck).
+- Runbook gained a symptom→cause→fix triage table for this incident class.
+
+**Suggested action:** Silas (morning): (1) home server: git pull conductor + pm2 restart
+kr-relay — watch the stalled job complete; (2) merge kind_robots #145 and this conductor PR;
+(3) rerun a styling and confirm the tile goes queued → rendering → done. If it instead goes
+rendering → failed, the ComfyUI error will be in pm2 logs — paste it to the session.
