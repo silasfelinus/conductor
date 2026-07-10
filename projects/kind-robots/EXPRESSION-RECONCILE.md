@@ -73,3 +73,40 @@ numbers are variants and are ignored for row purposes). `{key}_loop.webp`
 `fetch_todos.py` / `sync_projects_to_dreams.py`), plus a short usage
 section appended to this doc. Optional follow-up once trusted: a CI
 check that runs `--check` after image-distribution pushes.
+
+## Usage (shipped 2026-07-09)
+
+```bash
+# Report drift, write nothing (kind_robots checkout at ../kind_robots):
+python scripts/reconcile_expressions.py
+
+# One owner, CI-style (exit 2 on drift):
+python scripts/reconcile_expressions.py --owner brass-lampkeeper --check
+
+# Repair drift (requires KR_API_TOKEN admin/server key):
+python scripts/reconcile_expressions.py --apply
+
+# Also soft-disable rows whose files are gone:
+python scripts/reconcile_expressions.py --apply --deactivate
+```
+
+Flags: `--type bot|character`, `--owner {slug}`, `--skip-transitions`;
+env `KR_BASE_URL`, `KIND_ROBOTS_ROOT`. Reads are public endpoints
+(`/api/bots`, `/api/characters`, `/api/narrators/{type}/{slug}`); writes
+go through the batch upserts, each batch validated with the endpoint's
+`dryRun: true` before the real call.
+
+Implementation notes (verified against a live folder scan 2026-07-09):
+
+- Owners whose narrator endpoint 404s (inactive/private) get minimal
+  blind upserts (imagePath/videoPath only) — safe because the upsert's
+  update half skips omitted fields, so richer metadata and a deliberate
+  `isActive: false` both survive.
+- Single-digit takes (`anxious_1.webp`) are tolerated; files that don't
+  match the convention at all (`0001surprised.webp`) are reported, never
+  guessed. Folders matching no bot/character slug are reported the same
+  way (the live scan found 60+ expression folders for bots not yet in
+  the database — expected while narrator seeding is ahead of art
+  registration; the script leaves them alone).
+- Loop videos with no matching still are reported and skipped — a row
+  needs a promoted still first.
