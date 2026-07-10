@@ -8,6 +8,8 @@ notes_from_silas: |
 
   Front-end surface rule (Silas, 2026-07-10): most active product, content, game, and creative-tool projects should have a useful page inside Kind Robots, even when their deeper implementation lives elsewhere. Every PROJECT Dream should use its existing liveUrl as the canonical launch pointer. The individual project view must expose that link prominently as an Open Project action or tab. Infrastructure-only projects may be explicitly classified as internal rather than receiving fake placeholder pages.
 
+  Tab placement rule (Silas, 2026-07-10): a user-facing project without a stitched front end should receive a tab in the most appropriate EXISTING Kind Robots channel. Search for an existing tab/route first and never duplicate a working surface. WonderLab (`wonder`) is the fallback when no other channel fits honestly. Creating a new top-level channel remains a human-gated exception, not the default response to a new project. Follow TAB-INTEGRATION.md for placement, implementation, and verification.
+
 milestones:
   - id: m1
     title: "SHAPE — inventory the ecosystem and define shared primitives"
@@ -107,10 +109,14 @@ tasks:
       - t-004
       - t-005
       - t-007
+      - t-008
     note: >
       Turn the confirmed ecosystem gaps into small project-owned implementation tasks.
       Route shared UI work to global-ui or kind-robots and project-specific surfaces to
       their home roadmaps. Do not implement the gaps inside ecosystem-map itself.
+      Missing user-facing surfaces should add a tab to an existing channel according
+      to TAB-INTEGRATION.md; WonderLab is the fallback, and a new channel requires
+      explicit human approval.
 
   - id: t-007
     milestone: m1
@@ -119,14 +125,33 @@ tasks:
     owner: null
     passes: 0
     stakes: reversible
+    depends_on: t-008
     note: >
       Produce FRONTEND-SURFACE-MAP.md covering every active project. Classify each as:
-      (a) a useful Kind Robots page, (b) an external app/site with a Kind Robots bridge
-      page, (c) an internal infrastructure project that does not need a public product
-      page, or (d) missing a surface. Record the intended Kind Robots route and the
-      PROJECT Dream liveUrl value. Most product, content, game, and creative-tool
-      projects should land in category (a) or (b). Confirm that the individual project
-      view exposes liveUrl as a prominent Open Project link or tab. For each missing
-      useful surface, create a scoped follow-up task in the owning project roadmap;
-      avoid empty placeholder pages that provide no interaction, status, gallery,
-      documentation, or launch value.
+      (a) a working tab/page in Kind Robots, (b) an external app/site with a Kind Robots
+      bridge tab, (c) an internal infrastructure project that does not need a public
+      product surface, or (d) missing/incomplete. For every user-facing row record the
+      existing or proposed channel key, tab key, route, PROJECT Dream liveUrl, manager
+      component, tutorial coverage, image coverage, and verification state. Search for
+      already-stitched surfaces first; Superkate/Hair Studio, Conductor, Challenge
+      Center, Mural, Coloring Book, and AI Art Academy are reference examples. When a
+      useful surface is missing, create a scoped follow-up task in the owning project
+      roadmap to add it to the best existing channel under TAB-INTEGRATION.md. Use
+      WonderLab only when no channel fits. Verify the tab renders the intended component
+      rather than merely appearing in navigation or falling back to the channel default.
+
+  - id: t-008
+    milestone: m1
+    title: "Write the project tab integration runbook"
+    status: done
+    owner: worker
+    updated: '2026-07-10T00:00:00Z'
+    passes: 0
+    stakes: reversible
+    note: >
+      Added projects/ecosystem-map/TAB-INTEGRATION.md. It defers exact code templates
+      to kind_robots/sample/new-section.md and conductor projects/kind-robots/SECTIONS.md,
+      while defining Ecosystem's placement policy: reuse existing surfaces, choose the
+      best existing channel, use WonderLab as fallback, and gate new channels. The guide
+      includes working references, the dashboard/tutorial/image/manager/page/liveUrl
+      sequence, completion checks, and the required FRONTEND-SURFACE-MAP.md columns.
