@@ -1,16 +1,68 @@
 import 'package:flutter/material.dart';
 
+import '../data/app_lock_service.dart';
 import 'superkate_style.dart';
 
-class SuperkateOnboardingScreen extends StatelessWidget {
+class SuperkateOnboardingScreen extends StatefulWidget {
   const SuperkateOnboardingScreen({
     super.key,
     required this.onStart,
     this.isWorking = false,
   });
 
-  final Future<void> Function() onStart;
+  /// Called when Superkate starts the local beta. [pin] is non-null when she
+  /// chose to protect the client book with an app lock during onboarding.
+  final Future<void> Function({String? pin}) onStart;
   final bool isWorking;
+
+  @override
+  State<SuperkateOnboardingScreen> createState() =>
+      _SuperkateOnboardingScreenState();
+}
+
+class _SuperkateOnboardingScreenState extends State<SuperkateOnboardingScreen> {
+  final TextEditingController _pinController = TextEditingController();
+  final TextEditingController _repeatPinController = TextEditingController();
+  bool _wantsLock = false;
+  String? _pinError;
+
+  @override
+  void dispose() {
+    _pinController.dispose();
+    _repeatPinController.dispose();
+    super.dispose();
+  }
+
+  Future<void> _start(BuildContext context) async {
+    String? pin;
+    if (_wantsLock) {
+      pin = _pinController.text.trim();
+      if (!isValidAppLockPin(pin)) {
+        setState(() => _pinError = 'PINs are 4-8 digits.');
+        return;
+      }
+      if (pin != _repeatPinController.text.trim()) {
+        setState(() => _pinError = "Those PINs don't match each other.");
+        return;
+      }
+    }
+    setState(() => _pinError = null);
+    try {
+      await widget.onStart(pin: pin);
+    } catch (_) {
+      if (context.mounted) {
+        ScaffoldMessenger.of(context)
+          ..clearSnackBars()
+          ..showSnackBar(
+            const SnackBar(
+              content: Text(
+                'The onramp could not be saved. Try again.',
+              ),
+            ),
+          );
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -106,36 +158,92 @@ class SuperkateOnboardingScreen extends StatelessWidget {
                               title: 'Superkate voice',
                               body: 'Rainbow styling, warm copy, and no store/publish/sending behavior in this beta.',
                             ),
+                            const SizedBox(height: 12),
+                            Container(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 16, vertical: 8),
+                              decoration: BoxDecoration(
+                                color: palette.cardStrong,
+                                borderRadius: BorderRadius.circular(24),
+                                border: Border.all(color: palette.cardBorder),
+                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.stretch,
+                                children: [
+                                  SwitchListTile(
+                                    key: const ValueKey(
+                                        'onboarding-app-lock-switch'),
+                                    contentPadding: EdgeInsets.zero,
+                                    value: _wantsLock,
+                                    onChanged: widget.isWorking
+                                        ? null
+                                        : (next) => setState(
+                                            () => _wantsLock = next),
+                                    title: Text(
+                                      'Keep the client book private',
+                                      style: TextStyle(
+                                        color: palette.soft,
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w900,
+                                      ),
+                                    ),
+                                    subtitle: Text(
+                                      'Ask for a PIN when the app opens. '
+                                      'Optional, and changeable anytime in settings.',
+                                      style: TextStyle(
+                                        color: palette.muted,
+                                        fontSize: 13,
+                                        height: 1.3,
+                                      ),
+                                    ),
+                                  ),
+                                  if (_wantsLock) ...[
+                                    const SizedBox(height: 4),
+                                    TextField(
+                                      key: const ValueKey(
+                                          'onboarding-app-lock-pin'),
+                                      controller: _pinController,
+                                      keyboardType: TextInputType.number,
+                                      obscureText: true,
+                                      maxLength: 8,
+                                      decoration: const InputDecoration(
+                                        labelText: 'Choose a PIN (4-8 digits)',
+                                        counterText: '',
+                                      ),
+                                    ),
+                                    const SizedBox(height: 10),
+                                    TextField(
+                                      key: const ValueKey(
+                                          'onboarding-app-lock-repeat-pin'),
+                                      controller: _repeatPinController,
+                                      keyboardType: TextInputType.number,
+                                      obscureText: true,
+                                      maxLength: 8,
+                                      decoration: InputDecoration(
+                                        labelText: 'Repeat the PIN',
+                                        counterText: '',
+                                        errorText: _pinError,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 8),
+                                  ],
+                                ],
+                              ),
+                            ),
                             const SizedBox(height: 24),
                             FilledButton.icon(
                               key: const ValueKey('start-local-beta-button'),
-                              onPressed: isWorking
+                              onPressed: widget.isWorking
                                   ? null
-                                  : () async {
-                                      try {
-                                        await onStart();
-                                      } catch (_) {
-                                        if (context.mounted) {
-                                          ScaffoldMessenger.of(context)
-                                            ..clearSnackBars()
-                                            ..showSnackBar(
-                                              const SnackBar(
-                                                content: Text(
-                                                  'The onramp could not be saved. Try again.',
-                                                ),
-                                              ),
-                                            );
-                                        }
-                                      }
-                                    },
-                              icon: isWorking
+                                  : () => _start(context),
+                              icon: widget.isWorking
                                   ? const SizedBox.square(
                                       dimension: 18,
                                       child: CircularProgressIndicator(strokeWidth: 2),
                                     )
                                   : const Icon(Icons.rocket_launch),
                               label: Text(
-                                isWorking ? 'Opening your chair...' : 'Start local beta',
+                                widget.isWorking ? 'Opening your chair...' : 'Start local beta',
                               ),
                             ),
                             const SizedBox(height: 10),

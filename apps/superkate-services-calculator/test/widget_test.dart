@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:superkate_services_calculator/data/in_memory_app_lock_service.dart';
 import 'package:superkate_services_calculator/data/in_memory_onboarding_service.dart';
 import 'package:superkate_services_calculator/data/in_memory_persistence_service.dart';
 import 'package:superkate_services_calculator/data/persistence_service.dart';
@@ -48,6 +49,7 @@ void main() {
       SuperkateServicesCalculatorApp(
         service: Future.value(service),
         onboardingService: Future.value(onboarding),
+        appLockService: Future.value(InMemoryAppLockService()),
       ),
     );
     await tester.pumpAndSettle();
@@ -68,6 +70,7 @@ void main() {
       SuperkateServicesCalculatorApp(
         service: Future.value(service),
         onboardingService: Future.value(onboarding),
+        appLockService: Future.value(InMemoryAppLockService()),
       ),
     );
     await tester.pumpAndSettle();
@@ -91,6 +94,7 @@ void main() {
       SuperkateServicesCalculatorApp(
         service: Future.value(service),
         onboardingService: Future.value(onboarding),
+        appLockService: Future.value(InMemoryAppLockService()),
       ),
     );
     await tester.pumpAndSettle();
@@ -304,6 +308,7 @@ void main() {
       SuperkateServicesCalculatorApp(
         service: Future.value(service),
         onboardingService: Future.value(onboarding),
+        appLockService: Future.value(InMemoryAppLockService()),
       ),
     );
     await tester.pumpAndSettle();
