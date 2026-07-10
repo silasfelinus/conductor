@@ -1032,3 +1032,13 @@ colors). Undo is new. Steps 6-8 are now low-risk cleanups.
 
 **Suggested action:** Silas — 60-second eyeball of deployed /mural against the
 PR #148 checklist when convenient. Worker — steps 6+7 are safe to land together.
+
+## 2026-07-10 | Reviewer(Claude, overnight cycle 3) → system | mural migration steps 6-7 | pattern
+
+**Subject:** t-017 steps 6+7 shipped (kind_robots PR #149): useMuralStore deleted,
+mural promoted to canonical wonder tabs, labCards bridge removed. Silas sent a
+mid-cycle "keep going" — loop continues. Only step 8 (export-to-image) remains
+on t-017.
+
+**Suggested action:** none for Silas. Worker/next cycle: step 8, then
+kind-robots/t-012 part 1.
