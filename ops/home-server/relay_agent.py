@@ -95,10 +95,13 @@ def http_json(method, url, body=None, bearer=None, timeout=60):
 
 
 def claim_job():
+    # supportsInputImages: capability handshake — kind_robots only hands out
+    # jobs with payload images (Hair Studio kontext) to agents that declare
+    # support, so a stale agent leaves them waiting instead of failing them.
     status, resp = http_json(
         "POST",
         f"{KR_BASE_URL}/api/art/queue/claim",
-        {"agentId": AGENT_ID},
+        {"agentId": AGENT_ID, "supportsInputImages": True},
         bearer=KR_RELAY_TOKEN,
     )
     if status == 404:
@@ -139,50 +142,58 @@ def run_a1111(payload):
     return resp["images"][0]
 
 
+def decode_image_entry(entry):
+    """Validate one payload images entry and return (name, raw_bytes).
+    imageData may be a raw base64 string or a data URL."""
+    name = (entry or {}).get("name")
+    data = (entry or {}).get("imageData") or ""
+    if not name or not data:
+        raise ValueError('each images entry needs "name" and "imageData"')
+    if data.lstrip().lower().startswith("data:") and "," in data:
+        data = data.split(",", 1)[1]
+    return name, base64.b64decode(data)
+
+
+def build_image_upload_request(name, raw, boundary):
+    """Build (body_bytes, content_type) for ComfyUI's /upload/image endpoint:
+    multipart form with the file as "image", type=input, overwrite=true."""
+    ext = os.path.splitext(name)[1].lstrip(".").lower() or "png"
+    mime = "image/jpeg" if ext in ("jpg", "jpeg") else f"image/{ext}"
+    parts = [
+        (
+            f"--{boundary}\r\n"
+            f'Content-Disposition: form-data; name="image"; filename="{name}"\r\n'
+            f"Content-Type: {mime}\r\n\r\n"
+        ).encode(),
+        raw,
+        (
+            f"\r\n--{boundary}\r\n"
+            'Content-Disposition: form-data; name="type"\r\n\r\ninput\r\n'
+            f"--{boundary}\r\n"
+            'Content-Disposition: form-data; name="overwrite"\r\n\r\ntrue\r\n'
+            f"--{boundary}--\r\n"
+        ).encode(),
+    ]
+    return b"".join(parts), f"multipart/form-data; boundary={boundary}"
+
+
 def upload_comfy_input_images(payload):
     """Upload payload["images"] entries ({name, imageData}) to ComfyUI's input
-    folder so LoadImage nodes can reference them by name. imageData may be a
-    raw base64 string or a data URL. Image-to-image workflows (e.g. Flux
-    Kontext from kind_robots' /api/comfy/kontext/enqueue) depend on this."""
+    folder so LoadImage nodes can reference them by name. Image-to-image
+    workflows (e.g. Flux Kontext from kind_robots' /api/comfy/kontext/enqueue)
+    depend on this."""
     images = payload.get("images") or []
     if not isinstance(images, list):
         raise ValueError('COMFY payload "images" must be a list')
     for entry in images:
-        name = (entry or {}).get("name")
-        data = (entry or {}).get("imageData") or ""
-        if not name or not data:
-            raise ValueError('each images entry needs "name" and "imageData"')
-        if data.lstrip().lower().startswith("data:") and "," in data:
-            data = data.split(",", 1)[1]
-        raw = base64.b64decode(data)
-
+        name, raw = decode_image_entry(entry)
         boundary = "krrelay" + base64.b16encode(os.urandom(12)).decode().lower()
-        ext = os.path.splitext(name)[1].lstrip(".").lower() or "png"
-        mime = "image/jpeg" if ext in ("jpg", "jpeg") else f"image/{ext}"
-        parts = []
-        parts.append(
-            (
-                f"--{boundary}\r\n"
-                f'Content-Disposition: form-data; name="image"; filename="{name}"\r\n'
-                f"Content-Type: {mime}\r\n\r\n"
-            ).encode()
-        )
-        parts.append(raw)
-        parts.append(
-            (
-                f"\r\n--{boundary}\r\n"
-                'Content-Disposition: form-data; name="type"\r\n\r\ninput\r\n'
-                f"--{boundary}\r\n"
-                'Content-Disposition: form-data; name="overwrite"\r\n\r\ntrue\r\n'
-                f"--{boundary}--\r\n"
-            ).encode()
-        )
-        body = b"".join(parts)
+        body, content_type = build_image_upload_request(name, raw, boundary)
 
         req = urllib.request.Request(
             f"{COMFY_URL}/upload/image", data=body, method="POST"
         )
-        req.add_header("Content-Type", f"multipart/form-data; boundary={boundary}")
+        req.add_header("Content-Type", content_type)
         with urllib.request.urlopen(req, timeout=120) as resp:
             uploaded = json.loads(resp.read().decode() or "null")
         if not uploaded or not uploaded.get("name"):
