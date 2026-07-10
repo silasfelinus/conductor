@@ -318,3 +318,18 @@ tasks:
       pass (toolchain restored this session); prisma client regenerated and committed.
       Pending: live migration deploy (runs on merge) + end-to-end /stylist pass by Silas.
 
+  - id: t-017
+    milestone: m4
+    title: Surface the home relay's declared capabilities and last-claim time on an admin status readout
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-10T13:15:00Z'
+    note: >
+      Kaizen from the 2026-07-10 first-live-test stall (conductor #341 /
+      kind_robots #145): the queue guard skips agents that don't declare
+      supportsInputImages, which is invisible without pm2 access. Add a small
+      admin-only readout (e.g. on /stylist or an /admin surface) showing each
+      known relay agent's last claim attempt, declared capabilities, and agent
+      version, so a version-gap stall is diagnosable from the browser.

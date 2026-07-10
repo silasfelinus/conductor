@@ -339,12 +339,15 @@ tasks:
   stakes: reversible
   depends_on: t-018
   updated: '2026-07-10T13:00:00Z'
-  note: >
-    Reconciled 2026-07-10 (hourly Worker): the delete flow already shipped in commit 86db3d3 (confirmation dialog, no bulk delete, history/receipt behavior preserved, widget tests for cancel and confirm paths). Full suite passes on a real Flutter toolchain (71 tests). Roadmap status was stale; no new code needed.
+  note: 'Reconciled 2026-07-10 (hourly Worker): the delete flow already shipped in commit 86db3d3 (confirmation
+    dialog, no bulk delete, history/receipt behavior preserved, widget tests for cancel and confirm paths).
+    Full suite passes on a real Flutter toolchain (71 tests). Roadmap status was stale; no new code needed.
+
+    '
 - id: t-021
   milestone: m4
   title: Add CSV export for customers and appointments
-  status: waiting
+  status: ready
   owner: null
   passes: 0
   stakes: reversible
@@ -367,8 +370,11 @@ tasks:
   stakes: reversible
   depends_on: t-018
   updated: '2026-07-10T13:00:00Z'
-  note: >
-    Done 2026-07-10 (hourly Worker, PR from claude/hourly-conductor-worker-wcv547): optional PIN app lock — onboarding step (switch + PIN confirm), startup lock screen, and an app-bar settings sheet (turn on/off, change PIN; current PIN required to disable or change). PIN stored as salted SHA-256 only, never plaintext; local-only. Placeholder warm copy is editable. Verified: flutter analyze clean, 71 tests pass including 7 new lock widget tests and file/in-memory service tests.
+  note: "Done 2026-07-10 (hourly Worker, PR from claude/hourly-conductor-worker-wcv547): optional PIN\
+    \ app lock \u2014 onboarding step (switch + PIN confirm), startup lock screen, and an app-bar settings\
+    \ sheet (turn on/off, change PIN; current PIN required to disable or change). PIN stored as salted\
+    \ SHA-256 only, never plaintext; local-only. Placeholder warm copy is editable. Verified: flutter\
+    \ analyze clean, 71 tests pass including 7 new lock widget tests and file/in-memory service tests.\n"
 - id: t-023
   milestone: m2
   title: Draft cloud sync ownership and self-hosted backend decision note
@@ -469,7 +475,7 @@ tasks:
 - id: t-029
   milestone: m2
   title: Add app-side sync client interfaces without enabling production sync
-  status: ready
+  status: done
   owner: null
   passes: 0
   stakes: reversible
@@ -507,5 +513,7 @@ tasks:
   stakes: reversible
   depends_on: t-019
   updated: '2026-07-10T13:00:00Z'
-  note: >
-    Reconciled 2026-07-10 (hourly Worker): coverage already shipped in commits e5af760 + bb7c6a8 — save new profile, edit with form prefill, delete cancel/confirm paths, and the delete-detach invariant, exactly as this task specified. Verified green on a real Flutter toolchain (flutter test, 71 tests). Roadmap status was stale; no new code needed.
+  note: "Reconciled 2026-07-10 (hourly Worker): coverage already shipped in commits e5af760 + bb7c6a8\
+    \ \u2014 save new profile, edit with form prefill, delete cancel/confirm paths, and the delete-detach\
+    \ invariant, exactly as this task specified. Verified green on a real Flutter toolchain (flutter test,\
+    \ 71 tests). Roadmap status was stale; no new code needed.\n"
