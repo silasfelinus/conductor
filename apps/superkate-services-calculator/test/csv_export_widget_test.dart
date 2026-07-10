@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:superkate_services_calculator/data/csv_export_service.dart';
@@ -46,6 +48,43 @@ void main() {
     expect(exporter.lastCustomersCsv, contains('Hannah'));
     expect(exporter.lastAppointmentsCsv, contains('120.00'));
     expect(find.textContaining('Exported 1 customers'), findsOneWidget);
+  });
+
+  testWidgets('export flow shares exactly the two written CSV paths',
+      (tester) async {
+    _useTallSurface(tester);
+    final directory = await Directory.systemTemp.createTemp('superkate-share-');
+    addTearDown(() => directory.delete(recursive: true));
+    final shareGateway = InMemoryCsvShareGateway();
+    final exporter = FileCsvExportService(
+      directory: directory,
+      clock: () => DateTime(2026, 7, 10),
+      shareGateway: shareGateway,
+    );
+
+    await tester.pumpWidget(MaterialApp(
+      home: SuperkateHomePage(
+        service: InMemoryPersistenceService(),
+        exportService: exporter,
+      ),
+    ));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.byKey(const ValueKey('export-csv-button')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('confirm-export-button')));
+    await tester.pumpAndSettle();
+
+    final customersPath =
+        '${directory.path}${Platform.pathSeparator}superkate-customers-2026-07-10.csv';
+    final appointmentsPath =
+        '${directory.path}${Platform.pathSeparator}superkate-appointments-2026-07-10.csv';
+
+    expect(shareGateway.shareCount, 1);
+    expect(shareGateway.lastCustomersPath, customersPath);
+    expect(shareGateway.lastAppointmentsPath, appointmentsPath);
+    expect(File(customersPath).existsSync(), isTrue);
+    expect(File(appointmentsPath).existsSync(), isTrue);
   });
 
   testWidgets('cancelling the export dialog writes nothing', (tester) async {
