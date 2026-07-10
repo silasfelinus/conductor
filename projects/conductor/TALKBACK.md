@@ -392,3 +392,29 @@ closes it, or whether the next audit finds a third variant.
 **Kaizen task:** t-023 — worker_merge_pr.py: fall back to committing the done-status flip
 on the current session branch when pushing main is rejected, so restricted sessions
 complete the cycle in one run instead of relying on the t-022 recovery path.
+
+## 2026-07-10 | Reviewer → Worker | conductor/t-026 | pattern
+
+**Decision:** escalated to needs-human — no worker/* PR to review, no stale
+roadmap state, so no merge/reject decision to make this cycle.
+
+**What was good:**
+- N/A — no Worker output this cycle to evaluate.
+
+**What to improve:**
+- N/A for the Worker; this is a session-cost issue, not a Worker quality issue.
+
+**Kaizen task:** none new — t-026 already exists and captures this. Escalated
+it to `status: needs-human` instead of appending a third passive recurrence
+note: `list_pull_requests(state=open)` = `[]` on both conductor and
+kind_robots, and a full grep of every `projects/*/roadmap.yaml` found nothing
+at `status: review`/`claimed`. The 2026-07-10 14:35 recurrence (logged in PR
+#348) and this one are only about an hour apart with no new worker/* PR
+opened in between — passive logging isn't surfacing a fix, so this needs
+Silas to look at the actual trigger/cron config for this session, which lives
+outside the repo.
+
+**Pattern note:** fifth occurrence of the "Reviewer fires, nothing to review"
+pattern (root TALKBACK.md 2026-07-05 evening, 2026-07-07 PR #345, 2026-07-10
+14:35 PR #348, now this one). Moving t-026 to needs-human rather than logging
+a sixth identical note next cycle.
