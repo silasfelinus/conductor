@@ -1,6 +1,7 @@
-generated_by: scripts/queue_missing_project_art.py
-mode: dry-run
-description: Concrete project image requests ready for manual generation; no live API was called.
+generated_by: scripts/queue_monster_recast_art.py
+mode: ready
+description: Executable art queue. Monster Recast entries are expanded individually from characters.yaml and pages.yaml;
+  each entry creates one independent image.
 batch:
   entries:
   - project: superkate-hairstyle-ai
@@ -9,53 +10,1565 @@ batch:
     image_path: projects/images/superkate-hairstyle-ai-icon.webp
     size: 256x256
     status: pending
-    prompt: 'Premium app icon for a salon "Hair Studio" AI tool: a stylized portrait silhouette whose
-      flowing hair splits down the middle into two looks — one side a warm natural tone, the other shifting
-      through vivid magic-tinged color — with a small sparkle/wand accent suggesting an instant AI restyle,
-      elegant purple-and-teal salon palette, glossy modern beauty-tech polish, instantly readable strong
-      silhouette at small sizes, no readable text, no logos, no watermark, square composition'
+    prompt: 'Premium app icon for a salon "Hair Studio" AI tool: a stylized portrait silhouette whose flowing hair
+      splits down the middle into two looks — one side a warm natural tone, the other shifting through vivid magic-tinged
+      color — with a small sparkle/wand accent suggesting an instant AI restyle, elegant purple-and-teal salon palette,
+      glossy modern beauty-tech polish, instantly readable strong silhouette at small sizes, no readable text, no
+      logos, no watermark, square composition'
   - project: superkate-hairstyle-ai
     variant: card
     target_repo: silasfelinus/conductor
     image_path: projects/images/superkate-hairstyle-ai-card.webp
     size: 512x768
     status: pending
-    prompt: 'Portrait key art for a salon AI hairstyle studio: a diverse client seated in a chic salon
-      chair while a shimmering mirror shows the same person with a beautifully restyled, recolored hairstyle,
-      gentle before/after duality, a warm stylist and a friendly helper-robot assistant collaborating,
-      glowing purple-and-teal accent lighting, tactile beauty-tech detail, cinematic portrait staging,
-      no readable text, no logos, no watermark, portrait composition'
+    prompt: 'Portrait key art for a salon AI hairstyle studio: a diverse client seated in a chic salon chair while
+      a shimmering mirror shows the same person with a beautifully restyled, recolored hairstyle, gentle before/after
+      duality, a warm stylist and a friendly helper-robot assistant collaborating, glowing purple-and-teal accent
+      lighting, tactile beauty-tech detail, cinematic portrait staging, no readable text, no logos, no watermark,
+      portrait composition'
   - project: superkate-hairstyle-ai
     variant: hero
     target_repo: silasfelinus/conductor
     image_path: projects/images/superkate-hairstyle-ai-hero.webp
     size: 1280x720
     status: pending
-    prompt: 'Studio-quality widescreen hero for an AI hairstyle transformation studio: a bright modern
-      salon where a row of clients of varied genders, ages, and ethnicities see their own portraits transform
-      on floating mirror-panels — new colors and cuts blooming from a soft wash of generative light —
-      with small robot beauty-assistants and a confident stylist orchestrating the scene, layered depth,
-      purple-and-teal cinematic lighting, rich but uncluttered, no readable text, no logos, no watermark,
-      landscape composition'
+    prompt: 'Studio-quality widescreen hero for an AI hairstyle transformation studio: a bright modern salon where
+      a row of clients of varied genders, ages, and ethnicities see their own portraits transform on floating mirror-panels
+      — new colors and cuts blooming from a soft wash of generative light — with small robot beauty-assistants and
+      a confident stylist orchestrating the scene, layered depth, purple-and-teal cinematic lighting, rich but uncluttered,
+      no readable text, no logos, no watermark, landscape composition'
   - project: packmaker
     variant: card
     target_repo: silasfelinus/conductor
     image_path: projects/images/packmaker-card.webp
     size: 512x768
     status: pending
-    prompt: Professional portrait card illustration for Packmaker, a workshop where a diverse crew of
-      humans, robots, and inventive companions assembles themed content packs on a luminous conveyor —
-      location dioramas, character figures, genre tomes, and reward tokens being boxed into elegant collector
-      cases, cinematic key-art staging, tactile detail, no readable text, no logos, no watermark, portrait
-      composition
+    prompt: Professional portrait card illustration for Packmaker, a workshop where a diverse crew of humans, robots,
+      and inventive companions assembles themed content packs on a luminous conveyor — location dioramas, character
+      figures, genre tomes, and reward tokens being boxed into elegant collector cases, cinematic key-art staging,
+      tactile detail, no readable text, no logos, no watermark, portrait composition
   - project: packmaker
     variant: hero
     target_repo: silasfelinus/conductor
     image_path: projects/images/packmaker-hero.webp
     size: 1280x720
     status: pending
-    prompt: Studio-quality widescreen hero illustration for Packmaker, a grand pack-forging atelier with
-      two showcase display cases — one radiating heroic super-powered energy, one swirling with arcane
-      magic — while diverse makers and small robot artisans generate locations, characters, genres, and
-      rewards along glowing pipeline rails, layered depth and cinematic lighting, rich but uncluttered,
-      no readable text, no logos, no watermark, landscape composition
+    prompt: Studio-quality widescreen hero illustration for Packmaker, a grand pack-forging atelier with two showcase
+      display cases — one radiating heroic super-powered energy, one swirling with arcane magic — while diverse
+      makers and small robot artisans generate locations, characters, genres, and rewards along glowing pipeline
+      rails, layered depth and cinematic lighting, rich but uncluttered, no readable text, no logos, no watermark,
+      landscape composition
+  - project: coloring-book
+    set: monster-recast
+    kind: character-concept
+    slug: pound-foolish
+    title: Pound Foolish
+    variant: color
+    target_repo: silasfelinus/conductor
+    image_path: projects/coloring-book/sets/monster-recast/generated/color/characters/pound-foolish.webp
+    size: 2048x2732
+    status: pending
+    engine: flux
+    steps: 36
+    prompt: Premium full-color graphic horror illustration for Monster Recast, portrait 3:4 composition, thick confident
+      black outlines, extremely detailed but readable shapes, flat bounded color fills, hard-edged secondary color
+      shapes instead of gradients, dramatic cinematic staging, strong silhouette, serious theatrical camp, original
+      character design, no readable text, no logo, no watermark, one scene only, one image only, no collage, no
+      contact sheet, no comic panels. Original full-body character concept art of Pound Foolish, a colossal alien
+      demoness clown and glamorous cosmic ringmaster, six elegant arms, towering sculptural harlequin gown, tiny
+      crown, orbiting moon earrings, comet-tail ruff, standing beneath a striped meteor circus tent on an impossible
+      asteroid; lush 1970s airbrush fantasy poster mixed with theatrical fashion illustration, saturated cosmic
+      color, intricate but readable silhouette, playful menace, all-ages spooky, no text, no existing franchise
+      character, no actor likeness.
+    source_file: projects/coloring-book/sets/monster-recast/characters.yaml
+    source_slug: pound-foolish
+  - project: coloring-book
+    set: monster-recast
+    kind: character-concept
+    slug: countess-vesper-vane
+    title: Countess Vesper Vane
+    variant: color
+    target_repo: silasfelinus/conductor
+    image_path: projects/coloring-book/sets/monster-recast/generated/color/characters/countess-vesper-vane.webp
+    size: 2048x2732
+    status: pending
+    engine: flux
+    steps: 36
+    prompt: Premium full-color graphic horror illustration for Monster Recast, portrait 3:4 composition, thick confident
+      black outlines, extremely detailed but readable shapes, flat bounded color fills, hard-edged secondary color
+      shapes instead of gradients, dramatic cinematic staging, strong silhouette, serious theatrical camp, original
+      character design, no readable text, no logo, no watermark, one scene only, one image only, no collage, no
+      contact sheet, no comic panels. Original portrait of Countess Vesper Vane, a gender-recast vampire aristocrat
+      and owner of a decaying midnight cinema, towering crescent pompadour, wing-sleeved Art Deco coat, jeweled
+      tuxedo corset, white roses losing their color around her, moths drifting through projector light; elegant
+      1930s geometric poster design fused with richly painted gothic portraiture, dramatic balcony architecture,
+      sophisticated all-ages horror, no text, no existing vampire character, no actor likeness.
+    source_file: projects/coloring-book/sets/monster-recast/characters.yaml
+    source_slug: countess-vesper-vane
+  - project: coloring-book
+    set: monster-recast
+    kind: character-concept
+    slug: frankie-stitches
+    title: Frankie Stitches
+    variant: color
+    target_repo: silasfelinus/conductor
+    image_path: projects/coloring-book/sets/monster-recast/generated/color/characters/frankie-stitches.webp
+    size: 2048x2732
+    status: pending
+    engine: flux
+    steps: 36
+    prompt: Premium full-color graphic horror illustration for Monster Recast, portrait 3:4 composition, thick confident
+      black outlines, extremely detailed but readable shapes, flat bounded color fills, hard-edged secondary color
+      shapes instead of gradients, dramatic cinematic staging, strong silhouette, serious theatrical camp, original
+      character design, no readable text, no logo, no watermark, one scene only, one image only, no collage, no
+      contact sheet, no comic panels. Original full-body concept art of Frankie Stitches, a huge reanimated drag
+      king lounge singer with quilt-like body seams, sweeping pompadour, patchwork tuxedo, lightning-bolt lapels,
+      platform boots, chrome microphone connected to a heart-shaped voltmeter; exuberant 1950s hot-rod monster-magazine
+      illustration with hand-painted enamel texture and bold graphic shapes, sweet expression, laboratory stage
+      set, all-ages spooky, no text, no familiar stitched-monster makeup or copyrighted character.
+    source_file: projects/coloring-book/sets/monster-recast/characters.yaml
+    source_slug: frankie-stitches
+  - project: coloring-book
+    set: monster-recast
+    kind: character-concept
+    slug: mister-matrimony
+    title: Mister Matrimony
+    variant: color
+    target_repo: silasfelinus/conductor
+    image_path: projects/coloring-book/sets/monster-recast/generated/color/characters/mister-matrimony.webp
+    size: 2048x2732
+    status: pending
+    engine: flux
+    steps: 36
+    prompt: Premium full-color graphic horror illustration for Monster Recast, portrait 3:4 composition, thick confident
+      black outlines, extremely detailed but readable shapes, flat bounded color fills, hard-edged secondary color
+      shapes instead of gradients, dramatic cinematic staging, strong silhouette, serious theatrical camp, original
+      character design, no readable text, no logo, no watermark, one scene only, one image only, no collage, no
+      contact sheet, no comic panels. Original character concept of Mister Matrimony, an elegant reanimated gothic
+      groom with towering storm-cloud hair, mourning-white tailcoat, thorn boutonniere, pearl gloves and a translucent
+      smoke veil flowing from his shoulders, standing in a lightning-struck wedding conservatory where lilies bloom
+      from broken rings; Victorian funeral fashion plate rendered with luminous watercolor and engraved detail,
+      romantic and uncanny, all-ages, no text, no existing bride-monster design.
+    source_file: projects/coloring-book/sets/monster-recast/characters.yaml
+    source_slug: mister-matrimony
+  - project: coloring-book
+    set: monster-recast
+    kind: character-concept
+    slug: luna-howl
+    title: Luna Howl
+    variant: color
+    target_repo: silasfelinus/conductor
+    image_path: projects/coloring-book/sets/monster-recast/generated/color/characters/luna-howl.webp
+    size: 2048x2732
+    status: pending
+    engine: flux
+    steps: 36
+    prompt: Premium full-color graphic horror illustration for Monster Recast, portrait 3:4 composition, thick confident
+      black outlines, extremely detailed but readable shapes, flat bounded color fills, hard-edged secondary color
+      shapes instead of gradients, dramatic cinematic staging, strong silhouette, serious theatrical camp, original
+      character design, no readable text, no logo, no watermark, one scene only, one image only, no collage, no
+      contact sheet, no comic panels. Original full-body concept art of Luna Howl, glamorous werewolf cabaret singer
+      with an enormous crescent-shaped silver mane, expressive lupine face, sequined cobalt jumpsuit, moon-phase
+      belt, feathered shoulder cape and clawed platform heels, singing beneath a perfectly round disco-ball moon;
+      energetic 1980s neon nightclub poster with practical-effects creature texture, crisp fashion silhouette, joyful
+      all-ages horror, no text, no existing werewolf.
+    source_file: projects/coloring-book/sets/monster-recast/characters.yaml
+    source_slug: luna-howl
+  - project: coloring-book
+    set: monster-recast
+    kind: character-concept
+    slug: king-tut-tut
+    title: King Tut-Tut
+    variant: color
+    target_repo: silasfelinus/conductor
+    image_path: projects/coloring-book/sets/monster-recast/generated/color/characters/king-tut-tut.webp
+    size: 2048x2732
+    status: pending
+    engine: flux
+    steps: 36
+    prompt: Premium full-color graphic horror illustration for Monster Recast, portrait 3:4 composition, thick confident
+      black outlines, extremely detailed but readable shapes, flat bounded color fills, hard-edged secondary color
+      shapes instead of gradients, dramatic cinematic staging, strong silhouette, serious theatrical camp, original
+      character design, no readable text, no logo, no watermark, one scene only, one image only, no collage, no
+      contact sheet, no comic panels. Original character design of King Tut-Tut, a witty mummy drag king and furious
+      museum critic, wrapped in elegant linen beneath a sharply pleated tuxedo, asymmetrical lapis crown, jeweled
+      harness, scarab cufflinks and fan cape, holding a stone review tablet while tiny sandstorms rearrange incorrect
+      museum labels; ancient relief geometry blended with contemporary high-fashion editorial photography, rich
+      gold and blue, all-ages, no text, no copied death mask.
+    source_file: projects/coloring-book/sets/monster-recast/characters.yaml
+    source_slug: king-tut-tut
+  - project: coloring-book
+    set: monster-recast
+    kind: character-concept
+    slug: delta-drench
+    title: Delta Drench
+    variant: color
+    target_repo: silasfelinus/conductor
+    image_path: projects/coloring-book/sets/monster-recast/generated/color/characters/delta-drench.webp
+    size: 2048x2732
+    status: pending
+    engine: flux
+    steps: 36
+    prompt: Premium full-color graphic horror illustration for Monster Recast, portrait 3:4 composition, thick confident
+      black outlines, extremely detailed but readable shapes, flat bounded color fills, hard-edged secondary color
+      shapes instead of gradients, dramatic cinematic staging, strong silhouette, serious theatrical camp, original
+      character design, no readable text, no logo, no watermark, one scene only, one image only, no collage, no
+      contact sheet, no comic panels. Original full-body concept art of Delta Drench, an amphibious river-monster
+      diva and wetland guardian, sleek teal body, bell-shaped coral gill collar, long webbed hands, shell corset,
+      translucent raincoat train and lily-pad fascinator, posing beside a pink rescue speedboat among cattails and
+      dragonflies; lush 1950s aquatic science-fiction color illustration with fashion-ad polish, bright optimistic
+      menace, no text, no existing lagoon creature.
+    source_file: projects/coloring-book/sets/monster-recast/characters.yaml
+    source_slug: delta-drench
+  - project: coloring-book
+    set: monster-recast
+    kind: character-concept
+    slug: mister-nobody
+    title: Mister Nobody
+    variant: color
+    target_repo: silasfelinus/conductor
+    image_path: projects/coloring-book/sets/monster-recast/generated/color/characters/mister-nobody.webp
+    size: 2048x2732
+    status: pending
+    engine: flux
+    steps: 36
+    prompt: Premium full-color graphic horror illustration for Monster Recast, portrait 3:4 composition, thick confident
+      black outlines, extremely detailed but readable shapes, flat bounded color fills, hard-edged secondary color
+      shapes instead of gradients, dramatic cinematic staging, strong silhouette, serious theatrical camp, original
+      character design, no readable text, no logo, no watermark, one scene only, one image only, no collage, no
+      contact sheet, no comic panels. Original concept art of Mister Nobody, an invisible drag king stage magician
+      represented only by a perfectly tailored white dinner jacket, broad trousers, jeweled gloves, patent boots,
+      top hat, floating spectacles and a curled moustache suspended in empty air, performing amid mirrors and wandering
+      footprints; minimalist surrealist theatre photography translated into painted poster art, witty negative space,
+      jewel accents, all-ages uncanny, no text, no bandaged invisible character.
+    source_file: projects/coloring-book/sets/monster-recast/characters.yaml
+    source_slug: mister-nobody
+  - project: coloring-book
+    set: monster-recast
+    kind: character-concept
+    slug: madame-phantasm
+    title: Madame Phantasm
+    variant: color
+    target_repo: silasfelinus/conductor
+    image_path: projects/coloring-book/sets/monster-recast/generated/color/characters/madame-phantasm.webp
+    size: 2048x2732
+    status: pending
+    engine: flux
+    steps: 36
+    prompt: Premium full-color graphic horror illustration for Monster Recast, portrait 3:4 composition, thick confident
+      black outlines, extremely detailed but readable shapes, flat bounded color fills, hard-edged secondary color
+      shapes instead of gradients, dramatic cinematic staging, strong silhouette, serious theatrical camp, original
+      character design, no readable text, no logo, no watermark, one scene only, one image only, no collage, no
+      contact sheet, no comic panels. Original full-body character art of Madame Phantasm, a formidable woman opera
+      composer haunting an impossible underground theatre, angular black velvet gown shaped like organ pipes, mirrored
+      shoulder fins, sheet-music gloves, tuning-fork baton, a fan of small singing masks orbiting her face, chandeliers
+      bowing overhead; German Expressionist stage design with severe shadows and hand-painted theatrical color,
+      elegant all-ages gothic, no text, no familiar opera phantom costume.
+    source_file: projects/coloring-book/sets/monster-recast/characters.yaml
+    source_slug: madame-phantasm
+  - project: coloring-book
+    set: monster-recast
+    kind: character-concept
+    slug: hex-appeal
+    title: Hex Appeal
+    variant: color
+    target_repo: silasfelinus/conductor
+    image_path: projects/coloring-book/sets/monster-recast/generated/color/characters/hex-appeal.webp
+    size: 2048x2732
+    status: pending
+    engine: flux
+    steps: 36
+    prompt: Premium full-color graphic horror illustration for Monster Recast, portrait 3:4 composition, thick confident
+      black outlines, extremely detailed but readable shapes, flat bounded color fills, hard-edged secondary color
+      shapes instead of gradients, dramatic cinematic staging, strong silhouette, serious theatrical camp, original
+      character design, no readable text, no logo, no watermark, one scene only, one image only, no collage, no
+      contact sheet, no comic panels. Original concept art of Hex Appeal, a nonbinary cosmic witch hosting a supernatural
+      advice show, enormous spiral hat, crescent shoulders, psychedelic celestial caftan, crystal spectacles, constellation
+      gloves, stirring a galaxy in a teacup while star-shaped telephones ring around an orbiting moon cottage; bold
+      1970s occult screen print with layered fluorescent inks and crisp graphic forms, funny and mystical, all-ages,
+      no text, no existing witch character.
+    source_file: projects/coloring-book/sets/monster-recast/characters.yaml
+    source_slug: hex-appeal
+  - project: coloring-book
+    set: monster-recast
+    kind: character-concept
+    slug: sister-sinema
+    title: Sister Sinema
+    variant: color
+    target_repo: silasfelinus/conductor
+    image_path: projects/coloring-book/sets/monster-recast/generated/color/characters/sister-sinema.webp
+    size: 2048x2732
+    status: pending
+    engine: flux
+    steps: 36
+    prompt: Premium full-color graphic horror illustration for Monster Recast, portrait 3:4 composition, thick confident
+      black outlines, extremely detailed but readable shapes, flat bounded color fills, hard-edged secondary color
+      shapes instead of gradients, dramatic cinematic staging, strong silhouette, serious theatrical camp, original
+      character design, no readable text, no logo, no watermark, one scene only, one image only, no collage, no
+      contact sheet, no comic panels. Original portrait of Sister Sinema, a possessed old-Hollywood star whose elegant
+      ivory premiere gown dissolves into curling strips of film, projector-reel halo behind her head, black opera
+      gloves, multiple subtle alternate expressions appearing in the film frames around her, holding a clapperboard
+      fan in a haunted palace cinema; baroque devotional composition fused with drive-in horror poster printing,
+      luminous and strange, all-ages, no text, no existing possession character.
+    source_file: projects/coloring-book/sets/monster-recast/characters.yaml
+    source_slug: sister-sinema
+  - project: coloring-book
+    set: monster-recast
+    kind: character-concept
+    slug: stella-vore
+    title: Stella Vore
+    variant: color
+    target_repo: silasfelinus/conductor
+    image_path: projects/coloring-book/sets/monster-recast/generated/color/characters/stella-vore.webp
+    size: 2048x2732
+    status: pending
+    engine: flux
+    steps: 36
+    prompt: Premium full-color graphic horror illustration for Monster Recast, portrait 3:4 composition, thick confident
+      black outlines, extremely detailed but readable shapes, flat bounded color fills, hard-edged secondary color
+      shapes instead of gradients, dramatic cinematic staging, strong silhouette, serious theatrical camp, original
+      character design, no readable text, no logo, no watermark, one scene only, one image only, no collage, no
+      contact sheet, no comic panels. Original full-body concept art of Stella Vore, a crystalline extraterrestrial
+      empress and cosmic diplomat, radial flower-like crown, four sweeping hip structures, glowing lantern abdomen,
+      opalescent natural armor arranged like couture and a translucent meteor-glass mantle, tending floating star
+      eggs outside a retro drive-in theatre; 1970s retrofuturist space-opera painting with prism light and elegant
+      alien anatomy, no text, no familiar biomechanical alien silhouette.
+    source_file: projects/coloring-book/sets/monster-recast/characters.yaml
+    source_slug: stella-vore
+  - project: coloring-book
+    set: monster-recast
+    kind: character-concept
+    slug: mister-finale
+    title: Mister Finalé
+    variant: color
+    target_repo: silasfelinus/conductor
+    image_path: projects/coloring-book/sets/monster-recast/generated/color/characters/mister-finale.webp
+    size: 2048x2732
+    status: pending
+    engine: flux
+    steps: 36
+    prompt: Premium full-color graphic horror illustration for Monster Recast, portrait 3:4 composition, thick confident
+      black outlines, extremely detailed but readable shapes, flat bounded color fills, hard-edged secondary color
+      shapes instead of gradients, dramatic cinematic staging, strong silhouette, serious theatrical camp, original
+      character design, no readable text, no logo, no watermark, one scene only, one image only, no collage, no
+      contact sheet, no comic panels. Original character poster of Mister Finalé, a silent masked drag king stalking
+      an ornate backstage, slim black usher coat, red waistcoat, ticket-stub epaulettes, polished tap shoes, carrying
+      oversized blunt stage shears, face hidden by a unique circular mask with three rotating theatrical expressions,
+      cue lights glowing through velvet curtains; 1980s screen-printed video-store suspense poster, graphic shadows,
+      no gore, all-ages spooky, no text, no recognizable slasher mask or costume.
+    source_file: projects/coloring-book/sets/monster-recast/characters.yaml
+    source_slug: mister-finale
+  - project: coloring-book
+    set: monster-recast
+    kind: character-concept
+    slug: velvet-nightmare
+    title: Velvet Nightmare
+    variant: color
+    target_repo: silasfelinus/conductor
+    image_path: projects/coloring-book/sets/monster-recast/generated/color/characters/velvet-nightmare.webp
+    size: 2048x2732
+    status: pending
+    engine: flux
+    steps: 36
+    prompt: Premium full-color graphic horror illustration for Monster Recast, portrait 3:4 composition, thick confident
+      black outlines, extremely detailed but readable shapes, flat bounded color fills, hard-edged secondary color
+      shapes instead of gradients, dramatic cinematic staging, strong silhouette, serious theatrical camp, original
+      character design, no readable text, no logo, no watermark, one scene only, one image only, no collage, no
+      contact sheet, no comic panels. Original full-body concept art of Velvet Nightmare, a nonbinary cabaret ghoul
+      who manages a hotel between dreams, impossibly long graceful limbs, plum velvet smoking jacket, moon-striped
+      wide trousers, crescent shoulders, door-shaped rings and a halo of whispering brass room keys, standing in
+      a corridor that folds into an eye; 1920s Surrealist dreamscape with theatrical gouache textures and elegant
+      fashion drawing, eerie but inviting, no text, no recognizable dream-slasher features.
+    source_file: projects/coloring-book/sets/monster-recast/characters.yaml
+    source_slug: velvet-nightmare
+  - project: coloring-book
+    set: monster-recast
+    kind: character-concept
+    slug: sir-loin
+    title: Sir Loin
+    variant: color
+    target_repo: silasfelinus/conductor
+    image_path: projects/coloring-book/sets/monster-recast/generated/color/characters/sir-loin.webp
+    size: 2048x2732
+    status: pending
+    engine: flux
+    steps: 36
+    prompt: Premium full-color graphic horror illustration for Monster Recast, portrait 3:4 composition, thick confident
+      black outlines, extremely detailed but readable shapes, flat bounded color fills, hard-edged secondary color
+      shapes instead of gradients, dramatic cinematic staging, strong silhouette, serious theatrical camp, original
+      character design, no readable text, no logo, no watermark, one scene only, one image only, no collage, no
+      contact sheet, no comic panels. Original character concept of Sir Loin, a stocky rural butcher drag king and
+      haunted roadside chef, towering cowboy quiff, rhinestone red butcher apron over a blue western shirt, oven-mitt
+      gauntlets, steel-toe platform boots, holding a brightly modified hedge-trimmer saw while smiling appliances
+      peek from a singing smokehouse; bold American roadside linocut poster with hand-inked texture and comic folk-horror
+      energy, no gore, no text, no recognizable chainsaw-film character.
+    source_file: projects/coloring-book/sets/monster-recast/characters.yaml
+    source_slug: sir-loin
+  - project: coloring-book
+    set: monster-recast
+    kind: character-concept
+    slug: madame-colossa
+    title: Madame Colossa
+    variant: color
+    target_repo: silasfelinus/conductor
+    image_path: projects/coloring-book/sets/monster-recast/generated/color/characters/madame-colossa.webp
+    size: 2048x2732
+    status: pending
+    engine: flux
+    steps: 36
+    prompt: Premium full-color graphic horror illustration for Monster Recast, portrait 3:4 composition, thick confident
+      black outlines, extremely detailed but readable shapes, flat bounded color fills, hard-edged secondary color
+      shapes instead of gradients, dramatic cinematic staging, strong silhouette, serious theatrical camp, original
+      character design, no readable text, no logo, no watermark, one scene only, one image only, no collage, no
+      contact sheet, no comic panels. Original grand portrait of Madame Colossa, a colossal elegant mountain-ape
+      socialite kneeling beside an Art Nouveau city theatre she has saved from demolition, sculpted finger-wave
+      fur, emerald and peacock beaded gown panels, skyscraper-length stole, chandelier brooch and opera gloves,
+      tiny gala guests greeting her from balconies; sumptuous Art Nouveau poster composition with botanical borders
+      and architectural detail, celebratory not captive, no text, no famous giant-ape scene.
+    source_file: projects/coloring-book/sets/monster-recast/characters.yaml
+    source_slug: madame-colossa
+  - project: coloring-book
+    set: monster-recast
+    kind: character-concept
+    slug: titania-rex
+    title: Titania Rex
+    variant: color
+    target_repo: silasfelinus/conductor
+    image_path: projects/coloring-book/sets/monster-recast/generated/color/characters/titania-rex.webp
+    size: 2048x2732
+    status: pending
+    engine: flux
+    steps: 36
+    prompt: Premium full-color graphic horror illustration for Monster Recast, portrait 3:4 composition, thick confident
+      black outlines, extremely detailed but readable shapes, flat bounded color fills, hard-edged secondary color
+      shapes instead of gradients, dramatic cinematic staging, strong silhouette, serious theatrical camp, original
+      character design, no readable text, no logo, no watermark, one scene only, one image only, no collage, no
+      contact sheet, no comic panels. Original full-body monster art of Titania Rex, a colossal crowned reptilian
+      matriarch and environmental warning made flesh, upright queenly posture, fan-shaped translucent solar fins
+      displaying emergency icons, charcoal crystal scales flowing like a ceremonial gown, powerful tail curling
+      around a tiny bonsai city; Japanese woodblock-inspired storm print with bold carved contours, flat mineral
+      color and immense scale, no text, no recognizable kaiju anatomy or signature attack.
+    source_file: projects/coloring-book/sets/monster-recast/characters.yaml
+    source_slug: titania-rex
+  - project: coloring-book
+    set: monster-recast
+    kind: character-concept
+    slug: chum-darling
+    title: Chum Darling
+    variant: color
+    target_repo: silasfelinus/conductor
+    image_path: projects/coloring-book/sets/monster-recast/generated/color/characters/chum-darling.webp
+    size: 2048x2732
+    status: pending
+    engine: flux
+    steps: 36
+    prompt: Premium full-color graphic horror illustration for Monster Recast, portrait 3:4 composition, thick confident
+      black outlines, extremely detailed but readable shapes, flat bounded color fills, hard-edged secondary color
+      shapes instead of gradients, dramatic cinematic staging, strong silhouette, serious theatrical camp, original
+      character design, no readable text, no logo, no watermark, one scene only, one image only, no collage, no
+      contact sheet, no comic panels. Original character illustration of Chum Darling, a glamorous upright shark-woman
+      seaside safety inspector, dorsal-fin bouffant, expressive friendly shark face, aqua 1960s mod swimsuit gown,
+      red lifesaver sash, cat-eye goggles and pearl flipper heels, directing synchronized swimmers beneath striped
+      umbrellas; bright mid-century beach-travel poster with clean geometric shapes and playful suspense, all-ages,
+      no text, no attack scene, no recognizable shark-film composition.
+    source_file: projects/coloring-book/sets/monster-recast/characters.yaml
+    source_slug: chum-darling
+  - project: coloring-book
+    set: monster-recast
+    kind: character-concept
+    slug: babs-o-blob
+    title: Babs O'Blob
+    variant: color
+    target_repo: silasfelinus/conductor
+    image_path: projects/coloring-book/sets/monster-recast/generated/color/characters/babs-o-blob.webp
+    size: 2048x2732
+    status: pending
+    engine: flux
+    steps: 36
+    prompt: Premium full-color graphic horror illustration for Monster Recast, portrait 3:4 composition, thick confident
+      black outlines, extremely detailed but readable shapes, flat bounded color fills, hard-edged secondary color
+      shapes instead of gradients, dramatic cinematic staging, strong silhouette, serious theatrical camp, original
+      character design, no readable text, no logo, no watermark, one scene only, one image only, no collage, no
+      contact sheet, no comic panels. Original full-body concept art of Babs O'Blob, a joyous translucent raspberry-colored
+      shapeshifting starlet, elegant face emerging from glossy protoplasm, many opera-gloved hands, liquid train,
+      jewelry and tiny shoes suspended inside her body, posing beneath gelatin spotlights on a soundstage; surreal
+      mid-century dessert advertisement fused with glamorous studio portraiture, luminous transparency, playful
+      all-ages creature, no text, no existing blob monster.
+    source_file: projects/coloring-book/sets/monster-recast/characters.yaml
+    source_slug: babs-o-blob
+  - project: coloring-book
+    set: monster-recast
+    kind: character-concept
+    slug: podrick-bloom
+    title: Podrick Bloom
+    variant: color
+    target_repo: silasfelinus/conductor
+    image_path: projects/coloring-book/sets/monster-recast/generated/color/characters/podrick-bloom.webp
+    size: 2048x2732
+    status: pending
+    engine: flux
+    steps: 36
+    prompt: Premium full-color graphic horror illustration for Monster Recast, portrait 3:4 composition, thick confident
+      black outlines, extremely detailed but readable shapes, flat bounded color fills, hard-edged secondary color
+      shapes instead of gradients, dramatic cinematic staging, strong silhouette, serious theatrical camp, original
+      character design, no readable text, no logo, no watermark, one scene only, one image only, no collage, no
+      contact sheet, no comic panels. Original character concept of Podrick Bloom, an extraterrestrial botanical
+      drag king grown from a memory seed, slender body with subtle bark texture, petal pompadour, leaf-green morning
+      suit, seed-pearl waistcoat, orchid boutonniere and rootwood cane, standing in an overnight greenhouse where
+      his footprints sprout duplicate flowers; richly detailed Victorian botanical engraving colored by hand, melancholic
+      and elegant, no text, no familiar pod prop.
+    source_file: projects/coloring-book/sets/monster-recast/characters.yaml
+    source_slug: podrick-bloom
+  - project: coloring-book
+    set: monster-recast
+    kind: character-concept
+    slug: fly-boy-floyd
+    title: Fly Boy Floyd
+    variant: color
+    target_repo: silasfelinus/conductor
+    image_path: projects/coloring-book/sets/monster-recast/generated/color/characters/fly-boy-floyd.webp
+    size: 2048x2732
+    status: pending
+    engine: flux
+    steps: 36
+    prompt: Premium full-color graphic horror illustration for Monster Recast, portrait 3:4 composition, thick confident
+      black outlines, extremely detailed but readable shapes, flat bounded color fills, hard-edged secondary color
+      shapes instead of gradients, dramatic cinematic staging, strong silhouette, serious theatrical camp, original
+      character design, no readable text, no logo, no watermark, one scene only, one image only, no collage, no
+      contact sheet, no comic panels. Original full-body character art of Fly Boy Floyd, an elegant human-fly hybrid
+      lounge singer, slender bottle-green insectoid body, huge amber compound eyes showing miniature music videos,
+      antenna pompadour, plum velvet suit, four translucent wings shaped like coat tails, singing into a polished
+      proboscis microphone inside the Buzz Club; Victorian entomology cabinet illustration fused with smoky jazz-poster
+      painting, charming and uncanny, no text, no recognizable transformation-film makeup.
+    source_file: projects/coloring-book/sets/monster-recast/characters.yaml
+    source_slug: fly-boy-floyd
+  - project: coloring-book
+    set: monster-recast
+    kind: character-concept
+    slug: miss-chiffonette
+    title: Miss Chiffonette
+    variant: color
+    target_repo: silasfelinus/conductor
+    image_path: projects/coloring-book/sets/monster-recast/generated/color/characters/miss-chiffonette.webp
+    size: 2048x2732
+    status: pending
+    engine: flux
+    steps: 36
+    prompt: Premium full-color graphic horror illustration for Monster Recast, portrait 3:4 composition, thick confident
+      black outlines, extremely detailed but readable shapes, flat bounded color fills, hard-edged secondary color
+      shapes instead of gradients, dramatic cinematic staging, strong silhouette, serious theatrical camp, original
+      character design, no readable text, no logo, no watermark, one scene only, one image only, no collage, no
+      contact sheet, no comic panels. Original character concept of Miss Chiffonette, a haunted porcelain fashion
+      doll and sovereign of an abandoned nursery, towering powder-blue chiffon wig, layered Edwardian ribbon gown,
+      key-shaped bustle, jointed fan sleeves, subtle moving cracks and a brass wind-up key, presiding over a candlelit
+      dollhouse tea court of dust bunnies; delicate Edwardian watercolor storybook illustration with eerie architectural
+      detail, all-ages, no text, no recognizable horror doll.
+    source_file: projects/coloring-book/sets/monster-recast/characters.yaml
+    source_slug: miss-chiffonette
+  - project: coloring-book
+    set: monster-recast
+    kind: character-concept
+    slug: glamlin
+    title: Glamlin
+    variant: color
+    target_repo: silasfelinus/conductor
+    image_path: projects/coloring-book/sets/monster-recast/generated/color/characters/glamlin.webp
+    size: 2048x2732
+    status: pending
+    engine: flux
+    steps: 36
+    prompt: Premium full-color graphic horror illustration for Monster Recast, portrait 3:4 composition, thick confident
+      black outlines, extremely detailed but readable shapes, flat bounded color fills, hard-edged secondary color
+      shapes instead of gradients, dramatic cinematic staging, strong silhouette, serious theatrical camp, original
+      character design, no readable text, no logo, no watermark, one scene only, one image only, no collage, no
+      contact sheet, no comic panels. Original creature concept of Glamlin, a tiny nonbinary glitter-fed backstage
+      imp with asymmetrical bat ears, enormous dexterous tailoring hands, ruffled spine, bobbin-shaped tail, patchwork
+      tool vest, measuring-tape scarf, thimble boots and pin-cushion bracelets, multiplying into a costume crew
+      under roaring applause; handcrafted stop-motion maquette aesthetic using felt, latex, thread and miniature
+      theatre props, vibrant and lovable, no text, no recognizable mischievous movie creature.
+    source_file: projects/coloring-book/sets/monster-recast/characters.yaml
+    source_slug: glamlin
+  - project: coloring-book
+    set: monster-recast
+    kind: character-concept
+    slug: jackie-o-lantern
+    title: Jackie O'Lantern
+    variant: color
+    target_repo: silasfelinus/conductor
+    image_path: projects/coloring-book/sets/monster-recast/generated/color/characters/jackie-o-lantern.webp
+    size: 2048x2732
+    status: pending
+    engine: flux
+    steps: 36
+    prompt: Premium full-color graphic horror illustration for Monster Recast, portrait 3:4 composition, thick confident
+      black outlines, extremely detailed but readable shapes, flat bounded color fills, hard-edged secondary color
+      shapes instead of gradients, dramatic cinematic staging, strong silhouette, serious theatrical camp, original
+      character design, no readable text, no logo, no watermark, one scene only, one image only, no collage, no
+      contact sheet, no comic panels. Original full-body concept art of Jackie O'Lantern, a glamorous headless harvest
+      rider and autumn parade marshal, detachable blazing pumpkin helmet with changing carved expression, black-and-orange
+      cavalry tuxedo, reflective sash, leaf epaulettes, split riding coat and wheel-like cape, riding a supernatural
+      motorcycle-horse made of flame and brass detour signs; layered paper-cut shadow theatre with glowing translucent
+      color, dynamic folkloric silhouette, all-ages spooky, no text, no recognizable headless-rider adaptation.
+    source_file: projects/coloring-book/sets/monster-recast/characters.yaml
+    source_slug: jackie-o-lantern
+  - project: coloring-book
+    set: monster-recast
+    kind: cover-source
+    slug: monster-recast-cover
+    title: Monster Recast
+    variant: color
+    target_repo: silasfelinus/conductor
+    image_path: projects/coloring-book/sets/monster-recast/generated/color/cover/monster-recast-cover.webp
+    size: 2048x2732
+    status: pending
+    engine: flux
+    steps: 40
+    prompt: Premium full-color graphic horror illustration for Monster Recast, portrait 3:4 composition, thick confident
+      black outlines, extremely detailed but readable shapes, flat bounded color fills, hard-edged secondary color
+      shapes instead of gradients, dramatic cinematic staging, strong silhouette, serious theatrical camp, original
+      character design, no readable text, no logo, no watermark, one scene only, one image only, no collage, no
+      contact sheet, no comic panels. Original full-color ensemble cover illustration for Monster Recast, a glamorous
+      all-ages gallery of gender-recast and drag-reimagined cinema-monster archetypes at a spectacular old-Hollywood
+      premiere; Pound Foolish unfurls six arms beneath a cosmic marquee, Countess Vesper Vane descends a crescent
+      staircase, Frankie Stitches sings into a chrome microphone, Luna Howl poses under a disco moon, Delta Drench
+      arrives through a fountain, Madame Phantasm conducts floating masks, Stella Vore opens a crystal crown, Madame
+      Colossa and Titania Rex loom elegantly behind the theatre, Babs O'Blob becomes the red carpet itself; maximal
+      but readable triangular composition, varied body scales, jewel-toned glamour, painted theatrical poster with
+      Art Deco architecture and practical-creature texture, clear open area for title at top, no text generated,
+      no actor likenesses, no existing franchise character, no copied movie poster.
+    source_file: projects/coloring-book/sets/monster-recast/pages.yaml
+    source_slug: monster-recast-cover
+  - project: coloring-book
+    set: monster-recast
+    kind: page-source
+    slug: pound-foolish-solo
+    title: The Last Laugh
+    variant: color
+    target_repo: silasfelinus/conductor
+    image_path: projects/coloring-book/sets/monster-recast/generated/color/pages/pound-foolish-solo.webp
+    size: 2048x2732
+    status: pending
+    engine: flux
+    steps: 36
+    prompt: 'Premium full-color graphic horror illustration for Monster Recast, portrait 3:4 composition, thick
+      confident black outlines, extremely detailed but readable shapes, flat bounded color fills, hard-edged secondary
+      color shapes instead of gradients, dramatic cinematic staging, strong silhouette, serious theatrical camp,
+      original character design, no readable text, no logo, no watermark, one scene only, one image only, no collage,
+      no contact sheet, no comic panels. Create the full-color source illustration for the scene titled The Last
+      Laugh. Scene composition: Pound Foolish parts the curtains of a meteor circus with all six hands while tiny
+      moons laugh from the balcony. Keep the gown''s large panels and balloons as generous coloring regions. Character
+      design context: Original full-body character concept art of Pound Foolish, a colossal alien demoness clown
+      and glamorous cosmic ringmaster, six elegant arms, towering sculptural harlequin gown, tiny crown, orbiting
+      moon earrings, comet-tail ruff, standing beneath a striped meteor circus tent on an impossible asteroid; lush
+      1970s airbrush fantasy poster mixed with theatrical fashion illustration, saturated cosmic color, intricate
+      but readable silhouette, playful menace, all-ages spooky, no text, no existing franchise character, no actor
+      likeness.'
+    source_file: projects/coloring-book/sets/monster-recast/pages.yaml
+    source_slug: pound-foolish-solo
+    characters:
+    - pound-foolish
+  - project: coloring-book
+    set: monster-recast
+    kind: page-source
+    slug: countess-vesper-vane-solo
+    title: The Velvet Fang
+    variant: color
+    target_repo: silasfelinus/conductor
+    image_path: projects/coloring-book/sets/monster-recast/generated/color/pages/countess-vesper-vane-solo.webp
+    size: 2048x2732
+    status: pending
+    engine: flux
+    steps: 36
+    prompt: 'Premium full-color graphic horror illustration for Monster Recast, portrait 3:4 composition, thick
+      confident black outlines, extremely detailed but readable shapes, flat bounded color fills, hard-edged secondary
+      color shapes instead of gradients, dramatic cinematic staging, strong silhouette, serious theatrical camp,
+      original character design, no readable text, no logo, no watermark, one scene only, one image only, no collage,
+      no contact sheet, no comic panels. Create the full-color source illustration for the scene titled The Velvet
+      Fang. Scene composition: Vesper stands on the cinema balcony as projector light turns a bouquet of roses white
+      behind her. Use geometric curtain folds, moth wings, and crescent windows as medium-detail regions. Character
+      design context: Original portrait of Countess Vesper Vane, a gender-recast vampire aristocrat and owner of
+      a decaying midnight cinema, towering crescent pompadour, wing-sleeved Art Deco coat, jeweled tuxedo corset,
+      white roses losing their color around her, moths drifting through projector light; elegant 1930s geometric
+      poster design fused with richly painted gothic portraiture, dramatic balcony architecture, sophisticated all-ages
+      horror, no text, no existing vampire character, no actor likeness.'
+    source_file: projects/coloring-book/sets/monster-recast/pages.yaml
+    source_slug: countess-vesper-vane-solo
+    characters:
+    - countess-vesper-vane
+  - project: coloring-book
+    set: monster-recast
+    kind: page-source
+    slug: frankie-stitches-solo
+    title: King of Second Chances
+    variant: color
+    target_repo: silasfelinus/conductor
+    image_path: projects/coloring-book/sets/monster-recast/generated/color/pages/frankie-stitches-solo.webp
+    size: 2048x2732
+    status: pending
+    engine: flux
+    steps: 36
+    prompt: 'Premium full-color graphic horror illustration for Monster Recast, portrait 3:4 composition, thick
+      confident black outlines, extremely detailed but readable shapes, flat bounded color fills, hard-edged secondary
+      color shapes instead of gradients, dramatic cinematic staging, strong silhouette, serious theatrical camp,
+      original character design, no readable text, no logo, no watermark, one scene only, one image only, no collage,
+      no contact sheet, no comic panels. Create the full-color source illustration for the scene titled King of
+      Second Chances. Scene composition: Frankie performs at a laboratory lounge while vacuum tubes glow and repaired
+      appliances dance behind him. Make the patchwork tuxedo and heart voltmeter the main coloring focus. Character
+      design context: Original full-body concept art of Frankie Stitches, a huge reanimated drag king lounge singer
+      with quilt-like body seams, sweeping pompadour, patchwork tuxedo, lightning-bolt lapels, platform boots, chrome
+      microphone connected to a heart-shaped voltmeter; exuberant 1950s hot-rod monster-magazine illustration with
+      hand-painted enamel texture and bold graphic shapes, sweet expression, laboratory stage set, all-ages spooky,
+      no text, no familiar stitched-monster makeup or copyrighted character.'
+    source_file: projects/coloring-book/sets/monster-recast/pages.yaml
+    source_slug: frankie-stitches-solo
+    characters:
+    - frankie-stitches
+  - project: coloring-book
+    set: monster-recast
+    kind: page-source
+    slug: mister-matrimony-solo
+    title: The Eternal Groom
+    variant: color
+    target_repo: silasfelinus/conductor
+    image_path: projects/coloring-book/sets/monster-recast/generated/color/pages/mister-matrimony-solo.webp
+    size: 2048x2732
+    status: pending
+    engine: flux
+    steps: 36
+    prompt: 'Premium full-color graphic horror illustration for Monster Recast, portrait 3:4 composition, thick
+      confident black outlines, extremely detailed but readable shapes, flat bounded color fills, hard-edged secondary
+      color shapes instead of gradients, dramatic cinematic staging, strong silhouette, serious theatrical camp,
+      original character design, no readable text, no logo, no watermark, one scene only, one image only, no collage,
+      no contact sheet, no comic panels. Create the full-color source illustration for the scene titled The Eternal
+      Groom. Scene composition: Mister Matrimony officiates a monster elopement beneath a glass conservatory struck
+      by gentle lightning. Frame him with lilies, broken rings, and broad smoke-veil shapes. Character design context:
+      Original character concept of Mister Matrimony, an elegant reanimated gothic groom with towering storm-cloud
+      hair, mourning-white tailcoat, thorn boutonniere, pearl gloves and a translucent smoke veil flowing from his
+      shoulders, standing in a lightning-struck wedding conservatory where lilies bloom from broken rings; Victorian
+      funeral fashion plate rendered with luminous watercolor and engraved detail, romantic and uncanny, all-ages,
+      no text, no existing bride-monster design.'
+    source_file: projects/coloring-book/sets/monster-recast/pages.yaml
+    source_slug: mister-matrimony-solo
+    characters:
+    - mister-matrimony
+  - project: coloring-book
+    set: monster-recast
+    kind: page-source
+    slug: luna-howl-solo
+    title: Full-Moon Headliner
+    variant: color
+    target_repo: silasfelinus/conductor
+    image_path: projects/coloring-book/sets/monster-recast/generated/color/pages/luna-howl-solo.webp
+    size: 2048x2732
+    status: pending
+    engine: flux
+    steps: 36
+    prompt: 'Premium full-color graphic horror illustration for Monster Recast, portrait 3:4 composition, thick
+      confident black outlines, extremely detailed but readable shapes, flat bounded color fills, hard-edged secondary
+      color shapes instead of gradients, dramatic cinematic staging, strong silhouette, serious theatrical camp,
+      original character design, no readable text, no logo, no watermark, one scene only, one image only, no collage,
+      no contact sheet, no comic panels. Create the full-color source illustration for the scene titled Full-Moon
+      Headliner. Scene composition: Luna sings mid-transformation beneath a perfectly round disco moon as the audience
+      raises paw-shaped fans. Emphasize mane sections, sequins, bell bottoms, and crescent mirrors without tiny
+      confetti clutter. Character design context: Original full-body concept art of Luna Howl, glamorous werewolf
+      cabaret singer with an enormous crescent-shaped silver mane, expressive lupine face, sequined cobalt jumpsuit,
+      moon-phase belt, feathered shoulder cape and clawed platform heels, singing beneath a perfectly round disco-ball
+      moon; energetic 1980s neon nightclub poster with practical-effects creature texture, crisp fashion silhouette,
+      joyful all-ages horror, no text, no existing werewolf.'
+    source_file: projects/coloring-book/sets/monster-recast/pages.yaml
+    source_slug: luna-howl-solo
+    characters:
+    - luna-howl
+  - project: coloring-book
+    set: monster-recast
+    kind: page-source
+    slug: king-tut-tut-solo
+    title: The Unwrapped Critic
+    variant: color
+    target_repo: silasfelinus/conductor
+    image_path: projects/coloring-book/sets/monster-recast/generated/color/pages/king-tut-tut-solo.webp
+    size: 2048x2732
+    status: pending
+    engine: flux
+    steps: 36
+    prompt: 'Premium full-color graphic horror illustration for Monster Recast, portrait 3:4 composition, thick
+      confident black outlines, extremely detailed but readable shapes, flat bounded color fills, hard-edged secondary
+      color shapes instead of gradients, dramatic cinematic staging, strong silhouette, serious theatrical camp,
+      original character design, no readable text, no logo, no watermark, one scene only, one image only, no collage,
+      no contact sheet, no comic panels. Create the full-color source illustration for the scene titled The Unwrapped
+      Critic. Scene composition: Tut-Tut corrects a museum display while scarab cufflinks carry new labels and a
+      tiny sandstorm removes bad lighting. Use broad linen wraps, tablet glyph panels, and fan-cape sections. Character
+      design context: Original character design of King Tut-Tut, a witty mummy drag king and furious museum critic,
+      wrapped in elegant linen beneath a sharply pleated tuxedo, asymmetrical lapis crown, jeweled harness, scarab
+      cufflinks and fan cape, holding a stone review tablet while tiny sandstorms rearrange incorrect museum labels;
+      ancient relief geometry blended with contemporary high-fashion editorial photography, rich gold and blue,
+      all-ages, no text, no copied death mask.'
+    source_file: projects/coloring-book/sets/monster-recast/pages.yaml
+    source_slug: king-tut-tut-solo
+    characters:
+    - king-tut-tut
+  - project: coloring-book
+    set: monster-recast
+    kind: page-source
+    slug: delta-drench-solo
+    title: Duchess of the Drowned Delta
+    variant: color
+    target_repo: silasfelinus/conductor
+    image_path: projects/coloring-book/sets/monster-recast/generated/color/pages/delta-drench-solo.webp
+    size: 2048x2732
+    status: pending
+    engine: flux
+    steps: 36
+    prompt: 'Premium full-color graphic horror illustration for Monster Recast, portrait 3:4 composition, thick
+      confident black outlines, extremely detailed but readable shapes, flat bounded color fills, hard-edged secondary
+      color shapes instead of gradients, dramatic cinematic staging, strong silhouette, serious theatrical camp,
+      original character design, no readable text, no logo, no watermark, one scene only, one image only, no collage,
+      no contact sheet, no comic panels. Create the full-color source illustration for the scene titled Duchess
+      of the Drowned Delta. Scene composition: Delta steps from her pink rescue boat among cattails, dragonflies,
+      and warning buoys while carrying a rescued duck. Keep water shapes open and avoid dense ripples. Character
+      design context: Original full-body concept art of Delta Drench, an amphibious river-monster diva and wetland
+      guardian, sleek teal body, bell-shaped coral gill collar, long webbed hands, shell corset, translucent raincoat
+      train and lily-pad fascinator, posing beside a pink rescue speedboat among cattails and dragonflies; lush
+      1950s aquatic science-fiction color illustration with fashion-ad polish, bright optimistic menace, no text,
+      no existing lagoon creature.'
+    source_file: projects/coloring-book/sets/monster-recast/pages.yaml
+    source_slug: delta-drench-solo
+    characters:
+    - delta-drench
+  - project: coloring-book
+    set: monster-recast
+    kind: page-source
+    slug: mister-nobody-solo
+    title: Mostly Accessories
+    variant: color
+    target_repo: silasfelinus/conductor
+    image_path: projects/coloring-book/sets/monster-recast/generated/color/pages/mister-nobody-solo.webp
+    size: 2048x2732
+    status: pending
+    engine: flux
+    steps: 36
+    prompt: 'Premium full-color graphic horror illustration for Monster Recast, portrait 3:4 composition, thick
+      confident black outlines, extremely detailed but readable shapes, flat bounded color fills, hard-edged secondary
+      color shapes instead of gradients, dramatic cinematic staging, strong silhouette, serious theatrical camp,
+      original character design, no readable text, no logo, no watermark, one scene only, one image only, no collage,
+      no contact sheet, no comic panels. Create the full-color source illustration for the scene titled Mostly Accessories.
+      Scene composition: Mister Nobody performs a card trick in an empty spotlight, with floating jacket, gloves,
+      shoes, moustache, and cane. Let negative space define the invisible body and keep mirrors simple enough for
+      flood fill. Character design context: Original concept art of Mister Nobody, an invisible drag king stage
+      magician represented only by a perfectly tailored white dinner jacket, broad trousers, jeweled gloves, patent
+      boots, top hat, floating spectacles and a curled moustache suspended in empty air, performing amid mirrors
+      and wandering footprints; minimalist surrealist theatre photography translated into painted poster art, witty
+      negative space, jewel accents, all-ages uncanny, no text, no bandaged invisible character.'
+    source_file: projects/coloring-book/sets/monster-recast/pages.yaml
+    source_slug: mister-nobody-solo
+    characters:
+    - mister-nobody
+  - project: coloring-book
+    set: monster-recast
+    kind: page-source
+    slug: madame-phantasm-solo
+    title: The Unmasked Maestro
+    variant: color
+    target_repo: silasfelinus/conductor
+    image_path: projects/coloring-book/sets/monster-recast/generated/color/pages/madame-phantasm-solo.webp
+    size: 2048x2732
+    status: pending
+    engine: flux
+    steps: 36
+    prompt: 'Premium full-color graphic horror illustration for Monster Recast, portrait 3:4 composition, thick
+      confident black outlines, extremely detailed but readable shapes, flat bounded color fills, hard-edged secondary
+      color shapes instead of gradients, dramatic cinematic staging, strong silhouette, serious theatrical camp,
+      original character design, no readable text, no logo, no watermark, one scene only, one image only, no collage,
+      no contact sheet, no comic panels. Create the full-color source illustration for the scene titled The Unmasked
+      Maestro. Scene composition: Madame Phantasm conducts an orchestra of singing masks as chandeliers bow in an
+      impossible underground opera house. Simplify organ-pipe architecture into strong repeating shapes. Character
+      design context: Original full-body character art of Madame Phantasm, a formidable woman opera composer haunting
+      an impossible underground theatre, angular black velvet gown shaped like organ pipes, mirrored shoulder fins,
+      sheet-music gloves, tuning-fork baton, a fan of small singing masks orbiting her face, chandeliers bowing
+      overhead; German Expressionist stage design with severe shadows and hand-painted theatrical color, elegant
+      all-ages gothic, no text, no familiar opera phantom costume.'
+    source_file: projects/coloring-book/sets/monster-recast/pages.yaml
+    source_slug: madame-phantasm-solo
+    characters:
+    - madame-phantasm
+  - project: coloring-book
+    set: monster-recast
+    kind: page-source
+    slug: hex-appeal-solo
+    title: Ask the Abyss
+    variant: color
+    target_repo: silasfelinus/conductor
+    image_path: projects/coloring-book/sets/monster-recast/generated/color/pages/hex-appeal-solo.webp
+    size: 2048x2732
+    status: pending
+    engine: flux
+    steps: 36
+    prompt: 'Premium full-color graphic horror illustration for Monster Recast, portrait 3:4 composition, thick
+      confident black outlines, extremely detailed but readable shapes, flat bounded color fills, hard-edged secondary
+      color shapes instead of gradients, dramatic cinematic staging, strong silhouette, serious theatrical camp,
+      original character design, no readable text, no logo, no watermark, one scene only, one image only, no collage,
+      no contact sheet, no comic panels. Create the full-color source illustration for the scene titled Ask the
+      Abyss. Scene composition: Hex Appeal hosts a moon-orbit advice show, stirring a galaxy in a teacup while star
+      telephones light up. Use spiral hat bands, zodiac panels, and large cosmic swirls as color zones. Character
+      design context: Original concept art of Hex Appeal, a nonbinary cosmic witch hosting a supernatural advice
+      show, enormous spiral hat, crescent shoulders, psychedelic celestial caftan, crystal spectacles, constellation
+      gloves, stirring a galaxy in a teacup while star-shaped telephones ring around an orbiting moon cottage; bold
+      1970s occult screen print with layered fluorescent inks and crisp graphic forms, funny and mystical, all-ages,
+      no text, no existing witch character.'
+    source_file: projects/coloring-book/sets/monster-recast/pages.yaml
+    source_slug: hex-appeal-solo
+    characters:
+    - hex-appeal
+  - project: coloring-book
+    set: monster-recast
+    kind: page-source
+    slug: sister-sinema-solo
+    title: The Possessed Picture
+    variant: color
+    target_repo: silasfelinus/conductor
+    image_path: projects/coloring-book/sets/monster-recast/generated/color/pages/sister-sinema-solo.webp
+    size: 2048x2732
+    status: pending
+    engine: flux
+    steps: 36
+    prompt: 'Premium full-color graphic horror illustration for Monster Recast, portrait 3:4 composition, thick
+      confident black outlines, extremely detailed but readable shapes, flat bounded color fills, hard-edged secondary
+      color shapes instead of gradients, dramatic cinematic staging, strong silhouette, serious theatrical camp,
+      original character design, no readable text, no logo, no watermark, one scene only, one image only, no collage,
+      no contact sheet, no comic panels. Create the full-color source illustration for the scene titled The Possessed
+      Picture. Scene composition: Sister Sinema walks a premiere staircase as strips of film reveal alternate versions
+      of her expression. Keep each film frame large, distinct, and colorable rather than photorealistic. Character
+      design context: Original portrait of Sister Sinema, a possessed old-Hollywood star whose elegant ivory premiere
+      gown dissolves into curling strips of film, projector-reel halo behind her head, black opera gloves, multiple
+      subtle alternate expressions appearing in the film frames around her, holding a clapperboard fan in a haunted
+      palace cinema; baroque devotional composition fused with drive-in horror poster printing, luminous and strange,
+      all-ages, no text, no existing possession character.'
+    source_file: projects/coloring-book/sets/monster-recast/pages.yaml
+    source_slug: sister-sinema-solo
+    characters:
+    - sister-sinema
+  - project: coloring-book
+    set: monster-recast
+    kind: page-source
+    slug: stella-vore-solo
+    title: Mother of Meteors
+    variant: color
+    target_repo: silasfelinus/conductor
+    image_path: projects/coloring-book/sets/monster-recast/generated/color/pages/stella-vore-solo.webp
+    size: 2048x2732
+    status: pending
+    engine: flux
+    steps: 36
+    prompt: 'Premium full-color graphic horror illustration for Monster Recast, portrait 3:4 composition, thick
+      confident black outlines, extremely detailed but readable shapes, flat bounded color fills, hard-edged secondary
+      color shapes instead of gradients, dramatic cinematic staging, strong silhouette, serious theatrical camp,
+      original character design, no readable text, no logo, no watermark, one scene only, one image only, no collage,
+      no contact sheet, no comic panels. Create the full-color source illustration for the scene titled Mother of
+      Meteors. Scene composition: Stella Vore tends floating star eggs beside a retro drive-in screen while offering
+      a tiny moon as a diplomatic gift. Use radial crown petals, crystal armor facets, and lantern abdomen panels.
+      Character design context: Original full-body concept art of Stella Vore, a crystalline extraterrestrial empress
+      and cosmic diplomat, radial flower-like crown, four sweeping hip structures, glowing lantern abdomen, opalescent
+      natural armor arranged like couture and a translucent meteor-glass mantle, tending floating star eggs outside
+      a retro drive-in theatre; 1970s retrofuturist space-opera painting with prism light and elegant alien anatomy,
+      no text, no familiar biomechanical alien silhouette.'
+    source_file: projects/coloring-book/sets/monster-recast/pages.yaml
+    source_slug: stella-vore-solo
+    characters:
+    - stella-vore
+  - project: coloring-book
+    set: monster-recast
+    kind: page-source
+    slug: mister-finale-solo
+    title: The Last Act
+    variant: color
+    target_repo: silasfelinus/conductor
+    image_path: projects/coloring-book/sets/monster-recast/generated/color/pages/mister-finale-solo.webp
+    size: 2048x2732
+    status: pending
+    engine: flux
+    steps: 36
+    prompt: 'Premium full-color graphic horror illustration for Monster Recast, portrait 3:4 composition, thick
+      confident black outlines, extremely detailed but readable shapes, flat bounded color fills, hard-edged secondary
+      color shapes instead of gradients, dramatic cinematic staging, strong silhouette, serious theatrical camp,
+      original character design, no readable text, no logo, no watermark, one scene only, one image only, no collage,
+      no contact sheet, no comic panels. Create the full-color source illustration for the scene titled The Last
+      Act. Scene composition: Mister Finalé tap-dances down a backstage corridor while cutting a tangled stage rope
+      with oversized blunt shears. Show the rotating three-expression mask clearly and avoid realistic violence.
+      Character design context: Original character poster of Mister Finalé, a silent masked drag king stalking an
+      ornate backstage, slim black usher coat, red waistcoat, ticket-stub epaulettes, polished tap shoes, carrying
+      oversized blunt stage shears, face hidden by a unique circular mask with three rotating theatrical expressions,
+      cue lights glowing through velvet curtains; 1980s screen-printed video-store suspense poster, graphic shadows,
+      no gore, all-ages spooky, no text, no recognizable slasher mask or costume.'
+    source_file: projects/coloring-book/sets/monster-recast/pages.yaml
+    source_slug: mister-finale-solo
+    characters:
+    - mister-finale
+  - project: coloring-book
+    set: monster-recast
+    kind: page-source
+    slug: velvet-nightmare-solo
+    title: Checkout at Dawn
+    variant: color
+    target_repo: silasfelinus/conductor
+    image_path: projects/coloring-book/sets/monster-recast/generated/color/pages/velvet-nightmare-solo.webp
+    size: 2048x2732
+    status: pending
+    engine: flux
+    steps: 36
+    prompt: 'Premium full-color graphic horror illustration for Monster Recast, portrait 3:4 composition, thick
+      confident black outlines, extremely detailed but readable shapes, flat bounded color fills, hard-edged secondary
+      color shapes instead of gradients, dramatic cinematic staging, strong silhouette, serious theatrical camp,
+      original character design, no readable text, no logo, no watermark, one scene only, one image only, no collage,
+      no contact sheet, no comic panels. Create the full-color source illustration for the scene titled Checkout
+      at Dawn. Scene composition: Velvet Nightmare offers a room key in a hotel corridor folding into an eye-shaped
+      doorway while a sleepy shadow snores. Use long elegant lines, patterned trousers, and a few large surreal
+      door shapes. Character design context: Original full-body concept art of Velvet Nightmare, a nonbinary cabaret
+      ghoul who manages a hotel between dreams, impossibly long graceful limbs, plum velvet smoking jacket, moon-striped
+      wide trousers, crescent shoulders, door-shaped rings and a halo of whispering brass room keys, standing in
+      a corridor that folds into an eye; 1920s Surrealist dreamscape with theatrical gouache textures and elegant
+      fashion drawing, eerie but inviting, no text, no recognizable dream-slasher features.'
+    source_file: projects/coloring-book/sets/monster-recast/pages.yaml
+    source_slug: velvet-nightmare-solo
+    characters:
+    - velvet-nightmare
+  - project: coloring-book
+    set: monster-recast
+    kind: page-source
+    slug: sir-loin-solo
+    title: Five-Star Fright Stop
+    variant: color
+    target_repo: silasfelinus/conductor
+    image_path: projects/coloring-book/sets/monster-recast/generated/color/pages/sir-loin-solo.webp
+    size: 2048x2732
+    status: pending
+    engine: flux
+    steps: 36
+    prompt: 'Premium full-color graphic horror illustration for Monster Recast, portrait 3:4 composition, thick
+      confident black outlines, extremely detailed but readable shapes, flat bounded color fills, hard-edged secondary
+      color shapes instead of gradients, dramatic cinematic staging, strong silhouette, serious theatrical camp,
+      original character design, no readable text, no logo, no watermark, one scene only, one image only, no collage,
+      no contact sheet, no comic panels. Create the full-color source illustration for the scene titled Five-Star
+      Fright Stop. Scene composition: Sir Loin serves a towering vegetable sandwich while haunted kitchen appliances
+      sing behind the roadside counter. The modified hedge-trimmer tool rests safely beside a biscuit tin. Character
+      design context: Original character concept of Sir Loin, a stocky rural butcher drag king and haunted roadside
+      chef, towering cowboy quiff, rhinestone red butcher apron over a blue western shirt, oven-mitt gauntlets,
+      steel-toe platform boots, holding a brightly modified hedge-trimmer saw while smiling appliances peek from
+      a singing smokehouse; bold American roadside linocut poster with hand-inked texture and comic folk-horror
+      energy, no gore, no text, no recognizable chainsaw-film character.'
+    source_file: projects/coloring-book/sets/monster-recast/pages.yaml
+    source_slug: sir-loin-solo
+    characters:
+    - sir-loin
+  - project: coloring-book
+    set: monster-recast
+    kind: page-source
+    slug: madame-colossa-solo
+    title: The Skyline Preservationist
+    variant: color
+    target_repo: silasfelinus/conductor
+    image_path: projects/coloring-book/sets/monster-recast/generated/color/pages/madame-colossa-solo.webp
+    size: 2048x2732
+    status: pending
+    engine: flux
+    steps: 36
+    prompt: 'Premium full-color graphic horror illustration for Monster Recast, portrait 3:4 composition, thick
+      confident black outlines, extremely detailed but readable shapes, flat bounded color fills, hard-edged secondary
+      color shapes instead of gradients, dramatic cinematic staging, strong silhouette, serious theatrical camp,
+      original character design, no readable text, no logo, no watermark, one scene only, one image only, no collage,
+      no contact sheet, no comic panels. Create the full-color source illustration for the scene titled The Skyline
+      Preservationist. Scene composition: Madame Colossa kneels beside the theatre she saved, wearing a chandelier
+      brooch while tiny guests toast from balconies. Use her beaded gown panels, fur waves, orchids, and city windows
+      as balanced coloring regions. Character design context: Original grand portrait of Madame Colossa, a colossal
+      elegant mountain-ape socialite kneeling beside an Art Nouveau city theatre she has saved from demolition,
+      sculpted finger-wave fur, emerald and peacock beaded gown panels, skyscraper-length stole, chandelier brooch
+      and opera gloves, tiny gala guests greeting her from balconies; sumptuous Art Nouveau poster composition with
+      botanical borders and architectural detail, celebratory not captive, no text, no famous giant-ape scene.'
+    source_file: projects/coloring-book/sets/monster-recast/pages.yaml
+    source_slug: madame-colossa-solo
+    characters:
+    - madame-colossa
+  - project: coloring-book
+    set: monster-recast
+    kind: page-source
+    slug: titania-rex-solo
+    title: Emergency Broadcast Queen
+    variant: color
+    target_repo: silasfelinus/conductor
+    image_path: projects/coloring-book/sets/monster-recast/generated/color/pages/titania-rex-solo.webp
+    size: 2048x2732
+    status: pending
+    engine: flux
+    steps: 36
+    prompt: 'Premium full-color graphic horror illustration for Monster Recast, portrait 3:4 composition, thick
+      confident black outlines, extremely detailed but readable shapes, flat bounded color fills, hard-edged secondary
+      color shapes instead of gradients, dramatic cinematic staging, strong silhouette, serious theatrical camp,
+      original character design, no readable text, no logo, no watermark, one scene only, one image only, no collage,
+      no contact sheet, no comic panels. Create the full-color source illustration for the scene titled Emergency
+      Broadcast Queen. Scene composition: Titania Rex wraps her tail around a bonsai city and points toward an unsafe
+      reactor as solar fins display warning symbols. Keep the crystal scale gown graphic and distinct from familiar
+      kaiju anatomy. Character design context: Original full-body monster art of Titania Rex, a colossal crowned
+      reptilian matriarch and environmental warning made flesh, upright queenly posture, fan-shaped translucent
+      solar fins displaying emergency icons, charcoal crystal scales flowing like a ceremonial gown, powerful tail
+      curling around a tiny bonsai city; Japanese woodblock-inspired storm print with bold carved contours, flat
+      mineral color and immense scale, no text, no recognizable kaiju anatomy or signature attack.'
+    source_file: projects/coloring-book/sets/monster-recast/pages.yaml
+    source_slug: titania-rex-solo
+    characters:
+    - titania-rex
+  - project: coloring-book
+    set: monster-recast
+    kind: page-source
+    slug: chum-darling-solo
+    title: Miss Feeding Frenzy
+    variant: color
+    target_repo: silasfelinus/conductor
+    image_path: projects/coloring-book/sets/monster-recast/generated/color/pages/chum-darling-solo.webp
+    size: 2048x2732
+    status: pending
+    engine: flux
+    steps: 36
+    prompt: 'Premium full-color graphic horror illustration for Monster Recast, portrait 3:4 composition, thick
+      confident black outlines, extremely detailed but readable shapes, flat bounded color fills, hard-edged secondary
+      color shapes instead of gradients, dramatic cinematic staging, strong silhouette, serious theatrical camp,
+      original character design, no readable text, no logo, no watermark, one scene only, one image only, no collage,
+      no contact sheet, no comic panels. Create the full-color source illustration for the scene titled Miss Feeding
+      Frenzy. Scene composition: Chum Darling directs a synchronized-swimming safety routine beneath striped umbrellas
+      and lifeguard flags. Use mod fashion blocks, wave curls, and pearl details with broad white breathing room.
+      Character design context: Original character illustration of Chum Darling, a glamorous upright shark-woman
+      seaside safety inspector, dorsal-fin bouffant, expressive friendly shark face, aqua 1960s mod swimsuit gown,
+      red lifesaver sash, cat-eye goggles and pearl flipper heels, directing synchronized swimmers beneath striped
+      umbrellas; bright mid-century beach-travel poster with clean geometric shapes and playful suspense, all-ages,
+      no text, no attack scene, no recognizable shark-film composition.'
+    source_file: projects/coloring-book/sets/monster-recast/pages.yaml
+    source_slug: chum-darling-solo
+    characters:
+    - chum-darling
+  - project: coloring-book
+    set: monster-recast
+    kind: page-source
+    slug: babs-o-blob-solo
+    title: Every Role at Once
+    variant: color
+    target_repo: silasfelinus/conductor
+    image_path: projects/coloring-book/sets/monster-recast/generated/color/pages/babs-o-blob-solo.webp
+    size: 2048x2732
+    status: pending
+    engine: flux
+    steps: 36
+    prompt: 'Premium full-color graphic horror illustration for Monster Recast, portrait 3:4 composition, thick
+      confident black outlines, extremely detailed but readable shapes, flat bounded color fills, hard-edged secondary
+      color shapes instead of gradients, dramatic cinematic staging, strong silhouette, serious theatrical camp,
+      original character design, no readable text, no logo, no watermark, one scene only, one image only, no collage,
+      no contact sheet, no comic panels. Create the full-color source illustration for the scene titled Every Role
+      at Once. Scene composition: Babs O''Blob auditions as an entire cast, forming several expressive faces and
+      gloved hands from one flowing body. Divide the liquid silhouette into large accessory-filled regions without
+      using gray transparency. Character design context: Original full-body concept art of Babs O''Blob, a joyous
+      translucent raspberry-colored shapeshifting starlet, elegant face emerging from glossy protoplasm, many opera-gloved
+      hands, liquid train, jewelry and tiny shoes suspended inside her body, posing beneath gelatin spotlights on
+      a soundstage; surreal mid-century dessert advertisement fused with glamorous studio portraiture, luminous
+      transparency, playful all-ages creature, no text, no existing blob monster.'
+    source_file: projects/coloring-book/sets/monster-recast/pages.yaml
+    source_slug: babs-o-blob-solo
+    characters:
+    - babs-o-blob
+  - project: coloring-book
+    set: monster-recast
+    kind: page-source
+    slug: podrick-bloom-solo
+    title: The Perfect Substitute
+    variant: color
+    target_repo: silasfelinus/conductor
+    image_path: projects/coloring-book/sets/monster-recast/generated/color/pages/podrick-bloom-solo.webp
+    size: 2048x2732
+    status: pending
+    engine: flux
+    steps: 36
+    prompt: 'Premium full-color graphic horror illustration for Monster Recast, portrait 3:4 composition, thick
+      confident black outlines, extremely detailed but readable shapes, flat bounded color fills, hard-edged secondary
+      color shapes instead of gradients, dramatic cinematic staging, strong silhouette, serious theatrical camp,
+      original character design, no readable text, no logo, no watermark, one scene only, one image only, no collage,
+      no contact sheet, no comic panels. Create the full-color source illustration for the scene titled The Perfect
+      Substitute. Scene composition: Podrick Bloom waters flowers grown from his own footprints while memory rain
+      falls inside a moonlit greenhouse. Use botanical engraving shapes simplified into closed leaves, petals, glass
+      panes, and suit panels. Character design context: Original character concept of Podrick Bloom, an extraterrestrial
+      botanical drag king grown from a memory seed, slender body with subtle bark texture, petal pompadour, leaf-green
+      morning suit, seed-pearl waistcoat, orchid boutonniere and rootwood cane, standing in an overnight greenhouse
+      where his footprints sprout duplicate flowers; richly detailed Victorian botanical engraving colored by hand,
+      melancholic and elegant, no text, no familiar pod prop.'
+    source_file: projects/coloring-book/sets/monster-recast/pages.yaml
+    source_slug: podrick-bloom-solo
+    characters:
+    - podrick-bloom
+  - project: coloring-book
+    set: monster-recast
+    kind: page-source
+    slug: fly-boy-floyd-solo
+    title: The Buzz Club
+    variant: color
+    target_repo: silasfelinus/conductor
+    image_path: projects/coloring-book/sets/monster-recast/generated/color/pages/fly-boy-floyd-solo.webp
+    size: 2048x2732
+    status: pending
+    engine: flux
+    steps: 36
+    prompt: 'Premium full-color graphic horror illustration for Monster Recast, portrait 3:4 composition, thick
+      confident black outlines, extremely detailed but readable shapes, flat bounded color fills, hard-edged secondary
+      color shapes instead of gradients, dramatic cinematic staging, strong silhouette, serious theatrical camp,
+      original character design, no readable text, no logo, no watermark, one scene only, one image only, no collage,
+      no contact sheet, no comic panels. Create the full-color source illustration for the scene titled The Buzz
+      Club. Scene composition: Fly Boy Floyd croons on a tiny jazz stage as compound eyes display miniature dancers
+      and wing coat-tails spread behind him. Keep insect anatomy elegant, clean, and divided into usable color regions.
+      Character design context: Original full-body character art of Fly Boy Floyd, an elegant human-fly hybrid lounge
+      singer, slender bottle-green insectoid body, huge amber compound eyes showing miniature music videos, antenna
+      pompadour, plum velvet suit, four translucent wings shaped like coat tails, singing into a polished proboscis
+      microphone inside the Buzz Club; Victorian entomology cabinet illustration fused with smoky jazz-poster painting,
+      charming and uncanny, no text, no recognizable transformation-film makeup.'
+    source_file: projects/coloring-book/sets/monster-recast/pages.yaml
+    source_slug: fly-boy-floyd-solo
+    characters:
+    - fly-boy-floyd
+  - project: coloring-book
+    set: monster-recast
+    kind: page-source
+    slug: miss-chiffonette-solo
+    title: Queen of the Nursery
+    variant: color
+    target_repo: silasfelinus/conductor
+    image_path: projects/coloring-book/sets/monster-recast/generated/color/pages/miss-chiffonette-solo.webp
+    size: 2048x2732
+    status: pending
+    engine: flux
+    steps: 36
+    prompt: 'Premium full-color graphic horror illustration for Monster Recast, portrait 3:4 composition, thick
+      confident black outlines, extremely detailed but readable shapes, flat bounded color fills, hard-edged secondary
+      color shapes instead of gradients, dramatic cinematic staging, strong silhouette, serious theatrical camp,
+      original character design, no readable text, no logo, no watermark, one scene only, one image only, no collage,
+      no contact sheet, no comic panels. Create the full-color source illustration for the scene titled Queen of
+      the Nursery. Scene composition: Miss Chiffonette presides over a dollhouse tea party with dust-bunny courtiers
+      and many tiny doors behind her. Make ribbon layers, porcelain panels, keys, and teacups detailed but not microscopic.
+      Character design context: Original character concept of Miss Chiffonette, a haunted porcelain fashion doll
+      and sovereign of an abandoned nursery, towering powder-blue chiffon wig, layered Edwardian ribbon gown, key-shaped
+      bustle, jointed fan sleeves, subtle moving cracks and a brass wind-up key, presiding over a candlelit dollhouse
+      tea court of dust bunnies; delicate Edwardian watercolor storybook illustration with eerie architectural detail,
+      all-ages, no text, no recognizable horror doll.'
+    source_file: projects/coloring-book/sets/monster-recast/pages.yaml
+    source_slug: miss-chiffonette-solo
+    characters:
+    - miss-chiffonette
+  - project: coloring-book
+    set: monster-recast
+    kind: page-source
+    slug: glamlin-solo
+    title: Quick-Change Creature
+    variant: color
+    target_repo: silasfelinus/conductor
+    image_path: projects/coloring-book/sets/monster-recast/generated/color/pages/glamlin-solo.webp
+    size: 2048x2732
+    status: pending
+    engine: flux
+    steps: 36
+    prompt: 'Premium full-color graphic horror illustration for Monster Recast, portrait 3:4 composition, thick
+      confident black outlines, extremely detailed but readable shapes, flat bounded color fills, hard-edged secondary
+      color shapes instead of gradients, dramatic cinematic staging, strong silhouette, serious theatrical camp,
+      original character design, no readable text, no logo, no watermark, one scene only, one image only, no collage,
+      no contact sheet, no comic panels. Create the full-color source illustration for the scene titled Quick-Change
+      Creature. Scene composition: Glamlin multiplies into a tiny backstage tailoring crew, each copy handling one
+      oversized costume tool. Use fabric patches, thread loops, measuring-tape bands, and ruffled spines as playful
+      color zones. Character design context: Original creature concept of Glamlin, a tiny nonbinary glitter-fed
+      backstage imp with asymmetrical bat ears, enormous dexterous tailoring hands, ruffled spine, bobbin-shaped
+      tail, patchwork tool vest, measuring-tape scarf, thimble boots and pin-cushion bracelets, multiplying into
+      a costume crew under roaring applause; handcrafted stop-motion maquette aesthetic using felt, latex, thread
+      and miniature theatre props, vibrant and lovable, no text, no recognizable mischievous movie creature.'
+    source_file: projects/coloring-book/sets/monster-recast/pages.yaml
+    source_slug: glamlin-solo
+    characters:
+    - glamlin
+  - project: coloring-book
+    set: monster-recast
+    kind: page-source
+    slug: jackie-o-lantern-solo
+    title: Duchess of the Detour
+    variant: color
+    target_repo: silasfelinus/conductor
+    image_path: projects/coloring-book/sets/monster-recast/generated/color/pages/jackie-o-lantern-solo.webp
+    size: 2048x2732
+    status: pending
+    engine: flux
+    steps: 36
+    prompt: 'Premium full-color graphic horror illustration for Monster Recast, portrait 3:4 composition, thick
+      confident black outlines, extremely detailed but readable shapes, flat bounded color fills, hard-edged secondary
+      color shapes instead of gradients, dramatic cinematic staging, strong silhouette, serious theatrical camp,
+      original character design, no readable text, no logo, no watermark, one scene only, one image only, no collage,
+      no contact sheet, no comic panels. Create the full-color source illustration for the scene titled Duchess
+      of the Detour. Scene composition: Jackie O''Lantern leads lost travelers past a dangerous bridge on her flaming
+      brass motorcycle-horse. Keep the pumpkin face, cavalry tuxedo, leaf epaulettes, wheel cape, and detour signs
+      clear and colorable. Character design context: Original full-body concept art of Jackie O''Lantern, a glamorous
+      headless harvest rider and autumn parade marshal, detachable blazing pumpkin helmet with changing carved expression,
+      black-and-orange cavalry tuxedo, reflective sash, leaf epaulettes, split riding coat and wheel-like cape,
+      riding a supernatural motorcycle-horse made of flame and brass detour signs; layered paper-cut shadow theatre
+      with glowing translucent color, dynamic folkloric silhouette, all-ages spooky, no text, no recognizable headless-rider
+      adaptation.'
+    source_file: projects/coloring-book/sets/monster-recast/pages.yaml
+    source_slug: jackie-o-lantern-solo
+    characters:
+    - jackie-o-lantern
+  - project: coloring-book
+    set: monster-recast
+    kind: page-source
+    slug: midnight-double-feature
+    title: Midnight Double Feature
+    variant: color
+    target_repo: silasfelinus/conductor
+    image_path: projects/coloring-book/sets/monster-recast/generated/color/pages/midnight-double-feature.webp
+    size: 2048x2732
+    status: pending
+    engine: flux
+    steps: 36
+    prompt: 'Premium full-color graphic horror illustration for Monster Recast, portrait 3:4 composition, thick
+      confident black outlines, extremely detailed but readable shapes, flat bounded color fills, hard-edged secondary
+      color shapes instead of gradients, dramatic cinematic staging, strong silhouette, serious theatrical camp,
+      original character design, no readable text, no logo, no watermark, one scene only, one image only, no collage,
+      no contact sheet, no comic panels. Create the full-color source illustration for the scene titled Midnight
+      Double Feature. Scene composition: Vesper watches from a cinema balcony while Madame Phantasm conducts the
+      movie screen itself; moths become music notes between them. Compose as two distinct figures joined by sweeping
+      curtains and projector beams. Character design context: Original portrait of Countess Vesper Vane, a gender-recast
+      vampire aristocrat and owner of a decaying midnight cinema, towering crescent pompadour, wing-sleeved Art
+      Deco coat, jeweled tuxedo corset, white roses losing their color around her, moths drifting through projector
+      light; elegant 1930s geometric poster design fused with richly painted gothic portraiture, dramatic balcony
+      architecture, sophisticated all-ages horror, no text, no existing vampire character, no actor likeness. Original
+      full-body character art of Madame Phantasm, a formidable woman opera composer haunting an impossible underground
+      theatre, angular black velvet gown shaped like organ pipes, mirrored shoulder fins, sheet-music gloves, tuning-fork
+      baton, a fan of small singing masks orbiting her face, chandeliers bowing overhead; German Expressionist stage
+      design with severe shadows and hand-painted theatrical color, elegant all-ages gothic, no text, no familiar
+      opera phantom costume.'
+    source_file: projects/coloring-book/sets/monster-recast/pages.yaml
+    source_slug: midnight-double-feature
+    characters:
+    - countess-vesper-vane
+    - madame-phantasm
+  - project: coloring-book
+    set: monster-recast
+    kind: page-source
+    slug: city-scale-gala
+    title: The Biggest Night in Town
+    variant: color
+    target_repo: silasfelinus/conductor
+    image_path: projects/coloring-book/sets/monster-recast/generated/color/pages/city-scale-gala.webp
+    size: 2048x2732
+    status: pending
+    engine: flux
+    steps: 36
+    prompt: 'Premium full-color graphic horror illustration for Monster Recast, portrait 3:4 composition, thick
+      confident black outlines, extremely detailed but readable shapes, flat bounded color fills, hard-edged secondary
+      color shapes instead of gradients, dramatic cinematic staging, strong silhouette, serious theatrical camp,
+      original character design, no readable text, no logo, no watermark, one scene only, one image only, no collage,
+      no contact sheet, no comic panels. Create the full-color source illustration for the scene titled The Biggest
+      Night in Town. Scene composition: Madame Colossa and Titania Rex attend an outdoor gala beside the tiny preserved
+      theatre, trading bonsai centerpieces while helicopters hang chandeliers. Emphasize friendly scale contrast
+      and two completely different giant silhouettes. Character design context: Original grand portrait of Madame
+      Colossa, a colossal elegant mountain-ape socialite kneeling beside an Art Nouveau city theatre she has saved
+      from demolition, sculpted finger-wave fur, emerald and peacock beaded gown panels, skyscraper-length stole,
+      chandelier brooch and opera gloves, tiny gala guests greeting her from balconies; sumptuous Art Nouveau poster
+      composition with botanical borders and architectural detail, celebratory not captive, no text, no famous giant-ape
+      scene. Original full-body monster art of Titania Rex, a colossal crowned reptilian matriarch and environmental
+      warning made flesh, upright queenly posture, fan-shaped translucent solar fins displaying emergency icons,
+      charcoal crystal scales flowing like a ceremonial gown, powerful tail curling around a tiny bonsai city; Japanese
+      woodblock-inspired storm print with bold carved contours, flat mineral color and immense scale, no text, no
+      recognizable kaiju anatomy or signature attack.'
+    source_file: projects/coloring-book/sets/monster-recast/pages.yaml
+    source_slug: city-scale-gala
+    characters:
+    - madame-colossa
+    - titania-rex
+  - project: coloring-book
+    set: monster-recast
+    kind: page-source
+    slug: cosmic-quick-change
+    title: Catastrophe Couture
+    variant: color
+    target_repo: silasfelinus/conductor
+    image_path: projects/coloring-book/sets/monster-recast/generated/color/pages/cosmic-quick-change.webp
+    size: 2048x2732
+    status: pending
+    engine: flux
+    steps: 36
+    prompt: 'Premium full-color graphic horror illustration for Monster Recast, portrait 3:4 composition, thick
+      confident black outlines, extremely detailed but readable shapes, flat bounded color fills, hard-edged secondary
+      color shapes instead of gradients, dramatic cinematic staging, strong silhouette, serious theatrical camp,
+      original character design, no readable text, no logo, no watermark, one scene only, one image only, no collage,
+      no contact sheet, no comic panels. Create the full-color source illustration for the scene titled Catastrophe
+      Couture. Scene composition: Pound Foolish and Stella Vore compete in a cosmic runway finale while dozens of
+      Glamlin copies perform impossible costume changes. Keep the trio readable with Pound left, Stella right, and
+      a flowing ribbon of small Glamlins below. Character design context: Original full-body character concept art
+      of Pound Foolish, a colossal alien demoness clown and glamorous cosmic ringmaster, six elegant arms, towering
+      sculptural harlequin gown, tiny crown, orbiting moon earrings, comet-tail ruff, standing beneath a striped
+      meteor circus tent on an impossible asteroid; lush 1970s airbrush fantasy poster mixed with theatrical fashion
+      illustration, saturated cosmic color, intricate but readable silhouette, playful menace, all-ages spooky,
+      no text, no existing franchise character, no actor likeness. Original full-body concept art of Stella Vore,
+      a crystalline extraterrestrial empress and cosmic diplomat, radial flower-like crown, four sweeping hip structures,
+      glowing lantern abdomen, opalescent natural armor arranged like couture and a translucent meteor-glass mantle,
+      tending floating star eggs outside a retro drive-in theatre; 1970s retrofuturist space-opera painting with
+      prism light and elegant alien anatomy, no text, no familiar biomechanical alien silhouette. Original creature
+      concept of Glamlin, a tiny nonbinary glitter-fed backstage imp with asymmetrical bat ears, enormous dexterous
+      tailoring hands, ruffled spine, bobbin-shaped tail, patchwork tool vest, measuring-tape scarf, thimble boots
+      and pin-cushion bracelets, multiplying into a costume crew under roaring applause; handcrafted stop-motion
+      maquette aesthetic using felt, latex, thread and miniature theatre props, vibrant and lovable, no text, no
+      recognizable mischievous movie creature.'
+    source_file: projects/coloring-book/sets/monster-recast/pages.yaml
+    source_slug: cosmic-quick-change
+    characters:
+    - pound-foolish
+    - stella-vore
+    - glamlin
+  - project: coloring-book
+    set: monster-recast
+    kind: page-source
+    slug: monster-recast-premiere
+    title: The Monster Recast Premiere
+    variant: color
+    target_repo: silasfelinus/conductor
+    image_path: projects/coloring-book/sets/monster-recast/generated/color/pages/monster-recast-premiere.webp
+    size: 2048x2732
+    status: pending
+    engine: flux
+    steps: 36
+    prompt: 'Premium full-color graphic horror illustration for Monster Recast, portrait 3:4 composition, thick
+      confident black outlines, extremely detailed but readable shapes, flat bounded color fills, hard-edged secondary
+      color shapes instead of gradients, dramatic cinematic staging, strong silhouette, serious theatrical camp,
+      original character design, no readable text, no logo, no watermark, one scene only, one image only, no collage,
+      no contact sheet, no comic panels. Create the full-color source illustration for the scene titled The Monster
+      Recast Premiere. Scene composition: Full cast outside the Bijou Theatre for opening night. Arrange giant characters
+      as architectural framing, medium figures on stairs and balconies, and small characters in the foreground.
+      Every face and core silhouette must remain identifiable. Character design context: Original full-body character
+      concept art of Pound Foolish, a colossal alien demoness clown and glamorous cosmic ringmaster, six elegant
+      arms, towering sculptural harlequin gown, tiny crown, orbiting moon earrings, comet-tail ruff, standing beneath
+      a striped meteor circus tent on an impossible asteroid; lush 1970s airbrush fantasy poster mixed with theatrical
+      fashion illustration, saturated cosmic color, intricate but readable silhouette, playful menace, all-ages
+      spooky, no text, no existing franchise character, no actor likeness. Original portrait of Countess Vesper
+      Vane, a gender-recast vampire aristocrat and owner of a decaying midnight cinema, towering crescent pompadour,
+      wing-sleeved Art Deco coat, jeweled tuxedo corset, white roses losing their color around her, moths drifting
+      through projector light; elegant 1930s geometric poster design fused with richly painted gothic portraiture,
+      dramatic balcony architecture, sophisticated all-ages horror, no text, no existing vampire character, no actor
+      likeness. Original full-body concept art of Frankie Stitches, a huge reanimated drag king lounge singer with
+      quilt-like body seams, sweeping pompadour, patchwork tuxedo, lightning-bolt lapels, platform boots, chrome
+      microphone connected to a heart-shaped voltmeter; exuberant 1950s hot-rod monster-magazine illustration with
+      hand-painted enamel texture and bold graphic shapes, sweet expression, laboratory stage set, all-ages spooky,
+      no text, no familiar stitched-monster makeup or copyrighted character. Original character concept of Mister
+      Matrimony, an elegant reanimated gothic groom with towering storm-cloud hair, mourning-white tailcoat, thorn
+      boutonniere, pearl gloves and a translucent smoke veil flowing from his shoulders, standing in a lightning-struck
+      wedding conservatory where lilies bloom from broken rings; Victorian funeral fashion plate rendered with luminous
+      watercolor and engraved detail, romantic and uncanny, all-ages, no text, no existing bride-monster design.
+      Original full-body concept art of Luna Howl, glamorous werewolf cabaret singer with an enormous crescent-shaped
+      silver mane, expressive lupine face, sequined cobalt jumpsuit, moon-phase belt, feathered shoulder cape and
+      clawed platform heels, singing beneath a perfectly round disco-ball moon; energetic 1980s neon nightclub poster
+      with practical-effects creature texture, crisp fashion silhouette, joyful all-ages horror, no text, no existing
+      werewolf. Original character design of King Tut-Tut, a witty mummy drag king and furious museum critic, wrapped
+      in elegant linen beneath a sharply pleated tuxedo, asymmetrical lapis crown, jeweled harness, scarab cufflinks
+      and fan cape, holding a stone review tablet while tiny sandstorms rearrange incorrect museum labels; ancient
+      relief geometry blended with contemporary high-fashion editorial photography, rich gold and blue, all-ages,
+      no text, no copied death mask. Original full-body concept art of Delta Drench, an amphibious river-monster
+      diva and wetland guardian, sleek teal body, bell-shaped coral gill collar, long webbed hands, shell corset,
+      translucent raincoat train and lily-pad fascinator, posing beside a pink rescue speedboat among cattails and
+      dragonflies; lush 1950s aquatic science-fiction color illustration with fashion-ad polish, bright optimistic
+      menace, no text, no existing lagoon creature. Original concept art of Mister Nobody, an invisible drag king
+      stage magician represented only by a perfectly tailored white dinner jacket, broad trousers, jeweled gloves,
+      patent boots, top hat, floating spectacles and a curled moustache suspended in empty air, performing amid
+      mirrors and wandering footprints; minimalist surrealist theatre photography translated into painted poster
+      art, witty negative space, jewel accents, all-ages uncanny, no text, no bandaged invisible character. Original
+      full-body character art of Madame Phantasm, a formidable woman opera composer haunting an impossible underground
+      theatre, angular black velvet gown shaped like organ pipes, mirrored shoulder fins, sheet-music gloves, tuning-fork
+      baton, a fan of small singing masks orbiting her face, chandeliers bowing overhead; German Expressionist stage
+      design with severe shadows and hand-painted theatrical color, elegant all-ages gothic, no text, no familiar
+      opera phantom costume. Original concept art of Hex Appeal, a nonbinary cosmic witch hosting a supernatural
+      advice show, enormous spiral hat, crescent shoulders, psychedelic celestial caftan, crystal spectacles, constellation
+      gloves, stirring a galaxy in a teacup while star-shaped telephones ring around an orbiting moon cottage; bold
+      1970s occult screen print with layered fluorescent inks and crisp graphic forms, funny and mystical, all-ages,
+      no text, no existing witch character. Original portrait of Sister Sinema, a possessed old-Hollywood star whose
+      elegant ivory premiere gown dissolves into curling strips of film, projector-reel halo behind her head, black
+      opera gloves, multiple subtle alternate expressions appearing in the film frames around her, holding a clapperboard
+      fan in a haunted palace cinema; baroque devotional composition fused with drive-in horror poster printing,
+      luminous and strange, all-ages, no text, no existing possession character. Original full-body concept art
+      of Stella Vore, a crystalline extraterrestrial empress and cosmic diplomat, radial flower-like crown, four
+      sweeping hip structures, glowing lantern abdomen, opalescent natural armor arranged like couture and a translucent
+      meteor-glass mantle, tending floating star eggs outside a retro drive-in theatre; 1970s retrofuturist space-opera
+      painting with prism light and elegant alien anatomy, no text, no familiar biomechanical alien silhouette.
+      Original character poster of Mister Finalé, a silent masked drag king stalking an ornate backstage, slim black
+      usher coat, red waistcoat, ticket-stub epaulettes, polished tap shoes, carrying oversized blunt stage shears,
+      face hidden by a unique circular mask with three rotating theatrical expressions, cue lights glowing through
+      velvet curtains; 1980s screen-printed video-store suspense poster, graphic shadows, no gore, all-ages spooky,
+      no text, no recognizable slasher mask or costume. Original full-body concept art of Velvet Nightmare, a nonbinary
+      cabaret ghoul who manages a hotel between dreams, impossibly long graceful limbs, plum velvet smoking jacket,
+      moon-striped wide trousers, crescent shoulders, door-shaped rings and a halo of whispering brass room keys,
+      standing in a corridor that folds into an eye; 1920s Surrealist dreamscape with theatrical gouache textures
+      and elegant fashion drawing, eerie but inviting, no text, no recognizable dream-slasher features. Original
+      character concept of Sir Loin, a stocky rural butcher drag king and haunted roadside chef, towering cowboy
+      quiff, rhinestone red butcher apron over a blue western shirt, oven-mitt gauntlets, steel-toe platform boots,
+      holding a brightly modified hedge-trimmer saw while smiling appliances peek from a singing smokehouse; bold
+      American roadside linocut poster with hand-inked texture and comic folk-horror energy, no gore, no text, no
+      recognizable chainsaw-film character. Original grand portrait of Madame Colossa, a colossal elegant mountain-ape
+      socialite kneeling beside an Art Nouveau city theatre she has saved from demolition, sculpted finger-wave
+      fur, emerald and peacock beaded gown panels, skyscraper-length stole, chandelier brooch and opera gloves,
+      tiny gala guests greeting her from balconies; sumptuous Art Nouveau poster composition with botanical borders
+      and architectural detail, celebratory not captive, no text, no famous giant-ape scene. Original full-body
+      monster art of Titania Rex, a colossal crowned reptilian matriarch and environmental warning made flesh, upright
+      queenly posture, fan-shaped translucent solar fins displaying emergency icons, charcoal crystal scales flowing
+      like a ceremonial gown, powerful tail curling around a tiny bonsai city; Japanese woodblock-inspired storm
+      print with bold carved contours, flat mineral color and immense scale, no text, no recognizable kaiju anatomy
+      or signature attack. Original character illustration of Chum Darling, a glamorous upright shark-woman seaside
+      safety inspector, dorsal-fin bouffant, expressive friendly shark face, aqua 1960s mod swimsuit gown, red lifesaver
+      sash, cat-eye goggles and pearl flipper heels, directing synchronized swimmers beneath striped umbrellas;
+      bright mid-century beach-travel poster with clean geometric shapes and playful suspense, all-ages, no text,
+      no attack scene, no recognizable shark-film composition. Original full-body concept art of Babs O''Blob, a
+      joyous translucent raspberry-colored shapeshifting starlet, elegant face emerging from glossy protoplasm,
+      many opera-gloved hands, liquid train, jewelry and tiny shoes suspended inside her body, posing beneath gelatin
+      spotlights on a soundstage; surreal mid-century dessert advertisement fused with glamorous studio portraiture,
+      luminous transparency, playful all-ages creature, no text, no existing blob monster. Original character concept
+      of Podrick Bloom, an extraterrestrial botanical drag king grown from a memory seed, slender body with subtle
+      bark texture, petal pompadour, leaf-green morning suit, seed-pearl waistcoat, orchid boutonniere and rootwood
+      cane, standing in an overnight greenhouse where his footprints sprout duplicate flowers; richly detailed Victorian
+      botanical engraving colored by hand, melancholic and elegant, no text, no familiar pod prop. Original full-body
+      character art of Fly Boy Floyd, an elegant human-fly hybrid lounge singer, slender bottle-green insectoid
+      body, huge amber compound eyes showing miniature music videos, antenna pompadour, plum velvet suit, four translucent
+      wings shaped like coat tails, singing into a polished proboscis microphone inside the Buzz Club; Victorian
+      entomology cabinet illustration fused with smoky jazz-poster painting, charming and uncanny, no text, no recognizable
+      transformation-film makeup. Original character concept of Miss Chiffonette, a haunted porcelain fashion doll
+      and sovereign of an abandoned nursery, towering powder-blue chiffon wig, layered Edwardian ribbon gown, key-shaped
+      bustle, jointed fan sleeves, subtle moving cracks and a brass wind-up key, presiding over a candlelit dollhouse
+      tea court of dust bunnies; delicate Edwardian watercolor storybook illustration with eerie architectural detail,
+      all-ages, no text, no recognizable horror doll. Original creature concept of Glamlin, a tiny nonbinary glitter-fed
+      backstage imp with asymmetrical bat ears, enormous dexterous tailoring hands, ruffled spine, bobbin-shaped
+      tail, patchwork tool vest, measuring-tape scarf, thimble boots and pin-cushion bracelets, multiplying into
+      a costume crew under roaring applause; handcrafted stop-motion maquette aesthetic using felt, latex, thread
+      and miniature theatre props, vibrant and lovable, no text, no recognizable mischievous movie creature. Original
+      full-body concept art of Jackie O''Lantern, a glamorous headless harvest rider and autumn parade marshal,
+      detachable blazing pumpkin helmet with changing carved expression, black-and-orange cavalry tuxedo, reflective
+      sash, leaf epaulettes, split riding coat and wheel-like cape, riding a supernatural motorcycle-horse made
+      of flame and brass detour signs; layered paper-cut shadow theatre with glowing translucent color, dynamic
+      folkloric silhouette, all-ages spooky, no text, no recognizable headless-rider adaptation.'
+    source_file: projects/coloring-book/sets/monster-recast/pages.yaml
+    source_slug: monster-recast-premiere
+    characters:
+    - pound-foolish
+    - countess-vesper-vane
+    - frankie-stitches
+    - mister-matrimony
+    - luna-howl
+    - king-tut-tut
+    - delta-drench
+    - mister-nobody
+    - madame-phantasm
+    - hex-appeal
+    - sister-sinema
+    - stella-vore
+    - mister-finale
+    - velvet-nightmare
+    - sir-loin
+    - madame-colossa
+    - titania-rex
+    - chum-darling
+    - babs-o-blob
+    - podrick-bloom
+    - fly-boy-floyd
+    - miss-chiffonette
+    - glamlin
+    - jackie-o-lantern
