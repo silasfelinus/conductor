@@ -1,6 +1,7 @@
 ---
 slug: static-garden
 title: The Static Garden
+type: dream
 status: outline
 priority: normal
 narrator: no

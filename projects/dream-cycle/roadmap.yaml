@@ -2,16 +2,18 @@ project: dream-cycle
 kind: software
 autonomous: true
 goal: >
-  When nothing better is ready anywhere, conductor develops the site itself — one
-  dream at a time. Each dream ships complete: a location with a vibe, characters,
-  rewards, scenarios, optional bot narrator (expressions, topics, threads), and
-  all art — in roughly a day, from a human-steerable backlog of outline files.
+  When nothing better is ready anywhere, conductor makes something for the site —
+  one creation at a time, roughly one per day, art included. Creation types are
+  pluggable playbooks: complete dreams (location + vibe, characters, rewards,
+  scenarios, optional narrator with expressions/topics/threads), coloring-book
+  production days, and future day-sized types — all driven from a human-steerable
+  backlog of outline files.
 waypoints:
-  - Browse the backlog of dream outlines and see what's coming.
-  - Watch the active dream's build log fill in stage by stage.
+  - Browse the backlog of creation outlines and see what's coming.
+  - Watch the active creation's build log fill in stage by stage.
   - Leave a note in any outline file to steer or veto it.
-  - Visit a shipped dream on the site — location, cast, rewards, scenarios, narrator.
-  - Check SHIPPED.md for the ledger of every dream built so far.
+  - Visit a shipped creation — a dream's location, cast, and narrator, or a new coloring book set.
+  - Check SHIPPED.md for the ledger of everything built so far.
 notes_from_silas: >
   New project 2026-07-10, from my session direction: I want to test a new option
   for conductor sweeps — if there isn't anything better to do, the agent develops
@@ -22,13 +24,18 @@ notes_from_silas: >
   files that list out further ideas so there's a backlog of outlines for future
   developments, with the ability for me to leave notes in the files. We have all
   the pieces — this project is the infrastructure tightening around them.
+  UPDATE (same day): the idler needs to handle multiple types of creations, not
+  just dreams. One type is dream building; another is "spend today drafting and
+  making a coloring book." First coloring book: Monster Recast (Hollywood recast —
+  gender-bending Hollywood movie monsters), already outlined in
+  projects/coloring-book/sets/monster-recast/.
 milestones:
   - id: m1
     title: SHAPE — design brief and backlog format
     weight: 15
     status: in-progress
   - id: m2
-    title: TIGHTEN — dream spec, API audit, build playbook
+    title: TIGHTEN — API audit, loop contract, per-type playbooks
     weight: 30
     status: not-started
   - id: m3
@@ -36,7 +43,7 @@ milestones:
     weight: 15
     status: not-started
   - id: m4
-    title: DREAM FACTORY — the recurring one-dream-at-a-time build loop
+    title: CREATION FACTORY — the recurring one-creation-at-a-time build loop
     weight: 30
     status: not-started
   - id: m5
@@ -56,9 +63,11 @@ tasks:
       DESIGN-BRIEF.md written 2026-07-10 from Silas's session direction: the
       idle-fallback loop, the complete-dream definition, the 8-stage day cycle,
       and the backlog file contract (Notes-from-Silas sections, status/priority
-      frontmatter Silas can flip). backlog/ scaffolded with README, template,
-      and three seed outlines (tidepool-arcade, lantern-post, static-garden —
-      one deliberately narratorless to test that stage skipping).
+      frontmatter Silas can flip). backlog/ scaffolded with README, per-type
+      templates, three dream seeds (tidepool-arcade, lantern-post, static-garden
+      — one deliberately narratorless to test stage skipping), and the
+      monster-recast coloring-book scheduler card. Revised same day when Silas
+      generalized the idler to multiple creation types.
   - id: t-002
     milestone: m1
     title: Confirm scope and content-write authority with Silas
@@ -100,7 +109,7 @@ tasks:
       pitch (backend stays read-only/external — never edit it directly).
   - id: t-004
     milestone: m2
-    title: Write DREAM-SPEC.md — the complete-dream checklist and 8-stage build playbook
+    title: Write CREATION-SPEC.md (the generic loop contract) and specs/dream.md (the dream playbook)
     status: waiting
     owner: null
     passes: 0
@@ -108,14 +117,15 @@ tasks:
     updated: '2026-07-10T00:00:00Z'
     depends_on: t-003
     note: >
-      Infrastructure tightening, part 2. Turn DESIGN-BRIEF.md's loop into the
-      operational spec the recurring build task follows: per-stage inputs,
-      concrete create calls or seed-file paths (from t-003's audit), verification
-      per stage, art-prompt queueing through projects/art-prompts.yaml /
-      art-generate.yaml, metadata requirements (designer/source so a whole dream
-      is traceable and removable), the ship checklist, and the backlog
-      replenishment rule (keep >= 5 buildable outlines). Include how to honor
-      Silas's backlog notes and frontmatter flips at every stage.
+      Infrastructure tightening, part 2. CREATION-SPEC.md is the type-agnostic
+      contract the recurring build task follows: typed queue order, one-building
+      rule, playbook requirement, home-project delegation rule, Silas-notes
+      handling, build-log/ledger duties, and the backlog replenishment rule
+      (keep >= 5 buildable outlines). specs/dream.md is the first playbook: the
+      8 dream stages with per-stage inputs, concrete create calls or seed-file
+      paths (from t-003's audit), verification per stage, art-prompt queueing
+      through projects/art-prompts.yaml / art-generate.yaml, and metadata
+      requirements (designer/source so a whole dream is traceable and removable).
   - id: t-005
     milestone: m3
     title: Grow the backlog to ten buildable outlines
@@ -125,15 +135,17 @@ tasks:
     stakes: reversible
     updated: '2026-07-10T00:00:00Z'
     note: >
-      Three seeds exist (tidepool-arcade, lantern-post, static-garden). Add seven
-      more full outlines using backlog/_template.md — varied vibes and locations,
-      at least two narratorless, no duplicates of existing kind_robots Dreams or
-      backlog entries (check both). All-ages, on-brand whimsy per the seed tone
-      unless a Silas note steers otherwise. Quality over speed: each outline
-      should be buildable as-is.
+      Four seeds exist (dreams tidepool-arcade, lantern-post, static-garden;
+      coloring-book monster-recast). Add six more full outlines using the type
+      templates — mostly dreams (varied vibes/locations, at least two
+      narratorless) plus 1-2 new coloring-book concepts (all-ages, clearing the
+      coloring-book project's originality guardrails). No duplicates of existing
+      kind_robots Dreams, home-project sets, or backlog entries (check all).
+      All-ages, on-brand whimsy per the seed tone unless a Silas note steers
+      otherwise. Quality over speed: each outline should be buildable as-is.
   - id: t-006
     milestone: m4
-    title: 'Dream-a-day: advance the active dream build one stage'
+    title: 'Creation-a-day: advance the active creation build one stage'
     status: waiting
     recurring: true
     owner: null
@@ -147,12 +159,17 @@ tasks:
       sits LAST in projects/priority.yaml, this task is only picked when no other
       active project has ready work — that's the "nothing better to do" contract.
       Each cycle: (1) scan every backlog file for new Notes from Silas and
-      frontmatter flips, fold them in first; (2) if a dream is status: building,
-      advance it exactly ONE stage per DREAM-SPEC.md and append its Build log;
-      (3) else promote the top queued outline (approved > outline, then priority,
-      then oldest) to building and run stage 1; (4) at ship: verify the full
-      checklist, mark built, write the SHIPPED.md ledger entry, and replenish the
-      backlog if under 5 buildable outlines. One dream building at a time, ever.
+      frontmatter flips, fold them in first; (2) if a creation is status:
+      building, advance it exactly ONE stage per its type's playbook in specs/
+      and append its Build log; (3) else promote the top queued outline
+      (approved > outline, then priority, then oldest created — types without a
+      specs/ playbook wait, they don't block) to building and run its first
+      stage; (4) at ship: verify the playbook checklist, mark built, write the
+      SHIPPED.md ledger entry, and replenish the backlog if under 5 buildable
+      outlines. One creation building at a time, ever. Delegating types
+      (coloring-book) advance their home project's tasks and update both records;
+      never double-claim a home task the Worker is already actively building —
+      pick the next queued creation instead.
   - id: t-007
     milestone: m5
     title: Generate dream-cycle project art (icon, card, hero)
@@ -168,7 +185,7 @@ tasks:
       remove the ART-PROMPTS.md pending entries once files land.
   - id: t-008
     milestone: m5
-    title: First-dream retrospective — tighten the spec from what actually happened
+    title: First-creation retrospective — tighten the specs from what actually happened
     status: waiting
     owner: null
     passes: 0
@@ -176,8 +193,33 @@ tasks:
     updated: '2026-07-10T00:00:00Z'
     depends_on: t-004
     note: >
-      After the FIRST dream ships via t-006: compare the build against
-      DREAM-SPEC.md — stages that didn't fit a single cycle, missing
-      verification, art-pipeline friction, API gaps hit in practice. Amend
-      DREAM-SPEC.md and file any new kind_robots tasks. Summarize for Silas in
-      the PR so he can judge whether the one-dream-a-day cadence held.
+      After the FIRST creation ships via t-006: compare the build against
+      CREATION-SPEC.md and its type playbook — stages that didn't fit a single
+      cycle, missing verification, art-pipeline friction, API gaps hit in
+      practice, delegation friction with the home project (if coloring-book
+      shipped first). Amend the specs and file any new kind_robots or
+      coloring-book tasks. Summarize for Silas in the PR so he can judge whether
+      the one-creation-a-day cadence held.
+  - id: t-009
+    milestone: m2
+    title: Write specs/coloring-book.md — the coloring-book day-type playbook
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-10T00:00:00Z'
+    note: >
+      The second creation type, per Silas 2026-07-10: "spend today drafting and
+      making a coloring book." The playbook delegates to the coloring-book
+      project: stages map onto its production sequence (design cast bible + page
+      plan modeled on sets/monster-recast/ -> concept art -> selection ->
+      Character creation -> coloring conversion -> book assembly -> PAUSE;
+      publishing/POD stay hard-gated). Define: how a new-book outline creates its
+      set folder in projects/coloring-book/sets/<slug>/, how an idler day picks
+      and advances the set's next home-project task (updating BOTH the
+      coloring-book roadmap status and the backlog Build log, never
+      double-claiming a task the Worker holds), per-stage verification, and the
+      originality-guardrail checkpoint before any art generation. Coordinate with
+      coloring-book t-003/t-004 (engine + generation pipeline specs) — reference,
+      don't fork. Once this lands, backlog/monster-recast.md (approved, high)
+      becomes buildable by t-006.

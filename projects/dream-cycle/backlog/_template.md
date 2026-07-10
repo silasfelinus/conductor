@@ -1,6 +1,7 @@
 ---
 slug: replace-me            # kind_robots Dream slug (kebab-case, unique)
 title: Replace Me
+type: dream                 # this template is for dream creations
 status: outline             # outline | approved | building | built | parked | vetoed
 priority: normal            # low | normal | high  (Silas can bump)
 narrator: yes               # does this dream get a bot narrator?

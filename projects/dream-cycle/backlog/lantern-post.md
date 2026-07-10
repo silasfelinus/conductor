@@ -1,6 +1,7 @@
 ---
 slug: lantern-post
 title: The Lantern Post
+type: dream
 status: outline
 priority: normal
 narrator: yes

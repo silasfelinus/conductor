@@ -1,16 +1,16 @@
-# Shipped dreams — ledger
+# Shipped creations — ledger
 
-One entry per completed dream, appended at ship time (stage 8). Append-only.
+One entry per completed creation, appended at ship time. Append-only.
 
 Format:
 
 ```
-## YYYY-MM-DD — <title> (`<slug>`)
-- vibe: <genre dream slug> (new|reused)
-- created: N characters, N rewards, N scenarios, narrator: yes|no
-- where: <API rows | kind_robots seed PR #>
+## YYYY-MM-DD — <title> (`<slug>`, type: <type>)
+- dream: vibe genre (new|reused); N characters, N rewards, N scenarios, narrator yes|no
+  coloring-book: home set path; pages/cover produced; production stage reached
+- where: <API rows | kind_robots seed PR # | home set folder>
 - conductor PRs: #...
 - backlog file: backlog/<slug>.md (status: built)
 ```
 
-*(no dreams shipped yet)*
+*(nothing shipped yet)*

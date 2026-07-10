@@ -1,6 +1,7 @@
 ---
 slug: tidepool-arcade
 title: Tidepool Arcade
+type: dream
 status: outline
 priority: normal
 narrator: yes
