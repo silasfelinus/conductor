@@ -536,17 +536,19 @@ tasks:
 - id: t-033
   milestone: m3
   title: Share-sheet handoff for exported CSVs (share_plus) pending dependency approval
-  status: ready
-  owner: null
+  status: done
+  owner: worker
   passes: 0
   stakes: reversible
-  updated: '2026-07-10T14:20:00Z'
+  updated: '2026-07-10T18:30:00Z'
   note: >
-    Kaizen from t-021 (PR #346): exports currently land in app documents
-    storage; on a phone the natural next step is the system share sheet so
-    Kate can send the files to email/drive directly. Requires the
-    share_plus package — flag the new dependency in the PR for Silas.
-    Keep export local/user-initiated; the share action must be explicit.
+    Done via PR #352 (Reviewer-merged 2026-07-10): share_plus ^11.0.0 added
+    and production exports open the platform share sheet after both CSV
+    writes; the injected-directory test path stays share-free. FOR SILAS:
+    the new dependency is share_plus (standard Flutter Community Plus
+    package, local share sheet only, nothing uploads) — veto by reverting
+    PR #352 if unwanted. The Worker did not flip this status in the PR;
+    Reviewer reconciled it here.
 - id: t-034
   milestone: m3
   title: 'SyncEngine step 1: schema v2 migration (server_id/synced_at columns) + deletion outbox writes'
@@ -563,3 +565,35 @@ tasks:
     inside the existing deleteCustomer/deleteAppointment transactions.
     Pure local storage work, no network, tested against the existing
     sqlite test setup (migration from a v1 database included).
+- id: t-035
+  milestone: m3
+  title: Injectable share gateway so widget tests can assert the exported share payload
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  updated: '2026-07-10T18:30:00Z'
+  note: >
+    Kaizen from t-033 (PR #352): FileCsvExportService calls
+    SharePlus.instance directly, so the share step is only reachable in
+    production and widget tests cannot assert the exact two-file payload.
+    Extract a small share gateway interface (real SharePlus impl + fake),
+    inject it like the directory/clock seams, and add a widget test that
+    the export flow shares exactly the two written CSV paths.
+- id: t-036
+  milestone: m3
+  title: Fix Flutter 3.44 ListTile-in-DecoratedBox assert breaking 5 onboarding widget tests
+  status: done
+  owner: reviewer
+  passes: 0
+  stakes: reversible
+  updated: '2026-07-10T18:30:00Z'
+  note: >
+    CI's stable Flutter channel moved to 3.44.6 (2026-07-08), which added a
+    framework assert: a ListTile inside a color-decorated box without its
+    own Material paints its ink under the decoration. The onboarding app
+    lock card (SwitchListTile in a decorated Container in
+    superkate_onboarding.dart) tripped it, failing 5 widget tests on main
+    since ~13:00 UTC 2026-07-10 — unrelated to the PRs that surfaced it.
+    Fixed by wrapping the card body in Material(type: transparency).
+    Completed in this session's conductor PR.
