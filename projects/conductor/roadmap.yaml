@@ -377,7 +377,7 @@ tasks:
     title: Reviewer trigger fires with no open worker/* PR to review, repeatedly
     status: ready
     owner: null
-    updated: '2026-07-07T05:00:00Z'
+    updated: '2026-07-10T14:35:00Z'
     passes: 0
     stakes: reversible
     note: >
@@ -391,6 +391,16 @@ tasks:
       Investigate what fires the Reviewer session (cron/webhook cadence vs. actual
       Worker PR volume) and either slow the trigger interval, or make it conditional
       on an open worker/* PR existing before spinning up a full session.
+
+      Recurrence 2026-07-10 14:35 UTC: fired again minutes after the prior session's
+      "chore: conductor report" commit (65373a2), immediately following a stretch of
+      rapid-fire Worker PRs (#338-347) that were all already merged. Confirmed via
+      list_pull_requests(state=open) = [] on both repos and a grep of every
+      projects/*/roadmap.yaml for status: review/claimed = none. Unlike the
+      2026-07-07 audit (PR #345), no stale roadmap state existed to reconcile this
+      time, so this session made no other changes — logging the recurrence here
+      instead of repeating a full redundant sweep, per this task's own point about
+      the cost of doing that every cycle.
   - id: t-027
     milestone: m2
     title: Include project priority in Dream sync payload
