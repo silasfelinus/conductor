@@ -52,3 +52,27 @@ type: pattern
 **Suggested action:** If more Stripe routes appear, prefer one server-side Stripe helper module so all payment routes share the same lazy env handling and error shape.
 
 ---
+
+## 2026-07-10 | Reviewer → system | kind-robots/t-011 | pattern
+type: pattern
+
+**Decision:** audited already-merged work (conductor PR #330, merged by Silas 08:56) —
+corrected a PR-number citation error in the roadmap note; left at soft `needs-human`.
+
+**Detail:**
+- t-011's note credited the reconcile script itself to "PR #324," but #324 is actually the
+  separate GENERATION.md docs PR; the script landed in conductor PR #330 (title:
+  "reconcile_expressions.py — expression folders → ExpressionMedia rows (t-011)"). Fixed the
+  citation so a future reader doesn't chase the wrong diff.
+- PR #330 has merged, but its own body and the roadmap note both condition `done` on a live
+  dry-run against kind-robots.vercel.app, which every session so far has been unable to run
+  (proxy 403 from the agent sandbox). That's a genuine access limitation, not a code problem —
+  left at `status: needs-human` (soft) rather than marking done on code-merge alone.
+
+**What to improve:**
+- When a task note references a PR number for something implemented across two related PRs
+  in the same session (a spec PR and an implementation PR), cite both explicitly by purpose
+  ("spec: #324, script: #330") to avoid this kind of drift.
+
+**Kaizen task:** deferred — this is a citation fix + a pre-existing access gate, not a new
+systemic issue; no new roadmap task warranted.
