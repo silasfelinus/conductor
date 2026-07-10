@@ -226,14 +226,16 @@ tasks:
   - id: t-011
     milestone: m3
     title: "Build reconcile_expressions.py — expression folders → ExpressionMedia rows"
-    status: review
+    status: needs-human
     owner: reviewer
-    updated: "2026-07-10T00:15:00Z"
+    updated: "2026-07-10T14:00:00Z"
     passes: 0
     stakes: reversible
     note: >
       Implemented by the Reviewer at Silas's direction in the same session that
-      created it (PR #324, scripts/reconcile_expressions.py). Spec:
+      created it (script PR conductor#330, scripts/reconcile_expressions.py; spec
+      merged separately in conductor#324 — the note previously miscited #324 for
+      the script itself, corrected here). Spec:
       projects/kind-robots/EXPRESSION-RECONCILE.md (now includes usage).
       Scans kind_robots expression folders, diffs against ExpressionMedia rows
       via public reads, repairs drift folder→rows through the batch API with
@@ -242,10 +244,15 @@ tasks:
       rows; never touches message/label/emoticon/artPrompt on existing rows.
       Verified with an offline harness (stubbed API + real folder scan: parser,
       variant promotion, loops, transitions, create/update/missing planning,
-      --check exit code, dryRun-before-write ordering). Live API unreachable
-      from the session sandbox (proxy 403) — first real dry-run should happen
-      from an environment with kind-robots.vercel.app access. Set done when
-      PR #324 merges and a live dry-run looks sane.  - id: t-012
+      --check exit code, dryRun-before-write ordering). PR #330 has since merged
+      (2026-07-10 08:56). FOR SILAS (soft needs-human): the live API is still
+      unreachable from the agent sandbox (proxy 403 to kind-robots.vercel.app) —
+      someone with access needs to run `python scripts/reconcile_expressions.py`
+      (dry-run, no flags) once against production and confirm the report looks
+      sane before this flips to done. TO APPROVE: run the dry-run and either set
+      status: done yourself or note what drifted so a follow-up task can fix it.
+
+  - id: t-012
     milestone: m3
     title: Fix the mana purchase path — Stripe webhook credits + ManaTransaction ledger
     status: ready
