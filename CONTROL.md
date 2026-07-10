@@ -55,6 +55,21 @@ Silas explicitly approves that concrete action too.
   Those projects keep running without my input under the "never idle" rule in AGENTS.md
   (style pass / roadmap upgrade / more inspirations / content expansion when nothing is
   ready). ai-art-academy is the test run. Escalate only actual human gates.
+- Briefs are direction, not contracts (Silas, 2026-07-10): projects evolve. When
+  Silas's later commits or direction supersede a design-brief detail (e.g. Monster
+  Recast's 32-38 page homage pool replacing its original 28-page plan), run with
+  the newer reality and refresh the brief opportunistically — don't stall on or
+  re-litigate the older document.
+- Commercial-generation licensing rule (Silas, 2026-07-10, refined same day from
+  ai-art-academy t-011): STANDING DEFAULT, no per-case debate needed — anything
+  generated for commercial use (paid generation tiers, storefront/POD inventory,
+  DLC packs) runs on either a license-unencumbered backend we host (e.g. FLUX.1
+  schnell, Apache 2.0) or OpenAI/ChatGPT image generation otherwise (its terms
+  allow commercial use of outputs; it's already the art-prompts.yaml pipeline).
+  Officially supported licensed endpoints (BFL Kontext pro/max API, fal/Replicate)
+  remain an approved variant of "otherwise" where OpenAI doesn't fit. FLUX.1 dev,
+  Kontext dev, and dev-trained LoRAs never touch commercial output. Free-tier,
+  educational, and internal generation continue unchanged on the current stack.
 - Creation-a-day idle fallback (2026-07-10): dream-cycle sits LAST in priority.yaml.
   When no other active project has ready work, its recurring task builds the site's
   next creation (~one per day, art included) from the human-steerable backlog in

@@ -69,19 +69,17 @@ tasks:
   - id: t-002
     milestone: m1
     title: Confirm the Academy scope and brief match Silas's intent
-    status: needs-human
+    status: done
+    approved_by_human: true
     owner: null
     passes: 0
     stakes: reversible
-    updated: '2026-07-10T00:00:00Z'
+    updated: '2026-07-10T20:00:00Z'
     note: >
-      FOR SILAS: soft checkpoint per the new-project scope rule — NOTHING is blocked on
-      this; development proceeds in parallel. Read projects/ai-art-academy/DESIGN-BRIEF.md
-      (2 pages). It contains: the public-domain/dead-artists-only boundary, the
-      Kontext-first answer to your "kontext vs another engine" question, and the plan to
-      grow art-styler.vue into the Academy front end with Style Lab kept inside it.
-      TO APPROVE: set approved_by_human: true and status: done, or leave a correction
-      note here. Nothing unblocks — this only steers course correction.
+      APPROVED by Silas in-session 2026-07-10 (recorded by Reviewer per the
+      human-gate clearance rule). Brief and scope confirmed as written:
+      public-domain/dead-artists boundary, Kontext-first strategy, art-styler.vue
+      growth path with Style Lab kept inside the Academy.
   - id: t-003
     milestone: m2
     title: Hunt publicly available style LoRAs and build the style-LoRA registry
@@ -242,24 +240,28 @@ tasks:
   - id: t-011
     milestone: m2
     title: Decide the commercial-licensing posture for FLUX-dev/Kontext LoRAs
-    status: needs-human
+    status: done
+    approved_by_human: true
     owner: null
     passes: 0
     stakes: reversible
-    updated: '2026-07-10T08:30:00Z'
+    updated: '2026-07-10T20:00:00Z'
     note: >
-      FOR SILAS (soft gate — development continues; this only gates MONETIZED
-      generation): the LoRA hunt (docs/style-lora-registry.md, section "S-0") found
-      that FLUX.1-dev and most style LoRAs carry the FLUX.1-dev NON-COMMERCIAL
-      license. Free-tier educational remixing on your own servers is arguably fine;
-      charging tokens for generations that run dev-based weights is the gray zone.
-      The coloring-book research (projects/coloring-book/docs/generation-pipeline.md)
-      hit the same issue and lists licensed API endpoints (fal/Replicate) as the
-      clean path for paid tiers. TO DECIDE: (a) keep paid tiers off Academy/coloring
-      generation until licensing is resolved, (b) route paid generations through a
-      licensed API endpoint, or (c) get/confirm a commercial FLUX license. Write your
-      call here and set status: done. Nothing else is blocked meanwhile — both
-      projects keep building on the free/eval path.
+      DECIDED by Silas in-session 2026-07-10 (recorded by Reviewer per the
+      human-gate clearance rule). Ruling: no paid generation on
+      non-commercially-licensed weights, ever. When monetization arrives, use
+      only license-clean or officially supported engines. Concretely:
+      (1) FLUX.1 schnell (Apache 2.0) is approved for paid TEXT-TO-IMAGE on our
+      own servers — Silas asked "can't I use schnell instead?" and the answer is
+      yes for t2i. (2) Kontext-style REMIX/EDIT has no schnell equivalent
+      (Kontext dev is non-commercial), so paid remixing must route through an
+      officially supported endpoint: BFL's Kontext pro/max API, fal/Replicate
+      licensed hosting, or OpenAI images (whose terms allow commercial use of
+      outputs). (3) Free-tier/educational/internal generation continues
+      unchanged on the current stack, including dev-based LoRAs. Economy work
+      (coloring-book t-008) should design token pricing around per-image
+      licensed-API costs. Dev-based weights and dev-trained LoRAs stay excluded
+      from every paid path.
 
   - id: t-010
     milestone: m6
