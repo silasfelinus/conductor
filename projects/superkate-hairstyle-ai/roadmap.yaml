@@ -18,11 +18,17 @@ notes_from_silas: |
   Collab: ChatGPT (Worker) builds, Claude (Reviewer) reviews and hard-gates every step toward
   charging money / going public / touching real client data at scale.
 
+  2026-07-09 additions from Silas: (1) production generation must use the tailnet-safe path —
+  the deployed backend cannot resolve ts.net hostnames; the durable ArtJob queue + home relay
+  agent is the working bypass. (2) The Hair Studio page should host a REPLICA OF THE ENTIRE
+  Superkate app (calculator, clients, appointment history), not just the hair redesign — an
+  easy mock is fine where 1:1 backend parity isn't there yet, since Kind Robots is the backend.
+
 milestones:
   - id: m1
     title: "SHAPE — brief, backend contract, prompt design"
     weight: 25
-    status: in-progress
+    status: done
 
   - id: m2
     title: "BUILD — tab, intake, controls, async generate, gallery"
@@ -30,7 +36,7 @@ milestones:
     status: in-progress
 
   - id: m3
-    title: "POLISH & SHIP — states, monetization plan, launch gate"
+    title: "POLISH & SHIP — aesthetics, monetization plan, launch gate"
     weight: 25
     status: not-started
 
@@ -86,13 +92,13 @@ tasks:
   - id: t-004
     milestone: m2
     title: "Build the Hair Studio tab shell + navigation entry (staged/flagged)"
-    status: review
+    status: done
     owner: claude
     passes: 0
     stakes: reversible
     updated: 2026-07-09
     note: >
-      IN REVIEW (kind_robots branch claude/superkate-hairstyle-ai-nse06o): added content/stylist.md
+      DONE (PR #133 merged by Silas 2026-07-09): added content/stylist.md
       (/stylist page embedding :stylist-manager), a "stylist"/"Hair Studio" tab under the art
       dashboard (dashboardHelper, route /stylist), an art tutorial-channel "stylist" section, and
       placeholder tab/tutorial webp images (real art queued in art-prompts.yaml requests). The tab
@@ -103,14 +109,14 @@ tasks:
   - id: t-005
     milestone: m2
     title: "Image intake — upload + camera capture tied to a client"
-    status: review
+    status: done
     owner: claude
     passes: 0
     stakes: reversible
     depends_on: t-004
     updated: 2026-07-09
     note: >
-      IN REVIEW: stylist-manager.vue has upload (click + drag/drop) and camera capture
+      DONE (PR #133 merged by Silas 2026-07-09): stylist-manager.vue has upload (click + drag/drop) and camera capture
       (getUserMedia → canvas → data URL) with a preview and a free-text Client field, plus a
       camera-unavailable fallback to upload. Produces the data URL the Kontext endpoint expects.
       Follow-up: bind the Client field to real calculator customer profiles instead of free text
@@ -119,7 +125,7 @@ tasks:
   - id: t-006
     milestone: m2
     title: "Transformation controls → prompt builder (color / style / enhance, any combo)"
-    status: review
+    status: done
     owner: claude
     passes: 0
     stakes: reversible
@@ -128,7 +134,7 @@ tasks:
       - t-004
     updated: 2026-07-09
     note: >
-      IN REVIEW: three independent checkboxes (change color + color field, change style + style
+      DONE (PR #133 merged by Silas 2026-07-09): three independent checkboxes (change color + color field, change style + style
       field, improve overall image) plus a free-text notes field, merged by buildPrompt() into
       one Kontext prompt with the identity-preservation suffix. A plain-language changeSummary
       previews what will change; Style-it is disabled until a photo is present AND at least one
@@ -137,7 +143,7 @@ tasks:
   - id: t-007
     milestone: m2
     title: "Async generation with navigable loading state"
-    status: review
+    status: done
     owner: claude
     passes: 0
     stakes: reversible
@@ -146,7 +152,7 @@ tasks:
       - t-006
     updated: 2026-07-09
     note: >
-      IN REVIEW (kind_robots PR #134): DONE — job state moved to a dedicated stylistStore, so a
+      DONE (PR #134 merged by Silas 2026-07-09): job state moved to a dedicated stylistStore, so a
       styling job keeps running and its result still lands even when Superkate leaves and returns
       to the /stylist tab (the component is now a view over the store; store actions outlive
       component unmount). jobs[] carry pending/done/failed with retry + dismiss, filtered per
@@ -156,14 +162,14 @@ tasks:
   - id: t-008
     milestone: m2
     title: "Per-client transformation gallery (before/after + metadata)"
-    status: review
+    status: done
     owner: claude
     passes: 0
     stakes: reversible
     depends_on: t-005
     updated: 2026-07-09
     note: >
-      IN REVIEW (kind_robots PR #134): first cut DONE — a durable "Past looks for <client>"
+      DONE first cut (PR #134 merged by Silas 2026-07-09): a durable "Past looks for <client>"
       gallery loads the user's saved private stylist results across sessions (GET
       /api/art/user/:id, filtered by the "stylist:" designer tag, grouped by client) alongside
       the live before/after session grid. REMAINING (a follow-up, see t-013): the *before* image
@@ -175,14 +181,14 @@ tasks:
   - id: t-009
     milestone: m2
     title: "Kontext API client — mana/gate handling, error + timeout states"
-    status: review
+    status: done
     owner: claude
     passes: 0
     stakes: reversible
     depends_on: t-007
     updated: 2026-07-09
     note: >
-      IN REVIEW (kind_robots PR #134): the store already routes through artStore.generateArt →
+      DONE (PR #134 merged by Silas 2026-07-09): the store already routes through artStore.generateArt →
       /api/comfy/kontext/generate (performFetch retries + 180s timeout), and every failure lands
       on the job tile with a Retry action. Added friendlyError() mapping the real first-run
       failure modes — insufficient mana, no active Comfy/Kontext server, timeout, and
@@ -255,3 +261,41 @@ tasks:
       with a real client-identity link so a client's history is unambiguous — coordinate the key
       with the calculator's customer profile rather than widening scope here. Keep everything
       private (isPublic:false) and reversible; no billing, deploy, or public surface.
+
+  - id: t-014
+    milestone: m2
+    title: "Route generation through the ArtJob queue (prod tailnet fix)"
+    status: review
+    owner: claude
+    passes: 0
+    stakes: reversible
+    depends_on: t-007
+    updated: 2026-07-09
+    note: >
+      IN REVIEW (kind_robots PR #138 + relay change on conductor PR #320): production styling
+      failed with ENOTFOUND on the ts.net Comfy hostname — the deployed backend is not on the
+      home tailnet. Fix uses the existing durable ArtJob queue: new /api/comfy/kontext/enqueue
+      (mana-gated, workflow + input image + save block in the job payload), stylistStore
+      enqueues and polls /api/art/queue/:id, the queue complete endpoint applies
+      isPublic:false + designer + ownership to the uploaded ArtImage, and relay_agent.py gains
+      input-image upload to ComfyUI. TO VERIFY: deploy updated relay_agent.py on the home
+      server, merge both PRs, then run /stylist on the deployed site end-to-end.
+
+  - id: t-015
+    milestone: m2
+    title: "Replicate the full Superkate app on the Hair Studio page"
+    status: review
+    owner: claude
+    passes: 0
+    stakes: reversible
+    updated: 2026-07-09
+    note: >
+      IN REVIEW (kind_robots PR #138, same branch as the queue fix): built the sub-tabbed
+      suite on /stylist — Hair Studio | Calculator | Clients | History — backed by a new
+      localStorage-persisted superkateStore (the approved easy mock; KR-model sync is the
+      follow-up). Implements the calculator SPEC core formula (rate x time + products, cents),
+      hours/minutes preset chips, optional product cost defaulting to $0.00, client book with
+      optional email, appointment search by client/date, warm receipts with the configurable
+      contact block + "Superkate loves you!" and a mailto composer with email prefill, and the
+      delete-detach invariant. The restyler's client field suggests known clients from the
+      book. Not runtime-verified in this environment.
