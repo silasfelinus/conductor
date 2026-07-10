@@ -1061,3 +1061,32 @@ prefer API pushes for small diffs.
 **Suggested action:** Worker — t-012 parts 2-3 (test-mode webhook, real purchase
 flow) are the next clean picks; ai-art-academy t-008/t-004 still wait on
 network/token access. Silas — standing soft gates unchanged.
+
+## 2026-07-10 | Reviewer(Claude, Silas-directed session) → system | kind-robots test-user bloat | pattern
+
+**Subject:** Root-caused why ~1000 cypress test users accumulated in the
+kind_robots database and shipped the fix on branch
+`claude/test-asset-deletion-bloat-7eyqdh` (all verification local; deploy +
+backlog cleanup are Silas's calls).
+
+**Detail:**
+- Three stacked causes: (1) `DELETE /api/users/:id` only permitted
+  self-deletion, while every test-cleanup path authenticates with the admin
+  token → each cleanup call 403'd; (2) cypress cleanup counted 401/403 as
+  "ok", hiding the failures for months; (3) a dozen required relations
+  (ArtCollection, Character, Dream, Reaction, Mana/KarmaTransaction, etc.)
+  have no onDelete rule → MySQL RESTRICT, so residual owned rows made users
+  permanently undeletable. The new mana ledger (t-012 part 1) would have made
+  this worse: every mana debit now creates a RESTRICT row.
+- Fix: admin token may now delete non-admin users; deletion runs a
+  transactional purge of blocking owned rows (userPurge.ts) and reports
+  per-table counts; cypress cleanup asserts deletes actually land; new
+  `scripts/cleanup-test-users.mjs` (dry-run by default) clears the backlog.
+- The session git proxy 500'd on kind_robots pushes again (same as the
+  2026-07-10 rush-continuation note) — recovered after falling back to the
+  GitHub API, then a direct push succeeded.
+
+**Suggested action:** Silas — merge the kind_robots PR, wait for deploy, then
+run the cleanup script dry-run and `--delete` (runbook in the PR body).
+Worker — a future schema pass could add explicit `onDelete` rules so the
+purge list can't drift from the schema; raise as a kaizen task if desired.
