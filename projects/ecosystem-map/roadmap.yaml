@@ -116,29 +116,30 @@ tasks:
       their home roadmaps. Do not implement the gaps inside ecosystem-map itself.
       Missing user-facing surfaces should add a tab to an existing channel according
       to TAB-INTEGRATION.md; WonderLab is the fallback, and a new channel requires
-      explicit human approval.
+      explicit human approval. FRONTEND-SURFACE-MAP.md currently identifies 15 missing
+      or incomplete surfaces and prioritizes already-built partial integrations first.
 
   - id: t-007
     milestone: m1
     title: "Map project front-end surfaces and canonical launch links"
-    status: ready
-    owner: null
+    status: done
+    owner: worker
+    updated: '2026-07-10T00:00:00Z'
     passes: 0
     stakes: reversible
     depends_on: t-008
     note: >
-      Produce FRONTEND-SURFACE-MAP.md covering every active project. Classify each as:
-      (a) a working tab/page in Kind Robots, (b) an external app/site with a Kind Robots
-      bridge tab, (c) an internal infrastructure project that does not need a public
-      product surface, or (d) missing/incomplete. For every user-facing row record the
-      existing or proposed channel key, tab key, route, PROJECT Dream liveUrl, manager
-      component, tutorial coverage, image coverage, and verification state. Search for
-      already-stitched surfaces first; Superkate/Hair Studio, Conductor, Challenge
-      Center, Mural, Coloring Book, and AI Art Academy are reference examples. When a
-      useful surface is missing, create a scoped follow-up task in the owning project
-      roadmap to add it to the best existing channel under TAB-INTEGRATION.md. Use
-      WonderLab only when no channel fits. Verify the tab renders the intended component
-      rather than merely appearing in navigation or falling back to the channel default.
+      Completed projects/ecosystem-map/FRONTEND-SURFACE-MAP.md as a static GitHub audit
+      of all 29 active projects. Results: 8 complete user-facing surfaces, 6 internal or
+      platform projects that should not receive fake standalone tabs, and 15 missing or
+      incomplete surfaces. The map records existing/proposed channel, tab, route,
+      component evidence, tutorial/image state, intended Dream.liveUrl, confidence, and
+      follow-up order. It distinguishes working UI from APIs/assets/project cards alone.
+      Challenge Center is partial rather than verified complete: APIs, schema, card, and
+      collection art exist, but no dedicated component/render branch was found in the
+      current Conductor manager. AppMaker and Wishmaster have reusable nested Conductor
+      components but still need canonical tab integration. Production Dream.liveUrl
+      values remain a database verification step for t-006 implementation work.
 
   - id: t-008
     milestone: m1
