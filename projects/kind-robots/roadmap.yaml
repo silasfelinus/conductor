@@ -228,7 +228,7 @@ tasks:
     title: "Build reconcile_expressions.py — expression folders → ExpressionMedia rows"
     status: needs-human
     owner: reviewer
-    updated: "2026-07-10T14:00:00Z"
+    updated: "2026-07-10T19:30:00Z"
     passes: 0
     stakes: reversible
     note: >
@@ -245,12 +245,17 @@ tasks:
       Verified with an offline harness (stubbed API + real folder scan: parser,
       variant promotion, loops, transitions, create/update/missing planning,
       --check exit code, dryRun-before-write ordering). PR #330 has since merged
-      (2026-07-10 08:56). FOR SILAS (soft needs-human): the live API is still
-      unreachable from the agent sandbox (proxy 403 to kind-robots.vercel.app) —
-      someone with access needs to run `python scripts/reconcile_expressions.py`
-      (dry-run, no flags) once against production and confirm the report looks
-      sane before this flips to done. TO APPROVE: run the dry-run and either set
-      status: done yourself or note what drifted so a follow-up task can fix it.
+      (2026-07-10 08:56). UPDATE 2026-07-10 19:30: Silas's first live --apply
+      wrote 21 rows but falsely skipped 37 folders ("matches no bot slug") —
+      root cause was GET /api/bots ignoring paging params, capping the slug map
+      at the first 100 bots. Fixed both sides: conductor PR #360 (script now
+      resolves each folder via GET /api/narrators/{type}/{slug} first, bulk
+      list only as fallback) and kind_robots PR #152 (endpoint reads
+      page/pageSize via getQuery). Both merged. FOR SILAS: re-run
+      `python scripts/reconcile_expressions.py --apply` — expect the ~37
+      previously skipped folders to register (~700 creates). TO APPROVE: after
+      the re-run looks sane, set status: done. (Still soft needs-human — the
+      agent sandbox proxy 403s kind-robots.vercel.app, so only you can run it.)
 
   - id: t-012
     milestone: m3
@@ -281,3 +286,20 @@ tasks:
       (3) make credit-purchase.vue drive the real test-mode flow. Blocks real
       mana top-ups (digital-storefront t-012) and paid coloring/academy
       generation tiers.
+
+  - id: t-013
+    milestone: m3
+    title: Show the full bot roster in the app — botHelper fetch is capped at the first 100 bots
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: "2026-07-10T19:30:00Z"
+    note: >
+      Kaizen from kind_robots PR #152 (Reviewer, 2026-07-10): now that
+      GET /api/bots honors page/pageSize, the lone app caller
+      (stores/helpers/botHelper.ts) still requests the defaults — page 1,
+      pageSize 100 — so with 400+ bots the bot gallery likely never shows the
+      full roster. Either paginate the store's fetch (loop pages until a short
+      page) or raise pageSize deliberately; check for other UI surfaces that
+      assume the bot list is complete.
