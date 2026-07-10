@@ -1,0 +1,323 @@
+set: monster-recast
+version: 1
+trim_size: 8.5x11
+orientation: portrait
+illustrated_interior_pages: 28
+print_plan:
+  one_sided: true
+  illustration_side: right-hand
+  backing_page: blank or character quote
+  bleed: none for interiors
+  safe_margin_inches: 0.375
+  target_resolution: 2550x3300
+
+concept_art_rules:
+  - Generate full-color source art before line-art conversion.
+  - Preserve the character's approved silhouette, wardrobe, motifs, and originality guardrails.
+  - Use the style named in characters.yaml as a starting direction, not a rigid house style.
+  - Generate at least three materially different candidates per character before selection.
+  - No franchise names, studio logos, actor likenesses, signature props, or copied movie compositions.
+
+coloring_conversion_prompt: >
+  Convert the selected original character artwork into a premium adult-and-family coloring book page,
+  portrait 8.5x11 composition, bold clean black contour lines on pure white, closed colorable regions,
+  varied region sizes, expressive face preserved, costume details simplified but distinctive, background
+  reduced to a few large decorative shapes, no gray, no shading, no halftone, no color, no text, no border,
+  no solid black areas larger than a small accent, printable line weight, generous safe margins.
+
+cover:
+  title: Monster Recast
+  slug: monster-recast-cover
+  format: full-color wraparound source art plus separate title treatment
+  characters:
+    - pound-foolish
+    - countess-vesper-vane
+    - frankie-stitches
+    - luna-howl
+    - delta-drench
+    - madame-phantasm
+    - stella-vore
+    - madame-colossa
+    - titania-rex
+    - babs-o-blob
+  artPrompt: >
+    Original full-color ensemble cover illustration for Monster Recast, a glamorous all-ages gallery
+    of gender-recast and drag-reimagined cinema-monster archetypes at a spectacular old-Hollywood premiere;
+    Pound Foolish unfurls six arms beneath a cosmic marquee, Countess Vesper Vane descends a crescent staircase,
+    Frankie Stitches sings into a chrome microphone, Luna Howl poses under a disco moon, Delta Drench arrives
+    through a fountain, Madame Phantasm conducts floating masks, Stella Vore opens a crystal crown, Madame Colossa
+    and Titania Rex loom elegantly behind the theatre, Babs O'Blob becomes the red carpet itself; maximal but
+    readable triangular composition, varied body scales, jewel-toned glamour, painted theatrical poster with
+    Art Deco architecture and practical-creature texture, clear open area for title at top, no text generated,
+    no actor likenesses, no existing franchise character, no copied movie poster.
+
+pages:
+  - page: 1
+    slug: pound-foolish-solo
+    title: The Last Laugh
+    characters: [pound-foolish]
+    composition: >
+      Pound Foolish parts the curtains of a meteor circus with all six hands while tiny moons laugh from the balcony.
+      Keep the gown's large panels and balloons as generous coloring regions.
+
+  - page: 2
+    slug: countess-vesper-vane-solo
+    title: The Velvet Fang
+    characters: [countess-vesper-vane]
+    composition: >
+      Vesper stands on the cinema balcony as projector light turns a bouquet of roses white behind her.
+      Use geometric curtain folds, moth wings, and crescent windows as medium-detail regions.
+
+  - page: 3
+    slug: frankie-stitches-solo
+    title: King of Second Chances
+    characters: [frankie-stitches]
+    composition: >
+      Frankie performs at a laboratory lounge while vacuum tubes glow and repaired appliances dance behind him.
+      Make the patchwork tuxedo and heart voltmeter the main coloring focus.
+
+  - page: 4
+    slug: mister-matrimony-solo
+    title: The Eternal Groom
+    characters: [mister-matrimony]
+    composition: >
+      Mister Matrimony officiates a monster elopement beneath a glass conservatory struck by gentle lightning.
+      Frame him with lilies, broken rings, and broad smoke-veil shapes.
+
+  - page: 5
+    slug: luna-howl-solo
+    title: Full-Moon Headliner
+    characters: [luna-howl]
+    composition: >
+      Luna sings mid-transformation beneath a perfectly round disco moon as the audience raises paw-shaped fans.
+      Emphasize mane sections, sequins, bell bottoms, and crescent mirrors without tiny confetti clutter.
+
+  - page: 6
+    slug: king-tut-tut-solo
+    title: The Unwrapped Critic
+    characters: [king-tut-tut]
+    composition: >
+      Tut-Tut corrects a museum display while scarab cufflinks carry new labels and a tiny sandstorm removes bad lighting.
+      Use broad linen wraps, tablet glyph panels, and fan-cape sections.
+
+  - page: 7
+    slug: delta-drench-solo
+    title: Duchess of the Drowned Delta
+    characters: [delta-drench]
+    composition: >
+      Delta steps from her pink rescue boat among cattails, dragonflies, and warning buoys while carrying a rescued duck.
+      Keep water shapes open and avoid dense ripples.
+
+  - page: 8
+    slug: mister-nobody-solo
+    title: Mostly Accessories
+    characters: [mister-nobody]
+    composition: >
+      Mister Nobody performs a card trick in an empty spotlight, with floating jacket, gloves, shoes, moustache, and cane.
+      Let negative space define the invisible body and keep mirrors simple enough for flood fill.
+
+  - page: 9
+    slug: madame-phantasm-solo
+    title: The Unmasked Maestro
+    characters: [madame-phantasm]
+    composition: >
+      Madame Phantasm conducts an orchestra of singing masks as chandeliers bow in an impossible underground opera house.
+      Simplify organ-pipe architecture into strong repeating shapes.
+
+  - page: 10
+    slug: hex-appeal-solo
+    title: Ask the Abyss
+    characters: [hex-appeal]
+    composition: >
+      Hex Appeal hosts a moon-orbit advice show, stirring a galaxy in a teacup while star telephones light up.
+      Use spiral hat bands, zodiac panels, and large cosmic swirls as color zones.
+
+  - page: 11
+    slug: sister-sinema-solo
+    title: The Possessed Picture
+    characters: [sister-sinema]
+    composition: >
+      Sister Sinema walks a premiere staircase as strips of film reveal alternate versions of her expression.
+      Keep each film frame large, distinct, and colorable rather than photorealistic.
+
+  - page: 12
+    slug: stella-vore-solo
+    title: Mother of Meteors
+    characters: [stella-vore]
+    composition: >
+      Stella Vore tends floating star eggs beside a retro drive-in screen while offering a tiny moon as a diplomatic gift.
+      Use radial crown petals, crystal armor facets, and lantern abdomen panels.
+
+  - page: 13
+    slug: mister-finale-solo
+    title: The Last Act
+    characters: [mister-finale]
+    composition: >
+      Mister Finalé tap-dances down a backstage corridor while cutting a tangled stage rope with oversized blunt shears.
+      Show the rotating three-expression mask clearly and avoid realistic violence.
+
+  - page: 14
+    slug: velvet-nightmare-solo
+    title: Checkout at Dawn
+    characters: [velvet-nightmare]
+    composition: >
+      Velvet Nightmare offers a room key in a hotel corridor folding into an eye-shaped doorway while a sleepy shadow snores.
+      Use long elegant lines, patterned trousers, and a few large surreal door shapes.
+
+  - page: 15
+    slug: sir-loin-solo
+    title: Five-Star Fright Stop
+    characters: [sir-loin]
+    composition: >
+      Sir Loin serves a towering vegetable sandwich while haunted kitchen appliances sing behind the roadside counter.
+      The modified hedge-trimmer tool rests safely beside a biscuit tin.
+
+  - page: 16
+    slug: madame-colossa-solo
+    title: The Skyline Preservationist
+    characters: [madame-colossa]
+    composition: >
+      Madame Colossa kneels beside the theatre she saved, wearing a chandelier brooch while tiny guests toast from balconies.
+      Use her beaded gown panels, fur waves, orchids, and city windows as balanced coloring regions.
+
+  - page: 17
+    slug: titania-rex-solo
+    title: Emergency Broadcast Queen
+    characters: [titania-rex]
+    composition: >
+      Titania Rex wraps her tail around a bonsai city and points toward an unsafe reactor as solar fins display warning symbols.
+      Keep the crystal scale gown graphic and distinct from familiar kaiju anatomy.
+
+  - page: 18
+    slug: chum-darling-solo
+    title: Miss Feeding Frenzy
+    characters: [chum-darling]
+    composition: >
+      Chum Darling directs a synchronized-swimming safety routine beneath striped umbrellas and lifeguard flags.
+      Use mod fashion blocks, wave curls, and pearl details with broad white breathing room.
+
+  - page: 19
+    slug: babs-o-blob-solo
+    title: Every Role at Once
+    characters: [babs-o-blob]
+    composition: >
+      Babs O'Blob auditions as an entire cast, forming several expressive faces and gloved hands from one flowing body.
+      Divide the liquid silhouette into large accessory-filled regions without using gray transparency.
+
+  - page: 20
+    slug: podrick-bloom-solo
+    title: The Perfect Substitute
+    characters: [podrick-bloom]
+    composition: >
+      Podrick Bloom waters flowers grown from his own footprints while memory rain falls inside a moonlit greenhouse.
+      Use botanical engraving shapes simplified into closed leaves, petals, glass panes, and suit panels.
+
+  - page: 21
+    slug: fly-boy-floyd-solo
+    title: The Buzz Club
+    characters: [fly-boy-floyd]
+    composition: >
+      Fly Boy Floyd croons on a tiny jazz stage as compound eyes display miniature dancers and wing coat-tails spread behind him.
+      Keep insect anatomy elegant, clean, and divided into usable color regions.
+
+  - page: 22
+    slug: miss-chiffonette-solo
+    title: Queen of the Nursery
+    characters: [miss-chiffonette]
+    composition: >
+      Miss Chiffonette presides over a dollhouse tea party with dust-bunny courtiers and many tiny doors behind her.
+      Make ribbon layers, porcelain panels, keys, and teacups detailed but not microscopic.
+
+  - page: 23
+    slug: glamlin-solo
+    title: Quick-Change Creature
+    characters: [glamlin]
+    composition: >
+      Glamlin multiplies into a tiny backstage tailoring crew, each copy handling one oversized costume tool.
+      Use fabric patches, thread loops, measuring-tape bands, and ruffled spines as playful color zones.
+
+  - page: 24
+    slug: jackie-o-lantern-solo
+    title: Duchess of the Detour
+    characters: [jackie-o-lantern]
+    composition: >
+      Jackie O'Lantern leads lost travelers past a dangerous bridge on her flaming brass motorcycle-horse.
+      Keep the pumpkin face, cavalry tuxedo, leaf epaulettes, wheel cape, and detour signs clear and colorable.
+
+  - page: 25
+    slug: midnight-double-feature
+    title: Midnight Double Feature
+    characters: [countess-vesper-vane, madame-phantasm]
+    composition: >
+      Vesper watches from a cinema balcony while Madame Phantasm conducts the movie screen itself; moths become music notes
+      between them. Compose as two distinct figures joined by sweeping curtains and projector beams.
+    conceptArtPrompt: >
+      Original full-color duo portrait of Countess Vesper Vane and Madame Phantasm commanding a decaying midnight picture
+      palace, one poised on an Art Deco balcony among pale roses and moths, the other conducting floating masks before a
+      living silver screen, symmetrical gothic glamour, 1930s geometric cinema poster fused with German Expressionist stage
+      painting, distinct silhouettes, no text, no existing franchise characters or actor likenesses.
+
+  - page: 26
+    slug: city-scale-gala
+    title: The Biggest Night in Town
+    characters: [madame-colossa, titania-rex]
+    composition: >
+      Madame Colossa and Titania Rex attend an outdoor gala beside the tiny preserved theatre, trading bonsai centerpieces
+      while helicopters hang chandeliers. Emphasize friendly scale contrast and two completely different giant silhouettes.
+    conceptArtPrompt: >
+      Original full-color giant-monster gala scene with Madame Colossa, an elegant colossal mountain-ape socialite in emerald
+      Art Nouveau beadwork, and Titania Rex, a crowned reptilian matriarch with translucent solar-fan fins and crystal gown
+      scales, seated beside a tiny restored theatre at dusk, helicopters placing chandelier jewelry, joyful civic spectacle,
+      panoramic painted event poster, no text, no famous skyscraper pose, no recognizable kaiju design.
+
+  - page: 27
+    slug: cosmic-quick-change
+    title: Catastrophe Couture
+    characters: [pound-foolish, stella-vore, glamlin]
+    composition: >
+      Pound Foolish and Stella Vore compete in a cosmic runway finale while dozens of Glamlin copies perform impossible
+      costume changes. Keep the trio readable with Pound left, Stella right, and a flowing ribbon of small Glamlins below.
+    conceptArtPrompt: >
+      Original full-color cosmic fashion-show scene featuring Pound Foolish, a six-armed alien clown empress in celestial
+      harlequin couture, Stella Vore, a crystalline radial-crowned star predator in meteor-glass armor, and a chorus of tiny
+      tailoring imps called Glamlin racing between them with fabric and tools, spectacular asteroid runway under laughing
+      moons, 1970s airbrush fantasy meets handcrafted creature-effects photography, no text, no existing alien or clown design.
+
+  - page: 28
+    slug: monster-recast-premiere
+    title: The Monster Recast Premiere
+    characters:
+      - pound-foolish
+      - countess-vesper-vane
+      - frankie-stitches
+      - mister-matrimony
+      - luna-howl
+      - king-tut-tut
+      - delta-drench
+      - mister-nobody
+      - madame-phantasm
+      - hex-appeal
+      - sister-sinema
+      - stella-vore
+      - mister-finale
+      - velvet-nightmare
+      - sir-loin
+      - madame-colossa
+      - titania-rex
+      - chum-darling
+      - babs-o-blob
+      - podrick-bloom
+      - fly-boy-floyd
+      - miss-chiffonette
+      - glamlin
+      - jackie-o-lantern
+    composition: >
+      Full cast outside the Bijou Theatre for opening night. Arrange giant characters as architectural framing, medium figures
+      on stairs and balconies, and small characters in the foreground. Every face and core silhouette must remain identifiable.
+    conceptArtPrompt: >
+      Original full-color ensemble illustration of all twenty-four Monster Recast characters at the grand reopening of the
+      Bijou Theatre, an inclusive old-Hollywood monster premiere filled with drag kings, queens, nonbinary creatures, giant
+      beasts, gothic revenants, aliens and comic horrors; giant Madame Colossa and Titania Rex frame the skyline, Pound Foolish
+      spreads six arms above the marquee, the main cast fills a sweeping staircase, Babs O'Blob becomes part of the carpet,
+      Glamlin crews manage costumes in front, Jackie O'Lantern arrives on a brass flame-cycle; elaborate yet readable theatrical
+      poster composition, varied scale, Art Deco architecture, jewel colors, no text, no actor likenesses, no copied characters.
