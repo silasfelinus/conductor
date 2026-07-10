@@ -107,7 +107,7 @@ Approval and exploration are intentionally separate:
 - A later queued image for an approved concept is inspiration or an optional alternate; it does not replace the approved master unless Silas explicitly promotes it.
 - Files in `approved/` that are not yet in the confirmation manifest are surfaced for review rather than silently treated as a new decision.
 
-Current user-confirmed approvals are Frieda Krueger, TV Boy, and Masking Up, each with a colored and BW asset recorded in `approved/manifest.yaml`. The current filesystem also contains a complete Perfect Woman pair inside `approved/`; the preflight reports it separately because it was not part of the three approvals named in the 2026-07-10 direction. The report also surfaces legacy or nonstandard filenames—including the older `frienda` spelling and `masking-up.bw.webp`—without changing the art queue.
+Current user-confirmed approvals are Frieda Krueger, TV Boy, and Masking Up, each with a colored and BW asset recorded in `approved/manifest.yaml`. The current filesystem also contains a complete Perfect Woman pair inside `approved/`; the preflight reports it separately because it was not part of the three approvals named in the 2026-07-10 direction. The report also surfaces legacy filename drift—including the `freida`, `frieda`, and older `frienda` spellings—without changing the art queue.
 
 ## Production sequence
 
