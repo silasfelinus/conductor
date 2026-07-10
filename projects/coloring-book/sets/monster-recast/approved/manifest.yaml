@@ -15,14 +15,15 @@ queue_policy:
     one. Production work must reuse the approved colored master and BW partner first.
 confirmed_approvals:
   - concept_id: mr-002
-    slug: freida-krueger
-    label: Freida Krueger
+    slug: friedа-krueger
+    label: Frieda Krueger
     status: approved-pair
     color: approved/freida-krueger-color.webp
-    bw: approved/frienda-krueger-bw.webp
+    bw: approved/frieda-krueger-bw.webp
     notes:
       - Silas explicitly approved the design and colored/BW pair.
-      - The BW filename currently says "frienda" while the color filename says "freida"; retained as-is and surfaced by preflight.
+      - The color filename currently says "freida" while the newer BW filename says "frieda"; retained as-is and surfaced by preflight.
+      - An older "frienda-krueger-bw.webp" may still be present and should be treated as a duplicate, not another approval.
   - concept_id: mr-003
     slug: tv-boy
     label: TV Boy
@@ -34,10 +35,10 @@ confirmed_approvals:
   - concept_id: mr-004
     slug: masking-up
     label: Masking Up
-    status: approved-color-awaiting-bw
-    color: inspiration/masking-up-color.webp
-    bw: null
+    status: approved-pair
+    color: approved/masking-up-color.webp
+    bw: approved/masking-up.bw.webp
     notes:
-      - Silas explicitly approved this design.
-      - The color file is currently under inspiration/ rather than approved/.
-      - No masking-up BW file was present in the 2026-07-10 upload commit; add or move it later without changing queue order.
+      - Silas explicitly approved this design and pair.
+      - The BW filename uses a dot before "bw" instead of the standard dash; retained as-is and surfaced by preflight.
+      - The older inspiration/masking-up-color.webp remains inspiration only.
