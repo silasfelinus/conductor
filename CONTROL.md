@@ -21,7 +21,9 @@ ai-art-academy → coloring-book → humboldt-scoop → humboldt-scoop-cms →
 digital-storefront → packmaker → mermaids-of-venice → kind-robots → global-ui.
 (Mirror changes into projects/priority.yaml. Updated 2026-07-10: ai-art-academy and
 coloring-book created per Silas's session direction — ai-art-academy is the autonomous
-initiative test run and should get Worker attention early while it's being proven.)
+initiative test run and should get Worker attention early while it's being proven.
+dream-cycle sits last on purpose: it's the idle fallback, never a competitor for
+real ready work.)
 
 **Standing rules for all agents:** Respect each project's `kind`. Honor `depends_on` gates.
 Never expand product-types.yaml — pitch it. When unsure, do less and escalate to
@@ -53,6 +55,12 @@ Silas explicitly approves that concrete action too.
   Those projects keep running without my input under the "never idle" rule in AGENTS.md
   (style pass / roadmap upgrade / more inspirations / content expansion when nothing is
   ready). ai-art-academy is the test run. Escalate only actual human gates.
+- Dream-a-day idle fallback (2026-07-10): dream-cycle sits LAST in priority.yaml.
+  When no other active project has ready work, its recurring task builds the site's
+  next dream (location + vibe, characters, rewards, scenarios, optional narrator
+  with expressions/topics/threads — one dream, ~one day, art included) from the
+  human-steerable backlog in projects/dream-cycle/backlog/. Silas steers by leaving
+  notes in those files; agents fold notes in before every stage and never edit them.
 
 ---
 
@@ -183,6 +191,22 @@ and pre-approved. Surface only actual human gates; keep running without my input
 - Adjacent to sketchy (drawing instruction); shared KR token economy, separate projects.
 - Living-artist/brand styles (Disney, Gorillaz, DB4RZ…) may stay in the free-play
   Style Lab but are excluded from the taught curriculum.
+
+### dream-cycle  (software, autonomous: true)
+**Direction (2026-07-10, new project):** The dream-a-day idle fallback — testing a new
+option for conductor sweeps. When there isn't anything better to do, agents develop
+new ideas for the site, ONE dream at a time: a location and a vibe, each with
+characters, rewards, and scenarios; optionally a bot narrator with expressions,
+topics, and threads. Each dream takes about a day including all art generation.
+The backlog of outlines lives in `projects/dream-cycle/backlog/` — accessible files
+where I leave notes and flip status/priority to steer, park, or veto ideas.
+**Notes:**
+- Infrastructure first: audit the KR API surface (t-003) and write DREAM-SPEC.md
+  (t-004) before the first build. The recurring build task (t-006) waits on the spec.
+- Only ONE dream may be `building` at a time. Backlog stays ≥5 buildable outlines.
+- All kind_robots data models already exist — no schema work. API gaps become
+  kind_robots tasks/pitches, never direct backend edits.
+- My backlog-file notes are agent-read-only: fold them in, never edit or delete them.
 
 ### coloring-book  (software)
 **Direction (2026-07-10, new project):** Front-end coloring book app of AI-generated

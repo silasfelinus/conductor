@@ -1,0 +1,183 @@
+project: dream-cycle
+kind: software
+autonomous: true
+goal: >
+  When nothing better is ready anywhere, conductor develops the site itself — one
+  dream at a time. Each dream ships complete: a location with a vibe, characters,
+  rewards, scenarios, optional bot narrator (expressions, topics, threads), and
+  all art — in roughly a day, from a human-steerable backlog of outline files.
+waypoints:
+  - Browse the backlog of dream outlines and see what's coming.
+  - Watch the active dream's build log fill in stage by stage.
+  - Leave a note in any outline file to steer or veto it.
+  - Visit a shipped dream on the site — location, cast, rewards, scenarios, narrator.
+  - Check SHIPPED.md for the ledger of every dream built so far.
+notes_from_silas: >
+  New project 2026-07-10, from my session direction: I want to test a new option
+  for conductor sweeps — if there isn't anything better to do, the agent develops
+  new ideas for the site, one dream at a time. A dream is a location and a vibe,
+  each with characters, rewards, and scenarios; a dream can also have a bot
+  narrator, and a narrator has expressions, topics, and threads. Each idea should
+  take about a day to build out including all the art generation. Keep accessible
+  files that list out further ideas so there's a backlog of outlines for future
+  developments, with the ability for me to leave notes in the files. We have all
+  the pieces — this project is the infrastructure tightening around them.
+milestones:
+  - id: m1
+    title: SHAPE — design brief and backlog format
+    weight: 15
+    status: in-progress
+  - id: m2
+    title: TIGHTEN — dream spec, API audit, build playbook
+    weight: 30
+    status: not-started
+  - id: m3
+    title: BACKLOG — seed and sustain the outline runway
+    weight: 15
+    status: not-started
+  - id: m4
+    title: DREAM FACTORY — the recurring one-dream-at-a-time build loop
+    weight: 30
+    status: not-started
+  - id: m5
+    title: POLISH — project art and loop refinement
+    weight: 10
+    status: not-started
+tasks:
+  - id: t-001
+    milestone: m1
+    title: Write the design brief and backlog scaffolding
+    status: done
+    owner: reviewer
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-10T00:00:00Z'
+    note: >
+      DESIGN-BRIEF.md written 2026-07-10 from Silas's session direction: the
+      idle-fallback loop, the complete-dream definition, the 8-stage day cycle,
+      and the backlog file contract (Notes-from-Silas sections, status/priority
+      frontmatter Silas can flip). backlog/ scaffolded with README, template,
+      and three seed outlines (tidepool-arcade, lantern-post, static-garden —
+      one deliberately narratorless to test that stage skipping).
+  - id: t-002
+    milestone: m1
+    title: Confirm scope and content-write authority with Silas
+    status: needs-human
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-10T00:00:00Z'
+    note: >
+      FOR SILAS: soft checkpoint — nothing is blocked; m2 infrastructure work
+      proceeds in parallel. Read projects/dream-cycle/DESIGN-BRIEF.md (~2 pages)
+      and skim backlog/README.md plus one seed outline. It contains: the 8-stage
+      one-dream-a-day loop, the backlog file format you steer through, and the
+      assumption that agents may CREATE CONTENT ROWS (Dreams, Characters, Rewards,
+      Scenarios, narrator Bots, expressions, topics, threads) in the kind_robots
+      database via existing API endpoints — reversible, traceable, deletable rows,
+      like the pre-approved generated art they carry.
+      TO APPROVE: set approved_by_human: true and status: done, or leave a
+      correction note here (especially if content rows should land as seed-file
+      PRs instead of API writes, or if the first dreams should be isPublic: false
+      until you review them). Nothing unblocks — this only steers.
+  - id: t-003
+    milestone: m2
+    title: Audit the kind_robots API surface for every dream-build model
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-10T00:00:00Z'
+    note: >
+      Infrastructure tightening, part 1. For each model a dream build touches —
+      Dream, DreamRelation, Character, Reward, Scenario, Bot, ExpressionMedia,
+      ExpressionTransition, NarratorTopic, NarratorThread — verify (read-only:
+      inspect kind_robots server/api routes in the repo, no live writes) whether a
+      create/update endpoint exists, what auth it needs (KR_API_TOKEN pattern per
+      scripts/fetch_todos.py), and required fields. Output
+      projects/dream-cycle/docs/api-surface.md with a per-model verdict:
+      api-ready | gap. Each gap becomes a proposed kind_robots roadmap task or
+      pitch (backend stays read-only/external — never edit it directly).
+  - id: t-004
+    milestone: m2
+    title: Write DREAM-SPEC.md — the complete-dream checklist and 8-stage build playbook
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-10T00:00:00Z'
+    depends_on: t-003
+    note: >
+      Infrastructure tightening, part 2. Turn DESIGN-BRIEF.md's loop into the
+      operational spec the recurring build task follows: per-stage inputs,
+      concrete create calls or seed-file paths (from t-003's audit), verification
+      per stage, art-prompt queueing through projects/art-prompts.yaml /
+      art-generate.yaml, metadata requirements (designer/source so a whole dream
+      is traceable and removable), the ship checklist, and the backlog
+      replenishment rule (keep >= 5 buildable outlines). Include how to honor
+      Silas's backlog notes and frontmatter flips at every stage.
+  - id: t-005
+    milestone: m3
+    title: Grow the backlog to ten buildable outlines
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-10T00:00:00Z'
+    note: >
+      Three seeds exist (tidepool-arcade, lantern-post, static-garden). Add seven
+      more full outlines using backlog/_template.md — varied vibes and locations,
+      at least two narratorless, no duplicates of existing kind_robots Dreams or
+      backlog entries (check both). All-ages, on-brand whimsy per the seed tone
+      unless a Silas note steers otherwise. Quality over speed: each outline
+      should be buildable as-is.
+  - id: t-006
+    milestone: m4
+    title: 'Dream-a-day: advance the active dream build one stage'
+    status: waiting
+    recurring: true
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-10T00:00:00Z'
+    depends_on: t-004
+    note: >
+      THE idle-fallback loop (recurring — re-arms to ready after every cycle,
+      never reaches done, doesn't count toward milestones). Because dream-cycle
+      sits LAST in projects/priority.yaml, this task is only picked when no other
+      active project has ready work — that's the "nothing better to do" contract.
+      Each cycle: (1) scan every backlog file for new Notes from Silas and
+      frontmatter flips, fold them in first; (2) if a dream is status: building,
+      advance it exactly ONE stage per DREAM-SPEC.md and append its Build log;
+      (3) else promote the top queued outline (approved > outline, then priority,
+      then oldest) to building and run stage 1; (4) at ship: verify the full
+      checklist, mark built, write the SHIPPED.md ledger entry, and replenish the
+      backlog if under 5 buildable outlines. One dream building at a time, ever.
+  - id: t-007
+    milestone: m5
+    title: Generate dream-cycle project art (icon, card, hero)
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-10T00:00:00Z'
+    note: >
+      Prompts queued in projects/art-prompts.yaml (added 2026-07-10). Generate and
+      commit via the auto art pipeline (pre-approved) to projects/images/
+      dream-cycle-{icon,card,hero}.webp, keep prompt/model/source metadata, and
+      remove the ART-PROMPTS.md pending entries once files land.
+  - id: t-008
+    milestone: m5
+    title: First-dream retrospective — tighten the spec from what actually happened
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-10T00:00:00Z'
+    depends_on: t-004
+    note: >
+      After the FIRST dream ships via t-006: compare the build against
+      DREAM-SPEC.md — stages that didn't fit a single cycle, missing
+      verification, art-pipeline friction, API gaps hit in practice. Amend
+      DREAM-SPEC.md and file any new kind_robots tasks. Summarize for Silas in
+      the PR so he can judge whether the one-dream-a-day cadence held.

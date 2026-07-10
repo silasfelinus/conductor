@@ -18,6 +18,9 @@ Then report:
 - **Ready tasks** (what the Worker should pick up next, in priority order)
 - **Needs-human gates** (what only Silas can unblock, grouped by project)
 - **Any unresolved escalations** from TALKBACK
+- **Dream cycle** (idle fallback): the active `building` dream and its next stage,
+  or — if none — the next queued outline in `projects/dream-cycle/backlog/`; flag
+  any new Silas notes in backlog files and warn if buildable outlines < 5
 
 After the report, ask Silas what he wants to work on — or proceed directly if his first message is already a clear task.
 
