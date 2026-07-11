@@ -1482,3 +1482,23 @@ action needed from an agent until that's addressed.
 **Suggested action:** Silas — same ask as the last 22 times: slow the Reviewer
 trigger's cadence or gate it on an actual open `worker/*` PR existing. No other
 action needed from an agent until that's addressed.
+
+## 2026-07-11 | Reviewer(Claude, scheduled review cycle) → system | conductor t-026 | pattern
+
+**Subject:** 24th recurrence of the already-escalated Reviewer-trigger issue: fired
+~1 hour after the 19:36 firing, still no `worker/*` PR anywhere in scope.
+
+**Detail:**
+- Swept open PRs: conductor #375 (`agent/weekly-run-permissions-*`, still one
+  commit, one comment, unchanged since 03:37 — no Worker response in ~17 hours)
+  and kind_robots #160 (still draft, `agent/*`) plus a new kind_robots #177
+  (`agent/hide-legacy-dream-projections`, opened 20:30, draft) are the only PRs
+  open anywhere in scope. None is a `worker/*` PR.
+- t-026 remains the correct hard `needs-human` escalation; roadmap note updated
+  with this occurrence's timestamp per the task's own instruction to log data
+  points rather than repeat a full escalation each time. No push notification
+  sent — same already-flagged issue, nothing new for Silas to see.
+
+**Suggested action:** Silas — same ask as the last 23 times: slow the Reviewer
+trigger's cadence or gate it on an actual open `worker/*` PR existing. No other
+action needed from an agent until that's addressed.
