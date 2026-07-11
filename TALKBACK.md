@@ -1178,3 +1178,22 @@ block covering force-push/hard-reset/branch-delete/clean/rebase-i/direct-main-pu
 patterns, then reopen for review. Silas — if the Worker's atomic claim-commit
 flow genuinely needs a `main`-push carve-out, say so explicitly so the deny
 pattern can be scoped around it rather than left open-ended.
+
+## 2026-07-11 | Reviewer(Claude, scheduled review cycle) → system | conductor t-026 | pattern
+
+**Subject:** 9th recurrence of the already-escalated Reviewer-trigger issue: fired
+at 05:36 UTC, almost exactly 1 hour after the 04:37 firing, on the same
+already-reviewed conductor PR #375 with zero new activity in between.
+
+**Detail:**
+- Swept both repos: only #375 (conductor, still awaiting the Worker's `deny`-list
+  fix from my prior review, no new commits/comments) and kind_robots #169/#160
+  (unrelated draft PRs, not `worker/*`) are open. No `worker/*` PR exists anywhere.
+- t-026 already captures this as a hard `needs-human` escalation asking Silas to
+  fix the trigger cadence/condition outside the repo. No code change made; roadmap
+  note updated with this occurrence's timestamp per the task's own instruction to
+  log data points rather than repeat a full escalation each time.
+
+**Suggested action:** Silas — this is the same ask as the last 8 times: slow the
+Reviewer trigger's cadence or gate it on an actual open `worker/*` PR existing.
+No other action needed from an agent until that's addressed.
