@@ -1554,3 +1554,33 @@ declares an explicit onDelete, and a CI guard failing on a dirty
 
 **Suggested action:** none — cleanup complete. Worker may pick up the kaizen
 guards if desired.
+
+## 2026-07-11 | Reviewer(Claude, Silas-directed session) → system | challenge-center t-003 reconciled + kind_robots migration phase 4 underway | update
+
+**Subject:** t-003 closed by verification (roadmap was stale — the API already
+exists), and the Dream → Project/Facet migration is in its final cleanup phase.
+
+**Detail:**
+- challenge-center t-003: every endpoint in the spec already exists on
+  kind_robots main and was verified line-by-line (list/detail/create with admin
+  gate, contenders, API-key submissions with duplicate 409, both leaderboards
+  with net scoring and per-variant breakdowns). Set `status: done`; t-004/t-005
+  unblock on the Worker's next resolve_deps.py run. First LEARNING.yaml record
+  appended.
+- kind_robots migration: the ChatGPT handoff Silas carried in was stale — PR
+  #173 plus follow-ups #175–#178 were already merged, so phase 1 (runtime Genre
+  usage) is done. Remaining: legacy-row cleanup then compat-layer removal.
+- Opened kind_robots PR #179: one-shot `legacy-dream-cleanup` workflow
+  (Tailscale + DATABASE_URL pattern from fallback-snapshot.yml) that gates on
+  the genre relation audit + Project/Facet parity verifier, archives the 29
+  PROJECT + 20 GENRE dreams to archives/legacy-dreams/, and deletes only with
+  `delete=true`. After the rows are gone, a follow-up PR drops PROJECT/GENRE
+  from DreamType, removes the project-specific Dream columns, and deletes the
+  guard/compat layer (Silas pre-approved full cleanup).
+- Housekeeping: closed stale draft kind_robots PR #160 (its own description
+  forbade merging; the migration it smoke-tested shipped long ago) — Silas
+  approved.
+
+**Suggested action:** none for agents. Silas: PR #179 review/merge, then the
+two workflow dispatches (delete=false, then delete=true) are the remaining
+human-speed steps before the final compat-removal PR.
