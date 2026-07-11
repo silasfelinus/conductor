@@ -35,6 +35,8 @@ Read these files before selecting work:
 3. Select the highest-priority safe `ready` task from active projects.
    - Hard human gates stop unsafe work.
    - Soft blockers should be documented, then task selection should continue if other safe work exists.
+   - If the task has `passes > 0`, read its `retry_context:` field first and shape the
+     retry around it — never retry blind (see AGENTS.md "Retry context").
 
 4. Keep the implementation small.
    - Change only the files required by the task.
@@ -56,6 +58,18 @@ Read these files before selecting work:
    - List changed files.
    - Say what was verified.
    - Explain any human action needed with exact file/task edits.
+
+8. Triage failures before reacting.
+   - When a task attempt fails, classify it per AGENTS.md "Failure triage":
+     **transient** (environment hiccup — retry cheap or move on, no pass consumed),
+     **actionable** (task can never succeed as specified — fix the roadmap or soft
+     needs-human immediately, no pass consumed), **quality** (work was wrong — normal
+     retry loop, consumes a pass), **scope** (too big — split into smaller tasks).
+   - Never spend a second pass on an actionable failure; never escalate a transient one.
+
+9. Close the loop when a task ends.
+   - On closing a task at `done`/`blocked`, append the outcome record to `LEARNING.yaml`
+     (see AGENTS.md "Learning ledger").
 
 ## Soft blocker examples
 

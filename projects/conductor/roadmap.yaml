@@ -455,6 +455,89 @@ tasks:
       set git safe.directory for the SDK checkout) so flutter analyze/test run
       in every future cycle.
 
+  - id: t-030
+    milestone: m2
+    title: "Adopt PortOS CoS learnings: failure triage, retry context, learning ledger"
+    status: done
+    owner: claude
+    passes: 0
+    stakes: reversible
+    updated: "2026-07-11T21:30:00Z"
+    note: >
+      Retroactive task; Silas-directed session on branch
+      claude/conductor-portos-comparison-wdpdoq. Added AGENTS.md sections "Failure
+      triage" (transient/actionable/quality/scope — only quality/scope consume a
+      pass), "Retry context" (Reviewer writes retry_context: on rejection; Worker
+      must read it before re-claiming), and "Learning ledger" (LEARNING.yaml
+      append-only outcome records + scripts/build_learning_summary.py ->
+      LEARNING-REPORT.md, wired into kaizen targeting). Updated
+      prompts/hourly-worker.md steps 3/8/9 and both role definitions. 16 new tests
+      in tests/test_build_learning_summary.py; full suite 103 passed. Design record:
+      docs/2026-07-11-portos-cos-learnings.md.
+
+  - id: t-031
+    milestone: m2
+    title: Wire LEARNING-REPORT.md regeneration and its tests into CI
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: "2026-07-11T21:30:00Z"
+    depends_on: t-030
+    note: >
+      Follow-up to t-030. Add tests/test_build_learning_summary.py to the Worker PR
+      CI job list (ci.yml) and regenerate LEARNING-REPORT.md on pushes to main the
+      same way STATUS.md/KAIZEN.md are rebuilt, so the report never drifts from the
+      ledger.
+
+  - id: t-032
+    milestone: m2
+    title: Backfill LEARNING.yaml from recent git history and TALKBACK
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: "2026-07-11T21:30:00Z"
+    depends_on: t-030
+    note: >
+      The ledger starts empty, so LEARNING-REPORT.md has no signal until new tasks
+      close. Walk recently closed tasks (roadmap status done/blocked with passes
+      recorded) plus TALKBACK rejection entries and append best-effort records —
+      outcome and passes from the roadmap, failure_category inferred from the
+      Reviewer's stated reason where unambiguous, null otherwise. Append-only;
+      mark inferred records with a "backfilled" prefix in the lesson field.
+
+  - id: t-033
+    milestone: m2
+    title: "Pitch: worktree-parallel Workers with claim leases"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: "2026-07-11T21:30:00Z"
+    note: >
+      Deferred from the PortOS comparison (docs/2026-07-11-portos-cos-learnings.md).
+      Conductor's one-atomic-claim-commit rule serializes the Worker; PortOS CoS runs
+      3 concurrent agents via a git worktree per agent plus claim leases. Write a
+      pitch to pitches/ evaluating whether/how conductor's claim protocol could allow
+      N concurrent Worker claims safely (per-project caps, lease staleness, TALKBACK
+      contention). This is a structural change — pitch only, no implementation.
+
+  - id: t-034
+    milestone: m2
+    title: "Pitch: kind_robots dashboard as shared front-end for Conductor + PortOS CoS"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: "2026-07-11T21:30:00Z"
+    note: >
+      Deferred from the PortOS comparison. kind_robots already reads/writes this repo
+      as Conductor's control plane (server/api/conductor/*) and has a portos-page.vue
+      placeholder. Write a pitch to pitches/ for the one-dashboard-two-backends shape:
+      Conductor as governance layer, CoS-style runtime as execution layer, slug-parity
+      linking. Pitch only — cross-repo and outward-facing decisions stay with Silas.
+
   - id: t-029
     milestone: m1
     title: Promote the reconcile_expressions offline harness into the pytest suite
