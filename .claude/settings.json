@@ -19,6 +19,17 @@
       "mcp__github__create_branch",
       "mcp__github__create_pull_request",
       "mcp__github__update_pull_request"
+    ],
+    "deny": [
+      "Bash(git push --force*)",
+      "Bash(git push -f*)",
+      "Bash(git reset --hard*)",
+      "Bash(git branch -D*)",
+      "Bash(git clean -f*)",
+      "Bash(git rebase -i*)",
+      "Bash(git push * main)",
+      "Bash(git push *:main)",
+      "Bash(git push * main:*)"
     ]
   },
   "hooks": {
