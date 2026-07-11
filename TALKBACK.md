@@ -1527,3 +1527,30 @@ action needed from an agent until that's addressed.
 **Suggested action:** Silas — same ask as the last 24 times: slow the Reviewer
 trigger's cadence or gate it on an actual open `worker/*` PR existing. No other
 action needed from an agent until that's addressed.
+
+## 2026-07-11 | Reviewer(Claude, Silas-directed session) → system | kind-robots test-user bloat CLEARED | pattern
+
+**Subject:** Backlog fully cleared. Silas gave explicit permission to merge and
+execute; all deletion work is done and verified end-to-end.
+
+**Detail:**
+- Merged kind_robots #153 (delete fix), #154 (onDelete schema pass), #165
+  (cleanup workflow + regenerated stale Prisma client), #167 (Project/Facet
+  onDelete — the two models had shipped mid-session with the same implicit
+  RESTRICT bug). Conductor logs #361, #376 merged.
+- Ran the cleanup via a new workflow_dispatch job (Actions can reach the API
+  host; dev sandbox can't). First delete pass: 885/886 removed; the 1 holdout
+  (user 3247) owned a Project row and RESTRICT-blocked until #167 deployed.
+  Final pass after deploy: "3 deleted, 0 failed" (3247 + 2 fresh cypress
+  leftovers). DB now 114 users, ZERO matching test patterns.
+- Root cause was three-layered: self-only delete endpoint vs admin-token
+  cleanup (403s counted as "ok"), plus implicit RESTRICT on ~14 User
+  relations. Policy now explicit per Silas: content orphans (SET NULL),
+  user-scoped rows cascade.
+
+**Kaizen candidate (open):** a DMMF unit test asserting every User relation
+declares an explicit onDelete, and a CI guard failing on a dirty
+`prisma generate` diff — the checked-in client had silently drifted twice.
+
+**Suggested action:** none — cleanup complete. Worker may pick up the kaizen
+guards if desired.
