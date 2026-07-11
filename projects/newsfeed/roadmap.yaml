@@ -1,0 +1,168 @@
+project: newsfeed
+kind: software
+
+notes_from_silas: |
+  Build a modular, programmable newsfeed for the Kind Robots user homepage.
+  Replace the current settings-first homepage with useful feed content and move settings
+  into its own dedicated section. Ship a functional MVP quickly: curated recommended feeds
+  first, customization second, polish after the core loop works.
+
+  Recommended starter feeds should include AI news, activism, malaria activism,
+  AI gaming advances, AI model creation, and developer tips. Modularity is a core value:
+  feed definitions, source adapters, filtering, ordering, and presentation should be
+  separable rather than welded into one giant component.
+
+milestones:
+  - id: m1
+    title: "SHAPE — define the modular feed contract"
+    weight: 20
+    status: not-started
+
+  - id: m2
+    title: "BUILD — ship the functional homepage feed"
+    weight: 60
+    status: not-started
+
+  - id: m3
+    title: "POLISH & SHIP — customization, resilience, and UX"
+    weight: 20
+    status: not-started
+
+tasks:
+  - id: t-001
+    milestone: m1
+    title: "Audit the homepage and write the implementation brief"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Inspect the current Kind Robots homepage, settings surface, navigation, stores,
+      and relevant API boundaries. Update DESIGN-BRIEF.md with the exact files and
+      architecture for a fast MVP. Keep the plan additive and schema-free unless the
+      existing code makes that genuinely impossible. Immediately refine the BUILD tasks
+      after the audit; do not wait for scope confirmation.
+
+  - id: t-002
+    milestone: m1
+    title: "Confirm scope with Silas"
+    status: needs-human
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      FOR SILAS: soft checkpoint only; development is not blocked. Review
+      projects/newsfeed/DESIGN-BRIEF.md and redirect any feed categories, homepage
+      behavior, or customization expectations. Add a note here with changes, then set
+      approved_by_human: true and status: done when satisfied.
+
+  - id: t-003
+    milestone: m2
+    title: "Move homepage settings into a dedicated settings section"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-001
+    note: >
+      Preserve existing settings behavior while relocating it to a clearly discoverable
+      route or panel. The homepage should become available for the newsfeed without losing
+      any controls or creating duplicate sources of settings state.
+
+  - id: t-004
+    milestone: m2
+    title: "Create the feed registry and recommended presets"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-001
+    note: >
+      Add typed, modular feed definitions for AI news, activism, malaria activism,
+      AI gaming, AI model creation, and developer tips. Keep source adapters, feed metadata,
+      defaults, and user selection separate. Prefer configuration and Pinia state over
+      hard-coded branching in components.
+
+  - id: t-005
+    milestone: m2
+    title: "Build a minimal feed aggregation pipeline"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-004
+    note: >
+      Normalize feed items into one typed contract with title, summary, source, URL,
+      published time, category, and optional image. Use the smallest reliable ingestion
+      approach supported by the existing Kind Robots architecture. Avoid database schema
+      work for v1; any unavoidable shared-backend change becomes a proposal rather than
+      an improvised migration.
+
+  - id: t-006
+    milestone: m2
+    title: "Render the recommended newsfeed on the user homepage"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on:
+      - t-003
+      - t-005
+    note: >
+      Ship the first useful homepage: responsive feed cards, loading and empty states,
+      source attribution, external links, category filtering, and sensible chronological
+      ordering. Use the existing Kind Robots visual system and keep the component surface
+      small enough to evolve.
+
+  - id: t-007
+    milestone: m2
+    title: "Add user feed selection and ordering"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-006
+    note: >
+      Let users enable or disable recommended feeds and reorder them. Persist preferences
+      through the existing user/store/local-storage patterns without adding a new schema
+      for the MVP. Defaults should remain useful before any configuration.
+
+  - id: t-008
+    milestone: m3
+    title: "Add programmable feed filters"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-007
+    note: >
+      Add a compact advanced surface for include/exclude keywords, category filters,
+      source toggles, and sort mode. Treat this as a declarative configuration layer,
+      not arbitrary executable user code.
+
+  - id: t-009
+    milestone: m3
+    title: "Harden caching, deduplication, and failure handling"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-006
+    note: >
+      Add bounded caching, stable item identity, duplicate removal, stale-source tolerance,
+      and partial-success behavior so one broken feed does not blank the homepage.
+
+  - id: t-010
+    milestone: m3
+    title: "Polish accessibility and responsive presentation"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on:
+      - t-007
+      - t-009
+    note: >
+      Finish keyboard behavior, focus states, readable timestamps, mobile layout,
+      reduced-motion behavior where relevant, and final visual consistency. Keep the
+      feed fast and calm rather than turning the homepage into algorithmic slot-machine soup.
