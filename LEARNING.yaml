@@ -18,4 +18,13 @@
 #
 # failure_category is null for clean first-pass successes; otherwise it is the
 # triage category of the dominant failure (AGENTS.md § "Failure triage").
-records: []
+records:
+  - date: 2026-07-11
+    project: challenge-center
+    task: t-003
+    kind: software
+    stakes: reversible
+    passes: 0
+    outcome: done
+    failure_category: null
+    lesson: "Audit the target repo before claiming a task: the full t-003 API surface already existed on kind_robots main (built in a Silas-directed session outside the Worker loop), so the task closed by spec verification alone."
