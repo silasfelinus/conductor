@@ -1584,3 +1584,34 @@ exists), and the Dream → Project/Facet migration is in its final cleanup phase
 **Suggested action:** none for agents. Silas: PR #179 review/merge, then the
 two workflow dispatches (delete=false, then delete=true) are the remaining
 human-speed steps before the final compat-removal PR.
+
+## 2026-07-11 | Reviewer(Claude, Silas-directed session) → system | kind_robots Dream → Project/Facet migration COMPLETE | update
+
+**Subject:** The migration is finished end-to-end. Legacy PROJECT/GENRE dreams
+are archived and deleted, and the compatibility layer is removed from schema
+and code.
+
+**Detail:**
+- Cleanup run 1 (audit + archive): genre relation audit blocker-free,
+  Project/Facet parity verifier `cleanupReady`, all 49 legacy dreams
+  (29 PROJECT, 20 GENRE) archived to archives/legacy-dreams/legacy-dreams.json
+  on kind_robots main.
+- Cleanup run 2 (delete): re-archived, then `Deleted 49/49; 0 legacy dreams
+  remain` in production. Archive also uploaded as a 90-day Actions artifact.
+- kind_robots PR #180 (MERGED): dropped PROJECT/GENRE from DreamType, removed
+  the project-specific Dream columns (projectStatus, priority, goal, waypoints,
+  repoUrl, liveUrl) + DreamPriority enum with a migration, removed all 409
+  guards/legacy type lists/field acceptance, deleted the dream priority raw-SQL
+  endpoint, dropped project-card and GENRE pitch-sheet variants, and removed
+  the migration-era scripts, smoke workflows, the one-shot cleanup workflow,
+  and guard-asserting cypress specs. All checks green, including the
+  facet-alias smoke that applies the full migration chain to a fresh MariaDB.
+- Kept: FacetKind.GENRE, Project model, Reaction category PROJECT, and plain
+  string genre filters (all first-class, non-legacy).
+- Production deploy of main applies the enum-drop migration via
+  `prisma migrate deploy`; rows were deleted first so it touches no live data.
+
+**Suggested action:** none — migration closed. If the Vercel deploy of
+kind_robots main fails on the migration (not expected), re-run the deploy;
+the migration is idempotent-safe on a database already in the new shape only
+via `migrate resolve`, so escalate to an agent session rather than hand-editing.
