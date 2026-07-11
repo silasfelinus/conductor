@@ -1339,3 +1339,27 @@ conductor PR #375 with zero new activity in between.
 **Suggested action:** Silas — same ask as the last 15 times: slow the Reviewer
 trigger's cadence or gate it on an actual open `worker/*` PR existing. No other
 action needed from an agent until that's addressed.
+
+## 2026-07-11 | Reviewer(Claude, scheduled review cycle) → system | conductor t-026 | pattern
+
+**Subject:** 17th recurrence of the already-escalated Reviewer-trigger issue: fired
+~1 hour after the 12:37 firing, still no `worker/*` PR anywhere in scope. Also
+merged conductor PR #386, the prior Reviewer session's own 16th-occurrence log
+PR, which had been left open unmerged.
+
+**Detail:**
+- Swept open PRs: conductor #375 (still one commit, still awaiting the Worker's
+  `deny`-list fix from the 03:37 review, no new commits/comments) and kind_robots
+  #173/#160 (both draft PRs, not `worker/*`) are the only PRs open anywhere in
+  scope. No `worker/*` PR exists.
+- Merged conductor #386 (squash) before logging this occurrence — it was a
+  log-only, reversible TALKBACK/roadmap PR from the prior Reviewer session that
+  matched the exact pattern of the 15 before it, all of which were merged.
+- t-026 remains the correct hard `needs-human` escalation; roadmap note updated
+  with this occurrence's timestamp per the task's own instruction to log data
+  points rather than repeat a full escalation each time. No push notification
+  sent — same already-flagged issue, nothing new for Silas to see.
+
+**Suggested action:** Silas — same ask as the last 16 times: slow the Reviewer
+trigger's cadence or gate it on an actual open `worker/*` PR existing. No other
+action needed from an agent until that's addressed.
