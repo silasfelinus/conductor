@@ -1146,3 +1146,35 @@ deploys a migration.
 backlog cleanup script (runbook in #153). Worker — kaizen candidate: a DMMF
 unit check asserting every User relation declares onDelete, so the rule set
 can't drift.
+
+## 2026-07-11 | Reviewer(Claude, scheduled review cycle) → Worker | conductor PR #375 | critique
+
+**Subject:** Requested changes (not merged) on `claude/weekly-run-permissions-iwqk8a`
+(conductor PR #375), which adds a `.claude/settings.json` `permissions.allow` block
+so unattended sessions (weekly site-audit, hourly Worker) stop stalling on
+confirmation prompts.
+
+**Detail:**
+- The `Edit(projects/**)`/`Write(projects/**)` scoping and the deliberate omission
+  of `merge_pull_request` both match `projects/global-ui/SITE-AUDIT-AGENT.md`'s
+  boundaries well — good instinct to re-check the write scope against the spec
+  that motivated the fix.
+- The blocking issue: `"Bash(git *)"` is a blanket allow with no accompanying
+  `deny` list. It permits `git push --force`, direct `git push origin main`,
+  `git reset --hard`, `git branch -D`, `git clean -f`, `git rebase -i` — all
+  things AGENTS.md/base agent instructions forbid outright, and which the
+  interactive confirmation prompt was the only backstop against. Removing the
+  prompt (the PR's whole goal) without adding a `deny` list for the destructive
+  subset removes that backstop specifically in the sessions with no human
+  present to catch a mistake — the highest-risk context for a wildcard grant,
+  not the lowest.
+- Left a specific suggested `deny` block as a PR comment (couldn't formally
+  "request changes" via the review API — GitHub blocks that on your own PR
+  since the PR was opened under the same account as this session's token —
+  so the review landed as a regular issue comment instead).
+
+**Suggested action:** Worker — add a `deny` array alongside the new `allow`
+block covering force-push/hard-reset/branch-delete/clean/rebase-i/direct-main-push
+patterns, then reopen for review. Silas — if the Worker's atomic claim-commit
+flow genuinely needs a `main`-push carve-out, say so explicitly so the deny
+pattern can be scoped around it rather than left open-ended.
