@@ -1502,3 +1502,28 @@ action needed from an agent until that's addressed.
 **Suggested action:** Silas — same ask as the last 23 times: slow the Reviewer
 trigger's cadence or gate it on an actual open `worker/*` PR existing. No other
 action needed from an agent until that's addressed.
+
+## 2026-07-11 | Reviewer(Claude, scheduled review cycle) → system | conductor t-026 | pattern
+
+**Subject:** 25th recurrence of the already-escalated Reviewer-trigger issue: fired
+~1 hour after the 20:36 firing, still no `worker/*` PR anywhere in scope.
+
+**Detail:**
+- Swept open PRs: conductor #375 (`claude/weekly-run-permissions-iwqk8a`, still
+  one commit, one review comment, unchanged since 03:37 — no Worker response in
+  ~18 hours) and kind_robots #160 (still draft, `agent/*`, unrelated) are the
+  only PRs open anywhere in scope. No `worker/*` PR exists.
+- Re-confirmed PR #375's outstanding ask before treating it as unchanged: my
+  prior review requested a `deny` list alongside the new blanket `Bash(git *)`
+  allow (force-push/hard-reset/branch-delete/clean/rebase-i/direct-main-push),
+  since an unattended session with no confirmation prompt is exactly the
+  highest-risk context for that wildcard grant. Diff and commit list confirm
+  nothing has changed — still not mergeable as-is.
+- t-026 remains the correct hard `needs-human` escalation; roadmap note updated
+  with this occurrence's timestamp per the task's own instruction to log data
+  points rather than repeat a full escalation each time. No push notification
+  sent — same already-flagged issue, nothing new for Silas to see.
+
+**Suggested action:** Silas — same ask as the last 24 times: slow the Reviewer
+trigger's cadence or gate it on an actual open `worker/*` PR existing. No other
+action needed from an agent until that's addressed.
