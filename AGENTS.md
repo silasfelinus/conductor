@@ -172,6 +172,7 @@ violation regardless of whether the action seems helpful.
 - Smartly fix merge conflicts before merging; preserve independent valid changes and never delete conflicting work just to make Git happy
 - Set `status: claimed`, `status: review`, `status: needs-human`, `status: ready` (on retry), and `status: done` after a successful safe merge
 - Append entries to `TALKBACK.md` (global) or `projects/<name>/TALKBACK.md` — never overwrite
+- Append outcome records to `LEARNING.yaml` when closing a task (append-only, like TALKBACK)
 - Set `status: challenged` on a task where it disagrees with the Reviewer's rejection
 - Run `scripts/fetch_todos.py`, `complete_todo.py`, `resolve_deps.py`
 - Create new `ready` tasks in roadmap.yaml for out-of-scope issues discovered during work
@@ -242,6 +243,8 @@ delete it now, not an observation for later. (Kaizen from challenge-center/t-002
 - Comment on PRs with specific, actionable feedback
 - Set `status: done`, `status: ready`, `status: blocked`, `status: needs-human`
 - Append entries to `TALKBACK.md` (global) or `projects/<name>/TALKBACK.md` — never overwrite
+- Append outcome records to `LEARNING.yaml` when closing a task (append-only, like TALKBACK)
+- Write, overwrite, or remove the `retry_context:` field on a task per the Failure triage rules
 - Reference past TALKBACK entries when explaining a decision
 - Create new `ready` tasks in roadmap.yaml for unrelated issues spotted during review
 - Escalate a `challenged` task to `needs-human` for Silas to resolve
@@ -278,11 +281,15 @@ delete it now, not an observation for later. (Kaizen from challenge-center/t-002
   `status: needs-human`.
 - Keep the default outcome as an updated `main` branch unless the task is unsafe, human-gated,
   outward-facing, irreversible, or genuinely blocked. One task at a time.
+- **On closing a task at `done`** (e.g. after a safe self-merge): append the outcome record
+  to `LEARNING.yaml`.
 - **Merge conflicts:** resolve them intelligently. Keep both sides when they are independent,
   follow CONTROL.md and Silas notes when they conflict, and for `STATUS.md` / `workspace.html`
   accept the latest generated/main version. Re-check relevant verification after fixing conflicts.
-- **After a Reviewer rejection:** read the Reviewer's feedback carefully. If you agree,
-  fix and resubmit. If you disagree, write your case to the project's `TALKBACK.md` and
+- **After a Reviewer rejection:** read the Reviewer's feedback AND the task's
+  `retry_context:` carefully before re-claiming — never retry blind. If you agree,
+  fix and resubmit, saying in "Flags for Reviewer" how the retry addressed the
+  retry_context. If you disagree, write your case to the project's `TALKBACK.md` and
   set `status: challenged` — do not silently retry a disputed decision.
 
 **Recurring tasks** (`recurring: true`, e.g. brainstorm/t-001): these never reach `done`.
@@ -298,8 +305,11 @@ in the PR. Recurring tasks don't count toward milestone progress.
   on this task or recurring Worker patterns. Use it to calibrate your review.
 - **software, reversible, does the task, scoped:** approve and merge if the Worker has not
   already merged it; otherwise audit the result and append TALKBACK if useful.
-- **Needs changes:** comment specifically, set `status: ready`, increment `passes`.
-  At `passes == 3`, set `status: blocked` instead. Do NOT re-implement.
+- **Needs changes:** triage the failure first (see "Failure triage" — only quality/scope
+  consume a pass; transient/actionable failures route differently and never do). For a
+  quality/scope rejection: comment specifically, write `retry_context:` on the task,
+  set `status: ready`, increment `passes`. At `passes == 3`, set `status: blocked`
+  instead and append the ledger record. Do NOT re-implement.
 - **content / proposal / outward-facing / irreversible:** do NOT merge to live. Confirm the
   draft or pitch is well-formed, then leave at `status: needs-human` for Silas. (You may
   merge the file into main so it's visible, but never trigger publish/deploy/send.)
@@ -310,10 +320,14 @@ in the PR. Recurring tasks don't count toward milestone progress.
 - **Log commits must reach main**: TALKBACK/roadmap commits made on a session branch are only
   preserved if that branch gets a PR — never end a session with log commits stranded on an
   unPR'd branch.
+- **Ledger on close**: whenever your decision closes a task (`done` after merge, or
+  `blocked` at passes == 3), append the outcome record to `LEARNING.yaml` — including
+  the failure category and a one-line lesson.
 - **Kaizen on merge**: after every successful merge, create exactly one new `ready` task
   in the project's roadmap from the Worker's kaizen suggestion (or substitute your own if
   theirs is weak). One sentence title, `stakes: reversible`. This compounds improvement
-  across cycles automatically.
+  across cycles automatically. Check `LEARNING-REPORT.md` first — target a systematic
+  weakness over a generic improvement when one applies (see "Learning ledger").
 - **On a `challenged` task:** read the Worker's TALKBACK entry carefully. If the Worker's
   case has merit, adjust your decision and append a response. If not, escalate to
   `needs-human` for Silas to arbitrate — never re-reject a challenge silently.
@@ -379,6 +393,90 @@ do NOT block the task cycle automatically, but they MUST be reviewed by Silas be
 the next cycle that touches the flagged project. Include `security-flag: true` on the
 relevant roadmap task if one exists.
 
+## Failure triage — classify before you retry or escalate
+
+(Adopted 2026-07-11 from the PortOS CoS error-triage design — see
+`docs/2026-07-11-portos-cos-learnings.md`.) A failed pass is not one thing. Before
+deciding what happens next, whoever observed the failure (Worker mid-task, or Reviewer
+on rejection) assigns one of four categories. The category decides whether the pass
+budget is spent and where the task goes:
+
+| Category | What it looks like | Route | Consumes a pass? |
+|---|---|---|---|
+| **transient** | Environment hiccup unrelated to the work: connector/tooling failure, rate or session limits, CI flake, generated-file merge noise, network errors | Retry within the cycle if cheap; otherwise leave `ready` with a note and move to other work | No |
+| **actionable** | The task cannot succeed as specified no matter how many retries: missing access/credentials for the core work, stale or wrong task spec, an undeclared dependency, verification permanently impossible | Do NOT retry. Fix the roadmap (add `depends_on`, create the prerequisite task) or go straight to soft `needs-human` with a FOR SILAS note | No — retrying is waste |
+| **quality** | The work was attempted and is wrong: bugs, scope violations, verification gaps, doesn't do what the task says | Reviewer rejects with `retry_context` (below), task back to `ready`, Worker retries | Yes — this is what the budget is for |
+| **scope** | The task is too big to land in one pass: oversized diff, half-finished work, "and also" sprawl | Split it: create smaller `ready` tasks covering the remainder; the original either shrinks to its landable core or goes `waiting` on the new parts | Yes (the failed attempt), but stop retrying the monolith |
+
+Rules:
+- Only **quality** and **scope** failures increment `passes`. A transient or actionable
+  failure never burns the budget — the budget exists to bound *rework*, not to punish
+  environment problems.
+- On **actionable**: escalate or fix the roadmap the FIRST time. Burning three passes on
+  a task that can never succeed as specified is the failure mode this section exists to
+  prevent.
+- On **scope**: prefer decomposition over a third heroic attempt. Scope discipline
+  (hard rule 6) already says unrelated problems become new tasks — this extends it to
+  oversized related work.
+- The Reviewer records the category as `**Failure category:**` in its rejection feedback
+  and in the learning ledger (below). A Worker that self-triages mid-task records it in
+  the task `note:`.
+- When genuinely unsure between transient and quality, treat it as quality (spend the
+  pass). When unsure between quality and actionable, spend one pass before escalating.
+
+### Retry context — failed passes must teach the next one
+
+When the Reviewer rejects a task (`status: ready`, `passes` incremented), it also writes
+a `retry_context:` field on the task in `roadmap.yaml`:
+
+```yaml
+retry_context: >
+  pass 1 failed (quality): <what specifically went wrong, with file/PR reference>.
+  Do differently: <the concrete change of approach for the next attempt>.
+```
+
+- The Worker MUST read `retry_context` before re-claiming any task with `passes > 0`,
+  and the retry PR's "Flags for Reviewer" section must say how the attempt addressed it.
+- The Reviewer overwrites `retry_context` on each subsequent rejection (git history
+  preserves priors) and removes the field when the task reaches `done`.
+- A task at `passes > 0` with no `retry_context` is a template-discipline gap — the
+  Worker should note it in TALKBACK and reconstruct the context from the PR comments
+  before retrying blind.
+
+## Learning ledger — outcomes feed back into behavior
+
+Kaizen improves the system one suggestion per merge; the ledger makes *systematic*
+weaknesses visible across tasks, projects, and cycles (adopted from the PortOS CoS
+task-learning design). `LEARNING.yaml` at the repo root is an append-only ledger of
+task outcomes.
+
+**When a task closes** (`done`, `blocked`, or cancelled by Silas), the agent that closes
+it appends one record:
+
+```yaml
+- date: YYYY-MM-DD
+  project: <slug>
+  task: <task-id>
+  kind: software | content | proposal
+  stakes: reversible | outward-facing | irreversible
+  passes: <final pass count>
+  outcome: done | blocked | cancelled
+  failure_category: transient | actionable | quality | scope | null
+  lesson: "one sentence — what the next similar task should know"
+```
+
+- Append-only, same rule as TALKBACK: never edit or delete a prior record.
+- `failure_category` is `null` for clean first-pass successes; for anything that burned
+  a pass or blocked, use the triage category of the *dominant* failure.
+- Recurring tasks don't get a record per cycle — only if one cycle blocks or teaches
+  something worth a `lesson`.
+- `python scripts/build_learning_summary.py` regenerates `LEARNING-REPORT.md`
+  (auto-generated, read-only — same rules as STATUS.md / KAIZEN.md).
+- **Kaizen targeting:** before creating the kaizen task on a merge, the Reviewer checks
+  `LEARNING-REPORT.md`. If a systematic weakness (success rate < 60% for a project or
+  kind with 3+ records, or a failure category recurring 3+ times) applies to the project
+  at hand, the kaizen task targets that weakness instead of a generic improvement.
+
 ## Project art
 
 Every project has three visual assets displayed in the kind_robots Workspace panel:
@@ -418,6 +516,7 @@ Silas approval is required for the image generation itself.
 1. PRs only into `main` (except the Worker's atomic claim commit).
 2. Drafts not live actions when stakes are high → `needs-human`, never auto-fire.
 3. Iteration budget: 3 passes per software task (retries + challenges share the counter), then `blocked`.
+   Only quality/scope failures consume a pass — transient and actionable failures never do (see "Failure triage").
 4. One task at a time.
 5. Never touch DNS, secrets, billing, deploys, or send/publish anything without `needs-human`.
 6. Scope discipline: unrelated problems become new `ready` tasks, not extra diff.
@@ -467,6 +566,9 @@ The Reviewer decides whether to create a task from it or defer.
 
 **Decision:** merged | rejected (pass N) | escalated to needs-human | challenge resolved | audited already-merged work
 
+**Failure category:** (rejections/blocks only) transient | actionable | quality | scope —
+per the "Failure triage" section. Quality/scope: also write `retry_context:` on the task.
+
 **What was good:**
 - specific things the Worker did well
 
@@ -503,7 +605,8 @@ What the Worker would do first if you approve.
 `ready` → `claimed` → (`review` optional) → `done`
 
 Side exits:
-- `blocked` — iteration budget exhausted (passes == 3)
+- `blocked` — iteration budget exhausted (passes == 3, quality/scope failures only —
+  see "Failure triage"). Closing agent appends a `LEARNING.yaml` record.
 - `needs-human` — hard gate (gate_human/outward-facing/irreversible/content+proposal) OR soft
   escalation (stuck, connector failure, unclear path). Hard: stop cycle. Soft: continue to
   next ready task. Document which kind in the task `note:`.

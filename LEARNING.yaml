@@ -1,0 +1,21 @@
+# LEARNING.yaml — append-only task-outcome ledger.
+#
+# One record per CLOSED task (done / blocked / cancelled), appended by the agent
+# that closes it. Same rule as TALKBACK: never edit or delete a prior record.
+# Full protocol: AGENTS.md § "Learning ledger". Summary view: LEARNING-REPORT.md
+# (regenerate with `python scripts/build_learning_summary.py`).
+#
+# Record shape:
+#   - date: YYYY-MM-DD
+#     project: <slug>
+#     task: <task-id>
+#     kind: software | content | proposal
+#     stakes: reversible | outward-facing | irreversible
+#     passes: <final pass count>
+#     outcome: done | blocked | cancelled
+#     failure_category: transient | actionable | quality | scope | null
+#     lesson: "one sentence — what the next similar task should know"
+#
+# failure_category is null for clean first-pass successes; otherwise it is the
+# triage category of the dominant failure (AGENTS.md § "Failure triage").
+records: []
