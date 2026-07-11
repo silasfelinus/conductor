@@ -377,7 +377,7 @@ tasks:
     title: Reviewer trigger fires with no open worker/* PR to review, repeatedly
     status: needs-human
     owner: null
-    updated: '2026-07-10T15:35:00Z'
+    updated: '2026-07-11T00:00:00Z'
     passes: 0
     stakes: reversible
     note: >
@@ -385,15 +385,16 @@ tasks:
       is Worker PR volume to review — this is a platform/scheduling issue, not
       something fixable from inside the repo.
 
-      What's happening: at least 5 Reviewer sessions now (root TALKBACK.md
-      2026-07-05 evening, 2026-07-07 PR #345, 2026-07-10 14:35 PR #348, and this
-      session ~15:35) have fired expecting a worker/* PR to review, found zero
-      open PRs in both conductor and kind_robots via list_pull_requests, and
+      What's happening: at least 6 Reviewer sessions now (root TALKBACK.md
+      2026-07-05 evening, 2026-07-07 PR #345, 2026-07-10 14:35 PR #348, 2026-07-10
+      ~15:35, and 2026-07-11) have fired expecting a worker/* PR to review, found
+      zero open PRs in both conductor and kind_robots via list_pull_requests, and
       confirmed no roadmap task anywhere is at status: review or status: claimed.
       Each occurrence burns a full sweep (git log, PR list, roadmap grep, TALKBACK
       tail) to reach the same "nothing to do" conclusion. The 14:35 and ~15:35
       recurrences were only about an hour apart despite no new worker/* PR having
-      opened in between.
+      opened in between; the 2026-07-11 recurrence came roughly a day later,
+      confirming this isn't a one-off burst.
 
       TO APPROVE: This needs a change to how/how-often the Reviewer session is
       triggered (cron cadence, or a webhook/condition gate that only fires the
