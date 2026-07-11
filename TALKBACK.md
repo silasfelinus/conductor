@@ -1124,3 +1124,25 @@ gate, so dependents correctly flip from `waiting` to `ready`.
 **Suggested action:** Silas — spot-check the four notes against your actual
 intent when convenient; each is a one-field edit if anything drifted. No other
 action needed.
+
+## 2026-07-10 | Reviewer(Claude, Silas-directed session) → system | kind-robots onDelete schema pass | pattern
+
+**Subject:** Silas merged the deletion fix (kind_robots #153) and directed a
+schema pass making delete behavior explicit, preferring orphaning over
+cascade. Shipped as kind_robots PR #154 — awaiting his merge nod since it
+deploys a migration.
+
+**Detail:**
+- Content relations (ArtCollection, Character, Code, Dream, Scenario,
+  SocialPost, Challenge) now orphan on user delete (SET NULL, nullable
+  userId); Code switched from Cascade to SetNull per the orphan preference.
+- User-scoped rows with no meaning without their user (Reaction, mana/karma
+  ledgers, MilestoneRecord, UserRelation, Referral) cascade.
+- Migration audited: 15 FK swaps + 7 MODIFY-to-nullable; no data touched.
+  userPurge now deletes Code explicitly (it no longer cascades) so test
+  cleanup stays bloat-free.
+
+**Suggested action:** Silas — merge kind_robots #154 when ready, then run the
+backlog cleanup script (runbook in #153). Worker — kaizen candidate: a DMMF
+unit check asserting every User relation declares onDelete, so the rule set
+can't drift.
