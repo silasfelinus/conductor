@@ -377,7 +377,7 @@ tasks:
     title: Reviewer trigger fires with no open worker/* PR to review, repeatedly
     status: needs-human
     owner: null
-    updated: '2026-07-11T11:36:00Z'
+    updated: '2026-07-11T12:37:00Z'
     passes: 0
     stakes: reversible
     note: >
@@ -385,23 +385,27 @@ tasks:
       is Worker PR volume to review — this is a platform/scheduling issue, not
       something fixable from inside the repo.
 
-      What's happening: at least 15 Reviewer sessions now (root TALKBACK.md
+      What's happening: at least 16 Reviewer sessions now (root TALKBACK.md
       2026-07-05 evening, 2026-07-07 PR #345, 2026-07-10 14:35 PR #348, 2026-07-10
       ~15:35, 2026-07-11 00:37 PR #371, 2026-07-11 01:36, 2026-07-11 04:37,
       2026-07-11 05:36, 2026-07-11 06:36, 2026-07-11 07:36, 2026-07-11 08:36,
-      2026-07-11 09:36, 2026-07-11 10:36, and 2026-07-11 11:36) have fired on an
-      hourly cadence. The first several found zero open PRs anywhere and no
-      roadmap task at status: review/claimed. Starting 04:37 the pattern shifted:
-      each session re-fires almost exactly 1 hour after the prior session had
-      already reviewed conductor PR #375 (requested changes, logged in TALKBACK) —
-      with zero new commits, comments, or state change on that PR in between
-      firings. So the trigger isn't only firing into an empty queue; it's also
-      repeatedly re-firing on the same already-reviewed PR before the Worker could
-      plausibly have responded. Each occurrence burns a full sweep (git log, PR
-      list, roadmap grep, TALKBACK tail) to reach the same "nothing new to do"
-      conclusion. The 2026-07-11 11:36 occurrence is an eighth instance of that
+      2026-07-11 09:36, 2026-07-11 10:36, 2026-07-11 11:36, and 2026-07-11 12:37)
+      have fired on an hourly cadence. The first several found zero open PRs
+      anywhere and no roadmap task at status: review/claimed. Starting 04:37 the
+      pattern shifted: each session re-fires almost exactly 1 hour after the prior
+      session had already reviewed conductor PR #375 (requested changes, logged in
+      TALKBACK) — with zero new commits, comments, or state change on that PR in
+      between firings. So the trigger isn't only firing into an empty queue; it's
+      also repeatedly re-firing on the same already-reviewed PR before the Worker
+      could plausibly have responded. Each occurrence burns a full sweep (git log,
+      PR list, roadmap grep, TALKBACK tail) to reach the same "nothing new to do"
+      conclusion. The 2026-07-11 12:37 occurrence is a ninth instance of that
       exact pattern: PR #375 still has only the one original commit and the one
-      review comment from 03:37 — no Worker response in the 8 hours since.
+      review comment from 03:37 — no Worker response in the 9 hours since. The
+      Worker side also looks stalled independent of this PR: its last claim
+      commit on this roadmap was 2026-07-08, and the last worker/* PR merged
+      anywhere in scope was ~2026-07-10 22:31 UTC — Silas may want to check
+      whether the Worker's own hourly trigger is still firing.
 
       TO APPROVE: This needs a change to how/how-often the Reviewer session is
       triggered (cron cadence, or a webhook/condition gate that only fires the
