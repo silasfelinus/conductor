@@ -136,3 +136,21 @@ records:
     outcome: done
     failure_category: null
     lesson: "When a project is built directly rather than spec-first, the 'write a spec doc' tasks are closed by subsumption: the executable code + reference runs ARE the spec. Map each task to its shipped artifact (see docs/spec-subsumption.md) instead of writing redundant prose. Be honest about the tail — video (LTX) and 3D (Hunyuan3D/STL) inside t-012 stay explicitly deferred rather than folded into 'done'."
+  - date: 2026-07-12
+    project: model-builder
+    task: t-024
+    kind: software
+    stakes: reversible
+    passes: 0
+    outcome: done
+    failure_category: null
+    lesson: "Generic AI drafts (a bland reward) come from a generic prompt with no field awareness. The fix is a single per-model field spec (modelBuilderFields: required/optional, defaults, choice pools grounded in the schema + builder *Cards) used to pre-fill the FIELDS box AND fed into the suggest context as 'Fields to fill', so the model returns a full specific record with valid choices. Kept the drafts rich but deferred writing the parsed fields to real columns (t-028) — that's a prod-write not worth shipping untested. kind_robots PR #195."
+  - date: 2026-07-12
+    project: model-builder
+    task: t-026
+    kind: software
+    stakes: reversible
+    passes: 0
+    outcome: done
+    failure_category: null
+    lesson: "Minimal-interaction 'just create it' is cheap once the gated actions exist: autoBuildItem/autoBuildRun just chain the existing draft -> approve -> generate -> commit actions with defaults, and an includeArt toggle lets it skip art for a fast create-records-only path (ASSET_ONLY items need art, so skip them when it's off). No new backend — it orchestrates over the idempotent executor, so re-running is safe. kind_robots PR #196."

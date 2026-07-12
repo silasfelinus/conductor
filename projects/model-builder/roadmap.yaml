@@ -445,7 +445,7 @@ tasks:
   - id: t-024
     milestone: m6
     title: "Model-aware auto-fields and richer drafting"
-    status: ready
+    status: done
     owner: null
     passes: 0
     stakes: reversible
@@ -478,7 +478,7 @@ tasks:
   - id: t-026
     milestone: m6
     title: "Auto-build run mode + relationship-expansion art toggle"
-    status: ready
+    status: done
     owner: null
     passes: 0
     stakes: reversible
@@ -502,3 +502,19 @@ tasks:
       at a time. For a quantity output (e.g. 10 rewards), give a batch editor that sets which
       fields to automate vs fine-tune across all N items at once, with per-item overrides for
       the ones you want to hand-tune. Builds on the model-aware fields (t-024).
+
+  - id: t-028
+    milestone: m6
+    title: "Executor: persist drafted structured fields on commit"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Follow-up to t-024: the FIELDS draft now produces model-correct "field: value" lines
+      (a Reward with rewardType/rarity/effect), but the commit executor still writes only
+      name + one text field on CREATE/UPDATE. Parse the drafted field lines and apply the
+      KNOWN columns for the target model (validating choice fields against modelBuilderFields
+      pools; free text otherwise) so a created/updated record gets its real fields. Keep it
+      bounded and typed per model (no arbitrary column writes); CREATE first (new private
+      records) then UPDATE of own records. Deferred from t-024 as an untested prod-write.
