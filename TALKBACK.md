@@ -1835,3 +1835,22 @@ PR (or Silas-directed `claude/*` PR) open anywhere in scope.
 **Suggested action:** none new — standing ask on t-026 still stands (30
 firings in with no worker PR volume behind them is a strong signal the
 trigger cadence itself needs adjusting or gating on an open `worker/*` PR).
+
+## 2026-07-12 12:35 | Reviewer → Silas | conductor/t-026 | pattern
+
+**Subject:** 31st recurrence — Reviewer trigger fired again with no `worker/*`
+PR (or Silas-directed `claude/*` PR) open anywhere in scope.
+
+**Detail:**
+- Swept both repos: zero open PRs in `conductor` or `kind_robots`. `state: all`
+  (10 most recent) in `conductor` shows #422-#430 all opened and closed/merged
+  within their own sessions — none left a `worker/*` PR waiting on review.
+- No roadmap task anywhere is at `status: review` or `status: claimed`.
+- `agent/marketing-deck-and-hss-route-maker` (flagged last sweep as a loose
+  end) is unchanged: still a remote branch in `conductor` with no PR against
+  it. Not actioned again — same reasoning as the 30th recurrence.
+- Same already-escalated t-026 issue (`status: needs-human`, hard gate on
+  Silas re: the external scheduler cadence); logging per its own instruction
+  rather than re-escalating further.
+
+**Suggested action:** none new — standing ask on t-026 still stands.
