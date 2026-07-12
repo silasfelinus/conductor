@@ -8,9 +8,14 @@ kind: software
 notes_from_silas: |
   Customer-management software for the Humboldt Scoop service. Starter roadmap —
   I'll refine. Think: customers, their pets/yards, recurring service schedules,
-  visit logs, and billing. Pick a stack that's simple to self-host. Do NOT wire
-  real payment or customer data without flagging me (needs-human). Build with
-  seed/dummy data only until I say otherwise.
+  visit logs, billing, and a customer route maker that produces a mapped route for
+  a selected number of customer/user records. Pick a stack that's simple to self-host.
+  Do NOT wire real payment, customer data, addresses, or map-provider billing without
+  flagging me (needs-human). Build with seed/dummy data only until I say otherwise.
+
+  Route planning should use deterministic routing/optimization rather than an LLM.
+  Android is the first field-client target, while Linux and iOS compatibility remain
+  goals. Approved AI features may use team-owned LLM tokens, with keys server-side.
 
 milestones:
   - id: m1
@@ -19,18 +24,22 @@ milestones:
     status: not-started
   - id: m2
     title: "Customer + property data model"
-    weight: 20
+    weight: 15
     status: not-started
   - id: m3
     title: "Recurring service scheduling"
-    weight: 25
+    weight: 20
     status: not-started
   - id: m4
     title: "Visit logging + history"
-    weight: 20
+    weight: 15
     status: not-started
   - id: m5
     title: "Invoicing (draft-only, no live payments)"
+    weight: 15
+    status: not-started
+  - id: m6
+    title: "Mapped customer route planning + field client"
     weight: 20
     status: not-started
 
@@ -117,3 +126,84 @@ tasks:
       pet details, yard notes, visit checklist, and a gate-details placeholder.
       Falls back to all scheduled visits when no dummy visits match today's date.
       Dummy data only — no auth, no real customer data, no billing.
+
+  - id: t-006
+    milestone: m6
+    title: "Write the mapped customer route planner specification"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    gate_human: true
+    approved_by_human: false
+    note: >
+      Write route-planner/SPEC.md for a dispatcher or crew member selecting a date/filter,
+      start and optional end location, and a requested number N of eligible customer/user
+      records. Support explicit customer selection as well as choosing N from the eligible
+      queue. Define the ordered stop list, mapped route/polyline, distance/time estimates,
+      per-stop route cards, manual drag reorder, locked stops, skipped customers, and save/export.
+      Compare a self-hostable OpenStreetMap-compatible matrix/router plus deterministic optimizer
+      against paid APIs. Recommend one v1 path and one fallback, including privacy and costs.
+      Do not use an LLM for routing. Dummy addresses only. Silas approves provider/shape first.
+
+  - id: t-007
+    milestone: m6
+    title: "Implement deterministic route-plan API with selected customer count"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-006
+    note: >
+      Add seed-data API routes that accept date/filter, selectedCustomerIds or customerCount,
+      start/end coordinates, and route options. Build a travel-time/distance matrix and use a
+      deterministic optimizer appropriate for small service routes, such as nearest-neighbor
+      plus 2-opt for v1 or an approved OR-Tools service. Return ordered stops, geometry or map
+      instructions, totals, warnings, and an explanation of any excluded records. No real addresses.
+
+  - id: t-008
+    milestone: m6
+    title: "Build dispatcher map UI and manual route editing"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-007
+    note: >
+      Build the route-maker UI using the approved map provider. Let users choose N customers,
+      preview them on a map, optimize, inspect stop cards, drag/reorder, lock stops, remove/add
+      customers, recalculate, and save a route draft. Display distance, estimated drive time,
+      estimated service time, and route warnings. All component/API interaction goes through store state.
+
+  - id: t-009
+    milestone: m6
+    title: "Add Android-first crew route view with Linux/iOS-safe architecture"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-008
+    note: >
+      Create or extend a Flutter client for Android-first field use: today's route, map, next stop,
+      route card, visit completion, notes, and safe handoff to installed navigation. Keep provider,
+      storage, permissions, and deep-link services abstracted so Linux and iOS builds can consume
+      the same API and route-plan records. Use dummy data and no background customer tracking.
+
+  - id: t-010
+    milestone: m6
+    title: "Review real-address privacy, map costs, and launch gates"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: sensitive
+    depends_on:
+      - t-007
+      - t-008
+      - t-009
+    gate_human: true
+    approved_by_human: false
+    note: >
+      Before any real customer address enters the system, document data retention, encryption,
+      access roles, logs, geocoding/provider data handling, API billing limits, offline behavior,
+      and deletion/export. Real addresses, customer data, map billing, production credentials,
+      and crew rollout remain hard needs-human gates for Silas.
