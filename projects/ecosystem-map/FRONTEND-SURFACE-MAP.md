@@ -4,6 +4,22 @@ Static repository audit completed 2026-07-10 for every project marked `active` i
 `project-overrides.yaml`. This map answers where each project is discoverable in Kind
 Robots, or where it should be stitched next.
 
+> **Implementation update — 2026-07-12 (project-frontend-pages):** the 15 missing /
+> incomplete surfaces below were stitched in a single kind_robots pass. A reusable
+> public project-page scaffold now lives in `kind_robots/components/conductor/`
+> (`project-front-page.vue` + `project-deliverables-panel`, `project-gallery-strip`,
+> `project-pitch-board`, and the `projectFront.ts` config type). Each project got a
+> single-word `content/*.md` route, a `:{slug}-page` component, a canonical tab in its
+> existing channel's `dashboardConfigs`, and its `channelKey`/`tabKey`. Flagship
+> interactive surfaces: Coloring Book (`/coloring` — galleries, proposals, prompts,
+> color/BW generation, plus the existing color engine) and Challenge Center
+> (`/challenges` — arena browse + contenders). Wishmaster/AppMaker were promoted to
+> canonical `conductor` tabs with `/wishmaster` and `/appmaker` routes. A central
+> `workspace-header` change makes any cross-route tab navigate to its page. Remaining
+> follow-ups: real dashboard/tutorial `.webp` art per new tab (placeholders resolve
+> via project hero art today), tutorialCards sections, and verifying each PROJECT
+> Dream `liveUrl` points at the new route.
+
 ## Audit rules
 
 - A project is **complete** only when a useful surface is reachable and renders its
