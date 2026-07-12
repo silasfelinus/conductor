@@ -176,13 +176,13 @@ tasks:
 - id: t-004
   milestone: m2
   title: Seed 10 initial challenges in kind_robots
-  status: review
+  status: needs-human
   depends_on: t-003
   owner: worker
   passes: 0
   stakes: reversible
-  note: 'IMPLEMENTED: kind_robots PR #199 adds scripts/seed_challenges.ts with the ten roadmap-defined OPEN challenges, clear judge notes, idempotent upserts, validation-only default mode, and post-write count verification. The live --write seed was not executed because this Worker runtime has no DATABASE_URL; merging the script alone performs no database write. Review the target PR and CI before running the explicit --write command.'
-  updated: '2026-07-12T20:30:03Z'
+  note: 'FOR SILAS: Kind Robots PR #199 is merged; scripts/seed_challenges.ts contains the ten initial OPEN Challenge Center prompts, judge notes, validation, idempotent upserts, and post-write verification. TO APPROVE: in a credentialed Kind Robots environment, review the seed and run ''npx tsx scripts/seed_challenges.ts --write'', then verify that all ten slugs exist and set this task to status: done. This Worker did not run --write because DATABASE_URL was unavailable and the action creates public database rows. Completing it unblocks challenge-center/t-006 once t-005 is also done.'
+  updated: '2026-07-12T20:38:07Z'
 - id: t-005
   milestone: m3
   title: Build /challenges browser page in kind_robots
