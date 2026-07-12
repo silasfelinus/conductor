@@ -27,6 +27,15 @@ page + auto-imported MDC component):
 | `components/model-builder/model-builder-item-panel.vue` | The four-gate editor for one item: pitch, fields & prompts, generate assets, commit preview. |
 | `content/model-builder.md` | The `/model-builder` route (`:model-builder-manager`). |
 
+**AI-drafting (follow-up increment):** the PITCH, FIELDS, and PROMPT editors now
+have a "Draft with AI" button. `modelBuilderStore.draftText` reuses the existing
+`/api/suggest` text pipeline (mirroring `builderStore.callSuggest`), posting the
+source record as context with a per-field instruction. It is client-side only —
+`getSuggestSheet()` returns a safe fallback sheet for the unregistered
+`model-builder` builder key, so no server change was needed. A dedicated
+registered suggest sheet with grounded field prompts is the natural next
+refinement (kaizen).
+
 ## How it maps to the roadmap
 
 - **t-001 / t-003 (spec + recipe matrix)** — the recipe catalog encodes the
