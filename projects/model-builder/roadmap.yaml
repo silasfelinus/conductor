@@ -355,3 +355,19 @@ tasks:
       Use the canonical conductor-to-Dream sync path for slug model-builder, goal, and
       waypoints. Add navigation only after the first vertical slice works. Do not invent
       a second project identity record or conflicting slug.
+
+  - id: t-020
+    milestone: m3
+    title: "Register a grounded model-builder suggest sheet for AI-drafting"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Kaizen from the front-end scaffold: the "Draft with AI" buttons currently call
+      /api/suggest with builder 'model-builder', which falls back to the adventure sheet
+      because no sheet is registered. Add a dedicated sheet in
+      server/utils/suggest/sheets (registered via suggestRegistry) with a system prompt
+      and per-field prompts for pitch, fields, and artPrompt grounded in the selected
+      source record's type and canon, so drafts are on-topic instead of generic. Verify
+      via the existing /api/suggest path; no schema work.
