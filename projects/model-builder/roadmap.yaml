@@ -1,6 +1,18 @@
 project: model-builder
 kind: software
 
+goal: >
+  A reusable Kind Robots front end that turns any source record — Project, Character,
+  Bot, Facet, Dream, Reward, or Scenario — into a resumable, human-gated build run:
+  pick a recipe, generate fields and art, and commit upgraded or newly created records
+  with full provenance. Marketing Deck is one recipe, not the root product.
+waypoints:
+  - Pick a source model and a recipe, then choose exactly the outputs you want.
+  - Advance each item through pitch, fields and prompts, asset generation, and commit.
+  - Pause after any stage, edit results, and rerun only the stale steps.
+  - Reopen or cancel past runs from the run-history panel.
+  - Commit approved fields, assets, and relationships back to canonical records — idempotently.
+
 notes_from_silas: |
   Build a reusable front-end Model Builder for Kind Robots schema records. Marketing Deck
   is one recipe, not the root product. A user selects a source model — Project, Character,
@@ -355,16 +367,22 @@ tasks:
   - id: t-019
     milestone: m5
     title: "Create the matching PROJECT Dream and expose Model Builder navigation"
-    status: waiting
+    status: done
     owner: null
     passes: 0
     stakes: reversible
     depends_on:
       - t-014
     note: >
-      Use the canonical conductor-to-Dream sync path for slug model-builder, goal, and
-      waypoints. Add navigation only after the first vertical slice works. Do not invent
-      a second project identity record or conflicting slug.
+      Identity via the canonical sync path (scripts/sync_projects.py -> POST/PATCH
+      /api/projects, keyed on conductorSlug): added model-builder to project-overrides.yaml
+      (active/high) so it syncs at all, added goal + waypoints to this roadmap's top matter,
+      and extended build_project_payload to transmit goal (text) and waypoints (serialized
+      pipe-delimited, KR's format) only when present — no clobbering. Slug model-builder is
+      the single identity (no model-generator, no conflicting record). Navigation: appended
+      a Model Builder directory SmartIcon (link /model-builder) to kind_robots
+      stores/seeds/smartIcons.json — the fallback nav navStore imports; the content page
+      already qualifies for the generatesmart path. kind_robots nav PR + conductor sync PR.
 
   - id: t-020
     milestone: m3

@@ -122,7 +122,7 @@ def build_project_payload(slug, override, roadmap):
     conductor_priority = str(override.get("priority", "normal")).lower()
     kr_priority = CONDUCTOR_TO_KR_PRIORITY.get(conductor_priority, "NORMAL")
 
-    return {
+    payload = {
         "title": title,
         "description": description,
         "conductorSlug": slug,
@@ -130,6 +130,22 @@ def build_project_payload(slug, override, roadmap):
         "priority": kr_priority,
         "lastSyncedAt": datetime.now(timezone.utc).isoformat(),
     }
+
+    # goal + waypoints are optional roadmap top-matter. Only send them when the
+    # roadmap actually defines them, so projects without them are never cleared.
+    # KR stores waypoints as a pipe-delimited string ("✓ " done / "~ " active),
+    # so serialize a YAML list with " | ".
+    goal = roadmap.get("goal") if roadmap else None
+    if isinstance(goal, str) and goal.strip():
+        payload["goal"] = goal.strip()
+
+    waypoints = roadmap.get("waypoints") if roadmap else None
+    if isinstance(waypoints, list) and waypoints:
+        payload["waypoints"] = " | ".join(str(w).strip() for w in waypoints if str(w).strip())
+    elif isinstance(waypoints, str) and waypoints.strip():
+        payload["waypoints"] = waypoints.strip()
+
+    return payload
 
 
 def sync_project(slug, override, token):
