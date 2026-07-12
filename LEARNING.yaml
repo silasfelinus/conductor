@@ -64,3 +64,21 @@ records:
     outcome: done
     failure_category: null
     lesson: "An additive-only Prisma migration (new CREATE TABLEs, internal cascade FKs, external refs as plain scalar Int columns with no FK) merges safely even though merge-to-main runs prisma migrate deploy against prod — no reverse-relation edits to User/ArtImage were needed. The typecheck CI runs prisma generate before vue-tsc, so it validates a new schema file end-to-end (client types + routes + store) without a live DB; that plus the Vercel preview build is enough of a gate when you can't run the toolchain locally. kind_robots PR #188."
+  - date: 2026-07-12
+    project: model-builder
+    task: t-021
+    kind: software
+    stakes: reversible
+    passes: 0
+    outcome: done
+    failure_category: null
+    lesson: "Once a resource is durable, the cheapest high-value follow-up is a history/list surface — the list endpoint already existed, so the run-history panel was pure front-end with zero new API. kind_robots PR #189."
+  - date: 2026-07-12
+    project: model-builder
+    task: t-013
+    kind: software
+    stakes: reversible
+    passes: 0
+    outcome: done
+    failure_category: null
+    lesson: "Idempotent canonical writes without a live DB: an atomic claim on a unique key (updateMany where key IS NULL; count===0 means already committed) gives exactly-once semantics, releasing the key on write failure enables retry, and create+link in one $transaction prevents orphans. When you can't run the DB, keep writes to KNOWN exact field/relation names (pulled from schema) so vue-tsc validates every prisma.model.update/create at PR time — a wrong field name fails CI instead of corrupting prod. Covers t-013/t-014/t-015; kind_robots PR #190. Live proof still pending (t-022)."
