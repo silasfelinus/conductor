@@ -1,4 +1,4 @@
-name: Project Dream Sync
+name: Project Sync
 
 on:
   push:
@@ -24,9 +24,9 @@ jobs:
         shell: bash
         run: |
           set +e
-          output="$(python scripts/sync_projects_to_dreams.py 2>&1)"
+          output="$(python scripts/sync_projects.py 2>&1)"
           status=$?
-          echo "## Project Dream Sync" >> "$GITHUB_STEP_SUMMARY"
+          echo "## Project Sync" >> "$GITHUB_STEP_SUMMARY"
           echo '```text' >> "$GITHUB_STEP_SUMMARY"
           echo "$output" >> "$GITHUB_STEP_SUMMARY"
           echo '```' >> "$GITHUB_STEP_SUMMARY"

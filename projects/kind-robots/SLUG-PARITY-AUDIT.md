@@ -1,5 +1,14 @@
 # Slug Parity Audit: Conductor Projects vs. Kind Robots Dreams
 
+> **SUPERSEDED (2026-07-12).** This audit predates the Dream / Project / Facet
+> split. Project Dreams (`dreamType: PROJECT`) no longer exist — project
+> identity is now the first-class kind_robots `Project` model, joined to
+> conductor via `conductorSlug`, and the sync bridge is
+> `scripts/sync_projects.py` against `/api/projects`. The slug-parity
+> *principle* below still holds; every mechanical detail (endpoints, fields,
+> script name) is historical. See `PROJECT-CREATION.md` and `CONTROL.md`
+> for the current contract.
+
 **Audit date:** 2026-07-01
 **Task:** kind-robots/t-003
 **Auditor:** Worker (automated)

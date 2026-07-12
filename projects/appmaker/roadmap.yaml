@@ -162,13 +162,14 @@ tasks:
     '
 - id: t-006
   milestone: m1
-  title: Create the appmaker PROJECT Dream (slug parity)
+  title: Create the appmaker kind_robots Project (slug parity)
   status: ready
   owner: null
   passes: 0
   stakes: reversible
-  note: 'Run scripts/sync_projects_to_dreams.py (or create the Dream via the API) so kind_robots has a
-    PROJECT Dream with slug "appmaker" matching this project, per the standing slug-parity rule in CONTROL.md.
+  note: 'Run scripts/sync_projects.py (or POST /api/projects) so kind_robots has a
+    Project with conductorSlug "appmaker" matching this project, per the standing
+    slug-parity rule in CONTROL.md (post Dream/Project/Facet split).
 
     '
 - id: t-011

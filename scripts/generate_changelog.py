@@ -6,7 +6,7 @@ Reads git log since the last CHANGELOG.md entry (or the past 30 days on first
 run), groups commits by conductor project slug based on changed file paths, and
 appends a dated section.
 
-Run at the END of every Worker cycle, alongside sync_projects_to_dreams.py.
+Run at the END of every Worker cycle, alongside sync_projects.py.
 
 Format appended to CHANGELOG.md:
   ## YYYY-MM-DD

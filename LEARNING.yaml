@@ -28,3 +28,12 @@ records:
     outcome: done
     failure_category: null
     lesson: "Audit the target repo before claiming a task: the full t-003 API surface already existed on kind_robots main (built in a Silas-directed session outside the Worker loop), so the task closed by spec verification alone."
+  - date: 2026-07-12
+    project: conductor
+    task: t-027
+    kind: software
+    stakes: reversible
+    passes: 0
+    outcome: done
+    failure_category: null
+    lesson: "A stale task spec can be closed by a larger cutover that subsumes it: the Dream-sync priority ask was satisfied by rewriting the bridge to /api/projects — check whether pending tasks target a replaced integration before working them as written."
