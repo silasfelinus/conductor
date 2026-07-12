@@ -1,7 +1,7 @@
 # Pitch: Art Generator Connect — conductor-driven image generation
 date: 2026-06-27
 project-target: kind-robots
-status: approved
+status: passed
 
 ## The idea
 Wire conductor Worker cycles into the existing SD / ComfyUI automated pipelines
