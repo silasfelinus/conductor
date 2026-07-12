@@ -1,41 +1,68 @@
 project: brainstorm
 kind: proposal
-notes_from_silas: "Generate ideas for me to vote on. I want to log in and see things like: 5 STL project\n  ideas, 5 comic pitches under the genre guidelines I gave, lists of potential revenue\nstreams, ways\n  to improve AI_Networker. QUALITY OVER QUANTITY — a few strong, specific,\nbuildable pitches beat\n  a pile of vague ones. Don't repeat ideas already in pitches/.\nRespect my genre/direction guidance\n  in CONTROL.md. Tie product ideas to our approved\nproduct types where relevant (see digital-storefront/product-types.yaml);\n  if an idea\nneeds a new product type, say so explicitly in the pitch.\n"
+notes_from_silas: >
+  Generate ideas for me to vote on. I want to log in and see things like: 5 STL
+  project ideas, 5 comic pitches under the genre guidelines I gave, lists of
+  potential revenue streams, and ways to improve AI_Networker. QUALITY OVER
+  QUANTITY — a few strong, specific, buildable pitches beat a pile of vague ones.
+  Respect my genre and direction guidance in CONTROL.md. Tie product ideas to our
+  approved product types where relevant. Most importantly, do not pitch work that
+  already exists as a project, roadmap task, shipped feature, archived pitch, or
+  obvious extension of an active project. Existing work belongs in that project's
+  roadmap or kaizen queue, not back in the pitch inbox wearing a fake moustache.
 pitch_policy:
   max_new_pitches_per_cycle: 3
-  max_open_awaiting_pitches: 12
+  max_open_awaiting_pitches: 6
   dedup: true
+  dedup_sources:
+    - pitches/*.md regardless of status
+    - projects/*/roadmap.yaml project goals, waypoints, tasks, and notes
+    - STATUS.md active project inventory
+    - known kind_robots routes, stores, APIs, and shipped dashboard features
+  existing_work_action: >
+    If an idea overlaps an existing project or shipped feature, do not create a new
+    pitch. Either skip it, or add a clearly scoped task/kaizen to the existing
+    project when the idea contains a genuinely new increment.
+  required_pitch_sections:
+    - The idea
+    - Why it's worth doing
+    - Rough effort
+    - Suggested first task
+    - Existing-work check
   categories:
-  - new-products
-  - content-series
-  - revenue-streams
-  - ai-networker-upgrades
-  - cross-project
+    - new-products
+    - content-series
+    - revenue-streams
+    - ai-networker-upgrades
+    - cross-project
 milestones:
-- id: m1
-  title: Idea engine running and producing votable pitches
-  weight: 0
-  status: in-progress
+  - id: m1
+    title: Idea engine running and producing votable pitches
+    weight: 0
+    status: in-progress
 tasks:
-- id: t-001
-  milestone: m1
-  title: Generate this cycle's pitches
-  status: ready
-  owner: null
-  updated: "2026-07-01T00:00:00Z"
-  passes: 0
-  stakes: reversible
-  recurring: true
-  note: '2026-07-01 cycle complete. Produced 3 pitches: 2026-07-01-narrative-prompt-deck
-    (new-products), 2026-07-01-conductor-agent-health-dashboard (ai-networker-upgrades),
-    2026-07-01-ai-session-credits-subscription (revenue-streams). Read CONTROL.md (global
-    + any brainstorm/genre notes) and pitch_policy above. Count existing pitches/*.md
-    with status: awaiting-silas. If that count >= max_open_awaiting_pitches, write NOTHING
-    and leave a one-line note in the PR that the queue is full. Otherwise pick 1-2 categories
-    (rotate from last cycle), and write up to max_new_pitches_per_cycle NEW pitches to
-    pitches/<date>-<slug>.md using the pitch template in AGENTS.md. Each pitch must be
-    specific and buildable, name a project-target (existing project / "new" / "ai-networker-itself"),
-    and not duplicate an existing pitch. Open one PR with all new pitches; set status back
-    to ready (this task is recurring). Never set it to done.
-
-    '
+  - id: t-001
+    milestone: m1
+    title: Generate this cycle's pitches
+    status: ready
+    owner: null
+    updated: '2026-07-12T11:00:00Z'
+    passes: 0
+    stakes: reversible
+    recurring: true
+    note: >
+      2026-07-12 hygiene run: reviewed the six lingering awaiting-silas pitches.
+      Archived the Kind Robots coloring pack and Conductor agent-health dashboard as
+      duplicates, and superseded the AI session-credits subscription because the
+      subscription, Stripe, and mana surfaces already exist in kind_robots. Three
+      distinct product pitches remain for human review: pet-business guide,
+      Patchwork Worlds RPG zine, and Narrative Prompt Deck. Before every future
+      cycle, count awaiting pitches and stop when the queue is at the cap. Then scan
+      every pitch file regardless of status, every project roadmap goal/waypoint/task,
+      STATUS.md, and relevant kind_robots routes/stores/components. A title rewrite
+      does not make existing work new. Each new pitch must include an
+      `## Existing-work check` section naming the closest projects/features inspected
+      and explaining why the proposal is still distinct. If the useful part belongs
+      inside an existing project, add a task or kaizen there instead of creating a
+      pitch. Open one PR with all truly new pitches, return this recurring task to
+      ready, and never set it to done.
