@@ -46,3 +46,12 @@ records:
     outcome: done
     failure_category: null
     lesson: "Front-end-first, no-schema slice merges cleanly and safely: the Model Builder UI (source picker -> gated recipe runner -> four gates) reused existing model list APIs, the art generator, and /api/suggest without touching Prisma, so merge-to-main deployed only additive UI. When you can't run the toolchain locally, lean on the repo's whole-project vue-tsc PR check as the verification gate before merging. Partial slice spanning t-005/t-014 — durable BuildRun persistence (t-004) intentionally deferred, not done."
+  - date: 2026-07-12
+    project: conductor
+    task: t-035
+    kind: software
+    stakes: reversible
+    passes: 0
+    outcome: done
+    failure_category: null
+    lesson: "Secrets expire silently: a JWT-backed integration needs its failure mode loud (nonzero exit on auth errors) or the bridge can be dead for weeks while CI stays green."

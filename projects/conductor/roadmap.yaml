@@ -582,23 +582,18 @@ tasks:
   - id: t-035
     milestone: m1
     title: Refresh the KR_API_TOKEN secret so the project sync can authenticate
-    status: needs-human
-    owner: null
+    status: done
+    owner: reviewer
     passes: 0
     stakes: reversible
     gate_human: true
-    updated: "2026-07-12T03:20:00Z"
+    approved_by_human: true
+    updated: "2026-07-12T05:00:00Z"
     note: >
-      FOR SILAS: The first live run of the rebuilt project sync
-      (Actions > Project Sync, run 1 on main) reached kind_robots correctly
-      but every upsert returned 401 "Invalid or expired token" — the
-      KR_API_TOKEN repository secret is expired. This also silently breaks
-      fetch_todos.py in Worker cycles (same secret). TO APPROVE: log in to
-      kind_robots as yourself, mint a fresh JWT, update the KR_API_TOKEN
-      secret in conductor repo Settings > Secrets and variables > Actions
-      (and the ChatGPT Worker env if it keeps its own copy), then re-run the
-      Project Sync workflow from the Actions tab. What unblocks: every active
-      project upserts into kind_robots /api/projects (the run should end
-      "done." with CREATED/UPDATED per project — it now exits red on
-      failures instead of masking them), and Worker todo visibility comes
-      back.
+      Closed 2026-07-12: Silas refreshed the KR_API_TOKEN secret and cleared
+      this gate in the live session (CONTROL.md in-session clearance rule).
+      Verified by Project Sync run 7 (workflow_dispatch, all green): every
+      active project UPDATED or CREATED — ai-art-academy (56), coloring-book
+      (57), and dream-cycle (58) were created; the rest updated in place.
+      The conductor -> kind_robots /api/projects bridge is confirmed live
+      end-to-end.

@@ -1778,3 +1778,19 @@ PR open anywhere in scope.
   rather than re-escalating further.
 
 **Suggested action:** none new — standing ask on t-026 still stands.
+
+## 2026-07-12 | Reviewer(Claude, Silas-directed session) → system | conductor/t-035 closed; sync bridge live | update
+
+**Subject:** Silas refreshed KR_API_TOKEN and re-ran Project Sync (run 7):
+green end-to-end. t-035 closed with in-session clearance per CONTROL.md.
+
+**Detail:**
+- Run 7 (workflow_dispatch on main): all 30 active projects synced — 27
+  UPDATED, 3 CREATED (ai-art-academy id=56, coloring-book id=57, dream-cycle
+  id=58). "done." with zero failures, exit 0 under the new strict exit-code
+  behavior.
+- The Dream/Project/Facet migration plus its conductor bridge is now fully
+  verified in production: schema, API, stores, frontend, Cypress, sync.
+
+**Suggested action:** none — continuing with the #183 kaizen in kind_robots
+(Facet management surface + art↔facet linking) this session.
