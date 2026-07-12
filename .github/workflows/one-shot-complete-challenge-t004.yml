@@ -1,0 +1,58 @@
+name: One-shot Complete Challenge Center t-004
+
+on:
+  push:
+    branches:
+      - worker/challenge-center-t-004-complete
+
+permissions:
+  contents: write
+
+jobs:
+  complete:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: worker/challenge-center-t-004-complete
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install YAML dependency
+        run: pip install pyyaml
+
+      - name: Mark task done from Silas confirmation
+        run: |
+          python scripts/worker_task_status.py done challenge-center t-004 --note "DONE (2026-07-12, Silas confirmation): Kind Robots PR #199 had already merged the idempotent seed script, and Silas confirmed in the current session that npx tsx scripts/seed_challenges.ts --write was run. The script's post-write verification checks that all ten challenge slugs exist, so the credentialed public-row creation gate is complete."
+
+      - name: Append learning ledger record
+        run: |
+          cat >> LEARNING.yaml <<'EOF'
+          - date: 2026-07-12
+            project: challenge-center
+            task: t-004
+            kind: software
+            stakes: reversible
+            passes: 0
+            outcome: done
+            failure_category: null
+            lesson: "For credential-gated seed tasks, merge an idempotent validation-first script first, then close only after Silas confirms the explicit --write command completed successfully."
+          EOF
+
+      - name: Refresh learning summary and dependency state
+        run: |
+          python scripts/build_learning_summary.py
+          python scripts/resolve_deps.py
+
+      - name: Remove one-shot workflow and commit
+        run: |
+          rm .github/workflows/one-shot-complete-challenge-t004.yml
+          git config user.name conductor-bot
+          git config user.email conductor-bot@users.noreply.github.com
+          git add projects/challenge-center/roadmap.yaml LEARNING.yaml LEARNING-REPORT.md projects/*/roadmap.yaml .github/workflows/one-shot-complete-challenge-t004.yml
+          git commit -m "done: challenge-center/t-004"
+          git push origin HEAD:worker/challenge-center-t-004-complete
