@@ -29,6 +29,7 @@ Usage:
   python scripts/consume_art_queue.py                    # dry run
   python scripts/consume_art_queue.py --live             # queue + wait + download
   python scripts/consume_art_queue.py --live --limit 3   # first 3 entries only
+  python scripts/consume_art_queue.py --live --no-wait   # enqueue + mark done, don't block
 
 Output files: results are PNG (what the engines emit). If Pillow is
 installed they are converted to the .webp filename the entry names;
@@ -441,6 +442,13 @@ def main():
     parser.add_argument("--live", action="store_true", help="actually queue and download")
     parser.add_argument("--limit", type=int, default=0, help="max entries this run (0 = all)")
     parser.add_argument("--timeout", type=int, default=600, help="seconds to wait per job")
+    parser.add_argument(
+        "--no-wait",
+        action="store_true",
+        help="fire-and-forget: enqueue each entry, mark it done, and exit without "
+        "blocking on the render (the relay renders asynchronously; image download "
+        "happens separately). Won't freeze when the relay is offline.",
+    )
     args = parser.parse_args()
 
     entries = load_entries()
@@ -475,6 +483,14 @@ def main():
         name = entry["image_path"]
         try:
             job_id = enqueue(entry_to_job(entry))
+
+            if args.no_wait:
+                # Fire-and-forget: the entry is now an ArtJob; the relay owns the
+                # render. Mark it done and move on — don't block on the render.
+                print(f"  queued job {job_id} for {name} - not waiting (relay will render)")
+                done_paths.append(name)
+                continue
+
             print(f"  queued job {job_id} for {name} - waiting...")
             job = wait_for_job(job_id, args.timeout)
             image_b64 = fetch_image_b64(job["artImageId"])
@@ -491,11 +507,19 @@ def main():
 
     cleared = mark_generate_done(done_paths)
 
-    print(
-        f"\n{len(entries) - failures}/{len(entries)} succeeded"
-        f"; {cleared} marked done in {ART_GENERATE_FILE.relative_to(ROOT)}."
-        + ("" if failures else " Next: python scripts/distribute_images.py --dry-run")
-    )
+    if args.no_wait:
+        print(
+            f"\n{len(entries) - failures}/{len(entries)} enqueued"
+            f"; {cleared} marked done in {ART_GENERATE_FILE.relative_to(ROOT)}."
+            " The relay renders them asynchronously; run distribute_images.py once"
+            " the images land (or set the relay's KR_LOCAL_IMAGES_DIR)."
+        )
+    else:
+        print(
+            f"\n{len(entries) - failures}/{len(entries)} succeeded"
+            f"; {cleared} marked done in {ART_GENERATE_FILE.relative_to(ROOT)}."
+            + ("" if failures else " Next: python scripts/distribute_images.py --dry-run")
+        )
     return 1 if failures else 0
 
 
