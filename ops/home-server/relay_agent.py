@@ -24,6 +24,8 @@ Environment:
   COMFY_URL          default http://127.0.0.1:8188
   SD_URL             default http://127.0.0.1:7860
   POLL_SECONDS       default 10 (idle wait between claim attempts)
+  HEARTBEAT_SECONDS  default 60 (how often to report ComfyUI/SD up-down to
+                     kind_robots' /api/server/heartbeat; 0 disables)
   GEN_TIMEOUT        default 600 (max seconds per generation)
   AGENT_ID           default hostname (shows up as ArtJob.claimedBy)
   KR_LOCAL_IMAGES_DIR  optional — local kind_robots checkout's public/images
@@ -67,6 +69,9 @@ SD_URL = os.environ.get("SD_URL", "http://127.0.0.1:7860").rstrip("/")
 POLL_SECONDS = float(os.environ.get("POLL_SECONDS", "10"))
 GEN_TIMEOUT = float(os.environ.get("GEN_TIMEOUT", "600"))
 AGENT_ID = os.environ.get("AGENT_ID", socket.gethostname())
+# How often to report ComfyUI/SD up-down to kind_robots' /api/server/heartbeat
+# (feeds the ArtJob dashboard uptime chart). 0 disables heartbeats.
+HEARTBEAT_SECONDS = float(os.environ.get("HEARTBEAT_SECONDS", "60"))
 
 
 def log(msg):
@@ -92,6 +97,43 @@ def http_json(method, url, body=None, bearer=None, timeout=60):
             payload = None
         return e.code, payload
     # URLError / timeout propagate to the caller's handler
+
+
+def check_engine(base_url, health_path):
+    """Ping a local engine's health endpoint. Returns (ok, latency_ms)."""
+    url = f"{base_url}{health_path}"
+    started = time.time()
+    try:
+        req = urllib.request.Request(url, method="GET")
+        with urllib.request.urlopen(req, timeout=10) as resp:
+            ok = 200 <= resp.status < 300
+            resp.read(1)  # drain a byte; we don't need the body
+    except Exception:  # noqa: BLE001 — any failure means "down"
+        return False, None
+    return ok, int((time.time() - started) * 1000)
+
+
+def post_heartbeat(engine, ok, latency_ms):
+    """Report one engine's up/down to kind_robots (best-effort)."""
+    try:
+        http_json(
+            "POST",
+            f"{KR_BASE_URL}/api/server/heartbeat",
+            {"engine": engine, "ok": ok, "latencyMs": latency_ms},
+            bearer=KR_RELAY_TOKEN,
+            timeout=15,
+        )
+    except Exception as e:  # noqa: BLE001 — heartbeats must never crash the loop
+        log(f"heartbeat({engine}) failed to post: {e}")
+
+
+def send_heartbeats():
+    """Check ComfyUI (:8188) and A1111/SD (:7860) and report both. ComfyUI's
+    /system_stats and A1111's /sdapi/v1/progress are cheap liveness probes."""
+    comfy_ok, comfy_ms = check_engine(COMFY_URL, "/system_stats")
+    post_heartbeat("COMFY", comfy_ok, comfy_ms)
+    sd_ok, sd_ms = check_engine(SD_URL, "/sdapi/v1/progress")
+    post_heartbeat("A1111", sd_ok, sd_ms)
 
 
 def claim_job():
@@ -364,9 +406,16 @@ def main():
         sys.exit(1)
 
     log(f"agent {AGENT_ID} polling {KR_BASE_URL} every {POLL_SECONDS}s")
+    last_heartbeat = 0.0
     while True:
         job = None
         try:
+            # Report engine health on its own cadence (independent of the claim
+            # loop) so the dashboard sees ComfyUI/SD up/down even when idle.
+            if HEARTBEAT_SECONDS > 0 and time.time() - last_heartbeat >= HEARTBEAT_SECONDS:
+                send_heartbeats()
+                last_heartbeat = time.time()
+
             job = claim_job()
             if job:
                 process(job)
