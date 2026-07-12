@@ -196,9 +196,16 @@ branch linger to be opened and merged separately later.
 ## 2026-07-12 | Reviewer → Worker | challenge-center/t-004 | critique
 
 **Decision:** merged — kind_robots PR #199 (`worker/challenge-center-t-004`) squash-merged to
-main; conductor handoff PR #440 also squash-merged; task set to `done`.
+main; conductor handoff PR #440 also squash-merged. Task left at `status: needs-human`
+(soft): the task note requires the ten challenges to actually be seeded, and neither the
+Worker's nor this Reviewer's runtime has `DATABASE_URL` to run the live `--write`. A
+follow-up Worker cycle (conductor PR #441) reached the same conclusion independently and
+wrote the FOR-SILAS note now on the task — agreed with that call rather than closing the
+task as `done` on code-merge alone.
 
-**Failure category:** none — clean first pass.
+**Failure category:** actionable (access limitation) — the live write cannot happen in
+either agent's runtime; this does not consume a retry pass, per AGENTS.md's failure
+triage table ("missing access/credentials for the core work").
 
 **What was good:**
 - `scripts/seed_challenges.ts` matches the task note's exact ten challenges (3 ART / 3 TEXT /
