@@ -1,0 +1,418 @@
+project: model-builder
+kind: software
+
+notes_from_silas: |
+  Build a reusable front-end Model Builder for Kind Robots schema records. Marketing Deck
+  is one recipe, not the root product. A user selects a source model — Project, Character,
+  Bot, Facet, Dream, Reward, or Scenario — then selects a relevant recipe and individual
+  outputs. Defaults should be helpful but editable: Project defaults to Marketing Deck;
+  Character and Bot default to Character Deck; Reward defaults to Reward Deck; Facet,
+  Dream, and Scenario default to Art Upgrade plus relationship-aware expansion options.
+
+  The front end is a resumable, human-gated recipe runner. Each requested item advances
+  through explicit stages: idea pitch; structured field proposals and art prompts; asset
+  generation; and final create/update/link. Users can stop after any stage, edit results,
+  rerun only stale stages, or finish later. Editing an upstream stage marks downstream
+  work stale without deleting prior revisions.
+
+  The builder must support both upgrading existing rows and creating new related rows.
+  A Dream may request X Characters, Rewards, or Scenarios that fit its vibe; a Project may
+  request a Manager Bot; a Scenario may request cast Characters or Rewards. New rows may
+  be deferred until final commit or created early as private/inactive drafts after field
+  approval when an ID is needed to attach assets. Final activation/promotion remains a
+  separate gate.
+
+  Character Deck options include portrait/avatar candidates, canonical avatar, icon,
+  card and hero action shots, ExpressionMedia emotions/actions, optional reaction clips,
+  and optional 3D-reference/model generation. Reward Deck adapts to rewardType: ITEM
+  should offer a 3D-printable path; PET may optionally offer a figurine path; abstract
+  rewards generally receive art upgrades instead. The existing Hunyuan3D Comfy endpoint
+  is an input-image-to-model workflow and currently appears GLB-oriented. Do not label
+  output as STL unless an audited conversion/export step actually produces STL.
+
+  Reuse the existing Kind Robots generation specs, ArtImage/ArtCollection records,
+  ExpressionMedia, model APIs, and Comfy endpoints. Components must use a Pinia store;
+  they do not call API routes directly. Credentials stay server-side. Generation may use
+  Silas-owned team tokens, with usage visible. No unattended publishing, deployment,
+  printing, fabrication, account creation, ad spend, or destructive replacement.
+
+milestones:
+  - id: m1
+    title: "Model Builder contract, recipes, and endpoint audit"
+    weight: 20
+    status: not-started
+  - id: m2
+    title: "Persistent gated build runs and front-end workflow"
+    weight: 25
+    status: not-started
+  - id: m3
+    title: "Deck, art-upgrade, expansion, and 3D recipes"
+    weight: 25
+    status: not-started
+  - id: m4
+    title: "Idempotent API execution, linking, and asset promotion"
+    weight: 20
+    status: not-started
+  - id: m5
+    title: "Reference builds and reusable production release"
+    weight: 10
+    status: not-started
+
+tasks:
+  - id: t-001
+    milestone: m1
+    title: "Write the Model Builder product and orchestration specification"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Replace the narrow marketing-only contract with projects/model-builder/SPEC.md.
+      Define SourceModel, Recipe, BuildRun, BuildItem, BuildStage, BuildArtifact,
+      revision/provenance, usage, and final commit boundaries. Specify the four human
+      gates: PITCH, FIELDS_AND_PROMPTS, GENERATE_ASSETS, and COMMIT. Define stale-stage
+      invalidation, reruns, cancellation, retries, partial failure reporting, and resume.
+      Cover existing-record upgrades plus new-model creation in DEFERRED and DRAFT_EARLY
+      modes. The orchestrator tracks workflow only; it must not duplicate durable fields
+      already owned by Character, Bot, Dream, Reward, Scenario, Facet, Project, ArtImage,
+      ArtCollection, or ExpressionMedia.
+
+  - id: t-002
+    milestone: m1
+    title: "Audit source schemas, write endpoints, generation specs, and Comfy workflows"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Produce projects/model-builder/API-INVENTORY.md grounded in the current kind_robots
+      schema and routes. Cover Project, Character, Bot, Facet, Dream, Reward, Scenario,
+      ArtImage, ArtCollection, ExpressionMedia, and relationship writes. Verify the
+      documented endpoints for dreams, characters, bots, rewards, scenarios, expression
+      batch dry-runs, art generation, LTX video, and /api/comfy/hunyuan3d. Record exact
+      methods, payloads, auth, idempotency behavior, missing update/batch routes, and any
+      gap between generated model files and real STL export. Do not invent an endpoint
+      merely because a previous note remembers one.
+
+  - id: t-003
+    milestone: m1
+    title: "Define the model-to-recipe matrix and selectable output catalog"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on:
+      - t-001
+      - t-002
+    note: >
+      Write projects/model-builder/RECIPES.md. Define editable defaults: Project ->
+      marketing-deck; Character/Bot -> character-deck; Reward -> reward-deck; Facet,
+      Dream, and Scenario -> art-upgrade. Add relationship-expansion as an optional
+      recipe. Every output has a stable key, eligible source types, prerequisites,
+      quantity rules, target model type, asset sizes, generation method, stage gates,
+      relationship plan, and human-review requirements. Users may remove defaults or
+      select only one output.
+
+  - id: t-004
+    milestone: m2
+    title: "Design persistent BuildRun, BuildItem, artifact, and revision state"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on:
+      - t-001
+      - t-003
+    note: >
+      Propose the smallest durable orchestration schema needed to resume work across
+      devices and sessions. Track source type/id/slug and snapshot, recipe version,
+      requested outputs, quantities, target action CREATE/UPDATE/ASSET_ONLY, target IDs,
+      stage status, approvals, editable payload drafts, artifact references, provider/
+      workflow metadata, token/compute use, stale reasons, errors, and idempotency keys.
+      Prefer JSON snapshots for run-specific drafts and existing canonical models for
+      final data. Include cleanup/expiry rules for abandoned generated files.
+
+  - id: t-005
+    milestone: m2
+    title: "Design the front-end source picker and gated progress matrix"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on:
+      - t-003
+      - t-004
+    note: >
+      Specify the Kind Robots UI: choose model type, search/select a record, choose or
+      edit a recipe, enable output checkboxes, set quantities, select related models,
+      and inspect a row-by-stage progress matrix. Each BuildItem exposes editable pitch,
+      field proposal, relationship plan, art prompts, candidate assets, and final diff.
+      A later gate cannot silently bypass an unapproved prerequisite. Editing an earlier
+      stage marks downstream stages stale while retaining history. Include run, rerun,
+      pause, cancel, approve, reject, save-draft, and final-commit interactions plus
+      visible usage estimates/actuals. Components use modelBuilderStore for all API and
+      local persistence interactions.
+
+  - id: t-006
+    milestone: m2
+    title: "Define normalized source adapters for all supported models"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on:
+      - t-002
+      - t-003
+    note: >
+      Define adapters for Project, Character, Bot, Facet, Dream, Reward, and Scenario.
+      Each adapter returns identity, editable fields, canonical art, collections,
+      relationships, constraints, maturity/ownership flags, eligible recipes, and valid
+      related-model targets. Renderers and recipes consume the normalized contract,
+      while final writers remain model-specific. Preserve source snapshots so a run can
+      detect that its source changed after planning.
+
+  - id: t-007
+    milestone: m3
+    title: "Specify the Marketing Deck recipe as a Project output preset"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on:
+      - t-003
+      - t-006
+    note: >
+      Preserve the existing marketing work as one recipe. Selectable outputs include
+      business card, logo application, lawn sign, banner, flyer, website/app mockups,
+      photo/video shoot plans, static ads, commercial treatment/storyboard, optional
+      Comfy execution package, and week-by-week launch plan. Support related Project
+      sources such as humboldt-scoop plus humboldt-scoop-cms. Existing logos, approved
+      copy, and real screenshots remain authoritative; no unsolicited rebrand.
+
+  - id: t-008
+    milestone: m3
+    title: "Specify the Character Deck recipe for Character and Bot"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on:
+      - t-002
+      - t-003
+      - t-006
+    note: >
+      Define selectable outputs for identity pitch, schema-field proposal, artPrompt,
+      3+ portrait/avatar candidates, canonical portrait/avatar, icon, card, hero action
+      shots, transparent/cutout or model-sheet references, 10 emotion stills, 10 action
+      stills, custom ExpressionMedia keys, optional reaction clips, and high-value
+      transitions. Preserve the promoted portrait as identity anchor and use the current
+      expression conventions, owner XOR, paths, dry-run endpoint, and provenance rules.
+      Bot-specific field drafts must respect BotType; Character drafts must include the
+      playable identity fields and stats from the schema.
+
+  - id: t-009
+    milestone: m3
+    title: "Specify Reward Deck with type-aware art and optional 3D outputs"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on:
+      - t-002
+      - t-003
+      - t-006
+    note: >
+      Define Reward outputs for identity pitch, reward fields, icon, card art, hero/use
+      scene, collection placement, and relationship proposals. ITEM offers 3D-reference
+      and printable-model stages by default; PET may opt into a figurine path; SKILL,
+      POWER, MAGIC, and FAVOR default to art-only unless explicitly overridden. The 3D
+      flow must distinguish a threeDPrompt/reference image, generated GLB or other model
+      file, mesh QA, and optional verified STL conversion/export. Never claim a file is
+      print-ready without manifold/scale/orientation checks and human review.
+
+  - id: t-010
+    milestone: m3
+    title: "Specify the general Art Upgrade recipe"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on:
+      - t-003
+      - t-006
+    note: >
+      Build a model-aware art upgrade recipe for Facet, Dream, Scenario, Reward, Project,
+      Character, and Bot. Offer only fields/assets valid for the source: primary image,
+      icon, card, hero, inspiration set/ArtCollection, key scene, profile art, or asset
+      repair. Use the universal icon/card/hero/avatar dimensions and retain prior
+      canonical files as inspiration before promotion. Asset-only runs must not rewrite
+      unrelated model text.
+
+  - id: t-011
+    milestone: m3
+    title: "Specify relationship-aware new-model expansion recipes"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on:
+      - t-003
+      - t-006
+    note: >
+      Define quantity-based expansion options grounded in real relations. Dream may
+      create X Characters, X Rewards, X Scenarios, and an optional NARRATOR Bot. Project
+      may create or upgrade its MANAGER Bot. Scenario may create X cast Characters and
+      X Rewards. Facet may seed compatible Dreams, Characters, Rewards, or Scenarios.
+      Character may create signature Rewards; Reward may optionally pitch a Character
+      owner or Scenario use. Each child gets an independent BuildItem and four-stage
+      gates, plus a proposed relationship diff. Do not create unsupported universal
+      combinations just to make the matrix look symmetrical.
+
+  - id: t-012
+    milestone: m3
+    title: "Design Comfy image, expression, video, and 3D orchestration"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on:
+      - t-002
+      - t-008
+      - t-009
+      - t-010
+    note: >
+      Map each asset key to an existing licensed-safe image/video/3D workflow, request
+      payload, polling strategy, output parser, cancellation behavior, usage charge, and
+      provenance record. Reuse the current expression and LTX conventions. Audit the
+      Hunyuan3D endpoint's input-image requirement and output format; add a separate gap
+      task if STL conversion, mesh repair, or file persistence is missing. Commercial
+      output follows CONTROL.md licensing rules.
+
+  - id: t-013
+    milestone: m4
+    title: "Design idempotent draft-early and final-commit API execution"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on:
+      - t-002
+      - t-004
+      - t-006
+      - t-011
+    note: >
+      Define server-side execution for DEFERRED and DRAFT_EARLY creation. Draft-early
+      records are private/inactive and tagged to the run after field approval; final
+      commit promotes fields/assets/relationships and activates only what the user
+      approves. Existing rows receive an explicit before/after diff. Use model APIs and
+      batch dry-runs where available, stable idempotency keys, slug collision handling,
+      compensating cleanup for partial failures, and no raw SQL. Replaying COMMIT must
+      never duplicate rows or relationships.
+
+  - id: t-014
+    milestone: m4
+    title: "Implement the Model Builder API, Pinia store, and first UI slice"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on:
+      - t-004
+      - t-005
+      - t-013
+    note: >
+      Cross-repo implementation in kind_robots. Add the durable run API and
+      modelBuilderStore, then a responsive Model Builder workspace using existing
+      Tailwind/DaisyUI patterns. The first vertical slice should select an existing
+      Character, request one hero asset, run pitch and prompt gates, generate a draft
+      asset, and promote it through final commit. Do not call API routes directly from
+      components. Keep the first slice narrow enough to verify resume, stale-stage
+      invalidation, failure recovery, and idempotency before adding every recipe.
+
+  - id: t-015
+    milestone: m4
+    title: "Implement model creation, relationship linking, and batch expansion"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on:
+      - t-011
+      - t-013
+      - t-014
+    note: >
+      Extend the vertical slice to CREATE BuildItems and quantity-based child sets.
+      Prove both deferred final creation and private/inactive draft-early creation.
+      Connect Dream/Character/Reward/Scenario/Bot relations according to the approved
+      relationship diff, preserve ownership/maturity flags, and expose per-item retry
+      instead of rerunning a whole batch after one failure.
+
+  - id: t-016
+    milestone: m5
+    title: "Produce the Humboldt Scoop Solutions Marketing Deck reference run"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: outward-facing
+    depends_on:
+      - t-007
+      - t-014
+    gate_human: true
+    approved_by_human: false
+    note: >
+      Run the Project recipe with humboldt-scoop as source and humboldt-scoop-cms as a
+      related source. Produce the previously scoped internal review set without
+      publishing, printing, posting, outreach, deployment, or spend. Existing HSS brand
+      assets and real product screens remain authoritative.
+
+  - id: t-017
+    milestone: m5
+    title: "Produce one complete Character Deck reference run"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: outward-facing
+    depends_on:
+      - t-008
+      - t-012
+      - t-014
+    gate_human: true
+    approved_by_human: false
+    note: >
+      Select an approved existing Bot or Character and complete a reviewable deck with
+      field pitch, canonical portrait, icon/card/hero, a small expression/action subset,
+      and provenance. Expand to the full 20-expression set only after identity
+      consistency is proven. Optional video or 3D output stays separately selectable.
+
+  - id: t-018
+    milestone: m5
+    title: "Prove Dream expansion by creating a gated three-character set"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: outward-facing
+    depends_on:
+      - t-011
+      - t-015
+    gate_human: true
+    approved_by_human: false
+    note: >
+      Select an approved Dream, request exactly three fitting Characters, and carry each
+      through pitch, fields/prompts, assets, and final create/link. Verify independent
+      edits, selective reruns, unique slugs, ownership, Dream connections, partial
+      failure recovery, and no duplicate creation when final commit is replayed.
+
+  - id: t-019
+    milestone: m5
+    title: "Create the matching PROJECT Dream and expose Model Builder navigation"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on:
+      - t-014
+    note: >
+      Use the canonical conductor-to-Dream sync path to create/update the PROJECT Dream
+      with slug model-builder, goal, and waypoints. Add the Model Builder to the relevant
+      Kind Robots navigation only after the first vertical slice works. Do not invent a
+      second project identity record or hand-create a conflicting slug.
