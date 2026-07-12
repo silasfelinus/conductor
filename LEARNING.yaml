@@ -127,3 +127,12 @@ records:
     outcome: done
     failure_category: null
     lesson: "A registered /api/suggest sheet only helps if the client lets it: buildSuggestUserPrompt resolves extra.instruction BEFORE sheet.fieldPrompts, so a store that always sends extra.instruction silently overrides the sheet. Fix is two-sided — register the sheet (system prompt + per-field prompts + a buildContext that digests the source record's canon) AND stop the store force-sending an instruction (send only when explicitly provided). Then getSuggestSheet('model-builder') stops falling back to the adventure sheet. kind_robots PR #193."
+  - date: 2026-07-12
+    project: model-builder
+    task: t-001..t-012
+    kind: software
+    stakes: reversible
+    passes: 0
+    outcome: done
+    failure_category: null
+    lesson: "When a project is built directly rather than spec-first, the 'write a spec doc' tasks are closed by subsumption: the executable code + reference runs ARE the spec. Map each task to its shipped artifact (see docs/spec-subsumption.md) instead of writing redundant prose. Be honest about the tail — video (LTX) and 3D (Hunyuan3D/STL) inside t-012 stay explicitly deferred rather than folded into 'done'."
