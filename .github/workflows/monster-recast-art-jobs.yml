@@ -1,0 +1,83 @@
+name: Monster Recast ArtJobs
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "projects/coloring-book/sets/monster-recast/unapproved-art-jobs.yaml"
+      - "scripts/consume_monster_recast_art.py"
+      - ".github/workflows/monster-recast-art-jobs.yml"
+  schedule:
+    - cron: "30 9 * * *"
+  workflow_dispatch:
+    inputs:
+      limit:
+        description: "Maximum Monster Recast images to generate this run"
+        default: "4"
+        required: false
+      timeout:
+        description: "Seconds to wait per ArtJob"
+        default: "600"
+        required: false
+
+concurrency:
+  group: monster-recast-artjobs
+  cancel-in-progress: false
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install --disable-pip-version-check pyyaml Pillow
+
+      - name: Submit Monster Recast ArtJobs
+        id: consume
+        continue-on-error: true
+        env:
+          KR_API_TOKEN: ${{ secrets.KR_API_TOKEN }}
+        run: |
+          python scripts/consume_monster_recast_art.py --live \
+            --limit ${{ github.event.inputs.limit || '4' }} \
+            --timeout ${{ github.event.inputs.timeout || '600' }}
+
+      - name: Commit completed renders and queue progress
+        run: |
+          git config user.name "conductor-bot"
+          git config user.email "conductor-bot@users.noreply.github.com"
+          git add \
+            projects/coloring-book/sets/monster-recast/generated/ \
+            projects/coloring-book/sets/monster-recast/unapproved-art-jobs.yaml
+          if git diff --staged --quiet; then
+            echo "No Monster Recast changes to commit."
+            exit 0
+          fi
+          git commit -m "art: advance Monster Recast unapproved pair batch [skip ci]"
+          for attempt in 1 2 3 4 5; do
+            if git push; then
+              exit 0
+            fi
+            echo "push rejected (attempt $attempt); rebasing onto origin/main..."
+            git pull --rebase --autostash origin main
+            sleep $((attempt * 3))
+          done
+          exit 1
+
+      - name: Report outcome
+        run: |
+          if [ "${{ steps.consume.outcome }}" = "success" ]; then
+            echo "Monster Recast ArtJob batch advanced successfully."
+          else
+            echo "::warning::One or more Monster Recast jobs failed or timed out. Successful renders were still committed; failed queue entries remain pending."
+          fi
