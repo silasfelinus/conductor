@@ -15,11 +15,13 @@
 > (examples for everything) with minimal human interaction. Generated project art is
 > pre-approved internal work (AGENTS.md, 2026-07-06).
 >
-> **What still isn't automatic:** the generator's hard rule is *no text / no logo / no
-> watermark*, so it produces the **text-free imagery**; the real logo (`logo_clean.jpg`)
-> and copy are composited in a layout step. And live spend / posting / printing / real
-> customer contact stay off by default — those aren't "gates to wait on," they're just
-> out of scope for an internal example set.
+> **Text is fine here.** We don't gatekeep text on marketing materials — **Flux**
+> renders the copy directly, so each piece is a full text-bearing image at the right
+> shape (see `hss-marketing-deck.generate.yaml`). The only composite step is dropping
+> the **real logo** (`logo_clean.jpg`) into a reserved corner — never AI-generate or
+> restyle the logo (no rebrand). A few pieces (logo sheet, website/app mockups) are
+> assembled from real assets rather than generated. Spend is a later call — these are
+> shaped and ready; generate when you decide.
 
 ## Brand kit (authoritative)
 
@@ -58,9 +60,9 @@ Rates by number of dogs; **billed on the 1st of the month.**
 
 ## Build Items
 
-Each item shows its **Pitch**, its **Copy/Fields**, and its **Art** (a text-free
-generation prompt for the pipeline, or "layout" when it's an assembly of imagery +
-logo + copy). Sizes are print- or platform-correct.
+Each item shows its **Pitch**, its **Copy/Fields**, and its **Art** — a full
+text-bearing Flux piece (id in `hss-marketing-deck.generate.yaml`), or *assembled*
+when it's built from real assets rather than generated. Sizes are print/platform-correct.
 
 ### 1. Business card `business-card` · ASSET_ONLY
 
@@ -72,8 +74,8 @@ Back: "Weekly from $19 · Bi-weekly from $30 · Monthly from $50 · One-time & 4
 quote" · "Flat honest pricing · Cancel anytime · Billed the 1st" ·
 info@humboldtscoopsolutions.com · [QR → quote form].
 
-**Art:** *layout* — navy card, cream type, gold rule, teal pine/paw motif; real logo
-top-left; generatable component = the small paw/pine flourish (text-free).
+**Art:** Flux `business-card-front` / `business-card-back` (1050×600) — full pieces
+with copy; real logo composited top-left.
 
 ### 2. Logo application sheet `logo-application` · ASSET_ONLY
 
@@ -91,7 +93,7 @@ referral billboards. (Customer opt-in before placing.)
 **Copy:** "This yard: scooped & tidy 🐾" · "Humboldt Scoop Solutions — Professional
 Pet Waste Removal" · "humboldtscoopsolutions.com" · "Locally owned • Eureka–Arcata".
 
-**Art:** *layout* over a text-free generated background — see queue `marketing-sign-bg`.
+**Art:** Flux `lawn-sign` (900×1200) — full sign with copy; logo composited.
 
 ### 4. Banner `banner` · ASSET_ONLY · 1280×720
 
@@ -101,7 +103,7 @@ digital ad sets.
 **Copy:** name + descriptor · "A cleaner yard, without the dirty work." · "Weekly pet
 waste removal in Eureka, Arcata & McKinleyville" · "Free quote → humboldtscoopsolutions.com".
 
-**Art:** text-free wide illustration — queue `marketing-banner-bg` (1280×720).
+**Art:** Flux `banner` (1280×720) — full banner with copy; logo composited top-left.
 
 ### 5. Flyer `flyer` · ASSET_ONLY · 8.5×11in
 
@@ -113,7 +115,7 @@ dependable · 🧼 Thorough & tidy · 💙 Friendly & flexible) · pricing snaps
 renters, HOAs, landlords, breeders & shared spaces" · QR CTA. Property-manager variant
 headline: "Keep every unit's yard clean — one invoice, one reliable route."
 
-**Art:** *layout* over a text-free hero image — queue `marketing-flyer-hero`.
+**Art:** Flux `flyer` (1275×1650) — full flyer with copy + pricing; logo composited.
 
 ### 6. Website mockup board `website-mockup` · ASSET_ONLY
 
@@ -141,7 +143,7 @@ Arcata light; (2) Silas — matching framing; (3) Kathryn "superkate!" — warme
 sanitized tools / double-bag; (6) sign-in-yard candid. Consistent 3:4 portraits,
 cream/navy wardrobe, natural NorCal light, genuine-not-stock. Consent for people/property.
 
-**Art:** text-free mood-board reference — queue `marketing-photo-moodboard`.
+**Art:** Flux `photo-moodboard` (1280×720) — reference only, no copy.
 
 ### 9. Print & video shot lists `video-shot-list` · ASSET_ONLY
 
@@ -156,7 +158,7 @@ Three angles, one per audience. **Copy** — A) Homeowner: "Reclaim your backyar
 B) Property manager: "One route. Every unit. One invoice."; C) Poopstakes: "New
 customers win local goodies + good-dog bragging rights." Each: name+descriptor + gold CTA.
 
-**Art:** three text-free square backgrounds — queue `marketing-ad-a/b/c` (1080×1080).
+**Art:** Flux `ad-homeowner` / `ad-property` / `ad-poopstakes` (1080×1080) — full ads with copy.
 
 ### 11. Video commercial treatment `commercial-treatment` · ASSET_ONLY
 
@@ -169,7 +171,7 @@ end card.
 ### 12. Storyboard `storyboard` · ASSET_ONLY
 
 5 panels visualizing the treatment: dread → arrival → process → payoff → CTA card.
-**Art:** text-free 5-panel line-art board — queue `marketing-storyboard` (1280×720).
+**Art:** Flux `storyboard` (1280×720) — 5-panel board with panel captions.
 
 ### 13. Week-by-week launch plan `launch-plan` · ASSET_ONLY
 
@@ -190,22 +192,28 @@ internal example set (do it when Silas is ready), but nothing here waits on a re
 
 ---
 
-## Objects created / queued
+## Generation manifest — image files in the right shapes
 
-To make this a real full-object example set with minimal human interaction, the
-text-free visual components are queued into the live art pipeline
-(`projects/art-generate.yaml`, target `humboldt-scoop`), which the distribute-images
-workflow turns into committed HSS ArtCollection images:
+The pieces are specified for **Flux** (renders text) at print/platform-correct sizes
+in **`hss-marketing-deck.generate.yaml`**, ready to generate when you decide to spend:
 
-`marketing-banner-bg`, `marketing-sign-bg`, `marketing-flyer-hero`,
-`marketing-ad-a/b/c`, `marketing-storyboard`, `marketing-photo-moodboard`.
+| id | shape |
+|---|---|
+| business-card-front / -back | 1050×600 (3.5×2in) |
+| lawn-sign | 900×1200 (18×24in) |
+| banner | 1280×720 |
+| flyer | 1275×1650 (8.5×11in) |
+| ad-homeowner / -property / -poopstakes | 1080×1080 |
+| storyboard | 1280×720 |
+| photo-moodboard | 1280×720 (reference, no text) |
 
-The text/logo layout pieces (card, logo sheet, laid-out sign/flyer/ads) are assembly
-steps over those images + `logo_clean.jpg` — kept out of the generator because it
-forbids text/logos, and to honor "no rebrand."
+Each carries its real copy; the logo is composited into a reserved corner (no rebrand).
+Not generated (assembled from real assets): logo-application sheet, website mockup
+(real site), app mockup (CMS UI, dummy data).
 
 ## Notes
 
-- No live spend, posting, printing, or real customer contact — internal example set.
-- Existing logo/site/pricing mechanism authoritative; the pricing/area/descriptor above
-  are Silas-provided truth, folded into the deck and the CONTENT-BRIEF.
+- Shapes are the deliverable; spend/timing is Silas's later call. No live posting,
+  printing, or real customer contact.
+- Existing logo/site are authoritative; pricing/area/descriptor are Silas-provided
+  truth, folded into the deck and the CONTENT-BRIEF.

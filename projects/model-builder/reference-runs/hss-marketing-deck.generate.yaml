@@ -1,0 +1,132 @@
+# HSS Marketing Deck — Flux generation manifest
+#
+# Image files in the right shapes for the Humboldt Scoop Solutions marketing deck.
+# engine: flux — Flux renders the copy directly, so these are FULL text-bearing
+# pieces (not text-free backgrounds). The only compositing step is dropping the
+# real logo (projects/humboldt-scoop/scoops/wp-content/uploads/2026/01/logo_clean.jpg)
+# into the reserved corner — never AI-generate or restyle the logo (no rebrand).
+#
+# Palette: navy #1b3a5c · cream #fbf9f5/#f5f0e8 · gold #e8a030 · teal #7bbfb5 ·
+# rust #b9684f. Name is always "Humboldt Scoop Solutions — Professional Pet Waste
+# Removal". Nothing here is generated/spent yet; run when Silas decides.
+
+engine: flux
+target_repo: silasfelinus/conductor
+brand:
+  name: Humboldt Scoop Solutions
+  descriptor: Professional Pet Waste Removal
+  tagline: A cleaner yard, without the dirty work.
+  logo: projects/humboldt-scoop/scoops/wp-content/uploads/2026/01/logo_clean.jpg
+  contact: info@humboldtscoopsolutions.com
+  area: Eureka · Arcata · McKinleyville
+
+items:
+  - id: business-card-front
+    size: 1050x600        # 3.5x2in @ 300dpi, landscape
+    reserve_logo: top-left
+    prompt: >
+      Front of a printed business card for a friendly local pet-waste-removal
+      company, deep navy #1b3a5c background with cream #fbf9f5 text and a warm gold
+      #e8a030 accent rule, small teal pine-and-paw motif. Clean readable typography:
+      the words "Humboldt Scoop Solutions" as the main line, "Professional Pet Waste
+      Removal" beneath it smaller, and the tagline "A cleaner yard, without the dirty
+      work." Empty top-left corner reserved for a logo. Tidy, trustworthy, print-ready,
+      generous whitespace, no clutter.
+
+  - id: business-card-back
+    size: 1050x600
+    prompt: >
+      Back of the same business card, navy #1b3a5c and cream palette, gold accent.
+      Neat small text listing "Weekly · Bi-weekly · Monthly · One-time · 4+ dogs by
+      quote", the line "Flat honest pricing · Cancel anytime · Billed the 1st", and
+      "info@humboldtscoopsolutions.com". A simple QR-code placeholder square lower-right.
+      Clean, legible, minimal.
+
+  - id: lawn-sign
+    size: 900x1200        # 18x24in portrait yard sign
+    reserve_logo: bottom
+    prompt: >
+      A double-sided yard sign design, bold and readable from the sidewalk. Flat deep
+      navy #1b3a5c field, a stylized teal pine tree and a soft gold sunrise arc, a small
+      friendly paw. Large cream headline "This yard: scooped & tidy", then "Humboldt
+      Scoop Solutions — Professional Pet Waste Removal", then "humboldtscoopsolutions.com"
+      and small "Locally owned • Eureka–Arcata". High contrast, screen-print friendly,
+      cheerful and neighborly.
+
+  - id: banner
+    size: 1280x720        # wide web/event banner
+    reserve_logo: top-left
+    prompt: >
+      A wide marketing banner. Warm navy-to-teal sky over a tidy Northern California
+      backyard at misty morning, a happy dog on neat grass at right. Cream headline
+      "A cleaner yard, without the dirty work." and a subhead "Weekly pet waste removal
+      in Eureka, Arcata & McKinleyville", plus a gold call-to-action pill reading
+      "Get a free quote". Small line "Humboldt Scoop Solutions — Professional Pet Waste
+      Removal". Friendly, clean, lots of breathing room.
+
+  - id: flyer
+    size: 1275x1650       # 8.5x11in portrait
+    reserve_logo: top
+    prompt: >
+      A single-page print flyer on cream paper. Navy headline "Tired of the backyard
+      minefield?" Three small value cards with icons and labels: "Local & dependable",
+      "Thorough & tidy", "Friendly & flexible" (teal cards, gold accents). A friendly
+      photo-real dog-in-clean-yard hero band. A pricing snapshot line "Weekly from $19 ·
+      Bi-weekly from $30 · Monthly from $50". Footer: "Humboldt Scoop Solutions —
+      Professional Pet Waste Removal · humboldtscoopsolutions.com" with a QR placeholder.
+      Warm, uncluttered, approachable.
+
+  - id: ad-homeowner
+    size: 1080x1080
+    reserve_logo: bottom-right
+    prompt: >
+      A square social ad, homeowner angle. A cozy suburban backyard transformed clean
+      and inviting, a content dog on tidy grass, warm navy-cream-gold palette with teal.
+      Big cream headline "Reclaim your backyard." and a gold call-to-action pill "Free
+      quote". Small "Humboldt Scoop Solutions — Professional Pet Waste Removal". Bright,
+      optimistic, thumb-stopping but clean.
+
+  - id: ad-property
+    size: 1080x1080
+    reserve_logo: bottom-right
+    prompt: >
+      A square social ad, property-manager angle. A clean shared courtyard / multi-unit
+      lawn with a subtle glowing dotted service route winding between buildings. Navy,
+      cream, gold, teal. Headline "One route. Every unit. One invoice." and a gold CTA
+      pill "Get a quote". Small "Humboldt Scoop Solutions — Professional Pet Waste
+      Removal". Dependable, organized, professional but warm.
+
+  - id: ad-poopstakes
+    size: 1080x1080
+    reserve_logo: bottom-right
+    prompt: >
+      A playful square social ad. A proud cheerful dog wearing a little ribbon beside a
+      basket of Humboldt-made local goodies on a tidy lawn, light confetti sparkle, warm
+      navy-cream-gold-teal palette. Headline "New customers win local goodies + good-dog
+      bragging rights." and a gold CTA pill "Join the Poopstakes". Small "Humboldt Scoop
+      Solutions — Professional Pet Waste Removal". Joyful, charming, neighborly.
+
+  - id: storyboard
+    size: 1280x720
+    prompt: >
+      A five-panel commercial storyboard in warm navy/cream/gold line-art, panels left
+      to right with small caption bars: (1) owner frowning at a messy backyard, (2) a
+      friendly worker and small van arriving with a wave, (3) montage of tidy scooping and
+      sanitizing, (4) a kid and dog playing on a clean lawn, (5) an end card reading
+      "Humboldt Scoop Solutions — Professional Pet Waste Removal". Rough concept-art feel,
+      clear and gentle.
+
+  - id: photo-moodboard
+    size: 1280x720
+    text_free: true       # reference only, no copy
+    prompt: >
+      A warm photography mood-board reference for a small local pet-waste-removal team
+      brand shoot: natural NorCal morning light, friendly diverse team in simple navy
+      shirts, candid tidy-backyard and happy-dog moments, consistent cream-and-navy
+      wardrobe, genuine documentary small-business warmth, soft coastal fog, cohesive
+      navy/cream/gold/teal grade. No text.
+
+# Not generated — assembled from real assets, not Flux:
+#   logo-application  (uses the real logo across surfaces)
+#   website-mockup    (annotation of the real live site)
+#   app-mockup        (UI mockup of humboldt-scoop-cms, dummy data)
