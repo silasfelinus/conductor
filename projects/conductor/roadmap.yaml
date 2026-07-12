@@ -377,13 +377,21 @@ tasks:
     title: Reviewer trigger fires with no open worker/* PR to review, repeatedly
     status: needs-human
     owner: null
-    updated: '2026-07-12T18:36:00Z'
+    updated: '2026-07-12T19:40:00Z'
     passes: 0
     stakes: reversible
     note: >
       FOR SILAS: The Reviewer session trigger is firing far more often than there
       is Worker PR volume to review — this is a platform/scheduling issue, not
       something fixable from inside the repo.
+
+      UPDATE 2026-07-12 19:40: 38th recurrence. Same shape — zero open worker/*
+      PRs in either repo, no roadmap task at status: review/claimed. The
+      previously-flagged `agent/marketing-deck-and-hss-route-maker` branch no
+      longer exists on the conductor remote (superseded PR #400 is closed,
+      branch cleaned up) — nothing further to action there. Not re-notifying
+      Silas — same reasoning as recurrences 33-37. See TALKBACK.md 2026-07-12
+      19:40 entry for detail.
 
       UPDATE 2026-07-12 18:36: 37th recurrence. Same shape — zero open worker/*
       PRs in either repo, no roadmap task at status: review/claimed. The
