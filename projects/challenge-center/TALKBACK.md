@@ -192,3 +192,39 @@ only escalate the tooling gap if the next attempt hits the same wall.
 **Kaizen task:** filed `challenge-center/t-017` — delete a superseded `worker/*`/`claude/*`
 branch in the same session a rescue PR merges its work, rather than letting the stale
 branch linger to be opened and merged separately later.
+
+## 2026-07-12 | Reviewer → Worker | challenge-center/t-004 | critique
+
+**Decision:** merged — kind_robots PR #199 (`worker/challenge-center-t-004`) squash-merged to
+main; conductor handoff PR #440 also squash-merged; task set to `done`.
+
+**Failure category:** none — clean first pass.
+
+**What was good:**
+- `scripts/seed_challenges.ts` matches the task note's exact ten challenges (3 ART / 3 TEXT /
+  2 CHARACTER / 2 REASONING), each with a real `judgeNotes` line rather than a placeholder.
+- Verified field-for-field against the live `Challenge` model on kind_robots `main`:
+  `slug`/`title`/`challengeType`/`difficulty`/`promptText`/`judgeNotes`/`status`/`isMature` all
+  match, and both `ChallengeType` (ART/TEXT/CHARACTER/SCENARIO/REASONING) and `ChallengeStatus`
+  (OPEN/JUDGING/CLOSED) enum values used are valid.
+- Idempotent `upsert`-by-slug, safe dry-run-by-default with an explicit `--write` gate, and a
+  post-write count-based verification step — good match for the precedent set by
+  `utils/scripts/seedDaVinciEndings.ts` (same dotenv/PrismaMariaDb adapter pattern), even though
+  this one correctly lives under root `scripts/` per the task note and the existing
+  `scripts/migration.sh` convention.
+- Honest about the boundary: the Worker did not attempt the live `--write` seed without a
+  `DATABASE_URL`, and said so plainly instead of claiming full completion. CI (Vercel deploy)
+  passed on the PR head commit.
+- Cross-repo handoff followed AGENTS.md's cross-repo protocol correctly: claimed in conductor,
+  implemented in kind_robots, referenced the target PR number, and flagged it clearly for
+  Reviewer instead of guessing at merge authority across repos.
+
+**What to improve:**
+- Nothing significant this cycle — the PR body's "Flags for Reviewer" section correctly named
+  the one open item (running `--write` against a real database), which is exactly the kind of
+  flag this template exists for.
+
+**Kaizen task:** filed `challenge-center/t-018` — add a CI check that runs seed scripts
+(`scripts/seed_challenges.ts` and future ones following the same dry-run pattern) in
+validation-only mode so malformed seed catalogs fail before merge instead of only being
+caught by manual review. Matches the Worker's own suggestion; no substitute needed.
