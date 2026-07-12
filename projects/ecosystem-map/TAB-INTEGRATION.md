@@ -59,7 +59,7 @@ For project `{project}` using tab `{tab}` in channel `{channel}`:
    Placeholder art may ship temporarily; missing final art must be tracked rather than blocking the functional tab.
 5. **Wire actual rendering.** Update the existing channel manager so selecting `{tab}` renders the project's real manager component. A tab card that only changes stored state, routes to the wrong default component, or displays an empty placeholder is not complete.
 6. **Create a dedicated page only when useful.** When the project deserves a direct route, follow the page recipe in `kind_robots/sample/new-section.md`: `content/{title}.md`, valid `dashboardKey` / `dashboardTab`, and one `:{title}-manager` directive. The tab's `route` should point there.
-7. **Set the PROJECT Dream launch pointer.** Set `Dream.liveUrl` to the internal route or external app URL. The Conductor project detail's **Open Project** control must launch the same surface.
+7. **Register the placement on the Project DB row.** This is the step that is easy to forget — the code recipes (`new-section.md`, `SECTIONS.md`) never mention it. Set three fields on the kind_robots `Project` row: `liveUrl` (the internal route or external app URL — the Conductor **Open Project** control launches this), `channelKey` (the dashboard channel, e.g. `art`), and `tabKey` (the dashboard tab, e.g. `artjob`). These must match the `dashboardKey`/`dashboardTab` used in the content page and the tab key added in `dashboardHelper.ts`. Do it declaratively: add `liveUrl`/`channelKey`/`tabKey` to the project's entry in `project-overrides.yaml` (or its `roadmap.yaml` top-matter) and let `scripts/sync_projects.py` upsert them via `PATCH /api/projects/{slug}`. (Historical note: this field used to be `Dream.liveUrl`; the Dream model split into Dream/Project/Facet in July 2026, so it is now `Project.liveUrl`.)
 8. **Keep ownership clean.** The project's roadmap owns its feature work. `ecosystem-map` owns placement audits and gap routing. Shared tab/navigation changes belong in `kind_robots` or `global-ui`, not duplicated in every project.
 
 ## Completion checklist
@@ -71,7 +71,7 @@ A front end is considered stitched only when all applicable checks pass:
 - [ ] Refreshing or directly loading its route preserves the correct channel and active tab.
 - [ ] A matching tutorial section exists.
 - [ ] Dashboard and tutorial images exist or have explicit tracked replacements.
-- [ ] The PROJECT Dream `liveUrl` points to the same route or external app.
+- [ ] The `Project` row's `liveUrl`, `channelKey`, and `tabKey` are set (via `project-overrides.yaml` + `sync_projects.py`) and match the page's `dashboardKey`/`dashboardTab`.
 - [ ] The Conductor project detail's **Open Project** action reaches it.
 - [ ] TypeScript/typecheck and repository contract checks pass.
 - [ ] Mobile tab density and basic responsive layout have been checked.

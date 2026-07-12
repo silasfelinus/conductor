@@ -138,6 +138,18 @@ def build_project_payload(slug, override, roadmap):
     if isinstance(goal, str) and goal.strip():
         payload["goal"] = goal.strip()
 
+    # Frontend placement: liveUrl (route/app URL), channelKey (dashboard
+    # channel), tabKey (dashboard tab). These stitch a project into a front-end
+    # surface. Previously nothing synced them, so a project could have a page in
+    # the app but no DB registration. Read from the override first, falling back
+    # to roadmap top-matter. Only send defined values so we never null them out.
+    for field in ("liveUrl", "channelKey", "tabKey", "repoUrl"):
+        value = override.get(field)
+        if value is None and roadmap:
+            value = roadmap.get(field)
+        if isinstance(value, str) and value.strip():
+            payload[field] = value.strip()
+
     return payload
 
 

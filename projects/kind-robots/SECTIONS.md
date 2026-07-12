@@ -51,12 +51,18 @@ Iconify `kind-icon:*` names, not files.
 
 1. Entry under the channel's key in `dashboardConfigs.{channel}.tabs[]`
    (`stores/helpers/dashboardHelper.ts`) — key, label, icon, title,
-   summary, `image: tabImage(...)`, narrative, route.
+   summary, `image: tabImage(...)`, narrative, route. Add
+   `requiredRole: 'ADMIN'` for admin-only tabs.
 2. Matching section under the channel's key in
    `tutorialChannels.{channel}.sections[]`
    (`stores/helpers/tutorialCards.ts`).
 3. Images: `dashboard-tabs/{channel}/{tab}.webp` and
    `tutorials/{channel}/{tab}.webp` (same art in both paths is fine).
+4. **Register the Project DB placement** (easy to miss — the front-end wiring
+   does not set it): add `liveUrl`/`channelKey`/`tabKey` to the project's entry
+   in `project-overrides.yaml` (or its `roadmap.yaml`); `scripts/sync_projects.py`
+   upserts them to the `Project` row via `PATCH /api/projects/{slug}`. Without
+   this the project has a page but no DB registration.
 
 ### Every channel (after Silas approves)
 
