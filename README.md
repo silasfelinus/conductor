@@ -85,7 +85,8 @@ workspace.html                      auto-generated dashboard — do not edit
 | Project | What it is | Kind |
 |---|---|---|
 | humboldt-scoop | Existing site — adding the codebase under /site | software |
-| humboldt-scoop-cms | New customer management software | software |
+| humboldt-scoop-cms | Customer management, recurring schedules, route cards, and an Android-first mapped customer route maker | software |
+| marketing-deck | Project-first generator for selectable print, web, app, content, ad, commercial, and launch-plan marketing sets | software |
 | digital-storefront | Research → create → market → advertise pipeline; nothing publishes unattended | content |
 | approval-portal | The console Silas lives in: pick pitches, validate upgrades, confirm updates | software |
 | kind-robots | Apps consuming the shared KR backend (read-only) | software |
