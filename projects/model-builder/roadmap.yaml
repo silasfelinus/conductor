@@ -304,11 +304,12 @@ tasks:
       humboldt-scoop-cms reliability angle, all 13 marketing-deck outputs (copy + art specs)
       grounded in Silas's real data (logo_clean.jpg, pricing, service area, the mandatory
       "Professional Pet Waste Removal" descriptor, billed the 1st), also folded into the
-      CONTENT-BRIEF. The eight text-free visual components were QUEUED into the live art
-      pipeline (projects/art-generate.yaml, project humboldt-scoop, variants marketing-*),
-      so the distribute-images workflow turns them into committed HSS ArtCollection images —
-      "full objects, minimal human interaction." Text/logo layout pieces are assembly steps
-      over those images + the real logo (the generator forbids text/logos; no rebrand).
+      CONTENT-BRIEF. The image pieces are specified for Flux (which renders text) at
+      print/platform-correct shapes in reference-runs/hss-marketing-deck.generate.yaml —
+      full text-bearing marketing pieces, ready to generate when Silas decides to spend
+      (~$5k total op budget; shapes are the deliverable, not spend). The real logo is
+      composited into a reserved corner (no rebrand); logo sheet + site/app mockups are
+      assembled from real assets. (Marketing does NOT gatekeep text — Flux handles it.)
       Gate note (Silas, 2026-07-12): the four gates are OPTIONAL front-end pauses a user can
       place on a request — not a backend block that waits on a repo file. Default backend
       behavior is to create full objects. This corrects the earlier over-cautious
