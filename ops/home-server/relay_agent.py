@@ -255,12 +255,23 @@ def run_comfy(payload):
 
     upload_comfy_input_images(payload)
 
-    status, resp = http_json(
-        "POST", f"{COMFY_URL}/prompt", {"prompt": workflow, "client_id": AGENT_ID}
-    )
+    try:
+        status, resp = http_json(
+            "POST", f"{COMFY_URL}/prompt", {"prompt": workflow, "client_id": AGENT_ID}
+        )
+    except Exception as e:  # noqa: BLE001 — turn opaque socket errors into a clue
+        # A bare "timed out"/"connection refused" here is the #1 stall: ComfyUI
+        # isn't responding at COMFY_URL. Name the URL + likely cause so it shows
+        # up actionably in the FAILED job's error on the dashboard.
+        raise RuntimeError(
+            f"ComfyUI POST /prompt failed at {COMFY_URL} ({e}). "
+            "Is ComfyUI running and responsive on that port? "
+            f"Try opening {COMFY_URL}/system_stats."
+        ) from e
     if status != 200 or not resp or not resp.get("prompt_id"):
         raise RuntimeError(
-            f"ComfyUI /prompt returned HTTP {status}: {resp and resp.get('node_errors')}"
+            f"ComfyUI /prompt returned HTTP {status} at {COMFY_URL}: "
+            f"{resp and resp.get('node_errors')}"
         )
     prompt_id = resp["prompt_id"]
 
