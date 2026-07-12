@@ -10,6 +10,12 @@ Closes the autonomous art loop (art-generator-connect t-012):
     -> poll GET {KR}/api/art/queue/{id} (relay renders on the home box)
     -> GET  {KR}/api/art/image/{artImageId}?includeImageData=true
     -> projects/process/{basename}      (distribute_images.py routes from there)
+    -> mark the entry status: done in art-generate.yaml (comment-preserving)
+
+Entries self-drain: once an entry has been enqueued as an ArtJob and its render
+lands, it is marked status: done and skipped on the next run (failed entries
+stay pending for retry). ArtJob is the single source of truth — this script
+only turns approved generate entries into jobs and clears them.
 
 Dry-run by default: prints what would be queued and touches nothing. Pass
 --live to run for real — Silas has authorized the automatic loop; no separate
@@ -37,6 +43,7 @@ import os
 import random
 import re
 import sys
+import re
 import time
 import urllib.error
 import urllib.request
@@ -284,8 +291,83 @@ def load_entries():
     return [
         e
         for e in entries
-        if isinstance(e, dict) and e.get("prompt") and e.get("image_path")
+        if isinstance(e, dict)
+        and e.get("prompt")
+        and e.get("image_path")
+        and _is_pending(e)
     ]
+
+
+def _is_pending(entry):
+    """An entry is still consumable unless it has already been drained
+    (status done/complete). This lets the queue self-clear: once an entry has
+    been enqueued as an ArtJob and its render landed, it is marked done and
+    skipped on the next run."""
+    return (
+        str(entry.get("status") or "pending").strip().lower()
+        not in ("done", "complete", "completed")
+    )
+
+
+ENTRY_START_PAT = re.compile(r"^(\s*)-\s")
+IMAGE_PATH_PAT = re.compile(r"^\s*image_path:\s*(.+?)\s*$")
+STATUS_PAT = re.compile(r'^(\s*)status:\s*["\']?[A-Za-z0-9_-]+["\']?\s*(#.*)?$')
+
+
+def set_entry_status(text, image_path, new_status):
+    """Flip (or insert) the status line of the batch entry whose image_path
+    matches. Surgical, comment-preserving line edit — pyyaml round-trip would
+    drop the header and reformat every multi-line prompt. Mirrors
+    consume_art_requests.set_request_status."""
+    lines = text.splitlines(keepends=True)
+    starts = [i for i, line in enumerate(lines) if ENTRY_START_PAT.match(line)]
+
+    for idx, start in enumerate(starts):
+        end = starts[idx + 1] if idx + 1 < len(starts) else len(lines)
+
+        matched = False
+        for j in range(start, end):
+            m = IMAGE_PATH_PAT.match(lines[j])
+            if m and m.group(1).strip().strip("'\"") == image_path:
+                matched = True
+                break
+
+        if not matched:
+            continue
+
+        for j in range(start, end):
+            sm = STATUS_PAT.match(lines[j])
+            if sm:
+                lines[j] = f"{sm.group(1)}status: {new_status}\n"
+                return "".join(lines), True
+
+        # No status line on this entry — add one under image_path.
+        for j in range(start, end):
+            pm = IMAGE_PATH_PAT.match(lines[j])
+            if pm:
+                indent = re.match(r"^(\s*)", lines[j]).group(1)
+                lines.insert(j + 1, f"{indent}status: {new_status}\n")
+                return "".join(lines), True
+
+    return text, False
+
+
+def mark_generate_done(image_paths):
+    """Mark each image_path's entry status: done (single read/write).
+    Returns the number of entries changed."""
+    if not image_paths or not ART_GENERATE_FILE.exists():
+        return 0
+
+    text = ART_GENERATE_FILE.read_text()
+    changed = 0
+    for image_path in image_paths:
+        text, did = set_entry_status(text, image_path, "done")
+        if did:
+            changed += 1
+
+    if changed:
+        ART_GENERATE_FILE.write_text(text)
+    return changed
 
 
 def save_result(entry, image_b64):
@@ -388,6 +470,7 @@ def main():
         return 1
 
     failures = 0
+    done_paths = []
     for entry in entries:
         name = entry["image_path"]
         try:
@@ -399,12 +482,18 @@ def main():
             print(f"  DONE {name} -> {out.relative_to(ROOT)} (ArtImage {job['artImageId']})")
             if warning:
                 print(f"    WARNING: {warning}")
+            # Enqueued as an ArtJob and rendered — drain it from the queue so it
+            # is not re-sent next run. Failed entries stay pending for retry.
+            done_paths.append(name)
         except Exception as e:  # noqa: BLE001 - keep draining the batch
             failures += 1
             print(f"  FAILED {name}: {e}", file=sys.stderr)
 
+    cleared = mark_generate_done(done_paths)
+
     print(
-        f"\n{len(entries) - failures}/{len(entries)} succeeded."
+        f"\n{len(entries) - failures}/{len(entries)} succeeded"
+        f"; {cleared} marked done in {ART_GENERATE_FILE.relative_to(ROOT)}."
         + ("" if failures else " Next: python scripts/distribute_images.py --dry-run")
     )
     return 1 if failures else 0
