@@ -21,7 +21,7 @@ The mode is chosen at first launch and can be switched in Settings.
   roadmap approvals, pitch voting, conductor inbox) are authorized
   *server-side* by the signed-in user's role. Non-admin users simply never see
   that layer.
-- Core features (projects, tasks/todos, waypoints) are per-user via the
+- Core features (projects, tasks/todos) are per-user via the
   JWT-scoped kind_robots endpoints (`/api/dreams`, `/api/todos`).
 
 ## Repo layout
@@ -32,7 +32,7 @@ lib/
   features/
     onboarding/ server picker (hosted / self-hosted / local)
     auth/       login, register, auth state
-    projects/   Dream-backed projects, waypoints, dashboard, detail
+    projects/   Dream-backed projects, dashboard, detail
     todos/      todo list + composer (dreamId links todos to projects)
     agent_ops/  conductor-repo layer: roadmaps, approvals, pitches (admin only)
     settings/

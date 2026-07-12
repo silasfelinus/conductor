@@ -36,7 +36,7 @@ The kind_robots "conductor manager" is really two backends stitched together:
 
 | Layer | Storage | Multi-user? | App treatment |
 |---|---|---|---|
-| **Core**: projects (Dream rows, dreamType PROJECT), todos, waypoints, priorities, statuses, users | Prisma/MySQL, JWT-scoped | Yes (already userId-aware) | The app's main surface, for every user |
+| **Core**: projects (Dream rows, dreamType PROJECT), todos, priorities, statuses, users | Prisma/MySQL, JWT-scoped | Yes (already userId-aware) | The app's main surface, for every user |
 | **Agent Ops**: roadmap YAML, pitches, inbox, approvals, art-request queue | GitHub passthrough to the single `silasfelinus/conductor` repo | No — single-tenant by nature | Opt-in layer, admin-role only, hidden from general users |
 
 A general user's "project" is their own Dream + linked Todos. The GitHub
@@ -103,7 +103,6 @@ user's todos for a dream (not userId-scoped) ✅ now scoped to the caller.
 | Project gallery + priority sort | Dashboard | scaffolded |
 | New project (Dream) + project cap | Dashboard FAB | scaffolded |
 | Project status/priority/intent editing | Project detail | scaffolded (status, priority, full intent editor) |
-| Waypoints (add/cycle/reorder/remove) | Project detail | scaffolded |
 | Todos: create, edit, filter, done/archive, categories | Todos tab | scaffolded |
 | Feature wishlist (DESIRED_FEATURE + order, promote/retire) | Project detail | scaffolded |
 | Brainstorm / pitch voting | Approvals tab (Agent Ops) | scaffolded |

@@ -16,7 +16,6 @@ class Project {
     this.imagePath,
     this.cardPath,
     this.heroPath,
-    this.waypoints = const [],
     this.isPublic = false,
   });
 
@@ -34,7 +33,6 @@ class Project {
   final String? imagePath;
   final String? cardPath;
   final String? heroPath;
-  final List<Waypoint> waypoints;
   final bool isPublic;
 
   factory Project.fromJson(Map<String, dynamic> json) => Project(
@@ -52,7 +50,6 @@ class Project {
         imagePath: json['imagePath'] as String?,
         cardPath: json['cardPath'] as String?,
         heroPath: json['heroPath'] as String?,
-        waypoints: Waypoint.parseList(json['waypoints'] as String?),
         isPublic: (json['isPublic'] as bool?) ?? false,
       );
 
@@ -71,38 +68,6 @@ class Project {
         'imagePath': imagePath,
         'cardPath': cardPath,
         'heroPath': heroPath,
-        'waypoints': Waypoint.serializeList(waypoints),
         'isPublic': isPublic,
       };
-}
-
-enum WaypointStatus { todo, inProgress, done }
-
-/// Waypoints are stored server-side as one pipe-delimited string on the
-/// Dream: "✓ done step|~ in-progress step|future step".
-class Waypoint {
-  const Waypoint(this.label, this.status);
-
-  final String label;
-  final WaypointStatus status;
-
-  static List<Waypoint> parseList(String? raw) {
-    if (raw == null || raw.trim().isEmpty) return const [];
-    return raw.split('|').where((s) => s.trim().isNotEmpty).map((s) {
-      final t = s.trim();
-      if (t.startsWith('✓ ')) return Waypoint(t.substring(2), WaypointStatus.done);
-      if (t.startsWith('~ ')) {
-        return Waypoint(t.substring(2), WaypointStatus.inProgress);
-      }
-      return Waypoint(t, WaypointStatus.todo);
-    }).toList();
-  }
-
-  static String serializeList(List<Waypoint> waypoints) => waypoints
-      .map((w) => switch (w.status) {
-            WaypointStatus.done => '✓ ${w.label}',
-            WaypointStatus.inProgress => '~ ${w.label}',
-            WaypointStatus.todo => w.label,
-          })
-      .join('|');
 }

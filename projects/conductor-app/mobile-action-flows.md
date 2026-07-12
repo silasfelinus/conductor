@@ -24,7 +24,7 @@ The current app already has the right bones for this pass:
 - `apps/conductor/lib/features/todos/todos_screen.dart` supports Open/Done/Archived filters, swipe-to-done, swipe-to-archive, a modal composer, priority, category, and edit-on-tap.
 - `apps/conductor/lib/features/agent_ops/approvals_screen.dart` shows gated roadmap tasks, pending pitches, pitch approve/pass buttons, and conductor inbox replies.
 - `apps/conductor/lib/features/agent_ops/agent_ops_repository.dart` keeps Agent Ops behind the signed-in admin user's JWT; no admin token is stored in the app.
-- `apps/conductor/lib/features/projects/project_detail_screen.dart` supports project metadata editing, waypoints, project-scoped todos, wishlist, and project chat entry.
+- `apps/conductor/lib/features/projects/project_detail_screen.dart` supports project metadata editing, project-scoped todos, wishlist, and project chat entry.
 - `projects/conductor-app/app-architecture-v2.md` establishes the important boundary: core user project data is multi-user, while GitHub-backed Agent Ops is admin-only and single-tenant.
 
 ## Mobile principles
@@ -209,7 +209,6 @@ Recommended bottom navigation remains:
 Within Project detail, prefer sections over more bottom-nav items:
 
 - Overview
-- Waypoints
 - Tasks
 - Chat
 - Artwork

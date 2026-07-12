@@ -70,14 +70,15 @@ These endpoints read the conductor GitHub repo — no DB writes.
 ### 4. Projects (Project Identity Layer)
 
 The Dream model split into Dream / Project / Facet (July 2026). Project
-identity, status, priority, goal, and waypoints live on the first-class
-Project model; `conductorSlug` is the join key with conductor.
+identity, status, priority, and goal live on the first-class Project model;
+`conductorSlug` is the join key with conductor. Roadmap progress is tracked by
+milestones (owned by conductor), not a Project field.
 
 | Method | Path | Auth | Status | Notes |
 |---|---|---|---|---|
 | GET | `/api/projects` | Optional (public projects visible) | ✓ Exists | Query: `?status=ACTIVE`, `?priority=HIGH`, `?channelKey=`, `?search=`, `?mine=`, `?take=`, `?skip=` |
 | GET | `/api/projects/[id]` | Optional | ✓ Exists | By numeric id, `slug`, or `conductorSlug` |
-| POST | `/api/projects` | JWT | ✓ Exists | Create a Project (title, slug, conductorSlug, status, priority, goal, waypoints, lastSyncedAt, …) |
+| POST | `/api/projects` | JWT | ✓ Exists | Create a Project (title, slug, conductorSlug, status, priority, goal, lastSyncedAt, …) |
 | PATCH | `/api/projects/[id]` | JWT | ✓ Exists | Partial update — same fields as create, incl. priority and lastSyncedAt |
 | DELETE | `/api/projects/[id]` | JWT | ✓ Exists | Soft-archive (isActive false, status ARCHIVED) |
 

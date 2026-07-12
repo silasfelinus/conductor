@@ -105,7 +105,7 @@ def domain_matches(text: str) -> set[str]:
         matches.add("dream")
     if any(pattern.search(text) for pattern in CHARACTER_PATTERNS) or "character" in lowered:
         matches.add("character")
-    if any(pattern.search(text) for pattern in PROJECT_PATTERNS) or any(term in lowered for term in ("project", "waypoint", "roadmap", "task for", "what is next", "what's next", "goal of")):
+    if any(pattern.search(text) for pattern in PROJECT_PATTERNS) or any(term in lowered for term in ("project", "milestone", "roadmap", "task for", "what is next", "what's next", "goal of")):
         matches.add("project")
     if any(term in lowered for term in ("ask ami", "chat", "talk to", "question", "explain", "why", "how do i", "what is")) and not matches:
         matches.add("chat")

@@ -20,20 +20,16 @@ void main() {
       ]);
     });
 
-    test('systemPromptFor embeds project context and waypoint states', () {
+    test('systemPromptFor embeds project context', () {
       final project = Project.fromJson({
         'id': 1,
         'slug': 'x',
         'title': 'X',
         'goal': 'ship',
-        'waypoints': '✓ a|~ b|c',
       });
       final prompt = ProjectChatRepository.systemPromptFor(project);
       expect(prompt, contains('project assistant for "X"'));
       expect(prompt, contains('Goal: ship'));
-      expect(prompt, contains('[done] a'));
-      expect(prompt, contains('[in progress] b'));
-      expect(prompt, contains('[todo] c'));
     });
 
     test('channel name matches the kind_robots workspace convention', () {
