@@ -85,8 +85,8 @@ workspace.html                      auto-generated dashboard — do not edit
 | Project | What it is | Kind |
 |---|---|---|
 | humboldt-scoop | Existing site — adding the codebase under /site | software |
-| humboldt-scoop-cms | Customer management, scheduling, visit records, billing drafts, and mapped route planning | software |
-| marketing-deck | Selectable model-to-marketing-set generator; Humboldt Scoop Solutions is the first pilot | software |
+| humboldt-scoop-cms | Customer management, scheduling, visit records, billing drafts, and Android-first mapped route planning | software |
+| model-builder | Resumable gated recipe runner for upgrading or creating Kind Robots records; Marketing Deck is one preset | software |
 | digital-storefront | Research → create → market → advertise pipeline; nothing publishes unattended | content |
 | approval-portal | The console Silas lives in: pick pitches, validate upgrades, confirm updates | software |
 | kind-robots | Apps consuming the shared KR backend (read-only) | software |
