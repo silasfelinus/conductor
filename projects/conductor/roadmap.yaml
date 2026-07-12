@@ -377,13 +377,21 @@ tasks:
     title: Reviewer trigger fires with no open worker/* PR to review, repeatedly
     status: needs-human
     owner: null
-    updated: '2026-07-11T21:36:00Z'
+    updated: '2026-07-12T02:36:00Z'
     passes: 0
     stakes: reversible
     note: >
       FOR SILAS: The Reviewer session trigger is firing far more often than there
       is Worker PR volume to review — this is a platform/scheduling issue, not
       something fixable from inside the repo.
+
+      UPDATE 2026-07-12 02:36: 26th recurrence, but throughput looks healthy —
+      between the 25th firing (21:36) and this one, conductor #375 merged and
+      four more sessions closed real work (challenge-center/t-003, the
+      kind_robots migration, and a genuine worker-shaped PR #402/#403). This
+      firing just caught an empty queue. Downgrading urgency: still worth
+      fixing the cadence/gating to cut session-cost waste, but it is not
+      blocking the pipeline. See TALKBACK.md 2026-07-12 entry for detail.
 
       What's happening: at least 25 Reviewer sessions now (root TALKBACK.md
       2026-07-05 evening, 2026-07-07 PR #345, 2026-07-10 14:35 PR #348, 2026-07-10
