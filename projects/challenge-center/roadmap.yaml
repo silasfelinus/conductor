@@ -176,9 +176,9 @@ tasks:
 - id: t-004
   milestone: m2
   title: Seed 10 initial challenges in kind_robots
-  status: ready
+  status: claimed
   depends_on: t-003
-  owner: null
+  owner: worker
   passes: 0
   stakes: reversible
   note: "Write and run a seed script (scripts/seed_challenges.ts) that creates 10 challenges covering\
@@ -194,6 +194,7 @@ tasks:
     \ with the 8L full, measure exactly 4L.\" (2)\n  - \"A message arrives in a dead language. The only\
     \ key is a recipe. Decode the intent.\" (4)\n\nEach challenge must have a clear promptText (sent verbatim\
     \ to agents), judgeNotes (what voters should weigh), and status: OPEN.\n"
+  updated: '2026-07-12T20:27:33Z'
 - id: t-005
   milestone: m3
   title: Build /challenges browser page in kind_robots
