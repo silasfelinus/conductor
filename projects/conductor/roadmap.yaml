@@ -377,13 +377,18 @@ tasks:
     title: Reviewer trigger fires with no open worker/* PR to review, repeatedly
     status: needs-human
     owner: null
-    updated: '2026-07-12T13:40:00Z'
+    updated: '2026-07-12T14:36:00Z'
     passes: 0
     stakes: reversible
     note: >
       FOR SILAS: The Reviewer session trigger is firing far more often than there
       is Worker PR volume to review — this is a platform/scheduling issue, not
       something fixable from inside the repo.
+
+      UPDATE 2026-07-12 14:36: 33rd recurrence. Same shape — zero open worker/*
+      PRs in either repo, no roadmap task at status: review/claimed. Not
+      re-notifying Silas — 33 identical occurrences carry no new information.
+      See TALKBACK.md 2026-07-12 14:36 entry for detail.
 
       UPDATE 2026-07-12 13:40: 32nd recurrence. Same shape — zero open worker/*
       PRs in either repo, no roadmap task at status: review/claimed. The
