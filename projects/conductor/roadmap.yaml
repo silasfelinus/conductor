@@ -377,7 +377,7 @@ tasks:
     title: Reviewer trigger fires with no open worker/* PR to review, repeatedly
     status: needs-human
     owner: null
-    updated: '2026-07-12T05:36:00Z'
+    updated: '2026-07-12T10:50:00Z'
     passes: 0
     stakes: reversible
     note: >
@@ -392,6 +392,12 @@ tasks:
       that window), this firing just caught another empty queue an hour later.
       Urgency unchanged from the 26th update — worth fixing the cadence/gating,
       not blocking the pipeline. See TALKBACK.md 2026-07-12 04:36 entry for detail.
+
+      UPDATE 2026-07-12 10:50: 29th recurrence. Same shape — zero open worker/*
+      PRs in either repo, no roadmap task at status: review/claimed. Real work
+      continues to land between firings (conductor #409-#420, kind_robots
+      #187-#190), so throughput is healthy; this is purely idle-cycle overhead.
+      See TALKBACK.md 2026-07-12 10:50 entry for detail.
 
       UPDATE 2026-07-12 05:36: 28th recurrence. Zero open PRs in either repo
       (kind_robots #185/#186 from the 27th update have since merged); no
