@@ -20,7 +20,7 @@ Environment:
   KR_RELAY_TOKEN     required — admin user apiKey (or beta admin token)
   KR_RELAY_USER_ID   required — the user id matching that token (save-generated
                      verifies the two agree)
-  KR_BASE_URL        default https://kindrobots.org
+  KR_BASE_URL        default https://kind-robots.vercel.app
   COMFY_URL          default http://127.0.0.1:8188
   SD_URL             default http://127.0.0.1:7860
   POLL_SECONDS       default 10 (idle wait between claim attempts)
@@ -60,7 +60,11 @@ import time
 import urllib.error
 import urllib.request
 
-KR_BASE_URL = os.environ.get("KR_BASE_URL", "https://kindrobots.org").rstrip("/")
+# Default to the Vercel origin: the kindrobots.org domain is not an active
+# deployment (it sat behind Cloudflare and now 403s/404s these API routes), so a
+# relay left on that default polls a dead host and never claims jobs the app
+# enqueues on kind-robots.vercel.app. Override with KR_BASE_URL if that changes.
+KR_BASE_URL = os.environ.get("KR_BASE_URL", "https://kind-robots.vercel.app").rstrip("/")
 KR_RELAY_TOKEN = os.environ.get("KR_RELAY_TOKEN", "").strip()
 KR_RELAY_USER_ID = int(os.environ.get("KR_RELAY_USER_ID", "0") or 0)
 KR_LOCAL_IMAGES_DIR = os.environ.get("KR_LOCAL_IMAGES_DIR", "").strip()
