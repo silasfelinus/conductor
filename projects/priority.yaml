@@ -1,19 +1,22 @@
 # Which project leads when multiple have ready tasks. Top of list wins.
+# The leading priority band mirrors CONTROL.md's "Priority order this week."
+# Remaining projects retain their relative order; inactive entries are skipped via
+# project-overrides.yaml. Every active project should appear exactly once.
 order:
+  - superkate-services-calculator
   - challenge-center
   - ai-art-academy
   - coloring-book
-  - newsfeed
   - humboldt-scoop
   - humboldt-scoop-cms
-  - model-builder
-  - approval-portal
   - digital-storefront
   - packmaker
   - mermaids-of-venice
   - kind-robots
   - global-ui
-  - superkate-services-calculator
+  - newsfeed
+  - model-builder
+  - approval-portal
   - superkate-hairstyle-ai
   - ecosystem-map
   - conductor
@@ -30,6 +33,8 @@ order:
   - sketchy
   - brainstorm
   - wishmaster
+  - engagement
+  - ruler-hooked
   # dream-cycle stays LAST on purpose: its recurring build task is always ready,
   # so it fires only when no other active project has ready work (idle fallback).
   - dream-cycle
