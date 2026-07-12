@@ -1,0 +1,260 @@
+project: marketing-deck
+kind: software
+
+notes_from_silas: |
+  Build a reusable Marketing Deck tool that starts from a selected Kind Robots model
+  record and produces a selectable marketing set. V1 is Project-first and uses Humboldt
+  Scoop Solutions as the worked example. Humboldt Scoop is the parent business/site
+  project; humboldt-scoop-cms is the related customer-management and route-planning app.
+
+  The user chooses which outputs to create instead of receiving one fixed bundle. The
+  catalog should include business cards, logo applications, lawn signs, banners, flyers,
+  website mockups, app mockups, photo-shoot concepts, print/video content shot lists,
+  static ad posters, video-commercial treatments/storyboards or ComfyUI execution plans,
+  and a week-by-week launch schedule with suggested communities/channels, cadence, and
+  budget notes.
+
+  V1 is an internal tool for Silas and the team. It may use Silas-owned LLM/image/video
+  tokens where useful, with credentials kept server-side and no unattended publishing,
+  account creation, purchasing, ad spend, or deployment. Existing project assets and
+  approved logos are authoritative; do not casually redesign a supplied brand.
+
+  After the Project-first workflow is stable, generalize the source adapter so other
+  Kind Robots schema models can generate marketing sets or expand their ideas without
+  hard-coding every model into the renderer.
+
+milestones:
+  - id: m1
+    title: "Source contract and selectable marketing-set specification"
+    weight: 20
+    status: not-started
+  - id: m2
+    title: "Project-first generator and reusable deliverable catalog"
+    weight: 25
+    status: not-started
+  - id: m3
+    title: "Print, website, and app mockup production"
+    weight: 20
+    status: not-started
+  - id: m4
+    title: "Photo, static-ad, and ComfyUI video campaign production"
+    weight: 20
+    status: not-started
+  - id: m5
+    title: "Launch planner, HSS reference set, and model-generalization path"
+    weight: 15
+    status: not-started
+
+ tasks:
+  - id: t-001
+    milestone: m1
+    title: "Write the Marketing Deck product and data contract"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Write projects/marketing-deck/SPEC.md. Define the v1 source as a Project selected
+      by slug plus optional related Project slugs. The source snapshot should include
+      identity/copy fields, repository/live URLs, existing art and logo references,
+      website/app screenshots, audience, geography, offers, constraints, and user notes.
+      Define a MarketingSet record, selected deliverable types, generation status,
+      provenance, prompt/version metadata, and export manifest. Keep Conductor roadmap
+      as task truth and Kind Robots Project/Dream as identity/display truth; join by slug.
+
+  - id: t-002
+    milestone: m1
+    title: "Inventory Humboldt Scoop and Humboldt Scoop CMS as the reference source pair"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Create projects/marketing-deck/examples/humboldt-scoop/SOURCE-INVENTORY.md. Treat
+      humboldt-scoop as the parent business/site and humboldt-scoop-cms as a related
+      software product. Inventory the existing logo, current website design/screens,
+      available brand copy, service geography, app/CMS screens, route-maker concept,
+      and missing inputs. Do not redesign the existing logo or website merely because
+      the generator can; mark missing assets as requests for Silas.
+
+  - id: t-003
+    milestone: m1
+    title: "Define the selectable deliverable catalog and dependency rules"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-001
+    note: >
+      Define stable deliverable keys and schemas for: business-card, logo-application,
+      lawn-sign, banner, flyer, website-mockup, app-mockup, photo-shoot-plan,
+      print-content-shot-list, video-content-shot-list, static-ad-poster,
+      commercial-treatment, commercial-storyboard, comfy-video-execution, and
+      launch-schedule. Support bundles/presets, but always let the user select or remove
+      individual outputs. Declare dependencies, dimensions, print bleed/safe-area needs,
+      aspect ratios, copy limits, required assets, and human-approval states.
+
+  - id: t-004
+    milestone: m2
+    title: "Design the Project-to-MarketingSet generation pipeline"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on:
+      - t-001
+      - t-003
+    note: >
+      Produce an implementation plan for a Kind Robots UI where a user selects a Project,
+      optionally links related Projects, chooses deliverables, reviews the normalized
+      creative brief, and starts generation. The pipeline should separate deterministic
+      assembly/template work from LLM ideation and image/video generation. All provider
+      keys remain server-side. Internal team generation may use Silas-owned tokens, but
+      display estimated/actual usage and never initiate publishing or spend beyond the
+      requested generation job.
+
+  - id: t-005
+    milestone: m2
+    title: "Build the reusable creative-brief and copy-expansion layer"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on:
+      - t-001
+      - t-002
+    note: >
+      Define structured outputs for audience, value proposition, proof points, tone,
+      calls to action, service/product descriptions, campaign themes, required legal or
+      factual review, and content gaps. Preserve supplied facts and label AI suggestions
+      as suggestions. Existing brand language wins over invented copy. Store prompt and
+      source provenance so a set can be regenerated or revised without mystery meat.
+
+  - id: t-006
+    milestone: m3
+    title: "Specify print-ready template generation"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on:
+      - t-003
+      - t-005
+    note: >
+      Design reusable templates and export rules for business cards, lawn signage,
+      banners, flyers, logo applications, and static ad posters. Include SVG/PDF/PNG
+      targets, print dimensions, bleed, safe areas, QR/contact placement, font licensing,
+      accessibility/readability, and editable-source expectations. Generation creates
+      reviewable drafts only; ordering or printing is a separate needs-human action.
+
+  - id: t-007
+    milestone: m3
+    title: "Specify website and app mockup generation"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on:
+      - t-002
+      - t-003
+      - t-005
+    note: >
+      Define mockup outputs for desktop/mobile websites and app screens. Prefer framing
+      real screenshots or approved design files over hallucinating nonexistent features.
+      For HSS, preserve the current website direction and use the CMS/app screens to
+      demonstrate customer management and the planned mapped route-maker. Mockups are
+      presentation artifacts, not authority to rewrite or deploy either product.
+
+  - id: t-008
+    milestone: m4
+    title: "Create the photo-shoot and organic content planning system"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on:
+      - t-002
+      - t-005
+    note: >
+      Define photo and video shoot plans with shot concepts, locations, people/props,
+      orientation, duration, b-roll, releases/permissions, captions/hooks, and reuse
+      across print, short-form video, website, and ads. The HSS example should emphasize
+      local Humboldt identity, trustworthy crews, clean yards, pet-safe service, before/
+      after storytelling, and app-assisted route efficiency without exposing customer
+      addresses or private data.
+
+  - id: t-009
+    milestone: m4
+    title: "Design static-ad and ComfyUI commercial workflows"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on:
+      - t-003
+      - t-005
+    note: >
+      Specify static poster variants plus a video-commercial path from treatment to
+      script outline, storyboard, shot list, prompts, source assets, ComfyUI workflow,
+      generation manifest, edit notes, captions, and export sizes. Commercial generation
+      must follow CONTROL.md licensing rules. Use hosted license-safe models or approved
+      commercial endpoints; do not use dev-licensed models for commercial output. No ad
+      publishing, media buying, or public release without explicit human approval.
+
+  - id: t-010
+    milestone: m5
+    title: "Build the week-by-week launch-plan generator"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on:
+      - t-003
+      - t-005
+    note: >
+      Generate a reviewable launch calendar with week-by-week goals, asset deadlines,
+      suggested local/community groups or platforms to join, organic posting cadence,
+      content mix, outreach ideas, measurement checkpoints, and optional paid-budget
+      scenarios. Suggestions must be dated and sourceable when external research is used.
+      Joining groups, posting, outreach, account creation, or spending remains needs-human.
+
+  - id: t-011
+    milestone: m5
+    title: "Generate the complete Humboldt Scoop Solutions reference marketing set"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: outward-facing
+    depends_on:
+      - t-006
+      - t-007
+      - t-008
+      - t-009
+      - t-010
+    gate_human: true
+    approved_by_human: false
+    note: >
+      Produce one complete, internally reviewable HSS set using the existing logo and
+      current website/app direction: business card, lawn sign, banner, flyer, website and
+      app mockup boards, photo/video shoot plan, at least two static ad concepts, one
+      commercial treatment/storyboard with optional ComfyUI execution package, and a
+      week-by-week launch calendar. Nothing publishes or gets printed until Silas selects
+      and approves the final variants.
+
+  - id: t-012
+    milestone: m5
+    title: "Generalize the source adapter beyond Project records"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on:
+      - t-004
+      - t-011
+    note: >
+      After Project-first v1 is proven, define a MarketingSource adapter interface so
+      other Kind Robots schema models can supply identity, copy, assets, relationships,
+      audience, and expansion prompts. Start with a design and one low-risk second-model
+      proof rather than adding model-specific conditionals everywhere. The renderer and
+      deliverable catalog should consume the normalized source contract, not Prisma rows
+      directly.
