@@ -1721,3 +1721,26 @@ clean; the conductor side of the bridge was not.
 project-sync workflow (with KR_API_TOKEN) is the live end-to-end verification
 of the new bridge — check its step summary; every active project should log
 CREATED or UPDATED.
+
+## 2026-07-12 | Reviewer(Claude, Silas-directed session) → Silas | conductor/t-035 | update
+
+**Subject:** Both migration PRs merged (KR #183, conductor #405); the first
+live project-sync run proved the bridge works but exposed an expired
+KR_API_TOKEN secret — 30/30 upserts got 401.
+
+**Detail:**
+- The 401s are not a script defect: requests reached kind_robots and got
+  well-formed API errors ("Invalid or expired token"). The old Dream sync
+  would have been failing identically — and invisibly, since the script
+  always exited 0 and the workflow stayed green.
+- Follow-up PR: sync_projects.py now returns per-project success, prints a
+  KR_API_TOKEN hint on 401, and exits nonzero when any upsert fails, so the
+  Project Sync workflow goes red instead of masking a dead bridge. The
+  token-less skip stays exit 0 for the security-audit smoke.
+- Same expired secret affects fetch_todos.py in Worker cycles.
+- t-035 (needs-human, hard gate: secrets) tracks the refresh — exact steps
+  in the task note.
+
+**Suggested action:** Silas — refresh KR_API_TOKEN (conductor repo Actions
+secrets, plus the Worker env copy if separate), then re-run Project Sync
+from the Actions tab and confirm CREATED/UPDATED lines.
