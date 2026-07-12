@@ -91,3 +91,21 @@ records:
     outcome: done
     failure_category: null
     lesson: "The Model Builder's four gates are OPTIONAL front-end pauses (skip an item, or stop after prompt to edit) — NOT a backend block that waits on a repo-file approval. Default is to create full objects for everything. I over-applied a 'needs-human, internal-draft-only' framing to the HSS marketing deck; the right move was a full example set with the visuals queued into the real art pipeline (projects/art-generate.yaml). Also: the art generator forbids text/logos, so marketing collateral splits into generated text-free imagery + a text/logo layout step over the real logo (no rebrand). Don't invent brand facts — pricing/area/logo/descriptor came from Silas and were folded into CONTENT-BRIEF."
+  - date: 2026-07-12
+    project: model-builder
+    task: t-017
+    kind: content
+    stakes: reversible
+    passes: 0
+    outcome: done
+    failure_category: null
+    lesson: "Autonomous Character Deck reference run grounds best in a real flagship record (AMIb0t from stores/seeds/seedBots.ts). Identity consistency is the linchpin: generate the canonical NEUTRAL avatar FIRST, lock seed+checkpoint, reuse for icon/card/hero/expressions; prove on a small 5-key expression subset before any full 20-key batch (Expression enum has 10 emotions + 10 actions + CUSTOM; NEUTRAL is canonical; ExpressionMedia owner is Bot XOR Character). Character has only artImageId/imagePath (no icon/card/hero path fields — those are on Dream), so deck icon/card/hero are ArtImages in the owner's collection."
+  - date: 2026-07-12
+    project: model-builder
+    task: t-018
+    kind: content
+    stakes: reversible
+    passes: 0
+    outcome: done
+    failure_category: null
+    lesson: "Dream->3-Characters expansion runs autonomously end-to-end: pick a real Dream (Lantern Greenhouse, id 37) and let its `examples` seed the cast (one character per theme). The executor's guarantees ARE the t-018 proof points — three independent CREATE items (private/inactive, userId 10, unique @unique slugs), Dream links via the Characters implicit m2m, per-child idempotencyKey so a failed child retries alone and a COMMIT replay creates zero duplicates. A cohesive shared portrait style in the generate manifest keeps the cast visually tied to the dream."

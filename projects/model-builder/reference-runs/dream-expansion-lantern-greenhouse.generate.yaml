@@ -1,0 +1,35 @@
+# Dream Expansion — The Lantern Greenhouse — 3 character portraits
+#
+# One portrait per created Character. Shared style keeps the cast cohesive to the
+# dream (warm glass, brass lanterns, lantern vines). Each portrait -> the new
+# Character's artImageId (promoted) once committed. Nothing generated/spent yet.
+
+engine: comfy            # SDXL via /api/comfy/sdxl/generate
+dream: { id: 37, title: "The Lantern Greenhouse" }
+style: >
+  Inside a bright surreal lantern greenhouse — warm glass, glowing brass lanterns,
+  luminous lantern vines, soft amber-and-green light, cozy whimsical fantasy,
+  cinematic character portrait, cohesive palette across the cast.
+
+items:
+  - id: char-cogswaithe
+    size: 512x768
+    character: { slug: cogswaithe, name: Cogswaithe }
+    prompt: >
+      Portrait of Cogswaithe, a contemplative brass greenhouse-automaton philosopher,
+      polished clockwork body, gentle glowing eyes, holding a lens and a little ledger,
+      patient dry-witted air, surrounded by lantern vines, warm amber-green light.
+  - id: char-zippa
+    size: 512x768
+    character: { slug: zippa-emberwing, name: Zippa Emberwing }
+    prompt: >
+      Portrait of Zippa Emberwing, a hyperactive glowing lantern-butterfly sprite mid-dart,
+      bright ember wings trailing sparks, gleeful mischievous grin, motion and joy,
+      lanterns blurring behind her, warm amber-green light.
+  - id: char-vellum
+    size: 512x768
+    character: { slug: elder-vellum, name: Elder Vellum }
+    prompt: >
+      Portrait of Elder Vellum, an ancient suspiciously-wise papyrus moth, soft grey
+      pollen dust, scripture-like wing patterns, calm cryptic kindly gaze, perched among
+      condensation-beaded glass, warm amber-green light.
