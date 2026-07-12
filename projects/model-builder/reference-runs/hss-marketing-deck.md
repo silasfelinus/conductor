@@ -1,239 +1,211 @@
 # Reference Run — Humboldt Scoop Solutions Marketing Deck
 
-**Model Builder run (t-016) · INTERNAL REVIEW DRAFT — not for publication**
+**Model Builder run (t-016) · autonomous full-example set**
 
 - **Source model:** `humboldt-scoop` (Project)
 - **Related source:** `humboldt-scoop-cms` (route-maker / reliability proof)
 - **Recipe:** `marketing-deck`
-- **Stakes:** outward-facing · **gate_human: true** — nothing here ships until Silas approves.
-- **Grounding (authoritative, no rebrand):** `projects/humboldt-scoop/CONTENT-BRIEF.md`
-  and the live theme. Existing logo, approved copy, and real product screens win.
+- **Grounding (authoritative, no rebrand):** `projects/humboldt-scoop/CONTENT-BRIEF.md`,
+  the live theme, and Silas's data below. Existing logo, copy, and product screens win.
 
-> **What this is:** the Marketing Deck recipe run for HSS, produced as an internal
-> review set — pitches, copy, and asset **specs / generation prompts**, plus a launch
-> plan. **No images were generated, nothing was published, printed, posted, or spent.**
-> Each image item lists the prompt/size to run through the Model Builder's
-> GENERATE_ASSETS stage once Silas approves the concepts. The existing brand is the
-> constraint, not a suggestion.
+> **How gates work here (corrected):** the four gates are **optional front-end
+> pauses** a user can place on a request — e.g. "don't generate this item" or "stop
+> after prompt creation so I can edit before art." They are **not** a backend block
+> that waits on a repo file. This run assumes the default: **create full objects**
+> (examples for everything) with minimal human interaction. Generated project art is
+> pre-approved internal work (AGENTS.md, 2026-07-06).
+>
+> **What still isn't automatic:** the generator's hard rule is *no text / no logo / no
+> watermark*, so it produces the **text-free imagery**; the real logo (`logo_clean.jpg`)
+> and copy are composited in a layout step. And live spend / posting / printing / real
+> customer contact stay off by default — those aren't "gates to wait on," they're just
+> out of scope for an internal example set.
 
-## Brand kit (extracted, authoritative)
+## Brand kit (authoritative)
 
+- **Name (always paired):** **Humboldt Scoop Solutions — Professional Pet Waste Removal.**
+  The descriptor "Professional Pet Waste Removal" always follows the name.
 - **Tagline:** "A cleaner yard, without the dirty work."
+- **Logo:** `projects/humboldt-scoop/scoops/wp-content/uploads/2026/01/logo_clean.jpg`
+  (real file — composite it into laid-out pieces; never AI-generate or restyle it).
 - **Voice:** warm, local, lightly playful; practical and honest. Humboldt-proud.
 - **Palette:** navy `#1b3a5c` (primary) · cream `#fbf9f5` / `#f5f0e8` (paper) ·
   gold `#e8a030` (CTA/accent) · teal `#7bbfb5` / `#a7dccb` (fresh/clean) ·
   earthy rust `#b9684f` / `#8b2a1a` (grounding accent).
 - **Trust badges:** Locally owned · Flat honest pricing · Cancel anytime.
-- **Service area:** Arcata, Eureka, and surrounding Humboldt County.
-- **Differentiator to lean on (via CMS):** software-scheduled routes = "we never
-  miss a visit." Reliability is the product.
+- **Differentiator (via CMS):** software-scheduled routes = "we never miss a visit."
 - **Contact:** info@humboldtscoopsolutions.com · Arcata, CA.
-- **Do-not-invent:** prices (dynamic via `hss_pricing()`), team photos (missing —
-  see photo-shoot plan), any claim of coverage outside Humboldt County.
+
+### Pricing (authoritative — Silas)
+
+Rates by number of dogs; **billed on the 1st of the month.**
+
+| Plan | 1 dog | 2 dogs | 3 dogs | 4+ dogs |
+|---|---|---|---|---|
+| **Weekly** | $19 | $22 | $25 | by quote |
+| **Bi-weekly** (every 2 weeks) | $30 | $35 | $40 | by quote |
+| **Monthly** | $50 | $60 | $70 | by quote |
+
+(Plus **One-Time Cleanup** for first cleans / pre-event, per existing site tier.)
+
+### Service area
+
+- **Core:** Eureka · Arcata · McKinleyville.
+- **Also serving / by request:** Trinidad · Cutten · Freshwater · Blue Lake.
+  (Reasonable estimate — confirm/trim later.)
 
 ---
 
 ## Build Items
 
-Each item shows its **Pitch**, its **Fields & Prompts** (copy + an art-generation
-spec), and review notes — the four-gate structure the Model Builder walks.
+Each item shows its **Pitch**, its **Copy/Fields**, and its **Art** (a text-free
+generation prompt for the pipeline, or "layout" when it's an assembly of imagery +
+logo + copy). Sizes are print- or platform-correct.
 
-### 1. Business card `business-card` · ASSET_ONLY · image
+### 1. Business card `business-card` · ASSET_ONLY
 
-**Pitch:** A pocketable trust signal for door-to-door, community boards, and
-leave-behinds. Front = brand + tagline; back = services + QR to the quote form.
+**Pitch:** Pocketable trust signal for door-to-door, community boards, leave-behinds.
 
-**Copy**
-- Front: logo · "A cleaner yard, without the dirty work." · Arcata • Eureka • Humboldt County
-- Back: "Weekly · Bi-weekly · One-time · Commercial / HOA" · "Flat honest pricing · Cancel anytime" · info@humboldtscoopsolutions.com · [QR → quote form] · "Locally owned"
+**Copy** — Front: logo · "Humboldt Scoop Solutions — Professional Pet Waste Removal" ·
+"A cleaner yard, without the dirty work." · Eureka • Arcata • McKinleyville.
+Back: "Weekly from $19 · Bi-weekly from $30 · Monthly from $50 · One-time & 4+ dogs by
+quote" · "Flat honest pricing · Cancel anytime · Billed the 1st" ·
+info@humboldtscoopsolutions.com · [QR → quote form].
 
-**Art-prompt (front), 3.5×2in @ 300dpi (1050×600px):**
-> Clean flat business-card front for a friendly local pooper-scooper service,
-> deep navy `#1b3a5c` background, cream `#fbf9f5` type, warm gold `#e8a030` accent
-> rule, small teal paw/pine motif, generous whitespace, no clutter, print-ready,
-> logo placeholder top-left. Warm, trustworthy, small-business, NOT corporate.
+**Art:** *layout* — navy card, cream type, gold rule, teal pine/paw motif; real logo
+top-left; generatable component = the small paw/pine flourish (text-free).
 
-**Notes:** Use the real logo (do not regenerate it). QR must point at the live
-quote form only. Two-color-friendly for cheap printing.
+### 2. Logo application sheet `logo-application` · ASSET_ONLY
 
-### 2. Logo application sheet `logo-application` · ASSET_ONLY · image
+**Pitch:** Show the real logo used consistently across surfaces (card, sign, magnet,
+shirt, invoice header) so vendors/team apply it correctly. **No redesign.**
 
-**Pitch:** Show the *existing* logo used consistently across surfaces (card, sign,
-truck magnet, shirt, invoice header) so vendors and the team apply it correctly.
+**Fields:** clear-space, min size, navy-on-cream + cream-on-navy lockups, one-color
+fallback — all using `logo_clean.jpg`. **Art:** *layout only* (no generation).
 
-**Fields:** clear-space rule, min size, navy-on-cream + cream-on-navy lockups,
-one-color fallback. **No redesign of the logo** — application only.
+### 3. Lawn sign `lawn-sign` · ASSET_ONLY · 18×24in
 
-**Art-prompt:** a tidy brand-application board (grid of mockups) — omit until the
-real logo file is dropped in; generating a fake logo here would violate "no rebrand."
+**Pitch:** Highest-ROI local ad — a sign at serviced homes turns customers into
+referral billboards. (Customer opt-in before placing.)
 
-**Notes:** BLOCKED on the real logo asset. Flag for Silas: point me at the logo file.
+**Copy:** "This yard: scooped & tidy 🐾" · "Humboldt Scoop Solutions — Professional
+Pet Waste Removal" · "humboldtscoopsolutions.com" · "Locally owned • Eureka–Arcata".
 
-### 3. Lawn sign `lawn-sign` · ASSET_ONLY · image
+**Art:** *layout* over a text-free generated background — see queue `marketing-sign-bg`.
 
-**Pitch:** The highest-ROI local ad — a yard sign at serviced homes ("This yard
-kept clean by Humboldt Scoop") turns every customer into a referral billboard.
+### 4. Banner `banner` · ASSET_ONLY · 1280×720
 
-**Copy:** "This yard: scooped & tidy 🐾" · "Humboldt Scoop Solutions" ·
-"humboldtscoopsolutions.com" · small "Locally owned • Arcata".
+**Pitch:** Reusable wide banner for the farmers-market booth, events, and the top of
+digital ad sets.
 
-**Art-prompt, 18×24in yard sign (900×1200px):**
-> Double-sided yard-sign design, navy `#1b3a5c` field, big cream headline, gold
-> `#e8a030` accent bar, simple teal pine + paw icon, high-contrast readable from
-> the sidewalk, weatherproof screen-print friendly, cheerful and neighborly.
+**Copy:** name + descriptor · "A cleaner yard, without the dirty work." · "Weekly pet
+waste removal in Eureka, Arcata & McKinleyville" · "Free quote → humboldtscoopsolutions.com".
 
-**Notes:** Customer opt-in required before placing a sign at their home (consent
-is a human step, not automated).
+**Art:** text-free wide illustration — queue `marketing-banner-bg` (1280×720).
 
-### 4. Banner `banner` · ASSET_ONLY · image · 1280×720
+### 5. Flyer `flyer` · ASSET_ONLY · 8.5×11in
 
-**Pitch:** A reusable wide banner for the farmers-market booth, community events,
-and the top of any digital ad set.
+**Pitch:** Single-page leave-behind for apartments, HOA boards, and vet offices — the
+B2B/property-manager door-opener.
 
-**Copy:** "A cleaner yard, without the dirty work." · "Weekly pooper-scooper
-service in Arcata & Eureka" · "Get a free quote → humboldtscoopsolutions.com".
+**Copy:** headline "Tired of the backyard minefield?" · 3 value cards (🌲 Local &
+dependable · 🧼 Thorough & tidy · 💙 Friendly & flexible) · pricing snapshot · "Serving
+renters, HOAs, landlords, breeders & shared spaces" · QR CTA. Property-manager variant
+headline: "Keep every unit's yard clean — one invoice, one reliable route."
 
-**Art-prompt, 1280×720:**
-> Wide horizontal event banner, navy-to-teal soft gradient, cream headline left,
-> friendly dog + tidy backyard illustration right (fog-kissed NorCal vibe), gold
-> CTA pill, lots of breathing room, welcoming and clean.
+**Art:** *layout* over a text-free hero image — queue `marketing-flyer-hero`.
 
-### 5. Flyer `flyer` · ASSET_ONLY · image
+### 6. Website mockup board `website-mockup` · ASSET_ONLY
 
-**Pitch:** A single-page leave-behind for apartment complexes, HOA boards, and vet
-offices — the B2B/property-manager door-opener.
+**Pitch:** Site exists and is authoritative — this is a *refinement* board: the two P1
+gaps landing (team photos + narrative bios) and a testimonial pull-quote near the hero.
+Also surface the confirmed pricing table and service-area line. **No layout/nav change.**
 
-**Copy blocks:** headline "Tired of the backyard minefield?" · 3 value cards
-(🌲 Local & dependable · 🧼 Thorough & tidy · 💙 Friendly & flexible) · "Serving
-renters, HOAs, landlords, breeders & shared spaces" · tear-off/QR CTA.
+**Art:** *annotation of real screens* (no generation).
 
-**Art-prompt, 8.5×11in (1275×1650px):** print flyer, cream paper, navy headline,
-teal cards, gold CTA, one warm photo-real dog-in-yard hero area (leave space),
-approachable, uncluttered.
+### 7. App mockup board `app-mockup` · ASSET_ONLY
 
-**Notes:** Property-manager version should swap the hero line to "Keep every unit's
-yard clean — one invoice, one reliable route" (ties to the CMS route-maker).
+**Pitch:** Preview the `humboldt-scoop-cms` Android-first route client as a proof
+point: "software-scheduled, never miss a visit." Three phone frames — today's optimized
+route, a customer's property + pets + schedule, a visit-logged confirmation. **Dummy
+data only.** **Art:** *UI mockup* (no generation).
 
-### 6. Website mockup board `website-mockup` · ASSET_ONLY · image
+### 8. Photo-shoot plan `photo-shoot-plan` · ASSET_ONLY
 
-**Pitch:** The site already exists and is authoritative — this is a *refinement*
-board, not a redesign: it visualizes the two P1 content gaps landing (team photos +
-narrative bios) and a testimonial pull-quote in the social-proof slot.
+**Pitch:** The single highest-impact brand gap (per CONTENT-BRIEF). Reasonable-estimate
+plan; edit later.
 
-**Fields:** annotate the existing single-page anchor layout (Hero → Why Us →
-Offer → Pricing → Who → About → FAQ → Poopstakes → Quote). Show the About section
-*with* photos and 2-sentence bios; add one customer pull-quote near the hero.
+**Shot list (estimated):** (1) Viktors — friendly half-body, navy shirt, outdoor
+Arcata light; (2) Silas — matching framing; (3) Kathryn "superkate!" — warmer, playful;
+(4) hero: branded-shirt scooper in a tidy backyard, dog nearby, morning fog; (5) detail:
+sanitized tools / double-bag; (6) sign-in-yard candid. Consistent 3:4 portraits,
+cream/navy wardrobe, natural NorCal light, genuine-not-stock. Consent for people/property.
 
-**Notes:** No layout/nav changes proposed. Real screens win. This board exists to
-make the CONTENT-BRIEF's priority order visible, not to rebuild the site.
+**Art:** text-free mood-board reference — queue `marketing-photo-moodboard`.
 
-### 7. App mockup board `app-mockup` · ASSET_ONLY · image
+### 9. Print & video shot lists `video-shot-list` · ASSET_ONLY
 
-**Pitch:** Preview the field/customer app powered by `humboldt-scoop-cms` — the
-Android-first route client — as a marketing proof point: "software-scheduled, never
-miss a visit."
+**Print:** card, sign, flyer hero, booth banner (above). **Video (15–30s):**
+(1) problem: cluttered yard, owner sighs; (2) solution: branded arrival, friendly wave;
+(3) montage: scoop → double-bag → sanitize; (4) payoff: kid + dog on a clean lawn;
+(5) CTA card: name + descriptor + quote URL + "Eureka–Arcata–McKinleyville".
 
-**Fields:** three phone frames — (a) today's optimized route/map, (b) a customer's
-property + pets + schedule, (c) visit-logged confirmation. Dummy data only.
+### 10. Static ad concepts `static-ads` · ASSET_ONLY · 1080×1080
 
-**Notes:** Uses seed/dummy data only (per CMS `notes_from_silas` — no real customer
-data, addresses, or map-provider billing). Marketing may reference "route-optimized
-reliability"; it may NOT imply features that aren't built yet.
+Three angles, one per audience. **Copy** — A) Homeowner: "Reclaim your backyard.";
+B) Property manager: "One route. Every unit. One invoice."; C) Poopstakes: "New
+customers win local goodies + good-dog bragging rights." Each: name+descriptor + gold CTA.
 
-### 8. Photo-shoot plan `photo-shoot-plan` · ASSET_ONLY · plan
+**Art:** three text-free square backgrounds — queue `marketing-ad-a/b/c` (1080×1080).
 
-**Pitch:** The single highest-impact gap in the whole brand (per CONTENT-BRIEF): real
-team photos + a few real yard/action shots. This is a *plan*, not a generated image.
+### 11. Video commercial treatment `commercial-treatment` · ASSET_ONLY
 
-**Shot list:**
-1. Viktors (Founder) — friendly half-body, navy shirt, outdoor Arcata light.
-2. Silas (Ops & Web) — same treatment, consistent framing.
-3. Kathryn "superkate!" (Marketing) — warmer, on-brand playful.
-4. Hero: a scooper (branded shirt) in a tidy backyard, dog nearby, morning fog.
-5. Detail: sanitized tools / double-bag step (the "thorough & tidy" proof).
-6. Sign-in-yard candid (for the lawn-sign social proof).
+30-second local spot, warm and neighborly, landing on reliability. Open on the "backyard
+minefield" dread → the friendly HSS arrival (the reliability beat: "same day, every week,
+because a route says so") → tidy-process montage → clean yard + happy dog + tagline. VO
+warm and local; no jingle — let the Humboldt calm carry it. Full name+descriptor on the
+end card.
 
-**Direction:** consistent 3:4 portraits, cream/navy wardrobe, natural NorCal light,
-genuine-not-stock. Consent required for any person or customer property shown.
+### 12. Storyboard `storyboard` · ASSET_ONLY
 
-### 9. Print & video shot lists `video-shot-list` · ASSET_ONLY · plan
+5 panels visualizing the treatment: dread → arrival → process → payoff → CTA card.
+**Art:** text-free 5-panel line-art board — queue `marketing-storyboard` (1280×720).
 
-**Print:** card, sign, flyer hero, booth banner (covered above).
-**Video (15–30s):**
-1. Problem: cluttered backyard, owner sighs (2s).
-2. Solution: branded van/scooter arrives, friendly wave (3s).
-3. Process montage: scoop → double-bag → sanitize (6s).
-4. Payoff: kid + dog play on a clean lawn (4s).
-5. CTA card: tagline + quote URL + "Locally owned, Arcata & Eureka" (3s).
+### 13. Week-by-week launch plan `launch-plan` · ASSET_ONLY
 
-### 10. Static ad concepts `static-ads` · ASSET_ONLY · image
+Staged, low-cost, local-first. Outward spend/print/posting is out of scope for this
+internal example set (do it when Silas is ready), but nothing here waits on a repo file.
 
-**Pitch:** A small set of square social/static posters for local awareness — three
-angles, one per audience.
-
-**Concepts:**
-- A) Homeowner — "Reclaim your backyard." tidy-lawn hero, gold CTA.
-- B) Property manager — "One route. Every unit. One invoice." (CMS angle.)
-- C) Poopstakes — "New customers win local goodies + good-dog bragging rights."
-
-**Art-prompt (each), 1080×1080:** clean square poster, brand palette, single big
-idea, cream headline on navy or teal, gold CTA pill, one friendly focal image,
-lots of negative space, thumb-stopping but not loud.
-
-**Notes:** Concepts only. No ad account, no spend, no posting — that's a Silas gate.
-
-### 11. Video commercial treatment `commercial-treatment` · ASSET_ONLY · plan
-
-**Pitch:** A 30-second local spot treatment built from the shot list — warm,
-neighborly, a little funny, ending on reliability.
-
-**Treatment:** Open on the universal dread of the "backyard minefield." Cut to the
-friendly HSS arrival (the reliability beat — "same day, every week, because a route
-says so"). Montage of the tidy process. Land on a clean yard, a happy dog, and the
-tagline. VO warm and local; no jingle needead — let the Humboldt calm carry it.
-
-### 12. Storyboard `storyboard` · ASSET_ONLY · image
-
-**Pitch:** 5-panel board visualizing the treatment for review before any shoot.
-
-**Art-prompt:** a 5-panel storyboard sheet, simple warm line-art, navy/cream/gold,
-panels = dread → arrival → process → payoff → CTA card. Rough, for alignment only.
-
-### 13. Week-by-week launch plan `launch-plan` · ASSET_ONLY · plan
-
-A staged, low-cost, local-first rollout. Everything outward-facing is a Silas gate.
-
-| Week | Focus | Deliverables ready | Human gate before it goes out |
-|---|---|---|---|
-| 0 | Foundations | Approve concepts (this deck); confirm live pricing; shoot team photos | Silas approves deck; books shoot |
-| 1 | Site content | Team photos + bios live; one testimonial slot; FAQ +3 Qs | Silas publishes site edits |
-| 2 | Yard presence | Lawn signs printed; consent flow for placement | Silas approves print spend + customer opt-in |
-| 3 | Leave-behinds | Business cards + flyers printed; vet/HOA drop list | Silas approves print run + outreach list |
-| 4 | Local awareness | 3 static ad concepts finalized | Silas approves ad account + budget (spend gate) |
-| 5 | Booth/events | Banner printed; farmers-market booth kit | Silas books event |
-| 6 | Video | Shoot per shot list; edit 30s spot | Silas approves shoot + posting |
-| 7 | Poopstakes push | Cadence + concrete prize defined; rules link | Silas approves promotion + rules |
-| 8 | Measure | "How did you hear about us?" tracking review | — |
+| Week | Focus | Ready |
+|---|---|---|
+| 0 | Foundations | Concepts approved (this deck); pricing confirmed (done); photo shoot booked |
+| 1 | Site content | Team photos + bios; testimonial slot; pricing table + area line; FAQ +3 |
+| 2 | Yard presence | Lawn signs printed; placement consent flow |
+| 3 | Leave-behinds | Cards + flyers printed; vet/HOA drop list |
+| 4 | Local awareness | 3 static ad concepts finalized |
+| 5 | Booth/events | Banner printed; farmers-market kit |
+| 6 | Video | Shoot per shot list; edit 30s spot |
+| 7 | Poopstakes | Cadence + concrete prize + rules link |
+| 8 | Measure | "How did you hear about us?" tracking review |
 
 ---
 
-## Safety & provenance
+## Objects created / queued
 
-- **No outward action taken.** No image generated, nothing published, printed,
-  posted, emailed, or purchased. Every outward step in the launch plan is an
-  explicit Silas gate.
-- **No rebrand.** Existing logo, copy, palette, pricing mechanism, and site
-  structure are treated as authoritative; items 2 and 6 explicitly defer to them.
-- **Real data protected.** App item uses dummy data only; no customer addresses,
-  no map-provider billing, no live pricing invented.
-- **To generate the visuals:** run each image item's prompt/size through the Model
-  Builder GENERATE_ASSETS stage (a1111/comfy) under Silas's team tokens, review
-  candidates, then promote only approved assets. That step is intentionally NOT
-  done here.
+To make this a real full-object example set with minimal human interaction, the
+text-free visual components are queued into the live art pipeline
+(`projects/art-generate.yaml`, target `humboldt-scoop`), which the distribute-images
+workflow turns into committed HSS ArtCollection images:
 
-## Open questions for Silas
+`marketing-banner-bg`, `marketing-sign-bg`, `marketing-flyer-hero`,
+`marketing-ad-a/b/c`, `marketing-storyboard`, `marketing-photo-moodboard`.
 
-1. Where is the real **logo** file? (Unblocks items 1, 2, 3, 4, 5.)
-2. Are all four **pricing** tiers populated in WP admin (base + per-additional-dog)?
-3. Approve the **photo-shoot** as Week 0 priority?
-4. Any budget ceiling for print (signs/cards/flyers) so I can right-size quantities?
+The text/logo layout pieces (card, logo sheet, laid-out sign/flyer/ads) are assembly
+steps over those images + `logo_clean.jpg` — kept out of the generator because it
+forbids text/logos, and to honor "no rebrand."
+
+## Notes
+
+- No live spend, posting, printing, or real customer contact — internal example set.
+- Existing logo/site/pricing mechanism authoritative; the pricing/area/descriptor above
+  are Silas-provided truth, folded into the deck and the CONTENT-BRIEF.

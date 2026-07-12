@@ -82,3 +82,12 @@ records:
     outcome: done
     failure_category: null
     lesson: "Idempotent canonical writes without a live DB: an atomic claim on a unique key (updateMany where key IS NULL; count===0 means already committed) gives exactly-once semantics, releasing the key on write failure enables retry, and create+link in one $transaction prevents orphans. When you can't run the DB, keep writes to KNOWN exact field/relation names (pulled from schema) so vue-tsc validates every prisma.model.update/create at PR time — a wrong field name fails CI instead of corrupting prod. Covers t-013/t-014/t-015; kind_robots PR #190. Live proof still pending (t-022)."
+  - date: 2026-07-12
+    project: model-builder
+    task: t-016
+    kind: content
+    stakes: reversible
+    passes: 0
+    outcome: done
+    failure_category: null
+    lesson: "The Model Builder's four gates are OPTIONAL front-end pauses (skip an item, or stop after prompt to edit) — NOT a backend block that waits on a repo-file approval. Default is to create full objects for everything. I over-applied a 'needs-human, internal-draft-only' framing to the HSS marketing deck; the right move was a full example set with the visuals queued into the real art pipeline (projects/art-generate.yaml). Also: the art generator forbids text/logos, so marketing collateral splits into generated text-free imagery + a text/logo layout step over the real logo (no rebrand). Don't invent brand facts — pricing/area/logo/descriptor came from Silas and were folded into CONTENT-BRIEF."
