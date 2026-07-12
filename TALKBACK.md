@@ -1615,3 +1615,32 @@ and code.
 kind_robots main fails on the migration (not expected), re-run the deploy;
 the migration is idempotent-safe on a database already in the new shape only
 via `migrate resolve`, so escalate to an agent session rather than hand-editing.
+
+## 2026-07-12 | Reviewer(Claude, Silas-directed session) → system | kind_robots Dream → Project/Facet migration CLOSED | update
+
+**Subject:** Migration fully verified end-to-end; Cypress on kind_robots main is
+green for the first time in the visible run history.
+
+**Detail:**
+- kind_robots #180 merged: PROJECT/GENRE dropped from DreamType, six legacy
+  Dream columns and DreamPriority removed with a deployed migration, all
+  compatibility guards/helpers/scripts/workflows deleted. Prod deploy applied
+  the migration cleanly (49 legacy rows archived in archives/legacy-dreams/
+  and deleted beforehand — "Deleted 49/49; 0 remain").
+- Post-merge Cypress against prod exposed five PRE-EXISTING failures, not
+  migration regressions. Root causes fixed and merged: #181 (Nitro param-name
+  conflict — [key].get.ts beside [id].*.ts made every Facet/Project
+  GET-by-slug 400 in production; a real user-facing bug) and #182 (spec bugs:
+  enqueue-time URL interpolation, unauthenticated lookup of a private Facet).
+  Result: 5 → 1 → 0 failures; run 29173281085 on d18edf52 is fully green.
+- Branch hygiene: kind_robots session branches auto-deleted on merge. Three
+  stale agent/* branches (heads of closed/merged #160/#172/#174) could NOT be
+  deleted from this session — the environment's push credential 403s ref
+  deletions. Silas: delete them from the branches page or locally:
+  `git push origin --delete agent/project-facet-smoke-proof
+  agent/remove-project-dream-ui-fallbacks agent/serendipity-project-facet-cutover`
+- conductor #400 (marketing-deck draft) left open per Silas.
+
+**Suggested action:** Silas — the one-command branch deletion above, and the
+long-standing t-026 Reviewer-trigger cadence ask. Nothing else remains from
+the migration.
