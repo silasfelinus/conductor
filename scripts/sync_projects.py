@@ -133,14 +133,18 @@ def build_project_payload(slug, override, roadmap):
 
 
 def sync_project(slug, override, token):
+    """Upsert one project. Returns True on success, False on any error."""
     roadmap = load_roadmap(slug)
     payload = build_project_payload(slug, override, roadmap)
 
     try:
         existing = find_project_by_slug(slug, token)
+    except urllib.error.HTTPError as e:
+        print(f"  {slug}: ERROR {e.code} checking existence — {e}")
+        return False
     except Exception as e:
         print(f"  {slug}: ERROR checking existence — {e}")
-        return
+        return False
 
     try:
         if existing:
@@ -153,11 +157,20 @@ def sync_project(slug, override, token):
             result = kr_request("POST", "/projects", token, {**payload, "slug": slug})
             new_id = result.get("data", {}).get("id", "?")
             print(f"  {slug}: CREATED (id={new_id})")
+        return True
     except urllib.error.HTTPError as e:
         body = e.read().decode(errors="replace")
         print(f"  {slug}: ERROR {e.code} — {body[:200]}")
+        if e.code == 401:
+            print(
+                "  ^ 401 from kind_robots: KR_API_TOKEN is invalid or expired. "
+                "Mint a fresh JWT and update the secret.",
+                file=sys.stderr,
+            )
+        return False
     except Exception as e:
         print(f"  {slug}: ERROR — {e}")
+        return False
 
 
 def main():
@@ -171,11 +184,20 @@ def main():
     active = [o for o in overrides if o.get("status") == "active"]
 
     print(f"sync_projects: syncing {len(active)} active projects")
+    failures = 0
     for override in active:
         slug = override.get("slug")
         if not slug:
             continue
-        sync_project(slug, override, token)
+        if not sync_project(slug, override, token):
+            failures += 1
+
+    if failures:
+        # Exit nonzero so CI goes red instead of masking a broken bridge —
+        # the pre-cutover sync failed green for weeks because errors were
+        # only visible in per-line output.
+        print(f"done with {failures}/{len(active)} failures.")
+        sys.exit(1)
     print("done.")
 
 
