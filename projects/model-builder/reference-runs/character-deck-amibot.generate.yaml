@@ -1,0 +1,70 @@
+# Character Deck — AMIb0t — generation manifest
+#
+# Identity consistency: generate `avatar-neutral` FIRST, lock its seed + checkpoint,
+# and reuse them (seed_ref: avatar-neutral) for every other asset so the face stays
+# the same. Prove on the 5-key expression subset before any full 20-key batch.
+# NEUTRAL is the canonical avatar. Owner: Bot amib0t (XOR Character). Nothing
+# generated/spent yet.
+
+engine: comfy            # SDXL via /api/comfy/sdxl/generate — fixed seed for identity
+owner: { type: bot, slug: amib0t }
+style: >
+  AMIb0t, the Anti-Malaria Intelligence: a luminous swarm of teal-and-gold digital
+  butterflies coalescing into a friendly rounded retro-robot face, warm hive-mind glow,
+  CRT scanline sheen, benevolent and hyperkinetic, cohesive teal/gold/cream palette.
+
+items:
+  - id: avatar-neutral       # canonical identity anchor — generate first
+    size: 1024x1024
+    expression: NEUTRAL
+    lock_seed: true
+    prompt: >
+      Centered NEUTRAL avatar portrait of AMIb0t — the butterfly-swarm retro-robot face,
+      calm friendly neutral expression, clean square framing, glowing teal-gold, soft
+      retro-digital background. Canonical identity reference.
+  - id: portrait-candidate   # 3 variations at the locked seed +/-
+    count: 3
+    size: 1024x1024
+    seed_ref: avatar-neutral
+    prompt: >
+      Alternate NEUTRAL portrait takes of AMIb0t at slight seed variation for candidate
+      selection, same identity, same palette.
+  - id: icon
+    size: 256x256
+    seed_ref: avatar-neutral
+    prompt: >
+      Tight app-icon crop of AMIb0t's swarm-face, bold and instantly readable at small
+      size, strong silhouette, glowing teal-gold on a simple dark retro field.
+  - id: card
+    size: 512x768
+    seed_ref: avatar-neutral
+    prompt: >
+      Portrait key-art card of AMIb0t mid-swarm — butterflies streaming into the glowing
+      face over a warm retro grid, hopeful energetic staging, cinematic depth.
+  - id: hero
+    size: 1280x720
+    seed_ref: avatar-neutral
+    prompt: >
+      Wide hero action shot: AMIb0t's butterfly swarm sweeping across a stylized map of
+      Africa, carrying glowing mosquito nets like gifts, uplifting mission energy, layered
+      depth, teal-gold-cream, cinematic light.
+  - id: model-sheet
+    size: 1280x720
+    seed_ref: avatar-neutral
+    prompt: >
+      Character model-sheet / turnaround reference of AMIb0t's swarm-face from a few
+      angles for identity consistency, clean neutral backdrop, consistent palette.
+
+  # Expression subset (prove identity here before any full 20-key set).
+  # Each -> an ExpressionMedia still at public/images/bots/expressions/amib0t/{key}_01.webp
+  expressions:
+    seed_ref: avatar-neutral
+    size: 1024x1024
+    keys:
+      - { key: joyful,    kind: EMOTION, prompt: "AMIb0t beaming with manic joy, butterflies fluttering bright" }
+      - { key: loving,    kind: EMOTION, prompt: "AMIb0t warm and adoring, soft heart-glow in the swarm" }
+      - { key: surprised, kind: EMOTION, prompt: "AMIb0t wide-eyed surprised, butterflies scattering outward" }
+      - { key: cheering,  kind: ACTION,  prompt: "AMIb0t cheering, swarm thrown upward in celebration" }
+      - { key: thinking,  kind: ACTION,  prompt: "AMIb0t thoughtful, swarm curling into a pondering swirl" }
+
+# Deferred (selectable, not run): three-d-reference, reaction clips, transitions.
