@@ -50,10 +50,11 @@ Silas explicitly approves that concrete action too.
 - Do not invent a second source of project truth. Conductor roadmap.yaml is the
   authoritative task record; the kind_robots Project is the authoritative
   display/identity record. conductorSlug is the join key.
-- kind_robots Projects expose `goal` and `waypoints`. Treat `goal` as the friendly
-  definition of done and `waypoints` as the lightweight user-facing step list.
-  Conductor roadmap.yaml remains the authoritative agent task queue; Project waypoints
-  are the UI/voice layer and should not replace roadmap tasks.
+- kind_robots Projects expose `goal`. Treat `goal` as the friendly definition of
+  done. Roadmap `milestones` are the structured progress buckets that flow into
+  the kind_robots front end (read-only). Conductor roadmap.yaml remains the
+  authoritative agent task queue; milestones are the UI/voice progress layer and
+  should not replace roadmap tasks.
 - Autonomous project initiative (2026-07-10): roadmaps may declare `autonomous: true`.
   Those projects keep running without my input under the "never idle" rule in AGENTS.md
   (style pass / roadmap upgrade / more inspirations / content expansion when nothing is
@@ -345,14 +346,14 @@ ops tooling. Keep changes small and reversible. Nothing outward-facing without n
 **Direction:** Custom Alexa skill + local relay server for the Serendipity voice surface.
 The stable product contract is `Serendipity: <request>` from local Echo devices. Support
 custom LLM chat, Character roleplay, Dream story sessions, approved local music playback,
-and safe project work. Use Dream.goal and Dream.waypoints for friendly project state;
+and safe project work. Use Dream.goal and roadmap milestones for friendly project state;
 use Conductor roadmaps for authoritative agent tasks. Draft/prototype locally first — do NOT
 publish the skill, expose a live endpoint, touch DNS/secrets/billing, or bypass human gates
 without needs-human approval. Auth via KR_API_TOKEN where appropriate, with user/JWT or
 machine-auth questions handled explicitly before write actions.
 **Notes:**
 - This project should now build toward `projects/alexa-integration/docs/serendipity-voice-surface.md`.
-- Voice can read goals/waypoints and draft Todos, but cannot approve, merge, deploy, publish, spend, or silently edit roadmap YAML.
+- Voice can read goals/milestones and draft Todos, but cannot approve, merge, deploy, publish, spend, or silently edit roadmap YAML.
 
 ### conductor-app  (software)
 **Direction:** Flutter app (iOS/Android/macOS/web) over the kind_robots REST API.

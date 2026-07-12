@@ -112,30 +112,6 @@ class ProjectDetailScreen extends ConsumerWidget {
             ],
           ),
           const SizedBox(height: 24),
-          Text('Waypoints', style: Theme.of(context).textTheme.titleMedium),
-          if (project.waypoints.isEmpty)
-            const Padding(
-              padding: EdgeInsets.symmetric(vertical: 8),
-              child: Text('No waypoints yet.'),
-            ),
-          for (final (i, waypoint) in project.waypoints.indexed)
-            ListTile(
-              dense: true,
-              leading: Icon(switch (waypoint.status) {
-                WaypointStatus.done => Icons.check_circle,
-                WaypointStatus.inProgress => Icons.timelapse,
-                WaypointStatus.todo => Icons.radio_button_unchecked,
-              }),
-              title: Text(waypoint.label),
-              onTap: () => _cycleWaypoint(ref, project, i),
-              onLongPress: () => _waypointActions(context, ref, project, i),
-            ),
-          TextButton.icon(
-            icon: const Icon(Icons.add),
-            label: const Text('Add waypoint'),
-            onPressed: () => _addWaypoint(context, ref, project),
-          ),
-          const SizedBox(height: 24),
           Text('Tasks', style: Theme.of(context).textTheme.titleMedium),
           if (todos.isEmpty)
             const Padding(
@@ -163,83 +139,12 @@ class ProjectDetailScreen extends ConsumerWidget {
     );
   }
 
-  Future<void> _waypointActions(
-      BuildContext context, WidgetRef ref, Project project, int index) async {
-    final waypoints = project.waypoints;
-    final action = await showModalBottomSheet<String>(
-      context: context,
-      builder: (ctx) => SafeArea(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            ListTile(
-              title: Text(waypoints[index].label,
-                  style: Theme.of(ctx).textTheme.titleSmall),
-            ),
-            if (index > 0)
-              ListTile(
-                leading: const Icon(Icons.arrow_upward),
-                title: const Text('Move up'),
-                onTap: () => Navigator.of(ctx).pop('up'),
-              ),
-            if (index < waypoints.length - 1)
-              ListTile(
-                leading: const Icon(Icons.arrow_downward),
-                title: const Text('Move down'),
-                onTap: () => Navigator.of(ctx).pop('down'),
-              ),
-            ListTile(
-              leading: const Icon(Icons.delete_outline),
-              title: const Text('Remove'),
-              onTap: () => Navigator.of(ctx).pop('remove'),
-            ),
-          ],
-        ),
-      ),
-    );
-    if (action == null) return;
-    final updated = [...waypoints];
-    switch (action) {
-      case 'up':
-        updated.insert(index - 1, updated.removeAt(index));
-      case 'down':
-        updated.insert(index + 1, updated.removeAt(index));
-      case 'remove':
-        updated.removeAt(index);
-    }
-    await _patch(
-        ref, project, {'waypoints': Waypoint.serializeList(updated)});
-  }
-
   Future<void> _patch(
       WidgetRef ref, Project project, Map<String, dynamic> patch) async {
     final repo = ref.read(projectsRepositoryProvider);
     if (repo == null) return;
     await repo.update(project, patch);
     ref.invalidate(projectsProvider);
-  }
-
-  Future<void> _cycleWaypoint(WidgetRef ref, Project project, int index) async {
-    final waypoints = [...project.waypoints];
-    final current = waypoints[index];
-    final next = switch (current.status) {
-      WaypointStatus.todo => WaypointStatus.inProgress,
-      WaypointStatus.inProgress => WaypointStatus.done,
-      WaypointStatus.done => WaypointStatus.todo,
-    };
-    waypoints[index] = Waypoint(current.label, next);
-    await _patch(ref, project, {'waypoints': Waypoint.serializeList(waypoints)});
-  }
-
-  Future<void> _addWaypoint(
-      BuildContext context, WidgetRef ref, Project project) async {
-    final label = await _promptText(context, 'Add waypoint', 'Waypoint');
-    if (label == null || label.trim().isEmpty) return;
-    final waypoints = [
-      ...project.waypoints,
-      Waypoint(label.trim(), WaypointStatus.todo)
-    ];
-    await _patch(ref, project, {'waypoints': Waypoint.serializeList(waypoints)});
   }
 
   Future<void> _addTask(

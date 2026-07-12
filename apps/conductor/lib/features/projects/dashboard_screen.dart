@@ -99,9 +99,6 @@ class _ProjectCard extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final done =
-        project.waypoints.where((w) => w.status == WaypointStatus.done).length;
-    final total = project.waypoints.length;
     final thumbUrl = ref
         .watch(serverConfigProvider)
         ?.resolveAssetUrl(project.imagePath ?? project.cardPath);
@@ -138,18 +135,6 @@ class _ProjectCard extends ConsumerWidget {
                 padding: const EdgeInsets.only(top: 4),
                 child: Text(project.description!,
                     maxLines: 2, overflow: TextOverflow.ellipsis),
-              ),
-            if (total > 0)
-              Padding(
-                padding: const EdgeInsets.only(top: 12),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    LinearProgressIndicator(value: done / total),
-                    const SizedBox(height: 4),
-                    Text('$done of $total waypoints'),
-                  ],
-                ),
               ),
           ],
         ),

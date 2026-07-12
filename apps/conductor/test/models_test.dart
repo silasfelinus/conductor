@@ -32,7 +32,7 @@ void main() {
   });
 
   group('Project', () {
-    test('round-trips intent fields and waypoints', () {
+    test('round-trips intent fields', () {
       final project = Project.fromJson({
         'id': 5,
         'slug': 'conductor-app',
@@ -41,14 +41,11 @@ void main() {
         'flavorText': 'beep boop',
         'liveUrl': 'https://kindrobots.org',
         'repoUrl': 'https://github.com/silasfelinus/conductor',
-        'waypoints': '✓ scaffold|~ polish|ship',
       });
       final restored = Project.fromJson(project.toJson());
       expect(restored.goal, 'Ship to stores');
       expect(restored.flavorText, 'beep boop');
       expect(restored.liveUrl, 'https://kindrobots.org');
-      expect(restored.waypoints, hasLength(3));
-      expect(restored.waypoints[1].status, WaypointStatus.inProgress);
     });
 
     test('tolerates a server payload with extra/missing fields', () {
@@ -59,7 +56,6 @@ void main() {
         'unknownField': {'nested': true},
       });
       expect(project.projectStatus, 'ACTIVE');
-      expect(project.waypoints, isEmpty);
     });
   });
 }

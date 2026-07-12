@@ -80,20 +80,12 @@ class ProjectChatRepository {
 
   /// The same project context the kind_robots workspace assistant gets.
   static String systemPromptFor(Project project) {
-    final waypoints = project.waypoints
-        .map((w) => switch (w.status) {
-              WaypointStatus.done => '[done] ${w.label}',
-              WaypointStatus.inProgress => '[in progress] ${w.label}',
-              WaypointStatus.todo => '[todo] ${w.label}',
-            })
-        .join('; ');
     return [
       'You are the project assistant for "${project.title}".',
       if (project.goal?.isNotEmpty == true) 'Goal: ${project.goal}',
       if (project.pitch?.isNotEmpty == true) 'Pitch: ${project.pitch}',
       if (project.description?.isNotEmpty == true)
         'Description: ${project.description}',
-      if (waypoints.isNotEmpty) 'Waypoints: $waypoints',
       'Help the user plan, unblock, and advance this project. Be concise '
           'and concrete; suggest next actions they can take in this app.',
     ].join('\n');
