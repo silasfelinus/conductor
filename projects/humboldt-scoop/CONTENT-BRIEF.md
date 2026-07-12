@@ -5,6 +5,26 @@ Source: `projects/humboldt-scoop/scoops/wp-content/themes/humboldt-scoop-solutio
 
 ---
 
+## Authoritative facts (Silas, 2026-07-12)
+
+- **Name is always paired with its descriptor:** "Humboldt Scoop Solutions —
+  **Professional Pet Waste Removal**." The descriptor follows the name in copy.
+- **Logo file:** `projects/humboldt-scoop/scoops/wp-content/uploads/2026/01/logo_clean.jpg`
+  (authoritative — never AI-generate or restyle it).
+- **Pricing** (by number of dogs; **billed on the 1st of the month**):
+
+  | Plan | 1 dog | 2 dogs | 3 dogs | 4+ dogs |
+  |---|---|---|---|---|
+  | Weekly | $19 | $22 | $25 | by quote |
+  | Bi-weekly | $30 | $35 | $40 | by quote |
+  | Monthly | $50 | $60 | $70 | by quote |
+
+  Plus One-Time Cleanup (existing tier).
+- **Service area:** core Eureka · Arcata · McKinleyville; also serving / by request
+  Trinidad · Cutten · Freshwater · Blue Lake (confirm/trim as routes firm up).
+
+---
+
 ## Current Site Structure
 
 The site is a single-page layout with anchor-linked sections. One domain, no dedicated blog or secondary pages visible in the theme files.

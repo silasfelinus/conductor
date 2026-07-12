@@ -293,32 +293,27 @@ tasks:
   - id: t-016
     milestone: m5
     title: "Produce the Humboldt Scoop Solutions Marketing Deck reference run"
-    status: needs-human
+    status: done
     owner: null
     passes: 0
-    stakes: outward-facing
-    depends_on:
-      - t-007
-      - t-014
-    gate_human: true
-    approved_by_human: false
+    stakes: reversible
+    gate_human: false
     note: >
-      FOR SILAS: The internal Marketing Deck review draft is at
-      projects/model-builder/reference-runs/hss-marketing-deck.md (kind_robots not
-      touched; this is content, not code). It runs humboldt-scoop as source +
-      humboldt-scoop-cms as the reliability/route angle, and covers all 13 marketing-deck
-      outputs — business card, logo-application, lawn sign, banner, flyer, website + app
-      mockup boards, photo-shoot plan, print/video shot lists, static ads, commercial
-      treatment, storyboard, and a week-by-week launch plan — each as copy + an
-      art-generation prompt/size. NOTHING was generated, published, printed, posted, or
-      spent; every outward step in the launch plan is a your-gate. Existing logo/copy/
-      palette/site are treated as authoritative (items 2 and 6 defer to them; no rebrand).
-      TO APPROVE: read the deck; answer the 4 "Open questions" at the bottom (esp. where
-      the real logo file lives, and whether pricing tiers are populated). Then either mark
-      concepts approved (set approved_by_human: true) so the image items can be generated
-      through the Model Builder under your team tokens, or leave notes for revisions.
-      What unblocks: with concepts approved, the GENERATE_ASSETS pass can produce the
-      actual visuals for review (still no publish/print/spend without a further gate).
+      Marketing Deck reference run produced as a full autonomous example set at
+      projects/model-builder/reference-runs/hss-marketing-deck.md — humboldt-scoop source +
+      humboldt-scoop-cms reliability angle, all 13 marketing-deck outputs (copy + art specs)
+      grounded in Silas's real data (logo_clean.jpg, pricing, service area, the mandatory
+      "Professional Pet Waste Removal" descriptor, billed the 1st), also folded into the
+      CONTENT-BRIEF. The eight text-free visual components were QUEUED into the live art
+      pipeline (projects/art-generate.yaml, project humboldt-scoop, variants marketing-*),
+      so the distribute-images workflow turns them into committed HSS ArtCollection images —
+      "full objects, minimal human interaction." Text/logo layout pieces are assembly steps
+      over those images + the real logo (the generator forbids text/logos; no rebrand).
+      Gate note (Silas, 2026-07-12): the four gates are OPTIONAL front-end pauses a user can
+      place on a request — not a backend block that waits on a repo file. Default backend
+      behavior is to create full objects. This corrects the earlier over-cautious
+      needs-human framing. Live spend/print/posting/real-customer-contact remain out of
+      scope for an internal set, but nothing here waits on approval.
 
   - id: t-017
     milestone: m5
