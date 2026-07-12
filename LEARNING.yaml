@@ -109,3 +109,12 @@ records:
     outcome: done
     failure_category: null
     lesson: "Dream->3-Characters expansion runs autonomously end-to-end: pick a real Dream (Lantern Greenhouse, id 37) and let its `examples` seed the cast (one character per theme). The executor's guarantees ARE the t-018 proof points — three independent CREATE items (private/inactive, userId 10, unique @unique slugs), Dream links via the Characters implicit m2m, per-child idempotencyKey so a failed child retries alone and a COMMIT replay creates zero duplicates. A cohesive shared portrait style in the generate manifest keeps the cast visually tied to the dream."
+  - date: 2026-07-12
+    project: model-builder
+    task: t-019
+    kind: software
+    stakes: reversible
+    passes: 0
+    outcome: done
+    failure_category: null
+    lesson: "The conductor->KR project sync (scripts/sync_projects.py) only processes slugs marked active in project-overrides.yaml AND, before this task, never transmitted goal/waypoints even though the KR /api/projects endpoint accepts them. To wire a project's identity: add the override entry, add goal/waypoints to roadmap top matter, and extend build_project_payload to send them (goal as text; waypoints serialized to KR's pipe-delimited string) only when present so other projects are not cleared. Nav is seed-driven: append a type:directory SmartIcon to stores/seeds/smartIcons.json (the navStore fallback) mirroring /art; a content page with an icon: frontmatter also auto-registers via npm run generatesmart."
