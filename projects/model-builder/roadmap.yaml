@@ -57,6 +57,10 @@ milestones:
     title: "Reference builds and reusable production release"
     weight: 10
     status: in-progress
+  - id: m6
+    title: "Usage-driven refinements: smart fields, async art, auto-build"
+    weight: 15
+    status: in-progress
 
 tasks:
   - id: t-001
@@ -430,3 +434,77 @@ tasks:
       and linked to the Dream, then re-trigger commit on the same items and confirm NO
       duplicates (idempotencyKey guard). Record findings; file any fix as a new task. This
       is the live proof behind the gated reference runs t-016/t-017/t-018.
+
+  - id: t-023
+    milestone: m6
+    title: "Source thumbnails and run source-context panel"
+    status: done
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      From live testing (Silas): the source picker now shows each record's existing art as
+      a thumbnail, and the build-run view shows a source-context card (art + description/
+      pitch/backstory) sourced from the run's sourceSnapshot so it survives resume.
+      kind_robots PR #194.
+
+  - id: t-024
+    milestone: m6
+    title: "Model-aware auto-fields and richer drafting"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      From live testing (Silas): FIELDS_AND_PROMPTS should populate automatically — we know
+      each model type and what it needs — and the AI draft for a Reward came back as a bland
+      "enhance the project" sentence instead of a real reward. Reuse the single source of
+      per-model field truth (stores/registerBuilderStore.ts + stores/helpers/*Cards.ts:
+      defaultSheet, required/optional card keys, choice pools) to auto-fill the required
+      fields per source/target model and only surface optional toggles. Feed that same
+      per-model schema + choice pools into the suggest sheet so drafts produce a full,
+      specific record (a Reward gets name/rewardType/rarity/effect/flavor), not filler.
+
+  - id: t-025
+    milestone: m6
+    title: "Async art generation via the ArtJob queue"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      From live testing (Silas): the normal path is create the object, then send the prompt
+      to ArtJob (async) and handle it when done — synchronous generate is the interactive
+      special case. Add an async path: enqueue via POST /api/art/enqueue (returns jobId),
+      store the jobId on the build item, poll GET /api/art/queue/:id (~5s) until DONE, then
+      promote the resulting artImageId onto the item/target. Reuse artStore.enqueueAndRender
+      pattern. Show queued/rendering/done state per item. Keep sync generate as the "art
+      first, interactively" option.
+
+  - id: t-026
+    milestone: m6
+    title: "Auto-build run mode + relationship-expansion art toggle"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      From live testing (Silas): a user who chooses a run should be able to just create the
+      art/objects directly without walking every gate. Add an "auto-build" action that runs
+      a build to completion with defaults — auto-draft fields (t-024), queue art (t-025) or
+      skip it, and commit — for minimal-interaction production, while the gated flow stays
+      available. Include a relationship-expansion "generate art for the created records?"
+      toggle (create text-only records vs create + queue art).
+
+  - id: t-027
+    milestone: m6
+    title: "Batch editor for quantity outputs"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      From live testing (Silas): batch generations should be edited together, not one item
+      at a time. For a quantity output (e.g. 10 rewards), give a batch editor that sets which
+      fields to automate vs fine-tune across all N items at once, with per-item overrides for
+      the ones you want to hand-tune. Builds on the model-aware fields (t-024).
