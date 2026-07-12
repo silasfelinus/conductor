@@ -293,7 +293,7 @@ tasks:
   - id: t-016
     milestone: m5
     title: "Produce the Humboldt Scoop Solutions Marketing Deck reference run"
-    status: waiting
+    status: needs-human
     owner: null
     passes: 0
     stakes: outward-facing
@@ -303,9 +303,22 @@ tasks:
     gate_human: true
     approved_by_human: false
     note: >
-      Run humboldt-scoop as source with humboldt-scoop-cms as related source. Produce an
-      internal review set only. Existing HSS brand assets and product screens remain
-      authoritative. No publishing, printing, posting, outreach, deployment, or spend.
+      FOR SILAS: The internal Marketing Deck review draft is at
+      projects/model-builder/reference-runs/hss-marketing-deck.md (kind_robots not
+      touched; this is content, not code). It runs humboldt-scoop as source +
+      humboldt-scoop-cms as the reliability/route angle, and covers all 13 marketing-deck
+      outputs — business card, logo-application, lawn sign, banner, flyer, website + app
+      mockup boards, photo-shoot plan, print/video shot lists, static ads, commercial
+      treatment, storyboard, and a week-by-week launch plan — each as copy + an
+      art-generation prompt/size. NOTHING was generated, published, printed, posted, or
+      spent; every outward step in the launch plan is a your-gate. Existing logo/copy/
+      palette/site are treated as authoritative (items 2 and 6 defer to them; no rebrand).
+      TO APPROVE: read the deck; answer the 4 "Open questions" at the bottom (esp. where
+      the real logo file lives, and whether pricing tiers are populated). Then either mark
+      concepts approved (set approved_by_human: true) so the image items can be generated
+      through the Model Builder under your team tokens, or leave notes for revisions.
+      What unblocks: with concepts approved, the GENERATE_ASSETS pass can produce the
+      actual visuals for review (still no publish/print/spend without a further gate).
 
   - id: t-017
     milestone: m5
