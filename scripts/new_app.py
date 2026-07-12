@@ -293,11 +293,11 @@ def append_registries(slug: str, fmt: dict, dry: bool) -> None:
 def file_dream_todo(slug: str, title: str, dry: bool) -> None:
     token = os.environ.get("KR_API_TOKEN", "").strip()
     todo = {
-        "title": f"Create PROJECT Dream '{slug}' (slug parity for new app)",
+        "title": f"Create kind_robots Project '{slug}' (slug parity for new app)",
         "description": (
             f"AppMaker scaffolded apps/{slug}/ and projects/{slug}/. Run "
-            f"scripts/sync_projects_to_dreams.py (or create via API) so kind_robots has a "
-            f"PROJECT Dream with slug '{slug}' titled '{title}'."
+            f"scripts/sync_projects.py (or POST /api/projects) so kind_robots has a "
+            f"Project with conductorSlug '{slug}' titled '{title}'."
         ),
         "priority": "NORMAL",
         "category": "AGENT",

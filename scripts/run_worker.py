@@ -14,10 +14,10 @@ What this checks:
 - daily digest JSON generation and validation
 
 Usage:
-  python scripts/run_worker.py [--dry-run] [--since "24 hours ago"] [--sync-dreams]
+  python scripts/run_worker.py [--dry-run] [--since "24 hours ago"] [--sync-projects]
 
 Env:
-  KR_API_TOKEN  optional; enables kind_robots todo checks and Dream sync
+  KR_API_TOKEN  optional; enables kind_robots todo checks and Project sync
 """
 
 from __future__ import annotations
@@ -151,12 +151,12 @@ def check_digest(since: str) -> None:
         print('[worker-check] digest JSON builds and validates', file=sys.stderr)
 
 
-def sync_dreams() -> None:
+def sync_projects() -> None:
     if not os.environ.get('KR_API_TOKEN', '').strip():
-        print('[worker-check] KR_API_TOKEN not set; skipping Dream sync', file=sys.stderr)
+        print('[worker-check] KR_API_TOKEN not set; skipping Project sync', file=sys.stderr)
         return
 
-    run([sys.executable, 'scripts/sync_projects_to_dreams.py'], check=True)
+    run([sys.executable, 'scripts/sync_projects.py'], check=True)
 
 
 def main() -> None:
@@ -164,9 +164,11 @@ def main() -> None:
     parser.add_argument('--dry-run', action='store_true')
     parser.add_argument('--since', default='24 hours ago')
     parser.add_argument(
-        '--sync-dreams',
+        '--sync-projects',
+        '--sync-dreams',  # legacy alias from the pre-split Dream sync
+        dest='sync_projects',
         action='store_true',
-        help='Also run scripts/sync_projects_to_dreams.py. Requires KR_API_TOKEN.',
+        help='Also run scripts/sync_projects.py. Requires KR_API_TOKEN.',
     )
     args = parser.parse_args()
 
@@ -175,10 +177,10 @@ def main() -> None:
     check_dependency_resolution()
     check_digest(args.since)
 
-    if args.sync_dreams and not args.dry_run:
-        sync_dreams()
-    elif args.sync_dreams:
-        print('[worker-check] --dry-run set; skipping Dream sync write', file=sys.stderr)
+    if args.sync_projects and not args.dry_run:
+        sync_projects()
+    elif args.sync_projects:
+        print('[worker-check] --dry-run set; skipping Project sync write', file=sys.stderr)
 
     summary = build_queue_summary()
     print(json.dumps(summary, indent=2))

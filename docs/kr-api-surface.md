@@ -1,6 +1,9 @@
 # Kind Robots API Surface — Conductor App Map
 
 Generated: 2026-06-30
+Updated: 2026-07-12 — Dreams no longer carry project state; the Dream model
+split into Dream / Project / Facet. Project identity now lives at
+`/api/projects` (section 4).
 Task: conductor-app/t-005
 
 ---
@@ -64,17 +67,24 @@ These endpoints read the conductor GitHub repo — no DB writes.
 
 ---
 
-### 4. Dreams (Project Identity Layer)
+### 4. Projects (Project Identity Layer)
+
+The Dream model split into Dream / Project / Facet (July 2026). Project
+identity, status, priority, goal, and waypoints live on the first-class
+Project model; `conductorSlug` is the join key with conductor.
 
 | Method | Path | Auth | Status | Notes |
 |---|---|---|---|---|
-| GET | `/api/dreams` | Optional (public dreams visible) | ✓ Exists | Query: `?dreamType=PROJECT`, `?projectStatus=ACTIVE`, `?search=`, `?take=`, `?skip=`. Returns Dreams with ArtImage, ArtCollection, scenarios, characters, rewards. |
-| GET | `/api/dreams/[id]` | Optional | ✓ Exists | Single Dream with full relations |
-| POST | `/api/dreams` | JWT | ✓ Exists | Create a Dream (project creation on KR side) |
-| PATCH | `/api/dreams/[id]` | JWT | ✓ Exists | Update a Dream (sync projectStatus, description, etc.) |
-| PATCH | `/api/dreams/[id]/priority` | JWT | ✓ Exists | Update Dream display priority |
-| DELETE | `/api/dreams/[id]` | JWT | ✓ Exists | Delete a Dream |
-| POST | `/api/dreams/batch` | JWT | ✓ Exists | Batch-create Dreams |
+| GET | `/api/projects` | Optional (public projects visible) | ✓ Exists | Query: `?status=ACTIVE`, `?priority=HIGH`, `?channelKey=`, `?search=`, `?mine=`, `?take=`, `?skip=` |
+| GET | `/api/projects/[id]` | Optional | ✓ Exists | By numeric id, `slug`, or `conductorSlug` |
+| POST | `/api/projects` | JWT | ✓ Exists | Create a Project (title, slug, conductorSlug, status, priority, goal, waypoints, lastSyncedAt, …) |
+| PATCH | `/api/projects/[id]` | JWT | ✓ Exists | Partial update — same fields as create, incl. priority and lastSyncedAt |
+| DELETE | `/api/projects/[id]` | JWT | ✓ Exists | Soft-archive (isActive false, status ARCHIVED) |
+
+Dreams remain the creative-concept layer (`/api/dreams`, dreamType =
+ART/BRAINSTORM/…/PITCH/WISH) and no longer accept `dreamType=PROJECT`,
+`projectStatus`, or a priority endpoint. Facets (`/api/facets`) hold reusable
+creative flavor (GENRE, COLOR, THEME, ANIMAL, …) with alias resolution.
 
 ---
 
@@ -133,7 +143,7 @@ Recommendation: Polling for MVP; pitch push notification infrastructure as a fut
 | Current user | /api/users/me | ✓ | JWT |
 | All projects + tasks | /api/conductor/projects | ✓ | None |
 | Project overrides | /api/conductor/overrides | ✓ | None |
-| Project Dreams | /api/dreams?dreamType=PROJECT | ✓ | None (public) |
+| Project records | /api/projects | ✓ | None (public) |
 | Todos CRUD | /api/todos, /api/todos/[id] | ✓ | JWT |
 | Todo project link | n/a | ✗ — no `projectSlug` on Todo | — |
 | Submit message to conductor | /api/conductor/message | ✓ | None |

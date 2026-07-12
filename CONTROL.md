@@ -38,18 +38,21 @@ Silas explicitly approves that concrete action too.
 
 **Global notes (free-form, agents read these):**
 - Slug parity is a standing rule: every conductor project must have a matching
-  kind_robots Dream of dreamType PROJECT sharing the same slug. The slug is the
-  universal key across conductor file system, kind_robots database, front-end UI,
-  and LLM. When creating a project from any surface (conductor roadmap, front-end
-  form, LLM), produce a Dream with the matching slug and update conductor accordingly.
-  The sync_projects_to_dreams.py script (conductor/t-009) is the canonical
-  conductor → Dream bridge. Do not add redundant FK fields — enforce via slug match.
+  kind_robots **Project** record (the Dream model split into Dream / Project /
+  Facet in July 2026 — Dreams no longer carry project state). `conductorSlug`
+  on the kind_robots Project is the universal join key across the conductor
+  file system, kind_robots database, front-end UI, and LLM. When creating a
+  project from any surface (conductor roadmap, front-end form, LLM), produce a
+  kind_robots Project with matching conductorSlug and update conductor
+  accordingly. The sync_projects.py script is the canonical conductor →
+  kind_robots bridge (upserts via GET/POST/PATCH /api/projects). Do not add
+  redundant FK fields — enforce via slug match.
 - Do not invent a second source of project truth. Conductor roadmap.yaml is the
-  authoritative task record; kind_robots Dream is the authoritative display/identity
-  record. Slug is the join key.
-- Project Dreams now expose `goal` and `waypoints`. Treat `goal` as the friendly
+  authoritative task record; the kind_robots Project is the authoritative
+  display/identity record. conductorSlug is the join key.
+- kind_robots Projects expose `goal` and `waypoints`. Treat `goal` as the friendly
   definition of done and `waypoints` as the lightweight user-facing step list.
-  Conductor roadmap.yaml remains the authoritative agent task queue; Dream waypoints
+  Conductor roadmap.yaml remains the authoritative agent task queue; Project waypoints
   are the UI/voice layer and should not replace roadmap tasks.
 - Autonomous project initiative (2026-07-10): roadmaps may declare `autonomous: true`.
   Those projects keep running without my input under the "never idle" rule in AGENTS.md

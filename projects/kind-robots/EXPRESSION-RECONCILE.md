@@ -70,7 +70,7 @@ numbers are variants and are ignored for row purposes). `{key}_loop.webp`
 ## Deliverable
 
 `scripts/reconcile_expressions.py` in conductor (house style:
-`fetch_todos.py` / `sync_projects_to_dreams.py`), plus a short usage
+`fetch_todos.py` / `sync_projects.py`), plus a short usage
 section appended to this doc. Optional follow-up once trusted: a CI
 check that runs `--check` after image-distribution pushes.
 

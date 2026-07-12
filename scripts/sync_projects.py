@@ -1,10 +1,12 @@
 #!/usr/bin/env python3
 """
-sync_projects_to_dreams.py — Upsert conductor projects as Dreams in kind_robots.
+sync_projects.py — Upsert conductor projects as first-class Projects in kind_robots.
 
 For each active project in project-overrides.yaml, reads its roadmap.yaml and
-calls the kind_robots API to create or update a Dream with dreamType PROJECT,
-using the project slug as the canonical join key.
+calls the kind_robots /api/projects endpoints to create or update a Project,
+using conductorSlug as the canonical join key. (Replaces the retired
+sync_projects_to_dreams.py: Dreams no longer carry project state — the Dream
+model split into Dream / Project / Facet in July 2026.)
 
 Run at the END of every Worker cycle, after task work is complete.
 
@@ -12,10 +14,13 @@ Requires: KR_API_TOKEN env var (a valid kind_robots JWT for Silas's account)
 API base: https://kind-robots.vercel.app
 
 Status mapping:
-  conductor active  → kind_robots ACTIVE
-  conductor paused  → kind_robots PAUSED
+  conductor active   → kind_robots ACTIVE
+  conductor paused   → kind_robots PAUSED
   conductor finished → kind_robots DONE
   conductor retired  → kind_robots ARCHIVED
+
+Priority mapping (project-overrides.yaml):
+  low → LOW, normal → NORMAL, high/urgent → HIGH
 
 Exit codes: 0 = success, 1 = fatal config error
 Stdout: one line per project — CREATED / UPDATED / SKIPPED / ERROR
@@ -26,6 +31,7 @@ import os
 import sys
 import urllib.error
 import urllib.request
+from datetime import datetime, timezone
 from pathlib import Path
 
 try:
@@ -46,6 +52,13 @@ CONDUCTOR_TO_KR_STATUS = {
     "retired": "ARCHIVED",
 }
 
+CONDUCTOR_TO_KR_PRIORITY = {
+    "low": "LOW",
+    "normal": "NORMAL",
+    "high": "HIGH",
+    "urgent": "HIGH",
+}
+
 
 def kr_request(method, path, token, payload=None):
     url = f"{KR_API_BASE}{path}"
@@ -64,14 +77,11 @@ def kr_request(method, path, token, payload=None):
         return json.loads(resp.read())
 
 
-def find_dream_by_slug(slug, token):
+def find_project_by_slug(slug, token):
+    """GET /api/projects/{key} resolves both slug and conductorSlug."""
     try:
-        body = kr_request("GET", f"/dreams?slug={slug}", token)
-        dreams = body.get("data", [])
-        for d in dreams:
-            if d.get("slug") == slug:
-                return d
-        return None
+        body = kr_request("GET", f"/projects/{slug}", token)
+        return body.get("data")
     except urllib.error.HTTPError as e:
         if e.code == 404:
             return None
@@ -102,40 +112,45 @@ def first_paragraph(text):
     return paragraphs[0] if paragraphs else str(text).strip()
 
 
-def build_dream_payload(slug, override, roadmap):
+def build_project_payload(slug, override, roadmap):
     title = roadmap.get("project", slug).replace("-", " ").title() if roadmap else slug
     notes = roadmap.get("notes_from_silas", "") if roadmap else ""
     description = first_paragraph(notes) or f"Conductor project: {slug}"
 
     conductor_status = override.get("status", "active")
     kr_status = CONDUCTOR_TO_KR_STATUS.get(conductor_status, "ACTIVE")
+    conductor_priority = str(override.get("priority", "normal")).lower()
+    kr_priority = CONDUCTOR_TO_KR_PRIORITY.get(conductor_priority, "NORMAL")
 
     return {
-        "slug": slug,
         "title": title,
         "description": description,
-        "dreamType": "PROJECT",
-        "projectStatus": kr_status,
+        "conductorSlug": slug,
+        "status": kr_status,
+        "priority": kr_priority,
+        "lastSyncedAt": datetime.now(timezone.utc).isoformat(),
     }
 
 
 def sync_project(slug, override, token):
     roadmap = load_roadmap(slug)
-    payload = build_dream_payload(slug, override, roadmap)
+    payload = build_project_payload(slug, override, roadmap)
 
     try:
-        existing = find_dream_by_slug(slug, token)
+        existing = find_project_by_slug(slug, token)
     except Exception as e:
         print(f"  {slug}: ERROR checking existence — {e}")
         return
 
     try:
         if existing:
-            dream_id = existing.get("id")
-            kr_request("PATCH", f"/dreams/{dream_id}", token, payload)
-            print(f"  {slug}: UPDATED (id={dream_id})")
+            project_id = existing.get("id")
+            kr_request("PATCH", f"/projects/{project_id}", token, payload)
+            print(f"  {slug}: UPDATED (id={project_id})")
         else:
-            result = kr_request("POST", "/dreams", token, payload)
+            # slug only on create: the KR-side slug stays user-editable after
+            # that; conductorSlug remains the stable join key.
+            result = kr_request("POST", "/projects", token, {**payload, "slug": slug})
             new_id = result.get("data", {}).get("id", "?")
             print(f"  {slug}: CREATED (id={new_id})")
     except urllib.error.HTTPError as e:
@@ -155,7 +170,7 @@ def main():
     overrides = load_overrides()
     active = [o for o in overrides if o.get("status") == "active"]
 
-    print(f"sync_projects_to_dreams: syncing {len(active)} active projects")
+    print(f"sync_projects: syncing {len(active)} active projects")
     for override in active:
         slug = override.get("slug")
         if not slug:

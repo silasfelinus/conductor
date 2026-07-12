@@ -424,19 +424,21 @@ tasks:
       the cost of doing that every cycle.
   - id: t-027
     milestone: m2
-    title: Include project priority in Dream sync payload
-    status: ready
-    owner: null
-    updated: '2026-07-08T00:00:00Z'
+    title: Include project priority in the kind_robots Project sync payload
+    status: done
+    owner: reviewer
+    updated: '2026-07-12T00:00:00Z'
     passes: 0
     stakes: reversible
     depends_on: t-009
     note: >
-      Move from superkate-services-calculator cleanup: project-to-Dream sync is shared
-      Conductor worker plumbing, not an app task. Update scripts/sync_projects_to_dreams.py
-      so active project sync also sends priority metadata from project-overrides.yaml when
-      the Kind Robots API accepts it. Silas confirmed the existing sync succeeded without
-      priority, so this is non-blocking metadata polish.
+      Closed 2026-07-12 by the Dream->Project sync cutover (Silas-directed session):
+      sync_projects_to_dreams.py was replaced by scripts/sync_projects.py, which
+      upserts first-class kind_robots Projects via /api/projects keyed on
+      conductorSlug and sends priority (mapped from project-overrides.yaml:
+      low->LOW, normal->NORMAL, high/urgent->HIGH) plus lastSyncedAt on every
+      create and update. Original ask (priority metadata in the sync payload)
+      is fully covered by the rewrite.
   - id: t-028
     milestone: m1
     title: Bake the Flutter SDK into the web-session startup hook so app tasks self-verify

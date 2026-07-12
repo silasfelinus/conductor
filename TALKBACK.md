@@ -1644,3 +1644,50 @@ green for the first time in the visible run history.
 **Suggested action:** Silas — the one-command branch deletion above, and the
 long-standing t-026 Reviewer-trigger cadence ask. Nothing else remains from
 the migration.
+
+## 2026-07-12 | Reviewer(Claude, Silas-directed session) → system | Dreams/Projects/Facets ecosystem pass | update
+
+**Subject:** Full backend→frontend audit of the Dream → Project/Facet split,
+plus the fixes it surfaced in both repos. The kind_robots side was already
+clean; the conductor side of the bridge was not.
+
+**Detail:**
+- Audit (4 parallel sweeps: server, stores/types, components/pages,
+  tests/scripts/cross-repo): kind_robots schema, API, stores, frontend, and
+  Cypress are fully cut over. vue-tsc typecheck green. Remaining KR items were
+  finish-line polish, all fixed on this session branch:
+  - deleted the dead `fetchDreams({dreamType:'PROJECT'})` in
+    plugins/conductor-admin-data.client.ts (now fetches projectStore);
+    reframed add-scenario's "Legacy genre compatibility" panel as plain
+    freeform genre tags; renamed dream→project loop vars in the public
+    conductor gallery.
+  - API parity: new PATCH /api/facets/[id] (field + slug + alias updates,
+    409 on cross-facet alias conflicts, old canonical slug survives as an
+    alias); dreamTypes allow-list now includes PROMPTBOT/NARRATOR; todo
+    dreamId is validated like projectId; POST/PATCH /api/projects accept
+    lastSyncedAt; deleted stale addProjects/updateProjects .http seeds and
+    .migration-backups/. facetStore gained updateFacet/archiveFacet; the
+    dead localStorage-only priority block left conductorStore (priority
+    persists via projectStore.updateProject). Cypress facet spec extended
+    to cover PATCH + alias exact-set semantics.
+- CRITICAL conductor-side find: scripts/sync_projects_to_dreams.py still
+  POSTed dreamType PROJECT + projectStatus to /api/dreams — dead against the
+  post-migration API, and live-wired (run_worker.py, project-dream-sync.yml
+  on every push to main; masked in CI because the smoke test runs token-less).
+  Replaced with scripts/sync_projects.py: upserts first-class Projects via
+  GET/POST/PATCH /api/projects keyed on conductorSlug, maps status and
+  priority from project-overrides.yaml, stamps lastSyncedAt. Workflow renamed
+  to project-sync.yml; run_worker.py flag renamed --sync-projects
+  (--sync-dreams kept as alias); security-audit smoke updated.
+- Docs cut over to the Project contract: CONTROL.md slug-parity rule,
+  docs/kr-api-surface.md §4, PROJECT-CREATION.md (full rewrite),
+  kr-api-for-voice.md, alexa-voice-commands.md; SLUG-PARITY-AUDIT.md bannered
+  as superseded (dated artifact, left as history).
+- Roadmap hygiene: conductor/t-027 closed done (priority now in the sync
+  payload — LEARNING.yaml record appended); ruler-hooked/t-003 and
+  appmaker/t-006 rewritten against /api/projects instead of PROJECT Dreams.
+
+**Suggested action:** none blocking. The first push-to-main run of the renamed
+project-sync workflow (with KR_API_TOKEN) is the live end-to-end verification
+of the new bridge — check its step summary; every active project should log
+CREATED or UPDATED.

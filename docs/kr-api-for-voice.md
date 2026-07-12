@@ -66,8 +66,8 @@ kind_robots has two auth modes relevant to a relay server:
 
 | Method | Path | Auth | Voice summary | Fits ≤10 words | Notes |
 |---|---|---|---|---|---|
-| GET | `/api/dreams?dreamType=PROJECT` | Optional (public dreams visible without auth) | "[name] is [status]." | ✓ | Filter by dreamType=PROJECT for conductor projects. Returns projectStatus field |
-| PATCH | `/api/dreams/[id]` | requireApiUser (JWT) or admin token | "Project updated." | ✓ | Can update projectStatus from voice: "Pause [project]" |
+| GET | `/api/projects?status=ACTIVE` | Optional (public projects visible without auth) | "[name] is [status]." | ✓ | First-class Project model (post Dream/Project/Facet split). GET /api/projects/[slug] also resolves conductorSlug |
+| PATCH | `/api/projects/[id]` | requireApiUser (JWT) or admin token | "Project updated." | ✓ | Can update status from voice: "Pause [project]" |
 
 ---
 
@@ -88,7 +88,7 @@ kind_robots has two auth modes relevant to a relay server:
 - GET /api/conductor/projects — project status readouts
 - POST /api/conductor/message — "Tell Silas [message]"
 - POST /api/conductor/pitch-vote — "Approve pitch [slug]"
-- GET /api/dreams — project status via Dreams
+- GET /api/projects — project status via the Project model
 
 **Endpoints that need relay workaround or backend change:**
 - GET|POST|PATCH /api/todos — need long-lived JWT or machine auth route

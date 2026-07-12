@@ -71,14 +71,15 @@ tasks:
 
   - id: t-003
     milestone: m1
-    title: Create the matching kind_robots PROJECT Dream (slug parity)
+    title: Create the matching kind_robots Project (slug parity)
     status: ready
     owner: null
     passes: 0
     stakes: reversible
     note: >
-      Standing slug-parity rule: create a Dream of dreamType PROJECT with slug
-      ruler-hooked via scripts/sync_projects_to_dreams.py (needs KR_API_TOKEN).
+      Standing slug-parity rule (post Dream/Project/Facet split): create a
+      kind_robots Project with conductorSlug ruler-hooked via
+      scripts/sync_projects.py (needs KR_API_TOKEN) or POST /api/projects.
       Set goal (friendly definition of done: playable slideshow fishing/kingdom
       PoC on the web) and waypoints from the milestones.
 

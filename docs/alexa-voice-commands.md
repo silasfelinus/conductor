@@ -15,7 +15,7 @@ Define the first command list and sample phrases for the Conductor/Alexa integra
 
 - **Conductor/project reads**: Admin API key (`KR_API_TOKEN`) — safe for relay
 - **Todo reads/creates**: User JWT required — relay must hold a long-lived or machine-auth JWT (this is the main auth gap; see pitches needed below)
-- **Public project status**: No auth required (GET /api/conductor/projects, GET /api/dreams)
+- **Public project status**: No auth required (GET /api/conductor/projects, GET /api/projects)
 
 ---
 
