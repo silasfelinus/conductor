@@ -7,8 +7,8 @@ notes_from_silas: "Build the Alexa work as the Serendipity voice surface for loc
   \ Conductor remains the roadmap and coordination source of truth. When finished, it should support custom\
   \ LLM chat, taking on a role as a Character, telling/continuing a story in a Dream, generating art through\
   \ safe draft/queued paths, playing approved local music files, and creating/working on projects through\
-  \ safe draft/read paths. Project Dreams now have goal and waypoints fields; use them as the friendly\
-  \ voice/UI project state while keeping Conductor roadmap.yaml as the authoritative agent task queue.\
+  \ safe draft/read paths. Use the Project goal plus Conductor roadmap milestones and the next ready\
+  \ task as the friendly voice/UI project state, keeping Conductor roadmap.yaml as the authoritative agent task queue.\
   \ Prototype locally first. Do not publish the skill, expose a live endpoint, touch DNS/secrets/billing,\
   \ or bypass human gates without explicit needs-human approval."
 milestones:
@@ -156,9 +156,9 @@ tasks:
   passes: 0
   stakes: reversible
   depends_on: t-007
-  note: 'Let voice requests create safe draft work items: read project goal, read next waypoint, summarize
-    human gates, and draft AGENT/HONEYDO Todos. Voice must not set approved_by_human, merge PRs, publish,
-    deploy, spend, change secrets, or silently edit roadmap YAML.'
+  note: 'Let voice requests create safe draft work items: read project goal, read the next ready roadmap
+    task, summarize human gates, and draft AGENT/HONEYDO Todos. Voice must not set approved_by_human, merge
+    PRs, publish, deploy, spend, change secrets, or silently edit roadmap YAML.'
 - id: t-010
   milestone: m3
   title: Capture local Echo dry-run transcript and approval checklist

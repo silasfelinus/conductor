@@ -32,7 +32,7 @@ Each command must be classified before implementation:
 
 | Mode | Allowed behavior | Human gate |
 | --- | --- | --- |
-| Read | Summarize projects, tasks, Todos, pending approvals, recent activity, Dream.goal, or Dream.waypoints | No extra gate if using existing authenticated read APIs |
+| Read | Summarize projects, tasks, Todos, pending approvals, recent activity, project goal, or roadmap milestones | No extra gate if using existing authenticated read APIs |
 | Draft | Prepare a Todo, art request, approval note, chat transcript, story seed, or project update for review | Must ask for confirmation before creating anything |
 | Local | Play an approved local music file/folder/playlist or return a local-only mock response | Must be feature-flagged and restricted to configured library roots |
 | Blocked | Publish, deploy, expose endpoints, spend money, change DNS, change secrets, approve, merge, or alter production data | Requires a separate human-approved roadmap task |
@@ -46,7 +46,7 @@ Use this manual script for the first prototype pass:
 1. `Serendipity: what is the goal of Alexa integration.`
    - Expected: reads the PROJECT Dream goal or a safe fallback from Conductor docs without changing state.
 2. `Serendipity: what is next for Alexa integration.`
-   - Expected: reads the next pending Dream waypoint and/or roadmap task without changing roadmaps.
+   - Expected: reads the next ready roadmap task without changing roadmaps.
 3. `Serendipity: ask AMI why the relay is cranky.`
    - Expected: routes to a chat/LLM response and speaks a short answer.
 4. `Serendipity: have a Character explain Alexa integration as a quest.`

@@ -14,7 +14,7 @@ Kind Robots is becoming an ecosystem, not a pile of apps. Projects now share rep
 - Visual identity through icon/card/hero images and inspiration galleries.
 - Bot identity through Manager or Assistant bots tied to project Dreams.
 - Navigation through narrator topics, threads, and project-specific menus.
-- User-facing progress through Dream goals and waypoints.
+- User-facing progress through project goals and roadmap milestones.
 - Agent-facing execution through Conductor roadmaps.
 - Generated content through ArtCollections, packs, galleries, and media paths.
 
@@ -28,7 +28,7 @@ That is powerful, but it also creates clone-risk. If one project builds a custom
 | --- | --- | --- |
 | Agent task queue | Conductor `projects/<slug>/roadmap.yaml` | Authoritative for Worker/Reviewer execution. |
 | Project identity/display | Kind Robots Dream with `dreamType: PROJECT` | Slug matches Conductor project directory. |
-| Friendly project progress | Dream `goal` and `waypoints` | UI/voice layer only, not a replacement for roadmap tasks. |
+| Friendly project progress | Project `goal` and roadmap `milestones` | UI/voice layer only, not a replacement for roadmap tasks. |
 | Project visual assets | Conductor `projects/images/` for icon/card/hero | Distributed into the workspace by existing scripts only after approval. |
 | Inspiration gallery | Kind Robots `public/images/artcollections/<slug>/` | ArtCollection-style folder and manifest layer; generated candidates require approval before becoming canonical. |
 | Project bot | Existing Bot framework | One Manager or Assistant bot per project Dream unless explicitly skipped. |
@@ -108,7 +108,7 @@ Quality criteria should be explicit enough to reject mush without debate:
 - Do not add redundant foreign keys where slug parity already joins systems.
 - Do not generate or commit binary images.
 - Do not publish, deploy, spend, create live products, or touch DNS/secrets.
-- Do not replace Conductor roadmaps with Dream waypoints.
+- Do not replace Conductor roadmaps with a separate friendly-progress layer; milestones surface roadmap state, they do not fork it.
 - Do not auto-promote generated images to canonical paths before approval.
 
 ## Tone

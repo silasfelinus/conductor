@@ -13,7 +13,7 @@ The updated product target is the Serendipity voice surface: local Echo devices 
 - Let Silas ask for project status, pending approvals, recent activity, and safe task summaries by voice.
 - Let Silas ask custom LLM questions through Kind Robots chat streams.
 - Let Silas route a voice request through a selected Character role/persona.
-- Let Silas start or continue a Serendipity Dream story using LOCATION, GENRE, vibe, goal, and waypoints.
+- Let Silas start or continue a Serendipity Dream story using LOCATION, GENRE, vibe, and goal.
 - Let Silas play approved local music files through a local-only adapter.
 - Let Silas create draft agent todos through a controlled relay path once authentication is approved.
 - Keep voice output short enough for Alexa while preserving richer detail in logs or linked UI surfaces.
@@ -65,7 +65,7 @@ Adapters keep upstream calls isolated:
 - `serendipityRouter`: parses `Serendipity: <request>` text into chat, character, dream, music, project, or unknown domains.
 - `chatAdapter`: creates or continues a Kind Robots chat request.
 - `characterAdapter`: resolves a Character and adds role/persona context to the request.
-- `dreamAdapter`: reads Dream ingredients, PROJECT Dream `goal`, and PROJECT Dream `waypoints`.
+- `dreamAdapter`: reads Dream ingredients and PROJECT Dream `goal`; project progress (milestones, next task) comes from the Conductor roadmap.
 - `conductorAdapter`: reads project status, roadmaps, pending approval summaries, and activity summaries.
 - `kindRobotsAdapter`: reads Dream/project display data and, later, creates Todos if machine auth is approved.
 - `musicAdapter`: resolves approved local music file, folder, or playlist targets from configured library roots only.
@@ -96,7 +96,7 @@ This makes it obvious which commands are safe reads, which commands are local-on
 
 | Voice action | Intent | Relay mode | Upstream surface | Safety rule |
 | --- | --- | --- | --- | --- |
-| `Serendipity: what is next for Serendipity?` | `ProjectStatusIntent` | read | Dream.goal / Dream.waypoints + Conductor roadmap | Read only |
+| `Serendipity: what is next for Serendipity?` | `ProjectStatusIntent` | read | Project goal + Conductor roadmap (next ready task, milestones) | Read only |
 | `Serendipity: ask AMI why the relay is cranky` | `ChatIntent` | read/draft | Kind Robots chat stream | No production mutation |
 | `Serendipity: have Captain Whisker explain this as a quest` | `CharacterIntent` | read/draft | Character + chat stream | No production mutation |
 | `Serendipity: start a cozy mystery in the redwood library` | `DreamStoryIntent` | read/draft | Serendipity Dream story loop | Persist only after approved write path |
@@ -137,7 +137,7 @@ Voice responses should be short, concrete, and confirm whether an action happene
 
 Examples:
 
-- Project status: "Alexa integration is working toward local Serendipity voice control. Next waypoint: build the request router."
+- Project status: "Alexa integration is working toward local Serendipity voice control. Next task: build the request router."
 - Pending approvals: "You have four approval gates. Top priority: digital storefront platform choice."
 - Chat answer: "AMI says the relay is cranky because it needs a policy table before adapters. Classic goblin behavior."
 - Dream story: "The redwood library opens under your feet. A moth librarian asks which task you came to rescue."
