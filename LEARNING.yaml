@@ -55,3 +55,12 @@ records:
     outcome: done
     failure_category: null
     lesson: "Secrets expire silently: a JWT-backed integration needs its failure mode loud (nonzero exit on auth errors) or the bridge can be dead for weeks while CI stays green."
+  - date: 2026-07-12
+    project: model-builder
+    task: t-004
+    kind: software
+    stakes: reversible
+    passes: 0
+    outcome: done
+    failure_category: null
+    lesson: "An additive-only Prisma migration (new CREATE TABLEs, internal cascade FKs, external refs as plain scalar Int columns with no FK) merges safely even though merge-to-main runs prisma migrate deploy against prod — no reverse-relation edits to User/ArtImage were needed. The typecheck CI runs prisma generate before vue-tsc, so it validates a new schema file end-to-end (client types + routes + store) without a live DB; that plus the Vercel preview build is enough of a gate when you can't run the toolchain locally. kind_robots PR #188."

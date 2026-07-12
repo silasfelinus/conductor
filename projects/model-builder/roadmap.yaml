@@ -371,3 +371,17 @@ tasks:
       and per-field prompts for pitch, fields, and artPrompt grounded in the selected
       source record's type and canon, so drafts are on-topic instead of generic. Verify
       via the existing /api/suggest path; no schema work.
+
+  - id: t-021
+    milestone: m2
+    title: "Add a Model Builder run-history panel (list and reopen past runs)"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Kaizen from durable persistence (PR #188): runs now persist via
+      /api/model-builder/runs, but the UI only surfaces the single active run. Add a
+      history panel that lists the user's recent runs (GET /api/model-builder/runs) with
+      source, recipe, and committed/total progress, and lets them reopen one into the
+      progress matrix or cancel it. Front-end only; reuse modelBuilderStore. No schema.
