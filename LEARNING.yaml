@@ -118,3 +118,12 @@ records:
     outcome: done
     failure_category: null
     lesson: "The conductor->KR project sync (scripts/sync_projects.py) only processes slugs marked active in project-overrides.yaml AND, before this task, never transmitted goal/waypoints even though the KR /api/projects endpoint accepts them. To wire a project's identity: add the override entry, add goal/waypoints to roadmap top matter, and extend build_project_payload to send them (goal as text; waypoints serialized to KR's pipe-delimited string) only when present so other projects are not cleared. Nav is seed-driven: append a type:directory SmartIcon to stores/seeds/smartIcons.json (the navStore fallback) mirroring /art; a content page with an icon: frontmatter also auto-registers via npm run generatesmart."
+  - date: 2026-07-12
+    project: model-builder
+    task: t-020
+    kind: software
+    stakes: reversible
+    passes: 0
+    outcome: done
+    failure_category: null
+    lesson: "A registered /api/suggest sheet only helps if the client lets it: buildSuggestUserPrompt resolves extra.instruction BEFORE sheet.fieldPrompts, so a store that always sends extra.instruction silently overrides the sheet. Fix is two-sided — register the sheet (system prompt + per-field prompts + a buildContext that digests the source record's canon) AND stop the store force-sending an instruction (send only when explicitly provided). Then getSuggestSheet('model-builder') stops falling back to the adventure sheet. kind_robots PR #193."

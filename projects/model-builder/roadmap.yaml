@@ -387,18 +387,18 @@ tasks:
   - id: t-020
     milestone: m3
     title: "Register a grounded model-builder suggest sheet for AI-drafting"
-    status: ready
+    status: done
     owner: null
     passes: 0
     stakes: reversible
     note: >
-      Kaizen from the front-end scaffold: the "Draft with AI" buttons currently call
-      /api/suggest with builder 'model-builder', which falls back to the adventure sheet
-      because no sheet is registered. Add a dedicated sheet in
-      server/utils/suggest/sheets (registered via suggestRegistry) with a system prompt
-      and per-field prompts for pitch, fields, and artPrompt grounded in the selected
-      source record's type and canon, so drafts are on-topic instead of generic. Verify
-      via the existing /api/suggest path; no schema work.
+      Registered server/utils/suggest/sheets/modelBuilderSuggest.ts (builder
+      'model-builder') with a Model-Builder system prompt, per-field prompts for
+      pitch/fields/artPrompt, and a buildContext that surfaces the source record's canon
+      (type, recipe, output, action + a name/class/personality/backstory/pitch digest).
+      Also fixed the store: draftText was force-sending extra.instruction, which overrode
+      any sheet fieldPrompt — now it only sends one when explicitly passed, so the sheet
+      drives. No more adventure-sheet fallback. kind_robots PR #193.
 
   - id: t-021
     milestone: m2
