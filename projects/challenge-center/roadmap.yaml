@@ -166,7 +166,7 @@ tasks:
     \ patterns from kind_robots. Script submissions should be accepted with an API key (reuse Server.apiKey\
     \ pattern or a new env var). Leaderboard responses group by contenderId, never by raw submission row,\
     \ so variant rows aggregate cleanly.\n\nDONE (Reviewer verification, 2026-07-11): the full API surface\
-    \ already exists on kind_robots main and was verified endpoint-by-endpoint against this spec —\
+    \ already exists on kind_robots main and was verified endpoint-by-endpoint against this spec \u2014\
     \ list with type/status filters, slug detail with per-submission scores, admin-only create (403 gate),\
     \ active-contender list with kind filter, API-key-authenticated submissions (validateApiKey) that\
     \ set READY and reject (challenge, contender, variantKey) duplicates with a clear 409, and both leaderboards\
@@ -176,7 +176,7 @@ tasks:
 - id: t-004
   milestone: m2
   title: Seed 10 initial challenges in kind_robots
-  status: waiting
+  status: ready
   depends_on: t-003
   owner: null
   passes: 0
@@ -197,7 +197,7 @@ tasks:
 - id: t-005
   milestone: m3
   title: Build /challenges browser page in kind_robots
-  status: waiting
+  status: ready
   depends_on: t-003
   owner: null
   passes: 0
@@ -245,7 +245,7 @@ tasks:
 - id: t-008
   milestone: m4
   title: Write scripts/challenge_submit.py in conductor
-  status: waiting
+  status: ready
   depends_on: t-003
   owner: null
   passes: 0
@@ -365,12 +365,13 @@ tasks:
   stakes: reversible
   updated: 2026-07-07
   note: "DONE (2026-07-07, Silas-directed session): wrote projects/challenge-center/docs/comparison-axes.md\
-    \ as the canonical M5 reference — axis list and Contender-design paragraphs quoted verbatim from notes_from_silas,\
-    \ plus an axis->field->task mapping table (t-002 schema, t-012 roster, t-013 runner, t-014 variants,\
-    \ t-015 leaderboards) and the design guardrails. Original task intent below. Kaizen from the Reviewer's M5-expansion merge (conductor PR #188): the M5 tasks each restate\
-    \ pieces of the comparison-axes design inline (provider vs provider, model vs model, generator vs\
-    \ generator, prompt vs prompt via random substitution, settings vs settings) and the contender split\
-    \ (Contender = leaderboard identity, ChallengeSubmission = the \"how\": variantKey/promptUsed/ settings/randomSelections).\
+    \ as the canonical M5 reference \u2014 axis list and Contender-design paragraphs quoted verbatim from\
+    \ notes_from_silas, plus an axis->field->task mapping table (t-002 schema, t-012 roster, t-013 runner,\
+    \ t-014 variants, t-015 leaderboards) and the design guardrails. Original task intent below. Kaizen\
+    \ from the Reviewer's M5-expansion merge (conductor PR #188): the M5 tasks each restate pieces of\
+    \ the comparison-axes design inline (provider vs provider, model vs model, generator vs generator,\
+    \ prompt vs prompt via random substitution, settings vs settings) and the contender split (Contender\
+    \ = leaderboard identity, ChallengeSubmission = the \"how\": variantKey/promptUsed/ settings/randomSelections).\
     \ Write projects/challenge-center/docs/comparison-axes.md as the one canonical reference doc \u2014\
     \ pull the axis list and Contender-design paragraphs from notes_from_silas verbatim, then a short\
     \ table mapping each axis to the task(s) that implement it (t-002 schema, t-012 roster, t-013 runner,\
@@ -384,16 +385,17 @@ tasks:
   passes: 0
   stakes: reversible
   updated: 2026-07-07
-  note: "DONE (2026-07-07, Silas-directed session): added a 'Rescue / salvage PRs — delete the superseded\
-    \ branch in the same session' subsection to AGENTS.md (after the cross-repo guidance) instructing agents\
-    \ to delete a superseded worker/* or claude/* branch in the same session the rescue PR merges, and to\
-    \ treat a rescue PR body's 'can be deleted' line as an instruction to delete now. Original task intent below. Kaizen from the Reviewer's t-002 resolution (2026-07-07): kind_robots PR #116 (a Silas-directed\
-    \ session branch) rescued t-002's stranded migration+schema work onto current main and explicitly\
-    \ said in its own PR body \"the old worker/challenge-center-t-002 branch can be deleted\" once it\
-    \ landed. Instead, that exact stale branch was opened as PR #118 and merged separately about ten minutes\
-    \ later \u2014 harmless here only because its content was byte-identical to what #116 had already\
-    \ landed, so it merged as a no-op, but a stale worker branch that has DIVERGED from a rescue merge\
-    \ could just as easily reintroduce already-superseded or conflicting content. Add a habit/checklist\
+  note: "DONE (2026-07-07, Silas-directed session): added a 'Rescue / salvage PRs \u2014 delete the superseded\
+    \ branch in the same session' subsection to AGENTS.md (after the cross-repo guidance) instructing\
+    \ agents to delete a superseded worker/* or claude/* branch in the same session the rescue PR merges,\
+    \ and to treat a rescue PR body's 'can be deleted' line as an instruction to delete now. Original\
+    \ task intent below. Kaizen from the Reviewer's t-002 resolution (2026-07-07): kind_robots PR #116\
+    \ (a Silas-directed session branch) rescued t-002's stranded migration+schema work onto current main\
+    \ and explicitly said in its own PR body \"the old worker/challenge-center-t-002 branch can be deleted\"\
+    \ once it landed. Instead, that exact stale branch was opened as PR #118 and merged separately about\
+    \ ten minutes later \u2014 harmless here only because its content was byte-identical to what #116\
+    \ had already landed, so it merged as a no-op, but a stale worker branch that has DIVERGED from a\
+    \ rescue merge could just as easily reintroduce already-superseded or conflicting content. Add a habit/checklist\
     \ step (in AGENTS.md's cross-repo or rescue-PR guidance): whenever a rescue/salvage PR supersedes\
     \ a stranded worker/* or claude/* branch, delete that branch in the same session the rescue PR merges,\
     \ rather than leaving it for a later PR to accidentally reopen and merge.\n"
