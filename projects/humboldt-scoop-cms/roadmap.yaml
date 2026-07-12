@@ -8,29 +8,43 @@ kind: software
 notes_from_silas: |
   Customer-management software for the Humboldt Scoop service. Starter roadmap —
   I'll refine. Think: customers, their pets/yards, recurring service schedules,
-  visit logs, and billing. Pick a stack that's simple to self-host. Do NOT wire
-  real payment or customer data without flagging me (needs-human). Build with
-  seed/dummy data only until I say otherwise.
+  visit logs, billing, and a customer route maker. The route maker must let the team
+  choose a number or filtered set of customers, optimize their visit order, and show
+  the result as a mapped route with an ordered stop list.
+
+  Android is the first field-client target. Preserve a path to Linux and iOS instead
+  of welding business logic to Android-only APIs. Pick a stack that's simple to
+  self-host. Do NOT wire real payment, mapping credentials, or customer data without
+  flagging me (needs-human). Build with seed/dummy data only until I say otherwise.
+
+  Route optimization should be deterministic where practical; an LLM is not a routing
+  engine. If AI is useful for an internal planning helper, this is a single tool for me
+  and my team and may use our Silas-owned tokens, with all provider credentials kept
+  server-side and usage visible.
 
 milestones:
   - id: m1
     title: "Stack chosen + skeleton app runs locally"
-    weight: 15
+    weight: 12
     status: not-started
   - id: m2
     title: "Customer + property data model"
-    weight: 20
+    weight: 16
     status: not-started
   - id: m3
     title: "Recurring service scheduling"
-    weight: 25
+    weight: 22
     status: not-started
   - id: m4
     title: "Visit logging + history"
-    weight: 20
+    weight: 15
     status: not-started
   - id: m5
     title: "Invoicing (draft-only, no live payments)"
+    weight: 15
+    status: not-started
+  - id: m6
+    title: "Selectable customer route maker with mapped optimization"
     weight: 20
     status: not-started
 
@@ -117,3 +131,74 @@ tasks:
       pet details, yard notes, visit checklist, and a gate-details placeholder.
       Falls back to all scheduled visits when no dummy visits match today's date.
       Dummy data only — no auth, no real customer data, no billing.
+
+  - id: t-006
+    milestone: m6
+    title: "Write the route-maker architecture and privacy specification"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Write projects/humboldt-scoop-cms/route-maker/SPEC.md. The route-maker is more
+      than the existing ordered route cards: a user selects an exact number or filtered
+      set of active customers, chooses a start/end location, and receives an optimized
+      mapped route plus ordered stop list. Cover geocoding, travel-time matrices,
+      deterministic TSP/VRP optimization, service duration, optional time windows,
+      crew assignment, locked/manual stops, manual reorder, recalculation, total time/
+      distance, ETAs, deep links/navigation handoff, and auditability. Compare a hosted
+      routing provider with a self-hostable/open alternative. Use seed addresses only.
+      Real addresses, access codes, and provider credentials require explicit approval.
+
+  - id: t-007
+    milestone: m6
+    title: "Extend the seed schema and API for route requests and optimized results"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-006
+    note: >
+      Add typed seed-data contracts and API routes for creating a route request from
+      selected customer IDs or filters, limiting the selected count, specifying start/
+      end points and constraints, and returning an ordered route with coordinates,
+      segment travel estimates, service estimates, totals, and warnings. Keep routing
+      provider calls behind an adapter so deterministic local test fixtures can run
+      without network credentials. No LLM dependency is required for route math.
+
+  - id: t-008
+    milestone: m6
+    title: "Design the Android-first route-maker client with Linux and iOS portability"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-006
+    note: >
+      Produce CLIENT-ARCHITECTURE.md comparing the smallest viable cross-platform path
+      for an Android-first field app while preserving Linux and iOS compatibility. The
+      Hono/TypeScript service remains the backend contract; do not duplicate business
+      logic in each client. Cover authentication boundaries, secure local storage,
+      offline/cached route cards, map-provider abstractions, device navigation handoff,
+      and packaging. Recommend one client approach and one fallback before scaffolding.
+
+  - id: t-009
+    milestone: m6
+    title: "Build the seed-data route selection and map review prototype"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on:
+      - t-007
+      - t-008
+    gate_human: true
+    approved_by_human: false
+    note: >
+      Using dummy customers only, build the first Android-targeted prototype flow:
+      filter/search customers, select a number of stops, generate a mapped route, review
+      ordered cards and totals, lock or manually reorder stops, recalculate, and hand the
+      approved order to navigation. The prototype must use the portable API contract and
+      document Linux/iOS follow-on steps. Real customer data, production map keys, app-
+      store submission, public deployment, and paid provider usage remain separate hard
+      needs-human actions.
