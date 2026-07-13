@@ -1,17 +1,17 @@
 {
-  "generated_at": "2026-07-13T09:34:12.209450+00:00",
+  "generated_at": "2026-07-13T09:53:17.223517+00:00",
   "summary": {
     "roadmaps": 37,
     "active_projects": 31,
-    "tasks": 446,
-    "ready": 99,
+    "tasks": 447,
+    "ready": 101,
     "waiting": 57,
     "needs_human": 15,
-    "in_progress": 2,
+    "in_progress": 1,
     "done": 262,
     "errors": 0,
-    "warnings": 15,
-    "info": 44
+    "warnings": 0,
+    "info": 43
   },
   "projects": [
     {
@@ -198,15 +198,15 @@
       "override_status": "active",
       "priority_index": 10,
       "autonomous": false,
-      "task_count": 13,
+      "task_count": 14,
       "counts": {
         "done": 9,
         "needs-human": 1,
-        "ready": 3
+        "ready": 4
       },
-      "open_count": 4,
+      "open_count": 5,
       "human_attention": 1,
-      "ready": 3,
+      "ready": 4,
       "waiting": 0,
       "claimed": 0,
       "review": 0,
@@ -414,15 +414,14 @@
       "autonomous": false,
       "task_count": 21,
       "counts": {
-        "claimed": 1,
         "done": 19,
-        "ready": 1
+        "ready": 2
       },
       "open_count": 2,
       "human_attention": 0,
-      "ready": 1,
+      "ready": 2,
       "waiting": 0,
-      "claimed": 1,
+      "claimed": 0,
       "review": 0,
       "done": 19
     },
@@ -603,7 +602,7 @@
     {
       "slug": "engagement",
       "kind": "software",
-      "override_status": "active",
+      "override_status": "finished",
       "priority_index": 31,
       "autonomous": false,
       "task_count": 3,
@@ -621,7 +620,7 @@
     {
       "slug": "ruler-hooked",
       "kind": "software",
-      "override_status": "missing",
+      "override_status": "active",
       "priority_index": 32,
       "autonomous": false,
       "task_count": 10,
@@ -738,111 +737,6 @@
     }
   ],
   "findings": [
-    {
-      "severity": "warning",
-      "code": "POSSIBLY_UNNECESSARY_GATE",
-      "project": "art-generator-connect",
-      "task": "t-001",
-      "message": "Reversible software task is human-gated without an obvious hard-gate reason in its note."
-    },
-    {
-      "severity": "warning",
-      "code": "POSSIBLY_UNNECESSARY_GATE",
-      "project": "art-generator-connect",
-      "task": "t-009",
-      "message": "Reversible software task is human-gated without an obvious hard-gate reason in its note."
-    },
-    {
-      "severity": "warning",
-      "code": "STALE_IN_PROGRESS",
-      "project": "art-generator-connect",
-      "task": "t-019",
-      "message": "Task has remained claimed for 6 days."
-    },
-    {
-      "severity": "warning",
-      "code": "SOFT_NEEDS_HUMAN",
-      "project": "conductor",
-      "task": "t-026",
-      "message": "needs-human has no obvious hard-gate marker; consider returning it to ready or documenting the actual gate."
-    },
-    {
-      "severity": "warning",
-      "code": "POSSIBLY_UNNECESSARY_GATE",
-      "project": "digital-storefront",
-      "task": "t-001",
-      "message": "Reversible software task is human-gated without an obvious hard-gate reason in its note."
-    },
-    {
-      "severity": "warning",
-      "code": "POSSIBLY_UNNECESSARY_GATE",
-      "project": "digital-storefront",
-      "task": "t-002",
-      "message": "Reversible software task is human-gated without an obvious hard-gate reason in its note."
-    },
-    {
-      "severity": "warning",
-      "code": "POSSIBLY_UNNECESSARY_GATE",
-      "project": "digital-storefront",
-      "task": "t-010",
-      "message": "Reversible software task is human-gated without an obvious hard-gate reason in its note."
-    },
-    {
-      "severity": "warning",
-      "code": "ACTIVE_PROJECT_ALL_DONE",
-      "project": "engagement",
-      "task": null,
-      "message": "All tasks are done but project override remains active."
-    },
-    {
-      "severity": "warning",
-      "code": "ACTIVE_PROJECT_NO_OPEN_TASKS",
-      "project": "engagement",
-      "task": null,
-      "message": "Active project has no open tasks; mark finished/paused or add an intentional recurring task."
-    },
-    {
-      "severity": "warning",
-      "code": "POSSIBLY_UNNECESSARY_GATE",
-      "project": "global-ui",
-      "task": "t-009",
-      "message": "Reversible software task is human-gated without an obvious hard-gate reason in its note."
-    },
-    {
-      "severity": "warning",
-      "code": "POSSIBLY_UNNECESSARY_GATE",
-      "project": "kind-robots",
-      "task": "t-002",
-      "message": "Reversible software task is human-gated without an obvious hard-gate reason in its note."
-    },
-    {
-      "severity": "warning",
-      "code": "SOFT_NEEDS_HUMAN",
-      "project": "kind-robots",
-      "task": "t-011",
-      "message": "needs-human has no obvious hard-gate marker; consider returning it to ready or documenting the actual gate."
-    },
-    {
-      "severity": "warning",
-      "code": "SOFT_NEEDS_HUMAN",
-      "project": "newsfeed",
-      "task": "t-002",
-      "message": "needs-human has no obvious hard-gate marker; consider returning it to ready or documenting the actual gate."
-    },
-    {
-      "severity": "warning",
-      "code": "ROADMAP_MISSING_OVERRIDE",
-      "project": "ruler-hooked",
-      "task": null,
-      "message": "Roadmap has no project-overrides.yaml entry."
-    },
-    {
-      "severity": "warning",
-      "code": "SOFT_NEEDS_HUMAN",
-      "project": "superkate-services-calculator",
-      "task": "t-030",
-      "message": "needs-human has no obvious hard-gate marker; consider returning it to ready or documenting the actual gate."
-    },
     {
       "severity": "info",
       "code": "APPROVAL_WITHOUT_GATE",
@@ -1080,13 +974,6 @@
       "project": "recipe-box",
       "task": null,
       "message": "Roadmap has no friendly goal/definition of done."
-    },
-    {
-      "severity": "info",
-      "code": "INACTIVE_PROJECT_HAS_READY_TASKS",
-      "project": "ruler-hooked",
-      "task": null,
-      "message": "Inactive project retains 7 ready task(s); harmless but misleading in generated status."
     },
     {
       "severity": "info",
