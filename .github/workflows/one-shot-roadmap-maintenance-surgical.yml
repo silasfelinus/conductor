@@ -1,0 +1,105 @@
+name: One-shot Surgical Roadmap Maintenance
+
+on:
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: write
+
+jobs:
+  repair:
+    if: github.head_ref == 'maintenance/roadmap-audit-pass-2026-07-13'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: maintenance/roadmap-audit-pass-2026-07-13
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Apply surgical text-preserving repairs
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          def replace_once(path: str, old: str, new: str) -> None:
+              p = Path(path)
+              text = p.read_text()
+              count = text.count(old)
+              if count != 1:
+                  raise SystemExit(f'{path}: expected exactly one match, found {count}: {old!r}')
+              p.write_text(text.replace(old, new, 1))
+
+          replace_once(
+              'projects/challenge-center/roadmap.yaml',
+              '  depends_on: t-008, t-009\n',
+              '  depends_on:\n    - t-008\n    - t-009\n',
+          )
+          replace_once(
+              'projects/challenge-center/roadmap.yaml',
+              '  depends_on: t-010, t-012\n',
+              '  depends_on:\n    - t-010\n    - t-012\n',
+          )
+
+          def replace_in_task(path: str, task_id: str, old: str, new: str) -> None:
+              p = Path(path)
+              text = p.read_text()
+              marker = f'- id: {task_id}\n'
+              start = text.find(marker)
+              if start < 0:
+                  raise SystemExit(f'{path}: missing {task_id}')
+              next_task = text.find('\n- id: ', start + len(marker))
+              end = len(text) if next_task < 0 else next_task
+              block = text[start:end]
+              if block.count(old) != 1:
+                  raise SystemExit(f'{path}/{task_id}: expected one {old!r}, found {block.count(old)}')
+              block = block.replace(old, new, 1)
+              p.write_text(text[:start] + block + text[end:])
+
+          replace_in_task(
+              'projects/art-generator-connect/roadmap.yaml',
+              't-019',
+              '  status: in-progress\n',
+              '  status: claimed\n',
+          )
+          replace_in_task(
+              'projects/coloring-book/roadmap.yaml',
+              't-011',
+              '  status: ready\n',
+              '  status: waiting\n',
+          )
+          PY
+
+      - name: Regenerate audit only
+        run: |
+          pip install pyyaml
+          python scripts/audit_roadmaps.py --json ROADMAP-AUDIT.json --markdown ROADMAP-AUDIT.md
+
+      - name: Record scope and remove helper
+        run: |
+          cat > docs/MAINTENANCE-PASS-2026-07-13.md <<'EOF'
+          # Roadmap Maintenance Pass — 2026-07-13
+
+          This pass applies only deterministic, text-preserving roadmap repairs:
+
+          - normalizes two comma-separated Challenge Center dependency lists;
+          - normalizes one unsupported task status from `in-progress` to `claimed`;
+          - returns one Coloring Book task with unmet dependencies from `ready` to `waiting`;
+          - regenerates the portfolio audit.
+
+          It does not approve human gates, rename duplicate task IDs, change project lifecycle state, or infer product intent. Remaining audit findings require evidence-backed follow-up.
+          EOF
+          rm .github/workflows/one-shot-roadmap-maintenance-surgical.yml
+
+      - name: Commit repaired files
+        run: |
+          git config user.name conductor-bot
+          git config user.email conductor-bot@users.noreply.github.com
+          git add projects/art-generator-connect/roadmap.yaml projects/challenge-center/roadmap.yaml projects/coloring-book/roadmap.yaml ROADMAP-AUDIT.json ROADMAP-AUDIT.md docs/MAINTENANCE-PASS-2026-07-13.md .github/workflows/one-shot-roadmap-maintenance-surgical.yml
+          git commit -m "chore: apply surgical roadmap maintenance repairs"
+          git push origin HEAD:maintenance/roadmap-audit-pass-2026-07-13
