@@ -109,3 +109,50 @@ harness into the pytest suite (for #360).
 green on #152. Roadmap t-011 note updated: Silas should re-run `--apply` and expect the
 ~37 skipped folders (~700 creates) to register; stays soft needs-human (sandbox proxy
 still 403s kind-robots.vercel.app — confirmed again this session).
+
+## 2026-07-13 | Reviewer → Silas | kind-robots/video-generator (kind_robots PR #213) | pattern
+type: pattern
+
+**Decision:** merged (kind_robots PR #213, squash) — first `claude/*`-branch PR reviewed
+and merged under the AGENTS.md rule that treats Silas-directed `claude/*` PRs identically
+to Worker PRs. Branch `claude/video-generation-page-r3f8i8`, not tracked against any
+roadmap task (ad hoc Silas-directed session, per the PR body: "Silas wanted a way to
+generate short gifs from a still...").
+
+**What was good:**
+- Reused every existing contract instead of inventing new ones: the enqueue endpoint
+  extends the existing `EnqueueEngine` union and `GATE_ENGINE` map additively (no engine
+  removed or renamed), the video ArtJob payload mirrors the proven kontext queue shape
+  (`workflow` + named `images[]` for the relay to upload), and `videoStore.ts` polls
+  `/api/art/queue/:id` and loads `/api/art/image/:id?includeImageData=true` — both
+  pre-existing endpoints used the same way `artStore.ts`/`stylistStore.ts` already do.
+- Mana billing was extended correctly rather than left free: video frames flow into
+  `authAndGate`/`estimateArtCostUsd` as a new `frames` parameter, scaled by resolution and
+  frame count so longer clips cost proportionally more.
+- Honest, specific incompleteness disclosure: the PR body flags that the relay's
+  completion path only understands image output today, so a queued clip renders on the
+  home Comfy box but can't resolve into a playable ArtImage until the relay adds
+  video-aware storage — and that WAN's model filenames are unverified against a live
+  Comfy install. Nothing was overstated as "done" that wasn't.
+
+**What to improve:**
+- Nothing structural. Only note for future `claude/*`-branch reviews: this PR didn't use
+  the Worker PR handoff template (no explicit "Kaizen suggestion" section), so the
+  Reviewer had to substitute one — fine for a one-off, but if `claude/*` PRs become
+  routine it's worth asking Silas whether he wants the same handoff template applied.
+
+**Kaizen task:** kind-robots/t-014 — wire the relay's job-completion path to store
+rendered video output (mp4/webm) for `ltx`/`wan` ArtJobs so a queued clip actually
+resolves end-to-end; flagged as access-limited since the relay lives on Silas's home GPU
+box, not in either repo.
+
+**Review verification:** fetched the PR branch into a local worktree, ran `npm install`
+and `eslint` directly against every changed file (clean, zero warnings), and manually
+traced every new import/endpoint/schema reference (`ArtImage` fields, `/api/art/queue/:id`,
+`/api/art/image/:id`, `performFetch` signature, `crypto.randomUUID()` usage) against
+existing call sites to confirm they match established conventions. `vue-tsc --noEmit`
+was started but did not finish inside this sandbox's resource limits (stalled ~22 min
+wall-clock on ~1 min of actual CPU time) and was abandoned in favor of the above; the PR
+author's own session reported a clean `npm test` run. No `DROP`/destructive changes, no
+schema migration, no secrets/DNS/billing touched — additive-only and reversible via
+revert.
