@@ -167,7 +167,7 @@ violation regardless of whether the action seems helpful.
 
 ### Worker (OpenAI) — CAN
 - Push to `worker/*` branches
-- Make exactly ONE atomic claim commit to `main` per task cycle (message: `claim: <project>/<task-id>`)
+- Make exactly ONE atomic claim commit to `main` per task claimed (message: `claim: <project>/<task-id>`)
 - Open PRs from `worker/*` into `main`
 - Merge its own reversible, scoped, verified PRs when they are not human-gated, outward-facing, irreversible, or otherwise unsafe
 - Smartly fix merge conflicts before merging; preserve independent valid changes and never delete conflicting work just to make Git happy
@@ -263,7 +263,7 @@ delete it now, not an observation for later. (Kaizen from challenge-center/t-002
 - Touch DNS, secrets, billing, or trigger a live deploy or publish
 - Delete TALKBACK entries (the log is append-only)
 - Skip a `needs-human` gate on an `outward-facing` or `irreversible` task
-- Claim more than one task at a time
+- Hold more than one claimed task at once (claims are sequential — finish, hand off, or cleanly park one before claiming the next)
 
 ## The two roles
 
@@ -281,7 +281,9 @@ delete it now, not an observation for later. (Kaizen from challenge-center/t-002
 - **proposal:** write `pitches/<date>-<slug>.md` using the pitch template, open a PR, set
   `status: needs-human`.
 - Keep the default outcome as an updated `main` branch unless the task is unsafe, human-gated,
-  outward-facing, irreversible, or genuinely blocked. One task at a time.
+  outward-facing, irreversible, or genuinely blocked. Work one task in flight at a
+  time — you may complete several tasks in a single run, but finish (merge, hand off,
+  or cleanly park) each before claiming the next. Never hold two active claims at once.
 - **On closing a task at `done`** (e.g. after a safe self-merge): append the outcome record
   to `LEARNING.yaml`.
 - **Merge conflicts:** resolve them intelligently. Keep both sides when they are independent,
@@ -518,7 +520,9 @@ Silas approval is required for the image generation itself.
 2. Drafts not live actions when stakes are high → `needs-human`, never auto-fire.
 3. Iteration budget: 3 passes per software task (retries + challenges share the counter), then `blocked`.
    Only quality/scope failures consume a pass — transient and actionable failures never do (see "Failure triage").
-4. One task at a time.
+4. One task *in flight* at a time. A single run may complete several tasks sequentially —
+   finish, hand off, or cleanly park each (its own atomic claim commit, its own scoped PR)
+   before claiming the next. Never hold two active claims at once.
 5. Never touch DNS, secrets, billing, deploys, or send/publish anything without `needs-human`.
 6. Scope discipline: unrelated problems become new `ready` tasks, not extra diff.
 7. TALKBACK files are append-only: never edit or delete a prior entry from either agent.
