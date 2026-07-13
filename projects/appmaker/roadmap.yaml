@@ -132,16 +132,15 @@ tasks:
   milestone: m4
   title: Build the AppMaker page in kind_robots
   status: done
-  owner: claude
-  updated: '2026-07-03T00:00:00Z'
+  owner: worker
+  updated: '2026-07-13T00:00:00Z'
   passes: 0
   stakes: reversible
   depends_on: t-001
-  note: 'Merged to kind_robots main via PR #72 (2026-07-03T05:05:10Z): appmaker-page.vue (fleet browser
-    with roadmap progress + needs-you badges, self-serve create form, pending scaffold indicators), GET
-    /api/appmaker/apps (apps/ dir + open scaffold todos), POST /api/appmaker/scaffold-request (Dream with
-    slug parity + AGENT todo filed under the worker account; project cap enforced). Reached via workspace
-    card ''appmaker''. CI state display deferred to t-008 (needs webhooks).
+  note: 'Shipped the Kind Robots front end: the existing AppmakerPage component reused and given a canonical
+    /appmaker route, registered as the ''appmaker'' tab in the conductor channel with channelKey/tabKey.
+    Reusable project-front-page scaffold in kind_robots/components/conductor/. kind_robots PR #204 merged
+    2026-07-12.
 
     '
 - id: t-005
@@ -184,5 +183,21 @@ tasks:
     as bare `flutter create` shells with no roadmap task driving them to build-out. Add a check (script
     or CI note) that surfaces apps/<slug>/ folders whose lib/ has never grown past main.dart after N days,
     so Silas can decide build vs. retire instead of the fleet growing silently.
+
+    '
+- id: t-012
+  milestone: m4
+  title: Polish and upgrade AppMaker front-end surface
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  note: 'UI polish + upgrade for the appmaker front end now that the scaffold page is live at /appmaker.
+    Steps: (1) generate final dashboard-tab art at public/images/dashboard-tabs/conductor/appmaker.webp
+    and tutorial art at public/images/tutorials/conductor/appmaker.webp; (2) add a matching section for
+    ''appmaker'' under tutorialChannels.conductor.sections in kind_robots/stores/helpers/tutorialCards.ts;
+    (3) verify the PROJECT Dream liveUrl points at /appmaker (admin can run the Conductor ''Placements''
+    button to backfill channelKey/tabKey/liveUrl); (4) evolve the placeholder scaffold page into the full
+    interactive experience for this project.
 
     '

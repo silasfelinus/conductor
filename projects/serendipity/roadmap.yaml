@@ -47,16 +47,13 @@ tasks:
   milestone: m2
   title: Scaffold Serendipity component in kind_robots
   status: done
-  owner: claude
-  updated: '2026-07-03T09:30:00Z'
+  owner: worker
+  updated: '2026-07-13T00:00:00Z'
   pr: https://github.com/silasfelinus/kind_robots/pull/73
   passes: 0
   stakes: reversible
   depends_on: t-001
-  note: "Create components/pages/serendipity-page.vue (plus store if needed) wired into the kind_robots\
-    \ chat stream infrastructure: a themed intro screen, a streaming story panel using chatStore.generateText,\
-    \ and a Serendipity bot persona. No task integration yet \u2014 just a working streamed story experience\
-    \ behind the approved design.\n"
+  note: "Shipped the Kind Robots front end: the existing serendipity page component wired into a public scaffold-based page at /serendipity, registered as the 'serendipity' tab in the scenario channel with channelKey/tabKey. Reusable project-front-page scaffold in kind_robots/components/conductor/. kind_robots PR #204 merged 2026-07-12."
 - id: t-003
   milestone: m3
   title: Build theme picker from dream vibes, locations, and genres
@@ -185,3 +182,20 @@ tasks:
   passes: 0
   stakes: reversible
   note: 'FOR SILAS: I could not apply the actual Kind Robots UI patch because the GitHub connector safety filter blocked creating a worker branch in silasfelinus/kind_robots. I preserved the intended implementation at projects/serendipity/docs/t-011-serendipity-agent-todo-badge-filter.md. It explains the exact todoStore helpers, conductor-page.vue Story tab/filter, todo card badge, Serendipity metadata tweak, and verification checklist. TO APPROVE: apply that patch in a local-code/Claude session with kind_robots patch access, then set this task back to ready or done depending on whether you want another Worker pass. This is a soft tooling block; no live data, deploys, or roadmap YAML outside conductor were changed.'
+- id: t-012
+  milestone: m5
+  title: Polish and upgrade Serendipity front-end surface
+  status: ready
+  owner: null
+  updated: '2026-07-13T00:00:00Z'
+  passes: 0
+  stakes: reversible
+  note: 'UI polish + upgrade for the serendipity front end now that the scaffold page is live at /serendipity.
+    Steps: (1) generate final dashboard-tab art at public/images/dashboard-tabs/scenario/serendipity.webp
+    and tutorial art at public/images/tutorials/scenario/serendipity.webp; (2) add a matching section for
+    ''serendipity'' under tutorialChannels.scenario.sections in kind_robots/stores/helpers/tutorialCards.ts;
+    (3) verify the PROJECT Dream liveUrl points at /serendipity (admin can run the Conductor ''Placements''
+    button to backfill channelKey/tabKey/liveUrl); (4) evolve the placeholder scaffold page into the full
+    interactive experience for this project.
+
+    '

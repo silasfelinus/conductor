@@ -85,3 +85,21 @@ tasks:
       with kind_robots PR #87 + Silas's manual migration. Deliverable:
       projects/wishmaster/INTERFACE-DESIGN.md covering intent parsing, plan assembly,
       cost estimation, the consent screen, pipeline execution, and the two output sizes.
+  - id: t-003
+    milestone: m2
+    title: "Polish and upgrade Wishmaster front-end surface"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: "2026-07-13T00:00:00Z"
+    note: >
+      UI polish + upgrade for the wishmaster front end now that the scaffold page is live
+      at /wishmaster. Steps: (1) generate final dashboard-tab art at
+      public/images/dashboard-tabs/conductor/wishmaster.webp and tutorial art at
+      public/images/tutorials/conductor/wishmaster.webp; (2) add a matching section for
+      'wishmaster' under tutorialChannels.conductor.sections in
+      kind_robots/stores/helpers/tutorialCards.ts; (3) verify the PROJECT Dream liveUrl
+      points at /wishmaster (admin can run the Conductor 'Placements' button to backfill
+      channelKey/tabKey/liveUrl); (4) evolve the placeholder scaffold page into the full
+      interactive experience for this project.

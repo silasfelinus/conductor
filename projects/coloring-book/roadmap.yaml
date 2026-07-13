@@ -419,3 +419,21 @@ tasks:
       print layout, resolution, margins, and set completeness. This finishes the content
       package only. Do not create POD accounts, publish listings, deploy storefront changes,
       spend money, or make Characters public; those remain hard-gated in their owning projects.
+  - id: t-019
+    milestone: m2
+    title: Polish and upgrade Coloring Book front-end surface
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-13T00:00:00Z'
+    note: >
+      UI polish + upgrade for the coloring-book front end now that the scaffold
+      page is live at /coloring. Steps: (1) generate final dashboard-tab art at
+      public/images/dashboard-tabs/art/coloring.webp and tutorial art at
+      public/images/tutorials/art/coloring.webp; (2) add a matching section for
+      'coloring' under tutorialChannels.art.sections in
+      kind_robots/stores/helpers/tutorialCards.ts; (3) verify the PROJECT Dream
+      liveUrl points at /coloring (admin can run the Conductor 'Placements'
+      button to backfill channelKey/tabKey/liveUrl); (4) evolve the placeholder
+      scaffold page into the full interactive experience for this project.

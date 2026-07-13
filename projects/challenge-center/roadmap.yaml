@@ -229,7 +229,9 @@ tasks:
     and status (OPEN/JUDGING/CLOSED). Link to /challenges/[slug] for the detail view.
     Reuse existing Kind Robots card/grid component patterns. DESIGN DIRECTION (Silas):
     heavyweight fight-promo / Street Fighter select-screen aesthetic — see notes_from_silas.
-    Challenge cards read like fight matchups.
+    Challenge cards read like fight matchups. NOTE (2026-07-13): a basic scaffold-based
+    /challenges page + wonder-channel tab already shipped in kind_robots PR #204; this
+    task upgrades it to the full fight-promo experience.
 
     '
   updated: '2026-07-13T00:06:01+00:00'
@@ -472,3 +474,11 @@ tasks:
 
     '
   updated: '2026-07-12T20:40:00Z'
+- id: t-019
+  milestone: m3
+  title: Polish and upgrade Challenge Center front-end surface
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  note: "UI polish + upgrade for the challenge-center front end now that the scaffold page is live at /challenges. Steps: (1) generate final dashboard-tab art at public/images/dashboard-tabs/wonder/challenges.webp and tutorial art at public/images/tutorials/wonder/challenges.webp; (2) add a matching section for 'challenges' under tutorialChannels.wonder.sections in kind_robots/stores/helpers/tutorialCards.ts; (3) verify the PROJECT Dream liveUrl points at /challenges (admin can run the Conductor 'Placements' button to backfill channelKey/tabKey/liveUrl); (4) evolve the placeholder scaffold page into the full interactive experience for this project."

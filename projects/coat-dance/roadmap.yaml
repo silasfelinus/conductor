@@ -188,3 +188,21 @@ tasks:
     note: >
       Prepare an export checklist, review notes, credits/source notes, and release
       decision options. Nothing is published or promoted until Silas explicitly approves.
+
+  - id: t-010
+    milestone: m1
+    title: "Polish and upgrade Coat Dance front-end surface"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      UI polish + upgrade for the coat-dance front end now that the scaffold page is
+      live at /coat-dance. Steps: (1) generate final dashboard-tab art at
+      public/images/dashboard-tabs/art/coat-dance.webp and tutorial art at
+      public/images/tutorials/art/coat-dance.webp; (2) add a matching section for
+      'coat-dance' under tutorialChannels.art.sections in
+      kind_robots/stores/helpers/tutorialCards.ts; (3) verify the PROJECT Dream liveUrl
+      points at /coat-dance (admin can run the Conductor 'Placements' button to backfill
+      channelKey/tabKey/liveUrl); (4) evolve the placeholder scaffold page into the full
+      interactive experience for this project.
