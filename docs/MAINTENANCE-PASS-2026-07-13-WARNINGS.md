@@ -9,4 +9,4 @@ This pass resolves the 15 advisory findings from the first portfolio audit witho
 - `engagement` moved from `active` to `finished` because all tasks are done;
 - `ruler-hooked` received an active override so its ready tasks are selectable.
 
-The generated audit reports zero errors and zero warnings.
+Verification on the completed branch included four focused audit-policy tests, full roadmap YAML validation, the existing authz and worker-status checks, and regeneration of both audit artifacts. The generated audit reports zero errors and zero warnings.
