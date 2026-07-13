@@ -26,6 +26,7 @@ jobs:
         run: |
           python - <<'PY'
           from pathlib import Path
+          import re
 
           def replace_once(path: str, old: str, new: str) -> None:
               p = Path(path)
@@ -46,32 +47,35 @@ jobs:
               '  depends_on:\n    - t-010\n    - t-012\n',
           )
 
-          def replace_in_task(path: str, task_id: str, old: str, new: str) -> None:
+          def replace_in_task(path: str, task_id: str, old_value: str, new_value: str) -> None:
               p = Path(path)
               text = p.read_text()
-              marker = f'- id: {task_id}\n'
-              start = text.find(marker)
-              if start < 0:
+              pattern = re.compile(
+                  rf'(?ms)^(?P<indent>[ \t]*)- id: {re.escape(task_id)}\n(?P<body>.*?)(?=^(?P=indent)- id: |\Z)'
+              )
+              match = pattern.search(text)
+              if not match:
                   raise SystemExit(f'{path}: missing {task_id}')
-              next_task = text.find('\n- id: ', start + len(marker))
-              end = len(text) if next_task < 0 else next_task
-              block = text[start:end]
+              indent = match.group('indent')
+              old = f'{indent}  {old_value}\n'
+              new = f'{indent}  {new_value}\n'
+              block = match.group(0)
               if block.count(old) != 1:
                   raise SystemExit(f'{path}/{task_id}: expected one {old!r}, found {block.count(old)}')
-              block = block.replace(old, new, 1)
-              p.write_text(text[:start] + block + text[end:])
+              replacement = block.replace(old, new, 1)
+              p.write_text(text[:match.start()] + replacement + text[match.end():])
 
           replace_in_task(
               'projects/art-generator-connect/roadmap.yaml',
               't-019',
-              '  status: in-progress\n',
-              '  status: claimed\n',
+              'status: in-progress',
+              'status: claimed',
           )
           replace_in_task(
               'projects/coloring-book/roadmap.yaml',
               't-011',
-              '  status: ready\n',
-              '  status: waiting\n',
+              'status: ready',
+              'status: waiting',
           )
           PY
 
