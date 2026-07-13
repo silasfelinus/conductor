@@ -377,13 +377,25 @@ tasks:
     title: Reviewer trigger fires with no open worker/* PR to review, repeatedly
     status: needs-human
     owner: null
-    updated: '2026-07-13T03:36:00Z'
+    updated: '2026-07-13T04:37:00Z'
     passes: 0
     stakes: reversible
     note: >
       FOR SILAS: The Reviewer session trigger is firing far more often than there
       is Worker PR volume to review — this is a platform/scheduling issue, not
       something fixable from inside the repo.
+
+      UPDATE 2026-07-13 04:37: 45th recurrence. Same shape — zero open worker/*
+      PRs in either repo (list_pull_requests and list_branches both confirm;
+      kind_robots' previously-tracked draft PR #211 was merged directly by
+      Silas at 03:07 UTC, so it's clean too). Not re-notifying on the base
+      "no PR" finding — same reasoning as recurrences 33-44. NEW this cycle:
+      challenge-center/t-006 (claimed 2026-07-13T00:36:30Z) is now ~4 hours
+      unbranched with zero commits anywhere and both its dependencies already
+      done — escalating from "worth a closer look" to "looks stranded" across
+      4+ consecutive sweeps (42-45). Reviewer has no mandate to reclaim it, so
+      flagging for Silas or the next Worker cycle to reset it to ready/owner:
+      null if the claim is dead. See TALKBACK.md 2026-07-13 04:37 entry.
 
       UPDATE 2026-07-13 03:36: 44th recurrence. Same shape — zero open worker/*
       PRs in either repo (list_pull_requests confirms both empty; the
