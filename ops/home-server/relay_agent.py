@@ -48,6 +48,13 @@ uploaded to ComfyUI's input folder before the workflow runs, so LoadImage
 nodes can reference them (image-to-image, e.g. Flux Kontext / Hair Studio).
 An optional "save" block ({isPublic, isMature, designer}) is applied by
 kind_robots' complete endpoint, not by this agent.
+
+VIDEO jobs: a COMFY payload with "media": "video" (image-to-video, LTX/WAN
+from kind_robots' /api/art/enqueue) ends in a SaveVideo node, so Comfy history
+returns a video file (mp4/webm) instead of an image. The relay pulls that clip
+and uploads it via save-generated with the matching "fileType" so the ArtImage
+stores a playable clip. Input stills still ride in "images" and are uploaded to
+Comfy's input folder exactly like the image-to-image path.
 """
 
 import base64
@@ -247,13 +254,96 @@ def upload_comfy_input_images(payload):
         log(f"uploaded input image {uploaded['name']}")
 
 
+VIDEO_EXTENSIONS = (".mp4", ".webm", ".mov", ".mkv", ".gif")
+
+
+def is_video_filename(filename):
+    return bool(filename) and filename.lower().endswith(VIDEO_EXTENSIONS)
+
+
+def file_extension(filename):
+    """Lowercase, dot-less extension of a Comfy output filename ("" if none)."""
+    return os.path.splitext(filename or "")[1].lstrip(".").lower()
+
+
+def find_output_file(value, want_video):
+    """Recursively locate the first Comfy history output file descriptor.
+
+    Comfy nests output files under per-node dicts whose exact key varies by
+    save node (SaveImage → "images", SaveVideo → "images"/"gifs"/"video"
+    depending on the build), so scan structurally for any dict carrying a
+    "filename". When want_video is True match video files (SaveVideo); else
+    match stills. Returns {filename, subfolder, type} or None. Mirrors the
+    getFirstVideoFile logic in kind_robots' ltx/text2Video route."""
+    if not value:
+        return None
+    if isinstance(value, list):
+        for item in value:
+            found = find_output_file(item, want_video)
+            if found:
+                return found
+        return None
+    if isinstance(value, dict):
+        filename = value.get("filename")
+        if isinstance(filename, str) and filename:
+            is_video = is_video_filename(filename)
+            if is_video == bool(want_video):
+                return {
+                    "filename": filename,
+                    "subfolder": value.get("subfolder", "") or "",
+                    "type": value.get("type", "output") or "output",
+                }
+        for child in value.values():
+            found = find_output_file(child, want_video)
+            if found:
+                return found
+    return None
+
+
+def download_comfy_file(file_meta):
+    """Fetch a Comfy output file (image or video) as base64."""
+    from urllib.parse import urlencode
+
+    query = urlencode(
+        {
+            "filename": file_meta["filename"],
+            "subfolder": file_meta.get("subfolder", ""),
+            "type": file_meta.get("type", "output"),
+        }
+    )
+    req = urllib.request.Request(f"{COMFY_URL}/view?{query}")
+    with urllib.request.urlopen(req, timeout=180) as resp:
+        return base64.b64encode(resp.read()).decode()
+
+
+def extract_comfy_output(outputs, want_video):
+    """Turn a history entry's outputs into a {data_b64, file_type, is_video}
+    result, or None if the wanted output isn't ready yet."""
+    file_meta = find_output_file(outputs, want_video)
+    if not file_meta:
+        return None
+    ext = file_extension(file_meta["filename"])
+    return {
+        "data_b64": download_comfy_file(file_meta),
+        # SaveVideo defaults to mp4; SaveImage to png. Fall back accordingly so
+        # save-generated always gets a sane fileType.
+        "file_type": ext or ("mp4" if want_video else "png"),
+        "is_video": bool(want_video),
+    }
+
+
 def run_comfy(payload):
-    """Submit a ComfyUI workflow, poll history, download the first output image."""
+    """Submit a ComfyUI workflow, poll history, download the first output file.
+
+    Returns {data_b64, file_type, is_video}. Image jobs pull the first
+    SaveImage still; jobs marked "media": "video" pull the SaveVideo clip."""
     workflow = payload.get("workflow")
     if not isinstance(workflow, dict) or not workflow:
         raise ValueError('COMFY payload needs a "workflow" object (API format)')
 
     upload_comfy_input_images(payload)
+
+    want_video = str(payload.get("media") or "").strip().lower() == "video"
 
     try:
         status, resp = http_json(
@@ -284,32 +374,24 @@ def run_comfy(payload):
         entry = hist.get(prompt_id)
         if not entry:
             continue
-        for node_output in (entry.get("outputs") or {}).values():
-            for image in node_output.get("images") or []:
-                if not image.get("filename"):
-                    continue
-                from urllib.parse import urlencode
-
-                query = urlencode(
-                    {
-                        "filename": image["filename"],
-                        "subfolder": image.get("subfolder", ""),
-                        "type": image.get("type", "output"),
-                    }
-                )
-                req = urllib.request.Request(f"{COMFY_URL}/view?{query}")
-                with urllib.request.urlopen(req, timeout=120) as img_resp:
-                    return base64.b64encode(img_resp.read()).decode()
+        result = extract_comfy_output(entry.get("outputs") or {}, want_video)
+        if result:
+            return result
         comfy_status = (entry.get("status") or {}).get("status_str")
         if comfy_status == "error":
             raise RuntimeError("ComfyUI reported a workflow error")
-    raise RuntimeError(f"ComfyUI job timed out after {GEN_TIMEOUT}s")
+    kind = "video" if want_video else "image"
+    raise RuntimeError(f"ComfyUI {kind} job timed out after {GEN_TIMEOUT}s")
 
 
-def upload_result(job, image_b64):
+def upload_result(job, media):
+    """Upload a rendered result (media = {data_b64, file_type, is_video}) to
+    kind_robots. For video jobs the fileType tells save-generated to store the
+    clip as mp4/webm so the front-end plays it instead of treating it as a
+    still."""
     payload = job.get("payload") or {}
     body = {
-        "imageBase64": image_b64,
+        "imageBase64": media["data_b64"],
         "promptString": payload.get("promptString")
         or payload.get("prompt")
         or f"art job {job['id']}",
@@ -317,6 +399,7 @@ def upload_result(job, image_b64):
         or payload.get("negative_prompt"),
         "steps": payload.get("steps"),
         "seed": payload.get("seed"),
+        "fileType": media.get("file_type"),
         "designer": f"relay:{AGENT_ID}",
         "userId": KR_RELAY_USER_ID,
     }
@@ -352,13 +435,14 @@ def encode_webp(raw):
         return raw, "png"
 
 
-def write_local_copy(job, art_image_id, image_b64):
+def write_local_copy(job, art_image_id, media):
     """Local fast path: engines, kind_robots, and conductor share a drive, so
     drop the finished file straight into the local checkout's folder
-    collection (a folder IS a collection). Re-encoded to WebP (see encode_webp)
-    so we stop minting new PNGs. No-op unless KR_LOCAL_IMAGES_DIR is set.
-    Failures here never fail the job - the DB record is the source of truth;
-    this is a convenience copy awaiting commit."""
+    collection (a folder IS a collection). Stills are re-encoded to WebP (see
+    encode_webp) so we stop minting new PNGs; video clips are written through
+    untouched with their real extension. No-op unless KR_LOCAL_IMAGES_DIR is
+    set. Failures here never fail the job - the DB record is the source of
+    truth; this is a convenience copy awaiting commit."""
     if not KR_LOCAL_IMAGES_DIR:
         return
     try:
@@ -373,7 +457,12 @@ def write_local_copy(job, art_image_id, image_b64):
         base = KR_LOCAL_IMAGES_DIR.replace("\\", "/").rstrip("/")
         folder = f"{base}/{collection}"
         os.makedirs(folder, exist_ok=True)
-        data, ext = encode_webp(base64.b64decode(image_b64))
+        raw = base64.b64decode(media["data_b64"])
+        if media.get("is_video"):
+            # Never run video bytes through the WebP encoder — keep the clip.
+            data, ext = raw, media.get("file_type") or "mp4"
+        else:
+            data, ext = encode_webp(raw)
         file_path = f"{folder}/{collection}-{art_image_id}.{ext}"
         with open(file_path, "wb") as f:
             f.write(data)
@@ -406,13 +495,18 @@ def process(job):
         payload = json.loads(payload)
     log(f"job {job_id}: {engine} attempt {job.get('attempts')}")
 
-    image_b64 = run_comfy(payload) if engine == "COMFY" else run_a1111(payload)
-    art_image_id = upload_result(job, image_b64)
+    if engine == "COMFY":
+        media = run_comfy(payload)
+    else:
+        # A1111 always returns a still PNG.
+        media = {"data_b64": run_a1111(payload), "file_type": "png", "is_video": False}
+    art_image_id = upload_result(job, media)
     if not art_image_id:
         raise RuntimeError("upload returned no ArtImage id")
     complete_job(job_id, True, art_image_id=art_image_id)
-    write_local_copy(job, art_image_id, image_b64)
-    log(f"job {job_id}: DONE (ArtImage {art_image_id})")
+    write_local_copy(job, art_image_id, media)
+    kind = "video" if media.get("is_video") else "image"
+    log(f"job {job_id}: DONE ({kind} ArtImage {art_image_id})")
 
 
 def main():
