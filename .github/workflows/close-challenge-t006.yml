@@ -9,12 +9,12 @@ permissions:
 
 jobs:
   close-task:
-    if: github.head_ref == 'worker/challenge-center-t-006-finalize'
+    if: github.head_ref == 'worker/challenge-center-t-006-finalize-v2'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: worker/challenge-center-t-006-finalize
+          ref: worker/challenge-center-t-006-finalize-v2
           fetch-depth: 0
       - uses: actions/setup-python@v5
         with:
@@ -78,11 +78,11 @@ jobs:
               ledger.write_text(text.rstrip() + '\n' + record, encoding='utf-8')
           PY
           rm .github/workflows/close-challenge-t006.yml
-          rm -f .github/t006-finalize-trigger.md
+          rm -f .github/t006-finalize-trigger-v2.md
       - name: Commit reconciliation
         run: |
           git config user.name conductor-bot
           git config user.email conductor-bot@users.noreply.github.com
-          git add projects/challenge-center/roadmap.yaml LEARNING.yaml .github/workflows/close-challenge-t006.yml .github/t006-finalize-trigger.md
+          git add projects/challenge-center/roadmap.yaml LEARNING.yaml .github/workflows/close-challenge-t006.yml .github/t006-finalize-trigger-v2.md
           git commit -m "done: challenge-center/t-006 [skip ci]"
-          git push origin HEAD:worker/challenge-center-t-006-finalize
+          git push origin HEAD:worker/challenge-center-t-006-finalize-v2
