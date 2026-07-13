@@ -1,14 +1,14 @@
 # Roadmap Audit
 
-Generated: `2026-07-13T02:04:47.964034+00:00`
+Generated: `2026-07-13T08:31:00.866479+00:00`
 
 This is a conservative structural audit. It reports suspicious state; it does not automatically change task status or remove human gates.
 
 ## Portfolio snapshot
 
 - **37** roadmaps, **31** active projects, **447** tasks
-- **100 ready**, **56 waiting**, **15 needs-human**, **1 claimed/review**, **263 done**
-- Findings: **10 errors**, **14 warnings**, **44 informational**
+- **99 ready**, **57 waiting**, **15 needs-human**, **2 claimed/review**, **263 done**
+- Findings: **4 errors**, **15 warnings**, **44 informational**
 
 ## Project inventory
 
@@ -17,7 +17,7 @@ This is a conservative structural audit. It reports suspicious state; it does no
 | 1 | `superkate-services-calculator` | active | software | 0 | 0 | 1 | 0 | 35 / 36 |
 | 2 | `challenge-center` | active | software | 5 | 5 | 0 | 1 | 7 / 18 |
 | 3 | `ai-art-academy` | active | software | 5 | 0 | 0 | 0 | 7 / 12 |
-| 4 | `coloring-book` | active | software | 5 | 4 | 0 | 0 | 10 / 19 |
+| 4 | `coloring-book` | active | software | 4 | 5 | 0 | 0 | 10 / 19 |
 | 5 | `humboldt-scoop` | active | software | 1 | 0 | 0 | 0 | 7 / 8 |
 | 6 | `humboldt-scoop-cms` | active | software | 2 | 4 | 0 | 0 | 5 / 11 |
 | 7 | `digital-storefront` | active | software | 3 | 7 | 0 | 0 | 5 / 15 |
@@ -34,7 +34,7 @@ This is a conservative structural audit. It reports suspicious state; it does no
 | 18 | `serendipity` | active | software | 3 | 0 | 0 | 0 | 9 / 12 |
 | 19 | `storymaker` | active | software | 2 | 0 | 0 | 0 | 8 / 10 |
 | 20 | `davinci` | active | software | 2 | 0 | 0 | 0 | 12 / 14 |
-| 21 | `art-generator-connect` | active | software | 1 | 0 | 0 | 0 | 19 / 21 |
+| 21 | `art-generator-connect` | active | software | 1 | 0 | 0 | 1 | 19 / 21 |
 | 22 | `mural-design` | active | content | 1 | 3 | 1 | 0 | 2 / 7 |
 | 23 | `coat-dance` | active | content | 2 | 0 | 0 | 0 | 0 / 10 |
 | 24 | `alexa-integration` | active | software | 4 | 1 | 0 | 0 | 10 / 15 |
@@ -54,23 +54,18 @@ This is a conservative structural audit. It reports suspicious state; it does no
 
 ## Findings by severity
 
-### Error (10)
+### Error (4)
 
-- **INVALID_STATUS** — `art-generator-connect` / `t-019`: Unknown task status 'in-progress'.
-- **MALFORMED_DEPENDENCY_LIST** — `challenge-center` / `t-010`: depends_on is a comma-separated string: 't-008, t-009'; use a YAML list.
-- **MISSING_DEPENDENCY** — `challenge-center` / `t-010`: Dependency 't-008, t-009' does not exist in this roadmap.
-- **MALFORMED_DEPENDENCY_LIST** — `challenge-center` / `t-013`: depends_on is a comma-separated string: 't-010, t-012'; use a YAML list.
-- **MISSING_DEPENDENCY** — `challenge-center` / `t-013`: Dependency 't-010, t-012' does not exist in this roadmap.
-- **READY_WITH_UNMET_DEPS** — `coloring-book` / `t-011`: Ready task has unmet dependencies: t-006.
 - **GATED_DONE_WITHOUT_APPROVAL** — `conductor` / `t-006`: Human-gated task is done without approved_by_human: true.
 - **DUPLICATE_TASK_ID** — `conductor` / `t-011`: Task id appears more than once.
 - **GATED_DONE_WITHOUT_APPROVAL** — `humboldt-scoop-cms` / `t-003`: Human-gated task is done without approved_by_human: true.
 - **GATED_DONE_WITHOUT_APPROVAL** — `mermaids-of-venice` / `t-001`: Human-gated task is done without approved_by_human: true.
 
-### Warning (14)
+### Warning (15)
 
 - **POSSIBLY_UNNECESSARY_GATE** — `art-generator-connect` / `t-001`: Reversible software task is human-gated without an obvious hard-gate reason in its note.
 - **POSSIBLY_UNNECESSARY_GATE** — `art-generator-connect` / `t-009`: Reversible software task is human-gated without an obvious hard-gate reason in its note.
+- **STALE_IN_PROGRESS** — `art-generator-connect` / `t-019`: Task has remained claimed for 6 days.
 - **SOFT_NEEDS_HUMAN** — `conductor` / `t-026`: needs-human has no obvious hard-gate marker; consider returning it to ready or documenting the actual gate.
 - **POSSIBLY_UNNECESSARY_GATE** — `digital-storefront` / `t-001`: Reversible software task is human-gated without an obvious hard-gate reason in its note.
 - **POSSIBLY_UNNECESSARY_GATE** — `digital-storefront` / `t-002`: Reversible software task is human-gated without an obvious hard-gate reason in its note.
