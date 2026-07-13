@@ -16,13 +16,13 @@ happened. Don't edit it; edit here.
 reversible until the first clean cycle is done. Nothing publishes, deploys, or spends
 money without my explicit approval (set `approved_by_human: true` on the gated task).
 
-**Priority order this week:** superkate-services-calculator → challenge-center →
-ai-art-academy → coloring-book → humboldt-scoop → humboldt-scoop-cms →
-digital-storefront → packmaker → mermaids-of-venice → kind-robots → global-ui.
-(Mirror changes into projects/priority.yaml. Updated 2026-07-10: ai-art-academy and
-coloring-book created per Silas's session direction — ai-art-academy is the autonomous
-initiative test run and should get Worker attention early while it's being proven.
-dream-cycle sits last on purpose: it's the idle fallback, never a competitor for
+**Priority order this week:** challenge-center → ai-art-academy → coloring-book →
+humboldt-scoop → humboldt-scoop-cms → digital-storefront → packmaker →
+mermaids-of-venice → kind-robots → global-ui.
+(Mirror changes into projects/priority.yaml. Updated 2026-07-13: both Superkate apps
+are normal-priority and sit below this current priority cluster. ai-art-academy is the
+autonomous initiative test run and should get Worker attention early while it's being
+proven. dream-cycle sits last on purpose: it's the idle fallback, never a competitor for
 real ready work.)
 
 **Standing rules for all agents:** Respect each project's `kind`. Honor `depends_on` gates.
@@ -88,7 +88,7 @@ Silas explicitly approves that concrete action too.
 ## Per-project direction  ← agents read the block for the project they're working on
 
 ### superkate-services-calculator  (software)
-**Direction:** High-priority app for Superkate / Hair by Superkate. Build a private,
+**Direction:** Private app for Superkate / Hair by Superkate. Build a private,
 polished services calculator for salon appointments: client name, appointment date,
 hourly rate, time spent, product cost, appointment total, search by client/date, and
 receipt email preparation using `hourly rate × time spent + product cost = total price`.
