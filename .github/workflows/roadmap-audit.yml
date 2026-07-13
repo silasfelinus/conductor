@@ -1,0 +1,52 @@
+name: Roadmap Audit
+
+on:
+  pull_request:
+    paths:
+      - 'CONTROL.md'
+      - 'AGENTS.md'
+      - 'project-overrides.yaml'
+      - 'projects/priority.yaml'
+      - 'projects/*/roadmap.yaml'
+      - 'scripts/audit_roadmaps.py'
+      - 'docs/AUDITOR-DUTIES.md'
+      - 'docs/SELF-IMPROVING-STUDIO.md'
+  workflow_dispatch:
+  schedule:
+    - cron: '23 10 * * *'
+
+permissions:
+  contents: write
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.ref || github.ref_name }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install dependencies
+        run: pip install pyyaml
+      - name: Generate portfolio audit
+        run: python scripts/audit_roadmaps.py --json ROADMAP-AUDIT.json --markdown ROADMAP-AUDIT.md
+      - name: Persist initial audit snapshot on the audit branch
+        if: github.event_name == 'pull_request' && github.event.pull_request.head.ref == 'worker/roadmap-audit-2026-07-12'
+        run: |
+          git config user.name conductor-bot
+          git config user.email conductor-bot@users.noreply.github.com
+          git add ROADMAP-AUDIT.json ROADMAP-AUDIT.md
+          if ! git diff --cached --quiet; then
+            git commit -m "docs: generate portfolio roadmap audit"
+            git push origin HEAD:${{ github.event.pull_request.head.ref }}
+          fi
+      - name: Upload audit artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: roadmap-audit
+          path: |
+            ROADMAP-AUDIT.json
+            ROADMAP-AUDIT.md
+          retention-days: 30
