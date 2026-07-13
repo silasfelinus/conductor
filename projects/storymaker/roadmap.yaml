@@ -113,3 +113,20 @@ tasks:
     session data model doc (or a pointer in notes_from_silas) so schema design
     respects: no shared run/session tables, no columns added to Life* models,
     shared behavior only via existing KR models or extracted pure utilities.
+- id: t-010
+  milestone: m4
+  title: Polish and upgrade Storymaker front-end surface
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  note: >
+    UI polish + upgrade for the storymaker front end now that the scaffold page is
+    live at /storymaker. Steps: (1) generate final dashboard-tab art at
+    public/images/dashboard-tabs/scenario/storymaker.webp and tutorial art at
+    public/images/tutorials/scenario/storymaker.webp; (2) add a matching section
+    for 'storymaker' under tutorialChannels.scenario.sections in
+    kind_robots/stores/helpers/tutorialCards.ts; (3) verify the PROJECT Dream
+    liveUrl points at /storymaker (admin can run the Conductor 'Placements' button
+    to backfill channelKey/tabKey/liveUrl); (4) evolve the placeholder scaffold
+    page into the full interactive experience for this project.

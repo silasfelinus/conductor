@@ -271,7 +271,7 @@ tasks:
     milestone: m4
     title: "Implement the Model Builder API, Pinia store, and first UI slice"
     status: done
-    owner: null
+    owner: worker
     passes: 0
     stakes: reversible
     depends_on:
@@ -279,10 +279,10 @@ tasks:
       - t-005
       - t-013
     note: >
-      Cross-repo implementation in kind_robots. Add durable run APIs, modelBuilderStore, and a
-      responsive workspace. First slice: select an existing Character, request one hero asset,
-      approve pitch and prompt, generate a draft, and promote through final commit. Verify
-      resume, invalidation, recovery, and idempotency before expanding recipes.
+      Shipped the Kind Robots front end: the existing model-builder page component wired into a public
+      scaffold-based page at /model-builder, registered as the 'model-builder' tab in the builder channel
+      with channelKey/tabKey. Reusable project-front-page scaffold in kind_robots/components/conductor/.
+      kind_robots PR #204 merged 2026-07-12.
 
   - id: t-015
     milestone: m4
@@ -518,3 +518,20 @@ tasks:
       pools; free text otherwise) so a created/updated record gets its real fields. Keep it
       bounded and typed per model (no arbitrary column writes); CREATE first (new private
       records) then UPDATE of own records. Deferred from t-024 as an untested prod-write.
+
+  - id: t-029
+    milestone: m6
+    title: "Polish and upgrade Model Builder front-end surface"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      UI polish + upgrade for the model-builder front end now that the scaffold page is live at
+      /model-builder. Steps: (1) generate final dashboard-tab art at
+      public/images/dashboard-tabs/builder/model-builder.webp and tutorial art at
+      public/images/tutorials/builder/model-builder.webp; (2) add a matching section for 'model-builder'
+      under tutorialChannels.builder.sections in kind_robots/stores/helpers/tutorialCards.ts; (3) verify
+      the PROJECT Dream liveUrl points at /model-builder (admin can run the Conductor 'Placements' button
+      to backfill channelKey/tabKey/liveUrl); (4) evolve the placeholder scaffold page into the full
+      interactive experience for this project.

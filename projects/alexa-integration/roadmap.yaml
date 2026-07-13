@@ -258,3 +258,18 @@ tasks:
     checks) + typecheck green; kind_robots vue-tsc + eslint + prettier green; live curl round-trip for
     theme/surprise/art through POST /api/alexa; headless-browser proof (butterflies + synthwave theme +
     art draft + random surprise effect, no console errors).'
+- id: t-015
+  milestone: m4
+  title: Polish and upgrade Voice Lab front-end surface
+  status: ready
+  owner: null
+  updated: '2026-07-13T00:00:00Z'
+  passes: 0
+  stakes: reversible
+  note: 'UI polish + upgrade for the alexa-integration front end now that the scaffold page is live at
+    /voice-lab. Steps: (1) generate final dashboard-tab art at public/images/dashboard-tabs/wonder/voice-lab.webp
+    and tutorial art at public/images/tutorials/wonder/voice-lab.webp; (2) add a matching section for
+    ''voice-lab'' under tutorialChannels.wonder.sections in kind_robots/stores/helpers/tutorialCards.ts;
+    (3) verify the PROJECT Dream liveUrl points at /voice-lab (admin can run the Conductor ''Placements''
+    button to backfill channelKey/tabKey/liveUrl); (4) evolve the placeholder scaffold page into the full
+    interactive experience for this project.'

@@ -184,3 +184,21 @@ tasks:
       (decks, regions, saves) needs to look like to port cleanly to Unreal;
       what does NOT port (DOM compositing) and its Unreal equivalent; rough
       effort tiers. Research note only — no engine work, no Steam page.
+
+  - id: t-010
+    milestone: m2
+    title: Polish and upgrade Ruler Hooked front-end surface
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      UI polish + upgrade for the ruler-hooked front end now that the scaffold page is
+      live at /ruler-hooked. Steps: (1) generate final dashboard-tab art at
+      public/images/dashboard-tabs/wonder/ruler-hooked.webp and tutorial art at
+      public/images/tutorials/wonder/ruler-hooked.webp; (2) add a matching section for
+      'ruler-hooked' under tutorialChannels.wonder.sections in
+      kind_robots/stores/helpers/tutorialCards.ts; (3) verify the PROJECT Dream liveUrl
+      points at /ruler-hooked (admin can run the Conductor 'Placements' button to
+      backfill channelKey/tabKey/liveUrl); (4) evolve the placeholder scaffold page into
+      the full interactive experience for this project.

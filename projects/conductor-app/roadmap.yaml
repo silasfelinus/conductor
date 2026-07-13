@@ -196,3 +196,20 @@ tasks:
     manual audit.
 
     '
+- id: t-013
+  milestone: m1
+  title: Polish and upgrade Conductor App front-end surface
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  note: 'UI polish + upgrade for the conductor-app front end now that the scaffold page is live at
+    /conductor-app. Steps: (1) generate final dashboard-tab art at
+    public/images/dashboard-tabs/conductor/conductor-app.webp and tutorial art at
+    public/images/tutorials/conductor/conductor-app.webp; (2) add a matching section for ''conductor-app''
+    under tutorialChannels.conductor.sections in kind_robots/stores/helpers/tutorialCards.ts; (3) verify
+    the PROJECT Dream liveUrl points at /conductor-app (admin can run the Conductor ''Placements'' button
+    to backfill channelKey/tabKey/liveUrl); (4) evolve the placeholder scaffold page into the full
+    interactive experience for this project.
+
+    '

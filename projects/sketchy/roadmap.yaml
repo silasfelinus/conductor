@@ -125,3 +125,20 @@ tasks:
     \ as primary critique engine for quality and encouraging tone; GPT-4o as fallback/A-B test. Google\
     \ Vision AI excluded (object detection only). Cost estimate: ~$0.005\u20130.01/critique at Sketchy's\
     \ expected scale.\n"
+- id: t-007
+  milestone: m5
+  title: Polish and upgrade Sketchy front-end surface
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  note: >
+    UI polish + upgrade for the sketchy front end now that the scaffold page is
+    live at /sketchy. Steps: (1) generate final dashboard-tab art at
+    public/images/dashboard-tabs/academy/sketchy.webp and tutorial art at
+    public/images/tutorials/academy/sketchy.webp; (2) add a matching section for
+    'sketchy' under tutorialChannels.academy.sections in
+    kind_robots/stores/helpers/tutorialCards.ts; (3) verify the PROJECT Dream
+    liveUrl points at /sketchy (admin can run the Conductor 'Placements' button to
+    backfill channelKey/tabKey/liveUrl); (4) evolve the placeholder scaffold page
+    into the full interactive experience for this project.
