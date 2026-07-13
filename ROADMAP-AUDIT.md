@@ -1,14 +1,14 @@
 # Roadmap Audit
 
-Generated: `2026-07-13T08:31:00.866479+00:00`
+Generated: `2026-07-13T09:34:12.209450+00:00`
 
 This is a conservative structural audit. It reports suspicious state; it does not automatically change task status or remove human gates.
 
 ## Portfolio snapshot
 
-- **37** roadmaps, **31** active projects, **447** tasks
-- **99 ready**, **57 waiting**, **15 needs-human**, **2 claimed/review**, **263 done**
-- Findings: **4 errors**, **15 warnings**, **44 informational**
+- **37** roadmaps, **31** active projects, **446** tasks
+- **99 ready**, **57 waiting**, **15 needs-human**, **2 claimed/review**, **262 done**
+- Findings: **0 errors**, **15 warnings**, **44 informational**
 
 ## Project inventory
 
@@ -30,7 +30,7 @@ This is a conservative structural audit. It reports suspicious state; it does no
 | 14 | `approval-portal` | retired | software | 0 | 0 | 0 | 0 | 3 / 5 |
 | 15 | `superkate-hairstyle-ai` | active | software | 1 | 0 | 2 | 0 | 14 / 17 |
 | 16 | `ecosystem-map` | active | software | 4 | 1 | 0 | 0 | 3 / 8 |
-| 17 | `conductor` | active | software | 8 | 0 | 1 | 0 | 27 / 36 |
+| 17 | `conductor` | active | software | 8 | 0 | 1 | 0 | 26 / 35 |
 | 18 | `serendipity` | active | software | 3 | 0 | 0 | 0 | 9 / 12 |
 | 19 | `storymaker` | active | software | 2 | 0 | 0 | 0 | 8 / 10 |
 | 20 | `davinci` | active | software | 2 | 0 | 0 | 0 | 12 / 14 |
@@ -54,12 +54,9 @@ This is a conservative structural audit. It reports suspicious state; it does no
 
 ## Findings by severity
 
-### Error (4)
+### Error (0)
 
-- **GATED_DONE_WITHOUT_APPROVAL** — `conductor` / `t-006`: Human-gated task is done without approved_by_human: true.
-- **DUPLICATE_TASK_ID** — `conductor` / `t-011`: Task id appears more than once.
-- **GATED_DONE_WITHOUT_APPROVAL** — `humboldt-scoop-cms` / `t-003`: Human-gated task is done without approved_by_human: true.
-- **GATED_DONE_WITHOUT_APPROVAL** — `mermaids-of-venice` / `t-001`: Human-gated task is done without approved_by_human: true.
+_None._
 
 ### Warning (15)
 
