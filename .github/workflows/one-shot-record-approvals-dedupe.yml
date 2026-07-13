@@ -22,77 +22,65 @@ jobs:
         with:
           python-version: '3.12'
 
-      - name: Record approvals and remove true duplicate
+      - name: Install YAML dependency
+        run: pip install pyyaml
+
+      - name: Record confirmed human approvals
         run: |
-          pip install pyyaml
+          python scripts/set_task_field.py conductor t-006 approved_by_human true
+          python scripts/set_task_field.py humboldt-scoop-cms t-003 approved_by_human true
+          python scripts/set_task_field.py mermaids-of-venice t-001 approved_by_human true
+
+      - name: Remove the retroactive duplicate t-011 block
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+          import yaml
+
+          path = Path('projects/conductor/roadmap.yaml')
+          text = path.read_text()
+          lines = text.splitlines(keepends=True)
+
+          starts = []
+          for index, line in enumerate(lines):
+              match = re.match(r'^(?P<indent>\s*)-\s+id:\s*t-011\s*$', line.rstrip('\n'))
+              if match:
+                  starts.append((index, len(match.group('indent'))))
+
+          candidates = []
+          for start, indent in starts:
+              end = len(lines)
+              for index in range(start + 1, len(lines)):
+                  line = lines[index]
+                  match = re.match(r'^(?P<indent>\s*)-\s+id:\s*[^#\n]+', line)
+                  if match and len(match.group('indent')) == indent:
+                      end = index
+                      break
+              block = ''.join(lines[start:end])
+              if 'Retroactive task.' in block:
+                  candidates.append((start, end, block))
+
+          if len(candidates) != 1:
+              raise SystemExit(f'Expected one retroactive t-011 duplicate, found {len(candidates)}')
+
+          start, end, _ = candidates[0]
+          del lines[start:end]
+          path.write_text(''.join(lines))
+
+          data = yaml.safe_load(path.read_text())
+          remaining = [task for task in data['tasks'] if str(task.get('id')) == 't-011']
+          if len(remaining) != 1:
+              raise SystemExit(f'Expected one canonical t-011 after cleanup, found {len(remaining)}')
+          if 'Add Claude session startup sweep hook' not in remaining[0].get('title', ''):
+              raise SystemExit('The remaining t-011 is not the intended canonical hook task')
+          PY
+
+      - name: Validate approvals and regenerate audit
+        run: |
           python - <<'PY'
           from pathlib import Path
           import yaml
-
-          APPROVAL_NOTE = 'Approved by Silas in session on 2026-07-13.'
-
-          def task_spans(text: str, task_id: str):
-              lines = text.splitlines(keepends=True)
-              offsets = []
-              position = 0
-              for line in lines:
-                  offsets.append(position)
-                  position += len(line)
-
-              spans = []
-              for index, line in enumerate(lines):
-                  if line.strip() != f'- id: {task_id}':
-                      continue
-                  indent = len(line) - len(line.lstrip(' '))
-                  end_index = len(lines)
-                  for candidate in range(index + 1, len(lines)):
-                      candidate_line = lines[candidate]
-                      candidate_indent = len(candidate_line) - len(candidate_line.lstrip(' '))
-                      if candidate_indent == indent and candidate_line.strip().startswith('- id: '):
-                          end_index = candidate
-                          break
-                  start = offsets[index]
-                  end = offsets[end_index] if end_index < len(lines) else len(text)
-                  spans.append((start, end, text[start:end]))
-              return spans
-
-          def approve_unique_task(path: str, task_id: str):
-              p = Path(path)
-              text = p.read_text()
-              spans = task_spans(text, task_id)
-              if len(spans) != 1:
-                  raise SystemExit(f'{path}: expected one {task_id}, found {len(spans)}')
-              start, end, block = spans[0]
-              if 'approved_by_human: false' in block:
-                  block = block.replace('approved_by_human: false', 'approved_by_human: true', 1)
-              elif 'approved_by_human: true' not in block:
-                  raise SystemExit(f'{path}/{task_id}: no approval field found')
-
-              if 'approval_note:' not in block:
-                  lines = block.splitlines(keepends=True)
-                  for index, line in enumerate(lines):
-                      if 'approved_by_human: true' in line:
-                          indent = line[: len(line) - len(line.lstrip(' '))]
-                          lines.insert(index + 1, f'{indent}approval_note: "{APPROVAL_NOTE}"\n')
-                          break
-                  block = ''.join(lines)
-              p.write_text(text[:start] + block + text[end:])
-
-          approve_unique_task('projects/conductor/roadmap.yaml', 't-006')
-          approve_unique_task('projects/humboldt-scoop-cms/roadmap.yaml', 't-003')
-          approve_unique_task('projects/mermaids-of-venice/roadmap.yaml', 't-001')
-
-          conductor_path = Path('projects/conductor/roadmap.yaml')
-          conductor_text = conductor_path.read_text()
-          duplicate_candidates = [
-              span for span in task_spans(conductor_text, 't-011')
-              if 'Retroactive task.' in span[2]
-          ]
-          if len(duplicate_candidates) == 1:
-              start, end, _ = duplicate_candidates[0]
-              conductor_path.write_text(conductor_text[:start] + conductor_text[end:])
-          elif len(duplicate_candidates) > 1:
-              raise SystemExit(f'Expected at most one retroactive t-011 duplicate, found {len(duplicate_candidates)}')
 
           checks = [
               ('projects/conductor/roadmap.yaml', 't-006'),
@@ -101,17 +89,10 @@ jobs:
           ]
           for path, task_id in checks:
               data = yaml.safe_load(Path(path).read_text())
-              matches = [task for task in data['tasks'] if task['id'] == task_id]
+              matches = [task for task in data['tasks'] if str(task.get('id')) == task_id]
               if len(matches) != 1 or matches[0].get('approved_by_human') is not True:
                   raise SystemExit(f'{path}/{task_id}: approval validation failed')
-
-          conductor = yaml.safe_load(conductor_path.read_text())
-          if sum(task['id'] == 't-011' for task in conductor['tasks']) != 1:
-              raise SystemExit('conductor: duplicate t-011 still present')
           PY
-
-      - name: Regenerate roadmap audit and require zero errors
-        run: |
           python scripts/audit_roadmaps.py --json ROADMAP-AUDIT.json --markdown ROADMAP-AUDIT.md
           grep -F 'Findings: **0 errors**' ROADMAP-AUDIT.md
 
