@@ -154,3 +154,12 @@ records:
     outcome: done
     failure_category: null
     lesson: "Minimal-interaction 'just create it' is cheap once the gated actions exist: autoBuildItem/autoBuildRun just chain the existing draft -> approve -> generate -> commit actions with defaults, and an includeArt toggle lets it skip art for a fast create-records-only path (ASSET_ONLY items need art, so skip them when it's off). No new backend — it orchestrates over the idempotent executor, so re-running is safe. kind_robots PR #196."
+- date: 2026-07-12
+  project: challenge-center
+  task: t-004
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "For credential-gated seed tasks, merge an idempotent validation-first script first, then close only after Silas confirms the explicit --write command completed successfully."
