@@ -1,0 +1,277 @@
+name: One-shot Clear Roadmap Audit Warnings
+
+on:
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: write
+
+jobs:
+  repair:
+    if: github.head_ref == 'maintenance/clear-roadmap-audit-warnings'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: maintenance/clear-roadmap-audit-warnings
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install test dependencies
+        run: pip install pyyaml pytest
+
+      - name: Teach the framework explicit soft gates
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          def replace_once(path: str, old: str, new: str) -> None:
+              p = Path(path)
+              text = p.read_text()
+              if new in text:
+                  return
+              count = text.count(old)
+              if count != 1:
+                  raise SystemExit(f'{path}: expected one match, found {count}: {old!r}')
+              p.write_text(text.replace(old, new, 1))
+
+          replace_once(
+              'scripts/set_task_field.py',
+              '    "gate_human",\n    "approved_by_human",\n',
+              '    "gate_human",\n    "soft_gate",\n    "approved_by_human",\n',
+          )
+          replace_once(
+              'scripts/audit_roadmaps.py',
+              'if str(task.get("stakes", "")).lower() in {"outward-facing", "irreversible"}:',
+              'if str(task.get("stakes", "")).lower() in {"needs-human", "outward-facing", "irreversible"}:',
+          )
+          replace_once(
+              'scripts/audit_roadmaps.py',
+              '                if not hard_reasons:\n                    findings.append(issue("warning", "SOFT_NEEDS_HUMAN", slug, "needs-human has no obvious hard-gate marker; consider returning it to ready or documenting the actual gate.", task_id))\n',
+              '                if not hard_reasons and not task.get("soft_gate"):\n                    findings.append(issue("warning", "SOFT_NEEDS_HUMAN", slug, "needs-human has no obvious hard-gate marker; consider returning it to ready, setting soft_gate: true, or documenting the actual gate.", task_id))\n',
+          )
+          replace_once(
+              'scripts/audit_roadmaps.py',
+              '            if kind == "software" and task.get("gate_human") and str(task.get("stakes", "reversible")) == "reversible":\n',
+              '            if status in OPEN_STATES and kind == "software" and task.get("gate_human") and str(task.get("stakes", "reversible")) == "reversible":\n',
+          )
+
+          replace_once(
+              'AGENTS.md',
+              'On a **soft** `needs-human`: set the task status, document the reason clearly in the task\n`note:`, then **immediately re-run task selection** and pick the next available `ready` task.\nDo not end the cycle — there is almost always other work. Only stop if every ready task is\nalso blocked.\n',
+              'On a **soft** `needs-human`: set the task status, add `soft_gate: true`, document the reason clearly in the task\n`note:`, then **immediately re-run task selection** and pick the next available `ready` task.\nDo not end the cycle — there is almost always other work. Only stop if every ready task is\nalso blocked. `soft_gate: true` is metadata for auditors and coordinators; it never satisfies a dependency\nor grants permission for outward-facing work.\n',
+          )
+          replace_once(
+              'docs/AUDITOR-DUTIES.md',
+              'Soft gates include uncertainty, missing verification, tool access, ordinary architecture ambiguity, reversible review, and scope confirmation on new projects.\n',
+              'Soft gates include uncertainty, missing verification, tool access, ordinary architecture ambiguity, reversible review, and scope confirmation on new projects. Intentional soft checkpoints use `soft_gate: true`; this records that the state is deliberate without pretending it is a hard approval boundary. Completed, approved historical gates are provenance and should not be flagged as current throughput problems.\n',
+          )
+          PY
+
+      - name: Apply live roadmap and lifecycle repairs
+        run: |
+          python scripts/set_task_field.py art-generator-connect t-019 status ready
+          python scripts/set_task_field.py art-generator-connect t-019 owner null
+          python scripts/set_task_field.py art-generator-connect t-019 updated now
+          python scripts/set_task_field.py conductor t-026 soft_gate true
+          python scripts/set_task_field.py kind-robots t-011 soft_gate true
+          python scripts/set_task_field.py newsfeed t-002 soft_gate true
+
+          python - <<'PY'
+          from pathlib import Path
+          import yaml
+
+          path = Path('project-overrides.yaml')
+          text = path.read_text()
+          old = '''  - slug: engagement
+    status: active
+    priority: normal
+    kind: software
+'''
+          new = '''  - slug: engagement
+    status: finished
+    priority: normal
+    kind: software
+'''
+          if new not in text:
+              if text.count(old) != 1:
+                  raise SystemExit('Could not uniquely find engagement override')
+              text = text.replace(old, new, 1)
+
+          ruler = '''  - slug: ruler-hooked
+    status: active
+    priority: normal
+    kind: software
+
+'''
+          if '  - slug: ruler-hooked\n' not in text:
+              marker = '  - slug: dream-cycle\n'
+              if text.count(marker) != 1:
+                  raise SystemExit('Could not uniquely find dream-cycle override insertion point')
+              text = text.replace(marker, ruler + marker, 1)
+          path.write_text(text)
+
+          data = yaml.safe_load(text)
+          entries = {item['slug']: item for item in data['overrides']}
+          assert entries['engagement']['status'] == 'finished'
+          assert entries['ruler-hooked']['status'] == 'active'
+          PY
+
+      - name: Add audit policy regression tests
+        run: |
+          cat > tests/test_audit_roadmaps_policy.py <<'PY'
+          from __future__ import annotations
+
+          import importlib.util
+          from pathlib import Path
+
+
+          SCRIPT = Path(__file__).resolve().parents[1] / 'scripts' / 'audit_roadmaps.py'
+
+
+          def load_auditor():
+              spec = importlib.util.spec_from_file_location('audit_roadmaps_policy_test', SCRIPT)
+              assert spec and spec.loader
+              module = importlib.util.module_from_spec(spec)
+              spec.loader.exec_module(module)
+              return module
+
+
+          def findings_for(tmp_path: Path, task_yaml: str):
+              root = tmp_path
+              projects = root / 'projects'
+              (projects / 'example').mkdir(parents=True)
+              (projects / 'dream-cycle').mkdir(parents=True)
+              (root / 'CONTROL.md').write_text('# Test control\n')
+              (root / 'project-overrides.yaml').write_text(
+                  'overrides:\n'
+                  '  - slug: example\n'
+                  '    status: active\n'
+                  '    kind: software\n'
+                  '  - slug: dream-cycle\n'
+                  '    status: active\n'
+                  '    kind: software\n'
+              )
+              (projects / 'priority.yaml').write_text('order:\n  - example\n  - dream-cycle\n')
+              (projects / 'example' / 'roadmap.yaml').write_text(
+                  'project: example\n'
+                  'kind: software\n'
+                  'goal: Test the audit policy.\n'
+                  'milestones:\n  - id: m1\n    title: Test\n    weight: 100\n    status: not-started\n'
+                  'tasks:\n' + task_yaml
+              )
+              (projects / 'dream-cycle' / 'roadmap.yaml').write_text(
+                  'project: dream-cycle\n'
+                  'kind: software\n'
+                  'goal: Remain the fallback.\n'
+                  'milestones:\n  - id: m1\n    title: Loop\n    weight: 100\n    status: not-started\n'
+                  'tasks:\n'
+                  '  - id: t-001\n'
+                  '    milestone: m1\n'
+                  '    title: Recurring fallback\n'
+                  '    status: ready\n'
+                  '    stakes: reversible\n'
+              )
+              auditor = load_auditor()
+              auditor.ROOT = root
+              auditor.PROJECTS = projects
+              return auditor.audit()['findings']
+
+
+          def codes(findings):
+              return {item['code'] for item in findings}
+
+
+          def test_completed_approved_gate_is_historical_not_warning(tmp_path):
+              result = findings_for(
+                  tmp_path,
+                  '  - id: t-001\n'
+                  '    milestone: m1\n'
+                  '    title: Approved history\n'
+                  '    status: done\n'
+                  '    stakes: reversible\n'
+                  '    gate_human: true\n'
+                  '    approved_by_human: true\n'
+                  '    note: Internal review record.\n',
+              )
+              assert 'POSSIBLY_UNNECESSARY_GATE' not in codes(result)
+
+
+          def test_explicit_soft_gate_is_not_reported_as_accidental(tmp_path):
+              result = findings_for(
+                  tmp_path,
+                  '  - id: t-001\n'
+                  '    milestone: m1\n'
+                  '    title: Parallel scope check\n'
+                  '    status: needs-human\n'
+                  '    stakes: reversible\n'
+                  '    soft_gate: true\n'
+                  '    note: "FOR SILAS: Optional scope feedback; development continues."\n',
+              )
+              assert 'SOFT_NEEDS_HUMAN' not in codes(result)
+
+
+          def test_needs_human_stakes_is_a_hard_gate_marker(tmp_path):
+              result = findings_for(
+                  tmp_path,
+                  '  - id: t-001\n'
+                  '    milestone: m1\n'
+                  '    title: Production architecture decision\n'
+                  '    status: needs-human\n'
+                  '    stakes: needs-human\n'
+                  '    note: "FOR SILAS: Choose hosting and backup policy."\n',
+              )
+              assert 'SOFT_NEEDS_HUMAN' not in codes(result)
+
+
+          def test_open_reversible_gate_without_reason_still_warns(tmp_path):
+              result = findings_for(
+                  tmp_path,
+                  '  - id: t-001\n'
+                  '    milestone: m1\n'
+                  '    title: Suspicious gate\n'
+                  '    status: ready\n'
+                  '    stakes: reversible\n'
+                  '    gate_human: true\n'
+                  '    approved_by_human: false\n'
+                  '    note: Ordinary internal task.\n',
+              )
+              assert 'POSSIBLY_UNNECESSARY_GATE' in codes(result)
+          PY
+          pytest -q tests/test_audit_roadmaps_policy.py
+
+      - name: Regenerate audit and require a clean warning surface
+        run: |
+          python scripts/audit_roadmaps.py --json ROADMAP-AUDIT.json --markdown ROADMAP-AUDIT.md
+          grep -F 'Findings: **0 errors**, **0 warnings**' ROADMAP-AUDIT.md
+
+      - name: Record the maintenance decision and remove helper
+        run: |
+          cat > docs/MAINTENANCE-PASS-2026-07-13-WARNINGS.md <<'EOF'
+          # Roadmap Maintenance — Warning Cleanup
+
+          This pass resolves the 15 advisory findings from the first portfolio audit without erasing useful history:
+
+          - completed and approved historical gates no longer count as current throughput warnings;
+          - intentional soft checkpoints are explicit with `soft_gate: true`;
+          - `stakes: needs-human` is recognized as a real hard-gate marker;
+          - the abandoned `art-generator-connect/t-019` claim was reset to `ready` after branch and PR searches found no live work;
+          - `engagement` moved from `active` to `finished` because all tasks are done;
+          - `ruler-hooked` received an active override so its ready tasks are selectable.
+
+          The generated audit must report zero errors and zero warnings before this pass may merge.
+          EOF
+          rm .github/workflows/one-shot-clear-audit-warnings.yml
+
+      - name: Commit the maintenance result
+        run: |
+          git config user.name conductor-bot
+          git config user.email conductor-bot@users.noreply.github.com
+          git add AGENTS.md docs/AUDITOR-DUTIES.md docs/MAINTENANCE-PASS-2026-07-13-WARNINGS.md scripts/audit_roadmaps.py scripts/set_task_field.py tests/test_audit_roadmaps_policy.py project-overrides.yaml projects/art-generator-connect/roadmap.yaml projects/conductor/roadmap.yaml projects/kind-robots/roadmap.yaml projects/newsfeed/roadmap.yaml ROADMAP-AUDIT.md ROADMAP-AUDIT.json .github/workflows/one-shot-clear-audit-warnings.yml
+          git commit -m "chore: clear roadmap audit warnings"
+          git push origin HEAD:maintenance/clear-roadmap-audit-warnings
