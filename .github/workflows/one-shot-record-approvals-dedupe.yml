@@ -1,0 +1,132 @@
+name: One-shot Record Approvals and Dedupe
+
+on:
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: write
+
+jobs:
+  repair:
+    if: github.head_ref == 'maintenance/record-approvals-and-dedupe-t011'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: maintenance/record-approvals-and-dedupe-t011
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Record approvals and remove true duplicate
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          APPROVAL_NOTE = 'Approved by Silas in session on 2026-07-13.'
+
+          def task_spans(text: str, task_id: str):
+              lines = text.splitlines(keepends=True)
+              spans = []
+              offsets = []
+              pos = 0
+              for line in lines:
+                  offsets.append(pos)
+                  pos += len(line)
+              for index, line in enumerate(lines):
+                  if line.strip() != f'- id: {task_id}':
+                      continue
+                  indent = len(line) - len(line.lstrip(' '))
+                  end_index = len(lines)
+                  for candidate in range(index + 1, len(lines)):
+                      next_line = lines[candidate]
+                      next_indent = len(next_line) - len(next_line.lstrip(' '))
+                      if next_indent == indent and next_line.strip().startswith('- id: '):
+                          end_index = candidate
+                          break
+                  start = offsets[index]
+                  end = offsets[end_index] if end_index < len(lines) else len(text)
+                  spans.append((start, end, text[start:end]))
+              return spans
+
+          def select_task(path: str, task_id: str, title: str):
+              p = Path(path)
+              text = p.read_text()
+              matches = [span for span in task_spans(text, task_id) if title in span[2]]
+              if len(matches) != 1:
+                  raise SystemExit(f'{path}: expected one {task_id} task titled {title!r}, found {len(matches)}')
+              return p, text, matches[0]
+
+          def approve_task(path: str, task_id: str, title: str):
+              p, text, (start, end, block) = select_task(path, task_id, title)
+              if block.count('approved_by_human: false') != 1:
+                  raise SystemExit(f'{path}/{task_id}: expected one unapproved gate')
+              block = block.replace('approved_by_human: false', 'approved_by_human: true', 1)
+              approval_line = next(
+                  line for line in block.splitlines() if 'approved_by_human: true' in line
+              )
+              indent = approval_line[: len(approval_line) - len(approval_line.lstrip(' '))]
+              block = block.replace(
+                  approval_line + '\n',
+                  approval_line + f'\n{indent}approval_note: "{APPROVAL_NOTE}"\n',
+                  1,
+              )
+              p.write_text(text[:start] + block + text[end:])
+
+          approve_task(
+              'projects/conductor/roadmap.yaml',
+              't-006',
+              'Add GitHub Actions security audit workflow',
+          )
+          approve_task(
+              'projects/humboldt-scoop-cms/roadmap.yaml',
+              't-003',
+              'Write yard route calendar card spec (dummy data)',
+          )
+          approve_task(
+              'projects/mermaids-of-venice/roadmap.yaml',
+              't-001',
+              'Build the kind_robots mermaids landing page',
+          )
+
+          p, text, (start, end, block) = select_task(
+              'projects/conductor/roadmap.yaml',
+              't-011',
+              'Add .claude/hooks/session-start.sh SessionStart hook to automate the conductor sweep',
+          )
+          if 'Retroactive task.' not in block:
+              raise SystemExit('Refusing to remove t-011 because it no longer looks like the documented duplicate')
+          p.write_text(text[:start] + text[end:])
+          PY
+
+      - name: Regenerate roadmap audit
+        run: |
+          pip install pyyaml
+          python scripts/audit_roadmaps.py --json ROADMAP-AUDIT.json --markdown ROADMAP-AUDIT.md
+
+      - name: Record maintenance decision and remove helper
+        run: |
+          cat > docs/MAINTENANCE-PASS-2026-07-13-APPROVALS.md <<'EOF'
+          # Roadmap Maintenance — Human Approvals and Duplicate Cleanup
+
+          Silas confirmed in session on 2026-07-13 that the three completed audited gates were approved:
+
+          - `conductor/t-006`
+          - `humboldt-scoop-cms/t-003`
+          - `mermaids-of-venice/t-001`
+
+          The later duplicate `conductor/t-011` block was removed rather than renumbered because it retroactively described the same SessionStart hook already represented by the earlier canonical `t-011`. Existing `t-012` dependency semantics remain unchanged.
+          EOF
+          rm .github/workflows/one-shot-record-approvals-dedupe.yml
+
+      - name: Commit maintenance result
+        run: |
+          git config user.name conductor-bot
+          git config user.email conductor-bot@users.noreply.github.com
+          git add projects/conductor/roadmap.yaml projects/humboldt-scoop-cms/roadmap.yaml projects/mermaids-of-venice/roadmap.yaml ROADMAP-AUDIT.md ROADMAP-AUDIT.json docs/MAINTENANCE-PASS-2026-07-13-APPROVALS.md .github/workflows/one-shot-record-approvals-dedupe.yml
+          git commit -m "chore: record approvals and remove duplicate task"
+          git push origin HEAD:maintenance/record-approvals-and-dedupe-t011
