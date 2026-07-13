@@ -1,0 +1,65 @@
+name: Close challenge-center t-006
+
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  close-task:
+    if: github.head_ref == 'worker/challenge-center-t-006-finalize'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: worker/challenge-center-t-006-finalize
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install pyyaml
+      - name: Reconcile merged implementation
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import yaml
+
+          path = Path('projects/challenge-center/roadmap.yaml')
+          data = yaml.safe_load(path.read_text())
+          task = next(item for item in data['tasks'] if item['id'] == 't-006')
+          task['status'] = 'done'
+          task['owner'] = 'worker'
+          task['updated'] = '2026-07-13T10:13:18Z'
+          task['note'] = (
+              'DONE (2026-07-13): Kind Robots PR #210 merged the logged-in Challenge Center voting arena. '
+              'The dedicated /challenges/[slug] page supports classic two-contender VS layouts and responsive '
+              'N-contender grids; renders art, text, Character, and Scenario submissions; shows scores, ranks, '
+              'variants, and the mini leaderboard; and adds one auditable LOVED/CLAPPED/BOOED/HATED vote per '
+              'logged-in user through the ChallengeSubmission compound unique key. Contract tests, Prisma '
+              'generation, whole-project vue-tsc, and the Vercel build passed before merge. No live vote was cast.'
+          )
+          path.write_text(yaml.safe_dump(data, sort_keys=False, allow_unicode=True), encoding='utf-8')
+
+          ledger = Path('LEARNING.yaml')
+          learning = yaml.safe_load(ledger.read_text()) or []
+          learning.append({
+              'date': '2026-07-13',
+              'project': 'challenge-center',
+              'task': 't-006',
+              'outcome': 'done',
+              'failure_category': None,
+              'lesson': 'After a cross-repo PR merges, reconcile the conductor task immediately so a successful implementation cannot remain stranded as claimed.'
+          })
+          ledger.write_text(yaml.safe_dump(learning, sort_keys=False, allow_unicode=True), encoding='utf-8')
+          PY
+          python scripts/resolve_deps.py
+          rm .github/workflows/close-challenge-t006.yml
+      - name: Commit reconciliation
+        run: |
+          git config user.name conductor-bot
+          git config user.email conductor-bot@users.noreply.github.com
+          git add projects/challenge-center/roadmap.yaml LEARNING.yaml .github/workflows/close-challenge-t006.yml STATUS.md workspace.html
+          git commit -m "done: challenge-center/t-006 [skip ci]"
+          git push origin HEAD:worker/challenge-center-t-006-finalize
