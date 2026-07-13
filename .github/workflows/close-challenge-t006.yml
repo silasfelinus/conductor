@@ -43,11 +43,14 @@ jobs:
           path.write_text(yaml.safe_dump(data, sort_keys=False, allow_unicode=True), encoding='utf-8')
 
           ledger = Path('LEARNING.yaml')
-          learning = yaml.safe_load(ledger.read_text()) or []
-          learning.append({
+          learning = yaml.safe_load(ledger.read_text()) or {'records': []}
+          learning.setdefault('records', []).append({
               'date': '2026-07-13',
               'project': 'challenge-center',
               'task': 't-006',
+              'kind': 'software',
+              'stakes': 'reversible',
+              'passes': 0,
               'outcome': 'done',
               'failure_category': None,
               'lesson': 'After a cross-repo PR merges, reconcile the conductor task immediately so a successful implementation cannot remain stranded as claimed.'
@@ -56,10 +59,11 @@ jobs:
           PY
           python scripts/resolve_deps.py
           rm .github/workflows/close-challenge-t006.yml
+          rm -f .github/t006-finalize-trigger.md
       - name: Commit reconciliation
         run: |
           git config user.name conductor-bot
           git config user.email conductor-bot@users.noreply.github.com
-          git add projects/challenge-center/roadmap.yaml LEARNING.yaml .github/workflows/close-challenge-t006.yml STATUS.md workspace.html
+          git add projects/challenge-center/roadmap.yaml LEARNING.yaml .github/workflows/close-challenge-t006.yml .github/t006-finalize-trigger.md STATUS.md workspace.html
           git commit -m "done: challenge-center/t-006 [skip ci]"
           git push origin HEAD:worker/challenge-center-t-006-finalize
