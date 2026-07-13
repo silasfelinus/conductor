@@ -303,3 +303,25 @@ tasks:
       full roster. Either paginate the store's fetch (loop pages until a short
       page) or raise pageSize deliberately; check for other UI surfaces that
       assume the bot list is complete.
+
+  - id: t-014
+    milestone: m3
+    title: Wire the Comfy relay's job-completion path to store rendered clips for ltx/wan video ArtJobs
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: "2026-07-13T09:32:31Z"
+    note: >
+      Kaizen from kind_robots PR #213 (Reviewer, 2026-07-13): merged the
+      /video-generator page and ArtJob plumbing (LTX/WAN image-to-video via
+      server/api/art/enqueue.post.ts). The relay/save path still assumes
+      image output only, so a queued video job will render on the home Comfy
+      box but never resolve into a playable ArtImage until the relay branches
+      on the new `media: 'video'` marker in the job payload and stores the
+      clip with fileType mp4/webm. WAN's model filenames (server/api/comfy/wan/
+      utils/imageToVideoWorkflow.ts) are also untested against a live Comfy
+      install and may need retuning. This is an access-limited task — the
+      relay lives on Silas's home GPU box, not in either repo — so if a
+      Worker session can't reach it, this should self-triage to soft
+      needs-human rather than burn retry passes.
