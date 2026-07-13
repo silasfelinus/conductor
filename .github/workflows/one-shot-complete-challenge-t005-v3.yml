@@ -1,22 +1,27 @@
-# Second push intentionally triggers this already-installed one-shot workflow.
 name: One-shot Complete Challenge Center t-005 v3
 
 on:
-  push:
+  pull_request:
     branches:
-      - worker/challenge-center-t-005-complete-v3
+      - main
+    types:
+      - opened
+      - reopened
+      - synchronize
 
 permissions:
   contents: write
 
 jobs:
   complete:
+    if: github.head_ref == 'worker/challenge-center-t-005-complete-v3'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
           ref: worker/challenge-center-t-005-complete-v3
           fetch-depth: 0
+          token: ${{ github.token }}
 
       - name: Apply byte-preserving roadmap patch
         run: |
@@ -25,8 +30,7 @@ jobs:
           from pathlib import Path
 
           roadmap = Path('projects/challenge-center/roadmap.yaml')
-          text = roadmap.read_text()
-          lines = text.splitlines()
+          lines = roadmap.read_text().splitlines()
 
           def bounds(task_id: str):
               start = next(i for i, line in enumerate(lines) if line == f'- id: {task_id}')
@@ -65,11 +69,7 @@ jobs:
           depends_end = depends_index + 1
           while depends_end < end and lines[depends_end].startswith('  - '):
               depends_end += 1
-          lines[depends_index:depends_end] = [
-              '  depends_on:',
-              '  - t-004',
-              '  - t-005',
-          ]
+          lines[depends_index:depends_end] = ['  depends_on:', '  - t-004', '  - t-005']
 
           roadmap.write_text('\n'.join(lines) + '\n')
 
