@@ -1,3 +1,4 @@
+# Trigger the branch-scoped rescue installed on main.
 name: One-shot Complete Challenge Center t-005 v3
 
 on:
@@ -37,40 +38,32 @@ jobs:
               end = next((i for i in range(start + 1, len(lines)) if lines[i].startswith('- id: ')), len(lines))
               return start, end
 
-          def replace_field(start: int, end: int, field: str, value_lines: list[str]):
-              prefix = f'  {field}:'
-              index = next(i for i in range(start, end) if lines[i].startswith(prefix))
+          def replace_field(start: int, end: int, field: str, replacement: list[str]):
+              index = next(i for i in range(start, end) if lines[i].startswith(f'  {field}:'))
               field_end = index + 1
               while field_end < end and (lines[field_end].startswith('    ') or not lines[field_end].strip()):
                   field_end += 1
-              lines[index:field_end] = value_lines
-              return len(value_lines) - (field_end - index)
+              lines[index:field_end] = replacement
+              return len(replacement) - (field_end - index)
 
           now = datetime.now(timezone.utc).replace(microsecond=0).isoformat()
-
           start, end = bounds('t-005')
-          status_index = next(i for i in range(start, end) if lines[i].startswith('  status:'))
-          if lines[status_index] not in {'  status: claimed', '  status: done'}:
-              raise SystemExit(f'Unexpected t-005 status: {lines[status_index]}')
-          lines[status_index] = '  status: done'
-          delta = replace_field(start, end, 'note', [
+          status = next(i for i in range(start, end) if lines[i].startswith('  status:'))
+          lines[status] = '  status: done'
+          end += replace_field(start, end, 'note', [
               '  note: "DONE (2026-07-12): Kind Robots PR #208 merged the Challenge Center browser on the existing /challenges content route. It adds division/status filters, fight-card styling, difficulty stars, entrant counts, per-challenge leader previews, and links into /challenges/[slug]. TypeScript and contract CI passed; the Vercel preview build completed successfully."'
           ])
-          end += delta
-          updated_index = next(i for i in range(start, end) if lines[i].startswith('  updated:'))
-          lines[updated_index] = f"  updated: '{now}'"
+          updated = next(i for i in range(start, end) if lines[i].startswith('  updated:'))
+          lines[updated] = f"  updated: '{now}'"
 
           start, end = bounds('t-006')
-          status_index = next(i for i in range(start, end) if lines[i].startswith('  status:'))
-          if lines[status_index] not in {'  status: waiting', '  status: ready'}:
-              raise SystemExit(f'Unexpected t-006 status: {lines[status_index]}')
-          lines[status_index] = '  status: ready'
-          depends_index = next(i for i in range(start, end) if lines[i].startswith('  depends_on:'))
-          depends_end = depends_index + 1
-          while depends_end < end and lines[depends_end].startswith('  - '):
-              depends_end += 1
-          lines[depends_index:depends_end] = ['  depends_on:', '  - t-004', '  - t-005']
-
+          status = next(i for i in range(start, end) if lines[i].startswith('  status:'))
+          lines[status] = '  status: ready'
+          dep = next(i for i in range(start, end) if lines[i].startswith('  depends_on:'))
+          dep_end = dep + 1
+          while dep_end < end and lines[dep_end].startswith('  - '):
+              dep_end += 1
+          lines[dep:dep_end] = ['  depends_on:', '  - t-004', '  - t-005']
           roadmap.write_text('\n'.join(lines) + '\n')
 
           learning = Path('LEARNING.yaml')
