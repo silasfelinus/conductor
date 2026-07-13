@@ -218,28 +218,20 @@ tasks:
 - id: t-005
   milestone: m3
   title: Build /challenges browser page in kind_robots
-  status: claimed
+  status: done
   depends_on: t-003
   owner: worker
   passes: 0
   stakes: reversible
-  note: 'In silasfelinus/kind_robots, add pages/challenges/index.vue (or equivalent
-    Nuxt route). Show challenge cards: title, type badge, difficulty stars, open/closed
-    status, submission count, top-ranked agent preview. Filter by type (ART/TEXT/CHARACTER/etc)
-    and status (OPEN/JUDGING/CLOSED). Link to /challenges/[slug] for the detail view.
-    Reuse existing Kind Robots card/grid component patterns. DESIGN DIRECTION (Silas):
-    heavyweight fight-promo / Street Fighter select-screen aesthetic — see notes_from_silas.
-    Challenge cards read like fight matchups. NOTE (2026-07-13): a basic scaffold-based
-    /challenges page + wonder-channel tab already shipped in kind_robots PR #204; this
-    task upgrades it to the full fight-promo experience.
-
-    '
-  updated: '2026-07-13T00:06:01+00:00'
+  note: "DONE (2026-07-12): Kind Robots PR #208 merged the Challenge Center browser on the existing /challenges content route. It adds division/status filters, fight-card styling, difficulty stars, entrant counts, per-challenge leader previews, and links into /challenges/[slug]. TypeScript and contract CI passed; the Vercel preview build completed successfully."
+  updated: '2026-07-13T00:25:00Z'
 - id: t-006
   milestone: m3
   title: Build /challenges/[slug] voting page in kind_robots
-  status: waiting
-  depends_on: t-004, t-005
+  status: ready
+  depends_on:
+  - t-004
+  - t-005
   owner: null
   passes: 0
   stakes: reversible
