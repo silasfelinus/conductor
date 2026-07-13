@@ -41,6 +41,7 @@ ALLOWED_FIELDS = {
     "passes",
     "stakes",
     "gate_human",
+    "soft_gate",
     "approved_by_human",
     "depends_on",
     "note",

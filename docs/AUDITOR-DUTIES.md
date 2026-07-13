@@ -55,7 +55,7 @@ Classify every `needs-human` task as hard or soft.
 
 Hard gates include concrete publishing, spend, billing, production deployment, DNS, secrets, destructive data changes, legal/licensing decisions, security acknowledgements, and irreversible outward actions.
 
-Soft gates include uncertainty, missing verification, tool access, ordinary architecture ambiguity, reversible review, and scope confirmation on new projects.
+Soft gates include uncertainty, missing verification, tool access, ordinary architecture ambiguity, reversible review, and scope confirmation on new projects. Intentional soft checkpoints use `soft_gate: true`; this records that the state is deliberate without pretending it is a hard approval boundary. Completed, approved historical gates are provenance and should not be flagged as current throughput problems.
 
 The Auditor may recommend returning a soft-gated task to `ready`, splitting a hard outward action from reversible preparation, or improving the `FOR SILAS` note. It must not remove a genuine safety boundary merely to improve throughput.
 

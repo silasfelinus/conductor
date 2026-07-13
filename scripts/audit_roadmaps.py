@@ -229,17 +229,17 @@ def audit() -> dict[str, Any]:
                 hard_reasons = []
                 if task.get("gate_human"):
                     hard_reasons.append("gate_human")
-                if str(task.get("stakes", "")).lower() in {"outward-facing", "irreversible"}:
+                if str(task.get("stakes", "")).lower() in {"needs-human", "outward-facing", "irreversible"}:
                     hard_reasons.append(str(task.get("stakes")))
                 if kind in {"content", "proposal"}:
                     hard_reasons.append(kind)
                 note = str(task.get("note", ""))
-                if not hard_reasons:
-                    findings.append(issue("warning", "SOFT_NEEDS_HUMAN", slug, "needs-human has no obvious hard-gate marker; consider returning it to ready or documenting the actual gate.", task_id))
+                if not hard_reasons and not task.get("soft_gate"):
+                    findings.append(issue("warning", "SOFT_NEEDS_HUMAN", slug, "needs-human has no obvious hard-gate marker; consider returning it to ready, setting soft_gate: true, or documenting the actual gate.", task_id))
                 if "FOR SILAS:" not in note:
                     findings.append(issue("info", "NEEDS_HUMAN_NOTE_FORMAT", slug, "needs-human note does not use the AGENTS.md FOR SILAS action format.", task_id))
 
-            if kind == "software" and task.get("gate_human") and str(task.get("stakes", "reversible")) == "reversible":
+            if status in OPEN_STATES and kind == "software" and task.get("gate_human") and str(task.get("stakes", "reversible")) == "reversible":
                 note = str(task.get("note", "")).lower()
                 if not any(word in note for word in ("publish", "deploy", "billing", "secret", "dns", "production", "security", "approve", "legal")):
                     findings.append(issue("warning", "POSSIBLY_UNNECESSARY_GATE", slug, "Reversible software task is human-gated without an obvious hard-gate reason in its note.", task_id))

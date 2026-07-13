@@ -104,10 +104,11 @@ resolver treats a gated task as still blocking until `approved_by_human: true`.
 - Unclear architectural direction without a blocking dependency
 - Access limitation that prevents verification but doesn't invalidate the work
 
-On a **soft** `needs-human`: set the task status, document the reason clearly in the task
+On a **soft** `needs-human`: set the task status, add `soft_gate: true`, document the reason clearly in the task
 `note:`, then **immediately re-run task selection** and pick the next available `ready` task.
 Do not end the cycle — there is almost always other work. Only stop if every ready task is
-also blocked.
+also blocked. `soft_gate: true` is metadata for auditors and coordinators; it never satisfies a dependency
+or grants permission for outward-facing work.
 
 On a **hard** `needs-human`: stop. Do not pick another task. Flag clearly for Silas.
 
