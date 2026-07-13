@@ -377,13 +377,25 @@ tasks:
     title: Reviewer trigger fires with no open worker/* PR to review, repeatedly
     status: needs-human
     owner: null
-    updated: '2026-07-12T23:35:00Z'
+    updated: '2026-07-13T02:13:00Z'
     passes: 0
     stakes: reversible
     note: >
       FOR SILAS: The Reviewer session trigger is firing far more often than there
       is Worker PR volume to review — this is a platform/scheduling issue, not
       something fixable from inside the repo.
+
+      UPDATE 2026-07-13 02:13: 42nd recurrence. Same shape — zero open worker/*
+      PRs in either repo (list_pull_requests and search_pull_requests
+      is:open head:worker both confirm), no roadmap task at status:
+      review/claimed. One live status: claimed task exists (challenge-center
+      t-006, claimed by worker at 00:36:30, no branch/PR yet) — normal
+      Worker-in-progress state, not a review target. kind_robots has one open
+      PR (#211, "Add local animation preferences and polish startup effects")
+      but it's a draft authored directly by Silas on branch
+      `feature/user-animation-preferences` — not a worker/* branch, out of
+      Reviewer scope while draft. Not re-notifying Silas — same reasoning as
+      recurrences 33-41. See TALKBACK.md 2026-07-13 02:13 entry for detail.
 
       UPDATE 2026-07-12 23:35: 41st recurrence. Same shape — zero open worker/*
       PRs in either repo, no roadmap task at status: review/claimed. kind_robots
