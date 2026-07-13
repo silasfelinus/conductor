@@ -9,12 +9,12 @@ permissions:
 
 jobs:
   close-task:
-    if: github.head_ref == 'worker/challenge-center-t-006-close'
+    if: github.head_ref == 'worker/challenge-center-t-006-finalize'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: worker/challenge-center-t-006-close
+          ref: worker/challenge-center-t-006-finalize
           fetch-depth: 0
       - uses: actions/setup-python@v5
         with:
@@ -62,4 +62,4 @@ jobs:
           git config user.email conductor-bot@users.noreply.github.com
           git add projects/challenge-center/roadmap.yaml LEARNING.yaml .github/workflows/close-challenge-t006.yml STATUS.md workspace.html
           git commit -m "done: challenge-center/t-006 [skip ci]"
-          git push origin HEAD:worker/challenge-center-t-006-close
+          git push origin HEAD:worker/challenge-center-t-006-finalize
