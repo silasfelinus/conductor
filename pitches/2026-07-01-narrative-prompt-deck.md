@@ -1,7 +1,7 @@
 # Pitch: Narrative Prompt Deck
 date: 2026-07-01
 project-target: new
-status: awaiting-silas
+status: approved
 
 ## The idea
 A digital product: a printable (and optionally web-interactive) deck of 60 narrative prompt cards designed for writers, GMs, and collaborative fiction lovers. Each card contains a scenario seed, a character tension, a world detail, and a "twist" — structured so cards stack together to build scenes. Cards are formatted for standard playing-card print-at-home dimensions (2.5" x 3.5"). The deck ships as a PDF + a simple browser page where you can shuffle and draw digitally.
