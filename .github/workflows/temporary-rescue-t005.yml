@@ -1,7 +1,7 @@
 name: Temporary Rescue Challenge Center t-005
 
 on:
-  pull_request:
+  pull_request_target:
     branches:
       - main
     types:
@@ -14,7 +14,7 @@ permissions:
 
 jobs:
   rescue:
-    if: github.head_ref == 'worker/challenge-center-t-005-complete-v3'
+    if: github.event.pull_request.head.ref == 'worker/challenge-center-t-005-complete-v3'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
