@@ -1,0 +1,40 @@
+name: Roadmap Audit
+
+on:
+  pull_request:
+    paths:
+      - 'CONTROL.md'
+      - 'AGENTS.md'
+      - 'project-overrides.yaml'
+      - 'projects/priority.yaml'
+      - 'projects/*/roadmap.yaml'
+      - 'scripts/audit_roadmaps.py'
+      - 'docs/AUDITOR-DUTIES.md'
+      - 'docs/SELF-IMPROVING-STUDIO.md'
+  workflow_dispatch:
+  schedule:
+    - cron: '23 10 * * *'
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install dependencies
+        run: pip install pyyaml
+      - name: Generate portfolio audit
+        run: python scripts/audit_roadmaps.py --json ROADMAP-AUDIT.json --markdown ROADMAP-AUDIT.md
+      - name: Upload audit artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: roadmap-audit
+          path: |
+            ROADMAP-AUDIT.json
+            ROADMAP-AUDIT.md
+          retention-days: 30
