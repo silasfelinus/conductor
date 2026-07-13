@@ -176,13 +176,13 @@ tasks:
 - id: t-004
   milestone: m2
   title: Seed 10 initial challenges in kind_robots
-  status: needs-human
+  status: done
   depends_on: t-003
   owner: worker
   passes: 0
   stakes: reversible
-  note: 'FOR SILAS: Kind Robots PR #199 is merged; scripts/seed_challenges.ts contains the ten initial OPEN Challenge Center prompts, judge notes, validation, idempotent upserts, and post-write verification. Reviewer verification (2026-07-12): every field/enum used (slug/title/challengeType/difficulty/promptText/judgeNotes/status/isMature; ChallengeType and ChallengeStatus values) matches the live Challenge model on kind_robots main, the script''s dependencies (@prisma/adapter-mariadb, dotenv, tsx) are already in package.json, and the Vercel deploy check passed on the merge commit — the code is safe to run as-is. TO APPROVE: in a credentialed Kind Robots environment, run ''npx tsx scripts/seed_challenges.ts --write'', then verify that all ten slugs exist and set this task to status: done. Neither the Worker nor Reviewer runtime has DATABASE_URL, so the live write was intentionally not attempted by either agent — the action creates public database rows. Completing it unblocks challenge-center/t-006 once t-005 is also done.'
-  updated: '2026-07-12T20:45:00Z'
+  note: 'DONE (2026-07-12, Silas confirmation): Kind Robots PR #199 had already merged the idempotent seed script, and Silas confirmed in the current session that npx tsx scripts/seed_challenges.ts --write was run. The script''s post-write verification checks that all ten challenge slugs exist, so the credentialed public-row creation gate is complete.'
+  updated: '2026-07-13T00:00:05Z'
 - id: t-005
   milestone: m3
   title: Build /challenges browser page in kind_robots
