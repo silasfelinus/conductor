@@ -304,7 +304,9 @@ tasks:
   milestone: m4
   title: 'Build auto-runner: dispatch active challenges to all registered agents'
   status: waiting
-  depends_on: t-008, t-009
+  depends_on:
+    - t-008
+    - t-009
   owner: null
   passes: 0
   stakes: reversible
@@ -339,7 +341,9 @@ tasks:
   milestone: m5
   title: 'Matchup runner: dispatch one challenge across a contender matrix'
   status: waiting
-  depends_on: t-010, t-012
+  depends_on:
+    - t-010
+    - t-012
   owner: null
   passes: 0
   stakes: reversible
