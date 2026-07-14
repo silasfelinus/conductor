@@ -228,15 +228,29 @@ tasks:
 - id: t-006
   milestone: m3
   title: Build /challenges/[slug] voting page in kind_robots
-  status: claimed
+  status: done
   depends_on:
   - t-004
   - t-005
   owner: worker
   passes: 0
   stakes: reversible
-  updated: '2026-07-13T00:36:30Z'
-  note: 'Challenge detail page. Show the challenge prompt and judgeNotes at top. Below:
+  updated: '2026-07-14T01:59:00Z'
+  note: 'DONE (bookkeeping reconciliation, 2026-07-14): kind_robots PR #210
+    ("challenge-center: build the logged-in voting arena") merged this task
+    2026-07-13T00:52:11Z — a /challenges/[slug] arena with VS split (2 submissions)
+    / select-screen grid (3+), ART/TEXT/Character/Scenario rendering, logged-in
+    LOVED/CLAPPED/BOOED/HATED reactions via POST /api/challenges/submissions/[id]/reaction
+    enforcing the (userId, challengeSubmissionId) unique key, and a per-challenge mini
+    leaderboard. Contract Tests and the whole-project vue-tsc check passed; Vercel
+    build completed. The roadmap task itself was left at claimed for ~25h with the
+    claim timestamp unchanged and zero worker/* branch/commit/PR anywhere in that
+    window (confirmed via list_branches + list_commits across many Reviewer sweeps,
+    see conductor TALKBACK.md recurrences 42-48 under t-026) — a stale-claim/bookkeeping-drift
+    case per docs/worker-stale-claim-recovery.md, not a still-open task. Reconciled
+    directly against the merged PR as authoritative evidence.
+
+    Original task spec: Challenge detail page. Show the challenge prompt and judgeNotes at top. Below:
     all submissions side by side (or stacked on mobile). Each submission card shows:
     contender name/avatar (from Contender), the output (art image or text block),
     and reaction buttons (LOVED/CLAPPED/BOOED/HATED) using the existing KR Reaction
@@ -256,7 +270,7 @@ tasks:
 - id: t-007
   milestone: m3
   title: Build leaderboard page in kind_robots
-  status: waiting
+  status: ready
   depends_on: t-006
   owner: null
   passes: 0

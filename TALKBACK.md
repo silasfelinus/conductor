@@ -2304,3 +2304,70 @@ PR (or Silas-directed `claude/*` PR) open anywhere in scope.
 **Suggested action:** none new — standing ask on t-026 still stands. Worth
 a look, next time Silas is in the repo: whether session branches for this
 recurring Reviewer trigger are being provisioned from a stale base.
+
+## 2026-07-14 02:00 | Reviewer → Silas | conductor/t-026, kind_robots CI, challenge-center/t-006 | pattern
+
+**Subject:** Not a no-op cycle — kind_robots CI was actually red (not just
+"no PR to review"), fixed and merged directly; `challenge-center/t-006`'s
+25h "stranded claim" was actually done-but-unreconciled. Reconciled both.
+t-026's own recurrence count keeps climbing but is otherwise unchanged.
+
+**Detail:**
+- `CONDUCTOR-REPORT.md` (auto-generated, last run 2026-07-13 23:02 UTC)
+  flagged real ACTION NEEDED: `TypeScript Type Check` and `Cypress Tests`
+  failing in `kind_robots`. Confirmed via `list_workflow_runs` — both had
+  been red across every run since 2026-07-13 20:32 UTC, when they were
+  green immediately before (run `29281993613`, all 32 Cypress specs
+  passing).
+  - TypeScript: 3 real errors, all regressions from commits already on
+    `main` — a `Record<string, T>` indexed read TS flags possibly-`undefined`
+    in `server/api/comfy/kontext/utils/workflow.ts` (from `38f1cd39`), and an
+    `as const satisfies X[]` pattern in `scripts/seed_contenders.ts` where
+    entries missing an optional key don't type as `T | undefined`, they're
+    just absent from that union member, breaking destructuring (from
+    `823973e9`).
+  - Cypress: root-caused by diffing the last green run against the first
+    red one — `0ee601f8` ("Harden MariaDB connection pooling") dropped the
+    `DATABASE_CONNECTION_LIMIT` fallback from the mariadb driver's own
+    default of 10 down to 2, with no env var anywhere (grepped every
+    workflow + the repo) actually setting it. That shipped straight to
+    **production** (Cypress here runs against `kind-robots.vercel.app`,
+    not a spun-up CI server) and pool-starved it, producing "Cannot execute
+    new commands: connection closed" and `cy.request()` timeouts cascading
+    across 14 of 32 spec files.
+  - Fixed all three, verified `npm run test` (vue-tsc) and `npx eslint`
+    clean locally, opened kind_robots PR #222 from `claude/admiring-mayer-p949tz`,
+    and merged it (reversible, scoped, software — in scope per AGENTS.md's
+    Reviewer merge authority for `claude/*` branches). Left a CI-green
+    confirmation as a follow-up in this same session.
+- Separately, `challenge-center/t-006` — the task this file has logged as
+  a "stranded claim" for 8+ consecutive Reviewer sweeps (recurrences 42
+  through 48, ~25h with an unchanged `updated` timestamp and zero
+  branch/commit/PR) — turned out to already be **done**. `search_pull_requests`
+  for `t-006` in kind_robots surfaced PR #210, "challenge-center: build the
+  logged-in voting arena," merged 2026-07-13T00:52:11Z — before the claim
+  timestamp even finished settling — matching the task's spec point for
+  point (VS-split/grid arena, reaction voting, unique-key enforcement,
+  mini leaderboard). The roadmap task was simply never flipped to `done`.
+  Reconciled directly per `docs/worker-stale-claim-recovery.md`'s
+  bookkeeping-reconciliation section: verified the merge from repository
+  evidence, byte-preserving edit to `status: done` with a note citing PR
+  #210, and unblocked `t-007` (leaderboard page) from `waiting` to `ready`
+  since its only dependency is now satisfied.
+- **Pattern worth naming:** every prior recurrence on this stranded claim
+  treated "no branch found" as confirmation the work hadn't started, and
+  never checked whether a *merged* PR already matched the task's title/scope.
+  Branch search and PR-merge search answer different questions — a task can
+  be finished with its branch long deleted post-merge. Logged as a lesson
+  in `LEARNING.yaml`.
+- Same already-escalated t-026 issue (`status: needs-human`, hard gate on
+  Silas re: the external scheduler cadence) — still zero open `worker/*`
+  PRs anywhere in scope this cycle, so the base recurrence count is
+  technically still climbing, but this cycle did real, substantive work
+  found by looking past the "no PR" surface signal. Not re-escalating
+  t-026 itself further — same standing reasoning as recurrences 33-48.
+
+**Suggested action:** none new on t-026. For future stranded-claim
+sweeps: before logging another "still stranded" recurrence, run a
+`search_pull_requests` for the task id/title across the target repo —
+it's a 5-second check that would have caught this 7 recurrences earlier.
