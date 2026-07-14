@@ -352,22 +352,25 @@ tasks:
   - id: t-016
     milestone: m3
     title: Fix broken POST /api/sheets handler (mis-copied GET-by-id code)
-    status: ready
-    owner: null
+    status: review
+    owner: reviewer
     passes: 0
     stakes: reversible
-    updated: '2026-07-14T04:00:00Z'
+    updated: '2026-07-14T05:00:00Z'
     note: >
-      Found during dream-cycle Phase 2 (2026-07-14): server/api/sheets/index.post.ts
-      contains a mis-copied GET-by-id handler (its header comment reads
-      "[id].get.ts" and it does prisma.pitchSheet.findUnique on
+      FIX IN REVIEW (2026-07-14, Silas-directed): rewritten on the kind_robots
+      session branch claude/daily-digest-art-proposals-nbrxur (same PR as the
+      Daily Dream page). New handler: requireApiUser; body through
+      sanitizePitchSheetPayload; optional dreamId path verifies the Dream +
+      ownership/admin, idempotently returns an existing sheet, else creates
+      via buildPitchSheetFromDream (mirroring sheets/by-dream/[dreamId].post.ts);
+      standalone path (no dreamId) requires title and attributes to the
+      authenticated user. House response envelope, 201. ORIGINAL BUG: the file
+      contained a mis-copied GET-by-id handler (header comment read
+      "[id].get.ts", did prisma.pitchSheet.findUnique on
       event.context.params.id) — on the collection route params.id is
-      undefined, so every POST /api/sheets returns 400 "Invalid PitchSheet
-      ID" and nothing is ever created. Replace it with a real create handler
-      (validate via sanitizePitchSheetPayload like sheets/by-dream/[dreamId].post.ts,
-      attribute to the authenticated user). Conductor's build_dream_records.py
-      works around it via POST /api/sheets/by-dream/{dreamId}; once fixed,
-      standalone sheets (no dream) become possible.
+      undefined, so every POST /api/sheets returned 400 "Invalid PitchSheet
+      ID". Set done when the kind_robots PR merges.
   - id: t-017
     milestone: m3
     title: Add a DreamRelation REST endpoint (create/list dream graph edges)

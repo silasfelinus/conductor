@@ -272,18 +272,24 @@ tasks:
       (per-type theming mirroring kind_robots dream-pitch-sheet.vue +
       pitchSheetDefaults), a top-scored gallery, a highlight reel, and a
       comment/edit button linking to the proposal file's Notes-from-Silas.
-      (4) Generation runs during the conductor SWEEPS, not the digest cron
-      (Silas 2026-07-14, to avoid dedicated API-rate usage): the hourly conductor
-      sweep (build_conductor_summary.py -> build_dream_proposal.ensure_proposal)
-      generates the proposal once/day (guarded — no-op the other 23 runs) and
-      commits it; the Reviewer runs `python scripts/curate_art.py --daily` during
-      its sweep to score the day's renders into projects/curation/daily/<date>.yaml.
-      daily-digest.yml makes NO model calls — it only reads those committed files
-      and renders/sends the email. Comment/edit link = the GitHub backlog file
-      (Phase 1 default). Fulfils art-generator-connect/t-019 "surface generation
-      results in the daily digest."
-      SWEEP DUTY: the Reviewer runs curate_art.py --daily each sweep and commits
-      the daily report so the digest's top-scored gallery stays fresh.
+      (4) THE SWEEPING LLM AGENT AUTHORS THE PROPOSAL ITSELF (Silas
+      2026-07-14 — corrected same day; the earlier scripted-API version was
+      nixed): no ANTHROPIC_API_KEY anywhere in the proposal path.
+      build_dream_proposal.py is only the validator/renderer — agents run
+      `--check` each sweep (also in the CLAUDE.md startup sweep), author the
+      starter dream with their own reasoning per `--brief`, and write it via
+      `--from-json` (validated: exact counts, one SKILL + one ITEM; guarded:
+      one proposal per Pacific date; slug-deduped vs backlog + SHIPPED). The
+      hourly build_conductor_summary.py only FLAGS a missing proposal in
+      CONDUCTOR-REPORT.md stats. daily-digest.yml makes NO model calls — it
+      only reads committed files and renders/sends the email. Comment/edit
+      link = the GitHub backlog file (Phase 1 default). Fulfils
+      art-generator-connect/t-019 "surface generation results in the daily
+      digest."
+      SWEEP DUTIES: (a) every agent sweep — `build_dream_proposal.py --check`,
+      author today's proposal if missing; (b) the Reviewer runs
+      `python scripts/curate_art.py --daily` each sweep and commits the daily
+      report so the digest's top-scored gallery stays fresh.
   - id: t-012
     milestone: m4
     title: 'Phase 2: build the proposal into real records + art'
@@ -341,3 +347,4 @@ tasks:
       file's Notes-from-Silas. The digest email's "View the Daily Dream page"
       buttons (tomorrow + yesterday sections) now link here, and yesterday's
       section shows the built-records summary + attached art from built-data.
+      kind_robots PR #229.
