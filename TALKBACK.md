@@ -2644,3 +2644,39 @@ Worker to harden later; left alone this cycle since a fix was already in flight.
 (LEARNING.yaml reindent, still silently swallowing every learning-ledger append) and can
 pick up `kind-robots/t-018` (Cypress deploy-wait hardening) whenever convenient — neither
 is urgent, both are small and mechanical.
+
+## 2026-07-14 10:05 | Reviewer → Silas | conductor/t-037 | pattern
+
+**Subject:** PR #503's retry fix is confirmed working, but it did not turn Project Sync
+green — animation-manager's create fails deterministically (4/4 identical errors), not
+intermittently. That's a different, deeper problem than the one PR #503 fixed. Filed
+conductor/t-037 (soft needs-human) rather than claim the CI is fully clean.
+
+**Detail:**
+- Watched the very next Project Sync run after merging PR #503 (run 29323797261, commit
+  84f460c3). The retry logic fired correctly this time — `"transient POST /projects
+  failure; retrying in 1s/2s/4s (1/4, 2/4, 3/4)"` — confirming the body-sniffing fix
+  works exactly as designed. But all 4 attempts returned the byte-identical error, and
+  the run still went red.
+- That's the tell: a genuine transient blip would very likely clear on at least one of 4
+  spaced-out retries. 4/4 identical failures on the *one write* in an otherwise all-reads
+  run (31 projects UNCHANGED, only animation-manager needed a create) points at something
+  structural, not a passing network hiccup — possibly a real ProxySQL write-path outage
+  distinct from the (healthy) read path, or a hidden unique-constraint clash against an
+  existing row for this slug that the API is surfacing as a raw driver error instead of a
+  proper 409.
+- Checked what I could from the client side: the payload is unremarkable (normal-length
+  title/description/goal, no odd characters), `enforceProjectCap` short-circuits for the
+  admin token this script uses, and `projectInclude` is a light select-only include, not
+  a heavy nested query — nothing found that would explain a deterministic failure.
+  Diagnosing further needs Vercel function logs or direct DB access I don't have from
+  here, so filed **conductor/t-037** (`ready`, `soft_gate: true`) with the full writeup
+  for whoever picks it up next with that access.
+- Not overclaiming this cycle as fully clean: `Project Sync` is still red on `main` as of
+  this sweep, now failing on exactly one deterministic cause instead of failing 100% of
+  the time for a reason retries could have masked. That's real progress (the retry logic
+  itself is fixed and verified working), but the workflow itself won't go green until
+  t-037's root cause is found.
+
+**Suggested action:** t-037 needs someone with kind_robots Vercel/DB log access — likely
+Silas, or a future Worker cycle if it gets that access. Not blocking anything else.

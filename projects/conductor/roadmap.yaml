@@ -755,3 +755,41 @@ tasks:
       yaml.safe_load and confirm scripts/build_learning_summary.py runs clean
       afterward. Do not touch record content, only indentation — this is a
       formatting-only fix on an append-only ledger.
+
+  - id: t-037
+    milestone: m2
+    title: Investigate why creating the animation-manager kind_robots Project deterministically fails (connection closed)
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    soft_gate: true
+    updated: "2026-07-14T10:05:00Z"
+    note: >
+      FOR SILAS / next Worker with backend log access: conductor/PR #503 fixed
+      sync_projects.py's retry logic to also retry HTTP-400-wrapped transient
+      DB-connection errors (it previously only retried on 429/500/502/503/504
+      status codes). Confirmed the fix works -- the very next Project Sync run
+      after merging (run 29323797261, commit 84f460c3) now correctly retried 3
+      times with backoff -- but animation-manager still failed all 4 attempts
+      with the identical error every time: POST /api/projects ->
+      "'{"success":false,"message":"Cannot execute new commands: connection
+      closed","statusCode":400}'. That's different from ordinary transient
+      flakiness (which would recover on at least one of 4 tries): all 31 other
+      projects (read-only GET, all UNCHANGED) succeeded in the same run, and
+      animation-manager's create (the only WRITE in that run) failed 4/4
+      times with byte-identical output -- i.e. deterministic, not random.
+      Checked the payload (server/utils via sync_projects.build_project_payload)
+      for anomalies -- title/description/goal are normal length, no unusual
+      characters. Checked server/api/projects/index.post.ts and projectCap.ts --
+      enforceProjectCap only runs for non-admin users and the sync token is
+      Silas's (admin), so it short-circuits; projectInclude is a light
+      select-only include, not a heavy nested query. Nothing found client-side
+      that would explain a deterministic write failure. Needs someone with
+      Vercel function logs / direct DB access to see the actual Prisma/driver
+      error around this specific INSERT (is it a real ProxySQL write-path
+      outage distinct from the read path, a unique-constraint clash against
+      an existing-but-hidden project row for this slug, or something else).
+      Soft gate: sync_projects.py's retry improvement (PR #503) is still a net
+      win for genuine transient blips even though this specific case needs
+      backend investigation -- other conductor work is not blocked by this.
