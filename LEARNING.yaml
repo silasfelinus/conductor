@@ -19,141 +19,141 @@
 # failure_category is null for clean first-pass successes; otherwise it is the
 # triage category of the dominant failure (AGENTS.md § "Failure triage").
 records:
-  - date: 2026-07-11
-    project: challenge-center
-    task: t-003
-    kind: software
-    stakes: reversible
-    passes: 0
-    outcome: done
-    failure_category: null
-    lesson: "Audit the target repo before claiming a task: the full t-003 API surface already existed on kind_robots main (built in a Silas-directed session outside the Worker loop), so the task closed by spec verification alone."
-  - date: 2026-07-12
-    project: conductor
-    task: t-027
-    kind: software
-    stakes: reversible
-    passes: 0
-    outcome: done
-    failure_category: null
-    lesson: "A stale task spec can be closed by a larger cutover that subsumes it: the Dream-sync priority ask was satisfied by rewriting the bridge to /api/projects — check whether pending tasks target a replaced integration before working them as written."
-  - date: 2026-07-12
-    project: model-builder
-    task: frontend-scaffold
-    kind: software
-    stakes: reversible
-    passes: 0
-    outcome: done
-    failure_category: null
-    lesson: "Front-end-first, no-schema slice merges cleanly and safely: the Model Builder UI (source picker -> gated recipe runner -> four gates) reused existing model list APIs, the art generator, and /api/suggest without touching Prisma, so merge-to-main deployed only additive UI. When you can't run the toolchain locally, lean on the repo's whole-project vue-tsc PR check as the verification gate before merging. Partial slice spanning t-005/t-014 — durable BuildRun persistence (t-004) intentionally deferred, not done."
-  - date: 2026-07-12
-    project: conductor
-    task: t-035
-    kind: software
-    stakes: reversible
-    passes: 0
-    outcome: done
-    failure_category: null
-    lesson: "Secrets expire silently: a JWT-backed integration needs its failure mode loud (nonzero exit on auth errors) or the bridge can be dead for weeks while CI stays green."
-  - date: 2026-07-12
-    project: model-builder
-    task: t-004
-    kind: software
-    stakes: reversible
-    passes: 0
-    outcome: done
-    failure_category: null
-    lesson: "An additive-only Prisma migration (new CREATE TABLEs, internal cascade FKs, external refs as plain scalar Int columns with no FK) merges safely even though merge-to-main runs prisma migrate deploy against prod — no reverse-relation edits to User/ArtImage were needed. The typecheck CI runs prisma generate before vue-tsc, so it validates a new schema file end-to-end (client types + routes + store) without a live DB; that plus the Vercel preview build is enough of a gate when you can't run the toolchain locally. kind_robots PR #188."
-  - date: 2026-07-12
-    project: model-builder
-    task: t-021
-    kind: software
-    stakes: reversible
-    passes: 0
-    outcome: done
-    failure_category: null
-    lesson: "Once a resource is durable, the cheapest high-value follow-up is a history/list surface — the list endpoint already existed, so the run-history panel was pure front-end with zero new API. kind_robots PR #189."
-  - date: 2026-07-12
-    project: model-builder
-    task: t-013
-    kind: software
-    stakes: reversible
-    passes: 0
-    outcome: done
-    failure_category: null
-    lesson: "Idempotent canonical writes without a live DB: an atomic claim on a unique key (updateMany where key IS NULL; count===0 means already committed) gives exactly-once semantics, releasing the key on write failure enables retry, and create+link in one $transaction prevents orphans. When you can't run the DB, keep writes to KNOWN exact field/relation names (pulled from schema) so vue-tsc validates every prisma.model.update/create at PR time — a wrong field name fails CI instead of corrupting prod. Covers t-013/t-014/t-015; kind_robots PR #190. Live proof still pending (t-022)."
-  - date: 2026-07-12
-    project: model-builder
-    task: t-016
-    kind: content
-    stakes: reversible
-    passes: 0
-    outcome: done
-    failure_category: null
-    lesson: "The Model Builder's four gates are OPTIONAL front-end pauses (skip an item, or stop after prompt to edit) — NOT a backend block that waits on a repo-file approval. Default is to create full objects for everything. I over-applied a 'needs-human, internal-draft-only' framing to the HSS marketing deck; the right move was a full example set with the visuals queued into the real art pipeline (projects/art-generate.yaml). Also: the art generator forbids text/logos, so marketing collateral splits into generated text-free imagery + a text/logo layout step over the real logo (no rebrand). Don't invent brand facts — pricing/area/logo/descriptor came from Silas and were folded into CONTENT-BRIEF."
-  - date: 2026-07-12
-    project: model-builder
-    task: t-017
-    kind: content
-    stakes: reversible
-    passes: 0
-    outcome: done
-    failure_category: null
-    lesson: "Autonomous Character Deck reference run grounds best in a real flagship record (AMIb0t from stores/seeds/seedBots.ts). Identity consistency is the linchpin: generate the canonical NEUTRAL avatar FIRST, lock seed+checkpoint, reuse for icon/card/hero/expressions; prove on a small 5-key expression subset before any full 20-key batch (Expression enum has 10 emotions + 10 actions + CUSTOM; NEUTRAL is canonical; ExpressionMedia owner is Bot XOR Character). Character has only artImageId/imagePath (no icon/card/hero path fields — those are on Dream), so deck icon/card/hero are ArtImages in the owner's collection."
-  - date: 2026-07-12
-    project: model-builder
-    task: t-018
-    kind: content
-    stakes: reversible
-    passes: 0
-    outcome: done
-    failure_category: null
-    lesson: "Dream->3-Characters expansion runs autonomously end-to-end: pick a real Dream (Lantern Greenhouse, id 37) and let its `examples` seed the cast (one character per theme). The executor's guarantees ARE the t-018 proof points — three independent CREATE items (private/inactive, userId 10, unique @unique slugs), Dream links via the Characters implicit m2m, per-child idempotencyKey so a failed child retries alone and a COMMIT replay creates zero duplicates. A cohesive shared portrait style in the generate manifest keeps the cast visually tied to the dream."
-  - date: 2026-07-12
-    project: model-builder
-    task: t-019
-    kind: software
-    stakes: reversible
-    passes: 0
-    outcome: done
-    failure_category: null
-    lesson: "The conductor->KR project sync (scripts/sync_projects.py) only processes slugs marked active in project-overrides.yaml AND, before this task, never transmitted goal/waypoints even though the KR /api/projects endpoint accepts them. To wire a project's identity: add the override entry, add goal/waypoints to roadmap top matter, and extend build_project_payload to send them (goal as text; waypoints serialized to KR's pipe-delimited string) only when present so other projects are not cleared. Nav is seed-driven: append a type:directory SmartIcon to stores/seeds/smartIcons.json (the navStore fallback) mirroring /art; a content page with an icon: frontmatter also auto-registers via npm run generatesmart."
-  - date: 2026-07-12
-    project: model-builder
-    task: t-020
-    kind: software
-    stakes: reversible
-    passes: 0
-    outcome: done
-    failure_category: null
-    lesson: "A registered /api/suggest sheet only helps if the client lets it: buildSuggestUserPrompt resolves extra.instruction BEFORE sheet.fieldPrompts, so a store that always sends extra.instruction silently overrides the sheet. Fix is two-sided — register the sheet (system prompt + per-field prompts + a buildContext that digests the source record's canon) AND stop the store force-sending an instruction (send only when explicitly provided). Then getSuggestSheet('model-builder') stops falling back to the adventure sheet. kind_robots PR #193."
-  - date: 2026-07-12
-    project: model-builder
-    task: t-001..t-012
-    kind: software
-    stakes: reversible
-    passes: 0
-    outcome: done
-    failure_category: null
-    lesson: "When a project is built directly rather than spec-first, the 'write a spec doc' tasks are closed by subsumption: the executable code + reference runs ARE the spec. Map each task to its shipped artifact (see docs/spec-subsumption.md) instead of writing redundant prose. Be honest about the tail — video (LTX) and 3D (Hunyuan3D/STL) inside t-012 stay explicitly deferred rather than folded into 'done'."
-  - date: 2026-07-12
-    project: model-builder
-    task: t-024
-    kind: software
-    stakes: reversible
-    passes: 0
-    outcome: done
-    failure_category: null
-    lesson: "Generic AI drafts (a bland reward) come from a generic prompt with no field awareness. The fix is a single per-model field spec (modelBuilderFields: required/optional, defaults, choice pools grounded in the schema + builder *Cards) used to pre-fill the FIELDS box AND fed into the suggest context as 'Fields to fill', so the model returns a full specific record with valid choices. Kept the drafts rich but deferred writing the parsed fields to real columns (t-028) — that's a prod-write not worth shipping untested. kind_robots PR #195."
-  - date: 2026-07-12
-    project: model-builder
-    task: t-026
-    kind: software
-    stakes: reversible
-    passes: 0
-    outcome: done
-    failure_category: null
-    lesson: "Minimal-interaction 'just create it' is cheap once the gated actions exist: autoBuildItem/autoBuildRun just chain the existing draft -> approve -> generate -> commit actions with defaults, and an includeArt toggle lets it skip art for a fast create-records-only path (ASSET_ONLY items need art, so skip them when it's off). No new backend — it orchestrates over the idempotent executor, so re-running is safe. kind_robots PR #196."
+- date: 2026-07-11
+  project: challenge-center
+  task: t-003
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "Audit the target repo before claiming a task: the full t-003 API surface already existed on kind_robots main (built in a Silas-directed session outside the Worker loop), so the task closed by spec verification alone."
+- date: 2026-07-12
+  project: conductor
+  task: t-027
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "A stale task spec can be closed by a larger cutover that subsumes it: the Dream-sync priority ask was satisfied by rewriting the bridge to /api/projects — check whether pending tasks target a replaced integration before working them as written."
+- date: 2026-07-12
+  project: model-builder
+  task: frontend-scaffold
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "Front-end-first, no-schema slice merges cleanly and safely: the Model Builder UI (source picker -> gated recipe runner -> four gates) reused existing model list APIs, the art generator, and /api/suggest without touching Prisma, so merge-to-main deployed only additive UI. When you can't run the toolchain locally, lean on the repo's whole-project vue-tsc PR check as the verification gate before merging. Partial slice spanning t-005/t-014 — durable BuildRun persistence (t-004) intentionally deferred, not done."
+- date: 2026-07-12
+  project: conductor
+  task: t-035
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "Secrets expire silently: a JWT-backed integration needs its failure mode loud (nonzero exit on auth errors) or the bridge can be dead for weeks while CI stays green."
+- date: 2026-07-12
+  project: model-builder
+  task: t-004
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "An additive-only Prisma migration (new CREATE TABLEs, internal cascade FKs, external refs as plain scalar Int columns with no FK) merges safely even though merge-to-main runs prisma migrate deploy against prod — no reverse-relation edits to User/ArtImage were needed. The typecheck CI runs prisma generate before vue-tsc, so it validates a new schema file end-to-end (client types + routes + store) without a live DB; that plus the Vercel preview build is enough of a gate when you can't run the toolchain locally. kind_robots PR #188."
+- date: 2026-07-12
+  project: model-builder
+  task: t-021
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "Once a resource is durable, the cheapest high-value follow-up is a history/list surface — the list endpoint already existed, so the run-history panel was pure front-end with zero new API. kind_robots PR #189."
+- date: 2026-07-12
+  project: model-builder
+  task: t-013
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "Idempotent canonical writes without a live DB: an atomic claim on a unique key (updateMany where key IS NULL; count===0 means already committed) gives exactly-once semantics, releasing the key on write failure enables retry, and create+link in one $transaction prevents orphans. When you can't run the DB, keep writes to KNOWN exact field/relation names (pulled from schema) so vue-tsc validates every prisma.model.update/create at PR time — a wrong field name fails CI instead of corrupting prod. Covers t-013/t-014/t-015; kind_robots PR #190. Live proof still pending (t-022)."
+- date: 2026-07-12
+  project: model-builder
+  task: t-016
+  kind: content
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "The Model Builder's four gates are OPTIONAL front-end pauses (skip an item, or stop after prompt to edit) — NOT a backend block that waits on a repo-file approval. Default is to create full objects for everything. I over-applied a 'needs-human, internal-draft-only' framing to the HSS marketing deck; the right move was a full example set with the visuals queued into the real art pipeline (projects/art-generate.yaml). Also: the art generator forbids text/logos, so marketing collateral splits into generated text-free imagery + a text/logo layout step over the real logo (no rebrand). Don't invent brand facts — pricing/area/logo/descriptor came from Silas and were folded into CONTENT-BRIEF."
+- date: 2026-07-12
+  project: model-builder
+  task: t-017
+  kind: content
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "Autonomous Character Deck reference run grounds best in a real flagship record (AMIb0t from stores/seeds/seedBots.ts). Identity consistency is the linchpin: generate the canonical NEUTRAL avatar FIRST, lock seed+checkpoint, reuse for icon/card/hero/expressions; prove on a small 5-key expression subset before any full 20-key batch (Expression enum has 10 emotions + 10 actions + CUSTOM; NEUTRAL is canonical; ExpressionMedia owner is Bot XOR Character). Character has only artImageId/imagePath (no icon/card/hero path fields — those are on Dream), so deck icon/card/hero are ArtImages in the owner's collection."
+- date: 2026-07-12
+  project: model-builder
+  task: t-018
+  kind: content
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "Dream->3-Characters expansion runs autonomously end-to-end: pick a real Dream (Lantern Greenhouse, id 37) and let its `examples` seed the cast (one character per theme). The executor's guarantees ARE the t-018 proof points — three independent CREATE items (private/inactive, userId 10, unique @unique slugs), Dream links via the Characters implicit m2m, per-child idempotencyKey so a failed child retries alone and a COMMIT replay creates zero duplicates. A cohesive shared portrait style in the generate manifest keeps the cast visually tied to the dream."
+- date: 2026-07-12
+  project: model-builder
+  task: t-019
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "The conductor->KR project sync (scripts/sync_projects.py) only processes slugs marked active in project-overrides.yaml AND, before this task, never transmitted goal/waypoints even though the KR /api/projects endpoint accepts them. To wire a project's identity: add the override entry, add goal/waypoints to roadmap top matter, and extend build_project_payload to send them (goal as text; waypoints serialized to KR's pipe-delimited string) only when present so other projects are not cleared. Nav is seed-driven: append a type:directory SmartIcon to stores/seeds/smartIcons.json (the navStore fallback) mirroring /art; a content page with an icon: frontmatter also auto-registers via npm run generatesmart."
+- date: 2026-07-12
+  project: model-builder
+  task: t-020
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "A registered /api/suggest sheet only helps if the client lets it: buildSuggestUserPrompt resolves extra.instruction BEFORE sheet.fieldPrompts, so a store that always sends extra.instruction silently overrides the sheet. Fix is two-sided — register the sheet (system prompt + per-field prompts + a buildContext that digests the source record's canon) AND stop the store force-sending an instruction (send only when explicitly provided). Then getSuggestSheet('model-builder') stops falling back to the adventure sheet. kind_robots PR #193."
+- date: 2026-07-12
+  project: model-builder
+  task: t-001..t-012
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "When a project is built directly rather than spec-first, the 'write a spec doc' tasks are closed by subsumption: the executable code + reference runs ARE the spec. Map each task to its shipped artifact (see docs/spec-subsumption.md) instead of writing redundant prose. Be honest about the tail — video (LTX) and 3D (Hunyuan3D/STL) inside t-012 stay explicitly deferred rather than folded into 'done'."
+- date: 2026-07-12
+  project: model-builder
+  task: t-024
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "Generic AI drafts (a bland reward) come from a generic prompt with no field awareness. The fix is a single per-model field spec (modelBuilderFields: required/optional, defaults, choice pools grounded in the schema + builder *Cards) used to pre-fill the FIELDS box AND fed into the suggest context as 'Fields to fill', so the model returns a full specific record with valid choices. Kept the drafts rich but deferred writing the parsed fields to real columns (t-028) — that's a prod-write not worth shipping untested. kind_robots PR #195."
+- date: 2026-07-12
+  project: model-builder
+  task: t-026
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "Minimal-interaction 'just create it' is cheap once the gated actions exist: autoBuildItem/autoBuildRun just chain the existing draft -> approve -> generate -> commit actions with defaults, and an includeArt toggle lets it skip art for a fast create-records-only path (ASSET_ONLY items need art, so skip them when it's off). No new backend — it orchestrates over the idempotent executor, so re-running is safe. kind_robots PR #196."
 - date: 2026-07-12
   project: challenge-center
   task: t-004
@@ -244,3 +244,12 @@ records:
   outcome: done
   failure_category: null
   lesson: "resolve_deps.py (like process_task_events.py, flagged separately as t-020) rewrites the entire roadmap file with yaml.safe_dump whenever it applies an unblock, turning a two-task status flip into a 940-line diff (escaped Unicode, flow-style indentation, changed quoting). Ran it once, saw the blast radius, reverted, and reapplied the same t-009/t-015 unblock with the surgical set_task_field.py instead — landed as a 26-line diff. Future cycles should default to set_task_field.py for post-done dependency unblocks and treat resolve_deps.py's write path as unsafe for a clean PR until t-020 fixes it too."
+- date: 2026-07-14
+  project: conductor
+  task: t-036
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: quality
+  lesson: "This file's own block-sequence indentation had silently mixed two depths (2-space nested vs 0-indent flush) since an earlier merge, breaking yaml.safe_load for the whole ledger and swallowing every append_learning() call system-wide. Root cause was never diagnosed at the time it broke because process_task_events.py's YAML-parse failure wasn't surfaced loudly enough to trace back to this file. Fix was a pure whitespace reflow (dedent every record under the mixed-depth block by 2 spaces to match the majority 0-indent style) verified line-for-line against the diff so no record content changed, then confirmed both yaml.safe_load and scripts/build_learning_summary.py run clean. Next time a script that reads this file throws on task-close, check LEARNING.yaml's own parseability first before assuming the bug is in the caller."

@@ -2680,3 +2680,52 @@ conductor/t-037 (soft needs-human) rather than claim the CI is fully clean.
 
 **Suggested action:** t-037 needs someone with kind_robots Vercel/DB log access — likely
 Silas, or a future Worker cycle if it gets that access. Not blocking anything else.
+
+## 2026-07-14 | Reviewer → Silas | conductor/t-036 | pattern
+
+**Decision:** merged (self-implemented and self-verified; conductor-tooling fix, same
+Reviewer-direct-merge authority as the 2026-07-14 02:00 and 09:55 entries).
+
+**Failure category:** quality (the ledger's own indentation was silently wrong, not a
+transient or actionable blocker — a pure mechanical fix was possible in one pass).
+
+**What was good:**
+- Root cause was already fully diagnosed in the earlier security-flag entry (line 21 vs
+  157 mixed indent depths), so this cycle only had to execute the fix, not rediscover it.
+
+**What to improve:**
+- N/A — no Worker involved this cycle; this was a direct Reviewer/session fix on
+  conductor's own tooling per the task note's explicit scope (formatting-only, no record
+  content changes).
+
+**Detail:**
+- Confirmed `yaml.safe_load(LEARNING.yaml)` failed exactly as diagnosed: `expected
+  <block end>, but found '-'` at line 157, caused by records 22-156 nested 2 spaces under
+  `records:` while records 157+ sit flush at 0 indent.
+- Dedented lines 22-156 by exactly 2 spaces (script-driven, not hand-edited) so the whole
+  block matches the majority 0-indent style used by every later, more-recent entry per
+  the task's own guidance. Diffed every changed line pairwise to confirm content was
+  byte-identical before/after — only leading whitespace changed, zero record content
+  touched.
+- `yaml.safe_load` now parses all 25 pre-existing records plus the new t-036 closure
+  record (26 total) cleanly. `scripts/build_learning_summary.py` runs clean and
+  `LEARNING-REPORT.md` now reflects real aggregated data (25→26 closed tasks, 100%
+  success rate, kaizen-target table) instead of the stale placeholder
+  `_No records yet._` it had been silently stuck on.
+- Full `python3 -m pytest tests/` — 141 passed, 0 failures. Re-validated all 41
+  `projects/*/roadmap.yaml` files plus `LEARNING.yaml` parse clean (42/42).
+- Set `projects/conductor/roadmap.yaml` t-036 `status: ready` → `done` via
+  `scripts/set_task_field.py` (surgical single-field edit, not `resolve_deps.py` — per
+  challenge-center/t-008's own lesson two entries up in this same file) and appended the
+  closing `LEARNING.yaml` record for t-036 itself.
+
+**Kaizen task:** deferred — the standing gap this exposed (silent YAML-parse failures in
+`process_task_events.py`/`build_learning_summary.py` not surfacing loudly when
+`LEARNING.yaml` itself is malformed) is already tracked as `t-020`'s broader
+atomic-processing/error-surfacing scope; no new task needed.
+
+**Pattern note:** Third consecutive conductor-tooling fix this rotation merged directly
+by the Reviewer/session rather than routed through the Worker claim cycle (mirrors
+09:55 and 02:00 entries) — all three were small, mechanical, reversible, ops-only fixes
+with no product-roadmap surface. Keep using this path for that specific shape of task;
+it's working.
