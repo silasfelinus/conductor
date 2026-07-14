@@ -487,7 +487,7 @@ tasks:
 - id: t-018
   milestone: m2
   title: Add a CI check that runs seed scripts in validation-only mode
-  status: claimed
+  status: review
   owner: worker
   passes: 0
   stakes: reversible
@@ -499,8 +499,20 @@ tasks:
 
 
 
-    Worker run claimed the highest-priority eligible ready task after current-main priority scan.'
-  updated: '2026-07-14T22:06:09Z'
+    Worker run claimed the highest-priority eligible ready task after current-main priority scan.
+
+
+    IMPLEMENTED (2026-07-14): kind_robots PR #263 (branch claude/upbeat-pascal-w87yxr) adds
+    test:seed-challenges / test:seed-contenders npm scripts (plain tsx runs of scripts/seed_challenges.ts
+    and scripts/seed_contenders.ts with no --write flag — both already validate slugs/enum coverage/required
+    fields and skip all Prisma/DB work unless --write is passed) and wires both into
+    .github/workflows/contract-tests.yml, which already gates every PR and needs no database. Verified
+    locally with no DATABASE_URL set: both scripts validate and exit 0; confirmed the failure path by feeding
+    validateChallengeSeeds a duplicate-slug catalog and seeing it throw non-zero. utils/scripts/seedDaVinciEndings.ts
+    was left out of scope (see PR body) since it requires a file argument rather than an embedded catalog and
+    already has its own nightly DB-backed regression job. PR opened against main; awaiting CI (Contract
+    verifiers/TypeScript/facet-alias-smoke) before merge.'
+  updated: '2026-07-14T22:13:21Z'
   claimed_by: burst-20260714T220609Z
   claimed_at: '2026-07-14T22:06:09Z'
 - id: t-019
