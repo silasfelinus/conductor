@@ -18,8 +18,12 @@ def main() -> int:
         "all_needs_attention",
         "pitches_awaiting_vote",
         "open_branches",
+        "art_highlights",
+        "new_creations",
     }
     list_keys = required_keys - {"date"}
+    # tomorrow_proposal / yesterday_output are an object or null (no proposal yet).
+    proposal_keys = {"tomorrow_proposal", "yesterday_output"}
     required_project_keys = {
         "name",
         "kind",
@@ -40,6 +44,11 @@ def main() -> int:
     if wrong_list_types:
         print("digest.json fields must be lists: " + ", ".join(wrong_list_types), file=sys.stderr)
         return 1
+
+    for key in proposal_keys:
+        if key in digest and not (digest[key] is None or isinstance(digest[key], dict)):
+            print(f"digest.json {key} must be an object or null", file=sys.stderr)
+            return 1
 
     for index, project in enumerate(digest["projects"]):
         if not isinstance(project, dict):

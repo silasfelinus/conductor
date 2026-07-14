@@ -42,9 +42,11 @@ from __future__ import annotations
 
 import argparse
 import base64
+import datetime
 import io
 import json
 import os
+import subprocess
 import sys
 import urllib.error
 import urllib.request
@@ -53,17 +55,41 @@ from typing import Any, Optional
 
 import yaml
 
+try:
+    from zoneinfo import ZoneInfo
+    _TZ = ZoneInfo("America/Los_Angeles")
+except ImportError:  # pragma: no cover - Python < 3.9 fallback
+    _TZ = datetime.timezone(datetime.timedelta(hours=-7))
+
 sys.path.insert(0, str(Path(__file__).parent))
 import art_quality  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[1]
 SETS_DIR = ROOT / "projects" / "coloring-book" / "sets"
+DAILY_DIR = ROOT / "projects" / "curation" / "daily"   # dated daily scoring reports
+AESTHETIC_GUIDELINES = ROOT / "AESTHETIC-GUIDELINES.md"  # steerable daily rubric source
+# Recently-rendered art lives in these conductor folders; served publicly via raw GitHub.
+DAILY_SCAN_DIRS = [ROOT / "projects" / "images", ROOT / "projects" / "process"]
+CONDUCTOR_RAW = "https://raw.githubusercontent.com/silasfelinus/conductor/main"
 
 MODEL = os.environ.get("ART_CURATOR_MODEL", "claude-opus-4-8").strip()
 API_URL = "https://api.anthropic.com/v1/messages"
 DEFAULT_MIN_SCORE = 75
 MAX_EXEMPLARS = 2      # approved reference images per variant, the quality bar
 SAMPLE_EDGE = 1024     # downscale long edge before upload to bound image tokens
+
+# Daily-mode scoring: a general aesthetic verdict (no coloring-book specifics).
+DAILY_VERDICT_SCHEMA = {
+    "type": "object",
+    "properties": {
+        "score": {"type": "integer"},
+        "verdict": {"type": "string", "enum": ["promote", "revise", "reject"]},
+        "one_liner": {"type": "string"},
+        "reasons": {"type": "array", "items": {"type": "string"}},
+    },
+    "required": ["score", "verdict", "one_liner", "reasons"],
+    "additionalProperties": False,
+}
 
 VERDICT_SCHEMA = {
     "type": "object",
@@ -189,7 +215,8 @@ def exemplars(set_dir: Path, variant: str) -> list[Path]:
 
 
 def call_vision(api_key: str, candidate: Path, variant: str, scene: str,
-                refs: list[Path]) -> dict[str, Any]:
+                refs: list[Path], rubric: str = RUBRIC,
+                schema: dict[str, Any] = VERDICT_SCHEMA) -> dict[str, Any]:
     content: list[dict[str, Any]] = []
     if refs:
         content.append({"type": "text",
@@ -202,10 +229,11 @@ def call_vision(api_key: str, candidate: Path, variant: str, scene: str,
     if not src:
         raise RuntimeError("could not read candidate image")
     variant_label = "coloring-page line art" if variant == "bw" else "full-color illustration"
+    scene_hint = f" Intended concept: {scene}" if scene else ""
     content.append({"type": "text",
-                    "text": f"CANDIDATE ({variant_label}). Intended concept: {scene or '(unknown)'}"})
+                    "text": f"CANDIDATE ({variant_label}).{scene_hint}"})
     content.append({"type": "image", "source": src})
-    content.append({"type": "text", "text": RUBRIC})
+    content.append({"type": "text", "text": rubric})
 
     body = json.dumps({
         "model": MODEL,
@@ -213,7 +241,7 @@ def call_vision(api_key: str, candidate: Path, variant: str, scene: str,
         "thinking": {"type": "adaptive"},
         "output_config": {
             "effort": "medium",
-            "format": {"type": "json_schema", "schema": VERDICT_SCHEMA},
+            "format": {"type": "json_schema", "schema": schema},
         },
         "messages": [{"role": "user", "content": content}],
     }).encode()
@@ -247,6 +275,128 @@ def candidates(set_dir: Path) -> list[tuple[Path, str]]:
     return out
 
 
+def daily_rubric() -> str:
+    """The general aesthetic bar for daily scoring — steerable via AESTHETIC-GUIDELINES.md."""
+    guidelines = ""
+    if AESTHETIC_GUIDELINES.exists():
+        guidelines = AESTHETIC_GUIDELINES.read_text(encoding="utf-8").strip()
+    intro = (
+        "You are Conductor's daily style assessor. Score this freshly generated "
+        "image for the site on overall aesthetic quality, against the guidelines "
+        "below. Judge intentional composition, cohesive palette, light with "
+        "intent, character/story, and craft — reward finished, portfolio-worthy "
+        "work and knock blank/degenerate frames, watermarks, garbled anatomy, and "
+        "generic filler.\n\n"
+    )
+    scoring = (
+        "\n\nScore 0-100 and give a verdict (promote >=80, revise 60-79, "
+        "reject <60), a one_liner caption (<=12 words, for the digest gallery), "
+        "and brief reasons. Return ONLY the JSON object matching the schema."
+    )
+    return intro + (guidelines or "(no guidelines file found — use general good taste.)") + scoring
+
+
+def public_url(rel: str) -> str:
+    """Public URL for a conductor-tracked image, via raw GitHub (stable + public)."""
+    return f"{CONDUCTOR_RAW}/{rel.lstrip('/')}"
+
+
+def recent_render_paths(since: str, limit: int = 0) -> list[Path]:
+    """Image files under the scan dirs touched within `since` (git history, mtime fallback)."""
+    exts = {".webp", ".png", ".jpg", ".jpeg"}
+    found: list[Path] = []
+    seen: set[Path] = set()
+    rel_dirs = [str(d.relative_to(ROOT)) for d in DAILY_SCAN_DIRS if d.exists()]
+    if rel_dirs:
+        try:
+            out = subprocess.run(
+                ["git", "-C", str(ROOT), "log", f"--since={since}",
+                 "--name-only", "--pretty=format:", "--", *rel_dirs],
+                capture_output=True, text=True, timeout=60,
+            ).stdout
+            for line in out.splitlines():
+                line = line.strip()
+                if not line or Path(line).suffix.lower() not in exts:
+                    continue
+                path = ROOT / line
+                if path.exists() and path not in seen:
+                    seen.add(path)
+                    found.append(path)
+        except Exception:  # noqa: BLE001 - fall through to mtime scan
+            found = []
+    if not found:  # mtime fallback (fresh checkout with shallow history, local runs)
+        cutoff = datetime.datetime.now().timestamp() - 24 * 3600
+        for d in DAILY_SCAN_DIRS:
+            if not d.exists():
+                continue
+            for path in d.rglob("*"):
+                if path.suffix.lower() in exts and path.is_file() and path.stat().st_mtime >= cutoff:
+                    if path not in seen:
+                        seen.add(path)
+                        found.append(path)
+    if limit > 0:
+        found = found[:limit]
+    return found
+
+
+def run_daily(args) -> int:
+    """Score the day's fresh renders and write a dated report for the digest gallery."""
+    api_key = os.environ.get("ANTHROPIC_API_KEY", "").strip()
+    do_vision = bool(api_key) and not args.dry_run
+    todo = recent_render_paths(args.since, args.limit)
+    if not todo:
+        print(f"No fresh renders found under {[str(d.relative_to(ROOT)) for d in DAILY_SCAN_DIRS]} "
+              f"since {args.since}.")
+    rubric = daily_rubric()
+    now_iso = datetime.datetime.now(_TZ).isoformat()
+    results: list[dict[str, Any]] = []
+
+    for path in todo:
+        rel = str(path.relative_to(ROOT))
+        variant = art_quality._variant_from_path(path)
+        ok, reasons, info = art_quality.assess_file(path, variant)
+        base = {"image": rel, "public_url": public_url(rel), "source": path.parent.name,
+                "variant": variant, "objective": info, "scored_at": now_iso}
+        if ok is False:  # objective floor rejects a broken render before any vision spend
+            results.append({**base, "stage": "floor", "score": 0, "verdict": "reject",
+                            "reasons": reasons})
+            print(f"  FLOOR-FAIL {rel}  {'; '.join(reasons)}")
+            continue
+        if not do_vision:
+            results.append({**base, "stage": "floor", "score": None, "verdict": "needs-vision",
+                            "reasons": reasons if ok is None else []})
+            print(f"  NEEDS-VISION {rel}")
+            continue
+        try:
+            v = call_vision(api_key, path, variant, "", [], rubric=rubric,
+                            schema=DAILY_VERDICT_SCHEMA)
+        except Exception as error:  # noqa: BLE001 - keep scoring the batch
+            results.append({**base, "stage": "vision", "score": None, "verdict": "error",
+                            "reasons": [str(error)]})
+            print(f"  VISION-ERR {rel}: {error}", file=sys.stderr)
+            continue
+        results.append({**base, "stage": "vision", "score": int(v.get("score") or 0),
+                        "verdict": str(v.get("verdict") or "reject"),
+                        "one_liner": v.get("one_liner", ""), "reasons": v.get("reasons", [])})
+        print(f"  {str(v.get('verdict','')).upper():8} {rel}  score={v.get('score')}")
+
+    # Sort scored entries highest-first so the digest can take the top N directly.
+    results.sort(key=lambda r: (r.get("score") is not None, r.get("score") or 0), reverse=True)
+    DAILY_DIR.mkdir(parents=True, exist_ok=True)
+    date = datetime.datetime.now(_TZ).date().isoformat()
+    report = DAILY_DIR / f"{date}.yaml"
+    report.write_text(
+        yaml.safe_dump({"date": date, "model": MODEL if do_vision else None,
+                        "since": args.since, "scored": sum(1 for r in results if r.get("score") is not None),
+                        "results": results}, sort_keys=False, allow_unicode=True),
+        encoding="utf-8",
+    )
+    print(f"\nReport: {report.relative_to(ROOT)}  ({len(results)} images)")
+    if not do_vision:
+        print("Set ANTHROPIC_API_KEY and drop --dry-run for the vision scoring pass.")
+    return 0
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--set", default="monster-recast", help="coloring-book set slug")
@@ -256,7 +406,14 @@ def main() -> int:
                         help="objective prefilter only; no API calls")
     parser.add_argument("--promote", action="store_true",
                         help="move promote-verdict candidates into approved/ (default: propose only)")
+    parser.add_argument("--daily", action="store_true",
+                        help="score the day's fresh renders for the digest gallery (not a coloring set)")
+    parser.add_argument("--since", default="24 hours ago",
+                        help="daily mode: window of renders to score (git --since syntax)")
     args = parser.parse_args()
+
+    if args.daily:
+        return run_daily(args)
 
     set_dir = SETS_DIR / args.set
     if not set_dir.is_dir():
