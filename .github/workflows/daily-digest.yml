@@ -17,6 +17,8 @@ on:
 jobs:
   digest:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     env:
       SHOULD_SEND_EMAIL: ${{ github.event_name == 'schedule' || inputs.send_email == true }}
     steps:
@@ -26,7 +28,44 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - run: pip install pyyaml
+      - run: pip install pyyaml Pillow # Pillow => objective art-quality floor + image encode
+
+      # --- Art-forward morning ritual -------------------------------------
+      # Generate tomorrow's dream proposal (starter dream: 3 characters, 2
+      # locations, a narrator, 2 rewards) and score the day's fresh renders for
+      # the digest gallery. Both soft-fail: no ANTHROPIC_API_KEY (or the render
+      # box offline) just means a thinner digest, never a red build.
+      - name: Generate tomorrow's dream proposal
+        continue-on-error: true
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: python scripts/build_dream_proposal.py
+
+      - name: Score the day's art (style assessor)
+        continue-on-error: true
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: python scripts/curate_art.py --daily --limit 12
+
+      - name: Commit proposal + daily scoring report
+        continue-on-error: true
+        run: |
+          git config user.name "conductor-bot"
+          git config user.email "conductor-bot@users.noreply.github.com"
+          git add projects/dream-cycle/backlog/ projects/curation/daily/
+          if git diff --staged --quiet; then
+            echo "No proposal/report changes to commit."
+          else
+            git commit -m "chore: daily dream proposal + art scoring [skip ci]"
+            for attempt in 1 2 3 4 5; do
+              if git push; then break; fi
+              echo "push rejected (attempt $attempt); rebasing onto origin/main…"
+              git pull --rebase --autostash origin main || exit 1
+              sleep $((attempt * 3))
+            done
+          fi
+      # --------------------------------------------------------------------
+
       - name: Build digest JSON
         run: |
           python scripts/build_digest.py --since "24 hours ago" > digest.json

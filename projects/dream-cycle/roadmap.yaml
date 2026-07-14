@@ -240,3 +240,68 @@ tasks:
       rating) so card drift is caught by CI instead of a manual audit pass.
       Emit a non-zero exit with a readable diff summary; wire it into the
       existing conductor CI checks.
+  - id: t-011
+    milestone: m4
+    title: Rolling daily-dream proposal + art-forward digest (Phase 1)
+    status: done
+    owner: reviewer
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-14T00:00:00Z'
+    note: >
+      Silas 2026-07-14: up the ante on auto-created output — the daily digest
+      becomes an art-forward morning ritual. Shipped:
+      (1) scripts/build_dream_proposal.py — LLM (Anthropic, ANTHROPIC_API_KEY)
+      generates tomorrow's "starter dream" (3 characters, 2 locations, 1
+      narrator bot, 2 rewards one SKILL + one ITEM, vibe + scenarios) as a
+      dated backlog outline from backlog/_template-proposal.md; --sample/no-key
+      renders a built-in sample so the path stays verifiable and the run
+      soft-no-ops. (2) scripts/curate_art.py --daily — generalizes the style
+      assessor beyond coloring-book sets to score the day's fresh renders
+      (projects/images + projects/process) against the new steerable
+      AESTHETIC-GUIDELINES.md, writing projects/curation/daily/<date>.yaml with
+      per-image score + scored_at, sorted highest-first. (3) build_digest.py
+      gains tomorrow_proposal / yesterday_output / art_highlights /
+      new_creations; build_digest_email.py renders facsimile pitch cards
+      (per-type theming mirroring kind_robots dream-pitch-sheet.vue +
+      pitchSheetDefaults), a top-scored gallery, a highlight reel, and a
+      comment/edit button linking to the proposal file's Notes-from-Silas.
+      (4) daily-digest.yml runs proposal-gen + scoring (soft-fail) and commits
+      them before building the email. Comment/edit link target = the GitHub
+      backlog file (Phase 1 default). Fulfils art-generator-connect/t-019
+      "surface generation results in the daily digest."
+  - id: t-012
+    milestone: m4
+    title: 'Phase 2: build the proposal into real records + art'
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-14T00:00:00Z'
+    note: >
+      Follow-up to t-011. Wire each daily proposal (a backlog outline) through
+      to real kind_robots content so yesterday_output shows real built cards +
+      images, not just the proposal echo. Reuse model-builder's
+      relationship-expansion recipe (Dream -> 3 Characters / Rewards /
+      Scenarios / Narrator Bot; ref reference-runs/dream-expansion-lantern-
+      greenhouse.md) driven from the dream-cycle build loop (t-006), creating
+      Dream/Character/Reward/Bot + PitchSheet rows via the kind_robots REST API
+      with designer/source metadata (reversible). Then build_digest.py's
+      match_images_for() reads real ArtImage collections by slug.
+  - id: t-013
+    milestone: m5
+    title: 'Phase 2: kind_robots Daily Dream page (real pitch cards) — file as KR task'
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-14T00:00:00Z'
+    note: >
+      Follow-up to t-011. The email uses HTML facsimile cards because Vue
+      components can't render in email. For the full experience, file a
+      kind_robots task/pitch (frontend belongs to that repo — never edit the
+      backend directly) for a "Daily Dream" page reusing the real
+      components/dreams/dream-pitch-sheet.vue + dream-gallery.vue +
+      art-gallery.vue + conductor/project-gallery-strip.vue, with in-app
+      comment/edit via dream-sheet-toolbar.vue. The morning email then becomes a
+      teaser linking to it (the placeholder link is already wired).

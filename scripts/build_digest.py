@@ -135,6 +135,126 @@ def scan_pitches():
             out.append(title)
     return out
 
+REPO = "silasfelinus/conductor"
+DEFAULT_BRANCH = "main"
+BACKLOG_DIR = "projects/dream-cycle/backlog"
+DAILY_DIR = "projects/curation/daily"
+SHIPPED_PATH = "projects/dream-cycle/SHIPPED.md"
+CONDUCTOR_RAW = f"https://raw.githubusercontent.com/{REPO}/{DEFAULT_BRANCH}"
+
+
+def _public_url(rel):
+    return f"{CONDUCTOR_RAW}/{rel.lstrip('/')}"
+
+
+def _frontmatter(text):
+    m = re.match(r"^---\n(.*?)\n---\n", text, re.DOTALL)
+    if not m:
+        return {}
+    try:
+        return yaml.safe_load(m.group(1)) or {}
+    except yaml.YAMLError:
+        return {}
+
+
+def _section(text, heading):
+    """Body text under a `## heading` up to the next `## ` (or end)."""
+    m = re.search(rf"^##\s+{re.escape(heading)}\s*\n(.*?)(?=^##\s|\Z)", text, re.DOTALL | re.MULTILINE)
+    return m.group(1).strip() if m else ""
+
+
+def parse_proposal(path):
+    """Parse a daily-proposal backlog file into card-ready data. None if not a proposal."""
+    text = open(path, encoding="utf-8").read()
+    fm = _frontmatter(text)
+    if not fm.get("proposal"):
+        return None
+    data = {}
+    dm = re.search(r"<!--\s*proposal-data\s*\n(.*?)\n-->", text, re.DOTALL)
+    if dm:
+        try:
+            data = json.loads(dm.group(1))
+        except json.JSONDecodeError:
+            data = {}
+    idea = _section(text, "The idea")
+    filename = os.path.basename(path)
+    return {
+        "slug": str(fm.get("slug", "")),
+        "title": str(fm.get("title", filename)),
+        "date": str(fm.get("proposal_date") or fm.get("created") or ""),
+        "idea": idea,
+        "edit_link": f"https://github.com/{REPO}/blob/{DEFAULT_BRANCH}/{BACKLOG_DIR}/{filename}#notes-from-silas",
+        "data": data,
+    }
+
+
+def collect_proposals():
+    """(tomorrow's fresh proposal, yesterday's proposal that was built) — newest two."""
+    props = []
+    for path in sorted(glob.glob(f"{BACKLOG_DIR}/*.md")):
+        name = os.path.basename(path)
+        if name.startswith("_") or name == "README.md":
+            continue
+        parsed = parse_proposal(path)
+        if parsed:
+            props.append((parsed.get("date", ""), name, parsed))
+    props.sort(key=lambda t: (t[0], t[1]))
+    tomorrow = props[-1][2] if props else None
+    yesterday = props[-2][2] if len(props) >= 2 else None
+    return tomorrow, yesterday
+
+
+def match_images_for(slug):
+    """Best-effort: conductor-tracked images whose filename starts with the dream slug."""
+    if not slug:
+        return []
+    out = []
+    for path in sorted(glob.glob("projects/images/*")):
+        name = os.path.basename(path)
+        if name.startswith(slug) and os.path.splitext(name)[1].lower() in (".webp", ".png", ".jpg", ".jpeg"):
+            out.append({"name": name, "url": _public_url(path)})
+    return out
+
+
+def latest_daily_report():
+    reports = sorted(glob.glob(f"{DAILY_DIR}/*.yaml"))
+    if not reports:
+        return None
+    try:
+        return yaml.safe_load(open(reports[-1], encoding="utf-8")) or {}
+    except yaml.YAMLError:
+        return None
+
+
+def art_highlights(top_n=6):
+    """Top-scored renders of the day, from the style-assessor daily report."""
+    report = latest_daily_report()
+    if not report:
+        return []
+    scored = [r for r in report.get("results", []) if isinstance(r.get("score"), int)]
+    scored.sort(key=lambda r: r.get("score", 0), reverse=True)
+    return [
+        {
+            "url": r.get("public_url", _public_url(r.get("image", ""))),
+            "score": r.get("score"),
+            "caption": r.get("one_liner", ""),
+            "verdict": r.get("verdict", ""),
+        }
+        for r in scored[:top_n]
+    ]
+
+
+def new_creations(limit=5):
+    """Recent shipped creations, newest first, from the dream-cycle ledger."""
+    if not os.path.exists(SHIPPED_PATH):
+        return []
+    text = open(SHIPPED_PATH, encoding="utf-8").read()
+    entries = []
+    for m in re.finditer(r"^##\s+(\d{4}-\d{2}-\d{2})\s+—\s+(.+?)\s+\(`([^`]+)`", text, re.MULTILINE):
+        entries.append(f"{m.group(2)} ({m.group(1)})")
+    return list(reversed(entries))[:limit]
+
+
 def scan_branches():
     """Return summary strings for remote branches not yet merged to main."""
     raw = git("branch", "-r", "--no-merged", "origin/main")
@@ -179,12 +299,22 @@ def main():
             "ready_count": sum(1 for t in tasks if t.get("status") == "ready"),
         })
 
+    tomorrow_proposal, yesterday_proposal = collect_proposals()
+    yesterday_output = None
+    if yesterday_proposal:
+        yesterday_output = dict(yesterday_proposal)
+        yesterday_output["images"] = match_images_for(yesterday_proposal.get("slug", ""))
+
     payload = {
         "date": datetime.datetime.now(_TZ).date().isoformat(),
         "greeting": time_greeting(),
         "daily_spark": daily_spark(
             context=", ".join(p["name"] for p in projects) if projects else ""
         ),
+        "tomorrow_proposal": tomorrow_proposal,
+        "yesterday_output": yesterday_output,
+        "art_highlights": art_highlights(),
+        "new_creations": new_creations(),
         "commits_since": (git("log", f"--since={args.since}", "--pretty=format:%h %s (%an)") or "").splitlines(),
         "merges_since": (git("log", f"--since={args.since}", "--merges", "--pretty=format:%h %s") or "").splitlines(),
         "activity_since": significant_activity(args.since),
