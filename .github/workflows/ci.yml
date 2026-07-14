@@ -135,7 +135,10 @@ jobs:
         run: python -m pip install pytest pyyaml
 
       - name: Run fixture authz regression tests
-        run: pytest tests/test_authz_regression.py tests/test_set_task_field.py tests/test_queue_missing_project_art.py
+        run: |
+          pytest tests/test_authz_regression.py tests/test_set_task_field.py tests/test_queue_missing_project_art.py \
+            tests/test_roadmap_text_patch.py tests/test_process_task_events.py tests/test_resolve_deps.py \
+            tests/test_validate_roadmaps.py
 
   build-ts-projects:
     name: Build changed TypeScript projects

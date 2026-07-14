@@ -52,3 +52,13 @@ Use one event per state change. Do not create a replacement event after a workfl
 ## Failure behavior
 
 Invalid events are not deleted. The workflow fails visibly and leaves the event in place for diagnosis. A failed event is a soft blocker unless its underlying action is itself hard-gated or makes all remaining work unsafe.
+
+## Surgical, byte-preserving writes
+
+The processor (`scripts/process_task_events.py`) never reserializes a whole `roadmap.yaml` with `yaml.safe_dump`. It edits only the specific field lines an event actually changes (via `scripts/roadmap_text_patch.py`, built on `scripts/set_task_field.py`), so a status-only event produces a status-sized diff — every other task's formatting, quote style, block scalars, and literal Unicode stay byte-for-byte untouched. `scripts/resolve_deps.py`'s dependency-unblock writes (`waiting` → `ready`) use the same patcher for the same reason. `LEARNING.yaml` is append-only text: a new record is written as trailing bytes, never a full-ledger rewrite, so existing records keep whatever style they were originally saved with.
+
+## Atomic retry behavior
+
+`process()` validates the full event — including any `learning` payload — and computes every roadmap edit *before* writing anything, so an invalid `learning` block can never leave an already-applied status transition stranded with its event file undeleted; on any validation error, the roadmap file and the event file are both left exactly as they were.
+
+At the Git level, the `Process task events` workflow commits and pushes straight to `main`. If `origin/main` moved between checkout and push (a concurrent claim or another commit landed first), the workflow fetches the new `main`, discards its own commit with `git reset --hard` (never a force-push), and replays the *entire* processing step — including re-running `process_task_events.py` — against the fresh base. It allows exactly one such retry; if the second push also loses the race, the job fails and every event stays queued, untouched, on `origin/main` for the next run to pick up.
