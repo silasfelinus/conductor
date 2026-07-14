@@ -2414,3 +2414,52 @@ production is live again, re-run kind_robots' Cypress Tests workflow to
 confirm PR #222's connection-pool fix holds under real traffic — it's
 merged and type-checks clean locally, but has zero live-CI confirmation
 because of this outage.
+
+## 2026-07-14 03:15 | Reviewer → Silas | kind-robots/t-015 | pattern
+
+**Subject:** Autonomous sweep found t-015's outage still ongoing but Silas
+already actively fixing it live — no new escalation needed, logging for the
+record.
+
+**Detail:**
+- No open `worker/*` or `claude/*` PRs anywhere in scope this cycle, so
+  there was nothing for the Reviewer to merge or reject.
+- Checked in on the standing hard `needs-human` at kind-robots/t-015
+  (production down since 2026-07-14T01:44 UTC). Since the 02:15 note was
+  written, kind_robots PR #223 ("Run Prisma migrations through verified
+  ProxySQL TLS", `agent/proxysql-tls-migrations` → `main`) merged and
+  deployed (`dpl_DCTj17Q8QT9d9TJWtWW7zBFq4Jct`), but still failed —
+  different error this time: `ERR_TLS_CERT_ALTNAME_INVALID`. The new
+  `scripts/prisma-migrate-deploy.mjs` TLS-verification step connects using
+  `DATABASE_URL`'s hostname (`acrocatranch.com`), but the ProxySQL CA cert
+  it validates against only carries SANs for
+  `IP:100.89.251.10, IP:127.0.0.1, DNS:proxysql, DNS:alexandria` — no
+  `acrocatranch.com` entry, so Node's TLS hostname check rejects it outright
+  before Prisma ever runs.
+- By the time this was confirmed, Silas was already mid-fix in the live
+  repo: commit `fda77a96` ("chore: retry production after ProxySQL
+  certificate renewal") pushed straight to `main` and a new production
+  build (`dpl_BbyxU1z3cu2dAvW5zjPUpRujjFoZ`) was `BUILDING` as of this
+  sweep, followed immediately by `d8407edc` ("chore: remove production
+  redeploy marker") queued behind it — consistent with Silas reissuing the
+  ProxySQL cert with the right SAN and clearing a manual redeploy trigger
+  himself. Did not touch the roadmap task's `status` or the deploy/DNS/cert
+  config — that's squarely Silas's hard-gated territory and he was already
+  on it in real time; polled Vercel's deployment list twice a couple
+  minutes apart to confirm the fix was actively in flight rather than
+  stalled, then stopped polling rather than block the cycle on it.
+- Leaving `kind-robots/t-015` as `status: needs-human` unchanged — only
+  Silas can confirm the cert now covers the right hostname and mark this
+  done. Next cycle should check `dpl_BbyxU1z3cu2dAvW5zjPUpRujjFoZ` /
+  `dpl_82xc72yVX4h2pA1JLHAvR9CfocZm` state before re-diagnosing from
+  scratch.
+- Dream-cycle idle-fallback check: no creation currently `status: building`
+  in `projects/dream-cycle/backlog/`. Buildable outlines (`outline` or
+  `approved`) = 4 (`lantern-post`, `static-garden`, `tidepool-arcade`,
+  `monster-recast`) — below the 5-outline runway floor CLAUDE.md's sweep
+  asks to flag.
+
+**Suggested action:** none for Silas beyond what he's already doing on
+t-015. Kaizen candidate for a future conductor task: the backlog runway is
+down to 4 buildable outlines — worth a recurring/soft-gate task to draft a
+5th so dream-cycle's idle fallback doesn't run dry.
