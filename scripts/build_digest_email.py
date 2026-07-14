@@ -116,25 +116,42 @@ def proposal_cards(data, images=None):
     return "".join(cards)
 
 
-def proposal_section(heading, proposal, cta=False, images=None):
+def _button(href, text, color="#7e22ce"):
+    return (
+        f'<a href="{esc(href)}" '
+        f'style="display:inline-block;background:{color};color:#fff;text-decoration:none;'
+        f'padding:9px 16px;border-radius:8px;font-weight:700;margin-right:8px">{text}</a>'
+    )
+
+
+def proposal_section(heading, proposal, cta=False, images=None, page_link=""):
     if not proposal:
         return (f'<h2 style="margin-bottom:2px">{heading}</h2>'
                 f'<p style="color:#888"><i>No proposal yet — the next morning run will generate one.</i></p>')
     title = esc(proposal.get("title", ""))
     idea = esc(proposal.get("idea", ""))
-    button = ""
+    buttons = ""
     if cta and proposal.get("edit_link"):
-        button = (
-            f'<p><a href="{esc(proposal["edit_link"])}" '
-            f'style="display:inline-block;background:#7e22ce;color:#fff;text-decoration:none;'
-            f'padding:9px 16px;border-radius:8px;font-weight:700">💬 Comment / edit tomorrow\'s dream</a></p>'
+        buttons += _button(proposal["edit_link"], "💬 Comment / edit tomorrow's dream")
+    if page_link:
+        buttons += _button(page_link, "🌙 View the Daily Dream page", color="#1d4ed8")
+    buttons = f"<p>{buttons}</p>" if buttons else ""
+    # Phase 2: when the record builder has run, say what's live on the site.
+    built_line = ""
+    summary = proposal.get("records_summary")
+    if summary:
+        parts = ", ".join(f"{count} {key}" for key, count in summary.items() if count)
+        built_line = (
+            f'<p style="color:#166534;background:#f0fdf4;border-left:4px solid #16a34a;'
+            f'padding:8px 12px;border-radius:0 6px 6px 0;font-size:13px">'
+            f'✅ Built into live records: {esc(parts)}</p>'
         )
     cards = proposal_cards(proposal.get("data", {}), images=images)
     return (
         f'<h2 style="margin-bottom:2px">{heading}</h2>'
         f'<p style="font-size:1.1em;color:#333;margin:2px 0"><strong>{title}</strong></p>'
         f'<p style="color:#444;margin-top:2px">{idea}</p>'
-        f'{button}'
+        f'{built_line}{buttons}'
         f'<div style="margin:6px 0">{cards}</div>'
     )
 
@@ -207,10 +224,13 @@ def build_payload(digest):
     ) if spark_text else ""
 
     # Art-forward sections lead the digest.
-    tomorrow = proposal_section("🌙 Tomorrow's dream", digest.get("tomorrow_proposal"), cta=True)
+    page_link = digest.get("daily_dream_page", "")
+    tomorrow = proposal_section("🌙 Tomorrow's dream", digest.get("tomorrow_proposal"),
+                                cta=True, page_link=page_link)
     yo = digest.get("yesterday_output")
     yesterday = proposal_section("🖼️ Yesterday's output", yo,
-                                 images=(yo or {}).get("images") if yo else None)
+                                 images=(yo or {}).get("images") if yo else None,
+                                 page_link=(yo or {}).get("page", "") if yo else "")
     gallery = gallery_section(digest.get("art_highlights", []))
     reel = reel_section(digest.get("new_creations", []))
     art_block = "".join(x for x in (tomorrow, yesterday, gallery, reel) if x)

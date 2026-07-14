@@ -141,6 +141,8 @@ BACKLOG_DIR = "projects/dream-cycle/backlog"
 DAILY_DIR = "projects/curation/daily"
 SHIPPED_PATH = "projects/dream-cycle/SHIPPED.md"
 CONDUCTOR_RAW = f"https://raw.githubusercontent.com/{REPO}/{DEFAULT_BRANCH}"
+KR_BASE_URL = "https://kind-robots.vercel.app"
+DAILY_DREAM_PAGE = f"{KR_BASE_URL}/daily-dream"
 
 
 def _public_url(rel):
@@ -163,19 +165,22 @@ def _section(text, heading):
     return m.group(1).strip() if m else ""
 
 
+def _json_block(text, name):
+    m = re.search(rf"<!--\s*{name}\s*\n(.*?)\n-->", text, re.DOTALL)
+    if not m:
+        return None
+    try:
+        return json.loads(m.group(1))
+    except json.JSONDecodeError:
+        return None
+
+
 def parse_proposal(path):
     """Parse a daily-proposal backlog file into card-ready data. None if not a proposal."""
     text = open(path, encoding="utf-8").read()
     fm = _frontmatter(text)
     if not fm.get("proposal"):
         return None
-    data = {}
-    dm = re.search(r"<!--\s*proposal-data\s*\n(.*?)\n-->", text, re.DOTALL)
-    if dm:
-        try:
-            data = json.loads(dm.group(1))
-        except json.JSONDecodeError:
-            data = {}
     idea = _section(text, "The idea")
     filename = os.path.basename(path)
     return {
@@ -184,12 +189,13 @@ def parse_proposal(path):
         "date": str(fm.get("proposal_date") or fm.get("created") or ""),
         "idea": idea,
         "edit_link": f"https://github.com/{REPO}/blob/{DEFAULT_BRANCH}/{BACKLOG_DIR}/{filename}#notes-from-silas",
-        "data": data,
+        "data": _json_block(text, "proposal-data") or {},
+        "built": _json_block(text, "built-data"),  # Phase 2: real records live
     }
 
 
 def collect_proposals():
-    """(tomorrow's fresh proposal, yesterday's proposal that was built) — newest two."""
+    """(tomorrow's fresh proposal, yesterday's proposal) — prefer built for yesterday."""
     props = []
     for path in sorted(glob.glob(f"{BACKLOG_DIR}/*.md")):
         name = os.path.basename(path)
@@ -199,8 +205,12 @@ def collect_proposals():
         if parsed:
             props.append((parsed.get("date", ""), name, parsed))
     props.sort(key=lambda t: (t[0], t[1]))
-    tomorrow = props[-1][2] if props else None
-    yesterday = props[-2][2] if len(props) >= 2 else None
+    unbuilt = [p for _, _, p in props if not p.get("built")]
+    built = [p for _, _, p in props if p.get("built")]
+    tomorrow = unbuilt[-1] if unbuilt else (props[-1][2] if props else None)
+    yesterday = built[-1] if built else (props[-2][2] if len(props) >= 2 else None)
+    if yesterday is tomorrow:
+        yesterday = None
     return tomorrow, yesterday
 
 
@@ -303,7 +313,23 @@ def main():
     yesterday_output = None
     if yesterday_proposal:
         yesterday_output = dict(yesterday_proposal)
-        yesterday_output["images"] = match_images_for(yesterday_proposal.get("slug", ""))
+        built = yesterday_output.get("built") or {}
+        # Prefer art the record builder has attached to the live pitch sheets;
+        # fall back to slug-matched conductor images.
+        attached = [
+            {"name": os.path.basename(a.get("public_path", "")),
+             "url": KR_BASE_URL + a.get("public_path", "")}
+            for a in built.get("art", []) if a.get("attached")
+        ]
+        yesterday_output["images"] = attached or match_images_for(
+            yesterday_proposal.get("slug", ""))
+        if built:
+            records = built.get("records", {})
+            yesterday_output["records_summary"] = {
+                key: (len(val) if isinstance(val, list) else 1)
+                for key, val in records.items()
+            }
+            yesterday_output["page"] = built.get("page", DAILY_DREAM_PAGE)
 
     payload = {
         "date": datetime.datetime.now(_TZ).date().isoformat(),
@@ -313,6 +339,7 @@ def main():
         ),
         "tomorrow_proposal": tomorrow_proposal,
         "yesterday_output": yesterday_output,
+        "daily_dream_page": DAILY_DREAM_PAGE,
         "art_highlights": art_highlights(),
         "new_creations": new_creations(),
         "commits_since": (git("log", f"--since={args.since}", "--pretty=format:%h %s (%an)") or "").splitlines(),
