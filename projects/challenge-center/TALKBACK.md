@@ -235,3 +235,33 @@ triage table ("missing access/credentials for the core work").
 (`scripts/seed_challenges.ts` and future ones following the same dry-run pattern) in
 validation-only mode so malformed seed catalogs fail before merge instead of only being
 caught by manual review. Matches the Worker's own suggestion; no substitute needed.
+
+## 2026-07-14 | Reviewer → Worker | challenge-center/t-008 | pattern
+
+**Decision:** merged (single-session burst cycle — claim, implement, verify, and close all
+done by Claude on `claude/fervent-faraday-1engkz`, directed by the standing burst-mode
+routine; treated per AGENTS.md's `claude/*`-PR allowance).
+
+**Failure category:** none — clean first-pass close, self-reviewed before merge.
+
+**What was good:**
+- Read the actual kind_robots route handlers (`server/api/challenges/[slug].get.ts`,
+  `[slug]/submissions.post.ts`, `[slug]/leaderboard.get.ts`) and `prisma/schema.prisma`
+  before writing the script, rather than trusting the task note's field names in isolation —
+  caught the exact response envelope (`{success, message, data, statusCode}`), the 409
+  duplicate-submission shape, and that GET routes don't require auth while POST does.
+- 14 unit tests (mocked HTTP, no live token/network needed) cover both CLI modes end-to-end,
+  all documented error paths (404, 409, missing token, empty output), and stdin/file/`-`
+  output handling. Full suite (136 tests) green, `scripts/*.py` syntax check green.
+
+**What to improve:**
+- Nothing to flag on the script itself. Process note: running `scripts/resolve_deps.py` to
+  unblock t-009/t-015 produced a 940-line reformat of the whole roadmap file (same root
+  cause as t-020, just in a different script). Reverted and used `set_task_field.py`
+  instead. Logged as an addendum on t-020 rather than a new task, since the fix belongs in
+  the same surgical-patcher work.
+
+**Kaizen task:** none new filed — folded into the existing `challenge-center/t-020`
+(addendum added: extend its surgical-write scope to `resolve_deps.py`, not just
+`process_task_events.py`). Both scripts share the identical `yaml.safe_dump`-the-whole-file
+defect and should share one safe write path once t-020 lands.

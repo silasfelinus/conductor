@@ -2508,3 +2508,30 @@ before a near-duplicate reaches build.
 lookback window (ai-art-academy was the first, per CONTROL.md) — both used the same
 research → contract → front-loaded pitch queue → first shipped build shape. Worth
 noting as the house style for new autonomous initiatives if a third one shows up.
+
+## 2026-07-14 | Reviewer → system | root/LEARNING.yaml | security-flag
+
+**Subject:** LEARNING.yaml — the append-only outcome ledger — has been unparseable
+YAML since some earlier merge, silently breaking any task-event `learning:` append.
+
+**Detail:**
+- Found while closing challenge-center/t-008. `yaml.safe_load("LEARNING.yaml")` raises
+  `ParserError: expected <block end>, but found '-'` at the record beginning
+  `- date: 2026-07-12 / project: challenge-center / task: t-004`.
+- Root cause: every record before that point is indented `  - date:` (2 spaces, nested
+  under the `records:` key); every record from that one onward is `- date:` (0 indent,
+  flush with `records:`). A block sequence cannot mix indent depths — the parser treats
+  the 0-indent line as ending the sequence and errors on what follows.
+- Impact: `scripts/process_task_events.py`'s `append_learning()` calls `load_yaml()` on
+  this exact file before writing a new record — so any `done`/`blocked` task-event
+  carrying a `learning:` payload has been failing since whichever commit introduced the
+  indent switch, not just cosmetically wrong. `scripts/build_learning_summary.py` almost
+  certainly fails the same way, meaning `LEARNING-REPORT.md` may be stale.
+- Not a data-loss risk (append-only, git history is intact) and not something this
+  session touched further — filed as `conductor/t-036` (ready, reversible) rather than
+  fixed inline, to keep the challenge-center/t-008 PR scoped to its own diff.
+
+**Suggested action:** next conductor cycle should prioritize `conductor/t-036` — it's a
+small, mechanical reindent, but it's currently silently swallowing learning-ledger writes
+system-wide, which undermines the whole "learning ledger" kaizen-targeting mechanism
+described in AGENTS.md until fixed.
