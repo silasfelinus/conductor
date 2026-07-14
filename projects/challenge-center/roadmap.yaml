@@ -104,7 +104,7 @@ tasks:
       Unblocks t-002 (originally Bot registration, since redefined as the Contender
       migration — see its note) once the Worker's next cycle runs resolve_deps.py.
 
-      "
+    
   - id: t-002
     milestone: m1
     title: 'Schema: add Contender model and submission variant fields'
@@ -114,8 +114,7 @@ tasks:
     passes: 1
     stakes: reversible
     updated: 2026-07-07 08:30:00+00:00
-    note:
-      "SUPERSEDES the original \"register Bots\" task (Silas, 2026-07-05): Bots\
+    note: "SUPERSEDES the original \"register Bots\" task (Silas, 2026-07-05): Bots\
       \ are character-driven narrators and specialized GPTs — contenders get their own\
       \ model. In silasfelinus/kind_robots, one additive migration:\n\n  model Contender:\n\
       \    id, createdAt, updatedAt\n    slug            String  @unique @db.VarChar(255)\n\
@@ -178,8 +177,7 @@ tasks:
     owner: null
     passes: 0
     stakes: reversible
-    note:
-      "In silasfelinus/kind_robots, add API routes under server/api/challenges/.\
+    note: "In silasfelinus/kind_robots, add API routes under server/api/challenges/.\
       \ Builds against Contender from day one (t-002) — nothing references Bot.\n\n\
       \  GET  /api/challenges         — list open challenges (filter: type, status)\n\
       \  GET  /api/challenges/[slug]  — one challenge with submissions and scores\n\
@@ -213,12 +211,11 @@ tasks:
     owner: worker
     passes: 0
     stakes: reversible
-    note:
-      "DONE (2026-07-12, Silas confirmation): Kind Robots PR #199 had already merged
+    note: 'DONE (2026-07-12, Silas confirmation): Kind Robots PR #199 had already merged
       the idempotent seed script, and Silas confirmed in the current session that npx
-      tsx scripts/seed_challenges.ts --write was run. The script's post-write verification
+      tsx scripts/seed_challenges.ts --write was run. The script''s post-write verification
       checks that all ten challenge slugs exist, so the credentialed public-row creation
-      gate is complete."
+      gate is complete.'
     updated: '2026-07-13T00:00:05Z'
   - id: t-005
     milestone: m3
@@ -228,21 +225,34 @@ tasks:
     owner: worker
     passes: 0
     stakes: reversible
-    note: 'DONE (2026-07-12): Kind Robots PR #208 merged the Challenge Center browser on the existing /challenges content route. It adds division/status filters, fight-card styling, difficulty stars, entrant counts, per-challenge leader previews, and links into /challenges/[slug]. TypeScript and contract CI passed; the Vercel preview build completed successfully.'
+    note: "DONE (2026-07-12): Kind Robots PR #208 merged the Challenge Center browser on the existing /challenges content route. It adds division/status filters, fight-card styling, difficulty stars, entrant counts, per-challenge leader previews, and links into /challenges/[slug]. TypeScript and contract CI passed; the Vercel preview build completed successfully."
     updated: '2026-07-13T00:25:00Z'
   - id: t-006
     milestone: m3
     title: Build /challenges/[slug] voting page in kind_robots
-    status: cladoneimed
+    status: done
     depends_on:
-      - t-004
-      - t-005
-    owner: null
+    - t-004
+    - t-005
+    owner: worker
     passes: 0
     stakes: reversible
-    updated: '2026-07-13T00:36:30Z'
-    note:
-      'Challenge detail page. Show the challenge prompt and judgeNotes at top. Below:
+    updated: '2026-07-14T01:59:00Z'
+    note: 'DONE (bookkeeping reconciliation, 2026-07-14): kind_robots PR #210
+      ("challenge-center: build the logged-in voting arena") merged this task
+      2026-07-13T00:52:11Z — a /challenges/[slug] arena with VS split (2 submissions)
+      / select-screen grid (3+), ART/TEXT/Character/Scenario rendering, logged-in
+      LOVED/CLAPPED/BOOED/HATED reactions via POST /api/challenges/submissions/[id]/reaction
+      enforcing the (userId, challengeSubmissionId) unique key, and a per-challenge mini
+      leaderboard. Contract Tests and the whole-project vue-tsc check passed; Vercel
+      build completed. The roadmap task itself was left at claimed for ~25h with the
+      claim timestamp unchanged and zero worker/* branch/commit/PR anywhere in that
+      window (confirmed via list_branches + list_commits across many Reviewer sweeps,
+      see conductor TALKBACK.md recurrences 42-48 under t-026) — a stale-claim/bookkeeping-drift
+      case per docs/worker-stale-claim-recovery.md, not a still-open task. Reconciled
+      directly against the merged PR as authoritative evidence.
+
+      Original task spec: Challenge detail page. Show the challenge prompt and judgeNotes at top. Below:
       all submissions side by side (or stacked on mobile). Each submission card shows:
       contender name/avatar (from Contender), the output (art image or text block),
       and reaction buttons (LOVED/CLAPPED/BOOED/HATED) using the existing KR Reaction
@@ -262,13 +272,12 @@ tasks:
   - id: t-007
     milestone: m3
     title: Build leaderboard page in kind_robots
-    status: waiting
+    status: ready
     depends_on: t-006
     owner: null
     passes: 0
     stakes: reversible
-    note:
-      "Add /challenges/leaderboard page. Two views:\n  - Global: top agents by total\
+    note: "Add /challenges/leaderboard page. Two views:\n  - Global: top agents by total\
       \ net score across all challenges (table/podium)\n  - Per-type: filter to ART/TEXT/CHARACTER\
       \ etc., show rankings for that type\nContender row shows: avatar, name, challenges\
       \ attempted, challenges won, total score, win rate. Also show on each /challenges/[slug]\
@@ -283,8 +292,7 @@ tasks:
     owner: null
     passes: 0
     stakes: reversible
-    note:
-      "In silasfelinus/conductor, write scripts/challenge_submit.py. Usage: python\
+    note: "In silasfelinus/conductor, write scripts/challenge_submit.py. Usage: python\
       \ scripts/challenge_submit.py <challenge-slug> [--contender conductor-claude]\
       \ Steps:\n  1. Fetch challenge from KR API (GET /api/challenges/<slug>)\n  2.\
       \ Print promptText to stdout / pipe to agent\n  3. Accept agent output via stdin\
@@ -300,8 +308,7 @@ tasks:
     owner: null
     passes: 0
     stakes: reversible
-    note:
-      "In silasfelinus/portos, add a challenge submission script mirroring the conductor\
+    note: "In silasfelinus/portos, add a challenge submission script mirroring the conductor\
       \ one. Usage: (whatever invocation pattern portos uses) challenge_submit <challenge-slug>\
       \ Steps:\n  1. Fetch challenge from KR API (GET /api/challenges/<slug>)\n  2.\
       \ Pass promptText to the portos agent\n  3. Collect agent output\n  4. POST to\
@@ -319,8 +326,7 @@ tasks:
     owner: null
     passes: 0
     stakes: reversible
-    note:
-      "In silasfelinus/conductor, write scripts/challenge_runner.py. Usage: python\
+    note: "In silasfelinus/conductor, write scripts/challenge_runner.py. Usage: python\
       \ scripts/challenge_runner.py [--challenge <slug>] [--all] Steps:\n  1. Fetch\
       \ open challenges from KR API\n  2. For each challenge, skip if conductor-claude\
       \ already has a submission\n  3. Build the challenge prompt (from promptText +\
@@ -332,13 +338,12 @@ tasks:
   - id: t-012
     milestone: m5
     title: 'Seed contender roster: agent stacks, models, and art generators'
-    status: done
+    status: ready
     depends_on: t-002
     owner: null
     passes: 0
     stakes: reversible
-    note:
-      "Write scripts/seed_contenders.ts in kind_robots (idempotent, upsert by slug).\
+    note: "Write scripts/seed_contenders.ts in kind_robots (idempotent, upsert by slug).\
       \ Starting roster:\n  AGENT_STACK: conductor-claude (\"Conductor (Claude)\", generator:\
       \ claude-api),\n               portos-agent (\"Port0s\")\n  LLM_MODEL:   claude-fable\
       \ (model: claude-fable-5),\n               claude-opus (model: claude-opus-4-8),\n\
@@ -358,8 +363,7 @@ tasks:
     owner: null
     passes: 0
     stakes: reversible
-    note:
-      "In silasfelinus/conductor, write scripts/challenge_matchup.py — the generalization\
+    note: "In silasfelinus/conductor, write scripts/challenge_matchup.py — the generalization\
       \ of t-010's runner. Input: a challenge slug plus a matchup spec (inline JSON\
       \ or a YAML file):\n\n  contenders:\n    - { contender: claude-fable }\n    -\
       \ { contender: claude-opus }\n    - { contender: openai-gpt, settings: { temperature:\
@@ -382,8 +386,7 @@ tasks:
     owner: null
     passes: 0
     stakes: reversible
-    note:
-      'Support "same generator, different prompts" matchups where the difference
+    note: 'Support "same generator, different prompts" matchups where the difference
       is randomized variables. In silasfelinus/kind_robots, add a server util (and a
       small API route, e.g. POST /api/challenges/variants) that takes a base prompt
       containing placeholder keys and a variant count N, and returns N concrete prompts
@@ -395,8 +398,6 @@ tasks:
       variants must be auditable and reproducible, not mystery rolls. The conductor
       matchup runner (t-013) consumes this to enter one contender N times with variantKey
       "random-1"..."random-N".
-
-      '
   - id: t-015
     milestone: m5
     title: 'Faceted leaderboards: rank by model, generator, and prompt strategy'

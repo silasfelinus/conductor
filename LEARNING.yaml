@@ -181,3 +181,21 @@ records:
   outcome: done
   failure_category: null
   lesson: "Silas-directed claude/* PRs outside the roadmap task cycle are still in Reviewer scope per AGENTS.md and should be reviewed with the same rigor as a Worker PR — clone the branch, run lint/typecheck directly rather than trusting the PR body's self-reported verification."
+- date: 2026-07-14
+  project: challenge-center
+  task: t-006
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: actionable
+  lesson: "kind_robots PR #210 merged this task's exact scope 2026-07-13T00:52:11Z, but the roadmap task never left status: claimed — 25h and 8+ Reviewer sweeps (recurrences 42-48 on the unrelated t-026 pattern) logged it as 'stranded' without reconciling. When a claimed task's title/PR search turns up a merged PR matching the task description, check that FIRST before assuming the claim died — don't just watch the clock. Reconciled per docs/worker-stale-claim-recovery.md; t-007 (leaderboard) unblocked to ready as a result."
+- date: 2026-07-14
+  project: conductor
+  task: kind_robots-ci-green
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: quality
+  lesson: "'Harden MariaDB connection pooling' (kind_robots 0ee601f8) dropped the pool's connectionLimit default from the mariadb driver's own 10 to 2 with no env var anywhere to override it, silently pool-starving production and cascading into ~14 failing Cypress spec files. When a config 'hardening' commit introduces a new numeric default, diff it against the library's own built-in default rather than picking an arbitrary small number — and grep the whole repo/deploy config for whether anything actually sets the new env var before assuming it's tunable in practice."
