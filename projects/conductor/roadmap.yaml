@@ -992,3 +992,22 @@ tasks:
     claimed_by: reviewer-hourly-20260714T1848
     claimed_at: '2026-07-14T18:56:54Z'
     updated: '2026-07-14T19:10:19Z'
+
+  - id: t-043
+    milestone: m2
+    title: Deduplicate the three independent copies of dependency-satisfaction logic (resolve_deps.py, next_ready_task.py, audit_roadmaps.py)
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Kaizen from PR #523 (Worker, 2026-07-14, ai-art-academy/t-012): confirmed
+      resolve_deps.py's satisfied() is type-agnostic (status + gate_human +
+      approved_by_human only, no task-kind branching) and, while verifying
+      that, also confirmed next_ready_task.py and audit_roadmaps.py each
+      reimplement the identical satisfied()/dependency_satisfied() check
+      independently. Extract one shared helper (mirroring how
+      roadmap_claims.py already centralizes claim-staleness logic) so the
+      three copies can't drift apart in the future. Update all three
+      call sites and their existing test suites to use it; no behavior
+      change intended.
