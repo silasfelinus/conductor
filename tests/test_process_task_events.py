@@ -1,4 +1,5 @@
 import importlib.util
+import sys
 import tempfile
 import unittest
 from pathlib import Path
@@ -137,6 +138,36 @@ class TaskEventProcessorTests(unittest.TestCase):
             MODULE.process(event, dry_run=False)
 
         self.assertTrue(event.exists())
+
+    def test_main_applies_valid_events_even_when_an_earlier_one_fails(self):
+        # "bad-claim" sorts before "good-claim" alphabetically, reproducing the
+        # queue-head-of-line-blocking bug: a single unresolvable event must not
+        # prevent later, valid events in the same batch from being applied.
+        bad = self.write_event(
+            "bad-claim.yaml",
+            {"version": 1, "project": "demo", "task": "t-002", "operation": "claim"},
+        )
+        good = self.write_event(
+            "good-claim.yaml",
+            {"version": 1, "project": "demo", "task": "t-001", "operation": "claim"},
+        )
+
+        original_resolver = MODULE.run_resolver
+        original_argv = sys.argv
+        MODULE.run_resolver = lambda dry_run: None
+        sys.argv = ["process_task_events.py"]
+        try:
+            exit_code = MODULE.main()
+        finally:
+            MODULE.run_resolver = original_resolver
+            sys.argv = original_argv
+
+        self.assertEqual(exit_code, 1)
+        self.assertTrue(bad.exists(), "unresolvable event stays for diagnosis")
+        self.assertFalse(good.exists(), "valid event must still be consumed")
+        task = self.roadmap()["tasks"][0]
+        self.assertEqual(task["status"], "claimed")
+        self.assertEqual(task["owner"], "worker")
 
 
 if __name__ == "__main__":

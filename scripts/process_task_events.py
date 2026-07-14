@@ -223,15 +223,16 @@ def main() -> int:
         print("No task events to process.")
         return 0
 
+    had_error = False
     for path in files:
         try:
             print(process(path, args.dry_run))
         except Exception as error:
+            had_error = True
             print(f"ERROR {path.relative_to(ROOT)}: {error}", file=sys.stderr)
-            return 1
 
     run_resolver(args.dry_run)
-    return 0
+    return 1 if had_error else 0
 
 
 if __name__ == "__main__":
