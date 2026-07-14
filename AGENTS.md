@@ -74,6 +74,29 @@ todo explicitly asks for it. Scope is exactly what the title/description says.
    If none anywhere, stop — do not invent work. (Exceptions: a proposal-kind project may
    have a standing instruction to generate N pitches per cycle — follow its roadmap; and
    `autonomous: true` projects follow the "Autonomous projects — never idle" rule below.)
+6. **Claim it before doing real work**: run
+   `python scripts/claim_task.py <project> <task-id> --owner <worker|reviewer> --session <id>`.
+   This checks the task's live state on `origin/main` (not your local checkout, which
+   may be stale) and, if claimable, pushes a small `status: claimed` commit straight to
+   `origin/main` before you write any implementation. If it exits non-zero
+   (`ALREADY_CLAIMED`), someone else is already on that project/task — do not implement
+   it; go back to step 5 and pick the next `ready` task instead. See "Rotation
+   collisions" below for why this step exists.
+
+### Rotation collisions
+
+Picking a task from `priority.yaml`/`next_ready_task.py` only reads roadmap state — it
+does not reserve anything. Two sessions triggered close together (e.g. concurrent
+hourly burst-mode runs) can both read the same stale `ready` state, both fully
+implement the same project/task, and only discover the collision when one of them
+pushes. This happened for real on 2026-07-14 (`animation-manager/t-008` built twice —
+see `TALKBACK.md` and `conductor/t-040`). Step 6 above (`claim_task.py`) exists
+specifically to close this gap: it re-checks `origin/main` immediately before writing
+the claim and retries under a push race, so a losing session fails fast into
+`ALREADY_CLAIMED` instead of duplicating work. If a claiming session crashes before
+finishing, the claim self-expires after `CLAIM_TTL_MINUTES` (90 minutes, see
+`scripts/roadmap_claims.py`) so the task doesn't stay locked forever — `next_ready_task.py`
+surfaces a stale-claimed task as pickable again automatically.
 
 ### Task dependencies (pipelines)
 A task may declare `depends_on: <task-id>` (or a list). A task is only workable when every
@@ -271,8 +294,11 @@ delete it now, not an observation for later. (Kaizen from challenge-center/t-002
 - **Step 0 — Todos**: run `python scripts/fetch_todos.py`. Handle the top OPEN todo if
   any exist (see "Todos" section). Call `complete_todo.py <id>` when done.
 - **Step 1 — Resolve deps**: run `python scripts/resolve_deps.py`.
-- **Step 2 — Claim**: atomically set `status: claimed`, `owner: worker`, bump `updated`,
-  commit that one change to `main` with message `claim: <project>/<task-id>`.
+- **Step 2 — Claim**: run `python scripts/claim_task.py <project> <task-id> --owner worker
+  --session <id>` (see "Rotation collisions" above). It checks `origin/main` fresh,
+  refuses if another session already claimed the task, and otherwise pushes the
+  `status: claimed`/`owner: worker`/`updated` commit straight to `main` for you. On
+  `ALREADY_CLAIMED`, do not implement this task — pick the next `ready` task instead.
 - Branch `worker/<project>-<task-id>`. Do ONLY that task.
 - **software:** open a PR into `main`, fill the handoff template (including "Flags for
   Reviewer"), set task `status: review`, verify it, resolve conflicts if present, and merge

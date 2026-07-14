@@ -9,16 +9,28 @@ Usage:
 This is intentionally read-only. It mirrors the Worker selection rules closely enough
 for connector-only runs to confirm which task should be claimed without mutating any
 roadmap files.
+
+Picking a task here is advisory only -- it does not reserve it. Run
+`scripts/claim_task.py <project> <task-id> --owner <worker|reviewer> --session <id>`
+against the live `origin/main` before starting real implementation work, and rotate to
+the next task/project if it reports ALREADY_CLAIMED (see conductor/t-040). A
+`status: claimed` task whose `claimed_at` is older than CLAIM_TTL_MINUTES
+(roadmap_claims.py) is treated as an abandoned claim and surfaced here as pickable
+again, so a crashed session can't lock a task forever.
 """
 
 from __future__ import annotations
 
 import argparse
 import json
+import sys
 from pathlib import Path
 from typing import Any
 
 import yaml
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from roadmap_claims import task_is_claimable  # noqa: E402
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -107,7 +119,7 @@ def first_ready_task(order: list[str], active: dict[str, dict[str, Any]]) -> dic
         tasks_by_id = {str(task.get("id")): task for task in tasks if task.get("id")}
 
         for task in tasks:
-            if task.get("status") != "ready":
+            if not task_is_claimable(task):
                 continue
             if not task_is_unblocked(task, tasks_by_id):
                 continue
@@ -118,6 +130,7 @@ def first_ready_task(order: list[str], active: dict[str, dict[str, Any]]) -> dic
                 "title": task.get("title"),
                 "stakes": task.get("stakes"),
                 "path": str(PROJECTS_DIR / slug / "roadmap.yaml"),
+                "reclaimed_stale_claim": task.get("status") == "claimed",
             }
     return None
 
@@ -140,6 +153,9 @@ def main() -> int:
     print(f"kind: {result.get('kind') or 'unknown'}")
     print(f"stakes: {result.get('stakes') or 'unknown'}")
     print(f"roadmap: {result['path']}")
+    if result.get("reclaimed_stale_claim"):
+        print("note: reclaiming a stale claim (claimed_at older than CLAIM_TTL_MINUTES)")
+    print("Run scripts/claim_task.py before starting real work -- see this script's docstring.")
     return 0
 
 
