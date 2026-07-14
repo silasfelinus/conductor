@@ -3471,3 +3471,79 @@ discarded per the rotation-collision guidance instead of being submitted. Rotate
 **Kaizen task:** none filed this cycle — the satisfied()-dedup observation is noted
 in PR #523's description and this entry for a future session to pick up if it
 recurs as friction, not promoted to a roadmap task on a single observation.
+
+## 2026-07-14 | Reviewer → Silas | challenge-center/t-014 | closed (hourly burst-mode pick, PR #256)
+
+**Decision:** done. `next_ready_task.py` picked `challenge-center/t-014` (top of
+`priority.yaml`, `t-002` dependency already `done`). Claimed cleanly via
+`claim_task.py` — no rotation collision this cycle.
+
+**What happened:**
+1. `t-014` asked for a server util + small API route in silasfelinus/kind_robots
+   that expands a base prompt's placeholder keys into N concrete variants,
+   substituting from `stores/helpers/randomHelper.ts`'s built-in pools or a
+   matching user RANDOMLIST dream, with every variant's key→value roll recorded
+   for auditability (feeds `randomSelections` on `t-002`'s submission schema).
+2. Added `server/utils/promptVariants.ts` (`generatePromptVariants`): a pure
+   `{{key}}`-placeholder resolver that takes an injected pool-provider function,
+   so the core logic needs no DB/Prisma for testing. Added
+   `POST /api/challenges/variants`, which wires the resolver to the built-in
+   pools plus a Prisma lookup of RANDOMLIST dreams — discovered along the way
+   that RANDOMLIST isn't an actual value in the `DreamType` Prisma enum; it's a
+   virtual/legacy type that maps to `dreamType: BRAINSTORM` in the DB (see
+   `LEGACY_DREAM_TYPE_MAP` in `stores/helpers/dreamHelper.ts` and
+   `isRandomListDream` in `stores/randomStore.ts`) — used `BRAINSTORM` in the
+   Prisma query accordingly.
+3. Followed the repo's existing assert-script test convention (matches
+   `verifyFacetAliases.ts`, since this codebase's `npm test` is a project-wide
+   `vue-tsc --noEmit`, not a unit-test runner): added
+   `utils/scripts/verifyPromptVariants.ts`, wired as `npm run test:prompt-variants`.
+   Ran `npm install` (fresh checkout, no `node_modules`; had to set
+   `CYPRESS_INSTALL_BINARY=0` since the Cypress binary download is blocked by
+   this session's egress policy) to actually execute the verify script, the
+   project-wide `vue-tsc` typecheck, eslint, and prettier against the new files —
+   all clean, no new errors introduced.
+4. Opened kind_robots PR #256. Its "TypeScript" CI check came back red on files
+   I never touched (`server/api/art/image/index.get.ts`,
+   `server/api/model-builder/items/[id]/commit.post.ts`). Rather than assume
+   "pre-existing, not my problem," verified it directly: checked out a clean
+   `git worktree` of `origin/main` with zero PR changes applied, installed Node
+   24 via `nvm` to match the CI runner exactly (the sandbox's default Node was
+   22, `EBADENGINE`-flagged against this repo's `engines`), and re-ran the exact
+   `npm run test` CI runs — main fails with the identical two errors already.
+   Confirmed this is a pre-existing break, not a regression from this PR. All
+   other checks (Contract verifiers, facet-alias-smoke, GitGuardian, Vercel
+   preview deploy) passed, and GitHub reported `mergeable_state: "unstable"`
+   (not `blocked`), so merged PR #256 with the red TypeScript check
+   documented in the merge rationale.
+5. Filed `kind-robots/t-020` (ready) with the exact two errors, file:line
+   locations, and a likely-cause note (Prisma client extension type-generation
+   drift — `DefaultArgs` vs an extended `InternalArgs` shape) so a future Worker
+   session can fix the actual break without re-deriving any of this.
+
+**What was good:**
+- Didn't take a red CI check at face value in either direction — didn't
+  rubber-stamp-merge past it without checking, and didn't block/revert good work
+  on the assumption a red check must mean the PR is at fault. Reproduced the
+  exact CI environment (Node version included) locally against a clean
+  `origin/main` worktree to get a real answer before deciding to merge.
+- Caught the `RANDOMLIST` vs `BRAINSTORM` DB-type mismatch by reading
+  `dreamHelper.ts`/`randomStore.ts` instead of trusting the task note's
+  `dreamType=RANDOMLIST` framing literally — using the literal string in the
+  Prisma query would have thrown at runtime on the very first request with a
+  custom placeholder key.
+- Filed the CI break as its own task with enough detail (exact file:line,
+  error text, likely cause) that fixing it doesn't require re-discovering any
+  of this investigation.
+
+**What to improve:**
+- Could have checked whether `main`'s TypeScript check was already red before
+  opening the PR (e.g. via the Actions API on `main`) rather than discovering it
+  reactively from my own PR's check run — would have saved a round trip and let
+  the PR body state "pre-existing, verified" from the start instead of investigating
+  under pressure after the check failed.
+
+**Kaizen task:** `kind-robots/t-020` (fix the two pre-existing TypeScript errors
+breaking main's TypeScript CI check) — filed as a real roadmap task, not just a
+TALKBACK note, since it actively degrades the "all green" merge signal every
+Worker/Reviewer session relies on until it's fixed.

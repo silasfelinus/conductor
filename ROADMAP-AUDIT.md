@@ -1,28 +1,28 @@
 # Roadmap Audit
 
-Generated: `2026-07-14T17:50:19.684619+00:00`
+Generated: `2026-07-14T20:26:06.214240+00:00`
 
 This is a conservative structural audit. It reports suspicious state; it does not automatically change task status or remove human gates.
 
 ## Portfolio snapshot
 
-- **40** roadmaps, **33** active projects, **494** tasks
-- **112 ready**, **64 waiting**, **16 needs-human**, **0 claimed/review**, **291 done**
-- Findings: **0 errors**, **1 warnings**, **46 informational**
+- **40** roadmaps, **33** active projects, **497** tasks
+- **110 ready**, **63 waiting**, **17 needs-human**, **0 claimed/review**, **296 done**
+- Findings: **0 errors**, **1 warnings**, **47 informational**
 
 ## Project inventory
 
 | # | Project | State | Kind | Ready | Waiting | Human | In progress | Done / Total |
 |---:|---|---|---|---:|---:|---:|---:|---:|
-| 1 | `challenge-center` | active | software | 6 | 1 | 0 | 0 | 12 / 19 |
-| 2 | `ai-art-academy` | active | software | 5 | 0 | 0 | 0 | 7 / 12 |
+| 1 | `challenge-center` | active | software | 4 | 0 | 0 | 0 | 15 / 19 |
+| 2 | `ai-art-academy` | active | software | 4 | 0 | 0 | 0 | 8 / 12 |
 | 3 | `coloring-book` | active | software | 4 | 5 | 0 | 0 | 10 / 19 |
 | 4 | `humboldt-scoop` | active | software | 1 | 0 | 0 | 0 | 7 / 8 |
 | 5 | `humboldt-scoop-cms` | active | software | 2 | 4 | 0 | 0 | 5 / 11 |
 | 6 | `digital-storefront` | active | software | 3 | 7 | 0 | 0 | 5 / 15 |
 | 7 | `packmaker` | active | software | 2 | 3 | 0 | 0 | 1 / 6 |
 | 8 | `mermaids-of-venice` | active | content | 2 | 0 | 8 | 0 | 2 / 12 |
-| 9 | `kind-robots` | active | software | 6 | 0 | 1 | 0 | 12 / 19 |
+| 9 | `kind-robots` | active | software | 7 | 0 | 1 | 0 | 12 / 20 |
 | 10 | `kindrobots-unraid` | active | software | 1 | 7 | 1 | 0 | 3 / 12 |
 | 11 | `global-ui` | active | software | 2 | 0 | 0 | 0 | 11 / 13 |
 | 12 | `superkate-services-calculator` | active | software | 0 | 0 | 1 | 0 | 35 / 36 |
@@ -31,7 +31,7 @@ This is a conservative structural audit. It reports suspicious state; it does no
 | 15 | `model-builder` | active | software | 4 | 0 | 0 | 0 | 25 / 29 |
 | 16 | `animation-manager` | active | software | 4 | 2 | 0 | 0 | 4 / 10 |
 | 17 | `ecosystem-map` | active | software | 2 | 1 | 0 | 0 | 5 / 8 |
-| 18 | `conductor` | active | software | 9 | 0 | 1 | 0 | 31 / 41 |
+| 18 | `conductor` | active | software | 9 | 0 | 2 | 0 | 32 / 43 |
 | 19 | `serendipity` | active | software | 3 | 0 | 0 | 0 | 9 / 12 |
 | 20 | `storymaker` | active | software | 2 | 0 | 0 | 0 | 8 / 10 |
 | 21 | `davinci` | active | software | 2 | 0 | 0 | 0 | 12 / 14 |
@@ -65,7 +65,7 @@ _None._
 
 - **ROADMAP_MISSING_OVERRIDE** — `animation-studio`: Roadmap has no project-overrides.yaml entry.
 
-### Info (46)
+### Info (47)
 
 - **APPROVAL_WITHOUT_GATE** — `ai-art-academy` / `t-002`: approved_by_human is set on a task that is not human-gated.
 - **APPROVAL_WITHOUT_GATE** — `ai-art-academy` / `t-011`: approved_by_human is set on a task that is not human-gated.
@@ -81,6 +81,7 @@ _None._
 - **MISSING_GOAL** — `coat-dance`: Roadmap has no friendly goal/definition of done.
 - **APPROVAL_WITHOUT_GATE** — `coloring-book` / `t-002`: approved_by_human is set on a task that is not human-gated.
 - **MISSING_GOAL** — `conductor`: Roadmap has no friendly goal/definition of done.
+- **NEEDS_HUMAN_NOTE_FORMAT** — `conductor` / `t-037`: needs-human note does not use the AGENTS.md FOR SILAS action format.
 - **MISSING_GOAL** — `conductor-app`: Roadmap has no friendly goal/definition of done.
 - **MISSING_GOAL** — `davinci`: Roadmap has no friendly goal/definition of done.
 - **APPROVAL_WITHOUT_GATE** — `davinci` / `t-002`: approved_by_human is set on a task that is not human-gated.
