@@ -8,9 +8,11 @@ Claude to produce a brief actionable summary.
 
 Writes CONDUCTOR-REPORT.md (or prints to stdout with --dry-run).
 
-Also generates the daily-dream proposal once per day (via
-build_dream_proposal.ensure_proposal) so that content is produced within this
-hourly sweep instead of a dedicated daily-digest API call.
+Daily-dream duties: the PROPOSAL is authored by the sweeping LLM agent itself
+(no scripted model call — see build_dream_proposal.py --brief); this script
+only FLAGS when today's proposal is missing so the next agent sweep writes it.
+It does still run the record builder + art-attach pass (pure REST, no LLM):
+build_dream_records.ensure_records().
 
 Usage:  python scripts/build_conductor_summary.py [--dry-run]
 Env:    ANTHROPIC_API_KEY  (required for LLM assessment; falls back to rules)
@@ -36,7 +38,7 @@ except ImportError:
     sys.exit("PyYAML not installed — run: pip install pyyaml")
 
 sys.path.insert(0, str(Path(__file__).parent))
-import build_dream_proposal  # noqa: E402 — daily-dream proposal generator (reused by this sweep)
+import build_dream_proposal  # noqa: E402 — proposal existence check only (agents author proposals)
 import build_dream_records  # noqa: E402 — proposal → kind_robots records builder (Phase 2)
 
 REPOS = [
@@ -401,6 +403,11 @@ def _fallback(state: dict) -> str:
             f"**Art generation queue:** {art['active_gen_queue']} item(s) in projects/art-generate.yaml "
             "ready to send to the image generator."
         )
+    if state.get("daily_dream_proposal_missing"):
+        items.append(
+            "**Daily-dream proposal missing** for today — the next agent sweep should "
+            "author it (`python scripts/build_dream_proposal.py --brief`, then `--from-json`)."
+        )
 
     stats = (
         f"**Stats:** {rm.get('ready', 0)} ready | {rm.get('waiting', 0)} waiting | "
@@ -409,6 +416,8 @@ def _fallback(state: dict) -> str:
         f"{art.get('images_to_distribute', 0)} images to distribute | "
         f"{art.get('active_gen_queue', 0)} in gen queue"
     )
+    if state.get("daily_dream_proposal_missing"):
+        stats += " | ⚠ daily-dream proposal MISSING (agent sweep should author it)"
 
     if not items:
         return f"## ALL CLEAR\nAutonomous loop running — no blockers, no CI failures, no stale work.\n\n{stats}"
@@ -464,6 +473,11 @@ def main() -> None:
     print("  checking vercel status...", file=sys.stderr)
     vercel = fetch_vercel_status(kr_token)
 
+    # Daily-dream proposal: authored by the sweeping LLM agent, not this script.
+    # Surface a missing proposal as a signal so the next agent sweep writes one.
+    today_pacific = build_dream_proposal._target_date()
+    proposal_missing_today = not build_dream_proposal.proposal_exists_for(today_pacific)
+
     state = {
         "as_of": as_of,
         "repos": repos,
@@ -471,6 +485,7 @@ def main() -> None:
         "open_todos": todos,
         "art_queue": art_queue,
         "vercel": vercel,
+        "daily_dream_proposal_missing": proposal_missing_today,
     }
 
     print("  assessing...", file=sys.stderr)
@@ -478,22 +493,13 @@ def main() -> None:
 
     write_report(summary, as_of, args.dry_run)
 
-    # Generate the daily-dream proposal as part of this hourly sweep — a no-op on
-    # the 23 hourly runs where today's proposal already exists, so it costs at most
-    # one extra model call per day and keeps proposal generation off the (model-call-
-    # free) daily-digest cron. Soft-fail: a hiccup here never breaks the report.
-    print("  daily-dream proposal...", file=sys.stderr)
-    try:
-        build_dream_proposal.ensure_proposal(
-            os.environ.get("ANTHROPIC_API_KEY", ""), dry_run=args.dry_run
-        )
-    except Exception as e:  # noqa: BLE001
-        print(f"  proposal generation skipped: {e}", file=sys.stderr)
-
     # Phase 2: build yesterday's proposal into real kind_robots records (pure
     # REST via KR_API_TOKEN — no model calls) and attach any freshly-rendered
     # art to its pitch sheets. Guarded (one unbuilt proposal past its steering
     # day; skips if Silas left notes) and soft-failing, so it's sweep-safe.
+    # NOTE: proposal AUTHORING is not done here — the sweeping LLM agent writes
+    # it (build_dream_proposal.py --brief / --from-json); this run only flagged
+    # a missing proposal in the state above.
     print("  daily-dream records + art attach...", file=sys.stderr)
     build_dream_records.ensure_records(dry_run=args.dry_run)
 
