@@ -26,13 +26,19 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - run: pip install pyyaml
+      - run: pip install pyyaml Pillow
 
-      # This digest job makes NO model API calls. The daily-dream proposal is
-      # generated during the hourly conductor sweep (scripts/build_conductor_summary.py
-      # → build_dream_proposal.ensure_proposal, once/day), and the art scoring
-      # (scripts/curate_art.py --daily) is run during the Reviewer sweep. Here we
-      # only READ the committed proposal file + daily scoring report and render/send.
+      - name: Curate finished ArtJobs for trainer review
+        continue-on-error: true
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          KR_API_TOKEN: ${{ secrets.KR_API_TOKEN }}
+          KR_BASE_URL: https://kind-robots.vercel.app
+        run: python scripts/curate_art_jobs.py --limit 12
+
+      # The daily-dream proposal and repository image scoring are generated during
+      # the hourly conductor/reviewer sweeps. This job adds the durable ArtJob
+      # curation round trip, then reads committed proposal/report files and sends.
       - name: Build digest JSON
         run: |
           python scripts/build_digest.py --since "24 hours ago" > digest.json
