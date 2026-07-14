@@ -48,6 +48,7 @@ import json
 import os
 import subprocess
 import sys
+import tempfile
 import urllib.error
 import urllib.request
 from pathlib import Path
@@ -67,6 +68,7 @@ import art_quality  # noqa: E402
 ROOT = Path(__file__).resolve().parents[1]
 SETS_DIR = ROOT / "projects" / "coloring-book" / "sets"
 DAILY_DIR = ROOT / "projects" / "curation" / "daily"   # dated daily scoring reports
+REQUESTS_FILE = ROOT / "projects" / "curation" / "requests.yaml"  # front-end curate queue
 AESTHETIC_GUIDELINES = ROOT / "AESTHETIC-GUIDELINES.md"  # steerable daily rubric source
 # Recently-rendered art lives in these conductor folders; served publicly via raw GitHub.
 DAILY_SCAN_DIRS = [ROOT / "projects" / "images", ROOT / "projects" / "process"]
@@ -74,6 +76,11 @@ CONDUCTOR_RAW = "https://raw.githubusercontent.com/silasfelinus/conductor/main"
 
 MODEL = os.environ.get("ART_CURATOR_MODEL", "claude-opus-4-8").strip()
 API_URL = "https://api.anthropic.com/v1/messages"
+
+# kind_robots REST (curate-request consumer): fetch ArtImage bytes + POST CURATOR
+# feedback. Same conventions as scripts/build_dream_records.py.
+KR_BASE_URL = os.environ.get("KR_BASE_URL", "https://kind-robots.vercel.app").rstrip("/")
+KR_API_TOKEN = os.environ.get("KR_API_TOKEN", "").strip()
 DEFAULT_MIN_SCORE = 75
 MAX_EXEMPLARS = 2      # approved reference images per variant, the quality bar
 SAMPLE_EDGE = 1024     # downscale long edge before upload to bound image tokens
@@ -397,6 +404,149 @@ def run_daily(args) -> int:
     return 0
 
 
+# ── Front-end curate-request consumer (--requests) ──────────────────────────
+
+def _kr_http_json(method: str, endpoint: str, body: Any = None, timeout: int = 60):
+    """Call a kind_robots REST endpoint with the machine token. Returns (status, json)."""
+    url = f"{KR_BASE_URL}{endpoint}"
+    data = json.dumps(body).encode() if body is not None else None
+    req = urllib.request.Request(url, data=data, method=method)
+    req.add_header("Content-Type", "application/json")
+    if KR_API_TOKEN:
+        req.add_header("Authorization", f"Bearer {KR_API_TOKEN}")
+    try:
+        with urllib.request.urlopen(req, timeout=timeout) as resp:
+            return resp.status, json.loads(resp.read().decode() or "null")
+    except urllib.error.HTTPError as e:
+        try:
+            payload = json.loads(e.read().decode() or "null")
+        except (ValueError, OSError):
+            payload = None
+        return e.code, payload
+    except Exception as e:  # noqa: BLE001 - network failures surface as (0, msg)
+        return 0, {"error": str(e)}
+
+
+def _fetch_art_image(art_image_id: int) -> Optional[bytes]:
+    """Download an ArtImage's bytes from kind_robots (base64 imageData or a path)."""
+    status, resp = _kr_http_json(
+        "GET", f"/api/art/image/{art_image_id}?includeImageData=true"
+    )
+    if status != 200 or not isinstance(resp, dict) or not resp.get("data"):
+        return None
+    image = resp["data"]
+    raw = str(image.get("imageData") or "").strip()
+    if raw:
+        if raw.startswith("data:image/") and "base64," in raw:
+            raw = raw.split("base64,", 1)[1]
+        try:
+            return base64.b64decode(raw)
+        except Exception:  # noqa: BLE001
+            return None
+    # Fallback: a public /images path we can fetch directly.
+    path = str(image.get("imagePath") or image.get("path") or "").strip()
+    if not path:
+        return None
+    url = path if path.startswith("http") else f"{KR_BASE_URL}{'' if path.startswith('/') else '/'}{path}"
+    try:
+        with urllib.request.urlopen(url, timeout=60) as r:
+            return r.read()
+    except Exception:  # noqa: BLE001
+        return None
+
+
+def run_requests(args) -> int:
+    """Drain projects/curation/requests.yaml: curate each finished ArtJob and POST
+    a CURATOR verdict back to kind_robots (fills the ArtJob trainer panel)."""
+    if not REQUESTS_FILE.exists():
+        print(f"No curate-request queue at {REQUESTS_FILE.relative_to(ROOT)} — nothing to do.")
+        return 0
+
+    doc = yaml.safe_load(REQUESTS_FILE.read_text(encoding="utf-8")) or {}
+    requests_list = doc.get("requests") or []
+    pending = [r for r in requests_list if isinstance(r, dict) and r.get("status") == "pending"]
+    if args.limit > 0:
+        pending = pending[: args.limit]
+
+    if not pending:
+        print("No pending curate requests.")
+        return 0
+
+    api_key = os.environ.get("ANTHROPIC_API_KEY", "").strip()
+    do_vision = bool(api_key) and not args.dry_run
+    can_post = bool(KR_API_TOKEN) and not args.dry_run
+    if not do_vision:
+        why = "--dry-run" if args.dry_run else "ANTHROPIC_API_KEY not set"
+        print(f"Vision disabled ({why}) — leaving {len(pending)} request(s) pending.", file=sys.stderr)
+        return 0
+    if not can_post:
+        print("KR_API_TOKEN not set — cannot POST verdicts (leaving requests pending).", file=sys.stderr)
+        return 0
+
+    rubric = daily_rubric()
+    now_iso = datetime.datetime.now(_TZ).isoformat()
+    curated = 0
+
+    for entry in pending:
+        job_id = entry.get("job_id")
+        art_image_id = entry.get("art_image_id")
+        if not isinstance(job_id, int) or not isinstance(art_image_id, int):
+            entry["status"] = "error"
+            entry["error"] = "missing job_id/art_image_id"
+            continue
+
+        data = _fetch_art_image(art_image_id)
+        if not data:
+            entry["status"] = "error"
+            entry["error"] = f"could not fetch ArtImage {art_image_id}"
+            print(f"  FETCH-FAIL job {job_id} (ArtImage {art_image_id})", file=sys.stderr)
+            continue
+
+        tmp_path = Path(tempfile.gettempdir()) / f"curate-{art_image_id}.png"
+        tmp_path.write_bytes(data)
+        try:
+            v = call_vision(api_key, tmp_path, "color", str(entry.get("prompt") or ""),
+                            [], rubric=rubric, schema=DAILY_VERDICT_SCHEMA)
+        except Exception as error:  # noqa: BLE001 - keep draining the queue
+            entry["status"] = "error"
+            entry["error"] = str(error)
+            print(f"  VISION-ERR job {job_id}: {error}", file=sys.stderr)
+            continue
+        finally:
+            tmp_path.unlink(missing_ok=True)
+
+        verdict = str(v.get("verdict") or "reject").upper()
+        score = int(v.get("score") or 0)
+        feedback = {
+            "source": "CURATOR",
+            "verdict": verdict,
+            "score": score,
+            "summary": v.get("one_liner", ""),
+            "reasons": v.get("reasons", []),
+            "rubricKey": "conductor-curator-v1",
+        }
+        status, resp = _kr_http_json("POST", f"/api/art/queue/{job_id}/feedback", feedback)
+        if status not in (200, 201) or not isinstance(resp, dict) or not resp.get("success"):
+            entry["status"] = "error"
+            entry["error"] = f"feedback POST {status}: {(resp or {}).get('message', '')}"[:240]
+            print(f"  POST-FAIL job {job_id}: {status}", file=sys.stderr)
+            continue
+
+        entry["status"] = "done"
+        entry["verdict"] = verdict
+        entry["score"] = score
+        entry["curated_at"] = now_iso
+        entry.pop("error", None)
+        curated += 1
+        print(f"  {verdict:8} job {job_id}  score={score}  {v.get('one_liner','')}")
+
+    REQUESTS_FILE.write_text(
+        yaml.safe_dump(doc, sort_keys=False, allow_unicode=True), encoding="utf-8"
+    )
+    print(f"\nCurated {curated}/{len(pending)} request(s). Queue: {REQUESTS_FILE.relative_to(ROOT)}")
+    return 0
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--set", default="monster-recast", help="coloring-book set slug")
@@ -408,9 +558,15 @@ def main() -> int:
                         help="move promote-verdict candidates into approved/ (default: propose only)")
     parser.add_argument("--daily", action="store_true",
                         help="score the day's fresh renders for the digest gallery (not a coloring set)")
+    parser.add_argument("--requests", action="store_true",
+                        help="drain projects/curation/requests.yaml: curate finished ArtJobs "
+                             "and POST CURATOR verdicts back to kind_robots")
     parser.add_argument("--since", default="24 hours ago",
                         help="daily mode: window of renders to score (git --since syntax)")
     args = parser.parse_args()
+
+    if args.requests:
+        return run_requests(args)
 
     if args.daily:
         return run_daily(args)

@@ -1,0 +1,24 @@
+# projects/curation/requests.yaml
+#
+# Front-end-submitted art-curation requests (kind_robots ArtJob "Art trainer" →
+# Conductor). The live site appends here via POST /api/conductor/curate-request
+# when an admin clicks "Request curation" on a finished ArtJob.
+#
+# scripts/curate_art.py --requests drains this queue: for each `status: pending`
+# entry it runs the vision assessor on the ArtImage and POSTs source=CURATOR
+# feedback to POST /api/art/queue/<job_id>/feedback, then flips the entry to
+# `done` (recording verdict/score/curated_at). That curator verdict is what makes
+# a job appear in the trainer panel for Silas to Promote/Revise/Reject.
+#
+# Entry shape (block-sequence item, marker at column 0):
+#   - id: "curate-123"
+#     source: "kind-robots-artjob-trainer"
+#     status: "pending"        # pending | done | error
+#     job_id: 123
+#     art_image_id: 456
+#     project_slug: "..."      # optional
+#     note: "..."              # optional operator note
+#     requested_at: "2026-07-14T..."
+#     prompt: >
+#       the job's positive prompt
+requests: []
