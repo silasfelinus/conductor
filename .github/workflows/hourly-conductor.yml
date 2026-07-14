@@ -51,12 +51,14 @@ jobs:
           path: CONDUCTOR-REPORT.md
           if-no-files-found: ignore
 
-      - name: Commit conductor report
+      - name: Commit conductor report + daily proposal
         if: ${{ inputs.dry_run != 'true' }}
         run: |
           git config user.name "conductor-bot"
           git config user.email "conductor-bot@users.noreply.github.com"
-          git add CONDUCTOR-REPORT.md
+          # build_conductor_summary.py also generates the daily-dream proposal
+          # (once/day) into the dream-cycle backlog — commit it alongside the report.
+          git add CONDUCTOR-REPORT.md projects/dream-cycle/backlog/
           if git diff --staged --quiet; then
             echo "No changes to commit"
           else
