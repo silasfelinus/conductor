@@ -220,5 +220,51 @@ Items 1–4 are quick config/prompt edits in **conductor**. Items 6–9 are code
 
 ---
 
+---
+
+## 5. Fixes applied (2026-07-14, Silas-directed "take the evening")
+
+**conductor — Monster Recast (commit on this branch):**
+- `queue_monster_recast_art.py` + `consume_monster_recast_art.py`: subject now
+  leads the prompt; the house-style block trails (was style-first → subject
+  collapse on non-cosmic concepts). BW leads with an unambiguous line-art
+  instruction. Bans stated positively (negatives are inert on Flux cfg=1).
+- `scripts/art_quality.py` (new): objective quality gate, pure/self-tested
+  (`--selftest` 7/7). Rejects a "bw" render that came back colored, a
+  blank/degenerate frame, or a landscape where portrait was expected. Wired
+  into the live consumer — a failing render moves to `rejected/` and stays
+  pending instead of being marked done. Also the objective floor for the
+  autonomous promote-to-`approved/` curation goal.
+- Reconciled steps drift (30 → 36).
+
+**kind_robots — Hair Studio / Kontext (commit on this branch):**
+- `workflow.ts`: `originalWeight` (0..1) img2img init from the encoded source
+  at denoise = 1 − weight — the "weight from the original picture" knob; also
+  restores the source aspect ratio (no more forced square). Real
+  `negativePrompt` + `cfg` via CFGGuider (Flux ignores negatives at cfg=1).
+  `maskName` support (LoadImageMask + SetLatentNoiseMask, core nodes) so a hair
+  mask restricts changes to the hair region.
+- `enqueue.post.ts` / `stylistStore.ts` / `stylist-restyle.vue`: controls
+  threaded through; a live "how much should it still look like them?" strength
+  slider (defaults toward preservation), an opt-in extra-protect toggle, and
+  advanced guidance/steps.
+
+### Still open (needs the studio box / a live run — cannot verify from here)
+1. **Mask SOURCE.** The mask *path* is shipped and ready, but nothing generates
+   a hair mask yet — there is no hair-segmentation node on the ComfyUI box and
+   no client-side seg lib. True adaptive hair-only masking needs either (a) a
+   segmentation custom node installed on the box, or (b) an in-browser
+   hair-segmentation / quick-brush step feeding `maskData`. Until then the
+   shipped identity fix is `originalWeight`. → superkate `t-018`.
+2. **Live tuning pass.** The default preserve strength (0.3), guidance, and the
+   negative wording want one real run on the studio box to dial in — too subtle
+   vs. too loose is a box-only judgement. → superkate `t-019`.
+3. **Verify the Monster Recast re-render** on the box: confirm the subject-first
+   prompts hold the character and the BW slot now returns line art (the guard
+   will reject it if not).
+4. **Negative prompt on the automated Flux path** (`consume_art_queue.py`) is
+   still inert by design; making it real needs cfg>1 + a negative encode and a
+   live test — left as a deliberate, separate change.
+
 *Evidence: direct visual inspection of `projects/coloring-book/sets/monster-recast/{approved,generated}/*.webp`
-and the settings/prompt-assembly code cited inline. No images or settings were modified by this review.*
+and the settings/prompt-assembly code cited inline.*
