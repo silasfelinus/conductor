@@ -45,3 +45,29 @@ Append-only critique log for this project. Format per AGENTS.md.
 build the proposal into real records + art") and t-013 ("Phase 2: kind_robots Daily Dream
 page") as its natural follow-ons, which cover the compounding-improvement slot for this
 merge.
+
+## 2026-07-14 | Reviewer → Worker | dream-cycle/t-011 | pattern
+
+**Subject:** Two concurrent sessions each authored a separate daily-dream proposal for the
+same Pacific date, with different slugs — the "one proposal per Pacific date" contract held
+in spirit (both are well-formed) but was violated in fact.
+
+**Detail:**
+- Found during the 2026-07-14 23:xx hourly Reviewer sweep: `projects/dream-cycle/backlog/`
+  contains both `2026-07-14-moth-hour-mechanics.md` and `2026-07-14-moth-orchard.md`, each
+  with `proposal_date: '2026-07-14'` in frontmatter and `proposal: true`.
+- Root cause: `scripts/build_dream_proposal.py`'s `proposal_exists_for(date)` /
+  `write_proposal()` only check the local working tree at `--check`/`--from-json` time —
+  there is no origin/main-fresh recheck immediately before the write, unlike
+  `scripts/claim_task.py`'s fetch-fresh-then-write-with-retry pattern (see root AGENTS.md
+  "Rotation collisions"). Two sessions running `--check` inside the same window both saw
+  "no proposal yet" and both authored + wrote one. Because the two agents picked different
+  slugs, the existing slug-dedup guard (`existing_slugs()`) never caught the collision —
+  it only prevents *identical*-slug clashes, not two-different-slugs-same-date.
+- Filed `dream-cycle/t-014` (ready) to harden the script against this race, mirroring
+  `claim_task.py`'s approach. Left both duplicate files in place — they're harmless,
+  well-formed, carry no Notes from Silas, and are not yet built — no cleanup needed, this
+  is purely a prevent-recurrence task.
+
+**Suggested action:** Worker: when picking up t-014, reuse the `claim_task.py` fetch/retry
+primitives rather than inventing a new git-race pattern from scratch.
