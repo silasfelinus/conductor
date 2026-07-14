@@ -29,6 +29,7 @@ Stdout: one line per project — CREATED / UPDATED / SKIPPED / ERROR
 import json
 import os
 import sys
+import time
 import urllib.error
 import urllib.request
 from datetime import datetime, timezone
@@ -44,6 +45,8 @@ REPO_ROOT = Path(__file__).parent.parent
 OVERRIDES_FILE = REPO_ROOT / "project-overrides.yaml"
 PROJECTS_DIR = REPO_ROOT / "projects"
 KR_API_BASE = "https://kind-robots.vercel.app/api"
+TRANSIENT_HTTP_CODES = {429, 500, 502, 503, 504}
+MAX_REQUEST_ATTEMPTS = 4
 
 CONDUCTOR_TO_KR_STATUS = {
     "active": "ACTIVE",
@@ -73,8 +76,27 @@ def kr_request(method, path, token, payload=None):
             "Accept": "application/json",
         },
     )
-    with urllib.request.urlopen(req, timeout=15) as resp:
-        return json.loads(resp.read())
+
+    for attempt in range(1, MAX_REQUEST_ATTEMPTS + 1):
+        try:
+            with urllib.request.urlopen(req, timeout=15) as resp:
+                return json.loads(resp.read())
+        except urllib.error.HTTPError as error:
+            if error.code not in TRANSIENT_HTTP_CODES or attempt == MAX_REQUEST_ATTEMPTS:
+                raise
+        except (urllib.error.URLError, TimeoutError):
+            if attempt == MAX_REQUEST_ATTEMPTS:
+                raise
+
+        delay = 2 ** (attempt - 1)
+        print(
+            f"  transient {method} {path} failure; retrying in {delay}s "
+            f"({attempt}/{MAX_REQUEST_ATTEMPTS})",
+            file=sys.stderr,
+        )
+        time.sleep(delay)
+
+    raise RuntimeError(f"{method} {path} exhausted retries")
 
 
 def find_project_by_slug(slug, token):
@@ -153,6 +175,14 @@ def build_project_payload(slug, override, roadmap):
     return payload
 
 
+def project_changed_fields(existing, payload):
+    return [
+        field
+        for field, value in payload.items()
+        if field != "lastSyncedAt" and existing.get(field) != value
+    ]
+
+
 def sync_project(slug, override, token):
     """Upsert one project. Returns True on success, False on any error."""
     roadmap = load_roadmap(slug)
@@ -170,8 +200,14 @@ def sync_project(slug, override, token):
     try:
         if existing:
             project_id = existing.get("id")
+            changed_fields = project_changed_fields(existing, payload)
+            if not changed_fields:
+                print(f"  {slug}: UNCHANGED (id={project_id})")
+                return True
+
             kr_request("PATCH", f"/projects/{project_id}", token, payload)
-            print(f"  {slug}: UPDATED (id={project_id})")
+            fields = ", ".join(changed_fields)
+            print(f"  {slug}: UPDATED (id={project_id}; fields={fields})")
         else:
             # slug only on create: the KR-side slug stays user-editable after
             # that; conductorSlug remains the stable join key.
