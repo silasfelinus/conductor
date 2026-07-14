@@ -756,12 +756,12 @@ tasks:
   - id: t-037
     milestone: m2
     title: Investigate why creating the animation-manager kind_robots Project deterministically fails (connection closed)
-    status: ready
+    status: needs-human
     owner: null
     passes: 0
     stakes: reversible
-    soft_gate: true
-    updated: "2026-07-14T10:05:00Z"
+    gate_human: true
+    updated: "2026-07-14T19:20:00Z"
     note: >
       FOR SILAS / next Worker with backend log access: conductor/PR #503 fixed
       sync_projects.py's retry logic to also retry HTTP-400-wrapped transient
@@ -790,6 +790,43 @@ tasks:
       Soft gate: sync_projects.py's retry improvement (PR #503) is still a net
       win for genuine transient blips even though this specific case needs
       backend investigation -- other conductor work is not blocked by this.
+
+
+      UPDATE 2026-07-14T19:20 UTC (Reviewer, this session has live Vercel MCP
+      log access the prior investigation lacked): pulled `get_runtime_logs`
+      for kind_robots' Vercel project (prj_x6HB2IPpQbvqNqiYVgu3IibJ6FZf) for
+      the exact failure window of the 18:14:36 UTC Project Sync run. Every
+      failing `POST /api/projects` (deployment dpl_PCMGFcwbkcDQS5JwgrxithyXCzmv)
+      logs TWO paired "Operation failed" errors on the same request:
+      `JWTExpired: "exp" claim timestamp check failed` immediately followed by
+      `DriverAdapterError: Cannot execute new commands: connection closed`.
+      `kindrobots-unraid` now fails with the byte-identical signature too (not
+      just animation-manager as originally filed) -- both are simply the only
+      two projects that needed a WRITE (create/update) in these runs; the 31
+      UNCHANGED projects only ever GET, so they never exercise this path.
+      This strongly points to KR_API_TOKEN (per sync_projects.py's own docstring,
+      "a valid kind_robots JWT for Silas's account") having expired again --
+      same failure class as t-035, refreshed 2026-07-12, ~2 days before this
+      recurrence -- with a separate kind_robots-side bug where the expired-JWT
+      auth failure doesn't cleanly short-circuit to a 401 and instead falls
+      through to a DB call on an already-torn-down connection, surfacing the
+      misleading "connection closed" DriverAdapterError instead of a clear
+      auth error. Caveat: kind_robots' own session-JWT mint path
+      (server/api/auth/index.ts, `SignJWT`) sets `.setExpirationTime('360d')`,
+      which doesn't obviously explain a ~2-day recurrence, so either
+      KR_API_TOKEN isn't sourced from that exact mint path or something else
+      (rotation-on-login, manual short-lived reissue, revocation) is
+      invalidating it faster than 360 days -- worth Silas checking how this
+      specific token was generated.
+      TO APPROVE / ACT: (1) refresh KR_API_TOKEN the same way as t-035, which
+      should immediately restore Project Sync for both stuck projects; (2)
+      consider whether the token needs periodic rotation on a shorter cadence
+      than assumed, or a longer-lived token minted specifically for this
+      service-to-service use case instead of a personal session JWT; (3) a
+      kind_robots-side fix (new reversible task, not filed here to keep this
+      diff scoped) so an expired/invalid auth token returns a clean 401
+      instead of masquerading as a DB connection error -- would make this
+      failure mode self-diagnosing for whoever hits it next.
   - id: t-038
     milestone: m2
     title: Reconcile CONTROL.md's stated priority band with priority.yaml's actual order
