@@ -122,7 +122,15 @@ def mark_task_done(project: str, task_id: str, note: str | None) -> None:
         raise WorkerMergeError(f"worker_task_status.py done failed for {project}/{task_id}")
 
 
-def commit_done_status(project: str, task_id: str) -> None:
+def commit_done_status(project: str, task_id: str, session_branch: str | None) -> str:
+    """Commit the done-status roadmap flip and push it, returning the ref it landed on.
+
+    Permission-restricted sessions (git proxy allows only the designated claude/*
+    branch) get the merge through fine but a straight `push origin main` for the
+    status flip 403s. Rather than leaving a merged-but-not-marked-done gap for the
+    next cycle to rediscover, fall back to committing on the session's own branch
+    so the flip lands on main via that branch's normal PR instead.
+    """
     roadmap = ROOT / "projects" / project / "roadmap.yaml"
     run_git("add", str(roadmap.relative_to(ROOT)))
     try:
@@ -130,7 +138,31 @@ def commit_done_status(project: str, task_id: str) -> None:
     except WorkerMergeError as exc:
         if "nothing to commit" not in str(exc).lower():
             raise
-    run_git("push", "origin", "main")
+
+    try:
+        run_git("push", "origin", "main")
+        return "main"
+    except WorkerMergeError as exc:
+        if not session_branch or session_branch == "main":
+            raise
+        print(
+            f"WARNING: push to origin/main was rejected for {project}/{task_id}'s "
+            f"done-status commit ({exc}); falling back to session branch "
+            f"'{session_branch}'.",
+            file=sys.stderr,
+        )
+
+    done_sha = run_git("rev-parse", "HEAD")
+    run_git("checkout", session_branch)
+    run_git("cherry-pick", done_sha)
+    run_git("push", "origin", session_branch)
+    print(
+        f"Done-status commit for {project}/{task_id} landed on '{session_branch}' "
+        "instead of main (main push was rejected) -- it will reach main once that "
+        "branch's PR merges. Merge that PR promptly so the roadmap status doesn't "
+        "stay stale on main."
+    )
+    return session_branch
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -157,16 +189,19 @@ def main(argv: list[str] | None = None) -> int:
 
     try:
         merge_sha = merge_pr(args.repo, args.pr_number, args.token)
+        session_branch = run_git("rev-parse", "--abbrev-ref", "HEAD")
         run_git("checkout", "main")
         run_git("pull", "origin", "main")
         note = args.note or f"Completed in PR #{args.pr_number}."
         mark_task_done(args.project, args.task_id, note)
-        commit_done_status(args.project, args.task_id)
+        status_branch = commit_done_status(args.project, args.task_id, session_branch)
     except WorkerMergeError as exc:
         print(f"ERROR: {exc}", file=sys.stderr)
         return 1
 
     print(f"merged PR #{args.pr_number}; marked {args.project}/{args.task_id} done ({merge_sha})")
+    if status_branch != "main":
+        print(f"NOTE: roadmap done-status commit is on '{status_branch}', not main yet.")
     return 0
 
 
