@@ -894,3 +894,35 @@ tasks:
       directed by Silas" carve-out) -- flagging it here rather than
       resolving it unilaterally, since it's a process-authority question for
       Silas, not a one-line fix.
+
+  - id: t-041
+    milestone: m2
+    title: Document the "create branch via API before first git push" step for sessions whose designated branch doesn't exist on the remote yet
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-14T17:05:00Z'
+    note: >
+      Kaizen from t-038 (PR #515, merged 2026-07-14). This session's designated
+      branch (claude/great-goldberg-4srsd6) had never had a PR opened from it,
+      so it did not yet exist on the actual GitHub remote even though the
+      local checkout's remote-tracking ref showed a SHA for it (stale/local-
+      only knowledge). A plain `git push -u origin <branch>` for a genuinely
+      new remote branch failed with HTTP 413 from the git-smart-HTTP proxy --
+      GIT_TRACE_CURL showed it attempting to send an ~500MB pack (matching
+      the full .git size) instead of a small delta, apparently because the
+      proxy's handling of a brand-new ref requires a full pack rather than
+      computing one relative to objects already reachable via other refs
+      (e.g. main). Workaround that worked: call the GitHub MCP
+      `create_branch` tool (owner/repo/branch/from_branch: main) first --
+      this creates the ref instantly via the API with zero data transfer,
+      since it just points at a commit the remote already has -- then the
+      normal `git push` of the session's actual commits went through as a
+      small, fast delta. Add this as a documented step in AGENTS.md or
+      CLAUDE.md's session-startup guidance (something like: "if `git push -u
+      origin <your-branch>` fails with HTTP 413 and the branch has no prior
+      PR, the branch likely doesn't exist on the remote yet -- create it via
+      the GitHub API/MCP `create_branch` from main first, then push normally")
+      so the next session that hits this doesn't have to re-diagnose it from
+      a raw curl trace.
