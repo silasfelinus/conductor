@@ -37,17 +37,24 @@ tasks:
   - id: t-001
     milestone: m1
     title: "Audit the homepage and write the implementation brief"
-    status: ready
+    status: done
     owner: null
+    updated: 2026-07-14T12:00:00Z
     passes: 0
     stakes: reversible
     note: >
-      Inspect the current Kind Robots homepage, settings surface, navigation, stores,
-      and relevant API boundaries. Update DESIGN-BRIEF.md with the exact files and
-      architecture for a fast MVP. Include the pluggable perspective metadata and ranking
-      seams from BIAS-CONTROLS.md so the quick MVP does not require a future rewrite.
-      Keep the plan additive and schema-free unless the existing code makes that genuinely
-      impossible. Immediately refine the BUILD tasks after the audit; do not wait for scope confirmation.
+      Done. Audited pages/[...slug].vue + content/index.md (homepage is a Nuxt Content
+      doc rendering :user-manager -> user-dashboard.vue, which is where settings actually
+      live today), stores/userStore.ts + Prisma User columns (settings persistence),
+      stores/helpers/dashboardHelper.ts (wonder.newsfeed tab already registered, route
+      /newsfeed, image asset missing on disk), stores/helpers/tutorialCards.ts (no
+      top-level wonder channel yet), content/newsfeed.md + content/channels/lab/newsfeed.md
+      (already-stubbed routes), components/conductor/newsfeed-page.vue (separate pitch/
+      status page, not the real feature), server/api/conductor/prs.get.ts (fetch pattern
+      to model aggregation on; no caching layer exists yet anywhere in server/), and
+      components/dreams/dream-card.vue (best existing feed-card visual model). Findings
+      written into DESIGN-BRIEF.md's new "Audit findings" section with exact paths.
+      BUILD task notes (t-003 through t-006) refined below with these specifics.
 
   - id: t-002
     milestone: m1
@@ -66,20 +73,25 @@ tasks:
   - id: t-003
     milestone: m2
     title: "Move homepage settings into a dedicated settings section"
-    status: waiting
+    status: ready
     owner: null
     passes: 0
     stakes: reversible
     depends_on: t-001
     note: >
-      Preserve existing settings behavior while relocating it to a clearly discoverable
-      route or panel. The homepage should become available for the newsfeed without losing
-      any controls or creating duplicate sources of settings state.
+      Audit (t-001): the homepage is content/index.md, currently rendering
+      :user-manager (components/user/user-manager.vue -> user-dashboard.vue, which
+      embeds user-panel.vue's settings form, avatar upload, theme picker, cache-clear,
+      galleries). No settings live in a dedicated route today. Relocate user-manager's
+      "dashboard" tab so it's reachable at the existing /dashboard route
+      (dashboardConfigs.user is already registered) instead of the root, preserving all
+      current controls. Settings data itself stays on the Prisma User model via
+      stores/userStore.ts / server/api/users — do not add a new settings table.
 
   - id: t-004
     milestone: m2
     title: "Create the feed registry and recommended presets"
-    status: waiting
+    status: ready
     owner: null
     passes: 0
     stakes: reversible
@@ -88,7 +100,10 @@ tasks:
       Add typed, modular feed definitions for AI news, activism, malaria activism,
       AI gaming, AI model creation, and developer tips. Keep source adapters, feed metadata,
       defaults, user selection, and optional ranking dimensions separate. Prefer configuration
-      and Pinia state over hard-coded branching in components.
+      and Pinia state over hard-coded branching in components. Audit (t-001): new
+      feedPreferenceStore should follow the safeGetLocalStorage/safeSetLocalStorage
+      client-persistence pattern used by stores/navStore.ts and stores/socialStore.ts
+      (no Pinia-persistence plugin exists in this repo) rather than a database table.
 
   - id: t-005
     milestone: m2
@@ -103,7 +118,12 @@ tasks:
       published time, category, optional image, and optional perspective metadata with
       provenance/confidence. Use the smallest reliable ingestion approach supported by the
       existing Kind Robots architecture. Avoid database schema work for v1; any unavoidable
-      shared-backend change becomes a proposal rather than an improvised migration.
+      shared-backend change becomes a proposal rather than an improvised migration. Audit
+      (t-001): no server-side caching layer exists anywhere in server/ yet. Model the new
+      server/api/newsfeed/index.get.ts handler on server/api/conductor/prs.get.ts's shape
+      (thin handler + a shared fetch helper in a new server/utils/newsfeed.ts, mirroring
+      server/utils/conductor-github.ts), and introduce defineCachedEventHandler for TTL
+      caching — document the chosen TTL in the PR since there's no existing precedent.
 
   - id: t-006
     milestone: m2
@@ -119,7 +139,15 @@ tasks:
       Ship the first useful homepage: responsive feed cards, loading and empty states,
       source attribution, external links, category filtering, and sensible chronological
       ordering. Use the existing Kind Robots visual system and keep the component surface
-      small enough to evolve.
+      small enough to evolve. Audit (t-001): fork components/dreams/dream-card.vue for the
+      new FeedCard.vue (closest existing title/badge/image/timestamp grammar plus a
+      multi-source image-fallback chain for inconsistent RSS thumbnails). content/newsfeed.md
+      and content/channels/lab/newsfeed.md are already stubbed — build into them rather than
+      new routes. components/conductor/newsfeed-page.vue is a separate Project pitch/status
+      page (channelKey: wonder, tabKey: newsfeed) — keep it as-is and update its
+      deliverables.done list as milestones land; slot the real feed component into
+      project-front-page.vue's #interactive slot or swap content/newsfeed.md's body once
+      the real feature is ready, rather than replacing the pitch page.
 
   - id: t-007
     milestone: m2
