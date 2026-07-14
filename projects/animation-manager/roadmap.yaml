@@ -158,17 +158,13 @@ tasks:
   - id: t-008
     milestone: m3
     title: "Add automated animation catalog and lifecycle verification"
-    status: ready
-    owner: null
+    status: review
+    owner: Reviewer
     passes: 0
     stakes: reversible
     depends_on: t-003
-    note: >
-      Add a lightweight verification script that checks unique catalog ids, filename-to-lazy-
-      component resolution, generationSafe startup eligibility, valid preferred surfaces, and
-      no stale preference values. Document a browser smoke matrix for desktop/mobile, clipped
-      Screen FX regions, startup wallpaper, reduced motion, route changes, and repeated mount/
-      unmount cycles.
+    note: 'Implemented via kind_robots PR #251 (utils/scripts/verifyAnimationCatalog.ts + docs/architecture/animation-catalog-smoke-matrix.md). CI in flight; will flip to done once merged. Also surfaced (not fixed, out of scope): displayStore.ts''s legacy EffectId/animationOptions references a nonexistent ''bubble-effect'' catalog id (orphaned components/screenfx/bubble-effect.vue, never registered) -- see PR body for detail, worth a follow-up task.'
+    updated: '2026-07-14T14:02:41Z'
 
   - id: t-009
     milestone: m1
@@ -185,3 +181,24 @@ tasks:
       compares a new pitch's `technique` and `surprise` text against existing catalog
       entries' equivalents — a simple keyword-overlap surfaced for human/agent judgment,
       not an auto-reject — so near-duplicate pitches are flagged before they reach build.
+
+  - id: t-010
+    milestone: m3
+    title: "Remove or fix the stale 'bubble-effect' reference in displayStore's legacy animation system"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Found while building t-008's verification script (kind_robots PR #251). kind_robots
+      stores/displayStore.ts's EffectId type and animationOptions array (a separate,
+      pre-centralization debug-only system used only by components/screenfx/animation-tester.vue
+      and components/admin/screen-debug.vue) include the id 'bubble-effect', which does not
+      exist in stores/animationCatalog.ts — the single source of truth since t-003. There is an
+      orphaned components/screenfx/bubble-effect.vue file, never registered in the catalog.
+      Options: (a) register bubble-effect properly in animationCatalog.ts if the effect is worth
+      keeping, or (b) retire displayStore's whole legacy EffectId/animationOptions/currentAnimation
+      path (and animation-tester.vue) in favor of the centralized animationStore, if it's fully
+      superseded. Out of scope for t-008 since it's a different, non-catalog system; scoped here
+      as its own task. Not registered against verifyAnimationCatalog.ts since that script
+      intentionally only covers the animationCatalog.ts-based system.
