@@ -2766,3 +2766,50 @@ cross-repo task that closed exactly per its own note.
 - Also noted while sweeping: conductor PR #506 and kind_robots PRs #245/#249 (Wonder Lab
   admin-gate) were all merged directly by Silas within the ~hour before this sweep ran,
   ahead of any Reviewer action — no conflicting or stale state found in either repo.
+
+## 2026-07-14 | Reviewer → Silas | newsfeed/t-001 | pattern
+
+**Decision:** done (t-001), unblocked t-003/t-004 to ready.
+
+**Failure category:** null (clean first pass).
+
+**What was good:**
+- `newsfeed` was the burst-mode rotation pick this cycle: `active`, `priority: high` in
+  `project-overrides.yaml`, 0% progress, and every task carried no `updated` timestamp at
+  all — the most neglected active project in the system, with t-001 blocking six
+  downstream BUILD tasks transitively.
+- Did a real codebase audit of `kind_robots` (via a research-only Explore subagent) rather
+  than guessing paths: confirmed the homepage is `content/index.md` rendering
+  `:user-manager` (settings genuinely live there today, as the brief assumed), found the
+  `wonder.newsfeed` dashboard-tab entry and `content/newsfeed.md`/`content/channels/lab/newsfeed.md`
+  stubs already exist and are reserved integration points, found the separate
+  `components/conductor/newsfeed-page.vue` pitch/status page so the real feature doesn't
+  collide with it, and found there is no settings table, no Pinia-persistence plugin, and
+  no server-side caching layer anywhere in the app — all of which change how t-003/t-004/
+  t-005/t-006 should be built.
+- Per the task note's own instruction ("Immediately refine the BUILD tasks after the
+  audit; do not wait for scope confirmation"), rewrote t-003 through t-006's notes with
+  the exact file paths and patterns to follow, then used `set_task_field.py` (not
+  `resolve_deps.py`) for the two surgical `waiting` → `ready` flips on t-003/t-004, per the
+  standing lesson in this file (challenge-center/t-008, conductor/t-036) that
+  `resolve_deps.py`'s write path reserializes the whole roadmap into a huge diff.
+
+**What to improve:**
+- N/A — self-contained conductor-repo task (DESIGN-BRIEF.md + roadmap notes), no
+  cross-repo code change in this cycle. The actual `kind_robots` implementation work
+  (t-003 onward) is now unblocked for a future Worker/Reviewer cycle.
+
+**Detail:**
+- `projects/newsfeed/DESIGN-BRIEF.md`: replaced the placeholder "Likely Kind Robots areas
+  to audit" section with a concrete "Audit findings — exact integration points" section
+  (exact file paths for homepage routing, settings storage, dashboard-tab registry,
+  content stubs, the conductor pitch page, server fetch/caching pattern, and the
+  feed-card visual model to fork).
+- `projects/newsfeed/roadmap.yaml`: t-001 → `done`; t-003/t-004 notes enriched with audit
+  specifics and flipped `waiting` → `ready`; t-005/t-006 notes enriched (still `waiting`
+  on their own deps, unchanged status).
+- `python3 -m yaml.safe_load` on `projects/newsfeed/roadmap.yaml` — parses clean, 12
+  tasks. `scripts/audit_roadmaps.py` — no new errors/warnings attributed to `newsfeed`
+  (pre-existing findings elsewhere untouched).
+
+**Kaizen task:** deferred — no new systemic gap surfaced this cycle.

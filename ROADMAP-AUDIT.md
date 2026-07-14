@@ -1,52 +1,55 @@
 # Roadmap Audit
 
-Generated: `2026-07-13T09:53:17.223517+00:00`
+Generated: `2026-07-14T12:14:15.758565+00:00`
 
 This is a conservative structural audit. It reports suspicious state; it does not automatically change task status or remove human gates.
 
 ## Portfolio snapshot
 
-- **37** roadmaps, **31** active projects, **447** tasks
-- **101 ready**, **57 waiting**, **15 needs-human**, **1 claimed/review**, **262 done**
-- Findings: **0 errors**, **0 warnings**, **43 informational**
+- **40** roadmaps, **32** active projects, **489** tasks
+- **113 ready**, **60 waiting**, **16 needs-human**, **1 claimed/review**, **281 done**
+- Findings: **10 errors**, **3 warnings**, **47 informational**
 
 ## Project inventory
 
 | # | Project | State | Kind | Ready | Waiting | Human | In progress | Done / Total |
 |---:|---|---|---|---:|---:|---:|---:|---:|
-| 1 | `superkate-services-calculator` | active | software | 0 | 0 | 1 | 0 | 35 / 36 |
-| 2 | `challenge-center` | active | software | 5 | 5 | 0 | 1 | 7 / 18 |
-| 3 | `ai-art-academy` | active | software | 5 | 0 | 0 | 0 | 7 / 12 |
-| 4 | `coloring-book` | active | software | 4 | 5 | 0 | 0 | 10 / 19 |
-| 5 | `humboldt-scoop` | active | software | 1 | 0 | 0 | 0 | 7 / 8 |
-| 6 | `humboldt-scoop-cms` | active | software | 2 | 4 | 0 | 0 | 5 / 11 |
-| 7 | `digital-storefront` | active | software | 3 | 7 | 0 | 0 | 5 / 15 |
-| 8 | `packmaker` | active | software | 2 | 3 | 0 | 0 | 1 / 6 |
-| 9 | `mermaids-of-venice` | active | content | 2 | 0 | 8 | 0 | 2 / 12 |
-| 10 | `kind-robots` | active | software | 4 | 0 | 1 | 0 | 9 / 14 |
+| 1 | `challenge-center` | active | software | 6 | 2 | 0 | 0 | 11 / 19 |
+| 2 | `ai-art-academy` | active | software | 5 | 0 | 0 | 0 | 7 / 12 |
+| 3 | `coloring-book` | active | software | 4 | 5 | 0 | 0 | 10 / 19 |
+| 4 | `humboldt-scoop` | active | software | 1 | 0 | 0 | 0 | 7 / 8 |
+| 5 | `humboldt-scoop-cms` | active | software | 2 | 4 | 0 | 0 | 5 / 11 |
+| 6 | `digital-storefront` | active | software | 3 | 7 | 0 | 0 | 5 / 15 |
+| 7 | `packmaker` | active | software | 2 | 3 | 0 | 0 | 1 / 6 |
+| 8 | `mermaids-of-venice` | active | content | 2 | 0 | 8 | 0 | 2 / 12 |
+| 9 | `kind-robots` | active | software | 6 | 0 | 1 | 0 | 12 / 19 |
+| 10 | `kindrobots-unraid` | missing | infrastructure | 1 | 0 | 1 | 0 | 3 / 12 |
 | 11 | `global-ui` | active | software | 2 | 0 | 0 | 0 | 11 / 13 |
-| 12 | `newsfeed` | active | software | 2 | 9 | 1 | 0 | 0 / 12 |
-| 13 | `model-builder` | active | software | 5 | 0 | 0 | 0 | 24 / 29 |
-| 14 | `approval-portal` | retired | software | 0 | 0 | 0 | 0 | 3 / 5 |
-| 15 | `superkate-hairstyle-ai` | active | software | 1 | 0 | 2 | 0 | 14 / 17 |
-| 16 | `ecosystem-map` | active | software | 4 | 1 | 0 | 0 | 3 / 8 |
-| 17 | `conductor` | active | software | 8 | 0 | 1 | 0 | 26 / 35 |
-| 18 | `serendipity` | active | software | 3 | 0 | 0 | 0 | 9 / 12 |
-| 19 | `storymaker` | active | software | 2 | 0 | 0 | 0 | 8 / 10 |
-| 20 | `davinci` | active | software | 2 | 0 | 0 | 0 | 12 / 14 |
-| 21 | `art-generator-connect` | active | software | 2 | 0 | 0 | 0 | 19 / 21 |
-| 22 | `mural-design` | active | content | 1 | 3 | 1 | 0 | 2 / 7 |
-| 23 | `coat-dance` | active | content | 2 | 0 | 0 | 0 | 0 / 10 |
-| 24 | `alexa-integration` | active | software | 4 | 1 | 0 | 0 | 10 / 15 |
-| 25 | `conductor-app` | active | software | 6 | 0 | 0 | 0 | 7 / 13 |
-| 26 | `appmaker` | active | software | 4 | 2 | 0 | 0 | 6 / 12 |
-| 27 | `media-watchlist` | active | software | 1 | 0 | 0 | 0 | 5 / 6 |
-| 28 | `sketchy` | active | software | 3 | 0 | 0 | 0 | 4 / 7 |
-| 29 | `brainstorm` | active | proposal | 1 | 0 | 0 | 0 | 0 / 1 |
-| 30 | `wishmaster` | active | software | 2 | 0 | 0 | 0 | 1 / 3 |
-| 31 | `engagement` | finished | software | 0 | 0 | 0 | 0 | 3 / 3 |
-| 32 | `ruler-hooked` | active | software | 7 | 1 | 0 | 0 | 2 / 10 |
-| 33 | `dream-cycle` | active | software | 5 | 3 | 0 | 0 | 2 / 10 |
+| 12 | `superkate-services-calculator` | active | software | 0 | 0 | 1 | 0 | 35 / 36 |
+| 13 | `superkate-hairstyle-ai` | active | software | 3 | 0 | 2 | 0 | 14 / 19 |
+| 14 | `newsfeed` | active | software | 1 | 9 | 1 | 0 | 1 / 12 |
+| 15 | `model-builder` | active | software | 5 | 0 | 0 | 0 | 24 / 29 |
+| 16 | `animation-manager` | active | software | 4 | 2 | 0 | 0 | 3 / 9 |
+| 17 | `ecosystem-map` | active | software | 4 | 1 | 0 | 0 | 3 / 8 |
+| 18 | `conductor` | active | software | 9 | 0 | 1 | 0 | 27 / 37 |
+| 19 | `serendipity` | active | software | 3 | 0 | 0 | 0 | 9 / 12 |
+| 20 | `storymaker` | active | software | 2 | 0 | 0 | 0 | 8 / 10 |
+| 21 | `davinci` | active | software | 2 | 0 | 0 | 0 | 12 / 14 |
+| 22 | `art-generator-connect` | active | software | 2 | 0 | 0 | 0 | 19 / 21 |
+| 23 | `mural-design` | active | content | 1 | 3 | 1 | 0 | 2 / 7 |
+| 24 | `coat-dance` | active | content | 2 | 0 | 0 | 0 | 0 / 10 |
+| 25 | `alexa-integration` | active | software | 3 | 1 | 0 | 0 | 11 / 15 |
+| 26 | `conductor-app` | active | software | 6 | 0 | 0 | 0 | 7 / 13 |
+| 27 | `appmaker` | active | software | 4 | 2 | 0 | 0 | 6 / 12 |
+| 28 | `media-watchlist` | active | software | 1 | 0 | 0 | 0 | 5 / 6 |
+| 29 | `sketchy` | active | software | 3 | 0 | 0 | 0 | 4 / 7 |
+| 30 | `brainstorm` | active | proposal | 1 | 0 | 0 | 0 | 0 / 1 |
+| 31 | `wishmaster` | active | software | 2 | 0 | 0 | 0 | 1 / 3 |
+| 32 | `engagement` | finished | software | 0 | 0 | 0 | 0 | 3 / 3 |
+| 33 | `ruler-hooked` | active | software | 7 | 1 | 0 | 0 | 2 / 10 |
+| 34 | `dream-cycle` | active | software | 5 | 3 | 0 | 0 | 5 / 13 |
+| — | `animation-studio` | missing | software | 3 | 4 | 0 | 1 | 0 / 8 |
+| — | `approval-portal` | retired | software | 0 | 0 | 0 | 0 | 3 / 5 |
 | — | `career-transition` | retired | content | 3 | 4 | 0 | 0 | 1 / 8 |
 | — | `humboldt-impropriety-calendar` | retired | brainstorm | 0 | 5 | 0 | 0 | 0 / 6 |
 | — | `pinball-hero` | retired | content | 2 | 2 | 0 | 0 | 2 / 6 |
@@ -54,19 +57,31 @@ This is a conservative structural audit. It reports suspicious state; it does no
 
 ## Findings by severity
 
-### Error (0)
+### Error (10)
 
-_None._
+- **CONTROL_PRIORITY_DRIFT** — `_global`: CONTROL.md priority band ['challenge-center', 'ai-art-academy', 'coloring-book', 'humboldt-scoop', 'humboldt-scoop-cms', 'digital-storefront', 'packmaker', 'mermaids-of-venice', 'kind-robots', 'global-ui'] does not match priority.yaml prefix ['challenge-center', 'ai-art-academy', 'coloring-book', 'humboldt-scoop', 'humboldt-scoop-cms', 'digital-storefront', 'packmaker', 'mermaids-of-venice', 'kind-robots', 'kindrobots-unraid'].
+- **INVALID_STATUS** — `kindrobots-unraid` / `t-004`: Unknown task status 'planned'.
+- **INVALID_STATUS** — `kindrobots-unraid` / `t-006`: Unknown task status 'planned'.
+- **INVALID_STATUS** — `kindrobots-unraid` / `t-007`: Unknown task status 'planned'.
+- **INVALID_STATUS** — `kindrobots-unraid` / `t-008`: Unknown task status 'planned'.
+- **INVALID_STATUS** — `kindrobots-unraid` / `t-009`: Unknown task status 'planned'.
+- **INVALID_STATUS** — `kindrobots-unraid` / `t-010`: Unknown task status 'planned'.
+- **INVALID_STATUS** — `kindrobots-unraid` / `t-011`: Unknown task status 'planned'.
+- **WAITING_WITH_SATISFIED_DEPS** — `newsfeed` / `t-003`: All dependencies are satisfied; resolver should promote this task to ready.
+- **WAITING_WITH_SATISFIED_DEPS** — `newsfeed` / `t-004`: All dependencies are satisfied; resolver should promote this task to ready.
 
-### Warning (0)
+### Warning (3)
 
-_None._
+- **ROADMAP_MISSING_OVERRIDE** — `animation-studio`: Roadmap has no project-overrides.yaml entry.
+- **IN_PROGRESS_WITHOUT_TIMESTAMP** — `animation-studio` / `t-003`: Claimed/review task has no parseable updated timestamp.
+- **ROADMAP_MISSING_OVERRIDE** — `kindrobots-unraid`: Roadmap has no project-overrides.yaml entry.
 
-### Info (43)
+### Info (47)
 
 - **APPROVAL_WITHOUT_GATE** — `ai-art-academy` / `t-002`: approved_by_human is set on a task that is not human-gated.
 - **APPROVAL_WITHOUT_GATE** — `ai-art-academy` / `t-011`: approved_by_human is set on a task that is not human-gated.
 - **MISSING_GOAL** — `alexa-integration`: Roadmap has no friendly goal/definition of done.
+- **INACTIVE_PROJECT_HAS_READY_TASKS** — `animation-studio`: Inactive project retains 3 ready task(s); harmless but misleading in generated status.
 - **MISSING_GOAL** — `appmaker`: Roadmap has no friendly goal/definition of done.
 - **MISSING_GOAL** — `approval-portal`: Roadmap has no friendly goal/definition of done.
 - **MISSING_GOAL** — `art-generator-connect`: Roadmap has no friendly goal/definition of done.
@@ -90,6 +105,9 @@ _None._
 - **MISSING_GOAL** — `humboldt-scoop`: Roadmap has no friendly goal/definition of done.
 - **MISSING_GOAL** — `humboldt-scoop-cms`: Roadmap has no friendly goal/definition of done.
 - **MISSING_GOAL** — `kind-robots`: Roadmap has no friendly goal/definition of done.
+- **INACTIVE_PROJECT_HAS_READY_TASKS** — `kindrobots-unraid`: Inactive project retains 1 ready task(s); harmless but misleading in generated status.
+- **MISSING_GOAL** — `kindrobots-unraid`: Roadmap has no friendly goal/definition of done.
+- **APPROVAL_WITHOUT_GATE** — `kindrobots-unraid` / `t-002`: approved_by_human is set on a task that is not human-gated.
 - **MISSING_GOAL** — `media-watchlist`: Roadmap has no friendly goal/definition of done.
 - **MISSING_GOAL** — `mermaids-of-venice`: Roadmap has no friendly goal/definition of done.
 - **MISSING_GOAL** — `newsfeed`: Roadmap has no friendly goal/definition of done.
