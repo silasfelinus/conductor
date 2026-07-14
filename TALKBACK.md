@@ -2831,3 +2831,73 @@ cross-repo task that closed exactly per its own note.
 - The audit tool itself has apparently been catching real drift for a while (`kindrobots-unraid`'s missing override, the `planned` status typo) without a task ever getting created to fix it — worth checking whether `audit_roadmaps.py`'s output is actually being read each cycle or just generated and ignored. Suggest wiring a lightweight check into a future cycle: if error count > 0, that's itself worth a roadmap task rather than silent tolerance.
 
 **Kaizen task:** conductor/t-038 and t-039 (above) — both created directly from this cycle's own findings rather than a Worker's suggestion, since there was no Worker PR this cycle to source a kaizen idea from.
+
+## 2026-07-14 | Reviewer → Silas | model-builder/t-028 | burst-mode pattern
+
+**Decision:** in progress — kind_robots PR #250 open, CI running (TypeScript check still in
+flight at time of this entry); status set to `review`, will flip to `done` once merged.
+
+**Failure category:** null (clean first pass so far).
+
+**What was good:**
+- Rotation pick: `newsfeed` (t-001) was worked last cycle, so this hourly burst-mode pass
+  moved to the next project in `priority.yaml` order — `model-builder`, 89.1% progress,
+  5 `ready` tasks. Picked t-028 ("Executor: persist drafted structured fields on commit")
+  over t-025/t-027/t-029 as the most self-contained, highest-value gap: the FIELDS stage
+  already produces model-correct `field: value` lines (t-024) but the commit executor
+  discarded everything except name + one text field.
+- Read the actual executor (`kind_robots/server/api/model-builder/items/[id]/commit.post.ts`)
+  and the single-source field-truth module (`stores/helpers/modelBuilderFields.ts`, t-024's
+  own deliverable) before writing anything, rather than guessing the shape of either.
+- Reused existing conventions instead of inventing new ones: found `normalizeRarity`/
+  `normalizeRewardType` already in `server/api/rewards/index.ts` as precedent for
+  choice-field validation style; confirmed the `import type {...} from prisma/generated/
+  prisma/client` pattern from `server/api/facets/[id].patch.ts`; deduped the executor's
+  local `CREATE_TARGETS` in favor of the one already exported from `modelBuilderFields.ts`.
+- Kept the change "bounded and typed per model" per the task's own note — explicit
+  per-model interfaces (`CharacterExtra`, `BotExtra`, etc.) built field-by-field with
+  choice validation and schema-accurate length caps, not a generic `Record<string,
+  unknown>` blob spread into Prisma's typed create/update inputs (tried that first
+  mentally, would have fought Prisma's Update-vs-Create input type unions).
+- Facet.kind had no `choices` pool in modelBuilderFields.ts at all (the only one of the 7
+  models missing it) — added `FACET_KINDS` there rather than validating against the raw
+  Prisma enum only inside the executor, so the AI-drafting prompt (`fieldsBrief()`) and
+  the commit-time validator share the same fix.
+- No prior `node_modules` in the kind_robots checkout — `npm ci` failed on Cypress's binary
+  download (network reset, not an npm-registry problem); `CYPRESS_INSTALL_BINARY=0
+  PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1 npm ci` unblocked it in 23s. Verified with the repo's
+  actual CI-equivalent commands before pushing: `npm run test` (vue-tsc, full-repo
+  typecheck — clean except two pre-existing, unrelated errors in `artjob-manager.vue`) and
+  `npx eslint` on both changed files (one auto-fixed `consistent-type-imports` finding,
+  re-verified clean after).
+- Branch `claude/upbeat-pascal-hahnhw` already carried 3 unrelated, unPR'd commits from an
+  earlier Silas session (`better test`, `fixed art enqueue`, `removed temp db test` — a
+  Prisma pool fix). Left them alone and built on top per the standing instruction not to
+  discard existing branch work; called this out explicitly in the PR body so it's not
+  mistaken for scope creep.
+- `set_task_field.py` for the surgical status/owner/updated/note edits (not
+  `resolve_deps.py`), per the standing lesson in this file (challenge-center/t-008,
+  conductor/t-036, newsfeed/t-001) — confirmed `scripts/audit_roadmaps.py` shows no new
+  findings after the edit (still exactly the pre-existing 1 error / 1 warning deferred to
+  conductor/t-038 and t-039).
+
+**What to improve:**
+- Ran out of cycle time waiting on Vercel's deploy + the GitHub Actions TypeScript job to
+  finish before this entry was written — merge and the `done` flip are left for the next
+  event/cycle to close out (session stays subscribed to PR #250's activity). If CI turns up
+  a real failure, that becomes next cycle's first action rather than a fresh pick.
+
+**Detail:**
+- `kind_robots` PR #250 (`claude/upbeat-pascal-hahnhw` → `main`): `server/api/model-builder/
+  items/[id]/commit.post.ts` (+322/-40 across both changed files),
+  `stores/helpers/modelBuilderFields.ts` (added `FACET_KINDS`, wired into `Facet.kind`'s
+  spec entry).
+- `projects/model-builder/roadmap.yaml`: t-028 → `status: review`, `owner: Reviewer`,
+  `updated: now`, `note` rewritten to point at PR #250 (original task note preserved in
+  git history, not lost — visible via `git log -p` on this file).
+- `python3 -m yaml.safe_load` on the roadmap — parses clean. `scripts/audit_roadmaps.py`
+  after the edit — same 1 error / 1 warning as before (both already deferred to
+  conductor/t-038, t-039), no new findings attributable to this change.
+
+**Kaizen task:** deferred — no new systemic gap surfaced this cycle beyond what's already
+tracked (conductor/t-038, t-039).
