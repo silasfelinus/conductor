@@ -1,60 +1,18 @@
 #!/usr/bin/env python3
-"""
-relay_agent.py — pull-based art job relay for the kind_robots ArtJob queue.
+"""Pull-based ArtJob relay for the Kind Robots queue.
 
-Runs ON the home server (pm2-managed, alongside comfyui/sd-webui). Loop:
+Runs on the home server beside ComfyUI/A1111:
 
-  1. POST {KR}/api/art/queue/claim          -> claim the next runnable job
-  2. drive the local engine                 -> ComfyUI (:8188) or A1111 (:7860)
-  3. POST {KR}/api/art/save-generated       -> upload result, get ArtImage id
-  4. POST {KR}/api/art/queue/{id}/complete  -> mark DONE (or report failure)
+  1. claim a runnable ArtJob from kind_robots
+  2. render it on the local engine
+  3. upload the bytes through /api/art/save-generated
+  4. complete the ArtJob
 
-Pull model: only outbound HTTPS to kind_robots — nothing dials into the home
-network, no tailscale required on the data path, jobs wait out downtime.
-All policy (auth, routing, retries, priorities) lives in kind_robots; this
-script is deliberately dumb. Stdlib only — no pip installs needed.
-
-Requires kind_robots' ArtJob queue endpoints (art-generator-connect/t-010).
-
-Environment:
-  KR_RELAY_TOKEN     required — admin user apiKey (or beta admin token)
-  KR_RELAY_USER_ID   required — the user id matching that token (save-generated
-                     verifies the two agree)
-  KR_BASE_URL        default https://kind-robots.vercel.app
-  COMFY_URL          default http://127.0.0.1:8188
-  SD_URL             default http://127.0.0.1:7860
-  POLL_SECONDS       default 10 (idle wait between claim attempts)
-  HEARTBEAT_SECONDS  default 60 (how often to report ComfyUI/SD up-down to
-                     kind_robots' /api/server/heartbeat; 0 disables)
-  GEN_TIMEOUT        default 600 (max seconds per generation)
-  AGENT_ID           default hostname (shows up as ArtJob.claimedBy)
-  KR_LOCAL_IMAGES_DIR  optional — local kind_robots checkout's public/images
-                     folder (e.g. D:/code/kind_robots/public/images). When set,
-                     each finished image is ALSO written there as
-                     {collection}/{collection}-{artImageId}.webp so the file
-                     lands in a folder collection (payload.collection picks
-                     the folder, default "sdxl" — the model family, not the
-                     "comfy" frontend). Commit/push to publish. Engines emit
-                     PNG; the copy is re-encoded to WebP when Pillow is
-                     installed (pip install Pillow), else it falls back to .png.
-
-A1111 job payload: either raw txt2img keys (prompt, negative_prompt,
-cfg_scale, sampler_name, ...) or KR-style keys (promptString, negativePrompt,
-cfg, sampler) — both accepted, KR-style is translated.
-COMFY job payload: {"workflow": <full ComfyUI API-format graph>} plus
-optional "promptString" for the ArtImage record, and optional
-"images": [{"name", "imageData"}] — input images (base64 or data URL)
-uploaded to ComfyUI's input folder before the workflow runs, so LoadImage
-nodes can reference them (image-to-image, e.g. Flux Kontext / Hair Studio).
-An optional "save" block ({isPublic, isMature, designer}) is applied by
-kind_robots' complete endpoint, not by this agent.
-
-VIDEO jobs: a COMFY payload with "media": "video" (image-to-video, LTX/WAN
-from kind_robots' /api/art/enqueue) ends in a SaveVideo node, so Comfy history
-returns a video file (mp4/webm) instead of an image. The relay pulls that clip
-and uploads it via save-generated with the matching "fileType" so the ArtImage
-stores a playable clip. Input stills still ride in "images" and are uploaded to
-Comfy's input folder exactly like the image-to-image path.
+The upload creates a staging ArtImage. Normal jobs keep that id. An OVERWRITE
+retry is finalized by kind_robots into its stable target ArtImage id; completion
+returns that canonical id and this relay uses it for local-copy naming and logs.
+That distinction matters because the temporary staging ArtImage is deleted by the
+server's overwrite transaction.
 """
 
 import base64
@@ -67,11 +25,9 @@ import time
 import urllib.error
 import urllib.request
 
-# Default to the Vercel origin: the kindrobots.org domain is not an active
-# deployment (it sat behind Cloudflare and now 403s/404s these API routes), so a
-# relay left on that default polls a dead host and never claims jobs the app
-# enqueues on kind-robots.vercel.app. Override with KR_BASE_URL if that changes.
-KR_BASE_URL = os.environ.get("KR_BASE_URL", "https://kind-robots.vercel.app").rstrip("/")
+KR_BASE_URL = os.environ.get(
+    "KR_BASE_URL", "https://kind-robots.vercel.app"
+).rstrip("/")
 KR_RELAY_TOKEN = os.environ.get("KR_RELAY_TOKEN", "").strip()
 KR_RELAY_USER_ID = int(os.environ.get("KR_RELAY_USER_ID", "0") or 0)
 KR_LOCAL_IMAGES_DIR = os.environ.get("KR_LOCAL_IMAGES_DIR", "").strip()
@@ -80,52 +36,46 @@ SD_URL = os.environ.get("SD_URL", "http://127.0.0.1:7860").rstrip("/")
 POLL_SECONDS = float(os.environ.get("POLL_SECONDS", "10"))
 GEN_TIMEOUT = float(os.environ.get("GEN_TIMEOUT", "600"))
 AGENT_ID = os.environ.get("AGENT_ID", socket.gethostname())
-# How often to report ComfyUI/SD up-down to kind_robots' /api/server/heartbeat
-# (feeds the ArtJob dashboard uptime chart). 0 disables heartbeats.
 HEARTBEAT_SECONDS = float(os.environ.get("HEARTBEAT_SECONDS", "60"))
 
+VIDEO_EXTENSIONS = (".mp4", ".webm", ".mov", ".mkv", ".gif")
 
-def log(msg):
-    # Local timestamp so `pm2 logs` shows at a glance whether a line is recent.
-    ts = time.strftime("%Y-%m-%d %H:%M:%S")
-    print(f"[relay {ts}] {msg}", flush=True)
+
+def log(message):
+    timestamp = time.strftime("%Y-%m-%d %H:%M:%S")
+    print(f"[relay {timestamp}] {message}", flush=True)
 
 
 def http_json(method, url, body=None, bearer=None, timeout=60):
-    """JSON request/response via stdlib. Returns (status, parsed_json_or_None)."""
     data = json.dumps(body).encode() if body is not None else None
-    req = urllib.request.Request(url, data=data, method=method)
-    req.add_header("Content-Type", "application/json")
+    request = urllib.request.Request(url, data=data, method=method)
+    request.add_header("Content-Type", "application/json")
     if bearer:
-        req.add_header("Authorization", f"Bearer {bearer}")
+        request.add_header("Authorization", f"Bearer {bearer}")
     try:
-        with urllib.request.urlopen(req, timeout=timeout) as resp:
-            return resp.status, json.loads(resp.read().decode() or "null")
-    except urllib.error.HTTPError as e:
+        with urllib.request.urlopen(request, timeout=timeout) as response:
+            return response.status, json.loads(response.read().decode() or "null")
+    except urllib.error.HTTPError as error:
         try:
-            payload = json.loads(e.read().decode() or "null")
+            payload = json.loads(error.read().decode() or "null")
         except (ValueError, OSError):
             payload = None
-        return e.code, payload
-    # URLError / timeout propagate to the caller's handler
+        return error.code, payload
 
 
 def check_engine(base_url, health_path):
-    """Ping a local engine's health endpoint. Returns (ok, latency_ms)."""
-    url = f"{base_url}{health_path}"
     started = time.time()
     try:
-        req = urllib.request.Request(url, method="GET")
-        with urllib.request.urlopen(req, timeout=10) as resp:
-            ok = 200 <= resp.status < 300
-            resp.read(1)  # drain a byte; we don't need the body
-    except Exception:  # noqa: BLE001 — any failure means "down"
+        request = urllib.request.Request(f"{base_url}{health_path}", method="GET")
+        with urllib.request.urlopen(request, timeout=10) as response:
+            ok = 200 <= response.status < 300
+            response.read(1)
+    except Exception:  # noqa: BLE001 - any failure means down
         return False, None
     return ok, int((time.time() - started) * 1000)
 
 
 def post_heartbeat(engine, ok, latency_ms):
-    """Report one engine's up/down to kind_robots (best-effort)."""
     try:
         http_json(
             "POST",
@@ -134,13 +84,11 @@ def post_heartbeat(engine, ok, latency_ms):
             bearer=KR_RELAY_TOKEN,
             timeout=15,
         )
-    except Exception as e:  # noqa: BLE001 — heartbeats must never crash the loop
-        log(f"heartbeat({engine}) failed to post: {e}")
+    except Exception as error:  # noqa: BLE001 - never crash on heartbeat
+        log(f"heartbeat({engine}) failed to post: {error}")
 
 
 def send_heartbeats():
-    """Check ComfyUI (:8188) and A1111/SD (:7860) and report both. ComfyUI's
-    /system_stats and A1111's /sdapi/v1/progress are cheap liveness probes."""
     comfy_ok, comfy_ms = check_engine(COMFY_URL, "/system_stats")
     post_heartbeat("COMFY", comfy_ok, comfy_ms)
     sd_ok, sd_ms = check_engine(SD_URL, "/sdapi/v1/progress")
@@ -148,10 +96,7 @@ def send_heartbeats():
 
 
 def claim_job():
-    # supportsInputImages: capability handshake — kind_robots only hands out
-    # jobs with payload images (Hair Studio kontext) to agents that declare
-    # support, so a stale agent leaves them waiting instead of failing them.
-    status, resp = http_json(
+    status, response = http_json(
         "POST",
         f"{KR_BASE_URL}/api/art/queue/claim",
         {"agentId": AGENT_ID, "supportsInputImages": True},
@@ -159,18 +104,17 @@ def claim_job():
     )
     if status == 404:
         detail = ""
-        if isinstance(resp, dict):
-            detail = str(resp.get("message") or resp.get("error") or "")[:200]
-        log(f"claim got 404 — body: {detail or '(non-JSON body)'} — waiting")
+        if isinstance(response, dict):
+            detail = str(response.get("message") or response.get("error") or "")[:200]
+        log(f"claim got 404 - body: {detail or '(non-JSON body)'} - waiting")
         return None
-    if status != 200 or not resp or not resp.get("success"):
-        log(f"claim failed: HTTP {status} {resp and resp.get('message')}")
+    if status != 200 or not response or not response.get("success"):
+        log(f"claim failed: HTTP {status} {response and response.get('message')}")
         return None
-    return (resp.get("data") or {}).get("job")
+    return (response.get("data") or {}).get("job")
 
 
 def run_a1111(payload):
-    """Drive local A1111 txt2img. Returns base64 image."""
     body = {
         "prompt": payload.get("prompt") or payload.get("promptString") or "",
         "negative_prompt": payload.get("negative_prompt")
@@ -187,17 +131,15 @@ def run_a1111(payload):
     }
     if not body["prompt"]:
         raise ValueError("A1111 payload has no prompt/promptString")
-    status, resp = http_json(
+    status, response = http_json(
         "POST", f"{SD_URL}/sdapi/v1/txt2img", body, timeout=GEN_TIMEOUT
     )
-    if status != 200 or not resp or not resp.get("images"):
+    if status != 200 or not response or not response.get("images"):
         raise RuntimeError(f"A1111 returned HTTP {status}, no images")
-    return resp["images"][0]
+    return response["images"][0]
 
 
 def decode_image_entry(entry):
-    """Validate one payload images entry and return (name, raw_bytes).
-    imageData may be a raw base64 string or a data URL."""
     name = (entry or {}).get("name")
     data = (entry or {}).get("imageData") or ""
     if not name or not data:
@@ -208,10 +150,8 @@ def decode_image_entry(entry):
 
 
 def build_image_upload_request(name, raw, boundary):
-    """Build (body_bytes, content_type) for ComfyUI's /upload/image endpoint:
-    multipart form with the file as "image", type=input, overwrite=true."""
-    ext = os.path.splitext(name)[1].lstrip(".").lower() or "png"
-    mime = "image/jpeg" if ext in ("jpg", "jpeg") else f"image/{ext}"
+    extension = os.path.splitext(name)[1].lstrip(".").lower() or "png"
+    mime = "image/jpeg" if extension in ("jpg", "jpeg") else f"image/{extension}"
     parts = [
         (
             f"--{boundary}\r\n"
@@ -231,10 +171,6 @@ def build_image_upload_request(name, raw, boundary):
 
 
 def upload_comfy_input_images(payload):
-    """Upload payload["images"] entries ({name, imageData}) to ComfyUI's input
-    folder so LoadImage nodes can reference them by name. Image-to-image
-    workflows (e.g. Flux Kontext from kind_robots' /api/comfy/kontext/enqueue)
-    depend on this."""
     images = payload.get("images") or []
     if not isinstance(images, list):
         raise ValueError('COMFY payload "images" must be a list')
@@ -242,19 +178,15 @@ def upload_comfy_input_images(payload):
         name, raw = decode_image_entry(entry)
         boundary = "krrelay" + base64.b16encode(os.urandom(12)).decode().lower()
         body, content_type = build_image_upload_request(name, raw, boundary)
-
-        req = urllib.request.Request(
+        request = urllib.request.Request(
             f"{COMFY_URL}/upload/image", data=body, method="POST"
         )
-        req.add_header("Content-Type", content_type)
-        with urllib.request.urlopen(req, timeout=120) as resp:
-            uploaded = json.loads(resp.read().decode() or "null")
+        request.add_header("Content-Type", content_type)
+        with urllib.request.urlopen(request, timeout=120) as response:
+            uploaded = json.loads(response.read().decode() or "null")
         if not uploaded or not uploaded.get("name"):
             raise RuntimeError(f"ComfyUI input upload failed for {name}")
         log(f"uploaded input image {uploaded['name']}")
-
-
-VIDEO_EXTENSIONS = (".mp4", ".webm", ".mov", ".mkv", ".gif")
 
 
 def is_video_filename(filename):
@@ -262,19 +194,10 @@ def is_video_filename(filename):
 
 
 def file_extension(filename):
-    """Lowercase, dot-less extension of a Comfy output filename ("" if none)."""
     return os.path.splitext(filename or "")[1].lstrip(".").lower()
 
 
 def find_output_file(value, want_video):
-    """Recursively locate the first Comfy history output file descriptor.
-
-    Comfy nests output files under per-node dicts whose exact key varies by
-    save node (SaveImage → "images", SaveVideo → "images"/"gifs"/"video"
-    depending on the build), so scan structurally for any dict carrying a
-    "filename". When want_video is True match video files (SaveVideo); else
-    match stills. Returns {filename, subfolder, type} or None. Mirrors the
-    getFirstVideoFile logic in kind_robots' ltx/text2Video route."""
     if not value:
         return None
     if isinstance(value, list):
@@ -286,8 +209,7 @@ def find_output_file(value, want_video):
     if isinstance(value, dict):
         filename = value.get("filename")
         if isinstance(filename, str) and filename:
-            is_video = is_video_filename(filename)
-            if is_video == bool(want_video):
+            if is_video_filename(filename) == bool(want_video):
                 return {
                     "filename": filename,
                     "subfolder": value.get("subfolder", "") or "",
@@ -301,7 +223,6 @@ def find_output_file(value, want_video):
 
 
 def download_comfy_file(file_meta):
-    """Fetch a Comfy output file (image or video) as base64."""
     from urllib.parse import urlencode
 
     query = urlencode(
@@ -311,67 +232,58 @@ def download_comfy_file(file_meta):
             "type": file_meta.get("type", "output"),
         }
     )
-    req = urllib.request.Request(f"{COMFY_URL}/view?{query}")
-    with urllib.request.urlopen(req, timeout=180) as resp:
-        return base64.b64encode(resp.read()).decode()
+    request = urllib.request.Request(f"{COMFY_URL}/view?{query}")
+    with urllib.request.urlopen(request, timeout=180) as response:
+        return base64.b64encode(response.read()).decode()
 
 
 def extract_comfy_output(outputs, want_video):
-    """Turn a history entry's outputs into a {data_b64, file_type, is_video}
-    result, or None if the wanted output isn't ready yet."""
     file_meta = find_output_file(outputs, want_video)
     if not file_meta:
         return None
-    ext = file_extension(file_meta["filename"])
+    extension = file_extension(file_meta["filename"])
     return {
         "data_b64": download_comfy_file(file_meta),
-        # SaveVideo defaults to mp4; SaveImage to png. Fall back accordingly so
-        # save-generated always gets a sane fileType.
-        "file_type": ext or ("mp4" if want_video else "png"),
+        "file_type": extension or ("mp4" if want_video else "png"),
         "is_video": bool(want_video),
     }
 
 
 def run_comfy(payload):
-    """Submit a ComfyUI workflow, poll history, download the first output file.
-
-    Returns {data_b64, file_type, is_video}. Image jobs pull the first
-    SaveImage still; jobs marked "media": "video" pull the SaveVideo clip."""
     workflow = payload.get("workflow")
     if not isinstance(workflow, dict) or not workflow:
         raise ValueError('COMFY payload needs a "workflow" object (API format)')
 
     upload_comfy_input_images(payload)
-
     want_video = str(payload.get("media") or "").strip().lower() == "video"
 
     try:
-        status, resp = http_json(
-            "POST", f"{COMFY_URL}/prompt", {"prompt": workflow, "client_id": AGENT_ID}
+        status, response = http_json(
+            "POST",
+            f"{COMFY_URL}/prompt",
+            {"prompt": workflow, "client_id": AGENT_ID},
         )
-    except Exception as e:  # noqa: BLE001 — turn opaque socket errors into a clue
-        # A bare "timed out"/"connection refused" here is the #1 stall: ComfyUI
-        # isn't responding at COMFY_URL. Name the URL + likely cause so it shows
-        # up actionably in the FAILED job's error on the dashboard.
+    except Exception as error:  # noqa: BLE001 - add actionable context
         raise RuntimeError(
-            f"ComfyUI POST /prompt failed at {COMFY_URL} ({e}). "
+            f"ComfyUI POST /prompt failed at {COMFY_URL} ({error}). "
             "Is ComfyUI running and responsive on that port? "
             f"Try opening {COMFY_URL}/system_stats."
-        ) from e
-    if status != 200 or not resp or not resp.get("prompt_id"):
+        ) from error
+
+    if status != 200 or not response or not response.get("prompt_id"):
         raise RuntimeError(
             f"ComfyUI /prompt returned HTTP {status} at {COMFY_URL}: "
-            f"{resp and resp.get('node_errors')}"
+            f"{response and response.get('node_errors')}"
         )
-    prompt_id = resp["prompt_id"]
 
+    prompt_id = response["prompt_id"]
     deadline = time.time() + GEN_TIMEOUT
     while time.time() < deadline:
         time.sleep(2)
-        status, hist = http_json("GET", f"{COMFY_URL}/history/{prompt_id}")
-        if status != 200 or not hist:
+        status, history = http_json("GET", f"{COMFY_URL}/history/{prompt_id}")
+        if status != 200 or not history:
             continue
-        entry = hist.get(prompt_id)
+        entry = history.get(prompt_id)
         if not entry:
             continue
         result = extract_comfy_output(entry.get("outputs") or {}, want_video)
@@ -380,15 +292,12 @@ def run_comfy(payload):
         comfy_status = (entry.get("status") or {}).get("status_str")
         if comfy_status == "error":
             raise RuntimeError("ComfyUI reported a workflow error")
+
     kind = "video" if want_video else "image"
     raise RuntimeError(f"ComfyUI {kind} job timed out after {GEN_TIMEOUT}s")
 
 
 def upload_result(job, media):
-    """Upload a rendered result (media = {data_b64, file_type, is_video}) to
-    kind_robots. For video jobs the fileType tells save-generated to store the
-    clip as mp4/webm so the front-end plays it instead of treating it as a
-    still."""
     payload = job.get("payload") or {}
     body = {
         "imageBase64": media["data_b64"],
@@ -403,46 +312,35 @@ def upload_result(job, media):
         "designer": f"relay:{AGENT_ID}",
         "userId": KR_RELAY_USER_ID,
     }
-    status, resp = http_json(
+    status, response = http_json(
         "POST",
         f"{KR_BASE_URL}/api/art/save-generated",
         body,
         bearer=KR_RELAY_TOKEN,
         timeout=180,
     )
-    if status != 201 or not resp or not resp.get("success"):
+    if status != 201 or not response or not response.get("success"):
         raise RuntimeError(
-            f"save-generated failed: HTTP {status} {resp and resp.get('message')}"
+            f"save-generated failed: HTTP {status} "
+            f"{response and response.get('message')}"
         )
-    return (resp.get("data") or {}).get("id")
+    return (response.get("data") or {}).get("id")
 
 
 def encode_webp(raw):
-    """Re-encode raw image bytes (engines emit PNG) to WebP. Returns
-    (bytes, ext). Uses Pillow when available; if Pillow isn't installed or the
-    decode fails, falls back to the original bytes as .png so the relay still
-    works stdlib-only. WebP keeps the site's images small and consistent."""
     try:
         from PIL import Image  # optional dependency
 
-        with Image.open(io.BytesIO(raw)) as im:
-            buf = io.BytesIO()
-            # method=6 = best compression; quality 90 is visually lossless-ish.
-            im.save(buf, format="WEBP", quality=90, method=6)
-            return buf.getvalue(), "webp"
-    except Exception as e:  # noqa: BLE001 — Pillow missing or undecodable
-        log(f"webp encode skipped ({e}); keeping png")
+        with Image.open(io.BytesIO(raw)) as image:
+            buffer = io.BytesIO()
+            image.save(buffer, format="WEBP", quality=90, method=6)
+            return buffer.getvalue(), "webp"
+    except Exception as error:  # noqa: BLE001 - Pillow missing or bad bytes
+        log(f"webp encode skipped ({error}); keeping png")
         return raw, "png"
 
 
 def write_local_copy(job, art_image_id, media):
-    """Local fast path: engines, kind_robots, and conductor share a drive, so
-    drop the finished file straight into the local checkout's folder
-    collection (a folder IS a collection). Stills are re-encoded to WebP (see
-    encode_webp) so we stop minting new PNGs; video clips are written through
-    untouched with their real extension. No-op unless KR_LOCAL_IMAGES_DIR is
-    set. Failures here never fail the job - the DB record is the source of
-    truth; this is a convenience copy awaiting commit."""
     if not KR_LOCAL_IMAGES_DIR:
         return
     try:
@@ -450,25 +348,20 @@ def write_local_copy(job, art_image_id, media):
         collection = str(payload.get("collection") or "sdxl").strip().lower()
         if not collection.replace("-", "").replace("_", "").isalnum():
             collection = "sdxl"
-        # Normalize to forward slashes throughout. os.path.join on Windows
-        # emits backslashes, which mixed with a forward-slash KR_LOCAL_IMAGES_DIR
-        # produced ugly "D:/code/kind_robots/public/images\comfy\comfy-1.png".
-        # Forward slashes are valid on Windows too, so keep one style everywhere.
         base = KR_LOCAL_IMAGES_DIR.replace("\\", "/").rstrip("/")
         folder = f"{base}/{collection}"
         os.makedirs(folder, exist_ok=True)
         raw = base64.b64decode(media["data_b64"])
         if media.get("is_video"):
-            # Never run video bytes through the WebP encoder — keep the clip.
-            data, ext = raw, media.get("file_type") or "mp4"
+            data, extension = raw, media.get("file_type") or "mp4"
         else:
-            data, ext = encode_webp(raw)
-        file_path = f"{folder}/{collection}-{art_image_id}.{ext}"
-        with open(file_path, "wb") as f:
-            f.write(data)
+            data, extension = encode_webp(raw)
+        file_path = f"{folder}/{collection}-{art_image_id}.{extension}"
+        with open(file_path, "wb") as output:
+            output.write(data)
         log(f"local copy: {file_path}")
-    except Exception as e:  # noqa: BLE001
-        log(f"local copy failed (job still DONE): {e}")
+    except Exception as error:  # noqa: BLE001 - DB result remains authoritative
+        log(f"local copy failed (job still DONE): {error}")
 
 
 def complete_job(job_id, success, art_image_id=None, error=None):
@@ -477,14 +370,18 @@ def complete_job(job_id, success, art_image_id=None, error=None):
         body["artImageId"] = art_image_id
     if error:
         body["error"] = str(error)[:4000]
-    status, resp = http_json(
+    status, response = http_json(
         "POST",
         f"{KR_BASE_URL}/api/art/queue/{job_id}/complete",
         body,
         bearer=KR_RELAY_TOKEN,
     )
-    if status != 200:
-        log(f"complete({job_id}) failed: HTTP {status} {resp and resp.get('message')}")
+    if status != 200 or not response or not response.get("success"):
+        raise RuntimeError(
+            f"complete({job_id}) failed: HTTP {status} "
+            f"{response and response.get('message')}"
+        )
+    return (response.get("data") or {}).get("job") or {}
 
 
 def process(job):
@@ -498,20 +395,35 @@ def process(job):
     if engine == "COMFY":
         media = run_comfy(payload)
     else:
-        # A1111 always returns a still PNG.
-        media = {"data_b64": run_a1111(payload), "file_type": "png", "is_video": False}
-    art_image_id = upload_result(job, media)
-    if not art_image_id:
+        media = {
+            "data_b64": run_a1111(payload),
+            "file_type": "png",
+            "is_video": False,
+        }
+
+    staged_art_image_id = upload_result(job, media)
+    if not staged_art_image_id:
         raise RuntimeError("upload returned no ArtImage id")
-    complete_job(job_id, True, art_image_id=art_image_id)
-    write_local_copy(job, art_image_id, media)
+
+    completed_job = complete_job(
+        job_id, True, art_image_id=staged_art_image_id
+    )
+    final_art_image_id = completed_job.get("artImageId") or staged_art_image_id
+
+    if final_art_image_id != staged_art_image_id:
+        log(
+            f"job {job_id}: staged ArtImage {staged_art_image_id} finalized "
+            f"as canonical ArtImage {final_art_image_id}"
+        )
+
+    write_local_copy(job, final_art_image_id, media)
     kind = "video" if media.get("is_video") else "image"
-    log(f"job {job_id}: DONE ({kind} ArtImage {art_image_id})")
+    log(f"job {job_id}: DONE ({kind} ArtImage {final_art_image_id})")
 
 
 def main():
     if not KR_RELAY_TOKEN or not KR_RELAY_USER_ID:
-        log("KR_RELAY_TOKEN and KR_RELAY_USER_ID are required — exiting")
+        log("KR_RELAY_TOKEN and KR_RELAY_USER_ID are required - exiting")
         sys.exit(1)
 
     log(f"agent {AGENT_ID} polling {KR_BASE_URL} every {POLL_SECONDS}s")
@@ -519,23 +431,24 @@ def main():
     while True:
         job = None
         try:
-            # Report engine health on its own cadence (independent of the claim
-            # loop) so the dashboard sees ComfyUI/SD up/down even when idle.
-            if HEARTBEAT_SECONDS > 0 and time.time() - last_heartbeat >= HEARTBEAT_SECONDS:
+            if (
+                HEARTBEAT_SECONDS > 0
+                and time.time() - last_heartbeat >= HEARTBEAT_SECONDS
+            ):
                 send_heartbeats()
                 last_heartbeat = time.time()
 
             job = claim_job()
             if job:
                 process(job)
-                continue  # drain the queue before idling
+                continue
         except KeyboardInterrupt:
             raise
-        except Exception as e:  # noqa: BLE001 — relay must survive anything
-            log(f"error: {e}")
+        except Exception as error:  # noqa: BLE001 - relay must survive failures
+            log(f"error: {error}")
             if job:
                 try:
-                    complete_job(job["id"], False, error=e)
+                    complete_job(job["id"], False, error=error)
                 except Exception as report_error:  # noqa: BLE001
                     log(f"could not report failure: {report_error}")
         time.sleep(POLL_SECONDS)
