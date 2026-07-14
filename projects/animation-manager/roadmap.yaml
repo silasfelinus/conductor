@@ -32,7 +32,7 @@ milestones:
   - id: m2
     title: "Single-source animation registry and first shipped wallpaper"
     weight: 25
-    status: in-progress
+    status: done
   - id: m3
     title: "Attempt museum and Reaction-driven quality history"
     weight: 25
@@ -75,18 +75,20 @@ tasks:
   - id: t-003
     milestone: m2
     title: "Centralize animation registration and ship Bioluminescent Tide"
-    status: review
+    status: done
     owner: worker
-    updated: "2026-07-13T22:57:00-07:00"
+    updated: "2026-07-13T23:03:00-07:00"
     passes: 0
     stakes: reversible
     note: >
-      kind_robots PR #237 centralizes metadata in stores/animationCatalog.ts, derives effect
-      ids from that catalog, resolves Nuxt lazy components by filename convention in both
-      Screen FX and startup-animation, and adds components/screenfx/bioluminescent-tide.vue.
-      The effect is passive, generationSafe, eligible for random startup selection, observes
-      cursor wake and click ripples without capturing input, respects reduced motion, caps DPR,
-      and cleans up listeners/RAF/ResizeObserver. Set done after checks pass and PR merges.
+      Shipped through kind_robots PR #237, squash commit
+      afb88af80c2ae3816c6698830e13169e1b805ebf. stores/animationCatalog.ts is now the
+      single metadata registry; effect ids are derived from it and Nuxt lazy components are
+      resolved by filename convention in Screen FX and startup-animation. Added
+      components/screenfx/bioluminescent-tide.vue: a passive, generationSafe wallpaper eligible
+      for random startup selection, with cursor wake and click ripples that do not capture input,
+      reduced-motion behavior, capped DPR, ResizeObserver sizing, and full listener/RAF cleanup.
+      TypeScript Type Check and Contract Tests passed before merge.
 
   - id: t-004
     milestone: m3
