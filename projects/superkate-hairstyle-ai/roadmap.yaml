@@ -339,3 +339,45 @@ tasks:
       admin-only readout (e.g. on /stylist or an /admin surface) showing each
       known relay agent's last claim attempt, declared capabilities, and agent
       version, so a version-gap stall is diagnosable from the browser.
+
+  - id: t-018
+    milestone: m3
+    title: "Hair-mask SOURCE for true hair-only restyling (auto-seg or brush)"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: "2026-07-14T00:00:00Z"
+    note: >
+      From the 2026-07-14 image-gen quality review (IMAGE-GEN-QUALITY-REVIEW.md).
+      The Kontext graph now ACCEPTS a hair mask (workflow.ts maskName ->
+      LoadImageMask + SetLatentNoiseMask; enqueue accepts maskData; the relay
+      already uploads it as a second input image), so only the masked region is
+      repainted. What's missing is something that PRODUCES the mask: there is no
+      hair-segmentation node on the ComfyUI box and no client-side seg lib. Pick
+      one: (a) install a hair/person segmentation custom node on the box and
+      generate the mask in the workflow, or (b) an in-browser hair-segmentation
+      (MediaPipe selfie/hair) or a quick brush-the-hair step in stylist-restyle
+      that fills maskData. Until this lands, the shipped identity fix is the
+      originalWeight (preserve-original) slider — full-frame img2img, not
+      hair-only. This is the concrete "adaptive masking" Silas asked for.
+
+  - id: t-019
+    milestone: m3
+    title: "Live tuning pass for the new stylist controls on the studio box"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-014
+    updated: "2026-07-14T00:00:00Z"
+    note: >
+      From the 2026-07-14 review. The preserve-original weight, guidance, steps,
+      and negative-prompt controls shipped (kind_robots this branch) but were
+      authored without a live Comfy/Kontext box to verify against. Do one real
+      /stylist run on the deployed studio box and dial the defaults: preserve
+      strength currently defaults to 0.3 (leaning toward "keep it them" per
+      Silas's over-modification complaint) — confirm hair still changes enough,
+      and tune the CFGGuider cfg + IDENTITY_NEGATIVE wording so the extra-protect
+      toggle helps identity without fighting the requested restyle. Also confirm
+      the source-aspect-ratio output (no more forced 1024 square) looks right.

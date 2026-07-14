@@ -26,28 +26,44 @@ import yaml
 
 sys.path.insert(0, str(Path(__file__).parent))
 import consume_art_queue as consumer  # noqa: E402
+import art_quality  # noqa: E402
 
 ROOT = consumer.ROOT
 SET_DIR = ROOT / "projects" / "coloring-book" / "sets" / "monster-recast"
 QUEUE_FILE = SET_DIR / "unapproved-art-jobs.yaml"
 
-COLOR_PREFIX = (
-    "Finished Monster Recast colored graphic master, portrait 3:4. "
-    "Thick confident black contours, flat bounded color, hard-edged value shapes, "
-    "high organized detail, strong silhouette, serious theatrical camp, physically "
-    "coherent anatomy and contact points, one independent image only. No readable "
-    "text, logo, watermark, collage, contact sheet, comic panels, soft gradients, "
-    "airbrush haze, or painterly blur. "
+# COLOR is applied as a SUFFIX (subject first, style after) so Flux weights the
+# distinctive character/scene ahead of the house look — front-loading the style
+# block was collapsing concepts into generic posters. See
+# IMAGE-GEN-QUALITY-REVIEW.md 2a.
+COLOR_SUFFIX = (
+    " Render this as a finished Monster Recast colored graphic master, portrait 3:4: "
+    "thick confident black contours, flat bounded color, hard-edged value shapes, high "
+    "organized detail, strong silhouette, serious theatrical camp, physically coherent "
+    "anatomy and contact points. One full-bleed image filling the frame edge to edge, no "
+    "border, no framing panel, no comic panels, no collage, no contact sheet, no soft "
+    "gradients or airbrush haze, and no readable text, logo, or watermark."
 )
 
-BW_PREFIX = (
-    "Monster Recast teen-and-adult coloring-book line art, portrait 3:4. "
-    "Pure white background and clean black lines, bold outer contour, varied medium "
-    "interior line weight, closed colorable regions, high organized detail on face, "
-    "hands, signature prop, creature texture and immediate costume. No color, gray, "
-    "shading, halftone, dense crosshatching, text, logo, watermark, collage, contact "
-    "sheet or panels. Preserve the same decisive staging, body type, anatomy, "
-    "perspective, horror premise and theatrical-camp visual joke. "
+# BW is the one variant where the MEDIUM defines the deliverable, so it leads.
+# The scene is described as subject matter to depict in ink; then the no-color
+# rule is restated after the (color-laden) scene words. Negatives are inert on
+# the Flux path (cfg=1), so every constraint here is stated positively. A
+# colorfulness guard in the live path (art_quality.assess) rejects any BW render
+# that still comes back in color — the exact mr-010/mr-013 failure.
+BW_LEAD = (
+    "Black-and-white ink line art for a teen-and-adult coloring book: pure white "
+    "background, clean bold black outlines and varied medium interior line weight only, "
+    "absolutely no color and no gray shading. Depict this subject entirely as uncolored "
+    "black-outline line art — "
+)
+BW_TAIL = (
+    " Draw every element as closed black-outline regions on a white page with NO color "
+    "fills, NO shading, NO halftone, and NO dense crosshatching. Preserve the pose, body "
+    "type, anatomy, perspective, costume detail, horror premise and theatrical-camp joke, "
+    "with high detail on the face, hands, signature prop and creature texture. Fill the "
+    "frame edge to edge — no border, no framing panel, no comic panels, no collage, no "
+    "contact sheet, and no readable text, logo, or watermark."
 )
 
 CONCEPT_START = re.compile(r'^(\s*)-\s+id:\s*["\']?(mr-\d+)["\']?\s*$')
@@ -127,7 +143,7 @@ def build_entries() -> list[dict[str, Any]]:
                         "projects/coloring-book/sets/monster-recast/generated/color/"
                         f"{concept_id}-{slug}.webp"
                     ),
-                    "prompt": COLOR_PREFIX + scene_prompt,
+                    "prompt": scene_prompt + COLOR_SUFFIX,
                 }
             )
 
@@ -141,7 +157,7 @@ def build_entries() -> list[dict[str, Any]]:
                         "projects/coloring-book/sets/monster-recast/generated/bw/"
                         f"{concept_id}-{slug}.webp"
                     ),
-                    "prompt": BW_PREFIX + scene_prompt,
+                    "prompt": BW_LEAD + scene_prompt + BW_TAIL,
                 }
             )
 
@@ -282,6 +298,27 @@ def main() -> int:
             job = consumer.wait_for_job(job_id, args.timeout)
             image_b64 = consumer.fetch_image_b64(job["artImageId"])
             destination = save_result(entry, image_b64)
+
+            # Objective quality guard: a "bw" render that came back colored, or a
+            # blank/degenerate frame, is NOT a real deliverable. Reject it (move
+            # aside, leave the variant pending) instead of marking it done and
+            # letting it pollute the set — the mr-010/mr-013 failure mode.
+            ok, reasons, _info = art_quality.assess_file(destination, str(entry["variant"]))
+            if ok is False:
+                rejected = destination.parent / "rejected" / destination.name
+                rejected.parent.mkdir(parents=True, exist_ok=True)
+                destination.replace(rejected)
+                failures += 1
+                print(
+                    f"  REJECTED {entry['concept_id']} {entry['variant']}: "
+                    f"{'; '.join(reasons)} -> {rejected.relative_to(ROOT)} "
+                    "(left pending for re-render)",
+                    file=sys.stderr,
+                )
+                continue
+            if ok is None:
+                print(f"    NOTE: {reasons[0]} — cannot verify this render")
+
             completed.append(entry)
             print(
                 f"  DONE {entry['concept_id']} {entry['variant']} -> "
