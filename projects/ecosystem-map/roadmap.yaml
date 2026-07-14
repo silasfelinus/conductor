@@ -30,15 +30,18 @@ tasks:
   - id: t-001
     milestone: m1
     title: "Write the ecosystem design brief"
-    status: ready
-    owner: null
+    status: done
+    owner: worker
+    updated: '2026-07-14T14:30:00Z'
     passes: 0
     stakes: reversible
     note: >
-      Produce DESIGN-BRIEF.md for ecosystem-map. Cover the shared resource graph across
-      Conductor projects, Kind Robots Dreams, Bots, ArtCollections, narrator topics,
-      threads, menus, generated images, and project UI. Identify what should be shared,
-      what should remain project-owned, and where duplicate systems are likely forming.
+      Roadmap/reality drift found and corrected: DESIGN-BRIEF.md already existed in full
+      (canonical ownership table, project bot parity, visual asset parity, image approval
+      gate, duplication risks, first deliverables, non-goals) but this task was still
+      marked ready. Verified the document covers the full scope asked for — the shared
+      resource graph across Conductor projects, Dreams, Bots, ArtCollections, narrator
+      topics/threads, menus, generated images, and project UI — and flipped to done.
 
   - id: t-002
     milestone: m1
@@ -61,15 +64,23 @@ tasks:
   - id: t-003
     milestone: m1
     title: "Inventory project visual asset coverage"
-    status: ready
-    owner: null
+    status: done
+    owner: worker
+    updated: '2026-07-14T14:30:00Z'
     passes: 0
     stakes: reversible
     note: >
-      Compare conductor project slugs, project Dreams, ArtCollections, icon/card/hero
-      prompts, inspiration images, mock screenshot concepts, and title-image needs.
-      Produce a matrix showing missing assets and the canonical destination path for
-      each generated file. Do not generate image binaries.
+      Added projects/ecosystem-map/ASSET-COVERAGE-MATRIX.md: a static-repo-verifiable
+      audit of all 40 projects' icon/card/hero coverage (present vs queued in
+      art-prompts.yaml vs missing-and-unqueued), ArtCollection inspiration image counts,
+      and mock-screenshot need (sourced from FRONTEND-SURFACE-MAP.md's Class column where
+      audited). Found 6 active projects with no identity images and nothing queued
+      (animation-manager, kindrobots-unraid, model-builder, mural-design, newsfeed,
+      davinci-hero), 7 projects already queued in art-prompts.yaml pending only a
+      generation pass, and 23 of 34 non-retired projects with zero inspiration images.
+      Project Dreams/liveUrl and bot avatar/portrait images are explicitly out of scope
+      (DB-only data; bot images belong to t-004) rather than guessed. Does not generate
+      or touch any image binaries, per DESIGN-BRIEF.md's non-goals.
 
   - id: t-004
     milestone: m1
