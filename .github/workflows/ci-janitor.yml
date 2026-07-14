@@ -1,0 +1,33 @@
+name: CI Janitor
+
+on:
+  schedule:
+    - cron: '17 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  PYTHONUNBUFFERED: '1'
+
+jobs:
+  route-red-ci:
+    name: Route red CI to Worker Todo
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Check critical workflows
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          KR_API_TOKEN: ${{ secrets.KR_API_TOKEN }}
+        run: python scripts/ci_janitor.py
