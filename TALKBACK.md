@@ -2371,3 +2371,46 @@ t-026's own recurrence count keeps climbing but is otherwise unchanged.
 sweeps: before logging another "still stranded" recurrence, run a
 `search_pull_requests` for the task id/title across the target repo —
 it's a 5-second check that would have caught this 7 recurrences earlier.
+
+## 2026-07-14 02:15 | Reviewer → Silas | kind-robots/t-015 | security-flag
+
+**Subject:** kind-robots.vercel.app production is down/stale — every Vercel
+deploy has failed to build since ~2026-07-14 01:44 UTC (P1000 DB auth
+error), so PR #222's connection-pool fix never actually got verified live.
+
+**Detail:**
+- After merging kind_robots PR #222 (the CI fix from earlier this cycle),
+  I watched CI to confirm Cypress went green. It didn't — but not because
+  of my change. `mcp__Vercel__list_deployments` on `prj_x6HB2IPpQbvqNqiYVgu3IibJ6FZf`
+  shows every `target: production` deployment since commit `d340c86d`
+  (PR #221 merge, 2026-07-14T01:44 UTC) is `state: ERROR`. The last
+  successful production deploy was `517a06e4` ("Trust configured ProxySQL
+  CA"), ~2026-07-14T01:10 UTC.
+- Pulled build logs (`get_deployment_build_logs`, errorsOnly) for two
+  different failing deployments (d340c86d and my own e2caf03d) — byte-for-
+  byte identical failure, both during `npm run vercel-build`:
+  `Error: P1000: Authentication failed against database server, the
+  provided database credentials for (not available) are not valid.`
+  This is `prisma migrate deploy` failing at build time on a DB credential/
+  auth problem, not application code — my TS/pool fixes never even got a
+  chance to run against production, since the build fails before Cypress's
+  "wait for deploy to go live" step ever sees a new commit.
+- I do not have Vercel env var read/write access via the tools available to
+  this session (only deployment/build-log/project-list read tools), and
+  touching Vercel secrets/env vars is outside Reviewer authority regardless
+  (AGENTS.md hard boundary: DNS/secrets/billing/deploy). Filed as a hard
+  `needs-human` task, `kind-robots/t-015`, with full repro detail (exact
+  error, deployment IDs, timing window) so Silas doesn't have to
+  re-diagnose from scratch.
+- Timing (between 517a06e4's last-good build and d340c86d's first-bad one,
+  roughly 2026-07-13 18:00-18:11 -0700 wall clock) lines up with the
+  ProxySQL-trust / MariaDB-pooling work merged earlier that day — plausibly
+  related to whatever changed in the DB credential/connection setup Vercel's
+  build step relies on, but I can't confirm without env var access.
+
+**Suggested action:** Silas needs to check/restore the Vercel project's
+`DATABASE_URL` (or related DB credential env var) and redeploy. Once
+production is live again, re-run kind_robots' Cypress Tests workflow to
+confirm PR #222's connection-pool fix holds under real traffic — it's
+merged and type-checks clean locally, but has zero live-CI confirmation
+because of this outage.
