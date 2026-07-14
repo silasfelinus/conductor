@@ -796,11 +796,11 @@ tasks:
   - id: t-038
     milestone: m2
     title: Reconcile CONTROL.md's stated priority band with priority.yaml's actual order
-    status: ready
-    owner: null
+    status: claimed
+    owner: reviewer
     passes: 0
     stakes: reversible
-    updated: "2026-07-14T13:00:00Z"
+    updated: '2026-07-14T16:49:52Z'
     note: >
       Found by scripts/audit_roadmaps.py (CONTROL_PRIORITY_DRIFT, error severity):
       CONTROL.md's "Priority order this week" line lists challenge-center →
@@ -823,6 +823,8 @@ tasks:
       just a judgment call on which document reflects true intent. Re-run
       `python scripts/audit_roadmaps.py` after to confirm CONTROL_PRIORITY_DRIFT
       clears.
+    claimed_by: reviewer-great-goldberg-20260714T164946Z
+    claimed_at: '2026-07-14T16:49:52Z'
   - id: t-039
     milestone: m2
     title: Decide whether to retire animation-studio now that animation-manager supersedes it
