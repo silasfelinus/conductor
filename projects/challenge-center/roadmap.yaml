@@ -257,7 +257,7 @@ tasks:
   - id: t-008
     milestone: m4
     title: Write scripts/challenge_submit.py in conductor
-    status: claimed
+    status: done
     depends_on: t-003
     owner: claude-burst
     passes: 0
@@ -270,11 +270,27 @@ tasks:
         4. POST to /api/challenges/<slug>/submissions with contender slug + output
         5. Print submission id and current leaderboard standing
       Reads KR_API_TOKEN and KR_BASE_URL from env. This becomes the bridge between conductor agent runs and the challenge system.
-    updated: '2026-07-14T08:11:14Z'
+
+      DONE (2026-07-14, single-session burst cycle): added scripts/challenge_submit.py per
+      spec above. GET /api/challenges/<slug>, print promptText only when --output is omitted
+      (prompt-only mode, so it pipes cleanly to an agent); accept the agent's answer via
+      --output <file>|-; POST /api/challenges/<slug>/submissions with contenderSlug (default
+      conductor-claude, matching kind_robots scripts/seed_contenders.ts)/variantKey/
+      outputText/promptUsed; print the created submission id and this contender's current
+      leaderboard rank via GET /api/challenges/<slug>/leaderboard. Verified request/response
+      shapes directly against kind_robots main (server/api/challenges/[slug].get.ts,
+      [slug]/submissions.post.ts, [slug]/leaderboard.get.ts, prisma/schema.prisma
+      Challenge/ChallengeSubmission models) rather than assuming from the task note alone.
+      14 unit tests added in tests/test_challenge_submit.py (mocked HTTP, no live token
+      needed): fetch/submit/leaderboard success and error paths (404, 409 duplicate, missing
+      KR_API_TOKEN), stdin/file/empty-output handling, --dry-run, and both CLI modes
+      end-to-end. Full suite (136 tests) and scripts/*.py syntax check both green. t-009
+      (portos submission script) unblocks via resolve_deps.py.
+    updated: '2026-07-14T08:13:00Z'
   - id: t-009
     milestone: m4
     title: Write challenge submission script in silasfelinus/portos
-    status: waiting
+    status: ready
     depends_on: t-008
     owner: null
     passes: 0
@@ -287,6 +303,7 @@ tasks:
         4. POST to /api/challenges/<slug>/submissions with contenderSlug "portos-agent" + output
         5. Return submission id
       Reads KR_API_TOKEN and KR_BASE_URL from env (same vars as conductor). Worker should look at silasfelinus/portos to understand its agent invocation pattern before writing this — don't assume it matches conductor's.
+    updated: '2026-07-14T08:13:00Z'
   - id: t-010
     milestone: m4
     title: 'Build auto-runner: dispatch active challenges to all registered agents'
@@ -363,7 +380,7 @@ tasks:
   - id: t-015
     milestone: m5
     title: 'Faceted leaderboards: rank by model, generator, and prompt strategy'
-    status: waiting
+    status: ready
     depends_on: t-007
     owner: null
     passes: 0
@@ -379,6 +396,7 @@ tasks:
           surface its promptUsed / randomSelections so the comparison teaches
           something
       Facet data comes from the t-002 Contender fields; grouping is a query-level change, not new schema. Keep the championship presentation — a generator facet is just a different weight class.
+    updated: '2026-07-14T08:13:00Z'
   - id: t-016
     milestone: m5
     title: Write docs/comparison-axes.md summarizing the five M5 comparison axes
@@ -449,3 +467,5 @@ tasks:
       Implementation guidance: a targeted source-span patcher is preferred. A round-trip YAML library is acceptable only if the byte-preservation tests above pass. Do not call yaml.safe_dump on authoritative roadmap or learning files.
 
       Definition of done: the full task-event test suite passes in CI; processing representative claim and done fixtures produces a minimal expected diff; both output files parse with yaml.safe_load; documentation explains the atomic retry behavior; and no unrelated roadmap text changes.
+
+      ADDENDUM (Claude, 2026-07-14, found while closing t-008): scripts/resolve_deps.py (main(), around the yaml.safe_dump call) has the identical defect — running it after t-008 closed turned a two-task status flip (t-009, t-015: waiting -> ready) into a 940-line diff of the same kind (escaped Unicode, flow-style reindentation, changed quoting) across the whole challenge-center roadmap. Worked around this cycle by reverting and reapplying the same edits with set_task_field.py (26-line diff) instead of running resolve_deps.py for real. In scope for this task: extend whatever surgical patcher t-020 builds to resolve_deps.py's dependency-unblock writes too, not just process_task_events.py's event-driven ones — both call the same unsafe dump-the-whole-file pattern and should share one safe write path.

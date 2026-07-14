@@ -725,3 +725,33 @@ tasks:
       (57), and dream-cycle (58) were created; the rest updated in place.
       The conductor -> kind_robots /api/projects bridge is confirmed live
       end-to-end.
+
+  - id: t-036
+    milestone: m2
+    title: Fix LEARNING.yaml's broken block-sequence indentation so it parses again
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: "2026-07-14T08:20:00Z"
+    note: >
+      Found while closing challenge-center/t-008 (2026-07-14): root LEARNING.yaml
+      fails yaml.safe_load entirely — "expected <block end>, but found '-'" at the
+      record starting "- date: 2026-07-12 / project: challenge-center / task:
+      t-004". Every record before that point is indented as "  - date: ..." (2
+      spaces, nested under the records: key); every record from that one onward
+      reverts to "- date: ..." (0 indent, flush with records:). Mixing the two
+      indent depths within one YAML block sequence is what breaks the parser —
+      earlier entries parse fine in isolation but the file as a whole does not.
+      This is a real, not cosmetic, bug: process_task_events.py's
+      append_learning() calls load_yaml() on this exact file before appending,
+      so any task-event done/blocked closure carrying a learning: payload has
+      been raising an exception (and failing the whole event, per the atomic
+      processing in t-020's future scope) since whichever merge introduced the
+      indent switch. build_learning_summary.py likely fails the same way.
+      Fix: pick one indent convention (0-indent "- date:" matches the majority
+      of later, more-recent entries and needs no reflow of most of the file)
+      and normalize every entry to it in one pass; verify with
+      yaml.safe_load and confirm scripts/build_learning_summary.py runs clean
+      afterward. Do not touch record content, only indentation — this is a
+      formatting-only fix on an append-only ledger.
