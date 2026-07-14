@@ -289,3 +289,12 @@ records:
   outcome: done
   failure_category: null
   lesson: "The CI check the PR needed to pass (TypeScript Type Check) was already red on kind_robots main before this cycle touched anything — confirmed by pulling main's own latest workflow run for the same head sha rather than assuming the new PR's red check was caused by this change. Fixing the actual (unrelated, one-line) null-check bug in artjob-manager.vue on the same branch was faster and lower-risk than opening a second PR and waiting on a second review/merge cycle to unblock this one. Also: reused two existing conventions instead of inventing new ones (normalizeRarity/normalizeRewardType precedent in server/api/rewards/index.ts for choice-field validation style; the modelBuilderFields.ts single-source-of-field-truth module from t-024, extended rather than duplicated) — worth checking sibling API routes for an existing normalizer before writing a new one whenever a task touches enum-like fields."
+- date: 2026-07-14
+  project: animation-manager
+  task: t-008
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "Writing 'the animation verification script' SPEC.md already named required checking cross-file consistency, not just the catalog file itself: narratorHelper.ts's narratorAnimationAliases map and animationPreferenceStore.ts's DEFAULT_PREFERENCES both duplicate catalog ids as string literals with no compiler-enforced link back to animationCatalog.ts, so they're exactly the kind of thing that goes stale silently. Also had to model Nuxt's real filename-to-component-name resolution (splits on hyphen, underscore, AND dot — components/screenfx/fireworks.effect.vue resolves the same as a hyphenated file would) rather than assuming a literal id.vue match, which a naive exists-check would have gotten wrong. Found but did not fix an unrelated stale id (bubble-effect in displayStore.ts's legacy pre-centralization EffectId type, no matching catalog entry) — filed as t-010 rather than expanding this PR's diff."
