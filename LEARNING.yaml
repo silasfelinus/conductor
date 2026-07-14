@@ -262,3 +262,12 @@ records:
   outcome: done
   failure_category: null
   lesson: "Two-sided cross-repo task (conductor PR #506 draining requests.yaml, kind_robots PR #245 the front-end request bridge) — the task note said 'set done when both PRs merge' and both merged independently (by Silas directly) within an hour of each other, ahead of the next Reviewer sweep even noticing. Closing agent should re-check both halves' merge state before flipping status rather than assuming the note's gate is still open; used set_task_field.py for the surgical status flip per t-008's standing lesson."
+- date: 2026-07-14
+  project: newsfeed
+  task: t-001
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "Burst-mode rotation picked the least-recently-touched active project by checking every task's `updated` timestamp across all roadmaps rather than defaulting to whatever had the most recent PR activity — newsfeed had zero timestamps on any task despite being priority: high. A real codebase audit (dedicated Explore subagent, not guesses) found two integration points already reserved (dashboardHelper.ts's wonder.newsfeed tab, content/newsfeed.md) that a blind implementation could have collided with or duplicated."

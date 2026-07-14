@@ -118,16 +118,88 @@ Keyword programming, source-level controls, richer ranking, custom political wei
 - Avoid schema changes for v1.
 - Treat any unavoidable shared-backend or database change as a separate proposal under Conductor boundaries.
 
-## Likely Kind Robots areas to audit
+## Audit findings — exact integration points (2026-07-14)
 
-The first Worker should identify the exact current paths rather than guessing, but the audit should cover:
+The homepage is **not** a `pages/index.vue` component. All routes render through
+`pages/[...slug].vue`, a catch-all that resolves `route.path` against Nuxt Content
+(`queryCollection('content').path(path).first()`) and renders
+`<ContentRenderer :value="activePage" />`. The routed homepage document is
+`content/index.md`, whose body currently embeds `:user-manager`
+(`components/user/user-manager.vue`), a tabbed shell whose default `dashboard` tab
+renders `components/user/user-dashboard.vue` — which directly embeds
+`user-panel.vue` (profile/settings form), avatar upload, theme picker, cache-clear,
+and gallery panels. **Settings genuinely live on the homepage today**, confirming
+the brief's premise.
 
-- the current user homepage/page component
-- the settings component and route ownership
-- navigation registration
-- user/display/page stores and persistence helpers
-- existing server utilities for outbound fetches and caching
-- existing card/list components that fit the feed visual language
+- **Homepage swap (t-003/t-006):** change `content/index.md`'s body from
+  `:user-manager` to a new `:newsfeed-page` (or lighter `:home-feed`) component.
+  Relocate `user-manager`'s dashboard tab so it's reachable only at the existing
+  `/dashboard` route (already registered under `dashboardConfigs.user`), not the
+  root — this "moves" settings without deleting any existing functionality.
+
+- **Settings store (t-003):** there is no dedicated settings store or `/settings`
+  route today. Settings are flat columns on the Prisma `User` model
+  (`prisma/schema.prisma:1440`, e.g. `showMature`, `customIcons`,
+  `preferredArtServerId`, `hiddenServerIds`, `vibes`, `blockList`, `smartBar`) read
+  and written through `stores/userStore.ts` via `server/api/users`. Do not invent a
+  generic key/value settings table — follow this same convention for any settings
+  that must move, and keep new feed preferences (below) on their own store rather
+  than folding them into `userStore`.
+
+- **Feed preferences persistence (t-004/t-007):** the repo has no Pinia-persistence
+  plugin. The standing convention (≥18 stores, e.g. `stores/navStore.ts:108`,
+  `stores/socialStore.ts`) is a hand-rolled SSR-safe pair —
+  `safeGetLocalStorage(key)` / `safeSetLocalStorage(key, value)` — for client-only
+  UI state. Use that for feed enable/order/keyword-filter preferences in v1 rather
+  than a database migration. Only reach for Prisma `User` columns + a new
+  `server/api/users` sub-route if preferences genuinely need to survive across
+  devices, and treat that as a separate, smaller proposal.
+
+- **Dashboard-tab registry — already reserved (t-012):** `stores/helpers/dashboardHelper.ts:1264-1277`
+  already has a `wonder.newsfeed` tab entry (`route: '/newsfeed'`, image
+  `public/images/dashboard-tabs/wonder/newsfeed.webp`). The image file does not
+  exist on disk yet — t-012 needs to generate it, not create a new registry entry.
+  `stores/helpers/tutorialCards.ts`'s `tutorialChannels` has no top-level `wonder`
+  key yet (only games/scenario/dream/character/reward/bot/art/sanctuary/builder/
+  home/mural/conductor) — t-012 must add a new `wonder` entry with a `newsfeed`
+  section, mirroring the shape of an existing `TutorialChannel`.
+
+- **Content stubs already exist:** `content/newsfeed.md` (routed `/newsfeed` page:
+  `channelKey: lab`, `dashboardKey: wonder`, `dashboardTab: newsfeed`, body
+  `:newsfeed-page`) and `content/channels/lab/newsfeed.md` (lab-channel tab
+  metadata). Build into these rather than creating parallel routes/content docs.
+
+- **Conductor pitch page is separate from the real feature:**
+  `components/conductor/newsfeed-page.vue` wraps
+  `components/conductor/project-front-page.vue` with a static
+  `ProjectFrontConfig` (`slug: 'newsfeed'`, `channelKey: 'wonder'`,
+  `tabKey: 'newsfeed'`) and optionally overlays a live `Project` DB row via
+  `useProjectStore().projectForSlug(slug)`. This is a status/roadmap pitch page —
+  its own `deliverables.next` list says `['Feed builder + item renderers',
+  'Homepage placement']`. Keep it as the pitch page (update `deliverables.done` as
+  milestones land) and build the real interactive feed as a distinct component
+  slotted into `project-front-page.vue`'s `#interactive` slot, or swap
+  `content/newsfeed.md`'s body to render the real feed component directly once
+  it's no longer just a pitch. Register any `Project` DB row through the existing
+  `channelKey`/`tabKey`/`liveUrl` columns (`prisma/schema.prisma:507-509`) rather
+  than inventing a new config surface.
+
+- **Server-side aggregation (t-005):** no caching layer exists anywhere in
+  `server/` today (zero use of `defineCachedEventHandler`/`defineCachedFunction`).
+  Model a new `server/api/newsfeed/index.get.ts` on the shape of
+  `server/api/conductor/prs.get.ts` (thin `defineEventHandler` + a shared fetch
+  helper in a new `server/utils/newsfeed.ts`, following
+  `server/utils/conductor-github.ts`'s pattern of a small typed fetch wrapper).
+  Introduce `defineCachedEventHandler` for TTL caching of aggregated results —
+  this repo has no precedent for it yet, so document the TTL choice in the PR.
+
+- **Feed card visual language (t-006):** fork `components/dreams/dream-card.vue`
+  (image-first card, title, badge row, gradient-overlay footer, hover elevation,
+  `showImage`/`compact`/`showMeta` props, and a multi-source image-fallback
+  chain) for a new `FeedCard.vue` — it already has the closest title/badge/
+  image/timestamp visual grammar a feed item needs, plus the fallback-image
+  handling that inconsistent RSS thumbnails will require. `chat-card.vue`
+  (timestamp/author pattern) and `image-card.vue` are secondary references.
 
 ## Non-goals for v1
 
