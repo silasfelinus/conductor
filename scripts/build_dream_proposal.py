@@ -17,21 +17,26 @@ shape) so the existing creation loop can pick it up and build it, and so Silas
 can steer it by editing the file's `## Notes from Silas` section — the
 comment/edit link the digest points at.
 
-Follows the house LLM pattern (scripts/curate_art.py, build_conductor_summary.py):
-raw urllib to the Anthropic Messages API, ANTHROPIC_API_KEY from the environment,
-schema-constrained JSON output. With no key (or --sample) it renders a built-in
-sample proposal instead of calling the API, so the digest/rendering path stays
-verifiable and the morning workflow soft-no-ops rather than erroring.
+THE AUTHOR IS THE SWEEPING LLM AGENT ITSELF (Silas, 2026-07-14): no API keys,
+no scripted model calls anywhere in this path. This script is only the
+validator/renderer/writer the agent hands its proposal to. The sweep duty:
 
-Env:
-  ANTHROPIC_API_KEY    required for real generation; without it, --sample only
-  DREAM_PROPOSAL_MODEL model id (default claude-opus-4-8)
+  1. python scripts/build_dream_proposal.py --check      # exit 1 = missing
+  2. python scripts/build_dream_proposal.py --brief      # the authoring spec
+  3. (the agent invents the starter dream and emits the JSON itself)
+  4. python scripts/build_dream_proposal.py --from-json proposal.json
+
+The write is guarded (no-op if the date already has a proposal), the JSON is
+validated (exact counts, one SKILL + one ITEM reward), and the slug is
+de-duplicated against the backlog + SHIPPED ledger. `--sample` writes a
+built-in example so the render/digest path stays verifiable in tests.
 
 Usage:
-  python scripts/build_dream_proposal.py                 # generate + write today's file
-  python scripts/build_dream_proposal.py --dry-run       # print markdown, don't write
-  python scripts/build_dream_proposal.py --sample --dry-run   # built-in sample, no API
-  python scripts/build_dream_proposal.py --theme "coastal noir"  # optional steer
+  python scripts/build_dream_proposal.py --check              # is today's written?
+  python scripts/build_dream_proposal.py --brief              # print the authoring brief
+  python scripts/build_dream_proposal.py --from-json p.json   # validate + write (or - for stdin)
+  python scripts/build_dream_proposal.py --from-json - --dry-run   # preview markdown
+  python scripts/build_dream_proposal.py --sample --dry-run   # built-in sample
 """
 
 from __future__ import annotations
@@ -40,11 +45,8 @@ import argparse
 import datetime
 import glob
 import json
-import os
 import re
 import sys
-import urllib.error
-import urllib.request
 from pathlib import Path
 from typing import Any, Optional
 
@@ -60,134 +62,92 @@ ROOT = Path(__file__).resolve().parents[1]
 BACKLOG = ROOT / "projects" / "dream-cycle" / "backlog"
 SHIPPED = ROOT / "projects" / "dream-cycle" / "SHIPPED.md"
 
-MODEL = os.environ.get("DREAM_PROPOSAL_MODEL", "claude-opus-4-8").strip()
-API_URL = "https://api.anthropic.com/v1/messages"
 REPO = "silasfelinus/conductor"
 DEFAULT_BRANCH = "main"
-RARITIES = ["COMMON", "UNCOMMON", "RARE", "EPIC", "LEGENDARY"]
 
-PROPOSAL_SCHEMA = {
-    "type": "object",
-    "properties": {
-        "title": {"type": "string"},
-        "slug": {"type": "string"},
-        "idea": {"type": "string"},
-        "vibe": {
-            "type": "object",
-            "properties": {
-                "title": {"type": "string"},
-                "line": {"type": "string"},
-            },
-            "required": ["title", "line"],
-            "additionalProperties": False,
-        },
-        "locations": {
-            "type": "array",
-            "minItems": 2,
-            "maxItems": 2,
-            "items": {
-                "type": "object",
-                "properties": {
-                    "title": {"type": "string"},
-                    "known_for": {"type": "string"},
-                    "local_rule": {"type": "string"},
-                    "best_scene": {"type": "string"},
-                    "art_direction": {"type": "string"},
-                },
-                "required": ["title", "known_for", "local_rule", "best_scene", "art_direction"],
-                "additionalProperties": False,
-            },
-        },
-        "characters": {
-            "type": "array",
-            "minItems": 3,
-            "maxItems": 3,
-            "items": {
-                "type": "object",
-                "properties": {
-                    "name": {"type": "string"},
-                    "role_drive": {"type": "string"},
-                    "carries": {"type": "string"},
-                    "complication": {"type": "string"},
-                    "look": {"type": "string"},
-                },
-                "required": ["name", "role_drive", "carries", "complication", "look"],
-                "additionalProperties": False,
-            },
-        },
-        "rewards": {
-            "type": "array",
-            "minItems": 2,
-            "maxItems": 2,
-            "items": {
-                "type": "object",
-                "properties": {
-                    "name": {"type": "string"},
-                    "reward_type": {"type": "string", "enum": ["SKILL", "ITEM"]},
-                    "rarity": {"type": "string", "enum": RARITIES},
-                    "grants": {"type": "string"},
-                    "best_used_when": {"type": "string"},
-                    "catch": {"type": "string"},
-                },
-                "required": ["name", "reward_type", "rarity", "grants", "best_used_when", "catch"],
-                "additionalProperties": False,
-            },
-        },
-        "scenarios": {
-            "type": "array",
-            "minItems": 1,
-            "maxItems": 2,
-            "items": {
-                "type": "object",
-                "properties": {
-                    "title": {"type": "string"},
-                    "setup": {"type": "string"},
-                },
-                "required": ["title", "setup"],
-                "additionalProperties": False,
-            },
-        },
-        "narrator": {
-            "type": "object",
-            "properties": {
-                "name": {"type": "string"},
-                "voice": {"type": "string"},
-                "personality": {"type": "string"},
-                "appears_as": {"type": "string"},
-                "best_for": {"type": "string"},
-                "expressions": {"type": "string"},
-                "topics": {"type": "array", "items": {"type": "string"}},
-            },
-            "required": ["name", "voice", "personality", "appears_as", "best_for", "expressions", "topics"],
-            "additionalProperties": False,
-        },
-    },
-    "required": ["title", "slug", "idea", "vibe", "locations", "characters", "rewards", "scenarios", "narrator"],
-    "additionalProperties": False,
-}
-
-RUBRIC = """\
-You are Conductor's dream author, inventing tomorrow's "starter dream" for the
+BRIEF = """\
+You are Conductor's dream author, inventing today's "starter dream" for the
 Kind Robots site — a warm, imaginative AI art + roleplay platform. Invent ONE
 self-consistent world: two connected places, a shared mood, a small cast, a
 host, and two fitting rewards. Aim for cozy wonder with an edge — specific,
 tactile, a little strange, never generic fantasy filler.
 
-Produce exactly:
-- title + slug (kebab-case, 2-4 words, unique — must not reuse an existing one listed below)
+Produce exactly (as a JSON object, then pass it to --from-json):
+- title + slug (kebab-case, 2-4 words, unique — must not reuse a slug listed below)
 - idea: 2-4 sentences on what this world is and why someone wants to spend time here
-- vibe: a GENRE dream (title + one line) that both locations share
-- locations: EXACTLY 2 places in this one world, each with known_for / local_rule /
-  best_scene / art_direction (a concrete visual brief a text-to-image model can render)
-- characters: EXACTLY 3 who inhabit it, each with role_drive / carries / complication / look
-- rewards: EXACTLY 2 that fit the world — one reward_type SKILL (an ability/technique)
-  and one reward_type ITEM (a tangible object). Give each a rarity and a real catch.
-- scenarios: 1-2 setups wiring the locations, vibe, and cast together
-- narrator: ONE bot who hosts this dream — name, voice, personality, appears_as, best_for,
-  an expression note (NEUTRAL + a few emotions), and 2-3 topic ideas
+- vibe: {title, line} — a GENRE dream that both locations share
+- locations: EXACTLY 2 places in this one world, each with title / known_for /
+  local_rule / best_scene / art_direction (a concrete visual brief a
+  text-to-image model can render)
+- characters: EXACTLY 3 who inhabit it, each with name / role_drive / carries /
+  complication / look
+- rewards: EXACTLY 2 that fit the world — one reward_type SKILL (an
+  ability/technique) and one reward_type ITEM (a tangible object). Each with
+  name / rarity (COMMON|UNCOMMON|RARE|EPIC|LEGENDARY) / grants /
+  best_used_when / catch.
+- scenarios: 1-2 of {title, setup} wiring the locations, vibe, and cast together
+- narrator: ONE bot who hosts this dream — name / voice / personality /
+  appears_as / best_for / expressions (NEUTRAL + a few emotions) /
+  topics (2-3 strings)
 
-Every element must belong to the SAME world and reinforce the vibe. Return ONLY
-the JSON object matching the schema."""
+Every element must belong to the SAME world and reinforce the vibe."""
+
+
+# Required shape for an agent-authored proposal (see BRIEF / SAMPLE_PROPOSAL).
+REQUIRED_COUNTS = {"locations": 2, "characters": 3, "rewards": 2}
+REQUIRED_FIELDS = {
+    "locations": ["title", "known_for", "local_rule", "best_scene", "art_direction"],
+    "characters": ["name", "role_drive", "carries", "complication", "look"],
+    "rewards": ["name", "reward_type", "rarity", "grants", "best_used_when", "catch"],
+    "scenarios": ["title", "setup"],
+}
+
+
+def validate_proposal(p: Any) -> list[str]:
+    """Light structural validation of an agent-authored proposal. Returns problems."""
+    problems: list[str] = []
+    if not isinstance(p, dict):
+        return ["proposal must be a JSON object"]
+    for key in ("title", "idea"):
+        if not str(p.get(key, "")).strip():
+            problems.append(f"missing {key}")
+    vibe = p.get("vibe")
+    if not (isinstance(vibe, dict) and str(vibe.get("title", "")).strip()
+            and str(vibe.get("line", "")).strip()):
+        problems.append("vibe must be an object with title + line")
+    for key, count in REQUIRED_COUNTS.items():
+        items = p.get(key)
+        if not (isinstance(items, list) and len(items) == count):
+            problems.append(f"{key} must be a list of exactly {count}")
+            continue
+        for i, item in enumerate(items):
+            for field in REQUIRED_FIELDS[key]:
+                if not (isinstance(item, dict) and str(item.get(field, "")).strip()):
+                    problems.append(f"{key}[{i}] missing {field}")
+    scenarios = p.get("scenarios")
+    if not (isinstance(scenarios, list) and 1 <= len(scenarios) <= 2):
+        problems.append("scenarios must be a list of 1-2")
+    else:
+        for i, sc in enumerate(scenarios):
+            for field in REQUIRED_FIELDS["scenarios"]:
+                if not (isinstance(sc, dict) and str(sc.get(field, "")).strip()):
+                    problems.append(f"scenarios[{i}] missing {field}")
+    nar = p.get("narrator")
+    if not isinstance(nar, dict):
+        problems.append("narrator must be an object")
+    else:
+        for field in ("name", "voice", "personality", "appears_as", "best_for", "expressions"):
+            if not str(nar.get(field, "")).strip():
+                problems.append(f"narrator missing {field}")
+        if not (isinstance(nar.get("topics"), list) and nar["topics"]):
+            problems.append("narrator.topics must be a non-empty list")
+    types = sorted(str(r.get("reward_type", "")).upper()
+                   for r in (p.get("rewards") or []) if isinstance(r, dict))
+    if types and types != ["ITEM", "SKILL"]:
+        # normalize() can repair two-of-a-kind, but flag anything else odd
+        if set(types) - {"SKILL", "ITEM"}:
+            problems.append("reward_type values must be SKILL or ITEM")
+    return problems
 
 SAMPLE_PROPOSAL: dict[str, Any] = {
     "title": "The Kelpwick Lantern Post",
@@ -308,39 +268,6 @@ def existing_slugs() -> set[str]:
     return slugs
 
 
-def call_llm(api_key: str, theme: str, avoid: set[str]) -> dict[str, Any]:
-    avoid_line = ", ".join(sorted(avoid)) or "(none yet)"
-    steer = f"\n\nOptional steer for today's world: {theme}." if theme else ""
-    prompt = (
-        f"{RUBRIC}{steer}\n\nSlugs already used (do NOT reuse or closely echo): {avoid_line}"
-    )
-    body = json.dumps({
-        "model": MODEL,
-        "max_tokens": 4096,
-        "thinking": {"type": "adaptive"},
-        "output_config": {
-            "effort": "medium",
-            "format": {"type": "json_schema", "schema": PROPOSAL_SCHEMA},
-        },
-        "messages": [{"role": "user", "content": [{"type": "text", "text": prompt}]}],
-    }).encode()
-    req = urllib.request.Request(
-        API_URL,
-        data=body,
-        headers={
-            "Content-Type": "application/json",
-            "x-api-key": api_key,
-            "anthropic-version": "2023-06-01",
-        },
-        method="POST",
-    )
-    with urllib.request.urlopen(req, timeout=180) as resp:
-        payload = json.loads(resp.read())
-    text = next((b.get("text", "") for b in payload.get("content", [])
-                 if b.get("type") == "text"), "")
-    return json.loads(text)
-
-
 def normalize(p: dict[str, Any], avoid: set[str]) -> dict[str, Any]:
     """Enforce the tight contract the LLM may fudge: one SKILL + one ITEM, unique slug."""
     p.setdefault("slug", slugify(p.get("title", "starter-dream")))
@@ -450,42 +377,118 @@ def edit_link(filename: str) -> str:
     )
 
 
-def main() -> int:
-    ap = argparse.ArgumentParser(description=__doc__)
-    ap.add_argument("--dry-run", action="store_true", help="print markdown, don't write the file")
-    ap.add_argument("--sample", action="store_true", help="use the built-in sample proposal (no API call)")
-    ap.add_argument("--theme", default="", help="optional one-line steer for today's world")
-    ap.add_argument("--date", default=None, help="override proposal date (YYYY-MM-DD, Pacific)")
-    args = ap.parse_args()
+def _target_date(date: Optional[str] = None) -> str:
+    return date or datetime.datetime.now(_TZ).date().isoformat()
 
-    proposal_date = args.date or datetime.datetime.now(_TZ).date().isoformat()
-    avoid = existing_slugs()
-    api_key = os.environ.get("ANTHROPIC_API_KEY", "").strip()
 
-    if args.sample or not api_key:
-        if not args.sample:
-            print("ANTHROPIC_API_KEY not set — using the built-in sample proposal.", file=sys.stderr)
-        proposal = normalize(json.loads(json.dumps(SAMPLE_PROPOSAL)), avoid)
-    else:
+def proposal_exists_for(date: str) -> bool:
+    """True if a daily proposal for `date` is already in the backlog (skip regen)."""
+    for path in glob.glob(str(BACKLOG / "*.md")):
+        name = Path(path).name
+        if name.startswith("_") or name == "README.md":
+            continue
         try:
-            proposal = normalize(call_llm(api_key, args.theme, avoid), avoid)
-        except Exception as error:  # noqa: BLE001 - soft-fail so the morning run survives
-            print(f"Proposal generation failed: {error}", file=sys.stderr)
-            return 0
+            text = Path(path).read_text(encoding="utf-8")
+        except OSError:
+            continue
+        m = re.search(r"^proposal_date:\s*(.+)$", text, re.MULTILINE)
+        if m and m.group(1).strip().strip("'\"") == date:
+            return True
+    return False
 
-    markdown = render_markdown(proposal, proposal_date)
-    filename = f"{proposal_date}-{proposal['slug']}.md"
 
-    if args.dry_run:
+def _write(proposal: dict[str, Any], date: str, dry_run: bool) -> Optional[Path]:
+    markdown = render_markdown(proposal, date)
+    filename = f"{date}-{proposal['slug']}.md"
+    if dry_run:
         print(markdown)
         print(f"\n# would write: projects/dream-cycle/backlog/{filename}", file=sys.stderr)
         print(f"# edit link: {edit_link(filename)}", file=sys.stderr)
-        return 0
-
+        return BACKLOG / filename  # the would-be path (nothing written)
     dest = BACKLOG / filename
     dest.write_text(markdown, encoding="utf-8")
     print(f"Wrote {dest.relative_to(ROOT)}")
     print(f"Edit link: {edit_link(filename)}")
+    return dest
+
+
+def print_brief() -> None:
+    """Print the authoring brief for the sweeping agent (spec + slugs to avoid)."""
+    avoid = ", ".join(sorted(existing_slugs())) or "(none yet)"
+    print(BRIEF)
+    print(f"\nSlugs already used (do NOT reuse or closely echo): {avoid}")
+    print("\nWhen your JSON is ready:  python scripts/build_dream_proposal.py --from-json <file|->")
+
+
+def write_proposal(proposal: dict[str, Any], date: Optional[str] = None,
+                   dry_run: bool = False, force: bool = False) -> Optional[Path]:
+    """Validate + normalize an agent-authored proposal and write today's file.
+
+    Guarded: no-op (with a message) if `date` already has a proposal, unless
+    force. Returns the written path, or None."""
+    date = _target_date(date)
+    problems = validate_proposal(proposal)
+    if problems:
+        print("Proposal JSON is invalid:", file=sys.stderr)
+        for problem in problems:
+            print(f"  - {problem}", file=sys.stderr)
+        return None
+    if proposal_exists_for(date) and not force:
+        print(f"Proposal for {date} already exists — not writing (use --force to override).",
+              file=sys.stderr)
+        return None
+    proposal = normalize(json.loads(json.dumps(proposal)), existing_slugs())
+    return _write(proposal, date, dry_run)
+
+
+def main() -> int:
+    ap = argparse.ArgumentParser(description=__doc__)
+    ap.add_argument("--check", action="store_true",
+                    help="exit 0 if today's proposal exists, 1 if the agent should author one")
+    ap.add_argument("--brief", action="store_true",
+                    help="print the authoring brief (spec + slugs to avoid) for the agent")
+    ap.add_argument("--from-json", default=None, metavar="FILE",
+                    help="agent-authored proposal JSON to validate + write ('-' for stdin)")
+    ap.add_argument("--force", action="store_true",
+                    help="write even if the date already has a proposal")
+    ap.add_argument("--dry-run", action="store_true", help="print markdown, don't write the file")
+    ap.add_argument("--sample", action="store_true",
+                    help="write the built-in sample proposal (testing; bypasses the guard)")
+    ap.add_argument("--date", default=None, help="override proposal date (YYYY-MM-DD, Pacific)")
+    args = ap.parse_args()
+
+    date = _target_date(args.date)
+
+    if args.check:
+        if proposal_exists_for(date):
+            print(f"Proposal for {date} exists.")
+            return 0
+        print(f"No proposal for {date} — author one: run --brief for the spec, "
+              f"then --from-json to write it.")
+        return 1
+
+    if args.brief:
+        print_brief()
+        return 0
+
+    if args.sample:
+        # Testing/demo path: always render the built-in sample, guard bypassed.
+        proposal = normalize(json.loads(json.dumps(SAMPLE_PROPOSAL)), existing_slugs())
+        _write(proposal, date, args.dry_run)
+        return 0
+
+    if args.from_json:
+        try:
+            raw = sys.stdin.read() if args.from_json == "-" else Path(args.from_json).read_text(encoding="utf-8")
+            proposal = json.loads(raw)
+        except (OSError, json.JSONDecodeError) as error:
+            print(f"Could not read proposal JSON: {error}", file=sys.stderr)
+            return 1
+        written = write_proposal(proposal, date=date, dry_run=args.dry_run,
+                                 force=args.force)
+        return 0 if written else 1
+
+    ap.print_help()
     return 0
 
 

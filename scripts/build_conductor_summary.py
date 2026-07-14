@@ -8,6 +8,12 @@ Claude to produce a brief actionable summary.
 
 Writes CONDUCTOR-REPORT.md (or prints to stdout with --dry-run).
 
+Daily-dream duties: the PROPOSAL is authored by the sweeping LLM agent itself
+(no scripted model call — see build_dream_proposal.py --brief); this script
+only FLAGS when today's proposal is missing so the next agent sweep writes it.
+It does still run the record builder + art-attach pass (pure REST, no LLM):
+build_dream_records.ensure_records().
+
 Usage:  python scripts/build_conductor_summary.py [--dry-run]
 Env:    ANTHROPIC_API_KEY  (required for LLM assessment; falls back to rules)
         GITHUB_TOKEN       (recommended; avoids rate limits)
@@ -31,6 +37,10 @@ try:
 except ImportError:
     sys.exit("PyYAML not installed — run: pip install pyyaml")
 
+sys.path.insert(0, str(Path(__file__).parent))
+import build_dream_proposal  # noqa: E402 — proposal existence check only (agents author proposals)
+import build_dream_records  # noqa: E402 — proposal → kind_robots records builder (Phase 2)
+
 REPOS = [
     {"owner": "silasfelinus", "name": "conductor"},
     {"owner": "silasfelinus", "name": "kind_robots"},
@@ -42,7 +52,7 @@ STALE_PR_HOURS = 8        # flag worker/* PRs open longer than this without revi
 UTC = datetime.timezone.utc
 
 
-# ── Helpers ──────────────────────────────────────────────────────────────────
+# ── Helpers ─────────────────────────────
 
 def _now() -> datetime.datetime:
     return datetime.datetime.now(UTC)
@@ -78,7 +88,7 @@ def _gh(path: str, token: str | None, params: dict | None = None) -> object:
         return {}
 
 
-# ── Data gathering ───────────────────────────────────────────────────────────
+# ── Data gathering ────────────────────────────
 
 def fetch_repo(owner: str, name: str, token: str | None) -> dict:
     since_24h = (_now() - datetime.timedelta(hours=24)).strftime("%Y-%m-%dT%H:%M:%SZ")
@@ -217,7 +227,7 @@ def fetch_todos(token: str | None) -> list:
         return []
 
 
-# ── Art queue + image pipeline ───────────────────────────────────────────────
+# ── Art queue + image pipeline ──────────────────────────────────
 
 def fetch_art_queue() -> dict:
     """Count pending art generation requests and images waiting to be distributed."""
@@ -282,7 +292,7 @@ def fetch_vercel_status(token: str | None) -> dict:
     }
 
 
-# ── Claude assessment ────────────────────────────────────────────────────────
+# ── Claude assessment ──────────────────────────────
 
 SYSTEM = """\
 You are the Conductor — the project manager for an autonomous AI coordination system called AI_Networker.
@@ -393,6 +403,11 @@ def _fallback(state: dict) -> str:
             f"**Art generation queue:** {art['active_gen_queue']} item(s) in projects/art-generate.yaml "
             "ready to send to the image generator."
         )
+    if state.get("daily_dream_proposal_missing"):
+        items.append(
+            "**Daily-dream proposal missing** for today — the next agent sweep should "
+            "author it (`python scripts/build_dream_proposal.py --brief`, then `--from-json`)."
+        )
 
     stats = (
         f"**Stats:** {rm.get('ready', 0)} ready | {rm.get('waiting', 0)} waiting | "
@@ -401,6 +416,8 @@ def _fallback(state: dict) -> str:
         f"{art.get('images_to_distribute', 0)} images to distribute | "
         f"{art.get('active_gen_queue', 0)} in gen queue"
     )
+    if state.get("daily_dream_proposal_missing"):
+        stats += " | ⚠ daily-dream proposal MISSING (agent sweep should author it)"
 
     if not items:
         return f"## ALL CLEAR\nAutonomous loop running — no blockers, no CI failures, no stale work.\n\n{stats}"
@@ -409,7 +426,7 @@ def _fallback(state: dict) -> str:
     return f"## ACTION NEEDED\n\n{bullets}\n\n{stats}"
 
 
-# ── Output ───────────────────────────────────────────────────────────────────
+# ── Output ────────────────────────────
 
 def write_report(summary: str, as_of: str, dry_run: bool) -> None:
     content = (
@@ -426,7 +443,7 @@ def write_report(summary: str, as_of: str, dry_run: bool) -> None:
         print(f"  wrote {REPORT_PATH}", file=sys.stderr)
 
 
-# ── Entry point ──────────────────────────────────────────────────────────────
+# ── Entry point ────────────────────────────────
 
 def main() -> None:
     ap = argparse.ArgumentParser(description="Hourly conductor health assessment")
@@ -456,6 +473,11 @@ def main() -> None:
     print("  checking vercel status...", file=sys.stderr)
     vercel = fetch_vercel_status(kr_token)
 
+    # Daily-dream proposal: authored by the sweeping LLM agent, not this script.
+    # Surface a missing proposal as a signal so the next agent sweep writes one.
+    today_pacific = build_dream_proposal._target_date()
+    proposal_missing_today = not build_dream_proposal.proposal_exists_for(today_pacific)
+
     state = {
         "as_of": as_of,
         "repos": repos,
@@ -463,12 +485,23 @@ def main() -> None:
         "open_todos": todos,
         "art_queue": art_queue,
         "vercel": vercel,
+        "daily_dream_proposal_missing": proposal_missing_today,
     }
 
     print("  assessing...", file=sys.stderr)
     summary = assess(state)
 
     write_report(summary, as_of, args.dry_run)
+
+    # Phase 2: build yesterday's proposal into real kind_robots records (pure
+    # REST via KR_API_TOKEN — no model calls) and attach any freshly-rendered
+    # art to its pitch sheets. Guarded (one unbuilt proposal past its steering
+    # day; skips if Silas left notes) and soft-failing, so it's sweep-safe.
+    # NOTE: proposal AUTHORING is not done here — the sweeping LLM agent writes
+    # it (build_dream_proposal.py --brief / --from-json); this run only flagged
+    # a missing proposal in the state above.
+    print("  daily-dream records + art attach...", file=sys.stderr)
+    build_dream_records.ensure_records(dry_run=args.dry_run)
 
 
 if __name__ == "__main__":
