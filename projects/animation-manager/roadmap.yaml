@@ -158,12 +158,12 @@ tasks:
   - id: t-008
     milestone: m3
     title: "Add automated animation catalog and lifecycle verification"
-    status: review
+    status: done
     owner: Reviewer
     passes: 0
     stakes: reversible
     depends_on: t-003
-    note: 'Implemented via kind_robots PR #251 (utils/scripts/verifyAnimationCatalog.ts + docs/architecture/animation-catalog-smoke-matrix.md). CI in flight; will flip to done once merged. Also surfaced (not fixed, out of scope): displayStore.ts''s legacy EffectId/animationOptions references a nonexistent ''bubble-effect'' catalog id (orphaned components/screenfx/bubble-effect.vue, never registered) -- see PR body for detail, worth a follow-up task.'
+    note: 'Done via kind_robots PR #251 (merged, squash sha 683dd2e3): added utils/scripts/verifyAnimationCatalog.ts (npm run test:animation-catalog) and docs/architecture/animation-catalog-smoke-matrix.md. Script checks unique catalog ids, filename-to-lazy-component resolution (handles dotted filenames), valid preferredSurface values, a generationSafe/blocksInput invariant, and no stale preference/fallback ids (DEFAULT_PREFERENCES.startupEffect, pickRandomEffect''s fallback literal, every narratorAnimationAliases target). Follow-up t-010 filed for an unrelated stale ''bubble-effect'' id found in displayStore''s legacy (pre-t-003) EffectId system.'
     updated: '2026-07-14T14:02:41Z'
 
   - id: t-009

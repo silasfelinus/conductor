@@ -2910,3 +2910,78 @@ TypeScript check went green. Confirmed via `pull_request_read` before flipping t
 activity per the merged-PR convention. `LEARNING.yaml` record appended; `scripts/
 audit_roadmaps.py` still shows only the two pre-existing, already-deferred findings
 (conductor/t-038, t-039) — nothing new from this cycle's edits.
+
+## 2026-07-14 | Reviewer → Silas | animation-manager/t-008 | burst-mode pattern
+
+**Decision:** done. kind_robots PR #251 merged (squash sha `683dd2e3`), t-008 flipped to `done`.
+
+**Failure category:** null (clean first pass).
+
+**What was good:**
+- Rotation continued the burst-mode pattern from this same cycle (conductor PR #510
+  merged model-builder/t-028's close-out first): `model-builder` was worked last, so this
+  pass moved to the next project in `priority.yaml` order — `animation-manager`. Picked
+  t-008 ("Add automated animation catalog and lifecycle verification") as the most
+  self-contained ready task not blocked on anything beyond the already-`done` t-003.
+- Read the actual consumers before writing anything: `animationCatalog.ts`,
+  `animationStore.ts`, `animationPreferenceStore.ts`, `startup-animation.vue`'s
+  `resolveComponent`/`getAnimationComponentName` pairing, and `narratorHelper.ts`'s
+  `narratorAnimationAliases` map (explicitly commented "mirrors animationStore effect
+  ids" — a direct hit for "no stale preference values").
+- Modeled Nuxt's actual filename→component-name resolution instead of assuming a naive
+  `<id>.vue` match: `components/screenfx/fireworks.effect.vue` (a dotted filename) still
+  resolves to the same PascalCase name a hyphenated file would, because Nuxt's
+  `pathPrefix: false` scanner splits on any run of `-`, `_`, or `.`. A literal-filename
+  check would have false-failed on this real file.
+- Found a genuine latent bug class while writing the invariant check: `pickRandomEffect()`
+  (`animationStore.ts`) and the preference-store random path only filter by
+  `generationSafe`, never independently checking `blocksInput` — so a future catalog entry
+  combining `generationSafe: true` with `blocksInput: true` could surface as a blocking
+  overlay during "generation/loading" animation selection, violating the SPEC.md passive-
+  experience contract. Added an assertion forbidding that combination; all 29 current
+  entries already satisfy it (no regression, pure guard for the future).
+- Verified for real, not just typechecked: ran `npm run test:animation-catalog` against
+  the live catalog (29 effects, 43 screenfx components resolved, 42 narrator aliases
+  checked), then deliberately reintroduced a duplicate catalog id to confirm the script
+  actually fails with a clear message, restored the file, and re-verified clean before
+  committing. Also ran the full `npm run test` (vue-tsc) and `npx eslint` on both changed
+  files.
+- Exported `DEFAULT_PREFERENCES` from `animationPreferenceStore.ts` (was module-private)
+  rather than duplicating its literal default value in the test — keeps the check honest
+  against the real source of truth instead of a copy that could itself drift.
+- Installed kind_robots deps fresh this cycle (`CYPRESS_INSTALL_BINARY=0
+  PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1 npm ci`, no prior `node_modules`) specifically to
+  exercise the new script and the full typecheck rather than trusting an untested diff —
+  same convention the prior model-builder/t-028 cycle used.
+- Found but deliberately did NOT fix a genuinely unrelated stale reference: `displayStore.ts`'s
+  legacy, pre-`t-003` `EffectId`/`animationOptions` (used only by `animation-tester.vue` and
+  `screen-debug.vue`) includes a `'bubble-effect'` id absent from `animationCatalog.ts` — an
+  orphaned `components/screenfx/bubble-effect.vue` file was never registered. Filed as
+  `animation-manager/t-010` rather than expanding this PR's diff (scope discipline, hard
+  rule 6) — flagged clearly in the PR body so it isn't lost.
+
+**What to improve:**
+- Hit an unrelated environment issue mid-cycle: pushing the conductor roadmap commit
+  initially failed with an HTTP 413 from Cloudflare (in front of GitHub) even though the
+  actual delta was ~2.6KB (verified via `git bundle create`) — root-caused to the local
+  branch being one commit behind a stale `origin/main` (a `[skip ci]` STATUS.md refresh
+  had landed after this session's initial fetch); rebasing onto the fresh `origin/main` tip
+  and retrying succeeded immediately. Worth noting for future cycles: an unexplained 413
+  on a small push is worth a `git fetch origin main && git rebase origin/main` retry before
+  assuming a real proxy/size problem.
+
+**Detail:**
+- `kind_robots` PR #251 (`claude/admiring-mayer-pntf8k` → `main`, squash `683dd2e3`):
+  `utils/scripts/verifyAnimationCatalog.ts` (new, ~95 lines), `package.json`
+  (`test:animation-catalog` script), `stores/animationPreferenceStore.ts`
+  (`DEFAULT_PREFERENCES` made public), `docs/architecture/animation-catalog-smoke-matrix.md`
+  (new).
+- `projects/animation-manager/roadmap.yaml`: t-008 → `status: done`, `owner: Reviewer`,
+  note points at the merged PR and squash sha; added `t-010` (ready) for the `bubble-effect`
+  follow-up.
+- `python3 -m yaml.safe_load` on the roadmap and `LEARNING.yaml` — both parse clean.
+  `scripts/audit_roadmaps.py` — same 1 error / 1 warning as before (both already deferred
+  to `conductor/t-038`, `t-039`), no new findings from this cycle's edits.
+
+**Kaizen task:** deferred — `t-010` above already captures this cycle's own findable
+follow-up; no additional systemic gap surfaced beyond what's already tracked.
