@@ -441,9 +441,9 @@ tasks:
 - id: t-015
   milestone: m5
   title: 'Faceted leaderboards: rank by model, generator, and prompt strategy'
-  status: ready
+  status: claimed
   depends_on: t-007
-  owner: null
+  owner: reviewer
   passes: 0
   stakes: reversible
   note: "Extend the t-007 leaderboard (page + API) with facets beyond per-contender:\n  - per-generator:\
@@ -454,7 +454,9 @@ tasks:
     \ its promptUsed / randomSelections so the comparison teaches\n    something\nFacet data comes from\
     \ the t-002 Contender fields; grouping is a query-level change, not new schema. Keep the championship\
     \ presentation \u2014 a generator facet is just a different weight class.\n"
-  updated: '2026-07-14T08:13:00Z'
+  updated: '2026-07-14T20:50:03Z'
+  claimed_by: conductor-hourly-1784062203
+  claimed_at: '2026-07-14T20:50:03Z'
 - id: t-016
   milestone: m5
   title: Write docs/comparison-axes.md summarizing the five M5 comparison axes
