@@ -315,3 +315,85 @@ and merged.
 **Kaizen task:** none filed this cycle — the `buildChallengeLeaderboard`/`buildFacetLeaderboard`
 duplication noted in the PR body (`groupAndRank` factoring) is a minor internal-shape
 observation, not yet worth a dedicated task on a single observation.
+
+## 2026-07-14 | Reviewer → Worker | challenge-center/t-019 | closed (hourly conductor cycle, solo full-cycle)
+
+**Decision:** done. Claimed via `claim_task.py` (task's prior `worker` claim was stale — past
+`CLAIM_TTL_MINUTES` — and reclaimed cleanly, no rotation collision), implemented directly in
+this session, opened kind_robots PR #265, verified, and merged.
+
+**What happened:**
+1. The task note assumed the `/challenges` page was still a "placeholder scaffold" needing to
+   be "evolved into the full interactive experience." Read `components/conductor/
+   challenge-center-page.vue` and `pages/challenges/[slug].vue` directly before writing anything
+   — the page is already a fully built, interactive feature (type/status filtering, live leader
+   previews, a head-to-head arena with 4-way reactions, leaderboards) from prior tasks
+   (t-004/t-008/t-014/t-015). That framing was stale; no scaffold work was done, narrowing the
+   diff to exactly what was still missing.
+2. `tutorialChannels` in `stores/helpers/tutorialCards.ts` had no `wonder` key at all — the task
+   note's "add a section under tutorialChannels.wonder.sections" assumed a channel that doesn't
+   exist. Read the file in full and found the actual precedent for a standalone, non-footer page:
+   the existing `mural` entry (its own `ExtraTutorialKey`, own route in `tutorialRouteMap`). Added
+   `challenges` following that exact shape instead of inventing a `wonder` channel that nothing
+   else expects.
+3. The task note's art paths (`public/images/tutorials/wonder/challenges.webp`) also don't match
+   the codebase's actual convention — `tutorialImage(channelKey, sectionKey)` keys by the tutorial
+   channel's own key (confirmed via the `mural` precedent: `tutorials/mural/mural.webp`, not
+   `tutorials/wonder/mural.webp`). Used `tutorials/challenges/challenges.webp` instead, which is
+   what the code the task also asked for (`resolveTutorialChannelFromRoute` → `workspace-sheet.vue`)
+   actually resolves. `wonder` **is** correct for the unrelated dashboard-tab image system
+   (`dashboardHelper.ts`'s `wonder` dashboard already had a `challenges` tab expecting
+   `dashboard-tabs/wonder/challenges.webp` — that file was genuinely missing and got added there).
+4. No image-gen pipeline (API key, ChatGPT copy-paste queue) was available in this sandboxed
+   session. Rather than leave a queued-and-blocked `art-prompts.yaml` request (the documented
+   fallback per `coloring-book/t-010`'s LEARNING.yaml lesson), reused the already-approved
+   `conductor/projects/images/challenge-center-hero.webp` — already exactly 1600×900, matching the
+   `wonder`/`mural` sibling convention with zero resizing needed for the two full-size targets, and
+   resized to 384×216 for the sibling `thumb/` convention. Documented provenance in the commit and
+   PR body rather than presenting it as fresh generated art.
+5. PR CI: GitGuardian and Vercel passed immediately. "Contract verifiers" failed on the already-
+   tracked `kind-robots/t-021` (Channel content contract: `content/{account,friends,messages}.md`
+   reference unknown `home/*` tabs) — reproduced locally (`npm run test:channel-content`) with the
+   identical 3 files/errors, none touched by this PR's diff, confirming pre-existing/unrelated.
+   "TypeScript" also failed; CI's environment has changed since the t-014/t-015 precedent (now runs
+   `npx prisma generate` against a real `DATABASE_URL` before typecheck, not just `nuxi prepare`).
+   Reproduced that exact step locally (placeholder `DATABASE_URL`, `npx prisma generate`, then
+   `npm run test`) — got a different error count (82, vs. 54 without the regenerate step) than any
+   prior baseline, confirming Node 22 (local) vs. Node 24 (CI) drift genuinely doesn't converge to a
+   fixed number here. The decisive check instead: across both local runs, zero errors ever touched
+   `tutorialCards.ts` or any of its consumers (`tutorial-flyer.vue`, `workspace-sheet.vue`,
+   `dashboardHelper.ts`) — the only files this PR's diff changes. Attempted to fetch CI's own
+   `typescript-diagnostics` artifact for a byte-exact comparison; blocked by this sandbox's network
+   egress policy (Azure blob storage isn't on the proxy allowlist — same 403 that also blocked the
+   `CYPRESS_INSTALL_BINARY` binary download during `npm ci`, worth knowing is a policy limit, not a
+   flake). `mergeable_state` stayed `unstable` (not `blocked`); merged per the file-isolation
+   argument plus the PR #256/#258 precedent for known-red pre-existing/unrelated checks.
+
+**Failure category:** none — clean first-pass close.
+
+**What was good:**
+- Did not trust the task note's characterization of "what's missing" at face value in either
+  direction (the scaffold claim, the `wonder` tutorial-channel assumption, the art file paths) —
+  verified each against the live repo before writing code, and narrowed scope accordingly instead
+  of building unnecessary scaffold work or inventing a `wonder` tutorial channel nothing else uses.
+- When the standard image-gen queue wasn't available, found a real, immediately-usable solution
+  (reusing already-approved project art at the exact right dimensions) instead of leaving a
+  half-finished task or a placeholder image, and was explicit in the PR about the provenance so
+  the Reviewer/Silas could tell it apart from a fresh generation.
+- Kept digging on the CI TypeScript failure past the first "looks unrelated" impression — actually
+  reproduced CI's exact new `prisma generate` step locally rather than assuming the old t-014/t-015
+  reproduction method still applied, and used the *file-isolation* argument (no errors ever land in
+  the changed files, across two different local baselines) as the decisive evidence rather than
+  chasing an exact error-count match that turned out not to be stable across environments anyway.
+
+**What to improve:**
+- Local Node is pinned at 22.x with no `nvm`/`fnm` available in this sandbox, and the repo wants
+  24.x — this is now the second consecutive challenge-center task (after t-015) to hit this gap.
+  Worth a standing fix (a Node 24 setup step in the environment, or a documented sandbox-safe way
+  to fetch CI's diagnostic artifacts) rather than re-deriving a workaround each time. Filed as this
+  cycle's kaizen.
+
+**Kaizen task:** filed `challenge-center/t-021` — investigate provisioning Node 24.x (or an `nvm`/
+`fnm` install) in the sandbox session environment used for hourly conductor cycles, since local
+typecheck reproduction against kind_robots CI has now hit the Node 22→24 gap on two consecutive
+tasks (t-015, t-019) and the artifact-download fallback is blocked by the network egress policy.

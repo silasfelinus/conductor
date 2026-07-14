@@ -527,21 +527,11 @@ tasks:
 - id: t-019
   milestone: m3
   title: Polish and upgrade Challenge Center front-end surface
-  status: claimed
+  status: done
   owner: reviewer
   passes: 0
   stakes: reversible
-  note: 'UI polish + upgrade for the challenge-center front end now that the scaffold page is live at
-    /challenges. Steps: (1) generate final dashboard-tab art at public/images/dashboard-tabs/wonder/challenges.webp
-    and tutorial art at public/images/tutorials/wonder/challenges.webp; (2) add a matching section for
-    ''challenges'' under tutorialChannels.wonder.sections in kind_robots/stores/helpers/tutorialCards.ts;
-    (3) verify the PROJECT Dream liveUrl points at /challenges (admin can run the Conductor ''Placements''
-    button to backfill channelKey/tabKey/liveUrl); (4) evolve the placeholder scaffold page into the full
-    interactive experience for this project.
-
-
-    Worker claimed the highest-priority eligible ready task after current-main priority scan; t-018 was
-    already claimed.'
+  note: 'DONE (kind_robots PR #265, merged): added ''challenges'' to tutorialChannels (mirrors ''mural'' pattern) + wired into tutorialRouteMap; added dashboard-tab/thumb/tutorial webp art derived from the already-approved conductor/projects/images/challenge-center-hero.webp (no live image-gen pipeline available this session). Step 4 ("evolve the placeholder scaffold") was already done by prior tasks t-004/t-008/t-014/t-015 -- verified by reading challenge-center-page.vue and pages/challenges/[slug].vue directly, the "placeholder scaffold" framing was stale. Step 3 (liveUrl): PROJECT_PLACEMENTS[''challenge-center''] already correctly specifies route ''/challenges'' in code; live DB sync needs an admin to click the Conductor Placements button (out of session scope, not a code change). See TALKBACK for CI findings (kind-robots/t-021 pre-existing, confirmed unrelated) and kaizen.'
   updated: '2026-07-14T22:50:20Z'
   claimed_by: conductor-hourly-1784069419
   claimed_at: '2026-07-14T22:50:20Z'
@@ -594,3 +584,21 @@ tasks:
     \ path.\n"
   claimed_by: burst-20260714T230541Z
   claimed_at: '2026-07-14T23:06:04Z'
+- id: t-021
+  milestone: m1
+  title: Investigate provisioning Node 24.x in the sandbox session environment for local CI reproduction
+  status: ready
+  passes: 0
+  stakes: reversible
+  note: >
+    Kaizen from t-019: local typecheck reproduction against kind_robots CI has hit the same
+    Node 22 (sandbox) vs Node 24 (CI) gap on two consecutive tasks (t-015, t-019). No nvm/fnm
+    is available in this sandbox to install Node 24, and downloading CI's diagnostic artifacts
+    directly (e.g. the "typescript-diagnostics" upload) is blocked by the sandbox's network
+    egress policy (Azure blob storage isn't on the proxy allowlist). Investigate either
+    provisioning Node 24.x (or a version manager) in the hourly-cycle sandbox environment, or
+    documenting a reliable sandbox-safe path to fetch CI artifact contents (e.g. via the GitHub
+    API's artifact endpoint if it can be proxied, rather than the signed Azure blob URL it
+    redirects to). Until fixed, the fallback (confirmed sufficient on t-019) is: verify the
+    diff's changed files never appear in the local error list under any locally-reproducible
+    variant, rather than chasing an exact CI error-count match.
