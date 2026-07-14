@@ -1,0 +1,199 @@
+updated: "2026-07-13T23:03:00-07:00"
+
+pitches:
+  - id: bioluminescent-tide
+    title: Bioluminescent Tide
+    status: shipped
+    priority: 1
+    surprise: >
+      A transparent midnight current carries small glowing lantern organisms across the desktop;
+      long tide bands slowly reveal that the whole screen is breathing like shallow water.
+    passive_loop: >
+      Lanterns drift, pulse, wrap around the surface, and form temporary loose schools while
+      caustic bands cross at different speeds.
+    optional_interaction: >
+      Pointer movement creates a wake and gentle orbit influence. A click adds a tide pulse
+      without preventing the underlying page action.
+    technique: Canvas 2D, additive gradients, surface ResizeObserver, timestamp delta motion.
+    reduced_motion: Twelve slower lanterns, two quiet tide bands, reduced opacity, no pointer wake.
+    performance_risk: Per-particle radial gradients; cap entities and device-pixel ratio.
+    novelty: Combines ecosystem behavior and fluid light rather than cloning bubbles, fireflies, ripple, or aquarium.
+    acceptance:
+      - passive loop is complete without interaction
+      - underlying clicks remain functional
+      - startup and clipped Screen FX surfaces both render
+      - no resource leaks across repeated mounts
+    builds:
+      - version: 1
+        status: shipped
+        component: components/screenfx/bioluminescent-tide.vue
+        pull_request: silasfelinus/kind_robots#237
+        commit: afb88af80c2ae3816c6698830e13169e1b805ebf
+        verification:
+          - TypeScript Type Check
+          - Contract Tests
+
+  - id: paper-lantern-weather
+    title: Paper Lantern Weather
+    status: pitched
+    priority: 2
+    surprise: Folded paper lanterns behave like a tiny weather system, dimming before gusts and relighting in sheltered eddies.
+    passive_loop: Lanterns drift in layered parallax while soft paper creases flex and rare gust fronts reorganize the flock.
+    optional_interaction: Cursor movement briefly shelters nearby lanterns; clicks release one folded paper bird.
+    technique: SVG symbols or Canvas Path2D with deterministic wind fields.
+    reduced_motion: Static lantern arrangement with slow opacity breathing and no gust fronts.
+    performance_risk: Too many vector paths; cache repeated lantern shapes.
+    novelty: Paper-craft atmosphere rather than particles or stars.
+    acceptance:
+      - lantern silhouettes remain readable over light and dark themes
+      - rare gust event is visible but not disruptive
+
+  - id: magnetic-sand-garden
+    title: Magnetic Sand Garden
+    status: pitched
+    priority: 3
+    surprise: Metallic sand grains gather into temporary topographic islands, then collapse and reform around invisible magnets.
+    passive_loop: Flow-field bands continuously comb the sand into ridges, valleys, and occasional geometric blooms.
+    optional_interaction: Pointer acts as a weak magnet; click flips polarity and sends one expanding rearrangement through the field.
+    technique: Low-resolution simulation buffer upscaled with Canvas 2D or WebGL fallback research.
+    reduced_motion: Slower field updates with a nearly static dune state.
+    performance_risk: Full-pixel simulation can be expensive; use a coarse grid and bounded update rate.
+    novelty: Material simulation with emergent structure, unlike falling pixel rain.
+    acceptance:
+      - forms evolve rather than merely translating
+      - coarse simulation remains attractive at desktop scale
+
+  - id: stained-glass-rain
+    title: Stained Glass Rain
+    status: pitched
+    priority: 4
+    surprise: Raindrops refract the desktop into slowly changing stained-glass fragments without obscuring content.
+    passive_loop: Transparent polygon panes drift, merge, and split as rain lines trace leaded boundaries.
+    optional_interaction: Pointer tilts local refraction; clicks briefly illuminate one rose-window pattern.
+    technique: Canvas polygon clipping, gradients, blend modes, optional backdrop-filter experiment.
+    reduced_motion: Fixed panes with slow color temperature drift.
+    performance_risk: Backdrop filtering may be expensive or inconsistent; preserve a pure-canvas path.
+    novelty: Uses architectural glass grammar instead of generic kaleidoscope symmetry.
+    acceptance:
+      - content remains legible
+      - effect has a no-backdrop-filter fallback
+
+  - id: clockwork-greenhouse
+    title: Clockwork Greenhouse
+    status: pitched
+    priority: 5
+    surprise: Tiny brass stems grow leaves, gears pollinate mechanical flowers, and the garden quietly resets through seasons.
+    passive_loop: Plants grow and fold on staggered timelines while pollinator gears move between blooms.
+    optional_interaction: Cursor warmth accelerates nearby growth; clicks plant one temporary seed.
+    technique: Canvas scene graph with cached plant segments and deterministic lifecycle states.
+    reduced_motion: Mature garden with only subtle gear rotation and light shifts.
+    performance_risk: Too many independent timelines; use pooled state machines and capped plant count.
+    novelty: Slow procedural storytelling rather than ambient particles.
+    acceptance:
+      - visible lifecycle includes growth, bloom, seed, and reset
+      - no interaction is needed to populate the garden
+
+  - id: cloud-city-drift
+    title: Cloud City Drift
+    status: pitched
+    priority: 6
+    surprise: Impossible miniature cities float inside cloud banks, occasionally rotating to reveal streets on the underside.
+    passive_loop: Layered clouds cross at different depths while towers, bridges, and lights emerge and disappear.
+    optional_interaction: Pointer wind parts clouds; clicks trigger one distant beacon response.
+    technique: Procedural silhouettes, parallax layers, atmospheric gradients, seeded city grammar.
+    reduced_motion: Static cloud composition with slow lighting changes.
+    performance_risk: Overdraw from translucent clouds; pre-render cloud sprites or use low layer count.
+    novelty: A quiet world reveal with rare architectural surprises.
+    acceptance:
+      - city remains subtle enough for wallpaper use
+      - underside reveal occurs rarely and smoothly
+
+  - id: moth-constellation
+    title: Moth Constellation
+    status: pitched
+    priority: 7
+    surprise: Moths gather around invisible moonlight and briefly align into recognizable constellations before scattering.
+    passive_loop: Individual moths wander, rest, and regroup; constellation events are rare and seeded.
+    optional_interaction: Pointer light attracts a few moths; clicking extinguishes and relights the local glow.
+    technique: Boids-lite steering with cached wing sprites and event choreography.
+    reduced_motion: Fewer moths with slow gliding and no rapid scatter event.
+    performance_risk: Boid neighbor checks; use spatial buckets or small populations.
+    novelty: Distinct personalities and long-timescale pattern formation rather than static constellation nodes.
+    acceptance:
+      - constellation event reads clearly without text
+      - normal wandering remains interesting between events
+
+  - id: koi-memory-pond
+    title: Koi Memory Pond
+    status: pitched
+    priority: 8
+    surprise: Koi remember paths across sessions locally and slowly develop favorite routes, crossings, and resting places.
+    passive_loop: Fish swim under transparent water, disturb floating leaves, and occasionally follow one another.
+    optional_interaction: Pointer casts a shadow they avoid; clicks drop harmless food rings that the page still receives.
+    technique: Canvas spline paths, local preference seed, simple fish steering, ripple compositor.
+    reduced_motion: Two slow fish and static leaves with occasional gentle ripples.
+    performance_risk: Persistence must remain local and tiny; no database write per frame.
+    novelty: A wallpaper that develops habits rather than replaying the same random loop.
+    acceptance:
+      - local memory is optional and bounded
+      - fish remain convincing without detailed artwork assets
+
+  - id: impossible-terrarium
+    title: Impossible Terrarium
+    status: pitched
+    priority: 9
+    surprise: A glass terrarium contains stairways, roots, waterfalls, and rooms whose gravity directions disagree.
+    passive_loop: Tiny inhabitants traverse impossible routes while water and spores obey different gravity fields.
+    optional_interaction: Pointer rotates only one local gravity pocket; click opens a temporary door between two spaces.
+    technique: Isometric procedural tiles, masked layers, small agent paths.
+    reduced_motion: Static terrarium with slow lighting and occasional door glow.
+    performance_risk: Scene complexity; build from a small reusable tile grammar.
+    novelty: Escher-like environmental narrative instead of a full-screen filter.
+    acceptance:
+      - at least three gravity directions are legible
+      - scene remains transparent outside the terrarium forms
+
+  - id: ink-oracle
+    title: Ink Oracle
+    status: pitched
+    priority: 10
+    surprise: Floating ink blooms repeatedly suggest symbols, creatures, or faces but never settle into the same answer.
+    passive_loop: Diffusion-like tendrils expand, fold, fade, and seed the next bloom.
+    optional_interaction: Cursor currents bend ink; click stamps one temporary empty circle the ink must flow around.
+    technique: Coarse reaction-diffusion or curl-noise field rendered into a small offscreen buffer.
+    reduced_motion: One slow bloom with long fades and no pointer disturbance.
+    performance_risk: Simulation cost; run at reduced resolution and update below display refresh.
+    novelty: Ambiguous pareidolia and emergent imagery rather than plasma waves.
+    acceptance:
+      - patterns vary across restarts
+      - no frame-to-frame flicker or muddy full-screen opacity
+
+  - id: celestial-mobile
+    title: Celestial Mobile
+    status: pitched
+    priority: 11
+    surprise: A hanging mobile of moons, robots, keys, and tiny planets physically balances itself as pieces drift into new configurations.
+    passive_loop: Arms rotate with believable inertia while weights slowly migrate and rebalance the sculpture.
+    optional_interaction: Pointer breeze nudges the nearest arm; click briefly adds a mystery weight that changes the balance.
+    technique: Lightweight articulated physics with constraints and cached vector silhouettes.
+    reduced_motion: Very slow pendulum movement with fewer rebalance events.
+    performance_risk: Constraint instability; use a limited hierarchy and bounded integration step.
+    novelty: Physical balance and object silhouettes rather than orbital circles.
+    acceptance:
+      - motion reads as connected mechanics
+      - system returns to stable balance after perturbation
+
+  - id: tiny-weather-front
+    title: Tiny Weather Front
+    status: pitched
+    priority: 12
+    surprise: Miniature localized weather cells cross the screen independently: rain beneath one cloud, sunlight through another, a rare pocket tornado carrying leaves.
+    passive_loop: Cells form, merge, dissipate, and cast subtle light changes across their own regions.
+    optional_interaction: Pointer pressure bends a front; click seeds one short-lived warm updraft.
+    technique: Layered particle emitters driven by a shared coarse pressure map.
+    reduced_motion: Fewer cells, no tornado, and slower precipitation.
+    performance_risk: Multiple emitters can multiply particle count; share pools and cap active cells.
+    novelty: Spatially varied weather rather than uniform full-screen rain or snow.
+    acceptance:
+      - multiple weather types coexist without visual clutter
+      - effect remains passive and transparent

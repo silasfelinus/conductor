@@ -1,0 +1,171 @@
+project: animation-manager
+kind: software
+autonomous: true
+
+goal: >
+  A durable creative pipeline that researches surprising passive desktop animations,
+  pitches them before implementation, ships the strongest candidates into Kind Robots,
+  and improves or retires builds over time using real user Reactions.
+
+notes_from_silas: |
+  Create surprising and new opening desktop wallpapers. Every animation must work as a
+  passive experience with no interaction required. Optional interactions are encouraged
+  when they deepen the surprise without blocking the page: bubbles can be popped, a cursor
+  may leave a wake, and clicks may create harmless flourishes while the underlying click
+  still works.
+
+  Treat this as an evolving Animation Manager program, not a pile of unrelated effects.
+  Research modern screensavers and browser animation techniques, keep a queue of planned
+  animation pitches, build new effects, polish old ones, and track multiple attempts over
+  time with Kind Robots Reactions so the best versions rise and weak experiments can be
+  improved or retired.
+
+  A new animation should be registered once and then automatically appear in Screen FX,
+  explicit startup preferences, and the random opening animation pool when eligible.
+  Front-load the project with pitches, then ship the first new addition end-to-end.
+
+milestones:
+  - id: m1
+    title: "Research, quality contract, and animation pitch queue"
+    weight: 20
+    status: done
+  - id: m2
+    title: "Single-source animation registry and first shipped wallpaper"
+    weight: 25
+    status: done
+  - id: m3
+    title: "Attempt museum and Reaction-driven quality history"
+    weight: 25
+    status: not-started
+  - id: m4
+    title: "Animation Manager front end and promotion workflow"
+    weight: 20
+    status: not-started
+  - id: m5
+    title: "Daily research, build, and polish cadence"
+    weight: 10
+    status: not-started
+
+tasks:
+  - id: t-001
+    milestone: m1
+    title: "Write the passive-animation research and quality contract"
+    status: done
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Added projects/animation-manager/RESEARCH.md and SPEC.md. The contract requires a
+      satisfying passive loop, optional non-blocking interaction, requestAnimationFrame
+      timestamp motion, surface-aware sizing, capped device-pixel ratio, cleanup, reduced-motion
+      behavior, transparent layering, and a documented performance budget.
+
+  - id: t-002
+    milestone: m1
+    title: "Front-load a diverse queue of animation pitches"
+    status: done
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Added projects/animation-manager/PITCHES.yaml with twelve distinct candidates spanning
+      bioluminescence, paper craft, fluid sand, stained glass, botanical machinery, clouds,
+      moths, koi, weather, and impossible architecture. Bioluminescent Tide is the first build.
+
+  - id: t-003
+    milestone: m2
+    title: "Centralize animation registration and ship Bioluminescent Tide"
+    status: done
+    owner: worker
+    updated: "2026-07-13T23:03:00-07:00"
+    passes: 0
+    stakes: reversible
+    note: >
+      Shipped through kind_robots PR #237, squash commit
+      afb88af80c2ae3816c6698830e13169e1b805ebf. stores/animationCatalog.ts is now the
+      single metadata registry; effect ids are derived from it and Nuxt lazy components are
+      resolved by filename convention in Screen FX and startup-animation. Added
+      components/screenfx/bioluminescent-tide.vue: a passive, generationSafe wallpaper eligible
+      for random startup selection, with cursor wake and click ripples that do not capture input,
+      reduced-motion behavior, capped DPR, ResizeObserver sizing, and full listener/RAF cleanup.
+      TypeScript Type Check and Contract Tests passed before merge.
+
+  - id: t-004
+    milestone: m3
+    title: "Track animation attempts as Component records with Reactions"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-003
+    note: >
+      Use the existing Component model exactly for its stated museum-of-development-attempts
+      purpose; no schema change. Define one Component row per animation build using folderName
+      screenfx, a stable componentName such as bioluminescent-tide@v1, title, working/broken/
+      construction flags, and structured notes with animation slug, build number, commit/PR,
+      technique, quality checklist, and supersedes/supersededBy links. Reactions already support
+      reactionCategory COMPONENT and componentId. Add store helpers and API-backed list/create/
+      update/reaction flows without front-end components calling routes directly.
+
+  - id: t-005
+    milestone: m4
+    title: "Build the Animation Manager gallery and promotion workspace"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-004
+    note: >
+      Add a Kind Robots Animation Manager surface linked from Screen FX. Show catalog effects,
+      conductor pitch status, Component build history, aggregate Reaction/rating signals,
+      working/construction/broken state, version lineage, and actions to preview, compare,
+      promote, polish, or retire. Use an animationManagerStore for API and local state. Do not
+      create a second effect registry; the UI reads stores/animationCatalog.ts.
+
+  - id: t-006
+    milestone: m5
+    title: "Research and pitch one genuinely new passive animation"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    recurring: true
+    note: >
+      Daily creative-research loop. Produce at most one new pitch per Pacific calendar day and
+      no-op/re-arm if one already exists for the day or the buildable queue is above twelve.
+      Avoid cosmetic clones of existing effects. Every pitch needs a passive-loop hook, optional
+      interaction, implementation technique, reduced-motion plan, performance risk, novelty
+      comparison, and acceptance criteria. Append to PITCHES.yaml; never overwrite history.
+
+  - id: t-007
+    milestone: m5
+    title: "Build or polish one animation candidate from reaction evidence"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    recurring: true
+    depends_on:
+      - t-003
+      - t-004
+    note: >
+      Daily implementation loop, at most one animation build per Pacific calendar day. Prefer
+      the highest-priority accepted pitch when the queue needs new work; otherwise polish an
+      existing effect whose Reaction ratings/comments identify a specific weakness. Create a new
+      Component build record rather than erasing the old attempt. Ship only after typecheck,
+      contract tests, reduced-motion review, resize cleanup review, and a visual browser smoke.
+
+  - id: t-008
+    milestone: m3
+    title: "Add automated animation catalog and lifecycle verification"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-003
+    note: >
+      Add a lightweight verification script that checks unique catalog ids, filename-to-lazy-
+      component resolution, generationSafe startup eligibility, valid preferred surfaces, and
+      no stale preference values. Document a browser smoke matrix for desktop/mobile, clipped
+      Screen FX regions, startup wallpaper, reduced motion, route changes, and repeated mount/
+      unmount cycles.
