@@ -3192,3 +3192,13 @@ task instead of idling or re-logging `t-026`'s "no PR to review" recurrence agai
 
 **Kaizen task:** none filed this cycle — this task itself was small enough that no
 further systemic finding surfaced while doing it.
+
+## 2026-07-14 | Reviewer → Silas | conductor/t-041 | kaizen (filed from t-038 merge)
+
+**Decision:** filed as `ready`, `stakes: reversible`. Kaizen task from merging t-038
+(PR #515): document the "create the remote branch via the GitHub API before the first
+`git push`" workaround for a session whose designated branch has no prior PR (so it
+doesn't exist on the actual remote yet), since a plain `git push -u origin <branch>` in
+that state failed with HTTP 413 (proxy tried to send a full-history pack rather than a
+delta) until the branch ref was created via `create_branch` first. Full diagnostic
+detail is in the task note and PR #515's description rather than repeated here.
