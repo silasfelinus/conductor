@@ -548,11 +548,11 @@ tasks:
 - id: t-020
   milestone: m4
   title: Make task-event roadmap mutations surgical, formatting-preserving, and conflict-safe
-  status: ready
-  owner: null
+  status: claimed
+  owner: worker
   passes: 0
   stakes: reversible
-  updated: '2026-07-14T03:04:52Z'
+  updated: '2026-07-14T23:06:04Z'
   note: "Context: scripts/process_task_events.py currently rewrites complete authoritative YAML files\
     \ with PyYAML safe_dump. A one-task state change therefore produced hundreds of unrelated changed\
     \ lines, escaped readable Unicode, changed block and quote styles, and created unnecessary merge-conflict\
@@ -592,3 +592,5 @@ tasks:
     \ to resolve_deps.py's dependency-unblock writes too, not just process_task_events.py's event-driven\
     \ ones \u2014 both call the same unsafe dump-the-whole-file pattern and should share one safe write\
     \ path.\n"
+  claimed_by: burst-20260714T230541Z
+  claimed_at: '2026-07-14T23:06:04Z'
