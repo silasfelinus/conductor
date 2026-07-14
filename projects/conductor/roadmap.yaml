@@ -796,33 +796,12 @@ tasks:
   - id: t-038
     milestone: m2
     title: Reconcile CONTROL.md's stated priority band with priority.yaml's actual order
-    status: claimed
+    status: done
     owner: reviewer
     passes: 0
     stakes: reversible
-    updated: '2026-07-14T16:49:52Z'
-    note: >
-      Found by scripts/audit_roadmaps.py (CONTROL_PRIORITY_DRIFT, error severity):
-      CONTROL.md's "Priority order this week" line lists challenge-center →
-      ai-art-academy → coloring-book → humboldt-scoop → humboldt-scoop-cms →
-      digital-storefront → packmaker → mermaids-of-venice → kind-robots →
-      global-ui, but projects/priority.yaml's matching prefix inserts
-      kindrobots-unraid between kind-robots and global-ui. Checked git history
-      (git log -p --follow on both files): this drift is not a recent edit --
-      priority.yaml has carried kindrobots-unraid in that slot since the file
-      was created, and CONTROL.md's band text has never listed it, so this
-      looks like the CONTROL.md prose simply never got updated to mirror
-      priority.yaml rather than a real prioritization disagreement. Not
-      resolving unilaterally since priority band ordering is Silas's call
-      (CONTROL.md: "the one file Silas edits to steer everything"). Two
-      textual-only fixes to choose between: (a) add kindrobots-unraid to
-      CONTROL.md's band text to match current priority.yaml (if the existing
-      order is intended), or (b) move kindrobots-unraid out of priority.yaml's
-      top band to match CONTROL.md's stated intent (if it should rank lower).
-      Either is a one-line, reversible, non-code edit -- no gate_human needed,
-      just a judgment call on which document reflects true intent. Re-run
-      `python scripts/audit_roadmaps.py` after to confirm CONTROL_PRIORITY_DRIFT
-      clears.
+    updated: '2026-07-14T16:50:40Z'
+    note: 'Found by scripts/audit_roadmaps.py (CONTROL_PRIORITY_DRIFT, error severity): CONTROL.md''s "Priority order this week" line lists challenge-center → ai-art-academy → coloring-book → humboldt-scoop → humboldt-scoop-cms → digital-storefront → packmaker → mermaids-of-venice → kind-robots → global-ui, but projects/priority.yaml''s matching prefix inserts kindrobots-unraid between kind-robots and global-ui. Checked git history (git log -p --follow on both files): this drift is not a recent edit -- priority.yaml has carried kindrobots-unraid in that slot since the file was created, and CONTROL.md''s band text has never listed it, so this looks like the CONTROL.md prose simply never got updated to mirror priority.yaml rather than a real prioritization disagreement. Not resolving unilaterally since priority band ordering is Silas''s call (CONTROL.md: "the one file Silas edits to steer everything"). Two textual-only fixes to choose between: (a) add kindrobots-unraid to CONTROL.md''s band text to match current priority.yaml (if the existing order is intended), or (b) move kindrobots-unraid out of priority.yaml''s top band to match CONTROL.md''s stated intent (if it should rank lower). Either is a one-line, reversible, non-code edit -- no gate_human needed, just a judgment call on which document reflects true intent. Re-run `python scripts/audit_roadmaps.py` after to confirm CONTROL_PRIORITY_DRIFT clears. RESOLVED 2026-07-14 (Reviewer, idle-cycle burst-mode pick per conductor/t-026''s established pattern): chose option (a) -- added kindrobots-unraid to CONTROL.md''s band text between kind-robots and global-ui, matching priority.yaml''s existing order, since the investigation above already concluded this was prose drift rather than an intended reprioritization. Re-ran scripts/audit_roadmaps.py: CONTROL_PRIORITY_DRIFT cleared (0 errors, 1 pre-existing warning unchanged, already deferred to t-039).'
     claimed_by: reviewer-great-goldberg-20260714T164946Z
     claimed_at: '2026-07-14T16:49:52Z'
   - id: t-039
