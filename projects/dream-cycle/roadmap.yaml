@@ -266,10 +266,18 @@ tasks:
       (per-type theming mirroring kind_robots dream-pitch-sheet.vue +
       pitchSheetDefaults), a top-scored gallery, a highlight reel, and a
       comment/edit button linking to the proposal file's Notes-from-Silas.
-      (4) daily-digest.yml runs proposal-gen + scoring (soft-fail) and commits
-      them before building the email. Comment/edit link target = the GitHub
-      backlog file (Phase 1 default). Fulfils art-generator-connect/t-019
-      "surface generation results in the daily digest."
+      (4) Generation runs during the conductor SWEEPS, not the digest cron
+      (Silas 2026-07-14, to avoid dedicated API-rate usage): the hourly conductor
+      sweep (build_conductor_summary.py -> build_dream_proposal.ensure_proposal)
+      generates the proposal once/day (guarded — no-op the other 23 runs) and
+      commits it; the Reviewer runs `python scripts/curate_art.py --daily` during
+      its sweep to score the day's renders into projects/curation/daily/<date>.yaml.
+      daily-digest.yml makes NO model calls — it only reads those committed files
+      and renders/sends the email. Comment/edit link = the GitHub backlog file
+      (Phase 1 default). Fulfils art-generator-connect/t-019 "surface generation
+      results in the daily digest."
+      SWEEP DUTY: the Reviewer runs curate_art.py --daily each sweep and commits
+      the daily report so the digest's top-scored gallery stays fresh.
   - id: t-012
     milestone: m4
     title: 'Phase 2: build the proposal into real records + art'
