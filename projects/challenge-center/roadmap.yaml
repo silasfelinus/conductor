@@ -394,9 +394,9 @@ tasks:
 - id: t-014
   milestone: m5
   title: Prompt-variant generator using kind_robots random lists
-  status: ready
+  status: claimed
   depends_on: t-002
-  owner: null
+  owner: reviewer
   passes: 0
   stakes: reversible
   note: "Support \"same generator, different prompts\" matchups where the difference is randomized variables.\
@@ -409,6 +409,9 @@ tasks:
     \ (t-002) \u2014 variants must be auditable and reproducible, not mystery rolls. The conductor matchup\
     \ runner (t-013) consumes this to enter one contender N times with variantKey \"random-1\"...\"random-N\"\
     .\n"
+  claimed_by: burst-20260714-20-conductor
+  claimed_at: '2026-07-14T20:06:10Z'
+  updated: '2026-07-14T20:06:10Z'
 - id: t-015
   milestone: m5
   title: 'Faceted leaderboards: rank by model, generator, and prompt strategy'
