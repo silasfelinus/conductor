@@ -305,17 +305,12 @@ tasks:
   - id: t-023
     milestone: m2
     title: worker_merge_pr.py falls back to the session branch when pushing the done-status flip to main is rejected
-    status: claimed
+    status: done
     owner: reviewer
-    updated: '2026-07-14T17:07:07Z'
+    updated: '2026-07-14T17:08:34Z'
     passes: 0
     stakes: reversible
-    note: >
-      Kaizen from t-022. commit_done_status() pushes the roadmap flip straight to origin/main;
-      permission-restricted sessions (git proxy allows only the designated claude/* branch) get a 403
-      after a successful merge, leaving the merged-but-not-marked-done gap that t-022 recovery then has
-      to close on rerun. Fix: on a rejected main push, commit the flip on the current branch and print
-      a clear instruction that it lands via the session PR instead.
+    note: 'Fixed: commit_done_status() now falls back to the session''s own branch and pushes there when push origin main is rejected (permission-restricted session), instead of leaving a merged-but-not-marked-done gap. Added regression tests for both the fallback path and the no-fallback-branch error path. See TALKBACK.md for detail.'
     claimed_by: reviewer-burst-1784048827
     claimed_at: '2026-07-14T17:07:07Z'
   - id: t-024

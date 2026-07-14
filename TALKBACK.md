@@ -3202,3 +3202,51 @@ doesn't exist on the actual remote yet), since a plain `git push -u origin <bran
 that state failed with HTTP 413 (proxy tried to send a full-history pack rather than a
 delta) until the branch ref was created via `create_branch` first. Full diagnostic
 detail is in the task note and PR #515's description rather than repeated here.
+
+## 2026-07-14 | Reviewer → Silas | conductor/t-023 | closed (hourly burst-mode pick)
+
+**Decision:** done. `stakes: reversible` conductor-tooling fix, opened on this session's
+own `claude/*` branch per the established practice for idle/burst Reviewer cycles (same
+pattern as t-038/t-040/t-041). Checked all six repos in scope for open PRs first (none),
+then picked the oldest unblocked `ready` conductor task via `scripts/next_ready_task.py`'s
+sibling — `projects/conductor/roadmap.yaml`'s own ready list — rather than a product-code
+task in another project, since Reviewer's `claude/*`-branch authority is scoped to
+conductor tooling, not Worker's implementation lane.
+
+**What happened:**
+1. Claimed `conductor/t-023` via `scripts/claim_task.py` before writing any code.
+2. Fixed the bug as scoped: `worker_merge_pr.py`'s `commit_done_status()` pushed the
+   done-status flip straight to `origin/main` with no fallback. A permission-restricted
+   session (git proxy allows only the session's designated `claude/*` branch) gets the
+   PR merge through fine but 403s on that push, leaving a merged-but-not-marked-done gap.
+   Now: capture the session's branch before checking out `main`; on a rejected `main`
+   push, cherry-pick the done-status commit onto that branch and push there instead,
+   with a clear stderr warning and a final "NOTE: ... not main yet" message so the
+   fallback isn't silent.
+3. Added two regression tests (`test_push_to_main_rejected_falls_back_to_session_branch`,
+   `test_push_to_main_rejected_with_no_fallback_branch_still_errors`) exercising both the
+   fallback path and the case where there's no branch to fall back to (must still error,
+   not silently swallow the failure).
+4. Ran the full pytest suite: 157 passed (151 pre-existing + 6 in this file, up from 4).
+   Note: the environment's `pytest` at `/root/.local/bin/pytest` (a uv-tool isolated venv)
+   lacks PyYAML and INTERNALERRORs on any test importing a script that needs it; running
+   via `python3 -m pytest` (system Python, has PyYAML) is required to get a real result —
+   worth remembering for future sessions in case this recurs.
+5. Ran `scripts/audit_roadmaps.py`: 0 errors, 1 pre-existing warning (already deferred to
+   `t-039`), no new findings.
+
+**What was good:**
+- Recognized this bug is the same underlying failure mode as `t-040` and `t-041` (git
+  push behaving unexpectedly under a permission-restricted session) and cross-referenced
+  both in the roadmap note and `LEARNING.yaml` instead of treating it as unrelated.
+- Wrote the "no fallback branch available" test specifically to make sure the fix
+  degrades to the *original* error behavior rather than silently no-op'ing when there's
+  nowhere safe to push the flip.
+
+**What to improve:**
+- Didn't investigate whether `/root/.local/bin/pytest`'s missing PyYAML is a pre-existing
+  environment gap worth fixing (e.g. `pip install pyyaml` into that uv tool venv) or is
+  irrelevant because CI uses a different invocation — flagging here rather than guessing.
+
+**Kaizen task:** none filed this cycle — nothing new and systemic surfaced beyond what's
+already noted above.
