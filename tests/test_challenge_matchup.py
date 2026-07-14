@@ -260,10 +260,11 @@ def test_run_text_entry_generates_and_submits(monkeypatch):
         "status": "submitted",
         "submissionId": 88,
     }
-    assert captured["args"][5] == {"temperature": 0.8}
-    assert captured["args"][6] == {"season": "summer"}
+    assert captured["args"][4] == "warm"
+    assert captured["args"][5] == "Write\n\nMake it warm"
+    assert captured["args"][6] == {"temperature": 0.8}
+    assert captured["args"][7] == {"season": "summer"}
     assert captured["kwargs"]["output_text"] == "Generated answer"
-    assert captured["args"][4] == "Write\n\nMake it warm"
 
 
 def test_run_art_entry_submits_art_image(monkeypatch):
