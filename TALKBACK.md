@@ -3547,3 +3547,65 @@ recurs as friction, not promoted to a roadmap task on a single observation.
 breaking main's TypeScript CI check) — filed as a real roadmap task, not just a
 TALKBACK note, since it actively degrades the "all green" merge signal every
 Worker/Reviewer session relies on until it's fixed.
+
+## 2026-07-14 | Worker → Reviewer | challenge-center/t-018 | closed (hourly burst-mode pick)
+
+**Decision:** done. `next_ready_task.py` surfaced `challenge-center/t-018` as a
+reclaimed stale claim (original claim had expired past `CLAIM_TTL_MINUTES`);
+`claim_task.py` re-claimed it cleanly against live `origin/main`.
+
+**What happened:**
+1. t-018 was a kaizen from t-004: add a CI check that runs the Challenge Center
+   seed scripts (`scripts/seed_challenges.ts`, `scripts/seed_contenders.ts`) in
+   validation-only mode so a malformed seed catalog fails CI before merge.
+   Read both scripts first: they already validate (`validateChallengeSeeds`/
+   `validateContenderSeeds`) and skip all Prisma/DB work unless run with
+   `--write`, so a plain `tsx` invocation is already a pure, DB-free dry run —
+   no new validation logic needed, just wiring it into CI.
+2. Added `test:seed-challenges` / `test:seed-contenders` npm scripts and a step
+   in kind_robots' `contract-tests.yml`, which already documents itself as
+   "Fast, DB-free contract checks... can gate every pull request" — the exact
+   right home, no new workflow file needed.
+3. Verified locally (fresh `npm ci`, no `DATABASE_URL` set): both scripts
+   validate and exit 0. Confirmed the failure path directly by feeding
+   `validateChallengeSeeds` a duplicate-slug catalog and observing a non-zero
+   exit — so this actually catches what it's supposed to catch, not just a
+   green no-op.
+4. Opened kind_robots PR #263. Its CI came back red on two checks — Contract
+   verifiers (failing on "Channel content contract": 3 content files reference
+   unknown `home/{account,friends,messages}` tabs) and TypeScript (the
+   already-tracked kind-robots/t-020 errors) — neither of which this PR's
+   two-file diff (`package.json` + `contract-tests.yml`) could have caused or
+   touched. Before I finished independently reproducing that against a clean
+   `origin/main` worktree, Silas merged the PR directly himself.
+5. Filed `kind-robots/t-021` for the newly-observed Channel content contract
+   failure (exact error text and likely-cause note, same detail level as
+   t-020) so it doesn't just evaporate as a one-off red check nobody tracks.
+
+**What was good:**
+- Read the existing seed scripts before writing anything — they already had
+  the validation logic from t-004; the task was purely a CI-wiring exercise,
+  not a chance to add parallel/duplicate validation code.
+- Verified the negative case (a catalog that should fail actually fails,
+  non-zero exit) rather than only checking the happy path — a CI check that
+  only ever prints "PASS" and never fails on real input is worse than no
+  check, because it creates false confidence.
+- Filed the newly-observed CI break as a real roadmap task with exact error
+  text and a likely-cause hypothesis, matching the precedent set for
+  kind-robots/t-020, instead of leaving it as tribal knowledge in a PR
+  description.
+
+**What to improve:**
+- Started an independent clean-worktree reproduction of the Channel content
+  contract failure (per the precedent in challenge-center/t-015's TALKBACK
+  entry: don't take a red check at face value) but Silas merged before I
+  finished it. Not wrong to let him act on his own repo, but the t-021 note
+  is slightly less airtight than t-020's (no confirmed clean-`origin/main`
+  repro, just "ran before my diff's new step and touches files my diff never
+  changed") — worth a from-scratch repro if anyone picks up t-021 to confirm
+  before fixing rather than assuming the note's inference is complete.
+
+**Kaizen task:** `kind-robots/t-021` (fix the pre-existing "Channel content
+contract" CI failure — 3 files reference unknown tabs) — filed as a real
+roadmap task per the same reasoning as t-020: an unrelated red CI check
+degrades the "all green" merge signal every session relies on.

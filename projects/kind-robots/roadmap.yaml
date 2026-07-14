@@ -488,3 +488,34 @@ tasks:
       blocked) -- but main's TypeScript check will read red for every PR until
       this is fixed, which erodes the "all green" signal Workers/Reviewers rely
       on to merge confidently.
+
+  - id: t-021
+    milestone: m3
+    title: Fix pre-existing "Channel content contract" CI failure (3 unknown-tab references)
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: "2026-07-14T22:20:00Z"
+    note: >
+      Found during conductor burst-mode cycle (challenge-center/t-018, 2026-07-14
+      ~22:13 UTC): kind_robots PR #263's "Contract verifiers" GitHub Actions check
+      (Contract Tests workflow) failed on the "Channel content contract" step
+      (npm run test:channel-content, i.e. utils/scripts/verifyChannelContent.ts),
+      but PR #263 only touched package.json and .github/workflows/contract-tests.yml
+      -- it never touched any content/*.md file. Exact failure: "Channel content
+      contract failed with 3 error(s): content/account.md: references unknown tab
+      home/account; content/friends.md: references unknown tab home/friends;
+      content/messages.md: references unknown tab home/messages." Each of those
+      three files' frontmatter sets channelKey: home / tabKey: account|friends|messages,
+      so verifyChannelContent.ts's notion of valid tabs for the "home" channel is
+      out of sync with content that already exists in the repo (likely a tab
+      registry -- tutorialChannels.home.sections or equivalent -- missing entries
+      for account/friends/messages, or the three content files using stale tabKey
+      values from before a rename). Needs someone to trace verifyChannelContent.ts's
+      tab-source-of-truth and either add the missing tab entries or correct the
+      content frontmatter, whichever is the actual drift. Not escalated hard: Silas
+      merged PR #263 directly past this same red check (along with a pre-existing
+      red TypeScript check, see kind-robots/t-020) confirming it isn't a hard
+      blocker, but it's a second CI check reading red on main independent of any
+      single PR, further eroding the "all green" signal.
