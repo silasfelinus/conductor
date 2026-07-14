@@ -3284,3 +3284,67 @@ note — picked a small, already-fully-specified `ready` conductor task instead.
 
 **Kaizen task:** none filed this cycle — nothing new and systemic surfaced beyond what's
 already documented.
+
+## 2026-07-14 | Reviewer → Silas | challenge-center/t-010 | closed (hourly burst-mode pick, PR #519)
+
+**Decision:** done. Picked `challenge-center/t-010` as the leading `ready` task per
+`priority.yaml`/`next_ready_task.py` (challenge-center leads this week's priority band
+per CONTROL.md) and its dependencies (t-008, t-009) were already `done`. Claimed via
+`scripts/claim_task.py` before writing anything.
+
+**What happened:**
+1. Wrote `scripts/challenge_runner.py`: fetches OPEN challenges from
+   `GET /api/challenges?status=OPEN` (or a single slug via `--challenge`), skips any
+   challenge the contender already has a leaderboard entry for (reuses
+   `challenge_submit.fetch_leaderboard`/`find_standing` rather than duplicating that
+   HTTP logic), generates an answer via the Claude Messages API, and submits it through
+   `challenge_submit.submit_challenge`. `--dry-run` exercises the full evaluation path
+   without calling the API or submitting.
+2. Scope decision, documented in the roadmap note and PR body: only `TEXT` and
+   `REASONING` challengeTypes are handled, since `challenge_submit.py`'s `--output` flow
+   only supports plain `outputText`. `ART` (needs a generated `ArtImage`) and
+   `CHARACTER`/`SCENARIO` (need a KR `Character`/`Scenario` record first, per
+   kind_robots' `prisma/schema.prisma`) are skipped with a printed reason rather than
+   attempted — flagged as natural follow-up scope, not silently dropped.
+3. Caught and fixed a dual-module-instance import bug before it shipped: importing the
+   sibling script as a bare `challenge_submit` module (the pattern `curate_art.py` uses
+   for `art_quality`) gives pytest's `scripts.challenge_submit` import and the runner's
+   bare `challenge_submit` import two separate `sys.modules` entries, so
+   `monkeypatch.setattr(challenge_submit, ...)` in tests silently doesn't affect the
+   runner's copy and tests were making real (proxy-blocked) network calls instead of
+   hitting fakes. Fixed by importing via `from scripts import challenge_submit as cs`
+   after inserting the repo root onto `sys.path`, so both call sites resolve to the same
+   module object regardless of entry point.
+4. Wrote 21 tests in `tests/test_challenge_runner.py` covering fetch/dedup/generation/
+   submission/CLI paths. Full suite: 172 passed (151 pre-existing + 21 new) via
+   `python3 -m pytest` (system Python) — the `/root/.local/bin/pytest` uv-tool venv
+   still lacks PyYAML per the gap noted on t-039/t-041 sessions, unrelated to this change.
+5. `scripts/audit_roadmaps.py` flagged `WAITING_WITH_SATISFIED_DEPS` for
+   `challenge-center/t-013` once t-010 was marked done (t-013 depended on it); ran
+   `scripts/resolve_deps.py` to promote it to `ready`, back to 0 errors.
+6. Opened PR #519, subscribed to its activity, and watched CI (19 checks: lint, tests,
+   authz regression, CodeQL, roadmap validation, etc.) run to completion — all green
+   except CodeQL's JS/TS analyzer, which was still `in_progress` when Silas merged the
+   PR himself. No action needed on my end beyond confirming main now contains the merge.
+
+**What was good:**
+- Ran the actual test suite against the actual import pattern before trusting it, which
+  is what caught the dual-module bug — an easy one to ship silently since the tests
+  would still report "passed" in a subtly wrong way (real network calls happening to
+  fail cleanly in this sandboxed environment rather than the mock being exercised).
+- Named the ART/CHARACTER/SCENARIO scope cut explicitly in both the roadmap note and the
+  PR body instead of quietly shipping partial coverage of "dispatch active challenges to
+  all registered agents" as if it were complete.
+- Reused `challenge_submit.py`'s existing HTTP helpers instead of re-implementing
+  fetch/submit/leaderboard logic in the new script.
+
+**What to improve:**
+- Could have grepped for existing dual-import patterns (e.g. whether `curate_art.py`'s
+  `art_quality` import has ever actually been exercised via `scripts.curate_art` in a
+  test) before assuming the established pattern was safe to copy — it turned out
+  untested and latently broken for this exact reuse case.
+
+**Kaizen task:** none filed this cycle — the dual-module-import pitfall is scoped to
+this file's own fix (documented inline as a code comment) rather than a systemic pattern
+needing a roadmap task, since no other script currently imports a sibling `scripts/`
+module while also being test-imported via the `scripts.` package path.
