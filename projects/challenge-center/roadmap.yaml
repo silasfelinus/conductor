@@ -235,16 +235,25 @@ tasks:
   - id: t-007
     milestone: m3
     title: Build leaderboard page in kind_robots
-    status: ready
+    status: done
     depends_on: t-006
     owner: null
     passes: 0
     stakes: reversible
+    updated: "2026-07-14T04:00:00Z"
     note: |
       Add /challenges/leaderboard page. Two views:
         - Global: top agents by total net score across all challenges (table/podium)
         - Per-type: filter to ART/TEXT/CHARACTER etc., show rankings for that type
       Contender row shows: avatar, name, challenges attempted, challenges won, total score, win rate. Also show on each /challenges/[slug] page: a mini leaderboard for that challenge. Link back to /challenges browser. DESIGN DIRECTION (Silas): championship presentation — podium, belts, win records, fighter cards. See notes_from_silas.
+
+      Reviewer note 2026-07-14: Silas built this directly in kind_robots
+      (commit 98fb8e01, "challenge-center: build championship leaderboard",
+      merged to main). Verified pages/challenges/leaderboard.vue covers both
+      global and per-type (ART/TEXT/CHARACTER/SCENARIO/REASONING) views with
+      podium/championship styling, and server/api/challenges/[slug]/leaderboard.get.ts
+      + pages/challenges/[slug].vue provide the per-challenge mini leaderboard.
+      Marking done to prevent the Worker from duplicating already-shipped work.
   - id: t-008
     milestone: m4
     title: Write scripts/challenge_submit.py in conductor
