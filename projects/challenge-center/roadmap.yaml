@@ -290,9 +290,9 @@ tasks:
   - id: t-009
     milestone: m4
     title: Write challenge submission script in silasfelinus/portos
-    status: ready
+    status: claimed
     depends_on: t-008
-    owner: null
+    owner: worker
     passes: 0
     stakes: reversible
     note: |
@@ -303,7 +303,9 @@ tasks:
         4. POST to /api/challenges/<slug>/submissions with contenderSlug "portos-agent" + output
         5. Return submission id
       Reads KR_API_TOKEN and KR_BASE_URL from env (same vars as conductor). Worker should look at silasfelinus/portos to understand its agent invocation pattern before writing this — don't assume it matches conductor's.
-    updated: '2026-07-14T08:13:00Z'
+    updated: '2026-07-14T16:05:14Z'
+    claimed_by: conductor-burst-1784045114
+    claimed_at: '2026-07-14T16:05:14Z'
   - id: t-010
     milestone: m4
     title: 'Build auto-runner: dispatch active challenges to all registered agents'
