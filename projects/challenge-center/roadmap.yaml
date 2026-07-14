@@ -399,42 +399,33 @@ tasks:
   owner: reviewer
   passes: 1
   stakes: reversible
-  note: >
-    Support "same generator, different prompts" matchups where the difference is
-    randomized variables. In silasfelinus/kind_robots, add a server util (and a
-    small API route, e.g. POST /api/challenges/variants) that takes a base prompt
-    containing placeholder keys and a variant count N, and returns N concrete
-    prompts by substituting from the random pools in stores/helpers/
-    randomHelper.ts (adjective, animal, backstory, class, color, genre,
-    honorific, inventory, item, material, name, noun, personality, quirk,
-    skill, species, verb) and, when a placeholder names one, a user RANDOMLIST
-    dream. Each returned variant includes the key\u2192value map so the caller can
-    store it as randomSelections on the submission (t-002) \u2014 variants must be
-    auditable and reproducible, not mystery rolls. The conductor matchup runner
-    (t-013) consumes this to enter one contender N times with variantKey
-    "random-1"..."random-N".
+  note: 'Support "same generator, different prompts" matchups where the difference is randomized variables.
+    In silasfelinus/kind_robots, add a server util (and a small API route, e.g. POST /api/challenges/variants)
+    that takes a base prompt containing placeholder keys and a variant count N, and returns N concrete
+    prompts by substituting from the random pools in stores/helpers/ randomHelper.ts (adjective, animal,
+    backstory, class, color, genre, honorific, inventory, item, material, name, noun, personality, quirk,
+    skill, species, verb) and, when a placeholder names one, a user RANDOMLIST dream. Each returned variant
+    includes the key\u2192value map so the caller can store it as randomSelections on the submission (t-002)
+    \u2014 variants must be auditable and reproducible, not mystery rolls. The conductor matchup runner
+    (t-013) consumes this to enter one contender N times with variantKey "random-1"..."random-N".
 
-    DONE (hourly burst-mode cycle, 2026-07-14 ~20:15 UTC): kind_robots PR #256
-    (`claude/upbeat-pascal-pu2vtz` \u2192 main, merged) adds
-    server/utils/promptVariants.ts (`generatePromptVariants`, a pure {{key}}
-    placeholder resolver taking an injected pool-provider function so it needs
-    no DB in tests) and POST /api/challenges/variants, which wires it to the
-    built-in randomHelper.ts pools plus a Prisma lookup of visible RANDOMLIST
-    dreams (stored as dreamType: BRAINSTORM per dreamHelper.ts's
-    LEGACY_DREAM_TYPE_MAP \u2014 RANDOMLIST has no such value in the Prisma enum)
-    matched by normalized title, scoped to isPublic || own userId. Every variant
-    returns variantKey ("random-1".."random-N"), promptUsed, and a
-    randomSelections key\u2192value map for auditability. Added
-    utils/scripts/verifyPromptVariants.ts (assert-based, matches the existing
-    verifyFacetAliases.ts convention) wired as `npm run test:prompt-variants`.
-    Verified: the new verify script passes; `npm test` (vue-tsc) shows no new
-    errors \u2014 eslint and prettier clean on all changed files. PR's "TypeScript"
-    CI check failed, but on investigation (see kind-robots/t-020, filed this
-    cycle) it's a pre-existing break on main unrelated to this change \u2014 confirmed
-    by running the identical typecheck against a clean origin/main worktree with
-    no PR changes applied, same two errors, same two unrelated files. All other
-    checks (Contract verifiers, facet-alias-smoke, GitGuardian, Vercel deploy)
-    passed; merged since mergeable_state stayed "unstable" (not hard-blocked).
+    DONE (hourly burst-mode cycle, 2026-07-14 ~20:15 UTC): kind_robots PR #256 (`claude/upbeat-pascal-pu2vtz`
+    \u2192 main, merged) adds server/utils/promptVariants.ts (`generatePromptVariants`, a pure {{key}}
+    placeholder resolver taking an injected pool-provider function so it needs no DB in tests) and POST
+    /api/challenges/variants, which wires it to the built-in randomHelper.ts pools plus a Prisma lookup
+    of visible RANDOMLIST dreams (stored as dreamType: BRAINSTORM per dreamHelper.ts''s LEGACY_DREAM_TYPE_MAP
+    \u2014 RANDOMLIST has no such value in the Prisma enum) matched by normalized title, scoped to isPublic
+    || own userId. Every variant returns variantKey ("random-1".."random-N"), promptUsed, and a randomSelections
+    key\u2192value map for auditability. Added utils/scripts/verifyPromptVariants.ts (assert-based, matches
+    the existing verifyFacetAliases.ts convention) wired as `npm run test:prompt-variants`. Verified:
+    the new verify script passes; `npm test` (vue-tsc) shows no new errors \u2014 eslint and prettier
+    clean on all changed files. PR''s "TypeScript" CI check failed, but on investigation (see kind-robots/t-020,
+    filed this cycle) it''s a pre-existing break on main unrelated to this change \u2014 confirmed by
+    running the identical typecheck against a clean origin/main worktree with no PR changes applied, same
+    two errors, same two unrelated files. All other checks (Contract verifiers, facet-alias-smoke, GitGuardian,
+    Vercel deploy) passed; merged since mergeable_state stayed "unstable" (not hard-blocked).
+
+    '
   claimed_by: burst-20260714-20-conductor
   claimed_at: '2026-07-14T20:06:10Z'
   updated: '2026-07-14T20:21:00Z'
@@ -503,8 +494,8 @@ tasks:
 - id: t-018
   milestone: m2
   title: Add a CI check that runs seed scripts in validation-only mode
-  status: ready
-  owner: null
+  status: claimed
+  owner: worker
   passes: 0
   stakes: reversible
   note: 'Kaizen from t-004 (Worker''s suggestion, kind_robots PR #199): add a CI job/step that runs scripts/seed_challenges.ts
@@ -513,8 +504,10 @@ tasks:
     fields, duplicate slugs, wrong type coverage) fail CI before merge instead of only being caught by
     manual review.
 
-    '
-  updated: '2026-07-12T20:40:00Z'
+
+
+    Worker run claimed the highest-priority eligible ready task after current-main priority scan.'
+  updated: 2026-07-14 21:00:00+00:00
 - id: t-019
   milestone: m3
   title: Polish and upgrade Challenge Center front-end surface
