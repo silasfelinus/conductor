@@ -8,6 +8,10 @@ Claude to produce a brief actionable summary.
 
 Writes CONDUCTOR-REPORT.md (or prints to stdout with --dry-run).
 
+Also generates the daily-dream proposal once per day (via
+build_dream_proposal.ensure_proposal) so that content is produced within this
+hourly sweep instead of a dedicated daily-digest API call.
+
 Usage:  python scripts/build_conductor_summary.py [--dry-run]
 Env:    ANTHROPIC_API_KEY  (required for LLM assessment; falls back to rules)
         GITHUB_TOKEN       (recommended; avoids rate limits)
@@ -31,6 +35,9 @@ try:
 except ImportError:
     sys.exit("PyYAML not installed — run: pip install pyyaml")
 
+sys.path.insert(0, str(Path(__file__).parent))
+import build_dream_proposal  # noqa: E402 — daily-dream proposal generator (reused by this sweep)
+
 REPOS = [
     {"owner": "silasfelinus", "name": "conductor"},
     {"owner": "silasfelinus", "name": "kind_robots"},
@@ -42,7 +49,7 @@ STALE_PR_HOURS = 8        # flag worker/* PRs open longer than this without revi
 UTC = datetime.timezone.utc
 
 
-# ── Helpers ──────────────────────────────────────────────────────────────────
+# ── Helpers ─────────────────────────────────────────────────
 
 def _now() -> datetime.datetime:
     return datetime.datetime.now(UTC)
@@ -78,7 +85,7 @@ def _gh(path: str, token: str | None, params: dict | None = None) -> object:
         return {}
 
 
-# ── Data gathering ───────────────────────────────────────────────────────────
+# ── Data gathering ────────────────────────────────────────────
 
 def fetch_repo(owner: str, name: str, token: str | None) -> dict:
     since_24h = (_now() - datetime.timedelta(hours=24)).strftime("%Y-%m-%dT%H:%M:%SZ")
@@ -217,7 +224,7 @@ def fetch_todos(token: str | None) -> list:
         return []
 
 
-# ── Art queue + image pipeline ───────────────────────────────────────────────
+# ── Art queue + image pipeline ────────────────────────────────────
 
 def fetch_art_queue() -> dict:
     """Count pending art generation requests and images waiting to be distributed."""
@@ -282,7 +289,7 @@ def fetch_vercel_status(token: str | None) -> dict:
     }
 
 
-# ── Claude assessment ────────────────────────────────────────────────────────
+# ── Claude assessment ──────────────────────────────────────────
 
 SYSTEM = """\
 You are the Conductor — the project manager for an autonomous AI coordination system called AI_Networker.
@@ -409,7 +416,7 @@ def _fallback(state: dict) -> str:
     return f"## ACTION NEEDED\n\n{bullets}\n\n{stats}"
 
 
-# ── Output ───────────────────────────────────────────────────────────────────
+# ── Output ────────────────────────────────────────────────
 
 def write_report(summary: str, as_of: str, dry_run: bool) -> None:
     content = (
@@ -426,7 +433,7 @@ def write_report(summary: str, as_of: str, dry_run: bool) -> None:
         print(f"  wrote {REPORT_PATH}", file=sys.stderr)
 
 
-# ── Entry point ──────────────────────────────────────────────────────────────
+# ── Entry point ────────────────────────────────────────────
 
 def main() -> None:
     ap = argparse.ArgumentParser(description="Hourly conductor health assessment")
@@ -469,6 +476,18 @@ def main() -> None:
     summary = assess(state)
 
     write_report(summary, as_of, args.dry_run)
+
+    # Generate the daily-dream proposal as part of this hourly sweep — a no-op on
+    # the 23 hourly runs where today's proposal already exists, so it costs at most
+    # one extra model call per day and keeps proposal generation off the (model-call-
+    # free) daily-digest cron. Soft-fail: a hiccup here never breaks the report.
+    print("  daily-dream proposal...", file=sys.stderr)
+    try:
+        build_dream_proposal.ensure_proposal(
+            os.environ.get("ANTHROPIC_API_KEY", ""), dry_run=args.dry_run
+        )
+    except Exception as e:  # noqa: BLE001
+        print(f"  proposal generation skipped: {e}", file=sys.stderr)
 
 
 if __name__ == "__main__":

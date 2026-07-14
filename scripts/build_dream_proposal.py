@@ -17,18 +17,25 @@ shape) so the existing creation loop can pick it up and build it, and so Silas
 can steer it by editing the file's `## Notes from Silas` section — the
 comment/edit link the digest points at.
 
+Generation happens **during the hourly conductor sweep**, not the daily-digest
+cron: scripts/build_conductor_summary.py calls `ensure_proposal()` once per day
+(it's a no-op when a proposal for the date already exists), reusing the sweep's
+existing API budget. The daily-digest workflow only *reads* the committed file —
+it makes no model calls. This keeps proposal generation off a dedicated metered
+digest call.
+
 Follows the house LLM pattern (scripts/curate_art.py, build_conductor_summary.py):
 raw urllib to the Anthropic Messages API, ANTHROPIC_API_KEY from the environment,
-schema-constrained JSON output. With no key (or --sample) it renders a built-in
-sample proposal instead of calling the API, so the digest/rendering path stays
-verifiable and the morning workflow soft-no-ops rather than erroring.
+schema-constrained JSON output. `--sample` renders a built-in sample proposal
+(no API) so the rendering path stays verifiable.
 
 Env:
   ANTHROPIC_API_KEY    required for real generation; without it, --sample only
-  DREAM_PROPOSAL_MODEL model id (default claude-opus-4-8)
+  DREAM_PROPOSAL_MODEL model id (default claude-haiku-4-5-20251001 — cheap; the
+                       hourly sweep already runs Haiku, so this stays low-cost)
 
 Usage:
-  python scripts/build_dream_proposal.py                 # generate + write today's file
+  python scripts/build_dream_proposal.py                 # generate today's file if missing
   python scripts/build_dream_proposal.py --dry-run       # print markdown, don't write
   python scripts/build_dream_proposal.py --sample --dry-run   # built-in sample, no API
   python scripts/build_dream_proposal.py --theme "coastal noir"  # optional steer
@@ -60,7 +67,7 @@ ROOT = Path(__file__).resolve().parents[1]
 BACKLOG = ROOT / "projects" / "dream-cycle" / "backlog"
 SHIPPED = ROOT / "projects" / "dream-cycle" / "SHIPPED.md"
 
-MODEL = os.environ.get("DREAM_PROPOSAL_MODEL", "claude-opus-4-8").strip()
+MODEL = os.environ.get("DREAM_PROPOSAL_MODEL", "claude-haiku-4-5-20251001").strip()
 API_URL = "https://api.anthropic.com/v1/messages"
 REPO = "silasfelinus/conductor"
 DEFAULT_BRANCH = "main"
@@ -450,42 +457,88 @@ def edit_link(filename: str) -> str:
     )
 
 
-def main() -> int:
-    ap = argparse.ArgumentParser(description=__doc__)
-    ap.add_argument("--dry-run", action="store_true", help="print markdown, don't write the file")
-    ap.add_argument("--sample", action="store_true", help="use the built-in sample proposal (no API call)")
-    ap.add_argument("--theme", default="", help="optional one-line steer for today's world")
-    ap.add_argument("--date", default=None, help="override proposal date (YYYY-MM-DD, Pacific)")
-    args = ap.parse_args()
+def _target_date(date: Optional[str] = None) -> str:
+    return date or datetime.datetime.now(_TZ).date().isoformat()
 
-    proposal_date = args.date or datetime.datetime.now(_TZ).date().isoformat()
-    avoid = existing_slugs()
-    api_key = os.environ.get("ANTHROPIC_API_KEY", "").strip()
 
-    if args.sample or not api_key:
-        if not args.sample:
-            print("ANTHROPIC_API_KEY not set — using the built-in sample proposal.", file=sys.stderr)
-        proposal = normalize(json.loads(json.dumps(SAMPLE_PROPOSAL)), avoid)
-    else:
+def proposal_exists_for(date: str) -> bool:
+    """True if a daily proposal for `date` is already in the backlog (skip regen)."""
+    for path in glob.glob(str(BACKLOG / "*.md")):
+        name = Path(path).name
+        if name.startswith("_") or name == "README.md":
+            continue
         try:
-            proposal = normalize(call_llm(api_key, args.theme, avoid), avoid)
-        except Exception as error:  # noqa: BLE001 - soft-fail so the morning run survives
-            print(f"Proposal generation failed: {error}", file=sys.stderr)
-            return 0
+            text = Path(path).read_text(encoding="utf-8")
+        except OSError:
+            continue
+        m = re.search(r"^proposal_date:\s*(.+)$", text, re.MULTILINE)
+        if m and m.group(1).strip().strip("'\"") == date:
+            return True
+    return False
 
-    markdown = render_markdown(proposal, proposal_date)
-    filename = f"{proposal_date}-{proposal['slug']}.md"
 
-    if args.dry_run:
+def _write(proposal: dict[str, Any], date: str, dry_run: bool) -> Optional[Path]:
+    markdown = render_markdown(proposal, date)
+    filename = f"{date}-{proposal['slug']}.md"
+    if dry_run:
         print(markdown)
         print(f"\n# would write: projects/dream-cycle/backlog/{filename}", file=sys.stderr)
         print(f"# edit link: {edit_link(filename)}", file=sys.stderr)
-        return 0
-
+        return None
     dest = BACKLOG / filename
     dest.write_text(markdown, encoding="utf-8")
     print(f"Wrote {dest.relative_to(ROOT)}")
     print(f"Edit link: {edit_link(filename)}")
+    return dest
+
+
+def ensure_proposal(api_key: str, date: Optional[str] = None, dry_run: bool = False,
+                    allow_sample: bool = False, theme: str = "") -> Optional[Path]:
+    """Generate the daily proposal for `date` if one doesn't exist yet (else no-op).
+
+    This is the entry point the hourly conductor sweep calls once per day — the
+    existence guard makes the other 23 hourly runs free (no API call)."""
+    date = _target_date(date)
+    if proposal_exists_for(date):
+        print(f"Proposal for {date} already exists — skipping generation.", file=sys.stderr)
+        return None
+    avoid = existing_slugs()
+    api_key = (api_key or "").strip()
+    if api_key:
+        try:
+            proposal = normalize(call_llm(api_key, theme, avoid), avoid)
+        except Exception as error:  # noqa: BLE001 - soft-fail so the sweep survives
+            print(f"Proposal generation failed: {error}", file=sys.stderr)
+            return None
+    elif allow_sample:
+        print("No ANTHROPIC_API_KEY — using the built-in sample proposal.", file=sys.stderr)
+        proposal = normalize(json.loads(json.dumps(SAMPLE_PROPOSAL)), avoid)
+    else:
+        print("No ANTHROPIC_API_KEY (and --sample not set) — nothing generated.", file=sys.stderr)
+        return None
+    return _write(proposal, date, dry_run)
+
+
+def main() -> int:
+    ap = argparse.ArgumentParser(description=__doc__)
+    ap.add_argument("--dry-run", action="store_true", help="print markdown, don't write the file")
+    ap.add_argument("--sample", action="store_true",
+                    help="render the built-in sample proposal (no API); bypasses the existence guard")
+    ap.add_argument("--theme", default="", help="optional one-line steer for today's world")
+    ap.add_argument("--date", default=None, help="override proposal date (YYYY-MM-DD, Pacific)")
+    args = ap.parse_args()
+
+    date = _target_date(args.date)
+    if args.sample:
+        # Testing/demo path: always render the built-in sample, guard bypassed.
+        avoid = existing_slugs()
+        proposal = normalize(json.loads(json.dumps(SAMPLE_PROPOSAL)), avoid)
+        _write(proposal, date, args.dry_run)
+        return 0
+
+    # Production path — guarded once/day generation (used by the hourly sweep too).
+    ensure_proposal(os.environ.get("ANTHROPIC_API_KEY", ""), date=date,
+                    dry_run=args.dry_run, allow_sample=False, theme=args.theme)
     return 0
 
 
