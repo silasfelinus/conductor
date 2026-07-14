@@ -37,6 +37,7 @@ except ImportError:
 
 sys.path.insert(0, str(Path(__file__).parent))
 import build_dream_proposal  # noqa: E402 — daily-dream proposal generator (reused by this sweep)
+import build_dream_records  # noqa: E402 — proposal → kind_robots records builder (Phase 2)
 
 REPOS = [
     {"owner": "silasfelinus", "name": "conductor"},
@@ -49,7 +50,7 @@ STALE_PR_HOURS = 8        # flag worker/* PRs open longer than this without revi
 UTC = datetime.timezone.utc
 
 
-# ── Helpers ─────────────────────────────────────────────────
+# ── Helpers ─────────────────────────────
 
 def _now() -> datetime.datetime:
     return datetime.datetime.now(UTC)
@@ -85,7 +86,7 @@ def _gh(path: str, token: str | None, params: dict | None = None) -> object:
         return {}
 
 
-# ── Data gathering ────────────────────────────────────────────
+# ── Data gathering ────────────────────────────
 
 def fetch_repo(owner: str, name: str, token: str | None) -> dict:
     since_24h = (_now() - datetime.timedelta(hours=24)).strftime("%Y-%m-%dT%H:%M:%SZ")
@@ -224,7 +225,7 @@ def fetch_todos(token: str | None) -> list:
         return []
 
 
-# ── Art queue + image pipeline ────────────────────────────────────
+# ── Art queue + image pipeline ──────────────────────────────────
 
 def fetch_art_queue() -> dict:
     """Count pending art generation requests and images waiting to be distributed."""
@@ -289,7 +290,7 @@ def fetch_vercel_status(token: str | None) -> dict:
     }
 
 
-# ── Claude assessment ──────────────────────────────────────────
+# ── Claude assessment ──────────────────────────────
 
 SYSTEM = """\
 You are the Conductor — the project manager for an autonomous AI coordination system called AI_Networker.
@@ -416,7 +417,7 @@ def _fallback(state: dict) -> str:
     return f"## ACTION NEEDED\n\n{bullets}\n\n{stats}"
 
 
-# ── Output ────────────────────────────────────────────────
+# ── Output ────────────────────────────
 
 def write_report(summary: str, as_of: str, dry_run: bool) -> None:
     content = (
@@ -433,7 +434,7 @@ def write_report(summary: str, as_of: str, dry_run: bool) -> None:
         print(f"  wrote {REPORT_PATH}", file=sys.stderr)
 
 
-# ── Entry point ────────────────────────────────────────────
+# ── Entry point ────────────────────────────────
 
 def main() -> None:
     ap = argparse.ArgumentParser(description="Hourly conductor health assessment")
@@ -488,6 +489,13 @@ def main() -> None:
         )
     except Exception as e:  # noqa: BLE001
         print(f"  proposal generation skipped: {e}", file=sys.stderr)
+
+    # Phase 2: build yesterday's proposal into real kind_robots records (pure
+    # REST via KR_API_TOKEN — no model calls) and attach any freshly-rendered
+    # art to its pitch sheets. Guarded (one unbuilt proposal past its steering
+    # day; skips if Silas left notes) and soft-failing, so it's sweep-safe.
+    print("  daily-dream records + art attach...", file=sys.stderr)
+    build_dream_records.ensure_records(dry_run=args.dry_run)
 
 
 if __name__ == "__main__":

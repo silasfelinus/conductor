@@ -57,8 +57,10 @@ jobs:
           git config user.name "conductor-bot"
           git config user.email "conductor-bot@users.noreply.github.com"
           # build_conductor_summary.py also generates the daily-dream proposal
-          # (once/day) into the dream-cycle backlog — commit it alongside the report.
-          git add CONDUCTOR-REPORT.md projects/dream-cycle/backlog/
+          # (once/day), builds yesterday's proposal into kind_robots records
+          # (built-data in the backlog file), and queues its art requests —
+          # commit those surfaces alongside the report.
+          git add CONDUCTOR-REPORT.md projects/dream-cycle/backlog/ projects/art-prompts.yaml
           if git diff --staged --quiet; then
             echo "No changes to commit"
           else
