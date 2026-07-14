@@ -423,3 +423,32 @@ tasks:
       commit on main has already deployed to production by the time this
       job runs. Not urgent -- self-resolves once merge bursts settle -- but
       will keep flaking CI red during any future rapid-merge session.
+
+  - id: t-019
+    milestone: m3
+    title: Front-end curate request for the ArtJob trainer (closes the loop)
+    status: review
+    owner: reviewer
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-14T09:00:00Z'
+    note: >
+      SHIPPED IN REVIEW (2026-07-14, Silas-directed: "we should be able to
+      submit the curate request from the front end as well"). The merged ArtJob
+      trainer panel (PRs #239/#240/#241) only renders jobs that ALREADY have
+      payload.curation.curator, but nothing wrote that — curate_art.py scored to
+      disk, never POSTed source=CURATOR feedback — so the panel was always empty.
+      This closes the loop. kind_robots (session branch
+      claude/daily-digest-art-proposals-nbrxur, restarted from main after PR #229
+      merged): new admin-gated bridge server/api/conductor/curate-request.post.ts
+      (mirrors art-request.post.ts) appends to conductor
+      projects/curation/requests.yaml via conductorGet/Put; new
+      server/utils/curationRequestYaml.ts (column-0 block-seq contract, PyYAML-
+      verified); artJobStore requestCuration/requestWindowCuration +
+      curationRequesting/RequestedIds; UI adds a per-job "Request curation"
+      button on DONE cards, a bulk "Curate finished" header button, and a trainer
+      empty-state CTA. Conductor: curate_art.py --requests drains the queue (runs
+      the vision assessor with DAILY_VERDICT_SCHEMA, POSTs source=CURATOR to
+      /api/art/queue/<job>/feedback with KR_API_TOKEN, flips entries to done);
+      wired into the hourly sweep (build_conductor_summary.py, soft-failing).
+      Set done when both PRs merge.

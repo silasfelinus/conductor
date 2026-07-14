@@ -40,6 +40,7 @@ except ImportError:
 sys.path.insert(0, str(Path(__file__).parent))
 import build_dream_proposal  # noqa: E402 — proposal existence check only (agents author proposals)
 import build_dream_records  # noqa: E402 — proposal → kind_robots records builder (Phase 2)
+import curate_art  # noqa: E402 — drains front-end curate-request queue (art trainer loop)
 
 REPOS = [
     {"owner": "silasfelinus", "name": "conductor"},
@@ -502,6 +503,16 @@ def main() -> None:
     # a missing proposal in the state above.
     print("  daily-dream records + art attach...", file=sys.stderr)
     build_dream_records.ensure_records(dry_run=args.dry_run)
+
+    # Service front-end curate requests: run the vision assessor on ArtJobs Silas
+    # flagged in the ArtJob trainer panel and POST CURATOR verdicts back. Soft-fails
+    # without ANTHROPIC_API_KEY / KR_API_TOKEN (leaves the queue pending).
+    print("  curate-request drain (art trainer)...", file=sys.stderr)
+    try:
+        curate_args = argparse.Namespace(dry_run=args.dry_run, limit=0)
+        curate_art.run_requests(curate_args)
+    except Exception as error:  # noqa: BLE001 - never let curation break the sweep
+        print(f"  curate-request drain skipped: {error}", file=sys.stderr)
 
 
 if __name__ == "__main__":
