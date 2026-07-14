@@ -305,9 +305,9 @@ tasks:
   - id: t-023
     milestone: m2
     title: worker_merge_pr.py falls back to the session branch when pushing the done-status flip to main is rejected
-    status: ready
-    owner: null
-    updated: '2026-07-04T19:05:00Z'
+    status: claimed
+    owner: reviewer
+    updated: '2026-07-14T17:07:07Z'
     passes: 0
     stakes: reversible
     note: >
@@ -316,6 +316,8 @@ tasks:
       after a successful merge, leaving the merged-but-not-marked-done gap that t-022 recovery then has
       to close on rerun. Fix: on a rejected main push, commit the flip on the current branch and print
       a clear instruction that it lands via the session PR instead.
+    claimed_by: reviewer-burst-1784048827
+    claimed_at: '2026-07-14T17:07:07Z'
   - id: t-024
     milestone: m1
     title: Fix pre-existing failures in tests/test_run_worker_status_integration.py
