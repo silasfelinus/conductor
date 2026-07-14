@@ -367,11 +367,10 @@ tasks:
 - id: t-013
   milestone: m5
   title: 'Matchup runner: dispatch one challenge across a contender matrix'
-  status: claimed
+  status: done
   depends_on:
   - t-010
   - t-012
-  owner: worker
   passes: 0
   stakes: reversible
   note: "In silasfelinus/conductor, write scripts/challenge_matchup.py \u2014 the generalization of t-010's\
@@ -386,8 +385,12 @@ tasks:
     \ art save path so the submission gets a real artImageId. Print a matchup summary table. Reads KR_API_TOKEN,\
     \ KR_BASE_URL, ANTHROPIC_API_KEY, OPENAI_API_KEY from env; skip (with a clear note) any contender\
     \ whose key/backend is unavailable.\n\n\nClaimed for implementation of the general contender matchup\
-    \ runner on current main."
-  updated: 2026-07-14 18:16:27+00:00
+    \ runner on current main.\n\nComplete in conductor PR #522 (squash 610f718): added scripts/challenge_matchup.py\
+    \ with JSON/YAML contender matrices, live contender resolution, Anthropic/OpenAI text dispatch, queued\
+    \ A1111/Comfy art generation, OpenAI Images generation, real ArtImage submission links, variant audit\
+    \ metadata, safe per-entry skips, and summary reporting. Worker PR CI and Security Audit passed before\
+    \ merge."
+  updated: 2026-07-14 19:08:49+00:00
 - id: t-014
   milestone: m5
   title: Prompt-variant generator using kind_robots random lists
