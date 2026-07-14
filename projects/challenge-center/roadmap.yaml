@@ -290,12 +290,28 @@ tasks:
   - id: t-009
     milestone: m4
     title: Write challenge submission script in silasfelinus/portos
-    status: claimed
+    status: review
     depends_on: t-008
     owner: worker
     passes: 0
     stakes: reversible
     note: |
+      REVIEW (2026-07-14, burst-mode session): silasfelinus/portos PR #6 (branch
+      claude/blissful-goldberg-e7lam7 -> main) adds scripts/challenge_submit.py
+      mirroring this repo's script (fetch prompt -> run configured CLI provider
+      -> POST submission as contender "portos-agent" -> print leaderboard
+      standing), plus scripts/lib/run_cli_provider.mjs (a one-shot helper
+      wrapping PortOS's existing pickCliProvider/runCliProviderPrompt from
+      server/lib/cliProviderRun.js so the script doesn't hardcode a CLI's argv
+      convention) and a new settings.challengeSubmit provider/model config slot
+      validated the same way as the existing autofixer/calendarSync slots.
+      Verified locally: syntax checks, an end-to-end smoke test against a fake
+      CLI provider (spawn/stdin/stdout plumbing), and a stubbed-HTTP run of the
+      full fetch->agent->submit->leaderboard flow, plus the full PortOS server
+      vitest suite (712 passed, 1 pre-existing unrelated failure in
+      services/imageGen/codex.test.js, 140 skipped). Awaiting CI on PR #6
+      before merge. Original task intent below.
+
       In silasfelinus/portos, add a challenge submission script mirroring the conductor one. Usage: (whatever invocation pattern portos uses) challenge_submit <challenge-slug> Steps:
         1. Fetch challenge from KR API (GET /api/challenges/<slug>)
         2. Pass promptText to the portos agent
@@ -303,7 +319,7 @@ tasks:
         4. POST to /api/challenges/<slug>/submissions with contenderSlug "portos-agent" + output
         5. Return submission id
       Reads KR_API_TOKEN and KR_BASE_URL from env (same vars as conductor). Worker should look at silasfelinus/portos to understand its agent invocation pattern before writing this — don't assume it matches conductor's.
-    updated: '2026-07-14T16:05:14Z'
+    updated: '2026-07-14T16:16:30Z'
     claimed_by: conductor-burst-1784045114
     claimed_at: '2026-07-14T16:05:14Z'
   - id: t-010
