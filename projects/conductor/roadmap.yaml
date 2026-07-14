@@ -928,8 +928,8 @@ tasks:
   - id: t-042
     milestone: m2
     title: Fix task-events queue head-of-line blocking on a stale/invalid event
-    status: ready
-    owner: null
+    status: claimed
+    owner: reviewer
     passes: 0
     stakes: reversible
     note: >
@@ -952,3 +952,6 @@ tasks:
       already done). Added tests/test_process_task_events.py coverage
       (test_main_applies_valid_events_even_when_an_earlier_one_fails) that
       reproduces the alphabetical head-of-line-blocking scenario directly.
+    claimed_by: reviewer-hourly-20260714T1848
+    claimed_at: '2026-07-14T18:56:54Z'
+    updated: '2026-07-14T18:56:54Z'
