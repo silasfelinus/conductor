@@ -432,20 +432,13 @@ tasks:
 - id: t-015
   milestone: m5
   title: 'Faceted leaderboards: rank by model, generator, and prompt strategy'
-  status: claimed
+  status: done
   depends_on: t-007
   owner: reviewer
   passes: 0
   stakes: reversible
-  note: "Extend the t-007 leaderboard (page + API) with facets beyond per-contender:\n  - per-generator:\
-    \ SD vs Comfy vs OpenAI images across all ART challenges\n    (group by Contender.generator)\n  -\
-    \ per-model: Fable vs Opus vs GPT (group by Contender.model / provider)\n  - per-kind: AGENT_STACK\
-    \ vs LLM_MODEL vs ART_GENERATOR divisions\n  - per-variant within a challenge: on /challenges/[slug],\
-    \ when one\n    contender has multiple variantKeys, show which prompt variant won and\n    surface\
-    \ its promptUsed / randomSelections so the comparison teaches\n    something\nFacet data comes from\
-    \ the t-002 Contender fields; grouping is a query-level change, not new schema. Keep the championship\
-    \ presentation \u2014 a generator facet is just a different weight class.\n"
-  updated: '2026-07-14T20:50:03Z'
+  note: 'DONE (2026-07-14, hourly conductor cycle, Reviewer solo full-cycle session): kind_robots PR #258 (`claude/admiring-mayer-th2kzy` -> main, merged) adds `buildFacetLeaderboard()` in server/utils/challengeCenter.ts, grouping scored submissions by Contender kind/provider/model/generator instead of by individual contender (contenders missing the requested facet are excluded, not bucketed under "unknown"). GET /api/challenges/leaderboard gained a `facet` query param wired to it, with challengesAttempted/challengesWon/winRate computed per facet value the same way as per-contender today. Also closed the "per-variant within a challenge" bullet: buildChallengeLeaderboard() variants[] now carry promptUsed/randomSelections/rank plus a bestVariantKey on the entry, and /challenges/[slug] surfaces a "Best variant" badge and a "Random rolls used" collapse. pages/challenges/leaderboard.vue got a comparison-axis selector (contender/model/generator/provider/kind). New utils/scripts/verifyChallengeCenter.ts (wired as npm run test:challenge-center) covers both functions. Verified: new verify script passes, npm run test (vue-tsc) shows no new errors under Node 22 locally. PR CI: Facet Alias Smoke Test and Contract Tests green; TypeScript Type Check failed on GitHub Actions (Node 24 runner) — reproduced the exact same two pre-existing errors (server/api/art/image/index.get.ts:153, server/api/model-builder/items/[id]/commit.post.ts:644/646, tracked in kind-robots/t-020) by installing Node 24 locally and running a fresh `npm ci` + typecheck against this branch, byte-identical file:line match, confirming no regression from this change. Vercel deploy check failed on an unrelated build-rate-limit (24h retry), also pre-existing/environmental. mergeable_state stayed "unstable" (not blocked), matching the PR #256 precedent for merging past this known-red pre-existing check; merged.'
+  updated: '2026-07-14T21:10:17Z'
   claimed_by: conductor-hourly-1784062203
   claimed_at: '2026-07-14T20:50:03Z'
 - id: t-016

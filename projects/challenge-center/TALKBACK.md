@@ -265,3 +265,53 @@ routine; treated per AGENTS.md's `claude/*`-PR allowance).
 (addendum added: extend its surgical-write scope to `resolve_deps.py`, not just
 `process_task_events.py`). Both scripts share the identical `yaml.safe_dump`-the-whole-file
 defect and should share one safe write path once t-020 lands.
+
+## 2026-07-14 | Reviewer → Worker | challenge-center/t-015 | closed (hourly conductor cycle, solo full-cycle)
+
+**Decision:** done. Claimed via `claim_task.py` (no rotation collision), implemented directly
+in this session (no separate Worker pass this cycle), opened kind_robots PR #258, verified,
+and merged.
+
+**What happened:**
+1. `next_ready_task.py` picked `challenge-center/t-015` — top of `priority.yaml`, `t-007`
+   dependency already `done`.
+2. Added `buildFacetLeaderboard()` to `server/utils/challengeCenter.ts`, grouping scored
+   submissions by a Contender facet (`kind`/`provider`/`model`/`generator`) instead of by
+   individual contender. Contenders missing the requested facet are excluded rather than
+   silently bucketed under "unknown" — verified this with an explicit test case.
+3. Extended `buildChallengeLeaderboard()`'s per-contender `variants[]` with `promptUsed`,
+   `randomSelections`, and a within-contender `rank`, plus a `bestVariantKey` on the entry —
+   closes the task's fourth bullet ("per-variant within a challenge... show which prompt
+   variant won"). `/challenges/[slug]` now shows a "Best variant" badge and a "Random rolls
+   used" collapse alongside the existing "Exact prompt used" collapse.
+4. `GET /api/challenges/leaderboard` gained a `facet` query param; `pages/challenges/
+   leaderboard.vue` got a "Comparison axis" selector. New `utils/scripts/
+   verifyChallengeCenter.ts` (wired as `npm run test:challenge-center`) covers both
+   grouping functions with assert-based tests, following the repo's existing verify-script
+   convention.
+5. PR CI: Facet Alias Smoke Test and Contract Tests green. TypeScript Type Check failed —
+   investigated rather than assumed pre-existing: installed Node 24 locally (matching the
+   CI runner exactly, same as the `t-014`/PR #256 precedent), ran a fresh `npm ci` against
+   this branch, and reproduced the identical two pre-existing errors at the identical
+   file:line (`server/api/art/image/index.get.ts:153`, `server/api/model-builder/items/
+   [id]/commit.post.ts:644/646`, tracked in `kind-robots/t-020`). Vercel failed on an
+   unrelated build-rate-limit. `mergeable_state` stayed `unstable` (not `blocked`); merged
+   per the PR #256 precedent for known-red pre-existing checks.
+
+**What was good:**
+- Didn't take the CI TypeScript failure at face value in either direction — reproduced the
+  exact CI environment (Node 24 via a fresh local install, not just re-running under the
+  sandbox's Node 22) before concluding it was pre-existing, rather than assuming the prior
+  PR's investigation still applied without re-checking.
+- The facet-missing-value exclusion (a contender with `generator: null` doesn't get grouped
+  as `"null"`) was tested explicitly, not just implemented and assumed correct.
+
+**What to improve:**
+- No separate Worker/Reviewer split this cycle — one session claimed, implemented, and
+  merged. That's consistent with how prior hourly burst-mode cycles have operated on this
+  project (see `t-008`/`t-009`/`t-010`/`t-013`/`t-014` entries above), but worth noting since
+  AGENTS.md's default two-role model assumes a live Worker session exists to hand off to.
+
+**Kaizen task:** none filed this cycle — the `buildChallengeLeaderboard`/`buildFacetLeaderboard`
+duplication noted in the PR body (`groupAndRank` factoring) is a minor internal-shape
+observation, not yet worth a dedicated task on a single observation.

@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-07-14T15:18:19Z
+Generated: 2026-07-14T21:17:21Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **34**
-- Outcomes: done: 34
+- Closed tasks recorded: **43**
+- Outcomes: done: 43
 - Success rate: **100%**
 - Average passes on successful tasks: **0.0**
 
@@ -15,11 +15,13 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 | Project | Closed | Success rate |
 |---|---|---|
+| ai-art-academy | 1 | 100% |
 | alexa-integration | 1 | 100% |
 | animation-manager | 4 | 100% |
 | animation-studio | 1 | 100% |
-| challenge-center | 5 | 100% |
-| conductor | 5 | 100% |
+| challenge-center | 8 | 100% |
+| coloring-book | 1 | 100% |
+| conductor | 9 | 100% |
 | ecosystem-map | 2 | 100% |
 | kind-robots | 2 | 100% |
 | model-builder | 13 | 100% |
@@ -30,14 +32,14 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 3 | 100% |
-| software | 31 | 100% |
+| software | 40 | 100% |
 
 ## Failure categories
 
 | Category | Count |
 |---|---|
+| actionable | 2 |
 | quality | 2 |
-| actionable | 1 |
 
 ## Kaizen targets
 
@@ -45,16 +47,17 @@ _No systematic weaknesses above thresholds. Kaizen freely._
 
 ## Recent lessons
 
+- 2026-07-14 `challenge-center/t-015` — A red CI TypeScript check on a PR that touches unrelated files should be reproduced in the exact CI environment (matching Node major version via a fresh local install + npm ci), not just re-run under whatever Node happens to be in the sandbox -- confirming byte-identical file:line errors against a known pre-existing tracked issue (kind-robots/t-020) is what actually justifies merging past a red check, not an assumption that it 'must be the same one as last time.'
+- 2026-07-14 `coloring-book/t-019` — The task's own framing ('evolve the placeholder scaffold page') was stale -- a repo read of kind_robots showed the coloring engine (store/canvas/manager) is already a functionally complete region+raster-flood-fill implementation with undo and export, not a placeholder. Read the target repo before trusting a roadmap task's characterization of current state; the actual thin spots (generic Generate/Proposals/Prompts sub-tabs, single hardcoded page set) were narrower than the task description implied and got split into a new focused task (t-020) instead of driving an oversized diff. Also: art-asset generation for dashboard-tab/tutorial thumbnails is a queue-and-wait step (projects/art-prompts.yaml requests:), not something a single session executes end-to-end without KR_API_TOKEN -- queuing the request IS the correct terminal action for that sub-step, not a soft-gate blocker.
+- 2026-07-14 `ai-art-academy/t-012` — A 'confirm the resolver has no type-specific branching' task closed clean on first pass by reading satisfied() directly (scripts/resolve_deps.py) -- it only checks status/gate_human/approved_by_human, never task kind, so a licensing DECISION and a brief-confirmation gate were already handled identically. Backed the finding with tests/test_resolve_deps.py (12 tests, zero prior coverage) instead of a note-only close, so the guarantee is now regression-tested rather than asserted. Also picked up mid-cycle after a real rotation collision on challenge-center/t-013 -- claim_task.py's live origin/main check caught it before any duplicate work was pushed.
+- 2026-07-14 `conductor/t-042` — A batch event processor that aborts entirely on the first unresolvable item turns any single stale/invalid event into a silent, indefinite blocker for every other queued item; process independently and only fail the run for visibility after the resolvable items have already been committed.
+- 2026-07-14 `challenge-center/t-013` — Matrix runners should resolve backend identity from the authoritative contender roster and isolate missing credentials to one entry so a heterogeneous matchup can still make progress.
+
+- 2026-07-14 `challenge-center/t-007` — Derive challenge win metrics from grouped scored submissions so multiple variants do not inflate attempts and tied leaders remain explicit.
+- 2026-07-14 `conductor/t-041` — Documented the HTTP 413 first-push-of-a-session workaround (create the remote branch via GitHub MCP create_branch before the first git push, when the branch has no prior PR) in CLAUDE.md's Session end section, so future sessions hitting a brand-new-ref push failure don't have to re-diagnose it from a raw GIT_TRACE_CURL trace.
+- 2026-07-14 `conductor/t-023` — The bug this fixed (commit_done_status() pushing straight to origin/main with no fallback) is the same shape as the git-proxy 413 fix documented in t-041 and the claim-commit git-plumbing design built for t-040 -- recent cycles keep hitting variations of 'a permission-restricted session's git push can fail in a way plain code doesn't expect.' Fixed by capturing the session's own branch before checking out main, and on a rejected main push, cherry-picking the done-status commit onto that branch and pushing there instead so the status flip still reaches main via a normal PR rather than vanishing into a merged-but-not-marked-done gap. Verified with unit tests that simulate the push rejection (not just the happy path) since that's the one path that can't be exercised by running the script normally in a session that already has push access.
+- 2026-07-14 `conductor/t-038` — audit_roadmaps.py's CONTROL_PRIORITY_DRIFT finding pointed at two files that could disagree for two different reasons (real reprioritization vs. stale prose) -- git history on both files (not just diffing their current content) was what distinguished them: priority.yaml had carried the same order since file creation, so CONTROL.md's band text was the one that drifted, not an intentional Silas decision. Worth checking history before assuming a two-source-of-truth mismatch needs Silas's judgment call -- sometimes one side is just unmaintained prose.
 - 2026-07-14 `conductor/t-040` — Building the fix directly surfaced a second, unrelated latent bug in the tool it depends on: set_task_field.py's normalize_scalar left a literal ISO-timestamp value unquoted, so PyYAML silently reparsed it as a native datetime instead of a string (only the `now` keyword path was quoted). Caught by a test asserting the round-tripped type, not by reading the code -- worth remembering that a field 'looks like a string' in a diff is not the same as verifying its parsed type. Also: designed the claim commit to be built via git plumbing (scratch index + commit-tree) rather than a real checkout/commit specifically so it never disturbs whatever branch or uncommitted work the calling session already has -- validated with a real throwaway git repo (bare + clone), not just unit-level YAML assertions, since the git push/race path is exactly the part most likely to look correct and behave wrong under concurrency.
-- 2026-07-14 `ecosystem-map/t-003` — Built the asset coverage matrix entirely from filesystem-verifiable sources (projects/images/, kind_robots' public/images/artcollections/, projects/art-prompts.yaml's structured `images:` list) rather than guessing at DB-only fields (project Dreams, liveUrl) -- explicitly flagged those as needing live-DB verification, mirroring FRONTEND-SURFACE-MAP.md's existing precedent for the same limitation. Cross-referenced FRONTEND-SURFACE-MAP.md's Class column for the mock-screenshot-needed judgment instead of re-deriving it, and marked the 11 projects that audit never covered as unclassified rather than guessing. Found 6 active projects (animation-manager, kindrobots-unraid, model-builder, mural-design, newsfeed, davinci-hero) with zero identity images and nothing queued to produce them.
-- 2026-07-14 `ecosystem-map/t-001` — Roadmap/reality drift, not missing work: DESIGN-BRIEF.md was already a complete, substantial document (canonical ownership table, bot parity, visual asset parity, image approval gate, duplication risks, first deliverables) but the task was still status: ready. Worth a general habit -- before starting a 'write X.md' task, check whether X.md already exists and is actually done; roadmap status can lag a completed artifact same as it can lag a merged PR.
-- 2026-07-14 `animation-manager/t-008` — Writing 'the animation verification script' SPEC.md already named required checking cross-file consistency, not just the catalog file itself: narratorHelper.ts's narratorAnimationAliases map and animationPreferenceStore.ts's DEFAULT_PREFERENCES both duplicate catalog ids as string literals with no compiler-enforced link back to animationCatalog.ts, so they're exactly the kind of thing that goes stale silently. Also had to model Nuxt's real filename-to-component-name resolution (splits on hyphen, underscore, AND dot — components/screenfx/fireworks.effect.vue resolves the same as a hyphenated file would) rather than assuming a literal id.vue match, which a naive exists-check would have gotten wrong. Found but did not fix an unrelated stale id (bubble-effect in displayStore.ts's legacy pre-centralization EffectId type, no matching catalog entry) — filed as t-010 rather than expanding this PR's diff.
-- 2026-07-14 `model-builder/t-028` — The CI check the PR needed to pass (TypeScript Type Check) was already red on kind_robots main before this cycle touched anything — confirmed by pulling main's own latest workflow run for the same head sha rather than assuming the new PR's red check was caused by this change. Fixing the actual (unrelated, one-line) null-check bug in artjob-manager.vue on the same branch was faster and lower-risk than opening a second PR and waiting on a second review/merge cycle to unblock this one. Also: reused two existing conventions instead of inventing new ones (normalizeRarity/normalizeRewardType precedent in server/api/rewards/index.ts for choice-field validation style; the modelBuilderFields.ts single-source-of-field-truth module from t-024, extended rather than duplicated) — worth checking sibling API routes for an existing normalizer before writing a new one whenever a task touches enum-like fields.
-- 2026-07-14 `animation-studio/t-003` — Stale bookkeeping: kind_robots PR #238 (Gravity Garden animation) merged 2026-07-14T07:40Z but the animation-studio roadmap task was left at status: review with no updated timestamp, only surfaced by scripts/audit_roadmaps.py's IN_PROGRESS_WITHOUT_TIMESTAMP warning. Verified merge state directly via pull_request_read before flipping to done rather than trusting the roadmap's stale status. animation-studio also appears to be the pre-animation-manager pilot project (animation-manager PR #494 duplicates its research/pitch-queue tasks) and is missing a project-overrides.yaml entry entirely — flagged as conductor/t-039 for a human/Worker decision on whether to formally retire it rather than guessing.
-- 2026-07-14 `newsfeed/t-001` — Burst-mode rotation picked the least-recently-touched active project by checking every task's `updated` timestamp across all roadmaps rather than defaulting to whatever had the most recent PR activity — newsfeed had zero timestamps on any task despite being priority: high. A real codebase audit (dedicated Explore subagent, not guesses) found two integration points already reserved (dashboardHelper.ts's wonder.newsfeed tab, content/newsfeed.md) that a blind implementation could have collided with or duplicated.
-- 2026-07-14 `kind-robots/t-019` — Two-sided cross-repo task (conductor PR #506 draining requests.yaml, kind_robots PR #245 the front-end request bridge) — the task note said 'set done when both PRs merge' and both merged independently (by Silas directly) within an hour of each other, ahead of the next Reviewer sweep even noticing. Closing agent should re-check both halves' merge state before flipping status rather than assuming the note's gate is still open; used set_task_field.py for the surgical status flip per t-008's standing lesson.
-- 2026-07-14 `conductor/t-036` — This file's own block-sequence indentation had silently mixed two depths (2-space nested vs 0-indent flush) since an earlier merge, breaking yaml.safe_load for the whole ledger and swallowing every append_learning() call system-wide. Root cause was never diagnosed at the time it broke because process_task_events.py's YAML-parse failure wasn't surfaced loudly enough to trace back to this file. Fix was a pure whitespace reflow (dedent every record under the mixed-depth block by 2 spaces to match the majority 0-indent style) verified line-for-line against the diff so no record content changed, then confirmed both yaml.safe_load and scripts/build_learning_summary.py run clean. Next time a script that reads this file throws on task-close, check LEARNING.yaml's own parseability first before assuming the bug is in the caller.
-- 2026-07-14 `challenge-center/t-008` — resolve_deps.py (like process_task_events.py, flagged separately as t-020) rewrites the entire roadmap file with yaml.safe_dump whenever it applies an unblock, turning a two-task status flip into a 940-line diff (escaped Unicode, flow-style indentation, changed quoting). Ran it once, saw the blast radius, reverted, and reapplied the same t-009/t-015 unblock with the surgical set_task_field.py instead — landed as a 26-line diff. Future cycles should default to set_task_field.py for post-done dependency unblocks and treat resolve_deps.py's write path as unsafe for a clean PR until t-020 fixes it too.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-07-14T15:18:19Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-07-14T21:17:21Z_
