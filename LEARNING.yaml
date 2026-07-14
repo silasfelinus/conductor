@@ -586,3 +586,22 @@ records:
   outcome: done
   failure_category: null
   lesson: "A roadmap task's description of current state can be stale even when the task itself is legitimate -- verify against the live repo (both the target page/component AND the specific config structure the task names, e.g. 'tutorialChannels.wonder.sections') before writing code, since a task written when a feature was a placeholder may find that feature already complete by the time it's picked up, and a task assuming a config key exists may find it doesn't. Also: when the standard art-generation queue (art-prompts.yaml) isn't executable in a sandboxed session, reusing already-approved project art at matching dimensions (rather than leaving a queued-and-blocked placeholder) is a legitimate terminal action if the provenance is documented -- but this doesn't replace the queue for cases needing genuinely new art. Also: local CI reproduction can drift from the real thing in more than one way at once (Node major version AND a newly-added `prisma generate` pre-step) -- when an exact error-count match isn't achievable, the decisive check is file-isolation (does any local variant, however imperfect, ever put an error in the PR's actual changed files), not chasing a byte-exact reproduction."
+- date: 2026-07-14
+  project: challenge-center
+  task: t-020
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'A cherry-pick onto the real live claim commit (status/owner/claimed_by/claimed_at) surfaced
+
+    the exact failure mode this task fixes -- resolving it was three surgical field re-applies
+
+    via set_task_field.py/roadmap_text_patch.py instead of a full-file merge conflict, which is
+
+    itself a live demonstration that the patcher works. Also: when a task''s ''learning'' payload
+
+    needs validating, do it BEFORE any roadmap write so an invalid payload can''t strand an
+
+    already-applied, now-unrepeatable transition with its event file undeleted.'

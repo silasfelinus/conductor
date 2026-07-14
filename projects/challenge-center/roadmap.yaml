@@ -538,11 +538,10 @@ tasks:
 - id: t-020
   milestone: m4
   title: Make task-event roadmap mutations surgical, formatting-preserving, and conflict-safe
-  status: review
-  owner: worker
+  status: done
   passes: 0
   stakes: reversible
-  updated: '2026-07-14T23:23:38Z'
+  updated: '2026-07-14T23:29:41+00:00'
   note: |-
     Context: scripts/process_task_events.py currently rewrites complete authoritative YAML files with PyYAML safe_dump. A one-task state change therefore produced hundreds of unrelated changed lines, escaped readable Unicode, changed block and quote styles, and created unnecessary merge-conflict risk. The bridge must remain connector-safe without treating an entire roadmap as disposable generated output.
 
@@ -581,6 +580,11 @@ tasks:
     Regression coverage: tests/test_roadmap_text_patch.py (10 tests against a checked-in frozen fixture copied from the real challenge-center roadmap.yaml -- byte-identical unrelated tasks, literal Unicode em-dash/arrow preservation, literal-block notes, unset-as-noop, idempotent re-apply), plus new tests in test_process_task_events.py (byte-preservation, atomicity on a bad learning payload, repeat-claim zero-diff idempotency, multiline note block rendering) and test_resolve_deps.py (surgical multi-task unblock, Unicode preservation). Wired the new and existing task-event test files into ci.yml's authz-regression job so they actually run in CI. Documented the atomic-retry and surgical-write behavior in task-events/README.md.
 
     Full suite: 225/225 passing locally. Not done: a live end-to-end exercise of the GitHub Actions conflict-retry path itself (bash syntax-checked and logic-reviewed, but not runnable outside real CI).
+
+    conductor PR #534 merged (squash 81eae2f). scripts/roadmap_text_patch.py now performs all
+    roadmap/LEARNING.yaml mutations surgically in process_task_events.py and resolve_deps.py;
+    process-task-events.yml fetches main immediately before pushing and retries once on a
+    non-fast-forward race instead of force-pushing. 225 tests passing, all 19 PR checks green.
   claimed_by: burst-20260714T230541Z
   claimed_at: '2026-07-14T23:06:04Z'
 - id: t-021
