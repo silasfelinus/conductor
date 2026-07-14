@@ -506,12 +506,12 @@ tasks:
   - id: t-028
     milestone: m6
     title: "Executor: persist drafted structured fields on commit"
-    status: review
+    status: done
     owner: Reviewer
     passes: 0
     stakes: reversible
-    note: 'kind_robots PR #250: parse FIELDS-draft key:value lines and apply known, typed, choice-validated columns per model on CREATE/UPDATE (Character/Bot/Reward/Dream/Scenario/Project/Facet). Also added Facet.kind choices to modelBuilderFields.ts. Additionally fixed a pre-existing, unrelated TS2531 null-check bug in components/art/artjob-manager.vue (hasCuratorVerdict/curatorFeedback) that was already broken on main and blocking every PR''s required TypeScript check. Typecheck + eslint clean; auto-merge enabled, awaiting CI.'
-    updated: '2026-07-14T13:29:29Z'
+    note: 'Done via kind_robots PR #250 (merged, squash sha 53f0d1be): commit executor now parses the FIELDS-draft key:value lines and applies known, typed, choice-validated columns per model on CREATE/UPDATE (Character/Bot/Reward/Dream/Scenario/Project/Facet); added Facet.kind choices to modelBuilderFields.ts. Also fixed a pre-existing, unrelated TS2531 null-check bug in artjob-manager.vue that was blocking main''s required TypeScript check for every PR.'
+    updated: '2026-07-14T13:33:57Z'
 
   - id: t-029
     milestone: m6

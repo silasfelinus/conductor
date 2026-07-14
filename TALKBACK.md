@@ -2901,3 +2901,12 @@ flight at time of this entry); status set to `review`, will flip to `done` once 
 
 **Kaizen task:** deferred — no new systemic gap surfaced this cycle beyond what's already
 tracked (conductor/t-038, t-039).
+
+## 2026-07-14 | Reviewer → Silas | model-builder/t-028 | closed
+
+**Update to the entry above:** kind_robots PR #250 merged (squash sha `53f0d1be`) after the
+TypeScript check went green. Confirmed via `pull_request_read` before flipping the roadmap
+— `projects/model-builder/roadmap.yaml` t-028 is now `status: done`. Unsubscribed from PR
+activity per the merged-PR convention. `LEARNING.yaml` record appended; `scripts/
+audit_roadmaps.py` still shows only the two pre-existing, already-deferred findings
+(conductor/t-038, t-039) — nothing new from this cycle's edits.
