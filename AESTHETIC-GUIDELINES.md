@@ -8,6 +8,20 @@ These are the qualities the daily style assessor rewards when it scores the art
 the pipeline generated in the last day. The goal (Silas, 2026-07): **up the ante**
 — the auto-created output should look intentional, not like a random batch.
 
+## Originality inputs
+
+- When making fresh, original images, actively consider Kind Robots' available
+  randomizers and special lists as optional inspiration pools. Facets join this
+  pool as they are imported and expanded.
+- Sample a small number of unexpected elements, usually one to three, then
+  synthesize them into one coherent concept. Randomizers are sparks, not a demand
+  to cram every rolled noun into prompt soup.
+- Keep the actual brief, subject, utility, and ethical boundaries in control.
+  Discard combinations that weaken the idea or merely make it noisier.
+- When practical, preserve the selected randomizer/list/facet values in the
+  ArtJob prompt or metadata so curator and human feedback can reveal which kinds
+  of combinations consistently produce strong work.
+
 ## What we're going for
 
 - **Intentional composition** — a clear subject, a considered frame, real focal

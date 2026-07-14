@@ -16,6 +16,18 @@ built_pr: null              # filled at ship time
 The daily proposal is a *starter dream* — one self-consistent slice of a world:
 two locations, a shared vibe, three characters, a host, and two rewards.
 
+## Inspiration seeds
+Before settling on the concept, optionally sample Kind Robots randomizers and
+special lists for one to three unexpected ingredients. Facets join this source
+pool as they are imported. Keep only combinations that strengthen a coherent,
+original idea; randomizers are inspiration, not an obligation or a substitute
+for judgment.
+
+Record any useful seeds here so the final art prompts and later human feedback
+can be traced back to them.
+- Randomizer/list/facet seed: …
+- Randomizer/list/facet seed: …
+
 ## Vibe / genre dream
 The GENRE Dream that carries the mood — new, or an existing kind_robots GENRE to
 reuse. One line: the feeling, the stakes level, the tactile detail.
