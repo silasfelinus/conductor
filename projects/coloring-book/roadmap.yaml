@@ -422,12 +422,31 @@ tasks:
   - id: t-019
     milestone: m2
     title: Polish and upgrade Coloring Book front-end surface
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
-    updated: '2026-07-14T21:08:53Z'
+    updated: '2026-07-14T21:30:00Z'
     note: >
+      DONE 2026-07-14: kind_robots PR #260 merged — added a 'coloring' entry to
+      tutorialChannels.art.sections (stores/helpers/tutorialCards.ts) describing
+      the shipped engine (region/group fill, custom colors, undo, save/export),
+      matching every sibling section's shape. (3) verified: PROJECT_PLACEMENTS
+      ['coloring-book'] already resolves route: '/coloring' with no liveUrl
+      override needed — no code change required. (1) art: dashboard-tab
+      coloring.webp was already queued; added the two other missing requests
+      (tutorial coloring.webp, dashboard-tab coloring-page.webp) to
+      projects/art-prompts.yaml requests: — no KR_API_TOKEN this session, so
+      actual generation stays with whoever next runs the ChatGPT-batch art
+      workflow. (4) VERIFICATION GAP / correction: research (kind_robots repo
+      read) found the coloring engine (coloringStore.ts, coloring-canvas.vue,
+      coloring-book-manager.vue) is NOT a placeholder — it's a functionally
+      complete region+raster-flood fill engine with undo and export. The
+      genuinely thin spots are coloring-book-page.vue's Generate/Proposals/
+      Prompts sub-tabs (generic pitch boards) and only one page set (sampler)
+      existing behind coloring-book-manager.vue's hardcoded SET_SLUGS. Spun off
+      as a new focused task (t-020) rather than expanding this PR's scope.
+      Original spec:
       UI polish + upgrade for the coloring-book front end now that the scaffold
       page is live at /coloring. Steps: (1) generate final dashboard-tab art at
       public/images/dashboard-tabs/art/coloring.webp and tutorial art at
@@ -437,5 +456,20 @@ tasks:
       liveUrl points at /coloring (admin can run the Conductor 'Placements'
       button to backfill channelKey/tabKey/liveUrl); (4) evolve the placeholder
       scaffold page into the full interactive experience for this project.
-    claimed_by: conductor-burst-t019
-    claimed_at: '2026-07-14T21:08:53Z'
+  - id: t-020
+    milestone: m2
+    title: 'kind_robots: thicken Coloring Book Generate/Proposals/Prompts tabs and add a second page set'
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-14T21:30:00Z'
+    note: >
+      Filed 2026-07-14 as the kaizen/follow-up from t-019. coloring-book-page.vue's
+      Color tab is a real, working engine; its Generate/Proposals/Prompts tabs are
+      thin generic pitch-board wrappers, and coloring-book-manager.vue's SET_SLUGS
+      is hardcoded to only ['sampler']. Options for this pass (pick what's
+      unblocked): wire the Generate tab into the real t-006/t-007 generation
+      pipeline once those sets exist, or — if t-006 (Kind Robots set) has landed —
+      add its manifest to SET_SLUGS so the library shows more than the sampler.
+      Keep scope small; this can re-split further if it's still too big for one PR.
