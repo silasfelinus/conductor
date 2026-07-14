@@ -45,9 +45,19 @@ ALLOWED_FIELDS = {
     "approved_by_human",
     "depends_on",
     "note",
+    "claimed_by",
+    "claimed_at",
 }
 # Bare words YAML 1.1 parsers read as booleans; quote them so the value stays a string.
 YAML11_BOOL_WORDS = {"yes", "no", "on", "off", "y", "n"}
+# Bare scalars matching this also get parsed as native datetime/date objects by PyYAML's
+# YAML 1.1 timestamp resolver; quote them too so a literal timestamp value (e.g. passed
+# to `updated` or `claimed_at` instead of the `now` keyword) stays a plain string like
+# every other timestamp field in the roadmaps.
+TIMESTAMP_RE = re.compile(
+    r"^\d{4}-\d\d-\d\d"
+    r"([Tt ]\d\d:\d\d:\d\d(\.\d*)?\s*(Z|[-+]\d\d?(:\d\d)?)?)?$"
+)
 
 
 class TaskFieldError(Exception):
@@ -66,7 +76,11 @@ def normalize_scalar(value: str) -> str:
         return lowered
     if re.fullmatch(r"-?\d+", raw):
         return raw
-    if lowered not in YAML11_BOOL_WORDS and re.fullmatch(r"[A-Za-z0-9_.:/@+-]+", raw):
+    if (
+        lowered not in YAML11_BOOL_WORDS
+        and not TIMESTAMP_RE.match(raw)
+        and re.fullmatch(r"[A-Za-z0-9_.:/@+-]+", raw)
+    ):
         return raw
 
     escaped = raw.replace("'", "''")

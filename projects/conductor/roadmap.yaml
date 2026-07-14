@@ -859,36 +859,57 @@ tasks:
   - id: t-040
     milestone: m2
     title: Burst-mode rotation has no claim step, so concurrent hourly triggers can pick the same project/task
-    status: ready
-    owner: null
+    status: done
+    owner: reviewer
     passes: 0
     stakes: reversible
-    updated: "2026-07-14T14:30:00Z"
+    updated: '2026-07-14T15:16:44Z'
     note: >
-      Found directly, not just inferred: this session independently picked
-      animation-manager/t-008 via priority.yaml rotation, fully implemented
-      utils/scripts/verifyAnimationCatalog.ts + the browser smoke matrix doc
-      in kind_robots, and only discovered while pushing that a separate
-      session (Claude-Session 01M8yct9rGwRKfjdigMSk47W) had picked the exact
-      same project and task, shipped kind_robots PR #251, and closed out
-      conductor PR #511 minutes earlier -- both sessions' git pushes hit the
-      HTTP 413/502 errors documented in that PR's TALKBACK entry around the
-      same window, consistent with two burst-mode cycles racing on the same
-      stale base ref. No data was lost (this session's redundant commit
-      never reached origin -- caught via `git ls-remote` before retrying, and
-      cleanly reset onto the real merged main once found) but the duplicated
-      implementation work itself was pure waste, and a less careful session
-      could have force-pushed over the real merge or opened a conflicting PR.
-      Root cause: the rotation logic in priority.yaml/project-overrides.yaml
-      has no "someone is already working this slot" signal -- it only reads
-      `updated` timestamps and `status`, which lag behind an in-flight
-      session by definition. Consider a lightweight claim marker (e.g. a
-      short-TTL `claimed_at`/`claimed_by` stamp on the task, or a
-      `task-events/` lock file checked before starting real work and cleared
-      on close) that a rotation-picking session writes before diving in and
-      checks before picking a project, so two concurrent hourly triggers fail
-      fast into "already claimed, rotate to next" instead of duplicating
-      effort. Scoping this as its own task rather than folding a fix into
-      whatever session picks it up next, since the right mechanism (file
-      lock vs. roadmap field vs. TALKBACK-scan heuristic) is a design choice,
-      not a one-line fix.
+      Original finding (full account in TALKBACK.md, 2026-07-14
+      "ecosystem-map/t-001, t-003 | burst-mode pattern + rotation-collision
+      finding"): two concurrent burst-mode sessions independently picked and
+      fully implemented animation-manager/t-008, discovered only at push
+      time; no data was lost but the duplicate implementation was pure waste
+      and a less careful session could have force-pushed over the real merge.
+
+      Fix shipped this cycle: `scripts/claim_task.py` (new), backed by
+      `scripts/git_plumbing.py` (new -- builds and pushes a single-file
+      commit via a scratch git index, without touching the caller's checked-
+      out branch/working tree/HEAD) and `scripts/roadmap_claims.py` (new --
+      shared claimability/staleness rule: `status: ready`, or `status:
+      claimed` with `claimed_at` older than `CLAIM_TTL_MINUTES` = 90).
+      `claim_task.py` re-reads the task straight from `origin/main` (not the
+      local checkout), refuses with exit 3 (`ALREADY_CLAIMED`) if someone
+      else already holds it, and otherwise pushes a small `status: claimed`
+      commit straight to `origin/main` before real implementation work
+      starts, with bounded retry-on-race (re-fetch, re-check claimability,
+      rebuild the commit). `set_task_field.py` gained `claimed_by`/
+      `claimed_at` to its allowed-fields set; fixing this also surfaced and
+      fixed a real latent bug in its `normalize_scalar` -- a literal
+      timestamp value (as opposed to the `now` keyword) was left unquoted
+      and silently reparsed by PyYAML as a native `datetime` instead of a
+      string (caught by the new test suite, not by inspection).
+      `next_ready_task.py` now treats a stale `claimed` task as pickable
+      again, so a crashed claiming session can't lock a task forever.
+      AGENTS.md's "Picking what to work on" and the Worker's "Step 2 --
+      Claim" now document the required claim step and a new "Rotation
+      collisions" subsection explains why it exists. Covered by
+      tests/test_claim_task.py (real throwaway git repos exercising the
+      actual commit/push/race-rejection plumbing, not just the YAML edit),
+      tests/test_roadmap_claims.py, and a new case in
+      tests/test_set_task_field.py; full suite green (155 passed) and
+      `scripts/audit_roadmaps.py` unchanged (still the same 1 error / 1
+      warning already deferred to t-038/t-039).
+
+      Deliberately out of scope: this only closes the gap for sessions that
+      actually run `claim_task.py` -- it can't force a session to call it,
+      and doesn't touch `scripts/run_worker.py`'s separate, purely
+      informational `find_ready_task()` (that script explicitly never
+      executes tasks; see its module docstring). It also doesn't resolve the
+      pre-existing tension between AGENTS.md's formal "Reviewer CANNOT...
+      set status: claimed" rule and the established burst-mode practice of
+      Claude sessions claiming/implementing conductor-tooling tasks directly
+      under Silas's in-session direction (the "CAN... claude/* branches...
+      directed by Silas" carve-out) -- flagging it here rather than
+      resolving it unilaterally, since it's a process-authority question for
+      Silas, not a one-line fix.

@@ -3070,3 +3070,85 @@ real coordination gap worth its own task (`conductor/t-040`).
   rebuilt.
 
 **Kaizen task:** `conductor/t-040` (above) — filed directly from this cycle's own finding.
+
+## 2026-07-14 | Reviewer → Silas | conductor/t-040 | rotation-collision fix (claim_task.py)
+
+**Decision:** done. Conductor tooling change, `stakes: reversible`, opened as a PR into
+`main` (own `claude/*` branch) per the "directed by Silas in the session" carve-out —
+merging if CI passes.
+
+**What happened, in order:**
+
+1. This burst-mode cycle rotated to `conductor` and found `t-040` exactly matching what
+   this kind of cycle is doing right now — a live, unowned, `ready`, reversible finding
+   about the rotation process itself, filed by an earlier session after a real collision
+   (see prior TALKBACK entry same date). Picked it as the highest-value, lowest-risk
+   thing to do this cycle: fixing the mechanism I was actively relying on.
+2. Confirmed via `TALKBACK.md` and the roadmap `note:` that `t-040` was uncontested (no
+   other session had touched it since it was filed) before starting.
+3. Built the fix: `scripts/claim_task.py` (checks task claimability against a fresh
+   `git fetch origin main`, not the local checkout), `scripts/git_plumbing.py` (commits
+   and pushes the claim via a scratch git index — never touches the caller's real
+   branch/working tree/HEAD), and `scripts/roadmap_claims.py` (shared claimability +
+   90-minute stale-claim TTL, used by both `claim_task.py` and `next_ready_task.py`).
+4. Extended `set_task_field.py`'s allowed fields with `claimed_by`/`claimed_at`, and
+   while writing a type-roundtrip test for them, found a real pre-existing bug: a literal
+   ISO-timestamp value (as opposed to the `now` keyword) was left unquoted by
+   `normalize_scalar` and silently reparsed by PyYAML as a native `datetime`. Fixed with
+   a `TIMESTAMP_RE` guard in the same function.
+5. Verified the git plumbing for real, not just the YAML edit: spun up throwaway bare +
+   clone git repos (`tests/test_claim_task.py`) and asserted (a) a successful claim lands
+   `status: claimed`/`owner`/`claimed_by`/`claimed_at` on `origin/main`, (b) the caller's
+   branch and working tree are provably untouched (`git status --short` empty,
+   `git branch --show-current` unchanged) after a claim, (c) `--dry-run` writes nothing,
+   (d) claiming an already-`done` task raises `ALREADY_CLAIMED` (exit 3), and (e) a second
+   session cannot claim a task the first session just claimed. Also manually exercised the
+   actual non-fast-forward push-rejection path outside pytest (two competing commits off
+   the same stale parent) to confirm `commit_file_on_ref` returns `False` on the loser
+   instead of raising, before writing it up as a pytest fixture.
+6. Updated `AGENTS.md`: a new "Rotation collisions" subsection explaining why the claim
+   step exists, a new step 6 in "Picking what to work on" requiring `claim_task.py` before
+   real implementation work, and rewrote the Worker's "Step 2 — Claim" bullet to point at
+   the script instead of a manual instruction.
+7. Ran the full existing pytest suite (155 passed, no regressions) and
+   `scripts/audit_roadmaps.py` (same 1 error / 1 warning as before, both already deferred
+   to `t-038`/`t-039` — no new findings from this change).
+
+**What was good:**
+- Treated the git-plumbing path as the highest-risk part of the change (not the YAML
+  editing, which the existing `set_task_field.py` already handles well) and tested it
+  against real git repos, including the actual race-rejection behavior, rather than
+  trusting it because the code "looked right."
+- Found and fixed the `normalize_scalar` timestamp-quoting bug in the same PR since it
+  directly affects the new `claimed_at` field and was caught by the tests written for
+  this task — not scope creep, the same subsystem this task already touches.
+- Did not try to resolve the deeper AGENTS.md tension this surfaced (Reviewer formally
+  "CANNOT... set status: claimed", yet burst-mode Claude sessions routinely claim and
+  implement conductor-tooling tasks under Silas's direction) — flagged it in the roadmap
+  note as a process-authority question for Silas rather than deciding it unilaterally.
+
+**What to improve:**
+- The fix only helps sessions that actually call `claim_task.py` — nothing enforces that
+  a session runs it before implementing. `scripts/run_worker.py`'s automated healthcheck
+  deliberately never executes tasks (see its own docstring), so there's no automated
+  choke point to wire this into; enforcement is procedural (AGENTS.md) until/unless a
+  future task adds a CI-side check that a merged task PR's claim commit actually exists.
+
+**Detail:**
+- New: `scripts/claim_task.py`, `scripts/git_plumbing.py`, `scripts/roadmap_claims.py`,
+  `tests/test_claim_task.py`, `tests/test_roadmap_claims.py`.
+- Changed: `scripts/set_task_field.py` (`claimed_by`/`claimed_at` allowed fields,
+  `TIMESTAMP_RE` quoting fix), `scripts/next_ready_task.py` (stale claims reclaimable,
+  docstring points at `claim_task.py`), `tests/test_set_task_field.py` (new claim-field
+  case), `AGENTS.md` ("Rotation collisions" subsection, picking-order step 6, Worker
+  Step 2 rewritten).
+- `projects/conductor/roadmap.yaml`: `t-040` → `status: done`, `owner: reviewer`, note
+  rewritten to summarize the fix and reference this entry.
+- `LEARNING.yaml`: one new record (`conductor/t-040`).
+- `python3 -m pytest`: 155 passed. `python3 -m yaml.safe_load` on all edited YAML/ledger
+  files — parses clean. `scripts/audit_roadmaps.py` — same 1 error / 1 warning as before
+  (both already deferred to `conductor/t-038`, `t-039`), no new findings.
+
+**Kaizen task:** none filed this cycle — `t-040` itself already came from a prior
+cycle's kaizen-equivalent finding, and nothing new and comparably systemic surfaced here
+beyond the `normalize_scalar` bug, which was fixed directly rather than deferred.

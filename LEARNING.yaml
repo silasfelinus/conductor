@@ -316,3 +316,12 @@ records:
   outcome: done
   failure_category: null
   lesson: "Built the asset coverage matrix entirely from filesystem-verifiable sources (projects/images/, kind_robots' public/images/artcollections/, projects/art-prompts.yaml's structured `images:` list) rather than guessing at DB-only fields (project Dreams, liveUrl) -- explicitly flagged those as needing live-DB verification, mirroring FRONTEND-SURFACE-MAP.md's existing precedent for the same limitation. Cross-referenced FRONTEND-SURFACE-MAP.md's Class column for the mock-screenshot-needed judgment instead of re-deriving it, and marked the 11 projects that audit never covered as unclassified rather than guessing. Found 6 active projects (animation-manager, kindrobots-unraid, model-builder, mural-design, newsfeed, davinci-hero) with zero identity images and nothing queued to produce them."
+- date: 2026-07-14
+  project: conductor
+  task: t-040
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "Building the fix directly surfaced a second, unrelated latent bug in the tool it depends on: set_task_field.py's normalize_scalar left a literal ISO-timestamp value unquoted, so PyYAML silently reparsed it as a native datetime instead of a string (only the `now` keyword path was quoted). Caught by a test asserting the round-tripped type, not by reading the code -- worth remembering that a field 'looks like a string' in a diff is not the same as verifying its parsed type. Also: designed the claim commit to be built via git plumbing (scratch index + commit-tree) rather than a real checkout/commit specifically so it never disturbs whatever branch or uncommitted work the calling session already has -- validated with a real throwaway git repo (bare + clone), not just unit-level YAML assertions, since the git push/race path is exactly the part most likely to look correct and behave wrong under concurrency."

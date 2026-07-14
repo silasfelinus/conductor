@@ -92,6 +92,17 @@ def test_add_missing_field_lands_outside_multiline_note():
     assert task_block(out, "t-002") == task_block(ROADMAP, "t-002")
 
 
+def test_claim_fields_are_allowed_and_land_outside_note():
+    # claimed_by/claimed_at back conductor/t-040's claim mechanism (claim_task.py).
+    out = stf.set_task_field_text(ROADMAP, "t-001", "claimed_by", "reviewer-session-1")
+    out = stf.set_task_field_text(out, "t-001", "claimed_at", "2026-07-14T15:00:00Z")
+    tasks = parse_tasks(out)
+    assert tasks["t-001"]["claimed_by"] == "reviewer-session-1"
+    assert tasks["t-001"]["claimed_at"] == "2026-07-14T15:00:00Z"
+    assert "claimed_by" not in tasks["t-001"]["note"]
+    assert tasks["t-001"]["note"].startswith("Multi-line quoted note.")
+
+
 def test_replace_folded_note_removes_old_block():
     out = stf.set_task_field_text(ROADMAP, "t-002", "note", "Short replacement note")
     tasks = parse_tasks(out)  # would raise if the edit left invalid YAML behind

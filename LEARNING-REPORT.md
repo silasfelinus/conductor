@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-07-14T14:33:36Z
+Generated: 2026-07-14T15:18:19Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **33**
-- Outcomes: done: 33
+- Closed tasks recorded: **34**
+- Outcomes: done: 34
 - Success rate: **100%**
 - Average passes on successful tasks: **0.0**
 
@@ -19,7 +19,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | animation-manager | 4 | 100% |
 | animation-studio | 1 | 100% |
 | challenge-center | 5 | 100% |
-| conductor | 4 | 100% |
+| conductor | 5 | 100% |
 | ecosystem-map | 2 | 100% |
 | kind-robots | 2 | 100% |
 | model-builder | 13 | 100% |
@@ -30,7 +30,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 3 | 100% |
-| software | 30 | 100% |
+| software | 31 | 100% |
 
 ## Failure categories
 
@@ -45,6 +45,7 @@ _No systematic weaknesses above thresholds. Kaizen freely._
 
 ## Recent lessons
 
+- 2026-07-14 `conductor/t-040` — Building the fix directly surfaced a second, unrelated latent bug in the tool it depends on: set_task_field.py's normalize_scalar left a literal ISO-timestamp value unquoted, so PyYAML silently reparsed it as a native datetime instead of a string (only the `now` keyword path was quoted). Caught by a test asserting the round-tripped type, not by reading the code -- worth remembering that a field 'looks like a string' in a diff is not the same as verifying its parsed type. Also: designed the claim commit to be built via git plumbing (scratch index + commit-tree) rather than a real checkout/commit specifically so it never disturbs whatever branch or uncommitted work the calling session already has -- validated with a real throwaway git repo (bare + clone), not just unit-level YAML assertions, since the git push/race path is exactly the part most likely to look correct and behave wrong under concurrency.
 - 2026-07-14 `ecosystem-map/t-003` — Built the asset coverage matrix entirely from filesystem-verifiable sources (projects/images/, kind_robots' public/images/artcollections/, projects/art-prompts.yaml's structured `images:` list) rather than guessing at DB-only fields (project Dreams, liveUrl) -- explicitly flagged those as needing live-DB verification, mirroring FRONTEND-SURFACE-MAP.md's existing precedent for the same limitation. Cross-referenced FRONTEND-SURFACE-MAP.md's Class column for the mock-screenshot-needed judgment instead of re-deriving it, and marked the 11 projects that audit never covered as unclassified rather than guessing. Found 6 active projects (animation-manager, kindrobots-unraid, model-builder, mural-design, newsfeed, davinci-hero) with zero identity images and nothing queued to produce them.
 - 2026-07-14 `ecosystem-map/t-001` — Roadmap/reality drift, not missing work: DESIGN-BRIEF.md was already a complete, substantial document (canonical ownership table, bot parity, visual asset parity, image approval gate, duplication risks, first deliverables) but the task was still status: ready. Worth a general habit -- before starting a 'write X.md' task, check whether X.md already exists and is actually done; roadmap status can lag a completed artifact same as it can lag a merged PR.
 - 2026-07-14 `animation-manager/t-008` — Writing 'the animation verification script' SPEC.md already named required checking cross-file consistency, not just the catalog file itself: narratorHelper.ts's narratorAnimationAliases map and animationPreferenceStore.ts's DEFAULT_PREFERENCES both duplicate catalog ids as string literals with no compiler-enforced link back to animationCatalog.ts, so they're exactly the kind of thing that goes stale silently. Also had to model Nuxt's real filename-to-component-name resolution (splits on hyphen, underscore, AND dot — components/screenfx/fireworks.effect.vue resolves the same as a hyphenated file would) rather than assuming a literal id.vue match, which a naive exists-check would have gotten wrong. Found but did not fix an unrelated stale id (bubble-effect in displayStore.ts's legacy pre-centralization EffectId type, no matching catalog entry) — filed as t-010 rather than expanding this PR's diff.
@@ -54,7 +55,6 @@ _No systematic weaknesses above thresholds. Kaizen freely._
 - 2026-07-14 `kind-robots/t-019` — Two-sided cross-repo task (conductor PR #506 draining requests.yaml, kind_robots PR #245 the front-end request bridge) — the task note said 'set done when both PRs merge' and both merged independently (by Silas directly) within an hour of each other, ahead of the next Reviewer sweep even noticing. Closing agent should re-check both halves' merge state before flipping status rather than assuming the note's gate is still open; used set_task_field.py for the surgical status flip per t-008's standing lesson.
 - 2026-07-14 `conductor/t-036` — This file's own block-sequence indentation had silently mixed two depths (2-space nested vs 0-indent flush) since an earlier merge, breaking yaml.safe_load for the whole ledger and swallowing every append_learning() call system-wide. Root cause was never diagnosed at the time it broke because process_task_events.py's YAML-parse failure wasn't surfaced loudly enough to trace back to this file. Fix was a pure whitespace reflow (dedent every record under the mixed-depth block by 2 spaces to match the majority 0-indent style) verified line-for-line against the diff so no record content changed, then confirmed both yaml.safe_load and scripts/build_learning_summary.py run clean. Next time a script that reads this file throws on task-close, check LEARNING.yaml's own parseability first before assuming the bug is in the caller.
 - 2026-07-14 `challenge-center/t-008` — resolve_deps.py (like process_task_events.py, flagged separately as t-020) rewrites the entire roadmap file with yaml.safe_dump whenever it applies an unblock, turning a two-task status flip into a 940-line diff (escaped Unicode, flow-style indentation, changed quoting). Ran it once, saw the blast radius, reverted, and reapplied the same t-009/t-015 unblock with the surgical set_task_field.py instead — landed as a 26-line diff. Future cycles should default to set_task_field.py for post-done dependency unblocks and treat resolve_deps.py's write path as unsafe for a clean PR until t-020 fixes it too.
-- 2026-07-14 `animation-manager/t-003` — Cross-repo software task (conductor roadmap + kind_robots implementation PR #237) closed cleanly with the conductor PR correctly citing the exact kind_robots commit/PR — verified independently and it matched byte-for-byte with the claim.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-07-14T14:33:36Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-07-14T15:18:19Z_
