@@ -925,3 +925,30 @@ tasks:
       a raw curl trace.
     claimed_by: reviewer-hourly-1784051334
     claimed_at: '2026-07-14T17:48:54Z'
+  - id: t-042
+    milestone: m2
+    title: Fix task-events queue head-of-line blocking on a stale/invalid event
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Found during the 2026-07-14 18:48 UTC hourly sweep: the "Process task
+      events" workflow had been failing on every run since 04:18 UTC (7 runs),
+      because scripts/process_task_events.py's main() aborts the entire batch
+      and returns 1 on the FIRST event that raises -- and a stale
+      task-events/20260714T041245Z-challenge-center-t-008-claim.yaml (a claim
+      for a task that was later marked done through a different path) can
+      never succeed. Per the .github/workflows/process-task-events.yml design,
+      "Validate roadmaps"/"Commit processed state" only run on step success,
+      so this one bad event silently blocked every other queued event too --
+      including a real 18:16 UTC worker claim on challenge-center/t-013 that
+      never got applied. Fix: main() now continues past a failing event
+      instead of returning immediately, so valid events in the same batch
+      still get applied/committed; the workflow step is continue-on-error so
+      later steps still run, with a final step that fails the job (for
+      visibility) only after the commit step has run. Deleted the stale
+      t-008 event as part of this fix since it can never succeed (t-008 is
+      already done). Added tests/test_process_task_events.py coverage
+      (test_main_applies_valid_events_even_when_an_earlier_one_fails) that
+      reproduces the alphabetical head-of-line-blocking scenario directly.
