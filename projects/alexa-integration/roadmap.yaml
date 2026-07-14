@@ -1,7 +1,7 @@
 project: alexa-integration
 kind: software
 notes_from_silas: "Build the Alexa work as the Serendipity voice surface for local Amazon Echo devices.\
-  \ The stable user-facing contract is \"Serendipity: <request>\" \u2014 Alexa's actual invocation may\
+  \ The stable user-facing contract is \"Serendipity: <request>\" — Alexa's actual invocation may\
   \ be \"ask Serendipity to...\" or an opened Serendipity session, but the relay should route the request\
   \ after the Serendipity prefix. The deployable voice runtime now lives in silasfelinus/serendipity-voice;\
   \ Conductor remains the roadmap and coordination source of truth. When finished, it should support custom\
@@ -102,19 +102,26 @@ tasks:
 - id: t-006
   milestone: m4
   title: Wire LLM chat and Character role intents
-  status: ready
-  owner: worker
-  updated: '2026-07-03T16:12:52-07:00'
+  status: done
+  owner: claude
+  updated: '2026-07-14T04:26:00Z'
+  pr: https://github.com/silasfelinus/serendipity-voice/pull/21
   passes: 0
   stakes: reversible
   depends_on: t-005
-  note: 'FOR SILAS: I could not apply the actual serendipity-voice code patch because the GitHub connector
-    blocked creating the required worker branch in silasfelinus/serendipity-voice. I preserved the intended
-    implementation at projects/alexa-integration/docs/t-006-chat-character-adapters.md. It includes the
-    exact adapter file, adapter tests, package.json test-script update, and local verification commands.
-    TO APPROVE: apply that patch in a local-code or Claude session with serendipity-voice branch-write
-    access, then set this task back to ready or done depending on whether another Worker pass should finish
-    it. No live skill, endpoint, deploy, DNS, secrets, billing, or production data were touched.'
+  note: 'Done in serendipity-voice PR #21 (merged). The connector-blocked branch issue from the earlier
+    Worker pass no longer applied in this Claude session, which had direct write access to
+    silasfelinus/serendipity-voice. Re-designed the preserved patch
+    (projects/alexa-integration/docs/t-006-chat-character-adapters.md) to match how art submission (t-011)
+    actually works today rather than applying the stale doc verbatim: added src/chat-submit.ts, a real
+    chat/character submission to POST /api/botcafe/chat, gated behind SERENDIPITY_ENABLE_CHAT + the existing
+    SERENDIPITY_KR_SERVICE_TOKEN (same off-by-default pattern as art). Character requests look up the named
+    Bot by slug/name (GET /api/bots) and use its `prompt` field as the system prompt; an unmatched name falls
+    back to a display-cased persona. Wired into voice-bridge.ts as a post-processing step alongside art.
+    Extracted krAuthHeaders() into kind-robots-headers.ts so art-submit.ts and chat-submit.ts share one
+    header helper. Verified: npm test (191 checks, incl. new chat-submit.test.ts) + typecheck clean; manual
+    handle CLI run confirms stub-mode output is unchanged with chat disabled (the default). No live skill,
+    endpoint, deploy, DNS, secrets, billing, or production data were touched.'
 - id: t-007
   milestone: m4
   title: Wire Dream story intents using goal and waypoints
@@ -141,11 +148,11 @@ tasks:
     \ branch in silasfelinus/serendipity-voice, so the Worker preserved the exact intended patch (merged\
     \ in conductor PR #142) at projects/alexa-integration/docs/t-008-local-music-adapter.md. It contains\
     \ src/adapters/music-adapter.ts, its test file, a handle-voice-request.test.ts update, and the run-all-tests.ts\
-    \ wiring \u2014 behind a SERENDIPITY_ENABLE_MUSIC flag, reading only a configured library root, never\
+    \ wiring — behind a SERENDIPITY_ENABLE_MUSIC flag, reading only a configured library root, never\
     \ mutating files, and asking for clarification on multiple matches. TO APPROVE: apply that patch in\
     \ a local-code or Claude session with serendipity-voice branch-write access, run npm run test / npm\
     \ run typecheck there, then set this task to done (or back to ready if another Worker pass should\
-    \ finish it). This is a soft tooling block, not a design question \u2014 no live skill, endpoint,\
+    \ finish it). This is a soft tooling block, not a design question — no live skill, endpoint,\
     \ deploy, DNS, secrets, billing, or production data were touched."
 - id: t-009
   milestone: m5
