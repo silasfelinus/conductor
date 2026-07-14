@@ -260,11 +260,11 @@ tasks:
   - id: t-012
     milestone: m2
     title: Confirm resolve_deps.py treats decision-style approved_by_human (t-011) the same as brief-confirmation gates
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
-    updated: '2026-07-10T20:00:00Z'
+    updated: '2026-07-14T19:11:56Z'
     note: >
       Kaizen from PR #362 (Reviewer, 2026-07-10): t-002 and t-011 both now carry
       approved_by_human: true + status: done, but t-011 is a licensing DECISION
@@ -273,6 +273,8 @@ tasks:
       approved_by_human + status: done, not the task's semantic type) so any
       task depends_on: t-011 correctly flips from waiting to ready on the next
       Worker cycle. If the resolver has any type-specific branching, fix it.
+    claimed_by: conductor-burst-1784056316
+    claimed_at: '2026-07-14T19:11:56Z'
 
   - id: t-010
     milestone: m6
