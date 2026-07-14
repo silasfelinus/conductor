@@ -527,77 +527,68 @@ tasks:
 - id: t-019
   milestone: m3
   title: Polish and upgrade Challenge Center front-end surface
-  status: done
+  status: claimed
   owner: reviewer
   passes: 0
   stakes: reversible
-  note: 'DONE (kind_robots PR #265, merged): added ''challenges'' to tutorialChannels (mirrors ''mural'' pattern) + wired into tutorialRouteMap; added dashboard-tab/thumb/tutorial webp art derived from the already-approved conductor/projects/images/challenge-center-hero.webp (no live image-gen pipeline available this session). Step 4 ("evolve the placeholder scaffold") was already done by prior tasks t-004/t-008/t-014/t-015 -- verified by reading challenge-center-page.vue and pages/challenges/[slug].vue directly, the "placeholder scaffold" framing was stale. Step 3 (liveUrl): PROJECT_PLACEMENTS[''challenge-center''] already correctly specifies route ''/challenges'' in code; live DB sync needs an admin to click the Conductor Placements button (out of session scope, not a code change). See TALKBACK for CI findings (kind-robots/t-021 pre-existing, confirmed unrelated) and kaizen.'
+  note: 'UI polish + upgrade for the challenge-center front end now that the scaffold page is live at
+    /challenges. Steps: (1) generate final dashboard-tab art at public/images/dashboard-tabs/wonder/challenges.webp
+    and tutorial art at public/images/tutorials/wonder/challenges.webp; (2) add a matching section for
+    ''challenges'' under tutorialChannels.wonder.sections in kind_robots/stores/helpers/tutorialCards.ts;
+    (3) verify the PROJECT Dream liveUrl points at /challenges (admin can run the Conductor ''Placements''
+    button to backfill channelKey/tabKey/liveUrl); (4) evolve the placeholder scaffold page into the full
+    interactive experience for this project.
+
+
+    Worker claimed the highest-priority eligible ready task after current-main priority scan; t-018 was
+    already claimed.'
   updated: '2026-07-14T22:50:20Z'
   claimed_by: conductor-hourly-1784069419
   claimed_at: '2026-07-14T22:50:20Z'
 - id: t-020
   milestone: m4
   title: Make task-event roadmap mutations surgical, formatting-preserving, and conflict-safe
-  status: review
-  owner: worker
-  passes: 0
-  stakes: reversible
-  updated: '2026-07-14T23:23:38Z'
-  note: |-
-    Context: scripts/process_task_events.py currently rewrites complete authoritative YAML files with PyYAML safe_dump. A one-task state change therefore produced hundreds of unrelated changed lines, escaped readable Unicode, changed block and quote styles, and created unnecessary merge-conflict risk. The bridge must remain connector-safe without treating an entire roadmap as disposable generated output.
-
-    Required implementation:
-      1. Parse the complete roadmap for structural validation, but mutate only the requested task fields and the dependency statuses that resolve as a direct consequence of that event.
-      2. Preserve every byte outside the intended YAML nodes. Do not reserialize notes_from_silas, unrelated tasks, comments, blank lines, key ordering, quote style, Unicode, or multiline block style.
-      3. Preserve the existing key order and local formatting of the target task wherever possible. A status-only event must create a status-sized diff, not a file-sized diff.
-      4. Append to LEARNING.yaml without reformatting existing records. Duplicate task/outcome learning entries must remain idempotent.
-      5. Make the workflow conflict-safe: fetch current main immediately before committing, never force-push, retry one clean non-fast-forward race by replaying the still-pending event on current main, and otherwise fail with the event left intact.
-      6. Make processing atomic. Invalid events, resolver failures, validation failures, or unresolved push conflicts must not leave a partial roadmap or ledger commit.
-      7. Keep successfully processed events removable and failed events inspectable. Re-running after success must be a no-op.
-
-    Regression coverage:
-      - Use a checked-in fixture copied from the real Challenge Center roadmap, including long notes, Unicode arrows and em dashes, quoted values, block scalars, and dependency lists.
-      - A claim event may change only status, owner, updated, and the consumed event file. Assert all unrelated source lines are byte-identical.
-      - A done event may change only the target task, directly unblocked dependents, one append-only learning record, and the consumed event file.
-      - An invalid transition must produce zero authoritative-file diff and leave the event in place.
-      - A second run after success must produce zero diff and no duplicate learning record.
-      - Add a test that fails if an event causes broad roadmap churn, escaped Unicode, or conversion of literal blocks into folded/quoted strings.
-
-    Implementation guidance: a targeted source-span patcher is preferred. A round-trip YAML library is acceptable only if the byte-preservation tests above pass. Do not call yaml.safe_dump on authoritative roadmap or learning files.
-
-    Definition of done: the full task-event test suite passes in CI; processing representative claim and done fixtures produces a minimal expected diff; both output files parse with yaml.safe_load; documentation explains the atomic retry behavior; and no unrelated roadmap text changes.
-
-    ADDENDUM (Claude, 2026-07-14, found while closing t-008): scripts/resolve_deps.py (main(), around the yaml.safe_dump call) has the identical defect — running it after t-008 closed turned a two-task status flip (t-009, t-015: waiting -> ready) into a 940-line diff of the same kind (escaped Unicode, flow-style reindentation, changed quoting) across the whole challenge-center roadmap. Worked around this cycle by reverting and reapplying the same edits with set_task_field.py (26-line diff) instead of running resolve_deps.py for real. In scope for this task: extend whatever surgical patcher t-020 builds to resolve_deps.py's dependency-unblock writes too, not just process_task_events.py's event-driven ones — both call the same unsafe dump-the-whole-file pattern and should share one safe write path.
-
-
-    IMPLEMENTED (2026-07-14): scripts/roadmap_text_patch.py adds a shared surgical, multi-field, multiline-aware patcher (set/unset ops built on set_task_field.py's find_task_block/field_value_end primitives, plus a literal-block '|-' renderer for multi-paragraph note text so paragraph breaks and literal Unicode survive instead of being flattened or \u-escaped).
-
-    process_task_events.py now computes a list of field ops per event and applies them via apply_task_field_ops instead of yaml.safe_dump-ing the whole roadmap. It also validates any learning payload BEFORE touching the roadmap file, so an invalid learning block can no longer strand an already-applied transition with its event undeleted (atomicity fix). LEARNING.yaml appends are now pure trailing-text writes -- existing records are never re-touched.
-
-    resolve_deps.py (the addendum found while closing t-008) uses the same patcher for its waiting-to-ready status writes, so a multi-task unblock only changes those status lines.
-
-    Added scripts/validate_roadmaps.py (extracted from an inline workflow heredoc -- heredocs can't be indented under a plain '<<' terminator inside a YAML block scalar, which was the original approach and would have broken silently) and hardened .github/workflows/process-task-events.yml: it now fetches origin/main immediately before pushing, never force-pushes, and retries exactly once by git reset --hard origin/main plus a full replay of the processing step on a non-fast-forward race, otherwise failing with the event left intact on origin.
-
-    Regression coverage: tests/test_roadmap_text_patch.py (10 tests against a checked-in frozen fixture copied from the real challenge-center roadmap.yaml -- byte-identical unrelated tasks, literal Unicode em-dash/arrow preservation, literal-block notes, unset-as-noop, idempotent re-apply), plus new tests in test_process_task_events.py (byte-preservation, atomicity on a bad learning payload, repeat-claim zero-diff idempotency, multiline note block rendering) and test_resolve_deps.py (surgical multi-task unblock, Unicode preservation). Wired the new and existing task-event test files into ci.yml's authz-regression job so they actually run in CI. Documented the atomic-retry and surgical-write behavior in task-events/README.md.
-
-    Full suite: 225/225 passing locally. Not done: a live end-to-end exercise of the GitHub Actions conflict-retry path itself (bash syntax-checked and logic-reviewed, but not runnable outside real CI).
-  claimed_by: burst-20260714T230541Z
-  claimed_at: '2026-07-14T23:06:04Z'
-- id: t-021
-  milestone: m1
-  title: Investigate provisioning Node 24.x in the sandbox session environment for local CI reproduction
   status: ready
+  owner: null
   passes: 0
   stakes: reversible
-  note: >
-    Kaizen from t-019: local typecheck reproduction against kind_robots CI has hit the same
-    Node 22 (sandbox) vs Node 24 (CI) gap on two consecutive tasks (t-015, t-019). No nvm/fnm
-    is available in this sandbox to install Node 24, and downloading CI's diagnostic artifacts
-    directly (e.g. the "typescript-diagnostics" upload) is blocked by the sandbox's network
-    egress policy (Azure blob storage isn't on the proxy allowlist). Investigate either
-    provisioning Node 24.x (or a version manager) in the hourly-cycle sandbox environment, or
-    documenting a reliable sandbox-safe path to fetch CI artifact contents (e.g. via the GitHub
-    API's artifact endpoint if it can be proxied, rather than the signed Azure blob URL it
-    redirects to). Until fixed, the fallback (confirmed sufficient on t-019) is: verify the
-    diff's changed files never appear in the local error list under any locally-reproducible
-    variant, rather than chasing an exact CI error-count match.
+  updated: '2026-07-14T03:04:52Z'
+  note: "Context: scripts/process_task_events.py currently rewrites complete authoritative YAML files\
+    \ with PyYAML safe_dump. A one-task state change therefore produced hundreds of unrelated changed\
+    \ lines, escaped readable Unicode, changed block and quote styles, and created unnecessary merge-conflict\
+    \ risk. The bridge must remain connector-safe without treating an entire roadmap as disposable generated\
+    \ output.\n\nRequired implementation:\n  1. Parse the complete roadmap for structural validation,\
+    \ but mutate only the requested task fields and the dependency statuses that resolve as a direct consequence\
+    \ of that event.\n  2. Preserve every byte outside the intended YAML nodes. Do not reserialize notes_from_silas,\
+    \ unrelated tasks, comments, blank lines, key ordering, quote style, Unicode, or multiline block style.\n\
+    \  3. Preserve the existing key order and local formatting of the target task wherever possible. A\
+    \ status-only event must create a status-sized diff, not a file-sized diff.\n  4. Append to LEARNING.yaml\
+    \ without reformatting existing records. Duplicate task/outcome learning entries must remain idempotent.\n\
+    \  5. Make the workflow conflict-safe: fetch current main immediately before committing, never force-push,\
+    \ retry one clean non-fast-forward race by replaying the still-pending event on current main, and\
+    \ otherwise fail with the event left intact.\n  6. Make processing atomic. Invalid events, resolver\
+    \ failures, validation failures, or unresolved push conflicts must not leave a partial roadmap or\
+    \ ledger commit.\n  7. Keep successfully processed events removable and failed events inspectable.\
+    \ Re-running after success must be a no-op.\n\nRegression coverage:\n  - Use a checked-in fixture\
+    \ copied from the real Challenge Center roadmap, including long notes, Unicode arrows and em dashes,\
+    \ quoted values, block scalars, and dependency lists.\n  - A claim event may change only status, owner,\
+    \ updated, and the consumed event file. Assert all unrelated source lines are byte-identical.\n  -\
+    \ A done event may change only the target task, directly unblocked dependents, one append-only learning\
+    \ record, and the consumed event file.\n  - An invalid transition must produce zero authoritative-file\
+    \ diff and leave the event in place.\n  - A second run after success must produce zero diff and no\
+    \ duplicate learning record.\n  - Add a test that fails if an event causes broad roadmap churn, escaped\
+    \ Unicode, or conversion of literal blocks into folded/quoted strings.\n\nImplementation guidance:\
+    \ a targeted source-span patcher is preferred. A round-trip YAML library is acceptable only if the\
+    \ byte-preservation tests above pass. Do not call yaml.safe_dump on authoritative roadmap or learning\
+    \ files.\n\nDefinition of done: the full task-event test suite passes in CI; processing representative\
+    \ claim and done fixtures produces a minimal expected diff; both output files parse with yaml.safe_load;\
+    \ documentation explains the atomic retry behavior; and no unrelated roadmap text changes.\n\nADDENDUM\
+    \ (Claude, 2026-07-14, found while closing t-008): scripts/resolve_deps.py (main(), around the yaml.safe_dump\
+    \ call) has the identical defect \u2014 running it after t-008 closed turned a two-task status flip\
+    \ (t-009, t-015: waiting -> ready) into a 940-line diff of the same kind (escaped Unicode, flow-style\
+    \ reindentation, changed quoting) across the whole challenge-center roadmap. Worked around this cycle\
+    \ by reverting and reapplying the same edits with set_task_field.py (26-line diff) instead of running\
+    \ resolve_deps.py for real. In scope for this task: extend whatever surgical patcher t-020 builds\
+    \ to resolve_deps.py's dependency-unblock writes too, not just process_task_events.py's event-driven\
+    \ ones \u2014 both call the same unsafe dump-the-whole-file pattern and should share one safe write\
+    \ path.\n"

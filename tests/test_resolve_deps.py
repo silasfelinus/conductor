@@ -218,6 +218,73 @@ def test_main_dry_run_does_not_write(tmp_path: Path):
     assert path.read_text() == before
 
 
+def test_main_unblock_is_surgical_unrelated_tasks_byte_identical(tmp_path: Path):
+    # Regression for conductor/challenge-center t-020's addendum: resolve_deps.py
+    # used to yaml.safe_dump the whole roadmap for a status-only unblock, escaping
+    # Unicode and reformatting every unrelated task in the file.
+    roadmap_text = """\
+project: demo
+notes: "Uses an em dash — and an arrow → already, unrelated to any task."
+tasks:
+- id: t-001
+  title: Gate
+  status: done
+- id: t-002
+  title: Depends on gate
+  status: waiting
+  depends_on: t-001
+- id: t-003
+  title: Untouched sibling
+  status: claimed
+  owner: worker
+  note: 'Quoted note with an apostrophe: it''s fine.'
+"""
+    path = tmp_path / "projects" / "demo" / "roadmap.yaml"
+    path.parent.mkdir(parents=True)
+    path.write_text(roadmap_text, encoding="utf-8")
+
+    result = run_cli(tmp_path)
+    assert "unblocked t-002" in result.stdout
+
+    after = path.read_text(encoding="utf-8")
+    tasks = yaml.safe_load(after)["tasks"]
+    assert {t["id"]: t["status"] for t in tasks}["t-002"] == "ready"
+
+    before_lines = roadmap_text.splitlines()
+    after_lines = after.splitlines()
+    diff = [i for i, (a, b) in enumerate(zip(before_lines, after_lines)) if a != b]
+    assert len(diff) == 1
+    assert after_lines[diff[0]].strip() == "status: ready"
+    # The pre-existing em dash/arrow elsewhere in the file must stay literal.
+    assert "—" in after and "→" in after
+    assert "\\u2014" not in after and "\\u2192" not in after
+    # t-003's quoted note is completely untouched.
+    assert "note: 'Quoted note with an apostrophe: it''s fine.'" in after
+
+
+def test_main_multiple_unblocks_in_one_file_each_touch_only_their_own_line(tmp_path: Path):
+    roadmap = {
+        "project": "demo",
+        "tasks": [
+            {"id": "t-001", "title": "Gate", "status": "done"},
+            {"id": "t-002", "title": "First dependent", "status": "waiting", "depends_on": "t-001"},
+            {"id": "t-003", "title": "Second dependent", "status": "waiting", "depends_on": "t-001"},
+        ],
+    }
+    path = write_roadmap(tmp_path, "demo", roadmap)
+    before = path.read_text()
+
+    result = run_cli(tmp_path)
+    assert "unblocked t-002, t-003" in result.stdout
+
+    after = path.read_text()
+    before_lines = before.splitlines()
+    after_lines = after.splitlines()
+    assert len(before_lines) == len(after_lines)
+    diff = [i for i, (a, b) in enumerate(zip(before_lines, after_lines)) if a != b]
+    assert len(diff) == 2
+
+
 def test_main_skips_template_project(tmp_path: Path):
     roadmap = {
         "project": "_template",
