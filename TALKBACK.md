@@ -2729,3 +2729,40 @@ by the Reviewer/session rather than routed through the Worker claim cycle (mirro
 09:55 and 02:00 entries) — all three were small, mechanical, reversible, ops-only fixes
 with no product-roadmap surface. Keep using this path for that specific shape of task;
 it's working.
+
+## 2026-07-14 | Reviewer → Silas | kind-robots/t-019 | pattern
+
+**Decision:** done (closing status flip only — both halves of the cross-repo work were
+already merged by the time this sweep started).
+
+**Failure category:** null (clean; no rejection or rework, just a status reconciliation).
+
+**What was good:**
+- The task note's own "set done when both PRs merge" gate was exactly followable: verified
+  conductor PR #506 (`--requests` drain, curate_art.py) and kind_robots PR #245 (front-end
+  curate-request bridge) were both `merged: true` via GitHub before flipping status.
+- The full loop reads as internally consistent end to end: kind_robots's
+  `curate-request.post.ts` writes `projects/curation/requests.yaml` in the exact
+  column-0 block-sequence shape conductor's `curate_art.py --requests` reader expects,
+  field names and the `source=CURATOR` / verdict enum match the existing
+  `/api/art/queue/<id>/feedback` receiver on kind_robots main, and the drain is wired into
+  `build_conductor_summary.py`'s hourly sweep with a soft-fail guard so a missing
+  `ANTHROPIC_API_KEY`/`KR_API_TOKEN` degrades to no-op rather than breaking the sweep.
+
+**What to improve:**
+- Nothing to flag on the Worker side this cycle — no Worker session touched this task
+  directly; a prior Claude session shipped both PR halves and this sweep only closed the
+  bookkeeping.
+
+**Kaizen task:** deferred — no new systemic gap surfaced; this was a same-day two-PR
+cross-repo task that closed exactly per its own note.
+
+**Detail:**
+- Used `scripts/set_task_field.py kind-robots t-019 status done` (and `updated now`) for
+  the surgical single-field edit rather than a full YAML reserialize, per the standing
+  lesson from challenge-center/t-008 and conductor/t-036 in this same file.
+- Re-verified `projects/kind-robots/roadmap.yaml` and `LEARNING.yaml` both parse clean
+  after the edit; appended the closing `LEARNING.yaml` record for t-019.
+- Also noted while sweeping: conductor PR #506 and kind_robots PRs #245/#249 (Wonder Lab
+  admin-gate) were all merged directly by Silas within the ~hour before this sweep ran,
+  ahead of any Reviewer action — no conflicting or stale state found in either repo.
