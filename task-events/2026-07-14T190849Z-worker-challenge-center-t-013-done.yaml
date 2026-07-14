@@ -1,0 +1,20 @@
+version: 1
+project: challenge-center
+task: t-013
+operation: done
+updated: 2026-07-14T19:08:49+00:00
+note: >
+  Complete in conductor PR #522 (squash 610f718): added scripts/challenge_matchup.py
+  with JSON/YAML contender matrices, live contender resolution, Anthropic/OpenAI text
+  dispatch, queued A1111/Comfy art generation, OpenAI Images generation, real ArtImage
+  submission links, variant audit metadata, safe per-entry skips, and summary reporting.
+  Worker PR CI and Security Audit passed before merge.
+learning:
+  date: 2026-07-14
+  kind: software
+  stakes: reversible
+  passes: 0
+  failure_category: null
+  lesson: >
+    Matrix runners should resolve backend identity from the authoritative contender roster
+    and isolate missing credentials to one entry so a heterogeneous matchup can still make progress.
