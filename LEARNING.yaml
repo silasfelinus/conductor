@@ -550,3 +550,12 @@ records:
   outcome: done
   failure_category: null
   lesson: "A 'confirm the resolver has no type-specific branching' task closed clean on first pass by reading satisfied() directly (scripts/resolve_deps.py) -- it only checks status/gate_human/approved_by_human, never task kind, so a licensing DECISION and a brief-confirmation gate were already handled identically. Backed the finding with tests/test_resolve_deps.py (12 tests, zero prior coverage) instead of a note-only close, so the guarantee is now regression-tested rather than asserted. Also picked up mid-cycle after a real rotation collision on challenge-center/t-013 -- claim_task.py's live origin/main check caught it before any duplicate work was pushed."
+- date: 2026-07-14
+  project: coloring-book
+  task: t-019
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "The task's own framing ('evolve the placeholder scaffold page') was stale -- a repo read of kind_robots showed the coloring engine (store/canvas/manager) is already a functionally complete region+raster-flood-fill implementation with undo and export, not a placeholder. Read the target repo before trusting a roadmap task's characterization of current state; the actual thin spots (generic Generate/Proposals/Prompts sub-tabs, single hardcoded page set) were narrower than the task description implied and got split into a new focused task (t-020) instead of driving an oversized diff. Also: art-asset generation for dashboard-tab/tutorial thumbnails is a queue-and-wait step (projects/art-prompts.yaml requests:), not something a single session executes end-to-end without KR_API_TOKEN -- queuing the request IS the correct terminal action for that sub-step, not a soft-gate blocker."
