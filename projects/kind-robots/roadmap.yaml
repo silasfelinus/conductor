@@ -389,3 +389,37 @@ tasks:
       dreamIds relation arrays). Add server/api/dream-relations/ index.post/
       index.get/[id].delete with requireApiUser, then extend conductor's
       scripts/build_dream_records.py to create the edges.
+
+  - id: t-018
+    milestone: m3
+    title: Make the Cypress prod-deploy-wait step tolerant of rapid successive merges
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: "2026-07-14T09:55:00Z"
+    note: >
+      Found during conductor Reviewer sweep (2026-07-14 09:xx UTC):
+      .github/workflows/cypress.yml's deploy-wait step polls
+      ${BASE_URL}/api/version until it reports the exact merge-commit SHA,
+      timing out at 600s and failing the job otherwise. During a burst of
+      several merges within ~1-2 hours (PR #238-#242 all landed within one
+      session), Vercel kept starting a new production build for each new
+      main-branch commit before the previous one finished, so by the time
+      any single build would have gone live a newer commit had already
+      superseded it -- production stayed pinned on an older SHA and the
+      exact-match poll in run 29315412081 (target ad80d0e7) and run
+      29318586840 (target 2bbdf3d3) both timed out and failed red, even
+      though nothing was actually broken -- each commit's own build was
+      still in the Vercel queue/building when the next merge landed. Root
+      cause is a race between merge velocity and the wait step's
+      exact-SHA requirement, not a code regression; confirmed via Vercel's
+      deployments list showing no missing/errored production build, just
+      later ones superseding earlier ones. Suggested fix: either (a) accept
+      when the live commit is a git ancestor of TARGET_SHA rather than
+      requiring an exact match (i.e. the newer, already-live commit
+      supersedes the one this run cares about) so a superseded-but-still-
+      correct state passes, or (b) skip/short-circuit the wait when a newer
+      commit on main has already deployed to production by the time this
+      job runs. Not urgent -- self-resolves once merge bursts settle -- but
+      will keep flaking CI red during any future rapid-merge session.

@@ -46,7 +46,25 @@ OVERRIDES_FILE = REPO_ROOT / "project-overrides.yaml"
 PROJECTS_DIR = REPO_ROOT / "projects"
 KR_API_BASE = "https://kind-robots.vercel.app/api"
 TRANSIENT_HTTP_CODES = {429, 500, 502, 503, 504}
+# The kind_robots API sometimes surfaces a raw DB-driver connection error
+# (ProxySQL dropping a stale socket under load) wrapped in an HTTP 400
+# instead of a 5xx, so status-code-only retry logic misses it. Sniff the
+# body for these markers too. (Root cause matches the 2026-07-14 02:00
+# TALKBACK entry — "Cannot execute new commands: connection closed" —
+# recurring here via sync_projects.py's own requests.)
+TRANSIENT_BODY_MARKERS = (
+    "connection closed",
+    "econnreset",
+    "connection terminated",
+    "connect timeout",
+)
 MAX_REQUEST_ATTEMPTS = 4
+
+
+def _looks_transient(body):
+    text = body.decode(errors="replace").lower()
+    return any(marker in text for marker in TRANSIENT_BODY_MARKERS)
+
 
 CONDUCTOR_TO_KR_STATUS = {
     "active": "ACTIVE",
@@ -82,7 +100,16 @@ def kr_request(method, path, token, payload=None):
             with urllib.request.urlopen(req, timeout=15) as resp:
                 return json.loads(resp.read())
         except urllib.error.HTTPError as error:
-            if error.code not in TRANSIENT_HTTP_CODES or attempt == MAX_REQUEST_ATTEMPTS:
+            body = error.read()
+            transient = error.code in TRANSIENT_HTTP_CODES or _looks_transient(body)
+            if not transient or attempt == MAX_REQUEST_ATTEMPTS:
+                # .read() above drained the underlying stream, and HTTPError
+                # caches attribute lookups on first access (it delegates via
+                # tempfile._TemporaryFileWrapper.__getattr__), so reassigning
+                # .fp doesn't affect a later .read() call. Rebind .read
+                # directly so callers that read the body (e.g. sync_project's
+                # error-message logging) still see it.
+                error.read = lambda body=body: body
                 raise
         except (urllib.error.URLError, TimeoutError):
             if attempt == MAX_REQUEST_ATTEMPTS:
