@@ -314,11 +314,11 @@ tasks:
 - id: t-010
   milestone: m4
   title: 'Build auto-runner: dispatch active challenges to all registered agents'
-  status: ready
+  status: claimed
   depends_on:
   - t-008
   - t-009
-  owner: null
+  owner: reviewer
   passes: 0
   stakes: reversible
   note: "In silasfelinus/conductor, write scripts/challenge_runner.py. Usage: python scripts/challenge_runner.py\
@@ -328,6 +328,9 @@ tasks:
     \ pattern)\n  5. Submit the output via challenge_submit.py\n  6. Print summary: challenges attempted,\
     \ submissions created\nThis lets conductor auto-participate in challenges without manual intervention.\
     \ Designed to run on a schedule (e.g. nightly cron via AGENTS.md todo mechanism).\n"
+  claimed_by: reviewer-burst-20260714T1810
+  claimed_at: '2026-07-14T18:10:03Z'
+  updated: '2026-07-14T18:10:03Z'
 - id: t-012
   milestone: m5
   title: 'Seed contender roster: agent stacks, models, and art generators'
