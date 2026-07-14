@@ -2571,3 +2571,76 @@ every issue flagged in the previous sweep is now resolved.
 **Suggested action:** none for Silas. Next Worker cycle should prioritize conductor/t-036
 (LEARNING.yaml reindent) — it's still silently swallowing every learning-ledger append
 system-wide.
+
+## 2026-07-14 09:55 | Reviewer → Silas | conductor, kind_robots | pattern
+
+**Subject:** Not a no-op cycle — `CONDUCTOR-REPORT.md` flagged two real red CI signals
+this time (`Project Sync` in conductor, `Cypress Tests` in kind_robots). Root-caused both.
+One was a genuine bug in conductor's own tooling — fixed, tested, and merged directly.
+The other was a merge-velocity race, not a regression — filed as kind-robots/t-018 for
+Worker to harden later; left alone this cycle since a fix was already in flight.
+
+**Detail:**
+- **conductor `Project Sync` workflow** — failing on every run since at least
+  2026-07-14T04:33Z (`list_workflow_runs` showed 5 consecutive `main` failures).
+  `get_job_logs` on the latest failed run showed 31/32 projects synced fine; only
+  `animation-manager` errored: `ERROR 400 — {"message":"Cannot execute new commands:
+  connection closed","statusCode":400}`. Same underlying ProxySQL-drops-a-stale-socket
+  class of error already diagnosed in the 2026-07-14 02:00 TALKBACK entry (that one hit
+  kind_robots' own Cypress suite; this one hits `sync_projects.py`'s own HTTP calls to
+  the kind_robots API) — but `kr_request()`'s retry logic only retried on
+  `{429,500,502,503,504}` status codes, and the API wraps this particular driver error
+  in an HTTP 400, so the existing retry-with-backoff never fired and the sync failed
+  100% of the time on the same project every run.
+  - Fixed in `scripts/sync_projects.py`: added `TRANSIENT_BODY_MARKERS` (body-content
+    sniffing for `"connection closed"`, `"econnreset"`, `"connection terminated"`,
+    `"connect timeout"`) so a 400 carrying one of these markers now retries with the
+    same exponential backoff as a 5xx. Verified genuine validation 400s and 401s still
+    raise immediately without wasting retries — this only widens the transient set, not
+    the retry policy itself.
+  - Found and fixed a related landmine while writing this: `urllib.error.HTTPError`
+    caches attribute lookups on first access (`tempfile._TemporaryFileWrapper.__getattr__`
+    binds `.read` to the *original* stream and memoizes it as an instance attribute), so
+    reassigning `error.fp` after draining the body does **not** make `.read()` return the
+    body again — I initially wrote it that way and a regression test caught it returning
+    `b''`. Fixed by rebinding `error.read` directly to a closure over the saved bytes.
+    Kept both as regression tests.
+  - Added `tests/test_sync_projects.py` (5 cases: 5xx still retries, 400+marker now
+    retries and recovers, genuine 400/401 still raise immediately with zero retries, body
+    stays readable after retries are exhausted). Full suite: `python3 -m pytest tests/`
+    — 141 passed, 0 failures. Roadmap YAML validation also clean (41 files).
+  - This is conductor's own ops tooling (not a product-repo change), reversible, scoped
+    to the one function — merging directly per the Reviewer's established authority for
+    conductor tooling/CI-health fixes (mirrors the 2026-07-14 02:00 entry's precedent).
+- **kind_robots `Cypress Tests` / API Tests job** — also red on `main` for several
+  consecutive runs (07:41Z target `ad80d0e7`, 08:35Z target `2bbdf3d3`, both timed out).
+  Root cause is different from the Project Sync issue and NOT a regression: the deploy-
+  wait step in `.github/workflows/cypress.yml` polls `/api/version` until it reports the
+  *exact* merge-commit SHA, timing out at 600s. Five PRs (#238-#242) merged to `main`
+  within roughly the same session; checked Vercel's deployment list directly
+  (`list_deployments`) and confirmed every one of those commits *did* get a
+  `target: production` build queued — there's no missing or errored production
+  deployment — but each new merge landed before the previous commit's build finished,
+  so by the time any single build would have gone live a newer commit had already
+  superseded it. Production stayed pinned on an older SHA while the exact-match poll for
+  an already-superseded target commit ran out its clock. The most recent merge (PR #242,
+  `e8f4f809`) triggered a fresh production build that was still `QUEUED`/`BUILDING` as of
+  this sweep, and its corresponding Cypress run (29323122823) was `in_progress` — expected
+  to go green once that build completes and merge traffic settles, so I left it alone
+  rather than force a fix onto a self-resolving situation. Filed **kind-robots/t-018**
+  (`ready`, reversible) with the full diagnosis and two suggested fixes (accept an
+  ancestor commit as "live enough," or short-circuit when a newer commit has already
+  superseded the target) for whichever Worker cycle wants to harden it — this will keep
+  flaking red during any future rapid-merge burst until it's addressed.
+- Everything else matches the prior sweep: zero other open PRs across all five in-scope
+  repos (checked conductor, kind_robots — the one open PR there, #242, already covered
+  above and was merged by Silas directly, not a Worker/Reviewer PR — serendipity-voice,
+  PortOS, kindrobots-unraid). `conductor/t-036` (LEARNING.yaml reindent) is still `ready`
+  and still the top Worker item there — re-confirmed `yaml.safe_load` still fails at the
+  same indent-mismatch point. Dream-cycle backlog runway is healthy (8 outline/approved
+  entries, none `building`). Daily dream proposal for 2026-07-14 already existed.
+
+**Suggested action:** Worker's next cycle should prioritize `conductor/t-036`
+(LEARNING.yaml reindent, still silently swallowing every learning-ledger append) and can
+pick up `kind-robots/t-018` (Cypress deploy-wait hardening) whenever convenient — neither
+is urgent, both are small and mechanical.
