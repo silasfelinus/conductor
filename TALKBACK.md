@@ -2813,3 +2813,21 @@ cross-repo task that closed exactly per its own note.
   (pre-existing findings elsewhere untouched).
 
 **Kaizen task:** deferred — no new systemic gap surfaced this cycle.
+
+## 2026-07-14 | Reviewer → Silas/Worker | conductor/roadmap-audit | pattern
+
+**Decision:** audited already-merged/idle state (zero open worker/* PRs, zero worker/* or claude/* branches in conductor/kind_robots/serendipity-voice this cycle — routine empty-queue sweep, not re-escalating conductor/t-026's known trigger-cadence issue since real Worker throughput continued yesterday per this file's own 2026-07-14 entries above). Ran `scripts/audit_roadmaps.py` for repo health and found 8 errors + 3 warnings; fixed what was mechanical, escalated the rest as new roadmap tasks rather than guessing.
+
+**Failure category:** null (housekeeping, not a task rejection).
+
+**What was good (repo hygiene, self-critique of the coordination layer rather than a Worker PR):**
+- `kindrobots-unraid` t-004/t-006 through t-011 carried `status: planned`, which isn't in `VALID_STATUS` — flipped all six to `waiting` via `set_task_field.py` (matches their intent: real future work, no `depends_on`, not currently actionable). Re-ran the audit after each class of fix to confirm no new findings were introduced.
+- `animation-studio/t-003` ("Ship Gravity Garden") sat at `status: review` with no `updated` timestamp. Verified directly via `pull_request_read` that kind_robots PR #238 merged 2026-07-14T07:40Z, then flipped it to `done` and logged the LEARNING.yaml record — didn't trust the stale roadmap status.
+- `kindrobots-unraid` had zero `project-overrides.yaml` entry at all, meaning it read as `override_status: missing` (not `active`) despite being an obviously live, prioritized project (done tasks, needs-human items, a priority.yaml slot). Added the missing entry (`active`, `normal`, `software`) since there was no real ambiguity here.
+- **Did NOT** guess on two judgment calls and instead created new `ready` tasks for a human/future Worker: `conductor/t-038` (CONTROL.md's stated priority band vs. priority.yaml's actual order have listed `kindrobots-unraid` differently since the files were created — checked git history to confirm it's stale prose, not a live disagreement, but didn't decide which document is "right"), and `conductor/t-039` (`animation-studio` looks superseded by `animation-manager` per PR #494, but didn't retire it or add an "active" override without confirming — that could send a Worker to re-do already-shipped work).
+- Re-ran `scripts/build_status.py` and `scripts/build_learning_summary.py` after all roadmap/LEARNING.yaml edits so `STATUS.md`/`LEARNING-REPORT.md` reflect the fixes; audit now shows exactly the two deferred findings (1 error, 1 warning) and nothing else.
+
+**What to improve:**
+- The audit tool itself has apparently been catching real drift for a while (`kindrobots-unraid`'s missing override, the `planned` status typo) without a task ever getting created to fix it — worth checking whether `audit_roadmaps.py`'s output is actually being read each cycle or just generated and ignored. Suggest wiring a lightweight check into a future cycle: if error count > 0, that's itself worth a roadmap task rather than silent tolerance.
+
+**Kaizen task:** conductor/t-038 and t-039 (above) — both created directly from this cycle's own findings rather than a Worker's suggestion, since there was no Worker PR this cycle to source a kaizen idea from.

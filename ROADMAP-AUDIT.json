@@ -1,17 +1,17 @@
 {
-  "generated_at": "2026-07-14T12:14:15.758565+00:00",
+  "generated_at": "2026-07-14T12:59:34.144702+00:00",
   "summary": {
     "roadmaps": 40,
-    "active_projects": 32,
-    "tasks": 489,
-    "ready": 113,
-    "waiting": 60,
+    "active_projects": 33,
+    "tasks": 491,
+    "ready": 117,
+    "waiting": 65,
     "needs_human": 16,
-    "in_progress": 1,
-    "done": 281,
-    "errors": 10,
-    "warnings": 3,
-    "info": 47
+    "in_progress": 0,
+    "done": 282,
+    "errors": 1,
+    "warnings": 1,
+    "info": 46
   },
   "projects": [
     {
@@ -194,21 +194,21 @@
     },
     {
       "slug": "kindrobots-unraid",
-      "kind": "infrastructure",
-      "override_status": "missing",
+      "kind": "software",
+      "override_status": "active",
       "priority_index": 10,
       "autonomous": false,
       "task_count": 12,
       "counts": {
         "done": 3,
         "needs-human": 1,
-        "planned": 7,
-        "ready": 1
+        "ready": 1,
+        "waiting": 7
       },
-      "open_count": 2,
+      "open_count": 9,
       "human_attention": 1,
       "ready": 1,
-      "waiting": 0,
+      "waiting": 7,
       "claimed": 0,
       "review": 0,
       "done": 3
@@ -281,13 +281,13 @@
       "counts": {
         "done": 1,
         "needs-human": 1,
-        "ready": 1,
-        "waiting": 9
+        "ready": 3,
+        "waiting": 7
       },
       "open_count": 11,
       "human_attention": 1,
-      "ready": 1,
-      "waiting": 9,
+      "ready": 3,
+      "waiting": 7,
       "claimed": 0,
       "review": 0,
       "done": 1
@@ -357,15 +357,15 @@
       "override_status": "active",
       "priority_index": 18,
       "autonomous": false,
-      "task_count": 37,
+      "task_count": 39,
       "counts": {
         "done": 27,
         "needs-human": 1,
-        "ready": 9
+        "ready": 11
       },
-      "open_count": 10,
+      "open_count": 12,
       "human_attention": 1,
-      "ready": 9,
+      "ready": 11,
       "waiting": 0,
       "claimed": 0,
       "review": 0,
@@ -687,17 +687,17 @@
       "autonomous": true,
       "task_count": 8,
       "counts": {
+        "done": 1,
         "ready": 3,
-        "review": 1,
         "waiting": 4
       },
-      "open_count": 8,
+      "open_count": 7,
       "human_attention": 0,
       "ready": 3,
       "waiting": 4,
       "claimed": 0,
-      "review": 1,
-      "done": 0
+      "review": 0,
+      "done": 1
     },
     {
       "slug": "approval-portal",
@@ -806,86 +806,9 @@
       "message": "CONTROL.md priority band ['challenge-center', 'ai-art-academy', 'coloring-book', 'humboldt-scoop', 'humboldt-scoop-cms', 'digital-storefront', 'packmaker', 'mermaids-of-venice', 'kind-robots', 'global-ui'] does not match priority.yaml prefix ['challenge-center', 'ai-art-academy', 'coloring-book', 'humboldt-scoop', 'humboldt-scoop-cms', 'digital-storefront', 'packmaker', 'mermaids-of-venice', 'kind-robots', 'kindrobots-unraid']."
     },
     {
-      "severity": "error",
-      "code": "INVALID_STATUS",
-      "project": "kindrobots-unraid",
-      "task": "t-004",
-      "message": "Unknown task status 'planned'."
-    },
-    {
-      "severity": "error",
-      "code": "INVALID_STATUS",
-      "project": "kindrobots-unraid",
-      "task": "t-006",
-      "message": "Unknown task status 'planned'."
-    },
-    {
-      "severity": "error",
-      "code": "INVALID_STATUS",
-      "project": "kindrobots-unraid",
-      "task": "t-007",
-      "message": "Unknown task status 'planned'."
-    },
-    {
-      "severity": "error",
-      "code": "INVALID_STATUS",
-      "project": "kindrobots-unraid",
-      "task": "t-008",
-      "message": "Unknown task status 'planned'."
-    },
-    {
-      "severity": "error",
-      "code": "INVALID_STATUS",
-      "project": "kindrobots-unraid",
-      "task": "t-009",
-      "message": "Unknown task status 'planned'."
-    },
-    {
-      "severity": "error",
-      "code": "INVALID_STATUS",
-      "project": "kindrobots-unraid",
-      "task": "t-010",
-      "message": "Unknown task status 'planned'."
-    },
-    {
-      "severity": "error",
-      "code": "INVALID_STATUS",
-      "project": "kindrobots-unraid",
-      "task": "t-011",
-      "message": "Unknown task status 'planned'."
-    },
-    {
-      "severity": "error",
-      "code": "WAITING_WITH_SATISFIED_DEPS",
-      "project": "newsfeed",
-      "task": "t-003",
-      "message": "All dependencies are satisfied; resolver should promote this task to ready."
-    },
-    {
-      "severity": "error",
-      "code": "WAITING_WITH_SATISFIED_DEPS",
-      "project": "newsfeed",
-      "task": "t-004",
-      "message": "All dependencies are satisfied; resolver should promote this task to ready."
-    },
-    {
       "severity": "warning",
       "code": "ROADMAP_MISSING_OVERRIDE",
       "project": "animation-studio",
-      "task": null,
-      "message": "Roadmap has no project-overrides.yaml entry."
-    },
-    {
-      "severity": "warning",
-      "code": "IN_PROGRESS_WITHOUT_TIMESTAMP",
-      "project": "animation-studio",
-      "task": "t-003",
-      "message": "Claimed/review task has no parseable updated timestamp."
-    },
-    {
-      "severity": "warning",
-      "code": "ROADMAP_MISSING_OVERRIDE",
-      "project": "kindrobots-unraid",
       "task": null,
       "message": "Roadmap has no project-overrides.yaml entry."
     },
@@ -1077,13 +1000,6 @@
       "project": "kind-robots",
       "task": null,
       "message": "Roadmap has no friendly goal/definition of done."
-    },
-    {
-      "severity": "info",
-      "code": "INACTIVE_PROJECT_HAS_READY_TASKS",
-      "project": "kindrobots-unraid",
-      "task": null,
-      "message": "Inactive project retains 1 ready task(s); harmless but misleading in generated status."
     },
     {
       "severity": "info",
