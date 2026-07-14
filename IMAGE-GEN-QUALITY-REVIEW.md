@@ -236,6 +236,20 @@ Items 1–4 are quick config/prompt edits in **conductor**. Items 6–9 are code
   pending instead of being marked done. Also the objective floor for the
   autonomous promote-to-`approved/` curation goal.
 - Reconciled steps drift (30 → 36).
+- `scripts/curate_art.py` (new): the **vision-model curation pass** — the
+  judgment layer that approximates Silas's hand-picking. It runs the objective
+  `art_quality` gate as a cheap prefilter, then for each survivor asks a Claude
+  vision model to judge the candidate **against the `approved/` set as the
+  quality bar** (real approved images are sent as few-shot reference) on the
+  Monster Recast rubric — subject match, camp/horror read, anatomy, line-art
+  fidelity, "does it hold up next to approved". Promote-verdict candidates are
+  *proposed* into `curation/proposed/` for Silas (or moved to `approved/` with
+  `--promote`); it never deletes. Same house LLM pattern as
+  `build_conductor_summary.py` (raw Anthropic API, `ANTHROPIC_API_KEY`, graceful
+  objective-only fallback with no key). Verified: dry-run over the real
+  generated pairs discovers candidates, prefilters, and writes the report;
+  py_compile clean. The live vision pass needs a Worker cycle with the key +
+  Pillow.
 
 **kind_robots — Hair Studio / Kontext (commit on this branch):**
 - `workflow.ts`: `originalWeight` (0..1) img2img init from the encoded source
