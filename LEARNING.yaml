@@ -325,3 +325,12 @@ records:
   outcome: done
   failure_category: null
   lesson: "Building the fix directly surfaced a second, unrelated latent bug in the tool it depends on: set_task_field.py's normalize_scalar left a literal ISO-timestamp value unquoted, so PyYAML silently reparsed it as a native datetime instead of a string (only the `now` keyword path was quoted). Caught by a test asserting the round-tripped type, not by reading the code -- worth remembering that a field 'looks like a string' in a diff is not the same as verifying its parsed type. Also: designed the claim commit to be built via git plumbing (scratch index + commit-tree) rather than a real checkout/commit specifically so it never disturbs whatever branch or uncommitted work the calling session already has -- validated with a real throwaway git repo (bare + clone), not just unit-level YAML assertions, since the git push/race path is exactly the part most likely to look correct and behave wrong under concurrency."
+- date: "2026-07-14"
+  project: conductor
+  task: t-038
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "audit_roadmaps.py's CONTROL_PRIORITY_DRIFT finding pointed at two files that could disagree for two different reasons (real reprioritization vs. stale prose) -- git history on both files (not just diffing their current content) was what distinguished them: priority.yaml had carried the same order since file creation, so CONTROL.md's band text was the one that drifted, not an intentional Silas decision. Worth checking history before assuming a two-source-of-truth mismatch needs Silas's judgment call -- sometimes one side is just unmaintained prose."

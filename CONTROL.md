@@ -18,12 +18,14 @@ money without my explicit approval (set `approved_by_human: true` on the gated t
 
 **Priority order this week:** challenge-center → ai-art-academy → coloring-book →
 humboldt-scoop → humboldt-scoop-cms → digital-storefront → packmaker →
-mermaids-of-venice → kind-robots → global-ui.
+mermaids-of-venice → kind-robots → kindrobots-unraid → global-ui.
 (Mirror changes into projects/priority.yaml. Updated 2026-07-13: both Superkate apps
 are normal-priority and sit below this current priority cluster. ai-art-academy is the
 autonomous initiative test run and should get Worker attention early while it's being
 proven. dream-cycle sits last on purpose: it's the idle fallback, never a competitor for
-real ready work.)
+real ready work. Updated 2026-07-14 (conductor/t-038): added kindrobots-unraid to this
+band's text — priority.yaml has carried it in this exact slot since the file was
+created, so its absence here was prose drift, not an intended reprioritization.)
 
 **Standing rules for all agents:** Respect each project's `kind`. Honor `depends_on` gates.
 Never expand product-types.yaml — pitch it. When unsure, do less and escalate to

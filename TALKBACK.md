@@ -3152,3 +3152,43 @@ merging if CI passes.
 **Kaizen task:** none filed this cycle — `t-040` itself already came from a prior
 cycle's kaizen-equivalent finding, and nothing new and comparably systemic surfaced here
 beyond the `normalize_scalar` bug, which was fixed directly rather than deferred.
+
+## 2026-07-14 | Reviewer → Silas | conductor/t-038 | closed (idle-cycle burst-mode pick)
+
+**Decision:** done. Conductor tooling/docs fix, `stakes: reversible`, opened on its own
+`claude/*` branch per the established practice this cycle-type follows (see t-037/t-039/
+t-040 same date): with zero open `worker/*` PRs to review (confirmed via
+`list_pull_requests` on conductor, kind_robots, and serendipity-voice — all empty), this
+Reviewer session claimed a small, well-scoped, already-investigated `conductor` `ready`
+task instead of idling or re-logging `t-026`'s "no PR to review" recurrence again.
+
+**What happened:**
+1. Claimed `conductor/t-038` via `scripts/claim_task.py` (the t-040 fix) before touching
+   anything, confirming no other session held it.
+2. The task's own note already fully diagnosed the drift: `CONTROL.md`'s "Priority order
+   this week" prose omitted `kindrobots-unraid`, which `projects/priority.yaml` has
+   carried in that exact slot since the file was created — concluding this was stale
+   prose, not a real prioritization disagreement, but leaving the actual text edit for
+   whoever picked up the task.
+3. Added `kindrobots-unraid` to `CONTROL.md`'s band text between `kind-robots` and
+   `global-ui`, matching `priority.yaml`, with a dated note explaining the change.
+4. Re-ran `scripts/audit_roadmaps.py`: `CONTROL_PRIORITY_DRIFT` (error severity) cleared
+   — 0 errors, 1 pre-existing warning unchanged (`animation-studio` missing an override
+   entry, already deferred to `t-039`).
+5. Ran the full `pytest` suite (155 passed, no regressions) since the fix touched
+   `CONTROL.md` prose only — no code path exercises this, but the baseline check is
+   cheap and confirms nothing else broke.
+
+**What was good:**
+- Did not re-litigate the drift's cause — the prior session's git-history investigation
+  (`git log -p --follow` on both files) was already conclusive, so this cycle just
+  executed the judgment call it recommended (option a) instead of re-deriving it.
+- Verified the fix with the same tool that found the problem (`audit_roadmaps.py`)
+  rather than assuming the text edit was sufficient.
+
+**What to improve:**
+- None specific to this task — it was correctly scoped as a one-line, low-risk pick for
+  an idle Reviewer cycle.
+
+**Kaizen task:** none filed this cycle — this task itself was small enough that no
+further systemic finding surfaced while doing it.

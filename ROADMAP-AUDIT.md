@@ -1,20 +1,20 @@
 # Roadmap Audit
 
-Generated: `2026-07-14T15:19:02.670627+00:00`
+Generated: `2026-07-14T16:50:30.122059+00:00`
 
 This is a conservative structural audit. It reports suspicious state; it does not automatically change task status or remove human gates.
 
 ## Portfolio snapshot
 
 - **40** roadmaps, **33** active projects, **493** tasks
-- **114 ready**, **65 waiting**, **16 needs-human**, **0 claimed/review**, **287 done**
-- Findings: **1 errors**, **1 warnings**, **46 informational**
+- **113 ready**, **64 waiting**, **16 needs-human**, **1 claimed/review**, **288 done**
+- Findings: **0 errors**, **1 warnings**, **46 informational**
 
 ## Project inventory
 
 | # | Project | State | Kind | Ready | Waiting | Human | In progress | Done / Total |
 |---:|---|---|---|---:|---:|---:|---:|---:|
-| 1 | `challenge-center` | active | software | 6 | 2 | 0 | 0 | 11 / 19 |
+| 1 | `challenge-center` | active | software | 6 | 1 | 0 | 0 | 12 / 19 |
 | 2 | `ai-art-academy` | active | software | 5 | 0 | 0 | 0 | 7 / 12 |
 | 3 | `coloring-book` | active | software | 4 | 5 | 0 | 0 | 10 / 19 |
 | 4 | `humboldt-scoop` | active | software | 1 | 0 | 0 | 0 | 7 / 8 |
@@ -31,7 +31,7 @@ This is a conservative structural audit. It reports suspicious state; it does no
 | 15 | `model-builder` | active | software | 4 | 0 | 0 | 0 | 25 / 29 |
 | 16 | `animation-manager` | active | software | 4 | 2 | 0 | 0 | 4 / 10 |
 | 17 | `ecosystem-map` | active | software | 2 | 1 | 0 | 0 | 5 / 8 |
-| 18 | `conductor` | active | software | 11 | 0 | 1 | 0 | 28 / 40 |
+| 18 | `conductor` | active | software | 10 | 0 | 1 | 1 | 28 / 40 |
 | 19 | `serendipity` | active | software | 3 | 0 | 0 | 0 | 9 / 12 |
 | 20 | `storymaker` | active | software | 2 | 0 | 0 | 0 | 8 / 10 |
 | 21 | `davinci` | active | software | 2 | 0 | 0 | 0 | 12 / 14 |
@@ -57,9 +57,9 @@ This is a conservative structural audit. It reports suspicious state; it does no
 
 ## Findings by severity
 
-### Error (1)
+### Error (0)
 
-- **CONTROL_PRIORITY_DRIFT** — `_global`: CONTROL.md priority band ['challenge-center', 'ai-art-academy', 'coloring-book', 'humboldt-scoop', 'humboldt-scoop-cms', 'digital-storefront', 'packmaker', 'mermaids-of-venice', 'kind-robots', 'global-ui'] does not match priority.yaml prefix ['challenge-center', 'ai-art-academy', 'coloring-book', 'humboldt-scoop', 'humboldt-scoop-cms', 'digital-storefront', 'packmaker', 'mermaids-of-venice', 'kind-robots', 'kindrobots-unraid'].
+_None._
 
 ### Warning (1)
 
