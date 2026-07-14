@@ -348,3 +348,40 @@ tasks:
       d8407edc4fb29406d9ab621f19697c688b88b2da reached READY, the production homepage
       returned HTTP 200, and /api/dreams returned HTTP 200 with live database records.
       The temporary redeploy marker was removed, leaving main functionally unchanged.
+
+  - id: t-016
+    milestone: m3
+    title: Fix broken POST /api/sheets handler (mis-copied GET-by-id code)
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-14T04:00:00Z'
+    note: >
+      Found during dream-cycle Phase 2 (2026-07-14): server/api/sheets/index.post.ts
+      contains a mis-copied GET-by-id handler (its header comment reads
+      "[id].get.ts" and it does prisma.pitchSheet.findUnique on
+      event.context.params.id) — on the collection route params.id is
+      undefined, so every POST /api/sheets returns 400 "Invalid PitchSheet
+      ID" and nothing is ever created. Replace it with a real create handler
+      (validate via sanitizePitchSheetPayload like sheets/by-dream/[dreamId].post.ts,
+      attribute to the authenticated user). Conductor's build_dream_records.py
+      works around it via POST /api/sheets/by-dream/{dreamId}; once fixed,
+      standalone sheets (no dream) become possible.
+  - id: t-017
+    milestone: m3
+    title: Add a DreamRelation REST endpoint (create/list dream graph edges)
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-14T04:00:00Z'
+    note: >
+      Found during dream-cycle Phase 2 (2026-07-14): the DreamRelation Prisma
+      model exists (relationType edges like RELATED/CONTAINS/APPEARS_IN) but
+      has NO REST endpoint — server/api/relations/ is the social UserRelation
+      model. The daily-dream record builder therefore skips LOCATION<->GENRE
+      graph edges (cohesion currently comes from PitchSheet.extraData tags +
+      dreamIds relation arrays). Add server/api/dream-relations/ index.post/
+      index.get/[id].delete with requireApiUser, then extend conductor's
+      scripts/build_dream_records.py to create the edges.

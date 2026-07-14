@@ -97,6 +97,12 @@ tasks:
       projects/dream-cycle/docs/api-surface.md with a per-model verdict:
       api-ready | gap. Each gap becomes a proposed kind_robots roadmap task or
       pitch (backend stays read-only/external — never edit it directly).
+      HEAD START (2026-07-14, from t-012's build): Dream/Character/Reward/Bot/
+      Scenario/PitchSheet create+patch contracts are verified and documented in
+      scripts/build_dream_records.py's comments; known gaps already filed as
+      kind-robots t-016 (broken POST /api/sheets) and t-017 (no DreamRelation
+      endpoint). Remaining: ExpressionMedia/ExpressionTransition/NarratorTopic/
+      NarratorThread audit + the consolidated api-surface.md doc.
   - id: t-004
     milestone: m2
     title: Write CREATION-SPEC.md (the generic loop contract) and specs/dream.md (the dream playbook)
@@ -281,35 +287,57 @@ tasks:
   - id: t-012
     milestone: m4
     title: 'Phase 2: build the proposal into real records + art'
-    status: ready
-    owner: null
+    status: done
+    owner: reviewer
     passes: 0
     stakes: reversible
-    updated: '2026-07-14T00:00:00Z'
+    updated: '2026-07-14T04:00:00Z'
     note: >
-      Follow-up to t-011. Wire each daily proposal (a backlog outline) through
-      to real kind_robots content so yesterday_output shows real built cards +
-      images, not just the proposal echo. Reuse model-builder's
-      relationship-expansion recipe (Dream -> 3 Characters / Rewards /
-      Scenarios / Narrator Bot; ref reference-runs/dream-expansion-lantern-
-      greenhouse.md) driven from the dream-cycle build loop (t-006), creating
-      Dream/Character/Reward/Bot + PitchSheet rows via the kind_robots REST API
-      with designer/source metadata (reversible). Then build_digest.py's
-      match_images_for() reads real ArtImage collections by slug.
+      SHIPPED 2026-07-14 (with t-011, Silas-directed session).
+      scripts/build_dream_records.py builds the newest unbuilt proposal past
+      its steering day (proposal_date < today Pacific) into real kind_robots
+      rows via REST (Bearer KR_API_TOKEN): a PITCH Dream world card + GENRE
+      vibe Dream + 2 LOCATION Dreams + 3 CHARACTER Dreams w/ real Character
+      rows + 1 NARRATOR Dream w/ Bot row + 2 REWARD Dreams w/ Reward rows
+      (SKILL+ITEM) + Scenario rows, each card getting a PitchSheet via
+      POST /api/sheets/by-dream/{id} tagged extraData {dreamCycle,
+      proposalDate, elementType, element} and designer "dream-cycle"
+      (traceable/removable). Art queued as 9 requests: entries in
+      art-prompts.yaml targeting public/images/dreams/<slug>/ (existing
+      self-draining pipeline); the --attach pass (each hourly sweep)
+      HEAD-checks the public URLs and PATCHes sheet imagePath when live.
+      Runs from build_conductor_summary.py (hourly sweep, no LLM calls);
+      writes built-data JSON + Build log into the backlog file and flips
+      status straight to built (skipping "building" ON PURPOSE — the
+      one-building-at-a-time invariant belongs to the t-006 idle loop and
+      daily proposals are a parallel fast lane). STEERING GUARD: refuses to
+      auto-build any proposal whose Notes-from-Silas has content — an agent
+      must fold notes in first. Gaps found + filed as kind-robots t-016
+      (POST /api/sheets is a broken mis-copied handler — never use; by-dream
+      is the real create) and t-017 (no DreamRelation endpoint, graph edges
+      skipped). model-builder's relationship-expansion recipe remains the
+      richer interactive path; this builder is the headless daily lane.
   - id: t-013
     milestone: m5
-    title: 'Phase 2: kind_robots Daily Dream page (real pitch cards) — file as KR task'
-    status: ready
-    owner: null
+    title: 'Phase 2: kind_robots Daily Dream page (real pitch cards)'
+    status: done
+    owner: reviewer
     passes: 0
     stakes: reversible
-    updated: '2026-07-14T00:00:00Z'
+    updated: '2026-07-14T04:00:00Z'
     note: >
-      Follow-up to t-011. The email uses HTML facsimile cards because Vue
-      components can't render in email. For the full experience, file a
-      kind_robots task/pitch (frontend belongs to that repo — never edit the
-      backend directly) for a "Daily Dream" page reusing the real
-      components/dreams/dream-pitch-sheet.vue + dream-gallery.vue +
-      art-gallery.vue + conductor/project-gallery-strip.vue, with in-app
-      comment/edit via dream-sheet-toolbar.vue. The morning email then becomes a
-      teaser linking to it (the placeholder link is already wired).
+      SHIPPED 2026-07-14 (Silas-directed session; frontend built directly on
+      the kind_robots session branch claude/daily-digest-art-proposals-nbrxur
+      rather than filed as a task). /daily-dream route via the content-driven
+      convention: content/daily-dream.md embeds :daily-dream-page
+      (components/pages/daily-dream-page.vue), nav tab at
+      content/channels/play/daily-dream.md (Play channel, sort 12). The page
+      fetches PitchSheets via useSheetStore().fetchSheets(), filters
+      extraData.dreamCycle, groups by dream slug (newest proposalDate first),
+      and renders REAL dream-pitch-sheet cards (per-type theming via a
+      {id, dreamType} dream shim; sheets passed directly, no refetch), with a
+      day picker for previous dreams, an attached-art strip, and a
+      "Comment / edit this dream" button linking to the conductor backlog
+      file's Notes-from-Silas. The digest email's "View the Daily Dream page"
+      buttons (tomorrow + yesterday sections) now link here, and yesterday's
+      section shows the built-records summary + attached art from built-data.
