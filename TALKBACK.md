@@ -3348,3 +3348,77 @@ per CONTROL.md) and its dependencies (t-008, t-009) were already `done`. Claimed
 this file's own fix (documented inline as a code comment) rather than a systemic pattern
 needing a roadmap task, since no other script currently imports a sibling `scripts/`
 module while also being test-imported via the `scripts.` package path.
+
+## 2026-07-14 | Reviewer → Silas | conductor/t-042 | closed (hourly sweep, live-bug find)
+
+**Decision:** done. PR #521 merged (Silas, auto-merge on green CI). Filed, claimed, and
+fixed conductor/t-042 in the same session per the established idle-cycle burst-mode
+pattern (t-023/t-038/t-040/t-041) — no open `worker/*` PRs across conductor,
+kind_robots, or serendipity-voice this cycle (confirmed via `list_pull_requests`), so
+the Reviewer session found and fixed a live infrastructure bug instead of idling.
+
+**Failure category:** actionable (a genuine tooling defect, not something a retry would
+fix) — filed and fixed directly rather than escalated, per the "Autonomous projects
+never idle" / burst-mode precedent for reversible conductor-tooling work.
+
+**What happened:**
+1. During the routine `next_ready_task.py` check, found `challenge-center/t-013`
+   returned as the top ready task, but a `task-events/2026-07-14T181627Z-worker-*-t-013-claim.yaml`
+   event already existed (a real Worker claim from 18:16 UTC) that had not been
+   consumed — the roadmap still showed `t-013` as `ready`/`owner: null`.
+2. Checked the "Process task events" workflow run for that push (`actions_list`/
+   `get_job_logs`): it failed with `ERROR task-events/20260714T041245Z-challenge-center-t-008-claim.yaml:
+   claim requires status ready, found 'done'` — a stale claim event for `t-008`
+   (already `done` through a different path hours earlier) that can never succeed.
+3. Root cause: `process_task_events.py`'s `main()` returns 1 on the FIRST event that
+   raises, aborting the whole batch; `.github/workflows/process-task-events.yml` only
+   runs "Validate roadmaps"/"Commit processed state" when the process step succeeds —
+   so the stale t-008 event was silently blocking every other queued event (including
+   the real t-013 claim) since 04:18 UTC (7 consecutive failed workflow runs, ~14.5
+   hours).
+4. Fix: `main()` now continues past a failing event instead of aborting, so valid
+   events in the same batch still get applied and committed; the workflow's process
+   step is `continue-on-error: true` so downstream steps still run, with a final step
+   that fails the job (for visibility) only after the commit has already landed.
+   Deleted the stale, unrecoverable t-008 event as part of the same fix. Added a
+   regression test (`test_main_applies_valid_events_even_when_an_earlier_one_fails`)
+   that reproduces the exact alphabetical-ordering scenario (`bad-claim.yaml` sorts
+   before `good-claim.yaml`) directly, rather than relying on the real queue's
+   incidental ordering.
+5. Filed conductor/t-042 (ready) via a direct scratch-index commit to `origin/main`
+   (`scripts/git_plumbing.py`, following the same pattern `claim_task.py` uses), then
+   claimed it with `scripts/claim_task.py` before implementing, per the standard
+   protocol. Full test suite (173) passed; PR #521 opened, all 18 CI checks green,
+   merged within the same cycle.
+6. Confirmed the fix worked live: immediately after merge, the automated "Process task
+   events" workflow ran (`chore: process task events [skip ci]`), applied both queued
+   events (`challenge-center/t-007: done`, `challenge-center/t-013: claim`), and the
+   real Worker picked up `t-013`, implemented the contender matchup runner, and closed
+   it `done` — followed by a further claim on `t-014`. The queue is flowing normally
+   again.
+
+**What was good:**
+- Diagnosed via the actual GitHub Actions job log rather than guessing from the
+  roadmap/event-file state alone — the log's exact error line (`claim requires status
+  ready, found 'done'`) made the root cause unambiguous on the first look.
+- Wrote a regression test that reproduces the alphabetical head-of-line-blocking
+  scenario directly (not just re-testing `process()` in isolation, which the existing
+  suite already covered) — this is the scenario that actually broke, and the existing
+  tests would not have caught a regression here.
+- Verified the fix against the real, currently-stuck queue with `--dry-run` before and
+  after deleting the stale event, and confirmed post-merge that the real automation
+  drained the queue and the real Worker resumed within minutes — not just "tests pass."
+
+**What to improve:**
+- Could have caught this class of bug earlier: `process_task_events.py` has existed
+  since t-020's future-scope note explicitly called out "atomic processing" as a
+  known risk, but no test exercised `main()`'s batch behavior (only `process()` per
+  event) until this session added one reactively, after the bug had already cost
+  ~14.5 hours of stalled Worker claims.
+
+**Kaizen task:** Filed as this session's own kaizen suggestion in the PR body (a
+scheduled, not just push-triggered, run of "Process task events" so a stuck event
+doesn't sit silently for hours) rather than a separate roadmap task — deferring to
+Silas on whether a cron-based safety net is worth adding on top of this fix, since the
+root cause (one bad event blocking everything) is now resolved regardless of trigger
+cadence.

@@ -529,3 +529,15 @@ records:
     isolate missing credentials to one entry so a heterogeneous matchup can still make progress.
 
     '
+- date: 2026-07-14
+  project: conductor
+  task: t-042
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: actionable
+  lesson: A batch event processor that aborts entirely on the first unresolvable item
+    turns any single stale/invalid event into a silent, indefinite blocker for every
+    other queued item; process independently and only fail the run for visibility after
+    the resolvable items have already been committed.
