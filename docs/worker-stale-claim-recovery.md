@@ -20,6 +20,37 @@ For roadmap mutations, prefer the small-file bridge documented in `task-events/R
 
 The event bridge is the normal path for `claim`, `done`, `ready`, `review`, `needs-human`, `blocked`, and recurring-task `rearm` transitions whenever direct full-file Git access is unavailable.
 
+## Claim progress guarantee
+
+The expected unit of Worker progress is a completed task cycle, not a claim attempt. Claiming is intermediate bookkeeping and should consume only a small part of the run.
+
+A pending or unconsumed claim event is not a verified claim and is not, by itself, a reason to end the run.
+
+After committing a claim event, the Worker must immediately inspect all three authoritative signals:
+
+1. whether the `Process task events` workflow triggered;
+2. whether the event was consumed; and
+3. whether current `main` shows the selected task as `claimed` by `worker`.
+
+If the event was not consumed, diagnose the workflow trigger, event shape, current task state, and recent `main` changes during the same run. Then attempt exactly one safe recovery with the capabilities currently available.
+
+When current `main` still shows the task as `ready`, the preferred connector-safe recovery is:
+
+1. Create `worker/<project>-<task-id>-claim-recovery` from current `main`.
+2. Surgically update only the selected task's claim fields (`status`, `owner`, claim timestamp, and `updated`) and delete the exact stranded claim-event file on that branch.
+3. Verify that the diff contains only the intended task fields and the stranded event removal. Preserve every unrelated roadmap byte.
+4. Open and safely merge the reversible recovery PR.
+5. Re-fetch current `main` and confirm the task is `claimed` by `worker` before starting implementation.
+6. Delete the recovery branch after merge, then create the normal `worker/<project>-<task-id>` implementation branch from the verified claimed `main`.
+
+Do not start implementation before the claim is verified. Do not select a second task while an unresolved claim event could still consume later and create a second active claim. Reconcile, consume, or remove the event first.
+
+If the recovery attempt fails, classify the blocker under AGENTS.md instead of treating the claim attempt as useful task completion. Use a reviewed cleanup/release change when available so the event cannot fire later. Once the event is gone and the task is either `ready` or cleanly parked, immediately re-run dependency resolution and scan unrelated ready work.
+
+A claim-system failure is a hard stop only when every safe claim and cleanup mechanism is unavailable or repository state is genuinely unstable. An untriggered workflow, connector timeout, pending task event, branch problem, or bookkeeping failure is never sufficient by itself to conclude the run.
+
+Never finish a run with only "claim attempted" when a safe recovery path or unrelated eligible work remains.
+
 ## First occurrence
 
 1. Attempt one safe, scoped recovery using the capabilities currently available.
