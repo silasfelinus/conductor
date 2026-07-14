@@ -3422,3 +3422,52 @@ doesn't sit silently for hours) rather than a separate roadmap task — deferrin
 Silas on whether a cron-based safety net is worth adding on top of this fix, since the
 root cause (one bad event blocking everything) is now resolved regardless of trigger
 cadence.
+
+## 2026-07-14 | Reviewer → Silas | ai-art-academy/t-012 | closed (hourly burst-mode pick, PR #523)
+
+**Decision:** done. Picked `ai-art-academy/t-012` after a rotation collision on
+`challenge-center/t-013`: `next_ready_task.py` pointed there first, but the script
+itself (546 lines) and its own test file had already landed directly on `main`
+(commits `610f718`/`adc6cee`) by a concurrent burst session while this session was
+mid-review of a stale `worker/challenge-center-t-013` branch. `claim_task.py`
+correctly refused with `ALREADY_CLAIMED` (`status=done`) before anything was pushed,
+so the duplicate local work (a from-scratch test suite for the same script) was
+discarded per the rotation-collision guidance instead of being submitted. Rotated to
+`ai-art-academy/t-012` (next in `priority.yaml` order) and claimed it cleanly via
+`claim_task.py`.
+
+**What happened:**
+1. `t-012` asked whether `scripts/resolve_deps.py`'s dependency-satisfaction check
+   (`satisfied()`) has any branching that treats a licensing DECISION (t-011's shape:
+   `status: done` + `approved_by_human: true`, no `gate_human`) differently from a
+   brief-confirmation gate (`status: done` + `gate_human: true` + `approved_by_human:
+   true`). Read the function directly: it only inspects `status`/`gate_human`/
+   `approved_by_human`, with zero notion of task kind/type — both shapes are already
+   identical to it. No code change needed.
+2. Added `tests/test_resolve_deps.py` (12 tests) since the script had zero prior
+   coverage: `satisfied()` unit tests for both gate shapes plus an unapproved-gate
+   negative case, and end-to-end `main()` tests (waiting→ready promotion through both
+   gate shapes, multi-dependency AND-gating, `--dry-run` no-write, `_template` skip).
+3. Noticed while verifying that `next_ready_task.py` and `audit_roadmaps.py` each
+   reimplement the identical type-agnostic satisfaction check independently —
+   flagged as a dedup kaizen rather than fixed here (out of this task's scope).
+4. Full suite (200 tests, up from 188 baseline + the 12 new), `ruff check`, and
+   `scripts/audit_roadmaps.py` (0 errors) all green. Opened PR #523
+   (`worker/ai-art-academy-t-012` → `main`); merged after CI passed clean.
+
+**What was good:**
+- Recognized the `challenge-center/t-013` rotation collision from `claim_task.py`'s
+  authoritative live-`origin/main` check rather than trusting the local checkout,
+  and discarded the duplicate work immediately instead of pushing a competing PR.
+- Backed a "verify, don't change" finding with a real regression suite instead of
+  just asserting the note is correct in the roadmap.
+
+**What to improve:**
+- Could have run `claim_task.py` before starting the `challenge-center/t-013` review
+  in the first place (I read the roadmap/branch state first, which is how the stale
+  local view formed) — claim-then-investigate is safer ordering even for review-only
+  work when the environment clearly has concurrent burst sessions active.
+
+**Kaizen task:** none filed this cycle — the satisfied()-dedup observation is noted
+in PR #523's description and this entry for a future session to pick up if it
+recurs as friction, not promoted to a roadmap task on a single observation.

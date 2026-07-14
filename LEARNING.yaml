@@ -549,12 +549,4 @@ records:
   passes: 0
   outcome: done
   failure_category: null
-  lesson: A dependency-satisfaction check with no task-kind branching (status +
-    gate_human + approved_by_human only) treats a licensing DECISION and a
-    brief-confirmation checkpoint identically by construction -- verifying this
-    kind of "should X and Y be treated the same" task is often a matter of reading
-    the one function involved rather than writing new code, and the resulting
-    regression-test gap (resolve_deps.py had zero prior coverage) is usually the
-    more valuable output of the task. Also surfaced that the same
-    satisfied()/dependency_satisfied() check is independently reimplemented in
-    next_ready_task.py and audit_roadmaps.py -- filed as conductor/t-043.
+  lesson: "A 'confirm the resolver has no type-specific branching' task closed clean on first pass by reading satisfied() directly (scripts/resolve_deps.py) -- it only checks status/gate_human/approved_by_human, never task kind, so a licensing DECISION and a brief-confirmation gate were already handled identically. Backed the finding with tests/test_resolve_deps.py (12 tests, zero prior coverage) instead of a note-only close, so the guarantee is now regression-tested rather than asserted. Also picked up mid-cycle after a real rotation collision on challenge-center/t-013 -- claim_task.py's live origin/main check caught it before any duplicate work was pushed."
