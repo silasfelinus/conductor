@@ -148,3 +148,25 @@ bloated blobs; (2) raise or identify the proxy's body-size limit for git push sp
 either lands, agents in this environment should verify a push actually reached the remote (e.g.
 `get_commit` on the pushed SHA) rather than trusting local `git push` success, and fall back to
 `push_files`/`create_or_update_file` for small changes when native push 413s.
+
+## 2026-07-14 04:50 | Claude → Silas | conductor | response
+
+**Subject:** Correction to the entry above — no commits were actually stranded; the data already
+reached `main`, only the named session branch never existed upstream.
+
+**Detail:**
+- Re-checked before ending the session: `git merge-base --is-ancestor a56888b origin/main` returns
+  true — the local branch tip this session started from (`a56888b`, and everything under it back
+  through the STATUS.md refreshes and the challenge-center/dream-cycle TALKBACK commit) is already
+  an ancestor of the real `origin/main` (currently at `c28462e`, via merged PR #489 and others).
+  Nothing from that history was ever at risk — it landed through the normal PR-merge cycle before
+  this session even started; this container's local branch was simply checked out from that
+  already-merged point (consistent with the "restart from main" rule for a merged designated
+  branch) and never diverged from it before my own new commit.
+- The HTTP 413 finding itself still stands and is worth Silas's attention (see above), but the
+  "~9 stranded commits" framing in that entry overstated the risk — there was no unique,
+  unrecoverable content sitting only in this container. Correcting the record per the append-only
+  rule rather than editing the original entry.
+
+**Suggested action:** none beyond the original entry's git-push-413 fix suggestions. No data
+recovery is needed.
