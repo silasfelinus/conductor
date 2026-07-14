@@ -506,18 +506,12 @@ tasks:
   - id: t-028
     milestone: m6
     title: "Executor: persist drafted structured fields on commit"
-    status: ready
-    owner: null
+    status: done
+    owner: Reviewer
     passes: 0
     stakes: reversible
-    note: >
-      Follow-up to t-024: the FIELDS draft now produces model-correct "field: value" lines
-      (a Reward with rewardType/rarity/effect), but the commit executor still writes only
-      name + one text field on CREATE/UPDATE. Parse the drafted field lines and apply the
-      KNOWN columns for the target model (validating choice fields against modelBuilderFields
-      pools; free text otherwise) so a created/updated record gets its real fields. Keep it
-      bounded and typed per model (no arbitrary column writes); CREATE first (new private
-      records) then UPDATE of own records. Deferred from t-024 as an untested prod-write.
+    note: 'Done via kind_robots PR #250 (merged, squash sha 53f0d1be): commit executor now parses the FIELDS-draft key:value lines and applies known, typed, choice-validated columns per model on CREATE/UPDATE (Character/Bot/Reward/Dream/Scenario/Project/Facet); added Facet.kind choices to modelBuilderFields.ts. Also fixed a pre-existing, unrelated TS2531 null-check bug in artjob-manager.vue that was blocking main''s required TypeScript check for every PR.'
+    updated: '2026-07-14T13:33:57Z'
 
   - id: t-029
     milestone: m6

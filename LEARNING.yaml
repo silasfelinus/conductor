@@ -280,3 +280,12 @@ records:
   outcome: done
   failure_category: null
   lesson: "Stale bookkeeping: kind_robots PR #238 (Gravity Garden animation) merged 2026-07-14T07:40Z but the animation-studio roadmap task was left at status: review with no updated timestamp, only surfaced by scripts/audit_roadmaps.py's IN_PROGRESS_WITHOUT_TIMESTAMP warning. Verified merge state directly via pull_request_read before flipping to done rather than trusting the roadmap's stale status. animation-studio also appears to be the pre-animation-manager pilot project (animation-manager PR #494 duplicates its research/pitch-queue tasks) and is missing a project-overrides.yaml entry entirely — flagged as conductor/t-039 for a human/Worker decision on whether to formally retire it rather than guessing."
+- date: 2026-07-14
+  project: model-builder
+  task: t-028
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "The CI check the PR needed to pass (TypeScript Type Check) was already red on kind_robots main before this cycle touched anything — confirmed by pulling main's own latest workflow run for the same head sha rather than assuming the new PR's red check was caused by this change. Fixing the actual (unrelated, one-line) null-check bug in artjob-manager.vue on the same branch was faster and lower-risk than opening a second PR and waiting on a second review/merge cycle to unblock this one. Also: reused two existing conventions instead of inventing new ones (normalizeRarity/normalizeRewardType precedent in server/api/rewards/index.ts for choice-field validation style; the modelBuilderFields.ts single-source-of-field-truth module from t-024, extended rather than duplicated) — worth checking sibling API routes for an existing normalizer before writing a new one whenever a task touches enum-like fields."
