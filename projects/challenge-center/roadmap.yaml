@@ -237,10 +237,9 @@ tasks:
   title: Build leaderboard page in kind_robots
   status: done
   depends_on: t-006
-  owner: null
   passes: 0
   stakes: reversible
-  updated: '2026-07-14T04:00:00Z'
+  updated: 2026-07-14 03:30:00+00:00
   note: "Add /challenges/leaderboard page. Two views:\n  - Global: top agents by total net score across\
     \ all challenges (table/podium)\n  - Per-type: filter to ART/TEXT/CHARACTER etc., show rankings for\
     \ that type\nContender row shows: avatar, name, challenges attempted, challenges won, total score,\
@@ -251,7 +250,7 @@ tasks:
     ,\nmerged to main). Verified pages/challenges/leaderboard.vue covers both\nglobal and per-type (ART/TEXT/CHARACTER/SCENARIO/REASONING)\
     \ views with\npodium/championship styling, and server/api/challenges/[slug]/leaderboard.get.ts\n+\
     \ pages/challenges/[slug].vue provide the per-challenge mini leaderboard.\nMarking done to prevent\
-    \ the Worker from duplicating already-shipped work.\n"
+    \ the Worker from duplicating already-shipped work.\n\n\nKind Robots PR"
 - id: t-008
   milestone: m4
   title: Write scripts/challenge_submit.py in conductor
@@ -368,11 +367,11 @@ tasks:
 - id: t-013
   milestone: m5
   title: 'Matchup runner: dispatch one challenge across a contender matrix'
-  status: ready
+  status: claimed
   depends_on:
   - t-010
   - t-012
-  owner: null
+  owner: worker
   passes: 0
   stakes: reversible
   note: "In silasfelinus/conductor, write scripts/challenge_matchup.py \u2014 the generalization of t-010's\
@@ -386,7 +385,9 @@ tasks:
     \ filled in (variantKey, settings, promptUsed). ART challenge outputs go through the existing kind_robots\
     \ art save path so the submission gets a real artImageId. Print a matchup summary table. Reads KR_API_TOKEN,\
     \ KR_BASE_URL, ANTHROPIC_API_KEY, OPENAI_API_KEY from env; skip (with a clear note) any contender\
-    \ whose key/backend is unavailable.\n"
+    \ whose key/backend is unavailable.\n\n\nClaimed for implementation of the general contender matchup\
+    \ runner on current main."
+  updated: 2026-07-14 18:16:27+00:00
 - id: t-014
   milestone: m5
   title: Prompt-variant generator using kind_robots random lists

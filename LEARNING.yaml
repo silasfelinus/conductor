@@ -1,23 +1,3 @@
-# LEARNING.yaml — append-only task-outcome ledger.
-#
-# One record per CLOSED task (done / blocked / cancelled), appended by the agent
-# that closes it. Same rule as TALKBACK: never edit or delete a prior record.
-# Full protocol: AGENTS.md § "Learning ledger". Summary view: LEARNING-REPORT.md
-# (regenerate with `python scripts/build_learning_summary.py`).
-#
-# Record shape:
-#   - date: YYYY-MM-DD
-#     project: <slug>
-#     task: <task-id>
-#     kind: software | content | proposal
-#     stakes: reversible | outward-facing | irreversible
-#     passes: <final pass count>
-#     outcome: done | blocked | cancelled
-#     failure_category: transient | actionable | quality | scope | null
-#     lesson: "one sentence — what the next similar task should know"
-#
-# failure_category is null for clean first-pass successes; otherwise it is the
-# triage category of the dominant failure (AGENTS.md § "Failure triage").
 records:
 - date: 2026-07-11
   project: challenge-center
@@ -27,7 +7,9 @@ records:
   passes: 0
   outcome: done
   failure_category: null
-  lesson: "Audit the target repo before claiming a task: the full t-003 API surface already existed on kind_robots main (built in a Silas-directed session outside the Worker loop), so the task closed by spec verification alone."
+  lesson: 'Audit the target repo before claiming a task: the full t-003 API surface already existed on
+    kind_robots main (built in a Silas-directed session outside the Worker loop), so the task closed by
+    spec verification alone.'
 - date: 2026-07-12
   project: conductor
   task: t-027
@@ -36,7 +18,9 @@ records:
   passes: 0
   outcome: done
   failure_category: null
-  lesson: "A stale task spec can be closed by a larger cutover that subsumes it: the Dream-sync priority ask was satisfied by rewriting the bridge to /api/projects — check whether pending tasks target a replaced integration before working them as written."
+  lesson: "A stale task spec can be closed by a larger cutover that subsumes it: the Dream-sync priority\
+    \ ask was satisfied by rewriting the bridge to /api/projects \u2014 check whether pending tasks target\
+    \ a replaced integration before working them as written."
 - date: 2026-07-12
   project: model-builder
   task: frontend-scaffold
@@ -45,7 +29,12 @@ records:
   passes: 0
   outcome: done
   failure_category: null
-  lesson: "Front-end-first, no-schema slice merges cleanly and safely: the Model Builder UI (source picker -> gated recipe runner -> four gates) reused existing model list APIs, the art generator, and /api/suggest without touching Prisma, so merge-to-main deployed only additive UI. When you can't run the toolchain locally, lean on the repo's whole-project vue-tsc PR check as the verification gate before merging. Partial slice spanning t-005/t-014 — durable BuildRun persistence (t-004) intentionally deferred, not done."
+  lesson: "Front-end-first, no-schema slice merges cleanly and safely: the Model Builder UI (source picker\
+    \ -> gated recipe runner -> four gates) reused existing model list APIs, the art generator, and /api/suggest\
+    \ without touching Prisma, so merge-to-main deployed only additive UI. When you can't run the toolchain\
+    \ locally, lean on the repo's whole-project vue-tsc PR check as the verification gate before merging.\
+    \ Partial slice spanning t-005/t-014 \u2014 durable BuildRun persistence (t-004) intentionally deferred,\
+    \ not done."
 - date: 2026-07-12
   project: conductor
   task: t-035
@@ -54,7 +43,8 @@ records:
   passes: 0
   outcome: done
   failure_category: null
-  lesson: "Secrets expire silently: a JWT-backed integration needs its failure mode loud (nonzero exit on auth errors) or the bridge can be dead for weeks while CI stays green."
+  lesson: 'Secrets expire silently: a JWT-backed integration needs its failure mode loud (nonzero exit
+    on auth errors) or the bridge can be dead for weeks while CI stays green.'
 - date: 2026-07-12
   project: model-builder
   task: t-004
@@ -63,7 +53,12 @@ records:
   passes: 0
   outcome: done
   failure_category: null
-  lesson: "An additive-only Prisma migration (new CREATE TABLEs, internal cascade FKs, external refs as plain scalar Int columns with no FK) merges safely even though merge-to-main runs prisma migrate deploy against prod — no reverse-relation edits to User/ArtImage were needed. The typecheck CI runs prisma generate before vue-tsc, so it validates a new schema file end-to-end (client types + routes + store) without a live DB; that plus the Vercel preview build is enough of a gate when you can't run the toolchain locally. kind_robots PR #188."
+  lesson: "An additive-only Prisma migration (new CREATE TABLEs, internal cascade FKs, external refs as\
+    \ plain scalar Int columns with no FK) merges safely even though merge-to-main runs prisma migrate\
+    \ deploy against prod \u2014 no reverse-relation edits to User/ArtImage were needed. The typecheck\
+    \ CI runs prisma generate before vue-tsc, so it validates a new schema file end-to-end (client types\
+    \ + routes + store) without a live DB; that plus the Vercel preview build is enough of a gate when\
+    \ you can't run the toolchain locally. kind_robots PR #188."
 - date: 2026-07-12
   project: model-builder
   task: t-021
@@ -72,7 +67,9 @@ records:
   passes: 0
   outcome: done
   failure_category: null
-  lesson: "Once a resource is durable, the cheapest high-value follow-up is a history/list surface — the list endpoint already existed, so the run-history panel was pure front-end with zero new API. kind_robots PR #189."
+  lesson: "Once a resource is durable, the cheapest high-value follow-up is a history/list surface \u2014\
+    \ the list endpoint already existed, so the run-history panel was pure front-end with zero new API.\
+    \ kind_robots PR #189."
 - date: 2026-07-12
   project: model-builder
   task: t-013
@@ -81,7 +78,12 @@ records:
   passes: 0
   outcome: done
   failure_category: null
-  lesson: "Idempotent canonical writes without a live DB: an atomic claim on a unique key (updateMany where key IS NULL; count===0 means already committed) gives exactly-once semantics, releasing the key on write failure enables retry, and create+link in one $transaction prevents orphans. When you can't run the DB, keep writes to KNOWN exact field/relation names (pulled from schema) so vue-tsc validates every prisma.model.update/create at PR time — a wrong field name fails CI instead of corrupting prod. Covers t-013/t-014/t-015; kind_robots PR #190. Live proof still pending (t-022)."
+  lesson: "Idempotent canonical writes without a live DB: an atomic claim on a unique key (updateMany\
+    \ where key IS NULL; count===0 means already committed) gives exactly-once semantics, releasing the\
+    \ key on write failure enables retry, and create+link in one $transaction prevents orphans. When you\
+    \ can't run the DB, keep writes to KNOWN exact field/relation names (pulled from schema) so vue-tsc\
+    \ validates every prisma.model.update/create at PR time \u2014 a wrong field name fails CI instead\
+    \ of corrupting prod. Covers t-013/t-014/t-015; kind_robots PR #190. Live proof still pending (t-022)."
 - date: 2026-07-12
   project: model-builder
   task: t-016
@@ -90,7 +92,13 @@ records:
   passes: 0
   outcome: done
   failure_category: null
-  lesson: "The Model Builder's four gates are OPTIONAL front-end pauses (skip an item, or stop after prompt to edit) — NOT a backend block that waits on a repo-file approval. Default is to create full objects for everything. I over-applied a 'needs-human, internal-draft-only' framing to the HSS marketing deck; the right move was a full example set with the visuals queued into the real art pipeline (projects/art-generate.yaml). Also: the art generator forbids text/logos, so marketing collateral splits into generated text-free imagery + a text/logo layout step over the real logo (no rebrand). Don't invent brand facts — pricing/area/logo/descriptor came from Silas and were folded into CONTENT-BRIEF."
+  lesson: "The Model Builder's four gates are OPTIONAL front-end pauses (skip an item, or stop after prompt\
+    \ to edit) \u2014 NOT a backend block that waits on a repo-file approval. Default is to create full\
+    \ objects for everything. I over-applied a 'needs-human, internal-draft-only' framing to the HSS marketing\
+    \ deck; the right move was a full example set with the visuals queued into the real art pipeline (projects/art-generate.yaml).\
+    \ Also: the art generator forbids text/logos, so marketing collateral splits into generated text-free\
+    \ imagery + a text/logo layout step over the real logo (no rebrand). Don't invent brand facts \u2014\
+    \ pricing/area/logo/descriptor came from Silas and were folded into CONTENT-BRIEF."
 - date: 2026-07-12
   project: model-builder
   task: t-017
@@ -99,7 +107,13 @@ records:
   passes: 0
   outcome: done
   failure_category: null
-  lesson: "Autonomous Character Deck reference run grounds best in a real flagship record (AMIb0t from stores/seeds/seedBots.ts). Identity consistency is the linchpin: generate the canonical NEUTRAL avatar FIRST, lock seed+checkpoint, reuse for icon/card/hero/expressions; prove on a small 5-key expression subset before any full 20-key batch (Expression enum has 10 emotions + 10 actions + CUSTOM; NEUTRAL is canonical; ExpressionMedia owner is Bot XOR Character). Character has only artImageId/imagePath (no icon/card/hero path fields — those are on Dream), so deck icon/card/hero are ArtImages in the owner's collection."
+  lesson: "Autonomous Character Deck reference run grounds best in a real flagship record (AMIb0t from\
+    \ stores/seeds/seedBots.ts). Identity consistency is the linchpin: generate the canonical NEUTRAL\
+    \ avatar FIRST, lock seed+checkpoint, reuse for icon/card/hero/expressions; prove on a small 5-key\
+    \ expression subset before any full 20-key batch (Expression enum has 10 emotions + 10 actions + CUSTOM;\
+    \ NEUTRAL is canonical; ExpressionMedia owner is Bot XOR Character). Character has only artImageId/imagePath\
+    \ (no icon/card/hero path fields \u2014 those are on Dream), so deck icon/card/hero are ArtImages\
+    \ in the owner's collection."
 - date: 2026-07-12
   project: model-builder
   task: t-018
@@ -108,7 +122,12 @@ records:
   passes: 0
   outcome: done
   failure_category: null
-  lesson: "Dream->3-Characters expansion runs autonomously end-to-end: pick a real Dream (Lantern Greenhouse, id 37) and let its `examples` seed the cast (one character per theme). The executor's guarantees ARE the t-018 proof points — three independent CREATE items (private/inactive, userId 10, unique @unique slugs), Dream links via the Characters implicit m2m, per-child idempotencyKey so a failed child retries alone and a COMMIT replay creates zero duplicates. A cohesive shared portrait style in the generate manifest keeps the cast visually tied to the dream."
+  lesson: "Dream->3-Characters expansion runs autonomously end-to-end: pick a real Dream (Lantern Greenhouse,\
+    \ id 37) and let its `examples` seed the cast (one character per theme). The executor's guarantees\
+    \ ARE the t-018 proof points \u2014 three independent CREATE items (private/inactive, userId 10, unique\
+    \ @unique slugs), Dream links via the Characters implicit m2m, per-child idempotencyKey so a failed\
+    \ child retries alone and a COMMIT replay creates zero duplicates. A cohesive shared portrait style\
+    \ in the generate manifest keeps the cast visually tied to the dream."
 - date: 2026-07-12
   project: model-builder
   task: t-019
@@ -117,7 +136,14 @@ records:
   passes: 0
   outcome: done
   failure_category: null
-  lesson: "The conductor->KR project sync (scripts/sync_projects.py) only processes slugs marked active in project-overrides.yaml AND, before this task, never transmitted goal/waypoints even though the KR /api/projects endpoint accepts them. To wire a project's identity: add the override entry, add goal/waypoints to roadmap top matter, and extend build_project_payload to send them (goal as text; waypoints serialized to KR's pipe-delimited string) only when present so other projects are not cleared. Nav is seed-driven: append a type:directory SmartIcon to stores/seeds/smartIcons.json (the navStore fallback) mirroring /art; a content page with an icon: frontmatter also auto-registers via npm run generatesmart."
+  lesson: 'The conductor->KR project sync (scripts/sync_projects.py) only processes slugs marked active
+    in project-overrides.yaml AND, before this task, never transmitted goal/waypoints even though the
+    KR /api/projects endpoint accepts them. To wire a project''s identity: add the override entry, add
+    goal/waypoints to roadmap top matter, and extend build_project_payload to send them (goal as text;
+    waypoints serialized to KR''s pipe-delimited string) only when present so other projects are not cleared.
+    Nav is seed-driven: append a type:directory SmartIcon to stores/seeds/smartIcons.json (the navStore
+    fallback) mirroring /art; a content page with an icon: frontmatter also auto-registers via npm run
+    generatesmart.'
 - date: 2026-07-12
   project: model-builder
   task: t-020
@@ -126,7 +152,12 @@ records:
   passes: 0
   outcome: done
   failure_category: null
-  lesson: "A registered /api/suggest sheet only helps if the client lets it: buildSuggestUserPrompt resolves extra.instruction BEFORE sheet.fieldPrompts, so a store that always sends extra.instruction silently overrides the sheet. Fix is two-sided — register the sheet (system prompt + per-field prompts + a buildContext that digests the source record's canon) AND stop the store force-sending an instruction (send only when explicitly provided). Then getSuggestSheet('model-builder') stops falling back to the adventure sheet. kind_robots PR #193."
+  lesson: "A registered /api/suggest sheet only helps if the client lets it: buildSuggestUserPrompt resolves\
+    \ extra.instruction BEFORE sheet.fieldPrompts, so a store that always sends extra.instruction silently\
+    \ overrides the sheet. Fix is two-sided \u2014 register the sheet (system prompt + per-field prompts\
+    \ + a buildContext that digests the source record's canon) AND stop the store force-sending an instruction\
+    \ (send only when explicitly provided). Then getSuggestSheet('model-builder') stops falling back to\
+    \ the adventure sheet. kind_robots PR #193."
 - date: 2026-07-12
   project: model-builder
   task: t-001..t-012
@@ -135,7 +166,11 @@ records:
   passes: 0
   outcome: done
   failure_category: null
-  lesson: "When a project is built directly rather than spec-first, the 'write a spec doc' tasks are closed by subsumption: the executable code + reference runs ARE the spec. Map each task to its shipped artifact (see docs/spec-subsumption.md) instead of writing redundant prose. Be honest about the tail — video (LTX) and 3D (Hunyuan3D/STL) inside t-012 stay explicitly deferred rather than folded into 'done'."
+  lesson: "When a project is built directly rather than spec-first, the 'write a spec doc' tasks are closed\
+    \ by subsumption: the executable code + reference runs ARE the spec. Map each task to its shipped\
+    \ artifact (see docs/spec-subsumption.md) instead of writing redundant prose. Be honest about the\
+    \ tail \u2014 video (LTX) and 3D (Hunyuan3D/STL) inside t-012 stay explicitly deferred rather than\
+    \ folded into 'done'."
 - date: 2026-07-12
   project: model-builder
   task: t-024
@@ -144,7 +179,12 @@ records:
   passes: 0
   outcome: done
   failure_category: null
-  lesson: "Generic AI drafts (a bland reward) come from a generic prompt with no field awareness. The fix is a single per-model field spec (modelBuilderFields: required/optional, defaults, choice pools grounded in the schema + builder *Cards) used to pre-fill the FIELDS box AND fed into the suggest context as 'Fields to fill', so the model returns a full specific record with valid choices. Kept the drafts rich but deferred writing the parsed fields to real columns (t-028) — that's a prod-write not worth shipping untested. kind_robots PR #195."
+  lesson: "Generic AI drafts (a bland reward) come from a generic prompt with no field awareness. The\
+    \ fix is a single per-model field spec (modelBuilderFields: required/optional, defaults, choice pools\
+    \ grounded in the schema + builder *Cards) used to pre-fill the FIELDS box AND fed into the suggest\
+    \ context as 'Fields to fill', so the model returns a full specific record with valid choices. Kept\
+    \ the drafts rich but deferred writing the parsed fields to real columns (t-028) \u2014 that's a prod-write\
+    \ not worth shipping untested. kind_robots PR #195."
 - date: 2026-07-12
   project: model-builder
   task: t-026
@@ -153,7 +193,11 @@ records:
   passes: 0
   outcome: done
   failure_category: null
-  lesson: "Minimal-interaction 'just create it' is cheap once the gated actions exist: autoBuildItem/autoBuildRun just chain the existing draft -> approve -> generate -> commit actions with defaults, and an includeArt toggle lets it skip art for a fast create-records-only path (ASSET_ONLY items need art, so skip them when it's off). No new backend — it orchestrates over the idempotent executor, so re-running is safe. kind_robots PR #196."
+  lesson: "Minimal-interaction 'just create it' is cheap once the gated actions exist: autoBuildItem/autoBuildRun\
+    \ just chain the existing draft -> approve -> generate -> commit actions with defaults, and an includeArt\
+    \ toggle lets it skip art for a fast create-records-only path (ASSET_ONLY items need art, so skip\
+    \ them when it's off). No new backend \u2014 it orchestrates over the idempotent executor, so re-running\
+    \ is safe. kind_robots PR #196."
 - date: 2026-07-12
   project: challenge-center
   task: t-004
@@ -162,7 +206,8 @@ records:
   passes: 0
   outcome: done
   failure_category: null
-  lesson: "For credential-gated seed tasks, merge an idempotent validation-first script first, then close only after Silas confirms the explicit --write command completed successfully."
+  lesson: For credential-gated seed tasks, merge an idempotent validation-first script first, then close
+    only after Silas confirms the explicit --write command completed successfully.
 - date: 2026-07-12
   project: challenge-center
   task: t-005
@@ -171,7 +216,9 @@ records:
   passes: 0
   outcome: done
   failure_category: null
-  lesson: "Upgrade the existing project-front content route rather than creating a duplicate page; API-backed filters and lightweight leaderboard previews can turn a partial browser into the shipped arena without schema work."
+  lesson: Upgrade the existing project-front content route rather than creating a duplicate page; API-backed
+    filters and lightweight leaderboard previews can turn a partial browser into the shipped arena without
+    schema work.
 - date: 2026-07-13
   project: kind-robots
   task: video-generator-pr-213
@@ -180,7 +227,9 @@ records:
   passes: 0
   outcome: done
   failure_category: null
-  lesson: "Silas-directed claude/* PRs outside the roadmap task cycle are still in Reviewer scope per AGENTS.md and should be reviewed with the same rigor as a Worker PR — clone the branch, run lint/typecheck directly rather than trusting the PR body's self-reported verification."
+  lesson: "Silas-directed claude/* PRs outside the roadmap task cycle are still in Reviewer scope per\
+    \ AGENTS.md and should be reviewed with the same rigor as a Worker PR \u2014 clone the branch, run\
+    \ lint/typecheck directly rather than trusting the PR body's self-reported verification."
 - date: 2026-07-14
   project: challenge-center
   task: t-006
@@ -189,7 +238,12 @@ records:
   passes: 0
   outcome: done
   failure_category: actionable
-  lesson: "kind_robots PR #210 merged this task's exact scope 2026-07-13T00:52:11Z, but the roadmap task never left status: claimed — 25h and 8+ Reviewer sweeps (recurrences 42-48 on the unrelated t-026 pattern) logged it as 'stranded' without reconciling. When a claimed task's title/PR search turns up a merged PR matching the task description, check that FIRST before assuming the claim died — don't just watch the clock. Reconciled per docs/worker-stale-claim-recovery.md; t-007 (leaderboard) unblocked to ready as a result."
+  lesson: "kind_robots PR #210 merged this task's exact scope 2026-07-13T00:52:11Z, but the roadmap task\
+    \ never left status: claimed \u2014 25h and 8+ Reviewer sweeps (recurrences 42-48 on the unrelated\
+    \ t-026 pattern) logged it as 'stranded' without reconciling. When a claimed task's title/PR search\
+    \ turns up a merged PR matching the task description, check that FIRST before assuming the claim died\
+    \ \u2014 don't just watch the clock. Reconciled per docs/worker-stale-claim-recovery.md; t-007 (leaderboard)\
+    \ unblocked to ready as a result."
 - date: 2026-07-14
   project: conductor
   task: kind_robots-ci-green
@@ -198,7 +252,12 @@ records:
   passes: 0
   outcome: done
   failure_category: quality
-  lesson: "'Harden MariaDB connection pooling' (kind_robots 0ee601f8) dropped the pool's connectionLimit default from the mariadb driver's own 10 to 2 with no env var anywhere to override it, silently pool-starving production and cascading into ~14 failing Cypress spec files. When a config 'hardening' commit introduces a new numeric default, diff it against the library's own built-in default rather than picking an arbitrary small number — and grep the whole repo/deploy config for whether anything actually sets the new env var before assuming it's tunable in practice."
+  lesson: "'Harden MariaDB connection pooling' (kind_robots 0ee601f8) dropped the pool's connectionLimit\
+    \ default from the mariadb driver's own 10 to 2 with no env var anywhere to override it, silently\
+    \ pool-starving production and cascading into ~14 failing Cypress spec files. When a config 'hardening'\
+    \ commit introduces a new numeric default, diff it against the library's own built-in default rather\
+    \ than picking an arbitrary small number \u2014 and grep the whole repo/deploy config for whether\
+    \ anything actually sets the new env var before assuming it's tunable in practice."
 - date: 2026-07-14
   project: alexa-integration
   task: t-006
@@ -207,7 +266,13 @@ records:
   passes: 0
   outcome: done
   failure_category: null
-  lesson: "The Worker's earlier connector-block on silasfelinus/serendipity-voice was transient to that session, not a lasting boundary — a later Claude session with direct repo write access closed t-006 with no branch-creation issue at all. When a preserved cross-repo handoff doc is picked up later, treat it as a design reference rather than a literal patch to apply: the target repo's adapter architecture (art-submit.ts's gated-submission pattern) had evolved past the doc's shape since it was written, and re-deriving the implementation against current code avoided reintroducing a stale design."
+  lesson: "The Worker's earlier connector-block on silasfelinus/serendipity-voice was transient to that\
+    \ session, not a lasting boundary \u2014 a later Claude session with direct repo write access closed\
+    \ t-006 with no branch-creation issue at all. When a preserved cross-repo handoff doc is picked up\
+    \ later, treat it as a design reference rather than a literal patch to apply: the target repo's adapter\
+    \ architecture (art-submit.ts's gated-submission pattern) had evolved past the doc's shape since it\
+    \ was written, and re-deriving the implementation against current code avoided reintroducing a stale\
+    \ design."
 - date: 2026-07-14
   project: animation-manager
   task: t-001
@@ -216,7 +281,9 @@ records:
   passes: 0
   outcome: done
   failure_category: null
-  lesson: "First milestone of a new autonomous project (research + quality contract docs) landed clean in one pass with concrete, falsifiable acceptance criteria rather than vague prose — good template for future autonomous-project kickoffs."
+  lesson: "First milestone of a new autonomous project (research + quality contract docs) landed clean\
+    \ in one pass with concrete, falsifiable acceptance criteria rather than vague prose \u2014 good template\
+    \ for future autonomous-project kickoffs."
 - date: 2026-07-14
   project: animation-manager
   task: t-002
@@ -225,7 +292,8 @@ records:
   passes: 0
   outcome: done
   failure_category: null
-  lesson: "Front-loading twelve diverse pitches before the first build gave the recurring daily-pitch task (t-006) real runway immediately instead of starting from an empty queue."
+  lesson: Front-loading twelve diverse pitches before the first build gave the recurring daily-pitch task
+    (t-006) real runway immediately instead of starting from an empty queue.
 - date: 2026-07-14
   project: animation-manager
   task: t-003
@@ -234,7 +302,9 @@ records:
   passes: 0
   outcome: done
   failure_category: null
-  lesson: "Cross-repo software task (conductor roadmap + kind_robots implementation PR #237) closed cleanly with the conductor PR correctly citing the exact kind_robots commit/PR — verified independently and it matched byte-for-byte with the claim."
+  lesson: "Cross-repo software task (conductor roadmap + kind_robots implementation PR #237) closed cleanly\
+    \ with the conductor PR correctly citing the exact kind_robots commit/PR \u2014 verified independently\
+    \ and it matched byte-for-byte with the claim."
 - date: 2026-07-14
   project: challenge-center
   task: t-008
@@ -243,7 +313,13 @@ records:
   passes: 0
   outcome: done
   failure_category: null
-  lesson: "resolve_deps.py (like process_task_events.py, flagged separately as t-020) rewrites the entire roadmap file with yaml.safe_dump whenever it applies an unblock, turning a two-task status flip into a 940-line diff (escaped Unicode, flow-style indentation, changed quoting). Ran it once, saw the blast radius, reverted, and reapplied the same t-009/t-015 unblock with the surgical set_task_field.py instead — landed as a 26-line diff. Future cycles should default to set_task_field.py for post-done dependency unblocks and treat resolve_deps.py's write path as unsafe for a clean PR until t-020 fixes it too."
+  lesson: "resolve_deps.py (like process_task_events.py, flagged separately as t-020) rewrites the entire\
+    \ roadmap file with yaml.safe_dump whenever it applies an unblock, turning a two-task status flip\
+    \ into a 940-line diff (escaped Unicode, flow-style indentation, changed quoting). Ran it once, saw\
+    \ the blast radius, reverted, and reapplied the same t-009/t-015 unblock with the surgical set_task_field.py\
+    \ instead \u2014 landed as a 26-line diff. Future cycles should default to set_task_field.py for post-done\
+    \ dependency unblocks and treat resolve_deps.py's write path as unsafe for a clean PR until t-020\
+    \ fixes it too."
 - date: 2026-07-14
   project: conductor
   task: t-036
@@ -252,7 +328,15 @@ records:
   passes: 0
   outcome: done
   failure_category: quality
-  lesson: "This file's own block-sequence indentation had silently mixed two depths (2-space nested vs 0-indent flush) since an earlier merge, breaking yaml.safe_load for the whole ledger and swallowing every append_learning() call system-wide. Root cause was never diagnosed at the time it broke because process_task_events.py's YAML-parse failure wasn't surfaced loudly enough to trace back to this file. Fix was a pure whitespace reflow (dedent every record under the mixed-depth block by 2 spaces to match the majority 0-indent style) verified line-for-line against the diff so no record content changed, then confirmed both yaml.safe_load and scripts/build_learning_summary.py run clean. Next time a script that reads this file throws on task-close, check LEARNING.yaml's own parseability first before assuming the bug is in the caller."
+  lesson: This file's own block-sequence indentation had silently mixed two depths (2-space nested vs
+    0-indent flush) since an earlier merge, breaking yaml.safe_load for the whole ledger and swallowing
+    every append_learning() call system-wide. Root cause was never diagnosed at the time it broke because
+    process_task_events.py's YAML-parse failure wasn't surfaced loudly enough to trace back to this file.
+    Fix was a pure whitespace reflow (dedent every record under the mixed-depth block by 2 spaces to match
+    the majority 0-indent style) verified line-for-line against the diff so no record content changed,
+    then confirmed both yaml.safe_load and scripts/build_learning_summary.py run clean. Next time a script
+    that reads this file throws on task-close, check LEARNING.yaml's own parseability first before assuming
+    the bug is in the caller.
 - date: 2026-07-14
   project: kind-robots
   task: t-019
@@ -261,7 +345,12 @@ records:
   passes: 0
   outcome: done
   failure_category: null
-  lesson: "Two-sided cross-repo task (conductor PR #506 draining requests.yaml, kind_robots PR #245 the front-end request bridge) — the task note said 'set done when both PRs merge' and both merged independently (by Silas directly) within an hour of each other, ahead of the next Reviewer sweep even noticing. Closing agent should re-check both halves' merge state before flipping status rather than assuming the note's gate is still open; used set_task_field.py for the surgical status flip per t-008's standing lesson."
+  lesson: "Two-sided cross-repo task (conductor PR #506 draining requests.yaml, kind_robots PR #245 the\
+    \ front-end request bridge) \u2014 the task note said 'set done when both PRs merge' and both merged\
+    \ independently (by Silas directly) within an hour of each other, ahead of the next Reviewer sweep\
+    \ even noticing. Closing agent should re-check both halves' merge state before flipping status rather\
+    \ than assuming the note's gate is still open; used set_task_field.py for the surgical status flip\
+    \ per t-008's standing lesson."
 - date: 2026-07-14
   project: newsfeed
   task: t-001
@@ -270,7 +359,12 @@ records:
   passes: 0
   outcome: done
   failure_category: null
-  lesson: "Burst-mode rotation picked the least-recently-touched active project by checking every task's `updated` timestamp across all roadmaps rather than defaulting to whatever had the most recent PR activity — newsfeed had zero timestamps on any task despite being priority: high. A real codebase audit (dedicated Explore subagent, not guesses) found two integration points already reserved (dashboardHelper.ts's wonder.newsfeed tab, content/newsfeed.md) that a blind implementation could have collided with or duplicated."
+  lesson: "Burst-mode rotation picked the least-recently-touched active project by checking every task's\
+    \ `updated` timestamp across all roadmaps rather than defaulting to whatever had the most recent PR\
+    \ activity \u2014 newsfeed had zero timestamps on any task despite being priority: high. A real codebase\
+    \ audit (dedicated Explore subagent, not guesses) found two integration points already reserved (dashboardHelper.ts's\
+    \ wonder.newsfeed tab, content/newsfeed.md) that a blind implementation could have collided with or\
+    \ duplicated."
 - date: 2026-07-14
   project: animation-studio
   task: t-003
@@ -279,7 +373,14 @@ records:
   passes: 0
   outcome: done
   failure_category: null
-  lesson: "Stale bookkeeping: kind_robots PR #238 (Gravity Garden animation) merged 2026-07-14T07:40Z but the animation-studio roadmap task was left at status: review with no updated timestamp, only surfaced by scripts/audit_roadmaps.py's IN_PROGRESS_WITHOUT_TIMESTAMP warning. Verified merge state directly via pull_request_read before flipping to done rather than trusting the roadmap's stale status. animation-studio also appears to be the pre-animation-manager pilot project (animation-manager PR #494 duplicates its research/pitch-queue tasks) and is missing a project-overrides.yaml entry entirely — flagged as conductor/t-039 for a human/Worker decision on whether to formally retire it rather than guessing."
+  lesson: "Stale bookkeeping: kind_robots PR #238 (Gravity Garden animation) merged 2026-07-14T07:40Z\
+    \ but the animation-studio roadmap task was left at status: review with no updated timestamp, only\
+    \ surfaced by scripts/audit_roadmaps.py's IN_PROGRESS_WITHOUT_TIMESTAMP warning. Verified merge state\
+    \ directly via pull_request_read before flipping to done rather than trusting the roadmap's stale\
+    \ status. animation-studio also appears to be the pre-animation-manager pilot project (animation-manager\
+    \ PR #494 duplicates its research/pitch-queue tasks) and is missing a project-overrides.yaml entry\
+    \ entirely \u2014 flagged as conductor/t-039 for a human/Worker decision on whether to formally retire\
+    \ it rather than guessing."
 - date: 2026-07-14
   project: model-builder
   task: t-028
@@ -288,7 +389,16 @@ records:
   passes: 0
   outcome: done
   failure_category: null
-  lesson: "The CI check the PR needed to pass (TypeScript Type Check) was already red on kind_robots main before this cycle touched anything — confirmed by pulling main's own latest workflow run for the same head sha rather than assuming the new PR's red check was caused by this change. Fixing the actual (unrelated, one-line) null-check bug in artjob-manager.vue on the same branch was faster and lower-risk than opening a second PR and waiting on a second review/merge cycle to unblock this one. Also: reused two existing conventions instead of inventing new ones (normalizeRarity/normalizeRewardType precedent in server/api/rewards/index.ts for choice-field validation style; the modelBuilderFields.ts single-source-of-field-truth module from t-024, extended rather than duplicated) — worth checking sibling API routes for an existing normalizer before writing a new one whenever a task touches enum-like fields."
+  lesson: "The CI check the PR needed to pass (TypeScript Type Check) was already red on kind_robots main\
+    \ before this cycle touched anything \u2014 confirmed by pulling main's own latest workflow run for\
+    \ the same head sha rather than assuming the new PR's red check was caused by this change. Fixing\
+    \ the actual (unrelated, one-line) null-check bug in artjob-manager.vue on the same branch was faster\
+    \ and lower-risk than opening a second PR and waiting on a second review/merge cycle to unblock this\
+    \ one. Also: reused two existing conventions instead of inventing new ones (normalizeRarity/normalizeRewardType\
+    \ precedent in server/api/rewards/index.ts for choice-field validation style; the modelBuilderFields.ts\
+    \ single-source-of-field-truth module from t-024, extended rather than duplicated) \u2014 worth checking\
+    \ sibling API routes for an existing normalizer before writing a new one whenever a task touches enum-like\
+    \ fields."
 - date: 2026-07-14
   project: animation-manager
   task: t-008
@@ -297,7 +407,16 @@ records:
   passes: 0
   outcome: done
   failure_category: null
-  lesson: "Writing 'the animation verification script' SPEC.md already named required checking cross-file consistency, not just the catalog file itself: narratorHelper.ts's narratorAnimationAliases map and animationPreferenceStore.ts's DEFAULT_PREFERENCES both duplicate catalog ids as string literals with no compiler-enforced link back to animationCatalog.ts, so they're exactly the kind of thing that goes stale silently. Also had to model Nuxt's real filename-to-component-name resolution (splits on hyphen, underscore, AND dot — components/screenfx/fireworks.effect.vue resolves the same as a hyphenated file would) rather than assuming a literal id.vue match, which a naive exists-check would have gotten wrong. Found but did not fix an unrelated stale id (bubble-effect in displayStore.ts's legacy pre-centralization EffectId type, no matching catalog entry) — filed as t-010 rather than expanding this PR's diff."
+  lesson: "Writing 'the animation verification script' SPEC.md already named required checking cross-file\
+    \ consistency, not just the catalog file itself: narratorHelper.ts's narratorAnimationAliases map\
+    \ and animationPreferenceStore.ts's DEFAULT_PREFERENCES both duplicate catalog ids as string literals\
+    \ with no compiler-enforced link back to animationCatalog.ts, so they're exactly the kind of thing\
+    \ that goes stale silently. Also had to model Nuxt's real filename-to-component-name resolution (splits\
+    \ on hyphen, underscore, AND dot \u2014 components/screenfx/fireworks.effect.vue resolves the same\
+    \ as a hyphenated file would) rather than assuming a literal id.vue match, which a naive exists-check\
+    \ would have gotten wrong. Found but did not fix an unrelated stale id (bubble-effect in displayStore.ts's\
+    \ legacy pre-centralization EffectId type, no matching catalog entry) \u2014 filed as t-010 rather\
+    \ than expanding this PR's diff."
 - date: 2026-07-14
   project: ecosystem-map
   task: t-001
@@ -306,7 +425,11 @@ records:
   passes: 0
   outcome: done
   failure_category: null
-  lesson: "Roadmap/reality drift, not missing work: DESIGN-BRIEF.md was already a complete, substantial document (canonical ownership table, bot parity, visual asset parity, image approval gate, duplication risks, first deliverables) but the task was still status: ready. Worth a general habit -- before starting a 'write X.md' task, check whether X.md already exists and is actually done; roadmap status can lag a completed artifact same as it can lag a merged PR."
+  lesson: 'Roadmap/reality drift, not missing work: DESIGN-BRIEF.md was already a complete, substantial
+    document (canonical ownership table, bot parity, visual asset parity, image approval gate, duplication
+    risks, first deliverables) but the task was still status: ready. Worth a general habit -- before starting
+    a ''write X.md'' task, check whether X.md already exists and is actually done; roadmap status can
+    lag a completed artifact same as it can lag a merged PR.'
 - date: 2026-07-14
   project: ecosystem-map
   task: t-003
@@ -315,7 +438,14 @@ records:
   passes: 0
   outcome: done
   failure_category: null
-  lesson: "Built the asset coverage matrix entirely from filesystem-verifiable sources (projects/images/, kind_robots' public/images/artcollections/, projects/art-prompts.yaml's structured `images:` list) rather than guessing at DB-only fields (project Dreams, liveUrl) -- explicitly flagged those as needing live-DB verification, mirroring FRONTEND-SURFACE-MAP.md's existing precedent for the same limitation. Cross-referenced FRONTEND-SURFACE-MAP.md's Class column for the mock-screenshot-needed judgment instead of re-deriving it, and marked the 11 projects that audit never covered as unclassified rather than guessing. Found 6 active projects (animation-manager, kindrobots-unraid, model-builder, mural-design, newsfeed, davinci-hero) with zero identity images and nothing queued to produce them."
+  lesson: Built the asset coverage matrix entirely from filesystem-verifiable sources (projects/images/,
+    kind_robots' public/images/artcollections/, projects/art-prompts.yaml's structured `images:` list)
+    rather than guessing at DB-only fields (project Dreams, liveUrl) -- explicitly flagged those as needing
+    live-DB verification, mirroring FRONTEND-SURFACE-MAP.md's existing precedent for the same limitation.
+    Cross-referenced FRONTEND-SURFACE-MAP.md's Class column for the mock-screenshot-needed judgment instead
+    of re-deriving it, and marked the 11 projects that audit never covered as unclassified rather than
+    guessing. Found 6 active projects (animation-manager, kindrobots-unraid, model-builder, mural-design,
+    newsfeed, davinci-hero) with zero identity images and nothing queued to produce them.
 - date: 2026-07-14
   project: conductor
   task: t-040
@@ -324,8 +454,17 @@ records:
   passes: 0
   outcome: done
   failure_category: null
-  lesson: "Building the fix directly surfaced a second, unrelated latent bug in the tool it depends on: set_task_field.py's normalize_scalar left a literal ISO-timestamp value unquoted, so PyYAML silently reparsed it as a native datetime instead of a string (only the `now` keyword path was quoted). Caught by a test asserting the round-tripped type, not by reading the code -- worth remembering that a field 'looks like a string' in a diff is not the same as verifying its parsed type. Also: designed the claim commit to be built via git plumbing (scratch index + commit-tree) rather than a real checkout/commit specifically so it never disturbs whatever branch or uncommitted work the calling session already has -- validated with a real throwaway git repo (bare + clone), not just unit-level YAML assertions, since the git push/race path is exactly the part most likely to look correct and behave wrong under concurrency."
-- date: "2026-07-14"
+  lesson: 'Building the fix directly surfaced a second, unrelated latent bug in the tool it depends on:
+    set_task_field.py''s normalize_scalar left a literal ISO-timestamp value unquoted, so PyYAML silently
+    reparsed it as a native datetime instead of a string (only the `now` keyword path was quoted). Caught
+    by a test asserting the round-tripped type, not by reading the code -- worth remembering that a field
+    ''looks like a string'' in a diff is not the same as verifying its parsed type. Also: designed the
+    claim commit to be built via git plumbing (scratch index + commit-tree) rather than a real checkout/commit
+    specifically so it never disturbs whatever branch or uncommitted work the calling session already
+    has -- validated with a real throwaway git repo (bare + clone), not just unit-level YAML assertions,
+    since the git push/race path is exactly the part most likely to look correct and behave wrong under
+    concurrency.'
+- date: '2026-07-14'
   project: conductor
   task: t-038
   kind: software
@@ -333,8 +472,13 @@ records:
   passes: 0
   outcome: done
   failure_category: null
-  lesson: "audit_roadmaps.py's CONTROL_PRIORITY_DRIFT finding pointed at two files that could disagree for two different reasons (real reprioritization vs. stale prose) -- git history on both files (not just diffing their current content) was what distinguished them: priority.yaml had carried the same order since file creation, so CONTROL.md's band text was the one that drifted, not an intentional Silas decision. Worth checking history before assuming a two-source-of-truth mismatch needs Silas's judgment call -- sometimes one side is just unmaintained prose."
-- date: "2026-07-14"
+  lesson: 'audit_roadmaps.py''s CONTROL_PRIORITY_DRIFT finding pointed at two files that could disagree
+    for two different reasons (real reprioritization vs. stale prose) -- git history on both files (not
+    just diffing their current content) was what distinguished them: priority.yaml had carried the same
+    order since file creation, so CONTROL.md''s band text was the one that drifted, not an intentional
+    Silas decision. Worth checking history before assuming a two-source-of-truth mismatch needs Silas''s
+    judgment call -- sometimes one side is just unmaintained prose.'
+- date: '2026-07-14'
   project: conductor
   task: t-023
   kind: software
@@ -342,7 +486,15 @@ records:
   passes: 0
   outcome: done
   failure_category: null
-  lesson: "The bug this fixed (commit_done_status() pushing straight to origin/main with no fallback) is the same shape as the git-proxy 413 fix documented in t-041 and the claim-commit git-plumbing design built for t-040 -- recent cycles keep hitting variations of 'a permission-restricted session's git push can fail in a way plain code doesn't expect.' Fixed by capturing the session's own branch before checking out main, and on a rejected main push, cherry-picking the done-status commit onto that branch and pushing there instead so the status flip still reaches main via a normal PR rather than vanishing into a merged-but-not-marked-done gap. Verified with unit tests that simulate the push rejection (not just the happy path) since that's the one path that can't be exercised by running the script normally in a session that already has push access."
+  lesson: The bug this fixed (commit_done_status() pushing straight to origin/main with no fallback) is
+    the same shape as the git-proxy 413 fix documented in t-041 and the claim-commit git-plumbing design
+    built for t-040 -- recent cycles keep hitting variations of 'a permission-restricted session's git
+    push can fail in a way plain code doesn't expect.' Fixed by capturing the session's own branch before
+    checking out main, and on a rejected main push, cherry-picking the done-status commit onto that branch
+    and pushing there instead so the status flip still reaches main via a normal PR rather than vanishing
+    into a merged-but-not-marked-done gap. Verified with unit tests that simulate the push rejection (not
+    just the happy path) since that's the one path that can't be exercised by running the script normally
+    in a session that already has push access.
 - date: 2026-07-14
   project: conductor
   task: t-041
@@ -351,4 +503,17 @@ records:
   passes: 0
   outcome: done
   failure_category: null
-  lesson: "Documented the HTTP 413 first-push-of-a-session workaround (create the remote branch via GitHub MCP create_branch before the first git push, when the branch has no prior PR) in CLAUDE.md's Session end section, so future sessions hitting a brand-new-ref push failure don't have to re-diagnose it from a raw GIT_TRACE_CURL trace."
+  lesson: Documented the HTTP 413 first-push-of-a-session workaround (create the remote branch via GitHub
+    MCP create_branch before the first git push, when the branch has no prior PR) in CLAUDE.md's Session
+    end section, so future sessions hitting a brand-new-ref push failure don't have to re-diagnose it
+    from a raw GIT_TRACE_CURL trace.
+- date: 2026-07-14
+  project: challenge-center
+  task: t-007
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: Derive challenge win metrics from grouped scored submissions so multiple variants do not inflate
+    attempts and tied leaders remain explicit.
