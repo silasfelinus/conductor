@@ -1,69 +1,58 @@
 project: challenge-center
 kind: software
-notes_from_silas: "A comparison arena for generative work. Core mechanic: issue a\
-  \ challenge prompt →\nCONTENDERS each produce an artifact → Kind Robots users vote\
-  \ via reactions\n(LOVED/CLAPPED/BOOED/HATED) → leaderboards aggregate scores.\n\n\
-  EXPANSION (Silas, 2026-07-05): this is NOT primarily a sibling-competition tool.\n\
-  The original inspiration — Silas's conductor (Claude agents) vs his brother's\n\
-  port0s stack — remains a flagship matchup, but it is one instance of the general\n\
-  mechanic. A contender is ANY distinct way of producing an artifact, and the\nframework\
-  \ must support comparing along every axis:\n\n  - Provider vs provider: the same\
-  \ prompt to OpenAI vs Claude.\n  - Model vs model within a provider: Fable vs Opus.\n\
-  \  - Generator vs generator for art: the same prompt to SD, ComfyUI\n    (flux/sdxl/kontext/ltx),\
-  \ and OpenAI image generation — all already live in\n    kind_robots (server/api/art/sd,\
-  \ server/api/comfy/*, server/api/art/generate).\n  - Prompt vs prompt on the same\
-  \ generator: terse vs detailed phrasing, or\n    randomized variables via the kind_robots\
-  \ random-list feature (randomStore's\n    keyed pools — adjective/animal/genre/species/etc\
-  \ from stores/helpers/\n    randomHelper.ts — plus user-created RANDOMLIST dreams).\n\
-  \  - Settings vs settings: same model + prompt, different temperature/sampler/\n\
-  \    steps/cfg.\n\nContender design (Silas, 2026-07-05 — supersedes the original\
-  \ Bot plan): do NOT\nuse the Bot model. Bots are character-driven narrators and\
-  \ specialized GPTs; the\narena compares configurations, so contenders get their\
-  \ own small first-class\nmodel. Reactions already attach to ChallengeSubmission\
-  \ directly, so no Bot\ninfrastructure is actually needed for voting or scoring.\n\
-  \n  Contender = the leaderboard identity (the \"who\"): slug, name, kind\n  (AGENT_STACK\
-  \ | LLM_MODEL | ART_GENERATOR), provider/model/generator fields,\n  default settings,\
-  \ avatar art, description. Examples: conductor-claude,\n  portos-agent, claude-fable,\
-  \ claude-opus, openai-gpt, art-sd, art-comfy-flux.\n\n  ChallengeSubmission = the\
-  \ \"how\" of each individual entry: exact prompt used,\n  settings, random substitutions,\
-  \ variantKey. Uniqueness is\n  (challengeId, contenderId, variantKey) so one contender\
-  \ can enter multiple\n  prompt/settings variants in the same challenge.\n\nThe t-001\
-  \ tables carry a now-deprecated botId — t-002's migration adds Contender\nand stops\
-  \ using botId (nullable, never dropped). Nothing was ever built on it:\nno CHALLENGE_AGENT\
-  \ bots were registered and no API exists yet, so this pivot\ncosts one additive\
-  \ migration. Matchups can be 2-way duels or N-way grids.\n\nChallenge types we want:\n\
-  \  - ART: \"produce an icon/card/hero for X concept\" — submission becomes a KR\
-  \ ArtImage\n  - TEXT: \"write a scene / poem / description\" — submission stored\
-  \ as text\n  - CHARACTER: \"design a character for genre Y\" — submission links\
-  \ to KR Character\n  - SCENARIO: \"build a scenario/encounter for Z\" — submission\
-  \ links to KR Scenario\n  - REASONING: \"solve this puzzle / answer this question\"\
-  \ — auto-scored, no reaction voting\n\nJudging: reactions on ChallengeSubmission\
-  \ entities (reuse KR reaction system).\nLeaderboard: aggregate net reaction scores\
-  \ per agent across all challenges.\nKind Robots is the database, voting platform,\
-  \ and display layer.\n\nAgent identity: each competing agent/model/generator registers\
-  \ as a Contender\nrecord in kind_robots (see Contender design below — NOT a Bot;\
-  \ that earlier plan\nis superseded). Score aggregation runs Reaction → ChallengeSubmission\
-  \ → Contender.\n\nAPPROVED in full by Silas (2026-07-04) — all four milestones,\
-  \ portos integration\nincluded. portos is highly evolved (built by Silas's brother,\
-  \ a stronger programmer)\n— treat it as a first-class competitor, and per t-009,\
-  \ learn its invocation pattern\nfrom the repo rather than assuming it mirrors conductor's.\n\
-  \nM5 EXPANSION direction (Silas, 2026-07-05): the comparison-matrix milestone below\n\
-  generalizes the arena per the expansion note above. M1–M4 tasks proceed as written\n\
-  (they are the foundation either way); where an M1–M4 task note now mentions\nvariant\
-  \ fields, treat those as forward-compatibility so M5 lands without rework.\n\nLEGITIMATE\
-  \ VOTING (Silas, 2026-07-04): votes are per-user Reaction rows — the t-001\nschema\
-  \ enforces unique (userId, challengeSubmissionId) at the DB, so each logged-in\n\
-  user gets exactly one reaction per submission. Tallies are auditable; anonymous\
-  \ or\nduplicate voting is structurally impossible. Voting UI (t-006) must require\
-  \ login.\n\nFRONT-END DIRECTION (Silas, 2026-07-04): the challenge UI must be stellar\
-  \ — designed\nlike a heavyweight title-fight promo or a Street Fighter-style character/game\
-  \ select\nscreen. Think: VS layouts, agent \"fighter cards\" with avatars and records,\
-  \ bold type,\ndramatic matchup presentation. Not a plain CRUD table. This applies\
-  \ to t-005 (browser),\nt-006 (voting page), and t-007 (leaderboard).\n\nCross-repo\
-  \ split:\n  - kind_robots: new Prisma models, API routes, seeded challenge library,\
-  \ voting UI\n  - conductor: challenge runner scripts, agent dispatch tooling, this\
-  \ roadmap\n  - portos: its own submission script (separate repo, same pattern as\
-  \ conductor's)\n"
+notes_from_silas: "A comparison arena for generative work. Core mechanic: issue a challenge prompt \u2192\
+  \nCONTENDERS each produce an artifact \u2192 Kind Robots users vote via reactions\n(LOVED/CLAPPED/BOOED/HATED)\
+  \ \u2192 leaderboards aggregate scores.\n\nEXPANSION (Silas, 2026-07-05): this is NOT primarily a sibling-competition\
+  \ tool.\nThe original inspiration \u2014 Silas's conductor (Claude agents) vs his brother's\nport0s\
+  \ stack \u2014 remains a flagship matchup, but it is one instance of the general\nmechanic. A contender\
+  \ is ANY distinct way of producing an artifact, and the\nframework must support comparing along every\
+  \ axis:\n\n  - Provider vs provider: the same prompt to OpenAI vs Claude.\n  - Model vs model within\
+  \ a provider: Fable vs Opus.\n  - Generator vs generator for art: the same prompt to SD, ComfyUI\n \
+  \   (flux/sdxl/kontext/ltx), and OpenAI image generation \u2014 all already live in\n    kind_robots\
+  \ (server/api/art/sd, server/api/comfy/*, server/api/art/generate).\n  - Prompt vs prompt on the same\
+  \ generator: terse vs detailed phrasing, or\n    randomized variables via the kind_robots random-list\
+  \ feature (randomStore's\n    keyed pools \u2014 adjective/animal/genre/species/etc from stores/helpers/\n\
+  \    randomHelper.ts \u2014 plus user-created RANDOMLIST dreams).\n  - Settings vs settings: same model\
+  \ + prompt, different temperature/sampler/\n    steps/cfg.\n\nContender design (Silas, 2026-07-05 \u2014\
+  \ supersedes the original Bot plan): do NOT\nuse the Bot model. Bots are character-driven narrators\
+  \ and specialized GPTs; the\narena compares configurations, so contenders get their own small first-class\n\
+  model. Reactions already attach to ChallengeSubmission directly, so no Bot\ninfrastructure is actually\
+  \ needed for voting or scoring.\n\n  Contender = the leaderboard identity (the \"who\"): slug, name,\
+  \ kind\n  (AGENT_STACK | LLM_MODEL | ART_GENERATOR), provider/model/generator fields,\n  default settings,\
+  \ avatar art, description. Examples: conductor-claude,\n  portos-agent, claude-fable, claude-opus, openai-gpt,\
+  \ art-sd, art-comfy-flux.\n\n  ChallengeSubmission = the \"how\" of each individual entry: exact prompt\
+  \ used,\n  settings, random substitutions, variantKey. Uniqueness is\n  (challengeId, contenderId, variantKey)\
+  \ so one contender can enter multiple\n  prompt/settings variants in the same challenge.\n\nThe t-001\
+  \ tables carry a now-deprecated botId \u2014 t-002's migration adds Contender\nand stops using botId\
+  \ (nullable, never dropped). Nothing was ever built on it:\nno CHALLENGE_AGENT bots were registered\
+  \ and no API exists yet, so this pivot\ncosts one additive migration. Matchups can be 2-way duels or\
+  \ N-way grids.\n\nChallenge types we want:\n  - ART: \"produce an icon/card/hero for X concept\" \u2014\
+  \ submission becomes a KR ArtImage\n  - TEXT: \"write a scene / poem / description\" \u2014 submission\
+  \ stored as text\n  - CHARACTER: \"design a character for genre Y\" \u2014 submission links to KR Character\n\
+  \  - SCENARIO: \"build a scenario/encounter for Z\" \u2014 submission links to KR Scenario\n  - REASONING:\
+  \ \"solve this puzzle / answer this question\" \u2014 auto-scored, no reaction voting\n\nJudging: reactions\
+  \ on ChallengeSubmission entities (reuse KR reaction system).\nLeaderboard: aggregate net reaction scores\
+  \ per agent across all challenges.\nKind Robots is the database, voting platform, and display layer.\n\
+  \nAgent identity: each competing agent/model/generator registers as a Contender\nrecord in kind_robots\
+  \ (see Contender design below \u2014 NOT a Bot; that earlier plan\nis superseded). Score aggregation\
+  \ runs Reaction \u2192 ChallengeSubmission \u2192 Contender.\n\nAPPROVED in full by Silas (2026-07-04)\
+  \ \u2014 all four milestones, portos integration\nincluded. portos is highly evolved (built by Silas's\
+  \ brother, a stronger programmer)\n\u2014 treat it as a first-class competitor, and per t-009, learn\
+  \ its invocation pattern\nfrom the repo rather than assuming it mirrors conductor's.\n\nM5 EXPANSION\
+  \ direction (Silas, 2026-07-05): the comparison-matrix milestone below\ngeneralizes the arena per the\
+  \ expansion note above. M1\u2013M4 tasks proceed as written\n(they are the foundation either way); where\
+  \ an M1\u2013M4 task note now mentions\nvariant fields, treat those as forward-compatibility so M5 lands\
+  \ without rework.\n\nLEGITIMATE VOTING (Silas, 2026-07-04): votes are per-user Reaction rows \u2014\
+  \ the t-001\nschema enforces unique (userId, challengeSubmissionId) at the DB, so each logged-in\nuser\
+  \ gets exactly one reaction per submission. Tallies are auditable; anonymous or\nduplicate voting is\
+  \ structurally impossible. Voting UI (t-006) must require login.\n\nFRONT-END DIRECTION (Silas, 2026-07-04):\
+  \ the challenge UI must be stellar \u2014 designed\nlike a heavyweight title-fight promo or a Street\
+  \ Fighter-style character/game select\nscreen. Think: VS layouts, agent \"fighter cards\" with avatars\
+  \ and records, bold type,\ndramatic matchup presentation. Not a plain CRUD table. This applies to t-005\
+  \ (browser),\nt-006 (voting page), and t-007 (leaderboard).\n\nCross-repo split:\n  - kind_robots: new\
+  \ Prisma models, API routes, seeded challenge library, voting UI\n  - conductor: challenge runner scripts,\
+  \ agent dispatch tooling, this roadmap\n  - portos: its own submission script (separate repo, same pattern\
+  \ as conductor's)\n"
 milestones:
 - id: m1
   title: Schema & data foundation in kind_robots
@@ -96,13 +85,11 @@ tasks:
   gate_human: true
   approved_by_human: true
   updated: 2026-07-05 00:00:00+00:00
-  note: 'Complete: kind_robots PR #87 merged 2026-07-04 (Vercel deploy succeeded),
-    which ran the additive migration (Challenge + ChallengeSubmission tables, CHALLENGE_SUBMISSION
-    reaction category, nullable Reaction FK, DB-enforced unique (userId, challengeSubmissionId)).
-    Unblocks t-002 (originally Bot registration, since redefined as the Contender
-    migration — see its note) once the Worker''s next cycle runs resolve_deps.py.
-
-    '
+  note: "Complete: kind_robots PR #87 merged 2026-07-04 (Vercel deploy succeeded), which ran the additive\
+    \ migration (Challenge + ChallengeSubmission tables, CHALLENGE_SUBMISSION reaction category, nullable\
+    \ Reaction FK, DB-enforced unique (userId, challengeSubmissionId)). Unblocks t-002 (originally Bot\
+    \ registration, since redefined as the Contender migration \u2014 see its note) once the Worker's\
+    \ next cycle runs resolve_deps.py.\n"
 - id: t-002
   milestone: m1
   title: 'Schema: add Contender model and submission variant fields'
@@ -112,61 +99,51 @@ tasks:
   passes: 1
   stakes: reversible
   updated: 2026-07-07 08:30:00+00:00
-  note: "SUPERSEDES the original \"register Bots\" task (Silas, 2026-07-05): Bots\
-    \ are character-driven narrators and specialized GPTs — contenders get their own\
-    \ model. In silasfelinus/kind_robots, one additive migration:\n\n  model Contender:\n\
-    \    id, createdAt, updatedAt\n    slug            String  @unique @db.VarChar(255)\n\
-    \    name            String  @db.VarChar(255)\n    kind            ContenderKind\
-    \  (AGENT_STACK | LLM_MODEL | ART_GENERATOR)\n    provider        String? @db.VarChar(128)\
-    \   // anthropic | openai | local...\n    model           String? @db.VarChar(255)\
-    \   // claude-fable-5, gpt-5...\n    generator       String? @db.VarChar(128)\
-    \   // claude-api | openai-api |\n                                           \
-    \    // art-sd | comfy-flux | ...\n    defaultSettings Json?\n    description\
-    \     String? @db.Text\n    avatarImageId   Int?    (FK → ArtImage, nullable)\n\
-    \    isActive        Boolean @default(true)\n\n  ChallengeSubmission additions:\n\
-    \    contenderId      Int?  (FK → Contender; required in app logic, nullable\n\
-    \                            in DB only so the migration is additive)\n    variantKey\
-    \       String @default(\"default\") @db.VarChar(128)\n      — distinguishes multiple\
-    \ entries by one contender in one challenge\n        (\"terse\", \"detailed\"\
-    , \"random-3\", \"temp-0.2\")\n    promptUsed       String? @db.Text   // exact\
-    \ final prompt sent\n    settings         Json?              // overrides of defaultSettings\n\
-    \    randomSelections Json?              // randomStore key→value map used\n \
-    \   @@unique([challengeId, contenderId, variantKey])\n\n  Deprecate botId: make\
-    \ it nullable, keep the column (never DROP data),\n  stop writing it. Remove or\
-    \ keep the old (challengeId, botId) unique —\n  if removed, verify the migration\
-    \ is only DROP INDEX, not DROP COLUMN.\n\nNo CHALLENGE_AGENT bots were ever registered\
-    \ and no API exists yet, so this pivot has zero data to migrate. NOT human-gated\
-    \ (Silas, 2026-07-05): this is additive-only, so per the AGENTS.md migration rule\
-    \ the Worker opens the PR and the Reviewer audits migration.sql line-by-line and\
-    \ merges it — Silas is not a gate. If the generated migration turns out to contain\
-    \ any destructive statement, it reverts to hard needs-human.\nREVIEWER (pass 1/3,\
-    \ 2026-07-06): kind_robots PR #107 closed without merge. migration.sql itself\
-    \ is a clean additive migration (audited line-by-line), but the PR never applied\
-    \ the matching schema.prisma patch — it only left docs/challenge-center-t-002-schema-patch.md\
-    \ describing what schema.prisma needs. That drift is why the PR's Vercel deployment\
-    \ check failed. Next attempt must include the actual schema.prisma edit (Contender\
-    \ model, ContenderKind enum, ArtImage.Contenders relation, ChallengeSubmission\
-    \ field/relation additions — see the doc above for the exact patch) in the same\
-    \ PR, then `npx prisma validate && npx prisma generate` before opening for review\
-    \ again. Also: no `claim: challenge-center/t-002` commit was found on conductor\
-    \ main before this PR was opened — make sure the claim step actually runs.\nREVIEWER\
-    \ (resolved, 2026-07-07): kind_robots PR #116 (Silas-directed session, `claude/challenge-center-contenders-t002`\
-    \ → main, merged 2026-07-07T07:54:58Z) rebuilt the stranded work cleanly on current\
-    \ main: applied the exact migration.sql from the original branch verbatim (re-audited\
-    \ line-by-line — still additive-only: CREATE TABLE Contender, ADD COLUMN/MODIFY...NULL\
-    \ on ChallengeSubmission, one DROP INDEX immediately replaced by the new unique\
-    \ index, plus FKs; no DROP TABLE/COLUMN/data rewrite) AND applied the schema.prisma\
-    \ patch from docs/challenge-center-t-002-schema-patch.md (ContenderKind enum,\
-    \ Contender model, ArtImage.Contenders relation, ChallengeSubmission field/relation/index\
-    \ additions). Confirmed directly against current kind_robots main: schema.prisma\
-    \ now matches migration.sql exactly (Contender model, enum, and all ChallengeSubmission\
-    \ fields present). Note: kind_robots PR #118 (`worker/challenge-center-t-002`,\
-    \ the original stale branch) was also merged ~10 minutes later by Silas directly;\
-    \ its diff was identical/already-superseded content so it landed as a no-op, but\
-    \ the stale branch should have been deleted per PR #116's own note instead of\
-    \ being merged separately afterward (see t-017, filed as this cycle's kaizen).\
-    \ Task is genuinely complete now — t-003, t-005, t-008, t-012, and t-014 all unblock\
-    \ via the Worker's next `resolve_deps.py` run.\n"
+  note: "SUPERSEDES the original \"register Bots\" task (Silas, 2026-07-05): Bots are character-driven\
+    \ narrators and specialized GPTs \u2014 contenders get their own model. In silasfelinus/kind_robots,\
+    \ one additive migration:\n\n  model Contender:\n    id, createdAt, updatedAt\n    slug          \
+    \  String  @unique @db.VarChar(255)\n    name            String  @db.VarChar(255)\n    kind      \
+    \      ContenderKind  (AGENT_STACK | LLM_MODEL | ART_GENERATOR)\n    provider        String? @db.VarChar(128)\
+    \   // anthropic | openai | local...\n    model           String? @db.VarChar(255)   // claude-fable-5,\
+    \ gpt-5...\n    generator       String? @db.VarChar(128)   // claude-api | openai-api |\n        \
+    \                                       // art-sd | comfy-flux | ...\n    defaultSettings Json?\n\
+    \    description     String? @db.Text\n    avatarImageId   Int?    (FK \u2192 ArtImage, nullable)\n\
+    \    isActive        Boolean @default(true)\n\n  ChallengeSubmission additions:\n    contenderId \
+    \     Int?  (FK \u2192 Contender; required in app logic, nullable\n                            in\
+    \ DB only so the migration is additive)\n    variantKey       String @default(\"default\") @db.VarChar(128)\n\
+    \      \u2014 distinguishes multiple entries by one contender in one challenge\n        (\"terse\"\
+    , \"detailed\", \"random-3\", \"temp-0.2\")\n    promptUsed       String? @db.Text   // exact final\
+    \ prompt sent\n    settings         Json?              // overrides of defaultSettings\n    randomSelections\
+    \ Json?              // randomStore key\u2192value map used\n    @@unique([challengeId, contenderId,\
+    \ variantKey])\n\n  Deprecate botId: make it nullable, keep the column (never DROP data),\n  stop\
+    \ writing it. Remove or keep the old (challengeId, botId) unique \u2014\n  if removed, verify the\
+    \ migration is only DROP INDEX, not DROP COLUMN.\n\nNo CHALLENGE_AGENT bots were ever registered and\
+    \ no API exists yet, so this pivot has zero data to migrate. NOT human-gated (Silas, 2026-07-05):\
+    \ this is additive-only, so per the AGENTS.md migration rule the Worker opens the PR and the Reviewer\
+    \ audits migration.sql line-by-line and merges it \u2014 Silas is not a gate. If the generated migration\
+    \ turns out to contain any destructive statement, it reverts to hard needs-human.\nREVIEWER (pass\
+    \ 1/3, 2026-07-06): kind_robots PR #107 closed without merge. migration.sql itself is a clean additive\
+    \ migration (audited line-by-line), but the PR never applied the matching schema.prisma patch \u2014\
+    \ it only left docs/challenge-center-t-002-schema-patch.md describing what schema.prisma needs. That\
+    \ drift is why the PR's Vercel deployment check failed. Next attempt must include the actual schema.prisma\
+    \ edit (Contender model, ContenderKind enum, ArtImage.Contenders relation, ChallengeSubmission field/relation\
+    \ additions \u2014 see the doc above for the exact patch) in the same PR, then `npx prisma validate\
+    \ && npx prisma generate` before opening for review again. Also: no `claim: challenge-center/t-002`\
+    \ commit was found on conductor main before this PR was opened \u2014 make sure the claim step actually\
+    \ runs.\nREVIEWER (resolved, 2026-07-07): kind_robots PR #116 (Silas-directed session, `claude/challenge-center-contenders-t002`\
+    \ \u2192 main, merged 2026-07-07T07:54:58Z) rebuilt the stranded work cleanly on current main: applied\
+    \ the exact migration.sql from the original branch verbatim (re-audited line-by-line \u2014 still\
+    \ additive-only: CREATE TABLE Contender, ADD COLUMN/MODIFY...NULL on ChallengeSubmission, one DROP\
+    \ INDEX immediately replaced by the new unique index, plus FKs; no DROP TABLE/COLUMN/data rewrite)\
+    \ AND applied the schema.prisma patch from docs/challenge-center-t-002-schema-patch.md (ContenderKind\
+    \ enum, Contender model, ArtImage.Contenders relation, ChallengeSubmission field/relation/index additions).\
+    \ Confirmed directly against current kind_robots main: schema.prisma now matches migration.sql exactly\
+    \ (Contender model, enum, and all ChallengeSubmission fields present). Note: kind_robots PR #118 (`worker/challenge-center-t-002`,\
+    \ the original stale branch) was also merged ~10 minutes later by Silas directly; its diff was identical/already-superseded\
+    \ content so it landed as a no-op, but the stale branch should have been deleted per PR #116's own\
+    \ note instead of being merged separately afterward (see t-017, filed as this cycle's kaizen). Task\
+    \ is genuinely complete now \u2014 t-003, t-005, t-008, t-012, and t-014 all unblock via the Worker's\
+    \ next `resolve_deps.py` run.\n"
 - id: t-003
   milestone: m2
   title: Create /api/challenges CRUD and submission routes in kind_robots
@@ -175,32 +152,27 @@ tasks:
   owner: null
   passes: 0
   stakes: reversible
-  note: "In silasfelinus/kind_robots, add API routes under server/api/challenges/.\
-    \ Builds against Contender from day one (t-002) — nothing references Bot.\n\n\
-    \  GET  /api/challenges         — list open challenges (filter: type, status)\n\
-    \  GET  /api/challenges/[slug]  — one challenge with submissions and scores\n\
-    \  POST /api/challenges         — create challenge (admin only)\n  GET  /api/contenders\
-    \         — list active contenders (filter: kind)\n\n  POST /api/challenges/[slug]/submissions\n\
-    \    body: { contenderSlug, variantKey?, promptUsed?, settings?,\n           \
-    \ randomSelections?, outputText?, artImageId?, characterId? }\n    creates ChallengeSubmission,\
-    \ sets status: READY\n    returns submission id\n    rejects a duplicate (challenge,\
-    \ contender, variantKey) with a clear error\n\n  GET  /api/challenges/[slug]/leaderboard\n\
-    \    returns contenders ranked by net score (loved+clapped - booed-hated);\n \
-    \   a contender with multiple variants aggregates across them, with a\n    per-variant\
-    \ breakdown included\n\n  GET  /api/challenges/leaderboard\n    global leaderboard:\
-    \ aggregate scores across all challenges per Contender\n\nUse existing auth/session\
-    \ patterns from kind_robots. Script submissions should be accepted with an API\
-    \ key (reuse Server.apiKey pattern or a new env var). Leaderboard responses group\
-    \ by contenderId, never by raw submission row, so variant rows aggregate cleanly.\n\
-    \nDONE (Reviewer verification, 2026-07-11): the full API surface already exists\
-    \ on kind_robots main and was verified endpoint-by-endpoint against this spec\
-    \ — list with type/status filters, slug detail with per-submission scores, admin-only\
-    \ create (403 gate), active-contender list with kind filter, API-key-authenticated\
-    \ submissions (validateApiKey) that set READY and reject (challenge, contender,\
-    \ variantKey) duplicates with a clear 409, and both leaderboards ranked by net\
-    \ score with per-variant breakdowns grouped by contenderId (server/utils/challengeCenter.ts).\
-    \ No new work needed; closed by verification alone. t-004 and t-005 unblock via\
-    \ the Worker's next resolve_deps.py run.\n"
+  note: "In silasfelinus/kind_robots, add API routes under server/api/challenges/. Builds against Contender\
+    \ from day one (t-002) \u2014 nothing references Bot.\n\n  GET  /api/challenges         \u2014 list\
+    \ open challenges (filter: type, status)\n  GET  /api/challenges/[slug]  \u2014 one challenge with\
+    \ submissions and scores\n  POST /api/challenges         \u2014 create challenge (admin only)\n  GET\
+    \  /api/contenders         \u2014 list active contenders (filter: kind)\n\n  POST /api/challenges/[slug]/submissions\n\
+    \    body: { contenderSlug, variantKey?, promptUsed?, settings?,\n            randomSelections?, outputText?,\
+    \ artImageId?, characterId? }\n    creates ChallengeSubmission, sets status: READY\n    returns submission\
+    \ id\n    rejects a duplicate (challenge, contender, variantKey) with a clear error\n\n  GET  /api/challenges/[slug]/leaderboard\n\
+    \    returns contenders ranked by net score (loved+clapped - booed-hated);\n    a contender with multiple\
+    \ variants aggregates across them, with a\n    per-variant breakdown included\n\n  GET  /api/challenges/leaderboard\n\
+    \    global leaderboard: aggregate scores across all challenges per Contender\n\nUse existing auth/session\
+    \ patterns from kind_robots. Script submissions should be accepted with an API key (reuse Server.apiKey\
+    \ pattern or a new env var). Leaderboard responses group by contenderId, never by raw submission row,\
+    \ so variant rows aggregate cleanly.\n\nDONE (Reviewer verification, 2026-07-11): the full API surface\
+    \ already exists on kind_robots main and was verified endpoint-by-endpoint against this spec \u2014\
+    \ list with type/status filters, slug detail with per-submission scores, admin-only create (403 gate),\
+    \ active-contender list with kind filter, API-key-authenticated submissions (validateApiKey) that\
+    \ set READY and reject (challenge, contender, variantKey) duplicates with a clear 409, and both leaderboards\
+    \ ranked by net score with per-variant breakdowns grouped by contenderId (server/utils/challengeCenter.ts).\
+    \ No new work needed; closed by verification alone. t-004 and t-005 unblock via the Worker's next\
+    \ resolve_deps.py run.\n"
 - id: t-004
   milestone: m2
   title: Seed 10 initial challenges in kind_robots
@@ -209,11 +181,10 @@ tasks:
   owner: worker
   passes: 0
   stakes: reversible
-  note: 'DONE (2026-07-12, Silas confirmation): Kind Robots PR #199 had already merged
-    the idempotent seed script, and Silas confirmed in the current session that npx
-    tsx scripts/seed_challenges.ts --write was run. The script''s post-write verification
-    checks that all ten challenge slugs exist, so the credentialed public-row creation
-    gate is complete.'
+  note: 'DONE (2026-07-12, Silas confirmation): Kind Robots PR #199 had already merged the idempotent
+    seed script, and Silas confirmed in the current session that npx tsx scripts/seed_challenges.ts --write
+    was run. The script''s post-write verification checks that all ten challenge slugs exist, so the credentialed
+    public-row creation gate is complete.'
   updated: '2026-07-13T00:00:05Z'
 - id: t-005
   milestone: m3
@@ -223,7 +194,10 @@ tasks:
   owner: worker
   passes: 0
   stakes: reversible
-  note: "DONE (2026-07-12): Kind Robots PR #208 merged the Challenge Center browser on the existing /challenges content route. It adds division/status filters, fight-card styling, difficulty stars, entrant counts, per-challenge leader previews, and links into /challenges/[slug]. TypeScript and contract CI passed; the Vercel preview build completed successfully."
+  note: 'DONE (2026-07-12): Kind Robots PR #208 merged the Challenge Center browser on the existing /challenges
+    content route. It adds division/status filters, fight-card styling, difficulty stars, entrant counts,
+    per-challenge leader previews, and links into /challenges/[slug]. TypeScript and contract CI passed;
+    the Vercel preview build completed successfully.'
   updated: '2026-07-13T00:25:00Z'
 - id: t-006
   milestone: m3
@@ -236,37 +210,28 @@ tasks:
   passes: 0
   stakes: reversible
   updated: '2026-07-14T01:59:00Z'
-  note: 'DONE (bookkeeping reconciliation, 2026-07-14): kind_robots PR #210
-    ("challenge-center: build the logged-in voting arena") merged this task
-    2026-07-13T00:52:11Z — a /challenges/[slug] arena with VS split (2 submissions)
-    / select-screen grid (3+), ART/TEXT/Character/Scenario rendering, logged-in
-    LOVED/CLAPPED/BOOED/HATED reactions via POST /api/challenges/submissions/[id]/reaction
-    enforcing the (userId, challengeSubmissionId) unique key, and a per-challenge mini
-    leaderboard. Contract Tests and the whole-project vue-tsc check passed; Vercel
-    build completed. The roadmap task itself was left at claimed for ~25h with the
-    claim timestamp unchanged and zero worker/* branch/commit/PR anywhere in that
-    window (confirmed via list_branches + list_commits across many Reviewer sweeps,
-    see conductor TALKBACK.md recurrences 42-48 under t-026) — a stale-claim/bookkeeping-drift
-    case per docs/worker-stale-claim-recovery.md, not a still-open task. Reconciled
-    directly against the merged PR as authoritative evidence.
-
-    Original task spec: Challenge detail page. Show the challenge prompt and judgeNotes at top. Below:
-    all submissions side by side (or stacked on mobile). Each submission card shows:
-    contender name/avatar (from Contender), the output (art image or text block),
-    and reaction buttons (LOVED/CLAPPED/BOOED/HATED) using the existing KR Reaction
-    component — category: CHALLENGE_SUBMISSION. Voting requires a logged-in user;
-    the DB enforces one reaction per user per submission (unique userId+challengeSubmissionId),
-    so tallies are legitimate. Show net score and current rank on each card once scored.
-    For ART challenges, render the ArtImage thumbnail. For TEXT challenges, render
-    the outputText with a read-more expander. For CHARACTER challenges, render the
-    Character card. DESIGN DIRECTION (Silas): this is the VS screen — submissions
-    face off side by side like a title bout, agent avatars as fighter portraits. See
-    notes_from_silas. Design the layout for N contenders, not exactly two: a duel
-    renders as the classic VS split, 3+ renders as a select-screen grid. M5 matchups
-    (model-vs-model, generator-vs-generator, prompt-variant grids) reuse this page
-    unchanged.
-
-    '
+  note: "DONE (bookkeeping reconciliation, 2026-07-14): kind_robots PR #210 (\"challenge-center: build\
+    \ the logged-in voting arena\") merged this task 2026-07-13T00:52:11Z \u2014 a /challenges/[slug]\
+    \ arena with VS split (2 submissions) / select-screen grid (3+), ART/TEXT/Character/Scenario rendering,\
+    \ logged-in LOVED/CLAPPED/BOOED/HATED reactions via POST /api/challenges/submissions/[id]/reaction\
+    \ enforcing the (userId, challengeSubmissionId) unique key, and a per-challenge mini leaderboard.\
+    \ Contract Tests and the whole-project vue-tsc check passed; Vercel build completed. The roadmap task\
+    \ itself was left at claimed for ~25h with the claim timestamp unchanged and zero worker/* branch/commit/PR\
+    \ anywhere in that window (confirmed via list_branches + list_commits across many Reviewer sweeps,\
+    \ see conductor TALKBACK.md recurrences 42-48 under t-026) \u2014 a stale-claim/bookkeeping-drift\
+    \ case per docs/worker-stale-claim-recovery.md, not a still-open task. Reconciled directly against\
+    \ the merged PR as authoritative evidence.\nOriginal task spec: Challenge detail page. Show the challenge\
+    \ prompt and judgeNotes at top. Below: all submissions side by side (or stacked on mobile). Each submission\
+    \ card shows: contender name/avatar (from Contender), the output (art image or text block), and reaction\
+    \ buttons (LOVED/CLAPPED/BOOED/HATED) using the existing KR Reaction component \u2014 category: CHALLENGE_SUBMISSION.\
+    \ Voting requires a logged-in user; the DB enforces one reaction per user per submission (unique userId+challengeSubmissionId),\
+    \ so tallies are legitimate. Show net score and current rank on each card once scored. For ART challenges,\
+    \ render the ArtImage thumbnail. For TEXT challenges, render the outputText with a read-more expander.\
+    \ For CHARACTER challenges, render the Character card. DESIGN DIRECTION (Silas): this is the VS screen\
+    \ \u2014 submissions face off side by side like a title bout, agent avatars as fighter portraits.\
+    \ See notes_from_silas. Design the layout for N contenders, not exactly two: a duel renders as the\
+    \ classic VS split, 3+ renders as a select-screen grid. M5 matchups (model-vs-model, generator-vs-generator,\
+    \ prompt-variant grids) reuse this page unchanged.\n"
 - id: t-007
   milestone: m3
   title: Build leaderboard page in kind_robots
@@ -275,13 +240,12 @@ tasks:
   owner: null
   passes: 0
   stakes: reversible
-  note: "Add /challenges/leaderboard page. Two views:\n  - Global: top agents by total\
-    \ net score across all challenges (table/podium)\n  - Per-type: filter to ART/TEXT/CHARACTER\
-    \ etc., show rankings for that type\nContender row shows: avatar, name, challenges\
-    \ attempted, challenges won, total score, win rate. Also show on each /challenges/[slug]\
-    \ page: a mini leaderboard for that challenge. Link back to /challenges browser.\
-    \ DESIGN DIRECTION (Silas): championship presentation — podium, belts, win records,\
-    \ fighter cards. See notes_from_silas.\n"
+  note: "Add /challenges/leaderboard page. Two views:\n  - Global: top agents by total net score across\
+    \ all challenges (table/podium)\n  - Per-type: filter to ART/TEXT/CHARACTER etc., show rankings for\
+    \ that type\nContender row shows: avatar, name, challenges attempted, challenges won, total score,\
+    \ win rate. Also show on each /challenges/[slug] page: a mini leaderboard for that challenge. Link\
+    \ back to /challenges browser. DESIGN DIRECTION (Silas): championship presentation \u2014 podium,\
+    \ belts, win records, fighter cards. See notes_from_silas.\n"
 - id: t-008
   milestone: m4
   title: Write scripts/challenge_submit.py in conductor
@@ -290,14 +254,12 @@ tasks:
   owner: null
   passes: 0
   stakes: reversible
-  note: "In silasfelinus/conductor, write scripts/challenge_submit.py. Usage: python\
-    \ scripts/challenge_submit.py <challenge-slug> [--contender conductor-claude]\
-    \ Steps:\n  1. Fetch challenge from KR API (GET /api/challenges/<slug>)\n  2.\
-    \ Print promptText to stdout / pipe to agent\n  3. Accept agent output via stdin\
-    \ or --output flag\n  4. POST to /api/challenges/<slug>/submissions with contender\
-    \ slug + output\n  5. Print submission id and current leaderboard standing\nReads\
-    \ KR_API_TOKEN and KR_BASE_URL from env. This becomes the bridge between conductor\
-    \ agent runs and the challenge system.\n"
+  note: "In silasfelinus/conductor, write scripts/challenge_submit.py. Usage: python scripts/challenge_submit.py\
+    \ <challenge-slug> [--contender conductor-claude] Steps:\n  1. Fetch challenge from KR API (GET /api/challenges/<slug>)\n\
+    \  2. Print promptText to stdout / pipe to agent\n  3. Accept agent output via stdin or --output flag\n\
+    \  4. POST to /api/challenges/<slug>/submissions with contender slug + output\n  5. Print submission\
+    \ id and current leaderboard standing\nReads KR_API_TOKEN and KR_BASE_URL from env. This becomes the\
+    \ bridge between conductor agent runs and the challenge system.\n"
 - id: t-009
   milestone: m4
   title: Write challenge submission script in silasfelinus/portos
@@ -306,75 +268,69 @@ tasks:
   owner: null
   passes: 0
   stakes: reversible
-  note: "In silasfelinus/portos, add a challenge submission script mirroring the conductor\
-    \ one. Usage: (whatever invocation pattern portos uses) challenge_submit <challenge-slug>\
-    \ Steps:\n  1. Fetch challenge from KR API (GET /api/challenges/<slug>)\n  2.\
-    \ Pass promptText to the portos agent\n  3. Collect agent output\n  4. POST to\
-    \ /api/challenges/<slug>/submissions with contenderSlug \"portos-agent\" + output\n\
-    \  5. Return submission id\nReads KR_API_TOKEN and KR_BASE_URL from env (same\
-    \ vars as conductor). Worker should look at silasfelinus/portos to understand\
-    \ its agent invocation pattern before writing this — don't assume it matches conductor's.\n"
+  note: "In silasfelinus/portos, add a challenge submission script mirroring the conductor one. Usage:\
+    \ (whatever invocation pattern portos uses) challenge_submit <challenge-slug> Steps:\n  1. Fetch challenge\
+    \ from KR API (GET /api/challenges/<slug>)\n  2. Pass promptText to the portos agent\n  3. Collect\
+    \ agent output\n  4. POST to /api/challenges/<slug>/submissions with contenderSlug \"portos-agent\"\
+    \ + output\n  5. Return submission id\nReads KR_API_TOKEN and KR_BASE_URL from env (same vars as conductor).\
+    \ Worker should look at silasfelinus/portos to understand its agent invocation pattern before writing\
+    \ this \u2014 don't assume it matches conductor's.\n"
 - id: t-010
   milestone: m4
   title: 'Build auto-runner: dispatch active challenges to all registered agents'
   status: waiting
   depends_on:
-    - t-008
-    - t-009
+  - t-008
+  - t-009
   owner: null
   passes: 0
   stakes: reversible
-  note: "In silasfelinus/conductor, write scripts/challenge_runner.py. Usage: python\
-    \ scripts/challenge_runner.py [--challenge <slug>] [--all] Steps:\n  1. Fetch\
-    \ open challenges from KR API\n  2. For each challenge, skip if conductor-claude\
-    \ already has a submission\n  3. Build the challenge prompt (from promptText +\
-    \ any system context)\n  4. Call the conductor agent (via Claude API or existing\
-    \ agent invocation pattern)\n  5. Submit the output via challenge_submit.py\n\
-    \  6. Print summary: challenges attempted, submissions created\nThis lets conductor\
-    \ auto-participate in challenges without manual intervention. Designed to run\
-    \ on a schedule (e.g. nightly cron via AGENTS.md todo mechanism).\n"
+  note: "In silasfelinus/conductor, write scripts/challenge_runner.py. Usage: python scripts/challenge_runner.py\
+    \ [--challenge <slug>] [--all] Steps:\n  1. Fetch open challenges from KR API\n  2. For each challenge,\
+    \ skip if conductor-claude already has a submission\n  3. Build the challenge prompt (from promptText\
+    \ + any system context)\n  4. Call the conductor agent (via Claude API or existing agent invocation\
+    \ pattern)\n  5. Submit the output via challenge_submit.py\n  6. Print summary: challenges attempted,\
+    \ submissions created\nThis lets conductor auto-participate in challenges without manual intervention.\
+    \ Designed to run on a schedule (e.g. nightly cron via AGENTS.md todo mechanism).\n"
 - id: t-012
   milestone: m5
   title: 'Seed contender roster: agent stacks, models, and art generators'
-  status: ready
+  status: claimed
   depends_on: t-002
-  owner: null
+  owner: worker
   passes: 0
   stakes: reversible
-  note: "Write scripts/seed_contenders.ts in kind_robots (idempotent, upsert by slug).\
-    \ Starting roster:\n  AGENT_STACK: conductor-claude (\"Conductor (Claude)\", generator:\
-    \ claude-api),\n               portos-agent (\"Port0s\")\n  LLM_MODEL:   claude-fable\
-    \ (model: claude-fable-5),\n               claude-opus (model: claude-opus-4-8),\n\
-    \               openai-gpt (provider: openai)\n  ART_GENERATOR: art-sd (generator:\
-    \ art-sd),\n                 art-comfy-flux, art-comfy-sdxl (generator: comfy-*),\n\
-    \                 art-openai (generator: openai-images)\nEach gets a name and\
-    \ a description naming the exact backend it fronts. These are the fighter cards\
-    \ for matchups — avatar art can come later through the normal ART-PROMPTS pipeline\
-    \ (avatarImageId is nullable).\n"
+  note: "Write scripts/seed_contenders.ts in kind_robots (idempotent, upsert by slug). Starting roster:\n\
+    \  AGENT_STACK: conductor-claude (\"Conductor (Claude)\", generator: claude-api),\n              \
+    \ portos-agent (\"Port0s\")\n  LLM_MODEL:   claude-fable (model: claude-fable-5),\n              \
+    \ claude-opus (model: claude-opus-4-8),\n               openai-gpt (provider: openai)\n  ART_GENERATOR:\
+    \ art-sd (generator: art-sd),\n                 art-comfy-flux, art-comfy-sdxl (generator: comfy-*),\n\
+    \                 art-openai (generator: openai-images)\nEach gets a name and a description naming\
+    \ the exact backend it fronts. These are the fighter cards for matchups \u2014 avatar art can come\
+    \ later through the normal ART-PROMPTS pipeline (avatarImageId is nullable).\n\n\nClaiming highest-priority\
+    \ ready task after merging the connector-safe task-event bridge."
+  updated: 2026-07-14 02:17:00+00:00
 - id: t-013
   milestone: m5
   title: 'Matchup runner: dispatch one challenge across a contender matrix'
   status: waiting
   depends_on:
-    - t-010
-    - t-012
+  - t-010
+  - t-012
   owner: null
   passes: 0
   stakes: reversible
-  note: "In silasfelinus/conductor, write scripts/challenge_matchup.py — the generalization\
-    \ of t-010's runner. Input: a challenge slug plus a matchup spec (inline JSON\
-    \ or a YAML file):\n\n  contenders:\n    - { contender: claude-fable }\n    -\
-    \ { contender: claude-opus }\n    - { contender: openai-gpt, settings: { temperature:\
-    \ 1.0 } }\n    - { contender: conductor-claude, variantKey: detailed,\n      \
-    \  promptSuffix: \"...\" }\n\nBackend/model resolution comes from the Contender\
-    \ record (its generator/ model/defaultSettings fields); the spec only overrides\
-    \ per-entry. For each entry: build the final prompt (base promptText + any variant\
-    \ edits), call the right backend (Claude API, OpenAI API, or a kind_robots art\
-    \ endpoint for ART challenges), and POST the submission with the t-002 variant\
-    \ fields filled in (variantKey, settings, promptUsed). ART challenge outputs go\
-    \ through the existing kind_robots art save path so the submission gets a real\
-    \ artImageId. Print a matchup summary table. Reads KR_API_TOKEN, KR_BASE_URL,\
-    \ ANTHROPIC_API_KEY, OPENAI_API_KEY from env; skip (with a clear note) any contender\
+  note: "In silasfelinus/conductor, write scripts/challenge_matchup.py \u2014 the generalization of t-010's\
+    \ runner. Input: a challenge slug plus a matchup spec (inline JSON or a YAML file):\n\n  contenders:\n\
+    \    - { contender: claude-fable }\n    - { contender: claude-opus }\n    - { contender: openai-gpt,\
+    \ settings: { temperature: 1.0 } }\n    - { contender: conductor-claude, variantKey: detailed,\n \
+    \       promptSuffix: \"...\" }\n\nBackend/model resolution comes from the Contender record (its generator/\
+    \ model/defaultSettings fields); the spec only overrides per-entry. For each entry: build the final\
+    \ prompt (base promptText + any variant edits), call the right backend (Claude API, OpenAI API, or\
+    \ a kind_robots art endpoint for ART challenges), and POST the submission with the t-002 variant fields\
+    \ filled in (variantKey, settings, promptUsed). ART challenge outputs go through the existing kind_robots\
+    \ art save path so the submission gets a real artImageId. Print a matchup summary table. Reads KR_API_TOKEN,\
+    \ KR_BASE_URL, ANTHROPIC_API_KEY, OPENAI_API_KEY from env; skip (with a clear note) any contender\
     \ whose key/backend is unavailable.\n"
 - id: t-014
   milestone: m5
@@ -384,20 +340,16 @@ tasks:
   owner: null
   passes: 0
   stakes: reversible
-  note: 'Support "same generator, different prompts" matchups where the difference
-    is randomized variables. In silasfelinus/kind_robots, add a server util (and a
-    small API route, e.g. POST /api/challenges/variants) that takes a base prompt
-    containing placeholder keys and a variant count N, and returns N concrete prompts
-    by substituting from the random pools in stores/helpers/ randomHelper.ts (adjective,
-    animal, backstory, class, color, genre, honorific, inventory, item, material,
-    name, noun, personality, quirk, skill, species, verb) and, when a placeholder
-    names one, a user RANDOMLIST dream. Each returned variant includes the key→value
-    map so the caller can store it as randomSelections on the submission (t-002) —
-    variants must be auditable and reproducible, not mystery rolls. The conductor
-    matchup runner (t-013) consumes this to enter one contender N times with variantKey
-    "random-1"..."random-N".
-
-    '
+  note: "Support \"same generator, different prompts\" matchups where the difference is randomized variables.\
+    \ In silasfelinus/kind_robots, add a server util (and a small API route, e.g. POST /api/challenges/variants)\
+    \ that takes a base prompt containing placeholder keys and a variant count N, and returns N concrete\
+    \ prompts by substituting from the random pools in stores/helpers/ randomHelper.ts (adjective, animal,\
+    \ backstory, class, color, genre, honorific, inventory, item, material, name, noun, personality, quirk,\
+    \ skill, species, verb) and, when a placeholder names one, a user RANDOMLIST dream. Each returned\
+    \ variant includes the key\u2192value map so the caller can store it as randomSelections on the submission\
+    \ (t-002) \u2014 variants must be auditable and reproducible, not mystery rolls. The conductor matchup\
+    \ runner (t-013) consumes this to enter one contender N times with variantKey \"random-1\"...\"random-N\"\
+    .\n"
 - id: t-015
   milestone: m5
   title: 'Faceted leaderboards: rank by model, generator, and prompt strategy'
@@ -406,16 +358,14 @@ tasks:
   owner: null
   passes: 0
   stakes: reversible
-  note: "Extend the t-007 leaderboard (page + API) with facets beyond per-contender:\n\
-    \  - per-generator: SD vs Comfy vs OpenAI images across all ART challenges\n \
-    \   (group by Contender.generator)\n  - per-model: Fable vs Opus vs GPT (group\
-    \ by Contender.model / provider)\n  - per-kind: AGENT_STACK vs LLM_MODEL vs ART_GENERATOR\
-    \ divisions\n  - per-variant within a challenge: on /challenges/[slug], when one\n\
-    \    contender has multiple variantKeys, show which prompt variant won and\n \
-    \   surface its promptUsed / randomSelections so the comparison teaches\n    something\n\
-    Facet data comes from the t-002 Contender fields; grouping is a query-level change,\
-    \ not new schema. Keep the championship presentation — a generator facet is just\
-    \ a different weight class.\n"
+  note: "Extend the t-007 leaderboard (page + API) with facets beyond per-contender:\n  - per-generator:\
+    \ SD vs Comfy vs OpenAI images across all ART challenges\n    (group by Contender.generator)\n  -\
+    \ per-model: Fable vs Opus vs GPT (group by Contender.model / provider)\n  - per-kind: AGENT_STACK\
+    \ vs LLM_MODEL vs ART_GENERATOR divisions\n  - per-variant within a challenge: on /challenges/[slug],\
+    \ when one\n    contender has multiple variantKeys, show which prompt variant won and\n    surface\
+    \ its promptUsed / randomSelections so the comparison teaches\n    something\nFacet data comes from\
+    \ the t-002 Contender fields; grouping is a query-level change, not new schema. Keep the championship\
+    \ presentation \u2014 a generator facet is just a different weight class.\n"
 - id: t-016
   milestone: m5
   title: Write docs/comparison-axes.md summarizing the five M5 comparison axes
@@ -424,51 +374,41 @@ tasks:
   passes: 0
   stakes: reversible
   updated: 2026-07-07
-  note: 'DONE (2026-07-07, Silas-directed session): wrote projects/challenge-center/docs/comparison-axes.md
-    as the canonical M5 reference — axis list and Contender-design paragraphs quoted
-    verbatim from notes_from_silas, plus an axis->field->task mapping table (t-002
-    schema, t-012 roster, t-013 runner, t-014 variants, t-015 leaderboards) and the
-    design guardrails. Original task intent below. Kaizen from the Reviewer''s M5-expansion
-    merge (conductor PR #188): the M5 tasks each restate pieces of the comparison-axes
-    design inline (provider vs provider, model vs model, generator vs generator, prompt
-    vs prompt via random substitution, settings vs settings) and the contender split
-    (Contender = leaderboard identity, ChallengeSubmission = the "how": variantKey/promptUsed/
-    settings/randomSelections). Write projects/challenge-center/docs/comparison-axes.md
-    as the one canonical reference doc — pull the axis list and Contender-design paragraphs
-    from notes_from_silas verbatim, then a short table mapping each axis to the task(s)
-    that implement it (t-002 schema, t-012 roster, t-013 runner, t-014 variants, t-015
-    leaderboards). Future task notes and PR reviews should check against this doc
-    instead of re-deriving the design from scattered task notes.
-
-    '
+  note: "DONE (2026-07-07, Silas-directed session): wrote projects/challenge-center/docs/comparison-axes.md\
+    \ as the canonical M5 reference \u2014 axis list and Contender-design paragraphs quoted verbatim from\
+    \ notes_from_silas, plus an axis->field->task mapping table (t-002 schema, t-012 roster, t-013 runner,\
+    \ t-014 variants, t-015 leaderboards) and the design guardrails. Original task intent below. Kaizen\
+    \ from the Reviewer's M5-expansion merge (conductor PR #188): the M5 tasks each restate pieces of\
+    \ the comparison-axes design inline (provider vs provider, model vs model, generator vs generator,\
+    \ prompt vs prompt via random substitution, settings vs settings) and the contender split (Contender\
+    \ = leaderboard identity, ChallengeSubmission = the \"how\": variantKey/promptUsed/ settings/randomSelections).\
+    \ Write projects/challenge-center/docs/comparison-axes.md as the one canonical reference doc \u2014\
+    \ pull the axis list and Contender-design paragraphs from notes_from_silas verbatim, then a short\
+    \ table mapping each axis to the task(s) that implement it (t-002 schema, t-012 roster, t-013 runner,\
+    \ t-014 variants, t-015 leaderboards). Future task notes and PR reviews should check against this\
+    \ doc instead of re-deriving the design from scattered task notes.\n"
 - id: t-017
   milestone: m1
-  title: Delete superseded worker/* branches right after a rescue PR merges the same
-    task
+  title: Delete superseded worker/* branches right after a rescue PR merges the same task
   status: done
   owner: worker
   passes: 0
   stakes: reversible
   updated: 2026-07-07
-  note: 'DONE (2026-07-07, Silas-directed session): added a ''Rescue / salvage PRs
-    — delete the superseded branch in the same session'' subsection to AGENTS.md (after
-    the cross-repo guidance) instructing agents to delete a superseded worker/* or
-    claude/* branch in the same session the rescue PR merges, and to treat a rescue
-    PR body''s ''can be deleted'' line as an instruction to delete now. Original task
-    intent below. Kaizen from the Reviewer''s t-002 resolution (2026-07-07): kind_robots
-    PR #116 (a Silas-directed session branch) rescued t-002''s stranded migration+schema
-    work onto current main and explicitly said in its own PR body "the old worker/challenge-center-t-002
-    branch can be deleted" once it landed. Instead, that exact stale branch was opened
-    as PR #118 and merged separately about ten minutes later — harmless here only
-    because its content was byte-identical to what #116 had already landed, so it
-    merged as a no-op, but a stale worker branch that has DIVERGED from a rescue merge
-    could just as easily reintroduce already-superseded or conflicting content. Add
-    a habit/checklist step (in AGENTS.md''s cross-repo or rescue-PR guidance): whenever
-    a rescue/salvage PR supersedes a stranded worker/* or claude/* branch, delete
-    that branch in the same session the rescue PR merges, rather than leaving it for
-    a later PR to accidentally reopen and merge.
-
-    '
+  note: "DONE (2026-07-07, Silas-directed session): added a 'Rescue / salvage PRs \u2014 delete the superseded\
+    \ branch in the same session' subsection to AGENTS.md (after the cross-repo guidance) instructing\
+    \ agents to delete a superseded worker/* or claude/* branch in the same session the rescue PR merges,\
+    \ and to treat a rescue PR body's 'can be deleted' line as an instruction to delete now. Original\
+    \ task intent below. Kaizen from the Reviewer's t-002 resolution (2026-07-07): kind_robots PR #116\
+    \ (a Silas-directed session branch) rescued t-002's stranded migration+schema work onto current main\
+    \ and explicitly said in its own PR body \"the old worker/challenge-center-t-002 branch can be deleted\"\
+    \ once it landed. Instead, that exact stale branch was opened as PR #118 and merged separately about\
+    \ ten minutes later \u2014 harmless here only because its content was byte-identical to what #116\
+    \ had already landed, so it merged as a no-op, but a stale worker branch that has DIVERGED from a\
+    \ rescue merge could just as easily reintroduce already-superseded or conflicting content. Add a habit/checklist\
+    \ step (in AGENTS.md's cross-repo or rescue-PR guidance): whenever a rescue/salvage PR supersedes\
+    \ a stranded worker/* or claude/* branch, delete that branch in the same session the rescue PR merges,\
+    \ rather than leaving it for a later PR to accidentally reopen and merge.\n"
 - id: t-018
   milestone: m2
   title: Add a CI check that runs seed scripts in validation-only mode
@@ -476,12 +416,11 @@ tasks:
   owner: null
   passes: 0
   stakes: reversible
-  note: 'Kaizen from t-004 (Worker''s suggestion, kind_robots PR #199): add a CI job/step
-    that runs scripts/seed_challenges.ts (and future seed scripts following the same
-    dry-run-by-default pattern, e.g. utils/scripts/seedDaVinciEndings.ts) without
-    --write and without a database, so malformed seed catalogs (bad enum values, missing
-    required fields, duplicate slugs, wrong type coverage) fail CI before merge instead
-    of only being caught by manual review.
+  note: 'Kaizen from t-004 (Worker''s suggestion, kind_robots PR #199): add a CI job/step that runs scripts/seed_challenges.ts
+    (and future seed scripts following the same dry-run-by-default pattern, e.g. utils/scripts/seedDaVinciEndings.ts)
+    without --write and without a database, so malformed seed catalogs (bad enum values, missing required
+    fields, duplicate slugs, wrong type coverage) fail CI before merge instead of only being caught by
+    manual review.
 
     '
   updated: '2026-07-12T20:40:00Z'
@@ -492,4 +431,10 @@ tasks:
   owner: null
   passes: 0
   stakes: reversible
-  note: "UI polish + upgrade for the challenge-center front end now that the scaffold page is live at /challenges. Steps: (1) generate final dashboard-tab art at public/images/dashboard-tabs/wonder/challenges.webp and tutorial art at public/images/tutorials/wonder/challenges.webp; (2) add a matching section for 'challenges' under tutorialChannels.wonder.sections in kind_robots/stores/helpers/tutorialCards.ts; (3) verify the PROJECT Dream liveUrl points at /challenges (admin can run the Conductor 'Placements' button to backfill channelKey/tabKey/liveUrl); (4) evolve the placeholder scaffold page into the full interactive experience for this project."
+  note: 'UI polish + upgrade for the challenge-center front end now that the scaffold page is live at
+    /challenges. Steps: (1) generate final dashboard-tab art at public/images/dashboard-tabs/wonder/challenges.webp
+    and tutorial art at public/images/tutorials/wonder/challenges.webp; (2) add a matching section for
+    ''challenges'' under tutorialChannels.wonder.sections in kind_robots/stores/helpers/tutorialCards.ts;
+    (3) verify the PROJECT Dream liveUrl points at /challenges (admin can run the Conductor ''Placements''
+    button to backfill channelKey/tabKey/liveUrl); (4) evolve the placeholder scaffold page into the full
+    interactive experience for this project.'
