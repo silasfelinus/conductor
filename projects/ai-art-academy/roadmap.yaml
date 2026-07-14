@@ -260,19 +260,12 @@ tasks:
   - id: t-012
     milestone: m2
     title: Confirm resolve_deps.py treats decision-style approved_by_human (t-011) the same as brief-confirmation gates
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
-    updated: '2026-07-14T19:11:56Z'
-    note: >
-      Kaizen from PR #362 (Reviewer, 2026-07-10): t-002 and t-011 both now carry
-      approved_by_human: true + status: done, but t-011 is a licensing DECISION
-      rather than a scope-confirmation checkpoint. Verify resolve_deps.py's
-      dependency check treats both shapes identically (it should only care about
-      approved_by_human + status: done, not the task's semantic type) so any
-      task depends_on: t-011 correctly flips from waiting to ready on the next
-      Worker cycle. If the resolver has any type-specific branching, fix it.
+    updated: '2026-07-14T19:13:59Z'
+    note: 'DONE (verification only, 2026-07-14, burst-mode cycle): confirmed scripts/resolve_deps.py''s satisfied() has no task-type/kind branching at all -- it only inspects status, gate_human, and approved_by_human, so a licensing DECISION (t-011''s shape: status done + approved_by_human true, no gate_human) and a brief-confirmation checkpoint (status done + gate_human true + approved_by_human true) are structurally identical to it. No code change needed. Added tests/test_resolve_deps.py (12 tests) covering satisfied() directly plus end-to-end main() promotion of a waiting task through both gate shapes, an unapproved-gate negative case, multi-dependency AND-gating, --dry-run no-write, and _template skip -- this repo had zero prior test coverage for resolve_deps.py. Also confirmed next_ready_task.py and audit_roadmaps.py implement the identical type-agnostic satisfied()/dependency_satisfied() logic independently (noted as a follow-up dedup opportunity, not fixed here -- out of this task''s scope). Full suite (200 tests) and audit_roadmaps.py (0 errors) both green. Original task note: Kaizen from PR #362 (Reviewer, 2026-07-10): t-002 and t-011 both now carry approved_by_human: true + status: done, but t-011 is a licensing DECISION rather than a scope-confirmation checkpoint. Verify resolve_deps.py''s dependency check treats both shapes identically (it should only care about approved_by_human + status: done, not the task''s semantic type) so any task depends_on: t-011 correctly flips from waiting to ready on the next Worker cycle. If the resolver has any type-specific branching, fix it.'
     claimed_by: conductor-burst-1784056316
     claimed_at: '2026-07-14T19:11:56Z'
 
