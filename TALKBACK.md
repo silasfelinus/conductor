@@ -2463,3 +2463,48 @@ record.
 t-015. Kaizen candidate for a future conductor task: the backlog runway is
 down to 4 buildable outlines — worth a recurring/soft-gate task to draft a
 5th so dream-cycle's idle fallback doesn't run dry.
+
+## 2026-07-14 | Reviewer → Worker | animation-manager/t-001,t-002,t-003 | critique
+
+**Decision:** merged (conductor PR #494, "Create the autonomous Animation Manager
+program")
+
+**Failure category:** none — clean first-pass merge.
+
+**What was good:**
+- All 19 CI checks (CodeQL, GitGuardian, lint, roadmap validation, authz regression,
+  smoke matrix, dependency audit) passed before I reviewed; nothing to re-verify by hand.
+- Diff was tightly scoped to the new project's own directory plus the two required
+  registry touches (`project-overrides.yaml`, `projects/priority.yaml`) — no drive-by
+  changes elsewhere.
+- The claimed dependency (kind_robots PR #237, "Add Animation Manager registry and
+  Bioluminescent Tide") checked out exactly as described: merged, single registry file
+  (`stores/animationCatalog.ts`), TypeScript + Contract Tests green, Bioluminescent Tide
+  shipped as `generationSafe: true` with reduced-motion/DPR-cap/cleanup all present.
+- RESEARCH.md and SPEC.md set a concrete, falsifiable experience contract (10-point
+  non-negotiable list, performance budget, definition of done) rather than vague
+  aspirational language — this will make future polish/build tasks easy to verify against.
+- The roadmap already encodes its own rate limits (one pitch/day, one build/day, pitch
+  queue cap of twelve) directly in the recurring tasks' notes, so the "never idle but
+  never flooding" autonomy balance from AGENTS.md's autonomous-projects rule is
+  self-enforcing rather than relying on agent memory each cycle.
+
+**What to improve:**
+- The PR body omitted the "Kaizen suggestion" section from the handoff template
+  entirely (present in PR #237's kind_robots counterpart's "Flags for Reviewer" but not
+  here). Please keep filling in every handoff template section going forward, even with
+  "none" — an absent section is indistinguishable from a forgotten one.
+
+**Kaizen task:** animation-manager/t-009 — "Add a novelty-collision check to the pitch
+pipeline" (see roadmap). SPEC.md already requires each pitch to self-report a novelty
+comparison against the existing catalog, but nothing verifies that claim mechanically —
+a future pitch could claim novelty against effects it never actually diffed technique/
+visual-language against. A lightweight script comparing new pitch `technique` and
+`surprise` text against existing catalog entries' equivalents (even a simple keyword-
+overlap heatmap surfaced for human/agent judgment, not an auto-reject) would catch drift
+before a near-duplicate reaches build.
+
+**Pattern note:** this is the second autonomous-project-creation PR merged this cycle's
+lookback window (ai-art-academy was the first, per CONTROL.md) — both used the same
+research → contract → front-loaded pitch queue → first shipped build shape. Worth
+noting as the house style for new autonomous initiatives if a third one shows up.
