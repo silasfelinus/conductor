@@ -1,9 +1,9 @@
-updated: "2026-07-13T23:02:00-07:00"
+updated: "2026-07-13T23:03:00-07:00"
 
 pitches:
   - id: bioluminescent-tide
     title: Bioluminescent Tide
-    status: candidate
+    status: shipped
     priority: 1
     surprise: >
       A transparent midnight current carries small glowing lantern organisms across the desktop;
@@ -25,9 +25,13 @@ pitches:
       - no resource leaks across repeated mounts
     builds:
       - version: 1
-        status: review
+        status: shipped
         component: components/screenfx/bioluminescent-tide.vue
         pull_request: silasfelinus/kind_robots#237
+        commit: afb88af80c2ae3816c6698830e13169e1b805ebf
+        verification:
+          - TypeScript Type Check
+          - Contract Tests
 
   - id: paper-lantern-weather
     title: Paper Lantern Weather
