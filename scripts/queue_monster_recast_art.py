@@ -26,12 +26,18 @@ TARGET_REPO = "silasfelinus/conductor"
 PROJECT = "coloring-book"
 SIZE = "2048x2732"
 
-HOUSE_STYLE = (
-    "Premium full-color graphic horror illustration for Monster Recast, portrait 3:4 composition, "
-    "thick confident black outlines, extremely detailed but readable shapes, flat bounded color fills, "
-    "hard-edged secondary color shapes instead of gradients, dramatic cinematic staging, strong silhouette, "
-    "serious theatrical camp, original character design, no readable text, no logo, no watermark, "
-    "one scene only, one image only, no collage, no contact sheet, no comic panels."
+# Medium/style block. Applied as a SUFFIX (subject first, style after) so Flux
+# weights the distinctive character/scene ahead of the house look. Front-loading
+# this block was collapsing non-cosmic concepts into generic posters (see
+# IMAGE-GEN-QUALITY-REVIEW.md 2a). "full-bleed, edge to edge, no border" is
+# stated positively because negatives are inert on the Flux path (cfg=1).
+STYLE_SUFFIX = (
+    "Render this as a premium full-color graphic-horror illustration for the Monster Recast "
+    "coloring book: thick confident black outlines, extremely detailed but readable shapes, "
+    "flat bounded color fills, hard-edged secondary color shapes instead of gradients, strong "
+    "readable silhouette, serious theatrical camp, original character design. One single scene, "
+    "one full-bleed image filling the whole frame edge to edge with no border, no framing panel, "
+    "no comic panels, no collage, no contact sheet, and no readable text, logo, or watermark."
 )
 
 
@@ -71,7 +77,7 @@ def character_entry(character: dict[str, Any]) -> dict[str, Any]:
         "status": "pending",
         "engine": "flux",
         "steps": 36,
-        "prompt": f"{HOUSE_STYLE} {prompt}",
+        "prompt": f"{prompt} {STYLE_SUFFIX}",
         "source_file": "projects/coloring-book/sets/monster-recast/characters.yaml",
         "source_slug": slug,
     }
@@ -94,8 +100,8 @@ def page_entry(page: dict[str, Any], by_slug: dict[str, dict[str, Any]]) -> dict
     slugs = [str(value) for value in (page.get("characters") or [])]
     context = page_character_context(slugs, by_slug)
     prompt = (
-        f"{HOUSE_STYLE} Create the full-color source illustration for the scene titled {title}. "
-        f"Scene composition: {composition} Character design context: {context}"
+        f"Full-color source illustration for the Monster Recast scene titled {title}. "
+        f"Scene composition: {composition} Character design context: {context} {STYLE_SUFFIX}"
     )
     return {
         "project": PROJECT,
@@ -133,7 +139,7 @@ def cover_entry(cover: dict[str, Any]) -> dict[str, Any]:
         "status": "pending",
         "engine": "flux",
         "steps": 40,
-        "prompt": f"{HOUSE_STYLE} {prompt}",
+        "prompt": f"{prompt} {STYLE_SUFFIX}",
         "source_file": "projects/coloring-book/sets/monster-recast/pages.yaml",
         "source_slug": slug,
     }
