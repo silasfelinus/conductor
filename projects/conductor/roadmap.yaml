@@ -855,3 +855,40 @@ tasks:
       then either add the override entry (if kept separate) or mark
       project-overrides.yaml status: retired + close out the roadmap (if
       superseded).
+
+  - id: t-040
+    milestone: m2
+    title: Burst-mode rotation has no claim step, so concurrent hourly triggers can pick the same project/task
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: "2026-07-14T14:30:00Z"
+    note: >
+      Found directly, not just inferred: this session independently picked
+      animation-manager/t-008 via priority.yaml rotation, fully implemented
+      utils/scripts/verifyAnimationCatalog.ts + the browser smoke matrix doc
+      in kind_robots, and only discovered while pushing that a separate
+      session (Claude-Session 01M8yct9rGwRKfjdigMSk47W) had picked the exact
+      same project and task, shipped kind_robots PR #251, and closed out
+      conductor PR #511 minutes earlier -- both sessions' git pushes hit the
+      HTTP 413/502 errors documented in that PR's TALKBACK entry around the
+      same window, consistent with two burst-mode cycles racing on the same
+      stale base ref. No data was lost (this session's redundant commit
+      never reached origin -- caught via `git ls-remote` before retrying, and
+      cleanly reset onto the real merged main once found) but the duplicated
+      implementation work itself was pure waste, and a less careful session
+      could have force-pushed over the real merge or opened a conflicting PR.
+      Root cause: the rotation logic in priority.yaml/project-overrides.yaml
+      has no "someone is already working this slot" signal -- it only reads
+      `updated` timestamps and `status`, which lag behind an in-flight
+      session by definition. Consider a lightweight claim marker (e.g. a
+      short-TTL `claimed_at`/`claimed_by` stamp on the task, or a
+      `task-events/` lock file checked before starting real work and cleared
+      on close) that a rotation-picking session writes before diving in and
+      checks before picking a project, so two concurrent hourly triggers fail
+      fast into "already claimed, rotate to next" instead of duplicating
+      effort. Scoping this as its own task rather than folding a fix into
+      whatever session picks it up next, since the right mechanism (file
+      lock vs. roadmap field vs. TALKBACK-scan heuristic) is a design choice,
+      not a one-line fix.

@@ -2985,3 +2985,88 @@ audit_roadmaps.py` still shows only the two pre-existing, already-deferred findi
 
 **Kaizen task:** deferred — `t-010` above already captures this cycle's own findable
 follow-up; no additional systemic gap surfaced beyond what's already tracked.
+
+## 2026-07-14 | Reviewer → Silas | ecosystem-map/t-001, t-003 | burst-mode pattern + rotation-collision finding
+
+**Decision:** done (t-001, t-003). No PR needed — self-contained conductor-repo docs, no
+cross-repo code change.
+
+**Failure category:** null (t-001/t-003 themselves were clean), but this cycle surfaced a
+real coordination gap worth its own task (`conductor/t-040`).
+
+**What happened, in order:**
+
+1. Rotation picked `animation-manager` (next after `model-builder` in `priority.yaml`) and
+   this session independently implemented `t-008` end-to-end in `kind_robots`
+   (`utils/scripts/verifyAnimationCatalog.ts`, a browser smoke matrix doc, and a rename fix
+   for `fireworks.effect.vue`) — a real, working solution, verified with `npm run test`
+   (clean vue-tsc), `npx eslint` (clean), and the new script passing against the live
+   catalog.
+2. `git push` to the `kind_robots` branch failed repeatedly with alternating HTTP 502/413
+   from GitHub, even though the actual pack to send was ~16KB (confirmed by hand-building
+   it with `git pack-objects`) — not a real payload-size problem.
+3. Before retrying further, ran `git ls-remote origin claude/upbeat-pascal-xrmf5u` to check
+   whether anything had partially landed — it hadn't (empty result), so nothing needed
+   cleanup. Then `git fetch origin main` to get a fresh base before retrying, and found
+   `origin/main` had already moved to a commit titled "Animation Manager: catalog
+   verification script + browser smoke matrix (#251)" — a **different session**
+   (`Claude-Session 01M8yct9rGwRKfjdigMSk47W`) had picked the identical project and task,
+   shipped an equivalent (in places more thorough — it also caught
+   `narratorAnimationAliases` and the `pickRandomEffect` fallback literal, and correctly
+   modeled Nuxt's dot-as-separator filename resolution instead of renaming the file) and
+   already merged both the `kind_robots` PR (#251) and the conductor roadmap-closing PR
+   (#511, `t-008` → done, `t-010` filed as a follow-up).
+4. Reset the local `kind_robots` branch to the real `origin/main` (`git reset --hard`) and
+   confirmed via `git ls-remote` that the redundant commit never reached GitHub — no
+   cleanup needed, no risk of a duplicate/conflicting PR.
+5. Rebased this session's `conductor` branch onto the now-current `main` and continued the
+   burst-mode rotation at the next project, `ecosystem-map`, rather than re-doing
+   `animation-manager` work.
+
+**What was good:**
+- Checked `git ls-remote` before assuming a failed push meant nothing happened, and before
+  retrying further — the safe sequence when a push errors out ambiguously is "did anything
+  land?" before "try again," especially when 502s can sometimes mean the server accepted
+  the ref update before returning an error.
+- Did not force-push or otherwise try to make the redundant branch win; once the duplicate
+  was confirmed merged upstream, discarded the local redundant commit and moved on rather
+  than trying to reconcile two equally-valid implementations.
+- Filed `conductor/t-040` (below) instead of treating the collision as a one-off — it's a
+  systemic gap (no claim signal before starting real work), not specific to
+  `animation-manager`.
+- For `ecosystem-map`, found `t-001`'s deliverable (`DESIGN-BRIEF.md`) already existed in
+  full — roadmap said `ready`, reality said `done`. Rather than re-writing an
+  already-complete document, verified it actually covers the task's full scope and flipped
+  status only.
+- Built `t-003`'s asset coverage matrix from filesystem-verifiable sources only
+  (`projects/images/`, kind_robots' `public/images/artcollections/`,
+  `projects/art-prompts.yaml`'s structured `images:` list) and explicitly declined to guess
+  at DB-only fields (project Dreams, `liveUrl`) or bot images (routed to `t-004`), mirroring
+  `FRONTEND-SURFACE-MAP.md`'s existing precedent for the same limitation rather than
+  inventing a new convention.
+
+**What to improve:**
+- `conductor/t-040` names the actual fix needed: some lightweight claim signal (roadmap
+  field, lock file, or TALKBACK-scan heuristic) written before a rotation-picking session
+  starts real work, checked by the next session before it picks the same slot. Until that
+  exists, this exact collision can recur on any project/task pair two concurrent hourly
+  triggers reach at the same time.
+
+**Detail:**
+- `projects/ecosystem-map/roadmap.yaml`: `t-001` → `status: done` (note points at
+  `DESIGN-BRIEF.md`); `t-003` → `status: done` (note points at the new
+  `ASSET-COVERAGE-MATRIX.md`, summarizes the gaps found).
+- `projects/ecosystem-map/ASSET-COVERAGE-MATRIX.md`: new — icon/card/hero coverage,
+  inspiration-image counts, and mock-screenshot classification for all 40 projects; gap
+  summary (6 active projects with no identity images and nothing queued; 7 projects already
+  queued pending only a generation pass; 23 of 34 non-retired projects with zero inspiration
+  images).
+- `projects/conductor/roadmap.yaml`: added `t-040` (rotation-collision finding, ready,
+  no owner — needs a design decision on the claim mechanism, not a one-line fix).
+- `LEARNING.yaml`: two new records (`ecosystem-map/t-001`, `ecosystem-map/t-003`).
+- `python3 -m yaml.safe_load` on all three edited roadmap/ledger files — parses clean.
+  `scripts/audit_roadmaps.py` — same 1 error / 1 warning as before (both already deferred
+  to `conductor/t-038`, `t-039`), no new findings. `STATUS.md` and `LEARNING-REPORT.md`
+  rebuilt.
+
+**Kaizen task:** `conductor/t-040` (above) — filed directly from this cycle's own finding.
