@@ -793,3 +793,65 @@ tasks:
       Soft gate: sync_projects.py's retry improvement (PR #503) is still a net
       win for genuine transient blips even though this specific case needs
       backend investigation -- other conductor work is not blocked by this.
+  - id: t-038
+    milestone: m2
+    title: Reconcile CONTROL.md's stated priority band with priority.yaml's actual order
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: "2026-07-14T13:00:00Z"
+    note: >
+      Found by scripts/audit_roadmaps.py (CONTROL_PRIORITY_DRIFT, error severity):
+      CONTROL.md's "Priority order this week" line lists challenge-center →
+      ai-art-academy → coloring-book → humboldt-scoop → humboldt-scoop-cms →
+      digital-storefront → packmaker → mermaids-of-venice → kind-robots →
+      global-ui, but projects/priority.yaml's matching prefix inserts
+      kindrobots-unraid between kind-robots and global-ui. Checked git history
+      (git log -p --follow on both files): this drift is not a recent edit --
+      priority.yaml has carried kindrobots-unraid in that slot since the file
+      was created, and CONTROL.md's band text has never listed it, so this
+      looks like the CONTROL.md prose simply never got updated to mirror
+      priority.yaml rather than a real prioritization disagreement. Not
+      resolving unilaterally since priority band ordering is Silas's call
+      (CONTROL.md: "the one file Silas edits to steer everything"). Two
+      textual-only fixes to choose between: (a) add kindrobots-unraid to
+      CONTROL.md's band text to match current priority.yaml (if the existing
+      order is intended), or (b) move kindrobots-unraid out of priority.yaml's
+      top band to match CONTROL.md's stated intent (if it should rank lower).
+      Either is a one-line, reversible, non-code edit -- no gate_human needed,
+      just a judgment call on which document reflects true intent. Re-run
+      `python scripts/audit_roadmaps.py` after to confirm CONTROL_PRIORITY_DRIFT
+      clears.
+  - id: t-039
+    milestone: m2
+    title: Decide whether to retire animation-studio now that animation-manager supersedes it
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: "2026-07-14T13:00:00Z"
+    note: >
+      Found while triaging scripts/audit_roadmaps.py's ROADMAP_MISSING_OVERRIDE
+      warning for animation-studio (it has no projects/project-overrides.yaml
+      entry, so it reads as override_status: missing rather than active).
+      Investigation: animation-manager was created by kind_robots-adjacent PR
+      #494 ("Create the autonomous Animation Manager program") and its goal
+      text and t-001/t-002 (both done) closely mirror animation-studio's
+      original t-001 (research)/t-002 (pitch queue), still sitting at ready.
+      animation-studio/t-003 ("Ship Gravity Garden") was genuinely distinct
+      completed work -- verified kind_robots PR #238 merged 2026-07-14T07:40Z
+      via pull_request_read and flipped it ready->done directly this cycle
+      (LEARNING.yaml entry logged) since that was unambiguous. What's NOT
+      resolved: whether animation-studio's remaining tasks (t-001 ready, t-002
+      ready, t-004 ready, t-005-008 waiting) are stale duplicates that should
+      be formally retired (status: retired in project-overrides.yaml, folded
+      into animation-manager's roadmap) now that animation-manager is the
+      active continuation, or whether the two are intentionally separate
+      programs. Did not add an "active" override entry as a quick fix --
+      that would let a Worker start claiming t-001/t-002/t-004 and risk
+      redoing work animation-manager already shipped. Needs a human or a
+      Worker with more project history to decide retire-vs-keep-separate,
+      then either add the override entry (if kept separate) or mark
+      project-overrides.yaml status: retired + close out the roadmap (if
+      superseded).
