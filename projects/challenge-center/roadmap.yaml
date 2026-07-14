@@ -314,11 +314,11 @@ tasks:
 - id: t-010
   milestone: m4
   title: 'Build auto-runner: dispatch active challenges to all registered agents'
-  status: claimed
+  status: done
   depends_on:
   - t-008
   - t-009
-  owner: reviewer
+  owner: null
   passes: 0
   stakes: reversible
   note: "In silasfelinus/conductor, write scripts/challenge_runner.py. Usage: python scripts/challenge_runner.py\
@@ -327,7 +327,23 @@ tasks:
     \ + any system context)\n  4. Call the conductor agent (via Claude API or existing agent invocation\
     \ pattern)\n  5. Submit the output via challenge_submit.py\n  6. Print summary: challenges attempted,\
     \ submissions created\nThis lets conductor auto-participate in challenges without manual intervention.\
-    \ Designed to run on a schedule (e.g. nightly cron via AGENTS.md todo mechanism).\n"
+    \ Designed to run on a schedule (e.g. nightly cron via AGENTS.md todo mechanism).\n\nDONE (2026-07-14,\
+    \ hourly burst-mode cycle): added scripts/challenge_runner.py. Fetches OPEN\nchallenges via GET /api/challenges?status=OPEN\
+    \ (or a single slug via --challenge),\nskips any challengeType this runner doesn't handle and any\
+    \ challenge the contender\nalready has a leaderboard entry for (GET .../leaderboard, reused from challenge_submit.py),\
+    \ generates\nan answer via the Claude Messages API (model overridable via CHALLENGE_RUNNER_MODEL,\n\
+    default claude-sonnet-5), and submits it via challenge_submit.py's submit_challenge/\nfetch_leaderboard\
+    \ helpers (imported, not duplicated). Scope decision: only TEXT and\nREASONING challengeTypes are\
+    \ handled -- their submissions are plain outputText, which\nis all challenge_submit.py's --output\
+    \ flow supports. ART needs a generated ArtImage\n(separate scripts/curate_art.py pipeline) and CHARACTER/SCENARIO\
+    \ need a KR\nCharacter/Scenario record created first (per kind_robots prisma schema.prisma Challenge/\n\
+    ChallengeSubmission models) -- both skipped with a printed reason rather than attempted;\nfollow-up\
+    \ wiring for those three types is a natural next task. --dry-run evaluates\nand reports outcomes (submitted/skipped-type/skipped-duplicate/dry-run/error)\
+    \ without\ncalling the Claude API or submitting. 21 new tests in tests/test_challenge_runner.py\n\
+    cover fetch/dedup/generation/submission/CLI paths; full suite (172 tests, up from 151)\npasses via\
+    \ python3 -m pytest (the /root/.local/bin/pytest uv-tool venv still lacks\nPyYAML per the known gap\
+    \ noted on t-039/t-041 sessions -- unrelated to this change).\nscripts/audit_roadmaps.py: 0 errors,\
+    \ 1 pre-existing warning (unchanged).\n"
   claimed_by: reviewer-burst-20260714T1810
   claimed_at: '2026-07-14T18:10:03Z'
   updated: '2026-07-14T18:10:03Z'
@@ -352,7 +368,7 @@ tasks:
 - id: t-013
   milestone: m5
   title: 'Matchup runner: dispatch one challenge across a contender matrix'
-  status: waiting
+  status: ready
   depends_on:
   - t-010
   - t-012
