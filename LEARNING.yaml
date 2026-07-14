@@ -199,3 +199,12 @@ records:
   outcome: done
   failure_category: quality
   lesson: "'Harden MariaDB connection pooling' (kind_robots 0ee601f8) dropped the pool's connectionLimit default from the mariadb driver's own 10 to 2 with no env var anywhere to override it, silently pool-starving production and cascading into ~14 failing Cypress spec files. When a config 'hardening' commit introduces a new numeric default, diff it against the library's own built-in default rather than picking an arbitrary small number — and grep the whole repo/deploy config for whether anything actually sets the new env var before assuming it's tunable in practice."
+- date: 2026-07-14
+  project: alexa-integration
+  task: t-006
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "The Worker's earlier connector-block on silasfelinus/serendipity-voice was transient to that session, not a lasting boundary — a later Claude session with direct repo write access closed t-006 with no branch-creation issue at all. When a preserved cross-repo handoff doc is picked up later, treat it as a design reference rather than a literal patch to apply: the target repo's adapter architecture (art-submit.ts's gated-submission pattern) had evolved past the doc's shape since it was written, and re-deriving the implementation against current code avoided reintroducing a stale design."

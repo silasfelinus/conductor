@@ -83,3 +83,68 @@ updated merge policy from PR #136)
 (Worker's suggestion from PR #142, adopted as-is) so a connector-driven claim/status edit touches
 only the target task's fields instead of rewriting — and re-triggering the safety filter on —
 the whole file.
+
+## 2026-07-14 04:26 | Claude → Silas | alexa-integration/t-006 | pattern
+
+**Subject:** Closed the connector-blocked t-006 chat/character adapter task directly in a Claude
+session with serendipity-voice write access — no connector issue this time.
+
+**Detail:**
+- Picked this up during a scheduled burst-mode cycle rotating across the managed repos (this
+  cycle landed on serendipity-voice). t-006 and t-008 were both `status: ready` with an identical
+  story: a prior Worker pass designed the patch but the GitHub connector blocked branch creation
+  in `silasfelinus/serendipity-voice`, so the intended code was preserved as a doc instead
+  (`docs/t-006-chat-character-adapters.md`).
+- This session had direct branch-write access to serendipity-voice, so I implemented it rather
+  than re-preserving another doc. I did not apply the preserved patch verbatim — the codebase had
+  moved on since it was written (art submission, control bridge, and identity/personalization all
+  landed in the interim). Instead I re-derived the same intent against the current architecture:
+  `chat-submit.ts` mirrors `art-submit.ts`'s gated-submission pattern (`SERENDIPITY_ENABLE_CHAT` +
+  the existing service token), and wires in through `voice-bridge.ts` the same way art does,
+  rather than reshaping `handle-voice-request.ts`'s adapter dispatch to be async.
+- Character replies use the target Bot's real `prompt` field (looked up via `GET /api/bots`) as
+  the system prompt when a match exists, falling back to a display-cased persona name otherwise —
+  so voice always answers in character even for bots not yet in the KR catalog.
+- Verified with 191 total checks (20 new) + typecheck, merged serendipity-voice PR #21 directly
+  (reversible, off-by-default, scoped — no `needs-human` gate applies), and closed the roadmap task.
+
+**Suggested action:** none required. Worth flagging for whoever next touches
+`SERENDIPITY_ENABLE_CHAT=true` in production: `/api/botcafe/chat` runs through `manaGate` and will
+spend real mana on the beta-admin account per voice chat/character request — not a bug, just a
+cost Silas should know about before flipping the flag live. t-008 (local music adapter) has the
+identical connector-block story and is a good next pick for a future direct-access session.
+
+## 2026-07-14 04:40 | Claude → Silas | conductor | security-flag
+
+**Subject:** `git push` to `silasfelinus/conductor` fails with HTTP 413 from the local git proxy
+regardless of diff size — the repo's ~525MB pack exceeds a proxy body-size limit, so every native
+`git push` on this session's conductor branch failed and had to be routed through the GitHub API
+instead.
+
+**Detail:**
+- Confirmed with a 3-file, ~90-line diff: `git push` (with and without larger `http.postBuffer`)
+  consistently returned `RPC failed; HTTP 413`, while `git fetch`/`git pull` against the same
+  remote worked fine. `git count-objects -v` reports `size-pack: 533477` (KiB, ~521MiB) — the
+  proxy at `127.0.0.1:41729` appears to require the whole pack (or a large chunk of it) per push
+  rather than negotiating a small delta, and something in that path is over a body-size ceiling.
+- The session's local branch `claude/fervent-faraday-8f7217` had ~9 commits (STATUS.md refreshes,
+  roadmap/TALKBACK updates back to `a56888b`) that were made locally earlier in this session but
+  never actually reached GitHub — `list_branches`/`get_commit` via the GitHub API confirmed the
+  branch didn't exist upstream at all before this entry. Those local-only commits are still sitting
+  in this container's `.git` and will be lost when the session's disk is reclaimed unless someone
+  recovers them before then.
+- Worked around it for this task by using `push_files` (GitHub API) to recreate just this task's
+  change (roadmap.yaml + this TALKBACK entry + LEARNING.yaml) as fresh commits on
+  `claude/fervent-faraday-8f7217`, based directly off current `origin/main`. This does NOT recover
+  the other stranded commits' content — only this session's own change landed.
+
+**Suggested action:** FOR SILAS — this looks systemic, not one-off: any session whose git push
+exceeds the proxy's body-size limit will silently fail to land its work via `git push`, and unless
+an agent notices and falls back to the GitHub API (as done here), that work is quietly lost when
+the container recycles. Two independent fixes worth considering: (1) reduce the conductor repo's
+pack size — the project image/art binaries are the likely bulk; consider Git LFS or storing
+generated art outside the git history, and/or `git gc --aggressive` + history cleanup for already-
+bloated blobs; (2) raise or identify the proxy's body-size limit for git push specifically. Until
+either lands, agents in this environment should verify a push actually reached the remote (e.g.
+`get_commit` on the pushed SHA) rather than trusting local `git push` success, and fall back to
+`push_files`/`create_or_update_file` for small changes when native push 413s.
