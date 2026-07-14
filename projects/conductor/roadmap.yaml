@@ -895,11 +895,11 @@ tasks:
   - id: t-041
     milestone: m2
     title: Document the "create branch via API before first git push" step for sessions whose designated branch doesn't exist on the remote yet
-    status: ready
-    owner: null
+    status: claimed
+    owner: reviewer
     passes: 0
     stakes: reversible
-    updated: '2026-07-14T17:05:00Z'
+    updated: '2026-07-14T17:48:54Z'
     note: >
       Kaizen from t-038 (PR #515, merged 2026-07-14). This session's designated
       branch (claude/great-goldberg-4srsd6) had never had a PR opened from it,
@@ -923,3 +923,5 @@ tasks:
       the GitHub API/MCP `create_branch` from main first, then push normally")
       so the next session that hits this doesn't have to re-diagnose it from
       a raw curl trace.
+    claimed_by: reviewer-hourly-1784051334
+    claimed_at: '2026-07-14T17:48:54Z'
