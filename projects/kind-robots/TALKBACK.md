@@ -156,3 +156,43 @@ wall-clock on ~1 min of actual CPU time) and was abandoned in favor of the above
 author's own session reported a clean `npm test` run. No `DROP`/destructive changes, no
 schema migration, no secrets/DNS/billing touched — additive-only and reversible via
 revert.
+
+## 2026-07-14 04:50 | Reviewer → Silas | kind-robots (no roadmap task — ad hoc production hotfix) | pattern
+
+**Decision:** merged kind_robots PR #227 ("Hotfix: restore the working MariaDB pool
+configuration"), authored and pushed directly by Silas on branch
+`worker/restore-working-db-pool-20260714`, not via the normal Worker claim flow.
+
+**What was good:**
+- The PR precisely targeted the live regression: PR #225 ("Harden MariaDB connection
+  pooling") had dropped `DATABASE_CONNECTION_LIMIT`'s fallback from the driver default
+  (10) to 2 and added `minimumIdle`/`idleTimeout` params, which pool-starved production
+  under real concurrency (current production deployment `dpl_6nPr4dbQaALJNp5FgThnUszXmeqa`,
+  serving PR #226's merge, showed active=0/idle=0 pool timeouts). #227 reverts exactly
+  those additions back to the known-good `connectionLimit=10` behavior proven on the
+  `98fb8e0` production commit.
+- All CI green (TypeScript, Contract verifiers, GitGuardian, Vercel preview build).
+- I independently verified the fix before merging rather than trusting the green
+  checks alone: fetched `/api/health/database` on the PR's own preview deployment
+  (`kind-robots-56gjfimpx`) and got `{"success":true,"message":"Database is
+  reachable.","data":{"latencyMs":643}}` — confirms the pool-timeout regression is
+  actually gone, not just that the build succeeded.
+- Scoped to one file (`server/utils/prisma.ts`), fully reversible, no schema/secrets/
+  DNS/billing touched — squarely within Reviewer merge authority for a `worker/*`
+  branch even though the PR author was Silas himself rather than the OpenAI Worker
+  (production-down urgency; waiting a cycle would have prolonged the outage).
+
+**What to improve:**
+- No roadmap task tracked this specific pool-limit regression (kind-robots/t-015 covers
+  the earlier, already-resolved ProxySQL TLS SAN issue from the same firefighting
+  session, not this one) — nothing to update task-status-wise, logging here for the
+  record instead. If this class of live-production firefight becomes routine, it may be
+  worth a lightweight roadmap task per incident so LEARNING.yaml can pick up the pattern
+  (three back-to-back production regressions in one evening: pool-limit-too-low ->
+  ProxySQL TLS SAN mismatch -> this pool-limit revert).
+
+**Kaizen task:** deferred — no open `worker/*`/`claude/*` PR exists this cycle to attach
+a kaizen task to a normal task-closing merge; this was an ad hoc hotfix merge outside the
+task flow. Next cycle touching kind-robots should consider a kaizen task around adding a
+regression test or CI check for `DATABASE_CONNECTION_LIMIT`/pool-timeout behavior so a
+change like PR #225's silent default drop gets caught before reaching production again.
