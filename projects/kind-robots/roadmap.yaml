@@ -452,3 +452,39 @@ tasks:
       /api/art/queue/<job>/feedback with KR_API_TOKEN, flips entries to done);
       wired into the hourly sweep (build_conductor_summary.py, soft-failing).
       Set done when both PRs merge.
+
+  - id: t-020
+    milestone: m3
+    title: Fix two pre-existing TypeScript errors breaking main's TypeScript CI check
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: "2026-07-14T20:20:00Z"
+    note: >
+      Found during conductor Reviewer sweep (challenge-center/t-014 burst-mode
+      cycle, 2026-07-14 ~20:15 UTC): PR #256's "TypeScript" GitHub Actions check
+      (npm run test, i.e. vue-tsc --noEmit) failed, but the two files it failed
+      on were untouched by that PR. Confirmed independently in a clean worktree
+      checked out straight from origin/main (13e80b1c, no PR changes applied)
+      that `npm run test` already fails there with the exact same two errors --
+      this is a pre-existing break on main, not a regression from any single PR.
+      Errors: (1) server/api/art/image/index.get.ts:153:24 -- TS2321 "Excessive
+      stack depth comparing types 'ArtImageSelect<DefaultArgs>' and
+      'ArtImageSelect<InternalArgs & { result: {}; model: {}; query: {}; client:
+      {}; }>'" on the artImageCardSelect-style Prisma select object; (2)
+      server/api/model-builder/items/[id]/commit.post.ts:644 and :646 -- TS2345
+      "Argument ... is not assignable to parameter of type 'TransactionClient'"
+      where a `prisma.$transaction` callback's client is passed to a helper
+      expecting a narrower TransactionClient type -- looks like a Prisma-client
+      type-generation drift (DefaultArgs vs the extended InternalArgs shape)
+      rather than a real logic bug. Likely fix is a local type assertion/cast at
+      each call site, or regenerating types against a Prisma client version that
+      resolves the extension-args mismatch -- needs someone familiar with the
+      Prisma client extension setup to confirm before choosing a fix. Not
+      escalated hard since every other check (Cypress-adjacent Contract
+      verifiers, facet-alias-smoke, GitGuardian, Vercel deploy) stayed green and
+      merges aren't hard-blocked (mergeable_state stayed "unstable", not
+      blocked) -- but main's TypeScript check will read red for every PR until
+      this is fixed, which erodes the "all green" signal Workers/Reviewers rely
+      on to merge confidently.
