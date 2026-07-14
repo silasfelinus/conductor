@@ -35,3 +35,19 @@ After the report, ask Silas what he wants to work on — or proceed directly if 
 ## Session end
 
 Before ending: push any TALKBACK/roadmap log commits and make sure the session branch has a PR — log commits stranded on an unPR'd session branch never reach main and get lost.
+
+### First push of a session fails with HTTP 413
+
+If `git push -u origin <your-branch>` fails with an HTTP 413 from the git-smart-HTTP
+proxy on the *first* push of a session, and the branch has never had a PR opened from
+it, the branch likely doesn't exist on the actual GitHub remote yet — even if your local
+checkout's remote-tracking ref shows a SHA for it (that's stale/local-only knowledge).
+`GIT_TRACE_CURL` will show the proxy attempting to send a full-history pack (matching
+the whole `.git` size) instead of a small delta, apparently because a brand-new ref
+needs a full pack rather than one computed relative to objects already reachable via
+other refs (e.g. `main`).
+
+Workaround: call the GitHub MCP `create_branch` tool (`owner`/`repo`/`branch`/
+`from_branch: main`) first — this creates the ref instantly via the API with zero data
+transfer, since it just points at a commit the remote already has. Then the normal
+`git push` of your session's actual commits goes through as a small, fast delta.
