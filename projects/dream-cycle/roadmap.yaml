@@ -348,3 +348,34 @@ tasks:
       buttons (tomorrow + yesterday sections) now link here, and yesterday's
       section shows the built-records summary + attached art from built-data.
       kind_robots PR #229.
+  - id: t-014
+    milestone: m2
+    title: Harden build_dream_proposal.py against concurrent-session double-proposal races
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-14T23:51:00Z'
+    note: >
+      Found during the 2026-07-14 hourly Reviewer sweep: two concurrent sessions
+      each independently authored a daily-dream proposal for the SAME Pacific
+      date but with DIFFERENT slugs — projects/dream-cycle/backlog/
+      2026-07-14-moth-hour-mechanics.md and 2026-07-14-moth-orchard.md both carry
+      proposal_date: '2026-07-14'. Root cause: proposal_exists_for()/
+      write_proposal() in scripts/build_dream_proposal.py only check the local
+      working tree at --check/--from-json time, with no origin/main-fresh
+      recheck immediately before the write — unlike scripts/claim_task.py's
+      fetch-fresh-then-write-with-retry pattern (see root AGENTS.md "Rotation
+      collisions"). Two sessions running --check in the same window both saw
+      "no proposal yet" and both wrote one; because the slugs differ, the
+      existing slug-dedup guard (existing_slugs()) never caught it — it only
+      prevents identical-slug clashes, not two-different-slugs-same-date.
+      Fix: mirror claim_task.py's approach — before --from-json writes, fetch/
+      diff origin/main for any file with today's proposal_date and abort with a
+      clear message if one landed since --check ran, and/or have the calling
+      sweep step (build_conductor_summary.py / the CLAUDE.md startup step) git
+      pull immediately before --check and push immediately after --from-json,
+      retrying --check once on a push conflict. Both existing duplicate files
+      are harmless (well-formed, no Notes from Silas content, not yet built) —
+      leave them as extra backlog outlines, no cleanup needed. See
+      projects/dream-cycle/TALKBACK.md 2026-07-14 pattern entry for full detail.
