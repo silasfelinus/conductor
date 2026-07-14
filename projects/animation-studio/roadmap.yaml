@@ -1,0 +1,151 @@
+project: animation-studio
+kind: software
+autonomous: true
+
+goal: >
+  A repeatable animation studio that researches surprising passive screensavers, pitches
+  future effects, ships polished opening animations into Kind Robots through one canonical
+  registry, and improves old and new attempts using reaction-backed quality history.
+
+notes_from_silas: |
+  Opening desktop wallpaper animations must be enjoyable while completely passive. Optional
+  interactions are welcome when they create a delightful surprise, but no effect may require
+  clicking, dragging, typing, or cursor movement to work. Research modern screensavers and
+  creative browser animation techniques. Front-load animation pitches, then build and polish
+  effects over time. Track attempts and revisions with Reactions so quality can improve rather
+  than repeatedly starting from zero. Every accepted safe animation must appear in Screen FX,
+  animation preferences, and random opening screensavers through a single smart registration.
+
+milestones:
+  - id: m1
+    title: Research, standards, and pitch pipeline
+    weight: 20
+    status: in-progress
+  - id: m2
+    title: Canonical registry and reaction-backed attempt history
+    weight: 25
+    status: ready
+  - id: m3
+    title: First production animation shipped end-to-end
+    weight: 20
+    status: in-progress
+  - id: m4
+    title: Animation Manager and polish workflow
+    weight: 25
+    status: waiting
+  - id: m5
+    title: Recurring autonomous animation practice
+    weight: 10
+    status: waiting
+
+tasks:
+  - id: t-001
+    milestone: m1
+    title: Research modern passive screensavers and browser animation patterns
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Maintain RESEARCH.md with sources, techniques, performance notes, reduced-motion behavior,
+      passive-first interaction patterns, and ideas worth adapting rather than cloning. Include
+      Canvas 2D, CSS, SVG, WebGL/WebGPU where justified, audio-free defaults, and mobile limits.
+
+  - id: t-002
+    milestone: m1
+    title: Maintain a ranked animation pitch queue
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Add 5-10 concise pitches per research pass to pitches/. Each pitch defines the passive loop,
+      optional surprise interaction, visual novelty, implementation approach, performance risk,
+      reduced-motion fallback, and why it belongs in the opening rotation. Rank novelty, serenity,
+      surprise, reliability, and effort.
+
+  - id: t-003
+    milestone: m3
+    title: Ship Gravity Garden through the canonical animation catalog
+    status: review
+    owner: worker
+    passes: 0
+    stakes: reversible
+    note: >
+      Kind Robots draft PR #238 adds components/screenfx/gravity-garden.vue and one catalog entry.
+      Verify typecheck, lint, lifecycle cleanup, reduced-motion behavior, Screen FX selection, and
+      random startup selection. Merge only after verification.
+
+  - id: t-004
+    milestone: m2
+    title: Design reaction-backed animation attempts and revision lineage
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Define the smallest durable contract linking an animation concept, implementation attempt,
+      revision/build, screenshots or clips, provenance, performance notes, status, and Reactions.
+      Reuse the existing Reaction model/API where possible. Do not invent a parallel voting system.
+      Aggregate reactions by attempt and preserve lineage so polish work can compare versions.
+
+  - id: t-005
+    milestone: m2
+    title: Make animation registration declarative and self-validating
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on:
+      - t-003
+      - t-004
+    note: >
+      Extend the canonical animation catalog with metadata needed by startup, Screen FX, manager,
+      safety, performance, quality, and provenance. Add validation for missing components, duplicate
+      IDs, blocking effects marked startup-safe, and effects without reduced-motion behavior.
+
+  - id: t-006
+    milestone: m4
+    title: Build the Animation Manager in Kind Robots
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on:
+      - t-004
+      - t-005
+    note: >
+      Build a store-driven manager that browses concepts and attempts, previews versions, records
+      reactions, compares quality history, promotes a preferred build, retires stale attempts, and
+      creates polish tasks. Components never call API routes directly.
+
+  - id: t-007
+    milestone: m4
+    title: Audit and polish existing animation catalog
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on:
+      - t-006
+    note: >
+      Inventory every current effect, including stale preference entries such as removed Aurora.
+      Record performance, interaction blocking, startup safety, reduced-motion support, lifecycle
+      cleanup, visual quality, and reaction score. Polish the strongest candidates and retire or
+      archive weak ones without silently deleting attempt history.
+
+  - id: t-008
+    milestone: m5
+    title: Recurring research-pitch-build-polish animation cycle
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on:
+      - t-006
+      - t-007
+    note: >
+      Standing autonomous loop: research selectively, keep the ranked pitch queue healthy, choose
+      one high-value pitch or reaction-backed polish target, implement one scoped reversible change,
+      verify it, and update attempt history. Prefer polishing a promising weak build over flooding
+      the catalog with mediocre new effects. This may occupy a full Worker cycle.
