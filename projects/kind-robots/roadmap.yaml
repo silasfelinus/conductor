@@ -329,42 +329,22 @@ tasks:
 
   - id: t-015
     milestone: m3
-    title: "PRODUCTION DOWN: every Vercel deploy since ~01:44 UTC 2026-07-14 fails with a database auth error"
-    status: needs-human
-    owner: null
+    title: Restore Vercel production deployment after ProxySQL TLS certificate mismatch
+    status: done
+    owner: reviewer
     passes: 0
     stakes: outward-facing
     security_flag: true
-    updated: "2026-07-14T02:15:00Z"
+    gate_human: true
+    approved_by_human: true
+    updated: "2026-07-14T03:20:00Z"
     note: >
-      FOR SILAS: kind-robots.vercel.app has been running a stale build since
-      commit 517a06e4 ("Trust configured ProxySQL CA", last successful
-      production deploy, ~2026-07-14T01:10 UTC). Every deploy since — PR #221
-      (image-gen quality review, d340c86d) and this cycle's own CI fix (PR
-      #222, e2caf03d) — fails the SAME way during `npm run vercel-build`:
-
-        Error: P1000: Authentication failed against database server, the
-        provided database credentials for `(not available)` are not valid.
-
-      This is `prisma migrate deploy` failing at build time, not a code bug —
-      confirmed identical on two different commits' builds via Vercel's own
-      build logs (deployments dpl_BNek4F3VcV7P9qq1xKoQaEQHbJ83 and
-      dpl_GGWFZz7GLVxxQ7psrH2nHTHcsSbi, project prj_x6HB2IPpQbvqNqiYVgu3IibJ6FZf).
-      Timing lines up with "Trust configured ProxySQL CA" / the MariaDB
-      pooling changes earlier in the day — something about the DB credentials
-      or connection config Vercel's build step uses looks to have broken
-      around then, separate from the runtime connection-pool-size regression
-      already fixed in kind_robots PR #222.
-
-      TO APPROVE: I can't touch Vercel env vars/secrets or trigger a
-      redeploy — that's a hard gate per AGENTS.md. Silas needs to check the
-      Vercel project's DATABASE_URL / DB credential env var (Settings →
-      Environment Variables) against whatever changed around 2026-07-13
-      18:00-18:11 -0700, fix/restore it, and redeploy. Once a production
-      deploy goes green again, this task can close and the Cypress Tests
-      workflow (which runs against production) will confirm PR #222's
-      connection-pool fix actually works end-to-end — it never got the
-      chance to, since every build since has failed before Cypress could
-      even run.
-      What unblocks: the site itself (currently serving hours-stale code),
-      plus confirmation that the kind_robots CI pipeline is fully green again.
+      Resolved with Silas on 2026-07-13 PDT. The database credentials and base64 CA
+      were valid; the ProxySQL frontend server certificate lacked the
+      DNS:acrocatranch.com Subject Alternative Name required by Vercel's strict hostname
+      verification. Renewed the certificate with the correct SAN and triggered a clean
+      production rebuild. Vercel then established verified TLS to ProxySQL, Prisma
+      checked all 43 migrations with none pending, the final clean deployment for commit
+      d8407edc4fb29406d9ab621f19697c688b88b2da reached READY, the production homepage
+      returned HTTP 200, and /api/dreams returned HTTP 200 with live database records.
+      The temporary redeploy marker was removed, leaving main functionally unchanged.

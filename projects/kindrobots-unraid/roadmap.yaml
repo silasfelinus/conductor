@@ -51,30 +51,57 @@ tasks:
   - id: t-002
     milestone: m2
     title: Create and document the first ProxySQL Unraid template
-    status: needs-human
+    status: done
     owner: reviewer
-    updated: "2026-07-13T20:45:00Z"
+    updated: "2026-07-14T03:20:00Z"
     passes: 0
     stakes: reversible
     soft_gate: true
+    approved_by_human: true
     note: >
-      Draft template and setup guide are committed. FOR SILAS: install the template on
-      Alexandria, create proxysql.cnf with local credentials, attach it to MariaDB's
-      Docker network, and report startup logs plus whether a test read/write through
-      port 6033 succeeds. Do not expose admin port 6032 publicly.
+      Installed ProxySQL 3.0.9 on Alexandria and verified the local path from the
+      ProxySQL frontend to mariadb-kindrobots2:3306. The Unraid template and setup
+      guide document the 5544 host-port to 6033 container-port mapping, persistent
+      runtime configuration, private admin access through docker exec, and frontend TLS.
 
   - id: t-003
     milestone: m2
     title: Tune ProxySQL and switch Kind Robots database traffic
-    status: blocked
-    owner: null
+    status: done
+    owner: reviewer
+    updated: "2026-07-14T03:20:00Z"
     passes: 0
     stakes: high
     depends_on: t-002
     gate_human: true
+    approved_by_human: true
     note: >
-      Configure backend hostgroup, monitoring, application user, backend cap, and
-      observability. Switch DATABASE_URL only after direct reads and writes pass.
+      Completed the production cutover. ProxySQL uses backend hostgroup 10 with
+      mariadb-kindrobots2:3306, a 40-connection backend cap, the Kind Robots application
+      user and schema, monitoring, and verified frontend TLS. The certificate now
+      identifies acrocatranch.com as well as the local endpoints. Vercel strict hostname
+      verification passed, Prisma checked all 43 migrations with none pending, the final
+      clean production deployment reached READY, the homepage returned HTTP 200, and a
+      database-backed /api/dreams request returned HTTP 200 with live records. Kind Robots
+      retains a two-connection application pool limit per Vercel runtime instance.
+
+  - id: t-012
+    milestone: m2
+    title: Observe ProxySQL production pooling and record steady-state thresholds
+    status: needs-human
+    owner: reviewer
+    updated: "2026-07-14T03:20:00Z"
+    passes: 0
+    stakes: reversible
+    depends_on: t-003
+    soft_gate: true
+    note: >
+      FOR SILAS: after normal production traffic has accumulated, capture
+      stats_mysql_connection_pool plus frontend connection and query statistics from the
+      ProxySQL admin interface. Record ConnUsed, ConnFree, ConnOK, ConnERR, Queries,
+      latency, and failure behavior; then define alert and capacity thresholds. This is a
+      soft gate because Alexandria's ProxySQL admin interface is intentionally available
+      only through local docker exec and is not reachable by the Worker sandbox.
 
   - id: t-004
     milestone: m2
