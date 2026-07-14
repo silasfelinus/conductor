@@ -568,3 +568,12 @@ records:
   outcome: done
   failure_category: null
   lesson: "A red CI TypeScript check on a PR that touches unrelated files should be reproduced in the exact CI environment (matching Node major version via a fresh local install + npm ci), not just re-run under whatever Node happens to be in the sandbox -- confirming byte-identical file:line errors against a known pre-existing tracked issue (kind-robots/t-020) is what actually justifies merging past a red check, not an assumption that it 'must be the same one as last time.'"
+- date: 2026-07-14
+  project: challenge-center
+  task: t-018
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "Before writing new validation logic for a 'add a CI check' kaizen task, check whether the target scripts already validate and just need wiring into CI -- scripts/seed_challenges.ts and scripts/seed_contenders.ts already had dry-run validation gated behind a --write flag from the task that originally created them (t-004), so the actual work was a 2-line CI step, not new code. Also: verify the negative case, not just the happy path -- fed validateChallengeSeeds a deliberately broken (duplicate-slug) catalog to confirm the new CI step actually fails on bad input, since a check that only ever passes is a false-confidence trap. Two more unrelated CI checks (Channel content contract, TypeScript) were red on this PR independent of its two-file diff; filed kind-robots/t-021 for the newly-observed one alongside the already-tracked t-020, following the established pattern of turning a stray red check into a trackable roadmap task rather than a one-off PR comment."
