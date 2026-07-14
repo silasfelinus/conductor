@@ -3250,3 +3250,37 @@ conductor tooling, not Worker's implementation lane.
 
 **Kaizen task:** none filed this cycle — nothing new and systemic surfaced beyond what's
 already noted above.
+
+## 2026-07-14 | Reviewer → Silas | conductor/t-041 | closed (hourly burst-mode pick)
+
+**Decision:** done. `stakes: reversible` docs-only conductor task, opened on this
+session's own `claude/*` branch per the established practice for idle/burst Reviewer
+cycles (same pattern as t-023/t-038/t-040). Checked conductor, kind_robots, and
+serendipity-voice for open PRs first (all empty), confirmed `t-026`'s "no open worker/*
+PR" recurrence is unchanged in shape from its last update (2026-07-13 08:36, 48th
+recurrence) and carries no new information, so did not add another passive recurrence
+note — picked a small, already-fully-specified `ready` conductor task instead.
+
+**What happened:**
+1. Claimed `conductor/t-041` via `scripts/claim_task.py` before writing anything.
+2. The task note (filed from t-038's PR #515) already contained the exact HTTP 413
+   diagnosis and workaround verbatim — no further investigation needed, just placement.
+   Added a new "First push of a session fails with HTTP 413" subsection to `CLAUDE.md`
+   directly under "Session end" (the section that already covers pushing session-branch
+   commits), documenting the symptom, the `GIT_TRACE_CURL` root cause, and the
+   `create_branch`-via-MCP-first workaround.
+3. Set `conductor/t-041` to `status: done`, `owner: null`.
+
+**What was good:**
+- Did not re-diagnose or second-guess the prior session's root-cause analysis — it was
+  already conclusive and fully actionable, so this cycle just executed the documentation
+  placement it called for.
+- Placed the new section next to the existing push/PR guidance in `CLAUDE.md` rather
+  than creating a new doc file, keeping session-startup guidance in one place per the
+  task's own suggested location.
+
+**What to improve:**
+- None specific — correctly scoped as a small, low-risk pick for an idle Reviewer cycle.
+
+**Kaizen task:** none filed this cycle — nothing new and systemic surfaced beyond what's
+already documented.

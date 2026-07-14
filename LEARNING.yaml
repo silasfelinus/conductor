@@ -343,3 +343,12 @@ records:
   outcome: done
   failure_category: null
   lesson: "The bug this fixed (commit_done_status() pushing straight to origin/main with no fallback) is the same shape as the git-proxy 413 fix documented in t-041 and the claim-commit git-plumbing design built for t-040 -- recent cycles keep hitting variations of 'a permission-restricted session's git push can fail in a way plain code doesn't expect.' Fixed by capturing the session's own branch before checking out main, and on a rejected main push, cherry-picking the done-status commit onto that branch and pushing there instead so the status flip still reaches main via a normal PR rather than vanishing into a merged-but-not-marked-done gap. Verified with unit tests that simulate the push rejection (not just the happy path) since that's the one path that can't be exercised by running the script normally in a session that already has push access."
+- date: 2026-07-14
+  project: conductor
+  task: t-041
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "Documented the HTTP 413 first-push-of-a-session workaround (create the remote branch via GitHub MCP create_branch before the first git push, when the branch has no prior PR) in CLAUDE.md's Session end section, so future sessions hitting a brand-new-ref push failure don't have to re-diagnose it from a raw GIT_TRACE_CURL trace."
