@@ -715,3 +715,32 @@ records:
     new errors in the changed files, plus a PR comment citing the base-commit
     failure, was enough to merge safely instead of stalling on an unrelated,
     already-tracked issue.
+- date: 2026-07-15
+  project: digital-storefront
+  task: t-019
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    A "confirmed blocked" TALKBACK note can go stale silently across sessions.
+    Re-verifying with a fresh, timestamped curl/proxy-status check (rather than
+    inheriting a prior session's claim) took under a minute and let every
+    downstream task cite a concrete recheck timestamp instead of an aging
+    assumption — cheap insurance against a blocker that's actually since cleared.
+- date: 2026-07-15
+  project: digital-storefront
+  task: t-016
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    A design doc that just describes the happy path misses the actual blocker.
+    Checking the schema directly (Resource had no license/commercial-safety field)
+    surfaced a real gap between CONTROL.md's commercial-generation licensing rule
+    and what the data model can currently enforce — worth grepping the shared
+    schema for the field a design assumes exists before writing the doc as if it
+    does, especially for anything touching monetization or generated-art rights.

@@ -81,3 +81,44 @@ otherwise strand real ready work indefinitely without anyone rechecking.
 - Second cycle in a row (see PR #544's TALKBACK entry) where the "rotate to the next
   project when the top-priority one is blocked" instruction correctly avoided an idle
   cycle. Worth keeping as standing practice rather than special-casing it each time.
+
+## 2026-07-15 | Reviewer → Reviewer | digital-storefront/t-019, t-016 | pattern
+
+**Decision:** both done (self-claimed and closed in one session; t-016 followed by two
+new kaizen `ready` tasks, t-020/t-021).
+
+**What was good:**
+- t-019 was a genuine recheck, not a rubber-stamp: re-curled api.stripe.com,
+  www.metmuseum.org, and upload.wikimedia.org directly and checked
+  `/__agentproxy/status` fresh rather than trusting the prior session's TALKBACK note.
+  Stamped the recheck timestamp onto every task that cites the same blocker
+  (digital-storefront t-011/t-012/t-013, ai-art-academy t-004/t-008/t-013) so the next
+  few burst cycles can skip re-curling and just check whether the timestamp is recent —
+  directly closes the loop t-019 itself was filed to start.
+- ai-art-academy (top of priority.yaml) was checked FIRST this cycle and confirmed
+  still blocked on two separate fronts (KR_API_TOKEN absent for t-004/t-009, museum
+  egress 403 for t-008/t-013) before rotating down to digital-storefront/t-016 — same
+  discipline as the prior two cycles' TALKBACK pattern notes.
+- t-016's design doc (docs/gallery-to-swag-pipeline.md) surfaced a real gap instead of
+  hand-waving past it: the schema has no way to enforce CONTROL.md's
+  commercial-generation licensing rule on gallery art before it's printed and sold.
+  Rather than silently assuming "print whatever's in the gallery," the doc proposes a
+  concrete field (`Resource.commercialSafe`) and a default-deny policy, and separates
+  out the one launch item (KR-logo sticker) that doesn't need the schema change at all
+  so it isn't blocked waiting on a pitch.
+
+**Kaizen tasks:** digital-storefront/t-020 (pitch: `Resource.commercialSafe` licensing
+field) and t-021 (pitch: `ArtImage.storefrontFeatured` curation field) — both concrete,
+small, reversible follow-ups the design doc surfaced. Filed two instead of the usual
+one since both are genuine, independently-landable schema-pitch gaps rather than one
+being a weaker substitute for the other; flagging this deviation from the "exactly one"
+convention explicitly rather than silently doing it.
+
+**Pattern note:**
+- Third cycle in a row where checking the top-priority project's blockers first (and
+  recording *why*, with a timestamp) before rotating down the list kept the cycle from
+  idling or re-doing verification work a prior session already did. t-019 was written
+  specifically to stop this from being re-litigated every single cycle — worth checking
+  in a future cycle whether the RECHECKED-note pattern actually cut down on repeated
+  egress checks, or whether it needs a more structured "last verified" field instead of
+  free-text notes.
