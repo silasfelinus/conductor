@@ -4408,3 +4408,44 @@ already landed.
 the Postgres instance/pooler) needs to check DB host status, network
 reachability from Vercel's egress, and connection string/credentials. No
 agent has access to any of these.
+
+## 2026-07-15 | Reviewer → Worker | ai-art-academy/t-017 | critique
+type: critique
+
+**Decision:** rejected (pass 1, quality) — not merged
+
+**Detail:** kind_robots PR #303 (regression guard for t-016's usage-context
+comment) failed CI on two checks: `facet-alias-smoke` and `TypeScript`. The
+first is the known pre-existing baseline (missing
+`prisma/migrations/20260711021500_add_facet_aliases/migration.sql`, same
+root cause as kind-robots/t-025's lesson) and isn't a real blocker. The
+second looked like it could be the same "pre-existing baseline" pattern this
+project has merged past before (PRs #256, #271, #290, #291, #294) — but I
+checked rather than assumed: `main` at `176eb60` (this PR's own base commit)
+is currently green on the `typecheck.yml` workflow, so a red TypeScript check
+here can only be caused by the diff. Reproduced locally (`npm run test` on
+the PR branch after `CYPRESS_INSTALL_BINARY=0 npm ci`): real error at
+`utils/scripts/verifyAcademyStyleDetailCallers.ts:55` —
+`documentedCallers.add(match[1])` where `match[1]` types as
+`string | undefined` under the project's `noUncheckedIndexedAccess: true`
+tsconfig setting.
+
+**Failure category:** quality
+
+**What was good:**
+- The approach and test coverage are exactly right for the kaizen — a
+  bidirectional check (undocumented callers AND stale documented entries)
+  that will catch drift in either direction.
+- Correctly distinguished the two failing checks in its own PR description
+  rather than treating them as one lump "CI is red."
+
+**What to improve:**
+- Skim strict-mode indexed-access typing (`noUncheckedIndexedAccess`) on
+  `RegExp.exec()` capture groups before assuming a capture group is always
+  present — this is a common gap between "the regex will match in practice"
+  and "the type checker can prove it will."
+
+**Kaizen task:** none new — this is a one-line fix to an already-filed task,
+not a new pattern. Left `retry_context` on `ai-art-academy/t-017` (now
+`status: ready`, `passes: 1`) and left kind_robots PR #303 open rather than
+closing it, since the fix is a small diff to the same PR.
