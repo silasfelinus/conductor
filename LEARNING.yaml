@@ -966,3 +966,22 @@ records:
     `pytest tests/` (or a directory glob) over an enumerated file list for any
     gating job so new tests are covered by default instead of requiring a
     separate task to notice and wire them in.
+- date: 2026-07-15
+  project: kind-robots
+  task: t-022
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: actionable
+  lesson: >
+    A production incident's stakes/scope classification can be wrong when
+    it's written at filing time from a theory ("this looks like DB/infra")
+    rather than a confirmed root cause. Three hourly cycles re-confirmed
+    severity via telemetry without re-deriving root cause; the actual bug
+    was an ordinary app-code regression (a hardcoded pool-size fallback in
+    server/utils/prisma.ts, regressed from 10 to 2 -- same as historical fix
+    e2caf03d), fully within normal Worker/Reviewer software-fix authority.
+    On a recurring needs-human incident, re-examine whether the original
+    DB-vs-app-code (or similarly scoped) classification still holds before
+    re-flagging it a third time.

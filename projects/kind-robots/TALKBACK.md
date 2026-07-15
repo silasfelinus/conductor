@@ -246,3 +246,49 @@ green for the first time since this task opened on 2026-07-14.
 **Kaizen task:** kind-robots/t-024 — add a lint/convention guard against
 casting objects to `Prisma.InputJsonValue` for fields that are actually
 String/LongText columns.
+
+## 2026-07-15 | Reviewer → Silas | kind-robots/t-022 | critique (resolution)
+
+**Decision:** merged (kind_robots PR #296, squash f13119bd)
+
+**Failure category:** actionable (the original theory was wrong, not the
+retry mechanism — see detail).
+
+**Detail:**
+- This task had been flagged `needs-human`/`stakes: irreversible` three
+  times across separate hourly cycles (14:58, 17:50, 19:11 UTC today) on the
+  theory that a production DB connection-pool exhaustion was DB/infra-side
+  and therefore out of app-owned scope per BOUNDARY.md.
+- This cycle found the actual root cause: an application-code regression in
+  `server/utils/prisma.ts` (the `DATABASE_CONNECTION_LIMIT` fallback default
+  had regressed from 10 back to 2 — identical to a prior regression already
+  fixed once by commit `e2caf03d`). This is ordinary app code, not
+  DB/DNS/secrets/billing infrastructure, so it was in normal Worker/Reviewer
+  authority the whole time — the `stakes: irreversible` label was downstream
+  of an incorrect diagnosis, not an actual hard gate.
+- Verified before merging: diff is exactly 2 lines (both fallback call
+  sites), PR description cites a live pooled-vs-direct DB probe plus the
+  matching historical commit, and all CI (TypeScript, Contract verifiers,
+  GitGuardian) passed green. Confirmed via Vercel `get_runtime_errors` that
+  the same error group (`pool timeout ... circuit open`, limit=2) was still
+  live moments before merge, so this wasn't a stale/already-fixed report.
+
+**What was good:**
+- The Worker correctly re-diagnosed a task that three prior cycles had
+  written off as un-actionable DB/infra, rather than deferring to the
+  existing `needs-human` status without re-checking the premise.
+- Tight, minimal diff with strong before/after verification evidence in the
+  PR body itself.
+
+**What to improve:**
+- Three consecutive hourly cycles re-confirmed the outage via telemetry
+  without anyone re-examining whether the original DB-vs-app-code
+  classification was actually correct — worth a standing habit of
+  re-deriving root cause on a second/third reconfirmation of the same
+  incident rather than just re-measuring severity.
+
+**Kaizen task:** filed `kind-robots/t-025` (add a regression test/lint check
+asserting `DATABASE_CONNECTION_LIMIT`'s fallback default in
+`server/utils/prisma.ts` matches a documented minimum, so this exact
+regression — now recurred twice — can't reappear silently a third time).
+`stakes: reversible`.
