@@ -459,19 +459,25 @@ tasks:
   - id: t-020
     milestone: m2
     title: 'kind_robots: thicken Coloring Book Generate/Proposals/Prompts tabs and add a second page set'
-    status: claimed
+    status: done
     owner: reviewer
     passes: 0
     stakes: reversible
-    updated: '2026-07-15T12:07:13Z'
-    note: >
-      Filed 2026-07-14 as the kaizen/follow-up from t-019. coloring-book-page.vue's
-      Color tab is a real, working engine; its Generate/Proposals/Prompts tabs are
-      thin generic pitch-board wrappers, and coloring-book-manager.vue's SET_SLUGS
-      is hardcoded to only ['sampler']. Options for this pass (pick what's
-      unblocked): wire the Generate tab into the real t-006/t-007 generation
-      pipeline once those sets exist, or — if t-006 (Kind Robots set) has landed —
-      add its manifest to SET_SLUGS so the library shows more than the sampler.
-      Keep scope small; this can re-split further if it's still too big for one PR.
+    updated: '2026-07-15T12:23:51Z'
+    note: |-
+      DONE (2026-07-15, hourly burst-mode): merged kind_robots PR #290 (squash, sha
+      40eac7a). data/coloring-book/sets/index.json + loadSetSlugs() fallback to [sampler]
+      replaces the hardcoded SET_SLUGS; Cozy Corner (Sleepy Cat + Potted Plant Shelf) is a
+      second hand-authored svg-regions set proving the multi-set path end-to-end, since
+      t-006/t-007 (Kind Robots, Monster Recast) have not landed yet -- their manifests just
+      need an index.json entry once they do, no further code change. Contract verifiers and
+      GitGuardian were green; the TypeScript check failed but was verified pre-existing and
+      identical on origin/main (19 errors, byte-for-byte match via a clean git worktree
+      re-run with matching Node 24 + DATABASE_URL, zero of them touching the changed files)
+      -- already tracked as kind-robots/t-020, cross-referenced there. mergeable_state was
+      unstable, not blocked, consistent with this repo's established precedent for
+      merging past a confirmed-pre-existing red check. Left the Generate/Proposals/Prompts
+      tab thickening (the task's other named option) for a follow-up pass -- scope note
+      explicitly allowed re-splitting.
     claimed_by: hourly-burst-20260715T-rotation
     claimed_at: '2026-07-15T12:07:13Z'

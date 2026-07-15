@@ -1060,3 +1060,45 @@ tasks:
       per hard rule 9) immediately before `gh pr create`, so the PR opens
       already conflict-free against current main instead of drifting stale
       while it waits for review.
+
+  - id: t-046
+    milestone: m2
+    title: Cache a kind_robots node_modules install (or Nuxt type-stub cache) reachable through the sandbox proxy allowlist, so burst-mode sessions can run vue-tsc/eslint locally
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: |-
+      Kaizen from Reviewer's coloring-book/t-020 pass (hourly burst-mode, kind_robots
+      PR #290, 2026-07-15). challenge-center/t-021 (conductor PR #535) already solved
+      getting a matching Node 24.x runtime into the sandbox via
+      scripts/provision_node24.sh (nodejs.org's dist host is reachable through the
+      proxy; nodesource apt is not).
+
+      UPDATE (same session, before this task was even picked up): answered the open
+      question directly while investigating the #290 TypeScript CI failure. npmjs.org's
+      registry IS reachable through the sandbox proxy -- `cd kind_robots && source
+      scripts/provision_node24.sh && npm ci --no-audit --no-fund` completes in ~25s
+      (1238 packages, npm's own local cache warm from a prior attempt). The ONLY blocker
+      is unrelated to the registry: cypress@15.18.1's postinstall script tries to
+      download its standalone binary from Cypress' own CDN, which the sandbox's egress
+      allowlist rejects (ECONNRESET), and that aborts the whole `npm ci` before
+      node_modules finishes. Workaround: `CYPRESS_INSTALL_BINARY=0 npm ci --no-audit
+      --no-fund` skips just that download; everything else (including the
+      postinstall-triggered `nuxi prepare`, which is what actually generates the
+      `.nuxt` type-stub directory `vue-tsc` needs) completes normally. Also needed a
+      dummy `DATABASE_URL` env var (Prisma config loading fails without one, doesn't
+      need real DB connectivity for `prisma generate` or `vue-tsc`) -- CI sets
+      `mysql://...@127.0.0.1:3306/kindrobots`-shaped value, any well-formed value works
+      locally. Confirmed the full recipe works end-to-end: `npm ci` (skip Cypress) ->
+      `npx prisma generate` -> `npm run test` (vue-tsc) produces the exact same error
+      set as CI.
+
+      Remaining scope for this task: turn the above into a real script
+      (scripts/provision_kind_robots_deps.sh or similar), mirroring
+      provision_node24.sh's idempotent/no-root style, so future sessions run one
+      command instead of re-deriving the CYPRESS_INSTALL_BINARY+DATABASE_URL
+      combination from scratch. Lower priority than originally filed since the
+      manual recipe already unblocks sessions that know to ask for it -- this is now
+      about convenience/discoverability, not a hard wall.
+
