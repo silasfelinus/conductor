@@ -1,4 +1,20 @@
 records:
+- date: 2026-07-15
+  project: ai-art-academy
+  task: t-017
+  kind: software
+  stakes: reversible
+  passes: 1
+  outcome: done
+  failure_category: quality
+  lesson: 'TypeScript''s noUncheckedIndexedAccess types RegExpExecArray element access
+    (match[1]) as string | undefined, not string — a regex-capture-group value needs
+    an explicit guard/narrow before use, not just node:assert/strict at the end of the
+    script. Also: a Worker fix pushed to an already-open PR can race a Reviewer''s
+    review of the prior (failing) commit — the rejection posted before the fix commit''s
+    own CI had finished, so the retry_context and the fix crossed in flight. No process
+    change needed (the retry_context was still correct and actionable), but worth
+    re-checking PR state before assuming a rejection reflects the latest push.'
 - date: 2026-07-11
   project: challenge-center
   task: t-003
