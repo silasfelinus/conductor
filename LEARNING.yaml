@@ -985,3 +985,21 @@ records:
     On a recurring needs-human incident, re-examine whether the original
     DB-vs-app-code (or similarly scoped) classification still holds before
     re-flagging it a third time.
+- date: 2026-07-15
+  project: kind-robots
+  task: t-022
+  kind: software
+  stakes: irreversible
+  passes: 0
+  outcome: blocked
+  failure_category: actionable
+  lesson: >
+    Correction to the same-day t-022 "done" record above: that closure was
+    premature. The pool-limit-fallback fix (kind_robots PR #296) was real
+    and deployed (confirmed limit=10 in post-deploy logs), but production
+    stayed down -- active=0/idle=0 connections at any pool size means the
+    database is unreachable, not undersized. Always verify a production
+    incident fix against POST-DEPLOY live telemetry before marking it done,
+    not just a green CI diff plus pre-merge telemetry. Reverted to
+    needs-human/irreversible -- this remains an unresolved DB/infra
+    reachability issue outside agent access, now spanning 4 hourly cycles.

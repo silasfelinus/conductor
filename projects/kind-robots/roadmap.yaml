@@ -569,12 +569,12 @@ tasks:
   - id: t-022
     milestone: m1
     title: "Production DB connection-pool exhaustion — every DB-backed API route 503ing"
-    status: done
+    status: needs-human
     owner: reviewer
     passes: 0
-    stakes: reversible
+    stakes: irreversible
     soft_gate: false
-    updated: "2026-07-15T19:55:00Z"
+    updated: "2026-07-15T20:05:00Z"
     note: >
       FOR SILAS: The live kind_robots production API (kind-robots.vercel.app,
       current deployment dpl_ABj8P2NznjcCmq6mcevVeeeQpeQC / PR #292) is failing
@@ -634,6 +634,26 @@ tasks:
       TLS/object config paths) to 10, matching e2caf03d. All CI green
       (TypeScript, Contract verifiers, GitGuardian); reviewed and merged as
       Reviewer (squash f13119bd). Production redeploy triggered on merge.
+
+      CORRECTION 2026-07-15T20:05:00Z (same cycle, ~15 min later): the code
+      fix above was real and did take effect — confirmed via Vercel runtime
+      logs on the new deployment (dpl_7E7tPAPZRWn6e7N6jAfvf29rZBaX, READY and
+      aliased to kind-robots.vercel.app at 19:59:45Z) showing `limit=10` in
+      the pool-timeout error, up from `limit=2` pre-fix. BUT production is
+      STILL fully down post-deploy: `pool connections: active=0 idle=0
+      limit=10` — zero connections established at ANY pool size, not "pool
+      full." This confirms the ORIGINAL 14:58 UTC theory was actually right:
+      the database itself is unreachable or refusing connections (paused
+      instance, rotated credentials, network/firewall change), which no
+      pool-size fix can address. Reverting status to `needs-human` /
+      `stakes: irreversible` — do not treat this as resolved. FOR SILAS: the
+      pool-limit regression fix (PR #296) was a real, separate, legitimate
+      bug and stays merged, but it is not why the site is down. Please check
+      whether the production Postgres/MariaDB host/instance is paused,
+      reachable on the network Vercel's functions egress from, and whether
+      its connection string/credentials still match what's configured in
+      Vercel's environment variables — no agent has access to check or
+      change DB host status, network config, or env vars/secrets.
   - id: t-023
     milestone: m1
     title: Automate the deploy-wait ancestry-check verification t-018 did manually in scratch git repos
