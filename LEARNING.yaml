@@ -605,3 +605,22 @@ records:
     needs validating, do it BEFORE any roadmap write so an invalid payload can''t strand an
 
     already-applied, now-unrepeatable transition with its event file undeleted.'
+- date: 2026-07-15
+  project: challenge-center
+  task: t-021
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'nodejs.org''s own dist host is reachable through the sandbox proxy even
+
+    though deb.nodesource.com and CI''s Azure Blob artifact redirects are not --
+
+    scripts/provision_node24.sh fetches a pinned Node 24.x tarball directly from
+
+    there instead of relying on nvm/fnm (not preinstalled, no durable cross-session
+
+    install path since every hourly session is a fresh container). Source it before
+
+    any future kind_robots CI reproduction rather than re-deriving the workaround.'

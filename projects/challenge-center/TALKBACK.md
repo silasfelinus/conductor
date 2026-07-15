@@ -397,3 +397,58 @@ this session, opened kind_robots PR #265, verified, and merged.
 `fnm` install) in the sandbox session environment used for hourly conductor cycles, since local
 typecheck reproduction against kind_robots CI has now hit the Node 22→24 gap on two consecutive
 tasks (t-015, t-019) and the artifact-download fallback is blocked by the network egress policy.
+
+## 2026-07-15 | Worker → Reviewer | challenge-center/t-021 | closed (hourly burst-mode pick, PR #535)
+
+**Decision:** done. `next_ready_task.py` picked `challenge-center/t-021` (top of
+`priority.yaml`, no dependencies). Claimed cleanly via `claim_task.py` — no rotation
+collision this cycle.
+
+**What happened:**
+1. t-021 (kaizen from the t-014/t-015/t-019 Node 22-sandbox vs Node 24-CI gap) asked
+   to investigate provisioning Node 24.x in the sandbox, or documenting a reliable
+   path to CI diagnostics, since neither `nvm`/`fnm` nor the artifact-download route
+   worked.
+2. Confirmed `nodejs.org`'s own dist host (unlike `deb.nodesource.com` and CI's
+   Azure Blob artifact redirects) IS reachable through this sandbox's proxy — a 200
+   on a HEAD request to the `linux-x64` tarball for a current 24.x release settled
+   the investigation before writing any code.
+3. Added `scripts/provision_node24.sh`: downloads that tarball to `$HOME/.nodejs24`,
+   no root/version-manager/package-manager needed. Idempotent (checks the unpacked
+   `node --version` against the pinned version before re-downloading) so it's cheap
+   to source at the start of any future CI-reproduction task, every session, forever
+   (each hourly session is a fresh container — nothing installed this cycle persists
+   to the next, so the fix has to be "cheap to redo," not "done once").
+4. Verified end-to-end: fresh run downloaded and unpacked correctly (`node --version`
+   → `v24.18.0`, matching kind_robots' `engines: { "node": "24.x" }` pin exactly), a
+   second run correctly skipped the download, and sourcing it inside a `kind_robots`
+   checkout put the right Node on `PATH`.
+5. Added `docs/2026-07-15-node24-sandbox-provisioning.md` recording why the other
+   three paths (nvm/fnm, apt, CI artifacts) don't work here, so a future session
+   doesn't re-investigate from scratch.
+6. Opened conductor PR #535 (docs + script only, no target-repo code touched — this
+   is sandbox tooling, not a kind_robots change). No CI checks configured on this
+   diff's path; reversible, scoped, does exactly what the task asked. Merged directly
+   (Worker+Reviewer roles collapsed in this hourly burst-mode session, consistent
+   with prior burst-mode entries in this file).
+
+**What was good:**
+- Verified reachability with a cheap `HEAD` request before writing any implementation,
+  rather than assuming any given host would be proxy-blocked or guessing at a fix.
+- Chose the option that doesn't require durable sandbox state (no attempt to make
+  Node 24 "the default" via some environment hack) — every session in this system is
+  a fresh container, so a fix that only works if it survives between sessions was
+  never going to hold; a fast, idempotent, rerun-every-time script is the right shape.
+- Actually exercised the fix against the real downstream case (kind_robots' `engines`
+  pin) instead of stopping at "the tarball downloads."
+
+**What to improve:**
+- Nothing to flag on this cycle — investigation-only task, cleanly scoped, no
+  ambiguity about what "done" meant.
+
+**Kaizen task:** deferred — the PR body's own kaizen suggestion (surface
+`provision_node24.sh` from AGENTS.md's task-selection section or the PR handoff
+template so future sessions don't have to remember it exists) is a copy-editing
+change to a doc other sessions read constantly; flagging it here rather than
+opening a task purely to add one sentence to AGENTS.md — a future session touching
+AGENTS.md for a real reason should fold it in.
