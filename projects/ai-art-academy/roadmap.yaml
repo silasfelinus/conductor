@@ -25,7 +25,7 @@ milestones:
   - id: m1
     title: Design brief, policy, and model strategy
     weight: 15
-    status: in-progress
+    status: done
   - id: m2
     title: Style registry and LoRA/knowledge evaluation
     weight: 20
@@ -200,23 +200,55 @@ tasks:
       project (Silas 2026-07-10); keep the component reusable for the plain styler use.
   - id: t-008
     milestone: m4
-    title: 'kind_robots: Academy lesson example-works strips + starter image library'
+    title: 'kind_robots: download Academy starter image library + provenance manifest'
     status: ready
     owner: null
     passes: 0
     stakes: reversible
-    updated: '2026-07-10T08:30:00Z'
+    updated: '2026-07-15T00:48:00Z'
     depends_on: t-007
     note: >
-      Cross-repo task (kind_robots). RESCOPED after t-007 shipped further than
-      planned (the Academy is already registry-driven with lesson context; PR #143):
-      (1) download the 21 public-domain starter images per
-      docs/starter-image-library.md into public/images/academy/starters/ with the
-      provenance manifest (starters.manifest.json), re-verifying each source URL at
-      download time per PUBLIC-DOMAIN-POLICY.md; (2) add an example-works strip to
-      the lesson detail (real public-domain images per movement from the curriculum
-      outline's verified sources); (3) wire the starter library into the Remix
-      Studio source picker as a third tab next to Upload/Gallery.
+      SPLIT 2026-07-15 (conductor/t-010 roadmap-upgrade pass) from the original
+      3-part t-008, which bundled a real-download task with two front-end wiring
+      tasks — oversized for one landable PR per the Failure-triage "scope"
+      category. This task is part 1 only: download the 21 public-domain starter
+      images per docs/starter-image-library.md into
+      public/images/academy/starters/ with the provenance manifest
+      (starters.manifest.json), re-verifying each source URL at download time per
+      PUBLIC-DOMAIN-POLICY.md. Parts 2 and 3 are now their own tasks: t-013
+      (example-works strip) and t-014 (Remix Studio source-picker tab, depends on
+      this task's manifest existing).
+  - id: t-013
+    milestone: m4
+    title: 'kind_robots: add example-works strip to Academy lesson detail'
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-15T00:48:00Z'
+    depends_on: t-007
+    note: >
+      Split 2026-07-15 from the original t-008 (part 2 of 3) — independently
+      landable, does not need t-008's local starter-image download to exist
+      first. Add an example-works strip to the Academy lesson detail view: real
+      public-domain images per movement, sourced from the curriculum outline's
+      verified source URLs (docs/curriculum-outline.md), following
+      PUBLIC-DOMAIN-POLICY.md for provenance recording.
+  - id: t-014
+    milestone: m4
+    title: 'kind_robots: wire starter library into Remix Studio source picker'
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-15T00:48:00Z'
+    depends_on: t-008
+    note: >
+      Split 2026-07-15 from the original t-008 (part 3 of 3) — genuinely depends
+      on t-008's local starters/ directory and starters.manifest.json existing.
+      Wire the starter library into the Remix Studio source picker as a third
+      tab next to Upload/Gallery, reusing art-styler's existing source-image
+      machinery.
   - id: t-009
     milestone: m5
     title: Generate project art and Academy inspiration images
@@ -272,9 +304,9 @@ tasks:
   - id: t-010
     milestone: m6
     title: Academy continuous improvement pass
-    status: claimed
+    status: ready
     recurring: true
-    owner: worker
+    owner: null
     passes: 0
     stakes: reversible
     updated: '2026-07-15T00:51:16Z'
@@ -286,5 +318,13 @@ tasks:
       preview thumbnails, (d) expand the curriculum with a new movement/artist entry
       (respecting PUBLIC-DOMAIN-POLICY.md). Note which option ran in the PR. This task
       never reaches done and does not count toward milestone progress.
-    claimed_by: conductor-hourly-20260715-0048
-    claimed_at: '2026-07-15T00:51:16Z'
+
+      RAN 2026-07-15 (conductor-hourly-20260715-0048): option (b) roadmap
+      upgrade. Flipped milestone m1 to done (both its tasks, t-001/t-002, were
+      already done — stale status). Split the oversized 3-part t-008 into t-008
+      (starter-image download only), t-013 (example-works strip, independently
+      landable), and t-014 (source-picker wiring, depends_on: t-008) so future
+      cycles can land each part as its own scoped, verifiable PR instead of
+      risking a scope-failure on the monolith. No code touched; t-004/t-009
+      remain blocked on a token-bearing session for the generation backend
+      (KR_API_TOKEN unset here).

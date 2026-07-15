@@ -1,16 +1,16 @@
 {
-  "generated_at": "2026-07-14T21:17:20.805804+00:00",
+  "generated_at": "2026-07-15T00:52:37.322876+00:00",
   "summary": {
     "roadmaps": 40,
     "active_projects": 33,
-    "tasks": 498,
-    "ready": 107,
-    "waiting": 63,
+    "tasks": 503,
+    "ready": 109,
+    "waiting": 64,
     "needs_human": 17,
-    "in_progress": 2,
-    "done": 298,
+    "in_progress": 0,
+    "done": 302,
     "errors": 0,
-    "warnings": 1,
+    "warnings": 3,
     "info": 47
   },
   "projects": [
@@ -20,19 +20,17 @@
       "override_status": "active",
       "priority_index": 1,
       "autonomous": false,
-      "task_count": 19,
+      "task_count": 20,
       "counts": {
-        "claimed": 2,
-        "done": 16,
-        "ready": 1
+        "done": 20
       },
-      "open_count": 3,
+      "open_count": 0,
       "human_attention": 0,
-      "ready": 1,
+      "ready": 0,
       "waiting": 0,
-      "claimed": 2,
+      "claimed": 0,
       "review": 0,
-      "done": 16
+      "done": 20
     },
     {
       "slug": "ai-art-academy",
@@ -40,15 +38,16 @@
       "override_status": "active",
       "priority_index": 2,
       "autonomous": true,
-      "task_count": 12,
+      "task_count": 14,
       "counts": {
         "done": 8,
-        "ready": 4
+        "ready": 5,
+        "waiting": 1
       },
-      "open_count": 4,
+      "open_count": 6,
       "human_attention": 0,
-      "ready": 4,
-      "waiting": 0,
+      "ready": 5,
+      "waiting": 1,
       "claimed": 0,
       "review": 0,
       "done": 8
@@ -178,15 +177,15 @@
       "override_status": "active",
       "priority_index": 9,
       "autonomous": false,
-      "task_count": 20,
+      "task_count": 21,
       "counts": {
         "done": 12,
         "needs-human": 1,
-        "ready": 7
+        "ready": 8
       },
-      "open_count": 8,
+      "open_count": 9,
       "human_attention": 1,
-      "ready": 7,
+      "ready": 8,
       "waiting": 0,
       "claimed": 0,
       "review": 0,
@@ -665,15 +664,15 @@
       "override_status": "active",
       "priority_index": 34,
       "autonomous": true,
-      "task_count": 13,
+      "task_count": 14,
       "counts": {
         "done": 5,
-        "ready": 5,
+        "ready": 6,
         "waiting": 3
       },
-      "open_count": 8,
+      "open_count": 9,
       "human_attention": 0,
-      "ready": 5,
+      "ready": 6,
       "waiting": 3,
       "claimed": 0,
       "review": 0,
@@ -804,6 +803,20 @@
       "project": "animation-studio",
       "task": null,
       "message": "Roadmap has no project-overrides.yaml entry."
+    },
+    {
+      "severity": "warning",
+      "code": "ACTIVE_PROJECT_ALL_DONE",
+      "project": "challenge-center",
+      "task": null,
+      "message": "All tasks are done but project override remains active."
+    },
+    {
+      "severity": "warning",
+      "code": "ACTIVE_PROJECT_NO_OPEN_TASKS",
+      "project": "challenge-center",
+      "task": null,
+      "message": "Active project has no open tasks; mark finished/paused or add an intentional recurring task."
     },
     {
       "severity": "info",
