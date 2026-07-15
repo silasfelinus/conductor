@@ -3923,9 +3923,9 @@ pattern already used in other Silas repos, e.g. PortOS's `navManifest.js`) so a 
 missing from top-level nav fails a CI check instead of only surfacing via a manual
 navigation-map audit like this one.
 
-## 2026-07-15 | Reviewer → Silas | coloring-book/t-020 | in review (hourly burst-mode pick)
+## 2026-07-15 | Reviewer → Silas | coloring-book/t-020 | closed (hourly burst-mode pick, PR #290)
 
-**Decision:** pending (kind_robots PR #290 open, CI in progress at write time)
+**Decision:** merged (kind_robots PR #290, squash, sha 40eac7a)
 
 **Detail:** Rotation continued past today's already-well-covered projects
 (digital-storefront, kind-robots, conductor, kindrobots-unraid, global-ui had each had a
@@ -3949,28 +3949,55 @@ Generate/Proposals/Prompts tabs and add a second page set," filed as the t-019 k
 - Left the Generate/Proposals/Prompts thickening itself for a follow-up pass — the note
   explicitly allowed re-splitting, and that half needs either live generation plumbing
   or real book content neither of which existed yet.
+- kind_robots PR #290's "TypeScript" check came back red. Rather than trust it blind or
+  assume "pre-existing, not my problem," this session's sandbox had no `node_modules`
+  (challenge-center/t-021's `scripts/provision_node24.sh` only provisions the Node 24.x
+  runtime, not the install), so ran `npm ci` with `CYPRESS_INSTALL_BINARY=0` (the
+  Cypress binary download itself is blocked by the sandbox's egress allowlist, same
+  wall t-021 already hit for a different reason) — this got a real `node_modules` in
+  ~25s from cache. Ran `npm run test` (project-wide `vue-tsc --noEmit`) against the PR
+  branch: 19 errors, none in the changed files. Then checked out a clean `git worktree`
+  of `origin/main` (b4c1e6d4, zero PR changes) and re-ran the identical command: same 19
+  errors, byte-for-byte diffed against the PR-branch log — zero difference. Confirmed
+  pre-existing, not a regression. This is the same failure family already tracked at
+  `kind-robots/t-020` (was 82 errors as of the last check ~09:00 UTC today; now down to
+  19 — shrank without the task closing, so it's not fully fixed) — added an UPDATE to
+  that task's note with the current count and file list rather than opening a duplicate.
+  Contract verifiers and GitGuardian were green, `mergeable_state: "unstable"` (not
+  `blocked`), matching this repo's established precedent (see the kind_robots PR #256
+  entry earlier in this file) for merging past a confirmed-pre-existing red check.
+  Squash-merged with the rationale documented in the merge commit message.
 - Verified: `python3 -c "import json; json.load(...)"` on all four new/changed JSON
   files, hand-checked every new SVG region `d` path against the closed-path patterns
-  already used in `sampler-p01.json`/`sampler-p02.json`, and `scripts/audit_roadmaps.py`
-  (0 errors) on the roadmap edit. Could not run `vue-tsc`/`eslint` locally — no
-  `node_modules` in this sandbox — so relying on kind_robots PR #290's CI (TypeScript +
-  Contract verifiers were in progress, GitGuardian had already passed) instead of a
-  local check; subscribed to the PR and will merge once it's green or report back if
-  something fails.
-- Set coloring-book/t-020 to `status: review` with the PR link in the note; will flip to
-  `done` once #290 merges.
+  already used in `sampler-p01.json`/`sampler-p02.json`, `scripts/audit_roadmaps.py`
+  (0 errors) on both roadmap edits (coloring-book, kind-robots), and the local
+  `vue-tsc` cross-check above. No eslint/prettier/Cypress run — CI doesn't gate this
+  repo's PRs on them (only TypeScript, Contract verifiers, GitGuardian ran) and Cypress'
+  binary isn't installable in this sandbox.
+- Set coloring-book/t-020 to `status: done` with the PR link, merge sha, and CI
+  cross-check summary in the note.
 
 **What was good:**
 - Didn't rubber-stamp the note's two pre-written options when neither actually applied —
   traced the literal claim ("hardcoded to only sampler") back to the real underlying
   limitation and fixed that instead, which is more durable than either suggested patch
   once t-006/t-007 do land.
+- Didn't take the red TypeScript check at face value in either direction (rubber-stamp
+  past it, or block/investigate-forever) — got real `node_modules` despite the sandbox
+  gap, reproduced the CI command locally against a clean origin/main worktree, confirmed
+  byte-for-byte identical failure, and cross-linked the existing tracking task instead of
+  filing a duplicate or leaving the count stale.
 
 **What to improve:**
-- This sandbox still has no `node_modules` for kind_robots (only a bare Node 24 runtime
-  via `scripts/provision_node24.sh` from t-021) — a from-scratch `npm ci` was judged too
-  slow for an hourly burst-mode window and skipped in favor of trusting CI. Worth a
-  future kaizen: a prebaked/cached `node_modules` snapshot (or Nuxt's `.output`
-  type-stub cache) reachable through the sandbox's proxy allowlist, so burst-mode
-  sessions touching kind_robots can run `vue-tsc`/`eslint` locally instead of shipping
-  on faith.
+- kind-robots/t-020 has been sitting `ready` and un-worked since it grew to 82 errors
+  ~09:00 UTC today; it's now 19 (shrank on its own from unrelated changes, not a fix),
+  but it's degraded the "all green" merge signal for multiple sessions in a row now
+  across at least three separate PRs (#256, #271, #290). Recommend a Worker session
+  actually claim and fix it soon rather than each burst-mode session re-verifying and
+  re-documenting the same pre-existing break.
+
+**Kaizen task:** conductor/t-046 — cache a kind_robots `node_modules` install (or at
+least the `npm ci --no-audit` + `CYPRESS_INSTALL_BINARY=0` recipe this session used
+worked in ~25s from npm's own cache; a documented/scripted version of it, mirroring
+`scripts/provision_node24.sh`, would save every future session from rediscovering the
+Cypress-binary wall) reachable through the sandbox proxy allowlist.
