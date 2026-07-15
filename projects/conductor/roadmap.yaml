@@ -1105,7 +1105,7 @@ tasks:
   - id: t-047
     milestone: m2
     title: Switch ci.yml's authz-regression job from a test-file whitelist to pytest tests/
-    status: claimed
+    status: review
     owner: worker
     passes: 0
     stakes: reversible
@@ -1127,4 +1127,25 @@ tasks:
       runtime stays reasonable for a PR-gating job before landing.
     claimed_by: claude-burst-2026-07-15-1930
     claimed_at: '2026-07-15T19:06:39Z'
-    updated: '2026-07-15T19:06:39Z'
+    updated: '2026-07-15T19:08:39Z'
+
+  - id: t-048
+    milestone: m2
+    title: Rename ci.yml's authz-regression job now that it runs the full pytest suite
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: |-
+      Kaizen from t-047 (Reviewer, autonomous hourly burst cycle, 2026-07-15).
+      t-047 switched the job's run step to `pytest tests/` but deliberately left
+      the job key/name (`authz-regression` / "Authz regression tests") unchanged,
+      since GitHub branch protection may reference that exact check name as a
+      required status check and an agent has no way to see or update that
+      config from the repo. Confirm with Silas (or check the repo's branch
+      protection settings directly) whether "Authz regression tests" is a
+      required check; if not, rename the job to something accurate like
+      "Test suite (pytest tests/)" in one PR. If it IS required, this needs a
+      coordinated update (rename in ci.yml + update the required-check setting
+      in the same window) rather than an agent-only change -- soft needs-human
+      if branch protection can't be inspected from this environment.

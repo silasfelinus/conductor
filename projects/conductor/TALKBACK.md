@@ -418,3 +418,34 @@ outside the repo.
 pattern (root TALKBACK.md 2026-07-05 evening, 2026-07-07 PR #345, 2026-07-10
 14:35 PR #348, now this one). Moving t-026 to needs-human rather than logging
 a sixth identical note next cycle.
+
+## 2026-07-15 | Reviewer → Silas | conductor/t-047 | merged (autonomous hourly burst cycle)
+
+**Decision:** merged (self-implemented and self-reviewed in one solo automated
+cycle — no open PR existed at session start; claimed via `claim_task.py`).
+
+**Detail:** `.github/workflows/ci.yml`'s `authz-regression` job ran a hardcoded
+six-file pytest whitelist, leaving ~19 of the 25 files under `tests/` (including
+`test_validate_pack_manifest.py` from packmaker/t-007) unenforced by CI. Switched
+the job's run step to `pytest tests/` so every test file is covered by default;
+left the job's `name:`/key (`authz-regression` / "Authz regression tests")
+unchanged since GitHub branch protection may reference that exact check name as
+a required status check, and renaming it risks stranding PRs on a check that
+never reappears. Updated the workflow's header comment to describe the gate
+accurately ("full pytest suite" instead of "authz regression tests").
+
+**What was good:**
+- Verified locally before landing: `pytest tests/` → 235 passed in ~4s (matches
+  the task note's filing-time count exactly, confirming no drift), and
+  `py_compile` on every `scripts/*.py` file (mirroring the `lint-python` CI job).
+- Kept the diff minimal and reversible — one run-step swap plus a comment fix,
+  no job rename, no new exclusions needed (nothing flaky or slow enough to
+  warrant `--ignore`).
+
+**What to improve:**
+- N/A this cycle — task was small and well-scoped by the original kaizen note.
+
+**Kaizen task:** filed `conductor/t-048` — the same `authz-regression` job
+name now undersells what it runs (full suite, not just authz tests); a job
+*rename* would need a coordinated branch-protection update outside agent
+reach, so scope that as its own task rather than silently deferring.
