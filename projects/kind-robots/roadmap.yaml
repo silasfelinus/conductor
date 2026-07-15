@@ -455,39 +455,40 @@ tasks:
 
   - id: t-020
     milestone: m3
-    title: Fix two pre-existing TypeScript errors breaking main's TypeScript CI check
+    title: Fix pre-existing TypeScript errors breaking main's TypeScript CI check (grown to 82 across 25 files)
     status: ready
     owner: null
     passes: 0
     stakes: reversible
-    updated: "2026-07-14T20:20:00Z"
+    updated: "2026-07-15T03:40:00Z"
     note: >
-      Found during conductor Reviewer sweep (challenge-center/t-014 burst-mode
-      cycle, 2026-07-14 ~20:15 UTC): PR #256's "TypeScript" GitHub Actions check
-      (npm run test, i.e. vue-tsc --noEmit) failed, but the two files it failed
-      on were untouched by that PR. Confirmed independently in a clean worktree
-      checked out straight from origin/main (13e80b1c, no PR changes applied)
-      that `npm run test` already fails there with the exact same two errors --
-      this is a pre-existing break on main, not a regression from any single PR.
-      Errors: (1) server/api/art/image/index.get.ts:153:24 -- TS2321 "Excessive
-      stack depth comparing types 'ArtImageSelect<DefaultArgs>' and
-      'ArtImageSelect<InternalArgs & { result: {}; model: {}; query: {}; client:
-      {}; }>'" on the artImageCardSelect-style Prisma select object; (2)
-      server/api/model-builder/items/[id]/commit.post.ts:644 and :646 -- TS2345
-      "Argument ... is not assignable to parameter of type 'TransactionClient'"
-      where a `prisma.$transaction` callback's client is passed to a helper
-      expecting a narrower TransactionClient type -- looks like a Prisma-client
-      type-generation drift (DefaultArgs vs the extended InternalArgs shape)
-      rather than a real logic bug. Likely fix is a local type assertion/cast at
-      each call site, or regenerating types against a Prisma client version that
-      resolves the extension-args mismatch -- needs someone familiar with the
-      Prisma client extension setup to confirm before choosing a fix. Not
-      escalated hard since every other check (Cypress-adjacent Contract
-      verifiers, facet-alias-smoke, GitGuardian, Vercel deploy) stayed green and
-      merges aren't hard-blocked (mergeable_state stayed "unstable", not
-      blocked) -- but main's TypeScript check will read red for every PR until
-      this is fixed, which erodes the "all green" signal Workers/Reviewers rely
-      on to merge confidently.
+      GROWN 2026-07-15 (digital-storefront/t-014 burst-mode cycle, ~03:35 UTC):
+      re-confirmed this is still pre-existing and now much larger. kind_robots
+      PR #271's "TypeScript" check failed on files this PR never touched;
+      reproduced independently via `git worktree add` at origin/main (1ad17283,
+      no PR changes) and `npm run test` (vue-tsc --noEmit) fails there too with
+      the byte-for-byte identical 82 errors across 25 files (diffed the two
+      error logs -- zero difference), so this remains a pre-existing main
+      break, not a regression from #271 or any single PR. The original two
+      errors from 2026-07-14 (server/api/art/image/[id].get.ts TS2321
+      "Excessive stack depth"; server/api/model-builder/items/[id]/commit.post.ts
+      TS2345 TransactionClient mismatch) are STILL present and now joined by
+      80 more, dominated by one repeated pattern: "Type 'InputJsonValue' [or
+      'InputJsonValue | JsonNullClass'] is not assignable to type 'string' [or
+      'string | NullableStringFieldUpdateOperationsInput | ...']" across
+      components/art/artjob-manager.vue and ~20 server/api/*.post.ts|patch.ts
+      routes plus 3 utils/scripts/*.ts seed/migration scripts (full file list
+      in this session's PR discussion). Shape strongly suggests a Prisma schema
+      change flipped several models' JSON-typed columns (payload/metadata-style
+      fields) to String columns (or vice versa) without updating every call
+      site that still passes a JS object expecting Json semantics -- needs
+      someone to diff prisma/schema.prisma history against these call sites to
+      confirm which side is correct, then either restore the Json column type
+      or update all ~20 call sites to JSON.stringify/parse at the boundary.
+      Same as before: not escalated hard, other checks stay green and merges
+      aren't hard-blocked (mergeable_state "unstable", not "blocked"), but the
+      growth from 2 to 82 errors in ~24h means this should get picked up soon
+      before it gets harder to untangle from unrelated future changes.
 
   - id: t-021
     milestone: m3
