@@ -28,11 +28,40 @@ tasks:
 - id: t-001
   milestone: m1
   title: Write the packmaker design brief (SPEC.md)
-  status: claimed
+  status: done
   owner: reviewer
   passes: 0
   stakes: reversible
   note: >
+    DONE 2026-07-15 (conductor-hourly-20260715-1449): wrote SPEC.md. Maps pack
+    item types onto existing models (locations -> Dream dreamType:LOCATION,
+    genres -> Facet kind:GENRE, characters -> Dream dreamType:CHARACTER or the
+    richer standalone Character model, rewards -> the existing Reward model
+    and its Dream<->Reward relation) rather than inventing new item schemas;
+    the pack container itself stays a YAML manifest in packs/ for now (no
+    Pack Prisma model proposed -- deferred to t-004 as an open question).
+    Generation reuses existing kind_robots chat/art/dream endpoints
+    (server/api/chats/*, server/api/art/generate.post.ts +
+    art/queue/*, server/api/dreams/index.post.ts) per BOUNDARY.md's
+    read-only-shared-backend rule. Admin view = manifest-driven generator
+    (t-004); user view reuses the already-shipped /packs scaffold
+    (packmaker-page.vue -> ProjectFrontPage, t-005) via its empty
+    #interactive slot. Ownership/privacy: confirmed kind-robots t-008
+    (SHARING-SPEC.md) is still status:ready, not written -- so this brief
+    does NOT invent a parallel ACL model. Interim state uses the
+    isPublic/isMature/isActive triad already on Dream/Facet/Character
+    (all-or-nothing release); DLC per-purchaser visibility stays blocked on
+    t-008 by design. Storefront mapping: digital-storefront's SPEC.md
+    (t-009) already designed a generic Product/Entitlement model that
+    explicitly covers packmaker DLC packs as one of its shapes -- this brief
+    builds on that instead of re-designing entitlements, and only needs
+    t-008 for the per-item visibility half. Raised two soft needs-human
+    open questions (Character vs Dream shape for pack characters; whether a
+    real Pack Prisma model is ever needed) rather than blocking on them.
+    No code, schema, or generation changes -- design doc only, per this
+    project's own 2026-07-05 TALKBACK review ("the design brief should stay
+    a brief").
+    Original spec follows:
     SPEC.md covering: what a "pack" is (a manifest of generated website items —
     locations, genres, characters, rewards — mapped to existing kind_robots models
     like Dreams and Rewards); how generation reuses the existing kind_robots
@@ -46,11 +75,11 @@ tasks:
     to Silas as a soft needs-human in parallel.
   claimed_by: conductor-hourly-20260715-1449
   claimed_at: '2026-07-15T14:50:29Z'
-  updated: '2026-07-15T14:50:29Z'
+  updated: '2026-07-15T15:10:00Z'
 - id: t-002
   milestone: m1
   title: Define the pack manifest schema with one worked example
-  status: waiting
+  status: ready
   owner: null
   passes: 0
   stakes: reversible

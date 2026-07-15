@@ -554,3 +554,50 @@ tasks:
       groups, 9 roles, and 5 capabilities" -- 0 errors, no unknown-tab references.
       No code change needed this cycle; closing as done since the fix already
       landed and is confirmed on main.
+
+  - id: t-022
+    milestone: m1
+    title: "Production DB connection-pool exhaustion — every DB-backed API route 503ing"
+    status: needs-human
+    owner: reviewer
+    passes: 0
+    stakes: irreversible
+    soft_gate: false
+    updated: "2026-07-15T14:58:00Z"
+    note: >
+      FOR SILAS: The live kind_robots production API (kind-robots.vercel.app,
+      current deployment dpl_ABj8P2NznjcCmq6mcevVeeeQpeQC / PR #292) is failing
+      almost every DB-backed request right now with `DriverAdapterError: pool
+      timeout: failed to retrieve a connection from pool after ~3000ms (pool
+      connections: active=0 idle=0 limit=2)`, and once the circuit breaker
+      trips, the follow-on error is `pool timeout: failed to retrieve a
+      connection from pool (circuit open)`. Confirmed via Vercel runtime-error/
+      log telemetry: 459 of 466 requests in the last 30 minutes were 503s,
+      spanning /api/dreams, /api/todos, /api/rewards, /api/scenarios,
+      /api/characters, /api/bots, /api/art/queue/claim, /api/projects/*, and
+      even /api/health/database. Only non-DB routes (/api/version,
+      /robots.txt) return clean 200s, and this has been going on since at
+      least 08:56 UTC today (6h+) with the same signature recurring
+      intermittently back to February per the error-group's `first_seen`. The
+      pool sitting at active=0/idle=0 while still timing out (not "pool full,
+      too many concurrent users") suggests the database itself is refusing or
+      unreachable, not ordinary load-driven exhaustion — worth checking
+      whether the DB host/instance is paused, whether the connection string
+      changed, or whether the pool's `limit: 2` config is itself the bug
+      (unusually low for production).
+
+      Knock-on effect already visible in this repo: conductor's own GitHub
+      Actions "Project Sync" (scripts/sync_projects.py, hits
+      kind-robots.vercel.app/api/projects/*) and "CI Janitor"
+      (scripts/ci_janitor.py, posts to /api/todos) have been failing every run
+      since ~13:08 UTC today because they can't reach the same API.
+
+      TO APPROVE / ACT: this is production database/infra — out of app-owned
+      scope per BOUNDARY.md ("Production database migrations... deployment,
+      DNS, secrets, and billing infrastructure" are shared-backend concerns),
+      so no agent should touch the DB/pool config directly. Needs Silas (or
+      whoever manages the Postgres instance/pooler behind this Vercel project)
+      to check DB reachability and the pool configuration. Once resolved, set
+      `status: done` with a note on the root cause; conductor's sync/janitor
+      workflows need no code change and will recover on their own once the API
+      is healthy again.
