@@ -1105,8 +1105,8 @@ tasks:
   - id: t-047
     milestone: m2
     title: Switch ci.yml's authz-regression job from a test-file whitelist to pytest tests/
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     note: |-
@@ -1125,3 +1125,6 @@ tasks:
       files are covered by default. Verify the full suite still passes in the CI
       environment (it passes locally: 235 passed as of this task's filing) and that
       runtime stays reasonable for a PR-gating job before landing.
+    claimed_by: claude-burst-2026-07-15-1930
+    claimed_at: '2026-07-15T19:06:39Z'
+    updated: '2026-07-15T19:06:39Z'
