@@ -15,7 +15,7 @@ milestones:
 - id: m1
   title: Design brief and pack manifest schema
   weight: 30
-  status: not-started
+  status: complete
 - id: m2
   title: Two launch packs drafted (Uncanny Valor, Arcane Whimsy)
   weight: 35
@@ -79,23 +79,33 @@ tasks:
 - id: t-002
   milestone: m1
   title: Define the pack manifest schema with one worked example
-  status: claimed
+  status: done
   owner: worker
   passes: 0
   stakes: reversible
   depends_on: t-001
   note: >
-    A versioned manifest format (YAML or JSON) listing pack id, title, description,
-    owner, visibility, price hook, and item entries (type: location | genre |
-    character | reward; generation prompt; art prompt; target model/fields).
-    Include one small worked example pack in projects/packmaker/packs/.
+    DONE 2026-07-15 (conductor-hourly-20260715-1550): schema written as
+    projects/packmaker/packs/SCHEMA.md (schemaVersion 1) — top-level pack
+    fields (id/title/description/owner/visibility/price) plus a per-item
+    schema (type/itemShape/refId/draftPayload/notes). Resolves SPEC.md §7's
+    open question at the item level: itemShape lets a character-type entry
+    choose dream (lore-only) or character (stat-block) per item rather than
+    hardcoding one for the whole pack. price.hook (free|one-time|dlc) maps
+    onto digital-storefront's Product/Entitlement design (SPEC §5);
+    visibility (draft|released) encodes the interim all-or-nothing isPublic
+    rule (SPEC §4) pending kind-robots t-008. Worked example:
+    packs/example-starter-pack.yaml, a 4-item draft pack (one location,
+    genre, character, reward), validated with a YAML parse check (python
+    yaml.safe_load). No generation, API calls, or DB writes performed —
+    manifest-only per this task's scope.
   claimed_by: conductor-hourly-20260715-1550
   claimed_at: '2026-07-15T15:51:48Z'
-  updated: '2026-07-15T15:51:48Z'
+  updated: '2026-07-15T16:05:00Z'
 - id: t-003
   milestone: m2
   title: Draft the contents of the two launch packs (Uncanny Valor, Arcane Whimsy)
-  status: waiting
+  status: ready
   owner: null
   passes: 0
   stakes: reversible
@@ -161,3 +171,24 @@ tasks:
     liveUrl points at /packs (admin can run the Conductor 'Placements' button to
     backfill channelKey/tabKey/liveUrl); (4) evolve the placeholder scaffold page
     into the full interactive experience for this project.
+- id: t-007
+  milestone: m2
+  title: Add a manifest-validation script for pack YAML files
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  note: >
+    Kaizen from t-002's implementation (2026-07-15): SCHEMA.md (schemaVersion 1)
+    defines required top-level fields (id/title/description/owner/visibility/price)
+    and per-item fields (type/itemShape/refId-or-draftPayload), but nothing
+    checks a pack YAML against it besides manual review. Add a small
+    scripts/validate_pack_manifest.py (or extend an existing roadmap-validation
+    script if one already covers non-roadmap YAML) that loads a
+    projects/packmaker/packs/*.yaml file, checks the required fields/enums per
+    SCHEMA.md, and exits non-zero with a clear message on violation. Run it
+    against example-starter-pack.yaml as the first regression case. This gives
+    t-003 (drafting the two real launch packs) and t-004 (admin generator)
+    fast feedback instead of relying on manual review. Small, reversible,
+    conductor-repo-only change; no kind_robots or generation-backend
+    involvement.

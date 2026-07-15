@@ -870,3 +870,18 @@ records:
     out to still be unwritten -- both facts only surfaced by reading the sibling
     projects' specs and the live Prisma schema before drafting, not by trusting
     the roadmap task's own summary of them.
+- date: 2026-07-15
+  project: packmaker
+  task: t-002
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    Resolving an open design question (SPEC.md §7: dream-shaped vs
+    character-shaped pack characters) at the per-item field level
+    (itemShape) instead of a pack-level default kept the schema decision
+    deferred to the actual authors (t-003) without blocking t-002 on an
+    answer from Silas -- a reversible, self-documenting way to carry an
+    open question forward instead of parking the task at needs-human.

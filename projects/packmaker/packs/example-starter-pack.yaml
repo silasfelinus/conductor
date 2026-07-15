@@ -1,0 +1,91 @@
+# Worked example for packmaker/t-002's manifest schema — see SCHEMA.md in this
+# directory for the full field reference. This is a small, all-draft, free
+# pack: one item of each type, none generated yet (no refId on any item).
+# Writing or editing this file performs no generation, API calls, or DB
+# writes — it is a plan the admin generator (t-004) will later act on.
+
+schemaVersion: 1
+id: starter-sampler
+title: Starter Sampler
+description: >
+  A tiny four-item sample pack (one location, one genre, one character, one
+  reward) used to validate the manifest schema end-to-end before drafting
+  the real launch packs (Uncanny Valor, Arcane Whimsy) in t-003.
+owner: silas
+visibility: draft
+
+price:
+  hook: free
+
+items:
+  - id: sample-location
+    type: location
+    itemShape: dream
+    draftPayload:
+      title: The Lantern Archive
+      description: >
+        A drifting library-ship whose shelves rearrange themselves overnight,
+        cataloguing stories that haven't been told yet.
+      generationPrompt: >
+        Write a short evocative location description (80-120 words) for a
+        drifting library-ship that reorganizes its own shelves overnight,
+        for use as a kind_robots Dream (dreamType: LOCATION) description.
+      artPrompt: >
+        A vast wooden library-ship floating among clouds, shelves spiraling
+        upward, warm lantern light, painterly fantasy illustration.
+    notes: Placeholder location for schema validation only.
+
+  - id: sample-genre
+    type: genre
+    itemShape: facet
+    draftPayload:
+      title: Wistful Adventure
+      description: >
+        Adventure stories carrying a bittersweet undertone — triumph mixed
+        with the cost of getting there.
+      generationPrompt: >
+        Write a one-sentence flavor description for a "Wistful Adventure"
+        genre Facet (kind: GENRE) usable as a short tag descriptor.
+      artPrompt: >
+        Abstract genre icon: a compass rose fading into autumn leaves,
+        muted warm palette, flat illustration style.
+    notes: Placeholder genre tag for schema validation only.
+
+  - id: sample-character
+    type: character
+    itemShape: character
+    draftPayload:
+      title: Corvin Ashwrite
+      description: >
+        A retired cartographer turned reluctant guide, more comfortable
+        reading maps than making conversation.
+      generationPrompt: >
+        Write a short character backstory (100-150 words) for Corvin
+        Ashwrite, a retired cartographer, for use as a kind_robots Character
+        row's flavor text. Suggest class/species and a short list of notable
+        traits.
+      artPrompt: >
+        Portrait of a weathered middle-aged cartographer, ink-stained hands,
+        worn leather satchel of maps, muted earth tones, character concept
+        art.
+    notes: >
+      Uses itemShape: character (not dream) per SPEC.md §7's recommendation
+      for builder/game-facing packs — full stat-block row, not a lore-only
+      Dream.
+
+  - id: sample-reward
+    type: reward
+    itemShape: reward
+    draftPayload:
+      title: Ashwrite's Compass
+      description: >
+        A well-worn brass compass that always points toward the nearest
+        unexplored path.
+      generationPrompt: >
+        Write flavor text (2-3 sentences) for a kind_robots Reward named
+        "Ashwrite's Compass" (rewardType: ITEM), themed around navigation
+        and curiosity.
+      artPrompt: >
+        A brass pocket compass with a worn leather strap, engraved star
+        motif on the lid, item-icon style, soft studio lighting.
+    notes: Linked conceptually to sample-character; no DreamToReward relation until sample-location is generated.

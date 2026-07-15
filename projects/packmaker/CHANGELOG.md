@@ -17,3 +17,12 @@
   interim (isPublic/isMature/isActive) pending kind-robots t-008; DLC
   purchases build on digital-storefront's existing Product/Entitlement
   design (t-009) rather than a new entitlement model.
+- t-002 done: pack manifest schema (v1) written as `projects/packmaker/packs/SCHEMA.md`,
+  with a validated worked example (`packs/example-starter-pack.yaml`, four
+  items — one per type, all draft). Schema follows SPEC.md's item-type
+  mapping and resolves §7's open question at the item level via an explicit
+  `itemShape` field (a `character`-type entry can choose `dream` or
+  `character` per item, not per pack). `price.hook` maps directly onto
+  digital-storefront's `Product`/`Entitlement` design (SPEC §5); `visibility`
+  encodes the interim all-or-nothing `isPublic` rule from SPEC §4 pending
+  kind-robots t-008.
