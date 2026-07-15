@@ -1,28 +1,28 @@
 # Roadmap Audit
 
-Generated: `2026-07-14T21:17:20.805804+00:00`
+Generated: `2026-07-15T00:52:37.322876+00:00`
 
 This is a conservative structural audit. It reports suspicious state; it does not automatically change task status or remove human gates.
 
 ## Portfolio snapshot
 
-- **40** roadmaps, **33** active projects, **498** tasks
-- **107 ready**, **63 waiting**, **17 needs-human**, **2 claimed/review**, **298 done**
-- Findings: **0 errors**, **1 warnings**, **47 informational**
+- **40** roadmaps, **33** active projects, **503** tasks
+- **109 ready**, **64 waiting**, **17 needs-human**, **0 claimed/review**, **302 done**
+- Findings: **0 errors**, **3 warnings**, **47 informational**
 
 ## Project inventory
 
 | # | Project | State | Kind | Ready | Waiting | Human | In progress | Done / Total |
 |---:|---|---|---|---:|---:|---:|---:|---:|
-| 1 | `challenge-center` | active | software | 1 | 0 | 0 | 2 | 16 / 19 |
-| 2 | `ai-art-academy` | active | software | 4 | 0 | 0 | 0 | 8 / 12 |
+| 1 | `challenge-center` | active | software | 0 | 0 | 0 | 0 | 20 / 20 |
+| 2 | `ai-art-academy` | active | software | 5 | 1 | 0 | 0 | 8 / 14 |
 | 3 | `coloring-book` | active | software | 4 | 5 | 0 | 0 | 11 / 20 |
 | 4 | `humboldt-scoop` | active | software | 1 | 0 | 0 | 0 | 7 / 8 |
 | 5 | `humboldt-scoop-cms` | active | software | 2 | 4 | 0 | 0 | 5 / 11 |
 | 6 | `digital-storefront` | active | software | 3 | 7 | 0 | 0 | 5 / 15 |
 | 7 | `packmaker` | active | software | 2 | 3 | 0 | 0 | 1 / 6 |
 | 8 | `mermaids-of-venice` | active | content | 2 | 0 | 8 | 0 | 2 / 12 |
-| 9 | `kind-robots` | active | software | 7 | 0 | 1 | 0 | 12 / 20 |
+| 9 | `kind-robots` | active | software | 8 | 0 | 1 | 0 | 12 / 21 |
 | 10 | `kindrobots-unraid` | active | software | 1 | 7 | 1 | 0 | 3 / 12 |
 | 11 | `global-ui` | active | software | 2 | 0 | 0 | 0 | 11 / 13 |
 | 12 | `superkate-services-calculator` | active | software | 0 | 0 | 1 | 0 | 35 / 36 |
@@ -47,7 +47,7 @@ This is a conservative structural audit. It reports suspicious state; it does no
 | 31 | `wishmaster` | active | software | 2 | 0 | 0 | 0 | 1 / 3 |
 | 32 | `engagement` | finished | software | 0 | 0 | 0 | 0 | 3 / 3 |
 | 33 | `ruler-hooked` | active | software | 7 | 1 | 0 | 0 | 2 / 10 |
-| 34 | `dream-cycle` | active | software | 5 | 3 | 0 | 0 | 5 / 13 |
+| 34 | `dream-cycle` | active | software | 6 | 3 | 0 | 0 | 5 / 14 |
 | — | `animation-studio` | missing | software | 3 | 4 | 0 | 0 | 1 / 8 |
 | — | `approval-portal` | retired | software | 0 | 0 | 0 | 0 | 3 / 5 |
 | — | `career-transition` | retired | content | 3 | 4 | 0 | 0 | 1 / 8 |
@@ -61,9 +61,11 @@ This is a conservative structural audit. It reports suspicious state; it does no
 
 _None._
 
-### Warning (1)
+### Warning (3)
 
 - **ROADMAP_MISSING_OVERRIDE** — `animation-studio`: Roadmap has no project-overrides.yaml entry.
+- **ACTIVE_PROJECT_ALL_DONE** — `challenge-center`: All tasks are done but project override remains active.
+- **ACTIVE_PROJECT_NO_OPEN_TASKS** — `challenge-center`: Active project has no open tasks; mark finished/paused or add an intentional recurring task.
 
 ### Info (47)
 
