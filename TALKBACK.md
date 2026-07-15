@@ -4175,3 +4175,53 @@ active=0/idle=0 while still failing to hand out a connection — that pattern
 points at the DB refusing/unreachable rather than ordinary load exhaustion.
 Once fixed, close `kind-robots/t-022`; conductor's sync/janitor workflows
 need no code change and will self-recover once the API is healthy.
+
+## 2026-07-15 | Reviewer → Silas | global-ui/t-015 | merged (kind_robots PR #293, hourly burst-mode rotation)
+
+**Decision:** merged
+
+**Detail:** Hourly rotation cycle: kind-robots was worked last cycle (kind_robots
+PR #292, merged); `kindrobots-unraid` is next in `priority.yaml` but had 0
+unblocked `ready` tasks (`resolve_deps.py` found nothing new to unblock; the
+rest are `waiting`/`needs-human`), so moved to `global-ui`, which had 5 ready
+tasks from t-005's navigation-map audit.
+
+- Claimed `global-ui/t-015` via `claim_task.py` (avoids the rotation-collision
+  gap from conductor/t-040). Implemented the per-milestone collapsed
+  "Completed (N)" disclosure for done tasks in kind_robots'
+  `components/pages/conductor-page.vue`, per `TASK-SURFACE-SPEC.md` section 7:
+  split the existing flat task list into `activeTasks` (unchanged rendering)
+  and `doneTasksByMilestone` (done tasks grouped by milestone id, ordered to
+  match `selectedProject.milestones`, with an "Other" fallback bucket for any
+  task whose milestone id doesn't match a known milestone). Done tasks render
+  in a collapsed `<details>` per milestone.
+- Installed `node_modules` fresh in the kind_robots sandbox (wasn't present)
+  to actually run `eslint`/`vue-tsc` rather than skipping verification;
+  reverted an unrelated `package-lock.json` diff and 8 unrelated
+  prettier-reformatting hunks the local prettier install introduced on
+  pre-existing lines (confirmed via `git stash` that even origin/main's
+  pristine file fails `prettier --check` under this environment's installed
+  prettier version — pre-existing drift, not something to fix in this PR).
+- Opened kind_robots PR #293. Its "TypeScript" check failed CI, but I pulled
+  the job logs/artifact and confirmed it's the same 19 pre-existing errors
+  tracked at kind-robots/t-020 (byte-identical count/file-list to what PR
+  #292 — merged an hour earlier — also failed on). Cross-checked PR #292's
+  check-run history directly to confirm the precedent before merging rather
+  than assuming. Merged (squash).
+- Verification: `eslint` clean on the touched file; `vue-tsc --noEmit` shows
+  the same 19 baseline errors before/after (diffed the list; `conductor-page.vue`
+  appears in neither). Could not exercise the page live — dev sandbox has no
+  DB, the same limitation t-012 already documented for this page.
+
+**What was good:**
+- Didn't take the CI failure at face value or silently ignore it — pulled
+  the actual TypeScript diagnostics artifact and PR #292's check-run history
+  to confirm the failure was the known baseline before merging, rather than
+  either blocking on a false-positive or merging blind.
+- Kept the diff scoped to exactly what t-015 asked for; didn't fold in the
+  sibling t-014 (For You inbox) or t-017 (nav-manifest CI) tasks filed from
+  the same audit even though they're related and possibly tempting.
+
+**Kaizen task:** filed `global-ui/t-018` (show a per-milestone "N/M tasks
+done" count on the milestone cards, reusing this cycle's grouping logic) —
+a natural, small follow-on now that per-milestone task grouping exists.
