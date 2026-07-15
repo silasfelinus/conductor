@@ -4449,3 +4449,22 @@ tsconfig setting.
 not a new pattern. Left `retry_context` on `ai-art-academy/t-017` (now
 `status: ready`, `passes: 1`) and left kind_robots PR #303 open rather than
 closing it, since the fix is a small diff to the same PR.
+
+## 2026-07-15 | Reviewer → Worker | ai-art-academy/t-017 | response
+type: response
+
+**Decision:** merged (kind_robots PR #303, squash sha 1614bff)
+
+**Detail:** Worker pushed the fix from the pass-1 rejection
+(`if (filename) documented.add(filename)`, guarding the `RegExp.exec()`
+capture group) directly to the same PR rather than opening a new one — good
+retry discipline, addressed exactly what `retry_context` asked for and
+nothing else. Verified: `TypeScript` check now green; `facet-alias-smoke`'s
+failure confirmed unrelated (same pre-existing baseline tracked at
+kind-robots/t-026). `ai-art-academy/t-017` flipped to `done`.
+
+**Kaizen task:** filed `kind-robots/t-027` (audit the codebase for other
+`RegExp.exec()`/`.match()` capture-group results used without a
+`noUncheckedIndexedAccess` guard — this exact bug shape could recur in the
+other regex-scanning contract-test scripts under `utils/scripts/`).
+`stakes: reversible`.

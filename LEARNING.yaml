@@ -1040,3 +1040,19 @@ records:
     handoff template's Stakes/Flags-for-Reviewer/Kaizen-suggestion sections
     entirely rather than marking them n/a -- not a rejection-worthy issue on
     its own, but worth a Worker-side habit fix if it keeps recurring.
+- date: '2026-07-15'
+  project: ai-art-academy
+  task: t-017
+  kind: software
+  stakes: reversible
+  passes: 1
+  outcome: done
+  failure_category: quality
+  lesson: >
+    Pass 1 failed CI for real (not the project's usual pre-existing-baseline
+    pattern) -- verified by confirming main was green on the same workflow
+    before assuming baseline, then reproducing locally. RegExp.exec()
+    capture groups need an explicit guard under noUncheckedIndexedAccess;
+    filed kind-robots/t-027 to audit for the same shape elsewhere. Worker's
+    pass-2 fix was minimal and correctly targeted -- retry_context worked as
+    intended.

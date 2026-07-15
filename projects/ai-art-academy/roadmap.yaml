@@ -360,23 +360,10 @@ tasks:
   - id: t-017
     milestone: m6
     title: Add a regression check that fails if academy-style-detail.vue gains a new caller undocumented in its usage-context comment
-    status: claimed
+    status: done
     owner: worker
     passes: 1
     stakes: reversible
-    retry_context: >
-      pass 1 failed (quality): kind_robots PR #303 (utils/scripts/verifyAcademyStyleDetailCallers.ts)
-      fails the TypeScript check for real, not the known pre-existing baseline — verified by
-      reproducing locally (`npm run test` on the PR branch) and confirming main at 176eb60 is
-      currently green on the same typecheck.yml workflow. Error: line 55,
-      `documentedCallers.add(match[1])` — the project's tsconfig sets
-      `noUncheckedIndexedAccess: true`, so `match[1]` from `lineRegex.exec(contents)` types as
-      `string | undefined`, not `string`. Do differently: guard the assignment (e.g.
-      `if (match[1]) documentedCallers.add(match[1])`, or an `assert.ok(match[1])` check
-      consistent with the file's existing `node:assert/strict` usage) before merging. Everything
-      else about the PR (approach, test coverage, facet-alias-smoke being the separate known
-      pre-existing failure) was correct — this is a one-line fix, not a rewrite. See review
-      comment: https://github.com/silasfelinus/kind_robots/pull/303#issuecomment-4986167791
     note: >
       Kaizen from t-016 (Reviewer, 2026-07-15): t-016 added a hand-written comment
       documenting academy-style-detail.vue's three call sites
@@ -391,11 +378,19 @@ tasks:
       the conductor PR #579 body both omitted the handoff template's
       Stakes/Flags-for-Reviewer/Kaizen-suggestion sections — substituting this
       kaizen since neither PR offered one.
-      REJECTED 2026-07-15T23:20Z (pass 1, quality): see retry_context above. kind_robots
-      PR #303 left open for the fix rather than opening a new PR.
+      REJECTED 2026-07-15T23:20Z (pass 1, quality): kind_robots PR #303's
+      TypeScript check failed for real (match[1] typed string | undefined under
+      noUncheckedIndexedAccess) — see conductor PR #585 for full retry_context
+      (removed now that the task is done). kind_robots PR #303 left open for the
+      fix rather than opening a new PR.
+      DONE 2026-07-15T23:25Z: Worker pushed the one-line fix
+      (`if (filename) documented.add(filename)`) to the same PR. Verified
+      TypeScript check now green; facet-alias-smoke's failure confirmed as the
+      separate known pre-existing baseline (tracked at kind-robots/t-026, not a
+      blocker). Merged kind_robots PR #303 (squash, sha 1614bff).
     claimed_by: claude-burst-20260715-2300
     claimed_at: '2026-07-15T23:25:33Z'
-    updated: '2026-07-15T23:25:33Z'
+    updated: '2026-07-15T23:26:00Z'
 
   - id: t-010
     milestone: m6

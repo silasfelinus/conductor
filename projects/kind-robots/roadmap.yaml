@@ -798,3 +798,24 @@ tasks:
       creates (the Facet/FacetAlias tables + constraints), or by regenerating
       an equivalent standalone migration.sql fixture for the smoke test to
       run against, and update the path triggers to match.
+
+  - id: t-027
+    milestone: m1
+    title: Audit codebase for RegExp capture-group results used without a noUncheckedIndexedAccess guard
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Kaizen from ai-art-academy/t-017 (Reviewer, 2026-07-15, kind_robots PR #303):
+      that PR's first pass failed CI with `error TS2345: Argument of type
+      'string | undefined' is not assignable to parameter of type 'string'` — a
+      `RegExp.exec()` capture group (`match[1]`) was used directly without a null
+      check, which the project's `noUncheckedIndexedAccess: true` tsconfig setting
+      correctly types as `string | undefined`. Grep the codebase (especially
+      `utils/scripts/*.ts`, which has several similar regex-scanning contract-test
+      scripts) for other `.exec(`/`.match(` capture-group usages passed directly
+      into a function expecting `string` without a guard, and either add the guard
+      or confirm each one is provably safe (e.g. captured from a fixed-structure
+      literal). Small, mechanical, no design judgment needed.
+    updated: '2026-07-15T23:25:00Z'
