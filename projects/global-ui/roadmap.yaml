@@ -280,14 +280,14 @@ tasks:
 - id: t-015
   milestone: m5
   title: Add the "Completed (N)" collapsed disclosure for done tasks per project
-  status: review
+  status: done
   owner: worker
   passes: 0
   stakes: reversible
-  note: 'DONE 2026-07-15 (claude-burst-2026-07-15-rotation2): components/pages/conductor-page.vue''s project Tasks list now splits into activeTasks (unchanged flat rendering for non-done tasks) and doneTasksByMilestone (a computed grouping done tasks by milestone id, ordered to match selectedProject.milestones, with an ''Other'' fallback bucket for any unmatched milestone id). Done tasks render inside a collapsed <details> per milestone headed ''<milestone title> . Completed (N)'', matching TASK-SURFACE-SPEC.md section 7. Verified: eslint clean on the touched file; vue-tsc --noEmit shows the same 19 pre-existing errors tracked at kind-robots/t-020 (conductor-page.vue introduces none). Could not exercise the page live -- dev sandbox has no DB, same limitation t-012 already documented for this page. kind_robots PR #293 opened, subscribed to its activity.'
+  note: 'DONE 2026-07-15 (claude-burst-2026-07-15-rotation2): components/pages/conductor-page.vue''s project Tasks list now splits into activeTasks (unchanged flat rendering for non-done tasks) and doneTasksByMilestone (a computed grouping done tasks by milestone id, ordered to match selectedProject.milestones, with an ''Other'' fallback bucket for any unmatched milestone id). Done tasks render inside a collapsed <details> per milestone headed ''<milestone title> . Completed (N)'', matching TASK-SURFACE-SPEC.md section 7. Verified: eslint clean on the touched file; vue-tsc --noEmit shows the same 19 pre-existing errors tracked at kind-robots/t-020 (conductor-page.vue introduces none -- byte-diffed before/after). Could not exercise the page live -- dev sandbox has no DB, same limitation t-012 already documented for this page. kind_robots PR #293 merged (squash, be44ae5); the PR''s ''TypeScript'' check showed the same 19 known baseline errors and was merged anyway, matching the precedent set an hour earlier on kind-robots PR #292.'
   claimed_by: claude-burst-2026-07-15-rotation2
   claimed_at: '2026-07-15T15:08:34Z'
-  updated: '2026-07-15T15:18:47Z'
+  updated: '2026-07-15T15:22:24Z'
 - id: t-016
   milestone: m5
   title: Confirm or create the site-audit agent''s Claude Code Remote trigger
@@ -322,6 +322,22 @@ tasks:
     NAVIGATION-MAP.md as the first test cases.
 
     '
+- id: t-018
+  milestone: m5
+  title: Show a per-milestone "N/M tasks done" count on the milestone cards
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  note: >
+    Kaizen from t-015's implementation (2026-07-15): the milestone cards in
+    conductor-page.vue's Tasks tab already have per-milestone task counts
+    available as a side effect of t-015's doneTasksByMilestone grouping (done
+    tasks) and activeTasks (everything else) -- extend the grouping to also
+    count active tasks per milestone id and render "N/M done" next to each
+    milestone's weight/status badge, so progress is visible without opening
+    the (now-collapsed) completed disclosure or the task list at all. Small,
+    reversible, front-end-only change; no new data source needed.
 milestones:
 - id: m1
   title: Task language + presentation model
