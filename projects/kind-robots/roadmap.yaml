@@ -690,11 +690,11 @@ tasks:
   - id: t-025
     milestone: m3
     title: Guard against DATABASE_CONNECTION_LIMIT fallback regressing below a safe minimum in server/utils/prisma.ts
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
-    updated: "2026-07-15T19:55:00Z"
+    updated: '2026-07-15T20:07:50Z'
     note: >
       Kaizen from t-022 (Reviewer, kind_robots PR #296): the
       DATABASE_CONNECTION_LIMIT fallback default in server/utils/prisma.ts
@@ -708,3 +708,5 @@ tasks:
       CI/lint check referencing this history, so a future refactor of the
       pool-lifecycle/circuit-breaker code can't silently reintroduce the
       unsafe default a third time without a test failing.
+    claimed_by: worker/claude-burst-20260715-2007
+    claimed_at: '2026-07-15T20:07:50Z'
