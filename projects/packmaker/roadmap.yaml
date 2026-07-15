@@ -105,21 +105,57 @@ tasks:
 - id: t-003
   milestone: m2
   title: Draft the contents of the two launch packs (Uncanny Valor, Arcane Whimsy)
-  status: claimed
+  status: needs-human
   owner: worker
   passes: 0
   stakes: reversible
+  soft_gate: false
   depends_on: t-002
   gate_human: true
   approved_by_human: false
-  note: >
-    Draft full manifests for both packs in projects/packmaker/packs/: Uncanny Valor
-    (super-powers theme) and Arcane Whimsy (magic-powers theme), each with a themed
-    set of locations, genres, characters, and rewards (names, descriptions,
-    generation prompts, art prompts). Drafts only — nothing is generated into the
-    live database or published. Ends needs-human: Silas approves the pack names
-    (he may rename) and contents before any generation runs.
   claimed_by: claude-burst-20260715-2306
+  updated: '2026-07-15T23:20:00Z'
+  note: >
+    FOR SILAS: Both launch-pack manifests are drafted, validated against the
+    t-002 schema, and committed at projects/packmaker/packs/uncanny-valor.yaml
+    and projects/packmaker/packs/arcane-whimsy.yaml. Nothing was generated,
+    published, or written to the live database — these are plain YAML drafts.
+
+    Uncanny Valor (super-powers, price hook: dlc) — 11 items: 2 locations
+    (Ironclad Skyport, a scrappy airship-dock HQ; Sublevel Nine, a converted
+    subway containment wing), 2 genres (Grounded Heroics, Bombastic
+    Showdown), 4 characters as full Character-shape stat-block entries per
+    SPEC.md §7's recommendation (Volta Ferrin — living lightning conduit;
+    Greyline — intangible ex-cop; Bastion Ruk — invulnerable gentle giant;
+    Echo Vance — sound-manipulating ex-musician), 3 rewards each tied to one
+    character (Ferrin Coil, Greyline's Badge, Bastion's Core Fragment).
+
+    Arcane Whimsy (magic-powers, price hook: dlc) — 11 items: 2 locations
+    (The Bramblewick Market, a hidden fog-only bazaar; Hollow Moon
+    Observatory, a cliffside academy whose telescope shows somewhere else),
+    2 genres (Cozy Conjuring, Wyrd Peril), 4 characters as Character-shape
+    entries (Marigold Thistlewick — hedge witch; Corvid Nightshade —
+    raven-bonded illusionist; Pell Wickstone — clumsy apprentice enchanter;
+    The Hollow Warden — ancient moss golem), 3 rewards each tied to one
+    character (Thistlewick's Ledger, Nightshade Feather, Warden's Lichen
+    Cloak).
+
+    TO APPROVE: read both YAML files (or the PR diff) and either (a) approve
+    as-is, or (b) leave notes on what to rename/reshape — you may rename
+    either pack per the original brief. Once happy, set
+    `approved_by_human: true` and `status: done` here (or note specific
+    edits you want made first). This unblocks t-004 (the admin generator
+    view, cross-repo in kind_robots) and, downstream, digital-storefront's
+    DLC catalog work — no generation, Product rows, or Stripe activity
+    happens until t-004 is built and you separately approve going live.
+  outcome_note: >
+    No code changes; conductor-only PR (this is a design-brief project per
+    AGENTS.md's software/content/proposal distinction — packmaker's own
+    2026-07-05 TALKBACK review says briefs/drafts stay briefs, not
+    implementations). Both manifests pass a local YAML schema sanity check
+    (schemaVersion, id-matches-filename, visibility: draft, price.hook: dlc,
+    every item has draftPayload with no refId, all four required
+    draftPayload sub-fields present) — see PR test plan.
   claimed_at: '2026-07-15T23:08:26Z'
   updated: '2026-07-15T23:08:26Z'
 - id: t-004
