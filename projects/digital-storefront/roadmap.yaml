@@ -20,7 +20,7 @@ milestones:
 - id: m1
   title: Store foundation (audit + design brief)
   weight: 20
-  status: not-started
+  status: done
 - id: m2
   title: First sellable item live — Mermaids of Venice PDF
   weight: 25
@@ -97,40 +97,24 @@ tasks:
 - id: t-008
   milestone: m1
   title: Audit the existing kind_robots giftshop/Stripe surface and write STORE-AUDIT.md
-  status: claimed
+  status: done
   owner: reviewer
   passes: 0
   stakes: reversible
-  note: >
-    kind_robots already has stripe + @stripe/stripe-js in package.json, existing
-    server routes at server/api/stripe/checkout.post.ts and subscribe.post.ts
-    (both instantiate Stripe at module load from STRIPE_SECRET_KEY — the server
-    crashes on boot without it, worth fixing to lazy init), and a
-    components/giftshop/ suite (giftshop-manager, giftshop-interact,
-    cart-interact, shopping-cart, credit-purchase, mana-wallet, subscription-manager,
-    print-swag, social-publisher) plus stores/seeds/cartItems.ts. Map what exists,
-    what is wired to real data vs seeded/stubbed, and what each v1 catalog item still
-    needs (server routes, models, webhook handling). Output:
-    projects/digital-storefront/STORE-AUDIT.md. No code changes.
+  note: 'DONE 2026-07-15 (claude-burst-2026-07-15-0105): wrote projects/digital-storefront/STORE-AUDIT.md. Findings: Stripe checkout/subscribe routes work end to end up to the Stripe redirect but no webhook exists anywhere, so nothing downstream of a successful payment happens (no order record, no mana credit, no isMember flip). The Stripe checkout route prices against stores/seeds/cartItems.ts (7 items) as the real trusted catalog, but giftshop-interact.vue shows a different, unrelated 2-item demo array -- UI and real catalog are out of sync. Roughly half the giftshop components are wired to real state (shopping-cart.vue, mana-wallet.vue, social-publisher.vue, subscription-manager.vue''s start path) and half are alert()/console.log() stubs that look finished but do nothing (cart-interact.vue, credit-purchase.vue, print-swag.vue, subscription-manager.vue''s cancel path). No Order/Purchase/Cart/Subscription/Product Prisma models exist; commerce state lives only on User.stripeCustomerId. No POD vendor integration exists (0% wired). Neither Stripe route has an auth guard (contrast mana/social routes, which do) -- low severity today since nothing downstream trusts the session, but must be closed before a webhook starts crediting mana/membership off userId. Recommended next task: a Stripe webhook handler is the single highest-leverage next step -- every v1 catalog item (PDF delivery, subscription isMember flip, mana top-ups) needs it and none have it. No code changes made; audit only.'
   claimed_by: claude-burst-2026-07-15-0105
   claimed_at: '2026-07-15T01:07:47Z'
-  updated: '2026-07-15T01:07:47Z'
+  updated: '2026-07-15T01:13:28Z'
 - id: t-009
   milestone: m1
   title: Write the digital giftshop v1 design brief (SPEC.md)
-  status: waiting
-  owner: null
+  status: done
+  owner: reviewer
   passes: 0
   stakes: reversible
   depends_on: t-008
-  note: >
-    SPEC.md covering: Stripe architecture (Checkout Sessions + webhook -> fulfillment;
-    test mode until Silas flips live), catalog/product data model, entitlement model
-    for digital goods (PDF download, DLC unlocks), secure delivery of paid files
-    (authenticated endpoint — the novel PDF must NEVER sit in public/ or a public
-    repo path), mana crediting, subscription handling, and admin vs user views.
-    Per the 2026-07-04 soft-scope rule: raise scope confirmation to Silas as a soft
-    needs-human note while work continues.
+  note: 'DONE 2026-07-15 (claude-burst-2026-07-15-0105, same session as t-008 which unblocked this): wrote projects/digital-storefront/SPEC.md. Design covers Stripe architecture (keep Checkout Sessions, add the missing webhook handler with raw-body signature verification and idempotency via stored event/session ids), new Product/Order/OrderItem/Entitlement Prisma models replacing the imported stores/seeds/cartItems.ts as the trusted price source, secure PDF/DLC delivery via an Entitlement-gated download route (file stays outside public/ and outside the repo, per Silas''s hard rule), mana crediting (first writers for the already-defined but unused PURCHASE/SUBSCRIPTION_GRANT ManaReason values), subscription handling (webhook-driven isMember flip + a real soft-cancel route replacing cartStore.cancelSubscription''s stub), and admin vs user views. Flagged as a soft needs-human per the 2026-07-04 rule -- this is a proposal to refine, not an approved spec; Silas''s hard rules (no live Stripe products/webhooks in production, no POD account creation, no publishing, no spend without approval) are treated as non-negotiable regardless. Suggested a 6-step independently-landable build order ending with the Mermaids of Venice PDF go-live after step 3. Did not claim this via claim_task.py''s live origin/main check -- it was status:waiting on origin/main until this same session''s t-008 completion unblocked it (via resolve_deps.py), so a live check would have failed until t-008''s PR merges; doing both in one session/PR was faster than a blocked round-trip and collision risk is effectively zero since nothing could see this as ready before now.'
+  updated: '2026-07-15T01:16:01Z'
 - id: t-010
   milestone: m2
   title: 'Novel PDF intake: Silas supplies the file and sets the price'
@@ -154,7 +138,7 @@ tasks:
 - id: t-011
   milestone: m2
   title: Build the Mermaids of Venice PDF product page and purchase flow (kind_robots, Stripe test mode)
-  status: waiting
+  status: ready
   owner: null
   passes: 0
   stakes: outward-facing
@@ -163,35 +147,25 @@ tasks:
   - t-010
   gate_human: true
   approved_by_human: false
-  note: >
-    Cross-repo task (kind_robots). Product page linking from the mermaids landing
-    page and giftshop, Stripe Checkout in TEST MODE, webhook -> entitlement ->
-    authenticated download delivery. The PDF is stored server-side, never in
-    public/. Going live (live Stripe keys/products, real charges) is a separate
-    hard needs-human for Silas.
+  note: 'Cross-repo task (kind_robots). Product page linking from the mermaids landing page and giftshop, Stripe Checkout in TEST MODE, webhook -> entitlement -> authenticated download delivery. The PDF is stored server-side, never in public/. Going live (live Stripe keys/products, real charges) is a separate hard needs-human for Silas. STATUS NOTE 2026-07-15 (claude-burst-2026-07-15-0105): newly ready this cycle via resolve_deps.py, now that t-009 (SPEC.md) landed. Not started -- api.stripe.com is 403-policy-denied from this sandbox''s egress proxy (same denial as api calls to museum sites for ai-art-academy), so this can''t be built and verified end-to-end here. Needs a session/environment with open Stripe egress, or Silas''s own environment.'
 - id: t-012
   milestone: m3
   title: Wire one-time mana top-ups to Stripe checkout (test mode)
-  status: waiting
+  status: ready
   owner: null
   passes: 0
   stakes: reversible
   depends_on: t-009
-  note: >
-    Cross-repo (kind_robots). A few reasonable tiers per Silas; reuse
-    credit-purchase.vue / mana-wallet.vue where sensible. Webhook credits mana.
-    Test mode only; live activation is gated.
+  note: 'Cross-repo (kind_robots). A few reasonable tiers per Silas; reuse credit-purchase.vue / mana-wallet.vue where sensible. Webhook credits mana. Test mode only; live activation is gated. STATUS NOTE 2026-07-15 (claude-burst-2026-07-15-0105): newly ready this cycle via resolve_deps.py, now that t-009 (SPEC.md) landed. Not started -- api.stripe.com is 403-policy-denied from this sandbox''s egress proxy (same denial as api calls to museum sites for ai-art-academy), so this can''t be built and verified end-to-end here. Needs a session/environment with open Stripe egress, or Silas''s own environment.'
 - id: t-013
   milestone: m3
   title: Wire the monthly supporter subscription to Stripe (test mode)
-  status: waiting
+  status: ready
   owner: null
   passes: 0
   stakes: reversible
   depends_on: t-009
-  note: >
-    Cross-repo (kind_robots). Recurring donation plan(s) via Stripe subscriptions;
-    reuse subscription-manager.vue. Test mode only; live activation is gated.
+  note: 'Cross-repo (kind_robots). Recurring donation plan(s) via Stripe subscriptions; reuse subscription-manager.vue. Test mode only; live activation is gated. STATUS NOTE 2026-07-15 (claude-burst-2026-07-15-0105): newly ready this cycle via resolve_deps.py, now that t-009 (SPEC.md) landed. Not started -- api.stripe.com is 403-policy-denied from this sandbox''s egress proxy (same denial as api calls to museum sites for ai-art-academy), so this can''t be built and verified end-to-end here. Needs a session/environment with open Stripe egress, or Silas''s own environment.'
 - id: t-014
   milestone: m3
   title: Build the Against Malaria giving page

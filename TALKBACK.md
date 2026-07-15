@@ -3609,3 +3609,87 @@ reclaimed stale claim (original claim had expired past `CLAIM_TTL_MINUTES`);
 contract" CI failure — 3 files reference unknown tabs) — filed as a real
 roadmap task per the same reasoning as t-020: an unrelated red CI check
 degrades the "all green" merge signal every session relies on.
+
+## 2026-07-15 | Reviewer | digital-storefront/t-008, t-009 | closed (hourly burst-mode pick)
+
+**Decision:** done, both. Rotated off ai-art-academy/coloring-book/challenge-center
+after confirming their `ready` tasks were all blocked in this environment
+(generation backend needs `KR_API_TOKEN`, absent here; museum/Wikimedia image
+downloads for `ai-art-academy/t-008` and `t-013` blocked by the sandbox
+egress proxy with a 403 policy denial — confirmed directly against
+`www.metmuseum.org` and `commons.wikimedia.org` before giving up on that
+project, not just assumed from the roadmap note). Followed CONTROL.md's
+priority order down to `digital-storefront/t-008`, a pure code-read + doc
+task with no external dependency.
+
+**What happened:**
+1. `claim_task.py` claimed `t-008` cleanly against live `origin/main`.
+2. Delegated the file-by-file kind_robots giftshop/Stripe read to an Explore
+   subagent (routes, 9 components, seed catalog, cart store, Prisma models,
+   POD search, social-publisher dispatch, auth guards) — kept the main
+   session's context free for synthesis rather than pasting ~1800 lines of
+   source inline.
+3. Wrote `projects/digital-storefront/STORE-AUDIT.md`. Headline finding:
+   Stripe checkout/subscribe work up to the redirect, then nothing — no
+   webhook exists anywhere, so a successful payment leaves no local trace
+   beyond a pre-payment `stripeCustomerId`. Also flagged a live catalog
+   mismatch (`giftshop-interact.vue`'s UI shows different items than what
+   `stores/seeds/cartItems.ts` actually prices in Stripe) and a Stripe-route
+   auth gap (no check that the caller owns the `userId` in the request body,
+   unlike the mana/social routes which do check).
+4. `resolve_deps.py` unblocked `t-009` (design brief) the moment `t-008`
+   landed `done` locally. Since `t-009` was `status: waiting` on
+   `origin/main` until that instant, no other session could have raced it —
+   claimed it in-session without a separate `claim_task.py` round-trip
+   (documented the reasoning in the task's own `note:` for anyone auditing
+   later) rather than forcing an unnecessary blocked PR-then-claim cycle.
+5. Wrote `projects/digital-storefront/SPEC.md`, building directly on the
+   audit: new `Product`/`Order`/`OrderItem`/`Entitlement` Prisma models,
+   webhook handler design (raw-body signature verification, idempotency),
+   secure PDF/DLC delivery route, mana-crediting writers for the
+   already-defined-but-unused `PURCHASE`/`SUBSCRIPTION_GRANT` `ManaReason`
+   values, and a real subscription-cancel route replacing the existing stub.
+   Flagged as soft needs-human per the 2026-07-04 rule (a proposal to
+   refine, not an approved spec) while keeping Silas's hard rules (no live
+   Stripe config, no POD account creation, no spend without approval)
+   non-negotiable.
+6. `resolve_deps.py` unblocked three more tasks the moment `t-009` landed:
+   `t-011` (PDF purchase flow — `outward-facing` + `gate_human: true`, a
+   **hard** gate, stays `ready`/needs a Worker to build it to
+   `needs-human` for Silas's sign-off, not implement-and-close), `t-012`
+   (mana top-ups, test mode), `t-013` (subscription wiring, test mode).
+   Deliberately stopped here rather than starting any of the three in the
+   same cycle — they're substantial cross-repo Stripe/Prisma builds I can't
+   verify end-to-end in this sandbox (Stripe test-mode credentials aren't
+   available here either), and `t-011` specifically needs Silas in the loop
+   regardless of how complete the code is. Left them `ready` for the next
+   burst-mode cycle on this project instead of half-building three features
+   in one unreviewable PR.
+7. Ran `audit_roadmaps.py` before and after (0 errors both times once
+   `resolve_deps.py` was re-run to catch the second wave of unblocks) and
+   `build_status.py`/`build_workspace.py` to refresh the generated files.
+
+**What was good:**
+- Verified the "generation backend blocked" and "museum egress blocked"
+  claims directly (curl against the proxy, checked
+  `/__agentproxy/status` for the exact 403 policy-denial reason) instead of
+  taking the roadmap notes' word for it and picking a task I'd have to
+  soft-gate later anyway.
+- Delegated the wide, shallow multi-file read to a subagent instead of
+  reading nine Vue components and three server routes inline — kept this
+  session's context budget for the synthesis and writing work.
+- Re-ran `resolve_deps.py` a second time after `t-009` landed rather than
+  assuming one pass caught everything — it surfaced three more unblocks
+  (`t-011/012/013`) that would otherwise have sat `waiting` until the next
+  session happened to re-run it.
+- Stopped at a clean, verifiable, doc-only boundary instead of chasing the
+  unblocked chain into unverified cross-repo Stripe code in the same PR.
+
+**What to improve:**
+- Nothing new to flag this cycle. (Confirmed while writing this note:
+  `api.stripe.com` also gets a 403 policy denial from the sandbox proxy,
+  same as the museum hosts — so `t-011/012/013` genuinely can't be built
+  and verified end-to-end from this sandbox regardless of test-mode keys;
+  whoever picks those up next needs a session with open egress to Stripe,
+  or Silas's own environment, same pattern as the ai-art-academy image
+  downloads.)
