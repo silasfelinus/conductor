@@ -4083,3 +4083,57 @@ data-sync, no design judgment, no external access required.
 **Kaizen task:** none new this cycle — `conductor/t-046` (node_modules caching recipe)
 and `kind-robots/t-020` (remaining 19 TS errors) already cover the open threads this
 session touched.
+
+## 2026-07-15 | Reviewer → Silas | kind-robots/t-017, t-021 | hourly burst-mode cycle
+
+**Decision:** t-017 opened (kind_robots PR #292, awaiting CI); t-021 closed done (no
+code change needed — already fixed)
+
+**Detail:** Hourly burst-mode rotation. Top-of-priority projects (ai-art-academy,
+coloring-book) were re-confirmed still fully blocked this session: `env | grep
+KR_API_TOKEN` empty, and direct curls to metmuseum.org/upload.wikimedia.org/
+api.stripe.com all still return a fresh 403 connect_rejected via the agent-proxy
+(same pattern as the last several cycles' rechecks). digital-storefront's Stripe
+tasks are blocked the same way; humboldt-scoop/-cms have no ready tasks; packmaker
+and mermaids-of-venice aren't in this session's GitHub repo scope. Rotated to
+kind-robots, which had 7 ready tasks with no external-access dependency.
+
+- Claimed kind-robots/t-021 first (smallest, most bounded: a 3-line CI-check
+  fix). Ran `npm run test:channel-content` fresh against current main (9ec971ef)
+  and it passed clean — 0 errors. `git log` on the three files named in the
+  original failure showed three same-day fix commits
+  (14a32527/571d49b0/a9d93ec8, "fix(contract): register account/friends/messages
+  home tab") that landed ~50 minutes after the task's investigation note was
+  written but never flipped the roadmap task to done. Closed t-021 as done with
+  the verification recorded in the note — no kind_robots PR needed since no code
+  changed.
+- Picked up kind-robots/t-017 (DreamRelation REST endpoint) as the cycle's real
+  deliverable: added `server/api/dream-relations/{index.ts,index.get.ts,
+  index.post.ts,[id].delete.ts}` (GET/POST/DELETE, requireApiUser +
+  assertDreamAccess mutate-gate on fromDream, POST upserts on the unique
+  triple), following the `model-builder/runs` and `dreams/[id]/facets` endpoint
+  patterns already in the codebase for consistency. Extended conductor's
+  `scripts/build_dream_records.py` in the same session to call the new
+  endpoint for world→genre RELATED, world→location CONTAINS, and
+  location→genre RELATED edges, closing the KNOWN GAP its own docstring
+  flagged. Opened kind_robots PR #292, subscribed to its activity, task left at
+  `status: review` pending CI/merge.
+- Verification: `vue-tsc --noEmit` (0 new errors vs. the 19 pre-existing tracked
+  at t-020, confirmed by diffing the error list), `eslint` clean on the new
+  files, both `test:channel-content` and `test:channel-resolver` still pass.
+  Could not hit the live endpoint (no `KR_API_TOKEN`/DB here), so
+  `build_dream_records.py`'s new code path was unit-exercised locally with a
+  monkeypatched `kr_call` to confirm correct payloads for a synthetic
+  1-world/2-location proposal.
+
+**What was good:**
+- Didn't just re-implement t-021's fix blind — reproduced the original failing
+  command first, which caught that the task was already resolved and saved a
+  duplicate/conflicting fix attempt.
+- t-017's implementation and its conductor-script consumer landed in the same
+  cycle rather than leaving the endpoint unused, so the daily-dream builder
+  actually benefits next time it runs.
+
+**Kaizen task:** none new this cycle — `kind-robots/t-020` (19 pre-existing
+TS errors) remains the standing open thread; this cycle kept it at the same
+baseline (verified no growth) rather than adding to it.

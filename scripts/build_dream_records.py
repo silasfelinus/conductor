@@ -26,9 +26,10 @@ extraData: {dreamCycle, proposalDate, elementType, element} so the site's
 /daily-dream page can group and render a whole dream — and so the whole
 creation is traceable and removable (the reversibility contract).
 
-KNOWN GAP: kind_robots has no REST endpoint for DreamRelation edges, so the
-LOCATION↔GENRE graph edges are skipped; cohesion comes from extraData tags +
-the dreamIds relation arrays. Filed as a kind_robots follow-up.
+World-graph edges (kind-robots/t-017): the world (PITCH) Dream RELATED to the
+GENRE Dream, world CONTAINS each LOCATION Dream, and each LOCATION RELATED to
+the GENRE Dream — via POST /api/dream-relations. Character/narrator/reward
+cohesion still comes from extraData tags + the dreamIds relation arrays.
 
 Art is queued through the EXISTING self-draining pipeline: one `requests:`
 entry per card appended to projects/art-prompts.yaml targeting kind_robots
@@ -392,6 +393,11 @@ def build_records(proposal: dict, slug: str, pdate: str, dry_run: bool) -> tuple
     if genre:
         built["records"]["vibe"] = {"model": "Dream", "id": genre.get("id"),
                                     "title": vibe.get("title")}
+    genre_id = genre.get("id") if genre else None
+    if world_id and genre_id:
+        kr_call("POST", "/api/dream-relations",
+                {"fromDreamId": world_id, "toDreamId": genre_id, "relationType": "RELATED"},
+                dry_run, results, f"relation: {title} -> {vibe.get('title')} (RELATED)")
 
     # 3. Locations (LOCATION Dreams + cards)
     built["records"]["locations"] = []
@@ -414,6 +420,15 @@ def build_records(proposal: dict, slug: str, pdate: str, dry_run: bool) -> tuple
             built["records"]["locations"].append(
                 {"model": "Dream", "id": dream.get("id"), "title": loc.get("title")})
             location_ids.append(dream.get("id"))
+            loc_id = dream.get("id")
+            if world_id and loc_id:
+                kr_call("POST", "/api/dream-relations",
+                        {"fromDreamId": world_id, "toDreamId": loc_id, "relationType": "CONTAINS"},
+                        dry_run, results, f"relation: {title} -> {loc.get('title')} (CONTAINS)")
+            if loc_id and genre_id:
+                kr_call("POST", "/api/dream-relations",
+                        {"fromDreamId": loc_id, "toDreamId": genre_id, "relationType": "RELATED"},
+                        dry_run, results, f"relation: {loc.get('title')} -> {vibe.get('title')} (RELATED)")
         queue_art(el, loc.get("title", "Location"),
                   f"{loc.get('art_direction', '')}, {vibe_line}, "
                   f"portrait key-art composition, {HOUSE_PROMPT_TAIL}")

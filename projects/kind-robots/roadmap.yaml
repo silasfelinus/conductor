@@ -370,11 +370,11 @@ tasks:
   - id: t-017
     milestone: m3
     title: Add a DreamRelation REST endpoint (create/list dream graph edges)
-    status: ready
-    owner: null
+    status: done
+    owner: worker
     passes: 0
     stakes: reversible
-    updated: '2026-07-14T04:00:00Z'
+    updated: '2026-07-15T14:30:00Z'
     note: >
       Found during dream-cycle Phase 2 (2026-07-14): the DreamRelation Prisma
       model exists (relationType edges like RELATED/CONTAINS/APPEARS_IN) but
@@ -384,6 +384,26 @@ tasks:
       dreamIds relation arrays). Add server/api/dream-relations/ index.post/
       index.get/[id].delete with requireApiUser, then extend conductor's
       scripts/build_dream_records.py to create the edges.
+      IN REVIEW 2026-07-15 (burst cycle claude-burst-20260715-1400): kind_robots
+      PR #292 adds server/api/dream-relations/{index.ts,index.get.ts,index.post.ts,
+      [id].delete.ts} — GET/POST/DELETE, all requireApiUser + assertDreamAccess
+      (mutate) on the fromDream, POST upserts on the (fromDreamId, toDreamId,
+      relationType) unique triple. Companion change in this same session's
+      conductor PR: scripts/build_dream_records.py now calls POST
+      /api/dream-relations for world->genre RELATED, world->location CONTAINS,
+      and location->genre RELATED, closing the KNOWN GAP the script's docstring
+      called out. Verified: vue-tsc clean (0 new errors vs the 19 pre-existing
+      tracked at t-020), eslint clean, and the build_dream_records.py change was
+      unit-exercised locally with a monkeypatched kr_call to confirm the three
+      relation POSTs fire with correct payloads for a synthetic proposal. Could
+      not hit the live endpoint end-to-end (no KR_API_TOKEN/DB in this sandbox).
+      DONE 2026-07-15T14:30Z: kind_robots PR #292 merged (squash, sha e93b179e).
+      TypeScript check failure matched the known pre-existing 19-error baseline
+      (kind-robots/t-020, confirmed via local vue-tsc diff, no new errors from
+      this change); Contract verifiers and GitGuardian green, mergeable_state
+      unstable (not blocked), base matched current main exactly. Merged past
+      the confirmed-pre-existing failure per the established PR #256/#271/#290/
+      #291 precedent.
 
   - id: t-018
     milestone: m3
@@ -496,11 +516,11 @@ tasks:
   - id: t-021
     milestone: m3
     title: Fix pre-existing "Channel content contract" CI failure (3 unknown-tab references)
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
-    updated: '2026-07-15T14:07:55Z'
+    updated: "2026-07-15T14:20:00Z"
     note: >
       Found during conductor burst-mode cycle (challenge-center/t-018, 2026-07-14
       ~22:13 UTC): kind_robots PR #263's "Contract verifiers" GitHub Actions check
@@ -523,5 +543,14 @@ tasks:
       red TypeScript check, see kind-robots/t-020) confirming it isn't a hard
       blocker, but it's a second CI check reading red on main independent of any
       single PR, further eroding the "all green" signal.
-    claimed_by: claude-burst-20260715-1400
-    claimed_at: '2026-07-15T14:07:55Z'
+      DONE 2026-07-15 (burst cycle claude-burst-20260715-1400): already resolved
+      by three same-day commits landed after this note was written --
+      14a32527/571d49b0/a9d93ec8 ("fix(contract): register account/friends/messages
+      home tab", 2026-07-14 23:10 UTC) added content/channels/home/{account,
+      friends,messages}.md with contentType: tab + matching tabKey, registering
+      exactly the three tabs the contract check said were missing. Verified live
+      on current main (9ec971ef): npm run test:channel-content passes clean --
+      "7 channels, 61 tabs, 55 placed pages, 26 project placements, 2 shared-route
+      groups, 9 roles, and 5 capabilities" -- 0 errors, no unknown-tab references.
+      No code change needed this cycle; closing as done since the fix already
+      landed and is confirmed on main.

@@ -819,3 +819,37 @@ records:
     Contract verifiers and GitGuardian green plus an exact local reproduction of
     the CI command against the same merge state was enough to confirm no
     regression, consistent with the PR #256/#271/#290 precedent.
+- date: 2026-07-15
+  project: kind-robots
+  task: t-021
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    A roadmap task can go stale in the other direction too -- fixed by an
+    unrelated same-day commit that never closed it. Always reproduce the
+    original failing command against current main before starting work on a
+    "ready" CI-fix task; here npm run test:channel-content passed clean because
+    three targeted fix commits (14a32527/571d49b0/a9d93ec8) landed ~50 minutes
+    after the task's note was written but the roadmap was never updated.
+    Verify-before-build saved a redundant fix and surfaced the real gap
+    (stale task bookkeeping, not stale code).
+- date: 2026-07-15
+  project: kind-robots
+  task: t-017
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    Kaizen follow-up tasks that name their own consumer (here: conductor's
+    build_dream_records.py already had a KNOWN GAP comment pointing at the
+    missing endpoint) are easy to land completely in one cycle -- implement the
+    endpoint, then immediately wire its one real caller, rather than leaving
+    the new API unused until some future session rediscovers the gap. Mirroring
+    two already-merged endpoint families (model-builder/runs, dreams/facets)
+    for the auth/error-handling shape kept review risk low despite no live-DB
+    verification being possible in this sandbox.
