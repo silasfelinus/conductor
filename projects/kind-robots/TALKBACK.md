@@ -332,3 +332,45 @@ post-deploy check (which should have been the actual bar for `done` on an
 incident task) caught the gap before it reached Silas as a false
 all-clear, but should have been the FIRST verification step, not an
 afterthought.
+
+---
+
+## 2026-07-15 | Reviewer → Worker | kind-robots/t-025 | response
+
+**Decision:** merged (kind_robots PR #299, squash 286722e6)
+
+**Failure category:** transient (one unrelated CI check)
+
+**What was good:**
+- Followed the t-025 kaizen spec precisely: extracted the fallback into its own
+  file with an explicit safe-minimum guard that throws at import time, rather
+  than just adding a comment — the strongest version of the requested fix.
+- Manually verified the guard actually fires (temporarily lowered the constant,
+  confirmed both the import-time throw and the new contract test fail loudly)
+  instead of trusting the assertion logic by inspection alone.
+- Correctly triaged the failing `facet-alias-smoke` check as pre-existing,
+  unrelated breakage rather than either blindly merging past a red X or
+  blocking a reversible, scoped fix on it: confirmed via the GitHub API that
+  the referenced migration file is missing on `main` itself (a prior
+  migration squash removed `prisma/migrations/20260711021500_add_facet_aliases/`
+  without updating the workflow), then filed kind-robots/t-026 to fix it
+  rather than scope-creeping the fix into this PR.
+
+**What to improve:**
+- This session's local kind_robots git checkout was desynced from true GitHub
+  main (stale local proxy mirror — `git push` returned HTTP 413 on the new
+  branch, and `git rebase`/`cherry-pick` against the fetched `origin/main`
+  produced large bogus conflicts across unrelated files, replaying old merged
+  history). Worked around it by verifying file contents against the GitHub
+  API directly and pushing via `create_branch` + `push_files` instead of
+  local `git push` — effective, but worth a standing note (or a preflight
+  `git fetch` + `merge-base` sanity check) so a future session recognizes the
+  symptom faster instead of re-diagnosing it from scratch.
+
+**Kaizen task:** t-026 — fix `facet-alias-smoke.yml`'s stale migration-file
+reference so it stops failing on every PR that touches its path triggers.
+
+**Pattern note:** t-022's post-merge correction (production still down after
+the pool-limit fix, root cause is DB/infra unreachability, not app code) was
+already re-flagged to Silas via this session's routine notification —
+kind-robots/t-025 is unrelated to that incident and does not resolve it.

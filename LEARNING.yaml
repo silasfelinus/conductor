@@ -1003,3 +1003,25 @@ records:
     not just a green CI diff plus pre-merge telemetry. Reverted to
     needs-human/irreversible -- this remains an unresolved DB/infra
     reachability issue outside agent access, now spanning 4 hourly cycles.
+- date: 2026-07-15
+  project: kind-robots
+  task: t-025
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    kind_robots PR #299 merged despite one failing CI check
+    (facet-alias-smoke) after confirming via the GitHub API that the check
+    fails on unmodified main too (a prior migration squash removed
+    prisma/migrations/20260711021500_add_facet_aliases/ without updating the
+    workflow that still references it) -- a red check is only a merge
+    blocker when it's caused by the diff, not when it's independently
+    verified pre-existing breakage. Filed t-026 to fix the workflow itself.
+    Separately: this session's local kind_robots git checkout had desynced
+    from true GitHub main (stale local proxy git mirror), which broke
+    ordinary git push/rebase/cherry-pick with spurious HTTP 413s and bogus
+    unrelated-file conflicts -- verifying file contents against the GitHub
+    API directly and pushing via create_branch+push_files is the workaround
+    when that symptom recurs.

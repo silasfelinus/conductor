@@ -710,11 +710,11 @@ tasks:
   - id: t-025
     milestone: m3
     title: Guard against DATABASE_CONNECTION_LIMIT fallback regressing below a safe minimum in server/utils/prisma.ts
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
-    updated: '2026-07-15T20:07:50Z'
+    updated: '2026-07-15T20:35:00Z'
     note: >
       Kaizen from t-022 (Reviewer, kind_robots PR #296): the
       DATABASE_CONNECTION_LIMIT fallback default in server/utils/prisma.ts
@@ -728,5 +728,48 @@ tasks:
       CI/lint check referencing this history, so a future refactor of the
       pool-lifecycle/circuit-breaker code can't silently reintroduce the
       unsafe default a third time without a test failing.
+
+      DONE 2026-07-15 (worker/claude-burst-20260715-2007): kind_robots PR #299
+      merged (squash 286722e6) — extracted the fallback into
+      server/utils/databasePoolDefaults.ts (DEFAULT_CONNECTION_LIMIT=10,
+      SAFE_MINIMUM_CONNECTION_LIMIT=8, throws at import if breached),
+      prisma.ts now imports it instead of hardcoding 10 in both spots, and
+      added utils/scripts/verifyDatabasePoolDefaults.ts wired into the
+      Contract Tests CI workflow. eslint/prettier/vue-tsc all clean locally;
+      manually verified the guard fires by temporarily lowering the constant.
+      Verified: TypeScript Type Check, Contract Tests, and GitGuardian all
+      green. Facet Alias Smoke Test failed but is pre-existing, unrelated
+      breakage on main itself (confirmed via the GitHub API: main is missing
+      prisma/migrations/20260711021500_add_facet_aliases/migration.sql,
+      which that workflow still references after a migration squash removed
+      it — see new kaizen task t-026) — merged anyway since every check
+      relevant to this diff passed. NOTE: this session's local git checkout
+      of the kind_robots branch had desynced from true GitHub main (stale
+      proxy mirror — git push got HTTP 413 and local rebase produced bogus
+      unrelated-file conflicts), so the PR was built and pushed directly via
+      the GitHub API after confirming the touched files matched real main
+      byte-for-byte.
     claimed_by: worker/claude-burst-20260715-2007
     claimed_at: '2026-07-15T20:07:50Z'
+
+  - id: t-026
+    milestone: m1
+    title: Fix facet-alias-smoke.yml referencing a migration file removed by the prisma migration squash
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-15T20:35:00Z'
+    note: >
+      Kaizen from t-025 (Worker, kind_robots PR #299): .github/workflows/facet-alias-smoke.yml
+      still references prisma/migrations/20260711021500_add_facet_aliases/migration.sql
+      in its path triggers and in the "Execute Facet alias migration" step, but
+      that migration folder no longer exists on main — prisma/migrations now
+      contains only 00000000000000_squashed. Confirmed via the GitHub API
+      (main SHA 414f33da / 286722e6) that the file is genuinely absent, not a
+      local checkout artifact. Every PR touching package.json (or any of the
+      workflow's other path triggers) will fail this check until it's fixed.
+      Fix by pointing the step at whatever the squashed migration actually
+      creates (the Facet/FacetAlias tables + constraints), or by regenerating
+      an equivalent standalone migration.sql fixture for the smoke test to
+      run against, and update the path triggers to match.
