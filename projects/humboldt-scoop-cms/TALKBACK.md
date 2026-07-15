@@ -20,3 +20,59 @@ Cross-agent critique log for this project. Append-only.
 **Pattern note:** The process violation on t-001 (files committed directly to main) is a one-time runtime artifact, not a systematic Worker error. The Worker correctly flagged it in the PR body. If this recurs, set `security-flag: true` on the task.
 
 ---
+
+## 2026-07-15 | Worker → Reviewer | humboldt-scoop-cms/t-006 | pattern (hourly Conductor cycle)
+
+**Decision:** landed at `needs-human` (hard gate — `gate_human: true`, "Silas approves
+provider/shape first").
+
+**Detail:**
+- Followed `CONTROL.md`'s priority order for real: the prior hourly session had
+  jumped straight from the blocked ai-art-academy/coloring-book/challenge-center
+  trio to digital-storefront without touching humboldt-scoop or humboldt-scoop-cms,
+  which sit earlier in the priority list. Picked up humboldt-scoop-cms/t-006 to
+  close that gap this cycle.
+- Wrote `projects/humboldt-scoop-cms/route-planner/SPEC.md` per the task note:
+  selection model (date/filter, start/optional-end, explicit-pick or fill-to-N),
+  ordered-stop-list + map + per-stop-card output, manual drag reorder / locked
+  stops / skipped-customer / save-export interactions, and a routing-engine
+  comparison. Used `WebSearch` for current OSRM/VROOM/OpenRouteService/Mapbox
+  pricing and capability info rather than relying on training-data assumptions
+  about a space that changes (pricing tiers, current API shapes).
+- Recommended v1: self-hosted OSRM (road routing) + VROOM (stop-order
+  optimization, handles locked stops via job/priority constraints) + Leaflet
+  (map + built-in draggable waypoints) — zero per-request billing, no API keys,
+  customer addresses never leave Silas's own infrastructure. Recommended
+  OpenRouteService's hosted free tier as a same-shape fallback if standing up
+  two self-hosted services is more infra than Silas wants for a v1. Explicitly
+  did not use an LLM anywhere in the routing/optimization design, per the task's
+  direct instruction.
+- Read the sibling `route-cards/SPEC.md` and `STACK.md` first to match tone,
+  guardrail language, and the existing Hono/TypeScript stack context, and wired
+  the new spec's export step to feed that existing card-renderer spec rather
+  than inventing a second export format.
+- Ran `resolve_deps.py` after setting `status: needs-human` and confirmed t-007
+  correctly stayed `waiting` (hard-gated tasks must not unblock dependents
+  until `approved_by_human: true`, per AGENTS.md's Human-gated-stages section).
+
+**What was good:**
+- Verified this wasn't already-done work: checked `CONTROL.md`'s true priority
+  order against what the previous PR actually touched, instead of assuming the
+  prior session's rotation reasoning covered every earlier-priority project.
+- Used live web search for current routing-engine pricing/capabilities rather
+  than stale training knowledge, given this is exactly the kind of fast-moving
+  API/pricing space where that matters.
+- Confirmed the hard-gate mechanics held after closing at `needs-human`
+  (t-007 stayed `waiting`) instead of assuming and moving on.
+
+**Kaizen suggestion:** the priority-order compliance gap (skipping
+humboldt-scoop/humboldt-scoop-cms) is worth a lightweight guard — e.g. a
+`next_ready_task.py` warning (not a hard block) when a session's PR touches a
+project further down `priority.yaml` while an earlier-priority project still has
+unclaimed `ready` tasks and no documented blocker. Leaving this as a suggestion
+rather than filing a conductor task myself this cycle, since it needs a Reviewer
+judgment call on whether it's worth the false-positive risk (a project can be
+skipped for good reasons, like a real sandbox blocker, that a simple order-check
+can't detect).
+
+---

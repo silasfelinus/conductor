@@ -130,21 +130,27 @@ tasks:
   - id: t-006
     milestone: m6
     title: "Write the mapped customer route planner specification"
-    status: claimed
+    status: needs-human
     owner: worker
     passes: 0
     stakes: reversible
     gate_human: true
     approved_by_human: false
     note: >
-      Write route-planner/SPEC.md for a dispatcher or crew member selecting a date/filter,
-      start and optional end location, and a requested number N of eligible customer/user
-      records. Support explicit customer selection as well as choosing N from the eligible
-      queue. Define the ordered stop list, mapped route/polyline, distance/time estimates,
-      per-stop route cards, manual drag reorder, locked stops, skipped customers, and save/export.
-      Compare a self-hostable OpenStreetMap-compatible matrix/router plus deterministic optimizer
-      against paid APIs. Recommend one v1 path and one fallback, including privacy and costs.
-      Do not use an LLM for routing. Dummy addresses only. Silas approves provider/shape first.
+      FOR SILAS: wrote projects/humboldt-scoop-cms/route-planner/SPEC.md — the
+      route-planner design brief this task asked for. It defines the selection model
+      (date/filter, start/optional-end location, explicit-pick or fill-to-N customer
+      selection), the ordered-stop-list + map + per-stop card output, and the manual
+      drag-reorder/locked-stop/skipped-customer/save-export interactions.
+      TO APPROVE: it recommends self-hosted OSRM (road routing) + VROOM (stop-order
+      optimization) + Leaflet (map/draggable waypoints) as the v1 stack — no per-request
+      billing, no API keys, customer addresses never leave your own server — with
+      OpenRouteService's hosted free tier as a same-shape fallback if standing up two
+      self-hosted services is more than you want to own for a first version. No LLM is
+      used for routing per your direction. Section 8 of the spec has three open
+      questions (stack choice, Android client architecture, round-trip-by-default
+      assumption) — answer those, then set approved_by_human: true and status: done
+      to unblock t-007 (the deterministic route-plan API implementation).
     claimed_by: claude-hourly-2026-07-15-0148
     claimed_at: '2026-07-15T01:53:37Z'
     updated: '2026-07-15T01:53:37Z'
