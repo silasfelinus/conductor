@@ -31,7 +31,7 @@ milestones:
 - id: m5
   title: Local adapters and project actions
   weight: 20
-  status: not-started
+  status: in-progress
 tasks:
 - id: t-001
   milestone: m1
@@ -138,22 +138,25 @@ tasks:
 - id: t-008
   milestone: m5
   title: Prototype local music playback adapter
-  status: ready
-  owner: worker
-  updated: '2026-07-04T02:30:00Z'
+  status: done
+  owner: claude
+  updated: '2026-07-15T05:30:00Z'
+  pr: https://github.com/silasfelinus/serendipity-voice/pull/22
   passes: 0
   stakes: reversible
   depends_on: t-005
-  note: "FOR SILAS: The GitHub connector blocked creating the required worker/alexa-integration-t-008\
-    \ branch in silasfelinus/serendipity-voice, so the Worker preserved the exact intended patch (merged\
-    \ in conductor PR #142) at projects/alexa-integration/docs/t-008-local-music-adapter.md. It contains\
-    \ src/adapters/music-adapter.ts, its test file, a handle-voice-request.test.ts update, and the run-all-tests.ts\
-    \ wiring — behind a SERENDIPITY_ENABLE_MUSIC flag, reading only a configured library root, never\
-    \ mutating files, and asking for clarification on multiple matches. TO APPROVE: apply that patch in\
-    \ a local-code or Claude session with serendipity-voice branch-write access, run npm run test / npm\
-    \ run typecheck there, then set this task to done (or back to ready if another Worker pass should\
-    \ finish it). This is a soft tooling block, not a design question — no live skill, endpoint,\
-    \ deploy, DNS, secrets, billing, or production data were touched."
+  note: 'Done in serendipity-voice PR #22 (merged, squash). This Claude session had direct write access
+    to silasfelinus/serendipity-voice, so the preserved handoff patch at
+    projects/alexa-integration/docs/t-008-local-music-adapter.md applied cleanly with one adaptation:
+    the patch''s test literal predated later RuntimeConfig fields (enableChat, personMap, etc.), so the
+    adapted music-adapter.test.ts builds config via loadRuntimeConfig(env) like the rest of the suite
+    instead of a raw object literal. Replaced the always-disabled music-adapter stub with a real local
+    search: behind SERENDIPITY_ENABLE_MUSIC + SERENDIPITY_MUSIC_LIBRARY_ROOT, walks the configured root
+    for matching audio file names and reports a playback plan / clarification / no-match, never launching
+    a player or mutating the library. Verified: npm run test (added music-adapter.test.ts, 5 checks) +
+    npm run typecheck, both green. Also found a real routing bug while adapting the patch''s test fixture
+    (see t-016) and worked around it in the test rather than touching the control adapter, to keep this
+    PR scoped.'
 - id: t-009
   milestone: m5
   title: Draft project-work actions from voice
@@ -280,3 +283,21 @@ tasks:
     (3) verify the PROJECT Dream liveUrl points at /voice-lab (admin can run the Conductor ''Placements''
     button to backfill channelKey/tabKey/liveUrl); (4) evolve the placeholder scaffold page into the full
     interactive experience for this project.'
+- id: t-016
+  milestone: m4
+  title: Fix control-adapter theme-domain over-claiming any utterance containing the word "theme"
+  status: ready
+  owner: null
+  updated: '2026-07-15T05:30:00Z'
+  passes: 0
+  stakes: reversible
+  note: 'Found while closing t-008 (serendipity-voice PR #22): serendipity-voice/src/voice-router.ts
+    parseTheme() (~line 173) claims the control/theme domain for ANY utterance containing the substring
+    "theme" (`if (!lowered.includes(''theme'')) return undefined`), added in t-013 after t-008''s patch
+    was originally written. This misroutes phrases like "play the [song] theme" into the control domain
+    instead of music/chat/etc, since the theme check runs before other domain matching and short-circuits
+    it. Fix: require parseTheme to match one of its existing specific regexes (set/change/switch/use ...
+    theme) rather than the bare substring check, so an utterance only claims the theme domain when it is
+    actually phrased as a theme-setting command. Add a regression test asserting a music-domain "play X
+    theme"-style phrase still routes to music, not control. Worked around in t-008''s own test fixture
+    (renamed to avoid the word) rather than fixed here, to keep that PR scoped to the music adapter.'

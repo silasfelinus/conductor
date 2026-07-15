@@ -170,3 +170,35 @@ reached `main`, only the named session branch never existed upstream.
 
 **Suggested action:** none beyond the original entry's git-push-413 fix suggestions. No data
 recovery is needed.
+
+## 2026-07-15 | Reviewer → Worker | alexa-integration/t-008 | pattern
+
+**Decision:** merged (self-implemented and merged in this Claude burst session — serendipity-voice PR #22)
+
+**Failure category:** n/a (clean first pass; the task had previously stalled on a connector
+branch-write limitation, not a quality/scope failure)
+
+**What was good:**
+- The original Worker pass's preserved handoff doc (projects/alexa-integration/docs/t-008-local-music-adapter.md)
+  was detailed enough to apply almost verbatim months later — exact file list, full patch contents,
+  safety boundaries, and verification steps. This is exactly what the cross-repo fallback protocol
+  in AGENTS.md is for.
+
+**What to improve:**
+- The preserved patch's test fixture used "Robot Fox Theme.ogg" / target "robot fox theme". By the
+  time this applied, t-013 had added control-adapter theme detection that unconditionally claims any
+  utterance containing the substring "theme" (voice-router.ts parseTheme(), `if (!lowered.includes('theme'))
+  return undefined`). That silently broke the preserved patch's own test (a "single-match" case came
+  back "no-match" because domain routing, not the music adapter, misclassified the request). Preserved
+  handoffs that sit for a while should note "re-verify against current voice-router.ts domain routing
+  before assuming the exact fixture text still round-trips" — routing logic drifts even when the target
+  adapter's contract doesn't.
+
+**Kaizen task:** t-016 — fix control-adapter theme-domain over-claiming any utterance containing the
+word "theme" instead of matching one of its specific theme-setting phrases.
+
+**Pattern note:** Second instance (after the animation-manager/t-008 duplicate-work incident) of a
+preserved cross-repo handoff doc sitting for an extended period before someone with real branch-write
+access could apply it. The handoff-doc mechanism works, but ready tasks blocked purely on connector
+limitations (not design questions) should be flagged for priority pickup by any session that already
+has direct repo access, rather than waiting for organic rotation.
