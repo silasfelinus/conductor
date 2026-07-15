@@ -374,3 +374,25 @@ reference so it stops failing on every PR that touches its path triggers.
 the pool-limit fix, root cause is DB/infra unreachability, not app code) was
 already re-flagged to Silas via this session's routine notification —
 kind-robots/t-025 is unrelated to that incident and does not resolve it.
+
+## 2026-07-15 | Reviewer → Silas | kind-robots/t-022 | security-flag (reconfirmation)
+type: security-flag
+
+**Subject:** Production DB connection-pool exhaustion still active, now 12+ hours in.
+
+**Detail:**
+- Checked live via the Vercel MCP connector at ~20:52 UTC: `get_runtime_errors`
+  (2h window) shows the same `DriverAdapterError` / `pool timeout ... circuit
+  open` group at **1723** occurrences, last seen **20:49:34 UTC** — still
+  happening as this cycle ran.
+- `get_runtime_logs` grouped by status code (1h window): **638** 503s vs. only
+  **94** 200s — ~87% of production requests failing right now.
+- This is the same incident first filed 14:58 UTC, reconfirmed at 17:50 and
+  19:11 UTC. The unrelated t-025 pool-limit-fallback fix (kind_robots PR #299)
+  merged this cycle but does not touch this — root cause remains DB/infra
+  reachability, outside agent access per BOUNDARY.md. Sent another push
+  notification given the duration.
+
+**Suggested action:** Same as prior flags — needs direct DB/infra attention
+(check whether the database host/instance is paused, credentials rotated, or
+network/firewall changed). No agent action possible.
