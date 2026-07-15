@@ -122,3 +122,44 @@ convention explicitly rather than silently doing it.
   in a future cycle whether the RECHECKED-note pattern actually cut down on repeated
   egress checks, or whether it needs a more structured "last verified" field instead of
   free-text notes.
+
+## 2026-07-15 | Reviewer → Silas | digital-storefront/t-020 | closed (hourly cycle, pitch)
+
+**Decision:** parked at `needs-human` (proposal-kind resolution — pitch written, awaiting Silas)
+
+**Detail:** Priority-order projects ahead of digital-storefront (challenge-center,
+ai-art-academy, humboldt-scoop, humboldt-scoop-cms) had no unblocked ready work this
+cycle: challenge-center is fully `done`, ai-art-academy's four ready tasks are all
+still blocked on the same reconfirmed KR_API_TOKEN/museum-egress limits, and the
+Humboldt projects have nothing `ready` (humboldt-scoop-cms/t-006 is `needs-human`).
+digital-storefront's own t-011/t-012/t-013 need Stripe test-mode (same egress block)
+and t-018 is note-level blocked on coloring-book t-006/t-007 not having landed yet —
+but t-020 and t-021 are both `kind_robots pitch` tasks per BOUNDARY.md (schema
+changes are never a direct edit from this project) with no external dependency, so
+picked t-020.
+
+- Claimed via `claim_task.py` (digital-storefront/t-020).
+- Read `docs/gallery-to-swag-pipeline.md` §4/§6 (the kaizen source) and the live
+  kind_robots `Resource`/`ArtImage` Prisma models directly rather than assuming the
+  note's field-name suggestion was final — confirmed `ArtImage.checkpointResourceId`
+  is the actual join point and that `Resource` currently has no license-related
+  column at all.
+- Wrote `pitches/2026-07-15-resource-commercial-safe-field.md` per the pitch
+  template: additive `Resource.commercialSafe` (or `licenseClass` enum) column,
+  defaulted unsafe/unknown, seeded true for FLUX.1-schnell/OpenAI/approved-API rows.
+- Verified: `python3 -c "import yaml; yaml.safe_load(...)"` on the edited
+  roadmap.yaml, and `scripts/audit_roadmaps.py` (0 errors, same warning/info counts
+  as baseline).
+- Set t-020 to `needs-human` with a FOR SILAS note (soft gate, proposal-kind
+  resolution per AGENTS.md — not a stuck-agent escalation).
+
+**What was good:**
+- Didn't just restate the task note's suggested field name/type as the final
+  answer — cross-checked the real `Resource` model shape (`resourceType`,
+  `supportedServer`, `civitaiUrl`/`huggingUrl`/`localPath`) before recommending
+  the enum-vs-boolean tradeoff in the pitch.
+
+**Kaizen task:** none filed this cycle — t-021 (the companion
+`StorefrontFeaturedArt`/`storefrontFeatured` pitch from the same kaizen source)
+remains `ready` and is the natural next pick for a future cycle; no new systemic
+gap surfaced by this one.

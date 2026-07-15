@@ -346,12 +346,28 @@ tasks:
 - id: t-020
   milestone: m4
   title: 'kind_robots pitch: add Resource.commercialSafe (or licenseClass) so gallery-to-swag can gate on generation-backend licensing'
-  status: claimed
+  status: needs-human
   owner: reviewer
   passes: 0
   stakes: reversible
-  updated: '2026-07-15T10:50:30Z'
+  soft_gate: true
+  updated: '2026-07-15T10:55:00Z'
   note: >
+    FOR SILAS: Pitch written at pitches/2026-07-15-resource-commercial-safe-field.md.
+    It proposes an additive `Resource.commercialSafe` (or `licenseClass` enum)
+    Prisma column in kind_robots, defaulted unsafe/unknown, seeded true for
+    FLUX.1 schnell / OpenAI / approved licensed-API rows — the join point
+    digital-storefront's gallery-to-swag print flow needs to stop
+    default-denying almost all gallery art.
+
+    TO APPROVE: read the pitch, set its `status: approved` and this task's
+    `approved_by_human: true` + `status: done` if you want it built (or leave a
+    note here with changes first). Unblocks: a small follow-up kind_robots task
+    to add the migration + seed script, then digital-storefront's print-flow
+    gate can read the new field instead of its current default-deny-almost-everything
+    fallback.
+
+    Original spec:
     Kaizen from t-016's close (docs/gallery-to-swag-pipeline.md §4/§6). The
     self-service "print my gallery art" flow needs to enforce CONTROL.md's
     commercial-generation licensing rule (dev-trained LoRAs/Kontext-dev never touch
