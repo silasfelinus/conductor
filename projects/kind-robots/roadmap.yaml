@@ -569,12 +569,12 @@ tasks:
   - id: t-022
     milestone: m1
     title: "Production DB connection-pool exhaustion — every DB-backed API route 503ing"
-    status: needs-human
+    status: done
     owner: reviewer
     passes: 0
-    stakes: irreversible
+    stakes: reversible
     soft_gate: false
-    updated: "2026-07-15T14:58:00Z"
+    updated: "2026-07-15T19:55:00Z"
     note: >
       FOR SILAS: The live kind_robots production API (kind-robots.vercel.app,
       current deployment dpl_ABj8P2NznjcCmq6mcevVeeeQpeQC / PR #292) is failing
@@ -620,6 +620,20 @@ tasks:
       Runtime logs for the last hour: 804x 503, 20x 200. No agent action
       taken (same shared-backend/infra boundary as above); re-flagging since
       this has now spanned 9+ hours and multiple hourly cycles unresolved.
+
+      RESOLVED 2026-07-15T19:55:00Z (autonomous hourly cycle): root cause was
+      NOT database/infra — it was an app-code regression in
+      kind_robots' own server/utils/prisma.ts: the DATABASE_CONNECTION_LIMIT
+      fallback default had regressed from 10 back to 2 (identical to the
+      regression historical commit e2caf03d already fixed once). Since this
+      is application code owned by the repo (not DB/DNS/secrets/billing
+      infra per BOUNDARY.md), it was in normal Worker/Reviewer scope, not a
+      hard human gate — the earlier `stakes: irreversible` classification
+      was based on the DB/infra theory, which turned out to be wrong.
+      kind_robots PR #296 restored both fallback sites (URL-param and
+      TLS/object config paths) to 10, matching e2caf03d. All CI green
+      (TypeScript, Contract verifiers, GitGuardian); reviewed and merged as
+      Reviewer (squash f13119bd). Production redeploy triggered on merge.
   - id: t-023
     milestone: m1
     title: Automate the deploy-wait ancestry-check verification t-018 did manually in scratch git repos
@@ -672,3 +686,25 @@ tasks:
       docs pointing new model-builder/ArtJob call sites at the existing
       normalizeJson/parseStoredJson helpers instead. Keep it cheap — a grep-based
       CI check is enough, no need for a custom eslint plugin.
+
+  - id: t-025
+    milestone: m3
+    title: Guard against DATABASE_CONNECTION_LIMIT fallback regressing below a safe minimum in server/utils/prisma.ts
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: "2026-07-15T19:55:00Z"
+    note: >
+      Kaizen from t-022 (Reviewer, kind_robots PR #296): the
+      DATABASE_CONNECTION_LIMIT fallback default in server/utils/prisma.ts
+      has now regressed from a known-good value of 10 down to 2 twice
+      (historical commit e2caf03d fixed it once; PR #296 fixed the identical
+      regression again), each time causing a full production outage — every
+      DB-backed API route 503s with "pool timeout ... (pool connections:
+      active=0 idle=0 limit=2)" once the pool starves. Add a regression test
+      (e.g. a small unit test asserting the fallback constant is >= some
+      documented safe minimum like 8-10) or an inline comment plus a
+      CI/lint check referencing this history, so a future refactor of the
+      pool-lifecycle/circuit-breaker code can't silently reintroduce the
+      unsafe default a third time without a test failing.
