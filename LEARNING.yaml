@@ -1025,3 +1025,18 @@ records:
     unrelated-file conflicts -- verifying file contents against the GitHub
     API directly and pushing via create_branch+push_files is the workaround
     when that symptom recurs.
+- date: '2026-07-15'
+  project: ai-art-academy
+  task: t-016
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    Clean first-pass kaizen task: docs-only comment addition, verified
+    against all three real call sites before merge. Second/third instance
+    this week of a Worker PR (kind_robots #302, conductor #579) omitting the
+    handoff template's Stakes/Flags-for-Reviewer/Kaizen-suggestion sections
+    entirely rather than marking them n/a -- not a rejection-worthy issue on
+    its own, but worth a Worker-side habit fix if it keeps recurring.

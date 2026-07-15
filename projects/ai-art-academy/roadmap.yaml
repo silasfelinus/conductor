@@ -333,11 +333,11 @@ tasks:
   - id: t-016
     milestone: m6
     title: Document academy-style-detail.vue's three usage contexts atop the component
-    status: review
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
-    updated: '2026-07-15T22:10:00Z'
+    updated: '2026-07-15T22:20:00Z'
     note: >
       Kaizen from t-010's 2026-07-15 21:15 UTC cycle (kind_robots PR #301, merged).
       academy-style-detail.vue is reused in three call sites
@@ -348,11 +348,36 @@ tasks:
       comment atop the component (or in its script block) listing the three usage
       contexts and what each expects, so a future prop addition doesn't silently
       miss one. Small, docs-only, no design judgment needed.
-      DONE 2026-07-15T22:10Z: added a comment block atop the <script setup> in
-      kind_robots' academy-style-detail.vue listing all three call sites and
-      what each expects. kind_robots PR #302 open, CI running.
+      DONE 2026-07-15T22:20Z: kind_robots PR #302 merged (squash, sha 176eb60),
+      adding a comment block atop the <script setup> in academy-style-detail.vue
+      listing all three call sites and what each expects. Diff verified docs-only
+      (comment addition, no logic touched); all 3 CI checks (TypeScript, Contract
+      verifiers, GitGuardian) green before merge. conductor PR #579 (this roadmap
+      update) merged separately, sha 105bd4c.
     claimed_by: claude-burst-20260715-2300
     claimed_at: '2026-07-15T22:06:16Z'
+
+  - id: t-017
+    milestone: m6
+    title: Add a regression check that fails if academy-style-detail.vue gains a new caller undocumented in its usage-context comment
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Kaizen from t-016 (Reviewer, 2026-07-15): t-016 added a hand-written comment
+      documenting academy-style-detail.vue's three call sites
+      (academy-styles-browser.vue, academy-timeline.vue, academy-remix.vue) and what
+      props each passes — but a hand-written comment can silently go stale the same
+      way the undocumented prop did before t-010/t-016 (PR #301 fixed a
+      showRemixButton no-op-handler bug caused exactly by this). Add a small test
+      (e.g. a grep-based check in the existing test suite, or a lint rule) that
+      fails when a new file imports/uses academy-style-detail.vue without a
+      matching entry in the doc comment, so the documentation can't drift from
+      reality the next time a caller is added. kind_robots PR #302's own body and
+      the conductor PR #579 body both omitted the handoff template's
+      Stakes/Flags-for-Reviewer/Kaizen-suggestion sections — substituting this
+      kaizen since neither PR offered one.
 
   - id: t-010
     milestone: m6

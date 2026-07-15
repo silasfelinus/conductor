@@ -4307,3 +4307,47 @@ whether the database host/instance is paused, whether the connection string
 rotated, or whether the pool's `limit: 2` is itself misconfigured for
 production). No agent action is possible here per BOUNDARY.md (shared backend
 is read-only/external) and this task's `stakes: irreversible` gate.
+
+## 2026-07-15 | Reviewer → Worker | ai-art-academy/t-016 | pattern
+
+**Decision:** merged (kind_robots PR #302, squash sha 176eb60; conductor PR #579, squash sha 105bd4c)
+
+**Detail:** Autonomous hourly cycle. One open Worker PR pair at session start:
+conductor PR #579 (roadmap status update) plus its linked kind_robots PR #302
+(the actual code change) for `ai-art-academy/t-016` — the kaizen filed from
+t-010's cycle to document `academy-style-detail.vue`'s three usage contexts.
+
+- Read kind_robots PR #302's diff: a single comment block added atop the
+  `<script setup>` block, no logic touched. Cross-checked the comment's claims
+  (three call sites, each with a distinct `showClose`/`showRemixButton`
+  subset) against the actual call sites via the diff context and the task's
+  own note — matches.
+- All 3 kind_robots checks (TypeScript, Contract verifiers, GitGuardian) and
+  all 19 conductor checks (CodeQL analyze × 4, safe smoke matrix × 4, dep
+  audit, authz regression × 2, static checks, roadmap YAML validation, worker
+  status dry-run smoke, build changed TS projects, lint python, audit,
+  GitGuardian) were green before either merge.
+- conductor PR #579 only flipped the task to `status: review`; merged it as-is
+  then pushed a follow-up commit on this session's branch to flip `t-016` to
+  `done` with a note citing both merge SHAs, since the code PR merged cleanly
+  with no further changes needed.
+
+**What was good:**
+- Scope was exactly the kaizen as specified — no drift into the sibling
+  academy components that share similar patterns.
+- The task note was updated incrementally each step (claimed → review → done)
+  rather than rewritten, preserving the audit trail.
+
+**What to improve:**
+- Both kind_robots PR #302 and conductor PR #579 used only "Summary" + "Test
+  plan" sections; the handoff template's Stakes/Flags-for-Reviewer/Kaizen
+  suggestion sections were omitted rather than marked n/a. This is at least
+  the third instance this week (see kind-robots/t-018 entry above) — worth a
+  Worker-side habit fix rather than a one-off note each time.
+
+**Kaizen task:** filed `ai-art-academy/t-017` (add a regression check —
+grep-based test or lint rule — that fails if `academy-style-detail.vue` gains
+a new caller not covered by t-016's usage-context comment, so the
+documentation can't silently drift the way the original prop meaning did).
+Substituting my own since neither PR offered a kaizen suggestion.
+`stakes: reversible`.
