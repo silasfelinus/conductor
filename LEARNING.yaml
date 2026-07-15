@@ -951,3 +951,18 @@ records:
     a live correctness bug, not just an annotation to satisfy. Filed
     kind-robots/t-024 to guard against the InputJsonValue mismatch
     recurring at new call sites.
+- date: 2026-07-15
+  project: conductor
+  task: t-047
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    A CI job's hardcoded file-list whitelist silently rots as new test files
+    get added elsewhere in the same PR cycle (t-007's test_validate_pack_manifest.py
+    landed weeks before this fix and was never actually run in CI). Prefer
+    `pytest tests/` (or a directory glob) over an enumerated file list for any
+    gating job so new tests are covered by default instead of requiring a
+    separate task to notice and wire them in.
