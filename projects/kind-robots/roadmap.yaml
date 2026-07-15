@@ -291,11 +291,11 @@ tasks:
   - id: t-013
     milestone: m3
     title: Show the full bot roster in the app — botHelper fetch is capped at the first 100 bots
-    status: ready
-    owner: null
+    status: claimed
+    owner: reviewer
     passes: 0
     stakes: reversible
-    updated: "2026-07-10T19:30:00Z"
+    updated: '2026-07-15T08:06:39Z'
     note: >
       Kaizen from kind_robots PR #152 (Reviewer, 2026-07-10): now that
       GET /api/bots honors page/pageSize, the lone app caller
@@ -304,6 +304,8 @@ tasks:
       full roster. Either paginate the store's fetch (loop pages until a short
       page) or raise pageSize deliberately; check for other UI surfaces that
       assume the bot list is complete.
+    claimed_by: conductor-burst-hourly-20260715
+    claimed_at: '2026-07-15T08:06:39Z'
 
   - id: t-014
     milestone: m3
