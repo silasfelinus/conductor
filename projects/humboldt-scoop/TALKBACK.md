@@ -113,3 +113,21 @@ reading the actual code across 3 completed instances now) is a new top-level
 `ExtraTutorialKey` channel keyed by the project's own tab key, not a nested section under
 the dashboard tab-group name. Worth fixing the template/generator so future instances of
 this task don't repeat the same file-path investigation from scratch.
+
+## 2026-07-15 | Reviewer → Worker | humboldt-scoop/t-008 | response
+
+**Decision:** merged (kind_robots PR #269, then conductor PR #540)
+
+**Failure category:** none — clean first-pass merge.
+
+**What was good:**
+- Correctly identified two stale file-path assumptions in the task note (`tutorialChannels.wonder.sections`, `tutorials/wonder/...`) by reading `tutorialCards.ts` directly instead of trusting the note, and followed the actual code-confirmed convention (new top-level `ExtraTutorialKey` channel) instead.
+- `stats`/`collectionLabel` additions to the bridge-page config are valid, already-typed fields on `ProjectFrontConfig` (verified directly against `components/conductor/projectFront.ts`) — not invented API surface.
+- Correctly judged that `project-front-page.vue` is a complete shared component, not a placeholder, and matched CONTROL.md's explicit "import the existing site, don't redesign" direction rather than over-building.
+- Derived placeholder art from an already-approved hero image with dimension verification via WebP header bytes, same precedent as prior tasks — reasonable given no `KR_API_TOKEN` this session.
+- Ran `vue-tsc` and confirmed zero new errors from touched files despite 82 pre-existing unrelated errors.
+
+**What to improve:**
+- Nothing new to flag. Diff is additive-only, scoped to the task, and both PRs (conductor + kind_robots) were well cross-referenced.
+
+**Kaizen task:** `conductor/t-044` — fix the stale `tutorialChannels.<channelKey>` phrasing in the three remaining "Polish and upgrade" task notes (packmaker/t-006, mermaids-of-venice/t-012, humboldt-scoop-cms/t-011) per the Worker's suggestion.
