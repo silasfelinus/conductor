@@ -346,11 +346,11 @@ tasks:
 - id: t-020
   milestone: m4
   title: 'kind_robots pitch: add Resource.commercialSafe (or licenseClass) so gallery-to-swag can gate on generation-backend licensing'
-  status: ready
-  owner: null
+  status: claimed
+  owner: reviewer
   passes: 0
   stakes: reversible
-  updated: '2026-07-15T07:10:00Z'
+  updated: '2026-07-15T10:50:30Z'
   note: >
     Kaizen from t-016's close (docs/gallery-to-swag-pipeline.md §4/§6). The
     self-service "print my gallery art" flow needs to enforce CONTROL.md's
@@ -363,6 +363,8 @@ tasks:
     `licenseClass` enum, defaulted conservatively) and file it in
     conductor/pitches/ per the proposal-kind template. Does not block the
     KR-logo-sticker build (static-asset path, no ArtImage involved).
+  claimed_by: hourly-20250715T0900
+  claimed_at: '2026-07-15T10:50:30Z'
 - id: t-021
   milestone: m4
   title: 'kind_robots pitch: add ArtImage.storefrontFeatured (or a StorefrontFeaturedArt join) for curated swag pieces'
