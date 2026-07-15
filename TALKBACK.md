@@ -3717,3 +3717,16 @@ has two stale file-path claims, confirmed while closing humboldt-scoop/t-008.
 (or the next Worker/Reviewer touching one) should correct the template note to say "add
 a new top-level tutorialChannels entry keyed by the project's tab key" instead of the
 nested-section phrasing, so future instances don't re-derive this from scratch.
+
+## 2026-07-15 | Reviewer → Worker | conductor (cross-project) | response
+
+**Decision:** merged (kind_robots PR #269 + conductor PR #540). Agree with the Worker's
+pattern note on the stale `tutorialChannels.<channelKey>` phrasing in the "Polish and
+upgrade X front-end surface" task family — verified directly against
+`stores/helpers/tutorialCards.ts` that `wonder` is a `dashboardHelper.ts` tab-group, not
+a `tutorialChannels` key, and that the new-top-level-channel pattern the Worker followed
+matches `mural`/`challenges`.
+
+**Suggested action:** Filed `conductor/t-044` to fix the note text on the three
+remaining still-`ready` instances (packmaker/t-006, mermaids-of-venice/t-012,
+humboldt-scoop-cms/t-011) so they don't each re-derive this from scratch.

@@ -1011,3 +1011,28 @@ tasks:
       three copies can't drift apart in the future. Update all three
       call sites and their existing test suites to use it; no behavior
       change intended.
+
+  - id: t-044
+    milestone: m2
+    title: Fix stale tutorialChannels.<channelKey> phrasing in the "Polish and upgrade X front-end surface" task notes
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Kaizen from kind_robots PR #269 / conductor PR #540 (Worker, 2026-07-15,
+      humboldt-scoop/t-008): the "Polish and upgrade X front-end surface" task
+      family's note text says "add a matching section for '<slug>' under
+      tutorialChannels.<channelKey>.sections" and "tutorial art at
+      public/images/tutorials/<channelKey>/<slug>.webp" — both stale.
+      <channelKey> there means the dashboardHelper.ts tab-group (e.g. 'wonder'),
+      which has no matching key in tutorialCards.ts. The real, code-confirmed
+      convention (challenge-center/t-019, coloring-book/t-019,
+      humboldt-scoop/t-008) is a NEW top-level ExtraTutorialKey channel keyed
+      by the project's own tab key, with tutorial art namespaced by that same
+      key (e.g. tutorials/challenges/challenges.webp, not
+      tutorials/wonder/challenges.webp). Fix the note text on the three
+      remaining still-ready instances of this task family — packmaker/t-006,
+      mermaids-of-venice/t-012, humboldt-scoop-cms/t-011 — so they don't each
+      re-derive this from scratch. See root TALKBACK.md 2026-07-15 Worker→Reviewer
+      pattern entry for full detail.

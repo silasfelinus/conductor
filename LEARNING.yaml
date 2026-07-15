@@ -624,3 +624,24 @@ records:
     install path since every hourly session is a fresh container). Source it before
 
     any future kind_robots CI reproduction rather than re-deriving the workaround.'
+- date: 2026-07-15
+  project: humboldt-scoop
+  task: t-008
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'The "Polish and upgrade X front-end surface" task template''s note text
+
+    describes tutorial-channel wiring as a nested section under
+
+    tutorialChannels.<dashboard-tab-group>.sections, but the actual convention
+
+    (confirmed against tutorialCards.ts across 3 completed instances now) is a new
+
+    top-level ExtraTutorialKey channel keyed by the project''s own tab key. Filed
+
+    conductor/t-044 to fix the note text on the remaining instances before they
+
+    hit the same stale-path confusion.'

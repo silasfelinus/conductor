@@ -1,13 +1,13 @@
 # Roadmap Audit
 
-Generated: `2026-07-15T02:21:35.436534+00:00`
+Generated: `2026-07-15T02:53:51.986521+00:00`
 
 This is a conservative structural audit. It reports suspicious state; it does not automatically change task status or remove human gates.
 
 ## Portfolio snapshot
 
-- **40** roadmaps, **33** active projects, **503** tasks
-- **109 ready**, **60 waiting**, **18 needs-human**, **0 claimed/review**, **305 done**
+- **40** roadmaps, **33** active projects, **504** tasks
+- **110 ready**, **60 waiting**, **18 needs-human**, **0 claimed/review**, **305 done**
 - Findings: **0 errors**, **5 warnings**, **47 informational**
 
 ## Project inventory
@@ -31,7 +31,7 @@ This is a conservative structural audit. It reports suspicious state; it does no
 | 15 | `model-builder` | active | software | 4 | 0 | 0 | 0 | 25 / 29 |
 | 16 | `animation-manager` | active | software | 4 | 2 | 0 | 0 | 4 / 10 |
 | 17 | `ecosystem-map` | active | software | 2 | 1 | 0 | 0 | 5 / 8 |
-| 18 | `conductor` | active | software | 9 | 0 | 2 | 0 | 32 / 43 |
+| 18 | `conductor` | active | software | 10 | 0 | 2 | 0 | 32 / 44 |
 | 19 | `serendipity` | active | software | 3 | 0 | 0 | 0 | 9 / 12 |
 | 20 | `storymaker` | active | software | 2 | 0 | 0 | 0 | 8 / 10 |
 | 21 | `davinci` | active | software | 2 | 0 | 0 | 0 | 12 / 14 |
