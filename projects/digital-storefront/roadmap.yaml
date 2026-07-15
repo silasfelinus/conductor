@@ -206,11 +206,27 @@ tasks:
 - id: t-015
   milestone: m4
   title: 'Recommend a print-on-demand provider for the KR-logo item'
-  status: claimed
+  status: done
   owner: reviewer
   passes: 0
   stakes: reversible
   note: >
+    DONE 2026-07-15 (claude-hourly-2026-07-15-0448): wrote
+    projects/digital-storefront/research/pod-provider.md. Recommendation: Printful
+    first (single-supplier fulfillment consistency + more mature webhook-signing
+    docs for a serverless Nuxt/Vercel integration), first orderable item = a
+    die-cut/kiss-cut sticker (lowest base cost and shipping on either platform,
+    single flat print area, no size/color variant matrix, fastest turnaround —
+    smallest financial and integration risk to validate the whole order pipeline
+    before adding a mug or tee SKU). Compared Printful vs Printify on API auth,
+    webhook support, fulfillment model, docs maturity, and per-item base cost for
+    mug/tee/sticker; margins were close enough on all three that supplier
+    integration complexity, not a few dollars of base cost, should decide the
+    first item. No account created, no API keys requested, nothing published —
+    account creation and going live remain needs-human per the task's own
+    constraint and CONTROL.md's standing POD rule. This unblocks t-016 (gallery-
+    to-swag pipeline design) via resolve_deps.py.
+    Original task spec:
     Compare Printful vs Printify (and any clearly better option) specifically for:
     API-driven order automation from a Nuxt/Vercel app, per-order economics on a
     mug/tee/sticker, and putting the Kind Robots logo on whatever item is easiest
@@ -219,11 +235,11 @@ tasks:
     that is a needs-human step for Silas.
   claimed_by: claude-hourly-2026-07-15-0448
   claimed_at: '2026-07-15T04:50:40Z'
-  updated: '2026-07-15T04:50:40Z'
+  updated: '2026-07-15T05:05:00Z'
 - id: t-016
   milestone: m4
   title: Design the gallery-to-swag pipeline (user art on POD products)
-  status: waiting
+  status: ready
   owner: null
   passes: 0
   stakes: reversible
@@ -234,6 +250,12 @@ tasks:
     print-file requirements, POD API order flow, moderation/rights considerations,
     plus curated "specifically chosen pieces" support. Doc first; implementation
     tasks get created from it.
+
+    UPDATE 2026-07-15 (t-015 landed): design against Printful specifically —
+    research/pod-provider.md recommends Printful (single-supplier fulfillment,
+    more mature webhook-signing docs) with a sticker as the first orderable
+    item; extend the gallery pipeline to that same account/product family
+    rather than re-evaluating providers.
 - id: t-017
   milestone: m5
   title: Design DLC unlock purchase mechanics (packmaker packs as store items)
@@ -252,7 +274,7 @@ tasks:
 - id: t-018
   milestone: m4
   title: Add digital + POD coloring books from the coloring-book project to the catalog plan
-  status: waiting
+  status: ready
   owner: null
   passes: 0
   stakes: reversible
@@ -269,3 +291,21 @@ tasks:
     extend the catalog plan/SPEC with the two coloring book products — pricing
     approach, digital vs physical variants, and the exact hard-gated go-live steps
     (POD account, listings, live Stripe products remain needs-human for Silas).
+- id: t-019
+  milestone: m3
+  title: Re-verify the api.stripe.com and museum-site sandbox-egress blockers before re-flagging them as blocked again
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  note: >
+    Kaizen from t-015's close (2026-07-15). t-012, t-013, and ai-art-academy's
+    generation/download tasks have all been logged across multiple sessions as
+    blocked by a 403 policy denial from this sandbox's egress proxy (confirmed via
+    curl to api.stripe.com and metmuseum.org, and /__agentproxy/status). That denial
+    could be sandbox-specific and could change between sessions/environments. The
+    next session that would otherwise skip these tasks on the strength of a prior
+    TALKBACK note should first re-curl the relevant host(s) and only re-log "still
+    blocked" (or start the real build) based on a fresh check, not an inherited
+    assumption. If genuinely still blocked, note the recheck date so this doesn't
+    need repeating every single cycle.
