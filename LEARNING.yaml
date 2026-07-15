@@ -783,3 +783,21 @@ records:
     entry, no completed-task collapse, unconfirmed site-audit trigger) that a
     spec-only summary would have missed entirely. Filing gaps as new tasks
     rather than expanding the mapping task kept it a clean single-pass merge.
+- date: 2026-07-15
+  project: ai-art-academy
+  task: t-010
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    Tool choice matters when confirming a network-egress block: a prior cycle's
+    curl-via-agent-proxy 403 on metmuseum.org/upload.wikimedia.org could have been
+    proxy-specific, so this cycle re-confirmed with WebFetch (a different code path)
+    before trusting it again — same 403, ruling that out. Separately, WebSearch
+    (as opposed to WebFetch) was not blocked and was enough to source real museum
+    object references for new curriculum content without needing direct page
+    fetches. When a task is blocked on one access method, check whether a sibling
+    tool with different plumbing reaches the same resource before writing it off
+    for the session.
