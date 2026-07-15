@@ -291,12 +291,12 @@ tasks:
   - id: t-013
     milestone: m3
     title: Show the full bot roster in the app — botHelper fetch is capped at the first 100 bots
-    status: review
+    status: done
     owner: reviewer
     passes: 0
     stakes: reversible
     updated: '2026-07-15T08:12:55Z'
-    note: 'Kaizen from kind_robots PR #152 (Reviewer, 2026-07-10): now that GET /api/bots honors page/pageSize, the lone app caller (stores/helpers/botHelper.ts) still requests the defaults — page 1, pageSize 100 — so with 400+ bots the bot gallery likely never shows the full roster. Either paginate the store''s fetch (loop pages until a short page) or raise pageSize deliberately; check for other UI surfaces that assume the bot list is complete. IN REVIEW 2026-07-15 (conductor-burst-hourly): added fetchAllBots() to stores/helpers/botHelper.ts, looping /api/bots in pages of 200 until a short page confirms the end; botStore.ts''s fetchBots() now calls it instead of a single unpaginated request. eslint/prettier clean, vue-tsc introduces zero new errors (pre-existing 82-error break is kind-robots/t-020, unrelated). Checked the model-builder source-picker (modelBuilderStore.ts loadSources, config.endpoint also hits /api/bots unpaginated for the Bot source type) — left as-is since generalizing that shared loader across all source types needs per-type verification and is out of scope for this kaizen; worth a follow-up if the Bot source type in model-builder is confirmed to need it too. kind_robots PR #288 open.'
+    note: 'Kaizen from kind_robots PR #152 (Reviewer, 2026-07-10): now that GET /api/bots honors page/pageSize, the lone app caller (stores/helpers/botHelper.ts) still requests the defaults — page 1, pageSize 100 — so with 400+ bots the bot gallery likely never shows the full roster. Either paginate the store''s fetch (loop pages until a short page) or raise pageSize deliberately; check for other UI surfaces that assume the bot list is complete. IN REVIEW 2026-07-15 (conductor-burst-hourly): added fetchAllBots() to stores/helpers/botHelper.ts, looping /api/bots in pages of 200 until a short page confirms the end; botStore.ts''s fetchBots() now calls it instead of a single unpaginated request. eslint/prettier clean, vue-tsc introduces zero new errors (pre-existing 82-error break is kind-robots/t-020, unrelated). Checked the model-builder source-picker (modelBuilderStore.ts loadSources, config.endpoint also hits /api/bots unpaginated for the Bot source type) — left as-is since generalizing that shared loader across all source types needs per-type verification and is out of scope for this kaizen; worth a follow-up if the Bot source type in model-builder is confirmed to need it too. kind_robots PR #288 merged (squash bd96c997).'
     claimed_by: conductor-burst-hourly-20260715
     claimed_at: '2026-07-15T08:06:39Z'
 
