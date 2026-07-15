@@ -680,3 +680,21 @@ records:
     session before rotating rather than assuming a stale note. Recommendation
     (Printful, sticker first) was backed with live 2026 web research rather than
     reused verbatim from the older research/stores.md shortlist.
+- date: 2026-07-15
+  project: alexa-integration
+  task: t-008
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    A ready task blocked only by a prior connector branch-write limitation (not a
+    design question) is a great pick for any burst session that already has direct
+    repo access — the preserved handoff doc in projects/<name>/docs/ applied almost
+    verbatim. One gotcha: preserved patches can go stale against routing/dispatch
+    logic that evolved after they were written even when the target module's own
+    contract didn't change (here, t-013's control-adapter theme detection started
+    swallowing the patch's own test phrase). Re-verify preserved fixtures against
+    current routing before assuming they still round-trip; filed t-016 to fix the
+    over-claiming root cause.
