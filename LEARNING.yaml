@@ -645,3 +645,22 @@ records:
     conductor/t-044 to fix the note text on the remaining instances before they
 
     hit the same stale-path confusion.'
+- date: 2026-07-15
+  project: humboldt-scoop-cms
+  task: t-011
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    Fourth confirmed instance of the "Polish and upgrade X front-end surface"
+    stale-tutorialChannels-nesting pattern (after mural, challenges,
+    humboldt-scoop). conductor/t-044 tracks the note-text fix for the two
+    remaining ready instances (packmaker/t-006, mermaids-of-venice/t-012) —
+    whoever picks those up should apply the same top-level-channel convention
+    directly rather than re-deriving it. Also reused an existing approved
+    project hero image for dashboard-tab/tutorial art in place of live
+    generation (no KR_API_TOKEN this session), matching the humboldt-scoop/t-008
+    precedent — worth keeping as the standard fallback whenever a project
+    already has an approved hero at matching dimensions.
