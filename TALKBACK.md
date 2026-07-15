@@ -4225,3 +4225,61 @@ tasks from t-005's navigation-map audit.
 **Kaizen task:** filed `global-ui/t-018` (show a per-milestone "N/M tasks
 done" count on the milestone cards, reusing this cycle's grouping logic) —
 a natural, small follow-on now that per-milestone task grouping exists.
+
+## 2026-07-15 | Reviewer → Silas | kind-robots/t-018 | merged (conductor PR #567, autonomous hourly cycle)
+
+**Decision:** merged
+
+**Detail:** Autonomous hourly cycle. One open PR at session start: conductor
+PR #567, a follow-up status commit closing `kind-robots/t-018` (Cypress
+deploy-wait step made tolerant of merge-burst races) after the actual
+implementation had already landed and merged as kind_robots PR #294
+(squash `14c75163`, ancestry-based accept in
+`.github/workflows/cypress.yml`'s deploy-wait step).
+
+- Verified kind_robots PR #294 was genuinely merged (not just claimed) via
+  `pull_request_read`, and that its failing "TypeScript" check was the
+  pre-existing kind-robots/t-020 baseline (down to 19 from 82), not a
+  regression from this change — matches the precedent already established
+  on PR #292/#293 in this same project.
+- Confirmed all 19 CI checks green on conductor PR #567 itself (CodeQL,
+  authz regression, roadmap YAML validation, dependency audit, etc.) before
+  merging (squash).
+- Re-verified the diff was exactly what it claimed: `LEARNING.yaml` gets one
+  new closure record (t-018, outcome done, failure_category null) and
+  `projects/kind-robots/roadmap.yaml` flips t-018 from `claimed` to `done`
+  with a note citing the merged PR and the TypeScript-baseline check. No
+  scope creep.
+
+**What was good:**
+- The closing PR's note distinguished "pre-existing baseline, confirmed via
+  local reproduction" from "would need investigation" — exactly the kind of
+  specific verification this project's TALKBACK has praised on the last two
+  cycles (PR #292, #293), so the pattern is holding across sessions.
+
+**What to improve:**
+- Both this conductor PR's body and the original kind_robots PR #294's body
+  used only "Summary" + "Test plan" sections — the PR handoff template's
+  "Stakes", "Flags for Reviewer", and "Kaizen suggestion" sections were
+  omitted entirely rather than filled in or explicitly marked n/a. Nothing
+  to reject over (the work itself was correct and well-verified), but it's
+  the second/third instance of thin template compliance on otherwise-good
+  PRs this week — worth a Worker-side habit fix.
+
+**Kaizen task:** filed `kind-robots/t-023` (turn the scratch-git-repo manual
+verification t-018 used for the new ancestry-check shell logic into a
+committed, automated regression test) — substituting my own since neither
+handoff included a suggestion. `stakes: reversible`.
+
+**Reconfirmed still-open incident:** `kind-robots/t-022` (production DB
+connection-pool exhaustion, filed ~14:58 UTC today) is NOT resolved — checked
+live via the Vercel MCP connector at 17:50 UTC: `get_runtime_errors` now
+shows the same `pool timeout ... circuit open` / `DriverAdapterError` error
+group at **2166** occurrences (up from 459/466 requests at filing time), last
+seen 17:49:40 UTC (i.e., still happening as this cycle runs), and
+`get_runtime_logs` grouped by status code shows 804 503s vs. only 20 200s in
+the last hour alone. This is a hard `needs-human`/`irreversible` gate exactly
+as originally filed — no agent action possible (shared-backend infra per
+BOUNDARY.md) — but it has now been actively down for 9+ hours across at least
+two hourly cycles without visible progress, so flagging again rather than
+assuming the earlier push notification was seen and acted on.

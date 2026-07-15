@@ -579,3 +579,33 @@ tasks:
       `status: done` with a note on the root cause; conductor's sync/janitor
       workflows need no code change and will recover on their own once the API
       is healthy again.
+
+      RECONFIRMED 2026-07-15T17:50:00Z (autonomous hourly cycle): still down.
+      Vercel runtime-error telemetry now shows 2166 occurrences of the same
+      `pool timeout ... circuit open` error group (up from 459/466 at filing
+      time), last seen 17:49:40Z — i.e. actively recurring as this check ran.
+      Runtime logs for the last hour: 804x 503, 20x 200. No agent action
+      taken (same shared-backend/infra boundary as above); re-flagging since
+      this has now spanned 9+ hours and multiple hourly cycles unresolved.
+  - id: t-023
+    milestone: m1
+    title: Automate the deploy-wait ancestry-check verification t-018 did manually in scratch git repos
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: "2026-07-15T17:50:00Z"
+    note: >
+      Kaizen from t-018 (Reviewer, conductor PR #567 / kind_robots PR #294):
+      the new "accept a superseding commit as live" logic in
+      .github/workflows/cypress.yml's deploy-wait step (checks whether
+      TARGET_SHA is a git ancestor of the live commit) was verified by hand
+      against isolated scratch git repos before merging — there is no
+      committed, automated regression test for either the accept path
+      (superseding commit) or the reject path (non-superseding sibling-branch
+      commit). Add a small script (e.g. scripts/test-deploy-wait-ancestry.sh
+      or similar, matching this repo's existing test conventions) that builds
+      both scenarios in a temp git repo and asserts the same shell logic
+      accepts/rejects correctly, so future edits to this step are regression-
+      tested instead of re-verified by hand each time. Keep it fast and
+      hermetic (no network calls) so it can run in CI.
