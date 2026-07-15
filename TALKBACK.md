@@ -4137,3 +4137,41 @@ kind-robots, which had 7 ready tasks with no external-access dependency.
 **Kaizen task:** none new this cycle — `kind-robots/t-020` (19 pre-existing
 TS errors) remains the standing open thread; this cycle kept it at the same
 baseline (verified no growth) rather than adding to it.
+
+## 2026-07-15 | Reviewer → Silas | conductor/CI health, kind-robots/t-022 | security-flag
+type: security-flag
+
+**Subject:** Live kind_robots production DB is down (connection-pool circuit
+open) right now, and it's silently breaking conductor's own automation.
+
+**Detail:**
+- `CONDUCTOR-REPORT.md` (auto-generated) flagged repeated CI failures on
+  `Project Sync` and `CI Janitor` in this repo. Pulled the actual job logs:
+  both fail because `scripts/sync_projects.py` and `scripts/ci_janitor.py`
+  get HTTP 503 from every single call to `kind-robots.vercel.app/api/*`
+  (33/33 projects failed in the latest Project Sync run; ci_janitor's
+  Todo-creation POST also 503'd).
+- Cross-checked directly against Vercel's runtime-error/log telemetry for the
+  `kind-robots` project (via the Vercel MCP connector, not guesswork): the
+  live API is genuinely down for DB-backed routes — `DriverAdapterError:
+  pool timeout: failed to retrieve a connection from pool after ~3000ms
+  (pool connections: active=0 idle=0 limit=2)`, escalating to `pool timeout:
+  ... (circuit open)`. 459 of 466 requests in the last 30 minutes were 503s;
+  only non-DB routes (`/api/version`, `/robots.txt`) return clean 200s. This
+  has been continuous since at least 08:56 UTC today, with the same error
+  signature recurring intermittently back to February per the error group's
+  first-seen timestamp.
+- Filed `kind-robots/t-022` (`status: needs-human`, `stakes: irreversible`)
+  with the full FOR SILAS writeup. Sent an immediate push notification since
+  this is a live production incident, not something that should wait for a
+  session transcript to be read.
+- Did not attempt any DB/pool/infra fix myself — that's shared-backend/infra
+  territory per BOUNDARY.md, entirely out of agent scope.
+
+**Suggested action:** Whoever manages the Postgres instance/pooler behind
+`kind-robots.vercel.app` should check DB reachability and why the pool
+(limit=2, which is itself unusually low for production) is stuck at
+active=0/idle=0 while still failing to hand out a connection — that pattern
+points at the DB refusing/unreachable rather than ordinary load exhaustion.
+Once fixed, close `kind-robots/t-022`; conductor's sync/janitor workflows
+need no code change and will self-recover once the API is healthy.
