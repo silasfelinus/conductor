@@ -496,11 +496,11 @@ tasks:
   - id: t-021
     milestone: m3
     title: Fix pre-existing "Channel content contract" CI failure (3 unknown-tab references)
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
-    updated: "2026-07-14T22:20:00Z"
+    updated: '2026-07-15T14:07:55Z'
     note: >
       Found during conductor burst-mode cycle (challenge-center/t-018, 2026-07-14
       ~22:13 UTC): kind_robots PR #263's "Contract verifiers" GitHub Actions check
@@ -523,3 +523,5 @@ tasks:
       red TypeScript check, see kind-robots/t-020) confirming it isn't a hard
       blocker, but it's a second CI check reading red on main independent of any
       single PR, further eroding the "all green" signal.
+    claimed_by: claude-burst-20260715-1400
+    claimed_at: '2026-07-15T14:07:55Z'
