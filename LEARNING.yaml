@@ -853,3 +853,20 @@ records:
     two already-merged endpoint families (model-builder/runs, dreams/facets)
     for the auth/error-handling shape kept review risk low despite no live-DB
     verification being possible in this sandbox.
+- date: 2026-07-15
+  project: packmaker
+  task: t-001
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    A design brief that grounds every claim in the actual target schema/codebase
+    (not the task note's paraphrase of it) surfaces real integration points for
+    free: digital-storefront's t-009 SPEC.md had already designed a generic
+    Product/Entitlement model that explicitly covers this project's DLC packs,
+    and kind-robots t-008 (the sharing/ACL design this project depends on) turned
+    out to still be unwritten -- both facts only surfaced by reading the sibling
+    projects' specs and the live Prisma schema before drafting, not by trusting
+    the roadmap task's own summary of them.
