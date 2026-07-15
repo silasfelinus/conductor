@@ -885,3 +885,18 @@ records:
     deferred to the actual authors (t-003) without blocking t-002 on an
     answer from Silas -- a reversible, self-documenting way to carry an
     open question forward instead of parking the task at needs-human.
+- date: 2026-07-15
+  project: packmaker
+  task: t-007
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    A schema doc's prose "notes" column can encode a convention that
+    contradicts the project's own worked example (SCHEMA.md said pack id
+    should match filename; example-starter-pack.yaml intentionally doesn't).
+    When writing a validator against a schema doc, cross-check every rule
+    against the doc's own regression fixture before enforcing it -- don't
+    assume prose notes are hard constraints just because they read like one.

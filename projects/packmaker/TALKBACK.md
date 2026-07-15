@@ -81,3 +81,49 @@ neither the generation backend nor external egress.
 **Kaizen task:** filed `packmaker/t-007` (add a `validate_pack_manifest.py`
 script checking a pack YAML against SCHEMA.md) — a natural, small follow-on
 now that the schema is written down but nothing enforces it automatically.
+
+## 2026-07-15 | Reviewer → Silas | packmaker/t-007 | pattern
+
+**Decision:** merged (self-contained validation script, conductor-repo only)
+
+**Detail:** Hourly conductor cycle. Re-checked the same blockers noted in
+prior cycles' TALKBACK entries live (not from stale notes): `KR_API_TOKEN`
+still absent from `env`, and `curl` to metmuseum.org/upload.wikimedia.org
+still 403-policy-denied via the agent-proxy — confirming ai-art-academy's
+t-004/t-008/t-009/t-013 remain genuinely blocked this session. Rather than
+force a blocked task or repeat ai-art-academy/t-010's recurring never-idle
+slot a fourth time today, walked the priority order for a task with no
+external dependency and landed on packmaker/t-007 — the kaizen this same
+project's t-002 filed last cycle.
+
+- Claimed via `claim_task.py`. Wrote `scripts/validate_pack_manifest.py`
+  (required top-level + per-item field/enum checks against
+  `packs/SCHEMA.md`, `refId`-present exempts `draftPayload`) and
+  `tests/test_validate_pack_manifest.py` (10 cases).
+- Deliberately did NOT enforce SCHEMA.md's filename-must-match-`id` note as
+  a hard check: the real `example-starter-pack.yaml` (the task's own named
+  regression case) intentionally uses a descriptive filename rather than
+  matching its `id: starter-sampler`. Enforcing prose-convention notes that
+  contradict the task's own regression fixture is a scope trap — flagged
+  in the PR rather than silently deciding either way.
+- Verified: full `pytest tests/` (235 passed, no regressions), the new
+  suite standalone (10 passed), `validate_roadmaps.py` clean, all
+  `scripts/*.py` syntax-check clean, and a hand-built broken manifest
+  correctly produced all 6 expected errors.
+
+**What was good:**
+- Didn't just re-run ai-art-academy/t-010 a fourth time today out of
+  convenience once its blocked-task set was confirmed — checked sibling
+  high-priority projects (coloring-book, digital-storefront) for
+  environment-independent ready work first and found one cleanly scoped
+  from this project's own kaizen backlog.
+- Caught and resolved a real tension between SCHEMA.md's prose and its own
+  worked example before it became a false-positive CI failure, instead of
+  either blindly enforcing the note or silently dropping it without
+  explanation.
+
+**Kaizen task:** filed `conductor/t-047` (switch `ci.yml`'s
+`authz-regression` job from an explicit test-file whitelist to `pytest
+tests/` so new test files are covered without a human/agent remembering to
+add them to a hardcoded list — noticed only 6 of ~25 `tests/*.py` files are
+actually CI-gated).
