@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-07-15T04:25:27Z
+Generated: 2026-07-15T04:54:24Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **49**
-- Outcomes: done: 49
+- Closed tasks recorded: **50**
+- Outcomes: done: 50
 - Success rate: **100%**
 - Average passes on successful tasks: **0.0**
 
@@ -22,6 +22,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | challenge-center | 12 | 100% |
 | coloring-book | 1 | 100% |
 | conductor | 9 | 100% |
+| digital-storefront | 1 | 100% |
 | ecosystem-map | 2 | 100% |
 | humboldt-scoop | 1 | 100% |
 | humboldt-scoop-cms | 1 | 100% |
@@ -34,7 +35,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 3 | 100% |
-| software | 46 | 100% |
+| software | 47 | 100% |
 
 ## Failure categories
 
@@ -48,6 +49,8 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 _No systematic weaknesses above thresholds. Kaizen freely._
 
 ## Recent lessons
+
+- 2026-07-15 `digital-storefront/t-015` — Genuinely research-only tasks (no cross-repo code, no external API dependency) are the right thing to rotate to when the priority-ordered project and even the current project's own top tasks are blocked by sandbox egress denial (api.stripe.com, museum sites) — confirmed the denials still applied this session before rotating rather than assuming a stale note. Recommendation (Printful, sticker first) was backed with live 2026 web research rather than reused verbatim from the older research/stores.md shortlist.
 
 - 2026-07-15 `humboldt-scoop-cms/t-011` — Fourth confirmed instance of the "Polish and upgrade X front-end surface" stale-tutorialChannels-nesting pattern (after mural, challenges, humboldt-scoop). conductor/t-044 tracks the note-text fix for the two remaining ready instances (packmaker/t-006, mermaids-of-venice/t-012) — whoever picks those up should apply the same top-level-channel convention directly rather than re-deriving it. Also reused an existing approved project hero image for dashboard-tab/tutorial art in place of live generation (no KR_API_TOKEN this session), matching the humboldt-scoop/t-008 precedent — worth keeping as the standard fallback whenever a project already has an approved hero at matching dimensions.
 
@@ -75,7 +78,6 @@ already-applied, now-unrepeatable transition with its event file undeleted.
 - 2026-07-14 `challenge-center/t-015` — A red CI TypeScript check on a PR that touches unrelated files should be reproduced in the exact CI environment (matching Node major version via a fresh local install + npm ci), not just re-run under whatever Node happens to be in the sandbox -- confirming byte-identical file:line errors against a known pre-existing tracked issue (kind-robots/t-020) is what actually justifies merging past a red check, not an assumption that it 'must be the same one as last time.'
 - 2026-07-14 `coloring-book/t-019` — The task's own framing ('evolve the placeholder scaffold page') was stale -- a repo read of kind_robots showed the coloring engine (store/canvas/manager) is already a functionally complete region+raster-flood-fill implementation with undo and export, not a placeholder. Read the target repo before trusting a roadmap task's characterization of current state; the actual thin spots (generic Generate/Proposals/Prompts sub-tabs, single hardcoded page set) were narrower than the task description implied and got split into a new focused task (t-020) instead of driving an oversized diff. Also: art-asset generation for dashboard-tab/tutorial thumbnails is a queue-and-wait step (projects/art-prompts.yaml requests:), not something a single session executes end-to-end without KR_API_TOKEN -- queuing the request IS the correct terminal action for that sub-step, not a soft-gate blocker.
 - 2026-07-14 `ai-art-academy/t-012` — A 'confirm the resolver has no type-specific branching' task closed clean on first pass by reading satisfied() directly (scripts/resolve_deps.py) -- it only checks status/gate_human/approved_by_human, never task kind, so a licensing DECISION and a brief-confirmation gate were already handled identically. Backed the finding with tests/test_resolve_deps.py (12 tests, zero prior coverage) instead of a note-only close, so the guarantee is now regression-tested rather than asserted. Also picked up mid-cycle after a real rotation collision on challenge-center/t-013 -- claim_task.py's live origin/main check caught it before any duplicate work was pushed.
-- 2026-07-14 `conductor/t-042` — A batch event processor that aborts entirely on the first unresolvable item turns any single stale/invalid event into a silent, indefinite blocker for every other queued item; process independently and only fail the run for visibility after the resolvable items have already been committed.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-07-15T04:25:27Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-07-15T04:54:24Z_
