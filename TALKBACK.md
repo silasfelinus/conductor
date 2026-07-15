@@ -3730,3 +3730,45 @@ matches `mural`/`challenges`.
 **Suggested action:** Filed `conductor/t-044` to fix the note text on the three
 remaining still-`ready` instances (packmaker/t-006, mermaids-of-venice/t-012,
 humboldt-scoop-cms/t-011) so they don't each re-derive this from scratch.
+
+## 2026-07-15 | Reviewer → Silas | kind-robots/t-013 | closed (hourly burst-mode pick, PR #288)
+
+**Detail:** ai-art-academy (top of priority.yaml) has three sessions' worth of activity
+today already and every real task (t-004, t-008, t-009, t-013) is blocked on the same
+already-reconfirmed environment limits (no `KR_API_TOKEN`; sandbox 403s on
+metmuseum.org/upload.wikimedia.org) — re-checking a fourth time would have added
+nothing, so rotated past it without re-deriving the blocker. coloring-book's ready
+tasks are the same shape (generation-backend-gated, or t-020 gated on t-006/t-007
+landing first). digital-storefront's non-Stripe-gated tasks (t-020/t-021) are
+kind_robots pitches, not code; its code tasks need Stripe test-mode (same egress
+block). Picked kind-robots/t-013 instead: a small, fully self-contained, non-blocked
+bug fix.
+
+- Claimed via `claim_task.py` (kind-robots/t-013).
+- Root cause: `GET /api/bots` honors `page`/`pageSize` (PR #152) but the only real
+  caller, `botStore.ts`'s `fetchBots()`, called it with no query params, so with 400+
+  bots only the first 100 ever loaded into the store/gallery.
+- Added `fetchAllBots()` to `stores/helpers/botHelper.ts` — loops `/api/bots` in
+  batches of 200 until a short page confirms the end (bounded at 50 pages). Wired
+  `botStore.ts`'s `fetchBots()` to call it instead of a single unpaginated request.
+- Checked for other UI surfaces assuming the bot list is complete per the task note:
+  found `modelBuilderStore.ts`'s `loadSources()` also hits `config.endpoint` (`/api/bots`
+  for the Bot source type) unpaginated. Left it alone — that loader is shared across
+  every model-builder source type (Character, Facet, ...), so paginating it needs
+  per-type verification that's out of scope for this kaizen; noted as a possible
+  follow-up in the task note rather than silently expanding the PR.
+- Verified: `eslint`/`prettier` clean on both changed files (4 pre-existing
+  `no-empty`/`no-dynamic-delete` errors elsewhere in `botStore.ts` confirmed unchanged
+  via `git stash`); full `vue-tsc --noEmit` introduces zero new errors — all remaining
+  errors match the pre-existing break tracked in `kind-robots/t-020`.
+- kind_robots PR #288 opened, subscribed to PR activity. `kind-robots/t-013` set to
+  `status: review` with the PR link; will flip to `done` once merged.
+
+**What was good:**
+- Didn't re-verify already-reconfirmed blockers a fourth time in the same day —
+  checked the env var directly, confirmed still absent, and moved on immediately
+  instead of burning a cycle re-deriving TALKBACK's own existing notes.
+- Actually installed `node_modules` (`CYPRESS_INSTALL_BINARY=0` to dodge the Cypress
+  binary download egress block) and ran real lint/typecheck locally before opening the
+  PR, rather than trusting the diff by inspection alone.
+
