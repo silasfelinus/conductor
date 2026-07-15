@@ -408,36 +408,12 @@ tasks:
   - id: t-018
     milestone: m3
     title: Make the Cypress prod-deploy-wait step tolerant of rapid successive merges
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
-    updated: '2026-07-15T17:11:31Z'
-    note: >
-      Found during conductor Reviewer sweep (2026-07-14 09:xx UTC):
-      .github/workflows/cypress.yml's deploy-wait step polls
-      ${BASE_URL}/api/version until it reports the exact merge-commit SHA,
-      timing out at 600s and failing the job otherwise. During a burst of
-      several merges within ~1-2 hours (PR #238-#242 all landed within one
-      session), Vercel kept starting a new production build for each new
-      main-branch commit before the previous one finished, so by the time
-      any single build would have gone live a newer commit had already
-      superseded it -- production stayed pinned on an older SHA and the
-      exact-match poll in run 29315412081 (target ad80d0e7) and run
-      29318586840 (target 2bbdf3d3) both timed out and failed red, even
-      though nothing was actually broken -- each commit's own build was
-      still in the Vercel queue/building when the next merge landed. Root
-      cause is a race between merge velocity and the wait step's
-      exact-SHA requirement, not a code regression; confirmed via Vercel's
-      deployments list showing no missing/errored production build, just
-      later ones superseding earlier ones. Suggested fix: either (a) accept
-      when the live commit is a git ancestor of TARGET_SHA rather than
-      requiring an exact match (i.e. the newer, already-live commit
-      supersedes the one this run cares about) so a superseded-but-still-
-      correct state passes, or (b) skip/short-circuit the wait when a newer
-      commit on main has already deployed to production by the time this
-      job runs. Not urgent -- self-resolves once merge bursts settle -- but
-      will keep flaking CI red during any future rapid-merge session.
+    updated: '2026-07-15T17:21:04Z'
+    note: 'DONE 2026-07-15 (claude-burst-2026-07-15-1705): kind_robots PR #294 merged (squash, commit 14c75163). Deploy-wait step in .github/workflows/cypress.yml now accepts a superseding commit (TARGET_SHA is a git ancestor of the live commit) as a live deploy, not just an exact match, fixing the merge-burst false-red documented on this task. PR''s "TypeScript" check failed but was confirmed pre-existing and unrelated: reproduced locally on the PR branch (npm run test / vue-tsc), 19 errors across 10 app-source files (none touching the workflow YAML this PR changed), matching the ongoing baseline tracked at kind-robots/t-020 -- down from the 82 that t-020 logged earlier today, evidently reduced by intervening merges but still present on main. Merged after documenting that in a PR comment.'
     claimed_by: claude-burst-2026-07-15-1705
     claimed_at: '2026-07-15T17:11:31Z'
 

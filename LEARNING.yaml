@@ -900,3 +900,23 @@ records:
     When writing a validator against a schema doc, cross-check every rule
     against the doc's own regression fixture before enforcing it -- don't
     assume prose notes are hard constraints just because they read like one.
+- date: 2026-07-15
+  project: kind-robots
+  task: t-018
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    A CI wait-step that requires an exact-SHA match is fragile against its own
+    success: the more merges land close together, the more likely a later
+    commit's deploy wins the race and makes an earlier commit's own wait step
+    time out even though nothing broke. Ancestry (is TARGET_SHA reachable
+    from the live commit?) is the right relaxation, not a longer timeout --
+    a longer timeout still eventually fails if merges never stop arriving,
+    while ancestry succeeds the instant any superseding commit goes live.
+    Kept the common exact-match path fast by only deepening the shallow
+    checkout when the ancestry check is actually needed, and verified the
+    new shell logic against isolated scratch git repos before ever touching
+    live CI, since actions workflow YAML has no local unit-test harness.
