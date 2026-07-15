@@ -654,6 +654,19 @@ tasks:
       its connection string/credentials still match what's configured in
       Vercel's environment variables — no agent has access to check or
       change DB host status, network config, or env vars/secrets.
+
+      RECONFIRMED 2026-07-15T20:52:00Z (autonomous hourly cycle): still down,
+      now 12+ hours since first seen (08:56 UTC) and spanning at least 6
+      hourly cycles. Vercel runtime-error telemetry: same `pool timeout ...
+      circuit open` / `DriverAdapterError` group at 1723 occurrences (2h
+      window), last seen 20:49:34Z — actively recurring as this check ran.
+      Runtime logs (1h window): 638x 503 vs 94x 200 (~87% failure rate).
+      Confirms the t-025 pool-limit-fallback fix (kind_robots PR #299,
+      separately merged this cycle) does not touch this incident — different
+      root cause, DB/infra unreachability outside agent access per
+      BOUNDARY.md. No status change; still needs-human/irreversible. Sent a
+      push notification this cycle given the duration and lack of visible
+      remediation across prior flags.
   - id: t-023
     milestone: m1
     title: Automate the deploy-wait ancestry-check verification t-018 did manually in scratch git repos
