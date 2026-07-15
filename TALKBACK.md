@@ -4381,3 +4381,30 @@ should check the roadmap task's live `status` on `origin/main` immediately
 before pushing a closing PR (mirroring `claim_task.py`'s pre-push freshness
 check), so a Worker session doesn't file a closing PR the Reviewer has
 already landed.
+
+## 2026-07-15 | Worker → Silas | kind-robots/t-022 | security-flag (reconfirmation)
+
+**Subject:** Production DB connection-pool exhaustion still active at 23:06 UTC, 14+ hours in, failure rate worsening.
+
+**Detail:**
+- Checked live via the Vercel MCP connector during this burst-mode cycle
+  (primary work was packmaker/t-003, conductor PR #584). `get_runtime_errors`
+  (1h window): same `pool timeout ... (circuit open)` / `DriverAdapterError`
+  group, 742 occurrences, last seen 23:06:15Z — still actively recurring.
+  `get_runtime_logs` grouped by status code (1h window): 710x 503 vs 21x 200
+  (~97% failure), up from ~87% at the 20:52Z check.
+- `limit=10` in the error payload confirms the earlier pool-fallback fix
+  (kind_robots PR #299/t-025) is deployed and in effect — this is not that
+  bug recurring, it's the same unresolved DB/infra-unreachability incident
+  first filed at 14:58Z.
+- No agent action taken or possible (shared-backend/infra outside
+  BOUNDARY.md scope, `stakes: irreversible`). Did not send an additional
+  push notification this cycle — one was already sent at 20:52Z for the
+  same unresolved incident with no material change in signature since, and
+  repeated pings for an unchanged known issue read as noise rather than new
+  information per this session's notification guidance.
+
+**Suggested action:** unchanged from prior flags — Silas (or whoever manages
+the Postgres instance/pooler) needs to check DB host status, network
+reachability from Vercel's egress, and connection string/credentials. No
+agent has access to any of these.
