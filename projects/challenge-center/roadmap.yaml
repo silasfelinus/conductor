@@ -590,7 +590,7 @@ tasks:
 - id: t-021
   milestone: m1
   title: Investigate provisioning Node 24.x in the sandbox session environment for local CI reproduction
-  status: ready
+  status: claimed
   passes: 0
   stakes: reversible
   note: >
@@ -605,3 +605,7 @@ tasks:
     redirects to). Until fixed, the fallback (confirmed sufficient on t-019) is: verify the
     diff's changed files never appear in the local error list under any locally-reproducible
     variant, rather than chasing an exact CI error-count match.
+  owner: worker
+  claimed_by: claude-burst-2026-07-15-001
+  claimed_at: '2026-07-15T00:08:22Z'
+  updated: '2026-07-15T00:08:22Z'
