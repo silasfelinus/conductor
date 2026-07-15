@@ -280,22 +280,14 @@ tasks:
 - id: t-015
   milestone: m5
   title: Add the "Completed (N)" collapsed disclosure for done tasks per project
-  status: claimed
+  status: review
   owner: worker
   passes: 0
   stakes: reversible
-  note: 'Filed from t-005''s navigation-map audit (NAVIGATION-MAP.md, 2026-07-15).
-    TASK-SURFACE-SPEC.md section 7 specifies completed tasks default-collapsed under a
-    per-milestone "Completed (N)" disclosure header. conductor-page.vue currently shows
-    done tasks inline with the same badge/icon treatment as any other status
-    (conductor-page.vue:2736-2747) with no grouping or collapse, so long-lived projects
-    show every closed task all the time. Add the collapsed-by-default disclosure, grouped
-    per milestone, matching the spec.
-
-    '
+  note: 'DONE 2026-07-15 (claude-burst-2026-07-15-rotation2): components/pages/conductor-page.vue''s project Tasks list now splits into activeTasks (unchanged flat rendering for non-done tasks) and doneTasksByMilestone (a computed grouping done tasks by milestone id, ordered to match selectedProject.milestones, with an ''Other'' fallback bucket for any unmatched milestone id). Done tasks render inside a collapsed <details> per milestone headed ''<milestone title> . Completed (N)'', matching TASK-SURFACE-SPEC.md section 7. Verified: eslint clean on the touched file; vue-tsc --noEmit shows the same 19 pre-existing errors tracked at kind-robots/t-020 (conductor-page.vue introduces none). Could not exercise the page live -- dev sandbox has no DB, same limitation t-012 already documented for this page. kind_robots PR #293 opened, subscribed to its activity.'
   claimed_by: claude-burst-2026-07-15-rotation2
   claimed_at: '2026-07-15T15:08:34Z'
-  updated: '2026-07-15T15:08:34Z'
+  updated: '2026-07-15T15:18:47Z'
 - id: t-016
   milestone: m5
   title: Confirm or create the site-audit agent''s Claude Code Remote trigger
