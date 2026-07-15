@@ -768,3 +768,18 @@ records:
     the implementation review in conductor. Watch for merge-base drift on such
     bookkeeping PRs — a chore auto-commit landing on main between claim and PR
     open guarantees a STATUS.md conflict (see conductor/t-045).
+- date: 2026-07-15
+  project: global-ui
+  task: t-005
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    A "produce the final map/spec" task pays off most when it re-verifies
+    against the real implementation instead of re-printing the original design
+    doc — t-005 found three real navigation gaps (honeydo has no top-level nav
+    entry, no completed-task collapse, unconfirmed site-audit trigger) that a
+    spec-only summary would have missed entirely. Filing gaps as new tasks
+    rather than expanding the mapping task kept it a clean single-pass merge.
