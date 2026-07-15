@@ -1,14 +1,14 @@
 # Roadmap Audit
 
-Generated: `2026-07-15T01:56:10.162756+00:00`
+Generated: `2026-07-15T02:21:35.436534+00:00`
 
 This is a conservative structural audit. It reports suspicious state; it does not automatically change task status or remove human gates.
 
 ## Portfolio snapshot
 
 - **40** roadmaps, **33** active projects, **503** tasks
-- **110 ready**, **60 waiting**, **18 needs-human**, **0 claimed/review**, **304 done**
-- Findings: **0 errors**, **3 warnings**, **47 informational**
+- **109 ready**, **60 waiting**, **18 needs-human**, **0 claimed/review**, **305 done**
+- Findings: **0 errors**, **5 warnings**, **47 informational**
 
 ## Project inventory
 
@@ -17,7 +17,7 @@ This is a conservative structural audit. It reports suspicious state; it does no
 | 1 | `challenge-center` | active | software | 0 | 0 | 0 | 0 | 20 / 20 |
 | 2 | `ai-art-academy` | active | software | 5 | 1 | 0 | 0 | 8 / 14 |
 | 3 | `coloring-book` | active | software | 4 | 5 | 0 | 0 | 11 / 20 |
-| 4 | `humboldt-scoop` | active | software | 1 | 0 | 0 | 0 | 7 / 8 |
+| 4 | `humboldt-scoop` | active | software | 0 | 0 | 0 | 0 | 8 / 8 |
 | 5 | `humboldt-scoop-cms` | active | software | 1 | 4 | 1 | 0 | 5 / 11 |
 | 6 | `digital-storefront` | active | software | 5 | 3 | 0 | 0 | 7 / 15 |
 | 7 | `packmaker` | active | software | 2 | 3 | 0 | 0 | 1 / 6 |
@@ -61,11 +61,13 @@ This is a conservative structural audit. It reports suspicious state; it does no
 
 _None._
 
-### Warning (3)
+### Warning (5)
 
 - **ROADMAP_MISSING_OVERRIDE** — `animation-studio`: Roadmap has no project-overrides.yaml entry.
 - **ACTIVE_PROJECT_ALL_DONE** — `challenge-center`: All tasks are done but project override remains active.
 - **ACTIVE_PROJECT_NO_OPEN_TASKS** — `challenge-center`: Active project has no open tasks; mark finished/paused or add an intentional recurring task.
+- **ACTIVE_PROJECT_ALL_DONE** — `humboldt-scoop`: All tasks are done but project override remains active.
+- **ACTIVE_PROJECT_NO_OPEN_TASKS** — `humboldt-scoop`: Active project has no open tasks; mark finished/paused or add an intentional recurring task.
 
 ### Info (47)
 
