@@ -1102,3 +1102,26 @@ tasks:
       manual recipe already unblocks sessions that know to ask for it -- this is now
       about convenience/discoverability, not a hard wall.
 
+  - id: t-047
+    milestone: m2
+    title: Switch ci.yml's authz-regression job from a test-file whitelist to pytest tests/
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: |-
+      Kaizen from Reviewer's packmaker/t-007 pass (hourly burst-mode, conductor
+      PR #566, 2026-07-15). .github/workflows/ci.yml's authz-regression job runs
+      an explicit hardcoded list of six test files (pytest tests/test_authz_regression.py
+      tests/test_set_task_field.py tests/test_queue_missing_project_art.py
+      tests/test_roadmap_text_patch.py tests/test_process_task_events.py
+      tests/test_validate_roadmaps.py) rather than the full tests/ directory.
+      Roughly 19 of the ~25 files currently in tests/ (including the new
+      test_validate_pack_manifest.py from t-007) are never actually run in CI --
+      they only run if a human or agent remembers to invoke pytest locally.
+
+      Switch the job to `pytest tests/` (or `pytest tests/ --ignore=tests/<slow-or-flaky>.py`
+      if any specific file turns out to need exclusion -- audit first) so new test
+      files are covered by default. Verify the full suite still passes in the CI
+      environment (it passes locally: 235 passed as of this task's filing) and that
+      runtime stays reasonable for a PR-gating job before landing.
