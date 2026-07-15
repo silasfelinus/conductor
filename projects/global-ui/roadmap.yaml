@@ -86,7 +86,7 @@ tasks:
 - id: t-005
   milestone: m5
   title: Map the unified global UI for project and task presentation
-  status: claimed
+  status: done
   owner: worker
   passes: 0
   stakes: reversible
@@ -97,12 +97,22 @@ tasks:
   - t-007
   - t-008
   - t-009
-  note: 'Produce the final navigation/presentation map for projects, roadmaps, Todos, desired feature
-    lists, honeydos, kaizens, approvals, completion history, and the recurring site-audit agent loop.
-    Identify any follow-up tasks as separate scoped work rather than expanding this task.
+  updated: '2026-07-15T10:06:00Z'
+  note: 'Written projects/global-ui/NAVIGATION-MAP.md. Verified against kind_robots
+    origin/main (conductor-page.vue, conductor-manager.vue, todoStore.ts, serendipityStore.ts)
+    rather than assuming the original spec shipped as designed. Confirmed: project tasks,
+    task creation, kaizen, and desired-feature wishlist all match TASK-SURFACE-SPEC.md
+    exactly (dreamId-scoping is correct everywhere it matters). Found three discoverability
+    gaps versus the original spec: (1) honeydo has no top-level nav "For You" inbox --
+    it is a tab buried inside the per-project Conductor page, global data with no direct
+    front door; (2) no "Completed (N)" collapsed disclosure for done tasks -- they show
+    inline with badges/icons but no grouping; (3) the recurring site-audit agent
+    (SITE-AUDIT-AGENT.md, t-009) is designed but no TALKBACK/roadmap evidence confirms
+    the Claude Code Remote trigger was ever created -- the loop this task is supposed to
+    map does not appear to be running yet. Filed t-014/t-015/t-016 for the three gaps
+    per this task''s own instruction to scope follow-ups separately.
 
     '
-  claimed_by: conductor-burst-hourly-20260715-1006
   claimed_at: '2026-07-15T10:06:45Z'
   updated: '2026-07-15T10:06:45Z'
 - id: t-006
@@ -248,6 +258,56 @@ tasks:
     section to the /ui gallery documenting them, with a note to prefer DaisyUI `alert` for loud banners.
     Verified rendering across themes (emerald, synthwave) via headless screenshots. Migrating the 100+
     existing usages onto .kr-note-* is folded into t-012 (needs preview-deploy verification per surface).
+
+    '
+- id: t-014
+  milestone: m5
+  title: Give the honeydo queue a top-level nav "For You" inbox, not just a project-page tab
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  note: 'Filed from t-005''s navigation-map audit (NAVIGATION-MAP.md, 2026-07-15). The
+    honeydo data is already correctly global (todoStore.honeyDoTodos filters only on
+    category, not dreamId), but the only UI entry point is Plan -> Conductor -> open any
+    project -> HONEYDO tab in conductor-page.vue. TASK-SURFACE-SPEC.md section 3 called
+    for a top-level-nav "For You" inbox. Add a genuine top-level nav/dashboard entry that
+    surfaces todoStore.honeyDoTodos directly, without requiring the user to open an
+    unrelated project first. Reuse the existing HONEYDO tab markup/empty-state rather than
+    rebuilding it.
+
+    '
+- id: t-015
+  milestone: m5
+  title: Add the "Completed (N)" collapsed disclosure for done tasks per project
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  note: 'Filed from t-005''s navigation-map audit (NAVIGATION-MAP.md, 2026-07-15).
+    TASK-SURFACE-SPEC.md section 7 specifies completed tasks default-collapsed under a
+    per-milestone "Completed (N)" disclosure header. conductor-page.vue currently shows
+    done tasks inline with the same badge/icon treatment as any other status
+    (conductor-page.vue:2736-2747) with no grouping or collapse, so long-lived projects
+    show every closed task all the time. Add the collapsed-by-default disclosure, grouped
+    per milestone, matching the spec.
+
+    '
+- id: t-016
+  milestone: m5
+  title: Confirm or create the site-audit agent''s Claude Code Remote trigger
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  note: 'Filed from t-005''s navigation-map audit (NAVIGATION-MAP.md, 2026-07-15).
+    SITE-AUDIT-AGENT.md (t-009, done 2026-06-30) defines the weekly site-audit agent
+    prompt/cadence/scope but its own note says it "needs Silas approval before the
+    trigger is created." No TALKBACK or roadmap entry since then confirms the trigger
+    actually exists. Confirm whether the trigger is live; if not, this is a soft
+    needs-human item (creating a Claude Code Remote trigger is not something an agent
+    session can do for itself) -- write a FOR SILAS note with the exact setup steps
+    from SITE-AUDIT-AGENT.md rather than attempting to fake the loop.
 
     '
 milestones:
