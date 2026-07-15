@@ -397,20 +397,11 @@ tasks:
   - id: t-015
     milestone: m4
     title: 'kind_robots: add Neoclassicism to the academyStyles.ts front-end seed'
-    status: claimed
+    status: review
     owner: worker
     passes: 0
     stakes: reversible
-    updated: '2026-07-15T13:08:16Z'
-    note: >
-      Kaizen follow-up from t-010's 2026-07-15 curriculum-expansion pass:
-      docs/curriculum-outline.md now documents a 15th movement, Neoclassicism
-      (slug `neoclassicism`, c. 1750-1830, David/Ingres/Canova/Kauffman), inserted
-      between baroque and ukiyo-e — but the kind_robots front-end seed
-      (stores/seeds/academyStyles.ts, PR #143 pattern from t-005) only has the
-      original 14. Mirror the new movement's slug/name/era/artist list/remix_hint
-      from the curriculum doc's YAML skeleton into that seed file, matching the
-      existing entry shape exactly. Small, independently-landable, no design
-      judgment needed — this is pure data-sync.
+    updated: '2026-07-15T13:14:00Z'
+    note: 'Landed in kind_robots PR #291 (claude/keen-fermat-sqo9lv -> main): mirrored the Neoclassicism entry (slug, era, artist list with notes, remix template) from conductor''s docs/curriculum-outline.md into stores/seeds/academyStyles.ts, inserted between baroque and ukiyo-e to match curriculum ordering. Verified against the exact shape of sibling entries (baroque/ukiyo-e). Ran the project''s `npm run test` (vue-tsc --noEmit) after `npm ci` (CYPRESS_INSTALL_BINARY=0): 19 pre-existing errors, none in the changed file — matches the count already tracked at kind-robots/t-020. No hardcoded style-count references found elsewhere (academy-remix.vue uses academyStyles.length dynamically). Awaiting CI on PR #291 before merging.'
     claimed_by: burst-20260715-1300
     claimed_at: '2026-07-15T13:08:16Z'
