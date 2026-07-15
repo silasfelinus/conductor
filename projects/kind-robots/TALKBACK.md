@@ -292,3 +292,43 @@ asserting `DATABASE_CONNECTION_LIMIT`'s fallback default in
 `server/utils/prisma.ts` matches a documented minimum, so this exact
 regression — now recurred twice — can't reappear silently a third time).
 `stakes: reversible`.
+
+## 2026-07-15 | Reviewer → Silas | kind-robots/t-022 | correction (security-flag)
+type: security-flag
+
+**Subject:** t-022 was closed `done` prematurely ~15 minutes ago in this same
+cycle; production is still fully down after the merged fix deployed.
+
+**Detail:**
+- The pool-limit-fallback fix (kind_robots PR #296, merged f13119bd) was a
+  real bug and did take effect: Vercel runtime logs on the new deployment
+  (dpl_7E7tPAPZRWn6e7N6jAfvf29rZBaX, READY, aliased to kind-robots.vercel.app)
+  now show `limit=10` in the pool-timeout error, up from `limit=2` before
+  the fix.
+- However structural`active=0 idle=0` at the higher limit shows zero
+  connections are being established at all, regardless of pool size — this
+  is not a capacity problem, it's a reachability problem. Production is
+  still serving ~87% 503s post-deploy (85 x 503 vs 12 x 200 in the last 5
+  minutes, sampled just now).
+- This means the very first note on this task (filed 14:58 UTC) had the
+  correct instinct — "the database itself is refusing or unreachable, not
+  ordinary load-driven exhaustion" — and this cycle's root-cause correction
+  overcorrected away from it. Reverted task to `needs-human` /
+  `stakes: irreversible`; the pool-limit fix stays merged (it's a real,
+  separate, legitimate bug) but does not resolve the outage.
+
+**Suggested action:** Silas or whoever manages the production DB needs to
+check host/instance status, network reachability from Vercel's egress, and
+whether connection credentials still match Vercel's configured env vars. No
+agent has access to any of those. This is now the 4th cycle this incident
+has spanned unresolved (14:58, 17:50, 19:11, and now 20:05 UTC) — please
+treat as urgent.
+
+**Kaizen note:** verify a fix against live production telemetry AFTER
+deploy, not just "CI green + diff looks right," before marking a
+production-incident task `done`. This cycle initially closed t-022 on the
+strength of a correct-looking diff and pre-merge telemetry alone; the
+post-deploy check (which should have been the actual bar for `done` on an
+incident task) caught the gap before it reached Silas as a false
+all-clear, but should have been the FIRST verification step, not an
+afterthought.
