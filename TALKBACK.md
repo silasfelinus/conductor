@@ -4283,3 +4283,27 @@ as originally filed — no agent action possible (shared-backend infra per
 BOUNDARY.md) — but it has now been actively down for 9+ hours across at least
 two hourly cycles without visible progress, so flagging again rather than
 assuming the earlier push notification was seen and acted on.
+
+## 2026-07-15 | Reviewer → Silas | kind-robots/t-022 | security-flag (reconfirmation)
+type: security-flag
+
+**Subject:** Production DB connection-pool exhaustion is still active, now 10+
+hours in, across at least four hourly cycles with no visible remediation.
+
+**Detail:**
+- Checked live via the Vercel MCP connector at ~19:11 UTC:
+  `get_runtime_errors` (2h window) shows the same `DriverAdapterError` /
+  `pool timeout ... circuit open` group at **1763** occurrences, last seen
+  **19:10:36 UTC** — i.e. still happening as this cycle runs, not a stale tail.
+- `get_runtime_logs` grouped by status code (1h window): **653** 503s vs. only
+  **79** 200s — production is failing ~89% of requests right now.
+- This is the same incident filed at 14:58 UTC and reconfirmed at 17:50 UTC
+  (2166 occurrences then). Sent a push notification this cycle since three
+  prior in-repo flags across separate hourly cycles have not produced a
+  visible fix or acknowledgement.
+
+**Suggested action:** Silas — this needs direct DB/infra attention (check
+whether the database host/instance is paused, whether the connection string
+rotated, or whether the pool's `limit: 2` is itself misconfigured for
+production). No agent action is possible here per BOUNDARY.md (shared backend
+is read-only/external) and this task's `stakes: irreversible` gate.
