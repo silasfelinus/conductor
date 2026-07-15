@@ -753,3 +753,18 @@ records:
   outcome: done
   failure_category: null
   lesson: "Task notes that embed example values (channelKey/tabKey) from the task that spawned them should be cross-checked against the actual target project's source, not copied verbatim — packmaker/mermaids each needed their own real tabKey looked up in projectPlacements.ts."
+- date: 2026-07-15
+  project: kindrobots-unraid
+  task: t-005
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    Cross-repo tasks that finish with the real patch merged in the target repo
+    and only conductor-side bookkeeping left in the conductor PR are safe to
+    review purely on the target-repo diff + roadmap note; no need to re-derive
+    the implementation review in conductor. Watch for merge-base drift on such
+    bookkeeping PRs — a chore auto-commit landing on main between claim and PR
+    open guarantees a STATUS.md conflict (see conductor/t-045).

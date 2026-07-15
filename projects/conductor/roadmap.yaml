@@ -1036,3 +1036,27 @@ tasks:
     claimed_by: claude-hourly-2026-07-15-0900
     claimed_at: '2026-07-15T08:50:09Z'
     updated: '2026-07-15T09:05:00Z'
+
+  - id: t-045
+    milestone: m2
+    title: Have Worker sessions rebase their branch onto origin/main immediately before opening a PR, to avoid dumping trivial auto-gen conflicts on the Reviewer
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Kaizen from Reviewer merge of conductor PR #550 (kindrobots-unraid/t-005,
+      hourly cycle 2026-07-15). The PR's merge-base was one commit behind
+      origin/main (a "chore: refresh STATUS.md and workspace.html" auto-commit
+      landed on main between the Worker's claim and its PR open), producing a
+      guaranteed STATUS.md merge conflict that the Reviewer then had to resolve
+      by hand (take main's copy per hard rule 9, since refresh-status.yml
+      regenerates it anyway). This is pure friction: STATUS.md/ROADMAP-AUDIT.*
+      are regenerated on every main push, so any Worker branch older than the
+      most recent chore commit will conflict on these files 100% of the time.
+      Fix: add a step to the Worker cycle (AGENTS.md "Worker" section, near PR
+      open) that runs `git fetch origin main && git rebase origin/main` (or
+      merges, resolving STATUS.md/workspace.html/ROADMAP-AUDIT.* to main's copy
+      per hard rule 9) immediately before `gh pr create`, so the PR opens
+      already conflict-free against current main instead of drifting stale
+      while it waits for review.
