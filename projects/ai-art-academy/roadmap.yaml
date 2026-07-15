@@ -360,7 +360,7 @@ tasks:
   - id: t-017
     milestone: m6
     title: Add a regression check that fails if academy-style-detail.vue gains a new caller undocumented in its usage-context comment
-    status: claimed
+    status: done
     owner: worker
     passes: 1
     stakes: reversible
@@ -393,9 +393,16 @@ tasks:
       kaizen since neither PR offered one.
       REJECTED 2026-07-15T23:20Z (pass 1, quality): see retry_context above. kind_robots
       PR #303 left open for the fix rather than opening a new PR.
+      DONE 2026-07-15T23:26Z: pushed the exact one-line guard the retry_context asked
+      for (`const filename = match[1]; if (filename) documented.add(filename)`) on the
+      same PR, re-ran `npm run test` locally to confirm the TypeScript check passes,
+      and confirmed the failure timing was a race — the fix commit's CI (queued
+      23:12:10Z) hadn't finished when the pass-1 rejection posted (23:13:03Z). kind_robots
+      PR #303 merged clean (TypeScript + Contract verifiers green; facet-alias-smoke's
+      failure is the separate known pre-existing baseline, unrelated to this change).
     claimed_by: claude-burst-20260715-2300
     claimed_at: '2026-07-15T23:25:33Z'
-    updated: '2026-07-15T23:25:33Z'
+    updated: '2026-07-15T23:26:30Z'
 
   - id: t-010
     milestone: m6
