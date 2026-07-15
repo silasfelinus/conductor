@@ -338,7 +338,7 @@ tasks:
     owner: null
     passes: 0
     stakes: reversible
-    updated: '2026-07-15T11:30:00Z'
+    updated: '2026-07-15T21:15:00Z'
     note: >
       Standing never-idle task (re-arms to ready after every completion, per the
       recurring-task rule). Each cycle pick ONE: (a) front-end style/polish pass on
@@ -347,6 +347,29 @@ tasks:
       preview thumbnails, (d) expand the curriculum with a new movement/artist entry
       (respecting PUBLIC-DOMAIN-POLICY.md). Note which option ran in the PR. This task
       never reaches done and does not count toward milestone progress.
+
+      RAN 2026-07-15 (conductor-burst-hourly, ~21:15 UTC): option (a) front-end
+      polish pass. Rechecked blockers first: KR_API_TOKEN still absent (`env | grep
+      KR_API` empty, t-004/t-009 stay blocked) and metmuseum.org still a fresh 403
+      via WebFetch (t-008/t-013 stay blocked) — same signature as every prior
+      cycle, nothing new to log on those tasks this pass. Reviewed all five
+      components/academy/*.vue files in kind_robots for real (not manufactured)
+      polish opportunities and found one: `academy-style-detail.vue`'s footer
+      "Remix an image in {style}" button is reused in three contexts
+      (academy-styles-browser.vue, academy-timeline.vue — real navigation CTA — and
+      academy-remix.vue, which renders the same component *inside* the Remix Studio
+      itself as the side panel, where the button was wired to a no-op
+      `@remix="() => {}"` and did nothing on click). Added a `showRemixButton` prop
+      (default true) and hid it in the Remix Studio context only, removing the dead
+      click without touching the two contexts where it's a real CTA. kind_robots PR
+      #301 (branch claude/keen-fermat-0dvz1n): eslint clean, prettier clean, full
+      project `vue-tsc --noEmit` reported 0 errors. Also reconfirmed this cycle
+      (unrelated, filed separately): kind-robots/t-022's production DB outage is
+      still active 12+ hours in — 719 503s vs 54 200s in the last hour via Vercel
+      MCP `get_runtime_logs`, pool still active=0/idle=0 despite the limit=10 fix
+      from PR #299/#300 landing, so the root cause is DB/infra reachability, not
+      app-side pool config. Pushed a notification; no agent action possible per
+      BOUNDARY.md.
 
       RAN 2026-07-15 (conductor-burst-hourly, ~11:30 UTC): option (d) curriculum
       expansion. Rechecked t-004/t-008/t-009/t-013 blockers first with a different
