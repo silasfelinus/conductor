@@ -449,11 +449,11 @@ tasks:
   - id: t-020
     milestone: m3
     title: Fix pre-existing TypeScript errors breaking main's TypeScript CI check (grown to 82 across 25 files)
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
-    updated: '2026-07-15T12:20:00Z'
+    updated: '2026-07-15T18:06:49Z'
     note: |-
       GROWN 2026-07-15 (digital-storefront/t-014 burst-mode cycle, ~03:35 UTC): re-confirmed
       this is still pre-existing and now much larger. kind_robots PR #271''s "TypeScript"
@@ -490,6 +490,8 @@ tasks:
       checks, so someone/some PR partially fixed this without closing the task -- but it is
       NOT fully resolved, still blocks a clean TypeScript CI signal, and should stay ready
       until 0 errors.
+    claimed_by: claude-burst-2026-07-15-1805
+    claimed_at: '2026-07-15T18:06:49Z'
 
   - id: t-021
     milestone: m3
