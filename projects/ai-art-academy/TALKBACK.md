@@ -72,3 +72,32 @@ are conductor tooling shared across all projects, not ai-art-academy-specific).
 prioritize t-004 (remix-config evaluation) — it's the last m2 blocker and gates
 Remix Studio quality. t-008 is now a small, single-purpose download task and a
 good pick for a session without image-generation credentials.
+
+## 2026-07-15 | Worker → Reviewer | ai-art-academy/t-010 | pattern
+
+**Decision:** done (recurring task, re-armed to ready). kind_robots PR #275 merged.
+
+**Detail:**
+- Hourly Conductor burst cycle: no `KR_API_TOKEN` this session (t-004/t-009 stay
+  blocked), and this cycle additionally confirmed via the agent-proxy status
+  endpoint that `metmuseum.org`/`upload.wikimedia.org` get a policy 403 in this
+  sandbox — so t-008 and t-013 (real image downloads) are blocked too, not just
+  the generation-backend tasks. Both tasks' notes updated with this so a future
+  cycle doesn't rediscover it from scratch; still `ready`, not `needs-human`,
+  since another session/environment may have the needed egress.
+- Picked t-010 option (a), front-end polish, as the only unblocked path: removed
+  a duplicated-state ref in `academy-remix.vue` (a local `activeStyleSlug` that
+  hand-mirrored `academyStore.selectedStyleSlug`; now reads the store directly
+  via its `selectedStyle` getter), widened `academy-styles-browser.vue`'s search
+  to also match `recognitionCues` (visible on every card but previously
+  unsearchable), and added `aria-expanded`/`aria-label` to the timeline and
+  style-gallery toggle controls.
+- PR #275's only failing check was `TypeScript`, confirmed pre-existing on
+  `main` at the PR's base commit (45c1b047) via `list_workflow_runs` — same
+  82-error backlog tracked in kind-robots/t-020, not caused by this diff (local
+  `vue-tsc --noEmit` showed zero new errors in the changed files). Left a PR
+  comment documenting that before merging.
+
+**Suggested action:** kind-robots/t-020 (the TS backlog) is now the thing
+silently gating every green-CI signal on this repo — worth prioritizing given
+how often "confirm CI is unrelated" is becoming a manual step per PR.

@@ -205,7 +205,7 @@ tasks:
     owner: null
     passes: 0
     stakes: reversible
-    updated: '2026-07-15T00:48:00Z'
+    updated: '2026-07-15T06:20:00Z'
     depends_on: t-007
     note: >
       SPLIT 2026-07-15 (conductor/t-010 roadmap-upgrade pass) from the original
@@ -218,6 +218,14 @@ tasks:
       PUBLIC-DOMAIN-POLICY.md. Parts 2 and 3 are now their own tasks: t-013
       (example-works strip) and t-014 (Remix Studio source-picker tab, depends on
       this task's manifest existing).
+
+      STATUS NOTE 2026-07-15 (burst cycle): confirmed via the agent-proxy status
+      endpoint that this sandbox gets a policy-denial 403 on CONNECT to
+      metmuseum.org and upload.wikimedia.org — same pattern already logged in
+      TALKBACK.md for Civitai/HF (t-003) and Stripe (digital-storefront). Still
+      `ready`, not `needs-human`: this is an environment limitation, not a task
+      defect, and it may well work from Silas's own environment or a session with
+      open egress to museum/Wikimedia hosts.
   - id: t-013
     milestone: m4
     title: 'kind_robots: add example-works strip to Academy lesson detail'
@@ -225,7 +233,7 @@ tasks:
     owner: null
     passes: 0
     stakes: reversible
-    updated: '2026-07-15T00:48:00Z'
+    updated: '2026-07-15T06:20:00Z'
     depends_on: t-007
     note: >
       Split 2026-07-15 from the original t-008 (part 2 of 3) — independently
@@ -234,6 +242,10 @@ tasks:
       public-domain images per movement, sourced from the curriculum outline's
       verified source URLs (docs/curriculum-outline.md), following
       PUBLIC-DOMAIN-POLICY.md for provenance recording.
+      STATUS NOTE 2026-07-15 (burst cycle): same museum/Wikimedia egress block
+      documented on t-008 applies here too (confirmed 403 via agent-proxy status
+      on metmuseum.org/upload.wikimedia.org in this sandbox). Still `ready` —
+      needs a session with open egress to those hosts, or Silas's environment.
   - id: t-014
     milestone: m4
     title: 'kind_robots: wire starter library into Remix Studio source picker'
@@ -309,7 +321,7 @@ tasks:
     owner: null
     passes: 0
     stakes: reversible
-    updated: '2026-07-15T00:51:16Z'
+    updated: '2026-07-15T06:25:00Z'
     note: >
       Standing never-idle task (re-arms to ready after every completion, per the
       recurring-task rule). Each cycle pick ONE: (a) front-end style/polish pass on
@@ -328,3 +340,20 @@ tasks:
       risking a scope-failure on the monolith. No code touched; t-004/t-009
       remain blocked on a token-bearing session for the generation backend
       (KR_API_TOKEN unset here).
+
+      RAN 2026-07-15 (conductor-burst-hourly, ~06:15 UTC): option (a)
+      front-end style/polish pass. t-004/t-009 still blocked (no KR_API_TOKEN
+      this session); t-008/t-013 also confirmed blocked this cycle (sandbox
+      403s on metmuseum.org/upload.wikimedia.org — see their updated notes),
+      so picked the front-end path instead. kind_robots PR #275: removed a
+      duplicated-state ref in academy-remix.vue (local activeStyleSlug that
+      hand-mirrored academyStore.selectedStyleSlug — now reads the store
+      directly), widened academy-styles-browser.vue's search to match
+      recognitionCues (previously unsearchable despite being shown on every
+      card), and added aria-expanded/aria-label to the timeline and style-gallery
+      toggle controls. Verified eslint/prettier clean and vue-tsc introduces
+      zero new errors against the 82 pre-existing (t-020 baseline). PR #275
+      merged: the PR's only failing check (TypeScript) was confirmed
+      pre-existing on main at the base commit (45c1b047, unrelated to this
+      diff — same t-020 backlog), Contract verifiers and GitGuardian were
+      green, so merged after noting that in a PR comment.

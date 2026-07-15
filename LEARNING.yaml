@@ -698,3 +698,20 @@ records:
     swallowing the patch's own test phrase). Re-verify preserved fixtures against
     current routing before assuming they still round-trip; filed t-016 to fix the
     over-claiming root cause.
+- date: 2026-07-15
+  project: ai-art-academy
+  task: t-010
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    A PR's CI failure isn't necessarily caused by the PR: before treating a red
+    check as a blocker, diff it against the same check's result on main at the
+    PR's base commit (list_workflow_runs filtered to that branch/sha). Here
+    kind_robots' TypeScript check was already failing on main (kind-robots/t-020's
+    82-error backlog) before this PR existed; a local vue-tsc run confirming zero
+    new errors in the changed files, plus a PR comment citing the base-commit
+    failure, was enough to merge safely instead of stalling on an unrelated,
+    already-tracked issue.
