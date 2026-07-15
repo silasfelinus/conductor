@@ -801,3 +801,21 @@ records:
     fetches. When a task is blocked on one access method, check whether a sibling
     tool with different plumbing reaches the same resource before writing it off
     for the session.
+- date: 2026-07-15
+  project: ai-art-academy
+  task: t-015
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    Cross-repo mirroring tasks (docs -> front-end seed) are the ideal burst-mode
+    pick when the priority-order top project's other ready tasks are all blocked
+    on credentials/egress: pure data-sync, no design judgment, no external access
+    needed. Merged past a red TypeScript check that matched the already-tracked
+    pre-existing baseline (kind-robots/t-020, 19 errors, none in the changed
+    file) rather than treating a single red check as automatically blocking --
+    Contract verifiers and GitGuardian green plus an exact local reproduction of
+    the CI command against the same merge state was enough to confirm no
+    regression, consistent with the PR #256/#271/#290 precedent.

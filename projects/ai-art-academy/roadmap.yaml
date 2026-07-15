@@ -397,11 +397,11 @@ tasks:
   - id: t-015
     milestone: m4
     title: 'kind_robots: add Neoclassicism to the academyStyles.ts front-end seed'
-    status: review
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
-    updated: '2026-07-15T13:14:00Z'
-    note: 'Landed in kind_robots PR #291 (claude/keen-fermat-sqo9lv -> main): mirrored the Neoclassicism entry (slug, era, artist list with notes, remix template) from conductor''s docs/curriculum-outline.md into stores/seeds/academyStyles.ts, inserted between baroque and ukiyo-e to match curriculum ordering. Verified against the exact shape of sibling entries (baroque/ukiyo-e). Ran the project''s `npm run test` (vue-tsc --noEmit) after `npm ci` (CYPRESS_INSTALL_BINARY=0): 19 pre-existing errors, none in the changed file — matches the count already tracked at kind-robots/t-020. No hardcoded style-count references found elsewhere (academy-remix.vue uses academyStyles.length dynamically). Awaiting CI on PR #291 before merging.'
+    updated: '2026-07-15T13:17:22Z'
+    note: 'Merged: kind_robots PR #291 (squash, sha 9ec971e). Neoclassicism entry mirrored into stores/seeds/academyStyles.ts (slug, era, artists, remix template), inserted between baroque and ukiyo-e to match curriculum ordering. PR''s TypeScript check was red from 19 pre-existing errors unrelated to this one-file additive change (tracked at kind-robots/t-020, none in the changed file) — Contract verifiers and GitGuardian green, mergeable_state: unstable (not blocked), base matched current origin/main exactly. Merged past the confirmed-pre-existing failure per established precedent (PRs #256, #271, #290).'
     claimed_by: burst-20260715-1300
     claimed_at: '2026-07-15T13:08:16Z'
