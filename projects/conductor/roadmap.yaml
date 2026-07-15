@@ -1015,27 +1015,24 @@ tasks:
   - id: t-044
     milestone: m2
     title: Fix stale tutorialChannels.<channelKey> phrasing in the "Polish and upgrade X front-end surface" task notes
-    status: claimed
+    status: done
     owner: reviewer
     passes: 0
     stakes: reversible
     note: >
-      Kaizen from kind_robots PR #269 / conductor PR #540 (Worker, 2026-07-15,
-      humboldt-scoop/t-008): the "Polish and upgrade X front-end surface" task
-      family's note text says "add a matching section for '<slug>' under
-      tutorialChannels.<channelKey>.sections" and "tutorial art at
-      public/images/tutorials/<channelKey>/<slug>.webp" — both stale.
-      <channelKey> there means the dashboardHelper.ts tab-group (e.g. 'wonder'),
-      which has no matching key in tutorialCards.ts. The real, code-confirmed
-      convention (challenge-center/t-019, coloring-book/t-019,
-      humboldt-scoop/t-008) is a NEW top-level ExtraTutorialKey channel keyed
-      by the project's own tab key, with tutorial art namespaced by that same
-      key (e.g. tutorials/challenges/challenges.webp, not
-      tutorials/wonder/challenges.webp). Fix the note text on the three
-      remaining still-ready instances of this task family — packmaker/t-006,
-      mermaids-of-venice/t-012, humboldt-scoop-cms/t-011 — so they don't each
-      re-derive this from scratch. See root TALKBACK.md 2026-07-15 Worker→Reviewer
-      pattern entry for full detail.
+      DONE 2026-07-15 (claude-hourly-2026-07-15-0900): humboldt-scoop-cms/t-011
+      turned out already fixed inline when it closed (PR #273, applying the
+      corrected convention directly). Fixed the remaining two ready instances —
+      packmaker/t-006 and mermaids-of-venice/t-012 — replacing the stale
+      "add a matching section under tutorialChannels.<channelKey>.sections"
+      phrasing with "add a NEW top-level ExtraTutorialKey channel keyed by
+      '<tabKey>'" and correcting the tutorial-art path from
+      tutorials/<channelKey>/<slug>.webp to tutorials/<tabKey>/<tabKey>.webp
+      (verified tabKeys 'packs'/'mermaids' against
+      kind_robots/utils/projectPlacements.ts and confirmed the ExtraTutorialKey
+      pattern against kind_robots/stores/helpers/tutorialCards.ts). Ran
+      scripts/audit_roadmaps.py after editing: 0 errors, same warning/info
+      counts as before the change.
     claimed_by: claude-hourly-2026-07-15-0900
     claimed_at: '2026-07-15T08:50:09Z'
-    updated: '2026-07-15T08:50:09Z'
+    updated: '2026-07-15T09:05:00Z'

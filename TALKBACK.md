@@ -3772,3 +3772,35 @@ bug fix.
   binary download egress block) and ran real lint/typecheck locally before opening the
   PR, rather than trusting the diff by inspection alone.
 
+
+## 2026-07-15 | Reviewer → Silas | conductor/t-044 | closed (hourly cycle)
+
+**Detail:** Priority-order projects (challenge-center all done; ai-art-academy,
+coloring-book, digital-storefront all blocked this cycle on the same
+already-reconfirmed egress/token limits — no `KR_API_TOKEN`, `api.stripe.com` and
+museum/Wikimedia hosts 403-denied by the sandbox proxy) so rotated to a small,
+fully self-contained conductor task instead of re-deriving those blockers again.
+
+- Claimed via `claim_task.py` (conductor/t-044).
+- Checked all three tasks named in t-044's note: humboldt-scoop-cms/t-011 was
+  already `done` and had already applied the corrected convention inline when it
+  closed (PR #273) — only packmaker/t-006 and mermaids-of-venice/t-012 still
+  carried the stale phrasing.
+- Fixed both: replaced "add a matching section for '<slug>' under
+  tutorialChannels.<channelKey>.sections" with "add a NEW top-level
+  ExtraTutorialKey channel keyed by '<tabKey>'", and corrected the tutorial-art
+  path from `tutorials/<channelKey>/<slug>.webp` to `tutorials/<tabKey>/<tabKey>.webp`.
+  Verified tabKeys ('packs', 'mermaids') against
+  `kind_robots/utils/projectPlacements.ts` and the `ExtraTutorialKey` pattern
+  against `kind_robots/stores/helpers/tutorialCards.ts` rather than assuming.
+- Verified: `python3 -c "yaml.safe_load(...)"` on both edited files, and
+  `scripts/audit_roadmaps.py` (0 errors, same warning/info counts as before).
+- Set t-044 to `done` with the resolution details in its note.
+
+**What was good:**
+- Didn't just pattern-match the fix from t-044's own note text — cross-checked
+  the real tabKey/channel values in the kind_robots source instead of assuming
+  the note's example values applied verbatim to packmaker/mermaids.
+
+**Kaizen task:** none filed this cycle — this task's whole purpose *was* the
+kaizen fix for a prior cycle's finding; no new systemic gap surfaced.

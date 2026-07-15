@@ -744,3 +744,12 @@ records:
     and what the data model can currently enforce — worth grepping the shared
     schema for the field a design assumes exists before writing the doc as if it
     does, especially for anything touching monetization or generated-art rights.
+- date: 2026-07-15
+  project: conductor
+  task: t-044
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "Task notes that embed example values (channelKey/tabKey) from the task that spawned them should be cross-checked against the actual target project's source, not copied verbatim — packmaker/mermaids each needed their own real tabKey looked up in projectPlacements.ts."
