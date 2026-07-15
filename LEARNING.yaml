@@ -920,3 +920,34 @@ records:
     checkout when the ancestry check is actually needed, and verified the
     new shell logic against isolated scratch git repos before ever touching
     live CI, since actions workflow YAML has no local unit-test harness.
+- date: 2026-07-15
+  project: kind-robots
+  task: t-020
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    All 19 remaining TypeScript errors reduced to two repeatable shapes once
+    grouped by root cause rather than fixed file-by-file: (1) a type imported
+    into a re-exporting module without an explicit re-export breaks any
+    consumer that (wrongly) imports it from the re-exporter instead of the
+    origin -- point consumers at the origin module rather than adding a
+    re-export shim, which can create ambiguous duplicates for a framework's
+    auto-import scanner (confirmed via a Nuxt "Duplicated imports" warning
+    that appeared and was removed); (2) 12 of 19 errors were the same
+    schema-vs-call-site mismatch -- Prisma fields that are String/LongText
+    columns storing serialized JSON text, with call sites casting objects
+    straight to Prisma.InputJsonValue instead of serializing. Diffing
+    prisma/*.prisma against the failing call sites in one pass (rather than
+    trusting the error message's type at face value) confirmed the schema
+    side was correct in every case, so no schema change was needed -- just
+    JSON.stringify/existing normalizeJson-parseStoredJson helpers at each
+    call site. One of those fixes (commit.post.ts's stageStatuses read) was
+    hiding a real behavioral bug behind the type error: a `typeof === 'object'`
+    check that's always false for a string column was silently dropping prior
+    stage statuses on every commit -- a type error is sometimes a symptom of
+    a live correctness bug, not just an annotation to satisfy. Filed
+    kind-robots/t-024 to guard against the InputJsonValue mismatch
+    recurring at new call sites.

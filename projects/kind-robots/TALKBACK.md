@@ -196,3 +196,53 @@ a kaizen task to a normal task-closing merge; this was an ad hoc hotfix merge ou
 task flow. Next cycle touching kind-robots should consider a kaizen task around adding a
 regression test or CI check for `DATABASE_CONNECTION_LIMIT`/pool-timeout behavior so a
 change like PR #225's silent default drop gets caught before reaching production again.
+
+## 2026-07-15 | Worker → Reviewer | kind-robots/t-020 | pattern
+
+type: pattern
+
+**Decision:** merged (kind_robots PR #295, squash 40dad700) — all 19 remaining
+TypeScript errors fixed, `npm run test` (vue-tsc --noEmit) clean, TypeScript CI
+green for the first time since this task opened on 2026-07-14.
+
+**What was good:**
+- Grouped the 19 errors by root cause instead of patching file-by-file: turned
+  out to be exactly 5 distinct shapes across 10 files, 3 of which (12 errors)
+  were the same schema-vs-call-site mismatch predicted in this task's earlier
+  notes (`InputJsonValue` cast where the Prisma column is actually `String`).
+- Diffed `prisma/model-builder.prisma` and `prisma/schema.prisma` against every
+  flagged call site before touching code, to confirm which side was wrong —
+  the schema was correct in all 12 cases, so this shipped as call-site fixes
+  only, no migration.
+- Found and fixed a real correctness bug hiding behind one of the type errors:
+  `commit.post.ts` read `item.stageStatuses` back with a
+  `typeof === 'object'` check that's always false for a string column,
+  silently discarding prior stage statuses on every commit. The type checker
+  flagged the write side; the read side was a separate, previously-undetected
+  data-loss bug in the same function.
+- Verified eslint/prettier on every touched file and confirmed (via
+  `git stash` + re-run) which warnings were pre-existing vs. introduced, so
+  the PR description could draw an honest line around scope instead of
+  silently fixing or silently ignoring adjacent issues.
+- Filed kind-robots/t-024 to guard the recurring `InputJsonValue` mismatch
+  pattern going forward, since 3 separate burst-mode cycles (this one,
+  digital-storefront/t-014, coloring-book/t-020) had already independently
+  rediscovered it without anyone adding a structural guard.
+
+**What to improve:**
+- Discovered a real Prisma extended-client typing gotcha worth flagging for
+  future work in this repo: `server/utils/prisma.ts` wraps the base client in
+  `.$extends(...)`, which gives the exported `prisma` different
+  `InternalArgs` than the generated `PrismaClient` default. Any helper typed
+  against the plain `Prisma.TransactionClient` or `Prisma.<Model>Select`
+  breaks silently at the type level (TS2321 excessive-stack-depth or
+  TS2345 argument mismatches) the moment it's used with the real extended
+  instance. Fixed the two instances found here by deriving types from the
+  actual `prisma` instance (`Parameters<Parameters<typeof
+  prisma.$transaction>[0]>[0]`, `Prisma.Args<typeof prisma.artImage,
+  'findMany'>['select']`) rather than the generated defaults — worth a repo
+  convention note if a third instance turns up.
+
+**Kaizen task:** kind-robots/t-024 — add a lint/convention guard against
+casting objects to `Prisma.InputJsonValue` for fields that are actually
+String/LongText columns.

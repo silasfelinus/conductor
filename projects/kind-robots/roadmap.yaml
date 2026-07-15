@@ -449,11 +449,11 @@ tasks:
   - id: t-020
     milestone: m3
     title: Fix pre-existing TypeScript errors breaking main's TypeScript CI check (grown to 82 across 25 files)
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
-    updated: '2026-07-15T18:06:49Z'
+    updated: '2026-07-15T18:30:00Z'
     note: |-
       GROWN 2026-07-15 (digital-storefront/t-014 burst-mode cycle, ~03:35 UTC): re-confirmed
       this is still pre-existing and now much larger. kind_robots PR #271''s "TypeScript"
@@ -490,8 +490,39 @@ tasks:
       checks, so someone/some PR partially fixed this without closing the task -- but it is
       NOT fully resolved, still blocks a clean TypeScript CI signal, and should stay ready
       until 0 errors.
-    claimed_by: claude-burst-2026-07-15-1805
-    claimed_at: '2026-07-15T18:06:49Z'
+
+      UPDATE 2026-07-15 (claude-burst-2026-07-15-1805, kind_robots PR #295): fixed all
+      remaining 19 errors -- `npm run test` (vue-tsc --noEmit) now passes clean (0 errors,
+      exit 0). Root causes: (1) animationStore.ts imported AnimationEffectId/FxRegion as
+      types from animationCatalog.ts without re-exporting them, so 3 consumers importing
+      from animationStore broke -- repointed those imports at animationCatalog directly;
+      (2) the InputJsonValue family (12 of the 19) was exactly the schema-vs-call-site
+      mismatch this task's earlier notes predicted: every flagged model-builder/ArtJob
+      field (stageStatuses, pitch, fieldsDraft, promptDraft, previousPayload, nextPayload,
+      workflow, usageInfo, sourceSnapshot, selections, ArtJob.payload) is a String/LongText
+      column in prisma/model-builder.prisma and prisma/schema.prisma, not native Json --
+      call sites were casting objects straight to Prisma.InputJsonValue instead of
+      JSON.stringify/normalizeJson; fixed every call site, confirming the schema side was
+      correct and call sites were wrong (no schema change needed); (3) commit.post.ts's
+      TransactionClient mismatch was prisma being $extends()-wrapped -- Prisma.TransactionClient
+      (default args) no longer structurally matches the extended client's tx param type;
+      derived a local TransactionClient type from `Parameters<Parameters<typeof
+      prisma.$transaction>[0]>[0]` instead; (4) art/image/index.get.ts's "Excessive stack
+      depth" (TS2321) was the same extended-client mismatch applied to Prisma.ArtImageSelect
+      -- fixed the same way via Prisma.Args<typeof prisma.artImage, 'findMany'>['select'];
+      (5) artjob-feedback-manager.vue's TS7053 was `payload || {}` widening to `X | {}`
+      with no index signature -- annotated the local as Record<string, unknown>. Also fixed
+      a real (not just typed-wrong) bug found along the way: commit.post.ts read
+      item.stageStatuses back with a `typeof === 'object'` check that's always false for a
+      string column, silently dropping prior stage statuses on every commit -- replaced with
+      the existing parseStoredJson helper. Verified eslint and prettier clean on every
+      touched file (2 pre-existing, unrelated warnings confirmed present before this change
+      via git stash, left alone as out of scope).
+
+      DONE 2026-07-15 (claude-burst-2026-07-15-1805): kind_robots PR #295 merged (squash,
+      commit 40dad700). All 4 checks green (TypeScript, Contract verifiers, GitGuardian,
+      Vercel Preview Comments). TypeScript CI is clean on main for the first time since
+      this task's 2026-07-14 origin. Kaizen filed as kind-robots/t-024.
 
   - id: t-021
     milestone: m3
@@ -611,3 +642,33 @@ tasks:
       accepts/rejects correctly, so future edits to this step are regression-
       tested instead of re-verified by hand each time. Keep it fast and
       hermetic (no network calls) so it can run in CI.
+
+  - id: t-024
+    milestone: m3
+    title: Add a lint/convention guard against casting objects to Prisma.InputJsonValue for String/LongText columns
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: "2026-07-15T18:30:00Z"
+    note: >
+      Kaizen from t-020 (Worker, kind_robots PR #295): 12 of the 19 TypeScript
+      errors fixed in that PR were the same shape repeated across 10 files —
+      code casting a plain JS object straight to Prisma.InputJsonValue and
+      assigning it to a Prisma field that is actually a String/LongText column
+      in prisma/schema.prisma or prisma/model-builder.prisma (stageStatuses,
+      pitch, fieldsDraft, promptDraft, previousPayload, nextPayload, workflow,
+      usageInfo, sourceSnapshot, selections, ArtJob.payload — this repo
+      deliberately stores structured data as serialized JSON text rather than
+      native Json columns for these fields). The correct call-site pattern
+      already exists (normalizeJson/parseStoredJson in
+      server/api/model-builder/runs/index.ts, or a plain JSON.stringify) but
+      nothing stops a new call site from reintroducing the wrong cast — it
+      typechecks locally as `as Prisma.InputJsonValue` and only breaks when
+      vue-tsc runs against the real generated Prisma types. Add a guard: either
+      an eslint rule/pattern check that flags `as Prisma.InputJsonValue` (or
+      `as unknown as Prisma.InputJsonValue`) outside files that legitimately
+      have a native Json column, or a short note in this repo's CLAUDE.md-style
+      docs pointing new model-builder/ArtJob call sites at the existing
+      normalizeJson/parseStoredJson helpers instead. Keep it cheap — a grep-based
+      CI check is enough, no need for a custom eslint plugin.
