@@ -370,11 +370,11 @@ tasks:
   - id: t-017
     milestone: m3
     title: Add a DreamRelation REST endpoint (create/list dream graph edges)
-    status: review
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
-    updated: '2026-07-15T14:20:00Z'
+    updated: '2026-07-15T14:30:00Z'
     note: >
       Found during dream-cycle Phase 2 (2026-07-14): the DreamRelation Prisma
       model exists (relationType edges like RELATED/CONTAINS/APPEARS_IN) but
@@ -397,7 +397,13 @@ tasks:
       unit-exercised locally with a monkeypatched kr_call to confirm the three
       relation POSTs fire with correct payloads for a synthetic proposal. Could
       not hit the live endpoint end-to-end (no KR_API_TOKEN/DB in this sandbox).
-      Will flip to done once kind_robots#292 merges.
+      DONE 2026-07-15T14:30Z: kind_robots PR #292 merged (squash, sha e93b179e).
+      TypeScript check failure matched the known pre-existing 19-error baseline
+      (kind-robots/t-020, confirmed via local vue-tsc diff, no new errors from
+      this change); Contract verifiers and GitGuardian green, mergeable_state
+      unstable (not blocked), base matched current main exactly. Merged past
+      the confirmed-pre-existing failure per the established PR #256/#271/#290/
+      #291 precedent.
 
   - id: t-018
     milestone: m3

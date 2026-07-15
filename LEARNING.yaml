@@ -836,3 +836,20 @@ records:
     after the task's note was written but the roadmap was never updated.
     Verify-before-build saved a redundant fix and surfaced the real gap
     (stale task bookkeeping, not stale code).
+- date: 2026-07-15
+  project: kind-robots
+  task: t-017
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    Kaizen follow-up tasks that name their own consumer (here: conductor's
+    build_dream_records.py already had a KNOWN GAP comment pointing at the
+    missing endpoint) are easy to land completely in one cycle -- implement the
+    endpoint, then immediately wire its one real caller, rather than leaving
+    the new API unused until some future session rediscovers the gap. Mirroring
+    two already-merged endpoint families (model-builder/runs, dreams/facets)
+    for the auth/error-handling shape kept review risk low despite no live-DB
+    verification being possible in this sandbox.
