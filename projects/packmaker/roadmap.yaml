@@ -105,8 +105,8 @@ tasks:
 - id: t-003
   milestone: m2
   title: Draft the contents of the two launch packs (Uncanny Valor, Arcane Whimsy)
-  status: ready
-  owner: null
+  status: claimed
+  owner: worker
   passes: 0
   stakes: reversible
   depends_on: t-002
@@ -119,6 +119,9 @@ tasks:
     generation prompts, art prompts). Drafts only — nothing is generated into the
     live database or published. Ends needs-human: Silas approves the pack names
     (he may rename) and contents before any generation runs.
+  claimed_by: claude-burst-20260715-2306
+  claimed_at: '2026-07-15T23:08:26Z'
+  updated: '2026-07-15T23:08:26Z'
 - id: t-004
   milestone: m3
   title: Build the pack generator admin view in kind_robots
