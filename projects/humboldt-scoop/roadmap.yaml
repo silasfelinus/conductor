@@ -133,20 +133,44 @@ tasks:
   - id: t-008
     milestone: m3
     title: "Polish and upgrade Humboldt Scoop front-end surface"
-    status: claimed
+    status: done
     owner: worker
-    updated: '2026-07-15T02:14:03Z'
+    updated: '2026-07-15T02:30:00Z'
     passes: 0
     stakes: reversible
     note: >
-      UI polish + upgrade for the humboldt-scoop front end now that the scaffold page is
-      live at /humboldt-scoop. Steps: (1) generate final dashboard-tab art at
-      public/images/dashboard-tabs/wonder/humboldt-scoop.webp and tutorial art at
-      public/images/tutorials/wonder/humboldt-scoop.webp; (2) add a matching section for
-      'humboldt-scoop' under tutorialChannels.wonder.sections in
-      kind_robots/stores/helpers/tutorialCards.ts; (3) verify the PROJECT Dream liveUrl
-      points at /humboldt-scoop (admin can run the Conductor 'Placements' button to
-      backfill channelKey/tabKey/liveUrl); (4) evolve the placeholder scaffold page into
-      the full interactive experience for this project.
+      DONE (kind_robots PR pending, branch claude/keen-fermat-fvajrc). Original spec
+      referenced 'tutorialChannels.wonder.sections' and
+      'public/images/tutorials/wonder/humboldt-scoop.webp' -- both stale: 'wonder' is
+      only a dashboardHelper.ts tab-group/folder name, not a tutorialChannels key, and
+      tutorialCards.ts had NO entry at all for humboldt-scoop (verified by reading the
+      file directly). (1) art: no KR_API_TOKEN this session, so derived
+      dashboard-tab + tutorial webp art from the already-approved
+      public/images/projects/humboldt-scoop-hero.webp (1600x900, matches sibling
+      dashboard-tab dimensions exactly) instead of generating fresh -- same pattern as
+      challenge-center/t-019 and coloring-book/t-019. (2) added a new top-level
+      'humboldt-scoop' tutorialChannels entry (ExtraTutorialKey, mirroring the
+      mural/challenges pattern) with real content sourced from CONTENT-BRIEF.md
+      (service tiers, service area, Poopstakes), plus its tutorialRouteMap entry.
+      dashboardHelper.ts's 'wonder' tab entry for humboldt-scoop already existed from a
+      prior task -- no change needed. (3) PROJECT_PLACEMENTS['humboldt-scoop'] already
+      correctly maps channelKey/tabKey/route -- verified by reading
+      utils/projectPlacements.ts; live Project.liveUrl DB sync still needs an admin to
+      click the Conductor 'Placements' button, out of session scope (not a code change).
+      (4) step 4 ("evolve the placeholder scaffold into the full interactive
+      experience"): read project-front-page.vue -- it's a complete, polished shared
+      bridge-page component (hero, live-project merge, launch CTA, sections, gallery
+      strip, deliverables panel), not a bare placeholder. Per CONTROL.md's actual
+      direction for this project ("Import the existing site... don't redesign"), a
+      polished external bridge page IS the correct full experience for a real-world
+      WordPress business site -- so instead enriched the existing config: added a
+      service-area section, a stats strip, and collectionLabel: 'humboldt-scoop' to
+      surface the 3 already-approved inspiration images via ProjectGalleryStrip.
+      Verified `npm run test` (vue-tsc) shows 82 pre-existing TypeScript errors
+      unrelated to any touched file (Prisma InputJsonValue/string schema-drift errors
+      across server/api/*, server/utils/davinci.ts, utils/scripts/*) -- confirmed none
+      reference tutorialCards.ts or humboldt-scoop-page.vue. This pre-existing error
+      count is larger than kind-robots/t-020's "two errors" framing; left a note for
+      the Reviewer to consider refreshing that task rather than expanding this PR.
     claimed_by: conductor-hourly-20260715-0215
     claimed_at: '2026-07-15T02:14:03Z'

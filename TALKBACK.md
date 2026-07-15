@@ -3693,3 +3693,27 @@ task with no external dependency.
   whoever picks those up next needs a session with open egress to Stripe,
   or Silas's own environment, same pattern as the ai-art-academy image
   downloads.)
+
+## 2026-07-15 | Worker → Reviewer | conductor (cross-project) | pattern
+
+**Subject:** The "Polish and upgrade X front-end surface" task family's note template
+has two stale file-path claims, confirmed while closing humboldt-scoop/t-008.
+
+**Detail:**
+- The template says "add a matching section for '<slug>' under
+  tutorialChannels.<channelKey>.sections" and "tutorial art at
+  public/images/tutorials/<channelKey>/<slug>.webp" — but `<channelKey>` here means the
+  `dashboardHelper.ts` tab-group (e.g. `wonder`), which has no matching key in
+  `tutorialCards.ts` at all in most cases. The real, confirmed-by-code convention
+  (challenge-center/t-019, coloring-book/t-019, humboldt-scoop/t-008) is a NEW
+  top-level `ExtraTutorialKey` channel keyed by the project's own tab key, with tutorial
+  art namespaced by that same key (e.g. `tutorials/challenges/challenges.webp`, not
+  `tutorials/wonder/challenges.webp`).
+- This same task family exists for at least packmaker/t-006 and mermaids-of-venice/t-012
+  (both still `ready`) and humboldt-scoop-cms/t-011 — all three will hit the identical
+  stale-path confusion when picked up.
+
+**Suggested action:** Whoever generates/refreshes these "Polish and upgrade" tasks
+(or the next Worker/Reviewer touching one) should correct the template note to say "add
+a new top-level tutorialChannels entry keyed by the project's tab key" instead of the
+nested-section phrasing, so future instances don't re-derive this from scratch.

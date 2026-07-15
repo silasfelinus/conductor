@@ -1,16 +1,16 @@
 {
-  "generated_at": "2026-07-15T01:56:10.162756+00:00",
+  "generated_at": "2026-07-15T02:21:35.436534+00:00",
   "summary": {
     "roadmaps": 40,
     "active_projects": 33,
     "tasks": 503,
-    "ready": 110,
+    "ready": 109,
     "waiting": 60,
     "needs_human": 18,
     "in_progress": 0,
-    "done": 304,
+    "done": 305,
     "errors": 0,
-    "warnings": 3,
+    "warnings": 5,
     "info": 47
   },
   "projects": [
@@ -80,16 +80,15 @@
       "autonomous": false,
       "task_count": 8,
       "counts": {
-        "done": 7,
-        "ready": 1
+        "done": 8
       },
-      "open_count": 1,
+      "open_count": 0,
       "human_attention": 0,
-      "ready": 1,
+      "ready": 0,
       "waiting": 0,
       "claimed": 0,
       "review": 0,
-      "done": 7
+      "done": 8
     },
     {
       "slug": "humboldt-scoop-cms",
@@ -816,6 +815,20 @@
       "severity": "warning",
       "code": "ACTIVE_PROJECT_NO_OPEN_TASKS",
       "project": "challenge-center",
+      "task": null,
+      "message": "Active project has no open tasks; mark finished/paused or add an intentional recurring task."
+    },
+    {
+      "severity": "warning",
+      "code": "ACTIVE_PROJECT_ALL_DONE",
+      "project": "humboldt-scoop",
+      "task": null,
+      "message": "All tasks are done but project override remains active."
+    },
+    {
+      "severity": "warning",
+      "code": "ACTIVE_PROJECT_NO_OPEN_TASKS",
+      "project": "humboldt-scoop",
       "task": null,
       "message": "Active project has no open tasks; mark finished/paused or add an intentional recurring task."
     },

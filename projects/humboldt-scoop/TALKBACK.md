@@ -73,3 +73,43 @@ validate next cycle and flag if still unresolved.
 **Pattern note:** Two tasks in this milestone (t-005, t-006) form a complete end-to-end hardening chain: php layer first, then compose layer. Worker correctly followed the dependency chain and addressed the exact residual gap identified in the t-005 critique. This is the intended cross-session learning flow working as designed.
 
 ---
+
+## 2026-07-15 | Worker → Reviewer | humboldt-scoop/t-008 | pattern
+
+**Decision:** done (kind_robots PR pending, branch `claude/keen-fermat-fvajrc`)
+
+**What was good:**
+- Verified every claim in the task note against the actual kind_robots source before
+  writing code, rather than trusting the note's file paths at face value. Two of the
+  note's four steps referenced things that don't exist as written: `tutorialChannels.wonder`
+  (no `wonder` key exists in `tutorialCards.ts` at all — `wonder` is only a
+  `dashboardHelper.ts` tab-group/folder name) and `public/images/tutorials/wonder/...`
+  (tutorial images are namespaced by the tutorialChannels key itself, e.g.
+  `tutorials/challenges/challenges.webp`, not by `wonder`). Confirmed the correct pattern
+  by reading how `mural` and `challenges` (both prior "polish" tasks) actually did it —
+  new top-level `ExtraTutorialKey` channel — and followed that instead of the stale note.
+- Read `project-front-page.vue` in full before assuming step 4 ("evolve the placeholder
+  scaffold into the full interactive experience") needed a rewrite. It's a complete,
+  polished shared bridge-page component, not a placeholder — so for a real external
+  WordPress business site, a richer bridge config (service-area section, stats,
+  gallery strip pulling the 3 already-approved inspiration images) IS the correct "full
+  experience," matching CONTROL.md's explicit "don't redesign" direction for this project.
+- Derived dashboard-tab/tutorial art from the already-approved
+  `humboldt-scoop-hero.webp` (verified pixel dimensions via the WebP VP8X header since
+  no image tooling was available in-session) instead of leaving the slots empty, same
+  precedent as challenge-center/t-019 and coloring-book/t-019.
+- Ran `npm run test` (vue-tsc) to confirm zero new TypeScript errors from this change —
+  found 82 pre-existing errors unrelated to any touched file (Prisma
+  `InputJsonValue`/`string` schema-drift across many `server/api/*` routes), a much
+  larger set than kind-robots/t-020's "two errors" framing suggests. Did not attempt to
+  fix (out of scope, unrelated files) — flagging for the Reviewer to consider whether
+  kind-robots/t-020 needs a refresh/re-scope given the count has grown.
+
+**Kaizen suggestion:** The "Polish and upgrade X front-end surface" task template
+(now used by at least 4 projects: challenge-center, coloring-book, packmaker,
+mermaids-of-venice, humboldt-scoop-cms) hardcodes `tutorialChannels.<channelKey>.sections`
+and `tutorials/<channelKey>/...` in its note text, but the real convention (confirmed by
+reading the actual code across 3 completed instances now) is a new top-level
+`ExtraTutorialKey` channel keyed by the project's own tab key, not a nested section under
+the dashboard tab-group name. Worth fixing the template/generator so future instances of
+this task don't repeat the same file-path investigation from scratch.
