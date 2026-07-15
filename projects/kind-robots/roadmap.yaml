@@ -408,11 +408,11 @@ tasks:
   - id: t-018
     milestone: m3
     title: Make the Cypress prod-deploy-wait step tolerant of rapid successive merges
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
-    updated: "2026-07-14T09:55:00Z"
+    updated: '2026-07-15T17:11:31Z'
     note: >
       Found during conductor Reviewer sweep (2026-07-14 09:xx UTC):
       .github/workflows/cypress.yml's deploy-wait step polls
@@ -438,6 +438,8 @@ tasks:
       commit on main has already deployed to production by the time this
       job runs. Not urgent -- self-resolves once merge bursts settle -- but
       will keep flaking CI red during any future rapid-merge session.
+    claimed_by: claude-burst-2026-07-15-1705
+    claimed_at: '2026-07-15T17:11:31Z'
 
   - id: t-019
     milestone: m3
