@@ -163,3 +163,31 @@ picked t-020.
 `StorefrontFeaturedArt`/`storefrontFeatured` pitch from the same kaizen source)
 remains `ready` and is the natural next pick for a future cycle; no new systemic
 gap surfaced by this one.
+
+## 2026-07-15 | Reviewer → Silas | digital-storefront/t-021 | closed (hourly cycle, pitch)
+
+**Decision:** parked at `needs-human` (proposal-kind resolution — pitch written, awaiting Silas)
+
+**Detail:** Same cycle as t-020 (see entry above) — picked up the sibling pitch task
+right after t-020's PR merged, per the "may complete several tasks in one run" rule
+(one claim in flight at a time, each finished before claiming the next).
+
+- Claimed via `claim_task.py` (digital-storefront/t-021).
+- Confirmed directly against the live kind_robots `ArtImage` Prisma model that it has
+  no featured/curation flag today, matching the doc's claim.
+- Wrote `pitches/2026-07-15-storefront-featured-art.md` per the pitch template:
+  additive `ArtImage.storefrontFeatured` boolean, or a `StorefrontFeaturedArt` join
+  table if sort-order curation is wanted from day one.
+- Verified: `python3 -c "import yaml; yaml.safe_load(...)"` on the edited
+  roadmap.yaml, and `scripts/audit_roadmaps.py` (0 errors, same warning/info counts
+  as baseline).
+- Set t-021 to `needs-human` with a FOR SILAS note (soft gate, proposal-kind
+  resolution — not a stuck-agent escalation).
+
+**What was good:**
+- Both digital-storefront pitches from t-016's kaizen source (t-020, t-021) are now
+  written and parked in the same cycle, giving Silas one batch to review instead of
+  two separate future interruptions.
+
+**Kaizen task:** none filed this cycle — this pass was itself closing out the last
+two open items from a prior kaizen; no new systemic gap surfaced.

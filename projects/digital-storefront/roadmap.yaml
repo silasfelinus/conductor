@@ -384,12 +384,26 @@ tasks:
 - id: t-021
   milestone: m4
   title: 'kind_robots pitch: add ArtImage.storefrontFeatured (or a StorefrontFeaturedArt join) for curated swag pieces'
-  status: claimed
+  status: needs-human
   owner: reviewer
   passes: 0
   stakes: reversible
-  updated: '2026-07-15T10:57:19Z'
+  soft_gate: true
+  updated: '2026-07-15T11:00:00Z'
   note: >
+    FOR SILAS: Pitch written at pitches/2026-07-15-storefront-featured-art.md.
+    It proposes an additive `ArtImage.storefrontFeatured` boolean (or a
+    `StorefrontFeaturedArt { artImageId, sortOrder, addedAt }` join table if
+    curation ordering matters) so the storefront's swag rail can point at a
+    curated set of gallery pieces instead of a hand-maintained docs/ allow-list.
+
+    TO APPROVE: read the pitch, set its `status: approved` and this task's
+    `approved_by_human: true` + `status: done` if you want it built (pick
+    boolean vs join table, or leave a note here). Unblocks: a small follow-up
+    kind_robots task to add the migration, then digital-storefront's swag-rail
+    query can read the new field instead of a static allow-list.
+
+    Original spec:
     Kaizen from t-016's close (docs/gallery-to-swag-pipeline.md §5/§6). Curating
     specific ArtImage rows for the storefront's featured-prints rail (separate from
     the KR-logo item, which uses the static-asset path and doesn't need this) needs
