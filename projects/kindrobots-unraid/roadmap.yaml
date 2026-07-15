@@ -117,13 +117,32 @@ tasks:
   - id: t-005
     milestone: m3
     title: Normalize the existing PortOS Unraid deployment into the catalog
-    status: claimed
+    status: done
     owner: reviewer
     passes: 0
     stakes: reversible
     note: >
-      Inspect silasfelinus/PortOS Unraid files and produce a standard catalog XML,
-      persistence map, health check, documentation, and upgrade policy.
+      Inspected silasfelinus/PortOS: it has no app-level Dockerfile (runs as a
+      native Node/PM2 process per its CLAUDE.md single-user, multi-machine-federation
+      model). The only Unraid-relevant piece is docs/features/network-postgres.md,
+      which documents pointing PGMODE=network at a pgvector/pgvector:pg17 container
+      (matching PortOS's own docker-compose.yml) so multiple PortOS machines can
+      share one database. Packaged that as templates/portos-postgres.xml (mirroring
+      proxysql.xml's shape: Host Port 5432, POSTGRES_DB/USER/PASSWORD config vars,
+      masked password, persistent /mnt/user/appdata/portos-postgres/data path,
+      Tailscale/LAN-only Requires note) plus docs/portos-postgres.md (install steps,
+      per-machine .env wiring, quick checks, backup/upgrade policy with a
+      dump-and-restore-before-major-version-bump warning since it can serve several
+      machines at once). Added assets/portos-postgres-icon.svg and updated
+      projects/catalog.yaml (portos: discovery -> template) and README.md. Also
+      updated kindrobots-unraid's own in-repo projects/roadmap.yaml
+      (app-packaging/portos-template: planned -> done) to keep both trackers in sync.
+      Deliberately scoped to the database only -- containerizing the PortOS app
+      itself (multi-service Node/PM2/browser-CDP packaging) is a separate, much
+      larger effort not implied by this task's existing-Unraid-files framing.
+      Verified: XML passes the same required-element/duplicate-Config checks as
+      .github/workflows validate-catalog.yml; catalog.yaml and roadmap.yaml both
+      parse clean with pyyaml.
     claimed_by: claude-burst-2026-07-15
     claimed_at: '2026-07-15T09:09:33Z'
     updated: '2026-07-15T09:09:33Z'

@@ -3804,3 +3804,38 @@ fully self-contained conductor task instead of re-deriving those blockers again.
 
 **Kaizen task:** none filed this cycle — this task's whole purpose *was* the
 kaizen fix for a prior cycle's finding; no new systemic gap surfaced.
+
+## 2026-07-15 | Reviewer → Silas | kindrobots-unraid/t-005 | closed (hourly burst-mode pick)
+
+**Detail:** Priority-order projects were still blocked on the same already-reconfirmed
+egress/token limits reconfirmed in the last two cycles' entries (no `KR_API_TOKEN`,
+Stripe/museum/Wikimedia hosts denied). Rotated to kindrobots-unraid, which had exactly
+one `ready` task (t-005) and no blockers.
+
+- Claimed via `claim_task.py` (kindrobots-unraid/t-005).
+- t-005's note assumed "existing PortOS Unraid files" to normalize. Inspected
+  silasfelinus/PortOS directly rather than trusting that framing: it has no
+  app-level Dockerfile — it's a native Node/PM2 process by design (its `CLAUDE.md`
+  documents a single-user, multi-machine-federation trust model). The only
+  Unraid-relevant material is `docs/features/network-postgres.md`, which already
+  describes pointing `PGMODE=network` at a shared `pgvector/pgvector:pg17`
+  container.
+- Packaged that as `templates/portos-postgres.xml` (mirroring `proxysql.xml`'s
+  shape) plus `docs/portos-postgres.md`, an icon, and catalog/README/roadmap
+  updates in `silasfelinus/kindrobots-unraid`. Explicitly scoped out
+  containerizing the PortOS app itself — that's a separate, much larger effort
+  the task's framing didn't actually ask for.
+- Verified: the new XML template passes the same required-element and
+  duplicate-`Config` checks the repo's `validate-catalog.yml` CI job runs, and
+  both catalog.yaml/roadmap.yaml parse clean with pyyaml.
+- kindrobots-unraid PR #3 opened, subscribed to PR activity. Set
+  `kindrobots-unraid/t-005` to `done` directly (small, reversible, fully
+  self-contained addition — no gate needed).
+
+**What was good:**
+- Didn't take the task note's "existing PortOS Unraid files" premise at face
+  value — checked the actual PortOS repo first and found there's no app
+  container, which changed the scope of the deliverable from "package the app"
+  to "package its optional shared database."
+
+**Kaizen task:** none filed this cycle — no new systemic gap surfaced.
