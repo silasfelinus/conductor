@@ -459,19 +459,22 @@ tasks:
   - id: t-020
     milestone: m2
     title: 'kind_robots: thicken Coloring Book Generate/Proposals/Prompts tabs and add a second page set'
-    status: claimed
+    status: review
     owner: reviewer
     passes: 0
     stakes: reversible
-    updated: '2026-07-15T12:07:13Z'
-    note: >
-      Filed 2026-07-14 as the kaizen/follow-up from t-019. coloring-book-page.vue's
-      Color tab is a real, working engine; its Generate/Proposals/Prompts tabs are
-      thin generic pitch-board wrappers, and coloring-book-manager.vue's SET_SLUGS
-      is hardcoded to only ['sampler']. Options for this pass (pick what's
-      unblocked): wire the Generate tab into the real t-006/t-007 generation
-      pipeline once those sets exist, or — if t-006 (Kind Robots set) has landed —
-      add its manifest to SET_SLUGS so the library shows more than the sampler.
-      Keep scope small; this can re-split further if it's still too big for one PR.
+    updated: '2026-07-15T12:15:00Z'
+    note: |-
+      kind_robots PR #290 (silasfelinus/kind_robots, branch claude/keen-fermat-c46wpc): dynamic
+      set discovery (data/coloring-book/sets/index.json + loadSetSlugs() fallback to
+      [sampler]) replaces the hardcoded SET_SLUGS=[sampler], plus a second hand-authored
+      demo set (Cozy Corner: Sleepy Cat + Potted Plant Shelf) proving the multi-set path
+      end-to-end. t-006/t-007 (Kind Robots, Monster Recast) were not landed yet, so this
+      pass adds a set of its own rather than wiring in art that does not exist -- once
+      t-006/t-007 ship, their manifests just need an index.json entry, no further code
+      change. Left Proposals/Prompts tab thickening for a follow-up pass (scope note said
+      keep this small / re-split if needed). CI (TypeScript, contract verifiers,
+      GitGuardian) was in progress at push time; no local vue-tsc/eslint run available in
+      this sandbox (no node_modules installed).
     claimed_by: hourly-burst-20260715T-rotation
     claimed_at: '2026-07-15T12:07:13Z'

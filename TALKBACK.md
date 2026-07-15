@@ -3922,3 +3922,55 @@ egress or credentials — a genuinely landable synthesis task.
 pattern already used in other Silas repos, e.g. PortOS's `navManifest.js`) so a page/tab
 missing from top-level nav fails a CI check instead of only surfacing via a manual
 navigation-map audit like this one.
+
+## 2026-07-15 | Reviewer → Silas | coloring-book/t-020 | in review (hourly burst-mode pick)
+
+**Decision:** pending (kind_robots PR #290 open, CI in progress at write time)
+
+**Detail:** Rotation continued past today's already-well-covered projects
+(digital-storefront, kind-robots, conductor, kindrobots-unraid, global-ui had each had a
+turn; ai-art-academy's recurring t-010 had already run three times today per its own
+TALKBACK entry). challenge-center (top of priority.yaml) has zero `ready` tasks — every
+task is `done`. Next in priority order, coloring-book, had t-020 ready: "thicken
+Generate/Proposals/Prompts tabs and add a second page set," filed as the t-019 kaizen.
+- Claimed via `claim_task.py` (coloring-book/t-020).
+- The task note's two suggested options (wire Generate into the real t-006/t-007
+  pipeline, or add the Kind Robots manifest to SET_SLUGS) both assume t-006/t-007 have
+  landed — checked `kind_robots/public/data/coloring-book/sets/` and neither has (only
+  `sampler` exists). Re-scoped within the note's own "keep this small / re-split if
+  needed" allowance: fixed the actual bug underlying the complaint (SET_SLUGS hardcoded
+  to `['sampler']`, so the library structurally could not grow without a code change)
+  by adding `data/coloring-book/sets/index.json` + a `loadSetSlugs()` fetch with
+  fallback, and proved the multi-set path works today with a second, original,
+  hand-authored demo set (Cozy Corner — Sleepy Cat + Potted Plant Shelf, same
+  `svg-regions` JSON shape as the existing sampler pages) rather than inventing
+  placeholder Kind Robots/Monster Recast content that would collide with t-006/t-007's
+  own future manifests.
+- Left the Generate/Proposals/Prompts thickening itself for a follow-up pass — the note
+  explicitly allowed re-splitting, and that half needs either live generation plumbing
+  or real book content neither of which existed yet.
+- Verified: `python3 -c "import json; json.load(...)"` on all four new/changed JSON
+  files, hand-checked every new SVG region `d` path against the closed-path patterns
+  already used in `sampler-p01.json`/`sampler-p02.json`, and `scripts/audit_roadmaps.py`
+  (0 errors) on the roadmap edit. Could not run `vue-tsc`/`eslint` locally — no
+  `node_modules` in this sandbox — so relying on kind_robots PR #290's CI (TypeScript +
+  Contract verifiers were in progress, GitGuardian had already passed) instead of a
+  local check; subscribed to the PR and will merge once it's green or report back if
+  something fails.
+- Set coloring-book/t-020 to `status: review` with the PR link in the note; will flip to
+  `done` once #290 merges.
+
+**What was good:**
+- Didn't rubber-stamp the note's two pre-written options when neither actually applied —
+  traced the literal claim ("hardcoded to only sampler") back to the real underlying
+  limitation and fixed that instead, which is more durable than either suggested patch
+  once t-006/t-007 do land.
+
+**What to improve:**
+- This sandbox still has no `node_modules` for kind_robots (only a bare Node 24 runtime
+  via `scripts/provision_node24.sh` from t-021) — a from-scratch `npm ci` was judged too
+  slow for an hourly burst-mode window and skipped in favor of trusting CI. Worth a
+  future kaizen: a prebaked/cached `node_modules` snapshot (or Nuxt's `.output`
+  type-stub cache) reachable through the sandbox's proxy allowlist, so burst-mode
+  sessions touching kind_robots can run `vue-tsc`/`eslint` locally instead of shipping
+  on faith.

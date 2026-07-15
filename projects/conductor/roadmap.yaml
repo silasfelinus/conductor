@@ -1060,3 +1060,29 @@ tasks:
       per hard rule 9) immediately before `gh pr create`, so the PR opens
       already conflict-free against current main instead of drifting stale
       while it waits for review.
+
+  - id: t-046
+    milestone: m2
+    title: Cache a kind_robots node_modules install (or Nuxt type-stub cache) reachable through the sandbox proxy allowlist, so burst-mode sessions can run vue-tsc/eslint locally
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Kaizen from Reviewer's coloring-book/t-020 pass (hourly burst-mode, kind_robots
+      PR #290, 2026-07-15). challenge-center/t-021 (conductor PR #535) already solved
+      getting a matching Node 24.x runtime into the sandbox via
+      scripts/provision_node24.sh (nodejs.org's dist host is reachable through the
+      proxy; nodesource apt is not). The remaining gap is `node_modules`: kind_robots
+      has no lockfile-matching install in this sandbox, so `npm run test` (vue-tsc),
+      `npm run lint`, and any Cypress checks are unavailable locally, forcing sessions
+      to push code and trust GitHub Actions CI blind. Investigate whether `npm ci` from
+      kind_robots' registry (npmjs.org) is reachable through the same proxy allowlist
+      that nodejs.org's dist host is, and if so whether a pre-warmed/cached
+      `node_modules` (or at minimum Nuxt's generated `.nuxt` type-stub directory,
+      which is what unblocked `vue-tsc`/`eslint` in this session) can be provisioned
+      cheaply and idempotently the way scripts/provision_node24.sh does for the
+      runtime itself. If registry egress is blocked, document that finding instead
+      (mirroring how t-021 documented the nodesource-apt/CI-artifact dead ends) so
+      future sessions stop re-discovering the same wall.
+
