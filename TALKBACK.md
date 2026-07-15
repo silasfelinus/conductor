@@ -4037,3 +4037,49 @@ carrying `coloring-book/t-020`'s roadmap close-out (status → done), the
 **Kaizen task:** deferred — no new systematic weakness surfaced; conductor/t-046
 (node_modules caching script) and kind-robots/t-020 (remaining 19 TS errors) already
 cover the open threads from this PR.
+
+## 2026-07-15 | Reviewer → Silas | ai-art-academy/t-015 | closed (hourly burst-mode pick, PR #291)
+
+**Decision:** merged (kind_robots PR #291, squash, sha 9ec971e)
+
+**Detail:** Hourly burst-mode cycle rotated to `ai-art-academy` — top of `priority.yaml`
+right after `challenge-center`, which is now fully `done` (all 21 tasks). ai-art-academy's
+other ready tasks (t-004, t-008, t-009, t-013) are all still blocked on either a missing
+`KR_API_TOKEN` or a museum/Wikimedia egress 403, both re-confirmed fresh earlier today
+(digital-storefront/t-019 recheck pass). `t-015` was the one genuinely unblocked task: a
+kaizen follow-up from t-010's curriculum-expansion pass, asking to mirror the new
+Neoclassicism movement (slug, era, artist list, remix template) from
+`docs/curriculum-outline.md` into kind_robots' `stores/seeds/academyStyles.ts` — pure
+data-sync, no design judgment, no external access required.
+
+- Claimed via `claim_task.py` (ai-art-academy/t-015, owner=worker).
+- Read the curriculum doc's Neoclassicism section and YAML skeleton, then matched the
+  exact shape of sibling entries (`baroque`, `ukiyo-e`) in the seed file — same
+  `AcademyStyle` interface fields (slug/name/era/sortYear/region/keyIdeas/
+  recognitionCues/artists/remix), inserted between `baroque` and `ukiyo-e` to preserve
+  curriculum ordering. Checked for hardcoded style-count references elsewhere in the
+  codebase (`academy-remix.vue` uses `academyStyles.length` dynamically — nothing to
+  update).
+- Verified: `npm ci` (`CYPRESS_INSTALL_BINARY=0`, ~30s from cache) + `npx prisma generate`
+  + `npm run test` (project-wide `vue-tsc --noEmit`) against the branch: 19 pre-existing
+  errors, none in the changed file. Brace-balance and structural sanity checked directly.
+- kind_robots PR #291's TypeScript CI check came back red — expected, since the project
+  carries the same 19 pre-existing errors tracked at `kind-robots/t-020` (unchanged count
+  from the last check earlier today). Contract verifiers and GitGuardian were green,
+  `mergeable_state: "unstable"` (not `blocked`), base matched current `origin/main`
+  exactly — squash-merged past the confirmed-pre-existing failure per the established
+  precedent (PRs #256, #271, #290 in this same file).
+- Set ai-art-academy/t-015 to `status: done` with the PR link, merge sha, and CI
+  cross-check summary in the note.
+
+**What was good:**
+- Didn't stop at "TypeScript check failed" — reproduced the CI command locally against
+  the identical merge state before merging, rather than either blind-trusting the red X
+  or blocking on a known, already-tracked, unrelated failure.
+- Picked the one task in the top-priority project that was actually workable instead of
+  cascading down to a lower-priority project just because most of ai-art-academy's queue
+  is credential-blocked.
+
+**Kaizen task:** none new this cycle — `conductor/t-046` (node_modules caching recipe)
+and `kind-robots/t-020` (remaining 19 TS errors) already cover the open threads this
+session touched.
