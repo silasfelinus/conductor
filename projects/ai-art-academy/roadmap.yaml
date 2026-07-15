@@ -338,7 +338,7 @@ tasks:
     owner: null
     passes: 0
     stakes: reversible
-    updated: '2026-07-15T06:25:00Z'
+    updated: '2026-07-15T11:30:00Z'
     note: >
       Standing never-idle task (re-arms to ready after every completion, per the
       recurring-task rule). Each cycle pick ONE: (a) front-end style/polish pass on
@@ -347,6 +347,25 @@ tasks:
       preview thumbnails, (d) expand the curriculum with a new movement/artist entry
       (respecting PUBLIC-DOMAIN-POLICY.md). Note which option ran in the PR. This task
       never reaches done and does not count toward milestone progress.
+
+      RAN 2026-07-15 (conductor-burst-hourly, ~11:30 UTC): option (d) curriculum
+      expansion. Rechecked t-004/t-008/t-009/t-013 blockers first with a different
+      tool than prior cycles (WebFetch to metmuseum.org, not curl) — still a fresh
+      403; confirms the museum-egress block isn't proxy-tool-specific, so no need
+      to re-test it again next cycle. WebSearch (not WebFetch) does work in this
+      sandbox and was usable to source real Met/Wikimedia object references without
+      needing direct fetch access. Added a 15th movement, Neoclassicism
+      (`neoclassicism`, c. 1750-1830, David/Ingres/Canova/Kauffman — all died
+      1807-1867, safely public domain) to docs/curriculum-outline.md between
+      Baroque and Ukiyo-e: full prose section, recognition cues, 4 example works,
+      remix_hint, YAML skeleton entry, and added to the "strong remix candidates"
+      list with a texture-flattening caveat. Renumbered sections 6-14 to 7-15 and
+      bumped the intro's movement count 14→15. Kaizen candidate for next cycle:
+      the new movement's slug needs to land in kind_robots'
+      stores/seeds/academyStyles.ts (mirroring t-005's seed, PR #143) before it's
+      visible in the live curriculum — that's a small, independently-landable
+      cross-repo follow-up, not done here (conductor docs only, no kind_robots
+      code touched this pass).
 
       RAN 2026-07-15 (conductor-hourly-20260715-0048): option (b) roadmap
       upgrade. Flipped milestone m1 to done (both its tasks, t-001/t-002, were
@@ -374,3 +393,22 @@ tasks:
       pre-existing on main at the base commit (45c1b047, unrelated to this
       diff — same t-020 backlog), Contract verifiers and GitGuardian were
       green, so merged after noting that in a PR comment.
+
+  - id: t-015
+    milestone: m4
+    title: 'kind_robots: add Neoclassicism to the academyStyles.ts front-end seed'
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-15T11:30:00Z'
+    note: >
+      Kaizen follow-up from t-010's 2026-07-15 curriculum-expansion pass:
+      docs/curriculum-outline.md now documents a 15th movement, Neoclassicism
+      (slug `neoclassicism`, c. 1750-1830, David/Ingres/Canova/Kauffman), inserted
+      between baroque and ukiyo-e — but the kind_robots front-end seed
+      (stores/seeds/academyStyles.ts, PR #143 pattern from t-005) only has the
+      original 14. Mirror the new movement's slug/name/era/artist list/remix_hint
+      from the curriculum doc's YAML skeleton into that seed file, matching the
+      existing entry shape exactly. Small, independently-landable, no design
+      judgment needed — this is pure data-sync.

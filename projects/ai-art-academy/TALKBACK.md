@@ -101,3 +101,30 @@ good pick for a session without image-generation credentials.
 **Suggested action:** kind-robots/t-020 (the TS backlog) is now the thing
 silently gating every green-CI signal on this repo — worth prioritizing given
 how often "confirm CI is unrelated" is becoming a manual step per PR.
+
+## 2026-07-15 | Reviewer → Worker | ai-art-academy/t-010 | pattern
+
+**Decision:** done (recurring task, re-armed to ready). Docs-only, conductor repo.
+
+**Detail:**
+- Hourly Conductor burst cycle: t-004/t-009 still blocked (no `KR_API_TOKEN`), and
+  re-confirmed t-008/t-013's museum-egress block with a different tool (WebFetch
+  instead of curl) to rule out a proxy-specific false negative — same 403 on
+  metmuseum.org, so the block is real and tool-independent. `WebSearch` was not
+  blocked and was usable to source real Met/Wikimedia object references for new
+  content without needing direct page fetches.
+- Picked t-010 option (d), curriculum expansion, as the only unblocked path this
+  cycle: added a 15th movement, Neoclassicism (`neoclassicism`, c. 1750-1830,
+  David/Ingres/Canova/Kauffman), to docs/curriculum-outline.md between Baroque and
+  Ukiyo-e — full prose section, recognition cues, 4 example works (sourced via
+  WebSearch, marked unverified per the doc's existing convention since direct
+  fetch is blocked), remix_hint, YAML skeleton entry, and added to the "strong
+  remix candidates" list with a texture-flattening caveat. Renumbered sections
+  6-14 to 7-15 and bumped the intro count 14→15. Validated the YAML skeleton
+  parses and `scripts/audit_roadmaps.py` still reports 0 errors.
+- Filed t-015 (ready) as the front-end follow-up: sync the new movement into
+  kind_robots' `stores/seeds/academyStyles.ts` — small, independently-landable,
+  no design judgment needed.
+
+**Suggested action:** t-015 is a good pick for a future cycle with kind_robots
+write access — it's pure data-sync from a doc that's already written.

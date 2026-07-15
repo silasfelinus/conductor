@@ -4,7 +4,7 @@ date: 2026-07-10
 task: ai-art-academy/t-005
 status: draft for review (content complete, one source URL verified per movement)
 
-This is the v1 curriculum: 14 movements in chronological order, from Greek vases to
+This is the v1 curriculum: 15 movements in chronological order, from Greek vases to
 De Stijl. Every artist named here is long dead (all listed artists died before 1955),
 and every example work is a public-domain original held (or expected) in an
 open-access collection. See the ethical boundary in DESIGN-BRIEF.md and the
@@ -52,6 +52,12 @@ movements:
     artist_slugs: [caravaggio, artemisia-gentileschi, rembrandt-van-rijn, johannes-vermeer]
     example_count: 4
     remix_hint: "Repaint this image as a Baroque oil painting with dramatic chiaroscuro lighting, deep shadows, rich saturated color, and theatrical contrast"
+  - slug: neoclassicism
+    name: Neoclassicism
+    era: "c. 1750-1830"
+    artist_slugs: [jacques-louis-david, jean-auguste-dominique-ingres, antonio-canova, angelica-kauffman]
+    example_count: 4
+    remix_hint: "Repaint this image as a Neoclassical oil painting: crisp linear contours, cool restrained color, smooth invisible brushwork, and a calm, stage-like classical composition"
   - slug: ukiyo-e
     name: Ukiyo-e
     era: "c. 1650-1900"
@@ -339,7 +345,55 @@ chiaroscuro lighting, deep shadows, rich saturated color, and theatrical contras
 
 ---
 
-## 6. Ukiyo-e (`ukiyo-e`)
+## 6. Neoclassicism (`neoclassicism`)
+
+**Era:** c. 1750-1830
+
+**Key ideas.** Neoclassicism was a deliberate correction: after Rococo's pastel
+frivolity, artists turned back to the "noble simplicity" of Greece and Rome,
+freshly fueled by the excavations at Pompeii and Herculaneum. The style prized
+clear drawing over loose paint, moral seriousness over decoration, and stoic
+self-sacrifice over romance. Its timing was not an accident — this is the art of
+the Enlightenment and the age of revolutions, and its painters used togas and
+Roman senators to talk, quite pointedly, about civic virtue and their own
+turbulent present.
+
+**Recognition cues:**
+- Crisp, precise contours — line does the work, not visible brushwork
+- Cool, restrained color and even, theater-lit illumination (no Baroque murk)
+- Friezelike compositions: figures arranged shallowly, almost like a stage set
+- Classical props — togas, columns, Roman furniture, marble — used with intent
+- Frozen, deliberate gestures at a moment of moral or political decision
+
+**Notable artists:**
+- **Jacques-Louis David** (1748-1825) — The movement's central figure and
+  eventual court painter to Napoleon; his Roman history paintings doubled as
+  political manifestos on the eve of the French Revolution.
+- **Jean-Auguste-Dominique Ingres** (1780-1867) — David's most brilliant pupil,
+  who pushed line into near-abstraction and became the era's defining
+  portraitist of French society.
+- **Antonio Canova** (1757-1822) — The age's greatest sculptor, whose marble
+  figures combine antique cool with an almost tender softness.
+- **Angelica Kauffman** (1741-1807) — Swiss-born history painter and a founding
+  member of Britain's Royal Academy, one of only two women among its founders.
+
+**Example works:**
+- *The Death of Socrates*, Jacques-Louis David, 1787 — expected at Met Open
+  Access (unverified): https://www.metmuseum.org/art/collection/search/436105
+- *Oath of the Horatii*, Jacques-Louis David, 1784 — Musée du Louvre; expected
+  as PD scan at Wikimedia Commons (unverified)
+- *Joseph-Antoine Moltedo*, Jean-Auguste-Dominique Ingres, 1810 — expected at
+  Met Open Access (unverified): https://www.metmuseum.org/art/collection/search/438818
+- *Psyche Revived by Cupid's Kiss*, Antonio Canova, 1787-93 — Musée du Louvre;
+  expected as PD photograph at Wikimedia Commons (unverified)
+
+**remix_hint:** "Repaint this image as a Neoclassical oil painting: crisp linear
+contours, cool restrained color, smooth invisible brushwork, and a calm,
+stage-like classical composition"
+
+---
+
+## 7. Ukiyo-e (`ukiyo-e`)
 
 **Era:** c. 1650-1900 (Edo period Japan)
 
@@ -385,7 +439,7 @@ texture"
 
 ---
 
-## 7. Romanticism (`romanticism`)
+## 8. Romanticism (`romanticism`)
 
 **Era:** c. 1780-1850
 
@@ -430,7 +484,7 @@ glowing atmospheric light, sublime scale, moody emotional tone"
 
 ---
 
-## 8. Realism (`realism`)
+## 9. Realism (`realism`)
 
 **Era:** c. 1840-1880
 
@@ -475,7 +529,7 @@ palette, honest unidealized detail, natural daylight, dignified everyday subject
 
 ---
 
-## 9. Impressionism (`impressionism`)
+## 10. Impressionism (`impressionism`)
 
 **Era:** c. 1860-1890
 
@@ -520,7 +574,7 @@ visible broken brushstrokes, dappled natural light, and a bright plein-air palet
 
 ---
 
-## 10. Post-Impressionism (`post-impressionism`)
+## 11. Post-Impressionism (`post-impressionism`)
 
 **Era:** c. 1885-1910
 
@@ -567,7 +621,7 @@ expressive color, thick swirling impasto brushwork, and strong dark outlines"
 
 ---
 
-## 11. Art Nouveau (`art-nouveau`)
+## 12. Art Nouveau (`art-nouveau`)
 
 **Era:** c. 1890-1914
 
@@ -612,7 +666,7 @@ decorative border"
 
 ---
 
-## 12. Expressionism (`expressionism`)
+## 13. Expressionism (`expressionism`)
 
 **Era:** c. 1905-1933 (mainly Germany, Austria, and Scandinavia)
 
@@ -656,7 +710,7 @@ non-natural color, jagged energetic brushwork, and emotionally charged distortio
 
 ---
 
-## 13. Cubism (`cubism`)
+## 14. Cubism (`cubism`)
 
 **Era:** c. 1907-1925
 
@@ -703,7 +757,7 @@ geometric planes, multiple shifting viewpoints, muted browns, grays, and blues"
 
 ---
 
-## 14. De Stijl (`de-stijl`)
+## 15. De Stijl (`de-stijl`)
 
 **Era:** 1917-1931 (Netherlands)
 
@@ -755,9 +809,12 @@ decide where LoRAs help). Expected remix quality, flagged honestly:
 
 **Strong remix candidates (ship first):** `ukiyo-e`, `impressionism`,
 `post-impressionism`, `art-nouveau`, `expressionism`, `baroque`, `romanticism`,
-`renaissance`, `realism`. These are heavily represented in FLUX/Kontext training
-data and their styles transfer while preserving the user's composition — the core
-Academy promise.
+`renaissance`, `realism`, `neoclassicism`. These are heavily represented in
+FLUX/Kontext training data and their styles transfer while preserving the
+user's composition — the core Academy promise. `neoclassicism`'s smooth,
+invisible-brushwork finish and restrained palette should be an easy transfer;
+watch that the model doesn't over-flatten skin/fabric texture into a "marble
+statue" look when the source photo has strong texture.
 
 **Good but watch the output:** `greek-vase-painting` and `byzantine-mosaic` are
 strong graphic transformations (silhouette-on-terracotta, tesserae-and-gold) that
