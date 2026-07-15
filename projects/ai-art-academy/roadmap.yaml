@@ -330,6 +330,25 @@ tasks:
     claimed_by: conductor-burst-1784056316
     claimed_at: '2026-07-14T19:11:56Z'
 
+  - id: t-016
+    milestone: m6
+    title: Document academy-style-detail.vue's three usage contexts atop the component
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-15T21:47:00Z'
+    note: >
+      Kaizen from t-010's 2026-07-15 21:15 UTC cycle (kind_robots PR #301, merged).
+      academy-style-detail.vue is reused in three call sites
+      (academy-styles-browser.vue, academy-timeline.vue, academy-remix.vue) each
+      passing a different subset of showClose/showRemixButton/@remix — the
+      showRemixButton no-op-handler bug that PR fixed happened precisely because a
+      new prop's meaning wasn't obvious from the component alone. Add a short
+      comment atop the component (or in its script block) listing the three usage
+      contexts and what each expects, so a future prop addition doesn't silently
+      miss one. Small, docs-only, no design judgment needed.
+
   - id: t-010
     milestone: m6
     title: Academy continuous improvement pass
