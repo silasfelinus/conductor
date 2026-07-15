@@ -667,6 +667,18 @@ tasks:
       BOUNDARY.md. No status change; still needs-human/irreversible. Sent a
       push notification this cycle given the duration and lack of visible
       remediation across prior flags.
+
+      RECONFIRMED 2026-07-15T23:06:00Z (burst-mode cycle, packmaker/t-003
+      session): still down, now 14+ hours since first seen (08:56 UTC).
+      Checked live via the Vercel MCP connector: `get_runtime_errors` (1h
+      window) shows the same `pool timeout ... (circuit open)` /
+      `DriverAdapterError` group, 742 occurrences, last seen 23:06:15Z —
+      actively recurring as this check ran, with `limit=10` confirming the
+      t-025 pool-fallback fix (PR #299) is in effect and unrelated to this
+      outage. `get_runtime_logs` grouped by status code (1h window): 710x
+      503 vs 21x 200 (~97% failure — worse than the 20:52 check's ~87%). No
+      agent action possible (DB/infra unreachability, outside BOUNDARY.md
+      scope). No status change.
   - id: t-023
     milestone: m1
     title: Automate the deploy-wait ancestry-check verification t-018 did manually in scratch git repos
