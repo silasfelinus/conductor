@@ -147,7 +147,7 @@ tasks:
   - t-010
   gate_human: true
   approved_by_human: false
-  note: 'Cross-repo task (kind_robots). Product page linking from the mermaids landing page and giftshop, Stripe Checkout in TEST MODE, webhook -> entitlement -> authenticated download delivery. The PDF is stored server-side, never in public/. Going live (live Stripe keys/products, real charges) is a separate hard needs-human for Silas. STATUS NOTE 2026-07-15 (claude-burst-2026-07-15-0105): newly ready this cycle via resolve_deps.py, now that t-009 (SPEC.md) landed. Not started -- api.stripe.com is 403-policy-denied from this sandbox''s egress proxy (same denial as api calls to museum sites for ai-art-academy), so this can''t be built and verified end-to-end here. Needs a session/environment with open Stripe egress, or Silas''s own environment.'
+  note: 'Cross-repo task (kind_robots). Product page linking from the mermaids landing page and giftshop, Stripe Checkout in TEST MODE, webhook -> entitlement -> authenticated download delivery. The PDF is stored server-side, never in public/. Going live (live Stripe keys/products, real charges) is a separate hard needs-human for Silas. STATUS NOTE 2026-07-15 (claude-burst-2026-07-15-0105): newly ready this cycle via resolve_deps.py, now that t-009 (SPEC.md) landed. Not started -- api.stripe.com is 403-policy-denied from this sandbox''s egress proxy (same denial as api calls to museum sites for ai-art-academy), so this can''t be built and verified end-to-end here. Needs a session/environment with open Stripe egress, or Silas''s own environment. RECHECKED 2026-07-15T07:08Z (t-019): still 403 policy-denied via /__agentproxy/status (connect_rejected on api.stripe.com:443). No need to re-curl again until this note goes stale.'
 - id: t-012
   milestone: m3
   title: Wire one-time mana top-ups to Stripe checkout (test mode)
@@ -156,7 +156,7 @@ tasks:
   passes: 0
   stakes: reversible
   depends_on: t-009
-  note: 'Cross-repo (kind_robots). A few reasonable tiers per Silas; reuse credit-purchase.vue / mana-wallet.vue where sensible. Webhook credits mana. Test mode only; live activation is gated. STATUS NOTE 2026-07-15 (claude-burst-2026-07-15-0105): newly ready this cycle via resolve_deps.py, now that t-009 (SPEC.md) landed. Not started -- api.stripe.com is 403-policy-denied from this sandbox''s egress proxy (same denial as api calls to museum sites for ai-art-academy), so this can''t be built and verified end-to-end here. Needs a session/environment with open Stripe egress, or Silas''s own environment.'
+  note: 'Cross-repo (kind_robots). A few reasonable tiers per Silas; reuse credit-purchase.vue / mana-wallet.vue where sensible. Webhook credits mana. Test mode only; live activation is gated. STATUS NOTE 2026-07-15 (claude-burst-2026-07-15-0105): newly ready this cycle via resolve_deps.py, now that t-009 (SPEC.md) landed. Not started -- api.stripe.com is 403-policy-denied from this sandbox''s egress proxy (same denial as api calls to museum sites for ai-art-academy), so this can''t be built and verified end-to-end here. Needs a session/environment with open Stripe egress, or Silas''s own environment. RECHECKED 2026-07-15T07:08Z (t-019): still 403 policy-denied via /__agentproxy/status (connect_rejected on api.stripe.com:443). No need to re-curl again until this note goes stale.'
 - id: t-013
   milestone: m3
   title: Wire the monthly supporter subscription to Stripe (test mode)
@@ -165,7 +165,7 @@ tasks:
   passes: 0
   stakes: reversible
   depends_on: t-009
-  note: 'Cross-repo (kind_robots). Recurring donation plan(s) via Stripe subscriptions; reuse subscription-manager.vue. Test mode only; live activation is gated. STATUS NOTE 2026-07-15 (claude-burst-2026-07-15-0105): newly ready this cycle via resolve_deps.py, now that t-009 (SPEC.md) landed. Not started -- api.stripe.com is 403-policy-denied from this sandbox''s egress proxy (same denial as api calls to museum sites for ai-art-academy), so this can''t be built and verified end-to-end here. Needs a session/environment with open Stripe egress, or Silas''s own environment.'
+  note: 'Cross-repo (kind_robots). Recurring donation plan(s) via Stripe subscriptions; reuse subscription-manager.vue. Test mode only; live activation is gated. STATUS NOTE 2026-07-15 (claude-burst-2026-07-15-0105): newly ready this cycle via resolve_deps.py, now that t-009 (SPEC.md) landed. Not started -- api.stripe.com is 403-policy-denied from this sandbox''s egress proxy (same denial as api calls to museum sites for ai-art-academy), so this can''t be built and verified end-to-end here. Needs a session/environment with open Stripe egress, or Silas''s own environment. RECHECKED 2026-07-15T07:08Z (t-019): still 403 policy-denied via /__agentproxy/status (connect_rejected on api.stripe.com:443). No need to re-curl again until this note goes stale.'
 - id: t-014
   milestone: m3
   title: Build the Against Malaria giving page
@@ -239,7 +239,7 @@ tasks:
 - id: t-016
   milestone: m4
   title: Design the gallery-to-swag pipeline (user art on POD products)
-  status: claimed
+  status: done
   owner: reviewer
   passes: 0
   stakes: reversible
@@ -256,6 +256,24 @@ tasks:
     more mature webhook-signing docs) with a sticker as the first orderable
     item; extend the gallery pipeline to that same account/product family
     rather than re-evaluating providers.
+
+    DONE 2026-07-15T07:10Z (reviewer-burst-2026-07-15-0708): wrote
+    docs/gallery-to-swag-pipeline.md. Covers art selection UX (three entry
+    points: own-gallery "print this," curated featured pieces, upload), print-file
+    requirements (Printful's 150/300 DPI floor, RGB, PNG-for-diecut), POD API order
+    flow (new `PrintJob` model bridging `OrderItem` to Printful's Order API, reusing
+    SPEC.md's webhook/signature pattern), moderation/rights (flags that the schema
+    has no field today enforcing CONTROL.md's commercial-generation licensing rule —
+    dev-trained LoRAs/Kontext-dev must never reach a printed product — proposes a
+    `Resource.commercialSafe` field and a default-deny policy until it exists; also
+    reuses the existing `isMature`/ownership checks), and curated pieces (two paths:
+    curated ArtImage rows needing a `storefrontFeatured` field, and non-ArtImage
+    static assets like the actual KR logo, which needs neither schema pitch and can
+    ship first). Suggested build order puts the KR-logo sticker (t-015's real next
+    step) on the unblocked static-asset path, and gates the general self-service
+    "print my gallery art" flow on two new kind-robots pitches (commercialSafe,
+    storefrontFeatured) filed per BOUNDARY.md rather than edited directly. No
+    schema changes, no Printful account, no code shipped — design doc only.
   claimed_by: reviewer-burst-2026-07-15-0708
   claimed_at: '2026-07-15T07:10:26Z'
   updated: '2026-07-15T07:10:26Z'
@@ -297,7 +315,7 @@ tasks:
 - id: t-019
   milestone: m3
   title: Re-verify the api.stripe.com and museum-site sandbox-egress blockers before re-flagging them as blocked again
-  status: claimed
+  status: done
   owner: reviewer
   passes: 0
   stakes: reversible
@@ -312,6 +330,54 @@ tasks:
     blocked" (or start the real build) based on a fresh check, not an inherited
     assumption. If genuinely still blocked, note the recheck date so this doesn't
     need repeating every single cycle.
+
+    DONE 2026-07-15T07:08Z (reviewer-burst-2026-07-15-0708): re-curled
+    api.stripe.com, www.metmuseum.org, and upload.wikimedia.org directly and checked
+    /__agentproxy/status. All three still show a fresh `connect_rejected` /
+    "gateway answered 403 to CONNECT (policy denial or upstream failure)" entry
+    timestamped this session — the block is still live, not stale info. Stamped a
+    RECHECKED note with this timestamp on digital-storefront t-011/t-012/t-013 and
+    ai-art-academy t-004/t-008/t-013 so the next few cycles can skip the re-curl and
+    just check whether the recheck timestamp is recent, rather than re-verifying from
+    scratch every single burst cycle.
   claimed_by: reviewer-burst-2026-07-15-0708
   claimed_at: '2026-07-15T07:08:30Z'
   updated: '2026-07-15T07:08:30Z'
+- id: t-020
+  milestone: m4
+  title: 'kind_robots pitch: add Resource.commercialSafe (or licenseClass) so gallery-to-swag can gate on generation-backend licensing'
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  updated: '2026-07-15T07:10:00Z'
+  note: >
+    Kaizen from t-016's close (docs/gallery-to-swag-pipeline.md §4/§6). The
+    self-service "print my gallery art" flow needs to enforce CONTROL.md's
+    commercial-generation licensing rule (dev-trained LoRAs/Kontext-dev never touch
+    commercial output) before a real user can print a real ArtImage, but
+    `Resource` (the LoRA/checkpoint registry `ArtImage.checkpointResourceId` points
+    at) has no field recording license class today. Per BOUNDARY.md, this is a
+    kind_robots pitch (backend schema change), not a direct edit: write the pitch
+    (additive `Resource.commercialSafe: Boolean @default(false)` or a
+    `licenseClass` enum, defaulted conservatively) and file it in
+    conductor/pitches/ per the proposal-kind template. Does not block the
+    KR-logo-sticker build (static-asset path, no ArtImage involved).
+- id: t-021
+  milestone: m4
+  title: 'kind_robots pitch: add ArtImage.storefrontFeatured (or a StorefrontFeaturedArt join) for curated swag pieces'
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  updated: '2026-07-15T07:10:00Z'
+  note: >
+    Kaizen from t-016's close (docs/gallery-to-swag-pipeline.md §5/§6). Curating
+    specific ArtImage rows for the storefront's featured-prints rail (separate from
+    the KR-logo item, which uses the static-asset path and doesn't need this) needs
+    either a boolean flag on ArtImage or a small join table
+    (`StorefrontFeaturedArt { artImageId, sortOrder, addedAt }` if curation
+    ordering is wanted). Per BOUNDARY.md, write and file the pitch in
+    conductor/pitches/ rather than editing the shared schema directly. A flat
+    allow-list in this project's docs/ is an acceptable stand-in until the pitch
+    lands.

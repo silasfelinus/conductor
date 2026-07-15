@@ -123,6 +123,11 @@ tasks:
       STATUS NOTE 2026-07-10: still ready but requires the generation backend;
       KR_API_TOKEN is absent in web sessions, so this needs a token-bearing Worker
       cycle (or Silas's environment). Registry input from t-003 is complete.
+      RECHECKED 2026-07-15T07:08Z (digital-storefront/t-019 recheck pass): confirmed
+      KR_API_TOKEN is still absent from this session's environment (`env | grep
+      KR_API` empty). Different blocker than the Stripe/museum egress denial (missing
+      credential, not a network policy), so a future session should check for the
+      env var directly rather than re-curling anything.
   - id: t-005
     milestone: m3
     title: Write the art-history curriculum outline (movements, styles, artists)
@@ -226,6 +231,10 @@ tasks:
       `ready`, not `needs-human`: this is an environment limitation, not a task
       defect, and it may well work from Silas's own environment or a session with
       open egress to museum/Wikimedia hosts.
+      RECHECKED 2026-07-15T07:08Z (digital-storefront/t-019 recheck pass): re-curled
+      www.metmuseum.org and upload.wikimedia.org directly and via
+      /__agentproxy/status — both still show a fresh connect_rejected/403
+      policy-denial this session. Still genuinely blocked, not stale info.
   - id: t-013
     milestone: m4
     title: 'kind_robots: add example-works strip to Academy lesson detail'
@@ -246,6 +255,9 @@ tasks:
       documented on t-008 applies here too (confirmed 403 via agent-proxy status
       on metmuseum.org/upload.wikimedia.org in this sandbox). Still `ready` —
       needs a session with open egress to those hosts, or Silas's environment.
+      RECHECKED 2026-07-15T07:08Z (digital-storefront/t-019 recheck pass): still a
+      fresh connect_rejected/403 policy-denial this session — see t-008's recheck
+      note for the shared verification.
   - id: t-014
     milestone: m4
     title: 'kind_robots: wire starter library into Remix Studio source picker'
@@ -274,6 +286,11 @@ tasks:
       Generate and commit them via the auto art pipeline (pre-approved), then generate
       3+ Academy inspiration images (e.g. one landmark public-domain work re-imagined
       across several movements as a teaching strip). Keep prompt/model/source metadata.
+      RECHECKED 2026-07-15T07:08Z (digital-storefront/t-019 recheck pass): this task
+      needs the live generation backend, which needs KR_API_TOKEN — still absent from
+      this session's environment. Different blocker than t-008/t-013's museum-egress
+      denial (missing credential, not a network policy); check for the env var
+      directly in a future session rather than re-curling anything.
       Remove ART-PROMPTS.md entries once files land in projects/images/.
   - id: t-011
     milestone: m2
