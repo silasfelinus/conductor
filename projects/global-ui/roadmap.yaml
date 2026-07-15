@@ -310,6 +310,23 @@ tasks:
     from SITE-AUDIT-AGENT.md rather than attempting to fake the loop.
 
     '
+- id: t-017
+  milestone: m5
+  title: Add a nav-manifest-style registry so missing top-level nav entries fail CI
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  note: 'Kaizen from t-005''s review (2026-07-15): NAVIGATION-MAP.md found the honeydo
+    inbox has correct, already-global data but no top-level nav entry pointing at it --
+    a gap only caught by a manual audit. Mirror the pattern already used in other Silas
+    repos (e.g. PortOS''s server/lib/navManifest.js: a single source-of-truth list of
+    every navigable surface with fail-fast shape/duplicate guards at load time) so a new
+    page or a data surface with no nav entry fails a lint/CI check instead of silently
+    shipping undiscoverable. Scope to kind_robots; reuse the audit''s three findings in
+    NAVIGATION-MAP.md as the first test cases.
+
+    '
 milestones:
 - id: m1
   title: Task language + presentation model

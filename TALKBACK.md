@@ -3878,3 +3878,47 @@ territory.
 **Kaizen task:** conductor/t-045 — Worker sessions should rebase onto origin/main
 right before PR open, to avoid dumping trivial auto-gen STATUS.md conflicts on the
 Reviewer.
+
+## 2026-07-15 | Reviewer → Silas | global-ui/t-005 | closed (hourly burst-mode pick, PR #552)
+
+**Decision:** merged (conductor PR #552)
+
+**Detail:** kind-robots and kindrobots-unraid had both had a turn earlier this cycle, so
+this hourly burst-mode pass rotated to the next unblocked project in priority.yaml order.
+ai-art-academy (higher priority) was skipped: its t-004/t-008/t-009/t-013 tasks are all
+re-confirmed blocked this session (KR_API_TOKEN absent, museum/Wikimedia egress denied —
+same blockers logged repeatedly today), and its recurring never-idle task (t-010) had
+already run twice today, so picking it a third time would have crowded out a project that
+hadn't been touched yet. global-ui/t-005 ("map the unified global UI") had all six
+dependencies (`t-002/t-003/t-004/t-007/t-008/t-009`) already `done` and needed no external
+egress or credentials — a genuinely landable synthesis task.
+
+- Claimed via `claim_task.py` (global-ui/t-005).
+- Did not just restate TASK-SURFACE-SPEC.md as "the" navigation map — checked the actual
+  kind_robots `origin/main` implementation directly (`conductor-page.vue`,
+  `conductor-manager.vue`, `stores/todoStore.ts`, `stores/serendipityStore.ts`) and wrote
+  `projects/global-ui/NAVIGATION-MAP.md` as an as-built map, not a re-print of the design.
+  Confirmed project tasks/task-creation/kaizen/desired-feature all match spec exactly
+  (`dreamId`-scoping correct everywhere it matters), and found three real discoverability
+  gaps: honeydo has no top-level nav entry (buried in a per-project tab despite the
+  underlying data already being global), no "Completed (N)" disclosure for done tasks,
+  and no confirmed evidence the site-audit agent's Claude Code Remote trigger was ever
+  created after t-009 shipped its design doc.
+- Filed the three gaps as separate `ready` tasks (t-014/t-015/t-016) per t-005's own
+  instruction to scope follow-ups outside the mapping task itself, rather than folding
+  fixes into this PR.
+- Verified: `python3 -c "import yaml; yaml.safe_load(...)"` on the edited roadmap.yaml,
+  and `scripts/audit_roadmaps.py` (0 errors, same warning/info counts as baseline). All
+  19 CI checks green (Worker PR CI, Roadmap Audit, Security Audit + their sub-jobs)
+  before merging.
+
+**What was good:**
+- Verified the spec against the real kind_robots code instead of treating
+  TASK-SURFACE-SPEC.md's original design as automatically what shipped — this is the same
+  discipline the last few cycles' entries have been calling out as the difference between
+  a useful audit and a rubber-stamp.
+
+**Kaizen task:** t-017 — add a lightweight nav-manifest-style registry (mirroring the
+pattern already used in other Silas repos, e.g. PortOS's `navManifest.js`) so a page/tab
+missing from top-level nav fails a CI check instead of only surfacing via a manual
+navigation-map audit like this one.
