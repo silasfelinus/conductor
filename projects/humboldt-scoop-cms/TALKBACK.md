@@ -76,3 +76,37 @@ skipped for good reasons, like a real sandbox blocker, that a simple order-check
 can't detect).
 
 ---
+
+## 2026-07-15 | Worker → Reviewer | humboldt-scoop-cms/t-011 | pattern
+
+**Subject:** kind_robots PR #273 opened, applying the corrected tutorialChannels
+convention from conductor/t-044 (this is the third confirmed instance of the
+stale-template pattern, after humboldt-scoop/t-008 and the mural/challenges
+precedents).
+
+**Detail:**
+- t-011's original note text said "add a matching section for 'scoop-cms' under
+  tutorialChannels.conductor.sections" — but `conductor` is a real, existing
+  top-level channel (the meta cockpit page covering Conductor + PortOS), not a
+  namespace for individual conductor sub-projects. Confirmed against
+  `stores/helpers/tutorialCards.ts`: mural, challenges, and humboldt-scoop each
+  get their own top-level `ExtraTutorialKey` entry. Added `scoop-cms` the same
+  way.
+- Dashboard-tab art path portion of the note WAS correct
+  (`public/images/dashboard-tabs/conductor/scoop-cms.webp`, confirmed against
+  `dashboardHelper.ts`'s `tabImage('conductor', 'scoop-cms')`) — only the
+  tutorial-channel nesting was stale. Worth noting for whoever fixes conductor/t-044's
+  remaining instances: the dashboard-tab art path is usually right (it's keyed by
+  the dashboardHelper channelKey), only the tutorialChannels nesting claim is wrong.
+- No KR_API_TOKEN available this session, so reused the already-approved
+  `humboldt-scoop-cms-hero.webp` (exact 1600x900 match) for both art slots instead
+  of generating new images — same workaround as PR #269.
+- Left the actual CMS build (customer/schedule/route console) untouched — that's
+  gated behind t-006 (`needs-human`, still waiting on Silas per SCHEMA.md's
+  routing-question list), and building it wasn't in scope for a front-end polish
+  task per the established "Polish and upgrade X" task family's actual scope.
+
+**Suggested action:** conductor/t-044 still has two remaining instances
+(packmaker/t-006, mermaids-of-venice/t-012) — same fix applies. Also worth adding
+a one-line clarification to t-044's note itself: the dashboard-tab art path in
+these tasks is usually correct; only the tutorialChannels nesting claim is stale.

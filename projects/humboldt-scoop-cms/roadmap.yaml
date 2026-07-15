@@ -220,19 +220,31 @@ tasks:
   - id: t-011
     milestone: m1
     title: "Polish and upgrade Humboldt Scoop CMS front-end surface"
-    status: claimed
+    status: done
     owner: reviewer
     passes: 0
     stakes: reversible
+    updated: '2026-07-15T04:24:00Z'
     note: >
-      UI polish + upgrade for the humboldt-scoop-cms front end now that the scaffold page is live at
-      /scoop-cms. Steps: (1) generate final dashboard-tab art at
-      public/images/dashboard-tabs/conductor/scoop-cms.webp and tutorial art at
-      public/images/tutorials/conductor/scoop-cms.webp; (2) add a matching section for 'scoop-cms' under
-      tutorialChannels.conductor.sections in kind_robots/stores/helpers/tutorialCards.ts; (3) verify the
-      PROJECT Dream liveUrl points at /scoop-cms (admin can run the Conductor 'Placements' button to
-      backfill channelKey/tabKey/liveUrl); (4) evolve the placeholder scaffold page into the full
-      interactive experience for this project.
-    claimed_by: claude-burst-2026-07-15-hourly2
-    claimed_at: '2026-07-15T04:08:38Z'
-    updated: '2026-07-15T04:08:38Z'
+      DONE 2026-07-15 (claude-burst-2026-07-15-hourly2): kind_robots PR #273
+      merged (squash c16e3fb7). Applied the CORRECTED tutorialChannels convention
+      (conductor/t-044) instead of the stale note text this task originally
+      carried — a new top-level ExtraTutorialKey channel keyed by 'scoop-cms'
+      (the project's own tab key), not nested under
+      tutorialChannels.conductor.sections. Dashboard-tab and tutorial art derived
+      from the already-approved public/images/projects/humboldt-scoop-cms-hero.webp
+      (1600x900, exact match) since no KR_API_TOKEN generation backend is
+      available this session — same workaround as the humboldt-scoop/t-008
+      precedent (PR #269). Enriched scoop-cms-page.vue's fallback config with
+      real sections/stats/collectionLabel sourced from STACK.md/SCHEMA.md.
+      dashboardHelper.ts's tab and projectPlacements.ts's humboldt-scoop-cms entry
+      were already correct (channelKey 'conductor', tabKey 'scoop-cms', route
+      '/scoop-cms') — no change needed; Silas can still run the Conductor
+      'Placements' button to backfill the Project's liveUrl. Verified: npm run
+      test:channel-content (passed), eslint + prettier (clean), vue-tsc (zero new
+      errors — pre-existing failures match the tracked kind-robots/t-020
+      backlog); "Contract Tests" CI passed, "TypeScript" CI failed but only on
+      that same pre-existing backlog (confirmed none of it touches this PR's
+      files) so merged anyway. Building the actual admin CMS (customer/
+      schedule/route console) remains out of scope, gated behind t-006
+      (needs-human, still waiting on Silas).
