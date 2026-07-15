@@ -1,5 +1,12 @@
 # mermaids-of-venice CHANGELOG
 
+## 2026-07-15
+- t-011 done: added docs/subagent-fanout-notes.md documenting the sectional
+  subagent-fan-out-to-single-file workaround used for the t-004..t-007/t-010
+  editorial pass (subagents can't reliably write files in this harness; the parent
+  session collects each subagent's returned text and persists the synthesized
+  output itself). Kaizen task from PR #229 review.
+
 ## 2026-07-06
 - Editorial pipeline executed from the delivered second-edition PDF (338pp): full
   13-part sectional read synthesized into editorial/general-impressions.md,
