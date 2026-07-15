@@ -1,81 +1,78 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-07-15T10:16:24Z
+Generated: 2026-07-15T20:32:25Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **57**
-- Outcomes: done: 57
-- Success rate: **100%**
+- Closed tasks recorded: **70**
+- Outcomes: blocked: 1, done: 69
+- Success rate: **99%**
 - Average passes on successful tasks: **0.0**
 
 ## By project
 
 | Project | Closed | Success rate |
 |---|---|---|
-| ai-art-academy | 2 | 100% |
+| ai-art-academy | 4 | 100% |
 | alexa-integration | 2 | 100% |
 | animation-manager | 4 | 100% |
 | animation-studio | 1 | 100% |
 | challenge-center | 12 | 100% |
 | coloring-book | 1 | 100% |
-| conductor | 10 | 100% |
+| conductor | 11 | 100% |
 | digital-storefront | 3 | 100% |
 | ecosystem-map | 2 | 100% |
 | global-ui | 1 | 100% |
 | humboldt-scoop | 1 | 100% |
 | humboldt-scoop-cms | 1 | 100% |
-| kind-robots | 2 | 100% |
+| kind-robots | 9 | 89% |
 | kindrobots-unraid | 1 | 100% |
 | model-builder | 13 | 100% |
 | newsfeed | 1 | 100% |
+| packmaker | 3 | 100% |
 
 ## By kind
 
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 3 | 100% |
-| software | 54 | 100% |
+| software | 67 | 99% |
 
 ## Failure categories
 
 | Category | Count |
 |---|---|
-| actionable | 2 |
+| actionable | 4 |
 | quality | 2 |
 
 ## Kaizen targets
 
-_No systematic weaknesses above thresholds. Kaizen freely._
+- failure category `actionable` — 4 occurrences; look for the shared cause across its records
 
 ## Recent lessons
 
-- 2026-07-15 `global-ui/t-005` — A "produce the final map/spec" task pays off most when it re-verifies against the real implementation instead of re-printing the original design doc — t-005 found three real navigation gaps (honeydo has no top-level nav entry, no completed-task collapse, unconfirmed site-audit trigger) that a spec-only summary would have missed entirely. Filing gaps as new tasks rather than expanding the mapping task kept it a clean single-pass merge.
+- 2026-07-15 `kind-robots/t-025` — kind_robots PR #299 merged despite one failing CI check (facet-alias-smoke) after confirming via the GitHub API that the check fails on unmodified main too (a prior migration squash removed prisma/migrations/20260711021500_add_facet_aliases/ without updating the workflow that still references it) -- a red check is only a merge blocker when it's caused by the diff, not when it's independently verified pre-existing breakage. Filed t-026 to fix the workflow itself. Separately: this session's local kind_robots git checkout had desynced from true GitHub main (stale local proxy git mirror), which broke ordinary git push/rebase/cherry-pick with spurious HTTP 413s and bogus unrelated-file conflicts -- verifying file contents against the GitHub API directly and pushing via create_branch+push_files is the workaround when that symptom recurs.
 
-- 2026-07-15 `kindrobots-unraid/t-005` — Cross-repo tasks that finish with the real patch merged in the target repo and only conductor-side bookkeeping left in the conductor PR are safe to review purely on the target-repo diff + roadmap note; no need to re-derive the implementation review in conductor. Watch for merge-base drift on such bookkeeping PRs — a chore auto-commit landing on main between claim and PR open guarantees a STATUS.md conflict (see conductor/t-045).
+- 2026-07-15 `kind-robots/t-022` — Correction to the same-day t-022 "done" record above: that closure was premature. The pool-limit-fallback fix (kind_robots PR #296) was real and deployed (confirmed limit=10 in post-deploy logs), but production stayed down -- active=0/idle=0 connections at any pool size means the database is unreachable, not undersized. Always verify a production incident fix against POST-DEPLOY live telemetry before marking it done, not just a green CI diff plus pre-merge telemetry. Reverted to needs-human/irreversible -- this remains an unresolved DB/infra reachability issue outside agent access, now spanning 4 hourly cycles.
 
-- 2026-07-15 `conductor/t-044` — Task notes that embed example values (channelKey/tabKey) from the task that spawned them should be cross-checked against the actual target project's source, not copied verbatim — packmaker/mermaids each needed their own real tabKey looked up in projectPlacements.ts.
-- 2026-07-15 `digital-storefront/t-016` — A design doc that just describes the happy path misses the actual blocker. Checking the schema directly (Resource had no license/commercial-safety field) surfaced a real gap between CONTROL.md's commercial-generation licensing rule and what the data model can currently enforce — worth grepping the shared schema for the field a design assumes exists before writing the doc as if it does, especially for anything touching monetization or generated-art rights.
+- 2026-07-15 `kind-robots/t-022` — A production incident's stakes/scope classification can be wrong when it's written at filing time from a theory ("this looks like DB/infra") rather than a confirmed root cause. Three hourly cycles re-confirmed severity via telemetry without re-deriving root cause; the actual bug was an ordinary app-code regression (a hardcoded pool-size fallback in server/utils/prisma.ts, regressed from 10 to 2 -- same as historical fix e2caf03d), fully within normal Worker/Reviewer software-fix authority. On a recurring needs-human incident, re-examine whether the original DB-vs-app-code (or similarly scoped) classification still holds before re-flagging it a third time.
 
-- 2026-07-15 `digital-storefront/t-019` — A "confirmed blocked" TALKBACK note can go stale silently across sessions. Re-verifying with a fresh, timestamped curl/proxy-status check (rather than inheriting a prior session's claim) took under a minute and let every downstream task cite a concrete recheck timestamp instead of an aging assumption — cheap insurance against a blocker that's actually since cleared.
+- 2026-07-15 `conductor/t-047` — A CI job's hardcoded file-list whitelist silently rots as new test files get added elsewhere in the same PR cycle (t-007's test_validate_pack_manifest.py landed weeks before this fix and was never actually run in CI). Prefer `pytest tests/` (or a directory glob) over an enumerated file list for any gating job so new tests are covered by default instead of requiring a separate task to notice and wire them in.
 
-- 2026-07-15 `ai-art-academy/t-010` — A PR's CI failure isn't necessarily caused by the PR: before treating a red check as a blocker, diff it against the same check's result on main at the PR's base commit (list_workflow_runs filtered to that branch/sha). Here kind_robots' TypeScript check was already failing on main (kind-robots/t-020's 82-error backlog) before this PR existed; a local vue-tsc run confirming zero new errors in the changed files, plus a PR comment citing the base-commit failure, was enough to merge safely instead of stalling on an unrelated, already-tracked issue.
+- 2026-07-15 `kind-robots/t-020` — All 19 remaining TypeScript errors reduced to two repeatable shapes once grouped by root cause rather than fixed file-by-file: (1) a type imported into a re-exporting module without an explicit re-export breaks any consumer that (wrongly) imports it from the re-exporter instead of the origin -- point consumers at the origin module rather than adding a re-export shim, which can create ambiguous duplicates for a framework's auto-import scanner (confirmed via a Nuxt "Duplicated imports" warning that appeared and was removed); (2) 12 of 19 errors were the same schema-vs-call-site mismatch -- Prisma fields that are String/LongText columns storing serialized JSON text, with call sites casting objects straight to Prisma.InputJsonValue instead of serializing. Diffing prisma/*.prisma against the failing call sites in one pass (rather than trusting the error message's type at face value) confirmed the schema side was correct in every case, so no schema change was needed -- just JSON.stringify/existing normalizeJson-parseStoredJson helpers at each call site. One of those fixes (commit.post.ts's stageStatuses read) was hiding a real behavioral bug behind the type error: a `typeof === 'object'` check that's always false for a string column was silently dropping prior stage statuses on every commit -- a type error is sometimes a symptom of a live correctness bug, not just an annotation to satisfy. Filed kind-robots/t-024 to guard against the InputJsonValue mismatch recurring at new call sites.
 
-- 2026-07-15 `alexa-integration/t-008` — A ready task blocked only by a prior connector branch-write limitation (not a design question) is a great pick for any burst session that already has direct repo access — the preserved handoff doc in projects/<name>/docs/ applied almost verbatim. One gotcha: preserved patches can go stale against routing/dispatch logic that evolved after they were written even when the target module's own contract didn't change (here, t-013's control-adapter theme detection started swallowing the patch's own test phrase). Re-verify preserved fixtures against current routing before assuming they still round-trip; filed t-016 to fix the over-claiming root cause.
+- 2026-07-15 `kind-robots/t-018` — A CI wait-step that requires an exact-SHA match is fragile against its own success: the more merges land close together, the more likely a later commit's deploy wins the race and makes an earlier commit's own wait step time out even though nothing broke. Ancestry (is TARGET_SHA reachable from the live commit?) is the right relaxation, not a longer timeout -- a longer timeout still eventually fails if merges never stop arriving, while ancestry succeeds the instant any superseding commit goes live. Kept the common exact-match path fast by only deepening the shallow checkout when the ancestry check is actually needed, and verified the new shell logic against isolated scratch git repos before ever touching live CI, since actions workflow YAML has no local unit-test harness.
 
-- 2026-07-15 `digital-storefront/t-015` — Genuinely research-only tasks (no cross-repo code, no external API dependency) are the right thing to rotate to when the priority-ordered project and even the current project's own top tasks are blocked by sandbox egress denial (api.stripe.com, museum sites) — confirmed the denials still applied this session before rotating rather than assuming a stale note. Recommendation (Printful, sticker first) was backed with live 2026 web research rather than reused verbatim from the older research/stores.md shortlist.
+- 2026-07-15 `packmaker/t-007` — A schema doc's prose "notes" column can encode a convention that contradicts the project's own worked example (SCHEMA.md said pack id should match filename; example-starter-pack.yaml intentionally doesn't). When writing a validator against a schema doc, cross-check every rule against the doc's own regression fixture before enforcing it -- don't assume prose notes are hard constraints just because they read like one.
 
-- 2026-07-15 `humboldt-scoop-cms/t-011` — Fourth confirmed instance of the "Polish and upgrade X front-end surface" stale-tutorialChannels-nesting pattern (after mural, challenges, humboldt-scoop). conductor/t-044 tracks the note-text fix for the two remaining ready instances (packmaker/t-006, mermaids-of-venice/t-012) — whoever picks those up should apply the same top-level-channel convention directly rather than re-deriving it. Also reused an existing approved project hero image for dashboard-tab/tutorial art in place of live generation (no KR_API_TOKEN this session), matching the humboldt-scoop/t-008 precedent — worth keeping as the standard fallback whenever a project already has an approved hero at matching dimensions.
+- 2026-07-15 `packmaker/t-002` — Resolving an open design question (SPEC.md §7: dream-shaped vs character-shaped pack characters) at the per-item field level (itemShape) instead of a pack-level default kept the schema decision deferred to the actual authors (t-003) without blocking t-002 on an answer from Silas -- a reversible, self-documenting way to carry an open question forward instead of parking the task at needs-human.
 
-- 2026-07-15 `humboldt-scoop/t-008` — The "Polish and upgrade X front-end surface" task template's note text
-describes tutorial-channel wiring as a nested section under
-tutorialChannels.<dashboard-tab-group>.sections, but the actual convention
-(confirmed against tutorialCards.ts across 3 completed instances now) is a new
-top-level ExtraTutorialKey channel keyed by the project's own tab key. Filed
-conductor/t-044 to fix the note text on the remaining instances before they
-hit the same stale-path confusion.
+- 2026-07-15 `packmaker/t-001` — A design brief that grounds every claim in the actual target schema/codebase (not the task note's paraphrase of it) surfaces real integration points for free: digital-storefront's t-009 SPEC.md had already designed a generic Product/Entitlement model that explicitly covers this project's DLC packs, and kind-robots t-008 (the sharing/ACL design this project depends on) turned out to still be unwritten -- both facts only surfaced by reading the sibling projects' specs and the live Prisma schema before drafting, not by trusting the roadmap task's own summary of them.
+
+- 2026-07-15 `kind-robots/t-017` — Kaizen follow-up tasks that name their own consumer (here: conductor's build_dream_records.py already had a KNOWN GAP comment pointing at the missing endpoint) are easy to land completely in one cycle -- implement the endpoint, then immediately wire its one real caller, rather than leaving the new API unused until some future session rediscovers the gap. Mirroring two already-merged endpoint families (model-builder/runs, dreams/facets) for the auth/error-handling shape kept review risk low despite no live-DB verification being possible in this sandbox.
+
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-07-15T10:16:24Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-07-15T20:32:25Z_
