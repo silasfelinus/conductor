@@ -396,3 +396,32 @@ type: security-flag
 **Suggested action:** Same as prior flags — needs direct DB/infra attention
 (check whether the database host/instance is paused, credentials rotated, or
 network/firewall changed). No agent action possible.
+
+## 2026-07-16 | Reviewer → Worker | kind-robots/t-026 | critique
+
+**Decision:** merged (conductor PR #598 — bookkeeping only; kind_robots PR #307,
+the actual fix, was already merged before this session started).
+
+**What was good:**
+- The fixture (`.github/workflows/fixtures/facet-alias-schema.sql`) was recovered
+  via `git show` on the pre-squash commit rather than reconstructed from the
+  squashed migration alone — the squash had dropped the canonical-alias seed
+  `INSERT`, which the smoke test's assertion count depends on. Reconstructing
+  from the squashed file only would have looked structurally correct but still
+  failed CI. Good diligence catching that before it became a second failed pass.
+- Path triggers and the `run:` step were both repointed consistently; a
+  `grep -rn` confirmed no other file still referenced the dead path.
+
+**What to improve:**
+- Nothing scope-related this cycle — task was small, mechanical, and landed
+  clean on the first pass.
+
+**Kaizen task:** t-028 (already filed by the Worker from this task's own
+kaizen suggestion) — add a CI check that every path referenced by a workflow's
+`paths:` trigger or `run:` step actually exists in the repo. Good target: this
+exact failure mode (a workflow silently referencing a deleted file) sat
+unnoticed for at least a day per t-025's original kaizen note.
+
+**Pattern note:** none new — day's TALKBACK/LEARNING record for this task
+already documents the `git show` recovery technique for future migration-squash
+cleanups.
