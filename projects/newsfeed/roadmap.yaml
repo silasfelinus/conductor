@@ -91,8 +91,8 @@ tasks:
   - id: t-004
     milestone: m2
     title: "Create the feed registry and recommended presets"
-    status: ready
-    owner: null
+    status: claimed
+    owner: reviewer
     passes: 0
     stakes: reversible
     depends_on: t-001
@@ -104,6 +104,9 @@ tasks:
       feedPreferenceStore should follow the safeGetLocalStorage/safeSetLocalStorage
       client-persistence pattern used by stores/navStore.ts and stores/socialStore.ts
       (no Pinia-persistence plugin exists in this repo) rather than a database table.
+    claimed_by: claude-conductor-burst-20260716-newsfeed004
+    claimed_at: '2026-07-16T17:06:59Z'
+    updated: '2026-07-16T17:06:59Z'
 
   - id: t-005
     milestone: m2
