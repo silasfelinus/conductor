@@ -208,11 +208,11 @@ tasks:
   - id: t-008
     milestone: m4
     title: 'kind_robots: download Academy starter image library + provenance manifest'
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
-    updated: '2026-07-15T06:20:00Z'
+    updated: '2026-07-16T11:06:40Z'
     depends_on: t-007
     note: >
       SPLIT 2026-07-15 (conductor/t-010 roadmap-upgrade pass) from the original
@@ -237,6 +237,8 @@ tasks:
       www.metmuseum.org and upload.wikimedia.org directly and via
       /__agentproxy/status — both still show a fresh connect_rejected/403
       policy-denial this session. Still genuinely blocked, not stale info.
+    claimed_by: burst-20260716110639
+    claimed_at: '2026-07-16T11:06:40Z'
   - id: t-013
     milestone: m4
     title: 'kind_robots: add example-works strip to Academy lesson detail'
