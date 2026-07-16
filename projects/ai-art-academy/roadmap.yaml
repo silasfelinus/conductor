@@ -758,3 +758,22 @@ tasks:
       scaffold-to-data map in teaching-notes.md §2. Front-end judgment involved but no
       backend/DB — landable as a normal kind_robots PR. (No dependency on the DB outage
       tracked in kind-robots/t-022.)
+
+  - id: t-024
+    milestone: m3
+    title: Reconcile divergent slugs between curriculum-outline.md and style-lora-registry.md
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Kaizen from PR #616 merge (Reviewer, autonomous hourly cycle, 2026-07-16).
+      docs/curriculum-outline.md and docs/style-lora-registry.md use divergent
+      slugs for the same movement in several places — e.g. `baroque` vs
+      `baroque-chiaroscuro`, `renaissance` vs `renaissance-fresco`,
+      `post-impressionism` vs `post-impressionism-van-gogh`. Add either a
+      small cross-file consistency check (script or CI step comparing the two
+      YAML skeleton blocks' slug sets) or a documented slug-mapping table, so
+      the seed-sync task (t-020, wiring the 5 newest movements into
+      academyStyles.ts) can't accidentally wire the wrong style to the wrong
+      lesson. Do this before or alongside t-020 lands.

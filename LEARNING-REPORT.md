@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-07-16T10:26:05Z
+Generated: 2026-07-16T10:57:38Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **186**
-- Outcomes: blocked: 12, done: 174
+- Closed tasks recorded: **196**
+- Outcomes: blocked: 12, done: 184
 - Success rate: **94%**
 - Average passes on successful tasks: **0.0**
 
@@ -26,7 +26,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | coloring-book | 12 | 100% |
 | conductor | 17 | 100% |
 | digital-storefront | 6 | 100% |
-| dream-cycle | 5 | 100% |
+| dream-cycle | 10 | 100% |
 | ecosystem-map | 4 | 100% |
 | global-ui | 2 | 100% |
 | humboldt-impropriety-calendar | 1 | 0% |
@@ -39,6 +39,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | mural-design | 1 | 100% |
 | newsfeed | 1 | 100% |
 | packmaker | 5 | 100% |
+| ruler-hooked | 5 | 100% |
 | serendipity | 1 | 100% |
 | superkate-hairstyle-ai | 14 | 100% |
 | superkate-services-calculator | 11 | 100% |
@@ -47,35 +48,35 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 | Kind | Closed | Success rate |
 |---|---|---|
-| content | 15 | 40% |
-| software | 171 | 98% |
+| content | 18 | 50% |
+| software | 178 | 98% |
 
 ## Failure categories
 
 | Category | Count |
 |---|---|
-| actionable | 5 |
+| actionable | 6 |
 | quality | 3 |
 
 ## Kaizen targets
 
 - project `coat-dance` — 0% success over 8 closed tasks; aim the next kaizen task here
-- kind `content` — 40% success over 15 closed tasks; aim the next kaizen task here
-- failure category `actionable` — 5 occurrences; look for the shared cause across its records
+- kind `content` — 50% success over 18 closed tasks; aim the next kaizen task here
+- failure category `actionable` — 6 occurrences; look for the shared cause across its records
 - failure category `quality` — 3 occurrences; look for the shared cause across its records
 
 ## Recent lessons
 
-- 2026-07-16 `conductor/t-032` — Backfill scripts should reuse the live append/dedup path (prepare_learning + write_learning_record) rather than hand-rolling YAML — the (project,task,outcome) key makes re-runs idempotent for free, and a stale "starts empty" task premise is worth re-checking before scoping.
-- 2026-07-16 `model-builder/t-023` — backfilled: From live testing (Silas): the source picker now shows each record's existing art as a thumbnail, and the build-run view shows a source-context card (art + description/ pitch/backstory) sourced from the run's sourceSnapshot so it survives resume.
-- 2026-07-16 `model-builder/t-015` — backfilled: Extend to CREATE BuildItems and quantity-based child sets.
-- 2026-07-16 `model-builder/t-014` — backfilled: Shipped the Kind Robots front end: the existing model-builder page component wired into a public scaffold-based page at /model-builder, registered as the 'model-builder' tab in the builder channel with channelKey/tabKey.
-- 2026-07-16 `model-builder/t-012` — backfilled: Map asset keys to licensed-safe workflows, requests, polling, output parsing, cancellation, usage, and provenance.
-- 2026-07-16 `model-builder/t-011` — backfilled: Support Dream -> X Characters/Rewards/Scenarios and optional Narrator Bot; Project -> Manager Bot; Scenario -> cast Characters/Rewards; Facet -> fitting records; Character -> signature Rewards.
-- 2026-07-16 `model-builder/t-010` — backfilled: Offer only assets valid for the selected model: primary image, icon, card, hero, inspiration set/ArtCollection, key scene, profile/avatar, or repair.
-- 2026-07-16 `model-builder/t-009` — backfilled: Define Reward fields, icon, card, hero/use scene, collection placement, and relationship proposals.
-- 2026-07-16 `model-builder/t-008` — backfilled: Define identity and field pitches, artPrompt, portrait candidates, canonical avatar, icon, card, hero shots, cutout/model-sheet reference, selectable ExpressionMedia emotions and actions, custom keys, optional clips/transitions, and optional 3D reference/model.
-- 2026-07-16 `model-builder/t-007` — backfilled: Preserve the existing Marketing Deck scope as one recipe: business card, logo application, lawn sign, banner, flyer, website/app mockups, photo/video shoot plans, static ads, commercial treatment/storyboard, optional Comfy execution, and weekly launch plan.
+- 2026-07-16 `dream-cycle/t-014` — A concurrent double-write race needs a fetch-fresh-then-write-with-retry guard at the point of writing (mirroring claim_task.py), not just a same-slug dedup check — two different slugs on the same date can both pass a same-slug guard.
+- 2026-07-16 `dream-cycle/t-010` — A drift-check script is only trustworthy in CI if it also has a test asserting the committed backlog is currently drift-free — otherwise a false-negative on day one goes unnoticed.
+- 2026-07-16 `dream-cycle/t-009` — A day-type spec should state its delegation law explicitly (card = scheduler surface, set = authoritative, one owner per task) so downstream tasks stop guessing which file wins on conflict.
+- 2026-07-16 `dream-cycle/t-005` — Checking new backlog outlines for theme overlap against the existing backlog, kind_robots, and home sets before writing them keeps the buildable-outline count useful instead of padded with near-duplicates.
+- 2026-07-16 `dream-cycle/t-003` — A read-only API-surface audit against live source (server/api/**, prisma/schema.prisma) is enough to close historical "is this endpoint ready" gaps without any DB access — reconcile against the roadmap's own prior gap list rather than re-deriving it from scratch.
+- 2026-07-16 `ruler-hooked/t-009` — A ported-vs-reimplemented split (data-first content vs DOM compositing) is the right frame for engine-migration research notes — it tells the next reader what's safe to build now without over-committing to the target engine.
+- 2026-07-16 `ruler-hooked/t-008` — Writing art-direction prompts as templates (BASE + TIME_MOD + STYLE_TAIL) rather than one prompt per region/state/time cell is what makes a compositing-heavy variant matrix scale without hand-authoring every combination.
+- 2026-07-16 `ruler-hooked/t-006` — Closing the trigger/effects grammar against real content vocabulary (no time refs, mandatory requeue/defer path) before any card is written keeps "add an arc" a content task instead of a code task.
+- 2026-07-16 `ruler-hooked/t-005` — Specifying the region/state/time-of-day variant matrix with an explicit fallback rule (asset(region,state,time) graceful degradation) up front avoids a combinatorial asset-generation trap later.
+- 2026-07-16 `ruler-hooked/t-004` — A save/data-model spec that maps every field back to real kind_robots models (Character, Reward, LifeRun/LifeChoice/LifeStat) up front makes the later PoC build a wiring task, not a design task.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-07-16T10:26:05Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-07-16T10:57:38Z_

@@ -1256,3 +1256,34 @@ tasks:
       which paths ARE and ARE NOT called) covering: --apply without
       --deactivate (missing computed, not posted), --apply --deactivate
       (missing posted), and the stderr note text in each case.
+
+  - id: t-052
+    milestone: m1
+    title: Fix mislabeled status:blocked tasks (0 passes, never claimed) and guard against the pattern in validate_roadmaps.py
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Kaizen from PR #612 merge (Reviewer, autonomous hourly cycle, 2026-07-16),
+      targeting the systematic weakness LEARNING-REPORT.md flagged: project
+      `coat-dance` at 0% success over 8 closed tasks. Root cause found on
+      inspection: projects/coat-dance/roadmap.yaml t-002 through t-009 are all
+      `status: blocked`, `owner: null`, `passes: 0` — i.e. never claimed and
+      never actually attempted. Per AGENTS.md's status lifecycle, `blocked`
+      means the 3-pass iteration budget was exhausted; a task that was never
+      claimed with an unmet `depends_on` should be `status: waiting` instead.
+      t-001 (gate_human: true, needs Silas to supply the source video) is
+      still sitting at `status: ready` and has never been worked, so the
+      whole downstream chain inherited an incorrect `blocked` label it never
+      earned. `scripts/backfill_learning.py` then faithfully copied that
+      wrong status into LEARNING.yaml as 8 `outcome: blocked` records,
+      corrupting the project's success-rate signal (0% reads as a quality
+      problem; the real story is "never started, waiting on Silas"). Two
+      parts: (1) correct projects/coat-dance/roadmap.yaml t-002..t-009 from
+      `status: blocked` to `status: waiting` (do not touch LEARNING.yaml —
+      it's append-only; a corrective note is fine to append, overwriting
+      nothing); (2) add a check to scripts/validate_roadmaps.py that flags
+      any task with `status: blocked` AND `passes: 0` AND an unmet
+      `depends_on` as invalid, so this can't silently recur for another
+      content pipeline waiting on a human-supplied asset.

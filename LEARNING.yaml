@@ -2318,3 +2318,110 @@ records:
   lesson: Backfill scripts should reuse the live append/dedup path (prepare_learning + write_learning_record)
     rather than hand-rolling YAML — the (project,task,outcome) key makes re-runs idempotent for free,
     and a stale "starts empty" task premise is worth re-checking before scoping.
+- date: '2026-07-16'
+  project: ruler-hooked
+  task: t-004
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: A save/data-model spec that maps every field back to real kind_robots models (Character,
+    Reward, LifeRun/LifeChoice/LifeStat) up front makes the later PoC build a wiring task, not a design task.
+- date: '2026-07-16'
+  project: ruler-hooked
+  task: t-005
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: Specifying the region/state/time-of-day variant matrix with an explicit fallback rule
+    (asset(region,state,time) graceful degradation) up front avoids a combinatorial asset-generation
+    trap later.
+- date: '2026-07-16'
+  project: ruler-hooked
+  task: t-006
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: Closing the trigger/effects grammar against real content vocabulary (no time refs, mandatory
+    requeue/defer path) before any card is written keeps "add an arc" a content task instead of a code task.
+- date: '2026-07-16'
+  project: ruler-hooked
+  task: t-008
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: Writing art-direction prompts as templates (BASE + TIME_MOD + STYLE_TAIL) rather than
+    one prompt per region/state/time cell is what makes a compositing-heavy variant matrix scale
+    without hand-authoring every combination.
+- date: '2026-07-16'
+  project: ruler-hooked
+  task: t-009
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: A ported-vs-reimplemented split (data-first content vs DOM compositing) is the right
+    frame for engine-migration research notes — it tells the next reader what's safe to build now
+    without over-committing to the target engine.
+- date: '2026-07-16'
+  project: dream-cycle
+  task: t-003
+  kind: content
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: A read-only API-surface audit against live source (server/api/**, prisma/schema.prisma)
+    is enough to close historical "is this endpoint ready" gaps without any DB access — reconcile
+    against the roadmap's own prior gap list rather than re-deriving it from scratch.
+- date: '2026-07-16'
+  project: dream-cycle
+  task: t-005
+  kind: content
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: Checking new backlog outlines for theme overlap against the existing backlog, kind_robots,
+    and home sets before writing them keeps the buildable-outline count useful instead of padded
+    with near-duplicates.
+- date: '2026-07-16'
+  project: dream-cycle
+  task: t-009
+  kind: content
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: A day-type spec should state its delegation law explicitly (card = scheduler surface,
+    set = authoritative, one owner per task) so downstream tasks stop guessing which file wins
+    on conflict.
+- date: '2026-07-16'
+  project: dream-cycle
+  task: t-010
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: A drift-check script is only trustworthy in CI if it also has a test asserting the
+    committed backlog is currently drift-free — otherwise a false-negative on day one goes unnoticed.
+- date: '2026-07-16'
+  project: dream-cycle
+  task: t-014
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: actionable
+  lesson: A concurrent double-write race needs a fetch-fresh-then-write-with-retry guard at the
+    point of writing (mirroring claim_task.py), not just a same-slug dedup check — two different
+    slugs on the same date can both pass a same-slug guard.

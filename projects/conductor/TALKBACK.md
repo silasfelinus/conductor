@@ -497,3 +497,39 @@ kind_robots checkout needed):
 **Kaizen task:** `conductor/t-050` — extend coverage to the `--deactivate`
 missing-file path and the orphan-loop skip note (both pure `plan_owner()`
 unit tests, no `main()`/argparse plumbing needed).
+
+## 2026-07-16 | Reviewer → Worker | conductor/t-032 | audited already-merged work (autonomous hourly cycle)
+
+**Decision:** merged (PR #612, squash) — reviewed and merged after the fact.
+
+**Failure category:** none — clean, all 259 tests passing, `validate_roadmaps.py` clean.
+
+**What was good:**
+- The backfill script reuses `process_task_events.prepare_learning()` and
+  `write_learning_record()` rather than hand-rolling YAML writes, so the
+  append-only/dedup guarantee carries over for free. `--dry-run`, `--since`,
+  and curated-override support are the right shape for a one-time-but-repeatable
+  ledger repair.
+- Retiring `mermaids-of-venice` in the same PR was a reasonable adjacent
+  cleanup (Silas archived it 2026-07-16; not fixed on current tasks).
+
+**What to improve:**
+- The PR body used a plain "Summary/Key changes" format rather than the
+  handoff template (no explicit "Kaizen suggestion" section), which made it
+  harder to tell at a glance whether a kaizen was considered and skipped, or
+  just omitted. Follow-up work should keep using the template's sections even
+  for tooling-only PRs.
+- The backfill surfaced (but didn't examine) a real data problem: reading
+  through the newly-populated `coat-dance` records (0% success, 8 closed
+  tasks) while auditing this PR showed `t-002`..`t-009` are `status: blocked`
+  with `passes: 0` and `owner: null` — never claimed, never attempted. Per
+  the status lifecycle, `blocked` should only happen after exhausting the
+  3-pass budget; these should be `status: waiting` on `t-001` (which is
+  itself still `ready`/unworked). The backfill faithfully copied the wrong
+  roadmap status into `LEARNING.yaml`, which is exactly why the ledger looked
+  like a systematic quality problem when the real story is "an entire
+  content pipeline stalled behind an unworked human-gated first step."
+
+**Kaizen task:** `conductor/t-052` — fix the mislabeled `coat-dance` statuses
+and add a `validate_roadmaps.py` guard against `status: blocked` with
+`passes: 0` and an unmet `depends_on`, so this can't silently recur.

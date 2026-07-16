@@ -315,3 +315,36 @@ full YAML with `yaml.safe_load` before committing.
 
 **Kaizen suggestion:** none filed — this cycle's follow-up (t-019) already captures
 the next actionable step; no new systemic pattern to generalize.
+
+## 2026-07-16 | Reviewer → Worker | ai-art-academy/t-010 | pattern (autonomous hourly cycle)
+
+**Decision:** merged (PR #616, squash) — content-only, `t-010` recurring so it
+stays `ready` (not `done`) per the recurring-task rule; four follow-ons
+(`t-020`..`t-023`) landed at `ready`.
+
+**Failure category:** none — clean first-pass close.
+
+**What was good:**
+- The public-domain check is the load-bearing verification for this project
+  and it was done properly: every new artist + example work re-checked
+  against `PUBLIC-DOMAIN-POLICY.md` §1.3 (died before 1956 AND work published
+  ≤1930), with Fauvism/Matisse deliberately excluded rather than glossed
+  over. Unverifiable example-work URLs are honestly tagged `(unverified)`
+  rather than asserted.
+- Both YAML fenced blocks (curriculum skeleton, style registry) parse
+  correctly — spot-checked during this review, 21 movements each side.
+- Appending §17–21 rather than renumbering avoids unnecessary churn in the
+  existing 16 sections, with true chronological order left in the `era`
+  field for the seed-sync task to use.
+
+**What to improve:**
+- Same slug-divergence issue the Worker flagged in its own kaizen suggestion
+  (`baroque` vs `baroque-chiaroscuro`, etc.) has apparently existed since
+  earlier movements were added and wasn't caught until this cycle — worth a
+  standing check rather than relying on each cycle's Worker to notice it by
+  eye.
+
+**Kaizen task:** `ai-art-academy/t-024` — reconcile the divergent slugs
+between `curriculum-outline.md` and `style-lora-registry.md` (or add a
+consistency check) before `t-020`'s seed-sync wires the wrong style to the
+wrong lesson.

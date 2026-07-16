@@ -82,7 +82,7 @@ tasks:
   - id: t-003
     milestone: m2
     title: Audit the kind_robots API surface for every dream-build model
-    status: review
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -108,7 +108,7 @@ tasks:
   - id: t-004
     milestone: m2
     title: Write CREATION-SPEC.md (the generic loop contract) and specs/dream.md (the dream playbook)
-    status: waiting
+    status: ready
     owner: null
     passes: 0
     stakes: reversible
@@ -127,7 +127,7 @@ tasks:
   - id: t-005
     milestone: m3
     title: Grow the backlog to ten buildable outlines
-    status: review
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -206,7 +206,7 @@ tasks:
   - id: t-009
     milestone: m2
     title: Write specs/coloring-book.md — the coloring-book day-type playbook
-    status: review
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -239,7 +239,7 @@ tasks:
   - id: t-010
     milestone: m2
     title: Add a scheduler-card drift check (backlog cards vs home sets) runnable in CI
-    status: review
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -359,7 +359,7 @@ tasks:
   - id: t-014
     milestone: m2
     title: Harden build_dream_proposal.py against concurrent-session double-proposal races
-    status: review
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -389,3 +389,25 @@ tasks:
       projects/dream-cycle/TALKBACK.md 2026-07-14 pattern entry for full detail.
     claimed_by: dream-cycle-expansion-8m2dmk
     claimed_at: '2026-07-16T09:45:41Z'
+
+  - id: t-015
+    milestone: m2
+    title: Extend check_scheduler_drift.py to also validate type:dream backlog cards, not just coloring-book
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on:
+      - t-004
+    note: >
+      Kaizen from PR #614 merge (Reviewer, autonomous hourly cycle, 2026-07-16).
+      scripts/check_scheduler_drift.py (from t-010, this same PR) currently
+      diffs each `type: coloring-book` backlog card against its home set
+      (approved-pair count, names from approved/manifest.yaml, content
+      rating, N-concept pool from the README) and is wired into ci.yml as the
+      `scheduler-drift` job. Once specs/dream.md (t-004) lands and dreams
+      start shipping through the same backlog/scheduler surface, extend this
+      script (or add a sibling check) to validate `type: dream` cards the
+      same way, so both creation types get CI drift coverage instead of only
+      coloring-book. Depends on t-004 landing first for the dream spec to
+      validate against.
