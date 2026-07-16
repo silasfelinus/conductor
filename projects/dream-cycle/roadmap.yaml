@@ -82,11 +82,11 @@ tasks:
   - id: t-003
     milestone: m2
     title: Audit the kind_robots API surface for every dream-build model
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
-    updated: '2026-07-10T00:00:00Z'
+    updated: '2026-07-16T10:03:26Z'
     note: >
       Infrastructure tightening, part 1. For each model a dream build touches —
       Dream, DreamRelation, Character, Reward, Scenario, Bot, ExpressionMedia,
@@ -103,6 +103,8 @@ tasks:
       kind-robots t-016 (broken POST /api/sheets) and t-017 (no DreamRelation
       endpoint). Remaining: ExpressionMedia/ExpressionTransition/NarratorTopic/
       NarratorThread audit + the consolidated api-surface.md doc.
+    claimed_by: dream-cycle-expansion-8m2dmk
+    claimed_at: '2026-07-16T10:03:26Z'
   - id: t-004
     milestone: m2
     title: Write CREATION-SPEC.md (the generic loop contract) and specs/dream.md (the dream playbook)
