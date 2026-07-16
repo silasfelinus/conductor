@@ -2491,3 +2491,14 @@ records:
     allowlist on every probe) is worth the two minutes: it turns "these RSS
     URLs are probably fine" into an explicit, auditable `verified: false` plus
     a follow-on task, instead of a silent assumption baked into the registry.
+- date: '2026-07-16'
+  project: dream-cycle
+  task: t-004
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: Write the type-agnostic loop contract (CREATION-SPEC.md) once and have each specs/<type>.md
+    playbook plug into it, rather than restating queue/one-building/ledger rules per playbook; cite create-calls
+    from the API audit so stages stay in sync with the real endpoints.
