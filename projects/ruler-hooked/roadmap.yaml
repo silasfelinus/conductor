@@ -161,7 +161,7 @@ tasks:
   - id: t-007
     milestone: m2
     title: Build the slideshow play-loop proof of concept in kind_robots
-    status: claimed
+    status: review
     owner: worker
     passes: 0
     stakes: reversible
@@ -170,12 +170,19 @@ tasks:
       - t-005
       - t-006
     note: >
-      Cross-repo task (kind_robots). Slideshow/card play screen with live
-      layer compositing, event cards with choices, kingdom-health sliders,
-      and save/load with multiple slots. Placeholder art is fine until the
-      art pipeline delivers. PoC exit criteria are in DESIGN-BRIEF.md.
-    claimed_by: claude-build-sxndmc
-    claimed_at: '2026-07-16T20:48:35Z'
+      Cross-repo task (kind_robots). PoC exit criteria are in DESIGN-BRIEF.md.
+      PHASE 1 (foundation) DELIVERED 2026-07-16 (claude-build-sxndmc):
+      kind_robots PR #328 adds the pure, framework-free game engine +
+      type contracts — types/ruler-hooked.ts and utils/rulerHooked/*
+      (seed RNG, applyEffects reducer, triggers, compositor, seeded select)
+      plus a runtime engine.selftest.ts. Verified via isolated strict
+      `tsc --noEmit` (exit 0) and the tsx self-test (all pass); the full
+      vue-tsc gate could not run in-session (kind_robots toolchain OOM-restarts
+      the sandbox) — flagged for CI. PHASE 2 (the visible play screen: Pinia
+      store + Vue components + content bundle + wire into the /ruler-hooked
+      #interactive slot, placeholder art) is split to t-012. Mark t-007 done
+      once PR #328 merges AND t-012 lands the playable screen meeting all four
+      DESIGN-BRIEF m2 exit criteria.
     updated: '2026-07-16T20:48:35Z'
 
   - id: t-008
@@ -256,3 +263,40 @@ tasks:
     claimed_by: claude-build-sxndmc
     claimed_at: '2026-07-16T20:43:59Z'
     updated: '2026-07-16T20:43:59Z'
+
+  - id: t-012
+    milestone: m2
+    title: "Ruler Hooked PoC — Phase 2: play-screen UI, store, and content bundle"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Cross-repo (kind_robots). Phase 2 of the PoC, on top of the Phase-1
+      engine foundation landed in kind_robots PR #328 (types/ruler-hooked.ts +
+      utils/rulerHooked/*). Build the visible play screen and make it playable:
+      (1) stores/rulerHookedStore.ts — a Pinia setup-store holding the active
+      RunSave, wrapping the engine + a localStorage SaveStore (multi-slot;
+      reuse the stores/compositionStore.ts safeGet/SetLocalStorage +
+      canUseDom idiom — the app has no IndexedDB/persist plugin); fish(),
+      resolveChoice(), slot new/continue/rename/delete. (2) Components
+      (ssr:false + onMounted, like components/pages/memory-dungeon.vue):
+      ruler-hooked-game (orchestrator), ruler-hooked-stage (layered
+      absolute-inset-0 compositor with per-region crossfade + the
+      assetCandidates fallback ladder), ruler-hooked-card (event card + N
+      choices; adapt components/navigation/swipe-deck.vue /
+      components/scenarios/choice-*), ruler-hooked-health (axis meters, fill-%
+      like components/butterfly/single-slider.vue), ruler-hooked-slots.
+      (3) Content bundle under content/ruler-hooked/ (or assets) loaded via the
+      stores/helpers/snapshotLoader.ts import.meta.glob idiom: regions manifest,
+      the warlock/druid interrupt deck, the heir-elopes arc, >=2 Characters,
+      1 SKILL + 1 ITEM Reward, endings. (4) Wire ruler-hooked-game into
+      components/conductor/ruler-hooked-page.vue's #interactive slot. Placeholder
+      art is fine (reuse the 9 staged /images/ruler-hooked/*.webp + gradients).
+      DONE when the four DESIGN-BRIEF m2 exit criteria hold: playable
+      fish->card->choice loop; >=2 regions x >=2 states composited live and
+      responding to choices; one full character arc + the warlock/druid choice;
+      multi-slot save/load. VERIFY with `source
+      scripts/provision_kind_robots_deps.sh` then `npm run test` (vue-tsc) and
+      `npm run dev` — note the kind_robots toolchain is memory-heavy and has
+      OOM-restarted this sandbox, so run the vue-tsc/dev gate carefully.
