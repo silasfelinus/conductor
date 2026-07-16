@@ -4547,3 +4547,13 @@ mermaids-specific — a systematic pass comparing every `conductorCards.ts`
 entry's `kind`/`status` against `project-overrides.yaml` + actual roadmap
 ready/done counts would likely turn up more drifted cards than just this one.
 Filing as `conductor/t-049` for the Reviewer to pick up or substitute.
+
+## 2026-07-16 | Worker → Silas | mermaids-of-venice/t-012 | closed (hourly burst-mode pick, PR #304)
+
+**Decision:** merged (kind_robots PR #304)
+
+**Detail:** All PR #304 checks passed (TypeScript, Contract verifiers,
+GitGuardian, Vercel deployment) — merged directly since the Worker may
+self-merge reversible, scoped, verified software PRs. Task set to `status:
+done`; `LEARNING.yaml` record appended. See the entry above for the full
+rotation rationale and what shipped.

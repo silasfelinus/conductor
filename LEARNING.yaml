@@ -1056,3 +1056,23 @@ records:
     handoff template's Stakes/Flags-for-Reviewer/Kaizen-suggestion sections
     entirely rather than marking them n/a -- not a rejection-worthy issue on
     its own, but worth a Worker-side habit fix if it keeps recurring.
+- date: '2026-07-16'
+  project: mermaids-of-venice
+  task: t-012
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    Clean first-pass "Polish and upgrade X front-end surface" instance --
+    the humboldt-scoop/challenge-center established pattern (new top-level
+    ExtraTutorialKey channel, not a nested tutorialChannels.<channel>.sections
+    entry; reuse the already-approved project hero for dashboard-tab/tutorial
+    art when no live image-gen pipeline is available) transferred cleanly.
+    Also found a real, unrelated drift bug while touching adjacent code:
+    conductorCards.ts's project card had stale kind/status
+    (proposal/waiting) years behind the project's actual state
+    (content/ready with a shipped landing page and completed editorial
+    pipeline) -- filed conductor/t-049 to audit the rest of that file rather
+    than assume this was a one-off.
