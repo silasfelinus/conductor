@@ -1,13 +1,13 @@
 # Roadmap Audit
 
-Generated: `2026-07-16T11:52:01.025298+00:00`
+Generated: `2026-07-16T16:19:38.924391+00:00`
 
 This is a conservative structural audit. It reports suspicious state; it does not automatically change task status or remove human gates.
 
 ## Portfolio snapshot
 
-- **40** roadmaps, **32** active projects, **546** tasks
-- **102 ready**, **54 waiting**, **24 needs-human**, **0 claimed/review**, **355 done**
+- **40** roadmaps, **32** active projects, **551** tasks
+- **101 ready**, **54 waiting**, **24 needs-human**, **0 claimed/review**, **361 done**
 - Findings: **0 errors**, **5 warnings**, **47 informational**
 
 ## Project inventory
@@ -15,30 +15,30 @@ This is a conservative structural audit. It reports suspicious state; it does no
 | # | Project | State | Kind | Ready | Waiting | Human | In progress | Done / Total |
 |---:|---|---|---|---:|---:|---:|---:|---:|
 | 1 | `challenge-center` | active | software | 0 | 0 | 0 | 0 | 20 / 20 |
-| 2 | `ai-art-academy` | active | software | 8 | 1 | 2 | 0 | 13 / 24 |
+| 2 | `ai-art-academy` | active | software | 7 | 1 | 2 | 0 | 15 / 25 |
 | 3 | `coloring-book` | active | software | 3 | 5 | 0 | 0 | 12 / 20 |
 | 4 | `humboldt-scoop` | active | software | 0 | 0 | 0 | 0 | 8 / 8 |
 | 5 | `humboldt-scoop-cms` | active | software | 0 | 4 | 1 | 0 | 6 / 11 |
 | 6 | `digital-storefront` | active | software | 4 | 1 | 2 | 0 | 11 / 18 |
 | 7 | `packmaker` | active | software | 0 | 1 | 1 | 0 | 5 / 7 |
 | 8 | `mermaids-of-venice` | retired | content | 0 | 0 | 8 | 0 | 4 / 12 |
-| 9 | `kind-robots` | active | software | 7 | 0 | 2 | 0 | 25 / 34 |
+| 9 | `kind-robots` | active | software | 7 | 0 | 2 | 0 | 26 / 35 |
 | 10 | `kindrobots-unraid` | active | software | 0 | 7 | 1 | 0 | 4 / 12 |
-| 11 | `global-ui` | active | software | 5 | 0 | 0 | 0 | 13 / 18 |
+| 11 | `global-ui` | active | software | 5 | 0 | 0 | 0 | 14 / 19 |
 | 12 | `superkate-services-calculator` | active | software | 0 | 0 | 1 | 0 | 35 / 36 |
 | 13 | `superkate-hairstyle-ai` | active | software | 3 | 0 | 2 | 0 | 14 / 19 |
 | 14 | `newsfeed` | active | software | 3 | 7 | 1 | 0 | 1 / 12 |
 | 15 | `model-builder` | active | software | 4 | 0 | 0 | 0 | 25 / 29 |
 | 16 | `animation-manager` | active | software | 4 | 2 | 0 | 0 | 4 / 10 |
 | 17 | `ecosystem-map` | active | software | 2 | 1 | 0 | 0 | 5 / 8 |
-| 18 | `conductor` | active | software | 12 | 0 | 2 | 0 | 38 / 52 |
+| 18 | `conductor` | active | software | 13 | 0 | 2 | 0 | 39 / 54 |
 | 19 | `serendipity` | active | software | 3 | 0 | 0 | 0 | 9 / 12 |
 | 20 | `storymaker` | active | software | 2 | 0 | 0 | 0 | 8 / 10 |
 | 21 | `davinci` | active | software | 2 | 0 | 0 | 0 | 12 / 14 |
 | 22 | `art-generator-connect` | active | software | 2 | 0 | 0 | 0 | 19 / 21 |
 | 23 | `mural-design` | active | content | 1 | 3 | 1 | 0 | 2 / 7 |
 | 24 | `coat-dance` | active | content | 2 | 0 | 0 | 0 | 0 / 10 |
-| 25 | `alexa-integration` | active | software | 3 | 1 | 0 | 0 | 12 / 16 |
+| 25 | `alexa-integration` | active | software | 2 | 1 | 0 | 0 | 13 / 16 |
 | 26 | `conductor-app` | active | software | 6 | 0 | 0 | 0 | 7 / 13 |
 | 27 | `appmaker` | active | software | 4 | 2 | 0 | 0 | 6 / 12 |
 | 28 | `media-watchlist` | active | software | 1 | 0 | 0 | 0 | 5 / 6 |
