@@ -1456,6 +1456,27 @@ tasks:
       code 1, assert post_batch never called) closes the last CLI-gating gap
       in this file.
 
+  - id: t-060
+    milestone: m3
+    title: Fix priority.yaml drift — add animation-studio, career-transition, pinball-hero, recipe-box to the order list
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Found during 2026-07-16 autonomous Reviewer sweep (no open PRs to review this
+      cycle). projects/priority.yaml's header comment says "every active project
+      should appear exactly once" in its `order:` list, but four projects with live
+      `ready`/`needs-human` tasks are absent from it: animation-studio,
+      career-transition, pinball-hero, recipe-box. They still get worked (picking
+      logic falls back to roadmap files not just priority.yaml), but their absence
+      means CONTROL.md's priority-order commentary and priority.yaml drift out of
+      sync with which projects actually have live work — same class of prose-drift
+      previously fixed for kindrobots-unraid in conductor/t-038. Add the four to
+      projects/priority.yaml's `order:` list in a reasonable position (below the
+      named priority band, alongside similarly-scoped projects), verify with
+      scripts/validate_roadmaps.py, no code/behavior change.
+
   - id: t-059
     milestone: m2
     title: Branch janitor + "finish on clean main" policy so runs stop stranding branches
