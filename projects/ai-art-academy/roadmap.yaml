@@ -105,13 +105,23 @@ tasks:
   - id: t-004
     milestone: m2
     title: Evaluate prompt-only Kontext vs LoRA per style and record remix configs
-    status: ready
+    status: needs-human
+    soft_gate: true
     owner: null
     passes: 0
     stakes: reversible
-    updated: '2026-07-10T00:00:00Z'
+    updated: '2026-07-16T02:48:00Z'
     depends_on: t-003
     note: >
+      FOR SILAS: blocked on missing KR_API_TOKEN (generation backend credential) —
+      confirmed absent from the environment across three separate sessions now
+      (2026-07-10, 2026-07-15T07:08Z, 2026-07-16T02:48Z). Registry input from t-003
+      is complete and the task spec is otherwise ready to run; it just needs a
+      token-bearing Worker session (or the token added to this environment) to do
+      the actual A/B generation pass. Formalizing as soft needs-human so this
+      doesn't keep getting silently re-picked as the next ready task every cycle —
+      other ai-art-academy ready tasks can proceed in the meantime.
+      Original spec follows:
       Using the generation backend (pre-approved), A/B a fixed test image through each
       candidate Academy style: prompt-only instruction vs LoRA (where available in the
       registry from t-003). Judge composition preservation and style fidelity. Record a
@@ -120,14 +130,6 @@ tasks:
       comparison images as traceable evidence (prompt/model/seed metadata per the
       generated-art rule). If any must-have style fails on Kontext entirely, document
       the SDXL+IP-Adapter fallback case in the same file rather than building it.
-      STATUS NOTE 2026-07-10: still ready but requires the generation backend;
-      KR_API_TOKEN is absent in web sessions, so this needs a token-bearing Worker
-      cycle (or Silas's environment). Registry input from t-003 is complete.
-      RECHECKED 2026-07-15T07:08Z (digital-storefront/t-019 recheck pass): confirmed
-      KR_API_TOKEN is still absent from this session's environment (`env | grep
-      KR_API` empty). Different blocker than the Stripe/museum egress denial (missing
-      credential, not a network policy), so a future session should check for the
-      env var directly rather than re-curling anything.
   - id: t-005
     milestone: m3
     title: Write the art-history curriculum outline (movements, styles, artists)
