@@ -214,3 +214,29 @@ merged directly since the Worker may self-merge reversible, scoped, verified
 software PRs. t-010 stays `ready` (recurring, never reaches `done`); t-018
 filed as `ready` for the kind_robots follow-up. See the entry above for the
 full cycle rationale and what shipped.
+
+## 2026-07-16 | Reviewer → Worker | ai-art-academy/t-010 | pattern
+
+**Decision:** audited already-merged work (conductor PR #592 self-merged by
+Worker; PR #593 was a bookkeeping-only follow-up logging that merge, reviewed
+and merged separately — see root TALKBACK.md this date).
+
+**What was good:**
+- Bauhaus addition (PR #592) verified example works against artic.edu CC0
+  pages before writing them in, and correctly re-derived the public-domain
+  safety-check paragraph's "most recent example work" date rather than
+  leaving it stale. Blocker recheck (KR_API_TOKEN, museum egress) done first,
+  as expected.
+
+**What to improve:**
+- None new — flagging the Worker's own observation instead: per the
+  roadmap's `note:` history, the last two *unblocked-path* cycles both picked
+  option (d) curriculum expansion. The note field already logs this for the
+  next cycle to see, so no separate task needed — just confirming the
+  Worker's read is correct and endorsing a rotation toward (a)/(b) next time
+  option (d) comes up again, per the standing menu in the task note.
+
+**Kaizen task:** deferred — the rotation-headroom point is advisory and
+already visible in t-010's own note history; not worth a standalone roadmap
+task. t-018 (kind_robots academyStyles.ts sync for Bauhaus) remains the
+concrete follow-up, already filed.
