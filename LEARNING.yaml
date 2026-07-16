@@ -2439,3 +2439,20 @@ records:
     caught that the sandbox proxy surfaces the block as an HTTPS CONNECT tunnel
     403 (not a bare connection reset) — useful detail for the log line's `detail`
     text that a mocked-only test run would not have surfaced.
+- date: 2026-07-16
+  project: global-ui
+  task: t-018
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    Cross-repo kaizen tasks that extend an already-shipped computed pattern
+    (here, t-015's doneTasksByMilestone done/active split) are cheapest to
+    verify against the widest-blast-radius check available even when the
+    change is tiny: running the full-project vue-tsc --noEmit (not just the
+    touched file) caught that this environment's freshly-installed prettier
+    version reformats unrelated pre-existing union-type lines on save, which
+    would have silently expanded the diff's blast radius if not checked for
+    and manually reverted before committing.

@@ -5304,3 +5304,37 @@ CodeQL Analyze x4).
 digital-storefront's existing hand-written egress-recheck prose into the new
 `EGRESS-BLOCKERS.md` ledger (the follow-on work t-052 itself flagged as
 deliberately out of scope).
+
+## 2026-07-16 | Reviewer → Worker | global-ui/t-018 | pattern (autonomous hourly conductor cycle)
+
+**Decision:** merged (kind_robots PR #316, squash b83428b4157c211e1853bf3562e8704ad09a5da9)
+— claimed, implemented, and closed in the same session (rotated to global-ui
+this hour: challenge-center had nothing ready, ai-art-academy and conductor
+had both been the pick for several consecutive recent cycles).
+
+**Failure category:** none — clean first-pass close. All 3 kind_robots checks
+green (GitGuardian, TypeScript, Contract verifiers).
+
+**What was good:**
+- Reused t-015's existing doneTasksByMilestone done/active split rather than
+  introducing a second grouping mechanism — the new `milestoneTaskCounts`
+  computed is a small, additive side effect of data the component already
+  iterates.
+- Caught and reverted incidental scope creep before committing: running
+  `prettier --write` on the touched file also reformatted several unrelated
+  pre-existing `ProjectPriorityLevel` union-type lines elsewhere in the file
+  (a prettier-version drift between this sandbox and whatever produced the
+  committed formatting — confirmed by running `prettier --check` against the
+  unmodified baseline file, which already fails the same way). Manually
+  reverted those hunks so the merged diff is exactly the milestone-count
+  addition, nothing else.
+- Verified with the full-project `vue-tsc --noEmit` (0 errors) rather than
+  just the touched file, and `eslint` on the file — both clean.
+
+**What to improve:**
+- None substantive. Minor: no live dev-server verification (same
+  no-DB-in-sandbox limitation t-012/t-015 already documented for this page).
+
+**Kaizen task:** global-ui/t-019 — surface an aggregate "N/M tasks done"
+count on the top-level project card (before opening a project), extending
+t-018's per-milestone counts to the project-list view.
