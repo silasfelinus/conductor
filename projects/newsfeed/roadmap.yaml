@@ -91,27 +91,58 @@ tasks:
   - id: t-004
     milestone: m2
     title: "Create the feed registry and recommended presets"
-    status: claimed
+    status: done
     owner: reviewer
     passes: 0
     stakes: reversible
     depends_on: t-001
     note: >
-      Add typed, modular feed definitions for AI news, activism, malaria activism,
-      AI gaming, AI model creation, and developer tips. Keep source adapters, feed metadata,
-      defaults, user selection, and optional ranking dimensions separate. Prefer configuration
-      and Pinia state over hard-coded branching in components. Audit (t-001): new
-      feedPreferenceStore should follow the safeGetLocalStorage/safeSetLocalStorage
-      client-persistence pattern used by stores/navStore.ts and stores/socialStore.ts
-      (no Pinia-persistence plugin exists in this repo) rather than a database table.
+      DONE 2026-07-16: kind_robots PR #318 merged (squash a4d0bd29). Added
+      stores/helpers/newsfeed.ts (typed FeedSourceDefinition/FeedDefinition/
+      NewsFeedItem/PerspectiveMode/PerspectiveWeights contracts + the
+      FEED_SOURCES and FEED_DEFINITIONS registries covering the six starter
+      presets) and stores/feedPreferenceStore.ts (enabled feeds + order,
+      perspective mode/weights, label visibility, contrast preference,
+      persisted via the existing safeGetLocalStorage/safeSetLocalStorage
+      pattern, no DB table). Verified: eslint + prettier clean, full-project
+      vue-tsc --noEmit 0 errors, all 3 kind_robots CI checks green (GitGuardian,
+      TypeScript, Contract verifiers). Source URLs are unverified candidates
+      (`verified: false`) — this session's sandbox 403'd every outbound feed-URL
+      probe attempted, so live reachability is deferred to t-005/t-013.
+      Original spec: Add typed, modular feed definitions for AI news, activism,
+      malaria activism, AI gaming, AI model creation, and developer tips. Keep
+      source adapters, feed metadata, defaults, user selection, and optional
+      ranking dimensions separate. Prefer configuration and Pinia state over
+      hard-coded branching in components. Audit (t-001): new feedPreferenceStore
+      should follow the safeGetLocalStorage/safeSetLocalStorage client-persistence
+      pattern used by stores/navStore.ts and stores/socialStore.ts (no
+      Pinia-persistence plugin exists in this repo) rather than a database table.
     claimed_by: claude-conductor-burst-20260716-newsfeed004
     claimed_at: '2026-07-16T17:06:59Z'
-    updated: '2026-07-16T17:06:59Z'
+    updated: '2026-07-16T17:35:00Z'
+
+  - id: t-013
+    milestone: m3
+    title: "Batch-verify FEED_SOURCES reachability once the aggregation pipeline exists"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-005
+    note: >
+      Kaizen from t-004: every FEED_SOURCES entry in stores/helpers/newsfeed.ts
+      is currently an unverified candidate (verified: false) because the
+      sandbox's egress allowlist 403'd every outbound feed-URL probe attempted
+      during t-004 (TechCrunch, WHO, MarkTechPost, Kotaku). Once t-005 wires the
+      real server-side aggregation pipeline, batch-fetch every source once,
+      record verified: true/false per entry, and swap out any that 404/403 for
+      a working replacement rather than discovering broken feeds one at a time
+      in production.
 
   - id: t-005
     milestone: m2
     title: "Build a minimal feed aggregation pipeline"
-    status: waiting
+    status: ready
     owner: null
     passes: 0
     stakes: reversible
