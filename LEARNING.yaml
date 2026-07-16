@@ -1236,3 +1236,1030 @@ records:
     cover the one thing plan_owner()-level tests structurally can't reach:
     main()'s --apply/--deactivate gating of whether missing rows actually
     get POSTed.
+- date: '2026-07-02'
+  project: conductor
+  task: t-014
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: actionable
+  lesson: 'backfilled: A safety-net test suite that runs in only one CI job gives false green: the authz
+    regression passed on main yet never ran in Worker PR CI, so a breaking change could merge unseen —
+    run merge-gating suites in every job that gates the merge, not just the post-merge job.'
+- date: '2026-07-09'
+  project: kind-robots
+  task: t-010
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'backfilled: Merged kind_robots PR #135 as the first WonderLab mural color-studio pass.'
+- date: '2026-07-09'
+  project: mural-design
+  task: t-007
+  kind: content
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'backfilled: Implemented and merged the first frontend color-studio pass in kind_robots PR #135.'
+- date: '2026-07-09'
+  project: superkate-hairstyle-ai
+  task: t-001
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'backfilled: DONE (2026-07-09, Silas-directed Claude session): wrote DESIGN-BRIEF.md — what
+    Hair Studio is, who it serves, the surprise constraint, the web-first-in-Kind-Robots surface recommendation,
+    the existing Kontext backend contract, the color/style/enhance prompt builder, the async/nav'
+- date: '2026-07-09'
+  project: superkate-hairstyle-ai
+  task: t-002
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'backfilled: RESOLVED (2026-07-09): Silas confirmed web-first in-session — "we should have a
+    kind robots page for that anyway." Hair Studio ships as a tab in the Kind Robots web app (/stylist),
+    calling the existing Kontext backend; a Flutter bridge stays a later option.'
+- date: '2026-07-09'
+  project: superkate-hairstyle-ai
+  task: t-003
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'backfilled: DONE (2026-07-09): implemented directly in stylist-manager.vue rather than a standalone
+    doc.'
+- date: '2026-07-09'
+  project: superkate-hairstyle-ai
+  task: t-004
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'backfilled: DONE (PR #133 merged by Silas 2026-07-09): added content/stylist.md (/stylist page
+    embedding :stylist-manager), a "stylist"/"Hair Studio" tab under the art dashboard (dashboardHelper,
+    route /stylist), an art tutorial-channel "stylist" section, and placeholder tab/tutorial webp im'
+- date: '2026-07-09'
+  project: superkate-hairstyle-ai
+  task: t-005
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'backfilled: DONE (PR #133 merged by Silas 2026-07-09): stylist-manager.vue has upload (click
+    + drag/drop) and camera capture (getUserMedia → canvas → data URL) with a preview and a free-text
+    Client field, plus a camera-unavailable fallback to upload.'
+- date: '2026-07-09'
+  project: superkate-hairstyle-ai
+  task: t-006
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'backfilled: DONE (PR #133 merged by Silas 2026-07-09): three independent checkboxes (change
+    color + color field, change style + style field, improve overall image) plus a free-text notes field,
+    merged by buildPrompt() into one Kontext prompt with the identity-preservation suffix.'
+- date: '2026-07-09'
+  project: superkate-hairstyle-ai
+  task: t-007
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'backfilled: DONE (PR #134 merged by Silas 2026-07-09): job state moved to a dedicated stylistStore,
+    so a styling job keeps running and its result still lands even when Superkate leaves and returns to
+    the /stylist tab (the component is now a view over the store; store actions outlive componen'
+- date: '2026-07-09'
+  project: superkate-hairstyle-ai
+  task: t-008
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'backfilled: DONE first cut (PR #134 merged by Silas 2026-07-09): a durable "Past looks for
+    <client>" gallery loads the user''s saved private stylist results across sessions (GET /api/art/user/:id,
+    filtered by the "stylist:" designer tag, grouped by client) alongside the live before/after sess'
+- date: '2026-07-09'
+  project: superkate-hairstyle-ai
+  task: t-009
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'backfilled: DONE (PR #134 merged by Silas 2026-07-09): the store already routes through artStore.generateArt
+    → /api/comfy/kontext/generate (performFetch retries + 180s timeout), and every failure lands on the
+    job tile with a Retry action.'
+- date: '2026-07-09'
+  project: superkate-hairstyle-ai
+  task: t-014
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'backfilled: DONE (kind_robots PR #138 + conductor PR #320, both merged by Silas 2026-07-09/10):
+    production styling failed with ENOTFOUND on the ts.net Comfy hostname — the deployed backend is not
+    on the home tailnet.'
+- date: '2026-07-09'
+  project: superkate-hairstyle-ai
+  task: t-015
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'backfilled: DONE (kind_robots PR #138, merged by Silas 2026-07-10): built the sub-tabbed suite
+    on /stylist — Hair Studio | Calculator | Clients | History — backed by a new localStorage-persisted
+    superkateStore (the approved easy mock; KR-model sync is the follow-up).'
+- date: '2026-07-09'
+  project: superkate-services-calculator
+  task: t-019
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'backfilled: DONE (2026-07-09, Reviewer-merged conductor PR #314, squash).'
+- date: '2026-07-09'
+  project: superkate-services-calculator
+  task: t-025
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'backfilled: DONE (2026-07-09, PR #311): added Hair by Superkate receipt defaults using the
+    booking link https://hairbysuperkate.glossgenius.com/ and reply-to/contact email hairbysuperkate@gmail.com.'
+- date: '2026-07-09'
+  project: superkate-services-calculator
+  task: t-026
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'backfilled: DONE (2026-07-09, PR #312): added an independent background selector with Circles,
+    Hearts, Grid, and None options.'
+- date: '2026-07-10'
+  project: ai-art-academy
+  task: t-001
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'backfilled: DESIGN-BRIEF.md written 2026-07-10 from Silas''s session direction: scope, public-domain-only
+    ethical boundary, Kontext-first model strategy (prompt-mode for canonical dead-artist styles, curated
+    LoRAs where evaluation wins, SDXL+IP-Adapter documented as unbuilt fallback), product'
+- date: '2026-07-10'
+  project: ai-art-academy
+  task: t-002
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'backfilled: APPROVED by Silas in-session 2026-07-10 (recorded by Reviewer per the human-gate
+    clearance rule).'
+- date: '2026-07-10'
+  project: ai-art-academy
+  task: t-003
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'backfilled: DONE 2026-07-10: docs/style-lora-registry.md written.'
+- date: '2026-07-10'
+  project: ai-art-academy
+  task: t-005
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'backfilled: DONE 2026-07-10: docs/curriculum-outline.md written — 14 movements (Greek vase
+    painting through De Stijl), YAML skeleton + full prose, all artists died 1953 or earlier, 14/14 movements
+    have one verified open-access source URL (Met x6, AIC x5, NGA, Rijksmuseum, Wikimedia); remaini'
+- date: '2026-07-10'
+  project: ai-art-academy
+  task: t-006
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'backfilled: DONE 2026-07-10: PUBLIC-DOMAIN-POLICY.md (verified 2026 US cutoff: published 1930
+    or earlier, rolling year-96 rule; conservative combined rule: artist died before 1956 AND work within
+    US cutoff, default-deny; provenance JSON schema; anti-style-laundering clause; Style Lab exempti'
+- date: '2026-07-10'
+  project: ai-art-academy
+  task: t-007
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'backfilled: DONE 2026-07-10: kind_robots PR #143 merged (squash 78bb545).'
+- date: '2026-07-10'
+  project: ai-art-academy
+  task: t-011
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'backfilled: DECIDED by Silas in-session 2026-07-10 (recorded by Reviewer per the human-gate
+    clearance rule).'
+- date: '2026-07-10'
+  project: coloring-book
+  task: t-001
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'backfilled: DESIGN-BRIEF.md written 2026-07-10 from Silas''s session direction and updated
+    for Monster Recast: product shape, mural-engine reuse, generation pipeline, launch sets, originality
+    guardrails, economy, storefront/POD bridge, and all-ages content rating.'
+- date: '2026-07-10'
+  project: coloring-book
+  task: t-002
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'backfilled: APPROVED by Silas in-session 2026-07-10 (recorded by Reviewer per the human-gate
+    clearance rule), with a standing steer: projects evolve — where later commits supersede brief details
+    (e.g. Monster Recast''s 32-38 page homage-pool plan replacing the original 28-page plan), run with'
+- date: '2026-07-10'
+  project: coloring-book
+  task: t-003
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'backfilled: DONE 2026-07-10: docs/coloring-engine-spec.md written.'
+- date: '2026-07-10'
+  project: coloring-book
+  task: t-004
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'backfilled: DONE (spec) 2026-07-10: docs/generation-pipeline.md written.'
+- date: '2026-07-10'
+  project: coloring-book
+  task: t-005
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'backfilled: DONE 2026-07-10: kind_robots PR #144 merged.'
+- date: '2026-07-10'
+  project: coloring-book
+  task: t-008
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'backfilled: DONE 2026-07-10: docs/economy-spec.md written.'
+- date: '2026-07-10'
+  project: coloring-book
+  task: t-009
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'backfilled: DONE 2026-07-10: docs/pod-coloring-books.md written.'
+- date: '2026-07-10'
+  project: coloring-book
+  task: t-012
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'backfilled: Produced sets/monster-recast/README.md, characters.yaml, and pages.yaml.'
+- date: '2026-07-10'
+  project: coloring-book
+  task: t-017
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'backfilled: DONE 2026-07-10: all steps complete across four small PRs — step 4 (#147 geometry
+    to data + fallback), step 5 (#148 ColoringCanvas swap + verified migration shim), steps 6-7 (#149
+    muralStore deleted, mural canonical in wonder tabs, labCards bridge removed), step 8 (#150 export-to'
+- date: '2026-07-10'
+  project: coloring-book
+  task: t-018
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'backfilled: DONE 2026-07-10: kind_robots PR #146 merged.'
+- date: '2026-07-10'
+  project: dream-cycle
+  task: t-001
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'backfilled: DESIGN-BRIEF.md written 2026-07-10 from Silas''s session direction: the idle-fallback
+    loop, the complete-dream definition, the 8-stage day cycle, and the backlog file contract (Notes-from-Silas
+    sections, status/priority frontmatter Silas can flip).'
+- date: '2026-07-10'
+  project: dream-cycle
+  task: t-002
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'backfilled: APPROVED by Silas in-session 2026-07-10 (recorded by Reviewer per the human-gate
+    clearance rule): API writes approved, definitely — requiring Silas to approve every content row would
+    be unwieldy, and once the site is publicly used there will be many people creating with AI, so th'
+- date: '2026-07-10'
+  project: ecosystem-map
+  task: t-007
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'backfilled: Completed projects/ecosystem-map/FRONTEND-SURFACE-MAP.md as a static GitHub audit
+    of all 29 active projects.'
+- date: '2026-07-10'
+  project: ecosystem-map
+  task: t-008
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'backfilled: Added projects/ecosystem-map/TAB-INTEGRATION.md.'
+- date: '2026-07-10'
+  project: superkate-hairstyle-ai
+  task: t-010
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'backfilled: DONE — kind_robots PR #141 merged (2026-07-10 08:47): friendly error states with
+    Retry (t-009), loading affordances on jobs and history, tap-to-flip before/after compare on Past looks,
+    and a first-run "how it works" hint when the studio is empty.'
+- date: '2026-07-10'
+  project: superkate-hairstyle-ai
+  task: t-013
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'backfilled: DONE — kind_robots PR #141 merged (2026-07-10 08:47): durable before/after achieved
+    with no schema change (source photo already travels in each ArtJob payload; stylistStore recovers
+    befores from DONE queue jobs; Past looks gained tap-to-flip Before/After compare), AND the real cl'
+- date: '2026-07-10'
+  project: superkate-hairstyle-ai
+  task: t-016
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'backfilled: DONE — kind_robots PR #141 merged (2026-07-10 08:47): replaces the suite''s localStorage
+    mock for signed-in users with real Kind Robots persistence — new additive-only StylistClient + StylistAppointment
+    tables (migration 20260710020000, CREATE TABLE + FKs only), owner-checked /api'
+- date: '2026-07-10'
+  project: superkate-services-calculator
+  task: t-020
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'backfilled: Reconciled 2026-07-10 (hourly Worker): the delete flow already shipped in commit
+    86db3d3 (confirmation dialog, no bulk delete, history/receipt behavior preserved, widget tests for
+    cancel and confirm paths).'
+- date: '2026-07-10'
+  project: superkate-services-calculator
+  task: t-022
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'backfilled: Done 2026-07-10 (hourly Worker, PR from claude/hourly-conductor-worker-wcv547):
+    optional PIN app lock — onboarding step (switch + PIN confirm), startup lock screen, and an app-bar
+    settings sheet (turn on/off, change PIN; current PIN required to disable or change).'
+- date: '2026-07-10'
+  project: superkate-services-calculator
+  task: t-031
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'backfilled: Reconciled 2026-07-10 (hourly Worker): coverage already shipped in commits e5af760
+    + bb7c6a8 — save new profile, edit with form prefill, delete cancel/confirm paths, and the delete-detach
+    invariant, exactly as this task specified.'
+- date: '2026-07-10'
+  project: superkate-services-calculator
+  task: t-032
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'backfilled: Kaizen from t-029 (PR #344): the sync client interfaces and fake exist, but nothing
+    defines how the app tracks dirty records, when local deletions become tombstone records, or how the
+    push/pull loop drives SyncStatus for the UI.'
+- date: '2026-07-10'
+  project: superkate-services-calculator
+  task: t-033
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'backfilled: Done via PR #352 (Reviewer-merged 2026-07-10): share_plus ^11.0.0 added and production
+    exports open the platform share sheet after both CSV writes; the injected-directory test path stays
+    share-free.'
+- date: '2026-07-10'
+  project: superkate-services-calculator
+  task: t-034
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'backfilled: Kaizen from t-032 (PR #349), implementing step 1 of docs/sync-engine-design.md:
+    bump sqlite userVersion to 2 adding customers.synced_at, customers.server_id, appointments.server_id,
+    the sync_outbox table, and the one-row sync_state table; write outbox rows inside the existing del'
+- date: '2026-07-10'
+  project: superkate-services-calculator
+  task: t-035
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'backfilled: DONE (2026-07-10, PR #365): added an injectable CsvShareGateway with production
+    SharePlus and in-memory fake implementations, wired it into FileCsvExportService, and added widget
+    coverage asserting that the export flow shares exactly the two written CSV paths.'
+- date: '2026-07-10'
+  project: superkate-services-calculator
+  task: t-036
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'backfilled: CI''s stable Flutter channel moved to 3.44.6 (2026-07-08), which added a framework
+    assert: a ListTile inside a color-decorated box without its own Material paints its ink under the
+    decoration.'
+- date: '2026-07-11'
+  project: conductor
+  task: t-030
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'backfilled: Retroactive task; Silas-directed session on branch claude/conductor-portos-comparison-wdpdoq.'
+- date: '2026-07-13'
+  project: appmaker
+  task: t-004
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'backfilled: Shipped the Kind Robots front end: the existing AppmakerPage component reused and
+    given a canonical /appmaker route, registered as the ''appmaker'' tab in the conductor channel with
+    channelKey/tabKey.'
+- date: '2026-07-13'
+  project: kindrobots-unraid
+  task: t-001
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'backfilled: Created README, template directory, project catalog, phased roadmap, documentation,
+    icon assets, and GitHub Actions validation in silasfelinus/kindrobots-unraid.'
+- date: '2026-07-13'
+  project: mermaids-of-venice
+  task: t-001
+  kind: content
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'backfilled: Shipped the Kind Robots front end: a public scaffold-based page at /mermaids, registered
+    as the ''mermaids'' tab in the giftshop channel with channelKey/tabKey.'
+- date: '2026-07-13'
+  project: packmaker
+  task: t-005
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'backfilled: Shipped the Kind Robots front end: a public scaffold-based page at /packs, registered
+    as the ''packs'' tab in the builder channel with channelKey/tabKey.'
+- date: '2026-07-13'
+  project: serendipity
+  task: t-002
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'backfilled: Shipped the Kind Robots front end: the existing serendipity page component wired
+    into a public scaffold-based page at /serendipity, registered as the ''serendipity'' tab in the scenario
+    channel with channelKey/tabKey.'
+- date: '2026-07-14'
+  project: challenge-center
+  task: t-009
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'backfilled: DONE (2026-07-14, burst-mode session): silasfelinus/portos PR #6 (branch claude/blissful-goldberg-e7lam7
+    -> main) merged, adding scripts/challenge_submit.py mirroring this repo''s script (fetch prompt ->
+    run configured CLI provider -> POST submission as contender "portos-agent" ->'
+- date: '2026-07-14'
+  project: challenge-center
+  task: t-010
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'backfilled: In silasfelinus/conductor, write scripts/challenge_runner.py.'
+- date: '2026-07-14'
+  project: challenge-center
+  task: t-012
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'backfilled: Write scripts/seed_contenders.ts in kind_robots (idempotent, upsert by slug).'
+- date: '2026-07-14'
+  project: challenge-center
+  task: t-014
+  kind: software
+  stakes: reversible
+  passes: 1
+  outcome: done
+  failure_category: null
+  lesson: 'backfilled: Support "same generator, different prompts" matchups where the difference is randomized
+    variables.'
+- date: '2026-07-14'
+  project: dream-cycle
+  task: t-011
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'backfilled: Silas 2026-07-14: up the ante on auto-created output — the daily digest becomes
+    an art-forward morning ritual. Shipped: (1) scripts/build_dream_proposal.py — LLM (Anthropic, ANTHROPIC_API_KEY)
+    generates tomorrow''s "starter dream" (3 characters, 2 locations, 1 narrator bot, 2 rewa'
+- date: '2026-07-14'
+  project: dream-cycle
+  task: t-012
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'backfilled: SHIPPED 2026-07-14 (with t-011, Silas-directed session).'
+- date: '2026-07-14'
+  project: dream-cycle
+  task: t-013
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'backfilled: SHIPPED 2026-07-14 (Silas-directed session; frontend built directly on the kind_robots
+    session branch claude/daily-digest-art-proposals-nbrxur rather than filed as a task).'
+- date: '2026-07-14'
+  project: kind-robots
+  task: t-015
+  kind: software
+  stakes: outward-facing
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'backfilled: Resolved with Silas on 2026-07-13 PDT.'
+- date: '2026-07-14'
+  project: kind-robots
+  task: t-016
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'backfilled: DONE (2026-07-14): rewritten on the kind_robots session branch claude/daily-digest-art-proposals-nbrxur
+    (same PR as the Daily Dream page), merged as kind_robots PR #229 (Silas-authored, 2026-07-14T05:18Z).'
+- date: '2026-07-14'
+  project: kindrobots-unraid
+  task: t-002
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'backfilled: Installed ProxySQL 3.0.9 on Alexandria and verified the local path from the ProxySQL
+    frontend to mariadb-kindrobots2:3306.'
+- date: '2026-07-14'
+  project: kindrobots-unraid
+  task: t-003
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'backfilled: Completed the production cutover.'
+- date: '2026-07-15'
+  project: coloring-book
+  task: t-020
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'backfilled: DONE (2026-07-15, hourly burst-mode): merged kind_robots PR #290 (squash, sha 40eac7a).'
+- date: '2026-07-15'
+  project: digital-storefront
+  task: t-008
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'backfilled: DONE 2026-07-15 (claude-burst-2026-07-15-0105): wrote projects/digital-storefront/STORE-AUDIT.md.'
+- date: '2026-07-15'
+  project: digital-storefront
+  task: t-009
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'backfilled: DONE 2026-07-15 (claude-burst-2026-07-15-0105, same session as t-008 which unblocked
+    this): wrote projects/digital-storefront/SPEC.md.'
+- date: '2026-07-15'
+  project: digital-storefront
+  task: t-014
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'backfilled: DONE 2026-07-15 (claude-burst-2026-07-15-hourly): kind_robots PR #271 merged (2ebf8a9).'
+- date: '2026-07-15'
+  project: global-ui
+  task: t-015
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'backfilled: DONE 2026-07-15 (claude-burst-2026-07-15-rotation2): components/pages/conductor-page.vue''s
+    project Tasks list now splits into activeTasks (unchanged flat rendering for non-done tasks) and doneTasksByMilestone
+    (a computed grouping done tasks by milestone id, ordered to match selec'
+- date: '2026-07-15'
+  project: kind-robots
+  task: t-013
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'backfilled: Kaizen from kind_robots PR #152 (Reviewer, 2026-07-10): now that GET /api/bots
+    honors page/pageSize, the lone app caller (stores/helpers/botHelper.ts) still requests the defaults
+    — page 1, pageSize 100 — so with 400+ bots the bot gallery likely never shows the full roster.'
+- date: '2026-07-15'
+  project: mermaids-of-venice
+  task: t-011
+  kind: content
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'backfilled: DONE 2026-07-15 (conductor burst cycle): wrote docs/subagent-fanout-notes.md —
+    describes the harness limitation (subagents can''t reliably persist files directly; only their returned
+    text is trustworthy), the four-step workaround (section the source, fan out one subagent per secti'
+- date: '2026-07-16'
+  project: appmaker
+  task: t-007
+  kind: software
+  stakes: outward-facing
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'backfilled: DONE per Silas 2026-07-05 — GitHub App created at /silasfelinus/app-maker.'
+- date: '2026-07-16'
+  project: approval-portal
+  task: t-004
+  kind: software
+  stakes: outward-facing
+  passes: 0
+  outcome: blocked
+  failure_category: null
+  lesson: 'backfilled: Redirected to kind_robots.'
+- date: '2026-07-16'
+  project: approval-portal
+  task: t-005
+  kind: software
+  stakes: irreversible
+  passes: 0
+  outcome: blocked
+  failure_category: null
+  lesson: 'backfilled: Redirected to kind_robots.'
+- date: '2026-07-16'
+  project: coat-dance
+  task: t-002
+  kind: content
+  stakes: reversible
+  passes: 0
+  outcome: blocked
+  failure_category: null
+  lesson: 'backfilled: Identify practical tools or scripts for segmenting the source dance video by movement
+    beats, shot changes, audio events, and pose/action changes.'
+- date: '2026-07-16'
+  project: coat-dance
+  task: t-003
+  kind: content
+  stakes: reversible
+  passes: 0
+  outcome: blocked
+  failure_category: null
+  lesson: 'backfilled: Create a reusable beat-map table format with timestamp ranges, movement/action
+    description, coat behavior, camera/framing notes, emotional tone, candidate AI treatment, generation
+    method, and restitch notes.'
+- date: '2026-07-16'
+  project: coat-dance
+  task: t-004
+  kind: content
+  stakes: reversible
+  passes: 0
+  outcome: blocked
+  failure_category: null
+  lesson: 'backfilled: Propose a music-video structure that remixes the dance in sections: faithful reconstruction
+    moments, animated transformations, impossible perspective shifts, silhouette/shadow passages, object-manipulation
+    flourishes, and a final return to the human performer and coat.'
+- date: '2026-07-16'
+  project: coat-dance
+  task: t-005
+  kind: content
+  stakes: reversible
+  passes: 0
+  outcome: blocked
+  failure_category: null
+  lesson: 'backfilled: Produce prompts and negative prompts for 6-10 visual treatments using still frames
+    from the source video as references.'
+- date: '2026-07-16'
+  project: coat-dance
+  task: t-006
+  kind: content
+  stakes: reversible
+  passes: 0
+  outcome: blocked
+  failure_category: null
+  lesson: 'backfilled: Select one 5-10 second source segment and document a minimal reproducible path
+    through ComfyUI, LAX, Wan, or available video tools.'
+- date: '2026-07-16'
+  project: coat-dance
+  task: t-007
+  kind: content
+  stakes: reversible
+  passes: 0
+  outcome: blocked
+  failure_category: null
+  lesson: 'backfilled: Convert the approved beat map into a queue of renderable sections with source timestamps,
+    treatment, pipeline choice, prompt pack, expected output format, dependencies, and review status.'
+- date: '2026-07-16'
+  project: coat-dance
+  task: t-008
+  kind: content
+  stakes: reversible
+  passes: 0
+  outcome: blocked
+  failure_category: null
+  lesson: 'backfilled: Restitch rendered sections into a rough cut aligned to the chosen music or original
+    audio.'
+- date: '2026-07-16'
+  project: coat-dance
+  task: t-009
+  kind: content
+  stakes: reversible
+  passes: 0
+  outcome: blocked
+  failure_category: null
+  lesson: 'backfilled: Prepare an export checklist, review notes, credits/source notes, and release decision
+    options.'
+- date: '2026-07-16'
+  project: humboldt-impropriety-calendar
+  task: t-001
+  kind: content
+  stakes: outward-facing
+  passes: 0
+  outcome: blocked
+  failure_category: null
+  lesson: 'backfilled: Compare short-run printers, print-on-demand vendors, preorder workflows, and payment
+    processors for a mature but public-safe art/history calendar.'
+- date: '2026-07-16'
+  project: kind-robots
+  task: t-002
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'backfilled: All 9 projects now have card, hero, and icon images committed to projects/images/
+    in the conductor repo.'
+- date: '2026-07-16'
+  project: model-builder
+  task: t-001
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'backfilled: Write projects/model-builder/SPEC.md.'
+- date: '2026-07-16'
+  project: model-builder
+  task: t-002
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'backfilled: Produce projects/model-builder/API-INVENTORY.md grounded in the current kind_robots
+    schema and routes.'
+- date: '2026-07-16'
+  project: model-builder
+  task: t-003
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'backfilled: Write projects/model-builder/RECIPES.md.'
+- date: '2026-07-16'
+  project: model-builder
+  task: t-005
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'backfilled: Specify the Kind Robots UI: source picker, recipe editor, selectable outputs, quantities,
+    related models, row-by-stage matrix, pitch/field/relationship/prompt editors, candidate asset review,
+    and final diff.'
+- date: '2026-07-16'
+  project: model-builder
+  task: t-006
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'backfilled: Define adapters for Project, Character, Bot, Facet, Dream, Reward, and Scenario.'
+- date: '2026-07-16'
+  project: model-builder
+  task: t-007
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'backfilled: Preserve the existing Marketing Deck scope as one recipe: business card, logo application,
+    lawn sign, banner, flyer, website/app mockups, photo/video shoot plans, static ads, commercial treatment/storyboard,
+    optional Comfy execution, and weekly launch plan.'
+- date: '2026-07-16'
+  project: model-builder
+  task: t-008
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'backfilled: Define identity and field pitches, artPrompt, portrait candidates, canonical avatar,
+    icon, card, hero shots, cutout/model-sheet reference, selectable ExpressionMedia emotions and actions,
+    custom keys, optional clips/transitions, and optional 3D reference/model.'
+- date: '2026-07-16'
+  project: model-builder
+  task: t-009
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'backfilled: Define Reward fields, icon, card, hero/use scene, collection placement, and relationship
+    proposals.'
+- date: '2026-07-16'
+  project: model-builder
+  task: t-010
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'backfilled: Offer only assets valid for the selected model: primary image, icon, card, hero,
+    inspiration set/ArtCollection, key scene, profile/avatar, or repair.'
+- date: '2026-07-16'
+  project: model-builder
+  task: t-011
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'backfilled: Support Dream -> X Characters/Rewards/Scenarios and optional Narrator Bot; Project
+    -> Manager Bot; Scenario -> cast Characters/Rewards; Facet -> fitting records; Character -> signature
+    Rewards.'
+- date: '2026-07-16'
+  project: model-builder
+  task: t-012
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'backfilled: Map asset keys to licensed-safe workflows, requests, polling, output parsing, cancellation,
+    usage, and provenance.'
+- date: '2026-07-16'
+  project: model-builder
+  task: t-014
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'backfilled: Shipped the Kind Robots front end: the existing model-builder page component wired
+    into a public scaffold-based page at /model-builder, registered as the ''model-builder'' tab in the
+    builder channel with channelKey/tabKey.'
+- date: '2026-07-16'
+  project: model-builder
+  task: t-015
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'backfilled: Extend to CREATE BuildItems and quantity-based child sets.'
+- date: '2026-07-16'
+  project: model-builder
+  task: t-023
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'backfilled: From live testing (Silas): the source picker now shows each record''s existing
+    art as a thumbnail, and the build-run view shows a source-context card (art + description/ pitch/backstory)
+    sourced from the run''s sourceSnapshot so it survives resume.'
+- date: '2026-07-16'
+  project: conductor
+  task: t-032
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: Backfill scripts should reuse the live append/dedup path (prepare_learning + write_learning_record)
+    rather than hand-rolling YAML — the (project,task,outcome) key makes re-runs idempotent for free,
+    and a stale "starts empty" task premise is worth re-checking before scoping.

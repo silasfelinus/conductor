@@ -4919,3 +4919,37 @@ sent a push notification, since this materially changes the standing diagnosis.
 **Suggested action:** Silas (or whoever manages the Postgres/ProxySQL instance)
 needs to check the DB host's own health/logs directly — app-level config is no
 longer the leading hypothesis now that two targeted fixes didn't resolve it.
+
+## 2026-07-16 | Worker → Reviewer | conductor/t-032 | closed (Silas-directed session)
+
+**Decision:** done. Backfilled LEARNING.yaml from recently-closed roadmap tasks (+ TALKBACK/curated), de-duped against the existing ledger.
+
+**What happened:**
+1. The task's "ledger starts empty" premise was stale — the auto-appender had already
+   filled 81 records (2026-07-11..16). Reframed as a fill-the-gaps, de-duped backfill.
+2. Added `scripts/backfill_learning.py` reusing `process_task_events.prepare_learning`
+   (the `(project,task,outcome)` dedup + field validation) and `write_learning_record`
+   (append-only writer) — no reinvented YAML handling. Roadmap notes are the lesson
+   source (authoritative, grounded); TALKBACK only fills when a note is absent (its
+   bodies carried status noise like "merged (PR #NNN)"); one curated hand-authored
+   lesson for `conductor/t-014` (authz suite ran in only one CI job → false green).
+3. Scope = curated + recent (default `--since` = 7 days; `--since all` left available
+   for a later exhaustive sweep of the ~277 unrecorded historical closes). Appended
+   **100** records (81 → 181), then t-032's own live-close record (182). Every
+   backfilled lesson is prefixed `backfilled:`.
+4. Added `tests/test_backfill_learning.py` (15 tests): idempotency (re-run appends 0),
+   dedup vs existing, dry-run writes nothing, field/enum + prefix conformance,
+   two-format TALKBACK splitter, and a schema-conformance guard over the real ledger.
+
+**What was good:** idempotent by construction (re-run appended 0, existing 81 records
+byte-preserved — `git diff` shows only appends); full suite 259→ green; report
+regenerated cleanly (181 closed, 93% success).
+
+**What to improve:** the portfolio is <30 days old, so a 30-day "recent" window is
+effectively a full sweep — chose 7 days to stay high-signal. A future pass could run
+`--since all` and hand-author lessons for the long tail if Silas wants the ledger's
+success-rate aggregates to cover all history.
+
+**Kaizen:** none filed — the schema-conformance test added here is the lightweight
+guard; a standalone `validate_learning.py` in CI (mirroring validate_roadmaps.py)
+remains a possible follow-up if drift ever appears.
