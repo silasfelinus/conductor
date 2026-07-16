@@ -1011,11 +1011,11 @@ tasks:
   - id: t-035
     milestone: m1
     title: Extract the shared lookaround-anchoring regex fragment used by verifyWorkflowPaths.ts's bareTokenPattern and runStepTokenPattern into one named constant
-    status: review
+    status: done
     owner: worker
     passes: 1
     stakes: reversible
-    updated: '2026-07-16T22:15:00Z'
+    updated: '2026-07-16T22:20:00Z'
     note: >
       Kaizen from t-034 (Reviewer, kind_robots PR #314): t-030 and t-034 each
       independently applied the identical `(?<![A-Za-z0-9._/@-])...(?![A-Za-z0-9._-])`
@@ -1033,9 +1033,9 @@ tasks:
       DONE 2026-07-16 (claude-burst-2026-07-16-2200): added `anchorPathToken(body)`
       in utils/scripts/verifyWorkflowPaths.ts; both patterns now build from it.
       Verified via `npx tsx utils/scripts/verifyWorkflowPaths.ts` (7 workflow
-      files, 35 path references checked -- same counts as before). Opened
-      kind_robots PR #330 (branch claude/keen-fermat-kmugzq), CI in flight.
-      Will flip to done once CI is green and the PR merges.
+      files, 35 path references checked -- same counts as before). kind_robots
+      PR #330 merged (squash 8bf0cfe2), all 3 checks green (TypeScript,
+      Contract verifiers, GitGuardian).
     claimed_by: claude-burst-2026-07-16-2200
     claimed_at: '2026-07-16T22:08:51Z'
     pr: https://github.com/silasfelinus/kind_robots/pull/330
