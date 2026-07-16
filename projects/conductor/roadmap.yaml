@@ -667,11 +667,11 @@ tasks:
   - id: t-033
     milestone: m2
     title: "Pitch: worktree-parallel Workers with claim leases"
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
-    updated: "2026-07-11T21:30:00Z"
+    updated: '2026-07-16T19:10:41Z'
     note: >
       Deferred from the PortOS comparison (docs/2026-07-11-portos-cos-learnings.md).
       Conductor's one-atomic-claim-commit rule serializes the Worker; PortOS CoS runs
@@ -679,6 +679,8 @@ tasks:
       pitch to pitches/ evaluating whether/how conductor's claim protocol could allow
       N concurrent Worker claims safely (per-project caps, lease staleness, TALKBACK
       contention). This is a structural change — pitch only, no implementation.
+    claimed_by: claude-overnight-sxndmc
+    claimed_at: '2026-07-16T19:10:41Z'
 
   - id: t-034
     milestone: m2
