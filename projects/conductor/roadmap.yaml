@@ -1260,8 +1260,8 @@ tasks:
   - id: t-052
     milestone: m2
     title: Add a shared known-egress-blockers mechanism instead of copy-pasted recheck notes per task
-    status: ready
-    owner: null
+    status: claimed
+    owner: reviewer
     passes: 0
     stakes: reversible
     note: >
@@ -1284,6 +1284,9 @@ tasks:
       is fine — pick whichever is less roadmap-schema churn. Should NOT change
       any task's `status`/`needs-human` semantics, purely a record-keeping
       improvement so recheck history stays greppable in one place.
+    claimed_by: claude-conductor-burst-20260716-t052
+    claimed_at: '2026-07-16T15:06:58Z'
+    updated: '2026-07-16T15:06:58Z'
 
   - id: t-053
     milestone: m2
