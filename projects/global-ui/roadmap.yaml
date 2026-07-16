@@ -325,12 +325,19 @@ tasks:
 - id: t-018
   milestone: m5
   title: Show a per-milestone "N/M tasks done" count on the milestone cards
-  status: claimed
+  status: done
   owner: reviewer
   passes: 0
   stakes: reversible
   note: >
-    Kaizen from t-015's implementation (2026-07-15): the milestone cards in
+    DONE 2026-07-16 (kind_robots PR #316, squash b83428b4157c211e1853bf3562e8704ad09a5da9):
+    added a milestoneTaskCounts computed to conductor-page.vue (a
+    Map<milestoneId, {done, total}> built from selectedProject.tasks, a side
+    effect of t-015's existing done/active split) and rendered "N/M done" next
+    to each milestone card's weight label. Verified eslint clean and vue-tsc
+    --noEmit 0 errors (full project); no dev-server verification (no DB in
+    sandbox, same limitation t-012/t-015 documented). Original note: Kaizen
+    from t-015's implementation (2026-07-15): the milestone cards in
     conductor-page.vue's Tasks tab already have per-milestone task counts
     available as a side effect of t-015's doneTasksByMilestone grouping (done
     tasks) and activeTasks (everything else) -- extend the grouping to also
@@ -340,7 +347,25 @@ tasks:
     reversible, front-end-only change; no new data source needed.
   claimed_by: claude-conductor-hourly-20260716-t018
   claimed_at: '2026-07-16T15:51:09Z'
-  updated: '2026-07-16T15:51:09Z'
+  updated: '2026-07-16T16:05:00Z'
+- id: t-019
+  milestone: m5
+  title: Surface an aggregate "N/M tasks done" count on the top-level project card, before opening the project
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  note: >
+    Kaizen from t-018 (Reviewer, autonomous hourly conductor cycle, 2026-07-16,
+    kind_robots PR #316). t-018 put per-milestone "N/M done" counts on the
+    milestone cards inside a project's detail view, but a user still has to
+    open a project to see any progress signal at all -- the top-level project
+    list/card (wherever selectedProject is chosen from) shows no task-progress
+    indicator. Sum activeTasks/doneTasksByMilestone-style counts across all of
+    a project's tasks (not just one milestone) and render a compact "N/M done"
+    badge on the project card itself, reusing the same done-status filter
+    conductor-page.vue already applies per milestone. Front-end only, no new
+    data source.
 milestones:
 - id: m1
   title: Task language + presentation model
