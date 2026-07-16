@@ -763,11 +763,11 @@ tasks:
   - id: t-022
     milestone: m5
     title: 'Queue 256x256 style-preview thumbnail requests for the 5 new movements in art-prompts.yaml'
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
-    updated: '2026-07-16T10:22:18Z'
+    updated: '2026-07-16T20:09:33Z'
     note: >
       Filed 2026-07-16 (t-010 curriculum-expansion cycle). t-010's ~08:06 cycle queued
       16 `requests:` entries in projects/art-prompts.yaml (ids
@@ -780,6 +780,8 @@ tasks:
       only change (conductor repo); actual generation happens later via the existing
       art-prompts.yaml → distribute_images.py pipeline. Feeds t-019 (which wires
       previewImageSrc once images land).
+    claimed_by: claude-conductor-burst-20260716-t022-thumbs
+    claimed_at: '2026-07-16T20:09:33Z'
 
   - id: t-023
     milestone: m4
