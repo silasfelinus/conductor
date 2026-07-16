@@ -327,11 +327,11 @@ tasks:
   - id: t-017
     milestone: m4
     title: Surface the home relay's declared capabilities and last-claim time on an admin status readout
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
-    updated: '2026-07-16T16:09:11Z'
+    updated: '2026-07-16T17:00:00Z'
     note: >
       Kaizen from the 2026-07-10 first-live-test stall (conductor #341 /
       kind_robots #145): the queue guard skips agents that don't declare
@@ -339,6 +339,9 @@ tasks:
       admin-only readout (e.g. on /stylist or an /admin surface) showing each
       known relay agent's last claim attempt, declared capabilities, and agent
       version, so a version-gap stall is diagnosable from the browser.
+      Delivered in kind_robots PR #317 (merged): server/utils/relayAgentRegistry.ts
+      + GET /api/art/queue/relay-status + admin-gated Diagnostics tab on
+      /stylist (stylist-relay-status.vue).
     claimed_by: claude-conductor-burst-20260716-sh017
     claimed_at: '2026-07-16T16:09:11Z'
 
@@ -383,3 +386,23 @@ tasks:
       and tune the CFGGuider cfg + IDENTITY_NEGATIVE wording so the extra-protect
       toggle helps identity without fighting the requested restyle. Also confirm
       the source-aspect-ratio output (no more forced 1024 square) looks right.
+
+  - id: t-020
+    milestone: m4
+    title: Flip roadmap-tracked tasks to status review (not left at claimed) before opening a PR from a non-worker/* session
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: "2026-07-16T17:00:00Z"
+    note: >
+      Kaizen from t-017's close-out (Reviewer, autonomous hourly conductor cycle,
+      2026-07-16): t-017 was fully implemented and merged (kind_robots PR #317,
+      branch claude/keen-fermat-e812vh) while the roadmap still showed
+      status: claimed — the Reviewer sweep only found the open PR by checking
+      GitHub directly, not via roadmap state. This is the second occurrence of the
+      same pattern in this project (see TALKBACK.md 2026-07-10 entry for the
+      first). When a Silas-directed claude/* session picks up a roadmap-tracked
+      task in this project, it should set status: review (with claimed_by and the
+      branch name noted) before opening the PR, so a Reviewer sweep can find it
+      through roadmap.yaml instead of by hand-checking the open-PR list.

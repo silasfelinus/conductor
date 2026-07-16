@@ -2456,3 +2456,18 @@ records:
     version reformats unrelated pre-existing union-type lines on save, which
     would have silently expanded the diff's blast radius if not checked for
     and manually reverted before committing.
+- date: 2026-07-16
+  project: superkate-hairstyle-ai
+  task: t-017
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    A task can be fully implemented and merged (kind_robots PR #317) while still
+    sitting at roadmap status: claimed — the Reviewer sweep found it only by
+    checking the open-PR list directly, not roadmap state. This is the second
+    instance of a Silas-directed claude/* session finishing work without flipping
+    the task through status: review first (see project TALKBACK 2026-07-10 entry);
+    filed superkate-hairstyle-ai/t-020 to close the gap going forward.

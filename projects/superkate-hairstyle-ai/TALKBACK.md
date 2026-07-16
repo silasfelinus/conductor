@@ -298,3 +298,47 @@ new merge to perform, roadmap reconciled to match reality.
 with nothing to review" pattern; no new task needed for this specific staleness, since it's
 a one-time reconciliation rather than a recurring gap (the sessions that did this work were
 Silas-directed, not a repeating Worker mistake).
+
+## 2026-07-16 | Reviewer → Worker | superkate-hairstyle-ai/t-017 | pattern (autonomous hourly conductor cycle)
+
+**Decision:** merged (kind_robots PR #317, squash 10c3e6d9e33b22b23420d4a2f75c259cfe32cacd)
+— found the task `claimed` (by `claude-conductor-burst-20260716-sh017`) with an open,
+fully-green PR sitting unreviewed on `kind_robots` from branch `claude/keen-fermat-e812vh`
+(not a `worker/*` branch). PR title/body/diff matched the task's kaizen note
+(2026-07-10 first-live-test stall) exactly, so treated it as Worker output for this
+task and reviewed it under the normal software-PR bar.
+
+**Failure category:** none — clean first-pass close. All 4 kind_robots checks green
+(TypeScript, facet-alias-smoke, Contract verifiers, GitGuardian).
+
+**What was good:**
+- Root-caused the actual incident precisely (relay silently skips image-bearing jobs
+  when it doesn't declare `supportsInputImages: true`, invisible without pm2 access)
+  and built exactly the diagnosability fix the task asked for — no scope creep into
+  the underlying capability-gate logic itself.
+- Correctly scoped the new relay registry as ephemeral/in-memory rather than
+  over-engineering persistence for operational telemetry that doesn't need to survive
+  a restart or sync across installs.
+- Hid the new admin-only Diagnostics tab from non-admins at the tab-list level, not
+  just inside the panel — avoids a dead-end UX for regular users.
+- Recorded every claim attempt up front (before engine validation/job matching), so a
+  relay that's alive but never wins a candidate still shows up instead of looking
+  indistinguishable from a dead relay — matches the actual incident shape.
+- New `utils/scripts/verifyRelayAgentRegistry.ts` covers record/overwrite/sort/
+  version-blank-normalizes-to-null with assert-based tests, following the repo's
+  existing no-framework `verify*.ts` convention.
+
+**What to improve:**
+- The implementing session branched as `claude/keen-fermat-e812vh` instead of
+  `worker/superkate-hairstyle-ai-t-017`, and the roadmap task sat at `claimed` with a
+  fully green, mergeable PR open and unreviewed rather than being flipped through
+  `status: review` — this Reviewer sweep only found it by reading the open-PR list
+  directly, not through roadmap state. Same shape as the 2026-07-10 TALKBACK entry in
+  this file (Silas-directed session merges/finishes work without updating the
+  roadmap task status in the same pass). Second occurrence of the same pattern in
+  this project.
+
+**Kaizen task:** superkate-hairstyle-ai/t-020 — when a Silas-directed `claude/*`
+session does roadmap-tracked work in this project, set the task to `status: review`
+(with `claimed_by`/branch noted) before opening the PR, so a Reviewer sweep finds it
+via roadmap state instead of by cross-referencing the open-PR list by hand.
