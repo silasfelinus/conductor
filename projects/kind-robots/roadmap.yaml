@@ -791,11 +791,11 @@ tasks:
   - id: t-024
     milestone: m3
     title: Add a lint/convention guard against casting objects to Prisma.InputJsonValue for String/LongText columns
-    status: ready
-    owner: null
+    status: claimed
+    owner: reviewer
     passes: 0
     stakes: reversible
-    updated: "2026-07-15T18:30:00Z"
+    updated: '2026-07-16T09:07:42Z'
     note: >
       Kaizen from t-020 (Worker, kind_robots PR #295): 12 of the 19 TypeScript
       errors fixed in that PR were the same shape repeated across 10 files —
@@ -817,6 +817,8 @@ tasks:
       docs pointing new model-builder/ArtJob call sites at the existing
       normalizeJson/parseStoredJson helpers instead. Keep it cheap — a grep-based
       CI check is enough, no need for a custom eslint plugin.
+    claimed_by: claude-burst-hourly-20260716-0906
+    claimed_at: '2026-07-16T09:07:42Z'
 
   - id: t-025
     milestone: m3
