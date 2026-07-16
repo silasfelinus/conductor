@@ -204,3 +204,107 @@ def test_plan_owner_reports_loop_with_no_matching_still():
     assert creates == []
     assert updates == []
     assert notes == ["joyful: loop video with no still — skipped"]
+
+
+# ---------------------------------------------------------------------------
+# main() — --apply / --deactivate CLI gating (conductor/t-051)
+# ---------------------------------------------------------------------------
+#
+# These cover the gate `if all_missing and args.deactivate:` in main() and the
+# stderr `deactivate_note` — the CLI wiring around plan_owner()'s missing rows,
+# which the unit tests above (t-050) did not exercise.
+
+def _apply_setup(tmp_path, monkeypatch, slug="brass-lampkeeper"):
+    """One matching 'joyful' still on disk; the narrator additionally reports a
+    'sorrowful' row whose file is gone -> exactly one missing-file row, zero
+    creates/updates. Returns the list of api() POST payloads to
+    /api/bots/expressions so a test can assert whether missing rows were sent."""
+    make_expr_tree(tmp_path, "bot", slug, ["joyful"])
+    monkeypatch.setattr(rex, "KIND_ROBOTS_ROOT", tmp_path)
+    monkeypatch.setattr(rex, "KR_API_TOKEN", "fake-token")  # --apply gate
+
+    posts = []
+
+    def fake_api(path, payload=None, method=None, timeout=30):
+        if path == f"/api/narrators/bot/{slug}":
+            return {"data": {"id": 7, "ExpressionMedia": [
+                # joyful: imagePath already matches the convention -> no update
+                {"expressionKey": "joyful",
+                 "imagePath": f"/images/bots/expressions/{slug}/joyful_01.webp"},
+                # sorrowful: has a row but no file on disk -> missing
+                {"expressionKey": "sorrowful",
+                 "expression": "SORROWFUL", "kind": "EMOTION"},
+            ]}}
+        if path == "/api/bots/expressions":
+            posts.append(payload)
+            return {"data": []}
+        raise AssertionError(f"unexpected call: {path}")
+
+    monkeypatch.setattr(rex, "api", fake_api)
+    return posts
+
+
+def test_apply_without_deactivate_detects_but_never_posts_missing(tmp_path, monkeypatch, capsys):
+    posts = _apply_setup(tmp_path, monkeypatch)
+    monkeypatch.setattr(
+        "sys.argv",
+        ["reconcile_expressions.py", "--apply", "--type", "bot", "--owner", "brass-lampkeeper"],
+    )
+
+    code = rex.main()
+
+    totals = json.loads(capsys.readouterr().out.strip())
+    # the missing row is still detected and counted ...
+    assert totals["missing"] == 1
+    assert totals["create"] == 0 and totals["update"] == 0
+    # ... but with no creates/updates and no --deactivate, nothing is POSTed
+    assert posts == []
+    assert code == 0
+
+
+def test_apply_with_deactivate_posts_missing_soft_disable(tmp_path, monkeypatch, capsys):
+    posts = _apply_setup(tmp_path, monkeypatch)
+    monkeypatch.setattr(
+        "sys.argv",
+        ["reconcile_expressions.py", "--apply", "--deactivate",
+         "--type", "bot", "--owner", "brass-lampkeeper"],
+    )
+
+    rex.main()
+
+    # post_batch sends a dryRun payload then the real write -> 2 calls, both
+    # carrying the single soft-disable (isActive False) row.
+    assert len(posts) == 2
+    assert posts[0].get("dryRun") is True
+    assert posts[-1]["expressions"] == [{
+        "botId": 7,
+        "expressionKey": "sorrowful",
+        "expression": "SORROWFUL",
+        "kind": "EMOTION",
+        "isActive": False,
+    }]
+
+
+def test_deactivate_note_shown_when_missing_and_not_deactivating(tmp_path, monkeypatch, capsys):
+    _apply_setup(tmp_path, monkeypatch)
+    monkeypatch.setattr(
+        "sys.argv",
+        ["reconcile_expressions.py", "--apply", "--type", "bot", "--owner", "brass-lampkeeper"],
+    )
+
+    rex.main()
+
+    assert "missing-file rows reported only" in capsys.readouterr().err
+
+
+def test_deactivate_note_suppressed_when_deactivating(tmp_path, monkeypatch, capsys):
+    _apply_setup(tmp_path, monkeypatch)
+    monkeypatch.setattr(
+        "sys.argv",
+        ["reconcile_expressions.py", "--apply", "--deactivate",
+         "--type", "bot", "--owner", "brass-lampkeeper"],
+    )
+
+    rex.main()
+
+    assert "missing-file rows reported only" not in capsys.readouterr().err
