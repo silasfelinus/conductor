@@ -327,11 +327,11 @@ tasks:
   - id: t-017
     milestone: m4
     title: Surface the home relay's declared capabilities and last-claim time on an admin status readout
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
-    updated: '2026-07-10T13:15:00Z'
+    updated: '2026-07-16T16:09:11Z'
     note: >
       Kaizen from the 2026-07-10 first-live-test stall (conductor #341 /
       kind_robots #145): the queue guard skips agents that don't declare
@@ -339,6 +339,8 @@ tasks:
       admin-only readout (e.g. on /stylist or an /admin surface) showing each
       known relay agent's last claim attempt, declared capabilities, and agent
       version, so a version-gap stall is diagnosable from the browser.
+    claimed_by: claude-conductor-burst-20260716-sh017
+    claimed_at: '2026-07-16T16:09:11Z'
 
   - id: t-018
     milestone: m3
