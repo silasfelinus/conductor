@@ -1,13 +1,13 @@
 # Roadmap Audit
 
-Generated: `2026-07-16T02:48:34.887289+00:00`
+Generated: `2026-07-16T03:01:06.774936+00:00`
 
 This is a conservative structural audit. It reports suspicious state; it does not automatically change task status or remove human gates.
 
 ## Portfolio snapshot
 
 - **40** roadmaps, **33** active projects, **529** tasks
-- **108 ready**, **56 waiting**, **22 needs-human**, **0 claimed/review**, **332 done**
+- **106 ready**, **56 waiting**, **23 needs-human**, **0 claimed/review**, **333 done**
 - Findings: **0 errors**, **5 warnings**, **47 informational**
 
 ## Project inventory
@@ -15,12 +15,12 @@ This is a conservative structural audit. It reports suspicious state; it does no
 | # | Project | State | Kind | Ready | Waiting | Human | In progress | Done / Total |
 |---:|---|---|---|---:|---:|---:|---:|---:|
 | 1 | `challenge-center` | active | software | 0 | 0 | 0 | 0 | 20 / 20 |
-| 2 | `ai-art-academy` | active | software | 5 | 1 | 0 | 0 | 12 / 18 |
+| 2 | `ai-art-academy` | active | software | 4 | 1 | 1 | 0 | 12 / 18 |
 | 3 | `coloring-book` | active | software | 3 | 5 | 0 | 0 | 12 / 20 |
 | 4 | `humboldt-scoop` | active | software | 0 | 0 | 0 | 0 | 8 / 8 |
 | 5 | `humboldt-scoop-cms` | active | software | 0 | 4 | 1 | 0 | 6 / 11 |
 | 6 | `digital-storefront` | active | software | 4 | 1 | 2 | 0 | 11 / 18 |
-| 7 | `packmaker` | active | software | 1 | 1 | 1 | 0 | 4 / 7 |
+| 7 | `packmaker` | active | software | 0 | 1 | 1 | 0 | 5 / 7 |
 | 8 | `mermaids-of-venice` | active | content | 0 | 0 | 8 | 0 | 4 / 12 |
 | 9 | `kind-robots` | active | software | 7 | 0 | 2 | 0 | 18 / 27 |
 | 10 | `kindrobots-unraid` | active | software | 0 | 7 | 1 | 0 | 4 / 12 |

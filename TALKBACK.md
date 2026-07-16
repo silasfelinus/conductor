@@ -4629,3 +4629,71 @@ string/credentials. No agent has access to any of these.
 manages the Postgres instance/pooler) needs to check DB host status, network
 reachability from Vercel's egress, and connection string/credentials. No
 agent has access to any of these.
+
+## 2026-07-16 | Reviewer → Silas | kind-robots/t-022 | security-flag (reconfirmation)
+
+**Subject:** Production DB connection-pool exhaustion still active at 03:00 UTC, ~36 hours in, severity unchanged.
+
+**Detail:**
+- Autonomous hourly conductor cycle. `get_runtime_errors` (1h window, kind-robots
+  Vercel project) shows the same `pool timeout ... (circuit open)` /
+  `DriverAdapterError` group, 718 occurrences in-window, last seen 03:00:06Z —
+  still actively recurring, same signature as every check since the incident
+  was filed at 14:58Z on 2026-07-15. `get_runtime_logs` grouped by status code:
+  714x 503 vs 37x 200 (~95% failure), within the same band observed every cycle.
+- No agent action taken or possible (shared-backend/infra outside BOUNDARY.md
+  scope, `stakes: irreversible`). Not sending a push notification — consistent
+  with every prior cycle's call since 20:52Z on 2026-07-15: an unchanged known
+  issue with no new information isn't worth a repeat ping.
+
+**Suggested action (t-022):** unchanged from prior flags — Silas (or whoever
+manages the Postgres instance/pooler) needs to check DB host status, network
+reachability from Vercel's egress, and connection string/credentials. No
+agent has access to any of these.
+
+## 2026-07-16 | Reviewer → Silas | packmaker/t-006 | closed (hourly cycle)
+
+**Decision:** merged pending — kind_robots PR #306 opened and CI running at time of writing (self-merge if checks pass, per Reviewer authority over reversible/scoped `claude/*` PRs directed by Silas this session).
+
+**Detail:**
+- No open `worker/*` or `claude/*` PRs at cycle start in conductor, kind_robots,
+  or serendipity-voice. No `status: claimed`/`challenged` tasks. `ROADMAP-AUDIT`
+  unchanged at 0 errors / 5 warnings / 47 info (my own edits below don't add
+  new warnings). dream-cycle: no active `building` creation (t-006 idle-loop
+  still `waiting` on t-004), 12 buildable backlog outlines (well above the
+  5-item warn threshold). Today's (Pacific) daily-dream proposal already
+  exists — no action needed.
+- ai-art-academy/t-004: formalized as soft `needs-human` — blocked on missing
+  `KR_API_TOKEN` across three separate sessions now (2026-07-10, 2026-07-15,
+  2026-07-16) with the same confirmed-absent env var each time. It was
+  getting silently re-picked as "next ready" every cycle; converting it stops
+  that churn without inventing new work.
+- Picked packmaker/t-006 (next genuinely workable ready task after t-004's
+  ai-art-academy siblings — t-009 same KR_API_TOKEN blocker, t-008/t-013
+  still blocked on the known museum-egress 403, both reconfirmed) after
+  claiming it via `claim_task.py`. Shipped only step (2) of its 4-step note:
+  a new top-level `packs` ExtraTutorialKey channel in
+  `kind_robots/stores/helpers/tutorialCards.ts` (kind_robots PR #306).
+  eslint/prettier/vue-tsc all clean, no new or pre-existing errors.
+- Deliberately did NOT attempt step (4) ("evolve into the full interactive
+  experience"): it duplicates packmaker/t-004 (the actual admin-generator
+  build), which is correctly `waiting` on t-003's human-gated launch-pack
+  manifests. Building it here would have preempted a gated task. Steps (1)
+  and (3) remain genuinely blocked (missing credential; admin-only UI
+  action). Closed t-006 `done` on the landable, non-duplicate scope rather
+  than leaving a partially-blocked task perpetually `ready`.
+
+**Kaizen task:** packmaker roadmap tasks that bundle a mechanical always-doable
+step with credential-blocked and admin-only steps should be split into
+separate sub-tasks at authoring time. Noted in the kind_robots PR body as this
+cycle's kaizen suggestion (no new roadmap task filed — the closing note above
+already documents the actionable follow-up: file a small art-generation task
+once a token-bearing session exists).
+
+**Pattern note:** the KR_API_TOKEN / museum-egress / Stripe-egress blockers
+are now each confirmed 3+ times across ai-art-academy, digital-storefront,
+and packmaker without ever resolving — this environment's sandbox appears to
+consistently lack these three forms of access. Future cycles could save a
+recheck pass by treating "still absent" as the default assumption and only
+re-verifying if a task's note is more than ~48h stale, per the existing
+"no need to re-curl until this note goes stale" convention.
