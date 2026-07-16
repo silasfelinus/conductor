@@ -253,6 +253,13 @@ tasks:
       public-domain images per movement, sourced from the curriculum outline's
       verified source URLs (docs/curriculum-outline.md), following
       PUBLIC-DOMAIN-POLICY.md for provenance recording.
+      SCOPE UPDATE 2026-07-16 (t-010 expansion cycle): the curriculum is now 21
+      movements, not 16 — the strip should cover §17-21 (gothic, northern-
+      renaissance, rococo, symbolism, pointillism) too. Those five movements'
+      example-work URLs are still marked (unverified) in the outline (they carry
+      real accession numbers but egress was 403-blocked when they were added), so
+      re-verify them at image-fetch time the same as the rest, per the museum-egress
+      note below.
       STATUS NOTE 2026-07-15 (burst cycle): same museum/Wikimedia egress block
       documented on t-008 applies here too (confirmed 403 via agent-proxy status
       on metmuseum.org/upload.wikimedia.org in this sandbox). Still `ready` —
@@ -416,12 +423,12 @@ tasks:
   - id: t-010
     milestone: m6
     title: Academy continuous improvement pass
-    status: claimed
+    status: ready
     recurring: true
-    owner: worker
+    owner: null
     passes: 0
     stakes: reversible
-    updated: '2026-07-16T10:14:33Z'
+    updated: '2026-07-16T10:22:18Z'
     note: >
       Standing never-idle task (re-arms to ready after every completion, per the
       recurring-task rule). Each cycle pick ONE: (a) front-end style/polish pass on
@@ -430,6 +437,37 @@ tasks:
       preview thumbnails, (d) expand the curriculum with a new movement/artist entry
       (respecting PUBLIC-DOMAIN-POLICY.md). Note which option ran in the PR. This task
       never reaches done and does not count toward milestone progress.
+
+      RAN 2026-07-16 (claude session claude-ai-art-academy-curriculum-xnm2wl, ~10:22
+      UTC): options (d) + (b) combined — a Silas-directed content-depth pass ("full
+      reign, pure curriculum/content generation this session"). Rechecked blockers
+      first, same signature as every prior cycle: KR_API_TOKEN still absent (t-004/
+      t-009 stay needs-human) and museum egress still 403 (t-008/t-013 stay blocked),
+      so no art generation and no image-download work this session — pure markdown/YAML
+      content, which needs neither. (d) Expanded the curriculum from 16 to 21 movements
+      in docs/curriculum-outline.md: added Gothic Panel Painting (§17), Northern
+      Renaissance (§18), Rococo (§19), Symbolism (§20), and Neo-Impressionism/
+      Pointillism (§21) — full prose sections + YAML skeleton entries + remix_hints,
+      all cleared against PUBLIC-DOMAIN-POLICY.md §1.3 (newest death Signac 1935; all
+      example works pre-1930; Fauvism/Matisse deliberately excluded as post-1930).
+      New example-work URLs marked (unverified) — egress-blocked — with real accession
+      numbers for later spot-check. Updated the outline's intro count, "Lesson-only vs
+      remixable" tiers, and public-domain safety-check paragraph. Also enriched
+      docs/style-lora-registry.md: added prompt-mode entries for the 3 genuinely-new
+      slugs (northern-renaissance/rococo/symbolism), introduced an optional
+      `prompt_hint` field carrying the Kontext prompt-mode instruction (documented in
+      the block header; also backfilled onto the existing gothic/pointillism entries),
+      and added per-style teaching notes for all five. Wrote a NEW file
+      docs/teaching-notes.md: an 8-beat reusable lesson scaffold, a per-style
+      teaching-notes table for all 21 movements (teaching angle / remix difficulty /
+      failure mode), and three fully-worked example lessons (Ukiyo-e, Impressionism,
+      Pointillism). (b) Roadmap upgrade: filed four concrete follow-ons — t-020 (seed
+      the 5 new movements into kind_robots academyStyles.ts), t-021 (LoRA hunt +
+      prompt_hint backfill for the new/older prompt-mode styles), t-022 (queue preview
+      thumbnails for the 5 new movements, extending t-019's batch), t-023 (wire the
+      teaching-notes lesson scaffold into the Academy lesson-detail component) — and
+      extended t-013's note so the example-works strip covers all 21 movements. Conductor
+      docs only; no kind_robots code touched this pass.
 
       RAN 2026-07-16 (conductor-burst-hourly, ~08:06 UTC): option (c) style preview
       thumbnails. Rechecked blockers first: KR_API_TOKEN still absent (t-004/t-009
@@ -632,3 +670,91 @@ tasks:
       kind_robots' public/images/academy/styles/ — do not claim this task
       before verifying at least one file is present, or it will just
       re-discover the same "nothing to wire yet" state.
+
+  - id: t-020
+    milestone: m4
+    title: 'kind_robots: add the 5 v1.1 curriculum movements to the academyStyles.ts front-end seed'
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-16T10:22:18Z'
+    note: >
+      Filed 2026-07-16 (t-010 curriculum-expansion cycle). docs/curriculum-outline.md
+      grew from 16 to 21 movements (§17 gothic, §18 northern-renaissance, §19 rococo,
+      §20 symbolism, §21 pointillism — all cleared against PUBLIC-DOMAIN-POLICY.md
+      §1.3). Mirror each new movement into kind_robots stores/seeds/academyStyles.ts
+      exactly as t-015 (Neoclassicism) and t-018 (Bauhaus) did: one entry per slug
+      (slug, name, era, artists, recognitionCues, remix template from the outline's
+      remix_hint), inserted in chronological position per each entry's `era` (they
+      were appended to the outline's prose but the machine-readable skeleton and the
+      `era` field give the true order). Content sourced verbatim from the outline —
+      no new facts invented. Small, additive, one-file change; verify prettier +
+      vue-tsc clean before opening the kind_robots PR. Independently landable now
+      (does not depend on the preview-image work in t-019/t-022).
+
+  - id: t-021
+    milestone: m2
+    title: 'Hunt LoRAs for the 5 new prompt-mode movements and backfill prompt_hint on older entries'
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-16T10:22:18Z'
+    note: >
+      Filed 2026-07-16 (t-010 curriculum-expansion cycle). The five new movements all
+      ship prompt-mode in docs/style-lora-registry.md; none has a login-free FLUX LoRA
+      yet. Extend the registry the way t-003 did: hunt openly downloadable, PD/dead-
+      artist-safe LoRAs for gothic, northern-renaissance, rococo, symbolism, and
+      pointillism (Civitai starting points already parked in the needs-Silas table —
+      S-7 pointillism, S-8 gothic — but check for login-free Hugging Face options
+      first, and record license/trigger/weight per the existing schema). Same
+      environment caveat as t-003: HF/Civitai may be egress-blocked this session, so
+      web-search-sourced entries stay `license: unverified` until read off the model
+      card. Second, smaller half of this task: backfill the optional `prompt_hint`
+      field (introduced this cycle) onto the 8 older prompt-mode entries that still
+      keep their recipe only in prose, for machine-readable consistency. Registry-only,
+      no downloads/spend.
+
+  - id: t-022
+    milestone: m5
+    title: 'Queue 256x256 style-preview thumbnail requests for the 5 new movements in art-prompts.yaml'
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-16T10:22:18Z'
+    note: >
+      Filed 2026-07-16 (t-010 curriculum-expansion cycle). t-010's ~08:06 cycle queued
+      16 `requests:` entries in projects/art-prompts.yaml (ids
+      `kind-robots-academy-style-preview-<slug>`) for a 256x256 preview thumbnail per
+      v1 movement at public/images/academy/styles/{slug}.webp. Extend that batch to
+      the 5 v1.1 movements (gothic, northern-renaissance, rococo, symbolism,
+      pointillism) using the exact same pattern: same shared subject (small robot beside
+      a windowsill potted plant) for side-by-side comparability, prompt built from each
+      movement's recognitionCues / remix_hint in the curriculum outline. Prompt-catalog-
+      only change (conductor repo); actual generation happens later via the existing
+      art-prompts.yaml → distribute_images.py pipeline. Feeds t-019 (which wires
+      previewImageSrc once images land).
+
+  - id: t-023
+    milestone: m4
+    title: 'kind_robots: wire the teaching-notes lesson scaffold (Try-It / Reflect) into the Academy lesson-detail component'
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-16T10:22:18Z'
+    note: >
+      Filed 2026-07-16 (t-010 curriculum-expansion cycle). docs/teaching-notes.md now
+      defines an 8-beat reusable lesson scaffold (Hook → Look First → Big Idea → Meet
+      the Makers → See It → Try It → Reflect → Provenance) with a scaffold-to-data map
+      keyed to fields already in academyStyles.ts and the style registry. The current
+      academy-style-detail.vue shows the style facts but not the "Try It" (remix
+      exercise: instruction + what-to-expect + failure modes + one iterate knob) or
+      "Reflect" (critique/comprehension prompts) beats. Add those two beats to the
+      lesson-detail view, driven by the registry `prompt_hint`/`remix_hint` and a small
+      set of reusable Reflect prompts. Scoped, additive, reversible; start from the
+      scaffold-to-data map in teaching-notes.md §2. Front-end judgment involved but no
+      backend/DB — landable as a normal kind_robots PR. (No dependency on the DB outage
+      tracked in kind-robots/t-022.)
