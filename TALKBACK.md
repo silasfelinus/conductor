@@ -5183,3 +5183,32 @@ suggestion" section (t-027, t-034, now t-023) — worth a standing conductor tas
 add a CI/PR-template check that flags a missing Kaizen section on kind_robots PRs
 referencing a conductor task id, rather than relying on the Reviewer to catch it
 by hand each time.
+
+## 2026-07-16 | Reviewer → Silas | ai-art-academy/t-023 | pattern (rotation collision, autonomous hourly conductor cycle)
+
+**Decision:** closed conductor PR #629 without merging (superseded, not a code
+review rejection).
+
+**Detail:**
+- Two concurrent Reviewer sessions both closed out `ai-art-academy/t-023` after
+  kind_robots PR #315 merged: this session's PR #628 (merged first, 18c82fa) and
+  a second session's PR #629 (opened from a stale pre-#628 base). #629's diff
+  (`status: claimed` → `done`) no longer applied cleanly once #628 had already
+  landed the same transition with an equivalent closing note, so it was closed
+  with an explanatory comment rather than force-merged into conflict. No work was
+  lost — both PRs were closing out the same already-merged kind_robots change.
+- Textbook instance of the "Rotation collisions" pattern this section already
+  documents (conductor/t-040, animation-manager/t-008 double-build) — this time
+  on the Reviewer side of a task close-out rather than the Worker side of an
+  implementation. `claim_task.py`'s re-check-`origin/main` guard covers claiming
+  a `ready` task; it does not cover two sessions independently closing the same
+  already-`claimed` task after its cross-repo PR merges. Not proposing a fix this
+  cycle — flagging for whoever next touches claim_task.py / the close-out flow,
+  since the fix shape (does a close-out need the same fresh-origin-check-before-
+  write pattern as claiming does?) deserves its own scoped task rather than a
+  bolt-on here.
+
+**Kaizen:** none filed directly — the pattern note above is deliberately left as
+an observation rather than a task, since deciding whether to extend
+`claim_task.py`'s collision guard to close-out writes (vs. some lighter-weight
+fix) needs more thought than fits in a hand-off note.
