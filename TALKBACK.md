@@ -4497,3 +4497,63 @@ treating it as worth automating around.
 manages the Postgres instance/pooler) needs to check DB host status,
 network reachability from Vercel's egress, and connection
 string/credentials. No agent has access to any of these.
+
+## 2026-07-16 | Worker → Reviewer | mermaids-of-venice/t-012 | closed (hourly burst-mode pick, kind_robots PR #304)
+
+**Decision:** opened kind_robots PR #304, task set to `status: review`
+
+**Detail:** Rotation pick: challenge-center (top priority) has zero `ready`
+tasks (100% done); ai-art-academy had three turns already today
+(t-015/t-016/t-017); coloring-book and digital-storefront each had one turn
+today; packmaker's only `ready` task (t-003) closed to `needs-human` earlier
+this session. mermaids-of-venice was untouched today and next in
+`priority.yaml` order with a landable `ready` task (t-012), so this hourly
+burst-mode pass rotated there.
+
+- Followed the humboldt-scoop/challenge-center established pattern exactly:
+  `tutorialCards.ts` had no `mermaids` entry at all (the task note's original
+  "wonder.sections"-style phrasing was already corrected by conductor/t-044
+  before I picked this up) — added it as a new top-level `ExtraTutorialKey`
+  channel. `dashboardHelper.ts`'s tab and `projectPlacements.ts`'s route were
+  already correct from the t-001 landing-page build, no change needed there.
+- No live image-gen pipeline this session (no KR_API_TOKEN) — derived
+  dashboard-tab and tutorial art from the already-approved
+  `public/images/projects/mermaids-of-venice-hero.webp` (1600x900, matches
+  sibling dashboard-tab dimensions exactly), same fallback humboldt-scoop's
+  PR used.
+- Added a `ProjectGalleryStrip` to the bespoke `mermaids-page.vue` (not built
+  on the generic `ProjectFrontPage` scaffold, so this needed a direct
+  component drop-in rather than a config change) to surface the 3 approved
+  inspiration images. Deliberately did not touch any book-facing prose or the
+  personal-note placeholder — the project's `notes_from_silas` is explicit
+  that only Silas writes words intended for the book or its note; a
+  gallery/UI addition doesn't cross that line.
+- Found and fixed a stale `conductorCards.ts` entry along the way: the
+  project's Conductor card still said `kind: 'proposal'`, `status: 'waiting'`,
+  "Paused brainstorm concept" — describing a state from before t-001's
+  landing page shipped and the full editorial pipeline (t-004/t-005/t-006/
+  t-007/t-010) completed. Corrected to match `project-overrides.yaml`'s
+  `kind: content` and the project's actual active/ready state.
+- Verified: `eslint`, `prettier --check`, and full `vue-tsc --noEmit` (`npm
+  run test`) all clean on the touched files after a fresh `npm ci`
+  (`node_modules` wasn't present in this session's checkout).
+- Left step 3 of the original task note (verify PROJECT Dream liveUrl) as a
+  flag for whoever has admin access to run the Conductor "Placements"
+  button — it's a live DB backfill action, not a code change, and the
+  code-side channelKey/tabKey/route values were already correct.
+
+**Kaizen suggestion:** the `conductorCards.ts` staleness found here isn't
+mermaids-specific — a systematic pass comparing every `conductorCards.ts`
+entry's `kind`/`status` against `project-overrides.yaml` + actual roadmap
+ready/done counts would likely turn up more drifted cards than just this one.
+Filing as `conductor/t-049` for the Reviewer to pick up or substitute.
+
+## 2026-07-16 | Worker → Silas | mermaids-of-venice/t-012 | closed (hourly burst-mode pick, PR #304)
+
+**Decision:** merged (kind_robots PR #304)
+
+**Detail:** All PR #304 checks passed (TypeScript, Contract verifiers,
+GitGuardian, Vercel deployment) — merged directly since the Worker may
+self-merge reversible, scoped, verified software PRs. Task set to `status:
+done`; `LEARNING.yaml` record appended. See the entry above for the full
+rotation rationale and what shipped.

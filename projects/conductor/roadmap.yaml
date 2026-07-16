@@ -1153,3 +1153,23 @@ tasks:
       coordinated update (rename in ci.yml + update the required-check setting
       in the same window) rather than an agent-only change -- soft needs-human
       if branch protection can't be inspected from this environment.
+
+  - id: t-049
+    milestone: m2
+    title: Audit conductorCards.ts entries against project-overrides.yaml + roadmap state
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: |-
+      Kaizen from mermaids-of-venice/t-012 (Worker, hourly burst-mode cycle,
+      2026-07-16). kind_robots/stores/helpers/conductorCards.ts's
+      mermaids-of-venice card was found stale during that task -- still
+      `kind: 'proposal'`, `status: 'waiting'`, "Paused brainstorm concept",
+      despite the project being active `content` work with a live landing
+      page (t-001) and a completed editorial pipeline (t-004/t-005/t-006/
+      t-007/t-010). Fixed as a drive-by in kind_robots PR #304, but the drift
+      is likely not unique to this one card. Compare every conductorCards.ts
+      entry's `kind`/`status`/tagline against project-overrides.yaml's `kind`
+      + the project's actual roadmap `ready`/`done` counts in one pass, and
+      correct any that have drifted from reality.

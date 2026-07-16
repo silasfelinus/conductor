@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-07-15T20:32:25Z
+Generated: 2026-07-16T00:25:55Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **70**
-- Outcomes: blocked: 1, done: 69
+- Closed tasks recorded: **73**
+- Outcomes: blocked: 1, done: 72
 - Success rate: **99%**
 - Average passes on successful tasks: **0.0**
 
@@ -15,7 +15,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 | Project | Closed | Success rate |
 |---|---|---|
-| ai-art-academy | 4 | 100% |
+| ai-art-academy | 6 | 100% |
 | alexa-integration | 2 | 100% |
 | animation-manager | 4 | 100% |
 | animation-studio | 1 | 100% |
@@ -29,6 +29,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | humboldt-scoop-cms | 1 | 100% |
 | kind-robots | 9 | 89% |
 | kindrobots-unraid | 1 | 100% |
+| mermaids-of-venice | 1 | 100% |
 | model-builder | 13 | 100% |
 | newsfeed | 1 | 100% |
 | packmaker | 3 | 100% |
@@ -38,20 +39,25 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 3 | 100% |
-| software | 67 | 99% |
+| software | 70 | 99% |
 
 ## Failure categories
 
 | Category | Count |
 |---|---|
 | actionable | 4 |
-| quality | 2 |
+| quality | 3 |
 
 ## Kaizen targets
 
 - failure category `actionable` — 4 occurrences; look for the shared cause across its records
+- failure category `quality` — 3 occurrences; look for the shared cause across its records
 
 ## Recent lessons
+
+- 2026-07-16 `mermaids-of-venice/t-012` — Clean first-pass "Polish and upgrade X front-end surface" instance -- the humboldt-scoop/challenge-center established pattern (new top-level ExtraTutorialKey channel, not a nested tutorialChannels.<channel>.sections entry; reuse the already-approved project hero for dashboard-tab/tutorial art when no live image-gen pipeline is available) transferred cleanly. Also found a real, unrelated drift bug while touching adjacent code: conductorCards.ts's project card had stale kind/status (proposal/waiting) years behind the project's actual state (content/ready with a shipped landing page and completed editorial pipeline) -- filed conductor/t-049 to audit the rest of that file rather than assume this was a one-off.
+
+- 2026-07-15 `ai-art-academy/t-016` — Clean first-pass kaizen task: docs-only comment addition, verified against all three real call sites before merge. Second/third instance this week of a Worker PR (kind_robots #302, conductor #579) omitting the handoff template's Stakes/Flags-for-Reviewer/Kaizen-suggestion sections entirely rather than marking them n/a -- not a rejection-worthy issue on its own, but worth a Worker-side habit fix if it keeps recurring.
 
 - 2026-07-15 `kind-robots/t-025` — kind_robots PR #299 merged despite one failing CI check (facet-alias-smoke) after confirming via the GitHub API that the check fails on unmodified main too (a prior migration squash removed prisma/migrations/20260711021500_add_facet_aliases/ without updating the workflow that still references it) -- a red check is only a merge blocker when it's caused by the diff, not when it's independently verified pre-existing breakage. Filed t-026 to fix the workflow itself. Separately: this session's local kind_robots git checkout had desynced from true GitHub main (stale local proxy git mirror), which broke ordinary git push/rebase/cherry-pick with spurious HTTP 413s and bogus unrelated-file conflicts -- verifying file contents against the GitHub API directly and pushing via create_branch+push_files is the workaround when that symptom recurs.
 
@@ -69,10 +75,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 - 2026-07-15 `packmaker/t-002` — Resolving an open design question (SPEC.md §7: dream-shaped vs character-shaped pack characters) at the per-item field level (itemShape) instead of a pack-level default kept the schema decision deferred to the actual authors (t-003) without blocking t-002 on an answer from Silas -- a reversible, self-documenting way to carry an open question forward instead of parking the task at needs-human.
 
-- 2026-07-15 `packmaker/t-001` — A design brief that grounds every claim in the actual target schema/codebase (not the task note's paraphrase of it) surfaces real integration points for free: digital-storefront's t-009 SPEC.md had already designed a generic Product/Entitlement model that explicitly covers this project's DLC packs, and kind-robots t-008 (the sharing/ACL design this project depends on) turned out to still be unwritten -- both facts only surfaced by reading the sibling projects' specs and the live Prisma schema before drafting, not by trusting the roadmap task's own summary of them.
-
-- 2026-07-15 `kind-robots/t-017` — Kaizen follow-up tasks that name their own consumer (here: conductor's build_dream_records.py already had a KNOWN GAP comment pointing at the missing endpoint) are easy to land completely in one cycle -- implement the endpoint, then immediately wire its one real caller, rather than leaving the new API unused until some future session rediscovers the gap. Mirroring two already-merged endpoint families (model-builder/runs, dreams/facets) for the auth/error-handling shape kept review risk low despite no live-DB verification being possible in this sandbox.
-
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-07-15T20:32:25Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-07-16T00:25:55Z_

@@ -224,11 +224,24 @@ tasks:
 - id: t-012
   milestone: m1
   title: "Polish and upgrade Mermaids of Venice front-end surface"
-  status: claimed
+  status: done
   owner: worker
   passes: 0
   stakes: reversible
-  note: "CORRECTED 2026-07-15 (conductor/t-044): fixed stale tutorialChannels phrasing below per the code-confirmed convention (challenge-center/t-019, coloring-book/t-019, humboldt-scoop/t-008, humboldt-scoop-cms/t-011) — step (2) now says to add a NEW top-level ExtraTutorialKey channel keyed by 'mermaids' (the project's own tab key, per kind_robots/utils/projectPlacements.ts), not a nested section under an existing dashboard-tab-group channel. UI polish + upgrade for the mermaids-of-venice front end now that the scaffold page is live at /mermaids. Steps: (1) generate final dashboard-tab art at public/images/dashboard-tabs/giftshop/mermaids.webp and tutorial art at public/images/tutorials/mermaids/mermaids.webp; (2) add a NEW top-level ExtraTutorialKey channel keyed by 'mermaids' (NOT a nested section under tutorialChannels.giftshop.sections) in kind_robots/stores/helpers/tutorialCards.ts; (3) verify the PROJECT Dream liveUrl points at /mermaids (admin can run the Conductor 'Placements' button to backfill channelKey/tabKey/liveUrl); (4) evolve the placeholder scaffold page into the full interactive experience for this project."
-  claimed_by: claude-burst-20260716-0000
-  claimed_at: '2026-07-16T00:09:52Z'
+  updated: '2026-07-16T00:26:00Z'
+  note: >
+    DONE — kind_robots PR #304 merged (all checks green: TypeScript, Contract
+    verifiers, GitGuardian, Vercel preview). Added the 'mermaids'
+    ExtraTutorialKey channel to tutorialCards.ts (the one real gap —
+    dashboardHelper.ts's tab and projectPlacements.ts's route were already
+    correct), derived dashboard-tab + tutorial art from the already-approved
+    project hero (no live image-gen pipeline this session), added a
+    ProjectGalleryStrip to mermaids-page.vue showing the 3 approved
+    inspiration images (no book-facing prose touched), and corrected the
+    stale conductorCards.ts entry (was kind: proposal / status: waiting /
+    "paused brainstorm concept" — now kind: content / status: ready, matching
+    project-overrides.yaml and actual roadmap state). Step 3 of the original
+    note (verify PROJECT Dream liveUrl) is a live-admin Placements-button
+    action, not a code change — code-side channelKey/tabKey/route were
+    already correct, so nothing to patch there.
   updated: '2026-07-16T00:09:52Z'
