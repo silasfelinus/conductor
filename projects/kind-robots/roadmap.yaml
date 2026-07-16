@@ -594,7 +594,7 @@ tasks:
     passes: 0
     stakes: irreversible
     soft_gate: false
-    updated: "2026-07-15T20:05:00Z"
+    updated: "2026-07-16T06:56:00Z"
     note: >
       FOR SILAS: The live kind_robots production API (kind-robots.vercel.app,
       current deployment dpl_ABj8P2NznjcCmq6mcevVeeeQpeQC / PR #292) is failing
@@ -719,6 +719,35 @@ tasks:
       proposal already exists — matches the well-documented empty-queue
       pattern tracked in conductor/t-026, no new information to add there
       either.
+
+      RECONFIRMED 2026-07-16T06:56:00Z (autonomous hourly cycle) — NEW
+      INFORMATION, notification sent: this note never previously recorded
+      kind_robots PR #300 (`8da74e18`, merged ~2026-07-15T20:44Z), a SEPARATE
+      app-level fix from the pool-limit one above — it removed a custom
+      `checkServerIdentity()` that pinned the pool's TLS cert check to the
+      `DATABASE_URL` hostname (not present in the ProxySQL frontend cert's
+      SANs), which failed every pooled connection's TLS verification while
+      the CA-only direct probe succeeded throughout (i.e. the DB host was
+      reachable the whole time; only the *pooled* connection path's TLS
+      handshake was broken). Confirmed via Vercel `list_deployments`/
+      `get_deployment` that the CURRENT production deployment
+      (dpl_5tS6J7XPxjUPfquCVhsBZJSZg1zA, commit a160fa0, promoted
+      ~2026-07-16T05:36Z) is well after both the pool-limit fix (PR #299)
+      and this TLS fix (PR #300) — both are live in prod right now, roughly
+      10 hours ago as of this check, not merely merged-but-undeployed.
+      Despite both fixes being live, `get_runtime_errors` (6h window) shows
+      the exact same `DriverAdapterError: pool timeout ... (pool
+      connections: active=0 idle=0 limit=10)` / `circuit open` signature
+      still recurring right now (last=2026-07-16T06:49:28Z, essentially
+      real-time), 4361 occurrences / 27 users in the window. This rules out
+      both "just the pool limit" and "just the TLS mismatch" as the sole
+      cause. Sending a push notification despite the "no repeat ping for
+      unchanged info" precedent from the 23:49Z entry above, because this
+      IS new information: two distinct, deliberate, already-deployed fixes
+      did not resolve it, which is a materially different situation than
+      "still investigating, nothing tried yet." No agent has DB-host or
+      ProxySQL-pooler access to investigate further — still hard
+      needs-human, still out of app-owned scope per BOUNDARY.md.
   - id: t-023
     milestone: m1
     title: Automate the deploy-wait ancestry-check verification t-018 did manually in scratch git repos

@@ -504,3 +504,16 @@ continues to be a reliable fallback lane when the priority-ordered projects
 ahead are env-blocked (museum-egress 403, missing KR_API_TOKEN) -- fully
 self-contained, no cross-repo or external-egress dependency, same pattern
 noted on t-008's closure.
+
+## 2026-07-16 | Reviewer → Silas | kind-robots/t-022 | investigation update (autonomous hourly cycle)
+
+**Decision:** not closed — still hard `needs-human`. Full detail in the root
+`TALKBACK.md` entry of the same date/task (kept there since the investigation
+spanned the kind_robots app repo + Vercel telemetry, not just this project file).
+
+**Subject:** Both app-level fixes already deployed (pool-limit PR #299, TLS
+cert-verification PR #300, live in prod ~10h as of this check) — outage still
+recurring in real time regardless. New information; push notification sent.
+
+**Suggested action:** Silas needs to check the DB host/pooler directly — app config
+is no longer the leading hypothesis.
