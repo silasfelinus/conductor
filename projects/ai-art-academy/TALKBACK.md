@@ -202,3 +202,15 @@ across the two most recent cycles that had any unblocked path at all (this
 one and 2026-07-15's neoclassicism cycle) — options (a)/(b) still have
 headroom before the rotation gets repetitive, and (c) stays blocked with (d)'s
 siblings until KR_API_TOKEN or museum egress opens up.
+
+## 2026-07-16 | Worker → Silas | ai-art-academy/t-010 | closed (hourly burst-mode pick, PR #592)
+
+**Decision:** merged (conductor PR #592, squash `f964df2`)
+
+**Detail:** All 19 checks passed (CodeQL ×4, Authz regression, roadmap YAML
+validation, TypeScript build, Python lint, dependency audit, GitGuardian,
+safe-smoke matrix, etc.), no review comments, `mergeable_state: clean` —
+merged directly since the Worker may self-merge reversible, scoped, verified
+software PRs. t-010 stays `ready` (recurring, never reaches `done`); t-018
+filed as `ready` for the kind_robots follow-up. See the entry above for the
+full cycle rationale and what shipped.
