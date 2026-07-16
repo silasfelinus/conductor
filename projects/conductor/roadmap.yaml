@@ -641,19 +641,24 @@ tasks:
   - id: t-032
     milestone: m2
     title: Backfill LEARNING.yaml from recent git history and TALKBACK
-    status: ready
-    owner: null
+    status: done
+    owner: worker
     passes: 0
     stakes: reversible
-    updated: "2026-07-11T21:30:00Z"
+    updated: "2026-07-16T00:00:00Z"
     depends_on: t-030
     note: >
-      The ledger starts empty, so LEARNING-REPORT.md has no signal until new tasks
-      close. Walk recently closed tasks (roadmap status done/blocked with passes
-      recorded) plus TALKBACK rejection entries and append best-effort records —
-      outcome and passes from the roadmap, failure_category inferred from the
-      Reviewer's stated reason where unambiguous, null otherwise. Append-only;
-      mark inferred records with a "backfilled" prefix in the lesson field.
+      DONE (2026-07-16). The task's "ledger starts empty" premise was stale — the
+      auto-appender had already filled 81 records (2026-07-11..16) — so this became a
+      fill-the-gaps, de-duped backfill. Added scripts/backfill_learning.py (reuses
+      process_task_events.prepare_learning for the (project,task,outcome) dedup +
+      write_learning_record for the append-only write) and tests/test_backfill_learning.py
+      (15 tests incl. idempotency + a schema-conformance guard over the real ledger).
+      Ran the default curated+recent scope (last 7 days + one curated high-signal
+      lesson, conductor/t-014): appended 100 records (81 -> 181), every backfilled
+      lesson prefixed "backfilled:". Re-run appends zero (idempotent); existing 81
+      records byte-preserved. --since all remains for a later exhaustive sweep.
+      Regenerated LEARNING-REPORT.md.
 
   - id: t-033
     milestone: m2

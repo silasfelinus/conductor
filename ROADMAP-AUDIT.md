@@ -1,13 +1,13 @@
 # Roadmap Audit
 
-Generated: `2026-07-16T06:55:42.391865+00:00`
+Generated: `2026-07-16T10:26:06.285808+00:00`
 
 This is a conservative structural audit. It reports suspicious state; it does not automatically change task status or remove human gates.
 
 ## Portfolio snapshot
 
-- **40** roadmaps, **33** active projects, **534** tasks
-- **104 ready**, **56 waiting**, **24 needs-human**, **0 claimed/review**, **339 done**
+- **40** roadmaps, **32** active projects, **539** tasks
+- **93 ready**, **56 waiting**, **24 needs-human**, **11 claimed/review**, **344 done**
 - Findings: **0 errors**, **5 warnings**, **47 informational**
 
 ## Project inventory
@@ -15,14 +15,14 @@ This is a conservative structural audit. It reports suspicious state; it does no
 | # | Project | State | Kind | Ready | Waiting | Human | In progress | Done / Total |
 |---:|---|---|---|---:|---:|---:|---:|---:|
 | 1 | `challenge-center` | active | software | 0 | 0 | 0 | 0 | 20 / 20 |
-| 2 | `ai-art-academy` | active | software | 3 | 1 | 2 | 0 | 12 / 18 |
+| 2 | `ai-art-academy` | active | software | 3 | 1 | 2 | 1 | 12 / 19 |
 | 3 | `coloring-book` | active | software | 3 | 5 | 0 | 0 | 12 / 20 |
 | 4 | `humboldt-scoop` | active | software | 0 | 0 | 0 | 0 | 8 / 8 |
 | 5 | `humboldt-scoop-cms` | active | software | 0 | 4 | 1 | 0 | 6 / 11 |
 | 6 | `digital-storefront` | active | software | 4 | 1 | 2 | 0 | 11 / 18 |
 | 7 | `packmaker` | active | software | 0 | 1 | 1 | 0 | 5 / 7 |
-| 8 | `mermaids-of-venice` | active | content | 0 | 0 | 8 | 0 | 4 / 12 |
-| 9 | `kind-robots` | active | software | 7 | 0 | 2 | 0 | 21 / 30 |
+| 8 | `mermaids-of-venice` | retired | content | 0 | 0 | 8 | 0 | 4 / 12 |
+| 9 | `kind-robots` | active | software | 7 | 0 | 2 | 0 | 25 / 34 |
 | 10 | `kindrobots-unraid` | active | software | 0 | 7 | 1 | 0 | 4 / 12 |
 | 11 | `global-ui` | active | software | 5 | 0 | 0 | 0 | 13 / 18 |
 | 12 | `superkate-services-calculator` | active | software | 0 | 0 | 1 | 0 | 35 / 36 |
@@ -31,7 +31,7 @@ This is a conservative structural audit. It reports suspicious state; it does no
 | 15 | `model-builder` | active | software | 4 | 0 | 0 | 0 | 25 / 29 |
 | 16 | `animation-manager` | active | software | 4 | 2 | 0 | 0 | 4 / 10 |
 | 17 | `ecosystem-map` | active | software | 2 | 1 | 0 | 0 | 5 / 8 |
-| 18 | `conductor` | active | software | 12 | 0 | 2 | 0 | 37 / 51 |
+| 18 | `conductor` | active | software | 11 | 0 | 2 | 0 | 38 / 51 |
 | 19 | `serendipity` | active | software | 3 | 0 | 0 | 0 | 9 / 12 |
 | 20 | `storymaker` | active | software | 2 | 0 | 0 | 0 | 8 / 10 |
 | 21 | `davinci` | active | software | 2 | 0 | 0 | 0 | 12 / 14 |
@@ -46,8 +46,8 @@ This is a conservative structural audit. It reports suspicious state; it does no
 | 30 | `brainstorm` | active | proposal | 1 | 0 | 0 | 0 | 0 / 1 |
 | 31 | `wishmaster` | active | software | 2 | 0 | 0 | 0 | 1 / 3 |
 | 32 | `engagement` | finished | software | 0 | 0 | 0 | 0 | 3 / 3 |
-| 33 | `ruler-hooked` | active | software | 7 | 1 | 0 | 0 | 2 / 10 |
-| 34 | `dream-cycle` | active | software | 6 | 3 | 0 | 0 | 5 / 14 |
+| 33 | `ruler-hooked` | active | software | 2 | 1 | 0 | 5 | 2 / 10 |
+| 34 | `dream-cycle` | active | software | 1 | 3 | 0 | 5 | 5 / 14 |
 | — | `animation-studio` | missing | software | 3 | 4 | 0 | 0 | 1 / 8 |
 | — | `approval-portal` | retired | software | 0 | 0 | 0 | 0 | 3 / 5 |
 | — | `career-transition` | retired | content | 3 | 4 | 0 | 0 | 1 / 8 |
