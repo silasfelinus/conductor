@@ -327,18 +327,30 @@ tasks:
   - id: t-017
     milestone: m4
     title: Surface the home relay's declared capabilities and last-claim time on an admin status readout
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
-    updated: '2026-07-16T16:09:11Z'
+    updated: '2026-07-16T16:49:00Z'
     note: >
-      Kaizen from the 2026-07-10 first-live-test stall (conductor #341 /
-      kind_robots #145): the queue guard skips agents that don't declare
-      supportsInputImages, which is invisible without pm2 access. Add a small
-      admin-only readout (e.g. on /stylist or an /admin surface) showing each
-      known relay agent's last claim attempt, declared capabilities, and agent
-      version, so a version-gap stall is diagnosable from the browser.
+      DONE (kind_robots PR #317, squash 10c3e6d9e33b22b23420d4a2f75c259cfe32cacd,
+      merged by Silas). Adds server/utils/relayAgentRegistry.ts, an in-memory
+      (module-level Map, deliberately not persisted -- ephemeral operational
+      telemetry) registry of per-agentId last claim-attempt time, declared
+      capabilities (supportsInputImages, engines), and agent version.
+      claim.post.ts now records every claim attempt into the registry up front,
+      before engine validation, regardless of whether a job is actually claimed.
+      New admin GET server/api/art/queue/relay-status.get.ts
+      (requireAdminApiUser-guarded) plus a new admin-only "Diagnostics" tab
+      (components/art/stylist-relay-status.vue, wired into stylist-manager.vue /
+      superkateStore.ts) shows per-relay last-seen, capabilities, and version,
+      with a warning badge on any relay not declaring supportsInputImages -- the
+      exact silent-stall condition from the 2026-07-10 incident. Verified via
+      npm run test:relay-agent-registry (new focused assert-based test, this
+      repo's no-framework verify*.ts convention), full vue-tsc typecheck, and
+      lint/prettier on touched files -- all clean. Not live-verified against a
+      real relay/dev server (no DB/live box in the sandbox); Cypress e2e was not
+      run (binary download blocked by sandbox egress).
     claimed_by: claude-conductor-burst-20260716-sh017
     claimed_at: '2026-07-16T16:09:11Z'
 
@@ -383,3 +395,23 @@ tasks:
       and tune the CFGGuider cfg + IDENTITY_NEGATIVE wording so the extra-protect
       toggle helps identity without fighting the requested restyle. Also confirm
       the source-aspect-ratio output (no more forced 1024 square) looks right.
+
+  - id: t-020
+    milestone: m4
+    title: Flag stale relays (no claim attempt in N minutes) on the new relay-status admin panel
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-16T16:49:00Z'
+    note: >
+      Kaizen from t-017 (kind_robots PR #317): the new relay-status panel and
+      relayAgentRegistry.ts flag relays that are polling but haven't declared
+      supportsInputImages -- the exact 2026-07-10 incident -- but a relay that
+      stopped polling entirely (process died, box offline, tailnet down) just
+      silently ages out of the registry's "recently seen" view with no distinct
+      warning. Add a stale-relay flag mirroring queue/stats.get.ts's
+      STALE_CLAIM_MINUTES pattern: if lastSeenAt is older than the threshold,
+      surface it as a separate "not polling" state (distinct from "polling but
+      missing capability") in relay-status.get.ts and
+      components/art/stylist-relay-status.vue.

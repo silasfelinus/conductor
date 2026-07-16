@@ -1,13 +1,13 @@
 # Roadmap Audit
 
-Generated: `2026-07-16T16:19:38.924391+00:00`
+Generated: `2026-07-16T16:53:57.353801+00:00`
 
 This is a conservative structural audit. It reports suspicious state; it does not automatically change task status or remove human gates.
 
 ## Portfolio snapshot
 
-- **40** roadmaps, **32** active projects, **551** tasks
-- **101 ready**, **54 waiting**, **24 needs-human**, **0 claimed/review**, **361 done**
+- **40** roadmaps, **32** active projects, **552** tasks
+- **101 ready**, **54 waiting**, **24 needs-human**, **0 claimed/review**, **362 done**
 - Findings: **0 errors**, **5 warnings**, **47 informational**
 
 ## Project inventory
@@ -26,7 +26,7 @@ This is a conservative structural audit. It reports suspicious state; it does no
 | 10 | `kindrobots-unraid` | active | software | 0 | 7 | 1 | 0 | 4 / 12 |
 | 11 | `global-ui` | active | software | 5 | 0 | 0 | 0 | 14 / 19 |
 | 12 | `superkate-services-calculator` | active | software | 0 | 0 | 1 | 0 | 35 / 36 |
-| 13 | `superkate-hairstyle-ai` | active | software | 3 | 0 | 2 | 0 | 14 / 19 |
+| 13 | `superkate-hairstyle-ai` | active | software | 3 | 0 | 2 | 0 | 15 / 20 |
 | 14 | `newsfeed` | active | software | 3 | 7 | 1 | 0 | 1 / 12 |
 | 15 | `model-builder` | active | software | 4 | 0 | 0 | 0 | 25 / 29 |
 | 16 | `animation-manager` | active | software | 4 | 2 | 0 | 0 | 4 / 10 |

@@ -298,3 +298,45 @@ new merge to perform, roadmap reconciled to match reality.
 with nothing to review" pattern; no new task needed for this specific staleness, since it's
 a one-time reconciliation rather than a recurring gap (the sessions that did this work were
 Silas-directed, not a repeating Worker mistake).
+
+## 2026-07-16 | Reviewer → Worker | superkate-hairstyle-ai/t-017 | pattern (conductor burst cycle)
+
+type: pattern
+
+**Decision:** merged (Silas merged kind_robots PR #317 directly). Closing out the roadmap
+task to `done` from this session since it claimed and delegated the implementation.
+
+**Detail:**
+- Claimed via `claim_task.py` (worker/claude-conductor-burst-20260716-sh017) as the burst-mode
+  pick this cycle, chosen deliberately over the top-priority `next_ready_task.py` result
+  (ai-art-academy/t-008) — that task is a known, repeatedly-documented sandbox egress block
+  (metmuseum.org/upload.wikimedia.org 403 via the agent proxy), and this cycle's routine asked
+  for rotation across projects rather than re-hitting the same blocked task a fifth time.
+  `global-ui/t-018` was also skipped — a concurrent session had it claimed at the time
+  (confirmed via its `claimed_at` timestamp being well inside the 90-minute TTL, and it
+  resolved independently as conductor PR #633 / kind_robots #316).
+- Implementation used an in-memory (module-level `Map`) registry rather than a new Prisma
+  model/migration — the task's data (relay last-seen + declared capabilities) is ephemeral
+  operational telemetry, not something needing DB durability or cross-install sync, and this
+  sandbox has no reliable live-DB path to author/verify a migration against. Scoped
+  deliberately smaller than "add a RelayAgent table" to keep the PR landable in one sandbox
+  session with real (typecheck/lint/focused-test) verification instead of claimed-but-unrun
+  DB-backed verification.
+- Verification gap, disclosed honestly in the PR body: no live DB/dev server or real relay
+  available in this sandbox, so the claim endpoint's DB-backed path and the new panel's live
+  fetch were not exercised end-to-end; Cypress e2e didn't run (binary download blocked by
+  sandbox egress). `npm run test:relay-agent-registry`, full `vue-tsc` typecheck, and
+  lint/prettier on touched files were all run and are clean.
+
+**What was good:**
+- Correctly scoped around a known constraint (no DB migration risk in an unverifiable
+  sandbox) instead of attempting a DB-backed design that couldn't be tested here.
+- PR body's "Not verified" section states the live-fetch/relay gap plainly instead of
+  implying full verification.
+
+**What to improve:**
+- None new this cycle — first pass, clean typecheck/lint, no rejection.
+
+**Kaizen task:** `superkate-hairstyle-ai/t-020` — flag relays that stopped polling entirely
+(not just ones missing a declared capability) on the new admin panel, mirroring
+`queue/stats.get.ts`'s `STALE_CLAIM_MINUTES` pattern.

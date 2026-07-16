@@ -2456,3 +2456,21 @@ records:
     version reformats unrelated pre-existing union-type lines on save, which
     would have silently expanded the diff's blast radius if not checked for
     and manually reverted before committing.
+- date: 2026-07-16
+  project: superkate-hairstyle-ai
+  task: t-017
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    When a task's data need is ephemeral operational telemetry (relay
+    last-seen/capabilities here) rather than durable state, an in-memory
+    module-level store is a legitimate, smaller-blast-radius alternative to a
+    new Prisma model — it avoids an unverifiable-in-sandbox migration while
+    still landing the diagnosability the task asked for. Also: burst-mode
+    cycles should deliberately skip next_ready_task.py's top pick when it is a
+    task already logged multiple times as sandbox-egress-blocked (here,
+    ai-art-academy/t-008) — re-attempting a known-blocked task produces no new
+    information and burns a cycle that could cover a different project.
