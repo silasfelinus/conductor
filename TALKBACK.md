@@ -5497,6 +5497,54 @@ established.
 polish) is the next ready alexa-integration task but needs generated art
 assets, out of scope for a text-only agent session.
 
+## 2026-07-16 | Reviewer → Silas | alexa-integration | closed (burst-mode hourly cycle)
+
+**Decision:** merged — serendipity-voice PR #25 (squash a5a927b), docs-only.
+
+**Detail:**
+- Rotation pick: checked last-commit recency across all six in-scope repos
+  (conductor, kindrobots-unraid, serendipity-voice, ComfyUI, PortOS,
+  kind_robots) via `list_commits`. kindrobots-unraid was least-recently-touched
+  (2026-07-15T09:12Z) but every task in its roadmap is `done`/`needs-human`/
+  `waiting` with no formally unblocked dependency — nothing claimable.
+  ComfyUI is the unrelated upstream fork (no roadmap ties, last commit months
+  old). PortOS has no open issues in the `silasfelinus/PortOS` fork itself
+  (its real backlog lives in `atomantic/PortOS` issues, out of this session's
+  GitHub scope) and no conductor `projects/*` roadmap maps to it. conductor
+  and kind_robots both had commits in the last few minutes. That left
+  serendipity-voice (~1h stale) as the only repo with both a live conductor
+  roadmap (`alexa-integration`) and genuinely reachable work.
+- `alexa-integration/t-010` (Echo dry-run transcript) is `ready` after this
+  session's `resolve_deps.py` run, but is fundamentally hardware/exposure
+  gated (needs a physical Echo pointed at a publicly reachable endpoint —
+  `gate_human: true`, matches every prior cycle's documented limitation).
+  `t-015` (Voice Lab UI polish) needs generated art assets, also out of reach
+  this cycle. Neither was picked.
+- Instead of leaving the hour empty, cloned `serendipity-voice` and diffed
+  its README against actual adapter code: `t-006` (PR #21) wired real
+  chat/character submission to Kind Robots (`POST /api/botcafe/chat`, behind
+  `SERENDIPITY_ENABLE_CHAT`, mirroring the art/project-work opt-in pattern —
+  confirmed live in `src/chat-submit.ts` + `voice-bridge.ts` + 20 passing
+  `chat-submit.test.ts` checks), but README's Adapter status table still
+  called both `chat` and `character` "stubbed... no API call yet." and had no
+  section documenting the flag (already correct in `.env.example`, just never
+  surfaced in the README a human would actually read).
+- Fixed the table rows to "live (flagged)" and added a "Real chat + character
+  generation" section mirroring the existing "Real art generation" / "Real
+  project-work status" sections. Docs-only, zero code touched.
+- Verified: `npm test` (12 suites, all green — chat-submit 20 checks,
+  voice-bridge 30 checks) + `npm run typecheck` clean. No CI configured in
+  this repo (consistent with prior cycles). Merged directly — reversible,
+  scoped, docs-only, not outward-facing.
+
+**Failure category:** none.
+
+**Kaizen task:** none filed — this was an opportunistic doc-accuracy fix
+found while confirming t-010/t-015 were genuinely blocked, not a roadmap
+task in its own right. `alexa-integration/t-010` and `t-015` remain the only
+two `ready` tasks and both need something (hardware, art assets) this
+session's text-only remote environment can't supply.
+
 ## 2026-07-16 | Worker → Reviewer | conductor/t-025 | closed (Silas-directed session)
 
 **Decision:** done. Extended the existing scaffolder instead of building a new one.
