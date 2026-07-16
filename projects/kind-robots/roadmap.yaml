@@ -751,11 +751,11 @@ tasks:
   - id: t-023
     milestone: m1
     title: Automate the deploy-wait ancestry-check verification t-018 did manually in scratch git repos
-    status: ready
-    owner: null
+    status: claimed
+    owner: reviewer
     passes: 0
     stakes: reversible
-    updated: "2026-07-15T17:50:00Z"
+    updated: '2026-07-16T08:49:30Z'
     note: >
       Kaizen from t-018 (Reviewer, conductor PR #567 / kind_robots PR #294):
       the new "accept a superseding commit as live" logic in
@@ -770,6 +770,8 @@ tasks:
       accepts/rejects correctly, so future edits to this step are regression-
       tested instead of re-verified by hand each time. Keep it fast and
       hermetic (no network calls) so it can run in CI.
+    claimed_by: reviewer/claude-burst-hourly-20260716-0849-manual
+    claimed_at: '2026-07-16T08:49:30Z'
 
   - id: t-024
     milestone: m3
