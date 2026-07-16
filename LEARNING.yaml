@@ -1076,3 +1076,18 @@ records:
     (content/ready with a shipped landing page and completed editorial
     pipeline) -- filed conductor/t-049 to audit the rest of that file rather
     than assume this was a one-off.
+- date: '2026-07-16'
+  project: ai-art-academy
+  task: t-018
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    Clean first-pass cross-repo seed sync (kind_robots PR #305), mirroring
+    t-015's Neoclassicism precedent exactly: copy artist bios/remix_hint
+    verbatim from the conductor curriculum doc rather than re-deriving them,
+    and insert in curriculum order. Good burst-mode pick when the project's
+    other ready tasks (t-004/t-008/t-009/t-013) are blocked on missing
+    KR_API_TOKEN or museum-egress 403s -- this task needed neither.

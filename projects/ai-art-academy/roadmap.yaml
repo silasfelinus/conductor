@@ -528,18 +528,20 @@ tasks:
   - id: t-018
     milestone: m4
     title: 'kind_robots: add Bauhaus to the academyStyles.ts front-end seed'
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
-    updated: '2026-07-16T02:06:17Z'
+    updated: '2026-07-16T02:20:00Z'
     note: >
-      Curriculum-side work landed conductor-only in docs/curriculum-outline.md
-      (16th movement, `bauhaus`, added after `de-stijl` — see t-010's
-      2026-07-16 RAN note). Mirror t-015's Neoclassicism sync: add a `bauhaus`
-      entry to kind_robots stores/seeds/academyStyles.ts (slug, era
-      "1919-1933", artist_slugs [wassily-kandinsky, paul-klee,
-      laszlo-moholy-nagy], remix_hint from the curriculum doc's YAML
-      skeleton), inserted after `de-stijl` to match curriculum ordering.
+      DONE 2026-07-16: kind_robots PR #305 merged (squash, sha a3fa4c3).
+      Added a `bauhaus` entry to stores/seeds/academyStyles.ts (era
+      1919-1933, Germany; Kandinsky/Klee/Moholy-Nagy, all died 1944-1946),
+      inserted after `de-stijl` to match curriculum ordering, content
+      sourced verbatim from docs/curriculum-outline.md §16. Verified:
+      prettier clean, full project `npm run test` (vue-tsc --noEmit) exit 0
+      with zero errors before push; all 4 PR checks (TypeScript, Contract
+      verifiers, GitGuardian, Vercel deployment) green before merge. Branch
+      worker/ai-art-academy-t-018 auto-deleted on merge.
     claimed_by: claude-burst-hourly-20260716-0200
     claimed_at: '2026-07-16T02:06:17Z'
