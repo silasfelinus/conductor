@@ -160,15 +160,25 @@ tasks:
 - id: t-009
   milestone: m5
   title: Draft project-work actions from voice
-  status: ready
-  owner: null
-  updated: '2026-07-03T22:20:00-07:00'
+  status: done
+  owner: claude
+  updated: '2026-07-16T18:00:00Z'
+  pr: https://github.com/silasfelinus/serendipity-voice/pull/24
   passes: 0
   stakes: reversible
   depends_on: t-007
-  note: 'Let voice requests create safe draft work items: read project goal, read the next ready roadmap
-    task, summarize human gates, and draft AGENT/HONEYDO Todos. Voice must not set approved_by_human, merge
-    PRs, publish, deploy, spend, change secrets, or silently edit roadmap YAML.'
+  note: 'Done in serendipity-voice PR #24 (merged, squash). Behind SERENDIPITY_ENABLE_PROJECT_WORK
+    (off by default), "draft a task for X to ..." now reads the real, public/unauthenticated
+    GET /api/conductor/projects (src/project-work-status.ts) to speak the project goal
+    (notesFromSilas), the next status:ready task, and a count of pending human-approval gates
+    (gateHuman && !approvedByHuman), and composes suggested AGENT/HONEYDO Todo lines in the
+    transcript (src/adapters/project-work-adapter.ts). Never POSTs to /api/todos (needs a user
+    JWT the relay lacks, per docs/kr-api-for-voice.md) and never edits roadmap YAML — stays
+    read-and-draft only, matching the note above. Plain status readouts ("what''s next for X")
+    are unchanged, still served from the local PROJECT Dream snapshot in adapters/dream-adapter.ts.
+    Verified: npm test (project-work-status.test.ts new, 13 checks; voice-bridge.test.ts extended
+    30 checks) + npm run typecheck, both green. No CI configured in this repo; merged on clean
+    local verification per repo convention (see t-016).'
 - id: t-010
   milestone: m3
   title: Capture local Echo dry-run transcript and approval checklist
