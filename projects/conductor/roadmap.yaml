@@ -336,9 +336,9 @@ tasks:
   - id: t-025
     milestone: m2
     title: Build a new-project scaffold helper script
-    status: ready
-    owner: null
-    updated: '2026-07-06T00:00:00Z'
+    status: claimed
+    owner: worker
+    updated: '2026-07-16T19:02:28Z'
     passes: 0
     stakes: reversible
     note: >
@@ -349,6 +349,8 @@ tasks:
       PR skipped a CONTROL.md block and the art-prompt entries). Build a script that
       takes a slug/title/goal and generates all of the above in one pass so future
       project scaffolds don't drop a surface.
+    claimed_by: claude-t025-20260716
+    claimed_at: '2026-07-16T19:02:28Z'
   - id: t-026
     milestone: m2
     title: Reviewer trigger fires with no open worker/* PR to review, repeatedly
