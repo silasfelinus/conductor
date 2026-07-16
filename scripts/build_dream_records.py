@@ -286,12 +286,46 @@ def update_built_data(path: Path, built: dict) -> None:
 #     (idempotent: returns the existing sheet with 200 if one exists)
 #   * PATCH /api/sheets/{id} accepts imagePath (whitelist: sanitizePitchSheetPayload)
 
+def _delete_base(endpoint: str) -> str:
+    """The DELETE collection path for a row created via `endpoint`. Every POST
+    endpoint is its own collection base except sheets, whose create is
+    POST /api/sheets/by-dream/{dreamId} but whose delete is DELETE /api/sheets/{id}."""
+    if endpoint.startswith("/api/sheets"):
+        return "/api/sheets"
+    return endpoint
+
+
+def rollback_created(results: list, dry_run: bool = False) -> int:
+    """DELETE every row created this run (newest first), best-effort. Used to keep a
+    build ATOMIC: if any call fails (e.g. an intermittent DB 503 mid-sequence) we undo
+    the rows that did land so the proposal can be retried clean — no orphans, no
+    duplicates on the next sweep. Returns the number of rows deleted."""
+    created = [(r["delete_base"], r["id"]) for r in results
+               if r.get("ok") and r.get("id")]
+    if dry_run or not created:
+        return 0
+    deleted = 0
+    for base, rid in reversed(created):
+        status, _ = http_json("DELETE", f"{KR_BASE_URL}{base}/{rid}")
+        if status in (200, 204):
+            deleted += 1
+            print(f"  rolled back: DELETE {base}/{rid}")
+        else:
+            print(f"  WARN rollback failed: DELETE {base}/{rid} -> {status}",
+                  file=sys.stderr)
+    return deleted
+
+
 def kr_call(method: str, endpoint: str, body: dict, dry_run: bool,
             results: list, label: str = "") -> Optional[dict]:
-    """One API call; returns the record dict from data (with id) or None."""
+    """One API call; returns the record dict from data (with id) or None.
+
+    Each result carries `id` + `delete_base` so a failed build can roll back the rows
+    it already created (see rollback_created)."""
     if dry_run:
         print(f"  [dry-run] {method} {endpoint}: {label}")
-        results.append({"endpoint": endpoint, "status": 0, "ok": True, "label": label})
+        results.append({"endpoint": endpoint, "status": 0, "ok": True, "label": label,
+                        "id": None, "delete_base": _delete_base(endpoint)})
         return {"id": 0}
     status, resp = http_json(method, f"{KR_BASE_URL}{endpoint}", body)
     record = None
@@ -305,7 +339,9 @@ def kr_call(method: str, endpoint: str, body: dict, dry_run: bool,
         elif "id" in resp:
             record = resp
     ok = status in (200, 201, 207) and record is not None
-    results.append({"endpoint": endpoint, "status": status, "ok": ok, "label": label})
+    results.append({"endpoint": endpoint, "status": status, "ok": ok, "label": label,
+                    "id": record.get("id") if (ok and isinstance(record, dict)) else None,
+                    "delete_base": _delete_base(endpoint)})
     if not ok:
         print(f"  FAIL {status} {method} {endpoint} ({label}): {str(resp)[:200]}",
               file=sys.stderr)
@@ -618,9 +654,16 @@ def run_build(date_override: Optional[str], dry_run: bool) -> int:
 
     built, results, art_entries = build_records(proposal, slug, pdate, dry_run)
     failures = [r for r in results if not r["ok"]]
-    if not dry_run and results and len(failures) == len(results):
-        print("All record creations failed — leaving proposal unbuilt for the next sweep.",
-              file=sys.stderr)
+    if not dry_run and failures:
+        # Atomic build: never mark a partially-built proposal `built`. Roll back any
+        # rows that DID land (e.g. an intermittent DB 503 mid-sequence) so the next
+        # sweep retries clean — no orphans, no duplicate dreams. Previously this only
+        # bailed when EVERY call failed, so a partial failure shipped an incomplete
+        # dream flagged built and never retried.
+        n_deleted = rollback_created(results)
+        print(f"Build failed: {len(failures)}/{len(results)} call(s) failed; "
+              f"rolled back {n_deleted} created row(s); {slug} left UNBUILT for the "
+              "next sweep.", file=sys.stderr)
         return 0
 
     append_art_requests(art_entries, dry_run)
