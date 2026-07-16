@@ -1176,3 +1176,25 @@ records:
     model's shape obvious rather than invented from scratch -- worth doing
     for any future spec-writing task that touches an existing app's data
     model.
+- date: 2026-07-16
+  project: kind-robots
+  task: t-028
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    A guard script written to catch a bug class (t-026's dead-path-reference
+    regression) is worth typechecking against the exact CI job it will run
+    in before merging, not just eslint/prettier -- the first vue-tsc pass
+    caught 12 noUncheckedIndexedAccess errors in the new script from plain
+    array-index and regex-capture-group access, the identical bug class
+    t-027 exists to sweep for elsewhere in the codebase. Writing a new script
+    is also an opportunity to self-check it doesn't introduce the very
+    pattern a sibling kaizen task is auditing for. Simulating the actual
+    regression (temporarily removing a referenced file/fixture, confirming
+    the check fails, restoring, confirming it passes again) before opening
+    the PR is a cheap, high-confidence verification step for any "detect a
+    missing reference" tool and should be the default verification pattern
+    for this task shape.
