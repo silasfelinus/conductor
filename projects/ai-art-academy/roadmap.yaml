@@ -278,21 +278,28 @@ tasks:
   - id: t-009
     milestone: m5
     title: Generate project art and Academy inspiration images
-    status: ready
+    status: needs-human
+    soft_gate: true
     owner: null
     passes: 0
     stakes: reversible
-    updated: '2026-07-10T00:00:00Z'
+    updated: '2026-07-16T05:05:00Z'
     note: >
+      FOR SILAS: blocked on missing KR_API_TOKEN (generation backend credential) —
+      confirmed absent from the environment across four separate sessions now
+      (2026-07-10, 2026-07-15T07:08Z, 2026-07-16T02:48Z via t-004's recheck, and
+      2026-07-16T05:05Z here). Formalizing as soft needs-human, mirroring the same
+      fix just applied to t-004 (same root cause: missing KR_API_TOKEN, not the
+      museum-egress policy denial that keeps t-008/t-013 blocked) — this stops it
+      from being silently re-picked and re-confirmed-blocked as "next ready task"
+      every burst cycle. Task spec is otherwise complete and ready to run the
+      moment a token-bearing session (or this environment with the token added)
+      picks it up. Other ai-art-academy ready tasks proceed in the meantime.
+      Original spec follows:
       Icon/card/hero prompts are queued in projects/art-prompts.yaml (added 2026-07-10).
       Generate and commit them via the auto art pipeline (pre-approved), then generate
       3+ Academy inspiration images (e.g. one landmark public-domain work re-imagined
       across several movements as a teaching strip). Keep prompt/model/source metadata.
-      RECHECKED 2026-07-15T07:08Z (digital-storefront/t-019 recheck pass): this task
-      needs the live generation backend, which needs KR_API_TOKEN — still absent from
-      this session's environment. Different blocker than t-008/t-013's museum-egress
-      denial (missing credential, not a network policy); check for the env var
-      directly in a future session rather than re-curling anything.
       Remove ART-PROMPTS.md entries once files land in projects/images/.
   - id: t-011
     milestone: m2
@@ -414,7 +421,7 @@ tasks:
     owner: null
     passes: 0
     stakes: reversible
-    updated: '2026-07-15T21:15:00Z'
+    updated: '2026-07-16T05:05:00Z'
     note: >
       Standing never-idle task (re-arms to ready after every completion, per the
       recurring-task rule). Each cycle pick ONE: (a) front-end style/polish pass on
@@ -423,6 +430,30 @@ tasks:
       preview thumbnails, (d) expand the curriculum with a new movement/artist entry
       (respecting PUBLIC-DOMAIN-POLICY.md). Note which option ran in the PR. This task
       never reaches done and does not count toward milestone progress.
+
+      RAN 2026-07-16 (conductor-burst-hourly, ~05:05 UTC): option (b) roadmap
+      upgrade, per TALKBACK.md's own endorsement (2026-07-16, t-018 entry) to
+      rotate away from two consecutive option-(d) cycles. Rechecked blockers
+      first: KR_API_TOKEN still absent (`env | grep KR_API_TOKEN` empty) and a
+      fresh CONNECT to metmuseum.org/upload.wikimedia.org via the agent-proxy
+      status endpoint still shows connect_rejected/403 — same signature as
+      every prior cycle, t-008/t-013 stay blocked. Found and fixed a real
+      roadmap-hygiene gap: t-009 (art generation) shares t-004's exact
+      blocker (missing KR_API_TOKEN) but, unlike t-004, had never been
+      converted to soft needs-human — so next_ready_task.py was silently
+      re-picking and re-confirming it blocked every single cycle in ai-art-
+      academy's priority slot, right after t-008/t-013. Applied t-004's
+      established fix: t-009 is now `status: needs-human`, `soft_gate: true`,
+      with a FOR SILAS note explaining the mirrored precedent and preserving
+      the full original task spec unchanged below it. This unblocks the
+      rotation: ai-art-academy's next `ready` pick is now this task (t-010)
+      itself rather than looping on an unworkable art-generation task.
+      Checked milestone m5 ("Project art and inspiration assets") and m2 —
+      both remain accurately `not-started`/`in-progress` with no further
+      detail needed now that their sole blocking task is properly gated.
+      No stale notes found elsewhere in this roadmap worth pruning this pass
+      (existing RECHECKED/RAN entries are still each adding new signal, not
+      repeating). Conductor-only change; no kind_robots PR this cycle.
 
       RAN 2026-07-16 (conductor-burst-hourly): option (d) curriculum expansion.
       Rechecked blockers first: KR_API_TOKEN still absent (t-004/t-009 stay

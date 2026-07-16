@@ -260,3 +260,28 @@ cycle's TALKBACK bookkeeping — pure log entries, no code/roadmap changes).
 
 **Kaizen suggestion:** none filed — this was a small, fully precedented
 sync task with no new pattern to capture.
+
+## 2026-07-16 05:05 UTC | Worker → Silas | ai-art-academy/t-010 | closed (hourly burst-mode pick, option b)
+
+**Decision:** merged (conductor PR, roadmap-only change) — no kind_robots PR this cycle.
+
+**Detail:** Rotated to option (b) roadmap upgrade per this file's own prior
+endorsement (two consecutive cycles had picked option (d)). Rechecked both
+standing blockers first: KR_API_TOKEN still absent, museum-egress 403 still
+live (agent-proxy status confirms fresh `connect_rejected` on both
+metmuseum.org and upload.wikimedia.org). While rechecking, noticed t-009
+("Generate project art and Academy inspiration images") shares t-004's exact
+blocker — missing KR_API_TOKEN — but had never received t-004's
+soft-needs-human treatment, so `next_ready_task.py` was silently re-picking
+and re-confirming it blocked every cycle in ai-art-academy's priority slot.
+Converted t-009 to `status: needs-human` + `soft_gate: true` with a FOR
+SILAS note mirroring t-004's, spec preserved unchanged underneath. Confirmed
+via `next_ready_task.py --json` that the project's next `ready` pick is now
+t-010 itself (was previously looping t-008 → t-013 → t-009, all blocked).
+Reviewed milestones m2/m5 for further detail-and-refine opportunities per
+the option-(b) menu; both are already accurately described given their sole
+task is now properly gated, so left unchanged. Scanned other tasks' notes
+for staleness — none found worth pruning this pass.
+
+**Kaizen suggestion:** none filed — the fix generalizes an existing pattern
+(t-004's soft-gate treatment) rather than introducing a new one.

@@ -1,13 +1,13 @@
 # Roadmap Audit
 
-Generated: `2026-07-16T03:01:06.774936+00:00`
+Generated: `2026-07-16T05:08:23.973081+00:00`
 
 This is a conservative structural audit. It reports suspicious state; it does not automatically change task status or remove human gates.
 
 ## Portfolio snapshot
 
-- **40** roadmaps, **33** active projects, **529** tasks
-- **106 ready**, **56 waiting**, **23 needs-human**, **0 claimed/review**, **333 done**
+- **40** roadmaps, **33** active projects, **530** tasks
+- **103 ready**, **56 waiting**, **24 needs-human**, **1 claimed/review**, **335 done**
 - Findings: **0 errors**, **5 warnings**, **47 informational**
 
 ## Project inventory
@@ -15,14 +15,14 @@ This is a conservative structural audit. It reports suspicious state; it does no
 | # | Project | State | Kind | Ready | Waiting | Human | In progress | Done / Total |
 |---:|---|---|---|---:|---:|---:|---:|---:|
 | 1 | `challenge-center` | active | software | 0 | 0 | 0 | 0 | 20 / 20 |
-| 2 | `ai-art-academy` | active | software | 4 | 1 | 1 | 0 | 12 / 18 |
+| 2 | `ai-art-academy` | active | software | 3 | 1 | 2 | 0 | 12 / 18 |
 | 3 | `coloring-book` | active | software | 3 | 5 | 0 | 0 | 12 / 20 |
 | 4 | `humboldt-scoop` | active | software | 0 | 0 | 0 | 0 | 8 / 8 |
 | 5 | `humboldt-scoop-cms` | active | software | 0 | 4 | 1 | 0 | 6 / 11 |
 | 6 | `digital-storefront` | active | software | 4 | 1 | 2 | 0 | 11 / 18 |
 | 7 | `packmaker` | active | software | 0 | 1 | 1 | 0 | 5 / 7 |
 | 8 | `mermaids-of-venice` | active | content | 0 | 0 | 8 | 0 | 4 / 12 |
-| 9 | `kind-robots` | active | software | 7 | 0 | 2 | 0 | 18 / 27 |
+| 9 | `kind-robots` | active | software | 6 | 0 | 2 | 1 | 19 / 28 |
 | 10 | `kindrobots-unraid` | active | software | 0 | 7 | 1 | 0 | 4 / 12 |
 | 11 | `global-ui` | active | software | 5 | 0 | 0 | 0 | 13 / 18 |
 | 12 | `superkate-services-calculator` | active | software | 0 | 0 | 1 | 0 | 35 / 36 |
@@ -31,7 +31,7 @@ This is a conservative structural audit. It reports suspicious state; it does no
 | 15 | `model-builder` | active | software | 4 | 0 | 0 | 0 | 25 / 29 |
 | 16 | `animation-manager` | active | software | 4 | 2 | 0 | 0 | 4 / 10 |
 | 17 | `ecosystem-map` | active | software | 2 | 1 | 0 | 0 | 5 / 8 |
-| 18 | `conductor` | active | software | 13 | 0 | 2 | 0 | 34 / 49 |
+| 18 | `conductor` | active | software | 12 | 0 | 2 | 0 | 35 / 49 |
 | 19 | `serendipity` | active | software | 3 | 0 | 0 | 0 | 9 / 12 |
 | 20 | `storymaker` | active | software | 2 | 0 | 0 | 0 | 8 / 10 |
 | 21 | `davinci` | active | software | 2 | 0 | 0 | 0 | 12 / 14 |
