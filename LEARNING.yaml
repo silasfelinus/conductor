@@ -1265,3 +1265,12 @@ records:
   outcome: done
   failure_category: null
   lesson: "Extracting shared inline-workflow bash into a repo-root scripts/*.sh file (rather than re-implementing the same logic inside the test) keeps a regression test provably in sync with the production step it's guarding -- worth doing whenever a test's whole point is 'catch future edits to this exact check'."
+- date: 2026-07-16
+  project: kind-robots
+  task: t-024
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "For a detection/guard script, verify the negative case explicitly (a temporary fixture that should fail the check) in addition to the clean-pass case -- a check that has never been proven to actually catch a violation is unverified regardless of how clean the real tree scans."

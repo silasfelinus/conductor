@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-07-16T06:55:42Z
+Generated: 2026-07-16T09:49:56Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **81**
-- Outcomes: blocked: 1, done: 80
+- Closed tasks recorded: **84**
+- Outcomes: blocked: 1, done: 83
 - Success rate: **99%**
 - Average passes on successful tasks: **0.0**
 
@@ -27,7 +27,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | global-ui | 1 | 100% |
 | humboldt-scoop | 1 | 100% |
 | humboldt-scoop-cms | 1 | 100% |
-| kind-robots | 12 | 92% |
+| kind-robots | 15 | 93% |
 | kindrobots-unraid | 1 | 100% |
 | mermaids-of-venice | 1 | 100% |
 | model-builder | 13 | 100% |
@@ -39,7 +39,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 3 | 100% |
-| software | 78 | 99% |
+| software | 81 | 99% |
 
 ## Failure categories
 
@@ -55,6 +55,8 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-07-16 `kind-robots/t-024` — For a detection/guard script, verify the negative case explicitly (a temporary fixture that should fail the check) in addition to the clean-pass case -- a check that has never been proven to actually catch a violation is unverified regardless of how clean the real tree scans.
+- 2026-07-16 `kind-robots/t-023` — Extracting shared inline-workflow bash into a repo-root scripts/*.sh file (rather than re-implementing the same logic inside the test) keeps a regression test provably in sync with the production step it's guarding -- worth doing whenever a test's whole point is 'catch future edits to this exact check'.
 - 2026-07-16 `conductor/t-050` — Clean first-pass test-coverage closure: the kaizen note named the exact two plan_owner() branches to cover (missing/deactivate, orphan-loop skip) precisely enough to write direct unit tests against plan_owner() itself rather than going through main()'s CLI/argparse plumbing -- faster to write and to read than an equivalent integration test. Filed t-051 to cover the one thing plan_owner()-level tests structurally can't reach: main()'s --apply/--deactivate gating of whether missing rows actually get POSTed.
 
 - 2026-07-16 `conductor/t-029` — A kaizen note that names its exact test cases up front ("covering: X, Y, Z, W") makes a script-testing task fully self-scoping -- no need to chase down the original throwaway harness (PR #360's body only described it in prose, no code was ever committed) when the note already specifies the behaviors precisely enough to write fresh monkeypatch-based tests against the current source. Two easy self-made test bugs worth flagging for future test-writing tasks: (1) synthetic fixture data using `id: i` starting at 0 silently trips falsy-id guards in the code under test (`if slug and row.get("id")`) -- start fabricated ids at 1; (2) `capsys` stdout from `json.dumps(..., indent=2)` is multi-line, so `.splitlines()[-1]` grabs a bare closing brace instead of the object -- parse the whole captured block.
@@ -71,10 +73,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 - 2026-07-16 `ai-art-academy/t-018` — Clean first-pass cross-repo seed sync (kind_robots PR #305), mirroring t-015's Neoclassicism precedent exactly: copy artist bios/remix_hint verbatim from the conductor curriculum doc rather than re-deriving them, and insert in curriculum order. Good burst-mode pick when the project's other ready tasks (t-004/t-008/t-009/t-013) are blocked on missing KR_API_TOKEN or museum-egress 403s -- this task needed neither.
 
-- 2026-07-16 `mermaids-of-venice/t-012` — Clean first-pass "Polish and upgrade X front-end surface" instance -- the humboldt-scoop/challenge-center established pattern (new top-level ExtraTutorialKey channel, not a nested tutorialChannels.<channel>.sections entry; reuse the already-approved project hero for dashboard-tab/tutorial art when no live image-gen pipeline is available) transferred cleanly. Also found a real, unrelated drift bug while touching adjacent code: conductorCards.ts's project card had stale kind/status (proposal/waiting) years behind the project's actual state (content/ready with a shipped landing page and completed editorial pipeline) -- filed conductor/t-049 to audit the rest of that file rather than assume this was a one-off.
-
-- 2026-07-15 `ai-art-academy/t-016` — Clean first-pass kaizen task: docs-only comment addition, verified against all three real call sites before merge. Second/third instance this week of a Worker PR (kind_robots #302, conductor #579) omitting the handoff template's Stakes/Flags-for-Reviewer/Kaizen-suggestion sections entirely rather than marking them n/a -- not a rejection-worthy issue on its own, but worth a Worker-side habit fix if it keeps recurring.
-
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-07-16T06:55:42Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-07-16T09:49:56Z_

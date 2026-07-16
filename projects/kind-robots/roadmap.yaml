@@ -791,21 +791,22 @@ tasks:
   - id: t-024
     milestone: m3
     title: Add a lint/convention guard against casting objects to Prisma.InputJsonValue for String/LongText columns
-    status: review
+    status: done
     owner: reviewer
     passes: 0
     stakes: reversible
-    updated: '2026-07-16T09:10:00Z'
+    updated: '2026-07-16T09:15:00Z'
     note: >
-      IN REVIEW 2026-07-16 (claude-burst-hourly-20260716-0906): opened
-      kind_robots PR #311 — utils/scripts/verifyNoPrismaJsonCast.ts scans all
-      source files for `as Prisma.InputJsonValue` / `as unknown as
+      DONE 2026-07-16 (claude-burst-hourly-20260716-0906): merged kind_robots
+      PR #311 (squash) — all 3 checks green (Contract Tests, TypeScript Type
+      Check, Facet Alias Smoke Test). utils/scripts/verifyNoPrismaJsonCast.ts
+      scans all source files for `as Prisma.InputJsonValue` / `as unknown as
       Prisma.InputJsonValue` (neither schema.prisma nor model-builder.prisma
       has a native Json column, so this cast is never legitimate here), wired
       as `npm run test:no-prisma-json-cast` into contract-tests.yml. Verified
-      locally: clean pass against current tree (1056 files, 0 hits) and a
-      fixture-file sanity check confirming it catches a real bad cast with
-      exit code 1. Waiting on CI before merging.
+      locally before opening the PR: clean pass against current tree (1056
+      files, 0 hits) and a fixture-file sanity check confirming it catches a
+      real bad cast with exit code 1. Kaizen filed as t-033.
 
       ORIGINAL NOTE:
 
@@ -831,6 +832,32 @@ tasks:
       CI check is enough, no need for a custom eslint plugin.
     claimed_by: claude-burst-hourly-20260716-0906
     claimed_at: '2026-07-16T09:07:42Z'
+
+  - id: t-033
+    milestone: m1
+    title: Extend the Prisma-cast-footgun pattern beyond InputJsonValue as new instances are found
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-16T09:15:00Z'
+    note: >
+      Kaizen from t-024 (Reviewer, kind_robots PR #311): the new
+      verifyNoPrismaJsonCast.ts contract check only flags `as
+      Prisma.InputJsonValue` / `as unknown as Prisma.InputJsonValue`, the one
+      specific "cast past the type system" shape that caused 12 of PR #295's
+      19 TypeScript errors. It does not generalize to other Prisma
+      type-system-bypass casts (e.g. `as any as <PrismaModel>`,
+      `as unknown as Prisma.<Model>UncheckedCreateInput`, or similar) that
+      could reintroduce the same class of "typechecks locally, breaks against
+      real generated Prisma types" bug through a different cast shape. Rather
+      than speculatively broadening the regex now (higher false-positive
+      risk with no concrete second example yet), wait for the next such bug
+      to surface, confirm it fits the same "no legitimate call site in this
+      schema" pattern verifyNoPrismaJsonCast.ts relies on, and either extend
+      that script's BAD_CAST_PATTERN / add a sibling check, whichever keeps
+      the false-positive rate low. Cross-reference kind-robots/t-030's note
+      on the same false-positive caution for heuristic pattern checks.
 
   - id: t-025
     milestone: m3
