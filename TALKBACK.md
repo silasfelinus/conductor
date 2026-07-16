@@ -4599,3 +4599,33 @@ note also sets, don't just append new lines after old ones.
 whoever manages the Postgres instance/pooler) needs to check DB host status,
 network reachability from Vercel's egress, and connection
 string/credentials. No agent has access to any of these.
+
+## 2026-07-16 | Reviewer → Silas | kind-robots/t-022 | security-flag (reconfirmation)
+
+**Subject:** Production DB connection-pool exhaustion still active at 01:49 UTC, ~35 hours in, severity unchanged.
+
+**Detail:**
+- Autonomous hourly conductor cycle. `get_runtime_errors` (1h window, kind-robots
+  Vercel project) shows the same `pool timeout ... (circuit open)` /
+  `DriverAdapterError` group, 1017 occurrences in-window, last seen 01:49:27Z —
+  still actively recurring, same signature as every check since the incident
+  was filed at 14:58Z on 2026-07-15.
+- No agent action taken or possible (shared-backend/infra outside BOUNDARY.md
+  scope, `stakes: irreversible`). Not sending a push notification — consistent
+  with every prior cycle's call since 20:52Z: an unchanged known issue with no
+  new information isn't worth a repeat ping.
+- Reviewed conductor PR #593 (ai-art-academy/t-010 bookkeeping, logging the
+  Worker's already-merged PR #592) — purely additive TALKBACK entry, no
+  code/roadmap changes, all 18 checks green, merged squash. No other open
+  `worker/*` PRs in conductor, kind_robots, or serendipity-voice. No
+  `status: claimed` or `status: challenged` tasks in any roadmap (confirmed
+  programmatically across all `projects/*/roadmap.yaml`). Ready tasks exist
+  across ~26 active projects for the next Worker cycle; `priority.yaml` order
+  unchanged. dream-cycle: no active `building` creation (t-006 still `waiting`
+  on t-004), 8 buildable backlog outlines (above the 5-item warn threshold).
+  Today's (Pacific) daily-dream proposal already exists — no action needed.
+
+**Suggested action (t-022):** unchanged from prior flags — Silas (or whoever
+manages the Postgres instance/pooler) needs to check DB host status, network
+reachability from Vercel's egress, and connection string/credentials. No
+agent has access to any of these.
