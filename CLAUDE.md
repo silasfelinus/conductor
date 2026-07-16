@@ -51,3 +51,25 @@ Workaround: call the GitHub MCP `create_branch` tool (`owner`/`repo`/`branch`/
 `from_branch: main`) first — this creates the ref instantly via the API with zero data
 transfer, since it just points at a commit the remote already has. Then the normal
 `git push` of your session's actual commits goes through as a small, fast delta.
+
+### Later push in the same session also fails with HTTP 413 (after a rebase)
+
+The same 413 can recur *after* the branch's first push already succeeded and its PR
+merged, if you `git rebase origin/main` (or otherwise rewrite history) and then try a
+force-push of new work on the same branch name (Silas, 2026-07-16, conductor/t-010
+Bauhaus cycle: PR #592 merged cleanly, then a follow-up TALKBACK-only commit hit 413
+on every retry — including a plain `git push`, a retry, and a `502` on one attempt —
+even though the branch clearly still existed on the remote). Root cause suspected to
+be the same "proxy wants a full pack, not a delta" behavior as the brand-new-ref case,
+just triggered by a rewritten/diverged local history instead of a genuinely new ref.
+
+Workaround: skip `git push` for that one commit and use the GitHub MCP `push_files`
+tool instead, targeting the branch's *current remote tip* (do not rebase locally
+first) — it commits via the REST API with zero pack-transfer, so the 413 doesn't
+apply. Do not force-push to "fix" this. A PR opened from the resulting branch may
+show a larger diff than expected if `main` already has equivalent content under a
+different commit SHA (e.g. from an earlier squash merge) — GitHub's merge-base
+detection may or may not collapse this back to the true incremental diff, so check
+`additions`/`changed_files` on the created PR before assuming it duplicated
+already-merged work; if it looks right (matches only your new commit's actual
+diff), it's safe to merge as normal.
