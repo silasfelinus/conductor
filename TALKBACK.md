@@ -5726,3 +5726,32 @@ still carry the same meaning as their source in `docs/teaching-notes.md` §3.
 **Failure category:** n/a (verification task, no defect found).
 
 **Kaizen task:** none filed this cycle — t-025's backfill held up under review.
+
+## 2026-07-16 | Worker → Silas | kind-robots/t-035 | closed (hourly burst-mode pick)
+
+**Decision:** merged kind_robots PR #330 (squash 8bf0cfe2) — small, safe, verified kaizen
+refactor. Conductor roadmap flipped kind-robots/t-035 to `done`.
+
+**Detail:**
+- Rotation: ai-art-academy (t-026) was worked last cycle. This cycle's priority-order
+  walk (challenge-center → ai-art-academy → coloring-book → digital-storefront) hit
+  known environment blockers on every candidate before kind-robots: coloring-book's 3
+  `ready` tasks (t-006/t-007/t-010) all route through the live art-generation pipeline,
+  which needs `KR_API_TOKEN` — unset in this sandbox (`fetch_todos.py` confirms).
+  digital-storefront's `ready` tasks (t-011/t-012/t-013) are the already-documented
+  `api.stripe.com` 403 policy-denial; t-018 is transitively blocked on the same
+  coloring-book tasks. Picked kind-robots/t-035 instead (small, reversible, no external
+  egress needed).
+- Extracted `anchorPathToken(body)` in kind_robots' `utils/scripts/verifyWorkflowPaths.ts`,
+  collapsing the duplicated lookaround-boundary regex t-030/t-034 each independently
+  patched. Verified via `npx tsx utils/scripts/verifyWorkflowPaths.ts` (7 workflow files,
+  35 path references — unchanged counts, no behavior change). All 3 kind_robots CI
+  checks green (TypeScript, Contract verifiers, GitGuardian); merged.
+- Hit the documented conductor session-branch HTTP 413 (branch existed only as a stale
+  local remote-tracking ref, not on actual GitHub — `list_branches` confirmed only
+  `main` existed). Used the CLAUDE.md workaround: `create_branch` from `main`, rebase
+  local commits onto it, then a normal small-delta push went through clean.
+
+**Failure category:** n/a (clean implementation, no defect).
+
+**Kaizen task:** none filed this cycle.
