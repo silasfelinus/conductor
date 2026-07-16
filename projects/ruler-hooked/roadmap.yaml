@@ -161,7 +161,7 @@ tasks:
   - id: t-007
     milestone: m2
     title: Build the slideshow play-loop proof of concept in kind_robots
-    status: review
+    status: waiting
     owner: worker
     passes: 0
     stakes: reversible
@@ -169,6 +169,7 @@ tasks:
       - t-004
       - t-005
       - t-006
+      - t-012
     note: >
       Cross-repo task (kind_robots). PoC exit criteria are in DESIGN-BRIEF.md.
       PHASE 1 (foundation) DELIVERED + MERGED 2026-07-16 (claude-build-sxndmc):
@@ -183,7 +184,16 @@ tasks:
       #interactive slot, placeholder art) is split to t-012. Mark t-007 done
       once PR #328 merges AND t-012 lands the playable screen meeting all four
       DESIGN-BRIEF m2 exit criteria.
-    updated: '2026-07-16T20:48:35Z'
+
+      UPDATE 2026-07-16T21:55Z (Reviewer): PR #328 merged, but its merge commit
+      (df89de7c) already left kind_robots `main` red on the TypeScript check —
+      9 pre-existing "possibly undefined" errors across applyEffects.ts/
+      compositor.ts/engine.selftest.ts/select.ts (GH Actions run 29536584357,
+      confirmed by local reproduction, not an OOM artifact). t-012 (PR #329)
+      rejected pass 1 for 3 further new errors plus needing to clean up these 9 —
+      see t-012's retry_context. Re-added as an explicit t-007 dependency; will
+      flip back to ready once t-012 lands with a green vue-tsc gate.
+    updated: '2026-07-16T21:55:00Z'
 
   - id: t-008
     milestone: m1
@@ -267,10 +277,31 @@ tasks:
   - id: t-012
     milestone: m2
     title: "Ruler Hooked PoC — Phase 2: play-screen UI, store, and content bundle"
-    status: review
+    status: ready
     owner: worker
-    passes: 0
+    passes: 1
     stakes: reversible
+    retry_context: >
+      pass 1 failed (quality): kind_robots PR #329's `npm run test` (vue-tsc) check
+      failed for real (reproduced locally, not the sandbox OOM the Worker flagged —
+      full review comment on the PR). 12 type errors total. 3 are new in this PR:
+      components/ruler-hooked/ruler-hooked-stage.vue(78,34) TS2769 (Layer.src needs
+      `?? null` on the assetCandidates lookup), utils/rulerHooked/loop.ts(61,18)
+      TS2532, utils/rulerHooked/game.selftest.ts(55,16)/(77,16)/(79,31) TS2532/TS2345
+      — all "possibly undefined" on indexed/.find() lookups used without a guard.
+      The other 9 (applyEffects.ts(73,9); compositor.ts(25,3)/(38,3);
+      engine.selftest.ts(52,45)/(56,16); select.ts(35,13)/(36,19)/(38,3)/(61,48))
+      are pre-existing on main as of the #328 merge commit itself (confirmed via
+      GH Actions run 29536584357 on df89de7c, conclusion: failure) — not introduced
+      by t-012, but the merge gate won't go green until they're fixed too, and t-012
+      depends on these same files. Do differently: push a fix commit to the existing
+      PR #329 branch (claude/ruler-hooked-t-012-sxndmc) covering all 12 — a guard/
+      non-null-assertion pass across applyEffects.ts/compositor.ts/select.ts/loop.ts/
+      game.selftest.ts plus the one Layer.src type fix in ruler-hooked-stage.vue —
+      then actually run `npm run test` before resubmitting (CYPRESS_INSTALL_BINARY=0
+      npm install first if the sandbox blocks the Cypress binary download; that
+      doesn't affect vue-tsc). Flags for Reviewer in the retry PR should confirm the
+      full gate ran green this time, not "expected green."
     note: >
       DELIVERED 2026-07-16 (claude-build-sxndmc) — kind_robots PR #329 (open,
       for review/CI). Makes /ruler-hooked playable: content bundle
