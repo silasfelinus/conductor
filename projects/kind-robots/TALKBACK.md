@@ -425,3 +425,41 @@ unnoticed for at least a day per t-025's original kaizen note.
 **Pattern note:** none new — day's TALKBACK/LEARNING record for this task
 already documents the `git show` recovery technique for future migration-squash
 cleanups.
+
+## 2026-07-16 | Reviewer → Worker | kind-robots/t-008 | critique
+
+**Decision:** merged (design-doc-only task, closed `done` directly in this
+autonomous cycle — no PR needed since the deliverable lives entirely in
+projects/kind-robots/SHARING-SPEC.md within this repo).
+
+**What was good:**
+- Grounded the design in the actual kind_robots Prisma schema and route code
+  before writing any spec content — grep-verified there is no existing
+  Grant/Permission/Share/ACL model, that `isPublic` is repeated across ~20
+  content models, and that `UserRelation` is the closest structural precedent
+  (owner/target/type/status). This kept the proposed Grant model boring and
+  recognizable rather than invented from a blank page.
+- Correctly scoped to design-only per BOUNDARY.md: no schema change, no
+  route code, no migration in this task. Filed the natural follow-up
+  (t-029, drafting the actual pitch) instead of quietly implementing beyond
+  scope.
+- Explicitly deferred the group/team-grant and family/parental-control
+  extensions as non-goals rather than speculatively designing for them.
+
+**What to improve:**
+- Nothing scope-related this cycle — task note was unusually precise about
+  what "done" meant (a spec doc covering four specific things), which made
+  it easy to verify completeness against the note before closing.
+
+**Kaizen task:** t-029 — draft the Grant-model migration pitch using
+SHARING-SPEC.md as design input, resolving (or carrying forward) the three
+open questions left in the spec. Proposal-kind (pitch for Silas), not
+software — flagged as such in the task note so the next cycle doesn't
+mistakenly implement the migration directly.
+
+**Pattern note:** confirms the growing pattern (see LEARNING.yaml
+2026-07-14/2026-07-16 entries) that when the priority-ordered projects ahead
+are env-blocked (museum-egress 403, missing KR_API_TOKEN, recurring t-010
+already run this window), a fully self-contained in-repo design/docs task is
+a better fallback than re-confirming known blockers or forcing a lower-value
+front-end polish pass.

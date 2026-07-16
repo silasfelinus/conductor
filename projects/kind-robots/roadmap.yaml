@@ -172,7 +172,7 @@ tasks:
   - id: t-008
     milestone: m4
     title: "Design brief: private-but-shared content and per-user project sharing"
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -190,6 +190,23 @@ tasks:
       design, not the migration. Silas framed the packmaker DLC slice as a deliberate
       low-stakes security test of exactly this infrastructure; see packmaker/roadmap
       and digital-storefront t-017.
+
+      DONE 2026-07-16 (autonomous hourly cycle): wrote
+      projects/kind-robots/SHARING-SPEC.md. Grounded in the actual kind_robots
+      schema (grep-verified: no Grant/Permission/Share/ACL model exists today,
+      visibility is a repeated isPublic boolean across ~20 models, closest
+      structural precedent is UserRelation). Proposes one generalized Grant
+      model (subjectType/subjectId polymorphic, not one table per content
+      type) covering both project-sharing and content-unlock cases, a shared
+      canView() helper to replace ~140 duplicated per-route ownership checks,
+      an illustrative API surface, and how a storefront purchase becomes a
+      Grant row (source: PURCHASE) — directly unblocking digital-storefront
+      t-017's entitlement design. No schema change, no migration, no route
+      code — design only, per BOUNDARY.md; the actual Prisma migration is a
+      separate future pitch. Left three open questions for Silas in the doc
+      (ADMIN sub-permissions, revoke-vs-refund interaction, and whether to
+      pre-add an unused PACK enum value now vs. deferring to whichever pitch
+      adds packmaker's Pack model).
     claimed_by: autonomous-hourly-20260716-0418
     claimed_at: '2026-07-16T04:51:25Z'
     updated: '2026-07-16T04:51:25Z'
@@ -885,3 +902,31 @@ tasks:
       allowlisted), resolves glob-free entries against the repo tree, and
       fails CI if any point at a path that doesn't exist. Wire it into an
       existing lint/static-checks job rather than a new standalone workflow.
+
+  - id: t-029
+    milestone: m4
+    title: Draft the Grant-model migration pitch using SHARING-SPEC.md as design input
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Kaizen from t-008 (Reviewer, 2026-07-16): SHARING-SPEC.md
+      (projects/kind-robots/SHARING-SPEC.md) designs a generalized Grant
+      model for private-but-shared content and project sharing, but per
+      BOUNDARY.md's data-model boundary the actual Prisma migration needs a
+      formal pitch before any kind_robots schema change happens. Write
+      pitches/<date>-sharing-grant-model.md using the pitch template: the
+      idea (one Grant model, polymorphic subjectType/subjectId, replacing
+      ~140 duplicated per-route isPublic/ownership checks with a shared
+      canView() helper), why it's worth doing (unblocks digital-storefront
+      t-017's entitlement design and packmaker's DLC gating), rough effort,
+      and a suggested first task (the migration itself, scoped to just the
+      new Grant model + enums + the canView() helper — no changes to
+      existing isPublic columns). Resolve the three open questions in
+      SHARING-SPEC.md's "Open questions for Silas" section as part of
+      writing the pitch, or carry them into the pitch explicitly for Silas
+      to answer. This is proposal-kind work (a pitch for Silas to vet, not
+      something to execute) even though it sits in kind-robots's roadmap —
+      set status: needs-human when done, per the proposal-kind rule in
+      AGENTS.md.

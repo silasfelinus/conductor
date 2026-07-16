@@ -1155,3 +1155,24 @@ records:
     digital-storefront's ready tasks hit the same two blockers, so picked a
     fully self-contained in-repo task instead of re-treading known-blocked
     ground.
+- date: 2026-07-16
+  project: kind-robots
+  task: t-008
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    Design-only tasks (deliverable is a spec doc, not code/migration) are
+    ideal fallback picks when the priority-ordered projects ahead are
+    env-blocked (ai-art-academy museum-egress + KR_API_TOKEN, coloring-book
+    and digital-storefront riding the same two blockers, ai-art-academy's
+    recurring t-010 already run this window). t-008 had zero cross-repo
+    dependency and zero external egress need, so it was fully landable in
+    one pass. Grounding the design in the actual target schema (grep for
+    existing models/fields before writing a line of the spec) surfaced a
+    reusable structural precedent (UserRelation) that made the new Grant
+    model's shape obvious rather than invented from scratch -- worth doing
+    for any future spec-writing task that touches an existing app's data
+    model.
