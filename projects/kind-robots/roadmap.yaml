@@ -891,23 +891,12 @@ tasks:
   - id: t-027
     milestone: m1
     title: Audit codebase for RegExp capture-group results used without a noUncheckedIndexedAccess guard
-    status: claimed
-    owner: reviewer
+    status: done
+    owner: null
     passes: 0
     stakes: reversible
-    note: >
-      Kaizen from ai-art-academy/t-017 (Reviewer, 2026-07-15, kind_robots PR #303):
-      that PR's first pass failed CI with `error TS2345: Argument of type
-      'string | undefined' is not assignable to parameter of type 'string'` — a
-      `RegExp.exec()` capture group (`match[1]`) was used directly without a null
-      check, which the project's `noUncheckedIndexedAccess: true` tsconfig setting
-      correctly types as `string | undefined`. Grep the codebase (especially
-      `utils/scripts/*.ts`, which has several similar regex-scanning contract-test
-      scripts) for other `.exec(`/`.match(` capture-group usages passed directly
-      into a function expecting `string` without a guard, and either add the guard
-      or confirm each one is provably safe (e.g. captured from a fixed-structure
-      literal). Small, mechanical, no design judgment needed.
-    updated: '2026-07-16T07:09:00Z'
+    note: 'AUDIT COMPLETE (Reviewer, 2026-07-16, autonomous hourly burst cycle): grepped kind_robots for every non-test `.exec(`/`.match(` capture-group usage (36 files, excluding node_modules/.nuxt/dist and cypress/*.cy.ts, whose `.to.match()` calls are Chai assertions, not JS RegExp). Checked each site by hand and additionally ran a full `npm test` (nuxi prepare + vue-tsc --noEmit) after `npm install` in this sandbox to confirm ground truth: 0 TypeScript errors, so no site currently triggers the TS2345 class of failure that hit ai-art-academy/t-017. Every site is already provably safe by one of these patterns: optional chaining + nullish fallback (`match?.[1] ?? ''''`), an explicit `if (!match) return/continue` guard before indexed access, default-valued destructuring (`const [h = 0, s = 100] = ...`), a non-null assertion `!` applied only after a truthy check on `match` itself (server/api/conductor/*.get.ts, pixel-explosion.vue — mandatory capture groups, not optional ones, so the assertion is sound), or indexing that flows into a template literal / `Number()` call, neither of which requires a defined `string` (so `string | undefined` typechecks regardless). Files checked: stores/helpers/scenarioHelper.ts, stores/helpers/butterflyHelper.ts, stores/modelBuilderStore.ts, stores/stylistStore.ts, stores/storyStore.ts, components/dreams/dream-brainstorm.vue, components/rewards/reward-interact.vue, components/screenfx/pixel-explosion.vue, components/butterfly/store-butterfly.vue, server/api/comfy/hunyuan3d.post.ts, server/api/comfy/kontext/kombine.post.ts, server/api/comfy/kontext/generate.post.ts, server/api/comfy/kontext/utils/workflow.ts, server/api/comfy/test/generate.post.ts, server/api/appmaker/apps.get.ts, server/api/botcafe/titleStorm.ts, server/api/conductor/overrides.get.ts, server/api/conductor/projects.get.ts, server/api/conductor/art-request.post.ts, server/chatgpt/services/currentImageService.ts, server/utils/folderCollections.ts, server/utils/syncFolderCollection.ts, utils/scripts/verifyAcademyStyleDetailCallers.ts (the exact file the original t-017 bug lived in — already fixed by kind_robots PR #303''s `if (filename) documented.add(filename)` guard), utils/scripts/verifyChannelContent.ts, utils/scripts/verifyWorkflowPaths.ts, utils/scripts/auditChannelAssets.ts. No code changes needed in kind_robots — closing as done with this audit trail instead of an empty PR. If a future call site reintroduces the unguarded pattern, it will still be caught by CI''s existing vue-tsc --noEmit typecheck (verified working end-to-end this cycle), so no additional lint rule was added; t-030''s own note already flagged that a heuristic pattern-matching guard for this kind of thing has a high false-positive rate and needs careful design, so that''s left for a future task if a real regression shows a gap.'
+    updated: '2026-07-16T07:16:43Z'
     claimed_by: claude-burst-hourly-20260716-0707
     claimed_at: '2026-07-16T07:09:00Z'
 
