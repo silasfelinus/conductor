@@ -594,7 +594,7 @@ tasks:
     passes: 0
     stakes: irreversible
     soft_gate: false
-    updated: "2026-07-16T06:56:00Z"
+    updated: "2026-07-16T11:05:00Z"
     note: >
       FOR SILAS: The live kind_robots production API (kind-robots.vercel.app,
       current deployment dpl_ABj8P2NznjcCmq6mcevVeeeQpeQC / PR #292) is failing
@@ -748,6 +748,32 @@ tasks:
       "still investigating, nothing tried yet." No agent has DB-host or
       ProxySQL-pooler access to investigate further — still hard
       needs-human, still out of app-owned scope per BOUNDARY.md.
+
+      RECONFIRMED 2026-07-16T11:05:00Z (autonomous hourly cycle) — NEW
+      INFORMATION, notification sent: checked live via the Vercel MCP
+      connector. `get_runtime_errors` (2h window) still shows the same
+      `pool timeout ... (circuit open)` / `DriverAdapterError` group as the
+      dominant signature (1898 occurrences, last=2026-07-16T11:01:29Z,
+      real-time), but a THIRD, distinct error group now appears that was not
+      present in the 06:56Z check: a `[database:direct-probe]` failure at
+      2026-07-16T09:50:59Z — `SqlError code=UNKNOWN (conn:8, no: 2005,
+      SQLState: HY000) Unknown server host 'mariadb-[redacted]s2' (-2)` on
+      `/api/health/database-direct`, i.e. the direct (non-pooled) probe
+      itself failed DNS/hostname resolution for the MariaDB host, not just a
+      pool/TLS-path failure. This is materially different from every prior
+      check in this note, which consistently found the direct probe
+      succeeding (DB host reachable) while only the pooled path failed —
+      this is the first evidence the underlying host address/DNS may itself
+      be the problem (renamed, decommissioned, or a DNS/network change on
+      the ProxySQL frontend host), not purely a client-side pool/TLS
+      misconfiguration. `get_runtime_logs` (1h window) grouped by status:
+      957x 503 vs 309x 200 (~76% failure — still broken, though somewhat
+      better than the ~96-97% seen across the 23:06Z-06:56Z checks). FOR
+      SILAS: worth checking whether the `mariadb-...s2` hostname the direct
+      probe resolves still exists / has correct DNS — this looks like a
+      more specific, actionable lead than anything surfaced in the prior six
+      reconfirmations. No agent action taken (DB-host/DNS is outside
+      BOUNDARY.md scope) — still hard needs-human.
   - id: t-023
     milestone: m1
     title: Automate the deploy-wait ancestry-check verification t-018 did manually in scratch git repos
