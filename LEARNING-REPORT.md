@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-07-16T20:00:45Z
+Generated: 2026-07-16T20:04:23Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **202**
-- Outcomes: blocked: 12, done: 190
+- Closed tasks recorded: **206**
+- Outcomes: blocked: 12, done: 194
 - Success rate: **94%**
 - Average passes on successful tasks: **0.0**
 
@@ -24,7 +24,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | challenge-center | 16 | 100% |
 | coat-dance | 8 | 0% |
 | coloring-book | 12 | 100% |
-| conductor | 19 | 100% |
+| conductor | 23 | 100% |
 | digital-storefront | 6 | 100% |
 | dream-cycle | 11 | 100% |
 | ecosystem-map | 4 | 100% |
@@ -48,7 +48,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 15 | 40% |
-| software | 187 | 98% |
+| software | 191 | 98% |
 
 ## Failure categories
 
@@ -66,6 +66,14 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-07-16 `conductor/t-051` — CLI-gating tests (main()'s argument-combination branches) are a distinct coverage layer from the unit tests of the function they wrap (t-050) — both are needed, and it's easy to declare a file "tested" after only the unit layer lands.
+
+- 2026-07-16 `conductor/t-046` — A proven manual recipe (CYPRESS_INSTALL_BINARY=0 + dummy DATABASE_URL) is only as useful as its discoverability — turning it into a script closes half the gap, but it still needs a pointer from AGENTS.md (t-057) or future sessions will re-derive the same recipe from scratch.
+
+- 2026-07-16 `conductor/t-031` — Before adding a CI step, check whether the existing job already covers it (the full pytest tests/ run since t-047 already discovered the new test file) — avoids a redundant, easy-to-miss-in-review duplicate wire-up.
+
+- 2026-07-16 `conductor/t-045` — Documenting a fix in AGENTS.md doesn't finish the story if the same session that merges it also hits the Reviewer-side half of the same race (see t-056) — a written rule for one role doesn't cover the other role's version of the problem.
+
 - 2026-07-16 `ai-art-academy/t-025` — A kaizen task filed with owner: reviewer from a prior merge can be picked up and implemented directly in a later autonomous cycle acting as Worker when no separate Worker session is active that hour — the owner field on a ready task is a hint, not a hard assignment. When adapting source prose (here: teaching-notes.md's table) into code strings rather than copying verbatim, file a small follow-on diff-check task rather than trusting the cleanup by eye; it is cheap insurance against silent meaning drift.
 
 - 2026-07-16 `dream-cycle/t-004` — Write the type-agnostic loop contract (CREATION-SPEC.md) once and have each specs/<type>.md playbook plug into it, rather than restating queue/one-building/ledger rules per playbook; cite create-calls from the API audit so stages stay in sync with the real endpoints.
@@ -76,11 +84,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 - 2026-07-16 `global-ui/t-018` — Cross-repo kaizen tasks that extend an already-shipped computed pattern (here, t-015's doneTasksByMilestone done/active split) are cheapest to verify against the widest-blast-radius check available even when the change is tiny: running the full-project vue-tsc --noEmit (not just the touched file) caught that this environment's freshly-installed prettier version reformats unrelated pre-existing union-type lines on save, which would have silently expanded the diff's blast radius if not checked for and manually reverted before committing.
 
-- 2026-07-16 `conductor/t-052` — When a kaizen task offers two design options and explicitly recommends the lighter one ("pick whichever is less roadmap-schema churn"), take that steer literally rather than re-litigating it — the append-only single-ledger design (EGRESS-BLOCKERS.md, mirroring TALKBACK.md's existing convention) needed zero roadmap.yaml schema changes and no new task fields, while the alternative (a `blocked_by_egress` task field) would have touched every affected task's schema for the same practical outcome. Verifying the new tool against a real known-good host (registry.npmjs.org) and a real known-blocked host (metmuseum.org) in the same session, rather than only unit-testing with mocks, caught that the sandbox proxy surfaces the block as an HTTPS CONNECT tunnel 403 (not a bare connection reset) — useful detail for the log line's `detail` text that a mocked-only test run would not have surfaced.
-
-- 2026-07-16 `ai-art-academy/t-023` — A reusable lesson-scaffold beat (Try It / Reflect) can stay data-model-light by keying copy off an existing coarse field (remix.mode, prompt vs lora) instead of porting a large per-style table (teaching-notes.md's 21-row failure-mode list) into the TS seed — keeps the PR additive and scoped when the fine-grained data doesn't already live in the seed.
-- 2026-07-16 `ai-art-academy/t-024` — A cross-file slug "mismatch" is not always a bug — verify each divergence individually before forcing exact-match; three of this file pair's divergences were intentional (an artist/technique-specific LoRA entry narrower than the general curriculum movement), so the right fix was a documented mapping table, not renaming slugs to force equality.
-- 2026-07-16 `kind-robots/t-034` — When a lookaround-anchoring fix is applied to one token pattern in a file (t-030's bare-token pattern), sibling patterns in the same file sharing the old plain-\b anchoring (here, the extension-based runStepTokenPattern) should be audited in the same pass rather than deferred to a separate kaizen task — they share the identical failure mode.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-07-16T20:00:45Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-07-16T20:04:23Z_

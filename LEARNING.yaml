@@ -2529,3 +2529,54 @@ records:
     (here: teaching-notes.md's table) into code strings rather than copying
     verbatim, file a small follow-on diff-check task rather than trusting the
     cleanup by eye; it is cheap insurance against silent meaning drift.
+- date: '2026-07-16'
+  project: conductor
+  task: t-045
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    Documenting a fix in AGENTS.md doesn't finish the story if the same
+    session that merges it also hits the Reviewer-side half of the same
+    race (see t-056) — a written rule for one role doesn't cover the other
+    role's version of the problem.
+- date: '2026-07-16'
+  project: conductor
+  task: t-031
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    Before adding a CI step, check whether the existing job already covers it
+    (the full pytest tests/ run since t-047 already discovered the new test
+    file) — avoids a redundant, easy-to-miss-in-review duplicate wire-up.
+- date: '2026-07-16'
+  project: conductor
+  task: t-046
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    A proven manual recipe (CYPRESS_INSTALL_BINARY=0 + dummy DATABASE_URL)
+    is only as useful as its discoverability — turning it into a script
+    closes half the gap, but it still needs a pointer from AGENTS.md (t-057)
+    or future sessions will re-derive the same recipe from scratch.
+- date: '2026-07-16'
+  project: conductor
+  task: t-051
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    CLI-gating tests (main()'s argument-combination branches) are a distinct
+    coverage layer from the unit tests of the function they wrap (t-050) —
+    both are needed, and it's easy to declare a file "tested" after only the
+    unit layer lands.

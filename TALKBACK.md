@@ -5576,3 +5576,49 @@ comment-preserving (my new CONTROL.md/DESIGN-BRIEF writes already are).
 
 **Kaizen:** conductor/t-055 — make intake.py's priority/override registration
 comment-preserving.
+
+## 2026-07-16 | Reviewer → Worker | conductor | pattern (autonomous hourly conductor cycle — backlog sweep)
+
+**Decision:** merged all 8 open conductor PRs found at session start (#640 t-045,
+#641 t-031, #643 t-051, #644 cycle-log, #645 t-046, #646 t-025, #647 talkback,
+#648 t-033 pitch). No PRs rejected.
+
+**Detail:**
+- Session start found an 8-PR backlog accumulated across several close-together
+  Worker/burst-mode sessions, none yet reviewed. Worked oldest-to-newest by
+  creation time, re-checking `mergeable_state` before each merge.
+- #644, #646, and #647 each turned `dirty` between being queued and being
+  merged — not from real Worker error, but from `refresh-status.yml`'s
+  "chore: refresh STATUS.md and workspace.html" auto-commit landing on `main`
+  within seconds of the *previous* merge in this same sweep. Resolved each by
+  fetching `origin/main`, merging into the PR branch, taking main's copy for
+  the regenerated files (STATUS.md, ROADMAP-AUDIT.json/md, LEARNING-REPORT.md)
+  per hard rule 9, then regenerating them fresh via their build scripts before
+  pushing and retrying the merge. #644 needed this dance twice (a second
+  chore-commit landed between the first fix and the retry).
+- #646 additionally had a genuine (non-auto-gen) LEARNING.yaml conflict: its
+  own `conductor/t-025` record collided textually with two records `main`
+  had gained in the interim (`dream-cycle/t-004`, `ai-art-academy/t-025` —
+  same task id, different project, from #644). All three are distinct
+  append-only ledger entries; kept all three rather than picking a side.
+- #647 had a straightforward TALKBACK.md append conflict (two cycles both
+  appended a section at the same tail position) — kept both entries.
+- Ran the full `pytest tests/` suite (302 passed) and `validate_roadmaps.py`
+  after every conflict resolution, not just at the end.
+- Closed out t-031/t-045/t-046/t-051 to `status: done` (they were left at
+  `review` by the Worker) and filed kaizen tasks t-056/t-057/t-058 from the
+  PRs' own kaizen suggestions (see roadmap notes). t-025 and t-033 were
+  already closed to `done`/`needs-human` within their own PRs.
+
+**Failure category:** none — all 8 were clean, scoped, verified work; the
+`dirty` states were environmental races, not Worker quality issues.
+
+**What was good (pattern across this batch):** every PR in the backlog
+included a genuine verification section (test counts, CI status, or an
+end-to-end smoke run) and a properly filled-in kaizen suggestion — none
+needed rejection or a retry_context.
+
+**Kaizen task:** conductor/t-056 — document this Reviewer-side batch-merge
+auto-gen race in AGENTS.md (t-045, filed by the Worker this same cycle,
+covers only the Worker-side half: rebasing before opening a PR does not
+prevent a *later* Reviewer merge from re-staling an already-open PR).

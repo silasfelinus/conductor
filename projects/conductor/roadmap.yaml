@@ -631,17 +631,25 @@ tasks:
   - id: t-031
     milestone: m2
     title: Wire LEARNING-REPORT.md regeneration and its tests into CI
-    status: review
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
-    updated: '2026-07-16T18:57:24Z'
+    updated: '2026-07-16T20:00:00Z'
     depends_on: t-030
     note: >
-      Follow-up to t-030. Add tests/test_build_learning_summary.py to the Worker PR
-      CI job list (ci.yml) and regenerate LEARNING-REPORT.md on pushes to main the
-      same way STATUS.md/KAIZEN.md are rebuilt, so the report never drifts from the
-      ledger.
+      DONE 2026-07-16 (Reviewer merge, conductor PR #641, squash). Added a
+      "Regenerate LEARNING-REPORT.md" step to refresh-status.yml next to the
+      STATUS.md/workspace.html regen, added LEARNING.yaml to the workflow's
+      trigger paths, and regenerated the then-stale report (194->199 closed).
+      No ci.yml change needed: the "Authz regression tests" job already runs
+      the full pytest tests/ suite (t-047), which discovers
+      tests/test_build_learning_summary.py. 16/16 tests passed.
+
+      Original note: Follow-up to t-030. Add tests/test_build_learning_summary.py to
+      the Worker PR CI job list (ci.yml) and regenerate LEARNING-REPORT.md on pushes
+      to main the same way STATUS.md/KAIZEN.md are rebuilt, so the report never
+      drifts from the ledger.
     claimed_by: claude-overnight-sxndmc
     claimed_at: '2026-07-16T18:57:24Z'
 
@@ -1087,11 +1095,22 @@ tasks:
   - id: t-045
     milestone: m2
     title: Have Worker sessions rebase their branch onto origin/main immediately before opening a PR, to avoid dumping trivial auto-gen conflicts on the Reviewer
-    status: review
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
+    updated: '2026-07-16T20:00:00Z'
     note: >
+      DONE 2026-07-16 (Reviewer merge, conductor PR #640, squash). Added the
+      fetch+rebase step to AGENTS.md's Worker section. Note from the same
+      Reviewer sweep that merged this: the auto-gen race is broader than one
+      Worker PR being stale before it opens — refresh-status.yml's chore
+      commit landed on main after nearly every single merge in this cycle's
+      8-PR backlog, re-conflicting each subsequent PR in the queue seconds
+      later. Filed t-056 to cover the Reviewer-side batch-merge half of this
+      problem that this task didn't reach.
+
+      Original note: >
       Kaizen from Reviewer merge of conductor PR #550 (kindrobots-unraid/t-005,
       hourly cycle 2026-07-15). The PR's merge-base was one commit behind
       origin/main (a "chore: refresh STATUS.md and workspace.html" auto-commit
@@ -1109,16 +1128,27 @@ tasks:
       while it waits for review.
     claimed_by: claude-overnight-sxndmc
     claimed_at: '2026-07-16T18:55:33Z'
-    updated: '2026-07-16T18:55:33Z'
 
   - id: t-046
     milestone: m2
     title: Cache a kind_robots node_modules install (or Nuxt type-stub cache) reachable through the sandbox proxy allowlist, so burst-mode sessions can run vue-tsc/eslint locally
-    status: review
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
+    updated: '2026-07-16T20:00:00Z'
     note: |-
+      DONE 2026-07-16 (Reviewer merge, conductor PR #645, squash). Added
+      scripts/provision_kind_robots_deps.sh, mirroring provision_node24.sh's
+      idempotent/no-root style: sources provision_node24.sh, exports a dummy
+      DATABASE_URL, runs `CYPRESS_INSTALL_BINARY=0 npm ci --no-audit --no-fund`
+      then `prisma generate`. Verified end-to-end against the sibling
+      kind_robots checkout (1238 packages in ~30s, vue-tsc present, idempotent
+      re-run skips correctly). Filed t-057 (the PR's own kaizen suggestion):
+      mention the script in AGENTS.md near the cross-repo/verification
+      guidance so future sessions discover it without grepping.
+
+      Original note: |-
       Kaizen from Reviewer's coloring-book/t-020 pass (hourly burst-mode, kind_robots
       PR #290, 2026-07-15). challenge-center/t-021 (conductor PR #535) already solved
       getting a matching Node 24.x runtime into the sandbox via
@@ -1153,7 +1183,6 @@ tasks:
       about convenience/discoverability, not a hard wall.
     claimed_by: claude-overnight-sxndmc
     claimed_at: '2026-07-16T19:05:30Z'
-    updated: '2026-07-16T19:05:30Z'
 
   - id: t-047
     milestone: m2
@@ -1262,11 +1291,22 @@ tasks:
   - id: t-051
     milestone: m1
     title: Extend reconcile_expressions test coverage to the --apply/--deactivate CLI gating
-    status: review
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
+    updated: '2026-07-16T20:00:00Z'
     note: >
+      DONE 2026-07-16 (Reviewer merge, conductor PR #643, squash). Added 4
+      main()-level tests + a _apply_setup helper: --apply without --deactivate
+      detects/counts missing rows but never posts them; --apply --deactivate
+      posts the soft-disable batch; the stderr deactivate_note appears only
+      when appropriate. 13/13 tests passed (9 existing + 4 new). Filed t-058
+      (the PR's own kaizen suggestion): a test asserting --apply with no
+      KR_API_TOKEN returns 1 early, the one remaining untested CLI-gating
+      branch.
+
+      Original note: >
       Kaizen from t-050 (Reviewer, autonomous hourly cycle, 2026-07-16). t-050
       covered plan_owner()'s missing/deactivate and orphan-loop branches at the
       unit level, but main()'s CLI gating around them is still untested: with
@@ -1285,7 +1325,6 @@ tasks:
       (missing posted), and the stderr note text in each case.
     claimed_by: claude-overnight-sxndmc
     claimed_at: '2026-07-16T19:01:20Z'
-    updated: '2026-07-16T19:01:20Z'
 
   - id: t-052
     milestone: m2
@@ -1358,3 +1397,61 @@ tasks:
       text-surgery append (mirror t-025's register_control_block, or the LEARNING.yaml
       splice pattern), or adopt ruamel.yaml round-tripping. Add a test asserting a
       seeded header comment survives an intake.py run.
+
+  - id: t-056
+    milestone: m2
+    title: Document the Reviewer batch-merge auto-gen race in AGENTS.md
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Kaizen from this cycle's Reviewer sweep (2026-07-16, conductor PRs
+      #640/#641/#643/#644/#645/#646/#647/#648, an 8-PR backlog cleared in one
+      session). t-045 (this same cycle) covers the Worker-side half of the
+      auto-gen conflict problem (rebase before opening a PR), but the
+      Reviewer-side half is distinct and was hit repeatedly here:
+      refresh-status.yml's "chore: refresh STATUS.md and workspace.html"
+      commit lands on main within seconds of every merge, so when the
+      Reviewer clears several backlogged PRs back-to-back, nearly every merge
+      after the first races that auto-commit and turns mergeable_state dirty
+      moments after it was clean — no amount of Worker-side rebase-before-PR
+      prevents this, since the staleness is introduced by the Reviewer's own
+      prior merge, not by anything the Worker did. Add a short "Reviewer
+      batch-merge" note to AGENTS.md (near hard rule 9): when clearing
+      multiple PRs in one sweep, expect this race after each merge; re-fetch
+      main and retry rather than treating mergeable_state:dirty as a real
+      conflict on the first try. For genuine conflicts, the resolution is
+      the same as any auto-gen conflict — take main's copy for
+      STATUS.md/ROADMAP-AUDIT.*/LEARNING-REPORT.md and regenerate; for
+      append-only files (TALKBACK.md, LEARNING.yaml) that both sides touched,
+      keep both sides' entries rather than picking one.
+
+  - id: t-057
+    milestone: m2
+    title: Mention provision_kind_robots_deps.sh in AGENTS.md near the cross-repo/verification guidance
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Kaizen from conductor/t-046 (2026-07-16, PR #645). The script exists and is
+      proven end-to-end but is discoverable only by grepping scripts/ — add a
+      one-line pointer in AGENTS.md's cross-repo/verification section so future
+      sessions run it instead of re-deriving the CYPRESS_INSTALL_BINARY +
+      DATABASE_URL combination from scratch.
+
+  - id: t-058
+    milestone: m1
+    title: Test that reconcile_expressions main() --apply with no KR_API_TOKEN returns 1 early
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Kaizen from conductor/t-051 (2026-07-16, PR #643). t-051 covered the
+      --apply/--deactivate CLI gating but left one branch untested: main()
+      returns 1 immediately when --apply is passed without KR_API_TOKEN set.
+      A tiny test (monkeypatch rex.KR_API_TOKEN to None/empty, assert exit
+      code 1, assert post_batch never called) closes the last CLI-gating gap
+      in this file.
