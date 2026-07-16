@@ -594,8 +594,26 @@ tasks:
     passes: 0
     stakes: irreversible
     soft_gate: false
-    updated: "2026-07-16T06:56:00Z"
+    updated: "2026-07-16T12:00:00Z"
     note: >
+      RECONFIRMED 2026-07-16T12:00:00Z (autonomous hourly cycle) — verified live
+      via Vercel MCP, no notification sent (same signature as the 11:05Z check,
+      not materially new). `get_runtime_errors` (24h) still shows the dominant
+      `pool timeout ... (circuit open)` / `DriverAdapterError` group
+      (18008 occurrences, last=2026-07-16T11:54:39Z, real-time) as well as the
+      single `[database:direct-probe]` DNS-resolution failure at 09:50:59Z
+      (`Unknown server host 'mariadb-[redacted]s2'`) reported by the 11:05Z
+      check — independently confirmed present in this session's own
+      `get_runtime_errors` call, not just carried forward from a prior note.
+      That DNS failure has NOT recurred since (checked a narrower 2h window
+      ending 11:56Z: same pool-timeout group only, no second direct-probe DNS
+      failure) — so it reads as a one-off blip rather than a sustained new
+      failure mode, though it remains the most specific lead anyone has found
+      on possible DNS/host-identity drift on the ProxySQL frontend host.
+      `get_runtime_logs` (1h, grouped by statusCode): 886x 503 vs 132x 200
+      (~87% failure) — still broken, consistent with recent checks. No agent
+      action taken (DB-host/DNS is outside BOUNDARY.md scope) — still hard
+      needs-human.
       FOR SILAS: The live kind_robots production API (kind-robots.vercel.app,
       current deployment dpl_ABj8P2NznjcCmq6mcevVeeeQpeQC / PR #292) is failing
       almost every DB-backed request right now with `DriverAdapterError: pool
