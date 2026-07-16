@@ -689,11 +689,11 @@ tasks:
   - id: t-029
     milestone: m1
     title: Promote the reconcile_expressions offline harness into the pytest suite
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
-    updated: "2026-07-10T19:30:00Z"
+    updated: '2026-07-16T06:08:34Z'
     note: >
       Kaizen from conductor PR #360 (Reviewer, 2026-07-10): the script's
       narrator-first/bulk-fallback resolution order was verified with a
@@ -703,6 +703,8 @@ tasks:
       list, 404 falls back to the list with rows-unknown create-only
       semantics, character owner id comes from sourceCharacterId, and the
       first-100-truncation regression stays caught.
+    claimed_by: claude-burst-hourly-20260716-0608
+    claimed_at: '2026-07-16T06:08:34Z'
 
   - id: t-035
     milestone: m1
