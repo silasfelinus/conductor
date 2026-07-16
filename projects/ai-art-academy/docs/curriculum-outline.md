@@ -4,8 +4,8 @@ date: 2026-07-10
 task: ai-art-academy/t-005
 status: draft for review (content complete, one source URL verified per movement)
 
-This is the v1 curriculum: 15 movements in chronological order, from Greek vases to
-De Stijl. Every artist named here is long dead (all listed artists died before 1955),
+This is the v1 curriculum: 16 movements in chronological order, from Greek vases to
+Bauhaus. Every artist named here is long dead (all listed artists died before 1955),
 and every example work is a public-domain original held (or expected) in an
 open-access collection. See the ethical boundary in DESIGN-BRIEF.md and the
 forthcoming PUBLIC-DOMAIN-POLICY.md (t-006).
@@ -112,6 +112,12 @@ movements:
     artist_slugs: [piet-mondrian, theo-van-doesburg]
     example_count: 4
     remix_hint: "Reduce this image to a De Stijl composition: straight black lines and rectangles of pure red, yellow, blue, and white on a flat geometric grid"
+  - slug: bauhaus
+    name: Bauhaus
+    era: "1919-1933"
+    artist_slugs: [wassily-kandinsky, paul-klee, laszlo-moholy-nagy]
+    example_count: 4
+    remix_hint: "Repaint this image as a Bauhaus-school geometric abstraction: pure circles, triangles, and squares in bold primary colors on a flat plane, precise linework, no realistic shading"
 ```
 
 ---
@@ -802,6 +808,61 @@ and rectangles of pure red, yellow, blue, and white on a flat geometric grid"
 
 ---
 
+## 16. Bauhaus (`bauhaus`)
+
+**Era:** 1919-1933 (Weimar → Dessau → Berlin, Germany)
+
+**Key ideas.** The Bauhaus school treated painting, craft, and design as one
+discipline: "form follows function," taught through hands-on workshops
+(weaving, typography, metalwork, furniture) alongside foundational theory
+courses. Kandinsky and Klee both taught the first-year "form" class, codifying
+color and shape into a shared visual vocabulary — De Stijl's flat grids were a
+direct influence, feeding straight into the school's founding years. When the
+Nazi government forced the school to close in 1933, its faculty scattered
+worldwide and carried the style into modern graphic design, architecture, and
+art education.
+
+**Recognition cues:**
+- Pure geometric forms — circles, triangles, squares — used as a symbolic
+  color-form vocabulary (Kandinsky's "point, line, plane" theory)
+- Bold primary and secondary color fields, often crossed by black grid lines
+  or radiating diagonals
+- Whimsical, sign-like pictograms layered over precise geometric grids (Klee)
+- Camera-less "photograms" — ghostly silhouettes made by placing objects
+  directly on light-sensitive paper (Moholy-Nagy)
+- Sans-serif geometric typography and ornament-free composition in adjacent
+  design work
+
+**Notable artists:**
+- **Wassily Kandinsky** (1866-1944) — Led the Bauhaus's foundational "form"
+  class, teaching that geometric shapes and colors carry specific emotional
+  meaning (to him, a circle is calm, a triangle is aggressive).
+- **Paul Klee** (1879-1940) — Taught alongside Kandinsky and filled private
+  notebooks with pedagogical diagrams; his own paintings mix deceptively
+  childlike pictograms with dry, precise geometry.
+- **László Moholy-Nagy** (1895-1946) — Ran the Bauhaus's metal workshop and
+  pioneered the photogram, treating light itself as an art medium; later
+  founded the New Bauhaus in Chicago after the school's closure.
+
+**Example works:**
+- *Orange*, Wassily Kandinsky, 1923 — **VERIFIED**, Art Institute of Chicago
+  (CC0): https://www.artic.edu/artworks/72690/orange
+- *Circles in a Circle*, Wassily Kandinsky, 1923 — Philadelphia Museum of Art
+  (Louise and Walter Arensberg Collection); expected as PD scan at Wikimedia
+  Commons (unverified)
+- *Architecture*, Paul Klee, 1921 — **VERIFIED**, Art Institute of Chicago
+  (CC0), from Klee's "Magic Squares" series painted the year he joined the
+  Bauhaus faculty: https://www.artic.edu/artworks/17540/architecture
+- *Fotogramm*, László Moholy-Nagy, 1926 — Metropolitan Museum of Art
+  (accession search/265197); expected as open-access image (unverified CC0
+  status this session)
+
+**remix_hint:** "Repaint this image as a Bauhaus-school geometric abstraction:
+pure circles, triangles, and squares in bold primary colors on a flat plane,
+precise linework, no realistic shading"
+
+---
+
 ## Lesson-only vs remixable
 
 Every movement above maps to a remix config (mode `prompt` to start; t-003/t-004
@@ -821,7 +882,12 @@ strong graphic transformations (silhouette-on-terracotta, tesserae-and-gold) tha
 usually look delightful, but the model may add vessel curvature/border framing or
 lose fine facial detail — test in t-004. `illuminated-manuscript` remixes well as
 "miniature with gold border," though the page/text context can crowd small
-subjects.
+subjects. `bauhaus` spans three quite different hands (Kandinsky's spiritual
+geometry, Klee's whimsical pictograms, Moholy-Nagy's camera-less photograms) —
+expect the model to default to a generic "geometric abstract art" look rather
+than a specific recognizable Bauhaus signature; the prompt template should pick
+one sub-style (likely Kandinsky's point/line/plane vocabulary) rather than
+average all three.
 
 **Flagged as likely-poor remixers:**
 - `cubism` — faceting while "preserving the composition" is partly contradictory;
@@ -841,10 +907,11 @@ until t-004 evaluates them.
 ## Public-domain safety check (t-006 preview)
 
 All named artists died in 1953 or earlier (most recent deaths: Gleizes 1953,
-Munch 1944, Mondrian 1944, Mucha 1939, Kirchner 1938). No living or post-1990
-deceased artist appears anywhere. Picasso (d. 1973) and Braque (d. 1963) are
-mentioned in Cubism lesson prose as historical context only — no works of theirs
-are exhibited, remixed, or attributed as style targets. Every example work
-predates 1930, so all are US public domain; the most recent is van Doesburg's
-Counter-Composition V (1924), with the Klimt (1907-08), Marc (1913), and
-Mondrian (1921) works also comfortably pre-1930.
+Munch 1944, Mondrian 1944, Kandinsky 1944, Mucha 1939, Kirchner 1938). No
+living or post-1990 deceased artist appears anywhere. Picasso (d. 1973) and
+Braque (d. 1963) are mentioned in Cubism lesson prose as historical context
+only — no works of theirs are exhibited, remixed, or attributed as style
+targets. Every example work predates 1930, so all are US public domain; the
+most recent is Moholy-Nagy's Fotogramm (1926), with van Doesburg's
+Counter-Composition V (1924), the Klimt (1907-08), Marc (1913), and Mondrian
+(1921) works also comfortably pre-1930.
