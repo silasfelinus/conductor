@@ -289,6 +289,123 @@ images:
       text, no logos, no watermark, landscape composition
 
       '
+inspirations:
+# ruler-hooked — first landscape-layer prompt pack (t-008).
+# Concept layers for the composited play screen: each is one region in one state at
+# one time-of-day, authored as BASE + TIME_MOD + STYLE_TAIL per docs/art-direction.md
+# (§4 template scheme, §5 first pack). Every layer is a single horizontal depth band
+# with the rest of the frame transparent so they stack per docs/compositing.md.
+# This batch covers the warlock/druid swap the PoC must demonstrate (m2 exit
+# criterion) plus a day/night pair and one golden-hour treat to prove the time matrix.
+# PROMPTS ONLY — no art generated (KR_API_TOKEN unset). Generate through the normal
+# pipeline when a batch is green-lit.
+- project: ruler-hooked
+  target_repo: silasfelinus/kind_robots
+  images:
+    - image_path: public/images/artcollections/ruler-hooked/ruler-hooked-sky-open-day.webp
+      size: 1280x720
+      status: pending
+      prompt: >
+        Layer concept — SKY region, open state, day. Wide empty storybook sky over a
+        lakeside kingdom, soft clouds, distant birds, nothing but atmosphere in the top
+        depth band, warm high-key daylight from screen-left, clear midday color, gentle
+        ambient shadows, cartoony storybook illustration, soft confident linework,
+        rounded shapes, warm saturated slightly-faded palette, Monkey Island / Bakshi /
+        Treasure Planet / Steven Universe / She-Ra energy, single horizontal depth band
+        with the rest of the frame fully transparent, full-scene registration, strong
+        readable silhouette, no readable text, no logos, no watermark, no collage
+    - image_path: public/images/artcollections/ruler-hooked/ruler-hooked-sky-open-night.webp
+      size: 1280x720
+      status: pending
+      prompt: >
+        Layer concept — SKY region, open state, night. Wide empty storybook sky over a
+        lakeside kingdom, soft clouds, distant birds, nothing but atmosphere in the top
+        depth band, cool low-key moonlight from screen-right, deep blue shadows, small
+        warm window and lantern glows, cartoony storybook illustration, soft confident
+        linework, rounded shapes, warm saturated slightly-faded palette, Monkey Island /
+        Bakshi / Treasure Planet / Steven Universe / She-Ra energy, single horizontal
+        depth band with the rest of the frame fully transparent, full-scene
+        registration, strong readable silhouette, no readable text, no logos, no
+        watermark, no collage
+    - image_path: public/images/artcollections/ruler-hooked/ruler-hooked-treeline-wild-day.webp
+      size: 1280x720
+      status: pending
+      prompt: >
+        Layer concept — TREELINE region, wild state, day. A lush overgrown forest band
+        behind the lakeside foreground, tall tangled trees, dappled canopy, hidden
+        critter eyes, thriving, warm high-key daylight from screen-left, clear midday
+        color, gentle ambient shadows, cartoony storybook illustration, soft confident
+        linework, rounded shapes, warm saturated slightly-faded palette, Monkey Island /
+        Bakshi / Treasure Planet / Steven Universe / She-Ra energy, single horizontal
+        depth band with the rest of the frame fully transparent, full-scene
+        registration, strong readable silhouette, no readable text, no logos, no
+        watermark, no collage
+    - image_path: public/images/artcollections/ruler-hooked/ruler-hooked-treeline-wild-night.webp
+      size: 1280x720
+      status: pending
+      prompt: >
+        Layer concept — TREELINE region, wild state, night. A lush overgrown forest band
+        behind the lakeside foreground, tall tangled trees, dappled canopy, glowing
+        critter eyes, thriving, cool low-key moonlight from screen-right, deep blue
+        shadows, small warm firefly and lantern glows, cartoony storybook illustration,
+        soft confident linework, rounded shapes, warm saturated slightly-faded palette,
+        Monkey Island / Bakshi / Treasure Planet / Steven Universe / She-Ra energy,
+        single horizontal depth band with the rest of the frame fully transparent,
+        full-scene registration, strong readable silhouette, no readable text, no logos,
+        no watermark, no collage
+    - image_path: public/images/artcollections/ruler-hooked/ruler-hooked-treeline-logged-day.webp
+      size: 1280x720
+      status: pending
+      prompt: >
+        Layer concept — TREELINE region, logged state, day (the warlock-development
+        swap). A thinned forest band with fresh stumps and stacked timber, a few
+        survivor trees, wistful, mid-transformation, warm high-key daylight from
+        screen-left, clear midday color, gentle ambient shadows, cartoony storybook
+        illustration, soft confident linework, rounded shapes, warm saturated
+        slightly-faded palette, Monkey Island / Bakshi / Treasure Planet / Steven
+        Universe / She-Ra energy, single horizontal depth band with the rest of the
+        frame fully transparent, full-scene registration, strong readable silhouette,
+        no readable text, no logos, no watermark, no collage
+    - image_path: public/images/artcollections/ruler-hooked/ruler-hooked-far_shore-pristine-day.webp
+      size: 1280x720
+      status: pending
+      prompt: >
+        Layer concept — FAR_SHORE region, pristine state, day (the druid-preservation
+        swap). The far bank of a calm lake seen across the water, untouched wild
+        shoreline, reeds, a heron, soft forest edge, mid-distance depth band, warm
+        high-key daylight from screen-left, clear midday color, gentle ambient shadows,
+        cartoony storybook illustration, soft confident linework, rounded shapes, warm
+        saturated slightly-faded palette, Monkey Island / Bakshi / Treasure Planet /
+        Steven Universe / She-Ra energy, single horizontal depth band with the rest of
+        the frame fully transparent, full-scene registration, strong readable
+        silhouette, no readable text, no logos, no watermark, no collage
+    - image_path: public/images/artcollections/ruler-hooked/ruler-hooked-far_shore-industrial-day.webp
+      size: 1280x720
+      status: pending
+      prompt: >
+        Layer concept — FAR_SHORE region, industrial state, day (the warlock-development
+        swap). The far bank crowded with goofy warlock-financed development, crooked
+        smokestacks, tin roofs, purple-tinged smog puffs, comically over-built,
+        mid-distance depth band, warm high-key daylight from screen-left, clear midday
+        color, gentle ambient shadows, cartoony storybook illustration, soft confident
+        linework, rounded shapes, warm saturated slightly-faded palette, Monkey Island /
+        Bakshi / Treasure Planet / Steven Universe / She-Ra energy, single horizontal
+        depth band with the rest of the frame fully transparent, full-scene
+        registration, strong readable silhouette, no readable text, no logos, no
+        watermark, no collage
+    - image_path: public/images/artcollections/ruler-hooked/ruler-hooked-treeline-wild-golden.webp
+      size: 1280x720
+      status: pending
+      prompt: >
+        Layer concept — TREELINE region, wild state, golden hour (transient treat
+        variant). A lush overgrown forest band behind the lakeside foreground, tall
+        tangled trees, dappled canopy, hidden critter eyes, thriving, long warm
+        golden-hour rake light, amber rim-lighting on the leaves, drifting dust motes,
+        brief treat look, cartoony storybook illustration, soft confident linework,
+        rounded shapes, warm saturated slightly-faded palette, Monkey Island / Bakshi /
+        Treasure Planet / Steven Universe / She-Ra energy, single horizontal depth band
+        with the rest of the frame fully transparent, full-scene registration, strong
+        readable silhouette, no readable text, no logos, no watermark, no collage
 requests:
 - id: kind-robots-art-dashboard-tab-coloring01
   source: coloring-book
