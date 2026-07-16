@@ -5338,3 +5338,64 @@ green (GitGuardian, TypeScript, Contract verifiers).
 **Kaizen task:** global-ui/t-019 — surface an aggregate "N/M tasks done"
 count on the top-level project card (before opening a project), extending
 t-018's per-milestone counts to the project-list view.
+
+## 2026-07-16 | Reviewer → Worker | conductor | pattern (autonomous hourly conductor cycle)
+
+**Decision:** merged conductor PR #637 (newsfeed/t-004 close-out log commit, docs-only,
+20/20 CI checks green, clean mergeable_state). Closed conductor PR #636 without merging —
+superseded duplicate.
+
+**Detail:**
+- No open `worker/*` or `claude/*` PRs in kind_robots, serendipity-voice, PortOS, or
+  kindrobots-unraid this cycle. Only conductor itself had open PRs: two stray session-log
+  PRs (#636, #637) from prior burst-mode cycles that were never merged into `main`.
+- PR #636 (`superkate-hairstyle-ai/t-017` close-out) was `mergeable_state: dirty` against
+  current `main`. Root cause: its content was already independently merged via PR #635
+  (`5733bf8`, same t-017 close-out) before this session started — `main` already had
+  `t-017: status: done`. PR #635 also created its own `t-020` kaizen task with different
+  content than PR #636's proposed `t-020`, so the two PRs' `roadmap.yaml` diffs were
+  genuinely conflicting, not cleanly re-mergeable. Treated this as the "stale
+  superseded branch" case from the Rescue/salvage section: closed #636 with an
+  explanatory comment (crediting its distinct kaizen idea — flag relays that stop
+  polling entirely — for a future task if still wanted) instead of force-resolving a
+  conflict merge that would reintroduce already-landed content.
+- Attempted to delete the superseded branch (`claude/peaceful-thompson-e812vh`) per the
+  same section's "delete in the same session" rule; `git push origin --delete` was
+  rejected 403 by the proxy and no MCP branch-delete tool is available in this
+  toolset. Left closed instead — lower risk than the walkthrough's original case since
+  the PR is now closed with a clear explanation, not merely left open and rediscoverable
+  as `ready`-looking work.
+- Confirmed via a stray local `git checkout main`: this sandbox's local `main` ref is
+  a stale, heavily-diverged local branch (74 vs 52 commits from `origin/main` at time
+  of check) — an artifact of the container image, not something to build on. Switched
+  back to the session's designated branch immediately; no local `main` work was pushed.
+  Kaizen below suggests avoiding local `main` entirely in future sessions.
+
+**Failure category:** none — clean merge on #637; #636 was pre-existing stale state from
+a prior cycle's incomplete session-end cleanup (its PR was opened but never merged same-day).
+
+**What to improve (pattern, not this cycle's fault):** two consecutive burst-mode cycles
+picked the same project (`superkate-hairstyle-ai/t-017`) without checking whether a
+same-titled PR was already open, producing duplicate close-out work. `claim_task.py`
+should already prevent duplicate *implementation* claims, but the log-commit PR wasn't
+covered by that gate — it's a separate `conductor`-repo PR, not a roadmap claim.
+
+**Kaizen task:** conductor/t-055 — before opening a conductor-repo session-log PR that
+closes out a roadmap task, check `list_pull_requests` (or grep recent TALKBACK entries)
+for an already-open PR with the same task id in its title, to catch the case where a
+concurrent or prior session already closed the same task, rather than discovering the
+duplicate only when the second PR's `mergeable_state` turns dirty.
+
+**Security/ops note (not a new flag — reconfirming an existing one):** `kind-robots/t-022`
+(production DB connection-pool exhaustion, `needs-human`, hard gate) is still active as of
+17:50 UTC — `get_runtime_errors` (kind-robots Vercel project, 1h window) shows 86 fresh
+`DriverAdapterError` / "Cannot execute new commands: connection closed" 503s across
+`/api/prompts`, `/api/dreams`, `/api/rewards`, `/api/projects`, `/api/chats`,
+`/api/scenarios`, `/api/characters`, `/api/compositions`, `/api/resources`, `/api/bots` —
+effectively the whole core CRUD surface. Incident has been open since 2026-07-15 14:58Z
+(now well over 24h). No agent action possible (infra/DB access, `stakes: irreversible`).
+Sending a push notification for this cycle specifically because of the 24h+ duration and
+breadth of affected routes, breaking the "no repeat ping for unchanged issue" convention
+prior cycles established — a day-plus outage across the whole API surface seems worth one
+fresh nudge even without new information, then reverting to the no-repeat-ping default
+until something actually changes.
