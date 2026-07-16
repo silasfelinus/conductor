@@ -233,11 +233,11 @@ tasks:
   - id: t-010
     milestone: m2
     title: Add a scheduler-card drift check (backlog cards vs home sets) runnable in CI
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
-    updated: '2026-07-10T12:55:00Z'
+    updated: '2026-07-16T09:57:18Z'
     note: >
       Kaizen from PR #339 (merged 2026-07-10): extend
       scripts/coloring_approved_status.py or add a sibling script that diffs
@@ -246,6 +246,8 @@ tasks:
       rating) so card drift is caught by CI instead of a manual audit pass.
       Emit a non-zero exit with a readable diff summary; wire it into the
       existing conductor CI checks.
+    claimed_by: dream-cycle-expansion-8m2dmk
+    claimed_at: '2026-07-16T09:57:18Z'
   - id: t-011
     milestone: m4
     title: Rolling daily-dream proposal + art-forward digest (Phase 1)
@@ -351,11 +353,11 @@ tasks:
   - id: t-014
     milestone: m2
     title: Harden build_dream_proposal.py against concurrent-session double-proposal races
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
-    updated: '2026-07-14T23:51:00Z'
+    updated: '2026-07-16T09:45:41Z'
     note: >
       Found during the 2026-07-14 hourly Reviewer sweep: two concurrent sessions
       each independently authored a daily-dream proposal for the SAME Pacific
@@ -379,3 +381,5 @@ tasks:
       are harmless (well-formed, no Notes from Silas content, not yet built) —
       leave them as extra backlog outlines, no cleanup needed. See
       projects/dream-cycle/TALKBACK.md 2026-07-14 pattern entry for full detail.
+    claimed_by: dream-cycle-expansion-8m2dmk
+    claimed_at: '2026-07-16T09:45:41Z'

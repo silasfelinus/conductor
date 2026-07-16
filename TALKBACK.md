@@ -4920,6 +4920,76 @@ sent a push notification, since this materially changes the standing diagnosis.
 needs to check the DB host's own health/logs directly — app-level config is no
 longer the leading hypothesis now that two targeted fixes didn't resolve it.
 
+## 2026-07-16 | Reviewer → Silas | kind-robots/t-027 | closed (autonomous hourly burst cycle)
+
+**Decision:** claimed, audited, and closed `done` — no kind_robots code PR opened,
+since the audit found nothing to fix.
+
+**Detail:**
+- Rotation this cycle: challenge-center (0 ready), ai-art-academy (t-008/t-013
+  reconfirmed egress-blocked, t-010 recurring already ran ~2h earlier today at
+  05:05 UTC — too soon to re-run), coloring-book (t-006/t-007/t-010 all still
+  gated on the absent `KR_API_TOKEN`, reconfirmed via `env | grep`), digital-
+  storefront (t-011/t-012/t-013 reconfirmed still Stripe-egress-blocked, t-018
+  depends on the blocked coloring-book tasks) — all reconfirmed blocked with
+  fresh checks rather than assumed stale. Picked kind-robots/t-027 next: a
+  self-contained, no-egress-dependency audit task.
+- Claimed via `claim_task.py` (reviewer/claude-burst-hourly-20260716-0707), then
+  worked in the kind_robots checkout on `claude/keen-fermat-6qhgpa` (already
+  even with `origin/main` at `a160fa03`).
+- Grepped kind_robots for every non-cypress `.exec(`/`.match(` capture-group
+  usage (26 source files) and checked each by hand against the
+  `noUncheckedIndexedAccess` guard patterns already in use elsewhere in the repo
+  (optional chaining + `??`, explicit `if (!match)` early-return, default-valued
+  destructuring, or a `!` assertion applied only after a truthy check on a
+  mandatory capture group). Also ran `npm install` (skipping the Cypress binary
+  download, which fails in this sandbox's egress — `CYPRESS_INSTALL_BINARY=0`)
+  and the real `npm test` typecheck (`nuxi prepare` + `vue-tsc --noEmit`) end to
+  end for ground truth: 0 TypeScript errors currently. Every site — including
+  `utils/scripts/verifyAcademyStyleDetailCallers.ts`, the exact file the
+  original t-017 bug lived in — was already guarded (PR #303 already fixed that
+  one). No unguarded call sites found anywhere in the codebase.
+- Closed `done` with the full per-file audit trail in the task note rather than
+  opening an empty kind_robots PR. Did not add a new lint rule for this pattern:
+  t-030's own note already flags that a heuristic guard for a similarly-shaped
+  problem (bare path-token detection) has a high false-positive rate and needs
+  careful design — same caution applies here, so it's left for a future task if
+  a real regression ever demonstrates a gap the existing `vue-tsc` typecheck
+  doesn't already catch.
+
+**Kaizen:** none filed — this cycle didn't surface new follow-on work beyond what
+t-023/t-030 already cover for their respective verify-script hardening.
+
+## 2026-07-16 | Reviewer → Worker | kind-robots/t-027 | pattern (autonomous hourly cycle, fresh session)
+
+**Decision:** merged (conductor PR #606, squash) — no Worker/Reviewer pre-existing
+merge. Fresh headless session reviewing a prior cycle's PR.
+
+**Failure category:** none — clean first-pass close.
+
+**What was good:**
+- The prior cycle's audit was thorough and falsifiable: 26 named call sites,
+  each classified against a concrete guard pattern, backed by a live
+  `npm install` + `vue-tsc --noEmit` run rather than just static reading. That's
+  exactly the standard this kind of "confirm-or-fix" audit task should meet —
+  verified, not assumed.
+- Correctly avoided manufacturing an empty kind_robots PR just to have a code
+  artifact; closing `done` with the audit trail in the roadmap note was the
+  honest outcome given the finding.
+
+**What to improve:**
+- The PR's "Kaizen suggestion" section was omitted ("none filed"), which skips
+  the handoff template's required field. Per AGENTS.md the Reviewer substitutes
+  a kaizen of its own when the Worker's is weak or absent, so I filed
+  kind-robots/t-031 (a diff-scoped CI check that flags new unguarded
+  `.exec(`/`.match(` capture-group call sites at PR time, rather than relying
+  solely on `vue-tsc`'s generic TS2345 error as the only signal) — but future
+  audit-style closes should propose at least a deferred/no-op kaizen line
+  explicitly rather than leaving the field blank.
+
+**Kaizen task:** t-031 (kind-robots) — diff-scoped CI guard for new/changed
+capture-group call sites, narrower than a full-repo heuristic per t-030's
+false-positive caution.
 ## 2026-07-16 | Worker → Reviewer | conductor/t-032 | closed (Silas-directed session)
 
 **Decision:** done. Backfilled LEARNING.yaml from recently-closed roadmap tasks (+ TALKBACK/curated), de-duped against the existing ledger.

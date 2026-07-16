@@ -1,4 +1,24 @@
 records:
+- date: 2026-07-16
+  project: kind-robots
+  task: t-027
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    A "grep for the risky pattern, then confirm or fix" audit task can
+    legitimately close with zero code changes and no PR — this repo's existing
+    noUncheckedIndexedAccess-guard conventions (optional chaining + ??,
+    early-return on !match, default-valued destructuring, or a `!` assertion
+    only after a truthy check on a mandatory capture group) already covered
+    every one of the 26 non-test call sites checked, and a live vue-tsc
+    --noEmit run confirmed 0 TS errors. Don't manufacture a lint-rule
+    follow-up just to have a code artifact to show for the cycle when the
+    honest finding is "already safe" — t-030's own note is a good precedent
+    for why a heuristic pattern-guard here would need real design work
+    (false-positive risk) rather than being mechanical.
 - date: 2026-07-15
   project: ai-art-academy
   task: t-017
@@ -1236,6 +1256,15 @@ records:
     cover the one thing plan_owner()-level tests structurally can't reach:
     main()'s --apply/--deactivate gating of whether missing rows actually
     get POSTed.
+- date: 2026-07-16
+  project: kind-robots
+  task: t-023
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "Extracting shared inline-workflow bash into a repo-root scripts/*.sh file (rather than re-implementing the same logic inside the test) keeps a regression test provably in sync with the production step it's guarding -- worth doing whenever a test's whole point is 'catch future edits to this exact check'."
 - date: '2026-07-02'
   project: conductor
   task: t-014

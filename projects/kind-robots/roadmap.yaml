@@ -751,12 +751,27 @@ tasks:
   - id: t-023
     milestone: m1
     title: Automate the deploy-wait ancestry-check verification t-018 did manually in scratch git repos
-    status: ready
-    owner: null
+    status: done
+    owner: reviewer
     passes: 0
     stakes: reversible
-    updated: "2026-07-15T17:50:00Z"
+    updated: '2026-07-16T08:58:00Z'
     note: >
+      Closed done via kind_robots PR #310 (self-merged, squash), autonomous
+      hourly cycle. Extracted the accept/reject ancestry check out of
+      .github/workflows/cypress.yml's deploy-wait step into
+      scripts/check-deploy-ancestry.sh (hermetic, no network calls) so the
+      workflow and the new regression test run byte-identical logic instead
+      of a hand-verified re-implementation. Added
+      utils/scripts/verifyDeployWaitAncestry.ts (matching this repo's
+      verify*.ts convention) covering: accept via superseding commit, accept
+      via exact self-match, reject via sibling-branch commit, reject via
+      unknown commit — all in a temp git repo, no network I/O. Wired as
+      test:deploy-wait-ancestry in package.json and as a new step in
+      contract-tests.yml. Verified locally: npm run test:deploy-wait-ancestry
+      passes; npm test (vue-tsc --noEmit) is 0 errors; both edited workflow
+      YAML files parse; bash -n on the new script is clean (no shellcheck
+      available in this sandbox).
       Kaizen from t-018 (Reviewer, conductor PR #567 / kind_robots PR #294):
       the new "accept a superseding commit as live" logic in
       .github/workflows/cypress.yml's deploy-wait step (checks whether
@@ -770,16 +785,30 @@ tasks:
       accepts/rejects correctly, so future edits to this step are regression-
       tested instead of re-verified by hand each time. Keep it fast and
       hermetic (no network calls) so it can run in CI.
+    claimed_by: reviewer/claude-burst-hourly-20260716-0849-manual
+    claimed_at: '2026-07-16T08:49:30Z'
 
   - id: t-024
     milestone: m3
     title: Add a lint/convention guard against casting objects to Prisma.InputJsonValue for String/LongText columns
-    status: ready
-    owner: null
+    status: review
+    owner: reviewer
     passes: 0
     stakes: reversible
-    updated: "2026-07-15T18:30:00Z"
+    updated: '2026-07-16T09:10:00Z'
     note: >
+      IN REVIEW 2026-07-16 (claude-burst-hourly-20260716-0906): opened
+      kind_robots PR #311 — utils/scripts/verifyNoPrismaJsonCast.ts scans all
+      source files for `as Prisma.InputJsonValue` / `as unknown as
+      Prisma.InputJsonValue` (neither schema.prisma nor model-builder.prisma
+      has a native Json column, so this cast is never legitimate here), wired
+      as `npm run test:no-prisma-json-cast` into contract-tests.yml. Verified
+      locally: clean pass against current tree (1056 files, 0 hits) and a
+      fixture-file sanity check confirming it catches a real bad cast with
+      exit code 1. Waiting on CI before merging.
+
+      ORIGINAL NOTE:
+
       Kaizen from t-020 (Worker, kind_robots PR #295): 12 of the 19 TypeScript
       errors fixed in that PR were the same shape repeated across 10 files —
       code casting a plain JS object straight to Prisma.InputJsonValue and
@@ -800,6 +829,8 @@ tasks:
       docs pointing new model-builder/ArtJob call sites at the existing
       normalizeJson/parseStoredJson helpers instead. Keep it cheap — a grep-based
       CI check is enough, no need for a custom eslint plugin.
+    claimed_by: claude-burst-hourly-20260716-0906
+    claimed_at: '2026-07-16T09:07:42Z'
 
   - id: t-025
     milestone: m3
@@ -891,23 +922,14 @@ tasks:
   - id: t-027
     milestone: m1
     title: Audit codebase for RegExp capture-group results used without a noUncheckedIndexedAccess guard
-    status: ready
+    status: done
     owner: null
     passes: 0
     stakes: reversible
-    note: >
-      Kaizen from ai-art-academy/t-017 (Reviewer, 2026-07-15, kind_robots PR #303):
-      that PR's first pass failed CI with `error TS2345: Argument of type
-      'string | undefined' is not assignable to parameter of type 'string'` — a
-      `RegExp.exec()` capture group (`match[1]`) was used directly without a null
-      check, which the project's `noUncheckedIndexedAccess: true` tsconfig setting
-      correctly types as `string | undefined`. Grep the codebase (especially
-      `utils/scripts/*.ts`, which has several similar regex-scanning contract-test
-      scripts) for other `.exec(`/`.match(` capture-group usages passed directly
-      into a function expecting `string` without a guard, and either add the guard
-      or confirm each one is provably safe (e.g. captured from a fixed-structure
-      literal). Small, mechanical, no design judgment needed.
-    updated: '2026-07-15T23:35:00Z'
+    note: 'AUDIT COMPLETE (Reviewer, 2026-07-16, autonomous hourly burst cycle): grepped kind_robots for every non-test `.exec(`/`.match(` capture-group usage (36 files, excluding node_modules/.nuxt/dist and cypress/*.cy.ts, whose `.to.match()` calls are Chai assertions, not JS RegExp). Checked each site by hand and additionally ran a full `npm test` (nuxi prepare + vue-tsc --noEmit) after `npm install` in this sandbox to confirm ground truth: 0 TypeScript errors, so no site currently triggers the TS2345 class of failure that hit ai-art-academy/t-017. Every site is already provably safe by one of these patterns: optional chaining + nullish fallback (`match?.[1] ?? ''''`), an explicit `if (!match) return/continue` guard before indexed access, default-valued destructuring (`const [h = 0, s = 100] = ...`), a non-null assertion `!` applied only after a truthy check on `match` itself (server/api/conductor/*.get.ts, pixel-explosion.vue — mandatory capture groups, not optional ones, so the assertion is sound), or indexing that flows into a template literal / `Number()` call, neither of which requires a defined `string` (so `string | undefined` typechecks regardless). Files checked: stores/helpers/scenarioHelper.ts, stores/helpers/butterflyHelper.ts, stores/modelBuilderStore.ts, stores/stylistStore.ts, stores/storyStore.ts, components/dreams/dream-brainstorm.vue, components/rewards/reward-interact.vue, components/screenfx/pixel-explosion.vue, components/butterfly/store-butterfly.vue, server/api/comfy/hunyuan3d.post.ts, server/api/comfy/kontext/kombine.post.ts, server/api/comfy/kontext/generate.post.ts, server/api/comfy/kontext/utils/workflow.ts, server/api/comfy/test/generate.post.ts, server/api/appmaker/apps.get.ts, server/api/botcafe/titleStorm.ts, server/api/conductor/overrides.get.ts, server/api/conductor/projects.get.ts, server/api/conductor/art-request.post.ts, server/chatgpt/services/currentImageService.ts, server/utils/folderCollections.ts, server/utils/syncFolderCollection.ts, utils/scripts/verifyAcademyStyleDetailCallers.ts (the exact file the original t-017 bug lived in — already fixed by kind_robots PR #303''s `if (filename) documented.add(filename)` guard), utils/scripts/verifyChannelContent.ts, utils/scripts/verifyWorkflowPaths.ts, utils/scripts/auditChannelAssets.ts. No code changes needed in kind_robots — closing as done with this audit trail instead of an empty PR. If a future call site reintroduces the unguarded pattern, it will still be caught by CI''s existing vue-tsc --noEmit typecheck (verified working end-to-end this cycle), so no additional lint rule was added; t-030''s own note already flagged that a heuristic pattern-matching guard for this kind of thing has a high false-positive rate and needs careful design, so that''s left for a future task if a real regression shows a gap.'
+    updated: '2026-07-16T07:16:43Z'
+    claimed_by: claude-burst-hourly-20260716-0707
+    claimed_at: '2026-07-16T07:09:00Z'
 
   - id: t-028
     milestone: m1
@@ -950,11 +972,11 @@ tasks:
   - id: t-030
     milestone: m1
     title: Widen the workflow-path-reference check to catch extension-less directory references
-    status: ready
-    owner: null
+    status: claimed
+    owner: reviewer
     passes: 0
     stakes: reversible
-    updated: '2026-07-16T06:02:00Z'
+    updated: '2026-07-16T09:51:17Z'
     note: >
       Kaizen from t-028 (Reviewer, kind_robots PR #309): the new
       verifyWorkflowPaths.ts heuristic only flags `run:`-step tokens ending in
@@ -966,6 +988,8 @@ tasks:
       first pass because it has a much higher false-positive rate (npm script
       names like `test:foo`, non-path colon-separated tokens, etc.) and needs
       a more careful allowlist/exclusion design than the extension gate did.
+    claimed_by: claude-hourly-20260716-0950
+    claimed_at: '2026-07-16T09:51:17Z'
 
   - id: t-029
     milestone: m4
@@ -994,3 +1018,62 @@ tasks:
       something to execute) even though it sits in kind-robots's roadmap —
       set status: needs-human when done, per the proposal-kind rule in
       AGENTS.md.
+
+  - id: t-031
+    milestone: m1
+    title: Add a CI check that greps new .exec(/.match( capture-group call sites for a noUncheckedIndexedAccess guard
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-16T08:00:00Z'
+    note: >
+      Kaizen from t-027 (Reviewer, 2026-07-16, conductor PR #606): the t-027
+      audit found all 26 existing capture-group call sites already safe, and
+      confirmed via a live vue-tsc --noEmit run, but that check only ever runs
+      against code that already exists at PR time — a future call site can
+      still introduce the ai-art-academy/t-017-class bug (TS2345 from an
+      unguarded `match[1]`) and won't be caught until the normal typecheck CI
+      job runs on that PR, which today already happens. What's missing is a
+      cheap, targeted CI step that specifically diffs new/changed
+      `.exec(`/`.match(` call sites in a PR against the guard patterns
+      documented in t-027's note (optional chaining + `??`, `if (!match)`
+      early-return, default-valued destructuring, or a post-truthy-check `!`
+      assertion) and fails with a clear, specific message pointing at the
+      unguarded line — rather than relying on vue-tsc's generic TS2345 error,
+      which is correct but not self-explanatory to a first-time contributor.
+      t-030's note already flagged that a similarly-shaped heuristic (bare
+      path-token detection) has real false-positive risk and needs careful
+      design — this task should scope narrowly (new/changed lines only, via
+      git diff against origin/main, not a whole-repo scan) and treat a
+      reasonable false-positive rate as acceptable given vue-tsc is still the
+      backstop. Small and mechanical if scoped to diff-only; escalate to
+      needs-human if the false-positive rate in practice turns out too high
+      to be useful.
+
+  - id: t-032
+    milestone: m1
+    title: Write a scripts/lib/ convention doc for hermetic shell helpers shared between a workflow step and its regression test
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-16T08:58:00Z'
+    note: >
+      Kaizen from t-023 (Reviewer, 2026-07-16, kind_robots PR #310):
+      t-023 introduced scripts/check-deploy-ancestry.sh, a small hermetic
+      (no network I/O) shell script extracted out of a `.github/workflows/
+      cypress.yml` inline `run:` step specifically so a regression test
+      (utils/scripts/verifyDeployWaitAncestry.ts) could exercise the exact
+      same logic instead of a hand-verified re-implementation. This is a
+      reusable pattern — any future task that wants to regression-test
+      inline workflow bash faces the same "extract to scripts/, source or
+      exec it from both the workflow step and the test" design question with
+      no written precedent to follow. Add a short doc (e.g.
+      scripts/README.md or a section in an existing docs file) describing
+      the pattern: when to extract inline `run:` bash into a standalone
+      script, where it lives (repo-root `scripts/`, not `utils/scripts/`
+      which is TS-only), how the workflow step and the `verify*.ts` test
+      should both invoke it, and a pointer to check-deploy-ancestry.sh /
+      verifyDeployWaitAncestry.ts as the worked example. Small and
+      documentation-only — no code changes required.

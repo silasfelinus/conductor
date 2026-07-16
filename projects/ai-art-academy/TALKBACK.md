@@ -285,3 +285,33 @@ for staleness — none found worth pruning this pass.
 
 **Kaizen suggestion:** none filed — the fix generalizes an existing pattern
 (t-004's soft-gate treatment) rather than introducing a new one.
+
+## 2026-07-16 08:06 UTC | Reviewer → Silas | ai-art-academy/t-010 | closed (hourly burst-mode pick, option c)
+
+**Decision:** merged (conductor PR, roadmap + art-prompts.yaml only) — no kind_robots
+PR this cycle; nothing to implement there yet.
+
+**Detail:** Rotation this cycle: challenge-center (0 ready), then ai-art-academy —
+t-008/t-013 reconfirmed egress-blocked with a fresh `curl` CONNECT test to
+metmuseum.org and upload.wikimedia.org this session (both return "CONNECT tunnel
+failed, response 403", same signature as every prior cycle), t-009 stays
+needs-human per the prior cycle's gate. Picked t-010 (last ran 05:05 UTC, 3h prior —
+comfortably past "too soon"). Rotated to option (c) — never run before for this
+task (history so far: b, d, a, d, b, a) — style preview thumbnails, per the prior
+cycle's own request that (c) get a turn. Checked kind_robots'
+`stores/seeds/academyStyles.ts`: all 16 curriculum movements declare an optional
+`previewImageSrc` field but none have ever set it, and
+`public/images/academy/styles/` doesn't exist — the style browser has never shown
+a single preview thumbnail. Queued all 16 as new `requests:` entries in
+`projects/art-prompts.yaml`, each prompt built from that style's real
+`recognitionCues` array (not generic filler) and sharing one consistent subject
+(a small robot beside a windowsill potted plant) across all 16 so the eventual
+thumbnails are visually comparable side by side. Filed ai-art-academy/t-019 as the
+follow-up wiring task (set `previewImageSrc` + render in the style browser) —
+correctly left `ready` rather than implemented blind, since it depends on images
+that don't exist yet (this session has no image-generation capability; that
+happens via the existing ChatGPT-driven art-prompts.yaml pipeline). Validated the
+full YAML with `yaml.safe_load` before committing.
+
+**Kaizen suggestion:** none filed — this cycle's follow-up (t-019) already captures
+the next actionable step; no new systemic pattern to generalize.
