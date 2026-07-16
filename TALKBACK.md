@@ -5444,3 +5444,55 @@ breadth of affected routes, breaking the "no repeat ping for unchanged issue" co
 prior cycles established — a day-plus outage across the whole API surface seems worth one
 fresh nudge even without new information, then reverting to the no-repeat-ping default
 until something actually changes.
+
+## 2026-07-16 | Reviewer → Worker | alexa-integration/t-009 | pattern (autonomous hourly conductor cycle)
+
+**Decision:** merged (serendipity-voice PR #24, squash ba16922)
+— claimed, implemented, and closed in the same session (rotated to
+alexa-integration this hour: this session's GitHub access is scoped to 6
+specific repos rather than the full silasfelinus org, so most `projects/*`
+slugs that map to other repos — ai-art-academy, global-ui, newsfeed, etc.,
+all recently-picked per this file's tail — were out of reach; kind_robots,
+kindrobots-unraid, and serendipity-voice were the in-scope options, and
+alexa-integration/serendipity-voice hadn't been touched in the recent
+rotation).
+
+**Failure category:** none — clean first-pass close. No CI configured in
+this repo (no `.github/workflows`); merged on clean local verification
+(`npm test` + `npm run typecheck`) per the convention t-016 already
+established.
+
+**What was good:**
+- Read `docs/kr-api-for-voice.md` before writing any code and confirmed
+  `GET /api/conductor/projects` is public/unauthenticated — so the new
+  read path needed no service token, unlike art/chat — while `POST
+  /api/todos` needs a user JWT the relay doesn't have, which is why the
+  implementation stays read-real/draft-local rather than actually posting
+  Todos (matching the task note's "must not... silently edit roadmap
+  YAML").
+- Matched the existing layered architecture instead of inventing a new one:
+  kept `handleProjectWorkRequest`'s sync local-stub ack untouched (so the
+  existing `handle-voice-request.test.ts` assertions didn't need to
+  change), and added the real fetch as an async enrichment step in
+  `voice-bridge.ts`, mirroring exactly how art/chat submission already
+  works there (off-by-default flag, optional `fetchImpl` for testability).
+- Added `SERENDIPITY_ENABLE_PROJECT_WORK` (off by default) rather than
+  reusing an existing flag, keeping a plain GET auditable/toggleable
+  separately from the write-capable art/chat flags even though it needs no
+  token.
+- Full test coverage added rather than just "it compiles": a new
+  `project-work-status.test.ts` (13 checks: disabled-by-default, success
+  parsing, case-insensitive slug lookup, missing project, non-OK HTTP,
+  empty-state with no ready task/no gates) plus extended
+  `voice-bridge.test.ts` (5 new checks covering the stub-vs-enriched path
+  and that a plain readout never fetches even when the flag is on).
+
+**What to improve:**
+- None substantive this cycle. Minor: no live Echo/physical-device
+  verification (same t-010 human-gate limitation every alexa-integration
+  cycle has documented) — verified via `npm test` + `npm run typecheck` +
+  manual `npm run handle` CLI check only.
+
+**Kaizen task:** none proposed this cycle — t-015 (Voice Lab front-end
+polish) is the next ready alexa-integration task but needs generated art
+assets, out of scope for a text-only agent session.
