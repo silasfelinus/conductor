@@ -110,17 +110,26 @@ tasks:
     owner: null
     passes: 0
     stakes: reversible
-    updated: '2026-07-16T02:48:00Z'
+    updated: '2026-07-16T10:35:00Z'
     depends_on: t-003
     note: >
-      FOR SILAS: blocked on missing KR_API_TOKEN (generation backend credential) —
-      confirmed absent from the environment across three separate sessions now
-      (2026-07-10, 2026-07-15T07:08Z, 2026-07-16T02:48Z). Registry input from t-003
-      is complete and the task spec is otherwise ready to run; it just needs a
-      token-bearing Worker session (or the token added to this environment) to do
-      the actual A/B generation pass. Formalizing as soft needs-human so this
-      doesn't keep getting silently re-picked as the next ready task every cycle —
-      other ai-art-academy ready tasks can proceed in the meantime.
+      FOR SILAS: UPDATE 2026-07-16 — KR_API_TOKEN is NO LONGER the blocker. Silas
+      added it to the Claude Code environment's env-var field and it is now present
+      in agent sessions (verified this session: `env | grep KR_API_TOKEN` returns a
+      real value; the art scripts read it via os.environ). The prior "absent across
+      three sessions" note below was from cycles that ran before it was provisioned.
+      The REAL remaining gates before this A/B generation pass can run: (1) the
+      kind_robots production DB outage (tracked at kind-robots/t-022) — enqueue/
+      token-validation fails while it's down; and (2) the home GPU render relay,
+      which authenticates with a SEPARATE secret KR_RELAY_TOKEN (+ KR_RELAY_USER_ID),
+      not KR_API_TOKEN, and must be running to render (incl. Kontext). Also note: for
+      the scheduled GitHub-Actions art pipeline (auto-art-generate.yml), the token
+      must additionally exist as the repo secret `secrets.KR_API_TOKEN` — the
+      environment env-var field does not reach CI. NEXT STEP for a token-bearing
+      session: verify the live kind_robots API is reachable (e.g. fetch_todos.py or a
+      GET), and if so, flip this task to `ready` and run the A/B. Kept soft
+      needs-human for now only because the DB/relay state is unverified — the token
+      itself is fixed. Registry input from t-003 is complete.
       Original spec follows:
       Using the generation backend (pre-approved), A/B a fixed test image through each
       candidate Academy style: prompt-only instruction vs LoRA (where available in the
@@ -290,18 +299,20 @@ tasks:
     owner: null
     passes: 0
     stakes: reversible
-    updated: '2026-07-16T05:05:00Z'
+    updated: '2026-07-16T10:35:00Z'
     note: >
-      FOR SILAS: blocked on missing KR_API_TOKEN (generation backend credential) —
-      confirmed absent from the environment across four separate sessions now
-      (2026-07-10, 2026-07-15T07:08Z, 2026-07-16T02:48Z via t-004's recheck, and
-      2026-07-16T05:05Z here). Formalizing as soft needs-human, mirroring the same
-      fix just applied to t-004 (same root cause: missing KR_API_TOKEN, not the
-      museum-egress policy denial that keeps t-008/t-013 blocked) — this stops it
-      from being silently re-picked and re-confirmed-blocked as "next ready task"
-      every burst cycle. Task spec is otherwise complete and ready to run the
-      moment a token-bearing session (or this environment with the token added)
-      picks it up. Other ai-art-academy ready tasks proceed in the meantime.
+      FOR SILAS: UPDATE 2026-07-16 — KR_API_TOKEN is NO LONGER the blocker (same
+      correction as t-004). Silas provisioned it in the Claude Code environment's
+      env-var field; it is now present in agent sessions (verified this session).
+      The prior "absent across four sessions" note below predates that fix. The REAL
+      remaining gates for this generate-and-commit pass: (1) the kind_robots
+      production DB outage (kind-robots/t-022) and (2) the home render relay
+      (separate secret KR_RELAY_TOKEN + KR_RELAY_USER_ID, on the home box) — plus, if
+      generation is meant to run via the scheduled auto-art-generate.yml workflow, the
+      token must also be set as the GitHub repo secret `secrets.KR_API_TOKEN` (the
+      env-var field does not reach CI). NEXT STEP: a token-bearing session verifies the
+      live kind_robots API is reachable, then flips this to `ready` and runs it. Kept
+      soft needs-human only because DB/relay state is unverified — the token is fixed.
       Original spec follows:
       Icon/card/hero prompts are queued in projects/art-prompts.yaml (added 2026-07-10).
       Generate and commit them via the auto art pipeline (pre-approved), then generate
@@ -437,6 +448,18 @@ tasks:
       preview thumbnails, (d) expand the curriculum with a new movement/artist entry
       (respecting PUBLIC-DOMAIN-POLICY.md). Note which option ran in the PR. This task
       never reaches done and does not count toward milestone progress.
+
+      CORRECTION 2026-07-16 (later, same session, after Silas asked where the token
+      goes): the "KR_API_TOKEN still absent" line in the RAN entry immediately below
+      is WRONG. I carried that claim forward from prior cycles without re-checking the
+      live env; `env | grep KR_API_TOKEN` in this session in fact returns a real value
+      — Silas had provisioned it in the Claude Code environment's env-var field. The
+      token is present and is NOT a blocker. t-004 and t-009 notes have been corrected
+      accordingly (their real remaining gates are the kind_robots DB outage + the home
+      relay's separate KR_RELAY_TOKEN, and for the CI pipeline the GitHub repo secret
+      `secrets.KR_API_TOKEN`). Future cycles: stop re-confirming a token-absence
+      blocker; check DB/relay instead. The museum-egress 403 (t-008/t-013) IS still
+      real this session and remains accurate below.
 
       RAN 2026-07-16 (claude session claude-ai-art-academy-curriculum-xnm2wl, ~10:22
       UTC): options (d) + (b) combined — a Silas-directed content-depth pass ("full
