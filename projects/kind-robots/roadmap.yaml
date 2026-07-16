@@ -751,12 +751,27 @@ tasks:
   - id: t-023
     milestone: m1
     title: Automate the deploy-wait ancestry-check verification t-018 did manually in scratch git repos
-    status: claimed
+    status: done
     owner: reviewer
     passes: 0
     stakes: reversible
-    updated: '2026-07-16T08:49:30Z'
+    updated: '2026-07-16T08:58:00Z'
     note: >
+      Closed done via kind_robots PR #310 (self-merged, squash), autonomous
+      hourly cycle. Extracted the accept/reject ancestry check out of
+      .github/workflows/cypress.yml's deploy-wait step into
+      scripts/check-deploy-ancestry.sh (hermetic, no network calls) so the
+      workflow and the new regression test run byte-identical logic instead
+      of a hand-verified re-implementation. Added
+      utils/scripts/verifyDeployWaitAncestry.ts (matching this repo's
+      verify*.ts convention) covering: accept via superseding commit, accept
+      via exact self-match, reject via sibling-branch commit, reject via
+      unknown commit — all in a temp git repo, no network I/O. Wired as
+      test:deploy-wait-ancestry in package.json and as a new step in
+      contract-tests.yml. Verified locally: npm run test:deploy-wait-ancestry
+      passes; npm test (vue-tsc --noEmit) is 0 errors; both edited workflow
+      YAML files parse; bash -n on the new script is clean (no shellcheck
+      available in this sandbox).
       Kaizen from t-018 (Reviewer, conductor PR #567 / kind_robots PR #294):
       the new "accept a superseding commit as live" logic in
       .github/workflows/cypress.yml's deploy-wait step (checks whether
@@ -1019,3 +1034,30 @@ tasks:
       backstop. Small and mechanical if scoped to diff-only; escalate to
       needs-human if the false-positive rate in practice turns out too high
       to be useful.
+
+  - id: t-032
+    milestone: m1
+    title: Write a scripts/lib/ convention doc for hermetic shell helpers shared between a workflow step and its regression test
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-16T08:58:00Z'
+    note: >
+      Kaizen from t-023 (Reviewer, 2026-07-16, kind_robots PR #310):
+      t-023 introduced scripts/check-deploy-ancestry.sh, a small hermetic
+      (no network I/O) shell script extracted out of a `.github/workflows/
+      cypress.yml` inline `run:` step specifically so a regression test
+      (utils/scripts/verifyDeployWaitAncestry.ts) could exercise the exact
+      same logic instead of a hand-verified re-implementation. This is a
+      reusable pattern — any future task that wants to regression-test
+      inline workflow bash faces the same "extract to scripts/, source or
+      exec it from both the workflow step and the test" design question with
+      no written precedent to follow. Add a short doc (e.g.
+      scripts/README.md or a section in an existing docs file) describing
+      the pattern: when to extract inline `run:` bash into a standalone
+      script, where it lives (repo-root `scripts/`, not `utils/scripts/`
+      which is TS-only), how the workflow step and the `verify*.ts` test
+      should both invoke it, and a pointer to check-deploy-ancestry.sh /
+      verifyDeployWaitAncestry.ts as the worked example. Small and
+      documentation-only — no code changes required.
