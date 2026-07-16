@@ -784,24 +784,15 @@ tasks:
   - id: t-023
     milestone: m4
     title: 'kind_robots: wire the teaching-notes lesson scaffold (Try-It / Reflect) into the Academy lesson-detail component'
-    status: claimed
+    status: done
     owner: reviewer
     passes: 0
     stakes: reversible
-    updated: '2026-07-16T14:06:59Z'
-    note: >
-      Filed 2026-07-16 (t-010 curriculum-expansion cycle). docs/teaching-notes.md now
-      defines an 8-beat reusable lesson scaffold (Hook → Look First → Big Idea → Meet
-      the Makers → See It → Try It → Reflect → Provenance) with a scaffold-to-data map
-      keyed to fields already in academyStyles.ts and the style registry. The current
-      academy-style-detail.vue shows the style facts but not the "Try It" (remix
-      exercise: instruction + what-to-expect + failure modes + one iterate knob) or
-      "Reflect" (critique/comprehension prompts) beats. Add those two beats to the
-      lesson-detail view, driven by the registry `prompt_hint`/`remix_hint` and a small
-      set of reusable Reflect prompts. Scoped, additive, reversible; start from the
-      scaffold-to-data map in teaching-notes.md §2. Front-end judgment involved but no
-      backend/DB — landable as a normal kind_robots PR. (No dependency on the DB outage
-      tracked in kind-robots/t-022.)
+    updated: '2026-07-16T14:49:36Z'
+    note: |-
+      DONE 2026-07-16 (conductor-burst-hourly cycle): kind_robots PR #315 merged. Added "Try It" (remix.template instruction, a recognitionCues-driven what-to-expect line, and a remix.mode-aware failure-mode note — prompt vs lora, kept generic rather than per-style since the per-style failure-mode table lives only in this doc, not in academyStyles.ts's data model) and "Reflect" (three reusable comprehension/critique prompts) beats to components/academy/academy-style-detail.vue. Renders correctly in all three existing usage contexts (timeline, styles-browser, Remix Studio sidebar) — no prop changes needed. Verified: eslint clean, prettier clean, full-project vue-tsc --noEmit 0 errors. No dev-server/browser check this session.
+
+      Filed 2026-07-16 (t-010 curriculum-expansion cycle). docs/teaching-notes.md now defines an 8-beat reusable lesson scaffold (Hook → Look First → Big Idea → Meet the Makers → See It → Try It → Reflect → Provenance) with a scaffold-to-data map keyed to fields already in academyStyles.ts and the style registry. The current academy-style-detail.vue shows the style facts but not the "Try It" (remix exercise: instruction + what-to-expect + failure modes + one iterate knob) or "Reflect" (critique/comprehension prompts) beats. Add those two beats to the lesson-detail view, driven by the registry `prompt_hint`/`remix_hint` and a small set of reusable Reflect prompts. Scoped, additive, reversible; start from the scaffold-to-data map in teaching-notes.md §2. Front-end judgment involved but no backend/DB — landable as a normal kind_robots PR. (No dependency on the DB outage tracked in kind-robots/t-022.)
     claimed_by: claude-conductor-burst-20260716-t023
     claimed_at: '2026-07-16T14:06:59Z'
 
