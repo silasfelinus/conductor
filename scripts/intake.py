@@ -2,11 +2,17 @@
 """
 intake.py — Scaffold a new project, register it, and queue workspace art.
 
+One pass touches every surface a new project needs so no surface gets dropped
+(conductor/t-025 — filed after a Dream scaffold PR skipped the CONTROL.md block
+and the art-prompt entries).
+
 Usage:
-  python scripts/intake.py <slug> --kind software|content|proposal [--repo owner/repo] [--desc "short description"]
+  python scripts/intake.py <slug> --kind software|content|proposal \
+      [--title "Nice Name"] [--goal "one-line goal"] [--repo owner/repo] [--desc "short description"]
 
 Creates:
   projects/<slug>/roadmap.yaml
+  projects/<slug>/DESIGN-BRIEF.md
   projects/<slug>/CHANGELOG.md
 
 Updates when present:
@@ -14,6 +20,7 @@ Updates when present:
   projects/priority.yaml
   project-overrides.yaml
   projects/art-prompts.yaml
+  CONTROL.md            (appends a Per-project direction block)
 """
 
 import argparse
@@ -30,6 +37,8 @@ REPOS_FILE = REPO_ROOT / "repos.yaml"
 PRIORITY_FILE = PROJECTS_DIR / "priority.yaml"
 OVERRIDES_FILE = REPO_ROOT / "project-overrides.yaml"
 ART_PROMPTS_FILE = PROJECTS_DIR / "art-prompts.yaml"
+CONTROL_FILE = REPO_ROOT / "CONTROL.md"
+CONTROL_SECTION = "## Per-project direction"
 
 ART_PROMPTS_HEADER = """# art-prompts.yaml — Image queue for Conductor project assets and Kind Robots missing-image requests
 #
@@ -151,15 +160,94 @@ def register_art_prompts(slug: str, desc: str) -> None:
         print(f"✓ Queued {slug} icon/card/hero prompts in projects/art-prompts.yaml")
 
 
-def main():
+def design_brief_text(title: str, goal: str, today: str) -> str:
+    what = goal.strip() or "(Describe what this project is and the core payoff loop.)"
+    return f"""# {title} — Design Brief
+
+date: {today}
+status: draft (scaffolded via intake.py — fill in before building)
+author: (assign)
+
+## What it is
+
+{what}
+
+## Who it serves
+
+(Describe the target user and the primary use case.)
+
+## MVP scope
+
+(The smallest useful version — the first shippable slice.)
+
+## Out of scope / guardrails
+
+(Explicit non-goals and any gates: publishing, money, secrets, production, etc.)
+
+## Open questions
+
+(Decisions that need Silas before or during the build.)
+"""
+
+
+def register_design_brief(project_dir: Path, title: str, goal: str, today: str) -> None:
+    brief = project_dir / "DESIGN-BRIEF.md"
+    if brief.exists():
+        print(f"  (DESIGN-BRIEF.md already exists for {project_dir.name})")
+        return
+    brief.write_text(design_brief_text(title, goal, today))
+    print(f"✓ Created projects/{project_dir.name}/DESIGN-BRIEF.md")
+
+
+def control_block_text(slug: str, kind: str, goal: str) -> str:
+    direction = goal.strip() or "(Add steering direction for this project.)"
+    return f"### {slug}  ({kind})\n**Direction:** {direction}\n**Notes:**\n- (your notes)\n"
+
+
+def register_control_block(slug: str, kind: str, goal: str) -> None:
+    """Append a Per-project direction block to CONTROL.md (idempotent).
+
+    Inserts at the end of the CONTROL_SECTION block — before the next top-level
+    ``## `` heading if one exists, otherwise at end of file — so it stays inside
+    the per-project section even if later sections are added below it.
+    """
+    if not CONTROL_FILE.exists():
+        return
+    text = CONTROL_FILE.read_text()
+    if f"### {slug}  (" in text:
+        print(f"  (CONTROL.md already has a block for {slug})")
+        return
+
+    block = control_block_text(slug, kind, goal)
+    marker = text.find(CONTROL_SECTION)
+    if marker == -1:
+        # No per-project section — append the section itself.
+        new_text = text.rstrip("\n") + f"\n\n{CONTROL_SECTION}\n\n{block}"
+    else:
+        nxt = text.find("\n## ", marker + len(CONTROL_SECTION))
+        if nxt == -1:
+            new_text = text.rstrip("\n") + f"\n\n{block}"
+        else:
+            head, tail = text[:nxt], text[nxt:]
+            new_text = head.rstrip("\n") + f"\n\n{block}\n{tail.lstrip(chr(10))}"
+    CONTROL_FILE.write_text(new_text)
+    print(f"✓ Added {slug} block to CONTROL.md")
+
+
+def main(argv=None):
     parser = argparse.ArgumentParser(description="Scaffold a new Conductor project")
     parser.add_argument("slug", help="Project slug (kebab-case)")
     parser.add_argument("--kind", choices=["software", "content", "proposal"], default="software")
+    parser.add_argument("--title", default="", help="Display title (default: titleized slug)")
+    parser.add_argument("--goal", default="", help="One-line goal — seeds DESIGN-BRIEF.md and the CONTROL.md block")
     parser.add_argument("--repo", default=None, help="GitHub repo (owner/name), or omit for no external repo")
-    parser.add_argument("--desc", default="", help="Short description")
-    args = parser.parse_args()
+    parser.add_argument("--desc", default="", help="Short description (falls back to --goal)")
+    args = parser.parse_args(argv)
 
     slug = slugify(args.slug)
+    title = args.title.strip() or titleize(slug)
+    goal = args.goal.strip() or args.desc.strip()
+    desc = args.desc.strip() or goal
     project_dir = PROJECTS_DIR / slug
 
     if project_dir.exists():
@@ -182,7 +270,7 @@ def main():
 kind: {args.kind}
 
 notes_from_silas: |
-  {args.desc or "(Add project notes here.)"}
+  {desc or "(Add project notes here.)"}
 
 milestones:
   - id: m1
@@ -203,6 +291,8 @@ tasks:
     (project_dir / "roadmap.yaml").write_text(content)
 
     today = date.today().isoformat()
+    register_design_brief(project_dir, title, goal, today)
+
     changelog = f"# {slug} CHANGELOG\n\n## {today}\n- Project scaffolded via intake.py\n"
     (project_dir / "CHANGELOG.md").write_text(changelog)
 
@@ -219,7 +309,7 @@ tasks:
                 "slug": slug,
                 "repo": args.repo,
                 "kind": args.kind,
-                "description": args.desc or f"{slug} project",
+                "description": desc or f"{slug} project",
             })
             repos_data["repos"] = repos
             write_yaml(REPOS_FILE, repos_data)
@@ -227,9 +317,10 @@ tasks:
 
     register_priority(slug)
     register_override(slug, args.kind)
-    register_art_prompts(slug, args.desc or f"{titleize(slug)} project")
+    register_art_prompts(slug, desc or f"{titleize(slug)} project")
+    register_control_block(slug, args.kind, goal)
 
-    print(f"\nNext: edit projects/{slug}/roadmap.yaml to fill in milestones and tasks.")
+    print(f"\nNext: edit projects/{slug}/roadmap.yaml + DESIGN-BRIEF.md to fill in milestones, tasks, and the brief.")
 
 
 if __name__ == "__main__":

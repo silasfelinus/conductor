@@ -1,15 +1,15 @@
 {
-  "generated_at": "2026-07-16T17:36:13.009470+00:00",
+  "generated_at": "2026-07-16T19:09:24.163183+00:00",
   "summary": {
     "roadmaps": 40,
     "active_projects": 32,
-    "tasks": 553,
-    "ready": 101,
+    "tasks": 554,
+    "ready": 95,
     "waiting": 54,
     "needs_human": 24,
-    "in_progress": 0,
-    "done": 363,
-    "errors": 0,
+    "in_progress": 5,
+    "done": 365,
+    "errors": 1,
     "warnings": 5,
     "info": 47
   },
@@ -40,16 +40,17 @@
       "autonomous": true,
       "task_count": 25,
       "counts": {
+        "claimed": 1,
         "done": 15,
         "needs-human": 2,
-        "ready": 7,
+        "ready": 6,
         "waiting": 1
       },
       "open_count": 10,
       "human_attention": 2,
-      "ready": 7,
+      "ready": 6,
       "waiting": 1,
-      "claimed": 0,
+      "claimed": 1,
       "review": 0,
       "done": 15
     },
@@ -355,19 +356,20 @@
       "override_status": "active",
       "priority_index": 18,
       "autonomous": false,
-      "task_count": 54,
+      "task_count": 55,
       "counts": {
-        "done": 39,
+        "claimed": 3,
+        "done": 40,
         "needs-human": 2,
-        "ready": 13
+        "ready": 10
       },
       "open_count": 15,
       "human_attention": 2,
-      "ready": 13,
+      "ready": 10,
       "waiting": 0,
-      "claimed": 0,
+      "claimed": 3,
       "review": 0,
-      "done": 39
+      "done": 40
     },
     {
       "slug": "serendipity",
@@ -493,17 +495,17 @@
       "autonomous": false,
       "task_count": 16,
       "counts": {
-        "done": 13,
-        "ready": 2,
+        "done": 14,
+        "ready": 1,
         "waiting": 1
       },
-      "open_count": 3,
+      "open_count": 2,
       "human_attention": 0,
-      "ready": 2,
+      "ready": 1,
       "waiting": 1,
       "claimed": 0,
       "review": 0,
-      "done": 13
+      "done": 14
     },
     {
       "slug": "conductor-app",
@@ -664,15 +666,16 @@
       "autonomous": true,
       "task_count": 14,
       "counts": {
+        "claimed": 1,
         "done": 10,
-        "ready": 2,
+        "ready": 1,
         "waiting": 2
       },
       "open_count": 4,
       "human_attention": 0,
-      "ready": 2,
+      "ready": 1,
       "waiting": 2,
-      "claimed": 0,
+      "claimed": 1,
       "review": 0,
       "done": 10
     },
@@ -795,6 +798,13 @@
     }
   ],
   "findings": [
+    {
+      "severity": "error",
+      "code": "WAITING_WITH_SATISFIED_DEPS",
+      "project": "alexa-integration",
+      "task": "t-010",
+      "message": "All dependencies are satisfied; resolver should promote this task to ready."
+    },
     {
       "severity": "warning",
       "code": "ROADMAP_MISSING_OVERRIDE",

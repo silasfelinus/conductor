@@ -336,21 +336,24 @@ tasks:
   - id: t-025
     milestone: m2
     title: Build a new-project scaffold helper script
-    status: claimed
+    status: done
     owner: worker
-    updated: '2026-07-16T19:02:28Z'
+    updated: '2026-07-16T19:30:00Z'
     passes: 0
     stakes: reversible
     note: >
-      Kaizen from Worker's mural-design/t-001 PR (#249, reviewed 2026-07-06). Worker
-      noted that scaffolding a new Dream project currently means separately touching
-      projects/priority.yaml, project-overrides.yaml, projects/<slug>/roadmap.yaml,
-      projects/<slug>/DESIGN-BRIEF.md, and ART-PROMPTS.md — easy to miss a surface (this
-      PR skipped a CONTROL.md block and the art-prompt entries). Build a script that
-      takes a slug/title/goal and generates all of the above in one pass so future
-      project scaffolds don't drop a surface.
-    claimed_by: claude-t025-20260716
-    claimed_at: '2026-07-16T19:02:28Z'
+      DONE (2026-07-16). The one-pass scaffolder already existed as scripts/intake.py
+      (roadmap.yaml from _template, CHANGELOG.md, priority.yaml, project-overrides.yaml,
+      art-prompts.yaml, repos.yaml) — so rather than duplicate it, extended it to close
+      the exact gap the kaizen named: it now also writes projects/<slug>/DESIGN-BRIEF.md
+      (title/goal-seeded, sectioned stub) and appends a Per-project direction block to
+      CONTROL.md (comment-safe text insertion into the ## Per-project direction section,
+      idempotent), and accepts --title/--goal. Added tests/test_intake.py (7 tests;
+      intake.py had none) covering every surface, DESIGN-BRIEF title/goal, CONTROL block
+      placement/idempotency/section-append, and the existing-dir abort. Verified
+      end-to-end on a throwaway slug (all surfaces touched, roadmaps valid) then reverted.
+      Follow-up filed as t-055 (register_override/register_priority yaml.safe_dump clobbers
+      those files' header comments — pre-existing, surfaced by the e2e run).
   - id: t-026
     milestone: m2
     title: Reviewer trigger fires with no open worker/* PR to review, repeatedly
@@ -1319,3 +1322,22 @@ tasks:
       with a single sentence pointing at `EGRESS-BLOCKERS.md` (keep one summary line
       of history, don't delete the task's own note entirely). Purely record-keeping —
       should not change any task's `status`/`needs-human` semantics.
+
+  - id: t-055
+    milestone: m2
+    title: Make intake.py's priority/override registration comment-preserving
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Kaizen from conductor/t-025 (2026-07-16). t-025 extended scripts/intake.py to
+      cover DESIGN-BRIEF.md + a CONTROL.md block (both comment-safe text inserts), but
+      register_priority() and register_override() still round-trip projects/priority.yaml
+      and project-overrides.yaml through yaml.safe_dump — which strips those files'
+      header comments and inter-entry spacing (surfaced by t-025's end-to-end smoke run,
+      which reformatted project-overrides.yaml's "# Human-managed project overrides"
+      header before it was reverted). Make both registrations comment-preserving via a
+      text-surgery append (mirror t-025's register_control_block, or the LEARNING.yaml
+      splice pattern), or adopt ruamel.yaml round-tripping. Add a test asserting a
+      seeded header comment survives an intake.py run.
