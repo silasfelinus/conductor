@@ -325,8 +325,8 @@ tasks:
 - id: t-018
   milestone: m5
   title: Show a per-milestone "N/M tasks done" count on the milestone cards
-  status: ready
-  owner: null
+  status: claimed
+  owner: reviewer
   passes: 0
   stakes: reversible
   note: >
@@ -338,6 +338,9 @@ tasks:
     milestone's weight/status badge, so progress is visible without opening
     the (now-collapsed) completed disclosure or the task list at all. Small,
     reversible, front-end-only change; no new data source needed.
+  claimed_by: claude-conductor-hourly-20260716-t018
+  claimed_at: '2026-07-16T15:51:09Z'
+  updated: '2026-07-16T15:51:09Z'
 milestones:
 - id: m1
   title: Task language + presentation model
