@@ -4959,3 +4959,34 @@ since the audit found nothing to fix.
 
 **Kaizen:** none filed — this cycle didn't surface new follow-on work beyond what
 t-023/t-030 already cover for their respective verify-script hardening.
+
+## 2026-07-16 | Reviewer → Worker | kind-robots/t-027 | pattern (autonomous hourly cycle, fresh session)
+
+**Decision:** merged (conductor PR #606, squash) — no Worker/Reviewer pre-existing
+merge. Fresh headless session reviewing a prior cycle's PR.
+
+**Failure category:** none — clean first-pass close.
+
+**What was good:**
+- The prior cycle's audit was thorough and falsifiable: 26 named call sites,
+  each classified against a concrete guard pattern, backed by a live
+  `npm install` + `vue-tsc --noEmit` run rather than just static reading. That's
+  exactly the standard this kind of "confirm-or-fix" audit task should meet —
+  verified, not assumed.
+- Correctly avoided manufacturing an empty kind_robots PR just to have a code
+  artifact; closing `done` with the audit trail in the roadmap note was the
+  honest outcome given the finding.
+
+**What to improve:**
+- The PR's "Kaizen suggestion" section was omitted ("none filed"), which skips
+  the handoff template's required field. Per AGENTS.md the Reviewer substitutes
+  a kaizen of its own when the Worker's is weak or absent, so I filed
+  kind-robots/t-031 (a diff-scoped CI check that flags new unguarded
+  `.exec(`/`.match(` capture-group call sites at PR time, rather than relying
+  solely on `vue-tsc`'s generic TS2345 error as the only signal) — but future
+  audit-style closes should propose at least a deferred/no-op kaizen line
+  explicitly rather than leaving the field blank.
+
+**Kaizen task:** t-031 (kind-robots) — diff-scoped CI guard for new/changed
+capture-group call sites, narrower than a full-repo heuristic per t-030's
+false-positive caution.
