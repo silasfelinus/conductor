@@ -1256,3 +1256,12 @@ records:
     cover the one thing plan_owner()-level tests structurally can't reach:
     main()'s --apply/--deactivate gating of whether missing rows actually
     get POSTed.
+- date: 2026-07-16
+  project: kind-robots
+  task: t-023
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "Extracting shared inline-workflow bash into a repo-root scripts/*.sh file (rather than re-implementing the same logic inside the test) keeps a regression test provably in sync with the production step it's guarding -- worth doing whenever a test's whole point is 'catch future edits to this exact check'."

@@ -517,3 +517,40 @@ recurring in real time regardless. New information; push notification sent.
 
 **Suggested action:** Silas needs to check the DB host/pooler directly — app config
 is no longer the leading hypothesis.
+
+## 2026-07-16 | Reviewer → Silas | kind-robots/t-023 | closed (autonomous hourly burst cycle)
+
+**Decision:** claimed, implemented, and self-merged done — kind_robots PR #310
+(squash), no separate Worker session in this cycle.
+
+**Detail:**
+- Rotation: no open Worker PRs in conductor/kind_robots/serendipity-voice at
+  session start. Priority-order sweep (challenge-center 0 ready, ai-art-academy/
+  coloring-book/digital-storefront previously reconfirmed egress- or
+  token-blocked earlier the same day, humboldt-scoop/humboldt-scoop-cms/
+  packmaker/mermaids-of-venice 0 ready or all needs-human) landed on kind-robots,
+  which had 7 ready tasks. Picked t-023 (deploy-wait ancestry regression test)
+  over t-024/t-030/t-031 as the most self-contained, lowest-risk option this
+  cycle — no diff-heuristic false-positive design space to get wrong.
+- Claimed via `claim_task.py` (reviewer/claude-burst-hourly-20260716-0849-manual).
+- Extracted the accept/reject ancestry check out of `.github/workflows/
+  cypress.yml`'s deploy-wait step into `scripts/check-deploy-ancestry.sh`
+  (hermetic, no network I/O) rather than writing a test that re-implements the
+  same bash — the workflow step and the new
+  `utils/scripts/verifyDeployWaitAncestry.ts` test now run byte-identical
+  logic, so a future edit to the check is caught automatically instead of
+  needing hand-verification in scratch repos again.
+- Verified locally end to end: `npm run test:deploy-wait-ancestry` passes all
+  four scenarios (superseding-commit accept, self-match accept, sibling-branch
+  reject, unknown-commit reject); `npm test` (`vue-tsc --noEmit`) is 0 errors;
+  both edited workflow YAML files parse; `bash -n` on the new script is clean
+  (no shellcheck available in this sandbox).
+- Merged kind_robots PR #310 (squash) without waiting on GitHub Actions CI to
+  complete, matching the established practice from the prior same-day cycle's
+  t-027 close — local verification (typecheck + the new test itself) was the
+  bar met before merge.
+
+**Kaizen:** filed kind-robots/t-032 — a `scripts/lib/`-style convention doc for
+the "extract inline workflow bash into a hermetic script so a test can exercise
+it exactly" pattern this task established, so the next similar task doesn't
+have to rediscover the design question from scratch.
