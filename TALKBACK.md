@@ -4763,3 +4763,59 @@ agent has access to any of these.
   notification per established precedent.
 
 **Kaizen:** none filed this cycle — the task itself was a kaizen closure.
+
+## 2026-07-16 | Reviewer → Silas | kind-robots/t-008 | closed (autonomous hourly cycle)
+
+**Decision:** claimed, completed, and closed `done` in a single pass — no PR
+needed (deliverable is a design doc committed directly to this repo, not a
+kind_robots code change).
+
+**Detail:**
+- Fresh autonomous hourly cycle. `origin/main` tracking ref was stale locally
+  (fetch forced an update from ce2f4c6 to 016cf79) — after refreshing, the
+  session branch (`claude/great-goldberg-anjeq8`) was exactly at `origin/main`'s
+  tip, confirming its prior PR (#600) had already merged cleanly with nothing
+  stranded. No open `worker/*` or `claude/*` PRs in conductor, kind_robots, or
+  serendipity-voice at cycle start. No `status: claimed`/`challenged` tasks
+  anywhere before this cycle's own claim. No Todos (`KR_API_TOKEN` unset, as
+  every prior session has found).
+- Checked ready work in priority order: ai-art-academy's non-recurring ready
+  tasks (t-008/t-009/t-013) are still blocked on the same museum-egress 403 /
+  missing `KR_API_TOKEN` documented in every prior cycle's notes (all dated
+  within the last day, well under the 48h re-verify threshold, so not
+  re-checked this cycle); its recurring never-idle task (t-010) had already
+  run an option (curriculum expansion, Bauhaus) earlier the same day per its
+  own note, so re-running it again this cycle would have been redundant.
+  coloring-book and digital-storefront's ready tasks are the same two
+  blockers (art-generation token, Stripe egress) or waiting on coloring-book
+  output. packmaker had 0 ready tasks (its one ready task closed in the prior
+  cycle). kind-robots had several genuinely unblocked software/kaizen tasks —
+  picked t-008 (write projects/kind-robots/SHARING-SPEC.md) as the
+  highest-priority fully self-contained option: no cross-repo dependency, no
+  external egress, design-only per BOUNDARY.md.
+- Wrote SHARING-SPEC.md grounded in the real kind_robots schema (verified via
+  Explore agent: no existing Grant/ACL model, `isPublic` repeated across ~20
+  models, `UserRelation` as the closest structural precedent, ~140 duplicated
+  per-route ownership checks, no entitlement/purchase-fulfillment model
+  despite real Stripe checkout code existing). Proposes one generalized
+  `Grant` model (not one per content type) and a shared `canView()` helper.
+  Filed t-029 (proposal-kind: draft the actual migration pitch) as this
+  task's kaizen/follow-up, correctly distinguishing "designed" from
+  "approved to build."
+- `scripts/resolve_deps.py` found nothing newly unblocked by t-008's closure
+  (digital-storefront/t-017 depends in-project on t-011, which is unrelated
+  and still blocked — its note-level cross-project dependency on t-008 isn't
+  resolver-visible, by design). `scripts/validate_roadmaps.py` clean both
+  after the status edit and after the new t-029 task.
+- kind-robots/t-022 (production DB pool exhaustion, security-flag) not
+  re-checked this cycle — last reconfirmed by the immediately-preceding
+  session at 03:50 UTC (less than an hour before this cycle started), no
+  Vercel project-id lookup available without a `teamId` this session didn't
+  have cause to resolve, and no new information would change the standing
+  recommendation. No repeat notification, consistent with every prior cycle's
+  call on this same unchanged issue.
+- Daily-dream proposal for today (Pacific calendar day, per the script's
+  UTC-7 fixed offset) already exists — no authoring needed this cycle.
+
+**Kaizen:** t-029 (kind-robots) — draft the Grant-model migration pitch from
+SHARING-SPEC.md's design, proposal-kind, `needs-human` on completion.
