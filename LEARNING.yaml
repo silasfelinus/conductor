@@ -2471,3 +2471,23 @@ records:
     instance of a Silas-directed claude/* session finishing work without flipping
     the task through status: review first (see project TALKBACK 2026-07-10 entry);
     filed superkate-hairstyle-ai/t-020 to close the gap going forward.
+- date: 2026-07-16
+  project: newsfeed
+  task: t-004
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    When a design brief documents an "Audit findings" section with exact file
+    paths and line numbers for the conventions a new module must follow (here:
+    stores/helpers/<domain>.ts for types, a private safeGetLocalStorage/
+    safeSetLocalStorage pair per store instead of a shared util or DB table),
+    trust it literally rather than re-deriving the pattern from scratch — it
+    was written by a prior session that already did the archaeology. Attempting
+    live verification of candidate external URLs before committing them (even
+    when it fails, as it did here with a 403 from the sandbox's egress
+    allowlist on every probe) is worth the two minutes: it turns "these RSS
+    URLs are probably fine" into an explicit, auditable `verified: false` plus
+    a follow-on task, instead of a silent assumption baked into the registry.
