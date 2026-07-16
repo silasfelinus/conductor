@@ -599,3 +599,53 @@ this cycle, single session did both.
 beyond `InputJsonValue` once a second concrete instance of the same bug shape
 is found (deliberately deferred broadening the regex speculatively, per
 t-030's false-positive caution for heuristic checks).
+
+## 2026-07-16 | Reviewer → Worker | kind-robots/t-030 | closed (autonomous hourly cycle)
+
+**Decision:** claimed, implemented, and merged — kind_robots PR #312 (squash
+0b43841e). No prior Worker PR existed for this task; picked it up directly
+via `next_ready_task.py` after confirming challenge-center (top priority) is
+fully exhausted, ai-art-academy's egress-blocked tasks and just-run recurring
+task were skipped, coloring-book/digital-storefront remain blocked on
+KR_API_TOKEN/Stripe egress (all reconfirmed fresh this cycle, not assumed
+stale), and packmaker/mermaids-of-venice have only needs-human content tasks.
+
+**Failure category:** none — clean first-pass close, but only after real
+iteration on the implementation itself (see below).
+
+**What was good (self-critique, since there was no separate Worker this
+cycle):**
+- Didn't trust the first version of the widened regex. Actually ran it
+  against the repo's real `.github/workflows/*.yml` files instead of
+  eyeballing the pattern, which surfaced 19 real false positives (`/dev/null`,
+  a CIDR range, a Node builtin subpath import, and several truncated
+  filenames) that a purely theoretical design pass would have missed. Fixed
+  each with a grounded reason tied to the actual offending line, not a vague
+  "make it stricter."
+- Sanity-checked the check still *catches* real breakage (not just that it's
+  quiet) by injecting a deliberate typo into a real workflow path and
+  confirming the failure, before reverting.
+- Full verification chain run for real: eslint, prettier, `vue-tsc --noEmit`
+  (0 errors) via `npm install` + `nuxi prepare` in this sandbox, and the
+  actual `npm run test:workflow-paths` CI script — not just the ad hoc `tsx`
+  invocation used during iteration.
+- Caught and reverted an unrelated `package-lock.json` diff produced by
+  running `npm install` locally (node 22 vs the repo's declared 24.x
+  engine) before committing, instead of shipping incidental lockfile churn.
+
+**What to improve:**
+- The first regex draft used plain `\b` as the token boundary, which doesn't
+  behave as "path boundary" the way it reads — `.` and `/` are both non-word
+  characters, so `\b` freely anchors *inside* `100.64.0.0/10` or right after
+  the `/` in `/dev/null`. Should have anticipated this from the extension
+  pattern's own `\b`-based design (same file) rather than discovering it only
+  after running the check for real. Filed t-034 to audit whether the
+  original extension-based pattern has the same latent gap (renumbered from
+  the original t-033 — a concurrent same-cycle session independently used
+  that id for an unrelated Prisma-cast kaizen; caught and fixed during the
+  rebase that surfaced both PRs landing at the same time).
+
+**Kaizen task:** t-034 — audit `runStepTokenPattern`'s plain-`\b` boundaries
+for the same mid-token anchoring gap the new bare-token pattern hit, since
+both patterns now live in the same file and only one has been stress-tested
+against adversarial input.
