@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-07-16T10:26:05Z
+Generated: 2026-07-16T13:55:34Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **186**
-- Outcomes: blocked: 12, done: 174
+- Closed tasks recorded: **194**
+- Outcomes: blocked: 12, done: 182
 - Success rate: **94%**
 - Average passes on successful tasks: **0.0**
 
@@ -15,7 +15,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 | Project | Closed | Success rate |
 |---|---|---|
-| ai-art-academy | 14 | 100% |
+| ai-art-academy | 16 | 100% |
 | alexa-integration | 2 | 100% |
 | animation-manager | 4 | 100% |
 | animation-studio | 1 | 100% |
@@ -26,13 +26,13 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | coloring-book | 12 | 100% |
 | conductor | 17 | 100% |
 | digital-storefront | 6 | 100% |
-| dream-cycle | 5 | 100% |
+| dream-cycle | 10 | 100% |
 | ecosystem-map | 4 | 100% |
 | global-ui | 2 | 100% |
 | humboldt-impropriety-calendar | 1 | 0% |
 | humboldt-scoop | 1 | 100% |
 | humboldt-scoop-cms | 1 | 100% |
-| kind-robots | 21 | 95% |
+| kind-robots | 22 | 95% |
 | kindrobots-unraid | 4 | 100% |
 | mermaids-of-venice | 3 | 100% |
 | model-builder | 27 | 100% |
@@ -48,7 +48,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 15 | 40% |
-| software | 171 | 98% |
+| software | 179 | 98% |
 
 ## Failure categories
 
@@ -66,16 +66,16 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-07-16 `ai-art-academy/t-024` — A cross-file slug "mismatch" is not always a bug — verify each divergence individually before forcing exact-match; three of this file pair's divergences were intentional (an artist/technique-specific LoRA entry narrower than the general curriculum movement), so the right fix was a documented mapping table, not renaming slugs to force equality.
+- 2026-07-16 `kind-robots/t-034` — When a lookaround-anchoring fix is applied to one token pattern in a file (t-030's bare-token pattern), sibling patterns in the same file sharing the old plain-\b anchoring (here, the extension-based runStepTokenPattern) should be audited in the same pass rather than deferred to a separate kaizen task — they share the identical failure mode.
+- 2026-07-16 `ai-art-academy/t-020` — Curriculum-mirroring tasks (outline → academyStyles.ts) are cleanly landable without external egress when they only copy already-verified outline text; keep image-fetch work (t-008/t-013) split from pure data-mirroring work (t-020) so museum-egress blocks never stall the latter.
+- 2026-07-16 `dream-cycle/t-005` — New backlog outlines must be cross-checked against ALL existing slugs/themes (seeds, daily proposals, home sets, parked cards) before naming to stay non-duplicative.
+- 2026-07-16 `dream-cycle/t-009` — A delegating creation type's playbook should make the backlog card a pure scheduler/steering surface and explicitly forbid double-claiming a home task the Worker already holds.
+- 2026-07-16 `dream-cycle/t-003` — Audit endpoints against repo source when the DB is down; the beta-admin KR_API_TOKEN resolves to an admin user, so it clears the admin/server gate on the batch expression/transition endpoints.
+- 2026-07-16 `dream-cycle/t-010` — Card-vs-home-set drift checks must be negation-aware (e.g. 'NOT all-ages') and only compare facts both sides expose, or hand-written prose becomes a false positive.
+- 2026-07-16 `dream-cycle/t-014` — A same-date/different-slug daily-proposal race needs a fresh origin/main recheck before writing (mirroring claim_task), not just local slug-dedup; fully closing the window also needs sweep-level pull-before-check / push-after-write.
 - 2026-07-16 `conductor/t-032` — Backfill scripts should reuse the live append/dedup path (prepare_learning + write_learning_record) rather than hand-rolling YAML — the (project,task,outcome) key makes re-runs idempotent for free, and a stale "starts empty" task premise is worth re-checking before scoping.
 - 2026-07-16 `model-builder/t-023` — backfilled: From live testing (Silas): the source picker now shows each record's existing art as a thumbnail, and the build-run view shows a source-context card (art + description/ pitch/backstory) sourced from the run's sourceSnapshot so it survives resume.
-- 2026-07-16 `model-builder/t-015` — backfilled: Extend to CREATE BuildItems and quantity-based child sets.
-- 2026-07-16 `model-builder/t-014` — backfilled: Shipped the Kind Robots front end: the existing model-builder page component wired into a public scaffold-based page at /model-builder, registered as the 'model-builder' tab in the builder channel with channelKey/tabKey.
-- 2026-07-16 `model-builder/t-012` — backfilled: Map asset keys to licensed-safe workflows, requests, polling, output parsing, cancellation, usage, and provenance.
-- 2026-07-16 `model-builder/t-011` — backfilled: Support Dream -> X Characters/Rewards/Scenarios and optional Narrator Bot; Project -> Manager Bot; Scenario -> cast Characters/Rewards; Facet -> fitting records; Character -> signature Rewards.
-- 2026-07-16 `model-builder/t-010` — backfilled: Offer only assets valid for the selected model: primary image, icon, card, hero, inspiration set/ArtCollection, key scene, profile/avatar, or repair.
-- 2026-07-16 `model-builder/t-009` — backfilled: Define Reward fields, icon, card, hero/use scene, collection placement, and relationship proposals.
-- 2026-07-16 `model-builder/t-008` — backfilled: Define identity and field pitches, artPrompt, portrait candidates, canonical avatar, icon, card, hero shots, cutout/model-sheet reference, selectable ExpressionMedia emotions and actions, custom keys, optional clips/transitions, and optional 3D reference/model.
-- 2026-07-16 `model-builder/t-007` — backfilled: Preserve the existing Marketing Deck scope as one recipe: business card, logo application, lawn sign, banner, flyer, website/app mockups, photo/video shoot plans, static ads, commercial treatment/storyboard, optional Comfy execution, and weekly launch plan.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-07-16T10:26:05Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-07-16T13:55:34Z_

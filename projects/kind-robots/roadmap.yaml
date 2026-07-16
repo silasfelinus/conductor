@@ -957,13 +957,31 @@ tasks:
   - id: t-034
     milestone: m1
     title: Audit the extension-based run-step path pattern in verifyWorkflowPaths.ts for the same mid-token \b anchoring gap t-030 hit
-    status: claimed
-    owner: reviewer
+    status: done
+    owner: worker
     passes: 0
     stakes: reversible
-    updated: '2026-07-16T13:09:32Z'
-    note: >
-      Kaizen from t-030 (Reviewer, kind_robots PR #312): widening
+    updated: '2026-07-16T13:49:00Z'
+    note: |-
+      DONE 2026-07-16 (autonomous hourly conductor cycle): kind_robots PR #314
+      merged (squash 4e1f7cc5). Confirmed the same mid-token `\b` anchoring gap
+      t-030 fixed in the bare-token pattern also existed in the older
+      extension-based `runStepTokenPattern` -- it matched install-script URLs
+      (e.g. a `curl`'d `https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/
+      install.sh`) and absolute toolcache paths (e.g. `/opt/hostedtoolcache/
+      node/20.11.0/x64/bin/activate.sh`) as if they were repo-relative file
+      references, since domain/host segments fit the same
+      `[A-Za-z0-9._-]+(?:/[A-Za-z0-9._-]+)+` shape as a real path. Applied the
+      same lookaround anchoring t-030 used, plus excluding a leading `@` so
+      CDN/registry version-pin paths (`some-package@1.2.3/dist/index.js`)
+      don't false-positive either. Verified: identical match set across all 7
+      real workflow files before/after (pure robustness fix, no live false
+      positive existed); adversarial `curl .../install.sh` injection correctly
+      ignored; a genuinely dead path reference still correctly caught;
+      `npm run test:workflow-paths` passes; vue-tsc/eslint/prettier clean. CI
+      (GitGuardian, Contract verifiers, TypeScript) green before merge.
+
+      Original spec follows: Kaizen from t-030 (Reviewer, kind_robots PR #312): widening
       verifyWorkflowPaths.ts to catch extension-less path references
       surfaced a real bug class in the *new* bare-token pattern -- plain
       `\b` doesn't anchor where expected next to non-word characters like
@@ -987,3 +1005,25 @@ tasks:
       so this is a robustness pass, not a live bug fix.
     claimed_by: claude-burst-2026-07-16-kr
     claimed_at: '2026-07-16T13:09:32Z'
+
+  - id: t-035
+    milestone: m1
+    title: Extract the shared lookaround-anchoring regex fragment used by verifyWorkflowPaths.ts's bareTokenPattern and runStepTokenPattern into one named constant
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-16T13:49:00Z'
+    note: >
+      Kaizen from t-034 (Reviewer, kind_robots PR #314): t-030 and t-034 each
+      independently applied the identical `(?<![A-Za-z0-9._/@-])...(?![A-Za-z0-9._-])`
+      lookaround fix to two separate patterns in
+      utils/scripts/verifyWorkflowPaths.ts (bareTokenPattern and
+      runStepTokenPattern) because both had drifted onto plain `\b` anchoring
+      and needed auditing separately to discover the shared bug class. Extract
+      the lookaround pair into one named constant (e.g. `PATH_TOKEN_BOUNDARY`
+      or a small `anchorPathToken(pattern)` helper) that both patterns build
+      from, so a future third pattern in this file inherits correct anchoring
+      by construction instead of needing its own manual audit pass. Small,
+      reversible, test-covered by the existing `npm run test:workflow-paths`
+      suite.

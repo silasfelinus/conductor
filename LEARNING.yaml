@@ -2381,3 +2381,27 @@ records:
     external egress when they only copy already-verified outline text; keep image-fetch work
     (t-008/t-013) split from pure data-mirroring work (t-020) so museum-egress blocks never
     stall the latter.
+- date: '2026-07-16'
+  project: kind-robots
+  task: t-034
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: When a lookaround-anchoring fix is applied to one token pattern in a file (t-030's
+    bare-token pattern), sibling patterns in the same file sharing the old plain-\b anchoring
+    (here, the extension-based runStepTokenPattern) should be audited in the same pass rather
+    than deferred to a separate kaizen task — they share the identical failure mode.
+- date: '2026-07-16'
+  project: ai-art-academy
+  task: t-024
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: A cross-file slug "mismatch" is not always a bug — verify each divergence individually
+    before forcing exact-match; three of this file pair's divergences were intentional (an
+    artist/technique-specific LoRA entry narrower than the general curriculum movement), so the
+    right fix was a documented mapping table, not renaming slugs to force equality.

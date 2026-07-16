@@ -5055,3 +5055,60 @@ remains a possible follow-up if drift ever appears.
 
 **Kaizen:** none filed — straightforward scoped bug fix matching its
 close-out note almost exactly.
+
+## 2026-07-16 | Reviewer → Worker | kind-robots/t-034 | pattern (autonomous hourly conductor cycle)
+
+**Decision:** merged (kind_robots PR #314, squash 4e1f7cc5) — no pre-existing Worker/Reviewer split, fresh headless session reviewing a prior cycle's PR.
+
+**Failure category:** none — clean first-pass close.
+
+**What was good:**
+- The audit was genuinely adversarial rather than a rubber-stamp: it constructed concrete
+  false-positive inputs (an install-script URL, an absolute toolcache path, a CDN
+  version-pinned path) and verified the un-anchored pattern actually matched them before
+  applying the fix, then re-verified the fixed pattern against all 7 real workflow files
+  plus a deliberately injected dead-path case to confirm detection still works. CI
+  (GitGuardian, Contract verifiers, TypeScript) was green before merge.
+- Correctly reused the exact lookaround technique t-030 established rather than inventing
+  a new anchoring approach, keeping the two patterns' semantics consistent.
+
+**What to improve:**
+- The PR body omitted a "Kaizen suggestion" section (same gap noted for t-027 in this file
+  the same day) — filed kind-robots/t-035 in its place: extract the now-twice-duplicated
+  lookaround-anchoring fragment into one shared named constant/helper so a future third
+  pattern in verifyWorkflowPaths.ts inherits correct anchoring automatically instead of
+  needing its own manual audit pass.
+
+**Kaizen task:** t-035 (kind-robots) — extract shared lookaround-anchoring constant for
+verifyWorkflowPaths.ts's token patterns.
+
+## 2026-07-16 | Reviewer → Silas | ai-art-academy/t-024 | closed (autonomous hourly conductor cycle)
+
+**Decision:** claimed, implemented, and closed `done` directly — docs-only kaizen task,
+no cross-repo PR needed.
+
+**Detail:**
+- Rotation this cycle: challenge-center (all tasks done/not-started, nothing ready),
+  ai-art-academy next per priority.yaml. Rechecked museum/Wikimedia egress fresh
+  (`curl` to metmuseum.org and upload.wikimedia.org, both connection-refused/000) —
+  t-008 and t-013 remain genuinely blocked, a 4th consecutive session confirming the
+  same environment limitation; left `ready` rather than burn a pass (transient per
+  Failure-triage). t-010 (recurring) last ran ~3.5h earlier this same day, so skipped
+  it in favor of a concretely scoped `ready` task instead: t-019/t-021/t-022/t-023
+  were all viable but t-024 (slug reconciliation, conductor-repo docs only, zero
+  external egress) was the cleanest single-task fit for this cycle.
+- Claimed via `claim_task.py` (reviewer/conductor-hourly-20260716-1349). Parsed both
+  docs/curriculum-outline.md and docs/style-lora-registry.md programmatically to
+  extract the full slug sets and diff them, rather than eyeballing — found exactly
+  the 3 divergent pairs the task note named plus 6 registry-only bonus entries and 6
+  curriculum movements with no registry entry yet at all. Added a "Curriculum slug
+  mapping" table documenting all of this, with a one-line reason for each divergence
+  (narrower artist/technique-specific LoRA vs. the general movement — intentional,
+  not a naming bug) so a future seed-sync task can't misattribute a lesson.
+- Closed `done` with the verification method (programmatic set-diff, 21/21 both
+  ways) recorded in the task note.
+
+**Kaizen:** none filed — this was itself a kaizen task from a prior cycle, and its
+own note already flags the follow-on convention (new registry entries should default
+to the plain curriculum slug and add a mapping-table row only if the same
+narrower-than-the-movement situation applies).
