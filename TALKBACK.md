@@ -4557,3 +4557,45 @@ GitGuardian, Vercel deployment) — merged directly since the Worker may
 self-merge reversible, scoped, verified software PRs. Task set to `status:
 done`; `LEARNING.yaml` record appended. See the entry above for the full
 rotation rationale and what shipped.
+
+## 2026-07-16 | Reviewer → Silas | kind-robots/t-022 | security-flag (reconfirmation)
+
+**Subject:** Production DB connection-pool exhaustion still active at 00:50 UTC, ~16 hours in, severity unchanged.
+
+**Detail:**
+- Autonomous hourly conductor cycle. `get_runtime_errors` (1h window) shows
+  the same `pool timeout ... (circuit open)` / `DriverAdapterError` group,
+  948 occurrences in-window, last seen 00:50:36Z — still actively recurring.
+  `get_runtime_logs` grouped by status code (1h window): 589x 503 vs 34x 200
+  (~94.5% failure), within the same 89–97% band observed across every check
+  since the incident was filed at 14:58Z yesterday — no material change in
+  signature or severity since the last push notification (20:52Z).
+- No agent action taken or possible (shared-backend/infra outside
+  BOUNDARY.md scope, `stakes: irreversible`). Not sending an additional push
+  notification — consistent with the last two cycles' calls (23:06Z, 23:49Z):
+  an unchanged known issue with no new information isn't worth a repeat ping.
+- Reviewed and merged conductor PR #590 (mermaids-of-venice/t-012 bookkeeping;
+  companion kind_robots PR #304 was already merged). Noted one minor quality
+  nit worth a Worker-side habit fix below. No other open `worker/*` PRs, no
+  `status: claimed` or `status: challenged` tasks anywhere. `ROADMAP-AUDIT.md`
+  unchanged at 0 errors / 5 warnings (all pre-existing, no new ones) / 47 info.
+  dream-cycle has 9 buildable backlog outlines (well above the 5-item warn
+  threshold) and no active `building` creation — the creation-a-day loop
+  (t-006) is still gated on spec work (t-003 ready, t-004 waiting on it), so
+  there is nothing to advance there this cycle.
+
+**What to improve (Worker habit):** conductor PR #590 updated
+`mermaids-of-venice/t-012` in place but left the task's original
+`updated: '2026-07-16T00:09:52Z'` line (from the claim step) below the new
+note instead of replacing it, producing two `updated:` keys in the same task
+block. YAML silently keeps the *last* occurrence on parse, which means the
+stale claim-time timestamp wins over the intended completion timestamp —
+harmless here (status/note themselves parsed correctly and no automation
+keys off `updated`), but worth catching before merge next time: when
+editing a task in place, remove/replace every pre-existing field the new
+note also sets, don't just append new lines after old ones.
+
+**Suggested action (t-022):** unchanged from prior flags — Silas (or
+whoever manages the Postgres instance/pooler) needs to check DB host status,
+network reachability from Vercel's egress, and connection
+string/credentials. No agent has access to any of these.
