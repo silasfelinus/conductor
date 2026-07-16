@@ -957,33 +957,40 @@ tasks:
   - id: t-034
     milestone: m1
     title: Audit the extension-based run-step path pattern in verifyWorkflowPaths.ts for the same mid-token \b anchoring gap t-030 hit
-    status: claimed
-    owner: reviewer
+    status: done
     passes: 0
     stakes: reversible
-    updated: '2026-07-16T13:09:32Z'
-    note: >
+    updated: '2026-07-16T13:45:00Z'
+    note: |-
       Kaizen from t-030 (Reviewer, kind_robots PR #312): widening
-      verifyWorkflowPaths.ts to catch extension-less path references
-      surfaced a real bug class in the *new* bare-token pattern -- plain
-      `\b` doesn't anchor where expected next to non-word characters like
-      `.` and `/`, so the naive first version matched fragments of
-      `/dev/null`, `100.64.0.0/10`, and `scripts/cleanup-test-users.mjs`
-      instead of rejecting them or matching the whole token. Fixed there
-      with explicit lookaround (`(?<![a-zA-Z0-9._/-])` /
-      `(?![a-zA-Z0-9._-])`) instead of `\b`. The original *extension-based*
-      `runStepTokenPattern` (same file, shipped earlier in t-028) still
-      uses plain `\b` at both ends and has never been audited against this
-      specific failure mode -- it may have the same latent risk for
-      extension-terminated tokens embedded after a `/` (e.g. inside an
-      absolute path or a longer non-path string) that just hasn't shown up
-      in this repo's small set of workflow files yet. Audit it the same
-      way t-030 did: try deliberately adversarial run-step content (paths
-      embedded in URLs, absolute paths, decimal-like tokens) against the
-      existing pattern and either confirm it's safe (document why, e.g. an
-      extension list narrow enough that no non-path token happens to match
-      it in practice) or apply the same lookaround fix. Low urgency --
-      current workflow files show no evidence of an actual false positive,
-      so this is a robustness pass, not a live bug fix.
-    claimed_by: claude-burst-2026-07-16-kr
-    claimed_at: '2026-07-16T13:09:32Z'
+      verifyWorkflowPaths.ts to catch extension-less path references surfaced a
+      real bug class in the *new* bare-token pattern -- plain `\b` doesn't anchor
+      where expected next to non-word characters like `.` and `/`, so the naive
+      first version matched fragments of `/dev/null`, `100.64.0.0/10`, and
+      `scripts/cleanup-test-users.mjs` instead of rejecting them or matching the
+      whole token. Fixed there with explicit lookaround
+      (`(?<![a-zA-Z0-9._/-])` / `(?![a-zA-Z0-9._-])`) instead of `\b`. The
+      original *extension-based* `runStepTokenPattern` (same file, shipped
+      earlier in t-028) still used plain `\b` at both ends and had never been
+      audited against this specific failure mode.
+
+      DONE 2026-07-16 (burst-cycle session, kind_robots PR #314, merged): audited
+      runStepTokenPattern the same way t-030 audited the bare pattern -- tried
+      deliberately adversarial run-step content against it. Confirmed the same
+      class of gap is real here too: with no left-side anchor and a plain `\b`
+      on the right, the un-anchored regex matched install-script URLs (e.g.
+      `https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh`) and
+      absolute toolcache paths (e.g.
+      `/opt/hostedtoolcache/node/20.11.0/x64/bin/activate.sh`) as if they were
+      repo-relative file references, since domain/host segments fit the same
+      `[A-Za-z0-9._-]+(?:/[A-Za-z0-9._-]+)+` shape as a real path. Applied the
+      same lookaround technique t-030 used, plus excluding a leading `@` so
+      CDN/registry version-pin paths (`some-package@1.2.3/dist/index.js`) don't
+      false-positive either. Verified against all 7 real workflow files:
+      identical match set before/after (pure robustness fix -- no live false
+      positive exists in this repo's workflows today, matching the note's
+      "low urgency" framing). Manually injected an adversarial URL line and a
+      genuinely dead path reference into a real `run: |` block: the URL was
+      correctly ignored and the dead path was still caught. `npm run
+      test:workflow-paths` passes (35 refs, 7 files); vue-tsc --noEmit, eslint,
+      and prettier all clean before merge.

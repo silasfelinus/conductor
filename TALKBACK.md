@@ -5055,3 +5055,39 @@ remains a possible follow-up if drift ever appears.
 
 **Kaizen:** none filed — straightforward scoped bug fix matching its
 close-out note almost exactly.
+
+## 2026-07-16 | Worker → Silas | kind-robots/t-034 | closed (burst cycle)
+
+**Decision:** merged — kind_robots PR #314, squash-merged after CI (Contract
+verifiers, TypeScript, GitGuardian) passed clean.
+
+**Detail:**
+- Burst-mode cycle rotation: `kindrobots-unraid` (least-recently-touched repo)
+  had no claimable work — every roadmap task was `done`, `needs-human`, or
+  `waiting` with no satisfiable `depends_on`, and AGENTS.md forbids claiming a
+  `waiting` task without a resolver-confirmed dependency. `PortOS` was checked
+  next (its own repo, tracked via GitHub issues rather than a conductor
+  roadmap) and had zero open issues. Moved to `kind-robots`, which had 7 ready
+  tasks.
+- Picked t-034 (kaizen from t-030, `ready`, well-specified): audit
+  `utils/scripts/verifyWorkflowPaths.ts`'s extension-based `runStepTokenPattern`
+  for the same `\b` mid-token anchoring gap t-030 hit and fixed in the sibling
+  bare-token pattern. Confirmed the gap is real here too — the un-anchored
+  regex matched install-script URLs
+  (`https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh`) and
+  absolute toolcache paths
+  (`/opt/hostedtoolcache/node/20.11.0/x64/bin/activate.sh`) as if they were
+  repo-relative file references, since domain/host segments fit the same
+  `[A-Za-z0-9._-]+(?:/[A-Za-z0-9._-]+)+` shape as a real path. Applied t-030's
+  lookaround technique, plus excluded a leading `@` to also catch CDN/registry
+  version-pin paths (`some-package@1.2.3/dist/index.js`).
+- Verified against all 7 real workflow files: identical match set before and
+  after (pure robustness fix, zero live false positive today — matches the
+  task note's own "low urgency" framing). Manually injected an adversarial
+  URL line and a genuinely dead path reference into a real `run: |` block:
+  the URL was correctly ignored, the dead path was still caught. `npm run
+  test:workflow-paths` (35 refs, 7 files), `vue-tsc --noEmit`, `eslint`, and
+  `prettier --check` all clean.
+
+**Kaizen:** none filed — this was itself the kaizen task from t-030; no new
+follow-on gap surfaced in this file during the audit.
