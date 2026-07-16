@@ -957,11 +957,11 @@ tasks:
   - id: t-034
     milestone: m1
     title: Audit the extension-based run-step path pattern in verifyWorkflowPaths.ts for the same mid-token \b anchoring gap t-030 hit
-    status: ready
-    owner: null
+    status: claimed
+    owner: reviewer
     passes: 0
     stakes: reversible
-    updated: '2026-07-16T10:11:20Z'
+    updated: '2026-07-16T13:09:32Z'
     note: >
       Kaizen from t-030 (Reviewer, kind_robots PR #312): widening
       verifyWorkflowPaths.ts to catch extension-less path references
@@ -985,3 +985,5 @@ tasks:
       it in practice) or apply the same lookaround fix. Low urgency --
       current workflow files show no evidence of an actual false positive,
       so this is a robustness pass, not a live bug fix.
+    claimed_by: claude-burst-2026-07-16-kr
+    claimed_at: '2026-07-16T13:09:32Z'
