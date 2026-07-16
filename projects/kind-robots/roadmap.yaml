@@ -985,3 +985,35 @@ tasks:
       something to execute) even though it sits in kind-robots's roadmap —
       set status: needs-human when done, per the proposal-kind rule in
       AGENTS.md.
+
+  - id: t-031
+    milestone: m1
+    title: Add a CI check that greps new .exec(/.match( capture-group call sites for a noUncheckedIndexedAccess guard
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-16T08:00:00Z'
+    note: >
+      Kaizen from t-027 (Reviewer, 2026-07-16, conductor PR #606): the t-027
+      audit found all 26 existing capture-group call sites already safe, and
+      confirmed via a live vue-tsc --noEmit run, but that check only ever runs
+      against code that already exists at PR time — a future call site can
+      still introduce the ai-art-academy/t-017-class bug (TS2345 from an
+      unguarded `match[1]`) and won't be caught until the normal typecheck CI
+      job runs on that PR, which today already happens. What's missing is a
+      cheap, targeted CI step that specifically diffs new/changed
+      `.exec(`/`.match(` call sites in a PR against the guard patterns
+      documented in t-027's note (optional chaining + `??`, `if (!match)`
+      early-return, default-valued destructuring, or a post-truthy-check `!`
+      assertion) and fails with a clear, specific message pointing at the
+      unguarded line — rather than relying on vue-tsc's generic TS2345 error,
+      which is correct but not self-explanatory to a first-time contributor.
+      t-030's note already flagged that a similarly-shaped heuristic (bare
+      path-token detection) has real false-positive risk and needs careful
+      design — this task should scope narrowly (new/changed lines only, via
+      git diff against origin/main, not a whole-repo scan) and treat a
+      reasonable false-positive rate as acceptable given vue-tsc is still the
+      backstop. Small and mechanical if scoped to diff-only; escalate to
+      needs-human if the false-positive rate in practice turns out too high
+      to be useful.
