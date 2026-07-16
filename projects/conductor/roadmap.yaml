@@ -626,17 +626,19 @@ tasks:
   - id: t-031
     milestone: m2
     title: Wire LEARNING-REPORT.md regeneration and its tests into CI
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
-    updated: "2026-07-11T21:30:00Z"
+    updated: '2026-07-16T18:57:24Z'
     depends_on: t-030
     note: >
       Follow-up to t-030. Add tests/test_build_learning_summary.py to the Worker PR
       CI job list (ci.yml) and regenerate LEARNING-REPORT.md on pushes to main the
       same way STATUS.md/KAIZEN.md are rebuilt, so the report never drifts from the
       ledger.
+    claimed_by: claude-overnight-sxndmc
+    claimed_at: '2026-07-16T18:57:24Z'
 
   - id: t-032
     milestone: m2
