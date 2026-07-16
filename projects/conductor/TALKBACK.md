@@ -449,3 +449,51 @@ accurately ("full pytest suite" instead of "authz regression tests").
 name now undersells what it runs (full suite, not just authz tests); a job
 *rename* would need a coordinated branch-protection update outside agent
 reach, so scope that as its own task rather than silently deferring.
+
+## 2026-07-16 | Worker → Reviewer | conductor/t-029 | pattern
+
+**Decision:** self-implemented and self-closed in one solo automated cycle
+(claimed via `claim_task.py`, no separate Reviewer session — same pattern as
+t-047/t-023).
+
+**Detail:** Added `tests/test_reconcile_expressions.py`, promoting the
+throwaway stubbed-API harness from PR #360 into a committed pytest file. All
+four cases named in the original kaizen note are covered, each against a
+`monkeypatch.setattr(rex, "api", fake_api)` stub (no network, no real
+kind_robots checkout needed):
+- narrator lookup succeeding means the bulk `/api/bots` list is never queried
+  (asserted via a call-tracking fake that raises if that path is hit)
+- a narrator 404 falls back to the bulk list with `existing=None`, producing
+  create-only rows — confirmed no `missing`/deactivate row is ever computed
+  when rows are unknown, since drift can't be judged without a baseline
+- `fetch_narrator("character", ...)` resolves the owner id from
+  `sourceCharacterId`, not the payload's own `id` (that's the default
+  narrator bot's id — a real footgun if inverted)
+- `fetch_owner_ids`'s pagination-stall detection (`len(ids) == before`) is
+  exercised directly against a stubbed always-same-100-rows response, the
+  exact shape of the broken `/api/bots` pagination that PR #360's fix
+  worked around
+
+**What was good:**
+- Followed the existing `test_sync_projects.py`/`test_distribute_images.py`
+  conventions already in `tests/` (module-level `monkeypatch.setattr` for
+  both the API function and `KIND_ROBOTS_ROOT`, rather than inventing a new
+  mocking style) instead of adding a fixtures file or a new test framework.
+- Caught two of my own test-authoring bugs before landing: `id: i` for
+  `i in range(100)` produces a falsy `id: 0` for the first row, which
+  `fetch_owner_ids`'s `if slug and row.get("id")` guard correctly (silently)
+  drops — not a script bug, but would have made my own test flaky/wrong had
+  I not run it. And `json.dumps(..., indent=2)` means `capsys` stdout is
+  multi-line — parsing `.splitlines()[-1]` grabs a bare `}` instead of the
+  full object; fixed by parsing the whole captured stdout block.
+
+**What to improve:**
+- Two `plan_owner()` branches (the missing-file/deactivate path, and the
+  orphan-loop-with-no-still skip note) are still untested — deliberately
+  scoped out since the original kaizen note named exactly four cases and
+  scope discipline says don't expand a landed task's diff. Filed as
+  `conductor/t-050` instead of silently bundling them in.
+
+**Kaizen task:** `conductor/t-050` — extend coverage to the `--deactivate`
+missing-file path and the orphan-loop skip note (both pure `plan_owner()`
+unit tests, no `main()`/argparse plumbing needed).

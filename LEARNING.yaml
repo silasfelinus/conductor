@@ -1198,3 +1198,24 @@ records:
     the PR is a cheap, high-confidence verification step for any "detect a
     missing reference" tool and should be the default verification pattern
     for this task shape.
+- date: 2026-07-16
+  project: conductor
+  task: t-029
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    A kaizen note that names its exact test cases up front ("covering: X,
+    Y, Z, W") makes a script-testing task fully self-scoping -- no need to
+    chase down the original throwaway harness (PR #360's body only
+    described it in prose, no code was ever committed) when the note
+    already specifies the behaviors precisely enough to write fresh
+    monkeypatch-based tests against the current source. Two easy self-made
+    test bugs worth flagging for future test-writing tasks: (1) synthetic
+    fixture data using `id: i` starting at 0 silently trips falsy-id guards
+    in the code under test (`if slug and row.get("id")`) -- start
+    fabricated ids at 1; (2) `capsys` stdout from `json.dumps(...,
+    indent=2)` is multi-line, so `.splitlines()[-1]` grabs a bare closing
+    brace instead of the object -- parse the whole captured block.
