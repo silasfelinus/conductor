@@ -891,8 +891,8 @@ tasks:
   - id: t-027
     milestone: m1
     title: Audit codebase for RegExp capture-group results used without a noUncheckedIndexedAccess guard
-    status: ready
-    owner: null
+    status: claimed
+    owner: reviewer
     passes: 0
     stakes: reversible
     note: >
@@ -907,7 +907,9 @@ tasks:
       into a function expecting `string` without a guard, and either add the guard
       or confirm each one is provably safe (e.g. captured from a fixed-structure
       literal). Small, mechanical, no design judgment needed.
-    updated: '2026-07-15T23:35:00Z'
+    updated: '2026-07-16T07:09:00Z'
+    claimed_by: claude-burst-hourly-20260716-0707
+    claimed_at: '2026-07-16T07:09:00Z'
 
   - id: t-028
     milestone: m1
