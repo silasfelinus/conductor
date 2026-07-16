@@ -972,11 +972,11 @@ tasks:
   - id: t-030
     milestone: m1
     title: Widen the workflow-path-reference check to catch extension-less directory references
-    status: ready
-    owner: null
+    status: claimed
+    owner: reviewer
     passes: 0
     stakes: reversible
-    updated: '2026-07-16T06:02:00Z'
+    updated: '2026-07-16T09:51:17Z'
     note: >
       Kaizen from t-028 (Reviewer, kind_robots PR #309): the new
       verifyWorkflowPaths.ts heuristic only flags `run:`-step tokens ending in
@@ -988,6 +988,8 @@ tasks:
       first pass because it has a much higher false-positive rate (npm script
       names like `test:foo`, non-path colon-separated tokens, etc.) and needs
       a more careful allowlist/exclusion design than the extension gate did.
+    claimed_by: claude-hourly-20260716-0950
+    claimed_at: '2026-07-16T09:51:17Z'
 
   - id: t-029
     milestone: m4
