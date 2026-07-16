@@ -5212,3 +5212,55 @@ review rejection).
 an observation rather than a task, since deciding whether to extend
 `claim_task.py`'s collision guard to close-out writes (vs. some lighter-weight
 fix) needs more thought than fits in a hand-off note.
+## 2026-07-16 | Reviewer → Silas | conductor/t-052 | closed (conductor burst-hourly cycle)
+
+**Decision:** claimed, implemented, and closed `done` directly (conductor-repo tooling
+task, not a cross-repo change) — PR opened against conductor `main`.
+
+**Detail:**
+- Rotation this cycle: challenge-center still has nothing `ready`; ai-art-academy is
+  next per `priority.yaml` but has been the pick for the last several consecutive
+  cycles (t-020, t-008, t-024, t-023) — deliberately rotated past it this hour to a
+  different active project per this cycle's explicit "rotate through the list"
+  framing. Picked conductor/t-052 over conductor's other `ready` tasks: it's a kaizen
+  task from ai-art-academy/t-020 with a concrete, already-decided design (the task
+  note offers two options and explicitly recommends the lighter one), fully
+  self-contained in this repo (no kind_robots cross-repo dependency, no live art
+  generation, no egress-flaky external API), and cleanly verifiable with unit tests
+  plus a real live probe.
+- Claimed via `claim_task.py` (reviewer/claude-conductor-burst-20260716-t052).
+  Implemented option (b) as the task recommended: root-level `EGRESS-BLOCKERS.md`
+  (append-only, mirrors `TALKBACK.md`'s convention) plus
+  `scripts/recheck_egress_blocks.py`, which HEAD-probes a host through the sandbox's
+  agent proxy and appends one timestamped `blocked`/`reachable` line, optionally
+  linked to a `project/task-id`. A connection-level failure (refused/reset/timeout/
+  DNS) counts as `blocked`; any actual HTTP response (even 403/404) counts as
+  `reachable`, since the remote connection itself succeeded — that distinction
+  matters because a "real" 403 from a site's own auth logic is a different problem
+  than the sandbox's egress allowlist rejecting the connection outright.
+- Verified two ways: (1) 10 new unit tests in `tests/test_recheck_egress_blocks.py`
+  with all network calls mocked via `monkeypatch` and a `tmp_path` ledger file so
+  the real `EGRESS-BLOCKERS.md` is never touched by CI, plus the full 291-test suite
+  still green; (2) a live `--no-append` dry run against a known-good host
+  (`registry.npmjs.org` → reachable, HTTP 200) and a known-blocked host
+  (`metmuseum.org` → blocked — the sandbox proxy surfaces this as an HTTPS CONNECT
+  tunnel 403, not a bare connection reset, which is now baked into the tool's
+  `blocked` classification and logged verbatim in the `detail` text). Also ran
+  `scripts/audit_roadmaps.py` (0 errors, same 5 pre-existing warnings, no new
+  conductor findings) after closing the task.
+- Added a one-paragraph pointer in `AGENTS.md`'s Failure-triage section (next to the
+  `transient` category, where an egress block belongs) so future sessions discover
+  the tool instead of independently re-deriving a prose recheck paragraph.
+- Deliberately did NOT migrate ai-art-academy/t-008's, t-013's, or
+  digital-storefront's existing hand-written recheck prose into the new ledger
+  retroactively — the task's own note only asks for the mechanism, and backfilling
+  history across three other projects' tasks would have been unrelated scope creep
+  in this cycle. Left as natural follow-on: the next session that touches any of
+  those tasks can link forward to `EGRESS-BLOCKERS.md` instead of adding another
+  prose paragraph.
+
+**Kaizen:** none filed this cycle — t-052 was itself a kaizen task, and its own
+scope already covers the mechanism; retroactive migration of the three existing
+tasks' prose is noted above as natural follow-on work rather than spun into a new
+roadmap task, since it's small enough (link one sentence, per task, next time an
+agent is already in that task) to not need its own tracked item.

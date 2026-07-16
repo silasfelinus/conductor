@@ -1260,33 +1260,14 @@ tasks:
   - id: t-052
     milestone: m2
     title: Add a shared known-egress-blockers mechanism instead of copy-pasted recheck notes per task
-    status: claimed
+    status: done
     owner: reviewer
     passes: 0
     stakes: reversible
-    note: >
-      Kaizen from ai-art-academy/t-020 (Worker, burst-hourly cycle, 2026-07-16).
-      ai-art-academy/t-008 and t-013 have each independently accumulated 3+
-      "RECHECKED <date>: still a fresh connect_rejected/403" paragraphs for the
-      identical metmuseum.org / upload.wikimedia.org egress block (same pattern
-      also logged separately for Civitai/HF on t-003 and Stripe on
-      digital-storefront). Every session that picks up a blocked task currently
-      hand-checks the agent-proxy status endpoint and hand-writes a new prose
-      paragraph, which is easy to skip (no recheck at all) and makes "how many
-      times has this been reconfirmed, and when" hard to grep across tasks.
-      Add either (a) a `blocked_by_egress: [hostname, ...]` task field in
-      roadmap.yaml plus a small `scripts/recheck_egress_blocks.py` that curls
-      `/__agentproxy/status`'s `recentRelayFailures` for each listed host and
-      stamps a compact `last_egress_recheck: {date, blocked: bool}` onto the
-      task, or (b) a single root-level `EGRESS-BLOCKERS.md` ledger (mirroring
-      TALKBACK.md's append-only convention) that every recheck appends one line
-      to, with tasks linking to it instead of repeating the prose. Either design
-      is fine — pick whichever is less roadmap-schema churn. Should NOT change
-      any task's `status`/`needs-human` semantics, purely a record-keeping
-      improvement so recheck history stays greppable in one place.
+    note: 'DONE 2026-07-16 (option b, single ledger — less roadmap-schema churn per the task''s own recommendation): added root-level EGRESS-BLOCKERS.md (append-only, TALKBACK.md-style) plus scripts/recheck_egress_blocks.py, which HEAD-probes a host through the sandbox agent proxy and appends one timestamped blocked/reachable line, optionally linked to a project/task-id. Connection-level failures (refused/reset/timeout/DNS) count as blocked; any actual HTTP response including 4xx counts as reachable, since the remote connection succeeded. Verified live: registry.npmjs.org -> reachable (HTTP 200), metmuseum.org -> blocked (Tunnel connection failed: 403 Forbidden), matching the exact pattern ai-art-academy/t-008 and t-013 have hand-logged repeatedly. 10 new unit tests (tests/test_recheck_egress_blocks.py, network mocked via monkeypatch, tmp_path ledger so the real file is never touched by CI) plus the full 291-test suite pass. Added a one-paragraph pointer in AGENTS.md''s Failure-triage section so future sessions discover the tool instead of re-deriving prose rechecks. Did not migrate ai-art-academy/t-008''s, t-013''s, or digital-storefront''s existing recheck prose into the ledger retroactively -- out of scope for this task; the next session that touches those tasks can link forward instead.'
     claimed_by: claude-conductor-burst-20260716-t052
     claimed_at: '2026-07-16T15:06:58Z'
-    updated: '2026-07-16T15:06:58Z'
+    updated: '2026-07-16T15:10:09Z'
 
   - id: t-053
     milestone: m2

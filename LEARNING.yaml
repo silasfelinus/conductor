@@ -2418,3 +2418,24 @@ records:
     a large per-style table (teaching-notes.md's 21-row failure-mode list) into the TS seed —
     keeps the PR additive and scoped when the fine-grained data doesn't already live in the
     seed.
+- date: 2026-07-16
+  project: conductor
+  task: t-052
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    When a kaizen task offers two design options and explicitly recommends the
+    lighter one ("pick whichever is less roadmap-schema churn"), take that steer
+    literally rather than re-litigating it — the append-only single-ledger design
+    (EGRESS-BLOCKERS.md, mirroring TALKBACK.md's existing convention) needed zero
+    roadmap.yaml schema changes and no new task fields, while the alternative
+    (a `blocked_by_egress` task field) would have touched every affected task's
+    schema for the same practical outcome. Verifying the new tool against a real
+    known-good host (registry.npmjs.org) and a real known-blocked host
+    (metmuseum.org) in the same session, rather than only unit-testing with mocks,
+    caught that the sandbox proxy surfaces the block as an HTTPS CONNECT tunnel
+    403 (not a bare connection reset) — useful detail for the log line's `detail`
+    text that a mocked-only test run would not have surfaced.

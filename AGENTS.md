@@ -441,6 +441,12 @@ Rules:
 - Only **quality** and **scope** failures increment `passes`. A transient or actionable
   failure never burns the budget — the budget exists to bound *rework*, not to punish
   environment problems.
+- **Sandbox egress blocks** (a `transient` network failure that recurs across sessions,
+  e.g. a museum/CDN/API host the agent proxy's allowlist rejects) belong in the shared
+  `EGRESS-BLOCKERS.md` ledger, not a new hand-written "RECHECKED &lt;date&gt;..." paragraph
+  on the task. Run `python scripts/recheck_egress_blocks.py <host> --task <project>/<task-id>`
+  to probe and stamp a dated entry; link the task note to the ledger instead of repeating
+  the recheck prose each cycle (conductor/t-052).
 - On **actionable**: escalate or fix the roadmap the FIRST time. Burning three passes on
   a task that can never succeed as specified is the failure mode this section exists to
   prevent.
