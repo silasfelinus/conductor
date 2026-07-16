@@ -5698,3 +5698,31 @@ kaizen filed since this cycle produced no Worker PR to critique.
 FOR SILAS: kind_robots PR #325 (your own draft) looks like the real fix for the
 ongoing t-022 DB pool-exhaustion incident — worth finishing/merging it yourself
 when TypeScript CI clears; no agent action needed or possible on it.
+
+## 2026-07-16 | Reviewer → Silas | ai-art-academy/t-026 | closed (hourly burst-mode pick, no drift found)
+
+**Decision:** closed t-026 clean, no code fix needed — verified all 21 `failureMode`
+strings backfilled onto kind_robots `stores/seeds/academyStyles.ts` in t-025 (PR #319)
+still carry the same meaning as their source in `docs/teaching-notes.md` §3.
+
+**Detail:**
+- Rotation pick: `ruler-hooked` was worked last cycle (t-007/t-011/t-003 claims).
+  `next_ready_task.py` surfaced ai-art-academy/t-008 first, but that task (and its
+  sibling t-013) is still egress-blocked on metmuseum.org/upload.wikimedia.org —
+  re-confirmed fresh via `/__agentproxy/status` this session (403 CONNECT, same
+  signature logged on 2026-07-15/16). Skipped both without claiming rather than burn
+  a pass on a known environment limitation; picked ai-art-academy/t-026 instead, a
+  kaizen task from t-025's merge that needed no external egress.
+- Read all 21 `failureMode` values in kind_robots `stores/seeds/academyStyles.ts`
+  (main @ 748c645) side by side against the teaching-notes.md §3 table, slug by slug.
+  Every entry matches in meaning; observed differences are punctuation/article
+  normalization for TS string literals (slash-lists spelled out as "or"/"and") and
+  minor completions that don't change the claim (expressionism's "for a broader
+  result", de-stijl's "rather than expecting recognizable content"). Entry counts
+  match (21 `slug:`, 21 `failureMode:`).
+- No kind_robots PR opened — nothing to fix. conductor/t-026 closed `done` directly
+  on the roadmap.
+
+**Failure category:** n/a (verification task, no defect found).
+
+**Kaizen task:** none filed this cycle — t-025's backfill held up under review.
