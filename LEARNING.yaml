@@ -2393,3 +2393,15 @@ records:
     bare-token pattern), sibling patterns in the same file sharing the old plain-\b anchoring
     (here, the extension-based runStepTokenPattern) should be audited in the same pass rather
     than deferred to a separate kaizen task — they share the identical failure mode.
+- date: '2026-07-16'
+  project: ai-art-academy
+  task: t-024
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: A cross-file slug "mismatch" is not always a bug — verify each divergence individually
+    before forcing exact-match; three of this file pair's divergences were intentional (an
+    artist/technique-specific LoRA entry narrower than the general curriculum movement), so the
+    right fix was a documented mapping table, not renaming slugs to force equality.

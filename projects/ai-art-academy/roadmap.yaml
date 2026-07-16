@@ -806,12 +806,29 @@ tasks:
   - id: t-024
     milestone: m3
     title: Reconcile divergent slugs between curriculum-outline.md and style-lora-registry.md
-    status: claimed
+    status: done
     owner: reviewer
     passes: 0
     stakes: reversible
-    note: >
-      Kaizen from the curriculum-expansion cycle merge (Reviewer, autonomous hourly
+    note: |-
+      DONE 2026-07-16 (autonomous hourly conductor cycle): added a "Curriculum slug
+      mapping" section to docs/style-lora-registry.md (between "Coverage summary" and
+      "Machine-readable registry") — a full 21-row table mapping every
+      curriculum-outline.md `slug` to its style-lora-registry.md `style_slug`
+      counterpart (or `(none)` where no registry entry exists yet), explicitly
+      flagging the 3 divergent pairs (`baroque`/`baroque-chiaroscuro`,
+      `renaissance`/`renaissance-fresco`, `post-impressionism`/
+      `post-impressionism-van-gogh`) with a one-line reason each (the registry slug is
+      an artist/technique-specific take narrower than the general movement, not a
+      naming inconsistency), and listing the 6 registry-only bonus entries with no
+      curriculum counterpart at all (`stained-glass`, `watercolor`, `oil-painting`,
+      `sumi-e`, `art-deco`, `pop-art`) so a future seed-sync task knows to skip them.
+      Verified the mapping programmatically (parsed both files' slug lists and diffed
+      the sets) rather than by eye — table matches the actual file contents exactly:
+      21/21 curriculum slugs and 21/21 registry slugs accounted for. Docs-only change
+      in the conductor repo, no kind_robots PR needed.
+
+      Original spec follows: Kaizen from the curriculum-expansion cycle merge (Reviewer, autonomous hourly
       cycle, 2026-07-16). docs/curriculum-outline.md and docs/style-lora-registry.md use
       divergent slugs for the same movement in several places — e.g. `baroque` vs
       `baroque-chiaroscuro`, `renaissance` vs `renaissance-fresco`,

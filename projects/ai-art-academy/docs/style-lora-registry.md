@@ -49,6 +49,52 @@ non-commercial and non-production use only. Implications:
 Where a model card's license could not be confirmed from search results, the entry
 says `license: unverified` — verify on the model page before production use.
 
+## Curriculum slug mapping
+
+Filed as t-024 (kaizen from the curriculum-expansion cycle merge, 2026-07-16):
+`docs/curriculum-outline.md`'s `slug` and this file's `style_slug` are **not always
+identical strings for the same movement** — three registry entries deliberately use a
+more specific slug because the LoRA/technique they document is narrower than the full
+curriculum movement (an artist- or technique-specific take, not the movement in
+general). This table is the authoritative mapping so a seed-sync task (e.g. t-020,
+which wires curriculum movements into kind_robots `academyStyles.ts`) never wires a
+lesson to the wrong registry entry by assuming the slugs always match.
+
+| curriculum-outline.md `slug` | style-lora-registry.md `style_slug` | note |
+|---|---|---|
+| `greek-vase-painting` | *(none)* | not yet in the registry |
+| `byzantine-mosaic` | `byzantine-mosaic` | matches |
+| `illuminated-manuscript` | `illuminated-manuscript` | matches |
+| `renaissance` | `renaissance-fresco` | **divergent** — registry entry is a Raphael-LoRA + fresco-texture take, not the movement generically |
+| `baroque` | `baroque-chiaroscuro` | **divergent** — registry entry is the chiaroscuro-lighting prompt-mode recipe specifically |
+| `neoclassicism` | *(none)* | not yet in the registry |
+| `ukiyo-e` | `ukiyo-e` | matches |
+| `romanticism` | *(none)* | not yet in the registry |
+| `realism` | *(none)* | not yet in the registry |
+| `impressionism` | `impressionism` | matches |
+| `post-impressionism` | `post-impressionism-van-gogh` | **divergent** — registry entry is the Van Gogh Kontext-style LoRA specifically, one of two "bonus" entries below |
+| `art-nouveau` | `art-nouveau` | matches |
+| `expressionism` | `expressionism` | matches |
+| `cubism` | `cubism` | matches |
+| `de-stijl` | *(none)* | not yet in the registry |
+| `bauhaus` | *(none)* | not yet in the registry |
+| `gothic` | `gothic` | matches |
+| `northern-renaissance` | `northern-renaissance` | matches |
+| `rococo` | `rococo` | matches |
+| `symbolism` | `symbolism` | matches |
+| `pointillism` | `pointillism` | matches |
+
+Registry-only entries with **no curriculum-outline.md counterpart at all** — general
+painting techniques/bonus styles, not tied to a specific lesson movement, so a
+seed-sync task should skip them rather than try to match them to a curriculum slug:
+`stained-glass`, `watercolor`, `oil-painting`, `sumi-e`, `art-deco`, `pop-art`.
+
+When a future task adds a LoRA for one of the "not yet in the registry" rows above,
+give it the plain curriculum slug (matching, not divergent) unless the same
+narrower-than-the-movement situation applies — in which case add a row here explaining
+why, the same way `renaissance-fresco`/`baroque-chiaroscuro`/`post-impressionism-van-gogh`
+are documented.
+
 ## Machine-readable registry
 
 ```yaml

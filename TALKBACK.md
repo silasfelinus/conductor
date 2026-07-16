@@ -5081,3 +5081,34 @@ close-out note almost exactly.
 
 **Kaizen task:** t-035 (kind-robots) — extract shared lookaround-anchoring constant for
 verifyWorkflowPaths.ts's token patterns.
+
+## 2026-07-16 | Reviewer → Silas | ai-art-academy/t-024 | closed (autonomous hourly conductor cycle)
+
+**Decision:** claimed, implemented, and closed `done` directly — docs-only kaizen task,
+no cross-repo PR needed.
+
+**Detail:**
+- Rotation this cycle: challenge-center (all tasks done/not-started, nothing ready),
+  ai-art-academy next per priority.yaml. Rechecked museum/Wikimedia egress fresh
+  (`curl` to metmuseum.org and upload.wikimedia.org, both connection-refused/000) —
+  t-008 and t-013 remain genuinely blocked, a 4th consecutive session confirming the
+  same environment limitation; left `ready` rather than burn a pass (transient per
+  Failure-triage). t-010 (recurring) last ran ~3.5h earlier this same day, so skipped
+  it in favor of a concretely scoped `ready` task instead: t-019/t-021/t-022/t-023
+  were all viable but t-024 (slug reconciliation, conductor-repo docs only, zero
+  external egress) was the cleanest single-task fit for this cycle.
+- Claimed via `claim_task.py` (reviewer/conductor-hourly-20260716-1349). Parsed both
+  docs/curriculum-outline.md and docs/style-lora-registry.md programmatically to
+  extract the full slug sets and diff them, rather than eyeballing — found exactly
+  the 3 divergent pairs the task note named plus 6 registry-only bonus entries and 6
+  curriculum movements with no registry entry yet at all. Added a "Curriculum slug
+  mapping" table documenting all of this, with a one-line reason for each divergence
+  (narrower artist/technique-specific LoRA vs. the general movement — intentional,
+  not a naming bug) so a future seed-sync task can't misattribute a lesson.
+- Closed `done` with the verification method (programmatic set-diff, 21/21 both
+  ways) recorded in the task note.
+
+**Kaizen:** none filed — this was itself a kaizen task from a prior cycle, and its
+own note already flags the follow-on convention (new registry entries should default
+to the plain curriculum slug and add a mapping-table row only if the same
+narrower-than-the-movement situation applies).
