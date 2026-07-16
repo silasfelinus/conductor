@@ -108,11 +108,11 @@ tasks:
   - id: t-004
     milestone: m2
     title: Write CREATION-SPEC.md (the generic loop contract) and specs/dream.md (the dream playbook)
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
-    updated: '2026-07-10T00:00:00Z'
+    updated: '2026-07-16T18:59:16Z'
     depends_on: t-003
     note: >
       Infrastructure tightening, part 2. CREATION-SPEC.md is the type-agnostic
@@ -124,6 +124,8 @@ tasks:
       paths (from t-003's audit), verification per stage, art-prompt queueing
       through projects/art-prompts.yaml / art-generate.yaml, and metadata
       requirements (designer/source so a whole dream is traceable and removable).
+    claimed_by: dream-cycle-t004-specs
+    claimed_at: '2026-07-16T18:59:16Z'
   - id: t-005
     milestone: m3
     title: Grow the backlog to ten buildable outlines
