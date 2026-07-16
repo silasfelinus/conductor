@@ -800,11 +800,13 @@ tasks:
   - id: t-026
     milestone: m1
     title: Fix facet-alias-smoke.yml referencing a migration file removed by the prisma migration squash
-    status: claimed
+    status: review
     owner: worker
     passes: 0
     stakes: reversible
-    updated: '2026-07-16T03:06:16Z'
+    updated: '2026-07-16T03:15:00Z'
+    claimed_by: worker/claude-burst-hourly-20260716-0306
+    claimed_at: '2026-07-16T03:06:16Z'
     note: >
       Kaizen from t-025 (Worker, kind_robots PR #299): .github/workflows/facet-alias-smoke.yml
       still references prisma/migrations/20260711021500_add_facet_aliases/migration.sql
@@ -818,6 +820,19 @@ tasks:
       creates (the Facet/FacetAlias tables + constraints), or by regenerating
       an equivalent standalone migration.sql fixture for the smoke test to
       run against, and update the path triggers to match.
+
+      DONE (pending merge) 2026-07-16T03:15Z (conductor-burst-hourly): opened
+      kind_robots PR #307. Added .github/workflows/fixtures/facet-alias-schema.sql,
+      a standalone fixture recreating the FacetAlias table, its facetId FK, and
+      the canonical-alias seed (INSERT ... SELECT from Facet) verbatim from the
+      deleted migration's content (recovered via `git show` on the pre-squash
+      commit, not reconstructed from the squashed file alone — the squash
+      dropped the data-seeding INSERT, which the smoke test's canonical-alias
+      count assertion depends on). Repointed the workflow's path triggers and
+      migration-execution step at the fixture plus
+      prisma/migrations/00000000000000_squashed/migration.sql. No local
+      mariadb/docker available in this sandbox to smoke-test directly;
+      verifying via the PR's own CI run before merging.
     claimed_by: claude-burst-hourly-20260716-0306
     claimed_at: '2026-07-16T03:06:16Z'
 
