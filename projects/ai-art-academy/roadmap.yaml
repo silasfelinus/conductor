@@ -685,11 +685,11 @@ tasks:
   - id: t-020
     milestone: m4
     title: 'kind_robots: add the 5 v1.1 curriculum movements to the academyStyles.ts front-end seed'
-    status: review
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
-    updated: '2026-07-16T11:20:00Z'
+    updated: '2026-07-16T11:22:00Z'
     note: >
       Filed 2026-07-16 (t-010 curriculum-expansion cycle). docs/curriculum-outline.md
       grew from 16 to 21 movements (§17 gothic, §18 northern-renaissance, §19 rococo,
@@ -704,11 +704,13 @@ tasks:
       vue-tsc clean before opening the kind_robots PR. Independently landable now
       (does not depend on the preview-image work in t-019/t-022).
 
-      DONE 2026-07-16T11:20Z (burst-hourly cycle): kind_robots PR #313 opened on
+      DONE 2026-07-16T11:22Z (burst-hourly cycle): kind_robots PR #313 opened on
       claude/keen-fermat-qrthru with all 5 entries (21 total in the raw array,
       confirmed via slug count). Verified `prettier --check` clean and `npm test`
-      (nuxi prepare + vue-tsc --noEmit) 0 TypeScript errors. Awaiting CI on the PR
-      before self-merge and flipping to `done`.
+      (nuxi prepare + vue-tsc --noEmit) 0 TypeScript errors. CI green (TypeScript,
+      Contract verifiers, GitGuardian all passed) — self-merged (squash) as
+      c807bde. Milestone m4 unaffected in status (still in-progress; other m4
+      tasks remain open).
     claimed_by: burst-20260716110858
     claimed_at: '2026-07-16T11:08:59Z'
     pr: https://github.com/silasfelinus/kind_robots/pull/313
