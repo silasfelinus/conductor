@@ -156,6 +156,22 @@ jobs:
       - name: Check dream outlines are buildable per specs/dream.md
         run: python scripts/check_dream_outlines.py
 
+  ruler-hooked-doc-guards:
+    name: Ruler-hooked docs & art-prompts guards
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install PyYAML
+        run: pip install pyyaml
+
+      - name: Check ruler-hooked docs vocabulary + art-prompts inspirations
+        run: python scripts/check_ruler_hooked_docs.py
+
   build-ts-projects:
     name: Build changed TypeScript projects
     runs-on: ubuntu-latest

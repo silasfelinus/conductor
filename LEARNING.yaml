@@ -2617,3 +2617,15 @@ records:
     goal in the roadmap top-level `goal:` field (sync_projects.py source of truth) rather than only PATCHing
     live, so it survives a transient DB-write 503 and backfills on the next sync. Reads can succeed while
     writes 503 — "db is up" is not binary.'
+- date: '2026-07-16'
+  project: ruler-hooked
+  task: t-011
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'A vocab-drift guard for prose design docs should flag only code-token variants (far-shore/farshore
+    for far_shore) not spaced prose ("far shore"), and must match camelCase tokens case-SENSITIVELY so the
+    correct regionOverride does not match its own lowercased variant. Validate art-prompts inspirations
+    against the exact field distribute_images.py reads (image_path), not a guessed schema.'
