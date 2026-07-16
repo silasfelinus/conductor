@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-07-16T19:56:28Z
+Generated: 2026-07-16T19:57:39Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **201**
-- Outcomes: blocked: 12, done: 189
+- Closed tasks recorded: **202**
+- Outcomes: blocked: 12, done: 190
 - Success rate: **94%**
 - Average passes on successful tasks: **0.0**
 
@@ -24,7 +24,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | challenge-center | 16 | 100% |
 | coat-dance | 8 | 0% |
 | coloring-book | 12 | 100% |
-| conductor | 18 | 100% |
+| conductor | 19 | 100% |
 | digital-storefront | 6 | 100% |
 | dream-cycle | 11 | 100% |
 | ecosystem-map | 4 | 100% |
@@ -48,7 +48,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 15 | 40% |
-| software | 186 | 98% |
+| software | 187 | 98% |
 
 ## Failure categories
 
@@ -69,6 +69,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-07-16 `ai-art-academy/t-025` — A kaizen task filed with owner: reviewer from a prior merge can be picked up and implemented directly in a later autonomous cycle acting as Worker when no separate Worker session is active that hour — the owner field on a ready task is a hint, not a hard assignment. When adapting source prose (here: teaching-notes.md's table) into code strings rather than copying verbatim, file a small follow-on diff-check task rather than trusting the cleanup by eye; it is cheap insurance against silent meaning drift.
 
 - 2026-07-16 `dream-cycle/t-004` — Write the type-agnostic loop contract (CREATION-SPEC.md) once and have each specs/<type>.md playbook plug into it, rather than restating queue/one-building/ledger rules per playbook; cite create-calls from the API audit so stages stay in sync with the real endpoints.
+- 2026-07-16 `conductor/t-025` — Before building a new helper, grep for an existing one — the t-025 scaffolder already lived in scripts/intake.py, so the work was a small extension (DESIGN-BRIEF.md + CONTROL.md block) plus the tests it never had, not a greenfield script.
 - 2026-07-16 `newsfeed/t-004` — When a design brief documents an "Audit findings" section with exact file paths and line numbers for the conventions a new module must follow (here: stores/helpers/<domain>.ts for types, a private safeGetLocalStorage/ safeSetLocalStorage pair per store instead of a shared util or DB table), trust it literally rather than re-deriving the pattern from scratch — it was written by a prior session that already did the archaeology. Attempting live verification of candidate external URLs before committing them (even when it fails, as it did here with a 403 from the sandbox's egress allowlist on every probe) is worth the two minutes: it turns "these RSS URLs are probably fine" into an explicit, auditable `verified: false` plus a follow-on task, instead of a silent assumption baked into the registry.
 
 - 2026-07-16 `superkate-hairstyle-ai/t-017` — A task can be fully implemented and merged (kind_robots PR #317) while still sitting at roadmap status: claimed — the Reviewer sweep found it only by checking the open-PR list directly, not roadmap state. This is the second instance of a Silas-directed claude/* session finishing work without flipping the task through status: review first (see project TALKBACK 2026-07-10 entry); filed superkate-hairstyle-ai/t-020 to close the gap going forward.
@@ -80,7 +81,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-07-16 `ai-art-academy/t-023` — A reusable lesson-scaffold beat (Try It / Reflect) can stay data-model-light by keying copy off an existing coarse field (remix.mode, prompt vs lora) instead of porting a large per-style table (teaching-notes.md's 21-row failure-mode list) into the TS seed — keeps the PR additive and scoped when the fine-grained data doesn't already live in the seed.
 - 2026-07-16 `ai-art-academy/t-024` — A cross-file slug "mismatch" is not always a bug — verify each divergence individually before forcing exact-match; three of this file pair's divergences were intentional (an artist/technique-specific LoRA entry narrower than the general curriculum movement), so the right fix was a documented mapping table, not renaming slugs to force equality.
 - 2026-07-16 `kind-robots/t-034` — When a lookaround-anchoring fix is applied to one token pattern in a file (t-030's bare-token pattern), sibling patterns in the same file sharing the old plain-\b anchoring (here, the extension-based runStepTokenPattern) should be audited in the same pass rather than deferred to a separate kaizen task — they share the identical failure mode.
-- 2026-07-16 `ai-art-academy/t-020` — Curriculum-mirroring tasks (outline → academyStyles.ts) are cleanly landable without external egress when they only copy already-verified outline text; keep image-fetch work (t-008/t-013) split from pure data-mirroring work (t-020) so museum-egress blocks never stall the latter.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-07-16T19:56:28Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-07-16T19:57:39Z_
