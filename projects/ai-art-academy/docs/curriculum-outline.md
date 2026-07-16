@@ -4,11 +4,18 @@ date: 2026-07-10
 task: ai-art-academy/t-005
 status: draft for review (content complete, one source URL verified per movement)
 
-This is the v1 curriculum: 16 movements in chronological order, from Greek vases to
+This is the curriculum: 21 movements spanning the timeline from Greek vases to
 Bauhaus. Every artist named here is long dead (all listed artists died before 1955),
 and every example work is a public-domain original held (or expected) in an
 open-access collection. See the ethical boundary in DESIGN-BRIEF.md and the
-forthcoming PUBLIC-DOMAIN-POLICY.md (t-006).
+PUBLIC-DOMAIN-POLICY.md (t-006).
+
+Sections 1-16 are the v1 set (chronological). Sections 17-21 are the 2026-07-16 v1.1
+expansion (t-010 cycle): Gothic panel painting, Northern Renaissance, Rococo,
+Symbolism, and Neo-Impressionism/Pointillism. They are appended (rather than
+renumbered into place) but belong chronologically among the earlier movements — read
+the `era` field in the machine-readable skeleton for true ordering; the front-end
+seed (t-020) inserts them in chronological position.
 
 Verification method note: direct API/page fetches to museum hosts are blocked by the
 session egress proxy, so verification was done via web search returning the live
@@ -118,6 +125,40 @@ movements:
     artist_slugs: [wassily-kandinsky, paul-klee, laszlo-moholy-nagy]
     example_count: 4
     remix_hint: "Repaint this image as a Bauhaus-school geometric abstraction: pure circles, triangles, and squares in bold primary colors on a flat plane, precise linework, no realistic shading"
+  # --- v1.1 expansion (2026-07-16, t-010 cycle) ---
+  # These five belong chronologically among the movements above (see each `era`);
+  # appended here to avoid renumbering the v1 sections. The seed-sync task (t-020)
+  # inserts them in chronological order in academyStyles.ts.
+  - slug: gothic
+    name: Gothic Panel Painting
+    era: "c. 1200-1450"
+    artist_slugs: [duccio-di-buoninsegna, giotto-di-bondone, simone-martini, fra-angelico]
+    example_count: 4
+    remix_hint: "Repaint this image as a late-medieval Gothic panel painting: figures on a burnished gold-leaf ground, elongated bodies with gentle S-curves, jewel-toned tempera, pointed-arch framing, flattened space"
+  - slug: northern-renaissance
+    name: Northern Renaissance
+    era: "c. 1420-1570"
+    artist_slugs: [jan-van-eyck, rogier-van-der-weyden, hans-memling, pieter-bruegel-the-elder, hieronymus-bosch]
+    example_count: 4
+    remix_hint: "Repaint this image as an Early Netherlandish oil painting: microscopic detail, luminous layered glazes, crisp naturalism, cool northern daylight, and a meticulously rendered landscape or interior behind the figures"
+  - slug: rococo
+    name: Rococo
+    era: "c. 1700-1780"
+    artist_slugs: [antoine-watteau, francois-boucher, jean-honore-fragonard, jean-baptiste-simeon-chardin]
+    example_count: 4
+    remix_hint: "Repaint this image as a Rococo oil painting: pastel palette of rose, sky-blue, and cream, feathery loose brushwork, soft diffused light, playful ornamental curves, and a light, airy mood"
+  - slug: symbolism
+    name: Symbolism
+    era: "c. 1880-1910"
+    artist_slugs: [gustave-moreau, odilon-redon, arnold-bocklin, pierre-puvis-de-chavannes]
+    example_count: 4
+    remix_hint: "Repaint this image as a Symbolist painting: dreamlike mysterious mood, muted twilight color, mythic and allegorical atmosphere, soft glowing light, and a sense of reverie rather than plain reality"
+  - slug: pointillism
+    name: Neo-Impressionism / Pointillism
+    era: "c. 1884-1910"
+    artist_slugs: [georges-seurat, paul-signac, henri-edmond-cross, theo-van-rysselberghe]
+    example_count: 4
+    remix_hint: "Repaint this image using pointillist technique: thousands of tiny separate dots of pure unmixed color that blend in the eye, a luminous divisionist surface, even all-over stippling, and bright balanced light"
 ```
 
 ---
@@ -863,6 +904,239 @@ precise linework, no realistic shading"
 
 ---
 
+## 17. Gothic Panel Painting (`gothic`)
+
+**Era:** c. 1200-1450 (late-medieval Italy and beyond)
+
+**Key ideas.** Before the Renaissance learned to fake deep space, painters worked on
+wooden panels in glowing tempera against skies of solid gold leaf. Gothic painting is
+the hinge between the flat, eternal figures of Byzantine art and the breathing bodies
+of the Renaissance: artists like Giotto began letting saints stand with real weight,
+turn in space, and show tenderness or grief on their faces, while keeping the medieval
+love of gold, pattern, and pointed-arch framing. It is devotional art built to shimmer
+by candlelight on an altar — the ancestor of every stained-glass-and-gold sacred image
+you have ever seen.
+
+**Recognition cues:**
+- Burnished gold-leaf backgrounds instead of sky or landscape, often tooled with punched patterns
+- Slender, gently swaying figures with small features and haloed heads
+- Jewel-toned tempera — ultramarine, vermilion, rose — with fine, decorative linework
+- Pointed-arch and gabled frames; multi-panel altarpiece (polyptych) formats
+- Space that tilts toward the viewer — thrones and floors read as slightly "wrong," and that is the style, not a mistake
+
+**Notable artists:**
+- **Duccio di Buoninsegna** (c. 1255-1319) — The founder of the Sienese school, who
+  softened Byzantine rigidity into a new tenderness of line and color.
+- **Giotto di Bondone** (1267-1337) — The great pivot of Western painting, who gave
+  figures real weight, emotion, and believable space a full century before the
+  Renaissance caught up.
+- **Simone Martini** (c. 1284-1344) — Sienese master of elegant, courtly line and
+  sumptuous gold, whose refinement defined "International Gothic."
+- **Fra Angelico** (c. 1395-1455) — Dominican friar and painter who fused Gothic gold
+  with early-Renaissance light and perspective; devout, luminous, and precise.
+
+**Example works:**
+- *Madonna and Child*, Duccio di Buoninsegna, ca. 1290-1300 — expected at Met Open
+  Access (acc. 2004.442) (unverified — museum egress 403 this session)
+- *The Epiphany (Adoration of the Magi)*, attributed to Giotto and workshop, ca.
+  1320 — expected at Met Open Access (unverified)
+- *Saint Andrew*, Simone Martini, ca. 1326 — expected at Met Open Access (Robert
+  Lehman Collection) (unverified)
+- *The Crucifixion*, Fra Angelico, ca. 1420-23 — expected at Met Open Access
+  (unverified)
+
+**remix_hint:** "Repaint this image as a late-medieval Gothic panel painting:
+figures on a burnished gold-leaf ground, elongated bodies with gentle S-curves,
+jewel-toned tempera, pointed-arch framing, flattened space"
+
+---
+
+## 18. Northern Renaissance (`northern-renaissance`)
+
+**Era:** c. 1420-1570 (the Low Countries and Germany)
+
+**Key ideas.** While Italy rediscovered antiquity, the artists of Flanders and the
+Netherlands staged a quieter revolution: oil paint. Building color up in transparent
+glazes, they achieved a jewel-like realism the south could not match — every hair,
+brass rivet, and distant church tower rendered with almost microscopic devotion. This
+is art you lean in to. It hides symbols in ordinary objects (a single candle, a dog, a
+convex mirror), sets sacred scenes in real Flemish rooms, and looks out of the frame
+with startlingly modern, individual faces. Later, Bruegel turned that same sharp eye on
+peasant weddings and snowy villages, inventing the everyday landscape.
+
+**Recognition cues:**
+- Astonishing fine detail and hard, crisp edges — texture you can almost feel
+- Luminous, glowing color from layered oil glazes; cool, even northern daylight
+- Deep, meticulously painted landscapes or interiors behind the main figures
+- Symbolic everyday objects loaded with hidden meaning
+- Direct, particular, un-idealized faces — real people, not classical types
+
+**Notable artists:**
+- **Jan van Eyck** (c. 1390-1441) — The pioneer who pushed oil painting to jewel-like
+  perfection; his surfaces still look impossibly real six centuries on.
+- **Rogier van der Weyden** (c. 1399-1464) — Master of restrained, piercing emotion,
+  whose grieving figures set the standard for devotional feeling in the North.
+- **Hans Memling** (c. 1430-1494) — Bruges portraitist of serene, gentle faces,
+  hugely popular with the international merchants of his city.
+- **Hieronymus Bosch** (c. 1450-1516) — Inventor of teeming, surreal panoramas of
+  temptation and torment; a singular imagination centuries ahead of its time.
+- **Pieter Bruegel the Elder** (c. 1525-1569) — The great painter of peasant life,
+  seasons, and proverbs, who made the humble landscape a serious subject.
+
+**Example works:**
+- *The Annunciation*, Jan van Eyck, ca. 1434-36 — expected at National Gallery of Art
+  open access (acc. 1937.1.39) (unverified — museum egress 403 this session)
+- *Portrait of a Lady*, Rogier van der Weyden, ca. 1460 — expected at National Gallery
+  of Art open access (acc. 1937.1.44) (unverified)
+- *Tommaso di Folco Portinari and Maria Portinari*, Hans Memling, ca. 1470 — expected
+  at Met Open Access (acc. 14.40.626-627) (unverified)
+- *The Harvesters*, Pieter Bruegel the Elder, 1565 — expected at Met Open Access
+  (acc. 19.164) (unverified)
+
+**remix_hint:** "Repaint this image as an Early Netherlandish oil painting:
+microscopic detail, luminous layered glazes, crisp naturalism, cool northern
+daylight, and a meticulously rendered landscape or interior behind the figures"
+
+---
+
+## 19. Rococo (`rococo`)
+
+**Era:** c. 1700-1780 (France, then across Europe)
+
+**Key ideas.** After the thunder of the Baroque, the 18th century exhaled into
+something lighter and more playful. Rococo is the art of pleasure: garden parties,
+flirtation, silk and porcelain, painted in a pastel palette of rose, cream, and
+sky-blue with feathery, dissolving brushwork. Where Baroque used dark drama, Rococo
+uses soft diffused light and swirling ornamental curves. It can be pure frothy delight
+(Boucher, Fragonard) or something quieter and more tender — Chardin, working in the
+same era, turned the same soft light on a soap bubble or a kitchen still life and found
+real poetry there. It is a wonderful movement for learning that lightness is its own
+kind of skill.
+
+**Recognition cues:**
+- Pastel palette — rose pink, powder blue, cream, mint — and gilded highlights
+- Soft, diffused light with no harsh shadows; a hazy, tender atmosphere
+- Feathery, loose, sparkling brushwork, especially in silk and foliage
+- Playful curves and asymmetric ornament (shells, scrolls, garlands) everywhere
+- Light-hearted subjects: courtship, music, gardens, mythological romps
+
+**Notable artists:**
+- **Antoine Watteau** (1684-1721) — Inventor of the dreamy *fête galante* — elegant
+  figures drifting through parkland — and a poet of wistful, fleeting pleasure.
+- **François Boucher** (1703-1770) — The decorative genius of the age, favorite
+  painter of Madame de Pompadour, all rose-and-blue mythology and charm.
+- **Jean-Honoré Fragonard** (1732-1806) — The most dazzling brush of late Rococo,
+  whose flickering strokes turn silk and leaves into pure sparkle.
+- **Jean-Baptiste-Siméon Chardin** (1699-1779) — The quiet counterweight: still lifes
+  and domestic scenes of grave, luminous simplicity that later painters revered.
+
+**Example works:**
+- *Mezzetin*, Antoine Watteau, ca. 1718-20 — expected at Met Open Access (acc.
+  34.138) (unverified — museum egress 403 this session)
+- *The Toilette of Venus*, François Boucher, 1751 — expected at Met Open Access
+  (acc. 20.155.9) (unverified)
+- *The Love Letter*, Jean-Honoré Fragonard, early 1770s — expected at Met Open
+  Access (acc. 49.7.49) (unverified)
+- *Soap Bubbles*, Jean-Baptiste-Siméon Chardin, ca. 1733-34 — expected at Met Open
+  Access (acc. 49.24) (unverified)
+
+**remix_hint:** "Repaint this image as a Rococo oil painting: pastel palette of rose,
+sky-blue, and cream, feathery loose brushwork, soft diffused light, playful
+ornamental curves, and a light, airy mood"
+
+---
+
+## 20. Symbolism (`symbolism`)
+
+**Era:** c. 1880-1910 (France, Belgium, and beyond)
+
+**Key ideas.** While the Impressionists painted sunlight on water, the Symbolists
+turned inward, toward dreams, myths, and the unseen. Reacting against both cold realism
+and mere prettiness, they wanted painting to *suggest* rather than describe — to give
+form to longing, mystery, death, and the sacred. Expect twilight color, allegorical
+figures, and scenes that feel like something remembered from a dream you cannot quite
+place. Symbolism is the mood-music of art history, and it fed straight into
+Expressionism, Surrealism, and modern fantasy imagery.
+
+**Recognition cues:**
+- Dreamlike, mysterious mood — reverie rather than a report of the real world
+- Mythological, allegorical, or spiritual subjects, often melancholy or uncanny
+- Muted, twilight color and soft, glowing, sourceless light
+- Flattened, decorative, or hazy space that resists ordinary depth
+- A sense of hidden meaning — the picture is a riddle or a symbol, not a scene
+
+**Notable artists:**
+- **Gustave Moreau** (1826-1898) — Painter of jewel-encrusted myths and femmes
+  fatales, whose shimmering, detailed fantasies made him the movement's grand elder.
+- **Pierre Puvis de Chavannes** (1824-1898) — Master of pale, calm, dreamlike murals
+  whose flattened simplicity quietly influenced nearly every modernist who followed.
+- **Arnold Böcklin** (1827-1901) — Swiss painter of haunting mythologies; his
+  brooding *Isle of the Dead* became one of the most reproduced images of its era.
+- **Odilon Redon** (1840-1916) — Poet of the strange and the floating — dream-eyes,
+  spiders, and, later, radiant flowers in luminous pastel color.
+
+**Example works:**
+- *Oedipus and the Sphinx*, Gustave Moreau, 1864 — expected at Met Open Access (acc.
+  21.134.1) (unverified — museum egress 403 this session)
+- *Isle of the Dead*, Arnold Böcklin, 1880 — expected at Met Open Access (acc. 26.90)
+  (unverified)
+- *The Shepherd's Song*, Pierre Puvis de Chavannes, 1891 — expected at Met Open
+  Access (acc. 06.177) (unverified)
+- *Vase of Flowers*, Odilon Redon, ca. 1914 — expected at Met Open Access (acc.
+  16.20) (unverified)
+
+**remix_hint:** "Repaint this image as a Symbolist painting: dreamlike mysterious
+mood, muted twilight color, mythic and allegorical atmosphere, soft glowing light,
+and a sense of reverie rather than plain reality"
+
+---
+
+## 21. Neo-Impressionism / Pointillism (`pointillism`)
+
+**Era:** c. 1884-1910 (France and Belgium)
+
+**Key ideas.** Georges Seurat loved what Impressionism had discovered about light but
+wanted to put it on a scientific footing. Instead of loose dabs mixed on the palette,
+he built entire canvases from thousands of tiny, separate dots of pure color, placed so
+your eye — not the brush — does the blending. Up close it is a field of confetti; step
+back and it fuses into a glowing, oddly still, luminous whole. His followers, the
+Neo-Impressionists, spread this "divisionism" across France and Belgium. It is the most
+*method-driven* movement in the curriculum, which makes it a brilliant one to teach:
+the technique itself is the lesson.
+
+**Recognition cues:**
+- Whole image built from tiny, distinct dots or short dashes of pure color
+- Colors kept separate and left to blend optically in the viewer's eye
+- An even, all-over, almost woven surface texture
+- Luminous, balanced light and a calm, frozen, monumental stillness
+- Complementary color pairs (orange/blue, red/green) placed side by side to vibrate
+
+**Notable artists:**
+- **Georges Seurat** (1859-1891) — Inventor of pointillism, who built vast, serene,
+  scientifically composed scenes from pure dots; dead at just 31.
+- **Paul Signac** (1863-1935) — Seurat's great champion, who carried divisionism
+  forward into brighter, mosaic-like harbors and coastlines after Seurat's death.
+- **Henri-Edmond Cross** (1856-1910) — Painter of luminous Mediterranean color whose
+  broad, tile-like touch helped point the way toward Fauvism.
+- **Théo van Rysselberghe** (1862-1926) — The leading Belgian Neo-Impressionist, who
+  brought the dot-technique to elegant, sensitive portraiture.
+
+**Example works:**
+- *Circus Sideshow (Parade de cirque)*, Georges Seurat, 1887-88 — expected at Met
+  Open Access (acc. 61.101.17) (unverified — museum egress 403 this session)
+- *Study for "A Sunday on La Grande Jatte"*, Georges Seurat, 1884 — expected at Met
+  Open Access (acc. 51.112.6) (unverified)
+- *The Jetty at Cassis, Opus 198*, Paul Signac, 1889 — expected at Met Open Access
+  (acc. 1999.363.75) (unverified)
+- *Coast Scene (Provence)*, Henri-Edmond Cross, ca. 1891-92 — expected at open-access
+  collection (Met / AIC) (unverified)
+
+**remix_hint:** "Repaint this image using pointillist technique: thousands of tiny
+separate dots of pure unmixed color that blend in the eye, a luminous divisionist
+surface, even all-over stippling, and bright balanced light"
+
+---
+
 ## Lesson-only vs remixable
 
 Every movement above maps to a remix config (mode `prompt` to start; t-003/t-004
@@ -870,19 +1144,32 @@ decide where LoRAs help). Expected remix quality, flagged honestly:
 
 **Strong remix candidates (ship first):** `ukiyo-e`, `impressionism`,
 `post-impressionism`, `art-nouveau`, `expressionism`, `baroque`, `romanticism`,
-`renaissance`, `realism`, `neoclassicism`. These are heavily represented in
+`renaissance`, `realism`, `neoclassicism`, `northern-renaissance`, `rococo`,
+`symbolism`, `pointillism`. These are heavily represented in
 FLUX/Kontext training data and their styles transfer while preserving the
 user's composition — the core Academy promise. `neoclassicism`'s smooth,
 invisible-brushwork finish and restrained palette should be an easy transfer;
 watch that the model doesn't over-flatten skin/fabric texture into a "marble
-statue" look when the source photo has strong texture.
+statue" look when the source photo has strong texture. `northern-renaissance`
+and `rococo` are painterly oil styles the model handles gracefully — the risk is
+under-cooking (a generic "old painting" look); lean on the specifics in the
+remix_hint (microscopic glazed detail vs. feathery pastel brushwork). `symbolism`
+transfers as mood and palette more than as a hard signature, so results read as
+"dreamy twilight repaint" — set that expectation in UI copy. `pointillism` is the
+strongest *technique* transfer in the set (the dot-field is unmistakable), but the
+model may render the dots too coarse or too sparse at low resolution — t-004 should
+check dot density and consider a higher output size for this style.
 
 **Good but watch the output:** `greek-vase-painting` and `byzantine-mosaic` are
 strong graphic transformations (silhouette-on-terracotta, tesserae-and-gold) that
 usually look delightful, but the model may add vessel curvature/border framing or
 lose fine facial detail — test in t-004. `illuminated-manuscript` remixes well as
 "miniature with gold border," though the page/text context can crowd small
-subjects. `bauhaus` spans three quite different hands (Kandinsky's spiritual
+subjects. `gothic` shares the gold-ground look of `byzantine-mosaic` and
+`illuminated-manuscript`: the burnished gold background and pointed-arch framing
+transfer well, but the model may add unwanted altarpiece framing or halos to secular
+subjects — the remix_hint keeps "flattened space" and "gold-leaf ground" without
+forcing a religious frame; watch that portraits don't sprout haloes. `bauhaus` spans three quite different hands (Kandinsky's spiritual
 geometry, Klee's whimsical pictograms, Moholy-Nagy's camera-less photograms) —
 expect the model to default to a generic "geometric abstract art" look rather
 than a specific recognizable Bauhaus signature; the prompt template should pick
@@ -915,3 +1202,17 @@ targets. Every example work predates 1930, so all are US public domain; the
 most recent is Moholy-Nagy's Fotogramm (1926), with van Doesburg's
 Counter-Composition V (1924), the Klimt (1907-08), Marc (1913), and Mondrian
 (1921) works also comfortably pre-1930.
+
+**v1.1 expansion (2026-07-16) re-check.** The five added movements (§17-21) clear
+the PUBLIC-DOMAIN-POLICY.md §1.3 both-prongs rule (artist died before 1956 AND work
+published 1930 or earlier) with margin. Newest death among the additions is Paul
+Signac (d. 1935) — still comfortably inside the "died 1953 or earlier" statement
+above; every other added artist died between 1319 and 1926. The newest added example
+work is Redon's *Vase of Flowers* (ca. 1914), so Moholy-Nagy's 1926 Fotogramm remains
+the most recent example work in the whole curriculum. Fauvism was deliberately *not*
+added this pass: its central figures (Matisse, Derain, both d. 1954) pass prong 1 but
+their signature works are post-1930, which the policy flags as "mostly ineligible" —
+excluded to stay clear of the boundary. All §17-21 example-work URLs are marked
+`(unverified)` because museum egress is 403-blocked this session; they carry real
+accession numbers to spot-check when a session with open museum egress runs (batches
+with t-008/t-013).

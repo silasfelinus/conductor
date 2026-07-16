@@ -18,6 +18,14 @@ Of the **16 target styles**, research found:
   byzantine mosaic, art deco
 - **+2 bonus LoRA-backed styles** beyond the target list: Van Gogh (post-impressionism)
   and Pop Art, both from the Kontext-native style pack
+
+**v1.1 update (2026-07-16, t-010 cycle):** the curriculum grew from 16 to 21 movements,
+so three more prompt-mode entries were added here — `northern-renaissance`, `rococo`,
+and `symbolism` — bringing prompt-mode styles to **11** (the existing `gothic` and
+`pointillism` entries already covered two of the five new curriculum movements). Each
+new prompt-mode entry carries a provisional `prompt_hint` in the machine-readable block;
+none has a login-free FLUX LoRA yet, so hunting LoRAs for the five new movements is
+filed as follow-on **t-021**.
 - **11 Civitai candidates** parked in the "needs Silas" list — Civitai model pages and
   API were unreachable from this session (proxy policy), and Civitai downloads are
   commonly login/API-key-gated at the creator's option, so none can be verified or
@@ -49,6 +57,11 @@ says `license: unverified` — verify on the model page before production use.
 # weight is a starting suggestion; undocumented cases default to 0.9
 # base_model "kontext-dev" LoRAs are Kontext-native (best for the Remix studio);
 # "flux-dev" LoRAs generally also load against Kontext dev but need t-004 eval.
+# prompt_hint (optional, prompt-mode only): a provisional Kontext prompt-mode
+#   instruction to seed the Remix studio before t-004 records the tuned template
+#   in style-remix-configs.yaml. Added 2026-07-16 (t-010) for the newer prompt-mode
+#   styles; older prompt-mode entries keep their recipe in the per-style prose below
+#   and can be backfilled (t-021 kaizen).
 styles:
   - style_slug: impressionism
     mode: lora
@@ -108,6 +121,7 @@ styles:
     weight: 1.0
   - style_slug: pointillism
     mode: prompt
+    prompt_hint: "Repaint this image using pointillist technique: thousands of tiny separate dots of pure unmixed color that blend in the eye, a luminous divisionist surface, even all-over stippling, bright balanced light, in the manner of Seurat and Signac"
   - style_slug: expressionism
     mode: lora
     lora_name: davidrd123/lora-Kirchner-flux
@@ -118,6 +132,16 @@ styles:
     weight: 0.9
   - style_slug: gothic
     mode: prompt
+    prompt_hint: "Repaint this image as a late-medieval Gothic panel painting: figures on a burnished gold-leaf ground, elongated bodies with gentle S-curves, jewel-toned tempera, pointed-arch framing, flattened space, no modern shading"
+  - style_slug: northern-renaissance
+    mode: prompt
+    prompt_hint: "Repaint this image as an Early Netherlandish oil painting: microscopic detail, luminous layered glazes, crisp naturalism, cool northern daylight, a meticulously rendered landscape or interior behind the figures"
+  - style_slug: rococo
+    mode: prompt
+    prompt_hint: "Repaint this image as a Rococo oil painting: pastel palette of rose, sky-blue, and cream, feathery loose brushwork, soft diffused light, playful ornamental curves, a light and airy mood"
+  - style_slug: symbolism
+    mode: prompt
+    prompt_hint: "Repaint this image as a Symbolist painting: dreamlike mysterious mood, muted twilight color, mythic and allegorical atmosphere, soft glowing light, a sense of reverie rather than plain reality"
   - style_slug: byzantine-mosaic
     mode: prompt
   - style_slug: sumi-e
@@ -259,10 +283,20 @@ styles:
 
 ### pointillism — prompt-mode
 
+- Backs curriculum movement §21 (Neo-Impressionism / Pointillism: Seurat d. 1891,
+  Signac d. 1935, Cross d. 1910, van Rysselberghe d. 1926 — all in-bounds).
 - Only Civitai candidates ("Pointillism Art Style - FLUX", trained on Signac /
-  van Rysselberghe — both dead 70+ years, ethically fine — S-7). Prompt-mode:
-  "repaint as a pointillist painting, thousands of small distinct dots of pure
-  color, divisionist technique, in the manner of Seurat" (Seurat d. 1891).
+  van Rysselberghe — both dead 70+ years, ethically fine — S-7). Prompt-mode
+  (`prompt_hint` in the block above): "Repaint this image using pointillist
+  technique: thousands of tiny separate dots of pure unmixed color that blend in
+  the eye, a luminous divisionist surface, even all-over stippling, bright balanced
+  light, in the manner of Seurat and Signac."
+- **Teaching note / t-004 watch-item:** this is the most *mechanical* style in the
+  set — the dot-field either reads or it doesn't. Base FLUX/Kontext tends to render
+  the dots too coarse or to lapse into ordinary Impressionist dabs at small output
+  sizes; evaluate at a higher resolution than the other styles and check actual dot
+  density before shipping. A dedicated LoRA (S-7) is the most likely of the
+  prompt-mode set to beat the base prompt — flag as a priority A/B pair for t-004.
 
 ### expressionism — LoRA (Kirchner)
 
@@ -277,10 +311,70 @@ styles:
 
 ### gothic — prompt-mode
 
+- Backs curriculum movement §17 (Gothic Panel Painting: Duccio d. 1319, Giotto
+  d. 1337, Simone Martini d. 1344, Fra Angelico d. 1455 — all deeply in-bounds).
 - FLUX candidates on Civitai only, and mostly gothic-*horror* or gothic-anime rather
   than the medieval Gothic art of the lesson ("Gothic Oil Painting Style" is closest —
-  S-8). Prompt-mode: "in the style of late medieval Gothic panel painting, gold leaf
-  background, elongated figures, pointed-arch framing, tempera colors."
+  S-8). Prompt-mode (`prompt_hint` above): "Repaint this image as a late-medieval
+  Gothic panel painting: figures on a burnished gold-leaf ground, elongated bodies
+  with gentle S-curves, jewel-toned tempera, pointed-arch framing, flattened space,
+  no modern shading."
+- **Teaching note / t-004 watch-item:** shares the gold-ground family with
+  `byzantine-mosaic` and `illuminated-manuscript`, so the gold background and
+  tempera color transfer reliably. Two risks: the word "gothic" pulls the base model
+  toward gothic-horror aesthetics (add nothing about darkness/skulls; keep the
+  medieval-devotional cues explicit), and the model may bolt haloes or an altarpiece
+  frame onto secular subjects — acceptable for portraits, distracting for landscapes.
+
+### northern-renaissance — prompt-mode
+
+- Backs curriculum movement §18 (Early Netherlandish/German: van Eyck d. 1441, van
+  der Weyden d. 1464, Memling d. 1494, Bosch d. 1516, Bruegel the Elder d. 1569).
+- No dedicated FLUX Early-Netherlandish LoRA found on Hugging Face (login-free); the
+  `renderartist/classic-painting-flux` old-master LoRA (see oil-painting notes) partly
+  covers the look and is the natural LoRA A/B partner. Prompt-mode (`prompt_hint`
+  above): "Repaint this image as an Early Netherlandish oil painting: microscopic
+  detail, luminous layered glazes, crisp naturalism, cool northern daylight, a
+  meticulously rendered landscape or interior behind the figures."
+- **Teaching note / t-004 watch-item:** distinct from the Italian `renaissance` entry
+  (`renaissance-fresco` / Raphael LoRA) — this is the *northern*, oil-glaze, hyper-
+  detailed tradition, not sfumato and classical balance. The failure mode is
+  under-cooking into a generic "old oil painting"; the differentiators are the
+  microscopic detail and the deep, sharply-focused background, so keep those in the
+  template. Bruegel's peasant-genre subjects are a good demo image for showing how the
+  style handles everyday scenes, not just portraits.
+
+### rococo — prompt-mode
+
+- Backs curriculum movement §19 (Rococo: Watteau d. 1721, Boucher d. 1770, Fragonard
+  d. 1806, Chardin d. 1779 — all centuries in-bounds).
+- No login-free FLUX Rococo LoRA found; base-model knowledge of 18th-century French
+  painting is strong. Prompt-mode (`prompt_hint` above): "Repaint this image as a
+  Rococo oil painting: pastel palette of rose, sky-blue, and cream, feathery loose
+  brushwork, soft diffused light, playful ornamental curves, a light and airy mood."
+- **Teaching note / t-004 watch-item:** the pastel palette and soft light are what
+  sell it — a common miss is the model keeping the source photo's saturated/contrasty
+  color, which reads as generic portraiture rather than Rococo. Consider adding
+  "desaturated pastel, high-key lighting" if early A/Bs come back too punchy. Chardin's
+  quieter still-life register is a useful counter-example in the lesson (same era, very
+  different mood) but the remix template should target the Boucher/Fragonard sparkle.
+
+### symbolism — prompt-mode
+
+- Backs curriculum movement §20 (Symbolism: Moreau d. 1898, Puvis de Chavannes
+  d. 1898, Böcklin d. 1901, Redon d. 1916 — all in-bounds).
+- No dedicated FLUX Symbolism LoRA found (the term collides with modern "symbolic/
+  surreal" aesthetic LoRAs, which are off-register). Prompt-mode (`prompt_hint`
+  above): "Repaint this image as a Symbolist painting: dreamlike mysterious mood,
+  muted twilight color, mythic and allegorical atmosphere, soft glowing light, a
+  sense of reverie rather than plain reality."
+- **Teaching note / t-004 watch-item:** Symbolism is the loosest *visual* signature
+  in the set — it transfers as mood and palette (twilight, haze, glow) more than as a
+  hard technique, so evaluate it on atmosphere, not on a recognizable brush handling.
+  Expect results that read as "dreamy twilight repaint"; set that expectation in UI
+  copy. Guard against the base model sliding into modern digital-fantasy or
+  airbrushed-surrealism looks — anchor on the named 19th-century painters in the
+  lesson, not on generic "surreal."
 
 ### byzantine-mosaic — prompt-mode
 
