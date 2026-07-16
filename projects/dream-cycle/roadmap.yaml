@@ -414,3 +414,28 @@ tasks:
       per-file report; wired into ci.yml's dream-cycle-guards job alongside the
       scheduler-drift check. tests/test_check_dream_outlines.py covers both shapes,
       each failure mode, and asserts the real backlog stays buildable.
+  - id: t-016
+    milestone: m4
+    title: Make build_dream_records.py atomic (roll back partial builds on intermittent DB failure)
+    status: review
+    owner: worker
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-16T21:00:00Z'
+    note: >
+      Found 2026-07-16 while building sound-cannery live (Silas: DB back but with
+      intermittent downtimes). build_dream_records.py:run_build only left a proposal
+      UNBUILT when EVERY call failed; on a PARTIAL failure (an intermittent 503
+      mid-sequence) it still called record_built() — shipping an incomplete dream
+      flagged built (missing characters/rewards/etc.), never retried, with orphaned
+      rows. Fix: the build is now ATOMIC. kr_call records each created row's id +
+      delete_base; on ANY failure run_build calls rollback_created() to DELETE every
+      row that landed this run (newest-first, all seven models have DELETE endpoints)
+      and leaves the proposal unbuilt, so the next sweep retries clean — no orphans,
+      no duplicate dreams. tests/test_build_dream_records.py drives run_build with a
+      scripted fake http_json: full success marks built + never rolls back; partial
+      failure rolls back exactly the created rows and stays unbuilt; total failure
+      undoes nothing. Verified live: repeated attempts during the current DB write
+      outage (reads 200, writes 503) all bailed cleanly with 0 rollbacks and 0 files
+      changed. The actual sound-cannery build will complete on the next stable window
+      via the hourly sweep, now safe to run unattended.
