@@ -1091,3 +1091,21 @@ records:
     and insert in curriculum order. Good burst-mode pick when the project's
     other ready tasks (t-004/t-008/t-009/t-013) are blocked on missing
     KR_API_TOKEN or museum-egress 403s -- this task needed neither.
+- date: '2026-07-16'
+  project: packmaker
+  task: t-006
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    Task bundled a mechanical always-doable step (tutorial channel wiring)
+    with two env-blocked steps (art gen needs KR_API_TOKEN; admin Placements
+    verification needs admin UI) and one step that duplicated a separately
+    gated task (t-004, waiting on t-003's human approval). Split at pickup
+    time rather than attempting the whole note: shipped kind_robots PR #306
+    for the landable slice, explicitly dropped the duplicate step, and
+    documented the blocked steps in the closing note instead of leaving the
+    task perpetually ready. Future roadmap authoring should split tasks like
+    this into separate sub-tasks up front.

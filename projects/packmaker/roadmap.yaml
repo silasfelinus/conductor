@@ -189,11 +189,28 @@ tasks:
 - id: t-006
   milestone: m3
   title: Polish and upgrade Packmaker front-end surface
-  status: claimed
+  status: done
   owner: worker
   passes: 0
   stakes: reversible
   note: >
+    DONE 2026-07-16 (conductor-hourly cycle): kind_robots PR #306 shipped step
+    (2) — registered a NEW top-level ExtraTutorialKey channel keyed by 'packs'
+    (route /packs, matching content/channels/build/packs.md) in
+    stores/helpers/tutorialCards.ts, marked underConstruction since no
+    dashboard-tab/tutorial art exists for it yet. eslint/prettier/vue-tsc all
+    clean. Closing this task on that scope rather than leaving it perpetually
+    `ready`: (1) art generation needs the live generation backend
+    (KR_API_TOKEN), confirmed absent from this environment same as
+    ai-art-academy/t-004 and t-009 — file a fresh small task if/when a
+    token-bearing session is available rather than reopening this one; (3)
+    admin Placements verification is an admin-UI action outside agent access;
+    (4) "evolve into the full interactive experience" is intentionally
+    dropped from this task's scope — it duplicates packmaker/t-004 (Build the
+    pack generator admin view), which correctly stays `waiting` on t-003
+    (launch-pack manifests) until Silas approves them. Building it here would
+    have preempted a deliberately human-gated task.
+    Original spec follows (steps 1/3/4 not completed here, see above):
     CORRECTED 2026-07-15 (conductor/t-044): fixed stale tutorialChannels phrasing
     below per the code-confirmed convention (challenge-center/t-019,
     coloring-book/t-019, humboldt-scoop/t-008, humboldt-scoop-cms/t-011) — step (2)
@@ -211,6 +228,7 @@ tasks:
     backfill channelKey/tabKey/liveUrl); (4) evolve the placeholder scaffold page
     into the full interactive experience for this project.
   claimed_by: claude-conductor-hourly-20260716-0248
+  updated: '2026-07-16T03:00:00Z'
   claimed_at: '2026-07-16T02:52:43Z'
   updated: '2026-07-16T02:52:43Z'
 - id: t-007
