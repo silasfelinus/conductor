@@ -667,12 +667,24 @@ tasks:
   - id: t-033
     milestone: m2
     title: "Pitch: worktree-parallel Workers with claim leases"
-    status: claimed
+    status: needs-human
     owner: worker
     passes: 0
     stakes: reversible
+    soft_gate: true
     updated: '2026-07-16T19:10:41Z'
     note: >
+      PITCH WRITTEN (2026-07-16, claude-overnight-sxndmc):
+      pitches/2026-07-16-concurrent-worker-claim-leases.md. Proposal-kind task, so
+      it ends at needs-human for Silas to vet. FOR SILAS: the pitch proposes
+      allowing N concurrent Worker claims via the existing lease
+      (claimed_by/claimed_at + CLAIM_TTL_MINUTES) plus a global concurrency cap and
+      a git-worktree per session, mirroring PortOS CoS's 3-agent model — the
+      claim/lease primitives already exist in claim_task.py/roadmap_claims.py.
+      TO APPROVE: read the pitch; if you want it, set status: ready with a note and
+      the suggested first task (a projects/conductor/docs/concurrent-claims.md
+      design doc pinning the contention model) becomes the next pickup. Original
+      note below.
       Deferred from the PortOS comparison (docs/2026-07-11-portos-cos-learnings.md).
       Conductor's one-atomic-claim-commit rule serializes the Worker; PortOS CoS runs
       3 concurrent agents via a git worktree per agent plus claim leases. Write a
