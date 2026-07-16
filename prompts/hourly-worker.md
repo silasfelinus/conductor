@@ -71,14 +71,25 @@ Read these files before selecting work:
    - On closing a task at `done`/`blocked`, append the outcome record to `LEARNING.yaml`
      (see AGENTS.md "Learning ledger").
 
+10. Finish on clean main — merge and clean up.
+   - The cycle's terminal state for reversible, scoped, verified, non-gated work is
+     **merged into `main`**, not an open PR left for Silas. Merge safe work yourself; don't
+     wait to be told. Only genuinely gated work (human-gated / outward-facing / irreversible /
+     blocked — the Hard stops below) ends unmerged at `needs-human` with its PR open.
+   - Leave **no branch behind**: a merged PR's branch auto-deletes; for a no-PR or superseded
+     branch you can't delete from the session (ref deletion 403s), trigger the `branch-janitor`
+     workflow (`workflow_dispatch`, `force_delete_branches`). End the cycle with `main` green.
+
 ## Soft blocker examples
 
 Continue to another safe task after documenting:
 
 - Missing optional API token.
 - Local runtime unavailable, but the work can be statically checked.
-- Branch deletion unavailable through the connector.
 - A task is unclear but does not block unrelated ready work.
+
+(Branch deletion 403s from the session — that is NOT a reason to leave a branch behind: the
+`branch-janitor` workflow deletes it. See step 10.)
 
 ## Hard stop examples
 
@@ -96,4 +107,5 @@ Stop and ask for Silas action when work would require:
 - Result:
 - Files changed:
 - Verification:
+- Main clean? (PR merged + branch gone, or why parked at needs-human):
 - Blockers or follow-up:

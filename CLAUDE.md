@@ -34,7 +34,15 @@ After the report, ask Silas what he wants to work on — or proceed directly if 
 
 ## Session end
 
-Before ending: push any TALKBACK/roadmap log commits and make sure the session branch has a PR — log commits stranded on an unPR'd session branch never reach main and get lost.
+Before ending, leave a clean `main` with no branch behind. **Merge** the session's PR when the
+work is safe (reversible, scoped, verified, and not human-gated/outward-facing/irreversible) so
+its commits reach `main` and its branch is auto-deleted on merge — merging safe work is the
+default, not something to wait for Silas to request. Only genuinely gated work ends unmerged,
+and it still needs a PR open (log commits stranded on an unPR'd session branch never reach main
+and get lost). Never end a session with a merged-but-undeleted or no-PR branch lingering; any
+branch you can't delete from the session (ref deletion 403s here) is cleared by the
+`branch-janitor` workflow — trigger it via `workflow_dispatch` with `force_delete_branches` for
+one you've verified is superseded.
 
 ### First push of a session fails with HTTP 413
 
