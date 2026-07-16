@@ -886,11 +886,11 @@ tasks:
   - id: t-026
     milestone: m4
     title: Diff-check t-025's backfilled failureMode strings against teaching-notes.md's source table
-    status: ready
-    owner: null
+    status: claimed
+    owner: reviewer
     passes: 0
     stakes: reversible
-    updated: '2026-07-16T19:06:00Z'
+    updated: '2026-07-16T21:07:15Z'
     note: >
       Kaizen from t-025's merge (kind_robots PR #319, 2026-07-16). The 21
       `failureMode` values in `stores/seeds/academyStyles.ts` were adapted from
@@ -898,3 +898,5 @@ tasks:
       and quoting for TS string literals) rather than copied byte-for-byte. Read the
       table and the seed side by side and confirm none of the 21 drifted in meaning
       during that cleanup — flag and fix any that did.
+    claimed_by: claude-conductor-burst-20260716-t026-diffcheck
+    claimed_at: '2026-07-16T21:07:15Z'
