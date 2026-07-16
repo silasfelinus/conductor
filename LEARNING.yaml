@@ -2318,3 +2318,54 @@ records:
   lesson: Backfill scripts should reuse the live append/dedup path (prepare_learning + write_learning_record)
     rather than hand-rolling YAML — the (project,task,outcome) key makes re-runs idempotent for free,
     and a stale "starts empty" task premise is worth re-checking before scoping.
+- date: '2026-07-16'
+  project: dream-cycle
+  task: t-014
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: A same-date/different-slug daily-proposal race needs a fresh origin/main recheck before writing
+    (mirroring claim_task), not just local slug-dedup; fully closing the window also needs sweep-level
+    pull-before-check / push-after-write.
+- date: '2026-07-16'
+  project: dream-cycle
+  task: t-010
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: Card-vs-home-set drift checks must be negation-aware (e.g. 'NOT all-ages') and only compare
+    facts both sides expose, or hand-written prose becomes a false positive.
+- date: '2026-07-16'
+  project: dream-cycle
+  task: t-003
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: Audit endpoints against repo source when the DB is down; the beta-admin KR_API_TOKEN resolves
+    to an admin user, so it clears the admin/server gate on the batch expression/transition endpoints.
+- date: '2026-07-16'
+  project: dream-cycle
+  task: t-009
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: A delegating creation type's playbook should make the backlog card a pure scheduler/steering
+    surface and explicitly forbid double-claiming a home task the Worker already holds.
+- date: '2026-07-16'
+  project: dream-cycle
+  task: t-005
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: New backlog outlines must be cross-checked against ALL existing slugs/themes (seeds, daily proposals,
+    home sets, parked cards) before naming to stay non-duplicative.
