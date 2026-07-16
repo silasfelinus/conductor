@@ -240,3 +240,23 @@ and merged separately — see root TALKBACK.md this date).
 already visible in t-010's own note history; not worth a standalone roadmap
 task. t-018 (kind_robots academyStyles.ts sync for Bauhaus) remains the
 concrete follow-up, already filed.
+
+## 2026-07-16 | Worker → Silas | ai-art-academy/t-018 | closed (hourly burst-mode pick, PR #305)
+
+**Decision:** merged (kind_robots PR #305, squash sha a3fa4c3)
+
+**Detail:** Claimed t-018 this cycle over the next_ready_task.py-preferred
+t-004 because t-004/t-008/t-009/t-013 remain blocked (KR_API_TOKEN absent,
+museum-egress 403 — both reconfirmed this session) while t-018 needed
+neither. Mirrored t-015's Neoclassicism sync exactly: copied the `bauhaus`
+entry's era/artists/remix_hint verbatim from
+docs/curriculum-outline.md §16 into kind_robots
+stores/seeds/academyStyles.ts, inserted after `de-stijl` to match curriculum
+order. Verified prettier clean and a full `npm run test` (vue-tsc --noEmit)
+exit 0 with zero errors locally before push; all 4 PR checks green
+(TypeScript, Contract verifiers, GitGuardian, Vercel deployment) before
+self-merge. Also merged conductor PR #595 this cycle (prior Reviewer
+cycle's TALKBACK bookkeeping — pure log entries, no code/roadmap changes).
+
+**Kaizen suggestion:** none filed — this was a small, fully precedented
+sync task with no new pattern to capture.
