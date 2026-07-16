@@ -2629,3 +2629,17 @@ records:
     for far_shore) not spaced prose ("far shore"), and must match camelCase tokens case-SENSITIVELY so the
     correct regionOverride does not match its own lowercased variant. Validate art-prompts inspirations
     against the exact field distribute_images.py reads (image_path), not a guessed schema.'
+- date: '2026-07-16'
+  project: ai-art-academy
+  task: t-026
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'Kaizen-verification tasks (diff-checking an adapted/paraphrased backfill against its cited
+    source) are a cheap, high-value rotation pick when the project''s primary task is egress-blocked —
+    conductor#656 closed clean with zero drift found across 21 entries, no kind_robots PR needed. Missing
+    from that PR: no LEARNING.yaml entry on close (added here by the merging Reviewer) — closing agents
+    should append the ledger record in the same PR that sets status: done, not leave it for review to
+    backfill.'
