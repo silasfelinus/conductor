@@ -1455,3 +1455,27 @@ tasks:
       A tiny test (monkeypatch rex.KR_API_TOKEN to None/empty, assert exit
       code 1, assert post_batch never called) closes the last CLI-gating gap
       in this file.
+
+  - id: t-059
+    milestone: m2
+    title: Branch janitor + "finish on clean main" policy so runs stop stranding branches
+    status: done
+    owner: worker
+    updated: '2026-07-16T20:30:00Z'
+    passes: 0
+    stakes: reversible
+    note: >
+      DONE (2026-07-16, Silas-directed). Runs kept ending with open PRs / stranded
+      branches because merging was treated as opt-in ("cleanly park") and session
+      credentials 403 on ref deletion, so nothing cleaned no-PR branches. Fix, two
+      parts: (1) tooling — scripts/branch_janitor.py + .github/workflows/branch-janitor.yml
+      (hourly + workflow_dispatch, GITHUB_TOKEN can delete refs): auto-deletes
+      claude/*|worker/* branches that are strict ancestors of main, REPORTS (never
+      auto-deletes) unmerged stale branches, and takes a force_delete_branches list for
+      verified-superseded ones; 8 tests in tests/test_branch_janitor.py. (2) policy —
+      AGENTS.md ("Finish on clean main" section + Worker/Reviewer steps: merge safe work
+      by default, no leftover branch; gates at CAN/CANNOT unchanged), CLAUDE.md session-end,
+      and prompts/hourly-worker.md (new step 10 + report field). Human gates
+      (needs-human/outward-facing/irreversible/secrets/DNS/deploy) preserved verbatim.
+      Follow-up for Silas: enable the repo "Automatically delete head branches" setting
+      (kind_robots has it; conductor relies on the janitor until then).

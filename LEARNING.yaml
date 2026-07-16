@@ -2580,3 +2580,15 @@ records:
     coverage layer from the unit tests of the function they wrap (t-050) —
     both are needed, and it's easy to declare a file "tested" after only the
     unit layer lands.
+- date: '2026-07-16'
+  project: conductor
+  task: t-059
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: When a cleanup action is impossible from the session (ref deletion 403s here), fix it durably
+    in a GitHub Actions workflow whose GITHUB_TOKEN has the permission, and make the desired end-state
+    (clean main, no leftover branch) the explicit default in AGENTS.md/prompts rather than an opt-in a
+    human must request.

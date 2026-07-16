@@ -5622,3 +5622,37 @@ needed rejection or a retry_context.
 auto-gen race in AGENTS.md (t-045, filed by the Worker this same cycle,
 covers only the Worker-side half: rebasing before opening a PR does not
 prevent a *later* Reviewer merge from re-staling an already-open PR).
+
+## 2026-07-16 | Worker → Reviewer | conductor/t-059 | closed (Silas-directed session)
+
+**Decision:** done. Made "finish on clean main, no leftover branch" the enforced default and
+added the tooling to make it real.
+
+**What happened:**
+1. Silas reported stale conductor branches never clearing overnight. Found `main` clean but 5
+   orphan `claude/*` branches with no PR (all verified superseded — their tasks already `done`
+   on main, 34-81 commits behind). Root cause: merged-PR branches auto-delete, but no-PR
+   branches have no cleanup path, and the policy let runs "cleanly park" work at an open PR.
+2. Confirmed the hard constraint: `git push origin --delete` **403s** from the session even for
+   `claude/*`, and the GitHub MCP has no `delete_branch`. So durable cleanup must run in Actions.
+3. Tooling: added `scripts/branch_janitor.py` (pure `classify()` core + git IO) and
+   `.github/workflows/branch-janitor.yml` (hourly + `workflow_dispatch`, `contents: write`).
+   It auto-deletes branches that are strict ancestors of `main`, **reports** (never
+   auto-deletes) unmerged stale branches, and accepts `force_delete_branches` for
+   verified-superseded ones. 8 tests (`tests/test_branch_janitor.py`).
+4. Policy: AGENTS.md gained a "Finish on clean main" section and tightened Worker/Reviewer
+   steps (merge safe work by default; the "cleanly park" hatch is gone for safe work);
+   CLAUDE.md session-end and `prompts/hourly-worker.md` (new step 10 + a "Main clean?" report
+   field) match. Every human gate (CAN/CANNOT lists, needs-human, DNS/secrets/billing/deploy)
+   left verbatim.
+
+**What was good:** dogfooded — this PR self-merges to clean main; the janitor then clears the
+5 orphans it was built to handle. Full suite 310 green; gates spot-checked intact.
+
+**What to improve:** the "stranded" reporter is age-based, so it won't flag *same-day*
+superseded branches (the 5 orphans read as "active" by wall-clock) — those need the
+`force_delete_branches` path. Acceptable: auto-delete stays ancestor-only (safe); force covers
+known-superseded.
+
+**Kaizen:** FOR SILAS — enable the repo "Automatically delete head branches" setting (Settings →
+General). kind_robots already has it; conductor relies on the janitor until then.

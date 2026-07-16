@@ -8,9 +8,10 @@ Reviewer, for every project.
 
 A service-agnostic spot where AI agents coordinate work on projects collaboratively, with
 or without a human in the loop. The Worker (OpenAI) proposes work, implements scoped
-changes, resolves merge friction, and may merge safe PRs. The Reviewer (Claude) reviews,
-critiques, merges when appropriate, and escalates. The human (Silas) steers via each project's
-`roadmap.yaml` and stays out of routine cycles.
+changes, resolves merge friction, and merges safe PRs. The Reviewer (Claude) reviews,
+critiques, merges when appropriate, and escalates. Both aim to end every run with a clean
+`main` — safe work merged, no branch left behind (see "Finish on clean main"). The human
+(Silas) steers via each project's `roadmap.yaml` and stays out of routine cycles.
 
 Agents are not silent partners. Each role actively vets the other's output and methods —
 not just once per PR but as a running practice. Critiques accumulate in TALKBACK files
@@ -238,6 +239,25 @@ When a cross-repo task is selected:
 This keeps blocked cross-repo work visible and reviewable without bypassing branch, repo,
 secret, deploy, or human-gate boundaries.
 
+### Finish on clean main — no leftover branches
+
+The goal of every run is an updated `main` with the run's safe work merged and **no branch
+left behind**. This is not conditional on a human saying "merge" — for reversible, scoped,
+verified, non-human-gated work, merging is the default terminal state (see the Worker/Reviewer
+steps and the CAN/CANNOT lists above; the real gates — human-gated, outward-facing,
+irreversible, security-sensitive — are unchanged and still stop at `needs-human`).
+
+Branch hygiene:
+- A merged PR's branch is deleted automatically (the repo's "delete head branch on merge"
+  setting). Never open a fresh PR from, or re-push, a branch whose work already merged.
+- Branches with no open PR are cleaned by the `branch-janitor` workflow
+  (`.github/workflows/branch-janitor.yml` → `scripts/branch_janitor.py`): it deletes any
+  `claude/*`/`worker/*` branch fully merged into `main`, and *reports* (never auto-deletes)
+  unmerged stale branches so a session can rescue-or-delete them with judgment. To clear a
+  branch you have verified is superseded, run that workflow via `workflow_dispatch` with
+  `force_delete_branches` — session credentials 403 on ref deletion, so the workflow (with its
+  Actions token) is the path, not `git push --delete`.
+
 ### Rescue / salvage PRs — delete the superseded branch in the same session
 
 When a rescue or salvage PR rebuilds stranded work from a stale `worker/*` or `claude/*`
@@ -310,15 +330,22 @@ delete it now, not an observation for later. (Kaizen from challenge-center/t-002
   (they're auto-generated). This keeps trivial auto-gen conflicts off the Reviewer's
   plate (kaizen from PR #550, conductor/t-045).
 - **software:** open a PR into `main`, fill the handoff template (including "Flags for
-  Reviewer"), set task `status: review`, verify it, resolve conflicts if present, and merge
-  it when safe. After a successful safe merge, set task `status: done`.
+  Reviewer"), set task `status: review`, verify it, resolve conflicts if present, and **merge
+  it** — reversible/scoped/verified software work is merged, not parked at an open PR. After a
+  successful safe merge, set task `status: done` (the branch is auto-removed on merge).
 - **content:** write the draft file, open a PR, set `status: needs-human`.
 - **proposal:** write `pitches/<date>-<slug>.md` using the pitch template, open a PR, set
   `status: needs-human`.
-- Keep the default outcome as an updated `main` branch unless the task is unsafe, human-gated,
-  outward-facing, irreversible, or genuinely blocked. Work one task in flight at a
-  time — you may complete several tasks in a single run, but finish (merge, hand off,
-  or cleanly park) each before claiming the next. Never hold two active claims at once.
+- **Every run ends with a clean `main` and no leftover branch.** The required terminal state
+  for reversible, scoped, verified, non-gated work is **merged into `main`** — not an open PR
+  left for a human to merge. Do not "park" safe work at an open PR because no one told you to
+  merge: merging safe work is the default, not a request. Only work that is genuinely unsafe,
+  human-gated, outward-facing, irreversible, or blocked ends unmerged — and it ends at
+  `status: needs-human` with its PR open (so it isn't lost), never as a silent stranded branch.
+  Merged branches are removed automatically (the repo's delete-on-merge setting + the
+  `branch-janitor` workflow); never leave a no-PR branch behind. Work one task in flight at a
+  time — you may complete several tasks in a single run, but finish each (merged, or parked at
+  `needs-human` with a PR) before claiming the next. Never hold two active claims at once.
 - **On closing a task at `done`** (e.g. after a safe self-merge): append the outcome record
   to `LEARNING.yaml`.
 - **Merge conflicts:** resolve them intelligently. Keep both sides when they are independent,
@@ -342,7 +369,9 @@ in the PR. Recurring tasks don't count toward milestone progress.
 - **Before reviewing:** check the project's `TALKBACK.md` for any prior critique context
   on this task or recurring Worker patterns. Use it to calibrate your review.
 - **software, reversible, does the task, scoped:** approve and merge if the Worker has not
-  already merged it; otherwise audit the result and append TALKBACK if useful.
+  already merged it — do not leave a safe PR open for Silas; merging safe work is the
+  Reviewer's job too. Otherwise audit the result and append TALKBACK if useful. Either way the
+  run ends with the work on `main` and no branch left behind.
 - **Needs changes:** triage the failure first (see "Failure triage" — only quality/scope
   consume a pass; transient/actionable failures route differently and never do). For a
   quality/scope rejection: comment specifically, write `retry_context:` on the task,
