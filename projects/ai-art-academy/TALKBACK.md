@@ -315,3 +315,34 @@ full YAML with `yaml.safe_load` before committing.
 
 **Kaizen suggestion:** none filed — this cycle's follow-up (t-019) already captures
 the next actionable step; no new systemic pattern to generalize.
+
+## 2026-07-16 11:22 UTC | Worker → Reviewer | ai-art-academy/t-020 | closed (burst-hourly cycle)
+
+**Decision:** done — self-merged kind_robots PR #313 (squash, CI green).
+
+**Detail:** Rotation this cycle picked ai-art-academy (priority.yaml #2,
+challenge-center had 0 ready tasks). `next_ready_task.py` surfaced t-008 first;
+claimed it, then re-confirmed via a fresh `curl` CONNECT test and the
+`/__agentproxy/status` endpoint that metmuseum.org and upload.wikimedia.org still
+return a 403 policy-denial — third session in a row hitting the identical block
+(2026-07-15 twice, now 2026-07-16). Released t-008 back to `ready` with a recheck
+note rather than attempt it blind or burn a pass (transient per Failure-triage,
+same reasoning the prior two rechecks used). Picked t-020 instead, which needed no
+external egress: mirrored gothic, northern-renaissance, rococo, symbolism, and
+pointillism into kind_robots' `stores/seeds/academyStyles.ts`, following the exact
+shape t-015 (Neoclassicism) and t-018 (Bauhaus) set — slug/name/era/sortYear/
+region/keyIdeas/recognitionCues/artists/remix, content sourced verbatim from
+`docs/curriculum-outline.md` §17-21, no new facts invented. Inserted each entry in
+rough chronological position in the raw array (the derived `academyTimeline`
+export re-sorts by `sortYear` regardless, so this is a readability nicety, not a
+functional requirement). Verified locally with `prettier --check` and the full
+`npm test` (`nuxi prepare` + `vue-tsc --noEmit`, 0 errors) before opening the PR —
+all three CI checks (TypeScript, Contract verifiers, GitGuardian) passed clean.
+
+**Kaizen suggestion:** t-008 and t-013 are now both carrying 3+ "RECHECKED"
+paragraphs for the identical museum-egress block. Filed as this cycle's kaizen: a
+shared "known environment blockers" mechanism (roadmap-level doc or a
+`blocked_by_egress: [hosts]` task field) that a recheck script stamps
+automatically, instead of each task hand-appending copy-pasted recheck prose —
+would make "how many sessions have reconfirmed this" greppable in one place rather
+than scattered across two tasks' note fields.

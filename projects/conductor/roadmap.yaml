@@ -1256,3 +1256,31 @@ tasks:
       which paths ARE and ARE NOT called) covering: --apply without
       --deactivate (missing computed, not posted), --apply --deactivate
       (missing posted), and the stderr note text in each case.
+
+  - id: t-052
+    milestone: m2
+    title: Add a shared known-egress-blockers mechanism instead of copy-pasted recheck notes per task
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Kaizen from ai-art-academy/t-020 (Worker, burst-hourly cycle, 2026-07-16).
+      ai-art-academy/t-008 and t-013 have each independently accumulated 3+
+      "RECHECKED <date>: still a fresh connect_rejected/403" paragraphs for the
+      identical metmuseum.org / upload.wikimedia.org egress block (same pattern
+      also logged separately for Civitai/HF on t-003 and Stripe on
+      digital-storefront). Every session that picks up a blocked task currently
+      hand-checks the agent-proxy status endpoint and hand-writes a new prose
+      paragraph, which is easy to skip (no recheck at all) and makes "how many
+      times has this been reconfirmed, and when" hard to grep across tasks.
+      Add either (a) a `blocked_by_egress: [hostname, ...]` task field in
+      roadmap.yaml plus a small `scripts/recheck_egress_blocks.py` that curls
+      `/__agentproxy/status`'s `recentRelayFailures` for each listed host and
+      stamps a compact `last_egress_recheck: {date, blocked: bool}` onto the
+      task, or (b) a single root-level `EGRESS-BLOCKERS.md` ledger (mirroring
+      TALKBACK.md's append-only convention) that every recheck appends one line
+      to, with tasks linking to it instead of repeating the prose. Either design
+      is fine — pick whichever is less roadmap-schema churn. Should NOT change
+      any task's `status`/`needs-human` semantics, purely a record-keeping
+      improvement so recheck history stays greppable in one place.

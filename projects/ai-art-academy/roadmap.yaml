@@ -208,11 +208,11 @@ tasks:
   - id: t-008
     milestone: m4
     title: 'kind_robots: download Academy starter image library + provenance manifest'
-    status: claimed
-    owner: worker
+    status: ready
+    owner: null
     passes: 0
     stakes: reversible
-    updated: '2026-07-16T11:06:40Z'
+    updated: '2026-07-16T11:15:00Z'
     depends_on: t-007
     note: >
       SPLIT 2026-07-15 (conductor/t-010 roadmap-upgrade pass) from the original
@@ -237,8 +237,17 @@ tasks:
       www.metmuseum.org and upload.wikimedia.org directly and via
       /__agentproxy/status — both still show a fresh connect_rejected/403
       policy-denial this session. Still genuinely blocked, not stale info.
-    claimed_by: burst-20260716110639
-    claimed_at: '2026-07-16T11:06:40Z'
+      RECHECKED 2026-07-16T11:07Z (burst-hourly cycle, claimed then released same
+      session): re-curled both hosts directly and via /__agentproxy/status again —
+      identical fresh connect_rejected/403 policy-denial (recentRelayFailures
+      timestamped 2026-07-16T11:06:49Z for both hosts). Claimed this task first
+      this cycle, confirmed the block still holds, and released it back to `ready`
+      rather than burn a pass on an environment limitation (transient per the
+      Failure-triage table) — picked ai-art-academy/t-020 instead, which needed no
+      external egress. Third consecutive session confirming the same block; still
+      not `needs-human` per the same reasoning as the prior two rechecks.
+    claimed_by: null
+    claimed_at: null
   - id: t-013
     milestone: m4
     title: 'kind_robots: add example-works strip to Academy lesson detail'
@@ -676,11 +685,11 @@ tasks:
   - id: t-020
     milestone: m4
     title: 'kind_robots: add the 5 v1.1 curriculum movements to the academyStyles.ts front-end seed'
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
-    updated: '2026-07-16T11:08:59Z'
+    updated: '2026-07-16T11:22:00Z'
     note: >
       Filed 2026-07-16 (t-010 curriculum-expansion cycle). docs/curriculum-outline.md
       grew from 16 to 21 movements (§17 gothic, §18 northern-renaissance, §19 rococo,
@@ -694,8 +703,17 @@ tasks:
       no new facts invented. Small, additive, one-file change; verify prettier +
       vue-tsc clean before opening the kind_robots PR. Independently landable now
       (does not depend on the preview-image work in t-019/t-022).
+
+      DONE 2026-07-16T11:22Z (burst-hourly cycle): kind_robots PR #313 opened on
+      claude/keen-fermat-qrthru with all 5 entries (21 total in the raw array,
+      confirmed via slug count). Verified `prettier --check` clean and `npm test`
+      (nuxi prepare + vue-tsc --noEmit) 0 TypeScript errors. CI green (TypeScript,
+      Contract verifiers, GitGuardian all passed) — self-merged (squash) as
+      c807bde. Milestone m4 unaffected in status (still in-progress; other m4
+      tasks remain open).
     claimed_by: burst-20260716110858
     claimed_at: '2026-07-16T11:08:59Z'
+    pr: https://github.com/silasfelinus/kind_robots/pull/313
 
   - id: t-021
     milestone: m2
