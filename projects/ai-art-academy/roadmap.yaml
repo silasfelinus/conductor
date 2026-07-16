@@ -110,17 +110,28 @@ tasks:
     owner: null
     passes: 0
     stakes: reversible
-    updated: '2026-07-16T02:48:00Z'
+    updated: '2026-07-16T12:20:00Z'
     depends_on: t-003
     note: >
-      FOR SILAS: blocked on missing KR_API_TOKEN (generation backend credential) —
-      confirmed absent from the environment across three separate sessions now
-      (2026-07-10, 2026-07-15T07:08Z, 2026-07-16T02:48Z). Registry input from t-003
-      is complete and the task spec is otherwise ready to run; it just needs a
-      token-bearing Worker session (or the token added to this environment) to do
-      the actual A/B generation pass. Formalizing as soft needs-human so this
-      doesn't keep getting silently re-picked as the next ready task every cycle —
-      other ai-art-academy ready tasks can proceed in the meantime.
+      FOR SILAS: UPDATE 2026-07-16 — KR_API_TOKEN is NO LONGER the blocker (it is now
+      provisioned in the Claude Code environment env-var field + the GitHub Actions
+      secret; verified present in a session env this date). But two things keep this
+      task from running, and BOTH matter: (1) The conductor sandbox CANNOT reach the
+      kind_robots API — the egress gateway returns 403 CONNECT to kind-robots.vercel.app
+      (same allowlist block as the museum hosts), confirmed this date. So a burst/worker
+      SANDBOX session can never run or verify generation directly; the real art pipeline
+      is the `auto-art-generate` GitHub Action (runs on a GitHub runner with open egress
+      + secrets.KR_API_TOKEN, has workflow_dispatch). (2) Rendering needs the home relay
+      up with the correct KR_RELAY_TOKEN (a SEPARATE admin apiKey; can be the same value
+      as KR_API_TOKEN as long as KR_RELAY_USER_ID == the server's BETA_ADMIN_USER_ID,
+      default 1) AND the kind_robots DB up — the 2026-07-16 10:59Z auto-art-generate run
+      showed both consume steps warning "home render box may be offline / jobs timed out"
+      and "No image files in projects/process/", i.e. nothing rendered. NEXT STEP: this
+      is human-gated (dispatching live production generation needs Silas's explicit go-
+      ahead, per the safety gate). Once the relay's stale token is fixed + DB confirmed
+      up, dispatch `auto-art-generate` (limit 1) and confirm an image lands, THEN flip
+      this to `ready` and run the A/B. Kept soft needs-human. Registry input (t-003) is
+      complete.
       Original spec follows:
       Using the generation backend (pre-approved), A/B a fixed test image through each
       candidate Academy style: prompt-only instruction vs LoRA (where available in the
@@ -301,18 +312,20 @@ tasks:
     owner: null
     passes: 0
     stakes: reversible
-    updated: '2026-07-16T05:05:00Z'
+    updated: '2026-07-16T12:20:00Z'
     note: >
-      FOR SILAS: blocked on missing KR_API_TOKEN (generation backend credential) —
-      confirmed absent from the environment across four separate sessions now
-      (2026-07-10, 2026-07-15T07:08Z, 2026-07-16T02:48Z via t-004's recheck, and
-      2026-07-16T05:05Z here). Formalizing as soft needs-human, mirroring the same
-      fix just applied to t-004 (same root cause: missing KR_API_TOKEN, not the
-      museum-egress policy denial that keeps t-008/t-013 blocked) — this stops it
-      from being silently re-picked and re-confirmed-blocked as "next ready task"
-      every burst cycle. Task spec is otherwise complete and ready to run the
-      moment a token-bearing session (or this environment with the token added)
-      picks it up. Other ai-art-academy ready tasks proceed in the meantime.
+      FOR SILAS: UPDATE 2026-07-16 — KR_API_TOKEN is NO LONGER the blocker (same
+      correction as t-004; token now in the env-var field + GitHub secret, verified
+      present this date). Remaining gates, both real: (1) the conductor sandbox can't
+      reach the kind_robots API (egress 403 CONNECT to kind-robots.vercel.app), so
+      generation runs via the `auto-art-generate` GitHub Action (open-egress runner +
+      secrets.KR_API_TOKEN), not from a sandbox session; (2) the home render relay must
+      be up with the correct KR_RELAY_TOKEN (+ KR_RELAY_USER_ID == BETA_ADMIN_USER_ID)
+      and the kind_robots DB up — the 10:59Z auto-art-generate run this date rendered
+      nothing (both consume steps warned box-offline/timeout). Dispatching live
+      generation is human-gated (needs Silas's explicit go-ahead per the safety gate).
+      NEXT STEP: once the relay's stale token is fixed + DB up, dispatch auto-art-generate
+      (limit 1), confirm an image lands, then flip this to `ready`. Kept soft needs-human.
       Original spec follows:
       Icon/card/hero prompts are queued in projects/art-prompts.yaml (added 2026-07-10).
       Generate and commit them via the auto art pipeline (pre-approved), then generate
@@ -448,6 +461,15 @@ tasks:
       preview thumbnails, (d) expand the curriculum with a new movement/artist entry
       (respecting PUBLIC-DOMAIN-POLICY.md). Note which option ran in the PR. This task
       never reaches done and does not count toward milestone progress.
+
+      CORRECTION 2026-07-16 (later same session): the "KR_API_TOKEN still absent" line
+      in the RAN entry immediately below is WRONG — it was carried forward from prior
+      cycles without re-checking the live env. The token IS present (env-var field +
+      GitHub secret). t-004/t-009 notes now carry the accurate blockers: the sandbox
+      can't reach the kind_robots API (egress 403), so generation runs via the
+      auto-art-generate GitHub Action, not sandbox sessions; and rendering needs the
+      home relay (correct KR_RELAY_TOKEN + KR_RELAY_USER_ID) and the DB up. Dispatching
+      live generation is human-gated. (Re-applied fresh after PR #617 was closed dirty.)
 
       RAN 2026-07-16 (claude session claude-ai-art-academy-curriculum-xnm2wl, ~10:22
       UTC): options (d) + (b) combined — a Silas-directed content-depth pass ("full
