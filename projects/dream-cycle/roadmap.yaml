@@ -391,3 +391,26 @@ tasks:
       projects/dream-cycle/TALKBACK.md 2026-07-14 pattern entry for full detail.
     claimed_by: dream-cycle-expansion-8m2dmk
     claimed_at: '2026-07-16T09:45:41Z'
+  - id: t-015
+    milestone: m2
+    title: Add a dream-outline buildability preflight (backlog outlines vs specs/dream.md) runnable in CI
+    status: review
+    owner: worker
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-16T20:00:00Z'
+    note: >
+      Silas-directed 2026-07-16: the live-API build path (t-006) can't run from an
+      interactive session (kind-robots.vercel.app is egress-blocked here; only the
+      hourly CI runners have egress), so harden the loop offline instead — a
+      sibling to the t-010 scheduler-drift guard for dream outlines.
+      scripts/check_dream_outlines.py validates every buildable type:dream outline
+      (status outline/approved) against specs/dream.md before t-006 tries to build
+      it: required sections present (idea/location/vibe/characters/rewards/
+      scenarios/narrator), 2-5 characters, 2-8 rewards with a rarity spread (>=2
+      tiers when >=3 rewards), 1-3 scenarios, and a real narrator block when
+      narrator: yes (clean skip when narrator: no). Accepts both outline shapes
+      (seed "Location dream" + daily "Locations (2)"). Non-zero exit + readable
+      per-file report; wired into ci.yml's dream-cycle-guards job alongside the
+      scheduler-drift check. tests/test_check_dream_outlines.py covers both shapes,
+      each failure mode, and asserts the real backlog stays buildable.

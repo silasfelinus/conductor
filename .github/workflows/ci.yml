@@ -137,8 +137,8 @@ jobs:
       - name: Run full pytest suite
         run: pytest tests/
 
-  scheduler-drift:
-    name: Scheduler-card drift check
+  dream-cycle-guards:
+    name: Dream-cycle backlog guards
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -152,6 +152,9 @@ jobs:
 
       - name: Check dream-cycle scheduler cards vs home sets
         run: python scripts/check_scheduler_drift.py
+
+      - name: Check dream outlines are buildable per specs/dream.md
+        run: python scripts/check_dream_outlines.py
 
   build-ts-projects:
     name: Build changed TypeScript projects
