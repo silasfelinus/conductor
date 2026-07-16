@@ -149,3 +149,58 @@ def test_narrator_404_falls_back_to_bulk_list_rows_unknown_create_only(tmp_path,
     assert totals["update"] == 0
     assert totals["missing"] == 0
     assert "rows unreadable" in captured.err
+
+
+# ---------------------------------------------------------------------------
+# plan_owner — unit level (conductor/t-050)
+# ---------------------------------------------------------------------------
+
+def test_plan_owner_deactivates_row_whose_file_is_gone():
+    # "sorrowful" has a known row but no still on disk anymore; "joyful" still
+    # has both. Only judgeable when existing rows were actually readable.
+    scanned = {"stills": {"joyful": "joyful_01.webp"}, "loops": {}}
+    existing = {
+        "joyful": {"imagePath": "/images/bots/expressions/brass-lampkeeper/joyful_01.webp"},
+        "sorrowful": {"expression": "SORROWFUL", "kind": "EMOTION"},
+    }
+
+    creates, updates, missing, notes = rex.plan_owner(
+        "bot", "brass-lampkeeper", 7, scanned, existing
+    )
+
+    assert creates == []
+    assert updates == []
+    assert missing == [{
+        "botId": 7,
+        "expressionKey": "sorrowful",
+        "expression": "SORROWFUL",
+        "kind": "EMOTION",
+        "isActive": False,
+    }]
+    assert notes == []
+
+
+def test_plan_owner_never_deactivates_when_rows_unreadable():
+    # existing=None means rows couldn't be fetched -- never invent a
+    # deactivation from an unknown baseline.
+    scanned = {"stills": {}, "loops": {}}
+
+    creates, updates, missing, notes = rex.plan_owner(
+        "bot", "brass-lampkeeper", 7, scanned, None
+    )
+
+    assert missing == []
+
+
+def test_plan_owner_reports_loop_with_no_matching_still():
+    # A *_loop.webp with no numbered still for that key is flagged, not
+    # silently upserted as a row carrying only videoPath.
+    scanned = {"stills": {}, "loops": {"joyful": "joyful_loop.webp"}}
+
+    creates, updates, missing, notes = rex.plan_owner(
+        "bot", "brass-lampkeeper", 7, scanned, {}
+    )
+
+    assert creates == []
+    assert updates == []
+    assert notes == ["joyful: loop video with no still — skipped"]

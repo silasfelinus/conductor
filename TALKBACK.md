@@ -4819,3 +4819,103 @@ kind_robots code change).
 
 **Kaizen:** t-029 (kind-robots) — draft the Grant-model migration pitch from
 SHARING-SPEC.md's design, proposal-kind, `needs-human` on completion.
+
+## 2026-07-16 | Reviewer → Silas | conductor/t-050 | closed (autonomous hourly cycle)
+
+**Decision:** claimed, completed, and closed `done` in a single pass — conductor-only
+test change, no PR needed for a downstream repo.
+
+**Detail:**
+- Fresh autonomous hourly cycle. Local `main` tracking ref was badly stale (74 vs 53
+  commits diverged from `origin/main`) — reset to `origin/main` after confirming the
+  working tree was clean (no local-only work at risk; `main` is never a dev branch
+  here). No open `worker/*` or `claude/*` PRs in conductor, kind_robots, or
+  serendipity-voice at cycle start. No `status: claimed`/`challenged` tasks anywhere.
+  Today's (Pacific-calendar) daily-dream proposal already exists — confirmed the
+  script's own date logic (fixed UTC-7 offset) puts "today" at 2026-07-15 given the
+  actual current time (~06:49 UTC / 23:49 PDT), not a missed day.
+- Checked ready work in priority order: challenge-center has 0 ready tasks (all
+  `done`, milestones correctly `not-started` pending future work). ai-art-academy's
+  t-008/t-013 reconfirmed still 403-policy-denied on metmuseum.org/upload.wikimedia.org
+  (fresh curl, same signature as every prior cycle); t-009 already soft `needs-human`
+  per an earlier cycle's fix; t-010 (recurring never-idle) already ran this same
+  calendar day at 05:05 UTC (option b, roadmap upgrade) — re-running it again ~1h44m
+  later would be redundant given the established one-per-rotation cadence.
+  coloring-book's ready tasks (t-006/t-007/t-010) are all art-generation-gated on the
+  still-absent `KR_API_TOKEN`. digital-storefront's t-011/t-012/t-013 reconfirmed
+  still `api.stripe.com` 403-policy-denied; t-018 is note-level blocked on
+  coloring-book's art-gen tasks. Picked conductor/t-050 instead: a fully
+  self-contained, in-repo kaizen task with no cross-repo or egress dependency.
+- Added three direct `plan_owner()` unit tests to
+  `tests/test_reconcile_expressions.py`: the missing/deactivate path (a known row
+  whose still file is gone → `isActive:false`), the `existing=None` guard (never
+  invent a deactivation from an unreadable baseline), and the orphan-loop skip (a
+  `*_loop.webp` with no matching still → reported in `notes`, not silently upserted
+  as a videoPath-only row). Full suite verified green: 244 passed (up from 235),
+  0 regressions.
+- Filed t-051 as this task's kaizen: the one thing `plan_owner()`-level unit tests
+  structurally can't reach is `main()`'s `--apply`/`--deactivate` CLI gating (missing
+  rows are always *computed* but only *POSTed* when both flags are set) — needs an
+  integration-level test against `main()` itself.
+- Also investigated kind-robots/t-022 (production DB pool exhaustion, standing
+  security-flag/needs-human) via Vercel MCP runtime-error telemetry and a
+  read-only Explore of the kind_robots repo, since the error was still actively
+  recurring at cycle start (`last=2026-07-16T06:49:28Z`, essentially real-time).
+  Found NEW information worth flagging — see the dedicated entry below and the
+  updated note on kind-robots/t-022 — and sent Silas a push notification, since this
+  changes the diagnosis from "known unresolved infra issue" to "two deliberate
+  app-level fixes already shipped and deployed to prod, and the outage is still
+  happening anyway."
+
+**Kaizen:** t-051 (conductor) — extend reconcile_expressions test coverage to the
+`--apply`/`--deactivate` CLI gating and its stderr note text.
+
+## 2026-07-16 | Reviewer → Silas | kind-robots/t-022 | investigation update (autonomous hourly cycle)
+
+**Decision:** not closed — still hard `needs-human` (production DB/infra, out of
+app-owned scope per BOUNDARY.md). Updated the roadmap note with new findings and
+sent a push notification, since this materially changes the standing diagnosis.
+
+**Detail:**
+- Vercel runtime-error telemetry (`get_runtime_errors`, last 6h) shows the exact
+  same `DriverAdapterError: pool timeout ... (pool connections: active=0 idle=0
+  limit=10)` / `pool timeout ... (circuit open)` signature is STILL recurring right
+  now (`last=2026-07-16T06:49:28Z`) — 4361 occurrences across 27 users in the
+  window, spanning nearly every DB-backed route. Note the limit is now `10`, not
+  the `2` recorded in t-022's original note.
+- A read-only Explore of `/home/user/kind_robots` found the limit change was NOT
+  accidental drift — it was a deliberate fix, already merged and deployed:
+  - Commit `f13119bd` (Jul 15 12:51 PT) — "fix: restore production database pool
+    capacity (kind-robots/t-022)" — bumped the `DATABASE_CONNECTION_LIMIT` fallback
+    2 → 10 in `server/utils/prisma.ts`. Commit message notes this re-applies an
+    *earlier* fix (`e2caf03d`) for what was apparently the identical regression
+    happening a *second* time.
+  - PR #299 (`286722e6`, Jul 15 13:30 PT) hardened it: extracted the constant into
+    `server/utils/databasePoolDefaults.ts` (`DEFAULT_CONNECTION_LIMIT=10`,
+    `SAFE_MINIMUM_CONNECTION_LIMIT=8`, throws at import time if ever set below 8)
+    plus a CI contract test so the fallback can't silently regress a third time.
+  - PR #300 (`8da74e18`, Jul 15 13:44 PT) — a separate, distinct fix: removed a
+    custom `checkServerIdentity()` that pinned the pool's TLS cert check to the
+    `DATABASE_URL` hostname (not in the ProxySQL frontend cert's SANs), which failed
+    every *pooled* connection's TLS verification while the CA-only direct probe
+    succeeded throughout — meaning the DB host itself was reachable the whole time.
+  - Confirmed via `list_deployments`/`get_deployment`: the CURRENT production
+    deployment (`dpl_5tS6J7XPxjUPfquCVhsBZJSZg1zA`, commit `a160fa0`, promoted
+    ~05:36 UTC today) is well after both fix commits — both fixes are live in prod
+    right now, not merely merged-but-undeployed.
+- **This is the new information**: two distinct, deliberate app-level fixes are
+  confirmed live in production, and the pool-exhaustion error is still happening
+  anyway, in real time. That rules out "just the pool limit" and "just the TLS
+  mismatch" as the sole cause and points to a third, still-unidentified cause —
+  possibly the DB host/instance itself intermittently refusing connections (the
+  active=0/idle=0-while-timing-out signature from the original note is unchanged),
+  a pooler (ProxySQL) issue upstream of the app, or something outside this repo's
+  visibility entirely. No agent has DB-host or pooler access to investigate further.
+- Updated kind-robots/t-022's note with this finding (still `needs-human`,
+  `soft_gate: false` — unchanged, since it was never soft to begin with: production
+  DB/infra stays a hard gate). Did not close, reassign owner, or attempt any
+  DB/pool/infra change — out of scope per Hard Safety Rule 10 and BOUNDARY.md.
+
+**Suggested action:** Silas (or whoever manages the Postgres/ProxySQL instance)
+needs to check the DB host's own health/logs directly — app-level config is no
+longer the leading hypothesis now that two targeted fixes didn't resolve it.

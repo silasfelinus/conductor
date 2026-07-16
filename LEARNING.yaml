@@ -1219,3 +1219,20 @@ records:
     fabricated ids at 1; (2) `capsys` stdout from `json.dumps(...,
     indent=2)` is multi-line, so `.splitlines()[-1]` grabs a bare closing
     brace instead of the object -- parse the whole captured block.
+- date: 2026-07-16
+  project: conductor
+  task: t-050
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    Clean first-pass test-coverage closure: the kaizen note named the exact
+    two plan_owner() branches to cover (missing/deactivate, orphan-loop skip)
+    precisely enough to write direct unit tests against plan_owner() itself
+    rather than going through main()'s CLI/argparse plumbing -- faster to
+    write and to read than an equivalent integration test. Filed t-051 to
+    cover the one thing plan_owner()-level tests structurally can't reach:
+    main()'s --apply/--deactivate gating of whether missing rows actually
+    get POSTed.

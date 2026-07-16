@@ -1197,12 +1197,24 @@ tasks:
   - id: t-050
     milestone: m1
     title: Extend reconcile_expressions test coverage to the --deactivate missing-file path and orphan-loop skip
-    status: ready
-    owner: null
+    status: done
+    owner: reviewer
     passes: 0
     stakes: reversible
+    updated: '2026-07-16T06:56:00Z'
     note: >
-      Kaizen from t-029 (Worker, hourly burst-mode cycle, 2026-07-16). The new
+      Closed 2026-07-16 (autonomous hourly cycle). Added
+      test_plan_owner_deactivates_row_whose_file_is_gone,
+      test_plan_owner_never_deactivates_when_rows_unreadable, and
+      test_plan_owner_reports_loop_with_no_matching_still to
+      tests/test_reconcile_expressions.py — three direct plan_owner() unit
+      tests covering both branches named below plus the existing=None guard
+      (never invent a deactivation from an unknown baseline). Full suite
+      verified green: 244 passed (up from 235), no regressions. Conductor-only
+      change, no cross-repo PR needed.
+
+      Original note (Kaizen from t-029, Worker, hourly burst-mode cycle,
+      2026-07-16): The new
       tests/test_reconcile_expressions.py covers the four cases named in t-029's
       own kaizen note (narrator-wins, 404-fallback rows-unknown, character
       sourceCharacterId, pagination-stall truncation) but two other branches in
@@ -1214,3 +1226,28 @@ tasks:
       still for that key -- should be reported, not silently upserted as a
       row with only a videoPath). Both are pure plan_owner() unit tests, no
       main()/argparse plumbing needed.
+
+  - id: t-051
+    milestone: m1
+    title: Extend reconcile_expressions test coverage to the --apply/--deactivate CLI gating
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Kaizen from t-050 (Reviewer, autonomous hourly cycle, 2026-07-16). t-050
+      covered plan_owner()'s missing/deactivate and orphan-loop branches at the
+      unit level, but main()'s CLI gating around them is still untested: with
+      --apply but no --deactivate, all_missing rows are computed (and counted
+      in totals["missing"]) but must NOT be POSTed (see
+      scripts/reconcile_expressions.py's `if all_missing and args.deactivate:`
+      gate); only --apply --deactivate together should call post_batch on
+      them. Also untested: the stderr `deactivate_note` text that appends
+      "(missing-file rows reported only; --apply --deactivate to soft-disable)"
+      exactly when there's missing drift but --deactivate wasn't passed, and
+      is empty otherwise. Write 2-3 integration-level tests (extending the
+      existing narrator-lookup/bulk-fallback pattern in
+      tests/test_reconcile_expressions.py, monkeypatching `api` to assert
+      which paths ARE and ARE NOT called) covering: --apply without
+      --deactivate (missing computed, not posted), --apply --deactivate
+      (missing posted), and the stderr note text in each case.
