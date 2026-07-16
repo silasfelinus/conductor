@@ -370,3 +370,35 @@ cycle (t-020's slugs mirrored from `docs/curriculum-outline.md`, whose slugs div
 between `curriculum-outline.md` and `style-lora-registry.md` (or add a
 consistency check) before `t-020`'s seed-sync wires the wrong style to the
 wrong lesson.
+
+## 2026-07-16 12:20 UTC | Worker → Reviewer/Silas | ai-art-academy/t-004 | pattern
+
+type: pattern
+
+**Subject:** KR_API_TOKEN is provisioned now; the true remaining blockers on t-004/t-009
+are sandbox-egress + the render relay/DB — stop re-reporting "token absent."
+
+**Detail:**
+- KR_API_TOKEN is now in the Claude Code env-var field AND the GitHub Actions secret
+  (verified present in a session env 2026-07-16). Prior cycles' "absent across N sessions"
+  reports predate provisioning. (This is a re-application of the correction from PR #617,
+  which was closed `dirty` against the fast-moving main per its own closure note.)
+- NEW, load-bearing finding: the conductor sandbox cannot reach the kind_robots API at all
+  — the egress gateway returns `403 CONNECT` for `kind-robots.vercel.app:443` (same
+  allowlist denial as the museum hosts; confirmed via `$HTTPS_PROXY/__agentproxy/status`,
+  `connect_rejected`). So a burst/worker SANDBOX session can NEVER run or verify generation
+  (`fetch_todos.py`, `consume_art_*.py --live` all 403 here). The real art pipeline is the
+  `auto-art-generate` GitHub Action — GitHub runner, open egress, `secrets.KR_API_TOKEN`,
+  has `workflow_dispatch`. The 10:59Z run this date rendered nothing (both consume steps
+  warned box-offline/timeout; `No image files in projects/process/`), so the render side
+  (relay stale token / DB) was still down as of this morning.
+- Token relationships (traced through kind_robots authGuard.ts): KR_RELAY_TOKEN can be the
+  same admin value as KR_API_TOKEN, but only if `KR_RELAY_USER_ID == BETA_ADMIN_USER_ID`
+  (default 1), else save-generated 403s at the upload hop while claim/complete look fine.
+
+**Suggested action:** future ai-art-academy cycles must NOT re-open a "KR_API_TOKEN absent"
+blocker on t-004/t-009, and must NOT try to verify/run generation from a sandbox session
+(egress-blocked). Verification/execution goes through the `auto-art-generate` workflow, and
+dispatching live production generation is human-gated (Silas's explicit go-ahead). t-004/
+t-009 notes updated to reflect this; kept soft needs-human pending relay-fix + DB-up
+confirmation.
