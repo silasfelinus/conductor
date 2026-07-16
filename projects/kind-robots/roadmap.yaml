@@ -791,12 +791,24 @@ tasks:
   - id: t-024
     milestone: m3
     title: Add a lint/convention guard against casting objects to Prisma.InputJsonValue for String/LongText columns
-    status: claimed
+    status: review
     owner: reviewer
     passes: 0
     stakes: reversible
-    updated: '2026-07-16T09:07:42Z'
+    updated: '2026-07-16T09:10:00Z'
     note: >
+      IN REVIEW 2026-07-16 (claude-burst-hourly-20260716-0906): opened
+      kind_robots PR #311 — utils/scripts/verifyNoPrismaJsonCast.ts scans all
+      source files for `as Prisma.InputJsonValue` / `as unknown as
+      Prisma.InputJsonValue` (neither schema.prisma nor model-builder.prisma
+      has a native Json column, so this cast is never legitimate here), wired
+      as `npm run test:no-prisma-json-cast` into contract-tests.yml. Verified
+      locally: clean pass against current tree (1056 files, 0 hits) and a
+      fixture-file sanity check confirming it catches a real bad cast with
+      exit code 1. Waiting on CI before merging.
+
+      ORIGINAL NOTE:
+
       Kaizen from t-020 (Worker, kind_robots PR #295): 12 of the 19 TypeScript
       errors fixed in that PR were the same shape repeated across 10 files —
       code casting a plain JS object straight to Prisma.InputJsonValue and
