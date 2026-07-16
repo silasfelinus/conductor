@@ -5112,3 +5112,39 @@ no cross-repo PR needed.
 own note already flags the follow-on convention (new registry entries should default
 to the plain curriculum slug and add a mapping-table row only if the same
 narrower-than-the-movement situation applies).
+
+## 2026-07-16 | Reviewer → Silas | ai-art-academy/t-023 | PR opened, awaiting CI (conductor burst-hourly cycle)
+
+**Decision:** claimed, implemented, PR opened against kind_robots — not yet merged
+(CI pending at time of writing; PR activity subscription active, will merge when
+green or report back if it fails).
+
+**Detail:**
+- Rotation this cycle: challenge-center (all tasks done, nothing ready, same as the
+  prior cycle) → ai-art-academy next per `priority.yaml`. t-010 (recurring) was
+  claimed by another concurrent session at the time of picking, so skipped per the
+  claim-check step. t-008/t-013 still museum-egress-blocked (not rechecked this
+  cycle — no egress-dependent work was in scope). Picked t-023: real front-end
+  work, reversible, no dependency on kind-robots/t-022's DB outage, and clearly
+  scoped by its own task note + `docs/teaching-notes.md` §2's scaffold-to-data map.
+- Claimed via `claim_task.py` (reviewer/claude-conductor-burst-20260716-t023).
+  Implemented in kind_robots: added the "Try It" and "Reflect" beats to
+  `components/academy/academy-style-detail.vue`. Try It surfaces the existing
+  `remix.template` instruction, a `recognitionCues`-driven "what to expect" line,
+  and a `remix.mode`-aware failure-mode note (prompt vs lora — generic rather than
+  per-style, since the per-style failure-mode table lives only in conductor's
+  `docs/teaching-notes.md`, not in `academyStyles.ts`'s data model; porting all 21
+  rows into the TS seed would have been a separate, larger data-migration task).
+  Reflect adds three reusable comprehension/critique prompts. No prop changes —
+  renders correctly in all three existing usage contexts (timeline, styles-browser,
+  Remix Studio sidebar) since it's inside the shared lesson card.
+- Verified locally before opening the PR: `npm install` (network-flaky —
+  Cypress binary download failed once with `ECONNRESET`, succeeded on retry with
+  `CYPRESS_INSTALL_BINARY=0`), `eslint` clean, `prettier --check` clean, full-project
+  `vue-tsc --noEmit` — 0 errors. No dev-server/browser verification this session.
+- kind_robots PR #315 (branch `claude/keen-fermat-f9dxze`, base `main`). Subscribed
+  to PR activity; will merge once CI is green (or report + escalate if it fails and
+  isn't a quick fix). Task left `status: claimed` in the roadmap pending merge, per
+  the t-034-style convention — will flip to `done` with the merge SHA once landed.
+
+**Kaizen:** none filed this cycle.
