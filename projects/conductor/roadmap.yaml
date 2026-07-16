@@ -1097,8 +1097,8 @@ tasks:
   - id: t-046
     milestone: m2
     title: Cache a kind_robots node_modules install (or Nuxt type-stub cache) reachable through the sandbox proxy allowlist, so burst-mode sessions can run vue-tsc/eslint locally
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     note: |-
@@ -1134,6 +1134,9 @@ tasks:
       combination from scratch. Lower priority than originally filed since the
       manual recipe already unblocks sessions that know to ask for it -- this is now
       about convenience/discoverability, not a hard wall.
+    claimed_by: claude-overnight-sxndmc
+    claimed_at: '2026-07-16T19:05:30Z'
+    updated: '2026-07-16T19:05:30Z'
 
   - id: t-047
     milestone: m2
