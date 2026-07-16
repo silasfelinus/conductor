@@ -886,11 +886,11 @@ tasks:
   - id: t-026
     milestone: m4
     title: Diff-check t-025's backfilled failureMode strings against teaching-notes.md's source table
-    status: claimed
+    status: done
     owner: reviewer
     passes: 0
     stakes: reversible
-    updated: '2026-07-16T21:07:15Z'
+    updated: '2026-07-16T21:15:00Z'
     note: >
       Kaizen from t-025's merge (kind_robots PR #319, 2026-07-16). The 21
       `failureMode` values in `stores/seeds/academyStyles.ts` were adapted from
@@ -898,5 +898,19 @@ tasks:
       and quoting for TS string literals) rather than copied byte-for-byte. Read the
       table and the seed side by side and confirm none of the 21 drifted in meaning
       during that cleanup — flag and fix any that did.
+
+      DONE 2026-07-16T21:15Z (burst-hourly cycle): read all 21 `failureMode` values in
+      kind_robots `stores/seeds/academyStyles.ts` (main @ 748c645) side by side against
+      `docs/teaching-notes.md` §3's per-style table, slug by slug (greek-vase-painting
+      through bauhaus). No meaning drift in any entry — differences are limited to
+      punctuation/article normalization for TS string literals (e.g. "May add vessel
+      curvature/border framing" -> "May add vessel curvature or border framing"; "Keeps
+      the photo's saturated/contrasty color" -> "Keeps the photo's saturated, contrasty
+      color") and light TS-prose smoothing that preserves the original claim (e.g.
+      expressionism's seed adds "for a broader result" as a natural completion of the
+      table's "(registry note)" pointer, de-stijl's seed spells out "rather than
+      expecting recognizable content"). Count also confirmed: exactly 21 `slug:` and 21
+      `failureMode:` entries in the seed file, matching the table's 21 rows. No
+      kind_robots PR needed — nothing to fix. Closing clean.
     claimed_by: claude-conductor-burst-20260716-t026-diffcheck
     claimed_at: '2026-07-16T21:07:15Z'
