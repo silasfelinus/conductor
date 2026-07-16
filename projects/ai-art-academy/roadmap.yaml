@@ -763,9 +763,9 @@ tasks:
   - id: t-022
     milestone: m5
     title: 'Queue 256x256 style-preview thumbnail requests for the 5 new movements in art-prompts.yaml'
-    status: claimed
+    status: done
     owner: worker
-    passes: 0
+    passes: 1
     stakes: reversible
     updated: '2026-07-16T20:09:33Z'
     note: >
@@ -780,6 +780,15 @@ tasks:
       only change (conductor repo); actual generation happens later via the existing
       art-prompts.yaml → distribute_images.py pipeline. Feeds t-019 (which wires
       previewImageSrc once images land).
+      RAN 2026-07-16 (claude-conductor-burst-20260716-t022-thumbs): added the 5 missing
+      requests: entries (gothic, northern-renaissance, rococo, symbolism, pointillism)
+      to projects/art-prompts.yaml, each built from that movement's own Recognition
+      cues in docs/curriculum-outline.md §17-21, mirroring the exact prompt shape and
+      shared subject/composition boilerplate the other 16 entries already use so the
+      full 21-movement set stays visually comparable. Prompt-catalog-only change;
+      verified with `yaml.safe_load` (21 kind-robots-academy-style-preview-* entries
+      present, file parses clean) — no image generation triggered, no kind_robots code
+      touched. t-019 remains blocked until at least one of the 21 queued images lands.
     claimed_by: claude-conductor-burst-20260716-t022-thumbs
     claimed_at: '2026-07-16T20:09:33Z'
 
