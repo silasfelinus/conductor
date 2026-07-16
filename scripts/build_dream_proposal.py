@@ -26,16 +26,29 @@ validator/renderer/writer the agent hands its proposal to. The sweep duty:
   3. (the agent invents the starter dream and emits the JSON itself)
   4. python scripts/build_dream_proposal.py --from-json proposal.json
 
-The write is guarded (no-op if the date already has a proposal), the JSON is
-validated (exact counts, one SKILL + one ITEM reward), and the slug is
-de-duplicated against the backlog + SHIPPED ledger. `--sample` writes a
+The write is guarded twice (no-op if the date already has a proposal in the
+local tree, AND a fresh origin/main re-check right before writing so a proposal
+a concurrent session already landed there aborts this write — dream-cycle/t-014),
+the JSON is validated (exact counts, one SKILL + one ITEM reward), and the slug
+is de-duplicated against the backlog + SHIPPED ledger. `--sample` writes a
 built-in example so the render/digest path stays verifiable in tests.
 
+Concurrent-session race (why the origin/main re-check exists): two sweeps in the
+same window both ran --check, both saw "no proposal yet" in their own working
+trees, and both authored one for the same Pacific date with DIFFERENT slugs — so
+the slug-dedup never fired (2026-07-14, see projects/dream-cycle/TALKBACK.md).
+The write path now re-checks fresh origin/main immediately before writing, the
+same way claim_task.py re-checks before it claims. Best-effort: with no reachable
+origin the check degrades to local-only rather than blocking the run. Callers in
+the hourly sweep should additionally pull before --check and push right after
+--from-json to shrink the window further.
+
 Usage:
-  python scripts/build_dream_proposal.py --check              # is today's written?
+  python scripts/build_dream_proposal.py --check              # is today's written? (add --fetch to consult origin/main)
   python scripts/build_dream_proposal.py --brief              # print the authoring brief
   python scripts/build_dream_proposal.py --from-json p.json   # validate + write (or - for stdin)
   python scripts/build_dream_proposal.py --from-json - --dry-run   # preview markdown
+  python scripts/build_dream_proposal.py --from-json p.json --no-fetch   # skip the origin re-check (offline)
   python scripts/build_dream_proposal.py --sample --dry-run   # built-in sample
 """
 
@@ -64,6 +77,12 @@ SHIPPED = ROOT / "projects" / "dream-cycle" / "SHIPPED.md"
 
 REPO = "silasfelinus/conductor"
 DEFAULT_BRANCH = "main"
+
+BACKLOG_RELPATH = "projects/dream-cycle/backlog"
+REMOTE_REF = "origin/main"
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from git_plumbing import GitError, read_file_at_ref, run_git  # noqa: E402
 
 BRIEF = """\
 You are Conductor's dream author, inventing today's "starter dream" for the
@@ -381,8 +400,14 @@ def _target_date(date: Optional[str] = None) -> str:
     return date or datetime.datetime.now(_TZ).date().isoformat()
 
 
+def _proposal_date_in_text(text: str) -> Optional[str]:
+    """The `proposal_date` frontmatter value in a backlog file's text, or None."""
+    m = re.search(r"^proposal_date:\s*(.+)$", text, re.MULTILINE)
+    return m.group(1).strip().strip("'\"") if m else None
+
+
 def proposal_exists_for(date: str) -> bool:
-    """True if a daily proposal for `date` is already in the backlog (skip regen)."""
+    """True if a daily proposal for `date` is already in the LOCAL backlog (skip regen)."""
     for path in glob.glob(str(BACKLOG / "*.md")):
         name = Path(path).name
         if name.startswith("_") or name == "README.md":
@@ -391,10 +416,61 @@ def proposal_exists_for(date: str) -> bool:
             text = Path(path).read_text(encoding="utf-8")
         except OSError:
             continue
-        m = re.search(r"^proposal_date:\s*(.+)$", text, re.MULTILINE)
-        if m and m.group(1).strip().strip("'\"") == date:
+        if _proposal_date_in_text(text) == date:
             return True
     return False
+
+
+def fetch_main(quiet: bool = True) -> bool:
+    """Best-effort `git fetch origin main`.
+
+    Returns True if origin/main was refreshed, False if there's no reachable origin
+    (offline, no remote configured, sandbox with no network) — in which case callers
+    degrade to the local-only check rather than failing the whole run.
+    """
+    args = ["fetch", "origin", "main"] + (["-q"] if quiet else [])
+    try:
+        run_git(ROOT, *args)
+        return True
+    except GitError:
+        return False
+
+
+def _backlog_files_at_ref(ref: str) -> list[str]:
+    """Repo-relative paths of committed backlog outline files at `ref` (skips
+    templates/README). Returns [] if the ref or path doesn't exist there."""
+    try:
+        out = run_git(ROOT, "ls-tree", "-r", "--name-only", ref, "--", BACKLOG_RELPATH)
+    except GitError:
+        return []
+    files: list[str] = []
+    for line in out.splitlines():
+        line = line.strip()
+        if not line.endswith(".md"):
+            continue
+        name = Path(line).name
+        if name.startswith("_") or name == "README.md":
+            continue
+        files.append(line)
+    return files
+
+
+def remote_proposal_for(date: str, ref: str = REMOTE_REF) -> Optional[str]:
+    """Filename of a proposal for `date` already committed at `ref` (origin/main),
+    or None.
+
+    This is the concurrent-session guard (dream-cycle/t-014): the local-working-tree
+    check in proposal_exists_for() cannot see a proposal that ANOTHER session already
+    authored and landed on origin/main between this session's --check and its write.
+    Because the two sessions pick DIFFERENT slugs for the SAME Pacific date, the
+    slug-dedup guard (existing_slugs) never catches the collision — only a same-date
+    check against fresh origin/main does. Mirrors claim_task.py's fetch-fresh recheck.
+    """
+    for path in _backlog_files_at_ref(ref):
+        text = read_file_at_ref(ROOT, ref, path)
+        if text is not None and _proposal_date_in_text(text) == date:
+            return Path(path).name
+    return None
 
 
 def _write(proposal: dict[str, Any], date: str, dry_run: bool) -> Optional[Path]:
@@ -421,11 +497,17 @@ def print_brief() -> None:
 
 
 def write_proposal(proposal: dict[str, Any], date: Optional[str] = None,
-                   dry_run: bool = False, force: bool = False) -> Optional[Path]:
+                   dry_run: bool = False, force: bool = False,
+                   fetch: bool = True) -> Optional[Path]:
     """Validate + normalize an agent-authored proposal and write today's file.
 
-    Guarded: no-op (with a message) if `date` already has a proposal, unless
-    force. Returns the written path, or None."""
+    Guarded twice: no-op (with a message) if `date` already has a proposal in the
+    LOCAL working tree, and — unless `fetch` is off or `dry_run`/`force` — re-checks
+    fresh `origin/main` immediately before writing so a proposal another concurrent
+    session landed there since this session's --check aborts this write instead of
+    creating a second same-date proposal (dream-cycle/t-014). Returns the written
+    path, or None.
+    """
     date = _target_date(date)
     problems = validate_proposal(proposal)
     if problems:
@@ -434,9 +516,23 @@ def write_proposal(proposal: dict[str, Any], date: Optional[str] = None,
             print(f"  - {problem}", file=sys.stderr)
         return None
     if proposal_exists_for(date) and not force:
-        print(f"Proposal for {date} already exists — not writing (use --force to override).",
+        print(f"Proposal for {date} already exists locally — not writing (use --force to override).",
               file=sys.stderr)
         return None
+    # Concurrent-session guard: re-check origin/main fresh, the way claim_task.py
+    # re-checks before it writes a claim. Best-effort — if there's no reachable
+    # origin (offline/sandbox), fetch_main() returns False and we fall back to the
+    # local check above rather than blocking the run.
+    if fetch and not force and not dry_run and fetch_main():
+        landed = remote_proposal_for(date)
+        if landed:
+            print(
+                f"Proposal for {date} already landed on origin/main ({landed}) since "
+                "--check ran — another session beat this one. Not writing; re-run --check "
+                "(and fold in its Notes from Silas before building).",
+                file=sys.stderr,
+            )
+            return None
     proposal = normalize(json.loads(json.dumps(proposal)), existing_slugs())
     return _write(proposal, date, dry_run)
 
@@ -455,12 +551,21 @@ def main() -> int:
     ap.add_argument("--sample", action="store_true",
                     help="write the built-in sample proposal (testing; bypasses the guard)")
     ap.add_argument("--date", default=None, help="override proposal date (YYYY-MM-DD, Pacific)")
+    ap.add_argument("--fetch", action="store_true",
+                    help="with --check: also consult fresh origin/main (catches a proposal a "
+                         "concurrent session already landed but that isn't in this working tree yet)")
+    ap.add_argument("--no-fetch", action="store_true",
+                    help="with --from-json: skip the origin/main concurrent-session re-check "
+                         "(offline/local-only writes)")
     args = ap.parse_args()
 
     date = _target_date(args.date)
 
     if args.check:
-        if proposal_exists_for(date):
+        exists = proposal_exists_for(date)
+        if not exists and args.fetch and fetch_main():
+            exists = remote_proposal_for(date) is not None
+        if exists:
             print(f"Proposal for {date} exists.")
             return 0
         print(f"No proposal for {date} — author one: run --brief for the spec, "
@@ -485,7 +590,7 @@ def main() -> int:
             print(f"Could not read proposal JSON: {error}", file=sys.stderr)
             return 1
         written = write_proposal(proposal, date=date, dry_run=args.dry_run,
-                                 force=args.force)
+                                 force=args.force, fetch=not args.no_fetch)
         return 0 if written else 1
 
     ap.print_help()

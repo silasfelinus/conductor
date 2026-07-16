@@ -137,6 +137,22 @@ jobs:
       - name: Run full pytest suite
         run: pytest tests/
 
+  scheduler-drift:
+    name: Scheduler-card drift check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install PyYAML
+        run: pip install pyyaml
+
+      - name: Check dream-cycle scheduler cards vs home sets
+        run: python scripts/check_scheduler_drift.py
+
   build-ts-projects:
     name: Build changed TypeScript projects
     runs-on: ubuntu-latest
