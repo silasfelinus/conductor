@@ -1,13 +1,13 @@
 # Roadmap Audit
 
-Generated: `2026-07-16T10:22:20.635961+00:00`
+Generated: `2026-07-16T10:25:11.411248+00:00`
 
 This is a conservative structural audit. It reports suspicious state; it does not automatically change task status or remove human gates.
 
 ## Portfolio snapshot
 
-- **40** roadmaps, **32** active projects, **537** tasks
-- **97 ready**, **56 waiting**, **24 needs-human**, **7 claimed/review**, **342 done**
+- **40** roadmaps, **32** active projects, **538** tasks
+- **92 ready**, **56 waiting**, **24 needs-human**, **12 claimed/review**, **343 done**
 - Findings: **0 errors**, **5 warnings**, **47 informational**
 
 ## Project inventory
@@ -15,14 +15,14 @@ This is a conservative structural audit. It reports suspicious state; it does no
 | # | Project | State | Kind | Ready | Waiting | Human | In progress | Done / Total |
 |---:|---|---|---|---:|---:|---:|---:|---:|
 | 1 | `challenge-center` | active | software | 0 | 0 | 0 | 0 | 20 / 20 |
-| 2 | `ai-art-academy` | active | software | 4 | 1 | 2 | 0 | 12 / 19 |
+| 2 | `ai-art-academy` | active | software | 3 | 1 | 2 | 1 | 12 / 19 |
 | 3 | `coloring-book` | active | software | 3 | 5 | 0 | 0 | 12 / 20 |
 | 4 | `humboldt-scoop` | active | software | 0 | 0 | 0 | 0 | 8 / 8 |
 | 5 | `humboldt-scoop-cms` | active | software | 0 | 4 | 1 | 0 | 6 / 11 |
 | 6 | `digital-storefront` | active | software | 4 | 1 | 2 | 0 | 11 / 18 |
 | 7 | `packmaker` | active | software | 0 | 1 | 1 | 0 | 5 / 7 |
 | 8 | `mermaids-of-venice` | retired | content | 0 | 0 | 8 | 0 | 4 / 12 |
-| 9 | `kind-robots` | active | software | 5 | 0 | 2 | 2 | 23 / 32 |
+| 9 | `kind-robots` | active | software | 6 | 0 | 2 | 1 | 24 / 33 |
 | 10 | `kindrobots-unraid` | active | software | 0 | 7 | 1 | 0 | 4 / 12 |
 | 11 | `global-ui` | active | software | 5 | 0 | 0 | 0 | 13 / 18 |
 | 12 | `superkate-services-calculator` | active | software | 0 | 0 | 1 | 0 | 35 / 36 |
@@ -46,8 +46,8 @@ This is a conservative structural audit. It reports suspicious state; it does no
 | 30 | `brainstorm` | active | proposal | 1 | 0 | 0 | 0 | 0 / 1 |
 | 31 | `wishmaster` | active | software | 2 | 0 | 0 | 0 | 1 / 3 |
 | 32 | `engagement` | finished | software | 0 | 0 | 0 | 0 | 3 / 3 |
-| 33 | `ruler-hooked` | active | software | 4 | 1 | 0 | 3 | 2 / 10 |
-| 34 | `dream-cycle` | active | software | 4 | 3 | 0 | 2 | 5 / 14 |
+| 33 | `ruler-hooked` | active | software | 2 | 1 | 0 | 5 | 2 / 10 |
+| 34 | `dream-cycle` | active | software | 1 | 3 | 0 | 5 | 5 / 14 |
 | — | `animation-studio` | missing | software | 3 | 4 | 0 | 0 | 1 / 8 |
 | — | `approval-portal` | retired | software | 0 | 0 | 0 | 0 | 3 / 5 |
 | — | `career-transition` | retired | content | 3 | 4 | 0 | 0 | 1 / 8 |

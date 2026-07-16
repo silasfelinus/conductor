@@ -82,11 +82,11 @@ tasks:
   - id: t-003
     milestone: m2
     title: Audit the kind_robots API surface for every dream-build model
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
-    updated: '2026-07-10T00:00:00Z'
+    updated: '2026-07-16T10:03:26Z'
     note: >
       Infrastructure tightening, part 1. For each model a dream build touches —
       Dream, DreamRelation, Character, Reward, Scenario, Bot, ExpressionMedia,
@@ -103,6 +103,8 @@ tasks:
       kind-robots t-016 (broken POST /api/sheets) and t-017 (no DreamRelation
       endpoint). Remaining: ExpressionMedia/ExpressionTransition/NarratorTopic/
       NarratorThread audit + the consolidated api-surface.md doc.
+    claimed_by: dream-cycle-expansion-8m2dmk
+    claimed_at: '2026-07-16T10:03:26Z'
   - id: t-004
     milestone: m2
     title: Write CREATION-SPEC.md (the generic loop contract) and specs/dream.md (the dream playbook)
@@ -125,11 +127,11 @@ tasks:
   - id: t-005
     milestone: m3
     title: Grow the backlog to ten buildable outlines
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
-    updated: '2026-07-10T00:00:00Z'
+    updated: '2026-07-16T10:08:36Z'
     note: >
       Four seeds exist (dreams tidepool-arcade, lantern-post, static-garden;
       coloring-book monster-recast). Add six more full outlines using the type
@@ -142,6 +144,8 @@ tasks:
       available). Dreams stay all-ages, on-brand whimsy per the seed tone unless
       a Silas note steers otherwise. Quality over speed: each outline should be
       buildable as-is.
+    claimed_by: dream-cycle-expansion-8m2dmk
+    claimed_at: '2026-07-16T10:08:36Z'
   - id: t-006
     milestone: m4
     title: 'Creation-a-day: advance the active creation build one stage'
@@ -202,11 +206,11 @@ tasks:
   - id: t-009
     milestone: m2
     title: Write specs/coloring-book.md — the coloring-book day-type playbook
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
-    updated: '2026-07-10T00:00:00Z'
+    updated: '2026-07-16T10:06:42Z'
     note: >
       The second creation type, per Silas 2026-07-10: "spend today drafting and
       making a coloring book." The playbook delegates to the coloring-book
@@ -230,6 +234,8 @@ tasks:
       hollywood-recast-2) being untouchable until Silas activates them. Once
       this lands, backlog/monster-recast.md (approved, high) becomes buildable
       by t-006.
+    claimed_by: dream-cycle-expansion-8m2dmk
+    claimed_at: '2026-07-16T10:06:42Z'
   - id: t-010
     milestone: m2
     title: Add a scheduler-card drift check (backlog cards vs home sets) runnable in CI
