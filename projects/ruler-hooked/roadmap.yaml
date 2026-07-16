@@ -171,8 +171,8 @@ tasks:
       - t-006
     note: >
       Cross-repo task (kind_robots). PoC exit criteria are in DESIGN-BRIEF.md.
-      PHASE 1 (foundation) DELIVERED 2026-07-16 (claude-build-sxndmc):
-      kind_robots PR #328 adds the pure, framework-free game engine +
+      PHASE 1 (foundation) DELIVERED + MERGED 2026-07-16 (claude-build-sxndmc):
+      kind_robots PR #328 (MERGED) added the pure, framework-free game engine +
       type contracts — types/ruler-hooked.ts and utils/rulerHooked/*
       (seed RNG, applyEffects reducer, triggers, compositor, seeded select)
       plus a runtime engine.selftest.ts. Verified via isolated strict
@@ -267,13 +267,26 @@ tasks:
   - id: t-012
     milestone: m2
     title: "Ruler Hooked PoC — Phase 2: play-screen UI, store, and content bundle"
-    status: claimed
+    status: review
     owner: worker
     passes: 0
     stakes: reversible
     note: >
+      DELIVERED 2026-07-16 (claude-build-sxndmc) — kind_robots PR #329 (open,
+      for review/CI). Makes /ruler-hooked playable: content bundle
+      (utils/rulerHooked/content.ts — 4 ramp-driven regions, warlock/druid
+      interrupt, heir-elopes arc, 4 characters, 3 rewards, 2 endings),
+      newGame/loop/save (pure), the Pinia store, and 5 Vue components wired into
+      ProjectFrontPage's #interactive slot. Placeholder art via state-coloured
+      bands + the asset fallback ladder for real webp. VERIFIED (given the
+      kind_robots vue-tsc toolchain OOMs this sandbox): strict isolated tsc over
+      engine+logic+store (exit 0), headless engine.selftest + game.selftest all
+      pass — proving the four DESIGN-BRIEF m2 exit criteria at the logic layer —
+      and all 6 SFCs compile via @vue/compiler-sfc. CI to confirm the full
+      vue-tsc pass. When #329 merges, set t-012 AND t-007 to done. Original plan
+      below.
       Cross-repo (kind_robots). Phase 2 of the PoC, on top of the Phase-1
-      engine foundation landed in kind_robots PR #328 (types/ruler-hooked.ts +
+      engine foundation landed in kind_robots PR #328 (MERGED; types/ruler-hooked.ts +
       utils/rulerHooked/*). Build the visible play screen and make it playable:
       (1) stores/rulerHookedStore.ts — a Pinia setup-store holding the active
       RunSave, wrapping the engine + a localStorage SaveStore (multi-slot;
