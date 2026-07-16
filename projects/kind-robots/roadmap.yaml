@@ -999,24 +999,13 @@ tasks:
   - id: t-030
     milestone: m1
     title: Widen the workflow-path-reference check to catch extension-less directory references
-    status: claimed
-    owner: reviewer
+    status: done
     passes: 0
     stakes: reversible
-    updated: '2026-07-16T09:51:17Z'
-    note: >
-      Kaizen from t-028 (Reviewer, kind_robots PR #309): the new
-      verifyWorkflowPaths.ts heuristic only flags `run:`-step tokens ending in
-      a known extension (ts/tsx/js/mjs/cjs/py/sql/sh/json/yml/yaml/prisma), so
-      an extension-less path reference (e.g. `git diff --quiet -- stores/fallback`)
-      would not be caught if it went dead. Explore widening the heuristic to
-      also match bare `word/word(/word)*` tokens gated by `existsSync` on the
-      token itself or its parent directory -- deliberately deferred out of the
-      first pass because it has a much higher false-positive rate (npm script
-      names like `test:foo`, non-path colon-separated tokens, etc.) and needs
-      a more careful allowlist/exclusion design than the extension gate did.
-    claimed_by: claude-hourly-20260716-0950
-    claimed_at: '2026-07-16T09:51:17Z'
+    updated: '2026-07-16T10:11:20Z'
+    note: |-
+      DONE 2026-07-16 (conductor-hourly-20260716-0950, autonomous cycle): kind_robots PR #312 merged (squash 0b43841e). utils/scripts/verifyWorkflowPaths.ts's run-step scanner only ever flagged tokens ending in a known extension; added a second, narrower pattern for bare `word/word` tokens (e.g. `git diff --quiet -- stores/fallback`) plus a `node_modules/` allowlist entry. The naive first version of the bare pattern produced real false positives on this repo's own workflows -- iterated against each until clean: `/dev/null` and `100.64.0.0/10` (both matched as fragments because `\b` anchors mid-token on `.`/`/`, fixed with explicit lookaround instead of `\b`), `dns/promises` inside an embedded Node script (fixed with a require/from/import context check), and `scripts/cleanup-test-users.mjs` truncating to `scripts/cleanup-test` (greedy backtracking finding a false stopping point, fixed by tightening the trailing lookahead to reject any continuation character, not just `.letter`). Verified: ran the widened check against all 7 real workflow files (35 path references checked, 0 errors); sanity-checked detection still works by temporarily renaming `stores/fallback` to a typo and confirming the check fails, then reverted; eslint clean; prettier clean; full project `vue-tsc --noEmit` reports 0 errors; `npm run test:workflow-paths` (the actual CI script) passes. CI (Contract verifiers, TypeScript) green before merge.
+      Original spec follows: Kaizen from t-028 (Reviewer, kind_robots PR #309): the new verifyWorkflowPaths.ts heuristic only flags `run:`-step tokens ending in a known extension (ts/tsx/js/mjs/cjs/py/sql/sh/json/yml/yaml/prisma), so an extension-less path reference (e.g. `git diff --quiet -- stores/fallback`) would not be caught if it went dead. Explore widening the heuristic to also match bare `word/word(/word)*` tokens gated by `existsSync` on the token itself or its parent directory -- deliberately deferred out of the first pass because it has a much higher false-positive rate (npm script names like `test:foo`, non-path colon-separated tokens, etc.) and needs a more careful allowlist/exclusion design than the extension gate did.
 
   - id: t-029
     milestone: m4
@@ -1104,3 +1093,35 @@ tasks:
       should both invoke it, and a pointer to check-deploy-ancestry.sh /
       verifyDeployWaitAncestry.ts as the worked example. Small and
       documentation-only — no code changes required.
+
+  - id: t-034
+    milestone: m1
+    title: Audit the extension-based run-step path pattern in verifyWorkflowPaths.ts for the same mid-token \b anchoring gap t-030 hit
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-16T10:11:20Z'
+    note: >
+      Kaizen from t-030 (Reviewer, kind_robots PR #312): widening
+      verifyWorkflowPaths.ts to catch extension-less path references
+      surfaced a real bug class in the *new* bare-token pattern -- plain
+      `\b` doesn't anchor where expected next to non-word characters like
+      `.` and `/`, so the naive first version matched fragments of
+      `/dev/null`, `100.64.0.0/10`, and `scripts/cleanup-test-users.mjs`
+      instead of rejecting them or matching the whole token. Fixed there
+      with explicit lookaround (`(?<![a-zA-Z0-9._/-])` /
+      `(?![a-zA-Z0-9._-])`) instead of `\b`. The original *extension-based*
+      `runStepTokenPattern` (same file, shipped earlier in t-028) still
+      uses plain `\b` at both ends and has never been audited against this
+      specific failure mode -- it may have the same latent risk for
+      extension-terminated tokens embedded after a `/` (e.g. inside an
+      absolute path or a longer non-path string) that just hasn't shown up
+      in this repo's small set of workflow files yet. Audit it the same
+      way t-030 did: try deliberately adversarial run-step content (paths
+      embedded in URLs, absolute paths, decimal-like tokens) against the
+      existing pattern and either confirm it's safe (document why, e.g. an
+      extension list narrow enough that no non-path token happens to match
+      it in practice) or apply the same lookaround fix. Low urgency --
+      current workflow files show no evidence of an actual false positive,
+      so this is a robustness pass, not a live bug fix.
