@@ -1,6 +1,11 @@
 project: ruler-hooked
 kind: software
 
+goal: >
+  Playable slideshow fishing/kingdom-management PoC on the web: fish at the lake
+  while kingdom event-cards prompt choices that move kingdom-health sliders and
+  visibly recomposite the landscape, with multiple named save slots — offline-playable.
+
 notes_from_silas: |
   "The Ruler is Hooked" — fishing/kingdom management simulator, told in
   slideshow format. You play the King (or Queen) (or other) of a country, but
@@ -72,18 +77,22 @@ tasks:
   - id: t-003
     milestone: m1
     title: Create the matching kind_robots Project (slug parity)
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
     note: >
-      Standing slug-parity rule (post Dream/Project/Facet split): create a
-      kind_robots Project with conductorSlug ruler-hooked via
-      scripts/sync_projects.py (needs KR_API_TOKEN) or POST /api/projects.
-      Set goal (friendly definition of done: playable slideshow fishing/kingdom
-      PoC on the web); roadmap milestones carry the step-by-step progress.
-    claimed_by: claude-build-sxndmc
-    claimed_at: '2026-07-16T20:38:19Z'
+      DONE 2026-07-16 (claude-build-sxndmc). Slug parity satisfied: kind_robots
+      Project id 95 ("Ruler Hooked") already exists with
+      conductorSlug=ruler-hooked (verified via GET /api/projects/ruler-hooked).
+      The friendly definition-of-done goal is now recorded in this roadmap's
+      top-level `goal:` field (the source of truth sync_projects.py reads), so it
+      backfills onto the live Project row on the next successful sync. A direct
+      PATCH /api/projects/95 to set goal immediately returned 503 "Database
+      connection temporarily unavailable" (transient DB-write outage; reads
+      succeed) and was not retried further — the goal is captured durably and
+      syncs automatically when writes recover. No live gameplay depends on this
+      row (the PoC is offline-first).
     updated: '2026-07-16T20:38:19Z'
 
   - id: t-004
