@@ -883,11 +883,11 @@ tasks:
   - id: t-028
     milestone: m1
     title: Add a CI check that every file path referenced by a .github/workflows/*.yml step or path-trigger actually exists in the repo
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
-    updated: '2026-07-16T03:19:00Z'
+    updated: '2026-07-16T05:49:55Z'
     note: >
       Kaizen from t-026 (Worker, kind_robots PR #307): facet-alias-smoke.yml
       silently referenced a migration file that no longer existed after a
@@ -902,6 +902,8 @@ tasks:
       allowlisted), resolves glob-free entries against the repo tree, and
       fails CI if any point at a path that doesn't exist. Wire it into an
       existing lint/static-checks job rather than a new standalone workflow.
+    claimed_by: claude-burst-1784180994
+    claimed_at: '2026-07-16T05:49:55Z'
 
   - id: t-029
     milestone: m4
