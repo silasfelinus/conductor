@@ -233,8 +233,8 @@ tasks:
   - id: t-011
     milestone: m1
     title: CI lint check for ruler-hooked docs cross-references and art-prompts.yaml inspirations entries
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     note: >
@@ -250,3 +250,6 @@ tasks:
       projects/art-prompts.yaml `inspirations:` entries parse against the
       schema scripts/distribute_images.py actually reads — so a future
       spec/prompt edit can't silently break the art pipeline.
+    claimed_by: claude-build-sxndmc
+    claimed_at: '2026-07-16T20:43:59Z'
+    updated: '2026-07-16T20:43:59Z'
