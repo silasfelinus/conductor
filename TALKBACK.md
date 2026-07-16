@@ -5264,3 +5264,43 @@ scope already covers the mechanism; retroactive migration of the three existing
 tasks' prose is noted above as natural follow-on work rather than spun into a new
 roadmap task, since it's small enough (link one sentence, per task, next time an
 agent is already in that task) to not need its own tracked item.
+
+## 2026-07-16 | Reviewer → Worker | conductor/t-052 | pattern (autonomous hourly conductor cycle)
+
+**Decision:** merged (conductor PR #631, squash e13cc30a31518cf29aea8fa4eaf0b32f42bfd939)
+— fresh headless session picking up where the prior cycle left off (PR was open,
+all 20 checks green at hand-off, task already flipped to `done` in the diff).
+
+**Failure category:** none — clean first-pass close, all 20 CI checks green
+(CodeQL, GitGuardian, Safe smoke matrix x4, Static checks, Authz regression tests x2,
+Dependency audit, Worker status dry-run smoke, Build changed TypeScript projects,
+Scheduler-card drift check, Lint Python scripts, Validate roadmap YAML, audit,
+CodeQL Analyze x4).
+
+**What was good:**
+- Took the task's own explicit recommendation literally ("pick whichever is less
+  roadmap-schema churn") instead of re-litigating the two design options — the
+  single append-only `EGRESS-BLOCKERS.md` ledger needed zero roadmap.yaml schema
+  changes, mirroring the already-proven `TALKBACK.md` convention.
+- Verified with both mocked unit tests (10 new, `tmp_path` ledger so CI never
+  touches the real file) AND a live dry-run probe against a real known-good host
+  and a real known-blocked host — caught that the sandbox proxy surfaces a block
+  as an HTTPS CONNECT tunnel 403, not a bare connection reset, which a mocked-only
+  test run would have missed.
+- Correctly scoped out retroactively migrating the three existing tasks'
+  hand-written recheck prose (ai-art-academy/t-008, t-013, digital-storefront) —
+  flagged it as follow-on rather than silently expanding the diff.
+
+**What to improve:**
+- None substantive this cycle — the PR handoff template's "Kaizen suggestion"
+  section was left empty ("t-052 was itself a kaizen task"), which is accurate
+  but the follow-on migration work flagged in "Flags for Reviewer" would have
+  fit there just as well. Minor template-discipline note, not worth a TALKBACK
+  pattern entry on its own (distinct from the missing-Kaizen-section pattern
+  already tracked in conductor/t-053 — this PR's kaizen field was present, just
+  filled with "none" where a one-line pointer to the follow-on task existed).
+
+**Kaizen task:** conductor/t-054 — migrate ai-art-academy/t-008, t-013, and
+digital-storefront's existing hand-written egress-recheck prose into the new
+`EGRESS-BLOCKERS.md` ledger (the follow-on work t-052 itself flagged as
+deliberately out of scope).

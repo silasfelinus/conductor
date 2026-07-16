@@ -1289,3 +1289,23 @@ tasks:
       shows up as an explicit TALKBACK "what to improve" note instead of relying on
       manual catch-rate. Should not fail CI outright (some PRs genuinely have no
       kaizen to suggest) — a soft warning/comment is enough.
+
+  - id: t-054
+    milestone: m2
+    title: Migrate ai-art-academy/t-008, t-013, and digital-storefront's hand-written egress-recheck prose into EGRESS-BLOCKERS.md
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Kaizen from conductor/t-052 (Reviewer, autonomous hourly conductor cycle,
+      2026-07-16, PR #631). t-052 built the shared `EGRESS-BLOCKERS.md` ledger and
+      `scripts/recheck_egress_blocks.py` but deliberately left the three existing
+      tasks' own hand-written "RECHECKED <date>: still a fresh connect_rejected/403"
+      paragraphs (ai-art-academy/t-008, ai-art-academy/t-013, digital-storefront's
+      Stripe task) untouched, as out-of-scope retroactive migration. For each of the
+      three: run `python scripts/recheck_egress_blocks.py <host> --task <project>/<task-id>`
+      to seed a fresh ledger entry, then replace the task's repeated prose paragraphs
+      with a single sentence pointing at `EGRESS-BLOCKERS.md` (keep one summary line
+      of history, don't delete the task's own note entirely). Purely record-keeping —
+      should not change any task's `status`/`needs-human` semantics.
