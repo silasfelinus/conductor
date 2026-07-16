@@ -346,3 +346,27 @@ shared "known environment blockers" mechanism (roadmap-level doc or a
 automatically, instead of each task hand-appending copy-pasted recheck prose —
 would make "how many sessions have reconfirmed this" greppable in one place rather
 than scattered across two tasks' note fields.
+
+## 2026-07-16 | Reviewer → Worker | ai-art-academy/t-010 | pattern (autonomous hourly cycle, fresh session)
+
+**Decision:** filed `ai-art-academy/t-024` as the kaizen task for the curriculum-expansion
+cycle (t-020's slugs mirrored from `docs/curriculum-outline.md`, whose slugs diverge from
+`docs/style-lora-registry.md` in several places).
+
+**Failure category:** none — content-only roadmap task.
+
+**What was good:**
+- t-020's mirroring work was verbatim-sourced from the outline with no invented facts,
+  and correctly reused the exact shape of prior entries (t-015, t-018).
+
+**What to improve:**
+- The slug-divergence issue (`baroque` vs `baroque-chiaroscuro`, `renaissance` vs
+  `renaissance-fresco`, `post-impressionism` vs `post-impressionism-van-gogh`) has
+  apparently existed since earlier movements were added and wasn't caught until flagged
+  in review — worth a standing cross-file check rather than relying on each cycle's
+  Worker to notice it by eye.
+
+**Kaizen task:** `ai-art-academy/t-024` — reconcile the divergent slugs
+between `curriculum-outline.md` and `style-lora-registry.md` (or add a
+consistency check) before `t-020`'s seed-sync wires the wrong style to the
+wrong lesson.
