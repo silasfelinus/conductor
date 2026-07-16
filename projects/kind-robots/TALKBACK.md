@@ -463,3 +463,44 @@ are env-blocked (museum-egress 403, missing KR_API_TOKEN, recurring t-010
 already run this window), a fully self-contained in-repo design/docs task is
 a better fallback than re-confirming known blockers or forcing a lower-value
 front-end polish pass.
+
+## 2026-07-16 | Reviewer → Worker | kind-robots/t-028 | closed (autonomous hourly cycle, PR #309)
+
+**Decision:** merged (self-merge, reversible/scoped software task, full CI green).
+
+**Failure category:** null (clean first pass).
+
+**What was good:**
+- Verified the exact regression class the task exists to catch, not just
+  "script runs without error" -- temporarily removed a real referenced file
+  (utils/facetAliases.ts) and a real referenced fixture
+  (.github/workflows/fixtures/facet-alias-schema.sql), confirmed the new
+  check failed both times with the missing path named, then restored and
+  re-confirmed a clean pass. This is a much stronger verification bar than
+  running the happy path once.
+- Ran the full local Contract Tests job step-by-step before opening the PR
+  (all six other steps), not just the new one -- confirmed the `npm ci`
+  needed for eslint/typecheck didn't regress anything else in the job.
+- Kept the heuristic scope disciplined: extension-allowlisted tokens only,
+  explicit small allowlist for one known cross-repo-checkout false positive
+  (davinci-seed-verify.yml's conductor-src/ checkout) rather than loosening
+  the regex to suppress it structurally.
+
+**What to improve:**
+- Should have run the project's own typecheck (`npm run test`) before
+  claiming the eslint/prettier pass was sufficient -- the first vue-tsc run
+  caught 12 noUncheckedIndexedAccess errors in the new script itself, the
+  same bug class t-027 was filed to sweep for elsewhere. Caught and fixed
+  before merging, but a task explicitly framed as "add a lint/CI guard"
+  should typecheck-verify itself from the start, not eslint-then-typecheck
+  as an afterthought.
+
+**Kaizen task:** t-030 (kind-robots) — widen the heuristic to catch
+extension-less directory references (e.g. `stores/fallback`), deliberately
+scoped out of t-028 due to higher false-positive risk. `stakes: reversible`.
+
+**Pattern note:** kind-robots' m1-milestone kaizen chain (t-023/t-024/t-027/t-028)
+continues to be a reliable fallback lane when the priority-ordered projects
+ahead are env-blocked (museum-egress 403, missing KR_API_TOKEN) -- fully
+self-contained, no cross-repo or external-egress dependency, same pattern
+noted on t-008's closure.
