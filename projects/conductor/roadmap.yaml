@@ -996,8 +996,8 @@ tasks:
   - id: t-043
     milestone: m2
     title: Deduplicate the three independent copies of dependency-satisfaction logic (resolve_deps.py, next_ready_task.py, audit_roadmaps.py)
-    status: ready
-    owner: null
+    status: claimed
+    owner: reviewer
     passes: 0
     stakes: reversible
     note: >
@@ -1011,6 +1011,9 @@ tasks:
       three copies can't drift apart in the future. Update all three
       call sites and their existing test suites to use it; no behavior
       change intended.
+    claimed_by: claude-burst-hourly-20260716-0410
+    claimed_at: '2026-07-16T04:07:23Z'
+    updated: '2026-07-16T04:07:23Z'
 
   - id: t-044
     milestone: m2
