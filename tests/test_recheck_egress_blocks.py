@@ -119,7 +119,7 @@ def test_main_dry_run_does_not_write(tmp_path, monkeypatch, capsys):
     assert exit_code == 0
     assert ledger.read_text(encoding="utf-8") == LEDGER_TEMPLATE
     out = capsys.readouterr().out
-    assert "example.com" in out
+    assert out == "\U0001f6ab example.com: blocked (x)\n"
 
 
 def test_main_appends_using_default_ledger_file(tmp_path, monkeypatch):
