@@ -2592,3 +2592,15 @@ records:
     in a GitHub Actions workflow whose GITHUB_TOKEN has the permission, and make the desired end-state
     (clean main, no leftover branch) the explicit default in AGENTS.md/prompts rather than an opt-in a
     human must request.
+- date: '2026-07-16'
+  project: dream-cycle
+  task: t-015
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'When the live build path is egress-blocked from an interactive session, harden the loop OFFLINE
+    instead of faking a build: a CI preflight that validates each outline against the playbook (accepting
+    every real shape, lenient counts) catches unbuildable outlines before t-006 ever runs. Verify environment
+    egress before claiming DB/token blockers.'
