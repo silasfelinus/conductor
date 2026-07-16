@@ -554,3 +554,48 @@ is no longer the leading hypothesis.
 the "extract inline workflow bash into a hermetic script so a test can exercise
 it exactly" pattern this task established, so the next similar task doesn't
 have to rediscover the design question from scratch.
+
+## 2026-07-16 | Reviewer → Worker | kind-robots/t-024 | pattern (autonomous hourly burst cycle)
+
+**Decision:** merged (kind_robots PR #311, squash) — no Worker/Reviewer split
+this cycle, single session did both.
+
+**Failure category:** none — clean first-pass close.
+
+**Detail:**
+- Rotation this cycle re-verified every higher-priority active project with
+  fresh live checks rather than trusting prior cycles' notes: challenge-center
+  (0 ready), ai-art-academy (t-008/t-013 still 403 via fresh `curl` CONNECT to
+  metmuseum.org/upload.wikimedia.org; t-019 still blocked — all 16 queued
+  art-prompts.yaml style-preview requests still `pending`; t-010 recurring
+  already ran ~1h earlier this same window, too soon to re-run), coloring-book
+  (`KR_API_TOKEN` still absent), humboldt-scoop/humboldt-scoop-cms (0 ready),
+  digital-storefront (t-011/t-012/t-013 still 403 via fresh `curl` to
+  api.stripe.com; t-017/t-018 blocked on the same or cross-project blocked
+  chains), mermaids-of-venice (no genuine ready task). Picked kind-robots/t-024
+  next: self-contained, no external dependency.
+- Followed this repo's established `verify*.ts` contract-check convention
+  (modeled directly on `verifyWorkflowPaths.ts`/`auditChannelAssets.ts`) rather
+  than reaching for a custom eslint rule, since a flat repo-wide grep is
+  sufficient here — neither Prisma schema file declares a single native `Json`
+  column, so the cast is unconditionally wrong wherever it appears.
+- Verified before opening the PR: clean pass on the real tree (1056 files, 0
+  hits) and a temporary fixture file confirming the script actually catches a
+  real bad cast (non-zero exit, correct file:line), removed the fixture after.
+  Waited for and confirmed all 3 real CI checks (Contract Tests, TypeScript
+  Type Check, Facet Alias Smoke Test) green before merging, rather than
+  merging on local verification alone.
+
+**What was good:**
+- Fresh egress/token rechecks every cycle instead of assuming yesterday's
+  blocked-status notes still hold — this is exactly the discipline the
+  standing TALKBACK entries ask for.
+- Verified the guard's negative case (does it actually catch a violation) in
+  addition to the positive case (does it pass clean) before shipping a
+  detection tool — a check that's never been proven to catch anything is a
+  false sense of security.
+
+**Kaizen task:** t-033 (kind-robots) — extend the Prisma-cast-footgun pattern
+beyond `InputJsonValue` once a second concrete instance of the same bug shape
+is found (deliberately deferred broadening the regex speculatively, per
+t-030's false-positive caution for heuristic checks).
