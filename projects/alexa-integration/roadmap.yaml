@@ -286,18 +286,19 @@ tasks:
 - id: t-016
   milestone: m4
   title: Fix control-adapter theme-domain over-claiming any utterance containing the word "theme"
-  status: ready
-  owner: null
-  updated: '2026-07-15T05:30:00Z'
+  status: done
+  owner: claude
+  updated: '2026-07-16T12:15:00Z'
+  pr: https://github.com/silasfelinus/serendipity-voice/pull/23
   passes: 0
   stakes: reversible
-  note: 'Found while closing t-008 (serendipity-voice PR #22): serendipity-voice/src/voice-router.ts
-    parseTheme() (~line 173) claims the control/theme domain for ANY utterance containing the substring
-    "theme" (`if (!lowered.includes(''theme'')) return undefined`), added in t-013 after t-008''s patch
-    was originally written. This misroutes phrases like "play the [song] theme" into the control domain
-    instead of music/chat/etc, since the theme check runs before other domain matching and short-circuits
-    it. Fix: require parseTheme to match one of its existing specific regexes (set/change/switch/use ...
-    theme) rather than the bare substring check, so an utterance only claims the theme domain when it is
-    actually phrased as a theme-setting command. Add a regression test asserting a music-domain "play X
-    theme"-style phrase still routes to music, not control. Worked around in t-008''s own test fixture
-    (renamed to avoid the word) rather than fixed here, to keep that PR scoped to the music adapter.'
+  note: 'Done in serendipity-voice PR #23 (merged, squash). Fixed parseTheme() in src/voice-router.ts:
+    it now requires an actual match against one of the existing theme-setting phrasings (set/change/switch/make
+    it/use ... theme) instead of the bare substring check, so phrases like "play the [song] theme" fall
+    through to music/chat/etc instead of being claimed by the control/theme domain. Relaxed the first
+    pattern''s name-capture group to optional so the nameless "change the theme" -> ask-which-theme case
+    still works. Added a regression test asserting a "play X theme"-style phrase still routes to music.
+    Verified: npm test (voice-router 23 checks, up from 22) + npm run typecheck, both green; manual CLI
+    checks via npm run parse for the bug phrase, the nameless-theme case, and the "use the retro theme"
+    case all behave correctly. No CI configured in this repo (no .github/workflows); merged on clean
+    local verification per repo convention.'

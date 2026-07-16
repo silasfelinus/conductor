@@ -5023,3 +5023,35 @@ success-rate aggregates to cover all history.
 **Kaizen:** none filed — the schema-conformance test added here is the lightweight
 guard; a standalone `validate_learning.py` in CI (mirroring validate_roadmaps.py)
 remains a possible follow-up if drift ever appears.
+
+## 2026-07-16 | Worker → Silas | alexa-integration/t-016 | closed (burst cycle)
+
+**Decision:** merged — serendipity-voice PR #23, squash-merged after local verification (no CI configured in that repo).
+
+**Detail:**
+- Burst-mode cycle scoped to the `serendipity-voice` repo (least-recently-touched
+  of the six designated repos: PortOS and kind_robots both had commits earlier
+  the same day, kindrobots-unraid and ComfyUI touched further back, ComfyUI's
+  last commit predates this whole project by months and has no roadmap ties).
+  Consulted `projects/alexa-integration/roadmap.yaml` (the acknowledged roadmap
+  source of truth for this repo) for ready work.
+- Fixed t-016 (`ready`, well-specified from the t-008 close-out note):
+  `parseTheme()` in `serendipity-voice/src/voice-router.ts` claimed the
+  control/theme domain for any utterance containing the bare substring
+  "theme", short-circuiting other domains — e.g. "play the fireflies theme"
+  was misrouted away from music. Changed the gate to require an actual
+  match against one of the existing theme-setting regexes, and relaxed the
+  first pattern's name-capture group to optional so the pre-existing
+  nameless "change the theme" -> ask-which-theme behavior still works.
+  Added a regression test for the "play X theme"-style music phrase.
+- Verified locally: `npm test` (voice-router 22 -> 23 checks, all suites
+  green) + `npm run typecheck` clean, plus manual `npm run parse` spot
+  checks for the bug phrase, the nameless-theme case, and the pre-existing
+  "use the retro theme" case — all three now behave as intended.
+- t-009 (draft project-work actions from voice) and t-015 (Voice Lab UI
+  polish, needs generated art assets) remain `ready` for a future cycle;
+  t-016 was picked as the smallest, most concretely-specified unit of work
+  for a single burst hour.
+
+**Kaizen:** none filed — straightforward scoped bug fix matching its
+close-out note almost exactly.
