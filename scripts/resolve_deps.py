@@ -20,17 +20,11 @@ except ImportError:
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from roadmap_text_patch import apply_task_field_ops  # noqa: E402
+from roadmap_deps import dependency_satisfied as satisfied  # noqa: E402
 
 def as_list(v):
     if v is None: return []
     return v if isinstance(v, list) else [v]
-
-def satisfied(task):
-    if task.get("status") != "done":
-        return False
-    if task.get("gate_human"):
-        return bool(task.get("approved_by_human"))
-    return True
 
 def main():
     ap = argparse.ArgumentParser()

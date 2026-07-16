@@ -1129,3 +1129,29 @@ records:
     (museum-egress 403 / missing KR_API_TOKEN) and its recurring
     continuous-improvement task already ran this window -- fell through to
     the next active project in priority.yaml with concrete, unblocked work.
+- date: '2026-07-16'
+  project: conductor
+  task: t-043
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    Kaizen from ai-art-academy/t-012 (2026-07-14): three scripts
+    (resolve_deps.py, next_ready_task.py, audit_roadmaps.py) each
+    independently reimplemented the same dependency-satisfaction check.
+    Extracted scripts/roadmap_deps.py mirroring the existing
+    roadmap_claims.py centralization pattern. One subtlety worth flagging
+    for future dedup passes: audit_roadmaps.py is loaded standalone via
+    importlib.util.spec_from_file_location in its policy test, with no
+    package context, so a bare sibling import needs the same
+    sys.path.insert(0, <script dir>) trick resolve_deps.py/next_ready_task.py
+    already use -- a plain `from roadmap_deps import ...` without it would
+    only work by accident of import order across the test session. Also
+    another good burst-mode fallback pattern: ai-art-academy's ready tasks
+    were all env-blocked again (museum-egress 403, missing KR_API_TOKEN,
+    recurring t-010 already run this window) and coloring-book/
+    digital-storefront's ready tasks hit the same two blockers, so picked a
+    fully self-contained in-repo task instead of re-treading known-blocked
+    ground.

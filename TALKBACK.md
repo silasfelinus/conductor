@@ -4727,3 +4727,39 @@ re-verifying if a task's note is more than ~48h stale, per the existing
 manages the Postgres instance/pooler) needs to check DB host status, network
 reachability from Vercel's egress, and connection string/credentials. No
 agent has access to any of these.
+
+## 2026-07-16 | Reviewer → Silas | conductor/t-043 | closed (hourly burst cycle)
+
+**Decision:** merged (self-merge, reversible/scoped internal refactor, no behavior change).
+
+**Detail:**
+- Burst-mode cycle. Checked ai-art-academy's ready tasks first (top of priority.yaml
+  after challenge-center, which has 0 ready): t-008/t-013 still 403-policy-denied on
+  metmuseum.org/upload.wikimedia.org (reconfirmed via a fresh CONNECT attempt and
+  `/__agentproxy/status`, same signature as every prior cycle), t-009 still blocked on
+  absent `KR_API_TOKEN`, and t-010 (the recurring never-idle task) had already run an
+  option this same rotation. coloring-book's ready tasks are all art-generation-gated
+  (same token blocker); digital-storefront's t-012/t-013 are still api.stripe.com
+  403-policy-denied. Picked conductor/t-043 instead — a fully self-contained, in-repo
+  kaizen task with no cross-repo or egress dependency, well suited to one clean cycle.
+- Extracted `scripts/roadmap_deps.py` (single `dependency_satisfied(task)` helper,
+  mirroring `roadmap_claims.py`'s existing centralization pattern) and pointed
+  `resolve_deps.py`, `next_ready_task.py`, and `audit_roadmaps.py` at it, removing
+  each file's independent re-implementation. `resolve_deps.py` imports it as
+  `dependency_satisfied as satisfied` so its existing direct-call tests
+  (`tests/test_resolve_deps.py`) needed no changes. `audit_roadmaps.py` picked up the
+  same `sys.path.insert(0, ...)` sibling-import pattern the other two scripts already
+  use, since `tests/test_audit_roadmaps_policy.py` loads it standalone via
+  `importlib.util.spec_from_file_location` with no package context.
+- Verified no behavior change: full suite (235 tests) green; `resolve_deps.py
+  --dry-run`, `next_ready_task.py`, and `audit_roadmaps.py --json/--markdown` all
+  produce output identical to pre-change runs (0 errors / 5 warnings / 47 info on the
+  audit, matching committed `ROADMAP-AUDIT.md` modulo this task's own claimed→done
+  state transition). `scripts/validate_roadmaps.py` clean.
+- No other open `worker/*` or `claude/*` PRs in conductor, kind_robots, or
+  serendipity-voice at cycle start. No other `status: claimed`/`challenged` tasks.
+  kind-robots/t-022 (production DB pool exhaustion) still active per the last
+  reconfirmation at 03:50 UTC — no new information this cycle, so no repeat
+  notification per established precedent.
+
+**Kaizen:** none filed this cycle — the task itself was a kaizen closure.
