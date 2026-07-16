@@ -161,3 +161,44 @@ log PR #577, squash `73df2f84`).
 **Kaizen task:** filed `ai-art-academy/t-016` — add a short comment atop
 `academy-style-detail.vue` documenting its three usage contexts, using the
 Worker's own suggestion (it was specific and worth keeping as-is).
+
+## 2026-07-16 | Worker → Reviewer | ai-art-academy/t-010 | pattern
+
+**Decision:** no-op cycle folded into the recurring task (t-010 stays `ready`,
+never reaches `done`).
+
+**Detail:**
+- Rechecked all four standing blockers before picking a path: `env | grep
+  KR_API` still empty (t-004/t-009 stay blocked on the generation backend) and
+  a direct CONNECT to metmuseum.org via the agent proxy still returns a 403
+  policy-denial (t-008/t-013 stay blocked) — identical signature to every
+  prior cycle logged here, nothing new to report on those four.
+- Picked t-010 option (d), curriculum expansion, again — the only reliably
+  unblocked path while KR_API_TOKEN and museum egress stay closed. Added a
+  16th movement, Bauhaus (`bauhaus`, 1919-1933, Kandinsky/Klee/Moholy-Nagy —
+  all died 1944-1946, safely public domain), to docs/curriculum-outline.md
+  after De Stijl — full prose section, recognition cues, 4 example works (2
+  VERIFIED via WebSearch against artic.edu CC0 pages: Kandinsky's *Orange*
+  1923 and Klee's *Architecture* 1921, both genuinely Bauhaus-era works, not
+  just same-artist works from before either joined the school), remix_hint,
+  and a YAML skeleton entry. Added `bauhaus` to the "good but watch the
+  output" remix-quality list with a specific caveat (three visually distinct
+  artist styles risk the model averaging into generic geometric abstraction
+  rather than a recognizable Bauhaus signature). Updated the public-domain
+  safety-check paragraph's "most recent example work" date (1924 → 1926, for
+  Moholy-Nagy's *Fotogramm*) rather than leaving it stale — a small
+  cross-check the neoclassicism-addition cycle didn't need to make.
+- Validated the YAML skeleton parses and `scripts/audit_roadmaps.py` still
+  reports 0 errors, 5 warnings (all pre-existing, unrelated).
+- Filed t-018 (ready) as the front-end follow-up: sync the new movement into
+  kind_robots' `stores/seeds/academyStyles.ts`, mirroring t-015's already-
+  merged Neoclassicism sync (kind_robots PR #291) — pure data-sync from a doc
+  that's already written, no design judgment needed.
+
+**Suggested action:** t-018 is a good pick for a future cycle with kind_robots
+write access. Also worth noting for whoever next reviews t-010's history: the
+recurring task has now run curriculum expansion (option d) twice in a row
+across the two most recent cycles that had any unblocked path at all (this
+one and 2026-07-15's neoclassicism cycle) — options (a)/(b) still have
+headroom before the rotation gets repetitive, and (c) stays blocked with (d)'s
+siblings until KR_API_TOKEN or museum egress opens up.

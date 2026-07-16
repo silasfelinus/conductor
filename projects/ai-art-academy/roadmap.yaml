@@ -422,6 +422,28 @@ tasks:
       (respecting PUBLIC-DOMAIN-POLICY.md). Note which option ran in the PR. This task
       never reaches done and does not count toward milestone progress.
 
+      RAN 2026-07-16 (conductor-burst-hourly): option (d) curriculum expansion.
+      Rechecked blockers first: KR_API_TOKEN still absent (t-004/t-009 stay
+      blocked) and the museum-egress 403 is still live — confirmed via
+      `curl $HTTPS_PROXY/__agentproxy/status` plus a direct CONNECT attempt to
+      metmuseum.org (403), so t-008/t-013 stay blocked too, same signature as
+      every prior cycle. Added a 16th movement, Bauhaus (`bauhaus`, 1919-1933,
+      Kandinsky/Klee/Moholy-Nagy — all died 1944-1946, safely public domain) to
+      docs/curriculum-outline.md after De Stijl: full prose section, recognition
+      cues, 4 example works (2 VERIFIED via WebSearch against artic.edu CC0
+      pages — Kandinsky's *Orange* 1923 and Klee's *Architecture* 1921 — plus
+      Kandinsky's *Circles in a Circle* and Moholy-Nagy's *Fotogramm* marked
+      expected/unverified), remix_hint, and a YAML skeleton entry. Added
+      `bauhaus` to the "good but watch the output" remix-quality list (three
+      distinct artist styles risk the model averaging into generic geometric
+      abstraction) and updated the public-domain safety-check paragraph's
+      "most recent example work" from 1924 to 1926 (Moholy-Nagy's Fotogramm)
+      and added Kandinsky (d. 1944) to the death-date spot-check list. Filed
+      t-018 to sync the new slug into kind_robots'
+      stores/seeds/academyStyles.ts, mirroring t-015's Neoclassicism sync —
+      not done here (conductor docs only, no kind_robots code touched this
+      pass).
+
       RAN 2026-07-15 (conductor-burst-hourly, ~21:15 UTC): option (a) front-end
       polish pass. Rechecked blockers first: KR_API_TOKEN still absent (`env | grep
       KR_API` empty, t-004/t-009 stay blocked) and metmuseum.org still a fresh 403
@@ -502,3 +524,20 @@ tasks:
     note: 'Merged: kind_robots PR #291 (squash, sha 9ec971e). Neoclassicism entry mirrored into stores/seeds/academyStyles.ts (slug, era, artists, remix template), inserted between baroque and ukiyo-e to match curriculum ordering. PR''s TypeScript check was red from 19 pre-existing errors unrelated to this one-file additive change (tracked at kind-robots/t-020, none in the changed file) — Contract verifiers and GitGuardian green, mergeable_state: unstable (not blocked), base matched current origin/main exactly. Merged past the confirmed-pre-existing failure per established precedent (PRs #256, #271, #290).'
     claimed_by: burst-20260715-1300
     claimed_at: '2026-07-15T13:08:16Z'
+
+  - id: t-018
+    milestone: m4
+    title: 'kind_robots: add Bauhaus to the academyStyles.ts front-end seed'
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-16T00:00:00Z'
+    note: >
+      Curriculum-side work landed conductor-only in docs/curriculum-outline.md
+      (16th movement, `bauhaus`, added after `de-stijl` — see t-010's
+      2026-07-16 RAN note). Mirror t-015's Neoclassicism sync: add a `bauhaus`
+      entry to kind_robots stores/seeds/academyStyles.ts (slug, era
+      "1919-1933", artist_slugs [wassily-kandinsky, paul-klee,
+      laszlo-moholy-nagy], remix_hint from the curriculum doc's YAML
+      skeleton), inserted after `de-stijl` to match curriculum ordering.
