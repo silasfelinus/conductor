@@ -1240,8 +1240,8 @@ tasks:
   - id: t-051
     milestone: m1
     title: Extend reconcile_expressions test coverage to the --apply/--deactivate CLI gating
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     note: >
@@ -1261,6 +1261,9 @@ tasks:
       which paths ARE and ARE NOT called) covering: --apply without
       --deactivate (missing computed, not posted), --apply --deactivate
       (missing posted), and the stderr note text in each case.
+    claimed_by: claude-overnight-sxndmc
+    claimed_at: '2026-07-16T19:01:20Z'
+    updated: '2026-07-16T19:01:20Z'
 
   - id: t-052
     milestone: m2
