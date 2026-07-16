@@ -883,11 +883,11 @@ tasks:
   - id: t-028
     milestone: m1
     title: Add a CI check that every file path referenced by a .github/workflows/*.yml step or path-trigger actually exists in the repo
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
-    updated: '2026-07-16T05:49:55Z'
+    updated: '2026-07-16T06:02:00Z'
     note: >
       Kaizen from t-026 (Worker, kind_robots PR #307): facet-alias-smoke.yml
       silently referenced a migration file that no longer existed after a
@@ -902,8 +902,41 @@ tasks:
       allowlisted), resolves glob-free entries against the repo tree, and
       fails CI if any point at a path that doesn't exist. Wire it into an
       existing lint/static-checks job rather than a new standalone workflow.
-    claimed_by: claude-burst-1784180994
-    claimed_at: '2026-07-16T05:49:55Z'
+
+      DONE 2026-07-16 (conductor-burst-hourly): kind_robots PR #309 (squash
+      a160fa03) — added utils/scripts/verifyWorkflowPaths.ts (indentation-based
+      `paths:`/`paths-ignore:` list extraction plus an extension-allowlisted
+      heuristic token scan of `run:` step bodies), wired as
+      `npm run test:workflow-paths` into the existing Contract Tests job.
+      Verified by simulating the exact t-026 regression class (renamed
+      utils/facetAliases.ts, then separately the facet-alias-schema.sql
+      fixture referenced from a run: step) -- script correctly failed both
+      times, passed clean after restoring. Full CI green (Contract verifiers,
+      TypeScript, facet-alias-smoke, GitGuardian, Vercel preview). First
+      typecheck pass caught 12 noUncheckedIndexedAccess errors in the new
+      script itself (same bug class as t-027) from unguarded array/regex-capture
+      indexing -- fixed with Array.prototype.entries()/slice() iteration and
+      `?? ''` capture-group fallbacks before merging.
+
+  - id: t-030
+    milestone: m1
+    title: Widen the workflow-path-reference check to catch extension-less directory references
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-16T06:02:00Z'
+    note: >
+      Kaizen from t-028 (Reviewer, kind_robots PR #309): the new
+      verifyWorkflowPaths.ts heuristic only flags `run:`-step tokens ending in
+      a known extension (ts/tsx/js/mjs/cjs/py/sql/sh/json/yml/yaml/prisma), so
+      an extension-less path reference (e.g. `git diff --quiet -- stores/fallback`)
+      would not be caught if it went dead. Explore widening the heuristic to
+      also match bare `word/word(/word)*` tokens gated by `existsSync` on the
+      token itself or its parent directory -- deliberately deferred out of the
+      first pass because it has a much higher false-positive rate (npm script
+      names like `test:foo`, non-path colon-separated tokens, etc.) and needs
+      a more careful allowlist/exclusion design than the extension gate did.
 
   - id: t-029
     milestone: m4
