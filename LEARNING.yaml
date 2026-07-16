@@ -1109,3 +1109,23 @@ records:
     documented the blocked steps in the closing note instead of leaving the
     task perpetually ready. Future roadmap authoring should split tasks like
     this into separate sub-tasks up front.
+- date: '2026-07-16'
+  project: kind-robots
+  task: t-026
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    CI-fixture kaizen task (facet-alias-smoke.yml's dead migration reference,
+    filed from t-025). Recovering the pre-squash migration content via
+    `git show <pre-squash-sha>:<path>` was essential -- the squashed
+    migration.sql alone was missing the canonical-alias seed INSERT that the
+    smoke test's assertions depend on, so a fixture built only from the
+    squashed CREATE TABLE would have passed schema-shape review but still
+    failed CI. Good burst-mode pick when the top-priority project
+    (ai-art-academy) has all its ready tasks genuinely env-blocked
+    (museum-egress 403 / missing KR_API_TOKEN) and its recurring
+    continuous-improvement task already ran this window -- fell through to
+    the next active project in priority.yaml with concrete, unblocked work.

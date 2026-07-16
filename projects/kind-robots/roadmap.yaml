@@ -800,11 +800,11 @@ tasks:
   - id: t-026
     milestone: m1
     title: Fix facet-alias-smoke.yml referencing a migration file removed by the prisma migration squash
-    status: review
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
-    updated: '2026-07-16T03:15:00Z'
+    updated: '2026-07-16T03:19:00Z'
     claimed_by: worker/claude-burst-hourly-20260716-0306
     claimed_at: '2026-07-16T03:06:16Z'
     note: >
@@ -821,18 +821,21 @@ tasks:
       an equivalent standalone migration.sql fixture for the smoke test to
       run against, and update the path triggers to match.
 
-      DONE (pending merge) 2026-07-16T03:15Z (conductor-burst-hourly): opened
-      kind_robots PR #307. Added .github/workflows/fixtures/facet-alias-schema.sql,
-      a standalone fixture recreating the FacetAlias table, its facetId FK, and
-      the canonical-alias seed (INSERT ... SELECT from Facet) verbatim from the
+      DONE 2026-07-16T03:19Z (conductor-burst-hourly): kind_robots PR #307
+      merged (squash, sha fb1a293). Added
+      .github/workflows/fixtures/facet-alias-schema.sql, a standalone fixture
+      recreating the FacetAlias table, its facetId FK, and the
+      canonical-alias seed (INSERT ... SELECT from Facet) verbatim from the
       deleted migration's content (recovered via `git show` on the pre-squash
       commit, not reconstructed from the squashed file alone — the squash
       dropped the data-seeding INSERT, which the smoke test's canonical-alias
       count assertion depends on). Repointed the workflow's path triggers and
       migration-execution step at the fixture plus
       prisma/migrations/00000000000000_squashed/migration.sql. No local
-      mariadb/docker available in this sandbox to smoke-test directly;
-      verifying via the PR's own CI run before merging.
+      mariadb/docker available in this sandbox to smoke-test directly, but
+      all 4 CI checks passed on the PR (TypeScript, Contract verifiers,
+      GitGuardian, and facet-alias-smoke itself), confirming the fixture is
+      correct. conductor PR #598 (this roadmap update) merged separately.
     claimed_by: claude-burst-hourly-20260716-0306
     claimed_at: '2026-07-16T03:06:16Z'
 
@@ -856,3 +859,26 @@ tasks:
       or confirm each one is provably safe (e.g. captured from a fixed-structure
       literal). Small, mechanical, no design judgment needed.
     updated: '2026-07-15T23:35:00Z'
+
+  - id: t-028
+    milestone: m1
+    title: Add a CI check that every file path referenced by a .github/workflows/*.yml step or path-trigger actually exists in the repo
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-16T03:19:00Z'
+    note: >
+      Kaizen from t-026 (Worker, kind_robots PR #307): facet-alias-smoke.yml
+      silently referenced a migration file that no longer existed after a
+      Prisma migration squash, in both its path triggers and a `run:` step,
+      for at least one day before anyone noticed (t-025's kaizen note). A
+      workflow with a dead path reference doesn't fail loudly -- path
+      triggers just never match, and a `run:` step referencing a missing
+      file only fails when that specific job actually executes. Add a small
+      script (e.g. scripts/check_workflow_paths.py) that greps every
+      .github/workflows/*.yml for `paths:` entries and simple file-path-like
+      tokens in `run:` blocks (heuristic is fine -- false positives can be
+      allowlisted), resolves glob-free entries against the repo tree, and
+      fails CI if any point at a path that doesn't exist. Wire it into an
+      existing lint/static-checks job rather than a new standalone workflow.
