@@ -800,11 +800,11 @@ tasks:
   - id: t-026
     milestone: m1
     title: Fix facet-alias-smoke.yml referencing a migration file removed by the prisma migration squash
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
-    updated: '2026-07-15T20:35:00Z'
+    updated: '2026-07-16T03:06:16Z'
     note: >
       Kaizen from t-025 (Worker, kind_robots PR #299): .github/workflows/facet-alias-smoke.yml
       still references prisma/migrations/20260711021500_add_facet_aliases/migration.sql
@@ -818,6 +818,8 @@ tasks:
       creates (the Facet/FacetAlias tables + constraints), or by regenerating
       an equivalent standalone migration.sql fixture for the smoke test to
       run against, and update the path triggers to match.
+    claimed_by: claude-burst-hourly-20260716-0306
+    claimed_at: '2026-07-16T03:06:16Z'
 
   - id: t-027
     milestone: m1
