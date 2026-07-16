@@ -1284,3 +1284,24 @@ tasks:
       is fine — pick whichever is less roadmap-schema churn. Should NOT change
       any task's `status`/`needs-human` semantics, purely a record-keeping
       improvement so recheck history stays greppable in one place.
+
+  - id: t-053
+    milestone: m2
+    title: Flag kind_robots PRs referencing a conductor task id that are missing a "Kaizen suggestion" section
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Pattern note from ai-art-academy/t-023's TALKBACK entry (Reviewer, autonomous
+      hourly conductor cycle, 2026-07-16) — third occurrence this week of a merged
+      kind_robots PR missing the "Kaizen suggestion" section from the PR handoff
+      template (see also t-027, t-034/kind-robots-t-034 in TALKBACK.md), each time
+      caught only because the Reviewer happened to notice by hand. Add a lightweight
+      check — either a kind_robots CI step that greps the PR body for a "### Kaizen
+      suggestion" heading when the PR description contains a conductor task-id
+      pattern (`<project>/t-\d+`), or a conductor-side script the Reviewer runs
+      before closing review — that flags (does not block) a missing section so it
+      shows up as an explicit TALKBACK "what to improve" note instead of relying on
+      manual catch-rate. Should not fail CI outright (some PRs genuinely have no
+      kaizen to suggest) — a soft warning/comment is enough.

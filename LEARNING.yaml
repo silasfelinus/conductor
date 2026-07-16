@@ -2405,3 +2405,16 @@ records:
     before forcing exact-match; three of this file pair's divergences were intentional (an
     artist/technique-specific LoRA entry narrower than the general curriculum movement), so the
     right fix was a documented mapping table, not renaming slugs to force equality.
+- date: '2026-07-16'
+  project: ai-art-academy
+  task: t-023
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: A reusable lesson-scaffold beat (Try It / Reflect) can stay data-model-light by
+    keying copy off an existing coarse field (remix.mode, prompt vs lora) instead of porting
+    a large per-style table (teaching-notes.md's 21-row failure-mode list) into the TS seed —
+    keeps the PR additive and scoped when the fine-grained data doesn't already live in the
+    seed.
