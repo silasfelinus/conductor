@@ -86,7 +86,7 @@ tasks:
   - id: t-004
     milestone: m1
     title: Spec the play-loop data model and save system
-    status: review
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -107,7 +107,7 @@ tasks:
   - id: t-005
     milestone: m1
     title: Spec the environment layer compositing (regions, states, merge)
-    status: review
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -130,7 +130,7 @@ tasks:
   - id: t-006
     milestone: m1
     title: Spec the event/character card deck format
-    status: review
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -149,7 +149,7 @@ tasks:
   - id: t-007
     milestone: m2
     title: Build the slideshow play-loop proof of concept in kind_robots
-    status: waiting
+    status: ready
     owner: null
     passes: 0
     stakes: reversible
@@ -166,7 +166,7 @@ tasks:
   - id: t-008
     milestone: m1
     title: Write the art direction doc and first landscape prompt pack
-    status: review
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -187,7 +187,7 @@ tasks:
   - id: t-009
     milestone: m3
     title: Research the Unreal/Steam migration path (note only)
-    status: review
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -217,3 +217,24 @@ tasks:
       points at /ruler-hooked (admin can run the Conductor 'Placements' button to
       backfill channelKey/tabKey/liveUrl); (4) evolve the placeholder scaffold page into
       the full interactive experience for this project.
+
+  - id: t-011
+    milestone: m1
+    title: CI lint check for ruler-hooked docs cross-references and art-prompts.yaml inspirations entries
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Kaizen from the m1 design-doc merge (Reviewer, autonomous hourly cycle, 2026-07-16).
+      The m1 design docs (data-model.md, compositing.md, decks.md,
+      art-direction.md, unreal-migration.md) share vocabulary that must stay
+      in sync by hand today: region names (treeline, far_shore, village_edge,
+      castle_grounds), slider axes (nature, prosperity), regionOverride, and
+      the asset-naming convention. Add a small CI check that (1) lint-
+      validates cross-references between projects/ruler-hooked/docs/*.md stay
+      consistent (region/axis vocabulary doesn't silently drift when one doc
+      is edited without the others), and (2) confirms any queued
+      projects/art-prompts.yaml `inspirations:` entries parse against the
+      schema scripts/distribute_images.py actually reads — so a future
+      spec/prompt edit can't silently break the art pipeline.
