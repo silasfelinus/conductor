@@ -5544,3 +5544,35 @@ found while confirming t-010/t-015 were genuinely blocked, not a roadmap
 task in its own right. `alexa-integration/t-010` and `t-015` remain the only
 two `ready` tasks and both need something (hardware, art assets) this
 session's text-only remote environment can't supply.
+
+## 2026-07-16 | Worker → Reviewer | conductor/t-025 | closed (Silas-directed session)
+
+**Decision:** done. Extended the existing scaffolder instead of building a new one.
+
+**What happened:**
+1. t-031 (my planned learning-ledger follow-up) and t-051 were both claimed by
+   `claude-overnight-sxndmc` seconds before I could — rotated to the next free
+   conductor task, t-025.
+2. Found the "one-pass scaffold" the kaizen asked for already exists as
+   `scripts/intake.py` (roadmap from `_template`, CHANGELOG, priority.yaml,
+   project-overrides.yaml, art-prompts.yaml, repos.yaml). Rather than duplicate it,
+   closed the exact gap the kaizen named: it now also writes
+   `projects/<slug>/DESIGN-BRIEF.md` (title/goal-seeded sectioned stub) and appends a
+   `## Per-project direction` block to `CONTROL.md` (comment-safe text insertion,
+   idempotent, section-aware), and accepts `--title`/`--goal`.
+3. Added `tests/test_intake.py` (7 tests; intake.py had none): every surface touched,
+   DESIGN-BRIEF title/goal, CONTROL block placement + idempotency + section-append,
+   existing-dir abort.
+4. Verified end-to-end on a throwaway slug (all surfaces written, `validate_roadmaps`
+   green), then reverted the smoke artifacts.
+
+**What was good:** DRY — grepped for an existing implementation before writing code, so
+this was a scoped extension + the tests intake.py never had, not a redundant script.
+
+**What to improve:** the e2e run surfaced a pre-existing wart — `register_priority`/
+`register_override` round-trip their YAML through `yaml.safe_dump`, stripping those
+files' header comments. Filed **conductor/t-055** to make those two registrations
+comment-preserving (my new CONTROL.md/DESIGN-BRIEF writes already are).
+
+**Kaizen:** conductor/t-055 — make intake.py's priority/override registration
+comment-preserving.

@@ -844,7 +844,7 @@ tasks:
   - id: t-025
     milestone: m4
     title: 'kind_robots: thread per-style failure-mode text from docs/teaching-notes.md into academyStyles.ts'
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -859,6 +859,31 @@ tasks:
       component's mode-level computed for a per-style lookup with the current
       mode-level text as fallback when a style hasn't been backfilled yet. Scoped,
       additive, reversible — no dependency on kind-robots/t-022's DB outage.
+      DONE 2026-07-16T19:06:00Z (autonomous hourly conductor cycle, acting as both
+      Worker and Reviewer since no separate Worker session was active): implemented,
+      opened, and merged kind_robots PR #319 (squash 38beaea7). Added `failureMode?:
+      string` to the AcademyStyle interface and backfilled all 21 movements from
+      teaching-notes.md §3's "Key failure mode / watch-for" column; wired
+      academy-style-detail.vue's Try It beat to use it with the prior mode-level text
+      preserved as a fallback for any future unbackfilled style. Verified via
+      verifyAcademyStyleDetailCallers.ts, eslint, prettier, and a full project
+      vue-tsc --noEmit (0 errors). All 4 CI checks green before merge.
     claimed_by: conductor-hourly-20260716
     claimed_at: '2026-07-16T18:51:14Z'
-    updated: '2026-07-16T18:51:14Z'
+    updated: '2026-07-16T19:06:00Z'
+
+  - id: t-026
+    milestone: m4
+    title: Diff-check t-025's backfilled failureMode strings against teaching-notes.md's source table
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-16T19:06:00Z'
+    note: >
+      Kaizen from t-025's merge (kind_robots PR #319, 2026-07-16). The 21
+      `failureMode` values in `stores/seeds/academyStyles.ts` were adapted from
+      conductor's `docs/teaching-notes.md` §3 table prose (cleaned up capitalization
+      and quoting for TS string literals) rather than copied byte-for-byte. Read the
+      table and the seed side by side and confirm none of the 21 drifted in meaning
+      during that cleanup — flag and fix any that did.

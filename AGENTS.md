@@ -300,6 +300,15 @@ delete it now, not an observation for later. (Kaizen from challenge-center/t-002
   `status: claimed`/`owner: worker`/`updated` commit straight to `main` for you. On
   `ALREADY_CLAIMED`, do not implement this task — pick the next `ready` task instead.
 - Branch `worker/<project>-<task-id>`. Do ONLY that task.
+- **Rebase onto `origin/main` immediately before opening the PR** (all kinds): run
+  `git fetch origin main && git rebase origin/main` (or merge) right before `gh pr
+  create`, so the PR opens conflict-free against the current tip instead of drifting
+  stale while it waits for review. `STATUS.md` / `workspace.html` / `ROADMAP-AUDIT.*`
+  are regenerated on every push to `main`, so a branch whose merge-base is even one
+  `chore: refresh STATUS.md …` auto-commit behind will conflict on these files 100%
+  of the time — resolve any such conflict by taking main's copy per hard rule 9
+  (they're auto-generated). This keeps trivial auto-gen conflicts off the Reviewer's
+  plate (kaizen from PR #550, conductor/t-045).
 - **software:** open a PR into `main`, fill the handoff template (including "Flags for
   Reviewer"), set task `status: review`, verify it, resolve conflicts if present, and merge
   it when safe. After a successful safe merge, set task `status: done`.

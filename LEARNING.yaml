@@ -2491,3 +2491,41 @@ records:
     allowlist on every probe) is worth the two minutes: it turns "these RSS
     URLs are probably fine" into an explicit, auditable `verified: false` plus
     a follow-on task, instead of a silent assumption baked into the registry.
+- date: '2026-07-16'
+  project: conductor
+  task: t-025
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: Before building a new helper, grep for an existing one — the t-025 scaffolder already lived
+    in scripts/intake.py, so the work was a small extension (DESIGN-BRIEF.md + CONTROL.md block) plus
+    the tests it never had, not a greenfield script.
+- date: 2026-07-16
+  project: dream-cycle
+  task: t-004
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: Write the type-agnostic loop contract (CREATION-SPEC.md) once and have each specs/<type>.md
+    playbook plug into it, rather than restating queue/one-building/ledger rules per playbook; cite create-calls
+    from the API audit so stages stay in sync with the real endpoints.
+- date: 2026-07-16
+  project: ai-art-academy
+  task: t-025
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    A kaizen task filed with owner: reviewer from a prior merge can be picked
+    up and implemented directly in a later autonomous cycle acting as Worker
+    when no separate Worker session is active that hour — the owner field on
+    a ready task is a hint, not a hard assignment. When adapting source prose
+    (here: teaching-notes.md's table) into code strings rather than copying
+    verbatim, file a small follow-on diff-check task rather than trusting the
+    cleanup by eye; it is cheap insurance against silent meaning drift.
