@@ -2643,3 +2643,14 @@ records:
     from that PR: no LEARNING.yaml entry on close (added here by the merging Reviewer) — closing agents
     should append the ledger record in the same PR that sets status: done, not leave it for review to
     backfill.'
+- date: '2026-07-16'
+  project: dream-cycle
+  task: t-016
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'A multi-write build against an intermittent DB must be atomic: track created row ids and roll
+    them back (DELETE, newest-first) on ANY failure, never mark a partial build complete. Bailing only
+    on total failure silently ships incomplete, un-retried records during blips.'
