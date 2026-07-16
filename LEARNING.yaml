@@ -1274,6 +1274,23 @@ records:
   outcome: done
   failure_category: null
   lesson: "For a detection/guard script, verify the negative case explicitly (a temporary fixture that should fail the check) in addition to the clean-pass case -- a check that has never been proven to actually catch a violation is unverified regardless of how clean the real tree scans."
+- date: 2026-07-16
+  project: kind-robots
+  task: t-030
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    A regex boundary anchor (\b) doesn't mean "path boundary" -- it's a
+    word/non-word transition, and '.' and '/' are both non-word, so \b
+    happily anchors mid-token inside things like an IP/CIDR range or right
+    after the slash in /dev/null. Any new path-matching regex needs to be
+    run against real adversarial input (URLs, /dev/null, decimal-like
+    tokens, embedded module specifiers) before trusting it, not just
+    reasoned about -- this task's first draft looked correct and produced
+    19 false positives on the very files it was meant to check.
 - date: '2026-07-02'
   project: conductor
   task: t-014
