@@ -784,24 +784,21 @@ tasks:
   - id: t-023
     milestone: m4
     title: 'kind_robots: wire the teaching-notes lesson scaffold (Try-It / Reflect) into the Academy lesson-detail component'
-    status: claimed
+    status: done
     owner: reviewer
     passes: 0
     stakes: reversible
-    updated: '2026-07-16T14:06:59Z'
+    updated: '2026-07-16T15:47:00Z'
     note: >
-      Filed 2026-07-16 (t-010 curriculum-expansion cycle). docs/teaching-notes.md now
-      defines an 8-beat reusable lesson scaffold (Hook → Look First → Big Idea → Meet
-      the Makers → See It → Try It → Reflect → Provenance) with a scaffold-to-data map
-      keyed to fields already in academyStyles.ts and the style registry. The current
-      academy-style-detail.vue shows the style facts but not the "Try It" (remix
-      exercise: instruction + what-to-expect + failure modes + one iterate knob) or
-      "Reflect" (critique/comprehension prompts) beats. Add those two beats to the
-      lesson-detail view, driven by the registry `prompt_hint`/`remix_hint` and a small
-      set of reusable Reflect prompts. Scoped, additive, reversible; start from the
-      scaffold-to-data map in teaching-notes.md §2. Front-end judgment involved but no
-      backend/DB — landable as a normal kind_robots PR. (No dependency on the DB outage
-      tracked in kind-robots/t-022.)
+      DONE 2026-07-16 (autonomous hourly conductor cycle): merged kind_robots PR #315
+      (squash 7806771a9b6492af5a0e290a74dd05cea9ee42a6) — added the "Try It" (remix
+      instruction from `remix.template`, a `recognitionCues`-driven what-to-expect line,
+      a `remix.mode`-aware failure-mode note) and "Reflect" (three reusable
+      comprehension/critique prompts) beats to `academy-style-detail.vue`. All 3
+      kind_robots checks green (GitGuardian, TypeScript, Contract verifiers). Per-style
+      failure-mode text intentionally stayed mode-level generic rather than threading 21
+      one-off strings from teaching-notes.md into academyStyles.ts — additive, scoped,
+      reversible.
     claimed_by: claude-conductor-burst-20260716-t023
     claimed_at: '2026-07-16T14:06:59Z'
 
@@ -843,3 +840,22 @@ tasks:
     claimed_by: conductor-hourly-20260716-1349
     claimed_at: '2026-07-16T13:53:00Z'
     updated: '2026-07-16T13:53:00Z'
+
+  - id: t-025
+    milestone: m4
+    title: 'kind_robots: thread per-style failure-mode text from docs/teaching-notes.md into academyStyles.ts'
+    status: ready
+    owner: reviewer
+    passes: 0
+    stakes: reversible
+    note: >
+      Kaizen from t-023's merge (Reviewer, autonomous hourly conductor cycle,
+      2026-07-16, kind_robots PR #315). The new "Try It" beat's failure-mode note in
+      `academy-style-detail.vue` is currently mode-level generic (prompt vs lora, two
+      strings total) because the actual per-style failure-mode guidance lives only in
+      conductor's `docs/teaching-notes.md`, not in `academyStyles.ts`'s data model.
+      Add a `failureMode` (or similar) field to the style registry / seed, backfill it
+      from teaching-notes.md's per-style notes for all 21 movements, and swap the
+      component's mode-level computed for a per-style lookup with the current
+      mode-level text as fallback when a style hasn't been backfilled yet. Scoped,
+      additive, reversible — no dependency on kind-robots/t-022's DB outage.
