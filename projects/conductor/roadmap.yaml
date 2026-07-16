@@ -1066,8 +1066,8 @@ tasks:
   - id: t-045
     milestone: m2
     title: Have Worker sessions rebase their branch onto origin/main immediately before opening a PR, to avoid dumping trivial auto-gen conflicts on the Reviewer
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     note: >
@@ -1086,6 +1086,9 @@ tasks:
       per hard rule 9) immediately before `gh pr create`, so the PR opens
       already conflict-free against current main instead of drifting stale
       while it waits for review.
+    claimed_by: claude-overnight-sxndmc
+    claimed_at: '2026-07-16T18:55:33Z'
+    updated: '2026-07-16T18:55:33Z'
 
   - id: t-046
     milestone: m2
