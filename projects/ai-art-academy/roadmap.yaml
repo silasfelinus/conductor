@@ -416,12 +416,12 @@ tasks:
   - id: t-010
     milestone: m6
     title: Academy continuous improvement pass
-    status: claimed
+    status: ready
     recurring: true
-    owner: reviewer
+    owner: null
     passes: 0
     stakes: reversible
-    updated: '2026-07-16T08:06:56Z'
+    updated: '2026-07-16T08:15:00Z'
     note: >
       Standing never-idle task (re-arms to ready after every completion, per the
       recurring-task rule). Each cycle pick ONE: (a) front-end style/polish pass on
@@ -430,6 +430,31 @@ tasks:
       preview thumbnails, (d) expand the curriculum with a new movement/artist entry
       (respecting PUBLIC-DOMAIN-POLICY.md). Note which option ran in the PR. This task
       never reaches done and does not count toward milestone progress.
+
+      RAN 2026-07-16 (conductor-burst-hourly, ~08:06 UTC): option (c) style preview
+      thumbnails. Rechecked blockers first: KR_API_TOKEN still absent (t-004/t-009
+      stay needs-human) and a fresh `curl` CONNECT to metmuseum.org and
+      upload.wikimedia.org still returns "CONNECT tunnel failed, response 403" —
+      same signature as every prior cycle, t-008/t-013 stay blocked. Found a real
+      gap: none of the 16 curriculum movements in kind_robots'
+      `stores/seeds/academyStyles.ts` had a `previewImageSrc` set, and
+      `public/images/academy/styles/` doesn't exist yet — the style browser has
+      never shown a single preview thumbnail. Queued all 16 as new `requests:`
+      entries in `projects/art-prompts.yaml` (ids `kind-robots-academy-style-
+      preview-<slug>`), each pointing at
+      `public/images/academy/styles/{slug}.webp` (256x256) with a prompt built
+      from that style's actual `recognitionCues` in the seed file — the same
+      simple subject (a small robot beside a windowsill potted plant) rendered
+      once per movement so the eventual thumbnails are visually comparable
+      side by side, matching the "same simple landscape painted differently"
+      idea already used for the Academy's dashboard-tab thumbnail. This is a
+      prompt-catalog-only change (conductor repo); no image was generated in
+      this session — generation happens via the existing ChatGPT-driven
+      art-prompts.yaml pipeline, consistent with how every other pending batch
+      in that file works. Follow-up not done here: once images land in
+      kind_robots, `academyStyles.ts` needs each style's `previewImageSrc` set
+      and the style browser/timeline components wired to render it — filed as
+      a new task below (t-019) rather than attempted blind in this pass.
 
       RAN 2026-07-16 (conductor-burst-hourly, ~05:05 UTC): option (b) roadmap
       upgrade, per TALKBACK.md's own endorsement (2026-07-16, t-018 entry) to
@@ -580,3 +605,30 @@ tasks:
       worker/ai-art-academy-t-018 auto-deleted on merge.
     claimed_by: claude-burst-hourly-20260716-0200
     claimed_at: '2026-07-16T02:06:17Z'
+
+  - id: t-019
+    milestone: m5
+    title: 'kind_robots: wire academyStyles.ts previewImageSrc + render thumbnails in the style browser'
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-16T08:15:00Z'
+    note: >
+      Filed 2026-07-16 (conductor-burst-hourly, t-010 option (c) follow-up).
+      projects/art-prompts.yaml now has 16 pending `requests:` entries
+      (ids `kind-robots-academy-style-preview-<slug>`) queuing a 256x256
+      preview thumbnail for every curriculum movement at
+      public/images/academy/styles/{slug}.webp. Once those images are
+      generated and land in kind_robots via the normal art-prompts.yaml →
+      distribute_images.py pipeline, this task sets each style's
+      `previewImageSrc` field in stores/seeds/academyStyles.ts (the field
+      already exists in the AcademyStyle interface — see the doc comment
+      on line 44 — it's just never been populated) and confirms the style
+      browser/timeline components actually render it (fall back cleanly to
+      the current no-image state for any style whose thumbnail hasn't
+      landed yet, since the 16 images won't all generate in the same
+      batch). Blocked until at least one of the queued images exists in
+      kind_robots' public/images/academy/styles/ — do not claim this task
+      before verifying at least one file is present, or it will just
+      re-discover the same "nothing to wire yet" state.
