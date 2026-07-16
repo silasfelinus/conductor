@@ -996,24 +996,33 @@ tasks:
   - id: t-043
     milestone: m2
     title: Deduplicate the three independent copies of dependency-satisfaction logic (resolve_deps.py, next_ready_task.py, audit_roadmaps.py)
-    status: claimed
+    status: done
     owner: reviewer
     passes: 0
     stakes: reversible
     note: >
-      Kaizen from PR #523 (Worker, 2026-07-14, ai-art-academy/t-012): confirmed
-      resolve_deps.py's satisfied() is type-agnostic (status + gate_human +
-      approved_by_human only, no task-kind branching) and, while verifying
-      that, also confirmed next_ready_task.py and audit_roadmaps.py each
-      reimplement the identical satisfied()/dependency_satisfied() check
-      independently. Extract one shared helper (mirroring how
-      roadmap_claims.py already centralizes claim-staleness logic) so the
-      three copies can't drift apart in the future. Update all three
-      call sites and their existing test suites to use it; no behavior
-      change intended.
+      DONE 2026-07-16 (claude-burst-hourly-20260716-0410): extracted
+      scripts/roadmap_deps.py with a single dependency_satisfied(task) helper
+      (mirrors roadmap_claims.py's centralization pattern) and pointed all
+      three call sites at it. resolve_deps.py imports it as
+      `dependency_satisfied as satisfied` so its existing tests
+      (tests/test_resolve_deps.py, which call resolve_deps.satisfied()
+      directly) keep passing unchanged. next_ready_task.py and
+      audit_roadmaps.py each dropped their local re-implementation and import
+      the shared function directly; audit_roadmaps.py needed the same
+      `sys.path.insert(0, ...)` pattern resolve_deps.py/next_ready_task.py
+      already use for their sibling-module imports, since it's loaded via
+      importlib.util.spec_from_file_location in
+      tests/test_audit_roadmaps_policy.py with no package context.
+      Verified no behavior change: full suite (235 tests, up from 200 --
+      picked up new tests landed by other cycles since t-012) green;
+      `resolve_deps.py --dry-run`, `next_ready_task.py`, and
+      `audit_roadmaps.py` all produce identical output to pre-change runs
+      (0 errors / 5 warnings / 47 info on the audit, matching the committed
+      ROADMAP-AUDIT.md modulo this task's own claimed→done state change).
     claimed_by: claude-burst-hourly-20260716-0410
     claimed_at: '2026-07-16T04:07:23Z'
-    updated: '2026-07-16T04:07:23Z'
+    updated: '2026-07-16T04:15:00Z'
 
   - id: t-044
     milestone: m2

@@ -31,6 +31,7 @@ import yaml
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from roadmap_claims import task_is_claimable  # noqa: E402
+from roadmap_deps import dependency_satisfied  # noqa: E402
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -92,14 +93,6 @@ def load_roadmap(slug: str) -> Roadmap | None:
     if not isinstance(raw, dict):
         return None
     return raw
-
-
-def dependency_satisfied(task: Task | None) -> bool:
-    if not task or task.get("status") != "done":
-        return False
-    if task.get("gate_human"):
-        return bool(task.get("approved_by_human"))
-    return True
 
 
 def task_is_unblocked(task: Task, tasks_by_id: dict[str, Task]) -> bool:

@@ -12,10 +12,14 @@ import collections
 import datetime as dt
 import json
 import re
+import sys
 from pathlib import Path
 from typing import Any
 
 import yaml
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from roadmap_deps import dependency_satisfied  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[1]
 PROJECTS = ROOT / "projects"
@@ -63,14 +67,6 @@ def parse_time(value: Any) -> dt.datetime | None:
     if parsed.tzinfo is None:
         parsed = parsed.replace(tzinfo=dt.timezone.utc)
     return parsed.astimezone(dt.timezone.utc)
-
-
-def dependency_satisfied(task: dict[str, Any]) -> bool:
-    if task.get("status") != "done":
-        return False
-    if task.get("gate_human"):
-        return bool(task.get("approved_by_human"))
-    return True
 
 
 def find_cycles(graph: dict[str, list[str]]) -> list[list[str]]:
