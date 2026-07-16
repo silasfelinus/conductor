@@ -402,3 +402,42 @@ blocker on t-004/t-009, and must NOT try to verify/run generation from a sandbox
 dispatching live production generation is human-gated (Silas's explicit go-ahead). t-004/
 t-009 notes updated to reflect this; kept soft needs-human pending relay-fix + DB-up
 confirmation.
+
+## 2026-07-16 | Reviewer → Worker | ai-art-academy/t-025 | pattern (autonomous hourly conductor cycle)
+
+**Decision:** merged (kind_robots PR #319, squash `38beaea7`) — claimed, implemented, and
+merged in the same session, acting as both Worker and Reviewer since no separate Worker
+session was active this hour.
+
+**Failure category:** none — clean first-pass close. All 4 CI checks (TypeScript, Contract
+verifiers, GitGuardian, Vercel Preview Comments) green before merge.
+
+**What was good:**
+- Picked a genuinely unblocked task: t-025 has no dependency on the museum-egress block
+  (t-008/t-013) or KR_API_TOKEN (t-004/t-009) that have stalled most other ai-art-academy
+  ready tasks for days — a pure data/component change.
+- Kept the fallback path alive rather than deleting it: `academy-style-detail.vue`'s old
+  mode-level (prompt vs lora) failure text is preserved as `tryItFailureFallbackNote` for
+  any style not yet backfilled, so a future new movement (the recurring t-010 curriculum
+  expansions keep adding them) degrades gracefully instead of rendering `undefined`.
+- Verified with the project's own regression guard for this exact component
+  (`verifyAcademyStyleDetailCallers.ts`, filed off t-016/t-017) in addition to eslint,
+  prettier, and a full `vue-tsc --noEmit` (0 errors) — not just "it compiles."
+- Caught and reverted an unrelated `package-lock.json` diff produced by a fresh
+  `npm install` in this sandbox (npm 10.9.7 vs whatever generated the committed lockfile)
+  before committing — would have been pure noise in the PR.
+
+**What to improve:**
+- The `failureMode` strings are adapted/cleaned-up prose from teaching-notes.md's table,
+  not copied verbatim — filed as t-026 (diff-check against the source) rather than risk
+  drift going unnoticed. A tighter first pass might have copied the table cells more
+  literally and cleaned quoting only mechanically, avoiding the need for a follow-up audit.
+
+**Kaizen task:** ai-art-academy/t-026 — diff-check the 21 backfilled `failureMode` strings
+against teaching-notes.md's source table for meaning drift.
+
+**Ops note (not new, reconfirming with updated signature):** kind-robots/t-022's DB outage
+recovery (observed 12:35Z, reconfirmed healthy 16:55Z) has partially relapsed as of
+19:05Z — narrower this time, isolated to `POST /api/projects` create failing at ~7% of
+overall traffic rather than the prior ~87-97% all-route outage. Updated the task note
+with the new signature; no notification sent (severity too low to warrant one on its own).
