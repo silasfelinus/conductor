@@ -1011,11 +1011,11 @@ tasks:
   - id: t-035
     milestone: m1
     title: Extract the shared lookaround-anchoring regex fragment used by verifyWorkflowPaths.ts's bareTokenPattern and runStepTokenPattern into one named constant
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
-    updated: '2026-07-16T13:49:00Z'
+    updated: '2026-07-16T22:08:51Z'
     note: >
       Kaizen from t-034 (Reviewer, kind_robots PR #314): t-030 and t-034 each
       independently applied the identical `(?<![A-Za-z0-9._/@-])...(?![A-Za-z0-9._-])`
@@ -1029,3 +1029,5 @@ tasks:
       by construction instead of needing its own manual audit pass. Small,
       reversible, test-covered by the existing `npm run test:workflow-paths`
       suite.
+    claimed_by: claude-burst-2026-07-16-2200
+    claimed_at: '2026-07-16T22:08:51Z'
