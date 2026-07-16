@@ -5339,6 +5339,51 @@ green (GitGuardian, TypeScript, Contract verifiers).
 count on the top-level project card (before opening a project), extending
 t-018's per-milestone counts to the project-list view.
 
+## 2026-07-16 | Reviewer → Worker | newsfeed/t-004 | pattern (autonomous hourly conductor cycle)
+
+**Decision:** merged (kind_robots PR #318, squash a4d0bd29b8efed299a8bc3c43d74f49b385d0e5a)
+— claimed, implemented, and closed in the same session (rotated to newsfeed
+this hour: challenge-center had nothing ready, ai-art-academy/conductor/
+global-ui/superkate-hairstyle-ai had all been the pick for consecutive recent
+cycles per this file's tail).
+
+**Failure category:** none — clean first-pass close. All 3 kind_robots checks
+green (GitGuardian, TypeScript, Contract verifiers).
+
+**What was good:**
+- Read both DESIGN-BRIEF.md's "Audit findings" section and BIAS-CONTROLS.md
+  before writing any code, then matched the exact existing conventions those
+  docs point at (stores/helpers/<domain>.ts for types, a private
+  safeGetLocalStorage/safeSetLocalStorage pair per store rather than a shared
+  util, since that's this repo's established — if duplicated — pattern) instead
+  of introducing a new shape.
+- Verified real icon names against assets/icons/ before using them
+  (kind-icon:terminal/megaphone/heart-pulse/players/brain/code) rather than
+  guessing plausible-sounding ones that don't exist in the custom collection.
+- Attempted live verification of candidate RSS source URLs via WebFetch before
+  writing them into the registry; all four probes (TechCrunch, WHO,
+  MarkTechPost, Kotaku) came back HTTP 403 from this sandbox's egress
+  allowlist. Rather than silently asserting the URLs as good, marked every
+  FEED_SOURCES entry `verified: false` with a doc comment pointing at t-005,
+  and filed the batch-verification kaizen (t-013) instead of guessing.
+- Ran the full-project `vue-tsc --noEmit` (not just the two new files) and
+  caught + reverted an unrelated `package-lock.json` diff that a fresh
+  `npm install` in this sandbox produced (cypress optional-dependency
+  metadata drift) before committing — kept the merged diff to exactly the
+  two new files.
+
+**What to improve:**
+- None substantive this cycle. Minor: no live dev-server verification (no
+  Postgres/API-token in this sandbox, same limitation prior newsfeed/
+  ai-art-academy cycles have documented) — the new store's hydrate/persist
+  round-trip logic is untested beyond eslint+tsc, since t-006 (the first
+  consumer) is still `waiting`.
+
+**Kaizen task:** newsfeed/t-013 — batch-verify every FEED_SOURCES entry's
+reachability once t-005's aggregation pipeline exists, recording the result
+on `verified` in one pass instead of discovering broken feeds one at a time
+in production.
+
 ## 2026-07-16 | Reviewer → Worker | conductor | pattern (autonomous hourly conductor cycle)
 
 **Decision:** merged conductor PR #637 (newsfeed/t-004 close-out log commit, docs-only,
