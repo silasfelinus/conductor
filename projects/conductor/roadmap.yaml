@@ -689,20 +689,27 @@ tasks:
   - id: t-029
     milestone: m1
     title: Promote the reconcile_expressions offline harness into the pytest suite
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
-    updated: '2026-07-16T06:08:34Z'
+    updated: '2026-07-16T06:10:00Z'
     note: >
-      Kaizen from conductor PR #360 (Reviewer, 2026-07-10): the script's
-      narrator-first/bulk-fallback resolution order was verified with a
-      throwaway stubbed-API harness twice now (t-011 original + the #360
-      pagination fix). Turn that harness into a real test under tests/ (repo
-      already runs pytest) covering: narrator lookup wins and skips the bulk
-      list, 404 falls back to the list with rows-unknown create-only
-      semantics, character owner id comes from sourceCharacterId, and the
-      first-100-truncation regression stays caught.
+      DONE 2026-07-16 (conductor-burst-hourly): added tests/test_reconcile_expressions.py
+      covering all four cases from the original kaizen note against a fake api()
+      stub (no network, no real kind_robots checkout) — narrator lookup wins and
+      the bulk /api/bots list is never queried when it succeeds; a 404 falls back
+      to the bulk list with existing=None, producing create-only rows (never a
+      "missing"/deactivate row, since drift can't be judged without known rows);
+      character owner id resolves from sourceCharacterId, not the narrator
+      payload's own id (that's the default narrator bot's id); and
+      fetch_owner_ids' pagination-stall detection (len(ids) == before) is
+      unit-tested directly against a stubbed always-same-100-rows response,
+      the exact shape of the broken /api/bots pagination PR #360 fixed around.
+      Verified: full `pytest tests/` — 241 passed (was 235; +6 new), `python -m
+      py_compile` clean. No CI wiring change needed — ci.yml already runs
+      `pytest tests/` (whole directory, since t-047), so the new file is
+      auto-discovered.
     claimed_by: claude-burst-hourly-20260716-0608
     claimed_at: '2026-07-16T06:08:34Z'
 
@@ -1187,3 +1194,23 @@ tasks:
       entry's `kind`/`status`/tagline against project-overrides.yaml's `kind`
       + the project's actual roadmap `ready`/`done` counts in one pass, and
       correct any that have drifted from reality.
+  - id: t-050
+    milestone: m1
+    title: Extend reconcile_expressions test coverage to the --deactivate missing-file path and orphan-loop skip
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Kaizen from t-029 (Worker, hourly burst-mode cycle, 2026-07-16). The new
+      tests/test_reconcile_expressions.py covers the four cases named in t-029's
+      own kaizen note (narrator-wins, 404-fallback rows-unknown, character
+      sourceCharacterId, pagination-stall truncation) but two other branches in
+      plan_owner() are still only exercised manually: (a) the "rows whose file
+      is gone" missing/deactivate path (existing is not None and a previously
+      known key has no matching still on disk -- should produce an isActive:false
+      row, and only when existing was actually readable), and (b) the "loop
+      video with no still" skip note (a *_loop.webp with no matching numbered
+      still for that key -- should be reported, not silently upserted as a
+      row with only a videoPath). Both are pure plan_owner() unit tests, no
+      main()/argparse plumbing needed.
