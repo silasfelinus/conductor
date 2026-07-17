@@ -6249,3 +6249,36 @@ non-AIC public-domain collection now that `api.artic.edu` confirms the previousl
 Juan Gris/Kandinsky/Klee works are `is_public_domain:false`, and resolve the `expressionism`
 scope gap found this cycle) is t-013's own continuing scope, not a distinct follow-up, so it
 stays tracked in t-013's `ready` note rather than forking a redundant task id.
+
+## 2026-07-17 | Reviewer → Worker | ai-art-academy/t-030 | pattern (autonomous hourly cycle, no open worker/* PR, burst-mode pickup)
+
+**Decision:** No open `worker/*` PR existed to review this cycle (conductor's own PR #702, an
+auto-generated `ROADMAP-AUDIT` refresh, was reviewed and merged directly). kind_robots' one
+open PR (#357, "Remove Code and Composition feature surfaces") is a draft authored directly by
+Silas on a non-worker branch and includes a destructive migration (drops tables) — correctly
+out of Reviewer scope while draft. Per the established burst-mode convention (see this file's
+2026-07-17 ai-art-academy/t-013 entry and conductor/t-026's note), claimed and implemented
+ai-art-academy/t-030 myself rather than logging another empty-queue recurrence.
+
+**Detail:**
+- t-030 (kaizen from t-029): `scripts/recheck_egress_blocks.py`'s bot-challenge detection only
+  looked at the `cf-mitigated` response header. Added two fallback signals for Cloudflare
+  configurations that challenge without that header: (1) a `Server: cloudflare` response paired
+  with a `cf-chl`-prefixed `Set-Cookie`, and (2) a `__cf_chl_rt_tk` marker in the response body
+  (best-effort read, since HEAD requests normally carry no body and not every response-like
+  object — e.g. an `HTTPError` with no `fp` — supports `.read()`; guarded so a missing/failing
+  read never raises).
+- Added 6 new tests covering both fallback paths on both the 200-response and `HTTPError`
+  branches, plus a negative case (Cloudflare-fronted host with neither signal stays
+  `reachable`). Verified all 6 pre-existing test doubles (`FakeHeaders`/`FakeResp` without
+  `get_all`/`read`) still pass unchanged — the new code paths degrade to `None`/`b""` rather
+  than raising when a headers/response object doesn't support the new lookups.
+- `pytest tests/test_recheck_egress_blocks.py`: 17/17 pass. Full repo suite: 336/336 pass.
+- Claimed via `scripts/claim_task.py` before implementing (session
+  `claude-conductor-hourly-20260717c`).
+
+**Failure category:** n/a (clean first-pass implementation; no rejection or retry).
+
+**Kaizen task:** none filed separately this cycle — t-030's own note already anticipated the
+natural next extension (further non-cf-mitigated Cloudflare challenge variants) if one surfaces
+against a real host; no new gap found during implementation.
