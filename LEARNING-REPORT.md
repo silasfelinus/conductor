@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-07-17T21:12:42Z
+Generated: 2026-07-17T21:38:58Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **243**
-- Outcomes: blocked: 12, done: 231
+- Closed tasks recorded: **244**
+- Outcomes: blocked: 12, done: 232
 - Success rate: **95%**
 - Average passes on successful tasks: **0.0**
 
@@ -39,7 +39,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | model-builder | 28 | 100% |
 | mural-design | 1 | 100% |
 | newsfeed | 2 | 100% |
-| packmaker | 7 | 100% |
+| packmaker | 8 | 100% |
 | ruler-hooked | 2 | 100% |
 | serendipity | 1 | 100% |
 | superkate-hairstyle-ai | 16 | 100% |
@@ -50,24 +50,25 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 15 | 40% |
-| software | 228 | 99% |
+| software | 229 | 99% |
 
 ## Failure categories
 
 | Category | Count |
 |---|---|
 | actionable | 6 |
-| quality | 3 |
+| quality | 4 |
 
 ## Kaizen targets
 
 - project `coat-dance` — 0% success over 8 closed tasks; aim the next kaizen task here
 - kind `content` — 40% success over 15 closed tasks; aim the next kaizen task here
 - failure category `actionable` — 6 occurrences; look for the shared cause across its records
-- failure category `quality` — 3 occurrences; look for the shared cause across its records
+- failure category `quality` — 4 occurrences; look for the shared cause across its records
 
 ## Recent lessons
 
+- 2026-07-17 `packmaker/t-008` — Pure logic embedded in a Nuxt store may not import cleanly in lightweight CI; execute the exact source in a hermetic TypeScript VM or extract it into a dependency-light module rather than mocking or copying the implementation.
 - 2026-07-17 `ai-art-academy/t-013` — A soft needs-human task blocked purely by a connector limitation (full-blob-only file replacement risking truncation) is not the same as a task blocked by missing data — the handoff doc already had fully sourced, license-verified, byte-exact content ready to apply. Any later session with a real local git checkout of the target repo should treat such a handoff as directly actionable, not re-park it at needs-human.
 - 2026-07-17 `media-watchlist/t-007` — A 12-year hand-maintained log had ~6 format regimes the 2-year design sample never showed (unheadered year blocks, reversed headers, mixed-case sections, embedded stats tables, prose). Structural detection (a repeating section type implies a new unheadered year) beat hardcoded line numbers, and the log's own hand-tallies served as free validation targets — 2342 entries parsed with 0 unparseable lines and every mismatch traced to source-side drift, not parser error.
 - 2026-07-17 `packmaker/t-004` — Cross-repo admin-surface task with an unmet ACL dependency (kind-robots t-008) landed clean by keeping every created record isPublic:false as an explicit interim rule and deferring release/storefront wiring entirely, rather than stubbing a half-working gate. Task sat at status: claimed (not review) while its PR was open -- next cycle should flip to status: review before gh pr create per AGENTS.md step 7, even for cross-repo tasks.
@@ -77,7 +78,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-07-17 `superkate-hairstyle-ai/t-020` — Process gap fixed at the AGENTS.md level (step 7: set status review before any PR, all session types) rather than per-project. The task itself then sat at status: review after its PR merged — the exact failure mode it documents — because the session ended without the review→done flip. A task whose deliverable is a process rule should be closed in the same commit that lands the rule.
 - 2026-07-17 `kind-robots/t-022` — Production DB pool exhaustion (t-022, first seen 2026-07-15T08:56Z) had three false starts before the real fix: two app-code pool-config tweaks (#296 limit fallback, #300 TLS checkServerIdentity, #325/#327 pool lifecycle) each looked plausible and were confirmed live in prod, yet the outage kept recurring under a different signature each time (limit=10, then limit=1 'one-shot fallback'). The fix that actually held was a full revert (#342) of the one-shot-fallback mechanism (#336) rather than another patch on top of it -- when a pool/infra incident keeps changing shape after being 'fixed' twice, suspect the fix itself introduced a new failure mode and consider reverting the whole mechanism instead of patching further. Closed after 12+ hours / ~12 hourly cycles of sustained zero-503 confirmation, per Silas's own standing instruction to close once verified healthy.
 - 2026-07-17 `dream-cycle/t-017` — An always-failing dependency (intermittent DB 503s) masked two schema/contract bugs that meant the daily-dream pipeline had NEVER shipped a row: extraData is a String column (json.dumps it, don't send an object) and dream slugs are globally unique (send explicit de-duped slugs). Build live end-to-end once, early — dry-runs and unit tests can't catch a Prisma type mismatch. Run long API builds detached (background), never in a 2-min-capped foreground call.
-- 2026-07-17 `ai-art-academy/t-030` — Another self-contained conductor-only kaizen task, picked up burst-mode in an hourly Reviewer cycle with no open worker/* PR to review. Added Cloudflare challenge fallback signals (Server header + cf-chl cookie, __cf_chl_rt_tk body marker) behind defensive getattr()/callable() checks so the existing test doubles (which don't implement get_all()/read()) kept passing unchanged rather than needing every prior fixture updated — cheaper than the t-029 fixture-rewrite when the new code path is additive rather than a signature change.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-07-17T21:12:42Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-07-17T21:38:58Z_
