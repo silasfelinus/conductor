@@ -821,3 +821,33 @@ its own logic, before wiring a newly-extracted script in) and in the LEARNING.ya
 above (secret-scanner-safe fixture construction as a reusable pattern). Both are small
 enough to fold into the next session that touches either file rather than spawn a
 standalone task.
+
+## 2026-07-17 | Reviewer → Silas | kind-robots/t-022 | investigation update (autonomous hourly cycle)
+
+**Decision:** no merge this cycle (nothing open to merge for this task) — recorded a
+`RECOVERED (observed)` note on the roadmap task and left `status: needs-human`.
+
+**Detail:**
+- Found kind_robots PR #342 (`revert/pr-336-one-shot-fallback`), merged by Silas at
+  2026-07-17T05:48:16Z, which this task's roadmap note had not recorded — it happened
+  between the 04:55Z check (which merged PR #339 on top of the one-shot-fallback
+  mechanism) and this cycle. PR #342 reverts PR #336 wholesale, removing the one-shot
+  fallback pool mechanism entirely rather than continuing to patch it.
+- `get_runtime_errors`/`get_runtime_logs` via the Vercel MCP connector: the dominant
+  pool-timeout/connection-closed group tapered out by 06:17:23Z (~13 min after the
+  revert deployed, with several of the tail occurrences tagged
+  `[synthetic-test-request]` from a concurrent Cypress CI run) and both a 30-minute and
+  a 45-minute `statusCode=503` filtered window since then return zero rows. 1h window:
+  32x503/1028 total (~3%), all before 06:24Z.
+- Did not set `status: done`: this task has two prior false "RESOLVED" starts, and an
+  agent has not code-reviewed what else (if anything) depended on the reverted one-shot
+  fallback path this cycle. Framed the roadmap note so Silas can close it directly if
+  production still looks healthy when he reads it, citing PR #342 (and #339 before it).
+- Sent a push notification — this combines two things worth surfacing on their own:
+  new information (the revert wasn't in the task's history) and the first sustained
+  (30+ min) clean window since the 04:55Z acute outage.
+
+**Failure category:** n/a (investigation/reconfirmation, not a task retry/rejection).
+
+**Kaizen task:** none filed — the concrete next step (confirm sustained recovery, close
+with root cause) is already the explicit ask in the roadmap note, not a new systemic gap.
