@@ -918,12 +918,25 @@ tasks:
   - id: t-032
     milestone: m1
     title: Write a scripts/lib/ convention doc for hermetic shell helpers shared between a workflow step and its regression test
-    status: claimed
+    status: done
     owner: reviewer
     passes: 0
     stakes: reversible
-    updated: '2026-07-17T04:10:20Z'
+    updated: '2026-07-17T05:10:00Z'
     note: >
+      DONE 2026-07-17 (conductor-burst-hourly): kind_robots PR #341 squash-merged
+      (91bbef4) after all three checks (Contract verifiers, TypeScript, GitGuardian)
+      passed. scripts/README.md now documents the extraction pattern -- when to pull
+      inline workflow run: bash into a standalone repo-root scripts/ file (vs.
+      utils/scripts/, which is TypeScript regression tests and migration tooling, not
+      exclusively TS-only as the note below assumed -- it has a handful of .sh/.mjs
+      files too, corrected in the doc's phrasing), hermeticity and argument-passing
+      constraints so the same script is a pure function callable identically from a
+      workflow step and a test, and how to wire both call sites. Points to
+      check-deploy-ancestry.sh / verifyDeployWaitAncestry.ts / the cypress.yml
+      deploy-wait step as the worked example, with the exact invocation each side uses.
+      Verified npx prettier --check scripts/README.md passes; no code paths touched
+      per the task's own documentation-only scope.
       Kaizen from t-023 (Reviewer, 2026-07-16, kind_robots PR #310):
       t-023 introduced scripts/check-deploy-ancestry.sh, a small hermetic
       (no network I/O) shell script extracted out of a `.github/workflows/
@@ -943,6 +956,7 @@ tasks:
       documentation-only — no code changes required.
     claimed_by: claude-conductor-burst-hourly-20260717
     claimed_at: '2026-07-17T04:10:20Z'
+    pr: https://github.com/silasfelinus/kind_robots/pull/341
 
   - id: t-034
     milestone: m1
@@ -1027,3 +1041,23 @@ tasks:
     claimed_by: claude-burst-2026-07-16-2200
     claimed_at: '2026-07-16T22:08:51Z'
     pr: https://github.com/silasfelinus/kind_robots/pull/330
+
+  - id: t-036
+    milestone: m1
+    title: Retrofit one existing non-trivial inline workflow run bash block onto the scripts/README.md hermetic-helper pattern as a second worked example
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Kaizen from t-032 (Reviewer, 2026-07-17, kind_robots PR #341): scripts/README.md
+      now documents the extraction pattern with exactly one worked example
+      (check-deploy-ancestry.sh / verifyDeployWaitAncestry.ts). A convention doc with a
+      single example is easy to misapply at the edges (argument-passing, hermeticity
+      boundaries). Find one more `.github/workflows/*.yml` `run:` step with real
+      decision logic (conditional/loop/exit-code branching) that has no regression test
+      today, extract it into `scripts/` per the documented pattern, add its
+      `verify*.ts` test under `utils/scripts/`, and wire both call sites. This both
+      hardens a previously untested piece of CI logic and gives the doc a second
+      real-world example to reference. Small and reversible; pick the smallest
+      qualifying candidate rather than the most complex one.

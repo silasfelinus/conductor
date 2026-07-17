@@ -2695,3 +2695,15 @@ records:
     even reached origin/main. No process gap here, just worth remembering that fast
     same-session follow-ups can outrun roadmap bookkeeping; check open PRs again after any
     merge before assuming the sweep is complete.'
+- date: '2026-07-17'
+  project: kind-robots
+  task: t-032
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'Task was claimed/worked under owner: reviewer even though it was implementation
+    work (a doc PR), which the Security Model reserves for Worker. Harmless here since the
+    output was correct and merged clean, but future burst-mode sessions doing doc/code work
+    should claim as owner: worker regardless of which role slot the session is labeled.'
