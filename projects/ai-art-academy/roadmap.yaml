@@ -249,17 +249,19 @@ tasks:
   - id: t-013
     milestone: m4
     title: 'kind_robots: add example-works strip to Academy lesson detail'
-    status: review
-    owner: reviewer
+    status: ready
+    owner: null
     passes: 0
     stakes: reversible
     updated: '2026-07-17T16:13:24Z'
     depends_on: t-007
     note: >
-      IN REVIEW 2026-07-17 (burst-mode conductor cycle, reviewer session): kind_robots
-      PR open — ships 3 more movements (impressionism, post-impressionism, de-stijl),
-      taking the total to 12 of 21. Re-checked the www.artic.edu IIIF Cloudflare
-      bot-challenge from the prior cycle's note first (still live: 403 with
+      REVIEWED 2026-07-17 (burst-mode conductor cycle, reviewer session): merged
+      kind_robots PR #362 (squash d423562) and conductor PR #703 — ships 3 more
+      movements (impressionism, post-impressionism, de-stijl), taking the total to
+      12 of 21. All 3 kind_robots CI checks green, including Contract verifiers
+      (runs verifyAcademyExamplesManifest.ts for real). Re-checked the
+      www.artic.edu IIIF Cloudflare bot-challenge from the prior cycle's note first (still live: 403 with
       cf-mitigated:challenge, confirmed 2026-07-17T16:0xZ) and, since api.artic.edu
       metadata already confirmed all three works public-domain (Renoir 1933.455,
       Seurat 1926.224, Mondrian 1957.307), substituted same-accession Commons scans
@@ -287,8 +289,8 @@ tasks:
       SCOPE UPDATE note; still need sourcing.
       Original split-history: split 2026-07-15 from t-008 (part 2 of 3); scope
       expanded 2026-07-16 (t-010 cycle) from 16 to 21 movements.
-    claimed_by: claude-conductor-burst-20260717T1608Z
-    claimed_at: '2026-07-17T16:13:24Z'
+    claimed_by: null
+    claimed_at: null
   - id: t-014
     milestone: m4
     title: 'kind_robots: wire starter library into Remix Studio source picker'
