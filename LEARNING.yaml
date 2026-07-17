@@ -2835,3 +2835,21 @@ records:
     roadmaps," treat that as a same-day collision risk, not just documentation,
     and check the other project's roadmap/PR history before implementing, not
     only claim_task.py's own-project check.
+- date: 2026-07-17
+  project: global-ui
+  task: t-022
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    t-012/t-022 kr-* consolidation (kind_robots PR #349): the grep-density file list from
+    the scan was NOT the clean-swap list -- many "callout" hits were full-height flex
+    containers or dense p-2 text-xs chips where .kr-note (which bakes p-4 text-sm
+    font-semibold) is a poor fit. Triage each site for shape before swapping. Also: never
+    run `prettier --write` on a whole file to "clean up" a targeted class swap -- these
+    files aren't prettier-conformant, so it reformatted two of them by ~1600 lines each and
+    buried the real diff; there is no prettier/lint CI gate anyway, so minimal targeted
+    edits are both sufficient and reviewable. t-022's audit found exactly one real 2+ file
+    duplicate (the click/match leaderboards); extracted it, no others exist.
