@@ -249,11 +249,11 @@ tasks:
   - id: t-013
     milestone: m4
     title: 'kind_robots: add example-works strip to Academy lesson detail'
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
-    updated: '2026-07-15T06:20:00Z'
+    updated: '2026-07-17T13:09:19Z'
     depends_on: t-007
     note: >
       Split 2026-07-15 from the original t-008 (part 2 of 3) — independently
@@ -273,6 +273,8 @@ tasks:
       EGRESS-BLOCKERS.md (grep "ai-art-academy/t-013"). Blocked 2026-07-15/16,
       REACHABLE at the 2026-07-17T07:51Z recheck; re-run
       scripts/recheck_egress_blocks.py before claiming.
+    claimed_by: claude-conductor-burst-20260717T1307Z
+    claimed_at: '2026-07-17T13:09:19Z'
   - id: t-014
     milestone: m4
     title: 'kind_robots: wire starter library into Remix Studio source picker'
