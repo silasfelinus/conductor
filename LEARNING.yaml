@@ -3108,3 +3108,16 @@ records:
   lesson: Pure logic embedded in a Nuxt store may not import cleanly in lightweight CI; execute the exact
     source in a hermetic TypeScript VM or extract it into a dependency-light module rather than mocking
     or copying the implementation.
+- date: 2026-07-17
+  project: digital-storefront
+  task: t-024
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'Verifying the vulnerability directly (reproducing the unauth''d lookup) before writing
+    the fix caught that the client already sends its bearer token on every request via
+    performFetch, so cross-referencing the sibling cancel-subscription endpoint''s call site
+    was enough to confirm zero client changes were needed -- worth checking the calling
+    convention of a known-correct sibling endpoint before assuming a client update is required.'

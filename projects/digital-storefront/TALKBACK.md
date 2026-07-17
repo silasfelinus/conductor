@@ -222,3 +222,32 @@ not-introduced-by-this-PR gap, filed as kaizen rather than blocking the merge).
 **Kaizen task:** t-024 — `subscribe.post.ts` still accepts a client-supplied `userId`
 with no auth check (pre-existing, not worsened by #361; the new cancel-subscription
 endpoint was built correctly via `requireApiUser` and should be the model for the fix).
+
+## 2026-07-17 | Reviewer → Silas | digital-storefront/t-024 | pattern (burst-mode cycle)
+
+**Decision:** merged kind_robots PR #373 and conductor PR #728 (bookkeeping); t-024 closed done.
+
+**Detail:**
+- Own kaizen from t-013's close, picked up the same session cycle. Verified the vulnerability
+  directly before fixing: `subscribe.post.ts` did `prisma.user.findUnique({ where: { id: userId } })`
+  against an unauthenticated `readBody` value — any caller could pass an arbitrary id to create
+  a Stripe checkout session (and silently attach a `stripeCustomerId`) under someone else's user
+  record. Swapped in `requireApiUser`, the same helper `cancel-subscription.post.ts` already used
+  correctly.
+- Confirmed no client change was needed: `cartStore.ts`'s `performFetch` already attaches the
+  caller's bearer token to every request, exactly as the existing `cancelSubscription()` call
+  relies on — it never passed a userId either.
+- Ran real local verification instead of guessing at CI: `provision_kind_robots_deps.sh` to get
+  a working `node_modules`/Prisma client/`.nuxt`, then `eslint` on the touched file (confirmed via
+  `git stash` that the one remaining lint error — `no-explicit-any` on the catch block — predates
+  this change) and a full-project `vue-tsc --noEmit` (clean).
+- Rotation note: ai-art-academy led `priority.yaml` this cycle but had no genuinely workable task
+  (t-019 still blocked on unlanded preview images; t-010's recurring slot was actively claimed by
+  a concurrent hourly session) — moved to the next active project with real ready work instead of
+  idling or colliding.
+
+**Failure category:** n/a (clean first-pass fix, no rejection).
+
+**Kaizen task:** t-025 — `cartStore.ts`'s `subscribe(userId)` and its one caller
+(`subscription-manager.vue`) still pass a `userId` the server no longer reads (harmless, but dead
+parameter); drop it for clarity. `stakes: reversible`.

@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-07-17T21:49:37Z
+Generated: 2026-07-17T21:51:07Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **244**
-- Outcomes: blocked: 12, done: 232
+- Closed tasks recorded: **245**
+- Outcomes: blocked: 12, done: 233
 - Success rate: **95%**
 - Average passes on successful tasks: **0.0**
 
@@ -25,7 +25,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | coat-dance | 8 | 0% |
 | coloring-book | 12 | 100% |
 | conductor | 30 | 100% |
-| digital-storefront | 8 | 100% |
+| digital-storefront | 9 | 100% |
 | dream-cycle | 14 | 100% |
 | ecosystem-map | 4 | 100% |
 | global-ui | 9 | 100% |
@@ -50,7 +50,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 15 | 40% |
-| software | 229 | 99% |
+| software | 230 | 99% |
 
 ## Failure categories
 
@@ -68,6 +68,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-07-17 `digital-storefront/t-024` — Verifying the vulnerability directly (reproducing the unauth'd lookup) before writing the fix caught that the client already sends its bearer token on every request via performFetch, so cross-referencing the sibling cancel-subscription endpoint's call site was enough to confirm zero client changes were needed -- worth checking the calling convention of a known-correct sibling endpoint before assuming a client update is required.
 - 2026-07-17 `packmaker/t-008` — Pure logic embedded in a Nuxt store may not import cleanly in lightweight CI; execute the exact source in a hermetic TypeScript VM or extract it into a dependency-light module rather than mocking or copying the implementation.
 - 2026-07-17 `ai-art-academy/t-013` — A soft needs-human task blocked purely by a connector limitation (full-blob-only file replacement risking truncation) is not the same as a task blocked by missing data — the handoff doc already had fully sourced, license-verified, byte-exact content ready to apply. Any later session with a real local git checkout of the target repo should treat such a handoff as directly actionable, not re-park it at needs-human.
 - 2026-07-17 `media-watchlist/t-007` — A 12-year hand-maintained log had ~6 format regimes the 2-year design sample never showed (unheadered year blocks, reversed headers, mixed-case sections, embedded stats tables, prose). Structural detection (a repeating section type implies a new unheadered year) beat hardcoded line numbers, and the log's own hand-tallies served as free validation targets — 2342 entries parsed with 0 unparseable lines and every mismatch traced to source-side drift, not parser error.
@@ -77,7 +78,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-07-17 `packmaker/t-003` — Gated draft work (two DLC pack manifests) sat complete at needs-human for two days until Silas batch-cleared gates in a report session. Drafts validated against the t-002 schema before the gate meant zero rework on approval — front-loading schema validation makes human gates cheap to clear.
 - 2026-07-17 `superkate-hairstyle-ai/t-020` — Process gap fixed at the AGENTS.md level (step 7: set status review before any PR, all session types) rather than per-project. The task itself then sat at status: review after its PR merged — the exact failure mode it documents — because the session ended without the review→done flip. A task whose deliverable is a process rule should be closed in the same commit that lands the rule.
 - 2026-07-17 `kind-robots/t-022` — Production DB pool exhaustion (t-022, first seen 2026-07-15T08:56Z) had three false starts before the real fix: two app-code pool-config tweaks (#296 limit fallback, #300 TLS checkServerIdentity, #325/#327 pool lifecycle) each looked plausible and were confirmed live in prod, yet the outage kept recurring under a different signature each time (limit=10, then limit=1 'one-shot fallback'). The fix that actually held was a full revert (#342) of the one-shot-fallback mechanism (#336) rather than another patch on top of it -- when a pool/infra incident keeps changing shape after being 'fixed' twice, suspect the fix itself introduced a new failure mode and consider reverting the whole mechanism instead of patching further. Closed after 12+ hours / ~12 hourly cycles of sustained zero-503 confirmation, per Silas's own standing instruction to close once verified healthy.
-- 2026-07-17 `dream-cycle/t-017` — An always-failing dependency (intermittent DB 503s) masked two schema/contract bugs that meant the daily-dream pipeline had NEVER shipped a row: extraData is a String column (json.dumps it, don't send an object) and dream slugs are globally unique (send explicit de-duped slugs). Build live end-to-end once, early — dry-runs and unit tests can't catch a Prisma type mismatch. Run long API builds detached (background), never in a 2-min-capped foreground call.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-07-17T21:49:37Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-07-17T21:51:07Z_

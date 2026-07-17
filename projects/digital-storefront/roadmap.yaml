@@ -266,7 +266,7 @@ tasks:
 - id: t-024
   milestone: m3
   title: 'subscribe.post.ts: require authenticated user instead of trusting client-supplied userId'
-  status: review
+  status: done
   owner: worker
   passes: 0
   stakes: reversible
@@ -276,14 +276,14 @@ tasks:
     request body with no auth check (not introduced or worsened by #361 -- cancel-subscription.post.ts
     was built correctly, deriving the user from requireApiUser instead). Fix subscribe.post.ts
     to derive the user the same way, matching the new cancel-subscription endpoint's pattern.
-    IN REVIEW 2026-07-17 (conductor-burst-hourly, claude-conductor-burst-20260717T2057Z): kind_robots
-    PR #373 opened (branch claude/keen-fermat-k0alew) swapping the client-supplied userId lookup
-    for requireApiUser, mirroring cancel-subscription.post.ts. eslint clean on the touched lines
-    (one pre-existing no-explicit-any on the unrelated catch block, confirmed present before this
-    change too); full-project vue-tsc --noEmit exits 0. Awaiting CI on #373 before merge.
+    DONE 2026-07-17 (conductor-burst-hourly, claude-conductor-burst-20260717T2057Z): kind_robots
+    PR #373 merged, swapping the client-supplied userId lookup for requireApiUser, mirroring
+    cancel-subscription.post.ts. eslint clean on the touched lines (one pre-existing
+    no-explicit-any on the unrelated catch block, confirmed present before this change too);
+    full-project vue-tsc --noEmit exits 0.
   claimed_by: claude-conductor-burst-20260717T2057Z
   claimed_at: '2026-07-17T21:12:19Z'
-  updated: '2026-07-17T21:12:19Z'
+  updated: '2026-07-17T21:38:00Z'
 - id: t-014
   milestone: m3
   title: Build the Against Malaria giving page
@@ -541,3 +541,18 @@ tasks:
     lands.
   claimed_by: hourly-20260715T1057
   claimed_at: '2026-07-15T10:57:19Z'
+- id: t-025
+  milestone: m3
+  title: 'kind_robots: drop the now-unused userId param from cartStore.subscribe() and its caller'
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  note: >
+    Kaizen from t-024's close (2026-07-17): subscribe.post.ts now derives the user from
+    requireApiUser instead of a client-supplied userId, but stores/cartStore.ts's
+    subscribe(userId) and its one caller (components/giftshop/subscription-manager.vue)
+    still pass a userId the server never reads. Harmless but dead; drop the parameter from
+    both the store method and the call site for clarity.
+  claimed_by: null
+  claimed_at: null
