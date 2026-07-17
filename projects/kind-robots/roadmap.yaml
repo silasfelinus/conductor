@@ -873,30 +873,32 @@ tasks:
   - id: t-029
     milestone: m4
     title: Draft the Grant-model migration pitch using SHARING-SPEC.md as design input
-    status: claimed
+    status: needs-human
     owner: worker
     passes: 0
     stakes: reversible
+    soft_gate: true
     note: >
-      Kaizen from t-008 (Reviewer, 2026-07-16): SHARING-SPEC.md
-      (projects/kind-robots/SHARING-SPEC.md) designs a generalized Grant
-      model for private-but-shared content and project sharing, but per
-      BOUNDARY.md's data-model boundary the actual Prisma migration needs a
-      formal pitch before any kind_robots schema change happens. Write
-      pitches/<date>-sharing-grant-model.md using the pitch template: the
-      idea (one Grant model, polymorphic subjectType/subjectId, replacing
-      ~140 duplicated per-route isPublic/ownership checks with a shared
-      canView() helper), why it's worth doing (unblocks digital-storefront
-      t-017's entitlement design and packmaker's DLC gating), rough effort,
-      and a suggested first task (the migration itself, scoped to just the
-      new Grant model + enums + the canView() helper — no changes to
-      existing isPublic columns). Resolve the three open questions in
-      SHARING-SPEC.md's "Open questions for Silas" section as part of
-      writing the pitch, or carry them into the pitch explicitly for Silas
-      to answer. This is proposal-kind work (a pitch for Silas to vet, not
-      something to execute) even though it sits in kind-robots's roadmap —
-      set status: needs-human when done, per the proposal-kind rule in
-      AGENTS.md.
+      FOR SILAS: Pitch written at pitches/2026-07-17-sharing-grant-model.md.
+      It proposes one new Prisma model (Grant: granterId/granteeId/
+      subjectType/subjectId/level/source/refId/status/expiresAt) plus three
+      new enums, replacing the ~140 duplicated per-route isPublic/ownership
+      checks with a shared canView() helper, drawn directly from
+      projects/kind-robots/SHARING-SPEC.md (no new facts invented). It
+      unblocks digital-storefront/t-017 (entitlement design — a Grant with
+      source=PURCHASE IS the entitlement, no separate table needed) and
+      packmaker's DLC gating.
+      TO APPROVE: read the pitch and its three open questions (ADMIN
+      sub-permissions granularity; whether revocation should trigger a
+      refund flow; whether to add GrantSubject.PACK now vs. deferring to
+      the future Pack-adding pitch — the draft recommends deferring). Reply
+      in the pitch file or roadmap note with your answers, then set
+      status: ready (or approved_by_human: true if you want the migration
+      task auto-created) to unblock the actual migration task.
+      What unblocks: a new kind-robots task for the additive migration
+      itself (Grant model + 3 enums + server/utils/contentAccess.ts,
+      scoped exactly as the pitch's "Suggested first task" section
+      describes — no route rewiring, no Pack enum value).
     claimed_by: claude-burst-2026-07-17-hourly
     claimed_at: '2026-07-17T03:07:31Z'
     updated: '2026-07-17T03:07:31Z'
