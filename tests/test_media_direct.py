@@ -143,3 +143,32 @@ def test_relay_writes_file_and_refreshes_manifests(tmp_path, monkeypatch):
     assert destination.read_bytes() == b"encoded-image"
     assert (tmp_path / "test" / "gallery.json").read_text().strip() == '[\n  "sample.webp"\n]'
     assert '"test": "test"' in (tmp_path / "collections.json").read_text()
+
+
+def test_relay_recovers_prompt_id_from_comfy_queue(monkeypatch):
+    relay_media = load_relay_media_module(monkeypatch)
+
+    def fake_http_json(method, url, timeout=60, **_kwargs):
+        assert method == "GET"
+        assert url.endswith("/queue")
+        assert timeout == 15
+        return 200, {
+            "queue_running": [],
+            "queue_pending": [
+                [
+                    7,
+                    "prompt-123",
+                    {"node": {}},
+                    {"client_id": "Silas-PC-artjob-223"},
+                    ["57"],
+                ]
+            ],
+        }
+
+    monkeypatch.setattr(relay_media.relay, "http_json", fake_http_json)
+
+    assert (
+        relay_media.queued_prompt_id_for_client("Silas-PC-artjob-223")
+        == "prompt-123"
+    )
+    assert relay_media.queued_prompt_id_for_client("other-client") is None
