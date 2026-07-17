@@ -1450,8 +1450,8 @@ tasks:
   - id: t-058
     milestone: m1
     title: Test that reconcile_expressions main() --apply with no KR_API_TOKEN returns 1 early
-    status: ready
-    owner: null
+    status: claimed
+    owner: reviewer
     passes: 0
     stakes: reversible
     note: >
@@ -1461,6 +1461,9 @@ tasks:
       A tiny test (monkeypatch rex.KR_API_TOKEN to None/empty, assert exit
       code 1, assert post_batch never called) closes the last CLI-gating gap
       in this file.
+    claimed_by: projects-db-down-q2yfu0
+    claimed_at: '2026-07-17T07:48:52Z'
+    updated: '2026-07-17T07:48:52Z'
 
   - id: t-060
     milestone: m3
