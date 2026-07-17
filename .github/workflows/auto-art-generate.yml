@@ -1,24 +1,20 @@
 name: Auto Art Generate
 
 # Closes the autonomous art loop (art-generator-connect/t-012) so no one has to
-# run scripts on a local drive. On a schedule (and on demand) this:
-#   1. (optional) refreshes projects/art-generate.yaml to ONLY the project
-#      icon/card/hero art currently MISSING from projects/images/ — this is what
-#      makes the loop self-draining: once an image lands, it stops being queued.
-#   2. submits each queued entry to the kind_robots ArtJob queue on Vercel
-#      (public endpoint, machine-auth via KR_API_TOKEN — no Tailscale needed for
-#      this direction). This covers BOTH lanes: the self-draining project-art
-#      batch (art-generate.yaml) and the requests: block of art-prompts.yaml
-#      (ad-hoc / missing-image / voice requests), so everything funnels through
-#      the same queue.
-#   3. the home-box relay agent (already under pm2) claims each job outward,
-#      renders on localhost ComfyUI/A1111, and uploads the result.
-#   4. downloads finished images into projects/process/, routes them with
-#      distribute_images.py, and commits conductor- and kind_robots-side results.
+# manually shepherd generated files. On a schedule (and on demand) this:
+#   1. optionally refreshes projects/art-generate.yaml to only currently-missing
+#      project icon/card/hero art
+#   2. submits project-art and ad-hoc request lanes to the Kind Robots ArtJob queue
+#   3. the home-box relay renders each job and writes Kind Robots-targeted files
+#      directly to self-hosted media before completing the job
+#   4. conductor-targeted results (and any direct-media verification fallback)
+#      land in projects/process/ and are routed by distribute_images.py
+#   5. commits only conductor metadata/assets; Kind Robots image binaries are no
+#      longer checked out or committed by this workflow
 #
 # Box-down tolerance: if the home box is offline, jobs simply wait in the queue
-# and the consume step times out; that step is allowed to fail without failing
-# the whole run, so an offline box is a soft no-op rather than a red build.
+# and the consume step times out. That step is allowed to fail without failing the
+# whole run, so an offline box is a soft no-op rather than a red build.
 
 on:
   schedule:
@@ -54,56 +50,52 @@ jobs:
           path: conductor
           fetch-depth: 0
 
-      # kind_robots checkout so distribute_images.py can land site-side images.
-      # Needs GH_PAT (repo scope). Fails soft: if unavailable, kind_robots-target
-      # files stay in projects/process/ for the distribute-images workflow.
-      - uses: actions/checkout@v4
-        id: kr-checkout
-        continue-on-error: true
-        with:
-          repository: silasfelinus/kind_robots
-          path: kind_robots
-          token: ${{ secrets.GH_PAT }}
-          persist-credentials: true
-
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
 
       - name: Install dependencies
-        run: pip install pyyaml Pillow # Pillow => proper .webp output from the consumer
+        run: pip install pyyaml Pillow # Pillow => proper .webp output for conductor/fallback files
 
       - name: Refresh queue to currently-missing project art
         if: ${{ (github.event.inputs.refresh_queue || 'true') != 'false' }}
         working-directory: conductor
         run: python scripts/queue_missing_project_art.py --limit ${{ github.event.inputs.limit || '5' }}
 
-      - name: Submit + wait + download (live)
+      - name: Submit + wait + verify project-art results
         id: consume
         continue-on-error: true
         working-directory: conductor
         env:
           KR_API_TOKEN: ${{ secrets.KR_API_TOKEN }}
+          KR_MEDIA_ORIGIN: https://media.acrocatranch.com
         run: |
-          python scripts/consume_art_queue.py --live \
+          python scripts/consume_art_queue_to_media.py --live \
             --limit ${{ github.event.inputs.limit || '5' }} \
             --timeout ${{ github.event.inputs.timeout || '300' }}
 
       # Drain the requests: block of art-prompts.yaml (ad-hoc / missing-image /
-      # voice requests) through the same ArtJob queue. Marks each done. Fails
-      # soft like the batch consume: an offline box just leaves them pending.
-      - name: Submit + wait + download art requests (live)
+      # voice requests) through the same ArtJob queue. For Kind Robots targets,
+      # the home relay writes the exact public/images destination to self-hosted
+      # media and this consumer verifies the public URL before suppressing its
+      # projects/process fallback.
+      - name: Submit + wait + verify art requests
         id: consume_requests
         continue-on-error: true
         working-directory: conductor
         env:
           KR_API_TOKEN: ${{ secrets.KR_API_TOKEN }}
+          KR_MEDIA_ORIGIN: https://media.acrocatranch.com
         run: |
-          python scripts/consume_art_requests.py --live \
+          python scripts/consume_art_requests_to_media.py --live \
             --limit ${{ github.event.inputs.limit || '5' }} \
             --timeout ${{ github.event.inputs.timeout || '300' }}
 
-      - name: Route downloaded images
+      # Normally this sees only conductor-owned assets. If the public media URL
+      # did not verify after a supposedly successful relay job, the consumer keeps
+      # a recoverable copy in projects/process/; without a kind_robots checkout the
+      # distributor intentionally leaves that file there for investigation.
+      - name: Route downloaded conductor and fallback images
         working-directory: conductor
         run: python scripts/distribute_images.py
 
@@ -128,25 +120,6 @@ jobs:
             done
           fi
 
-      - name: Commit kind_robots results
-        if: steps.kr-checkout.outcome == 'success'
-        working-directory: kind_robots
-        run: |
-          git config user.name "conductor-bot"
-          git config user.email "conductor-bot@users.noreply.github.com"
-          git add public/
-          if git diff --staged --quiet; then
-            echo "No kind_robots-side changes."
-          else
-            git commit -m "chore: auto-generated art from conductor queue"
-            for attempt in 1 2 3 4 5; do
-              if git push; then break; fi
-              echo "push rejected (attempt $attempt); rebasing onto origin/main…"
-              git pull --rebase --autostash origin main || exit 1
-              sleep $((attempt * 3))
-            done
-          fi
-
       - name: Report generation outcome
         run: |
           for step in "batch:${{ steps.consume.outcome }}" "requests:${{ steps.consume_requests.outcome }}"; do
@@ -154,6 +127,6 @@ jobs:
             if [ "$outcome" = "success" ]; then
               echo "$name consume step succeeded."
             else
-              echo "::warning::$name consume step did not fully succeed — the home render box may be offline, or some jobs failed/timed out. Queued jobs wait in the kind_robots ArtJob queue and will be picked up on the next run when the box is back online."
+              echo "::warning::$name consume step did not fully succeed — the home render box may be offline, the direct media write may have failed, or some jobs timed out. Failed media writes remain retryable; verification fallbacks remain in projects/process/."
             fi
           done
