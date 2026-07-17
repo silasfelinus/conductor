@@ -3144,3 +3144,12 @@ records:
   outcome: done
   failure_category: null
   lesson: git commit-tree does not inherit commit.gpgsign the way porcelain git commit does -- any direct-to-ref plumbing helper that signs on this repo's behalf needs an explicit -S read from git config, or every commit it makes silently lands Unverified despite full signing config being present.
+- date: 2026-07-17
+  project: coloring-book
+  task: t-022
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: transient
+  lesson: "Two workflows sharing a mutable resource (queue file + single-worker render backend) need the SAME concurrency.group, not just any group — a uniquely-named group only prevents self-collision, not collision with a sibling workflow hitting the same backend in parallel."

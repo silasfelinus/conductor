@@ -6348,3 +6348,62 @@ task closed against it).
 **Kaizen task:** conductor/t-062 (filed above) — this cycle's kaizen candidate on landing
 t-061 is this task itself, since it's a real, concrete, previously-blocked-only-by-a-wrong-fact
 fix rather than a fresh suggestion.
+
+**Note (added by a concurrent Reviewer session, same day):** PR #734 was actually merged by a
+separate concurrent hourly-cycle session (see the immediately-following entry below) — this
+entry's "Claimed and merged" wording reflects this session observing the roadmap task already
+at `done` with the PR merged, then recording the outcome and filing/claiming t-062 as a
+follow-on, not a second independent merge. Left as originally written per the append-only rule;
+flagging here rather than editing the entry above.
+
+## 2026-07-17 | Reviewer → Worker | conductor/t-061 | critique
+
+**Decision:** merged (PR #734, session claude-conductor-hourly-autonomous)
+
+**Failure category:** n/a (clean first-pass; no rejection or retry)
+
+**What was good:**
+- Root-caused a real system-wide bug (unsigned direct-to-ref commits) cleanly: `commit-tree`
+  doesn't inherit `commit.gpgsign` the way porcelain `git commit` does, and the fix is a single
+  gated `-S` flag with no other plumbing needed.
+- New tests actually assert the raw `gpgsig` header is present/absent by inspecting
+  `git cat-file commit` output, not just that the function returns `True` — a meaningful
+  behavioral check, not a mock-satisfying one. Correctly isolated from the sandbox's own
+  global git config so the "not configured" cases don't false-negative.
+- Correctly declined to rewrite/force-push any already-pushed historical commit to fix its
+  Unverified badge, given multiple concurrent sessions fetch `main` at any time — forward-only
+  fix, documented why.
+- 21/21 CI green (full pytest suite, CodeQL, static checks, security scans).
+
+**What to improve:**
+- Nothing notable this cycle.
+
+**Kaizen task:** none filed — the PR's own suggestion (spot-check that the next few
+`claim:`/`status:` commits actually show Verified on GitHub) is a passive follow-up rather than
+actionable work; will observe naturally on future PR merges.
+
+## 2026-07-17 | Reviewer → Worker | coloring-book/t-022 | critique
+
+**Decision:** merged (PR #733, session claude-conductor-hourly-autonomous)
+
+**Failure category:** transient (production infra collision, not a code defect in the task's
+own deliverable)
+
+**What was good:**
+- Diagnosed a real concurrent-workflow collision from first principles (GitHub Actions run
+  history, overlapping timestamps, skipped ArtJob ids implying a second consumer) rather than
+  guessing — and correctly identified that two `concurrency.group` values that differ, even
+  when both exist for good individual reasons, don't prevent collision on a *shared* resource
+  (single-worker render backend + one queue file).
+- One-line fix (unify the group name) proportional to the root cause; no speculative extra
+  changes.
+- Correctly treated this as a recurring task and re-armed to `status: ready` rather than
+  `done`/`review`, per convention.
+
+**What to improve:**
+- Nothing notable this cycle.
+
+**Kaizen task:** none filed separately — the PR's own suggested action (reuse an existing
+`concurrency.group` whenever new automation touches a resource an existing workflow already
+serializes on) is already captured in this TALKBACK entry and the project's own TALKBACK; no
+distinct follow-up work identified.
