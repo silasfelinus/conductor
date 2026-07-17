@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-07-17T20:49:21Z
+Generated: 2026-07-17T21:05:29Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **242**
-- Outcomes: blocked: 12, done: 230
+- Closed tasks recorded: **243**
+- Outcomes: blocked: 12, done: 231
 - Success rate: **95%**
 - Average passes on successful tasks: **0.0**
 
@@ -15,7 +15,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 | Project | Closed | Success rate |
 |---|---|---|
-| ai-art-academy | 25 | 100% |
+| ai-art-academy | 26 | 100% |
 | alexa-integration | 2 | 100% |
 | animation-manager | 4 | 100% |
 | animation-studio | 1 | 100% |
@@ -50,7 +50,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 15 | 40% |
-| software | 227 | 99% |
+| software | 228 | 99% |
 
 ## Failure categories
 
@@ -68,6 +68,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-07-17 `ai-art-academy/t-013` — A soft needs-human task blocked purely by a connector limitation (full-blob-only file replacement risking truncation) is not the same as a task blocked by missing data — the handoff doc already had fully sourced, license-verified, byte-exact content ready to apply. Any later session with a real local git checkout of the target repo should treat such a handoff as directly actionable, not re-park it at needs-human.
 - 2026-07-17 `media-watchlist/t-007` — A 12-year hand-maintained log had ~6 format regimes the 2-year design sample never showed (unheadered year blocks, reversed headers, mixed-case sections, embedded stats tables, prose). Structural detection (a repeating section type implies a new unheadered year) beat hardcoded line numbers, and the log's own hand-tallies served as free validation targets — 2342 entries parsed with 0 unparseable lines and every mismatch traced to source-side drift, not parser error.
 - 2026-07-17 `packmaker/t-004` — Cross-repo admin-surface task with an unmet ACL dependency (kind-robots t-008) landed clean by keeping every created record isPublic:false as an explicit interim rule and deferring release/storefront wiring entirely, rather than stubbing a half-working gate. Task sat at status: claimed (not review) while its PR was open -- next cycle should flip to status: review before gh pr create per AGENTS.md step 7, even for cross-repo tasks.
 - 2026-07-17 `ai-art-academy/t-014` — art-styler.vue's source picker had no shared SourceImagePicker component or composable to extend -- upload/gallery state lived as plain inline refs. Adding a third source (the starter library) was still low-risk because generation (runStyleTransfer) only reads two refs (uploadedImageData/selectedSourceImage), so any new source that populates those two the same way needs zero changes downstream. Extracted the shared synthetic-ArtImage builder (buildSyntheticSourceImage) rather than duplicating it a second time. When a component's state is inline-only (no composable), check what the *consumer* function actually reads before assuming a new source needs its own code path through generation.
@@ -77,7 +78,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-07-17 `kind-robots/t-022` — Production DB pool exhaustion (t-022, first seen 2026-07-15T08:56Z) had three false starts before the real fix: two app-code pool-config tweaks (#296 limit fallback, #300 TLS checkServerIdentity, #325/#327 pool lifecycle) each looked plausible and were confirmed live in prod, yet the outage kept recurring under a different signature each time (limit=10, then limit=1 'one-shot fallback'). The fix that actually held was a full revert (#342) of the one-shot-fallback mechanism (#336) rather than another patch on top of it -- when a pool/infra incident keeps changing shape after being 'fixed' twice, suspect the fix itself introduced a new failure mode and consider reverting the whole mechanism instead of patching further. Closed after 12+ hours / ~12 hourly cycles of sustained zero-503 confirmation, per Silas's own standing instruction to close once verified healthy.
 - 2026-07-17 `dream-cycle/t-017` — An always-failing dependency (intermittent DB 503s) masked two schema/contract bugs that meant the daily-dream pipeline had NEVER shipped a row: extraData is a String column (json.dumps it, don't send an object) and dream slugs are globally unique (send explicit de-duped slugs). Build live end-to-end once, early — dry-runs and unit tests can't catch a Prisma type mismatch. Run long API builds detached (background), never in a 2-min-capped foreground call.
 - 2026-07-17 `ai-art-academy/t-030` — Another self-contained conductor-only kaizen task, picked up burst-mode in an hourly Reviewer cycle with no open worker/* PR to review. Added Cloudflare challenge fallback signals (Server header + cf-chl cookie, __cf_chl_rt_tk body marker) behind defensive getattr()/callable() checks so the existing test doubles (which don't implement get_all()/read()) kept passing unchanged rather than needing every prior fixture updated — cheaper than the t-029 fixture-rewrite when the new code path is additive rather than a signature change.
-- 2026-07-17 `ai-art-academy/t-029` — Self-contained conductor-only kaizen task (no cross-repo dependency): claimed, implemented, and merged in a single autonomous hourly cycle. probe_host()/append_entry() changed from a bool blocked/reachable signal to a three-way status string so a Cloudflare cf-mitigated challenge response is no longer silently folded into 'reachable' — the exact gap t-013 hit and hand-documented manually. Updating an existing test suite's fixtures (bool -> string) alongside new coverage, rather than only adding new tests, is what kept the refactor from leaving stale assertions that would pass for the wrong reason.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-07-17T20:49:21Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-07-17T21:05:29Z_
