@@ -174,11 +174,11 @@ tasks:
 - id: t-022
   milestone: m4
   title: Monster Recast book 1 production pass — 36 final color/BW pairs
-  status: review
+  status: ready
   owner: worker
   passes: 0
   stakes: reversible
-  updated: '2026-07-17T15:10:00Z'
+  updated: '2026-07-17T14:49:35Z'
   depends_on: t-021
   note: 'RECONCILED 2026-07-17 (burst-mode cycle): completed the "First reconcile" step -- mapped
     every physical projects/coloring-book/sets/monster-recast/approved/ file into proposals.yaml
@@ -369,3 +369,17 @@ tasks:
   stakes: reversible
   updated: '2026-07-17T00:00:00Z'
   note: SUPERSEDED 2026-07-17 by t-025, which validates 36 final pairs and keeps the cover separate.
+- id: t-029
+  milestone: m4
+  title: Make coloring_proposal_status.py surface elimination-only inspiration matches
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  updated: '2026-07-17T14:49:35Z'
+  note: 'Kaizen from t-022 (PR #697, 2026-07-17): the mr-025 inspiration was matched to its
+    concept "by elimination" (no direct text match), and that distinction currently only lives
+    in a roadmap/proposals.yaml note, not in --check output. Add a --check flag or summary line
+    listing any inspiration entries carrying needs_visual_verification: true (or an equivalent
+    elimination-only marker) so future cycles and Silas see them surfaced automatically instead
+    of having to read prose notes to find them.'
