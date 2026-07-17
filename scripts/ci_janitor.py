@@ -98,6 +98,41 @@ def latest_completed_run(check: WorkflowCheck, github_token: str) -> dict[str, A
     return runs[0] if isinstance(runs, list) and runs else None
 
 
+def latest_run_for_branch(check: WorkflowCheck, github_token: str) -> dict[str, Any] | None:
+    """The single most recent run for this branch/workflow, regardless of status.
+
+    Used to detect the cancel-in-progress concurrency-supersede pattern: a `cancelled`
+    completed run whose commit isn't actually the newest one on the branch was killed
+    by a newer push landing on the same concurrency group, not by a real failure.
+    """
+    repository = urllib.parse.quote(check.repository, safe="/")
+    workflow = urllib.parse.quote(check.workflow, safe="")
+    branch = urllib.parse.quote(check.branch, safe="")
+    url = (
+        f"{GITHUB_API}/repos/{repository}/actions/workflows/{workflow}/runs"
+        f"?branch={branch}&per_page=1"
+    )
+    response = request_json(url, token=github_token)
+    runs = response.get("workflow_runs", [])
+    return runs[0] if isinstance(runs, list) and runs else None
+
+
+def cancelled_run_is_superseded(
+    check: WorkflowCheck, run: dict[str, Any], github_token: str
+) -> bool:
+    """True when `run` (a `cancelled` completed run) isn't the newest run on the branch.
+
+    A newer run for a different commit means the concurrency group's cancel-in-progress
+    killed this one on a supersede, not a real failure -- see conductor/t-062. Whether
+    that newer run has itself finished yet doesn't matter: either way this cancelled run
+    is stale noise, not the branch's actual current state.
+    """
+    latest = latest_run_for_branch(check, github_token)
+    if not latest:
+        return False
+    return str(latest.get("head_sha") or "") != str(run.get("head_sha") or "")
+
+
 def todo_marker(check: WorkflowCheck, run_id: int) -> str:
     return f"ci-janitor:{check.repository}:{check.workflow}:{run_id}"
 
@@ -195,6 +230,19 @@ def main() -> int:
 
         if conclusion not in RED_CONCLUSIONS:
             continue
+
+        if conclusion == "cancelled":
+            try:
+                superseded = cancelled_run_is_superseded(check, run, github_token)
+            except (urllib.error.HTTPError, urllib.error.URLError, TimeoutError) as error:
+                print(f"::error::Unable to check for a superseding run of {check.label}: {error}")
+                return 1
+            if superseded:
+                print(
+                    f"{check.label}: cancelled run {run_id} superseded by a newer commit on "
+                    f"the branch (concurrency cancel-in-progress) -- treating as noise, not red."
+                )
+                continue
 
         red += 1
         marker = todo_marker(check, run_id)
