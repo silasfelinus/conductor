@@ -889,3 +889,32 @@ the code read came back clean.
 description outliving the code change that closed its gap; worth watching whether
 other PR#213-era kaizen tasks have the same staleness, but not spending a task on a
 speculative sweep without a second concrete instance.
+
+## 2026-07-17 | Reviewer → Silas | kind-robots/t-022 | pattern (autonomous hourly cycle, incident closed)
+
+**Decision:** Closed `status: done` after 12+ hours of sustained zero-503 confirmation.
+
+**Detail:**
+- t-022 (production DB connection-pool exhaustion, first seen 2026-07-15T08:56Z) has been
+  tracked across ~15 hourly reconfirmations with two false "RESOLVED" starts. The 06:56Z entry
+  (kind_robots PR #342, `revert/pr-336-one-shot-fallback`, merged by Silas) removed the
+  one-shot-fallback pool mechanism (PR #336) outright rather than patching it further, and Silas's
+  own note said to close this out once health held.
+- This cycle: checked live via the Vercel MCP connector (`get_runtime_logs` since=30m grouped by
+  statusCode — zero 503s across 891 requests; `get_runtime_errors` since=2h — no pool-timeout/
+  circuit-open/connection-closed group present at all, only routine 401/403/404 client errors).
+  12+ hours and roughly a dozen hourly cycles since the revert with no relapse — the longest clean
+  window on record for this incident, and the first one backed by an actual mechanism removal
+  rather than a parameter tweak.
+- Root cause per the full incident history: PR #336's one-shot Prisma pool fallback used
+  `minimumIdle: 0` with no `$connect()`/readiness probe before replay; concurrent heartbeat/
+  art-queue/Cypress traffic could pile into the un-warmed pool and never recover. PR #339 patched
+  around it; PR #342's full revert is what actually held.
+- Appended a `LEARNING.yaml` record capturing the "two patches didn't hold, the working fix was a
+  full revert of the mechanism" lesson for future infra incidents with a similar shape.
+
+**Failure category:** n/a (incident closure, not a task rejection).
+
+**Kaizen task:** none filed — this task's own history already contains the operationally useful
+lesson (kindrobots-unraid/t-012, ProxySQL production pooling observation, remains open and is the
+right home for any further pooling-threshold work).

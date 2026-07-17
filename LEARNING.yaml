@@ -2985,3 +2985,21 @@ records:
     send an object) and dream slugs are globally unique (send explicit de-duped slugs). Build live end-to-end
     once, early — dry-runs and unit tests can''t catch a Prisma type mismatch. Run long API builds detached
     (background), never in a 2-min-capped foreground call.'
+- date: 2026-07-17
+  project: kind-robots
+  task: t-022
+  kind: software
+  stakes: irreversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "Production DB pool exhaustion (t-022, first seen 2026-07-15T08:56Z) had three false
+    starts before the real fix: two app-code pool-config tweaks (#296 limit fallback, #300 TLS
+    checkServerIdentity, #325/#327 pool lifecycle) each looked plausible and were confirmed live
+    in prod, yet the outage kept recurring under a different signature each time (limit=10, then
+    limit=1 'one-shot fallback'). The fix that actually held was a full revert (#342) of the
+    one-shot-fallback mechanism (#336) rather than another patch on top of it -- when a pool/infra
+    incident keeps changing shape after being 'fixed' twice, suspect the fix itself introduced a
+    new failure mode and consider reverting the whole mechanism instead of patching further.
+    Closed after 12+ hours / ~12 hourly cycles of sustained zero-503 confirmation, per Silas's
+    own standing instruction to close once verified healthy."
