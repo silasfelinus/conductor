@@ -366,6 +366,19 @@ def build_records(proposal: dict, slug: str, pdate: str, dry_run: bool) -> tuple
     vibe_line = vibe.get("line", "")
     extra_base = {"dreamCycle": slug, "proposalDate": pdate}
 
+    # Dream slugs are globally unique in kind_robots; two same-titled elements
+    # (e.g. a world and a location both named "The Comet Market") would collide
+    # (409). Pass an explicit slug per dream, de-duplicated within this build.
+    used_slugs: set[str] = set()
+
+    def uniq_slug(base: str) -> str:
+        s = slugify(base) or "dream"
+        out, n = s, 2
+        while out in used_slugs:
+            out, n = f"{s}-{n}", n + 1
+        used_slugs.add(out)
+        return out
+
     def queue_art(element_slug: str, label: str, art_prompt: str) -> None:
         req_id, image_path, yaml_text = art_request_entry(slug, element_slug, label, art_prompt)
         art_entries.append(yaml_text)
@@ -378,7 +391,8 @@ def build_records(proposal: dict, slug: str, pdate: str, dry_run: bool) -> tuple
                    sheet_overrides: dict) -> Optional[dict]:
         """Create a card Dream + its PitchSheet (via by-dream). Returns the dream."""
         dream = kr_call("POST", "/api/dreams", {
-            "title": dtitle, "dreamType": dream_type, "designer": DESIGNER,
+            "title": dtitle, "slug": uniq_slug(dtitle),
+            "dreamType": dream_type, "designer": DESIGNER,
             "isPublic": True, "description": description,
             "flavorText": flavor[:500] if flavor else None,
             "artPrompt": art_prompt or None, "icon": icon,
@@ -387,7 +401,10 @@ def build_records(proposal: dict, slug: str, pdate: str, dry_run: bool) -> tuple
             return None
         sheet_body = {
             "designer": DESIGNER, "isPublic": True,
-            "extraData": {**extra_base, "elementType": dream_type, "element": element_slug},
+            # extraData is a String @db.LongText column — send JSON as a string,
+            # not a raw object (an object 400s with a Prisma-invalid error).
+            "extraData": json.dumps({**extra_base, "elementType": dream_type,
+                                     "element": element_slug}),
             **sheet_overrides,
         }
         sheet = kr_call("POST", f"/api/sheets/by-dream/{dream['id']}", sheet_body,
@@ -423,6 +440,7 @@ def build_records(proposal: dict, slug: str, pdate: str, dry_run: bool) -> tuple
     # 2. The vibe (GENRE Dream) — world-graph fidelity; no card/sheet.
     genre = kr_call("POST", "/api/dreams", {
         "title": vibe.get("title", f"{title} Vibe"), "dreamType": "GENRE",
+        "slug": uniq_slug(vibe.get("title", f"{title} Vibe")),
         "designer": DESIGNER, "isPublic": True, "description": vibe_line,
         "flavorText": vibe_line[:500], "icon": "kind-icon:palette",
     }, dry_run, results, f"GENRE dream: {vibe.get('title')}")
