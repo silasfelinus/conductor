@@ -30,3 +30,9 @@ blocked (URLError: <urlopen error Tunnel connection failed: 403 Forbidden>)
 
 ## 2026-07-17T03:05:32Z | upload.wikimedia.org | blocked | ai-art-academy/t-008
 blocked (URLError: <urlopen error Tunnel connection failed: 403 Forbidden>)
+
+## 2026-07-17T04:07:49Z | metmuseum.org | blocked | ai-art-academy/t-008
+blocked (URLError: <urlopen error Tunnel connection failed: 403 Forbidden>)
+
+## 2026-07-17T04:07:50Z | upload.wikimedia.org | blocked | ai-art-academy/t-008
+blocked (URLError: <urlopen error Tunnel connection failed: 403 Forbidden>)
