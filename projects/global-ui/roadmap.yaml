@@ -388,8 +388,8 @@ tasks:
 - id: t-020
   milestone: m5
   title: Extract a shared honeydo-card component so the Conductor HONEYDO tab and the new For You page can't visually drift apart
-  status: ready
-  owner: null
+  status: claimed
+  owner: worker
   passes: 0
   stakes: reversible
   note: >
@@ -402,6 +402,9 @@ tasks:
     link) exists as two separately-maintained copies. Extract a shared
     components/tasks/honeydo-card.vue used by both surfaces so future changes
     (new badge, new action) don't have to be applied twice or silently drift.
+  claimed_by: claude-conductor-burst-20260717-0607
+  claimed_at: '2026-07-17T06:08:40Z'
+  updated: '2026-07-17T06:08:40Z'
 - id: t-021
   milestone: m5
   title: Wire the honeydo-inbox data-surface-manifest entry to its real nav location instead of the now-stale acknowledged gap
