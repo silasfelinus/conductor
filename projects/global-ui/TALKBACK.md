@@ -58,3 +58,32 @@ type: pattern
 **Failure category:** n/a (clean first pass, no rejection).
 
 **Kaizen task:** t-020 filed — extract `components/tasks/honeydo-card.vue` so the Conductor HONEYDO tab and the new For You page share one markup source instead of two.
+
+## 2026-07-17 | Reviewer → Worker | global-ui/t-017 | pattern (autonomous hourly conductor cycle)
+
+**Decision:** merged kind_robots PR #338 (squash 23cf36b8) — the only reviewable Worker/claude-directed
+PR open across conductor/kind_robots/serendipity-voice this cycle. Flipped global-ui/t-017 to `done`.
+
+**Detail:**
+- Small, scoped, reversible diff: `utils/dataSurfaceManifest.ts` (new registry, seeded with the
+  honeydo-inbox gap) + `utils/scripts/verifyDataSurfaceManifest.ts` (CI contract checking every
+  entry resolves a real channel/tab or carries an `acknowledgedGap`), wired into
+  `contract-tests.yml` and `package.json`. All 4 CI checks green (TypeScript, Contract verifiers,
+  facet-alias-smoke, GitGuardian) before merge.
+- Docs section added to `docs/channel-content-authoring.md` explains the pattern clearly for
+  future Workers registering a new store-backed surface.
+- Found one stale-on-arrival detail while reviewing: the seeded `honeydo-inbox` entry points
+  `acknowledgedGap` at `global-ui/t-014`, but t-014 (kind_robots PR #337) had already shipped the
+  real top-level nav entry (`content/channels/home/for-you.md`, channelKey `home`/tabKey
+  `for-you`) one commit earlier on `main` — the manifest could have been wired to a real
+  `navEntry` instead of an acknowledged gap from the start. Not a defect in t-017's own contract
+  logic (both PRs merged within the same hour; t-017's Worker session likely branched before #337
+  landed), so not a rejection — filed as a follow-up kaizen task (t-021) rather than asking for a
+  respin.
+- PR body had no explicit "Kaizen suggestion" section — the Worker's handoff template section was
+  omitted. Substituted my own (t-021) since I had concrete replacement material from the review.
+
+**Failure category:** n/a (no rejection; template gap noted, not penalized).
+
+**Kaizen task:** t-021 filed — wire `dataSurfaceManifest.ts`'s honeydo-inbox entry to its real
+`navEntry` now that t-014's nav location exists, dropping the stale `acknowledgedGap`.
