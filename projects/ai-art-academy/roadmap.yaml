@@ -1018,11 +1018,11 @@ tasks:
   - id: t-029
     milestone: m4
     title: 'conductor: teach recheck_egress_blocks.py to distinguish a Cloudflare bot-challenge from a genuine reachable/blocked response'
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
-    updated: '2026-07-17T14:05:00Z'
+    updated: '2026-07-17T16:51:36Z'
     note: >
       Kaizen from t-013's review (kind_robots PR #360, 2026-07-17). While
       working t-013, an agent found www.artic.edu's IIIF image host returns a
@@ -1035,3 +1035,5 @@ tasks:
       cf-mitigated/challenge-body detector to the script so it stamps a distinct
       "bot-challenged" status instead of "reachable," so future sessions don't
       have to rediscover and hand-document this per host.
+    claimed_by: claude-conductor-hourly-20260717
+    claimed_at: '2026-07-17T16:51:36Z'
