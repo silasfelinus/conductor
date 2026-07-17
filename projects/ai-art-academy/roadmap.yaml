@@ -425,11 +425,11 @@ tasks:
   - id: t-010
     milestone: m6
     title: Academy continuous improvement pass
-    status: ready
+    status: claimed
     recurring: true
     passes: 0
     stakes: reversible
-    updated: '2026-07-17 19:21:00+00:00'
+    updated: '2026-07-17T20:48:56Z'
     note: |-
       Standing never-idle task (re-arms to ready after every completion, per the recurring-task rule). Each cycle pick ONE: (a) front-end style/polish pass on Academy or art-styler surfaces, (b) roadmap upgrade — refine tasks, detail the next milestone, prune stale notes, (c) generate more art inspirations or style preview thumbnails, (d) expand the curriculum with a new movement/artist entry (respecting PUBLIC-DOMAIN-POLICY.md). Note which option ran in the PR. This task never reaches done and does not count toward milestone progress.
       CORRECTION 2026-07-16 (later same session): the "KR_API_TOKEN still absent" line in the RAN entry immediately below is WRONG — it was carried forward from prior cycles without re-checking the live env. The token IS present (env-var field + GitHub secret). t-004/t-009 notes now carry the accurate blockers: the sandbox can't reach the kind_robots API (egress 403), so generation runs via the auto-art-generate GitHub Action, not sandbox sessions; and rendering needs the home relay (correct KR_RELAY_TOKEN + KR_RELAY_USER_ID) and the DB up. Dispatching live generation is human-gated. (Re-applied fresh after PR #617 was closed dirty.)
@@ -449,9 +449,11 @@ tasks:
 
       Added a reusable continuous-improvement checklist that rotates lanes, records current curriculum coverage, prevents redundant blocker probes, and defines the recurring-cycle completion test.
 
-      Completed option (b), roadmap/process upgrade. Merged PR
-    claimed_by: claude-conductor-burst-hourly-20260717T0507Z
-    claimed_at: '2026-07-17T05:09:44Z'
+      Completed option (b), roadmap/process upgrade: wrote docs/continuous-improvement-checklist.md (a reusable rotation list, current-coverage table, blocker-recheck discipline, and completion test for this recurring task). Merged conductor PR #715 (docs-only, no kind_robots change that pass).
+      RAN 2026-07-17 (~20:35 UTC, conductor-burst-hourly rotation, claude-conductor-burst-hourly-20260717T2000Z): option (a) front-end polish pass, per the checklist's own rotation rule (previous cycle was option (b), so lane 1 was next). Rechecked KR_RELAY_TOKEN/KR_RELAY_USER_ID first: still absent, so lane (c) generation stays blocked (KR_API_TOKEN alone isn't enough per the 2026-07-16 CORRECTION note above) — confirmed t-019 also still blocked (verified via GitHub `get_file_contents` that kind_robots' public/images/academy/styles/ still doesn't exist). Dispatched an Explore subagent to sweep every Academy component plus art-styler.vue (backs the shared Remix Studio/Style Lab surfaces) for a genuine, non-manufactured issue; it found a real WCAG 2.1.1 keyboard-operability gap: the source-image upload drop-zone in art-styler.vue was a bare clickable `<div>` (no `role`, `tabindex`, or keydown handler) targeting a `class="hidden"` `<input type="file">` that's out of tab order, so keyboard-only users had no way to reach or trigger the file picker at all — a real accessibility failure on a primary Academy Remix Studio interaction, not a style nitpick. Also found the gallery-search input in the same file had no `aria-label` (relies on placeholder alone, which disappears once typed), inconsistent with academy-styles-browser.vue's own search box which already has one. Fixed both: added `role="button" tabindex="0" aria-label` plus an `@keydown.enter.space` handler mirroring the existing `@click`, and added the missing `aria-label` to the gallery-search input. Verified: eslint clean, prettier clean, full-project `npm run test` (vue-tsc --noEmit) exits 0. kind_robots PR #371 (branch claude/keen-fermat-5y4h4d): all 3 CI checks green (TypeScript, Contract verifiers, GitGuardian) — merged squash 899ca64.
+    claimed_by: claude-conductor-hourly-20260717T2048Z
+    claimed_at: '2026-07-17T20:48:56Z'
+    owner: reviewer
 
   - id: t-015
     milestone: m4

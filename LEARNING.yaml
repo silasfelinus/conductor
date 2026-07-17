@@ -3065,9 +3065,22 @@ records:
   passes: 0
   outcome: done
   failure_category: null
-  lesson: "Cross-repo admin surfaces can ship without new backend by auditing the
-    target repo's existing create/patch routes first: mapping manifest itemShapes onto
-    the four existing endpoints (dreams/facets/characters/rewards all accept artImageId
-    on PATCH) meant the whole generator was frontend-only. When a repo has no YAML dep,
-    mirror conductor YAML as a typed TS seed plus a JSON import path instead of adding
-    a parser dependency."
+  lesson: "Cross-repo admin-surface task with an unmet ACL dependency (kind-robots
+    t-008) landed clean by keeping every created record isPublic:false as an explicit
+    interim rule and deferring release/storefront wiring entirely, rather than stubbing
+    a half-working gate. Task sat at status: claimed (not review) while its PR was
+    open -- next cycle should flip to status: review before gh pr create per AGENTS.md
+    step 7, even for cross-repo tasks."
+- date: '2026-07-17'
+  project: media-watchlist
+  task: t-007
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'A 12-year hand-maintained log had ~6 format regimes the 2-year design sample never showed
+    (unheadered year blocks, reversed headers, mixed-case sections, embedded stats tables, prose).
+    Structural detection (a repeating section type implies a new unheadered year) beat hardcoded line
+    numbers, and the log''s own hand-tallies served as free validation targets — 2342 entries parsed
+    with 0 unparseable lines and every mismatch traced to source-side drift, not parser error.'

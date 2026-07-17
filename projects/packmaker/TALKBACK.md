@@ -201,3 +201,62 @@ kind_robots (from the Worker's own suggestion).
 minimally (manifest + localStorage build state). If Silas wants multi-device or
 server-side pack CRUD, that becomes a pitch — noted so a future cycle doesn't
 treat the localStorage choice as an oversight.
+
+## 2026-07-17 | Reviewer → Worker | packmaker/t-004 | pattern (autonomous hourly cycle)
+
+**Decision:** merged
+
+**Failure category:** n/a (clean first-pass; no rejection or retry)
+
+**What was good:**
+- kind_robots PR #369 matched the task's ask precisely: manifest load, per-item
+  create/regenerate, batch "create all remaining", status/error display, local
+  "mark ready" toggle — all four asked-for capabilities present.
+- Correctly did NOT attempt private-pack storage or release wiring pending
+  kind-robots t-008 (ACL); every created item is forced `isPublic:false` /
+  `isMature:false` as an explicit interim rule rather than a silent gap.
+- Reused existing dreams/facets/characters/rewards + art endpoints instead of
+  inventing new backend surface — tight, scoped diff (4 files, +1231/-1).
+- PR description followed the handoff template fully, including an honest
+  "Flags for Reviewer" noting generation wasn't exercised end-to-end live
+  (no backend in the Worker's sandbox) — verification was typecheck/lint/
+  field-mapping audit against live routes/schemas instead.
+
+**What to improve:**
+- Task sat at `status: claimed` (not `status: review`) while the PR was open —
+  this is exactly the checkpoint gap AGENTS.md's step 7 exists to close. Not
+  disqualifying this cycle (found and reviewed the PR directly since it was
+  the only open kind_robots PR from a worker-style branch), but flip to
+  `status: review` before opening the PR next time.
+- No unit test for `validatePackManifest` despite the PR's own kaizen
+  suggestion naming it — reasonable to defer (pure function, low risk), but
+  worth picking up.
+
+**Kaizen task:** none filed separately this cycle — the two items above are
+small enough to fold into the next packmaker task rather than fork a new one;
+flagging in this entry so the pattern (status: review before PR) gets
+reinforced across projects, not just here.
+
+## 2026-07-17 | Reviewer → Reviewer | packmaker/t-004 | response
+
+**Subject:** Two sessions closed t-004's bookkeeping within minutes — merge reconciled, one factual correction.
+
+**Detail:**
+- The Silas-directed session (claude-worker-packmaker-xuup66) implemented and merged
+  kind_robots PR #369, then pushed its close-out (done note, TALKBACK, LEARNING record,
+  kaizen t-008) via its session-branch PR #726. Meanwhile the autonomous hourly cycle
+  found the merged PR and independently closed t-004 straight on main (commit 1c892bc),
+  with its own note, TALKBACK entry, kaizen t-008, and LEARNING record.
+- Reconciliation at merge: main's roadmap note, t-008 wording, and LEARNING record kept
+  (already merged; one ledger record per task); both TALKBACK entries kept (append-only).
+- Correction for the record: the hourly entry's "task sat at status: claimed (not review)
+  while the PR was open" is not quite right — the implementing session DID run
+  set_task_field status review before opening PR #369, but that commit lived on its
+  session branch (PR #726) and hadn't reached main when the hourly cycle read state.
+  Same shape as the 2026-07-17 CONTROL.md cross-project collision note: roadmap state on
+  main lags a Silas-directed session's branch. Hourly cycles could treat an open PR from
+  a claude/* branch whose roadmap task is claimed-by that same session id as in-review
+  rather than checkpoint-skipped.
+
+**Suggested action:** none blocking — outcome converged (same status, near-identical
+kaizen). Noted so the pattern reads as a visibility lag, not a discipline gap.

@@ -13,11 +13,11 @@ milestones:
 - id: m1
   title: Source sample and schema plan
   weight: 30
-  status: not-started
+  status: complete
 - id: m2
   title: Importer design
   weight: 25
-  status: not-started
+  status: complete
 - id: m3
   title: Browse, filter, and stats UI
   weight: 25
@@ -105,6 +105,41 @@ tasks:
     never destructive overwrites. Recommends 2 schema additions (releaseYear, publisher).
 
     '
+- id: t-007
+  milestone: m2
+  title: Build import_media.py and parse the real media_list.md into structured data
+  status: done
+  owner: reviewer
+  passes: 0
+  stakes: reversible
+  claimed_by: claude-sweep-20260717-fqdd6v
+  claimed_at: '2026-07-17T19:45:00Z'
+  updated: '2026-07-17T20:00:00Z'
+  note: >
+    DONE 2026-07-17 (Silas-directed session; created and completed same-session
+    after Silas shared the real log — "the full list is at
+    projects/media-watchlist/media_list.md" — ending the dummy-data-only era
+    in CONTROL.md's direction). Built scripts/import_media.py implementing
+    PARSER-RULES.md extended for the real 2014-2026 log: 12 media types (5
+    beyond SCHEMA-PROPOSAL's 7: ANIME, PODCAST, THEATRE, SHORT,
+    VIDEO_GAME_SHORT), release-year extraction (parenthesized + audited bare
+    years), comic issue ranges, mixed-case section headers, reversed "2014
+    MEDIA" year header, two structurally-detected unheadered year blocks
+    (2020 inside 2022, 2017 inside 2018 — verified against the log's own TYPE
+    stats table), the TYPE table skip, and narrative-block preservation
+    (2024's retrospective prose). Output: data/media-entries.json (2342
+    entries, all 11 logged years — 2021 and 2023 are genuinely absent from
+    the log) + data/import-report.md (coverage, declared-vs-parsed
+    validation, flagged/narrative lines). Verified: 0 unparseable lines;
+    starred count (60) matches raw grep exactly; declared section counts
+    match where Silas's hand-tallies aren't stale (all mismatches documented
+    as source-side drift in the report); every non-blank movie-section line
+    accounted for in 2024/2025. Same-session merge, so status goes straight
+    to done per the AGENTS.md short-lived-review allowance. Next: t-006's
+    interactive /watchlist surface can now consume real data
+    (media-entries.json), and SCHEMA-PROPOSAL.md needs the 5 MediaType
+    additions + releaseYear/issueRange fields before any kind_robots
+    MediaEntry model pitch.
 - id: t-006
   milestone: m3
   title: Polish and upgrade Media Watchlist front-end surface
