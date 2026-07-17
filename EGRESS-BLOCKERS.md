@@ -90,3 +90,12 @@ blocked (URLError: <urlopen error Tunnel connection failed: 403 Forbidden>)
 
 ## 2026-07-17T10:55:38Z | civitai.com | blocked | ai-art-academy/t-021
 blocked (URLError: <urlopen error Tunnel connection failed: 403 Forbidden>)
+
+## 2026-07-17T11:07:51Z | metmuseum.org | blocked | ai-art-academy/t-008
+blocked (URLError: <urlopen error Tunnel connection failed: 403 Forbidden>)
+
+## 2026-07-17T11:07:52Z | upload.wikimedia.org | blocked | ai-art-academy/t-008
+blocked (URLError: <urlopen error Tunnel connection failed: 403 Forbidden>)
+
+## 2026-07-17T11:08:30Z | api.stripe.com | blocked | digital-storefront/t-013
+blocked (URLError: <urlopen error Tunnel connection failed: 403 Forbidden>)
