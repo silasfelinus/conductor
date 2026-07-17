@@ -2972,3 +2972,16 @@ records:
   outcome: done
   failure_category: null
   lesson: "Another self-contained conductor-only kaizen task, picked up burst-mode in an hourly Reviewer cycle with no open worker/* PR to review. Added Cloudflare challenge fallback signals (Server header + cf-chl cookie, __cf_chl_rt_tk body marker) behind defensive getattr()/callable() checks so the existing test doubles (which don't implement get_all()/read()) kept passing unchanged rather than needing every prior fixture updated — cheaper than the t-029 fixture-rewrite when the new code path is additive rather than a signature change."
+- date: '2026-07-17'
+  project: dream-cycle
+  task: t-017
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'An always-failing dependency (intermittent DB 503s) masked two schema/contract bugs that meant
+    the daily-dream pipeline had NEVER shipped a row: extraData is a String column (json.dumps it, don''t
+    send an object) and dream slugs are globally unique (send explicit de-duped slugs). Build live end-to-end
+    once, early — dry-runs and unit tests can''t catch a Prisma type mismatch. Run long API builds detached
+    (background), never in a 2-min-capped foreground call.'
