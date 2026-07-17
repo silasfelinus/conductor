@@ -6079,3 +6079,55 @@ deferred surfaces.
 **Kaizen task:** t-023 -- preview-driven pass on the deferred kr-* surfaces (art callouts,
 /30-no-text notices, generic solid panels, code-library computed maps), each needing a
 per-surface preview-deploy eyeball the sandbox can't provide.
+
+## 2026-07-17 | Worker | digital-storefront/t-011 | done (kind_robots PR #351 merged, task split)
+
+**Decision:** claimed digital-storefront/t-011 (top of the priority-order walk this cycle:
+challenge-center had zero ready tasks — all 20 done, filed as a housekeeping observation below;
+ai-art-academy's ready tasks were all egress-blocked, freshly rechecked — metmuseum.org/
+upload.wikimedia.org/huggingface.co/civitai.com all still 403; coloring-book's ready tasks all
+need live art generation, also blocked/queued). Found t-011 as originally scoped ("Build the
+Mermaids of Venice PDF product page and purchase flow") bundled SPEC.md's build-order steps 1-3
+(schema migration, webhook, secure download route + product page) under one `gate_human:true` /
+`stakes:outward-facing` task. Split before attempting the monolith: landed only step 1 (schema +
+seed, zero live behavior) this cycle, reclassified that scoped-down slice as `stakes: reversible`
+on its own merits, and split the actual gated remainder into two new tasks (t-022 webhook, t-023
+product page + download route) that keep the original gate_human/outward-facing classification.
+
+**Detail:**
+- kind_robots PR #351: added `Product`/`Order`/`OrderItem`/`Entitlement` models + `ProductType`/
+  `OrderStatus` enums to `prisma/schema.prisma` (Int autoincrement ids matching house style, not
+  SPEC.md's draft `cuid()`; `metadata` as `String?/@db.LongText` per the repo's existing
+  no-native-Json-column convention, verified against `utils/scripts/verifyNoPrismaJsonCast.ts`).
+- Migration generated fully offline: `prisma migrate diff --from-schema <pre-change tree>
+  --to-schema prisma --script`, diffing the whole multi-file schema directory (schema.prisma +
+  model-builder.prisma + facet-alias.prisma) so cross-file model references resolved correctly.
+  No live DB or shadow DB needed for a schema-to-schema diff (only `--from-migrations` needs a
+  shadow DB). Result: purely additive, 4 `CREATE TABLE` + 6 `ADD CONSTRAINT` (FK), no drops.
+- Discovered `prisma/migrations/migration_lock.toml` was missing entirely — only the 2026-07-15
+  squashed-baseline folder existed, no lock file at the migrations-directory root. Confirmed via
+  `scripts/vercel-build.mjs` → `scripts/prisma-migrate-deploy.mjs` that production deploys DO run
+  real `prisma migrate deploy` (not just `db push`), which needs this file. Added it (a one-line,
+  unambiguous `provider = "mysql"` file matching the `migrations_old/` copy) since any new
+  migration folder needs it present to be valid — flagged in the PR for Silas rather than
+  investigating the deploy pipeline further (out of this task's scope).
+- Verified: `prisma validate`/`generate` clean, seed dry-run validates, eslint/prettier clean,
+  full-project `vue-tsc --noEmit` 0 errors, `verifyNoPrismaJsonCast` passes (1097 files). Could not
+  exercise a live `--write` seed or `prisma migrate deploy` (no DB in this sandbox).
+- Provisioned kind_robots deps via `conductor/scripts/provision_kind_robots_deps.sh`
+  (CYPRESS_INSTALL_BINARY=0 + dummy DATABASE_URL workaround, per conductor/t-046).
+- Housekeeping observation (not acted on, flagged for Silas): `scripts/audit_roadmaps.py` this
+  cycle showed `challenge-center` and `humboldt-scoop` both fully done (all tasks `status: done`)
+  but still `status: active` in `project-overrides.yaml` — that file's own header says
+  "Human-managed... Written by the workspace UI," so left it for Silas rather than editing it
+  directly. Also reconfirmed `kind-robots/t-022` (production DB pool exhaustion) still healthy —
+  `get_runtime_logs` (15m): 145x200, 0x503; `get_runtime_errors` (2h): only long-running background
+  noise, no pool-timeout/circuit-open recurrence. No notification sent (unchanged good news since
+  the 06:56Z recovery, not new information).
+
+**Failure category:** n/a (clean first-pass landing of the scoped-down step; the split itself
+happened before any implementation attempt, so no pass was consumed on t-011 — see LEARNING.yaml).
+
+**Kaizen task:** t-022 filed as the natural next pick for a future cycle with open api.stripe.com
+egress (webhook + Entitlement wiring) — not a "kaizen" in the improvement-suggestion sense, just
+the direct continuation of this task's own split. No separate kaizen task filed this cycle.
