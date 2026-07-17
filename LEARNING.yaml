@@ -2654,3 +2654,17 @@ records:
   lesson: 'A multi-write build against an intermittent DB must be atomic: track created row ids and roll
     them back (DELETE, newest-first) on ANY failure, never mark a partial build complete. Bailing only
     on total failure silently ships incomplete, un-retried records during blips.'
+- date: '2026-07-17'
+  project: global-ui
+  task: t-014
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'kind_robots has two distinct Nuxt Content collections that both accept the same frontmatter
+    shape (content.config.ts: "content" excludes channels/**, "channels" sources only channels/**) — a
+    top-level content/*.md file is the real routable page, while content/channels/<key>/*.md is nav
+    metadata only. Both commonly reuse the same tabKey. Easy to mistake for accidental duplication;
+    confirm against content.config.ts before assuming a bug. New top-level nav surfaces need one file
+    in each collection.'
