@@ -1,38 +1,17 @@
 set: monster-recast
 source_issue: 414
 migrated_at: '2026-07-17'
-status: active-project-handoff
-purpose: >
-  Keep Monster Recast stage-two production inside the coloring-book project
-  and its roadmap instead of relying on a standalone GitHub issue that the
-  Conductor Worker does not select.
-
-workflow_ownership:
-  exploration:
-    roadmap_task: t-007
-    scope: >
-      Finish paired first-pass color and black-and-white studies for concepts
-      not represented in approved/, using unapproved-art-jobs.yaml and the
-      quality/curation pipeline. Exploration must not replace accepted bases.
-  selection_and_refinement:
-    roadmap_task: t-013
-    scope: >
-      Reconcile every approved asset to a canonical concept, verify filename
-      drift and duplicates, preserve accepted compositions, repair weak or
-      divergent pairs, and record production metadata.
-  coloring_conversion:
-    roadmap_task: t-015
-    scope: >
-      Produce faithful missing counterparts and final print-ready line art
-      from selected colored masters without redesigning the accepted scene.
-  packaging:
-    roadmap_task: t-016
-    scope: >
-      Assemble the final digital and print-ready package only after selection,
-      Character creation, and coloring conversion are complete.
-
+status: absorbed-into-proposal-ledger
+canonical_files:
+  production_model: ../../PRODUCTION-MODEL.md
+  proposal_ledger: proposals.yaml
+  creative_pool: homage-concepts.yaml
+  legacy_approval_manifest: approved/manifest.yaml
+roadmap_ownership:
+  production: t-022
+  packaging: t-025
+  private_character_followup: t-014
 inventory_snapshot:
-  captured_from_issue: 414
   captured_at: '2026-07-12'
   approved_webp_files: 27
   represented_concepts: 18
@@ -40,100 +19,48 @@ inventory_snapshot:
   bw_only_working_bases: 8
   color_only_working_bases: 1
   represented_concept_ids:
-    - mr-001
-    - mr-002
-    - mr-003
-    - mr-004
-    - mr-005
-    - mr-006
-    - mr-007
-    - mr-008
-    - mr-009
-    - mr-011
-    - mr-012
-    - mr-014
-    - mr-015
-    - mr-018
-    - mr-020
-    - mr-022
-    - mr-025
-    - mr-029
+  - mr-001
+  - mr-002
+  - mr-003
+  - mr-004
+  - mr-005
+  - mr-006
+  - mr-007
+  - mr-008
+  - mr-009
+  - mr-011
+  - mr-012
+  - mr-014
+  - mr-015
+  - mr-018
+  - mr-020
+  - mr-022
+  - mr-025
+  - mr-029
   verification_notes:
-    - >
-      This is a dated handoff snapshot, not a substitute for scanning the
-      directory. Run python scripts/coloring_approved_status.py --check before
-      selection, refinement, conversion, or queue edits.
-    - >
-      masked-countess is provisionally mapped to mr-018 Doctor Feast and still
-      requires visual verification.
-    - >
-      Preserve binary filenames until the manifest records aliases and
-      duplicates explicitly; do not silently rename or delete art.
-
-stage_two_rules:
-  - Everything physically present in approved/ is approved as a stage-two working base.
-  - A working base may be color, black-and-white, or a complete pair; it is not automatically a final page.
-  - Evolve the accepted composition instead of regenerating it from scratch.
-  - Preserve pose, anatomy, body type, scars, age, creature structure, perspective, contact points, and the visual hook.
-  - Use STYLE-GUIDE.md: serious theatrical camp, thick black contours, bounded color, organized high detail, no collage.
-  - Record source asset, revision prompt, model or workflow, seed or job metadata, and output path.
-  - Keep publishing, POD accounts or listings, spend, storefront release, and public Character release out of scope.
-
-remaining_checklist:
-  inventory_reconciliation:
-    - Map every approved file to a canonical concept id and working title.
-    - Record stage-two-working-base status and whether each concept has color, BW, or a pair.
-    - Surface filename drift and duplicates without mutating binary assets.
-    - Refresh README and preflight counts after the manifest agrees with the directory.
-  counterpart_work:
-    - Identify the eight BW-only concepts that need colored masters.
-    - Identify the one color-only concept that needs faithful line-art conversion.
-    - Audit the nine complete pairs for composition, anatomy, and identity divergence.
-  exploration:
-    - Keep the durable unapproved-art-jobs.yaml queue active for unrepresented concepts.
-    - Route failed objective checks to rejected/ and leave their jobs pending.
-    - Use vision curation against approved/ as the quality bar before promotion.
-
+  - Run both coloring_approved_status.py and coloring_proposal_status.py before production.
+  - The snapshot is historical; the physical directory scan is the current existence check.
+  - The proposal ledger, not directory presence, records inspiration, acceptance, and final status.
+  - masked-countess remains a provisional mapping that requires visual verification.
+production_rules:
+- Exactly 36 interior proposal records; cover separate.
+- Accepted working files and confirmed final files are distinct states.
+- Every proposal aims for one final color file and one faithful final BW file.
+- Preserve accepted composition, anatomy, body type, age, scars, perspective, contact points, and visual hook.
+- Do not silently rename, delete, promote, or replace discovered art.
+- Advance small batches without waiting for unrelated exploration.
 captain_hook_addition:
-  canonical_candidate_id: mr-035
+  canonical_proposal_id: mr-035
   working_title: The Ticking Captain
-  source_lineage: Captain Hook and haunted pirate-villain folklore
-  status: proposed-for-canonical-manifests
-  recast: >
-    A formidable older adult woman pirate captain with a weathered, broad,
-    physically credible body and an original articulated prosthetic hook-hand.
-    She is pursued across impossible seas by a vast clockwork marine predator
-    whose brass gill plates tick like a ship chronometer.
-  body_direction: >
-    Mature, scarred, sea-hardened, powerful, and elegant without being slimmed
-    into a pinup. The prosthesis is functional, intricate, and visibly used.
-  framing: >
-    Low storm-deck angle as the captain braces at the wheel, catches a snapping
-    rigging line with the hook, and stares down the luminous outline of the
-    ticking predator beneath the waves.
-  horror_engine: >
-    Inescapable ticking, a time curse tied to the sea, a predator visible below
-    the hull, failing rigging, and the captain's certainty that it always finds her.
-  camp_engine: >
-    She remains impeccably theatrical and furious that destiny keeps arriving
-    off schedule while the entire ship counts down around her.
-  visual_hook: >
-    The prosthetic opens into a nested compass-and-chronometer claw whose hands
-    point directly toward the predator.
-  originalization_hook: >
-    Create a new captain identity, ship, costume system, prosthetic mechanism,
-    time curse, and marine species. Do not use Disney-specific likeness,
-    mustache, red-coat design, feathered hat, crocodile design, typography,
-    supporting characters, or exact scene recreation.
-  integration_needed:
-    - Add the concept to homage-concepts.yaml and increment concept_count.
-    - Add a canonical scene prompt to art-modeler-request.yaml.
-    - Add paired pending color and BW jobs to unapproved-art-jobs.yaml.
-    - Include it in later ranking and originality review; do not auto-select it for the book.
-
+  status: tracked-in-proposals-ledger
+  prompt_location: proposals.yaml#mr-035
+  remaining_legacy_sync:
+  - Optionally mirror the proposal into homage-concepts.yaml and art-modeler-request.yaml when those legacy files
+    are next edited.
+  - The production ledger already prevents this proposal from being lost or blocked on that duplication.
 completion_definition:
-  - approved/ and approved/manifest.yaml agree at the per-file level.
-  - Captain Hook lineage is represented in canonical concept and generation manifests.
-  - Missing counterpart work is explicitly recorded and queued.
-  - Existing approved bases can enter stage-two revision without waiting for unrelated exploration.
-  - Roadmap tasks t-007, t-013, and t-015 remain the authoritative execution queue.
+- Every approved/ file is mapped into a proposal as inspiration/candidate, accepted working file, final file, alias,
+  or duplicate.
+- All 36 proposal records contain a confirmed final color/BW pair.
+- t-022 is marked done and no longer recurring.
+- t-025 can package the book without re-interpreting legacy directories.
