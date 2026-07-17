@@ -32,6 +32,40 @@ filed as follow-on **t-021**.
   treated as available. Several would upgrade prompt-mode styles to LoRA mode if
   Silas checks them while logged in.
 
+**v1.2 update (2026-07-17, t-021):** first session with genuinely open egress to both
+`huggingface.co` and `civitai.com` (every prior cycle logged a 403 on both — see
+"Research method note" below). Direct HF/Civitai search found real candidates for all
+five movements this task was filed to cover:
+
+- **`northern-renaissance` upgraded to LoRA**: `Muapi/jan-van-eyck-style` (Hugging
+  Face, no login), a FLUX.1-dev LoRA literally named for Jan van Eyck — the founding
+  master of Early Netherlandish/Northern Renaissance painting (d. 1441). Direct hit.
+- **`symbolism` upgraded to LoRA**: `Kaamalauppias/finnish-symbolism-art-lora-v2`
+  (Hugging Face, no login), a FLUX.1-dev LoRA trained on Finnish Symbolism (the
+  movement of Akseli Gallen-Kallela, d. 1931). Trigger word is the generic `TOK`
+  (Replicate/ostris trainer default) and the repo ships no sample images, so quality
+  is unverified — flag for t-004 A/B before relying on it.
+- **`gothic`** (Civitai S-8, "Gothic Oil Painting Style"): now verifiable via
+  Civitai's public model API (previously blind-linked only). Its description
+  discloses no training artists/artwork at all — cannot confirm the ethical
+  dead-70-years boundary — so it is **not** promoted even though the page is
+  reachable now. Stays prompt-mode; S-8 note updated to flag the undisclosed
+  provenance rather than just "unreachable."
+- **`pointillism`** (Civitai S-7, "Pointillism Art Style"): now fully verified —
+  trained on Théo van Rysselberghe (d. 1926) and Paul Signac (d. 1935), both safely
+  public domain, FLUX.1 D base, non-commercial license, trigger words documented.
+  Ethically clean, but the actual weight download still returns `401` without a
+  Civitai account/API key (confirmed directly, not assumed) — stays gated in the
+  needs-Silas table, now with verified details instead of a blind link.
+- **`rococo`**: no viable candidate found. The one FLUX hit surfaced by search,
+  `Muapi/1890s-rococo-opera-sd1-sdxl-pony-flux`, trains on "pastel-colored 1890s
+  fantasy opera movie stills" — a modern Belle-Époque photo-still aesthetic, not
+  18th-century Rococo painting (Watteau/Boucher/Fragonard) — rejected as off-register,
+  same standard applied to the Picasso-name cubism rejection above. Stays prompt-mode.
+
+Net effect: LoRA-backed styles go from 8 to **10** (of the original 16), prompt-mode
+drops from 11 to **9**. Full detail in each style's "Per-style notes" entry below.
+
 ### Licensing headline (flag for t-004 and Silas)
 
 Almost every FLUX LoRA in the ecosystem is published under the **FLUX.1 [dev]
@@ -184,14 +218,24 @@ styles:
     mode: prompt
     prompt_hint: "Repaint this image as a late-medieval Gothic panel painting: figures on a burnished gold-leaf ground, elongated bodies with gentle S-curves, jewel-toned tempera, pointed-arch framing, flattened space, no modern shading"
   - style_slug: northern-renaissance
-    mode: prompt
-    prompt_hint: "Repaint this image as an Early Netherlandish oil painting: microscopic detail, luminous layered glazes, crisp naturalism, cool northern daylight, a meticulously rendered landscape or interior behind the figures"
+    mode: lora
+    lora_name: Muapi/jan-van-eyck-style
+    source_url: https://huggingface.co/Muapi/jan-van-eyck-style
+    license: "openrail++ (adapter) on FLUX.1 [dev] base — base model's Non-Commercial License still governs generation service use, same as every other flux-dev entry here"
+    base_model: flux-dev
+    trigger: "Jan van Eyck Style"
+    weight: 0.9
   - style_slug: rococo
     mode: prompt
     prompt_hint: "Repaint this image as a Rococo oil painting: pastel palette of rose, sky-blue, and cream, feathery loose brushwork, soft diffused light, playful ornamental curves, a light and airy mood"
   - style_slug: symbolism
-    mode: prompt
-    prompt_hint: "Repaint this image as a Symbolist painting: dreamlike mysterious mood, muted twilight color, mythic and allegorical atmosphere, soft glowing light, a sense of reverie rather than plain reality"
+    mode: lora
+    lora_name: Kaamalauppias/finnish-symbolism-art-lora-v2
+    source_url: https://huggingface.co/Kaamalauppias/finnish-symbolism-art-lora-v2
+    license: "FLUX.1 [dev] Non-Commercial License (commercial: no; generation-service: no without BFL license)"
+    base_model: flux-dev
+    trigger: "TOK"
+    weight: 0.9
   - style_slug: byzantine-mosaic
     mode: prompt
     prompt_hint: "Repaint this image as a Byzantine mosaic of small glass tesserae: gold background, frontal iconographic figures, visible grout lines"
@@ -338,7 +382,16 @@ styles:
 - Backs curriculum movement §21 (Neo-Impressionism / Pointillism: Seurat d. 1891,
   Signac d. 1935, Cross d. 1910, van Rysselberghe d. 1926 — all in-bounds).
 - Only Civitai candidates ("Pointillism Art Style - FLUX", trained on Signac /
-  van Rysselberghe — both dead 70+ years, ethically fine — S-7). Prompt-mode
+  van Rysselberghe — both dead 70+ years, ethically fine — S-7). **Verified
+  2026-07-17 (t-021)** via Civitai's public model API (reachable this session for
+  the first time): confirms FLUX.1 D base, trigger words `Vivid, Pointillist style,
+  impressionist-style painting, painting`, and the training basis Théo van
+  Rysselberghe (d. 1926) + Paul Signac (d. 1935) straight from the model's own
+  description — not inferred from search snippets. `allowCommercialUse:
+  {RentCivit,Image,Rent}`, `allowDerivatives: false`. The actual `.safetensors`
+  download still returns HTTP 401 without a Civitai account/API key (confirmed
+  directly), so it stays in the needs-Silas table — but now fully documented rather
+  than a blind link. Prompt-mode
   (`prompt_hint` in the block above): "Repaint this image using pointillist
   technique: thousands of tiny separate dots of pure unmixed color that blend in
   the eye, a luminous divisionist surface, even all-over stippling, bright balanced
@@ -371,6 +424,14 @@ styles:
   Gothic panel painting: figures on a burnished gold-leaf ground, elongated bodies
   with gentle S-curves, jewel-toned tempera, pointed-arch framing, flattened space,
   no modern shading."
+- **Verified 2026-07-17 (t-021):** Civitai's public model API was reachable this
+  session (`GET civitai.com/api/v1/models/910493`), so S-8 could finally be read
+  directly instead of guessed from search snippets. Its description field is a
+  recipe for shrimp egg foo young — not a single word about training images,
+  artists, or artwork. With no disclosed provenance there is no way to confirm the
+  dead-70-years boundary, so it stays un-promoted regardless of the login gate.
+  `allowCommercialUse: {RentCivit}`, `allowDerivatives: false` — non-commercial like
+  everything else here, for the record.
 - **Teaching note / t-004 watch-item:** shares the gold-ground family with
   `byzantine-mosaic` and `illuminated-manuscript`, so the gold background and
   tempera color transfer reliably. Two risks: the word "gothic" pulls the base model
@@ -378,23 +439,32 @@ styles:
   medieval-devotional cues explicit), and the model may bolt haloes or an altarpiece
   frame onto secular subjects — acceptable for portraits, distracting for landscapes.
 
-### northern-renaissance — prompt-mode
+### northern-renaissance — LoRA (Jan van Eyck)
 
 - Backs curriculum movement §18 (Early Netherlandish/German: van Eyck d. 1441, van
   der Weyden d. 1464, Memling d. 1494, Bosch d. 1516, Bruegel the Elder d. 1569).
-- No dedicated FLUX Early-Netherlandish LoRA found on Hugging Face (login-free); the
-  `renderartist/classic-painting-flux` old-master LoRA (see oil-painting notes) partly
-  covers the look and is the natural LoRA A/B partner. Prompt-mode (`prompt_hint`
-  above): "Repaint this image as an Early Netherlandish oil painting: microscopic
-  detail, luminous layered glazes, crisp naturalism, cool northern daylight, a
-  meticulously rendered landscape or interior behind the figures."
+- **Found 2026-07-17 (t-021), first session with open HF/Civitai egress:**
+  **`Muapi/jan-van-eyck-style`** (Hugging Face, no login — weights ship directly as
+  a repo sibling file, the vendor's own `muapi.ai` API in its README is optional,
+  not required). FLUX.1-dev native, trigger `Jan van Eyck Style`. Named directly for
+  Jan van Eyck, the founding master of the movement (d. 1441) — the cleanest
+  artist-name match found anywhere in this registry, and maximally in-bounds
+  ethically. License tag is `openrail++` on the adapter itself, but it loads onto
+  the FLUX.1-dev base, whose Non-Commercial License still governs generation-service
+  use the same as every other flux-dev entry — don't read `openrail++` as "more
+  permissive" for production purposes.
+- Old runner-up: `renderartist/classic-painting-flux` (see oil-painting notes) is a
+  broader old-master LoRA, still a fine A/B partner for t-004 alongside the new pick.
 - **Teaching note / t-004 watch-item:** distinct from the Italian `renaissance` entry
   (`renaissance-fresco` / Raphael LoRA) — this is the *northern*, oil-glaze, hyper-
   detailed tradition, not sfumato and classical balance. The failure mode is
   under-cooking into a generic "old oil painting"; the differentiators are the
   microscopic detail and the deep, sharply-focused background, so keep those in the
   template. Bruegel's peasant-genre subjects are a good demo image for showing how the
-  style handles everyday scenes, not just portraits.
+  style handles everyday scenes, not just portraits. Confirm the van Eyck LoRA
+  actually delivers the microscopic-detail/glaze look in t-004 — the trigger name
+  guarantees the *artist association*, not the specific visual traits, so treat this
+  as a strong lead to validate, not a done deal.
 
 ### rococo — prompt-mode
 
@@ -404,6 +474,13 @@ styles:
   painting is strong. Prompt-mode (`prompt_hint` above): "Repaint this image as a
   Rococo oil painting: pastel palette of rose, sky-blue, and cream, feathery loose
   brushwork, soft diffused light, playful ornamental curves, a light and airy mood."
+- **Checked 2026-07-17 (t-021), first session with open HF/Civitai egress:** direct
+  Hugging Face search for Watteau/Boucher/Fragonard by name returned nothing usable.
+  The one FLUX-native rococo-labeled hit, `Muapi/1890s-rococo-opera-sd1-sdxl-pony-flux`,
+  trains on "pastel-colored 1890s Rococo fantasy opera movie stills" — a modern
+  Belle-Époque photo-still look, not 18th-century Rococo painting — rejected as
+  off-register (same standard as the Picasso-name cubism rejection above). Stays
+  prompt-mode; genuinely nothing better found this pass, not merely unreached.
 - **Teaching note / t-004 watch-item:** the pastel palette and soft light are what
   sell it — a common miss is the model keeping the source photo's saturated/contrasty
   color, which reads as generic portraiture rather than Rococo. Consider adding
@@ -411,22 +488,38 @@ styles:
   quieter still-life register is a useful counter-example in the lesson (same era, very
   different mood) but the remix template should target the Boucher/Fragonard sparkle.
 
-### symbolism — prompt-mode
+### symbolism — LoRA (Finnish Symbolism)
 
 - Backs curriculum movement §20 (Symbolism: Moreau d. 1898, Puvis de Chavannes
   d. 1898, Böcklin d. 1901, Redon d. 1916 — all in-bounds).
-- No dedicated FLUX Symbolism LoRA found (the term collides with modern "symbolic/
-  surreal" aesthetic LoRAs, which are off-register). Prompt-mode (`prompt_hint`
-  above): "Repaint this image as a Symbolist painting: dreamlike mysterious mood,
-  muted twilight color, mythic and allegorical atmosphere, soft glowing light, a
-  sense of reverie rather than plain reality."
+- **Found 2026-07-17 (t-021), first session with open HF/Civitai egress:**
+  **`Kaamalauppias/finnish-symbolism-art-lora-v2`** (Hugging Face, no login,
+  FLUX.1-dev, weights ship directly as a repo sibling). Named for Finnish Symbolism —
+  the movement of Akseli Gallen-Kallela (d. 1931), safely in-bounds — trained via
+  Replicate's `ostris/flux-dev-lora-trainer`. Standard FLUX.1 [dev] Non-Commercial
+  license. **Caveats before shipping:** the trigger word is the generic `TOK`
+  (an ostris-trainer default, not a descriptive phrase) and the repo has no sample
+  images at all, so visual quality/on-style-ness is completely unverified — flag as
+  a priority t-004 A/B item, same as pointillism's mechanical-look risk below.
+- Related but not directly usable: `idiootti-ilves/Akseli_Gallen-Kallela_-_Kalevala`
+  (HF, no login) trains directly on Gallen-Kallela's Kalevala paintings under
+  **CC-BY-SA 4.0** — the most open license found anywhere in this registry — but it's
+  an SDXL 1.0 LoRA, wrong base-model architecture for our FLUX/Kontext pipeline.
+  Worth flagging to Silas as the best available *retraining* reference if a future
+  FLUX-native Gallen-Kallela LoRA is ever commissioned, not as a wireable candidate.
+- Prompt-mode fallback recipe (unchanged, useful for A/B against the LoRA):
+  "Repaint this image as a Symbolist painting: dreamlike mysterious mood, muted
+  twilight color, mythic and allegorical atmosphere, soft glowing light, a sense of
+  reverie rather than plain reality."
 - **Teaching note / t-004 watch-item:** Symbolism is the loosest *visual* signature
   in the set — it transfers as mood and palette (twilight, haze, glow) more than as a
   hard technique, so evaluate it on atmosphere, not on a recognizable brush handling.
   Expect results that read as "dreamy twilight repaint"; set that expectation in UI
   copy. Guard against the base model sliding into modern digital-fantasy or
   airbrushed-surrealism looks — anchor on the named 19th-century painters in the
-  lesson, not on generic "surreal."
+  lesson, not on generic "surreal." The Gallen-Kallela LoRA specifically may skew
+  toward Kalevala myth-illustration rather than the French/Belgian branch of the
+  movement (Moreau/Redon) — note that register difference in lesson copy if it ships.
 
 ### byzantine-mosaic — prompt-mode
 
@@ -467,11 +560,11 @@ how the relay runs Kontext — hosted API with commercial base license vs self-h
 and on risk appetite for NC LoRA weights in production). Until decided, only the
 Apache-2.0 watercolor LoRA is unambiguously production-safe.
 
-All Civitai entries below are candidates only: the Civitai site/API was unreachable
-from this session, per-model permissions (commercial use flags, "sell generated
-images", download gating) could not be read, and Civitai downloads are frequently
-login/API-key-gated at the creator's option. Silas (logged in) should check the
-permissions box on each model page before any are promoted into the registry.
+All Civitai entries below are candidates only: per-model permissions could not be
+fully verified (see per-row notes for the two re-checked 2026-07-17), and Civitai
+`.safetensors` downloads require a logged-in account/API key at the creator's
+option regardless of what the model card discloses. Silas (logged in) should check
+the permissions box on each model page before any are promoted into the registry.
 
 | # | Model | URL | Would upgrade |
 |---|-------|-----|----------------|
@@ -481,14 +574,16 @@ permissions box on each model page before any are promoted into the registry.
 | S-4 | Ukiyo-e Japanese Woodblock (Tsukioka Yoshitoshi) | https://civitai.com/models/1054574 | ukiyo-e artist variant |
 | S-5 | Renaissance Art Style - FLUX (trigger "Renaissance", 0.8–1.3) | https://civitai.com/models/672567 | renaissance alternate |
 | S-6 | [Pinkie] Stained Glass Art [Flux] (67 positive reviews) | https://civitai.com/models/728275 | stained-glass → lora |
-| S-7 | Pointillism Art Style - FLUX (Signac/van Rysselberghe-trained) | https://civitai.com/models/767804 | pointillism → lora |
-| S-8 | Gothic Oil Painting Style - Flux | https://civitai.com/models/910493 | gothic → lora |
+| S-7 | Pointillism Art Style - FLUX (Signac/van Rysselberghe-trained) | https://civitai.com/models/767804 | pointillism → lora — **content-verified 2026-07-17 via Civitai API: FLUX.1 D, trigger `Vivid, Pointillist style, impressionist-style painting, painting`, training basis confirmed PD-safe. Download still 401s without login.** |
+| S-8 | Gothic Oil Painting Style - Flux | https://civitai.com/models/910493 | gothic → lora — **checked 2026-07-17 via Civitai API: description discloses no training artists/artwork at all (page content is an unrelated recipe). Do not promote even if downloaded — provenance can't be confirmed against the dead-70-years rule.** |
 | S-9 | Mystic Sumi (sumi-e) | https://civitai.com/models/921689 | sumi-e Japanese variant |
 | S-10 | Art Deco LoRA [FLUX+SD+XL+Pony] (trigger artdeco_v4) | https://civitai.com/models/516682 | art-deco → lora |
 | S-11 | Expressionism / Painting style / Emotional expression | https://civitai.com/models/1190042 | expressionism alternate |
 
 No paid-only LoRAs were encountered; the gate on everything above is Civitai login,
-not payment.
+not payment. (S-1 through S-6 and S-9 through S-11 were not re-checked this pass —
+t-021's scope was the five v1.1 movements — so they still reflect the original
+2026-07-10 search-snippet research, not a fresh API read.)
 
 ## Ethical exclusions applied (do not revisit)
 
@@ -502,8 +597,19 @@ not payment.
 
 ## Research method note
 
-Hugging Face and Civitai were not directly fetchable from this session (proxy policy
-denial for both WebFetch and curl); everything above was assembled from web-search
-snippets and cross-checked across multiple queries. Licenses marked "unverified"
-should be read off the model card at download time (t-004 setup step). No weights
-were downloaded.
+Hugging Face and Civitai were not directly fetchable from the original 2026-07-10
+research session (proxy policy denial for both WebFetch and curl); that pass was
+assembled from web-search snippets and cross-checked across multiple queries.
+Licenses marked "unverified" from that pass should be read off the model card at
+download time (t-004 setup step).
+
+**Update 2026-07-17 (t-021):** this is the first session where both `huggingface.co`
+and `civitai.com` were directly reachable (`curl`/API calls returned real data, not
+403s) — every prior cycle's EGRESS-BLOCKERS.md recheck had logged the opposite.
+Hugging Face's public model API and file listings, and Civitai's public model API
+(`civitai.com/api/v1/models/<id>`), were used to verify candidates directly instead
+of relying on search snippets — see the northern-renaissance, symbolism, gothic, and
+pointillism per-style notes above for what changed as a result. Actual Civitai
+`.safetensors` downloads still require an authenticated account (confirmed via a
+direct `401` on the download endpoint), so that part of the gate is unchanged. No
+weights were downloaded this session either.

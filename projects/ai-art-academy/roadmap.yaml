@@ -549,36 +549,12 @@ tasks:
   - id: t-021
     milestone: m2
     title: 'Hunt LoRAs for the 5 new prompt-mode movements and backfill prompt_hint on older entries'
-    status: claimed
+    status: review
     owner: worker
     passes: 0
     stakes: reversible
-    updated: '2026-07-17T19:08:00Z'
-    note: >
-      Filed 2026-07-16 (t-010 curriculum-expansion cycle). The five new movements all
-      ship prompt-mode in docs/style-lora-registry.md; none has a login-free FLUX LoRA
-      yet. Extend the registry the way t-003 did: hunt openly downloadable, PD/dead-
-      artist-safe LoRAs for gothic, northern-renaissance, rococo, symbolism, and
-      pointillism (Civitai starting points already parked in the needs-Silas table —
-      S-7 pointillism, S-8 gothic — but check for login-free Hugging Face options
-      first, and record license/trigger/weight per the existing schema). Same
-      environment caveat as t-003: HF/Civitai may be egress-blocked this session, so
-      web-search-sourced entries stay `license: unverified` until read off the model
-      card.
-
-      BACKFILL DONE 2026-07-17 (conductor-burst-hourly): claimed, then completed the
-      registry-only half of this task (no egress needed) and released the rest back
-      to `ready`. Added `prompt_hint` to the 6 older prompt-mode entries still missing
-      it — ukiyo-e, baroque-chiaroscuro, cubism, stained-glass, byzantine-mosaic,
-      art-deco (the note's original "8" count was stale: gothic and pointillism, 2 of
-      the original 8, already got their hints in the same v1.1 batch that introduced
-      the field). Each hint is derived verbatim from that style's existing per-style
-      prose recipe in the same file — no new facts invented. Updated the field's own
-      doc-comment to drop the "can be backfilled" TODO language. Confirmed fresh
-      via EGRESS-BLOCKERS.md (2026-07-17T03:05Z entries, this session) that
-      huggingface.co/civitai.com remain 403-blocked from this sandbox, so the
-      LoRA-hunting half stays `ready`-but-blocked (transient, no pass burned) for a
-      session with open egress to those hosts, or Silas's own environment.
+    updated: '2026-07-17T19:15:39Z'
+    note: 'Filed 2026-07-16 (t-010 curriculum-expansion cycle). The five new movements all ship prompt-mode in docs/style-lora-registry.md; none has a login-free FLUX LoRA yet. Extend the registry the way t-003 did: hunt openly downloadable, PD/dead- artist-safe LoRAs for gothic, northern-renaissance, rococo, symbolism, and pointillism (Civitai starting points already parked in the needs-Silas table — S-7 pointillism, S-8 gothic — but check for login-free Hugging Face options first, and record license/trigger/weight per the existing schema). Same environment caveat as t-003: HF/Civitai may be egress-blocked this session, so web-search-sourced entries stay `license: unverified` until read off the model card. BACKFILL DONE 2026-07-17 (conductor-burst-hourly): claimed, then completed the registry-only half of this task (no egress needed) and released the rest back to `ready`. Added `prompt_hint` to the 6 older prompt-mode entries still missing it — ukiyo-e, baroque-chiaroscuro, cubism, stained-glass, byzantine-mosaic, art-deco (the note''s original "8" count was stale: gothic and pointillism, 2 of the original 8, already got their hints in the same v1.1 batch that introduced the field). Each hint is derived verbatim from that style''s existing per-style prose recipe in the same file — no new facts invented. Updated the field''s own doc-comment to drop the "can be backfilled" TODO language. Confirmed fresh via EGRESS-BLOCKERS.md (2026-07-17T03:05Z entries, this session) that huggingface.co/civitai.com remain 403-blocked from this sandbox, so the LoRA-hunting half stays `ready`-but-blocked (transient, no pass burned) for a session with open egress to those hosts, or Silas''s own environment. DONE 2026-07-17 (conductor-burst cycle, claude-conductor-burst-20260717T1900Z): first session with genuinely open egress to both huggingface.co and civitai.com (recheck_egress_blocks.py logged both `reachable` this time, see EGRESS-BLOCKERS.md — every prior entry for these two hosts was `blocked`). Resolved all five movements: (1) northern-renaissance upgraded to mode:lora — Muapi/jan-van-eyck-style (HF, no login, FLUX.1-dev, trigger "Jan van Eyck Style"), a direct hit named for the movement''s founding master (d. 1441). (2) symbolism upgraded to mode:lora — Kaamalauppias/finnish-symbolism-art-lora-v2 (HF, no login, FLUX.1-dev, trained on Finnish Symbolism/Gallen-Kallela d.1931); flagged the generic `TOK` trigger and missing sample images as a t-004 quality-verification item, and noted a CC-BY-SA-4.0 SDXL alternate (idiootti-ilves/Akseli_Gallen-Kallela) as a future-retrain reference only (wrong base architecture to wire directly). (3) gothic (S-8) — now readable via Civitai''s public model API; its description discloses zero training provenance (page content is literally an unrelated recipe), so it is NOT promoted even though reachable — can''t confirm the dead-70-years boundary. (4) pointillism (S-7) — fully verified via the same API: trained on Signac (d.1935) and van Rysselberghe (d.1926), both PD-safe, FLUX.1 D base, documented trigger words; actual weight download still returns HTTP 401 without a Civitai login (confirmed directly), so it stays in the needs-Silas table, now with verified detail instead of a blind link. (5) rococo — no viable candidate: the one FLUX rococo-labeled hit (Muapi/1890s-rococo-opera-sd1-sdxl-pony-flux) trains on a modern "1890s fantasy opera movie still" look, rejected as off-register same as the Picasso-cubism precedent; stays prompt-mode, genuinely nothing better found. Registry LoRA-backed count: 8 → 10 (of 16 original target styles). Full detail + updated needs-Silas table rows in docs/style-lora-registry.md. Conductor-only change (documentation registry, no kind_robots code); no kind_robots PR needed this cycle.'
     claimed_by: claude-conductor-burst-20260717T1900Z
     claimed_at: '2026-07-17T19:08:00Z'
 
