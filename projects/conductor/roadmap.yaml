@@ -1459,11 +1459,18 @@ tasks:
   - id: t-060
     milestone: m3
     title: Fix priority.yaml drift — add animation-studio, career-transition, pinball-hero, recipe-box to the order list
-    status: ready
-    owner: null
+    status: done
+    owner: reviewer
     passes: 0
     stakes: reversible
+    updated: '2026-07-17T07:46:23Z'
     note: >
+      DONE 2026-07-17 (Silas-directed session, claude/projects-db-down-q2yfu0):
+      added the four projects to priority.yaml's order list — animation-studio
+      after animation-manager, career-transition after coat-dance, pinball-hero
+      and recipe-box after sketchy; dream-cycle stays last. validate_roadmaps.py
+      passes. Original spec below.
+
       Found during 2026-07-16 autonomous Reviewer sweep (no open PRs to review this
       cycle). projects/priority.yaml's header comment says "every active project
       should appear exactly once" in its `order:` list, but four projects with live

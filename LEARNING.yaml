@@ -2738,3 +2738,17 @@ records:
     scoping the refactor to exactly the duplicated card (leaving the unrelated
     KAIZEN-category markup in conductor-page.vue untouched) kept the diff small and the
     CI green on the first try across both repos (kind_robots PR #344, conductor PR #678).
+- date: 2026-07-17
+  project: conductor
+  task: t-060
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    Priority.yaml drift fixes are pure record-keeping: placement "alongside
+    similarly-scoped projects" is a judgment call, so state the chosen anchors in
+    the task note (animation-studio after animation-manager, etc.) so the next
+    drift audit can tell intent from accident. Retired-but-listed projects are
+    harmless — overrides skip them at pick time.
