@@ -137,3 +137,41 @@ Closed the task out to `status: done` in a follow-up commit.
 honey-do card is now single-sourced; a natural next kaizen would be auditing whether any other
 duplicated-UI pairs exist elsewhere in the codebase, but that's speculative scope, not concrete
 enough to file without evidence.
+
+## 2026-07-17 | Worker | global-ui/t-019 | done (kind_robots PR #354 merged)
+
+**Decision:** claimed via `claim_task.py`, dispatched a research-only Explore agent to scope the
+real edit site before touching code (t-018's per-milestone counts lived in a component that
+turned out to be dead code for this purpose), implemented, verified, merged. Closed done, filed
+one kaizen follow-up (t-024).
+
+**Detail:**
+- The research step earned its cost here: the task note pointed at `conductor-page.vue`'s
+  per-milestone counts as the pattern to reuse, and a naive read of that file would have led to
+  editing its inline "overview" grid block — which `conductor-manager.vue` never actually mounts
+  (`showConductorGallery` always wins when `workspaceCardKey` is falsy/`'overview'`). The real
+  live top-level list is `conductor-overview-gallery-page.vue`, a sibling file with its own
+  independent `taskCounts()`/`itemFromProject()` computing the exact `done`/`totalTasks` fields
+  needed — already present on every gallery item, just not rendered above the fold in 3 of its 4
+  layout modes.
+- Implementation: 4 small template edits (one per gallery mode: cards, heroes, icons, list), all
+  reusing already-computed fields, `v-if="item.totalTasks"` guarding the new elements consistent
+  with the file's existing pattern (no new 0/0 badges). No API/store/schema change.
+- Verified: `eslint` clean, full-project `vue-tsc --noEmit` 0 errors, `prettier --check` clean on
+  every touched line (two pre-existing unrelated non-conformant lines elsewhere in the file were
+  left alone rather than reformatted). Could not exercise live in a browser (no dev server/DB in
+  this sandbox).
+- All 3 CI checks green (TypeScript, Contract verifiers, GitGuardian); merged squash 9f4f619.
+
+**What was good:**
+- Caught its own scope trap: the task note's suggested reuse target was a dead branch. Confirming
+  the *actual* live render path first (rather than pattern-matching the note's file reference)
+  avoided landing a no-op change on unreachable code.
+- Badge wording upgrade in `icons` mode (`"N tasks"` → `"N/M done"`, same slot) is strictly more
+  informative without adding a new element — minimal diff for the win.
+
+**Kaizen task:** t-024 — `itemFromProjectRecord()`'s non-admin fallback path approximates
+`done`/`totalTasks` from DB `Todo` counts, not real conductor task counts, so a project with any
+Todos (even zero conductor-matched tasks) can show a plausible-looking but semantically wrong
+ratio. Flagged in the PR body, filed as a follow-up rather than fixed inline (out of t-019's own
+scope, and the existing `v-if` guard already prevents the worst case of a bare "0/0").
