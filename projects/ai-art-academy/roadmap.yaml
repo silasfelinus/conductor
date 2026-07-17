@@ -219,11 +219,11 @@ tasks:
   - id: t-008
     milestone: m4
     title: 'kind_robots: download Academy starter image library + provenance manifest'
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
-    updated: '2026-07-16T11:15:00Z'
+    updated: '2026-07-17T00:07:14Z'
     depends_on: t-007
     note: >
       SPLIT 2026-07-15 (conductor/t-010 roadmap-upgrade pass) from the original
@@ -257,8 +257,8 @@ tasks:
       Failure-triage table) — picked ai-art-academy/t-020 instead, which needed no
       external egress. Third consecutive session confirming the same block; still
       not `needs-human` per the same reasoning as the prior two rechecks.
-    claimed_by: null
-    claimed_at: null
+    claimed_by: claude-burst-2026-07-17-hourly
+    claimed_at: '2026-07-17T00:07:14Z'
   - id: t-013
     milestone: m4
     title: 'kind_robots: add example-works strip to Academy lesson detail'
