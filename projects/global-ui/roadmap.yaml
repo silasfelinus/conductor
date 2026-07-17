@@ -405,8 +405,8 @@ tasks:
 - id: t-021
   milestone: m5
   title: Wire the honeydo-inbox data-surface-manifest entry to its real nav location instead of the now-stale acknowledged gap
-  status: ready
-  owner: null
+  status: done
+  owner: worker
   passes: 0
   stakes: reversible
   note: >
@@ -420,6 +420,12 @@ tasks:
     acknowledgedGap, then confirm `npm run test:data-surface-manifest` still
     passes (it should report the surface as wired, not acknowledged). Small,
     mechanical, no new data source.
+
+    Done 2026-07-17 (Reviewer, same autonomous hourly cycle as t-017): the same
+    Worker session that shipped t-017 immediately followed up with kind_robots
+    PR #340 implementing exactly this fix before the task even reached `ready`
+    on origin/main -- reviewed and merged (squash ab1cb3e3). All 3 CI checks
+    green (TypeScript, Contract verifiers, GitGuardian).
 milestones:
 - id: m1
   title: Task language + presentation model
