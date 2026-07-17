@@ -372,14 +372,16 @@ tasks:
 - id: t-029
   milestone: m4
   title: Make coloring_proposal_status.py surface elimination-only inspiration matches
-  status: ready
-  owner: null
+  status: claimed
+  owner: worker
   passes: 0
   stakes: reversible
-  updated: '2026-07-17T14:49:35Z'
+  updated: '2026-07-17T18:05:22Z'
   note: 'Kaizen from t-022 (PR #697, 2026-07-17): the mr-025 inspiration was matched to its
     concept "by elimination" (no direct text match), and that distinction currently only lives
     in a roadmap/proposals.yaml note, not in --check output. Add a --check flag or summary line
     listing any inspiration entries carrying needs_visual_verification: true (or an equivalent
     elimination-only marker) so future cycles and Silas see them surfaced automatically instead
     of having to read prose notes to find them.'
+  claimed_by: claude-conductor-hourly-20260717d
+  claimed_at: '2026-07-17T18:05:22Z'
