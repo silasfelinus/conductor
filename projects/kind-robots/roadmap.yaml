@@ -281,32 +281,40 @@ tasks:
   - id: t-012
     milestone: m3
     title: Fix the mana purchase path — Stripe webhook credits + ManaTransaction ledger
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
-    updated: '2026-07-17T08:52:46Z'
+    updated: '2026-07-17T09:20:00Z'
     note: >
-      PROGRESS 2026-07-10: PART 1 DONE (kind_robots PR #151) — manaGate.commit
-      now routes through applyMana: atomic debit + ManaTransaction ledger row
-      (reason-mapped, refId + cost carried), also closing the check-then-spend
-      race. The /api/mana statement endpoint now shows generation debits.
-      REMAINING (this task stays ready): part 2 test-mode Stripe webhook
-      crediting PURCHASE rows; part 3 make credit-purchase.vue drive the real
-      test-mode flow. Live Stripe objects stay hard-gated. Original spec:
-      Found by the coloring-book economy audit (projects/coloring-book/docs/
-      economy-spec.md, 2026-07-10): the mana economy is fully wired on the SPEND
-      side (User.mana/manaCap, daily refill, manaGate in 13 endpoints) but the
-      purchase side is stubbed — no Stripe webhook ever credits mana,
-      components/giftshop/credit-purchase.vue shows a fake success alert,
-      server/api/stripe/charge.ts is dead code, and manaGate's commit() skips
-      writing ManaTransaction ledger rows. Fix in small PRs: (1) ledger writes in
-      manaGate commit, (2) a Stripe webhook handler (TEST MODE ONLY — creating
-      live products/prices/webhooks in production stays hard-gated per
-      digital-storefront rules) that credits mana on checkout completion,
-      (3) make credit-purchase.vue drive the real test-mode flow. Blocks real
-      mana top-ups (digital-storefront t-012) and paid coloring/academy
-      generation tiers.
+      DONE 2026-07-17. PART 1 (kind_robots PR #151, 2026-07-10): manaGate.commit
+      routes through applyMana (ledger row + closed check-then-spend race).
+      PARTS 2+3 (kind_robots PR #345, claude-conductor-hourly-20260717T0849Z,
+      merged 2026-07-17T09:10Z): server/api/stripe/webhook.post.ts (raw-body
+      signature verification, credits mana via applyMana on
+      checkout.session.completed, idempotent on session id via refId) +
+      server/api/stripe/topup.post.ts (auth-gated checkout session against
+      trusted server-side tiers) + cartStore.topup(). FOLLOW-UP (kind_robots PR
+      #347, this session claude-burst-2026-07-17-0908): PR #345 left
+      credit-purchase.vue unmounted anywhere in the app and its Stripe
+      success/cancel redirects pointed at nonexistent /shop/success /
+      /shop/cancel routes — mounted it in giftshop-manager.vue's mana tab and
+      pointed the redirects at /sanctuary?manaTopup=<state>, which
+      giftshop-manager.vue now reads on mount to show a one-time banner. Live
+      Stripe objects remain hard-gated per digital-storefront rules. Unblocks
+      digital-storefront/t-012 (marked done alongside this task, same PRs).
+      NEAR-MISS COLLISION (see TALKBACK): this burst-mode session (started
+      ~09:08Z) independently built an equivalent webhook+topup implementation
+      before discovering PR #345 had merged ~09:10Z, minutes earlier, via the
+      same-named branch's git history — caught before push via the
+      fetch-before-push step in AGENTS.md's push guidance, so no duplicate
+      code reached main. Original spec: Found by the coloring-book economy
+      audit (projects/coloring-book/docs/economy-spec.md, 2026-07-10): the
+      mana economy is fully wired on the SPEND side (User.mana/manaCap, daily
+      refill, manaGate in 13 endpoints) but the purchase side was stubbed — no
+      Stripe webhook ever credited mana, credit-purchase.vue showed a fake
+      success alert, server/api/stripe/charge.ts was dead code, and
+      manaGate's commit() skipped writing ManaTransaction ledger rows.
     claimed_by: claude-conductor-hourly-20260717T0849Z
     claimed_at: '2026-07-17T08:52:46Z'
 

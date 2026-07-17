@@ -6008,3 +6008,47 @@ independently-maintained card copies that had *already* drifted, per its own not
 **Failure category:** n/a (clean first-pass merge on both PRs; no rejection).
 
 **Kaizen task:** none filed — task was already narrowly scoped and fully landed in one pass.
+
+## 2026-07-17 | Reviewer | kind-robots/t-012, digital-storefront/t-012 | done (near-miss duplicate-work collision, kind_robots PR #345 + #347)
+
+**Decision:** this burst-mode session picked digital-storefront/t-012 (mana top-ups → Stripe,
+test mode) after ai-art-academy's egress-blocked tasks and coloring-book's art-generation-pipeline
+tasks were unworkable this cycle. Fully implemented a webhook (`server/api/stripe/webhook.post.ts`)
++ dedicated checkout route + tier catalog + `credit-purchase.vue` rewire, ran eslint/prettier/
+vue-tsc clean — then, immediately before the first `git push`, `git fetch origin
+claude/keen-fermat-aw4maf` (this session's assigned branch) surfaced that PR #345
+(`worker/kind-robots-t-012`, a concurrent hourly-worker session claimed at 08:52Z) had merged an
+essentially identical implementation ~09:10Z, minutes before this session even started looking at
+the task. Discarded the local duplicate commit entirely (`git reset --hard
+origin/claude/keen-fermat-aw4maf`) rather than push it, then re-read the merged diff to confirm it
+was complete and correct before building on it instead of around it.
+
+**Detail:**
+- The collision was real, not a false alarm: PR #345 added `server/api/stripe/topup.post.ts` +
+  `server/api/stripe/webhook.post.ts` + `cartStore.topup()` + a `credit-purchase.vue` rewire —
+  functionally identical to what this session had just written independently (same idempotency
+  approach: check a prior `ManaTransaction` by `refId`==session id before crediting; same
+  auth-gated tiered-checkout shape). Converging independently on near-identical designs is a good
+  sign the approach is the obvious one, but it's still duplicate work that would have produced a
+  wasted/conflicting second PR had the fetch-before-push step been skipped.
+- Found one real gap in the merged work: `credit-purchase.vue` was rewired to the real flow but
+  never mounted anywhere reachable in the app (not in `giftshop-manager.vue`, not anywhere else),
+  and its Stripe success/cancel redirects pointed at `/shop/success` / `/shop/cancel`, routes that
+  don't exist. Fixed both in a small follow-up (kind_robots PR #347): mounted `<credit-purchase />`
+  in the mana tab alongside `mana-wallet`/`subscription-manager`, redirected to
+  `/sanctuary?manaTopup=<state>` (an existing route), and had `giftshop-manager.vue` read that
+  query param on mount to show a one-time banner and switch to the mana tab.
+- Marked both `kind-robots/t-012` (was `status: claimed` since 08:52Z, never closed out by the
+  claiming session even though its PR had merged) and `digital-storefront/t-012` `done`, cross-
+  referencing each other and the PR history in their notes.
+
+**Failure category:** n/a for the shipped work (clean merge, verified); the near-collision itself
+is a process observation, not a task failure — the existing rotation-collision safeguards
+(fetch-before-push, checking origin before implementing) worked as designed.
+
+**Kaizen task:** none filed — `claim_task.py`'s live-origin check plus AGENTS.md's
+fetch-before-push guidance already cover this; the miss here was that this session started
+investigating/implementing before running `claim_task.py` against the *kind-robots* project (it
+was working from the digital-storefront roadmap entry, which has no `depends_on` link to
+kind-robots/t-012 even though the task text says it's blocked on it) — worth a small hygiene note
+on digital-storefront/t-012's roadmap entry for future cycles, added inline in this same commit.

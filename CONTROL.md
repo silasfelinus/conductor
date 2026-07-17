@@ -84,6 +84,15 @@ Silas explicitly approves that concrete action too.
   expressions/topics/threads) and coloring-book production days, more later. Silas
   steers by leaving notes in those files; agents fold notes in before every stage
   and never edit them.
+- Cross-project same-task collision risk (2026-07-17, kind-robots/t-012 +
+  digital-storefront/t-012): the same real piece of work is sometimes tracked by two
+  different project roadmaps (a task note saying "blocks X in another project" or
+  "cross-repo, tracked in both roadmaps"), with no `depends_on` link between them
+  since that field only resolves within one project. Before implementing a task whose
+  note references another project's task, skim that other project's roadmap/recent
+  PRs too, not just `claim_task.py`'s own-project check — two sessions converged on
+  near-identical implementations the same hour here, caught only by the routine
+  fetch-before-push step.
 
 ---
 

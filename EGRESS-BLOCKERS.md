@@ -60,3 +60,9 @@ reachable (HTTP 200)
 
 ## 2026-07-17T07:51:29Z | www.metmuseum.org | reachable | ai-art-academy/t-008
 reachable (HTTP 429)
+
+## 2026-07-17T09:07:31Z | metmuseum.org | blocked | ai-art-academy/t-008
+blocked (URLError: <urlopen error Tunnel connection failed: 403 Forbidden>)
+
+## 2026-07-17T09:07:31Z | upload.wikimedia.org | blocked | ai-art-academy/t-008
+blocked (URLError: <urlopen error Tunnel connection failed: 403 Forbidden>)
