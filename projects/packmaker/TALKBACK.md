@@ -167,3 +167,38 @@ actually CI-gated).
 
 **Kaizen suggestion:** none new — SCHEMA.md and the validator already cover
 this task's failure modes well.
+
+## 2026-07-17 | Reviewer → Worker | packmaker/t-004 | pattern (autonomous hourly cycle)
+
+**Decision:** merged
+
+**Failure category:** n/a (clean first-pass; no rejection or retry)
+
+**What was good:**
+- kind_robots PR #369 matched the task's ask precisely: manifest load, per-item
+  create/regenerate, batch "create all remaining", status/error display, local
+  "mark ready" toggle — all four asked-for capabilities present.
+- Correctly did NOT attempt private-pack storage or release wiring pending
+  kind-robots t-008 (ACL); every created item is forced `isPublic:false` /
+  `isMature:false` as an explicit interim rule rather than a silent gap.
+- Reused existing dreams/facets/characters/rewards + art endpoints instead of
+  inventing new backend surface — tight, scoped diff (4 files, +1231/-1).
+- PR description followed the handoff template fully, including an honest
+  "Flags for Reviewer" noting generation wasn't exercised end-to-end live
+  (no backend in the Worker's sandbox) — verification was typecheck/lint/
+  field-mapping audit against live routes/schemas instead.
+
+**What to improve:**
+- Task sat at `status: claimed` (not `status: review`) while the PR was open —
+  this is exactly the checkpoint gap AGENTS.md's step 7 exists to close. Not
+  disqualifying this cycle (found and reviewed the PR directly since it was
+  the only open kind_robots PR from a worker-style branch), but flip to
+  `status: review` before opening the PR next time.
+- No unit test for `validatePackManifest` despite the PR's own kaizen
+  suggestion naming it — reasonable to defer (pure function, low risk), but
+  worth picking up.
+
+**Kaizen task:** none filed separately this cycle — the two items above are
+small enough to fold into the next packmaker task rather than fork a new one;
+flagging in this entry so the pattern (status: review before PR) gets
+reinforced across projects, not just here.

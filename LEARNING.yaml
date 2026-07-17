@@ -3057,3 +3057,17 @@ records:
     than duplicating it a second time. When a component's state is inline-only (no
     composable), check what the *consumer* function actually reads before assuming a
     new source needs its own code path through generation."
+- date: 2026-07-17
+  project: packmaker
+  task: t-004
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "Cross-repo admin-surface task with an unmet ACL dependency (kind-robots
+    t-008) landed clean by keeping every created record isPublic:false as an explicit
+    interim rule and deferring release/storefront wiring entirely, rather than stubbing
+    a half-working gate. Task sat at status: claimed (not review) while its PR was
+    open -- next cycle should flip to status: review before gh pr create per AGENTS.md
+    step 7, even for cross-repo tasks."
