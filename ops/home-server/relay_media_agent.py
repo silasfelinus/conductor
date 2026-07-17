@@ -11,7 +11,9 @@ ArtJob is marked successful. If the filesystem write or manifest update fails,
 the job is reported FAILED and remains retryable instead of silently completing
 with a missing public file.
 
-All other jobs use relay_agent.py unchanged.
+All other jobs use relay_agent.py unchanged, except that Comfy prompt submission
+uses a longer timeout and can recover a prompt id from /queue when Comfy accepted
+the prompt but its HTTP response arrived too late.
 """
 
 import base64
@@ -31,6 +33,8 @@ MEDIA_ROOT_VALUE = (
 IMAGE_EXTENSIONS = {".webp", ".png", ".jpg", ".jpeg", ".gif", ".svg"}
 GENERATED_IMAGE_EXTENSIONS = {".webp", ".png", ".jpg", ".jpeg", ".gif"}
 VIDEO_EXTENSIONS = {".mp4", ".webm", ".mov", ".mkv"}
+COMFY_PROMPT_TIMEOUT = float(os.environ.get("COMFY_PROMPT_TIMEOUT", "180"))
+COMFY_RECOVERY_SECONDS = float(os.environ.get("COMFY_RECOVERY_SECONDS", "45"))
 ORIGINAL_PROCESS = relay.process
 
 
@@ -174,6 +178,106 @@ def write_direct_media(job, media):
     return destination
 
 
+def queued_prompt_id_for_client(client_id):
+    """Find a prompt accepted by Comfy when POST /prompt timed out client-side."""
+    try:
+        status, queue = relay.http_json(
+            "GET", f"{relay.COMFY_URL}/queue", timeout=15
+        )
+    except Exception:  # noqa: BLE001 - recovery probes are best-effort
+        return None
+    if status != 200 or not isinstance(queue, dict):
+        return None
+
+    for key in ("queue_running", "queue_pending"):
+        entries = queue.get(key) or []
+        for entry in entries:
+            if not isinstance(entry, (list, tuple)) or len(entry) < 4:
+                continue
+            prompt_id = entry[1]
+            extra_data = entry[3]
+            if (
+                isinstance(prompt_id, str)
+                and isinstance(extra_data, dict)
+                and extra_data.get("client_id") == client_id
+            ):
+                return prompt_id
+    return None
+
+
+def run_comfy_with_recovery(payload):
+    workflow = payload.get("workflow")
+    if not isinstance(workflow, dict) or not workflow:
+        raise ValueError('COMFY payload needs a "workflow" object (API format)')
+
+    relay.upload_comfy_input_images(payload)
+    want_video = str(payload.get("media") or "").strip().lower() == "video"
+    client_id = str(
+        payload.get("_relayClientId")
+        or f"{relay.AGENT_ID}-prompt-{time.time_ns()}"
+    )
+
+    prompt_id = None
+    submit_error = None
+    try:
+        status, response = relay.http_json(
+            "POST",
+            f"{relay.COMFY_URL}/prompt",
+            {"prompt": workflow, "client_id": client_id},
+            timeout=COMFY_PROMPT_TIMEOUT,
+        )
+        if status != 200 or not response or not response.get("prompt_id"):
+            raise RuntimeError(
+                f"ComfyUI /prompt returned HTTP {status} at {relay.COMFY_URL}: "
+                f"{response and response.get('node_errors')}"
+            )
+        prompt_id = response["prompt_id"]
+    except Exception as error:  # noqa: BLE001 - accepted prompt may be recoverable
+        submit_error = error
+        relay.log(
+            f"ComfyUI /prompt response failed after {COMFY_PROMPT_TIMEOUT}s; "
+            f"checking queue for client {client_id}"
+        )
+        deadline = time.time() + COMFY_RECOVERY_SECONDS
+        while time.time() < deadline and not prompt_id:
+            prompt_id = queued_prompt_id_for_client(client_id)
+            if not prompt_id:
+                time.sleep(2)
+
+    if not prompt_id:
+        raise RuntimeError(
+            f"ComfyUI POST /prompt failed at {relay.COMFY_URL} ({submit_error}). "
+            f"No accepted prompt for client {client_id} appeared within "
+            f"{COMFY_RECOVERY_SECONDS}s."
+        ) from submit_error
+
+    if submit_error:
+        relay.log(f"recovered accepted Comfy prompt {prompt_id} for {client_id}")
+
+    deadline = time.time() + relay.GEN_TIMEOUT
+    while time.time() < deadline:
+        time.sleep(2)
+        status, history = relay.http_json(
+            "GET", f"{relay.COMFY_URL}/history/{prompt_id}"
+        )
+        if status != 200 or not history:
+            continue
+        entry = history.get(prompt_id)
+        if not entry:
+            continue
+        result = relay.extract_comfy_output(entry.get("outputs") or {}, want_video)
+        if result:
+            return result
+        comfy_status = (entry.get("status") or {}).get("status_str")
+        if comfy_status == "error":
+            raise RuntimeError("ComfyUI reported a workflow error")
+
+    kind = "video" if want_video else "image"
+    raise RuntimeError(
+        f"ComfyUI {kind} job timed out after {relay.GEN_TIMEOUT}s"
+    )
+
+
 def process_with_media(job):
     relative = direct_media_relative(job)
     if relative is None:
@@ -182,6 +286,7 @@ def process_with_media(job):
     job_id = job["id"]
     engine = (job.get("engine") or "A1111").upper()
     payload = job_payload(job)
+    payload["_relayClientId"] = f"{relay.AGENT_ID}-artjob-{job_id}"
     relay.log(f"job {job_id}: {engine} direct media -> {relative.as_posix()}")
 
     if engine == "COMFY":
@@ -217,6 +322,7 @@ def process_with_media(job):
     )
 
 
+relay.run_comfy = run_comfy_with_recovery
 relay.process = process_with_media
 
 
