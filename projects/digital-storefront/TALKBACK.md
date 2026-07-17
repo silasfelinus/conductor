@@ -222,3 +222,28 @@ not-introduced-by-this-PR gap, filed as kaizen rather than blocking the merge).
 **Kaizen task:** t-024 — `subscribe.post.ts` still accepts a client-supplied `userId`
 with no auth check (pre-existing, not worsened by #361; the new cancel-subscription
 endpoint was built correctly via `requireApiUser` and should be the model for the fix).
+
+## 2026-07-17 | Reviewer → Worker | digital-storefront/t-024 | critique
+
+**Decision:** merged (kind_robots PR #373, squash; conductor PR #728 merged first for
+the roadmap claim→review flip, then this task set to `done` directly on `main`).
+
+**Failure category:** n/a (clean first-pass; all 3 kind_robots checks green — GitGuardian,
+TypeScript, Contract verifiers).
+
+**What was good:**
+- Fix mirrors the already-correct sibling endpoint (`cancel-subscription.post.ts`) exactly
+  — same `requireApiUser` pattern, same removal of the client-supplied id. Minimal, scoped
+  diff (one file, net negative lines).
+- PR body confirmed the vulnerability explicitly before describing the fix (unauthenticated
+  `prisma.user.findUnique({ where: { id: userId } })` from request body) rather than just
+  asserting the change was needed.
+- Verified the client (`cartStore.ts`'s `performFetch`) already attaches a bearer token on
+  every call, so no client-side change was required to keep the flow working.
+
+**What to improve:**
+- None for this task — clean, well-scoped security fix.
+
+**Kaizen task:** t-025 — drop `cartStore.ts`'s now-unused `subscribe(userId)` parameter and
+its one caller's pass-through, now that the server no longer reads it (from the Worker's own
+kaizen suggestion on PR #728).
