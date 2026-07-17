@@ -264,16 +264,13 @@ tasks:
 - id: t-008
   milestone: m3
   title: Add a unit test for packStore.ts's validatePackManifest
-  status: ready
-  owner: null
+  status: claimed
+  owner: worker
   passes: 0
   stakes: reversible
-  note: >
-    Kaizen from t-004's implementation (2026-07-17, kind_robots PR #369): the
-    admin pack generator panel's packStore.ts validates an imported manifest
-    against the schema-v1 shape (validatePackManifest), but the PR that added
-    it shipped without a test for that function, despite the PR's own kaizen
-    suggestion naming it. It's a pure function (no store/network dependency),
-    so a focused unit test covering valid manifests, missing required fields,
-    and bad item shapes should be cheap. kind_robots-repo change (near
-    packStore.ts / packmaker-admin-panel.vue).
+  note: |-
+    Kaizen from t-004's implementation (2026-07-17, kind_robots PR #369): the admin pack generator panel's packStore.ts validates an imported manifest against the schema-v1 shape (validatePackManifest), but the PR that added it shipped without a test for that function, despite the PR's own kaizen suggestion naming it. It's a pure function (no store/network dependency), so a focused unit test covering valid manifests, missing required fields, and bad item shapes should be cheap. kind_robots-repo change (near packStore.ts / packmaker-admin-panel.vue).
+
+
+    Connector-backed Worker claim after scanning current priority queue and skipping active or hard-gated higher-priority tasks.
+  updated: '2026-07-17 21:14:06+00:00'
