@@ -147,7 +147,7 @@ tasks:
   - t-010
   gate_human: true
   approved_by_human: false
-  note: 'Cross-repo task (kind_robots). Product page linking from the mermaids landing page and giftshop, Stripe Checkout in TEST MODE, webhook -> entitlement -> authenticated download delivery. The PDF is stored server-side, never in public/. Going live (live Stripe keys/products, real charges) is a separate hard needs-human for Silas. STATUS NOTE 2026-07-15 (claude-burst-2026-07-15-0105): newly ready this cycle via resolve_deps.py, now that t-009 (SPEC.md) landed. Not started -- api.stripe.com is 403-policy-denied from this sandbox''s egress proxy (same denial as api calls to museum sites for ai-art-academy), so this can''t be built and verified end-to-end here. Needs a session/environment with open Stripe egress, or Silas''s own environment. RECHECKED 2026-07-15T07:08Z (t-019): still 403 policy-denied via /__agentproxy/status (connect_rejected on api.stripe.com:443). No need to re-curl again until this note goes stale.'
+  note: 'Cross-repo task (kind_robots). Product page linking from the mermaids landing page and giftshop, Stripe Checkout in TEST MODE, webhook -> entitlement -> authenticated download delivery. The PDF is stored server-side, never in public/. Going live (live Stripe keys/products, real charges) is a separate hard needs-human for Silas. Newly ready 2026-07-15 via resolve_deps.py once t-009 (SPEC.md) landed. EGRESS: api.stripe.com reachability is tracked in EGRESS-BLOCKERS.md (grep api.stripe.com) — 403-blocked 2026-07-15, REACHABLE at the 2026-07-17T07:51Z recheck (varies by session; re-run scripts/recheck_egress_blocks.py before claiming).'
 - id: t-012
   milestone: m3
   title: Wire one-time mana top-ups to Stripe checkout (test mode)
@@ -156,7 +156,7 @@ tasks:
   passes: 0
   stakes: reversible
   depends_on: t-009
-  note: 'Cross-repo (kind_robots). A few reasonable tiers per Silas; reuse credit-purchase.vue / mana-wallet.vue where sensible. Webhook credits mana. Test mode only; live activation is gated. STATUS NOTE 2026-07-15 (claude-burst-2026-07-15-0105): newly ready this cycle via resolve_deps.py, now that t-009 (SPEC.md) landed. Not started -- api.stripe.com is 403-policy-denied from this sandbox''s egress proxy (same denial as api calls to museum sites for ai-art-academy), so this can''t be built and verified end-to-end here. Needs a session/environment with open Stripe egress, or Silas''s own environment. RECHECKED 2026-07-15T07:08Z (t-019): still 403 policy-denied via /__agentproxy/status (connect_rejected on api.stripe.com:443). No need to re-curl again until this note goes stale.'
+  note: 'Cross-repo (kind_robots). A few reasonable tiers per Silas; reuse credit-purchase.vue / mana-wallet.vue where sensible. Webhook credits mana. Test mode only; live activation is gated. Newly ready 2026-07-15 via resolve_deps.py once t-009 (SPEC.md) landed. EGRESS: api.stripe.com reachability is tracked in EGRESS-BLOCKERS.md (grep api.stripe.com) — 403-blocked 2026-07-15, REACHABLE at the 2026-07-17T07:51Z recheck (varies by session; re-run scripts/recheck_egress_blocks.py before claiming).'
 - id: t-013
   milestone: m3
   title: Wire the monthly supporter subscription to Stripe (test mode)
@@ -165,7 +165,7 @@ tasks:
   passes: 0
   stakes: reversible
   depends_on: t-009
-  note: 'Cross-repo (kind_robots). Recurring donation plan(s) via Stripe subscriptions; reuse subscription-manager.vue. Test mode only; live activation is gated. STATUS NOTE 2026-07-15 (claude-burst-2026-07-15-0105): newly ready this cycle via resolve_deps.py, now that t-009 (SPEC.md) landed. Not started -- api.stripe.com is 403-policy-denied from this sandbox''s egress proxy (same denial as api calls to museum sites for ai-art-academy), so this can''t be built and verified end-to-end here. Needs a session/environment with open Stripe egress, or Silas''s own environment. RECHECKED 2026-07-15T07:08Z (t-019): still 403 policy-denied via /__agentproxy/status (connect_rejected on api.stripe.com:443). No need to re-curl again until this note goes stale.'
+  note: 'Cross-repo (kind_robots). Recurring donation plan(s) via Stripe subscriptions; reuse subscription-manager.vue. Test mode only; live activation is gated. Newly ready 2026-07-15 via resolve_deps.py once t-009 (SPEC.md) landed. EGRESS: api.stripe.com reachability is tracked in EGRESS-BLOCKERS.md (grep api.stripe.com) — 403-blocked 2026-07-15, REACHABLE at the 2026-07-17T07:51Z recheck (varies by session; re-run scripts/recheck_egress_blocks.py before claiming).'
 - id: t-014
   milestone: m3
   title: Build the Against Malaria giving page

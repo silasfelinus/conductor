@@ -1218,11 +1218,28 @@ tasks:
   - id: t-048
     milestone: m2
     title: Rename ci.yml's authz-regression job now that it runs the full pytest suite
-    status: claimed
+    status: needs-human
+    soft_gate: true
     owner: reviewer
     passes: 0
     stakes: reversible
+    updated: '2026-07-17T08:35:00Z'
     note: |-
+      FOR SILAS: this rename is blocked on one fact only you can see. ci.yml's
+      job key/name is still `authz-regression` / "Authz regression tests" even
+      though it now runs the full pytest suite (t-047). If that exact check name
+      is listed as a REQUIRED status check in the conductor repo's branch
+      protection settings (Settings → Branches → main), renaming the job would
+      break merges until the setting is updated in the same window.
+      TO APPROVE: check whether "Authz regression tests" is a required check.
+      If NOT required — reply/note "not required" and set this task back to
+      status: ready; any agent can then do the one-line rename to "Test suite
+      (pytest tests/)". If it IS required — either update the required-check
+      name yourself when the rename PR lands, or note that here and an agent
+      will coordinate both in one window. Flipped to soft needs-human
+      2026-07-17 because branch protection cannot be inspected from agent
+      sessions (no branch-protection API access), per this task's own spec.
+      Original spec:
       Kaizen from t-047 (Reviewer, autonomous hourly burst cycle, 2026-07-15).
       t-047 switched the job's run step to `pytest tests/` but deliberately left
       the job key/name (`authz-regression` / "Authz regression tests") unchanged,
@@ -1235,8 +1252,6 @@ tasks:
       coordinated update (rename in ci.yml + update the required-check setting
       in the same window) rather than an agent-only change -- soft needs-human
       if branch protection can't be inspected from this environment.
-    claimed_by: projects-db-down-q2yfu0
-    claimed_at: '2026-07-17T07:53:22Z'
     updated: '2026-07-17T07:53:22Z'
 
   - id: t-049
@@ -1365,11 +1380,23 @@ tasks:
   - id: t-054
     milestone: m2
     title: Migrate ai-art-academy/t-008, t-013, and digital-storefront's hand-written egress-recheck prose into EGRESS-BLOCKERS.md
-    status: claimed
+    status: done
     owner: reviewer
     passes: 0
     stakes: reversible
+    updated: '2026-07-17T08:30:00Z'
     note: >
+      DONE 2026-07-17 (Silas-directed session, claude/projects-db-down-q2yfu0):
+      seeded ledger entries via recheck_egress_blocks.py for ai-art-academy/t-013
+      (metmuseum.org, upload.wikimedia.org) and digital-storefront/t-011
+      (api.stripe.com) — t-008 already had three same-day entries — and replaced
+      the five tasks' hand-written RECHECKED paragraphs (t-008, t-013, and all
+      three Stripe tasks t-011/t-012/t-013, which shared identical prose) with a
+      one-line EGRESS pointer keeping a dated summary. No status semantics
+      changed. NOTABLE: this session's probes found ALL hosts REACHABLE
+      (metmuseum 429, wikimedia 200, stripe 404) — the 403 egress block appears
+      lifted or environment-specific; recorded in the ledger and the task notes.
+      Original spec:
       Kaizen from conductor/t-052 (Reviewer, autonomous hourly conductor cycle,
       2026-07-16, PR #631). t-052 built the shared `EGRESS-BLOCKERS.md` ledger and
       `scripts/recheck_egress_blocks.py` but deliberately left the three existing
@@ -1381,8 +1408,6 @@ tasks:
       with a single sentence pointing at `EGRESS-BLOCKERS.md` (keep one summary line
       of history, don't delete the task's own note entirely). Purely record-keeping —
       should not change any task's `status`/`needs-human` semantics.
-    claimed_by: projects-db-down-q2yfu0
-    claimed_at: '2026-07-17T07:50:32Z'
     updated: '2026-07-17T07:50:32Z'
 
   - id: t-055
@@ -1407,11 +1432,18 @@ tasks:
   - id: t-056
     milestone: m2
     title: Document the Reviewer batch-merge auto-gen race in AGENTS.md
-    status: claimed
+    status: done
     owner: reviewer
     passes: 0
     stakes: reversible
+    updated: '2026-07-17T08:10:00Z'
     note: >
+      DONE 2026-07-17 (Silas-directed session, claude/projects-db-down-q2yfu0):
+      added the "Reviewer batch-merge note (companion to rule 9)" paragraph to
+      AGENTS.md immediately after the hard-rules list — expect the
+      refresh-status.yml race after each merge in a sweep, retry before treating
+      dirty as a real conflict, take main's copy for auto-gen files, keep both
+      sides for append-only files. Original spec:
       Kaizen from this cycle's Reviewer sweep (2026-07-16, conductor PRs
       #640/#641/#643/#644/#645/#646/#647/#648, an 8-PR backlog cleared in one
       session). t-045 (this same cycle) covers the Worker-side half of the
@@ -1432,53 +1464,63 @@ tasks:
       STATUS.md/ROADMAP-AUDIT.*/LEARNING-REPORT.md and regenerate; for
       append-only files (TALKBACK.md, LEARNING.yaml) that both sides touched,
       keep both sides' entries rather than picking one.
-    claimed_by: projects-db-down-q2yfu0
-    claimed_at: '2026-07-17T07:47:54Z'
     updated: '2026-07-17T07:47:54Z'
 
   - id: t-057
     milestone: m2
     title: Mention provision_kind_robots_deps.sh in AGENTS.md near the cross-repo/verification guidance
-    status: claimed
+    status: done
     owner: reviewer
     passes: 0
     stakes: reversible
+    updated: '2026-07-17T08:05:00Z'
     note: >
-      Kaizen from conductor/t-046 (2026-07-16, PR #645). The script exists and is
+      DONE 2026-07-17 (Silas-directed session, claude/projects-db-down-q2yfu0):
+      added a short paragraph to AGENTS.md's Cross-repo tasks section pointing at
+      `source scripts/provision_kind_robots_deps.sh` and naming the two baked-in
+      workarounds. Original spec: Kaizen from conductor/t-046 (2026-07-16, PR #645). The script exists and is
       proven end-to-end but is discoverable only by grepping scripts/ — add a
       one-line pointer in AGENTS.md's cross-repo/verification section so future
       sessions run it instead of re-deriving the CYPRESS_INSTALL_BINARY +
       DATABASE_URL combination from scratch.
-    claimed_by: projects-db-down-q2yfu0
-    claimed_at: '2026-07-17T07:46:52Z'
     updated: '2026-07-17T07:46:52Z'
 
   - id: t-058
     milestone: m1
     title: Test that reconcile_expressions main() --apply with no KR_API_TOKEN returns 1 early
-    status: claimed
+    status: done
     owner: reviewer
     passes: 0
     stakes: reversible
+    updated: '2026-07-17T08:20:00Z'
     note: >
+      DONE 2026-07-17 (Silas-directed session, claude/projects-db-down-q2yfu0):
+      added test_apply_without_token_returns_1_before_any_work — monkeypatches
+      KR_API_TOKEN to empty, asserts exit code 1, the stderr message, and that
+      api() is never called (exploding stub). Suite: 14 passed. Original spec:
       Kaizen from conductor/t-051 (2026-07-16, PR #643). t-051 covered the
       --apply/--deactivate CLI gating but left one branch untested: main()
       returns 1 immediately when --apply is passed without KR_API_TOKEN set.
       A tiny test (monkeypatch rex.KR_API_TOKEN to None/empty, assert exit
       code 1, assert post_batch never called) closes the last CLI-gating gap
       in this file.
-    claimed_by: projects-db-down-q2yfu0
-    claimed_at: '2026-07-17T07:48:52Z'
     updated: '2026-07-17T07:48:52Z'
 
   - id: t-060
     milestone: m3
     title: Fix priority.yaml drift — add animation-studio, career-transition, pinball-hero, recipe-box to the order list
-    status: claimed
+    status: done
     owner: reviewer
     passes: 0
     stakes: reversible
+    updated: '2026-07-17T07:46:23Z'
     note: >
+      DONE 2026-07-17 (Silas-directed session, claude/projects-db-down-q2yfu0):
+      added the four projects to priority.yaml's order list — animation-studio
+      after animation-manager, career-transition after coat-dance, pinball-hero
+      and recipe-box after sketchy; dream-cycle stays last. validate_roadmaps.py
+      passes. Original spec below.
+
       Found during 2026-07-16 autonomous Reviewer sweep (no open PRs to review this
       cycle). projects/priority.yaml's header comment says "every active project
       should appear exactly once" in its `order:` list, but four projects with live
@@ -1491,8 +1533,6 @@ tasks:
       projects/priority.yaml's `order:` list in a reasonable position (below the
       named priority band, alongside similarly-scoped projects), verify with
       scripts/validate_roadmaps.py, no code/behavior change.
-    claimed_by: projects-db-down-q2yfu0
-    claimed_at: '2026-07-17T07:45:37Z'
     updated: '2026-07-17T07:45:37Z'
 
   - id: t-059

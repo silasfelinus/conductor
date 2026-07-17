@@ -237,34 +237,13 @@ tasks:
       (example-works strip) and t-014 (Remix Studio source-picker tab, depends on
       this task's manifest existing).
 
-      STATUS NOTE 2026-07-15 (burst cycle): confirmed via the agent-proxy status
-      endpoint that this sandbox gets a policy-denial 403 on CONNECT to
-      metmuseum.org and upload.wikimedia.org — same pattern already logged in
-      TALKBACK.md for Civitai/HF (t-003) and Stripe (digital-storefront). Still
-      `ready`, not `needs-human`: this is an environment limitation, not a task
-      defect, and it may well work from Silas's own environment or a session with
-      open egress to museum/Wikimedia hosts.
-      RECHECKED 2026-07-15T07:08Z (digital-storefront/t-019 recheck pass): re-curled
-      www.metmuseum.org and upload.wikimedia.org directly and via
-      /__agentproxy/status — both still show a fresh connect_rejected/403
-      policy-denial this session. Still genuinely blocked, not stale info.
-      RECHECKED 2026-07-16T11:07Z (burst-hourly cycle, claimed then released same
-      session): re-curled both hosts directly and via /__agentproxy/status again —
-      identical fresh connect_rejected/403 policy-denial (recentRelayFailures
-      timestamped 2026-07-16T11:06:49Z for both hosts). Claimed this task first
-      this cycle, confirmed the block still holds, and released it back to `ready`
-      rather than burn a pass on an environment limitation (transient per the
-      Failure-triage table) — picked ai-art-academy/t-020 instead, which needed no
-      external egress. Third consecutive session confirming the same block; still
-      not `needs-human` per the same reasoning as the prior two rechecks.
-      RECHECKED 2026-07-17T00:07Z (burst-hourly rotation): re-curled
-      www.metmuseum.org and upload.wikimedia.org directly — both still return a
-      fresh CONNECT tunnel 403 (`/__agentproxy/status` shows the allowlist
-      unchanged). Claimed this task first this cycle, confirmed the block still
-      holds, and released it back to `ready` rather than burn a pass on an
-      environment limitation — moved to the next ready task in rotation instead.
-      Fourth consecutive session confirming the same block; still not
-      `needs-human` per the same reasoning as the prior rechecks.
+      EGRESS: metmuseum.org / upload.wikimedia.org reachability is tracked in
+      EGRESS-BLOCKERS.md (grep "ai-art-academy/t-008") — blocked with a fresh
+      CONNECT-tunnel 403 across four consecutive sessions 2026-07-15 → early
+      2026-07-17, then REACHABLE at the 2026-07-17T07:51Z recheck (this varies by
+      session/environment, so re-run scripts/recheck_egress_blocks.py before
+      claiming). An environment limitation, not a task defect — transient per
+      Failure-triage, so stays `ready` without burning passes.
   - id: t-013
     milestone: m4
     title: 'kind_robots: add example-works strip to Academy lesson detail'
@@ -288,13 +267,10 @@ tasks:
       real accession numbers but egress was 403-blocked when they were added), so
       re-verify them at image-fetch time the same as the rest, per the museum-egress
       note below.
-      STATUS NOTE 2026-07-15 (burst cycle): same museum/Wikimedia egress block
-      documented on t-008 applies here too (confirmed 403 via agent-proxy status
-      on metmuseum.org/upload.wikimedia.org in this sandbox). Still `ready` —
-      needs a session with open egress to those hosts, or Silas's environment.
-      RECHECKED 2026-07-15T07:08Z (digital-storefront/t-019 recheck pass): still a
-      fresh connect_rejected/403 policy-denial this session — see t-008's recheck
-      note for the shared verification.
+      EGRESS: same museum/Wikimedia hosts as t-008 — reachability tracked in
+      EGRESS-BLOCKERS.md (grep "ai-art-academy/t-013"). Blocked 2026-07-15/16,
+      REACHABLE at the 2026-07-17T07:51Z recheck; re-run
+      scripts/recheck_egress_blocks.py before claiming.
   - id: t-014
     milestone: m4
     title: 'kind_robots: wire starter library into Remix Studio source picker'
