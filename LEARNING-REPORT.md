@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-07-17T18:51:32Z
+Generated: 2026-07-17T18:56:16Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **235**
-- Outcomes: blocked: 12, done: 223
+- Closed tasks recorded: **236**
+- Outcomes: blocked: 12, done: 224
 - Success rate: **95%**
 - Average passes on successful tasks: **0.0**
 
@@ -32,7 +32,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | humboldt-impropriety-calendar | 1 | 0% |
 | humboldt-scoop | 1 | 100% |
 | humboldt-scoop-cms | 1 | 100% |
-| kind-robots | 25 | 96% |
+| kind-robots | 26 | 96% |
 | kindrobots-unraid | 4 | 100% |
 | mermaids-of-venice | 3 | 100% |
 | model-builder | 28 | 100% |
@@ -49,7 +49,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 15 | 40% |
-| software | 220 | 99% |
+| software | 221 | 99% |
 
 ## Failure categories
 
@@ -67,6 +67,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-07-17 `kind-robots/t-022` — Production DB pool exhaustion (t-022, first seen 2026-07-15T08:56Z) had three false starts before the real fix: two app-code pool-config tweaks (#296 limit fallback, #300 TLS checkServerIdentity, #325/#327 pool lifecycle) each looked plausible and were confirmed live in prod, yet the outage kept recurring under a different signature each time (limit=10, then limit=1 'one-shot fallback'). The fix that actually held was a full revert (#342) of the one-shot-fallback mechanism (#336) rather than another patch on top of it -- when a pool/infra incident keeps changing shape after being 'fixed' twice, suspect the fix itself introduced a new failure mode and consider reverting the whole mechanism instead of patching further. Closed after 12+ hours / ~12 hourly cycles of sustained zero-503 confirmation, per Silas's own standing instruction to close once verified healthy.
 - 2026-07-17 `dream-cycle/t-017` — An always-failing dependency (intermittent DB 503s) masked two schema/contract bugs that meant the daily-dream pipeline had NEVER shipped a row: extraData is a String column (json.dumps it, don't send an object) and dream slugs are globally unique (send explicit de-duped slugs). Build live end-to-end once, early — dry-runs and unit tests can't catch a Prisma type mismatch. Run long API builds detached (background), never in a 2-min-capped foreground call.
 - 2026-07-17 `ai-art-academy/t-030` — Another self-contained conductor-only kaizen task, picked up burst-mode in an hourly Reviewer cycle with no open worker/* PR to review. Added Cloudflare challenge fallback signals (Server header + cf-chl cookie, __cf_chl_rt_tk body marker) behind defensive getattr()/callable() checks so the existing test doubles (which don't implement get_all()/read()) kept passing unchanged rather than needing every prior fixture updated — cheaper than the t-029 fixture-rewrite when the new code path is additive rather than a signature change.
 - 2026-07-17 `ai-art-academy/t-029` — Self-contained conductor-only kaizen task (no cross-repo dependency): claimed, implemented, and merged in a single autonomous hourly cycle. probe_host()/append_entry() changed from a bool blocked/reachable signal to a three-way status string so a Cloudflare cf-mitigated challenge response is no longer silently folded into 'reachable' — the exact gap t-013 hit and hand-documented manually. Updating an existing test suite's fixtures (bool -> string) alongside new coverage, rather than only adding new tests, is what kept the refactor from leaving stale assertions that would pass for the wrong reason.
@@ -79,8 +80,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 - 2026-07-17 `model-builder/t-027` — Batch editor over a derived group (run.items sharing an outputKey) rather than a persisted group object -- the store already carried everything needed (outputKey, quantityIndex, per-item primitives), so the batch actions just loop draftText/updateFields/ approveStage/autoBuildItem and the component stays presentational. Reused the FIELDS "key: value" blob convention (t-028) for setFieldLine so a batch field-set stays compatible with the commit executor's parser. Two self-caught vue-tsc misses under noUncheckedIndexedAccess (items[0] and arr[len-1] are T|undefined) -- always guard array-index access in new store code, and re-run vue-tsc capturing its real exit code (a `| tail` pipe masks it as 0).
 
-- 2026-07-17 `digital-storefront/t-011` — A hard-gated task (gate_human:true, stakes:outward-facing) can still bundle a genuinely reversible, non-customer-facing sub-piece (here: a pure schema migration + seed script, zero live behavior change) inside a monolith whose overall stakes classification is correctly outward-facing. Splitting BEFORE attempting the monolith let the safe slice land through normal Worker/Reviewer flow (merged, no needs-human wait) while the actual gated remainder (webhook fulfillment, product page + purchase flow) kept its gate_human/outward-facing classification on the new split-off tasks. No pass was burned since the split happened at task-selection time, not after a failed implementation attempt. When a hard-gated task's note describes multiple independently-landable pieces (a SPEC.md build order, "step 1/2/3" language), check whether the leading piece is actually reversible on its own before assuming the whole task must wait on Silas.
-
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-07-17T18:51:32Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-07-17T18:56:16Z_
