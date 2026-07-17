@@ -1,0 +1,38 @@
+schema_version: 1
+ledger_contract:
+  proposal_count: 36
+  required_proposal_fields:
+  - slot
+  - id
+  - title
+  - prompt
+  - inspirations
+  - accepted
+  - final
+  - notes
+  prompt_fields:
+  - text
+  - ref
+  pair_fields:
+  - color
+  - bw
+  allowed_states:
+  - open
+  - prompted
+  - exploring
+  - accepted-color
+  - accepted-bw
+  - accepted-pair
+  - final-color
+  - final-bw
+  - final-pair
+  - deferred
+  rules:
+  - Slots are exactly 1 through 36 and ids are unique within a book.
+  - A prompt is tracked when either prompt.text or prompt.ref is populated.
+  - Inspirations and candidates do not imply acceptance.
+  - accepted.color and accepted.bw are independent working approvals.
+  - final.color and final.bw are independent draft confirmations.
+  - A final file should preserve the accepted composition unless notes record an explicit
+    replacement decision.
+  - The cover is tracked outside the 36 proposal records.

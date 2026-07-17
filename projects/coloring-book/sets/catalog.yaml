@@ -1,0 +1,30 @@
+schema_version: 1
+updated: '2026-07-17'
+interior_proposals_per_book: 36
+pair_files_per_proposal: 2
+cover_counted_in_proposal_target: false
+production_order:
+- order: 1
+  slug: monster-recast
+  title: Monster Recast
+  short_prefix: MR
+  ledger: monster-recast/proposals.yaml
+  status: active-production
+- order: 2
+  slug: hollywood-recast
+  title: Hollywood Recast
+  short_prefix: HWR
+  ledger: hollywood-recast/proposals.yaml
+  status: proposal-development
+  title_note: Canonical title is Hollywood Recast, never Hollywood Recast 2.
+- order: 3
+  slug: kind-robots
+  title: Kind Robots
+  short_prefix: KR
+  ledger: kind-robots/proposals.yaml
+  status: proposal-development
+abbreviation_policy:
+  forbidden:
+  - HR
+  reason: Both recast projects were historically called HR; use MR and HWR to prevent
+    cross-book asset drift.
