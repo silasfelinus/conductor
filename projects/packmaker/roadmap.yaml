@@ -19,7 +19,7 @@ milestones:
 - id: m2
   title: Two launch packs drafted (Uncanny Valor, Arcane Whimsy)
   weight: 35
-  status: not-started
+  status: complete
 - id: m3
   title: Generator front end (admin + user views)
   weight: 35
@@ -105,16 +105,16 @@ tasks:
 - id: t-003
   milestone: m2
   title: Draft the contents of the two launch packs (Uncanny Valor, Arcane Whimsy)
-  status: needs-human
+  status: done
   owner: worker
   passes: 0
   stakes: reversible
   soft_gate: false
   depends_on: t-002
   gate_human: true
-  approved_by_human: false
+  approved_by_human: true
   claimed_by: claude-burst-20260715-2306
-  updated: '2026-07-15T23:20:00Z'
+  updated: '2026-07-17T19:30:00Z'
   note: >
     FOR SILAS: Both launch-pack manifests are drafted, validated against the
     t-002 schema, and committed at projects/packmaker/packs/uncanny-valor.yaml
@@ -157,11 +157,19 @@ tasks:
     every item has draftPayload with no refId, all four required
     draftPayload sub-fields present) — see PR test plan.
   claimed_at: '2026-07-15T23:08:26Z'
-  updated: '2026-07-15T23:08:26Z'
+  updated: '2026-07-17T19:30:00Z'
+  approval_note: >
+    APPROVED 2026-07-17: Silas cleared this gate in-session ("remove hard
+    gates on 3... just keep working on them moving forward") — set
+    approved_by_human: true / status: done per the CONTROL.md human-gate
+    clearance rule. Pack drafts stand as-is (no renames requested); t-004
+    (admin generator view, cross-repo) unblocks via resolve_deps. Live
+    generation/Product rows/Stripe activity remain separately gated as the
+    note above states.
 - id: t-004
   milestone: m3
   title: Build the pack generator admin view in kind_robots
-  status: waiting
+  status: ready
   owner: null
   passes: 0
   stakes: reversible

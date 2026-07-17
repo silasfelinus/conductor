@@ -3003,3 +3003,26 @@ records:
     new failure mode and consider reverting the whole mechanism instead of patching further.
     Closed after 12+ hours / ~12 hourly cycles of sustained zero-503 confirmation, per Silas's
     own standing instruction to close once verified healthy."
+- date: '2026-07-17'
+  project: superkate-hairstyle-ai
+  task: t-020
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'Process gap fixed at the AGENTS.md level (step 7: set status review before any PR, all session
+    types) rather than per-project. The task itself then sat at status: review after its PR merged — the
+    exact failure mode it documents — because the session ended without the review→done flip. A task whose
+    deliverable is a process rule should be closed in the same commit that lands the rule.'
+- date: '2026-07-17'
+  project: packmaker
+  task: t-003
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'Gated draft work (two DLC pack manifests) sat complete at needs-human for two days until Silas
+    batch-cleared gates in a report session. Drafts validated against the t-002 schema before the gate
+    meant zero rework on approval — front-loading schema validation makes human gates cheap to clear.'
