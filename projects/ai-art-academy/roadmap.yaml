@@ -961,8 +961,8 @@ tasks:
   - id: t-027
     milestone: m4
     title: 'kind_robots: validate starters.manifest.json against PUBLIC-DOMAIN-POLICY.md schema in CI'
-    status: claimed
-    owner: worker
+    status: done
+    owner: null
     passes: 0
     stakes: reversible
     updated: '2026-07-17T12:52:07Z'
@@ -979,3 +979,21 @@ tasks:
       future edit to this file can't silently drop a provenance field.
     claimed_by: claude-conductor-autonomous-20260717T1252Z
     claimed_at: '2026-07-17T12:52:07Z'
+  - id: t-028
+    milestone: m4
+    title: 'kind_robots: generalize the provenance schema validator to cover the future academy-styles example-work registry'
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-17T13:03:00Z'
+    depends_on: t-013
+    note: >
+      Kaizen from t-027's merge (kind_robots PR #359, 2026-07-17). t-027 shipped
+      utils/scripts/verifyAcademyStarterManifest.ts, validating
+      public/images/academy/starters/starters.manifest.json against
+      PUBLIC-DOMAIN-POLICY.md §3. t-013 will add the same provenance schema to
+      curriculum "example work" entries in the academy-styles registry once it
+      lands. Extract the shared field-list/license-enum check (or add a second
+      thin validator reusing it) so both manifests are covered instead of
+      duplicating the schema by hand a second time.
