@@ -439,3 +439,31 @@ tasks:
       outage (reads 200, writes 503) all bailed cleanly with 0 rollbacks and 0 files
       changed. The actual sound-cannery build will complete on the next stable window
       via the hourly sweep, now safe to run unattended.
+  - id: t-017
+    milestone: m4
+    title: Fix the two bugs that blocked every daily-dream build; ship the first dream live
+    status: review
+    owner: worker
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-17T18:30:00Z'
+    note: >
+      Once the DB came back (2026-07-17), building live surfaced two bugs the
+      intermittent 503s had masked — neither had EVER let a proposal build (every
+      backlog proposal was unbuilt): (1) PitchSheet.extraData is a String
+      @db.LongText column but build_dream_records.py sent it as a raw JSON object,
+      so POST /api/sheets/by-dream 400'd "Invalid prisma.pitchSheet.create()" on
+      every sheet — now json.dumps()'d; (2) dream slugs are globally unique and two
+      same-titled elements (comet-market's world + a location both "The Comet
+      Market") collided 409 — now each dream POSTs an explicit slug de-duplicated
+      within the build (uniq_slug). With both fixed, comet-market built end-to-end
+      (Done: 32/32 — 10 Dreams + PitchSheets + 3 Characters + Bot + 2 Rewards + 2
+      Scenarios + relations, all designer "dream-cycle"; 9 art requests queued;
+      slug the-comet-market-2 confirms the dedup; sheet extraData verified as a
+      parseable JSON string tagged dreamCycle=comet-market). Companion kind_robots
+      fix needed for the /daily-dream page to render these: daily-dream-page.vue
+      metaOf() only accepts object extraData — must JSON.parse the string (filed
+      separately). Cleaned up two earlier partial-build orphan sets from timed-out
+      foreground runs (deleted via the model DELETE endpoints); root cause was the
+      2-min tool timeout killing the sync build before rollback — builds now run
+      detached in the background.
