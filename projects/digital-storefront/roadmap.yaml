@@ -254,12 +254,15 @@ tasks:
 - id: t-013
   milestone: m3
   title: Wire the monthly supporter subscription to Stripe (test mode)
-  status: ready
-  owner: null
+  status: claimed
+  owner: worker
   passes: 0
   stakes: reversible
   depends_on: t-009
   note: 'Cross-repo (kind_robots). Recurring donation plan(s) via Stripe subscriptions; reuse subscription-manager.vue. Test mode only; live activation is gated. Newly ready 2026-07-15 via resolve_deps.py once t-009 (SPEC.md) landed. EGRESS: api.stripe.com reachability is tracked in EGRESS-BLOCKERS.md (grep api.stripe.com) — 403-blocked 2026-07-15, REACHABLE at the 2026-07-17T07:51Z recheck (varies by session; re-run scripts/recheck_egress_blocks.py before claiming).'
+  claimed_by: claude-conductor-burst-20260717T1507Z
+  claimed_at: '2026-07-17T15:07:29Z'
+  updated: '2026-07-17T15:07:29Z'
 - id: t-014
   milestone: m3
   title: Build the Against Malaria giving page
