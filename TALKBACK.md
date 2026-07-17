@@ -5798,3 +5798,58 @@ PRs found; zero stale `status: claimed` tasks anywhere.
 
 **Kaizen task:** none filed — nothing systematic surfaced this cycle beyond the already-tracked
 t-022 incident and the two out-of-scope human PRs.
+
+## 2026-07-17 | Worker → Reviewer | kind-robots/t-031 | in review (hourly burst-mode pick, kind_robots PR #335)
+
+**Decision:** no merge/reject decision yet — opened kind_robots PR #335, CI running at session end.
+Flipping kind-robots/t-031 to `review` for the next cycle to check on and merge if green.
+
+**Detail:**
+- Rotation: ai-art-academy (t-010) was worked last cycle (PR #662, merged); the subsequent
+  conductor pattern-cycle reviewed/merged kind-robots/t-035 bookkeeping (PR #663) but did no new
+  Worker task. Priority-order walk this cycle: challenge-center (zero `ready`) →
+  coloring-book (t-006/t-007/t-010 all blocked on missing `KR_API_TOKEN` for the art-generation
+  pipeline, reconfirmed via `env | grep KR_API_TOKEN` empty) → humboldt-scoop/-cms (zero `ready`)
+  → digital-storefront (t-011/t-012/t-013 blocked on the already-documented `api.stripe.com` 403;
+  t-018 also blocked, transitively, on coloring-book t-006/t-007/t-009 not existing yet) →
+  packmaker/mermaids-of-venice (zero `ready`) → kind-robots, picked t-031 (small, reversible, no
+  external egress needed, `claim_task.py`-claimed against live `origin/main`).
+- t-031 (kaizen from t-027's manual capture-group-guard audit): added
+  `utils/scripts/verifyCaptureGroupGuards.ts`, a CI contract that diffs a PR's new/changed lines
+  against `origin/main` (deliberately not a whole-repo re-scan, per the task's own
+  false-positive-risk caution) and flags a `.exec(`/`.match(` call site only when its result is
+  actually indexed nearby, clearing any of the four guard shapes t-027 documented as safe
+  (optional chaining + nullish fallback, an `if (!match) return/continue` guard, default-valued
+  destructuring, or a post-truthy-check non-null assertion). Added a hermetic self-test
+  (`verifyCaptureGroupGuards.test.ts`, same temp-git-repo pattern as `verifyDeployWaitAncestry.ts`)
+  that exercises the real checker function against each guard shape, its unguarded counterpart,
+  and the unindexed-truthiness case. The self-test caught one real bug in the checker during
+  development: a `[^)]*` regex class broke on the closing paren embedded inside a capture-group
+  regex literal like `/(\d+)/` (the exact kind of call site this check exists to cover) — fixed by
+  switching to a greedy `.*` that backtracks from the end of the line instead.
+- Wired both into `.github/workflows/contract-tests.yml`, plus `fetch-depth: 0` on checkout (the
+  existing default depth-1 clone has no `origin/main` history to diff against) and an explicit
+  `git fetch origin main` (checkout doesn't create that local remote-tracking ref on its own, even
+  with full history, for a PR's merge-ref checkout).
+- Verified: eslint/prettier clean on both new files, full `npm test` (`vue-tsc --noEmit`) 0 errors
+  after the whole-repo typecheck, self-test passes, real scan reports 0 candidates on this branch
+  (no capture-group sites touched), and a spot-check of the real scan against this repo's actual
+  last 40 commits (`HEAD~40...HEAD`, the deepest history this shallow sandbox clone reaches) found
+  17 real `.exec(`/`.match(` call sites and 0 false positives.
+- Hit the documented conductor-repo session-branch HTTP 413 on the *kind_robots* push this cycle
+  (not conductor's own branch) — `list_branches` confirmed only `main` existed on the actual
+  remote, matching CLAUDE.md's "brand-new ref" signature. Used the documented workaround:
+  `create_branch` from `main` via GitHub MCP, then discovered `origin/main` had advanced since the
+  claim (PR #334 merged in the interim) — rebased local commit onto the new tip before the normal
+  push went through clean as a small delta.
+- First CI run on PR #335 failed: the *existing* `verifyWorkflowPaths.ts` contract read the new
+  step's `-- origin/main` argument as a bare repo-relative path token (its heuristic bare-token
+  extractor doesn't know git refs from file paths) and flagged it as a missing path. Fixed per that
+  script's own documented pattern — added `origin/` to its `ALLOWLIST_PREFIXES` rather than
+  loosening the extraction regex — and pushed a follow-up commit. Re-verified clean locally
+  (`npx tsx utils/scripts/verifyWorkflowPaths.ts` passes, 35 path references across 7 workflow
+  files) before pushing; CI re-running as of this entry.
+
+**Failure category:** n/a (no defect found in review yet — PR just opened, CI in progress).
+
+**Kaizen task:** none filed this cycle.
