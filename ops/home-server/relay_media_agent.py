@@ -29,6 +29,8 @@ MEDIA_ROOT_VALUE = (
     or os.environ.get("KR_LOCAL_IMAGES_DIR", "").strip()
 )
 IMAGE_EXTENSIONS = {".webp", ".png", ".jpg", ".jpeg", ".gif", ".svg"}
+GENERATED_IMAGE_EXTENSIONS = {".webp", ".png", ".jpg", ".jpeg", ".gif"}
+VIDEO_EXTENSIONS = {".mp4", ".webm", ".mov", ".mkv"}
 ORIGINAL_PROCESS = relay.process
 
 
@@ -75,11 +77,8 @@ def media_root():
 
 def encode_image_for_suffix(raw, suffix):
     suffix = suffix.lower()
-    if suffix not in IMAGE_EXTENSIONS:
-        return raw
-
-    if suffix == ".svg":
-        return raw
+    if suffix not in GENERATED_IMAGE_EXTENSIONS:
+        raise ValueError(f"Unsupported generated image target extension: {suffix}")
 
     try:
         from PIL import Image
@@ -99,8 +98,6 @@ def encode_image_for_suffix(raw, suffix):
             image.convert("RGB").save(output, format="JPEG", quality=92)
         elif suffix == ".gif":
             image.save(output, format="GIF")
-        else:
-            return raw
         return output.getvalue()
 
 
@@ -158,11 +155,17 @@ def write_direct_media(job, media):
     if destination != root and root not in destination.parents:
         raise ValueError(f"Media destination escaped root: {destination}")
 
+    suffix = destination.suffix.lower()
     raw = base64.b64decode(media["data_b64"])
     if media.get("is_video"):
+        if suffix not in VIDEO_EXTENSIONS:
+            raise ValueError(
+                f"Video result cannot be written to target extension {suffix or '(none)'}"
+            )
         encoded = raw
     else:
-        suffix = destination.suffix or f".{media.get('file_type') or 'png'}"
+        if not suffix:
+            raise ValueError("Generated image target must include a file extension")
         encoded = encode_image_for_suffix(raw, suffix)
 
     atomic_write(destination, encoded)
