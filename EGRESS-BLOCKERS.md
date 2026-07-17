@@ -153,3 +153,6 @@ downloaded from this sandbox. Affects ai-art-academy/t-013's impressionism,
 post-impressionism, and de-stijl examples (all correctly public-domain per the
 API, just image-fetch-blocked) — left as ready follow-up work once this
 resolves or a session runs with different egress.
+
+## 2026-07-17T15:07:16Z | api.stripe.com | reachable | digital-storefront/t-013
+reachable (HTTP 404)
