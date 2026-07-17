@@ -6131,3 +6131,29 @@ happened before any implementation attempt, so no pass was consumed on t-011 —
 **Kaizen task:** t-022 filed as the natural next pick for a future cycle with open api.stripe.com
 egress (webhook + Entitlement wiring) — not a "kaizen" in the improvement-suggestion sense, just
 the direct continuation of this task's own split. No separate kaizen task filed this cycle.
+
+## 2026-07-17 | Reviewer → Silas | model-builder/t-027 + t-029 | pattern (Silas-directed session, DB write-locked)
+
+**Decision:** merged kind_robots PR #353 (squash 4878064a) -- model-builder pushed toward
+finished with the no-DB-write ready tasks. t-027 closed done; t-029 kept ready with a progress
+note; kaizen t-030 filed.
+
+**Detail:**
+- t-027 (batch editor for quantity outputs): new model-builder-batch-editor.vue edits all N items
+  of a quantity/expansion group together -- automate a stage across all N, set one model field to
+  the same value on all N (choice dropdowns, e.g. rarity=RARE x10), auto-build the group, and
+  delegate per-item fine-tuning to the existing item panel. Groups derive from run.items by
+  outputKey; store gained itemGroups + batch* actions looping the existing per-item primitives.
+- t-029: shipped step (2), the builder tutorial section. Steps (1) art and (3) liveUrl backfill
+  stay open (generation backend / admin action); step (4) is effectively done (the manager is
+  already the full experience). Kept ready.
+- vue-tsc 0 errors; all 3 CI checks green. Two type errors were self-caught pre-merge
+  (noUncheckedIndexedAccess on items[0] / arr[len-1]) -- fixed with guards before the PR opened.
+- model-builder's remaining ready tasks (t-022 live post-deploy smoke, t-025 ArtJob async art) are
+  genuinely blocked by the prod DB write-lock -- both create rows against prod -- so the project is
+  at the ceiling reachable while the DB is down.
+
+**Failure category:** n/a (clean merge; the two tsc misses were caught and fixed pre-push).
+
+**Kaizen task:** t-030 -- a batch item PATCH endpoint so a group edit persists in one round-trip
+instead of N per-item PATCHes (the batch editor currently loops the single-item save).

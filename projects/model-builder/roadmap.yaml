@@ -493,15 +493,30 @@ tasks:
   - id: t-027
     milestone: m6
     title: "Batch editor for quantity outputs"
-    status: ready
-    owner: null
+    status: done
+    owner: reviewer
     passes: 0
     stakes: reversible
+    updated: '2026-07-17T11:00:00Z'
     note: >
       From live testing (Silas): batch generations should be edited together, not one item
       at a time. For a quantity output (e.g. 10 rewards), give a batch editor that sets which
       fields to automate vs fine-tune across all N items at once, with per-item overrides for
       the ones you want to hand-tune. Builds on the model-aware fields (t-024).
+
+      Done 2026-07-17 (Silas-directed session, kind_robots PR #353 squash 4878064a): added
+      components/model-builder/model-builder-batch-editor.vue, shown above the single-item
+      panel whenever the selected item belongs to a quantity/expansion group (items sharing
+      an outputKey). It (a) automates a stage across all N (batch-draft pitch/fields/art-prompt
+      with an only-empty guard, approve FIELDS, or auto-build the group), (b) sets one model
+      field to the same value on all N (choice fields render as dropdowns, e.g. rarity=RARE
+      across 10 rewards), and (c) delegates per-item fine-tuning to the existing item panel via
+      a select-item event. New store surface: itemGroups computed +
+      batchDraftField/batchSetField/batchApproveStage/batchAutoBuild looping the existing
+      per-item primitives; parse/read/setFieldLine helpers for the FIELDS key:value blob.
+      vue-tsc 0 errors; all 3 CI checks green. The AI-draft/auto-build paths call /api/suggest
+      + art/commit, so they were type-checked but not exercised live (DB-less sandbox); they
+      reuse the already-shipped, already-exercised per-item primitives.
 
   - id: t-028
     milestone: m6
@@ -529,3 +544,29 @@ tasks:
       the PROJECT Dream liveUrl points at /model-builder (admin can run the Conductor 'Placements' button
       to backfill channelKey/tabKey/liveUrl); (4) evolve the placeholder scaffold page into the full
       interactive experience for this project.
+
+      PROGRESS 2026-07-17 (Silas-directed session, kind_robots PR #353 squash 4878064a): step (2)
+      done -- added a 'model-builder' section under tutorialChannels.builder.sections in
+      stores/helpers/tutorialCards.ts (image resolves via tutorialImage('builder','model-builder'),
+      falls back to a placeholder until the art lands). Step (4) is effectively covered: the
+      /model-builder mount (content/model-builder.md -> :model-builder-manager) is already the full
+      interactive experience -- source picker, recipe selector, gated progress matrix, run history,
+      and now the t-027 quantity batch editor -- not a placeholder scaffold. Remaining and kept
+      ready: step (1) dashboard-tab + tutorial .webp art (needs the generation backend/egress) and
+      step (3) the liveUrl backfill (an admin Placements click, not an agent action).
+
+  - id: t-030
+    milestone: m6
+    title: "Batch item PATCH endpoint to cut N per-item saves to one request"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Kaizen from t-027 (kind_robots PR #353, 2026-07-17). The new batch editor and autoBuildRun
+      loop the existing single-item PATCH (/api/model-builder/items/:id) once per item, so a
+      batch-set or batch-draft across N items fires N requests. Add a batch endpoint (e.g.
+      PATCH /api/model-builder/items/batch accepting [{ id, ...fields, stageStatuses }]) and a
+      store batchPushItems helper so a whole group edit persists in one round-trip, recording the
+      same revision/stage metadata the per-item PATCH does. Front-end + one server route; no schema
+      change. Keep the per-item PATCH for single edits.
