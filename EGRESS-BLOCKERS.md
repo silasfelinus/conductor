@@ -99,3 +99,27 @@ blocked (URLError: <urlopen error Tunnel connection failed: 403 Forbidden>)
 
 ## 2026-07-17T11:08:30Z | api.stripe.com | blocked | digital-storefront/t-013
 blocked (URLError: <urlopen error Tunnel connection failed: 403 Forbidden>)
+
+## 2026-07-17T11:50:07Z | metmuseum.org | reachable | ai-art-academy/t-008
+reachable (HTTP 429)
+
+## 2026-07-17T11:50:08Z | upload.wikimedia.org | reachable | ai-art-academy/t-008
+reachable (HTTP 200)
+
+## 2026-07-17T11:52:00Z | artic.edu | reachable | ai-art-academy/t-008
+reachable (HTTP 403)
+
+## 2026-07-17T11:52:01Z | api.artic.edu | reachable | ai-art-academy/t-008
+reachable (HTTP 200)
+
+## 2026-07-17T11:52:02Z | clevelandart.org | reachable | ai-art-academy/t-008
+reachable (HTTP 200)
+
+## 2026-07-17T11:52:03Z | nga.gov | reachable | ai-art-academy/t-008
+reachable (HTTP 403)
+
+## 2026-07-17T11:52:06Z | rijksmuseum.nl | reachable | ai-art-academy/t-008
+reachable (HTTP 200)
+
+## 2026-07-17T11:52:07Z | commons.wikimedia.org | reachable | ai-art-academy/t-008
+reachable (HTTP 200)
