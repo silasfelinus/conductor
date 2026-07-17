@@ -82,22 +82,35 @@ def next_action(proposal: dict[str, Any]) -> str | None:
     return None
 
 
-def validate_book(entry: dict[str, Any]) -> tuple[list[str], dict[str, int], tuple[int, str, str] | None]:
+def needs_verification_entries(proposal: dict[str, Any]) -> list[dict[str, Any]]:
+    inspirations = proposal.get("inspirations")
+    if not isinstance(inspirations, list):
+        return []
+    return [
+        inspiration
+        for inspiration in inspirations
+        if isinstance(inspiration, dict) and inspiration.get("needs_visual_verification")
+    ]
+
+
+def validate_book(
+    entry: dict[str, Any],
+) -> tuple[list[str], dict[str, int], tuple[int, str, str] | None, list[tuple[str, str, str]]]:
     errors: list[str] = []
     slug = str(entry.get("slug") or "")
     ledger_rel = entry.get("ledger")
     if not slug or not isinstance(ledger_rel, str):
-        return [f"catalog entry missing slug or ledger: {entry!r}"], {}, None
+        return [f"catalog entry missing slug or ledger: {entry!r}"], {}, None, []
 
     path = SETS_DIR / ledger_rel
     if not path.exists():
-        return [f"{slug}: missing ledger {path.relative_to(ROOT)}"], {}, None
+        return [f"{slug}: missing ledger {path.relative_to(ROOT)}"], {}, None, []
 
     doc = load_yaml(path)
     book = doc.get("book") if isinstance(doc.get("book"), dict) else {}
     proposals = doc.get("proposals")
     if not isinstance(proposals, list):
-        return [f"{slug}: proposals must be a list"], {}, None
+        return [f"{slug}: proposals must be a list"], {}, None, []
     inventory = doc.get("inventory_snapshot") if isinstance(doc.get("inventory_snapshot"), dict) else {}
 
     if book.get("slug") != slug:
@@ -127,6 +140,7 @@ def validate_book(entry: dict[str, Any]) -> tuple[list[str], dict[str, int], tup
         "final_pairs": 0,
     }
     first_next: tuple[int, str, str] | None = None
+    needs_verification: list[tuple[str, str, str]] = []
 
     required = {"slot", "id", "title", "prompt", "inspirations", "accepted", "final", "notes"}
     for index, proposal in enumerate(proposals, start=1):
@@ -168,9 +182,13 @@ def validate_book(entry: dict[str, Any]) -> tuple[list[str], dict[str, int], tup
         if action and first_next is None:
             first_next = (int(proposal.get("slot") or index), str(proposal.get("id") or index), action)
 
+        proposal_id = str(proposal.get("id") or index)
+        for inspiration in needs_verification_entries(proposal):
+            needs_verification.append((slug, proposal_id, str(inspiration.get("path") or "?")))
+
     if inventory.get("requires_directory_reconciliation"):
         first_next = (0, "inventory", "reconcile discovered files into proposal records")
-    return errors, counts, first_next
+    return errors, counts, first_next, needs_verification
 
 
 def main() -> int:
@@ -187,12 +205,14 @@ def main() -> int:
 
     all_errors: list[str] = []
     all_complete = True
+    all_needs_verification: list[tuple[str, str, str]] = []
     for entry in entries:
         if not isinstance(entry, dict):
             all_errors.append(f"catalog entry is not a mapping: {entry!r}")
             continue
-        errors, counts, next_item = validate_book(entry)
+        errors, counts, next_item, needs_verification = validate_book(entry)
         all_errors.extend(errors)
+        all_needs_verification.extend(needs_verification)
         title = entry.get("title") or entry.get("slug")
         print(f"{entry.get('order')}. {title} ({entry.get('slug')})")
         if counts:
@@ -217,6 +237,12 @@ def main() -> int:
             else:
                 print("   next: package and release-gate review")
             all_complete = all_complete and counts["final_pairs"] == 36
+        print()
+
+    if all_needs_verification:
+        print("NEEDS VISUAL VERIFICATION (elimination-only inspiration matches):")
+        for slug, proposal_id, inspiration_path in all_needs_verification:
+            print(f"- {slug}/{proposal_id}: {inspiration_path}")
         print()
 
     if all_errors:

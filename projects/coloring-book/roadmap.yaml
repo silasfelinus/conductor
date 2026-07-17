@@ -372,7 +372,7 @@ tasks:
 - id: t-029
   milestone: m4
   title: Make coloring_proposal_status.py surface elimination-only inspiration matches
-  status: claimed
+  status: review
   owner: worker
   passes: 0
   stakes: reversible
@@ -382,6 +382,15 @@ tasks:
     in a roadmap/proposals.yaml note, not in --check output. Add a --check flag or summary line
     listing any inspiration entries carrying needs_visual_verification: true (or an equivalent
     elimination-only marker) so future cycles and Silas see them surfaced automatically instead
-    of having to read prose notes to find them.'
+    of having to read prose notes to find them.
+
+    Done (burst-mode cycle, 2026-07-17): coloring_proposal_status.py now scans every
+    proposal''s inspirations list for entries carrying needs_visual_verification: true and
+    prints a "NEEDS VISUAL VERIFICATION (elimination-only inspiration matches)" section
+    listing slug/proposal-id/path for each, ahead of the STRUCTURAL ERRORS block, in both
+    plain and --strict-finals runs. Verified against the current mr-025 gothic-schoolgirl
+    color/BW pair (both entries now show up automatically instead of needing the prose
+    note read). No other script consumes validate_book()''s return tuple, so extending it
+    with the new needs_verification list was a safe, local change.'
   claimed_by: claude-conductor-hourly-20260717d
   claimed_at: '2026-07-17T18:05:22Z'
