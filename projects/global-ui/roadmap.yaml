@@ -241,6 +241,17 @@ tasks:
     eyes in a preview deploy per surface — the dev sandbox has no DB, so most data-heavy pages cannot be
     visually verified here. Do it in small reversible passes, screenshotting /ui and the touched views.
 
+    PROGRESS 2026-07-17 (Silas-directed session, kind_robots PR #349 squash 9880cbd8):
+    first migration pass landed -- status callouts across 11 components onto .kr-note-*:
+    the add-* form family (add-bot/character/scenario/reward/checkpoint/composition) and the
+    interact + settings tail (character/bot/composition-interact, server-selector,
+    account-settings). Deferred for a preview-driven pass (documented in PR #349): the art
+    surfaces (artjob-manager, stylist-relay-status) are full-height flex containers / dense
+    p-2 text-xs chips where .kr-note is a poor fit; the /30-opacity notices with no text color
+    would gain colored text; stage-manager pills are not inline notes; and the
+    generic-solid-panel migration + code-library computed maps remain. Kept status: ready for
+    the next pass (see kaizen t-023). vue-tsc green; there is no lint gate in CI.
+
     '
 - id: t-013
   milestone: m5
@@ -437,10 +448,11 @@ tasks:
 - id: t-022
   milestone: m5
   title: Audit components/pages/*.vue for other card/list-item UI duplicated across 2+ top-level surfaces, matching the honeydo-card pattern t-020 just fixed
-  status: ready
-  owner: null
+  status: done
+  owner: reviewer
   passes: 0
   stakes: reversible
+  updated: '2026-07-17T10:15:00Z'
   note: >
     Kaizen from t-020 (Reviewer, autonomous hourly conductor cycle, 2026-07-17,
     kind_robots PR #344 / conductor PR #678). t-020 fixed one instance of
@@ -456,6 +468,38 @@ tasks:
     components/tasks/ or a similarly-scoped shared directory. Front-end only,
     no new data source. If the audit finds zero further hits, close done with
     that finding -- it doesn't need to force an extraction where none exists.
+
+    Done 2026-07-17 (Silas-directed session, kind_robots PR #349 squash 9880cbd8):
+    the audit found exactly one further 2+ file duplication -- click-leaderboard.vue
+    and match-leaderboard.vue rendered an identical rank/username/record table
+    differing only in the score column. Extracted
+    components/achievements/leaderboard-table.vue (props rows/scoreLabel/scoreKey),
+    rewired both callers, swapped off-theme gray-* for base-* tokens, and added a
+    live example to the /ui data gallery. No other clean 2+ file item-card duplicate
+    exists (honeydo already extracted in t-020; the conductor pages compose shared
+    subcomponents rather than duplicating a literal item-card). All 3 CI checks green
+    (TypeScript, Contract verifiers, GitGuardian); merged.
+- id: t-023
+  milestone: m5
+  title: Preview-driven pass on the deferred kr-* surfaces (art callouts, /30-no-text notices, generic solid panels, code-library maps)
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  note: >
+    Kaizen from t-012's first migration pass (kind_robots PR #349, 2026-07-17). That pass
+    deliberately skipped surfaces that can't be verified headlessly or are a poor .kr-note
+    fit: (a) art status surfaces (artjob-manager.vue, stylist-relay-status.vue) --
+    full-height flex containers and dense p-2 text-xs chips; if migrated, use
+    "kr-note kr-note-* p-2 text-xs font-normal" overrides, or leave as-is; (b) /30-opacity
+    notices with NO text color (composition-interact narrative/art panels, server-selector
+    info panel) -- .kr-note-* would add colored text, so decide per-site; (c) stage-manager
+    rounded-full status pills -- not inline notes, skip; (d) the generic-solid-panel
+    migration onto .kr-panel / .kr-panel-muted (only exact p-6 solid matches, hand-verified
+    non-bespoke and non-dashed); (e) code-library.vue computed class maps
+    (text-{status}-content -> text-{status} is a real color change). Each needs a
+    preview-deploy eyeball per surface since the sandbox has no DB. Small reversible passes,
+    screenshot /ui + the touched views.
 milestones:
 - id: m1
   title: Task language + presentation model

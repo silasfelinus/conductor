@@ -6052,3 +6052,30 @@ investigating/implementing before running `claim_task.py` against the *kind-robo
 was working from the digital-storefront roadmap entry, which has no `depends_on` link to
 kind-robots/t-012 even though the task text says it's blocked on it) — worth a small hygiene note
 on digital-storefront/t-012's roadmap entry for future cycles, added inline in this same commit.
+
+## 2026-07-17 | Reviewer → Silas | global-ui/t-012 + t-022 | pattern (Silas-directed 12h session, DB write-locked)
+
+**Decision:** merged kind_robots PR #349 (squash 9880cbd8) -- global-ui design-system
+consolidation, chosen as the best token-rich work while prod DB writes are locked (t-022).
+t-022 closed done; t-012 kept ready with a progress note; kaizen t-023 filed for the
+deferred surfaces.
+
+**Detail:**
+- Migrated status callouts across 11 components onto the canonical .kr-note-* classes
+  (add-* form family + interact/settings tail). Extracted a shared
+  components/achievements/leaderboard-table.vue from the click/match leaderboard pair
+  (t-022's one real duplication hit) and rewired both callers. 15 files, +107/-145.
+- All 3 CI checks green (TypeScript, Contract verifiers, GitGuardian); local vue-tsc green.
+- Two recoveries worth logging: (1) the kind_robots session branch did not exist on the
+  real remote (stale local tracking ref) -> hit the documented brand-new-ref 413, fixed
+  via GitHub MCP create_branch from main + rebase onto the real tip. (2) A `prettier
+  --write` on non-conformant files bloated two by ~1600 lines each, burying the real
+  diff; reset those files to main, reapplied only the targeted class swaps, and rebuilt
+  clean history (force-with-lease). There is no prettier/lint CI gate, so the reformat was
+  never needed.
+
+**Failure category:** n/a (clean merge; the prettier bloat was caught and corrected pre-merge).
+
+**Kaizen task:** t-023 -- preview-driven pass on the deferred kr-* surfaces (art callouts,
+/30-no-text notices, generic solid panels, code-library computed maps), each needing a
+per-surface preview-deploy eyeball the sandbox can't provide.
