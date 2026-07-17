@@ -266,8 +266,8 @@ tasks:
 - id: t-024
   milestone: m3
   title: 'subscribe.post.ts: require authenticated user instead of trusting client-supplied userId'
-  status: ready
-  owner: null
+  status: claimed
+  owner: worker
   passes: 0
   stakes: reversible
   note: >
@@ -276,6 +276,9 @@ tasks:
     request body with no auth check (not introduced or worsened by #361 -- cancel-subscription.post.ts
     was built correctly, deriving the user from requireApiUser instead). Fix subscribe.post.ts
     to derive the user the same way, matching the new cancel-subscription endpoint's pattern.
+  claimed_by: claude-conductor-burst-20260717T2057Z
+  claimed_at: '2026-07-17T21:12:19Z'
+  updated: '2026-07-17T21:12:19Z'
 - id: t-014
   milestone: m3
   title: Build the Against Malaria giving page
