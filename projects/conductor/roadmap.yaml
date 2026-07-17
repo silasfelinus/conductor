@@ -1591,11 +1591,11 @@ tasks:
   - id: t-061
     milestone: m2
     title: 'scripts/git_plumbing.py: sign direct-to-ref commits when commit.gpgsign is configured'
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
-    updated: '2026-07-17T19:45:00Z'
+    updated: '2026-07-17T23:08:51Z'
     note: >
       Filed 2026-07-17 (burst-mode cycle, ai-art-academy/t-021, see TALKBACK.md same
       date for full detail). `commit_file_on_ref()` in `scripts/git_plumbing.py` builds
@@ -1622,3 +1622,5 @@ tasks:
       filed), so a rewrite-and-force-push to fix historical Unverified badges is not
       worth the real risk of breaking someone else's in-flight rebase. This task is
       forward-looking only: sign commits made by this helper from here on.
+    claimed_by: claude-conductor-burst-20260717T2300Z
+    claimed_at: '2026-07-17T23:08:51Z'
