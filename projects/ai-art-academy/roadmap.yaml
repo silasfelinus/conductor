@@ -219,11 +219,11 @@ tasks:
   - id: t-008
     milestone: m4
     title: 'kind_robots: download Academy starter image library + provenance manifest'
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
-    updated: '2026-07-17T00:07:14Z'
+    updated: '2026-07-17T11:51:30Z'
     depends_on: t-007
     note: >
       SPLIT 2026-07-15 (conductor/t-010 roadmap-upgrade pass) from the original
@@ -244,6 +244,8 @@ tasks:
       session/environment, so re-run scripts/recheck_egress_blocks.py before
       claiming). An environment limitation, not a task defect — transient per
       Failure-triage, so stays `ready` without burning passes.
+    claimed_by: claude-conductor-autonomous-20260717T1150Z
+    claimed_at: '2026-07-17T11:51:30Z'
   - id: t-013
     milestone: m4
     title: 'kind_robots: add example-works strip to Academy lesson detail'
