@@ -1218,8 +1218,8 @@ tasks:
   - id: t-048
     milestone: m2
     title: Rename ci.yml's authz-regression job now that it runs the full pytest suite
-    status: ready
-    owner: null
+    status: claimed
+    owner: reviewer
     passes: 0
     stakes: reversible
     note: |-
@@ -1235,6 +1235,9 @@ tasks:
       coordinated update (rename in ci.yml + update the required-check setting
       in the same window) rather than an agent-only change -- soft needs-human
       if branch protection can't be inspected from this environment.
+    claimed_by: projects-db-down-q2yfu0
+    claimed_at: '2026-07-17T07:53:22Z'
+    updated: '2026-07-17T07:53:22Z'
 
   - id: t-049
     milestone: m2
