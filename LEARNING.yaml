@@ -2892,3 +2892,19 @@ records:
     with the commit executor's parser. Two self-caught vue-tsc misses under noUncheckedIndexedAccess
     (items[0] and arr[len-1] are T|undefined) -- always guard array-index access in new store code,
     and re-run vue-tsc capturing its real exit code (a `| tail` pipe masks it as 0).
+- date: 2026-07-17
+  project: global-ui
+  task: t-019
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    A task note's suggested reuse target can point at dead code -- t-018's per-milestone
+    counts lived in conductor-page.vue, but that component's inline "overview" grid block
+    is never actually mounted by conductor-manager.vue (showConductorGallery always wins).
+    Dispatching a research-only agent to confirm the real live render path
+    (conductor-overview-gallery-page.vue) before writing any template edits avoided a
+    wasted no-op PR. The needed done/totalTasks fields were already computed and present
+    on every gallery item; the fix was template-only across 4 layout modes.

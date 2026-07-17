@@ -366,7 +366,7 @@ tasks:
 - id: t-019
   milestone: m5
   title: Surface an aggregate "N/M tasks done" count on the top-level project card, before opening the project
-  status: claimed
+  status: done
   owner: worker
   passes: 0
   stakes: reversible
@@ -381,9 +381,20 @@ tasks:
     badge on the project card itself, reusing the same done-status filter
     conductor-page.vue already applies per milestone. Front-end only, no new
     data source.
+
+    DONE 2026-07-17 via kind_robots PR #354 (squash 9f4f619). The real
+    top-level project list is conductor-overview-gallery-page.vue (not the
+    dead overview block inside conductor-page.vue) -- its `item.done` /
+    `item.totalTasks` fields were already computed by t-018's
+    taskCounts()/itemFromProject() work, just not surfaced above the fold.
+    Added a "done/totalTasks done" badge to all 4 gallery layout modes
+    (cards, heroes, icons, list); list mode already showed a bare done count
+    and just needed the denominator, icons mode's "N tasks" badge became
+    "N/M done" in the same slot. No API/store/Prisma changes. All 3 CI
+    checks green (TypeScript, Contract verifiers, GitGuardian).
   claimed_by: claude-conductor-hourly-20260717T1042Z
   claimed_at: '2026-07-17T11:02:49Z'
-  updated: '2026-07-17T11:02:49Z'
+  updated: '2026-07-17T11:15:00Z'
 - id: t-020
   milestone: m5
   title: Extract a shared honeydo-card component so the Conductor HONEYDO tab and the new For You page can't visually drift apart
@@ -503,6 +514,30 @@ tasks:
     (text-{status}-content -> text-{status} is a real color change). Each needs a
     preview-deploy eyeball per surface since the sandbox has no DB. Small reversible passes,
     screenshot /ui + the touched views.
+- id: t-024
+  milestone: m5
+  title: Guard the misleading done/totalTasks fallback in conductor-overview-gallery-page.vue's itemFromProjectRecord()
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  note: >
+    Kaizen from t-019 (Worker, autonomous hourly conductor cycle, 2026-07-17,
+    kind_robots PR #354). t-019 surfaced item.done/item.totalTasks as a
+    "N/M done" badge on the top-level project gallery cards. For non-admin
+    users, galleryItems falls back to itemFromProjectRecord() when a DB
+    Project row has no matching conductorStore entry by conductorSlug --
+    that fallback approximates done/totalTasks from DB Todo counts
+    (done: record.status === 'DONE' ? 1 : 0, totalTasks: record._count
+    ?.Todos ?? 0), NOT real conductor task counts. The existing
+    v-if="item.totalTasks" guard hides the badge when that yields 0, but if
+    a project has any Todos at all it will render a plausible-looking but
+    wrong ratio (e.g. "1/3 done" meaning something entirely unrelated to
+    conductor tasks). Either compute a real fallback from a lighter
+    conductor summary, or make the badge conditional on the item actually
+    having conductor-sourced counts (e.g. a boolean flag set only in
+    itemFromProject(), not itemFromProjectRecord()) so the fallback path
+    never shows a task-count badge at all.
 milestones:
 - id: m1
   title: Task language + presentation model
