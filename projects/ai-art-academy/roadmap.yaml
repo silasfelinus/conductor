@@ -219,8 +219,8 @@ tasks:
   - id: t-008
     milestone: m4
     title: 'kind_robots: download Academy starter image library + provenance manifest'
-    status: claimed
-    owner: worker
+    status: ready
+    owner: null
     passes: 0
     stakes: reversible
     updated: '2026-07-17T00:07:14Z'
@@ -257,8 +257,14 @@ tasks:
       Failure-triage table) — picked ai-art-academy/t-020 instead, which needed no
       external egress. Third consecutive session confirming the same block; still
       not `needs-human` per the same reasoning as the prior two rechecks.
-    claimed_by: claude-burst-2026-07-17-hourly
-    claimed_at: '2026-07-17T00:07:14Z'
+      RECHECKED 2026-07-17T00:07Z (burst-hourly rotation): re-curled
+      www.metmuseum.org and upload.wikimedia.org directly — both still return a
+      fresh CONNECT tunnel 403 (`/__agentproxy/status` shows the allowlist
+      unchanged). Claimed this task first this cycle, confirmed the block still
+      holds, and released it back to `ready` rather than burn a pass on an
+      environment limitation — moved to the next ready task in rotation instead.
+      Fourth consecutive session confirming the same block; still not
+      `needs-human` per the same reasoning as the prior rechecks.
   - id: t-013
     milestone: m4
     title: 'kind_robots: add example-works strip to Academy lesson detail'
