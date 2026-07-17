@@ -266,7 +266,7 @@ tasks:
 - id: t-024
   milestone: m3
   title: 'subscribe.post.ts: require authenticated user instead of trusting client-supplied userId'
-  status: claimed
+  status: review
   owner: worker
   passes: 0
   stakes: reversible
@@ -276,6 +276,11 @@ tasks:
     request body with no auth check (not introduced or worsened by #361 -- cancel-subscription.post.ts
     was built correctly, deriving the user from requireApiUser instead). Fix subscribe.post.ts
     to derive the user the same way, matching the new cancel-subscription endpoint's pattern.
+    IN REVIEW 2026-07-17 (conductor-burst-hourly, claude-conductor-burst-20260717T2057Z): kind_robots
+    PR #373 opened (branch claude/keen-fermat-k0alew) swapping the client-supplied userId lookup
+    for requireApiUser, mirroring cancel-subscription.post.ts. eslint clean on the touched lines
+    (one pre-existing no-explicit-any on the unrelated catch block, confirmed present before this
+    change too); full-project vue-tsc --noEmit exits 0. Awaiting CI on #373 before merge.
   claimed_by: claude-conductor-burst-20260717T2057Z
   claimed_at: '2026-07-17T21:12:19Z'
   updated: '2026-07-17T21:12:19Z'
