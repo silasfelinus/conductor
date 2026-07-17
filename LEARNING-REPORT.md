@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-07-17T19:37:30Z
+Generated: 2026-07-17T19:52:11Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **240**
-- Outcomes: blocked: 12, done: 228
+- Closed tasks recorded: **241**
+- Outcomes: blocked: 12, done: 229
 - Success rate: **95%**
 - Average passes on successful tasks: **0.0**
 
@@ -38,7 +38,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | model-builder | 28 | 100% |
 | mural-design | 1 | 100% |
 | newsfeed | 2 | 100% |
-| packmaker | 6 | 100% |
+| packmaker | 7 | 100% |
 | ruler-hooked | 2 | 100% |
 | serendipity | 1 | 100% |
 | superkate-hairstyle-ai | 16 | 100% |
@@ -49,7 +49,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 15 | 40% |
-| software | 225 | 99% |
+| software | 226 | 99% |
 
 ## Failure categories
 
@@ -67,6 +67,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-07-17 `packmaker/t-004` — Cross-repo admin-surface task with an unmet ACL dependency (kind-robots t-008) landed clean by keeping every created record isPublic:false as an explicit interim rule and deferring release/storefront wiring entirely, rather than stubbing a half-working gate. Task sat at status: claimed (not review) while its PR was open -- next cycle should flip to status: review before gh pr create per AGENTS.md step 7, even for cross-repo tasks.
 - 2026-07-17 `ai-art-academy/t-014` — art-styler.vue's source picker had no shared SourceImagePicker component or composable to extend -- upload/gallery state lived as plain inline refs. Adding a third source (the starter library) was still low-risk because generation (runStyleTransfer) only reads two refs (uploadedImageData/selectedSourceImage), so any new source that populates those two the same way needs zero changes downstream. Extracted the shared synthetic-ArtImage builder (buildSyntheticSourceImage) rather than duplicating it a second time. When a component's state is inline-only (no composable), check what the *consumer* function actually reads before assuming a new source needs its own code path through generation.
 - 2026-07-17 `conductor/t-037` — A deterministic cross-repo write failure (4/4 identical retries while 31 reads succeeded) was correctly parked at needs-human rather than burning passes — the cause was environmental (expired KR_API_TOKEN + the t-022 DB-pool outage), invisible to client-side inspection. When the upstream incidents cleared, verification cost one Actions log read: the sync run showed both formerly-failing creates existing as rows (id=1281/1285). Deterministic-failure + clean-reads is a strong signal to check auth and infra before suspecting the payload.
 - 2026-07-17 `packmaker/t-003` — Gated draft work (two DLC pack manifests) sat complete at needs-human for two days until Silas batch-cleared gates in a report session. Drafts validated against the t-002 schema before the gate meant zero rework on approval — front-loading schema validation makes human gates cheap to clear.
@@ -76,7 +77,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-07-17 `ai-art-academy/t-030` — Another self-contained conductor-only kaizen task, picked up burst-mode in an hourly Reviewer cycle with no open worker/* PR to review. Added Cloudflare challenge fallback signals (Server header + cf-chl cookie, __cf_chl_rt_tk body marker) behind defensive getattr()/callable() checks so the existing test doubles (which don't implement get_all()/read()) kept passing unchanged rather than needing every prior fixture updated — cheaper than the t-029 fixture-rewrite when the new code path is additive rather than a signature change.
 - 2026-07-17 `ai-art-academy/t-029` — Self-contained conductor-only kaizen task (no cross-repo dependency): claimed, implemented, and merged in a single autonomous hourly cycle. probe_host()/append_entry() changed from a bool blocked/reachable signal to a three-way status string so a Cloudflare cf-mitigated challenge response is no longer silently folded into 'reachable' — the exact gap t-013 hit and hand-documented manually. Updating an existing test suite's fixtures (bool -> string) alongside new coverage, rather than only adding new tests, is what kept the refactor from leaving stale assertions that would pass for the wrong reason.
 - 2026-07-17 `digital-storefront/t-013` — Cross-repo software task where the code PR (kind_robots#361) and the conductor bookkeeping PR (#700) were opened by a prior burst-mode session but left unmerged at status:review — the Reviewer cycle's job was purely to verify and merge both, then close the roadmap task. Delegating the payment-code diff review to a subagent (checking migration additivity, auth on the new cancel-subscription endpoint, and webhook signature verification) kept the large diff out of the main context while still confirming test-mode-only, no live keys, no cross-user cancellation.
-- 2026-07-17 `ai-art-academy/t-028` — A kaizen task can be fulfilled as a side effect of the task it depends on, before that task fully completes — check the dependency's actual diff before assuming a `waiting` kaizen is still open; t-013's PR extracted the shared schema validator t-028 asked for regardless of how many example-work entries exist yet.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-07-17T19:37:30Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-07-17T19:52:11Z_

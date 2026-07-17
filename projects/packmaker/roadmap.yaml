@@ -23,7 +23,7 @@ milestones:
 - id: m3
   title: Generator front end (admin + user views)
   weight: 35
-  status: not-started
+  status: complete
 tasks:
 - id: t-001
   milestone: m1
@@ -169,20 +169,15 @@ tasks:
 - id: t-004
   milestone: m3
   title: Build the pack generator admin view in kind_robots
-  status: claimed
-  owner: worker
+  status: done
+  owner: null
   passes: 0
   stakes: reversible
   depends_on: t-003
-  note: >
-    Cross-repo (kind_robots). Admin-only surface to load a manifest, run/re-run
-    generation per item through existing pipelines, review results, and mark a
-    pack ready. Repeatability is the point — the tool must make generating the
-    NEXT pack cheap. Depends at note-level on kind-robots t-008 (ACL) for
-    private-pack storage.
+  note: 'Completed. kind_robots PR #369 merged (squash 5a5d383): packmaker-admin-panel.vue (admin-only, gated on userStore.isAdmin) + packStore.ts + packManifests.ts seed data. Loads a pack manifest, creates/regenerates each item via existing dreams/facets/characters/rewards + art endpoints, shows per-item status, batch-creates remaining items, and a local ''mark ready'' toggle. All created items forced isPublic:false/isMature:false pending kind-robots t-008 (ACL) -- no live/public release wired, correctly deferred per the original note. Reviewed by Reviewer session (CI green: TypeScript/Contract verifiers/GitGuardian, scoped 4-file diff, no migrations/secrets/DNS/billing) and merged directly, no rejection pass.'
   claimed_by: claude-worker-packmaker-xuup66
   claimed_at: '2026-07-17T19:24:38Z'
-  updated: '2026-07-17T19:24:38Z'
+  updated: '2026-07-17T20:15:00Z'
 - id: t-005
   milestone: m3
   title: Build the user-facing pack view (browse, preview, owned unlocks)
@@ -266,3 +261,19 @@ tasks:
   claimed_by: claude-burst-2026-07-15-1723
   claimed_at: '2026-07-15T16:50:41Z'
   updated: '2026-07-15T16:54:27Z'
+- id: t-008
+  milestone: m3
+  title: Add a unit test for packStore.ts's validatePackManifest
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  note: >
+    Kaizen from t-004's implementation (2026-07-17, kind_robots PR #369): the
+    admin pack generator panel's packStore.ts validates an imported manifest
+    against the schema-v1 shape (validatePackManifest), but the PR that added
+    it shipped without a test for that function, despite the PR's own kaizen
+    suggestion naming it. It's a pure function (no store/network dependency),
+    so a focused unit test covering valid manifests, missing required fields,
+    and bad item shapes should be cheap. kind_robots-repo change (near
+    packStore.ts / packmaker-admin-panel.vue).
