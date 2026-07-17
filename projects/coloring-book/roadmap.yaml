@@ -174,11 +174,11 @@ tasks:
 - id: t-022
   milestone: m4
   title: Monster Recast book 1 production pass — 36 final color/BW pairs
-  status: ready
-  owner: null
+  status: claimed
+  owner: worker
   passes: 0
   stakes: reversible
-  updated: '2026-07-17T00:00:00Z'
+  updated: '2026-07-17T14:07:32Z'
   depends_on: t-021
   note: 'Run python scripts/coloring_proposal_status.py --check and python scripts/coloring_approved_status.py --check.
     First reconcile the physical approved/ inventory into sets/monster-recast/proposals.yaml without guessing or
@@ -187,6 +187,8 @@ tasks:
     final drafts. Preserve accepted compositions. This task is recurring while incomplete. When the ledger reaches
     36 confirmed final pairs, remove recurring, mark done, and let t-025 package book 1.'
   recurring: true
+  claimed_by: claude-conductor-burst-20260717T1500Z
+  claimed_at: '2026-07-17T14:07:32Z'
 - id: t-025
   milestone: m6
   title: Package and register Monster Recast book 1
