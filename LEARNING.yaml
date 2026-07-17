@@ -2707,3 +2707,21 @@ records:
     work (a doc PR), which the Security Model reserves for Worker. Harmless here since the
     output was correct and merged clean, but future burst-mode sessions doing doc/code work
     should claim as owner: worker regardless of which role slot the session is labeled.'
+- date: 2026-07-17
+  project: kind-robots
+  task: t-036
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    A hermetic test's synthetic fixture data can itself trip a secret scanner if it's
+    shaped like a real credential literal (mysql://user:pass@host) or uses a
+    trigger-word identifier (a const literally named *PASSWORD*) even though it's fake
+    test data. Assemble such fixtures from named constants via template literals (or
+    .join for delimiter-containing pieces) rather than one quoted literal, and avoid
+    secret-suggestive identifier names, to dodge false positives before they cost a
+    round trip. Also: once a flagged literal lands in any commit, GitGuardian scans the
+    whole PR's commit range, so a follow-up commit that removes it does not clear the
+    check on its own — squash/rebase so the flagged text never appears in history.
