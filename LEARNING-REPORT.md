@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-07-17T15:51:17Z
+Generated: 2026-07-17T15:55:14Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **231**
-- Outcomes: blocked: 12, done: 219
+- Closed tasks recorded: **232**
+- Outcomes: blocked: 12, done: 220
 - Success rate: **95%**
 - Average passes on successful tasks: **0.0**
 
@@ -25,7 +25,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | coat-dance | 8 | 0% |
 | coloring-book | 12 | 100% |
 | conductor | 29 | 100% |
-| digital-storefront | 7 | 100% |
+| digital-storefront | 8 | 100% |
 | dream-cycle | 13 | 100% |
 | ecosystem-map | 4 | 100% |
 | global-ui | 9 | 100% |
@@ -49,7 +49,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 15 | 40% |
-| software | 216 | 99% |
+| software | 217 | 99% |
 
 ## Failure categories
 
@@ -67,6 +67,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-07-17 `digital-storefront/t-013` — Cross-repo software task where the code PR (kind_robots#361) and the conductor bookkeeping PR (#700) were opened by a prior burst-mode session but left unmerged at status:review — the Reviewer cycle's job was purely to verify and merge both, then close the roadmap task. Delegating the payment-code diff review to a subagent (checking migration additivity, auth on the new cancel-subscription endpoint, and webhook signature verification) kept the large diff out of the main context while still confirming test-mode-only, no live keys, no cross-user cancellation.
 - 2026-07-17 `ai-art-academy/t-028` — A kaizen task can be fulfilled as a side effect of the task it depends on, before that task fully completes — check the dependency's actual diff before assuming a `waiting` kaizen is still open; t-013's PR extracted the shared schema validator t-028 asked for regardless of how many example-work entries exist yet.
 - 2026-07-17 `ai-art-academy/t-027` — Clean first-pass kaizen: a dependency-free utils/scripts/verify*.ts contract test following the existing convention (see verifyDataSurfaceManifest.ts) is fast to write, easy to verify locally (constructed 3 intentionally-broken manifest copies to confirm each failure mode triggers, then restored the original), and slots straight into contract-tests.yml without needing the Nuxt/Prisma runtime.
 - 2026-07-17 `ai-art-academy/t-008` — Re-verifying a plan doc's source URLs at download time (rather than trusting its "VERIFIED" marks) caught two real drifts: Met's own API reports isPublicDomain:false for one accession the doc had marked CC0, and artic.edu's IIIF image CDN blocks script fetches with a Cloudflare bot challenge regardless of User-Agent. Both were fixed by substituting a Commons PD-Mark scan of the identical accession rather than skipping the item -- always keep a same-work fallback source in mind for institution APIs with rights-flag or bot-protection surprises. Also: resize images to a web resolution (2000px longest edge) before committing -- an original museum scan can be tens of MB each, blowing past a "modest footprint" budget the plan doc estimated assuming smaller files.
@@ -83,8 +84,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 - 2026-07-17 `conductor/t-054` — Running the recheck script during a record-keeping migration paid off beyond bookkeeping: all previously 403-blocked hosts (metmuseum, wikimedia, stripe) probed REACHABLE this session, flipping three "blocked" tasks to genuinely workable — always re-probe before copying forward a "still blocked" claim. When the top of priority.yaml is systemically blocked (shared egress allowlist, missing API token) rather than task-specific, don't burn a cycle re-probing the same hosts across multiple tasks in the same blocked project -- one recheck via recheck_egress_blocks.py covers the whole cluster of tasks depending on that host. Walking down to the next project with genuinely actionable (no-dependency, no-egress) ready tasks is cheaper than repeatedly rediscovering the same block. Also: a fresh sandbox with no node_modules can fail npm install on an unrelated dev-only binary download (Cypress's CDN, itself egress-blocked here) -- rerun with CYPRESS_INSTALL_BINARY=0 rather than treating the whole install as blocked, and revert any incidental package-lock.json churn the reinstall introduces before committing (npm engine-version mismatch between the sandbox and the repo's pinned node/npm produces unrelated lockfile diffs that don't belong in an unrelated PR).
 
-- 2026-07-17 `conductor/t-058` — When testing an early-exit gate, assert the negative too: an exploding api() stub proves main() returned before any work, which the exit code alone doesn't guarantee.
-
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-07-17T15:51:17Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-07-17T15:55:14Z_
