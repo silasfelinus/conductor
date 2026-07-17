@@ -121,22 +121,25 @@ def test_relay_rejects_unsafe_kindrobots_paths(monkeypatch, image_path):
 def test_relay_writes_file_and_refreshes_manifests(tmp_path, monkeypatch):
     relay_media = load_relay_media_module(monkeypatch)
     monkeypatch.setattr(relay_media, "MEDIA_ROOT_VALUE", str(tmp_path))
+    monkeypatch.setattr(
+        relay_media, "encode_image_for_suffix", lambda raw, _suffix: raw
+    )
 
     destination = relay_media.write_direct_media(
         {
             "payload": {
                 "targetRepo": "silasfelinus/kind_robots",
-                "imagePath": "public/images/test/sample.svg",
+                "imagePath": "public/images/test/sample.webp",
             }
         },
         {
-            "data_b64": base64.b64encode(b"<svg></svg>").decode(),
-            "file_type": "svg",
+            "data_b64": base64.b64encode(b"encoded-image").decode(),
+            "file_type": "png",
             "is_video": False,
         },
     )
 
-    assert destination == tmp_path / "test" / "sample.svg"
-    assert destination.read_bytes() == b"<svg></svg>"
-    assert (tmp_path / "test" / "gallery.json").read_text().strip() == '[\n  "sample.svg"\n]'
+    assert destination == tmp_path / "test" / "sample.webp"
+    assert destination.read_bytes() == b"encoded-image"
+    assert (tmp_path / "test" / "gallery.json").read_text().strip() == '[\n  "sample.webp"\n]'
     assert '"test": "test"' in (tmp_path / "collections.json").read_text()
