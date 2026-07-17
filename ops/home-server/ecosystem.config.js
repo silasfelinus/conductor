@@ -117,7 +117,13 @@ module.exports = {
         // Exact backing directory for https://media.acrocatranch.com/images/.
         KR_MEDIA_IMAGES_DIR: process.env.KR_MEDIA_IMAGES_DIR || '',
         // Optional generic ArtImage-id copies for jobs without an exact target.
-        KR_LOCAL_IMAGES_DIR: process.env.KR_LOCAL_IMAGES_DIR || ''
+        KR_LOCAL_IMAGES_DIR: process.env.KR_LOCAL_IMAGES_DIR || '',
+        // Flux validation/submission can take over a minute on this machine.
+        // Recovery uses a unique Comfy client id to avoid duplicate submissions.
+        COMFY_PROMPT_TIMEOUT: process.env.COMFY_PROMPT_TIMEOUT || '180',
+        COMFY_RECOVERY_SECONDS: process.env.COMFY_RECOVERY_SECONDS || '45',
+        // Large 1024px Flux jobs on the RTX 3060 can exceed ten minutes.
+        GEN_TIMEOUT: process.env.GEN_TIMEOUT || '1800'
       },
       out_file: `${LOG_DIR}/kr-relay.out.log`,
       error_file: `${LOG_DIR}/kr-relay.err.log`,
