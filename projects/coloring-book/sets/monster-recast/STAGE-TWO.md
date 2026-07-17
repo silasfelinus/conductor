@@ -1,80 +1,75 @@
-# Monster Recast — Stage Two
+# Monster Recast — Production Stage
 
-This file replaces GitHub issue #414 as the durable project-local handoff for Monster Recast production. The Conductor Worker selects roadmap tasks, not broad standalone issues, so execution remains owned by `projects/coloring-book/roadmap.yaml`.
+This file preserves the useful handoff from closed GitHub issue #414. The canonical
+execution task is now `coloring-book/t-022`, and the canonical per-page production
+state is `proposals.yaml`.
 
-The structured companion is `stage-two-handoff.yaml`.
+Read `../../PRODUCTION-MODEL.md` first.
 
-## What is already true
+## Book contract
 
-Everything physically present in `approved/` is approved to move into **stage two** as a working base. A working base may be a colored master, a black-and-white base, or a complete pair; it is not automatically a final page.
+Monster Recast is book one. It has exactly 36 interior proposal slots and a separate
+cover. Every proposal aims to finish with:
 
-The dated July 12 inventory recorded:
+- one accepted and then confirmed final color master
+- one accepted and then confirmed final black-and-white master
+- a faithful pair relationship: same composition, identity, pose, anatomy, and major
+  scene details
 
-- 27 approved WebP files
+A file in `approved/` is an approved **working base**, not automatically a final draft.
+
+## Current migration snapshot
+
+The dated July 12 handoff recorded:
+
+- 27 WebP files in `approved/`
 - 18 represented concepts
-- 9 complete color/BW pairs
+- 9 complete color/BW working pairs
 - 8 BW-only working bases
 - 1 color-only working base
 
-Run this before any selection, refinement, conversion, queue edit, or count update:
+Run both checks before production:
 
 ```bash
 python scripts/coloring_approved_status.py --check
+python scripts/coloring_proposal_status.py --check
 ```
 
-The scan is authoritative for the live filesystem. The counts above are a migration snapshot, not permission to ignore newer files.
+The filesystem scan reports what exists. `proposals.yaml` records what each file means.
+Do not infer acceptance or final status merely from directory presence.
 
-## Roadmap ownership
+## Immediate next action
 
-### `t-007` — exploration
+Reconcile every physical file in `approved/` into the matching proposal record:
 
-Finish paired first-pass color and black-and-white studies for concepts not represented in `approved/`. Use `unapproved-art-jobs.yaml`, the objective quality gate, and vision curation. Exploration may produce optional alternatives, but it must not replace an accepted production base without Silas explicitly promoting it.
+- preserve exact filenames and record aliases/duplicates instead of silently renaming
+- distinguish inspiration/candidate, accepted working file, and confirmed final file
+- verify the provisional `masked-countess` mapping rather than assuming it is `mr-018`
+- preserve the three explicitly accepted legacy pairs already seeded in the ledger
+- clear `inventory_snapshot.requires_directory_reconciliation` only when the per-file
+  mapping is complete
 
-### `t-013` — selection and stage-two refinement
+After reconciliation, `t-022` advances a small batch at a time. It may fill prompts,
+attach inspiration, generate or curate candidates, record accepted files, create a
+faithful missing counterpart, or confirm final drafts. It does not wait for unrelated
+exploration before improving an accepted base.
 
-This task owns the inventory reconciliation that was stranded in issue #414:
+## The Ticking Captain
 
-- map every file in `approved/` to its canonical concept ID and working title
-- record whether each concept has color, BW, or a complete pair
-- surface filename drift and duplicates without silently renaming or deleting binaries
-- verify the provisional `masked-countess` → `mr-018` Doctor Feast mapping
-- preserve accepted composition, anatomy, body type, scars, age, creature structure, perspective, contact points, and visual joke
-- repair pairs whose composition or identity diverges
-- record source asset, prompt, workflow/model, seed/job metadata, and output path
+`mr-035`, **The Ticking Captain**, is now a numbered proposal in `proposals.yaml`.
 
-Existing approved bases may enter this work without waiting for unrelated exploratory renders.
+A formidable older woman pirate captain with a weathered, powerful body and an
+original articulated compass-and-chronometer hook is pursued by a vast clockwork
+marine predator whose brass gills tick like a ship chronometer. The commercial version
+requires an original captain identity, ship, costume system, prosthetic mechanism,
+time curse, and marine species.
 
-### `t-015` — faithful coloring conversion
+Do not use a Disney-specific likeness, familiar red-coat design, feathered hat,
+crocodile design, typography, supporting characters, or exact scene recreation.
 
-This task owns missing counterparts and final line-art conversion:
+## Completion
 
-- identify the eight BW-only concepts needing colored masters
-- identify the one color-only concept needing faithful line art
-- convert from the selected colored composition rather than redesigning the page
-- apply `STYLE-GUIDE.md`: serious theatrical camp, thick black contours, bounded color, organized high detail, coherent contact points, and no collage
-
-### `t-016` — packaging
-
-Packaging begins only after selection, private Character creation, and coloring conversion are complete. Publishing, POD accounts or listings, spend, storefront release, and public Character release remain out of scope.
-
-## Captain Hook addition
-
-The proposed canonical addition is `mr-035`, **The Ticking Captain**:
-
-A formidable older woman pirate captain with a weathered, powerful body and an original articulated prosthetic hook-hand is pursued across impossible seas by a vast clockwork marine predator whose brass gill plates tick like a ship chronometer. At a low storm-deck angle, she braces at the wheel, catches snapping rigging with the hook, and stares down the luminous predator beneath the hull.
-
-The hook opens into a nested compass-and-chronometer claw whose hands point directly toward the predator. The commercial version needs an original captain identity, ship, costume system, prosthetic mechanism, time curse, and marine species.
-
-Do not use Disney-specific likeness, mustache, red-coat design, feathered hat, crocodile design, typography, supporting characters, or exact scene recreation.
-
-The canonical integration work remains explicit in `stage-two-handoff.yaml`: add the concept to `homage-concepts.yaml`, add its scene prompt to `art-modeler-request.yaml`, and queue its paired color/BW studies in `unapproved-art-jobs.yaml`.
-
-## Done means
-
-Stage two is ready to run cleanly when:
-
-1. `approved/` and `approved/manifest.yaml` agree at the per-file level.
-2. The Captain Hook lineage exists in the canonical concept and generation manifests.
-3. Missing counterpart work is identified and queued.
-4. Existing approved bases can be refined without reinventing accepted designs.
-5. Roadmap tasks `t-007`, `t-013`, and `t-015` remain the authoritative execution queue.
+Monster Recast production is complete when all 36 proposal records have confirmed
+final color and BW files. Then `t-022` stops recurring and `t-025` owns packaging and
+kind_robots registration. Publishing, POD accounts/listings, spend, and public
+Character release remain human-gated.
