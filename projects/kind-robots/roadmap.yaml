@@ -918,12 +918,27 @@ tasks:
   - id: t-032
     milestone: m1
     title: Write a scripts/lib/ convention doc for hermetic shell helpers shared between a workflow step and its regression test
-    status: claimed
+    status: review
     owner: reviewer
     passes: 0
     stakes: reversible
-    updated: '2026-07-17T04:10:20Z'
+    updated: '2026-07-17T04:14:00Z'
     note: >
+      RAN 2026-07-17 (conductor-burst-hourly): kind_robots PR #341 (branch
+      claude/keen-fermat-40wp3s) adds scripts/README.md documenting the
+      extraction pattern -- when to pull inline workflow run: bash into a
+      standalone repo-root scripts/ file (vs. utils/scripts/, which is
+      TypeScript regression tests and migration tooling, not exclusively
+      TS-only as the note below assumed -- it has a handful of .sh/.mjs
+      files too, corrected in the doc's phrasing), hermeticity and
+      argument-passing constraints so the same script is a pure function
+      callable identically from a workflow step and a test, and how to wire
+      both call sites. Points to check-deploy-ancestry.sh /
+      verifyDeployWaitAncestry.ts / the cypress.yml deploy-wait step as the
+      worked example, with the exact invocation each side uses. Verified
+      npx prettier --check scripts/README.md passes; no code paths touched
+      per the task's own documentation-only scope. PR open, CI running at
+      claim time -- not merged yet, review this cycle.
       Kaizen from t-023 (Reviewer, 2026-07-16, kind_robots PR #310):
       t-023 introduced scripts/check-deploy-ancestry.sh, a small hermetic
       (no network I/O) shell script extracted out of a `.github/workflows/
