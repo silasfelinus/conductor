@@ -318,7 +318,7 @@ tasks:
 - id: t-017
   milestone: m5
   title: Add a nav-manifest-style registry so missing top-level nav entries fail CI
-  status: claimed
+  status: done
   owner: worker
   passes: 0
   stakes: reversible
@@ -331,10 +331,16 @@ tasks:
     shipping undiscoverable. Scope to kind_robots; reuse the audit''s three findings in
     NAVIGATION-MAP.md as the first test cases.
 
+    Done 2026-07-17 (Reviewer, autonomous hourly cycle): kind_robots PR #338 merged
+    (squash 23cf36b8) -- added utils/dataSurfaceManifest.ts + verifyDataSurfaceManifest.ts
+    CI contract, wired into contract-tests.yml. Seeded with the honeydo-inbox gap,
+    acknowledged against t-014 (now done). All 4 CI checks green (TypeScript, Contract
+    verifiers, facet-alias-smoke, GitGuardian).
+
     '
   claimed_by: claude-burst-2026-07-17-hourly-3
   claimed_at: '2026-07-17T02:11:27Z'
-  updated: '2026-07-17T02:11:27Z'
+  updated: '2026-07-17T02:52:00Z'
 - id: t-018
   milestone: m5
   title: Show a per-milestone "N/M tasks done" count on the milestone cards
@@ -396,6 +402,24 @@ tasks:
     link) exists as two separately-maintained copies. Extract a shared
     components/tasks/honeydo-card.vue used by both surfaces so future changes
     (new badge, new action) don't have to be applied twice or silently drift.
+- id: t-021
+  milestone: m5
+  title: Wire the honeydo-inbox data-surface-manifest entry to its real nav location instead of the now-stale acknowledged gap
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  note: >
+    Kaizen from t-017 (Reviewer, autonomous hourly conductor cycle, 2026-07-17,
+    kind_robots PR #338). t-017's utils/dataSurfaceManifest.ts seeded the
+    honeydo-inbox entry with navEntry: null and acknowledgedGap: 'global-ui/t-014'
+    -- but t-014 (kind_robots PR #337) had already shipped the real top-level nav
+    entry one commit earlier on main (content/channels/home/for-you.md:
+    channelKey 'home', tabKey 'for-you', route /for-you). Update the honeydo-inbox
+    entry to navEntry: { channelKey: 'home', tabKey: 'for-you' } and drop
+    acknowledgedGap, then confirm `npm run test:data-surface-manifest` still
+    passes (it should report the surface as wired, not acknowledged). Small,
+    mechanical, no new data source.
 milestones:
 - id: m1
   title: Task language + presentation model

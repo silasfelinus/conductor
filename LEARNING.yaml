@@ -2668,3 +2668,16 @@ records:
     metadata only. Both commonly reuse the same tabKey. Easy to mistake for accidental duplication;
     confirm against content.config.ts before assuming a bug. New top-level nav surfaces need one file
     in each collection.'
+- date: '2026-07-17'
+  project: global-ui
+  task: t-017
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'When a Worker session claims a task whose seed data references another in-flight
+    task (t-017''s manifest pointed at t-014 via acknowledgedGap), check whether the referenced
+    task landed on main in the interim before merging — it may have shipped a real target
+    (t-014''s /for-you nav entry) that should replace the placeholder gap outright, saving a
+    follow-up cycle.'
