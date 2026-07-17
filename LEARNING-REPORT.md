@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-07-17T16:51:59Z
+Generated: 2026-07-17T16:57:59Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **232**
-- Outcomes: blocked: 12, done: 220
+- Closed tasks recorded: **233**
+- Outcomes: blocked: 12, done: 221
 - Success rate: **95%**
 - Average passes on successful tasks: **0.0**
 
@@ -15,7 +15,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 | Project | Closed | Success rate |
 |---|---|---|
-| ai-art-academy | 22 | 100% |
+| ai-art-academy | 23 | 100% |
 | alexa-integration | 2 | 100% |
 | animation-manager | 4 | 100% |
 | animation-studio | 1 | 100% |
@@ -49,7 +49,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 15 | 40% |
-| software | 217 | 99% |
+| software | 218 | 99% |
 
 ## Failure categories
 
@@ -67,6 +67,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-07-17 `ai-art-academy/t-029` — Self-contained conductor-only kaizen task (no cross-repo dependency): claimed, implemented, and merged in a single autonomous hourly cycle. probe_host()/append_entry() changed from a bool blocked/reachable signal to a three-way status string so a Cloudflare cf-mitigated challenge response is no longer silently folded into 'reachable' — the exact gap t-013 hit and hand-documented manually. Updating an existing test suite's fixtures (bool -> string) alongside new coverage, rather than only adding new tests, is what kept the refactor from leaving stale assertions that would pass for the wrong reason.
 - 2026-07-17 `digital-storefront/t-013` — Cross-repo software task where the code PR (kind_robots#361) and the conductor bookkeeping PR (#700) were opened by a prior burst-mode session but left unmerged at status:review — the Reviewer cycle's job was purely to verify and merge both, then close the roadmap task. Delegating the payment-code diff review to a subagent (checking migration additivity, auth on the new cancel-subscription endpoint, and webhook signature verification) kept the large diff out of the main context while still confirming test-mode-only, no live keys, no cross-user cancellation.
 - 2026-07-17 `ai-art-academy/t-028` — A kaizen task can be fulfilled as a side effect of the task it depends on, before that task fully completes — check the dependency's actual diff before assuming a `waiting` kaizen is still open; t-013's PR extracted the shared schema validator t-028 asked for regardless of how many example-work entries exist yet.
 - 2026-07-17 `ai-art-academy/t-027` — Clean first-pass kaizen: a dependency-free utils/scripts/verify*.ts contract test following the existing convention (see verifyDataSurfaceManifest.ts) is fast to write, easy to verify locally (constructed 3 intentionally-broken manifest copies to confirm each failure mode triggers, then restored the original), and slots straight into contract-tests.yml without needing the Nuxt/Prisma runtime.
@@ -82,8 +83,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 - 2026-07-17 `kind-robots/t-012` — Two independent sessions converged on nearly identical implementations for the same mana-top-up Stripe feature within the same hour (one via digital-storefront's roadmap entry, one via kind-robots' — the same real task tracked in two project roadmaps with no depends_on link between them). The duplicate was caught for free by the routine fetch-before-push step (git fetch origin <assigned-branch> before the first git push surfaced that the branch's remote tip already had the other session's merged PR) -- confirming that step is worth keeping even when a task looks uncontested. When a task's note says "blocks X in another project" or "tracked in both roadmaps," treat that as a same-day collision risk, not just documentation, and check the other project's roadmap/PR history before implementing, not only claim_task.py's own-project check.
 
-- 2026-07-17 `conductor/t-054` — Running the recheck script during a record-keeping migration paid off beyond bookkeeping: all previously 403-blocked hosts (metmuseum, wikimedia, stripe) probed REACHABLE this session, flipping three "blocked" tasks to genuinely workable — always re-probe before copying forward a "still blocked" claim. When the top of priority.yaml is systemically blocked (shared egress allowlist, missing API token) rather than task-specific, don't burn a cycle re-probing the same hosts across multiple tasks in the same blocked project -- one recheck via recheck_egress_blocks.py covers the whole cluster of tasks depending on that host. Walking down to the next project with genuinely actionable (no-dependency, no-egress) ready tasks is cheaper than repeatedly rediscovering the same block. Also: a fresh sandbox with no node_modules can fail npm install on an unrelated dev-only binary download (Cypress's CDN, itself egress-blocked here) -- rerun with CYPRESS_INSTALL_BINARY=0 rather than treating the whole install as blocked, and revert any incidental package-lock.json churn the reinstall introduces before committing (npm engine-version mismatch between the sandbox and the repo's pinned node/npm produces unrelated lockfile diffs that don't belong in an unrelated PR).
-
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-07-17T16:51:59Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-07-17T16:57:59Z_
