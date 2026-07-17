@@ -644,3 +644,48 @@ broadly across kind_robots.
 **Pattern note:** this is the second consecutive t-010 cycle where the checklist's rotation
 rule (added by the immediately prior cycle) directly shaped what ran next — it's doing its
 intended job of preventing redundant blocker re-probes and lane repetition.
+
+## 2026-07-17 | Reviewer → Worker | ai-art-academy/t-010 + t-013 | pattern (autonomous hourly cycle, self-implemented, two tasks landed)
+
+**Decision:** No open `worker/*` PR existed to review this cycle (kind_robots had none open
+at session start; conductor's own open PR, #725, was a prior burst cycle's bookkeeping and
+was reviewed and merged directly). Per the established burst-mode convention, claimed and
+implemented ai-art-academy/t-010 (roadmap-accuracy lane), and its finding led directly into
+implementing t-013 as a second, sequential task in the same session — never holding two
+claims at once, per hard rule 4.
+
+**Detail:**
+- t-010 (lane 2, roadmap accuracy per the checklist's rotation rule — previous cycle ran
+  lane 1): audited every `needs-human`/blocked note against current evidence instead of
+  re-probing blindly. Found that t-013's handoff doc
+  (`docs/t-013-remaining-example-works.md`) was fully researched, license-cleared, and
+  patch-ready, but stuck purely on a connector limitation (GitHub connector can only
+  replace `academyStyles.ts` as a full-file blob, risking truncation of ~1,100 lines of
+  unrelated curriculum) that doesn't apply to a session with a real local `kind_robots`
+  checkout.
+- t-013: re-verified the doc's sourcing was still live (fresh `curl` to
+  `upload.wikimedia.org`/`api.nga.gov`, byte-for-byte matching the doc's recorded file
+  sizes/dimensions for two of three images; resized the NGA Fantômas original to the
+  documented 1600px-long-edge/quality-88 spec), applied the exact prepared patch to
+  `stores/seeds/academyStyles.ts` and `examples.manifest.json`, added the three images.
+  This completes the Academy's example-works strip at 21/21 movements — a real content
+  milestone, not incremental polish.
+- Verified: `npm run test:academy-examples-manifest` (21/21 entries), prettier clean,
+  eslint clean, full-project `vue-tsc --noEmit` exit 0. kind_robots PR #372 opened; merging
+  after CI confirms green (see task note for final SHA).
+- This is a good example of "connector-limited handoff" working as designed: the doc
+  preserved exact, verifiable, immediately-appliable content instead of a vague TODO, so a
+  later session with better tool access could execute it without re-doing the research.
+
+**Failure category:** n/a (clean first-pass implementation on both tasks; no rejection or
+retry).
+
+**Kaizen task:** worth a standing reminder (not a new roadmap task — this is process, not
+scope) that when a `needs-human`/blocked task's note says "handoff doc is patch-ready,
+blocked only by connector limits," any session with local git access to the target repo
+should treat that as directly actionable rather than re-parking it. No new gap found beyond
+that; deferred as a documented pattern here instead.
+
+**Pattern note:** third consecutive cycle where the continuous-improvement checklist's
+rotation rule shaped what ran — and the first where the roadmap-accuracy lane surfaced
+real, shippable work rather than just a bookkeeping correction.

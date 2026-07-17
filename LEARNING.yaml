@@ -3084,3 +3084,16 @@ records:
     Structural detection (a repeating section type implies a new unheadered year) beat hardcoded line
     numbers, and the log''s own hand-tallies served as free validation targets — 2342 entries parsed
     with 0 unparseable lines and every mismatch traced to source-side drift, not parser error.'
+- date: '2026-07-17'
+  project: ai-art-academy
+  task: t-013
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'A soft needs-human task blocked purely by a connector limitation (full-blob-only
+    file replacement risking truncation) is not the same as a task blocked by missing data —
+    the handoff doc already had fully sourced, license-verified, byte-exact content ready to
+    apply. Any later session with a real local git checkout of the target repo should treat
+    such a handoff as directly actionable, not re-park it at needs-human.'
