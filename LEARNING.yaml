@@ -3097,3 +3097,14 @@ records:
     the handoff doc already had fully sourced, license-verified, byte-exact content ready to
     apply. Any later session with a real local git checkout of the target repo should treat
     such a handoff as directly actionable, not re-park it at needs-human.'
+- date: 2026-07-17
+  project: packmaker
+  task: t-008
+  kind: software
+  stakes: reversible
+  passes: 1
+  outcome: done
+  failure_category: quality
+  lesson: Pure logic embedded in a Nuxt store may not import cleanly in lightweight CI; execute the exact
+    source in a hermetic TypeScript VM or extract it into a dependency-light module rather than mocking
+    or copying the implementation.
