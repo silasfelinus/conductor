@@ -5967,3 +5967,44 @@ stale `done` state; no defect merged to `main`).
 
 **Kaizen task:** none filed this cycle — the acknowledged-gap staleness was fixed directly
 via a same-cycle follow-up PR rather than deferred.
+
+## 2026-07-17 | Worker | global-ui/t-020 | done (conductor-burst-hourly, kind_robots PR #344 + conductor PR #678 merged)
+
+**Decision:** claimed and shipped global-ui/t-020 (shared honeydo-card component) after finding
+the top two priority-band projects blocked this cycle: ai-art-academy's ready tasks (t-008,
+t-013) need metmuseum.org/upload.wikimedia.org, both freshly rechecked 403-blocked (see
+`EGRESS-BLOCKERS.md`); coloring-book/t-010's art-generation pipeline needs `KR_API_TOKEN` (unset
+in this sandbox) and kind-robots.vercel.app, also unreachable (403 tunnel). kind-robots itself
+had an active concurrent claim on t-036 (owner: worker, claimed ~18 min prior, well inside the
+90-minute TTL) from what looked like a parallel hourly session, so picked a different task there
+rather than risk collision. Walked down to global-ui, whose t-019/t-020 are both front-end-only,
+no-dependency, no-egress tasks — picked t-020 since the DRY case was more concrete (two
+independently-maintained card copies that had *already* drifted, per its own note).
+
+**Detail:**
+- Claimed via `claim_task.py` against live `origin/main`.
+- Added `components/tasks/honeydo-card.vue` in kind_robots: presentational shared component
+  (todo/project props; toggle-done/archive/delete/view-project emits) covering the fields both
+  surfaces needed (checkbox, title, priority badge, description, optional relative timestamp,
+  optional "View project" link, optional archive/delete actions, optional category badge).
+  `for-you-manager.vue` now renders it directly, dropping its inline markup and local
+  `relativeTime` helper. `conductor-page.vue`'s Tasks list now branches per todo: HONEYDO-category
+  items render `honeydo-card` (with archive/delete + the honey-do badge outside the OPEN filter,
+  matching prior behavior); non-HONEYDO (KAIZEN) items keep the existing inline card verbatim —
+  scoped the refactor to the honey-do card only, per the task's own title, rather than also
+  folding KAIZEN into a generalized todo-card (bigger, unscoped change).
+- kind_robots had no `node_modules` installed in this sandbox; `npm install` failed on Cypress's
+  binary download (its CDN is egress-blocked here) until re-run with
+  `CYPRESS_INSTALL_BINARY=0`. That install regenerated `package-lock.json` with unrelated
+  `"dev": true` / cpu-arch-pruning churn (npm 10 vs. the repo's pinned npm 11 engine) — reverted
+  it before committing so the PR only carries the actual component change.
+- Verified: `npx eslint` clean on all three touched files; `npx vue-tsc --noEmit` reported 0
+  errors (exit 0) — no pre-existing baseline errors surfaced this run, so nothing to compare a
+  delta against. Could not exercise live in a browser (no dev server/DB in this sandbox).
+- kind_robots PR #344 and conductor PR #678 (roadmap `review`→`done` in two steps, matching the
+  claim → review → done state machine) both merged clean on first CI pass; both session branches
+  auto-deleted on merge, confirmed via `git ls-remote` showing no lingering ref on either repo.
+
+**Failure category:** n/a (clean first-pass merge on both PRs; no rejection).
+
+**Kaizen task:** none filed — task was already narrowly scoped and fully landed in one pass.

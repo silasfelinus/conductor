@@ -387,7 +387,7 @@ tasks:
     link) exists as two separately-maintained copies. Extract a shared
     components/tasks/honeydo-card.vue used by both surfaces so future changes
     (new badge, new action) don't have to be applied twice or silently drift.
-    IN REVIEW 2026-07-17 (conductor-burst-hourly): added
+    DONE 2026-07-17 (conductor-burst-hourly): added
     components/tasks/honeydo-card.vue (presentational: todo/project props,
     toggle-done/archive/delete/view-project emits). for-you-manager.vue now
     renders it directly (dropped its inline card markup and local
@@ -396,7 +396,7 @@ tasks:
     and, outside the OPEN filter, the honey-do category badge); non-HONEYDO
     (KAIZEN) items keep the existing inline card unchanged -- this refactor
     is scoped to the honey-do card only. eslint clean and vue-tsc --noEmit
-    reports 0 errors on the touched files (fresh npm install in-session,
+    reported 0 errors on the touched files (fresh npm install in-session,
     Cypress binary download skipped via CYPRESS_INSTALL_BINARY=0 since its
     CDN is egress-blocked in this sandbox; package-lock.json churn from that
     install was reverted, not committed). Could not exercise live in a
