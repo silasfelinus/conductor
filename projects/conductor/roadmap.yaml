@@ -1455,11 +1455,16 @@ tasks:
   - id: t-058
     milestone: m1
     title: Test that reconcile_expressions main() --apply with no KR_API_TOKEN returns 1 early
-    status: ready
-    owner: null
+    status: done
+    owner: reviewer
     passes: 0
     stakes: reversible
+    updated: '2026-07-17T08:20:00Z'
     note: >
+      DONE 2026-07-17 (Silas-directed session, claude/projects-db-down-q2yfu0):
+      added test_apply_without_token_returns_1_before_any_work — monkeypatches
+      KR_API_TOKEN to empty, asserts exit code 1, the stderr message, and that
+      api() is never called (exploding stub). Suite: 14 passed. Original spec:
       Kaizen from conductor/t-051 (2026-07-16, PR #643). t-051 covered the
       --apply/--deactivate CLI gating but left one branch untested: main()
       returns 1 immediately when --apply is passed without KR_API_TOKEN set.

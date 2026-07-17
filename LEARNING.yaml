@@ -2777,3 +2777,15 @@ records:
     merge, so the fix is procedural documentation (retry after re-fetching main),
     not more Worker-side rebasing — document races where the causing agent will
     read them, next to the conflict-resolution rule they modify.
+- date: 2026-07-17
+  project: conductor
+  task: t-058
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    When testing an early-exit gate, assert the negative too: an exploding api()
+    stub proves main() returned before any work, which the exit code alone
+    doesn't guarantee.

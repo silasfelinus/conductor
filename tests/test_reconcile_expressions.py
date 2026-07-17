@@ -308,3 +308,25 @@ def test_deactivate_note_suppressed_when_deactivating(tmp_path, monkeypatch, cap
     rex.main()
 
     assert "missing-file rows reported only" not in capsys.readouterr().err
+
+
+def test_apply_without_token_returns_1_before_any_work(tmp_path, monkeypatch, capsys):
+    # conductor/t-058: the very first gate in main() — --apply with no
+    # KR_API_TOKEN must exit 1 before touching the checkout or the API.
+    make_expr_tree(tmp_path, "bot", "brass-lampkeeper", ["joyful"])
+    monkeypatch.setattr(rex, "KIND_ROBOTS_ROOT", tmp_path)
+    monkeypatch.setattr(rex, "KR_API_TOKEN", "")
+
+    def exploding_api(path, payload=None, method=None, timeout=30):
+        raise AssertionError(f"api() must not be called without a token: {path}")
+
+    monkeypatch.setattr(rex, "api", exploding_api)
+    monkeypatch.setattr(
+        "sys.argv",
+        ["reconcile_expressions.py", "--apply", "--type", "bot", "--owner", "brass-lampkeeper"],
+    )
+
+    code = rex.main()
+
+    assert code == 1
+    assert "--apply requires KR_API_TOKEN" in capsys.readouterr().err
