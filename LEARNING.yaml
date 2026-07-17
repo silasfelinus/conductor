@@ -2725,3 +2725,24 @@ records:
     round trip. Also: once a flagged literal lands in any commit, GitGuardian scans the
     whole PR's commit range, so a follow-up commit that removes it does not clear the
     check on its own — squash/rebase so the flagged text never appears in history.
+- date: 2026-07-17
+  project: global-ui
+  task: t-020
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    When the top of priority.yaml is systemically blocked (shared egress allowlist,
+    missing API token) rather than task-specific, don't burn a cycle re-probing the
+    same hosts across multiple tasks in the same blocked project -- one recheck via
+    recheck_egress_blocks.py covers the whole cluster of tasks depending on that host.
+    Walking down to the next project with genuinely actionable (no-dependency,
+    no-egress) ready tasks is cheaper than repeatedly rediscovering the same block.
+    Also: a fresh sandbox with no node_modules can fail npm install on an unrelated
+    dev-only binary download (Cypress's CDN, itself egress-blocked here) -- rerun with
+    CYPRESS_INSTALL_BINARY=0 rather than treating the whole install as blocked, and
+    revert any incidental package-lock.json churn the reinstall introduces before
+    committing (npm engine-version mismatch between the sandbox and the repo's pinned
+    node/npm produces unrelated lockfile diffs that don't belong in an unrelated PR).
