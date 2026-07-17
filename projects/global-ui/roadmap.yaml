@@ -366,8 +366,8 @@ tasks:
 - id: t-019
   milestone: m5
   title: Surface an aggregate "N/M tasks done" count on the top-level project card, before opening the project
-  status: ready
-  owner: null
+  status: claimed
+  owner: worker
   passes: 0
   stakes: reversible
   note: >
@@ -381,6 +381,9 @@ tasks:
     badge on the project card itself, reusing the same done-status filter
     conductor-page.vue already applies per milestone. Front-end only, no new
     data source.
+  claimed_by: claude-conductor-hourly-20260717T1042Z
+  claimed_at: '2026-07-17T11:02:49Z'
+  updated: '2026-07-17T11:02:49Z'
 - id: t-020
   milestone: m5
   title: Extract a shared honeydo-card component so the Conductor HONEYDO tab and the new For You page can't visually drift apart
