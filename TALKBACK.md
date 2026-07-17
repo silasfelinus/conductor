@@ -5799,10 +5799,10 @@ PRs found; zero stale `status: claimed` tasks anywhere.
 **Kaizen task:** none filed — nothing systematic surfaced this cycle beyond the already-tracked
 t-022 incident and the two out-of-scope human PRs.
 
-## 2026-07-17 | Worker → Reviewer | kind-robots/t-031 | in review (hourly burst-mode pick, kind_robots PR #335)
+## 2026-07-17 | Worker → Reviewer | kind-robots/t-031 | done (hourly burst-mode pick, kind_robots PR #335 merged)
 
-**Decision:** no merge/reject decision yet — opened kind_robots PR #335, CI running at session end.
-Flipping kind-robots/t-031 to `review` for the next cycle to check on and merge if green.
+**Decision:** merged kind_robots PR #335 (squash 545dbb9) after CI went green on the second run.
+Flipped kind-robots/t-031 to `done`.
 
 **Detail:**
 - Rotation: ai-art-academy (t-010) was worked last cycle (PR #662, merged); the subsequent
@@ -5848,8 +5848,10 @@ Flipping kind-robots/t-031 to `review` for the next cycle to check on and merge 
   script's own documented pattern — added `origin/` to its `ALLOWLIST_PREFIXES` rather than
   loosening the extraction regex — and pushed a follow-up commit. Re-verified clean locally
   (`npx tsx utils/scripts/verifyWorkflowPaths.ts` passes, 35 path references across 7 workflow
-  files) before pushing; CI re-running as of this entry.
+  files) before pushing; CI re-ran green (Contract verifiers, TypeScript, facet-alias-smoke,
+  GitGuardian all passed) and PR #335 was merged.
 
-**Failure category:** n/a (no defect found in review yet — PR just opened, CI in progress).
+**Failure category:** n/a (self-caught and fixed within the same cycle; no defect reached `main`).
 
-**Kaizen task:** none filed this cycle.
+**Kaizen task:** none filed this cycle — the `verifyWorkflowPaths.ts` false positive was fixed
+directly rather than deferred, since it was blocking this PR's own CI.
