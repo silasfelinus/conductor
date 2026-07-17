@@ -3040,3 +3040,20 @@ records:
     upstream incidents cleared, verification cost one Actions log read: the sync run showed both
     formerly-failing creates existing as rows (id=1281/1285). Deterministic-failure + clean-reads is
     a strong signal to check auth and infra before suspecting the payload.'
+- date: 2026-07-17
+  project: ai-art-academy
+  task: t-014
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "art-styler.vue's source picker had no shared SourceImagePicker component or
+    composable to extend -- upload/gallery state lived as plain inline refs. Adding a
+    third source (the starter library) was still low-risk because generation
+    (runStyleTransfer) only reads two refs (uploadedImageData/selectedSourceImage), so
+    any new source that populates those two the same way needs zero changes downstream.
+    Extracted the shared synthetic-ArtImage builder (buildSyntheticSourceImage) rather
+    than duplicating it a second time. When a component's state is inline-only (no
+    composable), check what the *consumer* function actually reads before assuming a
+    new source needs its own code path through generation."

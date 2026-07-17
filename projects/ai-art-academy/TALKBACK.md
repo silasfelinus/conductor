@@ -557,3 +557,41 @@ bot-challenge response (`cf-mitigated: challenge` header / JS-challenge body) as
 distinct status from a genuine reachable response, so the next session doesn't have to
 rediscover and hand-document the artic.edu IIIF case (or any future host with the same
 pattern) from scratch.
+
+## 2026-07-17 | Reviewer → Silas | ai-art-academy/t-014 | pattern (autonomous hourly cycle, self-implemented)
+
+**Decision:** claimed, implemented, verified, and merged in a single session — no open
+`worker/*` PR existed to review this cycle, so per the established burst-mode convention
+(see this file's t-013/t-030 entries), claimed and implemented t-014 directly. Closed `done`.
+
+**Detail:**
+- Split 2026-07-15 from t-008 (part 3 of 3): wire the starter library
+  (`public/images/academy/starters/starters.manifest.json`, 21 public-domain works) into
+  the Remix Studio source picker as a third tab next to Upload/Gallery.
+- Dispatched an Explore subagent first to map `academy-remix.vue` → `art-styler.vue`'s
+  inline `sourceTab` state machine (no separate `SourceImagePicker` component or composable
+  exists — everything lives in `art-styler.vue` as plain refs) and confirm the starter
+  manifest was not wired to any frontend surface yet (server route, composable, or store).
+- Implementation: added a `starters` branch to `sourceTab`, lazy-loaded via the existing
+  `watch(sourceTab, ...)` pattern (mirrors the gallery tab's lazy fetch). Selecting a
+  starter fetches the static image, converts it to a data URL, and reuses the exact same
+  synthetic-`ArtImage` construction the Upload tab already used — extracted into a shared
+  `buildSyntheticSourceImage()` helper so both paths stay in sync. This means
+  `runStyleTransfer()` needed zero changes: the starter path populates
+  `uploadedImageData`/`selectedSourceImage` exactly like an upload always has.
+- Verified: `npm run test` (vue-tsc, full project) 0 errors; eslint/prettier clean;
+  `npm run test:academy-starter-manifest` 21/21 (sanity-checked the data this tab reads,
+  unchanged by the PR). Did not exercise live in a browser — the app's SSR/API routes hit
+  the real production DB and this sandbox has no local DB, so verification was
+  typecheck+lint+contract-test per this repo's usual conductor-session pattern; flagged
+  this gap explicitly in the PR for a manual click-through.
+- kind_robots PR #366: 3/3 CI checks green (TypeScript, Contract verifiers, GitGuardian).
+  Self-merged as Reviewer (squash 0eb9c09).
+
+**Failure category:** n/a (clean first-pass implementation; no rejection or retry).
+
+**Kaizen task:** deferred — the natural follow-up (surface `academy/examples.manifest.json`,
+the sibling curriculum example-works manifest, which has the identical "not wired to any
+frontend" gap starters had before this PR) is already tracked as ai-art-academy/t-013
+("add example-works strip to Academy lesson detail"), so filing a new task would be
+redundant with existing scope.
