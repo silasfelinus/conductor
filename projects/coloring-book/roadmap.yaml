@@ -175,7 +175,7 @@ tasks:
 - id: t-022
   milestone: m4
   title: Monster Recast book 1 production pass — 36 final color/BW pairs
-  status: claimed
+  status: ready
   passes: 0
   stakes: reversible
   updated: '2026-07-17T22:11:05Z'
@@ -192,6 +192,8 @@ tasks:
     Next eligible priority task after packmaker/t-008 completion; this cycle will reconcile the active Monster Recast color batch and advance it without duplicating queued work.
 
     Reconciled the active Monster Recast batch without duplicating it. The canonical queue still has no newly landed renders committed, while production logs show the secret-bearing runner advanced through ArtJobs 242 and 243 with successful 200 polling and a 201 submission at 21:25:19 UTC. The existing color-art event remains authoritative and retries safely; a second event would risk duplicate generation.
+
+    RAN 2026-07-17 (~22:00 UTC, conductor-burst-hourly rotation): found and fixed the actual root cause of the "second event risks duplicate generation" worry above. GitHub Actions run history showed `Coloring Book Color ArtJobs` (monster-recast-art-jobs.yml) ran 18:37:54-21:10:53Z (success, landed PR #711's 108-proposal queue pass) while `Process coloring art events` (process-color-art-events.yml, the new event-bridge from this same task added a few cycles ago) ran 20:34:48-22:00:43Z and **failed** its only run ever: 2 ArtJobs got an immediate ComfyUI connection-refused, then 16 more each timed out after 300s "still queued/running" (0/18 succeeded). The two runs overlap by ~36 minutes, and the ArtJob ids the failed run reports (228, 229, 231, 233, 234, 236, 237, 239-249) skip ids (230, 232, 235, 238) that the concurrent successful run was almost certainly consuming at the same time -- both workflows call the same `consume_coloring_book_color_art.py --live` against the same `color-art-jobs.yaml` queue and the same single-worker render backend, but they carried *different* `concurrency.group` values (`coloring-book-color-artjobs` vs `conductor-color-art-events`), so GitHub Actions ran them fully in parallel instead of serializing them -- exactly the "second event" collision this note already worried about, just triggered by the pre-existing daily/push-triggered workflow rather than a second manually-dropped event. Fix: unified `process-color-art-events.yml`'s concurrency group to `coloring-book-color-artjobs` (matching monster-recast-art-jobs.yml) so GitHub Actions now queues one behind the other instead of running both against the render backend at once. The already-preserved event file `color-art-events/20260717T203500Z-monster-recast-batch-01.yaml` needs no manual edit -- it self-retries on the next hourly cron (`27 * * * *`) and should now succeed since it will no longer race the other workflow. Conductor-only change (`.github/workflows/process-color-art-events.yml`, one line); no kind_robots PR needed this cycle.
   recurring: true
   claimed_by: claude-conductor-burst-20260717T2200Z
   claimed_at: '2026-07-17T22:11:05Z'

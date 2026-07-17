@@ -46,3 +46,39 @@ Recurring task flipped back to `status: ready` per convention; kaizen task t-029
 **Kaizen task:** t-029 — surface `needs_visual_verification`/elimination-only inspiration
 matches directly in `coloring_proposal_status.py --check` output instead of leaving them to
 prose notes.
+
+## 2026-07-17 | Worker → Reviewer | coloring-book/t-022 | pattern (infra concurrency collision)
+
+**Decision:** fixed a real infra bug found while checking on the recurring color-production
+pass; no code claim beyond a one-line workflow config change. Task stayed `recurring: true`,
+flipped back to `status: ready`.
+
+**Detail:**
+- `Process coloring art events` (process-color-art-events.yml, added earlier this same task's
+  cycle as the connector-safe event bridge) had its first-ever run fail: 0/18 ArtJobs
+  succeeded (2 immediate ComfyUI connection-refused, 16 timeouts after 300s).
+- Cross-checked GitHub Actions run history: `Coloring Book Color ArtJobs`
+  (monster-recast-art-jobs.yml) ran 18:37:54-21:10:53Z (success) while the event-bridge run
+  went 20:34:48-22:00:43Z (failure) — a ~36-minute overlap. Both workflows call
+  `consume_coloring_book_color_art.py --live` against the exact same `color-art-jobs.yaml`
+  queue and the same single-worker render backend, but carried *different*
+  `concurrency.group` values, so GitHub Actions ran them fully in parallel instead of
+  serializing. The failed run's reported ArtJob ids (228, 229, 231, 233, 234, 236, 237,
+  239-249) skip ids that the concurrently-running successful workflow was almost certainly
+  consuming at the same moments — consistent with two workflows racing the same backend.
+- This is exactly the "a second event would risk duplicate generation" risk this task's own
+  note already flagged from an earlier cycle, just triggered by the *pre-existing*
+  daily/push-triggered workflow rather than a second manually-dropped event file.
+- Fix: unified `process-color-art-events.yml`'s concurrency group to
+  `coloring-book-color-artjobs` (matching `monster-recast-art-jobs.yml`) so the two workflows
+  now queue behind each other instead of hitting the render backend simultaneously. No other
+  workflow touches either script, so no third group needed updating.
+- The preserved event file (`color-art-events/20260717T203500Z-monster-recast-batch-01.yaml`)
+  needs no manual edit — it self-retries on the next hourly cron and should now succeed since
+  it won't race the other workflow.
+
+**Suggested action:** when adding any new automation that shares a mutable resource (a queue
+file, an external render backend, a rate-limited API) with an existing workflow, always check
+whether an existing `concurrency.group` already covers that resource and reuse it — a new,
+uniquely-named group only prevents self-collision, not collision with siblings touching the
+same backend.
