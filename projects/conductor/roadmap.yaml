@@ -1653,7 +1653,7 @@ tasks:
   - id: t-062
     milestone: m2
     title: 'scripts/ci_janitor.py: do not file a Todo for a cancelled run superseded by a passing later run'
-    status: claimed
+    status: review
     owner: worker
     passes: 0
     stakes: reversible
@@ -1686,5 +1686,26 @@ tasks:
       only changes `cancelled` handling. Add test cases to `tests/test_ci_janitor.py`
       covering: cancelled-then-success-elsewhere (no Todo), cancelled-and-still-latest (Todo
       filed), and the existing non-cancelled red cases (unchanged).
+
+      RAN 2026-07-17 (~23:55 UTC, conductor-burst rotation, claude-conductor-burst-20260717T2300Z):
+      implemented with one refinement over the original spec. Rather than checking a *second
+      completed* run, added `latest_run_for_branch()` (no `status=` filter, `per_page=1`) — the
+      single most recent run on the branch/workflow regardless of status — and
+      `cancelled_run_is_superseded()`, which compares its `head_sha` against the cancelled
+      run's. This also correctly covers the real-world race in Todo #385: at the moment
+      ci-janitor polled, the superseding run (`c7a4324a`) hadn't *completed* yet (it finished
+      ~10 minutes after the Todo was filed, confirmed via the run's created_at vs the Todo's
+      createdAt), so a "check the next completed run" approach as originally specced would
+      have found nothing newer and still filed the Todo. Comparing against the latest run of
+      any status catches this: a differing head_sha on a newer run means the concurrency
+      group's cancel-in-progress superseded this one, whether or not that newer run has
+      finished yet — so it's noise either way, not the branch's real current state. Only
+      `cancelled` conclusions get this extra check; `main()`'s existing loop still bails out
+      with `::error::` on a genuine API failure while checking (matching the file's existing
+      error-handling style for every other network call here). Added 2 tests to
+      `tests/test_ci_janitor.py`: superseded-cancelled (no Todo, "superseded" in output) and
+      still-latest-cancelled (Todo filed as before) — 6/6 pass, existing 4 unaffected since
+      they use non-cancelled conclusions. Full suite: `pytest tests/` 352 passed / 1 skipped
+      (unchanged pre-existing skip). `validate_roadmaps.py` clean, `py_compile` clean.
     claimed_by: claude-conductor-burst-20260717T2300Z
     claimed_at: '2026-07-17T23:51:18Z'
