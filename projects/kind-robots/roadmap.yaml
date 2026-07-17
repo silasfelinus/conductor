@@ -333,24 +333,54 @@ tasks:
   - id: t-014
     milestone: m3
     title: Wire the Comfy relay's job-completion path to store rendered clips for ltx/wan video ArtJobs
-    status: claimed
+    status: needs-human
+    soft_gate: true
     owner: worker
     passes: 0
     stakes: reversible
-    updated: '2026-07-17T10:56:19Z'
+    updated: '2026-07-17T11:05:00Z'
     note: >
-      Kaizen from kind_robots PR #213 (Reviewer, 2026-07-13): merged the
-      /video-generator page and ArtJob plumbing (LTX/WAN image-to-video via
-      server/api/art/enqueue.post.ts). The relay/save path still assumes
-      image output only, so a queued video job will render on the home Comfy
-      box but never resolve into a playable ArtImage until the relay branches
-      on the new `media: 'video'` marker in the job payload and stores the
-      clip with fileType mp4/webm. WAN's model filenames (server/api/comfy/wan/
-      utils/imageToVideoWorkflow.ts) are also untested against a live Comfy
-      install and may need retuning. This is an access-limited task — the
-      relay lives on Silas's home GPU box, not in either repo — so if a
-      Worker session can't reach it, this should self-triage to soft
-      needs-human rather than burn retry passes.
+      FOR SILAS: this task's original spec (below) turned out to be stale —
+      the server-side gap it describes no longer exists. A code audit this
+      cycle (2026-07-17, claude-conductor-hourly) found the relay/save path
+      is already fully video-aware: `server/api/art/enqueue.post.ts` sets a
+      `media: 'video'` marker + video metadata block on every LTX/WAN job
+      payload (line ~505), `server/api/art/save-generated.post.ts` already
+      validates and accepts `fileType` values `mp4`/`webm`/`mov`/`mkv` (its
+      own comment documents this is "set by the relay for image-to-video
+      jobs"), `ArtImage.fileType` has no DB-level constraint blocking video
+      values, and `stores/videoStore.ts`'s `artImageToVideoSrc()` already
+      resolves a video-typed ArtImage into a playable `data:video/...`
+      src. None of this needed to be built — it appears to have landed in a
+      later PR without this kaizen task being closed.
+
+      TO APPROVE: two real open questions only Silas (or a live relay run)
+      can resolve — (1) has a real end-to-end video ArtJob actually been run
+      against the home Comfy relay and produced a playable clip, or is this
+      server-side contract untested against the real relay agent (which
+      lives outside both repos — no poll loop / ComfyUI client exists in
+      kind_robots)? (2) `server/api/comfy/wan/utils/imageToVideoWorkflow.ts`'s
+      header comment claims its WAN model filenames are "verified against
+      the home Comfy install (Z:/ai/models, 2026-07)" — does "verified" mean
+      the filenames match what's installed, or that a real render succeeded?
+      If Silas confirms a live run already succeeded (or runs one and it
+      works), set `approved_by_human: true` + `status: done` — the repo-side
+      work is complete. If a real gap surfaces (relay doesn't branch on
+      `media`, or WAN produces bad output), leave a note describing it and
+      this reopens as a new scoped task instead of retrying this stale spec.
+
+      Original spec (kaizen from kind_robots PR #213, Reviewer, 2026-07-13):
+      merged the /video-generator page and ArtJob plumbing (LTX/WAN
+      image-to-video via server/api/art/enqueue.post.ts). The relay/save
+      path still assumes image output only, so a queued video job will
+      render on the home Comfy box but never resolve into a playable
+      ArtImage until the relay branches on the new `media: 'video'` marker
+      in the job payload and stores the clip with fileType mp4/webm. WAN's
+      model filenames (server/api/comfy/wan/utils/imageToVideoWorkflow.ts)
+      are also untested against a live Comfy install and may need retuning.
+      This is an access-limited task — the relay lives on Silas's home GPU
+      box, not in either repo — so if a Worker session can't reach it, this
+      should self-triage to soft needs-human rather than burn retry passes.
     claimed_by: claude-conductor-hourly-20260717T1042Z
     claimed_at: '2026-07-17T10:56:19Z'
 

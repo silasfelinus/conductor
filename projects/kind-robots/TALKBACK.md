@@ -851,3 +851,41 @@ standalone task.
 
 **Kaizen task:** none filed — the concrete next step (confirm sustained recovery, close
 with root cause) is already the explicit ask in the roadmap note, not a new systemic gap.
+
+## 2026-07-17 | Worker | kind-robots/t-014 | needs-human (soft — stale spec, actionable failure)
+
+**Decision:** claimed via `claim_task.py`, dispatched a research-only Explore agent against
+the live kind_robots checkout rather than writing code blind, found the task's spec is
+stale, and closed at `status: needs-human` / `soft_gate: true` instead of implementing
+or retrying.
+
+**Detail:**
+- The task's spec (kaizen from PR #213) claimed the relay/save completion path "assumes
+  image output only." A full read of `server/api/art/enqueue.post.ts`,
+  `server/api/art/save-generated.post.ts`, `server/api/art/queue/complete.post.ts`,
+  `prisma/schema.prisma`, and `stores/videoStore.ts` found the opposite: the `media:
+  'video'` marker, the `fileType` mp4/webm/mov/mkv allowlist, the unconstrained DB
+  column, and the video-src resolver are all already implemented and consistent with
+  each other. Nothing in this repo matches the described gap.
+- This is an **actionable** failure per the Failure-triage table (stale/wrong task
+  spec) — the correct response is "do NOT retry... go straight to soft needs-human,"
+  which is what happened. No pass was burned (`passes: 0` preserved).
+- Two real open questions remain that only Silas or a live relay run can answer: (1)
+  whether a real video ArtJob has ever round-tripped through the actual out-of-repo
+  relay agent end-to-end, since that agent's code isn't in either repo and can't be
+  audited statically; (2) whether `imageToVideoWorkflow.ts`'s "verified against the
+  home Comfy install" comment means filenames-match or a-render-succeeded. Wrote both
+  into a FOR SILAS note per the roadmap's needs-human note template, preserving the
+  original spec text below it for reference.
+- Per the soft-needs-human rule, did not end the cycle here — moved on to look for
+  other ready work (see next entry / this cycle's summary).
+
+**What was good:** the task's own note anticipated exactly this outcome ("if a Worker
+session can't reach [the relay], this should self-triage to soft needs-human rather
+than burn retry passes") — that framing made the right call fast and unambiguous once
+the code read came back clean.
+
+**Kaizen task:** none filed — this is itself a case of a stale kaizen-sourced task
+description outliving the code change that closed its gap; worth watching whether
+other PR#213-era kaizen tasks have the same staleness, but not spending a task on a
+speculative sweep without a second concrete instance.
