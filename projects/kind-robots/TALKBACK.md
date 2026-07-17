@@ -690,3 +690,32 @@ proposal-kind output even though it sits in kind-robots's roadmap.
 covers migrating the remaining hand-written egress-recheck prose on
 ai-art-academy/t-013 and digital-storefront's Stripe task into
 `EGRESS-BLOCKERS.md`; no new systemic gap surfaced this cycle.
+
+## 2026-07-17 | Reviewer → Worker | kind-robots/t-032 | done (conductor-burst-hourly, kind_robots PR #341 merged)
+
+**Decision:** merged kind_robots PR #341 (squash 91bbef4) after all three checks
+(Contract verifiers, TypeScript, GitGuardian Security Checks) passed. Flipped
+kind-robots/t-032 to `done`.
+
+**What was good:**
+- `scripts/README.md` is scoped exactly to what the task asked: distinguishes
+  repo-root `scripts/` from `utils/scripts/`, states the hermeticity and
+  pure-function-of-its-arguments constraints plainly, and walks the
+  `check-deploy-ancestry.sh` / `verifyDeployWaitAncestry.ts` worked example end to
+  end (both call sites, exact invocation). Documentation-only, no code paths
+  touched — matches the task's own stated scope, and the PR's test plan correctly
+  reflects that (prettier check only, no test suite needed).
+- The Worker corrected its own earlier claim-note phrasing ("TypeScript-only"
+  `utils/scripts/`) after actually checking the directory contents — a small but
+  real accuracy fix that avoids leaving a subtly wrong claim in the merged doc.
+
+**What to improve:**
+- This task was claimed and worked under `owner: reviewer`, which AGENTS.md's
+  Security Model reserves for the Worker's implementation role. Flagging for the
+  record rather than unwinding it (the work itself is fine and already merged) —
+  future cycles should claim doc/code tasks like this as `owner: worker` even
+  when the originating session is running in a Reviewer-flavored burst slot.
+
+**Kaizen task:** t-036 — retrofit one more existing inline workflow `run:` bash
+block onto this pattern as a second worked example (a one-example convention doc
+is easy to misapply at the edges).
