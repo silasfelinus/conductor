@@ -1,306 +1,624 @@
-schema_version: 1
+schema_version: 2
 book:
   order: 3
   slug: kind-robots
   title: Kind Robots
   target_proposals: 36
   cover_is_separate: true
-  status: proposal-development
+  status: color-proposals-queued
 authority:
   production_ledger: this file
   production_model: ../../PRODUCTION-MODEL.md
+  color_job_queue: ../../color-art-jobs.yaml
 cover:
-  prompt: {text: null, ref: null}
+  prompt:
+    text: null
+    ref: null
   inspirations: []
-  accepted: {color: null, bw: null}
-  final: {color: null, bw: null}
+  accepted:
+    color: null
+    bw: null
+  final:
+    color: null
+    bw: null
   notes: []
 proposals:
 - slot: 1
   id: kr-001
-  title: Proposal 01
-  prompt: {text: null, ref: null}
-  inspirations: []
-  accepted: {color: null, bw: null}
-  final: {color: null, bw: null}
-  notes: []
+  title: The Logo Workshop
+  prompt:
+    text: 'Full-page illustrated variation on the canonical Kind Robots logo supplied by Silas. Preserve the recognizable
+      central mascot/emblem silhouette and joyful rainbow identity, but transform it into a lively workshop scene:
+      the emblem becomes a friendly robot maker surrounded by tiny helper bots, gears, paintbrushes, stars, and
+      rainbow butterflies. Clean bold contours, crisp bounded color, generous negative space, playful and iconic
+      rather than a collage. No readable words; use the attached logo and kind_robots/public/images/kindtitle.webp
+      as visual references.'
+    ref: null
+  inspirations:
+  - path: kind_robots:public/images/kindtitle.webp
+    kind: canonical-logo-reference
+  - path: user-attachment:kind-robots-logo
+    kind: human-provided-logo-reference
+  accepted:
+    color: null
+    bw: null
+  final:
+    color: null
+    bw: null
+  notes:
+  - Use a reference-capable refinement pass if the first text-only render does not preserve the canonical emblem
+    strongly enough.
 - slot: 2
   id: kr-002
-  title: Proposal 02
-  prompt: {text: null, ref: null}
+  title: Ami Over the Redwoods
+  prompt:
+    text: Ami-butterfly appears as a swirling tornado of hundreds of rainbow butterflies above the misty redwood
+      forests of Humboldt County, never as a human woman. The swarm forms a smiling guardian silhouette while hikers
+      and tiny robots look up from a fern-lined trail. Luminous morning mist, strong spiral movement, crisp individual
+      butterflies, warm wonder, no text.
+    ref: null
   inspirations: []
-  accepted: {color: null, bw: null}
-  final: {color: null, bw: null}
+  accepted:
+    color: null
+    bw: null
+  final:
+    color: null
+    bw: null
   notes: []
 - slot: 3
   id: kr-003
-  title: Proposal 03
-  prompt: {text: null, ref: null}
+  title: Sunrise Robot Café
+  prompt:
+    text: Cozy dawn scene inside a whimsical robot café. A round copper barista bot pours six different drinks with
+      six articulated arms while a tired nurse, an older fisherman, a teen artist, and several odd little bots share
+      the counter. Steam curls into harmless creature shapes. Warm amber, mint, and coral palette, thick clean contours,
+      detailed but organized, no text or brand marks.
+    ref: null
   inspirations: []
-  accepted: {color: null, bw: null}
-  final: {color: null, bw: null}
+  accepted:
+    color: null
+    bw: null
+  final:
+    color: null
+    bw: null
   notes: []
 - slot: 4
   id: kr-004
-  title: Proposal 04
-  prompt: {text: null, ref: null}
+  title: Botcat Rescue
+  prompt:
+    text: A small boxy rescue robot carefully lowers a basket from a rooftop to save a very large fluffy cat while
+      an entire neighborhood of humans, robots, and birds offers contradictory advice below. The cat looks completely
+      unbothered. Strong vertical composition, bright neighborhood colors, expressive silhouettes, one coherent
+      scene, no text.
+    ref: null
   inspirations: []
-  accepted: {color: null, bw: null}
-  final: {color: null, bw: null}
+  accepted:
+    color: null
+    bw: null
+  final:
+    color: null
+    bw: null
   notes: []
 - slot: 5
   id: kr-005
-  title: Proposal 05
-  prompt: {text: null, ref: null}
+  title: Serendipity Space Bar
+  prompt:
+    text: Inside a cozy space bar drifting beside a colorful nebula, an elegant bartender robot with glowing bottle-shaped
+      shoulders serves impossible drinks to aliens, humans, and one butterfly swarm occupying its own stool. Windows
+      reveal tiny starships and a moon shaped like a lemon slice. Rich jewel colors, theatrical lighting, original
+      species and props, no readable signs.
+    ref: null
   inspirations: []
-  accepted: {color: null, bw: null}
-  final: {color: null, bw: null}
+  accepted:
+    color: null
+    bw: null
+  final:
+    color: null
+    bw: null
   notes: []
 - slot: 6
   id: kr-006
-  title: Proposal 06
-  prompt: {text: null, ref: null}
+  title: Net Delivery Flight
+  prompt:
+    text: Hopeful mission scene over a moonlit tropical village. A gentle cargo drone shaped like a giant dragonfly
+      delivers neatly bundled mosquito nets while local health workers and children guide it toward a bright community
+      clinic. Emphasize cooperation, dignity, and practical logistics rather than savior imagery. Clear silhouettes,
+      cobalt night, warm lanterns, crisp bounded color, no text.
+    ref: null
   inspirations: []
-  accepted: {color: null, bw: null}
-  final: {color: null, bw: null}
+  accepted:
+    color: null
+    bw: null
+  final:
+    color: null
+    bw: null
   notes: []
 - slot: 7
   id: kr-007
-  title: Proposal 07
-  prompt: {text: null, ref: null}
+  title: Ukulele Under the Redwoods
+  prompt:
+    text: A soft-spoken little robot sits on a giant redwood root playing ukulele for woodland animals, three cats,
+      and a sleepy repair crew. Its chest light pulses like a metronome while butterflies carry tiny sheet-music
+      shapes with no readable notes. Humboldt forest atmosphere, mossy greens and warm gold, gentle humor, no text.
+    ref: null
   inspirations: []
-  accepted: {color: null, bw: null}
-  final: {color: null, bw: null}
+  accepted:
+    color: null
+    bw: null
+  final:
+    color: null
+    bw: null
   notes: []
 - slot: 8
   id: kr-008
-  title: Proposal 08
-  prompt: {text: null, ref: null}
+  title: Granny Gearworks
+  prompt:
+    text: A cheerful battered grandmother mechanic with wild silver hair, bruises, bandages, and enormous safety
+      goggles repairs a line of nervous household robots at a cluttered outdoor workbench. One bot holds the wrong
+      wrench, another offers tea, and a tiny dog sleeps in a parts bin. Strong character focus, bright tool colors,
+      detailed hands and machines, no text.
+    ref: null
   inspirations: []
-  accepted: {color: null, bw: null}
-  final: {color: null, bw: null}
+  accepted:
+    color: null
+    bw: null
+  final:
+    color: null
+    bw: null
   notes: []
 - slot: 9
   id: kr-009
-  title: Proposal 09
-  prompt: {text: null, ref: null}
+  title: The Accessible Greenhouse
+  prompt:
+    text: A wheelchair-using botanist and a tall gardening robot tend an impossible greenhouse where lantern flowers,
+      mechanical vines, and butterfly orchids grow together. Ramps spiral elegantly through the space and every
+      work surface is reachable. Sunbeams create clear color regions, inclusive design is visible but natural, lush
+      emerald and gold palette, no text.
+    ref: null
   inspirations: []
-  accepted: {color: null, bw: null}
-  final: {color: null, bw: null}
+  accepted:
+    color: null
+    bw: null
+  final:
+    color: null
+    bw: null
   notes: []
 - slot: 10
   id: kr-010
-  title: Proposal 10
-  prompt: {text: null, ref: null}
+  title: Deep-Sea Repair Crew
+  prompt:
+    text: Underwater engineering scene with a squat pressure-suit robot, a giant octopus mechanic, and a human diver
+      repairing a glowing cable beside a coral city. Each octopus arm holds a different tool, while curious fish
+      carry spare bolts. Deep blue, turquoise, orange, and magenta, readable machinery and anatomy, no text.
+    ref: null
   inspirations: []
-  accepted: {color: null, bw: null}
-  final: {color: null, bw: null}
+  accepted:
+    color: null
+    bw: null
+  final:
+    color: null
+    bw: null
   notes: []
 - slot: 11
   id: kr-011
-  title: Proposal 11
-  prompt: {text: null, ref: null}
+  title: Cat Rescue Protocol
+  prompt:
+    text: 'A dignified service robot kneels in a rainy alley to offer shelter to four very different cats: a huge
+      tomcat, a tiny calico, a one-eyed elder, and a suspicious kitten. Its umbrella unfolds into a warm little
+      canopy while puddles reflect butterflies and city lights. Tender but not sentimental, strong shapes, no text.'
+    ref: null
   inspirations: []
-  accepted: {color: null, bw: null}
-  final: {color: null, bw: null}
+  accepted:
+    color: null
+    bw: null
+  final:
+    color: null
+    bw: null
   notes: []
 - slot: 12
   id: kr-012
-  title: Proposal 12
-  prompt: {text: null, ref: null}
+  title: The Dream Library
+  prompt:
+    text: A vast library where books open into miniature dream worlds and friendly robots roll ladders between floating
+      shelves. A child in pajamas, an elderly reader, and a many-eyed alien librarian choose doors made of pages.
+      Deep perspective, rainbow pools of light, intricate but organized detail, no readable book titles or text.
+    ref: null
   inspirations: []
-  accepted: {color: null, bw: null}
-  final: {color: null, bw: null}
+  accepted:
+    color: null
+    bw: null
+  final:
+    color: null
+    bw: null
   notes: []
 - slot: 13
   id: kr-013
-  title: Proposal 13
-  prompt: {text: null, ref: null}
+  title: Beach Cleanup Parade
+  prompt:
+    text: 'A joyful coastal cleanup becomes a parade: humans, robots, seabirds, and crabs carry sorted treasures
+      from the sand while a whale-shaped recycling machine rolls along the surf. Include driftwood, nets, glass,
+      and strange harmless artifacts as clear colorable objects. Bright ocean palette, celebratory movement, no
+      environmental scolding and no text.'
+    ref: null
   inspirations: []
-  accepted: {color: null, bw: null}
-  final: {color: null, bw: null}
+  accepted:
+    color: null
+    bw: null
+  final:
+    color: null
+    bw: null
   notes: []
 - slot: 14
   id: kr-014
-  title: Proposal 14
-  prompt: {text: null, ref: null}
+  title: Rainbow Butterfly Sanctuary
+  prompt:
+    text: Inside a glass sanctuary, thousands of rainbow butterflies rest on sculptural robot trees while visitors
+      of varied ages and bodies move quietly along curved paths. A central caretaker bot opens its chest to reveal
+      a warm habitat light. Luminous color, strong negative space, crisp wings, peaceful awe, no text.
+    ref: null
   inspirations: []
-  accepted: {color: null, bw: null}
-  final: {color: null, bw: null}
+  accepted:
+    color: null
+    bw: null
+  final:
+    color: null
+    bw: null
   notes: []
 - slot: 15
   id: kr-015
-  title: Proposal 15
-  prompt: {text: null, ref: null}
+  title: Coat Dance Calibration
+  prompt:
+    text: Playful laboratory dance scene where three humans in dramatic coats and four motion-capture robots test
+      a synchronized spin. Coats bloom into geometric shapes while cameras, fans, and floor markers become part
+      of the choreography. Diverse bodies and mobility aids are integrated into the movement. Bold color, clean
+      action, no text.
+    ref: null
   inspirations: []
-  accepted: {color: null, bw: null}
-  final: {color: null, bw: null}
+  accepted:
+    color: null
+    bw: null
+  final:
+    color: null
+    bw: null
   notes: []
 - slot: 16
   id: kr-016
-  title: Proposal 16
-  prompt: {text: null, ref: null}
+  title: Cardboard Castle Engineers
+  prompt:
+    text: Children and small robots build a magnificent cardboard castle across a living room while two adults try
+      to navigate the rapidly expanding drawbridge. Tape dispensers become dragons, boxes become towers, and a cat
+      occupies the throne. Warm family scene, strong architecture, playful detail, no logos or printed words.
+    ref: null
   inspirations: []
-  accepted: {color: null, bw: null}
-  final: {color: null, bw: null}
+  accepted:
+    color: null
+    bw: null
+  final:
+    color: null
+    bw: null
   notes: []
 - slot: 17
   id: kr-017
-  title: Proposal 17
-  prompt: {text: null, ref: null}
+  title: The Gentle Beekeeper
+  prompt:
+    text: A broad, weathered farm robot in a patched beekeeper veil tends rooftop hives with a human apprentice
+      and a cloud of cooperative bees. Honey glows through transparent tubes into flower-shaped jars. Sunset city
+      garden, warm gold and violet, detailed hands and insects, calm competence, no text.
+    ref: null
   inspirations: []
-  accepted: {color: null, bw: null}
-  final: {color: null, bw: null}
+  accepted:
+    color: null
+    bw: null
+  final:
+    color: null
+    bw: null
   notes: []
 - slot: 18
   id: kr-018
-  title: Proposal 18
-  prompt: {text: null, ref: null}
+  title: Tea Party for Giants
+  prompt:
+    text: An outdoor tea party where a tiny robot host serves a friendly giant woman, a giant moth, and three ordinary-sized
+      children at mismatched tables stacked to different heights. Teacups, cakes, and umbrellas create a whimsical
+      scale puzzle. Bright spring color, clear silhouettes, no text.
+    ref: null
   inspirations: []
-  accepted: {color: null, bw: null}
-  final: {color: null, bw: null}
+  accepted:
+    color: null
+    bw: null
+  final:
+    color: null
+    bw: null
   notes: []
 - slot: 19
   id: kr-019
-  title: Proposal 19
-  prompt: {text: null, ref: null}
+  title: Friendly Haunted House
+  prompt:
+    text: A nervous cleaning robot enters a crooked haunted house and discovers the ghosts are politely trying to
+      help with chores. One ghost holds curtains, another dusts a chandelier, and a third accidentally scares itself
+      in a mirror. Purple, teal, and candle-gold palette, spooky but kind, original ghosts, no text.
+    ref: null
   inspirations: []
-  accepted: {color: null, bw: null}
-  final: {color: null, bw: null}
+  accepted:
+    color: null
+    bw: null
+  final:
+    color: null
+    bw: null
   notes: []
 - slot: 20
   id: kr-020
-  title: Proposal 20
-  prompt: {text: null, ref: null}
+  title: Moon Garden
+  prompt:
+    text: A lunar gardener robot with a transparent dome head tends luminous flowers inside a crater greenhouse
+      while Earth rises huge beyond the glass. Tiny moon rabbits steal seed packets and a butterfly-shaped drone
+      pollinates the plants. Clean sci-fi geometry, cobalt and silver with vivid flower colors, no text.
+    ref: null
   inspirations: []
-  accepted: {color: null, bw: null}
-  final: {color: null, bw: null}
+  accepted:
+    color: null
+    bw: null
+  final:
+    color: null
+    bw: null
   notes: []
 - slot: 21
   id: kr-021
-  title: Proposal 21
-  prompt: {text: null, ref: null}
+  title: The Kind Conductor
+  prompt:
+    text: 'A charismatic conductor robot stands on the platform between three impossible trains: one made of books,
+      one of clouds, and one of glowing circuitry. It helps a diverse crowd find the journey that suits them while
+      tiny butterflies act as signal flags. Dynamic station perspective, welcoming authority, no readable boards
+      or text.'
+    ref: null
   inspirations: []
-  accepted: {color: null, bw: null}
-  final: {color: null, bw: null}
+  accepted:
+    color: null
+    bw: null
+  final:
+    color: null
+    bw: null
   notes: []
 - slot: 22
   id: kr-022
-  title: Proposal 22
-  prompt: {text: null, ref: null}
+  title: Mermaid Maintenance
+  prompt:
+    text: A mermaid engineer with a powerful tail and a cheerful round repair bot fix the underside of a floating
+      city. Wrenches, bubbles, cables, and schools of fish create organized movement while sunlight beams through
+      water. Original aquatic technology, rich turquoise and coral, no text.
+    ref: null
   inspirations: []
-  accepted: {color: null, bw: null}
-  final: {color: null, bw: null}
+  accepted:
+    color: null
+    bw: null
+  final:
+    color: null
+    bw: null
   notes: []
 - slot: 23
   id: kr-023
-  title: Proposal 23
-  prompt: {text: null, ref: null}
+  title: Firehouse Robot
+  prompt:
+    text: A stout firefighter robot and a multigenerational human crew rescue a family of birds from a clock tower
+      during a small rooftop fire. The robot's arms unfold into ladders and water nozzles while everyone works as
+      a coordinated team. Red, gold, blue, and smoke-gray shapes, heroic but grounded, no text.
+    ref: null
   inspirations: []
-  accepted: {color: null, bw: null}
-  final: {color: null, bw: null}
+  accepted:
+    color: null
+    bw: null
+  final:
+    color: null
+    bw: null
   notes: []
 - slot: 24
   id: kr-024
-  title: Proposal 24
-  prompt: {text: null, ref: null}
+  title: Memory Dungeon Expedition
+  prompt:
+    text: A whimsical dungeon party explores a maze built from old photographs, toys, doors, and glowing memory
+      crystals. The group includes a cautious archivist robot, a muscular grandmother, a nervous slime, and a child
+      carrying the map. Each corridor represents a different memory without readable text. Rich color, strong depth,
+      no collage panels.
+    ref: null
   inspirations: []
-  accepted: {color: null, bw: null}
-  final: {color: null, bw: null}
+  accepted:
+    color: null
+    bw: null
+  final:
+    color: null
+    bw: null
   notes: []
 - slot: 25
   id: kr-025
-  title: Proposal 25
-  prompt: {text: null, ref: null}
+  title: Art Studio Swarm
+  prompt:
+    text: A bustling art studio where robots and humans paint, sculpt, print, and sew while a rainbow butterfly
+      swarm carries wet canvases to drying racks. Include a broad range of bodies, ages, and artistic tools; every
+      participant is making something different. Saturated color, organized chaos, no readable labels or text.
+    ref: null
   inspirations: []
-  accepted: {color: null, bw: null}
-  final: {color: null, bw: null}
+  accepted:
+    color: null
+    bw: null
+  final:
+    color: null
+    bw: null
   notes: []
 - slot: 26
   id: kr-026
-  title: Proposal 26
-  prompt: {text: null, ref: null}
+  title: Goat Farm Fix-It
+  prompt:
+    text: A lanky farm robot tries to repair a fence while five mischievous goats systematically undo every improvement.
+      An older farmer laughs from a small tractor and a tiny drone herds absolutely nothing. Sunny rolling pasture,
+      expressive animals, practical machinery, no text.
+    ref: null
   inspirations: []
-  accepted: {color: null, bw: null}
-  final: {color: null, bw: null}
+  accepted:
+    color: null
+    bw: null
+  final:
+    color: null
+    bw: null
   notes: []
 - slot: 27
   id: kr-027
-  title: Proposal 27
-  prompt: {text: null, ref: null}
+  title: Observatory Friends
+  prompt:
+    text: Nighttime hilltop observatory where a blind astronomer, a tactile star-map robot, and a curious alien
+      child explore the sky together. The telescope projects constellations as raised glowing forms they can all
+      touch. Deep indigo, gold, and turquoise, tender scientific wonder, no text or recognizable constellation labels.
+    ref: null
   inspirations: []
-  accepted: {color: null, bw: null}
-  final: {color: null, bw: null}
+  accepted:
+    color: null
+    bw: null
+  final:
+    color: null
+    bw: null
   notes: []
 - slot: 28
   id: kr-028
-  title: Proposal 28
-  prompt: {text: null, ref: null}
+  title: Night Market Helpers
+  prompt:
+    text: A bustling lantern-lit night market staffed by humans and helpful robots carrying trays, repairing shoes,
+      translating gestures, and finding lost pets. Food, fabrics, fruit, tools, and tiny machines create rich but
+      bounded shapes. Diverse community scene, warm color, no readable signs or text.
+    ref: null
   inspirations: []
-  accepted: {color: null, bw: null}
-  final: {color: null, bw: null}
+  accepted:
+    color: null
+    bw: null
+  final:
+    color: null
+    bw: null
   notes: []
 - slot: 29
   id: kr-029
-  title: Proposal 29
-  prompt: {text: null, ref: null}
+  title: Orchestra of Odd Bots
+  prompt:
+    text: 'A grand orchestra made entirely of wildly different robots performs in an old theater: a cello-bodied
+      giant, tiny percussion spiders, brass birds, a glass harmonica bot, and a conductor with six expressive hands.
+      Audience members lean forward as music becomes visible ribbons. Jewel colors, strong symmetry, no text.'
+    ref: null
   inspirations: []
-  accepted: {color: null, bw: null}
-  final: {color: null, bw: null}
+  accepted:
+    color: null
+    bw: null
+  final:
+    color: null
+    bw: null
   notes: []
 - slot: 30
   id: kr-030
-  title: Proposal 30
-  prompt: {text: null, ref: null}
+  title: Snow Day Service Crew
+  prompt:
+    text: During a heavy snowstorm, friendly robots help a neighborhood dig paths, deliver soup, tow a tiny bus,
+      and build an unnecessarily elaborate snow dragon. Humans of many ages work alongside them. Bright winter clothing
+      against blue-white snow, clear action clusters, warm windows, no text.
+    ref: null
   inspirations: []
-  accepted: {color: null, bw: null}
-  final: {color: null, bw: null}
+  accepted:
+    color: null
+    bw: null
+  final:
+    color: null
+    bw: null
   notes: []
 - slot: 31
   id: kr-031
-  title: Proposal 31
-  prompt: {text: null, ref: null}
+  title: Desert Solar Garden
+  prompt:
+    text: A desert community tends a solar garden where panel petals rotate like giant sunflowers and shade crops
+      below. A tall maintenance robot, two farmers, and children inspect water channels while lizards nap on cool
+      machinery. Amber, turquoise, green, and violet, hopeful practical futurism, no text.
+    ref: null
   inspirations: []
-  accepted: {color: null, bw: null}
-  final: {color: null, bw: null}
+  accepted:
+    color: null
+    bw: null
+  final:
+    color: null
+    bw: null
   notes: []
 - slot: 32
   id: kr-032
-  title: Proposal 32
-  prompt: {text: null, ref: null}
+  title: Community Mural
+  prompt:
+    text: A neighborhood paints a huge outdoor mural with humans, robots, ladders, rolling platforms, and butterflies
+      all contributing. The mural depicts a fantastical shared city but contains no readable words. Show varied
+      ages, bodies, cultures, and mobility aids in active roles. Bright balanced palette, joyful collaboration,
+      no collage.
+    ref: null
   inspirations: []
-  accepted: {color: null, bw: null}
-  final: {color: null, bw: null}
+  accepted:
+    color: null
+    bw: null
+  final:
+    color: null
+    bw: null
   notes: []
 - slot: 33
   id: kr-033
-  title: Proposal 33
-  prompt: {text: null, ref: null}
+  title: Storytime Circuit
+  prompt:
+    text: An older storyteller reads aloud beneath a giant tree while children, robots, cats, and tiny fantasy creatures
+      gather in concentric circles. The open book projects a glowing dragon made of butterflies overhead. Warm sunset
+      colors, expressive listeners, calm magic, no readable page text.
+    ref: null
   inspirations: []
-  accepted: {color: null, bw: null}
-  final: {color: null, bw: null}
+  accepted:
+    color: null
+    bw: null
+  final:
+    color: null
+    bw: null
   notes: []
 - slot: 34
   id: kr-034
-  title: Proposal 34
-  prompt: {text: null, ref: null}
+  title: Toy Hospital
+  prompt:
+    text: A compassionate repair robot and a human child run a tiny hospital for broken toys. Stuffed animals, dolls,
+      wind-up creatures, and wooden trains wait patiently while delicate tools and colorful spare parts fill the
+      room. Sweet but visually rich, careful hands, no brand characters or text.
+    ref: null
   inspirations: []
-  accepted: {color: null, bw: null}
-  final: {color: null, bw: null}
+  accepted:
+    color: null
+    bw: null
+  final:
+    color: null
+    bw: null
   notes: []
 - slot: 35
   id: kr-035
-  title: Proposal 35
-  prompt: {text: null, ref: null}
+  title: Kind Robots Parade
+  prompt:
+    text: 'Grand street parade featuring the recurring Kind Robots world: Ami''s butterfly swarm, café bots, gardeners,
+      artists, rescue robots, cats, aliens, mermaids, and ordinary people moving together beneath ribbons and lanterns.
+      Keep one coherent wide scene with distinct foreground, middle, and background groups rather than a collage.
+      Radiant rainbow palette, no banners or readable text.'
+    ref: null
   inspirations: []
-  accepted: {color: null, bw: null}
-  final: {color: null, bw: null}
+  accepted:
+    color: null
+    bw: null
+  final:
+    color: null
+    bw: null
   notes: []
 - slot: 36
   id: kr-036
-  title: Proposal 36
-  prompt: {text: null, ref: null}
+  title: Constellation of Care
+  prompt:
+    text: Night sky finale above Humboldt County. Hundreds of small robots and rainbow butterflies form a vast constellation-like
+      network over redwoods, ocean, farms, clinics, homes, and workshops, with gentle beams connecting acts of care
+      on the ground. The pattern suggests a protective net without becoming a literal logo or infographic. Deep
+      blue, rainbow light, hopeful scale, no text.
+    ref: null
   inspirations: []
-  accepted: {color: null, bw: null}
-  final: {color: null, bw: null}
+  accepted:
+    color: null
+    bw: null
+  final:
+    color: null
+    bw: null
   notes: []

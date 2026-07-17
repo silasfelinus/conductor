@@ -1,7 +1,8 @@
 set: monster-recast
-mode: ready
-description: Durable ArtJob batch for paired color and black-and-white first-pass studies of concepts not represented
-  in approved/.
+mode: superseded
+description: Historical paired color/BW first-pass queue. Do not submit new jobs from this file. Canonical color
+  work moved to projects/coloring-book/color-art-jobs.yaml; BW is derived only after a color master is accepted.
+superseded_by: projects/coloring-book/color-art-jobs.yaml
 source_manifest: projects/coloring-book/sets/monster-recast/art-modeler-request.yaml
 approval_snapshot:
   represented_concept_ids:
@@ -23,7 +24,8 @@ approval_snapshot:
   - mr-022
   - mr-025
   - mr-029
-  mapping_note: 'masked-countess is treated as the mr-018 Doctor Feast working pair; verify in issue #414.'
+  mapping_note: masked-countess is treated as the mr-018 Doctor Feast working pair; visual verification is still
+    required.
 defaults:
   target_repo: silasfelinus/conductor
   size: 1024x1536
