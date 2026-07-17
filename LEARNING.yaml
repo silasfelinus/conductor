@@ -2927,3 +2927,12 @@ records:
     resolution (2000px longest edge) before committing -- an original museum scan can be
     tens of MB each, blowing past a "modest footprint" budget the plan doc estimated
     assuming smaller files.
+- date: 2026-07-17
+  project: ai-art-academy
+  task: t-027
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "Clean first-pass kaizen: a dependency-free utils/scripts/verify*.ts contract test following the existing convention (see verifyDataSurfaceManifest.ts) is fast to write, easy to verify locally (constructed 3 intentionally-broken manifest copies to confirm each failure mode triggers, then restored the original), and slots straight into contract-tests.yml without needing the Nuxt/Prisma runtime."

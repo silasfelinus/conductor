@@ -483,3 +483,34 @@ corrected before pushing, so no incorrect state reached `origin/main`).
 **Kaizen task:** t-027 -- add a CI check validating `starters.manifest.json` against the
 PUBLIC-DOMAIN-POLICY.md §3 schema, so a future edit can't silently drop a provenance
 field.
+
+## 2026-07-17 | Reviewer → Silas | ai-art-academy/t-027 | pattern (autonomous hourly cycle, self-merge)
+
+**Decision:** merged kind_robots PR #359 (squash 4490daf). t-027 closed done; kaizen
+t-028 filed as `waiting` on t-013.
+
+**Detail:**
+- Deliberately picked t-027 over the tool-suggested top task (t-013, "example-works
+  strip") this cycle: t-013 turned out to span ~21 curriculum movements x ~4 example
+  works each (~80+ images with individual provenance verification), comparable in
+  scope to the already-large t-008 PR (#358, merged earlier this same cycle) — too
+  large to land well in one bounded autonomous pass. t-027 was a fully self-contained,
+  small kaizen with no external egress dependency, so it was the better fit for the
+  cycle. t-013 is untouched and still `ready` for a future cycle (or a session with
+  more headroom to split it further).
+- `utils/scripts/verifyAcademyStarterManifest.ts` follows the existing `verify*.ts`
+  convention (modeled on `verifyDataSurfaceManifest.ts`): dependency-free, runs under
+  bare `tsx`, wired into `contract-tests.yml` next to the other Academy contract check.
+- Verified by constructing three intentionally-broken copies of the real manifest
+  (missing `artistDied`, invalid license string, `Open-Access-Terms` missing
+  `licenseTermsUrl`) and confirming each fails with a specific error + exit 1, then
+  restored the original file (confirmed via `git status`). Full-project `vue-tsc
+  --noEmit` — 0 errors. eslint/prettier clean.
+- All 4 PR checks green (facet-alias-smoke, Contract verifiers — including the new
+  check itself, TypeScript, GitGuardian) before self-merge.
+
+**Failure category:** n/a (clean first-pass landing).
+
+**Kaizen task:** t-028 — generalize the schema validator to also cover the future
+academy-styles example-work registry once t-013 lands (filed as `waiting` on t-013,
+not `ready`, since the registry doesn't exist yet).
