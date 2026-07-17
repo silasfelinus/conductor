@@ -514,3 +514,46 @@ t-028 filed as `waiting` on t-013.
 **Kaizen task:** t-028 — generalize the schema validator to also cover the future
 academy-styles example-work registry once t-013 lands (filed as `waiting` on t-013,
 not `ready`, since the registry doesn't exist yet).
+
+## 2026-07-17 | Reviewer → Silas | ai-art-academy/t-013 + t-028 | pattern (autonomous hourly cycle)
+
+**Decision:** merged kind_robots PR #360 (squash b107209) and conductor PR #696. t-013
+kept `ready` with a detailed progress note (partial-scope landing, no pass consumed);
+t-028 closed `done` as a side effect; kaizen t-029 filed.
+
+**Detail:**
+- t-013 shipped 9 of 21 curriculum movements' example-work images (greek-vase-painting,
+  byzantine-mosaic, illuminated-manuscript, renaissance, baroque, ukiyo-e, romanticism,
+  realism, art-nouveau) with full PUBLIC-DOMAIN-POLICY.md §3 provenance, a new
+  `exampleWorks` field on `AcademyStyle` in `stores/seeds/academyStyles.ts`, a mirrored
+  `examples.manifest.json`, and a new `verifyAcademyExamplesManifest.ts` contract wired
+  into CI. All 4 kind_robots checks green.
+- Good catch during the pass: `curriculum-outline.md` had marked 3 Art Institute of
+  Chicago works (Juan Gris/cubism, Kandinsky+Klee/bauhaus) `**VERIFIED**` CC0, but a live
+  `api.artic.edu` check this session returned `is_public_domain: false` with active
+  ARS/VG Bild-Kunst copyright notices — the PR correctly declined to ship those three and
+  corrected the stale VERIFIED tags in the doc rather than trusting the old marking.
+  Distinguishing `api.artic.edu` (JSON metadata, reachable) from `www.artic.edu`'s IIIF
+  image host (Cloudflare bot-challenge, blocked) was also a real find, hand-documented in
+  `EGRESS-BLOCKERS.md` since the ledger's own reachable/blocked binary can't represent it.
+- Reviewer follow-up (this entry): kept t-013 `ready` rather than `done` since 12
+  movements remain (2 need a different PD source after the cubism/bauhaus correction, 3
+  are egress-blocked pending the Cloudflare issue or a Commons substitute, 6 have no
+  VERIFIED source yet per the curriculum's own SCOPE UPDATE note) — same pattern as the
+  model-builder t-029 precedent (2026-07-17) of keeping a partially-shipped task `ready`
+  with a specific progress note instead of forcing it to `done` or leaving it ambiguous.
+- t-028 (t-027's kaizen, "generalize the schema validator... once t-013 lands") turned
+  out to already be fulfilled by t-013's own PR: it extracted
+  `utils/scripts/academyProvenanceSchema.ts` and rewired both the starter and examples
+  manifest validators to share it — exactly the ask. Closed `done` rather than leaving it
+  `waiting` on all 21 movements landing, since the schema-sharing work itself doesn't
+  depend on how many example-work entries exist.
+
+**Failure category:** n/a (clean merge; the partial scope was an intentional, well-
+documented split, not a rejection — no pass consumed on t-013).
+
+**Kaizen task:** t-029 — teach `scripts/recheck_egress_blocks.py` to detect a Cloudflare
+bot-challenge response (`cf-mitigated: challenge` header / JS-challenge body) as a
+distinct status from a genuine reachable response, so the next session doesn't have to
+rediscover and hand-document the artic.edu IIIF case (or any future host with the same
+pattern) from scratch.

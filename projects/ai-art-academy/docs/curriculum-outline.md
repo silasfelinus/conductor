@@ -790,8 +790,10 @@ brilliant early-generation colleagues whose art is safely in the public domain.
   elegant compositions made the style sing; died at just 40.
 
 **Example works:**
-- *Portrait of Pablo Picasso*, Juan Gris, 1912 — **VERIFIED**, Art Institute of
-  Chicago (CC0): https://www.artic.edu/artworks/8624/portrait-of-pablo-picasso
+- *Portrait of Pablo Picasso*, Juan Gris, 1912 — CORRECTION 2026-07-17
+  (ai-art-academy/t-013): previously marked VERIFIED/CC0, but api.artic.edu
+  reports `is_public_domain: false` for this object — re-verify before use
+  (unverified): https://www.artic.edu/artworks/8624/portrait-of-pablo-picasso
 - *The Musician's Table*, Juan Gris, 1914 — expected at Met Open Access (Leonard
   A. Lauder Cubist Collection) (unverified)
 - *Man on a Balcony*, Albert Gleizes, 1912 — expected as PD scan at Wikimedia
@@ -886,14 +888,23 @@ art education.
   founded the New Bauhaus in Chicago after the school's closure.
 
 **Example works:**
-- *Orange*, Wassily Kandinsky, 1923 — **VERIFIED**, Art Institute of Chicago
-  (CC0): https://www.artic.edu/artworks/72690/orange
+- *Orange*, Wassily Kandinsky, 1923 — CORRECTION 2026-07-17
+  (ai-art-academy/t-013): previously marked VERIFIED/CC0, but
+  api.artic.edu reports `is_public_domain: false` with a live copyright
+  notice ("© 2018 Artists Rights Society (ARS), New York / ADAGP,
+  Paris") for this object — re-verify before use (unverified):
+  https://www.artic.edu/artworks/72690/orange
 - *Circles in a Circle*, Wassily Kandinsky, 1923 — Philadelphia Museum of Art
   (Louise and Walter Arensberg Collection); expected as PD scan at Wikimedia
   Commons (unverified)
-- *Architecture*, Paul Klee, 1921 — **VERIFIED**, Art Institute of Chicago
-  (CC0), from Klee's "Magic Squares" series painted the year he joined the
-  Bauhaus faculty: https://www.artic.edu/artworks/17540/architecture
+- *Architecture*, Paul Klee, 1921 — CORRECTION 2026-07-17
+  (ai-art-academy/t-013): previously marked VERIFIED/CC0, but
+  api.artic.edu reports `is_public_domain: false` with a live copyright
+  notice ("© 2018 Artists Rights Society (ARS), New York / VG
+  Bild-Kunst, Bonn") for this object, from Klee's "Magic Squares"
+  series painted the year he joined the Bauhaus faculty — re-verify
+  before use (unverified):
+  https://www.artic.edu/artworks/17540/architecture
 - *Fotogramm*, László Moholy-Nagy, 1926 — Metropolitan Museum of Art
   (accession search/265197); expected as open-access image (unverified CC0
   status this session)

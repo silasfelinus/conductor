@@ -249,32 +249,39 @@ tasks:
   - id: t-013
     milestone: m4
     title: 'kind_robots: add example-works strip to Academy lesson detail'
-    status: claimed
-    owner: worker
+    status: ready
+    owner: null
     passes: 0
     stakes: reversible
-    updated: '2026-07-17T13:09:19Z'
+    updated: '2026-07-17T14:05:00Z'
     depends_on: t-007
     note: >
-      Split 2026-07-15 from the original t-008 (part 2 of 3) — independently
-      landable, does not need t-008's local starter-image download to exist
-      first. Add an example-works strip to the Academy lesson detail view: real
-      public-domain images per movement, sourced from the curriculum outline's
-      verified source URLs (docs/curriculum-outline.md), following
-      PUBLIC-DOMAIN-POLICY.md for provenance recording.
-      SCOPE UPDATE 2026-07-16 (t-010 expansion cycle): the curriculum is now 21
-      movements, not 16 — the strip should cover §17-21 (gothic, northern-
-      renaissance, rococo, symbolism, pointillism) too. Those five movements'
-      example-work URLs are still marked (unverified) in the outline (they carry
-      real accession numbers but egress was 403-blocked when they were added), so
-      re-verify them at image-fetch time the same as the rest, per the museum-egress
-      note below.
-      EGRESS: same museum/Wikimedia hosts as t-008 — reachability tracked in
-      EGRESS-BLOCKERS.md (grep "ai-art-academy/t-013"). Blocked 2026-07-15/16,
-      REACHABLE at the 2026-07-17T07:51Z recheck; re-run
-      scripts/recheck_egress_blocks.py before claiming.
-    claimed_by: claude-conductor-burst-20260717T1307Z
-    claimed_at: '2026-07-17T13:09:19Z'
+      REVIEWED 2026-07-17 (autonomous hourly conductor cycle): merged kind_robots
+      PR #360 (squash b107209) — ships 9 of 21 movements (greek-vase-painting,
+      byzantine-mosaic, illuminated-manuscript, renaissance, baroque, ukiyo-e,
+      romanticism, realism, art-nouveau), each with a verified public-domain
+      example work in stores/seeds/academyStyles.ts's new exampleWorks field,
+      mirrored to public/images/academy/examples/examples.manifest.json and
+      guarded by the new verifyAcademyExamplesManifest.ts contract. Kept `ready`
+      rather than `done` — remaining scope, no pass consumed (partial-scope
+      landing, not a rejection):
+      (1) cubism and bauhaus — curriculum-outline.md's "VERIFIED" tags for the
+      AIC-sourced Juan Gris/Kandinsky/Klee works were stale: api.artic.edu now
+      reports is_public_domain:false with live ARS/VG Bild-Kunst copyright
+      notices. Corrected to "unverified" in the outline this pass; need a
+      different public-domain source before shipping.
+      (2) impressionism, post-impressionism, de-stijl — correctly public-domain
+      per api.artic.edu, but www.artic.edu's IIIF image host returned a
+      Cloudflare bot-challenge (blocked for image bytes, not metadata); ship once
+      that clears (see EGRESS-BLOCKERS.md 2026-07-17T13:15Z entry) or a
+      same-accession Commons scan is substituted (t-008's precedent).
+      (3) gothic, northern-renaissance, rococo, symbolism, pointillism,
+      neoclassicism — no VERIFIED source yet per curriculum-outline.md's own
+      SCOPE UPDATE note; still need sourcing.
+      Original split-history: split 2026-07-15 from t-008 (part 2 of 3); scope
+      expanded 2026-07-16 (t-010 cycle) from 16 to 21 movements.
+    claimed_by: null
+    claimed_at: null
   - id: t-014
     milestone: m4
     title: 'kind_robots: wire starter library into Remix Studio source picker'
@@ -982,18 +989,40 @@ tasks:
   - id: t-028
     milestone: m4
     title: 'kind_robots: generalize the provenance schema validator to cover the future academy-styles example-work registry'
-    status: waiting
+    status: done
     owner: null
     passes: 0
     stakes: reversible
-    updated: '2026-07-17T13:03:00Z'
+    updated: '2026-07-17T14:05:00Z'
     depends_on: t-013
     note: >
-      Kaizen from t-027's merge (kind_robots PR #359, 2026-07-17). t-027 shipped
-      utils/scripts/verifyAcademyStarterManifest.ts, validating
-      public/images/academy/starters/starters.manifest.json against
-      PUBLIC-DOMAIN-POLICY.md §3. t-013 will add the same provenance schema to
-      curriculum "example work" entries in the academy-styles registry once it
-      lands. Extract the shared field-list/license-enum check (or add a second
-      thin validator reusing it) so both manifests are covered instead of
-      duplicating the schema by hand a second time.
+      Kaizen from t-027's merge (kind_robots PR #359, 2026-07-17). Fulfilled as a
+      side effect of t-013's kind_robots PR #360 (2026-07-17): the PR extracted
+      the shared field-list/license-enum check into
+      utils/scripts/academyProvenanceSchema.ts and rewired both
+      verifyAcademyStarterManifest.ts and the new
+      verifyAcademyExamplesManifest.ts to validate against it — exactly the
+      generalization this task asked for. Closed done rather than waiting on
+      t-013's remaining 12 movements, since the schema-sharing work itself is
+      complete regardless of how many example-work entries exist yet.
+
+  - id: t-029
+    milestone: m4
+    title: 'conductor: teach recheck_egress_blocks.py to distinguish a Cloudflare bot-challenge from a genuine reachable/blocked response'
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-17T14:05:00Z'
+    note: >
+      Kaizen from t-013's review (kind_robots PR #360, 2026-07-17). While
+      working t-013, an agent found www.artic.edu's IIIF image host returns a
+      Cloudflare bot-challenge (`cf-mitigated: challenge` header, JS-challenge
+      HTML body) — but scripts/recheck_egress_blocks.py's own reachable/blocked
+      rule treats any HTTP response (including this 403 challenge page) as
+      "reachable," so it silently masked a real image-fetch block. The workaround
+      this pass was a hand-written EGRESS-BLOCKERS.md entry
+      (2026-07-17T13:15Z) explaining the distinction manually. Add a
+      cf-mitigated/challenge-body detector to the script so it stamps a distinct
+      "bot-challenged" status instead of "reachable," so future sessions don't
+      have to rediscover and hand-document this per host.

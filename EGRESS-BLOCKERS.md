@@ -123,3 +123,33 @@ reachable (HTTP 200)
 
 ## 2026-07-17T11:52:07Z | commons.wikimedia.org | reachable | ai-art-academy/t-008
 reachable (HTTP 200)
+
+## 2026-07-17T13:08:25Z | metmuseum.org | reachable | ai-art-academy/t-013
+reachable (HTTP 429)
+
+## 2026-07-17T13:08:27Z | upload.wikimedia.org | reachable | ai-art-academy/t-013
+reachable (HTTP 200)
+
+## 2026-07-17T13:08:28Z | www.metmuseum.org | reachable | ai-art-academy/t-013
+reachable (HTTP 429)
+
+## 2026-07-17T13:14:58Z | www.artic.edu | reachable | ai-art-academy/t-013
+reachable (HTTP 403)
+
+## 2026-07-17T13:14:59Z | api.artic.edu | reachable | ai-art-academy/t-013
+reachable (HTTP 200)
+
+## 2026-07-17T13:15Z | www.artic.edu/iiif/2/* (IMAGE HOST, not the domain) | manually-blocked | ai-art-academy/t-013
+The automated recheck above logs www.artic.edu as "reachable (HTTP 403)" because
+any HTTP response counts as reachable by this ledger's own rule (connection
+succeeded). That masks a real, distinct problem: the 403 is a Cloudflare bot
+challenge (`cf-mitigated: challenge` response header, JS-challenge HTML body),
+not an ordinary 403 or rate limit — confirmed on both the full-size and
+info.json IIIF paths, retried after a delay with no change. api.artic.edu (the
+JSON metadata API, different host) is genuinely reachable and returns real data.
+Net effect: artwork metadata + is_public_domain flags can be fetched from
+api.artic.edu, but the actual image bytes at www.artic.edu/iiif/2/... cannot be
+downloaded from this sandbox. Affects ai-art-academy/t-013's impressionism,
+post-impressionism, and de-stijl examples (all correctly public-domain per the
+API, just image-fetch-blocked) — left as ready follow-up work once this
+resolves or a session runs with different egress.
