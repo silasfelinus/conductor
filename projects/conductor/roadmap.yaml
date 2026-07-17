@@ -1401,11 +1401,18 @@ tasks:
   - id: t-056
     milestone: m2
     title: Document the Reviewer batch-merge auto-gen race in AGENTS.md
-    status: ready
-    owner: null
+    status: done
+    owner: reviewer
     passes: 0
     stakes: reversible
+    updated: '2026-07-17T08:10:00Z'
     note: >
+      DONE 2026-07-17 (Silas-directed session, claude/projects-db-down-q2yfu0):
+      added the "Reviewer batch-merge note (companion to rule 9)" paragraph to
+      AGENTS.md immediately after the hard-rules list — expect the
+      refresh-status.yml race after each merge in a sweep, retry before treating
+      dirty as a real conflict, take main's copy for auto-gen files, keep both
+      sides for append-only files. Original spec:
       Kaizen from this cycle's Reviewer sweep (2026-07-16, conductor PRs
       #640/#641/#643/#644/#645/#646/#647/#648, an 8-PR backlog cleared in one
       session). t-045 (this same cycle) covers the Worker-side half of the

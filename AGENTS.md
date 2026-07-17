@@ -613,6 +613,19 @@ Silas approval is required for the image generation itself.
     `prisma db execute`, then `prisma migrate resolve --applied`), and never rename or
     edit a migration that may already be applied somewhere — ship a new migration instead.
 
+**Reviewer batch-merge note (companion to rule 9):** `refresh-status.yml` lands a
+`chore: refresh STATUS.md and workspace.html` commit on `main` within seconds of every
+merge. When clearing several backlogged PRs in one sweep, expect each merge after the
+first to race that auto-commit: a PR that was clean moments ago flips to
+`mergeable_state: dirty` through no fault of the Worker (the staleness comes from the
+Reviewer's own previous merge — Worker-side rebase-before-PR cannot prevent it). Do not
+treat the first `dirty` as a real conflict: re-fetch `main` (update the PR branch) and
+retry. If a genuine conflict remains, resolve it like any auto-gen conflict — take
+main's copy of `STATUS.md` / `workspace.html` / `ROADMAP-AUDIT.*` / `LEARNING-REPORT.md`
+and regenerate; for append-only files both sides touched (`TALKBACK.md`, `LEARNING.yaml`),
+keep both sides' entries rather than picking one. (Kaizen from the 2026-07-16 8-PR
+Reviewer sweep, conductor/t-056.)
+
 ## PR handoff template (Worker fills in)
 ```
 ### Task

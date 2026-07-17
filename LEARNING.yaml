@@ -2764,3 +2764,16 @@ records:
     Discoverability docs pay for themselves: a proven script that only greppers can
     find gets re-derived; one paragraph in AGENTS.md at the point of need (the
     cross-repo section) is the whole fix.
+- date: 2026-07-17
+  project: conductor
+  task: t-056
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    The batch-merge dirty-state race is self-inflicted by the Reviewer's own prior
+    merge, so the fix is procedural documentation (retry after re-fetching main),
+    not more Worker-side rebasing — document races where the causing agent will
+    read them, next to the conflict-resolution rule they modify.
