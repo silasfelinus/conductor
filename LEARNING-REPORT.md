@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-07-17T19:12:38Z
+Generated: 2026-07-17T19:15:18Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **238**
-- Outcomes: blocked: 12, done: 226
+- Closed tasks recorded: **239**
+- Outcomes: blocked: 12, done: 227
 - Success rate: **95%**
 - Average passes on successful tasks: **0.0**
 
@@ -24,7 +24,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | challenge-center | 16 | 100% |
 | coat-dance | 8 | 0% |
 | coloring-book | 12 | 100% |
-| conductor | 29 | 100% |
+| conductor | 30 | 100% |
 | digital-storefront | 8 | 100% |
 | dream-cycle | 14 | 100% |
 | ecosystem-map | 4 | 100% |
@@ -49,24 +49,25 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 15 | 40% |
-| software | 223 | 99% |
+| software | 224 | 99% |
 
 ## Failure categories
 
 | Category | Count |
 |---|---|
-| actionable | 5 |
+| actionable | 6 |
 | quality | 3 |
 
 ## Kaizen targets
 
 - project `coat-dance` — 0% success over 8 closed tasks; aim the next kaizen task here
 - kind `content` — 40% success over 15 closed tasks; aim the next kaizen task here
-- failure category `actionable` — 5 occurrences; look for the shared cause across its records
+- failure category `actionable` — 6 occurrences; look for the shared cause across its records
 - failure category `quality` — 3 occurrences; look for the shared cause across its records
 
 ## Recent lessons
 
+- 2026-07-17 `conductor/t-037` — A deterministic cross-repo write failure (4/4 identical retries while 31 reads succeeded) was correctly parked at needs-human rather than burning passes — the cause was environmental (expired KR_API_TOKEN + the t-022 DB-pool outage), invisible to client-side inspection. When the upstream incidents cleared, verification cost one Actions log read: the sync run showed both formerly-failing creates existing as rows (id=1281/1285). Deterministic-failure + clean-reads is a strong signal to check auth and infra before suspecting the payload.
 - 2026-07-17 `packmaker/t-003` — Gated draft work (two DLC pack manifests) sat complete at needs-human for two days until Silas batch-cleared gates in a report session. Drafts validated against the t-002 schema before the gate meant zero rework on approval — front-loading schema validation makes human gates cheap to clear.
 - 2026-07-17 `superkate-hairstyle-ai/t-020` — Process gap fixed at the AGENTS.md level (step 7: set status review before any PR, all session types) rather than per-project. The task itself then sat at status: review after its PR merged — the exact failure mode it documents — because the session ended without the review→done flip. A task whose deliverable is a process rule should be closed in the same commit that lands the rule.
 - 2026-07-17 `kind-robots/t-022` — Production DB pool exhaustion (t-022, first seen 2026-07-15T08:56Z) had three false starts before the real fix: two app-code pool-config tweaks (#296 limit fallback, #300 TLS checkServerIdentity, #325/#327 pool lifecycle) each looked plausible and were confirmed live in prod, yet the outage kept recurring under a different signature each time (limit=10, then limit=1 'one-shot fallback'). The fix that actually held was a full revert (#342) of the one-shot-fallback mechanism (#336) rather than another patch on top of it -- when a pool/infra incident keeps changing shape after being 'fixed' twice, suspect the fix itself introduced a new failure mode and consider reverting the whole mechanism instead of patching further. Closed after 12+ hours / ~12 hourly cycles of sustained zero-503 confirmation, per Silas's own standing instruction to close once verified healthy.
@@ -76,8 +77,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-07-17 `digital-storefront/t-013` — Cross-repo software task where the code PR (kind_robots#361) and the conductor bookkeeping PR (#700) were opened by a prior burst-mode session but left unmerged at status:review — the Reviewer cycle's job was purely to verify and merge both, then close the roadmap task. Delegating the payment-code diff review to a subagent (checking migration additivity, auth on the new cancel-subscription endpoint, and webhook signature verification) kept the large diff out of the main context while still confirming test-mode-only, no live keys, no cross-user cancellation.
 - 2026-07-17 `ai-art-academy/t-028` — A kaizen task can be fulfilled as a side effect of the task it depends on, before that task fully completes — check the dependency's actual diff before assuming a `waiting` kaizen is still open; t-013's PR extracted the shared schema validator t-028 asked for regardless of how many example-work entries exist yet.
 - 2026-07-17 `ai-art-academy/t-027` — Clean first-pass kaizen: a dependency-free utils/scripts/verify*.ts contract test following the existing convention (see verifyDataSurfaceManifest.ts) is fast to write, easy to verify locally (constructed 3 intentionally-broken manifest copies to confirm each failure mode triggers, then restored the original), and slots straight into contract-tests.yml without needing the Nuxt/Prisma runtime.
-- 2026-07-17 `ai-art-academy/t-008` — Re-verifying a plan doc's source URLs at download time (rather than trusting its "VERIFIED" marks) caught two real drifts: Met's own API reports isPublicDomain:false for one accession the doc had marked CC0, and artic.edu's IIIF image CDN blocks script fetches with a Cloudflare bot challenge regardless of User-Agent. Both were fixed by substituting a Commons PD-Mark scan of the identical accession rather than skipping the item -- always keep a same-work fallback source in mind for institution APIs with rights-flag or bot-protection surprises. Also: resize images to a web resolution (2000px longest edge) before committing -- an original museum scan can be tens of MB each, blowing past a "modest footprint" budget the plan doc estimated assuming smaller files.
-
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-07-17T19:12:38Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-07-17T19:15:18Z_
