@@ -156,3 +156,9 @@ resolves or a session runs with different egress.
 
 ## 2026-07-17T15:07:16Z | api.stripe.com | reachable | digital-storefront/t-013
 reachable (HTTP 404)
+
+## 2026-07-17T19:15:17Z | huggingface.co | reachable | ai-art-academy/t-021
+reachable (HTTP 200)
+
+## 2026-07-17T19:15:17Z | civitai.com | reachable | ai-art-academy/t-021
+reachable (HTTP 200)
