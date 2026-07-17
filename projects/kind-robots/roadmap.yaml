@@ -281,11 +281,11 @@ tasks:
   - id: t-012
     milestone: m3
     title: Fix the mana purchase path — Stripe webhook credits + ManaTransaction ledger
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
-    updated: '2026-07-10T20:30:00Z'
+    updated: '2026-07-17T08:52:46Z'
     note: >
       PROGRESS 2026-07-10: PART 1 DONE (kind_robots PR #151) — manaGate.commit
       now routes through applyMana: atomic debit + ManaTransaction ledger row
@@ -307,6 +307,8 @@ tasks:
       (3) make credit-purchase.vue drive the real test-mode flow. Blocks real
       mana top-ups (digital-storefront t-012) and paid coloring/academy
       generation tiers.
+    claimed_by: claude-conductor-hourly-20260717T0849Z
+    claimed_at: '2026-07-17T08:52:46Z'
 
   - id: t-013
     milestone: m3
