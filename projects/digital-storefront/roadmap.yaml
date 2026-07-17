@@ -254,15 +254,28 @@ tasks:
 - id: t-013
   milestone: m3
   title: Wire the monthly supporter subscription to Stripe (test mode)
-  status: review
-  owner: worker
+  status: done
+  owner: reviewer
   passes: 0
   stakes: reversible
   depends_on: t-009
-  note: 'Cross-repo (kind_robots). PR open: silasfelinus/kind_robots#361 (branch claude/keen-fermat-eq3rb2) — webhook now activates isMember/memberUntil/stripeSubscriptionId on checkout.session.completed (mode: subscription) and keeps it in sync via customer.subscription.updated/deleted; added a real cancel-subscription endpoint (cartStore.cancelSubscription was a stub); fixed success/cancel redirect URLs (pointed at nonexistent /members/* pages) to /sanctuary?subscription=...; added a notice banner mirroring the mana top-up one. Test mode only; live activation stays gated per CONTROL.md. vue-tsc/eslint/prettier clean.'
-  claimed_by: claude-conductor-burst-20260717T1507Z
-  claimed_at: '2026-07-17T15:07:29Z'
-  updated: '2026-07-17T15:22:54Z'
+  note: 'DONE 2026-07-17 (conductor hourly cycle): kind_robots PR #361 merged (98190504). Webhook now activates isMember/memberUntil/stripeSubscriptionId on checkout.session.completed (mode: subscription) and keeps it in sync via customer.subscription.updated/deleted; added a real cancel-subscription endpoint (cartStore.cancelSubscription was a stub); fixed success/cancel redirect URLs (pointed at nonexistent /members/* pages) to /sanctuary?subscription=...; added a notice banner mirroring the mana top-up one. Test mode only; live activation stays gated per CONTROL.md. Reviewed: migration purely additive (nullable ADD COLUMN), no live/hardcoded Stripe keys, cancel-subscription endpoint authenticates via requireApiUser and takes no client-supplied user/subscription id (cannot cancel another user''s subscription), webhook signature verification (constructEvent) untouched and still required. All 3 CI checks green.'
+  claimed_by: null
+  claimed_at: null
+  updated: '2026-07-17T00:00:00Z'
+- id: t-024
+  milestone: m3
+  title: 'subscribe.post.ts: require authenticated user instead of trusting client-supplied userId'
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  note: >
+    Kaizen from t-013's close (2026-07-17): reviewing kind_robots PR #361 surfaced that the
+    pre-existing server/api/stripe/subscribe.post.ts accepts a client-supplied userId in the
+    request body with no auth check (not introduced or worsened by #361 -- cancel-subscription.post.ts
+    was built correctly, deriving the user from requireApiUser instead). Fix subscribe.post.ts
+    to derive the user the same way, matching the new cancel-subscription endpoint's pattern.
 - id: t-014
   milestone: m3
   title: Build the Against Malaria giving page

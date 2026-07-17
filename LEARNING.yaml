@@ -2945,3 +2945,12 @@ records:
   outcome: done
   failure_category: null
   lesson: "A kaizen task can be fulfilled as a side effect of the task it depends on, before that task fully completes — check the dependency's actual diff before assuming a `waiting` kaizen is still open; t-013's PR extracted the shared schema validator t-028 asked for regardless of how many example-work entries exist yet."
+- date: '2026-07-17'
+  project: digital-storefront
+  task: t-013
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "Cross-repo software task where the code PR (kind_robots#361) and the conductor bookkeeping PR (#700) were opened by a prior burst-mode session but left unmerged at status:review — the Reviewer cycle's job was purely to verify and merge both, then close the roadmap task. Delegating the payment-code diff review to a subagent (checking migration additivity, auth on the new cancel-subscription endpoint, and webhook signature verification) kept the large diff out of the main context while still confirming test-mode-only, no live keys, no cross-user cancellation."
