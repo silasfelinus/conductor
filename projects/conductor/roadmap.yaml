@@ -1218,11 +1218,28 @@ tasks:
   - id: t-048
     milestone: m2
     title: Rename ci.yml's authz-regression job now that it runs the full pytest suite
-    status: ready
-    owner: null
+    status: needs-human
+    soft_gate: true
+    owner: reviewer
     passes: 0
     stakes: reversible
+    updated: '2026-07-17T08:35:00Z'
     note: |-
+      FOR SILAS: this rename is blocked on one fact only you can see. ci.yml's
+      job key/name is still `authz-regression` / "Authz regression tests" even
+      though it now runs the full pytest suite (t-047). If that exact check name
+      is listed as a REQUIRED status check in the conductor repo's branch
+      protection settings (Settings → Branches → main), renaming the job would
+      break merges until the setting is updated in the same window.
+      TO APPROVE: check whether "Authz regression tests" is a required check.
+      If NOT required — reply/note "not required" and set this task back to
+      status: ready; any agent can then do the one-line rename to "Test suite
+      (pytest tests/)". If it IS required — either update the required-check
+      name yourself when the rename PR lands, or note that here and an agent
+      will coordinate both in one window. Flipped to soft needs-human
+      2026-07-17 because branch protection cannot be inspected from agent
+      sessions (no branch-protection API access), per this task's own spec.
+      Original spec:
       Kaizen from t-047 (Reviewer, autonomous hourly burst cycle, 2026-07-15).
       t-047 switched the job's run step to `pytest tests/` but deliberately left
       the job key/name (`authz-regression` / "Authz regression tests") unchanged,
