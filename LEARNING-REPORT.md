@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-07-17T23:51:46Z
+Generated: 2026-07-17T23:57:27Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **248**
-- Outcomes: blocked: 12, done: 236
+- Closed tasks recorded: **249**
+- Outcomes: blocked: 12, done: 237
 - Success rate: **95%**
 - Average passes on successful tasks: **0.0**
 
@@ -23,7 +23,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | approval-portal | 2 | 0% |
 | challenge-center | 16 | 100% |
 | coat-dance | 8 | 0% |
-| coloring-book | 12 | 100% |
+| coloring-book | 13 | 100% |
 | conductor | 31 | 100% |
 | digital-storefront | 9 | 100% |
 | dream-cycle | 14 | 100% |
@@ -50,7 +50,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 15 | 40% |
-| software | 233 | 99% |
+| software | 234 | 99% |
 
 ## Failure categories
 
@@ -58,6 +58,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 |---|---|
 | actionable | 6 |
 | quality | 4 |
+| transient | 1 |
 
 ## Kaizen targets
 
@@ -68,6 +69,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-07-17 `coloring-book/t-022` — Two workflows sharing a mutable resource (queue file + single-worker render backend) need the SAME concurrency.group, not just any group — a uniquely-named group only prevents self-collision, not collision with a sibling workflow hitting the same backend in parallel.
 - 2026-07-17 `conductor/t-061` — git commit-tree does not inherit commit.gpgsign the way porcelain git commit does -- any direct-to-ref plumbing helper that signs on this repo's behalf needs an explicit -S read from git config, or every commit it makes silently lands Unverified despite full signing config being present.
 - 2026-07-17 `packmaker/t-010` — Reusing an established hermetic-VM contract-test pattern (t-008's validatePackManifest test) for a sibling function made a same-cycle kaizen pickup fast and low-risk — the one wrinkle was that assert.deepEqual on objects returned from vm.runInNewContext fails on cross-realm prototype mismatch even when data is structurally identical; round-trip through JSON.parse(JSON.stringify(...)) to normalize before comparing.
 - 2026-07-17 `packmaker/t-009` — A cross-cutting infra fix (suggest providers hardcoding max_tokens 512) surfaced naturally while building one feature's LLM call — landing it in the same PR benefited every suggest caller instead of needing a separate follow-up task.
@@ -77,7 +79,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-07-17 `media-watchlist/t-007` — A 12-year hand-maintained log had ~6 format regimes the 2-year design sample never showed (unheadered year blocks, reversed headers, mixed-case sections, embedded stats tables, prose). Structural detection (a repeating section type implies a new unheadered year) beat hardcoded line numbers, and the log's own hand-tallies served as free validation targets — 2342 entries parsed with 0 unparseable lines and every mismatch traced to source-side drift, not parser error.
 - 2026-07-17 `packmaker/t-004` — Cross-repo admin-surface task with an unmet ACL dependency (kind-robots t-008) landed clean by keeping every created record isPublic:false as an explicit interim rule and deferring release/storefront wiring entirely, rather than stubbing a half-working gate. Task sat at status: claimed (not review) while its PR was open -- next cycle should flip to status: review before gh pr create per AGENTS.md step 7, even for cross-repo tasks.
 - 2026-07-17 `ai-art-academy/t-014` — art-styler.vue's source picker had no shared SourceImagePicker component or composable to extend -- upload/gallery state lived as plain inline refs. Adding a third source (the starter library) was still low-risk because generation (runStyleTransfer) only reads two refs (uploadedImageData/selectedSourceImage), so any new source that populates those two the same way needs zero changes downstream. Extracted the shared synthetic-ArtImage builder (buildSyntheticSourceImage) rather than duplicating it a second time. When a component's state is inline-only (no composable), check what the *consumer* function actually reads before assuming a new source needs its own code path through generation.
-- 2026-07-17 `conductor/t-037` — A deterministic cross-repo write failure (4/4 identical retries while 31 reads succeeded) was correctly parked at needs-human rather than burning passes — the cause was environmental (expired KR_API_TOKEN + the t-022 DB-pool outage), invisible to client-side inspection. When the upstream incidents cleared, verification cost one Actions log read: the sync run showed both formerly-failing creates existing as rows (id=1281/1285). Deterministic-failure + clean-reads is a strong signal to check auth and infra before suspecting the payload.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-07-17T23:51:46Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-07-17T23:57:27Z_
