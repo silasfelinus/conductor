@@ -799,13 +799,25 @@ tasks:
   - id: t-037
     milestone: m2
     title: Investigate why creating the animation-manager kind_robots Project deterministically fails (connection closed)
-    status: needs-human
+    status: ready
     owner: null
     passes: 0
     stakes: reversible
-    gate_human: true
-    updated: "2026-07-14T19:20:00Z"
+    updated: "2026-07-17T19:30:00Z"
     note: >
+      UNGATED 2026-07-17 (Silas, in-session): "remove hard gates on 3 and 4,
+      should now be working" — gate_human removed, back to ready. The DB-pool
+      incident (kind-robots t-022, closed same session — root cause PR #336's
+      one-shot fallback pool, reverted in kind_robots PR #342) plausibly
+      explains the "connection closed" write failures recorded below. Next
+      pickup: trigger/observe a Project Sync run (scripts/sync_projects.py)
+      and confirm the animation-manager and kindrobots-unraid Project CREATEs
+      now succeed; if they do, close done with the run link. Also confirm the
+      JWTExpired pairing noted below is gone now that KR_API_TOKEN was
+      refreshed. If the write still deterministically fails post-t-022-fix,
+      escalate back to needs-human with the fresh log signature.
+
+
       FOR SILAS / next Worker with backend log access: conductor/PR #503 fixed
       sync_projects.py's retry logic to also retry HTTP-400-wrapped transient
       DB-connection errors (it previously only retried on 429/500/502/503/504
