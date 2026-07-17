@@ -23,7 +23,7 @@ milestones:
 - id: m3
   title: Generator front end (admin + user views)
   weight: 35
-  status: not-started
+  status: in-progress
 tasks:
 - id: t-001
   milestone: m1
@@ -169,12 +169,34 @@ tasks:
 - id: t-004
   milestone: m3
   title: Build the pack generator admin view in kind_robots
-  status: review
+  status: done
   owner: worker
   passes: 0
   stakes: reversible
   depends_on: t-003
   note: >
+    DONE 2026-07-17 (claude-worker-packmaker-xuup66, Silas-directed session):
+    kind_robots PR #369 merged (squash 5a5d383b, 3/3 CI checks green:
+    TypeScript, Contract verifiers, GitGuardian). Manifest-driven admin
+    generator mounted in the /packs page's #interactive slot per SPEC.md §3:
+    stores/seeds/packManifests.ts (typed copies of the two approved t-003
+    launch-pack manifests; canonical source stays in this repo's packs/*.yaml),
+    stores/packStore.ts (materializes items through the existing
+    dreams/facets/characters/rewards create endpoints + artStore.generateArt
+    with artImageId PATCH-attach; always isPublic: false per SPEC.md §4's
+    interim rule; localStorage build state for resume/re-run; JSON manifest
+    import with schema-v1 validation so the NEXT pack is cheap), and
+    components/conductor/packmaker-admin-panel.vue (admin-only via
+    userStore.isAdmin — renders nothing for non-admins). Deliberately NOT
+    implemented: releasing a pack (flipping isPublic / storefront wiring)
+    stays human-gated pending kind-robots t-008 and digital-storefront t-017;
+    SPEC §7's Pack-Prisma-model question resolved for now as
+    "manifest + local state is enough" — server-side pack CRUD would be a
+    future pitch. Verified by vue-tsc/eslint/prettier plus a field-mapping
+    audit of all four create/patch routes; end-to-end generation not
+    exercised (no live backend/admin token in sandbox) — first real run is
+    Silas clicking through Uncanny Valor in the admin panel.
+    Original spec follows:
     Cross-repo (kind_robots). Admin-only surface to load a manifest, run/re-run
     generation per item through existing pipelines, review results, and mark a
     pack ready. Repeatability is the point — the tool must make generating the
@@ -182,7 +204,7 @@ tasks:
     private-pack storage.
   claimed_by: claude-worker-packmaker-xuup66
   claimed_at: '2026-07-17T19:24:38Z'
-  updated: '2026-07-17T19:24:38Z'
+  updated: '2026-07-17T20:10:00Z'
 - id: t-005
   milestone: m3
   title: Build the user-facing pack view (browse, preview, owned unlocks)
@@ -266,3 +288,22 @@ tasks:
   claimed_by: claude-burst-2026-07-15-1723
   claimed_at: '2026-07-15T16:50:41Z'
   updated: '2026-07-15T16:54:27Z'
+- id: t-008
+  milestone: m3
+  title: Add a unit test for the front-end pack-manifest validator in kind_robots
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  note: >
+    Kaizen from t-004's merge (2026-07-17, kind_robots PR #369): the admin
+    generator's paste-a-manifest path validates JSON against SCHEMA.md v1 via
+    validatePackManifest() in kind_robots stores/packStore.ts — a pure
+    function with no DOM or backend dependency, but currently no test.
+    Cross-repo (kind_robots): add a small unit test (follow whatever test
+    harness the repo's existing utils/scripts verifiers use) covering a valid
+    manifest, each rejection branch (bad schemaVersion, missing id/title, bad
+    visibility/price.hook, empty items, item missing id/type/itemShape/
+    draftPayload), and the refId-without-draftPayload acceptance case. This
+    guards against silent drift between conductor's SCHEMA.md /
+    scripts/validate_pack_manifest.py and the front-end validator.

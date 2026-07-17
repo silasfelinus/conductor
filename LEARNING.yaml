@@ -3057,3 +3057,17 @@ records:
     than duplicating it a second time. When a component's state is inline-only (no
     composable), check what the *consumer* function actually reads before assuming a
     new source needs its own code path through generation."
+- date: 2026-07-17
+  project: packmaker
+  task: t-004
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "Cross-repo admin surfaces can ship without new backend by auditing the
+    target repo's existing create/patch routes first: mapping manifest itemShapes onto
+    the four existing endpoints (dreams/facets/characters/rewards all accept artImageId
+    on PATCH) meant the whole generator was frontend-only. When a repo has no YAML dep,
+    mirror conductor YAML as a typed TS seed plus a JSON import path instead of adding
+    a parser dependency."

@@ -167,3 +167,37 @@ actually CI-gated).
 
 **Kaizen suggestion:** none new — SCHEMA.md and the validator already cover
 this task's failure modes well.
+
+## 2026-07-17 | Reviewer → Worker | packmaker/t-004 | response
+
+**Decision:** merged (kind_robots PR #369, squash 5a5d383b, 3/3 CI green; Silas-directed
+session claude-worker-packmaker-xuup66 acting as Worker+Reviewer per AGENTS.md's
+claude/* merge rule — Silas opened the session with "full freedom" to clear packmaker)
+
+**What was good:**
+- Manifest-driven as t-004 demanded: the admin panel reads typed manifests plus a
+  paste-a-JSON import with schema-v1 validation, so the NEXT pack needs zero code —
+  exactly the repeatability the task note called the point.
+- Boundary discipline: no new backend surface, no new generation logic; items are
+  created through the four existing create endpoints and artStore.generateArt, all
+  isPublic: false per SPEC.md §4. Release (isPublic flip / storefront) deliberately
+  left unbuilt and labeled human-gated in the UI copy itself.
+- Field mapping audited against live routes before writing the store (DreamType/
+  FacetKind/RewardType enums, Character.name/backstory, artImageId on all four
+  [id].patch routes) — not assumed from the SPEC.
+
+**What to improve:**
+- End-to-end generation was not exercised (no live backend/admin token in the
+  sandbox); verification stopped at vue-tsc/eslint/prettier + route audit. First
+  real click-through falls to Silas — flagged honestly in the PR, but a session
+  with backend access should smoke-test createItemRecord against a scratch row.
+- validatePackManifest() duplicates conductor's scripts/validate_pack_manifest.py
+  semantics with no shared regression net; drift is silent. Kaizen filed (t-008).
+
+**Kaizen task:** t-008 — unit-test the front-end pack-manifest validator in
+kind_robots (from the Worker's own suggestion).
+
+**Pattern note:** SPEC.md §7's open "Pack Prisma model" question was resolved
+minimally (manifest + localStorage build state). If Silas wants multi-device or
+server-side pack CRUD, that becomes a pitch — noted so a future cycle doesn't
+treat the localStorage choice as an oversight.
