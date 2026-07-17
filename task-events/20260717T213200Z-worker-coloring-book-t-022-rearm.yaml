@@ -1,6 +1,0 @@
-version: 1
-project: coloring-book
-task: t-022
-operation: rearm
-updated: 2026-07-17T21:32:00+00:00
-note: Reconciled the active Monster Recast batch without duplicating it. The canonical queue still has no newly landed renders committed, while production logs show the secret-bearing runner advanced through ArtJobs 242 and 243 with successful 200 polling and a 201 submission at 21:25:19 UTC. The existing color-art event remains authoritative and retries safely; a second event would risk duplicate generation.
