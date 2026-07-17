@@ -2725,3 +2725,16 @@ records:
     round trip. Also: once a flagged literal lands in any commit, GitGuardian scans the
     whole PR's commit range, so a follow-up commit that removes it does not clear the
     check on its own — squash/rebase so the flagged text never appears in history.
+- date: 2026-07-17
+  project: global-ui
+  task: t-020
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    Clean first-pass extraction of a shared component from two already-drifted copies:
+    scoping the refactor to exactly the duplicated card (leaving the unrelated
+    KAIZEN-category markup in conductor-page.vue untouched) kept the diff small and the
+    CI green on the first try across both repos (kind_robots PR #344, conductor PR #678).

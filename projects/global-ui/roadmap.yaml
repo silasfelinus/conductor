@@ -388,7 +388,7 @@ tasks:
 - id: t-020
   milestone: m5
   title: Extract a shared honeydo-card component so the Conductor HONEYDO tab and the new For You page can't visually drift apart
-  status: review
+  status: done
   owner: worker
   passes: 0
   stakes: reversible
@@ -417,9 +417,14 @@ tasks:
     install was reverted, not committed). Could not exercise live in a
     browser -- no dev server/DB in this sandbox. kind_robots PR #344 open,
     awaiting CI.
+
+    DONE 2026-07-17 (Reviewer, autonomous hourly conductor cycle): kind_robots
+    PR #344 CI went green on all 3 checks (TypeScript, Contract verifiers,
+    GitGuardian) -- reviewed and merged (squash e173ac4). Merged the paired
+    conductor PR #678 (21/21 checks green) closing this task in the roadmap.
   claimed_by: claude-conductor-burst-20260717-0607
   claimed_at: '2026-07-17T06:08:40Z'
-  updated: '2026-07-17T06:08:40Z'
+  updated: '2026-07-17T06:56:00Z'
 - id: t-021
   milestone: m5
   title: Wire the honeydo-inbox data-surface-manifest entry to its real nav location instead of the now-stale acknowledged gap
@@ -444,6 +449,28 @@ tasks:
     PR #340 implementing exactly this fix before the task even reached `ready`
     on origin/main -- reviewed and merged (squash ab1cb3e3). All 3 CI checks
     green (TypeScript, Contract verifiers, GitGuardian).
+- id: t-022
+  milestone: m5
+  title: Audit components/pages/*.vue for other card/list-item UI duplicated across 2+ top-level surfaces, matching the honeydo-card pattern t-020 just fixed
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  note: >
+    Kaizen from t-020 (Reviewer, autonomous hourly conductor cycle, 2026-07-17,
+    kind_robots PR #344 / conductor PR #678). t-020 fixed one instance of
+    surface drift (conductor-page.vue's HONEYDO tab vs for-you-manager.vue each
+    maintaining a separate honeydo item card) by extracting
+    components/tasks/honeydo-card.vue. That pattern -- a top-level page built
+    to surface data that a project-detail view already renders, each keeping
+    its own copy of the same item-card markup -- can recur any time a new
+    top-level surface is added for data that already had an in-project view.
+    Grep components/pages/*.vue for repeated card/list-item markup shapes
+    (checkbox + title + badge + description + timestamp, or similar) rendered
+    in 2+ files without a shared component, and extract each real hit into
+    components/tasks/ or a similarly-scoped shared directory. Front-end only,
+    no new data source. If the audit finds zero further hits, close done with
+    that finding -- it doesn't need to force an extraction where none exists.
 milestones:
 - id: m1
   title: Task language + presentation model
