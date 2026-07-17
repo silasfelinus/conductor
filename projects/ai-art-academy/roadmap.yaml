@@ -765,11 +765,11 @@ tasks:
   - id: t-021
     milestone: m2
     title: 'Hunt LoRAs for the 5 new prompt-mode movements and backfill prompt_hint on older entries'
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
-    updated: '2026-07-17T03:55:00Z'
+    updated: '2026-07-17T19:08:00Z'
     note: >
       Filed 2026-07-16 (t-010 curriculum-expansion cycle). The five new movements all
       ship prompt-mode in docs/style-lora-registry.md; none has a login-free FLUX LoRA
@@ -795,6 +795,8 @@ tasks:
       huggingface.co/civitai.com remain 403-blocked from this sandbox, so the
       LoRA-hunting half stays `ready`-but-blocked (transient, no pass burned) for a
       session with open egress to those hosts, or Silas's own environment.
+    claimed_by: claude-conductor-burst-20260717T1900Z
+    claimed_at: '2026-07-17T19:08:00Z'
 
   - id: t-022
     milestone: m5
