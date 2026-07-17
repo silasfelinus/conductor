@@ -7,12 +7,18 @@ on:
       - "projects/coloring-book/.surgery-payload/**"
       - "scripts/materialize_coloring_surgery.py"
       - ".github/workflows/materialize-coloring-surgery.yml"
+  pull_request:
+    branches: [main]
+    paths:
+      - "projects/coloring-book/.surgery-payload/**"
+      - "scripts/materialize_coloring_surgery.py"
+      - ".github/workflows/materialize-coloring-surgery.yml"
 
 permissions:
   contents: write
 
 concurrency:
-  group: materialize-coloring-surgery
+  group: materialize-coloring-surgery-${{ github.head_ref || github.ref_name }}
   cancel-in-progress: false
 
 jobs:
@@ -21,6 +27,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
+          ref: ${{ github.head_ref || github.ref_name }}
           fetch-depth: 0
       - uses: actions/setup-python@v5
         with:
@@ -38,4 +45,4 @@ jobs:
           git config user.email "conductor-bot@users.noreply.github.com"
           git add -A
           git commit -m "coloring-book: queue color-first proposals in 18-image passes"
-          git push
+          git push origin HEAD:${{ github.head_ref || github.ref_name }}
