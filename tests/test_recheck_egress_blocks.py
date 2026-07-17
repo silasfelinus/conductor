@@ -28,7 +28,7 @@ def test_append_entry_blocked(tmp_path):
     ledger = make_ledger(tmp_path)
     recheck.append_entry(
         "metmuseum.org",
-        True,
+        "blocked",
         "blocked (ConnectionResetError: [Errno 104] Connection reset by peer)",
         "ai-art-academy/t-008",
         ledger_path=ledger,
@@ -43,18 +43,34 @@ def test_append_entry_blocked(tmp_path):
 def test_append_entry_reachable_no_task(tmp_path):
     ledger = make_ledger(tmp_path)
     recheck.append_entry(
-        "api.stripe.com", False, "reachable (HTTP 200)", None, ledger_path=ledger
+        "api.stripe.com", "reachable", "reachable (HTTP 200)", None, ledger_path=ledger
     )
     text = ledger.read_text(encoding="utf-8")
     assert "| api.stripe.com | reachable\n" in text
     assert "reachable (HTTP 200)" in text
 
 
+def test_append_entry_bot_challenged(tmp_path):
+    ledger = make_ledger(tmp_path)
+    recheck.append_entry(
+        "www.artic.edu",
+        "bot-challenged",
+        "bot-challenged (HTTP 403, cf-mitigated: challenge)",
+        "ai-art-academy/t-029",
+        ledger_path=ledger,
+    )
+    text = ledger.read_text(encoding="utf-8")
+    assert "| www.artic.edu | bot-challenged | ai-art-academy/t-029" in text
+    assert "cf-mitigated: challenge" in text
+
+
 def test_append_entry_is_additive_never_touches_prior_lines(tmp_path):
     ledger = make_ledger(tmp_path)
-    recheck.append_entry("host-a.example", True, "blocked (x)", None, ledger_path=ledger)
+    recheck.append_entry("host-a.example", "blocked", "blocked (x)", None, ledger_path=ledger)
     first_snapshot = ledger.read_text(encoding="utf-8")
-    recheck.append_entry("host-b.example", False, "reachable (HTTP 200)", None, ledger_path=ledger)
+    recheck.append_entry(
+        "host-b.example", "reachable", "reachable (HTTP 200)", None, ledger_path=ledger
+    )
     second_snapshot = ledger.read_text(encoding="utf-8")
     assert second_snapshot.startswith(first_snapshot.rstrip("\n"))
     assert "host-a.example" in second_snapshot
@@ -64,19 +80,24 @@ def test_append_entry_is_additive_never_touches_prior_lines(tmp_path):
 def test_append_entry_missing_file_raises(tmp_path):
     missing = tmp_path / "does-not-exist.md"
     with pytest.raises(SystemExit):
-        recheck.append_entry("host.example", True, "blocked (x)", None, ledger_path=missing)
+        recheck.append_entry("host.example", "blocked", "blocked (x)", None, ledger_path=missing)
 
 
 def test_append_entry_missing_log_marker_raises(tmp_path):
     ledger = tmp_path / "EGRESS-BLOCKERS.md"
     ledger.write_text("# EGRESS-BLOCKERS.md\n\nNo log section here.\n", encoding="utf-8")
     with pytest.raises(SystemExit):
-        recheck.append_entry("host.example", True, "blocked (x)", None, ledger_path=ledger)
+        recheck.append_entry("host.example", "blocked", "blocked (x)", None, ledger_path=ledger)
 
 
 def test_probe_host_reachable(monkeypatch):
+    class FakeHeaders:
+        def get(self, name, default=None):
+            return default
+
     class FakeResp:
         status = 200
+        headers = FakeHeaders()
 
         def __enter__(self):
             return self
@@ -85,8 +106,8 @@ def test_probe_host_reachable(monkeypatch):
             return False
 
     monkeypatch.setattr(recheck.urllib.request, "urlopen", lambda req, timeout=None: FakeResp())
-    blocked, detail = recheck.probe_host("example.com")
-    assert blocked is False
+    status, detail = recheck.probe_host("example.com")
+    assert status == "reachable"
     assert "200" in detail
 
 
@@ -95,8 +116,8 @@ def test_probe_host_reachable_on_http_error(monkeypatch):
         raise recheck.urllib.error.HTTPError(req.full_url, 403, "Forbidden", {}, None)
 
     monkeypatch.setattr(recheck.urllib.request, "urlopen", raise_http_error)
-    blocked, detail = recheck.probe_host("example.com")
-    assert blocked is False
+    status, detail = recheck.probe_host("example.com")
+    assert status == "reachable"
     assert "403" in detail
 
 
@@ -105,15 +126,49 @@ def test_probe_host_blocked_on_connection_failure(monkeypatch):
         raise ConnectionResetError("Connection reset by peer")
 
     monkeypatch.setattr(recheck.urllib.request, "urlopen", raise_conn_error)
-    blocked, detail = recheck.probe_host("example.com")
-    assert blocked is True
+    status, detail = recheck.probe_host("example.com")
+    assert status == "blocked"
     assert "ConnectionResetError" in detail
+
+
+def test_probe_host_bot_challenged_on_http_error_with_cf_header(monkeypatch):
+    def raise_http_error(req, timeout=None):
+        raise recheck.urllib.error.HTTPError(
+            req.full_url, 403, "Forbidden", {"cf-mitigated": "challenge"}, None
+        )
+
+    monkeypatch.setattr(recheck.urllib.request, "urlopen", raise_http_error)
+    status, detail = recheck.probe_host("www.artic.edu")
+    assert status == "bot-challenged"
+    assert "cf-mitigated: challenge" in detail
+    assert "403" in detail
+
+
+def test_probe_host_bot_challenged_on_200_with_cf_header(monkeypatch):
+    class FakeHeaders:
+        def get(self, name, default=None):
+            return "managed_challenge" if name == "cf-mitigated" else default
+
+    class FakeResp:
+        status = 200
+        headers = FakeHeaders()
+
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *exc):
+            return False
+
+    monkeypatch.setattr(recheck.urllib.request, "urlopen", lambda req, timeout=None: FakeResp())
+    status, detail = recheck.probe_host("example.com")
+    assert status == "bot-challenged"
+    assert "managed_challenge" in detail
 
 
 def test_main_dry_run_does_not_write(tmp_path, monkeypatch, capsys):
     ledger = make_ledger(tmp_path)
     monkeypatch.setattr(recheck, "LEDGER_FILE", ledger)
-    monkeypatch.setattr(recheck, "probe_host", lambda host, timeout=10.0: (True, "blocked (x)"))
+    monkeypatch.setattr(recheck, "probe_host", lambda host, timeout=10.0: ("blocked", "blocked (x)"))
 
     exit_code = recheck.main(["example.com", "--no-append"])
     assert exit_code == 0
@@ -125,7 +180,9 @@ def test_main_dry_run_does_not_write(tmp_path, monkeypatch, capsys):
 def test_main_appends_using_default_ledger_file(tmp_path, monkeypatch):
     ledger = make_ledger(tmp_path)
     monkeypatch.setattr(recheck, "LEDGER_FILE", ledger)
-    monkeypatch.setattr(recheck, "probe_host", lambda host, timeout=10.0: (False, "reachable (HTTP 200)"))
+    monkeypatch.setattr(
+        recheck, "probe_host", lambda host, timeout=10.0: ("reachable", "reachable (HTTP 200)")
+    )
 
     exit_code = recheck.main(["example.com", "--task", "conductor/t-052"])
     assert exit_code == 0

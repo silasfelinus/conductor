@@ -15,10 +15,16 @@ Usage:
     python scripts/recheck_egress_blocks.py api.stripe.com --no-append   # dry run
 
 A connection-level failure (refused, reset, timeout, DNS failure) is treated as
-"blocked" — the signature of a sandbox egress-allowlist rejection. Any actual
-HTTP response, even an error one (403, 404, ...), is treated as "reachable",
-since the connection itself succeeded; that's a remote-site response, not an
-egress block.
+"blocked" — the signature of a sandbox egress-allowlist rejection. An HTTP
+response carrying a `cf-mitigated` header (Cloudflare's bot-management signal,
+e.g. `cf-mitigated: challenge`) is treated as "bot-challenged" — the connection
+reached the remote site, but the remote site is interposing a JS/managed
+challenge rather than serving the resource, which silently defeats a fetch just
+like a genuine block would (see EGRESS-BLOCKERS.md's www.artic.edu IIIF entry,
+ai-art-academy/t-013). Any other actual HTTP response, even an error one (403,
+404, ...), is treated as "reachable", since the connection itself succeeded and
+no challenge signal was present; that's an ordinary remote-site response, not
+an egress block.
 
 This script never changes a roadmap task's status — it only records what it
 observed. The calling agent still applies normal Failure-triage rules.
@@ -38,24 +44,40 @@ LEDGER_FILE = REPO_ROOT / "EGRESS-BLOCKERS.md"
 LOG_MARKER = "## Log"
 
 
-def probe_host(host: str, timeout: float = 10.0) -> tuple[bool, str]:
-    """Return (blocked, detail) for a single host."""
+def _cf_mitigated(headers) -> str | None:
+    """Return the `cf-mitigated` header value if present, else None."""
+    if headers is None:
+        return None
+    return headers.get("cf-mitigated")
+
+
+def probe_host(host: str, timeout: float = 10.0) -> tuple[str, str]:
+    """Return (status, detail) for a single host.
+
+    status is one of "blocked", "bot-challenged", "reachable".
+    """
     url = host if host.startswith(("http://", "https://")) else f"https://{host}"
     req = urllib.request.Request(
         url, method="HEAD", headers={"User-Agent": "conductor-egress-recheck/1.0"}
     )
     try:
         with urllib.request.urlopen(req, timeout=timeout) as resp:
-            return False, f"reachable (HTTP {resp.status})"
+            cf = _cf_mitigated(resp.headers)
+            if cf:
+                return "bot-challenged", f"bot-challenged (HTTP {resp.status}, cf-mitigated: {cf})"
+            return "reachable", f"reachable (HTTP {resp.status})"
     except urllib.error.HTTPError as e:
-        return False, f"reachable (HTTP {e.code})"
+        cf = _cf_mitigated(e.headers)
+        if cf:
+            return "bot-challenged", f"bot-challenged (HTTP {e.code}, cf-mitigated: {cf})"
+        return "reachable", f"reachable (HTTP {e.code})"
     except Exception as e:  # noqa: BLE001 - log the failure shape verbatim
-        return True, f"blocked ({e.__class__.__name__}: {e})"
+        return "blocked", f"blocked ({e.__class__.__name__}: {e})"
 
 
 def append_entry(
     host: str,
-    blocked: bool,
+    status: str,
     detail: str,
     task: str | None,
     ledger_path: Path = LEDGER_FILE,
@@ -68,7 +90,6 @@ def append_entry(
         raise SystemExit(f"{ledger_path} missing a '{LOG_MARKER}' section marker")
 
     ts = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
-    status = "blocked" if blocked else "reachable"
     task_part = f" | {task}" if task else ""
     entry = f"\n## {ts} | {host} | {status}{task_part}\n{detail}\n"
 
@@ -89,12 +110,13 @@ def main(argv: list[str] | None = None) -> int:
     )
     args = parser.parse_args(argv)
 
+    markers = {"blocked": "\U0001f6ab", "bot-challenged": "⚠️", "reachable": "✓"}
     for host in args.hosts:
-        blocked, detail = probe_host(host, timeout=args.timeout)
-        marker = "\U0001f6ab" if blocked else "✓"
+        status, detail = probe_host(host, timeout=args.timeout)
+        marker = markers.get(status, "?")
         print(f"{marker} {host}: {detail}")
         if not args.no_append:
-            append_entry(host, blocked, detail, args.task, ledger_path=LEDGER_FILE)
+            append_entry(host, status, detail, args.task, ledger_path=LEDGER_FILE)
 
     return 0
 

@@ -1018,22 +1018,48 @@ tasks:
   - id: t-029
     milestone: m4
     title: 'conductor: teach recheck_egress_blocks.py to distinguish a Cloudflare bot-challenge from a genuine reachable/blocked response'
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
-    updated: '2026-07-17T16:51:36Z'
+    updated: '2026-07-17T17:00:00Z'
     note: >
-      Kaizen from t-013's review (kind_robots PR #360, 2026-07-17). While
-      working t-013, an agent found www.artic.edu's IIIF image host returns a
-      Cloudflare bot-challenge (`cf-mitigated: challenge` header, JS-challenge
-      HTML body) — but scripts/recheck_egress_blocks.py's own reachable/blocked
-      rule treats any HTTP response (including this 403 challenge page) as
-      "reachable," so it silently masked a real image-fetch block. The workaround
-      this pass was a hand-written EGRESS-BLOCKERS.md entry
-      (2026-07-17T13:15Z) explaining the distinction manually. Add a
-      cf-mitigated/challenge-body detector to the script so it stamps a distinct
-      "bot-challenged" status instead of "reachable," so future sessions don't
-      have to rediscover and hand-document this per host.
-    claimed_by: claude-conductor-hourly-20260717
-    claimed_at: '2026-07-17T16:51:36Z'
+      DONE (2026-07-17, autonomous hourly cycle, claude-conductor-hourly-20260717):
+      scripts/recheck_egress_blocks.py's probe_host() and append_entry() now
+      return/accept a three-way status string ("blocked" | "bot-challenged" |
+      "reachable") instead of a bool. A response (success or HTTPError) carrying
+      a `cf-mitigated` header is stamped "bot-challenged" with the header value
+      recorded in the ledger detail line, instead of being silently folded into
+      "reachable" as before. main()'s marker map and EGRESS-BLOCKERS.md's `##`
+      line both carry the new status verbatim. No other script calls probe_host
+      or append_entry, so this was a clean in-place signature change; all 9
+      existing tests were updated for the new string status (was bool) and 4 new
+      tests cover the bot-challenged path (HTTPError-with-header, 200-with-header,
+      and the ledger-append/marker-print paths) — 13/13 pass, full suite
+      332/332 pass. Manually verified end-to-end with a monkeypatched urlopen
+      raising an HTTPError carrying `cf-mitigated: challenge`. Historical
+      EGRESS-BLOCKERS.md entries (e.g. www.artic.edu, recorded before this fix)
+      are left as-is per the ledger's append-only convention; the next real
+      recheck of that host will now stamp bot-challenged automatically instead
+      of needing a hand-written manual note like t-013 had to add.
+    claimed_by: null
+    claimed_at: null
+
+  - id: t-030
+    milestone: m4
+    title: 'conductor: extend recheck_egress_blocks.py bot-challenge detection beyond the cf-mitigated header'
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-17T17:00:00Z'
+    note: >
+      Kaizen from t-029 (2026-07-17). t-029 detects a Cloudflare bot-challenge
+      only via the `cf-mitigated` response header. Some Cloudflare configurations
+      serve a JS/managed challenge without that header — e.g. a 503 "Just a
+      moment..." interstitial identified only by `server: cloudflare` plus a
+      `cf-chl`-prefixed Set-Cookie or a `__cf_chl_rt_tk` marker in the HTML body.
+      HEAD requests (what probe_host uses) won't get a body, so the header/cookie
+      signals are the practical path. Add a fallback check for these secondary
+      signals so the header-only heuristic doesn't miss non-cf-mitigated
+      challenge variants, and add tests for each new signal.

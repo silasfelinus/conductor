@@ -2954,3 +2954,12 @@ records:
   outcome: done
   failure_category: null
   lesson: "Cross-repo software task where the code PR (kind_robots#361) and the conductor bookkeeping PR (#700) were opened by a prior burst-mode session but left unmerged at status:review — the Reviewer cycle's job was purely to verify and merge both, then close the roadmap task. Delegating the payment-code diff review to a subagent (checking migration additivity, auth on the new cancel-subscription endpoint, and webhook signature verification) kept the large diff out of the main context while still confirming test-mode-only, no live keys, no cross-user cancellation."
+- date: 2026-07-17
+  project: ai-art-academy
+  task: t-029
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "Self-contained conductor-only kaizen task (no cross-repo dependency): claimed, implemented, and merged in a single autonomous hourly cycle. probe_host()/append_entry() changed from a bool blocked/reachable signal to a three-way status string so a Cloudflare cf-mitigated challenge response is no longer silently folded into 'reachable' — the exact gap t-013 hit and hand-documented manually. Updating an existing test suite's fixtures (bool -> string) alongside new coverage, rather than only adding new tests, is what kept the refactor from leaving stale assertions that would pass for the wrong reason."
