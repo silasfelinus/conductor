@@ -219,8 +219,8 @@ tasks:
   - id: t-008
     milestone: m4
     title: 'kind_robots: download Academy starter image library + provenance manifest'
-    status: claimed
-    owner: worker
+    status: ready
+    owner: null
     passes: 0
     stakes: reversible
     updated: '2026-07-17T00:07:14Z'
@@ -257,8 +257,14 @@ tasks:
       Failure-triage table) — picked ai-art-academy/t-020 instead, which needed no
       external egress. Third consecutive session confirming the same block; still
       not `needs-human` per the same reasoning as the prior two rechecks.
-    claimed_by: claude-burst-2026-07-17-hourly
-    claimed_at: '2026-07-17T00:07:14Z'
+      RECHECKED 2026-07-17T00:07Z (burst-hourly rotation): re-curled
+      www.metmuseum.org and upload.wikimedia.org directly — both still return a
+      fresh CONNECT tunnel 403 (`/__agentproxy/status` shows the allowlist
+      unchanged). Claimed this task first this cycle, confirmed the block still
+      holds, and released it back to `ready` rather than burn a pass on an
+      environment limitation — moved to the next ready task in rotation instead.
+      Fourth consecutive session confirming the same block; still not
+      `needs-human` per the same reasoning as the prior rechecks.
   - id: t-013
     milestone: m4
     title: 'kind_robots: add example-works strip to Academy lesson detail'
@@ -447,9 +453,9 @@ tasks:
   - id: t-010
     milestone: m6
     title: Academy continuous improvement pass
-    status: claimed
+    status: ready
     recurring: true
-    owner: worker
+    owner: null
     passes: 0
     stakes: reversible
     updated: '2026-07-17T00:09:30Z'
@@ -470,6 +476,26 @@ tasks:
       auto-art-generate GitHub Action, not sandbox sessions; and rendering needs the
       home relay (correct KR_RELAY_TOKEN + KR_RELAY_USER_ID) and the DB up. Dispatching
       live generation is human-gated. (Re-applied fresh after PR #617 was closed dirty.)
+
+      RAN 2026-07-17 (conductor-burst-hourly rotation, claude-burst-2026-07-17-hourly):
+      option (a) front-end polish pass. Rechecked blockers first: fresh `curl` CONNECT
+      to metmuseum.org, upload.wikimedia.org, huggingface.co, and civitai.com all still
+      return "CONNECT tunnel failed, response 403" — same signature as every prior
+      cycle, so t-008/t-013/t-021 stay `ready`-but-blocked (recheck notes added to
+      t-008 directly; t-013/t-021 unchanged since their own last recheck already
+      covers the same signature). t-019 stays blocked too: confirmed via GitHub
+      `get_file_contents` that kind_robots' public/images/academy/styles/ still
+      doesn't exist, so still zero preview thumbnails landed. Found a real copy
+      inconsistency instead: academy-manager.vue's loading spinner said "waking five
+      centuries of dead masters" and content/academy.md's description said "from
+      Greek vases to De Stijl grids" — both stale from before the curriculum grew
+      from its original ~5-centuries scope to 21 movements spanning Greek vase
+      painting (c. 600 BCE) through Bauhaus (1919-1933, the true chronologically-last
+      entry in stores/seeds/academyStyles.ts, added after De Stijl by t-018). Both
+      already conflicted with the correct "twenty-five centuries" copy already live
+      in academy-timeline.vue's header. Fixed both to match. kind_robots PR #332
+      (branch claude/keen-fermat-ozs6fe): prettier clean, copy-only change, no logic
+      touched.
 
       RAN 2026-07-16 (claude session claude-ai-art-academy-curriculum-xnm2wl, ~10:22
       UTC): options (d) + (b) combined — a Silas-directed content-depth pass ("full
