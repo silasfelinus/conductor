@@ -11,11 +11,15 @@ import yaml
 
 ROOT = Path(__file__).resolve().parents[1]
 PART_DIR = ROOT / 'projects' / 'coloring-book' / '.surgery-payload'
-WORKFLOW = ROOT / '.github' / 'workflows' / 'materialize-coloring-surgery.yml'
-SELF = Path(__file__).resolve()
+MONSTER_WORKFLOW = ROOT / '.github' / 'workflows' / 'monster-recast-art-jobs.yml'
 
 
 def main() -> None:
+    if not PART_DIR.exists():
+        print('Coloring surgery payload already materialized.')
+        return
+
+    previous_monster_workflow = MONSTER_WORKFLOW.read_bytes()
     encoded = ''.join(
         path.read_text(encoding='utf-8').strip()
         for path in sorted(PART_DIR.glob('part-*'))
@@ -23,6 +27,9 @@ def main() -> None:
     payload = base64.b64decode(encoded)
     with tarfile.open(fileobj=io.BytesIO(payload), mode='r:gz') as archive:
         archive.extractall(ROOT, filter='data')
+    # The Actions token may write normal repository files but should not rewrite
+    # workflows. GitHub applies the final workflow update directly after this commit.
+    MONSTER_WORKFLOW.write_bytes(previous_monster_workflow)
 
     roadmap_path = ROOT / 'projects' / 'coloring-book' / 'roadmap.yaml'
     roadmap = yaml.safe_load(roadmap_path.read_text(encoding='utf-8'))
@@ -63,15 +70,14 @@ def main() -> None:
         task_id = task.get('id')
         if task_id in task_notes:
             old = str(task.get('note') or '')
-            task['note'] = task_notes[task_id] + old
+            if not old.startswith(task_notes[task_id]):
+                task['note'] = task_notes[task_id] + old
     roadmap_path.write_text(
         yaml.safe_dump(roadmap, sort_keys=False, allow_unicode=True, width=110),
         encoding='utf-8',
     )
 
     shutil.rmtree(PART_DIR)
-    SELF.unlink(missing_ok=True)
-    WORKFLOW.unlink(missing_ok=True)
 
 
 if __name__ == '__main__':
