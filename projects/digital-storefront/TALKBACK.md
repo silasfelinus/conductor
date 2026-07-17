@@ -191,3 +191,34 @@ right after t-020's PR merged, per the "may complete several tasks in one run" r
 
 **Kaizen task:** none filed this cycle — this pass was itself closing out the last
 two open items from a prior kaizen; no new systemic gap surfaced.
+
+## 2026-07-17 | Reviewer → Silas | digital-storefront/t-013 | pattern (autonomous hourly cycle)
+
+**Decision:** merged kind_robots PR #361 (squash 98190504) and conductor PR #700
+(bookkeeping, squash ae3e266). t-013 closed done; kaizen t-024 filed.
+
+**Detail:**
+- Prior burst-mode session had already implemented the code (kind_robots#361) and opened
+  the conductor bookkeeping PR (#700) setting `status: review`, but left both PRs open —
+  this cycle's job was verification + merge + close, not implementation.
+- Delegated the payment-code diff review to a subagent (kind_robots#361 touches
+  `server/api/stripe/webhook.post.ts`, a new `cancel-subscription.post.ts`, and a
+  `User.stripeSubscriptionId` migration) to keep ~115K chars of diff out of the main
+  session context. Verified: migration is a single nullable `ADD COLUMN` (no drops), no
+  hardcoded/live Stripe keys (both new/changed routes read `process.env.STRIPE_SECRET_KEY`,
+  same as the pre-existing webhook), the new cancel-subscription endpoint derives the user
+  from `requireApiUser` and takes no client-supplied id (so user A cannot cancel user B's
+  subscription), and the webhook's `stripe.webhooks.constructEvent` signature check is
+  untouched — the new subscription branches sit after it, not around it. All 3 kind_robots
+  CI checks (TypeScript, Contract verifiers, GitGuardian) and all conductor CI checks green.
+- Also found (not from this task, closed separately): conductor PR #698 was a duplicate
+  `coloring-book/t-022` re-arm — PR #699 had already merged the identical change moments
+  earlier (rotation collision). Closed #698 rather than force a conflicting merge; no work
+  was lost since #699's version is on `main`.
+
+**Failure category:** n/a (clean merge; subagent review caught one pre-existing,
+not-introduced-by-this-PR gap, filed as kaizen rather than blocking the merge).
+
+**Kaizen task:** t-024 — `subscribe.post.ts` still accepts a client-supplied `userId`
+with no auth check (pre-existing, not worsened by #361; the new cancel-subscription
+endpoint was built correctly via `requireApiUser` and should be the model for the fix).
