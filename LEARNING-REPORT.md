@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-07-17T19:08:22Z
+Generated: 2026-07-17T19:12:38Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **236**
-- Outcomes: blocked: 12, done: 224
+- Closed tasks recorded: **238**
+- Outcomes: blocked: 12, done: 226
 - Success rate: **95%**
 - Average passes on successful tasks: **0.0**
 
@@ -38,10 +38,10 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | model-builder | 28 | 100% |
 | mural-design | 1 | 100% |
 | newsfeed | 2 | 100% |
-| packmaker | 5 | 100% |
+| packmaker | 6 | 100% |
 | ruler-hooked | 2 | 100% |
 | serendipity | 1 | 100% |
-| superkate-hairstyle-ai | 15 | 100% |
+| superkate-hairstyle-ai | 16 | 100% |
 | superkate-services-calculator | 11 | 100% |
 
 ## By kind
@@ -49,7 +49,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 15 | 40% |
-| software | 221 | 99% |
+| software | 223 | 99% |
 
 ## Failure categories
 
@@ -67,6 +67,8 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-07-17 `packmaker/t-003` — Gated draft work (two DLC pack manifests) sat complete at needs-human for two days until Silas batch-cleared gates in a report session. Drafts validated against the t-002 schema before the gate meant zero rework on approval — front-loading schema validation makes human gates cheap to clear.
+- 2026-07-17 `superkate-hairstyle-ai/t-020` — Process gap fixed at the AGENTS.md level (step 7: set status review before any PR, all session types) rather than per-project. The task itself then sat at status: review after its PR merged — the exact failure mode it documents — because the session ended without the review→done flip. A task whose deliverable is a process rule should be closed in the same commit that lands the rule.
 - 2026-07-17 `kind-robots/t-022` — Production DB pool exhaustion (t-022, first seen 2026-07-15T08:56Z) had three false starts before the real fix: two app-code pool-config tweaks (#296 limit fallback, #300 TLS checkServerIdentity, #325/#327 pool lifecycle) each looked plausible and were confirmed live in prod, yet the outage kept recurring under a different signature each time (limit=10, then limit=1 'one-shot fallback'). The fix that actually held was a full revert (#342) of the one-shot-fallback mechanism (#336) rather than another patch on top of it -- when a pool/infra incident keeps changing shape after being 'fixed' twice, suspect the fix itself introduced a new failure mode and consider reverting the whole mechanism instead of patching further. Closed after 12+ hours / ~12 hourly cycles of sustained zero-503 confirmation, per Silas's own standing instruction to close once verified healthy.
 - 2026-07-17 `dream-cycle/t-017` — An always-failing dependency (intermittent DB 503s) masked two schema/contract bugs that meant the daily-dream pipeline had NEVER shipped a row: extraData is a String column (json.dumps it, don't send an object) and dream slugs are globally unique (send explicit de-duped slugs). Build live end-to-end once, early — dry-runs and unit tests can't catch a Prisma type mismatch. Run long API builds detached (background), never in a 2-min-capped foreground call.
 - 2026-07-17 `ai-art-academy/t-030` — Another self-contained conductor-only kaizen task, picked up burst-mode in an hourly Reviewer cycle with no open worker/* PR to review. Added Cloudflare challenge fallback signals (Server header + cf-chl cookie, __cf_chl_rt_tk body marker) behind defensive getattr()/callable() checks so the existing test doubles (which don't implement get_all()/read()) kept passing unchanged rather than needing every prior fixture updated — cheaper than the t-029 fixture-rewrite when the new code path is additive rather than a signature change.
@@ -76,10 +78,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-07-17 `ai-art-academy/t-027` — Clean first-pass kaizen: a dependency-free utils/scripts/verify*.ts contract test following the existing convention (see verifyDataSurfaceManifest.ts) is fast to write, easy to verify locally (constructed 3 intentionally-broken manifest copies to confirm each failure mode triggers, then restored the original), and slots straight into contract-tests.yml without needing the Nuxt/Prisma runtime.
 - 2026-07-17 `ai-art-academy/t-008` — Re-verifying a plan doc's source URLs at download time (rather than trusting its "VERIFIED" marks) caught two real drifts: Met's own API reports isPublicDomain:false for one accession the doc had marked CC0, and artic.edu's IIIF image CDN blocks script fetches with a Cloudflare bot challenge regardless of User-Agent. Both were fixed by substituting a Commons PD-Mark scan of the identical accession rather than skipping the item -- always keep a same-work fallback source in mind for institution APIs with rights-flag or bot-protection surprises. Also: resize images to a web resolution (2000px longest edge) before committing -- an original museum scan can be tens of MB each, blowing past a "modest footprint" budget the plan doc estimated assuming smaller files.
 
-- 2026-07-17 `global-ui/t-019` — A task note's suggested reuse target can point at dead code -- t-018's per-milestone counts lived in conductor-page.vue, but that component's inline "overview" grid block is never actually mounted by conductor-manager.vue (showConductorGallery always wins). Dispatching a research-only agent to confirm the real live render path (conductor-overview-gallery-page.vue) before writing any template edits avoided a wasted no-op PR. The needed done/totalTasks fields were already computed and present on every gallery item; the fix was template-only across 4 layout modes.
-
-- 2026-07-17 `model-builder/t-027` — Batch editor over a derived group (run.items sharing an outputKey) rather than a persisted group object -- the store already carried everything needed (outputKey, quantityIndex, per-item primitives), so the batch actions just loop draftText/updateFields/ approveStage/autoBuildItem and the component stays presentational. Reused the FIELDS "key: value" blob convention (t-028) for setFieldLine so a batch field-set stays compatible with the commit executor's parser. Two self-caught vue-tsc misses under noUncheckedIndexedAccess (items[0] and arr[len-1] are T|undefined) -- always guard array-index access in new store code, and re-run vue-tsc capturing its real exit code (a `| tail` pipe masks it as 0).
-
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-07-17T19:08:22Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-07-17T19:12:38Z_
