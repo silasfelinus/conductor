@@ -1591,11 +1591,11 @@ tasks:
   - id: t-061
     milestone: m2
     title: 'scripts/git_plumbing.py: sign direct-to-ref commits when commit.gpgsign is configured'
-    status: review
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
-    updated: '2026-07-17T23:20:00Z'
+    updated: '2026-07-17T23:49:33Z'
     note: >
       Filed 2026-07-17 (burst-mode cycle, ai-art-academy/t-021, see TALKBACK.md same
       date for full detail). `commit_file_on_ref()` in `scripts/git_plumbing.py` builds
@@ -1649,3 +1649,40 @@ tasks:
       `gpgsig` header when the calling session has signing configured.
     claimed_by: claude-conductor-burst-20260717T2300Z
     claimed_at: '2026-07-17T23:08:51Z'
+
+  - id: t-062
+    milestone: m2
+    title: 'scripts/ci_janitor.py: do not file a Todo for a cancelled run superseded by a passing later run'
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-17T23:30:00Z'
+    note: >
+      Filed 2026-07-17 (burst-mode cycle, claude-conductor-burst-20260717T2300Z), correcting
+      a mistaken attribution in TALKBACK.md's 2026-07-17 "kind_robots ci-janitor Todo #371"
+      entry: that entry says "ci-janitor lives in kind_robots' own tooling, not a
+      conductor-tracked project" and declines to file a task here. That's wrong —
+      `scripts/ci_janitor.py` (+ `.github/workflows/ci-janitor.yml`, `CI-JANITOR.md`,
+      `tests/test_ci_janitor.py`) all live in *this* repo; it polls kind_robots' Cypress
+      workflow via the GitHub API and files a HIGH-priority kind_robots Todo when the
+      latest completed run's conclusion is in `RED_CONCLUSIONS` (includes `cancelled`).
+      Confirmed the exact same false-positive pattern recurred a second time same day:
+      Todo #385 flagged run 29615947794 (commit `26eecbcb`, `cancelled`) — investigation via
+      GitHub MCP `actions_get`/`list_workflow_runs`/`list_commits` showed `cypress.yml`'s
+      `concurrency: { group: cypress-${{ github.ref }}, cancel-in-progress: true }` killed
+      it because commit `c7a4324a` (the very next commit on `main`, run 29616829952) landed
+      seconds later and its own run completed `success` ~16 minutes after. Closed Todo #385
+      `DONE` with no code change (nothing was ever broken) — same resolution as #371.
+      Fix (per #371's own suggested action, now actually actionable since this is a
+      conductor task): in `latest_completed_run()` or right after it in `main()`, when the
+      fetched run's conclusion is `cancelled`, look at the *next* run on the same
+      branch/workflow (one more page of `?branch=...&status=completed&per_page=2`, or check
+      if a newer run exists via `?branch=...&per_page=1` regardless of status) — if that
+      later run's `head_sha` differs and its conclusion is `success`, treat the cancelled
+      run as noise (skip, do not create a Todo) rather than red. Only file a Todo when the
+      *latest* run on the branch is itself red, not any older cancelled one. Keep the other
+      `RED_CONCLUSIONS` values (`failure`, `timed_out`, etc.) filing exactly as before — this
+      only changes `cancelled` handling. Add test cases to `tests/test_ci_janitor.py`
+      covering: cancelled-then-success-elsewhere (no Todo), cancelled-and-still-latest (Todo
+      filed), and the existing non-cancelled red cases (unchanged).

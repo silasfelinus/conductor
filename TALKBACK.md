@@ -6308,3 +6308,43 @@ type: pattern
 - Closed Todo #371 as `DONE` without any code change: nothing was broken, main already had (and continued to have) green Cypress coverage.
 
 **Suggested action:** ci-janitor's red-CI detector should treat a `cancelled` conclusion as noise (not worth filing a Todo) when a later run on the same branch/workflow within a few minutes shows `success` — that's the concurrency-supersede pattern, not a failure. Worth a Todo only if the *latest* run on the branch is red, not any historical cancelled one. Not filing a conductor roadmap task for this since ci-janitor lives in kind_robots' own tooling, not a conductor-tracked project — flagging here for whichever agent next touches ci-janitor's detection logic.
+
+## 2026-07-17 | Reviewer → Worker | conductor/t-061, conductor/t-062 | pattern (correction + fix, burst-mode cycle claude-conductor-burst-20260717T2300Z)
+
+**Decision:** Claimed and merged conductor/t-061 (PR #734: sign direct-to-ref commits in
+`scripts/git_plumbing.py` when `commit.gpgsign` is configured — see that task's own note for
+full detail). Also handled kind_robots Todo #385 and filed conductor/t-062 as a follow-on.
+
+**Detail:**
+- t-061: implemented exactly as specced by the filing session. `commit_file_on_ref` now passes
+  `-S` to `commit-tree` when `commit.gpgsign` is true (new `gpgsign_enabled()` helper). New
+  `tests/test_git_plumbing.py`, 4 cases, isolated from the host's own global git config via
+  `GIT_CONFIG_GLOBAL`/`GIT_CONFIG_SYSTEM=os.devnull` so the "not configured" cases aren't
+  false-negatived by this sandbox's own signing setup; the real-signing case is
+  `skipif(no ssh-keygen)` since this particular sandbox has no ssh client tools installed (only
+  a harness-provided `gpg.ssh.program` wrapper) but CI's ubuntu-latest does. Full suite: 350
+  passed / 1 skipped. `validate_roadmaps.py` clean. Merged via normal Worker-style PR flow
+  (create_branch + push to sidestep the documented first-push-of-branch HTTP 413, since the
+  branch had been auto-deleted after its prior PR merged).
+- Todo #385 ("Fix red CI: Kind Robots Cypress Tests") turned out to be the *exact same*
+  false-positive pattern as this file's own 2026-07-17 "Todo #371" entry above, recurring a
+  second time same day: `cypress.yml`'s `cancel-in-progress` concurrency killed run 29615947794
+  (commit `26eecbcb`) because the very next commit on `main` (`c7a4324a`, run 29616829952)
+  landed seconds later; that run finished `success` ~16 minutes after. Closed #385 `DONE`, no
+  code change, same resolution as #371.
+- **Correction to the #371 entry's "Suggested action":** it states ci-janitor "lives in
+  kind_robots' own tooling, not a conductor-tracked project" and declines to file a task here
+  on that basis. That's incorrect — `scripts/ci_janitor.py`, `.github/workflows/ci-janitor.yml`,
+  `CI-JANITOR.md`, and `tests/test_ci_janitor.py` all live in *this* repo (conductor); it's a
+  conductor tool that happens to poll and file Todos against kind_robots' CI, not a kind_robots
+  tool. Filed conductor/t-062 with the concrete fix (check whether a later run on the same
+  branch/workflow already succeeded before filing a Todo for a `cancelled` one) now that it's
+  correctly a conductor-tracked, pickable task rather than an orphaned suggestion.
+
+**Failure category:** n/a (t-061: clean first-pass implementation of an already-well-specced
+task; Todo #385: transient/false-positive, not a real failure — no pass consumed, no roadmap
+task closed against it).
+
+**Kaizen task:** conductor/t-062 (filed above) — this cycle's kaizen candidate on landing
+t-061 is this task itself, since it's a real, concrete, previously-blocked-only-by-a-wrong-fact
+fix rather than a fresh suggestion.

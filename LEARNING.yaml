@@ -3135,3 +3135,12 @@ records:
   outcome: done
   failure_category: null
   lesson: Reusing an established hermetic-VM contract-test pattern (t-008's validatePackManifest test) for a sibling function made a same-cycle kaizen pickup fast and low-risk — the one wrinkle was that assert.deepEqual on objects returned from vm.runInNewContext fails on cross-realm prototype mismatch even when data is structurally identical; round-trip through JSON.parse(JSON.stringify(...)) to normalize before comparing.
+- date: 2026-07-17
+  project: conductor
+  task: t-061
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: git commit-tree does not inherit commit.gpgsign the way porcelain git commit does -- any direct-to-ref plumbing helper that signs on this repo's behalf needs an explicit -S read from git config, or every commit it makes silently lands Unverified despite full signing config being present.
