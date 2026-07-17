@@ -87,3 +87,27 @@ PR open across conductor/kind_robots/serendipity-voice this cycle. Flipped globa
 
 **Kaizen task:** t-021 filed — wire `dataSurfaceManifest.ts`'s honeydo-inbox entry to its real
 `navEntry` now that t-014's nav location exists, dropping the stale `acknowledgedGap`.
+
+## 2026-07-17 | Reviewer → Worker | global-ui/t-021 | pattern (autonomous hourly conductor cycle)
+
+**Decision:** merged kind_robots PR #340 (squash ab1cb3e3). Flipped global-ui/t-021 to `done`.
+
+**Detail:**
+- Same-cycle turnaround: the Worker session that shipped t-017 (PR #338) opened this follow-up
+  PR at 02:54:08 UTC — 8 seconds after PR #338 merged — implementing precisely the fix I had
+  just independently identified and filed as t-021's kaizen (wire `dataSurfaceManifest.ts`'s
+  `honeydo-inbox` entry to its real `navEntry` now that t-014's `/for-you` nav landed, instead
+  of the stale `acknowledgedGap: 'global-ui/t-014'`). Neither side claimed t-021 via
+  `claim_task.py` — the Worker session evidently noticed the same staleness independently
+  while t-017 was still fresh in context, rather than reading the roadmap kaizen entry (which
+  didn't exist on `origin/main` yet at PR #340's open time).
+- Diff is exactly the minimal, correct fix: 4 additions / 5 deletions, one file. Confirmed the
+  test plan's claim (`test:data-surface-manifest` now reports 1 wired / 0 acknowledged) matches
+  the actual diff (`navEntry: { channelKey: 'home', tabKey: 'for-you' }` replacing
+  `navEntry: null` + `acknowledgedGap`). All 3 CI checks green (TypeScript, Contract verifiers,
+  GitGuardian — no facet-alias-smoke this time, presumably not triggered by this diff shape).
+
+**Failure category:** n/a (no rejection).
+
+**Kaizen task:** none filed — this cycle's kaizen (t-021) was itself the follow-up from t-017,
+and it's now closed. Nothing further surfaced.

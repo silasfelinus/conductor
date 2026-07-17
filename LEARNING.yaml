@@ -2681,3 +2681,17 @@ records:
     task landed on main in the interim before merging — it may have shipped a real target
     (t-014''s /for-you nav entry) that should replace the placeholder gap outright, saving a
     follow-up cycle.'
+- date: '2026-07-17'
+  project: global-ui
+  task: t-021
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'A Worker session that just shipped a task can independently notice and fix a
+    same-cycle staleness issue faster than the Reviewer can file and route a kaizen task for
+    it -- kind_robots PR #340 landed 8 seconds after PR #338 merged, before the kaizen task
+    even reached origin/main. No process gap here, just worth remembering that fast
+    same-session follow-ups can outrun roadmap bookkeeping; check open PRs again after any
+    merge before assuming the sweep is complete.'
