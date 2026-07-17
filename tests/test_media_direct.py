@@ -71,6 +71,7 @@ def load_relay_media_module(monkeypatch):
     home_server = Path(__file__).parents[1] / "ops" / "home-server"
     monkeypatch.syspath_prepend(str(home_server))
     sys.modules.pop("relay_media_agent", None)
+    sys.modules.pop("relay_agent", None)
     spec = importlib.util.spec_from_file_location(
         "relay_media_agent", home_server / "relay_media_agent.py"
     )
