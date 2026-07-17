@@ -38,6 +38,22 @@ def resolve_ref(root: Path, ref: str) -> str:
     return run_git(root, "rev-parse", ref).strip()
 
 
+def gpgsign_enabled(root: Path) -> bool:
+    """True when this repo's git config has commit.gpgsign set to true.
+
+    Uses a plain `git config --get` (exit 1 / empty when unset) rather than run_git,
+    which would raise GitError on the common "not configured" case.
+    """
+    result = subprocess.run(
+        ["git", "config", "--get", "commit.gpgsign"],
+        cwd=root,
+        text=True,
+        capture_output=True,
+        encoding="utf-8",
+    )
+    return result.returncode == 0 and result.stdout.strip().lower() == "true"
+
+
 def read_file_at_ref(root: Path, ref: str, path: str) -> str | None:
     result = subprocess.run(
         ["git", "show", f"{ref}:{path}"],
@@ -66,6 +82,12 @@ def commit_file_on_ref(
     (fast-forward) push, False on a non-fast-forward rejection -- meaning the ref moved
     since `parent_sha` was read and the caller should re-fetch, re-check, and retry.
     Raises GitError for any other git failure.
+
+    Signs the commit (`commit-tree -S`) when this repo's `commit.gpgsign` is true --
+    `commit-tree` doesn't apply that config automatically the way porcelain `git commit`
+    does, so without this the commit lands unsigned/"Unverified" even with signing
+    configured. `-S` reads the same `user.signingkey`/`gpg.format` config `git commit -S`
+    would, so no separate signing setup is needed here.
     """
     git_dir = run_git(root, "rev-parse", "--git-dir").strip()
     git_dir_path = (root / git_dir) if not Path(git_dir).is_absolute() else Path(git_dir)
@@ -82,7 +104,10 @@ def commit_file_on_ref(
         blob_sha = run_git(root, "hash-object", "-w", "--stdin", input=content, env=env).strip()
         run_git(root, "update-index", "--add", "--cacheinfo", f"100644,{blob_sha},{path}", env=env)
         tree_sha = run_git(root, "write-tree", env=env).strip()
-        commit_sha = run_git(root, "commit-tree", tree_sha, "-p", parent_sha, "-m", message).strip()
+        commit_tree_args = ["commit-tree", tree_sha, "-p", parent_sha, "-m", message]
+        if gpgsign_enabled(root):
+            commit_tree_args.append("-S")
+        commit_sha = run_git(root, *commit_tree_args).strip()
 
         push = subprocess.run(
             ["git", "push", "origin", f"{commit_sha}:{ref}"],

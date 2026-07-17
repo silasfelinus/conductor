@@ -1591,11 +1591,11 @@ tasks:
   - id: t-061
     milestone: m2
     title: 'scripts/git_plumbing.py: sign direct-to-ref commits when commit.gpgsign is configured'
-    status: claimed
+    status: review
     owner: worker
     passes: 0
     stakes: reversible
-    updated: '2026-07-17T23:08:51Z'
+    updated: '2026-07-17T23:20:00Z'
     note: >
       Filed 2026-07-17 (burst-mode cycle, ai-art-academy/t-021, see TALKBACK.md same
       date for full detail). `commit_file_on_ref()` in `scripts/git_plumbing.py` builds
@@ -1622,5 +1622,30 @@ tasks:
       filed), so a rewrite-and-force-push to fix historical Unverified badges is not
       worth the real risk of breaking someone else's in-flight rebase. This task is
       forward-looking only: sign commits made by this helper from here on.
+
+      RAN 2026-07-17 (~23:20 UTC, conductor-burst rotation, claude-conductor-burst-20260717T2300Z):
+      implemented exactly as specced. Added `gpgsign_enabled(root)` to
+      `scripts/git_plumbing.py` — reads `commit.gpgsign` via a plain
+      `git config --get` (not `run_git`, since an unset key exits non-zero and
+      `run_git` would raise `GitError` on the common case) and returns True only on
+      an exact `"true"` value. `commit_file_on_ref` now appends `-S` to the
+      `commit-tree` argv when that's true; no separate signing-key plumbing needed
+      since `commit-tree -S` reads `user.signingkey`/`gpg.format` the same way
+      `git commit -S` does. New `tests/test_git_plumbing.py` (4 cases): signed vs
+      unsigned commits actually produce/omit a `gpgsig` header in the raw commit
+      object (verified via `git cat-file commit`), plus `gpgsign_enabled`'s
+      absent/false-config cases. All isolated from the host's real global/system git
+      config via `GIT_CONFIG_GLOBAL`/`GIT_CONFIG_SYSTEM=os.devnull` — this sandbox's
+      own signing setup (`commit.gpgsign=true` globally) would otherwise make the
+      "not configured" cases false-negative. The real-signing test is
+      `skipif(shutil.which("ssh-keygen") is None)`: this sandbox has no `ssh`
+      client tools installed at all (confirmed: no `/usr/bin/ssh*`, only a harness
+      commit-signing wrapper at `gpg.ssh.program`), so it skips locally but runs for
+      real on CI's ubuntu-latest, which ships `openssh-client`. Verified: full suite
+      `pytest tests/` 350 passed / 1 skipped (the new skip), `py_compile` clean on
+      both changed files. Did not touch any already-pushed historical commit, per
+      the note above. Next `claim_task.py`-driven commit onto any project's `main`
+      (including this task's own future claim commits) should carry a real
+      `gpgsig` header when the calling session has signing configured.
     claimed_by: claude-conductor-burst-20260717T2300Z
     claimed_at: '2026-07-17T23:08:51Z'
