@@ -1,6 +1,0 @@
-version: 1
-project: coloring-book
-task: t-022
-operation: rearm
-updated: 2026-07-17T20:41:00+00:00
-note: PR #724 merged (a74ae2f) after Worker PR CI and Security Audit passed. The new secret-aware runner accepted the first bounded Monster Recast batch: Vercel recorded POST /api/art/queue 201 for job 228 and ongoing successful polling with no runtime errors. The event remains authoritative until the runner commits landed renders and removes it; its hourly schedule retries safely if the queue or relay delays completion.
