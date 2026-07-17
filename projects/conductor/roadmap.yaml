@@ -1362,11 +1362,23 @@ tasks:
   - id: t-054
     milestone: m2
     title: Migrate ai-art-academy/t-008, t-013, and digital-storefront's hand-written egress-recheck prose into EGRESS-BLOCKERS.md
-    status: ready
-    owner: null
+    status: done
+    owner: reviewer
     passes: 0
     stakes: reversible
+    updated: '2026-07-17T08:30:00Z'
     note: >
+      DONE 2026-07-17 (Silas-directed session, claude/projects-db-down-q2yfu0):
+      seeded ledger entries via recheck_egress_blocks.py for ai-art-academy/t-013
+      (metmuseum.org, upload.wikimedia.org) and digital-storefront/t-011
+      (api.stripe.com) — t-008 already had three same-day entries — and replaced
+      the five tasks' hand-written RECHECKED paragraphs (t-008, t-013, and all
+      three Stripe tasks t-011/t-012/t-013, which shared identical prose) with a
+      one-line EGRESS pointer keeping a dated summary. No status semantics
+      changed. NOTABLE: this session's probes found ALL hosts REACHABLE
+      (metmuseum 429, wikimedia 200, stripe 404) — the 403 egress block appears
+      lifted or environment-specific; recorded in the ledger and the task notes.
+      Original spec:
       Kaizen from conductor/t-052 (Reviewer, autonomous hourly conductor cycle,
       2026-07-16, PR #631). t-052 built the shared `EGRESS-BLOCKERS.md` ledger and
       `scripts/recheck_egress_blocks.py` but deliberately left the three existing

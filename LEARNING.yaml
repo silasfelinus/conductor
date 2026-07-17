@@ -2789,3 +2789,16 @@ records:
     When testing an early-exit gate, assert the negative too: an exploding api()
     stub proves main() returned before any work, which the exit code alone
     doesn't guarantee.
+- date: 2026-07-17
+  project: conductor
+  task: t-054
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    Running the recheck script during a record-keeping migration paid off beyond
+    bookkeeping: all previously 403-blocked hosts (metmuseum, wikimedia, stripe)
+    probed REACHABLE this session, flipping three "blocked" tasks to genuinely
+    workable — always re-probe before copying forward a "still blocked" claim.

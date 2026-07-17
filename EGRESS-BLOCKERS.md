@@ -42,3 +42,21 @@ blocked (URLError: <urlopen error Tunnel connection failed: 403 Forbidden>)
 
 ## 2026-07-17T06:07:06Z | upload.wikimedia.org | blocked | ai-art-academy/t-008
 blocked (URLError: <urlopen error Tunnel connection failed: 403 Forbidden>)
+
+## 2026-07-17T07:51:10Z | metmuseum.org | reachable | ai-art-academy/t-013
+reachable (HTTP 429)
+
+## 2026-07-17T07:51:11Z | upload.wikimedia.org | reachable | ai-art-academy/t-013
+reachable (HTTP 200)
+
+## 2026-07-17T07:51:11Z | api.stripe.com | reachable | digital-storefront/t-011
+reachable (HTTP 404)
+
+## 2026-07-17T07:51:28Z | metmuseum.org | reachable | ai-art-academy/t-008
+reachable (HTTP 429)
+
+## 2026-07-17T07:51:29Z | upload.wikimedia.org | reachable | ai-art-academy/t-008
+reachable (HTTP 200)
+
+## 2026-07-17T07:51:29Z | www.metmuseum.org | reachable | ai-art-academy/t-008
+reachable (HTTP 429)
