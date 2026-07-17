@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-07-17T17:49:34Z
+Generated: 2026-07-17T17:55:35Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **233**
-- Outcomes: blocked: 12, done: 221
+- Closed tasks recorded: **234**
+- Outcomes: blocked: 12, done: 222
 - Success rate: **95%**
 - Average passes on successful tasks: **0.0**
 
@@ -15,7 +15,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 | Project | Closed | Success rate |
 |---|---|---|
-| ai-art-academy | 23 | 100% |
+| ai-art-academy | 24 | 100% |
 | alexa-integration | 2 | 100% |
 | animation-manager | 4 | 100% |
 | animation-studio | 1 | 100% |
@@ -49,7 +49,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 15 | 40% |
-| software | 218 | 99% |
+| software | 219 | 99% |
 
 ## Failure categories
 
@@ -67,6 +67,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-07-17 `ai-art-academy/t-030` — Another self-contained conductor-only kaizen task, picked up burst-mode in an hourly Reviewer cycle with no open worker/* PR to review. Added Cloudflare challenge fallback signals (Server header + cf-chl cookie, __cf_chl_rt_tk body marker) behind defensive getattr()/callable() checks so the existing test doubles (which don't implement get_all()/read()) kept passing unchanged rather than needing every prior fixture updated — cheaper than the t-029 fixture-rewrite when the new code path is additive rather than a signature change.
 - 2026-07-17 `ai-art-academy/t-029` — Self-contained conductor-only kaizen task (no cross-repo dependency): claimed, implemented, and merged in a single autonomous hourly cycle. probe_host()/append_entry() changed from a bool blocked/reachable signal to a three-way status string so a Cloudflare cf-mitigated challenge response is no longer silently folded into 'reachable' — the exact gap t-013 hit and hand-documented manually. Updating an existing test suite's fixtures (bool -> string) alongside new coverage, rather than only adding new tests, is what kept the refactor from leaving stale assertions that would pass for the wrong reason.
 - 2026-07-17 `digital-storefront/t-013` — Cross-repo software task where the code PR (kind_robots#361) and the conductor bookkeeping PR (#700) were opened by a prior burst-mode session but left unmerged at status:review — the Reviewer cycle's job was purely to verify and merge both, then close the roadmap task. Delegating the payment-code diff review to a subagent (checking migration additivity, auth on the new cancel-subscription endpoint, and webhook signature verification) kept the large diff out of the main context while still confirming test-mode-only, no live keys, no cross-user cancellation.
 - 2026-07-17 `ai-art-academy/t-028` — A kaizen task can be fulfilled as a side effect of the task it depends on, before that task fully completes — check the dependency's actual diff before assuming a `waiting` kaizen is still open; t-013's PR extracted the shared schema validator t-028 asked for regardless of how many example-work entries exist yet.
@@ -81,8 +82,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 - 2026-07-17 `global-ui/t-022` — t-012/t-022 kr-* consolidation (kind_robots PR #349): the grep-density file list from the scan was NOT the clean-swap list -- many "callout" hits were full-height flex containers or dense p-2 text-xs chips where .kr-note (which bakes p-4 text-sm font-semibold) is a poor fit. Triage each site for shape before swapping. Also: never run `prettier --write` on a whole file to "clean up" a targeted class swap -- these files aren't prettier-conformant, so it reformatted two of them by ~1600 lines each and buried the real diff; there is no prettier/lint CI gate anyway, so minimal targeted edits are both sufficient and reviewable. t-022's audit found exactly one real 2+ file duplicate (the click/match leaderboards); extracted it, no others exist.
 
-- 2026-07-17 `kind-robots/t-012` — Two independent sessions converged on nearly identical implementations for the same mana-top-up Stripe feature within the same hour (one via digital-storefront's roadmap entry, one via kind-robots' — the same real task tracked in two project roadmaps with no depends_on link between them). The duplicate was caught for free by the routine fetch-before-push step (git fetch origin <assigned-branch> before the first git push surfaced that the branch's remote tip already had the other session's merged PR) -- confirming that step is worth keeping even when a task looks uncontested. When a task's note says "blocks X in another project" or "tracked in both roadmaps," treat that as a same-day collision risk, not just documentation, and check the other project's roadmap/PR history before implementing, not only claim_task.py's own-project check.
-
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-07-17T17:49:34Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-07-17T17:55:35Z_
