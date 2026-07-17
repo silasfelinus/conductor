@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-07-17T18:11:07Z
+Generated: 2026-07-17T18:22:03Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **234**
-- Outcomes: blocked: 12, done: 222
+- Closed tasks recorded: **235**
+- Outcomes: blocked: 12, done: 223
 - Success rate: **95%**
 - Average passes on successful tasks: **0.0**
 
@@ -26,7 +26,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | coloring-book | 12 | 100% |
 | conductor | 29 | 100% |
 | digital-storefront | 8 | 100% |
-| dream-cycle | 13 | 100% |
+| dream-cycle | 14 | 100% |
 | ecosystem-map | 4 | 100% |
 | global-ui | 9 | 100% |
 | humboldt-impropriety-calendar | 1 | 0% |
@@ -49,7 +49,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 15 | 40% |
-| software | 219 | 99% |
+| software | 220 | 99% |
 
 ## Failure categories
 
@@ -67,6 +67,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-07-17 `dream-cycle/t-017` — An always-failing dependency (intermittent DB 503s) masked two schema/contract bugs that meant the daily-dream pipeline had NEVER shipped a row: extraData is a String column (json.dumps it, don't send an object) and dream slugs are globally unique (send explicit de-duped slugs). Build live end-to-end once, early — dry-runs and unit tests can't catch a Prisma type mismatch. Run long API builds detached (background), never in a 2-min-capped foreground call.
 - 2026-07-17 `ai-art-academy/t-030` — Another self-contained conductor-only kaizen task, picked up burst-mode in an hourly Reviewer cycle with no open worker/* PR to review. Added Cloudflare challenge fallback signals (Server header + cf-chl cookie, __cf_chl_rt_tk body marker) behind defensive getattr()/callable() checks so the existing test doubles (which don't implement get_all()/read()) kept passing unchanged rather than needing every prior fixture updated — cheaper than the t-029 fixture-rewrite when the new code path is additive rather than a signature change.
 - 2026-07-17 `ai-art-academy/t-029` — Self-contained conductor-only kaizen task (no cross-repo dependency): claimed, implemented, and merged in a single autonomous hourly cycle. probe_host()/append_entry() changed from a bool blocked/reachable signal to a three-way status string so a Cloudflare cf-mitigated challenge response is no longer silently folded into 'reachable' — the exact gap t-013 hit and hand-documented manually. Updating an existing test suite's fixtures (bool -> string) alongside new coverage, rather than only adding new tests, is what kept the refactor from leaving stale assertions that would pass for the wrong reason.
 - 2026-07-17 `digital-storefront/t-013` — Cross-repo software task where the code PR (kind_robots#361) and the conductor bookkeeping PR (#700) were opened by a prior burst-mode session but left unmerged at status:review — the Reviewer cycle's job was purely to verify and merge both, then close the roadmap task. Delegating the payment-code diff review to a subagent (checking migration additivity, auth on the new cancel-subscription endpoint, and webhook signature verification) kept the large diff out of the main context while still confirming test-mode-only, no live keys, no cross-user cancellation.
@@ -80,8 +81,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 - 2026-07-17 `digital-storefront/t-011` — A hard-gated task (gate_human:true, stakes:outward-facing) can still bundle a genuinely reversible, non-customer-facing sub-piece (here: a pure schema migration + seed script, zero live behavior change) inside a monolith whose overall stakes classification is correctly outward-facing. Splitting BEFORE attempting the monolith let the safe slice land through normal Worker/Reviewer flow (merged, no needs-human wait) while the actual gated remainder (webhook fulfillment, product page + purchase flow) kept its gate_human/outward-facing classification on the new split-off tasks. No pass was burned since the split happened at task-selection time, not after a failed implementation attempt. When a hard-gated task's note describes multiple independently-landable pieces (a SPEC.md build order, "step 1/2/3" language), check whether the leading piece is actually reversible on its own before assuming the whole task must wait on Silas.
 
-- 2026-07-17 `global-ui/t-022` — t-012/t-022 kr-* consolidation (kind_robots PR #349): the grep-density file list from the scan was NOT the clean-swap list -- many "callout" hits were full-height flex containers or dense p-2 text-xs chips where .kr-note (which bakes p-4 text-sm font-semibold) is a poor fit. Triage each site for shape before swapping. Also: never run `prettier --write` on a whole file to "clean up" a targeted class swap -- these files aren't prettier-conformant, so it reformatted two of them by ~1600 lines each and buried the real diff; there is no prettier/lint CI gate anyway, so minimal targeted edits are both sufficient and reviewable. t-022's audit found exactly one real 2+ file duplicate (the click/match leaderboards); extracted it, no others exist.
-
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-07-17T18:11:07Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-07-17T18:22:03Z_
