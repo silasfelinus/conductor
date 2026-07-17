@@ -719,3 +719,36 @@ kind-robots/t-032 to `done`.
 **Kaizen task:** t-036 — retrofit one more existing inline workflow `run:` bash
 block onto this pattern as a second worked example (a one-example convention doc
 is easy to misapply at the edges).
+
+## 2026-07-17 | Reviewer → Worker | kind-robots/t-022 | merged (conductor-burst-hourly, kind_robots PR #339)
+
+**Decision:** merged kind_robots PR #339 (squash 30eb67a) after both required checks
+(Contract Tests, TypeScript Type Check) passed. Left kind-robots/t-022 at `needs-human`
+(not `done`) pending post-deploy confirmation.
+
+**Detail:**
+- Session-startup Vercel check found production actively degraded: 45x503/17x200 (15m,
+  ~73%) and 337x503/53x200 (1h, ~86%), all one error group —
+  `DriverAdapterError: pool timeout ... (pool connections: active=0 idle=0 limit=1)`,
+  last seen essentially real-time. This is the "one-shot fallback" pool (limit=1),
+  distinct from the earlier limit=10 main-pool incidents this task has tracked since
+  2026-07-15.
+- PR #339 (open, authored by Silas, both checks green) directly targets this exact
+  signature: the one-shot fallback's `minimumIdle: 0` with no `$connect()`/readiness
+  probe before replay, plus no serialization letting Cypress/heartbeat/art-queue
+  traffic pile into the same fallback connection concurrently.
+- Classified as application-level pool-init code, not DB host/DNS/secrets/billing —
+  same category as PR #296/#299/#300, which this task's own history already treats as
+  normal Worker/Reviewer merge scope once a specific PR is confirmed non-infra (as
+  opposed to the broader "is the DB itself reachable" question, which stays
+  needs-human). Given ~86% active failure and a green-CI, root-cause-matched fix
+  already sitting open, merged rather than parking another cycle.
+- Did not set `status: done` — post-deploy recovery unconfirmed at merge time (build
+  still in progress), and this task has two prior false "RESOLVED" starts on record.
+  Sent a push notification given the active severity.
+
+**Failure category:** n/a (incident response, not a task retry/rejection).
+
+**Kaizen task:** none filed this cycle — the next actionable follow-up is confirming
+recovery post-deploy, which is already the explicit next step in t-022's note, not a
+new systemic gap.
