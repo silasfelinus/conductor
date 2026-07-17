@@ -2875,3 +2875,20 @@ records:
     describes multiple independently-landable pieces (a SPEC.md build order,
     "step 1/2/3" language), check whether the leading piece is actually
     reversible on its own before assuming the whole task must wait on Silas.
+- date: 2026-07-17
+  project: model-builder
+  task: t-027
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    Batch editor over a derived group (run.items sharing an outputKey) rather than a
+    persisted group object -- the store already carried everything needed (outputKey,
+    quantityIndex, per-item primitives), so the batch actions just loop draftText/updateFields/
+    approveStage/autoBuildItem and the component stays presentational. Reused the FIELDS
+    "key: value" blob convention (t-028) for setFieldLine so a batch field-set stays compatible
+    with the commit executor's parser. Two self-caught vue-tsc misses under noUncheckedIndexedAccess
+    (items[0] and arr[len-1] are T|undefined) -- always guard array-index access in new store code,
+    and re-run vue-tsc capturing its real exit code (a `| tail` pipe masks it as 0).
