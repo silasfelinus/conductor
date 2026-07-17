@@ -85,19 +85,25 @@ module.exports = {
       merge_logs: true
     },
     // kr-relay — pull-based bridge between the kind_robots ArtJob queue and the
-    // local engines (see relay_agent.py). The queue endpoints are LIVE (PR #90
-    // merged 2026-07-05). To enable:
-    //   1. One-time, in PowerShell (keeps the secret OUT of this tracked file):
-    //        setx KR_RELAY_TOKEN "your-admin-apikey"
-    //        setx KR_RELAY_USER_ID "1"
-    //   2. Open a NEW shell (setx doesn't affect the current one)
-    //   3. Uncomment this block, then: pm2 start ecosystem.config.js --only kr-relay ; pm2 save
+    // local engines. relay_media_agent.py wraps the proven relay_agent.py and
+    // writes Kind Robots-targeted jobs to their exact self-hosted media path
+    // before reporting the job successful.
+    //
+    // One-time, in PowerShell (keeps secrets and machine paths out of git):
+    //   setx KR_RELAY_TOKEN "your-admin-apikey"
+    //   setx KR_RELAY_USER_ID "1"
+    //   setx KR_MEDIA_IMAGES_DIR "Z:/kindrobots/images"
+    //   py -3.12 -m pip install Pillow
+    //
+    // Open a NEW shell after setx, then:
+    //   pm2 start ecosystem.config.js --only kr-relay
+    //   pm2 save
     // NEVER paste the real token into this file — it is committed to git.
     {
       name: 'kr-relay',
       cwd: __dirname,
-      script: 'C:/Python312/python.exe', // any Python 3.9+; stdlib only
-      args: 'relay_agent.py',
+      script: 'C:/Python312/python.exe', // any Python 3.9+; Pillow required for webp targets
+      args: 'relay_media_agent.py',
       interpreter: 'none',
       windowsHide: true,
       autorestart: true,
@@ -108,9 +114,9 @@ module.exports = {
         // Prod currently lives on the vercel.app host; switch to
         // kindrobots.org when that domain points at prod.
         KR_BASE_URL: 'https://kind-robots.vercel.app',
-        // Local fast path: set (via setx) to your kind_robots checkout's
-        // public/images folder to also land finished files there, e.g.
-        //   setx KR_LOCAL_IMAGES_DIR "D:/code/kind_robots/public/images"
+        // Exact backing directory for https://media.acrocatranch.com/images/.
+        KR_MEDIA_IMAGES_DIR: process.env.KR_MEDIA_IMAGES_DIR || '',
+        // Optional generic ArtImage-id copies for jobs without an exact target.
         KR_LOCAL_IMAGES_DIR: process.env.KR_LOCAL_IMAGES_DIR || ''
       },
       out_file: `${LOG_DIR}/kr-relay.out.log`,
