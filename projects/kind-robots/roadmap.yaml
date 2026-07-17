@@ -918,11 +918,11 @@ tasks:
   - id: t-032
     milestone: m1
     title: Write a scripts/lib/ convention doc for hermetic shell helpers shared between a workflow step and its regression test
-    status: ready
-    owner: null
+    status: claimed
+    owner: reviewer
     passes: 0
     stakes: reversible
-    updated: '2026-07-16T08:58:00Z'
+    updated: '2026-07-17T04:10:20Z'
     note: >
       Kaizen from t-023 (Reviewer, 2026-07-16, kind_robots PR #310):
       t-023 introduced scripts/check-deploy-ancestry.sh, a small hermetic
@@ -941,6 +941,8 @@ tasks:
       should both invoke it, and a pointer to check-deploy-ancestry.sh /
       verifyDeployWaitAncestry.ts as the worked example. Small and
       documentation-only — no code changes required.
+    claimed_by: claude-conductor-burst-hourly-20260717
+    claimed_at: '2026-07-17T04:10:20Z'
 
   - id: t-034
     milestone: m1
