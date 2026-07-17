@@ -216,6 +216,11 @@ Some roadmap tasks describe changes in another Silas-owned repository, such as `
 `serendipity-voice`, or `portos`. The conductor roadmap still owns the task state, but the
 code patch belongs in the target repository.
 
+To verify kind_robots changes locally (vue-tsc / eslint) in an ephemeral sandbox, run
+`source scripts/provision_kind_robots_deps.sh` — it installs node_modules + the Prisma
+client with the two required workarounds (CYPRESS_INSTALL_BINARY=0 and a dummy
+DATABASE_URL) baked in, instead of every session re-deriving them (conductor/t-046).
+
 When a cross-repo task is selected:
 1. Claim the conductor roadmap task exactly as usual on `main`.
 2. Create the implementation branch in the target repository as `worker/<project>-<task-id>`

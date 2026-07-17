@@ -1430,12 +1430,16 @@ tasks:
   - id: t-057
     milestone: m2
     title: Mention provision_kind_robots_deps.sh in AGENTS.md near the cross-repo/verification guidance
-    status: ready
-    owner: null
+    status: done
+    owner: reviewer
     passes: 0
     stakes: reversible
+    updated: '2026-07-17T08:05:00Z'
     note: >
-      Kaizen from conductor/t-046 (2026-07-16, PR #645). The script exists and is
+      DONE 2026-07-17 (Silas-directed session, claude/projects-db-down-q2yfu0):
+      added a short paragraph to AGENTS.md's Cross-repo tasks section pointing at
+      `source scripts/provision_kind_robots_deps.sh` and naming the two baked-in
+      workarounds. Original spec: Kaizen from conductor/t-046 (2026-07-16, PR #645). The script exists and is
       proven end-to-end but is discoverable only by grepping scripts/ — add a
       one-line pointer in AGENTS.md's cross-repo/verification section so future
       sessions run it instead of re-deriving the CYPRESS_INSTALL_BINARY +
