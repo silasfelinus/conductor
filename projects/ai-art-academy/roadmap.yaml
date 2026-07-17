@@ -1015,11 +1015,11 @@ tasks:
   - id: t-030
     milestone: m4
     title: 'conductor: extend recheck_egress_blocks.py bot-challenge detection beyond the cf-mitigated header'
-    status: ready
-    owner: null
+    status: claimed
+    owner: reviewer
     passes: 0
     stakes: reversible
-    updated: '2026-07-17T17:00:00Z'
+    updated: '2026-07-17T17:49:08Z'
     note: >
       Kaizen from t-029 (2026-07-17). t-029 detects a Cloudflare bot-challenge
       only via the `cf-mitigated` response header. Some Cloudflare configurations
@@ -1030,3 +1030,5 @@ tasks:
       signals are the practical path. Add a fallback check for these secondary
       signals so the header-only heuristic doesn't miss non-cf-mitigated
       challenge variants, and add tests for each new signal.
+    claimed_by: claude-conductor-hourly-20260717c
+    claimed_at: '2026-07-17T17:49:08Z'
