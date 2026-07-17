@@ -169,8 +169,8 @@ tasks:
 - id: t-004
   milestone: m3
   title: Build the pack generator admin view in kind_robots
-  status: ready
-  owner: null
+  status: claimed
+  owner: worker
   passes: 0
   stakes: reversible
   depends_on: t-003
@@ -180,6 +180,9 @@ tasks:
     pack ready. Repeatability is the point — the tool must make generating the
     NEXT pack cheap. Depends at note-level on kind-robots t-008 (ACL) for
     private-pack storage.
+  claimed_by: claude-worker-packmaker-xuup66
+  claimed_at: '2026-07-17T19:24:38Z'
+  updated: '2026-07-17T19:24:38Z'
 - id: t-005
   milestone: m3
   title: Build the user-facing pack view (browse, preview, owned unlocks)
