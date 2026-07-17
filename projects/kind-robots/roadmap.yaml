@@ -901,11 +901,11 @@ tasks:
   - id: t-031
     milestone: m1
     title: Add a CI check that greps new .exec(/.match( capture-group call sites for a noUncheckedIndexedAccess guard
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
-    updated: '2026-07-16T08:00:00Z'
+    updated: '2026-07-17T01:08:15Z'
     note: >
       Kaizen from t-027 (Reviewer, 2026-07-16, conductor PR #606): the t-027
       audit found all 26 existing capture-group call sites already safe, and
@@ -929,6 +929,8 @@ tasks:
       backstop. Small and mechanical if scoped to diff-only; escalate to
       needs-human if the false-positive rate in practice turns out too high
       to be useful.
+    claimed_by: claude-burst-2026-07-17-hourly-2
+    claimed_at: '2026-07-17T01:08:15Z'
 
   - id: t-032
     milestone: m1
