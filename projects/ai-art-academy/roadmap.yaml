@@ -249,11 +249,10 @@ tasks:
   - id: t-013
     milestone: m4
     title: 'kind_robots: add example-works strip to Academy lesson detail'
-    status: review
-    owner: worker
+    status: needs-human
     passes: 0
     stakes: reversible
-    updated: '2026-07-17 18:28:00+00:00'
+    updated: '2026-07-17 18:32:00+00:00'
     depends_on: t-007
     note: |-
       REVIEWED 2026-07-17 (burst-mode conductor cycle, reviewer session claude-conductor-hourly-20260717b): merged kind_robots PR #363 (squash 9f12bd8) and conductor PR #705 -- ships 6 more movements (gothic, northern-renaissance, rococo, neoclassicism, symbolism, pointillism), taking the total to 18 of 21. All kind_robots CI checks green (TypeScript, Contract verifiers incl. verifyAcademyExamplesManifest.ts, GitGuardian) and all 21 conductor CI checks green. Sourced entirely from curriculum-outline.md's own pre-identified expected candidates (previously flagged unverified due to museum-egress blocks in an earlier session) -- verified live against the Met Collection API (isPublicDomain: true) plus PUBLIC-DOMAIN-POLICY.md section 1.3 (artist died 70+ years ago AND work created/published on or before the US cutoff year): Duccio's Madonna and Child (Met 2004.442), Memling's Tommaso and Maria Portinari (Met 14.40.626-27), Chardin's Soap Bubbles (Met 49.24), David's The Death of Socrates (Met 31.45), Moreau's Oedipus and the Sphinx (Met 21.134.1), Seurat's Circus Sideshow (Met 61.101.17). Images downloaded full-res and resized to a 1600px long edge to match the manifest's existing file-size convention. Remaining scope, kept ready once this PR lands (partial-scope landing, not a rejection): (1) cubism and bauhaus -- still need a different public-domain source; the AIC-sourced Juan Gris/Kandinsky/Klee works curriculum-outline.md once marked VERIFIED are now confirmed non-public-domain via api.artic.edu's is_public_domain:false with live ARS/VG Bild-Kunst copyright notices. (2) NEW FINDING this cycle: expressionism also has no exampleWorks entry in academyStyles.ts and was not mentioned in the prior cycle's scope note as remaining work -- unclear whether it was silently missed in an earlier pass or intentionally deferred; needs a source hunt (Munch/Kirchner/Marc, all pass section 1.3) same as the other six landed this cycle. Original split-history: split 2026-07-15 from t-008 (part 2 of 3); scope expanded 2026-07-16 (t-010 cycle) from 16 to 21 movements.
@@ -261,8 +260,11 @@ tasks:
       Manual recovery run after restoring the hourly Conductor Worker; remaining scope is the Expressionism, Cubism, and Bauhaus public-domain example works.
 
       Source audit and exact cross-repo implementation handoff completed in projects/ai-art-academy/docs/t-013-remaining-example-works.md; connector-safe fallback PR is ready for merge.
+
+      Merged conductor PR
     claimed_by: null
     claimed_at: null
+    soft_gate: true
   - id: t-014
     milestone: m4
     title: 'kind_robots: wire starter library into Remix Studio source picker'
