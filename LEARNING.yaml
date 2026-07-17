@@ -3071,3 +3071,16 @@ records:
     a half-working gate. Task sat at status: claimed (not review) while its PR was
     open -- next cycle should flip to status: review before gh pr create per AGENTS.md
     step 7, even for cross-repo tasks."
+- date: '2026-07-17'
+  project: media-watchlist
+  task: t-007
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'A 12-year hand-maintained log had ~6 format regimes the 2-year design sample never showed
+    (unheadered year blocks, reversed headers, mixed-case sections, embedded stats tables, prose).
+    Structural detection (a repeating section type implies a new unheadered year) beat hardcoded line
+    numbers, and the log''s own hand-tallies served as free validation targets — 2342 entries parsed
+    with 0 unparseable lines and every mismatch traced to source-side drift, not parser error.'
