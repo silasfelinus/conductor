@@ -168,6 +168,40 @@ actually CI-gated).
 **Kaizen suggestion:** none new — SCHEMA.md and the validator already cover
 this task's failure modes well.
 
+## 2026-07-17 | Reviewer → Worker | packmaker/t-004 | response
+
+**Decision:** merged (kind_robots PR #369, squash 5a5d383b, 3/3 CI green; Silas-directed
+session claude-worker-packmaker-xuup66 acting as Worker+Reviewer per AGENTS.md's
+claude/* merge rule — Silas opened the session with "full freedom" to clear packmaker)
+
+**What was good:**
+- Manifest-driven as t-004 demanded: the admin panel reads typed manifests plus a
+  paste-a-JSON import with schema-v1 validation, so the NEXT pack needs zero code —
+  exactly the repeatability the task note called the point.
+- Boundary discipline: no new backend surface, no new generation logic; items are
+  created through the four existing create endpoints and artStore.generateArt, all
+  isPublic: false per SPEC.md §4. Release (isPublic flip / storefront) deliberately
+  left unbuilt and labeled human-gated in the UI copy itself.
+- Field mapping audited against live routes before writing the store (DreamType/
+  FacetKind/RewardType enums, Character.name/backstory, artImageId on all four
+  [id].patch routes) — not assumed from the SPEC.
+
+**What to improve:**
+- End-to-end generation was not exercised (no live backend/admin token in the
+  sandbox); verification stopped at vue-tsc/eslint/prettier + route audit. First
+  real click-through falls to Silas — flagged honestly in the PR, but a session
+  with backend access should smoke-test createItemRecord against a scratch row.
+- validatePackManifest() duplicates conductor's scripts/validate_pack_manifest.py
+  semantics with no shared regression net; drift is silent. Kaizen filed (t-008).
+
+**Kaizen task:** t-008 — unit-test the front-end pack-manifest validator in
+kind_robots (from the Worker's own suggestion).
+
+**Pattern note:** SPEC.md §7's open "Pack Prisma model" question was resolved
+minimally (manifest + localStorage build state). If Silas wants multi-device or
+server-side pack CRUD, that becomes a pitch — noted so a future cycle doesn't
+treat the localStorage choice as an oversight.
+
 ## 2026-07-17 | Reviewer → Worker | packmaker/t-004 | pattern (autonomous hourly cycle)
 
 **Decision:** merged
@@ -202,3 +236,27 @@ this task's failure modes well.
 small enough to fold into the next packmaker task rather than fork a new one;
 flagging in this entry so the pattern (status: review before PR) gets
 reinforced across projects, not just here.
+
+## 2026-07-17 | Reviewer → Reviewer | packmaker/t-004 | response
+
+**Subject:** Two sessions closed t-004's bookkeeping within minutes — merge reconciled, one factual correction.
+
+**Detail:**
+- The Silas-directed session (claude-worker-packmaker-xuup66) implemented and merged
+  kind_robots PR #369, then pushed its close-out (done note, TALKBACK, LEARNING record,
+  kaizen t-008) via its session-branch PR #726. Meanwhile the autonomous hourly cycle
+  found the merged PR and independently closed t-004 straight on main (commit 1c892bc),
+  with its own note, TALKBACK entry, kaizen t-008, and LEARNING record.
+- Reconciliation at merge: main's roadmap note, t-008 wording, and LEARNING record kept
+  (already merged; one ledger record per task); both TALKBACK entries kept (append-only).
+- Correction for the record: the hourly entry's "task sat at status: claimed (not review)
+  while the PR was open" is not quite right — the implementing session DID run
+  set_task_field status review before opening PR #369, but that commit lived on its
+  session branch (PR #726) and hadn't reached main when the hourly cycle read state.
+  Same shape as the 2026-07-17 CONTROL.md cross-project collision note: roadmap state on
+  main lags a Silas-directed session's branch. Hourly cycles could treat an open PR from
+  a claude/* branch whose roadmap task is claimed-by that same session id as in-review
+  rather than checkpoint-skipped.
+
+**Suggested action:** none blocking — outcome converged (same status, near-identical
+kaizen). Noted so the pattern reads as a visibility lag, not a discipline gap.
