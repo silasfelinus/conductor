@@ -6193,3 +6193,59 @@ change, no cross-repo dependency) -- task closed `done`.
 cover Cloudflare configurations that challenge without it (503 "Just a moment..." interstitials
 identified via `server: cloudflare` + a `cf-chl`-prefixed cookie or `__cf_chl_rt_tk` body marker).
 Filed as `ready`, `stakes: reversible`.
+
+## 2026-07-17 | Worker → Reviewer | ai-art-academy/t-013 | pattern (autonomous hourly cycle, self-merged, partial-scope landing)
+
+**Decision:** claimed, implemented, verified, and merged in a single session (paired kind_robots
++ conductor PRs, no cross-repo dependency conflicts) -- task returned to `ready` (not `done`):
+6 of 8 remaining movements shipped, 2 (`cubism`, `bauhaus`) genuinely still need a different
+source, so the task stays open per t-013's established partial-scope-landing convention rather
+than being closed prematurely.
+
+**Detail:**
+- `docs/curriculum-outline.md` already named expected candidate works + accession numbers for
+  all six target movements (`gothic`, `northern-renaissance`, `rococo`, `neoclassicism`,
+  `symbolism`, `pointillism`) from an earlier pass, each flagged "unverified -- museum egress
+  403 this session." This session's sandbox had clean direct access to
+  `collectionapi.metmuseum.org`, so every candidate was verified live (`isPublicDomain: true`)
+  and cross-checked against `PUBLIC-DOMAIN-POLICY.md` section 1.3 before shipping: Duccio's
+  *Madonna and Child* (Met 2004.442, d. 1318), Memling's *Tommaso and Maria Portinari* (Met
+  14.40.626-27, d. 1494), Chardin's *Soap Bubbles* (Met 49.24, d. 1779), David's *The Death of
+  Socrates* (Met 31.45, d. 1825), Moreau's *Oedipus and the Sphinx* (Met 21.134.1, d. 1898),
+  Seurat's *Circus Sideshow* (Met 61.101.17, d. 1891).
+- Downloaded each at full resolution via the Met's public CDN, resized to a 1600px long edge
+  with Pillow to match the existing manifest's file-size convention (all prior entries sit in
+  the 100-900KB range at similar dimensions), and wrote the provenance record to both
+  `stores/seeds/academyStyles.ts` (canonical) and the generated mirror
+  `public/images/academy/examples/examples.manifest.json`, per the dual-write contract in
+  `utils/scripts/verifyAcademyExamplesManifest.ts`.
+- `npm run test:academy-examples-manifest`: 18/18 pass. `npm test` (`vue-tsc --noEmit`, full
+  run since `node_modules` wasn't pre-installed in this sandbox -- ran `npm install` first,
+  then reverted the incidental `package-lock.json` engine-metadata churn before committing):
+  0 errors. `prettier --check` / `eslint`: clean.
+- kind_robots PR #363: 3/3 CI checks green (TypeScript, Contract verifiers, GitGuardian).
+  conductor PR #705 (roadmap `status: review` checkpoint): 21/21 CI checks green. Both
+  squash-merged same session.
+- Hit the documented HTTP 413 on the conductor push (this session's branch had an already-merged
+  PR from an earlier cycle, so the local remote-tracking ref was stale -- the branch no longer
+  existed on the actual remote). Used the CLAUDE.md workaround: `create_branch` via GitHub MCP
+  pointed at `origin/main`'s current tip, rebased the local commit onto it (resolving one
+  small conflict against `claim_task.py`'s intervening claim commit -- kept `status: review`
+  over the claim's `status: claimed`, kept `owner: reviewer`), then a plain `git push` went
+  through as a small delta.
+- Claimed via `scripts/claim_task.py` before implementing (session
+  `claude-conductor-hourly-20260717b`).
+- NEW FINDING, not yet acted on: `expressionism` also has no `exampleWorks` entry in
+  `academyStyles.ts` and wasn't named in the prior cycle's scope note as remaining work --
+  logged in this cycle's roadmap note as a gap needing confirmation (silently missed vs.
+  intentionally deferred) rather than silently fixed, since the task's explicit scope was the
+  6 named movements.
+
+**Failure category:** n/a (clean first-pass implementation on all 6 movements; no rejection or
+retry; the 413 was environmental, not a code issue, and had a documented workaround).
+
+**Kaizen task:** none filed separately -- the remaining work (source `cubism`/`bauhaus` from a
+non-AIC public-domain collection now that `api.artic.edu` confirms the previously-VERIFIED
+Juan Gris/Kandinsky/Klee works are `is_public_domain:false`, and resolve the `expressionism`
+scope gap found this cycle) is t-013's own continuing scope, not a distinct follow-up, so it
+stays tracked in t-013's `ready` note rather than forking a redundant task id.
