@@ -175,10 +175,10 @@ tasks:
 - id: t-022
   milestone: m4
   title: Monster Recast book 1 production pass — 36 final color/BW pairs
-  status: ready
+  status: claimed
   passes: 0
   stakes: reversible
-  updated: '2026-07-17 21:32:00+00:00'
+  updated: '2026-07-17T22:11:05Z'
   depends_on: t-021
   note: |-
     CURRENT COLOR-FIRST DIRECTION 2026-07-17: use the canonical color-art-jobs.yaml queue. A Worker generation/submission/review pass handles up to 18 Monster Recast color proposals at one stage. Do not generate new BW variants until the corresponding color composition is accepted; then derive a faithful BW counterpart in an 18-image pass. RECONCILED 2026-07-17 (burst-mode cycle): completed the "First reconcile" step -- mapped every physical projects/coloring-book/sets/monster-recast/approved/ file into proposals.yaml as inspirations on its matching concept slot, cross-checked against the 2026-07-12 inventory_snapshot's represented_concept_ids and per-category counts (all matched exactly, confirming the mapping). No files renamed or guessed: 16 of 17 approved-only concepts matched by exact working-title/source-lineage text against homage-concepts.yaml; the 18th (gothic-schoolgirl -> mr-025) had no direct text match and is flagged needs_visual_verification -- inferred only by elimination (the one leftover discovered slug against the one leftover represented id) since guessing a slug-to-concept match from vibes alone would violate "without guessing." Also recorded the two generated/-only ArtJob-complete pairs (mr-010/madam-hat, mr-013/ansel-bell, per unapproved-art-jobs.yaml) as generated-candidates, distinct from the approved/ inventory. coloring_proposal_status.py --check now reports 17/18 approved concepts with inspiration attached (up from 1) and coloring_approved_status.py --check / --check both still pass. Ready for the next cycle to run the actual production batch (attach/create accepted masters, starting at mr-001 per the status script's "next" pointer) -- kept `recurring`, not done; no pass consumed (this is progress on the recurring task, not a rejection).
@@ -193,8 +193,9 @@ tasks:
 
     Reconciled the active Monster Recast batch without duplicating it. The canonical queue still has no newly landed renders committed, while production logs show the secret-bearing runner advanced through ArtJobs 242 and 243 with successful 200 polling and a 201 submission at 21:25:19 UTC. The existing color-art event remains authoritative and retries safely; a second event would risk duplicate generation.
   recurring: true
-  claimed_by: claude-conductor-burst-20260717T1500Z
-  claimed_at: '2026-07-17T14:07:32Z'
+  claimed_by: claude-conductor-burst-20260717T2200Z
+  claimed_at: '2026-07-17T22:11:05Z'
+  owner: worker
 - id: t-025
   milestone: m6
   title: Package and register Monster Recast book 1
