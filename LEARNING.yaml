@@ -3126,3 +3126,12 @@ records:
   outcome: done
   failure_category: null
   lesson: A cross-cutting infra fix (suggest providers hardcoding max_tokens 512) surfaced naturally while building one feature's LLM call — landing it in the same PR benefited every suggest caller instead of needing a separate follow-up task.
+- date: 2026-07-17
+  project: packmaker
+  task: t-010
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: Reusing an established hermetic-VM contract-test pattern (t-008's validatePackManifest test) for a sibling function made a same-cycle kaizen pickup fast and low-risk — the one wrinkle was that assert.deepEqual on objects returned from vm.runInNewContext fails on cross-realm prototype mismatch even when data is structurally identical; round-trip through JSON.parse(JSON.stringify(...)) to normalize before comparing.
