@@ -1653,11 +1653,11 @@ tasks:
   - id: t-062
     milestone: m2
     title: 'scripts/ci_janitor.py: do not file a Todo for a cancelled run superseded by a passing later run'
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
-    updated: '2026-07-17T23:30:00Z'
+    updated: '2026-07-17T23:51:18Z'
     note: >
       Filed 2026-07-17 (burst-mode cycle, claude-conductor-burst-20260717T2300Z), correcting
       a mistaken attribution in TALKBACK.md's 2026-07-17 "kind_robots ci-janitor Todo #371"
@@ -1686,3 +1686,5 @@ tasks:
       only changes `cancelled` handling. Add test cases to `tests/test_ci_janitor.py`
       covering: cancelled-then-success-elsewhere (no Todo), cancelled-and-still-latest (Todo
       filed), and the existing non-cancelled red cases (unchanged).
+    claimed_by: claude-conductor-burst-20260717T2300Z
+    claimed_at: '2026-07-17T23:51:18Z'
