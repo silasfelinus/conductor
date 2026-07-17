@@ -441,3 +441,45 @@ recovery (observed 12:35Z, reconfirmed healthy 16:55Z) has partially relapsed as
 19:05Z — narrower this time, isolated to `POST /api/projects` create failing at ~7% of
 overall traffic rather than the prior ~87-97% all-route outage. Updated the task note
 with the new signature; no notification sent (severity too low to warrant one on its own).
+
+## 2026-07-17 | Reviewer | ai-art-academy/t-008 | pattern (autonomous conductor cycle, self-implemented)
+
+**Decision:** merged (kind_robots PR #358, self-authored and self-merged in the same
+autonomous cycle -- no separate Worker/Reviewer split this run). t-008 closed done;
+t-014 auto-unblocked by the dependency resolver; kaizen t-027 filed.
+
+**What was good:**
+- Egress to all 8 source hosts (metmuseum.org, upload.wikimedia.org, artic.edu,
+  api.artic.edu, clevelandart.org, nga.gov, rijksmuseum.nl, commons.wikimedia.org) was
+  rechecked live before starting, per the task's own note -- confirmed reachable this
+  session, unlike the four prior sessions the note recorded as blocked.
+- Did not trust the plan doc's "VERIFIED" marks blindly: re-checked every Met accession
+  against the live Collection API (`isPublicDomain` flag) and caught one false-CC0
+  (29.100.113, "Bridge over a Pond of Water Lilies") that the doc had marked verified.
+  Also discovered artic.edu's IIIF image CDN is behind a Cloudflare bot challenge
+  (confirmed with both a plain and browser-spoofed User-Agent) -- not documented in the
+  plan doc at all, since the doc's own verification pass only checked JSON metadata, not
+  actual image-byte fetches.
+- Both drifts were fixed by substituting a same-accession Commons PD-Mark scan rather
+  than silently dropping the item or blocking the whole task -- 21/21 images shipped.
+- Caught the "images.metmuseum.org / commons scans are huge" problem before committing:
+  first attempt produced a 71MB single file; added Pillow-based resize-to-2000px +
+  JPEG q85 before the second, full run, landing at 16MB total for all 21 (doc's own
+  estimate was 40-80MB, so this is well under budget).
+
+**What to improve:**
+- The claim_task.py claim landed via git plumbing directly on origin/main, but the local
+  working tree wasn't re-fetched before a subsequent `set_task_field.py` edit -- so the
+  first status:review edit was applied to a stale pre-claim copy (owner: null instead of
+  worker, no claimed_by/claimed_at) and had to be redone after a stash/rebase/conflict
+  detour. claim_task.py's own docstring warns exactly about this "never touches the
+  caller's working tree" behavior; the fix is to always `git fetch origin main` and
+  rebase immediately after any claim_task.py call, before making further roadmap edits
+  in the same session, not just before the initial claim.
+
+**Failure category:** n/a (clean merge; the stale-local-copy edit was self-caught and
+corrected before pushing, so no incorrect state reached `origin/main`).
+
+**Kaizen task:** t-027 -- add a CI check validating `starters.manifest.json` against the
+PUBLIC-DOMAIN-POLICY.md §3 schema, so a future edit can't silently drop a provenance
+field.

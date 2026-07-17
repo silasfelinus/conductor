@@ -2908,3 +2908,22 @@ records:
     (conductor-overview-gallery-page.vue) before writing any template edits avoided a
     wasted no-op PR. The needed done/totalTasks fields were already computed and present
     on every gallery item; the fix was template-only across 4 layout modes.
+- date: 2026-07-17
+  project: ai-art-academy
+  task: t-008
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    Re-verifying a plan doc's source URLs at download time (rather than trusting its
+    "VERIFIED" marks) caught two real drifts: Met's own API reports isPublicDomain:false
+    for one accession the doc had marked CC0, and artic.edu's IIIF image CDN blocks
+    script fetches with a Cloudflare bot challenge regardless of User-Agent. Both were
+    fixed by substituting a Commons PD-Mark scan of the identical accession rather than
+    skipping the item -- always keep a same-work fallback source in mind for institution
+    APIs with rights-flag or bot-protection surprises. Also: resize images to a web
+    resolution (2000px longest edge) before committing -- an original museum scan can be
+    tens of MB each, blowing past a "modest footprint" budget the plan doc estimated
+    assuming smaller files.
