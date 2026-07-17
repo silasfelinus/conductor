@@ -23,7 +23,7 @@ milestones:
 - id: m3
   title: Generator front end (admin + user views)
   weight: 35
-  status: complete
+  status: in-progress
 tasks:
 - id: t-001
   milestone: m1
@@ -275,3 +275,27 @@ tasks:
 
     kind_robots PR
   updated: '2026-07-17 21:26:00+00:00'
+- id: t-009
+  milestone: m3
+  title: 'Pack editor: rename packs, hand-build new packs, LLM scaffold from a prompt'
+  status: claimed
+  owner: worker
+  passes: 0
+  stakes: reversible
+  depends_on: t-004
+  note: >
+    Silas direction (2026-07-17, in-session): the admin generator (t-004)
+    should also let him (1) rename a pack (he reserved renaming rights on the
+    launch packs from the start), (2) build a NEW pack by hand-setting some or
+    all entries in an editor, and (3) give just a general prompt and have an
+    LLM generate an appropriate manifest scaffold to review/edit before
+    saving. Cross-repo (kind_robots). Scaffold generation should reuse the
+    existing /api/suggest pipeline via a registered packmaker suggest sheet
+    (the established per-builder extension point), not new generation
+    surface; providers currently hardcode max_tokens 512 even though the
+    endpoint accepts maxTokens — wire that through as part of this task so a
+    full manifest fits. Saved packs stay local draft manifests feeding the
+    existing t-004 generator flow; nothing publishes.
+  claimed_by: claude-worker-packmaker-xuup66
+  claimed_at: '2026-07-17T21:38:12Z'
+  updated: '2026-07-17T21:38:12Z'
