@@ -288,15 +288,16 @@ tasks:
 - id: t-025
   milestone: m3
   title: "Drop the now-unused userId param cartStore.ts's subscribe() still sends to /api/stripe/subscribe.post.ts"
-  status: ready
+  status: claimed
   passes: 0
   stakes: reversible
-  note: >
-    Kaizen from t-024's merge (kind_robots PR #373): subscribe.post.ts now derives the user
-    from requireApiUser(event) and no longer reads userId from the request body, but
-    cartStore.ts's subscribe(userId) and its one caller (subscription-manager.vue) still pass
-    one. Harmless today (the server ignores it) but confusing for the next reader — drop the
-    now-dead parameter from both the store action and its caller. kind_robots-repo change.
+  note: |-
+    Kaizen from t-024's merge (kind_robots PR #373): subscribe.post.ts now derives the user from requireApiUser(event) and no longer reads userId from the request body, but cartStore.ts's subscribe(userId) and its one caller (subscription-manager.vue) still pass one. Harmless today (the server ignores it) but confusing for the next reader — drop the now-dead parameter from both the store action and its caller. kind_robots-repo change.
+
+
+    Claiming the highest-priority reversible ready task after skipping claimed or inactive projects.
+  owner: worker
+  updated: '2026-07-17 22:13:20+00:00'
 - id: t-014
   milestone: m3
   title: Build the Against Malaria giving page
