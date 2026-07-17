@@ -266,8 +266,8 @@ tasks:
 - id: t-024
   milestone: m3
   title: 'subscribe.post.ts: require authenticated user instead of trusting client-supplied userId'
-  status: review
-  owner: worker
+  status: done
+  owner: reviewer
   passes: 0
   stakes: reversible
   note: >
@@ -276,14 +276,27 @@ tasks:
     request body with no auth check (not introduced or worsened by #361 -- cancel-subscription.post.ts
     was built correctly, deriving the user from requireApiUser instead). Fix subscribe.post.ts
     to derive the user the same way, matching the new cancel-subscription endpoint's pattern.
-    IN REVIEW 2026-07-17 (conductor-burst-hourly, claude-conductor-burst-20260717T2057Z): kind_robots
-    PR #373 opened (branch claude/keen-fermat-k0alew) swapping the client-supplied userId lookup
-    for requireApiUser, mirroring cancel-subscription.post.ts. eslint clean on the touched lines
-    (one pre-existing no-explicit-any on the unrelated catch block, confirmed present before this
-    change too); full-project vue-tsc --noEmit exits 0. Awaiting CI on #373 before merge.
+    DONE 2026-07-17 (conductor hourly cycle, claude-conductor-hourly-20260717d): kind_robots PR #373
+    (branch claude/keen-fermat-k0alew) merged after all 3 checks (GitGuardian, TypeScript,
+    Contract verifiers) passed -- subscribe.post.ts now derives the user via requireApiUser(event)
+    instead of trusting a client-supplied userId, mirroring cancel-subscription.post.ts. Conductor
+    PR #728 (roadmap claim->review) merged first, then this task flipped to done here after
+    confirming the implementation PR's merge.
   claimed_by: claude-conductor-burst-20260717T2057Z
   claimed_at: '2026-07-17T21:12:19Z'
-  updated: '2026-07-17T21:12:19Z'
+  updated: '2026-07-17T22:05:00Z'
+- id: t-025
+  milestone: m3
+  title: "Drop the now-unused userId param cartStore.ts's subscribe() still sends to /api/stripe/subscribe.post.ts"
+  status: ready
+  passes: 0
+  stakes: reversible
+  note: >
+    Kaizen from t-024's merge (kind_robots PR #373): subscribe.post.ts now derives the user
+    from requireApiUser(event) and no longer reads userId from the request body, but
+    cartStore.ts's subscribe(userId) and its one caller (subscription-manager.vue) still pass
+    one. Harmless today (the server ignores it) but confusing for the next reader — drop the
+    now-dead parameter from both the store action and its caller. kind_robots-repo change.
 - id: t-014
   milestone: m3
   title: Build the Against Malaria giving page

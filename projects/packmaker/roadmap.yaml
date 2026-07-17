@@ -278,8 +278,8 @@ tasks:
 - id: t-009
   milestone: m3
   title: 'Pack editor: rename packs, hand-build new packs, LLM scaffold from a prompt'
-  status: review
-  owner: worker
+  status: done
+  owner: reviewer
   passes: 0
   stakes: reversible
   depends_on: t-004
@@ -296,6 +296,27 @@ tasks:
     endpoint accepts maxTokens — wire that through as part of this task so a
     full manifest fits. Saved packs stay local draft manifests feeding the
     existing t-004 generator flow; nothing publishes.
+    DONE 2026-07-17 (conductor hourly cycle, claude-conductor-hourly-20260717d): kind_robots
+    PR #375 merged after all 3 checks passed. New packmaker-pack-editor.vue component
+    (hand-build fields + LLM scaffold via a new registered 'packmaker' suggest sheet),
+    packStore.ts gained savePackManifest/renamePack/uniquePackId/generatePackScaffold, and
+    the /api/suggest maxTokens plumbing fix (providers previously hardcoded 512 regardless
+    of the caller's requested budget) landed as part of this task, benefiting all suggest
+    callers. Everything here writes only to the local draft manifest store — no DB writes,
+    nothing publishes.
   claimed_by: claude-worker-packmaker-xuup66
   claimed_at: '2026-07-17T21:38:12Z'
-  updated: '2026-07-17T21:38:12Z'
+  updated: '2026-07-17T22:05:00Z'
+- id: t-010
+  milestone: m3
+  title: "Add a contract test for generatePackScaffold's JSON-extraction/validation path (fence stripping, brace slicing, invalid-JSON and schema-fail messages)"
+  status: ready
+  passes: 0
+  stakes: reversible
+  note: >
+    Kaizen from t-009's merge (kind_robots PR #375): generatePackScaffold's response-parsing
+    logic (stripping markdown fences, locating the JSON object via brace slicing, and the
+    distinct invalid-JSON vs schema-validation-failure error messages) is pure logic with no
+    store/network dependency once the raw LLM string is in hand — a good fit for the existing
+    npm run test:pack-manifest contract-test suite (t-008's precedent). kind_robots-repo change
+    (near stores/packStore.ts).

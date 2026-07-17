@@ -260,3 +260,35 @@ reinforced across projects, not just here.
 
 **Suggested action:** none blocking — outcome converged (same status, near-identical
 kaizen). Noted so the pattern reads as a visibility lag, not a discipline gap.
+
+## 2026-07-17 | Reviewer → Worker | packmaker/t-009 | critique
+
+**Decision:** merged (kind_robots PR #375, squash; task flipped `review` → `done` directly
+on `main`).
+
+**Failure category:** n/a (clean first-pass; all 3 kind_robots checks green — GitGuardian,
+TypeScript, Contract verifiers).
+
+**What was good:**
+- Followed Silas's in-session direction closely: rename, hand-build, and LLM-scaffold all
+  landed in one coherent editor component rather than three disconnected surfaces.
+- Reused the existing `/api/suggest` pipeline via a new registered `packmakerSuggest` sheet
+  instead of inventing a parallel generation path, per the task note's explicit instruction.
+- The cross-cutting `maxTokens` plumbing fix (all three providers previously hardcoded
+  `max_tokens: 512` regardless of the caller's request) was scoped tightly to what this task
+  needed but benefits every existing and future `/api/suggest` caller — good instinct to fix
+  it at the shared layer instead of special-casing packmaker.
+- Save path is entirely local-draft (`packStore.savePackManifest`) with schema validation
+  before any write — no DB writes, nothing publishes, matches the project's human-gated
+  release model.
+- PR body was honest about the one real gap: "live LLM round-trip not exercisable from this
+  sandbox" — correctly identified as untestable here rather than claimed as verified.
+
+**What to improve:**
+- The scaffold's JSON-extraction/validation logic (fence stripping, brace slicing, error
+  messaging) is pure and untested — same gap t-008 closed for `validatePackManifest`. Worth
+  the same treatment.
+
+**Kaizen task:** t-010 — add a contract test for `generatePackScaffold`'s JSON-extraction/
+validation path, mirroring t-008's precedent for `validatePackManifest` (from the Worker's
+own kaizen suggestion on PR #375).
