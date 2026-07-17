@@ -5922,3 +5922,89 @@ type: pattern
 **Suggested action:** Worker: before skipping any egress-flagged task, run the recheck
 script — the allowlist evidently varies by session. Silas: answer t-048's required-check
 question when convenient.
+
+## 2026-07-17 | Worker → Reviewer | global-ui/t-017 | done (hourly burst-mode pick, kind_robots PR #338 + #340 merged)
+
+**Decision:** merged kind_robots PR #338 (squash 23cf36b) and follow-up PR #340 (squash
+efa34ad). Flipped global-ui/t-017 to `done`.
+
+**Detail:**
+- Rotation: ai-art-academy and kind-robots were both worked in the last two burst cycles
+  (see prior entries this cycle-block). Priority-order walk this cycle: kindrobots-unraid
+  had zero `ready` tasks (all `done`/`needs-human`/`waiting`) → global-ui, which had a
+  `ready` batch (t-012, t-016, t-017, t-019) plus t-014 already `claimed` by a *different*,
+  concurrently-running conductor-hourly session (not this burst rotation's own history) —
+  left t-014 untouched per the claim and picked t-017 instead (concrete, CI-verifiable,
+  no human-eyes-on-a-preview-deploy dependency unlike t-012, no Silas-only trigger-creation
+  step unlike t-016).
+- t-017 (kaizen from t-005's NAVIGATION-MAP.md audit): ported PortOS's `navManifest.js`
+  pattern into kind_robots as `utils/dataSurfaceManifest.ts` + a new CI contract
+  `utils/scripts/verifyDataSurfaceManifest.ts`. The existing `verifyChannelContent.ts`
+  only cross-references content Markdown pages' `channelKey`/`tabKey` frontmatter — a data
+  surface with no Markdown page at all (like the honeydo inbox pre-t-014, living entirely
+  inside a HONEYDO tab buried in `conductor-page.vue`) evades that scan silently. The new
+  manifest requires every registered surface to carry either a `navEntry` resolving to a
+  real `content/channels` tab, or an explicit `acknowledgedGap` naming the tracking task —
+  so a newly-added undiscoverable surface fails CI outright, while an already-tracked,
+  in-flight gap doesn't block the build. Verified the negative case manually (stripped the
+  seed entry's `acknowledgedGap` locally, confirmed the contract fails with a clear
+  message, restored it) before pushing.
+- Race with the concurrent session: t-014 (the real honeydo nav fix) merged as kind_robots
+  PR #337 in the middle of this same rotation cycle, making PR #338's `acknowledgedGap:
+  'global-ui/t-014'` placeholder stale within minutes. Caught this on the conductor-repo
+  side via a routine `git fetch origin main` before writing the `done` roadmap update and
+  fixed it forward rather than leaving a resolved gap flagged as open — follow-up
+  kind_robots PR #340 rewired the entry to `navEntry: { channelKey: 'home', tabKey:
+  'for-you' }` matching PR #337's actual `content/channels/home/for-you.md`. Both PRs
+  independently verified clean (eslint/prettier, `vue-tsc --noEmit` 0 errors,
+  `test:channel-content`/`test:channel-resolver` unaffected) before pushing.
+- No conflict with t-014's own files — different files touched (`utils/dataSurfaceManifest.ts`
+  vs `components/pages/for-you-manager.vue` + `content/**`), so no merge collision, only a
+  content-staleness issue caught by re-fetching before the roadmap write.
+
+**Failure category:** n/a (self-caught staleness within the same cycle before it reached a
+stale `done` state; no defect merged to `main`).
+
+**Kaizen task:** none filed this cycle — the acknowledged-gap staleness was fixed directly
+via a same-cycle follow-up PR rather than deferred.
+
+## 2026-07-17 | Worker | global-ui/t-020 | done (conductor-burst-hourly, kind_robots PR #344 + conductor PR #678 merged)
+
+**Decision:** claimed and shipped global-ui/t-020 (shared honeydo-card component) after finding
+the top two priority-band projects blocked this cycle: ai-art-academy's ready tasks (t-008,
+t-013) need metmuseum.org/upload.wikimedia.org, both freshly rechecked 403-blocked (see
+`EGRESS-BLOCKERS.md`); coloring-book/t-010's art-generation pipeline needs `KR_API_TOKEN` (unset
+in this sandbox) and kind-robots.vercel.app, also unreachable (403 tunnel). kind-robots itself
+had an active concurrent claim on t-036 (owner: worker, claimed ~18 min prior, well inside the
+90-minute TTL) from what looked like a parallel hourly session, so picked a different task there
+rather than risk collision. Walked down to global-ui, whose t-019/t-020 are both front-end-only,
+no-dependency, no-egress tasks — picked t-020 since the DRY case was more concrete (two
+independently-maintained card copies that had *already* drifted, per its own note).
+
+**Detail:**
+- Claimed via `claim_task.py` against live `origin/main`.
+- Added `components/tasks/honeydo-card.vue` in kind_robots: presentational shared component
+  (todo/project props; toggle-done/archive/delete/view-project emits) covering the fields both
+  surfaces needed (checkbox, title, priority badge, description, optional relative timestamp,
+  optional "View project" link, optional archive/delete actions, optional category badge).
+  `for-you-manager.vue` now renders it directly, dropping its inline markup and local
+  `relativeTime` helper. `conductor-page.vue`'s Tasks list now branches per todo: HONEYDO-category
+  items render `honeydo-card` (with archive/delete + the honey-do badge outside the OPEN filter,
+  matching prior behavior); non-HONEYDO (KAIZEN) items keep the existing inline card verbatim —
+  scoped the refactor to the honey-do card only, per the task's own title, rather than also
+  folding KAIZEN into a generalized todo-card (bigger, unscoped change).
+- kind_robots had no `node_modules` installed in this sandbox; `npm install` failed on Cypress's
+  binary download (its CDN is egress-blocked here) until re-run with
+  `CYPRESS_INSTALL_BINARY=0`. That install regenerated `package-lock.json` with unrelated
+  `"dev": true` / cpu-arch-pruning churn (npm 10 vs. the repo's pinned npm 11 engine) — reverted
+  it before committing so the PR only carries the actual component change.
+- Verified: `npx eslint` clean on all three touched files; `npx vue-tsc --noEmit` reported 0
+  errors (exit 0) — no pre-existing baseline errors surfaced this run, so nothing to compare a
+  delta against. Could not exercise live in a browser (no dev server/DB in this sandbox).
+- kind_robots PR #344 and conductor PR #678 (roadmap `review`→`done` in two steps, matching the
+  claim → review → done state machine) both merged clean on first CI pass; both session branches
+  auto-deleted on merge, confirmed via `git ls-remote` showing no lingering ref on either repo.
+
+**Failure category:** n/a (clean first-pass merge on both PRs; no rejection).
+
+**Kaizen task:** none filed — task was already narrowly scoped and fully landed in one pass.
