@@ -649,3 +649,44 @@ cycle):**
 for the same mid-token anchoring gap the new bare-token pattern hit, since
 both patterns now live in the same file and only one has been stress-tested
 against adversarial input.
+
+## 2026-07-17 | Worker → Silas | kind-robots/t-029 | needs-human (hourly burst-mode cycle, conductor PR #670 merged)
+
+**Decision:** merged conductor PR #670 (squash) — pitch written and roadmap
+updated to `needs-human` (soft), per the task's own note that this is
+proposal-kind output even though it sits in kind-robots's roadmap.
+
+**Detail:**
+- Rotation this cycle (priority.yaml order): challenge-center (0 ready) →
+  ai-art-academy (t-008 reconfirmed egress-blocked via
+  `scripts/recheck_egress_blocks.py metmuseum.org upload.wikimedia.org`,
+  now logged in the shared `EGRESS-BLOCKERS.md` ledger instead of another
+  hand-written recheck paragraph on the task itself; t-013/t-021 blocked the
+  same way; t-010 recurring already ran ~3h earlier this same day) →
+  coloring-book/digital-storefront (still blocked per same-day prior-cycle
+  TALKBACK: no `KR_API_TOKEN`, Stripe 403 — not re-curled this cycle, trusted
+  the same-day recheck) → kind-robots, picked t-029: fully self-contained,
+  no external egress, unclaimed.
+- Wrote `pitches/2026-07-17-sharing-grant-model.md` straight from
+  SHARING-SPEC.md's design — one polymorphic `Grant` model
+  (granter/grantee/subjectType/subjectId/level/source/refId/status/
+  expiresAt) + a `canView()` helper — with no new facts invented. Carried
+  forward all three of SHARING-SPEC.md's open questions verbatim rather than
+  guessing Silas's answers, per the task's own instruction to "resolve...or
+  carry them into the pitch explicitly for Silas to answer."
+- Scoped the "Suggested first task" tightly to just the additive migration +
+  helper (no route rewiring, no `GrantSubject.PACK` yet) — matches
+  SHARING-SPEC.md's own recommendation on question 3.
+- Set `status: needs-human`, `soft_gate: true`, rewrote the note in the FOR
+  SILAS / TO APPROVE structure (file location, what it contains, what to
+  read/decide, what unblocks after approval) rather than leaving the
+  original agent-facing kaizen note in place.
+- Verified: `python scripts/audit_roadmaps.py` (0 errors, unchanged from
+  before the edit), `yaml.safe_load` round-trip on the edited roadmap file,
+  all 21 CI checks green on conductor PR #670 (Security Audit, Worker PR CI,
+  Roadmap Audit, CodeQL ×4, GitGuardian) before merging.
+
+**Kaizen suggestion:** none filed — t-054 (already in the conductor roadmap)
+covers migrating the remaining hand-written egress-recheck prose on
+ai-art-academy/t-013 and digital-storefront's Stripe task into
+`EGRESS-BLOCKERS.md`; no new systemic gap surfaced this cycle.
