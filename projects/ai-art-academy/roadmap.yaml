@@ -249,33 +249,40 @@ tasks:
   - id: t-013
     milestone: m4
     title: 'kind_robots: add example-works strip to Academy lesson detail'
-    status: claimed
+    status: review
     owner: reviewer
     passes: 0
     stakes: reversible
     updated: '2026-07-17T16:13:24Z'
     depends_on: t-007
     note: >
-      REVIEWED 2026-07-17 (autonomous hourly conductor cycle): merged kind_robots
-      PR #360 (squash b107209) — ships 9 of 21 movements (greek-vase-painting,
-      byzantine-mosaic, illuminated-manuscript, renaissance, baroque, ukiyo-e,
-      romanticism, realism, art-nouveau), each with a verified public-domain
-      example work in stores/seeds/academyStyles.ts's new exampleWorks field,
-      mirrored to public/images/academy/examples/examples.manifest.json and
-      guarded by the new verifyAcademyExamplesManifest.ts contract. Kept `ready`
-      rather than `done` — remaining scope, no pass consumed (partial-scope
-      landing, not a rejection):
+      IN REVIEW 2026-07-17 (burst-mode conductor cycle, reviewer session): kind_robots
+      PR open — ships 3 more movements (impressionism, post-impressionism, de-stijl),
+      taking the total to 12 of 21. Re-checked the www.artic.edu IIIF Cloudflare
+      bot-challenge from the prior cycle's note first (still live: 403 with
+      cf-mitigated:challenge, confirmed 2026-07-17T16:0xZ) and, since api.artic.edu
+      metadata already confirmed all three works public-domain (Renoir 1933.455,
+      Seurat 1926.224, Mondrian 1957.307), substituted same-accession Commons scans
+      per t-008's precedent — each is an AIC-credited upload (Commons Credit field
+      links straight back to the artic.edu/artworks/<id> page), tagged PD-old-100-
+      expired/CC-PD-Mark, recorded as license: PD-Mark with the standard Commons
+      licenseTermsUrl. Added to stores/seeds/academyStyles.ts's exampleWorks field,
+      mirrored to public/images/academy/examples/examples.manifest.json (with a
+      SUBSTITUTED SOURCE note per entry), images committed under
+      public/images/academy/examples/. Could not run the repo's own
+      verifyAcademyExamplesManifest.ts (node_modules not installed in this sandbox)
+      so self-checked the same contract (required-field presence, license enum,
+      manifest<->seed imageSrc/movement cross-match, on-disk file existence) with an
+      equivalent throwaway script — all clean; a real `npm run
+      test:academy-examples-manifest` should still run in kind_robots CI on the PR.
+      Remaining scope unchanged from the prior cycle, kept `ready` once this PR
+      lands (partial-scope landing, not a rejection):
       (1) cubism and bauhaus — curriculum-outline.md's "VERIFIED" tags for the
       AIC-sourced Juan Gris/Kandinsky/Klee works were stale: api.artic.edu now
       reports is_public_domain:false with live ARS/VG Bild-Kunst copyright
-      notices. Corrected to "unverified" in the outline this pass; need a
+      notices. Corrected to "unverified" in the outline in an earlier pass; need a
       different public-domain source before shipping.
-      (2) impressionism, post-impressionism, de-stijl — correctly public-domain
-      per api.artic.edu, but www.artic.edu's IIIF image host returned a
-      Cloudflare bot-challenge (blocked for image bytes, not metadata); ship once
-      that clears (see EGRESS-BLOCKERS.md 2026-07-17T13:15Z entry) or a
-      same-accession Commons scan is substituted (t-008's precedent).
-      (3) gothic, northern-renaissance, rococo, symbolism, pointillism,
+      (2) gothic, northern-renaissance, rococo, symbolism, pointillism,
       neoclassicism — no VERIFIED source yet per curriculum-outline.md's own
       SCOPE UPDATE note; still need sourcing.
       Original split-history: split 2026-07-15 from t-008 (part 2 of 3); scope
