@@ -766,11 +766,11 @@ tasks:
   - id: t-021
     milestone: m2
     title: 'Hunt LoRAs for the 5 new prompt-mode movements and backfill prompt_hint on older entries'
-    status: claimed
-    owner: worker
+    status: ready
+    owner: null
     passes: 0
     stakes: reversible
-    updated: '2026-07-17T03:50:08Z'
+    updated: '2026-07-17T03:55:00Z'
     note: >
       Filed 2026-07-16 (t-010 curriculum-expansion cycle). The five new movements all
       ship prompt-mode in docs/style-lora-registry.md; none has a login-free FLUX LoRA
@@ -781,12 +781,21 @@ tasks:
       first, and record license/trigger/weight per the existing schema). Same
       environment caveat as t-003: HF/Civitai may be egress-blocked this session, so
       web-search-sourced entries stay `license: unverified` until read off the model
-      card. Second, smaller half of this task: backfill the optional `prompt_hint`
-      field (introduced this cycle) onto the 8 older prompt-mode entries that still
-      keep their recipe only in prose, for machine-readable consistency. Registry-only,
-      no downloads/spend.
-    claimed_by: claude-conductor-burst-hourly-20260717T035007Z
-    claimed_at: '2026-07-17T03:50:08Z'
+      card.
+
+      BACKFILL DONE 2026-07-17 (conductor-burst-hourly): claimed, then completed the
+      registry-only half of this task (no egress needed) and released the rest back
+      to `ready`. Added `prompt_hint` to the 6 older prompt-mode entries still missing
+      it — ukiyo-e, baroque-chiaroscuro, cubism, stained-glass, byzantine-mosaic,
+      art-deco (the note's original "8" count was stale: gothic and pointillism, 2 of
+      the original 8, already got their hints in the same v1.1 batch that introduced
+      the field). Each hint is derived verbatim from that style's existing per-style
+      prose recipe in the same file — no new facts invented. Updated the field's own
+      doc-comment to drop the "can be backfilled" TODO language. Confirmed fresh
+      via EGRESS-BLOCKERS.md (2026-07-17T03:05Z entries, this session) that
+      huggingface.co/civitai.com remain 403-blocked from this sandbox, so the
+      LoRA-hunting half stays `ready`-but-blocked (transient, no pass burned) for a
+      session with open egress to those hosts, or Silas's own environment.
 
   - id: t-022
     milestone: m5

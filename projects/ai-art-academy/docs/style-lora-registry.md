@@ -106,8 +106,8 @@ are documented.
 # prompt_hint (optional, prompt-mode only): a provisional Kontext prompt-mode
 #   instruction to seed the Remix studio before t-004 records the tuned template
 #   in style-remix-configs.yaml. Added 2026-07-16 (t-010) for the newer prompt-mode
-#   styles; older prompt-mode entries keep their recipe in the per-style prose below
-#   and can be backfilled (t-021 kaizen).
+#   styles; backfilled 2026-07-17 (t-021) onto the remaining older prompt-mode
+#   entries, derived from each style's per-style prose below.
 styles:
   - style_slug: impressionism
     mode: lora
@@ -119,6 +119,7 @@ styles:
     weight: 0.9
   - style_slug: ukiyo-e
     mode: prompt
+    prompt_hint: "Repaint this image as an ukiyo-e woodblock print in the style of Hokusai: flat color planes, bold black outlines, visible woodgrain texture, no text, no stamps, no border"
   - style_slug: art-nouveau
     mode: lora
     lora_name: dvyio/flux-lora-art-nouveau
@@ -129,8 +130,10 @@ styles:
     weight: 0.9
   - style_slug: baroque-chiaroscuro
     mode: prompt
+    prompt_hint: "Repaint this image as a baroque oil painting with dramatic chiaroscuro lighting, in the style of Caravaggio and Rembrandt: deep shadows, a single warm light source, rich dark palette"
   - style_slug: cubism
     mode: prompt
+    prompt_hint: "Repaint this image as an analytic cubist painting: fragmented geometric planes, multiple simultaneous viewpoints, muted browns and greys"
   - style_slug: renaissance-fresco
     mode: lora
     lora_name: davidrd123/Flux-Raphael-LoRA
@@ -141,6 +144,7 @@ styles:
     weight: 0.9
   - style_slug: stained-glass
     mode: prompt
+    prompt_hint: "Repaint this image as a stained glass window: black lead lines, jewel-toned translucent glass, gothic tracery"
   - style_slug: illuminated-manuscript
     mode: lora
     lora_name: dvyio/flux-lora-medieval-illustration
@@ -190,6 +194,7 @@ styles:
     prompt_hint: "Repaint this image as a Symbolist painting: dreamlike mysterious mood, muted twilight color, mythic and allegorical atmosphere, soft glowing light, a sense of reverie rather than plain reality"
   - style_slug: byzantine-mosaic
     mode: prompt
+    prompt_hint: "Repaint this image as a Byzantine mosaic of small glass tesserae: gold background, frontal iconographic figures, visible grout lines"
   - style_slug: sumi-e
     mode: lora
     lora_name: Kontext-Style/Chinese_Ink_lora (Owen777/Kontext-Style-Loras)
@@ -200,6 +205,7 @@ styles:
     weight: 1.0
   - style_slug: art-deco
     mode: prompt
+    prompt_hint: "Repaint this image as a 1920s Art Deco poster: streamlined geometric forms, strong symmetry, gold and jewel tones, sunburst motifs"
   # Bonus styles (not in the t-003 target list, free wins from the Kontext pack)
   - style_slug: post-impressionism-van-gogh
     mode: lora
