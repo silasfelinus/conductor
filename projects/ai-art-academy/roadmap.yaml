@@ -219,7 +219,7 @@ tasks:
   - id: t-008
     milestone: m4
     title: 'kind_robots: download Academy starter image library + provenance manifest'
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -276,7 +276,7 @@ tasks:
   - id: t-014
     milestone: m4
     title: 'kind_robots: wire starter library into Remix Studio source picker'
-    status: waiting
+    status: ready
     owner: null
     passes: 0
     stakes: reversible
@@ -956,3 +956,22 @@ tasks:
       kind_robots PR needed — nothing to fix. Closing clean.
     claimed_by: claude-conductor-burst-20260716-t026-diffcheck
     claimed_at: '2026-07-16T21:07:15Z'
+  - id: t-027
+    milestone: m4
+    title: 'kind_robots: validate starters.manifest.json against PUBLIC-DOMAIN-POLICY.md schema in CI'
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-17T12:10:00Z'
+    note: >
+      Kaizen from t-008's merge (kind_robots PR #358, 2026-07-17). The manifest
+      schema (workTitle, artist, artistDied, year, collection, accessionId,
+      sourceUrl, license, licenseTermsUrl, retrievedDate per
+      PUBLIC-DOMAIN-POLICY.md §3) is currently enforced only by hand at write
+      time. Add a small script (Zod or plain JS) that validates
+      public/images/academy/starters/starters.manifest.json against the
+      required-field schema and the license enum (CC0 | PD-Mark |
+      Open-Access-Terms, with licenseTermsUrl required for the latter), and wire
+      it into an existing lightweight CI check (e.g. contract-tests.yml) so a
+      future edit to this file can't silently drop a provenance field.
