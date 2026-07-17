@@ -3153,3 +3153,12 @@ records:
   outcome: done
   failure_category: transient
   lesson: "Two workflows sharing a mutable resource (queue file + single-worker render backend) need the SAME concurrency.group, not just any group — a uniquely-named group only prevents self-collision, not collision with a sibling workflow hitting the same backend in parallel."
+- date: 2026-07-17
+  project: conductor
+  task: t-062
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: When de-flaking a red-CI detector's cancelled-run false positive, compare against the branch's latest run of ANY status, not just the latest completed one -- the superseding run frequently hasn't finished yet at the moment the detector polls (confirmed here: 9 minutes later), so a completed-only comparison would still miss the exact race it's meant to catch.
