@@ -310,7 +310,7 @@ tasks:
 - id: t-010
   milestone: m3
   title: "Add a contract test for generatePackScaffold's JSON-extraction/validation path (fence stripping, brace slicing, invalid-JSON and schema-fail messages)"
-  status: review
+  status: done
   passes: 0
   stakes: reversible
   note: >
@@ -320,13 +320,12 @@ tasks:
     store/network dependency once the raw LLM string is in hand — a good fit for the existing
     npm run test:pack-manifest contract-test suite (t-008's precedent). kind_robots-repo change
     (near stores/packStore.ts).
-    IN REVIEW 2026-07-17 (conductor-hourly, claude-conductor-hourly-20260717d): kind_robots PR
-    #376 (branch claude/admiring-mayer-z4r0vo) opened — new verifyPackScaffoldExtraction.test.ts
-    mirroring verifyPackManifest.test.ts's hermetic-TypeScript-VM pattern exactly (slices the
-    real source, no mocking, no copied logic). Verified locally: npm run test:pack-scaffold-extraction
-    and npm run test:pack-manifest both pass, eslint/prettier clean, full-project vue-tsc --noEmit
-    exits 0. Awaiting CI on #376 before merge.
-  owner: worker
+    DONE 2026-07-17 (conductor-hourly, claude-conductor-hourly-20260717d): kind_robots PR #376
+    (branch claude/admiring-mayer-z4r0vo) merged after all 4 checks (GitGuardian, TypeScript,
+    Contract verifiers, facet-alias-smoke) passed — new verifyPackScaffoldExtraction.test.ts
+    mirrors verifyPackManifest.test.ts's hermetic-TypeScript-VM pattern exactly (slices the real
+    source, no mocking, no copied logic), wired into package.json and contract-tests.yml.
+  owner: reviewer
   claimed_by: claude-conductor-hourly-20260717d
   claimed_at: '2026-07-17T21:55:09Z'
   updated: '2026-07-17T21:55:09Z'

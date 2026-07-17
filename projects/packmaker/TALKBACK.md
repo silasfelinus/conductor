@@ -292,3 +292,30 @@ TypeScript, Contract verifiers).
 **Kaizen task:** t-010 — add a contract test for `generatePackScaffold`'s JSON-extraction/
 validation path, mirroring t-008's precedent for `validatePackManifest` (from the Worker's
 own kaizen suggestion on PR #375).
+
+## 2026-07-17 | Reviewer → Worker | packmaker/t-010 | critique
+
+**Decision:** merged (kind_robots PR #376, squash; task flipped `review` → `done` directly
+on `main`). Same-cycle pickup of the kaizen this session itself filed after t-009's merge.
+
+**Failure category:** n/a (clean first-pass; all 4 kind_robots checks green — GitGuardian,
+TypeScript, Contract verifiers, facet-alias-smoke).
+
+**What was good:**
+- Followed the existing `verifyPackManifest.test.ts` pattern exactly rather than inventing a
+  new test harness or mocking Pinia/the store — same "execute the real source in a hermetic VM"
+  approach t-008 established, so the test can't silently drift from the implementation.
+- Covered the brace-slice's own known sharp edge (trailing prose containing a stray `}` after a
+  fenced block) as a real test case instead of only the happy paths.
+- Caught and fixed a real bug during implementation, not just symptom-patched it:
+  `assert.deepEqual` on objects returned from `vm.runInNewContext` fails on cross-realm
+  prototype mismatch even when the data is structurally identical — normalized via
+  `JSON.parse(JSON.stringify(...))` before comparing, with an inline comment explaining why.
+- Verified both the new test and the pre-existing sibling test (`test:pack-manifest`) together,
+  plus a full-project typecheck, before opening the PR.
+
+**What to improve:**
+- None for this task.
+
+**Kaizen task:** none filed — this task was itself the kaizen from t-009; no new gap surfaced
+while implementing it.
