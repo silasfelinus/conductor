@@ -799,12 +799,27 @@ tasks:
   - id: t-037
     milestone: m2
     title: Investigate why creating the animation-manager kind_robots Project deterministically fails (connection closed)
-    status: claimed
+    status: done
     owner: reviewer
     passes: 0
     stakes: reversible
-    updated: '2026-07-17T19:11:58Z'
+    updated: '2026-07-17T19:35:00Z'
     note: >
+      CLOSED 2026-07-17T19:35Z (claude-sweep-20260717-fqdd6v, same session as
+      the ungate): VERIFIED FIXED. Project Sync run 29606412293 (main @
+      2e882a4a, 19:08Z) syncs all 32 active projects clean — and both
+      previously-failing WRITE targets now EXIST as kind_robots Project rows:
+      animation-manager UNCHANGED (id=1285), kindrobots-unraid UNCHANGED
+      (id=1281). Zero retries, zero JWTExpired, zero connection-closed errors
+      in the run log. The high row ids (1281/1285 vs 1-95 for the older
+      projects) confirm the creates landed recently — i.e. once the
+      KR_API_TOKEN was refreshed and the t-022 DB-pool incident (one-shot
+      fallback pool, reverted in kind_robots PR #342) was resolved, the
+      deterministic failure disappeared with no conductor code change needed
+      beyond the already-merged retry improvement (PR #503). Root cause per
+      the investigation below: expired JWT (KR_API_TOKEN) paired with the
+      DB-pool connection-closed signature — both since fixed.
+
       UNGATED 2026-07-17 (Silas, in-session): "remove hard gates on 3 and 4,
       should now be working" — gate_human removed, back to ready. The DB-pool
       incident (kind-robots t-022, closed same session — root cause PR #336's

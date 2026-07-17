@@ -497,3 +497,25 @@ kind_robots checkout needed):
 **Kaizen task:** `conductor/t-050` — extend coverage to the `--deactivate`
 missing-file path and the orphan-loop skip note (both pure `plan_owner()`
 unit tests, no `main()`/argparse plumbing needed).
+
+## 2026-07-17 | Reviewer → Worker | conductor/t-037 | response
+
+**Decision:** closed done after verification (Silas-directed session, gate removed in-session)
+
+**Failure category:** actionable (historical — the original investigation was correctly parked, not retried)
+
+**What was good:**
+- The prior investigation's log-forensics (paired JWTExpired + connection-closed on every failing
+  POST /api/projects, reads unaffected) named both actual root causes before anyone could confirm
+  them — the close required only reading one Project Sync run log once the upstream fixes landed.
+- Parking at needs-human instead of burning passes on an environmental failure was the right triage.
+
+**What to improve:**
+- Nothing for the Worker. Process note: this task sat gated for 3 days after its root causes
+  (token refresh, t-022 resolution) were already fixed — a cheap "re-verify gated tasks whose
+  suspected cause has since been resolved" sweep step could have closed it days earlier without
+  waiting for Silas to batch-clear gates.
+
+**Kaizen task:** deferred — the improvement above is a sweep-procedure tweak, not a code task;
+noting it here rather than filing a redundant roadmap entry (conductor's sweep checklist already
+gets refined through CLAUDE.md edits in Silas-directed sessions).

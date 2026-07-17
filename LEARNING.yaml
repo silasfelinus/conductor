@@ -3026,3 +3026,17 @@ records:
   lesson: 'Gated draft work (two DLC pack manifests) sat complete at needs-human for two days until Silas
     batch-cleared gates in a report session. Drafts validated against the t-002 schema before the gate
     meant zero rework on approval — front-loading schema validation makes human gates cheap to clear.'
+- date: '2026-07-17'
+  project: conductor
+  task: t-037
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: actionable
+  lesson: 'A deterministic cross-repo write failure (4/4 identical retries while 31 reads succeeded)
+    was correctly parked at needs-human rather than burning passes — the cause was environmental
+    (expired KR_API_TOKEN + the t-022 DB-pool outage), invisible to client-side inspection. When the
+    upstream incidents cleared, verification cost one Actions log read: the sync run showed both
+    formerly-failing creates existing as rows (id=1281/1285). Deterministic-failure + clean-reads is
+    a strong signal to check auth and infra before suspecting the payload.'
