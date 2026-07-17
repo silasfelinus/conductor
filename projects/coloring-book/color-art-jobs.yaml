@@ -1,0 +1,915 @@
+schema_version: 1
+mode: ready
+variant: color
+description: Canonical color-proposal ArtJob queue for the three 36-image coloring books. Black-and-white conversion
+  begins only after a color composition is accepted.
+batch_policy:
+  worker_pass_size: 18
+  submission_order: book-order-then-slot
+  meaning: One pass may prepare, submit, retrieve, or review up to 18 color proposals. Do not spend a pass writing
+    one to six isolated prompts when a full half-book batch is available.
+defaults:
+  target_repo: silasfelinus/conductor
+  size: 1024x1536
+  engine: flux
+  flux_variant: dev
+  steps: 36
+  guidance: 3.5
+  output_version: color-proposals-v1
+status_meanings:
+  pending: ready to submit as a color ArtJob
+  done: render landed; human review may accept it, request revision, or keep it as inspiration
+  approved: accepted color master already exists; no new color ArtJob is required
+books:
+- order: 1
+  slug: monster-recast
+  title: Monster Recast
+  ledger: sets/monster-recast/proposals.yaml
+  entries:
+  - slot: 1
+    id: mr-001
+    slug: perfect-woman
+    title: The Perfect Woman
+    status: pending
+    seed: 840001
+    image_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-001-perfect-woman.webp
+    source_ref: projects/coloring-book/sets/monster-recast/art-modeler-request.yaml#mr-001
+  - slot: 2
+    id: mr-002
+    slug: dream-killer
+    title: Sweet Dreams, Darling
+    status: approved
+    seed: 840002
+    image_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-002-dream-killer.webp
+    source_ref: projects/coloring-book/sets/monster-recast/art-modeler-request.yaml#mr-002
+  - slot: 3
+    id: mr-003
+    slug: broadcast-giant
+    title: Broadcast Giant
+    status: approved
+    seed: 840003
+    image_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-003-broadcast-giant.webp
+    source_ref: projects/coloring-book/sets/monster-recast/art-modeler-request.yaml#mr-003
+  - slot: 4
+    id: mr-004
+    slug: mask-up
+    title: Masking Up at Moon Lake
+    status: approved
+    seed: 840004
+    image_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-004-mask-up.webp
+    source_ref: projects/coloring-book/sets/monster-recast/art-modeler-request.yaml#mr-004
+  - slot: 5
+    id: mr-005
+    slug: moon-torn
+    title: Moon-Torn
+    status: pending
+    seed: 840005
+    image_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-005-moon-torn.webp
+    source_ref: projects/coloring-book/sets/monster-recast/art-modeler-request.yaml#mr-005
+  - slot: 6
+    id: mr-006
+    slug: screwhead
+    title: Screwhead
+    status: pending
+    seed: 840006
+    image_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-006-screwhead.webp
+    source_ref: projects/coloring-book/sets/monster-recast/art-modeler-request.yaml#mr-006
+  - slot: 7
+    id: mr-007
+    slug: pound-foolish
+    title: Pound Foolish
+    status: pending
+    seed: 840007
+    image_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-007-pound-foolish.webp
+    source_ref: projects/coloring-book/sets/monster-recast/art-modeler-request.yaml#mr-007
+  - slot: 8
+    id: mr-008
+    slug: game-mistress
+    title: The Little Game Mistress
+    status: pending
+    seed: 840008
+    image_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-008-game-mistress.webp
+    source_ref: projects/coloring-book/sets/monster-recast/art-modeler-request.yaml#mr-008
+  - slot: 9
+    id: mr-009
+    slug: draculina-husbands
+    title: Draculina and Her Three Husbands
+    status: pending
+    seed: 840009
+    image_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-009-draculina-husbands.webp
+    source_ref: projects/coloring-book/sets/monster-recast/art-modeler-request.yaml#mr-009
+  - slot: 10
+    id: mr-010
+    slug: madam-hat
+    title: The Madam in the Hat
+    status: pending
+    seed: 840010
+    image_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-010-madam-hat.webp
+    source_ref: projects/coloring-book/sets/monster-recast/art-modeler-request.yaml#mr-010
+  - slot: 11
+    id: mr-011
+    slug: alien-king
+    title: The Alien King
+    status: pending
+    seed: 840011
+    image_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-011-alien-king.webp
+    source_ref: projects/coloring-book/sets/monster-recast/art-modeler-request.yaml#mr-011
+  - slot: 12
+    id: mr-012
+    slug: hush-dummy
+    title: Hush, Darling
+    status: pending
+    seed: 840012
+    image_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-012-hush-dummy.webp
+    source_ref: projects/coloring-book/sets/monster-recast/art-modeler-request.yaml#mr-012
+  - slot: 13
+    id: mr-013
+    slug: ansel-bell
+    title: Ansel Bell
+    status: pending
+    seed: 840013
+    image_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-013-ansel-bell.webp
+    source_ref: projects/coloring-book/sets/monster-recast/art-modeler-request.yaml#mr-013
+  - slot: 14
+    id: mr-014
+    slug: bathtub-shave
+    title: Ghostface Gets Ready
+    status: pending
+    seed: 840014
+    image_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-014-bathtub-shave.webp
+    source_ref: projects/coloring-book/sets/monster-recast/art-modeler-request.yaml#mr-014
+  - slot: 15
+    id: mr-015
+    slug: red-carpet-mummy
+    title: Unraveled on the Red Carpet
+    status: pending
+    seed: 840015
+    image_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-015-red-carpet-mummy.webp
+    source_ref: projects/coloring-book/sets/monster-recast/art-modeler-request.yaml#mr-015
+  - slot: 16
+    id: mr-016
+    slug: creature-drag
+    title: Creature in Drag
+    status: pending
+    seed: 840016
+    image_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-016-creature-drag.webp
+    source_ref: projects/coloring-book/sets/monster-recast/art-modeler-request.yaml#mr-016
+  - slot: 17
+    id: mr-017
+    slug: trophy-queen
+    title: Trophy Queen
+    status: pending
+    seed: 840017
+    image_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-017-trophy-queen.webp
+    source_ref: projects/coloring-book/sets/monster-recast/art-modeler-request.yaml#mr-017
+  - slot: 18
+    id: mr-018
+    slug: doctor-feast
+    title: Doctor Feast
+    status: pending
+    seed: 840018
+    image_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-018-doctor-feast.webp
+    source_ref: projects/coloring-book/sets/monster-recast/art-modeler-request.yaml#mr-018
+  - slot: 19
+    id: mr-019
+    slug: countess-vermin
+    title: Countess Vermin
+    status: pending
+    seed: 840019
+    image_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-019-countess-vermin.webp
+    source_ref: projects/coloring-book/sets/monster-recast/art-modeler-request.yaml#mr-019
+  - slot: 20
+    id: mr-020
+    slug: fly-girl-summer
+    title: Fly Girl Summer
+    status: pending
+    seed: 840020
+    image_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-020-fly-girl-summer.webp
+    source_ref: projects/coloring-book/sets/monster-recast/art-modeler-request.yaml#mr-020
+  - slot: 21
+    id: mr-021
+    slug: invisible-flasher
+    title: The Invisible Exhibitionist
+    status: pending
+    seed: 840021
+    image_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-021-invisible-flasher.webp
+    source_ref: projects/coloring-book/sets/monster-recast/art-modeler-request.yaml#mr-021
+  - slot: 22
+    id: mr-022
+    slug: prom-king
+    title: Prom King Ascendant
+    status: pending
+    seed: 840022
+    image_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-022-prom-king.webp
+    source_ref: projects/coloring-book/sets/monster-recast/art-modeler-request.yaml#mr-022
+  - slot: 23
+    id: mr-023
+    slug: babs-blob
+    title: Babs O'Blob
+    status: pending
+    seed: 840023
+    image_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-023-babs-blob.webp
+    source_ref: projects/coloring-book/sets/monster-recast/art-modeler-request.yaml#mr-023
+  - slot: 24
+    id: mr-024
+    slug: madame-phantasm
+    title: Madame Phantasm
+    status: pending
+    seed: 840024
+    image_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-024-madame-phantasm.webp
+    source_ref: projects/coloring-book/sets/monster-recast/art-modeler-request.yaml#mr-024
+  - slot: 25
+    id: mr-025
+    slug: little-miss-omen
+    title: Little Miss Omen
+    status: pending
+    seed: 840025
+    image_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-025-little-miss-omen.webp
+    source_ref: projects/coloring-book/sets/monster-recast/art-modeler-request.yaml#mr-025
+  - slot: 26
+    id: mr-026
+    slug: madam-satan
+    title: Madam Satan
+    status: pending
+    seed: 840026
+    image_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-026-madam-satan.webp
+    source_ref: projects/coloring-book/sets/monster-recast/art-modeler-request.yaml#mr-026
+  - slot: 27
+    id: mr-027
+    slug: half-possessed
+    title: Half Possessed
+    status: pending
+    seed: 840027
+    image_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-027-half-possessed.webp
+    source_ref: projects/coloring-book/sets/monster-recast/art-modeler-request.yaml#mr-027
+  - slot: 28
+    id: mr-028
+    slug: backward-boy
+    title: Backward Boy
+    status: pending
+    seed: 840028
+    image_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-028-backward-boy.webp
+    source_ref: projects/coloring-book/sets/monster-recast/art-modeler-request.yaml#mr-028
+  - slot: 29
+    id: mr-029
+    slug: madame-close-shave
+    title: Madame Close-Shave
+    status: pending
+    seed: 840029
+    image_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-029-madame-close-shave.webp
+    source_ref: projects/coloring-book/sets/monster-recast/art-modeler-request.yaml#mr-029
+  - slot: 30
+    id: mr-030
+    slug: honeyed-hook
+    title: Honeyed Hook
+    status: pending
+    seed: 840030
+    image_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-030-honeyed-hook.webp
+    source_ref: projects/coloring-book/sets/monster-recast/art-modeler-request.yaml#mr-030
+  - slot: 31
+    id: mr-031
+    slug: tall-woman
+    title: The Tall Woman
+    status: pending
+    seed: 840031
+    image_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-031-tall-woman.webp
+    source_ref: projects/coloring-book/sets/monster-recast/art-modeler-request.yaml#mr-031
+  - slot: 32
+    id: mr-032
+    slug: shape-at-home
+    title: The Shape at Home
+    status: pending
+    seed: 840032
+    image_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-032-shape-at-home.webp
+    source_ref: projects/coloring-book/sets/monster-recast/art-modeler-request.yaml#mr-032
+  - slot: 33
+    id: mr-033
+    slug: hallway-boys
+    title: The Hallway Boys
+    status: pending
+    seed: 840033
+    image_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-033-hallway-boys.webp
+    source_ref: projects/coloring-book/sets/monster-recast/art-modeler-request.yaml#mr-033
+  - slot: 34
+    id: mr-034
+    slug: mother-patch
+    title: Mother of the Patch
+    status: pending
+    seed: 840034
+    image_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-034-mother-patch.webp
+    source_ref: projects/coloring-book/sets/monster-recast/art-modeler-request.yaml#mr-034
+  - slot: 35
+    id: mr-035
+    slug: ticking-captain
+    title: The Ticking Captain
+    status: pending
+    seed: 840035
+    image_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-035-ticking-captain.webp
+    prompt: 'Low storm-deck angle: a formidable older woman pirate captain with a weathered, broad, sea-hardened
+      body braces at the wheel and catches a snapping rigging line with an original articulated compass-and-chronometer
+      hook. Beneath the hull, a vast clockwork marine predator glows through black water, its brass gills ticking
+      like a ship chronometer. Serious theatrical camp, original ship and costume system, thick clean black contours,
+      bounded flat color, dense organized detail, no text, no collage, no Disney likeness, familiar red-coat design,
+      feathered hat, crocodile design, or exact scene recreation.'
+  - slot: 36
+    id: mr-group-001
+    slug: monster-matinee
+    title: Monster Matinee
+    status: pending
+    seed: 840036
+    image_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-group-001-monster-matinee.webp
+    prompt: A midnight movie-theater lobby becomes a monster matinee after closing. The female ventriloquist dummy,
+      antique boy doll, and angular game-mistress automaton pose together beneath a blank glowing marquee while
+      tiny mechanical ushers flee with popcorn. Keep all three designs distinct, adult-safe and original, with strong
+      triangular staging, crisp faces and props, theatrical jewel colors, thick clean contours, no readable text,
+      no collage panels, and no copied commercial doll features.
+- order: 2
+  slug: hollywood-recast
+  title: Hollywood Recast
+  ledger: sets/hollywood-recast/proposals.yaml
+  entries:
+  - slot: 1
+    id: hwr-001
+    slug: starlight-mechanic
+    title: Starlight Mechanic
+    status: pending
+    seed: 850001
+    source_ref: projects/coloring-book/sets/hollywood-recast/proposals.yaml#hwr-001
+    image_path: projects/coloring-book/sets/hollywood-recast/generated/color-proposals-v1/hwr-001-starlight-mechanic.webp
+  - slot: 2
+    id: hwr-002
+    slug: the-grand-staircase
+    title: The Grand Staircase
+    status: pending
+    seed: 850002
+    source_ref: projects/coloring-book/sets/hollywood-recast/proposals.yaml#hwr-002
+    image_path: projects/coloring-book/sets/hollywood-recast/generated/color-proposals-v1/hwr-002-the-grand-staircase.webp
+  - slot: 3
+    id: hwr-003
+    slug: desert-wheel-queen
+    title: Desert Wheel Queen
+    status: pending
+    seed: 850003
+    source_ref: projects/coloring-book/sets/hollywood-recast/proposals.yaml#hwr-003
+    image_path: projects/coloring-book/sets/hollywood-recast/generated/color-proposals-v1/hwr-003-desert-wheel-queen.webp
+  - slot: 4
+    id: hwr-004
+    slug: rain-on-the-backlot
+    title: Rain on the Backlot
+    status: pending
+    seed: 850004
+    source_ref: projects/coloring-book/sets/hollywood-recast/proposals.yaml#hwr-004
+    image_path: projects/coloring-book/sets/hollywood-recast/generated/color-proposals-v1/hwr-004-rain-on-the-backlot.webp
+  - slot: 5
+    id: hwr-005
+    slug: midnight-detective
+    title: Midnight Detective
+    status: pending
+    seed: 850005
+    source_ref: projects/coloring-book/sets/hollywood-recast/proposals.yaml#hwr-005
+    image_path: projects/coloring-book/sets/hollywood-recast/generated/color-proposals-v1/hwr-005-midnight-detective.webp
+  - slot: 6
+    id: hwr-006
+    slug: temple-of-the-sun-engine
+    title: Temple of the Sun Engine
+    status: pending
+    seed: 850006
+    source_ref: projects/coloring-book/sets/hollywood-recast/proposals.yaml#hwr-006
+    image_path: projects/coloring-book/sets/hollywood-recast/generated/color-proposals-v1/hwr-006-temple-of-the-sun-engine.webp
+  - slot: 7
+    id: hwr-007
+    slug: the-silver-swashbuckler
+    title: The Silver Swashbuckler
+    status: pending
+    seed: 850007
+    source_ref: projects/coloring-book/sets/hollywood-recast/proposals.yaml#hwr-007
+    image_path: projects/coloring-book/sets/hollywood-recast/generated/color-proposals-v1/hwr-007-the-silver-swashbuckler.webp
+  - slot: 8
+    id: hwr-008
+    slug: laboratory-tenor
+    title: Laboratory Tenor
+    status: pending
+    seed: 850008
+    source_ref: projects/coloring-book/sets/hollywood-recast/proposals.yaml#hwr-008
+    image_path: projects/coloring-book/sets/hollywood-recast/generated/color-proposals-v1/hwr-008-laboratory-tenor.webp
+  - slot: 9
+    id: hwr-009
+    slug: ballroom-double-take
+    title: Ballroom Double Take
+    status: pending
+    seed: 850009
+    source_ref: projects/coloring-book/sets/hollywood-recast/proposals.yaml#hwr-009
+    image_path: projects/coloring-book/sets/hollywood-recast/generated/color-proposals-v1/hwr-009-ballroom-double-take.webp
+  - slot: 10
+    id: hwr-010
+    slug: rooftop-sign-song
+    title: Rooftop Sign Song
+    status: pending
+    seed: 850010
+    source_ref: projects/coloring-book/sets/hollywood-recast/proposals.yaml#hwr-010
+    image_path: projects/coloring-book/sets/hollywood-recast/generated/color-proposals-v1/hwr-010-rooftop-sign-song.webp
+  - slot: 11
+    id: hwr-011
+    slug: the-gentle-giant-visitor
+    title: The Gentle Giant Visitor
+    status: pending
+    seed: 850011
+    source_ref: projects/coloring-book/sets/hollywood-recast/proposals.yaml#hwr-011
+    image_path: projects/coloring-book/sets/hollywood-recast/generated/color-proposals-v1/hwr-011-the-gentle-giant-visitor.webp
+  - slot: 12
+    id: hwr-012
+    slug: last-train-first-kiss
+    title: Last Train, First Kiss
+    status: pending
+    seed: 850012
+    source_ref: projects/coloring-book/sets/hollywood-recast/proposals.yaml#hwr-012
+    image_path: projects/coloring-book/sets/hollywood-recast/generated/color-proposals-v1/hwr-012-last-train-first-kiss.webp
+  - slot: 13
+    id: hwr-013
+    slug: high-noon-marshal
+    title: High Noon Marshal
+    status: pending
+    seed: 850013
+    source_ref: projects/coloring-book/sets/hollywood-recast/proposals.yaml#hwr-013
+    image_path: projects/coloring-book/sets/hollywood-recast/generated/color-proposals-v1/hwr-013-high-noon-marshal.webp
+  - slot: 14
+    id: hwr-014
+    slug: chrome-thunder
+    title: Chrome Thunder
+    status: pending
+    seed: 850014
+    source_ref: projects/coloring-book/sets/hollywood-recast/proposals.yaml#hwr-014
+    image_path: projects/coloring-book/sets/hollywood-recast/generated/color-proposals-v1/hwr-014-chrome-thunder.webp
+  - slot: 15
+    id: hwr-015
+    slug: prince-of-the-deep
+    title: Prince of the Deep
+    status: pending
+    seed: 850015
+    source_ref: projects/coloring-book/sets/hollywood-recast/proposals.yaml#hwr-015
+    image_path: projects/coloring-book/sets/hollywood-recast/generated/color-proposals-v1/hwr-015-prince-of-the-deep.webp
+  - slot: 16
+    id: hwr-016
+    slug: the-verdict
+    title: The Verdict
+    status: pending
+    seed: 850016
+    source_ref: projects/coloring-book/sets/hollywood-recast/proposals.yaml#hwr-016
+    image_path: projects/coloring-book/sets/hollywood-recast/generated/color-proposals-v1/hwr-016-the-verdict.webp
+  - slot: 17
+    id: hwr-017
+    slug: casino-grandmother
+    title: Casino Grandmother
+    status: pending
+    seed: 850017
+    source_ref: projects/coloring-book/sets/hollywood-recast/proposals.yaml#hwr-017
+    image_path: projects/coloring-book/sets/hollywood-recast/generated/color-proposals-v1/hwr-017-casino-grandmother.webp
+  - slot: 18
+    id: hwr-018
+    slug: nebula-crooner
+    title: Nebula Crooner
+    status: pending
+    seed: 850018
+    source_ref: projects/coloring-book/sets/hollywood-recast/proposals.yaml#hwr-018
+    image_path: projects/coloring-book/sets/hollywood-recast/generated/color-proposals-v1/hwr-018-nebula-crooner.webp
+  - slot: 19
+    id: hwr-019
+    slug: the-house-on-marigold-hill
+    title: The House on Marigold Hill
+    status: pending
+    seed: 850019
+    source_ref: projects/coloring-book/sets/hollywood-recast/proposals.yaml#hwr-019
+    image_path: projects/coloring-book/sets/hollywood-recast/generated/color-proposals-v1/hwr-019-the-house-on-marigold-hill.webp
+  - slot: 20
+    id: hwr-020
+    slug: director-of-monsters
+    title: Director of Monsters
+    status: pending
+    seed: 850020
+    source_ref: projects/coloring-book/sets/hollywood-recast/proposals.yaml#hwr-020
+    image_path: projects/coloring-book/sets/hollywood-recast/generated/color-proposals-v1/hwr-020-director-of-monsters.webp
+  - slot: 21
+    id: hwr-021
+    slug: the-silent-mechanic
+    title: The Silent Mechanic
+    status: pending
+    seed: 850021
+    source_ref: projects/coloring-book/sets/hollywood-recast/proposals.yaml#hwr-021
+    image_path: projects/coloring-book/sets/hollywood-recast/generated/color-proposals-v1/hwr-021-the-silent-mechanic.webp
+  - slot: 22
+    id: hwr-022
+    slug: disco-exorcist
+    title: Disco Exorcist
+    status: pending
+    seed: 850022
+    source_ref: projects/coloring-book/sets/hollywood-recast/proposals.yaml#hwr-022
+    image_path: projects/coloring-book/sets/hollywood-recast/generated/color-proposals-v1/hwr-022-disco-exorcist.webp
+  - slot: 23
+    id: hwr-023
+    slug: whiteout-expedition
+    title: Whiteout Expedition
+    status: pending
+    seed: 850023
+    source_ref: projects/coloring-book/sets/hollywood-recast/proposals.yaml#hwr-023
+    image_path: projects/coloring-book/sets/hollywood-recast/generated/color-proposals-v1/hwr-023-whiteout-expedition.webp
+  - slot: 24
+    id: hwr-024
+    slug: the-stunt-swordmaster
+    title: The Stunt Swordmaster
+    status: pending
+    seed: 850024
+    source_ref: projects/coloring-book/sets/hollywood-recast/proposals.yaml#hwr-024
+    image_path: projects/coloring-book/sets/hollywood-recast/generated/color-proposals-v1/hwr-024-the-stunt-swordmaster.webp
+  - slot: 25
+    id: hwr-025
+    slug: escape-from-center-ring
+    title: Escape from Center Ring
+    status: pending
+    seed: 850025
+    source_ref: projects/coloring-book/sets/hollywood-recast/proposals.yaml#hwr-025
+    image_path: projects/coloring-book/sets/hollywood-recast/generated/color-proposals-v1/hwr-025-escape-from-center-ring.webp
+  - slot: 26
+    id: hwr-026
+    slug: champion-in-the-mirror
+    title: Champion in the Mirror
+    status: pending
+    seed: 850026
+    source_ref: projects/coloring-book/sets/hollywood-recast/proposals.yaml#hwr-026
+    image_path: projects/coloring-book/sets/hollywood-recast/generated/color-proposals-v1/hwr-026-champion-in-the-mirror.webp
+  - slot: 27
+    id: hwr-027
+    slug: the-peacock-prince
+    title: The Peacock Prince
+    status: pending
+    seed: 850027
+    source_ref: projects/coloring-book/sets/hollywood-recast/proposals.yaml#hwr-027
+    image_path: projects/coloring-book/sets/hollywood-recast/generated/color-proposals-v1/hwr-027-the-peacock-prince.webp
+  - slot: 28
+    id: hwr-028
+    slug: end-of-the-world-road-trip
+    title: End-of-the-World Road Trip
+    status: pending
+    seed: 850028
+    source_ref: projects/coloring-book/sets/hollywood-recast/proposals.yaml#hwr-028
+    image_path: projects/coloring-book/sets/hollywood-recast/generated/color-proposals-v1/hwr-028-end-of-the-world-road-trip.webp
+  - slot: 29
+    id: hwr-029
+    slug: matinee-time-machine
+    title: Matinee Time Machine
+    status: pending
+    seed: 850029
+    source_ref: projects/coloring-book/sets/hollywood-recast/proposals.yaml#hwr-029
+    image_path: projects/coloring-book/sets/hollywood-recast/generated/color-proposals-v1/hwr-029-matinee-time-machine.webp
+  - slot: 30
+    id: hwr-030
+    slug: mermaid-on-lot-seven
+    title: Mermaid on Lot Seven
+    status: pending
+    seed: 850030
+    source_ref: projects/coloring-book/sets/hollywood-recast/proposals.yaml#hwr-030
+    image_path: projects/coloring-book/sets/hollywood-recast/generated/color-proposals-v1/hwr-030-mermaid-on-lot-seven.webp
+  - slot: 31
+    id: hwr-031
+    slug: alien-at-the-premiere
+    title: Alien at the Premiere
+    status: pending
+    seed: 850031
+    source_ref: projects/coloring-book/sets/hollywood-recast/proposals.yaml#hwr-031
+    image_path: projects/coloring-book/sets/hollywood-recast/generated/color-proposals-v1/hwr-031-alien-at-the-premiere.webp
+  - slot: 32
+    id: hwr-032
+    slug: comedy-troupe-catastrophe
+    title: Comedy Troupe Catastrophe
+    status: pending
+    seed: 850032
+    source_ref: projects/coloring-book/sets/hollywood-recast/proposals.yaml#hwr-032
+    image_path: projects/coloring-book/sets/hollywood-recast/generated/color-proposals-v1/hwr-032-comedy-troupe-catastrophe.webp
+  - slot: 33
+    id: hwr-033
+    slug: the-last-projectionist
+    title: The Last Projectionist
+    status: pending
+    seed: 850033
+    source_ref: projects/coloring-book/sets/hollywood-recast/proposals.yaml#hwr-033
+    image_path: projects/coloring-book/sets/hollywood-recast/generated/color-proposals-v1/hwr-033-the-last-projectionist.webp
+  - slot: 34
+    id: hwr-034
+    slug: creature-feature-sweethearts
+    title: Creature Feature Sweethearts
+    status: pending
+    seed: 850034
+    source_ref: projects/coloring-book/sets/hollywood-recast/proposals.yaml#hwr-034
+    image_path: projects/coloring-book/sets/hollywood-recast/generated/color-proposals-v1/hwr-034-creature-feature-sweethearts.webp
+  - slot: 35
+    id: hwr-035
+    slug: awards-night-stampede
+    title: Awards Night Stampede
+    status: pending
+    seed: 850035
+    source_ref: projects/coloring-book/sets/hollywood-recast/proposals.yaml#hwr-035
+    image_path: projects/coloring-book/sets/hollywood-recast/generated/color-proposals-v1/hwr-035-awards-night-stampede.webp
+  - slot: 36
+    id: hwr-036
+    slug: the-recast-marquee
+    title: The Recast Marquee
+    status: pending
+    seed: 850036
+    source_ref: projects/coloring-book/sets/hollywood-recast/proposals.yaml#hwr-036
+    image_path: projects/coloring-book/sets/hollywood-recast/generated/color-proposals-v1/hwr-036-the-recast-marquee.webp
+- order: 3
+  slug: kind-robots
+  title: Kind Robots
+  ledger: sets/kind-robots/proposals.yaml
+  entries:
+  - slot: 1
+    id: kr-001
+    slug: the-logo-workshop
+    title: The Logo Workshop
+    status: pending
+    seed: 860001
+    source_ref: projects/coloring-book/sets/kind-robots/proposals.yaml#kr-001
+    image_path: projects/coloring-book/sets/kind-robots/generated/color-proposals-v1/kr-001-the-logo-workshop.webp
+    allow_logo_emblem: true
+    reference_images:
+    - kind_robots:public/images/kindtitle.webp
+    - user-attachment:kind-robots-logo
+  - slot: 2
+    id: kr-002
+    slug: ami-over-the-redwoods
+    title: Ami Over the Redwoods
+    status: pending
+    seed: 860002
+    source_ref: projects/coloring-book/sets/kind-robots/proposals.yaml#kr-002
+    image_path: projects/coloring-book/sets/kind-robots/generated/color-proposals-v1/kr-002-ami-over-the-redwoods.webp
+  - slot: 3
+    id: kr-003
+    slug: sunrise-robot-caf
+    title: Sunrise Robot Café
+    status: pending
+    seed: 860003
+    source_ref: projects/coloring-book/sets/kind-robots/proposals.yaml#kr-003
+    image_path: projects/coloring-book/sets/kind-robots/generated/color-proposals-v1/kr-003-sunrise-robot-caf.webp
+  - slot: 4
+    id: kr-004
+    slug: botcat-rescue
+    title: Botcat Rescue
+    status: pending
+    seed: 860004
+    source_ref: projects/coloring-book/sets/kind-robots/proposals.yaml#kr-004
+    image_path: projects/coloring-book/sets/kind-robots/generated/color-proposals-v1/kr-004-botcat-rescue.webp
+  - slot: 5
+    id: kr-005
+    slug: serendipity-space-bar
+    title: Serendipity Space Bar
+    status: pending
+    seed: 860005
+    source_ref: projects/coloring-book/sets/kind-robots/proposals.yaml#kr-005
+    image_path: projects/coloring-book/sets/kind-robots/generated/color-proposals-v1/kr-005-serendipity-space-bar.webp
+  - slot: 6
+    id: kr-006
+    slug: net-delivery-flight
+    title: Net Delivery Flight
+    status: pending
+    seed: 860006
+    source_ref: projects/coloring-book/sets/kind-robots/proposals.yaml#kr-006
+    image_path: projects/coloring-book/sets/kind-robots/generated/color-proposals-v1/kr-006-net-delivery-flight.webp
+  - slot: 7
+    id: kr-007
+    slug: ukulele-under-the-redwoods
+    title: Ukulele Under the Redwoods
+    status: pending
+    seed: 860007
+    source_ref: projects/coloring-book/sets/kind-robots/proposals.yaml#kr-007
+    image_path: projects/coloring-book/sets/kind-robots/generated/color-proposals-v1/kr-007-ukulele-under-the-redwoods.webp
+  - slot: 8
+    id: kr-008
+    slug: granny-gearworks
+    title: Granny Gearworks
+    status: pending
+    seed: 860008
+    source_ref: projects/coloring-book/sets/kind-robots/proposals.yaml#kr-008
+    image_path: projects/coloring-book/sets/kind-robots/generated/color-proposals-v1/kr-008-granny-gearworks.webp
+  - slot: 9
+    id: kr-009
+    slug: the-accessible-greenhouse
+    title: The Accessible Greenhouse
+    status: pending
+    seed: 860009
+    source_ref: projects/coloring-book/sets/kind-robots/proposals.yaml#kr-009
+    image_path: projects/coloring-book/sets/kind-robots/generated/color-proposals-v1/kr-009-the-accessible-greenhouse.webp
+  - slot: 10
+    id: kr-010
+    slug: deep-sea-repair-crew
+    title: Deep-Sea Repair Crew
+    status: pending
+    seed: 860010
+    source_ref: projects/coloring-book/sets/kind-robots/proposals.yaml#kr-010
+    image_path: projects/coloring-book/sets/kind-robots/generated/color-proposals-v1/kr-010-deep-sea-repair-crew.webp
+  - slot: 11
+    id: kr-011
+    slug: cat-rescue-protocol
+    title: Cat Rescue Protocol
+    status: pending
+    seed: 860011
+    source_ref: projects/coloring-book/sets/kind-robots/proposals.yaml#kr-011
+    image_path: projects/coloring-book/sets/kind-robots/generated/color-proposals-v1/kr-011-cat-rescue-protocol.webp
+  - slot: 12
+    id: kr-012
+    slug: the-dream-library
+    title: The Dream Library
+    status: pending
+    seed: 860012
+    source_ref: projects/coloring-book/sets/kind-robots/proposals.yaml#kr-012
+    image_path: projects/coloring-book/sets/kind-robots/generated/color-proposals-v1/kr-012-the-dream-library.webp
+  - slot: 13
+    id: kr-013
+    slug: beach-cleanup-parade
+    title: Beach Cleanup Parade
+    status: pending
+    seed: 860013
+    source_ref: projects/coloring-book/sets/kind-robots/proposals.yaml#kr-013
+    image_path: projects/coloring-book/sets/kind-robots/generated/color-proposals-v1/kr-013-beach-cleanup-parade.webp
+  - slot: 14
+    id: kr-014
+    slug: rainbow-butterfly-sanctuary
+    title: Rainbow Butterfly Sanctuary
+    status: pending
+    seed: 860014
+    source_ref: projects/coloring-book/sets/kind-robots/proposals.yaml#kr-014
+    image_path: projects/coloring-book/sets/kind-robots/generated/color-proposals-v1/kr-014-rainbow-butterfly-sanctuary.webp
+  - slot: 15
+    id: kr-015
+    slug: coat-dance-calibration
+    title: Coat Dance Calibration
+    status: pending
+    seed: 860015
+    source_ref: projects/coloring-book/sets/kind-robots/proposals.yaml#kr-015
+    image_path: projects/coloring-book/sets/kind-robots/generated/color-proposals-v1/kr-015-coat-dance-calibration.webp
+  - slot: 16
+    id: kr-016
+    slug: cardboard-castle-engineers
+    title: Cardboard Castle Engineers
+    status: pending
+    seed: 860016
+    source_ref: projects/coloring-book/sets/kind-robots/proposals.yaml#kr-016
+    image_path: projects/coloring-book/sets/kind-robots/generated/color-proposals-v1/kr-016-cardboard-castle-engineers.webp
+  - slot: 17
+    id: kr-017
+    slug: the-gentle-beekeeper
+    title: The Gentle Beekeeper
+    status: pending
+    seed: 860017
+    source_ref: projects/coloring-book/sets/kind-robots/proposals.yaml#kr-017
+    image_path: projects/coloring-book/sets/kind-robots/generated/color-proposals-v1/kr-017-the-gentle-beekeeper.webp
+  - slot: 18
+    id: kr-018
+    slug: tea-party-for-giants
+    title: Tea Party for Giants
+    status: pending
+    seed: 860018
+    source_ref: projects/coloring-book/sets/kind-robots/proposals.yaml#kr-018
+    image_path: projects/coloring-book/sets/kind-robots/generated/color-proposals-v1/kr-018-tea-party-for-giants.webp
+  - slot: 19
+    id: kr-019
+    slug: friendly-haunted-house
+    title: Friendly Haunted House
+    status: pending
+    seed: 860019
+    source_ref: projects/coloring-book/sets/kind-robots/proposals.yaml#kr-019
+    image_path: projects/coloring-book/sets/kind-robots/generated/color-proposals-v1/kr-019-friendly-haunted-house.webp
+  - slot: 20
+    id: kr-020
+    slug: moon-garden
+    title: Moon Garden
+    status: pending
+    seed: 860020
+    source_ref: projects/coloring-book/sets/kind-robots/proposals.yaml#kr-020
+    image_path: projects/coloring-book/sets/kind-robots/generated/color-proposals-v1/kr-020-moon-garden.webp
+  - slot: 21
+    id: kr-021
+    slug: the-kind-conductor
+    title: The Kind Conductor
+    status: pending
+    seed: 860021
+    source_ref: projects/coloring-book/sets/kind-robots/proposals.yaml#kr-021
+    image_path: projects/coloring-book/sets/kind-robots/generated/color-proposals-v1/kr-021-the-kind-conductor.webp
+  - slot: 22
+    id: kr-022
+    slug: mermaid-maintenance
+    title: Mermaid Maintenance
+    status: pending
+    seed: 860022
+    source_ref: projects/coloring-book/sets/kind-robots/proposals.yaml#kr-022
+    image_path: projects/coloring-book/sets/kind-robots/generated/color-proposals-v1/kr-022-mermaid-maintenance.webp
+  - slot: 23
+    id: kr-023
+    slug: firehouse-robot
+    title: Firehouse Robot
+    status: pending
+    seed: 860023
+    source_ref: projects/coloring-book/sets/kind-robots/proposals.yaml#kr-023
+    image_path: projects/coloring-book/sets/kind-robots/generated/color-proposals-v1/kr-023-firehouse-robot.webp
+  - slot: 24
+    id: kr-024
+    slug: memory-dungeon-expedition
+    title: Memory Dungeon Expedition
+    status: pending
+    seed: 860024
+    source_ref: projects/coloring-book/sets/kind-robots/proposals.yaml#kr-024
+    image_path: projects/coloring-book/sets/kind-robots/generated/color-proposals-v1/kr-024-memory-dungeon-expedition.webp
+  - slot: 25
+    id: kr-025
+    slug: art-studio-swarm
+    title: Art Studio Swarm
+    status: pending
+    seed: 860025
+    source_ref: projects/coloring-book/sets/kind-robots/proposals.yaml#kr-025
+    image_path: projects/coloring-book/sets/kind-robots/generated/color-proposals-v1/kr-025-art-studio-swarm.webp
+  - slot: 26
+    id: kr-026
+    slug: goat-farm-fix-it
+    title: Goat Farm Fix-It
+    status: pending
+    seed: 860026
+    source_ref: projects/coloring-book/sets/kind-robots/proposals.yaml#kr-026
+    image_path: projects/coloring-book/sets/kind-robots/generated/color-proposals-v1/kr-026-goat-farm-fix-it.webp
+  - slot: 27
+    id: kr-027
+    slug: observatory-friends
+    title: Observatory Friends
+    status: pending
+    seed: 860027
+    source_ref: projects/coloring-book/sets/kind-robots/proposals.yaml#kr-027
+    image_path: projects/coloring-book/sets/kind-robots/generated/color-proposals-v1/kr-027-observatory-friends.webp
+  - slot: 28
+    id: kr-028
+    slug: night-market-helpers
+    title: Night Market Helpers
+    status: pending
+    seed: 860028
+    source_ref: projects/coloring-book/sets/kind-robots/proposals.yaml#kr-028
+    image_path: projects/coloring-book/sets/kind-robots/generated/color-proposals-v1/kr-028-night-market-helpers.webp
+  - slot: 29
+    id: kr-029
+    slug: orchestra-of-odd-bots
+    title: Orchestra of Odd Bots
+    status: pending
+    seed: 860029
+    source_ref: projects/coloring-book/sets/kind-robots/proposals.yaml#kr-029
+    image_path: projects/coloring-book/sets/kind-robots/generated/color-proposals-v1/kr-029-orchestra-of-odd-bots.webp
+  - slot: 30
+    id: kr-030
+    slug: snow-day-service-crew
+    title: Snow Day Service Crew
+    status: pending
+    seed: 860030
+    source_ref: projects/coloring-book/sets/kind-robots/proposals.yaml#kr-030
+    image_path: projects/coloring-book/sets/kind-robots/generated/color-proposals-v1/kr-030-snow-day-service-crew.webp
+  - slot: 31
+    id: kr-031
+    slug: desert-solar-garden
+    title: Desert Solar Garden
+    status: pending
+    seed: 860031
+    source_ref: projects/coloring-book/sets/kind-robots/proposals.yaml#kr-031
+    image_path: projects/coloring-book/sets/kind-robots/generated/color-proposals-v1/kr-031-desert-solar-garden.webp
+  - slot: 32
+    id: kr-032
+    slug: community-mural
+    title: Community Mural
+    status: pending
+    seed: 860032
+    source_ref: projects/coloring-book/sets/kind-robots/proposals.yaml#kr-032
+    image_path: projects/coloring-book/sets/kind-robots/generated/color-proposals-v1/kr-032-community-mural.webp
+  - slot: 33
+    id: kr-033
+    slug: storytime-circuit
+    title: Storytime Circuit
+    status: pending
+    seed: 860033
+    source_ref: projects/coloring-book/sets/kind-robots/proposals.yaml#kr-033
+    image_path: projects/coloring-book/sets/kind-robots/generated/color-proposals-v1/kr-033-storytime-circuit.webp
+  - slot: 34
+    id: kr-034
+    slug: toy-hospital
+    title: Toy Hospital
+    status: pending
+    seed: 860034
+    source_ref: projects/coloring-book/sets/kind-robots/proposals.yaml#kr-034
+    image_path: projects/coloring-book/sets/kind-robots/generated/color-proposals-v1/kr-034-toy-hospital.webp
+  - slot: 35
+    id: kr-035
+    slug: kind-robots-parade
+    title: Kind Robots Parade
+    status: pending
+    seed: 860035
+    source_ref: projects/coloring-book/sets/kind-robots/proposals.yaml#kr-035
+    image_path: projects/coloring-book/sets/kind-robots/generated/color-proposals-v1/kr-035-kind-robots-parade.webp
+  - slot: 36
+    id: kr-036
+    slug: constellation-of-care
+    title: Constellation of Care
+    status: pending
+    seed: 860036
+    source_ref: projects/coloring-book/sets/kind-robots/proposals.yaml#kr-036
+    image_path: projects/coloring-book/sets/kind-robots/generated/color-proposals-v1/kr-036-constellation-of-care.webp

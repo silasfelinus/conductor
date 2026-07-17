@@ -1,10 +1,12 @@
-name: Monster Recast ArtJobs
+name: Coloring Book Color ArtJobs
 
 on:
   push:
     branches: [main]
     paths:
-      - "projects/coloring-book/sets/monster-recast/unapproved-art-jobs.yaml"
+      - "projects/coloring-book/color-art-jobs.yaml"
+      - "projects/coloring-book/sets/*/proposals.yaml"
+      - "scripts/consume_coloring_book_color_art.py"
       - "scripts/consume_monster_recast_art.py"
       - ".github/workflows/monster-recast-art-jobs.yml"
   schedule:
@@ -12,16 +14,20 @@ on:
   workflow_dispatch:
     inputs:
       limit:
-        description: "Maximum Monster Recast images to generate this run"
-        default: "4"
+        description: "Maximum color proposals to generate this pass"
+        default: "18"
         required: false
       timeout:
         description: "Seconds to wait per ArtJob"
         default: "600"
         required: false
+      book:
+        description: "Optional book slug: monster-recast, hollywood-recast, or kind-robots"
+        default: ""
+        required: false
 
 concurrency:
-  group: monster-recast-artjobs
+  group: coloring-book-color-artjobs
   cancel-in-progress: false
 
 jobs:
@@ -42,29 +48,37 @@ jobs:
       - name: Install dependencies
         run: pip install --disable-pip-version-check pyyaml Pillow
 
-      - name: Submit Monster Recast ArtJobs
+      - name: Submit color proposal ArtJobs
         id: consume
         continue-on-error: true
         env:
           KR_API_TOKEN: ${{ secrets.KR_API_TOKEN }}
         run: |
-          python scripts/consume_monster_recast_art.py --live \
-            --limit ${{ github.event.inputs.limit || '4' }} \
-            --timeout ${{ github.event.inputs.timeout || '600' }}
+          BOOK_ARGS=()
+          if [ -n "${{ github.event.inputs.book }}" ]; then
+            BOOK_ARGS=(--book "${{ github.event.inputs.book }}")
+          fi
+          python scripts/consume_coloring_book_color_art.py --live \
+            --limit ${{ github.event.inputs.limit || '18' }} \
+            --timeout ${{ github.event.inputs.timeout || '600' }} \
+            "${BOOK_ARGS[@]}"
 
       - name: Commit completed renders and queue progress
         run: |
           git config user.name "conductor-bot"
           git config user.email "conductor-bot@users.noreply.github.com"
-          git add projects/coloring-book/sets/monster-recast/unapproved-art-jobs.yaml
-          if [ -d projects/coloring-book/sets/monster-recast/generated ]; then
-            git add projects/coloring-book/sets/monster-recast/generated/
-          fi
+          git add projects/coloring-book/color-art-jobs.yaml
+          for set in monster-recast hollywood-recast kind-robots; do
+            dir="projects/coloring-book/sets/$set/generated/color-proposals-v1"
+            if [ -d "$dir" ]; then
+              git add "$dir"
+            fi
+          done
           if git diff --staged --quiet; then
-            echo "No Monster Recast changes to commit."
+            echo "No coloring-book color-job changes to commit."
             exit 0
           fi
-          git commit -m "art: advance Monster Recast unapproved pair batch [skip ci]"
+          git commit -m "art: advance 18-image coloring-book color batch [skip ci]"
           for attempt in 1 2 3 4 5; do
             if git push; then
               exit 0
@@ -78,7 +92,7 @@ jobs:
       - name: Report outcome
         run: |
           if [ "${{ steps.consume.outcome }}" = "success" ]; then
-            echo "Monster Recast ArtJob batch advanced successfully."
+            echo "Coloring-book color proposal batch advanced successfully."
           else
-            echo "::warning::One or more Monster Recast jobs failed or timed out. Successful renders were still committed; failed queue entries remain pending."
+            echo "::warning::One or more color proposal jobs failed or timed out. Successful renders were still committed; failed entries remain pending."
           fi

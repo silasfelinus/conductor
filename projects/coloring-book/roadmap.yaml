@@ -4,12 +4,13 @@ goal: 'A kind_robots coloring-book app and production pipeline: develop themed b
   accepted paired masters in the app, and prepare complete digital and print-ready packages for the storefront.'
 notes_from_silas: 'Canonical book order and scope, clarified 2026-07-17: book 1 is Monster Recast, book 2 is Hollywood
   Recast (never “Hollywood Recast 2”), and book 3 is Kind Robots. Each book tracks exactly 36 interior illustration
-  proposals; each proposal is intended to finish as one confirmed final-draft color file and one faithful confirmed
-  final-draft black-and-white file. Covers are separate. The proposal ledger must retain the proposed prompt, inspirations
-  and candidates, accepted working color/BW files, and final color/BW files. Accepted is not the same as final.
-  Use MR, HWR, and KR prefixes; the old shared HR shorthand is ambiguous. Keep production moving in small batches
-  without making unrelated exploration block accepted work. Art generation and internal curation are authorized;
-  publishing, POD accounts/listings, spend, and public Character release remain human-gated.'
+  proposals and begins with a complete set of 36 COLOR design prompts. Prompt writing, ArtJob submission, render
+  retrieval, and same-stage review advance in batches of up to 18 images (half a book), not 1-6. Design iterations
+  are color-first. Early BW studies may be retained as inspiration, but a faithful BW coloring-page counterpart
+  is generated only after its color composition is accepted. Each proposal ultimately finishes as one confirmed
+  final color file and one faithful final BW file. Covers are separate. Accepted is not final. Use MR, HWR, and
+  KR prefixes. Internal art generation and curation are authorized; publishing, POD accounts/listings, spend, and
+  public Character release remain human-gated.'
 milestones:
 - id: m1
   title: Design brief, proposal-ledger contract, and production specs
@@ -180,23 +181,22 @@ tasks:
   stakes: reversible
   updated: '2026-07-17T14:49:35Z'
   depends_on: t-021
-  note: 'RECONCILED 2026-07-17 (burst-mode cycle): completed the "First reconcile" step -- mapped
-    every physical projects/coloring-book/sets/monster-recast/approved/ file into proposals.yaml
-    as inspirations on its matching concept slot, cross-checked against the 2026-07-12
-    inventory_snapshot''s represented_concept_ids and per-category counts (all matched exactly,
-    confirming the mapping). No files renamed or guessed: 16 of 17 approved-only concepts matched
-    by exact working-title/source-lineage text against homage-concepts.yaml; the 18th
-    (gothic-schoolgirl -> mr-025) had no direct text match and is flagged
-    needs_visual_verification -- inferred only by elimination (the one leftover discovered slug
-    against the one leftover represented id) since guessing a slug-to-concept match from vibes
-    alone would violate "without guessing." Also recorded the two generated/-only ArtJob-complete
-    pairs (mr-010/madam-hat, mr-013/ansel-bell, per unapproved-art-jobs.yaml) as
-    generated-candidates, distinct from the approved/ inventory. coloring_proposal_status.py --check
-    now reports 17/18 approved concepts with inspiration attached (up from 1) and
-    coloring_approved_status.py --check / --check both still pass. Ready for the next cycle to run
-    the actual production batch (attach/create accepted masters, starting at mr-001 per the status
-    script''s "next" pointer) -- kept `recurring`, not done; no pass consumed (this is progress on
-    the recurring task, not a rejection).'
+  note: 'CURRENT COLOR-FIRST DIRECTION 2026-07-17: use the canonical color-art-jobs.yaml queue. A Worker generation/submission/review
+    pass handles up to 18 Monster Recast color proposals at one stage. Do not generate new BW variants until the
+    corresponding color composition is accepted; then derive a faithful BW counterpart in an 18-image pass. RECONCILED
+    2026-07-17 (burst-mode cycle): completed the "First reconcile" step -- mapped every physical projects/coloring-book/sets/monster-recast/approved/
+    file into proposals.yaml as inspirations on its matching concept slot, cross-checked against the 2026-07-12
+    inventory_snapshot''s represented_concept_ids and per-category counts (all matched exactly, confirming the mapping).
+    No files renamed or guessed: 16 of 17 approved-only concepts matched by exact working-title/source-lineage text
+    against homage-concepts.yaml; the 18th (gothic-schoolgirl -> mr-025) had no direct text match and is flagged
+    needs_visual_verification -- inferred only by elimination (the one leftover discovered slug against the one
+    leftover represented id) since guessing a slug-to-concept match from vibes alone would violate "without guessing."
+    Also recorded the two generated/-only ArtJob-complete pairs (mr-010/madam-hat, mr-013/ansel-bell, per unapproved-art-jobs.yaml)
+    as generated-candidates, distinct from the approved/ inventory. coloring_proposal_status.py --check now reports
+    17/18 approved concepts with inspiration attached (up from 1) and coloring_approved_status.py --check / --check
+    both still pass. Ready for the next cycle to run the actual production batch (attach/create accepted masters,
+    starting at mr-001 per the status script''s "next" pointer) -- kept `recurring`, not done; no pass consumed
+    (this is progress on the recurring task, not a rejection).'
   recurring: true
   claimed_by: claude-conductor-burst-20260717T1500Z
   claimed_at: '2026-07-17T14:07:32Z'
@@ -224,10 +224,12 @@ tasks:
   stakes: reversible
   updated: '2026-07-17T00:00:00Z'
   depends_on: t-022
-  note: Use sets/hollywood-recast/proposals.yaml. The canonical title is Hollywood Recast, never Hollywood Recast
-    2, and ids use hwr- to avoid the old HR collision. Each recurring cycle advances a small batch from prompt through
-    inspiration, accepted pair, and confirmed final pair. When all 36 final pairs exist, remove recurring and mark
-    done.
+  note: Hollywood Recast already has 36 named color proposals and queued color ArtJobs. It may collect/render color
+    proposals while Monster Recast remains editorially first. Use batches of up to 18 at one stage. The canonical
+    title is Hollywood Recast, never Hollywood Recast 2. BW follows accepted color composition. Use sets/hollywood-recast/proposals.yaml.
+    The canonical title is Hollywood Recast, never Hollywood Recast 2, and ids use hwr- to avoid the old HR collision.
+    Each recurring cycle advances a small batch from prompt through inspiration, accepted pair, and confirmed final
+    pair. When all 36 final pairs exist, remove recurring and mark done.
   recurring: true
 - id: t-026
   milestone: m6
@@ -252,9 +254,12 @@ tasks:
   stakes: reversible
   updated: '2026-07-17T00:00:00Z'
   depends_on: t-023
-  note: Use sets/kind-robots/proposals.yaml. Existing Kind Robots art is inspiration or candidate material until
-    explicitly accepted for this book. Each recurring cycle advances a small batch from prompt through accepted
-    pair and confirmed final pair. When all 36 final pairs exist, remove recurring and mark done.
+  note: Kind Robots already has 36 named color proposals and queued color ArtJobs, including kr-001 as a variation
+    on the supplied/canonical Kind Robots logo. Use batches of up to 18 at one stage. Existing art and early BW
+    are inspiration until accepted; BW production follows accepted color composition. Use sets/kind-robots/proposals.yaml.
+    Existing Kind Robots art is inspiration or candidate material until explicitly accepted for this book. Each
+    recurring cycle advances a small batch from prompt through accepted pair and confirmed final pair. When all
+    36 final pairs exist, remove recurring and mark done.
   recurring: true
 - id: t-027
   milestone: m6
@@ -377,20 +382,17 @@ tasks:
   passes: 0
   stakes: reversible
   updated: '2026-07-17T18:05:22Z'
-  note: 'Kaizen from t-022 (PR #697, 2026-07-17): the mr-025 inspiration was matched to its
-    concept "by elimination" (no direct text match), and that distinction currently only lives
-    in a roadmap/proposals.yaml note, not in --check output. Add a --check flag or summary line
-    listing any inspiration entries carrying needs_visual_verification: true (or an equivalent
-    elimination-only marker) so future cycles and Silas see them surfaced automatically instead
+  note: 'Kaizen from t-022 (PR #697, 2026-07-17): the mr-025 inspiration was matched to its concept "by elimination"
+    (no direct text match), and that distinction currently only lives in a roadmap/proposals.yaml note, not in --check
+    output. Add a --check flag or summary line listing any inspiration entries carrying needs_visual_verification:
+    true (or an equivalent elimination-only marker) so future cycles and Silas see them surfaced automatically instead
     of having to read prose notes to find them.
 
-    Done (burst-mode cycle, 2026-07-17): coloring_proposal_status.py now scans every
-    proposal''s inspirations list for entries carrying needs_visual_verification: true and
-    prints a "NEEDS VISUAL VERIFICATION (elimination-only inspiration matches)" section
-    listing slug/proposal-id/path for each, ahead of the STRUCTURAL ERRORS block, in both
-    plain and --strict-finals runs. Verified against the current mr-025 gothic-schoolgirl
-    color/BW pair (both entries now show up automatically instead of needing the prose
-    note read). No other script consumes validate_book()''s return tuple, so extending it
-    with the new needs_verification list was a safe, local change.'
+    Done (burst-mode cycle, 2026-07-17): coloring_proposal_status.py now scans every proposal''s inspirations list
+    for entries carrying needs_visual_verification: true and prints a "NEEDS VISUAL VERIFICATION (elimination-only
+    inspiration matches)" section listing slug/proposal-id/path for each, ahead of the STRUCTURAL ERRORS block,
+    in both plain and --strict-finals runs. Verified against the current mr-025 gothic-schoolgirl color/BW pair
+    (both entries now show up automatically instead of needing the prose note read). No other script consumes validate_book()''s
+    return tuple, so extending it with the new needs_verification list was a safe, local change.'
   claimed_by: claude-conductor-hourly-20260717d
   claimed_at: '2026-07-17T18:05:22Z'
