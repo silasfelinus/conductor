@@ -37,10 +37,12 @@ inventory_snapshot:
   - mr-022
   - mr-025
   - mr-029
-  requires_directory_reconciliation: true
+  requires_directory_reconciliation: false
+  reconciled_at: '2026-07-17'
   notes:
   - Run scripts/coloring_approved_status.py --check and map every physical file into this ledger.
   - Only three pairs are explicitly mapped as accepted below; other discovered files remain candidates or unresolved working bases until reconciled.
+  - 'RECONCILED 2026-07-17 (t-022 inventory pass): all 18 represented_concept_ids now carry their discovered approved/ candidate(s) as inspirations below, matched by exact working-title/source-lineage text against homage-concepts.yaml (no filenames renamed or guessed). mr-025''s "gothic-schoolgirl" pair was the one discovered slug with no direct title/lineage text match; it is inferred by elimination (it is the only discovered slug left once the other 17 represented_concept_ids are matched, and mr-025 is the only represented id left unmatched) — flagged for visual verification, not treated as confirmed. Two further pairs (mr-010/madam-hat, mr-013/ansel-bell) exist only in generated/ (ArtJob-complete, not yet in approved/) and are recorded separately as generated-candidates, not counted in this approved/ snapshot.'
 cover:
   prompt: {text: null, ref: null}
   inspirations: []
@@ -94,99 +96,123 @@ proposals:
   id: mr-005
   title: null
   prompt: {text: null, ref: homage-concepts.yaml#mr-005}
-  inspirations: []
+  inspirations:
+  - {path: approved/moon-torn-bw.webp, kind: discovered-bw-candidate}
   accepted: {color: null, bw: null}
   final: {color: null, bw: null}
   notes:
   - "Approved-directory assets were reported for this concept in the 2026-07-12 snapshot; reconcile exact filenames before new generation."
+  - "Reconciled 2026-07-17: approved/moon-torn-bw.webp matches this concept's working title (Moon-Torn) exactly. BW-only working base; no color candidate discovered yet."
 - slot: 6
   id: mr-006
   title: null
   prompt: {text: null, ref: homage-concepts.yaml#mr-006}
-  inspirations: []
+  inspirations:
+  - {path: approved/screwhead-bw.webp, kind: discovered-bw-candidate}
   accepted: {color: null, bw: null}
   final: {color: null, bw: null}
   notes:
   - "Approved-directory assets were reported for this concept in the 2026-07-12 snapshot; reconcile exact filenames before new generation."
+  - "Reconciled 2026-07-17: approved/screwhead-bw.webp matches this concept's working title (Screwhead) exactly. BW-only working base; no color candidate discovered yet."
 - slot: 7
   id: mr-007
   title: null
   prompt: {text: null, ref: homage-concepts.yaml#mr-007}
-  inspirations: []
+  inspirations:
+  - {path: approved/pound-foolish-bw.webp, kind: discovered-bw-candidate}
   accepted: {color: null, bw: null}
   final: {color: null, bw: null}
   notes:
   - "Approved-directory assets were reported for this concept in the 2026-07-12 snapshot; reconcile exact filenames before new generation."
+  - "Reconciled 2026-07-17: approved/pound-foolish-bw.webp matches this concept's working title (Pound Foolish) exactly. BW-only working base; no color candidate discovered yet."
 - slot: 8
   id: mr-008
   title: null
   prompt: {text: null, ref: homage-concepts.yaml#mr-008}
-  inspirations: []
+  inspirations:
+  - {path: approved/tricycle-doll-color.webp, kind: discovered-color-candidate}
   accepted: {color: null, bw: null}
   final: {color: null, bw: null}
   notes:
   - "Approved-directory assets were reported for this concept in the 2026-07-12 snapshot; reconcile exact filenames before new generation."
+  - "Reconciled 2026-07-17: approved/tricycle-doll-color.webp matches this concept's source_lineage (Jigsaw's tricycle doll) exactly. Color-only working base; no BW candidate discovered yet."
 - slot: 9
   id: mr-009
   title: null
   prompt: {text: null, ref: homage-concepts.yaml#mr-009}
-  inspirations: []
+  inspirations:
+  - {path: approved/draculina-bw.webp, kind: discovered-bw-candidate}
   accepted: {color: null, bw: null}
   final: {color: null, bw: null}
   notes:
   - "Approved-directory assets were reported for this concept in the 2026-07-12 snapshot; reconcile exact filenames before new generation."
+  - "Reconciled 2026-07-17: approved/draculina-bw.webp matches this concept's working title (Draculina and Her Three Husbands) exactly. BW-only working base; no color candidate discovered yet."
 - slot: 10
   id: mr-010
   title: null
   prompt: {text: null, ref: homage-concepts.yaml#mr-010}
-  inspirations: []
+  inspirations:
+  - {path: generated/color/mr-010-madam-hat.webp, kind: generated-color-candidate}
+  - {path: generated/bw/mr-010-madam-hat.webp, kind: generated-bw-candidate}
   accepted: {color: null, bw: null}
   final: {color: null, bw: null}
-  notes: []
+  notes:
+  - "Reconciled 2026-07-17: unapproved-art-jobs.yaml lists this concept's ArtJob (slug madam-hat) as color_status/bw_status done. Files exist in generated/, not approved/ -- distinct from the approved-directory inventory above. Not yet reviewed or accepted by Silas."
 - slot: 11
   id: mr-011
   title: null
   prompt: {text: null, ref: homage-concepts.yaml#mr-011}
-  inspirations: []
+  inspirations:
+  - {path: approved/alien-king-bw.webp, kind: discovered-bw-candidate}
   accepted: {color: null, bw: null}
   final: {color: null, bw: null}
   notes:
   - "Approved-directory assets were reported for this concept in the 2026-07-12 snapshot; reconcile exact filenames before new generation."
+  - "Reconciled 2026-07-17: approved/alien-king-bw.webp matches this concept's working title (The Alien King) exactly. BW-only working base; no color candidate discovered yet."
 - slot: 12
   id: mr-012
   title: null
   prompt: {text: null, ref: homage-concepts.yaml#mr-012}
-  inspirations: []
+  inspirations:
+  - {path: approved/hush-darling-bw.webp, kind: discovered-bw-candidate}
   accepted: {color: null, bw: null}
   final: {color: null, bw: null}
   notes:
   - "Approved-directory assets were reported for this concept in the 2026-07-12 snapshot; reconcile exact filenames before new generation."
+  - "Reconciled 2026-07-17: approved/hush-darling-bw.webp matches this concept's working title (Hush, Darling) exactly. BW-only working base; no color candidate discovered yet."
 - slot: 13
   id: mr-013
   title: null
   prompt: {text: null, ref: homage-concepts.yaml#mr-013}
-  inspirations: []
+  inspirations:
+  - {path: generated/color/mr-013-ansel-bell.webp, kind: generated-color-candidate}
+  - {path: generated/bw/mr-013-ansel-bell.webp, kind: generated-bw-candidate}
   accepted: {color: null, bw: null}
   final: {color: null, bw: null}
-  notes: []
+  notes:
+  - "Reconciled 2026-07-17: unapproved-art-jobs.yaml lists this concept's ArtJob (slug ansel-bell) as color_status/bw_status done. Files exist in generated/, not approved/ -- distinct from the approved-directory inventory above. Not yet reviewed or accepted by Silas."
 - slot: 14
   id: mr-014
   title: null
   prompt: {text: null, ref: homage-concepts.yaml#mr-014}
-  inspirations: []
+  inspirations:
+  - {path: approved/masked-bath-bw.webp, kind: discovered-bw-candidate}
   accepted: {color: null, bw: null}
   final: {color: null, bw: null}
   notes:
   - "Approved-directory assets were reported for this concept in the 2026-07-12 snapshot; reconcile exact filenames before new generation."
+  - "Reconciled 2026-07-17: approved/masked-bath-bw.webp matches this concept's masked-killer bathtub scene (Ghostface Gets Ready) by scene description. BW-only working base; no color candidate discovered yet."
 - slot: 15
   id: mr-015
   title: null
   prompt: {text: null, ref: homage-concepts.yaml#mr-015}
-  inspirations: []
+  inspirations:
+  - {path: approved/carpet-unraveled-bw.webp, kind: discovered-bw-candidate}
   accepted: {color: null, bw: null}
   final: {color: null, bw: null}
   notes:
   - "Approved-directory assets were reported for this concept in the 2026-07-12 snapshot; reconcile exact filenames before new generation."
+  - "Reconciled 2026-07-17: approved/carpet-unraveled-bw.webp matches this concept's working title (Unraveled on the Red Carpet) exactly. BW-only working base; no color candidate discovered yet."
 - slot: 16
   id: mr-016
   title: null
@@ -207,12 +233,15 @@ proposals:
   id: mr-018
   title: null
   prompt: {text: null, ref: homage-concepts.yaml#mr-018}
-  inspirations: []
+  inspirations:
+  - {path: approved/masked-countess-color.webp, kind: discovered-color-candidate}
+  - {path: approved/masked-countess-bw.webp, kind: discovered-bw-candidate}
   accepted: {color: null, bw: null}
   final: {color: null, bw: null}
   notes:
   - "Approved-directory assets were reported for this concept in the 2026-07-12 snapshot; reconcile exact filenames before new generation."
   - "The legacy masked-countess filename is only provisionally mapped here and requires visual verification."
+  - "Reconciled 2026-07-17: unapproved-art-jobs.yaml's approval_snapshot.mapping_note independently confirms 'masked-countess is treated as the mr-018 Doctor Feast working pair; verify in issue #414' -- corroborates the provisional mapping above. Complete color/BW pair discovered; still needs the visual verification noted in issue #414 before promotion to accepted."
 - slot: 19
   id: mr-019
   title: null
@@ -225,11 +254,14 @@ proposals:
   id: mr-020
   title: null
   prompt: {text: null, ref: homage-concepts.yaml#mr-020}
-  inspirations: []
+  inspirations:
+  - {path: approved/fly-beach-color.webp, kind: discovered-color-candidate}
+  - {path: approved/fly-beach-bw.webp, kind: discovered-bw-candidate}
   accepted: {color: null, bw: null}
   final: {color: null, bw: null}
   notes:
   - "Approved-directory assets were reported for this concept in the 2026-07-12 snapshot; reconcile exact filenames before new generation."
+  - "Reconciled 2026-07-17: approved/fly-beach-{color,bw}.webp match this concept's swimsuit-pinup beach setting (Fly Girl Summer) by scene description. Complete color/BW pair discovered; not yet Silas-approved."
 - slot: 21
   id: mr-021
   title: null
@@ -242,11 +274,14 @@ proposals:
   id: mr-022
   title: null
   prompt: {text: null, ref: homage-concepts.yaml#mr-022}
-  inspirations: []
+  inspirations:
+  - {path: approved/prom-king-color.webp, kind: discovered-color-candidate}
+  - {path: approved/prom-king-bw.webp, kind: discovered-bw-candidate}
   accepted: {color: null, bw: null}
   final: {color: null, bw: null}
   notes:
   - "Approved-directory assets were reported for this concept in the 2026-07-12 snapshot; reconcile exact filenames before new generation."
+  - "Reconciled 2026-07-17: approved/prom-king-{color,bw}.webp match this concept's working title (Prom King Ascendant) exactly. Complete color/BW pair discovered; not yet Silas-approved."
 - slot: 23
   id: mr-023
   title: null
@@ -267,11 +302,14 @@ proposals:
   id: mr-025
   title: null
   prompt: {text: null, ref: homage-concepts.yaml#mr-025}
-  inspirations: []
+  inspirations:
+  - {path: approved/gothic-schoolgirl-color.webp, kind: discovered-color-candidate, needs_visual_verification: true}
+  - {path: approved/gothic-schoolgirl-bw.webp, kind: discovered-bw-candidate, needs_visual_verification: true}
   accepted: {color: null, bw: null}
   final: {color: null, bw: null}
   notes:
   - "Approved-directory assets were reported for this concept in the 2026-07-12 snapshot; reconcile exact filenames before new generation."
+  - "Reconciled 2026-07-17 BY ELIMINATION, NOT BY TEXT MATCH: 'gothic-schoolgirl' has no direct working-title or source-lineage match anywhere in homage-concepts.yaml, unapproved-art-jobs.yaml, or docs. It is the one discovered approved/ slug left over once the other 17 of the 18 represented_concept_ids are matched by exact text, and mr-025 (Little Miss Omen -- a private-school-uniformed girl, 1970s occult horror) is the one represented id left unmatched -- a plausible legacy filename for this concept, but unconfirmed. Do not promote to accepted or treat as verified without Silas confirming the visual match."
 - slot: 26
   id: mr-026
   title: null
@@ -300,11 +338,14 @@ proposals:
   id: mr-029
   title: null
   prompt: {text: null, ref: homage-concepts.yaml#mr-029}
-  inspirations: []
+  inspirations:
+  - {path: approved/victorian-barber-color.webp, kind: discovered-color-candidate}
+  - {path: approved/victorian-barber-bw.webp, kind: discovered-bw-candidate}
   accepted: {color: null, bw: null}
   final: {color: null, bw: null}
   notes:
   - "Approved-directory assets were reported for this concept in the 2026-07-12 snapshot; reconcile exact filenames before new generation."
+  - "Reconciled 2026-07-17: approved/victorian-barber-{color,bw}.webp match this concept's source_lineage (Sweeney Todd murderous barber, Madame Close-Shave) by scene description. Complete color/BW pair discovered; not yet Silas-approved."
 - slot: 30
   id: mr-030
   title: null

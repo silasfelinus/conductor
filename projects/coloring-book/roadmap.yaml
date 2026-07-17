@@ -174,18 +174,29 @@ tasks:
 - id: t-022
   milestone: m4
   title: Monster Recast book 1 production pass — 36 final color/BW pairs
-  status: claimed
+  status: review
   owner: worker
   passes: 0
   stakes: reversible
-  updated: '2026-07-17T14:07:32Z'
+  updated: '2026-07-17T15:10:00Z'
   depends_on: t-021
-  note: 'Run python scripts/coloring_proposal_status.py --check and python scripts/coloring_approved_status.py --check.
-    First reconcile the physical approved/ inventory into sets/monster-recast/proposals.yaml without guessing or
-    renaming files. Then each cycle advances a small batch (normally 1-6 proposals): fill prompts, attach inspirations,
-    generate or curate candidates, record accepted working files, create faithful missing counterparts, or confirm
-    final drafts. Preserve accepted compositions. This task is recurring while incomplete. When the ledger reaches
-    36 confirmed final pairs, remove recurring, mark done, and let t-025 package book 1.'
+  note: 'RECONCILED 2026-07-17 (burst-mode cycle): completed the "First reconcile" step -- mapped
+    every physical projects/coloring-book/sets/monster-recast/approved/ file into proposals.yaml
+    as inspirations on its matching concept slot, cross-checked against the 2026-07-12
+    inventory_snapshot''s represented_concept_ids and per-category counts (all matched exactly,
+    confirming the mapping). No files renamed or guessed: 16 of 17 approved-only concepts matched
+    by exact working-title/source-lineage text against homage-concepts.yaml; the 18th
+    (gothic-schoolgirl -> mr-025) had no direct text match and is flagged
+    needs_visual_verification -- inferred only by elimination (the one leftover discovered slug
+    against the one leftover represented id) since guessing a slug-to-concept match from vibes
+    alone would violate "without guessing." Also recorded the two generated/-only ArtJob-complete
+    pairs (mr-010/madam-hat, mr-013/ansel-bell, per unapproved-art-jobs.yaml) as
+    generated-candidates, distinct from the approved/ inventory. coloring_proposal_status.py --check
+    now reports 17/18 approved concepts with inspiration attached (up from 1) and
+    coloring_approved_status.py --check / --check both still pass. Ready for the next cycle to run
+    the actual production batch (attach/create accepted masters, starting at mr-001 per the status
+    script''s "next" pointer) -- kept `recurring`, not done; no pass consumed (this is progress on
+    the recurring task, not a rejection).'
   recurring: true
   claimed_by: claude-conductor-burst-20260717T1500Z
   claimed_at: '2026-07-17T14:07:32Z'
