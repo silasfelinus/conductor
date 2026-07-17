@@ -959,11 +959,11 @@ tasks:
   - id: t-027
     milestone: m4
     title: 'kind_robots: validate starters.manifest.json against PUBLIC-DOMAIN-POLICY.md schema in CI'
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
-    updated: '2026-07-17T12:10:00Z'
+    updated: '2026-07-17T12:52:07Z'
     note: >
       Kaizen from t-008's merge (kind_robots PR #358, 2026-07-17). The manifest
       schema (workTitle, artist, artistDied, year, collection, accessionId,
@@ -975,3 +975,5 @@ tasks:
       Open-Access-Terms, with licenseTermsUrl required for the latter), and wire
       it into an existing lightweight CI check (e.g. contract-tests.yml) so a
       future edit to this file can't silently drop a provenance field.
+    claimed_by: claude-conductor-autonomous-20260717T1252Z
+    claimed_at: '2026-07-17T12:52:07Z'
