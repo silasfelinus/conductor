@@ -322,25 +322,10 @@ tasks:
   owner: worker
   passes: 0
   stakes: reversible
-  note: 'Kaizen from t-005''s review (2026-07-15): NAVIGATION-MAP.md found the honeydo
-    inbox has correct, already-global data but no top-level nav entry pointing at it --
-    a gap only caught by a manual audit. Mirror the pattern already used in other Silas
-    repos (e.g. PortOS''s server/lib/navManifest.js: a single source-of-truth list of
-    every navigable surface with fail-fast shape/duplicate guards at load time) so a new
-    page or a data surface with no nav entry fails a lint/CI check instead of silently
-    shipping undiscoverable. Scope to kind_robots; reuse the audit''s three findings in
-    NAVIGATION-MAP.md as the first test cases.
-
-    Done 2026-07-17 (Reviewer, autonomous hourly cycle): kind_robots PR #338 merged
-    (squash 23cf36b8) -- added utils/dataSurfaceManifest.ts + verifyDataSurfaceManifest.ts
-    CI contract, wired into contract-tests.yml. Seeded with the honeydo-inbox gap,
-    acknowledged against t-014 (now done). All 4 CI checks green (TypeScript, Contract
-    verifiers, facet-alias-smoke, GitGuardian).
-
-    '
+  note: 'Added utils/dataSurfaceManifest.ts + utils/scripts/verifyDataSurfaceManifest.ts in kind_robots (PortOS navManifest.js-style registry): every data surface that must be reachable from a top-level nav destination gets an entry with either a navEntry resolving to a real content/channels tab, or an acknowledgedGap pointing at a tracking task -- a surface with neither fails CI, so a new undiscoverable surface (like the honeydo inbox that motivated this task) can never land silently again. Wired into package.json (test:data-surface-manifest) and .github/workflows/contract-tests.yml; documented in docs/channel-content-authoring.md. Seeded the manifest with the honeydo-inbox gap from NAVIGATION-MAP.md, acknowledged against global-ui/t-014. kind_robots PR #338 merged (squash 23cf36b): eslint/prettier clean, vue-tsc 0 errors, test:channel-content and test:channel-resolver unaffected, manual check confirmed the new contract fails when an entry has neither navEntry nor acknowledgedGap. t-014 (the actual honeydo top-level nav fix) landed in the same rotation cycle via a concurrent session (PR #337, home/for-you tab), which made this task''s acknowledgedGap stale within minutes of merging. Follow-up kind_robots PR #340 (squash efa34ad, merged) updated the manifest entry to navEntry: { channelKey: ''home'', tabKey: ''for-you'' } so the contract reflects the resolved state instead of a resolved-but-still-flagged gap.'
   claimed_by: claude-burst-2026-07-17-hourly-3
   claimed_at: '2026-07-17T02:11:27Z'
-  updated: '2026-07-17T02:52:00Z'
+  updated: '2026-07-17T02:56:33Z'
 - id: t-018
   milestone: m5
   title: Show a per-milestone "N/M tasks done" count on the milestone cards
