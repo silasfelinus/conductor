@@ -1662,7 +1662,7 @@ tasks:
     owner: worker
     passes: 0
     stakes: reversible
-    updated: '2026-07-17T23:57:54Z'
+    updated: '2026-07-18T00:05:00Z'
     note: >
       Filed 2026-07-17 (burst-mode cycle, claude-conductor-burst-20260717T2300Z), correcting
       a mistaken attribution in TALKBACK.md's 2026-07-17 "kind_robots ci-janitor Todo #371"
@@ -1712,5 +1712,11 @@ tasks:
       still-latest-cancelled (Todo filed as before) — 6/6 pass, existing 4 unaffected since
       they use non-cancelled conclusions. Full suite: `pytest tests/` 352 passed / 1 skipped
       (unchanged pre-existing skip). `validate_roadmaps.py` clean, `py_compile` clean.
+
+      MERGED 2026-07-18 (~00:05 UTC, autonomous hourly conductor cycle, Reviewer): PR #736
+      was 21/21 CI green (full pytest suite, CodeQL, static checks, security scans).
+      Squash-merged into main (946a7f3). Well-scoped fix with a real root-cause refinement
+      over the original spec (compares against the latest run of any status, not just the
+      latest completed one) — no changes requested.
     claimed_by: claude-conductor-burst-20260717T2300Z
     claimed_at: '2026-07-17T23:51:18Z'
