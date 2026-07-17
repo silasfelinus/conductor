@@ -390,21 +390,11 @@ tasks:
   - id: t-020
     milestone: m4
     title: Flip roadmap-tracked tasks to status review (not left at claimed) before opening a PR from a non-worker/* session
-    status: claimed
-    owner: worker
+    status: review
+    owner: claude
     passes: 0
     stakes: reversible
-    updated: '2026-07-17T11:10:39Z'
-    note: >
-      Kaizen from t-017's close-out (Reviewer, autonomous hourly conductor cycle,
-      2026-07-16): t-017 was fully implemented and merged (kind_robots PR #317,
-      branch claude/keen-fermat-e812vh) while the roadmap still showed
-      status: claimed — the Reviewer sweep only found the open PR by checking
-      GitHub directly, not via roadmap state. This is the second occurrence of the
-      same pattern in this project (see TALKBACK.md 2026-07-10 entry for the
-      first). When a Silas-directed claude/* session picks up a roadmap-tracked
-      task in this project, it should set status: review (with claimed_by and the
-      branch name noted) before opening the PR, so a Reviewer sweep can find it
-      through roadmap.yaml instead of by hand-checking the open-PR list.
+    updated: '2026-07-17T11:11:13Z'
+    note: 'DONE 2026-07-17 (claude-burst-hourly-20260717T1110Z, conductor PR): fixed at the process level rather than per-project, since the gap applies to any session picking up a roadmap-tracked task, not just this one. Added AGENTS.md ''Picking what to work on'' step 7 (after claim_task.py, before the Rotation collisions section): every session -- worker/* hourly AND Silas-directed claude/*/burst-mode sessions -- must run scripts/set_task_field.py <project> <task-id> status review (with claimed_by/owner reflecting the real session and branch, no worker/* prefix required) before opening the PR, so a Reviewer sweep can find in-progress work via roadmap state instead of hand-checking GitHub. Also documents that a session merging its own PR may flip review straight to done right after merge -- the point is no silent claimed-to-done jump with zero externally-visible checkpoint. No kind_robots code change needed; this project''s roadmap.yaml itself is the only file this specific task touches beyond AGENTS.md.'
     claimed_by: claude-burst-hourly-20260717T1110Z
     claimed_at: '2026-07-17T11:10:39Z'

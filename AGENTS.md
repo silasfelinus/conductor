@@ -83,6 +83,26 @@ todo explicitly asks for it. Scope is exactly what the title/description says.
    (`ALREADY_CLAIMED`), someone else is already on that project/task — do not implement
    it; go back to step 5 and pick the next `ready` task instead. See "Rotation
    collisions" below for why this step exists.
+7. **Set `status: review` before opening the PR — every session, not just hourly
+   `worker/*` runs.** This applies equally to Silas-directed `claude/*` sessions and
+   burst-mode cycles doing Worker-style roadmap pickup, not only the OpenAI hourly
+   Worker. Once implementation is done and you're about to `gh pr create` (or the
+   GitHub MCP equivalent), run
+   `python scripts/set_task_field.py <project> <task-id> status review` (and confirm
+   `claimed_by`/`owner` still identify your session and its actual branch name — it
+   does not need to start with `worker/`) so a later Reviewer sweep can find the
+   in-progress work by reading roadmap state, instead of having to hand-check the
+   open-PR list on GitHub. Skipping this step is exactly what caused
+   `superkate-hairstyle-ai/t-017` to sit at `status: claimed` after PR #317 had
+   already merged (twice — see `TALKBACK.md` 2026-07-10 and 2026-07-16, and
+   `superkate-hairstyle-ai/t-020`); a task left at `status: claimed` past a session's
+   lifetime looks abandoned rather than in-review, and its claim can silently expire
+   under `CLAIM_TTL_MINUTES` while the PR is still open. If your session merges its
+   own PR in the same run (see "Reviewer (Claude) — CAN merge ... from `claude/*`
+   branches" below), it's fine for `status: review` to be short-lived — set it before
+   `gh pr create` and flip straight to `status: done` right after the merge — the
+   point is that roadmap state never silently jumps from `claimed` to `done` with no
+   externally-visible checkpoint in between.
 
 ### Rotation collisions
 
