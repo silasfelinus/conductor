@@ -288,7 +288,7 @@ tasks:
 - id: t-025
   milestone: m3
   title: "Drop the now-unused userId param cartStore.ts's subscribe() still sends to /api/stripe/subscribe.post.ts"
-  status: claimed
+  status: needs-human
   passes: 0
   stakes: reversible
   note: |-
@@ -296,8 +296,10 @@ tasks:
 
 
     Claiming the highest-priority reversible ready task after skipping claimed or inactive projects.
-  owner: worker
-  updated: '2026-07-17 22:13:20+00:00'
+
+    FOR SILAS: The two-line cleanup is identified in kind_robots stores/cartStore.ts and components/giftshop/subscription-manager.vue. The current Worker connector can read but only fully replace these large files, and this run has no local GitHub network path for a surgical patch. TO RESUME: return this task to ready when a local checkout or patch-capable GitHub tool is available. No implementation was started and no kind_robots branch was created.
+  updated: '2026-07-17 22:19:00+00:00'
+  soft_gate: true
 - id: t-014
   milestone: m3
   title: Build the Against Malaria giving page
