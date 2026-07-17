@@ -2963,3 +2963,12 @@ records:
   outcome: done
   failure_category: null
   lesson: "Self-contained conductor-only kaizen task (no cross-repo dependency): claimed, implemented, and merged in a single autonomous hourly cycle. probe_host()/append_entry() changed from a bool blocked/reachable signal to a three-way status string so a Cloudflare cf-mitigated challenge response is no longer silently folded into 'reachable' — the exact gap t-013 hit and hand-documented manually. Updating an existing test suite's fixtures (bool -> string) alongside new coverage, rather than only adding new tests, is what kept the refactor from leaving stale assertions that would pass for the wrong reason."
+- date: 2026-07-17
+  project: ai-art-academy
+  task: t-030
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "Another self-contained conductor-only kaizen task, picked up burst-mode in an hourly Reviewer cycle with no open worker/* PR to review. Added Cloudflare challenge fallback signals (Server header + cf-chl cookie, __cf_chl_rt_tk body marker) behind defensive getattr()/callable() checks so the existing test doubles (which don't implement get_all()/read()) kept passing unchanged rather than needing every prior fixture updated — cheaper than the t-029 fixture-rewrite when the new code path is additive rather than a signature change."

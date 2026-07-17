@@ -165,6 +165,117 @@ def test_probe_host_bot_challenged_on_200_with_cf_header(monkeypatch):
     assert "managed_challenge" in detail
 
 
+def test_probe_host_bot_challenged_via_server_and_cf_chl_cookie(monkeypatch):
+    class FakeHeaders:
+        def get(self, name, default=None):
+            if name == "Server":
+                return "cloudflare"
+            return default
+
+        def get_all(self, name):
+            if name == "Set-Cookie":
+                return ["cf_clearance=abc123; Path=/", "cf-chl-2-xyz=token; Path=/"]
+            return None
+
+    class FakeResp:
+        status = 503
+        headers = FakeHeaders()
+
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *exc):
+            return False
+
+    monkeypatch.setattr(recheck.urllib.request, "urlopen", lambda req, timeout=None: FakeResp())
+    status, detail = recheck.probe_host("example.com")
+    assert status == "bot-challenged"
+    assert "server: cloudflare" in detail
+    assert "cf-chl-2-xyz" in detail
+    assert "503" in detail
+
+
+def test_probe_host_bot_challenged_via_body_marker(monkeypatch):
+    class FakeHeaders:
+        def get(self, name, default=None):
+            return default
+
+        def get_all(self, name):
+            return None
+
+    class FakeResp:
+        status = 503
+        headers = FakeHeaders()
+
+        def read(self, limit=8192):
+            return b"<html><script>var a = '__cf_chl_rt_tk' + x;</script></html>"
+
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *exc):
+            return False
+
+    monkeypatch.setattr(recheck.urllib.request, "urlopen", lambda req, timeout=None: FakeResp())
+    status, detail = recheck.probe_host("example.com")
+    assert status == "bot-challenged"
+    assert "__cf_chl_rt_tk" in detail
+    assert "503" in detail
+
+
+def test_probe_host_reachable_when_cloudflare_server_without_challenge_signal(monkeypatch):
+    class FakeHeaders:
+        def get(self, name, default=None):
+            if name == "Server":
+                return "cloudflare"
+            return default
+
+        def get_all(self, name):
+            if name == "Set-Cookie":
+                return ["cf_clearance=abc123; Path=/"]
+            return None
+
+    class FakeResp:
+        status = 200
+        headers = FakeHeaders()
+
+        def read(self, limit=8192):
+            return b"<html>ok</html>"
+
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *exc):
+            return False
+
+    monkeypatch.setattr(recheck.urllib.request, "urlopen", lambda req, timeout=None: FakeResp())
+    status, detail = recheck.probe_host("example.com")
+    assert status == "reachable"
+    assert "200" in detail
+
+
+def test_probe_host_bot_challenged_fallback_on_http_error(monkeypatch):
+    class FakeHeaders:
+        def get(self, name, default=None):
+            if name == "Server":
+                return "cloudflare"
+            return default
+
+        def get_all(self, name):
+            if name == "Set-Cookie":
+                return ["cf-chl-3-abc=token"]
+            return None
+
+    def raise_http_error(req, timeout=None):
+        raise recheck.urllib.error.HTTPError(req.full_url, 503, "Service Unavailable", FakeHeaders(), None)
+
+    monkeypatch.setattr(recheck.urllib.request, "urlopen", raise_http_error)
+    status, detail = recheck.probe_host("example.com")
+    assert status == "bot-challenged"
+    assert "cf-chl-3-abc" in detail
+    assert "503" in detail
+
+
 def test_main_dry_run_does_not_write(tmp_path, monkeypatch, capsys):
     ledger = make_ledger(tmp_path)
     monkeypatch.setattr(recheck, "LEDGER_FILE", ledger)
