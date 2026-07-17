@@ -5855,3 +5855,47 @@ Flipped kind-robots/t-031 to `done`.
 
 **Kaizen task:** none filed this cycle — the `verifyWorkflowPaths.ts` false positive was fixed
 directly rather than deferred, since it was blocking this PR's own CI.
+
+## 2026-07-17 | Worker → Reviewer | ai-art-academy/t-021 | done (conductor-burst-hourly, PR #672 merged)
+
+**Decision:** merged conductor PR #672 (squash db10242) after all three CI workflows (Worker PR
+CI, Roadmap Audit, Security Audit) went green on the first run.
+
+**Detail:**
+- Full priority-order walk this cycle (fresh session, no prior context): challenge-center (zero
+  `ready` — every task is `not-started` or `done`) → ai-art-academy, where t-008/t-013 stayed
+  `ready`-but-blocked (fresh 403 on metmuseum.org/upload.wikimedia.org, confirmed via
+  `EGRESS-BLOCKERS.md` entries timestamped 2026-07-17T03:05Z, same session), t-019 stayed blocked
+  (kind_robots `public/images/academy/styles/` still has zero landed thumbnails), and t-010
+  (recurring, never-idle) had already run this same cycle date per its own note (PR #332,
+  option (a) front-end polish) — re-running its menu today would have duplicated that pass.
+  t-021 was the one genuinely actionable ready task: its LoRA-hunting half needs the same
+  HF/Civitai hosts (also 403 this session, same signature), but its second half — backfilling
+  the optional `prompt_hint` field onto older prompt-mode registry entries — is registry-only,
+  needs no egress, and was independently callable per the task's own note.
+- Claimed via `claim_task.py` against live `origin/main`. Found the task's own "8 older entries"
+  count was stale (2 of the 8 — gothic, pointillism — already got hints in the v1.1 batch that
+  introduced the field), leaving 6: ukiyo-e, baroque-chiaroscuro, cubism, stained-glass,
+  byzantine-mosaic, art-deco. Added `prompt_hint` to each, derived verbatim from that style's
+  existing per-style prose recipe elsewhere in the same file (no new facts invented), and
+  updated the field's doc-comment to drop the stale "can be backfilled" TODO line.
+- Correctly left the task at `status: ready` (not `done`) since only half the scope landed —
+  the LoRA-hunting half stays blocked for a session with open HF/Civitai egress. Released the
+  claim, rewrote the roadmap note with what was done and what's still blocked, matching the
+  established "claim, do the unblocked slice, release the rest" pattern already used on t-008.
+- First push of the session branch hit the documented brand-new-ref path (not the 413 itself,
+  but a related non-fast-forward): `create_branch` via GitHub MCP pointed at `main`'s tip at
+  API-call time, but the roadmap-claim commit had already triggered a `chore: refresh STATUS.md`
+  auto-commit on `main` by the time the branch was created, so the new branch ref landed one
+  commit ahead of the local checkout. Fixed with a plain `git rebase origin/<branch>` before the
+  normal push, which then went through clean.
+- Verified: both changed files parse as valid YAML/Markdown-with-YAML; confirmed no CI contract
+  or script references `style-lora-registry.md`/`prompt_hint` (grepped `scripts/` and `.github/`),
+  so there was no additional automated target to run beyond the three PR-triggered workflows,
+  all of which passed.
+
+**Failure category:** n/a (clean first-pass merge; no rejection).
+
+**Kaizen task:** none filed — this task was itself already the kaizen follow-on from an earlier
+t-010 cycle, and it's now drained down to just the egress-blocked LoRA-hunting remainder, which
+already has its own tracking via `EGRESS-BLOCKERS.md`.
