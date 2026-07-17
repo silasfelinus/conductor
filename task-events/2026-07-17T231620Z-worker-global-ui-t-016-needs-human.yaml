@@ -1,9 +1,0 @@
-version: 1
-project: global-ui
-task: t-016
-operation: needs-human
-owner: worker
-updated: 2026-07-17T23:16:20+00:00
-soft_gate: true
-note: >
-  FOR SILAS: SITE-AUDIT-AGENT.md defines the weekly Claude Code Remote trigger, but this Worker session cannot inspect or create Claude Code Remote triggers. Create one with cron_expression "0 9 * * 1", the prompt in projects/global-ui/SITE-AUDIT-AGENT.md, create_new_session_on_fire true, and push notifications enabled. Review each generated audit PR before merging. This is a soft gate; unrelated Worker tasks remain eligible.

@@ -312,20 +312,16 @@ tasks:
 - id: t-016
   milestone: m5
   title: Confirm or create the site-audit agent''s Claude Code Remote trigger
-  status: ready
-  owner: null
+  status: needs-human
   passes: 0
   stakes: reversible
-  note: 'Filed from t-005''s navigation-map audit (NAVIGATION-MAP.md, 2026-07-15).
-    SITE-AUDIT-AGENT.md (t-009, done 2026-06-30) defines the weekly site-audit agent
-    prompt/cadence/scope but its own note says it "needs Silas approval before the
-    trigger is created." No TALKBACK or roadmap entry since then confirms the trigger
-    actually exists. Confirm whether the trigger is live; if not, this is a soft
-    needs-human item (creating a Claude Code Remote trigger is not something an agent
-    session can do for itself) -- write a FOR SILAS note with the exact setup steps
-    from SITE-AUDIT-AGENT.md rather than attempting to fake the loop.
+  note: |-
+    Filed from t-005's navigation-map audit (NAVIGATION-MAP.md, 2026-07-15). SITE-AUDIT-AGENT.md (t-009, done 2026-06-30) defines the weekly site-audit agent prompt/cadence/scope but its own note says it "needs Silas approval before the trigger is created." No TALKBACK or roadmap entry since then confirms the trigger actually exists. Confirm whether the trigger is live; if not, this is a soft needs-human item (creating a Claude Code Remote trigger is not something an agent session can do for itself) -- write a FOR SILAS note with the exact setup steps from SITE-AUDIT-AGENT.md rather than attempting to fake the loop.
 
-    '
+
+    FOR SILAS: SITE-AUDIT-AGENT.md defines the weekly Claude Code Remote trigger, but this Worker session cannot inspect or create Claude Code Remote triggers. Create one with cron_expression "0 9 * * 1", the prompt in projects/global-ui/SITE-AUDIT-AGENT.md, create_new_session_on_fire true, and push notifications enabled. Review each generated audit PR before merging. This is a soft gate; unrelated Worker tasks remain eligible.
+  soft_gate: true
+  updated: '2026-07-17 23:16:20+00:00'
 - id: t-017
   milestone: m5
   title: Add a nav-manifest-style registry so missing top-level nav entries fail CI
