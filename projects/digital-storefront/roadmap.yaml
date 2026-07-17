@@ -24,7 +24,7 @@ milestones:
 - id: m2
   title: First sellable item live — Mermaids of Venice PDF
   weight: 25
-  status: not-started
+  status: in-progress
 - id: m3
   title: Support & donations (subscription, mana top-ups, Against Malaria page)
   weight: 20
@@ -137,20 +137,98 @@ tasks:
     buyers remains a separate hard needs-human).
 - id: t-011
   milestone: m2
-  title: Build the Mermaids of Venice PDF product page and purchase flow (kind_robots, Stripe test mode)
-  status: claimed
+  title: 'kind_robots: Product/Order/OrderItem/Entitlement schema + seed (Mermaids PDF product) — step 1 of the original Mermaids purchase-flow task'
+  status: done
   owner: worker
   passes: 0
-  stakes: outward-facing
+  stakes: reversible
   depends_on:
   - t-009
   - t-010
+  updated: '2026-07-17T10:58:00Z'
+  note: >
+    SPLIT 2026-07-17 (autonomous hourly conductor cycle): the original t-011
+    ("Build the Mermaids of Venice PDF product page and purchase flow") bundled
+    SPEC.md's build-order steps 1-3 (schema migration, webhook, secure download
+    route + product page) into one task carrying gate_human:true/
+    stakes:outward-facing for the whole customer-facing purchase capability.
+    That's too large for one pass and conflates a pure internal schema
+    migration (zero live behavior, nothing customer-facing) with the actual
+    gated feature. Split before attempting the monolith — no pass burned, no
+    failed attempt: t-011 now covers ONLY step 1 (schema + seed), which has
+    zero user-facing surface and is genuinely `stakes: reversible` on its own
+    merits (additive-only migration: 4 CREATE TABLE + FK constraints, no
+    drops; new tables are inert until the follow-on tasks wire code to them).
+    DONE via kind_robots PR #351: added Product/Order/OrderItem/Entitlement
+    models + ProductType/OrderStatus enums to prisma/schema.prisma (Int
+    autoincrement ids matching house style, not SPEC.md's cuid() draft;
+    metadata as String?/@db.LongText per the repo's no-native-Json-column
+    convention), a purely-additive migration generated offline via `prisma
+    migrate diff --from-schema/--to-schema` (no live DB needed), and
+    scripts/seed_products.ts (idempotent, upsert-by-slug, seeds only
+    mermaids-of-venice-pdf at $9.99 per t-010's cleared price). Also added
+    prisma/migrations/migration_lock.toml, which was missing entirely from
+    the migrations directory (only the 2026-07-15 squashed baseline existed) —
+    scripts/vercel-build.mjs -> scripts/prisma-migrate-deploy.mjs runs real
+    `prisma migrate deploy` on production deploys and needs this file to
+    identify the provider; flagged for Silas in the PR in case it's a known
+    gap. Verified: prisma validate/generate clean, seed dry-run validates,
+    eslint/prettier clean, full-project vue-tsc 0 errors,
+    verifyNoPrismaJsonCast passes. Deliberately did NOT touch checkout.post.ts,
+    add a webhook, or build any UI — zero behavior change to any live route.
+    Remainder split into t-022 (webhook) and t-023 (secure download + product
+    page + purchase flow), both carrying the original gate_human:true/
+    stakes:outward-facing forward since THEY are the actual customer-facing
+    purchase capability. EGRESS: api.stripe.com reachability (needed by t-022/
+    t-023, not this step) is tracked in EGRESS-BLOCKERS.md — blocked again as
+    of this same cycle's recheck (varies by session; re-run
+    scripts/recheck_egress_blocks.py before claiming either).
+- id: t-022
+  milestone: m2
+  title: 'kind_robots: Stripe webhook (checkout.session.completed, payment mode) credits an Entitlement for the Mermaids PDF product'
+  status: ready
+  owner: null
+  passes: 0
+  stakes: outward-facing
   gate_human: true
   approved_by_human: false
-  note: 'Cross-repo task (kind_robots). Product page linking from the mermaids landing page and giftshop, Stripe Checkout in TEST MODE, webhook -> entitlement -> authenticated download delivery. The PDF is stored server-side, never in public/. Going live (live Stripe keys/products, real charges) is a separate hard needs-human for Silas. Newly ready 2026-07-15 via resolve_deps.py once t-009 (SPEC.md) landed. EGRESS: api.stripe.com reachability is tracked in EGRESS-BLOCKERS.md (grep api.stripe.com) — 403-blocked 2026-07-15, REACHABLE at the 2026-07-17T07:51Z recheck (varies by session; re-run scripts/recheck_egress_blocks.py before claiming).'
-  claimed_by: claude-conductor-hourly-20260717T0958Z
-  claimed_at: '2026-07-17T09:54:21Z'
-  updated: '2026-07-17T09:54:21Z'
+  depends_on:
+  - t-011
+  note: >
+    Step 2 of the original t-011 (SPEC.md §2, §4): new
+    server/api/stripe/webhook.post.ts event (or extend one if t-012's mana
+    webhook already created a shared handler — check kind_robots PR #345
+    first) verifying the Stripe signature via readRawBody +
+    stripe.webhooks.constructEvent, handling checkout.session.completed
+    (mode: payment) for the mermaids-of-venice-pdf Product: create an Order +
+    OrderItem row, then an Entitlement row for the buyer. Idempotent on
+    stripeSessionId (unique constraint already in the t-011 migration) so a
+    redelivered webhook event can't double-fulfill. TEST MODE ONLY. This is
+    real purchase-fulfillment logic (credits a paid entitlement) — stays
+    gate_human like the original t-011, even though it has no UI of its own.
+    EGRESS: api.stripe.com — re-run scripts/recheck_egress_blocks.py before
+    claiming (blocked as of 2026-07-17T10:5xZ, varies by session).
+- id: t-023
+  milestone: m2
+  title: 'kind_robots: Mermaids of Venice PDF product page + Stripe checkout + secure entitlement-gated download route'
+  status: waiting
+  owner: null
+  passes: 0
+  stakes: outward-facing
+  gate_human: true
+  approved_by_human: false
+  depends_on:
+  - t-022
+  note: >
+    Step 3 of the original t-011 (SPEC.md §5): a Checkout Session creation
+    route for the mermaids-of-venice-pdf Product (mode: payment, reuse the
+    topup.post.ts/checkout.post.ts pattern), a product page linked from the
+    mermaids landing page (components/pages/mermaids-page.vue) and giftshop,
+    and a secure download route that checks the caller's Entitlement (via
+    t-022's webhook) before streaming the PDF from server-side storage — never
+    public/. `waiting` on t-022 (needs its Entitlement-granting webhook to gate
+    against). Going live (real charges, live Stripe keys) stays a separate
+    hard needs-human for Silas regardless of this task's own completion.
 - id: t-012
   milestone: m3
   title: Wire one-time mana top-ups to Stripe checkout (test mode)
@@ -302,7 +380,15 @@ tasks:
   stakes: reversible
   depends_on: t-011
   note: >
-    Entitlement design tying purchased DLC packs (packmaker project: Uncanny Valor,
+    RESOLVER NOTE 2026-07-17: t-011 (this task's only in-file depends_on) is now
+    `status: done`, so `scripts/resolve_deps.py` and `scripts/audit_roadmaps.py`'s
+    WAITING_WITH_SATISFIED_DEPS check will both flag/promote this to `ready` —
+    that promotion is WRONG. Do not accept it without first checking
+    packmaker/t-003's live status (still `needs-human` as of this note); if
+    still not `done`, revert this back to `waiting` rather than claiming it.
+    Neither script can see cross-project note-level blockers, per CONTROL.md's
+    2026-07-17 cross-project-collision note. Entitlement design tying purchased
+    DLC packs (packmaker project: Uncanny Valor,
     Arcane Whimsy) to per-user unlocks of generated content (locations, genres,
     characters, rewards). ALSO BLOCKED ON (cross-project, note-level dependency —
     resolver only sees in-project deps): kind-robots t-008 private-but-shared

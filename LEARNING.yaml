@@ -2853,3 +2853,25 @@ records:
     buried the real diff; there is no prettier/lint CI gate anyway, so minimal targeted
     edits are both sufficient and reviewable. t-022's audit found exactly one real 2+ file
     duplicate (the click/match leaderboards); extracted it, no others exist.
+- date: 2026-07-17
+  project: digital-storefront
+  task: t-011
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    A hard-gated task (gate_human:true, stakes:outward-facing) can still
+    bundle a genuinely reversible, non-customer-facing sub-piece (here: a pure
+    schema migration + seed script, zero live behavior change) inside a
+    monolith whose overall stakes classification is correctly outward-facing.
+    Splitting BEFORE attempting the monolith let the safe slice land through
+    normal Worker/Reviewer flow (merged, no needs-human wait) while the actual
+    gated remainder (webhook fulfillment, product page + purchase flow) kept
+    its gate_human/outward-facing classification on the new split-off tasks.
+    No pass was burned since the split happened at task-selection time, not
+    after a failed implementation attempt. When a hard-gated task's note
+    describes multiple independently-landable pieces (a SPEC.md build order,
+    "step 1/2/3" language), check whether the leading piece is actually
+    reversible on its own before assuming the whole task must wait on Silas.
