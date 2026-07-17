@@ -1587,3 +1587,38 @@ tasks:
       (needs-human/outward-facing/irreversible/secrets/DNS/deploy) preserved verbatim.
       Follow-up for Silas: enable the repo "Automatically delete head branches" setting
       (kind_robots has it; conductor relies on the janitor until then).
+
+  - id: t-061
+    milestone: m2
+    title: 'scripts/git_plumbing.py: sign direct-to-ref commits when commit.gpgsign is configured'
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-17T19:45:00Z'
+    note: >
+      Filed 2026-07-17 (burst-mode cycle, ai-art-academy/t-021, see TALKBACK.md same
+      date for full detail). `commit_file_on_ref()` in `scripts/git_plumbing.py` builds
+      its commit with plain `git commit-tree tree -p parent -m message` — this does NOT
+      apply `commit.gpgsign`/`user.signingkey` the way porcelain `git commit` does; a
+      `-S` flag (or `gpg.sign`-equivalent) is required explicitly. Confirmed via
+      `git cat-file commit <sha>` on a commit this helper pushed directly to `main`:
+      no `gpgsig` header, even though this session's git config has
+      `commit.gpgsign=true`, `gpg.format=ssh`, and `user.signingkey` all set. Since
+      `claim_task.py` uses this exact helper for every claim/status commit across every
+      project's roadmap, every direct-to-ref commit this whole system has made this way
+      is likely unsigned and shows as "Unverified" on GitHub.
+      Fix: in `commit_file_on_ref`, read `commit.gpgsign` (and `user.signingkey`/
+      `gpg.format`) via `git config --get`, and when signing is enabled, pass `-S` to
+      the `commit-tree` invocation (git's `commit-tree -S` reads the same
+      `user.signingkey`/`gpg.format` config as `git commit -S`, so no separate signing
+      logic should be needed — just the flag). Add a test asserting the resulting
+      commit's raw object contains a `gpgsig` header when `commit.gpgsign` is true in
+      the test git config, and that it's absent (and commit still succeeds) when
+      signing isn't configured, so the helper keeps working in environments without a
+      signing key set up (e.g. CI). Do NOT attempt to retroactively re-sign or rewrite
+      any already-pushed commit made via this helper — `main` has multiple concurrent
+      agent sessions fetching it at any given time (observed directly the day this was
+      filed), so a rewrite-and-force-push to fix historical Unverified badges is not
+      worth the real risk of breaking someone else's in-flight rebase. This task is
+      forward-looking only: sign commits made by this helper from here on.
