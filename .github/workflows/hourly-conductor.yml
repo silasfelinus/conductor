@@ -15,6 +15,10 @@ on:
         default: "false"
         type: string
 
+concurrency:
+  group: conductor-main-writers
+  cancel-in-progress: false
+
 jobs:
   conductor:
     runs-on: ubuntu-latest
@@ -63,7 +67,20 @@ jobs:
           git add CONDUCTOR-REPORT.md projects/dream-cycle/backlog/ projects/art-prompts.yaml
           if git diff --staged --quiet; then
             echo "No changes to commit"
-          else
-            git commit -m "chore: conductor report $(date -u '+%Y-%m-%d %H:%M UTC') [skip ci]"
-            git push
+            exit 0
           fi
+
+          git commit -m "chore: conductor report $(date -u '+%Y-%m-%d %H:%M UTC') [skip ci]"
+
+          for attempt in 1 2 3; do
+            git fetch origin main
+            git rebase origin/main
+            if git push origin HEAD:main; then
+              exit 0
+            fi
+            echo "Push attempt ${attempt}/3 lost a race; retrying."
+            sleep $((attempt * 2))
+          done
+
+          echo "::error::Unable to push conductor report after 3 attempts."
+          exit 1
