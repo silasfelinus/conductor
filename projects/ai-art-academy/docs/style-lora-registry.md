@@ -66,6 +66,14 @@ five movements this task was filed to cover:
 Net effect: LoRA-backed styles go from 8 to **10** (of the original 16), prompt-mode
 drops from 11 to **9**. Full detail in each style's "Per-style notes" entry below.
 
+**v1.3 update (2026-07-18, t-010 cycle):** the curriculum's 22nd movement, Suprematism
+(added the cycle before this one), had no registry entry at all — not in the
+curriculum-slug-mapping table, the machine-readable block, or the per-style notes.
+Added it as prompt-mode (10th prompt-mode style), reusing the exact instruction text
+already shipped in `docs/suprematism-lesson.md` as its `prompt_hint` so the two docs
+can't drift apart. No LoRA search performed this cycle — filed as a candidate for a
+future `t-021`-style hunt, same as any other movement still on prompt-mode.
+
 ### Licensing headline (flag for t-004 and Silas)
 
 Almost every FLUX LoRA in the ecosystem is published under the **FLUX.1 [dev]
@@ -117,6 +125,7 @@ lesson to the wrong registry entry by assuming the slugs always match.
 | `rococo` | `rococo` | matches |
 | `symbolism` | `symbolism` | matches |
 | `pointillism` | `pointillism` | matches |
+| `suprematism` | `suprematism` | matches — added v1.3 (2026-07-18, this cycle), see per-style notes |
 
 Registry-only entries with **no curriculum-outline.md counterpart at all** — general
 painting techniques/bonus styles, not tied to a specific lesson movement, so a
@@ -250,6 +259,9 @@ styles:
   - style_slug: art-deco
     mode: prompt
     prompt_hint: "Repaint this image as a 1920s Art Deco poster: streamlined geometric forms, strong symmetry, gold and jewel tones, sunburst motifs"
+  - style_slug: suprematism
+    mode: prompt
+    prompt_hint: "Reduce this image to a Suprematist composition: a small number of flat geometric shapes -- squares, circles, and bars -- in black, red, and a few pure colors, floating freely against a plain white ground, with no outline, perspective, texture, or recognizable objects"
   # Bonus styles (not in the t-003 target list, free wins from the Kontext pack)
   - style_slug: post-impressionism-van-gogh
     mode: lora
@@ -542,6 +554,23 @@ styles:
   Base-model prompt: "as a 1920s Art Deco poster, streamlined geometric forms,
   strong symmetry, gold and jewel tones, sunburst motifs" — Deco is extremely well
   represented in training data; expected fine.
+
+### suprematism — prompt-mode
+
+- Added v1.3 (2026-07-18, t-010 cycle) — backs curriculum movement §22 (Suprematism:
+  sole artist Kazimir Malevich, d. 1935, comfortably in-bounds). No LoRA search
+  performed this cycle (egress to Hugging Face/Civitai was not part of this pass);
+  filed here as prompt-mode by default like every other newly-added movement until a
+  dedicated t-021-style hunt covers it. `prompt_hint` above matches the "Try It"
+  instruction already shipped in `docs/suprematism-lesson.md` verbatim, so the
+  registry and the lesson module never drift apart.
+- **Teaching note / t-004 watch-item:** flagged Hard in `curriculum-outline.md` and
+  the teaching-notes per-style table for the same reason `de-stijl` is Hard — a
+  faithful Suprematist remix discards the source subject almost entirely (geometry
+  replaces content, not just palette/texture), so a literal "preserve composition"
+  instruction fights the style itself. Frame the lesson's remix as a deliberate
+  reduction exercise rather than a subtle restyle, same framing already used for
+  De Stijl.
 
 ### Bonus: post-impressionism (Van Gogh) and pop-art — LoRA
 

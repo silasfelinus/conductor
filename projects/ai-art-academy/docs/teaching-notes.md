@@ -11,7 +11,7 @@ worked example lessons — so every style page in the Academy teaches the same w
 converts cleanly into front-end lesson copy.
 
 Companion files:
-- `docs/curriculum-outline.md` — the 21 movements (source of truth for facts/works/hints)
+- `docs/curriculum-outline.md` — the 22 movements (source of truth for facts/works/hints)
 - `docs/style-lora-registry.md` — per-style remix mode (`prompt` vs `lora`) + `prompt_hint`
 - `PUBLIC-DOMAIN-POLICY.md` — the eligibility rule every example work must pass (§1.3) and
   the provenance schema (§3)
@@ -97,7 +97,7 @@ or style registry.
 
 ---
 
-## 3. Per-style teaching notes (all 21 movements)
+## 3. Per-style teaching notes (all 22 movements)
 
 Remix-difficulty tiers match `curriculum-outline.md`'s "Lesson-only vs remixable" section:
 **Easy** = strong transfer, ship first; **Medium** = good but watch the output;
@@ -128,6 +128,7 @@ slugs — e.g. `renaissance-fresco`, `baroque-chiaroscuro`, `post-impressionism-
 | 19 | Rococo (`rococo`) | prompt | Easy | Lightness as a skill; pleasure, pastel, soft light | Keeps the photo's saturated/contrasty color — push high-key pastel |
 | 20 | Symbolism (`symbolism`) | prompt | Easy | Suggest, don't describe; dreams, myth, the unseen | Loosest visual signature — transfers as mood/palette; guard vs modern digital-surreal |
 | 21 | Neo-Impressionism / Pointillism (`pointillism`) | prompt | Easy | The technique *is* the lesson; dots your eye blends | Dots render too coarse/sparse at low res — evaluate at higher output size |
+| 22 | Suprematism (`suprematism`) | prompt | **Hard** | Feeling over depiction; geometry alone as the subject | Faithful remix discards the source subject almost entirely — frame as a reduction exercise, not a restyle (see `docs/suprematism-lesson.md`, this movement's dedicated worked lesson) |
 
 ---
 
@@ -137,6 +138,11 @@ Three full instantiations of the §2 scaffold, chosen to span the range: a stron
 non-Western remixer (Ukiyo-e), the canonical crowd-pleaser (Impressionism), and a
 technique-driven new addition (Pointillism). These are written as ready-to-ship lesson
 copy — a content author or the seed pipeline can lift them close to verbatim.
+
+A fourth full worked lesson exists for Suprematism (movement #22, the newest and the
+curriculum's only "Hard, discards-the-subject" case) but lives in its own file,
+`docs/suprematism-lesson.md`, rather than inline here — it was authored after this
+document and follows the same eight-beat scaffold.
 
 ### 4.1 Ukiyo-e — "Pictures of the Floating World"
 
