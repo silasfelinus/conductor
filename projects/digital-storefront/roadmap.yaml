@@ -437,11 +437,11 @@ tasks:
 - id: t-018
   milestone: m4
   title: Add digital + POD coloring books from the coloring-book project to the catalog plan
-  status: ready
-  owner: null
+  status: claimed
+  owner: worker
   passes: 0
   stakes: reversible
-  updated: '2026-07-10T00:00:00Z'
+  updated: '2026-07-18T01:07:15Z'
   depends_on: t-015
   note: >
     New 2026-07-10 per Silas: whatever coloring pages the coloring-book project
@@ -454,6 +454,8 @@ tasks:
     extend the catalog plan/SPEC with the two coloring book products — pricing
     approach, digital vs physical variants, and the exact hard-gated go-live steps
     (POD account, listings, live Stripe products remain needs-human for Silas).
+  claimed_by: claude-conductor-burst-20260718T0148Z
+  claimed_at: '2026-07-18T01:07:15Z'
 - id: t-019
   milestone: m3
   title: Re-verify the api.stripe.com and museum-site sandbox-egress blockers before re-flagging them as blocked again
