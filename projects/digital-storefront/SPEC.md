@@ -289,3 +289,94 @@ list. This lets the Mermaids of Venice PDF go live (in test mode) after step
 - DLC pack content itself (packmaker's job).
 - A dedicated admin CRUD UI for `Product` rows (Prisma Studio is sufficient
   for v1 catalog size).
+
+---
+
+## 11. Coloring book catalog extension (digital-storefront/t-018)
+
+Silas's 2026-07-10 direction: whatever coloring pages the coloring-book
+project produces are storefront inventory, in two variants — digital
+(set unlocks / PDF download) and physical (print-on-demand paperback). This
+section extends the v1 catalog (§9) with those two `Product` rows per book,
+using the existing schema from §3–5 unchanged, and maps the exact
+hard-gated steps between "content exists" and "purchasable."
+
+### Source content
+
+Two coloring-book production sets currently feed this catalog line
+(coloring-book roadmap, checked 2026-07-18):
+
+| Set | Coloring-book task | Status | Scope |
+|---|---|---|---|
+| Monster Recast (book 1) | t-022 | ready / in production | 36 final color/BW page pairs |
+| Kind Robots (book 3) | t-024 | waiting (depends on kr art batches) | 36 final color/BW page pairs |
+
+Both are recurring production tasks that advance in batches — neither has a
+complete 36-pair set yet. This catalog extension is safe to land now because
+it only defines the `Product` shape and go-live checklist; it creates no
+live rows and does not block on production finishing. Each book's catalog
+entry activates independently once its own set completes.
+
+### Variant 1 — Digital PDF
+
+No new plumbing: this is a `Product` row with `type: DIGITAL_PDF`,
+`metadata: { podSourceSet: "monster-recast" | "kind-robots" }`, using the
+exact `Entitlement` + secure-download path already specified in §4–5
+(same shape as the Mermaids of Venice PDF). Catalog product type:
+`pdf-coloring` (already approved in `product-types.yaml`) — no pitch
+needed for this variant.
+
+- Interior: the accepted final color/BW page pairs, assembled into one PDF
+  per book (color pages, or a color+BW combo edition — TBD at go-live, not
+  a schema question).
+- Price: no storefront precedent yet for a PDF product below novel-length;
+  suggest **$4.99–$6.99** range (indie coloring-PDF norm), final number is
+  a pricing decision for Silas at go-live, not blocking the catalog design.
+- Fulfillment: identical to §5 — no vendor, no account, no spend. This
+  variant can go live independently of the physical variant below as soon
+  as its source set reaches 36/36 and Silas sets a price.
+
+### Variant 2 — Physical POD (print-on-demand paperback)
+
+Uses the research already done in coloring-book/t-009
+(`projects/coloring-book/docs/pod-coloring-books.md`): **Lulu** as v1
+provider (verified public Print API, free sandbox, no spend to integrate),
+8.5×11 perfect-bound, single-sided, 48–64 interior pages (front matter +
+24–32 coloring images — roughly two-thirds of one 36-page digital set, so
+each book's physical edition may ship as fewer plates than its digital
+counterpart, or split across two physical volumes — a call for whoever
+builds the interior-assembly step, not this brief).
+
+- `Product` row: `type: POD` (the enum in §3 already covers this — no
+  Prisma change), `metadata: { vendor: "lulu", bindingType: "perfect",
+  paperStock: "60lb-uncoated", trim: "8.5x11", podSourceSet: ... }`.
+- Fulfillment step (build-time, not gated): a webhook handler step that
+  calls Lulu's print-job-creation endpoint against their sandbox — buildable
+  and testable end-to-end with zero spend per t-009's research, same as any
+  other webhook step in §2. Production credentials are the only gated part.
+- Pricing shape: unit cost ~$2.50–4.50/copy (Lulu estimate, confirm via
+  calculator at go-live), indicative list ~$9.99, ~$4–6 gross margin/copy
+  before shipping — from t-009's research, not re-derived here.
+- **New catalog product type needed:** `product-types.yaml` has
+  `pod-text-art` (merch: stickers/mugs/apparel via Printful/Printify) but
+  nothing for a printed book (different vendor, different fulfillment API,
+  page-count-based product instead of a flat design). Per CONTROL.md's
+  standing rule ("Never expand product-types.yaml — pitch it"), a pitch for
+  a new `pod-book` type is filed alongside this task rather than editing
+  the file directly — see `pitches/2026-07-18-pod-book-product-type.md`.
+
+### Hard-gated go-live steps (both variants — nothing below happens without Silas)
+
+- [ ] Lulu account creation + developer-portal API credentials (even sandbox
+      keys require an account) — per t-009 §"Hard-gated for Silas"
+- [ ] Tax/banking details on Lulu (payee info)
+- [ ] `pod-book` product type approval (the pitch above)
+- [ ] Setting the actual list price for either variant
+- [ ] Listing publication — making either variant purchasable anywhere
+- [ ] Any real spend: proof copies, paid API calls outside Lulu's sandbox
+- [ ] Live-mode Stripe product/price creation for these SKUs (§10, unchanged
+      standing rule)
+
+Not gated: `Product`/webhook/entitlement schema work, Lulu sandbox
+integration, interior/cover PDF assembly and preflighting, and this
+planning doc itself.

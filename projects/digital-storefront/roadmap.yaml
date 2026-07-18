@@ -437,25 +437,41 @@ tasks:
 - id: t-018
   milestone: m4
   title: Add digital + POD coloring books from the coloring-book project to the catalog plan
-  status: claimed
+  status: done
   owner: worker
   passes: 0
   stakes: reversible
-  updated: '2026-07-18T01:07:15Z'
+  updated: '2026-07-18T01:20:00Z'
   depends_on: t-015
   note: >
     New 2026-07-10 per Silas: whatever coloring pages the coloring-book project
     creates are storefront inventory, digital (set unlocks / PDF downloads) and
-    physical (print-on-demand paper coloring books). ALSO BLOCKED ON (cross-project,
-    note-level dependency — resolver only sees in-project deps): coloring-book t-006
-    and t-007 (the "Kind Robots" and "Spooktacular Monster Drag Party" launch sets)
-    and coloring-book t-009 (the POD path spec, which this task consumes; the POD
-    provider choice from t-015 serves both books and KR-logo swag). Deliverable:
-    extend the catalog plan/SPEC with the two coloring book products — pricing
-    approach, digital vs physical variants, and the exact hard-gated go-live steps
-    (POD account, listings, live Stripe products remain needs-human for Silas).
+    physical (print-on-demand paper coloring books). Cross-project blockers noted
+    here previously (coloring-book t-006/t-007/t-009, superseded 2026-07-17 by
+    t-022/t-024/done respectively) are all resolved as of 2026-07-18 — verified
+    coloring-book t-009 done (Lulu POD research) and t-006/t-007 done (superseded
+    by t-022/t-024, current production tasks, not blockers). Deliverable: extend
+    the catalog plan/SPEC with the two coloring book products — pricing approach,
+    digital vs physical variants, and the exact hard-gated go-live steps (POD
+    account, listings, live Stripe products remain needs-human for Silas).
   claimed_by: claude-conductor-burst-20260718T0148Z
   claimed_at: '2026-07-18T01:07:15Z'
+  outcome_note: >
+    Added SPEC.md §11 (Coloring book catalog extension) covering both source sets
+    (Monster Recast/t-022, Kind Robots/t-024 — both still in production, neither
+    blocks this planning work). Digital variant reuses the existing pdf-coloring
+    product type and §3-5 Entitlement/download plumbing verbatim — no new type
+    needed, go-live is just "set price once a set hits 36/36." Physical variant
+    reuses coloring-book/t-009's Lulu research (8.5x11 perfect-bound, 60# uncoated,
+    48-64pp) and the existing generic POD ProductType enum value, but needs a new
+    product-types.yaml catalog entry (pod-book) since the only current POD type
+    (pod-text-art) means merch, not page-count-priced books through a different
+    vendor API. Filed pitches/2026-07-18-pod-book-product-type.md per CONTROL.md's
+    "never expand product-types.yaml directly" rule rather than editing the file.
+    Listed the exact hard-gated go-live checklist (Lulu account/credentials,
+    pricing, listing publication, live Stripe SKUs) mirroring t-009's and SPEC.md
+    §10's existing gates — nothing net-new gated, nothing ungated that should be.
+
 - id: t-019
   milestone: m3
   title: Re-verify the api.stripe.com and museum-site sandbox-egress blockers before re-flagging them as blocked again

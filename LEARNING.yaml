@@ -3180,3 +3180,12 @@ records:
   outcome: done
   failure_category: quality
   lesson: "A plain YAML scalar containing an unescaped colon+space (e.g. a parenthetical like \"(confirmed here: 9 minutes later)\") is invalid mid-value -- always quote or block-scalar a hand-appended lesson/note field with any ': ' in it. Also: before implementing a task note's suggested root cause, verify it against the actual code path -- the note assumed the live append writer needed a quoting fix, but it already auto-quotes via yaml.safe_dump; the real bad entry was a hand-appended plain scalar that bypassed that writer entirely."
+- date: 2026-07-18
+  project: digital-storefront
+  task: t-018
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "A task's in-file depends_on note can go stale in a good way, not just a bad one -- t-017/t-018 both carried explicit 'do not trust the resolver, verify these cross-project blockers by hand' warnings written when the blockers were genuinely unmet; by the time this cycle picked t-018 up, every named blocker (coloring-book t-006/t-007/t-009, kind-robots t-008, packmaker t-003) had independently reached done. Always re-check cited blockers live before either claiming or reverting a resolver-promoted task -- the warning note itself can be outdated."
