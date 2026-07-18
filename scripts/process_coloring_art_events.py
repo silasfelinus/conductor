@@ -13,6 +13,7 @@ import os
 import subprocess
 import sys
 from dataclasses import dataclass
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
@@ -31,6 +32,8 @@ ALLOWED_KEYS = {
     "requested_by",
     "task",
     "note",
+    "attempt_count",
+    "last_attempt_at",
 }
 MAX_LIMIT = 18
 MIN_TIMEOUT = 30
@@ -91,6 +94,14 @@ def load_event(path: Path) -> ColorArtEvent:
     if not MIN_TIMEOUT <= timeout <= MAX_TIMEOUT:
         raise ValueError(f"timeout must be between {MIN_TIMEOUT} and {MAX_TIMEOUT}")
 
+    attempt_count = _positive_int(data.get("attempt_count", 0), "attempt_count")
+    if attempt_count < 0:
+        raise ValueError("attempt_count must be at least 0")
+
+    last_attempt_at = data.get("last_attempt_at")
+    if last_attempt_at is not None and not isinstance(last_attempt_at, str):
+        raise ValueError("last_attempt_at must be an ISO-8601 string")
+
     return ColorArtEvent(path=path, book=str(book), limit=limit, timeout=timeout)
 
 
@@ -98,6 +109,17 @@ def queued_events() -> list[Path]:
     if not EVENT_DIR.exists():
         return []
     return sorted(path for path in EVENT_DIR.glob("*.yaml") if path.is_file())
+
+
+def record_attempt(path: Path) -> None:
+    data = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
+    if not isinstance(data, dict):
+        raise ValueError("event root must be a mapping")
+
+    attempt_count = _positive_int(data.get("attempt_count", 0), "attempt_count")
+    data["attempt_count"] = attempt_count + 1
+    data["last_attempt_at"] = datetime.now(timezone.utc).isoformat(timespec="seconds")
+    path.write_text(yaml.safe_dump(data, sort_keys=False), encoding="utf-8")
 
 
 def process_event(event: ColorArtEvent, *, live: bool) -> int:
@@ -110,6 +132,7 @@ def process_event(event: ColorArtEvent, *, live: bool) -> int:
         print("KR_API_TOKEN is required for live coloring-art events.", file=sys.stderr)
         return 1
 
+    record_attempt(event.path)
     result = subprocess.run(command, cwd=ROOT, check=False)
     if result.returncode == 0:
         event.path.unlink()
