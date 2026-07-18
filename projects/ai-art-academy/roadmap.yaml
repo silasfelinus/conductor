@@ -427,11 +427,11 @@ tasks:
   - id: t-010
     milestone: m6
     title: Academy continuous improvement pass
-    status: claimed
+    status: ready
     recurring: true
     passes: 0
     stakes: reversible
-    updated: '2026-07-18T04:05:05Z'
+    updated: '2026-07-18T04:16:00Z'
     note: |-
       Standing never-idle task (re-arms to ready after every completion, per the recurring-task rule). Each cycle pick ONE: (a) front-end style/polish pass on Academy or art-styler surfaces, (b) roadmap upgrade — refine tasks, detail the next milestone, prune stale notes, (c) generate more art inspirations or style preview thumbnails, (d) expand the curriculum with a new movement/artist entry (respecting PUBLIC-DOMAIN-POLICY.md). Note which option ran in the PR. This task never reaches done and does not count toward milestone progress.
       CORRECTION 2026-07-16 (later same session): the "KR_API_TOKEN still absent" line in the RAN entry immediately below is WRONG — it was carried forward from prior cycles without re-checking the live env. The token IS present (env-var field + GitHub secret). t-004/t-009 notes now carry the accurate blockers: the sandbox can't reach the kind_robots API (egress 403), so generation runs via the auto-art-generate GitHub Action, not sandbox sessions; and rendering needs the home relay (correct KR_RELAY_TOKEN + KR_RELAY_USER_ID) and the DB up. Dispatching live generation is human-gated. (Re-applied fresh after PR #617 was closed dirty.)
@@ -460,6 +460,7 @@ tasks:
       Retry after the prior unconsumed claim event; current main verified ready with zero active claims.
 
       RAN 2026-07-18: option (d) curriculum/content expansion. Added projects/ai-art-academy/docs/suprematism-lesson.md, a complete eight-beat lesson module for the 22nd movement, via merged PR #743 (squash a3772894). Worker PR CI and Security Audit passed. Task-event recovery was hardened through PRs #747 and #750; this final event update is intentionally merged after the successful-merge trigger became active.
+      RAN 2026-07-18 (~04:05 UTC, conductor-burst rotation, claude-conductor-burst-20260718T040501Z): option (a) front-end polish pass, per the checklist's rotation rule (previous cycle ran lane 4, curriculum/content expansion, so lane 1 was next). Dispatched an Explore subagent over the Academy component set (all five components/academy/*.vue plus art-styler.vue) for a genuine, non-manufactured issue, explicitly told to skip everything already fixed by prior cycles (focus restoration, art-styler drop-zone keyboard support, dead remix button, duplicated state). It found a real remaining gap: the Style Lab tab (academy-manager.vue) renders art-styler.vue and image-upload.vue side by side as twin upload panels, but only art-styler.vue's drop-zone got the role/tabindex/keydown treatment in PR #371 — components/art/image-upload.vue's identical click-to-browse drop-zone had no role, tabindex, or keyboard handler, so keyboard-only and screen-reader users could not reach or trigger the file picker in that panel at all. Fixed by mirroring the exact art-styler.vue pattern (role="button", tabindex="0", aria-label="Upload images", @keydown.enter.space.prevent). image-upload.vue is shared beyond Academy (bots, characters, rewards, scenarios, art-builder, art-manager, avatar-picker, user-dashboard) but the change is purely additive, safe everywhere it's used. Verified: eslint clean, prettier clean, full-project `npm run test` (vue-tsc --noEmit, provisioned via conductor's provision_kind_robots_deps.sh) 0 errors. kind_robots PR #383 (branch claude/keen-fermat-fgzxlj): all 3 CI checks green (TypeScript, Contract verifiers, GitGuardian), no review comments — merged squash 039d8fa1.
     claimed_by: claude-conductor-burst-20260718T040501Z
     claimed_at: '2026-07-18T04:05:05Z'
     owner: reviewer
