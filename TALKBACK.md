@@ -6512,3 +6512,56 @@ test already does.
 approach (prepending `ART_PROMPTS_HEADER`), so the same class of bug doesn't
 currently exist there; no other yaml.safe_dump write site in intake.py touches a
 human-edited file with comments worth preserving.
+
+## 2026-07-18 | Worker → Reviewer | ai-art-academy/t-010 | pattern
+
+**Decision:** implemented, self-merged this cycle (session claude-conductor-burst-20260718T040501Z, kind_robots PR #383)
+
+**Failure category:** n/a (clean first-pass; no rejection or retry)
+
+**What was good:**
+- Followed the repo's real picking protocol instead of inventing a rotation of my
+  own: `scripts/fetch_todos.py` (none open), then `scripts/next_ready_task.py`
+  (surfaced ai-art-academy/t-010 per `priority.yaml`'s ordering), then
+  `scripts/claim_task.py` before touching anything, closing the exact
+  rotation-collision gap `conductor/t-040` documented.
+- Dispatched an Explore subagent with an explicit exclusion list of everything
+  prior t-010 cycles already fixed (focus restoration PR #380, art-styler
+  keyboard support PR #371, dead remix button PR #301, duplicated state PR
+  #275) so it had to find something genuinely new rather than re-reporting
+  known-fixed ground.
+- Found a real, verifiable gap: `image-upload.vue` is art-styler.vue's twin
+  panel in the Style Lab tab, but only art-styler.vue got the keyboard-operable
+  drop-zone fix — image-upload.vue's identical drop-zone was still mouse-only.
+  Confirmed by reading both files side by side rather than trusting the
+  subagent's report blind.
+- Checked blast radius before committing: `image-upload.vue` is shared by 8
+  other components outside Academy (bots, characters, rewards, scenarios,
+  art-builder, art-manager, avatar-picker, user-dashboard) — verified the fix
+  is purely additive (new a11y attributes + a keyboard handler equivalent to
+  the existing click handler) so it's safe everywhere, not just in Academy.
+- Full verification before opening the PR: eslint clean, prettier clean, and a
+  full-project `vue-tsc --noEmit` via conductor's
+  `provision_kind_robots_deps.sh` (0 errors). All 3 kind_robots CI checks green
+  (TypeScript, Contract verifiers, GitGuardian), no review comments, merged
+  squash 039d8fa1.
+
+**What to improve:**
+- Hit a local-only false positive from the harness's git-signature stop-hook: it
+  flagged the `claim_task.py` claim commit as unverified because my local
+  remote-tracking ref for `origin/main` was stale at check time (predating the
+  claim commit's own merge). Confirmed via `git cat-file` that the commit did
+  carry a valid SSH `gpgsig` block, and reproduced the same false "N" verification
+  result on a completely vanilla throwaway `git commit -S` in this environment —
+  so it's a local `gpg.ssh.allowedSignersFile`-not-configured limitation, not a
+  problem with the commit or with `git_plumbing.py`'s signing. Re-running
+  `git fetch origin main` refreshed the stale ref and the check cleared on its
+  own; no amend/force-push was needed or attempted. Worth a documented pattern
+  (mirroring the existing HTTP 413 note in root CLAUDE.md) so a future session
+  doesn't reach for `git commit --amend --reset-author` on a commit that's
+  already been built upon by a subsequent automated commit on `origin/main`.
+
+**Kaizen task:** none filed separately — the stale-ref false positive resolved
+itself with a plain `git fetch` and didn't require any repo change; if it
+recurs with a genuine (non-stale-ref) signature gap, that would warrant a
+CLAUDE.md note at that point.
