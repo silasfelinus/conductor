@@ -193,8 +193,8 @@ tasks:
   - id: t-006
     milestone: m2
     title: "Render the recommended newsfeed on the user homepage"
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     depends_on:
@@ -213,6 +213,9 @@ tasks:
       deliverables.done list as milestones land; slot the real feed component into
       project-front-page.vue's #interactive slot or swap content/newsfeed.md's body once
       the real feature is ready, rather than replacing the pitch page.
+    claimed_by: claude-conductor-burst-20260718T1506Z
+    claimed_at: '2026-07-18T15:06:56Z'
+    updated: '2026-07-18T15:06:56Z'
 
   - id: t-007
     milestone: m2
