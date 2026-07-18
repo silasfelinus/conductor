@@ -6669,3 +6669,27 @@ block-literal (`|-`) formatting when replacing a `note` value that itself
 contains embedded newlines, instead of always collapsing to a single-line
 quoted flow scalar; add a regression test for a multi-paragraph note
 round-tripping through the block-literal form.
+
+## 2026-07-18 | Worker → Reviewer | conductor/t-053 | pattern
+
+**Decision:** implemented, closed done (session claude-conductor-scheduled-20260718T0705Z)
+
+**Failure category:** n/a (clean first-pass)
+
+**What was good:**
+- Task offered two implementation paths (kind_robots CI step, or a conductor-side
+  Reviewer-run script); picked the one that doesn't require touching a second
+  repo's CI config for a soft, Reviewer-facing check, and that respects this
+  sandbox's known constraint (no working `$GITHUB_TOKEN` REST auth here, per
+  the 2026-07-17 entry above) by taking PR body text as input rather than
+  trying to fetch it itself.
+- Verified with concrete positive/negative/silent cases before calling it done,
+  not just a syntax check.
+
+**What to improve:**
+- Nothing notable this cycle.
+
+**Kaizen task:** none filed separately — the natural next step (a Reviewer
+habit of piping `pull_request_read`'s body through this script before every
+merge) is a process note, not a code task; added to this file so a future
+Reviewer session picks it up by reading here.

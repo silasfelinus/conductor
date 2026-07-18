@@ -1428,10 +1428,11 @@ tasks:
   - id: t-053
     milestone: m2
     title: Flag kind_robots PRs referencing a conductor task id that are missing a "Kaizen suggestion" section
-    status: ready
-    owner: null
+    status: done
+    owner: worker
     passes: 0
     stakes: reversible
+    updated: '2026-07-18T07:35:00Z'
     note: >
       Pattern note from ai-art-academy/t-023's TALKBACK entry (Reviewer, autonomous
       hourly conductor cycle, 2026-07-16) — third occurrence this week of a merged
@@ -1445,6 +1446,22 @@ tasks:
       shows up as an explicit TALKBACK "what to improve" note instead of relying on
       manual catch-rate. Should not fail CI outright (some PRs genuinely have no
       kaizen to suggest) — a soft warning/comment is enough.
+
+      DONE 2026-07-18 (session claude-conductor-scheduled-20260718T0705Z): took
+      the second option — a conductor-side script (`scripts/check_pr_kaizen.py`)
+      the Reviewer runs against a PR's title + body right before closing review.
+      Deliberately no network access (a prior TALKBACK entry, 2026-07-17,
+      recorded that `$GITHUB_TOKEN` has no working REST API auth in this
+      sandbox) — it's a pure text check over content the Reviewer already has
+      from the GitHub MCP `pull_request_read` call, passed via `--body`/
+      `--body-file`/stdin. Detects a `<project>/t-\d+`-shaped task id in the
+      title+body; if found and no `### Kaizen suggestion` (any heading depth,
+      case-insensitive) heading exists in the body, prints one soft WARNING
+      line and always exits 0 — never blocks. Silent when no task id is
+      referenced or the section is present. Verified with three cases (task id
+      + missing section warns; task id + section present is silent; no task id
+      is silent) and `python -m py_compile` (matches this repo's "Lint Python
+      scripts" CI step, which only syntax-checks `scripts/*.py`).
 
   - id: t-054
     milestone: m2

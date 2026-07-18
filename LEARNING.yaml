@@ -3230,3 +3230,13 @@ records:
   outcome: done
   failure_category: null
   lesson: "Static frontend fallback data (conductorCards.ts) drifts silently from the roadmap/project-overrides.yaml source of truth over time -- 9 of 22 cards had stale kind/status/tagline fields with no error surfaced anywhere, since the fallback only renders when the live DB API is unavailable. A periodic drift audit (this task) is the only thing that catches it; consider making it recurring rather than one-off."
+
+- date: 2026-07-18
+  project: conductor
+  task: t-053
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "A recurring PR-template gap (missing Kaizen suggestion section) was only ever caught by a Reviewer noticing by hand, three times in one week. A tiny, network-free text check the Reviewer runs on content it already has (scripts/check_pr_kaizen.py) closes that gap cheaper than touching a second repo's CI config -- prefer the same-repo, no-new-dependency option when a task offers a choice of implementation paths."
