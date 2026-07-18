@@ -3220,3 +3220,13 @@ records:
   outcome: done
   failure_category: null
   lesson: "A design task blocked on two cross-project note-level dependencies (invisible to resolve_deps.py/claim_task.py, which only check in-project depends_on) should re-verify each blocker's live status directly before claiming, per CONTROL.md's cross-project-collision note -- both packmaker/t-003 and kind-robots/t-008 were genuinely done here, but the task's own note explicitly warned not to trust the resolver's blind promotion."
+
+- date: 2026-07-18
+  project: conductor
+  task: t-049
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "Static frontend fallback data (conductorCards.ts) drifts silently from the roadmap/project-overrides.yaml source of truth over time -- 9 of 22 cards had stale kind/status/tagline fields with no error surfaced anywhere, since the fallback only renders when the live DB API is unavailable. A periodic drift audit (this task) is the only thing that catches it; consider making it recurring rather than one-off."

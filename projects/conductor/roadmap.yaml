@@ -1286,7 +1286,7 @@ tasks:
   - id: t-049
     milestone: m2
     title: Audit conductorCards.ts entries against project-overrides.yaml + roadmap state
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -1302,9 +1302,46 @@ tasks:
       entry's `kind`/`status`/tagline against project-overrides.yaml's `kind`
       + the project's actual roadmap `ready`/`done` counts in one pass, and
       correct any that have drifted from reality.
+
+      RAN 2026-07-18 (~06:20 UTC, conductor-burst rotation,
+      claude-conductor-burst-20260718T060659Z): did the full pass across all
+      22 conductorCards.ts entries. Nine had drifted: challenge-center,
+      humboldt-scoop, and engagement all showed `taskStatus: 'ready'` despite
+      zero ready tasks in their roadmaps (all done/finished) -> `'done'`;
+      humboldt-scoop-cms showed `'ready'` despite zero ready tasks (1
+      needs-human, 4 waiting, 6 done) -> `'needs-human'`; approval-portal
+      showed `'waiting'` despite zero waiting tasks (2 blocked, 3 done) ->
+      `'blocked'`; mermaids-of-venice (the original t-012 fix) had regressed
+      back to `'ready'` despite zero ready tasks (8 needs-human, 4 done) ->
+      `'needs-human'`; digital-storefront's `projectKind: 'content'`
+      contradicted its explicit override `kind: software` -> `'software'`;
+      humboldt-impropriety-calendar's `projectKind: 'content'` contradicted
+      the override's `kind: brainstorm` (mapped to `'proposal'` since
+      kind_robots' `ConductorProjectKind` type has no `brainstorm` variant --
+      same convention the `brainstorm` project's own card already uses) and
+      its `taskStatus: 'ready'` was wrong (0 ready; 1 blocked, 5 waiting) ->
+      `'blocked'`; coat-dance was the worst case -- `projectKind: 'proposal'`
+      and `taskStatus: 'waiting'` both contradicted the override (active,
+      `kind: content`) and the roadmap (2 ready, 8 blocked, 0 waiting), and
+      its description still called it "a paused brainstorm concept" retained
+      "until it earns active work again" even though it's an active project
+      with real ready work -- fixed kind/status and rewrote the
+      tagline/description from the actual task titles (beat-mapping, style-
+      frame pack, section remix pipeline). Also refreshed humboldt-scoop's
+      tagline/description to past tense now that all 8 tasks are done.
+      Verified: eslint clean, prettier clean, full-project `vue-tsc --noEmit`
+      exit 0 via conductor's `provision_kind_robots_deps.sh` (caught one real
+      type error along the way -- `'brainstorm'` isn't a valid
+      `ConductorProjectKind`, hence the proposal mapping above). kind_robots
+      PR #386 (branch `claude/keen-fermat-qxctg4`); will flip to `done` once
+      merged.
+
+      DONE 2026-07-18 (Reviewer, conductor-scheduled-20260718T0705Z): kind_robots
+      PR #386 merged clean (TypeScript, Contract verifiers, GitGuardian all
+      green, squash 897597d).
     claimed_by: claude-conductor-burst-20260718T060659Z
     claimed_at: '2026-07-18T06:06:59Z'
-    updated: '2026-07-18T06:06:59Z'
+    updated: '2026-07-18T06:20:00Z'
   - id: t-050
     milestone: m1
     title: Extend reconcile_expressions test coverage to the --deactivate missing-file path and orphan-loop skip
