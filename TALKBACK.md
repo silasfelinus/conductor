@@ -6823,3 +6823,77 @@ Might be worth a small script (`scripts/audit_roadmaps.py` already exists per co
 sibling check) that flags any `status: review`/`status: claimed` task whose `claimed_by` commit's
 referenced PR (if discoverable from the note text) is already merged/closed, so this stops being
 something each session has to notice by hand.
+
+## 2026-07-18 | Worker → Reviewer | kind-robots + system | pattern
+
+**Decision:** implemented, self-merged (session claude-conductor-burst-20260718T141846Z-ciFollowup,
+kind_robots PR #422 and PR #424)
+
+**Failure category:** n/a (clean, both root-caused before touching code)
+
+**What was good:**
+- Followed the Todo-first rule strictly: `scripts/fetch_todos.py` surfaced ci-janitor Todo #413
+  (HIGH, red "Kind Robots Cypress Tests" on main) before any roadmap task was picked, per
+  AGENTS.md. Delegated root-cause investigation to a background research agent rather than
+  guessing from the run summary alone — it read the actual job logs and confirmed all 367 Cypress
+  specs had passed; only the separate "Verify Cypress cleanup" step failed, because a safety-net
+  cleanup task replayed `DELETE /api/components/{id}` against a fixture the test had already
+  deleted itself, and `prisma.component.delete()`'s P2025 ("record not found") fell through
+  `handlePrismaError()`'s default branch to 500 instead of the cleanup harness's tolerated 404.
+  `server/api/chatgpt/index.post.ts` already mapped P2025→404 for the identical case, so the fix
+  (one `case 'P2025'` in `server/utils/error.ts`) matched an existing in-repo convention instead
+  of inventing a new one.
+- Verified locally before pushing: provisioned real kind_robots deps via
+  `scripts/provision_kind_robots_deps.sh`, ran `npm run test` (vue-tsc) and eslint clean, confirmed
+  via `git stash` diff that the file's Prettier warnings predate this change. Cleaned up
+  `nuxi prepare`'s regenerated `public/components.json` / `wonderlab-components.json` before
+  committing so they didn't leak into the diff.
+- On PR #422, Contract verifiers failed with the exact two errors already tracked as
+  ai-art-academy/t-033 and kind-robots/t-038 (confirmed by comparing the job log's error text
+  verbatim against those tasks' notes) — merged past it rather than re-investigating from scratch,
+  then immediately claimed kind-robots/t-038 itself (`claim_task.py`) and shipped PR #424 deleting
+  the dangling `thin-social-store-codemod.yml` workflow, since it was a well-scoped, already-
+  diagnosed, reversible fix sitting `status: ready` further down the same investigation.
+- Confirmed the fix actually worked rather than assuming: waited for the post-merge `cypress.yml`
+  run on main (triggered by PR #422's merge) to complete (`conclusion: success`) before calling
+  `scripts/complete_todo.py 413` — CI-JANITOR.md's contract requires verification before closing,
+  not just "the PR merged."
+
+**What to improve:**
+- Hit a new, previously undocumented git-proxy failure mode this session: `git checkout main`
+  (chained with `&& git pull --rebase`) in the kind_robots checkout timed out under the harness's
+  2-minute Bash default and was killed mid-checkout, leaving the working tree with ~150 files
+  showing as modified/deleted while HEAD/index still correctly pointed at the prior commit (no
+  data was lost — `git reset --hard HEAD` cleanly recovered — but it was alarming to hit
+  mid-session and cost time diagnosing). Root cause looks like a plain `git checkout <branch>`
+  against a large repo taking longer than 2 minutes when many commits have landed on `main` since
+  the last fetch (many parallel burst sessions merging concurrently makes this repo's `main`
+  move fast). Workaround used: `git fetch origin <branch>` alone is fast; then
+  `git branch -f local-name origin/<branch> && git checkout local-name` avoided the slow
+  path. Worth a kaizen task: either bump the timeout for checkout-heavy git commands in this
+  repo's tooling notes, or document the fetch+branch-force pattern as the standard way to switch
+  to a fast-moving branch instead of `git checkout <branch>` directly.
+- Hit conductor's own documented HTTP 413 push failure (this session's designated branch,
+  `claude/peaceful-thompson-f2xn42`) on a plain status-field commit — `git ls-remote` confirmed
+  the branch didn't exist on the actual remote yet (matching CLAUDE.md's documented first-push
+  cause), even though local remote-tracking showed a stale SHA from session start. Used the
+  documented `create_branch` MCP workaround, which itself surfaced a second wrinkle not yet
+  written up: by the time the ref was created it pointed at a `main` that had already moved past
+  what conductor/t-038's own commit was based on (other sessions merged in the interim), requiring
+  a `git rebase` (one straightforward conflict, resolved by hand) before the push would go
+  through as a fast-forward. Both steps worked, but the sequence (ref doesn't exist → create it →
+  discover it's now ahead of your branch → rebase → push) took a few extra minutes to work out
+  from CLAUDE.md's existing wording alone, which describes the two known 413 causes but not this
+  compound case.
+- The stop hook flagged a commit as unsigned (missing SSH signature) despite `commit.gpgsign=true`
+  being configured — `git commit --amend -S` silently produced no signature on the first attempt
+  with no error, and only a second explicit `git commit --amend --no-edit --reset-author -S`
+  actually attached a valid SSH signature (confirmed via `git cat-file commit`, since
+  `git log --show-signature` itself can't verify without a local `allowedSignersFile` — that's a
+  separate, expected limitation, not a real problem). Not clear why the first `-S` attempt didn't
+  sign; if this recurs, worth checking whether `git commit --amend --no-edit -S` (without
+  `--reset-author`) behaves differently from the combined flags used here.
+
+**Kaizen task:** none filed this cycle for the git-checkout-timeout finding above — recording it
+here first since it's a new observation, not yet confirmed as a recurring pattern worth a roadmap
+task.
