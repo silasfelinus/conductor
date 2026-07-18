@@ -15,16 +15,18 @@ Record the lane, files changed, and verification in the task note before rearmin
 
 ## Current curriculum coverage
 
-The Academy currently has 21 movement entries. Before adding a 22nd movement, finish the known coverage gaps below unless a newly discovered issue is more urgent.
+The Academy currently has 22 movement entries (21 in `academyStyles.ts` pending
+t-031's Suprematism sync). Before adding a 23rd movement, finish the known coverage
+gaps below unless a newly discovered issue is more urgent.
 
 | Area | Current state | Next verifiable action |
 |---|---|---|
-| Lesson seed entries | 21 movements seeded | Keep curriculum and `academyStyles.ts` slug order aligned |
-| Example works | 18 movements complete | Finish Expressionism, Cubism, and Bauhaus with policy-compliant public-domain sources |
-| Starter library | 21 starter images and provenance manifest complete | Keep source-picker integration aligned with the manifest |
-| Style previews | 21 prompts queued | Generate images only through the approved pipeline, then wire `previewImageSrc` |
+| Lesson seed entries | 22 movements in curriculum-outline.md; 21 synced to `academyStyles.ts` | Land t-031 (Suprematism sync), then keep curriculum and `academyStyles.ts` slug order aligned |
+| Example works | 22 movements complete (t-013 landed Expressionism/Cubism/Bauhaus 2026-07-17; Suprematism shipped complete 2026-07-18) | Spot-check VERIFIED URLs opportunistically; no known gaps |
+| Starter library | 21 starter images and provenance manifest complete | Add a Suprematism starter image/provenance entry; keep source-picker integration aligned with the manifest |
+| Style previews | 21 prompts queued; Suprematism not yet queued | Queue a Suprematism preview prompt in `art-prompts.yaml` (mirrors t-022); generate images only through the approved pipeline, then wire `previewImageSrc` |
 | Remix configs | Registry exists; A/B generation blocked | Resume only after the relay, database, and approved generation path are available |
-| Teaching scaffold | Written in `docs/teaching-notes.md` | Wire the scaffold into lesson detail when the corresponding front-end task is ready |
+| Teaching scaffold | Written in `docs/teaching-notes.md` | Wire the scaffold into lesson detail when the corresponding front-end task is ready; add a Suprematism row when that lands |
 
 ## Blocker discipline
 
