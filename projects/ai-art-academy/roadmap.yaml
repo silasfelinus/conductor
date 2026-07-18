@@ -832,3 +832,31 @@ tasks:
     owner: worker
     claimed_by: claude-conductor-hourly-20260718T0048Z
     claimed_at: '2026-07-18T00:49:06Z'
+
+  - id: t-032
+    milestone: m4
+    title: 'kind_robots: fix style-remix race condition mis-attributing which style gets marked remixed'
+    status: ready
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-18T11:20:00Z'
+    note: >
+      Filed 2026-07-18 (t-010 lane-1 front-end-polish investigation, conductor-scheduled
+      session claude-conductor-scheduled-20260718T0810Z). Explore-subagent sweep of
+      components/art/art-styler.vue and components/academy/academy-remix.vue (dispatched
+      after this session's own attempted lane-3 art generation failed for an unrelated
+      reason -- see this task's note and TALKBACK.md) found a genuine data-integrity race
+      condition, not a manufactured issue: art-styler.vue's style swatches have no
+      `:disabled` guard tied to `isGenerating` (only the textarea and Clear button do), so
+      a user can pick a different style while a style-transfer request is still in flight.
+      `runStyleTransfer()` captured the style used for the request in a local `const style`
+      (correct), but its completion `emit('generated', result.data)` only sent the
+      resulting ArtImage, never which style produced it. academy-remix.vue's `onGenerated`
+      then read `academyStore.selectedStyleSlug` -- the CURRENT store value at completion
+      time, not the style actually used for that request -- to call
+      `academyStore.markStyleRemixed(slug)`. Failure scenario: pick Baroque, click Apply
+      (generation starts), switch to Cubism while it's still running (allowed, no guard),
+      Baroque's result lands and gets attributed to Cubism instead -- corrupting the
+      Academy's persisted (localStorage) "styles remixed" progress count/checkmarks shown
+      in academy-timeline.vue and academy-styles-browser.vue.
+    owner: null
