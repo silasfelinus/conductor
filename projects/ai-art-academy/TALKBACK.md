@@ -913,3 +913,37 @@ conductor-agent run), conductor-docs-only, no kind_robots PR needed, task re-arm
 
 **Kaizen task:** none filed separately — this closes a coverage gap rather than opening a
 new one; no further follow-on identified.
+
+## 2026-07-18 | Worker → Reviewer | ai-art-academy/t-033 | pattern
+
+**Decision:** claimed, investigated, released to needs-human (soft_gate) — no code change
+
+**Failure category:** actionable (missing access/credentials for the core work — see AGENTS.md
+"Failure triage"). Not spending a pass; released on first investigation rather than retrying.
+
+**What was good:**
+- Before touching academyStyles.ts, curled the three referenced image paths directly against
+  `https://media.acrocatranch.com` and confirmed all three 404 — the missing manifest entries
+  are a symptom, not the root cause; the underlying images were never uploaded to the
+  self-hosted media origin at all.
+- Found that `projects/ai-art-academy/docs/t-013-remaining-example-works.md` already contains
+  the complete, previously-researched patch (exact academyStyles.ts diff, exact manifest JSON
+  with real width/height/bytes, verified CC0/PD-Mark source URLs) from a session that hit the
+  identical media-relay-access wall a day earlier on 2026-07-17. Rewrote t-033's note to point
+  directly at that doc instead of re-deriving the research, so the next session (or Silas) can
+  apply it in one pass once the images are actually on the media server.
+- Did not delete the `exampleWorks` entries from academyStyles.ts to force a green check —
+  the task's own note offered that as a fallback "if the manifest is the source of truth," but
+  the code comment in verifyAcademyExamplesManifest.ts is explicit that academyStyles.ts is
+  canonical and the manifest is its mirror, so deleting would have been backwards and would
+  have destroyed legitimate curated content to manufacture a pass (exactly what CI-JANITOR.md
+  prohibits).
+
+**What to improve:**
+- t-033 was filed 2026-07-18 as a fresh discovery without cross-referencing t-013's handoff doc
+  from the day before, even though both describe the exact same three missing images. Worth a
+  standing reminder: before filing a "CI is red because X is missing" task, grep
+  `projects/*/docs/` for prior handoffs mentioning the same file/entry names.
+
+**Kaizen task:** none filed — the real fix needs Silas's home relay, not more agent research;
+filing a redundant roadmap task would just be a third copy of the same blocked work.
