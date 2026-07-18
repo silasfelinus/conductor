@@ -836,10 +836,10 @@ tasks:
   - id: t-032
     milestone: m4
     title: 'kind_robots: fix style-remix race condition mis-attributing which style gets marked remixed'
-    status: ready
+    status: claimed
     passes: 0
     stakes: reversible
-    updated: '2026-07-18T11:20:00Z'
+    updated: '2026-07-18T11:20:48Z'
     note: >
       Filed 2026-07-18 (t-010 lane-1 front-end-polish investigation, conductor-scheduled
       session claude-conductor-scheduled-20260718T0810Z). Explore-subagent sweep of
@@ -859,4 +859,6 @@ tasks:
       Baroque's result lands and gets attributed to Cubism instead -- corrupting the
       Academy's persisted (localStorage) "styles remixed" progress count/checkmarks shown
       in academy-timeline.vue and academy-styles-browser.vue.
-    owner: null
+    owner: worker
+    claimed_by: claude-conductor-scheduled-20260718T0810Z-followup
+    claimed_at: '2026-07-18T11:20:48Z'
