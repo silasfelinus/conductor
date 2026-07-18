@@ -110,6 +110,83 @@ def test_register_control_block_is_idempotent(tmp_path, monkeypatch):
     assert (root / "CONTROL.md").read_text().count("### dup-proj  (software)") == 1
 
 
+def test_priority_and_override_registration_preserves_comments(tmp_path, monkeypatch):
+    root, projects = _fixture_repo(tmp_path, monkeypatch)
+    (projects / "priority.yaml").write_text(
+        "# Which project leads when multiple have ready tasks. Top of list wins.\n"
+        "order:\n"
+        "  - challenge-center\n"
+        "  - ai-art-academy\n"
+        "  # dream-cycle stays LAST on purpose: idle fallback.\n"
+        "  - brainstorm\n"
+        "  - dream-cycle\n"
+    )
+    (root / "project-overrides.yaml").write_text(
+        "# Human-managed project overrides. Written by the workspace UI.\n"
+        "# Agents: check this before claiming tasks.\n"
+        "\n"
+        "overrides:\n"
+        "  - slug: existing-proj\n"
+        "    status: active\n"
+        "    priority: normal\n"
+        "    kind: software\n"
+        "    # a hand-written note some agent left here\n"
+        "    liveUrl: /existing\n"
+    )
+
+    intake.main(["comet-forge", "--kind", "software", "--goal", "Forge comets."])
+
+    priority_text = (projects / "priority.yaml").read_text()
+    assert "# Which project leads when multiple have ready tasks. Top of list wins." in priority_text
+    assert "# dream-cycle stays LAST on purpose: idle fallback." in priority_text
+    order = yaml.safe_load(priority_text)["order"]
+    assert order.index("challenge-center") < order.index("comet-forge") < order.index("brainstorm")
+    assert order[-1] == "dream-cycle"
+
+    overrides_text = (root / "project-overrides.yaml").read_text()
+    assert "# Human-managed project overrides. Written by the workspace UI." in overrides_text
+    assert "# a hand-written note some agent left here" in overrides_text
+    assert "liveUrl: /existing" in overrides_text
+    overrides = yaml.safe_load(overrides_text)["overrides"]
+    entry = next(e for e in overrides if e["slug"] == "comet-forge")
+    assert entry["status"] == "active" and entry["kind"] == "software"
+    existing = next(e for e in overrides if e["slug"] == "existing-proj")
+    assert existing["liveUrl"] == "/existing"
+
+
+def test_register_override_updates_existing_entry_in_place(tmp_path, monkeypatch):
+    root, _ = _fixture_repo(tmp_path, monkeypatch)
+    (root / "project-overrides.yaml").write_text(
+        "overrides:\n"
+        "  - slug: dormant-proj\n"
+        "    status: retired # archived by Silas, may revisit\n"
+        "    priority: high\n"
+        "\n"
+        "  - slug: other-proj\n"
+        "    status: active\n"
+        "    priority: normal\n"
+        "    kind: content\n"
+    )
+    intake.register_override("dormant-proj", "software")
+
+    text = (root / "project-overrides.yaml").read_text()
+    assert "priority: high" in text  # untouched
+    assert "- slug: other-proj" in text and "kind: content" in text  # sibling block untouched
+    data = yaml.safe_load(text)["overrides"]
+    entry = next(e for e in data if e["slug"] == "dormant-proj")
+    assert entry["status"] == "active"
+    assert entry["kind"] == "software"
+    assert entry["priority"] == "high"
+
+
+def test_register_priority_is_idempotent(tmp_path, monkeypatch):
+    _, projects = _fixture_repo(tmp_path, monkeypatch)
+    intake.register_priority("dup-slug")
+    intake.register_priority("dup-slug")
+    order = yaml.safe_load((projects / "priority.yaml").read_text())["order"]
+    assert order.count("dup-slug") == 1
+
+
 def test_existing_project_dir_aborts(tmp_path, monkeypatch):
     _, projects = _fixture_repo(tmp_path, monkeypatch)
     (projects / "taken").mkdir()

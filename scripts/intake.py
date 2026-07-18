@@ -116,36 +116,92 @@ def default_art_entry(slug: str, desc: str) -> dict:
     }
 
 
+def _insert_list_item(text: str, item: str, before: str | None = None) -> str:
+    """Insert ``- item`` into a top-level YAML block list in `text` via text surgery,
+    preserving every comment and blank line untouched (mirrors register_control_block's
+    approach — a full yaml.safe_dump round-trip would strip both).
+
+    If `before` names an existing list item, the new one is inserted immediately above
+    it at matching indentation. Otherwise it's inserted right after the last top-level
+    list item found in the file.
+    """
+    lines = text.splitlines(keepends=True)
+    if before is not None:
+        pattern = re.compile(rf"^(\s*)- {re.escape(before)}\s*$")
+        for i, line in enumerate(lines):
+            m = pattern.match(line.rstrip("\n"))
+            if m:
+                lines.insert(i, f"{m.group(1)}- {item}\n")
+                return "".join(lines)
+
+    list_pattern = re.compile(r"^(\s*)- \S")
+    last_idx, last_indent = None, "  "
+    for i, line in enumerate(lines):
+        m = list_pattern.match(line)
+        if m:
+            last_idx, last_indent = i, m.group(1)
+    if last_idx is None:
+        lines.append(f"  - {item}\n")
+    else:
+        lines.insert(last_idx + 1, f"{last_indent}- {item}\n")
+    return "".join(lines)
+
+
 def register_priority(slug: str) -> None:
     if not PRIORITY_FILE.exists():
         return
 
-    data = load_yaml(PRIORITY_FILE)
-    order = data.get("order") or []
-    if slug not in order:
-        if "brainstorm" in order:
-            order.insert(order.index("brainstorm"), slug)
-        else:
-            order.append(slug)
-        data["order"] = order
-        write_yaml(PRIORITY_FILE, data)
-        print(f"✓ Added {slug} to projects/priority.yaml")
+    text = PRIORITY_FILE.read_text()
+    if re.search(rf"^\s*- {re.escape(slug)}\s*$", text, re.MULTILINE):
+        return
+
+    new_text = _insert_list_item(text, slug, before="brainstorm")
+    PRIORITY_FILE.write_text(new_text)
+    print(f"✓ Added {slug} to projects/priority.yaml")
+
+
+def _override_block_span(text: str, slug: str) -> tuple[int, int] | None:
+    """Return the (start, end) character span of the ``- slug: <slug>`` block."""
+    m = re.search(rf"^  - slug: {re.escape(slug)}\s*$", text, re.MULTILINE)
+    if not m:
+        return None
+    start = m.start()
+    next_m = re.search(r"^  - slug: ", text[m.end():], re.MULTILINE)
+    end = m.end() + next_m.start() if next_m else len(text)
+    return start, end
 
 
 def register_override(slug: str, kind: str) -> None:
-    data = load_yaml(OVERRIDES_FILE)
-    overrides = data.setdefault("overrides", [])
+    """Set `slug`'s status/kind in project-overrides.yaml via text surgery, so header
+    comments, inline comments, and blank-line block separators survive untouched — a
+    yaml.safe_dump round-trip strips all of those (conductor/t-055)."""
+    if not OVERRIDES_FILE.exists():
+        return
+    text = OVERRIDES_FILE.read_text()
+    span = _override_block_span(text, slug)
 
-    for entry in overrides:
-        if entry.get("slug") == slug:
-            entry["status"] = "active"
-            entry["priority"] = entry.get("priority") or "normal"
-            entry["kind"] = kind
-            break
+    if span is not None:
+        start, end = span
+        block = text[start:end]
+        block = re.sub(r"^(\s*status:)\s*\S+", r"\1 active", block, count=1, flags=re.MULTILINE)
+        if re.search(r"^\s*kind:\s*\S+", block, re.MULTILINE):
+            block = re.sub(r"^(\s*kind:)\s*\S+", rf"\1 {kind}", block, count=1, flags=re.MULTILINE)
+        else:
+            block = re.sub(r"^(\s*priority:.*)$", rf"\1\n    kind: {kind}", block, count=1, flags=re.MULTILINE)
+        text = text[:start] + block + text[end:]
+        OVERRIDES_FILE.write_text(text)
+        print(f"✓ Registered {slug} in project-overrides.yaml")
+        return
+
+    entry = f"  - slug: {slug}\n    status: active\n    priority: normal\n    kind: {kind}\n"
+    empty_list = re.search(r"^overrides:[ \t]*\[[ \t]*\][ \t]*\n?", text, re.MULTILINE)
+    if empty_list:
+        new_text = text[:empty_list.start()] + "overrides:\n" + entry + text[empty_list.end():]
+    elif re.search(r"^overrides:\s*$", text, re.MULTILINE):
+        new_text = text.rstrip("\n") + "\n\n" + entry
     else:
-        overrides.append({"slug": slug, "status": "active", "priority": "normal", "kind": kind})
-
-    write_yaml(OVERRIDES_FILE, data)
+        new_text = text.rstrip("\n") + "\n\noverrides:\n" + entry
+    OVERRIDES_FILE.write_text(new_text)
     print(f"✓ Registered {slug} in project-overrides.yaml")
 
 
