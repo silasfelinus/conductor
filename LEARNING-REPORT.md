@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-07-18T14:28:10Z
+Generated: 2026-07-18T14:32:03Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **264**
-- Outcomes: blocked: 12, done: 252
+- Closed tasks recorded: **265**
+- Outcomes: blocked: 12, done: 253
 - Success rate: **95%**
 - Average passes on successful tasks: **0.0**
 
@@ -32,7 +32,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | humboldt-impropriety-calendar | 1 | 0% |
 | humboldt-scoop | 1 | 100% |
 | humboldt-scoop-cms | 1 | 100% |
-| kind-robots | 26 | 96% |
+| kind-robots | 27 | 96% |
 | kindrobots-unraid | 4 | 100% |
 | media-watchlist | 1 | 100% |
 | mermaids-of-venice | 3 | 100% |
@@ -50,7 +50,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 15 | 40% |
-| software | 249 | 99% |
+| software | 250 | 99% |
 
 ## Failure categories
 
@@ -69,6 +69,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-07-18 `kind-robots/t-038` — Deleting a stale one-shot workflow file that references a since-merged branch/script cleared a required 'Contract verifiers' CI check that was red on every kind_robots PR regardless of diff -- worth grepping for other one-shot workflows with a 'delete after X lands' trailing comment where X has already landed, since they silently keep failing verifyWorkflowPaths.ts forever otherwise.
 - 2026-07-18 `newsfeed/t-005` — The task note pointed at prs.get.ts's raw-array response shape as the model to follow, but that's a rare conductor-only outlier -- 110+ of this repo's other GET routes use a {success,message,data}+errorHandler convention instead. When a task note says 'model X on Y's shape,' check how common Y's specific pattern actually is across the codebase before copying it verbatim; the intended lesson (thin handler + shared util split, introduce caching) can be separable from the literal response contract.
 - 2026-07-18 `digital-storefront/t-017` — A design-only task (no PR, per BOUNDARY.md) with follow-on tasks already filed (t-026, kind-robots/t-037) still needs an explicit status: done close -- the design doc landing on main and the follow-ons existing isn't itself a completion signal a later session will notice without checking. Same pattern as global-ui/t-025 this cycle: two independent status: review tasks both had their actual output already merged/landed, just missing the roadmap close.
 - 2026-07-18 `global-ui/t-025` — kind_robots PR #420 merged cleanly (option (a): migrate both shadow-variant panels onto kr-panel/kr-panel-muted with the shadow layered as a template utility override) but the roadmap task sat at status: review for several hours/cycles with no session flipping it to done -- closing a task the Worker/Reviewer already merged is easy to defer past the same session. Check pull_request_read on any status: review task's referenced PR before picking new work; a merged PR with no roadmap follow-through is a same-session-fixable gap, not a needs-human one.
@@ -78,7 +79,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-07-18 `conductor/t-053` — A recurring PR-template gap (missing Kaizen suggestion section) was only ever caught by a Reviewer noticing by hand, three times in one week. A tiny, network-free text check the Reviewer runs on content it already has (scripts/check_pr_kaizen.py) closes that gap cheaper than touching a second repo's CI config -- prefer the same-repo, no-new-dependency option when a task offers a choice of implementation paths.
 - 2026-07-18 `conductor/t-049` — Static frontend fallback data (conductorCards.ts) drifts silently from the roadmap/project-overrides.yaml source of truth over time -- 9 of 22 cards had stale kind/status/tagline fields with no error surfaced anywhere, since the fallback only renders when the live DB API is unavailable. A periodic drift audit (this task) is the only thing that catches it; consider making it recurring rather than one-off.
 - 2026-07-18 `digital-storefront/t-017` — A design task blocked on two cross-project note-level dependencies (invisible to resolve_deps.py/claim_task.py, which only check in-project depends_on) should re-verify each blocker's live status directly before claiming, per CONTROL.md's cross-project-collision note -- both packmaker/t-003 and kind-robots/t-008 were genuinely done here, but the task's own note explicitly warned not to trust the resolver's blind promotion.
-- 2026-07-18 `conductor/t-055` — yaml.safe_dump round-tripping a human-edited YAML file silently strips every comment and blank-line separator on write -- any registration/patch helper that touches a file agents don't exclusively own (priority.yaml, project-overrides.yaml) should do targeted text-surgery (regex/line insertion, mirroring register_control_block) instead of load-mutate-dump, even when the mutation itself is a one-line append.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-07-18T14:28:10Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-07-18T14:32:03Z_
