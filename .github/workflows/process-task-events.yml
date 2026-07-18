@@ -73,7 +73,8 @@ jobs:
             echo "Attempt ${attempt}/${max_attempts}: processing against $(git rev-parse HEAD)"
 
             had_error=0
-            python scripts/process_task_events.py || had_error=1
+            python scripts/process_task_events.py > /tmp/task-event-process.log 2>&1 || had_error=1
+            cat /tmp/task-event-process.log
             python scripts/validate_roadmaps.py
 
             if git diff --quiet && git diff --cached --quiet; then
@@ -104,6 +105,10 @@ jobs:
           done
 
           if [ "$had_error" -ne 0 ]; then
-            echo "::error::One or more task events failed to apply; they remain in task-events/ for diagnosis." >&2
+            cp /tmp/task-event-process.log task-event-diagnostics.txt
+            git add -f task-event-diagnostics.txt
+            git commit -m "diagnostic: task event run ${GITHUB_RUN_ID}"
+            git push origin "HEAD:refs/heads/diagnostics/task-events-${GITHUB_RUN_ID}"
+            echo "::error::One or more task events failed; diagnostics were pushed to diagnostics/task-events-${GITHUB_RUN_ID}." >&2
             exit 1
           fi
