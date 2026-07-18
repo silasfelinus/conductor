@@ -57,11 +57,20 @@ jobs:
       # retry exactly once on a clean race by re-running the processor against the
       # new main, and otherwise fail with the event left unconsumed on origin.
       - name: Process queued events and commit (one conflict retry)
+        env:
+          # The push below needs a usable credential in *this* step. The remote
+          # URL baked in the checkout step was not reaching the push (git failed
+          # with "could not read Username"), so construct an explicitly
+          # tokenized push URL here from a token that is guaranteed present in
+          # this step's env.
+          GH_TOKEN: ${{ github.token }}
         run: |
           set -e
           python3 -m pip install --disable-pip-version-check --quiet pyyaml
           had_error=0
           max_attempts=2
+
+          push_url="https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
 
           git config user.name "conductor-task-events[bot]"
           git config user.email "conductor-task-events[bot]@users.noreply.github.com"
@@ -87,7 +96,7 @@ jobs:
             # Fetch immediately before pushing so the fast-forward check is against
             # the freshest possible origin/main.
             git fetch --quiet origin main
-            if git push --quiet origin HEAD:main; then
+            if git push --quiet "$push_url" HEAD:main; then
               echo "Pushed cleanly."
               break
             fi
