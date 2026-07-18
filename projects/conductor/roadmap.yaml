@@ -1837,7 +1837,7 @@ tasks:
   - id: t-066
     milestone: m2
     title: A background subagent delegated a file push, then completed after the dispatching session had already pushed further changes to the same file directly, overwriting them
-    status: ready
+    status: claimed
     passes: 0
     stakes: reversible
     note: >
@@ -1873,3 +1873,7 @@ tasks:
       remote tip immediately before its push (not just use content handed
       to it at dispatch time), so a stale push_files call fails loudly on
       an unexpected base instead of silently overwriting newer commits.
+    owner: reviewer
+    claimed_by: claude-conductor-burst-20260718T230803Z
+    claimed_at: '2026-07-18T23:08:07Z'
+    updated: '2026-07-18T23:08:07Z'
