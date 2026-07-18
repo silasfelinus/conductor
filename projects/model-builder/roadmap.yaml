@@ -558,8 +558,8 @@ tasks:
   - id: t-030
     milestone: m6
     title: "Batch item PATCH endpoint to cut N per-item saves to one request"
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     note: >
@@ -570,3 +570,6 @@ tasks:
       store batchPushItems helper so a whole group edit persists in one round-trip, recording the
       same revision/stage metadata the per-item PATCH does. Front-end + one server route; no schema
       change. Keep the per-item PATCH for single edits.
+    claimed_by: claude-conductor-scheduled-20260718T1730Z
+    claimed_at: '2026-07-18T11:06:30Z'
+    updated: '2026-07-18T11:06:30Z'
