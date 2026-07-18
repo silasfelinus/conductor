@@ -126,6 +126,7 @@ lesson to the wrong registry entry by assuming the slugs always match.
 | `symbolism` | `symbolism` | matches |
 | `pointillism` | `pointillism` | matches |
 | `suprematism` | `suprematism` | matches — added v1.3 (2026-07-18, this cycle), see per-style notes |
+| `ashcan-school` | *(none)* | not yet in the registry — added to curriculum-outline.md v1.3 (2026-07-18); no dedicated LoRA search performed this cycle |
 
 Registry-only entries with **no curriculum-outline.md counterpart at all** — general
 painting techniques/bonus styles, not tied to a specific lesson movement, so a
