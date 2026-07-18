@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-07-18T20:20:32Z
+Generated: 2026-07-18T20:34:39Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **272**
-- Outcomes: blocked: 12, done: 260
+- Closed tasks recorded: **274**
+- Outcomes: blocked: 12, done: 262
 - Success rate: **96%**
 - Average passes on successful tasks: **0.0**
 
@@ -41,7 +41,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | newsfeed | 8 | 100% |
 | packmaker | 10 | 100% |
 | ruler-hooked | 2 | 100% |
-| serendipity | 1 | 100% |
+| serendipity | 3 | 100% |
 | superkate-hairstyle-ai | 16 | 100% |
 | superkate-services-calculator | 11 | 100% |
 
@@ -50,7 +50,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 15 | 40% |
-| software | 257 | 99% |
+| software | 259 | 99% |
 
 ## Failure categories
 
@@ -69,6 +69,8 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-07-18 `serendipity/t-011` — A fully-drafted implementation doc left behind by a blocked session (projects/serendipity/docs/t-011-serendipity-agent-todo-badge-filter.md) made this a near-zero-ambiguity patch-and-verify task; leaving such docs behind on a soft block is worth doing consistently since it turns the next session's work into transcription instead of redesign.
+- 2026-07-18 `serendipity/t-008` — A prior connector-only session's GitHub write-safety-filter block does not mean the task is stuck -- a session with real git + GitHub MCP patch access can just implement the already-scoped fix directly; re-check for patch access before assuming a soft-blocked task needs another connector-only attempt.
 - 2026-07-18 `newsfeed/t-015` — Before implementing a task whose note references a generated/shared file (here public/components.json / create-component-json.mjs), grep sibling projects' roadmaps for the same filename first -- this task duplicated kind-robots/t-039+t-040 verbatim and was closeable by cross-reference alone, with zero new code.
 - 2026-07-18 `kind-robots/t-040` — Mechanical drift-correction tasks (regenerate a committed generated file after a generator fix lands) are clean one-pass work when scoped tight: ran the generator, diffed line-by-line to confirm only additions + alphabetical fixes (no reordering churn, no removals), left the generator's other untracked output file alone since it was never part of this repo's history.
 - 2026-07-18 `kind-robots/t-039` — Pinning localeCompare(..., 'en') in create-component-json.mjs's three sort call sites made the generated manifest deterministic across Node/ICU builds. When a kaizen note bundles a determinism fix with a separate drift-correction (here: missing components in the committed file), keep the diff scoped to just the fix and file the drift correction as its own ready task (kind-robots/t-040) rather than expanding the PR.
@@ -77,8 +79,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-07-18 `newsfeed/t-006` — Regenerating public/components.json via its own generator script (utils/scripts/create-component-json.mjs, run implicitly by nuxi prepare) in this sandbox reorders unrelated existing entries and adds real components missing from the committed file -- looks like environment-dependent Array.sort/localeCompare collation, or the committed file has just drifted. Hand-patching only the new folder entries kept the diff scoped; worth a follow-up task to make the generator's sort collation-stable (e.g. explicit localeCompare(b, 'en') or plain codepoint compare) so future sessions don't have to work around it.
 - 2026-07-18 `newsfeed/t-006` — Reusing one feed-rendering component (NewsfeedFeed) in both the live homepage and the project pitch page's #interactive slot avoided duplicating feed logic across two surfaces -- when a project has both a real feature and a separate pitch/status page, slot the real component into the pitch page rather than keeping them as two independent implementations.
 - 2026-07-18 `kind-robots/t-038` — Deleting a stale one-shot workflow file that references a since-merged branch/script cleared a required 'Contract verifiers' CI check that was red on every kind_robots PR regardless of diff -- worth grepping for other one-shot workflows with a 'delete after X lands' trailing comment where X has already landed, since they silently keep failing verifyWorkflowPaths.ts forever otherwise.
-- 2026-07-18 `newsfeed/t-005` — The task note pointed at prs.get.ts's raw-array response shape as the model to follow, but that's a rare conductor-only outlier -- 110+ of this repo's other GET routes use a {success,message,data}+errorHandler convention instead. When a task note says 'model X on Y's shape,' check how common Y's specific pattern actually is across the codebase before copying it verbatim; the intended lesson (thin handler + shared util split, introduce caching) can be separable from the literal response contract.
-- 2026-07-18 `digital-storefront/t-017` — A design-only task (no PR, per BOUNDARY.md) with follow-on tasks already filed (t-026, kind-robots/t-037) still needs an explicit status: done close -- the design doc landing on main and the follow-ons existing isn't itself a completion signal a later session will notice without checking. Same pattern as global-ui/t-025 this cycle: two independent status: review tasks both had their actual output already merged/landed, just missing the roadmap close.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-07-18T20:20:32Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-07-18T20:34:39Z_
