@@ -6470,3 +6470,45 @@ hand-appending a malformed record the same way, bypassing the safe writer) is al
 caught by `test_committed_ledger_schema_conformance` running on every PR touching
 `tests/`; no further mechanical guard identified that wouldn't just restate what that
 test already does.
+## 2026-07-18 | Worker → Reviewer | conductor/t-055 | pattern
+
+**Decision:** implemented, self-merged this cycle (session claude-zealous-euler-7qjjdl, PR #749)
+
+**Failure category:** n/a (clean first-pass; no rejection or retry)
+
+**What was good:**
+- Replaced the yaml.safe_dump round-trip in `register_priority`/`register_override`
+  with text-surgery insertion (mirroring `register_control_block`'s existing
+  approach) instead of reaching for a new dependency — no ruamel.yaml available in
+  the environment and no requirements.txt to add it to, so the in-repo pattern was
+  the lower-risk fit.
+- Verified against the *real* projects/priority.yaml and project-overrides.yaml
+  (copied to a scratch dir, ran the registration functions, diffed against
+  originals): each produced exactly a one-line/one-block addition with zero
+  incidental changes to comments, inline notes (e.g. dream-cycle's
+  "idle fallback by design" comment, the retired-project archival comments), or
+  blank-line block separators — not just the synthetic test fixtures.
+- Handled edge cases the original dict round-trip papered over: an `overrides: []`
+  empty inline list (converts to block form on first real entry), entries missing
+  an optional `kind:` field entirely, and updating an already-existing override
+  entry in place without touching sibling blocks or unrelated fields.
+- Added 3 new regression tests (comment/note preservation across both files,
+  in-place update of an existing entry, idempotency) plus ran the full suite:
+  356 passed / 1 pre-existing skip (up from 353), `validate_roadmaps.py` clean.
+
+**What to improve:**
+- This session's `git push` failed deterministically with HTTP 413 for every
+  attempt (even a trivial 1-line diff on a brand-new ref attempted a ~1GB pack),
+  confirming the CLAUDE.md-documented proxy issue is not an edge case here. Had
+  to route all main-branch writes (this entry included) through the Contents API
+  instead of git, and deliberately excluded projects/conductor/roadmap.yaml's
+  status field from the PR branch itself to dodge a 3-way merge conflict against
+  the direct-to-main claim commit — worth normalizing this pattern (PR content +
+  separate direct-to-main status commits) as the standard playbook for future
+  sessions that hit this, rather than each session re-deriving it.
+
+**Kaizen task:** none filed separately — `register_art_prompts`'s write path
+(`write_art_prompts`) already preserves its own header via a similar hand-rolled
+approach (prepending `ART_PROMPTS_HEADER`), so the same class of bug doesn't
+currently exist there; no other yaml.safe_dump write site in intake.py touches a
+human-edited file with comments worth preserving.
