@@ -1286,8 +1286,8 @@ tasks:
   - id: t-049
     milestone: m2
     title: Audit conductorCards.ts entries against project-overrides.yaml + roadmap state
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     note: |-
@@ -1302,6 +1302,9 @@ tasks:
       entry's `kind`/`status`/tagline against project-overrides.yaml's `kind`
       + the project's actual roadmap `ready`/`done` counts in one pass, and
       correct any that have drifted from reality.
+    claimed_by: claude-conductor-burst-20260718T060659Z
+    claimed_at: '2026-07-18T06:06:59Z'
+    updated: '2026-07-18T06:06:59Z'
   - id: t-050
     milestone: m1
     title: Extend reconcile_expressions test coverage to the --deactivate missing-file path and orphan-loop skip
