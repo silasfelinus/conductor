@@ -186,16 +186,49 @@ tasks:
 - id: t-022
   milestone: m2
   title: 'kind_robots: Stripe webhook (checkout.session.completed, payment mode) credits an Entitlement for the Mermaids PDF product'
-  status: claimed
+  status: needs-human
   owner: worker
   passes: 0
   stakes: outward-facing
   gate_human: true
   approved_by_human: false
+  soft_gate: false
   depends_on:
   - t-011
   note: >
-    Step 2 of the original t-011 (SPEC.md §2, §4): new
+    FOR SILAS: kind_robots PR #426 (branch worker/digital-storefront-t-022)
+    adds handleProductPurchase to server/api/stripe/webhook.post.ts.
+
+    What it does: when a checkout.session.completed event arrives with
+    session.mode === 'payment' and metadata.productSlug set, it looks up the
+    Product by slug, then creates an Order + OrderItem + Entitlement in one
+    transaction. Idempotent on Order.stripeSessionId (unique constraint from
+    t-011's migration) — a redelivered webhook event finds the existing Order
+    and returns without double-crediting, same shape as the existing
+    handleManaTopup handler for mana top-ups.
+
+    TO APPROVE: review kind_robots PR #426, confirm the metadata.productSlug
+    contract it defines is what you want the (not-yet-built) checkout-session
+    route in t-023 to set, then merge the PR yourself or tell an agent to
+    merge it. Set approved_by_human: true and status: done here once merged
+    — this stays gate_human because it's real purchase-fulfillment logic
+    (grants a paid Entitlement) even though it has no UI of its own, per this
+    task's original stakes:outward-facing marking.
+
+    What unblocks: t-023 (product page + checkout session + secure download
+    route) depends on this task and can then set metadata.productSlug /
+    metadata.userId on its checkout session to match this handler's contract.
+
+    Verified before opening the PR: full-project `npm run test` (vue-tsc
+    --noEmit) exit 0, eslint clean, prettier clean, `prisma validate` clean
+    (confirms Order/OrderItem/Entitlement/Product and the stripeSessionId
+    unique constraint already exist). No live Stripe call made; could not
+    exercise a real signed webhook event from this sandbox (no egress/test
+    secrets here) — CI is the verification gate before merge, same as how
+    t-011 step 1 and PR #345's mana_topup handler were verified.
+
+    ORIGINAL TASK NOTE (unchanged below): Step 2 of the original t-011
+    (SPEC.md §2, §4): new
     server/api/stripe/webhook.post.ts event (or extend one if t-012's mana
     webhook already created a shared handler — check kind_robots PR #345
     first) verifying the Stripe signature via readRawBody +
