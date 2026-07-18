@@ -1178,8 +1178,8 @@ tasks:
   - id: t-039
     milestone: m1
     title: Make utils/scripts/create-component-json.mjs's folder/component sort collation-stable
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     note: >-
@@ -1203,3 +1203,6 @@ tasks:
       ? 1 : 0`) in buildLegacyFolders' two sort calls -- so future sessions
       running the generator locally don't produce unrelated reordering noise in
       their diffs.
+    claimed_by: claude-conductor-session-20260718T1815Z
+    claimed_at: '2026-07-18T18:16:48Z'
+    updated: '2026-07-18T18:16:48Z'
