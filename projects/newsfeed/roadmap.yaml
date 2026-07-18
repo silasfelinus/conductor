@@ -73,8 +73,8 @@ tasks:
   - id: t-003
     milestone: m2
     title: "Move homepage settings into a dedicated settings section"
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     depends_on: t-001
@@ -87,6 +87,9 @@ tasks:
       (dashboardConfigs.user is already registered) instead of the root, preserving all
       current controls. Settings data itself stays on the Prisma User model via
       stores/userStore.ts / server/api/users — do not add a new settings table.
+    claimed_by: claude-conductor-burst-20260718T-newsfeed
+    claimed_at: '2026-07-18T09:07:43Z'
+    updated: '2026-07-18T09:07:43Z'
 
   - id: t-004
     milestone: m2
