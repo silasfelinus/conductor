@@ -178,12 +178,14 @@ tasks:
 - id: t-011
   milestone: m5
   title: Badge and filter Serendipity-created AGENT todos in the Todos surface
-  status: ready
+  status: claimed
   owner: worker
-  updated: '2026-07-03T14:14:24-07:00'
+  updated: '2026-07-18T20:20:05Z'
   passes: 0
   stakes: reversible
   note: 'FOR SILAS: I could not apply the actual Kind Robots UI patch because the GitHub connector safety filter blocked creating a worker branch in silasfelinus/kind_robots. I preserved the intended implementation at projects/serendipity/docs/t-011-serendipity-agent-todo-badge-filter.md. It explains the exact todoStore helpers, conductor-page.vue Story tab/filter, todo card badge, Serendipity metadata tweak, and verification checklist. TO APPROVE: apply that patch in a local-code/Claude session with kind_robots patch access, then set this task back to ready or done depending on whether you want another Worker pass. This is a soft tooling block; no live data, deploys, or roadmap YAML outside conductor were changed.'
+  claimed_by: claude-conductor-agent-20260718T201310Z
+  claimed_at: '2026-07-18T20:20:05Z'
 - id: t-012
   milestone: m5
   title: Polish and upgrade Serendipity front-end surface
