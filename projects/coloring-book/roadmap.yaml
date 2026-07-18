@@ -240,6 +240,30 @@ tasks:
     Canonical Monster Recast 18-image color batch retry prepared on worker/coloring-book-t-022-run10; no duplicate event or BW generation added.
 
     Merged PR
+
+    ROOT CAUSE FOUND 2026-07-18 (conductor-burst cycle, actionable per Failure triage -- not
+    retrying further this cycle): the canonical event has failed every hourly run since at
+    least 2026-07-17T20:34:48Z (18+ consecutive GitHub Actions runs of
+    process-color-art-events.yml, all failure/cancelled, none succeeded -- checked via the
+    Actions API). Every one of the 18 queued ArtJobs times out after the full 300s
+    ("still queued/running") every single cycle -- 0/18 ever complete. Vercel runtime-error
+    aggregation on kind-robots (prj_x6HB2IPpQbvqNqiYVgu3IibJ6FZf) for the last 48h shows the
+    top error group by far is a MariaDB connection-pool exhaustion (DriverAdapterError:
+    "pool timeout: failed to retrieve a connection from pool after 10000ms", "Cannot execute
+    new commands: connection closed") hitting /api/art/image, /api/art/queue/claim, and ~20
+    other routes, 2042 occurrences across 135 users, most recently 2026-07-18T13:31:46Z --
+    overlapping this task's failure window exactly. Runtime logs show POST
+    /api/art/queue/claim itself returning 200 steadily every few minutes throughout, so the
+    claim step succeeds; the generation step behind it (the self-hosted ComfyUI/render
+    worker on Alexandria per kindrobots-unraid's ProxySQL/database-resilience notes,
+    m2 "in-progress") is what never reports a completed image back. This matches
+    kindrobots-unraid/t-012's existing soft-gate note that Alexandria's DB pooling is only
+    observable via local docker exec, unreachable from this sandbox -- can't be diagnosed or
+    fixed further from here. FOR SILAS: check whether the ComfyUI worker / Alexandria's
+    connection to kind-robots.vercel.app is actually up; the hourly workflow will keep
+    retrying and burning CI minutes for nothing until it is. Not spending further retry
+    passes on this recurring task this cycle -- re-armed to ready per the recurring-task
+    rule, no code change made.
   recurring: true
   claimed_by: claude-conductor-burst-20260717T2200Z
   claimed_at: '2026-07-17T22:11:05Z'
