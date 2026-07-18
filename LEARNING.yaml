@@ -3358,3 +3358,12 @@ records:
   outcome: done
   failure_category: null
   lesson: "Pinning localeCompare(..., 'en') in create-component-json.mjs's three sort call sites made the generated manifest deterministic across Node/ICU builds. When a kaizen note bundles a determinism fix with a separate drift-correction (here: missing components in the committed file), keep the diff scoped to just the fix and file the drift correction as its own ready task (kind-robots/t-040) rather than expanding the PR."
+- date: 2026-07-18
+  project: kind-robots
+  task: t-040
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "Mechanical drift-correction tasks (regenerate a committed generated file after a generator fix lands) are clean one-pass work when scoped tight: ran the generator, diffed line-by-line to confirm only additions + alphabetical fixes (no reordering churn, no removals), left the generator's other untracked output file alone since it was never part of this repo's history."

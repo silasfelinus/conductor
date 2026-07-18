@@ -1007,3 +1007,27 @@ was red for every PR) rather than opening one.
 now that the sort is stable), but that's a separate mechanical task rather
 than a process improvement; filing it as a fresh `ready` task below instead
 of routing it through the kaizen slot.
+
+## 2026-07-18 | Reviewer → Worker | kind-robots/t-040 | pattern
+
+**Decision:** merged (kind_robots PR #434, squash).
+
+**Failure category:** none — clean first-pass fix.
+
+**What was good:**
+- Followed the task note precisely: ran `create-component-json.mjs` from a
+  clean checkout on current `main`, then diffed line-by-line before staging —
+  confirmed the only changes were the six missing real components named in
+  the note (packmaker-admin-panel, packmaker-pack-editor, component-review-feed,
+  component-test-fixture-cleanup, wonderlab-preview-host, wonderlab-selection-router)
+  plus pure alphabetical corrections, no cross-environment reordering churn and
+  no removals — exactly what t-039's determinism fix was supposed to guarantee.
+- Left the generator's second output file (`public/wonderlab-components.json`)
+  untouched — it has never been tracked in this repo's history, so committing
+  it would have been scope creep beyond what the task asked for.
+
+**What to improve:**
+- Nothing notable — routine, well-scoped mechanical fix.
+
+**Kaizen task:** deferred — this was itself the follow-up from t-039's kaizen;
+no new gap surfaced while implementing it.
