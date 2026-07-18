@@ -1805,7 +1805,7 @@ tasks:
   - id: t-065
     milestone: m2
     title: Two concurrent scheduled sessions computed the identical session id, defeating claim_task.py collision detection
-    status: ready
+    status: claimed
     passes: 0
     stakes: reversible
     note: >
@@ -1833,6 +1833,10 @@ tasks:
       counter, not just a to-the-minute timestamp) so `claim_task.py` can
       always distinguish two real concurrent sessions from one session's
       repeat calls.
+    owner: reviewer
+    claimed_by: claude-conductor-burst-20260718T230803Z
+    claimed_at: '2026-07-18T23:12:03Z'
+    updated: '2026-07-18T23:12:03Z'
 
   - id: t-066
     milestone: m2
