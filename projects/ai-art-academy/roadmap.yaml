@@ -836,7 +836,7 @@ tasks:
   - id: t-032
     milestone: m4
     title: 'kind_robots: fix style-remix race condition mis-attributing which style gets marked remixed'
-    status: review
+    status: done
     passes: 0
     stakes: reversible
     updated: '2026-07-18T11:20:48Z'
@@ -859,6 +859,22 @@ tasks:
       Baroque's result lands and gets attributed to Cubism instead -- corrupting the
       Academy's persisted (localStorage) "styles remixed" progress count/checkmarks shown
       in academy-timeline.vue and academy-styles-browser.vue.
+
+      DONE 2026-07-18T11:32Z: kind_robots PR #408 merged (squash, sha 6dfb89e). Changed
+      art-styler.vue's `generated` emit to carry the `StyleEntry` actually used for the
+      request (`emit('generated', result.data, style)`, `style` being the local const
+      captured at the start of `runStyleTransfer()`), and academy-remix.vue's `onGenerated`
+      to read that emitted style (`style?.slug`) instead of re-reading
+      `academyStore.selectedStyleSlug` after the async request settles. Verified: eslint 0
+      errors, prettier clean, full-project `npm run test` (nuxi prepare + vue-tsc --noEmit)
+      exit 0, all 3 kind_robots PR checks green (TypeScript, Contract verifiers,
+      GitGuardian). Checked all 3 existing `@generated` callers (avatar-picker.vue,
+      coloring-book-page.vue x2) -- none read a second argument, so the emit-signature
+      change is backward compatible. Kaizen suggestion (not filed as a task): the style
+      swatches still have no `:disabled`/pointer-events guard during `isGenerating`, so a
+      user can still visually reselect mid-request even though attribution is now correct
+      -- a UX follow-up could disable them to match the existing textarea/Clear-button
+      pattern.
     owner: worker
     claimed_by: claude-conductor-scheduled-20260718T0810Z-followup
     claimed_at: '2026-07-18T11:20:48Z'

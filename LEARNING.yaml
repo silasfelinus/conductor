@@ -3260,3 +3260,13 @@ records:
   outcome: done
   failure_category: null
   lesson: "Relocating a component off a route can leave stale duplicate frontmatter behind on an unrelated nav/breadcrumb metadata file that shares the same route (content/channels/home/dashboard.md's dashboardKey/dashboardTab, separate from the actual page file content/index.md). Grep every content file that shares the target route, not just the one being edited, before calling a relocation complete."
+
+- date: 2026-07-18
+  project: ai-art-academy
+  task: t-032
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "art-styler.vue's generated emit carried only the result image, not which style produced it, so the consumer had to re-read current store state to attribute a completed generation -- exactly the kind of async gap where a mid-flight selection change mis-attributes the result. When an event fires after an awaited async call, pass the value that was true at request-start through the event payload itself rather than letting the consumer re-read live state after the fact."
