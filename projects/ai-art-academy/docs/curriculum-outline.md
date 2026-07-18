@@ -4,7 +4,7 @@ date: 2026-07-10
 task: ai-art-academy/t-005
 status: draft for review (content complete, one source URL verified per movement)
 
-This is the curriculum: 22 movements spanning the timeline from Greek vases to
+This is the curriculum: 23 movements spanning the timeline from Greek vases to
 Suprematism. Every artist named here is long dead (all listed artists died before
 1955), and every example work is a public-domain original held (or expected) in an
 open-access collection. See the ethical boundary in DESIGN-BRIEF.md and the
@@ -13,9 +13,10 @@ PUBLIC-DOMAIN-POLICY.md (t-006).
 Sections 1-16 are the v1 set (chronological). Sections 17-21 are the 2026-07-16 v1.1
 expansion (t-010 cycle): Gothic panel painting, Northern Renaissance, Rococo,
 Symbolism, and Neo-Impressionism/Pointillism. Section 22 is the 2026-07-18 v1.2
-addition (t-010 cycle): Suprematism. They are appended (rather than renumbered into
-place) but belong chronologically among the earlier movements — read the `era` field
-in the machine-readable skeleton for true ordering; the front-end seed (t-020, t-031)
+addition (t-010 cycle): Suprematism. Section 23 is the 2026-07-18 v1.3 addition
+(t-010 cycle): Ashcan School. They are appended (rather than renumbered into place)
+but belong chronologically among the earlier movements — read the `era` field in the
+machine-readable skeleton for true ordering; the front-end seed (t-020, t-031)
 inserts them in chronological position.
 
 Verification method note: direct API/page fetches to museum hosts are blocked by the
@@ -170,6 +171,16 @@ movements:
     artist_slugs: [kazimir-malevich]
     example_count: 4
     remix_hint: "Reduce this image to a Suprematist composition: a small number of flat geometric shapes — squares, circles, bars — in black, red, and a few pure colors, floating freely against a plain white ground, no outline or perspective, pure weightless geometry"
+  # --- v1.3 addition (2026-07-18, t-010 cycle) ---
+  # Belongs chronologically before de-stijl/bauhaus/suprematism (see `era`); appended
+  # here to avoid renumbering the sections above. A future seed-sync task inserts it
+  # in chronological position in academyStyles.ts, mirroring t-020/t-031.
+  - slug: ashcan-school
+    name: Ashcan School
+    era: "c. 1900-1913"
+    artist_slugs: [robert-henri, george-bellows, john-sloan, william-glackens]
+    example_count: 4
+    remix_hint: "Repaint this image in the Ashcan School style: loose, gestural brushwork, a dark and earthy urban palette, unglamorized everyday city subject matter, and dramatic, low-key lighting like a newspaper illustrator working in oil"
 ```
 
 ---
@@ -1216,6 +1227,67 @@ pure weightless geometry"
 
 ---
 
+## 23. Ashcan School (`ashcan-school`)
+
+**Era:** c. 1900-1913 (New York)
+
+**Key ideas.** Robert Henri told his students to forget the polite academy subjects
+and go paint what was actually outside their studio windows: tenements, saloons,
+boxing clubs, and crowded snow-covered streets. His circle — nicknamed "the Ashcan
+School" by a critic who meant it as an insult — believed a fire escape or a prize
+fight deserved the same serious, confident brushwork as a mythological scene. Where
+French Realism a generation earlier had ennobled rural peasant labor, the Ashcan
+painters trained that same unflinching eye on the modern industrial city: gritty,
+loud, and alive. Their work reads like photojournalism painted in oil, decades
+before photojournalism existed as a form.
+
+**Recognition cues:**
+- Loose, confident, visibly gestural brushwork — energy and immediacy over
+  polished finish
+- A dark, murky, earthy palette (browns, blacks, muddy grays) punctuated by small
+  bright accents (a lit window, a red coat, a boxer's skin under harsh light)
+- Everyday urban subjects treated with the same seriousness as history painting:
+  city streets, tenements, saloons, crowds, boxing matches
+- Dramatic, low, often artificial lighting (gaslight, ring lights) rather than
+  even daylight
+- A sense of the scene caught in motion, viewed from within the crowd rather than
+  staged for the viewer
+
+**Notable artists:**
+- **Robert Henri** (1865-1929) — The movement's teacher and organizer; urged
+  students to paint life "with such vitality" that gallery walls would seem to
+  disappear.
+- **George Bellows** (1882-1925) — Best known for his ringside boxing scenes,
+  rendered with blurred, aggressive brushwork that puts the viewer in the crowd.
+- **John Sloan** (1871-1951) — Chronicler of Greenwich Village street life,
+  rooftops, and working-class New Yorkers going about ordinary days.
+- **William Glackens** (1870-1938) — Painted the city's social scenes — cafes,
+  restaurants, parks — in a looser, more colorful hand than his Ashcan peers.
+
+**Example works:**
+- *Stag at Sharkey's*, George Bellows, 1909 — Cleveland Museum of Art (acc.
+  1133.1922). VERIFIED public domain (author died 1925, published before 1931,
+  Wikimedia Commons):
+  https://commons.wikimedia.org/wiki/File:1909_Stag_at_Sharkey's.jpg
+- *Snow in New York*, Robert Henri, 1902 — National Gallery of Art, Washington
+  (Chester Dale Collection, acc. 1954.4.3). VERIFIED public domain (CC0 1.0,
+  Wikimedia Commons):
+  https://commons.wikimedia.org/wiki/File:Robert_Henri,_Snow_in_New_York,_1902,_NGA_42929.jpg
+- *The "City" from Greenwich Village*, John Sloan, 1922 — National Gallery of Art,
+  Washington (acc. 1970.1.1). VERIFIED public domain (author died 1951, published
+  before 1931, Wikimedia Commons):
+  https://commons.wikimedia.org/wiki/File:JFSloan_The_City_from_Greenwich_Village.png
+- *At Mouquin's* (also known as *Chez Mouquin*), William Glackens, 1905 — Art
+  Institute of Chicago (acc. 1925.295). VERIFIED public domain (CC0 1.0, Wikimedia
+  Commons):
+  https://commons.wikimedia.org/wiki/File:William_James_Glackens_-_At_Mouquin%27s_-_1925.295_-_Art_Institute_of_Chicago.jpg
+
+**remix_hint:** "Repaint this image in the Ashcan School style: loose, gestural
+brushwork, a dark and earthy urban palette, unglamorized everyday city subject
+matter, and dramatic, low-key lighting like a newspaper illustrator working in oil"
+
+---
+
 ## Lesson-only vs remixable
 
 Every movement above maps to a remix config (mode `prompt` to start; t-003/t-004
@@ -1253,7 +1325,11 @@ geometry, Klee's whimsical pictograms, Moholy-Nagy's camera-less photograms) —
 expect the model to default to a generic "geometric abstract art" look rather
 than a specific recognizable Bauhaus signature; the prompt template should pick
 one sub-style (likely Kandinsky's point/line/plane vocabulary) rather than
-average all three.
+average all three. `ashcan-school` shares `realism`'s risk of under-cooking into a
+lightly-graded photo, but its darker palette and visibly loose brushwork give the
+model more to grab onto than straight Realism does — the remix_hint leans on
+"gestural," "murky," and "low-key lighting" to keep it from reading as a generic
+sepia filter.
 
 **Flagged as likely-poor remixers:**
 - `cubism` — faceting while "preserving the composition" is partly contradictory;
@@ -1309,3 +1385,17 @@ records above move. Unlike the §17-21 batch, this session had working egress to
 `commons.wikimedia.org` (confirmed via WebFetch, HTTP 200), so all four example-work
 URLs are marked VERIFIED against their live Wikimedia Commons file pages and PD
 license tags (PD-Russia-expired / Public Domain Mark 1.0), not "(unverified)."
+
+**v1.3 addition (2026-07-18) re-check.** Section 23 (Ashcan School) clears the
+PUBLIC-DOMAIN-POLICY.md §1.3 both-prongs rule for all four named artists: Robert
+Henri (d. 1929), George Bellows (d. 1925), John Sloan (d. 1951), and William
+Glackens (d. 1938) all died well before the 1956 cutoff — John Sloan's 1951 death is
+the newest of this batch but still inside the "died 1953 or earlier" statement
+above, so no recency record moves. All four example works (1902, 1905, 1909, 1922)
+comfortably predate the 1930 US publication cutoff and predate Moholy-Nagy's 1926
+Fotogramm as the curriculum's most-recent work is unaffected — 1922 is the newest of
+this batch. This session had working egress to `commons.wikimedia.org` (confirmed
+via WebFetch, HTTP 200 on all four file pages), so all four example-work URLs are
+marked VERIFIED against their live Wikimedia Commons file pages and PD license tags
+(two CC0 1.0 dedications from open-access museums, two "author died 70+ years ago,
+published before 1931" PD tags), not "(unverified)."
