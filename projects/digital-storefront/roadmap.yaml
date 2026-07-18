@@ -414,12 +414,32 @@ tasks:
 - id: t-017
   milestone: m5
   title: Design DLC unlock purchase mechanics (packmaker packs as store items)
-  status: claimed
+  status: review
   owner: worker
   passes: 0
   stakes: reversible
   depends_on: t-011
   note: >
+    RESOLVED 2026-07-18 (session claude-conductor-scheduled-20260718T0411Z):
+    both cross-project note-level blockers this task carried (packmaker/t-003
+    draft pack contents, kind-robots/t-008 private-but-shared content/ACL
+    design) are now confirmed `status: done` on origin/main, so this design
+    was unblocked and written: `projects/digital-storefront/docs/dlc-unlock-design.md`.
+    It reconciles the two designs that already existed for half of this
+    problem each — digital-storefront SPEC.md's `Entitlement` (proves
+    purchase) and kind-robots SHARING-SPEC.md's `Grant` (proves per-item
+    visibility) — via a new `Pack` model that joins them: one `Product`/
+    `Entitlement` per purchase as already designed, plus one `Grant`
+    (`subjectType: PACK`) created alongside it in the same webhook
+    fulfillment step, with each pack-generated `Dream`/`Facet`/`Character`/
+    `Reward` row carrying a nullable `packId` FK that `canView()` checks
+    against an active `Grant` instead of packmaker SPEC.md §4's interim
+    all-or-nothing `isPublic` switch. Design only — no schema, no migration,
+    no code, per `BOUNDARY.md`. Filed two follow-on implementation tasks:
+    digital-storefront/t-026 (webhook DLC fulfillment) and kind-robots/t-037
+    (the actual `Pack`/`packId`/`GrantSubject.PACK` migration + `canView()`
+    extension). Original task note (now resolved) preserved below.
+
     RESOLVER NOTE 2026-07-17: t-011 (this task's only in-file depends_on) is now
     `status: done`, so `scripts/resolve_deps.py` and `scripts/audit_roadmaps.py`'s
     WAITING_WITH_SATISFIED_DEPS check will both flag/promote this to `ready` —
@@ -578,3 +598,28 @@ tasks:
     lands.
   claimed_by: hourly-20260715T1057
   claimed_at: '2026-07-15T10:57:19Z'
+- id: t-026
+  milestone: m5
+  title: 'kind_robots: extend Stripe webhook fulfillment to DLC products (Entitlement + Grant)'
+  status: waiting
+  owner: null
+  passes: 0
+  stakes: outward-facing
+  gate_human: true
+  approved_by_human: false
+  depends_on: t-022
+  note: >
+    Filed 2026-07-18 (t-017's design close,
+    projects/digital-storefront/docs/dlc-unlock-design.md). Once t-022's
+    Mermaids-PDF-scoped webhook fulfillment lands and at least one DLC
+    `Product` row exists (packmaker/t-004 admin generator has produced an
+    approved, purchasable pack), extend the same
+    `server/api/stripe/webhook.post.ts` handler's `checkout.session.completed`
+    (mode: payment) branch to also handle `Product.type = DLC`: create the
+    `Entitlement` row exactly as for any other digital good, then create one
+    `Grant` row (`subjectType: PACK`, `subjectId` = the pack's id,
+    `level: UNLOCK`, `source: PURCHASE`, `refId` = the entitlement id,
+    `status: ACTIVE`) in the same fulfillment step. Depends on kind-robots
+    t-037 (the `Pack`/`GrantSubject.PACK` migration) landing first so `Grant`
+    actually has a `PACK` subject type to write. TEST MODE ONLY — stays
+    gate_human like t-022, this is real purchase-fulfillment logic.
