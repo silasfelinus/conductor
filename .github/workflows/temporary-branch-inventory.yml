@@ -1,19 +1,36 @@
-name: Temporary branch inventory
+name: Temporary verified branch cleanup
 
 on:
   pull_request:
-    types: [opened, synchronize, ready_for_review]
+    types: [synchronize]
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
-  inventory:
+  cleanup:
     if: github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
     steps:
-      - name: List remote branches
+      - name: Delete verified stale refs and temporary diagnostic ref
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          git ls-remote --heads "https://github.com/${GITHUB_REPOSITORY}.git" \
-            | sed 's#.*refs/heads/##' \
-            | sort
+          set -euo pipefail
+          remote="https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+          stale=(
+            "test-write-probe-delete-me"
+            "worker/coloring-book-t-022-claim-recovery"
+            "worker/conductor-task-event-pr-trigger"
+          )
+
+          for branch in "${stale[@]}"; do
+            if git ls-remote --exit-code --heads "$remote" "refs/heads/$branch" >/dev/null 2>&1; then
+              git push "$remote" --delete "$branch"
+            fi
+          done
+
+          echo "Remaining branches before removing diagnostic ref:"
+          git ls-remote --heads "$remote" | sed 's#.*refs/heads/##' | sort
+
+          git push "$remote" --delete "claude/temporary-branch-inventory"
