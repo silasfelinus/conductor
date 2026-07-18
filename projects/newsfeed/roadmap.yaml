@@ -258,14 +258,12 @@ tasks:
   - id: t-009
     milestone: m3
     title: "Harden caching, deduplication, and failure handling"
-    status: claimed
+    status: review
     owner: worker
     passes: 0
     stakes: reversible
     depends_on: t-006
-    note: >
-      Add bounded caching, stable item identity, duplicate removal, stale-source tolerance,
-      and partial-success behavior so one broken feed does not blank the homepage.
+    note: 'Add bounded caching, stable item identity, duplicate removal, stale-source tolerance, and partial-success behavior so one broken feed does not blank the homepage. RAN 2026-07-18 (conductor-burst-hourly rotation, claude-conductor-burst-20260718T1707Z): audited server/utils/newsfeed.ts against the five requirements in this note''s original text. Bounded caching (defineCachedEventHandler, 15min TTL at the route), stable item identity (stableId hash over guid/link), duplicate removal (per-aggregateFeed-call seen-id Set), and partial-success (Promise.all + per-source sourceErrors, one broken source never blanks the others) were already in place from t-005/t-006. The one real gap was stale-source tolerance: a source that failed returned zero items with no fallback. Added an in-memory last-known-good cache per source id in fetchSourceItems -- on failure, serves the prior successful items (bounded to 24h old) flagged stale: true, with the underlying error still reported via AggregatedFeed.sourceErrors[].stale. A source with no prior success keeps the original always-empty-on-failure behavior. Added regression coverage to utils/scripts/verifyNewsfeedAggregation.ts using a local http.createServer fixture (serves once, then closed) to prove the stale-fallback path without relying on real network egress. Verified: npm run test:newsfeed-aggregation, npm test (vue-tsc --noEmit, exit 0), eslint, prettier --check -- all clean. kind_robots PR #428 (branch claude/keen-fermat-7exrse), CI pending at time of this note.'
     claimed_by: claude-conductor-burst-20260718T1707Z
     claimed_at: '2026-07-18T17:07:15Z'
     updated: '2026-07-18T17:07:15Z'
