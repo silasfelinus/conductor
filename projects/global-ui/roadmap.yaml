@@ -535,9 +535,44 @@ tasks:
     genuinely deferred -- each needs a preview-deploy eyeball this sandbox can't do (no DB)
     -- so kept `status: ready` rather than `done`, same pattern t-012 used for its own
     partial first pass.
+
+    RAN 2026-07-18 (~16:05 UTC, conductor-burst rotation): partial pass on item (a), art
+    status surfaces. Rather than eyeballing a live preview (still not possible, no DB),
+    scoped strictly to the notices where the color match against .kr-note-* is exact
+    (border-{status}/40 bg-{status}/10, with an explicit text-{status} class already
+    present) -- the same narrow-exact-match discipline item (d)'s pass used. Migrated 4
+    sites: artjob-manager.vue's error banner, its warning/success bulk-retry-result
+    ternary, its oldest-pending-job warning notice, and stylist-relay-status.vue's error
+    banner -- all using the "kr-note kr-note-* p-2 text-xs font-normal" override recipe
+    this task's own note already prescribed. Investigated but explicitly left untouched
+    rather than guessing: (1) both files' full-height admin-only/agents-empty banners
+    (colors match but they're flagged in this task's own note as "leave as-is" candidates,
+    not clearly wrong); (2) artjob-manager.vue:365's error/30 and stylist-relay-status.vue's
+    warning/50 opacity-drift notices -- migrating would tighten them to /40, a real
+    (probably desired, but unverified) visual change; (3) artjob-manager.vue:372's info
+    notice, which sets no text color at all today -- migrating would add text-info, exactly
+    the "notices with NO text color" ambiguity item (b) already flags, so left for the same
+    decision pass rather than resolved independently; (4) stylist-relay-status.vue:123's
+    warning pill -- rounded-xl + text-[11px], not .kr-note's rounded-2xl/text-sm shape,
+    needs more overrides than the established recipe covers. Also investigated item (b)
+    directly: server-selector.vue's "Edit Local Server" info panel (border-info/40
+    bg-info/10, exact match) turns out to have a real cascade risk -- its <h3> has no
+    explicit text-size class, and Tailwind Preflight sets heading font-size to `inherit`,
+    so adding .kr-note's text-sm to the parent would shrink that heading while its "Add
+    Local Server" sibling panel (border-secondary/40 -- no .kr-note-secondary variant
+    exists) stays whatever size it is today. Left untouched; this reasoning replaces the
+    task's prior generic "needs preview eyeball" note for this specific site with a
+    concrete, checkable reason. Verified: eslint clean, prettier --check clean, full
+    `npm run test` (vue-tsc --noEmit) exit 0 via conductor's provision_kind_robots_deps.sh.
+    Also confirmed a local `nuxi prepare` run regenerates public/components.json (reordered
+    entries, unrelated to this change) and public/wonderlab-components.json (untracked) --
+    neither was committed. kind_robots PR #427 (branch claude/keen-fermat-5hst4z): merged.
+    Item (a) has one exact-match site left completely untouched by either pass (none found
+    this cycle beyond the 4 above); items (b) and (c) still genuinely open. Kept
+    `status: ready`.
   claimed_by: claude-conductor-scheduled-20260718T1012Z
   claimed_at: '2026-07-18T10:12:09Z'
-  updated: '2026-07-18T10:12:09Z'
+  updated: '2026-07-18T16:05:00Z'
 - id: t-024
   milestone: m5
   title: Guard the misleading done/totalTasks fallback in conductor-overview-gallery-page.vue's itemFromProjectRecord()
