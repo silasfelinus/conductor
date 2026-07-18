@@ -232,8 +232,8 @@ tasks:
   - id: t-007
     milestone: m2
     title: "Add user feed selection and ordering"
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     depends_on: t-006
@@ -241,6 +241,9 @@ tasks:
       Let users enable or disable recommended feeds and reorder them. Persist preferences
       through the existing user/store/local-storage patterns without adding a new schema
       for the MVP. Defaults should remain useful before any configuration.
+    claimed_by: claude-conductor-session-20260718T211402Z
+    claimed_at: '2026-07-18T21:14:02Z'
+    updated: '2026-07-18T21:14:02Z'
 
   - id: t-008
     milestone: m3
