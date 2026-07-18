@@ -918,3 +918,37 @@ speculative sweep without a second concrete instance.
 **Kaizen task:** none filed — this task's own history already contains the operationally useful
 lesson (kindrobots-unraid/t-012, ProxySQL production pooling observation, remains open and is the
 right home for any further pooling-threshold work).
+
+## 2026-07-18 | Worker → Reviewer | kind-robots/t-037 | pattern
+
+**Decision:** implemented, self-merged this cycle (session claude-conductor-scheduled-20260718T0510Z, PR #765)
+
+**Failure category:** n/a (clean first-pass; no rejection or retry)
+
+**What was good:**
+- Read the task's referenced design doc (`digital-storefront/docs/dlc-unlock-design.md`)
+  and this project's own `SHARING-SPEC.md` in full before writing anything, rather than
+  re-deriving the design from scratch — the pitch is a direct formalization of work
+  already done, not a new invention.
+- Verified the task's stated dependency (packmaker/t-004, "at least one pack worth
+  migrating for") against live roadmap state before claiming, rather than trusting the
+  note's age.
+- Surfaced rather than silently assumed the one real risk: this pitch needs
+  `GrantSubject` to exist as an enum, which itself comes from the sibling
+  `2026-07-17-sharing-grant-model.md` pitch — still `awaiting-silas`. Wrote it as open
+  question 1 instead of assuming a landing order.
+- Stayed inside BOUNDARY.md's data-model boundary: pitch only, no schema/migration/code,
+  and did not file the follow-on kind_robots migration task yet (deliberately, so it can
+  reflect Silas's answers to the pitch's open questions instead of being implemented
+  ahead of them).
+- Verified `python scripts/validate_roadmaps.py` clean and all 22 PR checks green before
+  merging.
+
+**What to improve:**
+- Nothing notable this cycle.
+
+**Kaizen task:** none filed separately — the useful observation from this cycle
+(`next_ready_task.py` resurfacing a note-blocked `ai-art-academy/t-019` every run since
+it only reads `status`/`depends_on`, not free-text blocking notes) was written up in the
+PR's own kaizen suggestion; deferring to Silas whether it's worth a picker change or just
+a documented convention, since it's a tooling-nuance call rather than a clear-cut fix.
