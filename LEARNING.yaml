@@ -3403,3 +3403,12 @@ records:
   outcome: done
   failure_category: null
   lesson: "Store-side work (feedPreferenceStore's enableFeed/disableFeed/reorderFeeds, t-004) had already shipped with zero UI consuming it -- worth checking for this shape generally: a 'ready' feature task may already be half-built by an earlier task's kaizen/over-scope, so grep the store/helpers layer for existing actions before assuming a feature needs building from scratch."
+- date: 2026-07-18
+  project: ai-art-academy
+  task: t-034
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "Fourth seed-sync task of this exact shape (t-015/t-018/t-020/t-031/t-034: mirror a new curriculum-outline.md movement into academyStyles.ts). The array is sorted by sortYear at runtime (academyTimeline), so literal insertion position in the source array is a readability convention, not a functional requirement -- worth remembering before treating chronological placement as a correctness constraint."
