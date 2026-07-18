@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-07-18T09:08:09Z
+Generated: 2026-07-18T09:21:14Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **259**
-- Outcomes: blocked: 12, done: 247
+- Closed tasks recorded: **260**
+- Outcomes: blocked: 12, done: 248
 - Success rate: **95%**
 - Average passes on successful tasks: **0.0**
 
@@ -38,7 +38,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | mermaids-of-venice | 3 | 100% |
 | model-builder | 28 | 100% |
 | mural-design | 1 | 100% |
-| newsfeed | 2 | 100% |
+| newsfeed | 3 | 100% |
 | packmaker | 10 | 100% |
 | ruler-hooked | 2 | 100% |
 | serendipity | 1 | 100% |
@@ -50,7 +50,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 15 | 40% |
-| software | 244 | 99% |
+| software | 245 | 99% |
 
 ## Failure categories
 
@@ -69,6 +69,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-07-18 `newsfeed/t-003` — Relocating a component off a route can leave stale duplicate frontmatter behind on an unrelated nav/breadcrumb metadata file that shares the same route (content/channels/home/dashboard.md's dashboardKey/dashboardTab, separate from the actual page file content/index.md). Grep every content file that shares the target route, not just the one being edited, before calling a relocation complete.
 - 2026-07-18 `animation-manager/t-010` — The task note called bubble-effect.vue 'orphaned/never registered' but it was actually already wired into animation-loader.vue's effectMap -- just missing from animationCatalog.ts, the catalog that actually gates which ids animationStore can select. Read both the consuming component AND the catalog before assuming a component is dead code; a component can be fully wired downstream and still be unreachable because its id never appears upstream.
 - 2026-07-18 `conductor/t-053` — A recurring PR-template gap (missing Kaizen suggestion section) was only ever caught by a Reviewer noticing by hand, three times in one week. A tiny, network-free text check the Reviewer runs on content it already has (scripts/check_pr_kaizen.py) closes that gap cheaper than touching a second repo's CI config -- prefer the same-repo, no-new-dependency option when a task offers a choice of implementation paths.
 - 2026-07-18 `conductor/t-049` — Static frontend fallback data (conductorCards.ts) drifts silently from the roadmap/project-overrides.yaml source of truth over time -- 9 of 22 cards had stale kind/status/tagline fields with no error surfaced anywhere, since the fallback only renders when the live DB API is unavailable. A periodic drift audit (this task) is the only thing that catches it; consider making it recurring rather than one-off.
@@ -78,7 +79,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-07-18 `digital-storefront/t-018` — A task's in-file depends_on note can go stale in a good way, not just a bad one -- t-017/t-018 both carried explicit 'do not trust the resolver, verify these cross-project blockers by hand' warnings written when the blockers were genuinely unmet; by the time this cycle picked t-018 up, every named blocker (coloring-book t-006/t-007/t-009, kind-robots t-008, packmaker t-003) had independently reached done. Always re-check cited blockers live before either claiming or reverting a resolver-promoted task -- the warning note itself can be outdated.
 - 2026-07-18 `conductor/t-063` — A plain YAML scalar containing an unescaped colon+space (e.g. a parenthetical like "(confirmed here: 9 minutes later)") is invalid mid-value -- always quote or block-scalar a hand-appended lesson/note field with any ': ' in it. Also: before implementing a task note's suggested root cause, verify it against the actual code path -- the note assumed the live append writer needed a quoting fix, but it already auto-quotes via yaml.safe_dump; the real bad entry was a hand-appended plain scalar that bypassed that writer entirely.
 - 2026-07-18 `ai-art-academy/t-031` — When a recurring never-idle task (t-010) files a small, concrete, independently-landable follow-up task, prefer claiming that follow-up over re-running the recurring task again the same rotation -- it's real shippable work instead of another lane pass.
-- 2026-07-17 `conductor/t-062` — When de-flaking a red-CI detector's cancelled-run false positive, compare against the branch's latest run of ANY status, not just the latest completed one -- the superseding run frequently hasn't finished yet at the moment the detector polls (confirmed here: 9 minutes later), so a completed-only comparison would still miss the exact race it's meant to catch.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-07-18T09:08:09Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-07-18T09:21:14Z_
