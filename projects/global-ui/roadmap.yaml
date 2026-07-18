@@ -582,11 +582,11 @@ tasks:
 - id: t-025
   milestone: m5
   title: Decide a home for shadow-variant panels found during t-023's generic-solid-panel pass
-  status: claimed
+  status: review
   owner: reviewer
   passes: 0
   stakes: reversible
-  updated: '2026-07-18T12:10:29Z'
+  updated: '2026-07-18T12:11:46Z'
   note: >
     Kaizen from t-023 (kind_robots PR #398, 2026-07-18). While migrating exact-match
     generic solid panels onto .kr-panel/.kr-panel-muted, found two surfaces that match
@@ -600,6 +600,28 @@ tasks:
     .kr-panel-elevated (or similar) variant with a heavier shadow for modal/elevated
     contexts so these have a canonical home instead of staying hand-written
     indefinitely. Small, reversible either way.
+
+    RESOLVED 2026-07-18 (conductor-burst rotation,
+    claude-conductor-burst-20260718T121029Z-4512): went with option (a). Checked
+    for other shadow-xl/shadow-2xl modal-card surfaces across components/ and
+    pages/ first (screen-debug.vue, tutorial-flyer.vue, performer-creator.vue,
+    animation-interact.vue, achievement-popup.vue, art-gallery.vue,
+    artjob-manager.vue) to see whether a shared .kr-panel-elevated variant would
+    pay for itself beyond these two files; none of them are a plain p-6 solid
+    panel like kr-panel/kr-panel-muted, so a new variant would only ever be used
+    by these two call sites. Migrated both onto the shared class with the extra
+    shadow layered on as a plain utility override in the template class list —
+    the identical pattern t-023 already established for kr-note's p-2/text-xs
+    dense-surface overrides (utilities-layer classes win over @layer components
+    in Tailwind v4's default layer order, confirmed against
+    assets/css/tailwind.css's `@layer components` wrapping .kr-panel). kind_robots
+    PR #420: art-reactions.vue -> `kr-panel-muted ... shadow-lg`,
+    builder-manager.vue's confirm-modal card -> `kr-panel ... shadow-xl`. Verified
+    eslint clean, vue-tsc clean (via provision_kind_robots_deps.sh), and
+    prettier drift on builder-manager.vue confirmed pre-existing (present on
+    main before this diff, unrelated). No preview-deploy check possible in this
+    sandbox, but risk is minimal: pure class-name swap onto an already-live
+    shared surface class, same background/border/radius/padding as before.
   claimed_by: claude-conductor-burst-20260718T121029Z-4512
   claimed_at: '2026-07-18T12:10:29Z'
 milestones:
