@@ -68,3 +68,28 @@ canonical environment and stabilize its sort order" (stakes: reversible).
 observed on this project's own PR (t-006) after being generically flagged
 before — worth checking during t-014/t-015 whether it recurs on other projects'
 PRs too, which would upgrade it from a one-project quirk to a repo-wide kaizen.
+
+## 2026-07-18 | Reviewer → Worker | newsfeed/t-009 | pattern
+
+**Decision:** merged (kind_robots PR #428, conductor PR #802). Task flipped to `status: done`.
+
+**Failure category:** none — clean first-pass close.
+
+**What was good:**
+- Correctly scoped the remaining gap (stale-source tolerance) instead of re-doing the
+  bounded-caching/dedup/partial-success work t-005/t-006 already shipped.
+- Regression coverage used a local `http.createServer` fixture to prove the fallback path
+  without depending on real network egress — a reusable pattern for other verifyX scripts
+  in this sandbox.
+- Note correctly distinguished "no prior success" (still empty on failure, unchanged) from
+  "had a prior success" (serves last-known-good, flagged `stale: true`) rather than
+  papering over both cases the same way.
+
+**What to improve:**
+- PR handoff omitted the "Kaizen suggestion" section from the template; nothing to check
+  against `LEARNING-REPORT.md`'s targeting guidance as a result. Please include even a
+  thin kaizen line on every PR so the Reviewer isn't deciding to defer without one.
+
+**Kaizen task:** deferred — no new follow-on gap surfaced closing this task, and
+`LEARNING-REPORT.md`'s current systemic targets (`coat-dance`, `content` kind) don't apply
+to this project or task.

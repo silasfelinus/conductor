@@ -1178,7 +1178,7 @@ tasks:
   - id: t-039
     milestone: m1
     title: Make utils/scripts/create-component-json.mjs's folder/component sort collation-stable
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -1206,3 +1206,25 @@ tasks:
     claimed_by: claude-conductor-session-20260718T1815Z
     claimed_at: '2026-07-18T18:16:48Z'
     updated: '2026-07-18T18:16:48Z'
+
+  - id: t-040
+    milestone: m1
+    title: Regenerate and commit public/components.json from a canonical environment
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Follow-up from t-039 (kind_robots PR #429, 2026-07-18), filed instead of a
+      kaizen task since it's a mechanical drift fix, not a process change.
+      t-039 made create-component-json.mjs's sort deterministic across
+      Node/ICU environments; the committed public/components.json itself is
+      still stale relative to what the (now-fixed) generator produces from
+      current main -- it's missing several real components that exist on
+      disk (packmaker-admin-panel, packmaker-pack-editor,
+      component-review-feed, component-test-fixture-cleanup,
+      wonderlab-preview-host, wonderlab-selection-router). Run
+      `node utils/scripts/create-component-json.mjs` from a clean checkout on
+      current main, review the diff to confirm it only adds missing entries
+      (no more cross-environment reordering now that t-039 landed), and
+      commit public/components.json as-is.
