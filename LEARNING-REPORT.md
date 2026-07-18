@@ -1,14 +1,14 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-07-18T17:07:41Z
+Generated: 2026-07-18T17:11:54Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **266**
-- Outcomes: blocked: 12, done: 254
-- Success rate: **95%**
+- Closed tasks recorded: **267**
+- Outcomes: blocked: 12, done: 255
+- Success rate: **96%**
 - Average passes on successful tasks: **0.0**
 
 ## By project
@@ -24,7 +24,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | challenge-center | 16 | 100% |
 | coat-dance | 8 | 0% |
 | coloring-book | 13 | 100% |
-| conductor | 36 | 100% |
+| conductor | 37 | 100% |
 | digital-storefront | 12 | 100% |
 | dream-cycle | 14 | 100% |
 | ecosystem-map | 4 | 100% |
@@ -50,7 +50,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 15 | 40% |
-| software | 251 | 99% |
+| software | 252 | 99% |
 
 ## Failure categories
 
@@ -69,6 +69,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-07-18 `conductor/t-064` — set_task_field.py silently flattened hand-maintained note: |- block-literal scalars to a single quoted line on any edit -- fixed by detecting the existing block style and re-emitting new multiline values in the same style. A kaizen note that specifies the exact fix shape, the regression test to add, and a safe interim workaround (here: use Edit directly for block-literal notes) turns a same-day implementable fix instead of requiring rediscovery.
 - 2026-07-18 `newsfeed/t-006` — Reusing one feed-rendering component (NewsfeedFeed) in both the live homepage and the project pitch page's #interactive slot avoided duplicating feed logic across two surfaces -- when a project has both a real feature and a separate pitch/status page, slot the real component into the pitch page rather than keeping them as two independent implementations.
 - 2026-07-18 `kind-robots/t-038` — Deleting a stale one-shot workflow file that references a since-merged branch/script cleared a required 'Contract verifiers' CI check that was red on every kind_robots PR regardless of diff -- worth grepping for other one-shot workflows with a 'delete after X lands' trailing comment where X has already landed, since they silently keep failing verifyWorkflowPaths.ts forever otherwise.
 - 2026-07-18 `newsfeed/t-005` — The task note pointed at prs.get.ts's raw-array response shape as the model to follow, but that's a rare conductor-only outlier -- 110+ of this repo's other GET routes use a {success,message,data}+errorHandler convention instead. When a task note says 'model X on Y's shape,' check how common Y's specific pattern actually is across the codebase before copying it verbatim; the intended lesson (thin handler + shared util split, introduce caching) can be separable from the literal response contract.
@@ -78,7 +79,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-07-18 `newsfeed/t-003` — Relocating a component off a route can leave stale duplicate frontmatter behind on an unrelated nav/breadcrumb metadata file that shares the same route (content/channels/home/dashboard.md's dashboardKey/dashboardTab, separate from the actual page file content/index.md). Grep every content file that shares the target route, not just the one being edited, before calling a relocation complete.
 - 2026-07-18 `animation-manager/t-010` — The task note called bubble-effect.vue 'orphaned/never registered' but it was actually already wired into animation-loader.vue's effectMap -- just missing from animationCatalog.ts, the catalog that actually gates which ids animationStore can select. Read both the consuming component AND the catalog before assuming a component is dead code; a component can be fully wired downstream and still be unreachable because its id never appears upstream.
 - 2026-07-18 `conductor/t-053` — A recurring PR-template gap (missing Kaizen suggestion section) was only ever caught by a Reviewer noticing by hand, three times in one week. A tiny, network-free text check the Reviewer runs on content it already has (scripts/check_pr_kaizen.py) closes that gap cheaper than touching a second repo's CI config -- prefer the same-repo, no-new-dependency option when a task offers a choice of implementation paths.
-- 2026-07-18 `conductor/t-049` — Static frontend fallback data (conductorCards.ts) drifts silently from the roadmap/project-overrides.yaml source of truth over time -- 9 of 22 cards had stale kind/status/tagline fields with no error surfaced anywhere, since the fallback only renders when the live DB API is unavailable. A periodic drift audit (this task) is the only thing that catches it; consider making it recurring rather than one-off.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-07-18T17:07:41Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-07-18T17:11:54Z_
