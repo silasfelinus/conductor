@@ -4,18 +4,19 @@ date: 2026-07-10
 task: ai-art-academy/t-005
 status: draft for review (content complete, one source URL verified per movement)
 
-This is the curriculum: 21 movements spanning the timeline from Greek vases to
-Bauhaus. Every artist named here is long dead (all listed artists died before 1955),
-and every example work is a public-domain original held (or expected) in an
+This is the curriculum: 22 movements spanning the timeline from Greek vases to
+Suprematism. Every artist named here is long dead (all listed artists died before
+1955), and every example work is a public-domain original held (or expected) in an
 open-access collection. See the ethical boundary in DESIGN-BRIEF.md and the
 PUBLIC-DOMAIN-POLICY.md (t-006).
 
 Sections 1-16 are the v1 set (chronological). Sections 17-21 are the 2026-07-16 v1.1
 expansion (t-010 cycle): Gothic panel painting, Northern Renaissance, Rococo,
-Symbolism, and Neo-Impressionism/Pointillism. They are appended (rather than
-renumbered into place) but belong chronologically among the earlier movements — read
-the `era` field in the machine-readable skeleton for true ordering; the front-end
-seed (t-020) inserts them in chronological position.
+Symbolism, and Neo-Impressionism/Pointillism. Section 22 is the 2026-07-18 v1.2
+addition (t-010 cycle): Suprematism. They are appended (rather than renumbered into
+place) but belong chronologically among the earlier movements — read the `era` field
+in the machine-readable skeleton for true ordering; the front-end seed (t-020, t-031)
+inserts them in chronological position.
 
 Verification method note: direct API/page fetches to museum hosts are blocked by the
 session egress proxy, so verification was done via web search returning the live
@@ -159,6 +160,16 @@ movements:
     artist_slugs: [georges-seurat, paul-signac, henri-edmond-cross, theo-van-rysselberghe]
     example_count: 4
     remix_hint: "Repaint this image using pointillist technique: thousands of tiny separate dots of pure unmixed color that blend in the eye, a luminous divisionist surface, even all-over stippling, and bright balanced light"
+  # --- v1.2 addition (2026-07-18, t-010 cycle) ---
+  # Belongs chronologically before de-stijl/bauhaus (see `era`); appended here to
+  # avoid renumbering the sections above. The seed-sync task (t-031) inserts it in
+  # chronological position in academyStyles.ts.
+  - slug: suprematism
+    name: Suprematism
+    era: "1913-1919"
+    artist_slugs: [kazimir-malevich]
+    example_count: 4
+    remix_hint: "Reduce this image to a Suprematist composition: a small number of flat geometric shapes — squares, circles, bars — in black, red, and a few pure colors, floating freely against a plain white ground, no outline or perspective, pure weightless geometry"
 ```
 
 ---
@@ -1148,6 +1159,63 @@ surface, even all-over stippling, and bright balanced light"
 
 ---
 
+## 22. Suprematism (`suprematism`)
+
+**Era:** 1913-1919 (Russia)
+
+**Key ideas.** Kazimir Malevich pushed abstraction as far as it would go: not
+"reducing" a subject to shapes, but throwing the subject away entirely. He called it
+Suprematism — "the supremacy of pure feeling" over the depiction of objects. His
+1915 *Black Square*, first shown hung high across a room corner (the traditional
+position for a Russian Orthodox icon), announced a total break with representation:
+painting as color and geometry alone, answerable to nothing outside itself. Within a
+few years he was floating clusters of squares, bars, and circles across bare white
+canvases, as if geometry itself had come unmoored from gravity. The movement burned
+brightly for less than a decade before Soviet cultural policy turned against
+abstract art in the late 1920s, but its geometric vocabulary fed directly into
+Constructivism and, through emigre contacts, into De Stijl and the Bauhaus.
+
+**Recognition cues:**
+- A small number of flat, hard-edged geometric shapes (squares, rectangles, circles,
+  bars) in a handful of colors
+- Shapes appear to float freely, tilted off the horizontal/vertical axis, with no
+  ground line, horizon, or perspective
+- A plain white or near-white background used as infinite, weightless space rather
+  than a wall or sky
+- Black, red, and white as the dominant palette, with other pure colors used
+  sparingly
+- Total absence of recognizable objects, figures, or texture — this is the most
+  radically non-representational style in the curriculum
+
+**Notable artists:**
+- **Kazimir Malevich** (1879-1935) — Founder and sole originator of Suprematism;
+  a former Cubo-Futurist painter who unveiled the style at the 1915 "Last Futurist
+  Exhibition 0,10" in Petrograd and spent the rest of his career elaborating its
+  geometric vocabulary in painting, theory, and design.
+
+**Example works:**
+- *Black Square*, Kazimir Malevich, 1915 — State Tretyakov Gallery, Moscow. VERIFIED
+  public domain (PD-Russia-expired tag, Wikimedia Commons):
+  https://commons.wikimedia.org/wiki/File:Kazimir_Malevich,_1915,_Black_Suprematic_Square,_oil_on_linen_canvas,_79.5_x_79.5_cm,_Tretyakov_Gallery,_Moscow.jpg
+- *Suprematist Composition: Airplane Flying*, Kazimir Malevich, 1915 — Museum of
+  Modern Art, New York (acc. 1936). VERIFIED public domain (Public Domain Mark 1.0,
+  Wikimedia Commons):
+  https://commons.wikimedia.org/wiki/File:Suprematist_Composition_-_Airplane_Flying_(Malevich,_1915).jpg
+- *Suprematist Composition: White on White*, Kazimir Malevich, 1918 — Museum of
+  Modern Art, New York (acc. 1963). VERIFIED public domain (Public Domain Mark 1.0,
+  Wikimedia Commons):
+  https://commons.wikimedia.org/wiki/File:Kazimir_Malevich_-_'Suprematist_Composition-_White_on_White',_oil_on_canvas,_1918,_Museum_of_Modern_Art.jpg
+- *Suprematist Painting: Eight Red Rectangles*, Kazimir Malevich, 1915 — Stedelijk
+  Museum, Amsterdam. VERIFIED public domain (Public Domain Mark 1.0, Wikimedia
+  Commons): https://commons.wikimedia.org/wiki/File:Malevich-Suprematism..jpg
+
+**remix_hint:** "Reduce this image to a Suprematist composition: a small number of
+flat geometric shapes — squares, circles, bars — in black, red, and a few pure
+colors, floating freely against a plain white ground, no outline or perspective,
+pure weightless geometry"
+
+---
+
 ## Lesson-only vs remixable
 
 Every movement above maps to a remix config (mode `prompt` to start; t-003/t-004
@@ -1197,10 +1265,15 @@ average all three.
   recognizable remix isn't faithful De Stijl. Recommend lesson-first, with the
   remix framed playfully ("Mondrian-ify: reduce your image to its grid") and
   expectations set in the UI copy.
+- `suprematism` — the same discard-the-photo problem as `de-stijl`, more extreme:
+  Malevich's whole point was throwing out recognizable subject matter, so a
+  "faithful" remix is definitionally a handful of floating shapes with no trace of
+  the source. Frame it the same playful way ("Malevich-ify: reduce your image to
+  pure geometry") rather than promising the model will preserve composition.
 
-No movement is lesson-only in v1 — even the flagged two get a remix config — but
-`cubism` and `de-stijl` should carry a "results vary, that's part of the fun" note
-until t-004 evaluates them.
+No movement is lesson-only in v1 — even the flagged three get a remix config — but
+`cubism`, `de-stijl`, and `suprematism` should carry a "results vary, that's part of
+the fun" note until t-004 evaluates them.
 
 ## Public-domain safety check (t-006 preview)
 
@@ -1227,3 +1300,12 @@ excluded to stay clear of the boundary. All §17-21 example-work URLs are marked
 `(unverified)` because museum egress is 403-blocked this session; they carry real
 accession numbers to spot-check when a session with open museum egress runs (batches
 with t-008/t-013).
+
+**v1.2 addition (2026-07-18) re-check.** Section 22 (Suprematism) clears the
+PUBLIC-DOMAIN-POLICY.md §1.3 both-prongs rule with wide margin: sole artist Kazimir
+Malevich died in 1935 (comfortably before the 1956 cutoff), and all four example
+works date 1915-1918 (comfortably before the 1930 cutoff) — none of the recency
+records above move. Unlike the §17-21 batch, this session had working egress to
+`commons.wikimedia.org` (confirmed via WebFetch, HTTP 200), so all four example-work
+URLs are marked VERIFIED against their live Wikimedia Commons file pages and PD
+license tags (PD-Russia-expired / Public Domain Mark 1.0), not "(unverified)."
