@@ -1724,33 +1724,11 @@ tasks:
   - id: t-063
     milestone: m2
     title: 'LEARNING.yaml: fix malformed lesson field breaking test_committed_ledger_schema_conformance on every PR'
-    status: claimed
+    status: done
     passes: 0
     stakes: reversible
-    updated: '2026-07-18T00:58:38Z'
-    note: >
-      Found 2026-07-18 (ai-art-academy/t-010 burst cycle, PR #738) while triaging a red
-      "Authz regression tests" check in ci.yml — that job actually runs the full
-      `pytest tests/`, not just authz tests (misleading name; consider renaming it too,
-      low priority). `tests/test_backfill_learning.py::test_committed_ledger_schema_conformance`
-      fails with `yaml.scanner.ScannerError: mapping values are not allowed here` at
-      LEARNING.yaml line 3164, column 268. Reproduced identically on a pristine origin/main
-      worktree at commit c4b7291 (pre-dates PR #738), so this is a real, currently-broken
-      state of `main` — not something PR #738 introduced. Root cause: line 3164's
-      `lesson:` value is an unquoted plain YAML scalar containing the substring
-      "(confirmed here: 9 minutes later)" — the "here: " is an unescaped colon+space inside
-      a plain scalar, which YAML parses as a new mapping key starting mid-value, breaking
-      the parse. Fix: quote that lesson string (single or double quotes) or convert it to a
-      block scalar (`lesson: >` or `lesson: |`) so the embedded colon is no longer
-      significant; grep LEARNING.yaml for other unquoted `lesson:`/`note:`-style plain
-      scalars containing ": " as a preventive sweep (this ledger is append-only across many
-      sessions, so this pattern likely isn't unique to line 3164 — check before assuming a
-      single-line fix is sufficient). This blocks CI green on every PR that touches
-      `tests/` in the `ci.yml` "Authz regression tests" job (the sibling job in
-      security-audit.yml only runs test_authz_regression.py directly and is unaffected).
-      Add a regression test asserting `scripts/backfill_learning.py`'s ledger-append path
-      quotes/escapes values containing ": " so this can't recur silently from future
-      appends.
+    updated: '2026-07-18T01:00:56Z'
+    note: 'Fixed 2026-07-18T01:10Z (conductor-hourly-20260718T0048Z): quoted LEARNING.yaml line 3164''s `lesson:` value in double quotes so the embedded "(confirmed here: 9 minutes later)" colon+space no longer breaks the YAML parse. Swept the entire file for other unquoted plain-scalar `lesson:` values containing ": " via a small script checking every `lesson: `-prefixed line that doesn''t already start with a quote/block-scalar marker -- only line 3164 matched; no other instances found. Root-cause note: the offending entry was a hand-appended plain scalar (a session used a literal heredoc/cat append rather than process_task_events.write_learning_record, whose yaml.safe_dump already auto-quotes values needing it), so the bug wasn''t in the live append path itself. Added a regression test anyway (tests/test_process_task_events.py::test_learning_lesson_with_colon_space_round_trips) asserting a lesson containing an embedded ": " round-trips through write_learning_record and the resulting file re-parses cleanly, locking in that the live writer path stays safe against this exact pattern even though it wasn''t the actual cause. Verified: python3 -m pytest tests/ -q -> 353 passed, 1 skipped (up from 352/1, the new test); scripts/validate_roadmaps.py -> valid; test_backfill_learning.py::test_committed_ledger_schema_conformance (the test this task was filed to fix) now passes. No kind_robots change; conductor-only.'
     owner: worker
     claimed_by: claude-conductor-hourly-20260718T0048Z
     claimed_at: '2026-07-18T00:58:38Z'

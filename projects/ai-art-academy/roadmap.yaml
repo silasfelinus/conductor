@@ -813,26 +813,11 @@ tasks:
   - id: t-031
     milestone: m4
     title: 'kind_robots: add Suprematism to the academyStyles.ts front-end seed'
-    status: claimed
+    status: done
     passes: 0
     stakes: reversible
-    updated: '2026-07-18T00:49:06Z'
-    note: >
-      Filed 2026-07-18 (t-010 curriculum-expansion cycle). docs/curriculum-outline.md
-      grew from 21 to 22 movements: §22 Suprematism (`suprematism`, era 1913-1919,
-      sole artist Kazimir Malevich 1879-1935), cleared against
-      PUBLIC-DOMAIN-POLICY.md §1.3 with wide margin (artist died 1935, all four
-      example works 1915-1918). Mirror the new movement into kind_robots
-      stores/seeds/academyStyles.ts exactly as t-015 (Neoclassicism) and t-018
-      (Bauhaus) did: one entry (slug, name, era, artists, recognitionCues, remix
-      template from the outline's remix_hint), inserted in chronological position
-      per the `era` field — Suprematism (1913-1919) sits before De Stijl (1917-1931)
-      and Bauhaus (1919-1933) in true chronological order even though it is appended
-      last in the outline's prose. Content sourced verbatim from the outline — no new
-      facts invented. Small, additive, one-file change; verify prettier + vue-tsc
-      clean before opening the kind_robots PR. Independently landable now (does not
-      depend on the preview-image work in t-019/t-022; a Suprematism preview-thumbnail
-      prompt was queued separately in art-prompts.yaml this same cycle).
+    updated: '2026-07-18T00:57:02Z'
+    note: 'Filed 2026-07-18 (t-010 curriculum-expansion cycle). docs/curriculum-outline.md grew from 21 to 22 movements: §22 Suprematism (`suprematism`, era 1913-1919, sole artist Kazimir Malevich 1879-1935), cleared against PUBLIC-DOMAIN-POLICY.md §1.3 with wide margin (artist died 1935, all four example works 1915-1918). Mirror the new movement into kind_robots stores/seeds/academyStyles.ts exactly as t-015 (Neoclassicism) and t-018 (Bauhaus) did: one entry (slug, name, era, artists, recognitionCues, remix template from the outline''s remix_hint), inserted in chronological position per the `era` field — Suprematism (1913-1919) sits before De Stijl (1917-1931) and Bauhaus (1919-1933) in true chronological order even though it is appended last in the outline''s prose. Content sourced verbatim from the outline — no new facts invented. Small, additive, one-file change; verify prettier + vue-tsc clean before opening the kind_robots PR. Independently landable now (does not depend on the preview-image work in t-019/t-022; a Suprematism preview-thumbnail prompt was queued separately in art-prompts.yaml this same cycle).  DONE 2026-07-18T00:57Z (conductor-hourly-20260718T0048Z): kind_robots PR #379 merged (squash, sha c7033961). Added the `suprematism` entry to stores/seeds/academyStyles.ts (slug, name, era, sortYear, region, keyIdeas, recognitionCues, artists, failureMode, remix template), inserted before de-stijl/bauhaus per its 1913 sortYear -- content sourced verbatim from docs/curriculum-outline.md §22, mirroring t-015/t-018''s pattern. exampleWorks intentionally omitted this pass (separate follow-up, matching how t-018/t-020 landed). Verified: prettier --write then --check clean, eslint 0 errors, full-project `npm run test` (nuxi prepare + vue-tsc --noEmit) exit 0. All 3 kind_robots PR checks green (TypeScript, Contract verifiers, GitGuardian) before merge.'
     owner: worker
     claimed_by: claude-conductor-hourly-20260718T0048Z
     claimed_at: '2026-07-18T00:49:06Z'

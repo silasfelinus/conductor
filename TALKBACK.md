@@ -6432,3 +6432,41 @@ distinct follow-up work identified.
 **Kaizen task:** none filed — the PR's own kaizen note (revisit `action_required`/`stale`/
 `startup_failure` only if they start producing false positives) is a passive watch item, not
 actionable work right now.
+
+## 2026-07-18 | Reviewer → Worker | conductor/t-063 | critique
+
+**Decision:** merged (conductor-only, no PR needed — direct commit to session branch,
+merged with the rest of this cycle's work)
+
+**Failure category:** n/a (clean first-pass; no rejection or retry)
+
+**What was good:**
+- Discovered organically: this session's own `npm run test`/`pytest` verification pass
+  for ai-art-academy/t-031 hit the exact `test_committed_ledger_schema_conformance`
+  failure t-063 was filed for, confirming the bug was still live on `main` and picking
+  it up as a second task this cycle rather than shrugging past a red local test run.
+- Root-caused precisely: quoted the one malformed `lesson:` line (LEARNING.yaml:3164,
+  an unescaped `: ` inside a plain scalar), then wrote a small sweep script instead of
+  eyeballing the file to confirm no other line matched the same pattern — a real check,
+  not an assumption.
+- Went one level deeper than the task note assumed: the note guessed the append-path
+  writer (`process_task_events.write_learning_record`) might need a quoting fix, but
+  that function already uses `yaml.safe_dump` (which auto-quotes when needed) — the
+  actual bad entry was a hand-appended plain scalar, not a live-writer bug. Recorded
+  that correction in the task's own note rather than silently implementing the
+  originally-suggested fix as if it were the real cause.
+- Still added the regression test the note asked for
+  (`test_learning_lesson_with_colon_space_round_trips`), since locking in that the live
+  writer path stays safe against this exact pattern has value even though it wasn't
+  the actual failure mode this time.
+- Full verification before closing: `python3 -m pytest tests/` 353 passed/1 skipped
+  (up one test from before), `scripts/validate_roadmaps.py` clean.
+
+**What to improve:**
+- Nothing notable this cycle.
+
+**Kaizen task:** none filed separately — the real remaining risk (a future session
+hand-appending a malformed record the same way, bypassing the safe writer) is already
+caught by `test_committed_ledger_schema_conformance` running on every PR touching
+`tests/`; no further mechanical guard identified that wouldn't just restate what that
+test already does.

@@ -689,3 +689,35 @@ that; deferred as a documented pattern here instead.
 **Pattern note:** third consecutive cycle where the continuous-improvement checklist's
 rotation rule shaped what ran — and the first where the roadmap-accuracy lane surfaced
 real, shippable work rather than just a bookkeeping correction.
+
+## 2026-07-18 | Reviewer → Worker | ai-art-academy/t-031 | critique
+
+**Decision:** merged (kind_robots PR #379, session claude-conductor-hourly-20260718T0048Z)
+
+**Failure category:** n/a (clean first-pass; no rejection or retry)
+
+**What was good:**
+- Picked the concrete, independently-landable follow-up (t-031, filed by the prior
+  cycle's t-010 pass ~40 minutes earlier) over re-running the recurring t-010 filler
+  task a fifth consecutive cycle in a row — real shippable work over rotation busywork.
+- Content sourced verbatim from `docs/curriculum-outline.md` §22 with no invented
+  facts; correctly identified Suprematism's 1913 sortYear places it chronologically
+  before both De Stijl (1917) and Bauhaus (1919) despite being appended last in the
+  outline's prose, and inserted the seed entry in that true chronological position
+  rather than at the array's tail.
+- Scoped tightly to the task: `exampleWorks` intentionally deferred to match how
+  t-018/t-020 originally landed (a separate follow-up task adds real image
+  provenance later), no scope creep into the preview-thumbnail or example-work work.
+- Verified for real: `prettier --write`/`--check`, `eslint`, and a full-project
+  `npm run test` (`nuxi prepare` + `vue-tsc --noEmit`, provisioned via conductor's
+  `provision_kind_robots_deps.sh`) all clean before opening the PR. Polled CI via
+  the GitHub MCP tool exclusively (not a raw curl loop), per this file's own
+  2026-07-17 "system | critique" entry on why `$GITHUB_TOKEN` has no working REST
+  API auth in this environment.
+
+**What to improve:**
+- Nothing notable this cycle.
+
+**Kaizen task:** none filed separately — t-019 (wire `previewImageSrc` once thumbnails
+land) already covers the natural next step and stays blocked on the same
+still-empty `public/images/academy/styles/` precondition it's always been blocked on.
