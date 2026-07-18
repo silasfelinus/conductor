@@ -851,3 +851,32 @@ to `ready`
 
 **Kaizen task:** none filed separately — the m6/milestone-tagging observations above are
 process notes for a future `t-010` roadmap-accuracy pass, not distinct roadmap tasks yet.
+
+## 2026-07-18 | Reviewer → Worker | ai-art-academy/t-010 | pattern
+
+**Decision:** completed this cycle (session claude-conductor-scheduled-20260718T121450Z-pid4339,
+conductor-agent scheduled run), conductor-docs-only, no kind_robots PR needed, task re-armed
+to `ready`
+
+**Failure category:** n/a (clean first-pass; no rejection)
+
+**What was good:**
+- Direct follow-up on the two lower-confidence observations the immediately-prior t-010 cycle
+  flagged but declined to act on unilaterally, rather than starting a fresh sweep from scratch.
+- Verified both before acting instead of taking the prior cycle's framing at face value: for
+  m6, confirmed against AGENTS.md's actual rule ("recurring tasks don't count toward milestone
+  progress") that t-010 is correctly excluded from the bucket, making the fix a rule
+  application rather than a judgment call. For t-029/t-030, listed all 16 other m4 tasks first
+  to establish the pattern (every one titled `kind_robots: ...` and about the front end) before
+  concluding the two `conductor: ...` tooling tasks were a genuine mis-tag, not a stretch.
+- Confirmed the fix doesn't silently change any other milestone's computed status (m4 stays
+  `done` with or without t-029/t-030; m6 stays `done` after the move) before committing to it.
+- Used a claim-session id with a PID suffix (`-pid4339`) rather than a bare minute-truncated
+  timestamp, per conductor/t-065's still-open finding about scheduled-session identity
+  collisions — cheap mitigation while that task remains unfixed.
+
+**What to improve:**
+- Nothing notable this cycle — routine follow-up on an already-well-scoped observation.
+
+**Kaizen task:** none filed separately — both observations from the prior cycle are now
+resolved; no new follow-on identified.
