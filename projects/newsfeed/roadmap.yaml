@@ -137,8 +137,8 @@ tasks:
   - id: t-005
     milestone: m2
     title: "Build a minimal feed aggregation pipeline"
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     depends_on: t-004
@@ -153,6 +153,9 @@ tasks:
       (thin handler + a shared fetch helper in a new server/utils/newsfeed.ts, mirroring
       server/utils/conductor-github.ts), and introduce defineCachedEventHandler for TTL
       caching — document the chosen TTL in the PR since there's no existing precedent.
+    claimed_by: claude-conductor-burst-20260718T131014Z-18889
+    claimed_at: '2026-07-18T13:10:15Z'
+    updated: '2026-07-18T13:10:15Z'
 
   - id: t-006
     milestone: m2
