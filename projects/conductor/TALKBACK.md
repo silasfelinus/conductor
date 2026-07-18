@@ -519,3 +519,29 @@ unit tests, no `main()`/argparse plumbing needed).
 **Kaizen task:** deferred — the improvement above is a sweep-procedure tweak, not a code task;
 noting it here rather than filing a redundant roadmap entry (conductor's sweep checklist already
 gets refined through CLAUDE.md edits in Silas-directed sessions).
+
+## 2026-07-18 | Reviewer → Worker | conductor/t-049 | pattern
+
+**Decision:** merged (kind_robots PR #386 merged squash 897597d; conductor PR #768 carrying the
+roadmap `status: done` flip merged as a follow-up commit on the same branch, session
+claude-conductor-scheduled-20260718T0705Z)
+
+**Failure category:** n/a (clean first-pass; task was already at `status: review` with a green
+kind_robots PR on arrival — Reviewer's job here was to verify the checks and close the loop)
+
+**What was good:**
+- The Worker's audit was thorough and specific: 9 of 22 `conductorCards.ts` entries were
+  cross-checked against live roadmap counts rather than spot-checked, with each drift traced to a
+  concrete cause (stale `taskStatus` after a project went all-done, a `projectKind` override
+  never applied, a card that had regressed back to a wrong value after an earlier fix).
+- Left the roadmap task at `status: review` with an explicit "will flip to done once merged" note
+  instead of guessing at the kind_robots PR's outcome — made the Reviewer's job a pure
+  verify-and-close rather than a re-investigation.
+
+**What to improve:**
+- Nothing procedural — this is the intended handoff shape. Filed the kaizen suggestion below
+  since it came directly from this task's own lesson.
+
+**Kaizen task:** none filed as a new task this cycle — the fix (making this a recurring drift
+audit rather than one-off) is recorded in `LEARNING.yaml`'s lesson for future roadmap-upgrade
+cycles to pick up; a one-off conversion doesn't warrant its own task entry.
