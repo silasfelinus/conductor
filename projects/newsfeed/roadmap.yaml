@@ -73,7 +73,7 @@ tasks:
   - id: t-003
     milestone: m2
     title: "Move homepage settings into a dedicated settings section"
-    status: review
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -81,7 +81,7 @@ tasks:
     note: 'Audit (t-001): the homepage is content/index.md, currently rendering :user-manager (components/user/user-manager.vue -> user-dashboard.vue, which embeds user-panel.vue''s settings form, avatar upload, theme picker, cache-clear, galleries). No settings live in a dedicated route today. Relocate user-manager''s "dashboard" tab so it''s reachable at the existing /dashboard route (dashboardConfigs.user is already registered) instead of the root, preserving all current controls. Settings data itself stays on the Prisma User model via stores/userStore.ts / server/api/users — do not add a new settings table. Connector-backed Worker claim (conductor-burst-hourly rotation, 2026-07-18): kind_robots PR https://github.com/silasfelinus/kind_robots/pull/391 swaps content/index.md''s body from :user-manager to a new :home-feed-placeholder component (components/home/home-feed-placeholder.vue) and drops the stale dashboardKey/dashboardTab binding on content/channels/home/dashboard.md (the Home channel''s Dashboard nav-tab entry, route /). content/dashboard.md (route /dashboard) is untouched -- it already rendered the identical :user-manager, so every current control (avatars/friends/achievements/ themes/chats/logout) is preserved exactly where it already lived, and the header avatar widget (user-picture.vue) already links there. vue-tsc, eslint, and prettier all clean on the touched files. Could not get a working browser preview of either / or /dashboard in this sandbox (both showed the stock Nuxt welcome page pre- and post-change -- a DB/session limitation, not caused by this diff). PR CI is the verification gate before merge.'
     claimed_by: claude-conductor-burst-20260718T-newsfeed
     claimed_at: '2026-07-18T09:07:43Z'
-    updated: '2026-07-18T09:07:43Z'
+    updated: '2026-07-18T09:20:07Z'
 
   - id: t-004
     milestone: m2
@@ -267,3 +267,23 @@ tasks:
       points at /newsfeed (admin can run the Conductor 'Placements' button to backfill
       channelKey/tabKey/liveUrl); (4) evolve the placeholder scaffold page into the full
       interactive experience for this project.
+
+  - id: t-014
+    milestone: m2
+    title: "Preview-deploy visual check of the / and /dashboard swap from t-003"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Kaizen from t-003 (Worker, kind_robots PR #391): the homepage settings-relocation
+      (content/index.md -> :home-feed-placeholder, settings preserved unchanged at
+      /dashboard) landed with vue-tsc/eslint/prettier verification only -- the sandbox
+      could not boot a working `nuxt dev` preview for either route (both served the
+      stock Nuxt welcome page regardless of branch content, a DB/session limitation of
+      that session, not a code defect). A session with a real preview-deploy connector
+      should visually confirm: (1) "/" renders home-feed-placeholder.vue correctly for
+      both guest and logged-in states, (2) "/dashboard" still renders the full
+      user-manager dashboard (avatars/friends/achievements/themes/chats/logout)
+      unchanged, (3) the header avatar link and the placeholder's CTA both land on
+      /dashboard correctly.

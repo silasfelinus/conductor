@@ -1,13 +1,13 @@
 # Roadmap Audit
 
-Generated: `2026-07-18T07:22:50.331202+00:00`
+Generated: `2026-07-18T09:21:04.275343+00:00`
 
 This is a conservative structural audit. It reports suspicious state; it does not automatically change task status or remove human gates.
 
 ## Portfolio snapshot
 
-- **40** roadmaps, **31** active projects, **599** tasks
-- **72 ready**, **55 waiting**, **28 needs-human**, **1 claimed/review**, **432 done**
+- **40** roadmaps, **31** active projects, **601** tasks
+- **70 ready**, **55 waiting**, **28 needs-human**, **2 claimed/review**, **435 done**
 - Findings: **0 errors**, **6 warnings**, **45 informational**
 
 ## Project inventory
@@ -15,7 +15,7 @@ This is a conservative structural audit. It reports suspicious state; it does no
 | # | Project | State | Kind | Ready | Waiting | Human | In progress | Done / Total |
 |---:|---|---|---|---:|---:|---:|---:|---:|
 | 1 | `challenge-center` | finished | software | 0 | 0 | 0 | 0 | 20 / 20 |
-| 2 | `ai-art-academy` | active | software | 2 | 0 | 2 | 0 | 27 / 31 |
+| 2 | `ai-art-academy` | active | software | 1 | 0 | 2 | 1 | 27 / 31 |
 | 3 | `coloring-book` | active | software | 1 | 9 | 0 | 0 | 19 / 29 |
 | 4 | `humboldt-scoop` | active | software | 0 | 0 | 0 | 0 | 8 / 8 |
 | 5 | `humboldt-scoop-cms` | active | software | 0 | 4 | 1 | 0 | 6 / 11 |
@@ -27,12 +27,12 @@ This is a conservative structural audit. It reports suspicious state; it does no
 | 11 | `global-ui` | active | software | 2 | 0 | 1 | 0 | 21 / 24 |
 | 12 | `superkate-services-calculator` | active | software | 0 | 0 | 1 | 0 | 35 / 36 |
 | 13 | `superkate-hairstyle-ai` | active | software | 2 | 0 | 2 | 0 | 16 / 20 |
-| 14 | `newsfeed` | active | software | 3 | 7 | 1 | 0 | 2 / 13 |
+| 14 | `newsfeed` | active | software | 3 | 7 | 1 | 0 | 3 / 14 |
 | 15 | `model-builder` | active | software | 4 | 0 | 0 | 0 | 26 / 30 |
-| 16 | `animation-manager` | active | software | 4 | 2 | 0 | 0 | 4 / 10 |
+| 16 | `animation-manager` | active | software | 3 | 2 | 0 | 0 | 5 / 10 |
 | 17 | `animation-studio` | missing | software | 3 | 4 | 0 | 0 | 1 / 8 |
 | 18 | `ecosystem-map` | active | software | 2 | 1 | 0 | 0 | 5 / 8 |
-| 19 | `conductor` | active | software | 5 | 0 | 3 | 0 | 56 / 64 |
+| 19 | `conductor` | active | software | 5 | 0 | 3 | 0 | 57 / 65 |
 | 20 | `serendipity` | active | software | 3 | 0 | 0 | 0 | 9 / 12 |
 | 21 | `storymaker` | active | software | 2 | 0 | 0 | 0 | 8 / 10 |
 | 22 | `davinci` | active | software | 2 | 0 | 0 | 0 | 12 / 14 |
