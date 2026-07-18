@@ -492,8 +492,8 @@ tasks:
 - id: t-023
   milestone: m5
   title: Preview-driven pass on the deferred kr-* surfaces (art callouts, /30-no-text notices, generic solid panels, code-library maps)
-  status: ready
-  owner: null
+  status: claimed
+  owner: worker
   passes: 0
   stakes: reversible
   note: >
@@ -510,6 +510,9 @@ tasks:
     (text-{status}-content -> text-{status} is a real color change). Each needs a
     preview-deploy eyeball per surface since the sandbox has no DB. Small reversible passes,
     screenshot /ui + the touched views.
+  claimed_by: claude-conductor-scheduled-20260718T1012Z
+  claimed_at: '2026-07-18T10:12:09Z'
+  updated: '2026-07-18T10:12:09Z'
 - id: t-024
   milestone: m5
   title: Guard the misleading done/totalTasks fallback in conductor-overview-gallery-page.vue's itemFromProjectRecord()
