@@ -1720,3 +1720,34 @@ tasks:
       latest completed one) — no changes requested.
     claimed_by: claude-conductor-burst-20260717T2300Z
     claimed_at: '2026-07-17T23:51:18Z'
+
+  - id: t-063
+    milestone: m2
+    title: 'LEARNING.yaml: fix malformed lesson field breaking test_committed_ledger_schema_conformance on every PR'
+    status: ready
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-18T00:30:00Z'
+    note: >
+      Found 2026-07-18 (ai-art-academy/t-010 burst cycle, PR #738) while triaging a red
+      "Authz regression tests" check in ci.yml — that job actually runs the full
+      `pytest tests/`, not just authz tests (misleading name; consider renaming it too,
+      low priority). `tests/test_backfill_learning.py::test_committed_ledger_schema_conformance`
+      fails with `yaml.scanner.ScannerError: mapping values are not allowed here` at
+      LEARNING.yaml line 3164, column 268. Reproduced identically on a pristine origin/main
+      worktree at commit c4b7291 (pre-dates PR #738), so this is a real, currently-broken
+      state of `main` — not something PR #738 introduced. Root cause: line 3164's
+      `lesson:` value is an unquoted plain YAML scalar containing the substring
+      "(confirmed here: 9 minutes later)" — the "here: " is an unescaped colon+space inside
+      a plain scalar, which YAML parses as a new mapping key starting mid-value, breaking
+      the parse. Fix: quote that lesson string (single or double quotes) or convert it to a
+      block scalar (`lesson: >` or `lesson: |`) so the embedded colon is no longer
+      significant; grep LEARNING.yaml for other unquoted `lesson:`/`note:`-style plain
+      scalars containing ": " as a preventive sweep (this ledger is append-only across many
+      sessions, so this pattern likely isn't unique to line 3164 — check before assuming a
+      single-line fix is sufficient). This blocks CI green on every PR that touches
+      `tests/` in the `ci.yml` "Authz regression tests" job (the sibling job in
+      security-audit.yml only runs test_authz_regression.py directly and is unaffected).
+      Add a regression test asserting `scripts/backfill_learning.py`'s ledger-append path
+      quotes/escapes values containing ": " so this can't recur silently from future
+      appends.
