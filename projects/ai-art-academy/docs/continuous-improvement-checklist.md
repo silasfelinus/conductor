@@ -15,16 +15,16 @@ Record the lane, files changed, and verification in the task note before rearmin
 
 ## Current curriculum coverage
 
-The Academy currently has 22 movement entries (21 in `academyStyles.ts` pending
-t-031's Suprematism sync). Before adding a 23rd movement, finish the known coverage
-gaps below unless a newly discovered issue is more urgent.
+The Academy currently has 22 movement entries, all 22 synced to `academyStyles.ts`
+(t-031 landed the Suprematism sync 2026-07-18). Before adding a 23rd movement,
+finish the known coverage gaps below unless a newly discovered issue is more urgent.
 
 | Area | Current state | Next verifiable action |
 |---|---|---|
-| Lesson seed entries | 22 movements in curriculum-outline.md; 21 synced to `academyStyles.ts` | Land t-031 (Suprematism sync), then keep curriculum and `academyStyles.ts` slug order aligned |
+| Lesson seed entries | 22 movements in curriculum-outline.md; all 22 synced to `academyStyles.ts` (t-031 done) | Keep curriculum and `academyStyles.ts` slug order aligned as new movements land |
 | Example works | 22 movements complete (t-013 landed Expressionism/Cubism/Bauhaus 2026-07-17; Suprematism shipped complete 2026-07-18) | Spot-check VERIFIED URLs opportunistically; no known gaps |
 | Starter library | 21 starter images and provenance manifest complete | Add a Suprematism starter image/provenance entry; keep source-picker integration aligned with the manifest |
-| Style previews | 21 prompts queued; Suprematism not yet queued | Queue a Suprematism preview prompt in `art-prompts.yaml` (mirrors t-022); generate images only through the approved pipeline, then wire `previewImageSrc` |
+| Style previews | 22 prompts queued (Suprematism queued 2026-07-18, `kind-robots-academy-style-preview-suprematism` in `art-prompts.yaml`) | Generate images only through the approved pipeline, then wire `previewImageSrc` (t-019) |
 | Remix configs | Registry exists; A/B generation blocked | Resume only after the relay, database, and approved generation path are available |
 | Teaching scaffold | Written in `docs/teaching-notes.md` | Wire the scaffold into lesson detail when the corresponding front-end task is ready; add a Suprematism row when that lands |
 

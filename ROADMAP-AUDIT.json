@@ -1,16 +1,16 @@
 {
-  "generated_at": "2026-07-18T04:17:08.449729+00:00",
+  "generated_at": "2026-07-18T06:18:42.746892+00:00",
   "summary": {
     "roadmaps": 40,
     "active_projects": 31,
     "tasks": 598,
-    "ready": 72,
+    "ready": 71,
     "waiting": 55,
-    "needs_human": 27,
+    "needs_human": 28,
     "in_progress": 2,
     "done": 431,
     "errors": 0,
-    "warnings": 5,
+    "warnings": 6,
     "info": 45
   },
   "projects": [
@@ -40,16 +40,15 @@
       "autonomous": true,
       "task_count": 31,
       "counts": {
-        "claimed": 1,
         "done": 27,
         "needs-human": 2,
-        "ready": 1
+        "ready": 2
       },
       "open_count": 4,
       "human_attention": 2,
-      "ready": 1,
+      "ready": 2,
       "waiting": 0,
-      "claimed": 1,
+      "claimed": 0,
       "review": 0,
       "done": 27
     },
@@ -179,12 +178,12 @@
       "task_count": 37,
       "counts": {
         "done": 32,
-        "needs-human": 3,
-        "ready": 2
+        "needs-human": 4,
+        "ready": 1
       },
       "open_count": 5,
-      "human_attention": 3,
-      "ready": 2,
+      "human_attention": 4,
+      "ready": 1,
       "waiting": 0,
       "claimed": 0,
       "review": 0,
@@ -377,15 +376,16 @@
       "autonomous": false,
       "task_count": 63,
       "counts": {
+        "claimed": 1,
         "done": 55,
         "needs-human": 3,
-        "ready": 5
+        "ready": 4
       },
       "open_count": 8,
       "human_attention": 3,
-      "ready": 5,
+      "ready": 4,
       "waiting": 0,
-      "claimed": 0,
+      "claimed": 1,
       "review": 0,
       "done": 55
     },
@@ -814,6 +814,13 @@
       "project": "humboldt-scoop",
       "task": null,
       "message": "Active project has no open tasks; mark finished/paused or add an intentional recurring task."
+    },
+    {
+      "severity": "warning",
+      "code": "SOFT_NEEDS_HUMAN",
+      "project": "kind-robots",
+      "task": "t-037",
+      "message": "needs-human has no obvious hard-gate marker; consider returning it to ready, setting soft_gate: true, or documenting the actual gate."
     },
     {
       "severity": "warning",
