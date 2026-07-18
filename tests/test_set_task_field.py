@@ -46,6 +46,15 @@ tasks:
   title: Plain task
   status: ready
   passes: 2
+- id: t-004
+  milestone: m1
+  title: Recurring task with hand-maintained block-literal note
+  status: ready
+  passes: 0
+  note: |-
+    RAN 2026-07-01: first cycle paragraph.
+
+    RAN 2026-07-08: second cycle paragraph.
 """
 
 
@@ -109,6 +118,34 @@ def test_replace_folded_note_removes_old_block():
     assert tasks["t-002"]["note"] == "Short replacement note"
     assert "Folded note line one." not in out
     assert tasks["t-002"]["depends_on"] == ["t-001", "t-003"]
+
+
+def test_multiline_note_preserves_existing_block_literal_style():
+    # conductor/t-064: appending a new paragraph to an existing `note: |-` block
+    # must stay a block-literal scalar, not collapse to one quoted flow line.
+    existing = parse_tasks(ROADMAP)["t-004"]["note"]
+    new_value = existing + "\n\nRAN 2026-07-15: third cycle paragraph."
+    out = stf.set_task_field_text(ROADMAP, "t-004", "note", new_value)
+
+    block = task_block(out, "t-004")
+    assert "note: |-" in block
+    assert "note: '" not in block  # did not collapse to a quoted flow scalar
+
+    tasks = parse_tasks(out)
+    assert tasks["t-004"]["note"] == new_value
+    assert "RAN 2026-07-01" in tasks["t-004"]["note"]
+    assert "RAN 2026-07-15" in tasks["t-004"]["note"]
+    # Other tasks/fields untouched.
+    assert task_block(out, "t-002") == task_block(ROADMAP, "t-002")
+    assert tasks["t-004"]["status"] == "ready"
+
+
+def test_multiline_note_without_existing_block_style_still_flattens():
+    # No prior block-literal to preserve (t-001's note is a quoted scalar) —
+    # behavior is unchanged: newlines flatten to spaces as documented.
+    out = stf.set_task_field_text(ROADMAP, "t-001", "note", "line one\nline two")
+    tasks = parse_tasks(out)
+    assert tasks["t-001"]["note"] == "line one line two"
 
 
 def test_replace_depends_on_list_removes_old_items():

@@ -6949,3 +6949,45 @@ maneuver fixes this, since the sandbox has no reachability into Alexandria's loc
 services (matches kindrobots-unraid/t-012's existing soft-gate note). Logged as a
 security-flag per AGENTS.md rather than burning coloring-book/t-022's pass budget on a task
 that cannot succeed as specified right now (Failure triage: actionable).
+
+## 2026-07-18 | Reviewer → Worker | conductor/t-064 | pattern
+
+**Decision:** closed `done` (implemented directly this session — conductor tooling, not a
+kind_robots PR).
+
+**Failure category:** none — clean first-pass fix.
+
+**What was good (the kaizen author, ai-art-academy/t-010's 2026-07-18T0705Z cycle):**
+- Caught the bug in dry-run review before it landed on `main`, recovered the original
+  file by hand instead of shipping the flattened version, and wrote a precise,
+  actionable kaizen note (exact fix shape, regression-test ask, and a documented safe
+  workaround for the interim). This is exactly the level of detail that let this session
+  implement the fix without re-deriving the bug from scratch.
+
+**What changed:**
+- `scripts/set_task_field.py`: when the field being replaced already exists as a
+  block-literal scalar (`note: |-`, `note: >-`, etc.) and the new value contains embedded
+  newlines, the writer now re-emits the same block style via a new
+  `render_block_scalar()` helper instead of collapsing to a quoted flow scalar. A field
+  with no prior block style still flattens to one line, unchanged (documented, intentional
+  behavior — nothing to preserve there).
+- `tests/test_set_task_field.py`: added a `t-004` fixture task with a hand-maintained
+  `note: |-` block, plus two regression tests — one asserting a multi-paragraph append
+  preserves the block-literal style and round-trips through `yaml.safe_load`, one
+  confirming the no-prior-block-style path still flattens as documented.
+- Verified against the real `ai-art-academy/t-010` note (21+ `RAN <date>: ...`
+  paragraphs, the exact case the kaizen was filed against) via an in-memory dry run —
+  block style preserved, content round-trips clean. Full suite: 360 passed, 1 skipped.
+- Merging t-006 (see above) satisfied `newsfeed/t-007`/`t-009`'s dependencies;
+  `scripts/resolve_deps.py` unblocked both to `ready` and `audit_roadmaps.py` dropped
+  from 2 errors (`WAITING_WITH_SATISFIED_DEPS`) to 0.
+
+**Kaizen task:** none filed this cycle — the fix is scoped and self-contained; no new
+follow-on gap surfaced while implementing it.
+
+**Pattern note:** the documented interim workaround ("use Edit directly, not
+`set_task_field.py note` for block-literal notes") in this task's own note and in
+AGENTS.md/CLAUDE.md kaizen history is now obsolete for the block-literal-preservation
+case specifically — worth a follow-up sweep only if another session hits a *different*
+formatting-loss shape from this script (e.g. `depends_on` block lists), which this fix
+does not touch.
