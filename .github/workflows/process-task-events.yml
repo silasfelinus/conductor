@@ -6,6 +6,9 @@ on:
       - main
     paths:
       - task-events/*.yaml
+      - .github/workflows/process-task-events.yml
+  schedule:
+    - cron: "17 * * * *"
   workflow_dispatch:
 
 permissions:
