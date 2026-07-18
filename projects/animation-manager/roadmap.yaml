@@ -185,9 +185,9 @@ tasks:
   - id: t-010
     milestone: m3
     title: "Remove or fix the stale 'bubble-effect' reference in displayStore's legacy animation system"
-    status: claimed
+    status: done
     owner: worker
-    passes: 0
+    passes: 1
     stakes: reversible
     note: >
       Found while building t-008's verification script (kind_robots PR #251). kind_robots
@@ -202,6 +202,15 @@ tasks:
       superseded. Out of scope for t-008 since it's a different, non-catalog system; scoped here
       as its own task. Not registered against verifyAnimationCatalog.ts since that script
       intentionally only covers the animationCatalog.ts-based system.
+
+      RESOLVED 2026-07-18 (conductor-burst session): went with option (a) — registered
+      bubble-effect in stores/animationCatalog.ts (kind_robots PR #390, merged). Confirmed
+      bubble-effect.vue is a real, visually distinct effect (colorful per-bubble-color SVG
+      circles with a pop-on-leave animation) worth keeping, not a duplicate of fizzy-bubbles
+      (white glowing bubbles), and that animation-loader.vue's effectMap was already fully
+      wired to render it — it was purely a missing catalog registration, not orphaned code.
+      Verified with npm run test:animation-catalog (30 effects, unique ids, all screenfx
+      components resolved) and npm run test (vue-tsc --noEmit), both clean.
     claimed_by: claude-conductor-burst-20260718T081118Z-838175
     claimed_at: '2026-07-18T08:11:21Z'
     updated: '2026-07-18T08:11:21Z'
