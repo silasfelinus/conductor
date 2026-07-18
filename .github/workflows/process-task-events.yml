@@ -34,25 +34,21 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out current main
-        uses: actions/checkout@v4
-        with:
-          ref: main
-          fetch-depth: 0
-          show-progress: false
-          sparse-checkout-cone-mode: false
-          sparse-checkout: |
-            /projects/*/roadmap.yaml
-            /task-events/*.yaml
-            /scripts/*.py
-            /LEARNING.yaml
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.12"
-
-      - name: Install YAML dependency
-        run: python -m pip install --disable-pip-version-check pyyaml
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -e
+          gh auth setup-git
+          git init --quiet .
+          git remote add origin "https://github.com/${GITHUB_REPOSITORY}.git"
+          git sparse-checkout init --no-cone
+          git sparse-checkout set --no-cone \
+            '/projects/*/roadmap.yaml' \
+            '/task-events/*.yaml' \
+            '/scripts/*.py' \
+            '/LEARNING.yaml'
+          git fetch --quiet --filter=blob:none --depth=2 origin main
+          git checkout --quiet -B main FETCH_HEAD
 
       # Process, validate, and commit are one step so a non-fast-forward push can
       # replay the whole thing against fresh origin/main instead of committing on a
@@ -63,6 +59,7 @@ jobs:
       - name: Process queued events and commit (one conflict retry)
         run: |
           set -e
+          python3 -m pip install --disable-pip-version-check --quiet pyyaml
           had_error=0
           max_attempts=2
 
@@ -76,9 +73,9 @@ jobs:
             echo "Attempt ${attempt}/${max_attempts}: processing against $(git rev-parse HEAD)"
 
             had_error=0
-            python scripts/process_task_events.py > /tmp/task-event-process.log 2>&1 || had_error=1
+            python3 scripts/process_task_events.py > /tmp/task-event-process.log 2>&1 || had_error=1
             cat /tmp/task-event-process.log
-            python scripts/validate_roadmaps.py
+            python3 scripts/validate_roadmaps.py
 
             if git diff --quiet && git diff --cached --quiet; then
               echo "No changes to commit."
@@ -90,8 +87,8 @@ jobs:
 
             # Fetch immediately before pushing so the fast-forward check is against
             # the freshest possible origin/main.
-            git fetch origin main
-            if git push origin HEAD:main; then
+            git fetch --quiet origin main
+            if git push --quiet origin HEAD:main; then
               echo "Pushed cleanly."
               break
             fi
@@ -109,7 +106,7 @@ jobs:
             cp /tmp/task-event-process.log task-event-diagnostics.txt
             git add -f task-event-diagnostics.txt
             git commit -m "diagnostic: task event run ${GITHUB_RUN_ID}"
-            git push origin "HEAD:refs/heads/diagnostics/task-events-${GITHUB_RUN_ID}"
+            git push --quiet origin "HEAD:refs/heads/diagnostics/task-events-${GITHUB_RUN_ID}"
             echo "::error::One or more task events failed; diagnostics were pushed to diagnostics/task-events-${GITHUB_RUN_ID}." >&2
             exit 1
           fi
