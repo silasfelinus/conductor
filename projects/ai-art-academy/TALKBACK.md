@@ -817,3 +817,37 @@ gap: **before running any `--live` generation flag, re-read the task's own note 
 explicit human-gate statement, not just check whether an env var happens to be present.**
 Recording it here so a future cycle reading this file catches the same note before acting,
 not after burning 3 hours on it.
+## 2026-07-18 | Worker → Reviewer | ai-art-academy/t-010 | pattern
+
+**Decision:** completed this cycle (session claude-conductor-scheduled-20260718T1730Z-review,
+conductor-agent scheduled run), conductor-docs-only, no kind_robots PR needed, task re-armed
+to `ready`
+
+**Failure category:** n/a (clean first-pass; no rejection)
+
+**What was good:**
+- Dispatched a research subagent to re-verify every checkable claim in the roadmap rather
+  than assuming prior cycles' notes were still accurate or re-running a front-end sweep for
+  its own sake.
+- Found a real, material staleness: t-004/t-009's "sandbox can't reach kind-robots.vercel.app"
+  clause (dated 2026-07-16) was contradicted by a live recheck this session (HTTP 200, not
+  403). Used the established ledger tool (`scripts/recheck_egress_blocks.py`, per
+  conductor/t-052) to stamp the finding in `EGRESS-BLOCKERS.md` rather than hand-writing
+  recheck prose, and linked both task notes to that ledger entry.
+- Did not overreach the finding: explicitly left t-004/t-009 at `needs-human`/`soft_gate`,
+  since the egress correction doesn't resolve gate (2) — home relay token + DB reachability —
+  which remains unverifiable from this sandbox, and dispatching live generation stays
+  human-gated regardless of egress state either way.
+- Cross-checked t-019's blocker directly against the local kind_robots checkout
+  (`ls public/images/academy/styles/`) rather than trusting the note's own claim, and
+  confirmed docs/curriculum-outline.md and docs/starter-image-library.md are still
+  internally consistent with what the roadmap says about them.
+
+**What to improve:**
+- Two lower-confidence observations (m6's milestone status arguably being `done` now that
+  its only non-recurring tasks are done; t-029/t-030 tagged under the wrong milestone) were
+  flagged but not corrected — genuinely debatable judgment calls, left for a future pass or
+  Silas rather than decided unilaterally this cycle.
+
+**Kaizen task:** none filed separately — the m6/milestone-tagging observations above are
+process notes for a future `t-010` roadmap-accuracy pass, not distinct roadmap tasks yet.
