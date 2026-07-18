@@ -258,14 +258,17 @@ tasks:
   - id: t-009
     milestone: m3
     title: "Harden caching, deduplication, and failure handling"
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     depends_on: t-006
     note: >
       Add bounded caching, stable item identity, duplicate removal, stale-source tolerance,
       and partial-success behavior so one broken feed does not blank the homepage.
+    claimed_by: claude-conductor-burst-20260718T1707Z
+    claimed_at: '2026-07-18T17:07:15Z'
+    updated: '2026-07-18T17:07:15Z'
 
   - id: t-010
     milestone: m3
