@@ -55,7 +55,7 @@ records:
   outcome: done
   failure_category: null
   lesson: "A stale task spec can be closed by a larger cutover that subsumes it: the Dream-sync priority\
-    \ ask was satisfied by rewriting the bridge to /api/projects \u2014 check whether pending tasks target\
+    \ ask was satisfied by rewriting the bridge to /api/projects — check whether pending tasks target\
     \ a replaced integration before working them as written."
 - date: 2026-07-12
   project: model-builder
@@ -69,7 +69,7 @@ records:
     \ -> gated recipe runner -> four gates) reused existing model list APIs, the art generator, and /api/suggest\
     \ without touching Prisma, so merge-to-main deployed only additive UI. When you can't run the toolchain\
     \ locally, lean on the repo's whole-project vue-tsc PR check as the verification gate before merging.\
-    \ Partial slice spanning t-005/t-014 \u2014 durable BuildRun persistence (t-004) intentionally deferred,\
+    \ Partial slice spanning t-005/t-014 — durable BuildRun persistence (t-004) intentionally deferred,\
     \ not done."
 - date: 2026-07-12
   project: conductor
@@ -91,7 +91,7 @@ records:
   failure_category: null
   lesson: "An additive-only Prisma migration (new CREATE TABLEs, internal cascade FKs, external refs as\
     \ plain scalar Int columns with no FK) merges safely even though merge-to-main runs prisma migrate\
-    \ deploy against prod \u2014 no reverse-relation edits to User/ArtImage were needed. The typecheck\
+    \ deploy against prod — no reverse-relation edits to User/ArtImage were needed. The typecheck\
     \ CI runs prisma generate before vue-tsc, so it validates a new schema file end-to-end (client types\
     \ + routes + store) without a live DB; that plus the Vercel preview build is enough of a gate when\
     \ you can't run the toolchain locally. kind_robots PR #188."
@@ -103,7 +103,7 @@ records:
   passes: 0
   outcome: done
   failure_category: null
-  lesson: "Once a resource is durable, the cheapest high-value follow-up is a history/list surface \u2014\
+  lesson: "Once a resource is durable, the cheapest high-value follow-up is a history/list surface —\
     \ the list endpoint already existed, so the run-history panel was pure front-end with zero new API.\
     \ kind_robots PR #189."
 - date: 2026-07-12
@@ -118,7 +118,7 @@ records:
     \ where key IS NULL; count===0 means already committed) gives exactly-once semantics, releasing the\
     \ key on write failure enables retry, and create+link in one $transaction prevents orphans. When you\
     \ can't run the DB, keep writes to KNOWN exact field/relation names (pulled from schema) so vue-tsc\
-    \ validates every prisma.model.update/create at PR time \u2014 a wrong field name fails CI instead\
+    \ validates every prisma.model.update/create at PR time — a wrong field name fails CI instead\
     \ of corrupting prod. Covers t-013/t-014/t-015; kind_robots PR #190. Live proof still pending (t-022)."
 - date: 2026-07-12
   project: model-builder
@@ -129,11 +129,11 @@ records:
   outcome: done
   failure_category: null
   lesson: "The Model Builder's four gates are OPTIONAL front-end pauses (skip an item, or stop after prompt\
-    \ to edit) \u2014 NOT a backend block that waits on a repo-file approval. Default is to create full\
+    \ to edit) — NOT a backend block that waits on a repo-file approval. Default is to create full\
     \ objects for everything. I over-applied a 'needs-human, internal-draft-only' framing to the HSS marketing\
     \ deck; the right move was a full example set with the visuals queued into the real art pipeline (projects/art-generate.yaml).\
     \ Also: the art generator forbids text/logos, so marketing collateral splits into generated text-free\
-    \ imagery + a text/logo layout step over the real logo (no rebrand). Don't invent brand facts \u2014\
+    \ imagery + a text/logo layout step over the real logo (no rebrand). Don't invent brand facts —\
     \ pricing/area/logo/descriptor came from Silas and were folded into CONTENT-BRIEF."
 - date: 2026-07-12
   project: model-builder
@@ -148,7 +148,7 @@ records:
     \ avatar FIRST, lock seed+checkpoint, reuse for icon/card/hero/expressions; prove on a small 5-key\
     \ expression subset before any full 20-key batch (Expression enum has 10 emotions + 10 actions + CUSTOM;\
     \ NEUTRAL is canonical; ExpressionMedia owner is Bot XOR Character). Character has only artImageId/imagePath\
-    \ (no icon/card/hero path fields \u2014 those are on Dream), so deck icon/card/hero are ArtImages\
+    \ (no icon/card/hero path fields — those are on Dream), so deck icon/card/hero are ArtImages\
     \ in the owner's collection."
 - date: 2026-07-12
   project: model-builder
@@ -160,7 +160,7 @@ records:
   failure_category: null
   lesson: "Dream->3-Characters expansion runs autonomously end-to-end: pick a real Dream (Lantern Greenhouse,\
     \ id 37) and let its `examples` seed the cast (one character per theme). The executor's guarantees\
-    \ ARE the t-018 proof points \u2014 three independent CREATE items (private/inactive, userId 10, unique\
+    \ ARE the t-018 proof points — three independent CREATE items (private/inactive, userId 10, unique\
     \ @unique slugs), Dream links via the Characters implicit m2m, per-child idempotencyKey so a failed\
     \ child retries alone and a COMMIT replay creates zero duplicates. A cohesive shared portrait style\
     \ in the generate manifest keeps the cast visually tied to the dream."
@@ -190,7 +190,7 @@ records:
   failure_category: null
   lesson: "A registered /api/suggest sheet only helps if the client lets it: buildSuggestUserPrompt resolves\
     \ extra.instruction BEFORE sheet.fieldPrompts, so a store that always sends extra.instruction silently\
-    \ overrides the sheet. Fix is two-sided \u2014 register the sheet (system prompt + per-field prompts\
+    \ overrides the sheet. Fix is two-sided — register the sheet (system prompt + per-field prompts\
     \ + a buildContext that digests the source record's canon) AND stop the store force-sending an instruction\
     \ (send only when explicitly provided). Then getSuggestSheet('model-builder') stops falling back to\
     \ the adventure sheet. kind_robots PR #193."
@@ -205,7 +205,7 @@ records:
   lesson: "When a project is built directly rather than spec-first, the 'write a spec doc' tasks are closed\
     \ by subsumption: the executable code + reference runs ARE the spec. Map each task to its shipped\
     \ artifact (see docs/spec-subsumption.md) instead of writing redundant prose. Be honest about the\
-    \ tail \u2014 video (LTX) and 3D (Hunyuan3D/STL) inside t-012 stay explicitly deferred rather than\
+    \ tail — video (LTX) and 3D (Hunyuan3D/STL) inside t-012 stay explicitly deferred rather than\
     \ folded into 'done'."
 - date: 2026-07-12
   project: model-builder
@@ -219,7 +219,7 @@ records:
     \ fix is a single per-model field spec (modelBuilderFields: required/optional, defaults, choice pools\
     \ grounded in the schema + builder *Cards) used to pre-fill the FIELDS box AND fed into the suggest\
     \ context as 'Fields to fill', so the model returns a full specific record with valid choices. Kept\
-    \ the drafts rich but deferred writing the parsed fields to real columns (t-028) \u2014 that's a prod-write\
+    \ the drafts rich but deferred writing the parsed fields to real columns (t-028) — that's a prod-write\
     \ not worth shipping untested. kind_robots PR #195."
 - date: 2026-07-12
   project: model-builder
@@ -232,7 +232,7 @@ records:
   lesson: "Minimal-interaction 'just create it' is cheap once the gated actions exist: autoBuildItem/autoBuildRun\
     \ just chain the existing draft -> approve -> generate -> commit actions with defaults, and an includeArt\
     \ toggle lets it skip art for a fast create-records-only path (ASSET_ONLY items need art, so skip\
-    \ them when it's off). No new backend \u2014 it orchestrates over the idempotent executor, so re-running\
+    \ them when it's off). No new backend — it orchestrates over the idempotent executor, so re-running\
     \ is safe. kind_robots PR #196."
 - date: 2026-07-12
   project: challenge-center
@@ -264,7 +264,7 @@ records:
   outcome: done
   failure_category: null
   lesson: "Silas-directed claude/* PRs outside the roadmap task cycle are still in Reviewer scope per\
-    \ AGENTS.md and should be reviewed with the same rigor as a Worker PR \u2014 clone the branch, run\
+    \ AGENTS.md and should be reviewed with the same rigor as a Worker PR — clone the branch, run\
     \ lint/typecheck directly rather than trusting the PR body's self-reported verification."
 - date: 2026-07-14
   project: challenge-center
@@ -275,10 +275,10 @@ records:
   outcome: done
   failure_category: actionable
   lesson: "kind_robots PR #210 merged this task's exact scope 2026-07-13T00:52:11Z, but the roadmap task\
-    \ never left status: claimed \u2014 25h and 8+ Reviewer sweeps (recurrences 42-48 on the unrelated\
+    \ never left status: claimed — 25h and 8+ Reviewer sweeps (recurrences 42-48 on the unrelated\
     \ t-026 pattern) logged it as 'stranded' without reconciling. When a claimed task's title/PR search\
     \ turns up a merged PR matching the task description, check that FIRST before assuming the claim died\
-    \ \u2014 don't just watch the clock. Reconciled per docs/worker-stale-claim-recovery.md; t-007 (leaderboard)\
+    \ — don't just watch the clock. Reconciled per docs/worker-stale-claim-recovery.md; t-007 (leaderboard)\
     \ unblocked to ready as a result."
 - date: 2026-07-14
   project: conductor
@@ -292,7 +292,7 @@ records:
     \ default from the mariadb driver's own 10 to 2 with no env var anywhere to override it, silently\
     \ pool-starving production and cascading into ~14 failing Cypress spec files. When a config 'hardening'\
     \ commit introduces a new numeric default, diff it against the library's own built-in default rather\
-    \ than picking an arbitrary small number \u2014 and grep the whole repo/deploy config for whether\
+    \ than picking an arbitrary small number — and grep the whole repo/deploy config for whether\
     \ anything actually sets the new env var before assuming it's tunable in practice."
 - date: 2026-07-14
   project: alexa-integration
@@ -303,7 +303,7 @@ records:
   outcome: done
   failure_category: null
   lesson: "The Worker's earlier connector-block on silasfelinus/serendipity-voice was transient to that\
-    \ session, not a lasting boundary \u2014 a later Claude session with direct repo write access closed\
+    \ session, not a lasting boundary — a later Claude session with direct repo write access closed\
     \ t-006 with no branch-creation issue at all. When a preserved cross-repo handoff doc is picked up\
     \ later, treat it as a design reference rather than a literal patch to apply: the target repo's adapter\
     \ architecture (art-submit.ts's gated-submission pattern) had evolved past the doc's shape since it\
@@ -318,7 +318,7 @@ records:
   outcome: done
   failure_category: null
   lesson: "First milestone of a new autonomous project (research + quality contract docs) landed clean\
-    \ in one pass with concrete, falsifiable acceptance criteria rather than vague prose \u2014 good template\
+    \ in one pass with concrete, falsifiable acceptance criteria rather than vague prose — good template\
     \ for future autonomous-project kickoffs."
 - date: 2026-07-14
   project: animation-manager
@@ -339,7 +339,7 @@ records:
   outcome: done
   failure_category: null
   lesson: "Cross-repo software task (conductor roadmap + kind_robots implementation PR #237) closed cleanly\
-    \ with the conductor PR correctly citing the exact kind_robots commit/PR \u2014 verified independently\
+    \ with the conductor PR correctly citing the exact kind_robots commit/PR — verified independently\
     \ and it matched byte-for-byte with the claim."
 - date: 2026-07-14
   project: challenge-center
@@ -353,7 +353,7 @@ records:
     \ roadmap file with yaml.safe_dump whenever it applies an unblock, turning a two-task status flip\
     \ into a 940-line diff (escaped Unicode, flow-style indentation, changed quoting). Ran it once, saw\
     \ the blast radius, reverted, and reapplied the same t-009/t-015 unblock with the surgical set_task_field.py\
-    \ instead \u2014 landed as a 26-line diff. Future cycles should default to set_task_field.py for post-done\
+    \ instead — landed as a 26-line diff. Future cycles should default to set_task_field.py for post-done\
     \ dependency unblocks and treat resolve_deps.py's write path as unsafe for a clean PR until t-020\
     \ fixes it too."
 - date: 2026-07-14
@@ -382,7 +382,7 @@ records:
   outcome: done
   failure_category: null
   lesson: "Two-sided cross-repo task (conductor PR #506 draining requests.yaml, kind_robots PR #245 the\
-    \ front-end request bridge) \u2014 the task note said 'set done when both PRs merge' and both merged\
+    \ front-end request bridge) — the task note said 'set done when both PRs merge' and both merged\
     \ independently (by Silas directly) within an hour of each other, ahead of the next Reviewer sweep\
     \ even noticing. Closing agent should re-check both halves' merge state before flipping status rather\
     \ than assuming the note's gate is still open; used set_task_field.py for the surgical status flip\
@@ -397,7 +397,7 @@ records:
   failure_category: null
   lesson: "Burst-mode rotation picked the least-recently-touched active project by checking every task's\
     \ `updated` timestamp across all roadmaps rather than defaulting to whatever had the most recent PR\
-    \ activity \u2014 newsfeed had zero timestamps on any task despite being priority: high. A real codebase\
+    \ activity — newsfeed had zero timestamps on any task despite being priority: high. A real codebase\
     \ audit (dedicated Explore subagent, not guesses) found two integration points already reserved (dashboardHelper.ts's\
     \ wonder.newsfeed tab, content/newsfeed.md) that a blind implementation could have collided with or\
     \ duplicated."
@@ -415,7 +415,7 @@ records:
     \ directly via pull_request_read before flipping to done rather than trusting the roadmap's stale\
     \ status. animation-studio also appears to be the pre-animation-manager pilot project (animation-manager\
     \ PR #494 duplicates its research/pitch-queue tasks) and is missing a project-overrides.yaml entry\
-    \ entirely \u2014 flagged as conductor/t-039 for a human/Worker decision on whether to formally retire\
+    \ entirely — flagged as conductor/t-039 for a human/Worker decision on whether to formally retire\
     \ it rather than guessing."
 - date: 2026-07-14
   project: model-builder
@@ -426,13 +426,13 @@ records:
   outcome: done
   failure_category: null
   lesson: "The CI check the PR needed to pass (TypeScript Type Check) was already red on kind_robots main\
-    \ before this cycle touched anything \u2014 confirmed by pulling main's own latest workflow run for\
+    \ before this cycle touched anything — confirmed by pulling main's own latest workflow run for\
     \ the same head sha rather than assuming the new PR's red check was caused by this change. Fixing\
     \ the actual (unrelated, one-line) null-check bug in artjob-manager.vue on the same branch was faster\
     \ and lower-risk than opening a second PR and waiting on a second review/merge cycle to unblock this\
     \ one. Also: reused two existing conventions instead of inventing new ones (normalizeRarity/normalizeRewardType\
     \ precedent in server/api/rewards/index.ts for choice-field validation style; the modelBuilderFields.ts\
-    \ single-source-of-field-truth module from t-024, extended rather than duplicated) \u2014 worth checking\
+    \ single-source-of-field-truth module from t-024, extended rather than duplicated) — worth checking\
     \ sibling API routes for an existing normalizer before writing a new one whenever a task touches enum-like\
     \ fields."
 - date: 2026-07-14
@@ -448,10 +448,10 @@ records:
     \ and animationPreferenceStore.ts's DEFAULT_PREFERENCES both duplicate catalog ids as string literals\
     \ with no compiler-enforced link back to animationCatalog.ts, so they're exactly the kind of thing\
     \ that goes stale silently. Also had to model Nuxt's real filename-to-component-name resolution (splits\
-    \ on hyphen, underscore, AND dot \u2014 components/screenfx/fireworks.effect.vue resolves the same\
+    \ on hyphen, underscore, AND dot — components/screenfx/fireworks.effect.vue resolves the same\
     \ as a hyphenated file would) rather than assuming a literal id.vue match, which a naive exists-check\
     \ would have gotten wrong. Found but did not fix an unrelated stale id (bubble-effect in displayStore.ts's\
-    \ legacy pre-centralization EffectId type, no matching catalog entry) \u2014 filed as t-010 rather\
+    \ legacy pre-centralization EffectId type, no matching catalog entry) — filed as t-010 rather\
     \ than expanding this PR's diff."
 - date: 2026-07-14
   project: ecosystem-map
@@ -3201,3 +3201,13 @@ records:
     path needs an explicit provenance flag (hasConductorTaskCounts), not just a truthiness guard on the
     value itself -- a zero-but-real-conductor-count and a nonzero-but-wrong-source count both need distinct
     handling, and .length/truthiness on the value alone can't tell them apart.
+
+- date: 2026-07-18
+  project: conductor
+  task: t-055
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "yaml.safe_dump round-tripping a human-edited YAML file silently strips every comment and blank-line separator on write -- any registration/patch helper that touches a file agents don't exclusively own (priority.yaml, project-overrides.yaml) should do targeted text-surgery (regex/line insertion, mirroring register_control_block) instead of load-mutate-dump, even when the mutation itself is a one-line append."
