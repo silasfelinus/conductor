@@ -1,13 +1,13 @@
 # Roadmap Audit
 
-Generated: `2026-07-18T13:15:42.972954+00:00`
+Generated: `2026-07-18T16:18:25.203227+00:00`
 
 This is a conservative structural audit. It reports suspicious state; it does not automatically change task status or remove human gates.
 
 ## Portfolio snapshot
 
-- **40** roadmaps, **31** active projects, **603** tasks
-- **69 ready**, **55 waiting**, **28 needs-human**, **3 claimed/review**, **437 done**
+- **40** roadmaps, **31** active projects, **607** tasks
+- **70 ready**, **51 waiting**, **31 needs-human**, **1 claimed/review**, **443 done**
 - Findings: **0 errors**, **6 warnings**, **45 informational**
 
 ## Project inventory
@@ -15,24 +15,24 @@ This is a conservative structural audit. It reports suspicious state; it does no
 | # | Project | State | Kind | Ready | Waiting | Human | In progress | Done / Total |
 |---:|---|---|---|---:|---:|---:|---:|---:|
 | 1 | `challenge-center` | finished | software | 0 | 0 | 0 | 0 | 20 / 20 |
-| 2 | `ai-art-academy` | active | software | 2 | 0 | 2 | 0 | 28 / 32 |
-| 3 | `coloring-book` | active | software | 1 | 9 | 0 | 0 | 19 / 29 |
+| 2 | `ai-art-academy` | active | software | 1 | 0 | 4 | 0 | 28 / 33 |
+| 3 | `coloring-book` | active | software | 0 | 9 | 0 | 1 | 19 / 29 |
 | 4 | `humboldt-scoop` | active | software | 0 | 0 | 0 | 0 | 8 / 8 |
 | 5 | `humboldt-scoop-cms` | active | software | 0 | 4 | 1 | 0 | 6 / 11 |
-| 6 | `digital-storefront` | active | software | 1 | 2 | 3 | 1 | 16 / 23 |
+| 6 | `digital-storefront` | active | software | 0 | 2 | 4 | 0 | 17 / 23 |
 | 7 | `packmaker` | active | software | 0 | 0 | 0 | 0 | 10 / 10 |
 | 8 | `mermaids-of-venice` | retired | content | 0 | 0 | 8 | 0 | 4 / 12 |
-| 9 | `kind-robots` | active | software | 1 | 0 | 4 | 0 | 32 / 37 |
+| 9 | `kind-robots` | active | software | 1 | 0 | 4 | 0 | 33 / 38 |
 | 10 | `kindrobots-unraid` | active | software | 0 | 7 | 1 | 0 | 4 / 12 |
-| 11 | `global-ui` | active | software | 2 | 0 | 1 | 1 | 21 / 25 |
+| 11 | `global-ui` | active | software | 2 | 0 | 1 | 0 | 22 / 25 |
 | 12 | `superkate-services-calculator` | active | software | 0 | 0 | 1 | 0 | 35 / 36 |
 | 13 | `superkate-hairstyle-ai` | active | software | 2 | 0 | 2 | 0 | 16 / 20 |
-| 14 | `newsfeed` | active | software | 2 | 7 | 1 | 1 | 3 / 14 |
+| 14 | `newsfeed` | active | software | 6 | 3 | 1 | 0 | 5 / 15 |
 | 15 | `model-builder` | active | software | 3 | 0 | 0 | 0 | 27 / 30 |
 | 16 | `animation-manager` | active | software | 3 | 2 | 0 | 0 | 5 / 10 |
 | 17 | `animation-studio` | missing | software | 3 | 4 | 0 | 0 | 1 / 8 |
 | 18 | `ecosystem-map` | active | software | 2 | 1 | 0 | 0 | 5 / 8 |
-| 19 | `conductor` | active | software | 5 | 0 | 3 | 0 | 57 / 65 |
+| 19 | `conductor` | active | software | 5 | 0 | 3 | 0 | 58 / 66 |
 | 20 | `serendipity` | active | software | 3 | 0 | 0 | 0 | 9 / 12 |
 | 21 | `storymaker` | active | software | 2 | 0 | 0 | 0 | 8 / 10 |
 | 22 | `davinci` | active | software | 2 | 0 | 0 | 0 | 12 / 14 |
