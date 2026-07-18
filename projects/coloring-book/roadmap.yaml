@@ -175,10 +175,10 @@ tasks:
 - id: t-022
   milestone: m4
   title: Monster Recast book 1 production pass — 36 final color/BW pairs
-  status: claimed
+  status: ready
   passes: 0
   stakes: reversible
-  updated: '2026-07-18 04:17:00+00:00'
+  updated: '2026-07-18 04:31:00+00:00'
   depends_on: t-021
   note: |-
     CURRENT COLOR-FIRST DIRECTION 2026-07-17: use the canonical color-art-jobs.yaml queue. A Worker generation/submission/review pass handles up to 18 Monster Recast color proposals at one stage. Do not generate new BW variants until the corresponding color composition is accepted; then derive a faithful BW counterpart in an 18-image pass. RECONCILED 2026-07-17 (burst-mode cycle): completed the "First reconcile" step -- mapped every physical projects/coloring-book/sets/monster-recast/approved/ file into proposals.yaml as inspirations on its matching concept slot, cross-checked against the 2026-07-12 inventory_snapshot's represented_concept_ids and per-category counts (all matched exactly, confirming the mapping). No files renamed or guessed: 16 of 17 approved-only concepts matched by exact working-title/source-lineage text against homage-concepts.yaml; the 18th (gothic-schoolgirl -> mr-025) had no direct text match and is flagged needs_visual_verification -- inferred only by elimination (the one leftover discovered slug against the one leftover represented id) since guessing a slug-to-concept match from vibes alone would violate "without guessing." Also recorded the two generated/-only ArtJob-complete pairs (mr-010/madam-hat, mr-013/ansel-bell, per unapproved-art-jobs.yaml) as generated-candidates, distinct from the approved/ inventory. coloring_proposal_status.py --check now reports 17/18 approved concepts with inspiration attached (up from 1) and coloring_approved_status.py --check / --check both still pass. Ready for the next cycle to run the actual production batch (attach/create accepted masters, starting at mr-001 per the status script's "next" pointer) -- kept `recurring`, not done; no pass consumed (this is progress on the recurring task, not a rejection).
@@ -196,10 +196,11 @@ tasks:
     RAN 2026-07-17 (~22:00 UTC, conductor-burst-hourly rotation): found and fixed the actual root cause of the "second event risks duplicate generation" worry above. GitHub Actions run history showed `Coloring Book Color ArtJobs` (monster-recast-art-jobs.yml) ran 18:37:54-21:10:53Z (success, landed PR #711's 108-proposal queue pass) while `Process coloring art events` (process-color-art-events.yml, the new event-bridge from this same task added a few cycles ago) ran 20:34:48-22:00:43Z and **failed** its only run ever: 2 ArtJobs got an immediate ComfyUI connection-refused, then 16 more each timed out after 300s "still queued/running" (0/18 succeeded). The two runs overlap by ~36 minutes, and the ArtJob ids the failed run reports (228, 229, 231, 233, 234, 236, 237, 239-249) skip ids (230, 232, 235, 238) that the concurrent successful run was almost certainly consuming at the same time -- both workflows call the same `consume_coloring_book_color_art.py --live` against the same `color-art-jobs.yaml` queue and the same single-worker render backend, but they carried *different* `concurrency.group` values (`coloring-book-color-artjobs` vs `conductor-color-art-events`), so GitHub Actions ran them fully in parallel instead of serializing them -- exactly the "second event" collision this note already worried about, just triggered by the pre-existing daily/push-triggered workflow rather than a second manually-dropped event. Fix: unified `process-color-art-events.yml`'s concurrency group to `coloring-book-color-artjobs` (matching monster-recast-art-jobs.yml) so GitHub Actions now queues one behind the other instead of running both against the render backend at once. The already-preserved event file `color-art-events/20260717T203500Z-monster-recast-batch-01.yaml` needs no manual edit -- it self-retries on the next hourly cron (`27 * * * *`) and should now succeed since it will no longer race the other workflow. Conductor-only change (`.github/workflows/process-color-art-events.yml`, one line); no kind_robots PR needed this cycle.
 
     Connector-backed Worker claim after confirming ai-art-academy/t-010 was concurrently claimed; next eligible active project in priority order.
+
+    Queue-maintenance cycle completed. The single canonical 18-image Monster Recast color event remains preserved and no duplicate was created; recorded verified state in projects/coloring-book/docs/t-022-20260718-batch-retry.md. Task-event push authentication was repaired in PR
   recurring: true
   claimed_by: claude-conductor-burst-20260717T2200Z
   claimed_at: '2026-07-17T22:11:05Z'
-  owner: worker
 - id: t-025
   milestone: m6
   title: Package and register Monster Recast book 1
