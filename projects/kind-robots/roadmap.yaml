@@ -1190,3 +1190,32 @@ tasks:
     claimed_by: claude-conductor-burst-20260718T141846Z-ciFollowup
     claimed_at: '2026-07-18T14:18:47Z'
     updated: '2026-07-18T14:30:32Z'
+
+  - id: t-039
+    milestone: m1
+    title: Make utils/scripts/create-component-json.mjs's folder/component sort collation-stable
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Kaizen from newsfeed/t-006 (kind_robots PR #425, 2026-07-18). Regenerating
+      public/components.json via this script (run implicitly by `nuxi prepare`'s
+      postinstall, i.e. every `npm run test`/`npm run dev`) in a fresh sandbox
+      checkout reorders several entries already committed on main -- e.g.
+      "builder-card-grid"/"builder-card" and "ami-link-butterflies"/"ami-link"
+      swap order -- purely from re-running `Array.prototype.sort`/`localeCompare`
+      in a different Node/ICU environment than whatever produced the currently
+      committed file. Separately (not this task's concern, but worth noting),
+      the committed file is also missing several real, currently-existing
+      components (packmaker-admin-panel, packmaker-pack-editor,
+      component-review-feed, component-test-fixture-cleanup,
+      wonderlab-preview-host, wonderlab-selection-router, user-manager-directory
+      reordering) -- it has simply drifted from a stale generation and needs a
+      full regenerate-and-commit pass from a canonical environment. Fix for
+      *this* task: make the sort deterministic across environments -- e.g. swap
+      `left.localeCompare(right)` for an explicit `left.localeCompare(right,
+      'en')` or a plain codepoint comparator (`left < right ? -1 : left > right
+      ? 1 : 0`) in buildLegacyFolders' two sort calls -- so future sessions
+      running the generator locally don't produce unrelated reordering noise in
+      their diffs.
