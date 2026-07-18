@@ -343,8 +343,8 @@ tasks:
   - id: t-015
     milestone: m3
     title: "Regenerate public/components.json from a canonical environment and stabilize its sort order"
-    status: ready
-    owner: null
+    status: claimed
+    owner: reviewer
     passes: 0
     stakes: reversible
     note: >
@@ -361,3 +361,6 @@ tasks:
       generator's sort explicit and collation-stable (e.g. localeCompare(b, 'en')
       or a plain codepoint sort) so future sessions don't have to hand-patch it to
       avoid unrelated churn.
+    claimed_by: claude-conductor-agent-run-20260718
+    claimed_at: '2026-07-18T19:19:26Z'
+    updated: '2026-07-18T19:19:26Z'
