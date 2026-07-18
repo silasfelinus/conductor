@@ -7,6 +7,11 @@ on:
     paths:
       - task-events/*.yaml
       - .github/workflows/process-task-events.yml
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
   pull_request_target:
     types:
       - closed
@@ -23,22 +28,27 @@ concurrency:
 
 jobs:
   process:
-    if: github.event_name != 'pull_request_target' || github.event.pull_request.merged == true
+    if: >-
+      (github.event_name != 'pull_request_target' || github.event.pull_request.merged == true) &&
+      (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository)
     runs-on: ubuntu-latest
     steps:
       - name: Check out current main
-        uses: actions/checkout@v4
-        with:
-          ref: main
-          fetch-depth: 0
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.12"
-
-      - name: Install YAML dependency
-        run: python -m pip install --disable-pip-version-check pyyaml
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -e
+          gh auth setup-git
+          git init --quiet .
+          git remote add origin "https://github.com/${GITHUB_REPOSITORY}.git"
+          git sparse-checkout init --no-cone
+          git sparse-checkout set --no-cone \
+            '/projects/*/roadmap.yaml' \
+            '/task-events/*.yaml' \
+            '/scripts/*.py' \
+            '/LEARNING.yaml'
+          git fetch --quiet --filter=blob:none --depth=2 origin main
+          git checkout --quiet -B main FETCH_HEAD
 
       # Process, validate, and commit are one step so a non-fast-forward push can
       # replay the whole thing against fresh origin/main instead of committing on a
@@ -49,30 +59,35 @@ jobs:
       - name: Process queued events and commit (one conflict retry)
         run: |
           set -e
+          python3 -m pip install --disable-pip-version-check --quiet pyyaml
           had_error=0
           max_attempts=2
+
+          git config user.name "conductor-task-events[bot]"
+          git config user.email "conductor-task-events[bot]@users.noreply.github.com"
+
+          echo "Queued events on current main:"
+          find task-events -maxdepth 1 -type f -name '*.yaml' -not -name 'example.yaml' -print | sort
 
           for attempt in $(seq 1 "$max_attempts"); do
             echo "Attempt ${attempt}/${max_attempts}: processing against $(git rev-parse HEAD)"
 
             had_error=0
-            python scripts/process_task_events.py || had_error=1
-            python scripts/validate_roadmaps.py
+            python3 scripts/process_task_events.py || had_error=1
+            python3 scripts/validate_roadmaps.py
 
             if git diff --quiet && git diff --cached --quiet; then
               echo "No changes to commit."
               break
             fi
 
-            git config user.name "conductor-task-events[bot]"
-            git config user.email "conductor-task-events[bot]@users.noreply.github.com"
             git add projects task-events LEARNING.yaml
             git commit -m "chore: process task events [skip ci]"
 
             # Fetch immediately before pushing so the fast-forward check is against
             # the freshest possible origin/main.
-            git fetch origin main
-            if git push origin HEAD:main; then
+            git fetch --quiet origin main
+            if git push --quiet origin HEAD:main; then
               echo "Pushed cleanly."
               break
             fi
