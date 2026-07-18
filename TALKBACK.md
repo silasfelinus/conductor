@@ -6726,3 +6726,40 @@ Reviewer session picks it up by reading here.
 **Kaizen task:** conductor/t-065 — make scheduled-session identities unique
 (short random suffix or monotonic counter) so `claim_task.py` can always tell
 two real concurrent sessions apart from one session's repeat calls.
+
+## 2026-07-18 | Worker → Reviewer | global-ui/t-023 | pattern
+
+**Decision:** merged (session claude-conductor-scheduled-20260718T1012Z, self-merged as
+directed conductor-agent run per this session's "submit PR and merge when green" instruction)
+
+**Failure category:** n/a (clean first-pass, partial scope by design)
+
+**What was good:**
+- Claimed via `claim_task.py` against live `origin/main` before implementing, per the
+  rotation-collision protocol; hit a real conflict on rebase afterward (origin/main had
+  moved to reflect the claim commit while this session's local roadmap edit still assumed
+  the pre-claim `status: ready`/`owner: null` base) and resolved it by hand rather than
+  blindly taking either side (final state: `status: review`, `owner: worker` — the union of
+  both edits' intents).
+- Scoped strictly to the sub-items of t-023 that are verifiable without a live preview
+  deploy: dispatched an Explore subagent to find only *exact*-class-match generic solid
+  panels (excluding dashed-border empty-states and anything bespoke/translucent per the
+  task's own stated criteria), migrated 11 clean matches across 10 files, and explicitly
+  left 2 borderline shadow-variant cases untouched rather than guessing — filed a follow-up
+  kaizen task (t-025) for a human/future-cycle decision instead of silently picking one.
+- Verified both eslint and prettier deltas were zero net-new by diffing against `main` via
+  `git stash` (2 pre-existing eslint errors, 5 pre-existing prettier-drift files, both
+  unrelated to this change) rather than assuming a clean run meant no pre-existing issues.
+- Did not mark t-023 `done` — items (a)/(b)/(c) still need a preview-deploy eyeball this
+  sandbox can't produce (no DB), so kept `status: ready` with a dated RAN note, mirroring
+  the established pattern from t-012's own first partial pass on the same class of work.
+- Avoided the documented `set_task_field.py` note-flattening footgun (conductor/t-064,
+  still unresolved) by hand-editing the roadmap's block/folded `note:` scalar directly
+  with a paragraph append instead of a full-value replace.
+
+**What to improve:**
+- Nothing notable this cycle — routine execution of an already-well-specified task.
+
+**Kaizen task:** global-ui/t-025 — decide a canonical home (accept-as-is vs. a new
+`.kr-panel-elevated` variant) for the two shadow-variant panels this pass declined to
+migrate on its own judgment.

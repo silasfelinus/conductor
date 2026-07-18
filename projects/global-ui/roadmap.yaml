@@ -492,8 +492,8 @@ tasks:
 - id: t-023
   milestone: m5
   title: Preview-driven pass on the deferred kr-* surfaces (art callouts, /30-no-text notices, generic solid panels, code-library maps)
-  status: review
-  owner: worker
+  status: ready
+  owner: null
   passes: 0
   stakes: reversible
   note: >
@@ -510,6 +510,31 @@ tasks:
     (text-{status}-content -> text-{status} is a real color change). Each needs a
     preview-deploy eyeball per surface since the sandbox has no DB. Small reversible passes,
     screenshot /ui + the touched views.
+
+    RAN 2026-07-18 (~10:12 UTC, conductor-scheduled session, claude-conductor-scheduled-20260718T1012Z):
+    landed item (d), the generic-solid-panel migration, plus resolved item (e) as moot.
+    An Explore subagent scanned components/**/*.vue and pages/**/*.vue for elements whose
+    class list was an exact match (modulo extra layout/text utilities) to .kr-panel's
+    `rounded-2xl border border-base-300 bg-base-100 p-6` or .kr-panel-muted's
+    `bg-base-200` variant, excluding border-dashed empty-states and bespoke/translucent
+    surfaces per this task's own criteria. Found 11 clean exact matches across 10 files
+    (art-manager.vue, academy-manager.vue, pages/[...slug].vue x2, art-interact.vue,
+    user-galleries.vue, user-panel.vue, bot-gallery.vue, character-gallery.vue,
+    reward-gallery.vue, lab-interact.vue) and migrated them; left 2 borderline cases
+    untouched (art-reactions.vue and builder-manager.vue's modal card both carry a
+    shadow-lg/shadow-xl variant instead of kr-panel's plain shadow-sm -- flagged in the PR
+    as a follow-up decision rather than silently deciding for Silas) and 1 confirmed-bespoke
+    exclusion (butterfly-demo.vue, custom butterfly-card class). Item (e) turned out moot:
+    code-library.vue lives in abandonware/, not live code (superseded by a recent migration
+    per PR #388's notes), so there is no computed class map to change. Verified via eslint
+    (2 pre-existing errors on both main and this branch, confirmed unrelated via git stash),
+    prettier --check (5 pre-existing failures on both main and this branch, same method),
+    and full-project `npm run test` (vue-tsc --noEmit) exit 0. kind_robots PR #398 (branch
+    claude/vigilant-edison-8b8pkt): all 3 CI checks green (TypeScript, Contract verifiers,
+    GitGuardian), no review comments, merged squash 9d2c7f4. Items (a), (b), (c) remain
+    genuinely deferred -- each needs a preview-deploy eyeball this sandbox can't do (no DB)
+    -- so kept `status: ready` rather than `done`, same pattern t-012 used for its own
+    partial first pass.
   claimed_by: claude-conductor-scheduled-20260718T1012Z
   claimed_at: '2026-07-18T10:12:09Z'
   updated: '2026-07-18T10:12:09Z'
@@ -554,6 +579,27 @@ tasks:
   claimed_by: claude-conductor-burst-20260718-t024
   claimed_at: '2026-07-18T03:12:23Z'
   updated: '2026-07-18T03:12:23Z'
+- id: t-025
+  milestone: m5
+  title: Decide a home for shadow-variant panels found during t-023's generic-solid-panel pass
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  updated: '2026-07-18T10:12:09Z'
+  note: >
+    Kaizen from t-023 (kind_robots PR #398, 2026-07-18). While migrating exact-match
+    generic solid panels onto .kr-panel/.kr-panel-muted, found two surfaces that match
+    the base 4 classes (rounded-2xl border border-base-300 bg-base-{100,200} p-6) but
+    carry an intentional shadow variant instead of kr-panel's plain shadow-sm:
+    components/art/art-reactions.vue (shadow-lg on its root panel) and
+    components/builder/builder-manager.vue's "Clear this builder?" confirmation-modal
+    card (shadow-xl, inside a bespoke fixed-inset modal scrim). Left both untouched
+    rather than guess. Decide either: (a) accept the shadow difference is cosmetic
+    and migrate both onto kr-panel/kr-panel-muted anyway, or (b) add a
+    .kr-panel-elevated (or similar) variant with a heavier shadow for modal/elevated
+    contexts so these have a canonical home instead of staying hand-written
+    indefinitely. Small, reversible either way.
 milestones:
 - id: m1
   title: Task language + presentation model
