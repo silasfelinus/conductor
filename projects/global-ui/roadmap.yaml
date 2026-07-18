@@ -492,7 +492,7 @@ tasks:
 - id: t-023
   milestone: m5
   title: Preview-driven pass on the deferred kr-* surfaces (art callouts, /30-no-text notices, generic solid panels, code-library maps)
-  status: review
+  status: ready
   owner: reviewer
   passes: 0
   stakes: reversible
@@ -570,9 +570,36 @@ tasks:
     Item (a) has one exact-match site left completely untouched by either pass (none found
     this cycle beyond the 4 above); items (b) and (c) still genuinely open. Kept
     `status: ready`.
-  claimed_by: claude-conductor-burst-20260718T200645Z
-  claimed_at: '2026-07-18T20:06:45Z'
-  updated: '2026-07-18T20:06:45Z'
+
+    RAN 2026-07-18 (~20:06 UTC, conductor-burst rotation, claude-conductor-burst-20260718T200645Z):
+    closed out the remaining item (a)/(b) ambiguities with static, checkable reasoning instead of
+    guessing at a live preview. Fixed real drift on artjob-manager.vue's job.error banner
+    (border-error/30, not the canonical /40, while already carrying text-error) onto
+    `kr-note kr-note-error p-2 text-xs font-normal` -- the established dense-chip recipe, zero
+    new colors introduced. Left three sites explicitly decided rather than silently skipped:
+    (1) artjob-manager.vue's adjacent retry-mode info notice has no text color at all today;
+    migrating would add a new text-info that hasn't been there before, the same
+    no-text-color ambiguity item (b) already flags, so left for a real preview-driven decision;
+    (2) stylist-relay-status.vue:118-126's "Silent-stall risk" warning pill already carries the
+    exact canonical border-warning/40 bg-warning/10 text-warning trio -- no drift to fix -- and
+    its rounded-xl/text-[11px] shape would need overrides beyond the established recipe for zero
+    visual gain, so left as bespoke per this task's own "or leave as-is" allowance for dense
+    chips; (3) composition-interact.vue (item (b)'s other named candidate) lives under
+    abandonware/, excluded from both Nuxt component discovery (nuxt.config.ts) and the TS build
+    (tsconfig.json) -- dead code, moot like code-library.vue was. Item (c) (stage-manager pills)
+    was already resolved as "skip, not inline notes" from this task's original framing. Verified:
+    eslint clean, prettier --check clean (one formatting nit from the edit fixed via
+    prettier --write), full `npm run test` (vue-tsc --noEmit) exit 0 via conductor's
+    provision_kind_robots_deps.sh. kind_robots PR #438 (branch claude/keen-fermat-wjo2bc): all 3
+    CI checks green (TypeScript, Contract verifiers, GitGuardian), no review comments, merged
+    squash d248cf3. Every deferred sub-item this task was tracking now has an explicit,
+    documented decision; the only thing still open (the two no-text-color notices) is a genuine
+    Silas visual-preference call, not something more digging resolves -- kept `status: ready`
+    rather than `needs-human` since it's a small aesthetic choice, not a blocker, matching how
+    prior cycles on this task have treated it.
+  claimed_by: null
+  claimed_at: null
+  updated: '2026-07-18T20:24:00Z'
 - id: t-024
   milestone: m5
   title: Guard the misleading done/totalTasks fallback in conductor-overview-gallery-page.vue's itemFromProjectRecord()
