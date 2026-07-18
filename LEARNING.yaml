@@ -3310,3 +3310,13 @@ records:
   outcome: done
   failure_category: null
   lesson: "Deleting a stale one-shot workflow file that references a since-merged branch/script cleared a required 'Contract verifiers' CI check that was red on every kind_robots PR regardless of diff -- worth grepping for other one-shot workflows with a 'delete after X lands' trailing comment where X has already landed, since they silently keep failing verifyWorkflowPaths.ts forever otherwise."
+
+- date: 2026-07-18
+  project: newsfeed
+  task: t-006
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "Regenerating public/components.json via its own generator script (utils/scripts/create-component-json.mjs, run implicitly by nuxi prepare) in this sandbox reorders unrelated existing entries and adds real components missing from the committed file -- looks like environment-dependent Array.sort/localeCompare collation, or the committed file has just drifted. Hand-patching only the new folder entries kept the diff scoped; worth a follow-up task to make the generator's sort collation-stable (e.g. explicit localeCompare(b, 'en') or plain codepoint compare) so future sessions don't have to work around it."
