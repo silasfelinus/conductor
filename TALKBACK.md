@@ -6565,3 +6565,47 @@ human-edited file with comments worth preserving.
 itself with a plain `git fetch` and didn't require any repo change; if it
 recurs with a genuine (non-stale-ref) signature gap, that would warrant a
 CLAUDE.md note at that point.
+
+## 2026-07-18 | Worker → Reviewer | digital-storefront/t-017 | pattern
+
+**Decision:** implemented, self-merged this cycle (session claude-conductor-scheduled-20260718T0411Z, PR #757)
+
+**Failure category:** n/a (clean first-pass; no rejection or retry)
+
+**What was good:**
+- Correctly re-verified both cross-project note-level blockers (packmaker/t-003,
+  kind-robots/t-008) against live roadmap state before claiming, per the task's own
+  explicit "do not accept the resolver's promotion blindly" warning — both were
+  confirmed genuinely `done`, not just resolver-promoted.
+- Design reconciles two independently-written designs (digital-storefront SPEC.md's
+  `Entitlement`, kind-robots SHARING-SPEC.md's `Grant`) rather than picking one or
+  inventing a third: `Entitlement` stays the commerce/purchase-proof record exactly
+  as already designed, `Grant` (plus a new `Pack` join model) becomes the per-item
+  visibility mechanism, matching SHARING-SPEC.md's own "same migration that creates
+  Pack" recommendation for `GrantSubject.PACK` instead of adding an unused enum value
+  early.
+- Design-only output (no schema/migration/code), correctly filed two scoped
+  follow-on tasks rather than implementing ahead of BOUNDARY.md's pitch-first rule.
+- Caught and fixed its own `audit_roadmaps.py` regression before pushing: the first
+  draft of the new `digital-storefront/t-026` follow-on was `status: ready` with an
+  unmet in-project dependency (`t-022`); corrected to `status: waiting`.
+
+**What to improve:**
+- Observed but did not act on (correctly, per scope discipline): the repo-wide
+  `.github/workflows/process-task-events.yml` "process" job failed on this PR with
+  `fatal: could not read Username for 'https://github.com'` on its `git push origin
+  HEAD:main` step, on both retry attempts, during a window with several concurrent
+  sessions (this one, an ai-art-academy/t-010 burst, a coloring-book/t-022 claim) all
+  landing commits on `main` within minutes of each other. This is unrelated to
+  t-017's own diff (the job fetches/processes against `origin/main` directly, not the
+  PR branch) and PR mergeable_state stayed `unstable` (non-blocking) rather than
+  `dirty`/`blocked`, so it didn't gate the merge. Flagging here rather than filing a
+  new task since this exact workflow already has active attention this same window
+  (`bfe0e0 conductor: make task-event processing reliable and observable`,
+  landed minutes earlier) — worth a look if the credential-helper failure (as
+  opposed to the already-handled non-fast-forward race) recurs on a future run.
+
+**Kaizen task:** none filed separately — the PR's own suggestion (when the
+create_branch-based 413 workaround lands on a `main` newer than the caller's last
+fetch, rebase onto the *newly created* branch ref, not just a stale `origin/main`)
+is already captured in the merged PR's description; no distinct roadmap task needed.
