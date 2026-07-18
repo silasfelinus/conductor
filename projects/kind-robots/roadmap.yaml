@@ -1123,29 +1123,29 @@ tasks:
   - id: t-037
     milestone: m4
     title: 'Pitch: Pack model + packId FK + GrantSubject.PACK migration for DLC unlocks'
-    status: claimed
+    status: needs-human
     owner: worker
     passes: 0
     stakes: reversible
     note: >
-      Filed 2026-07-18 (digital-storefront/t-017's design close,
-      projects/digital-storefront/docs/dlc-unlock-design.md). Builds directly
-      on this project's own SHARING-SPEC.md (t-008), which already designed
-      `Grant` but deliberately left `GrantSubject.PACK` unadded, recommending
-      it land "in the same migration that creates Pack." Per BOUNDARY.md,
-      write and file the actual pitch in conductor/pitches/ before any schema
-      change: add a `Pack` model (`id`, `slug`, `title`, `ownerId`), add a
-      nullable `packId` FK to `Dream`/`Facet`/`Character`/`Reward` (default
-      null, zero effect on existing rows), add `GrantSubject.PACK` to the
-      enum, and extend the shared content-access helper (`canView()`, per
-      SHARING-SPEC.md) to treat an active `Grant` (`subjectType: PACK`,
-      `subjectId: packId`) as sufficient visibility for pack-tagged content —
-      replacing packmaker SPEC.md §4's interim all-or-nothing `isPublic`
-      switch for `dlc`-hook packs specifically (non-DLC packs keep the
-      existing release-flip behavior unchanged). Depends on packmaker/t-004
-      (admin generator) having produced at least one pack worth migrating
-      for, so this doesn't land schema nobody uses yet. Unblocks
-      digital-storefront/t-026 (webhook DLC fulfillment).
+      FOR SILAS: Pitch written and filed at
+      pitches/2026-07-18-pack-model-dlc-unlocks.md — a Pack model + packId FK
+      (on Dream/Facet/Character/Reward) + GrantSubject.PACK enum value, one
+      additive migration, unlocking per-buyer visibility for packmaker's two
+      DLC packs (currently stuck at isPublic:false for everyone since t-004).
+      Builds on projects/digital-storefront/docs/dlc-unlock-design.md and
+      this project's own SHARING-SPEC.md (t-008), which deliberately left
+      GrantSubject.PACK unadded pending this pitch.
+      TO APPROVE: read the pitch, especially its 3 open questions (migration
+      sequencing vs. the still-pending 2026-07-17-sharing-grant-model.md
+      pitch; Pack.ownerId for house-owned DLC packs; whether refund should
+      auto-revoke the paired Grant). Set the pitch's `status:` to `approved`
+      or `rejected` in the file, and set this task to `status: done` (or
+      `status: ready` with a note if you want changes first).
+      What unblocks: the actual kind_robots migration (a new implementation
+      task, not filed yet — filed once you approve so it reflects any answers
+      to the open questions above), which in turn unblocks
+      digital-storefront's DLC-fulfillment webhook follow-on.
     claimed_by: claude-conductor-scheduled-20260718T0510Z
     claimed_at: '2026-07-18T05:13:46Z'
-    updated: '2026-07-18T05:13:46Z'
+    updated: '2026-07-18T05:14:53Z'
