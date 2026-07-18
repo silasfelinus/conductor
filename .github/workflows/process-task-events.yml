@@ -40,7 +40,7 @@ jobs:
           set -e
           gh auth setup-git
           git init --quiet .
-          git remote add origin "https://github.com/${GITHUB_REPOSITORY}.git"
+          git remote add origin "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
           git sparse-checkout init --no-cone
           git sparse-checkout set --no-cone \
             '/projects/*/roadmap.yaml' \
