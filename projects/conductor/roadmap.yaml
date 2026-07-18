@@ -1833,3 +1833,43 @@ tasks:
       counter, not just a to-the-minute timestamp) so `claim_task.py` can
       always distinguish two real concurrent sessions from one session's
       repeat calls.
+
+  - id: t-066
+    milestone: m2
+    title: A background subagent delegated a file push, then completed after the dispatching session had already pushed further changes to the same file directly, overwriting them
+    status: ready
+    passes: 0
+    stakes: reversible
+    note: >
+      Observed 2026-07-18 (kind-robots/t-038 burst-mode cycle). Hit conductor's
+      documented HTTP 413 push failure on this session's own designated
+      branch and delegated the documented `push_files` MCP workaround to a
+      background subagent, handing it the file content as it stood at that
+      moment. Before the subagent returned, this session found and used a
+      faster/different fix directly in the foreground (`create_branch` +
+      rebase + normal `git push`) and kept committing further changes to the
+      SAME file on top of that (a status flip from `review` to `done` plus a
+      completion note). The background subagent, with no way to know its
+      task had been superseded, eventually finished and pushed its own
+      `push_files` commit built from the STALE content it was dispatched
+      with -- landing on top of the branch tip and silently reverting the
+      file back to the earlier `status: review` state, dropping both later
+      edits. Caught immediately via the task-completion notification,
+      refetched `origin/<branch>`, and reapplied the dropped edits, so no
+      permanent loss -- but it cost an extra round-trip and could easily go
+      unnoticed for a subagent whose output isn't re-read afterward. This is
+      a real write race, not just wasted work: a background subagent
+      operating on a file the dispatching session is concurrently editing
+      can clobber later commits even within a single session with no other
+      human or agent involved. Fix ideas (pick one or combine): (a) when a
+      workaround is resolved in the foreground while a delegated subagent
+      for the same fix is still in flight, explicitly cancel/ignore that
+      subagent's eventual result rather than letting it complete and push
+      unsupervised; (b) never delegate a git-state-mutating workaround
+      (push_files, create_branch, etc.) to a background subagent for a
+      problem already being actively fixed inline -- reserve background
+      delegation for genuinely independent work; (c) if delegation is
+      unavoidable, have the subagent re-fetch and diff against the CURRENT
+      remote tip immediately before its push (not just use content handed
+      to it at dispatch time), so a stale push_files call fails loudly on
+      an unexpected base instead of silently overwriting newer commits.

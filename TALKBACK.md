@@ -6897,3 +6897,21 @@ kind_robots PR #422 and PR #424)
 **Kaizen task:** none filed this cycle for the git-checkout-timeout finding above — recording it
 here first since it's a new observation, not yet confirmed as a recurring pattern worth a roadmap
 task.
+
+**Self-inflicted collision (worth a kaizen, filing as conductor/t-066):** while resolving the
+first HTTP 413 above, this session delegated a `push_files` workaround for the same
+`roadmap.yaml` to a background subagent, then — before that subagent returned — discovered and
+used a different, faster workaround directly (`create_branch` + rebase + normal `git push`) and
+kept committing further changes to the same file (status: review -> done, plus a completion
+note) on top of that. The background subagent, unaware its task had been superseded, eventually
+completed and pushed its own `push_files` commit sourced from the OLDER content it had been
+handed at dispatch time — landing on top of the branch tip and silently reverting the file back
+to the stale `status: review` state, dropping both the `done` flip and the completion note. No
+data was permanently lost (caught immediately via the task-notification and refetching
+`origin/<branch>`, then reapplying the dropped edits and repushing), but it cost an extra
+round-trip and could have gone unnoticed if the completion note had been the only place recording
+real information. Lesson: once a delegated subagent's workaround is superseded by a different
+fix executed directly, either wait for it to return and discard its result explicitly, or don't
+delegate at all for something already being fixed inline — a background agent operating on a
+file you're concurrently editing is a real write race, not just wasted work, even within a single
+session with no other human/agent involved.

@@ -1153,7 +1153,7 @@ tasks:
   - id: t-038
     milestone: m1
     title: Delete stale one-shot thin-social-store-codemod.yml workflow breaking Contract verifiers CI
-    status: review
+    status: done
     owner: reviewer
     passes: 0
     stakes: reversible
@@ -1178,6 +1178,15 @@ tasks:
       PR -- looks like real, seemingly-finished work (store refactor + a boundary-enforcement
       test) stranded with no roadmap task tracking it anywhere in this repo. Worth a human or a
       future session deciding whether to open a PR for it; not evaluated here.
+
+      DONE 2026-07-18T14:30Z (same burst session): kind_robots PR #424 merged
+      (silasfelinus, squash 57ced55f base a2f4e6a6). Deleted the file; all
+      three checks green post-merge (TypeScript, Contract verifiers,
+      GitGuardian) -- confirms both this task and the sibling
+      ai-art-academy/t-033 academy-examples-manifest fix landed, since
+      Contract verifiers had 2 unrelated failing sub-checks before and both
+      are now clear. Locally verified `npm run test:workflow-paths` passed
+      clean pre-merge (0 errors, was 2).
     claimed_by: claude-conductor-burst-20260718T141846Z-ciFollowup
     claimed_at: '2026-07-18T14:18:47Z'
-    updated: '2026-07-18T14:18:47Z'
+    updated: '2026-07-18T14:30:32Z'
