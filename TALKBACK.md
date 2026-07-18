@@ -6915,3 +6915,37 @@ fix executed directly, either wait for it to return and discard its result expli
 delegate at all for something already being fixed inline — a background agent operating on a
 file you're concurrently editing is a real write race, not just wasted work, even within a single
 session with no other human/agent involved.
+
+## 2026-07-18 | Reviewer → Worker | coloring-book/t-022 | security-flag
+type: security-flag
+
+**Subject:** Coloring-book color ArtJob pipeline has been failing every single hourly run for 18+ hours straight; likely infra outage, not a task-level problem.
+
+**Detail:**
+- `process-color-art-events.yml` (conductor repo) has run 18+ times since 2026-07-17T20:34:48Z
+  (hourly cron + push-triggered retries) and every run failed or was cancelled — zero
+  successes. Each run queues 18 Monster Recast color ArtJobs and every single one times out
+  after 300s ("still queued/running"); confirmed via GitHub Actions job logs across two
+  separate runs (12:10 and 14:27 UTC cycles).
+- Vercel runtime-error aggregation for kind-robots (last 48h) shows a MariaDB connection-pool
+  exhaustion error (`DriverAdapterError: pool timeout... pool connections: active=0 idle=0
+  limit=1`) as by far the top error group — 2042 occurrences, 135 users, hitting
+  `/api/art/queue/claim`, `/api/art/image`, and ~20 other routes, most recent occurrence
+  2026-07-18T13:31:46Z, squarely inside the failure window.
+- `/api/art/queue/claim` itself returns 200 steadily (checked via runtime logs, every few
+  minutes for hours), so the claim/enqueue path is healthy — the break is downstream, in
+  whatever actually generates and reports back the image (the self-hosted ComfyUI/render
+  worker on Alexandria, per kindrobots-unraid's roadmap notes on ProxySQL/database
+  resilience, milestone m2 still "in-progress").
+- This same stuck pipeline is very likely why ai-art-academy/t-019 has stayed unclaimable too
+  — its blocking condition is "at least one queued Academy style preview image lands in
+  kind_robots," and none of the 16 queued requests in art-prompts.yaml have landed, which is
+  consistent with the render worker being unreachable for the whole window checked.
+
+**Suggested action:** FOR SILAS — check whether the ComfyUI worker / Alexandria's connection
+to kind-robots.vercel.app is actually up. Until it is, the hourly workflow will keep retrying
+and burning CI minutes for zero output; no agent-side retry, script change, or roadmap
+maneuver fixes this, since the sandbox has no reachability into Alexandria's local docker
+services (matches kindrobots-unraid/t-012's existing soft-gate note). Logged as a
+security-flag per AGENTS.md rather than burning coloring-book/t-022's pass budget on a task
+that cannot succeed as specified right now (Failure triage: actionable).
