@@ -1805,38 +1805,17 @@ tasks:
   - id: t-065
     milestone: m2
     title: Two concurrent scheduled sessions computed the identical session id, defeating claim_task.py collision detection
-    status: claimed
+    status: review
     passes: 0
     stakes: reversible
     note: >
-      Observed 2026-07-18: two concurrent conductor sessions both independently
-      claimed and ran a full ai-art-academy/t-010 cycle (a recurring task) at
-      essentially the same time, using the LITERAL SAME session identity string
-      `claude-conductor-scheduled-20260718T0705Z` (visible in both cycles'
-      `claimed_by`/RAN-entry text; presumably the scheduler names sessions by
-      truncating to the minute, and two triggers landed in the same minute).
-      This time the collision resolved harmlessly by luck: one session did
-      option (a) front-end polish (kind_robots PR #387) and the other did
-      option (d) curriculum-coverage docs, and their roadmap.yaml note edits
-      happened to land in different parts of the same block-literal `note`
-      field, so `git rebase`/merge combined both without a real conflict. But
-      `claim_task.py`'s collision check almost certainly compares the
-      incoming `--session` value against the existing `claimed_by` field --
-      if both sessions present the identical identity, the second claim looks
-      like "the same session re-confirming its own claim" rather than a
-      genuine second claimant, which is exactly the gap t-040 (2026-07-14)
-      was meant to close. A future collision on a task whose two independent
-      diffs touch the *same* lines (e.g. both editing `status:` or the same
-      note paragraph) would not resolve as cleanly. Fix: make session
-      identities actually unique across concurrent triggers of the same
-      scheduled task (e.g. append a short random suffix or a monotonic
-      counter, not just a to-the-minute timestamp) so `claim_task.py` can
-      always distinguish two real concurrent sessions from one session's
-      repeat calls.
+      Observed 2026-07-18: two concurrent conductor sessions both independently claimed and ran a full ai-art-academy/t-010 cycle (a recurring task) at essentially the same time, using the LITERAL SAME session identity string `claude-conductor-scheduled-20260718T0705Z` (visible in both cycles' `claimed_by`/RAN-entry text; presumably the scheduler names sessions by truncating to the minute, and two triggers landed in the same minute). This time the collision resolved harmlessly by luck: one session did option (a) front-end polish (kind_robots PR #387) and the other did option (d) curriculum-coverage docs, and their roadmap.yaml note edits happened to land in different parts of the same block-literal `note` field, so `git rebase`/merge combined both without a real conflict. But `claim_task.py`'s collision check almost certainly compares the incoming `--session` value against the existing `claimed_by` field -- if both sessions present the identical identity, the second claim looks like "the same session re-confirming its own claim" rather than a genuine second claimant, which is exactly the gap t-040 (2026-07-14) was meant to close. A future collision on a task whose two independent diffs touch the *same* lines (e.g. both editing `status:` or the same note paragraph) would not resolve as cleanly. Fix: make session identities actually unique across concurrent triggers of the same scheduled task (e.g. append a short random suffix or a monotonic counter, not just a to-the-minute timestamp) so `claim_task.py` can always distinguish two real concurrent sessions from one session's repeat calls.
+
+      RAN 2026-07-18 (~23:20 UTC, conductor-burst-hourly rotation, claude-conductor-burst-20260718T230803Z): traced the actual claim mechanism instead of extending the speculation. `roadmap_claims.task_is_claimable()` -- the sole function claim_task.py's `check_claimable()` consults -- decides claimability purely from the task's `status` and `claimed_at` read off `origin/main`; it never compares the incoming `--session` value against the existing `claimed_by` field. So a second caller presenting the IDENTICAL session string as an already-landed claim is rejected exactly like any other second claimant (status is `claimed` and not stale) -- there is no special-case path where matching claimed_by is treated as "the same session re-confirming its own claim." Added test_identical_session_string_does_not_bypass_collision_check to tests/test_claim_task.py to lock this guarantee in as a regression test (full suite: 361 passed, 1 skipped). This means the specific mechanism this note speculated about is not a gap in claim_task.py itself. The real explanation for the observed 2026-07-18 collision is almost certainly that ai-art-academy/t-010 is a recurring task: per AGENTS.md's recurring-task rule, its status flips back to `ready` immediately after each cycle (not held at `claimed`/`review` like a normal task), so two triggers landing minutes apart can each legitimately claim, run, and re-arm the SAME recurring task in quick succession -- that's the intended re-entrant design for recurring tasks, not a collision bug. The remaining actionable idea from this note (unique-per-invocation session identities, e.g. a random/monotonic suffix on scheduler-assigned session ids) is still a reasonable defense-in-depth / audit-readability improvement, but it isn't fixing a proven vote-splitting defect -- punting that as a genuine UX nice-to-have rather than implementing a session-id-format change speculatively, since it would touch how every scheduled session is named (outside this repo's control) for marginal benefit over the now-verified git-plumbing guarantee.
     owner: reviewer
     claimed_by: claude-conductor-burst-20260718T230803Z
     claimed_at: '2026-07-18T23:12:03Z'
-    updated: '2026-07-18T23:12:03Z'
+    updated: '2026-07-18T23:15:16Z'
 
   - id: t-066
     milestone: m2

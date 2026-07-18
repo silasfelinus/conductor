@@ -135,3 +135,20 @@ def test_second_session_cannot_claim_after_first_lands(demo_repo):
     with pytest.raises(ct.ClaimError) as excinfo:
         ct.claim("demo", "t-001", "reviewer", "session-b", dry_run=False)
     assert excinfo.value.code == 3
+
+
+def test_identical_session_string_does_not_bypass_collision_check(demo_repo):
+    """Regression test for conductor/t-065: two concurrent triggers can end up with
+    the identical --session identity (e.g. a scheduler naming sessions to the
+    minute). Collision detection must be keyed on repo/ref state (status,
+    claimed_at), never on comparing claimed_by against the incoming --session --
+    so a second caller presenting the SAME session string as an already-landed
+    claim is rejected exactly like any other second claimant, not treated as
+    "the same session re-confirming its own claim"."""
+    same_session = "claude-conductor-scheduled-20260718T0705Z"
+    ct.claim("demo", "t-001", "worker", same_session, dry_run=False)
+
+    with pytest.raises(ct.ClaimError) as excinfo:
+        ct.claim("demo", "t-001", "worker", same_session, dry_run=False)
+    assert excinfo.value.code == 3
+    assert "ALREADY_CLAIMED" in str(excinfo.value)
