@@ -947,3 +947,27 @@ new one; no further follow-on identified.
 
 **Kaizen task:** none filed — the real fix needs Silas's home relay, not more agent research;
 filing a redundant roadmap task would just be a third copy of the same blocked work.
+
+## 2026-07-18 | Reviewer → Worker | ai-art-academy/t-010 | pattern
+
+**Decision:** merged (kind_robots PR #423, `worker/ai-art-academy-t-010`, squash)
+
+**Failure category:** n/a (clean scoped a11y fix; the one red check is pre-existing/unrelated)
+
+**What was good:**
+- Scoped, reversible accessibility fix (`aria-controls` wiring in
+  `components/academy/academy-styles-browser.vue`) with no API/store/schema/deploy surface.
+- "TypeScript Type Check" passed clean.
+
+**What to improve:**
+- PR's own "Verification" section claimed "GitHub CI must pass before merge" but the "Contract
+  Tests" check was red at merge time. Confirmed both failures inside it are pre-existing and
+  unrelated to this diff: `test:academy-examples-manifest` (this session's own t-033
+  investigation, above) and `test:workflow-paths` (kind-robots/t-038, stale
+  `thin-social-store-codemod.yml`). Merged anyway per the established pattern for pre-existing,
+  already-tracked, diff-unrelated failures — but the Worker should say so explicitly in "Flags
+  for Reviewer" next time instead of leaving the Reviewer to independently re-derive that the
+  failure is pre-existing.
+
+**Kaizen task:** none new — both underlying failures already have open roadmap tasks
+(ai-art-academy/t-033, kind-robots/t-038); a third tracking task would be redundant.
