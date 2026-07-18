@@ -140,6 +140,17 @@ tasks:
     (media-entries.json), and SCHEMA-PROPOSAL.md needs the 5 MediaType
     additions + releaseYear/issueRange fields before any kind_robots
     MediaEntry model pitch.
+
+    UPDATE 2026-07-17 (same session): Silas supplied the missing 2021 year
+    as media_2021.md. Importer extended to multi-file sources (media_list.md
+    + any media_*.md supplements — future years can be dropped in the same
+    way), plus two new tokens 2021 introduced: "x2" rewatch markers (new
+    rewatch field, per BROWSE-UX's wishlist) and approximate days like
+    "7/1x" (month kept, day null, dateRaw preserved). 2021 validates
+    perfectly: all five declared section counts match parsed exactly
+    (68 movies / 23 TV / 1 game / 62 comic issues / 3 books). Total corpus
+    now 2440 entries across 12 years; only 2023 remains absent (Silas's
+    documented gap year). Entries now carry sourceFile.
 - id: t-006
   milestone: m3
   title: Polish and upgrade Media Watchlist front-end surface
