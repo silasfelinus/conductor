@@ -81,3 +81,29 @@ detection may or may not collapse this back to the true incremental diff, so che
 `additions`/`changed_files` on the created PR before assuming it duplicated
 already-merged work; if it looks right (matches only your new commit's actual
 diff), it's safe to merge as normal.
+
+### Don't delegate an in-flight git workaround to a background subagent
+
+If you dispatch a background subagent to run the `push_files` (or any other
+git-state-mutating) workaround above, and then — before it returns — resolve the
+same push in the foreground by a different route (e.g. `create_branch` + rebase +
+`git push`), the background subagent has no way to learn its task was superseded.
+It will still finish, using the file content it was handed at dispatch time, and
+push that stale snapshot on top of whatever the foreground already landed —
+silently reverting any commits the foreground made after dispatching it. This is a
+real write race, not just wasted work: it can clobber later commits even within a
+single session with no other human or agent involved (observed 2026-07-18,
+conductor/t-066: a foreground `status: review → done` flip plus a completion note
+were dropped this way; caught via the task-completion notification and reapplied,
+so no permanent loss, but it cost an extra round-trip and could easily go
+unnoticed for a subagent whose output isn't re-read afterward).
+
+Rule: never delegate a git-state-mutating workaround (`push_files`, `create_branch`,
+force-push, etc.) to a background subagent for a problem you are actively fixing
+inline. Background delegation is for genuinely independent work — if you're already
+solving it in the foreground, either wait for the subagent's result before doing
+anything else to that branch, or cancel/ignore its eventual output once your
+foreground fix lands. If delegation is truly unavoidable, have the subagent re-fetch
+and diff against the *current* remote tip immediately before it pushes (not just use
+the content it was handed at dispatch time), so a stale call fails loudly on an
+unexpected base instead of silently overwriting newer commits.

@@ -1837,42 +1837,13 @@ tasks:
   - id: t-066
     milestone: m2
     title: A background subagent delegated a file push, then completed after the dispatching session had already pushed further changes to the same file directly, overwriting them
-    status: claimed
+    status: review
     passes: 0
     stakes: reversible
     note: >
-      Observed 2026-07-18 (kind-robots/t-038 burst-mode cycle). Hit conductor's
-      documented HTTP 413 push failure on this session's own designated
-      branch and delegated the documented `push_files` MCP workaround to a
-      background subagent, handing it the file content as it stood at that
-      moment. Before the subagent returned, this session found and used a
-      faster/different fix directly in the foreground (`create_branch` +
-      rebase + normal `git push`) and kept committing further changes to the
-      SAME file on top of that (a status flip from `review` to `done` plus a
-      completion note). The background subagent, with no way to know its
-      task had been superseded, eventually finished and pushed its own
-      `push_files` commit built from the STALE content it was dispatched
-      with -- landing on top of the branch tip and silently reverting the
-      file back to the earlier `status: review` state, dropping both later
-      edits. Caught immediately via the task-completion notification,
-      refetched `origin/<branch>`, and reapplied the dropped edits, so no
-      permanent loss -- but it cost an extra round-trip and could easily go
-      unnoticed for a subagent whose output isn't re-read afterward. This is
-      a real write race, not just wasted work: a background subagent
-      operating on a file the dispatching session is concurrently editing
-      can clobber later commits even within a single session with no other
-      human or agent involved. Fix ideas (pick one or combine): (a) when a
-      workaround is resolved in the foreground while a delegated subagent
-      for the same fix is still in flight, explicitly cancel/ignore that
-      subagent's eventual result rather than letting it complete and push
-      unsupervised; (b) never delegate a git-state-mutating workaround
-      (push_files, create_branch, etc.) to a background subagent for a
-      problem already being actively fixed inline -- reserve background
-      delegation for genuinely independent work; (c) if delegation is
-      unavoidable, have the subagent re-fetch and diff against the CURRENT
-      remote tip immediately before its push (not just use content handed
-      to it at dispatch time), so a stale push_files call fails loudly on
-      an unexpected base instead of silently overwriting newer commits.
+      Observed 2026-07-18 (kind-robots/t-038 burst-mode cycle). Hit conductor's documented HTTP 413 push failure on this session's own designated branch and delegated the documented `push_files` MCP workaround to a background subagent, handing it the file content as it stood at that moment. Before the subagent returned, this session found and used a faster/different fix directly in the foreground (`create_branch` + rebase + normal `git push`) and kept committing further changes to the SAME file on top of that (a status flip from `review` to `done` plus a completion note). The background subagent, with no way to know its task had been superseded, eventually finished and pushed its own `push_files` commit built from the STALE content it was dispatched with -- landing on top of the branch tip and silently reverting the file back to the earlier `status: review` state, dropping both later edits. Caught immediately via the task-completion notification, refetched `origin/<branch>`, and reapplied the dropped edits, so no permanent loss -- but it cost an extra round-trip and could easily go unnoticed for a subagent whose output isn't re-read afterward. This is a real write race, not just wasted work: a background subagent operating on a file the dispatching session is concurrently editing can clobber later commits even within a single session with no other human or agent involved. Fix ideas (pick one or combine): (a) when a workaround is resolved in the foreground while a delegated subagent for the same fix is still in flight, explicitly cancel/ignore that subagent's eventual result rather than letting it complete and push unsupervised; (b) never delegate a git-state-mutating workaround (push_files, create_branch, etc.) to a background subagent for a problem already being actively fixed inline -- reserve background delegation for genuinely independent work; (c) if delegation is unavoidable, have the subagent re-fetch and diff against the CURRENT remote tip immediately before its push (not just use content handed to it at dispatch time), so a stale push_files call fails loudly on an unexpected base instead of silently overwriting newer commits.
+
+      RAN 2026-07-18 (~23:08 UTC, conductor-burst-hourly rotation, claude-conductor-burst-20260718T230803Z): implemented fix (b) as the primary rule (simplest and most robust: never delegate a git-state-mutating workaround to a background subagent for a problem being fixed inline) plus fix (c) as a fallback for when delegation is unavoidable (subagent must re-fetch and diff against the current remote tip immediately before pushing, not rely on dispatch-time content). Documented both in CLAUDE.md's new "Don't delegate an in-flight git workaround to a background subagent" subsection (right after the two HTTP 413 workaround sections it extends) and cross-referenced from a new rule 11 in AGENTS.md's Hard safety rules so it applies globally, not just to sessions that load this repo's CLAUDE.md. Docs-only change (no code path exists to enforce this mechanically -- the failure mode is a session behavior choice, not a script bug), so no test suite change. kind_robots PR not applicable (conductor-repo-only).
     owner: reviewer
     claimed_by: claude-conductor-burst-20260718T230803Z
     claimed_at: '2026-07-18T23:08:07Z'

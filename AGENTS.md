@@ -632,6 +632,12 @@ Silas approval is required for the image generation itself.
     session. Repair migration drift with data-preserving steps (targeted SQL via
     `prisma db execute`, then `prisma migrate resolve --applied`), and never rename or
     edit a migration that may already be applied somewhere — ship a new migration instead.
+11. Never delegate a git-state-mutating workaround (`push_files`, `create_branch`,
+    force-push, etc.) to a background subagent for a problem you are actively fixing
+    inline in the foreground — its eventual push can silently overwrite commits you make
+    after dispatching it, since it only knows the file content it was handed at dispatch
+    time. See CLAUDE.md's "Don't delegate an in-flight git workaround to a background
+    subagent" (conductor/t-066).
 
 **Reviewer batch-merge note (companion to rule 9):** `refresh-status.yml` lands a
 `chore: refresh STATUS.md and workspace.html` commit on `main` within seconds of every
