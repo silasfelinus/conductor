@@ -186,8 +186,8 @@ tasks:
 - id: t-022
   milestone: m2
   title: 'kind_robots: Stripe webhook (checkout.session.completed, payment mode) credits an Entitlement for the Mermaids PDF product'
-  status: ready
-  owner: null
+  status: claimed
+  owner: worker
   passes: 0
   stakes: outward-facing
   gate_human: true
@@ -208,6 +208,9 @@ tasks:
     gate_human like the original t-011, even though it has no UI of its own.
     EGRESS: api.stripe.com — re-run scripts/recheck_egress_blocks.py before
     claiming (blocked as of 2026-07-17T10:5xZ, varies by session).
+  claimed_by: claude-web-h36l2m-20260718T1520Z
+  claimed_at: '2026-07-18T15:19:19Z'
+  updated: '2026-07-18T15:19:19Z'
 - id: t-023
   milestone: m2
   title: 'kind_robots: Mermaids of Venice PDF product page + Stripe checkout + secure entitlement-gated download route'
