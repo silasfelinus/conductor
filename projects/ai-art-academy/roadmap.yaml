@@ -427,11 +427,11 @@ tasks:
   - id: t-010
     milestone: m6
     title: Academy continuous improvement pass
-    status: claimed
+    status: ready
     recurring: true
     passes: 0
     stakes: reversible
-    updated: '2026-07-18 02:49:00+00:00'
+    updated: '2026-07-18 03:40:00+00:00'
     note: |-
       Standing never-idle task (re-arms to ready after every completion, per the recurring-task rule). Each cycle pick ONE: (a) front-end style/polish pass on Academy or art-styler surfaces, (b) roadmap upgrade — refine tasks, detail the next milestone, prune stale notes, (c) generate more art inspirations or style preview thumbnails, (d) expand the curriculum with a new movement/artist entry (respecting PUBLIC-DOMAIN-POLICY.md). Note which option ran in the PR. This task never reaches done and does not count toward milestone progress.
       CORRECTION 2026-07-16 (later same session): the "KR_API_TOKEN still absent" line in the RAN entry immediately below is WRONG — it was carried forward from prior cycles without re-checking the live env. The token IS present (env-var field + GitHub secret). t-004/t-009 notes now carry the accurate blockers: the sandbox can't reach the kind_robots API (egress 403), so generation runs via the auto-art-generate GitHub Action, not sandbox sessions; and rendering needs the home relay (correct KR_RELAY_TOKEN + KR_RELAY_USER_ID) and the DB up. Dispatching live generation is human-gated. (Re-applied fresh after PR #617 was closed dirty.)
@@ -458,9 +458,10 @@ tasks:
       RAN 2026-07-18 (conductor-burst rotation, claude-conductor-burst-hourly session): option (a) front-end polish pass, per the checklist's rotation rule (previous cycle ran lane 4, curriculum depth, so lane 1 was next). Confirmed t-031 (Suprematism sync) already merged as kind_robots PR #379 and its roadmap status is already `done` — no bookkeeping gap there. Rechecked t-019's blocker: `public/images/academy/styles/` still doesn't exist in kind_robots, zero thumbnails landed, stays `ready`-but-blocked, same signature as every prior cycle. Dispatched an Explore subagent over all five components/academy/*.vue files plus art-styler.vue for a genuine issue; it found a real focus-management bug: `academy-timeline.vue` swaps its toggle `<button>` for `academy-style-detail` via `v-if`/`v-else`, and `academy-styles-browser.vue`'s detail panel unmounts on close — in both cases the close button is unmounted the instant it's clicked with no `ref`/`focus()` call anywhere to recover focus, so keyboard/screen-reader users closing an expanded lesson get dropped to `<body>` and have to re-tab from the top of the page. Fixed both: added a slug-keyed ref map in each component (`toggleRefs` in academy-timeline.vue, `gridRefs` in academy-styles-browser.vue) and a close handler that calls `.focus()` on the original trigger element after `nextTick`. Verified: `npx eslint`/`npx prettier --check` clean on both files, full-project `npm run test` (`vue-tsc --noEmit`, provisioned via conductor's `provision_kind_robots_deps.sh`) 0 errors. kind_robots PR #380 (branch claude/keen-fermat-m45z4s), subscribed to PR activity for CI/review follow-up. Kaizen candidate filed in the PR body (not yet a roadmap task): `academy-style-detail.vue`'s `tryItFailureFallbackNote` computed is dead in practice now that all 23 seed entries define `failureMode` — worth pruning in a future cycle.
 
       Retry after the prior unconsumed claim event; current main verified ready with zero active claims.
+
+      RAN 2026-07-18: option (d) curriculum/content expansion. Added projects/ai-art-academy/docs/suprematism-lesson.md, a complete eight-beat lesson module for the 22nd movement, via merged PR #743 (squash a3772894). Worker PR CI and Security Audit passed. Task-event recovery was hardened through PRs #747 and #750; this final event update is intentionally merged after the successful-merge trigger became active.
     claimed_by: claude-conductor-burst-20260718T0008Z
     claimed_at: '2026-07-18T00:08:10Z'
-    owner: worker
 
   - id: t-015
     milestone: m4
