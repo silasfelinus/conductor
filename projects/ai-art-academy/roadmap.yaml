@@ -446,7 +446,7 @@ tasks:
   - id: t-010
     milestone: m6
     title: Academy continuous improvement pass
-    status: needs-human
+    status: ready
     recurring: true
     passes: 0
     stakes: reversible
@@ -494,9 +494,8 @@ tasks:
       Lane (a) front-end polish implementation is complete on kind_robots branch worker/ai-art-academy-t-010; review and CI pending.
 
       FOR SILAS: kind_robots PR #423 contains a scoped Academy accessibility polish: style cards now identify their expanded lesson panel through aria-controls. TypeScript and the Academy caller contract passed, but the unrelated repository-wide Workflow path references contract failed twice on current main/merge state, so the Worker did not merge through failed verification. TO APPROVE: inspect or repair the workflow-path baseline, then merge PR #423 if the remaining checks are green and rearm this recurring task. No production, schema, API, or deployment change is involved.
-    claimed_by: claude-conductor-agentrun-20260718T1311Z
-    claimed_at: '2026-07-18T13:12:17Z'
-    soft_gate: true
+      RESOLVED 2026-07-18 (~17:20 UTC, conductor Agent session): confirmed via GitHub that kind_robots PR #423 was merged by Silas at 2026-07-18T14:27:10Z (squash, branch worker/ai-art-academy-t-010) -- the workflow-path gate above is cleared. Re-armed this recurring task to `status: ready` (was left at `needs-human`/`soft_gate: true` past the gate's resolution) and cleared `claimed_by`/`soft_gate` so the next cycle can pick it up cleanly. No other change made.
+    owner: null
 
   - id: t-015
     milestone: m4
