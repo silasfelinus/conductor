@@ -39,6 +39,12 @@ jobs:
           ref: main
           fetch-depth: 0
           show-progress: false
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /projects/
+            /task-events/
+            /scripts/
+            /LEARNING.yaml
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -59,6 +65,9 @@ jobs:
           set -e
           had_error=0
           max_attempts=2
+
+          echo "Queued events on current main:"
+          find task-events -maxdepth 1 -type f -name '*.yaml' -not -name 'example.yaml' -print | sort
 
           for attempt in $(seq 1 "$max_attempts"); do
             echo "Attempt ${attempt}/${max_attempts}: processing against $(git rev-parse HEAD)"
