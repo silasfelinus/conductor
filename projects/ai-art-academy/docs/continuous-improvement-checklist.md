@@ -23,7 +23,7 @@ finish the known coverage gaps below unless a newly discovered issue is more urg
 |---|---|---|
 | Lesson seed entries | 22 movements in curriculum-outline.md; all 22 synced to `academyStyles.ts` (t-031 done) | Keep curriculum and `academyStyles.ts` slug order aligned as new movements land |
 | Example works | 22 movements complete (t-013 landed Expressionism/Cubism/Bauhaus 2026-07-17; Suprematism shipped complete 2026-07-18) | Spot-check VERIFIED URLs opportunistically; no known gaps |
-| Starter library | 21 starter images and provenance manifest complete | Add a Suprematism starter image/provenance entry; keep source-picker integration aligned with the manifest |
+| Starter library | 21 starter images and provenance manifest complete — coverage intentionally movement-agnostic (2026-07-18: confirmed no movement-specific starters exist for any of the 8 movements added after v1, and an abstract Suprematist work would fail the library's own selection criteria; see starter-image-library.md) | Keep source-picker integration aligned with the manifest; no new starter entries needed |
 | Style previews | 22 prompts queued (Suprematism queued 2026-07-18, `kind-robots-academy-style-preview-suprematism` in `art-prompts.yaml`) | Generate images only through the approved pipeline, then wire `previewImageSrc` (t-019) |
 | Remix configs | Registry exists; A/B generation blocked | Resume only after the relay, database, and approved generation path are available |
 | Teaching scaffold | Written in `docs/teaching-notes.md` | Wire the scaffold into lesson detail when the corresponding front-end task is ready; add a Suprematism row when that lands |

@@ -19,6 +19,20 @@ verification is search-index confirmation of the exact official URL + accession)
 Unverified entries (⏳) carry a best-known URL and MUST be re-verified at download
 time before entering the manifest.
 
+**This library is deliberately movement-agnostic, not one-per-movement.** The 21
+entries above are general-subject remix bases (portraits, landscapes, animals, still
+life, botanical) selected for structure that survives restyling — they are the
+*inputs* a user remixes into any of the 22 taught movements, not outputs sampled
+from each movement. None of the eight movements added after this library's original
+v1 pass (Gothic Panel Painting, Northern Renaissance, Rococo, Symbolism,
+Neo-Impressionism/Pointillism, Bauhaus, Neoclassicism, Suprematism) received a
+dedicated starter entry, confirming this by consistent precedent. A largely-abstract
+Suprematist work (e.g. Malevich's *Black Square*) would also fail this library's own
+selection criteria above — no recognizable focal subject, so restyling it into a
+portrait- or landscape-driven movement produces nothing legible. Coverage stays
+complete at 21; see the continuous-improvement checklist's corrected note
+(2026-07-18) for the same conclusion.
+
 ---
 
 ## The library (21 works)
