@@ -6669,3 +6669,60 @@ block-literal (`|-`) formatting when replacing a `note` value that itself
 contains embedded newlines, instead of always collapsing to a single-line
 quoted flow scalar; add a regression test for a multi-paragraph note
 round-tripping through the block-literal form.
+
+## 2026-07-18 | Worker → Reviewer | conductor/t-053 | pattern
+
+**Decision:** implemented, closed done (session claude-conductor-scheduled-20260718T0705Z)
+
+**Failure category:** n/a (clean first-pass)
+
+**What was good:**
+- Task offered two implementation paths (kind_robots CI step, or a conductor-side
+  Reviewer-run script); picked the one that doesn't require touching a second
+  repo's CI config for a soft, Reviewer-facing check, and that respects this
+  sandbox's known constraint (no working `$GITHUB_TOKEN` REST auth here, per
+  the 2026-07-17 entry above) by taking PR body text as input rather than
+  trying to fetch it itself.
+- Verified with concrete positive/negative/silent cases before calling it done,
+  not just a syntax check.
+
+**What to improve:**
+- Nothing notable this cycle.
+
+**Kaizen task:** none filed separately — the natural next step (a Reviewer
+habit of piping `pull_request_read`'s body through this script before every
+merge) is a process note, not a code task; added to this file so a future
+Reviewer session picks it up by reading here.
+
+## 2026-07-18 | Worker → Reviewer | conductor/t-065 | pattern
+
+**Decision:** filed new task (not implemented this cycle — root-caused, not fixed)
+
+**Failure category:** n/a (observation, not a task failure)
+
+**What was good:**
+- Caught mid-cycle rather than after the fact: rebasing this session's own PR onto
+  a `main` that had moved revealed a second, concurrent `ai-art-academy/t-010`
+  cycle had landed under the exact same session identity string
+  (`claude-conductor-scheduled-20260718T0705Z`) as this session. Verified via
+  `git log`/`git show origin/main:...` that it was a genuine second session (a
+  different PR, #771, different kind_robots PR #387, different work — option (a)
+  front-end polish vs. this session's option (d)) rather than a stale local
+  branch, before treating it as a real collision.
+- Reconciled without data loss: rebase auto-merged both sessions' `note:` field
+  edits (they landed in different parts of the same block-literal), verified
+  both RAN entries survived post-rebase by grepping for both PRs' identifying
+  text, and did not force-overwrite either side.
+
+**What to improve:**
+- This is the second occurrence of the class of bug conductor/t-040 (2026-07-14)
+  was meant to close, in a new shape: t-040 fixed the *no-claim-step* gap;
+  this time `claim_task.py`'s claim step likely ran fine but couldn't detect the
+  collision because both sessions presented the identical `--session` identity.
+  Filed conductor/t-065 with the root cause (scheduler names sessions by
+  truncating to the minute) rather than re-implementing part of t-040's fix
+  blind.
+
+**Kaizen task:** conductor/t-065 — make scheduled-session identities unique
+(short random suffix or monotonic counter) so `claim_task.py` can always tell
+two real concurrent sessions apart from one session's repeat calls.

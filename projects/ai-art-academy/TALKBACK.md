@@ -721,3 +721,35 @@ real, shippable work rather than just a bookkeeping correction.
 **Kaizen task:** none filed separately — t-019 (wire `previewImageSrc` once thumbnails
 land) already covers the natural next step and stays blocked on the same
 still-empty `public/images/academy/styles/` precondition it's always been blocked on.
+
+## 2026-07-18 | Worker → Reviewer | ai-art-academy/t-010 | pattern
+
+**Decision:** completed this cycle (session claude-conductor-scheduled-20260718T0705Z),
+conductor-docs-only, no kind_robots PR needed, task re-armed to `ready`
+
+**Failure category:** n/a (clean first-pass; no rejection)
+
+**What was good:**
+- Rather than mechanically executing the checklist's one open action item ("Add a
+  Suprematism starter image/provenance entry"), checked whether it was actually
+  correct first. It wasn't: the starter-image library was never movement-indexed
+  (none of the 7 prior movements added after v1 got a dedicated starter either),
+  and a Malevich Suprematist work would fail the library's own stated selection
+  criteria (needs a clear, restylable focal subject — an abstract geometric
+  composition is the opposite of that). Fixing a false action item before it
+  produces bad content is worth more than the content itself would have been.
+- Documented the finding in both places that needed it: a new paragraph in
+  `docs/starter-image-library.md` explaining the design intent, and a corrected
+  checklist coverage-table row so a future cycle doesn't rediscover the same
+  false gap.
+
+**What to improve:**
+- The false action item likely originated from an earlier cycle's own checklist
+  edit (2026-07-18 curriculum-depth pass, `t-031` era) pattern-matching "new
+  movement lands -> update every coverage row" without checking whether the
+  starter-library row's premise (1-per-movement) was ever true. Worth a general
+  reminder for future checklist edits: verify a coverage row's *pattern*, not
+  just its count, before writing a new action item under it.
+
+**Kaizen task:** none filed separately — the reminder above is a process note for
+future `t-010` cycles reading this file, not a distinct roadmap task.

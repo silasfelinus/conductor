@@ -1428,10 +1428,11 @@ tasks:
   - id: t-053
     milestone: m2
     title: Flag kind_robots PRs referencing a conductor task id that are missing a "Kaizen suggestion" section
-    status: ready
-    owner: null
+    status: done
+    owner: worker
     passes: 0
     stakes: reversible
+    updated: '2026-07-18T07:35:00Z'
     note: >
       Pattern note from ai-art-academy/t-023's TALKBACK entry (Reviewer, autonomous
       hourly conductor cycle, 2026-07-16) — third occurrence this week of a merged
@@ -1445,6 +1446,22 @@ tasks:
       shows up as an explicit TALKBACK "what to improve" note instead of relying on
       manual catch-rate. Should not fail CI outright (some PRs genuinely have no
       kaizen to suggest) — a soft warning/comment is enough.
+
+      DONE 2026-07-18 (session claude-conductor-scheduled-20260718T0705Z): took
+      the second option — a conductor-side script (`scripts/check_pr_kaizen.py`)
+      the Reviewer runs against a PR's title + body right before closing review.
+      Deliberately no network access (a prior TALKBACK entry, 2026-07-17,
+      recorded that `$GITHUB_TOKEN` has no working REST API auth in this
+      sandbox) — it's a pure text check over content the Reviewer already has
+      from the GitHub MCP `pull_request_read` call, passed via `--body`/
+      `--body-file`/stdin. Detects a `<project>/t-\d+`-shaped task id in the
+      title+body; if found and no `### Kaizen suggestion` (any heading depth,
+      case-insensitive) heading exists in the body, prints one soft WARNING
+      line and always exits 0 — never blocks. Silent when no task id is
+      referenced or the section is present. Verified with three cases (task id
+      + missing section warns; task id + section present is silent; no task id
+      is silent) and `python -m py_compile` (matches this repo's "Lint Python
+      scripts" CI step, which only syntax-checks `scripts/*.py`).
 
   - id: t-054
     milestone: m2
@@ -1784,3 +1801,35 @@ tasks:
     stakes: reversible
     updated: '2026-07-18T07:19:00Z'
     note: 'Kaizen from ai-art-academy/t-010 (2026-07-18, claude-conductor-scheduled-20260718T0705Z). scripts/set_task_field.py''s own docstring says "Newlines in a new value are flattened to spaces — the writer emits exactly one line per field," by design, for every field including `note`. But in practice, every recurring/multi-cycle task''s `note` field (t-010 itself has 21+ entries) is hand-maintained as a `note: |-` block-literal scalar with one `RAN <date>: ...` paragraph per line, specifically so the roadmap stays human-readable and diff-friendly for Silas. Calling `set_task_field.py <project> <task-id> note "<existing note>\n<new RAN paragraph>"` silently collapses that entire multi-paragraph history into one giant single-line quoted flow scalar, destroying the paragraph breaks (content is preserved, formatting is not) -- caught this in dry-run/diff review before pushing (had to `git reset --soft`+`git checkout HEAD --` to recover the original block-literal file and hand-append the new paragraph with Edit instead), so no bad state landed on main, but a less careful session would ship the flattened version and every note field that gets touched this way afterward stays flattened forever (the script always re-flattens on the next edit, so the format never self-heals). Fix: when the field is `note` (or any field whose incoming value contains embedded newlines) and the existing field being replaced was itself a block-literal (`key: |-` / `key: >-` etc.), emit the new value in the same block style instead of collapsing to a quoted flow scalar -- preserves the established per-paragraph-per-line convention. Add a regression test asserting a multi-paragraph note round-trips through the block-literal form. Until this lands, the safe pattern for appending to a multi-paragraph note is a direct Edit/text insertion of the new paragraph line, not `set_task_field.py note "..."`.'
+
+  - id: t-065
+    milestone: m2
+    title: Two concurrent scheduled sessions computed the identical session id, defeating claim_task.py collision detection
+    status: ready
+    passes: 0
+    stakes: reversible
+    note: >
+      Observed 2026-07-18: two concurrent conductor sessions both independently
+      claimed and ran a full ai-art-academy/t-010 cycle (a recurring task) at
+      essentially the same time, using the LITERAL SAME session identity string
+      `claude-conductor-scheduled-20260718T0705Z` (visible in both cycles'
+      `claimed_by`/RAN-entry text; presumably the scheduler names sessions by
+      truncating to the minute, and two triggers landed in the same minute).
+      This time the collision resolved harmlessly by luck: one session did
+      option (a) front-end polish (kind_robots PR #387) and the other did
+      option (d) curriculum-coverage docs, and their roadmap.yaml note edits
+      happened to land in different parts of the same block-literal `note`
+      field, so `git rebase`/merge combined both without a real conflict. But
+      `claim_task.py`'s collision check almost certainly compares the
+      incoming `--session` value against the existing `claimed_by` field --
+      if both sessions present the identical identity, the second claim looks
+      like "the same session re-confirming its own claim" rather than a
+      genuine second claimant, which is exactly the gap t-040 (2026-07-14)
+      was meant to close. A future collision on a task whose two independent
+      diffs touch the *same* lines (e.g. both editing `status:` or the same
+      note paragraph) would not resolve as cleanly. Fix: make session
+      identities actually unique across concurrent triggers of the same
+      scheduled task (e.g. append a short random suffix or a monotonic
+      counter, not just a to-the-minute timestamp) so `claim_task.py` can
+      always distinguish two real concurrent sessions from one session's
+      repeat calls.
