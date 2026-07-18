@@ -7,6 +7,11 @@ on:
     paths:
       - task-events/*.yaml
       - .github/workflows/process-task-events.yml
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
   pull_request_target:
     types:
       - closed
@@ -23,7 +28,9 @@ concurrency:
 
 jobs:
   process:
-    if: github.event_name != 'pull_request_target' || github.event.pull_request.merged == true
+    if: >-
+      (github.event_name != 'pull_request_target' || github.event.pull_request.merged == true) &&
+      (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository)
     runs-on: ubuntu-latest
     steps:
       - name: Check out current main
