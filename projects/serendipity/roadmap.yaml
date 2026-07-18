@@ -144,6 +144,13 @@ tasks:
     expose pendingChat, pendingChatId, and pendingText from chatStore so serendipityStore does not read
     the last chat array entry while streaming.
 
+    IMPLEMENTED 2026-07-18 (conductor Agent session, full git+GitHub MCP patch access): landed exactly
+    the intended change in kind_robots PR #440 (branch claude/vigilant-edison-3a4jpp) -- pendingChatId/pendingChat/pendingText
+    exposed from chatStore, serendipityStore streamingText reads pendingText directly, weaveStartChatCount
+    removed as redundant. vue-tsc clean, eslint clean (2 pre-existing unrelated no-empty errors noted, not
+    introduced by this diff). PR also carries t-011''s implementation on the same branch. TO APPROVE: merge
+    PR #440 once CI is green (or note if you want it split first).
+
     '
   claimed_by: claude-conductor-agent-20260718T201310Z
   claimed_at: '2026-07-18T20:13:13Z'
@@ -178,12 +185,21 @@ tasks:
 - id: t-011
   milestone: m5
   title: Badge and filter Serendipity-created AGENT todos in the Todos surface
-  status: claimed
+  status: review
   owner: worker
   updated: '2026-07-18T20:20:05Z'
   passes: 0
   stakes: reversible
-  note: 'FOR SILAS: I could not apply the actual Kind Robots UI patch because the GitHub connector safety filter blocked creating a worker branch in silasfelinus/kind_robots. I preserved the intended implementation at projects/serendipity/docs/t-011-serendipity-agent-todo-badge-filter.md. It explains the exact todoStore helpers, conductor-page.vue Story tab/filter, todo card badge, Serendipity metadata tweak, and verification checklist. TO APPROVE: apply that patch in a local-code/Claude session with kind_robots patch access, then set this task back to ready or done depending on whether you want another Worker pass. This is a soft tooling block; no live data, deploys, or roadmap YAML outside conductor were changed.'
+  note: 'FOR SILAS: I could not apply the actual Kind Robots UI patch because the GitHub connector safety filter blocked creating a worker branch in silasfelinus/kind_robots. I preserved the intended implementation at projects/serendipity/docs/t-011-serendipity-agent-todo-badge-filter.md. It explains the exact todoStore helpers, conductor-page.vue Story tab/filter, todo card badge, Serendipity metadata tweak, and verification checklist. TO APPROVE: apply that patch in a local-code/Claude session with kind_robots patch access, then set this task back to ready or done depending on whether you want another Worker pass. This is a soft tooling block; no live data, deploys, or roadmap YAML outside conductor were changed.
+
+    IMPLEMENTED 2026-07-18 (conductor Agent session, full git+GitHub MCP patch access): applied the preserved
+    patch essentially as drafted in kind_robots PR #440 (branch claude/vigilant-edison-3a4jpp) -- isSerendipityAgentTodo/serendipityAgentTodos/regularAgentTodos
+    added to todoStore, the story-decision createTodo call now sets icon kind-icon:sparkles, and conductor-page.vue
+    gained the Story tab + card badge (badge shown in all filters, not just non-OPEN, per this note''s own
+    verification checklist item 4). vue-tsc and eslint both clean. PR also carries t-008''s implementation on
+    the same branch. TO APPROVE: merge PR #440 once CI is green.
+
+    '
   claimed_by: claude-conductor-agent-20260718T201310Z
   claimed_at: '2026-07-18T20:20:05Z'
 - id: t-012
