@@ -3367,3 +3367,12 @@ records:
   outcome: done
   failure_category: null
   lesson: "Mechanical drift-correction tasks (regenerate a committed generated file after a generator fix lands) are clean one-pass work when scoped tight: ran the generator, diffed line-by-line to confirm only additions + alphabetical fixes (no reordering churn, no removals), left the generator's other untracked output file alone since it was never part of this repo's history."
+- date: 2026-07-18
+  project: newsfeed
+  task: t-015
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "Before implementing a task whose note references a generated/shared file (here public/components.json / create-component-json.mjs), grep sibling projects' roadmaps for the same filename first -- this task duplicated kind-robots/t-039+t-040 verbatim and was closeable by cross-reference alone, with zero new code."

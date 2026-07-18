@@ -343,24 +343,14 @@ tasks:
   - id: t-015
     milestone: m3
     title: "Regenerate public/components.json from a canonical environment and stabilize its sort order"
-    status: claimed
-    owner: reviewer
+    status: done
+    owner: null
     passes: 0
     stakes: reversible
     note: >
-      Kaizen from t-006 (kind_robots PR #425): running
-      `node utils/scripts/create-component-json.mjs` (or `npm run test`'s `nuxi
-      prepare` postinstall) in a sandbox reorders several unrelated existing
-      entries (e.g. builder-card/builder-card-grid, ami-link) and surfaces several
-      real components already missing from the committed file (packmaker-admin-panel,
-      component-review-feed, wonderlab-preview-host, etc.) that predate t-006 --
-      looks like environment-dependent Array.prototype.sort/localeCompare collation,
-      or the committed file has simply drifted from a stale generation. t-006 hand-added
-      only its two new folder entries to stay scoped. Regenerate the file from a
-      canonical (non-sandbox) environment and reconcile the drift, or make the
-      generator's sort explicit and collation-stable (e.g. localeCompare(b, 'en')
-      or a plain codepoint sort) so future sessions don't have to hand-patch it to
-      avoid unrelated churn.
+      Kaizen from t-006 (kind_robots PR #425): running node utils/scripts/create-component-json.mjs (or npm run test's nuxi prepare postinstall) in a sandbox reorders several unrelated existing entries (e.g. builder-card/builder-card-grid, ami-link) and surfaces several real components already missing from the committed file (packmaker-admin-panel, component-review-feed, wonderlab-preview-host, etc.) that predate t-006 -- looks like environment-dependent Array.prototype.sort/localeCompare collation, or the committed file has simply drifted from a stale generation. t-006 hand-added only its two new folder entries to stay scoped. Regenerate the file from a canonical (non-sandbox) environment and reconcile the drift, or make the generator's sort explicit and collation-stable (e.g. localeCompare(b, 'en') or a plain codepoint sort) so future sessions don't have to hand-patch it to avoid unrelated churn.
+
+      RESOLVED 2026-07-18 (conductor-agent-run, cross-project duplicate): this exact ask was independently tracked and completed under kind-robots/t-039 (sort stabilization -- confirmed all 3 sort call sites in create-component-json.mjs now use localeCompare(x, 'en'), kind_robots PR #429) and kind-robots/t-040 (regenerate + reconcile drift, kind_robots PR #434, merged 2026-07-18). Verified directly: grep for localeCompare in the script shows the 'en' locale pin at all three call sites, and the just-merged t-040 diff added exactly the missing components this note names (packmaker-admin-panel, component-review-feed, wonderlab-preview-host, plus packmaker-pack-editor/component-test-fixture-cleanup/wonderlab-selection-router) with no unrelated reordering churn. No further action needed here -- closing as done rather than duplicating the fix a second time. Cross-reference for CONTROL.md's cross-project same-task collision note (2026-07-17): this is another instance of the same task tracked in two project roadmaps with no depends_on link between them.
     claimed_by: claude-conductor-agent-run-20260718
     claimed_at: '2026-07-18T19:19:26Z'
     updated: '2026-07-18T19:19:26Z'
