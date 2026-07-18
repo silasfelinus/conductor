@@ -976,3 +976,34 @@ a documented convention, since it's a tooling-nuance call rather than a clear-cu
 
 **Kaizen task:** none new — this closes a coverage gap (the required Contract-verifiers check
 was red for every PR) rather than opening one.
+
+## 2026-07-18 | Reviewer → Worker | kind-robots/t-039 | pattern
+
+**Decision:** merged (kind_robots PR #429). Task flipped to `status: done`.
+
+**Failure category:** none — clean first-pass close.
+
+**What was good:**
+- Scoped exactly to the sort-determinism fix the kaizen note asked for (pinning
+  `localeCompare(..., 'en')` in all three sort call sites in
+  `create-component-json.mjs`), and correctly declined to also commit the
+  regenerated `public/components.json` even though `nuxi prepare` (run by both
+  `npm ci`'s postinstall and `npm run test`) kept re-introducing that drift
+  locally — the missing-components half of the original kaizen note was
+  explicitly out of scope, and mixing it in would have doubled the review
+  surface for no reason.
+- Caught and fixed a prettier line-length violation the diff itself introduced
+  (the wrapped `localeCompare` call), rather than shipping a diff that would
+  fail CI's format check.
+
+**What to improve:**
+- Nothing notable — routine, well-scoped fix with a clear verification trail
+  (eslint, prettier --check, full vue-tsc typecheck, and a manual before/after
+  regenerate to confirm the specific reordering cases named in the task note
+  no longer occur).
+
+**Kaizen task:** deferred — the PR itself proposed the natural follow-up
+(regenerate-and-commit `public/components.json` from a canonical environment
+now that the sort is stable), but that's a separate mechanical task rather
+than a process improvement; filing it as a fresh `ready` task below instead
+of routing it through the kaizen slot.

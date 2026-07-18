@@ -3349,3 +3349,12 @@ records:
   outcome: done
   failure_category: null
   lesson: "Stale-source tolerance (last-known-good cache per source, bounded to 24h, flagged stale: true) was the one real gap left after t-005/t-006 shipped bounded caching, stable identity, dedup, and partial-success -- verified with a local http.createServer fixture (serves once, then closes) instead of relying on live network egress to prove the fallback path."
+- date: 2026-07-18
+  project: kind-robots
+  task: t-039
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "Pinning localeCompare(..., 'en') in create-component-json.mjs's three sort call sites made the generated manifest deterministic across Node/ICU builds. When a kaizen note bundles a determinism fix with a separate drift-correction (here: missing components in the committed file), keep the diff scoped to just the fix and file the drift correction as its own ready task (kind-robots/t-040) rather than expanding the PR."
