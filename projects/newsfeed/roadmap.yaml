@@ -232,18 +232,18 @@ tasks:
   - id: t-007
     milestone: m2
     title: "Add user feed selection and ordering"
-    status: claimed
+    status: review
     owner: worker
     passes: 0
     stakes: reversible
     depends_on: t-006
     note: >
-      Let users enable or disable recommended feeds and reorder them. Persist preferences
-      through the existing user/store/local-storage patterns without adding a new schema
-      for the MVP. Defaults should remain useful before any configuration.
+      Let users enable or disable recommended feeds and reorder them. Persist preferences through the existing user/store/local-storage patterns without adding a new schema for the MVP. Defaults should remain useful before any configuration.
+
+      DONE 2026-07-18 (conductor session claude-conductor-session-20260718T211402Z): the store side (t-004's feedPreferenceStore, enableFeed/disableFeed/reorderFeeds) already existed with nothing consuming it. Added components/newsfeed/newsfeed-preferences.vue, a "Manage feeds" panel toggled from newsfeed-feed.vue's header, listing every FEED_DEFINITIONS entry with an enable/disable toggle and move-up/move-down reordering for enabled feeds (no drag-and-drop library exists in this repo, so buttons instead of a drag handle). newsfeed-feed.vue now watches enabledFeedSlugs (order-sensitive .join(',')) to auto-refetch on any selection/order change, guarded against the store's own initial-hydrate mutation via a hasLoadedOnce flag. Registered the component in public/components.json. Verified: vue-tsc --noEmit (0 errors), eslint clean, prettier clean on touched files (public/components.json's one remaining prettier warning is pre-existing drift on main, confirmed via git stash). No live preview available (sandbox has no DB). kind_robots PR https://github.com/silasfelinus/kind_robots/pull/456 (branch claude/vigilant-edison-15k0tv). Flagged for the Reviewer: the "All" tab still sorts purely chronologically (feed order only affects per-feed chip order, not "All" interleaving), and a pre-existing quirk where disabling every feed still fetches everything via the availableFeeds fallback -- both out of this task's scope, noted as possible follow-ups.
     claimed_by: claude-conductor-session-20260718T211402Z
     claimed_at: '2026-07-18T21:14:02Z'
-    updated: '2026-07-18T21:14:02Z'
+    updated: '2026-07-18T21:27:29Z'
 
   - id: t-008
     milestone: m3
