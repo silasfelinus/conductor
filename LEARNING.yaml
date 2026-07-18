@@ -3161,7 +3161,7 @@ records:
   passes: 0
   outcome: done
   failure_category: null
-  lesson: When de-flaking a red-CI detector's cancelled-run false positive, compare against the branch's latest run of ANY status, not just the latest completed one -- the superseding run frequently hasn't finished yet at the moment the detector polls (confirmed here: 9 minutes later), so a completed-only comparison would still miss the exact race it's meant to catch.
+  lesson: "When de-flaking a red-CI detector's cancelled-run false positive, compare against the branch's latest run of ANY status, not just the latest completed one -- the superseding run frequently hasn't finished yet at the moment the detector polls (confirmed here: 9 minutes later), so a completed-only comparison would still miss the exact race it's meant to catch."
 - date: 2026-07-18
   project: ai-art-academy
   task: t-031
@@ -3171,3 +3171,12 @@ records:
   outcome: done
   failure_category: null
   lesson: "When a recurring never-idle task (t-010) files a small, concrete, independently-landable follow-up task, prefer claiming that follow-up over re-running the recurring task again the same rotation -- it's real shippable work instead of another lane pass."
+- date: 2026-07-18
+  project: conductor
+  task: t-063
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: quality
+  lesson: "A plain YAML scalar containing an unescaped colon+space (e.g. a parenthetical like \"(confirmed here: 9 minutes later)\") is invalid mid-value -- always quote or block-scalar a hand-appended lesson/note field with any ': ' in it. Also: before implementing a task note's suggested root cause, verify it against the actual code path -- the note assumed the live append writer needed a quoting fix, but it already auto-quotes via yaml.safe_dump; the real bad entry was a hand-appended plain scalar that bypassed that writer entirely."

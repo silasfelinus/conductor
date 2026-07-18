@@ -105,6 +105,41 @@ class TaskEventProcessorTests(unittest.TestCase):
         self.assertNotIn("owner", task)
         self.assertEqual(len(ledger["records"]), 1)
 
+    def test_learning_lesson_with_colon_space_round_trips(self):
+        """conductor/t-063: a lesson containing an embedded ': ' (e.g. a
+        parenthetical like '(confirmed here: 9 minutes later)') must come back
+        out of write_learning_record's yaml.safe_dump quoted/escaped so the
+        committed file stays valid YAML -- LEARNING.yaml line 3164 broke
+        test_committed_ledger_schema_conformance on every PR because that exact
+        pattern was hand-appended as an unquoted plain scalar instead of going
+        through this writer."""
+        roadmap = self.roadmap()
+        roadmap["tasks"][0]["status"] = "review"
+        (self.root / "projects" / "demo" / "roadmap.yaml").write_text(
+            yaml.safe_dump(roadmap, sort_keys=False), encoding="utf-8"
+        )
+        tricky_lesson = (
+            "Compare against the branch's latest run of ANY status (confirmed "
+            "here: 9 minutes later), not just the latest completed one."
+        )
+        payload = {
+            "version": 1,
+            "project": "demo",
+            "task": "t-001",
+            "operation": "done",
+            "learning": {
+                "kind": "software",
+                "stakes": "reversible",
+                "lesson": tricky_lesson,
+            },
+        }
+
+        MODULE.process(self.write_event("done-colon.yaml", payload), dry_run=False)
+
+        ledger_text = (self.root / "LEARNING.yaml").read_text(encoding="utf-8")
+        ledger = yaml.safe_load(ledger_text)  # raises yaml.scanner.ScannerError if malformed
+        self.assertEqual(ledger["records"][0]["lesson"], tricky_lesson)
+
     def test_rearm_requires_recurring_task(self):
         event = self.write_event(
             "bad-rearm.yaml",
