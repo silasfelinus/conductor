@@ -513,8 +513,8 @@ tasks:
 - id: t-024
   milestone: m5
   title: Guard the misleading done/totalTasks fallback in conductor-overview-gallery-page.vue's itemFromProjectRecord()
-  status: claimed
-  owner: reviewer
+  status: review
+  owner: worker
   passes: 0
   stakes: reversible
   note: >
@@ -534,7 +534,21 @@ tasks:
     having conductor-sourced counts (e.g. a boolean flag set only in
     itemFromProject(), not itemFromProjectRecord()) so the fallback path
     never shows a task-count badge at all.
-  claimed_by: claude-conductor-burst-20260718-review-panel
+
+    RAN 2026-07-18 (conductor-burst rotation): implemented the second option.
+    Added `hasConductorTaskCounts: boolean` to ProjectGalleryItem -- `true`
+    from itemFromProject(), `false` from itemFromProjectRecord()'s literal
+    fallback object (the branch that reuses itemFromProject() when a
+    matching conductor project exists still returns `true`, correctly).
+    Gated the badge in all three grid/card view modes on
+    `item.hasConductorTaskCounts && item.totalTasks`, and replaced the
+    previously-unguarded raw `{{ item.done }}/{{ item.totalTasks }}` in the
+    list view with a `—` placeholder when the counts aren't
+    conductor-sourced. kind_robots PR #382 (branch claude/keen-fermat-szlzfe):
+    eslint clean, full-project `vue-tsc --noEmit` reports 0 errors. Could not
+    visually verify the four gallery view modes against a preview deploy
+    (sandbox has no DB) -- flagged in the PR body as remaining verification.
+  claimed_by: claude-conductor-burst-20260718-t024
   claimed_at: '2026-07-18T03:12:23Z'
   updated: '2026-07-18T03:12:23Z'
 milestones:
