@@ -1,38 +1,38 @@
 # Roadmap Audit
 
-Generated: `2026-07-17T15:56:33.359520+00:00`
+Generated: `2026-07-18T04:17:08.449729+00:00`
 
 This is a conservative structural audit. It reports suspicious state; it does not automatically change task status or remove human gates.
 
 ## Portfolio snapshot
 
-- **40** roadmaps, **32** active projects, **585** tasks
-- **83 ready**, **55 waiting**, **28 needs-human**, **1 claimed/review**, **407 done**
-- Findings: **0 errors**, **5 warnings**, **46 informational**
+- **40** roadmaps, **31** active projects, **598** tasks
+- **72 ready**, **55 waiting**, **27 needs-human**, **2 claimed/review**, **431 done**
+- Findings: **0 errors**, **5 warnings**, **45 informational**
 
 ## Project inventory
 
 | # | Project | State | Kind | Ready | Waiting | Human | In progress | Done / Total |
 |---:|---|---|---|---:|---:|---:|---:|---:|
-| 1 | `challenge-center` | active | software | 0 | 0 | 0 | 0 | 20 / 20 |
-| 2 | `ai-art-academy` | active | software | 6 | 0 | 2 | 0 | 21 / 29 |
-| 3 | `coloring-book` | active | software | 2 | 9 | 0 | 0 | 18 / 29 |
+| 1 | `challenge-center` | finished | software | 0 | 0 | 0 | 0 | 20 / 20 |
+| 2 | `ai-art-academy` | active | software | 1 | 0 | 2 | 1 | 27 / 31 |
+| 3 | `coloring-book` | active | software | 1 | 9 | 0 | 0 | 19 / 29 |
 | 4 | `humboldt-scoop` | active | software | 0 | 0 | 0 | 0 | 8 / 8 |
 | 5 | `humboldt-scoop-cms` | active | software | 0 | 4 | 1 | 0 | 6 / 11 |
-| 6 | `digital-storefront` | active | software | 4 | 1 | 2 | 0 | 14 / 21 |
-| 7 | `packmaker` | active | software | 0 | 1 | 1 | 0 | 5 / 7 |
+| 6 | `digital-storefront` | active | software | 1 | 2 | 3 | 1 | 16 / 23 |
+| 7 | `packmaker` | active | software | 0 | 0 | 0 | 0 | 10 / 10 |
 | 8 | `mermaids-of-venice` | retired | content | 0 | 0 | 8 | 0 | 4 / 12 |
-| 9 | `kind-robots` | active | software | 1 | 0 | 4 | 0 | 31 / 36 |
+| 9 | `kind-robots` | active | software | 2 | 0 | 3 | 0 | 32 / 37 |
 | 10 | `kindrobots-unraid` | active | software | 0 | 7 | 1 | 0 | 4 / 12 |
-| 11 | `global-ui` | active | software | 4 | 0 | 0 | 0 | 20 / 24 |
+| 11 | `global-ui` | active | software | 2 | 0 | 1 | 0 | 21 / 24 |
 | 12 | `superkate-services-calculator` | active | software | 0 | 0 | 1 | 0 | 35 / 36 |
-| 13 | `superkate-hairstyle-ai` | active | software | 2 | 0 | 2 | 1 | 15 / 20 |
+| 13 | `superkate-hairstyle-ai` | active | software | 2 | 0 | 2 | 0 | 16 / 20 |
 | 14 | `newsfeed` | active | software | 3 | 7 | 1 | 0 | 2 / 13 |
 | 15 | `model-builder` | active | software | 4 | 0 | 0 | 0 | 26 / 30 |
 | 16 | `animation-manager` | active | software | 4 | 2 | 0 | 0 | 4 / 10 |
 | 17 | `animation-studio` | missing | software | 3 | 4 | 0 | 0 | 1 / 8 |
 | 18 | `ecosystem-map` | active | software | 2 | 1 | 0 | 0 | 5 / 8 |
-| 19 | `conductor` | active | software | 6 | 0 | 4 | 0 | 50 / 60 |
+| 19 | `conductor` | active | software | 5 | 0 | 3 | 0 | 55 / 63 |
 | 20 | `serendipity` | active | software | 3 | 0 | 0 | 0 | 9 / 12 |
 | 21 | `storymaker` | active | software | 2 | 0 | 0 | 0 | 8 / 10 |
 | 22 | `davinci` | active | software | 2 | 0 | 0 | 0 | 12 / 14 |
@@ -43,7 +43,7 @@ This is a conservative structural audit. It reports suspicious state; it does no
 | 27 | `alexa-integration` | active | software | 2 | 0 | 0 | 0 | 14 / 16 |
 | 28 | `conductor-app` | active | software | 6 | 0 | 0 | 0 | 7 / 13 |
 | 29 | `appmaker` | active | software | 4 | 2 | 0 | 0 | 6 / 12 |
-| 30 | `media-watchlist` | active | software | 1 | 0 | 0 | 0 | 5 / 6 |
+| 30 | `media-watchlist` | active | software | 1 | 0 | 0 | 0 | 6 / 7 |
 | 31 | `sketchy` | active | software | 3 | 0 | 0 | 0 | 4 / 7 |
 | 32 | `pinball-hero` | retired | content | 2 | 2 | 0 | 0 | 2 / 6 |
 | 33 | `recipe-box` | retired | software | 1 | 2 | 0 | 0 | 0 / 3 |
@@ -51,7 +51,7 @@ This is a conservative structural audit. It reports suspicious state; it does no
 | 35 | `wishmaster` | active | software | 2 | 0 | 0 | 0 | 1 / 3 |
 | 36 | `engagement` | finished | software | 0 | 0 | 0 | 0 | 3 / 3 |
 | 37 | `ruler-hooked` | active | software | 2 | 1 | 0 | 0 | 9 / 12 |
-| 38 | `dream-cycle` | active | software | 3 | 0 | 0 | 0 | 13 / 16 |
+| 38 | `dream-cycle` | active | software | 3 | 0 | 0 | 0 | 14 / 17 |
 | — | `approval-portal` | retired | software | 0 | 0 | 0 | 0 | 3 / 5 |
 | — | `humboldt-impropriety-calendar` | retired | brainstorm | 0 | 5 | 0 | 0 | 0 / 6 |
 
@@ -64,12 +64,12 @@ _None._
 ### Warning (5)
 
 - **ROADMAP_MISSING_OVERRIDE** — `animation-studio`: Roadmap has no project-overrides.yaml entry.
-- **ACTIVE_PROJECT_ALL_DONE** — `challenge-center`: All tasks are done but project override remains active.
-- **ACTIVE_PROJECT_NO_OPEN_TASKS** — `challenge-center`: Active project has no open tasks; mark finished/paused or add an intentional recurring task.
 - **ACTIVE_PROJECT_ALL_DONE** — `humboldt-scoop`: All tasks are done but project override remains active.
 - **ACTIVE_PROJECT_NO_OPEN_TASKS** — `humboldt-scoop`: Active project has no open tasks; mark finished/paused or add an intentional recurring task.
+- **ACTIVE_PROJECT_ALL_DONE** — `packmaker`: All tasks are done but project override remains active.
+- **ACTIVE_PROJECT_NO_OPEN_TASKS** — `packmaker`: Active project has no open tasks; mark finished/paused or add an intentional recurring task.
 
-### Info (46)
+### Info (45)
 
 - **APPROVAL_WITHOUT_GATE** — `ai-art-academy` / `t-002`: approved_by_human is set on a task that is not human-gated.
 - **APPROVAL_WITHOUT_GATE** — `ai-art-academy` / `t-011`: approved_by_human is set on a task that is not human-gated.
@@ -85,7 +85,6 @@ _None._
 - **MISSING_GOAL** — `coat-dance`: Roadmap has no friendly goal/definition of done.
 - **APPROVAL_WITHOUT_GATE** — `coloring-book` / `t-002`: approved_by_human is set on a task that is not human-gated.
 - **MISSING_GOAL** — `conductor`: Roadmap has no friendly goal/definition of done.
-- **NEEDS_HUMAN_NOTE_FORMAT** — `conductor` / `t-037`: needs-human note does not use the AGENTS.md FOR SILAS action format.
 - **MISSING_GOAL** — `conductor-app`: Roadmap has no friendly goal/definition of done.
 - **MISSING_GOAL** — `davinci`: Roadmap has no friendly goal/definition of done.
 - **APPROVAL_WITHOUT_GATE** — `davinci` / `t-002`: approved_by_human is set on a task that is not human-gated.
