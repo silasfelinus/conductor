@@ -513,8 +513,8 @@ tasks:
 - id: t-024
   milestone: m5
   title: Guard the misleading done/totalTasks fallback in conductor-overview-gallery-page.vue's itemFromProjectRecord()
-  status: ready
-  owner: null
+  status: claimed
+  owner: reviewer
   passes: 0
   stakes: reversible
   note: >
@@ -534,6 +534,9 @@ tasks:
     having conductor-sourced counts (e.g. a boolean flag set only in
     itemFromProject(), not itemFromProjectRecord()) so the fallback path
     never shows a task-count badge at all.
+  claimed_by: claude-conductor-burst-20260718-review-panel
+  claimed_at: '2026-07-18T03:12:23Z'
+  updated: '2026-07-18T03:12:23Z'
 milestones:
 - id: m1
   title: Task language + presentation model
