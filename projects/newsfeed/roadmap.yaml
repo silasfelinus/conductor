@@ -213,14 +213,26 @@ tasks:
       deliverables.done list as milestones land; slot the real feed component into
       project-front-page.vue's #interactive slot or swap content/newsfeed.md's body once
       the real feature is ready, rather than replacing the pitch page.
+
+      DONE 2026-07-18: kind_robots PR #425 merged (squash 14ef1c6). Added
+      components/newsfeed/feed-card.vue (forked dream-card.vue's grammar, per-item
+      image-fallback chain + category badge + relative timestamp) and
+      components/newsfeed/newsfeed-feed.vue (fetches /api/newsfeed filtered by
+      feedPreferenceStore.enabledFeedSlugs, merges/dedupes/sorts chronologically,
+      loading/empty/error states, per-feed filter chips). Wired into both
+      components/home/home-feed-placeholder.vue (the live homepage) and
+      components/conductor/newsfeed-page.vue's #interactive slot (the project
+      pitch page). Reviewer (this session) verified all 3 kind_robots CI checks
+      green (GitGuardian, TypeScript, Contract verifiers) and merged directly —
+      reversible, scoped, does the task. Follow-ups filed as kaizen below.
     claimed_by: claude-conductor-burst-20260718T1506Z
     claimed_at: '2026-07-18T15:06:56Z'
-    updated: '2026-07-18T15:06:56Z'
+    updated: '2026-07-18T16:11:18Z'
 
   - id: t-007
     milestone: m2
     title: "Add user feed selection and ordering"
-    status: waiting
+    status: ready
     owner: null
     passes: 0
     stakes: reversible
@@ -246,14 +258,17 @@ tasks:
   - id: t-009
     milestone: m3
     title: "Harden caching, deduplication, and failure handling"
-    status: waiting
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     depends_on: t-006
     note: >
       Add bounded caching, stable item identity, duplicate removal, stale-source tolerance,
       and partial-success behavior so one broken feed does not blank the homepage.
+    claimed_by: claude-conductor-burst-20260718T1707Z
+    claimed_at: '2026-07-18T17:07:15Z'
+    updated: '2026-07-18T17:07:15Z'
 
   - id: t-010
     milestone: m3
@@ -326,3 +341,25 @@ tasks:
       user-manager dashboard (avatars/friends/achievements/themes/chats/logout)
       unchanged, (3) the header avatar link and the placeholder's CTA both land on
       /dashboard correctly.
+
+  - id: t-015
+    milestone: m3
+    title: "Regenerate public/components.json from a canonical environment and stabilize its sort order"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Kaizen from t-006 (kind_robots PR #425): running
+      `node utils/scripts/create-component-json.mjs` (or `npm run test`'s `nuxi
+      prepare` postinstall) in a sandbox reorders several unrelated existing
+      entries (e.g. builder-card/builder-card-grid, ami-link) and surfaces several
+      real components already missing from the committed file (packmaker-admin-panel,
+      component-review-feed, wonderlab-preview-host, etc.) that predate t-006 --
+      looks like environment-dependent Array.prototype.sort/localeCompare collation,
+      or the committed file has simply drifted from a stale generation. t-006 hand-added
+      only its two new folder entries to stay scoped. Regenerate the file from a
+      canonical (non-sandbox) environment and reconcile the drift, or make the
+      generator's sort explicit and collation-stable (e.g. localeCompare(b, 'en')
+      or a plain codepoint sort) so future sessions don't have to hand-patch it to
+      avoid unrelated churn.

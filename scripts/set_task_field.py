@@ -15,7 +15,12 @@ roadmap task field without rewriting quoted strings, multiline notes, comments, 
 Multiline field values (folded `note: >` blocks, quoted notes spanning lines, and
 `depends_on` block lists) are replaced as a whole; new fields are inserted at the end of
 the task block so they can never land inside another field's value. Newlines in a new
-value are flattened to spaces — the writer emits exactly one line per field.
+value are flattened to spaces — the writer emits exactly one line per field — UNLESS the
+field being replaced already exists as a block-literal scalar (`note: |-`, `note: >-`,
+etc.) AND the new value itself contains embedded newlines. In that case the new value is
+re-emitted in the same block style instead of being collapsed to a single quoted line,
+preserving the hand-maintained per-paragraph-per-line convention used by long-running
+`note:` fields (e.g. recurring tasks with one `RAN <date>: ...` paragraph per cycle).
 
 If PyYAML is importable, the result is re-parsed after the edit and the write is refused
 unless the document is valid YAML and the target task actually carries the field.
@@ -34,6 +39,9 @@ from datetime import datetime, timezone
 PROJECTS_DIR = pathlib.Path("projects")
 TASK_ID_RE = re.compile(r"^(?P<indent>\s*)-\s+id:\s*(?P<id>[^#\n]+?)\s*(?:#.*)?$")
 KEY_RE = re.compile(r"^(?P<indent>\s*)(?P<key>[A-Za-z_][A-Za-z0-9_-]*):(?P<rest>.*)$")
+BLOCK_STYLE_RE = re.compile(
+    r"^(?P<indent>\s*)(?P<key>[A-Za-z_][A-Za-z0-9_-]*):\s*(?P<style>[|>][-+]?)\s*$"
+)
 ALLOWED_FIELDS = {
     "status",
     "owner",
@@ -159,6 +167,34 @@ def field_value_end(lines: list[str], key_idx: int, block_end: int, field_indent
     return idx
 
 
+def existing_block_style(lines: list[str], key_idx: int) -> str | None:
+    """Return the block-scalar indicator (`|-`, `>`, etc.) on a key line, if any."""
+    match = BLOCK_STYLE_RE.match(lines[key_idx])
+    return match.group("style") if match else None
+
+
+def render_block_scalar(field: str, style: str, value: str, field_indent: int) -> list[str]:
+    """Render `value` as a block-literal/folded scalar in the given style.
+
+    Preserves blank lines (paragraph breaks) and does not escape or requote
+    the content — block scalars carry their text as-is.
+    """
+    content_lines = value.split("\n")
+    while content_lines and content_lines[0] == "":
+        content_lines.pop(0)
+    while content_lines and content_lines[-1] == "":
+        content_lines.pop()
+
+    content_indent = field_indent + 2
+    rendered = [f"{' ' * field_indent}{field}: {style}\n"]
+    for line in content_lines:
+        if line.strip() == "":
+            rendered.append("\n")
+        else:
+            rendered.append(f"{' ' * content_indent}{line}\n")
+    return rendered
+
+
 def set_task_field_text(text: str, task_id: str, field: str, value: str) -> str:
     if field not in ALLOWED_FIELDS:
         allowed = ", ".join(sorted(ALLOWED_FIELDS))
@@ -169,8 +205,6 @@ def set_task_field_text(text: str, task_id: str, field: str, value: str) -> str:
         raise TaskFieldError("Roadmap is empty")
 
     start, end, field_indent = find_task_block(lines, task_id)
-    rendered = normalize_scalar(value)
-    replacement = f"{' ' * field_indent}{field}: {rendered}\n"
 
     found_field_idx: int | None = None
     for idx in range(start + 1, end):
@@ -184,11 +218,17 @@ def set_task_field_text(text: str, task_id: str, field: str, value: str) -> str:
             break
 
     if found_field_idx is not None:
+        block_style = existing_block_style(lines, found_field_idx) if "\n" in value else None
+        if block_style is not None:
+            replacement_lines = render_block_scalar(field, block_style, value, field_indent)
+        else:
+            replacement_lines = [f"{' ' * field_indent}{field}: {normalize_scalar(value)}\n"]
         # Replace the key line AND its whole value block, so a multiline note
         # or a depends_on list cannot leave dangling continuation lines behind.
         value_end = field_value_end(lines, found_field_idx, end, field_indent)
-        lines[found_field_idx:value_end] = [replacement]
+        lines[found_field_idx:value_end] = replacement_lines
     else:
+        replacement = f"{' ' * field_indent}{field}: {normalize_scalar(value)}\n"
         # Insert at the end of the task block (before trailing blank separators)
         # so the new line can never split another field's multiline value.
         insert_at = end
