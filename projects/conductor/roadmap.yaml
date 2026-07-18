@@ -1775,3 +1775,12 @@ tasks:
     owner: worker
     claimed_by: claude-conductor-hourly-20260718T0048Z
     claimed_at: '2026-07-18T00:58:38Z'
+
+  - id: t-064
+    milestone: m2
+    title: 'set_task_field.py: preserve block-literal formatting when a note value contains embedded newlines'
+    status: ready
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-18T07:19:00Z'
+    note: 'Kaizen from ai-art-academy/t-010 (2026-07-18, claude-conductor-scheduled-20260718T0705Z). scripts/set_task_field.py''s own docstring says "Newlines in a new value are flattened to spaces — the writer emits exactly one line per field," by design, for every field including `note`. But in practice, every recurring/multi-cycle task''s `note` field (t-010 itself has 21+ entries) is hand-maintained as a `note: |-` block-literal scalar with one `RAN <date>: ...` paragraph per line, specifically so the roadmap stays human-readable and diff-friendly for Silas. Calling `set_task_field.py <project> <task-id> note "<existing note>\n<new RAN paragraph>"` silently collapses that entire multi-paragraph history into one giant single-line quoted flow scalar, destroying the paragraph breaks (content is preserved, formatting is not) -- caught this in dry-run/diff review before pushing (had to `git reset --soft`+`git checkout HEAD --` to recover the original block-literal file and hand-append the new paragraph with Edit instead), so no bad state landed on main, but a less careful session would ship the flattened version and every note field that gets touched this way afterward stays flattened forever (the script always re-flattens on the next edit, so the format never self-heals). Fix: when the field is `note` (or any field whose incoming value contains embedded newlines) and the existing field being replaced was itself a block-literal (`key: |-` / `key: >-` etc.), emit the new value in the same block style instead of collapsing to a quoted flow scalar -- preserves the established per-paragraph-per-line convention. Add a regression test asserting a multi-paragraph note round-trips through the block-literal form. Until this lands, the safe pattern for appending to a multi-paragraph note is a direct Edit/text insertion of the new paragraph line, not `set_task_field.py note "..."`.'

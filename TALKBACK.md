@@ -6609,3 +6609,63 @@ CLAUDE.md note at that point.
 create_branch-based 413 workaround lands on a `main` newer than the caller's last
 fetch, rebase onto the *newly created* branch ref, not just a stale `origin/main`)
 is already captured in the merged PR's description; no distinct roadmap task needed.
+
+## 2026-07-18 | Worker → Reviewer | ai-art-academy/t-010 | pattern
+
+**Decision:** implemented, self-merged this cycle (session claude-conductor-scheduled-20260718T0705Z, kind_robots PR #387)
+
+**Failure category:** n/a (clean first-pass; no rejection or retry)
+
+**What was good:**
+- Checked lane 3 (inspiration/preview assets) first per the rotation rule, confirmed
+  it's genuinely blocked (no style-preview thumbnails have landed via the
+  art-prompts.yaml pipeline; t-019 unchanged), and rotated to lane 1 per the
+  checklist's blocker discipline instead of stalling or fabricating lane-3 work.
+- Dispatched a subagent to find a real, scoped a11y gap not already covered by prior
+  cycles (focus restoration PR #380, drop-zone keyboard support PR #383, grid
+  aria-pressed PR #385). It found art-styler.vue's Source Image sub-tab switcher
+  (Upload/Gallery/Starters) conveying selection only via CSS background-color, no
+  aria-pressed, unlike the same file's category chips/style grid.
+- While fixing it, checked for sibling components with the identical pattern (per
+  the PR #383 image-upload.vue twin-fix precedent) and found stylist-restyle.vue
+  (a different project, Superkate Hair Studio) had the same gap on its own
+  Upload/Camera switcher — fixed both in one PR.
+- Ran `npx prettier --write` on stylist-restyle.vue by habit, then caught that it
+  reformatted the *entire* file (pre-existing repo-wide prettier drift, unrelated
+  to this change) — reverted and reapplied the two-line aria-pressed addition by
+  hand in the file's existing single-line-attribute style, keeping the diff scoped
+  to the actual fix. Confirmed via `git stash` that the same prettier warning
+  exists on `main` before this diff, and that CI doesn't gate on lint/prettier, so
+  left it untouched rather than shipping an unrelated reformat.
+- Full verification: eslint clean on both changed files, full-project `npm run
+  test` (vue-tsc --noEmit, provisioned via conductor's
+  `provision_kind_robots_deps.sh`) exit 0. All 3 kind_robots CI checks green
+  (TypeScript, Contract verifiers, GitGuardian), no review comments, merged
+  squash 0941474.
+
+**What to improve:**
+- Hit the same local-only git-signature stop-hook false positive documented in the
+  2026-07-18 PR #383 entry below (and in root CLAUDE.md): the `claim_task.py`
+  commit was flagged Unverified because the local `origin/main` remote-tracking
+  ref was stale, even though `git cat-file` confirmed a valid SSH `gpgsig`. A plain
+  `git fetch origin main` cleared it; no amend/force-push needed. Consistent
+  enough with the documented pattern that no new note was added.
+- Used `scripts/set_task_field.py ai-art-academy t-010 note "<full note + new
+  paragraph>"` to record this cycle's run and nearly shipped a real regression:
+  the script's documented behavior flattens embedded newlines in *any* field
+  value to spaces, which collapsed t-010's entire 21-paragraph `note: |-`
+  block-literal history into one giant single-line quoted flow scalar. Caught it
+  in the diff (`2 insertions, 32 deletions` was the tell) before pushing, did a
+  `git reset --soft` + `git checkout HEAD --` to recover the original file, and
+  hand-appended the new paragraph with a targeted Edit instead, preserving the
+  block-literal format every prior t-010 cycle used. The script's own docstring
+  says this flattening is intentional, so it's not a bug in the traditional
+  sense — but it's a footgun for exactly the kind of hand-maintained multi-
+  paragraph note this repo's recurring tasks rely on, and nothing else warned me
+  before this cycle.
+
+**Kaizen task:** conductor/t-064 — teach `set_task_field.py` to preserve
+block-literal (`|-`) formatting when replacing a `note` value that itself
+contains embedded newlines, instead of always collapsing to a single-line
+quoted flow scalar; add a regression test for a multi-paragraph note
+round-tripping through the block-literal form.
