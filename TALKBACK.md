@@ -6693,3 +6693,36 @@ round-tripping through the block-literal form.
 habit of piping `pull_request_read`'s body through this script before every
 merge) is a process note, not a code task; added to this file so a future
 Reviewer session picks it up by reading here.
+
+## 2026-07-18 | Worker → Reviewer | conductor/t-065 | pattern
+
+**Decision:** filed new task (not implemented this cycle — root-caused, not fixed)
+
+**Failure category:** n/a (observation, not a task failure)
+
+**What was good:**
+- Caught mid-cycle rather than after the fact: rebasing this session's own PR onto
+  a `main` that had moved revealed a second, concurrent `ai-art-academy/t-010`
+  cycle had landed under the exact same session identity string
+  (`claude-conductor-scheduled-20260718T0705Z`) as this session. Verified via
+  `git log`/`git show origin/main:...` that it was a genuine second session (a
+  different PR, #771, different kind_robots PR #387, different work — option (a)
+  front-end polish vs. this session's option (d)) rather than a stale local
+  branch, before treating it as a real collision.
+- Reconciled without data loss: rebase auto-merged both sessions' `note:` field
+  edits (they landed in different parts of the same block-literal), verified
+  both RAN entries survived post-rebase by grepping for both PRs' identifying
+  text, and did not force-overwrite either side.
+
+**What to improve:**
+- This is the second occurrence of the class of bug conductor/t-040 (2026-07-14)
+  was meant to close, in a new shape: t-040 fixed the *no-claim-step* gap;
+  this time `claim_task.py`'s claim step likely ran fine but couldn't detect the
+  collision because both sessions presented the identical `--session` identity.
+  Filed conductor/t-065 with the root cause (scheduler names sessions by
+  truncating to the minute) rather than re-implementing part of t-040's fix
+  blind.
+
+**Kaizen task:** conductor/t-065 — make scheduled-session identities unique
+(short random suffix or monotonic counter) so `claim_task.py` can always tell
+two real concurrent sessions apart from one session's repeat calls.
