@@ -1724,10 +1724,10 @@ tasks:
   - id: t-063
     milestone: m2
     title: 'LEARNING.yaml: fix malformed lesson field breaking test_committed_ledger_schema_conformance on every PR'
-    status: ready
+    status: claimed
     passes: 0
     stakes: reversible
-    updated: '2026-07-18T00:30:00Z'
+    updated: '2026-07-18T00:58:38Z'
     note: >
       Found 2026-07-18 (ai-art-academy/t-010 burst cycle, PR #738) while triaging a red
       "Authz regression tests" check in ci.yml — that job actually runs the full
@@ -1751,3 +1751,6 @@ tasks:
       Add a regression test asserting `scripts/backfill_learning.py`'s ledger-append path
       quotes/escapes values containing ": " so this can't recur silently from future
       appends.
+    owner: worker
+    claimed_by: claude-conductor-hourly-20260718T0048Z
+    claimed_at: '2026-07-18T00:58:38Z'
