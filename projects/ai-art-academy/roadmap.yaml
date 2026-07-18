@@ -956,10 +956,10 @@ tasks:
   - id: t-034
     milestone: m4
     title: 'kind_robots: add Ashcan School to the academyStyles.ts front-end seed'
-    status: review
+    status: done
     passes: 0
     stakes: reversible
-    updated: '2026-07-18T22:17:16Z'
+    updated: '2026-07-18T22:19:21Z'
     note: >-
       Filed 2026-07-18 (t-010 curriculum-expansion cycle, lane 4). docs/curriculum-outline.md
       grew from 22 to 23 movements: §23 Ashcan School (`ashcan-school`, era c. 1900-1913, four
@@ -977,6 +977,17 @@ tasks:
       preview-thumbnail prompt was queued separately in art-prompts.yaml this same cycle).
       Once the seed entry lands, a follow-up pass can add the four VERIFIED example-works
       entries (docs/curriculum-outline.md §23) to examples.manifest.json, mirroring t-013.
-    owner: worker
+
+
+      DONE 2026-07-18T22:19Z (conductor agent run, claude-conductor-agentrun-20260718T2300Z):
+      kind_robots PR #464 merged (squash 9d9ed8ef). Added the ashcan-school entry to
+      stores/seeds/academyStyles.ts (23rd curriculum movement), inserted chronologically
+      (sortYear 1900, between art-nouveau and expressionism) per the array's runtime sort.
+      Content sourced verbatim from curriculum-outline.md §23 and teaching-notes.md's
+      failure-mode column (no new facts invented). Verified: prettier clean, eslint clean,
+      full-project vue-tsc --noEmit exit 0, all 3 kind_robots CI checks green (TypeScript,
+      Contract verifiers, GitGuardian). Example works left for a follow-up task per t-013
+      precedent.
+    owner: null
     claimed_by: claude-conductor-agentrun-20260718T2300Z
     claimed_at: '2026-07-18T22:11:27Z'
