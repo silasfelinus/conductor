@@ -49,6 +49,16 @@ class ColoringArtEventTests(unittest.TestCase):
         )
         self.assertEqual(event.command(live=True)[-1], "--live")
 
+    def test_load_event_accepts_attempt_metadata(self) -> None:
+        event = MODULE.load_event(
+            self.write_event(
+                attempt_count=3,
+                last_attempt_at="2026-07-18T07:14:50+00:00",
+            )
+        )
+
+        self.assertEqual(event.book, "monster-recast")
+
     def test_load_event_rejects_unsafe_values(self) -> None:
         cases = [
             ("version", 2, "version must be 1"),
@@ -59,6 +69,9 @@ class ColoringArtEventTests(unittest.TestCase):
             ("limit", "18", "limit must be an integer"),
             ("timeout", 29, "timeout must be between 30 and 900"),
             ("timeout", 901, "timeout must be between 30 and 900"),
+            ("attempt_count", -1, "attempt_count must be at least 0"),
+            ("attempt_count", "1", "attempt_count must be an integer"),
+            ("last_attempt_at", 1, "last_attempt_at must be an ISO-8601 string"),
         ]
 
         for field, value, message in cases:
@@ -69,6 +82,15 @@ class ColoringArtEventTests(unittest.TestCase):
     def test_load_event_rejects_unknown_fields(self) -> None:
         with self.assertRaisesRegex(ValueError, "unsupported event fields: command"):
             MODULE.load_event(self.write_event(command="rm -rf /"))
+
+    def test_record_attempt_increments_and_timestamps_event(self) -> None:
+        path = self.write_event(attempt_count=2)
+
+        MODULE.record_attempt(path)
+
+        payload = yaml.safe_load(path.read_text(encoding="utf-8"))
+        self.assertEqual(payload["attempt_count"], 3)
+        self.assertRegex(payload["last_attempt_at"], r"^\d{4}-\d{2}-\d{2}T")
 
 
 if __name__ == "__main__":
