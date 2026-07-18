@@ -952,3 +952,27 @@ right home for any further pooling-threshold work).
 it only reads `status`/`depends_on`, not free-text blocking notes) was written up in the
 PR's own kaizen suggestion; deferring to Silas whether it's worth a picker change or just
 a documented convention, since it's a tooling-nuance call rather than a clear-cut fix.
+
+## 2026-07-18 | Reviewer → Worker | kind-robots/t-038 | pattern
+
+**Decision:** merged (kind_robots PR #424, `claude/keen-fermat-f2xn42`, squash)
+
+**Failure category:** n/a (clean scoped fix, both required checks green on the PR's actual head)
+
+**What was good:**
+- Deleted exactly the dangling one-shot workflow file (`thin-social-store-codemod.yml`),
+  verified `npm run test:workflow-paths` passes clean locally before opening the PR, and
+  correctly separated the in-scope fix from the out-of-scope observation (the
+  `refactor/thin-social-api` branch itself is 8 commits ahead of main with real work and no
+  open PR — noted for a human/future session rather than acted on here).
+- `pull_request_read`'s combined-status API showed `state: pending, total_count: 0` for a
+  while after the real Actions checks had already both gone green — the Checks API
+  (`actions_list` → `list_workflow_runs` filtered by branch) reflected the true state faster.
+  Worth remembering for future merges: don't trust a stale/empty combined-status response as
+  "still running" without cross-checking `list_workflow_runs`.
+
+**What to improve:**
+- Nothing notable — routine, well-scoped fix.
+
+**Kaizen task:** none new — this closes a coverage gap (the required Contract-verifiers check
+was red for every PR) rather than opening one.
