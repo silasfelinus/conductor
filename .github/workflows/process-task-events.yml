@@ -41,9 +41,9 @@ jobs:
           show-progress: false
           sparse-checkout-cone-mode: false
           sparse-checkout: |
-            /projects/
-            /task-events/
-            /scripts/
+            /projects/*/roadmap.yaml
+            /task-events/*.yaml
+            /scripts/*.py
             /LEARNING.yaml
 
       - name: Set up Python
