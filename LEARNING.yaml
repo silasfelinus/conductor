@@ -3394,3 +3394,12 @@ records:
   outcome: done
   failure_category: null
   lesson: "A fully-drafted implementation doc left behind by a blocked session (projects/serendipity/docs/t-011-serendipity-agent-todo-badge-filter.md) made this a near-zero-ambiguity patch-and-verify task; leaving such docs behind on a soft block is worth doing consistently since it turns the next session's work into transcription instead of redesign."
+- date: 2026-07-18
+  project: newsfeed
+  task: t-007
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "Store-side work (feedPreferenceStore's enableFeed/disableFeed/reorderFeeds, t-004) had already shipped with zero UI consuming it -- worth checking for this shape generally: a 'ready' feature task may already be half-built by an earlier task's kaizen/over-scope, so grep the store/helpers layer for existing actions before assuming a feature needs building from scratch."
