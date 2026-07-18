@@ -6763,3 +6763,63 @@ directed conductor-agent run per this session's "submit PR and merge when green"
 **Kaizen task:** global-ui/t-025 — decide a canonical home (accept-as-is vs. a new
 `.kr-panel-elevated` variant) for the two shadow-variant panels this pass declined to
 migrate on its own judgment.
+
+## 2026-07-18 | Worker → Reviewer | newsfeed/t-005 | pattern
+
+**Decision:** implemented, self-merged (session claude-conductor-burst-20260718T131014Z-18889,
+kind_robots PR #421)
+
+**Failure category:** n/a (clean first-pass)
+
+**What was good:**
+- Skipped re-claiming ai-art-academy/t-010 despite it being next in `next_ready_task.py`'s
+  output — that recurring task had already been cycled through 4+ times in the preceding few
+  hours by other sessions with diminishing returns (roadmap-accuracy passes, a11y micro-fixes),
+  and picking a genuinely new, well-scoped, non-recurring `ready` task (newsfeed/t-005) further
+  down `priority.yaml` seemed like better use of a burst cycle than another micro-pass on the
+  same recurring task. Walked the priority order project-by-project first, skipping recurring/
+  blocked/speculative-note/gate_human candidates (ai-art-academy/t-019 blocked on missing images,
+  coloring-book/t-022 is an egress-dependent pipeline already fought over many cycles,
+  digital-storefront/t-022 is gate_human outward-facing, kind-robots/t-033 explicitly says "wait
+  for a concrete second instance" in its own note, global-ui/t-012/t-023's remaining scope needs
+  a preview-deploy eyeball this sandbox can't do) before landing on newsfeed/t-005.
+- Found and closed two unrelated `status: review` tasks whose PRs had already merged with no one
+  flipping them to `done` (global-ui/t-025 → kind_robots PR #420 merged; digital-storefront/t-017
+  → design doc already on main with follow-ons filed) — verified each via `pull_request_read`/
+  `git log` before touching status, not just trusting the roadmap's stale state.
+- Provisioned real deps via `scripts/provision_kind_robots_deps.sh` and ran the actual
+  `npm run test` (vue-tsc), `eslint`, and `prettier` gates locally rather than guessing — caught
+  and fixed two genuine `noUncheckedIndexedAccess` type errors during development.
+- CI's "Contract verifiers" check failed on PR #421 with 2 errors unrelated to this diff
+  (academy-examples-manifest, workflow-paths). Rather than assume or guess, checked out
+  `origin/main` in a scratch worktree and reproduced both failures there unmodified, confirming
+  they predate this PR, before merging anyway and filing them as separate tasks
+  (ai-art-academy/t-033, kind-robots/t-038) instead of silently ignoring or wrongly blaming them
+  on this change.
+- kind-robots/t-038's investigation also surfaced `refactor/thin-social-api`, an 8-commit-ahead
+  branch with real completed work (a store refactor + boundary test) and no open PR, invisible to
+  any roadmap — flagged it in the task note as a separate finding for a human/future session
+  rather than acting on it (out of scope, not this session's work to merge).
+
+**What to improve:**
+- Session-identity collision risk (conductor/t-065, still open): used a session id with a pid
+  suffix (`claude-conductor-burst-20260718T131014Z-18889`) rather than a bare truncated-to-the-
+  second timestamp, but t-065's actual fix (making the scheduler itself emit unique ids) is still
+  unimplemented — this was a manual workaround, not a systemic fix.
+- The `note:` flattening footgun (conductor/t-064, still unresolved) meant hand-editing the
+  block-scalar YAML directly for the multi-paragraph append rather than using
+  `set_task_field.py`, same workaround the last few sessions have used. Still worth someone
+  actually landing t-064.
+
+**Kaizen task:** newsfeed/t-013 (batch-verify FEED_SOURCES reachability) and t-006 (render the
+feed on the homepage) both auto-unblocked via `resolve_deps.py` now that t-005 is done — no new
+kaizen task filed since t-013 already covers the natural next step (verifying registry sources
+now that the aggregation pipeline exists to verify them against).
+
+**Pattern note:** Third session this cycle-window to independently notice a `status: review` task
+sitting past its PR's actual merge (this entry's own global-ui/t-025 and digital-storefront/t-017
+closes; see also the "Reviewer batch-merge note" in AGENTS.md and conductor/t-053's session).
+Might be worth a small script (`scripts/audit_roadmaps.py` already exists per conductor/t-030's
+sibling check) that flags any `status: review`/`status: claimed` task whose `claimed_by` commit's
+referenced PR (if discoverable from the note text) is already merged/closed, so this stops being
+something each session has to notice by hand.

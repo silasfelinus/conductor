@@ -900,3 +900,26 @@ tasks:
     owner: worker
     claimed_by: claude-conductor-scheduled-20260718T0810Z-followup
     claimed_at: '2026-07-18T11:20:48Z'
+
+  - id: t-033
+    milestone: m3
+    title: 'kind_robots: fix examples.manifest.json contract failure (expressionism, cubism, bauhaus)'
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Filed 2026-07-18 (conductor-burst session, spotted as an unrelated pre-existing CI failure
+      while reviewing an unrelated newsfeed PR -- confirmed via a clean worktree against
+      origin/main before filing, so this is not caused by that PR). `npm run test:academy-examples-manifest`
+      (utils/scripts/verifyAcademyExamplesManifest.ts, part of the "Contract verifiers" required
+      CI check) currently fails on kind_robots main with 3 errors: the `expressionism`, `cubism`,
+      and `bauhaus` entries in stores/seeds/academyStyles.ts each have an `exampleWorks` array but
+      no matching entry in the examples manifest at
+      https://media.acrocatranch.com/images/academy/starters/examples.manifest.json (or wherever
+      that manifest is now hosted/generated from -- check verifyAcademyExamplesManifest.ts for the
+      exact source it validates against). This blocks the "Contract verifiers" check green on
+      every PR touching kind_robots main, not just Academy-related ones. Fix: either add the 3
+      missing manifest entries (mirroring an existing style's entry shape) or remove/adjust the
+      `exampleWorks` entries in academyStyles.ts for these 3 styles if the manifest is the source
+      of truth and they were added to the wrong side. Small, reversible, no schema change.
