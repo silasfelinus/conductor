@@ -66,7 +66,7 @@ jobs:
           git config user.name "conductor-task-events[bot]"
           git config user.email "conductor-task-events[bot]@users.noreply.github.com"
 
-          echo "Queued events on current main:"
+          echo "Queued task events on current main:"
           find task-events -maxdepth 1 -type f -name '*.yaml' -not -name 'example.yaml' -print | sort
 
           for attempt in $(seq 1 "$max_attempts"); do
