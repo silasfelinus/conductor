@@ -3270,3 +3270,33 @@ records:
   outcome: done
   failure_category: null
   lesson: "art-styler.vue's generated emit carried only the result image, not which style produced it, so the consumer had to re-read current store state to attribute a completed generation -- exactly the kind of async gap where a mid-flight selection change mis-attributes the result. When an event fires after an awaited async call, pass the value that was true at request-start through the event payload itself rather than letting the consumer re-read live state after the fact."
+
+- date: 2026-07-18
+  project: global-ui
+  task: t-025
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "kind_robots PR #420 merged cleanly (option (a): migrate both shadow-variant panels onto kr-panel/kr-panel-muted with the shadow layered as a template utility override) but the roadmap task sat at status: review for several hours/cycles with no session flipping it to done -- closing a task the Worker/Reviewer already merged is easy to defer past the same session. Check pull_request_read on any status: review task's referenced PR before picking new work; a merged PR with no roadmap follow-through is a same-session-fixable gap, not a needs-human one."
+
+- date: 2026-07-18
+  project: digital-storefront
+  task: t-017
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "A design-only task (no PR, per BOUNDARY.md) with follow-on tasks already filed (t-026, kind-robots/t-037) still needs an explicit status: done close -- the design doc landing on main and the follow-ons existing isn't itself a completion signal a later session will notice without checking. Same pattern as global-ui/t-025 this cycle: two independent status: review tasks both had their actual output already merged/landed, just missing the roadmap close."
+
+- date: 2026-07-18
+  project: newsfeed
+  task: t-005
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "The task note pointed at prs.get.ts's raw-array response shape as the model to follow, but that's a rare conductor-only outlier -- 110+ of this repo's other GET routes use a {success,message,data}+errorHandler convention instead. When a task note says 'model X on Y's shape,' check how common Y's specific pattern actually is across the codebase before copying it verbatim; the intended lesson (thin handler + shared util split, introduce caching) can be separable from the literal response contract."

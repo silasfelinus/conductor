@@ -119,7 +119,7 @@ tasks:
   - id: t-013
     milestone: m3
     title: "Batch-verify FEED_SOURCES reachability once the aggregation pipeline exists"
-    status: waiting
+    status: ready
     owner: null
     passes: 0
     stakes: reversible
@@ -137,7 +137,7 @@ tasks:
   - id: t-005
     milestone: m2
     title: "Build a minimal feed aggregation pipeline"
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -153,14 +153,47 @@ tasks:
       (thin handler + a shared fetch helper in a new server/utils/newsfeed.ts, mirroring
       server/utils/conductor-github.ts), and introduce defineCachedEventHandler for TTL
       caching — document the chosen TTL in the PR since there's no existing precedent.
+
+      DONE 2026-07-18 (conductor-burst session claude-conductor-burst-20260718T131014Z-18889):
+      built server/utils/newsfeed.ts (dependency-free RSS 2.0 / Atom parsing via regex
+      extraction -- no new npm dependency for a handful of known tags; sanitizes/truncates HTML
+      via a shared sanitizeText; per-source fetchSourceItems with an 8s timeout that never
+      throws, returning an error string instead so one broken source can't blank the feed;
+      aggregateFeed dedupes by stable id, sorts newest-first, applies optional
+      includeTags/excludeTags keyword filtering against title+summary+category) and
+      server/api/newsfeed/index.get.ts (thin handler, ?feed=/?feeds= query, defaults to every
+      defaultEnabled feed from t-004's registry). Used this repo's dominant
+      {success,message,data}+errorHandler response convention (110+ existing GET routes) rather
+      than prs.get.ts's raw-array shape, since prs.get.ts is a rare conductor-only outlier and a
+      future frontend consumer (t-006) will expect the standard shape. Wrapped in
+      defineCachedEventHandler at a 15-minute TTL -- this repo's first use of Nitro caching --
+      documented in a code comment (RSS sources publish far slower than 15 minutes; bounds
+      egress to the ~15 registry hosts to 4x/hour regardless of traffic). category on
+      NewsFeedItem is populated from each entry's real RSS/Atom <category> tags rather than
+      synthesized from the feed slug, matching DESIGN-BRIEF.md's "include/exclude tags or
+      keywords" wording more literally (no current FEED_DEFINITIONS entry sets
+      includeTags/excludeTags yet, so that path is untested against real data). Added
+      utils/scripts/verifyNewsfeedAggregation.ts (+ test:newsfeed-aggregation script) covering
+      RSS/Atom parsing, sanitization, malformed input, and unreachable-source resilience without
+      hitting the network for the deterministic assertions. Verified: test:newsfeed-aggregation
+      passes; full-project npm run test (vue-tsc --noEmit) clean (caught and fixed two real
+      noUncheckedIndexedAccess errors during development); eslint clean; prettier clean.
+      kind_robots PR #421 merged (squash, sha 9fa53d7). No live verification of the actual
+      FEED_SOURCES RSS URLs -- all remain verified: false per their own docstring; pipeline
+      verified against fixtures + a deliberately-unreachable host instead. Frontend consumption
+      (FeedCard.vue etc.) is t-006, out of scope here. CI's "Contract verifiers" check showed 2
+      failures on this PR (academy-examples-manifest, workflow-paths) -- both confirmed
+      pre-existing on origin/main via a clean worktree check before merging, unrelated to this
+      diff; merged anyway and filed ai-art-academy/t-033 and kind-robots/t-038 to track them
+      separately.
     claimed_by: claude-conductor-burst-20260718T131014Z-18889
     claimed_at: '2026-07-18T13:10:15Z'
-    updated: '2026-07-18T13:10:15Z'
+    updated: '2026-07-18T13:24:49Z'
 
   - id: t-006
     milestone: m2
     title: "Render the recommended newsfeed on the user homepage"
-    status: waiting
+    status: ready
     owner: null
     passes: 0
     stakes: reversible

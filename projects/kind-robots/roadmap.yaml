@@ -1149,3 +1149,32 @@ tasks:
     claimed_by: claude-conductor-scheduled-20260718T0510Z
     claimed_at: '2026-07-18T05:13:46Z'
     updated: '2026-07-18T05:14:53Z'
+
+  - id: t-038
+    milestone: m1
+    title: Delete stale one-shot thin-social-store-codemod.yml workflow breaking Contract verifiers CI
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Filed 2026-07-18 (conductor-burst session, spotted as an unrelated pre-existing CI failure
+      while reviewing an unrelated newsfeed PR -- confirmed via a clean worktree against
+      origin/main before filing). `npm run test:workflow-paths`
+      (utils/scripts/verifyWorkflowPaths.ts, part of the "Contract verifiers" required CI check)
+      currently fails on kind_robots main with 2 errors, both from
+      .github/workflows/thin-social-store-codemod.yml: it references
+      scripts/refactor-thin-social-store.mjs and branch refactor/thin-social-api, neither of
+      which exists on main (the script and branch only exist on the refactor/thin-social-api
+      branch itself). This is a one-shot workflow (see its own trailing comment: "One-shot
+      workflow; delete after the guarded transform lands.") that already ran successfully --
+      refactor/thin-social-api has the resulting commit
+      (396c3ab3 "refactor(socials): merge bounded aggregate mutations in store [skip ci]") plus a
+      follow-up test commit (dde063bd). It is now dangling and breaking the required CI check for
+      every PR against main, Academy-related or not. Fix: delete
+      .github/workflows/thin-social-store-codemod.yml (mirrors the precedent in git history:
+      "chore: remove one-shot PitchSheet follow-up workflow"). Separately flagging, NOT part of
+      this task's scope: refactor/thin-social-api itself is 8 commits ahead of main with no open
+      PR -- looks like real, seemingly-finished work (store refactor + a boundary-enforcement
+      test) stranded with no roadmap task tracking it anywhere in this repo. Worth a human or a
+      future session deciding whether to open a PR for it; not evaluated here.
