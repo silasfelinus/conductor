@@ -3376,3 +3376,21 @@ records:
   outcome: done
   failure_category: null
   lesson: "Before implementing a task whose note references a generated/shared file (here public/components.json / create-component-json.mjs), grep sibling projects' roadmaps for the same filename first -- this task duplicated kind-robots/t-039+t-040 verbatim and was closeable by cross-reference alone, with zero new code."
+- date: 2026-07-18
+  project: serendipity
+  task: t-008
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "A prior connector-only session's GitHub write-safety-filter block does not mean the task is stuck -- a session with real git + GitHub MCP patch access can just implement the already-scoped fix directly; re-check for patch access before assuming a soft-blocked task needs another connector-only attempt."
+- date: 2026-07-18
+  project: serendipity
+  task: t-011
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "A fully-drafted implementation doc left behind by a blocked session (projects/serendipity/docs/t-011-serendipity-agent-todo-badge-filter.md) made this a near-zero-ambiguity patch-and-verify task; leaving such docs behind on a soft block is worth doing consistently since it turns the next session's work into transcription instead of redesign."

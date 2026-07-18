@@ -6991,3 +6991,37 @@ AGENTS.md/CLAUDE.md kaizen history is now obsolete for the block-literal-preserv
 case specifically — worth a follow-up sweep only if another session hits a *different*
 formatting-loss shape from this script (e.g. `depends_on` block lists), which this fix
 does not touch.
+
+## 2026-07-18 | Reviewer → Worker | serendipity/t-008, t-011 | pattern
+
+**Decision:** merged (kind_robots PR #440, squash 7a3b0cb).
+
+**Failure category:** none — clean first-pass implementation of both tasks.
+
+**What was good:**
+- Both tasks had been left `status: ready` by a prior connector-only (ChatGPT/Worker)
+  session after its GitHub connector safety filter blocked writing to
+  silasfelinus/kind_robots. Rather than leaving the tasks stuck, that session preserved
+  the exact intended change inline (t-008's note) or as a full implementation doc
+  (t-011: `projects/serendipity/docs/t-011-serendipity-agent-todo-badge-filter.md`).
+  This session had real git + GitHub MCP patch access, so it implemented both directly:
+  `pendingChatId`/`pendingChat`/`pendingText` exposed from chatStore (removing the now-
+  redundant `weaveStartChatCount` heuristic in serendipityStore), and the Story tab +
+  todo badge + `isSerendipityAgentTodo` split in todoStore/conductor-page.vue, matching
+  the preserved doc closely.
+- Verified with `npm run test` (vue-tsc --noEmit, clean) and `npx eslint` on every
+  changed file (clean; 2 pre-existing unrelated `no-empty` errors in chatStore.ts noted
+  but not touched) before opening the PR, and confirmed all 3 required CI checks
+  (TypeScript, Contract verifiers, GitGuardian) green before merging.
+
+**What to improve:**
+- Claimed t-011 before t-008's PR had merged, landing both tasks' commits on the same
+  kind_robots branch/PR instead of finishing one task fully (merge + roadmap `done`)
+  before claiming the next, which is what AGENTS.md's "one task in flight" rule asks
+  for. Neither task was large and the PR body was updated to clearly cover both before
+  merge, so no real harm here, but the next session picking up two small `ready` tasks
+  back-to-back should default to sequencing them (finish/merge #1, then claim #2)
+  unless there's a specific reason to batch.
+
+**Kaizen task:** none filed this cycle — both tasks were fully-scoped, low-ambiguity
+patches with no new follow-on gap surfaced while implementing them.
