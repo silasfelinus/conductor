@@ -3310,3 +3310,13 @@ records:
   outcome: done
   failure_category: null
   lesson: "Deleting a stale one-shot workflow file that references a since-merged branch/script cleared a required 'Contract verifiers' CI check that was red on every kind_robots PR regardless of diff -- worth grepping for other one-shot workflows with a 'delete after X lands' trailing comment where X has already landed, since they silently keep failing verifyWorkflowPaths.ts forever otherwise."
+
+- date: 2026-07-18
+  project: newsfeed
+  task: t-006
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "Reusing one feed-rendering component (NewsfeedFeed) in both the live homepage and the project pitch page's #interactive slot avoided duplicating feed logic across two surfaces -- when a project has both a real feature and a separate pitch/status page, slot the real component into the pitch page rather than keeping them as two independent implementations."
