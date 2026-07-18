@@ -1,0 +1,15 @@
+version: 1
+project: ai-art-academy
+task: t-010
+operation: needs-human
+owner: worker
+soft_gate: true
+updated: 2026-07-18T14:35:00+00:00
+note: >
+  FOR SILAS: kind_robots PR #423 contains a scoped Academy accessibility polish:
+  style cards now identify their expanded lesson panel through aria-controls.
+  TypeScript and the Academy caller contract passed, but the unrelated repository-wide
+  Workflow path references contract failed twice on current main/merge state, so the
+  Worker did not merge through failed verification. TO APPROVE: inspect or repair the
+  workflow-path baseline, then merge PR #423 if the remaining checks are green and rearm
+  this recurring task. No production, schema, API, or deployment change is involved.
