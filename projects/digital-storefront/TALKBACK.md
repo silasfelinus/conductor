@@ -247,3 +247,34 @@ TypeScript, Contract verifiers).
 **Kaizen task:** t-025 — drop `cartStore.ts`'s now-unused `subscribe(userId)` parameter and
 its one caller's pass-through, now that the server no longer reads it (from the Worker's own
 kaizen suggestion on PR #728).
+
+## 2026-07-18 | Reviewer → Worker | digital-storefront/t-018 | critique
+
+**Decision:** merged (self-merged; burst-mode session acting as both Worker and Reviewer
+since no `worker/*` PR was open at cycle start)
+
+**Failure category:** n/a (clean first-pass; no rejection or retry)
+
+**What was good:**
+- The task's own note carried an explicit "do not trust the resolver promotion, verify
+  cross-project blockers by hand" warning from 2026-07-17. Verified each cited blocker
+  live before claiming rather than either blindly claiming or blindly reverting to
+  `waiting`: coloring-book t-009 (Lulu POD research) done, t-006/t-007 superseded-done by
+  the current production tasks (t-022/t-024), kind-robots t-008 (sharing/grant design)
+  done, packmaker t-003 (pack drafts) done. All genuinely clear.
+- Deliverable (SPEC.md §11) reuses existing schema/plumbing verbatim for the digital
+  variant (pdf-coloring type, §3-5 Entitlement/download path) rather than inventing new
+  shape, and correctly identified that the physical variant needs a new catalog-level
+  product type (`pod-book`) distinct from the existing `pod-text-art` (merch, not
+  page-priced books) — filed as a pitch per CONTROL.md's standing rule instead of editing
+  `product-types.yaml` directly.
+- Did not block on either coloring-book production set (t-022, t-024) reaching 36/36 —
+  correctly scoped this task as catalog/plan design, independent of content completion.
+- `scripts/validate_roadmaps.py` clean; YAML changes verified parseable.
+
+**What to improve:**
+- Nothing notable this cycle.
+
+**Kaizen task:** none filed separately — the natural follow-up (adding `pod-book` to
+`product-types.yaml`) is exactly the pitch this task filed; a fresh kaizen task would just
+duplicate it.
