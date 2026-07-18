@@ -73,20 +73,12 @@ tasks:
   - id: t-003
     milestone: m2
     title: "Move homepage settings into a dedicated settings section"
-    status: claimed
+    status: review
     owner: worker
     passes: 0
     stakes: reversible
     depends_on: t-001
-    note: >
-      Audit (t-001): the homepage is content/index.md, currently rendering
-      :user-manager (components/user/user-manager.vue -> user-dashboard.vue, which
-      embeds user-panel.vue's settings form, avatar upload, theme picker, cache-clear,
-      galleries). No settings live in a dedicated route today. Relocate user-manager's
-      "dashboard" tab so it's reachable at the existing /dashboard route
-      (dashboardConfigs.user is already registered) instead of the root, preserving all
-      current controls. Settings data itself stays on the Prisma User model via
-      stores/userStore.ts / server/api/users — do not add a new settings table.
+    note: 'Audit (t-001): the homepage is content/index.md, currently rendering :user-manager (components/user/user-manager.vue -> user-dashboard.vue, which embeds user-panel.vue''s settings form, avatar upload, theme picker, cache-clear, galleries). No settings live in a dedicated route today. Relocate user-manager''s "dashboard" tab so it''s reachable at the existing /dashboard route (dashboardConfigs.user is already registered) instead of the root, preserving all current controls. Settings data itself stays on the Prisma User model via stores/userStore.ts / server/api/users — do not add a new settings table. Connector-backed Worker claim (conductor-burst-hourly rotation, 2026-07-18): kind_robots PR https://github.com/silasfelinus/kind_robots/pull/391 swaps content/index.md''s body from :user-manager to a new :home-feed-placeholder component (components/home/home-feed-placeholder.vue) and drops the stale dashboardKey/dashboardTab binding on content/channels/home/dashboard.md (the Home channel''s Dashboard nav-tab entry, route /). content/dashboard.md (route /dashboard) is untouched -- it already rendered the identical :user-manager, so every current control (avatars/friends/achievements/ themes/chats/logout) is preserved exactly where it already lived, and the header avatar widget (user-picture.vue) already links there. vue-tsc, eslint, and prettier all clean on the touched files. Could not get a working browser preview of either / or /dashboard in this sandbox (both showed the stock Nuxt welcome page pre- and post-change -- a DB/session limitation, not caused by this diff). PR CI is the verification gate before merge.'
     claimed_by: claude-conductor-burst-20260718T-newsfeed
     claimed_at: '2026-07-18T09:07:43Z'
     updated: '2026-07-18T09:07:43Z'
