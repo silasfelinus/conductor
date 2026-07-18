@@ -427,11 +427,11 @@ tasks:
   - id: t-010
     milestone: m6
     title: Academy continuous improvement pass
-    status: ready
+    status: claimed
     recurring: true
     passes: 0
     stakes: reversible
-    updated: '2026-07-18 03:40:00+00:00'
+    updated: '2026-07-18T04:05:05Z'
     note: |-
       Standing never-idle task (re-arms to ready after every completion, per the recurring-task rule). Each cycle pick ONE: (a) front-end style/polish pass on Academy or art-styler surfaces, (b) roadmap upgrade — refine tasks, detail the next milestone, prune stale notes, (c) generate more art inspirations or style preview thumbnails, (d) expand the curriculum with a new movement/artist entry (respecting PUBLIC-DOMAIN-POLICY.md). Note which option ran in the PR. This task never reaches done and does not count toward milestone progress.
       CORRECTION 2026-07-16 (later same session): the "KR_API_TOKEN still absent" line in the RAN entry immediately below is WRONG — it was carried forward from prior cycles without re-checking the live env. The token IS present (env-var field + GitHub secret). t-004/t-009 notes now carry the accurate blockers: the sandbox can't reach the kind_robots API (egress 403), so generation runs via the auto-art-generate GitHub Action, not sandbox sessions; and rendering needs the home relay (correct KR_RELAY_TOKEN + KR_RELAY_USER_ID) and the DB up. Dispatching live generation is human-gated. (Re-applied fresh after PR #617 was closed dirty.)
@@ -460,8 +460,9 @@ tasks:
       Retry after the prior unconsumed claim event; current main verified ready with zero active claims.
 
       RAN 2026-07-18: option (d) curriculum/content expansion. Added projects/ai-art-academy/docs/suprematism-lesson.md, a complete eight-beat lesson module for the 22nd movement, via merged PR #743 (squash a3772894). Worker PR CI and Security Audit passed. Task-event recovery was hardened through PRs #747 and #750; this final event update is intentionally merged after the successful-merge trigger became active.
-    claimed_by: claude-conductor-burst-20260718T0008Z
-    claimed_at: '2026-07-18T00:08:10Z'
+    claimed_by: claude-conductor-burst-20260718T040501Z
+    claimed_at: '2026-07-18T04:05:05Z'
+    owner: reviewer
 
   - id: t-015
     milestone: m4
