@@ -7320,3 +7320,44 @@ the rotation.
 **Kaizen task:** `conductor/t-070` — consolidate `check_pr_kaizen.py` and
 `check_pr_file_overlap.py` into one pre-merge advisory pass so a Reviewer
 session only has to invoke one script per PR instead of remembering several.
+
+## 2026-07-19 | Reviewer (burst-mode) | conductor/t-070 | pattern
+
+**Decision:** merged (conductor PR #865, squash `3ca57ca`); task closed at `status: done`.
+
+**Failure category:** none — clean first-pass implementation, but the push itself hit
+the documented shallow-clone HTTP 413 twice in one session (first on a brand-new local
+`main` divergence after `claim_task.py`'s claim commit landed, then again after the
+squash-merge when flipping the task to `done`) — both resolved via CLAUDE.md's
+documented workarounds (`create_branch` for the first, direct `git_plumbing.
+commit_file_on_ref` to `refs/heads/main` for the second, mirroring `claim_task.py`'s
+own push mechanism) rather than transcribing the ~130KB roadmap.yaml by hand into
+`push_files`, which would have been the much riskier path for a file this size.
+
+**What was good:**
+- Rotation-picking: `next_ready_task.py` pointed at `ai-art-academy/t-010` (top of
+  `priority.yaml`), but that recurring task had already run 5+ times in the prior ~10
+  hours with diminishing returns (front-end polish, roadmap-accuracy x2, and a
+  curriculum spot-check all landed the same day, the most recent explicitly finding "no
+  scoped reversible change to make"). Rather than force a 6th cosmetic cycle, checked
+  the next few priority-order projects for genuinely actionable ready work
+  (`coloring-book/t-022` blocked on an already-escalated Alexandria/ComfyUI infra
+  outage, `kindrobots-unraid/t-012` hard-gated on local-only ProxySQL access,
+  `kind-robots/t-033` a zero-new-evidence watchdog already rechecked twice today) before
+  landing on `conductor/t-070`, a genuinely fresh, well-scoped kaizen task. Confirmed
+  the choice was sound: a concurrent session claimed `ai-art-academy/t-010` for a real
+  new lane within the hour, matching the read that it wasn't actually idle.
+- Kept the consolidation purely at the invocation-surface layer per the task's own
+  note — `pre_merge_checks.py` imports `check_pr_kaizen.check()` and
+  `check_pr_file_overlap.find_overlaps()`/`format_warning()` unchanged rather than
+  reimplementing or merging their logic, so each check's own tests stay the source of
+  truth for its behavior.
+- 13 new tests (`tests/test_pre_merge_checks.py`) cover per-check isolation, combined
+  formatting, and the CLI (text/`--json`/error-path). Full suite (413 passed, 1
+  skipped) and `audit_roadmaps.py` (0 errors, 6 pre-existing warnings) unchanged from
+  baseline.
+
+**What to improve:** none this cycle.
+
+**Kaizen task:** none filed — this task was itself a kaizen follow-on (from
+newsfeed/t-016) and no new deferred cleanup surfaced while implementing it.
