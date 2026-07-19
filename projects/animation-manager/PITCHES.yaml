@@ -1,4 +1,4 @@
-updated: "2026-07-13T23:03:00-07:00"
+updated: "2026-07-19T19:45:00-07:00"
 
 pitches:
   - id: bioluminescent-tide
@@ -199,3 +199,34 @@ pitches:
     acceptance:
       - multiple weather types coexist without visual clutter
       - effect remains passive and transparent
+
+  - id: ant-farm-excavation
+    title: Ant Farm Excavation
+    status: pitched
+    priority: 13
+    surprise: >
+      A cross-section sand column, like a childhood ant farm, where a small colony of
+      tiny robot ants continuously digs new tunnels, abandons old ones to slow collapse,
+      and occasionally uncovers a buried trinket half-visible in the sand.
+    passive_loop: >
+      Ants path along existing tunnels and dig new branches at their tips; unused
+      tunnel segments slowly narrow and cave in behind them, so the whole network
+      is always mid-reshape rather than settling into a final maze.
+    optional_interaction: >
+      Pointer acts as a vibration source that redirects nearby ants toward it; click
+      drops one grain-pile obstacle that the colony routes around and eventually digs through.
+    technique: >
+      Grid-based sand cells (dug/undug/filled) with simple ant agents doing biased
+      random-walk digging, rendered as a coarse heightfield with a few sand-grain
+      sprites for collapse events.
+    reduced_motion: Four slow ants, no collapse events, no obstacle drops, static tunnel shading.
+    performance_risk: >
+      Per-cell simulation cost at high resolution; use a small fixed grid and cap
+      simultaneous active tunnels.
+    novelty: >
+      Agent-driven excavation and tunnel decay reads as a living underground process,
+      distinct from magnetic-sand-garden's raked surface patterns and from any
+      digging-free effect already shipped.
+    acceptance:
+      - at least two tunnels are visibly under construction or collapse at any time
+      - excavated trinkets appear at most once per minute and do not repeat consecutively
