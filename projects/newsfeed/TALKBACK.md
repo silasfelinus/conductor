@@ -404,3 +404,32 @@ an existing sweep script) that flags any conductor task at `status: claimed`/`re
 for a cross-repo task whose target-repo PR (named in the task's own note/title) has
 already merged, so a session's roadmap state can't silently drift behind the real work
 for more than one sweep.
+
+## 2026-07-19 | Reviewer (burst-mode) | newsfeed/t-014 | pattern
+
+**Decision:** verified via Vercel MCP against the current production deployment; task closed at `status: done`. No kind_robots PR needed — pure verification, no code change.
+
+**Failure category:** none — clean verification, no regression found.
+
+**What was good:**
+- Followed AGENTS.md's documented Vercel MCP method exactly (`list_teams` →
+  `list_projects` → `list_deployments` → `web_fetch_vercel_url`) rather than
+  attempting a local `nuxt dev` boot, which the same doc already explains fails in
+  this sandbox (unreachable dummy `DATABASE_URL`).
+- Confirmed the deployment fetched was actually current (state `READY`, commit
+  `981d366` — the same commit this session's own `newsfeed/t-020` PR #543 landed)
+  rather than an arbitrary older one from the deployments list, several of which
+  were `ERROR` state from an earlier rocky stretch that day.
+- Explicitly flagged the one real verification gap instead of glossing over it:
+  the fetch is unauthenticated (no session cookie available from this sandbox), so
+  only the guest-rendered state of "/" and "/dashboard" was checked — the
+  logged-in variant and the actual `logout` control remain unverified, consistent
+  with the same class of soft limitation `newsfeed/t-012` already recorded for its
+  Dream `liveUrl` check.
+
+**What to improve:** none this cycle.
+
+**Kaizen task:** deferred — no new kaizen filed for this task; `conductor/t-071`
+(filed from this session's `t-020` close-out, same cycle) already covers the
+adjacent process gap this session ran into twice today (roadmap state lagging
+real-world completion).
