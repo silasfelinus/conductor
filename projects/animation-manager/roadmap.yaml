@@ -169,21 +169,14 @@ tasks:
   - id: t-009
     milestone: m1
     title: "Add a novelty-collision check to the pitch pipeline"
-    status: claimed
+    status: review
     owner: worker
     passes: 0
     stakes: reversible
-    note: >
-      Kaizen from Reviewer's t-001/t-002/t-003 review (conductor PR #494, TALKBACK
-      2026-07-14). SPEC.md requires each pitch in PITCHES.yaml to self-report a novelty
-      comparison against the existing catalog, but nothing verifies that claim
-      mechanically. Add a script (mirrors the style of the t-008 verification script) that
-      compares a new pitch's `technique` and `surprise` text against existing catalog
-      entries' equivalents — a simple keyword-overlap surfaced for human/agent judgment,
-      not an auto-reject — so near-duplicate pitches are flagged before they reach build.
+    note: 'scripts/check_animation_novelty.py added: Jaccard keyword-overlap check over technique+surprise text, --pitch to check one pitch against the rest, --strict for CI enforcement (default is advisory, matching the task''s not-an-auto-reject intent). Along the way found and fixed a real YAML syntax bug in PITCHES.yaml (tiny-weather-front''s surprise field had an unquoted colon breaking every parser, including this one) -- no script had ever loaded this file before. 13 new unit tests plus a guard test asserting the real PITCHES.yaml stays parseable with no high-overlap pairs.'
     claimed_by: claude-conductor-burst-20260719-rotation-animation-manager
     claimed_at: '2026-07-19T07:10:26Z'
-    updated: '2026-07-19T07:10:26Z'
+    updated: '2026-07-19T07:10:53Z'
 
   - id: t-010
     milestone: m3
