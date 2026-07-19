@@ -277,7 +277,7 @@ tasks:
   - id: t-010
     milestone: m3
     title: "Polish accessibility and responsive presentation"
-    status: review
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -363,3 +363,23 @@ tasks:
     claimed_by: claude-conductor-agent-run-20260718
     claimed_at: '2026-07-18T19:19:26Z'
     updated: '2026-07-18T19:19:26Z'
+
+  - id: t-016
+    milestone: m3
+    title: "Give newsfeed (and similar tasks) a real rendered preview instead of a local nuxt dev wall"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Kaizen from t-010 (kind_robots PR #486): at least two newsfeed tasks now
+      (t-010, and t-014 before it) hit the same sandbox limitation independently --
+      `npm run dev` 500s immediately because DATABASE_URL points at an unreachable
+      dummy MariaDB host, so SSR never reaches page markup and there's no way to
+      visually or keyboard-nav verify a frontend change locally. Investigate whether
+      the Vercel MCP connector (list_deployments / get_deployment / a preview URL for
+      this branch's PR) can give a session an actual rendered page to check against,
+      and if so document the concrete steps (which tool calls, what to look for) in
+      AGENTS.md's cross-repo section so future frontend tasks don't each rediscover
+      "no local nuxt dev" from scratch. If no such path exists yet, the deliverable
+      is a clear note saying so instead of silence.

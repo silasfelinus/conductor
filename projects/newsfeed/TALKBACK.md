@@ -121,3 +121,37 @@ to this project or task.
 **Kaizen task:** deferred — CONTROL.md already documents this exact collision
 pattern from 2026-07-17; a third instance doesn't need a new task, just continued
 vigilance per the existing note.
+
+## 2026-07-19 | Worker → Reviewer | newsfeed/t-010 | pattern
+
+**Decision:** merged (kind_robots PR #486, self-merged same session after CI green:
+Contract verifiers, TypeScript, GitGuardian all passed).
+
+**Failure category:** none — clean first-pass implementation.
+
+**What was good:**
+- Addressed every item the task note called out specifically (keyboard behavior,
+  focus states, readable timestamps, mobile layout, reduced-motion, visual
+  consistency) rather than a generic "polish" pass: `aria-pressed`/`aria-expanded`/
+  `aria-busy` on the filter/manage/refresh controls, `aria-live="polite"` on the
+  status region, `motion-safe:` variants on the card's hover transform (kept the
+  shadow transition unconditional since it isn't motion), a semantic `<time>`
+  element with an absolute-timestamp `title`, and visible `focus-visible` rings
+  across every interactive control touched.
+- Rebased onto `origin/main` twice (once pre-PR after a concurrent merge landed,
+  once more before opening) and re-ran eslint after each rebase and after
+  prettier's auto-fix, so nothing shipped unverified after a base change.
+
+**What to improve:**
+- Verification was static only (vue-tsc + eslint + prettier) — `nuxt dev` 500s in
+  this sandbox because `DATABASE_URL` points at an unreachable dummy MariaDB host,
+  the same wall `newsfeed/t-014` already hit. Said so explicitly in the PR's
+  "Flags for Reviewer" section rather than claiming a rendered check that didn't
+  happen; a session with real preview-deploy access should still do a quick
+  tab-through + OS-level reduced-motion toggle to confirm the CSS actually behaves
+  as intended, since Tailwind `motion-safe:`/`focus-visible:` variants were never
+  visually exercised.
+
+**Kaizen task:** newsfeed/t-016 filed — give newsfeed (and any other project hitting
+this same wall) a documented path to a *real* rendered preview via the Vercel MCP
+connector instead of each task rediscovering "no local nuxt dev" independently.

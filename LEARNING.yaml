@@ -3439,3 +3439,12 @@ records:
   outcome: done
   failure_category: null
   lesson: "Two projects can duplicate scope task-for-task under different ids/titles (animation-studio/t-004 vs animation-manager/t-004, near-identical asks) with no explicit link between them -- when a roadmap gains a clear 'active continuation' project, check whether an older sibling project should retire via project-overrides.yaml rather than staying independently claimable and risking a Worker re-doing already-shipped work."
+- date: 2026-07-19
+  project: newsfeed
+  task: t-010
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "Accessibility/responsive-polish tasks on this codebase can be fully verified with vue-tsc + eslint + prettier alone when a live nuxt dev preview isn't reachable (dummy DATABASE_URL 500s before SSR reaches page markup, same wall as newsfeed/t-014) -- static verification is an acceptable bar for this shape of change, but the PR should say so explicitly so a Reviewer knows no rendered/keyboard-nav check happened."
