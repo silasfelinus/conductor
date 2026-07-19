@@ -296,6 +296,116 @@ class TaskEventProcessorTests(unittest.TestCase):
         self.assertEqual(after_first, after_second)
         self.assertFalse(second.exists())
 
+    def test_stale_event_is_skipped_and_does_not_revert_newer_claim(self):
+        # conductor/t-067: a queued "review" event generated at 07:20 sat unapplied
+        # for an hour behind a malformed sibling file. In the meantime the same
+        # (recurring) task cycled through another claim at 08:18. Applying the old
+        # event once it finally parsed must not silently revert that newer claim.
+        roadmap = self.roadmap()
+        roadmap["tasks"][0]["status"] = "claimed"
+        roadmap["tasks"][0]["owner"] = "worker"
+        roadmap["tasks"][0]["claimed_by"] = "claude-newer-session"
+        roadmap["tasks"][0]["claimed_at"] = "2026-07-19T08:18:20Z"
+        roadmap["tasks"][0]["updated"] = "2026-07-19T08:18:20Z"
+        (self.root / "projects" / "demo" / "roadmap.yaml").write_text(
+            yaml.safe_dump(roadmap, sort_keys=False), encoding="utf-8"
+        )
+        before = (self.root / "projects" / "demo" / "roadmap.yaml").read_text(encoding="utf-8")
+
+        stale_event = self.write_event(
+            "stale-review.yaml",
+            {
+                "version": 1,
+                "project": "demo",
+                "task": "t-001",
+                "operation": "review",
+                "updated": "2026-07-19T07:20:00Z",
+                "note": "Roadmap-accuracy lane: stale by the time it applied.",
+            },
+        )
+
+        result = MODULE.process(stale_event, dry_run=False)
+
+        after = (self.root / "projects" / "demo" / "roadmap.yaml").read_text(encoding="utf-8")
+        self.assertIn("STALE", result)
+        self.assertEqual(before, after)
+        self.assertFalse(stale_event.exists())
+
+    def test_stale_event_dry_run_leaves_event_file_in_place(self):
+        roadmap = self.roadmap()
+        roadmap["tasks"][0]["status"] = "claimed"
+        roadmap["tasks"][0]["claimed_at"] = "2026-07-19T08:18:20Z"
+        (self.root / "projects" / "demo" / "roadmap.yaml").write_text(
+            yaml.safe_dump(roadmap, sort_keys=False), encoding="utf-8"
+        )
+
+        stale_event = self.write_event(
+            "stale-review.yaml",
+            {
+                "version": 1,
+                "project": "demo",
+                "task": "t-001",
+                "operation": "review",
+                "updated": "2026-07-19T07:20:00Z",
+            },
+        )
+
+        result = MODULE.process(stale_event, dry_run=True)
+
+        self.assertIn("STALE", result)
+        self.assertTrue(stale_event.exists())
+
+    def test_event_without_updated_timestamp_is_never_flagged_stale(self):
+        # No reference timestamp on the event means there's nothing to compare
+        # against -- fall through to normal processing rather than guessing.
+        roadmap = self.roadmap()
+        roadmap["tasks"][0]["status"] = "claimed"
+        roadmap["tasks"][0]["owner"] = "worker"
+        roadmap["tasks"][0]["claimed_at"] = "2026-07-19T08:18:20Z"
+        (self.root / "projects" / "demo" / "roadmap.yaml").write_text(
+            yaml.safe_dump(roadmap, sort_keys=False), encoding="utf-8"
+        )
+
+        event = self.write_event(
+            "no-timestamp-done.yaml",
+            {"version": 1, "project": "demo", "task": "t-001", "operation": "done"},
+        )
+
+        result = MODULE.process(event, dry_run=False)
+
+        self.assertNotIn("STALE", result)
+        task = self.roadmap()["tasks"][0]
+        self.assertEqual(task["status"], "done")
+
+    def test_event_newer_than_task_state_applies_normally(self):
+        # The ordinary flow: a session claims a task, then later queues a "done"
+        # event with a fresher timestamp than the claim. Not stale.
+        roadmap = self.roadmap()
+        roadmap["tasks"][0]["status"] = "claimed"
+        roadmap["tasks"][0]["owner"] = "worker"
+        roadmap["tasks"][0]["claimed_at"] = "2026-07-19T07:00:00Z"
+        roadmap["tasks"][0]["updated"] = "2026-07-19T07:00:00Z"
+        (self.root / "projects" / "demo" / "roadmap.yaml").write_text(
+            yaml.safe_dump(roadmap, sort_keys=False), encoding="utf-8"
+        )
+
+        event = self.write_event(
+            "later-done.yaml",
+            {
+                "version": 1,
+                "project": "demo",
+                "task": "t-001",
+                "operation": "done",
+                "updated": "2026-07-19T07:20:00Z",
+            },
+        )
+
+        result = MODULE.process(event, dry_run=False)
+
+        self.assertNotIn("STALE", result)
+        task = self.roadmap()["tasks"][0]
+        self.assertEqual(task["status"], "done")
+
     def test_main_applies_valid_events_even_when_an_earlier_one_fails(self):
         # "bad-claim" sorts before "good-claim" alphabetically, reproducing the
         # queue-head-of-line-blocking bug: a single unresolvable event must not
