@@ -1119,3 +1119,33 @@ remains tracked separately at t-033.
 examples.manifest.json media-server write step to a GitHub Actions job with
 secrets) is already tracked as `ai-art-academy/t-033` (needs-human); no new task
 needed.
+
+## 2026-07-19 | Reviewer (agent run) | ai-art-academy/t-010 | pattern
+
+**Decision:** rearmed `t-010` from `status: claimed` to `status: ready` (a
+one-line roadmap fix, no PR of its own beyond conductor's roadmap commit).
+
+**Failure category:** transient — no rework needed, just a missed checkpoint.
+
+**What was good:** n/a (drift fix, not a Worker submission).
+
+**What to improve:**
+- `t-010`'s own last note (17:04–17:25 UTC) already said "kind_robots PR #544
+  … merging once CI is green … Rearming to `ready` per the recurring-task
+  convention," and PR #544 confirmed merged at `2026-07-19T17:25:23Z`
+  (verified directly via `pull_request_read`), but the roadmap's `status:`
+  field was never flipped. Two independent sessions surfaced this same drift
+  within the hour (this one, and conductor/t-071's `check_pr_merged_drift.py`
+  build) and both initially left it alone per AGENTS.md's rotation-collision
+  caution, since `t-010` looked like it might still be another session's
+  in-flight work. Enough time has now passed with no further activity on the
+  task that it's safe to close out.
+
+**Kaizen task:** none — `t-010`'s own recurring cycle is the natural next
+step; the tooling gap is already covered by `conductor/t-071`
+(`scripts/check_pr_merged_drift.py`, merged PR #867).
+
+**Pattern note:** third confirmed instance of "claim commit lands, cross-repo
+PR merges, roadmap status never catches up," after superkate-hairstyle-ai/t-017
+and newsfeed/t-020 — the exact drift class `conductor/t-071` was raised to
+catch, recurring here the same day its detector was built.

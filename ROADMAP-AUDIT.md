@@ -1,13 +1,13 @@
 # Roadmap Audit
 
-Generated: `2026-07-19T17:24:40.096119+00:00`
+Generated: `2026-07-19T18:21:26.036603+00:00`
 
 This is a conservative structural audit. It reports suspicious state; it does not automatically change task status or remove human gates.
 
 ## Portfolio snapshot
 
 - **40** roadmaps, **31** active projects, **623** tasks
-- **57 ready**, **47 waiting**, **31 needs-human**, **1 claimed/review**, **476 done**
+- **57 ready**, **47 waiting**, **31 needs-human**, **0 claimed/review**, **477 done**
 - Findings: **0 errors**, **6 warnings**, **45 informational**
 
 ## Project inventory
@@ -15,7 +15,7 @@ This is a conservative structural audit. It reports suspicious state; it does no
 | # | Project | State | Kind | Ready | Waiting | Human | In progress | Done / Total |
 |---:|---|---|---|---:|---:|---:|---:|---:|
 | 1 | `challenge-center` | finished | software | 0 | 0 | 0 | 0 | 20 / 20 |
-| 2 | `ai-art-academy` | active | software | 1 | 0 | 3 | 1 | 29 / 34 |
+| 2 | `ai-art-academy` | active | software | 2 | 0 | 3 | 0 | 29 / 34 |
 | 3 | `coloring-book` | active | software | 1 | 9 | 0 | 0 | 19 / 29 |
 | 4 | `humboldt-scoop` | active | software | 0 | 0 | 0 | 0 | 8 / 8 |
 | 5 | `humboldt-scoop-cms` | active | software | 0 | 4 | 1 | 0 | 6 / 11 |
@@ -32,7 +32,7 @@ This is a conservative structural audit. It reports suspicious state; it does no
 | 16 | `animation-manager` | active | software | 2 | 2 | 0 | 0 | 7 / 11 |
 | 17 | `animation-studio` | retired | software | 3 | 4 | 0 | 0 | 1 / 8 |
 | 18 | `ecosystem-map` | active | software | 1 | 0 | 0 | 0 | 7 / 8 |
-| 19 | `conductor` | active | software | 3 | 0 | 4 | 0 | 64 / 71 |
+| 19 | `conductor` | active | software | 2 | 0 | 4 | 0 | 65 / 71 |
 | 20 | `serendipity` | active | software | 1 | 0 | 0 | 0 | 11 / 12 |
 | 21 | `storymaker` | active | software | 2 | 0 | 0 | 0 | 8 / 10 |
 | 22 | `davinci` | active | software | 1 | 0 | 0 | 0 | 13 / 14 |
