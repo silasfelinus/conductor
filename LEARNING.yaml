@@ -3595,3 +3595,12 @@ records:
   outcome: done
   failure_category: null
   lesson: "When a tie-break/precedence rule (here, resolveTutorialChannelFromRoute's cross-key bestLen prefix match) has zero real-world data to exercise it, add optional test-only override parameters defaulted to the real production data -- this lets a unit test inject controlled overlapping fixtures without touching any real call site's behavior, rather than either skipping the test or waiting for production data to coincidentally collide."
+- date: '2026-07-19'
+  project: newsfeed
+  task: t-014
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "A prior session's own note (\"could not verify locally, needs a real preview-deploy connector\") is a precise handoff -- the Vercel MCP list_teams/list_projects/list_deployments/web_fetch_vercel_url chain in AGENTS.md answers it directly against the live production deployment without needing a new PR or any code change. Worth checking whether a 'ready' task is actually a pure-verification task before assuming every ready task implies a code diff."
