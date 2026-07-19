@@ -405,11 +405,11 @@ tasks:
   - id: t-016
     milestone: m3
     title: "Kaizen: check same-project open PRs for touched-file overlap before merging the first one"
-    status: claimed
+    status: review
     owner: reviewer
     passes: 0
     stakes: reversible
-    updated: '2026-07-19T11:14:15Z'
+    updated: '2026-07-19T11:20:00Z'
     note: >
       Kaizen from t-008/t-010 (Reviewer, kind_robots PR #484/#486, 2026-07-19):
       two `claimed` newsfeed tasks both touched newsfeed-feed.vue and
@@ -421,6 +421,24 @@ tasks:
       the PR review so the conflict is anticipated rather than discovered at
       merge time. Keep it advisory (a warning/note), not a merge blocker, since
       overlapping files don't always conflict.
+
+
+      IN REVIEW 2026-07-19: added scripts/check_pr_file_overlap.py, a pure
+      no-network advisory check matching check_pr_kaizen.py's convention --
+      given the target PR's title/body/changed-files and a list of other
+      currently-open PRs' same, it infers each PR's project from the
+      `<project>/t-NNN` task id (same TASK_ID_RE approach as
+      check_pr_kaizen.py), and for any other open PR referencing the same
+      project, reports overlapping changed files. Advisory only (always exits
+      0); prints nothing for a clean PR. 14 unit tests in
+      tests/test_check_pr_file_overlap.py cover project extraction, overlap
+      detection, the target-excluded-from-its-own-others-list edge case, and
+      both text and --json CLI output. Full suite (392 tests) green;
+      `audit_roadmaps.py` clean. Not wired into CI (matches check_pr_kaizen.py,
+      which is also invoked manually during review, not automated) -- a
+      Reviewer session runs it with the GitHub MCP `list_pull_requests` /
+      `pull_request_read(method="get_files")` data it already has before
+      merging a same-project PR.
     claimed_by: claude-conductor-agentrun-20260719T1114Z
     claimed_at: '2026-07-19T11:14:15Z'
 
