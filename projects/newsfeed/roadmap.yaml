@@ -405,11 +405,11 @@ tasks:
   - id: t-016
     milestone: m3
     title: "Kaizen: check same-project open PRs for touched-file overlap before merging the first one"
-    status: ready
-    owner: null
+    status: claimed
+    owner: reviewer
     passes: 0
     stakes: reversible
-    updated: '2026-07-19T02:35:00Z'
+    updated: '2026-07-19T11:14:15Z'
     note: >
       Kaizen from t-008/t-010 (Reviewer, kind_robots PR #484/#486, 2026-07-19):
       two `claimed` newsfeed tasks both touched newsfeed-feed.vue and
@@ -421,6 +421,8 @@ tasks:
       the PR review so the conflict is anticipated rather than discovered at
       merge time. Keep it advisory (a warning/note), not a merge blocker, since
       overlapping files don't always conflict.
+    claimed_by: claude-conductor-agentrun-20260719T1114Z
+    claimed_at: '2026-07-19T11:14:15Z'
 
   - id: t-017
     milestone: m3
