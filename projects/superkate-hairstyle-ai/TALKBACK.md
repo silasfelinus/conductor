@@ -342,3 +342,41 @@ task and reviewed it under the normal software-PR bar.
 session does roadmap-tracked work in this project, set the task to `status: review`
 (with `claimed_by`/branch noted) before opening the PR, so a Reviewer sweep finds it
 via roadmap state instead of by cross-referencing the open-PR list by hand.
+
+## 2026-07-19 | Worker → Reviewer | superkate-hairstyle-ai/t-018 | pattern
+
+**Decision:** implemented, self-merged (kind_robots PR #504, Contract Tests + TypeScript
+Type Check both green).
+
+**Failure category:** null (clean first pass).
+
+**What was good:**
+- The task's note already scoped two options for producing a hair mask (server-side
+  segmentation node vs. client-side brush/MediaPipe) and explicitly named the brush as
+  self-contained. Picked that option directly instead of attempting the ComfyUI-box
+  path, which no agent session in this environment can reach — avoided a predictable
+  actionable-failure cycle.
+- Found that the `maskData` plumbing (`stylistStore.ts`, `enqueue.post.ts`,
+  `workflow.ts`'s `LoadImageMask`/`SetLatentNoiseMask`) already existed end-to-end and
+  was simply unused — confirmed via direct file reads before writing any code, so the
+  diff only needed to add the piece that was actually missing (something to produce
+  the mask), not re-derive or duplicate the existing wiring.
+- First implementation pass ran `prettier --write` on the whole touched file, which
+  reformatted ~200 unrelated lines (pre-existing drift — the file wasn't prettier-clean
+  on `main` before this change either, confirmed by running `prettier --check` against
+  the pre-change commit). Caught before committing: reset and reapplied only the
+  actual feature edits by hand, cutting the diff for `stylist-restyle.vue` from
+  263 changed lines to 39. Repo CI doesn't gate on lint/prettier (no lint step in any
+  workflow), so this was pure unforced scope creep, not a required fix.
+- UI-change verification note: `/stylist` is `ADMIN`-gated and this sandbox has no
+  real `DATABASE_URL`, so a live browser check wasn't possible — confirmed this is a
+  sandbox-wide limitation (the home page 500s identically with "DATABASE_URL is
+  missing") rather than something introduced by this change, before falling back to
+  vue-tsc + eslint per this repo's documented local-verification bar.
+
+**Kaizen task:** superkate-hairstyle-ai/t-019 remains open and is the natural next
+step (live tuning pass on the studio box) but explicitly needs a live Comfy/Kontext
+box this session can't reach — not claiming it. Suggested new kaizen: add minimal
+Cypress coverage for `/stylist` (currently zero — `grep -rli stylist cypress/` finds
+nothing), since neither the pre-existing `maskData` API path nor now this brush UI
+has any automated regression coverage.
