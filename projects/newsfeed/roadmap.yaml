@@ -119,7 +119,7 @@ tasks:
   - id: t-013
     milestone: m3
     title: "Batch-verify FEED_SOURCES reachability once the aggregation pipeline exists"
-    status: claimed
+    status: review
     owner: reviewer
     passes: 0
     stakes: reversible
@@ -133,6 +133,25 @@ tasks:
       record verified: true/false per entry, and swap out any that 404/403 for
       a working replacement rather than discovering broken feeds one at a time
       in production.
+
+      RAN 2026-07-19 (~20:10-20:20 UTC, claude-conductor-agentrun-20260719T201329Z):
+      batch-fetched all 15 FEED_SOURCES entries via the live pipeline (GET
+      /api/newsfeed on production through the Vercel MCP connector). 9 resolved
+      cleanly first try. 6 were 404/403: globalcitizen, devex-news,
+      gatesfoundation-ideas, kotaku-ai, pcgamer-ai, anthropic-news. Researched
+      and confirmed (via fetchSourceItems directly, real items returned) working
+      replacement URLs for 2 -- globalcitizen -> /en/content/feed/, kotaku-ai ->
+      /tag/ai/feed. Checked several URL patterns for the other 4 with no working
+      RSS endpoint found (devex-news 403s on every path tried -- bot-blocked, not
+      a wrong path; gatesfoundation-ideas and anthropic-news appear to have no
+      RSS at all; pcgamer-ai only resolves a site-wide off-topic feed) --
+      documented what was tried inline per source in newsfeed.ts rather than
+      guessing, matching the existing devex-news perspective-rating precedent.
+      Net: 11/15 sources verified: true (up from 0/15). Verified: eslint,
+      prettier --check, npm run test (vue-tsc, 0 errors), and the existing
+      utils/scripts/verifyNewsfeedAggregation.ts regression test all clean.
+      kind_robots PR #554 (branch claude/vigilant-edison-jcxp06) open, CI
+      pending -- will merge and flip to done once green.
     claimed_by: claude-conductor-agentrun-20260719T201329Z
     claimed_at: '2026-07-19T20:13:30Z'
     updated: '2026-07-19T20:13:30Z'
