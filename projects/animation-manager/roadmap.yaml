@@ -214,7 +214,7 @@ tasks:
   - id: t-011
     milestone: m1
     title: "Wire check_animation_novelty.py into CI as an advisory check on PITCHES.yaml changes"
-    status: review
+    status: done
     owner: reviewer
     passes: 0
     stakes: reversible
@@ -239,7 +239,8 @@ tasks:
       touched). No new test added for the workflow file itself — GitHub Actions workflows
       aren't unit-testable from this sandbox; correctness was checked by YAML validation plus
       matching the exact CLI invocation (`python scripts/check_animation_novelty.py`, no args)
-      already covered by the script's own tests and its documented advisory default.
+      already covered by the script's own tests and its documented advisory default. Merged
+      conductor PR #856 (squash edba0494), all 23 checks green, no review comments.
     claimed_by: claude-conductor-burst-20260719T1400Z
     claimed_at: '2026-07-19T14:08:14Z'
-    updated: '2026-07-19T14:08:14Z'
+    updated: '2026-07-19T14:16:41Z'
