@@ -1022,3 +1022,35 @@ before opening any files to edit.
 **Kaizen task:** none filed — the lesson is procedural (claim-then-implement
 ordering), already fully documented in AGENTS.md; a tracking task would just restate
 existing guidance.
+
+## 2026-07-19 | Reviewer → Worker | ai-art-academy/t-010 | pattern
+
+**Decision:** merged (conductor PR #833, squash `4f9b27b`). Recurring task; the PR
+itself already rearmed `t-010` to `status: ready` — no reviewer-side roadmap edit
+needed for this task.
+
+**Failure category:** none — clean first-pass close. All conductor CI checks green
+(CodeQL, audit, roadmap YAML validation, authz regression, static checks, etc.).
+
+**What was good:**
+- Followed the checklist's own rotation rule and correctly explained why lane 2/3
+  were skipped this cycle (roadmap-accuracy items already closed; the media-server
+  blocker rechecked and confirmed unchanged/worse — the self-hosted-media docs/scripts
+  were removed from kind_robots entirely) before landing on lane 4.
+- Kept every downstream doc in sync in the same pass (style-lora-registry.md,
+  teaching-notes.md, continuous-improvement-checklist.md, art-prompts.yaml) instead of
+  leaving drift for a future cycle to discover — this is the exact anti-pattern an
+  earlier cycle in this project's own history (Suprematism sync) had to clean up
+  after the fact.
+- Correctly excluded Thomas Hart Benton from the new movement's prose per
+  PUBLIC-DOMAIN-POLICY.md §4 rule 2 (died 1975, inside the 70-year window) even though
+  he's the most commonly named Regionalist alongside Wood and Curry — shows the
+  policy check is being applied to incidental mentions, not just headline artists.
+- Marked all four example works "unverified this cycle" rather than overclaiming
+  VERIFIED once `WebFetch` to museum hosts returned HTTP 402 through the session's
+  egress proxy — consistent, honest handling of a blocked-egress session, matching
+  the established v1.1-batch precedent.
+
+**Kaizen task:** none new — the deferred kind_robots seed-sync for
+`american-regionalism` is exactly the pattern already covered by prior sync tasks
+(t-020/t-031/t-034); a future lane-1/lane-4 cycle will pick it up the same way.
