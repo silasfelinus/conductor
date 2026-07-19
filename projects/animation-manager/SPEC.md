@@ -76,17 +76,30 @@ Reaction comments and ratings drive the next change. A polish pass becomes a new
 
 ## Attempt records
 
-Use the existing `Component` model without schema changes.
+Use the existing `Component` model without schema changes. Implemented in kind_robots
+via `stores/helpers/animationComponentHelper.ts` (naming/tag conventions) and
+`componentStore.ts`'s `recordAnimationAttempt`/`linkSupersededAnimationAttempt` actions
+(t-004, kind_robots PR #564) — read that helper before hand-rolling a new attempt row.
 
-Recommended fields:
+Fields, as actually implemented (the `isWorking`/`underConstruction`/`isBroken`
+booleans this section originally sketched were retired from the live schema before
+t-004 landed; the model now carries a single `status` enum instead):
 
 - `folderName`: `screenfx`
-- `componentName`: `<animation-slug>@v<build-number>`
+- `componentName`: `<animation-slug>@v<build-number>` (e.g. `bioluminescent-tide@v1`).
+  Distinct from the bare `<animation-slug>` row the WonderLab reconciliation system
+  (`server/utils/wonderlabComponentReconcile.ts`) keeps in sync with the live `.vue`
+  file — never write to that row from the attempt-record flow.
 - `title`: human title plus build number
-- `isWorking`: true only after required verification
-- `underConstruction`: true for prototypes or candidates
-- `isBroken`: true for failed or retired attempts that should not be promoted
-- `notes`: structured YAML or JSON text containing slug, build, catalog id, component path, commit, PR, technique, passive behavior, interaction behavior, reduced-motion behavior, verification, `supersedes`, and `supersededBy`
+- `status`: `WORKING` / `UNDER_CONSTRUCTION` / `BROKEN` / `RETIRED` / etc.
+  (`ComponentStatus`) — true only after required verification for `WORKING`
+- `notes`: a short human-readable one-line summary. The column is an unindexed
+  `VARCHAR(191)` with no app-layer length cap, so it is **not** where the structured
+  ledger below lives — cramming JSON into it risks silent truncation.
+- `tags` (JSON column, added by the `component_canonical_expand` migration, not a
+  schema change on top of what t-004 assumed): the structured payload — slug, build
+  number, catalog id, component path, commit, PR, technique, quality checklist, and
+  `supersedes`/`supersededBy` links.
 
 Reactions use `reactionCategory: COMPONENT` and the Component row id. The initial quality view should show rating average, rating count, reaction-type counts, and recent comments. Promotion decisions should show evidence but remain reversible and human-visible.
 

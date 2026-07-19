@@ -1,17 +1,17 @@
 {
-  "generated_at": "2026-07-19T20:36:44.364149+00:00",
+  "generated_at": "2026-07-19T21:25:34.348561+00:00",
   "summary": {
     "roadmaps": 40,
     "active_projects": 31,
     "tasks": 624,
     "ready": 55,
-    "waiting": 47,
-    "needs_human": 31,
+    "waiting": 45,
+    "needs_human": 32,
     "in_progress": 1,
-    "done": 479,
+    "done": 480,
     "errors": 0,
     "warnings": 6,
-    "info": 45
+    "info": 46
   },
   "projects": [
     {
@@ -273,15 +273,14 @@
       "autonomous": false,
       "task_count": 21,
       "counts": {
-        "claimed": 1,
         "done": 19,
-        "needs-human": 1
+        "needs-human": 2
       },
       "open_count": 2,
-      "human_attention": 1,
+      "human_attention": 2,
       "ready": 0,
       "waiting": 0,
-      "claimed": 1,
+      "claimed": 0,
       "review": 0,
       "done": 19
     },
@@ -312,17 +311,16 @@
       "autonomous": true,
       "task_count": 11,
       "counts": {
-        "done": 7,
-        "ready": 2,
-        "waiting": 2
+        "done": 8,
+        "ready": 3
       },
-      "open_count": 4,
+      "open_count": 3,
       "human_attention": 0,
-      "ready": 2,
-      "waiting": 2,
+      "ready": 3,
+      "waiting": 0,
       "claimed": 0,
       "review": 0,
-      "done": 7
+      "done": 8
     },
     {
       "slug": "animation-studio",
@@ -371,15 +369,16 @@
       "autonomous": false,
       "task_count": 71,
       "counts": {
+        "claimed": 1,
         "done": 65,
         "needs-human": 4,
-        "ready": 2
+        "ready": 1
       },
       "open_count": 6,
       "human_attention": 4,
-      "ready": 2,
+      "ready": 1,
       "waiting": 0,
-      "claimed": 0,
+      "claimed": 1,
       "review": 0,
       "done": 65
     },
@@ -1053,6 +1052,13 @@
       "project": "newsfeed",
       "task": null,
       "message": "Roadmap has no friendly goal/definition of done."
+    },
+    {
+      "severity": "info",
+      "code": "NEEDS_HUMAN_NOTE_FORMAT",
+      "project": "newsfeed",
+      "task": "t-021",
+      "message": "needs-human note does not use the AGENTS.md FOR SILAS action format."
     },
     {
       "severity": "info",
