@@ -3613,3 +3613,12 @@ records:
   outcome: done
   failure_category: null
   lesson: "A branch push can 413 even with a tiny diff and no local history rewrite -- this session's push failed twice, once because the session branch simply didn't exist on the actual GitHub remote yet (local remote-tracking ref showed a stale SHA, but `git ls-remote` showed nothing), and again after a squash-merge when a follow-up single-field status flip needed to reach main. Both resolved via CLAUDE.md's documented workarounds (`create_branch` for the first, `git_plumbing.commit_file_on_ref` direct to `refs/heads/main` for the second) rather than attempting to hand-transcribe a ~130KB roadmap.yaml into `push_files`, which would have risked silently corrupting the shared roadmap for every other concurrent agent. When a file is too large to safely retype, prefer a git-plumbing helper that reads the exact bytes from disk over any path that requires the content to pass through generated text."
+- date: '2026-07-19'
+  project: ai-art-academy
+  task: t-010
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: transient
+  lesson: "Two independent sessions within the same hour (this one, and conductor/t-071's tooling build) both found t-010 stuck at status: claimed with its own note confirming the referenced kind_robots PR #544 had merged and it should rearm to ready -- and both initially deferred fixing it per AGENTS.md's rotation-collision caution, since the task looked like it might still be another session's in-flight work. A task claim that's confirmed complete by its own note but left untouched twice out of caution is itself a signal worth acting on the second time, not deferring a third: check whether real time has actually passed (claimed_at vs now) and whether the referenced PR's merge timestamp predates the current sweep by a wide margin before assuming a stale-looking claim is still live."
