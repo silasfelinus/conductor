@@ -319,21 +319,14 @@ tasks:
   - id: t-011
     milestone: m3
     title: "Add adjustable political perspective balance"
-    status: claimed
+    status: review
     owner: worker
     passes: 0
     stakes: reversible
     depends_on:
       - t-007
       - t-008
-    note: >
-      Implement the staged controls from BIAS-CONTROLS.md. Start with transparent
-      Focused, Balanced, and Broad spectrum modes backed by normalized numeric weights;
-      show optional source-perspective labels only where provenance exists. Keep political
-      perspective separate from factual reliability, do not infer user ideology, preserve
-      unrated and primary sources, and avoid applying political balancing to unrelated feeds.
-      Custom per-bucket weights and contrasting-coverage grouping may follow once the simple
-      modes work cleanly.
+    note: 'RAN 2026-07-19 (~06:00 UTC, conductor-burst-rotation cycle): implemented. Wired the already-existing perspectiveMode/perspectiveWeights/labelsVisible plumbing (built ahead of schedule in t-004/t-008) that nothing previously read: added PERSPECTIVE_MODE_PRESETS (focused/balanced/broad, every bucket weight > 0 so no viewpoint is ever fully excluded) and setPerspectiveMode now actually applies the preset instead of being a no-op on weights; added a pure applyPerspectiveBalance() (smooth weighted round-robin, stores/helpers/newsfeed.ts) that reorders only items from feeds flagged topicPolitical -- non-political feeds are provably untouched (pinned-index test in the new contract script); stamped item.topicPolitical client-side in newsfeed-feed.vue from FeedDefinition at group-assembly time so a merged multi-feed list can still gate correctly; added the Focused/Balanced/Broad mode selector + a labels-visible toggle to newsfeed-filters.vue; added a perspective badge to feed-card.vue shown only when a source rating exists and labels are visible (never shown for unrated sources -- ''unrated remains visibly unrated'', not silently backfilled). Custom per-bucket sliders and contrasting-coverage grouping stay deferred per this task''s own note. Deliberately left FEED_SOURCES'' perspective fields unseeded: assigning real political-lean labels to specific organizations (globalcitizen, devex-news, the only topicPolitical:true feed''s sources) needs an actual rating methodology/citation, not an agent-invented guess -- fabricating one would violate BIAS-CONTROLS.md''s own ''never describe bias ratings as objective fact'' guardrail rather than satisfy it; flagged as a follow-up for whoever has a real source. New utils/scripts/verifyNewsfeedPerspectiveBalance.ts (pass-through, weighted-interleave, unrated-bucket-never-excluded, zero-weight-safety, preset-shape assertions) wired into package.json test:newsfeed-perspective-balance and contract-tests.yml. Verified: npm run test (vue-tsc, clean), npx eslint on all changed files (clean), and all three newsfeed contract scripts (filters/aggregation/perspective-balance) plus the WonderLab passive-card-fixture script (feed-card.vue is also a WonderLab preview) pass. kind_robots PR opened from claude/keen-fermat-foey0j.'
     claimed_by: claude-conductor-burst-20260719T-rotation-newsfeed
     claimed_at: '2026-07-19T06:07:28Z'
     updated: '2026-07-19T06:07:28Z'
