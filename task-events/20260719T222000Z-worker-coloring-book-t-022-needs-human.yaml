@@ -1,8 +1,0 @@
-version: 1
-project: coloring-book
-task: t-022
-operation: needs-human
-owner: worker
-soft_gate: true
-updated: 2026-07-19T22:20:00+00:00
-note: "FOR SILAS: The sole canonical Monster Recast 18-image color event is still present at color-art-events/20260717T203500Z-monster-recast-batch-01.yaml and has reached attempt_count 18 (last attempt 2026-07-19T19:37:03Z) without landing renders. Recent repository evidence says the shared ComfyUI/Alexandria render backend is failing every hourly run. No duplicate event or BW work was created. TO RESUME: restore/verify the home render backend, then set this task back to ready; the existing event will retry safely. This is a soft infrastructure gate and does not block unrelated roadmap work."
