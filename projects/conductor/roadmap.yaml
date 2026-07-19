@@ -1876,7 +1876,7 @@ tasks:
   - id: t-068
     milestone: m2
     title: Validate task-events/*.yaml syntax at write time or in CI, not first discovered when the shared process job breaks
-    status: ready
+    status: claimed
     passes: 0
     stakes: reversible
     note: >
@@ -1888,6 +1888,10 @@ tasks:
       whatever produces task-events/ entries (yaml.safe_load before write) or as a CI check on any PR
       touching task-events/ -- so a malformed event file is caught at its own PR instead of silently
       blocking the queue and failing CI for everyone else's PRs in the meantime.
+    owner: reviewer
+    claimed_by: claude-conductor-agentrun-20260719T1204Z
+    claimed_at: '2026-07-19T12:17:44Z'
+    updated: '2026-07-19T12:17:44Z'
 
   - id: t-069
     milestone: m2
