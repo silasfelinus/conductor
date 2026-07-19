@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-07-19T11:22:01Z
+Generated: 2026-07-19T11:27:27Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **290**
-- Outcomes: blocked: 12, done: 278
+- Closed tasks recorded: **291**
+- Outcomes: blocked: 12, done: 279
 - Success rate: **96%**
 - Average passes on successful tasks: **0.0**
 
@@ -38,7 +38,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | mermaids-of-venice | 3 | 100% |
 | model-builder | 28 | 100% |
 | mural-design | 1 | 100% |
-| newsfeed | 13 | 100% |
+| newsfeed | 14 | 100% |
 | packmaker | 10 | 100% |
 | ruler-hooked | 2 | 100% |
 | serendipity | 3 | 100% |
@@ -50,7 +50,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 15 | 40% |
-| software | 275 | 99% |
+| software | 276 | 99% |
 
 ## Failure categories
 
@@ -70,6 +70,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-07-19 `newsfeed/t-016` — check_pr_file_overlap.py mirrors check_pr_kaizen.py's convention (pure function over pre-fetched PR title/body/files, no network calls, always exits 0, silent on a clean PR) rather than inventing a new shape -- worth deliberately matching an existing advisory-check convention when adding a sibling check, since it keeps the Reviewer's invocation surface predictable. Filed conductor/t-070 to eventually consolidate the two into one pre-merge pass.
 - 2026-07-19 `newsfeed/t-017` — The Vercel MCP connector (list_teams -> list_projects -> list_deployments -> web_fetch_vercel_url) does give a session a real rendered preview page for any open kind_robots PR, unblocking the recurring 'no local nuxt dev' wall (t-010/t-014/t-017); documented the concrete steps in AGENTS.md. Checking list_deployments' state field along the way surfaced a genuinely broken production build (unquoted Character, a reserved MariaDB word, in raw SQL across four call sites from a prior PR cluster) that had nothing to do with newsfeed -- worth always glancing at production deployment health while investigating an unrelated preview, since 'the change isn't showing up' can mean the whole build is failing, not that the change is wrong. Raw-SQL contract-test mocks that match on text prefixes cannot catch real grammar/parse errors; filed conductor/t-069 for a proper check.
 - 2026-07-19 `conductor/t-067` — process_task_events.py now guards against the same staleness class claim_task.py already solves for direct claims: before applying a queued event, compare its own updated timestamp against the live task's claimed_at/updated and skip (log STALE, don't apply) if the task moved on since the event was queued. Clean first-pass fix with 4 new unit tests covering the reported regression, dry-run, no-timestamp, and ordinary-newer-event cases.
 - 2026-07-19 `ai-art-academy/t-010` — A queued task-events/ entry stuck behind a sibling file's YAML syntax bug applied stale status/note state on top of this session's freshly-claimed t-010 once it finally processed -- process_task_events.py has no staleness check against the task's current claimed_at/updated, unlike claim_task.py's live-recheck guard for direct claims. Read a corrupted roadmap note carefully before re-editing it: the truncated/duplicated fragment was easy to mistake for legitimate history at a glance. Filed conductor/t-067 for the underlying gap.
@@ -79,7 +80,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-07-19 `ai-art-academy/t-010` — PR #506's file diff listed two files (stylist-mask-brush.vue, stylist-restyle.vue) that looked out of scope for an academyStyles.ts sync -- turned out to be the exact 'main already has equivalent content under a different squash SHA' pattern from CLAUDE.md, confirmed safe by diffing the PR's own commit content against origin/main directly rather than trusting the file-list at face value.
 - 2026-07-19 `ai-art-academy/t-010` — continuous-improvement-checklist.md's coverage table already names the next verifiable action per area; reading it directly instead of re-auditing the curriculum from scratch is the fast path to a scoped, low-ambiguity t-010 cycle.
 - 2026-07-19 `superkate-hairstyle-ai/t-018` — The task's own note already scoped two options (server-side seg node vs client brush) and flagged which one is sandbox-reachable; reading that scoping note before claiming avoided burning a pass on the infeasible option (a), which needs ComfyUI box access no agent session has.
-- 2026-07-19 `newsfeed/t-008` — Two claimed tasks in the same project touching the same files (newsfeed t-008/t-010) can merge minutes apart and produce an avoidable conflict on the second review; check same-project open PRs' file lists for overlap before merging the first one, not just at merge time on the second.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-07-19T11:22:01Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-07-19T11:27:27Z_
