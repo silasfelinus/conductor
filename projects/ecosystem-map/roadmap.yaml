@@ -85,18 +85,27 @@ tasks:
   - id: t-004
     milestone: m1
     title: "Specify Manager and Assistant bot parity"
-    status: claimed
+    status: review
     owner: worker
     passes: 0
     stakes: reversible
     note: >
-      Document how each project Dream should receive a Manager or Assistant bot using
-      the existing bot framework. Include botType selection, avatar image prompt rules,
-      twenty thin portrait emotion/action image slots, narrator topic/thread wiring,
-      and the custom project navigation menu contract.
+      Added projects/ecosystem-map/BOT-PARITY-SPEC.md, grounded in the live kind_robots
+      schema (Bot.BotType is a free string not an enum; portraits live in ExpressionMedia,
+      not on Bot; there is no dreamType: PROJECT -- Project is its own model joined via
+      Project.managerBotId -> Bot.id). Covers botType selection (MANAGER for
+      project-steering bots, linked through Project.managerBotId not a Dream), avatar
+      image prompt rules, the 20-slot ExpressionMedia emotion/action portrait set (10
+      EMOTION + 10 ACTION values from the real Expression enum, plus CUSTOM), narrator
+      NarratorTopic/NarratorThread wiring where starterPrompts *is* the project
+      navigation menu contract, and a minimum-viable-parity implementation sequence for
+      t-006 to route per project. Verified schema details via GitHub read-only research
+      against silasfelinus/kind_robots (Bot, ExpressionMedia, NarratorTopic,
+      NarratorThread, Project models) rather than assuming the DESIGN-BRIEF.md
+      description was implementation-accurate.
     claimed_by: claude-conductor-burst-20260719-rotation-ecosystem-map
     claimed_at: '2026-07-19T08:09:56Z'
-    updated: '2026-07-19T08:09:56Z'
+    updated: '2026-07-19T08:13:27Z'
 
   - id: t-005
     milestone: m2
