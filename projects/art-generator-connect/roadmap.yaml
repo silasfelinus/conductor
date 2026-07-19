@@ -431,9 +431,9 @@ tasks:
 - id: t-020
   milestone: m4
   title: Re-tighten ArtQueueEntry.variant from string back to the ArtVariant union in kind_robots' server/utils/artRequestYaml.ts
-  status: review
+  status: done
   owner: reviewer
-  updated: '2026-07-19T23:20:00Z'
+  updated: '2026-07-19T23:23:00Z'
   passes: 0
   stakes: reversible
   note: >
@@ -451,8 +451,8 @@ tasks:
     ArtQueueEntry.variant to it; art-request.post.ts now imports ArtVariant instead
     of re-declaring its own via `keyof typeof VARIANT_SIZES`, and VARIANT_SIZES is
     pinned to `Record<ArtVariant, string>` so the two can't drift apart again.
-    Verified: test:art-request-yaml and full vue-tsc typecheck both clean. kind_robots
-    PR #581 open, CI running -- merging once green.
+    Verified: test:art-request-yaml and full vue-tsc typecheck both clean. Merged
+    kind_robots PR #581 (squash 984c412), all 3 CI checks green.
   claimed_by: claude-conductor-burst-20260719T2306Z
   claimed_at: '2026-07-19T23:06:07Z'
 - id: t-021

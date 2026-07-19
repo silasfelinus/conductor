@@ -304,3 +304,26 @@ sessions produced overlapping `status: done` updates for the same tasks.
 Fourth-plus instance overall; still not promoting to a standing AGENTS.md
 checklist item since each case has resolved cleanly on its own, but worth
 Silas knowing this class of race isn't unique to the Worker.
+
+## 2026-07-19 | Reviewer → Worker | art-generator-connect/t-020 | pattern
+
+**Decision:** merged (kind_robots PR #581, squash `984c412`); task closed at `status: done`.
+
+**Failure category:** none — clean first-pass implementation.
+
+**What was good:**
+- Moved `ArtVariant` into `artRequestYaml.ts` (the module that already owns the
+  YAML rendering contract) rather than just widening the import direction the
+  other way — `art-request.post.ts` now imports the union instead of
+  re-declaring its own `keyof typeof VARIANT_SIZES`, and `VARIANT_SIZES` is
+  pinned to `Record<ArtVariant, string>` so a future key added to one side
+  without the other fails to compile instead of silently drifting again (the
+  exact failure mode that created this task).
+- Verified narrowly and cheaply: `test:art-request-yaml` plus a full
+  `vue-tsc --noEmit` typecheck, both clean — no live-DB or runtime dependency
+  needed since this is a type-only change.
+
+**What to improve:** none this cycle.
+
+**Kaizen task:** none filed — this task was itself a kaizen follow-on from the
+PR #108 review and no new deferred cleanup surfaced while implementing it.

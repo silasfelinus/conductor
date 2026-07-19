@@ -3640,3 +3640,12 @@ records:
   outcome: done
   failure_category: null
   lesson: "Batch-verifying a source registry against a live pipeline surfaces real breakage fast (6/15 FEED_SOURCES were 404/403, none of it visible from reading the code) -- but finding a *replacement* URL needs the same discipline as sourcing a bias rating: test the candidate through the app's own parser (fetchSourceItems), not just an HTTP 200, before committing it, and leave genuinely unfindable replacements verified: false with an inline note of what was tried rather than swapping in an off-topic or wrong-entity feed just to clear the red X."
+- date: '2026-07-19'
+  project: art-generator-connect
+  task: t-020
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "A type widened during an extraction refactor (ArtQueueEntry.variant: ArtVariant -> string, kind_robots PR #108) is easy to miss since call sites still typecheck fine with valid literals -- the fix is cheapest when the narrower union is defined in the module that owns the contract (artRequestYaml.ts) and the consumer imports it, rather than each side declaring its own copy that can silently drift apart again."
