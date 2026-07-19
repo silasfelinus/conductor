@@ -505,8 +505,8 @@ tasks:
   - id: t-018
     milestone: m3
     title: "Research and cite real source-perspective ratings for FEED_SOURCES, starting with the Activism feed"
-    status: claimed
-    owner: reviewer
+    status: done
+    owner: null
     passes: 0
     stakes: reversible
     updated: '2026-07-19T19:13:03Z'
@@ -520,6 +520,25 @@ tasks:
       named ratings organization) with a citation, not an invented judgment call.
       Start with the Activism feed's sources (globalcitizen, devex-news, etc.),
       the only feed currently flagged `topicPolitical: true`.
+
+      DONE 2026-07-19 (conductor scheduled session, claude-conductor-scheduled-20260719T-newsfeed-t018):
+      Media Bias/Fact Check rates Global Citizen "Left-Center" bias / "High"
+      factual reporting (mediabiasfactcheck.com/global-citizen) -- mapped to
+      `perspective: { label: 'center-left', source: 'Media Bias/Fact Check
+      (mediabiasfactcheck.com/global-citizen)', confidence: 'medium' }` on the
+      `globalcitizen` FEED_SOURCES entry. Devex has no Media Bias/Fact Check
+      profile and Ground News reports its bias/factuality as unknown too (no
+      AllSides/Ad Fontes/MBFC rating exists to cite) -- left unrated with an
+      inline comment explaining why, per the "unrated sources remain usable
+      and visibly unrated" guardrail, so a future cycle doesn't re-research
+      the same absence. Verified eslint/prettier clean and `npm run test`
+      (vue-tsc --noEmit) 0 errors on kind_robots (after parking pre-existing
+      untracked leftover files -- components/code/, components/composition/,
+      components/giftshop/social-publisher.vue -- unrelated to this diff, per
+      the same convention as ai-art-academy/t-010's 2026-07-15 note). kind_robots
+      PR #549 (branch claude/newsfeed-t018-perspective-sources): all 3 CI checks
+      green (TypeScript, Contract verifiers, GitGuardian) -- merged squash
+      5695852.
     claimed_by: claude-conductor-scheduled-20260719T-newsfeed-t018
     claimed_at: '2026-07-19T19:13:03Z'
 
@@ -601,3 +620,25 @@ tasks:
       comments -- merged squash `981d366`.
     claimed_by: claude-conductor-burst-20260719T1605Z
     claimed_at: '2026-07-19T16:06:48Z'
+
+  - id: t-021
+    milestone: m3
+    title: "Visually verify feed-card.vue's perspective tooltip for both a rated and an unrated source via the Vercel preview flow"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Kaizen from t-018 (kind_robots PR #549, merged): the Activism feed now has
+      one rated source (globalcitizen, perspective.label 'center-left') and one
+      genuinely unrated source (devex-news, no perspective field at all) sitting
+      side by side for the first time -- `feed-card.vue:64` already renders a
+      `:title` tooltip citing `item.perspective?.source` when present, but this
+      has only ever been checked by reading the template, never by looking at an
+      actual rendered card for both the rated and the unrated case. Use the
+      Vercel MCP connector flow documented in AGENTS.md's cross-repo section
+      (list_teams -> list_projects -> list_deployments -> web_fetch_vercel_url)
+      against a newsfeed page/preview to confirm: the rated source shows a
+      tooltip citing Media Bias/Fact Check, the unrated source shows no
+      political-lean badge/tooltip at all (not a blank or broken one), and
+      neither state looks like objective fact per BIAS-CONTROLS.md's guardrail.
