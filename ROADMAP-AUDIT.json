@@ -1,16 +1,16 @@
 {
-  "generated_at": "2026-07-19T02:10:11.539107+00:00",
+  "generated_at": "2026-07-19T03:12:59.508425+00:00",
   "summary": {
     "roadmaps": 40,
     "active_projects": 31,
-    "tasks": 610,
-    "ready": 62,
-    "waiting": 49,
-    "needs_human": 30,
-    "in_progress": 2,
-    "done": 456,
+    "tasks": 612,
+    "ready": 64,
+    "waiting": 48,
+    "needs_human": 31,
+    "in_progress": 0,
+    "done": 458,
     "errors": 0,
-    "warnings": 5,
+    "warnings": 6,
     "info": 45
   },
   "projects": [
@@ -271,21 +271,19 @@
       "override_status": "active",
       "priority_index": 14,
       "autonomous": false,
-      "task_count": 15,
+      "task_count": 17,
       "counts": {
-        "claimed": 2,
-        "done": 8,
+        "done": 10,
         "needs-human": 1,
-        "ready": 3,
-        "waiting": 1
+        "ready": 6
       },
       "open_count": 7,
       "human_attention": 1,
-      "ready": 3,
-      "waiting": 1,
-      "claimed": 2,
+      "ready": 6,
+      "waiting": 0,
+      "claimed": 0,
       "review": 0,
-      "done": 8
+      "done": 10
     },
     {
       "slug": "model-builder",
@@ -375,12 +373,12 @@
       "task_count": 66,
       "counts": {
         "done": 61,
-        "needs-human": 3,
-        "ready": 2
+        "needs-human": 4,
+        "ready": 1
       },
       "open_count": 5,
-      "human_attention": 3,
-      "ready": 2,
+      "human_attention": 4,
+      "ready": 1,
       "waiting": 0,
       "claimed": 0,
       "review": 0,
@@ -791,6 +789,13 @@
     }
   ],
   "findings": [
+    {
+      "severity": "warning",
+      "code": "SOFT_NEEDS_HUMAN",
+      "project": "conductor",
+      "task": "t-034",
+      "message": "needs-human has no obvious hard-gate marker; consider returning it to ready, setting soft_gate: true, or documenting the actual gate."
+    },
     {
       "severity": "warning",
       "code": "ACTIVE_PROJECT_ALL_DONE",
