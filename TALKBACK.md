@@ -7295,3 +7295,28 @@ to notice and fix it).
 covers the next concrete conductor-tooling improvement; ai-art-academy's own kaizen slot
 is naturally filled by its next `t-010` cycle picking up lane 1 (front-end polish) per
 the rotation.
+
+## 2026-07-19 | Reviewer (burst-mode) | newsfeed/t-016 | pattern
+
+**Decision:** merged (conductor PR #849, squash `afa6c79`); task closed at `status: done`.
+
+**Failure category:** none — clean first-pass implementation.
+
+**What was good:**
+- Followed the existing `check_pr_kaizen.py` convention exactly (pure function
+  over pre-fetched PR data, no network calls of its own, always exits 0,
+  silent on a clean PR) instead of inventing a new shape, so the two advisory
+  checks now compose the same way in a Reviewer's workflow.
+- 14 unit tests cover the real edge cases: target excluded from its own
+  "others" list, no-task-id/no-files no-ops, multi-PR overlap, and both text
+  and `--json` output. Full suite (392 tests) green; `audit_roadmaps.py` clean.
+- Also merged conductor PR #846 (davinci/t-011) in the same sweep before
+  picking up this task — its kind_robots dependency (PR #516) had merged
+  since the prior session opened it, and CI was already green, so it was
+  ready to close rather than leave open.
+
+**What to improve:** none this cycle.
+
+**Kaizen task:** `conductor/t-070` — consolidate `check_pr_kaizen.py` and
+`check_pr_file_overlap.py` into one pre-merge advisory pass so a Reviewer
+session only has to invoke one script per PR instead of remembering several.

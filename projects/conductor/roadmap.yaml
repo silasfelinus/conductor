@@ -1912,3 +1912,22 @@ tasks:
       kind_robots code change, not a conductor one -- file the concrete script/CI-step work as a
       kind_robots task if this project tracks kind_robots CI work, or as a direct kind_robots PR
       when picked up.
+
+  - id: t-070
+    milestone: m2
+    title: Consolidate check_pr_kaizen.py and check_pr_file_overlap.py into one pre-merge advisory pass
+    status: ready
+    passes: 0
+    stakes: reversible
+    note: >
+      Kaizen from newsfeed/t-016 (Reviewer, conductor PR #849, merged 2026-07-19):
+      check_pr_file_overlap.py was built to match check_pr_kaizen.py's existing
+      convention (pure no-network function over pre-fetched PR title/body/files,
+      invoked manually by a Reviewer session, not wired into CI). Now that there
+      are two such advisory checks with the same invocation shape, consider a
+      single pre_merge_checks.py that runs both (and any future advisory PR
+      check) in one pass over one set of GitHub MCP-fetched PR data, so the
+      Reviewer only needs to remember/run one script per PR under review instead
+      of several. Keep each individual check's logic and tests separate --
+      this is purely about the invocation surface, not merging the checks
+      themselves.

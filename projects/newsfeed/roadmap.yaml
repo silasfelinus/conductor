@@ -405,11 +405,11 @@ tasks:
   - id: t-016
     milestone: m3
     title: "Kaizen: check same-project open PRs for touched-file overlap before merging the first one"
-    status: review
+    status: done
     owner: reviewer
     passes: 0
     stakes: reversible
-    updated: '2026-07-19T11:20:00Z'
+    updated: '2026-07-19T11:20:56Z'
     note: >
       Kaizen from t-008/t-010 (Reviewer, kind_robots PR #484/#486, 2026-07-19):
       two `claimed` newsfeed tasks both touched newsfeed-feed.vue and
@@ -439,6 +439,10 @@ tasks:
       Reviewer session runs it with the GitHub MCP `list_pull_requests` /
       `pull_request_read(method="get_files")` data it already has before
       merging a same-project PR.
+
+
+      DONE 2026-07-19: merged conductor PR #849 (squash afa6c79), CI green,
+      full suite 392 passed.
     claimed_by: claude-conductor-agentrun-20260719T1114Z
     claimed_at: '2026-07-19T11:14:15Z'
 
