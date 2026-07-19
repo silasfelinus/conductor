@@ -3658,3 +3658,12 @@ records:
   outcome: done
   failure_category: null
   lesson: "Verify a new contract check both ways -- clean against the real repo (proves the prior fix holds) and against a deliberately reintroduced instance of the bug (proves the check actually catches it), not just the former. Also: a project-wide typecheck gate (vue-tsc) can fail a PR for a reason unrelated to its diff if main itself broke earlier the same day (here, PR #569); when that happens, fix the one-line pre-existing break inline and flag it transparently in the PR body rather than blocking the actual task on it or silently expanding scope."
+- date: '2026-07-19'
+  project: art-generator-connect
+  task: t-020
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "Rotation collision on a cross-repo task: claim_task.py closes the conductor-side claim race but not the target-repo one -- two sessions can land the identical claim_task.py claim commit in the same window and then independently finish the same kind_robots implementation before either opens a PR, surfacing only at merge time via a dirty mergeable_state. No rework was needed here since both diffs were functionally identical; a cheap second check (grep the target repo's recent PRs for the task id before opening a new one) would catch this earlier next time."
