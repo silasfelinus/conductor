@@ -3538,3 +3538,12 @@ records:
   outcome: done
   failure_category: null
   lesson: "The Vercel MCP connector (list_teams -> list_projects -> list_deployments -> web_fetch_vercel_url) does give a session a real rendered preview page for any open kind_robots PR, unblocking the recurring 'no local nuxt dev' wall (t-010/t-014/t-017); documented the concrete steps in AGENTS.md. Checking list_deployments' state field along the way surfaced a genuinely broken production build (unquoted Character, a reserved MariaDB word, in raw SQL across four call sites from a prior PR cluster) that had nothing to do with newsfeed -- worth always glancing at production deployment health while investigating an unrelated preview, since 'the change isn't showing up' can mean the whole build is failing, not that the change is wrong. Raw-SQL contract-test mocks that match on text prefixes cannot catch real grammar/parse errors; filed conductor/t-069 for a proper check."
+- date: 2026-07-19
+  project: newsfeed
+  task: t-016
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "check_pr_file_overlap.py mirrors check_pr_kaizen.py's convention (pure function over pre-fetched PR title/body/files, no network calls, always exits 0, silent on a clean PR) rather than inventing a new shape -- worth deliberately matching an existing advisory-check convention when adding a sibling check, since it keeps the Reviewer's invocation surface predictable. Filed conductor/t-070 to eventually consolidate the two into one pre-merge pass."
