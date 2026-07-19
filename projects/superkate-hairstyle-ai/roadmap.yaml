@@ -392,11 +392,11 @@ tasks:
   - id: t-021
     milestone: m3
     title: Add minimal Cypress coverage for /stylist (currently zero automated coverage)
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
-    updated: '2026-07-19T05:14:07Z'
+    updated: '2026-07-19T07:17:19Z'
     note: >
       Kaizen from t-018 (kind_robots PR #504). No Cypress test references
       "stylist" anywhere in the repo (grep -rli stylist cypress/ returns
@@ -407,3 +407,5 @@ tasks:
       least one Cypress e2e assertion that an admin session can reach /stylist
       and see Hair Studio render, plus a contract test asserting enqueue.post.ts
       forwards a provided maskData through to the ComfyUI payload unchanged.
+    claimed_by: claude-conductor-agentrun-20260719T0700Z
+    claimed_at: '2026-07-19T07:17:19Z'
