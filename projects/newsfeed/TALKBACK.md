@@ -302,3 +302,37 @@ reserved words (starting with `Character`) used as table identifiers in raw SQL
 (`$queryRaw`/`$queryRawUnsafe`/raw driver `.query()`), since the existing contract-test
 mocks match on SQL text prefixes and can never catch a real grammar/parse error —
 exactly how this shipped across four call sites unnoticed.
+
+## 2026-07-19 | Reviewer (burst-mode) | newsfeed/t-012 | pattern
+
+**Decision:** merged (kind_robots PR #541, squash `f4ef6ca4`; conductor PR #855); task closed at `status: done`.
+
+**Failure category:** none — clean first-pass implementation.
+
+**What was good:**
+- Read the actual component tree (`newsfeed-filters.vue`, `newsfeed-preferences.vue`,
+  `feedPreferenceStore.ts`) before touching the task, rather than trusting the task
+  note's step (4) framing ("evolve the placeholder scaffold page") at face value —
+  found the page had already evolved past "placeholder" in prior cycles and only the
+  front-page copy hadn't caught up.
+- Traced why `/newsfeed`'s "Show tutorial" toggle was silently inert:
+  `resolveTutorialChannelFromRoute` had no `wonder` entry in `tutorialChannels` or
+  `tutorialRouteMap` at all (not a stale-but-present key), confirmed via the
+  `Record<TutorialChannelKey, TutorialChannel>` `satisfies` constraint that adding
+  the type-union member requires a full object, then added exactly the one section
+  the task asked for (`newsfeed`) rather than speculatively backfilling all ~11
+  `wonder`-dashboard tabs' tutorial content in the same PR.
+- Verified with the full local toolchain (`npm run test` vue-tsc, eslint, prettier,
+  three newsfeed verify scripts, plus `verifyNavigationRouteAccess`/
+  `verifyChannelResolver`/`auditChannelAssets`) before opening the PR, and both PRs'
+  CI came back green with no follow-up fixes needed.
+- Correctly triaged step (3) — verifying the Dream `liveUrl` — as an unverifiable
+  soft item (no DB/admin access from this sandbox) rather than guessing or silently
+  dropping it; documented in both the roadmap note and the kind_robots PR body.
+
+**What to improve:** none this cycle.
+
+**Kaizen task:** `newsfeed/t-019` — sweep the remaining `wonder`-dashboard routes
+(`/wonderlab`, `/screenfx`, `/davinci`, `/watchlist`, `/ruler-hooked`, `/voice-lab`)
+for the same missing-tutorial-channel gap this task fixed for `/newsfeed`, in one
+pass rather than one route at a time.
