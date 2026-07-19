@@ -7118,3 +7118,45 @@ under the current multi-session commit cadence regardless of code quality.
 project-roadmap-tracked, and the two follow-ups (production DB repair, Vercel plan/cadence
 decision) are Silas-only actions, not agent-workable tasks. If commit-cadence throttling is
 wanted, that would land as a kind_robots-side infra change, not a conductor roadmap item.
+
+## 2026-07-19 | burst-mode | system | pattern (kind_robots ci-janitor Todo #445, production deploy still blocked)
+
+**Decision:** completed (no new code change) — same still-unresolved gate as Todo #444/PR #502,
+not a new incident.
+
+**Failure category:** blocked — confirmed via `mcp__Vercel__get_deployment_build_logs` on the
+production deployment for commit `1e1588c` (superkate-hairstyle-ai/t-018, pushed 06:11:53Z):
+build still fails with Prisma `P3009` — `migrate found failed migrations in the target
+database, new migrations will not be applied` — naming the exact same migration,
+`20260719031500_reaction_first_party_author_expand`, whose SQL was already corrected in PR
+#502 (squash `e1a0024`). The corrected migration file is not the problem; production's
+`_prisma_migrations` table still carries a row for this migration marked failed from its
+*original* (pre-fix) attempt at 2026-07-19T03:27Z, and Prisma refuses to apply anything further
+until that row is resolved via `prisma migrate resolve` against the live database — which
+needs `DATABASE_URL` credentials no agent in this session holds (confirmed absent from env).
+Cross-checked with `mcp__Vercel__list_deployments`: production is still pinned to the last
+commit that deployed clean before the break (`a75cb03`, the newsfeed-a11y PR), and every
+`target: production` deploy since (`1094a11`, `1e1588c`) shows `state: ERROR` with this same
+P3009. This is not a code regression from t-018 or any other commit landed since — it is the
+identical blocker already flagged to Silas in the Todo #444 entry above, still open.
+
+**What was good:**
+- Did not re-attempt the already-applied code fix, re-touch the migration file, or open a
+  redundant PR — verified via build logs and deployment history that the fix from PR #502 is
+  correctly on `main` and the remaining failure is 100% the stale failed-migration row, not a
+  gap in that fix.
+- Did not guess; checked the actual Vercel build log for this specific run's deployment before
+  concluding it's a duplicate, rather than assuming from the Todo title alone.
+
+**What to improve:** none new — this is exactly the recurrence the prior entry predicted
+("this will very likely recur ... even with the migration bug fixed" was about the *Vercel cap*
+specifically, but the same "needs Silas" shape applies to the DB repair half of that entry too:
+until `prisma migrate resolve --rolled-back 20260719031500_reaction_first_party_author_expand`
+(or `--applied`, since the corrected SQL is now safe to (re)apply) runs against the live
+database, **every kind_robots production deploy stays broken**, regardless of how many more
+correct PRs land on top. Flagged to Silas directly again via push notification — this is the
+second cycle this has blocked production, now going on ~3 hours.
+
+**Kaizen task:** none — the actionable kaizen (DB repair, Vercel cadence) is already filed in
+the Todo #444 entry above; this entry exists only to record that Todo #445 is a duplicate
+symptom of the same open gate, not a new investigation.
