@@ -392,11 +392,10 @@ tasks:
   - id: t-021
     milestone: m3
     title: Add minimal Cypress coverage for /stylist (currently zero automated coverage)
-    status: review
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
-    updated: '2026-07-19T07:17:19Z'
     note: >
       Kaizen from t-018 (kind_robots PR #504). No Cypress test references
       "stylist" anywhere in the repo (grep -rli stylist cypress/ returns
@@ -430,5 +429,9 @@ tasks:
       spec live in-sandbox (cypress postinstall's binary download is blocked by
       the egress allowlist, same as npm ci's CYPRESS_INSTALL_BINARY=0 workaround)
       -- CI is the real verification gate for that spec.
+      DONE 2026-07-19 (~07:45 UTC): kind_robots PR #513 merged squash `8a1b9fb`
+      after all 4 CI checks green (TypeScript, Contract verifiers,
+      facet-alias-smoke, GitGuardian).
     claimed_by: claude-conductor-agentrun-20260719T0700Z
     claimed_at: '2026-07-19T07:17:19Z'
+    updated: '2026-07-19T07:45:00Z'
