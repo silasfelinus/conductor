@@ -1912,7 +1912,7 @@ tasks:
   - id: t-070
     milestone: m2
     title: Consolidate check_pr_kaizen.py and check_pr_file_overlap.py into one pre-merge advisory pass
-    status: claimed
+    status: review
     passes: 0
     stakes: reversible
     note: >
@@ -1927,6 +1927,23 @@ tasks:
       of several. Keep each individual check's logic and tests separate --
       this is purely about the invocation surface, not merging the checks
       themselves.
+
+
+      RAN 2026-07-19 (burst-mode cycle, claude-conductor-burst-20260719T-t070):
+      added scripts/pre_merge_checks.py, importing check_pr_kaizen.check() and
+      check_pr_file_overlap.find_overlaps()/format_warning() unchanged and
+      running both against one --target/--others JSON pair (same shape
+      check_pr_file_overlap.py already used), printing any combined warnings
+      and exiting 0 (advisory only). Neither underlying check's logic or tests
+      were touched -- this is purely the shared invocation surface the task
+      asked for. Added tests/test_pre_merge_checks.py (13 tests: run_checks
+      isolation per-check, format_results empty-when-clean and both-sections,
+      main() CLI text/--json/error-path). No AGENTS.md doc pointer existed to
+      update -- the two prior scripts were only ever invoked ad hoc by a
+      Reviewer, not referenced in the documented workflow. Verified: full
+      `pytest tests/` (413 passed, 1 skipped, same baseline as before this
+      change) and `scripts/audit_roadmaps.py` (0 errors, 6 pre-existing
+      warnings, unchanged).
     owner: reviewer
     claimed_by: claude-conductor-burst-20260719T-t070
     claimed_at: '2026-07-19T17:08:24Z'
