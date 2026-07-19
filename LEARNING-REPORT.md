@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-07-19T23:36:36Z
+Generated: 2026-07-19T23:39:43Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **303**
-- Outcomes: blocked: 12, done: 291
+- Closed tasks recorded: **304**
+- Outcomes: blocked: 12, done: 292
 - Success rate: **96%**
 - Average passes on successful tasks: **0.0**
 
@@ -21,7 +21,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | animation-studio | 1 | 100% |
 | appmaker | 2 | 100% |
 | approval-portal | 2 | 0% |
-| art-generator-connect | 1 | 100% |
+| art-generator-connect | 2 | 100% |
 | challenge-center | 16 | 100% |
 | coat-dance | 8 | 0% |
 | coloring-book | 13 | 100% |
@@ -51,7 +51,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 15 | 40% |
-| software | 288 | 99% |
+| software | 289 | 99% |
 
 ## Failure categories
 
@@ -71,6 +71,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-07-19 `art-generator-connect/t-020` — Rotation collision on a cross-repo task: claim_task.py closes the conductor-side claim race but not the target-repo one -- two sessions can land the identical claim_task.py claim commit in the same window and then independently finish the same kind_robots implementation before either opens a PR, surfacing only at merge time via a dirty mergeable_state. No rework was needed here since both diffs were functionally identical; a cheap second check (grep the target repo's recent PRs for the task id before opening a new one) would catch this earlier next time.
 - 2026-07-19 `conductor/t-069` — Verify a new contract check both ways -- clean against the real repo (proves the prior fix holds) and against a deliberately reintroduced instance of the bug (proves the check actually catches it), not just the former. Also: a project-wide typecheck gate (vue-tsc) can fail a PR for a reason unrelated to its diff if main itself broke earlier the same day (here, PR #569); when that happens, fix the one-line pre-existing break inline and flag it transparently in the PR body rather than blocking the actual task on it or silently expanding scope.
 - 2026-07-19 `art-generator-connect/t-020` — A type widened during an extraction refactor (ArtQueueEntry.variant: ArtVariant -> string, kind_robots PR #108) is easy to miss since call sites still typecheck fine with valid literals -- the fix is cheapest when the narrower union is defined in the module that owns the contract (artRequestYaml.ts) and the consumer imports it, rather than each side declaring its own copy that can silently drift apart again.
 - 2026-07-19 `newsfeed/t-013` — Batch-verifying a source registry against a live pipeline surfaces real breakage fast (6/15 FEED_SOURCES were 404/403, none of it visible from reading the code) -- but finding a *replacement* URL needs the same discipline as sourcing a bias rating: test the candidate through the app's own parser (fetchSourceItems), not just an HTTP 200, before committing it, and leave genuinely unfindable replacements verified: false with an inline note of what was tried rather than swapping in an off-topic or wrong-entity feed just to clear the red X.
@@ -80,7 +81,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-07-19 `newsfeed/t-014` — A prior session's own note ("could not verify locally, needs a real preview-deploy connector") is a precise handoff -- the Vercel MCP list_teams/list_projects/list_deployments/web_fetch_vercel_url chain in AGENTS.md answers it directly against the live production deployment without needing a new PR or any code change. Worth checking whether a 'ready' task is actually a pure-verification task before assuming every ready task implies a code diff.
 - 2026-07-19 `newsfeed/t-020` — When a tie-break/precedence rule (here, resolveTutorialChannelFromRoute's cross-key bestLen prefix match) has zero real-world data to exercise it, add optional test-only override parameters defaulted to the real production data -- this lets a unit test inject controlled overlapping fixtures without touching any real call site's behavior, rather than either skipping the test or waiting for production data to coincidentally collide.
 - 2026-07-19 `newsfeed/t-019` — When a task offers an explicit design choice (single multi-route channel vs. per-tab-key split), the smaller-diff option that widens an existing type (string -> string | readonly string[]) beat fragmenting one coherent UI narrative into N near-duplicate config entries -- worth defaulting to the option that keeps content close to a shared idea in one place, then generalizing the plumbing, rather than duplicating structure to avoid a small type change.
-- 2026-07-19 `model-builder/t-025` — When a render/generation backend has been failing every scheduled run for days (confirmed via the Actions API, not assumed), skip tasks that need it live and pick the next ready task that's verifiable by typecheck/lint alone -- don't burn a retry pass re-attempting a task blocked on infrastructure outside agent control.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-07-19T23:36:36Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-07-19T23:39:43Z_
