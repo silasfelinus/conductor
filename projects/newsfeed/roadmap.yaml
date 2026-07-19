@@ -352,20 +352,35 @@ tasks:
   - id: t-012
     milestone: m2
     title: "Polish and upgrade Newsfeed front-end surface"
-    status: claimed
+    status: review
     owner: worker
     passes: 0
     stakes: reversible
-    note: >
-      UI polish + upgrade for the newsfeed front end now that the scaffold page is live
-      at /newsfeed. Steps: (1) generate final dashboard-tab art at
-      public/images/dashboard-tabs/wonder/newsfeed.webp and tutorial art at
-      public/images/tutorials/wonder/newsfeed.webp; (2) add a matching section for
-      'newsfeed' under tutorialChannels.wonder.sections in
-      kind_robots/stores/helpers/tutorialCards.ts; (3) verify the PROJECT Dream liveUrl
-      points at /newsfeed (admin can run the Conductor 'Placements' button to backfill
-      channelKey/tabKey/liveUrl); (4) evolve the placeholder scaffold page into the full
-      interactive experience for this project.
+    note: |-
+      UI polish + upgrade for the newsfeed front end now that the scaffold page is live at /newsfeed. Steps: (1) generate final dashboard-tab art at public/images/dashboard-tabs/wonder/newsfeed.webp and tutorial art at public/images/tutorials/wonder/newsfeed.webp; (2) add a matching section for 'newsfeed' under tutorialChannels.wonder.sections in kind_robots/stores/helpers/tutorialCards.ts; (3) verify the PROJECT Dream liveUrl points at /newsfeed (admin can run the Conductor 'Placements' button to backfill channelKey/tabKey/liveUrl); (4) evolve the placeholder scaffold page into the full interactive experience for this project.
+
+      RAN 2026-07-19 (~13:15 UTC, claude-conductor-burst-20260719T1313Z): steps (2) and (4)
+      done in kind_robots PR #541 (branch claude/vigilant-edison-4umbno). (2) tutorialCards.ts
+      had no 'wonder' TutorialChannelKey at all (not a stale-but-present key) -- added it to
+      ExtraTutorialKey, added a wonder tutorialChannel with a newsfeed section, and added
+      wonder: '/newsfeed' to tutorialRouteMap, since resolveTutorialChannelFromRoute('/newsfeed')
+      previously returned null and the workspace sheet's "Show tutorial" toggle silently had
+      nothing to render on this page. (4) turned out to already be substantially done by prior
+      cycles -- newsfeed-feed.vue/newsfeed-filters.vue/newsfeed-preferences.vue/feedPreferenceStore.ts
+      already implement category filtering, source toggles, keyword include/exclude, sort mode,
+      and a Focused/Balanced/Broad perspective-balance UI; only newsfeed-page.vue's own
+      `deliverables.next` copy hadn't caught up, so moved those two items to `done` and left
+      "Custom per-bucket perspective weight sliders" (explicitly deferred in
+      newsfeed-filters.vue's own comment) as the one genuine remaining "next" item. (1) the
+      dashboard-tab image was already queued (kind-robots-newsfeed-image-4df00acf, pending);
+      added the missing tutorial-card queue entry (kind-robots-newsfeed-tutorial-fec66d78,
+      public/images/tutorials/wonder/newsfeed.webp) to art-prompts.yaml so the pipeline picks
+      it up too. (3) not verifiable from this sandbox -- no live DB access and no admin session
+      to run the Conductor "Placements" backfill; flagged as a soft follow-up in the PR rather
+      than blocking. Verified via `npm run test` (vue-tsc, clean), eslint/prettier, and
+      verifyNewsfeedAggregation/Filters/PerspectiveBalance + verifyNavigationRouteAccess/
+      verifyChannelResolver/auditChannelAssets (all pass). kind_robots PR #541 open, pending
+      review/merge this same cycle.
     claimed_by: claude-conductor-burst-20260719T1313Z
     claimed_at: '2026-07-19T13:13:50Z'
     updated: '2026-07-19T13:13:50Z'
