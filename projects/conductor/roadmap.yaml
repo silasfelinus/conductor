@@ -1969,3 +1969,35 @@ tasks:
     claimed_by: null
     claimed_at: null
     updated: '2026-07-19T18:14:51Z'
+
+  - id: t-072
+    milestone: m2
+    title: Regression-test the Character.userId nullability class of Prisma-vs-vue-tsc mismatch beyond this one call site
+    status: ready
+    passes: 0
+    stakes: reversible
+    note: >
+      Kaizen from conductor/t-069 (Reviewer, kind_robots PR #575, 2026-07-19): while
+      landing the unquoted-reserved-word-table contract check, that PR's own TypeScript
+      CI check failed for an unrelated reason -- `assertCharacterPatchCompatibility` in
+      server/api/characters/compatibility.ts typed its `existingUserId` parameter as
+      non-nullable `number`, but `Character.userId` is `Int?` in prisma/schema.prisma and
+      its only call site (server/api/characters/[id].patch.ts:75) passes the nullable
+      field straight through. This had already broken `main` earlier the same day via
+      PR #569 (commit 60a32129, "Apply Character patch compatibility boundary") with no
+      CI catching it until the next unrelated PR ran vue-tsc. Fixed inline (type-only
+      widening to `number | null`, verified via a clean full `npm run test` vue-tsc run)
+      since it was blocking this PR's own green CI, but the underlying pattern --
+      a Prisma nullable-Int field passed to a helper typed as non-nullable, only caught
+      when vue-tsc happens to run against the exact changed file -- has no regression
+      guard of its own (unlike the InputJsonValue cast class covered by
+      verifyNoPrismaJsonCast.ts / kind-robots/t-033). Consider whether a lightweight
+      contract check (or just running `npm run test` as its own always-green CI gate,
+      if it isn't already blocking merges) would catch this class earlier; also worth
+      checking staging.  Cross-reference kind-robots/t-033's note on keeping heuristic
+      pattern checks narrow to avoid false positives -- confirm a concrete second
+      instance exists before broadening scope, same discipline as that task.
+    owner: null
+    claimed_by: null
+    claimed_at: null
+    updated: '2026-07-19T22:30:00Z'
