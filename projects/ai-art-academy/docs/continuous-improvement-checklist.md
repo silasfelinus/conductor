@@ -16,7 +16,8 @@ Record the lane, files changed, and verification in the task note before rearmin
 ### Rotation state
 
 - Last completed lane: Front-end polish — fixed a focus-management bug in `academy-styles-browser.vue` where closing the style detail panel while an active search filter had unmounted the originating grid button dropped keyboard focus to `<body>`; added a fallback to the search input. kind_robots PR #520, merged squash `a174d16`, 2026-07-19.
-- Next preferred lane: Roadmap accuracy.
+- Rechecked 2026-07-19 (~12:20-12:35 UTC): roadmap accuracy (lane 2) and a curriculum-depth (lane 4) spot-check both came back clean/unchanged this cycle — no drift, no new verifiable fact. No lane completed a landed change; see `t-010`'s RECHECKED note in `roadmap.yaml` for detail.
+- Next preferred lane: Roadmap accuracy still applies once lane 3 (preview thumbnails) unblocks or a fresh front-end/curriculum finding turns up — check `public/images/academy/styles/` before picking lane 3.
 - Override the preferred lane only when it is blocked or a higher-severity reversible issue is newly verified; record that reason in the task note.
 
 This explicit state is the handoff between recurring cycles. Update it in the same PR as each `t-010` improvement so the next Worker does not infer rotation from a long roadmap note.
