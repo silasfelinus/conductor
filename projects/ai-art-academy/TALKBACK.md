@@ -1149,3 +1149,32 @@ step; the tooling gap is already covered by `conductor/t-071`
 PR merges, roadmap status never catches up," after superkate-hairstyle-ai/t-017
 and newsfeed/t-020 — the exact drift class `conductor/t-071` was raised to
 catch, recurring here the same day its detector was built.
+
+## 2026-07-19 | Reviewer (agent run) | ai-art-academy/t-010 | pattern
+
+**Decision:** rearmed `t-010` (roadmap accuracy lane); PR opened.
+
+**Failure category:** none — clean lane-2 cycle, no code changed.
+
+**What was good:**
+- Lane 2 (roadmap accuracy) per the checklist rotation, since lane 1 (front-end
+  polish) had just run and merged (PR #544) earlier this cycle.
+- Found and corrected a small stale claim in this project's own process doc:
+  `continuous-improvement-checklist.md` still said kind_robots PR #544 was
+  "merging pending CI" after it had, in fact, already merged
+  (`2026-07-19T17:25:23Z`, confirmed via `pull_request_read`) — a minor
+  instance of the same "note says done, state says not-done" drift class
+  `conductor/t-071` targets, just in a doc field instead of `status:`.
+- Rechecked all three open `needs-human` tasks (t-004, t-009, t-033) against
+  their stated blockers before assuming they were still accurate — all three
+  confirmed still genuinely blocked on unchanged infra (relay/DB down,
+  home-server upload access), no roadmap edit needed there.
+- Used `roadmap_text_patch.set_multiline_task_field_text` to append this
+  cycle's RAN note as a single new line rather than a full-file YAML
+  re-serialization — kept the diff to the actual new content instead of
+  reformatting every task in a 105KB file.
+
+**What to improve:** none this cycle.
+
+**Kaizen task:** none — the tooling gap this project keeps surfacing
+(status-vs-note drift) is `conductor/t-071`, already merged.
