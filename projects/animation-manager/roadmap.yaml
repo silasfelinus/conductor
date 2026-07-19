@@ -214,7 +214,7 @@ tasks:
   - id: t-011
     milestone: m1
     title: "Wire check_animation_novelty.py into CI as an advisory check on PITCHES.yaml changes"
-    status: claimed
+    status: review
     owner: reviewer
     passes: 0
     stakes: reversible
@@ -225,6 +225,21 @@ tasks:
       runs scripts/check_animation_novelty.py whenever PITCHES.yaml changes and surfaces any
       flagged pairs in the job output/PR, matching the "not an auto-reject" intent already in
       the script and its originating task.
+
+
+      DONE 2026-07-19 (conductor-burst rotation, claude-conductor-burst-20260719T1400Z): added
+      .github/workflows/animation-novelty-check.yml, triggered on `pull_request` when
+      projects/animation-manager/PITCHES.yaml or scripts/check_animation_novelty.py changes.
+      Runs `python scripts/check_animation_novelty.py` (no `--strict`), matching the script's
+      existing advisory intent — the job always exits 0 and any flagged pairs print straight
+      into the check's log output for a reviewer to see, without failing the PR. Modeled on
+      roadmap-audit.yml's path-triggered pattern already used elsewhere in this repo. Verified
+      the workflow YAML parses (`yaml.safe_load`) and the existing 13-test
+      tests/test_check_animation_novelty.py suite still passes unchanged (no script logic
+      touched). No new test added for the workflow file itself — GitHub Actions workflows
+      aren't unit-testable from this sandbox; correctness was checked by YAML validation plus
+      matching the exact CLI invocation (`python scripts/check_animation_novelty.py`, no args)
+      already covered by the script's own tests and its documented advisory default.
     claimed_by: claude-conductor-burst-20260719T1400Z
     claimed_at: '2026-07-19T14:08:14Z'
     updated: '2026-07-19T14:08:14Z'
