@@ -503,8 +503,8 @@ tasks:
   - id: t-019
     milestone: m3
     title: "kind_robots: wire tutorial-channel coverage for the rest of the wonder dashboard's routes"
-    status: review
-    owner: worker
+    status: done
+    owner: null
     passes: 0
     stakes: reversible
     updated: '2026-07-19T15:14:27Z'
@@ -525,5 +525,33 @@ tasks:
       resolves one route per key) -- confirm whether a per-tab-key channel split is
       needed instead of one shared 'wonder' key covering many unrelated pages, and
       note the tradeoff either way before implementing.
+
+      RESOLVED 2026-07-19 (conductor agent run): chose the single-channel,
+      multi-route-array design over a per-tab-key split -- widened tutorialRouteMap's
+      value type to `string | readonly string[]` and updated
+      resolveTutorialChannelFromRoute to check every route in a key's list. Added the
+      six missing sections (wonderlab, screenfx, davinci, watchlist, ruler-hooked,
+      voice-lab) to the `wonder` channel. kind_robots PR #542: eslint, prettier, and
+      vue-tsc (npm run test) all clean; merged squash `56b59a0`.
     claimed_by: claude-conductor-19jul-1510
     claimed_at: '2026-07-19T15:14:27Z'
+
+  - id: t-020
+    milestone: m3
+    title: "Add a unit test asserting resolveTutorialChannelFromRoute picks exact-match over prefix-match across different channel keys"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-19T15:30:00Z'
+    note: >
+      Kaizen from t-019 (kind_robots PR #542, merged): resolveTutorialChannelFromRoute
+      now iterates multiple routes per channel key (the `wonder` key alone covers 7
+      routes) and picks the longest matching prefix via a cross-key `bestLen`
+      tie-break when no exact match hits first. No route in the current set is a
+      prefix of another channel's route, so this hasn't been exercised, but the
+      function has no test coverage at all today. Add unit tests in a
+      tutorialCards spec covering: (1) exact match always wins even when a shorter
+      route from a different key would also match as a prefix, (2) prefix match
+      picks the most specific (longest) route across different keys, (3) the
+      `wonder` key's multi-route array resolves correctly for each of its 7 routes.

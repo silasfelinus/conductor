@@ -3577,3 +3577,12 @@ records:
   outcome: done
   failure_category: null
   lesson: "When a render/generation backend has been failing every scheduled run for days (confirmed via the Actions API, not assumed), skip tasks that need it live and pick the next ready task that's verifiable by typecheck/lint alone -- don't burn a retry pass re-attempting a task blocked on infrastructure outside agent control."
+- date: '2026-07-19'
+  project: newsfeed
+  task: t-019
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "When a task offers an explicit design choice (single multi-route channel vs. per-tab-key split), the smaller-diff option that widens an existing type (string -> string | readonly string[]) beat fragmenting one coherent UI narrative into N near-duplicate config entries -- worth defaulting to the option that keeps content close to a shared idea in one place, then generalizing the plumbing, rather than duplicating structure to avoid a small type change."
