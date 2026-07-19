@@ -348,11 +348,11 @@ tasks:
   - id: t-018
     milestone: m3
     title: "Hair-mask SOURCE for true hair-only restyling (auto-seg or brush)"
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
-    updated: "2026-07-14T00:00:00Z"
+    updated: '2026-07-19T05:14:07Z'
     note: >
       From the 2026-07-14 image-gen quality review (IMAGE-GEN-QUALITY-REVIEW.md).
       The Kontext graph now ACCEPTS a hair mask (workflow.ts maskName ->
@@ -366,6 +366,8 @@ tasks:
       that fills maskData. Until this lands, the shipped identity fix is the
       originalWeight (preserve-original) slider — full-frame img2img, not
       hair-only. This is the concrete "adaptive masking" Silas asked for.
+    claimed_by: claude-conductor-agentrun-20260719T0400Z
+    claimed_at: '2026-07-19T05:14:07Z'
 
   - id: t-019
     milestone: m3
