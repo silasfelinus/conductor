@@ -647,24 +647,12 @@ tasks:
   - id: t-021
     milestone: m3
     title: "Visually verify feed-card.vue's perspective tooltip for both a rated and an unrated source via the Vercel preview flow"
-    status: claimed
-    owner: worker
+    status: needs-human
+    owner: null
     passes: 0
     stakes: reversible
     note: >
-      Kaizen from t-018 (kind_robots PR #549, merged): the Activism feed now has
-      one rated source (globalcitizen, perspective.label 'center-left') and one
-      genuinely unrated source (devex-news, no perspective field at all) sitting
-      side by side for the first time -- `feed-card.vue:64` already renders a
-      `:title` tooltip citing `item.perspective?.source` when present, but this
-      has only ever been checked by reading the template, never by looking at an
-      actual rendered card for both the rated and the unrated case. Use the
-      Vercel MCP connector flow documented in AGENTS.md's cross-repo section
-      (list_teams -> list_projects -> list_deployments -> web_fetch_vercel_url)
-      against a newsfeed page/preview to confirm: the rated source shows a
-      tooltip citing Media Bias/Fact Check, the unrated source shows no
-      political-lean badge/tooltip at all (not a blank or broken one), and
-      neither state looks like objective fact per BIAS-CONTROLS.md's guardrail.
-    claimed_by: claude-burst-hourly-20260719T2010Z
-    claimed_at: '2026-07-19T20:07:34Z'
-    updated: '2026-07-19T20:07:34Z'
+      Kaizen from t-018 (kind_robots PR #549, merged): the Activism feed now has one rated source (globalcitizen, perspective.label 'center-left') and one genuinely unrated source (devex-news, no perspective field at all) sitting side by side for the first time -- `feed-card.vue:64` already renders a `:title` tooltip citing `item.perspective?.source` when present, but this has only ever been checked by reading the template, never by looking at an actual rendered card for both the rated and the unrated case. Use the Vercel MCP connector flow documented in AGENTS.md's cross-repo section (list_teams -> list_projects -> list_deployments -> web_fetch_vercel_url) against a newsfeed page/preview to confirm: the rated source shows a tooltip citing Media Bias/Fact Check, the unrated source shows no political-lean badge/tooltip at all (not a blank or broken one), and neither state looks like objective fact per BIAS-CONTROLS.md's guardrail.
+      RAN 2026-07-19 (~20:07-20:20 UTC, claude-burst-hourly-20260719T2010Z): code-level trace confirms the wiring is correct end-to-end -- server/utils/newsfeed.ts:177-181 maps FeedSourceDefinition.perspective onto NewsFeedItem.perspective only when the source config carries one (globalcitizen does, devex-news doesn't), and feed-card.vue:64 binds `item.perspective?.source` straight into the badge's :title with no missing branch. Could not complete the actual visual check though: the Vercel MCP flow's web_fetch_vercel_url only returns pre-hydration SSR HTML -- newsfeed-feed.vue's loadFeed() runs onMounted only (client-fetch, not SSR/useAsyncData), so the fetched markup always shows the "Nothing here yet" placeholder regardless of real feed content. A direct Playwright/Chromium check against the vercel.app preview URL also isn't possible from this sandbox (net::ERR_CONNECTION_RESET -- that domain isn't on this session's egress allowlist, which is presumably why AGENTS.md's documented flow uses the MCP tool instead of a local browser in the first place). Fetched the live production API directly instead (`GET /api/newsfeed?feed=activism` via web_fetch_vercel_url, which does execute server-side): confirmed 0 items -- BOTH Activism sources are currently dead in production (globalcitizen: HTTP 404, its RSS feed no longer exists at all -- checked their homepage, no <link rel="alternate" type="application/rss+xml"> anywhere; devex-news: HTTP 403, looks like a blanket bot-block on the whole devex.com domain, independently reproduced via plain WebFetch too). So the tooltip literally cannot render for either case right now -- not a code bug, but there's no live data to visually confirm against. This is exactly what newsfeed/t-013 (batch-verify FEED_SOURCES reachability) exists to catch; while investigating I found and claimed t-013 too, but a concurrent session (claude-conductor-agentrun-20260719T201329Z) claimed it out from under me a few minutes into the file edit -- reverted my newsfeed.ts change unstaged rather than risk a duplicate-implementation collision (see conductor/t-040 precedent in AGENTS.md), so t-013's actual fix is left to that session. FOR SILAS (soft gate, not blocking other work): even once t-013 lands, a REAL rated+unrated pair for the Activism feed specifically may still not be achievable without a working replacement source for globalcitizen (dead, no RSS at all) or devex-news (blanket 403) -- and BIAS-CONTROLS.md means any replacement needs a researched, cited Media Bias/Fact Check-style rating, not a guess, which I did not attempt here. This task should stay ready-but-blocked until t-013 (or a follow-up) lands a working rated source in the Activism feed specifically, not just any feed.
+    soft_gate: true
+    updated: '2026-07-19T20:17:30Z'
