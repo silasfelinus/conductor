@@ -206,3 +206,30 @@ for overlap before merging the first — if they collide, resolving the conflict
 on the *second* PR immediately (as done here) is cheap, but noting the overlap
 before merging the first would have made this predictable rather than
 discovered at merge time.
+
+## 2026-07-19 | Reviewer | newsfeed/t-008+t-010 | pattern
+
+**Subject:** three independent sessions raced to close out the same two tasks
+(`t-008`, `t-010`) in `projects/newsfeed/roadmap.yaml` within the same ~20-minute
+window: this session (conductor PR #827, merged), plus two others (conductor PR
+#825 "t-010: close done + kaizen t-016" and PR #826 "t-008: review then done").
+All three read the same `claimed` roadmap state, and all three independently
+implemented/merged the *same* kind_robots PRs (#484, #486) — the underlying code
+work wasn't duplicated (good), but the roadmap bookkeeping was attempted three
+times. #827 landed first; #825 and #826 are now stale (their `status: claimed →
+done` diffs are already reflected on `main` in different words) and were closed
+as superseded rather than merged, which would have either conflicted outright or
+silently created a second `t-016` with different content (both #825 and this
+session independently invented a task literally named `t-016` for two different
+kaizen ideas — purely coincidental id collision, not a shared source). The one
+substantive idea unique to #825 (investigate a Vercel MCP-backed rendered
+preview to replace the sandbox's `nuxt dev`-can't-reach-a-real-DB wall) was
+preserved as `t-017` rather than lost when its PR was closed.
+
+**Suggested action:** this is the same root cause CONTROL.md already names for
+cross-*project* collisions (2026-07-17 note) and `conductor/t-065` names for
+same-task double-claims — extend either existing note, or `newsfeed/t-016`'s own
+file-overlap check, to also cover "closing out a task" PRs specifically, since
+those touch roadmap.yaml/TALKBACK.md rather than product code and are easy to
+mistake for low-risk/no-conflict-possible busywork right up until two of them
+land minutes apart.

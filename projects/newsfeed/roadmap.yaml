@@ -407,3 +407,26 @@ tasks:
       the PR review so the conflict is anticipated rather than discovered at
       merge time. Keep it advisory (a warning/note), not a merge blocker, since
       overlapping files don't always conflict.
+
+  - id: t-017
+    milestone: m3
+    title: "Investigate a real rendered preview path (e.g. Vercel MCP) instead of the local nuxt dev wall"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-19T02:40:00Z'
+    note: >
+      Kaizen from t-010 (a concurrent session's PR #486 review, cherry-picked from
+      a since-superseded conductor PR #825 whose roadmap edits collided with this
+      session's #827): at least three newsfeed tasks now (t-010, t-014, and this
+      note itself) have independently hit the same sandbox wall -- `npm run dev`
+      500s immediately because DATABASE_URL points at an unreachable dummy MariaDB
+      host, so SSR never reaches page markup and there is no way to visually or
+      keyboard-nav verify a front-end change locally. Investigate whether the
+      Vercel MCP connector (list_deployments / get_deployment / a preview URL for
+      the PR's branch) can give a session an actual rendered page to check
+      against, and if so document the concrete steps (which tool calls, what to
+      look for) in AGENTS.md's cross-repo section so future front-end tasks stop
+      rediscovering "no local nuxt dev" from scratch. If no such path exists yet,
+      the deliverable is a clear note saying so instead of silence.
