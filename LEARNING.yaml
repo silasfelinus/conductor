@@ -3649,3 +3649,12 @@ records:
   outcome: done
   failure_category: null
   lesson: "A type widened during an extraction refactor (ArtQueueEntry.variant: ArtVariant -> string, kind_robots PR #108) is easy to miss since call sites still typecheck fine with valid literals -- the fix is cheapest when the narrower union is defined in the module that owns the contract (artRequestYaml.ts) and the consumer imports it, rather than each side declaring its own copy that can silently drift apart again."
+- date: '2026-07-19'
+  project: conductor
+  task: t-069
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "Verify a new contract check both ways -- clean against the real repo (proves the prior fix holds) and against a deliberately reintroduced instance of the bug (proves the check actually catches it), not just the former. Also: a project-wide typecheck gate (vue-tsc) can fail a PR for a reason unrelated to its diff if main itself broke earlier the same day (here, PR #569); when that happens, fix the one-line pre-existing break inline and flag it transparently in the PR body rather than blocking the actual task on it or silently expanding scope."

@@ -1890,7 +1890,7 @@ tasks:
   - id: t-069
     milestone: m2
     title: Flag unquoted MariaDB/MySQL reserved words used as raw-SQL table identifiers in kind_robots
-    status: review
+    status: done
     passes: 0
     stakes: reversible
     note: >
@@ -1910,6 +1910,20 @@ tasks:
       kind_robots code change, not a conductor one -- file the concrete script/CI-step work as a
       kind_robots task if this project tracks kind_robots CI work, or as a direct kind_robots PR
       when picked up.
+
+      DONE 2026-07-19 (conductor scheduled agent run): implemented and merged kind_robots PR #575
+      -- added utils/scripts/verifyNoUnquotedReservedWordTables.ts (scans $queryRaw/
+      $queryRawUnsafe/$executeRaw/$executeRawUnsafe/.query() call sites for reserved words used as
+      unquoted table identifiers after FROM/JOIN/INTO/UPDATE/TABLE, starting with `Character`),
+      wired into contract-tests.yml, plus the `test:no-unquoted-reserved-word-tables` npm script.
+      Verified clean against main (21 raw-SQL files, 0 unquoted `Character` identifiers) and
+      confirmed the check actually catches the bug via a deliberately reintroduced unquoted
+      `LEFT JOIN Character c ON ...` in a throwaway temp file before removing it. PR's own
+      TypeScript CI initially failed on an unrelated pre-existing main break (Character.userId
+      nullability vs. a non-nullable helper param, from same-day PR #569) -- fixed inline
+      (one-line type widening, full `npm run test` verified clean) since it was blocking this
+      PR's own green CI; flagged transparently in the PR body and filed conductor/t-072 for the
+      broader pattern. Merged (silasfelinus).
     owner: reviewer
     claimed_by: claude-conductor-scheduled-20260719T221307Z
     claimed_at: '2026-07-19T22:13:07Z'
