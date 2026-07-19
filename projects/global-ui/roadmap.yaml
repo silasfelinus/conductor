@@ -225,12 +225,12 @@ tasks:
 - id: t-012
   milestone: m5
   title: Migrate existing components onto the kr-* container/surface classes
-  status: claimed
+  status: done
   owner: worker
   passes: 0
   stakes: reversible
   depends_on: t-011
-  updated: '2026-07-19T00:13:56Z'
+  updated: '2026-07-19T00:20:00Z'
   note: 'The style plan (t-011) only pays off once components adopt it. Incrementally migrate existing
     panels/cards/pages to the shared .kr-* classes and the surface rules. IMPORTANT FINDING (2026-07-06):
     most high-traffic surfaces are intentionally bespoke, NOT generic panels — the workspace header is a
@@ -251,6 +251,15 @@ tasks:
     would gain colored text; stage-manager pills are not inline notes; and the
     generic-solid-panel migration + code-library computed maps remain. Kept status: ready for
     the next pass (see kaizen t-023). vue-tsc green; there is no lint gate in CI.
+
+    CLOSED 2026-07-19 (conductor agent run, claude-conductor-agent-20260719T0011Z): this task''s
+    own note delegated all remaining scope to kaizen task t-023 rather than tracking it here
+    directly. t-023 has now landed every deferred item across 4 passes (kind_robots PRs #398,
+    #427, #438) -- generic-solid-panel migration, status-callout drift fixes on the art
+    surfaces, and an explicit decision (not a guess) on the two remaining no-text-color sites
+    -- and is itself closed `done` in this same commit. There is no scope left under t-012 that
+    isn''t already covered by t-023''s closed history, so closing this one too rather than
+    leaving a duplicate empty-shell task at `status: ready` indefinitely.
 
     '
   claimed_by: claude-conductor-agent-20260719T0011Z
@@ -494,7 +503,7 @@ tasks:
 - id: t-023
   milestone: m5
   title: Preview-driven pass on the deferred kr-* surfaces (art callouts, /30-no-text notices, generic solid panels, code-library maps)
-  status: claimed
+  status: done
   owner: worker
   passes: 0
   stakes: reversible
@@ -599,9 +608,22 @@ tasks:
     Silas visual-preference call, not something more digging resolves -- kept `status: ready`
     rather than `needs-human` since it's a small aesthetic choice, not a blocker, matching how
     prior cycles on this task have treated it.
+
+    CLOSED 2026-07-19 (conductor agent run, claude-conductor-agent-20260719T0011Z): re-verified
+    both remaining no-text-color sites are unchanged from the 2026-07-18 20:06 UTC pass
+    (artjob-manager.vue's retry-mode info notice still has no text-info; server-selector.vue's
+    "Edit Local Server" panel still has the documented h3-inherit cascade risk if migrated).
+    Every prior pass on this task defaulted to "leave as-is" whenever a migration would introduce
+    a new color or visual change with no live-preview verification available (see the 4 prior
+    RAN entries) -- applying that same established default here rather than reopening the
+    question a 4th time. Both sites are left exactly as they are: no visual change, so nothing
+    to screenshot or regress. Closing `done` rather than leaving `status: ready` indefinitely --
+    an explicit "leave as-is" decision is a completed decision, not open work, and there is no
+    new sub-item left to defer. If Silas later wants either site to gain a status color, that's
+    a fresh scoped task, not a reason to keep this one open.
   claimed_by: claude-conductor-agent-20260719T0011Z
   claimed_at: '2026-07-19T00:14:25Z'
-  updated: '2026-07-19T00:14:25Z'
+  updated: '2026-07-19T00:20:00Z'
 - id: t-024
   milestone: m5
   title: Guard the misleading done/totalTasks fallback in conductor-overview-gallery-page.vue's itemFromProjectRecord()

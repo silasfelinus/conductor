@@ -175,3 +175,42 @@ one kaizen follow-up (t-024).
 Todos (even zero conductor-matched tasks) can show a plausible-looking but semantically wrong
 ratio. Flagged in the PR body, filed as a follow-up rather than fixed inline (out of t-019's own
 scope, and the existing `v-if` guard already prevents the worst case of a bare "0/0").
+
+## 2026-07-19 | Worker/Reviewer (combined agent run) | global-ui/t-012, t-023 | done (roadmap-only, no code change)
+
+**Decision:** claimed both via `claim_task.py`, closed both `done`. No kind_robots PR — this was
+a roadmap-accuracy closure, not new implementation.
+
+**Detail:**
+- t-012's own note delegated its entire remaining scope ("Kept status: ready for the next pass,
+  see kaizen t-023") to t-023 rather than tracking further work under t-012 itself. t-023 has
+  since landed 4 passes (kind_robots PRs #398, #427, #438) covering every item its own kaizen
+  note enumerated: generic-solid-panel migration, art-surface status-callout drift fixes, and an
+  explicit (not guessed) decision on the two remaining no-text-color notices
+  (artjob-manager.vue's retry-mode info notice, server-selector.vue's "Edit Local Server" panel
+  — left as-is, matching the default this task's own history already established for
+  ambiguous-color migrations, and re-verified unchanged against current kind_robots main before
+  closing).
+- Both tasks were sitting at `status: ready` at the top of the priority queue (global-ui is
+  priority-band position 11, ahead of most other active work) with no further landable scope —
+  re-investigating them again this cycle would have reproduced the same "nothing new" result a
+  prior session already reached on 2026-07-18. Closing them accurately removes a source of
+  repeated wasted cycles, the same class of waste flagged on coloring-book/t-022 (endless
+  re-diagnosis of a state that hasn't changed).
+
+**What was good (about the prior sessions' work, being closed out here):**
+- Every deferred sub-item across t-023's 4 passes got an explicit, checkable decision (cascade
+  risk analysis on server-selector.vue's `<h3>`, dead-code confirmation on
+  composition-interact.vue/code-library.vue) rather than a guess or a silent skip — this made
+  closing the task today a verification exercise, not a judgment call from scratch.
+
+**What to improve:**
+- t-012 and t-023 both stayed at `status: ready` well past the point where they had no more
+  landable work, because neither is `recurring: true` yet both kept re-arming via "kept status:
+  ready" language mirroring the recurring-task pattern. A task that has reached "the only thing
+  left is a Silas call, not more digging" should close `done` (or `needs-human` if the call is
+  genuinely blocking) rather than sit `ready` — `ready` should mean "there is landable work here,"
+  not "we've decided not to decide."
+
+**Kaizen task:** none filed this cycle — this was a hygiene closure of exhausted tasks, not new
+product surface; no fresh follow-on gap surfaced while verifying the close-out.
