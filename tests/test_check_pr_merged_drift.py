@@ -117,10 +117,11 @@ def test_check_flags_merged_pr():
     body = b'{"merged": true, "merged_at": "2026-07-19T16:16:31Z", "title": "newsfeed/t-020"}'
 
     with patch("urllib.request.urlopen", return_value=FakeResponse(body)):
-        findings = dr.check(candidates, token=None)
+        findings, unresolved = dr.check(candidates, token=None)
 
     assert len(findings) == 1
     assert findings[0]["pr_merged_at"] == "2026-07-19T16:16:31Z"
+    assert unresolved == []
 
 
 def test_check_does_not_flag_open_pr():
@@ -131,21 +132,23 @@ def test_check_does_not_flag_open_pr():
     body = b'{"merged": false, "merged_at": null, "title": "newsfeed/t-020"}'
 
     with patch("urllib.request.urlopen", return_value=FakeResponse(body)):
-        findings = dr.check(candidates, token=None)
+        findings, unresolved = dr.check(candidates, token=None)
 
     assert findings == []
+    assert unresolved == []
 
 
-def test_check_skips_pr_lookup_failure_without_raising():
+def test_check_reports_pr_lookup_failure_as_unresolved_not_clean():
     candidates = [{
         "project": "newsfeed", "task_id": "t-020", "title": "x", "status": "claimed",
         "repo": "silasfelinus/kind_robots", "pr_number": 404,
     }]
 
     with patch("urllib.request.urlopen", side_effect=http_error(404)):
-        findings = dr.check(candidates, token=None)
+        findings, unresolved = dr.check(candidates, token=None)
 
     assert findings == []
+    assert unresolved == candidates
 
 
 # --------------------------------------------------------------------------- #
@@ -153,7 +156,7 @@ def test_check_skips_pr_lookup_failure_without_raising():
 # --------------------------------------------------------------------------- #
 
 def test_render_reports_clean_state():
-    assert "No drift found" in dr.render([])
+    assert "No drift found" in dr.render([], [], total=1)
 
 
 def test_render_lists_each_finding():
@@ -162,6 +165,17 @@ def test_render_lists_each_finding():
         "repo": "silasfelinus/kind_robots", "pr_number": 517,
         "pr_title": "newsfeed/t-020: fix", "pr_merged_at": "2026-07-19T16:16:31Z",
     }]
-    out = dr.render(findings)
+    out = dr.render(findings, [], total=1)
     assert "newsfeed/t-020" in out
     assert "silasfelinus/kind_robots#517" in out
+
+
+def test_render_flags_unresolved_instead_of_claiming_clean():
+    unresolved = [{
+        "project": "newsfeed", "task_id": "t-020", "title": "x", "status": "claimed",
+        "repo": "silasfelinus/kind_robots", "pr_number": 404,
+    }]
+    out = dr.render([], unresolved, total=1)
+    assert "No drift found" not in out
+    assert "could NOT be verified" in out
+    assert "newsfeed/t-020" in out
