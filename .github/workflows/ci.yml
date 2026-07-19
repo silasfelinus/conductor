@@ -63,6 +63,22 @@ jobs:
           print(f"OK: {f} valid")
           EOF
 
+  validate-task-events:
+    name: Validate queued task-events YAML
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install PyYAML
+        run: pip install pyyaml
+
+      - name: Validate task-events/*.yaml
+        run: python scripts/validate_task_events.py
+
   lint-python:
     name: Lint Python scripts
     runs-on: ubuntu-latest
