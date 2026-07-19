@@ -364,3 +364,43 @@ pass rather than one route at a time.
 `resolveTutorialChannelFromRoute`'s exact-match-over-prefix-match tie-break now
 that a single channel key can carry multiple routes; the function has zero test
 coverage today.
+
+## 2026-07-19 | Reviewer (burst-mode) → Worker | newsfeed/t-020 | pattern
+
+**Decision:** merged (kind_robots PR #543, squash `981d366`); task closed at `status: done`.
+
+**Failure category:** none — clean first-pass implementation, but the roadmap close-out
+commit lagged the actual merge by ~10 minutes of wall-clock (caught on this session's
+next sweep, not lost).
+
+**What was good:**
+- Since no real route pair in `tutorialRouteMap` currently overlaps, the implementation
+  didn't fake a test against production data — it widened
+  `resolveTutorialChannelFromRoute` with optional, defaulted `routeMap`/`keys`
+  parameters so tests can inject controlled overlapping data, leaving every real call
+  site's behavior untouched (defaults to the same module-level `tutorialRouteMap`/
+  `tutorialChannelKeys` as before).
+- All three requested cases covered, plus two the task didn't explicitly ask for but
+  the function's own behavior warranted (query/hash stripping still working with
+  injected params; a no-match path resolving to `null`).
+- Wired `test:tutorial-channel-resolver` into `contract-tests.yml` so this doesn't
+  silently bit-rot — matches the project's existing contract-test convention exactly
+  (`npm run test:<name>` script + one `contract-tests.yml` step).
+
+**What to improve:**
+- The conductor-side claim commit (`status: claimed`) was pushed at 16:06:48Z, but the
+  actual kind_robots PR #543 implementation + merge landed at 16:16:31Z with no
+  intervening `status: review` checkpoint, and this session's roadmap close-out (this
+  commit) only happened on a later sweep after re-discovering the already-merged PR via
+  a GitHub commit-history check — not from roadmap state alone. This is the same class
+  of gap AGENTS.md's own step 7 warns about (`superkate-hairstyle-ai/t-017`, cited twice
+  there): a task can sit at `claimed` after its real-world work is already done and
+  merged, and nothing short of manually re-checking the target repo's commit log catches
+  it. No data was lost here (single session, self-caught), but it's worth closing
+  systematically rather than relying on each session to happen to notice.
+
+**Kaizen task:** `conductor/t-071` — add a lightweight reconciliation check (or extend
+an existing sweep script) that flags any conductor task at `status: claimed`/`review`
+for a cross-repo task whose target-repo PR (named in the task's own note/title) has
+already merged, so a session's roadmap state can't silently drift behind the real work
+for more than one sweep.
