@@ -15,8 +15,8 @@ Record the lane, files changed, and verification in the task note before rearmin
 
 ### Rotation state
 
-- Last completed lane: Roadmap accuracy — flipped m4 to `done` (all 15 tasks done) and m3 to `in-progress` (t-033 still needs-human), correcting drift the 2026-07-18 audit couldn't have caught since t-033 didn't exist yet, 2026-07-19.
-- Next preferred lane: Front-end polish.
+- Last completed lane: Front-end polish — fixed a focus-management bug in `academy-styles-browser.vue` where closing the style detail panel while an active search filter had unmounted the originating grid button dropped keyboard focus to `<body>`; added a fallback to the search input. kind_robots PR #520, merged squash `a174d16`, 2026-07-19.
+- Next preferred lane: Roadmap accuracy.
 - Override the preferred lane only when it is blocked or a higher-severity reversible issue is newly verified; record that reason in the task note.
 
 This explicit state is the handoff between recurring cycles. Update it in the same PR as each `t-010` improvement so the next Worker does not infer rotation from a long roadmap note.
