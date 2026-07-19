@@ -1860,3 +1860,38 @@ tasks:
     claimed_by: claude-conductor-burst-20260718T230803Z
     claimed_at: '2026-07-18T23:08:07Z'
     updated: '2026-07-18T23:12:32Z'
+
+  - id: t-067
+    milestone: m2
+    title: A task-events entry stuck behind a malformed-YAML sibling file applied stale roadmap state on top of a newer, unrelated claim once unblocked
+    status: ready
+    passes: 0
+    stakes: reversible
+    note: >
+      Observed 2026-07-19. A queued `task-events/2026-07-19T072000Z-ai-art-academy-t-010-review-worker.yaml`
+      entry (a ~07:20 UTC session's roadmap-accuracy-lane completion for the recurring
+      ai-art-academy/t-010) could not be applied for ~an hour because its own `note:` field had
+      an unquoted colon breaking YAML parsing -- the CI `process` job kept failing on every push
+      to main in the meantime (a real, user-visible red check on unrelated PRs, not just a silent
+      queue stall). Once a different session fixed that file's YAML syntax, `process_task_events.py`
+      applied the now-parseable event -- but by then, ai-art-academy/t-010 (a recurring task) had
+      already cycled through at least one more full claim/rearm (curriculum-depth cycle, kind_robots
+      PR #506) and this session had freshly re-claimed it (`status: claimed`, `claimed_by:
+      claude-conductor-agentrun-20260719T0811Z`, `claimed_at: 2026-07-19T08:18:20Z`). The stale event
+      still applied on top: it set `status: review` and appended a truncated/duplicated note fragment
+      unrelated to the current claim, silently reverting this session's live `claimed` state to look
+      like a stale, already-reviewed cycle. Caught and hand-repaired in conductor PR (this session's
+      ai-art-academy/t-010 close-out) rather than left corrupted. Root cause: `process_task_events.py`
+      applies a queued event's operation (status/note patch) unconditionally once it parses, with no
+      check for whether the target task's claim identity/timestamp has moved on since the event was
+      queued -- it treats "the event is now syntactically valid" as "the event is still semantically
+      current." This is the same class of staleness problem `claim_task.py` already solves for direct
+      claims (re-check origin/main immediately before writing); the task-events queue has no equivalent
+      guard. Fix idea: before applying a queued event, compare the event's `updated`/timestamp against
+      the task's current `claimed_at`/`updated` in the live roadmap -- if the task has been
+      claimed/updated by a *different* session more recently than the event's own timestamp, skip
+      applying the stale event (log it, do not silently discard) rather than blindly patching over
+      newer state. A secondary, lower-priority fix: task-event YAML files should be validated
+      (`yaml.safe_load`) at write time (whatever produces them) or CI-checked as part of PR review
+      before landing in `task-events/`, not first discovered when the shared `process` CI job breaks
+      for every subsequent PR.

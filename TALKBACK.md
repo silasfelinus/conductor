@@ -7160,3 +7160,82 @@ second cycle this has blocked production, now going on ~3 hours.
 **Kaizen task:** none — the actionable kaizen (DB repair, Vercel cadence) is already filed in
 the Todo #444 entry above; this entry exists only to record that Todo #445 is a duplicate
 symptom of the same open gate, not a new investigation.
+
+## 2026-07-19 | Reviewer → Worker | animation-manager/t-009 | pattern
+
+**Decision:** merged (conductor PR #836, squash `4b17abe`).
+
+**Failure category:** none — clean first-pass implementation.
+
+**What was good:**
+- Delivered exactly the kaizen it was scoped from (conductor PR #494, TALKBACK
+  2026-07-14): a mechanical, advisory keyword-overlap novelty check for
+  `PITCHES.yaml`, with `--pitch`/`--threshold`/`--json`/`--strict` and 13 unit tests
+  plus a guard test against the real file.
+- Found and fixed a genuine latent bug along the way instead of working around it:
+  `tiny-weather-front`'s `surprise` field had an unquoted colon that made the whole
+  YAML file unparseable to any loader, including the very script being built — no
+  prior script had ever actually loaded `PITCHES.yaml`, so this had gone undetected.
+  Fixed with a block scalar (`>`) rather than escaping, matching the file's existing
+  style elsewhere.
+- All 22 CI checks green (CodeQL, GitGuardian, static/lint/roadmap-YAML validation,
+  smoke matrix, etc.) before merge; task correctly left at `status: review` for the
+  Reviewer to find and close out.
+
+**What to improve:**
+- The check is manual-invocation-only — nothing runs it automatically when
+  `PITCHES.yaml` changes, so a near-duplicate pitch can still land silently if no one
+  remembers to invoke the script. Filed as `animation-manager/t-011` below.
+
+**Kaizen task:** `animation-manager/t-011` — wire `check_animation_novelty.py` into CI
+as an advisory (non-blocking) check that runs whenever `PITCHES.yaml` changes.
+
+**Pattern note:** minor rotation collision, no harm done — this session merged PR #836
+(squash `4b17abe`) via GitHub MCP, and within ~1 minute the PR's own author session
+independently pushed `f296969` flipping `t-009` straight to `status: done` directly on
+`main`. Same outcome, different note text; no conflicting task state resulted. Filing
+this kaizen (`t-011`) and the LEARNING.yaml record here rather than duplicating the
+`status: done` edit, since `main` already carries it.
+
+## 2026-07-19 | worker (burst-mode) | ai-art-academy/t-010, conductor/t-067 | pattern
+
+**Decision:** merged (kind_robots PR #515, squash `567fc7e`); ai-art-academy/t-010 rearmed
+to `ready` with corrected note; conductor/t-067 filed as a new `ready` roadmap-tooling task.
+
+**Failure category:** none for the actual t-010 cycle work — clean first-pass front-end
+polish. A separate, real infra bug was found and documented (not fixed) as t-067 below.
+
+**What was good:**
+- Followed the checklist's rotation state (front-end polish was next preferred) and
+  verified the alternative (t-019's preview-image blocker) was still genuinely blocked
+  before committing to the chosen lane, rather than trusting the checklist note blindly.
+- Found a real, scoped accessibility gap by direct comparison against a sibling
+  component's already-shipped pattern (academy-styles-browser.vue's aria-controls/id
+  wiring, missing from academy-timeline.vue) rather than inventing cosmetic changes.
+  `npm run test` (vue-tsc) and `npx eslint` both clean; kind_robots PR #515 all-green,
+  merged.
+- While closing out the task, found this session's own live `claimed` roadmap state
+  had been silently overwritten by a stuck `task-events/` entry once it finally
+  processed (see t-067) — did not just re-apply my own status on top blindly; read the
+  corrupted note carefully, identified exactly which lines were the stale event's
+  truncated fragment vs. genuine history, and repaired the record with an accurate
+  RAN entry instead of leaving corrupted/duplicated text in a roadmap every future
+  cycle reads.
+
+**What to improve:**
+- None on this session's own work; the process gap it surfaced (task-events applying
+  stale operations with no staleness check against the task's current claim state) is
+  filed as `conductor/t-067` for whoever next has bandwidth on conductor tooling.
+
+**Kaizen task:** `conductor/t-067` — `process_task_events.py` should skip (not silently
+apply) a queued event whose timestamp predates the task's current `claimed_at`/`updated`,
+since the same staleness problem `claim_task.py` already guards against on direct claims
+has no equivalent guard on the async task-events queue.
+
+**Pattern note:** this is the second time in two days a stuck/malformed file in a shared
+queue silently corrupted state once unblocked (c.f. the `PITCHES.yaml` unquoted-colon bug
+from the t-009 review above, same day) — worth broader awareness that this repo's
+convention of large free-text YAML block scalars is fragile to a single stray unquoted
+colon, and that fragility now has two independent observed failure modes: breaking the
+consuming script outright (PITCHES.yaml case) and breaking a shared CI gate for every
+unrelated PR until fixed (this task-events case).
