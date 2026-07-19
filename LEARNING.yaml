@@ -3439,3 +3439,21 @@ records:
   outcome: done
   failure_category: null
   lesson: "Two projects can duplicate scope task-for-task under different ids/titles (animation-studio/t-004 vs animation-manager/t-004, near-identical asks) with no explicit link between them -- when a roadmap gains a clear 'active continuation' project, check whether an older sibling project should retire via project-overrides.yaml rather than staying independently claimable and risking a Worker re-doing already-shipped work."
+- date: 2026-07-19
+  project: newsfeed
+  task: t-010
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "Accessibility-polish tasks (aria attributes, focus-visible, motion-safe, semantic timestamps) verify cleanly with vue-tsc/eslint/prettier alone when no live nuxt dev preview is reachable in-sandbox; keep flagging the missing visual/keyboard-nav check explicitly rather than treating static verification as sufficient proof."
+- date: 2026-07-19
+  project: newsfeed
+  task: t-008
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: transient
+  lesson: "Two claimed tasks in the same project touching the same files (newsfeed t-008/t-010) can merge minutes apart and produce an avoidable conflict on the second review; check same-project open PRs' file lists for overlap before merging the first one, not just at merge time on the second."

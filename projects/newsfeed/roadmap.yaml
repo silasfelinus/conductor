@@ -248,7 +248,7 @@ tasks:
   - id: t-008
     milestone: m3
     title: "Add programmable feed filters"
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -257,9 +257,25 @@ tasks:
       Add a compact advanced surface for include/exclude keywords, category filters,
       source toggles, and sort mode. Treat this as a declarative configuration layer,
       not arbitrary executable user code.
+      DONE 2026-07-19 (claude-conductor-agentrun-20260719, Reviewer merge): kind_robots
+      PR #484 merged (squash 43c7dc6). New pure applyNewsfeedFilters()/sanitizeKeywordList()
+      in stores/helpers/newsfeed.ts, a stable sourceId on NewsFeedItem, persisted
+      include/exclude keywords + disabledSourceIds + selectedCategories + sortMode on
+      feedPreferenceStore, a new newsfeed-filters.vue panel, and a regression test
+      (utils/scripts/verifyNewsfeedFilters.ts) wired into contract-tests.yml CI.
+      The PR's initial CI never triggered (0 workflow runs queued for its branch
+      beyond GitGuardian, ~15+ min after opening) -- manually re-queued
+      contract-tests.yml/typecheck.yml via workflow_dispatch to unblock review; see
+      TALKBACK.md for the anomaly note. Once green, the PR had drifted behind the
+      just-merged t-010 (#486, same file) and hit a real merge conflict (both added
+      steps to contract-tests.yml and both touched newsfeed-feed.vue's Manage-feeds
+      panel markup) -- resolved by hand (kept both new CI steps; kept both the
+      aria-controls id from t-010 and the NewsfeedFilters panel from t-008),
+      re-verified locally (vue-tsc, eslint, prettier, both newsfeed contract tests
+      all clean) via provision_kind_robots_deps.sh, pushed, re-ran CI clean, merged.
     claimed_by: claude-conductor-burst-20260719
     claimed_at: '2026-07-19T01:04:38Z'
-    updated: '2026-07-19T01:04:38Z'
+    updated: '2026-07-19T02:20:00Z'
 
   - id: t-009
     milestone: m3
@@ -277,7 +293,7 @@ tasks:
   - id: t-010
     milestone: m3
     title: "Polish accessibility and responsive presentation"
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -288,6 +304,14 @@ tasks:
       Finish keyboard behavior, focus states, readable timestamps, mobile layout,
       reduced-motion behavior where relevant, and final visual consistency. Keep the
       feed fast and calm rather than turning the homepage into algorithmic slot-machine soup.
+      DONE 2026-07-19 (claude-conductor-agentrun-20260719T0110Z): kind_robots PR #486
+      merged (squash a75cb03). aria-pressed/aria-expanded/aria-controls/aria-busy added
+      to feed-card and newsfeed-feed controls, aria-live status region, motion-safe:
+      variants for hover transforms, focus-visible rings throughout, and a semantic
+      <time> element with absolute-timestamp title on feed cards. Verified via
+      vue-tsc --noEmit, eslint, prettier (all clean); no live nuxt dev render was
+      possible in-sandbox (dummy DATABASE_URL), so this is static/type verification
+      only — flagged for a follow-up visual/keyboard-nav pass, see t-014.
     claimed_by: claude-conductor-agentrun-20260719T0110Z
     claimed_at: '2026-07-19T01:12:57Z'
     updated: '2026-07-19T01:12:57Z'
@@ -363,3 +387,23 @@ tasks:
     claimed_by: claude-conductor-agent-run-20260718
     claimed_at: '2026-07-18T19:19:26Z'
     updated: '2026-07-18T19:19:26Z'
+
+  - id: t-016
+    milestone: m3
+    title: "Kaizen: check same-project open PRs for touched-file overlap before merging the first one"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-19T02:35:00Z'
+    note: >
+      Kaizen from t-008/t-010 (Reviewer, kind_robots PR #484/#486, 2026-07-19):
+      two `claimed` newsfeed tasks both touched newsfeed-feed.vue and
+      contract-tests.yml and merged minutes apart, producing an avoidable merge
+      conflict discovered only when reviewing the second PR. Add a lightweight
+      step to the Reviewer flow (a script or a documented manual check) that,
+      before merging a PR, lists any other currently-open PR from the same
+      project and diffs their changed-file sets -- if they overlap, flag it in
+      the PR review so the conflict is anticipated rather than discovered at
+      merge time. Keep it advisory (a warning/note), not a merge blocker, since
+      overlapping files don't always conflict.

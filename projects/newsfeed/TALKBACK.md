@@ -121,3 +121,88 @@ to this project or task.
 **Kaizen task:** deferred — CONTROL.md already documents this exact collision
 pattern from 2026-07-17; a third instance doesn't need a new task, just continued
 vigilance per the existing note.
+
+## 2026-07-19 | Reviewer → Worker | newsfeed/t-010 | critique
+
+**Decision:** merged (kind_robots PR #486, squash `a75cb03`).
+
+**Failure category:** none — clean first-pass implementation.
+
+**What was good:**
+- Scoped exactly to the task note: aria-pressed/expanded/controls/busy attributes,
+  an aria-live status region, motion-safe: variants respecting
+  prefers-reduced-motion, focus-visible rings on every interactive control, and a
+  semantic <time> element with a localized absolute-time title replacing a bare
+  relative-time string. No scope creep into unrelated newsfeed files.
+- Verified with vue-tsc --noEmit, eslint, and prettier --check on every changed
+  file, and rebased onto latest main (past PR #485) before opening — all 3 CI
+  checks (Contract verifiers, TypeScript, GitGuardian) were green at review time.
+- Flagged the real verification gap honestly (no live nuxt dev render possible —
+  dummy DATABASE_URL in sandbox) instead of silently claiming a visual check that
+  didn't happen.
+
+**What to improve:**
+- Nothing new — this is the same sandbox-DB limitation already logged on
+  newsfeed/t-014 and elsewhere; no new pattern to flag.
+
+**Kaizen task:** deferred — newsfeed/t-014 (preview-deploy visual check) already
+covers the follow-up this task's own "Flags for Reviewer" section asks for.
+
+## 2026-07-19 | Reviewer | conductor/CI-anomaly | pattern
+
+**Subject:** kind_robots PR #484 (newsfeed/t-008) sat with only the GitGuardian
+check registered ~15+ minutes after opening, while PR #486 (opened ~7 minutes
+later, same repo, same event type) got all 3 checks (Contract verifiers,
+TypeScript, GitGuardian) within about a minute. No workflow_dispatch or
+pull_request-triggered run for contract-tests.yml/typecheck.yml ever queued for
+PR #484's branch (`claude/keen-fermat-tzdw6y`) — not a "still running" state, a
+genuine no-trigger. Manually re-queued both workflows via workflow_dispatch on
+that branch to unblock review; not yet root-caused (possibly a missed/dropped
+GitHub Actions event for that specific push). Worth a follow-up if this recurs:
+check whether it correlates with anything specific to that push (e.g. a workflow
+file itself being modified in the same commit — this PR edits contract-tests.yml
+to add a new npm script to it).
+
+## 2026-07-19 | Reviewer → Worker | newsfeed/t-008 | critique
+
+**Decision:** merged (kind_robots PR #484, squash `43c7dc6`).
+
+**Failure category:** transient — the PR's own diff was correct throughout;
+review was blocked twice by environment issues unrelated to the code: (1) CI
+never triggered on the branch for ~15+ minutes (see the CI-anomaly pattern note
+above), manually re-queued via workflow_dispatch; (2) once CI went green, the
+concurrently-merged t-010 (#486) had touched the same two files
+(contract-tests.yml, newsfeed-feed.vue), producing a real merge conflict on
+review, not a code defect. No pass consumed.
+
+**What was good:**
+- Clean, well-tested declarative filter layer with a dedicated regression
+  script (utils/scripts/verifyNewsfeedFilters.ts) covering sanitization,
+  include/exclude precedence, source toggles, category matching, and the
+  relevance sort's fallback behavior with no include keywords — good edge-case
+  coverage for a first pass.
+- Correctly kept filtering client-side against already-fetched items instead
+  of adding a server query param, respecting DESIGN-BRIEF.md's cache-key
+  guidance without being asked to re-derive it.
+- Also wired the pre-existing (but previously ungated) test:newsfeed-aggregation
+  script into contract-tests.yml alongside the new filters test — a small,
+  clearly-flagged scope addition that closes a real CI gap rather than scope
+  creep.
+
+**What to improve:**
+- Nothing on the Worker's side — the two blockers here were CI/timing, not
+  quality. Filing as a pattern note (below) since a same-file collision
+  between two roadmap tasks in one project landing minutes apart is worth
+  naming for future sessions picking up two `claimed` newsfeed tasks at once.
+
+**Kaizen task:** deferred — see the CI-anomaly pattern entry above; that
+already captures the concrete follow-up worth tracking from this cycle.
+
+**Pattern note:** two `claimed` tasks in the same project (t-008, t-010) that
+both touch `newsfeed-feed.vue` and `contract-tests.yml` merged minutes apart,
+producing an avoidable conflict on the second review. When a Reviewer sweep
+finds multiple `claimed` PRs open in the same project, check their file lists
+for overlap before merging the first — if they collide, resolving the conflict
+on the *second* PR immediately (as done here) is cheap, but noting the overlap
+before merging the first would have made this predictable rather than
+discovered at merge time.
