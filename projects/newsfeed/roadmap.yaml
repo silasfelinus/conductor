@@ -539,11 +539,11 @@ tasks:
   - id: t-020
     milestone: m3
     title: "Add a unit test asserting resolveTutorialChannelFromRoute picks exact-match over prefix-match across different channel keys"
-    status: ready
-    owner: null
+    status: claimed
+    owner: reviewer
     passes: 0
     stakes: reversible
-    updated: '2026-07-19T15:30:00Z'
+    updated: '2026-07-19T16:06:48Z'
     note: >
       Kaizen from t-019 (kind_robots PR #542, merged): resolveTutorialChannelFromRoute
       now iterates multiple routes per channel key (the `wonder` key alone covers 7
@@ -555,3 +555,5 @@ tasks:
       route from a different key would also match as a prefix, (2) prefix match
       picks the most specific (longest) route across different keys, (3) the
       `wonder` key's multi-route array resolves correctly for each of its 7 routes.
+    claimed_by: claude-conductor-burst-20260719T1605Z
+    claimed_at: '2026-07-19T16:06:48Z'
