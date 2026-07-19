@@ -13,6 +13,14 @@ Choose the first useful lane that has not run in the previous cycle:
 
 Record the lane, files changed, and verification in the task note before rearming `t-010`.
 
+### Rotation state
+
+- Last completed lane: Curriculum depth — American Regionalism seed sync, 2026-07-19, kind_robots PR #506.
+- Next preferred lane: Front-end polish.
+- Override the preferred lane only when it is blocked or a higher-severity reversible issue is newly verified; record that reason in the task note.
+
+This explicit state is the handoff between recurring cycles. Update it in the same PR as each `t-010` improvement so the next Worker does not infer rotation from a long roadmap note.
+
 ## Current curriculum coverage
 
 The Academy currently has 24 movement entries in `curriculum-outline.md`; all 24 are
