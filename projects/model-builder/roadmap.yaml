@@ -462,8 +462,8 @@ tasks:
   - id: t-025
     milestone: m6
     title: "Async art generation via the ArtJob queue"
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     note: >
@@ -474,6 +474,9 @@ tasks:
       promote the resulting artImageId onto the item/target. Reuse artStore.enqueueAndRender
       pattern. Show queued/rendering/done state per item. Keep sync generate as the "art
       first, interactively" option.
+    claimed_by: claude-conductor-burst-20260719T1259Z
+    claimed_at: '2026-07-19T13:07:21Z'
+    updated: '2026-07-19T13:07:21Z'
 
   - id: t-026
     milestone: m6
