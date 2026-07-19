@@ -319,21 +319,14 @@ tasks:
   - id: t-011
     milestone: m3
     title: "Add adjustable political perspective balance"
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
     depends_on:
       - t-007
       - t-008
-    note: >
-      Implement the staged controls from BIAS-CONTROLS.md. Start with transparent
-      Focused, Balanced, and Broad spectrum modes backed by normalized numeric weights;
-      show optional source-perspective labels only where provenance exists. Keep political
-      perspective separate from factual reliability, do not infer user ideology, preserve
-      unrated and primary sources, and avoid applying political balancing to unrelated feeds.
-      Custom per-bucket weights and contrasting-coverage grouping may follow once the simple
-      modes work cleanly.
+    note: 'Merged kind_robots PR #505 (2026-07-19). Perspective-balance mode presets, weighted round-robin ranking gated to topicPolitical feeds, mode selector + labels-visible toggle, perspective badge, and contract test all landed on main. FEED_SOURCES perspective ratings remain deliberately unseeded pending a real methodology/citation (see PR description) -- a good follow-up task for whoever has one, not filed as a new roadmap task since it''s a data/sourcing question, not a code gap.'
     claimed_by: claude-conductor-burst-20260719T-rotation-newsfeed
     claimed_at: '2026-07-19T06:07:28Z'
     updated: '2026-07-19T06:07:28Z'
