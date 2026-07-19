@@ -1952,24 +1952,14 @@ tasks:
   - id: t-071
     milestone: m2
     title: Flag conductor tasks stuck at claimed/review whose cross-repo target PR already merged
-    status: claimed
+    status: review
     passes: 0
     stakes: reversible
     note: >
-      Kaizen from newsfeed/t-020 (Reviewer, burst-mode, 2026-07-19): the conductor
-      claim commit for t-020 landed at 16:06:48Z, but the real implementation (kind_robots
-      PR #543) merged ten minutes later at 16:16:31Z with no `status: review`
-      checkpoint in between, and the roadmap close-out only happened on this session's
-      next sweep after manually re-checking kind_robots' commit history -- roadmap
-      state alone gave no signal the work was already done. This is the same class of
-      gap AGENTS.md's step 7 already cites twice (superkate-hairstyle-ai/t-017, PR #317
-      merging while the task sat at `claimed`). Add a script (or extend an existing
-      sweep/audit script) that, for every conductor task at `status: claimed` or
-      `status: review` whose note/title references a specific cross-repo PR number,
-      checks via the GitHub MCP/API whether that PR has since merged, and flags the
-      mismatch (print or a small report) so a Reviewer sweep catches drift within the
-      same cycle instead of relying on a session happening to notice.
+      Kaizen from newsfeed/t-020 (Reviewer, burst-mode, 2026-07-19): the conductor claim commit for t-020 landed at 16:06:48Z, but the real implementation (kind_robots PR #543) merged ten minutes later at 16:16:31Z with no `status: review` checkpoint in between, and the roadmap close-out only happened on this session's next sweep after manually re-checking kind_robots' commit history -- roadmap state alone gave no signal the work was already done. This is the same class of gap AGENTS.md's step 7 already cites twice (superkate-hairstyle-ai/t-017, PR #317 merging while the task sat at `claimed`). Add a script (or extend an existing sweep/audit script) that, for every conductor task at `status: claimed` or `status: review` whose note/title references a specific cross-repo PR number, checks via the GitHub MCP/API whether that PR has since merged, and flags the mismatch (print or a small report) so a Reviewer sweep catches drift within the same cycle instead of relying on a session happening to notice.
+
+      RAN 2026-07-19 (claude-burst-0fb5003f, burst-mode project rotation): added scripts/check_pr_merged_drift.py -- a standalone, read-only sweep (matches the check_repos.py/check_scheduler_drift.py family, not folded into audit_roadmaps.py since that script is intentionally network-free). It scans every projects/*/roadmap.yaml for tasks at status: claimed or status: review, extracts any `<repo> PR #<n>` reference from the task's title/note via a fixed alias table (conductor, kind_robots, kindrobots-unraid, serendipity-voice, comfyui, PortOS -- the repos this conductor instance actually pushes to), looks up each PR's merge state via the GitHub REST API, and reports (or --json-emits) every task whose referenced PR has already merged. Bare `PR #N` references with no repo prefix are skipped, not guessed, since they're genuinely ambiguous across repos. 13 new tests in tests/test_check_pr_merged_drift.py (regex extraction, scan filtering by status, and check() against a mocked urlopen -- no live network in the suite); full pytest run 426 passed / 1 skipped, up from 413 baseline. Live-validated the extraction logic against the real roadmaps (found real `kind_robots PR #NNN` references across several projects) and cross-checked two of them via the GitHub MCP pull_request_read tool directly (kind_robots #543 and #544, both merged: true) since this sandbox's direct api.github.com calls 403 without a real token (confirmed check_repos.py hits the identical 403 here -- a pre-existing sandbox limitation, not a regression). Along the way the tool surfaced a live instance of exactly this drift class: ai-art-academy/t-010 (a recurring task) sat at status: claimed with a note saying its kind_robots PR #544 had merged and it was 'rearming to ready', but the status field was never actually flipped. Left that alone rather than editing another session's in-flight task out of caution (AGENTS.md's rotation-collision warning), but it's a real early catch this tool would have flagged in a live sweep with a working token.
     owner: reviewer
     claimed_by: claude-burst-0fb5003f
     claimed_at: '2026-07-19T18:04:58Z'
-    updated: '2026-07-19T18:04:58Z'
+    updated: '2026-07-19T18:10:39Z'
