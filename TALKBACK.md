@@ -7401,3 +7401,48 @@ newsfeed/t-016) and no new deferred cleanup surfaced while implementing it.
 perspective tooltip for both the newly-rated and newly-unrated Activism
 source via the Vercel preview flow, since this is the first time a real
 rated/unrated pair exists to check against.
+
+## 2026-07-19 | Reviewer → Worker | art-generator-connect/t-020 | pattern
+
+**Subject:** Rotation collision — two sessions claimed and fully implemented the same task within the same minute.
+
+**Detail:**
+- Both this session and a separate session called `claim_task.py
+  art-generator-connect t-020` and landed the exact same claim commit
+  (`f2d0405`, `claimed_by: claude-conductor-burst-20260719T2306Z`) — a true
+  race where both origin/main reads happened before either claim pushed,
+  which `claim_task.py`'s own-project check cannot prevent once both reads
+  land in the same window.
+- Both sessions independently implemented the identical fix in kind_robots:
+  this session opened PR #580 (23:15:39Z), the other opened PR #581
+  (merged 23:22:18Z), both from the same main base `d06f365`. The diffs are
+  functionally identical — `artRequestYaml.ts` is byte-for-byte the same;
+  `art-request.post.ts` differs only cosmetically (`VARIANT_SIZES:
+  Record<ArtVariant, string>` in #581 vs. `as const` in this session's #580,
+  no behavior difference).
+- Caught only at merge time, when #580's `mergeable_state` flipped to
+  `dirty` against main (already updated by #581's merge) — not by
+  `claim_task.py`, since both claims had already landed before either PR
+  reached merge. Closed #580 unmerged as redundant; no rework needed since
+  the outcome was already correct via #581.
+- The now-superseded kind_robots branch (`claude/keen-fermat-x7oksh`)
+  couldn't be cleaned up this cycle: the shared `/home/user/kind_robots`
+  checkout had substantial unrelated uncommitted/untracked changes at the
+  time (components/code/*, components/composition/*, public/images/
+  acrocats/*, prisma/generated/*, etc.), consistent with another session
+  actively using the same checkout concurrently. Left it untouched rather
+  than risk a destructive `checkout -f`/`reset --hard` against someone
+  else's in-progress work. kind_robots also has no `branch-janitor`
+  equivalent (that workflow only exists in this repo), so the stale branch
+  has no automated cleanup path today.
+
+**Suggested action:** `claim_task.py` closes the gap for *conductor-side*
+claim races but can't prevent two sessions from independently finishing the
+identical cross-repo (kind_robots) implementation before either opens a PR —
+the collision only surfaces in the target repo, at merge time. A cheap
+mitigation: before opening a cross-repo PR, grep the target repo's recent
+open+merged PR titles for the task id (`art-generator-connect/t-020`-style
+strings already appear in PR bodies here) as a second check beyond
+`claim_task.py`. Separately, kind_robots would benefit from its own
+`branch-janitor`-equivalent workflow, since cross-repo tasks now regularly
+leave superseded `claude/*` branches behind there with no cleanup path.

@@ -437,22 +437,9 @@ tasks:
   passes: 0
   stakes: reversible
   note: >
-    Kaizen from reviewing kind_robots PR #108 (t-008/t-017): when
-    renderRequestEntry's YAML logic was extracted out of
-    server/api/conductor/art-request.post.ts into server/utils/artRequestYaml.ts,
-    ArtQueueEntry.variant was quietly widened from a specific ArtVariant union
-    to plain string. Harmless today (CI/tsc green, all call sites still pass
-    ArtVariant values) but it loosens the compile-time contract on a module
-    whose whole purpose is enforcing a contract. Narrow it back to the
-    ArtVariant union and confirm tsc + test:art-request-yaml stay green.
-
-    IMPLEMENTED 2026-07-19 (~23:20 UTC): moved `ArtVariant` ('icon'|'card'|'hero'|
-    'image') into artRequestYaml.ts as the canonical contract module and narrowed
-    ArtQueueEntry.variant to it; art-request.post.ts now imports ArtVariant instead
-    of re-declaring its own via `keyof typeof VARIANT_SIZES`, and VARIANT_SIZES is
-    pinned to `Record<ArtVariant, string>` so the two can't drift apart again.
-    Verified: test:art-request-yaml and full vue-tsc typecheck both clean. Merged
-    kind_robots PR #581 (squash 984c412), all 3 CI checks green.
+    Kaizen from reviewing kind_robots PR #108 (t-008/t-017): when renderRequestEntry's YAML logic was extracted out of server/api/conductor/art-request.post.ts into server/utils/artRequestYaml.ts, ArtQueueEntry.variant was quietly widened from a specific ArtVariant union to plain string. Harmless today (CI/tsc green, all call sites still pass ArtVariant values) but it loosens the compile-time contract on a module whose whole purpose is enforcing a contract. Narrow it back to the ArtVariant union and confirm tsc + test:art-request-yaml stay green.
+    IMPLEMENTED 2026-07-19 (~23:20 UTC): moved `ArtVariant` ('icon'|'card'|'hero'| 'image') into artRequestYaml.ts as the canonical contract module and narrowed ArtQueueEntry.variant to it; art-request.post.ts now imports ArtVariant instead of re-declaring its own via `keyof typeof VARIANT_SIZES`, and VARIANT_SIZES is pinned to `Record<ArtVariant, string>` so the two can't drift apart again. Verified: test:art-request-yaml and full vue-tsc typecheck both clean. Merged kind_robots PR #581 (squash 984c412), all 3 CI checks green.
+    ROTATION COLLISION (separate session, 2026-07-19T23:15-23:29 UTC): a second session claimed this same task within the same minute (both landed the identical `claim_task.py` claim commit at f2d0405) and independently produced a functionally identical fix, opened as kind_robots PR #580 from the same main base (d06f365). PR #581 above merged first; #580 was closed unmerged as redundant once the collision surfaced via a dirty mergeable_state. No rework needed -- see root TALKBACK.md for the full collision writeup and a suggested claim_task.py hardening idea for cross-repo tasks.
   claimed_by: claude-conductor-burst-20260719T2306Z
   claimed_at: '2026-07-19T23:06:07Z'
 - id: t-021
