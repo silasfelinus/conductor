@@ -913,11 +913,11 @@ tasks:
   - id: t-039
     milestone: m2
     title: Decide whether to retire animation-studio now that animation-manager supersedes it
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
-    updated: '2026-07-19T00:24:39Z'
+    updated: '2026-07-19T00:28:00Z'
     note: >
       Found while triaging scripts/audit_roadmaps.py's ROADMAP_MISSING_OVERRIDE
       warning for animation-studio (it has no projects/project-overrides.yaml
@@ -942,6 +942,24 @@ tasks:
       then either add the override entry (if kept separate) or mark
       project-overrides.yaml status: retired + close out the roadmap (if
       superseded).
+
+      DECIDED 2026-07-19 (conductor agent run, claude-conductor-agent-20260719T0011Z):
+      retired. Confirmed animation-studio's three remaining ready tasks (t-001
+      research, t-002 pitch queue, t-004 reaction-backed attempts) each
+      functionally duplicate animation-manager scope that is already done
+      (t-001/t-002) or already ready under the identical description (t-004
+      "Track animation attempts as Component records with Reactions" here vs.
+      animation-studio's own t-004 "Design reaction-backed animation attempts
+      and revision lineage"). animation-manager is the actively-developed,
+      autonomous:true continuation (4/10 tasks done, coherent in-flight
+      pipeline) vs. animation-studio's 1/8 (only the genuinely distinct Gravity
+      Garden work). Added project-overrides.yaml status: retired for
+      animation-studio with the full rationale inline there; left
+      roadmap.yaml untouched as historical record rather than deleting or
+      editing its tasks (retired override already makes it unclaimable per
+      AGENTS.md step 3, so no roadmap edit needed to enforce that). This
+      resolves the ROADMAP_MISSING_OVERRIDE warning audit_roadmaps.py had been
+      flagging for animation-studio.
     claimed_by: claude-conductor-agent-20260719T0011Z
     claimed_at: '2026-07-19T00:24:39Z'
 

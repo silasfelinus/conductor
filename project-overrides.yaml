@@ -62,6 +62,20 @@ overrides:
     priority: high
     kind: software
 
+  - slug: animation-studio
+    status: retired # retired 2026-07-19 (conductor/t-039) — superseded by animation-manager,
+    # which mirrors its research (t-001) and pitch-queue (t-002) tasks (both done there) and
+    # is the actively-developed autonomous continuation (4/10 tasks done vs 1/8). Only
+    # animation-studio's genuinely distinct work (t-003 Gravity Garden) already shipped and
+    # is marked done. Remaining animation-studio ready tasks (t-001, t-002, t-004) duplicate
+    # animation-manager scope already done or in flight there (t-004 "Track animation
+    # attempts as Component records with Reactions" vs animation-manager's own t-004 of the
+    # same description) -- keeping animation-studio claimable risked a Worker re-doing
+    # already-shipped work, the same collision class as animation-manager/t-008 (see
+    # TALKBACK.md 2026-07-14). roadmap.yaml kept as historical record, not deleted.
+    priority: low
+    kind: software
+
   - slug: approval-portal
     status: retired
     priority: low

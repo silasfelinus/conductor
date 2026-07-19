@@ -545,3 +545,34 @@ kind_robots PR on arrival — Reviewer's job here was to verify the checks and c
 **Kaizen task:** none filed as a new task this cycle — the fix (making this a recurring drift
 audit rather than one-off) is recorded in `LEARNING.yaml`'s lesson for future roadmap-upgrade
 cycles to pick up; a one-off conversion doesn't warrant its own task entry.
+
+## 2026-07-19 | Worker/Reviewer (combined agent run) | conductor/t-039 | done (roadmap-overrides-only, no code change)
+
+**Decision:** claimed via `claim_task.py`, resolved the retire-vs-keep-separate question the
+task itself posed, closed `done`.
+
+**Detail:**
+- Added a `project-overrides.yaml` entry for `animation-studio` (`status: retired`, with the
+  full rationale inline as a comment) — the one gap `audit_roadmaps.py`'s `ROADMAP_MISSING_OVERRIDE`
+  warning had been flagging (confirmed by re-running the audit before/after: 6 warnings → 5, no
+  more `animation-studio` findings).
+- Rationale: `animation-manager` (autonomous, 4/10 tasks done, coherent in-flight pipeline)
+  duplicates `animation-studio`'s original scope task-for-task — `animation-studio/t-004`
+  ("Design reaction-backed animation attempts and revision lineage") and
+  `animation-manager/t-004` ("Track animation attempts as Component records with Reactions") are
+  the same ask under different task ids. `animation-studio`'s only genuinely distinct work
+  (Gravity Garden, t-003) already shipped and was already `done`.
+- Left `animation-studio/roadmap.yaml` untouched as a historical record — the `retired` override
+  already makes it unclaimable per AGENTS.md step 3 (project-overrides check), so no roadmap
+  edit was needed to enforce that, and preserving the file avoids losing the task history if
+  Silas ever wants to revisit the decision.
+
+**What was good (about the task as filed):**
+- The original note already did the hard investigative work (PR #494 provenance, the
+  Gravity-Garden-is-distinct/done finding already applied) and explicitly framed the two options
+  (retire vs. keep separate) with the exact file/field to change either way — this made the
+  actual decision closing this cycle a judgment call on evidence already assembled, not a fresh
+  investigation.
+
+**Kaizen task:** none filed — this was a roadmap-hygiene closure of a task that had already done
+its own research; no new follow-on gap surfaced while resolving it.
