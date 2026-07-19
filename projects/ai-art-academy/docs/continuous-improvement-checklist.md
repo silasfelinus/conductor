@@ -15,10 +15,10 @@ Record the lane, files changed, and verification in the task note before rearmin
 
 ### Rotation state
 
-- Last completed lane: Roadmap accuracy (lane 2), 2026-07-19 (~18:26-18:35 UTC). Corrected this file's own stale claim below (was "merging pending CI") and rechecked the three `needs-human` tasks (t-004, t-009, t-033) against their stated blockers — all three are still accurately blocked on the same infra (relay/DB down, home-server upload access), no drift found, no roadmap edit needed there.
-- Previously: Front-end polish — fixed `image-upload.vue`'s batch-upload success/failure overlays keying by `file.name` instead of file identity, which cross-wired status badges when two queued files shared a name. kind_robots PR #544, merged 2026-07-19T17:25:23Z (this cycle corrected the stale "merging pending CI" note above — the recurring task itself had also drifted to `status: claimed` after the merge with no rearm; see `t-010`'s TALKBACK entry, conductor/t-071).
+- Last completed lane: Front-end polish (lane 1), 2026-07-19 (~19:04-19:15 UTC). Fixed `image-upload.vue`'s `addFiles()` silently dropping non-PNG/JPEG/WebP files (drag-and-drop bypasses the input's `accept` attribute) with zero user-visible feedback — now sets `error.value` to a skip-count message. kind_robots PR #547, merged 2026-07-19T19:14Z.
+- Previously: Roadmap accuracy (lane 2), 2026-07-19 (~18:26-18:35 UTC). Corrected this file's own stale claim (was "merging pending CI") and rechecked the three `needs-human` tasks (t-004, t-009, t-033) against their stated blockers — all three are still accurately blocked on the same infra (relay/DB down, home-server upload access), no drift found, no roadmap edit needed there.
 - Rechecked 2026-07-19 (~12:20-12:35 UTC): roadmap accuracy (lane 2) and a curriculum-depth (lane 4) spot-check both came back clean/unchanged that cycle — no drift, no new verifiable fact. See `t-010`'s RECHECKED note in `roadmap.yaml` for detail.
-- Next preferred lane: Front-end polish (lane 1) is next in rotation order since lane 2 just ran. Lane 3 (preview thumbnails) stays blocked — check `public/images/academy/styles/` before picking it.
+- Next preferred lane: Roadmap accuracy (lane 2) is next in rotation order since lane 1 just ran. Lane 3 (preview thumbnails) stays blocked — check `public/images/academy/styles/` before picking it.
 - Override the preferred lane only when it is blocked or a higher-severity reversible issue is newly verified; record that reason in the task note.
 
 This explicit state is the handoff between recurring cycles. Update it in the same PR as each `t-010` improvement so the next Worker does not infer rotation from a long roadmap note.
