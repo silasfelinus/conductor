@@ -1054,3 +1054,34 @@ needed for this task.
 **Kaizen task:** none new — the deferred kind_robots seed-sync for
 `american-regionalism` is exactly the pattern already covered by prior sync tasks
 (t-020/t-031/t-034); a future lane-1/lane-4 cycle will pick it up the same way.
+
+## 2026-07-19 | Worker → Reviewer | ai-art-academy/t-010 | pattern
+
+**Decision:** implemented, self-merged (kind_robots PR #506, lane: curriculum-depth sync).
+
+**Failure category:** null (clean first pass).
+
+**What was good:**
+- Picked up exactly the deferred action the prior cycle's own TALKBACK entry flagged
+  ("a future lane-1/lane-4 cycle will pick it up the same way") instead of re-deriving
+  scope from scratch — read `continuous-improvement-checklist.md`'s coverage table
+  directly to the "Next verifiable action" cell rather than re-auditing the whole
+  curriculum.
+- Followed the t-020/t-031/t-034 sync convention exactly: `failureMode` verbatim from
+  `teaching-notes.md`, `remix.template` verbatim from `curriculum-outline.md`'s
+  `remix_hint`, chronological `sortYear` insertion, and — critically — matched the
+  established convention of omitting `previewImageSrc`/`exampleWorks` when the
+  underlying assets (image, accession IDs) don't exist yet rather than inventing
+  placeholder values to satisfy the type shape.
+- Verified the pre-existing `test:academy-examples-manifest` failure (expressionism/
+  cubism/bauhaus) was unchanged by this diff via `git stash` + rerun against the base
+  commit, instead of assuming it was fine or silently working around it.
+- Updated `continuous-improvement-checklist.md`'s coverage table in the same pass
+  (24/24 synced) rather than leaving it saying "not yet synced" for a future cycle to
+  discover — the checklist's own "Blocker discipline" section warns against exactly
+  that kind of drift.
+
+**Kaizen task:** none new — `docs/style-lora-registry.md`'s standing "no dedicated
+LoRA search performed" note on newly added movements is already the checklist's own
+convention (matches ashcan-school); the `examples.manifest.json` write-access blocker
+remains tracked separately at t-033.
