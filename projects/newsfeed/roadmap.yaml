@@ -326,10 +326,28 @@ tasks:
     depends_on:
       - t-007
       - t-008
-    note: 'Merged kind_robots PR #505 (2026-07-19). Perspective-balance mode presets, weighted round-robin ranking gated to topicPolitical feeds, mode selector + labels-visible toggle, perspective badge, and contract test all landed on main. FEED_SOURCES perspective ratings remain deliberately unseeded pending a real methodology/citation (see PR description) -- a good follow-up task for whoever has one, not filed as a new roadmap task since it''s a data/sourcing question, not a code gap.'
+    note: >
+      Implement the staged controls from BIAS-CONTROLS.md. Start with transparent
+      Focused, Balanced, and Broad spectrum modes backed by normalized numeric weights;
+      show optional source-perspective labels only where provenance exists. Keep political
+      perspective separate from factual reliability, do not infer user ideology, preserve
+      unrated and primary sources, and avoid applying political balancing to unrelated feeds.
+      Custom per-bucket weights and contrasting-coverage grouping may follow once the simple
+      modes work cleanly.
+      DONE 2026-07-19 (~07:05 UTC, conductor reviewer sweep): kind_robots PR #505 shipped
+      PERSPECTIVE_MODE_PRESETS + applyPerspectiveBalance() in stores/helpers/newsfeed.ts
+      (pass-through for non-political items, weighted round-robin merge, unrated items get
+      their own never-zero bucket), wired setPerspectiveMode() to actually apply preset
+      weights, added the mode selector + label toggle to newsfeed-filters.vue and a
+      perspective badge to feed-card.vue (shown only when a source rating exists and labels
+      are visible), and a new contract test (test:newsfeed-perspective-balance) wired into
+      CI. All 4 checks green (TypeScript, Contract verifiers, facet-alias-smoke, GitGuardian).
+      Custom per-bucket weights/contrasting-coverage grouping deferred as originally scoped.
+      No real FEED_SOURCES perspective ratings exist yet, so the UI has nothing to visibly
+      act on until at least one source is rated -- see new task t-018. Merged squash `ca74f5f`.
     claimed_by: claude-conductor-burst-20260719T-rotation-newsfeed
     claimed_at: '2026-07-19T06:07:28Z'
-    updated: '2026-07-19T06:07:28Z'
+    updated: '2026-07-19T07:05:00Z'
 
   - id: t-012
     milestone: m2
@@ -426,3 +444,22 @@ tasks:
       look for) in AGENTS.md's cross-repo section so future front-end tasks stop
       rediscovering "no local nuxt dev" from scratch. If no such path exists yet,
       the deliverable is a clear note saying so instead of silence.
+
+  - id: t-018
+    milestone: m3
+    title: "Research and cite real source-perspective ratings for FEED_SOURCES, starting with the Activism feed"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-19T07:05:00Z'
+    note: >
+      Kaizen from t-011 (kind_robots PR #505, merged): the new perspective-balance
+      UI (mode selector, badges) and ranking logic are real and tested, but every
+      FEED_SOURCES entry's `perspective` field is still empty, so there is nothing
+      for a normal user to see act yet. Per BIAS-CONTROLS.md, any rating assigned
+      must expose methodology and provenance and never be presented as objective
+      fact -- source it from an actual published media-bias methodology (e.g. a
+      named ratings organization) with a citation, not an invented judgment call.
+      Start with the Activism feed's sources (globalcitizen, devex-news, etc.),
+      the only feed currently flagged `topicPolitical: true`.

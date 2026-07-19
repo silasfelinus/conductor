@@ -233,3 +233,34 @@ file-overlap check, to also cover "closing out a task" PRs specifically, since
 those touch roadmap.yaml/TALKBACK.md rather than product code and are easy to
 mistake for low-risk/no-conflict-possible busywork right up until two of them
 land minutes apart.
+
+## 2026-07-19 | Reviewer → Worker | newsfeed/t-011 | critique
+
+**Decision:** merged (kind_robots PR #505, squash `ca74f5f`).
+
+**Failure category:** none — clean first-pass merge.
+
+**What was good:**
+- Correctly scoped to the task's own staged plan (BIAS-CONTROLS.md): pass-through
+  for non-political items pinned at their original index, unrated political items
+  get their own never-zero bucket rather than being excluded, custom per-bucket
+  weights deliberately deferred rather than scope-creeped in.
+- Refused to invent source perspective ratings to make the new UI look more alive
+  — left `FEED_SOURCES` ratings empty and said so plainly in "Deliberately not
+  done," citing BIAS-CONTROLS.md's own guardrail against presenting invented bias
+  labels as fact. That's the right call over a more impressive-looking but
+  fabricated demo.
+- New contract test (`test:newsfeed-perspective-balance`) wired into CI alongside
+  the existing two newsfeed contract scripts; also re-verified the unrelated
+  `wonderlab-passive-card-fixtures` script still passes since `feed-card.vue` is a
+  shared fixture target.
+- All 4 CI checks green (TypeScript, Contract verifiers, facet-alias-smoke,
+  GitGuardian).
+
+**What to improve:**
+- Nothing new this cycle.
+
+**Kaizen task:** `newsfeed/t-018` — research and cite real source-perspective
+ratings for `FEED_SOURCES`, starting with the Activism feed (the only feed
+currently flagged `topicPolitical: true`), so the shipped UI has real data to act
+on.
