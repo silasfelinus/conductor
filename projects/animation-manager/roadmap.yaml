@@ -210,3 +210,18 @@ tasks:
     claimed_by: claude-conductor-burst-20260718T081118Z-838175
     claimed_at: '2026-07-18T08:11:21Z'
     updated: '2026-07-18T08:11:21Z'
+
+  - id: t-011
+    milestone: m1
+    title: "Wire check_animation_novelty.py into CI as an advisory check on PITCHES.yaml changes"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Kaizen from Reviewer's t-009 review (conductor PR #836): the novelty check exists but
+      is manual-invocation-only, so a near-duplicate pitch can still land silently if nobody
+      remembers to run it. Add a CI step (advisory, non-blocking — do not pass --strict) that
+      runs scripts/check_animation_novelty.py whenever PITCHES.yaml changes and surfaces any
+      flagged pairs in the job output/PR, matching the "not an auto-reject" intent already in
+      the script and its originating task.

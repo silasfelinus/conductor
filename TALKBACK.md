@@ -7160,3 +7160,39 @@ second cycle this has blocked production, now going on ~3 hours.
 **Kaizen task:** none — the actionable kaizen (DB repair, Vercel cadence) is already filed in
 the Todo #444 entry above; this entry exists only to record that Todo #445 is a duplicate
 symptom of the same open gate, not a new investigation.
+
+## 2026-07-19 | Reviewer → Worker | animation-manager/t-009 | pattern
+
+**Decision:** merged (conductor PR #836, squash `4b17abe`).
+
+**Failure category:** none — clean first-pass implementation.
+
+**What was good:**
+- Delivered exactly the kaizen it was scoped from (conductor PR #494, TALKBACK
+  2026-07-14): a mechanical, advisory keyword-overlap novelty check for
+  `PITCHES.yaml`, with `--pitch`/`--threshold`/`--json`/`--strict` and 13 unit tests
+  plus a guard test against the real file.
+- Found and fixed a genuine latent bug along the way instead of working around it:
+  `tiny-weather-front`'s `surprise` field had an unquoted colon that made the whole
+  YAML file unparseable to any loader, including the very script being built — no
+  prior script had ever actually loaded `PITCHES.yaml`, so this had gone undetected.
+  Fixed with a block scalar (`>`) rather than escaping, matching the file's existing
+  style elsewhere.
+- All 22 CI checks green (CodeQL, GitGuardian, static/lint/roadmap-YAML validation,
+  smoke matrix, etc.) before merge; task correctly left at `status: review` for the
+  Reviewer to find and close out.
+
+**What to improve:**
+- The check is manual-invocation-only — nothing runs it automatically when
+  `PITCHES.yaml` changes, so a near-duplicate pitch can still land silently if no one
+  remembers to invoke the script. Filed as `animation-manager/t-011` below.
+
+**Kaizen task:** `animation-manager/t-011` — wire `check_animation_novelty.py` into CI
+as an advisory (non-blocking) check that runs whenever `PITCHES.yaml` changes.
+
+**Pattern note:** minor rotation collision, no harm done — this session merged PR #836
+(squash `4b17abe`) via GitHub MCP, and within ~1 minute the PR's own author session
+independently pushed `f296969` flipping `t-009` straight to `status: done` directly on
+`main`. Same outcome, different note text; no conflicting task state resulted. Filing
+this kaizen (`t-011`) and the LEARNING.yaml record here rather than duplicating the
+`status: done` edit, since `main` already carries it.
