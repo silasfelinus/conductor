@@ -462,8 +462,8 @@ tasks:
   - id: t-025
     milestone: m6
     title: "Async art generation via the ArtJob queue"
-    status: review
-    owner: worker
+    status: done
+    owner: null
     passes: 0
     stakes: reversible
     note: >
@@ -576,3 +576,24 @@ tasks:
     claimed_by: claude-conductor-scheduled-20260718T1730Z
     claimed_at: '2026-07-18T11:06:30Z'
     updated: '2026-07-18T11:06:30Z'
+
+  - id: t-031
+    milestone: m6
+    title: "Live smoke test of the t-025 async ArtJob queue path on /model-builder"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Kaizen from t-025 (kind_robots PR #539, 2026-07-19). t-025 added
+      artStore.enqueueCurrentArt/getArtJobStatus/finalizeQueuedArtImage and
+      modelBuilderStore.generateItemAssetAsync + a per-item poll loop, verified only via
+      vue-tsc/eslint (no reachable DATABASE_URL/render backend in the sandbox — the
+      ComfyUI/Alexandria relay behind the ArtJob queue was failing every hourly run all day
+      per coloring-book/t-022's notes). Once that backend is confirmed healthy again, do a
+      live /model-builder run: queue GENERATE_ASSETS on 2-3 build items concurrently via the
+      new async button, confirm each shows independent queued -> rendering -> done state
+      (not sharing/clobbering artStore's global queueState), confirm the resulting
+      artImageId/imagePath land correctly per item, and confirm the existing synchronous
+      "Generate candidate" button still works unchanged. Record findings; file any fix as a
+      new task.

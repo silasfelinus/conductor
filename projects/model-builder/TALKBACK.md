@@ -57,3 +57,41 @@ instruction) — kind_robots PR #406
   recurring work.
 
 **Kaizen task:** none filed — no new pattern surfaced beyond what's already tracked.
+
+## 2026-07-19 | Reviewer (burst-mode) | model-builder/t-025 | pattern
+
+**Decision:** merged (kind_robots PR #539, squash `ceab9a76`); task closed at `status: done`.
+
+**Failure category:** none — clean first-pass implementation.
+
+**What was good:**
+- Rotation picked this task specifically because it was verifiable without a live render
+  backend: `coloring-book/t-022` (next in `priority.yaml` order) and
+  `superkate-hairstyle-ai/t-019` both needed the ComfyUI/Alexandria relay, which had
+  30+ consecutive hourly failures logged for `process-color-art-events.yml` at claim
+  time — confirmed via the Actions API rather than assumed from stale notes. Picking
+  `model-builder/t-025` avoided burning another wasted retry pass on those.
+- Reused the existing `artStore.enqueueAndRender` pattern per the task note by
+  extracting shared helpers (`resolveArtGenerationRoute`, `mergeCurrentArtOverrides`)
+  out of the working synchronous `generateArt`/`generateCurrentArt` instead of
+  duplicating their server-selection/validation logic in a new async copy — verified
+  behavior-preservation by diffing that the sync path's control flow is unchanged, just
+  calling the extracted functions.
+- Caught a real correctness risk before it shipped: the obvious naive approach (reusing
+  `artStore.waitForQueuedArtJob` per item) would have had every concurrently-queued
+  Model Builder item stomp the same global `state.queueState`/`currentJobId`. Added a
+  state-free `getArtJobStatus` single-shot poll instead, so per-item concurrent polling
+  in `modelBuilderStore.pollAsyncArtJob` can't cross-contaminate.
+- Verified `vue-tsc --noEmit` (0 errors, matches baseline) and `eslint` (same 6
+  pre-existing errors as `main`, confirmed via `git stash` + re-lint diff, zero new)
+  rather than assuming clean from typecheck alone.
+- Explicitly flagged in the PR body what couldn't be verified (live end-to-end smoke,
+  same render-backend outage) instead of silently claiming full verification, and filed
+  the live-smoke gap as a proper kaizen task (`t-031`) rather than leaving it only in
+  prose.
+
+**What to improve:** none this cycle.
+
+**Kaizen task:** `model-builder/t-031` — live smoke test of the t-025 async path on
+`/model-builder` once the ComfyUI/Alexandria render backend is confirmed healthy
+(tracked via `coloring-book/t-022`'s existing FOR-SILAS note).
