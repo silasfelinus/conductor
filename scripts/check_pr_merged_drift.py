@@ -124,11 +124,16 @@ def gh_pr(repo: str, number: int, token: str | None) -> dict | None:
         return None
 
 
-def check(candidates: list[dict[str, Any]], token: str | None) -> list[dict[str, Any]]:
+def check(candidates: list[dict[str, Any]], token: str | None) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
+    """Return (findings, unresolved). `unresolved` holds candidates whose PR
+    lookup failed (network/auth error) — these were NOT verified either way
+    and must not be reported as "clean"."""
     findings = []
+    unresolved = []
     for c in candidates:
         pr = gh_pr(c["repo"], c["pr_number"], token)
         if not pr:
+            unresolved.append(c)
             continue
         if pr.get("merged") or pr.get("merged_at"):
             findings.append({
@@ -136,18 +141,33 @@ def check(candidates: list[dict[str, Any]], token: str | None) -> list[dict[str,
                 "pr_merged_at": pr.get("merged_at"),
                 "pr_title": pr.get("title"),
             })
-    return findings
+    return findings, unresolved
 
 
-def render(findings: list[dict[str, Any]]) -> str:
-    if not findings:
-        return "No drift found — every claimed/review task's referenced PR is still open (or unresolved)."
-    lines = [f"Found {len(findings)} task(s) at claimed/review whose referenced PR already merged:\n"]
-    for f in findings:
+def render(findings: list[dict[str, Any]], unresolved: list[dict[str, Any]], total: int) -> str:
+    lines = []
+    if unresolved:
         lines.append(
-            f"  {f['project']}/{f['task_id']} (status: {f['status']}) references "
-            f"{f['repo']}#{f['pr_number']} \"{f['pr_title']}\", merged {f['pr_merged_at']}"
+            f"⚠  {len(unresolved)}/{total} candidate(s) could NOT be verified (API lookup failed — "
+            f"see stderr for HTTP codes). This is common in sandboxed sessions that only have "
+            f"GitHub MCP tools, not direct API/token access — a raw urllib call to api.github.com "
+            f"will 403 there even with GITHUB_TOKEN set. Do not treat this run as a clean audit; "
+            f"re-check the unresolved task(s) via the GitHub MCP `pull_request_read` tool instead:"
         )
+        for c in unresolved:
+            lines.append(f"    {c['project']}/{c['task_id']} -> {c['repo']}#{c['pr_number']}")
+        lines.append("")
+    if findings:
+        lines.append(f"Found {len(findings)} task(s) at claimed/review whose referenced PR already merged:\n")
+        for f in findings:
+            lines.append(
+                f"  {f['project']}/{f['task_id']} (status: {f['status']}) references "
+                f"{f['repo']}#{f['pr_number']} \"{f['pr_title']}\", merged {f['pr_merged_at']}"
+            )
+    elif not unresolved:
+        lines.append(f"No drift found — all {total} claimed/review PR reference(s) verified still open.")
+    elif len(unresolved) < total:
+        lines.append(f"No drift found among the {total - len(unresolved)} candidate(s) successfully verified.")
     return "\n".join(lines)
 
 
@@ -160,14 +180,22 @@ def main() -> None:
     if not token:
         print("⚠  GITHUB_TOKEN not set — rate limits apply", file=sys.stderr)
 
-    findings = check(scan(), token)
+    candidates = scan()
+    findings, unresolved = check(candidates, token)
 
     if args.json:
-        print(json.dumps(findings, indent=2))
+        print(json.dumps({"findings": findings, "unresolved": unresolved}, indent=2))
     else:
-        print(render(findings))
+        print(render(findings, unresolved, len(candidates)))
 
-    sys.exit(1 if findings else 0)
+    # Exit codes: 0 = verified clean, 1 = drift found, 2 = could not fully
+    # verify (some/all lookups failed) — distinct from "clean" so callers
+    # (and agent sessions) don't mistake an unverified run for a passing one.
+    if findings:
+        sys.exit(1)
+    if unresolved:
+        sys.exit(2)
+    sys.exit(0)
 
 
 if __name__ == "__main__":

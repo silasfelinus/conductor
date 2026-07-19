@@ -1,13 +1,13 @@
 # Roadmap Audit
 
-Generated: `2026-07-19T21:25:34.348561+00:00`
+Generated: `2026-07-19T23:12:43.702079+00:00`
 
 This is a conservative structural audit. It reports suspicious state; it does not automatically change task status or remove human gates.
 
 ## Portfolio snapshot
 
 - **40** roadmaps, **31** active projects, **624** tasks
-- **55 ready**, **45 waiting**, **32 needs-human**, **1 claimed/review**, **480 done**
+- **52 ready**, **45 waiting**, **33 needs-human**, **3 claimed/review**, **480 done**
 - Findings: **0 errors**, **6 warnings**, **46 informational**
 
 ## Project inventory
@@ -16,7 +16,7 @@ This is a conservative structural audit. It reports suspicious state; it does no
 |---:|---|---|---|---:|---:|---:|---:|---:|
 | 1 | `challenge-center` | finished | software | 0 | 0 | 0 | 0 | 20 / 20 |
 | 2 | `ai-art-academy` | active | software | 2 | 0 | 3 | 0 | 29 / 34 |
-| 3 | `coloring-book` | active | software | 1 | 9 | 0 | 0 | 19 / 29 |
+| 3 | `coloring-book` | active | software | 0 | 9 | 1 | 0 | 19 / 29 |
 | 4 | `humboldt-scoop` | active | software | 0 | 0 | 0 | 0 | 8 / 8 |
 | 5 | `humboldt-scoop-cms` | active | software | 0 | 4 | 1 | 0 | 6 / 11 |
 | 6 | `digital-storefront` | active | software | 0 | 2 | 4 | 0 | 17 / 23 |
@@ -32,11 +32,11 @@ This is a conservative structural audit. It reports suspicious state; it does no
 | 16 | `animation-manager` | active | software | 3 | 0 | 0 | 0 | 8 / 11 |
 | 17 | `animation-studio` | retired | software | 3 | 4 | 0 | 0 | 1 / 8 |
 | 18 | `ecosystem-map` | active | software | 1 | 0 | 0 | 0 | 7 / 8 |
-| 19 | `conductor` | active | software | 1 | 0 | 4 | 1 | 65 / 71 |
+| 19 | `conductor` | active | software | 0 | 0 | 4 | 2 | 65 / 71 |
 | 20 | `serendipity` | active | software | 1 | 0 | 0 | 0 | 11 / 12 |
 | 21 | `storymaker` | active | software | 2 | 0 | 0 | 0 | 8 / 10 |
 | 22 | `davinci` | active | software | 1 | 0 | 0 | 0 | 13 / 14 |
-| 23 | `art-generator-connect` | active | software | 2 | 0 | 0 | 0 | 19 / 21 |
+| 23 | `art-generator-connect` | active | software | 1 | 0 | 0 | 1 | 19 / 21 |
 | 24 | `mural-design` | active | content | 1 | 3 | 1 | 0 | 2 / 7 |
 | 25 | `coat-dance` | active | content | 2 | 0 | 0 | 0 | 0 / 10 |
 | 26 | `career-transition` | retired | content | 3 | 4 | 0 | 0 | 1 / 8 |
