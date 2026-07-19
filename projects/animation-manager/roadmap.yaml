@@ -93,7 +93,7 @@ tasks:
   - id: t-004
     milestone: m3
     title: "Track animation attempts as Component records with Reactions"
-    status: claimed
+    status: review
     owner: worker
     passes: 0
     stakes: reversible
@@ -106,6 +106,34 @@ tasks:
       technique, quality checklist, and supersedes/supersededBy links. Reactions already support
       reactionCategory COMPONENT and componentId. Add store helpers and API-backed list/create/
       update/reaction flows without front-end components calling routes directly.
+
+      IMPLEMENTED 2026-07-19 (conductor-burst session, kind_robots PR #564): found the
+      Component/Reaction CRUD infra (componentStore.ts, componentHelper.ts, reactionStore.ts)
+      already fully built and unused by any caller -- reactionCategory COMPONENT was already
+      wired end-to-end. The actual gap was the animation-specific naming/tag convention, so
+      added stores/helpers/animationComponentHelper.ts (componentName "<slug>@v<build>",
+      folderName screenfx, listAnimationAttempts/getLatestAnimationAttempt/nextBuildNumber)
+      plus componentStore.ts's recordAnimationAttempt/linkSupersededAnimationAttempt actions.
+      Two deviations from this note's literal wording, both documented in SPEC.md's Attempt
+      records section: (1) "working/broken/construction flags" map to the existing ComponentStatus
+      enum (WORKING/UNDER_CONSTRUCTION/BROKEN/...) -- the boolean fields were already retired
+      from the live schema before this task started; (2) the structured ledger (slug, build,
+      commit/PR, technique, quality checklist, supersedes/supersededBy) lives in the `tags` JSON
+      column, not `notes` -- `notes` is an uncapped VARCHAR(191) with no app-layer length limit,
+      real risk of silent truncation for a growing JSON blob. `tags` existed on the model already
+      (component_canonical_expand migration) but no route exposed it; added support to both
+      server/api/components/index.post.ts and [id].patch.ts (also widened the PATCH componentName
+      regex to allow "@"). Added utils/scripts/verifyAnimationComponentAttempts.ts (npm run
+      test:animation-component-attempts, wired into contract-tests.yml) covering every one of
+      the 30 catalog slugs against the real server-side componentName validation, plus
+      listing/supersession logic. Verified clean: the new contract test, the existing
+      verifyNoPrismaJsonCast.ts guard (confirmed the new `tags` cast doesn't trip the
+      InputJsonValue ban -- it's a legitimate native-Json-column cast, kind-robots/t-033
+      territory), full vue-tsc typecheck, and eslint on every touched file. No live DB in this
+      sandbox, so did not attempt to backfill historical builds (bioluminescent-tide@v1,
+      gravity-garden@v1) or exercise the new store actions end-to-end -- left as a follow-up
+      once someone has DB access; t-007 (which depends on this task) will create the first
+      real attempt record on its next build regardless.
     claimed_by: claude-conductor-burst-20260719T2100Z
     claimed_at: '2026-07-19T21:04:59Z'
     updated: '2026-07-19T21:04:59Z'
