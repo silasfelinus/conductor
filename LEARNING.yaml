@@ -3559,3 +3559,12 @@ records:
     of defining its own inherits that helper's module-global EVENT_DIR, not the caller's patched attribute
     -- tests patching MODULE.EVENT_DIR silently no-op unless the helper is defined in (or duplicated into)
     the same module it's called from.
+- date: '2026-07-19'
+  project: newsfeed
+  task: t-012
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "A task note can go stale even while the code moves fast underneath it: newsfeed-page.vue's own deliverables.next list still said \"Category filtering\" and \"Perspective balancing UI\" were pending, but both had fully shipped in prior cycles (newsfeed-filters.vue, feedPreferenceStore.ts) -- nothing was reading the front-page copy against the actual component tree to catch the drift. Worth checking a task's own rendered copy against its component implementation before assuming a roadmap note's status is current, not just the roadmap task's own status field."
