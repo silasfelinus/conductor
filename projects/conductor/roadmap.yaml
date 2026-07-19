@@ -1867,8 +1867,24 @@ tasks:
     status: done
     passes: 0
     stakes: reversible
-    note: 'Fixed: process_task_events.py now checks a queued event''s own `updated` timestamp against the live task''s `claimed_at`/`updated` before applying it. If the task has moved on since the event was generated (e.g. it was claimed again after the event was queued but before it got applied, as happened for ai-art-academy/t-010 in this task''s own report), the event is now skipped and logged as STALE instead of silently patching over the newer state. Added stale_reason() with 4 new unit tests covering: the reported regression scenario, dry-run behavior, events with no updated timestamp (never flagged, nothing to compare), and the ordinary newer-event-than-claim flow (still applies normally). Full test suite (378 tests) passes.'
+    note: 'Fixed: process_task_events.py now checks a queued event''s own `updated` timestamp against the live task''s `claimed_at`/`updated` before applying it. If the task has moved on since the event was generated (e.g. it was claimed again after the event was queued but before it got applied, as happened for ai-art-academy/t-010 in this task''s own report), the event is now skipped and logged as STALE instead of silently patching over the newer state. Added stale_reason() with 4 new unit tests covering: the reported regression scenario, dry-run behavior, events with no updated timestamp (never flagged, nothing to compare), and the ordinary newer-event-than-claim flow (still applies normally). Full test suite (378 tests) passes. Reviewed and merged conductor PR #844 (squash `73c2177`) — all 22 CI checks green, diff scoped to exactly the fix + tests, no scope creep.'
     owner: worker
     claimed_by: claude-conductor-burst-20260719-rotation-conductor
     claimed_at: '2026-07-19T09:05:59Z'
-    updated: '2026-07-19T09:15:03Z'
+    updated: '2026-07-19T09:20:00Z'
+
+  - id: t-068
+    milestone: m2
+    title: Validate task-events/*.yaml syntax at write time or in CI, not first discovered when the shared process job breaks
+    status: ready
+    passes: 0
+    stakes: reversible
+    note: >
+      Kaizen from t-067 (conductor PR #844, merged 2026-07-19): t-067 fixed process_task_events.py's
+      staleness handling, but the secondary root cause that made the original incident visible for
+      ~an hour is still open -- a queued task-events/*.yaml file with a plain YAML syntax error (an
+      unquoted colon in a free-text note field) broke the shared `process` CI job for every unrelated
+      PR until a different session happened to fix that one file. Add a validation step -- either at
+      whatever produces task-events/ entries (yaml.safe_load before write) or as a CI check on any PR
+      touching task-events/ -- so a malformed event file is caught at its own PR instead of silently
+      blocking the queue and failing CI for everyone else's PRs in the meantime.

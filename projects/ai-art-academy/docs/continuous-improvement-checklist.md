@@ -15,8 +15,8 @@ Record the lane, files changed, and verification in the task note before rearmin
 
 ### Rotation state
 
-- Last completed lane: Front-end polish — academy-timeline.vue aria-controls/id wiring for the expanded lesson panel, 2026-07-19, kind_robots PR #515.
-- Next preferred lane: Roadmap accuracy.
+- Last completed lane: Roadmap accuracy — flipped m4 to `done` (all 15 tasks done) and m3 to `in-progress` (t-033 still needs-human), correcting drift the 2026-07-18 audit couldn't have caught since t-033 didn't exist yet, 2026-07-19.
+- Next preferred lane: Front-end polish.
 - Override the preferred lane only when it is blocked or a higher-severity reversible issue is newly verified; record that reason in the task note.
 
 This explicit state is the handoff between recurring cycles. Update it in the same PR as each `t-010` improvement so the next Worker does not infer rotation from a long roadmap note.

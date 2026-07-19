@@ -7239,3 +7239,59 @@ convention of large free-text YAML block scalars is fragile to a single stray un
 colon, and that fragility now has two independent observed failure modes: breaking the
 consuming script outright (PITCHES.yaml case) and breaking a shared CI gate for every
 unrelated PR until fixed (this task-events case).
+
+## 2026-07-19 | Reviewer → Worker | conductor/t-067 | pattern
+
+**Decision:** merged (conductor PR #844, squash `73c2177`)
+
+**Failure category:** none — clean first-pass fix.
+
+**What was good:**
+- `stale_reason()` directly addresses the root cause t-067 documented: compares a
+  queued event's own `updated` timestamp against the task's live `claimed_at`/`updated`
+  and skips (logs `STALE`, deletes the event) instead of silently patching over newer
+  state — the same class of guard `claim_task.py` already has for direct claims.
+- Four new unit tests cover the reported regression scenario, dry-run behavior, events
+  with no `updated` timestamp (correctly never flagged — nothing to compare against),
+  and the ordinary case where an event genuinely postdates the task's last claim (still
+  applies). Full suite (378 tests) green; roadmap YAML validates; dry-run smoke clean.
+- Diff is exactly the fix + tests + roadmap note — no scope creep.
+
+**What to improve:**
+- The task was left at `status: claimed` in the roadmap when the PR was opened rather
+  than flipped to `status: review` per AGENTS.md step 7 (the PR's own roadmap diff
+  changed it to `review` directly, skipping the separate pre-PR commit that step
+  describes). Low-stakes here since the PR merged within the same session's sweep, but
+  worth the reminder since this exact gap caused real confusion previously
+  (`superkate-hairstyle-ai/t-017`, cited in AGENTS.md's own step-7 rationale).
+
+**Kaizen task:** `conductor/t-068` — validate `task-events/*.yaml` syntax at write time
+or in CI, closing the secondary root cause t-067's own note flagged (a malformed event
+file breaking the shared `process` CI job for every unrelated PR until someone happens
+to notice and fix it).
+
+## 2026-07-19 | Reviewer (burst-mode) | ai-art-academy/t-010 | pattern
+
+**Decision:** roadmap-accuracy lane, conductor-docs-only (no kind_robots PR needed) — rearmed to `ready`.
+
+**What was good:**
+- Followed the checklist's rotation state (lane 2, roadmap accuracy, was next preferred
+  after lane 1 ran the immediately-prior cycle) rather than re-running a front-end sweep.
+- Found two real, material milestone-status drifts by cross-checking every milestone's
+  task list against its actual task statuses rather than trusting the existing labels:
+  m4 (all 15 tasks done, still marked `in-progress`) and m3 (marked `done` despite
+  carrying the still-open `t-033` needs-human task). Confirmed via git history that m3's
+  drift is genuine and recent — a same-day 2026-07-18 ~11:18 UTC audit explicitly
+  verified m3 as accurate, and t-033 wasn't claimed until ~14:22 UTC that same day, so
+  the finding isn't something a prior pass merely missed.
+- Quantified the effect on `build_status.py`'s weighted formula (72.5% → 77.5%) before
+  writing it down, rather than asserting the milestones were wrong without checking the
+  formula actually reads plain `status` fields (it does — no separate task-rollup logic
+  to also update).
+
+**What to improve:** none this cycle.
+
+**Kaizen task:** deferred — `conductor/t-068` (filed above from the t-067 review) already
+covers the next concrete conductor-tooling improvement; ai-art-academy's own kaizen slot
+is naturally filled by its next `t-010` cycle picking up lane 1 (front-end polish) per
+the rotation.

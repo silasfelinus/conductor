@@ -3520,3 +3520,12 @@ records:
   outcome: done
   failure_category: transient
   lesson: "A queued task-events/ entry stuck behind a sibling file's YAML syntax bug applied stale status/note state on top of this session's freshly-claimed t-010 once it finally processed -- process_task_events.py has no staleness check against the task's current claimed_at/updated, unlike claim_task.py's live-recheck guard for direct claims. Read a corrupted roadmap note carefully before re-editing it: the truncated/duplicated fragment was easy to mistake for legitimate history at a glance. Filed conductor/t-067 for the underlying gap."
+- date: 2026-07-19
+  project: conductor
+  task: t-067
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "process_task_events.py now guards against the same staleness class claim_task.py already solves for direct claims: before applying a queued event, compare its own updated timestamp against the live task's claimed_at/updated and skip (log STALE, don't apply) if the task moved on since the event was queued. Clean first-pass fix with 4 new unit tests covering the reported regression, dry-run, no-timestamp, and ordinary-newer-event cases."
