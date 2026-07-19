@@ -4,17 +4,18 @@ date: 2026-07-10
 task: ai-art-academy/t-005
 status: draft for review (content complete, one source URL verified per movement)
 
-This is the curriculum: 23 movements spanning the timeline from Greek vases to
-Suprematism. Every artist named here is long dead (all listed artists died before
-1955), and every example work is a public-domain original held (or expected) in an
-open-access collection. See the ethical boundary in DESIGN-BRIEF.md and the
+This is the curriculum: 24 movements spanning the timeline from Greek vases to
+American Regionalism. Every artist named here is long dead (all listed artists died
+before 1955), and every example work is a public-domain original held (or expected)
+in an open-access collection. See the ethical boundary in DESIGN-BRIEF.md and the
 PUBLIC-DOMAIN-POLICY.md (t-006).
 
 Sections 1-16 are the v1 set (chronological). Sections 17-21 are the 2026-07-16 v1.1
 expansion (t-010 cycle): Gothic panel painting, Northern Renaissance, Rococo,
 Symbolism, and Neo-Impressionism/Pointillism. Section 22 is the 2026-07-18 v1.2
 addition (t-010 cycle): Suprematism. Section 23 is the 2026-07-18 v1.3 addition
-(t-010 cycle): Ashcan School. They are appended (rather than renumbered into place)
+(t-010 cycle): Ashcan School. Section 24 is the 2026-07-19 v1.4 addition (t-010
+cycle): American Regionalism. They are appended (rather than renumbered into place)
 but belong chronologically among the earlier movements — read the `era` field in the
 machine-readable skeleton for true ordering; the front-end seed (t-020, t-031)
 inserts them in chronological position.
@@ -181,6 +182,16 @@ movements:
     artist_slugs: [robert-henri, george-bellows, john-sloan, william-glackens]
     example_count: 4
     remix_hint: "Repaint this image in the Ashcan School style: loose, gestural brushwork, a dark and earthy urban palette, unglamorized everyday city subject matter, and dramatic, low-key lighting like a newspaper illustrator working in oil"
+  # --- v1.4 addition (2026-07-19, t-010 cycle) ---
+  # Belongs chronologically after ashcan-school (see `era`); appended here to avoid
+  # renumbering the sections above. A future seed-sync task inserts it in
+  # chronological position in academyStyles.ts, mirroring t-020/t-031/t-034.
+  - slug: american-regionalism
+    name: American Regionalism
+    era: "c. 1928-1935"
+    artist_slugs: [grant-wood, john-steuart-curry]
+    example_count: 4
+    remix_hint: "Repaint this image in the American Regionalist style: smooth, simplified sculptural forms with crisp outlines, sharp-focus representational realism, a rural Midwestern American setting, a dramatic rolling sky, and a muted earthy palette with a few bold accent colors"
 ```
 
 ---
@@ -1288,6 +1299,73 @@ matter, and dramatic, low-key lighting like a newspaper illustrator working in o
 
 ---
 
+## 24. American Regionalism (`american-regionalism`)
+
+**Era:** c. 1928-1935 (movement continued into the early 1940s; Midwestern United
+States)
+
+**Key ideas.** After a decade of American painters looking to Paris for their cues,
+a Midwestern countercurrent insisted the most American subject was standing right
+outside the studio window: county fairs, cornfields, Carpenter Gothic farmhouses,
+camp-meeting baptisms, storm cellars. Regionalist painters rendered these everyday
+rural scenes not with the loose, gritty immediacy of the Ashcan School but with a
+smooth, almost sculptural precision — crisp outlines, simplified rounded forms, and
+a sharp-focus realism closer to a folk-art tintype than a candid photograph. The
+tone is famously ambiguous: is a stiff farm couple posed in front of their
+gothic-windowed house sincere homage or gentle satire? The movement's rise
+coincided with the onset of the Great Depression, and its images of steady,
+self-sufficient rural life read — deliberately or not — as reassurance at a moment
+of national anxiety about the modern industrial city.
+
+**Recognition cues:**
+- Smooth, simplified, almost sculptural forms — rounded contours on trees, clouds,
+  and clothing rather than loose brushwork
+- Sharp-focus, evenly lit representational realism with very little visible
+  brushstroke texture
+- Rural and small-town Midwestern American subjects: farms, farmhouses, fields,
+  main streets, community gatherings
+- Dramatic, rolling skies and stylized cloud/crop patterns used as a compositional
+  device
+- A muted, earthy palette (ochre, olive, brick red, slate blue) with occasional
+  saturated accent color
+- Figures often posed frontally and stiffly, giving scenes a formal,
+  tintype-photograph quality
+
+**Notable artists:**
+- **Grant Wood** (1891-1942) — Iowa painter whose meticulous, polished realism and
+  ambiguous tone made *American Gothic* the most recognized American painting of
+  the 20th century.
+- **John Steuart Curry** (1897-1946) — Kansas-born painter of dramatic rural
+  weather and revivalist religious life, whose theatrical compositions brought
+  Regionalism its most kinetic, storm-tossed energy.
+
+**Example works:**
+- *American Gothic*, Grant Wood, 1930 — Art Institute of Chicago (Friends of
+  American Art Collection, acc. 1930.934). Public domain per AIC's CC0 Open Access
+  program (author died 1942, published 1930) — unverified this cycle by direct
+  fetch (`artic.edu` returned HTTP 402 through the session egress proxy); confirmed
+  via web search matching title, artist, date, and accession number:
+  https://www.artic.edu/artworks/6565/american-gothic
+- *Stone City, Iowa*, Grant Wood, 1930 — Joslyn Art Museum, Omaha. Public domain
+  (author died 1942, published before 1931) — unverified this cycle by direct
+  fetch, confirmed via web search of the Wikimedia Commons file page:
+  https://commons.wikimedia.org/wiki/File:Stone_City_Iowa_1930_Grant_Wood.jpg
+- *Baptism in Kansas*, John Steuart Curry, 1928 — Whitney Museum of American Art.
+  Public domain (author died 1946, published before 1931) — unverified this cycle
+  by direct fetch, confirmed via web search of the Wikimedia Commons file page:
+  https://commons.wikimedia.org/wiki/File:Baptism_in_Kansas,_by_John_Steuart_Curry.jpg
+- *Tornado Over Kansas*, John Steuart Curry, 1929 — Muskegon Museum of Art. Public
+  domain (author died 1946, published before 1931) — unverified this cycle by
+  direct fetch, confirmed via web search of the Wikimedia Commons file page:
+  https://commons.wikimedia.org/wiki/File:Tornado_Over_Kansas_(Curry,_1929).jpg
+
+**remix_hint:** "Repaint this image in the American Regionalist style: smooth,
+simplified sculptural forms with crisp outlines, sharp-focus representational
+realism, a rural Midwestern American setting, a dramatic rolling sky, and a muted
+earthy palette with a few bold accent colors"
+
+---
+
 ## Lesson-only vs remixable
 
 Every movement above maps to a remix config (mode `prompt` to start; t-003/t-004
@@ -1329,7 +1407,11 @@ average all three. `ashcan-school` shares `realism`'s risk of under-cooking into
 lightly-graded photo, but its darker palette and visibly loose brushwork give the
 model more to grab onto than straight Realism does — the remix_hint leans on
 "gestural," "murky," and "low-key lighting" to keep it from reading as a generic
-sepia filter.
+sepia filter. `american-regionalism` shares `realism`'s and `ashcan-school`'s
+under-cooking risk from the opposite direction: its smooth, sculptural finish is
+close to a lightly-processed photo already, so the remix_hint leans on "simplified
+sculptural forms," "crisp outlines," and "dramatic rolling sky" to push past a
+generic realism filter toward the movement's distinctive smoothed-and-stylized look.
 
 **Flagged as likely-poor remixers:**
 - `cubism` — faceting while "preserving the composition" is partly contradictory;
@@ -1399,3 +1481,27 @@ via WebFetch, HTTP 200 on all four file pages), so all four example-work URLs ar
 marked VERIFIED against their live Wikimedia Commons file pages and PD license tags
 (two CC0 1.0 dedications from open-access museums, two "author died 70+ years ago,
 published before 1931" PD tags), not "(unverified)."
+
+**v1.4 addition (2026-07-19) re-check.** Section 24 (American Regionalism) clears
+the PUBLIC-DOMAIN-POLICY.md §1.3 both-prongs rule for both named artists: Grant Wood
+(d. 1942) and John Steuart Curry (d. 1946) both died well before the 1956 cutoff —
+Curry's 1946 death is the newest of this batch but still inside the "died 1953 or
+earlier" statement above, so no recency record moves. Thomas Hart Benton, the third
+figure usually named alongside Wood and Curry in general-audience accounts of this
+movement, is deliberately **not named anywhere in this entry**: he died in 1975 (51
+years ago), inside the 70-year prong-1 window, so PUBLIC-DOMAIN-POLICY.md §4 rule 2
+excludes him even as historical-context prose (unlike Picasso/Braque in the Cubism
+entry above, whose mention predates this policy's strict reading and is flagged
+there as its own exception — a new entry should not add a second one). All four
+example works (1928, 1929, 1930, 1930) comfortably predate the 1930 US publication
+cutoff, but *American Gothic* and *Stone City, Iowa* (both 1930) now become the most
+recent example works in the whole curriculum, surpassing Moholy-Nagy's 1926
+Fotogramm — update this record if a future addition adds a work dated after 1930
+(none should, since 1930 is the policy's hard ceiling). Unlike the §22-23 batch,
+this session's `WebFetch` to museum hosts returned HTTP 402 (a proxy-level block,
+not the earlier sessions' 403), so all four example-work URLs are marked
+"unverified this cycle" per-entry above rather than VERIFIED — confirmed via web
+search matching title, artist, date, collection, and (for *American Gothic*)
+accession number, but not by directly reading the live page's license tag. Spot-check
+against live pages when a session with open museum/Commons egress runs (same
+follow-up pattern as the §17-21 batch).

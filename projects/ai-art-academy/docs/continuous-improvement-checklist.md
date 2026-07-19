@@ -15,20 +15,21 @@ Record the lane, files changed, and verification in the task note before rearmin
 
 ## Current curriculum coverage
 
-The Academy currently has 23 movement entries in `curriculum-outline.md`; all 23 are
+The Academy currently has 24 movement entries in `curriculum-outline.md`; 23 are
 synced to `academyStyles.ts` (t-031 landed the Suprematism sync 2026-07-18; t-034
-landed the Ashcan School sync 2026-07-18, kind_robots PR #464, merged). Before adding
-a 24th movement, finish the known coverage gaps below unless a newly discovered
-issue is more urgent.
+landed the Ashcan School sync 2026-07-18, kind_robots PR #464, merged). The 24th,
+American Regionalism, landed 2026-07-19 (this cycle) as a conductor-docs-only
+addition — not yet synced to kind_robots. Before adding a 25th movement, finish the
+known coverage gaps below unless a newly discovered issue is more urgent.
 
 | Area | Current state | Next verifiable action |
 |---|---|---|
-| Lesson seed entries | 23 movements in curriculum-outline.md; all 23 synced to `academyStyles.ts` (t-034 landed the Ashcan School sync 2026-07-18, kind_robots PR #464) | No action needed until a 24th movement lands |
-| Example works | 22 movements complete (t-013 landed Expressionism/Cubism/Bauhaus 2026-07-17; Suprematism shipped complete 2026-07-18); Ashcan School's 4 VERIFIED works are written up in curriculum-outline.md §23 but not yet in `examples.manifest.json` (confirmed absent: no `exampleWorks` field on the `ashcan-school` entry in `stores/seeds/academyStyles.ts` as of 2026-07-19) | Blocked on media-server write access — same blocker as t-033 (confirmed 2026-07-19: `examples.manifest.json` lives on `media.acrocatranch.com`, not in the kind_robots git repo; this session has `KR_API_TOKEN` but no `KR_RELAY_TOKEN`/`KR_RELAY_USER_ID` and found no in-repo upload path, so it cannot write the manifest or upload the 4 images from here). Research/sourcing is already done (curriculum-outline.md §23); only the write step remains. Resume once a session with media-server/relay write access is available — do not re-attempt from a sandbox without it |
+| Lesson seed entries | 24 movements in curriculum-outline.md; 23 synced to `academyStyles.ts` (t-034 landed the Ashcan School sync 2026-07-18, kind_robots PR #464). American Regionalism (§24, added 2026-07-19) not yet synced | Sync `american-regionalism` to `academyStyles.ts`, mirroring t-020/t-031/t-034 |
+| Example works | 22 movements complete (t-013 landed Expressionism/Cubism/Bauhaus 2026-07-17; Suprematism shipped complete 2026-07-18); Ashcan School's 4 VERIFIED works are written up in curriculum-outline.md §23 but not yet in `examples.manifest.json` (confirmed absent: no `exampleWorks` field on the `ashcan-school` entry in `stores/seeds/academyStyles.ts` as of 2026-07-19). American Regionalism's 4 works are written up in curriculum-outline.md §24 (sourced, but marked "unverified this cycle" — `WebFetch` to museum hosts returned HTTP 402 through the session egress proxy) | Blocked on media-server write access — same blocker as t-033 (confirmed 2026-07-19: `examples.manifest.json` lives on `media.acrocatranch.com`, not in the kind_robots git repo; this session has `KR_API_TOKEN` but no `KR_RELAY_TOKEN`/`KR_RELAY_USER_ID` and found no in-repo upload path, so it cannot write the manifest or upload images from here). Research/sourcing is already done (curriculum-outline.md §23-24); only the write step remains, plus a direct-fetch spot-check of §24's four URLs when museum/Commons egress is open. Resume once a session with media-server/relay write access is available — do not re-attempt from a sandbox without it |
 | Starter library | 21 starter images and provenance manifest complete — coverage intentionally movement-agnostic (2026-07-18: confirmed no movement-specific starters exist for any of the 8 movements added after v1, and an abstract Suprematist work would fail the library's own selection criteria; see starter-image-library.md) | Keep source-picker integration aligned with the manifest; no new starter entries needed |
-| Style previews | 23 prompts queued (Suprematism queued 2026-07-18, `kind-robots-academy-style-preview-suprematism`; Ashcan School queued the same cycle it was added, `kind-robots-academy-style-preview-ashcan-school`, both in `art-prompts.yaml`) | No action needed until a 24th movement lands |
+| Style previews | 24 prompts queued (Suprematism queued 2026-07-18, `kind-robots-academy-style-preview-suprematism`; Ashcan School queued the same cycle it was added, `kind-robots-academy-style-preview-ashcan-school`; American Regionalism queued 2026-07-19, `kind-robots-academy-style-preview-american-regionalism`, all in `art-prompts.yaml`) | No action needed until a 25th movement lands |
 | Remix configs | Registry exists; A/B generation blocked | Resume only after the relay, database, and approved generation path are available |
-| Teaching scaffold | Written in `docs/teaching-notes.md`, covering all 23 movements including Ashcan School; wired into `academy-style-detail.vue`'s Try It / Reflect sections (t-023, done — verified 2026-07-18 via `grep -n "Try it\|Reflect" components/academy/academy-style-detail.vue` on kind_robots main) | No action needed; keep the Vue wiring aligned as new movements land |
+| Teaching scaffold | Written in `docs/teaching-notes.md`, covering all 24 movements including American Regionalism; wired into `academy-style-detail.vue`'s Try It / Reflect sections (t-023, done — verified 2026-07-18 via `grep -n "Try it\|Reflect" components/academy/academy-style-detail.vue` on kind_robots main) | No action needed; keep the Vue wiring aligned as new movements land |
 
 ## Blocker discipline
 

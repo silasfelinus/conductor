@@ -11,7 +11,7 @@ worked example lessons — so every style page in the Academy teaches the same w
 converts cleanly into front-end lesson copy.
 
 Companion files:
-- `docs/curriculum-outline.md` — the 23 movements (source of truth for facts/works/hints)
+- `docs/curriculum-outline.md` — the 24 movements (source of truth for facts/works/hints)
 - `docs/style-lora-registry.md` — per-style remix mode (`prompt` vs `lora`) + `prompt_hint`
 - `PUBLIC-DOMAIN-POLICY.md` — the eligibility rule every example work must pass (§1.3) and
   the provenance schema (§3)
@@ -97,7 +97,7 @@ or style registry.
 
 ---
 
-## 3. Per-style teaching notes (all 23 movements)
+## 3. Per-style teaching notes (all 24 movements)
 
 Remix-difficulty tiers match `curriculum-outline.md`'s "Lesson-only vs remixable" section:
 **Easy** = strong transfer, ship first; **Medium** = good but watch the output;
@@ -130,6 +130,7 @@ slugs — e.g. `renaissance-fresco`, `baroque-chiaroscuro`, `post-impressionism-
 | 21 | Neo-Impressionism / Pointillism (`pointillism`) | prompt | Easy | The technique *is* the lesson; dots your eye blends | Dots render too coarse/sparse at low res — evaluate at higher output size |
 | 22 | Suprematism (`suprematism`) | prompt | **Hard** | Feeling over depiction; geometry alone as the subject | Faithful remix discards the source subject almost entirely — frame as a reduction exercise, not a restyle (see `docs/suprematism-lesson.md`, this movement's dedicated worked lesson) |
 | 23 | Ashcan School (`ashcan-school`) | prompt | Medium | Everyday city grit given the seriousness of history painting | Under-cooks toward a lightly-graded photo if the prompt underweights brushwork/palette — lean on "gestural," "murky," "low-key lighting" |
+| 24 | American Regionalism (`american-regionalism`) | prompt | Medium | Everyday rural America made monumental; smooth sculptural realism as quiet ambiguity | Under-cooks toward a lightly-processed photo if the prompt underweights the smoothed, sculptural simplification — lean on "crisp outlines," "simplified sculptural forms," "dramatic rolling sky" |
 
 ---
 
