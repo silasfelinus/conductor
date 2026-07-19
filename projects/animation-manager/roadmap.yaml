@@ -214,8 +214,8 @@ tasks:
   - id: t-011
     milestone: m1
     title: "Wire check_animation_novelty.py into CI as an advisory check on PITCHES.yaml changes"
-    status: ready
-    owner: null
+    status: claimed
+    owner: reviewer
     passes: 0
     stakes: reversible
     note: >
@@ -225,3 +225,6 @@ tasks:
       runs scripts/check_animation_novelty.py whenever PITCHES.yaml changes and surfaces any
       flagged pairs in the job output/PR, matching the "not an auto-reject" intent already in
       the script and its originating task.
+    claimed_by: claude-conductor-burst-20260719T1400Z
+    claimed_at: '2026-07-19T14:08:14Z'
+    updated: '2026-07-19T14:08:14Z'
