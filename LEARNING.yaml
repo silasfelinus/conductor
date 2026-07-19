@@ -3529,3 +3529,12 @@ records:
   outcome: done
   failure_category: null
   lesson: "process_task_events.py now guards against the same staleness class claim_task.py already solves for direct claims: before applying a queued event, compare its own updated timestamp against the live task's claimed_at/updated and skip (log STALE, don't apply) if the task moved on since the event was queued. Clean first-pass fix with 4 new unit tests covering the reported regression, dry-run, no-timestamp, and ordinary-newer-event cases."
+- date: 2026-07-19
+  project: newsfeed
+  task: t-017
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "The Vercel MCP connector (list_teams -> list_projects -> list_deployments -> web_fetch_vercel_url) does give a session a real rendered preview page for any open kind_robots PR, unblocking the recurring 'no local nuxt dev' wall (t-010/t-014/t-017); documented the concrete steps in AGENTS.md. Checking list_deployments' state field along the way surfaced a genuinely broken production build (unquoted Character, a reserved MariaDB word, in raw SQL across four call sites from a prior PR cluster) that had nothing to do with newsfeed -- worth always glancing at production deployment health while investigating an unrelated preview, since 'the change isn't showing up' can mean the whole build is failing, not that the change is wrong. Raw-SQL contract-test mocks that match on text prefixes cannot catch real grammar/parse errors; filed conductor/t-069 for a proper check."

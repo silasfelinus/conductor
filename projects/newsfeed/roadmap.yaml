@@ -425,25 +425,15 @@ tasks:
   - id: t-017
     milestone: m3
     title: "Investigate a real rendered preview path (e.g. Vercel MCP) instead of the local nuxt dev wall"
-    status: claimed
-    owner: worker
+    status: done
+    owner: null
     passes: 0
     stakes: reversible
-    updated: '2026-07-19T10:12:05Z'
+    updated: '2026-07-19T10:24:25Z'
     note: >
-      Kaizen from t-010 (a concurrent session's PR #486 review, cherry-picked from
-      a since-superseded conductor PR #825 whose roadmap edits collided with this
-      session's #827): at least three newsfeed tasks now (t-010, t-014, and this
-      note itself) have independently hit the same sandbox wall -- `npm run dev`
-      500s immediately because DATABASE_URL points at an unreachable dummy MariaDB
-      host, so SSR never reaches page markup and there is no way to visually or
-      keyboard-nav verify a front-end change locally. Investigate whether the
-      Vercel MCP connector (list_deployments / get_deployment / a preview URL for
-      the PR's branch) can give a session an actual rendered page to check
-      against, and if so document the concrete steps (which tool calls, what to
-      look for) in AGENTS.md's cross-repo section so future front-end tasks stop
-      rediscovering "no local nuxt dev" from scratch. If no such path exists yet,
-      the deliverable is a clear note saying so instead of silence.
+      Kaizen from t-010 (a concurrent session's PR #486 review, cherry-picked from a since-superseded conductor PR #825 whose roadmap edits collided with this session's #827): at least three newsfeed tasks now (t-010, t-014, and this note itself) have independently hit the same sandbox wall -- `npm run dev` 500s immediately because DATABASE_URL points at an unreachable dummy MariaDB host, so SSR never reaches page markup and there is no way to visually or keyboard-nav verify a front-end change locally. Investigate whether the Vercel MCP connector (list_deployments / get_deployment / a preview URL for the PR's branch) can give a session an actual rendered page to check against, and if so document the concrete steps (which tool calls, what to look for) in AGENTS.md's cross-repo section so future front-end tasks stop rediscovering "no local nuxt dev" from scratch. If no such path exists yet, the deliverable is a clear note saying so instead of silence.
+
+      RAN 2026-07-19 (~10:12-10:35 UTC, claude-conductor-agentrun-20260719T1400Z): confirmed the Vercel MCP connector answers this fully. list_teams -> list_projects -> list_deployments (kind-robots, prj_x6HB2IPpQbvqNqiYVgu3IibJ6FZf) surfaces a real preview deployment URL for every open PR branch; web_fetch_vercel_url against it returned full SSR markup (real <title>, real app-shell classes), not the stock Nuxt welcome page -- confirmed with a live fetch, not just reading docs. Documented the concrete tool sequence in AGENTS.md's cross-repo section (new subsection right after provision_kind_robots_deps.sh). While checking a preview URL, list_deployments also showed the current production deployment in ERROR state -- a real, separate finding: unquoted `Character` (a reserved MariaDB word) in a raw SQL JOIN was failing every production build since PR #515, via repair-known-prisma-migrations.mjs's migration-repair step. Same unquoted shape existed in three other raw-SQL sites merged in the same PR cluster (component reaction reads, WonderLab rollout audit, review-draft repository) that would have hit the identical parse error the first time they ran. Fixed all four plus the one contract test asserting the old literal text; verified via the existing contract-test suite, eslint, and a full vue-tsc typecheck (all green) before merging kind_robots PR #517 (squash 7517ad2). No kind_robots front-end work needed for the newsfeed feature itself -- this task's deliverable is the AGENTS.md documentation plus the production-unblocking fix it surfaced.
     claimed_by: claude-conductor-agentrun-20260719T1400Z
     claimed_at: '2026-07-19T10:12:05Z'
 

@@ -264,3 +264,41 @@ land minutes apart.
 ratings for `FEED_SOURCES`, starting with the Activism feed (the only feed
 currently flagged `topicPolitical: true`), so the shipped UI has real data to act
 on.
+
+## 2026-07-19 | Reviewer (burst-mode) | newsfeed/t-017 | pattern
+
+**Decision:** merged (kind_robots PR #517, squash `7517ad2`)
+
+**Failure category:** none — clean first-pass fix; also caught a real, unrelated production incident along the way.
+
+**What was good:**
+- Answered the task's actual question (does the Vercel MCP connector give a session
+  a real rendered page?) with a live fetch, not a documentation guess: `list_teams`
+  → `list_projects` → `list_deployments` → `web_fetch_vercel_url` returned full SSR
+  markup with a real `<title>` and real app-shell classes for a PR preview URL —
+  confirmed, not assumed. Documented the concrete tool sequence in AGENTS.md's
+  cross-repo section per the task's own ask.
+- While pulling `list_deployments` for that check, noticed the current production
+  deployment was in `ERROR` state and did not treat that as out of scope just
+  because it wasn't the task at hand: pulled the build logs, found `ER_PARSE_ERROR`
+  from an unquoted `Character` (a reserved MariaDB keyword) in
+  `repair-known-prisma-migrations.mjs`'s migration-repair query, and grepped the
+  whole repo for the same unquoted shape rather than fixing only the one call site
+  — found three more raw-SQL sites (component reaction reads, WonderLab rollout
+  audit, review-draft repository) merged in the same PR cluster that would have hit
+  the identical parse error the first time they ran.
+- Verified properly before merging: ran every contract test the changed files touch
+  (including provisioning `node_modules`/`.nuxt` via `provision_kind_robots_deps.sh`
+  to get real eslint/vue-tsc coverage instead of skipping it), updated the one
+  contract test whose regex asserted the now-changed literal source text, and
+  confirmed CI green (TypeScript, Contract verifiers, GitGuardian) before merging.
+
+**What to improve:** none this cycle — the diff stayed scoped to the actual bug
+(pure identifier-quoting, no behavior change) despite touching five files across two
+unrelated features.
+
+**Kaizen task:** `conductor/t-069` — add a CI check that flags unquoted MariaDB/MySQL
+reserved words (starting with `Character`) used as table identifiers in raw SQL
+(`$queryRaw`/`$queryRawUnsafe`/raw driver `.query()`), since the existing contract-test
+mocks match on SQL text prefixes and can never catch a real grammar/parse error —
+exactly how this shipped across four call sites unnoticed.
