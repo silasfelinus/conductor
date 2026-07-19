@@ -7056,3 +7056,65 @@ this PR sat open). No pass consumed.
 **Kaizen task:** deferred — `conductor/t-065` (closed `done` this same window, PR
 #820) already investigated and resolved the relevant collision-detection question;
 no new gap surfaced by this review beyond what that task already covers.
+
+## 2026-07-19 | Reviewer → Worker | system | pattern (kind_robots ci-janitor Todo #444, production deploy fully blocked)
+
+**Decision:** implemented, self-merged (kind_robots PR #502, squash `e1a0024`). Todo #444
+marked DONE per CI-JANITOR.md's "verification passed OR remaining gate clearly documented"
+clause — verification could not pass this cycle for reasons entirely outside agent reach (below).
+
+**Failure category:** actionable (root cause found and fixed in one pass; the remaining
+blockers are DB-credential and billing actions no agent in this session can take — burning
+further passes re-checking would be pure waste, not rework).
+
+**What was good:**
+- Didn't stop at "GitHub Actions timed out waiting for deploy" — that's what the run log
+  showed, but treating it as the root cause would have been wrong. Cross-checked Vercel
+  directly (`mcp__Vercel__list_deployments` / `get_deployment_build_logs`) and found the
+  *actual* failure two layers down: a migration (`20260719031500_reaction_first_party_author_expand`)
+  added a `CHECK` constraint on `authorBotId`/`authorCharacterId` in the same `ALTER TABLE`
+  that gives those columns `ON DELETE SET NULL ON UPDATE CASCADE` foreign keys — MariaDB
+  rejects that combination outright (error 1901,
+  `ER_CHECK_CONSTRAINT_FUNCTION_IS_NOT_ALLOWED`). Because Prisma refuses any further
+  migration once one has failed (P3018), **every kind_robots production deploy since
+  2026-07-19T03:27Z failed**, and `kind-robots.vercel.app` was frozen on a ~90-minute-stale
+  commit — that's why the "wait for deploy" step was timing out on every run, not flakiness.
+- Found the same anti-pattern already staged one migration later
+  (`20260719033500_review_draft_storage_expand`'s `ReviewDraft_single_author_chk`) before it
+  had even been reached (blocked behind the first failure) and fixed both in one PR instead of
+  trading one incident for an identical one next cycle.
+- Kept the fix minimal and safe: removed only the two invalid CHECK constraints (columns,
+  indexes, and both FKs untouched); mutual exclusivity for `Reaction` stays enforced at the
+  application layer via the already-existing, already-tested
+  `assertSingleFirstPartyReactionAuthor()`. Updated both migration contract tests
+  (`verifyReactionFirstPartyAuthorExpand.ts`, `verifyReviewDraftStorageExpand.ts`) to assert
+  the CHECK is *absent* with the same rationale in a comment, rather than deleting or
+  weakening their coverage.
+- Confirmed the fix's correctness two ways before merging: `contract-tests.yml` (DB-free,
+  the real gate for a PR) went fully green including both updated migration-contract steps,
+  and the PR branch's own Vercel preview deployment independently reached `READY` (i.e.
+  `prisma migrate deploy` completed without error against a database that had never seen the
+  broken migration) — real evidence the corrected SQL is valid, not just "tests I wrote
+  myself pass."
+
+**What to improve / new finding — Vercel free-tier deploy cap is now a recurring hazard:**
+Mid-PR, Vercel started rejecting deployments repo-wide with `api-deployments-free-per-day`
+("more than 100... try again in 24 hours"). This is a **second, independent** blocker on top
+of the migration bug — cross-checked and confirmed real (a PR comment from `vercel[bot]`
+carried the same error verbatim). Given the commit rate observed on `main` today (tens of
+pushes/hour from concurrent burst sessions; nearly every `cypress.yml` run in the several
+hours before this one shows `conclusion: cancelled`, only two production deploys actually
+completed in that window), this free-tier daily cap is going to keep getting exhausted as
+long as commit velocity stays this high — this will very likely recur on a normal day even
+with the migration bug fixed. Neither the DB migration-state repair (needs `DATABASE_URL`
+credentials to run `prisma migrate resolve`) nor the Vercel cap (needs a Pro upgrade or a
+24h wait) are things any agent in this session can act on — both are flagged to Silas
+directly via push notification with exact next steps, not left as a silent TODO. Worth a
+kaizen task for whoever next has bandwidth: either throttle/batch kind_robots' auto-deploy
+trigger (e.g. Vercel's "Ignored Build Step" or a debounce), or this cap will keep re-tripping
+under the current multi-session commit cadence regardless of code quality.
+
+**Kaizen task:** filed as a note here rather than a roadmap task — ci-janitor Todos aren't
+project-roadmap-tracked, and the two follow-ups (production DB repair, Vercel plan/cadence
+decision) are Silas-only actions, not agent-workable tasks. If commit-cadence throttling is
+wanted, that would land as a kind_robots-side infra change, not a conductor roadmap item.
