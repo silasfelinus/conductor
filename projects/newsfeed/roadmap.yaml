@@ -119,8 +119,8 @@ tasks:
   - id: t-013
     milestone: m3
     title: "Batch-verify FEED_SOURCES reachability once the aggregation pipeline exists"
-    status: ready
-    owner: null
+    status: claimed
+    owner: reviewer
     passes: 0
     stakes: reversible
     depends_on: t-005
@@ -133,6 +133,9 @@ tasks:
       record verified: true/false per entry, and swap out any that 404/403 for
       a working replacement rather than discovering broken feeds one at a time
       in production.
+    claimed_by: claude-conductor-agentrun-20260719T201329Z
+    claimed_at: '2026-07-19T20:13:30Z'
+    updated: '2026-07-19T20:13:30Z'
 
   - id: t-005
     milestone: m2
