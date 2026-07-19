@@ -348,24 +348,12 @@ tasks:
   - id: t-018
     milestone: m3
     title: "Hair-mask SOURCE for true hair-only restyling (auto-seg or brush)"
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
     updated: '2026-07-19T05:14:07Z'
-    note: >
-      From the 2026-07-14 image-gen quality review (IMAGE-GEN-QUALITY-REVIEW.md).
-      The Kontext graph now ACCEPTS a hair mask (workflow.ts maskName ->
-      LoadImageMask + SetLatentNoiseMask; enqueue accepts maskData; the relay
-      already uploads it as a second input image), so only the masked region is
-      repainted. What's missing is something that PRODUCES the mask: there is no
-      hair-segmentation node on the ComfyUI box and no client-side seg lib. Pick
-      one: (a) install a hair/person segmentation custom node on the box and
-      generate the mask in the workflow, or (b) an in-browser hair-segmentation
-      (MediaPipe selfie/hair) or a quick brush-the-hair step in stylist-restyle
-      that fills maskData. Until this lands, the shipped identity fix is the
-      originalWeight (preserve-original) slider — full-frame img2img, not
-      hair-only. This is the concrete "adaptive masking" Silas asked for.
+    note: 'RESOLVED 2026-07-19 (Silas-directed agent run): picked option (b) from this task''s own note — a manual freehand brush instead of MediaPipe auto-segmentation, since the brush needs no new npm dependency/model download and ships in one pass. New components/art/stylist-mask-brush.vue paints a mask on an offscreen canvas at the source photo''s NATURAL resolution (independent of the preview''s letterboxed CSS display size), so the exported mask lines up pixel-for-pixel with what the relay uploads regardless of aspect-fit letterboxing. stylist-restyle.vue gained an opt-in ''Only restyle the hair'' toggle wired to the already-existing (previously unused) maskData plumbing (stylistStore.ts, enqueue.post.ts, workflow.ts''s LoadImageMask/SetLatentNoiseMask). Verified via vue-tsc + eslint (clean); could not verify live in a browser since this sandbox has no real DATABASE_URL and /stylist is ADMIN-gated (confirmed sandbox-wide, not change-specific: the home page 500s identically). Merged kind_robots PR #504 (self-merged, Contract Tests + TypeScript Type Check both green). No Cypress coverage exists for stylist-restyle.vue (pre-existing gap, not introduced here) -- flagged as this task''s kaizen suggestion.'
     claimed_by: claude-conductor-agentrun-20260719T0400Z
     claimed_at: '2026-07-19T05:14:07Z'
 
@@ -400,3 +388,22 @@ tasks:
     note: 'DONE 2026-07-17 (claude-burst-hourly-20260717T1110Z, conductor PR): fixed at the process level rather than per-project, since the gap applies to any session picking up a roadmap-tracked task, not just this one. Added AGENTS.md ''Picking what to work on'' step 7 (after claim_task.py, before the Rotation collisions section): every session -- worker/* hourly AND Silas-directed claude/*/burst-mode sessions -- must run scripts/set_task_field.py <project> <task-id> status review (with claimed_by/owner reflecting the real session and branch, no worker/* prefix required) before opening the PR, so a Reviewer sweep can find in-progress work via roadmap state instead of hand-checking GitHub. Also documents that a session merging its own PR may flip review straight to done right after merge -- the point is no silent claimed-to-done jump with zero externally-visible checkpoint. No kind_robots code change needed; this project''s roadmap.yaml itself is the only file this specific task touches beyond AGENTS.md.'
     claimed_by: claude-burst-hourly-20260717T1110Z
     claimed_at: '2026-07-17T11:10:39Z'
+
+  - id: t-021
+    milestone: m3
+    title: Add minimal Cypress coverage for /stylist (currently zero automated coverage)
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-19T05:14:07Z'
+    note: >
+      Kaizen from t-018 (kind_robots PR #504). No Cypress test references
+      "stylist" anywhere in the repo (grep -rli stylist cypress/ returns
+      nothing), and the maskData API path (enqueue.post.ts, workflow.ts's
+      LoadImageMask/SetLatentNoiseMask) has no contract-test coverage either
+      -- both pre-existing gaps, not introduced by t-018, but now compounded
+      by the new stylist-mask-brush.vue UI on top of them. Start minimal: at
+      least one Cypress e2e assertion that an admin session can reach /stylist
+      and see Hair Studio render, plus a contract test asserting enqueue.post.ts
+      forwards a provided maskData through to the ComfyUI payload unchanged.
