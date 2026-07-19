@@ -225,12 +225,12 @@ tasks:
 - id: t-012
   milestone: m5
   title: Migrate existing components onto the kr-* container/surface classes
-  status: ready
+  status: claimed
   owner: worker
   passes: 0
   stakes: reversible
   depends_on: t-011
-  updated: '2026-07-06T00:00:00Z'
+  updated: '2026-07-19T00:13:56Z'
   note: 'The style plan (t-011) only pays off once components adopt it. Incrementally migrate existing
     panels/cards/pages to the shared .kr-* classes and the surface rules. IMPORTANT FINDING (2026-07-06):
     most high-traffic surfaces are intentionally bespoke, NOT generic panels — the workspace header is a
@@ -253,6 +253,8 @@ tasks:
     the next pass (see kaizen t-023). vue-tsc green; there is no lint gate in CI.
 
     '
+  claimed_by: claude-conductor-agent-20260719T0011Z
+  claimed_at: '2026-07-19T00:13:56Z'
 - id: t-013
   milestone: m5
   title: Canonical status-callout classes (.kr-note-*) + gallery
