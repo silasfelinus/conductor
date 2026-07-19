@@ -125,7 +125,7 @@ tasks:
   - id: t-006
     milestone: m5
     title: "Research and pitch one genuinely new passive animation"
-    status: claimed
+    status: ready
     owner: reviewer
     passes: 0
     stakes: reversible
@@ -136,6 +136,17 @@ tasks:
       Avoid cosmetic clones of existing effects. Every pitch needs a passive-loop hook, optional
       interaction, implementation technique, reduced-motion plan, performance risk, novelty
       comparison, and acceptance criteria. Append to PITCHES.yaml; never overwrite history.
+
+      RAN 2026-07-19 (~19:46 UTC, conductor scheduled session): PITCHES.yaml's
+      `updated` timestamp was stale at 2026-07-13, and the buildable (status:
+      pitched) queue was at 11, so neither no-op condition applied. Added
+      `ant-farm-excavation` (a cross-section ant-farm sand column with agent-driven
+      tunnel digging/collapse), checked against all 12 existing pitch titles/themes
+      for overlap -- distinct from magnetic-sand-garden (raked static patterns, no
+      agents/excavation) and every other shipped/pitched concept. Brings the
+      buildable queue to exactly 12, at the cap but not above it. No kind_robots
+      code touched (pitch-only, per this task's scope) -- re-armed to ready per the
+      recurring-task convention.
     claimed_by: claude-conductor-scheduled-20260719T-animation-t006
     claimed_at: '2026-07-19T19:46:22Z'
     updated: '2026-07-19T19:46:22Z'
