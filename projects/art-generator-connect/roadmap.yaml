@@ -431,9 +431,9 @@ tasks:
 - id: t-020
   milestone: m4
   title: Re-tighten ArtQueueEntry.variant from string back to the ArtVariant union in kind_robots' server/utils/artRequestYaml.ts
-  status: claimed
+  status: review
   owner: reviewer
-  updated: '2026-07-19T23:06:07Z'
+  updated: '2026-07-19T23:20:00Z'
   passes: 0
   stakes: reversible
   note: >
@@ -445,6 +445,14 @@ tasks:
     ArtVariant values) but it loosens the compile-time contract on a module
     whose whole purpose is enforcing a contract. Narrow it back to the
     ArtVariant union and confirm tsc + test:art-request-yaml stay green.
+
+    IMPLEMENTED 2026-07-19 (~23:20 UTC): moved `ArtVariant` ('icon'|'card'|'hero'|
+    'image') into artRequestYaml.ts as the canonical contract module and narrowed
+    ArtQueueEntry.variant to it; art-request.post.ts now imports ArtVariant instead
+    of re-declaring its own via `keyof typeof VARIANT_SIZES`, and VARIANT_SIZES is
+    pinned to `Record<ArtVariant, string>` so the two can't drift apart again.
+    Verified: test:art-request-yaml and full vue-tsc typecheck both clean. kind_robots
+    PR #581 open, CI running -- merging once green.
   claimed_by: claude-conductor-burst-20260719T2306Z
   claimed_at: '2026-07-19T23:06:07Z'
 - id: t-021
