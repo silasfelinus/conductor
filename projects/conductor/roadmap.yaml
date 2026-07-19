@@ -708,17 +708,26 @@ tasks:
   - id: t-034
     milestone: m2
     title: "Pitch: kind_robots dashboard as shared front-end for Conductor + PortOS CoS"
-    status: ready
-    owner: null
+    status: needs-human
+    owner: claude
     passes: 0
     stakes: reversible
-    updated: "2026-07-11T21:30:00Z"
+    updated: "2026-07-19T02:30:00Z"
     note: >
-      Deferred from the PortOS comparison. kind_robots already reads/writes this repo
-      as Conductor's control plane (server/api/conductor/*) and has a portos-page.vue
-      placeholder. Write a pitch to pitches/ for the one-dashboard-two-backends shape:
-      Conductor as governance layer, CoS-style runtime as execution layer, slug-parity
-      linking. Pitch only — cross-repo and outward-facing decisions stay with Silas.
+      FOR SILAS: pitch written to pitches/2026-07-19-kind-robots-dashboard-shared-frontend.md.
+      Proposes extending the existing `portos` tab in kind_robots'
+      stores/helpers/conductorTabs.ts (already a stub with forward-looking narrative
+      text, currently unbacked) into a real second-runtime view if/when a CoS-style
+      runtime is ever adopted, fed by a new read-only server/api/conductor/*
+      endpoint mirroring the existing projects.get.ts/prs.get.ts pattern.
+      TO APPROVE: read the pitch, set status: approved in the pitch file's front
+      matter if you like the direction, and (optional) greenlight the suggested
+      first task -- a design-note-only write to
+      projects/conductor/docs/portos-dashboard-shape.md, no code, no runtime
+      decision implied. This does not authorize or depend on conductor/t-033
+      (worktree-parallel Workers, still needs-human) -- either can proceed
+      independently. Deferred from the PortOS comparison
+      (docs/2026-07-11-portos-cos-learnings.md).
 
   - id: t-029
     milestone: m1
