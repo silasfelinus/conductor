@@ -3511,3 +3511,12 @@ records:
   outcome: done
   failure_category: null
   lesson: "Building a mechanical verifier over a hand-authored YAML catalog is a good way to discover the catalog was never actually machine-parseable (an unquoted colon in one field broke every YAML loader) -- worth a quick parse-and-scan pass on the target file before assuming its structure is well-formed just because agents have been hand-editing it successfully."
+- date: 2026-07-19
+  project: ai-art-academy
+  task: t-010
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: transient
+  lesson: "A queued task-events/ entry stuck behind a sibling file's YAML syntax bug applied stale status/note state on top of this session's freshly-claimed t-010 once it finally processed -- process_task_events.py has no staleness check against the task's current claimed_at/updated, unlike claim_task.py's live-recheck guard for direct claims. Read a corrupted roadmap note carefully before re-editing it: the truncated/duplicated fragment was easy to mistake for legitimate history at a glance. Filed conductor/t-067 for the underlying gap."

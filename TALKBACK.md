@@ -7196,3 +7196,46 @@ independently pushed `f296969` flipping `t-009` straight to `status: done` direc
 `main`. Same outcome, different note text; no conflicting task state resulted. Filing
 this kaizen (`t-011`) and the LEARNING.yaml record here rather than duplicating the
 `status: done` edit, since `main` already carries it.
+
+## 2026-07-19 | worker (burst-mode) | ai-art-academy/t-010, conductor/t-067 | pattern
+
+**Decision:** merged (kind_robots PR #515, squash `567fc7e`); ai-art-academy/t-010 rearmed
+to `ready` with corrected note; conductor/t-067 filed as a new `ready` roadmap-tooling task.
+
+**Failure category:** none for the actual t-010 cycle work — clean first-pass front-end
+polish. A separate, real infra bug was found and documented (not fixed) as t-067 below.
+
+**What was good:**
+- Followed the checklist's rotation state (front-end polish was next preferred) and
+  verified the alternative (t-019's preview-image blocker) was still genuinely blocked
+  before committing to the chosen lane, rather than trusting the checklist note blindly.
+- Found a real, scoped accessibility gap by direct comparison against a sibling
+  component's already-shipped pattern (academy-styles-browser.vue's aria-controls/id
+  wiring, missing from academy-timeline.vue) rather than inventing cosmetic changes.
+  `npm run test` (vue-tsc) and `npx eslint` both clean; kind_robots PR #515 all-green,
+  merged.
+- While closing out the task, found this session's own live `claimed` roadmap state
+  had been silently overwritten by a stuck `task-events/` entry once it finally
+  processed (see t-067) — did not just re-apply my own status on top blindly; read the
+  corrupted note carefully, identified exactly which lines were the stale event's
+  truncated fragment vs. genuine history, and repaired the record with an accurate
+  RAN entry instead of leaving corrupted/duplicated text in a roadmap every future
+  cycle reads.
+
+**What to improve:**
+- None on this session's own work; the process gap it surfaced (task-events applying
+  stale operations with no staleness check against the task's current claim state) is
+  filed as `conductor/t-067` for whoever next has bandwidth on conductor tooling.
+
+**Kaizen task:** `conductor/t-067` — `process_task_events.py` should skip (not silently
+apply) a queued event whose timestamp predates the task's current `claimed_at`/`updated`,
+since the same staleness problem `claim_task.py` already guards against on direct claims
+has no equivalent guard on the async task-events queue.
+
+**Pattern note:** this is the second time in two days a stuck/malformed file in a shared
+queue silently corrupted state once unblocked (c.f. the `PITCHES.yaml` unquoted-colon bug
+from the t-009 review above, same day) — worth broader awareness that this repo's
+convention of large free-text YAML block scalars is fragile to a single stray unquoted
+colon, and that fragility now has two independent observed failure modes: breaking the
+consuming script outright (PITCHES.yaml case) and breaking a shared CI gate for every
+unrelated PR until fixed (this task-events case).

@@ -15,8 +15,8 @@ Record the lane, files changed, and verification in the task note before rearmin
 
 ### Rotation state
 
-- Last completed lane: Curriculum depth — American Regionalism seed sync, 2026-07-19, kind_robots PR #506.
-- Next preferred lane: Front-end polish.
+- Last completed lane: Front-end polish — academy-timeline.vue aria-controls/id wiring for the expanded lesson panel, 2026-07-19, kind_robots PR #515.
+- Next preferred lane: Roadmap accuracy.
 - Override the preferred lane only when it is blocked or a higher-severity reversible issue is newly verified; record that reason in the task note.
 
 This explicit state is the handoff between recurring cycles. Update it in the same PR as each `t-010` improvement so the next Worker does not infer rotation from a long roadmap note.
