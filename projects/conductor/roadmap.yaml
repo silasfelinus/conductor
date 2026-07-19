@@ -1952,7 +1952,7 @@ tasks:
   - id: t-071
     milestone: m2
     title: Flag conductor tasks stuck at claimed/review whose cross-repo target PR already merged
-    status: ready
+    status: claimed
     passes: 0
     stakes: reversible
     note: >
@@ -1969,3 +1969,7 @@ tasks:
       checks via the GitHub MCP/API whether that PR has since merged, and flags the
       mismatch (print or a small report) so a Reviewer sweep catches drift within the
       same cycle instead of relying on a session happening to notice.
+    owner: reviewer
+    claimed_by: claude-burst-0fb5003f
+    claimed_at: '2026-07-19T18:04:58Z'
+    updated: '2026-07-19T18:04:58Z'
