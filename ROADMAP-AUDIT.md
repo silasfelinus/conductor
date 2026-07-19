@@ -1,14 +1,14 @@
 # Roadmap Audit
 
-Generated: `2026-07-19T20:36:44.364149+00:00`
+Generated: `2026-07-19T21:25:34.348561+00:00`
 
 This is a conservative structural audit. It reports suspicious state; it does not automatically change task status or remove human gates.
 
 ## Portfolio snapshot
 
 - **40** roadmaps, **31** active projects, **624** tasks
-- **55 ready**, **47 waiting**, **31 needs-human**, **1 claimed/review**, **479 done**
-- Findings: **0 errors**, **6 warnings**, **45 informational**
+- **55 ready**, **45 waiting**, **32 needs-human**, **1 claimed/review**, **480 done**
+- Findings: **0 errors**, **6 warnings**, **46 informational**
 
 ## Project inventory
 
@@ -27,12 +27,12 @@ This is a conservative structural audit. It reports suspicious state; it does no
 | 11 | `global-ui` | active | software | 0 | 0 | 1 | 0 | 24 / 25 |
 | 12 | `superkate-services-calculator` | active | software | 0 | 0 | 1 | 0 | 35 / 36 |
 | 13 | `superkate-hairstyle-ai` | active | software | 1 | 0 | 2 | 0 | 18 / 21 |
-| 14 | `newsfeed` | active | software | 0 | 0 | 1 | 1 | 19 / 21 |
+| 14 | `newsfeed` | active | software | 0 | 0 | 2 | 0 | 19 / 21 |
 | 15 | `model-builder` | active | software | 3 | 0 | 0 | 0 | 28 / 31 |
-| 16 | `animation-manager` | active | software | 2 | 2 | 0 | 0 | 7 / 11 |
+| 16 | `animation-manager` | active | software | 3 | 0 | 0 | 0 | 8 / 11 |
 | 17 | `animation-studio` | retired | software | 3 | 4 | 0 | 0 | 1 / 8 |
 | 18 | `ecosystem-map` | active | software | 1 | 0 | 0 | 0 | 7 / 8 |
-| 19 | `conductor` | active | software | 2 | 0 | 4 | 0 | 65 / 71 |
+| 19 | `conductor` | active | software | 1 | 0 | 4 | 1 | 65 / 71 |
 | 20 | `serendipity` | active | software | 1 | 0 | 0 | 0 | 11 / 12 |
 | 21 | `storymaker` | active | software | 2 | 0 | 0 | 0 | 8 / 10 |
 | 22 | `davinci` | active | software | 1 | 0 | 0 | 0 | 13 / 14 |
@@ -70,7 +70,7 @@ _None._
 - **ACTIVE_PROJECT_ALL_DONE** — `packmaker`: All tasks are done but project override remains active.
 - **ACTIVE_PROJECT_NO_OPEN_TASKS** — `packmaker`: Active project has no open tasks; mark finished/paused or add an intentional recurring task.
 
-### Info (45)
+### Info (46)
 
 - **APPROVAL_WITHOUT_GATE** — `ai-art-academy` / `t-002`: approved_by_human is set on a task that is not human-gated.
 - **APPROVAL_WITHOUT_GATE** — `ai-art-academy` / `t-011`: approved_by_human is set on a task that is not human-gated.
@@ -104,6 +104,7 @@ _None._
 - **MISSING_GOAL** — `media-watchlist`: Roadmap has no friendly goal/definition of done.
 - **MISSING_GOAL** — `mermaids-of-venice`: Roadmap has no friendly goal/definition of done.
 - **MISSING_GOAL** — `newsfeed`: Roadmap has no friendly goal/definition of done.
+- **NEEDS_HUMAN_NOTE_FORMAT** — `newsfeed` / `t-021`: needs-human note does not use the AGENTS.md FOR SILAS action format.
 - **MISSING_GOAL** — `packmaker`: Roadmap has no friendly goal/definition of done.
 - **INACTIVE_PROJECT_HAS_READY_TASKS** — `pinball-hero`: Inactive project retains 2 ready task(s); harmless but misleading in generated status.
 - **MISSING_GOAL** — `pinball-hero`: Roadmap has no friendly goal/definition of done.
