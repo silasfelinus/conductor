@@ -539,7 +539,7 @@ tasks:
   - id: t-020
     milestone: m3
     title: "Add a unit test asserting resolveTutorialChannelFromRoute picks exact-match over prefix-match across different channel keys"
-    status: review
+    status: done
     owner: reviewer
     passes: 0
     stakes: reversible
@@ -572,7 +572,9 @@ tasks:
       case. Wired `npm run test:tutorial-channel-resolver` into
       `.github/workflows/contract-tests.yml` alongside the other newsfeed contract
       checks. Verified locally: `npx eslint` clean, `npx prettier --check` clean,
-      the new test passes, kind_robots PR opened from branch
-      `claude/keen-fermat-newsfeed-t020-tutorial-resolver-test`.
+      the new test passes, full-project `vue-tsc --noEmit` 0 errors. kind_robots
+      PR #543 (branch `claude/keen-fermat-twud4v`): all 4 CI checks green
+      (Contract verifiers, TypeScript, facet-alias-smoke, GitGuardian), no review
+      comments -- merged squash `981d366`.
     claimed_by: claude-conductor-burst-20260719T1605Z
     claimed_at: '2026-07-19T16:06:48Z'
