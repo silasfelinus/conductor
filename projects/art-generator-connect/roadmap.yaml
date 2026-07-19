@@ -431,9 +431,9 @@ tasks:
 - id: t-020
   milestone: m4
   title: Re-tighten ArtQueueEntry.variant from string back to the ArtVariant union in kind_robots' server/utils/artRequestYaml.ts
-  status: ready
-  owner: null
-  updated: '2026-07-06T21:00:00Z'
+  status: claimed
+  owner: reviewer
+  updated: '2026-07-19T23:06:07Z'
   passes: 0
   stakes: reversible
   note: >
@@ -445,6 +445,8 @@ tasks:
     ArtVariant values) but it loosens the compile-time contract on a module
     whose whole purpose is enforcing a contract. Narrow it back to the
     ArtVariant union and confirm tsc + test:art-request-yaml stay green.
+  claimed_by: claude-conductor-burst-20260719T2306Z
+  claimed_at: '2026-07-19T23:06:07Z'
 - id: t-021
   milestone: m5
   title: 'Consume the requests: block of art-prompts.yaml (close the second art lane)'
