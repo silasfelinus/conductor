@@ -1,0 +1,31 @@
+name: Animation Novelty Check
+
+# Kaizen from animation-manager/t-011 (Reviewer's t-009 review, conductor PR #836):
+# check_animation_novelty.py existed but was manual-invocation-only, so a near-duplicate
+# pitch could land silently if nobody remembered to run it. This surfaces flagged pairs
+# in the PR's job output whenever PITCHES.yaml changes. Advisory only -- non-blocking,
+# matching the script's own "not an auto-reject" intent (run without --strict).
+
+on:
+  pull_request:
+    paths:
+      - 'projects/animation-manager/PITCHES.yaml'
+      - 'scripts/check_animation_novelty.py'
+
+permissions:
+  contents: read
+
+jobs:
+  novelty-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install dependencies
+        run: pip install pyyaml
+      - name: Run novelty check (advisory)
+        run: python scripts/check_animation_novelty.py
