@@ -446,11 +446,11 @@ tasks:
   - id: t-010
     milestone: m6
     title: Academy continuous improvement pass
-    status: claimed
+    status: review
     recurring: true
     passes: 0
     stakes: reversible
-    updated: '2026-07-19T08:18:20Z'
+    updated: '2026-07-19 07:20:00+00:00'
     note: |-
       Standing never-idle task (re-arms to ready after every completion, per the recurring-task rule). Each cycle pick ONE: (a) front-end style/polish pass on Academy or art-styler surfaces, (b) roadmap upgrade — refine tasks, detail the next milestone, prune stale notes, (c) generate more art inspirations or style preview thumbnails, (d) expand the curriculum with a new movement/artist entry (respecting PUBLIC-DOMAIN-POLICY.md). Note which option ran in the PR. This task never reaches done and does not count toward milestone progress.
       RAN 2026-07-19 (~07:05-07:16 UTC, two concurrent sessions converged on the same cycle — see TALKBACK.md for both accounts): option (d) curriculum depth. Synced american-regionalism (movement #24, added to curriculum-outline.md in a prior 2026-07-19 cycle) into stores/seeds/academyStyles.ts, mirroring the t-020/t-031/t-034 pattern (keyIdeas/recognitionCues/artists condensed from curriculum-outline.md §24; failureMode verbatim from teaching-notes.md row 24; remix.template verbatim remix_hint; inserted at sortYear 1928, chronologically after bauhaus). previewImageSrc and exampleWorks intentionally omitted — no preview image has generated yet, and 3 of 4 example works lack an accessionId (required field), matching the existing ashcan-school/suprematism convention of deferring exampleWorks backfill. Verified via vue-tsc + eslint (clean) and the three academy contract checks (test:academy-style-detail-callers, test:academy-starter-manifest both pass; test:academy-examples-manifest has 3 pre-existing failures — expressionism/cubism/bauhaus missing examples.manifest.json entries, confirmed identical on the pre-change commit via git stash, already tracked as t-033, not touched by this change). kind_robots PR #506 (branch worker/ai-art-academy-t-010-american-regionalism-sync) merged squash `ccd6022`. The PR's diff also listed `components/art/stylist-mask-brush.vue`/`stylist-restyle.vue` as changed — a second reviewing session confirmed both byte-identical to what's already on `main` (merged separately as superkate-hairstyle-ai/t-018, kind_robots PR #834, under a different squash SHA) via direct `git show` diff against `origin/main`, so the merge was a genuine no-op for those two files — the known "PR shows a larger diff than expected because main already has equivalent content under a different commit SHA" pattern from conductor/CLAUDE.md. All 3 CI checks green (TypeScript, Contract verifiers, GitGuardian). Rearmed to `ready` per the recurring-task convention — coverage table in continuous-improvement-checklist.md updated to reflect american-regionalism now synced (24/24).
@@ -476,6 +476,8 @@ tasks:
       Claim recurring Academy continuous-improvement cycle for curriculum coverage synchronization.
 
       Roadmap-accuracy lane complete. Added explicit recurring-lane handoff state to continuous-improvement-checklist.md; Worker PR CI and Security Audit passed; merged conductor PR
+
+      Roadmap-accuracy lane: make recurring lane rotation state explicit in the Academy continuous-improvement checklist.
     claimed_by: claude-conductor-agentrun-20260719T0811Z
     claimed_at: '2026-07-19T08:18:20Z'
     owner: worker
