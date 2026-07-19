@@ -7361,3 +7361,43 @@ own push mechanism) rather than transcribing the ~130KB roadmap.yaml by hand int
 
 **Kaizen task:** none filed — this task was itself a kaizen follow-on (from
 newsfeed/t-016) and no new deferred cleanup surfaced while implementing it.
+
+## 2026-07-19 | Reviewer (scheduled) | newsfeed/t-018 | pattern
+
+**Decision:** merged (kind_robots PR #549, squash `5695852`); task closed at `status: done`.
+
+**Failure category:** none — clean first-pass implementation.
+
+**What was good:**
+- Sourced from a real, checkable methodology instead of guessing: fetched
+  mediabiasfactcheck.com/global-citizen directly (not just search-result
+  snippets) to get the exact "Left-Center" / "High" label wording, and
+  confirmed via a site-scoped search that Media Bias/Fact Check has no
+  Devex profile at all before concluding it should stay unrated — exactly
+  the "expose methodology and provenance, never invent a judgment call"
+  guardrail in BIAS-CONTROLS.md.
+- Left a code comment on the `devex-news` entry explaining the absence of
+  a rating (checked, not skipped) so a future cycle doesn't re-research
+  the same dead end.
+- Hit two separate environment snags and diagnosed both rather than
+  forcing through: (1) the kind_robots local checkout had a huge
+  interrupted-checkout artifact (`git checkout main` timed out mid-way,
+  leaving 366 files modified) — verified the branch ref itself matched
+  origin exactly (no real divergent commits) before `git reset --hard`;
+  (2) stray untracked files from an unrelated prior interrupted checkout
+  (`components/code/`, `components/composition/`, `components/giftshop/
+  social-publisher.vue` — referencing already-removed stores) were
+  breaking `vue-tsc` with unrelated errors — parked via `git stash -u`
+  rather than committed, matching the exact convention ai-art-academy/t-010
+  documented on 2026-07-15 for the same class of leftover.
+- Hit the documented brand-new-ref HTTP 413 on the conductor push (this
+  session's designated branch didn't actually exist on the GitHub remote
+  yet despite a stale local remote-tracking ref) — resolved via
+  `create_branch` + rebase per CLAUDE.md, not a force-push workaround.
+
+**What to improve:** none this cycle.
+
+**Kaizen task:** `newsfeed/t-021` — visually verify feed-card.vue's
+perspective tooltip for both the newly-rated and newly-unrated Activism
+source via the Vercel preview flow, since this is the first time a real
+rated/unrated pair exists to check against.

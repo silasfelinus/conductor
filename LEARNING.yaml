@@ -3622,3 +3622,12 @@ records:
   outcome: done
   failure_category: transient
   lesson: "Two independent sessions within the same hour (this one, and conductor/t-071's tooling build) both found t-010 stuck at status: claimed with its own note confirming the referenced kind_robots PR #544 had merged and it should rearm to ready -- and both initially deferred fixing it per AGENTS.md's rotation-collision caution, since the task looked like it might still be another session's in-flight work. A task claim that's confirmed complete by its own note but left untouched twice out of caution is itself a signal worth acting on the second time, not deferring a third: check whether real time has actually passed (claimed_at vs now) and whether the referenced PR's merge timestamp predates the current sweep by a wide margin before assuming a stale-looking claim is still live."
+- date: '2026-07-19'
+  project: newsfeed
+  task: t-018
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "Sourcing a real bias rating (vs. leaving unrated) is a fast WebSearch+WebFetch task once a project's guardrail doc (BIAS-CONTROLS.md) already specifies the required provenance shape -- checked Media Bias/Fact Check's own site directly (not just search snippets) to get the exact label wording, and confirmed absence-of-rating for the second source via a site-scoped search before concluding it should stay unrated rather than guessing a plausible-sounding label."
