@@ -1927,3 +1927,24 @@ tasks:
       of several. Keep each individual check's logic and tests separate --
       this is purely about the invocation surface, not merging the checks
       themselves.
+
+  - id: t-071
+    milestone: m2
+    title: Flag conductor tasks stuck at claimed/review whose cross-repo target PR already merged
+    status: ready
+    passes: 0
+    stakes: reversible
+    note: >
+      Kaizen from newsfeed/t-020 (Reviewer, burst-mode, 2026-07-19): the conductor
+      claim commit for t-020 landed at 16:06:48Z, but the real implementation (kind_robots
+      PR #543) merged ten minutes later at 16:16:31Z with no `status: review`
+      checkpoint in between, and the roadmap close-out only happened on this session's
+      next sweep after manually re-checking kind_robots' commit history -- roadmap
+      state alone gave no signal the work was already done. This is the same class of
+      gap AGENTS.md's step 7 already cites twice (superkate-hairstyle-ai/t-017, PR #317
+      merging while the task sat at `claimed`). Add a script (or extend an existing
+      sweep/audit script) that, for every conductor task at `status: claimed` or
+      `status: review` whose note/title references a specific cross-repo PR number,
+      checks via the GitHub MCP/API whether that PR has since merged, and flags the
+      mismatch (print or a small report) so a Reviewer sweep catches drift within the
+      same cycle instead of relying on a session happening to notice.

@@ -3586,3 +3586,12 @@ records:
   outcome: done
   failure_category: null
   lesson: "When a task offers an explicit design choice (single multi-route channel vs. per-tab-key split), the smaller-diff option that widens an existing type (string -> string | readonly string[]) beat fragmenting one coherent UI narrative into N near-duplicate config entries -- worth defaulting to the option that keeps content close to a shared idea in one place, then generalizing the plumbing, rather than duplicating structure to avoid a small type change."
+- date: '2026-07-19'
+  project: newsfeed
+  task: t-020
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "When a tie-break/precedence rule (here, resolveTutorialChannelFromRoute's cross-key bestLen prefix match) has zero real-world data to exercise it, add optional test-only override parameters defaulted to the real production data -- this lets a unit test inject controlled overlapping fixtures without touching any real call site's behavior, rather than either skipping the test or waiting for production data to coincidentally collide."
