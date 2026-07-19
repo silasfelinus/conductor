@@ -248,7 +248,7 @@ tasks:
   - id: t-008
     milestone: m3
     title: "Add programmable feed filters"
-    status: claimed
+    status: review
     owner: worker
     passes: 0
     stakes: reversible
@@ -257,6 +257,24 @@ tasks:
       Add a compact advanced surface for include/exclude keywords, category filters,
       source toggles, and sort mode. Treat this as a declarative configuration layer,
       not arbitrary executable user code.
+
+
+      RAN 2026-07-19 (conductor-burst-hourly rotation): implemented include/exclude
+      keyword filters, per-source toggles, category selection, and a recent/relevance
+      sort mode. New pure applyNewsfeedFilters()/sanitizeKeywordList() in
+      stores/helpers/newsfeed.ts, extended feedPreferenceStore.ts with the new
+      persisted preferences (same sanitize-on-hydrate pattern as existing fields),
+      new components/newsfeed/newsfeed-filters.vue panel wired into newsfeed-feed.vue's
+      existing "Manage feeds" disclosure. Added sourceId to NewsFeedItem so source
+      toggles survive a display-name rename. Filtering runs client-side against
+      already-fetched items rather than a new server query param, to avoid expanding
+      the /api/newsfeed 15-minute cache's key space. New utils/scripts/verifyNewsfeedFilters.ts
+      regression test wired to npm run test:newsfeed-filters and into
+      .github/workflows/contract-tests.yml (also wired the pre-existing
+      test:newsfeed-aggregation script into that same CI workflow -- it existed but
+      was never gated on PRs). Verified: test:newsfeed-filters, test:newsfeed-aggregation,
+      vue-tsc --noEmit, eslint, prettier --check -- all clean. kind_robots PR #484,
+      CI pending at time of this note.
     claimed_by: claude-conductor-burst-20260719
     claimed_at: '2026-07-19T01:04:38Z'
     updated: '2026-07-19T01:04:38Z'
