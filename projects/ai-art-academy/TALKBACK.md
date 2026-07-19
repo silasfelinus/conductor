@@ -1085,3 +1085,37 @@ needed for this task.
 LoRA search performed" note on newly added movements is already the checklist's own
 convention (matches ashcan-school); the `examples.manifest.json` write-access blocker
 remains tracked separately at t-033.
+
+## 2026-07-19 | Reviewer → Worker | ai-art-academy/t-010 | critique
+
+**Decision:** merged (kind_robots PR #506, squash `ccd6022`).
+
+**Failure category:** none — clean first-pass merge.
+
+**What was good:**
+- The academyStyles.ts entry itself (american-regionalism) follows the established
+  sync pattern exactly: keyIdeas/recognitionCues/artists condensed from
+  curriculum-outline.md, failureMode copied verbatim from teaching-notes.md,
+  remix.template copied verbatim, correctly excluded Thomas Hart Benton per the
+  public-domain 70-year policy window despite general audiences grouping him with
+  Wood/Curry.
+- All CI green (TypeScript, Contract verifiers, GitGuardian).
+
+**What to improve:**
+- The PR's file list included two unrelated files (`stylist-mask-brush.vue`,
+  `stylist-restyle.vue`) from an earlier commit on the same branch that had
+  already merged separately as superkate-hairstyle-ai/t-018 (kind_robots PR #834,
+  squash SHA differs from the branch's own unsquashed commit). This is the
+  documented "PR shows a larger diff than expected because main already has
+  equivalent content under a different commit SHA" scenario from conductor/CLAUDE.md
+  — confirmed harmless only by diffing the branch's own commit content directly
+  against `origin/main` before merging, not by trusting the PR's file-list summary.
+  Worth remembering for future sessions that continue working on a branch after one
+  of its earlier commits has already merged elsewhere: rebase (or start a fresh
+  branch from main) before opening the next PR, so the file list stays a true
+  reflection of what's new.
+
+**Kaizen task:** deferred — the PR's own kaizen suggestion (move the blocked
+examples.manifest.json media-server write step to a GitHub Actions job with
+secrets) is already tracked as `ai-art-academy/t-033` (needs-human); no new task
+needed.

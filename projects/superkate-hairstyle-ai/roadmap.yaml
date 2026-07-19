@@ -392,11 +392,10 @@ tasks:
   - id: t-021
     milestone: m3
     title: Add minimal Cypress coverage for /stylist (currently zero automated coverage)
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
-    updated: '2026-07-19T07:17:19Z'
     note: >
       Kaizen from t-018 (kind_robots PR #504). No Cypress test references
       "stylist" anywhere in the repo (grep -rli stylist cypress/ returns
@@ -407,5 +406,32 @@ tasks:
       least one Cypress e2e assertion that an admin session can reach /stylist
       and see Hair Studio render, plus a contract test asserting enqueue.post.ts
       forwards a provided maskData through to the ComfyUI payload unchanged.
+      IMPLEMENTED 2026-07-19 (~07:40 UTC): kind_robots PR #513 (branch
+      claude/vigilant-edison-lwefr4). Contract test (utils/scripts/verifyKontextMaskForwarding.ts,
+      wired into package.json + contract-tests.yml) covers maskData forwarding
+      into the ArtJob payload unchanged and the LoadImageMask/SetLatentNoiseMask
+      graph wiring -- extracted a small buildKontextInputImages() helper from
+      enqueue.post.ts's inline logic so it's unit-testable (behavior unchanged).
+      The Cypress e2e piece is narrower than originally scoped: investigated
+      Cypress's admin-auth options first and found no way to establish a real
+      authenticated ADMIN browser session today -- the existing beta-admin-token
+      bypass (cypress/support/api-auth.ts) is API-header-only and rejected by
+      /api/auth/validate/token.ts (requires an actual 3-part JWT), and no seeded
+      admin login (username/password) is exposed to Cypress. Shipped what's
+      honestly verifiable instead: cypress/e2e/stylist-access.cy.ts asserts an
+      anonymous visitor to /stylist is redirected to /login rather than seeing
+      Hair Studio -- real coverage of the requiredRole: ADMIN gate itself, not a
+      fabricated "renders correctly" assertion. Filed the authenticated-session
+      gap as this PR's kaizen suggestion (a seeded Cypress admin identity or
+      test-only JWT-minting path) rather than blocking or faking it. Verified
+      locally: npm run test (vue-tsc) clean, eslint clean, prettier clean,
+      npm run test:kontext-mask-forwarding passes. Could not run the new Cypress
+      spec live in-sandbox (cypress postinstall's binary download is blocked by
+      the egress allowlist, same as npm ci's CYPRESS_INSTALL_BINARY=0 workaround)
+      -- CI is the real verification gate for that spec.
+      DONE 2026-07-19 (~07:45 UTC): kind_robots PR #513 merged squash `8a1b9fb`
+      after all 4 CI checks green (TypeScript, Contract verifiers,
+      facet-alias-smoke, GitGuardian).
     claimed_by: claude-conductor-agentrun-20260719T0700Z
     claimed_at: '2026-07-19T07:17:19Z'
+    updated: '2026-07-19T07:45:00Z'

@@ -380,3 +380,40 @@ box this session can't reach — not claiming it. Suggested new kaizen: add mini
 Cypress coverage for `/stylist` (currently zero — `grep -rli stylist cypress/` finds
 nothing), since neither the pre-existing `maskData` API path nor now this brush UI
 has any automated regression coverage.
+
+## 2026-07-19 | Worker → Reviewer | superkate-hairstyle-ai/t-021 | pattern
+
+**Decision:** implemented, self-merged (kind_robots PR #513, squash `8a1b9fb`).
+
+**Failure category:** null (clean first pass, with one honest scope reduction).
+
+**What was good:**
+- Investigated Cypress's actual admin-auth capabilities before writing the
+  "admin session reaches /stylist" assertion the task asked for, rather than
+  assuming it was possible: traced the existing beta-admin-token bypass
+  (`cypress/support/api-auth.ts`) all the way through `authGuard.ts` and
+  confirmed it's API-header-only, then confirmed `/api/auth/validate/token.ts`
+  (what the client SPA's `userStore` actually calls) rejects anything that
+  isn't a real 3-part JWT — so no admin browser session is establishable with
+  current Cypress secrets. Rather than fake it (e.g. asserting against an
+  unauthenticated or mocked render), shipped a narrower but real assertion:
+  anonymous visitors get redirected to `/login`, i.e. the `requiredRole: ADMIN`
+  gate itself is verified. Documented the gap precisely in the spec's own file
+  comment and filed it as this PR's kaizen suggestion instead of leaving it
+  implicit.
+- The `maskData` contract test extracted a 6-line pure helper
+  (`buildKontextInputImages`) from `enqueue.post.ts`'s previously-inline logic
+  so it's testable without a live server/DB — a minimal, behavior-preserving
+  refactor scoped exactly to what the test needed, not a broader cleanup.
+- Verified everything actually checkable locally (`npm run test`, eslint,
+  prettier, the new contract test itself) and was explicit about what
+  couldn't be checked in-sandbox (the live Cypress spec — binary download
+  blocked by the egress allowlist, same known limitation as `npm ci`) rather
+  than claiming untested code paths were verified.
+
+**Kaizen task:** none new here — the PR's own kaizen suggestion (a seeded
+Cypress admin test identity or test-only JWT-minting path, so any
+`requiredRole`-gated page can get real authenticated-content coverage, not
+just its access boundary) is the natural follow-up; leaving it as a PR-level
+suggestion for whoever picks up test-infra work rather than forcing a roadmap
+task into a project already carrying `t-019`'s live-Comfy-box blocker.
