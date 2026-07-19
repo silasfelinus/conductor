@@ -24,6 +24,7 @@ except ImportError:
     raise SystemExit(1)
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
+from roadmap_claims import parse_timestamp  # noqa: E402
 from roadmap_text_patch import apply_task_field_ops  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -77,6 +78,31 @@ def find_task(roadmap: dict[str, Any], task_id: str) -> dict[str, Any]:
     if len(matches) != 1:
         raise ValueError(f"expected exactly one task {task_id!r}; found {len(matches)}")
     return matches[0]
+
+
+def stale_reason(task: dict[str, Any], event: dict[str, Any]) -> str | None:
+    """Return a human-readable reason if `task`'s live state has already moved past
+    what `event` knew about, or None if the event is still current.
+
+    A queued event can sit unapplied for a while (e.g. stuck behind a malformed
+    sibling file -- see conductor/t-067). If the task gets claimed or otherwise
+    updated again in the meantime, blindly applying the old event once it finally
+    parses would silently revert that newer state. Compare the event's own
+    `updated` timestamp against the task's live `claimed_at`/`updated`: if the task
+    has moved on since the event was generated, the event is stale.
+    """
+    event_updated = parse_timestamp(event.get("updated"))
+    if event_updated is None:
+        return None  # no reference timestamp on the event; nothing to compare against
+
+    for field in ("claimed_at", "updated"):
+        task_ts = parse_timestamp(task.get(field))
+        if task_ts is not None and task_ts > event_updated:
+            return (
+                f"task.{field}={task_ts.isoformat()} is newer than event.updated="
+                f"{event_updated.isoformat()} -- task moved on after this event was queued"
+            )
+    return None
 
 
 def compute_transition_ops(
@@ -225,6 +251,17 @@ def process(path: Path, dry_run: bool) -> str:
     if not isinstance(roadmap, dict):
         raise ValueError(f"{roadmap_path}: expected a YAML mapping")
     task = find_task(roadmap, task_id)
+
+    reason = stale_reason(task, event)
+    if reason is not None:
+        # The live task has moved on since this event was queued (conductor/t-067):
+        # applying it now would silently revert whatever claimed/updated it more
+        # recently. Drop the event rather than patch over newer state -- replaying
+        # it again next cycle can never become non-stale, since roadmap timestamps
+        # only move forward.
+        if not dry_run:
+            path.unlink()
+        return f"{project}/{task_id}: STALE skip ({operation}) -- {reason}"
 
     # Compute everything (transition + learning validation) before writing anything,
     # so an invalid learning payload can't leave a half-applied, now-unrepeatable
