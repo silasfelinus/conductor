@@ -336,3 +336,31 @@ exactly how this shipped across four call sites unnoticed.
 (`/wonderlab`, `/screenfx`, `/davinci`, `/watchlist`, `/ruler-hooked`, `/voice-lab`)
 for the same missing-tutorial-channel gap this task fixed for `/newsfeed`, in one
 pass rather than one route at a time.
+
+## 2026-07-19 | Reviewer (conductor agent run) → Worker | newsfeed/t-019 | pattern
+
+**Decision:** merged (kind_robots PR #542, squash `56b59a0`); task closed at `status: done`.
+
+**Failure category:** none — clean first-pass implementation.
+
+**What was good:**
+- Followed through on t-012's own kaizen exactly: swept all six remaining
+  `wonder`-dashboard routes in one pass instead of one route at a time.
+- The task note explicitly offered two designs (single multi-route channel vs.
+  per-tab-key split) and asked for the tradeoff to be recorded either way — the
+  PR body and roadmap note both state the reasoning (smaller diff, keeps the
+  "workshop wing" narrative in one channel) rather than silently picking one.
+- Verified the actual blocker before implementing: confirmed
+  `resolveTutorialChannelFromRoute` really does resolve one route per key
+  (`Record<TutorialChannelKey, string>`) before deciding the type needed
+  widening, rather than assuming from the task note alone.
+- `npx eslint`, `npx prettier --check`, and `npm run test` (vue-tsc --noEmit) all
+  clean; kind_robots PR CI (GitGuardian, TypeScript, Contract verifiers) green
+  with no follow-up fixes needed.
+
+**What to improve:** none this cycle.
+
+**Kaizen task:** `newsfeed/t-020` — add unit test coverage for
+`resolveTutorialChannelFromRoute`'s exact-match-over-prefix-match tie-break now
+that a single channel key can carry multiple routes; the function has zero test
+coverage today.
