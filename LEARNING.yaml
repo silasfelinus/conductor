@@ -3430,3 +3430,12 @@ records:
   outcome: done
   failure_category: null
   lesson: "A task can reach a state where the only remaining item is an explicitly-flagged 'needs Silas's visual preference, not more digging' cosmetic call. Applying the task's own already-established default (leave ambiguous color additions as-is) and closing done is better than leaving it 'ready' indefinitely awaiting a low-stakes call nobody is blocked on -- reserve needs-human for calls that actually block something."
+- date: 2026-07-19
+  project: conductor
+  task: t-039
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "Two projects can duplicate scope task-for-task under different ids/titles (animation-studio/t-004 vs animation-manager/t-004, near-identical asks) with no explicit link between them -- when a roadmap gains a clear 'active continuation' project, check whether an older sibling project should retire via project-overrides.yaml rather than staying independently claimable and risking a Worker re-doing already-shipped work."
