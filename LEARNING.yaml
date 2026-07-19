@@ -3631,3 +3631,12 @@ records:
   outcome: done
   failure_category: null
   lesson: "Sourcing a real bias rating (vs. leaving unrated) is a fast WebSearch+WebFetch task once a project's guardrail doc (BIAS-CONTROLS.md) already specifies the required provenance shape -- checked Media Bias/Fact Check's own site directly (not just search snippets) to get the exact label wording, and confirmed absence-of-rating for the second source via a site-scoped search before concluding it should stay unrated rather than guessing a plausible-sounding label."
+- date: '2026-07-19'
+  project: newsfeed
+  task: t-013
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "Batch-verifying a source registry against a live pipeline surfaces real breakage fast (6/15 FEED_SOURCES were 404/403, none of it visible from reading the code) -- but finding a *replacement* URL needs the same discipline as sourcing a bias rating: test the candidate through the app's own parser (fetchSourceItems), not just an HTTP 200, before committing it, and leave genuinely unfindable replacements verified: false with an inline note of what was tried rather than swapping in an off-topic or wrong-entity feed just to clear the red X."
