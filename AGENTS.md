@@ -241,6 +241,36 @@ To verify kind_robots changes locally (vue-tsc / eslint) in an ephemeral sandbox
 client with the two required workarounds (CYPRESS_INSTALL_BINARY=0 and a dummy
 DATABASE_URL) baked in, instead of every session re-deriving them (conductor/t-046).
 
+**Visually verifying a front-end change: use the Vercel MCP connector, not local `nuxt
+dev`.** Local `npm run dev` 500s immediately in this sandbox because `DATABASE_URL`
+points at an unreachable dummy MariaDB host — SSR never reaches page markup, so there
+is no way to visually or keyboard-nav check a change locally (hit independently by at
+least three newsfeed tasks: t-010, t-014, t-017). The Vercel MCP connector gives a
+session a real rendered page instead (confirmed working, newsfeed/t-017, 2026-07-19):
+1. `mcp__Vercel__list_teams` — get the team ID (kind_robots is under
+   `silasfelinus-projects`).
+2. `mcp__Vercel__list_projects` (with that team ID) — get the kind-robots project ID
+   (`prj_x6HB2IPpQbvqNqiYVgu3IibJ6FZf` as of 2026-07-19; re-fetch if this ever changes).
+3. `mcp__Vercel__list_deployments` (project ID + team ID) — every open kind_robots PR
+   gets its own preview deployment here (matched via `meta.githubPrId`/`githubCommitRef`);
+   find the one for the branch/PR you care about and take its `url`.
+4. `mcp__Vercel__web_fetch_vercel_url` on `https://<that url>/<route>` — returns the
+   actual rendered HTML (full SSR markup, not the stock Nuxt welcome page). Use a
+   regular `WebFetch` first only if the deployment has no Vercel Authentication
+   protection; `web_fetch_vercel_url` is the one that works regardless, since it
+   authenticates as this MCP server's connected Vercel account.
+   `mcp__Vercel__get_deployment_build_logs` / `get_runtime_errors` on the same
+   project/deployment are useful alongside this for diagnosing a build or runtime
+   failure rather than just confirming markup.
+This does NOT require deploying anything new — Vercel already builds a preview for
+every PR automatically. `list_deployments`' `state` field also surfaces the current
+production deployment's health (`READY` vs `ERROR`) — worth a glance whenever a
+session is investigating why a change "isn't showing up," since that can mean
+production itself is failing to build rather than the change being wrong. (Concrete
+example: the 2026-07-19 t-017 check found production in `ERROR` — a genuine backend
+bug, unquoted `Character` table name in raw SQL breaking every deploy since PR #515;
+see kind_robots PR #517.)
+
 When a cross-repo task is selected:
 1. Claim the conductor roadmap task exactly as usual on `main`.
 2. Create the implementation branch in the target repository as `worker/<project>-<task-id>`

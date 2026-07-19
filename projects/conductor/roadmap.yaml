@@ -1888,3 +1888,27 @@ tasks:
       whatever produces task-events/ entries (yaml.safe_load before write) or as a CI check on any PR
       touching task-events/ -- so a malformed event file is caught at its own PR instead of silently
       blocking the queue and failing CI for everyone else's PRs in the meantime.
+
+  - id: t-069
+    milestone: m2
+    title: Flag unquoted MariaDB/MySQL reserved words used as raw-SQL table identifiers in kind_robots
+    status: ready
+    passes: 0
+    stakes: reversible
+    note: >
+      Kaizen from newsfeed/t-017 (Reviewer, kind_robots PR #517, merged 2026-07-19): CHARACTER
+      is a reserved word in MariaDB's grammar; an unquoted `LEFT JOIN Character c ON ...` /
+      `FROM Character` in raw SQL (`$queryRaw`/`$queryRawUnsafe`/a raw driver `.query()`) throws
+      ER_PARSE_ERROR at query time. This exact shape shipped across four call sites in kind_robots
+      (a migration-repair script that runs during `npm run vercel-build`, plus three API/util
+      files) in the same PR cluster (#511-#515) before anyone noticed -- the migration-repair one
+      broke every production deploy until PR #517 fixed it. The existing contract-test mocks for
+      these files (e.g. verify-known-migration-repair.mjs's fakeConnection) match on SQL text
+      prefixes and can never catch a real grammar/parse error, so this class of bug has no
+      regression guard today. Add a lightweight check (a script grepping new/changed raw-SQL call
+      sites for unquoted reserved-word table names, run in kind_robots CI, starting with
+      `Character` since it's the one that already bit us and expanding the word list as more
+      surface) so the next one is caught before merge instead of in production. This is a
+      kind_robots code change, not a conductor one -- file the concrete script/CI-step work as a
+      kind_robots task if this project tracks kind_robots CI work, or as a direct kind_robots PR
+      when picked up.
