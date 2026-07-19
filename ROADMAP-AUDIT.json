@@ -1,15 +1,15 @@
 {
-  "generated_at": "2026-07-19T15:24:54.223059+00:00",
+  "generated_at": "2026-07-19T16:13:33.411797+00:00",
   "summary": {
     "roadmaps": 40,
     "active_projects": 31,
     "tasks": 622,
-    "ready": 59,
+    "ready": 58,
     "waiting": 48,
     "needs_human": 31,
     "in_progress": 1,
-    "done": 472,
-    "errors": 0,
+    "done": 473,
+    "errors": 1,
     "warnings": 6,
     "info": 45
   },
@@ -275,14 +275,15 @@
       "counts": {
         "done": 15,
         "needs-human": 1,
-        "ready": 4
+        "ready": 3,
+        "review": 1
       },
       "open_count": 5,
       "human_attention": 1,
-      "ready": 4,
+      "ready": 3,
       "waiting": 0,
       "claimed": 0,
-      "review": 0,
+      "review": 1,
       "done": 15
     },
     {
@@ -352,17 +353,16 @@
       "autonomous": false,
       "task_count": 8,
       "counts": {
-        "claimed": 1,
-        "done": 6,
+        "done": 7,
         "waiting": 1
       },
-      "open_count": 2,
+      "open_count": 1,
       "human_attention": 0,
       "ready": 0,
       "waiting": 1,
-      "claimed": 1,
+      "claimed": 0,
       "review": 0,
-      "done": 6
+      "done": 7
     },
     {
       "slug": "conductor",
@@ -789,6 +789,13 @@
     }
   ],
   "findings": [
+    {
+      "severity": "error",
+      "code": "WAITING_WITH_SATISFIED_DEPS",
+      "project": "ecosystem-map",
+      "task": "t-006",
+      "message": "All dependencies are satisfied; resolver should promote this task to ready."
+    },
     {
       "severity": "warning",
       "code": "SOFT_NEEDS_HUMAN",
