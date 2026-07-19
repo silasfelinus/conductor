@@ -1,14 +1,14 @@
 # Roadmap Audit
 
-Generated: `2026-07-19T15:24:54.223059+00:00`
+Generated: `2026-07-19T16:13:42.879894+00:00`
 
 This is a conservative structural audit. It reports suspicious state; it does not automatically change task status or remove human gates.
 
 ## Portfolio snapshot
 
 - **40** roadmaps, **31** active projects, **622** tasks
-- **59 ready**, **48 waiting**, **31 needs-human**, **1 claimed/review**, **472 done**
-- Findings: **0 errors**, **6 warnings**, **45 informational**
+- **58 ready**, **48 waiting**, **31 needs-human**, **1 claimed/review**, **473 done**
+- Findings: **1 errors**, **6 warnings**, **45 informational**
 
 ## Project inventory
 
@@ -27,11 +27,11 @@ This is a conservative structural audit. It reports suspicious state; it does no
 | 11 | `global-ui` | active | software | 0 | 0 | 1 | 0 | 24 / 25 |
 | 12 | `superkate-services-calculator` | active | software | 0 | 0 | 1 | 0 | 35 / 36 |
 | 13 | `superkate-hairstyle-ai` | active | software | 1 | 0 | 2 | 0 | 18 / 21 |
-| 14 | `newsfeed` | active | software | 4 | 0 | 1 | 0 | 15 / 20 |
+| 14 | `newsfeed` | active | software | 3 | 0 | 1 | 1 | 15 / 20 |
 | 15 | `model-builder` | active | software | 3 | 0 | 0 | 0 | 28 / 31 |
 | 16 | `animation-manager` | active | software | 2 | 2 | 0 | 0 | 7 / 11 |
 | 17 | `animation-studio` | retired | software | 3 | 4 | 0 | 0 | 1 / 8 |
-| 18 | `ecosystem-map` | active | software | 0 | 1 | 0 | 1 | 6 / 8 |
+| 18 | `ecosystem-map` | active | software | 0 | 1 | 0 | 0 | 7 / 8 |
 | 19 | `conductor` | active | software | 3 | 0 | 4 | 0 | 63 / 70 |
 | 20 | `serendipity` | active | software | 1 | 0 | 0 | 0 | 11 / 12 |
 | 21 | `storymaker` | active | software | 2 | 0 | 0 | 0 | 8 / 10 |
@@ -57,9 +57,9 @@ This is a conservative structural audit. It reports suspicious state; it does no
 
 ## Findings by severity
 
-### Error (0)
+### Error (1)
 
-_None._
+- **WAITING_WITH_SATISFIED_DEPS** — `ecosystem-map` / `t-006`: All dependencies are satisfied; resolver should promote this task to ready.
 
 ### Warning (6)
 

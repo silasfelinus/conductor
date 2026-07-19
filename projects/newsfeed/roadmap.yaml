@@ -539,7 +539,7 @@ tasks:
   - id: t-020
     milestone: m3
     title: "Add a unit test asserting resolveTutorialChannelFromRoute picks exact-match over prefix-match across different channel keys"
-    status: claimed
+    status: review
     owner: reviewer
     passes: 0
     stakes: reversible
@@ -555,5 +555,24 @@ tasks:
       route from a different key would also match as a prefix, (2) prefix match
       picks the most specific (longest) route across different keys, (3) the
       `wonder` key's multi-route array resolves correctly for each of its 7 routes.
+
+      RAN 2026-07-19 (~16:05-16:20 UTC, claude-conductor-burst-20260719T1605Z,
+      burst-mode project rotation): added `utils/scripts/verifyTutorialChannelResolver.ts`
+      covering all three requested cases. Since no real route pair currently overlaps
+      as a prefix (confirmed by inspecting the actual `footerRouteMap`/`tutorialRouteMap`
+      data -- same finding this note already recorded), gave
+      `resolveTutorialChannelFromRoute` two optional, defaulted parameters
+      (`routeMap`, `keys`) so tests can inject controlled overlapping route data
+      while every real call site (e.g. `workspace-sheet.vue`, which passes only
+      `route.path`) keeps its exact prior behavior via the defaults. Cases (1) and
+      (2) use a small synthetic `{ games: '/shop', art: '/shop/gallery' }` override
+      to force the overlap the real data doesn't have yet; case (3) runs against
+      the real, unmodified route map over all 7 wonder routes plus one sub-path
+      each. Also added a null-result and a query/hash-stripping-with-overrides
+      case. Wired `npm run test:tutorial-channel-resolver` into
+      `.github/workflows/contract-tests.yml` alongside the other newsfeed contract
+      checks. Verified locally: `npx eslint` clean, `npx prettier --check` clean,
+      the new test passes, kind_robots PR opened from branch
+      `claude/keen-fermat-newsfeed-t020-tutorial-resolver-test`.
     claimed_by: claude-conductor-burst-20260719T1605Z
     claimed_at: '2026-07-19T16:06:48Z'
