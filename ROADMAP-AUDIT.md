@@ -1,14 +1,14 @@
 # Roadmap Audit
 
-Generated: `2026-07-18T23:16:24.324117+00:00`
+Generated: `2026-07-19T02:10:11.539107+00:00`
 
 This is a conservative structural audit. It reports suspicious state; it does not automatically change task status or remove human gates.
 
 ## Portfolio snapshot
 
 - **40** roadmaps, **31** active projects, **610** tasks
-- **67 ready**, **49 waiting**, **30 needs-human**, **2 claimed/review**, **451 done**
-- Findings: **0 errors**, **6 warnings**, **45 informational**
+- **62 ready**, **49 waiting**, **30 needs-human**, **2 claimed/review**, **456 done**
+- Findings: **0 errors**, **5 warnings**, **45 informational**
 
 ## Project inventory
 
@@ -24,15 +24,15 @@ This is a conservative structural audit. It reports suspicious state; it does no
 | 8 | `mermaids-of-venice` | retired | content | 0 | 0 | 8 | 0 | 4 / 12 |
 | 9 | `kind-robots` | active | software | 1 | 0 | 4 | 0 | 35 / 40 |
 | 10 | `kindrobots-unraid` | active | software | 0 | 7 | 1 | 0 | 4 / 12 |
-| 11 | `global-ui` | active | software | 2 | 0 | 1 | 0 | 22 / 25 |
+| 11 | `global-ui` | active | software | 0 | 0 | 1 | 0 | 24 / 25 |
 | 12 | `superkate-services-calculator` | active | software | 0 | 0 | 1 | 0 | 35 / 36 |
 | 13 | `superkate-hairstyle-ai` | active | software | 2 | 0 | 2 | 0 | 16 / 20 |
-| 14 | `newsfeed` | active | software | 5 | 1 | 1 | 0 | 8 / 15 |
+| 14 | `newsfeed` | active | software | 3 | 1 | 1 | 2 | 8 / 15 |
 | 15 | `model-builder` | active | software | 3 | 0 | 0 | 0 | 27 / 30 |
 | 16 | `animation-manager` | active | software | 3 | 2 | 0 | 0 | 5 / 10 |
-| 17 | `animation-studio` | missing | software | 3 | 4 | 0 | 0 | 1 / 8 |
+| 17 | `animation-studio` | retired | software | 3 | 4 | 0 | 0 | 1 / 8 |
 | 18 | `ecosystem-map` | active | software | 2 | 1 | 0 | 0 | 5 / 8 |
-| 19 | `conductor` | active | software | 3 | 0 | 3 | 2 | 58 / 66 |
+| 19 | `conductor` | active | software | 2 | 0 | 3 | 0 | 61 / 66 |
 | 20 | `serendipity` | active | software | 1 | 0 | 0 | 0 | 11 / 12 |
 | 21 | `storymaker` | active | software | 2 | 0 | 0 | 0 | 8 / 10 |
 | 22 | `davinci` | active | software | 2 | 0 | 0 | 0 | 12 / 14 |
@@ -61,9 +61,8 @@ This is a conservative structural audit. It reports suspicious state; it does no
 
 _None._
 
-### Warning (6)
+### Warning (5)
 
-- **ROADMAP_MISSING_OVERRIDE** — `animation-studio`: Roadmap has no project-overrides.yaml entry.
 - **ACTIVE_PROJECT_ALL_DONE** — `humboldt-scoop`: All tasks are done but project override remains active.
 - **ACTIVE_PROJECT_NO_OPEN_TASKS** — `humboldt-scoop`: Active project has no open tasks; mark finished/paused or add an intentional recurring task.
 - **SOFT_NEEDS_HUMAN** — `kind-robots` / `t-037`: needs-human has no obvious hard-gate marker; consider returning it to ready, setting soft_gate: true, or documenting the actual gate.
