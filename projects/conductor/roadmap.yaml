@@ -1864,11 +1864,11 @@ tasks:
   - id: t-067
     milestone: m2
     title: A task-events entry stuck behind a malformed-YAML sibling file applied stale roadmap state on top of a newer, unrelated claim once unblocked
-    status: review
+    status: done
     passes: 0
     stakes: reversible
     note: 'Fixed: process_task_events.py now checks a queued event''s own `updated` timestamp against the live task''s `claimed_at`/`updated` before applying it. If the task has moved on since the event was generated (e.g. it was claimed again after the event was queued but before it got applied, as happened for ai-art-academy/t-010 in this task''s own report), the event is now skipped and logged as STALE instead of silently patching over the newer state. Added stale_reason() with 4 new unit tests covering: the reported regression scenario, dry-run behavior, events with no updated timestamp (never flagged, nothing to compare), and the ordinary newer-event-than-claim flow (still applies normally). Full test suite (378 tests) passes.'
     owner: worker
     claimed_by: claude-conductor-burst-20260719-rotation-conductor
     claimed_at: '2026-07-19T09:05:59Z'
-    updated: '2026-07-19T09:05:59Z'
+    updated: '2026-07-19T09:15:03Z'
