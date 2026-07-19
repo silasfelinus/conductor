@@ -462,21 +462,29 @@ tasks:
   - id: t-025
     milestone: m6
     title: "Async art generation via the ArtJob queue"
-    status: review
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
     note: >
-      From live testing (Silas): the normal path is create the object, then send the prompt
-      to ArtJob (async) and handle it when done — synchronous generate is the interactive
-      special case. Add an async path: enqueue via POST /api/art/enqueue (returns jobId),
-      store the jobId on the build item, poll GET /api/art/queue/:id (~5s) until DONE, then
-      promote the resulting artImageId onto the item/target. Reuse artStore.enqueueAndRender
-      pattern. Show queued/rendering/done state per item. Keep sync generate as the "art
-      first, interactively" option.
+      Done: kind_robots PR #539 (merged e5f98d0) adds artStore.enqueueCurrentArt /
+      getArtJobStatus / finalizeQueuedArtImage alongside the existing synchronous
+      generateArt path (both now share resolveArtGenerationRoute /
+      mergeCurrentArtOverrides so routing rules can't drift), and wires Model
+      Builder's generateItemAssetAsync + a per-item poll loop on top of it so
+      multiple build items can queue/render independently with their own
+      queued/rendering state. Sync generateItemAsset kept unchanged as the "art
+      first, interactively" option per this note. Verified via vue-tsc (clean)
+      and eslint (no new errors vs main); could not exercise live end-to-end —
+      sandbox has no reachable DATABASE_URL and the ComfyUI/Alexandria render
+      backend has been failing every hourly run since ~2026-07-17 (see
+      coloring-book/t-022). A live /model-builder smoke test once that backend
+      is healthy is the natural follow-up (see kaizen below). CI green on both
+      kind_robots PR #539 and this conductor PR; reviewed and merged this
+      session.
     claimed_by: claude-conductor-burst-20260719T1259Z
     claimed_at: '2026-07-19T13:07:21Z'
-    updated: '2026-07-19T13:07:21Z'
+    updated: '2026-07-19T14:12:34Z'
 
   - id: t-026
     milestone: m6
@@ -576,3 +584,23 @@ tasks:
     claimed_by: claude-conductor-scheduled-20260718T1730Z
     claimed_at: '2026-07-18T11:06:30Z'
     updated: '2026-07-18T11:06:30Z'
+
+  - id: t-031
+    milestone: m6
+    title: "Live smoke test of the async art-generation path (t-025) once the render backend is healthy"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Kaizen from t-025 (kind_robots PR #539, 2026-07-19). t-025's async
+      generateItemAssetAsync path could only be verified via vue-tsc/eslint —
+      the sandbox has no reachable DATABASE_URL and the ComfyUI/Alexandria
+      render backend has been failing every hourly process-color-art-events.yml
+      run since ~2026-07-17 (see coloring-book/t-022's FOR-SILAS note). Once
+      that backend is confirmed healthy again, queue 2-3 items concurrently on
+      /model-builder (via the Vercel MCP preview-deploy check described in
+      AGENTS.md's "Cross-repo tasks" section, or a live session), and confirm:
+      each item shows independent queued/rendering state, no cross-item
+      interference, and the finished image promotes onto the item exactly like
+      the synchronous path does.

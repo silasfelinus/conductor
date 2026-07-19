@@ -7320,3 +7320,42 @@ the rotation.
 **Kaizen task:** `conductor/t-070` — consolidate `check_pr_kaizen.py` and
 `check_pr_file_overlap.py` into one pre-merge advisory pass so a Reviewer
 session only has to invoke one script per PR instead of remembering several.
+
+## 2026-07-19 | Reviewer → Worker | model-builder/t-025 | pattern
+
+**Decision:** merged (kind_robots PR #539, squash `e5f98d0`; conductor PR #854,
+squash `e7c3ceb`); task closed at `status: done`.
+
+**Failure category:** none — clean first-pass implementation, picked up as the
+final close-out step of a prior session's burst-mode cycle (the PR itself was
+already open and CI-green at session start).
+
+**What was good:**
+- `resolveArtGenerationRoute` / `mergeCurrentArtOverrides` extraction means the
+  new async path (`enqueueCurrentArt` → `enqueueArtGeneration` →
+  `getArtJobStatus` → `finalizeQueuedArtImage`) and the existing synchronous
+  `generateArt`/`generateCurrentArt` share the exact same server-selection,
+  hosted-Kontext-fallback, and sync-vs-queue routing logic instead of forking
+  it — the diff to `generateArt` itself is a pure delete-and-call-the-helper,
+  confirmed no behavior change.
+- Model Builder's `generateItemAssetAsync` + `pollAsyncArtJob` gives each
+  build item independent queued/rendering state via a per-item `artJobId`
+  guard (`while (item.artJobId === jobId)`), so a re-queue or dropped item
+  can't have a stale poll clobber newer state — same defensive pattern as
+  `claim_task.py`'s staleness checks elsewhere in the fleet.
+- Both PRs were fully CI-green (3/3 kind_robots checks, 23/23 conductor
+  checks) with no scope creep — diff is exactly the async plumbing + wiring
+  the task asked for.
+
+**What to improve:**
+- The task sat at `status: review` from 13:19 UTC to this session's pickup
+  rather than being closed out in the same session that opened the PR — not a
+  real problem (CI was still running and the roadmap accurately reflected
+  in-progress state throughout), just noting for the record that "flip to
+  done after merge" is exactly the kind of small follow-up a later session
+  has to rediscover via the open-PR sweep rather than roadmap state alone.
+
+**Kaizen task:** `model-builder/t-031` — live-smoke-test the async path once
+the ComfyUI/Alexandria render backend (down since ~2026-07-17 per
+coloring-book/t-022) is confirmed healthy; genuinely couldn't be verified any
+other way this cycle since it needs a live render round-trip.
