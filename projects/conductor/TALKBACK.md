@@ -615,3 +615,47 @@ its own research; no new follow-on gap surfaced while resolving it.
 process guidance, not a code task; conductor/t-069 (kind_robots reserved-word raw-SQL
 check) and t-070 (advisory-check consolidation) remain the queued next steps from this
 same incident family.
+
+## 2026-07-19 | Reviewer (scheduled) | conductor/t-069 | pattern
+
+**Decision:** merged (kind_robots PR #575); task closed at `status: done` once CI is green.
+
+**Failure category:** none — clean implementation; one unrelated pre-existing CI break
+fixed inline to unblock this PR's own green status (see below).
+
+**What was good:**
+- Verified the exact real-world bug shape (PR #517's fix quoting `` `Character` `` in
+  `scripts/repair-known-prisma-migrations.mjs`) before writing the check, so the pattern
+  targets the actual grammar the schema/raw-SQL boundary hits rather than a guessed shape.
+- Confirmed the check both passes clean against current `main` (proving PR #517's fix
+  holds) and correctly flags a deliberately reintroduced unquoted `Character` in a throwaway
+  temp file before removing it — a real catch-test, not just a clean-repo pass.
+- Full `npm run test` (vue-tsc, project-wide) run locally, not just the new script in
+  isolation, since the task's own PR needed to pass the same CI it's adding to.
+
+**What to improve:**
+- The PR's own TypeScript CI check initially failed for a reason entirely unrelated to
+  this task: `assertCharacterPatchCompatibility` (server/api/characters/compatibility.ts)
+  typed `existingUserId` as non-nullable `number`, but `Character.userId` is `Int?` and
+  its only call site passes the nullable field directly — broken on `main` earlier the
+  same day via PR #569 (commit `60a32129`), with nothing catching it until the next
+  unrelated PR's vue-tsc run. Fixed inline (type-only widening) since it was blocking
+  this PR's own green CI and the fix was one line, but flagged clearly as a separate
+  concern in the PR body rather than silently folding it into the task's diff. Filed
+  conductor/t-072 for the broader pattern (nullable Prisma fields vs. non-nullable
+  helper params, no regression guard).
+- Session-level note, not this task's own error: this session's designated conductor
+  branch (`claude/zealous-euler-1vw4d6`) hit the documented brand-new-ref HTTP 413 on
+  first push. Between diagnosing that and calling `create_branch`, a concurrent session
+  pushed real work (`coloring-book/t-022` park + claim commits) to `origin/main`, so
+  `create_branch(from_branch: main)` picked up that newer tip and the subsequent
+  `git push` 403'd as non-fast-forward against local history. Resolved with a normal
+  `git fetch` + `git rebase origin/<branch>` + one-line roadmap conflict resolution
+  (both sides had touched the same `t-069` status field this same session) — no data
+  lost, but worth noting as a live instance of CLAUDE.md's documented 413 workaround
+  interacting with genuine concurrent-session drift, not just a stale local ref.
+
+**Kaizen task:** conductor/t-072 — regression-test the nullable-Prisma-field-vs-non-nullable-helper-param
+pattern beyond this one call site (or confirm `npm run test` already gates every kind_robots
+PR and this was a one-off same-day gap).
+
