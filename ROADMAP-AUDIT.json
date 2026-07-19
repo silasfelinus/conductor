@@ -1,15 +1,15 @@
 {
-  "generated_at": "2026-07-19T16:13:33.411797+00:00",
+  "generated_at": "2026-07-19T17:24:40.096119+00:00",
   "summary": {
     "roadmaps": 40,
     "active_projects": 31,
-    "tasks": 622,
-    "ready": 58,
-    "waiting": 48,
+    "tasks": 623,
+    "ready": 57,
+    "waiting": 47,
     "needs_human": 31,
     "in_progress": 1,
-    "done": 473,
-    "errors": 1,
+    "done": 476,
+    "errors": 0,
     "warnings": 6,
     "info": 45
   },
@@ -40,15 +40,16 @@
       "autonomous": true,
       "task_count": 34,
       "counts": {
+        "claimed": 1,
         "done": 29,
         "needs-human": 3,
-        "ready": 2
+        "ready": 1
       },
       "open_count": 5,
       "human_attention": 3,
-      "ready": 2,
+      "ready": 1,
       "waiting": 0,
-      "claimed": 0,
+      "claimed": 1,
       "review": 0,
       "done": 29
     },
@@ -273,18 +274,17 @@
       "autonomous": false,
       "task_count": 20,
       "counts": {
-        "done": 15,
+        "done": 17,
         "needs-human": 1,
-        "ready": 3,
-        "review": 1
+        "ready": 2
       },
-      "open_count": 5,
+      "open_count": 3,
       "human_attention": 1,
-      "ready": 3,
+      "ready": 2,
       "waiting": 0,
       "claimed": 0,
-      "review": 1,
-      "done": 15
+      "review": 0,
+      "done": 17
     },
     {
       "slug": "model-builder",
@@ -354,12 +354,12 @@
       "task_count": 8,
       "counts": {
         "done": 7,
-        "waiting": 1
+        "ready": 1
       },
       "open_count": 1,
       "human_attention": 0,
-      "ready": 0,
-      "waiting": 1,
+      "ready": 1,
+      "waiting": 0,
       "claimed": 0,
       "review": 0,
       "done": 7
@@ -370,9 +370,9 @@
       "override_status": "active",
       "priority_index": 19,
       "autonomous": false,
-      "task_count": 70,
+      "task_count": 71,
       "counts": {
-        "done": 63,
+        "done": 64,
         "needs-human": 4,
         "ready": 3
       },
@@ -382,7 +382,7 @@
       "waiting": 0,
       "claimed": 0,
       "review": 0,
-      "done": 63
+      "done": 64
     },
     {
       "slug": "serendipity",
@@ -789,13 +789,6 @@
     }
   ],
   "findings": [
-    {
-      "severity": "error",
-      "code": "WAITING_WITH_SATISFIED_DEPS",
-      "project": "ecosystem-map",
-      "task": "t-006",
-      "message": "All dependencies are satisfied; resolver should promote this task to ready."
-    },
     {
       "severity": "warning",
       "code": "SOFT_NEEDS_HUMAN",

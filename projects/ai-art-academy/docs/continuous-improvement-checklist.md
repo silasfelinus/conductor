@@ -15,9 +15,9 @@ Record the lane, files changed, and verification in the task note before rearmin
 
 ### Rotation state
 
-- Last completed lane: Front-end polish — fixed a focus-management bug in `academy-styles-browser.vue` where closing the style detail panel while an active search filter had unmounted the originating grid button dropped keyboard focus to `<body>`; added a fallback to the search input. kind_robots PR #520, merged squash `a174d16`, 2026-07-19.
-- Rechecked 2026-07-19 (~12:20-12:35 UTC): roadmap accuracy (lane 2) and a curriculum-depth (lane 4) spot-check both came back clean/unchanged this cycle — no drift, no new verifiable fact. No lane completed a landed change; see `t-010`'s RECHECKED note in `roadmap.yaml` for detail.
-- Next preferred lane: Roadmap accuracy still applies once lane 3 (preview thumbnails) unblocks or a fresh front-end/curriculum finding turns up — check `public/images/academy/styles/` before picking lane 3.
+- Last completed lane: Front-end polish — fixed `image-upload.vue`'s batch-upload success/failure overlays keying by `file.name` instead of file identity, which cross-wired status badges when two queued files shared a name. kind_robots PR #544, 2026-07-19 (merging pending CI).
+- Rechecked 2026-07-19 (~12:20-12:35 UTC): roadmap accuracy (lane 2) and a curriculum-depth (lane 4) spot-check both came back clean/unchanged that cycle — no drift, no new verifiable fact. See `t-010`'s RECHECKED note in `roadmap.yaml` for detail.
+- Next preferred lane: Roadmap accuracy (lane 2) or curriculum depth (lane 4) — both were last rechecked clean at ~12:20-12:35 UTC, so either is fair game again after enough time/state has passed to matter. Lane 3 (preview thumbnails) stays blocked — check `public/images/academy/styles/` before picking it.
 - Override the preferred lane only when it is blocked or a higher-severity reversible issue is newly verified; record that reason in the task note.
 
 This explicit state is the handoff between recurring cycles. Update it in the same PR as each `t-010` improvement so the next Worker does not infer rotation from a long roadmap note.
