@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-07-19T16:26:23Z
+Generated: 2026-07-19T16:35:13Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **296**
-- Outcomes: blocked: 12, done: 284
+- Closed tasks recorded: **297**
+- Outcomes: blocked: 12, done: 285
 - Success rate: **96%**
 - Average passes on successful tasks: **0.0**
 
@@ -38,7 +38,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | mermaids-of-venice | 3 | 100% |
 | model-builder | 29 | 100% |
 | mural-design | 1 | 100% |
-| newsfeed | 17 | 100% |
+| newsfeed | 18 | 100% |
 | packmaker | 10 | 100% |
 | ruler-hooked | 2 | 100% |
 | serendipity | 3 | 100% |
@@ -50,7 +50,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 15 | 40% |
-| software | 281 | 99% |
+| software | 282 | 99% |
 
 ## Failure categories
 
@@ -70,6 +70,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-07-19 `newsfeed/t-014` — A prior session's own note ("could not verify locally, needs a real preview-deploy connector") is a precise handoff -- the Vercel MCP list_teams/list_projects/list_deployments/web_fetch_vercel_url chain in AGENTS.md answers it directly against the live production deployment without needing a new PR or any code change. Worth checking whether a 'ready' task is actually a pure-verification task before assuming every ready task implies a code diff.
 - 2026-07-19 `newsfeed/t-020` — When a tie-break/precedence rule (here, resolveTutorialChannelFromRoute's cross-key bestLen prefix match) has zero real-world data to exercise it, add optional test-only override parameters defaulted to the real production data -- this lets a unit test inject controlled overlapping fixtures without touching any real call site's behavior, rather than either skipping the test or waiting for production data to coincidentally collide.
 - 2026-07-19 `newsfeed/t-019` — When a task offers an explicit design choice (single multi-route channel vs. per-tab-key split), the smaller-diff option that widens an existing type (string -> string | readonly string[]) beat fragmenting one coherent UI narrative into N near-duplicate config entries -- worth defaulting to the option that keeps content close to a shared idea in one place, then generalizing the plumbing, rather than duplicating structure to avoid a small type change.
 - 2026-07-19 `model-builder/t-025` — When a render/generation backend has been failing every scheduled run for days (confirmed via the Actions API, not assumed), skip tasks that need it live and pick the next ready task that's verifiable by typecheck/lint alone -- don't burn a retry pass re-attempting a task blocked on infrastructure outside agent control.
@@ -79,7 +80,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-07-19 `newsfeed/t-017` — The Vercel MCP connector (list_teams -> list_projects -> list_deployments -> web_fetch_vercel_url) does give a session a real rendered preview page for any open kind_robots PR, unblocking the recurring 'no local nuxt dev' wall (t-010/t-014/t-017); documented the concrete steps in AGENTS.md. Checking list_deployments' state field along the way surfaced a genuinely broken production build (unquoted Character, a reserved MariaDB word, in raw SQL across four call sites from a prior PR cluster) that had nothing to do with newsfeed -- worth always glancing at production deployment health while investigating an unrelated preview, since 'the change isn't showing up' can mean the whole build is failing, not that the change is wrong. Raw-SQL contract-test mocks that match on text prefixes cannot catch real grammar/parse errors; filed conductor/t-069 for a proper check.
 - 2026-07-19 `conductor/t-067` — process_task_events.py now guards against the same staleness class claim_task.py already solves for direct claims: before applying a queued event, compare its own updated timestamp against the live task's claimed_at/updated and skip (log STALE, don't apply) if the task moved on since the event was queued. Clean first-pass fix with 4 new unit tests covering the reported regression, dry-run, no-timestamp, and ordinary-newer-event cases.
 - 2026-07-19 `ai-art-academy/t-010` — A queued task-events/ entry stuck behind a sibling file's YAML syntax bug applied stale status/note state on top of this session's freshly-claimed t-010 once it finally processed -- process_task_events.py has no staleness check against the task's current claimed_at/updated, unlike claim_task.py's live-recheck guard for direct claims. Read a corrupted roadmap note carefully before re-editing it: the truncated/duplicated fragment was easy to mistake for legitimate history at a glance. Filed conductor/t-067 for the underlying gap.
-- 2026-07-19 `animation-manager/t-009` — Building a mechanical verifier over a hand-authored YAML catalog is a good way to discover the catalog was never actually machine-parseable (an unquoted colon in one field broke every YAML loader) -- worth a quick parse-and-scan pass on the target file before assuming its structure is well-formed just because agents have been hand-editing it successfully.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-07-19T16:26:23Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-07-19T16:35:13Z_
