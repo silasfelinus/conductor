@@ -169,8 +169,8 @@ tasks:
   - id: t-009
     milestone: m1
     title: "Add a novelty-collision check to the pitch pipeline"
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     note: >
@@ -181,6 +181,9 @@ tasks:
       compares a new pitch's `technique` and `surprise` text against existing catalog
       entries' equivalents — a simple keyword-overlap surfaced for human/agent judgment,
       not an auto-reject — so near-duplicate pitches are flagged before they reach build.
+    claimed_by: claude-conductor-burst-20260719-rotation-animation-manager
+    claimed_at: '2026-07-19T07:10:26Z'
+    updated: '2026-07-19T07:10:26Z'
 
   - id: t-010
     milestone: m3
