@@ -576,3 +576,42 @@ task itself posed, closed `done`.
 
 **Kaizen task:** none filed — this was a roadmap-hygiene closure of a task that had already done
 its own research; no new follow-on gap surfaced while resolving it.
+
+## 2026-07-19 | Reviewer (agent run, CI-Janitor Todo #446 response) | conductor/t-068 | pattern
+
+**Decision:** merged (conductor PR #851, squash `70062dc`); task closed at `status: done`.
+
+**Failure category:** none — clean first-pass implementation.
+
+**What was good:**
+- Session started from a HIGH-priority CI-Janitor Todo (kind_robots Cypress Tests red,
+  run 29679887584 from PR #515's unquoted-`Character`-table production-build breakage).
+  Investigation found that incident already being actively resolved by a concurrent
+  session (kind_robots PRs #517-#525 landing in real time against the same commit range,
+  production back to `READY` within the hour) -- correctly avoided duplicating that work
+  and instead picked a self-contained conductor task from the same incident family
+  (t-068, filed as t-067's own kaizen) to make productive use of the session without
+  colliding with the live kind_robots fix-up.
+- `scripts/validate_task_events.py` deliberately does NOT import `event_files()`/`EVENT_DIR`
+  from `process_task_events.py` despite the obvious temptation to reuse them directly --
+  a first draft did exactly that and the test suite would have silently validated the
+  real repo's `task-events/` directory instead of each test's fixture directory, since a
+  function's free variables resolve against its *defining* module's globals, not the
+  caller's patched attributes. Caught and fixed before landing (own review, not
+  reviewer-caught).
+- 11 new tests including a direct regression for the exact unquoted-colon-in-a-note shape
+  that caused the original t-067/t-068 incident. Full suite (404 tests) green;
+  `validate_roadmaps.py` and `validate_task_events.py` both clean against the real repo.
+
+**What to improve:**
+- None on this task's own execution. Noting for future sessions: the GitHub REST API is
+  not directly reachable via `curl` in this sandbox (the agent proxy returns a synthetic
+  "GitHub access is not enabled for this session" error) -- CI/PR status must be polled
+  via the GitHub MCP tools, not a `Monitor` shell loop hitting `api.github.com` directly.
+  Wasted two background Monitor tasks discovering this; worth a note in AGENTS.md or
+  CLAUDE.md if it recurs.
+
+**Kaizen task:** none filed as a new task this cycle -- the sandbox-curl finding above is
+process guidance, not a code task; conductor/t-069 (kind_robots reserved-word raw-SQL
+check) and t-070 (advisory-check consolidation) remain the queued next steps from this
+same incident family.

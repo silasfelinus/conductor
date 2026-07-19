@@ -1876,18 +1876,10 @@ tasks:
   - id: t-068
     milestone: m2
     title: Validate task-events/*.yaml syntax at write time or in CI, not first discovered when the shared process job breaks
-    status: review
+    status: done
     passes: 0
     stakes: reversible
-    note: >
-      Kaizen from t-067 (conductor PR #844, merged 2026-07-19): t-067 fixed process_task_events.py's
-      staleness handling, but the secondary root cause that made the original incident visible for
-      ~an hour is still open -- a queued task-events/*.yaml file with a plain YAML syntax error (an
-      unquoted colon in a free-text note field) broke the shared `process` CI job for every unrelated
-      PR until a different session happened to fix that one file. Add a validation step -- either at
-      whatever produces task-events/ entries (yaml.safe_load before write) or as a CI check on any PR
-      touching task-events/ -- so a malformed event file is caught at its own PR instead of silently
-      blocking the queue and failing CI for everyone else's PRs in the meantime.
+    note: 'Fixed: added scripts/validate_task_events.py (YAML syntax + required-field shape checks, no side effects) and wired it into ci.yml''s Worker PR CI as a new validate-task-events job. A malformed task-events/*.yaml file is now rejected at its own PR instead of landing on main and failing the shared process-task-events job for every unrelated PR. 11 new tests, including a direct regression for the unquoted-colon-in-a-note shape from the original t-067 incident. Merged conductor PR #851 (squash 70062dc) -- all 23 CI checks green.'
     owner: reviewer
     claimed_by: claude-conductor-agentrun-20260719T1204Z
     claimed_at: '2026-07-19T12:17:44Z'

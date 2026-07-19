@@ -3547,3 +3547,15 @@ records:
   outcome: done
   failure_category: null
   lesson: "check_pr_file_overlap.py mirrors check_pr_kaizen.py's convention (pure function over pre-fetched PR title/body/files, no network calls, always exits 0, silent on a clean PR) rather than inventing a new shape -- worth deliberately matching an existing advisory-check convention when adding a sibling check, since it keeps the Reviewer's invocation surface predictable. Filed conductor/t-070 to eventually consolidate the two into one pre-merge pass."
+- date: '2026-07-19'
+  project: conductor
+  task: t-068
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: A validator module that reuses another module's file-listing helper (event_files()) instead
+    of defining its own inherits that helper's module-global EVENT_DIR, not the caller's patched attribute
+    -- tests patching MODULE.EVENT_DIR silently no-op unless the helper is defined in (or duplicated into)
+    the same module it's called from.
