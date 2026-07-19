@@ -3604,3 +3604,12 @@ records:
   outcome: done
   failure_category: null
   lesson: "A prior session's own note (\"could not verify locally, needs a real preview-deploy connector\") is a precise handoff -- the Vercel MCP list_teams/list_projects/list_deployments/web_fetch_vercel_url chain in AGENTS.md answers it directly against the live production deployment without needing a new PR or any code change. Worth checking whether a 'ready' task is actually a pure-verification task before assuming every ready task implies a code diff."
+- date: '2026-07-19'
+  project: conductor
+  task: t-070
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "A branch push can 413 even with a tiny diff and no local history rewrite -- this session's push failed twice, once because the session branch simply didn't exist on the actual GitHub remote yet (local remote-tracking ref showed a stale SHA, but `git ls-remote` showed nothing), and again after a squash-merge when a follow-up single-field status flip needed to reach main. Both resolved via CLAUDE.md's documented workarounds (`create_branch` for the first, `git_plumbing.commit_file_on_ref` direct to `refs/heads/main` for the second) rather than attempting to hand-transcribe a ~130KB roadmap.yaml into `push_files`, which would have risked silently corrupting the shared roadmap for every other concurrent agent. When a file is too large to safely retype, prefer a git-plumbing helper that reads the exact bytes from disk over any path that requires the content to pass through generated text."
