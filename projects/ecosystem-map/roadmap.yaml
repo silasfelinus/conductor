@@ -110,7 +110,7 @@ tasks:
   - id: t-005
     milestone: m2
     title: "Audit shared layers for duplicate development"
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -119,9 +119,25 @@ tasks:
       narrator threads, pack/content permissions, task surfaces, roadmap milestones,
       ArtCollections, bot images, and project metadata. Produce a reuse map with
       specific recommendations for which layer owns each primitive.
+
+      DONE 2026-07-19 (burst-mode): wrote projects/ecosystem-map/REUSE-MAP.md, a static
+      audit of silasfelinus/kind_robots's schema/components against DESIGN-BRIEF.md's
+      ownership table. Two confirmed real findings: (1) 22 independently-implemented
+      `*-gallery.vue` components with no shared base — same grid/filter/variant pattern
+      hand-rolled per model (`ui-gallery.vue` is a same-named-but-unrelated style-guide
+      page, not a base component); (2) content sharing/visibility is still ~19 scattered
+      `isPublic` booleans with no Grant/ACL model, matching and independently
+      re-verifying projects/kind-robots/SHARING-SPEC.md's existing findings rather than
+      duplicating that design work. One confirmed gap (not duplication): roadmap
+      milestones never reach the kind_robots DB — scripts/sync_projects.py only syncs
+      the free-text `goal`, so no front-end surface can currently show per-milestone
+      progress. Everything else audited (bot images/ExpressionMedia, project↔bot
+      linkage, Todo vs roadmap task separation, ArtCollections) was confirmed
+      correctly single-owned, no action needed. This unblocks t-006 (all of its
+      t-003/t-004/t-005/t-007/t-008 dependencies are now done).
     claimed_by: claude-conductor-burst-20260719T1500Z
     claimed_at: '2026-07-19T15:07:12Z'
-    updated: '2026-07-19T15:07:12Z'
+    updated: '2026-07-19T15:20:00Z'
 
   - id: t-006
     milestone: m2
