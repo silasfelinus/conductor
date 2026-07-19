@@ -215,7 +215,7 @@ tasks:
   - id: t-011
     milestone: m2
     title: "Add LifeRun status-transition guard and an end-to-end play-loop API test"
-    status: review
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -232,7 +232,7 @@ tasks:
       the davinci-seed-verify CI job so the whole play loop gets coverage without
       dev-server auth (folds in the t-012 kaizen).
 
-      IN REVIEW 2026-07-19 (conductor-burst rotation, claude-conductor-burst-20260719-rotation-davinci):
+      DONE 2026-07-19 (conductor-burst rotation, claude-conductor-burst-20260719-rotation-davinci):
       resolveLifeRunEnding (server/utils/davinci.ts) now short-circuits on an already-COMPLETE
       run via a new resolveCompletedLifeRun helper -- reads the stored outcomeKey/ending/award
       ids back instead of recomputing stats and re-running the award transaction, so a repeat
@@ -242,12 +242,11 @@ tasks:
       wired into .github/workflows/davinci-seed-verify.yml as a new "Run play-loop regression
       suite" step so it runs nightly/on workflow_dispatch against the same scratch DB the seed
       importer already populates. eslint, prettier --check, and full-project vue-tsc --noEmit
-      (0 errors) all clean locally; the new CI step itself needs a live scratch MariaDB, not
-      available in this sandbox, so it's unverified until the PR's CI run completes. kind_robots
-      PR #516 (branch claude/keen-fermat-bn9vk5), based on current main (567fc7e6). TO APPROVE:
-      merge once CI (TypeScript, Contract verifiers, facet-alias-smoke, GitGuardian, and the new
-      Da Vinci Seed Verify play-loop step on its next scheduled/dispatched run) is green, then
-      flip to status: done.
+      (0 errors) all clean locally; the new CI step itself needs a live scratch MariaDB (not
+      available in this sandbox) so its first real run is the next nightly/dispatched Da Vinci
+      Seed Verify workflow -- flag t-011a if that run surfaces a failure. kind_robots PR #516
+      (branch claude/keen-fermat-bn9vk5): TypeScript, Contract verifiers, facet-alias-smoke, and
+      GitGuardian all green; merged squash 9e2579b8.
 
   - id: t-012
     milestone: m2
