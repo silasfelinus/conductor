@@ -446,16 +446,17 @@ tasks:
   - id: t-010
     milestone: m6
     title: Academy continuous improvement pass
-    status: claimed
+    status: ready
     recurring: true
     passes: 0
     stakes: reversible
-    updated: '2026-07-19 07:16:22+00:00'
+    updated: '2026-07-19 07:25:00+00:00'
     note: |-
       2026-07-19 cycle (Silas-directed agent run): lane = curriculum-depth sync, per continuous-improvement-checklist.md's coverage table 'Next verifiable action' for Lesson seed entries. Synced american-regionalism (movement #24, added to curriculum-outline.md in a prior 2026-07-19 cycle) into stores/seeds/academyStyles.ts, mirroring the t-020/t-031/t-034 pattern (keyIdeas/recognitionCues/artists condensed from curriculum-outline.md $24; failureMode verbatim from teaching-notes.md row 24; remix.template verbatim remix_hint; inserted at sortYear 1928, chronologically after bauhaus). previewImageSrc and exampleWorks intentionally omitted -- no preview image has generated yet, and 3 of 4 example works lack an accessionId (required field), matching the existing ashcan-school/suprematism convention of deferring exampleWorks backfill. Verified via vue-tsc + eslint (clean) and the three academy contract checks (test:academy-style-detail-callers, test:academy-starter-manifest both pass; test:academy-examples-manifest has 3 PRE-EXISTING failures -- expressionism/cubism/bauhaus missing examples.manifest.json entries, confirmed identical on the pre-change commit via git stash, already tracked as t-033, not touched by this change). Merged kind_robots PR #506 (self-merged). Rearmed to ready per the recurring-task convention -- coverage table in continuous-improvement-checklist.md should be updated next cycle to reflect american-regionalism now synced (24/24).
 
       Claim recurring Academy continuous-improvement cycle for curriculum coverage synchronization.
-    owner: worker
+
+      Roadmap-accuracy lane complete. Added explicit recurring-lane handoff state to continuous-improvement-checklist.md; Worker PR CI and Security Audit passed; merged conductor PR
     claimed_by: claude-conductor-agentrun-20260719T0400Z
     claimed_at: '2026-07-19T06:15:23Z'
 
