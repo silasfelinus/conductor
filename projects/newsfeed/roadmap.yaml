@@ -503,11 +503,11 @@ tasks:
   - id: t-019
     milestone: m3
     title: "kind_robots: wire tutorial-channel coverage for the rest of the wonder dashboard's routes"
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
-    updated: '2026-07-19T13:40:00Z'
+    updated: '2026-07-19T15:14:27Z'
     note: >
       Kaizen from t-012 (kind_robots PR #541, merged): resolveTutorialChannelFromRoute
       (stores/helpers/tutorialCards.ts) had no coverage at all for /newsfeed until this
@@ -525,3 +525,5 @@ tasks:
       resolves one route per key) -- confirm whether a per-tab-key channel split is
       needed instead of one shared 'wonder' key covering many unrelated pages, and
       note the tradeoff either way before implementing.
+    claimed_by: claude-conductor-19jul-1510
+    claimed_at: '2026-07-19T15:14:27Z'
