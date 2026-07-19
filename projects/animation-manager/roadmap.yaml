@@ -169,14 +169,14 @@ tasks:
   - id: t-009
     milestone: m1
     title: "Add a novelty-collision check to the pitch pipeline"
-    status: review
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
-    note: 'scripts/check_animation_novelty.py added: Jaccard keyword-overlap check over technique+surprise text, --pitch to check one pitch against the rest, --strict for CI enforcement (default is advisory, matching the task''s not-an-auto-reject intent). Along the way found and fixed a real YAML syntax bug in PITCHES.yaml (tiny-weather-front''s surprise field had an unquoted colon breaking every parser, including this one) -- no script had ever loaded this file before. 13 new unit tests plus a guard test asserting the real PITCHES.yaml stays parseable with no high-overlap pairs.'
+    note: 'Merged: conductor PR #836. scripts/check_animation_novelty.py ships the Jaccard keyword-overlap novelty check (technique+surprise, --pitch/--threshold/--json/--strict), advisory by default per SPEC.md''s not-an-auto-reject intent. Also fixed a latent YAML syntax bug in PITCHES.yaml (unquoted colon in tiny-weather-front''s surprise field) that had made the file unparseable to any loader -- caught only because this task''s script was the first thing to ever read it. 13 new tests, full suite green (374 passed, 1 skipped).'
     claimed_by: claude-conductor-burst-20260719-rotation-animation-manager
     claimed_at: '2026-07-19T07:10:26Z'
-    updated: '2026-07-19T07:10:53Z'
+    updated: '2026-07-19T08:12:54Z'
 
   - id: t-010
     milestone: m3
