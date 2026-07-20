@@ -1,13 +1,13 @@
 # Roadmap Audit
 
-Generated: `2026-07-20T20:33:59.502979+00:00`
+Generated: `2026-07-20T21:09:50.821524+00:00`
 
 This is a conservative structural audit. It reports suspicious state; it does not automatically change task status or remove human gates.
 
 ## Portfolio snapshot
 
 - **40** roadmaps, **31** active projects, **636** tasks
-- **44 ready**, **44 waiting**, **35 needs-human**, **2 claimed/review**, **500 done**
+- **43 ready**, **44 waiting**, **35 needs-human**, **2 claimed/review**, **501 done**
 - Findings: **0 errors**, **11 warnings**, **46 informational**
 
 ## Project inventory
@@ -41,7 +41,7 @@ This is a conservative structural audit. It reports suspicious state; it does no
 | 25 | `coat-dance` | active | content | 1 | 0 | 0 | 1 | 0 / 10 |
 | 26 | `career-transition` | retired | content | 3 | 4 | 0 | 0 | 1 / 8 |
 | 27 | `alexa-integration` | active | software | 2 | 0 | 0 | 0 | 14 / 16 |
-| 28 | `conductor-app` | active | software | 4 | 0 | 1 | 0 | 9 / 14 |
+| 28 | `conductor-app` | active | software | 3 | 0 | 1 | 0 | 10 / 14 |
 | 29 | `appmaker` | active | software | 2 | 1 | 0 | 0 | 9 / 12 |
 | 30 | `media-watchlist` | active | software | 2 | 0 | 0 | 0 | 8 / 10 |
 | 31 | `sketchy` | active | software | 2 | 0 | 0 | 0 | 5 / 7 |
