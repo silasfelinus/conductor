@@ -40,3 +40,40 @@ shared the real log)
 **Pattern note:** the log's own declared counts (section headers, TYPE table) made excellent
 free validation targets — worth repeating on any future hand-log import: diff parsed totals
 against the human's own tallies and report drift instead of trusting either side blindly.
+
+## 2026-07-20 | Reviewer (agent run) | media-watchlist/t-008 | done (docs-only, conductor repo)
+
+**Decision:** implemented and self-merged (session claude-conductor-agent-20260720T1515Z).
+
+**Failure category:** none — clean first pass.
+
+**What was good:**
+- Claimed via `claim_task.py` against fresh `origin/main` before writing anything, per the
+  rotation-collision rule — no other session had touched t-008 today.
+- Rather than trusting SCHEMA-PROPOSAL.md's 2025/2026-sample-only proposal at face value,
+  reconciled it line-by-line against the actual `data/media-entries.json` (t-007's real
+  2440-entry import) and caught a real discrepancy: BROWSE-UX.md specced `rewatch` as a
+  `Boolean`, but the importer emits an `Int` (source `"x2"` marker parses to `rewatch: 2`,
+  total watch count). Only 1/2440 entries is populated, which is exactly the kind of thing
+  that's easy to miss without checking the actual data distribution — verified via a direct
+  `Counter` over the JSON rather than assuming the doc was still accurate.
+- Delegated research into kind_robots' actual Prisma/API house conventions (response wrapper
+  shape, Prisma singleton import path, enum validation pattern, groupBy-based stats routes) to
+  an Explore agent against live `silasfelinus/kind_robots` main via the GitHub MCP tools, then
+  used those concrete examples (`server/api/facets/index.get.ts`, `server/api/logs/index.get.ts`,
+  `server/api/art/queue/stats.get.ts`) to pattern-match the new route contracts instead of
+  inventing a shape that would need rework at implementation time.
+- Kept `line`/`raw` (import-provenance-only JSON fields) out of the Prisma model rather than
+  reflexively carrying every JSON key into columns — documented why (no durable meaning after
+  import; re-derivable from the source `.md` files if ever needed).
+- Specced an idempotency guard for the one-time seed rather than assuming `skipDuplicates`
+  alone was safe — there's no unique constraint to dedupe on, since two genuine same-day
+  re-watches without an explicit marker are valid distinct rows.
+- `python scripts/audit_roadmaps.py` — 0 errors before and after, same 11-warning/46-info
+  baseline.
+
+**What to improve:** none this cycle.
+
+**Kaizen task:** media-watchlist/t-009 — build the MediaEntry migration, the two GET routes,
+and wire the browse/stats UI to real data per t-008's spec. This is the actual next blocker
+for milestone m3.
