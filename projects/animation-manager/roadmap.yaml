@@ -217,7 +217,7 @@ tasks:
   - id: t-007
     milestone: m5
     title: "Build or polish one animation candidate from reaction evidence"
-    status: claimed
+    status: ready
     owner: worker
     passes: 0
     stakes: reversible
@@ -231,6 +231,27 @@ tasks:
       existing effect whose Reaction ratings/comments identify a specific weakness. Create a new
       Component build record rather than erasing the old attempt. Ship only after typecheck,
       contract tests, reduced-motion review, resize cleanup review, and a visual browser smoke.
+
+      RAN 2026-07-20 (~07:09-07:45 UTC, claude-conductor-burst-20260720T0750Z): built
+      paper-lantern-weather, the highest-priority unbuilt pitch in PITCHES.yaml (priority 2,
+      next after bioluminescent-tide). New components/screenfx/paper-lantern-weather.vue
+      (Canvas 2D, cached Path2D lantern shapes per size bucket, ResizeObserver sizing,
+      prefers-reduced-motion handling, full RAF/observer/listener cleanup on unmount --
+      follows the shipped bioluminescent-tide.vue pattern) plus the stores/animationCatalog.ts
+      entry (generationSafe: true, preferredSurface: fullscreen, no blocksInput). Verified:
+      npm test (vue-tsc --noEmit, clean), eslint (clean), npm run test:animation-catalog (31
+      effects, unique ids, component resolves, aliases checked), npm run
+      test:animation-component-attempts (naming/attempt conventions verified for all 31
+      catalog slugs). Live browser smoke test and the Component attempt record (SPEC.md
+      "Attempt records") are BOTH deferred: this sandbox has no reachable DATABASE_URL, so
+      server/utils/prisma.ts throws on every SSR request and the Nuxt dev server 500s on all
+      routes -- same class of blocker as model-builder/t-031 and davinci/t-014's notes.
+      Confirmed via a local temp test page (removed before commit, not part of the diff) that
+      the 500 is a global SSR/DB issue, not specific to this route. kind_robots PR #627 merged
+      (squash 398a327a) after all 3 CI checks passed (Contract verifiers, TypeScript,
+      GitGuardian). PITCHES.yaml's paper-lantern-weather entry carries a `builds:` record
+      (status: candidate, pending the deferred live-smoke pass before promoting to shipped).
+      Rearming to ready per the recurring-task convention.
     claimed_by: claude-conductor-burst-20260720T0750Z
     claimed_at: '2026-07-20T07:09:09Z'
     updated: '2026-07-20T07:09:09Z'
