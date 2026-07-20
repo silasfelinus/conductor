@@ -68,11 +68,11 @@ tasks:
   - id: t-002
     milestone: m1
     title: "Design the Wishmaster bot interface (wish -> costed plan -> assembled output)"
-    status: ready
-    owner: null
+    status: claimed
+    owner: reviewer
     passes: 0
     stakes: reversible
-    updated: "2026-07-04T22:00:00Z"
+    updated: '2026-07-20T17:05:57Z'
     note: >
       Design doc for the Wishmaster flow using the approved scope (see scope.md
       Decisions section): user speaks a wish -> bot parses intent and assembles an
@@ -85,6 +85,8 @@ tasks:
       with kind_robots PR #87 + Silas's manual migration. Deliverable:
       projects/wishmaster/INTERFACE-DESIGN.md covering intent parsing, plan assembly,
       cost estimation, the consent screen, pipeline execution, and the two output sizes.
+    claimed_by: claude-burst-rotation-20260720T1740Z
+    claimed_at: '2026-07-20T17:05:57Z'
   - id: t-003
     milestone: m2
     title: "Polish and upgrade Wishmaster front-end surface"
