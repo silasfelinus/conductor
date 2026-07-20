@@ -564,6 +564,36 @@ tasks:
       `clearQueue()`, which resets it back to `''`). Updated
       continuous-improvement-checklist.md's rotation state; next preferred lane is roadmap
       accuracy (lane 2). Rearmed to `ready` per the recurring-task convention.
+      RAN 2026-07-20 (~08:06-08:35 UTC, claude-conductor-burst-20260720T080634Z): option (b)
+      roadmap accuracy, per the checklist's rotation rule (previous cycle ran lane 1,
+      front-end polish, so lane 2 was next preferred). Ran
+      `python scripts/check_pr_merged_drift.py` (clean, 0 claimed/review PR references
+      found) and `python scripts/audit_roadmaps.py` (0 errors/warnings for this project;
+      2 pre-existing info-level `APPROVAL_WITHOUT_GATE` findings on t-002/t-011, not
+      defects). Found a real staleness bug while re-reading t-033's blocker chain: the
+      cross-repo handoff doc `docs/t-013-remaining-example-works.md` (written 2026-07-17)
+      still listed `examples.manifest.json` and its 3 example-work images as files to
+      commit directly into the `kind_robots` git repo, but the 2026-07-19 discovery already
+      on record in this checklist's "Example works" row established that the manifest
+      actually lives on `media.acrocatranch.com`, not in git -- the handoff doc predated
+      that finding and was never corrected, so a future session with home-relay access
+      could easily follow its stale file list and commit to paths the contract verifier
+      (`verifyAcademyExamplesManifest.ts`) never reads. Confirmed via `kind_robots` source
+      (`utils/scripts/mediaContractSource.ts`: the manifest is fetched through
+      `readMediaText()`/`mediaSourceDescription()` against `MEDIA_ROOT` or
+      `https://media.acrocatranch.com`, never the git tree) and a live check
+      (`get_file_contents` on `public/images/academy/examples/` 404s -- the directory does
+      not exist in the repo). Corrected the handoff doc in place: split "Files to change"
+      into an in-repo half (`academyStyles.ts` only) and a media-server half routed
+      through the home relay, and rewrote "Remaining action" into the two genuinely
+      independent steps. Added a short pointer addendum to t-033's note above so the
+      correction isn't only discoverable by opening the doc. Conductor-docs-only change,
+      no kind_robots PR (t-033/t-035 remain genuinely blocked on home-relay write access,
+      unchanged by this fix). Updated continuous-improvement-checklist.md's rotation
+      state; next preferred lane is inspiration/preview assets (lane 3), noting it was
+      last confirmed blocked 2026-07-20 ~04:10Z and this cycle's media-URL spot-check
+      (still 404) is not a fresh live-queue probe. Rearming to `ready` per the
+      recurring-task convention.
     owner: worker
     claimed_by: claude-conductor-burst-20260720080634Z
     claimed_at: '2026-07-20T08:06:34Z'
@@ -1006,6 +1036,17 @@ tasks:
       test:academy-examples-manifest` passes. That unblocks the "Contract verifiers" CI
       check for every kind_robots PR, not just Academy ones -- also referenced by
       kind-robots/t-038 (stale workflow file) as a co-blocker of the same check.
+      UPDATE 2026-07-20 (t-010 roadmap-accuracy cycle): corrected a stale assumption inside
+      the handoff doc itself -- it previously listed examples.manifest.json and the 3 images
+      as files to commit directly in the kind_robots git repo. Confirmed via kind_robots
+      source (utils/scripts/mediaContractSource.ts, verifyAcademyExamplesManifest.ts) and a
+      live check (get_file_contents on public/images/academy/examples/ 404s -- the directory
+      does not exist in git) that only stores/seeds/academyStyles.ts is an in-repo commit;
+      examples.manifest.json and the images are fetched from
+      https://media.acrocatranch.com/images/academy/examples/... at build/test time and must
+      go through the home relay, never a GitHub PR. Doc corrected in place (see its
+      2026-07-20 correction note); this task's actual blocker (home-relay write access) is
+      unchanged.
     claimed_by: claude-scheduled-20260718-1420-26944
     claimed_at: '2026-07-18T14:22:06Z'
     updated: '2026-07-18T14:24:39Z'
