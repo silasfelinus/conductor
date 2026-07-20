@@ -162,13 +162,30 @@ tasks:
 - id: t-006
   milestone: m1
   title: Create the appmaker kind_robots Project (slug parity)
-  status: claimed
+  status: done
   owner: worker
   passes: 0
   stakes: reversible
   note: 'Run scripts/sync_projects.py (or POST /api/projects) so kind_robots has a
     Project with conductorSlug "appmaker" matching this project, per the standing
     slug-parity rule in CONTROL.md (post Dream/Project/Facet split).
+
+
+    DONE 2026-07-20: ran `python scripts/sync_projects.py` live (this session has
+
+    working KR_API_TOKEN + kind_robots API egress) and it reported `appmaker:
+
+    UNCHANGED (id=24)` — `sync_project()` only prints UNCHANGED when
+
+    `find_project_by_slug` resolves the kind_robots Project via GET
+
+    /api/projects/appmaker AND every field in the computed payload, including
+
+    `conductorSlug: "appmaker"`, already matches the existing record exactly.
+
+    Slug parity was already satisfied (likely from an earlier bulk sync); this
+
+    task just formalizes that in the roadmap. No kind_robots change needed.
 
     '
   claimed_by: claude-conductor-scheduled-20260720T0524Z
