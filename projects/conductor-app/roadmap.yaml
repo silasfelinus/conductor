@@ -195,8 +195,8 @@ tasks:
 - id: t-013
   milestone: m1
   title: Polish and upgrade Conductor App front-end surface
-  status: review
-  owner: reviewer
+  status: ready
+  owner: null
   passes: 0
   stakes: reversible
   note: 'UI polish + upgrade for the conductor-app front end now that the scaffold page is live at
@@ -208,7 +208,21 @@ tasks:
     to backfill channelKey/tabKey/liveUrl); (4) evolve the placeholder scaffold page into the full
     interactive experience for this project.
 
+    PROGRESS 2026-07-20 (conductor agent session claude-conductor-agent-20260720T-run2,
+    kind_robots PR #647 merged squash bb093c2): step (2) done -- added a ''conductor-app''
+    section under tutorialChannels.conductor.sections in stores/helpers/tutorialCards.ts,
+    resolving via tutorialImage(''conductor'', ''conductor-app'') with a placeholder fallback
+    until dedicated art lands. Step (4) advanced: the scaffold (ProjectFrontPage + fallback
+    config) already existed but had no #interactive slot; added one showing live done/total
+    task counts and the next ready tasks for this project, sourced from
+    conductorStore.projects, mirroring appmaker-page.vue''s use of the same store and the
+    #interactive pattern storymaker/serendipity/davinci already use. Remaining and kept
+    ready: step (1) dashboard-tab + tutorial art (art-generation relay confirmed still slow
+    to drain this session -- see art-generator-connect/t-019 and t-022) and step (3) the
+    liveUrl/channelKey/tabKey backfill (needs an admin Placements click, not independently
+    verifiable from this session). Verified before merge: eslint clean, prettier clean,
+    full-project npm run test (vue-tsc --noEmit) exit 0. All 3 kind_robots PR checks green
+    (TypeScript, Contract verifiers, GitGuardian).
+
     '
-  updated: '2026-07-20T12:35:03Z'
-  claimed_by: claude-conductor-agent-20260720T-run2
-  claimed_at: '2026-07-20T12:33:48Z'
+  updated: '2026-07-20T12:38:08Z'

@@ -74,3 +74,36 @@ security-flag entry above). The kaizen task targets that recurring gap directly.
 directly by Silas outside the normal Worker→PR→Reviewer flow, remember to flip the
 roadmap task status in the same session so it doesn't sit stale.
 
+
+## 2026-07-20 | Reviewer (conductor agent run) | conductor-app/t-013 | review (partial, kept ready)
+
+**Decision:** implemented steps (2) and (4), self-merged (kind_robots PR #647, squash `bb093c2`).
+
+**Failure category:** none — clean first pass.
+
+**What was good:**
+- Checked the actual rendered state before trusting the task note: the note said
+  "the scaffold page is live at /conductor-app," but the scaffold
+  (`components/conductor/conductor-app-page.vue`) had never been given an
+  `#interactive` slot, unlike storymaker/serendipity/davinci which already added
+  one this same day. Confirmed by reading the file rather than assuming from the
+  note text.
+- Reused `conductorStore.projects` (the same store `appmaker-page.vue` already
+  reads) instead of adding a new fetch path, so the "build progress" panel shows
+  this project's own real done/total task counts and next-ready-task titles with
+  zero new backend code.
+- Added the missing `conductor-app` tutorial section under
+  `tutorialChannels.conductor.sections` (which already had `conductor`, `portos`,
+  `appmaker` but not this project) using the same `tutorialImage()` helper and
+  placeholder-fallback convention as its siblings.
+- Verified before merge: eslint clean, prettier clean, full-project
+  `npm run test` (`vue-tsc --noEmit`) exit 0. All 3 kind_robots PR checks green.
+- Left steps (1) (dashboard-tab/tutorial art) and (3) (liveUrl backfill) alone
+  rather than attempt a workaround — both are genuinely blocked (art relay,
+  admin-only action), matching the pattern already established today across
+  davinci/t-014, alexa-integration/t-015, and serendipity/t-012.
+
+**What to improve:** none this cycle.
+
+**Kaizen task:** none this cycle — remaining steps (1)/(3) are already fully
+scoped in the task's own note; no new follow-on surfaced.
