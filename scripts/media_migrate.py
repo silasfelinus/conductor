@@ -226,23 +226,27 @@ def main() -> int:
 
     stats = apply_moves(moves, root, args.apply)
 
-    # regenerate manifests for every folder that gained files, plus the index.
-    # For a folder move the new path IS the folder; for a file move it's the file,
-    # so regen its parent.
-    print("Regenerating gallery.json / collections.json ...")
-    regen_targets = set()
-    for m in moves:
-        if not m.get("new"):
-            continue
-        d = root / rel(m["new"])
-        regen_targets.add(d if (m.get("kind") == "folder" or d.is_dir()) else d.parent)
-    for d in sorted(regen_targets):
-        regen_gallery(d, args.apply)
-    idx = regen_collections(root, args.apply)
-    print(f"  collections.json: {len(idx)} folder(s){'' if args.apply else ' [dry]'}")
+    # Regenerate manifests only on --apply. The dry-run skips this: walking the
+    # whole 2000+ file tree to preview collections.json is slow over a network
+    # mount and changes nothing. For a folder move the new path IS the folder;
+    # for a file move it's the file, so regen its parent.
+    if args.apply:
+        print("Regenerating gallery.json / collections.json ...")
+        regen_targets = set()
+        for m in moves:
+            if not m.get("new"):
+                continue
+            d = root / rel(m["new"])
+            regen_targets.add(d if (m.get("kind") == "folder" or d.is_dir()) else d.parent)
+        for d in sorted(regen_targets):
+            regen_gallery(d, True)
+        idx = regen_collections(root, True)
+        print(f"  collections.json: {len(idx)} folder(s)")
+
     print(f"\n{stats}")
     if not args.apply:
-        print("Dry-run only. Re-run with --apply to move the files.")
+        print("Dry-run only (manifest + collections.json regen skipped). "
+              "Re-run with --apply to move the files.")
     return 0
 
 
