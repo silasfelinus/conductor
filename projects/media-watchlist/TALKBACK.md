@@ -77,3 +77,29 @@ against the human's own tallies and report drift instead of trusting either side
 **Kaizen task:** media-watchlist/t-009 — build the MediaEntry migration, the two GET routes,
 and wire the browse/stats UI to real data per t-008's spec. This is the actual next blocker
 for milestone m3.
+
+## 2026-07-20 | Reviewer (conductor agent-run session) | media-watchlist/t-009 | pattern
+
+**Decision:** merged — kind_robots PR #696 (squash 9d77ea2f).
+
+**What was good:**
+- t-008's spec doc (final schema + route contracts) made t-009 a clean, self-contained
+  implementation pass with no open design questions — every field, route param, and edge
+  case (the `rewatch Int?` correction, no `User` relation) was already resolved before
+  writing any code.
+- Followed existing house conventions closely (facets/logs route shape, art/queue/stats
+  groupBy pattern, Todo model's nullable-userId-no-relation precedent) rather than
+  inventing new patterns, and verified against 7 existing contract scripts locally in
+  addition to vue-tsc/eslint/prettier.
+
+**What to improve:**
+- The "minimal browse UI" scope call (deferring Entry Detail, Review Editor, and CSV
+  export) is reasonable for a first pass but means BROWSE-UX.md's private-review-editor
+  promise — the actual differentiator over just browsing a spreadsheet — still doesn't
+  exist. Filed as t-010 rather than left implicit.
+- MySQL/MariaDB's lack of a `nulls: 'last'` Prisma option for the `date_asc` sort mode was
+  discovered and documented rather than worked around with raw SQL; worth a second look if
+  the ASC sort ever becomes a commonly-used path in practice, not just the default.
+
+**Kaizen task:** media-watchlist/t-010 — Entry detail view + private review editor
+(BROWSE-UX.md sections 3/5), the two write routes it needs, admin-gated.

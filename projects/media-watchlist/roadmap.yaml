@@ -215,7 +215,7 @@ tasks:
 - id: t-009
   milestone: m3
   title: Build the MediaEntry Prisma migration, GET /api/media-entries browse + stats routes, and a minimal browse UI from t-008's spec
-  status: claimed
+  status: done
   owner: reviewer
   passes: 0
   stakes: reversible
@@ -232,6 +232,59 @@ tasks:
     (BROWSE-UX.md) to the real API instead of the static fallback stats t-006
     added. Verify with vue-tsc/eslint at minimum; live DB verification may need
     the Vercel MCP preview-deployment path per AGENTS.md''s cross-repo section
-    if local DATABASE_URL is unreachable.'
+    if local DATABASE_URL is unreachable.
+
+    DONE 2026-07-20T20:32Z (conductor agent-run session, claude-conductor-agentrun-20260720T2015Z):
+    kind_robots PR #696 merged (squash 9d77ea2f). Added the MediaType enum (12
+    values) + MediaEntry model to prisma/schema.prisma with an additive-only
+    migration (one new table, no changes to existing tables/columns); no
+    User relation, matching the existing Todo model''s userId Int? @default(1)
+    precedent. Implemented GET /api/media-entries (year/mediaType/starred/
+    month/season/search/sort/take/skip, admin-gated) and GET
+    /api/media-entries/stats (counts by type/month, starred + top 5, audiobook
+    hours, pages read, comic issues, TV seasons), both patterned on
+    facets/logs/art-queue-stats routes. Wrote scripts/seed_media_entries.ts
+    (idempotency-guarded one-time backfill of the 2440-entry corpus, dry-run
+    by default). Built components/watchlist/watchlist-browse.vue (search,
+    type/starred filters, sort, pagination, live stats strip) wired into
+    watchlist-page.vue''s existing #interactive slot, replacing the static
+    fallback stats t-006 added. Verified: npx prisma validate + generate
+    clean; full-project vue-tsc --noEmit 0 errors; eslint 0 errors; prettier
+    clean; seed script dry-run validated all 2440 entries against the new
+    enum; ran 7 relevant existing contract scripts locally (channel-content,
+    conductor-api-auth-guards, no-prisma-json-cast,
+    no-unquoted-reserved-word-tables, existing-owner-id-nullability,
+    ownership-nullability, data-surface-manifest), all pass. No live
+    DATABASE_URL in this sandbox, so the migration/seed/routes were
+    typechecked and dry-run validated but not exercised against a real
+    database -- flagged in the PR for a future live-DB smoke pass. Known
+    limitation documented in the route: MySQL/MariaDB has no `nulls: last`
+    Prisma option (Postgres/CockroachDB/SQL Server only), so sort=date_asc
+    puts unwatched-date entries first rather than last (date_desc, the
+    default, is unaffected). Entry detail view, private review editor, and
+    CSV export (BROWSE-UX.md sections 3/5) are out of scope for this minimal
+    pass -- filed as this task''s kaizen suggestion below.'
   claimed_by: claude-conductor-agentrun-20260720T2015Z
   claimed_at: '2026-07-20T20:18:00Z'
+  pr: https://github.com/silasfelinus/kind_robots/pull/696
+
+- id: t-010
+  milestone: m3
+  title: Entry detail view + private review editor (BROWSE-UX.md sections 3/5)
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  note: >
+    Kaizen from t-009 (kind_robots PR #696, 2026-07-20). The minimal browse
+    UI (components/watchlist/watchlist-browse.vue) lists entries but has no
+    detail view -- clicking an entry does nothing yet. The MediaEntry model
+    already has review/reviewPublic/rating/externalId/externalUrl columns
+    (t-008's spec) with no write path. Build the Entry Detail panel
+    (BROWSE-UX.md section 3: title/type/year/starred header, a private
+    markdown review editor with auto-save draft + explicit Publish action
+    that only sets reviewPublic -- no external push per the MVP rule) and
+    the two write routes it needs (e.g. PATCH /api/media-entries/:id for
+    review/rating/starred edits). Admin-gated, same as the browse/stats
+    routes. The Stats view's CSV export button (BROWSE-UX.md section 4) is a
+    separate, smaller follow-on -- not part of this task's scope.
