@@ -446,7 +446,7 @@ tasks:
   - id: t-010
     milestone: m6
     title: Academy continuous improvement pass
-    status: claimed
+    status: review
     recurring: true
     passes: 0
     stakes: reversible
@@ -537,10 +537,35 @@ tasks:
       seed file. Updated continuous-improvement-checklist.md's rotation state; next
       preferred lane is front-end polish (lane 1). Rearming to `ready` per the
       recurring-task convention.
+      RAN 2026-07-20 (~06:06-06:20 UTC, claude-conductor-burst-20260720T060611Z): option (a)
+      front-end polish, per the checklist's rotation rule (previous cycle ran lane 4,
+      curriculum depth, so lane 1 was next preferred). Dispatched an Explore subagent over
+      all 7 in-scope files (academy-manager.vue, academy-timeline.vue,
+      academy-styles-browser.vue, academy-style-detail.vue, academy-remix.vue,
+      art-styler.vue, image-upload.vue) with an explicit exclusion list of every
+      previously-fixed bug class (focus restoration, aria-* wiring, showRemixButton no-op,
+      Set-based file-identity keying, silent drag-and-drop rejection). Found a real,
+      verifiable bug: `image-upload.vue`'s `handleBatchUpload()` left `queuedFiles`
+      completely untouched after a partial failure, so clicking "Upload N images" again to
+      retry the failed files re-submitted the *entire* original batch, including files
+      that already succeeded — `uploadStore.uploadSingleFile` always creates a new
+      `ArtImage` row (not an idempotent upsert), so a retry after a partial failure created
+      duplicate `ArtImage` rows and duplicate collection/model attachments for the
+      already-succeeded files. Fixed by splicing succeeded files out of `queuedFiles`
+      (revoking their object URLs, matching the pattern already used in
+      `clearQueue`/`removeFile`) as soon as the batch result comes back, so only the
+      genuinely-failed files remain queued for retry. Verified: `npx eslint`/`npx prettier
+      --check` on the changed file both clean; `npm run test` (`vue-tsc --noEmit`) exit 0.
+      kind_robots PR #622 (branch claude/keen-fermat-be7jf0) — merging once CI is green.
+      Filed a kaizen follow-up in the PR body (unrelated pre-existing bug: the
+      clean-batch-success path sets a success `message.value` then immediately calls
+      `clearQueue()`, which resets it back to `''`). Updated
+      continuous-improvement-checklist.md's rotation state; next preferred lane is roadmap
+      accuracy (lane 2). Rearming to `ready` per the recurring-task convention once the PR
+      merges.
     owner: worker
     claimed_by: claude-conductor-burst-20260720T060611Z
-    claimed_at: '2026-07-20T06:06:12Z'
-    owner: worker
+    claimed_at: '2026-07-20T06:06:11Z'
 
   - id: t-015
     milestone: m4

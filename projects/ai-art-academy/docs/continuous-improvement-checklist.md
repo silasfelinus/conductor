@@ -15,7 +15,16 @@ Record the lane, files changed, and verification in the task note before rearmin
 
 ### Rotation state
 
-- Last completed lane: Curriculum depth (lane 4, follow-up), 2026-07-20 (~04:10-04:40 UTC).
+- Last completed lane: Front-end polish (lane 1), 2026-07-20 (~06:06-06:20 UTC). Dispatched
+  an Explore subagent over all 7 in-scope files with an explicit exclusion list of every
+  previously-fixed bug class. Found a real, verifiable bug: `image-upload.vue`'s
+  `handleBatchUpload()` left `queuedFiles` untouched after a partial failure, so retrying
+  re-uploaded the entire original batch — including already-succeeded files — creating
+  duplicate `ArtImage` rows and duplicate collection/model attachments. Fixed by splicing
+  succeeded files out of the queue (revoking their object URLs) as soon as the batch
+  result comes back, so a retry only resends the files that actually failed. kind_robots
+  PR #622 (branch `claude/keen-fermat-be7jf0`), merging once CI is green.
+- Previously: Curriculum depth (lane 4, follow-up), 2026-07-20 (~04:10-04:40 UTC).
   Lane 3 (inspiration/preview assets) was next preferred, tried first, and reconfirmed
   blocked: a fresh `--live` queue attempt (job 855) sat PENDING/unclaimed after 10+ minutes,
   same signature as every prior check — home relay still down. Fell back to lane 4, but the
@@ -65,11 +74,11 @@ Record the lane, files changed, and verification in the task note before rearmin
   PRs — conductor-docs-only change this cycle, no kind_robots PR.
 - Previously: Roadmap accuracy (lane 2), 2026-07-19 (~22:00-22:20 UTC). Milestone audit came back clean (no drift). Fixed a real tooling bug found while auditing: `scripts/check_pr_merged_drift.py` treated failed GitHub API lookups (this session type only has GitHub MCP tools, not direct REST/token access — every lookup 403'd) identically to confirmed-open PRs, so a 100%-failed run silently reported "No drift found" with exit 0, indistinguishable from a genuine clean audit. `check()`/`render()` now surface unresolved lookups explicitly and `main()` exits 2 (not 0) when anything couldn't be verified. Tests updated/added in `tests/test_check_pr_merged_drift.py`; full suite green (427 passed, 1 pre-existing skip). Conductor-only change, no kind_robots PR.
 - Before that: Front-end polish (lane 1), 2026-07-19 (~19:04-19:15 UTC). Fixed `image-upload.vue`'s `addFiles()` silently dropping non-PNG/JPEG/WebP files (drag-and-drop bypasses the input's `accept` attribute) with zero user-visible feedback — now sets `error.value` to a skip-count message. kind_robots PR #547, merged 2026-07-19T19:14Z.
-- Next preferred lane: Front-end polish (lane 1) — this cycle used lane 4 (as a fallback from
-  blocked lane 3). Lane 3 remains blocked on home-relay reachability; do not re-probe it with
-  a fresh live queue attempt until relay/DB state is confirmed to have changed (see
-  `EGRESS-BLOCKERS.md` convention) — checking `GET /api/art/queue/855` on the still-pending
-  job first is cheaper than queuing a new one.
+- Next preferred lane: Roadmap accuracy (lane 2) — this cycle completed lane 1. Lane 3
+  remains blocked on home-relay reachability; do not re-probe it with a fresh live queue
+  attempt until relay/DB state is confirmed to have changed (see `EGRESS-BLOCKERS.md`
+  convention) — checking `GET /api/art/queue/855` on the still-pending job first is
+  cheaper than queuing a new one.
 - Override the preferred lane only when it is blocked or a higher-severity reversible issue is newly verified; record that reason in the task note.
 
 This explicit state is the handoff between recurring cycles. Update it in the same PR as each `t-010` improvement so the next Worker does not infer rotation from a long roadmap note.
