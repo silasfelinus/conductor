@@ -3712,3 +3712,12 @@ records:
   outcome: done
   failure_category: null
   lesson: "Before writing new implementation tasks off a stale audit doc, re-verify the audit's claims live against the target repo -- FRONTEND-SURFACE-MAP.md's 2026-07-10 snapshot of 15 missing/incomplete surfaces was 10 days out of date; checking kind_robots main's dashboardHelper.ts and content/*.md directly showed all 15 already had scaffold routes, and each project's own roadmap.yaml already carried the matching 'Polish and upgrade <Project> front-end surface' follow-up task (5 done, 10 ready). Filing new tasks from the doc's text alone would have created 15 duplicate entries forking the same work into two roadmap locations. Also: closing a project's last open task can flip it into ACTIVE_PROJECT_ALL_DONE/ACTIVE_PROJECT_NO_OPEN_TASKS in audit_roadmaps.py -- left project-overrides.yaml's status untouched since flipping active->finished/paused looks like a Silas-approval decision per that file's existing precedent comments, matching how humboldt-scoop already sits in the identical state unremediated."
+- date: '2026-07-20'
+  project: appmaker
+  task: t-006
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "Before implementing a 'create the kind_robots Project for slug parity' task, run scripts/sync_projects.py live first -- it's idempotent and prints UNCHANGED (with a real field-by-field comparison, not just a slug match) when parity is already satisfied, which was the case here (id=24 already had conductorSlug=appmaker). Confirmed this session also has genuine KR_API_TOKEN + kind_robots API egress, unlike ai-art-academy's documented relay/museum-egress blocks -- worth checking live rather than assuming blocked."
