@@ -1,14 +1,14 @@
 # Roadmap Audit
 
-Generated: `2026-07-20T05:12:55.687865+00:00`
+Generated: `2026-07-20T06:17:46.080416+00:00`
 
 This is a conservative structural audit. It reports suspicious state; it does not automatically change task status or remove human gates.
 
 ## Portfolio snapshot
 
 - **40** roadmaps, **31** active projects, **629** tasks
-- **50 ready**, **45 waiting**, **34 needs-human**, **2 claimed/review**, **487 done**
-- Findings: **0 errors**, **7 warnings**, **46 informational**
+- **48 ready**, **45 waiting**, **34 needs-human**, **1 claimed/review**, **490 done**
+- Findings: **0 errors**, **9 warnings**, **46 informational**
 
 ## Project inventory
 
@@ -31,10 +31,10 @@ This is a conservative structural audit. It reports suspicious state; it does no
 | 15 | `model-builder` | active | software | 3 | 0 | 0 | 0 | 28 / 31 |
 | 16 | `animation-manager` | active | software | 2 | 0 | 0 | 0 | 10 / 12 |
 | 17 | `animation-studio` | retired | software | 3 | 4 | 0 | 0 | 1 / 8 |
-| 18 | `ecosystem-map` | active | software | 0 | 0 | 0 | 1 | 7 / 8 |
+| 18 | `ecosystem-map` | active | software | 0 | 0 | 0 | 0 | 8 / 8 |
 | 19 | `conductor` | active | software | 0 | 0 | 5 | 1 | 67 / 73 |
 | 20 | `serendipity` | active | software | 1 | 0 | 0 | 0 | 11 / 12 |
-| 21 | `storymaker` | active | software | 2 | 0 | 0 | 0 | 8 / 10 |
+| 21 | `storymaker` | active | software | 1 | 0 | 0 | 0 | 9 / 10 |
 | 22 | `davinci` | active | software | 1 | 0 | 0 | 0 | 13 / 14 |
 | 23 | `art-generator-connect` | active | software | 1 | 0 | 0 | 0 | 20 / 21 |
 | 24 | `mural-design` | active | content | 1 | 3 | 1 | 0 | 2 / 7 |
@@ -42,7 +42,7 @@ This is a conservative structural audit. It reports suspicious state; it does no
 | 26 | `career-transition` | retired | content | 3 | 4 | 0 | 0 | 1 / 8 |
 | 27 | `alexa-integration` | active | software | 2 | 0 | 0 | 0 | 14 / 16 |
 | 28 | `conductor-app` | active | software | 5 | 0 | 0 | 0 | 8 / 13 |
-| 29 | `appmaker` | active | software | 4 | 2 | 0 | 0 | 6 / 12 |
+| 29 | `appmaker` | active | software | 3 | 2 | 0 | 0 | 7 / 12 |
 | 30 | `media-watchlist` | active | software | 1 | 0 | 0 | 0 | 6 / 7 |
 | 31 | `sketchy` | active | software | 3 | 0 | 0 | 0 | 4 / 7 |
 | 32 | `pinball-hero` | retired | content | 2 | 2 | 0 | 0 | 2 / 6 |
@@ -61,10 +61,12 @@ This is a conservative structural audit. It reports suspicious state; it does no
 
 _None._
 
-### Warning (7)
+### Warning (9)
 
 - **SOFT_NEEDS_HUMAN** — `conductor` / `t-034`: needs-human has no obvious hard-gate marker; consider returning it to ready, setting soft_gate: true, or documenting the actual gate.
 - **SOFT_NEEDS_HUMAN** — `conductor` / `t-073`: needs-human has no obvious hard-gate marker; consider returning it to ready, setting soft_gate: true, or documenting the actual gate.
+- **ACTIVE_PROJECT_ALL_DONE** — `ecosystem-map`: All tasks are done but project override remains active.
+- **ACTIVE_PROJECT_NO_OPEN_TASKS** — `ecosystem-map`: Active project has no open tasks; mark finished/paused or add an intentional recurring task.
 - **ACTIVE_PROJECT_ALL_DONE** — `humboldt-scoop`: All tasks are done but project override remains active.
 - **ACTIVE_PROJECT_NO_OPEN_TASKS** — `humboldt-scoop`: Active project has no open tasks; mark finished/paused or add an intentional recurring task.
 - **SOFT_NEEDS_HUMAN** — `kind-robots` / `t-037`: needs-human has no obvious hard-gate marker; consider returning it to ready, setting soft_gate: true, or documenting the actual gate.

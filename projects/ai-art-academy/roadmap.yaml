@@ -446,7 +446,7 @@ tasks:
   - id: t-010
     milestone: m6
     title: Academy continuous improvement pass
-    status: review
+    status: ready
     recurring: true
     passes: 0
     stakes: reversible
@@ -556,13 +556,14 @@ tasks:
       `clearQueue`/`removeFile`) as soon as the batch result comes back, so only the
       genuinely-failed files remain queued for retry. Verified: `npx eslint`/`npx prettier
       --check` on the changed file both clean; `npm run test` (`vue-tsc --noEmit`) exit 0.
-      kind_robots PR #622 (branch claude/keen-fermat-be7jf0) — merging once CI is green.
+      kind_robots PR #622 (branch claude/keen-fermat-be7jf0): all 3 CI checks green
+      (TypeScript, Contract verifiers, GitGuardian), no review comments — merged squash
+      `20ea16fd`.
       Filed a kaizen follow-up in the PR body (unrelated pre-existing bug: the
       clean-batch-success path sets a success `message.value` then immediately calls
       `clearQueue()`, which resets it back to `''`). Updated
       continuous-improvement-checklist.md's rotation state; next preferred lane is roadmap
-      accuracy (lane 2). Rearming to `ready` per the recurring-task convention once the PR
-      merges.
+      accuracy (lane 2). Rearmed to `ready` per the recurring-task convention.
     owner: worker
     claimed_by: claude-conductor-burst-20260720T060611Z
     claimed_at: '2026-07-20T06:06:11Z'
