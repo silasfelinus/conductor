@@ -7780,3 +7780,31 @@ slice" section) is real but deliberately left unfiled per the note above.
 minimal browse API from the already-written SCHEMA-PROPOSAL.md/BROWSE-UX.md,
 now that the real corpus is validated. This is the actual next blocker for
 milestone m3 (Browse, filter, and stats UI).
+
+## 2026-07-20 | Reviewer (agent run) | CI Janitor todo #501 | Kind Robots Cypress Tests
+
+**Decision:** completed as resolved — root cause fixed, no recurrence confirmed.
+
+**Detail:**
+- Todo #501 flagged kind_robots run 29750462974 (Cypress Tests, `cancelled`, pushed 14:24:00Z).
+- Investigated timing: kind_robots PR #648 (merged 15:12:19Z) had already changed
+  `.github/workflows/cypress.yml`'s trigger from `on: push` (with
+  `cancel-in-progress: true`) to `on: schedule` (every 30 min) + `workflow_dispatch`,
+  specifically to stop main's high push frequency from cancelling every run before it
+  could finish. Run 29750462974 fired at 14:24Z, *before* that fix landed at 15:12Z —
+  it's the tail end of the already-fixed behavior, not a new instance.
+- Confirmed no push-triggered Cypress run has fired since 14:24Z (checked the 15 most
+  recent runs) — the trigger-removal fix is holding.
+- No scheduled run had completed yet by 16:16Z (over an hour after the fix), so rather
+  than assume it works, triggered a manual `workflow_dispatch` run (29758905038) to get
+  a real, uncancelled pass/fail signal. All gate steps (deploy-wait, DB-readiness soak,
+  stale-user cleanup) passed quickly and cleanly; the "Run Cypress tests" step itself was
+  still executing past the 25-minute mark when this session ended — not failed, just a
+  long-running full E2E suite with no sign of hanging (every prior step succeeded
+  normally). Completed the todo on the strength of the root-cause fix (confirmed, with
+  2.5+ hours of clean history) rather than blocking session end on this one suite run.
+
+**Suggested action:** if a future session finds this same class of todo recurring, or
+finds run 29758905038 (or the next scheduled run) actually failed rather than just
+being slow, treat it as a fresh, real incident — the concurrency/cancellation cause is
+closed, but full-suite green was not independently confirmed by this session.
