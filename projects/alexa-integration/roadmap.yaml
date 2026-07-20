@@ -281,9 +281,9 @@ tasks:
 - id: t-015
   milestone: m4
   title: Polish and upgrade Voice Lab front-end surface
-  status: claimed
-  owner: reviewer
-  updated: '2026-07-20T11:13:31Z'
+  status: ready
+  owner: null
+  updated: '2026-07-20T11:30:00Z'
   passes: 0
   stakes: reversible
   note: 'UI polish + upgrade for the alexa-integration front end now that the scaffold page is live at
@@ -292,9 +292,21 @@ tasks:
     ''voice-lab'' under tutorialChannels.wonder.sections in kind_robots/stores/helpers/tutorialCards.ts;
     (3) verify the PROJECT Dream liveUrl points at /voice-lab (admin can run the Conductor ''Placements''
     button to backfill channelKey/tabKey/liveUrl); (4) evolve the placeholder scaffold page into the full
-    interactive experience for this project.'
-  claimed_by: claude-burst-rotation-20260720-voicelab
-  claimed_at: '2026-07-20T11:13:31Z'
+    interactive experience for this project.
+
+    PROGRESS 2026-07-20 (conductor burst-rotation session, kind_robots PR #643 merged squash fd3d3b3):
+    step (2) confirmed already done in a prior cycle -- tutorialChannels.wonder.sections already carries
+    a ''voice-lab'' entry in stores/helpers/tutorialCards.ts. Step (4) done this cycle: replaced the bare
+    ProjectFrontPage scaffold with a live #interactive slot (the same pattern storymaker-page.vue uses) --
+    a relay-status readout plus a "try it" console that sends a sample "Serendipity: ..." request through
+    the existing serendipityVoiceStore (the same client /serendipity-voice uses), and an adapter reference
+    table (chat/character/dream/art/music/project/control) mirroring serendipity-voice''s README status
+    table, plus a launch link to the full Serendipity Voice view. Remaining and kept ready: step (1) --
+    dashboard-tab + tutorial .webp art, art-generation relay still down this session (same finding as
+    several other projects'' cycles today); step (3) -- liveUrl/channelKey/tabKey backfill needs an admin
+    Placements click, not independently verifiable from this session. Verified before merge: eslint clean,
+    prettier clean, full-project npm run test (vue-tsc --noEmit) exit 0. All 3 kind_robots PR checks green
+    (TypeScript, Contract verifiers, GitGuardian).'
 - id: t-016
   milestone: m4
   title: Fix control-adapter theme-domain over-claiming any utterance containing the word "theme"
