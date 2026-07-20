@@ -48,6 +48,14 @@ ROOT = consumer.ROOT
 ART_PROMPTS_FILE = ROOT / "projects" / "art-prompts.yaml"
 KIND_ROBOTS_ROOT = ROOT.parent / "kind_robots"
 
+# Filler art (missing frontend images, ad-hoc, voice) does not need the 30-step
+# "hero" budget the project-art lane spends. These are throwaway web
+# illustrations behind a card/thumbnail, and the backlog only drains as fast as
+# each render finishes -- fewer steps means more images per run off the same
+# box. 20 steps on Flux-dev keeps the look while cutting ~a third of the render
+# time. Any request may still override with its own explicit `steps:`.
+FILLER_STEPS = 20
+
 REPO_ROOTS = {
     "silasfelinus/conductor": ROOT,
     "silasfelinus/kind_robots": KIND_ROBOTS_ROOT,
@@ -88,6 +96,19 @@ def already_satisfied(entry):
         return target_path(entry).exists()
     except OSError:
         return False
+
+
+def apply_default_steps(entries, steps):
+    """Give each entry a `steps` value unless it already set its own.
+
+    entry_to_job() reads `steps` off the entry, so this scopes the filler-tuned
+    step count to this lane (missing-image / ad-hoc / voice) and leaves the
+    project-art lane on its own 30-step default. Mutates in place; not persisted
+    -- mark_done does surgical line edits, never a full YAML re-dump."""
+    for entry in entries:
+        if not entry.get("steps"):
+            entry["steps"] = steps
+    return entries
 
 
 def set_request_status(text, req_id, new_status):
@@ -149,6 +170,12 @@ def main():
     parser.add_argument("--limit", type=int, default=0, help="max requests this run (0 = all)")
     parser.add_argument("--timeout", type=int, default=600, help="seconds to wait per job")
     parser.add_argument(
+        "--steps",
+        type=int,
+        default=FILLER_STEPS,
+        help=f"sampler steps for requests that don't set their own (default {FILLER_STEPS}, tuned for filler art)",
+    )
+    parser.add_argument(
         "--id-prefix",
         default=None,
         help="only process requests whose id starts with this prefix (scope a run to one source/batch)",
@@ -171,6 +198,9 @@ def main():
         (satisfied if already_satisfied(r) else todo).append(r)
     if args.limit > 0:
         todo = todo[: args.limit]
+
+    # Give every request a filler-tuned step count unless it asked for its own.
+    apply_default_steps(todo, args.steps)
 
     if not requests:
         print("No pending requests in projects/art-prompts.yaml - nothing to do.")
