@@ -7984,3 +7984,71 @@ complete. A repo-wide sweep for every Cypress spec sending `userId` (or similar
 client-supplied ownership fields) to a create endpoint, cross-referenced against each
 endpoint's actual policy, would likely catch the next one of these before a janitor
 cycle has to discover it live.
+
+## 2026-07-20 | Reviewer (burst-mode hourly cycle) | CI Janitor todo #516 | root cause, not another test payload
+
+**Decision:** the string of PRs (#719→#720→#721→#724→#727) chasing this same red
+Cypress signal all fixed real one-off test-payload bugs, but the run that was still
+red when this cycle started (`workflow_dispatch` 29784481012, on #727's own merge
+commit `a5862945`) failed at a completely different step: "Wait for deploy to go
+live" timed out after 1200s, never reaching the Cypress suite at all. Root-caused and
+fixed the actual mechanism instead of chasing another test fixture. kind_robots PR
+#728 merged (squash `d9a6a40`) after all 4 required checks went green (Contract
+verifiers, TypeScript, facet-alias-smoke, GitGuardian). Todo #516 marked DONE.
+
+**Detail:**
+- Checked the live run's job log directly (not just the conclusion): 20+ minutes of
+  `not live yet (serving: cea8027a...)` against `TARGET_SHA=a5862945`, ending in
+  `Production did not serve a5862945 (or a superseding commit) within 1200s`.
+- Confirmed via the Vercel MCP connector (project `kind-robots`) that the deployment
+  for `a5862945` (PR #727) has `readyState: CANCELED` with
+  `errorLink: .../projects#ignored-build-step` — Vercel's own `ignoreCommand`
+  (`scripts/vercel-ignore-build.mjs`) correctly skipped building it, because PR #727
+  only touched a Cypress spec file and every deploy-inert path (`cypress/`, `docs/`,
+  `*.test.ts`, etc.) is intentionally excluded from triggering a production deploy.
+  Production was still serving PR #725's commit (`cea8027a`, a real app-code change)
+  and always would be, until some future app-code commit landed.
+- `.github/workflows/cypress.yml`'s deploy-wait loop only had two acceptance paths:
+  exact match, or `TARGET_SHA` being an ancestor of a *newer* superseding live commit
+  (`scripts/check-deploy-ancestry.sh`, from kind-robots/t-018/t-023). Neither covers
+  the reverse case here — `live` (`cea8027a`) precedes `TARGET_SHA` (`a5862945`), but
+  Vercel will never build `TARGET_SHA` on its own because its changes are deploy-inert.
+  The loop had no way to recognize that and just burned the full timeout.
+- This is a structural collision between two independently-reasonable pieces of CI
+  infra (skip no-op deploys vs. wait for the pushed commit to go live), not a bug in
+  either one alone — and it will recur any time a test-only or docs-only fix (exactly
+  the kind of PR this CI-janitor todo chain keeps producing) is the most recent commit
+  on main when the scheduled Cypress run fires.
+- Fixed by extracting the ignored-path predicate out of `vercel-ignore-build.mjs` into
+  a new shared `scripts/lib/deployIgnorePaths.mjs` (single source of truth instead of
+  a second copy that could drift), adding `scripts/check-deploy-noop.mjs` (accepts
+  when `live` is an ancestor of `TARGET_SHA` and every file changed between them is
+  deploy-inert per that same predicate), wiring it into `cypress.yml`'s wait loop as a
+  third acceptance path, and adding a hermetic regression test
+  (`utils/scripts/verifyDeployWaitNoOp.ts`, matching `verifyDeployWaitAncestry.ts`'s
+  temp-git-repo pattern) wired into `contract-tests.yml`.
+- Verified by replaying the actual incident locally:
+  `node scripts/check-deploy-noop.mjs cea8027a... a5862945...` exits 0, confirming
+  this fix would have accepted that exact deploy as live instead of timing out.
+- PR #728's own CI caught a real mistake in the first push: the new echo message said
+  "(test/docs only)", which `utils/scripts/verifyWorkflowPaths.ts`'s path-reference
+  contract correctly flagged as a reference to a nonexistent `test/docs` directory
+  (bare lowercase/lowercase token heuristic, kind-robots/t-030/t-034/t-035). Reworded
+  to "(test- and docs-only)" and re-verified locally before pushing the fix.
+- Separately, PR #728's `Contract verifiers` run also showed "Academy examples
+  manifest contract failed with 3 error(s)" (expressionism/cubism/bauhaus missing
+  from the live `examples.manifest.json`). Confirmed unrelated: this PR never touches
+  `academyStyles.ts` or the examples manifest, and `contract-tests.yml` passed clean
+  on `main` at the exact same commit (`a5862945`) 40 minutes earlier — this check does
+  a live network fetch against `media.acrocatranch.com` each run, so this reads as an
+  external-data flake, not a regression from this PR. Left alone; worth a look as its
+  own CI-janitor item if it recurs on `main` itself rather than just this PR's branch.
+
+**Suggested action:** the deploy-wait step now tolerates a no-op deploy, but the
+underlying tension — test/docs-only PRs never get their own production deployment,
+so a scheduled Cypress run landing right after one has nothing new to wait for except
+recognizing that fact — will keep showing up. If a future scheduled run times out at
+the deploy-wait step again, check `Wait for deploy to go live`'s log for the specific
+failure shape (timeout vs. actual test failures) before assuming it's another
+test-payload bug in the chase-#516 lineage; it may be a third distinct failure mode
+this fix and #719-#727 don't yet cover.
