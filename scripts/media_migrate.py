@@ -46,6 +46,10 @@ IMAGE_EXTS = {".webp", ".png", ".jpg", ".jpeg"}
 # The public URL prefix that maps to the media root. imagePath
 # "/images/dreams/x.webp" is the file "<root>/dreams/x.webp".
 URL_PREFIX = "/images/"
+# Default manifest is repo-relative so the script works from the repo root
+# regardless of the caller's CWD.
+_REPO_ROOT = Path(__file__).resolve().parents[1]
+DEFAULT_MANIFEST = _REPO_ROOT / "projects" / "dream-cycle" / "media-migration-manifest.json"
 # The kindrobots images share as seen from the conductor box under WSL. Override
 # with --root (Windows: Z:\kindrobots\images) or $KR_IMAGES_ROOT (Unraid-local:
 # /mnt/user/pc/kindrobots/images).
@@ -146,7 +150,7 @@ def regen_collections(root: Path, apply: bool) -> dict:
 
 def main() -> int:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--manifest", default="media-migration-manifest.json")
+    ap.add_argument("--manifest", default=str(DEFAULT_MANIFEST))
     ap.add_argument("--root", default=DEFAULT_ROOT,
                     help=f"media images root (default {DEFAULT_ROOT}, or $KR_IMAGES_ROOT)")
     ap.add_argument("--apply", action="store_true", help="actually move (default: dry-run)")
