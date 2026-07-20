@@ -1231,3 +1231,42 @@ tasks:
     claimed_by: claude-conductor-agent-run-20260718
     claimed_at: '2026-07-18T19:11:31Z'
     updated: '2026-07-18T19:11:31Z'
+
+  - id: t-041
+    milestone: m1
+    title: Fix unescaped [id] in GitHub Actions paths filters across 13 workflows so they actually trigger
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Spotted while verifying conductor/t-072 (kind_robots PR #598, 2026-07-20):
+      that PR edited server/api/resources/[id].patch.ts, which
+      .github/workflows/resource-mutation-ownership.yml's `paths:` filter lists
+      verbatim (`'server/api/resources/[id].patch.ts'`). The workflow never
+      triggered on the PR at all -- confirmed via
+      actions_list/list_workflow_runs filtered to the PR's branch, total_count:
+      0, versus the PR's other four checks (TypeScript, Contract verifiers,
+      facet-alias-smoke, GitGuardian) which ran normally. Root cause: GitHub
+      Actions' `paths` filter uses glob syntax where `[...]` is a character
+      class, not a literal bracket -- `[id].patch.ts` matches a single-char
+      filename like `i.patch.ts` or `d.patch.ts`, never the real
+      `[id].patch.ts` Nuxt dynamic-route filename. `grep -rl '\[id\]'
+      .github/workflows/*.yml | xargs grep -l 'paths:'` finds 13 workflows with
+      this exact shape, all presumably silently dead for their real target
+      files: bot-mutation-ownership.yml, character-mutation-input-parity.yml,
+      delete-response-envelope.yml, dream-mutation-input-parity.yml,
+      project-mutation-input-parity.yml, reaction-subpatch-envelope.yml,
+      resource-mutation-ownership.yml, reward-mutation-input-parity.yml,
+      scenario-mutation-input-parity.yml, server-mutation-ownership.yml,
+      sheet-mutation-input-parity.yml, theme-mutation-input-parity.yml,
+      todo-mutation-input-parity.yml. Fix: escape the brackets (e.g.
+      `server/api/resources/\[id\].patch.ts`) in each affected `paths:` list,
+      verify locally against GitHub's documented paths-filter glob syntax, and
+      confirm with a scratch PR (or `workflow_dispatch` + a real edit to one
+      target file) that at least one previously-dead workflow now triggers.
+      Each of these guards a real, previously-shipped ownership/parity
+      contract script (e.g. verifyResourceMutationOwnership.ts) that still
+      runs fine locally/via `workflow_dispatch` -- this is purely about the
+      pull_request trigger never firing, not about the underlying checks
+      being wrong.
