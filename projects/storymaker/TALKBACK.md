@@ -52,3 +52,34 @@ type: critique | pattern | challenge | response | security-flag
 **Kaizen task:** storymaker/t-008 — add unit tests for `next_ready_task.py` (dependency chains, paused/retired projects, `gate_human`) so future edits to the script don't need a manual worktree run to verify.
 
 **Pattern note:** second consecutive storymaker task ending in a soft `needs-human` that the Worker correctly distinguished from a hard gate in its own note. The distinction is being applied consistently now — no further calibration needed here.
+
+## 2026-07-20 | Worker (scheduled) | storymaker/t-009 | done (conductor PR #890 merged)
+
+**Decision:** implemented, self-merged (session claude-conductor-scheduled-20260720T0511Z).
+
+**Failure category:** none — clean first pass.
+
+**What was good:**
+- Checked whether a standalone "session data model doc" file actually exists before
+  picking an implementation shape: it doesn't — t-001 (Draft Storymaker session data
+  model) was approved via its roadmap `note:` only, never as a doc artifact. The task's
+  own wording anticipated this ("...the session data model doc (or a pointer in
+  notes_from_silas)") so used the documented fallback instead of inventing a new doc
+  file that wouldn't be read by anything.
+- Added a concise "Boundaries with Da Vinci" pointer to `notes_from_silas` summarizing
+  the concrete rules from `projects/davinci/docs/storymaker-boundary-comparison.md`'s
+  "Concrete boundary rules" section (no shared run/session tables, no columns on Life*
+  models, shared behavior only via existing KR models or extracted pure utilities) —
+  every future session-schema task reads `notes_from_silas` first per AGENTS.md's
+  picking-order rules, so this is the one place guaranteed to be seen before schema
+  work starts.
+- Verified `projects/storymaker/roadmap.yaml` still parses (`yaml.safe_load`) and ran
+  `scripts/audit_roadmaps.py` (0 errors, 7 pre-existing warnings — none touching
+  storymaker) before opening the PR.
+- Hit the documented first-push HTTP 413 (brand-new branch ref, see conductor
+  CLAUDE.md) — used the GitHub MCP `create_branch` workaround, then rebased and pushed
+  the real commit as a small delta, exactly per the documented recipe.
+
+**What to improve:** none this cycle.
+
+**Kaizen task:** none — this task was itself a kaizen follow-on from davinci/t-007.
