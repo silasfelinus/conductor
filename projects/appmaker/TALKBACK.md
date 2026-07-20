@@ -41,3 +41,37 @@ type: critique | pattern | challenge | response | security-flag
 **What to improve:** none this cycle.
 
 **Kaizen task:** none — this was a stale-task cleanup, not new scope.
+
+## 2026-07-20 | Worker (burst) | appmaker/t-012 | partial progress (kind_robots PR #639 merged)
+
+**Decision:** implemented step (2), self-verified, merged (session claude-conductor-burst-20260720T0920Z). Task kept `ready` — steps (1) and (3) still outstanding, not agent-actionable this cycle.
+
+**Failure category:** none — clean first pass on the scoped piece.
+
+**What was good:**
+- Rotation: walked `priority.yaml` order past the top few candidates because they were genuinely
+  blocked, not just picked the first `ready` hit. ai-art-academy/t-019 and t-035 both need the
+  art-generation relay (confirmed still down — `public/images/academy/styles/` still doesn't exist
+  in the local kind_robots checkout). serendipity/t-012 was claimed and merged by a different session
+  minutes before this one started. superkate-hairstyle-ai/t-019 needs a live Comfy/Kontext box run.
+  model-builder/t-022 and t-031 need live prod DB access / a healthy ArtJob relay. conductor-app's
+  t-007/t-008/t-012 live in `apps/conductor/` (Flutter) with no Flutter/Dart SDK available in this
+  sandbox to safely verify a blind edit, so skipped in favor of a task with real local tooling.
+  appmaker/t-012 was the first genuinely unblocked, scoped, verifiable candidate.
+- Before touching the placeholder-scaffold framing in the task's own note, checked
+  `components/pages/appmaker-page.vue` directly (270 lines) instead of trusting the note's wording —
+  it's already a full interactive experience (browse fleet, create-app form, project jump-in) shipped
+  by appmaker/t-004, not a stub. Recorded that finding instead of re-building something that already
+  exists.
+- Verified before opening the PR: `npx eslint` on the changed file (clean) and full-project
+  `npm run test` (`vue-tsc --noEmit`, exit 0) after provisioning kind_robots deps via
+  `scripts/provision_kind_robots_deps.sh`. All 3 kind_robots PR checks green (TypeScript, Contract
+  verifiers, GitGuardian) before merge.
+- Hit the documented conductor-side first-push HTTP 413 on this session's own `claude/*` branch
+  (brand-new ref) when pushing the `status: review` tracking commit — used the `create_branch`
+  MCP-tool workaround per CLAUDE.md, which required one extra rebase since `main` had advanced by a
+  `chore: refresh STATUS.md` commit between the branch-create call and the retry push.
+
+**What to improve:** none this cycle.
+
+**Kaizen task:** none this cycle — small scoped follow-up to an existing task pattern, not new scope.
