@@ -446,7 +446,7 @@ tasks:
   - id: t-010
     milestone: m6
     title: Academy continuous improvement pass
-    status: review
+    status: ready
     recurring: true
     passes: 0
     stakes: reversible
@@ -595,8 +595,8 @@ tasks:
       (still 404) is not a fresh live-queue probe. Rearming to `ready` per the
       recurring-task convention.
       RAN 2026-07-20 (~10:04-10:35 UTC, worker/burst-1784541890): checklist's preferred lane was inspiration/preview assets (lane 3), so tried it first. Reconfirmed the blocker with a fresh, authenticated poll of the exact job queued by the prior cycle: `GET /api/art/queue/816` still returned `status: PENDING` with `updatedAt` unchanged since the job was created (~00:14 UTC) -- roughly 10 hours with zero relay activity, same signature as every prior check. Fell back to lane 4 (curriculum depth) per the checklist's own instruction, and per its "finish known coverage gaps before a 26th movement" rule picked the one non-blocked gap the coverage table already named: added a Persian Miniature Painting row (#25) to `docs/teaching-notes.md`'s per-style table (mode `prompt`, difficulty **Hard** -- the movement's inverted spatial logic, distant figures placed higher rather than smaller, fights the same "preserve composition" tension already documented for cubism/de-stijl/suprematism) and bumped the section header from 24 to 25 movements. Also added the missing `persian-miniature` placeholder row to `style-lora-registry.md`'s curriculum-slug-mapping table, mirroring the existing `ashcan-school`/`american-regionalism` "not yet in the registry" convention (no LoRA search performed this cycle). Verified: `python3 -c "import yaml; yaml.safe_load(...)"` on both edited docs is N/A (plain Markdown, not YAML); confirmed no other RAN entry already covered this gap by grepping `persian` (case-insensitive) across both files before editing. Conductor-docs-only change (teaching-notes.md, style-lora-registry.md, this checklist); no kind_robots PR needed -- neither file is synced into the kind_robots front end. Left two related gaps unfixed, out of this cycle's scope and noted in the checklist for a future pass: `curriculum-outline.md` never got a "v1.5 addition re-check" public-domain-policy paragraph for §25 (every addition since v1.1 has one; the underlying VERIFIED research already exists in §25 itself, so this would be a low-risk writeup, not new research), and persian-miniature is not yet categorized in curriculum-outline.md's "Lesson-only vs remixable" tier lists. Updated continuous-improvement-checklist.md's rotation state; next preferred lane is front-end polish (lane 1). Rearming to `ready` per the recurring-task convention.
-    owner: worker
-    claimed_by: burst-1784541890
+    owner: null
+    claimed_by: null
     claimed_at: '2026-07-20T10:04:51Z'
 
   - id: t-015
