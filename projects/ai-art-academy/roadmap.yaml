@@ -446,11 +446,11 @@ tasks:
   - id: t-010
     milestone: m6
     title: Academy continuous improvement pass
-    status: claimed
+    status: ready
     recurring: true
     passes: 0
     stakes: reversible
-    updated: '2026-07-20T04:15:03Z'
+    updated: '2026-07-20T04:40:00Z'
     note: |-
       Standing never-idle task (re-arms to ready after every completion, per the recurring-task rule). Each cycle pick ONE: (a) front-end style/polish pass on Academy or art-styler surfaces, (b) roadmap upgrade — refine tasks, detail the next milestone, prune stale notes, (c) generate more art inspirations or style preview thumbnails, (d) expand the curriculum with a new movement/artist entry (respecting PUBLIC-DOMAIN-POLICY.md). Note which option ran in the PR. This task never reaches done and does not count toward milestone progress.
       RAN 2026-07-19 (~11:04-11:15 UTC, claude-conductor-burst-20260719T1104Z): option (a) front-end polish, per the checklist's rotation rule (previous cycle ran lane 2, roadmap accuracy, so lane 1 was next preferred). Dispatched an Explore subagent over every Academy component (academy-manager.vue, academy-timeline.vue, academy-styles-browser.vue, academy-style-detail.vue, academy-remix.vue) plus the two shared components/art/ surfaces (art-styler.vue, image-upload.vue), with an explicit exclusion list of everything already fixed in prior cycles (PRs #275, #301, #332, #371, #380, #383, #385, #387, #397, #515). Found a real, verifiable focus-management bug: `academy-styles-browser.vue`'s `closeStyle()` restores keyboard focus to the grid button that opened the style detail panel, but that button unmounts (deleting its `gridRefs` entry) when an active search query no longer matches its style while the panel is still open — closing the panel at that point silently dropped focus to `<body>`, exactly the regression this code was originally written to prevent. Added a `searchInputRef` (always mounted) as a fallback focus target when the original grid button is gone. Verified: `npx eslint` and `npx prettier --check` both clean, `npm run test` (`vue-tsc --noEmit`) 0 errors. kind_robots PR #520 (branch claude/keen-fermat-academy-focus-fallback): all 3 CI checks green (TypeScript, Contract verifiers, GitGuardian), no review comments — merged squash `a174d16`. Rearmed to `ready` per the recurring-task convention — continuous-improvement-checklist.md's rotation state updated to record front-end polish as the completed lane, next preferred roadmap accuracy.
@@ -513,6 +513,30 @@ tasks:
       Updated docs/continuous-improvement-checklist.md's rotation state; next preferred
       lane is roadmap accuracy (lane 2). Rearming to `ready` per the recurring-task
       convention.
+      RAN 2026-07-20 (~04:10-04:40 UTC, claude-conductor-scheduled-20260720T0410Z): lane 3
+      (inspiration/preview assets) was next per the checklist's rotation state, so tried
+      it first. Rechecked the home relay directly rather than trusting the ~01:10Z note:
+      `python scripts/consume_art_requests.py --id-prefix "kind-robots-academy-style-
+      preview-" --live --limit 2` again got job 855 accepted (200 OK) but it sat
+      PENDING/unclaimed after 10+ minutes -- same signature, no change, relay still down.
+      Fell back to lane 4 (curriculum depth), but the ~01:10Z cycle had already fully
+      researched and verified movement #25 (Persian Miniature) -- nothing left to add
+      there -- so instead finished that cycle's own explicitly-deferred follow-up: synced
+      `persian-miniature` into kind_robots' `stores/seeds/academyStyles.ts` (was the one
+      thing the 01:10Z note said it deliberately did NOT do this cycle). Split this out of
+      t-035 (which had bundled the sync with the still-blocked thumbnail batch-generation)
+      into its own completed unit -- see t-035's note for full detail. kind_robots PR #616
+      merged squash `99ba5ff3`: added the entry (era c. 1400-1600, sortYear 1400, artists
+      Kamal ud-Din Bihzad and Sultan Muhammad), inserted between `renaissance` and
+      `northern-renaissance`. exampleWorks/previewImageSrc deferred to a future task
+      (images need sourcing/verification, not just data entry), matching the
+      ashcan-school/t-031 precedent. Verified: eslint clean, full-project `npm run test`
+      (vue-tsc --noEmit) exit 0 before and after rebasing onto latest kind_robots main,
+      prettier unchanged. All 3 kind_robots PR checks green (TypeScript, Contract
+      verifiers, GitGuardian) before merge. Curriculum content is now 25/25 synced to the
+      seed file. Updated continuous-improvement-checklist.md's rotation state; next
+      preferred lane is front-end polish (lane 1). Rearming to `ready` per the
+      recurring-task convention.
     owner: reviewer
     claimed_by: claude-conductor-scheduled-20260720T0410Z
     claimed_at: '2026-07-20T04:15:03Z'
@@ -1002,11 +1026,11 @@ tasks:
 
   - id: t-035
     milestone: m6
-    title: 'kind_robots: batch-generate the 25 queued Academy style-preview thumbnails once the home relay recovers, then sync persian-miniature to academyStyles.ts'
+    title: 'kind_robots: batch-generate the 25 queued Academy style-preview thumbnails once the home relay recovers'
     status: ready
     passes: 0
     stakes: reversible
-    updated: '2026-07-20T01:10:00Z'
+    updated: '2026-07-20T04:35:00Z'
     note: >-
       Kaizen from the 2026-07-20 t-010 cycle. All 25 `kind-robots-academy-style-preview-*`
       requests in `projects/art-prompts.yaml` are queued and `status: pending`, but the home
@@ -1019,11 +1043,25 @@ tasks:
       the relay is back. When it is: run `python scripts/consume_art_requests.py --id-prefix
       "kind-robots-academy-style-preview-" --live` (no --limit) to drain all 25 in one pass
       -- the `--id-prefix` filter added this cycle keeps it from also draining the ~130
-      other unrelated pending requests sharing that same queue. Separately (can land in the
-      same or a follow-up kind_robots PR): sync the 25th movement, Persian Miniature
-      Painting (`persian-miniature`, curriculum-outline.md §25, all 3 example works
-      VERIFIED), into `stores/seeds/academyStyles.ts`, mirroring t-015/t-018/t-031/t-034 --
-      one entry (slug, name, era, artists, recognitionCues, remix template from the
-      outline's remix_hint), inserted in chronological position per the `era` field
-      (belongs early, alongside illuminated-manuscript/renaissance). Content sourced
-      verbatim from curriculum-outline.md §25 -- no new facts invented.
+      other unrelated pending requests sharing that same queue.
+
+      SPLIT 2026-07-20T04:35Z (claude-conductor-scheduled-20260720T0410Z, t-010 cycle):
+      this task originally bundled the thumbnail batch-generation above with a separate,
+      unblocked half -- syncing the 25th movement, Persian Miniature Painting, into
+      stores/seeds/academyStyles.ts. Split them out since the sync half didn't need the
+      relay at all. DONE (sync half): kind_robots PR #616 merged (squash 99ba5ff3).
+      Added the `persian-miniature` entry (era c. 1400-1600, sortYear 1400, artists Kamal
+      ud-Din Bihzad and Sultan Muhammad), inserted between `renaissance` and
+      `northern-renaissance` per its era. Content sourced verbatim from
+      curriculum-outline.md §25 -- no new facts invented. exampleWorks/previewImageSrc
+      deliberately left for a follow-up (same pattern as ashcan-school/t-031), since real
+      image files still need sourcing/verification, not just data entry. Verified:
+      eslint clean, full-project `npm run test` (vue-tsc --noEmit) exit 0 both before and
+      after rebasing onto latest main, prettier unchanged. All 3 kind_robots PR checks
+      green (TypeScript, Contract verifiers, GitGuardian) before merge. This task
+      (t-035) now covers only the still-blocked thumbnail-generation half; re-ran the
+      relay recheck this same cycle (queued job 855 for greek-vase-painting via
+      consume_art_requests.py --live) and it again sat PENDING/unclaimed after 10+
+      minutes -- home relay still down, no change from the 2026-07-20T01:10Z reading.
+      Stays `ready`-but-blocked (transient, no pass burned) for a session with the home
+      relay reachable, or Silas's own environment.
