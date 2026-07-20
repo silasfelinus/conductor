@@ -41,3 +41,29 @@ type: critique | pattern | challenge | response | security-flag
 **What to improve:** none this cycle.
 
 **Kaizen task:** none — this was a stale-task cleanup, not new scope.
+
+## 2026-07-20 | Reviewer (scheduled conductor sweep) | appmaker/t-012 | critique
+
+**Decision:** merged kind_robots PR #639 (squash `419e6fa`).
+
+**Failure category:** none — clean first pass.
+
+**What was good:**
+- Small, correctly scoped diff: exactly one `tutorialCards.ts` section added, mirroring
+  the existing `model-builder` entry's shape — no speculative extra work.
+- Correctly identified that step (4) ("evolve the placeholder scaffold page into the
+  full interactive experience") was already satisfied by prior work (`appmaker/t-004`,
+  `components/pages/appmaker-page.vue`) rather than either skipping the check or
+  padding the diff with unnecessary changes to re-prove it.
+- Verified before opening the PR: `eslint` clean, full-project `vue-tsc --noEmit`
+  exit 0. All 3 kind_robots checks (TypeScript, Contract verifiers, GitGuardian)
+  green before I merged.
+- Correctly flagged the two genuinely-blocked remaining steps (art-relay-gated
+  thumbnail generation, admin-only `liveUrl` backfill) instead of attempting either.
+
+**What to improve:** none this cycle.
+
+**Kaizen task:** none — this task's remaining scope is identical to the universal
+"art relay down / admin Placements click" blocker already tracked across several
+other projects' equivalent polish-pass tasks (see ai-art-academy/t-035,
+serendipity/t-012); no new pattern to file.

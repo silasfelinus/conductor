@@ -208,8 +208,8 @@ tasks:
 - id: t-012
   milestone: m4
   title: Polish and upgrade AppMaker front-end surface
-  status: claimed
-  owner: worker
+  status: ready
+  owner: null
   passes: 0
   stakes: reversible
   note: 'UI polish + upgrade for the appmaker front end now that the scaffold page is live at /appmaker.
@@ -220,7 +220,16 @@ tasks:
     button to backfill channelKey/tabKey/liveUrl); (4) evolve the placeholder scaffold page into the full
     interactive experience for this project.
 
+    PROGRESS 2026-07-20 (conductor-burst session claude-conductor-burst-20260720T0920Z, kind_robots
+    PR #639 merged squash 419e6fa): step (2) done -- added an ''appmaker'' section under
+    tutorialChannels.conductor.sections in stores/helpers/tutorialCards.ts, mirroring the existing
+    model-builder entry, resolving via tutorialImage(''conductor'', ''appmaker'') with a placeholder
+    fallback until dedicated art lands. Step (4) confirmed already covered by prior work (appmaker/t-004):
+    components/pages/appmaker-page.vue (270 lines -- browse the app fleet, create-app form, project
+    jump-in) is a full interactive experience, not a placeholder scaffold. Remaining and kept ready:
+    step (1) dashboard-tab + tutorial .webp art (needs the generation backend/egress -- relay confirmed
+    still down this session, see ai-art-academy/t-035) and step (3) the liveUrl backfill (an admin
+    Placements click, not an agent action). Verified: eslint clean, full-project vue-tsc --noEmit exit
+    0. All 3 kind_robots PR checks green (TypeScript, Contract verifiers, GitGuardian).
+
     '
-  claimed_by: claude-conductor-burst-20260720T0920Z
-  claimed_at: '2026-07-20T09:12:01Z'
-  updated: '2026-07-20T09:12:01Z'
