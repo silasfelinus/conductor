@@ -289,7 +289,7 @@ tasks:
   - id: t-014
     milestone: m4
     title: "Polish and upgrade Da Vinci front-end surface"
-    status: review
+    status: ready
     owner: reviewer
     passes: 0
     stakes: reversible
@@ -328,3 +328,28 @@ tasks:
     claimed_by: claude-conductor-agent-20260720T-run1
     claimed_at: '2026-07-20T11:14:27Z'
     updated: '2026-07-20T11:14:27Z'
+
+  - id: t-015
+    milestone: m2
+    title: "Spec the AI-narration layer that generates Da Vinci chapter prompts/choices"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Kaizen from t-014 (kind_robots PR #645). The play-loop API
+      (POST /api/davinci/runs, GET /api/davinci/runs/:id,
+      POST /api/davinci/runs/:id/choices, POST /api/davinci/runs/:id/resolve) and
+      the ending/achievement seed (davinci-ending-* triggerCodes) are both built
+      and live, but nothing yet generates the actual chapter prose, choice text,
+      or effect deltas a player would see -- docs/notes/davinci-play-loop-api.md
+      explicitly scopes narration as "a separate layer that calls these; it never
+      owns state" and defers it. Write the design brief for that layer: what
+      calls into the play-loop endpoints (a Chat-backed narrator? a bot?), how it
+      derives `effects` deltas per choice from the DAVINCI_DIMENSIONS stat model,
+      how many choices/chapter and how resolution timing works, and how it reuses
+      or diverges from Storymaker's narrator pattern (see
+      projects/davinci/docs/storymaker-boundary-comparison.md). This is the
+      actual blocker between the existing backend and a real playable run UI --
+      not front-end polish (see t-014's note for why a UI build was deferred
+      instead of attempted this cycle).

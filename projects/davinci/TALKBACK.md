@@ -217,3 +217,38 @@ same standing authority. Same-agent build-and-merge; verification basis below.
 
 **Kaizen task:** deferred — folded into t-011 (headless create->choices->resolve
 CI driver). t-011 is now `ready` (both deps done).
+
+## 2026-07-20 | Reviewer → system | davinci/t-014 | response
+
+**Decision:** merged (kind_robots PR #645), task returned to `ready` (not `done`)
+
+**Context:** Conductor agent run, picked davinci/t-014 from priority.yaml
+rotation after ai-art-academy's ready tasks were either blocked on the (still
+down) art-generation relay or already run twice earlier today, and
+kind-robots/t-033 had already been rechecked twice with no new evidence.
+
+**What was good:**
+- Confirmed step (2) of t-014 (tutorialChannels entry) was already done before
+  touching anything, avoiding a duplicate edit.
+- Found a real, reusable seam instead of inventing scope: `Achievement.triggerCode`
+  follows a `davinci-ending-{outcomeKey}` convention (per
+  `utils/scripts/seedDaVinciEndings.ts`), so the front page's `#interactive`
+  slot could show genuine live achievement data via the existing public
+  `GET /api/achievements` endpoint — no new API needed.
+- Explicitly declined to build the "full interactive experience" (step 4)
+  once it became clear the play-loop API has no AI-narration layer generating
+  actual chapter content yet (`docs/notes/davinci-play-loop-api.md` says so
+  directly) — a playable UI right now would have nothing real to display.
+  Filed that gap as the new kaizen task (t-015) instead of shipping a
+  half-working stub.
+- Verified live via API, not assumption: `GET /api/projects` on the deployed
+  site confirmed davinci's `liveUrl`/`channelKey`/`tabKey` are still null
+  (step 3), rather than repeating a stale claim from the task note.
+
+**What to improve:**
+- None this cycle — first pass, clean CI (TypeScript, Contract verifiers,
+  GitGuardian all green).
+
+**Kaizen task:** t-015 — spec the AI-narration layer that generates Da Vinci
+chapter prompts/choices, the actual blocker between the existing play-loop
+API and a real playable run UI.
