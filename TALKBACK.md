@@ -7729,3 +7729,54 @@ pass over ecosystem-map's own backlog.
 **Kaizen task:** none filed this cycle — the natural next task (build the
 `/narrate` endpoint + minimal run-screen UI per the spec's "First build
 slice" section) is real but deliberately left unfiled per the note above.
+
+## 2026-07-20 | Reviewer (agent run) | media-watchlist/t-006 | audited already-merged work
+
+**Decision:** implemented and self-merged (session claude-conductor-agent-20260720T1412Z, kind_robots PR #649).
+
+**Failure category:** none — clean first pass.
+
+**What was good:**
+- Session-start sweep found no open PRs and no genuinely fresh `ready` work at the
+  top of `priority.yaml`: ai-art-academy/t-010 had just been claimed by a concurrent
+  burst session (skipped to avoid collision); ai-art-academy/t-019 and t-035 are
+  both still blocked on the same art-generation relay outage every other session
+  confirmed today; kind-robots/t-033, superkate-hairstyle-ai/t-019, and the
+  model-builder live-smoke tasks were all previously documented as blocked
+  (live backend / admin-only action). serendipity/t-012, storymaker/t-010, and
+  davinci/t-014 — the same "Polish and upgrade X front-end surface" task shape —
+  were each already claimed or freshly progressed by other sessions today. Walked
+  further down `priority.yaml` to media-watchlist/t-006, the same task shape but
+  genuinely untouched since 2026-07-13, no collision risk.
+- Used the `stats` field already defined on `ProjectFrontConfig` (precedent:
+  davinci-page.vue, humboldt-scoop-page.vue) to surface real, already-validated
+  numbers (2,440 entries, 12 years, 60 starred) from the t-007 import instead of
+  inventing a live data path — correctly judged that building the actual
+  `MediaEntry` Prisma model + API is out of scope for a polish pass (same call
+  storymaker/t-010 and davinci/t-014 made for their own gaps), and filed that as
+  a properly scoped kaizen task (t-008) instead.
+- Caught and fixed a stale `deliverables.done` claim ("Watchlist data model and
+  API") that didn't match reality — verified via direct search that no
+  `MediaEntry` model or server route exists in kind_robots yet.
+- Hit the documented claim-vs-local-state race (this file's own kaizen note,
+  conductor/t-066 lineage): `claim_task.py` pushed the claim commit straight to
+  `origin/main`, but the local conductor branch was stale, so the first
+  `set_task_field.py status review` call would have silently dropped
+  `owner`/`claimed_by`/`claimed_at`. Caught by re-diffing origin/main before
+  committing (not just trusting the local file), fixed by stashing, rebasing
+  onto `origin/main`, and reapplying the field edit on the correct base —
+  confirmed all three fields survived before pushing.
+- Verified before merging kind_robots PR #649: `npx eslint` (clean), `npx
+  prettier --check` (clean), full-project `vue-tsc --noEmit` (exit 0). All 3 PR
+  checks green (TypeScript, Contract verifiers, GitGuardian).
+- Kept the roadmap task at `ready` (not `done`) since steps (1) art and (3)
+  liveUrl backfill remain genuinely blocked — matches how serendipity/t-012,
+  storymaker/t-010, and davinci/t-014 handled the identical situation today,
+  rather than closing a task whose own step list isn't fully satisfied.
+
+**What to improve:** none this cycle.
+
+**Kaizen task:** media-watchlist/t-008 — spec the MediaEntry Prisma model +
+minimal browse API from the already-written SCHEMA-PROPOSAL.md/BROWSE-UX.md,
+now that the real corpus is validated. This is the actual next blocker for
+milestone m3 (Browse, filter, and stats UI).

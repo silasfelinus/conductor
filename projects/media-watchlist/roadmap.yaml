@@ -154,11 +154,36 @@ tasks:
 - id: t-006
   milestone: m3
   title: Polish and upgrade Media Watchlist front-end surface
-  status: claimed
+  status: ready
   owner: reviewer
   passes: 0
   stakes: reversible
   updated: '2026-07-20T14:14:16Z'
-  note: 'UI polish + upgrade for the media-watchlist front end now that the scaffold page is live at /watchlist. Steps: (1) generate final dashboard-tab art at public/images/dashboard-tabs/wonder/watchlist.webp and tutorial art at public/images/tutorials/wonder/watchlist.webp; (2) add a matching section for ''watchlist'' under tutorialChannels.wonder.sections in kind_robots/stores/helpers/tutorialCards.ts; (3) verify the PROJECT Dream liveUrl points at /watchlist (admin can run the Conductor ''Placements'' button to backfill channelKey/tabKey/liveUrl); (4) evolve the placeholder scaffold page into the full interactive experience for this project.'
+  note: 'UI polish + upgrade for the media-watchlist front end now that the scaffold page is live at /watchlist. Steps: (1) generate final dashboard-tab art at public/images/dashboard-tabs/wonder/watchlist.webp and tutorial art at public/images/tutorials/wonder/watchlist.webp; (2) add a matching section for ''watchlist'' under tutorialChannels.wonder.sections in kind_robots/stores/helpers/tutorialCards.ts; (3) verify the PROJECT Dream liveUrl points at /watchlist (admin can run the Conductor ''Placements'' button to backfill channelKey/tabKey/liveUrl); (4) evolve the placeholder scaffold page into the full interactive experience for this project.
+
+    PROGRESS 2026-07-20 (conductor agent session claude-conductor-agent-20260720T1412Z, kind_robots PR #649 merged squash 5af699e): step (2) confirmed already done -- a ''watchlist'' section already existed under tutorialChannels.wonder.sections in stores/helpers/tutorialCards.ts, no action needed. Step (4) advanced within polish-pass scope: added real headline `stats` (2,440 entries logged, 12 years tracked, 60 starred favorites) to watchlist-page.vue''s fallback config, sourced from the validated media_list.md import (t-007, data/import-report.md), and corrected the `deliverables` list, which previously claimed a nonexistent "Watchlist data model and API" -- verified no MediaEntry Prisma model or server route exists in kind_robots yet. A full interactive browse/filter UI is NOT built: that needs the actual MediaEntry schema + API (SCHEMA-PROPOSAL.md/BROWSE-UX.md already spec it), which is materially larger than a polish pass -- same judgment call storymaker/t-010 and davinci/t-014 made for their own live-data gaps. Remaining and kept ready: step (1) dashboard-tab + tutorial .webp art (already queued in art-prompts.yaml as kind-robots-watchlist-image-607fccd0, blocked on the art-generation relay -- confirmed still down this session, consistent with every other project that checked it today) and step (3) the liveUrl/channelKey/tabKey backfill (admin Placements click, not an agent action). Verified before merge: eslint clean, prettier clean, full-project vue-tsc --noEmit exit 0. All 3 kind_robots PR checks green (TypeScript, Contract verifiers, GitGuardian).
+
+    '
   claimed_by: claude-conductor-agent-20260720T1412Z
   claimed_at: '2026-07-20T14:14:16Z'
+- id: t-008
+  milestone: m3
+  title: Spec the MediaEntry Prisma model and minimal browse API from SCHEMA-PROPOSAL.md/BROWSE-UX.md
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  updated: '2026-07-20T14:30:00Z'
+  note: 'Kaizen from the 2026-07-20 t-006 cycle (kind_robots PR #649). The real
+    corpus is now imported and validated (2,440 entries, 12 years, t-007 done),
+    but no MediaEntry Prisma model or server API exists in kind_robots yet --
+    SCHEMA-PROPOSAL.md already proposes a 15-field model + MediaType enum
+    (extend with the 5 additional types t-007 discovered: ANIME, PODCAST,
+    THEATRE, SHORT, VIDEO_GAME_SHORT, plus releaseYear/issueRange/rewatch/sourceFile
+    fields the real import needed) and BROWSE-UX.md already specs the browse/filter/stats
+    UI this milestone (m3) targets. This task is docs/spec only: reconcile
+    SCHEMA-PROPOSAL.md against what import_media.py actually produced, write
+    the final Prisma model + a minimal GET /api/media-entries browse route
+    contract, and note a one-time seed/import path from data/media-entries.json.
+    Building the actual migration + route + UI is follow-on work once this
+    spec is settled.'
