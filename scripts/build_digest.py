@@ -142,6 +142,10 @@ DAILY_DIR = "projects/curation/daily"
 SHIPPED_PATH = "projects/dream-cycle/SHIPPED.md"
 CONDUCTOR_RAW = f"https://raw.githubusercontent.com/{REPO}/{DEFAULT_BRANCH}"
 KR_BASE_URL = "https://kind-robots.vercel.app"
+# Rendered art serves 200 from the self-hosted media origin; the app origin only
+# 307-redirects /images/, which email clients render unreliably.
+KR_MEDIA_ORIGIN = os.environ.get(
+    "KR_MEDIA_ORIGIN", "https://media.acrocatranch.com").rstrip("/")
 DAILY_DREAM_PAGE = f"{KR_BASE_URL}/daily-dream"
 
 
@@ -318,7 +322,7 @@ def main():
         # fall back to slug-matched conductor images.
         attached = [
             {"name": os.path.basename(a.get("public_path", "")),
-             "url": KR_BASE_URL + a.get("public_path", "")}
+             "url": KR_MEDIA_ORIGIN + a.get("public_path", "")}
             for a in built.get("art", []) if a.get("attached")
         ]
         yesterday_output["images"] = attached or match_images_for(
