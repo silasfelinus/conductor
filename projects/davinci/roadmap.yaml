@@ -289,7 +289,7 @@ tasks:
   - id: t-014
     milestone: m4
     title: "Polish and upgrade Da Vinci front-end surface"
-    status: claimed
+    status: ready
     owner: reviewer
     passes: 0
     stakes: reversible
@@ -303,6 +303,53 @@ tasks:
       liveUrl points at /davinci (admin can run the Conductor 'Placements' button
       to backfill channelKey/tabKey/liveUrl); (4) evolve the placeholder scaffold
       page into the full interactive experience for this project.
+
+      PROGRESS 2026-07-20 (conductor agent session claude-conductor-agent-20260720T-run1,
+      kind_robots PR #645): step (2) confirmed already done -- a 'davinci' section
+      already exists under tutorialChannels.wonder.sections in
+      stores/helpers/tutorialCards.ts, no action needed. Step (4) advanced within
+      polish-pass scope rather than built in full: added a #interactive slot to
+      davinci-page.vue that fetches achievements client-side and lists the seeded
+      davinci-ending-* achievements (title + live count), mirroring the
+      storymaker-page.vue pattern of wiring live store data into the front page. A
+      full playable run UI is NOT built -- the play-loop API
+      (POST /api/davinci/runs, choices, resolve) exists server-side but there is no
+      AI-narration layer yet to generate actual chapter content, so a playable UI
+      would have nothing real to show; same judgment call storymaker/t-010 made.
+      Filed a kaizen suggestion (in the PR body) to spec that narration layer next.
+      Remaining and kept ready: step (1) dashboard-tab + hero art (already queued
+      in art-prompts.yaml as kind-robots-davinci-image-* / conductor-davinci-hero-*,
+      blocked on the art-generation relay -- confirmed still down this session via
+      the same relay-status pattern serendipity/t-012 and storymaker/t-010 found
+      today) and step (3) the liveUrl/channelKey/tabKey backfill (confirmed still
+      null via GET /api/projects, needs an admin Placements click). Verified before
+      opening the PR: npm run test (vue-tsc --noEmit) exit 0, eslint clean, prettier
+      clean. Full CI check status pending on kind_robots PR #645.
     claimed_by: claude-conductor-agent-20260720T-run1
     claimed_at: '2026-07-20T11:14:27Z'
     updated: '2026-07-20T11:14:27Z'
+
+  - id: t-015
+    milestone: m2
+    title: "Spec the AI-narration layer that generates Da Vinci chapter prompts/choices"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Kaizen from t-014 (kind_robots PR #645). The play-loop API
+      (POST /api/davinci/runs, GET /api/davinci/runs/:id,
+      POST /api/davinci/runs/:id/choices, POST /api/davinci/runs/:id/resolve) and
+      the ending/achievement seed (davinci-ending-* triggerCodes) are both built
+      and live, but nothing yet generates the actual chapter prose, choice text,
+      or effect deltas a player would see -- docs/notes/davinci-play-loop-api.md
+      explicitly scopes narration as "a separate layer that calls these; it never
+      owns state" and defers it. Write the design brief for that layer: what
+      calls into the play-loop endpoints (a Chat-backed narrator? a bot?), how it
+      derives `effects` deltas per choice from the DAVINCI_DIMENSIONS stat model,
+      how many choices/chapter and how resolution timing works, and how it reuses
+      or diverges from Storymaker's narrator pattern (see
+      projects/davinci/docs/storymaker-boundary-comparison.md). This is the
+      actual blocker between the existing backend and a real playable run UI --
+      not front-end polish (see t-014's note for why a UI build was deferred
+      instead of attempted this cycle).
