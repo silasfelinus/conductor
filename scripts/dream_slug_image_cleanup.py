@@ -23,12 +23,12 @@ What it does (in order, each phase independently skippable/idempotent):
   4. image paths (dreams+facets) — PATCH PitchSheet.imagePath / dream.cardPath and
      facet.imagePath to the canonical /images/<type>/<slug>/... form, and record
      every old->new move in a manifest. FILES do not move here (they live on the
-     Unraid media box) — the manifest feeds scripts/unraid_media_migrate.py, which
+     Unraid media box) — the manifest feeds scripts/media_migrate.py, which
      Silas runs on the box to `mv` the files + regenerate collections.json.
 
 Reward image folders (/rewards/<type>/... vs the component's /images/rewards/...)
 are intentionally NOT mass-rewritten here — that divergence is reconciled on the
-box by unraid_media_migrate.py, which can see the real folders. See its header.
+box by scripts/media_migrate.py, which can see the real folders. See its header.
 
 Usage:
   python scripts/dream_slug_image_cleanup.py                 # dry-run, prints plan
@@ -297,7 +297,7 @@ def run(only: set[str], live: bool, manifest_path: Path):
     manifest_path.parent.mkdir(parents=True, exist_ok=True)
     manifest_path.write_text(json.dumps(manifest, indent=2) + "\n")
     print(f"\nWrote {len(manifest['moves'])} media move(s) -> {manifest_path}")
-    print("Run scripts/unraid_media_migrate.py on the media box to move the files.")
+    print("Run scripts/media_migrate.py against the Z: images share to move the files.")
 
 
 def main() -> int:

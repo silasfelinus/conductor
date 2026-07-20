@@ -1,16 +1,24 @@
 #!/usr/bin/env python3
 """
-unraid_media_migrate.py — RUN THIS ON THE SELF-HOSTED MEDIA BOX (Unraid).
+media_migrate.py — move the dream/facet image files to match the DB.
 
-Applies the image-file moves recorded by scripts/dream_slug_image_cleanup.py
-(projects/dream-cycle/media-migration-manifest.json) to the real media store,
-then regenerates collections.json + gallery.json so the CDN can still resolve
-folders. The DB imagePath values were already PATCHed to the NEW paths by the
-cleanup script; this makes the files sit where those paths now point.
+Run this from ANY machine on Silas's network that can WRITE to the kindrobots
+images share — you do NOT have to be on the Unraid box. The images live on the
+Unraid NAS (served via media.acrocatranch.com) but are reachable as a share:
 
-Why here and not from CI: the image tree lives on the Unraid share
-(/mnt/user/pc/kindrobots/images, served via media.acrocatranch.com). Vercel and
-the conductor CI box cannot write to it — see kind_robots/docs/self-hosted-media.md.
+  * from the conductor box (Windows):   Z:\kindrobots\images
+  * from the conductor box (WSL/Linux): /mnt/z/kindrobots/images   <- default
+  * on the Unraid box itself:           /mnt/user/pc/kindrobots/images
+
+Point --root (or $KR_IMAGES_ROOT) at whichever applies. See
+kind_robots/docs/self-hosted-media.md. Vercel and the conductor CI box cannot
+write to the share, which is why this step is manual.
+
+It applies the moves recorded by scripts/dream_slug_image_cleanup.py
+(projects/dream-cycle/media-migration-manifest.json), then regenerates
+collections.json + gallery.json so the CDN can still resolve folders. The DB
+imagePath values were already PATCHed to the NEW paths by the cleanup script;
+this makes the files sit where those paths now point.
 
 Safe by construction:
   * DRY-RUN by default — prints every move; pass --apply to actually move.
@@ -19,10 +27,11 @@ Safe by construction:
   * Never deletes. Orphaned duplicate-card files (from the merged-away dreams)
     are only REPORTED, for you to remove by hand if you want.
 
-Usage (on the box, with the manifest copied over or the repo checked out):
-  python3 unraid_media_migrate.py --manifest media-migration-manifest.json
-  python3 unraid_media_migrate.py --manifest media-migration-manifest.json --apply
-  KR_IMAGES_ROOT=/mnt/z/kindrobots/images python3 unraid_media_migrate.py --apply
+Usage (from the conductor checkout, over the Z: share):
+  python3 scripts/media_migrate.py                                    # dry-run
+  python3 scripts/media_migrate.py --apply                            # move (WSL default root)
+  python3 scripts/media_migrate.py --root Z:\\kindrobots\\images --apply   # Windows
+  KR_IMAGES_ROOT=/mnt/z/kindrobots/images python3 scripts/media_migrate.py --apply
 """
 from __future__ import annotations
 
@@ -37,7 +46,18 @@ IMAGE_EXTS = {".webp", ".png", ".jpg", ".jpeg"}
 # The public URL prefix that maps to the media root. imagePath
 # "/images/dreams/x.webp" is the file "<root>/dreams/x.webp".
 URL_PREFIX = "/images/"
-DEFAULT_ROOT = os.environ.get("KR_IMAGES_ROOT", "/mnt/user/pc/kindrobots/images")
+# The kindrobots images share as seen from the conductor box under WSL. Override
+# with --root (Windows: Z:\kindrobots\images) or $KR_IMAGES_ROOT (Unraid-local:
+# /mnt/user/pc/kindrobots/images).
+_ROOT_CANDIDATES = [
+    "/mnt/z/kindrobots/images",         # conductor box, WSL mount of Z:
+    "Z:/kindrobots/images",             # conductor box, native Windows
+    "/mnt/user/pc/kindrobots/images",   # on the Unraid box itself
+]
+DEFAULT_ROOT = os.environ.get(
+    "KR_IMAGES_ROOT",
+    next((c for c in _ROOT_CANDIDATES if Path(c).exists()), _ROOT_CANDIDATES[0]),
+)
 
 
 def rel(url_path: str) -> str:
@@ -137,8 +157,10 @@ def main() -> int:
     moves = man.get("moves", [])
     print(f"{'APPLY' if args.apply else 'DRY-RUN'} · root={root} · {len(moves)} move(s)")
     if not root.exists():
-        print(f"!! images root {root} not found — set --root or $KR_IMAGES_ROOT to the "
-              f"Unraid share (e.g. /mnt/z/kindrobots/images).", file=sys.stderr)
+        print(f"!! images root {root} not found. Point --root or $KR_IMAGES_ROOT at the "
+              f"kindrobots images share — one of:", file=sys.stderr)
+        for c in _ROOT_CANDIDATES:
+            print(f"     {c}", file=sys.stderr)
         if args.apply:
             return 2
 
