@@ -107,6 +107,33 @@ schtasks /Create /SC MINUTE /MO 5 /TN "AI-Backends-Healthcheck" `
   /TR "powershell -NoProfile -ExecutionPolicy Bypass -File \"C:\path\to\conductor\ops\home-server\healthcheck.ps1\""
 ```
 
+### Email alerts on restart
+
+The watchdog can email you when it has to restart a hung backend (and, more
+importantly, when a restart *doesn't* bring it back). It reuses the same Brevo
+transactional-email account as the daily digest — no new provider. Set these
+once on the box, then open a **new** shell so `schtasks` picks them up:
+
+```powershell
+setx BREVO_API_KEY "your-brevo-key"
+setx DIGEST_TO     "silasfelinus@gmail.com"     # or ALERT_TO to override
+setx DIGEST_FROM   "ops@your-verified-sender"    # or ALERT_FROM; must be a Brevo-verified sender
+# optional: setx ALERT_COOLDOWN_MINUTES "60"     # min gap between repeat emails per backend (default 60)
+```
+
+With no `BREVO_API_KEY` set the watchdog still restarts — it just won't email.
+A per-backend cooldown (default 60 min, in `logs\alert-state.json`) keeps a
+flapping process from emailing every 5-minute tick.
+
+Two layers of coverage:
+
+- **This watchdog** catches a *hung or crashed* ComfyUI/SD backend on a box
+  that's still online, restarts it, and emails the outcome.
+- **CI** (`auto-art-generate.yml`) catches the box being *entirely
+  unreachable* — it probes `media.acrocatranch.com` each run and emails on the
+  down↔up transition (a dead box can't email you itself). Those alerts use the
+  repo's existing `BREVO_API_KEY` / `DIGEST_*` GitHub Actions secrets.
+
 ## Day-to-day commands
 
 ```powershell

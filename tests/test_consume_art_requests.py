@@ -127,3 +127,32 @@ def test_entry_to_job_reused_for_a_request():
     # no size on an image request => consumer's 1024x1024 default
     assert job["payload"]["width"] == 1024
     assert job["payload"]["height"] == 1024
+
+
+def test_filler_steps_default_is_lower_than_project_lane():
+    # The whole point: filler art costs fewer steps than the 30-step project lane.
+    assert cr.FILLER_STEPS < cr.consumer.DEFAULT_STEPS
+    assert cr.FILLER_STEPS < cr.consumer.FLUX_MODELS["dev"]["steps"]
+
+
+def test_apply_default_steps_fills_only_unset():
+    entries = [
+        {"image_path": "a.webp"},               # no steps -> gets the default
+        {"image_path": "b.webp", "steps": 40},  # explicit -> preserved
+        {"image_path": "c.webp", "steps": 0},   # falsy -> treated as unset
+    ]
+    cr.apply_default_steps(entries, 20)
+    assert entries[0]["steps"] == 20
+    assert entries[1]["steps"] == 40
+    assert entries[2]["steps"] == 20
+
+
+def test_filler_steps_reach_the_flux_workflow():
+    # A request with no steps, once defaulted, renders at the filler count end to
+    # end -- both the payload and the Flux KSampler node carry it.
+    entry = {"image_path": "public/images/x.webp", "prompt": "x", "variant": "image"}
+    cr.apply_default_steps([entry], cr.FILLER_STEPS)
+    job = cr.consumer.entry_to_job(entry)
+    assert job["payload"]["steps"] == cr.FILLER_STEPS
+    ksampler = job["payload"]["workflow"]["52"]["inputs"]
+    assert ksampler["steps"] == cr.FILLER_STEPS
