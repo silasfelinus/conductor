@@ -1239,3 +1239,43 @@ into `academyStyles.ts` alongside the preview image.
 - None significant this cycle. Minor: the `docs/teaching-notes.md` gap the checklist's coverage table already flags (Persian Miniature has no teaching-notes entry yet) was left untouched, correctly out of scope for this pass but worth flagging so it doesn't silently fall off the checklist's radar.
 
 **Kaizen task:** none new this cycle — `t-035` (now thumbnail-generation-only) already carries the next actionable item once the home relay recovers.
+
+## 2026-07-20 | Reviewer (scheduled conductor sweep) | ai-art-academy/t-010 | pattern
+
+**Decision:** merged conductor PR #897 (lane 2, roadmap-accuracy fix for the stale
+media-vs-git split in `t-013-remaining-example-works.md`), from a `claude/*` branch
+opened by a different session.
+
+**Failure category:** transient — the PR's merge-base had drifted ~15 commits behind
+`main` (multiple `chore: refresh STATUS.md`/roadmap-claim commits landed from other
+concurrent sessions while it sat open), so `merge_pull_request` 405'd with a real
+conflict, not a stale-`dirty`-state false alarm. No pass consumed; this is exactly the
+"batch-merge note" scenario in `AGENTS.md`, just triggered by elapsed wall-clock time
+across sessions instead of back-to-back Reviewer merges.
+
+**What was good:**
+- Rebased the PR branch locally instead of retrying the API merge blind. Two real
+  conflicts: `STATUS.md` (auto-gen, resolved to `main`'s copy per hard rule 9) and this
+  project's own `roadmap.yaml` on `t-010`'s `claimed_by`/`updated` fields — a second
+  burst session had re-claimed the same recurring task (session-id format
+  `...burst-20260720080634Z` vs `...burst-20260720T080634Z`, ~1 second apart) after
+  this PR's branch point but before it merged. Kept `main`'s (newer) claim metadata
+  rather than reintroducing the PR's stale claim state; the substantive note-log content
+  on both sides was already conflict-free (append-only history, not touched by either
+  session).
+- Regenerated `ROADMAP-AUDIT.{json,md}` after the rebase instead of trusting the PR's
+  now-stale snapshot, and confirmed all 23 PR checks green (CodeQL x4, GitGuardian,
+  Authz regression tests, Dependency audit, Static checks, roadmap/task-event YAML
+  validation, Lint Python scripts, TypeScript build, Worker status/Dream-cycle/
+  Ruler-hooked smoke guards) on the rebased head before merging.
+- Confirmed the PR's own substantive change is correct and low-risk: it corrects a
+  handoff doc that told a future session to `git commit` files that actually live on
+  `media.acrocatranch.com`, not in the kind_robots repo — verified against
+  `mediaContractSource.ts` and a live 404 on the in-repo path, matching the PR's own
+  cited evidence rather than taking the PR description on faith.
+
+**What to improve:** none this cycle.
+
+**Kaizen task:** none new this cycle — no fresh systematic gap surfaced; the
+recurring-task claim race this cycle hit is the same class already tracked by
+`AGENTS.md`'s "Rotation collisions" section, not a new pattern.
