@@ -102,8 +102,8 @@ tasks:
 - id: t-009
   milestone: m1
   title: Cross-link the Da Vinci boundary rules before designing session schema
-  status: ready
-  owner: null
+  status: claimed
+  owner: worker
   passes: 0
   stakes: reversible
   note: >
@@ -113,6 +113,9 @@ tasks:
     session data model doc (or a pointer in notes_from_silas) so schema design
     respects: no shared run/session tables, no columns added to Life* models,
     shared behavior only via existing KR models or extracted pure utilities.
+  claimed_by: claude-conductor-scheduled-20260720T0511Z
+  claimed_at: '2026-07-20T05:13:44Z'
+  updated: '2026-07-20T05:13:44Z'
 - id: t-010
   milestone: m4
   title: Polish and upgrade Storymaker front-end surface
