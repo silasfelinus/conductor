@@ -122,3 +122,35 @@ say-so, prefer landing the roadmap edit as its own commit authored under Silas's
 (as happened naturally here) rather than folded into an agent-authored bookkeeping commit —
 that makes the provenance checkable from `git log` alone instead of resting on a PR body's
 word.
+
+## 2026-07-20 | Reviewer (conductor agent) | serendipity/t-012 | pattern
+
+**Decision:** implemented steps (2) and (4) of the standing "Polish and upgrade front-end
+surface" task, merged (kind_robots PR #636, squash 650a2c9). Kept task `status: ready` —
+steps (1) and (3) remain genuinely blocked (art-generation relay down; admin-only
+liveUrl backfill), same shape as model-builder/t-029's prior cycle.
+
+**Failure category:** none — clean first pass on the landable scope.
+
+**What was good:**
+- Verified live before assuming any part of the task was still open: checked
+  `tutorialChannels.scenario.sections` in kind_robots main and confirmed no `serendipity`
+  entry existed (only `scenarios`/`add`), then checked `components/pages/serendipity-page.vue`
+  and confirmed it already implements the full story-weaving loop rather than being a
+  placeholder scaffold — avoided both under- and over-scoping the task.
+- Confirmed the art-generation relay is still down (job 816 recheck) and the Project
+  record's `liveUrl`/`channelKey`/`tabKey` are still null via a live `GET /api/projects`
+  call, rather than assuming either from the task note's age.
+- Verified before merging: eslint, prettier, full-project `npm run test` (vue-tsc)
+  locally, then confirmed all 3 kind_robots PR checks green.
+
+**Pattern note:** this is the second project (after model-builder/t-029) where "evolve
+the placeholder scaffold into the full interactive experience" turned out to already be
+a fully-built feature, not a scaffold. Filed as this cycle's kaizen suggestion in the PR:
+the standing task template should distinguish projects with real shipped milestones from
+those still at scaffold stage, so the note stops implying scaffold-level work that isn't
+there.
+
+**Kaizen task:** none filed this cycle — the pattern note above is the improvement signal;
+no new task needed since the underlying template text lives in each project's roadmap and
+would need a cross-project sweep, which is disproportionate to one cycle's finding.
