@@ -215,11 +215,11 @@ tasks:
 - id: t-009
   milestone: m3
   title: Build the MediaEntry Prisma migration, GET /api/media-entries browse + stats routes, and a minimal browse UI from t-008's spec
-  status: ready
-  owner: null
+  status: claimed
+  owner: reviewer
   passes: 0
   stakes: reversible
-  updated: '2026-07-20T15:30:00Z'
+  updated: '2026-07-20T20:18:00Z'
   note: 'Kaizen from the 2026-07-20 t-008 cycle. projects/media-watchlist/docs/t-008-final-schema-and-browse-api.md
     has the final Prisma model + MediaType enum, the GET /api/media-entries and
     GET /api/media-entries/stats route contracts, and the one-time
@@ -233,3 +233,5 @@ tasks:
     added. Verify with vue-tsc/eslint at minimum; live DB verification may need
     the Vercel MCP preview-deployment path per AGENTS.md''s cross-repo section
     if local DATABASE_URL is unreachable.'
+  claimed_by: claude-conductor-agentrun-20260720T2015Z
+  claimed_at: '2026-07-20T20:18:00Z'
