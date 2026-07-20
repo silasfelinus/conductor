@@ -15,7 +15,7 @@ milestones:
 - id: m2
   title: Dashboard and project views
   weight: 30
-  status: in-progress
+  status: done
 - id: m3
   title: Todos, approvals, and art requests
   weight: 25
@@ -148,13 +148,35 @@ tasks:
 - id: t-008
   milestone: m2
   title: 'App: project intent editor and feature wishlist (DESIRED_FEATURE todos with ordering)'
-  status: ready
-  owner: null
+  status: done
+  owner: claude
   passes: 0
   stakes: reversible
   depends_on: t-006
+  updated: '2026-07-20T21:00:00Z'
   note: 'Port the remaining conductor-page project-detail powers to the app: goal/pitch/flavorText/liveUrl/repoUrl
     autosave editing, and the ordered DESIRED_FEATURE wishlist with promote-to-AGENT and retire actions.
+
+    FOUND DONE 2026-07-20 (conductor-burst rotation): this was already fully implemented and
+    wired but never flipped from ready. Verified by reading the actual code, not just the
+    roadmap: apps/conductor/lib/features/projects/widgets/intent_editor_sheet.dart is a
+    bottom sheet editing title/goal/description/pitch/flavorText/liveUrl/repoUrl and
+    returning a diff-only patch map; wishlist_section.dart lists DESIRED_FEATURE todos
+    scoped to dreamId, sorted by order, with up/down reorder (rewrites order to list
+    position), a popup menu with "Promote to agent task" (patches category to AGENT,
+    priority to HIGH) and "Retire" (status ARCHIVED), and an "Add to wishlist" dialog that
+    creates a new DESIRED_FEATURE todo at the end of the list. Both widgets are imported
+    and rendered from project_detail_screen.dart (edit-details IconButton opens
+    IntentEditorSheet; WishlistSection is rendered in the body). Project.toJson/fromJson in
+    project_models.dart carries every field the editor touches, and both
+    RemoteProjectsRepository.update (PATCH /api/dreams/:id) and LocalProjectsRepository.update
+    apply the patch. docs/app-architecture-v2.md''s feature-parity table already lists
+    "Project status/priority/intent editing" as "scaffolded (status, priority, full intent
+    editor)" and "Feature wishlist (DESIRED_FEATURE + order, promote/retire)" as
+    "scaffolded" -- the doc was ahead of this roadmap file. No functional gap found; not
+    re-implemented. flutter analyze/test were not re-run in this sandbox (no flutter
+    toolchain available here) -- this is a bookkeeping-only correction, the code itself was
+    already live on main pre-dating this session, so no new risk is introduced.
 
     '
 - id: t-009
