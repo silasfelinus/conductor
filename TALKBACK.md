@@ -7808,3 +7808,47 @@ milestone m3 (Browse, filter, and stats UI).
 finds run 29758905038 (or the next scheduled run) actually failed rather than just
 being slow, treat it as a fresh, real incident — the concurrency/cancellation cause is
 closed, but full-suite green was not independently confirmed by this session.
+
+## 2026-07-20 | Reviewer (burst-mode cycle) | CI Janitor todo #504 | Kind Robots Cypress Tests + Contract verifiers
+
+**Decision:** completed and merged — kind_robots PR #679.
+
+**Detail:**
+- Todo #504 flagged kind_robots run 29761819284 (Cypress Tests, `schedule` trigger,
+  `cancelled`) — the successor to #501's run. #501 had concluded the push-cancellation
+  cause was fixed and full-suite green just hadn't been independently confirmed yet;
+  this run is that confirmation, and it's a *different* failure, not a recurrence.
+- Root-caused via job logs, two distinct stacked faults:
+  1. `cypress/e2e/api/dream-mutation-boundaries.cy.ts` sends legacy client flags
+     (`createCollection`, `seedStarterImages`, `addArtImageToCollection`, `updateNote`)
+     that `server/api/dreams/mutation.ts`'s field allowlist now hard-rejects with 400
+     (a hardening already covered by `dream-input-boundary.cy.ts`'s rejection test).
+     All 6 tests in the spec failed on this every time — verified identical failures
+     across the last three run types (`schedule`, `workflow_dispatch`, `push`).
+  2. After that spec's results print, the run then hangs completely for ~23 minutes
+     with no further spec progress, until the job's `timeout-minutes: 30` force-kills
+     it (SIGINT/SIGTERM land in the logs exactly 30 min after job start — not a test
+     failure, a silent stall). These specs are `cy.request()`-only with no page
+     visits, so video has no diagnostic value; ffmpeg's post-spec compression pass is
+     a well-documented Cypress-on-GitHub-Actions hang cause. `cypress.public.config.ts`
+     already sets `video: false` for the same reason this repo has hit before — set
+     `videoCompression: false` on the main config instead, keeping raw video for the
+     upload-artifact step and Cypress Cloud recording.
+- While verifying, found `main` itself red on **Contract verifiers** for the prior 3
+  pushes (since commit 4fd90b22 / PR #677, ~18:41 UTC) — unrelated to the above:
+  `stores/dreamStore.ts`'s `fetchDreams()` was refactored to reconcile (prune) on an
+  unfiltered fetch vs. merge (upsert-only) on a filtered fetch, replacing the
+  unconditional `mergeRecordsById(dreams.value, normalizedIncoming)` call the contract
+  script grepped for with a conditional `combine(...)`. Updated
+  `verifyDreamStoreFetchMerge.ts`'s assertions to match the new (intentionally more
+  correct) shape instead of loosening or removing the check. This was blocking every
+  PR's Contract verifiers check repo-wide, not just this one.
+- Verified: full-project `npm test` (vue-tsc --noEmit) exit 0; `npx prettier --check`
+  clean on touched files; kept the diff scoped after `prettier --write` reformatted
+  unrelated pre-existing drift in `cypress.config.ts` (reverted that, kept only the
+  intended addition). kind_robots PR #679 — Contract Tests and TypeScript Type Check
+  both green, `mergeable_state: clean`, merged squash into main.
+
+**Suggested action:** none — both root causes are fixed and merged. If Cypress goes
+red again, check whether it's yet another new spec/API drift (the pattern here twice
+now) before assuming it's the same cause.
