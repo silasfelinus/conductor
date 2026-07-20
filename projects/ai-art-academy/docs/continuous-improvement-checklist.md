@@ -15,6 +15,27 @@ Record the lane, files changed, and verification in the task note before rearmin
 
 ### Rotation state
 
+- Last completed lane: Front-end polish (lane 1), 2026-07-20 (~18:12-18:35 UTC,
+  claude-conductor-agent-20260720T1830Z). Dispatched an Explore subagent over
+  all 5 Academy components plus art-styler.vue/image-upload.vue with an
+  exclusion list of every pattern already fixed in prior cycles (aria-pressed,
+  aria-label/aria-controls, focus-management, dead no-op handlers, duplicated
+  local state, search-field coverage, stale copy). Found a real, verifiable
+  bug in `image-upload.vue`'s `handleBatchUpload()`: on a fully-successful
+  batch, the function set the success confirmation banner text
+  (`message.value = uploadStore.message ?? ''`) and then immediately called
+  `clearQueue()`, which unconditionally resets `message.value`/`error.value`
+  back to `''` on the very next line — so the "✓ N images uploaded" banner
+  never rendered on the happy path (the most common outcome). The
+  failure/partial-failure path was unaffected since `clearQueue()` isn't
+  called there, which is why the asymmetry survived this many polish cycles.
+  Fixed by reordering so `clearQueue()` runs before the message/error
+  assignment. Verified: `npx eslint`, `npx prettier --check` both clean;
+  full-project `npm run test` (`vue-tsc --noEmit`) exit 0. kind_robots PR #672
+  (branch `claude/vigilant-edison-gkpke6`): all 3 CI checks green (TypeScript,
+  Contract verifiers, GitGuardian) — merged squash `070a7b8`. Next preferred
+  lane is roadmap accuracy (lane 2) — this cycle ran lane 1, so lane 2 is next
+  in the 1→2→3→4 rotation.
 - Last completed lane: Curriculum depth (lane 4, coverage-gap follow-up),
   2026-07-20 (~17:12-17:26 UTC). Lane 3 (inspiration/preview assets) was next
   preferred per the prior cycle's note, tried first with a *fresh* queued job
