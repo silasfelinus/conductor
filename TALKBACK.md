@@ -7852,3 +7852,47 @@ closed, but full-suite green was not independently confirmed by this session.
 **Suggested action:** none — both root causes are fixed and merged. If Cypress goes
 red again, check whether it's yet another new spec/API drift (the pattern here twice
 now) before assuming it's the same cause.
+
+## 2026-07-20 | Reviewer (agent run) | CI Janitor todo #506 | Kind Robots Cypress Tests
+
+**Decision:** resolved via a concurrent session's PR — kind_robots PR #721 (merged),
+my own independently-authored PR #720 closed by Silas as superseded.
+
+**Detail:**
+- Todo #506 flagged run 29770267938 (commit fbfe2a86, cancelled) — confirmed this run
+  started at 19:01:33Z, before PR #679's Cypress-hang fix merged at 19:23:47Z, so it
+  was the tail end of the already-fixed timeout signature, not a new incident.
+- Checked the next scheduled run after #679 (29777691847, commit 64ce1bff): it
+  completed the full suite for the first time in days (~10 min, no timeout) and
+  surfaced 6 real failures across 5 of 58 specs. Root-caused all 5 independently by
+  reading the actual server routes and validators (not just pattern-matching #679's
+  fix): 4 were stale test payloads hitting field-allowlist/ownership hardening
+  (`facet-assignments.cy.ts`'s dead `createCollection` field, `relationships.cy.ts`'s
+  dead `supportsTxt2Img` field, `bots.cy.ts`'s `{fresh: true}` double-call silently
+  reusing one shared identity instead of two distinct users, and
+  `server-health-report-ownership.cy.ts`'s admin+`userId` ownership-spoofing attempt
+  that the ownership-hardening pass now rejects unconditionally, admin included).
+  The 5th was a real product bug: `scenarios/batch.patch.ts` called the shared
+  mutation validator without telling it batch entries legitimately carry their own
+  routing `id`, so every batch-PATCH call failed every entry with "Scenario ID is
+  server-owned" — this endpoint could never have succeeded as documented.
+- Opened kind_robots PR #720 with all 5 fixes (my batch-PATCH fix added an
+  `allowBatchId` validator mode). Within ~7 minutes, a concurrent session had
+  independently found and fixed the identical 5 issues and merged kind_robots PR
+  #721 first (same 4 stale-test corrections; the batch-PATCH fix took a different
+  but equivalent approach — routing the batch entry's `id` through the validator's
+  existing `routeId` parameter instead of adding a new `allowBatchId` mode). Silas
+  closed #720 as superseded, correctly noting no unique verified change remained to
+  merge from it.
+- Verified #721 is genuinely `merged: true` (not just closed) before completing the
+  todo. Ran `python scripts/complete_todo.py 506`.
+
+**Suggested action:** this is the third rotation collision on this exact
+Cypress-CI-fix cycle in one afternoon (see #679/#680 above, now #720/#721) — two
+independent sessions kept converging on the same red-CI todo within minutes of each
+other. The todo's `ci-janitor:...:cypress.yml:<run-id>` naming ties it to a specific
+run, but nothing marks a todo as "someone's already investigating" once a session
+starts on it, so a second concurrently-triggered session has no signal to check
+before duplicating the work. Consider whether CI-janitor todos should get a
+claim/lock step analogous to `claim_task.py` for roadmap tasks, given this is now a
+repeated pattern rather than a one-off.
