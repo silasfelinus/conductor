@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-07-20T00:12:44Z
+Generated: 2026-07-20T00:37:11Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **304**
-- Outcomes: blocked: 12, done: 292
+- Closed tasks recorded: **305**
+- Outcomes: blocked: 12, done: 293
 - Success rate: **96%**
 - Average passes on successful tasks: **0.0**
 
@@ -17,7 +17,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 |---|---|---|
 | ai-art-academy | 33 | 100% |
 | alexa-integration | 2 | 100% |
-| animation-manager | 6 | 100% |
+| animation-manager | 7 | 100% |
 | animation-studio | 1 | 100% |
 | appmaker | 2 | 100% |
 | approval-portal | 2 | 0% |
@@ -51,26 +51,27 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 15 | 40% |
-| software | 289 | 99% |
+| software | 290 | 99% |
 
 ## Failure categories
 
 | Category | Count |
 |---|---|
+| quality | 6 |
 | actionable | 6 |
-| quality | 5 |
 | transient | 4 |
 
 ## Kaizen targets
 
 - project `coat-dance` — 0% success over 8 closed tasks; aim the next kaizen task here
 - kind `content` — 40% success over 15 closed tasks; aim the next kaizen task here
+- failure category `quality` — 6 occurrences; look for the shared cause across its records
 - failure category `actionable` — 6 occurrences; look for the shared cause across its records
-- failure category `quality` — 5 occurrences; look for the shared cause across its records
 - failure category `transient` — 4 occurrences; look for the shared cause across its records
 
 ## Recent lessons
 
+- 2026-07-20 `animation-manager/t-005` — New route content mounts (content/<slug>.md with a channelKey/tabKey pair) aren't self-sufficient -- verifyChannelContent.ts requires a matching content/channels/<channel>/<tab>.md tab document to exist too, or CI's Contract verifiers job fails with 'references unknown tab'. Adding a new WonderLab-style tab means touching both files (the route mount AND the channel tab registration), not just the route mount + dashboardHelper.ts/lab-manager.vue wiring that satisfies the front-end nav. Caught by CI on first push, fixed in a follow-up commit -- next time check for a content/channels/<channelKey>/ directory before assuming a new channelKey/tabKey pair needs no separate registration.
 - 2026-07-19 `art-generator-connect/t-020` — Rotation collision on a cross-repo task: claim_task.py closes the conductor-side claim race but not the target-repo one -- two sessions can land the identical claim_task.py claim commit in the same window and then independently finish the same kind_robots implementation before either opens a PR, surfacing only at merge time via a dirty mergeable_state. No rework was needed here since both diffs were functionally identical; a cheap second check (grep the target repo's recent PRs for the task id before opening a new one) would catch this earlier next time.
 - 2026-07-19 `conductor/t-069` — Verify a new contract check both ways -- clean against the real repo (proves the prior fix holds) and against a deliberately reintroduced instance of the bug (proves the check actually catches it), not just the former. Also: a project-wide typecheck gate (vue-tsc) can fail a PR for a reason unrelated to its diff if main itself broke earlier the same day (here, PR #569); when that happens, fix the one-line pre-existing break inline and flag it transparently in the PR body rather than blocking the actual task on it or silently expanding scope.
 - 2026-07-19 `art-generator-connect/t-020` — A type widened during an extraction refactor (ArtQueueEntry.variant: ArtVariant -> string, kind_robots PR #108) is easy to miss since call sites still typecheck fine with valid literals -- the fix is cheapest when the narrower union is defined in the module that owns the contract (artRequestYaml.ts) and the consumer imports it, rather than each side declaring its own copy that can silently drift apart again.
@@ -80,7 +81,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-07-19 `conductor/t-070` — A branch push can 413 even with a tiny diff and no local history rewrite -- this session's push failed twice, once because the session branch simply didn't exist on the actual GitHub remote yet (local remote-tracking ref showed a stale SHA, but `git ls-remote` showed nothing), and again after a squash-merge when a follow-up single-field status flip needed to reach main. Both resolved via CLAUDE.md's documented workarounds (`create_branch` for the first, `git_plumbing.commit_file_on_ref` direct to `refs/heads/main` for the second) rather than attempting to hand-transcribe a ~130KB roadmap.yaml into `push_files`, which would have risked silently corrupting the shared roadmap for every other concurrent agent. When a file is too large to safely retype, prefer a git-plumbing helper that reads the exact bytes from disk over any path that requires the content to pass through generated text.
 - 2026-07-19 `newsfeed/t-014` — A prior session's own note ("could not verify locally, needs a real preview-deploy connector") is a precise handoff -- the Vercel MCP list_teams/list_projects/list_deployments/web_fetch_vercel_url chain in AGENTS.md answers it directly against the live production deployment without needing a new PR or any code change. Worth checking whether a 'ready' task is actually a pure-verification task before assuming every ready task implies a code diff.
 - 2026-07-19 `newsfeed/t-020` — When a tie-break/precedence rule (here, resolveTutorialChannelFromRoute's cross-key bestLen prefix match) has zero real-world data to exercise it, add optional test-only override parameters defaulted to the real production data -- this lets a unit test inject controlled overlapping fixtures without touching any real call site's behavior, rather than either skipping the test or waiting for production data to coincidentally collide.
-- 2026-07-19 `newsfeed/t-019` — When a task offers an explicit design choice (single multi-route channel vs. per-tab-key split), the smaller-diff option that widens an existing type (string -> string | readonly string[]) beat fragmenting one coherent UI narrative into N near-duplicate config entries -- worth defaulting to the option that keeps content close to a shared idea in one place, then generalizing the plumbing, rather than duplicating structure to avoid a small type change.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-07-20T00:12:44Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-07-20T00:37:11Z_
