@@ -74,6 +74,17 @@ already shipped in `docs/suprematism-lesson.md` as its `prompt_hint` so the two 
 can't drift apart. No LoRA search performed this cycle — filed as a candidate for a
 future `t-021`-style hunt, same as any other movement still on prompt-mode.
 
+**v1.4 update (2026-07-20, t-010 cycle):** the curriculum's 25th movement, Persian
+Miniature Painting (added two cycles earlier), had no registry entry — the
+curriculum-slug-mapping table still said "not yet in the registry." With Hugging
+Face and Civitai both directly reachable this cycle, ran an actual LoRA search
+rather than deferring it again: found `batchku/storai-persian-miniature` (HF,
+FLUX.1-dev, no login) but did not promote it — undisclosed training provenance,
+same standard already applied to the rejected `gothic` Civitai candidate (S-8).
+Added `persian-miniature` as an 11th prompt-mode style, `prompt_hint` copied
+verbatim from `curriculum-outline.md` §25's remix_hint. Full detail in the
+persian-miniature per-style notes entry below.
+
 ### Licensing headline (flag for t-004 and Silas)
 
 Almost every FLUX LoRA in the ecosystem is published under the **FLUX.1 [dev]
@@ -128,7 +139,7 @@ lesson to the wrong registry entry by assuming the slugs always match.
 | `suprematism` | `suprematism` | matches — added v1.3 (2026-07-18, this cycle), see per-style notes |
 | `ashcan-school` | *(none)* | not yet in the registry — added to curriculum-outline.md v1.3 (2026-07-18); no dedicated LoRA search performed this cycle |
 | `american-regionalism` | *(none)* | not yet in the registry — added to curriculum-outline.md v1.4 (2026-07-19); no dedicated LoRA search performed this cycle |
-| `persian-miniature` | *(none)* | not yet in the registry — added to curriculum-outline.md §25 (2026-07-20); no dedicated LoRA search performed this cycle |
+| `persian-miniature` | `persian-miniature` | matches — added v1.4 (2026-07-20, this cycle), prompt-mode; see per-style notes |
 
 Registry-only entries with **no curriculum-outline.md counterpart at all** — general
 painting techniques/bonus styles, not tied to a specific lesson movement, so a
@@ -265,6 +276,9 @@ styles:
   - style_slug: suprematism
     mode: prompt
     prompt_hint: "Reduce this image to a Suprematist composition: a small number of flat geometric shapes -- squares, circles, and bars -- in black, red, and a few pure colors, floating freely against a plain white ground, with no outline, perspective, texture, or recognizable objects"
+  - style_slug: persian-miniature
+    mode: prompt
+    prompt_hint: "Repaint this image as a Persian miniature: flat, high-vantage compositions with distant figures placed higher rather than smaller, brilliant unshaded jewel colors, intricate architectural or garden detail, patterned textiles, and a dense floral or geometric border, no Western perspective or cast shadow"
   # Bonus styles (not in the t-003 target list, free wins from the Kontext pack)
   - style_slug: post-impressionism-van-gogh
     mode: lora
@@ -574,6 +588,44 @@ styles:
   instruction fights the style itself. Frame the lesson's remix as a deliberate
   reduction exercise rather than a subtle restyle, same framing already used for
   De Stijl.
+
+### persian-miniature — prompt-mode
+
+- Backs curriculum movement §25 (Persian Miniature Painting: Kamal ud-Din Bihzad
+  d. 1535, Sultan Muhammad d. before 1555 — both comfortably in-bounds).
+- **Checked 2026-07-20 (t-010 cycle), first session with open egress to both
+  Hugging Face and Civitai since this movement was added:** found one candidate,
+  **`batchku/storai-persian-miniature`** (Hugging Face, no login, FLUX.1-dev,
+  trigger `ali_persian-miniature`), trained via fal.ai's generic
+  flux-lora-fast-training service "for StorAI story generation in the style of
+  old Persian miniatures." Standard FLUX.1 [dev] Non-Commercial license, weights
+  downloadable directly. **Not promoted**: the model card discloses no training
+  artists/artwork — same undisclosed-provenance situation as the rejected
+  `gothic` Civitai candidate (S-8) — so the dead-70-years boundary can't be
+  confirmed from the source data, only inferred from the trigger name. Left as a
+  documented candidate rather than wired in; a future pass may revisit if the
+  uploader discloses a training set, or if Silas is willing to accept a
+  fal.ai-style-transfer LoRA on trigger-name evidence alone.
+- Also checked and rejected as off-register: Civitai "Mughal Miniature Painting
+  Style" (trigger "Mughal miniature painting of") — a related but visually
+  distinct Indo-Persian courtly tradition, not the Timurid/Safavid Herat-Tabriz
+  register this lesson teaches; and Shakker-Labs/FLUX.1-dev-LoRA-Miniature-World,
+  which produces tilt-shift diorama photography, not painting — a false-positive
+  "miniature" name collision, not a style match at all.
+- Prompt-mode recipe (`prompt_hint` above, verbatim from `curriculum-outline.md`
+  §25's remix_hint): "Repaint this image as a Persian miniature: flat,
+  high-vantage compositions with distant figures placed higher rather than
+  smaller, brilliant unshaded jewel colors, intricate architectural or garden
+  detail, patterned textiles, and a dense floral or geometric border, no Western
+  perspective or cast shadow."
+- **Teaching note / t-004 watch-item:** shares the "discards realistic space" risk
+  already flagged for `cubism`/`suprematism`/`de-stijl`, but the failure mode is
+  different — the base model tends to default to ordinary linear-perspective
+  illustration and simply add jewel-tone color and a decorative border, rather
+  than actually inverting the size/height convention. Evaluate specifically
+  whether generated output places distant elements higher (not just smaller) on
+  the page; if not, the remix reads as generic "colorful storybook art," not
+  Persian miniature.
 
 ### Bonus: post-impressionism (Van Gogh) and pop-art — LoRA
 
