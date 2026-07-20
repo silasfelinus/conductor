@@ -8,35 +8,34 @@ today, Pacific) and creates the actual content rows via the kind_robots REST
 API (machine auth: Authorization: Bearer KR_API_TOKEN — the beta-admin token;
 rows attribute to the system admin user server-side).
 
-What gets created (per the kind_robots data philosophy, where a Dream row is
-the universal "card hub" and PitchSheets hang off Dreams 1:1):
+What gets created. The Dream index holds only vibes + locations; every other
+element is created as its REAL model (Character/Bot/Reward/Scenario), linked to
+the day's world Dream — never a shadow "CHARACTER/NARRATOR/REWARD" dream:
 
-  * 1 PITCH Dream — the world card (title + idea + vibe)
+  * 1 PITCH Dream — the world card (title + idea + vibe) — the day's dream
   * 1 GENRE Dream — the vibe (world-graph fidelity; no card)
   * 2 LOCATION Dreams
-  * 3 CHARACTER Dreams + 3 real Character rows (linked via dreamIds)
-  * 1 NARRATOR Dream + 1 real Bot row
-  * 2 REWARD Dreams + 2 real Reward rows (one SKILL, one ITEM)
-  * 1-2 Scenario rows (linked to the world + locations)
-  * a PitchSheet per card Dream via POST /api/sheets/by-dream/{id}
+  * 3 real Character rows, 1 real Bot (BotType NARRATOR), 2 real Reward rows
+    (one SKILL, one ITEM), and 1-2 real Scenario rows — each linked to the
+    world Dream via dreamIds. NO shadow Dreams of those types.
+  * a PitchSheet per world/location Dream via POST /api/sheets/by-dream/{id}
     (NOTE: POST /api/sheets is a known-broken handler — never use it)
 
-Every row carries designer: "dream-cycle", and every sheet carries
-extraData: {dreamCycle, proposalDate, elementType, element} so the site's
-/daily-dream page can group and render a whole dream — and so the whole
-creation is traceable and removable (the reversibility contract).
+Every row carries designer: "dream-cycle" so the whole creation is traceable
+and removable (the reversibility contract).
 
 World-graph edges (kind-robots/t-017): the world (PITCH) Dream RELATED to the
 GENRE Dream, world CONTAINS each LOCATION Dream, and each LOCATION RELATED to
-the GENRE Dream — via POST /api/dream-relations. Character/narrator/reward
-cohesion still comes from extraData tags + the dreamIds relation arrays.
+the GENRE Dream — via POST /api/dream-relations. Character/narrator/reward/
+scenario cohesion comes from the dreamIds link to the world Dream.
 
 Art is queued through the EXISTING self-draining pipeline: one `requests:`
-entry per card appended to projects/art-prompts.yaml targeting kind_robots
+entry per element appended to projects/art-prompts.yaml targeting kind_robots
 public/images/dreams/<slug>/… — the nightly auto-art-generate workflow renders
 them and distribute_images.py lands them in the site repo. The `--attach`
-pass (run every hourly sweep) HEAD-checks the public URLs and PATCHes each
-PitchSheet's imagePath once its art is live.
+pass (run every hourly sweep) HEAD-checks the public URLs and PATCHes the
+imagePath of each element's OWN row (Dream / Character / Bot / Reward /
+Scenario) once its art is live — so every creation renders from its own art.
 
 Steering contract: if the proposal file's `## Notes from Silas` section has
 real content, this script REFUSES to auto-build (agents must fold notes in
@@ -379,12 +378,18 @@ def build_records(proposal: dict, slug: str, pdate: str, dry_run: bool) -> tuple
         used_slugs.add(out)
         return out
 
-    def queue_art(element_slug: str, label: str, art_prompt: str) -> None:
+    def queue_art(element_slug: str, label: str, art_prompt: str,
+                  target_endpoint: str, target_id: Optional[int]) -> None:
+        # Art attaches to the created entity's own imagePath (a Dream for the
+        # world/locations, or the real Character/Bot/Reward/Scenario row) — not
+        # to a shadow dream's PitchSheet. target_id is the row to PATCH once the
+        # rendered image is live (see attach_art).
         req_id, image_path, yaml_text = art_request_entry(slug, element_slug, label, art_prompt)
         art_entries.append(yaml_text)
         built["art"].append({"request_id": req_id, "image_path": image_path,
                              "public_path": "/" + image_path.removeprefix("public/"),
-                             "attached": False, "element": element_slug})
+                             "attached": False, "element": element_slug,
+                             "target_endpoint": target_endpoint, "target_id": target_id})
 
     def card_dream(dream_type: str, dtitle: str, description: str, flavor: str,
                    art_prompt: str, icon: str, element_slug: str,
@@ -434,7 +439,8 @@ def build_records(proposal: dict, slug: str, pdate: str, dry_run: bool) -> tuple
         built["records"]["world"] = {"model": "Dream", "id": world.get("id"), "title": title}
         queue_art(slug, title,
                   f"establishing key art for the world of {title}: {proposal.get('idea', '')} "
-                  f"{vibe_line}, portrait key-art composition, {HOUSE_PROMPT_TAIL}")
+                  f"{vibe_line}, portrait key-art composition, {HOUSE_PROMPT_TAIL}",
+                  "/api/dreams", world.get("id"))
     world_id = world.get("id") if world else None
 
     # 2. The vibe (GENRE Dream) — world-graph fidelity; no card/sheet.
@@ -485,22 +491,15 @@ def build_records(proposal: dict, slug: str, pdate: str, dry_run: bool) -> tuple
                         dry_run, results, f"relation: {loc.get('title')} -> {vibe.get('title')} (RELATED)")
         queue_art(el, loc.get("title", "Location"),
                   f"{loc.get('art_direction', '')}, {vibe_line}, "
-                  f"portrait key-art composition, {HOUSE_PROMPT_TAIL}")
+                  f"portrait key-art composition, {HOUSE_PROMPT_TAIL}",
+                  "/api/dreams", dream.get("id") if dream else None)
 
-    # 4. Characters (CHARACTER card Dream + real Character row)
+    # 4. Characters (real Character rows linked to the world/vibe Dream — no
+    #    shadow CHARACTER dream; art attaches to the Character's own imagePath).
     built["records"]["characters"] = []
+    link_ids = [world_id] if world_id else []
     for ch in proposal.get("characters", []):
         el = slugify(ch.get("name", "character"))
-        dream = card_dream(
-            "CHARACTER", ch.get("name", "Character"), ch.get("role_drive", ""),
-            ch.get("carries", ""), ch.get("look", ""), "kind-icon:user-round", el,
-            {"title": ch.get("name", ""), "subtitle": "Character",
-             "hook": ch.get("look", ""),
-             **trio([("Wants", ch.get("role_drive", "")),
-                     ("Carries", ch.get("carries", "")),
-                     ("Complication", ch.get("complication", ""))])},
-        )
-        link_ids = [i for i in ([dream.get("id")] if dream else []) + [world_id] if i]
         rec = kr_call("POST", "/api/characters", {
             "name": ch.get("name", "Character"), "designer": DESIGNER, "isPublic": True,
             "drive": ch.get("role_drive", ""),
@@ -515,22 +514,15 @@ def build_records(proposal: dict, slug: str, pdate: str, dry_run: bool) -> tuple
                 {"model": "Character", "id": rec.get("id"), "name": ch.get("name")})
         queue_art(el, ch.get("name", "Character"),
                   f"character portrait of {ch.get('name', '')}: {ch.get('look', '')}, "
-                  f"in the world of {title} ({vibe_line}), {HOUSE_PROMPT_TAIL}")
+                  f"in the world of {title} ({vibe_line}), {HOUSE_PROMPT_TAIL}",
+                  "/api/characters", rec.get("id") if rec else None)
 
-    # 5. Narrator (NARRATOR card Dream + real Bot row)
+    # 5. Narrator (real Bot row linked to the world/vibe Dream — no shadow
+    #    NARRATOR dream; art attaches to the Bot's own imagePath).
     nar = proposal.get("narrator", {})
     if nar:
         el = slugify(nar.get("name", "narrator")) + "-narrator"
-        dream = card_dream(
-            "NARRATOR", nar.get("name", "Narrator"), nar.get("personality", ""),
-            nar.get("voice", ""), nar.get("appears_as", ""), "kind-icon:book-open", el,
-            {"title": nar.get("name", ""), "subtitle": "Narrator bot",
-             "hook": nar.get("voice", ""),
-             **trio([("Mission", nar.get("personality", "")),
-                     ("Appears As", nar.get("appears_as", "")),
-                     ("Best For", nar.get("best_for", ""))])},
-        )
-        link_ids = [i for i in ([dream.get("id")] if dream else []) + [world_id] if i]
+        link_ids = [world_id] if world_id else []
         rec = kr_call("POST", "/api/bots", {
             "name": nar.get("name", "Narrator"), "BotType": "NARRATOR",
             "designer": DESIGNER, "isPublic": True,
@@ -553,7 +545,8 @@ def build_records(proposal: dict, slug: str, pdate: str, dry_run: bool) -> tuple
                                             "name": nar.get("name")}
         queue_art(el, nar.get("name", "Narrator"),
                   f"narrator portrait of {nar.get('name', '')}: {nar.get('appears_as', '')}, "
-                  f"{nar.get('personality', '')}, world of {title} ({vibe_line}), {HOUSE_PROMPT_TAIL}")
+                  f"{nar.get('personality', '')}, world of {title} ({vibe_line}), {HOUSE_PROMPT_TAIL}",
+                  "/api/bots", rec.get("id") if rec else None)
 
     # 6. Rewards (REWARD card Dream + real Reward row; one SKILL, one ITEM)
     built["records"]["rewards"] = []
@@ -563,16 +556,7 @@ def build_records(proposal: dict, slug: str, pdate: str, dry_run: bool) -> tuple
         rarity = str(rw.get("rarity", "COMMON")).upper()
         if rarity not in VALID_RARITIES:
             rarity = "COMMON"
-        dream = card_dream(
-            "REWARD", rw.get("name", "Reward"), rw.get("grants", ""),
-            rw.get("catch", ""), f"{rw.get('name', '')}: {rw.get('grants', '')}",
-            "kind-icon:gift", el,
-            {"title": rw.get("name", ""), "subtitle": f"{rtype} · {rarity}",
-             **trio([("Grants", rw.get("grants", "")),
-                     ("Best Used When", rw.get("best_used_when", "")),
-                     ("The Catch", rw.get("catch", ""))])},
-        )
-        link_ids = [i for i in ([dream.get("id")] if dream else []) + [world_id] if i]
+        link_ids = [world_id] if world_id else []
         rec = kr_call("POST", "/api/rewards", {
             "name": rw.get("name", "Reward"), "designer": DESIGNER, "isPublic": True,
             "description": rw.get("grants", ""),
@@ -591,13 +575,15 @@ def build_records(proposal: dict, slug: str, pdate: str, dry_run: bool) -> tuple
         queue_art(el, rw.get("name", "Reward"),
                   f"iconic treasure-card illustration of {rw.get('name', '')} ({rtype}): "
                   f"{rw.get('grants', '')}, atmospheric background, world of {title} "
-                  f"({vibe_line}), {HOUSE_PROMPT_TAIL}")
+                  f"({vibe_line}), {HOUSE_PROMPT_TAIL}",
+                  "/api/rewards", rec.get("id") if rec else None)
 
     # 7. Scenarios (real Scenario rows, linked to the world + locations)
     built["records"]["scenarios"] = []
     loc_titles = ", ".join(l.get("title", "") for l in proposal.get("locations", []))
     scenario_links = [i for i in [world_id, *location_ids] if i]
     for sc in proposal.get("scenarios", []):
+        el = slugify(sc.get("title", "scenario")) + "-scenario"
         rec = kr_call("POST", "/api/scenarios", {
             "title": (sc.get("title", "Scenario"))[:190], "designer": DESIGNER,
             "isPublic": True,
@@ -610,6 +596,10 @@ def build_records(proposal: dict, slug: str, pdate: str, dry_run: bool) -> tuple
         if rec:
             built["records"]["scenarios"].append(
                 {"model": "Scenario", "id": rec.get("id"), "title": sc.get("title")})
+        queue_art(el, sc.get("title", "Scenario"),
+                  f"establishing scene art for {sc.get('title', '')}: {sc.get('setup', '')}, "
+                  f"world of {title} ({vibe_line}), {HOUSE_PROMPT_TAIL}",
+                  "/api/scenarios", rec.get("id") if rec else None)
 
     return built, results, art_entries
 
@@ -630,18 +620,28 @@ def attach_art(dry_run: bool) -> int:
             public_path = art.get("public_path", "")
             if not public_path or not head_ok(KR_BASE_URL + public_path):
                 continue
-            sheet_id = (built.get("sheets") or {}).get(art.get("element"))
-            if sheet_id and not dry_run:
-                status, resp = http_json("PATCH", f"{KR_BASE_URL}/api/sheets/{sheet_id}",
+            # Attach to the created entity's own imagePath (Dream / Character /
+            # Bot / Reward / Scenario). Fall back to the legacy sheet target for
+            # any art queued before this pipeline change.
+            endpoint = art.get("target_endpoint")
+            target_id = art.get("target_id")
+            if not (endpoint and target_id):
+                sheet_id = (built.get("sheets") or {}).get(art.get("element"))
+                if sheet_id:
+                    endpoint, target_id = "/api/sheets", sheet_id
+            if not (endpoint and target_id):
+                continue
+            if not dry_run:
+                status, resp = http_json("PATCH", f"{KR_BASE_URL}{endpoint}/{target_id}",
                                          {"imagePath": public_path})
                 if status not in (200, 201):
-                    print(f"  attach FAIL {status} sheet {sheet_id} ← {public_path}: "
+                    print(f"  attach FAIL {status} {endpoint}/{target_id} ← {public_path}: "
                           f"{str(resp)[:120]}", file=sys.stderr)
                     continue
             art["attached"] = True
             attached += 1
             changed = True
-            print(f"  attached {public_path} → sheet {sheet_id}")
+            print(f"  attached {public_path} → {endpoint}/{target_id}")
         if changed and not dry_run:
             update_built_data(p, built)
     if attached == 0:
