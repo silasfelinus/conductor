@@ -15,7 +15,28 @@ Record the lane, files changed, and verification in the task note before rearmin
 
 ### Rotation state
 
-- Last completed lane: Front-end polish (lane 1), 2026-07-20 (~06:06-06:20 UTC). Dispatched
+- Last completed lane: Roadmap accuracy (lane 2), 2026-07-20 (~08:06-08:30 UTC). Ran
+  `scripts/check_pr_merged_drift.py` (clean, no drift) and `scripts/audit_roadmaps.py`
+  (only 2 pre-existing info-level `APPROVAL_WITHOUT_GATE` findings for this project,
+  t-002/t-011 — not defects, no warnings/errors). Found a real, verifiable staleness
+  bug while auditing t-033's blocker chain: `docs/t-013-remaining-example-works.md`
+  (written 2026-07-17) listed `examples.manifest.json` and its 3 example-work images
+  as files to commit directly into the `kind_robots` git repo, but the 2026-07-19
+  finding already on record (this file's "Example works" coverage row) established
+  that manifest lives on `media.acrocatranch.com`, not in git — the handoff doc
+  predated that discovery and never got corrected, so a future session with
+  home-relay access could easily follow its stale file list and commit to paths the
+  contract verifier never reads. Confirmed via `kind_robots` source
+  (`utils/scripts/mediaContractSource.ts`: `examples.manifest.json` is read through
+  `mediaSourceDescription()`/`readMediaText()` against `MEDIA_ROOT` or
+  `https://media.acrocatranch.com`, never the git tree) and a live check
+  (`get_file_contents` on `public/images/academy/examples/` 404s — the directory
+  does not exist in the repo). Corrected the handoff doc in place (split "Files to
+  change" into an in-repo half — `academyStyles.ts` only — and a media-server half
+  routed through the home relay) and added a short pointer note to t-033 in
+  roadmap.yaml. Conductor-only change, no kind_robots PR (nothing to commit there
+  yet — t-033/t-035 remain genuinely blocked on home-relay write access, unchanged).
+- Previously: Front-end polish (lane 1), 2026-07-20 (~06:06-06:20 UTC). Dispatched
   an Explore subagent over all 7 in-scope files with an explicit exclusion list of every
   previously-fixed bug class. Found a real, verifiable bug: `image-upload.vue`'s
   `handleBatchUpload()` left `queuedFiles` untouched after a partial failure, so retrying
@@ -74,11 +95,13 @@ Record the lane, files changed, and verification in the task note before rearmin
   PRs — conductor-docs-only change this cycle, no kind_robots PR.
 - Previously: Roadmap accuracy (lane 2), 2026-07-19 (~22:00-22:20 UTC). Milestone audit came back clean (no drift). Fixed a real tooling bug found while auditing: `scripts/check_pr_merged_drift.py` treated failed GitHub API lookups (this session type only has GitHub MCP tools, not direct REST/token access — every lookup 403'd) identically to confirmed-open PRs, so a 100%-failed run silently reported "No drift found" with exit 0, indistinguishable from a genuine clean audit. `check()`/`render()` now surface unresolved lookups explicitly and `main()` exits 2 (not 0) when anything couldn't be verified. Tests updated/added in `tests/test_check_pr_merged_drift.py`; full suite green (427 passed, 1 pre-existing skip). Conductor-only change, no kind_robots PR.
 - Before that: Front-end polish (lane 1), 2026-07-19 (~19:04-19:15 UTC). Fixed `image-upload.vue`'s `addFiles()` silently dropping non-PNG/JPEG/WebP files (drag-and-drop bypasses the input's `accept` attribute) with zero user-visible feedback — now sets `error.value` to a skip-count message. kind_robots PR #547, merged 2026-07-19T19:14Z.
-- Next preferred lane: Roadmap accuracy (lane 2) — this cycle completed lane 1. Lane 3
-  remains blocked on home-relay reachability; do not re-probe it with a fresh live queue
-  attempt until relay/DB state is confirmed to have changed (see `EGRESS-BLOCKERS.md`
-  convention) — checking `GET /api/art/queue/855` on the still-pending job first is
-  cheaper than queuing a new one.
+- Next preferred lane: Inspiration and preview assets (lane 3) — this cycle completed
+  lane 2. Lane 3 was last confirmed blocked 2026-07-20 ~04:10Z (job 816 accepted but
+  never claimed after 10+ minutes); this cycle only spot-checked the unauthenticated
+  media-file URL from `t-033`'s blocker (still 404, consistent, no state change) —
+  that is not a live queue probe, so don't treat it as a fresh relay-up/down signal.
+  Check `GET /api/art/queue/816` first before queuing a new job; if still blocked,
+  fall back to lane 4 (curriculum depth) per the checklist's own instruction.
 - Override the preferred lane only when it is blocked or a higher-severity reversible issue is newly verified; record that reason in the task note.
 
 This explicit state is the handoff between recurring cycles. Update it in the same PR as each `t-010` improvement so the next Worker does not infer rotation from a long roadmap note.

@@ -4,19 +4,47 @@ Date: 2026-07-17
 Target repository: `silasfelinus/kind_robots`
 Intended branch: `worker/ai-art-academy-t-013`
 
+**Correction (2026-07-20, t-010 roadmap-accuracy cycle):** the "Files to
+change" list below is stale about *where* 4 of the 5 files live. Confirmed
+via `kind_robots` source (`utils/scripts/mediaContractSource.ts`,
+`verifyAcademyExamplesManifest.ts`) and a live check
+(`get_file_contents(silasfelinus/kind_robots,
+public/images/academy/examples)` 404s — the directory does not exist in
+git): `examples.manifest.json` and every example-work image are read from
+`https://media.acrocatranch.com/images/academy/examples/...` at build/test
+time (or a local `MEDIA_ROOT` mirror), NOT from the kind_robots git tree.
+Only `stores/seeds/academyStyles.ts` is an actual git commit in this repo.
+The `"file": "public/images/..."` strings inside each manifest entry below
+are correct as-is — that's the schema's identifier convention
+(`repositoryFileToMediaPath` strips the `public/images/` prefix to resolve
+the real media-server path) — just don't try to `git add`/commit those 4
+paths into `kind_robots`. This is the same media-server-write blocker
+already tracked on ai-art-academy/t-033 and t-035: applying the manifest
+and image uploads requires home-relay access
+(`ops/home-server/SELF-HOSTED-MEDIA.md`), which no sandboxed agent session
+has. A session with that access should upload the 3 images and the merged
+manifest JSON through the relay, THEN a normal sandboxed session can land
+the `academyStyles.ts` half as an ordinary PR.
+
 ## Why this handoff exists
 
 The source research and file acquisition are complete, but the current GitHub connector can only replace an existing file as a complete blob. The canonical registry is `stores/seeds/academyStyles.ts` (about 1,100 lines), so replacing it through a truncated connector response would risk dropping unrelated curriculum content. Per the cross-repo fallback rule, this document preserves the exact scoped patch for a local-checkout session.
 
 No backend, schema, deployment, secret, or billing change is required.
 
-## Files to change in `kind_robots`
+## Files to change
+
+In the `kind_robots` git repo (normal PR):
 
 - `stores/seeds/academyStyles.ts`
-- `public/images/academy/examples/examples.manifest.json`
-- `public/images/academy/examples/the-yellow-cow-49-1210.jpg` (new)
-- `public/images/academy/examples/fantomas-1976-59-1.jpg` (new)
-- `public/images/academy/examples/composition-8-37-262.jpg` (new)
+
+On the media server (`media.acrocatranch.com`), via the home relay —
+**not** a kind_robots git commit (see correction note above):
+
+- `academy/examples/examples.manifest.json` (merge these 3 entries into the existing array)
+- `academy/examples/the-yellow-cow-49-1210.jpg` (new)
+- `academy/examples/fantomas-1976-59-1.jpg` (new)
+- `academy/examples/composition-8-37-262.jpg` (new)
 
 ## 1. Expressionism
 
@@ -213,4 +241,9 @@ Also verify:
 
 ## Remaining action
 
-Apply this exact patch and the three acquired JPEGs in the target repository, open the normal scoped PR, and merge after the contract verifier and TypeScript checks pass. Do not mark the live implementation complete merely because this handoff is merged into Conductor.
+Two independent steps, per the correction note above:
+
+1. **Media upload (needs home-relay access):** merge the three manifest entries into `examples.manifest.json` and upload the three acquired JPEGs on `media.acrocatranch.com` under `academy/examples/`.
+2. **Git PR (any sandboxed session):** apply the three `exampleWorks` patches to `stores/seeds/academyStyles.ts` in `kind_robots`, open the normal scoped PR, and merge after the contract verifier and TypeScript checks pass.
+
+Do not mark the live implementation complete merely because this handoff is merged into Conductor — both steps must land, and `npm run test:academy-examples-manifest` (ideally with `MEDIA_VERIFY_ASSETS=1`) must pass against the real media server.
