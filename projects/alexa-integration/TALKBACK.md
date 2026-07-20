@@ -234,3 +234,38 @@ has direct repo access, rather than waiting for organic rotation.
 **Kaizen task:** none this cycle — steps (1) and (3) remain and are already captured in the task
 note (art-relay-down and admin-Placements-click, respectively — both external blockers, not scope
 this session could close).
+
+## 2026-07-20 | Reviewer (burst rotation) | alexa-integration/t-010 | needs-human (hard gate, as designed)
+
+**Decision:** captured the required dry-run transcript, set `status: needs-human` per AGENTS.md's
+hard-gate rule for `gate_human: true` tasks, opened a conductor PR (not merged — hard gates stay
+unmerged for Silas).
+
+**Failure category:** n/a — this is the expected terminal state for a `gate_human: true` task; it
+was never going to reach `done` in an unattended session.
+
+**What was good:**
+- Rotation pick: this session's hourly repo rotation found conductor, kind_robots, and
+  kindrobots-unraid already touched earlier today, and PortOS's roadmap lives entirely in the
+  upstream `atomantic/PortOS` issue tracker (out of this session's repo-access scope, so its
+  backlog isn't readable). alexa-integration's `t-010` had been `ready` and un-touched since
+  2026-07-03 with all five of its `depends_on` tasks already `done` — a genuinely unblocked, stale
+  task rather than churn on an already-saturated project.
+- Ran the exact manual test script from `rollout-safety-checklist.md` Section 4 (all 10 lines)
+  against `silasfelinus/serendipity-voice` `main` via the real `handleVoiceRequest` CLI entry
+  point, with no `.env` present so every flag sat at its safe default — representative of a real
+  request, zero risk of a live write.
+- Found and documented 4 real router-precision gaps in the process (not safety gaps — nothing
+  wrote/spent/published in any of the 10 runs) rather than just rubber-stamping the checklist:
+  the checklist's own sample Dream-story line never matches the router because `dreamPatterns`
+  requires the literal word "story", and `deploy`/`change DNS` fall through to a generic
+  clarification instead of the specific blocked-refusal message. Filed as new `ready` tasks
+  `t-017` and `t-018` with exact file/line pointers and suggested fixes, rather than fixing them
+  inline and risking scope creep on a transcript-capture task.
+- Wrote the `t-010` note using the AGENTS.md "Writing needs-human task notes for Silas" structure
+  (what was produced + where, what it contains, exact approve action, what unblocks).
+
+**What to improve:** none this cycle.
+
+**Kaizen task:** `t-017` (dream-pattern "story" keyword gap), `t-018` (blockedActions missing
+deploy/DNS) — both filed this cycle, both `ready`, no dependencies.
