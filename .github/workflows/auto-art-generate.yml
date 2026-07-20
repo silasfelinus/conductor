@@ -76,13 +76,50 @@ jobs:
         env:
           KR_MEDIA_ORIGIN: https://media.acrocatranch.com
         run: |
+          # Remember the last-known state so we only email on a transition
+          # (down<->up), never once per run during a long outage.
+          STATUS_FILE="ops/home-server/RENDER-BOX-STATUS"
+          PREV="unknown"
+          if [ -f "$STATUS_FILE" ]; then PREV="$(tr -d '[:space:]' < "$STATUS_FILE")"; fi
           if python scripts/check_render_box.py; then
+            NOW="up"
             echo "up=true" >> "$GITHUB_OUTPUT"
             echo "::notice::Render box reachable — draining the pending art queue."
           else
+            NOW="down"
             echo "up=false" >> "$GITHUB_OUTPUT"
             echo "::warning::Render box offline — skipping art generation this run. The pending queue is preserved and will drain when the box is back."
           fi
+          printf '%s\n' "$NOW" > "$STATUS_FILE"
+          ALERT="none"
+          if [ "$NOW" = "down" ] && [ "$PREV" != "down" ]; then ALERT="down"; fi
+          if [ "$NOW" = "up" ] && [ "$PREV" = "down" ]; then ALERT="recovered"; fi
+          echo "alert=$ALERT" >> "$GITHUB_OUTPUT"
+
+      # Email Silas only when the box crosses down<->up (transition-gated by the
+      # committed RENDER-BOX-STATUS marker above). Best-effort: no Brevo secret
+      # or a send failure never fails the run.
+      - name: Email on render-box state change
+        if: ${{ steps.boxhealth.outputs.alert != 'none' }}
+        continue-on-error: true
+        working-directory: conductor
+        env:
+          KR_MEDIA_ORIGIN: https://media.acrocatranch.com
+          BREVO_API_KEY: ${{ secrets.BREVO_API_KEY }}
+          DIGEST_TO: ${{ secrets.DIGEST_TO || vars.DIGEST_TO }}
+          DIGEST_TO_NAME: ${{ secrets.DIGEST_TO_NAME || vars.DIGEST_TO_NAME }}
+          DIGEST_FROM: ${{ secrets.DIGEST_FROM || vars.DIGEST_FROM }}
+          DIGEST_FROM_NAME: ${{ secrets.DIGEST_FROM_NAME || vars.DIGEST_FROM_NAME }}
+        run: |
+          RUN_URL="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          if [ "${{ steps.boxhealth.outputs.alert }}" = "down" ]; then
+            SUBJECT="⚠️ Render box DOWN — art generation paused"
+            BODY="The self-hosted ComfyUI/media render box ($KR_MEDIA_ORIGIN) is unreachable from CI. Art generation is paused; the pending queue is preserved and drains automatically once the box is back. Run: $RUN_URL"
+          else
+            SUBJECT="✅ Render box recovered — art generation resumed"
+            BODY="The render box ($KR_MEDIA_ORIGIN) is reachable again; auto-art-generate has resumed draining the queue. Run: $RUN_URL"
+          fi
+          python scripts/send_alert_brevo.py --subject "$SUBJECT" --body "$BODY"
 
       - name: Refresh queue to currently-missing project art
         if: ${{ steps.boxhealth.outputs.up == 'true' && (github.event.inputs.refresh_queue || 'true') != 'false' }}
@@ -143,7 +180,7 @@ jobs:
         run: |
           git config user.name "conductor-bot"
           git config user.email "conductor-bot@users.noreply.github.com"
-          git add projects/images/ projects/process/ projects/art-generate.yaml projects/art-prompts.yaml
+          git add projects/images/ projects/process/ projects/art-generate.yaml projects/art-prompts.yaml ops/home-server/RENDER-BOX-STATUS
           if git diff --staged --quiet; then
             echo "No conductor-side changes."
           else
