@@ -1235,8 +1235,8 @@ tasks:
   - id: t-041
     milestone: m1
     title: Fix unescaped [id] in GitHub Actions paths filters across 13 workflows so they actually trigger
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     note: >
@@ -1270,3 +1270,6 @@ tasks:
       runs fine locally/via `workflow_dispatch` -- this is purely about the
       pull_request trigger never firing, not about the underlying checks
       being wrong.
+    claimed_by: claude-conductor-burst-20260720T0300Z
+    claimed_at: '2026-07-20T03:05:05Z'
+    updated: '2026-07-20T03:05:05Z'
