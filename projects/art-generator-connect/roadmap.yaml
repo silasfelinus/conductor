@@ -451,8 +451,8 @@ tasks:
 - id: t-022
   milestone: m5
   title: 'Investigate why the "Submit + wait + verify art requests" step in auto-art-generate.yml runs far longer than its --limit/--timeout should allow'
-  status: ready
-  owner: null
+  status: claimed
+  owner: worker
   passes: 0
   stakes: reversible
   note: >
@@ -472,6 +472,9 @@ tasks:
     eligible entries because already_satisfied() is under-matching). Check
     the finished run's logs once it completes for the actual per-item timing
     before changing behavior.
+  claimed_by: claude-conductor-agent-20260720T1315Z
+  claimed_at: '2026-07-20T13:17:12Z'
+  updated: '2026-07-20T13:17:12Z'
 - id: t-020
   milestone: m4
   title: Re-tighten ArtQueueEntry.variant from string back to the ArtVariant union in kind_robots' server/utils/artRequestYaml.ts
