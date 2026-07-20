@@ -107,3 +107,37 @@ roadmap task status in the same session so it doesn't sit stale.
 
 **Kaizen task:** none this cycle — remaining steps (1)/(3) are already fully
 scoped in the task's own note; no new follow-on surfaced.
+
+## 2026-07-20 | Reviewer (agent run) | conductor-app/t-007 | audited, closed as roadmap-accuracy (no code change)
+
+**Decision:** closed `done` without a kind_robots PR — the task's premise was stale.
+
+**Failure category:** none — caught before any implementation was attempted.
+
+**What was good:**
+- Before writing any code for "move pitch votes and project priorities off localStorage,"
+  dispatched an Explore agent to grep the live kind_robots repo for the exact localStorage
+  keys the task's note named (`kr.workspacePitchVotes`, `kr.projectPriorities`) rather than
+  trusting the note's description of current state.
+- Found both halves of the premise were already false: `Project.priority` is a real, indexed
+  Prisma column set via `PATCH /api/projects/[id]` (already visible to the Flutter app, no
+  localStorage involvement ever found — zero hits for `kr.projectPriorities`); pitch voting
+  already goes through `POST /api/conductor/pitch-vote` (admin-gated), which sets a canonical
+  `status:` field on the pitch's markdown file — `kr.workspacePitchVotes` in
+  `stores/conductorStore.ts` is now only read to `localStorage.removeItem()` it as one-time
+  legacy cleanup, not an active data path.
+- Did not conflate "already off localStorage" with "matches the task's deeper intent": the
+  current pitch-vote design is a single admin-set status per pitch, not a per-user
+  multi-voter table. Rather than build that speculatively (a real, larger feature) or
+  silently close the task as if today's design already satisfies it, split it into a new
+  soft `needs-human` task (t-014) asking Silas which one is actually wanted — no code change
+  either way is needed from that answer alone, it only decides whether new work gets scoped.
+- Appended a `LEARNING.yaml` record under `conductor-app/t-007` with the general lesson
+  (verify a task's stated problem against current main before implementing, not just before
+  merging).
+
+**What to improve:** none this cycle — this is exactly what the pre-implementation research
+step is for.
+
+**Kaizen task:** t-014 filed directly (see above) rather than a generic suggestion, since the
+open question is specific and actionable, not a broad "improve X" pattern.

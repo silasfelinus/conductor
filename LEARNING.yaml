@@ -3739,3 +3739,12 @@ records:
   outcome: done
   failure_category: null
   lesson: "When a workflow step blows past a --limit/--timeout ceiling that looks correctly plumbed, check for unbounded work happening BEFORE the bounded loop, not just inside it -- consume_art_requests.py's self-drain pre-scan (already_satisfied()) ran over the full pending backlog (not --limit-bounded, by design) and called the network-backed check twice per entry via two separate list comprehensions, which is what actually blew the ceiling, not wait_for_job/--timeout as the original note hypothesized."
+- date: '2026-07-20'
+  project: conductor-app
+  task: t-007
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "Before implementing a roadmap task's stated problem, verify the problem still exists on current main -- t-007's premise (pitch votes and project priorities stuck in per-browser localStorage) was already false: priorities had already migrated to a real Prisma column and votes already flow through a real per-pitch API endpoint, just not via the code paths the task's note assumed. An Explore agent pass against the live repo (grep for the exact localStorage keys named in the task) caught this before any code was written; filed the genuinely-open sub-question (real per-user multi-voter tallying vs. today's single-admin-status design) as a separate soft-needs-human task instead of building speculative scope."

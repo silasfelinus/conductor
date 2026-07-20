@@ -118,7 +118,7 @@ tasks:
 - id: t-007
   milestone: m3
   title: Move pitch votes and project priorities from localStorage to per-user DB state in kind_robots
-  status: claimed
+  status: done
   owner: reviewer
   passes: 0
   stakes: reversible
@@ -127,7 +127,21 @@ tasks:
     Design per-user persistence (or fold into Dream.priority for priorities) and migrate the workspace
     + app to it.
 
-    '
+    DONE 2026-07-20 (conductor agent session claude-conductor-agent-20260720T1620Z): researched
+    current kind_robots main via an Explore agent before writing any code, and found this task''s
+    premise is stale -- the migration already happened, just not through this roadmap task.
+    `kr.projectPriorities` has zero references anywhere in the repo; project priority is already a
+    real Prisma column (`Project.priority: ProjectPriority`, indexed), set via `PATCH
+    /api/projects/[id]` -- DB-backed and already visible to the Flutter app via the same REST API it
+    already calls. `stores/conductorStore.ts` still references `kr.workspacePitchVotes`, but only to
+    `localStorage.removeItem()` it as one-time legacy cleanup on load -- actual voting already goes
+    through `POST /api/conductor/pitch-vote` (admin-gated via `requireAdminApiUser`), which sets a
+    canonical `status:` field on the pitch''s markdown file in this (conductor) repo. That''s a
+    real, non-localStorage, per-pitch status -- not per-browser -- so the literal "move off
+    localStorage" objective is done. It is NOT a per-user multi-voter table (one canonical status per
+    pitch, admin-set), which is a different, larger feature than what this task described; see t-014
+    for that as a separate, explicitly-scoped follow-up rather than building it speculatively here.
+    No kind_robots code change needed -- this is a roadmap-accuracy close, not an implementation.'
   claimed_by: claude-conductor-agent-20260720T1620Z
   claimed_at: '2026-07-20T16:22:32Z'
   updated: '2026-07-20T16:22:32Z'
@@ -229,3 +243,27 @@ tasks:
 
     '
   updated: '2026-07-20T12:38:08Z'
+
+- id: t-014
+  milestone: m3
+  title: 'Design true per-user multi-voter pitch voting (if actually wanted)'
+  status: needs-human
+  soft_gate: true
+  owner: null
+  passes: 0
+  stakes: reversible
+  note: >
+    FOR SILAS: t-007 closed as done 2026-07-20 -- pitch votes and project priorities are
+    already off localStorage and DB/API-backed. But pitch voting today is one canonical
+    `status:` field per pitch (admin-only, set via POST /api/conductor/pitch-vote, stored
+    on the pitch's markdown file), not a per-user table where multiple people each cast
+    their own vote. t-007's original wording ("per-user DB state ... invisible to the
+    Flutter app") suggests that might have been the real intent, but a single admin-set
+    status could equally be the intended design for a workspace only Silas curates.
+
+    TO APPROVE: if you want real multi-voter pitch voting (e.g. Silas + collaborators each
+    voting, tallied), set status: ready and I'll design a PitchVote Prisma model
+    (userId + pitchSlug, @@unique per pattern from the Reaction model) plus a
+    server/api/conductor/pitch-votes endpoint. If the current single-admin-status design is
+    actually what you want, set status: done with a note -- no code change needed either
+    way, this is purely a scope question.
