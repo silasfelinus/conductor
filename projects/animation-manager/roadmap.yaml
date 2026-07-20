@@ -141,8 +141,8 @@ tasks:
   - id: t-005
     milestone: m4
     title: "Build the Animation Manager gallery and promotion workspace"
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     depends_on: t-004
@@ -152,6 +152,9 @@ tasks:
       working/construction/broken state, version lineage, and actions to preview, compare,
       promote, polish, or retire. Use an animationManagerStore for API and local state. Do not
       create a second effect registry; the UI reads stores/animationCatalog.ts.
+    claimed_by: claude-conductor-burst-20260720T000606Z
+    claimed_at: '2026-07-20T00:06:06Z'
+    updated: '2026-07-20T00:06:06Z'
 
   - id: t-006
     milestone: m5
