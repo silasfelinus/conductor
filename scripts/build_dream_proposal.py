@@ -86,13 +86,29 @@ from git_plumbing import GitError, read_file_at_ref, run_git  # noqa: E402
 
 BRIEF = """\
 You are Conductor's dream author, inventing today's "starter dream" for the
-Kind Robots site — a warm, imaginative AI art + roleplay platform. Invent ONE
+Kind Robots site — an imaginative AI art + roleplay platform. Invent ONE
 self-consistent world: two connected places, a shared mood, a small cast, a
-host, and two fitting rewards. Aim for cozy wonder with an edge — specific,
-tactile, a little strange, never generic fantasy filler.
+host, and two fitting rewards. Specific, tactile, a little strange, never
+generic fantasy filler.
+
+VARIETY IS THE JOB (Silas, 2026-07-20). Every day must feel like a DIFFERENT
+GENRE from the recent ones — not another warm-lantern-and-brass-robots cozy
+dream. Warmth is a house value, not a genre: reach it through noir, cosmic
+horror, hard sci-fi, western, heist, folk-horror, cyberpunk, myth, absurdist
+comedy, sports, courtroom drama, disaster, spy thriller — wherever today's
+GENRE SPARK (printed below) points. A new vibe each day means a new *genre
+feel*, not a new label on the same mood. Do NOT echo the vibe, palette,
+setting-type, or character archetypes of the recently-used dreams listed below,
+and do NOT reuse or near-repeat any recent character name (no second "Pip").
+
+SLUGS (full rules: projects/dream-cycle/specs/SLUG-POLICY.md):
+- kebab-case, PREFER 2 WORDS. Avoid 3+ words unless every word earns clarity.
+- NO leading "the-" (wrecks alphabetical indexing) — except a genuine two-word
+  proper name like "the-marrow". Never a 3+ word "the-…" slug.
+- The world slug is the through-line: every element and its art reuse it.
 
 Produce exactly (as a JSON object, then pass it to --from-json):
-- title + slug (kebab-case, 2-4 words, unique — must not reuse a slug listed below)
+- title + slug (kebab-case, prefer 2 words, unique — must not reuse a slug below)
 - idea: 2-4 sentences on what this world is and why someone wants to spend time here
 - vibe: {title, line} — a GENRE dream that both locations share
 - locations: EXACTLY 2 places in this one world, each with title / known_for /
@@ -260,9 +276,22 @@ SAMPLE_PROPOSAL: dict[str, Any] = {
 }
 
 
+_LEADING_ARTICLES = ("the-", "a-", "an-")
+
+
 def slugify(text: str) -> str:
+    """kebab-case per specs/SLUG-POLICY.md — drops a leading article unless doing
+    so leaves a single bare word (so `the-marrow` survives, `the-comet-market`
+    becomes `comet-market`)."""
     s = re.sub(r"[^a-z0-9]+", "-", text.lower()).strip("-")
-    return re.sub(r"-{2,}", "-", s) or "starter-dream"
+    s = re.sub(r"-{2,}", "-", s)
+    for art in _LEADING_ARTICLES:
+        if s.startswith(art):
+            rest = s[len(art):]
+            if rest and "-" in rest:
+                s = rest
+            break
+    return s or "starter-dream"
 
 
 def existing_slugs() -> set[str]:
@@ -488,10 +517,73 @@ def _write(proposal: dict[str, Any], date: str, dry_run: bool) -> Optional[Path]
     return dest
 
 
+# Distant genre/tone families to rotate through, so the daily dream stops
+# converging on one cozy-lantern mood. The brief surfaces a date-seeded few as the
+# day's "genre spark" — a push away from yesterday, not a hard constraint.
+GENRE_FAMILIES = [
+    "hardboiled noir", "cosmic/eldritch horror", "hard science fiction",
+    "weird western", "high-stakes heist", "folk horror", "cyberpunk",
+    "mythic epic", "absurdist comedy", "underdog sports", "courtroom drama",
+    "disaster/survival", "spy thriller", "gothic romance", "dieselpunk",
+    "post-apocalyptic", "screwball farce", "haunted procedural",
+    "swashbuckling adventure", "solarpunk", "silent-film slapstick",
+    "biopunk/body horror", "space opera", "carnival/circus grotesque",
+    "hardscrabble frontier", "psychedelic surrealism", "wuxia",
+    "cozy mystery (but make the genre feel unmistakable)",
+]
+
+
+def _recent_proposals(limit: int = 6) -> list[str]:
+    """The most recent dated proposal backlog files, newest first."""
+    dated = sorted(
+        (p for p in glob.glob(str(BACKLOG / "20*-*.md"))),
+        key=lambda p: Path(p).name, reverse=True,
+    )
+    return dated[:limit]
+
+
+def recent_vibes_and_names(limit: int = 6) -> tuple[list[str], list[str]]:
+    """Pull vibe lines and character names from recent proposals so the brief can
+    tell the author what NOT to echo (addresses 'everything feels the same' and
+    the duplicate 'Pip' character names, Silas 2026-07-20)."""
+    vibes: list[str] = []
+    names: list[str] = []
+    for path in _recent_proposals(limit):
+        try:
+            text = Path(path).read_text(encoding="utf-8")
+        except OSError:
+            continue
+        m = re.search(r"^## Vibe / genre dream\s*\n\*\*(.+?)\*\*", text, re.MULTILINE)
+        if m:
+            vibes.append(m.group(1).strip())
+        for cm in re.finditer(r"^- \*\*(.+?)\*\*", text, re.MULTILINE):
+            frag = cm.group(1).strip()
+            # character bullets read "Name — role…"; keep the short leading name
+            name = frag.split(" — ")[0].split("(")[0].strip()
+            if name and len(name) <= 40:
+                names.append(name)
+    # de-dup, keep order
+    return list(dict.fromkeys(vibes)), list(dict.fromkeys(names))
+
+
+def _genre_spark(date: str) -> list[str]:
+    """A deterministic-by-date pick of distant genre families for the day."""
+    seed = sum(ord(c) for c in date)
+    return [GENRE_FAMILIES[(seed + i * 7) % len(GENRE_FAMILIES)] for i in range(3)]
+
+
 def print_brief() -> None:
-    """Print the authoring brief for the sweeping agent (spec + slugs to avoid)."""
+    """Print the authoring brief for the sweeping agent (spec + slugs/vibes to avoid)."""
     avoid = ", ".join(sorted(existing_slugs())) or "(none yet)"
+    vibes, names = recent_vibes_and_names()
+    spark = _genre_spark(_target_date())
     print(BRIEF)
+    print(f"\nGENRE SPARK for today (pick or blend, or go somewhere just as far): "
+          f"{', '.join(spark)}.")
+    print(f"Recently-used vibes — do NOT echo their genre/mood: "
+          f"{', '.join(vibes) or '(none yet)'}")
+    print(f"Recently-used names/titles — do NOT reuse or near-repeat: "
+          f"{', '.join(names[:30]) or '(none yet)'}")
     print(f"\nSlugs already used (do NOT reuse or closely echo): {avoid}")
     print("\nWhen your JSON is ready:  python scripts/build_dream_proposal.py --from-json <file|->")
 

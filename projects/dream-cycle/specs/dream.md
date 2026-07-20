@@ -10,6 +10,15 @@ and (optionally) a bot narrator who hosts it. Runs under `CREATION-SPEC.md`'s lo
 everything maps to existing kind_robots models; all are **api-ready** per
 `docs/api-surface.md`.
 
+## Slugs & creationSource
+
+All slugs follow `specs/SLUG-POLICY.md` (kebab-case, prefer two words, no leading
+`the-` except a genuine two-word name; the world slug is the through-line every
+element and its art reuse). The PITCH world card OWNS the proposal's slug so a
+same-titled LOCATION can't collide with it. Dreams built by the autonomous daily
+fast-lane carry `creationSource: "AI"` (not the DB-default `HUMAN`); use `HYBRID`
+only when Silas seeded the idea.
+
 ## Auth & metadata (every write stage)
 
 - **Auth:** `Authorization: Bearer $KR_API_TOKEN` (the beta-admin token; resolves to

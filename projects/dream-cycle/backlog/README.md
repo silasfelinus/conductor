@@ -15,6 +15,11 @@ Copy the template for the creation type (`_template.md` for dreams,
 | `priority` | `low` / `normal` / `high`                                  | Silas (agents default `normal`) |
 | `narrator` | `yes` / `no` (dream type only)                             | either — Silas's word wins |
 
+**Slugs** follow one rule everywhere: `specs/SLUG-POLICY.md` (kebab-case, prefer
+two words, no leading `the-` except a genuine two-word name, one slug shared by a
+dream and all its elements + art). The generators enforce it; review flags 4+ word
+or `the-…` multi-word slugs.
+
 Queue order (across all types): `approved` before `outline`, then `priority`,
 then oldest `created`. An outline whose `type` has no playbook in `specs/` yet is
 not buildable — it waits, it doesn't block the queue. `parked` and `vetoed`
