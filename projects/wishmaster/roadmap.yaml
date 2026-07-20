@@ -68,23 +68,15 @@ tasks:
   - id: t-002
     milestone: m1
     title: "Design the Wishmaster bot interface (wish -> costed plan -> assembled output)"
-    status: claimed
+    status: review
     owner: reviewer
     passes: 0
     stakes: reversible
     updated: '2026-07-20T17:05:57Z'
     note: >
-      Design doc for the Wishmaster flow using the approved scope (see scope.md
-      Decisions section): user speaks a wish -> bot parses intent and assembles an
-      ingredient plan -> user sees the plan WITH a cost estimate (mana) and approves
-      (userApproved/approvedAt; duration+cap consent for anything recurring) ->
-      pipeline runs with status/stepLog state -> small wishes complete as Compositions;
-      project-shaped wishes create a PROJECT Dream via the project-creation LLM surface
-      (auto-Todo scaffolds the SHAPE/BUILD/POLISH roadmap and building starts, per the
-      bias-to-action rule) with outputDreamId linking wish to Dream. Schema fields land
-      with kind_robots PR #87 + Silas's manual migration. Deliverable:
-      projects/wishmaster/INTERFACE-DESIGN.md covering intent parsing, plan assembly,
-      cost estimation, the consent screen, pipeline execution, and the two output sizes.
+      Design doc for the Wishmaster flow using the approved scope (see scope.md Decisions section): user speaks a wish -> bot parses intent and assembles an ingredient plan -> user sees the plan WITH a cost estimate (mana) and approves (userApproved/approvedAt; duration+cap consent for anything recurring) -> pipeline runs with status/stepLog state -> small wishes complete as Compositions; project-shaped wishes create a PROJECT Dream via the project-creation LLM surface (auto-Todo scaffolds the SHAPE/BUILD/POLISH roadmap and building starts, per the bias-to-action rule) with outputDreamId linking wish to Dream. Schema fields land with kind_robots PR #87 + Silas's manual migration. Deliverable: projects/wishmaster/INTERFACE-DESIGN.md covering intent parsing, plan assembly, cost estimation, the consent screen, pipeline execution, and the two output sizes.
+
+      PROGRESS 2026-07-20 (claude-burst-rotation-20260720T1740Z): wrote projects/wishmaster/INTERFACE-DESIGN.md covering the full flow (intent parse -> size classification -> plan assembly -> cost estimation via existing manaCost.ts estimators -> consent screen -> resumable pipeline execution -> the two output sizes). Verified against current kind_robots main before writing: the Composition model does NOT exist in prisma/schema.prisma (zero matches repo-wide), and PR #87's actual merged diff -- despite its title/body claiming "Wishmaster fields on Composition" -- only contains the Challenge Center schema + KARMA_LIVE flip, no Composition changes at all. Also corrected the project-output path against the current architecture: the Dream/Project/Facet split (July 2026) means project-shaped wishes create a standalone Project record via POST /api/projects (per kind-robots/PROJECT-CREATION.md Surface 3), not a "PROJECT Dream" as this note's original text (and scope.md's 2026-07-04 Decisions) describe -- DreamType has no PROJECT value. Filed as open items in the design doc rather than blocking: (1) Composition model itself needs creating, not just 5 columns -- re-scope the next schema task accordingly; (2) the auto-Todo-on-Project-creation hook PROJECT-CREATION.md flags as unimplemented is a hard blocker for the PROJECT path ever reaching a built roadmap unattended; (3) Project has no wish-back-reference field equivalent to outputDreamId; (4) DreamType.WISH is unused -- confirm intent or ignore; (5) the Surface 3 slug-uniqueness helper still needs writing. Design doc ends at needs-human per scope.md's standing "do not implement from this doc alone" posture.
     claimed_by: claude-burst-rotation-20260720T1740Z
     claimed_at: '2026-07-20T17:05:57Z'
   - id: t-003
