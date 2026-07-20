@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-07-20T16:23:10Z
+Generated: 2026-07-20T16:32:24Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **312**
-- Outcomes: blocked: 12, done: 300
+- Closed tasks recorded: **313**
+- Outcomes: blocked: 12, done: 301
 - Success rate: **96%**
 - Average passes on successful tasks: **0.0**
 
@@ -26,6 +26,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | coat-dance | 8 | 0% |
 | coloring-book | 13 | 100% |
 | conductor | 43 | 100% |
+| conductor-app | 1 | 100% |
 | digital-storefront | 12 | 100% |
 | dream-cycle | 14 | 100% |
 | ecosystem-map | 5 | 100% |
@@ -52,7 +53,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 15 | 40% |
-| software | 297 | 99% |
+| software | 298 | 99% |
 
 ## Failure categories
 
@@ -72,6 +73,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-07-20 `conductor-app/t-007` — Before implementing a roadmap task's stated problem, verify the problem still exists on current main -- t-007's premise (pitch votes and project priorities stuck in per-browser localStorage) was already false: priorities had already migrated to a real Prisma column and votes already flow through a real per-pitch API endpoint, just not via the code paths the task's note assumed. An Explore agent pass against the live repo (grep for the exact localStorage keys named in the task) caught this before any code was written; filed the genuinely-open sub-question (real per-user multi-voter tallying vs. today's single-admin-status design) as a separate soft-needs-human task instead of building speculative scope.
 - 2026-07-20 `art-generator-connect/t-022` — When a workflow step blows past a --limit/--timeout ceiling that looks correctly plumbed, check for unbounded work happening BEFORE the bounded loop, not just inside it -- consume_art_requests.py's self-drain pre-scan (already_satisfied()) ran over the full pending backlog (not --limit-bounded, by design) and called the network-backed check twice per entry via two separate list comprehensions, which is what actually blew the ceiling, not wait_for_job/--timeout as the original note hypothesized.
 - 2026-07-20 `appmaker/t-011` — For 'file age' checks in this repo, local git log is not trustworthy -- local clones are frequently shallow/squash-merged, and two unrelated apps/<slug>/lib/main.dart files both showed exactly one, identical-timestamp commit locally despite being scaffolded on different dates. Querying the GitHub REST API's commits?path=... endpoint for a file's earliest commit gives the true creation date regardless of local clone depth; scripts/check_repos.py's existing GITHUB_TOKEN+urllib pattern is the right template to reuse, even though the API call itself can't be live-verified from this interactive sandbox (org egress policy 403s api.github.com here) -- that's a known, pre-existing limitation, not new.
 - 2026-07-20 `appmaker/t-006` — Before implementing a 'create the kind_robots Project for slug parity' task, run scripts/sync_projects.py live first -- it's idempotent and prints UNCHANGED (with a real field-by-field comparison, not just a slug match) when parity is already satisfied, which was the case here (id=24 already had conductorSlug=appmaker). Confirmed this session also has genuine KR_API_TOKEN + kind_robots API egress, unlike ai-art-academy's documented relay/museum-egress blocks -- worth checking live rather than assuming blocked.
@@ -81,7 +83,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-07-20 `conductor/t-072` — Kaizen tasks phrased as 'test the class of bug beyond this one call site' can tempt an overly broad heuristic (e.g. scanning every nullable Prisma Int field). Grepping for the actual naming convention first (existing<Owner>Id) found only the two call sites the bug's own history named, both already fixed -- confirming no second live instance existed kept the new static contract (verifyExistingOwnerIdNullability.ts) narrow and false-positive-free instead of flagging the ~100+ unrelated authenticatedUserId/callerUserId params that are genuinely non-nullable. Also hit a reusable snag: importing a route handler file (server/api/resources/[id].patch.ts) directly in a DB-free test throws at import time because it pulls in server/utils/prisma.ts, which requires DATABASE_URL synchronously -- extracting the pure helper into its own compatibility.ts module (mirroring characters/compatibility.ts) sidesteps this cleanly and is a reusable pattern for future DB-free behavioral tests.
 - 2026-07-20 `animation-manager/t-005` — New route content mounts (content/<slug>.md with a channelKey/tabKey pair) aren't self-sufficient -- verifyChannelContent.ts requires a matching content/channels/<channel>/<tab>.md tab document to exist too, or CI's Contract verifiers job fails with 'references unknown tab'. Adding a new WonderLab-style tab means touching both files (the route mount AND the channel tab registration), not just the route mount + dashboardHelper.ts/lab-manager.vue wiring that satisfies the front-end nav. Caught by CI on first push, fixed in a follow-up commit -- next time check for a content/channels/<channelKey>/ directory before assuming a new channelKey/tabKey pair needs no separate registration.
 - 2026-07-19 `art-generator-connect/t-020` — Rotation collision on a cross-repo task: claim_task.py closes the conductor-side claim race but not the target-repo one -- two sessions can land the identical claim_task.py claim commit in the same window and then independently finish the same kind_robots implementation before either opens a PR, surfacing only at merge time via a dirty mergeable_state. No rework was needed here since both diffs were functionally identical; a cheap second check (grep the target repo's recent PRs for the task id before opening a new one) would catch this earlier next time.
-- 2026-07-19 `conductor/t-069` — Verify a new contract check both ways -- clean against the real repo (proves the prior fix holds) and against a deliberately reintroduced instance of the bug (proves the check actually catches it), not just the former. Also: a project-wide typecheck gate (vue-tsc) can fail a PR for a reason unrelated to its diff if main itself broke earlier the same day (here, PR #569); when that happens, fix the one-line pre-existing break inline and flag it transparently in the PR body rather than blocking the actual task on it or silently expanding scope.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-07-20T16:23:10Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-07-20T16:32:24Z_
