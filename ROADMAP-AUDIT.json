@@ -1,16 +1,16 @@
 {
-  "generated_at": "2026-07-20T01:25:28.668677+00:00",
+  "generated_at": "2026-07-20T04:32:34.914449+00:00",
   "summary": {
     "roadmaps": 40,
     "active_projects": 31,
-    "tasks": 628,
-    "ready": 54,
+    "tasks": 629,
+    "ready": 51,
     "waiting": 45,
-    "needs_human": 33,
+    "needs_human": 34,
     "in_progress": 2,
-    "done": 483,
+    "done": 486,
     "errors": 0,
-    "warnings": 6,
+    "warnings": 7,
     "info": 46
   },
   "projects": [
@@ -175,17 +175,17 @@
       "autonomous": false,
       "task_count": 41,
       "counts": {
-        "done": 35,
+        "done": 36,
         "needs-human": 4,
-        "ready": 2
+        "ready": 1
       },
-      "open_count": 6,
+      "open_count": 5,
       "human_attention": 4,
-      "ready": 2,
+      "ready": 1,
       "waiting": 0,
       "claimed": 0,
       "review": 0,
-      "done": 35
+      "done": 36
     },
     {
       "slug": "kindrobots-unraid",
@@ -311,14 +311,15 @@
       "autonomous": true,
       "task_count": 12,
       "counts": {
+        "claimed": 1,
         "done": 9,
-        "ready": 3
+        "ready": 2
       },
       "open_count": 3,
       "human_attention": 0,
-      "ready": 3,
+      "ready": 2,
       "waiting": 0,
-      "claimed": 0,
+      "claimed": 1,
       "review": 0,
       "done": 9
     },
@@ -367,20 +368,19 @@
       "override_status": "active",
       "priority_index": 19,
       "autonomous": false,
-      "task_count": 72,
+      "task_count": 73,
       "counts": {
         "claimed": 1,
-        "done": 66,
-        "needs-human": 4,
-        "review": 1
+        "done": 67,
+        "needs-human": 5
       },
       "open_count": 6,
-      "human_attention": 4,
+      "human_attention": 5,
       "ready": 0,
       "waiting": 0,
       "claimed": 1,
-      "review": 1,
-      "done": 66
+      "review": 0,
+      "done": 67
     },
     {
       "slug": "serendipity",
@@ -545,16 +545,16 @@
       "autonomous": false,
       "task_count": 13,
       "counts": {
-        "done": 7,
-        "ready": 6
+        "done": 8,
+        "ready": 5
       },
-      "open_count": 6,
+      "open_count": 5,
       "human_attention": 0,
-      "ready": 6,
+      "ready": 5,
       "waiting": 0,
       "claimed": 0,
       "review": 0,
-      "done": 7
+      "done": 8
     },
     {
       "slug": "appmaker",
@@ -792,6 +792,13 @@
       "code": "SOFT_NEEDS_HUMAN",
       "project": "conductor",
       "task": "t-034",
+      "message": "needs-human has no obvious hard-gate marker; consider returning it to ready, setting soft_gate: true, or documenting the actual gate."
+    },
+    {
+      "severity": "warning",
+      "code": "SOFT_NEEDS_HUMAN",
+      "project": "conductor",
+      "task": "t-073",
       "message": "needs-human has no obvious hard-gate marker; consider returning it to ready, setting soft_gate: true, or documenting the actual gate."
     },
     {
