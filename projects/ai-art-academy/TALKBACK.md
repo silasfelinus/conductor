@@ -1239,3 +1239,20 @@ into `academyStyles.ts` alongside the preview image.
 - None significant this cycle. Minor: the `docs/teaching-notes.md` gap the checklist's coverage table already flags (Persian Miniature has no teaching-notes entry yet) was left untouched, correctly out of scope for this pass but worth flagging so it doesn't silently fall off the checklist's radar.
 
 **Kaizen task:** none new this cycle — `t-035` (now thumbnail-generation-only) already carries the next actionable item once the home relay recovers.
+
+## 2026-07-20 | Worker (conductor burst-mode session) | ai-art-academy/t-010 | pattern
+
+**Decision:** rearmed `t-010` (lane 3 reconfirmed blocked via a fresh authenticated poll of job 816, fell back to lane 4's coverage-gap follow-up flagged by the previous cycle's own TALKBACK entry).
+
+**Failure category:** none — no pass consumed, conductor-docs-only change.
+
+**What was good:**
+- Directly acted on the gap the immediately-prior cycle's TALKBACK entry flagged as "left untouched, worth flagging so it doesn't silently fall off the checklist's radar": the missing `docs/teaching-notes.md` row for Persian Miniature Painting.
+- Reconfirmed the lane-3 blocker with a fresh, authenticated `GET /api/art/queue/816` rather than trusting the prior cycle's note — same signature (PENDING, `updatedAt` unchanged ~10 hours), so the recheck was cheap and didn't burn time on a live queue attempt that would only add another unclaimed job.
+- Found and fixed a second, adjacent gap while filling the first: `style-lora-registry.md`'s curriculum-slug-mapping table had no row at all for `persian-miniature` (every other curriculum movement has one, even as a "not yet in the registry" placeholder) — added it in the same precedented style as `ashcan-school`/`american-regionalism`.
+- Kept scope tight to the checklist's named action plus that one directly-adjacent, low-risk table row — did not attempt the `curriculum-outline.md` v1.5 policy-recheck paragraph or the remix-quality tier-list categorization (both real gaps, but each is its own small unit of work), and recorded both explicitly in the checklist's rotation state instead of letting them evaporate.
+
+**What to improve:**
+- None significant this cycle.
+
+**Kaizen task:** none new this cycle — the two deferred gaps (curriculum-outline.md v1.5 re-check paragraph for §25; persian-miniature's remix-quality tier placement) are already recorded in the checklist's rotation-state note as ready-to-pick fallbacks for a future lane-4 cycle, so a separate roadmap task would be redundant bookkeeping.
