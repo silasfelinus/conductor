@@ -217,7 +217,7 @@ tasks:
   - id: t-007
     milestone: m5
     title: "Build or polish one animation candidate from reaction evidence"
-    status: review
+    status: ready
     owner: worker
     passes: 0
     stakes: reversible
@@ -247,10 +247,11 @@ tasks:
       server/utils/prisma.ts throws on every SSR request and the Nuxt dev server 500s on all
       routes -- same class of blocker as model-builder/t-031 and davinci/t-014's notes.
       Confirmed via a local temp test page (removed before commit, not part of the diff) that
-      the 500 is a global SSR/DB issue, not specific to this route. kind_robots PR #627 open
-      (not yet merged -- status left at review pending CI + the deferred live-smoke follow-up).
-      PITCHES.yaml updated to add a `builds:` entry for paper-lantern-weather. Rearming to
-      ready per the recurring-task convention once this cycle's review resolves.
+      the 500 is a global SSR/DB issue, not specific to this route. kind_robots PR #627 merged
+      (squash 398a327a) after all 3 CI checks passed (Contract verifiers, TypeScript,
+      GitGuardian). PITCHES.yaml's paper-lantern-weather entry carries a `builds:` record
+      (status: candidate, pending the deferred live-smoke pass before promoting to shipped).
+      Rearming to ready per the recurring-task convention.
     claimed_by: claude-conductor-burst-20260720T0750Z
     claimed_at: '2026-07-20T07:09:09Z'
     updated: '2026-07-20T07:09:09Z'

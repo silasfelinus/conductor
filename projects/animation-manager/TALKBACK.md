@@ -33,3 +33,21 @@ type: critique
 - Before the first push, only `vue-tsc` (`npm run test`) and `eslint` were run locally — not `npm run test:channel-content` or any of the other repo-specific `test:*` contract scripts wired into `contract-tests.yml`. That gap is exactly why the missing tab registration reached CI instead of being caught locally: vue-tsc has no opinion on content-frontmatter conventions. Once the failure surfaced, the full relevant `test:*` surface was identified from `.github/workflows/contract-tests.yml` and run locally for the fix — that should be step zero for any PR touching `content/` or `stores/helpers/*.ts` in this repo, not a reaction to a CI failure.
 
 **Kaizen task:** t-012 — Auto-supersede the prior WORKING build when Animation Manager promotes a new one (from the Worker's own kaizen suggestion in the PR body).
+
+## 2026-07-20 | Worker (conductor burst session) | animation-manager/t-007 | pattern
+
+**Decision:** merged (kind_robots PR #627, squash 398a327a, single clean push, all 3 CI checks passed first try).
+
+**Failure category:** none — no CI failure, no rework.
+
+**What was good:**
+- Read the shipped `bioluminescent-tide.vue` build first and matched its structure (ResizeObserver sizing, capped DPR, `prefers-reduced-motion` listener, full RAF/observer/listener cleanup on unmount) instead of inventing a new shape, so the new effect fits the existing review bar.
+- Followed the "cache repeated lantern shapes" performance-risk note from the pitch literally: lantern silhouettes are `Path2D` objects cached by rounded-radius bucket in a `Map`, built once and reused every frame rather than reconstructed per lantern per frame.
+- Ran the full locally-runnable verification surface before pushing (learned from t-005's TALKBACK entry above): `npm test` (vue-tsc), eslint, `test:animation-catalog`, and `test:animation-component-attempts` — not just typecheck.
+- Discovered the branch's local checkout had diverged from `origin/main` with no common ancestor (a force-pushed remote history) before pushing, not after a rejected push — reset the branch onto current `origin/main` and reapplied the two changed files rather than fighting an unrelated-histories merge.
+- Attempted a real live-browser smoke test (a temporary throwaway page mounting just the new component, deleted before commit) rather than assuming the DB blocker applied without checking; confirmed it's a global SSR/DB-missing 500 on every route, not something specific to this change, and documented that precisely instead of hand-waving "couldn't verify."
+
+**What to improve:**
+- The live browser smoke test and the `Component` attempt record (SPEC.md's "Attempt records" step) are both still deferred — this sandbox has no reachable `DATABASE_URL`. Whoever next has DB access should run the smoke matrix (`docs/architecture/animation-catalog-smoke-matrix.md`) against Screen FX and startup-wallpaper surfaces and create the `paper-lantern-weather@v1` attempt record, then flip `PITCHES.yaml`'s build entry from `candidate` to `shipped`.
+
+**Kaizen task:** none new this cycle.
