@@ -79,6 +79,10 @@ BACKLOG = ROOT / "projects" / "dream-cycle" / "backlog"
 ART_PROMPTS = ROOT / "projects" / "art-prompts.yaml"
 
 KR_BASE_URL = os.environ.get("KR_BASE_URL", "https://kind-robots.vercel.app").rstrip("/")
+# Rendered images live on the self-hosted media origin (200); the app origin
+# only 307-redirects /images/, so HEAD-check the media origin directly.
+KR_MEDIA_ORIGIN = os.environ.get(
+    "KR_MEDIA_ORIGIN", "https://media.acrocatranch.com").rstrip("/")
 KR_API_TOKEN = os.environ.get("KR_API_TOKEN", "").strip()
 DESIGNER = "dream-cycle"
 PAGE_URL = f"{KR_BASE_URL}/daily-dream"
@@ -618,7 +622,7 @@ def attach_art(dry_run: bool) -> int:
             if art.get("attached"):
                 continue
             public_path = art.get("public_path", "")
-            if not public_path or not head_ok(KR_BASE_URL + public_path):
+            if not public_path or not head_ok(KR_MEDIA_ORIGIN + public_path):
                 continue
             # Attach to the created entity's own imagePath (Dream / Character /
             # Bot / Reward / Scenario). Fall back to the legacy sheet target for
