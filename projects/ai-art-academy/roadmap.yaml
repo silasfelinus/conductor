@@ -446,11 +446,11 @@ tasks:
   - id: t-010
     milestone: m6
     title: Academy continuous improvement pass
-    status: ready
+    status: claimed
     recurring: true
     passes: 0
     stakes: reversible
-    updated: '2026-07-20T10:10:13Z'
+    updated: '2026-07-20T12:07:53Z'
     note: |-
       Standing never-idle task (re-arms to ready after every completion, per the recurring-task rule). Each cycle pick ONE: (a) front-end style/polish pass on Academy or art-styler surfaces, (b) roadmap upgrade — refine tasks, detail the next milestone, prune stale notes, (c) generate more art inspirations or style preview thumbnails, (d) expand the curriculum with a new movement/artist entry (respecting PUBLIC-DOMAIN-POLICY.md). Note which option ran in the PR. This task never reaches done and does not count toward milestone progress.
       RAN 2026-07-19 (~11:04-11:15 UTC, claude-conductor-burst-20260719T1104Z): option (a) front-end polish, per the checklist's rotation rule (previous cycle ran lane 2, roadmap accuracy, so lane 1 was next preferred). Dispatched an Explore subagent over every Academy component (academy-manager.vue, academy-timeline.vue, academy-styles-browser.vue, academy-style-detail.vue, academy-remix.vue) plus the two shared components/art/ surfaces (art-styler.vue, image-upload.vue), with an explicit exclusion list of everything already fixed in prior cycles (PRs #275, #301, #332, #371, #380, #383, #385, #387, #397, #515). Found a real, verifiable focus-management bug: `academy-styles-browser.vue`'s `closeStyle()` restores keyboard focus to the grid button that opened the style detail panel, but that button unmounts (deleting its `gridRefs` entry) when an active search query no longer matches its style while the panel is still open — closing the panel at that point silently dropped focus to `<body>`, exactly the regression this code was originally written to prevent. Added a `searchInputRef` (always mounted) as a fallback focus target when the original grid button is gone. Verified: `npx eslint` and `npx prettier --check` both clean, `npm run test` (`vue-tsc --noEmit`) 0 errors. kind_robots PR #520 (branch claude/keen-fermat-academy-focus-fallback): all 3 CI checks green (TypeScript, Contract verifiers, GitGuardian), no review comments — merged squash `a174d16`. Rearmed to `ready` per the recurring-task convention — continuous-improvement-checklist.md's rotation state updated to record front-end polish as the completed lane, next preferred roadmap accuracy.
@@ -595,9 +595,9 @@ tasks:
       (still 404) is not a fresh live-queue probe. Rearming to `ready` per the
       recurring-task convention.
       RAN 2026-07-20 (~10:04-10:35 UTC, worker/burst-1784541890): checklist's preferred lane was inspiration/preview assets (lane 3), so tried it first. Reconfirmed the blocker with a fresh, authenticated poll of the exact job queued by the prior cycle: `GET /api/art/queue/816` still returned `status: PENDING` with `updatedAt` unchanged since the job was created (~00:14 UTC) -- roughly 10 hours with zero relay activity, same signature as every prior check. Fell back to lane 4 (curriculum depth) per the checklist's own instruction, and per its "finish known coverage gaps before a 26th movement" rule picked the one non-blocked gap the coverage table already named: added a Persian Miniature Painting row (#25) to `docs/teaching-notes.md`'s per-style table (mode `prompt`, difficulty **Hard** -- the movement's inverted spatial logic, distant figures placed higher rather than smaller, fights the same "preserve composition" tension already documented for cubism/de-stijl/suprematism) and bumped the section header from 24 to 25 movements. Also added the missing `persian-miniature` placeholder row to `style-lora-registry.md`'s curriculum-slug-mapping table, mirroring the existing `ashcan-school`/`american-regionalism` "not yet in the registry" convention (no LoRA search performed this cycle). Verified: `python3 -c "import yaml; yaml.safe_load(...)"` on both edited docs is N/A (plain Markdown, not YAML); confirmed no other RAN entry already covered this gap by grepping `persian` (case-insensitive) across both files before editing. Conductor-docs-only change (teaching-notes.md, style-lora-registry.md, this checklist); no kind_robots PR needed -- neither file is synced into the kind_robots front end. Left two related gaps unfixed, out of this cycle's scope and noted in the checklist for a future pass: `curriculum-outline.md` never got a "v1.5 addition re-check" public-domain-policy paragraph for §25 (every addition since v1.1 has one; the underlying VERIFIED research already exists in §25 itself, so this would be a low-risk writeup, not new research), and persian-miniature is not yet categorized in curriculum-outline.md's "Lesson-only vs remixable" tier lists. Updated continuous-improvement-checklist.md's rotation state; next preferred lane is front-end polish (lane 1). Rearming to `ready` per the recurring-task convention.
-    owner: null
-    claimed_by: null
-    claimed_at: '2026-07-20T10:04:51Z'
+    owner: worker
+    claimed_by: claude-burst-rotation-20260720T120752Z
+    claimed_at: '2026-07-20T12:07:53Z'
 
   - id: t-015
     milestone: m4
