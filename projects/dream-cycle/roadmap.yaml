@@ -467,3 +467,23 @@ tasks:
       foreground runs (deleted via the model DELETE endpoints); root cause was the
       2-min tool timeout killing the sync build before rollback — builds now run
       detached in the background.
+  - id: t-018
+    milestone: m5
+    title: Seed each daily dream from 1-2 live facets (genre mixing for fresher ideas)
+    status: ready
+    owner: worker
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-20T00:00:00Z'
+    note: >
+      Silas 2026-07-20: to get fresher, more original daily dreams, the creation
+      should START by choosing 1-2 genres from our Facet rows (GET /api/facets) and
+      blending them as the day's vibe seed — and as we add more and different facets,
+      they mix in automatically. This extends the genre-variety work already landed in
+      build_dream_proposal.py (the date-seeded GENRE_FAMILIES / _genre_spark and the
+      "avoid recently-used vibes/names" lists): swap or augment the hardcoded spark
+      with LIVE facet slugs pulled from the API, so the seed is grounded in the site's
+      real genre taxonomy and grows with it (weight toward less-recently-used facets
+      to keep spreading). Keep the recently-used-vibe guard. Was explicitly out of
+      scope for the 2026-07-20 slug/image cleanup; captured here as the next
+      loop-quality refinement.
