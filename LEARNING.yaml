@@ -3721,3 +3721,12 @@ records:
   outcome: done
   failure_category: null
   lesson: "Before implementing a 'create the kind_robots Project for slug parity' task, run scripts/sync_projects.py live first -- it's idempotent and prints UNCHANGED (with a real field-by-field comparison, not just a slug match) when parity is already satisfied, which was the case here (id=24 already had conductorSlug=appmaker). Confirmed this session also has genuine KR_API_TOKEN + kind_robots API egress, unlike ai-art-academy's documented relay/museum-egress blocks -- worth checking live rather than assuming blocked."
+- date: '2026-07-20'
+  project: appmaker
+  task: t-011
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "For 'file age' checks in this repo, local git log is not trustworthy -- local clones are frequently shallow/squash-merged, and two unrelated apps/<slug>/lib/main.dart files both showed exactly one, identical-timestamp commit locally despite being scaffolded on different dates. Querying the GitHub REST API's commits?path=... endpoint for a file's earliest commit gives the true creation date regardless of local clone depth; scripts/check_repos.py's existing GITHUB_TOKEN+urllib pattern is the right template to reuse, even though the API call itself can't be live-verified from this interactive sandbox (org egress policy 403s api.github.com here) -- that's a known, pre-existing limitation, not new."
