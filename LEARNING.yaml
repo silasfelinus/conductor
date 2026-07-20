@@ -3685,3 +3685,12 @@ records:
   outcome: done
   failure_category: null
   lesson: "Kaizen tasks phrased as 'test the class of bug beyond this one call site' can tempt an overly broad heuristic (e.g. scanning every nullable Prisma Int field). Grepping for the actual naming convention first (existing<Owner>Id) found only the two call sites the bug's own history named, both already fixed -- confirming no second live instance existed kept the new static contract (verifyExistingOwnerIdNullability.ts) narrow and false-positive-free instead of flagging the ~100+ unrelated authenticatedUserId/callerUserId params that are genuinely non-nullable. Also hit a reusable snag: importing a route handler file (server/api/resources/[id].patch.ts) directly in a DB-free test throws at import time because it pulls in server/utils/prisma.ts, which requires DATABASE_URL synchronously -- extracting the pure helper into its own compatibility.ts module (mirroring characters/compatibility.ts) sidesteps this cleanly and is a reusable pattern for future DB-free behavioral tests."
+- date: '2026-07-20'
+  project: animation-manager
+  task: t-012
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "Burst-mode rotation picking superkate-hairstyle-ai/t-019 and model-builder/t-022, t-029, t-031 next in priority.yaml order all turned out to need a live deployed backend (a Tailscale ts.net Comfy box or an admin-only action) this sandbox can't reach -- confirmed via each task's own note/TALKBACK history before skipping rather than claiming and stalling. animation-manager/t-012 (a kaizen from t-005's review) was the first genuinely pure-code ready task further down the list. The fix itself was a clean first pass: extracted the WORKING-attempt-to-supersede lookup as a pure, testable helper (findAttemptToSupersede in animationComponentHelper.ts) instead of inlining the filter in the store action, matching the existing listAnimationAttempts/getLatestAnimationAttempt pattern and letting the new behavior be covered in the same DB-free verify script (verifyAnimationComponentAttempts.ts) rather than needing a Pinia-mocking store test that doesn't exist yet for this store."

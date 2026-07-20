@@ -7567,3 +7567,58 @@ files they're meant to guard.
   worth a scripted heuristic yet.
 
 **Kaizen task:** none this cycle.
+
+## 2026-07-20 | Worker (burst) | animation-manager/t-012 | done (kind_robots PR #613 merged)
+
+**Decision:** implemented, self-merged (session claude-conductor-burst-20260720T0500Z).
+
+**Failure category:** none — clean first pass.
+
+**What was good:**
+- Rotation: `next_ready_task.py` again surfaced ai-art-academy/t-010 (recurring,
+  re-arms immediately) at the top; per the last cycle's precedent, kept walking
+  `priority.yaml` order for genuine non-recurring `ready` work instead of
+  re-running the same project two cycles straight. kind-robots (worked last
+  cycle via t-041) was also skipped for rotation diversity.
+- superkate-hairstyle-ai/t-019 and model-builder/t-022, t-029, t-031 were the
+  next `ready` tasks down the list, but each explicitly needs either a live
+  deployed backend (t-019's Tailscale `ts.net` Comfy/Kontext box — already
+  documented in `projects/superkate-hairstyle-ai/TALKBACK.md` as unreachable
+  from any session in this environment) or an admin-only action (t-029's
+  remaining `liveUrl` backfill step) that no agent session can perform.
+  Confirmed via each task's own note/TALKBACK history before skipping rather
+  than claiming and stalling on an environment limitation.
+- animation-manager/t-012 (kaizen from t-005's review, kind_robots PR #590) was
+  the first genuinely pure-code `ready` task further down `priority.yaml`.
+  `promoteAttempt()` set the promoted build's status to `WORKING` but never
+  called the existing `linkSupersededAnimationAttempt()` against the prior
+  `WORKING` attempt for the same effect slug, so promoting could leave two
+  `WORKING` Component rows for one catalog effect.
+- Extracted the lookup as a pure, testable `findAttemptToSupersede()` helper in
+  `stores/helpers/animationComponentHelper.ts` (mirrors the existing
+  `listAnimationAttempts`/`getLatestAnimationAttempt` pattern) rather than
+  inlining the filter in the store action, so the new behavior is covered in
+  the same DB-free `verifyAnimationComponentAttempts.ts` script instead of
+  needing a Pinia-mocking store test (none exists yet for this store).
+- Verified locally before opening the PR: `npm run test:animation-component-attempts`
+  (new supersede-lookup cases plus all existing conventions), full `npm test`
+  (vue-tsc across the whole repo, clean), and `npx eslint` on all three changed
+  files (clean). Confirmed all 3 PR checks green (TypeScript, Contract
+  verifiers, GitGuardian) before merging.
+- Caught and reverted an unrelated `package-lock.json` diff (npm-version
+  metadata drift — `dev`/`libc`/`optional`/`peer` field churn from `npm
+  install` under a locally-different npm version than what generated the
+  committed lockfile) before committing, so the PR diff stayed scoped to the
+  actual fix.
+- Also caught a claim-vs-local-state race mid-session: `claim_task.py` pushes
+  its claim commit straight to `origin/main`, but this conductor session's
+  local branch was cut before that push landed, so the first
+  `set_task_field.py status review` call silently dropped the `owner`/
+  `claimed_by` fields the claim had just set (operating on a stale local copy
+  of the task block). Caught by re-diffing the task after the edit instead of
+  assuming the line-oriented writer preserved unrelated fields; fixed by
+  rebasing onto `origin/main` before reapplying the field edit.
+
+**What to improve:** none this cycle.
+
+**Kaizen task:** none this cycle.
