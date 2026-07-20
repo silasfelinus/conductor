@@ -68,11 +68,11 @@ tasks:
   - id: t-002
     milestone: m1
     title: "Design the Wishmaster bot interface (wish -> costed plan -> assembled output)"
-    status: review
+    status: done
     owner: reviewer
     passes: 0
     stakes: reversible
-    updated: '2026-07-20T17:05:57Z'
+    updated: '2026-07-20T17:20:50Z'
     note: >
       Design doc for the Wishmaster flow using the approved scope (see scope.md Decisions section): user speaks a wish -> bot parses intent and assembles an ingredient plan -> user sees the plan WITH a cost estimate (mana) and approves (userApproved/approvedAt; duration+cap consent for anything recurring) -> pipeline runs with status/stepLog state -> small wishes complete as Compositions; project-shaped wishes create a PROJECT Dream via the project-creation LLM surface (auto-Todo scaffolds the SHAPE/BUILD/POLISH roadmap and building starts, per the bias-to-action rule) with outputDreamId linking wish to Dream. Schema fields land with kind_robots PR #87 + Silas's manual migration. Deliverable: projects/wishmaster/INTERFACE-DESIGN.md covering intent parsing, plan assembly, cost estimation, the consent screen, pipeline execution, and the two output sizes.
 
