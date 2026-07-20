@@ -40,7 +40,7 @@ milestones:
   - id: m4
     title: "Animation Manager front end and promotion workflow"
     weight: 20
-    status: not-started
+    status: done
   - id: m5
     title: "Daily research, build, and polish cadence"
     weight: 10
@@ -141,7 +141,7 @@ tasks:
   - id: t-005
     milestone: m4
     title: "Build the Animation Manager gallery and promotion workspace"
-    status: review
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -152,9 +152,38 @@ tasks:
       working/construction/broken state, version lineage, and actions to preview, compare,
       promote, polish, or retire. Use an animationManagerStore for API and local state. Do not
       create a second effect registry; the UI reads stores/animationCatalog.ts.
+
+      DONE 2026-07-20 (conductor-burst session, kind_robots PR #590, squash ad145742): shipped
+      a new /animation-manager tab in the wonder dashboard, linked from Screen FX's header
+      ("Manage builds"). stores/animationManagerStore.ts is a thin view-model composing the
+      existing componentStore (t-004's recordAnimationAttempt convention) + animationStore
+      (live preview trigger) + animationCatalog.ts -- no duplicate CRUD layer, no second
+      registry. components/animation/animation-manager.vue reuses components/wonderlab/
+      component-card.vue (already wired to Reaction ratings) for the gallery grid, a detail
+      sidebar with full version history, and a two-up compare view. Actions: Preview (triggers
+      the effect live), Compare, Promote (-> WORKING), Polish (-> UNDER_CONSTRUCTION), Retire
+      (-> RETIRED), all as Component status transitions on the attempt row.
+
+      Two deviations from the note's literal wording, both flagged for Reviewer in the PR: (1)
+      "conductor pitch status" is not deeply wired -- no kind_robots API exposes this project's
+      PITCHES.yaml (it lives only in this conductor repo), so rather than fabricate a second
+      source of truth the UI links out to the existing /conductor page instead; (2) promote
+      doesn't yet auto-supersede a prior WORKING build of the same effect (componentStore's
+      linkSupersededAnimationAttempt exists but wasn't wired in -- left as the kaizen task).
+
+      CI caught a real gap on first push: content/animation-manager.md declared channelKey lab
+      / tabKey animation-manager but nothing registered that tab, so verifyChannelContent.ts
+      failed with "references unknown tab lab/animation-manager". Fixed by adding
+      content/channels/lab/animation-manager.md (mirrors screen-fx.md's shape). Verified: npm
+      run test (vue-tsc, clean), eslint (clean), and every relevant test:* contract script
+      (channel-content, channel-resolver, tutorial-channel-resolver, wonderlab-*,
+      animation-catalog, animation-component-attempts) all green before and after the fix. No
+      live DB in this sandbox, so promote/polish/retire and initialize() were not exercised
+      against real data -- left as a live-smoke follow-up once DB/Vercel-preview access is
+      available in a session (same limitation t-004 hit).
     claimed_by: claude-conductor-burst-20260720T000606Z
     claimed_at: '2026-07-20T00:06:06Z'
-    updated: '2026-07-20T00:06:06Z'
+    updated: '2026-07-20T00:29:00Z'
 
   - id: t-006
     milestone: m5
@@ -292,3 +321,23 @@ tasks:
     claimed_by: claude-conductor-burst-20260719T1400Z
     claimed_at: '2026-07-19T14:08:14Z'
     updated: '2026-07-19T14:16:41Z'
+
+  - id: t-012
+    milestone: m4
+    title: "Auto-supersede the prior WORKING build when Animation Manager promotes a new one"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Kaizen from t-005's review (kind_robots PR #590): stores/animationManagerStore.ts's
+      promoteAttempt() sets the chosen build's status to WORKING but does not call
+      componentStore's existing linkSupersededAnimationAttempt() against the effect's
+      previous WORKING build (if any), so "promote" can leave more than one WORKING attempt
+      for the same catalog effect. Wire promoteAttempt() to look up the prior WORKING attempt
+      for that slug (componentStore.allComponents filtered via listAnimationAttempts, status
+      WORKING, excluding the one being promoted) and call linkSupersededAnimationAttempt on it
+      before/after setting the new status, so promoting always leaves exactly one WORKING
+      attempt per effect. Verify with a focused addition to
+      utils/scripts/verifyAnimationComponentAttempts.ts or a small new store-level test if one
+      exists; full vue-tsc + eslint as usual.
