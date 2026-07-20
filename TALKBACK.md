@@ -7896,3 +7896,91 @@ starts on it, so a second concurrently-triggered session has no signal to check
 before duplicating the work. Consider whether CI-janitor todos should get a
 claim/lock step analogous to `claim_task.py` for roadmap tasks, given this is now a
 repeated pattern rather than a one-off.
+
+## 2026-07-20 | Reviewer (burst-mode cycle) | CI Janitor todo #506 | Kind Robots Cypress Tests follow-up
+
+**Decision:** completed and merged — kind_robots PR #721.
+
+**Detail:**
+- Todo #506 flagged kind_robots run 29770267938 (Cypress Tests, `cancelled`). That run
+  started 19:01:33Z, *before* #679 merged (19:23:47Z) — it's the tail end of the
+  already-fixed hang, not a new incident, same pattern as #501 → #504.
+- The first scheduled run after #679 actually merged (run 29777691847, commit 64ce1bff,
+  ~20:49-21:07Z) confirmed the hang fix held (suite completed in <10 min instead of
+  hanging to the 30-min timeout) but surfaced 6 real test failures across 5 spec files.
+  Root-caused and fixed all 5 via a background agent (kind_robots PR #721):
+  1. `facet-assignments.cy.ts` — stale `createCollection` field on Dream create, same
+     class of bug #679 fixed elsewhere, just a different file it didn't touch.
+  2. `relationships.cy.ts` — stale `supportsTxt2Img` field on Server create.
+  3. `server-health-report-ownership.cy.ts` — its `before` hook tried to admin-assign
+     `userId` on Server create, which `assertServerCreateOwnership` now intentionally
+     forbids for everyone (already covered by `server-ownership.cy.ts`'s dedicated
+     boundary suite) — the test was fighting a real, already-tested product decision.
+     Rewrote the fixture to create the Server as its intended owner, then admin-PATCH
+     `isPublic: true` afterward.
+  4. `bots.cy.ts` — "forbids attaching another user private Dream on Bot creation" used
+     the deprecated `{ fresh: true }` no-op for both the acting user and the intended
+     "other" owner, so both resolved to the same seed identity — the create was
+     self-owned (legitimately 201), not a permission bypass. Verified
+     `assertBotRelationsAttachable` still correctly 403s real cross-user attachment;
+     switched the second call to `{ role: 'second' }` matching every sibling spec's
+     convention. Flagged and checked carefully since a too-permissive API would have
+     been a real security regression — it wasn't.
+  5. **Real API bug**, not a test issue: `server/api/scenarios/batch.patch.ts`'s
+     `processEntry` called `assertScenarioMutationInput` without a `routeId`, so the
+     documented `{ updates: [{ id, ...fields }] }` body shape's own `id` field
+     unconditionally 400'd every entry with "Scenario ID is server-owned" — Scenario
+     batch PATCH could never succeed for any caller. Fixed by extracting `id` first and
+     passing it as `routeId`, mirroring `[id].patch.ts`'s contract.
+- Verified: `npm test` (vue-tsc --noEmit) exit 0; `prettier --check` on all 5 touched
+  files shows only pre-existing drift confirmed to predate this change. kind_robots
+  PR #721 merged squash (9a4fdf05).
+- A post-merge `workflow_dispatch` verification run (29780457098) was still executing
+  when this cycle wrapped up — completing this todo on the strength of the merged
+  root-cause fix + clean typecheck, per the same precedent set for todo #501 (don't
+  block session end on one run's completion when the fix itself is verified).
+
+**Suggested action:** if a future session finds run 29780457098 (or the next scheduled
+run) still red, treat it as a fresh incident and check whether it's yet another new
+spec/API drift — same pattern as #501→#504→#506, three rounds running now — before
+assuming it's already covered. Might be worth a broader sweep of every Cypress spec for
+stale/dead create-payload fields in one pass rather than continuing to discover them one
+CI-janitor cycle at a time.
+
+## 2026-07-20 | Reviewer (burst-mode cycle) | CI Janitor todo #506 | residual relationships.cy.ts failure
+
+**Decision:** found and fixed one more real gap in #721's fix — kind_robots PR #724.
+
+**Detail:**
+- The above two entries both completed todo #506 on the strength of #721 merging
+  with clean typecheck, without waiting for its post-merge live-run confirmation. That
+  run (`workflow_dispatch` 29780457098, on #721's merge commit `9a4fdf05`) finished
+  while this session was writing up its own entry: 57 of 58 specs passing (up from 53
+  of 58 pre-#721), but `relationships.cy.ts` still red — one step further into the
+  same test than before, not fully fixed.
+- Root cause: `relationships.cy.ts`'s one test creates 11 linked records in a chain,
+  and every `postRecord()` call passes `userId` (the caller's own id) in the body.
+  #721 dropped the dead `supportsTxt2Img` field from the `server` call, which was
+  the first failure, but didn't notice the *same test* also sends `userId` to two
+  other endpoints with a stricter policy. Confirmed by reading all 9 create handlers
+  directly (via subagent): three distinct ownership policies exist across the
+  codebase, not one — LENIENT (self-matching `userId` tolerated: prompt, scenario,
+  reward, dream, resource, server) vs. STRICT (any `userId` key's mere presence
+  rejected, value irrelevant: bot's dedicated `assertOwnershipIsServerManaged`, and
+  character/chat/artCollection/artImage via the generic field-allowlist simply never
+  including `userId`). The test's `bot` and `character` calls hit the STRICT path;
+  `chat`/`artImage`/`artCollection` already omitted `userId` so were unaffected.
+- Fixed by dropping `userId` from only the `bot` and `character` payloads — every
+  LENIENT call (including `server`) is untouched. kind_robots PR #724, pushed via
+  `push_files` (branch created fresh via `create_branch`, matching this repo's own
+  documented 413-workaround pattern for a brand-new ref).
+
+**Suggested action:** this confirms the prior entry's own suggested action — don't
+mark a CI-janitor todo done purely on "typecheck passed + PR merged" when a live
+verification run is available or about to land; wait for it, or explicitly flag (as
+both did) that it's unconfirmed. This is the second residual bug in a row found only
+by actually reading the live run's output rather than assuming a root-cause fix was
+complete. A repo-wide sweep for every Cypress spec sending `userId` (or similar
+client-supplied ownership fields) to a create endpoint, cross-referenced against each
+endpoint's actual policy, would likely catch the next one of these before a janitor
+cycle has to discover it live.
