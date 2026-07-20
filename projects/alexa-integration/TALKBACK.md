@@ -202,3 +202,35 @@ preserved cross-repo handoff doc sitting for an extended period before someone w
 access could apply it. The handoff-doc mechanism works, but ready tasks blocked purely on connector
 limitations (not design questions) should be flagged for priority pickup by any session that already
 has direct repo access, rather than waiting for organic rotation.
+
+## 2026-07-20 | Reviewer (burst rotation) | alexa-integration/t-015 | done (partial, kept ready)
+
+**Decision:** implemented step (4), self-merged (kind_robots PR #643, squash fd3d3b3).
+
+**Failure category:** none — clean first pass.
+
+**What was good:**
+- Rotation pick: the hourly repo-rotation cycle for this session found conductor and kind-robots
+  already saturated with continuous autonomous Worker/Reviewer activity today (dozens of merges
+  within the hour), so picked an unclaimed, un-touched-in-a-week ready task instead of adding to
+  that queue's own churn: alexa-integration/t-015 (owner: null, last updated 2026-07-13).
+- Found the exact reusable mechanism first: `project-front-page.vue` documents a `#interactive`
+  slot ("Project specific interactive UI goes in here"), already used by `storymaker-page.vue`.
+  Reused it rather than inventing a new page-shell pattern or risking a `pathPrefix: false`
+  filename collision by creating a second `voice-lab-page.vue` under `components/pages/`.
+- Reused `serendipityVoiceStore` (the same client `/serendipity-voice` already uses) instead of
+  writing a second relay client — the "try it" console on `/voice-lab` now exercises the exact
+  same dispatcher path a real Echo utterance would, with zero new backend code.
+- Sourced the adapter reference table directly from `silasfelinus/serendipity-voice`'s own README
+  "Adapter status" table rather than the older 2026-06-30 `docs/alexa-voice-commands.md` (which
+  predates the "Serendipity: &lt;request&gt;" phrasing pivot and describes a different, unimplemented
+  "ask Conductor" command set) — kept the reference accurate to what's actually live today.
+- Verified before merge: `eslint` clean, `prettier --check` clean, full-project `npm run test`
+  (`vue-tsc --noEmit`) exit 0, all 3 kind_robots PR checks green (TypeScript, Contract verifiers,
+  GitGuardian).
+
+**What to improve:** none this cycle.
+
+**Kaizen task:** none this cycle — steps (1) and (3) remain and are already captured in the task
+note (art-relay-down and admin-Placements-click, respectively — both external blockers, not scope
+this session could close).
