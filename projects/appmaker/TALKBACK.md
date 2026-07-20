@@ -76,6 +76,34 @@ type: critique | pattern | challenge | response | security-flag
 
 **Kaizen task:** none this cycle — small scoped follow-up to an existing task pattern, not new scope.
 
+## 2026-07-20 | Reviewer (scheduled conductor sweep) | appmaker/t-012 | pattern
+
+**Decision:** none — collision discovered while merging conductor PR #900, not a new task action.
+
+**Failure category:** transient (rotation collision, not a quality issue in either session's actual work).
+
+**What was good/what happened:**
+- A separate Reviewer-role session (conductor PR #900, opened 09:29:21, after the
+  Worker-burst session above had already merged kind_robots PR #639 at 09:26:56) picked
+  up the same already-open kind_robots PR #639, reviewed it, and wrote up its own
+  progress note + TALKBACK entry believing *it* performed the merge — citing squash
+  `419e6fa`, which does not match the PR's actual squash SHA (`da1a258b`, confirmed via
+  the GitHub API). The kind_robots-side work itself was correct and only merged once;
+  this was a documentation race, not a duplicate code change.
+- Resolved the conductor-side merge conflict (PR #900 vs `main`) by keeping this file's
+  and `roadmap.yaml`'s entries above (the accurate, verified record) and dropping the
+  duplicate/inaccurate write-up rather than appending a second entry with a wrong SHA
+  into the permanent log.
+
+**What to improve:** Before a Reviewer session credits itself with merging a PR, verify
+the actual merge response (or re-fetch the PR) rather than writing up the outcome from
+memory/assumption — this is the same class of race as the `claim_task.py` rotation
+collisions in AGENTS.md, just on the review/merge side instead of the claim side.
+
+**Kaizen task:** none — existing `claim_task.py` machinery covers claims; a matching
+"confirm you're not reviewing a PR someone else already merged seconds ago" check would
+be the natural analog but is small enough to fold into normal Reviewer practice rather
+than needing its own roadmap task.
 ## 2026-07-20 | Worker (agent run) | appmaker/t-011 | done (scripts/flag_stale_apps.py)
 
 **Decision:** implemented, self-verified, set `status: review` (session claude-conductor-agentrun-20260720-appmaker-t011).
