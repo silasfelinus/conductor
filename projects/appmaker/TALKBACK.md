@@ -75,3 +75,35 @@ type: critique | pattern | challenge | response | security-flag
 **What to improve:** none this cycle.
 
 **Kaizen task:** none this cycle — small scoped follow-up to an existing task pattern, not new scope.
+
+## 2026-07-20 | Worker (agent run) | appmaker/t-011 | done (scripts/flag_stale_apps.py)
+
+**Decision:** implemented, self-verified, set `status: review` (session claude-conductor-agentrun-20260720-appmaker-t011).
+
+**Failure category:** none — clean first pass.
+
+**What was good:**
+- Checked how "bare" should actually be detected before writing anything: local `git log`
+  per-path turned out to be unreliable in this sandbox's shallow/squash-merged clone
+  (`apps/wishmaster` and `apps/appmaker` both showed exactly one, identical-timestamp
+  commit locally, despite being scaffolded separately) — caught this by comparing two
+  unrelated apps' histories rather than trusting the first result. Switched the age
+  lookup to the GitHub REST API (`commits?path=...`), which reflects true history
+  regardless of local clone depth.
+- Detected bareness structurally (an exact-match "scaffolded by AppMaker" marker string
+  in `lib/main.dart`, mirroring `scripts/new_app.py`'s own scaffold template) rather than
+  by file count or a hardcoded per-project date list, so it stays correct for apps
+  scaffolded outside `new_app.py` (the PR #104 batch) without needing per-project
+  special-casing.
+- Verified what could be verified locally (`py_compile`, structural bareness detection
+  correctly finds 8/10 apps, correctly excludes the two genuinely built-out ones) and
+  was explicit in the roadmap note about what couldn't be (the GitHub API call 403s from
+  this interactive sandbox by org egress policy — same known limitation as the existing
+  `scripts/check_repos.py`, not a bug in the new script) rather than either skipping
+  verification silently or claiming full verification it didn't have.
+
+**What to improve:** none this cycle.
+
+**Kaizen task:** none — this task's own scope was the kaizen (from the PR #104 merge);
+a natural next step if Silas wants it automatic is wiring `flag_stale_apps.py` into an
+existing periodic workflow, left as a follow-up rather than expanding this task's diff.
