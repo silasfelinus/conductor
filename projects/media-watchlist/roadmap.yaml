@@ -169,11 +169,11 @@ tasks:
 - id: t-008
   milestone: m3
   title: Spec the MediaEntry Prisma model and minimal browse API from SCHEMA-PROPOSAL.md/BROWSE-UX.md
-  status: ready
-  owner: null
+  status: done
+  owner: reviewer
   passes: 0
   stakes: reversible
-  updated: '2026-07-20T14:30:00Z'
+  updated: '2026-07-20T15:30:00Z'
   note: 'Kaizen from the 2026-07-20 t-006 cycle (kind_robots PR #649). The real
     corpus is now imported and validated (2,440 entries, 12 years, t-007 done),
     but no MediaEntry Prisma model or server API exists in kind_robots yet --
@@ -186,4 +186,50 @@ tasks:
     the final Prisma model + a minimal GET /api/media-entries browse route
     contract, and note a one-time seed/import path from data/media-entries.json.
     Building the actual migration + route + UI is follow-on work once this
-    spec is settled.'
+    spec is settled.
+
+    DONE 2026-07-20 (conductor agent session claude-conductor-agent-20260720T1515Z):
+    wrote projects/media-watchlist/docs/t-008-final-schema-and-browse-api.md.
+    Reconciled SCHEMA-PROPOSAL.md against the real import (data/media-entries.json,
+    2440 entries): confirmed the 12-value MediaType enum, releaseYear, issueRange,
+    and sourceFile additions, and caught one real discrepancy against
+    BROWSE-UX.md''s proposal -- the importer''s `rewatch` field is an Int (total
+    watch count, e.g. "x2" -> 2; only 1/2440 entries populated) not the Boolean
+    BROWSE-UX.md specced, so the final model uses `rewatch Int?`. Wrote the final
+    Prisma model + MediaType enum (12 values, userId Int? @default(1) following
+    the existing Todo model precedent for single-user scoping), a GET
+    /api/media-entries browse contract (year/mediaType/starred/month/season/search/sort/take/skip,
+    findMany+count pattern) and GET /api/media-entries/stats contract (groupBy
+    pattern), both patterned on kind_robots server/api/facets/index.get.ts,
+    server/api/logs/index.get.ts, and server/api/art/queue/stats.get.ts
+    (researched live via GitHub MCP tools against current kind_robots main).
+    Documented the one-time createMany seed path from data/media-entries.json
+    with an idempotency guard (no unique constraint exists to dedupe genuine
+    same-day re-watches without an explicit rewatch marker). Docs-only change,
+    conductor repo; no kind_robots PR needed for this task. Filed the natural
+    next task as media-watchlist/t-009 (build the migration + route + minimal
+    browse UI from this spec) per the kaizen-compounding rule. `python
+    scripts/audit_roadmaps.py` -- 0 errors, no new warnings.'
+  claimed_by: claude-conductor-agent-20260720T1515Z
+  claimed_at: '2026-07-20T15:15:01Z'
+- id: t-009
+  milestone: m3
+  title: Build the MediaEntry Prisma migration, GET /api/media-entries browse + stats routes, and a minimal browse UI from t-008's spec
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  updated: '2026-07-20T15:30:00Z'
+  note: 'Kaizen from the 2026-07-20 t-008 cycle. projects/media-watchlist/docs/t-008-final-schema-and-browse-api.md
+    has the final Prisma model + MediaType enum, the GET /api/media-entries and
+    GET /api/media-entries/stats route contracts, and the one-time
+    data/media-entries.json seed path fully specced and reconciled against the
+    real 2440-entry corpus. This task implements it in kind_robots: (1) add the
+    MediaEntry model + MediaType enum to prisma/schema.prisma and migrate, (2)
+    write the one-time seed script and backfill the real corpus (idempotency
+    guard per the spec''s section 4), (3) implement the two GET routes per the
+    spec''s section 3, (4) wire watchlist-page.vue''s browse/filter/stats views
+    (BROWSE-UX.md) to the real API instead of the static fallback stats t-006
+    added. Verify with vue-tsc/eslint at minimum; live DB verification may need
+    the Vercel MCP preview-deployment path per AGENTS.md''s cross-repo section
+    if local DATABASE_URL is unreachable.'

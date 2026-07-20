@@ -92,8 +92,8 @@ tasks:
 - id: t-008
   milestone: m3
   title: 'kind_robots: installation models, connect flow, webhook endpoint'
-  status: ready
-  owner: null
+  status: done
+  owner: reviewer
   passes: 0
   stakes: reversible
   depends_on: t-007
@@ -101,11 +101,35 @@ tasks:
     callback, HMAC-verified POST /api/appmaker/github/webhook, and the granted-repo list API. Per design
     sections 4, 5a, 5e, 6.
 
-    '
+    DONE 2026-07-20 (conductor agent session claude-conductor-agent-20260720T1535Z,
+    kind_robots PR #651 merged squash ea478b28): built exactly what the design doc''s
+    §8 task table specced for t-008, no more/less -- GithubInstallation + AppRepo
+    Prisma models (additive migration 20260720154500_appmaker_github_integration,
+    hand-authored since no shadow DB was available to run `prisma migrate dev`, checked
+    line-by-line against the schema and the nearest analogous existing migration),
+    GET /api/appmaker/github/connect (signed state nonce via jose HS256, reusing the
+    existing JWT_SECRET rather than provisioning a new one), GET /api/appmaker/github/setup
+    (verifies state, fetches installation details as the app itself via a jose RS256
+    App JWT, upserts GithubInstallation), POST /api/appmaker/github/webhook
+    (HMAC-SHA256 verified against the raw body, mirroring server/api/stripe/webhook.post.ts''s
+    raw-body pattern exactly), and GET /api/appmaker/github/repos. push/pull_request/check_suite
+    webhook events are acknowledged but no-op -- design section 5e''s CI-status-cache is
+    a separate model not in t-008''s scope, left undone rather than speculatively built.
+    Installation-token minting and any GitHub write action were deliberately left to
+    t-009 per the design doc''s own task split. Verified: vue-tsc --noEmit (0 errors),
+    eslint + prettier clean on all changed files, Prisma JSON-cast / unquoted-reserved-table
+    / capture-group-guard contracts all pass, known-migration-repair self-test still
+    passes. Not verified: a live install round-trip against real GitHub (no reachable
+    live environment in this sandbox, same class of gap as other recent live-smoke
+    deferrals) -- flagged in the kind_robots PR body. `python scripts/audit_roadmaps.py`
+    -- 0 errors, no new warnings.'
+  claimed_by: claude-conductor-agent-20260720T1535Z
+  claimed_at: '2026-07-20T15:34:14Z'
+  updated: '2026-07-20T15:53:00Z'
 - id: t-009
   milestone: m3
   title: 'Worker external-repo support: installation tokens + scaffold PR flow'
-  status: waiting
+  status: ready
   owner: null
   passes: 0
   stakes: reversible

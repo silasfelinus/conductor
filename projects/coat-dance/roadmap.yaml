@@ -192,8 +192,8 @@ tasks:
   - id: t-010
     milestone: m1
     title: "Polish and upgrade Coat Dance front-end surface"
-    status: ready
-    owner: null
+    status: review
+    owner: worker
     passes: 0
     stakes: reversible
     note: >
@@ -206,3 +206,23 @@ tasks:
       points at /coat-dance (admin can run the Conductor 'Placements' button to backfill
       channelKey/tabKey/liveUrl); (4) evolve the placeholder scaffold page into the full
       interactive experience for this project.
+
+      PROGRESS 2026-07-20 (conductor burst-rotation session, claude-burst-rotation-20260720T1440Z):
+      step (2) done -- added a 'coat-dance' section under tutorialChannels.art.sections in
+      stores/helpers/tutorialCards.ts (marked underConstruction, same convention as the
+      sanctuary channel's giftshop/community entries for early-stage features). Step (4) done
+      within honest scope: replaced the bare ProjectFrontPage scaffold with a real #interactive
+      slot in components/conductor/coat-dance-page.vue -- the true 2006 HSU trench-coat
+      performance premise (from this roadmap's notes_from_silas) plus a production-stage tracker
+      mirroring m1-m5 above (all not-started, matching current roadmap state). Deliberately did
+      NOT fabricate a remix-tool UI: this project is genuinely 0% into production (every
+      milestone not-started, t-002 through t-009 all blocked on the source video), so there is no
+      real backend/store to hook an interactive tool into yet, unlike storymaker/davinci's
+      scenario engines. Remaining and kept ready: step (1) dashboard-tab + tutorial .webp art
+      (art-generation relay still down this cycle, same finding as several other projects today)
+      and step (3) liveUrl/channelKey/tabKey backfill (admin Placements click, not an agent
+      action). Verified before merge: prettier clean, eslint clean, full-project npm run test
+      (vue-tsc --noEmit) exit 0. kind_robots PR #650 (branch claude/keen-fermat-4ytr28).
+    claimed_by: claude-burst-rotation-20260720T1440Z
+    claimed_at: '2026-07-20T15:14:05Z'
+    updated: '2026-07-20T15:25:03Z'

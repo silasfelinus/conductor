@@ -135,3 +135,49 @@ than needing its own roadmap task.
 **Kaizen task:** none — this task's own scope was the kaizen (from the PR #104 merge);
 a natural next step if Silas wants it automatic is wiring `flag_stale_apps.py` into an
 existing periodic workflow, left as a follow-up rather than expanding this task's diff.
+
+## 2026-07-20 | Reviewer (agent run) | appmaker/t-008 | done (kind_robots PR #651 merged)
+
+**Decision:** implemented and self-merged (session claude-conductor-agent-20260720T1535Z).
+
+**Failure category:** none — clean first pass.
+
+**What was good:**
+- Read `GITHUB-APP-DESIGN.md` in full before writing anything, including §8's own task
+  split (t-008 = models + connect flow + webhook; t-009 = installation tokens + write
+  actions), and held to that boundary rather than building the whole design in one pass —
+  installation-token minting and any GitHub write action were left out entirely, even
+  though the shared `appmakerGithub.ts` utils file would have been a natural place to
+  add them opportunistically.
+- Delegated research into kind_robots' concrete conventions (Prisma multi-file schema
+  style, the existing Stripe webhook's raw-body/HMAC pattern, `jose` already being the
+  in-repo JWT library, `authGuard.ts`'s guard functions, the raw-`fetch` GitHub API
+  pattern in `conductor-github.ts`) to an Explore agent against the live repo before
+  writing code, then matched every one of those conventions exactly rather than
+  inventing new patterns (e.g. reused `JWT_SECRET` for the state nonce instead of
+  requesting a new secret Silas hadn't provisioned; hand-rolled HMAC with Node's
+  `crypto` instead of adding a GitHub SDK dependency for one webhook route).
+- No shadow database was available in this sandbox to run `prisma migrate dev`, so the
+  additive migration SQL was hand-authored — checked column-by-column against the
+  schema and byte-for-byte against the DDL conventions of the most recent comparable
+  migration (`20260717103700_add_storefront_product_order_entitlement`) rather than
+  guessing at Prisma's MySQL output format.
+- Verified everything verifiable without a live GitHub round-trip: full-project
+  `vue-tsc --noEmit` (0 errors), `eslint`/`prettier` clean on every changed file, and
+  every contract check plausibly relevant to a new Prisma model + webhook route
+  (Prisma JSON-cast, unquoted-reserved-table, capture-group-guard, and the
+  known-migration-repair self-test) — explicitly checked whether the "Conductor API
+  auth-guard contract" applied (it only scans `server/api/conductor/`, confirmed by
+  reading the checker script, not assumed) rather than either skipping the check or
+  wrongly adding an auth guard to `setup.get.ts`/`webhook.post.ts` that would have
+  broken their actual auth model (state nonce / HMAC, not a session token).
+- Explicitly flagged the one thing that couldn't be verified (a live install
+  round-trip against real GitHub) in both the PR body and the roadmap note instead of
+  claiming full verification.
+- `t-009` was already filed in the roadmap (waiting on t-008) — ran `resolve_deps.py`
+  rather than hand-flipping its status, which correctly unblocked it to `ready`.
+
+**What to improve:** none this cycle.
+
+**Kaizen task:** none filed — `appmaker/t-009` (installation-token minting + scaffold-PR
+flow) already exists and is now unblocked; it's the correct next step, not a new kaizen.
