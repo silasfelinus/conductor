@@ -7622,3 +7622,56 @@ files they're meant to guard.
 **What to improve:** none this cycle.
 
 **Kaizen task:** none this cycle.
+
+## 2026-07-20 | Worker (burst) | ecosystem-map/t-006 | done (conductor PR #889 merged)
+
+**Decision:** implemented, self-merged (session claude-conductor-burst-20260720T0700Z).
+
+**Failure category:** none — clean first pass.
+
+**What was good:**
+- Rotation: `next_ready_task.py` surfaced ai-art-academy/t-010 (recurring filler, already
+  run twice today per TALKBACK) at the top. The two most-recently-worked burst projects
+  this rotation, kind-robots (t-041) and animation-manager (t-012), were skipped for
+  rotation diversity. Walked `priority.yaml` order past kind-robots/t-033 (a "wait for a
+  second concrete example" recheck task with nothing new to find a third time —
+  RECHECKED twice already on 2026-07-18/19 with identical zero-match results) to
+  ecosystem-map/t-006, the next genuinely fresh, unblocked, pure-conductor-repo task.
+- t-006's job is "turn confirmed FRONTEND-SURFACE-MAP.md gaps into project-owned
+  implementation tasks" — rather than trusting the 2026-07-10 audit doc's text and
+  filing 15 new tasks from it, re-verified live against `silasfelinus/kind_robots` main
+  (`stores/helpers/dashboardHelper.ts` + `content/*.md`) via the GitHub MCP tools first.
+  All 15 rows the doc flagged as missing/incomplete (Humboldt Scoop, Humboldt Scoop CMS,
+  Sketchy, Storymaker, Da Vinci, Media Watchlist, Conductor App, Alexa Integration,
+  Mermaids of Venice, Packmaker, Coat Dance, Wishmaster, Challenge Center, Serendipity,
+  AppMaker) already have a registered dashboard tab and a `content/<slug>.md` scaffold
+  route — closed by the project-frontend-pages pass this doc's own 2026-07-12 update
+  describes. Cross-checked each of those 15 projects' `roadmap.yaml` and found every one
+  already carries the matching "Polish and upgrade `<Project>` front-end surface" task
+  (5 already `done`, 10 already `ready` and queued in priority order) — the exact
+  implementation-task shape t-006 exists to produce.
+- Filed zero new tasks: writing 15 duplicates of tasks that already exist would have
+  forked the same work into two roadmap locations instead of routing it once. Updated
+  `FRONTEND-SURFACE-MAP.md` with a 2026-07-20 re-audit note so the next cycle reads
+  current reality instead of the stale 2026-07-10 snapshot, and closed t-006 as done.
+- Closing t-006 made ecosystem-map 8/8 tasks done, which `audit_roadmaps.py` correctly
+  flagged as new `ACTIVE_PROJECT_ALL_DONE`/`ACTIVE_PROJECT_NO_OPEN_TASKS` warnings.
+  Left `project-overrides.yaml`'s `ecosystem-map` entry at `status: active` rather than
+  flipping it to `finished`/`paused` unilaterally — that file's existing comments (e.g.
+  the `finished` flips on other projects) read as Silas-approval decisions, and
+  `humboldt-scoop` already sits in the identical fully-done-but-active state
+  unremediated, so this isn't a new problem introduced here. Flagged it for Silas in the
+  PR body instead of guessing.
+- Verified before opening the PR: `python scripts/audit_roadmaps.py` (0 errors), then
+  all 23 conductor PR #889 checks green (CodeQL x4, GitGuardian, Authz regression tests,
+  Dependency audit, Static checks, roadmap/task-event YAML validation, Lint Python
+  scripts, TypeScript build, Worker status/Dream-cycle/Ruler-hooked smoke guards)
+  before merging.
+- Hit the documented first-push HTTP 413 (brand-new `worker/ecosystem-map-t-006` ref) —
+  used the `create_branch` MCP-tool workaround per this file's own CLAUDE.md section,
+  which worked on the first try this time.
+
+**What to improve:** none this cycle.
+
+**Kaizen task:** none this cycle — this cycle's task was itself a verification/kaizen
+pass over ecosystem-map's own backlog.
