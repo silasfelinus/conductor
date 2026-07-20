@@ -129,8 +129,8 @@ tasks:
 - id: t-010
   milestone: m4
   title: Polish and upgrade Storymaker front-end surface
-  status: review
-  owner: reviewer
+  status: ready
+  owner: null
   passes: 0
   stakes: reversible
   note: >
@@ -143,6 +143,23 @@ tasks:
     liveUrl points at /storymaker (admin can run the Conductor 'Placements' button
     to backfill channelKey/tabKey/liveUrl); (4) evolve the placeholder scaffold
     page into the full interactive experience for this project.
-  claimed_by: claude-conductor-agentrun-20260720-storymaker
-  claimed_at: '2026-07-20T09:17:22Z'
-  updated: '2026-07-20T09:17:22Z'
+
+    PROGRESS 2026-07-20 (conductor agent session claude-conductor-agentrun-20260720-storymaker,
+    kind_robots PR #640 merged squash b6adafd8): step (2) done -- added a 'storymaker' section
+    under tutorialChannels.scenario.sections in stores/helpers/tutorialCards.ts, mirroring the
+    existing serendipity entry, resolving via tutorialImage('scenario', 'storymaker') with a
+    placeholder fallback until dedicated art lands. Step (4) partially advanced rather than
+    confirmed already-covered: the scaffold's #interactive slot was a static card linking out to
+    /stories with no real data, so wired it to scenarioStore (initialize() on mount, cheap
+    local/seed data only, no live fetch, matching the SSR-safe pattern already used in
+    scenario-gallery.vue/scenario-interact.vue/dream-manager.vue) to show a live scenario count
+    plus up to 3 scenario titles linking to /stories, alongside the existing CTA. Not a full
+    dedicated Storymaker UI -- that would be materially larger scope than a polish pass; left as
+    a genuinely open step for a future cycle if Silas wants a bespoke flow rather than reuse of
+    the Stories engine. Remaining and kept ready: step (1) dashboard-tab + tutorial .webp art
+    (needs the generation backend/egress -- relay confirmed still down this session, see
+    ai-art-academy/t-035) and step (3) the liveUrl backfill (an admin Placements click, not an
+    agent action). Verified: eslint + prettier clean on both changed files, full-project
+    vue-tsc --noEmit exit 0. All 3 kind_robots PR checks green (TypeScript, Contract verifiers,
+    GitGuardian).
+  updated: '2026-07-20T09:30:00Z'
