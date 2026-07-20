@@ -92,6 +92,37 @@ def apply_moves(moves: list[dict], root: Path, apply: bool) -> dict:
             print(f"  MISSING source, cannot move: {src}  (-> {dst})")
             stats["missing"] += 1
             continue
+
+        # Whole-folder relocation (kind "folder", or the source is a directory):
+        # a misplaced collection folder like /images/the-lantern-greenhouse-collection
+        # -> /images/dreams/lantern-greenhouse. Merge into an existing dest folder
+        # rather than fail, and never overwrite a file already there.
+        if kind == "folder" or src.is_dir():
+            print(f"  {'FOLDER' if apply else '[dry] FOLDER'} {src}  ->  {dst}")
+            if apply:
+                dst.mkdir(parents=True, exist_ok=True)
+                for item in list(src.iterdir()):
+                    target = dst / item.name
+                    if target.exists():
+                        print(f"    keep existing, skip: {target.name}")
+                        continue
+                    shutil.move(str(item), str(target))
+                # remove the now-empty (or manifest/leftover-only) source dir
+                remaining = [p for p in src.iterdir()]
+                if not remaining:
+                    src.rmdir()
+                else:
+                    print(f"    left {len(remaining)} item(s) in {src} (name clash)")
+                # For a dream collection, the DB PitchSheet points at
+                # <slug>/<slug>-card.webp. The folder's files are arbitrarily
+                # named, so guarantee that canonical card exists by copying the
+                # best candidate image (keeps the original too).
+                if dst.parent.name == "dreams":
+                    ensure_dream_card(dst)
+            touched_dirs.add(dst)
+            stats["moved"] += 1
+            continue
+
         if dst.exists():
             print(f"  CONFLICT dest exists, skipping: {dst}  (from {src})")
             stats["conflict"] += 1
@@ -104,6 +135,31 @@ def apply_moves(moves: list[dict], root: Path, apply: bool) -> dict:
         touched_dirs.add(src.parent)
         stats["moved"] += 1
     return stats
+
+
+_CARD_PREFERENCE = ("card", "hero", "key", "cover", "title", "main", "dream")
+
+
+def ensure_dream_card(folder: Path) -> None:
+    """Make sure <folder>/<slug>-card.webp exists (the DB PitchSheet path) by
+    copying the most card-like image in the folder. No-op if it already exists
+    or the folder has no images."""
+    slug = folder.name
+    target = folder / f"{slug}-card.webp"
+    if target.exists():
+        return
+    imgs = sorted(f for f in folder.iterdir()
+                  if f.is_file() and f.suffix.lower() in IMAGE_EXTS)
+    if not imgs:
+        return
+    best = None
+    for pref in _CARD_PREFERENCE:
+        best = next((f for f in imgs if pref in f.stem.lower()), None)
+        if best:
+            break
+    best = best or imgs[0]
+    shutil.copy2(str(best), str(target))
+    print(f"    card: copied {best.name} -> {target.name}")
 
 
 def has_images(d: Path) -> bool:
@@ -170,10 +226,18 @@ def main() -> int:
 
     stats = apply_moves(moves, root, args.apply)
 
-    # regenerate manifests for every folder that gained files, plus the index
+    # regenerate manifests for every folder that gained files, plus the index.
+    # For a folder move the new path IS the folder; for a file move it's the file,
+    # so regen its parent.
     print("Regenerating gallery.json / collections.json ...")
-    for d in sorted({root / rel(m["new"]) for m in moves if m.get("new")}):
-        regen_gallery(d.parent, args.apply)
+    regen_targets = set()
+    for m in moves:
+        if not m.get("new"):
+            continue
+        d = root / rel(m["new"])
+        regen_targets.add(d if (m.get("kind") == "folder" or d.is_dir()) else d.parent)
+    for d in sorted(regen_targets):
+        regen_gallery(d, args.apply)
     idx = regen_collections(root, args.apply)
     print(f"  collections.json: {len(idx)} folder(s){'' if args.apply else ' [dry]'}")
     print(f"\n{stats}")
