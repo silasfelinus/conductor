@@ -15,6 +15,24 @@ Record the lane, files changed, and verification in the task note before rearmin
 
 ### Rotation state
 
+- Last completed lane: Curriculum depth (lane 4, coverage-gap follow-up),
+  2026-07-20 (~17:12-17:26 UTC). Lane 3 (inspiration/preview assets) was next
+  preferred per the prior cycle's note, tried first with a *fresh* queued job
+  (job 957, greek-vase-painting.webp) rather than re-polling job 816: the
+  queueing script hit a one-off `Connection reset by peer` mid-poll and
+  aborted early, but a direct follow-up `curl` to the same job's status
+  endpoint returned cleanly with `status: PENDING` and `updatedAt` unchanged
+  since creation — confirming the connection reset was a transient network
+  blip, not new evidence about relay state, and the underlying "not claimed"
+  blocker is unchanged. Fell back to lane 4 per the checklist's own
+  instruction and picked its two already-identified small gaps: added the
+  missing v1.5-addition (2026-07-20) PUBLIC-DOMAIN-POLICY.md re-check
+  paragraph for §25 (Persian Miniature Painting) to `curriculum-outline.md`,
+  and added `persian-miniature` to the "Flagged as likely-poor remixers" tier
+  list (same spatial-logic-vs-composition-preservation tension already
+  flagged for `cubism`, and already called out for this movement in
+  `teaching-notes.md` row 25). Conductor-docs-only change; no kind_robots PR
+  needed.
 - Last completed lane: Roadmap accuracy (lane 2), 2026-07-20 (~14:11-14:35 UTC). Ran
   `scripts/check_pr_merged_drift.py` (clean) and `scripts/audit_roadmaps.py` (same 2
   pre-existing info-level findings, not defects). Reconfirmed t-019 still genuinely
@@ -149,14 +167,12 @@ Record the lane, files changed, and verification in the task note before rearmin
   PRs — conductor-docs-only change this cycle, no kind_robots PR.
 - Previously: Roadmap accuracy (lane 2), 2026-07-19 (~22:00-22:20 UTC). Milestone audit came back clean (no drift). Fixed a real tooling bug found while auditing: `scripts/check_pr_merged_drift.py` treated failed GitHub API lookups (this session type only has GitHub MCP tools, not direct REST/token access — every lookup 403'd) identically to confirmed-open PRs, so a 100%-failed run silently reported "No drift found" with exit 0, indistinguishable from a genuine clean audit. `check()`/`render()` now surface unresolved lookups explicitly and `main()` exits 2 (not 0) when anything couldn't be verified. Tests updated/added in `tests/test_check_pr_merged_drift.py`; full suite green (427 passed, 1 pre-existing skip). Conductor-only change, no kind_robots PR.
 - Before that: Front-end polish (lane 1), 2026-07-19 (~19:04-19:15 UTC). Fixed `image-upload.vue`'s `addFiles()` silently dropping non-PNG/JPEG/WebP files (drag-and-drop bypasses the input's `accept` attribute) with zero user-visible feedback — now sets `error.value` to a skip-count message. kind_robots PR #547, merged 2026-07-19T19:14Z.
-- Next preferred lane: Inspiration/preview assets (lane 3) — this cycle completed
-  lane 2 (roadmap accuracy, t-033 stale co-blocker fix). Recheck with a *fresh*
-  queued job, not another poll of job 816 (last confirmed blocked 2026-07-20
-  ~10:04Z, `status: PENDING` unchanged since ~00:14Z — it will never resolve once
-  the relay is back since it isn't being retried). If still blocked, lane 4's two
-  already-identified small gaps (curriculum-outline.md's missing v1.5 policy
-  re-check paragraph for §25; persian-miniature not yet in the remix-quality tier
-  lists) are ready-to-pick fallbacks.
+- Next preferred lane: Front-end polish (lane 1) — this cycle completed lane 4
+  (curriculum depth, the persian-miniature policy-recheck + tier-list fallback)
+  after lane 3 was rechecked with a fresh job (957) and confirmed still blocked
+  (`status: PENDING`, never claimed). No outstanding lane-4 gaps remain from
+  this batch; the next lane-3 recheck should queue a fresh job again rather
+  than poll 816 or 957.
 - Override the preferred lane only when it is blocked or a higher-severity reversible issue is newly verified; record that reason in the task note.
 
 This explicit state is the handoff between recurring cycles. Update it in the same PR as each `t-010` improvement so the next Worker does not infer rotation from a long roadmap note.
@@ -176,7 +192,7 @@ newly discovered issue is more urgent.
 | Lesson seed entries | All 25 movements in curriculum-outline.md are synced to `academyStyles.ts` (Persian Miniature Painting landed 2026-07-20, kind_robots PR #616, mirroring t-020/t-031/t-034/PR #506) | Coverage complete for the current 25-movement curriculum; sync the next movement when one is added |
 | Example works | 23 movements complete, including Persian Miniature Painting (3 works, all **VERIFIED** by direct `WebFetch` of their Wikimedia Commons file pages this cycle — 2026-07-20 egress to commons.wikimedia.org worked, unlike the earlier `artic.edu` 402s). Ashcan School's 4 VERIFIED works are written up in curriculum-outline.md §23 but not yet in `examples.manifest.json` (confirmed absent: no `exampleWorks` field on the `ashcan-school` entry in `stores/seeds/academyStyles.ts` as of 2026-07-19). American Regionalism's 4 works are written up in curriculum-outline.md §24 (sourced, but marked "unverified this cycle" — `WebFetch` to museum hosts returned HTTP 402 through the session egress proxy) | Blocked on media-server write access — same blocker as t-033 (confirmed 2026-07-19: `examples.manifest.json` lives on `media.acrocatranch.com`, not in the kind_robots git repo; this session has `KR_API_TOKEN` but no `KR_RELAY_TOKEN`/`KR_RELAY_USER_ID` and found no in-repo upload path, so it cannot write the manifest or upload images from here). Research/sourcing is already done (curriculum-outline.md §23-25); only the write step remains, plus a direct-fetch spot-check of §24's four URLs when museum/Commons egress is open. Resume once a session with media-server/relay write access is available — do not re-attempt from a sandbox without it |
 | Starter library | 21 starter images and provenance manifest complete — coverage intentionally movement-agnostic (2026-07-18: confirmed no movement-specific starters exist for any of the 8 movements added after v1, and an abstract Suprematist work would fail the library's own selection criteria; see starter-image-library.md) | Keep source-picker integration aligned with the manifest; no new starter entries needed |
-| Style previews | 25 prompts queued (Suprematism queued 2026-07-18, `kind-robots-academy-style-preview-suprematism`; Ashcan School queued the same cycle it was added, `kind-robots-academy-style-preview-ashcan-school`; American Regionalism queued 2026-07-19, `kind-robots-academy-style-preview-american-regionalism`; Persian Miniature Painting queued 2026-07-20, `kind-robots-academy-style-preview-persian-miniature`, all in `art-prompts.yaml`). All 25 are still `status: pending` — the home relay is not claiming jobs (2026-07-20: a live `--live` queue attempt via the new `--id-prefix` filter got job 816 accepted by the API but never claimed after 10+ minutes) | Blocked on home-relay reachability, not on this queue. Re-run `python scripts/consume_art_requests.py --id-prefix "kind-robots-academy-style-preview-" --live` once relay/DB state is confirmed to have changed |
+| Style previews | 25 prompts queued (Suprematism queued 2026-07-18, `kind-robots-academy-style-preview-suprematism`; Ashcan School queued the same cycle it was added, `kind-robots-academy-style-preview-ashcan-school`; American Regionalism queued 2026-07-19, `kind-robots-academy-style-preview-american-regionalism`; Persian Miniature Painting queued 2026-07-20, `kind-robots-academy-style-preview-persian-miniature`, all in `art-prompts.yaml`). All 25 are still `status: pending` — the home relay is not claiming jobs (2026-07-20 ~10:04Z: job 816 accepted but never claimed after 10+ minutes; 2026-07-20 ~17:12Z: fresh job 957 also accepted but still `status: PENDING`/unclaimed, `updatedAt` unchanged since creation, confirmed via direct API check) | Blocked on home-relay reachability, not on this queue. Re-run `python scripts/consume_art_requests.py --id-prefix "kind-robots-academy-style-preview-" --live` with a fresh job (not 816 or 957) once relay/DB state is confirmed to have changed |
 | Remix configs | Registry exists; A/B generation blocked | Resume only after the relay, database, and approved generation path are available |
 | Teaching scaffold | Written in `docs/teaching-notes.md`, now covering all 25 movements including Persian Miniature Painting (row 25 added 2026-07-20, this cycle); wired into `academy-style-detail.vue`'s Try It / Reflect sections (t-023, done — verified 2026-07-18 via `grep -n "Try it\|Reflect" components/academy/academy-style-detail.vue` on kind_robots main) | Coverage complete for the current 25-movement curriculum; add the next movement's row when one is added |
 
