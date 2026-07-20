@@ -188,7 +188,7 @@ tasks:
   - id: t-006
     milestone: m5
     title: "Research and pitch one genuinely new passive animation"
-    status: claimed
+    status: ready
     owner: worker
     passes: 0
     stakes: reversible
@@ -210,9 +210,26 @@ tasks:
       buildable queue to exactly 12, at the cap but not above it. No kind_robots
       code touched (pitch-only, per this task's scope) -- re-armed to ready per the
       recurring-task convention.
-    claimed_by: claude-conductor-agent-20260720T0713Z
-    claimed_at: '2026-07-20T07:17:28Z'
-    updated: '2026-07-20T07:17:28Z'
+
+      RAN 2026-07-20 (~07:17 UTC, conductor agent session,
+      claude-conductor-agent-20260720T0713Z): new Pacific calendar day (last run
+      was 2026-07-19T19:45 -07:00) and the buildable queue was exactly 12 (not
+      above twelve), so neither no-op condition applied. Added
+      `marble-run-contraption` (a perpetual Rube Goldberg marble circuit -- fixed
+      track segments, seesaw/bell/pinwheel contact triggers, bucket-elevator
+      return), checked against all 13 existing pitches. Distinct from
+      clockwork-greenhouse (organic growth state machines, not track-position
+      physics), celestial-mobile (free-hanging balance physics, not a fixed
+      circuit), and ant-farm-excavation (grid-based digging sim, not track
+      traversal). Ran `scripts/check_animation_novelty.py --strict` -- no
+      collisions at or above the 0.2 threshold across all 14 pitches. Brings the
+      buildable queue to 13 (above the cap for the *next* cycle's no-op check,
+      consistent with how the prior cycle read the same rule going from 11 to
+      exactly 12). No kind_robots code touched (pitch-only) -- re-armed to ready
+      per the recurring-task convention.
+    claimed_by: null
+    claimed_at: null
+    updated: '2026-07-20T07:19:36Z'
 
   - id: t-007
     milestone: m5

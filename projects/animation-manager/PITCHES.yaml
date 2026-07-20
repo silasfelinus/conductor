@@ -1,4 +1,4 @@
-updated: "2026-07-19T19:45:00-07:00"
+updated: "2026-07-20T00:15:00-07:00"
 
 pitches:
   - id: bioluminescent-tide
@@ -230,3 +230,36 @@ pitches:
     acceptance:
       - at least two tunnels are visibly under construction or collapse at any time
       - excavated trinkets appear at most once per minute and do not repeat consecutively
+
+  - id: marble-run-contraption
+    title: Marble Run Contraption
+    status: pitched
+    priority: 14
+    surprise: >
+      A perpetual Rube Goldberg machine of wooden chutes, tiny bells, seesaws, and
+      pinwheels ferries a handful of marbles in an endless loop, each one triggering
+      a small cascade of catches, taps, and releases along the way.
+    passive_loop: >
+      Marbles roll down fixed track segments, tip seesaw catches, spin pinwheels,
+      and ring bells on contact, then rise back to the top via a slow bucket-elevator
+      so the same handful of marbles recirculates without ever running out.
+    optional_interaction: >
+      Pointer nudges one lever arm, briefly redirecting the next marble onto an
+      alternate branch; click drops one extra marble into the top hopper for a
+      few seconds of denser traffic before it settles back to baseline.
+    technique: >
+      Segment-based track graph (arcs, ramps, seesaws, catch-and-release gates) with
+      simple per-marble position-along-track state rather than full rigid-body physics;
+      contact events at fixed trigger points drive bell/pinwheel/seesaw animations.
+    reduced_motion: One marble on a short two-segment loop, no bell/pinwheel flourishes, slow elevator only.
+    performance_risk: >
+      Many simultaneous contact-triggered animations can pile up; pool trigger effects
+      and cap concurrent marbles in flight.
+    novelty: >
+      A fixed kinetic-toy circuit driven by track-position state and discrete contact
+      events, distinct from clockwork-greenhouse's organic growth timelines, celestial-mobile's
+      free-hanging balance physics, and ant-farm-excavation's grid-based digging simulation.
+    acceptance:
+      - at least one full marble circuit (drop to elevator return) is visible within thirty seconds
+      - contact-triggered flourishes (bell/pinwheel/seesaw) never desync from the marble that caused them
+      - underlying page clicks remain functional through the click interaction
