@@ -15,6 +15,26 @@ Record the lane, files changed, and verification in the task note before rearmin
 
 ### Rotation state
 
+- Last completed lane: Front-end polish (lane 1), 2026-07-20 (~12:07-12:30 UTC).
+  Dispatched a general-purpose subagent over all 7 in-scope files with an explicit
+  exclusion list of every previously-fixed bug class (PRs #275, #301, #332, #371,
+  #380, #383, #385, #387, #397, #515, #520, #544, #547, #603, #622). Found a real,
+  verifiable data-correctness bug: `academy-styles-browser.vue` shares a single
+  unkeyed `academy-style-detail` instance across style switches — its click handler
+  moves `expandedSlug` directly between two non-null slugs without ever passing
+  through `null`, so Vue patches the same instance in place instead of remounting
+  it when the user picks a new tile without closing the panel first.
+  `academy-style-detail.vue` only calls `markLessonViewed()` in `onMounted`, so
+  every style opened this way after the first silently stopped being credited as
+  viewed — no checkmark, no `lessonsViewedCount` increment, no error.
+  `academy-timeline.vue` was confirmed unaffected (each style has its own keyed
+  `v-for` `<li>`, so it always mounts a distinct instance). Fixed with
+  `:key="expandedStyle.slug"` on the `academy-style-detail` usage in
+  `academy-styles-browser.vue`, forcing a remount per style. Verified prettier
+  clean; no local `node_modules` in this sandbox, so eslint/vue-tsc relied on
+  kind_robots CI this cycle (all 3 checks green: TypeScript, Contract verifiers,
+  GitGuardian). kind_robots PR #646 (branch `claude/keen-fermat-y6jjjw`), merged
+  squash `98cfdc8`.
 - Last completed lane: Curriculum depth (lane 4, coverage-gap follow-up), 2026-07-20
   (~10:04-10:35 UTC). Lane 3 (inspiration/preview assets) was next preferred per the
   prior cycle's note, tried first: `GET /api/art/queue/816` (the job queued at
@@ -119,16 +139,16 @@ Record the lane, files changed, and verification in the task note before rearmin
   PRs — conductor-docs-only change this cycle, no kind_robots PR.
 - Previously: Roadmap accuracy (lane 2), 2026-07-19 (~22:00-22:20 UTC). Milestone audit came back clean (no drift). Fixed a real tooling bug found while auditing: `scripts/check_pr_merged_drift.py` treated failed GitHub API lookups (this session type only has GitHub MCP tools, not direct REST/token access — every lookup 403'd) identically to confirmed-open PRs, so a 100%-failed run silently reported "No drift found" with exit 0, indistinguishable from a genuine clean audit. `check()`/`render()` now surface unresolved lookups explicitly and `main()` exits 2 (not 0) when anything couldn't be verified. Tests updated/added in `tests/test_check_pr_merged_drift.py`; full suite green (427 passed, 1 pre-existing skip). Conductor-only change, no kind_robots PR.
 - Before that: Front-end polish (lane 1), 2026-07-19 (~19:04-19:15 UTC). Fixed `image-upload.vue`'s `addFiles()` silently dropping non-PNG/JPEG/WebP files (drag-and-drop bypasses the input's `accept` attribute) with zero user-visible feedback — now sets `error.value` to a skip-count message. kind_robots PR #547, merged 2026-07-19T19:14Z.
-- Next preferred lane: Front-end polish (lane 1) — this cycle completed lane 4
-  (fell back from lane 3, still blocked). Lane 3 was reconfirmed blocked 2026-07-20
-  ~10:04Z by directly polling `GET /api/art/queue/816` (fresh, authenticated —
-  `status: PENDING`, `updatedAt` unchanged since the job was queued ~00:14Z, ~10
-  hours with zero relay activity); a future cycle should queue and poll a *new* job
-  rather than re-check 816 again, since 816 itself will never resolve once the relay
-  is back (it's not being retried). If lane 1 is exhausted or blocked, lane 4's two
-  freshly-identified small gaps (curriculum-outline.md's missing v1.5 policy re-check
-  paragraph for §25; persian-miniature not yet in the remix-quality tier lists) are
-  ready-to-pick fallbacks before reaching for lane 2.
+- Next preferred lane: Roadmap accuracy (lane 2) — this cycle completed lane 1
+  (academy-styles-browser.vue viewed-tracking remount fix, PR #646). Lane 3
+  (inspiration/preview assets) was last confirmed blocked 2026-07-20 ~10:04Z by
+  directly polling `GET /api/art/queue/816` (`status: PENDING`, `updatedAt`
+  unchanged since ~00:14Z); a future cycle should queue and poll a *new* job rather
+  than re-check 816 again, since it will never resolve once the relay is back (it's
+  not being retried). If lane 2 is exhausted or blocked, lane 4's two
+  already-identified small gaps (curriculum-outline.md's missing v1.5 policy
+  re-check paragraph for §25; persian-miniature not yet in the remix-quality tier
+  lists) are ready-to-pick fallbacks.
 - Override the preferred lane only when it is blocked or a higher-severity reversible issue is newly verified; record that reason in the task note.
 
 This explicit state is the handoff between recurring cycles. Update it in the same PR as each `t-010` improvement so the next Worker does not infer rotation from a long roadmap note.
