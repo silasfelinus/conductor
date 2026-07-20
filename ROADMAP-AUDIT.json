@@ -1,16 +1,16 @@
 {
-  "generated_at": "2026-07-20T05:12:55.687865+00:00",
+  "generated_at": "2026-07-20T06:17:46.080416+00:00",
   "summary": {
     "roadmaps": 40,
     "active_projects": 31,
     "tasks": 629,
-    "ready": 50,
+    "ready": 48,
     "waiting": 45,
     "needs_human": 34,
-    "in_progress": 2,
-    "done": 487,
+    "in_progress": 1,
+    "done": 490,
     "errors": 0,
-    "warnings": 7,
+    "warnings": 9,
     "info": 46
   },
   "projects": [
@@ -350,16 +350,15 @@
       "autonomous": false,
       "task_count": 8,
       "counts": {
-        "done": 7,
-        "review": 1
+        "done": 8
       },
-      "open_count": 1,
+      "open_count": 0,
       "human_attention": 0,
       "ready": 0,
       "waiting": 0,
       "claimed": 0,
-      "review": 1,
-      "done": 7
+      "review": 0,
+      "done": 8
     },
     {
       "slug": "conductor",
@@ -408,16 +407,16 @@
       "autonomous": false,
       "task_count": 10,
       "counts": {
-        "done": 8,
-        "ready": 2
+        "done": 9,
+        "ready": 1
       },
-      "open_count": 2,
+      "open_count": 1,
       "human_attention": 0,
-      "ready": 2,
+      "ready": 1,
       "waiting": 0,
       "claimed": 0,
       "review": 0,
-      "done": 8
+      "done": 9
     },
     {
       "slug": "davinci",
@@ -563,17 +562,17 @@
       "autonomous": false,
       "task_count": 12,
       "counts": {
-        "done": 6,
-        "ready": 4,
+        "done": 7,
+        "ready": 3,
         "waiting": 2
       },
-      "open_count": 6,
+      "open_count": 5,
       "human_attention": 0,
-      "ready": 4,
+      "ready": 3,
       "waiting": 2,
       "claimed": 0,
       "review": 0,
-      "done": 6
+      "done": 7
     },
     {
       "slug": "media-watchlist",
@@ -799,6 +798,20 @@
       "project": "conductor",
       "task": "t-073",
       "message": "needs-human has no obvious hard-gate marker; consider returning it to ready, setting soft_gate: true, or documenting the actual gate."
+    },
+    {
+      "severity": "warning",
+      "code": "ACTIVE_PROJECT_ALL_DONE",
+      "project": "ecosystem-map",
+      "task": null,
+      "message": "All tasks are done but project override remains active."
+    },
+    {
+      "severity": "warning",
+      "code": "ACTIVE_PROJECT_NO_OPEN_TASKS",
+      "project": "ecosystem-map",
+      "task": null,
+      "message": "Active project has no open tasks; mark finished/paused or add an intentional recurring task."
     },
     {
       "severity": "warning",
