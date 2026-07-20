@@ -4,7 +4,7 @@ date: 2026-07-10
 task: ai-art-academy/t-005
 status: draft for review (content complete, one source URL verified per movement)
 
-This is the curriculum: 24 movements spanning the timeline from Greek vases to
+This is the curriculum: 25 movements spanning the timeline from Greek vases to
 American Regionalism. Every artist named here is long dead (all listed artists died
 before 1955), and every example work is a public-domain original held (or expected)
 in an open-access collection. See the ethical boundary in DESIGN-BRIEF.md and the
@@ -15,8 +15,10 @@ expansion (t-010 cycle): Gothic panel painting, Northern Renaissance, Rococo,
 Symbolism, and Neo-Impressionism/Pointillism. Section 22 is the 2026-07-18 v1.2
 addition (t-010 cycle): Suprematism. Section 23 is the 2026-07-18 v1.3 addition
 (t-010 cycle): Ashcan School. Section 24 is the 2026-07-19 v1.4 addition (t-010
-cycle): American Regionalism. They are appended (rather than renumbered into place)
-but belong chronologically among the earlier movements — read the `era` field in the
+cycle): American Regionalism. Section 25 is the 2026-07-20 v1.5 addition (t-010
+cycle): Persian Miniature Painting — the first non-Western, non-Japanese entry
+beyond Ukiyo-e. They are appended (rather than renumbered into place) but belong
+chronologically among the earlier movements — read the `era` field in the
 machine-readable skeleton for true ordering; the front-end seed (t-020, t-031)
 inserts them in chronological position.
 
@@ -192,6 +194,17 @@ movements:
     artist_slugs: [grant-wood, john-steuart-curry]
     example_count: 4
     remix_hint: "Repaint this image in the American Regionalist style: smooth, simplified sculptural forms with crisp outlines, sharp-focus representational realism, a rural Midwestern American setting, a dramatic rolling sky, and a muted earthy palette with a few bold accent colors"
+  # --- v1.5 addition (2026-07-20, t-010 cycle) ---
+  # First non-Western/non-Japanese entry beyond ukiyo-e; belongs chronologically
+  # around illuminated-manuscript/renaissance (see `era`); appended here to avoid
+  # renumbering the sections above. A future seed-sync task inserts it in
+  # chronological position in academyStyles.ts, mirroring t-020/t-031/t-034.
+  - slug: persian-miniature
+    name: Persian Miniature Painting
+    era: "c. 1400-1600 (Timurid Herat and early Safavid schools)"
+    artist_slugs: [kamal-ud-din-bihzad, sultan-muhammad]
+    example_count: 3
+    remix_hint: "Repaint this image as a Persian miniature: flat, high-vantage compositions with distant figures placed higher rather than smaller, brilliant unshaded jewel colors, intricate architectural or garden detail, patterned textiles, and a dense floral or geometric border, no Western perspective or cast shadow"
 ```
 
 ---
@@ -1363,6 +1376,70 @@ of national anxiety about the modern industrial city.
 simplified sculptural forms with crisp outlines, sharp-focus representational
 realism, a rural Midwestern American setting, a dramatic rolling sky, and a muted
 earthy palette with a few bold accent colors"
+
+---
+
+## 25. Persian Miniature Painting (`persian-miniature`)
+
+**Era:** c. 1400-1600 (Timurid Herat and early Safavid schools)
+
+**Key ideas.** Persian miniatures illustrated manuscripts of court poetry and epic —
+Sa'di's *Bustan*, Nizami's *Iskandarnama*, the *Shahnameh* — with pages built to be
+held close and read slowly, not viewed from across a room. Space is organized by a
+logic opposite to Western linear perspective: figures further away are placed
+higher on the page rather than drawn smaller, light falls evenly with no cast
+shadow, and buildings are often shown in "cutaway" view so interior and exterior
+action read at once. Color is pure and unmixed — mineral pigments and gold leaf
+applied in flat, jewel-bright fields — and the picture surface doubles as
+ornament: architectural tilework, garden foliage, and clothing patterns are
+rendered with the same dense, miniature-scale precision as the figures
+themselves. The Herat workshop under Bihzad, and the Tabriz workshop that
+followed under Safavid patronage, are generally regarded as the tradition's
+technical and compositional peak.
+
+**Recognition cues:**
+- No Western linear perspective: distant figures and elements placed higher on
+  the page rather than smaller
+- Flat, even lighting with no cast shadows
+- Brilliant, unmixed jewel colors (ultramarine, vermilion, gold leaf) applied in
+  flat fields rather than blended
+- Dense surface ornament — patterned textiles, tiled architecture, stylized
+  foliage — rendered as precisely as the figures
+- "Cutaway" architecture showing interior and exterior of a building at once
+- A framing border of fine floral or geometric pattern around the scene
+
+**Notable artists:**
+- **Kamal ud-Din Bihzad** (c. 1450-1535) — Leading painter of the Herat
+  workshop under Timurid and later Safavid patronage; widely regarded as the
+  tradition's most technically refined master, sometimes called "the Persian
+  Leonardo."
+- **Sultan Muhammad** (active early-mid 16th century, d. before 1555) — Director
+  of Shah Ismail's Tabriz workshop and first project director of the *Shahnameh*
+  of Shah Tahmasp, known for dense, imaginative compositions.
+
+**Example works:**
+- *Yusuf Fleeing the Advances of Zulaikha*, Kamal ud-Din Bihzad, 1488 — folio
+  from a *Bustan* of Sa'di, Herat. **VERIFIED**, Egyptian National Library and
+  Archives, Cairo (Adab farisi 22, f. 52b); public domain (Creative Commons
+  Public Domain Mark 1.0 — reproduction of a pre-1931-published work) via
+  Wikimedia Commons:
+  https://commons.wikimedia.org/wiki/File:Yusuf_fleeing_the_Advances_of_Zulaikha.jpg
+- *The Building of the Palace of Khavarnaq*, Kamal ud-Din Bihzad, c. 1494-95 —
+  folio from Nizami's *Khamsa*. **VERIFIED**, British Library (Or. 6810, folio
+  154v); public domain (PD-Art, Yorck Project reproduction of a public-domain
+  original) via Wikimedia Commons:
+  https://commons.wikimedia.org/wiki/File:Kamal-ud-din_Bihzad_-_Construction_of_the_fort_of_Kharnaq.jpg
+- *Alexander and the Hermit*, Kamal ud-Din Bihzad, 1494-95 — folio from
+  Nizami's *Iskandarnama*. **VERIFIED**, British Library (Or. 6810, folio
+  273R); public domain (Creative Commons Public Domain Mark 1.0 /
+  PD-old-100-expired) via Wikimedia Commons:
+  https://commons.wikimedia.org/wiki/File:Alexander_and_the_Hermit,_from_Nizami's_Iskandarnama,_1494-95,_by_Behzad._British_Library_OR.6810_Folio_273R.jpg
+
+**remix_hint:** "Repaint this image as a Persian miniature: flat, high-vantage
+compositions with distant figures placed higher rather than smaller, brilliant
+unshaded jewel colors, intricate architectural or garden detail, patterned
+textiles, and a dense floral or geometric border, no Western perspective or cast
+shadow"
 
 ---
 

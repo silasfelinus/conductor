@@ -1178,3 +1178,46 @@ catch, recurring here the same day its detector was built.
 
 **Kaizen task:** none — the tooling gap this project keeps surfacing
 (status-vs-note drift) is `conductor/t-071`, already merged.
+
+## 2026-07-20 | Reviewer (agent run) | ai-art-academy/t-010 | pattern
+
+**Decision:** rearmed `t-010` (curriculum-depth lane, lane 3 attempted and found blocked first); PR opened, conductor-docs-only.
+
+**Failure category:** none — lane 3 attempt correctly diagnosed as blocked (transient, infra), no pass consumed; lane 4 landed clean.
+
+**What was good:**
+- Followed the checklist's own instruction literally: tried the preferred lane
+  (3, inspiration/preview assets) before falling back, rather than assuming it
+  was still blocked from a prior cycle's indirect evidence.
+- Added `--id-prefix` to `scripts/consume_art_requests.py` (tested,
+  `filter_by_id_prefix()`) before attempting live generation, specifically so
+  the attempt couldn't accidentally drain the ~130 other unrelated pending
+  requests sharing that queue — scope discipline applied to a shared script,
+  not just this project's own files.
+- Got a genuinely new, stronger signal on the relay blocker than any prior
+  cycle: not just "the target directory doesn't exist yet" but a live queued
+  job (816) sitting `PENDING`/unclaimed for 10+ minutes via direct polling —
+  confirms the relay itself isn't picking up jobs, not just that no one has
+  generated these particular images yet.
+- Lane 4 (curriculum depth) research was fully WebFetch-verified against
+  primary sources (Wikimedia Commons file pages) rather than left as
+  "unverified this cycle" — `commons.wikimedia.org` was reachable this
+  session even though `artic.edu` was not for a prior cycle, so egress
+  reachability is confirmed host-dependent, not uniformly blocked.
+- Kept the new movement's front-end sync (academyStyles.ts) as a deliberately
+  separate future task rather than cramming a kind_robots PR into the same
+  cycle, matching the established t-020/t-031/t-034 pattern.
+
+**What to improve:**
+- The live `--limit 2` generation attempt left one real side effect worth
+  noting for the next session: job 816 is queued server-side and will sit
+  `PENDING` indefinitely unless something eventually claims or expires it.
+  Not a roadmap concern, but worth knowing if a future relay-recovery check
+  wants a cheap probe — it can poll job 816 directly instead of queuing a new
+  one.
+
+**Kaizen task:** `ai-art-academy/t-035` — once the home relay is confirmed
+reachable again (recheck `GET /api/art/queue/816` first), batch-generate all
+25 queued `kind-robots-academy-style-preview-*` images in one `--live` run
+using this cycle's new `--id-prefix` filter, then sync `persian-miniature`
+into `academyStyles.ts` alongside the preview image.

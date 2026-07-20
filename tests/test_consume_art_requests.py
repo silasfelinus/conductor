@@ -108,6 +108,14 @@ def test_mark_done_writes_file(tmp_path, monkeypatch):
     assert "status: done" in dv_block
 
 
+def test_filter_by_id_prefix():
+    entries = [{"id": "kind-robots-academy-style-preview-cubism"}, {"id": "conductor-davinci-card-2e72bbc9"}]
+    assert cr.filter_by_id_prefix(entries, "kind-robots-academy-style-preview-") == [entries[0]]
+    # falsy prefix is a no-op
+    assert cr.filter_by_id_prefix(entries, None) == entries
+    assert cr.filter_by_id_prefix(entries, "") == entries
+
+
 def test_entry_to_job_reused_for_a_request():
     # a request dict (no 'project') maps cleanly via the shared consumer
     job = cr.consumer.entry_to_job(

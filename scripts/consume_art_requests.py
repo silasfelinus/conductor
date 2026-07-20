@@ -66,6 +66,13 @@ def load_requests():
     ]
 
 
+def filter_by_id_prefix(entries, prefix):
+    """Keep only entries whose id starts with prefix. No-op when prefix is falsy."""
+    if not prefix:
+        return entries
+    return [e for e in entries if str(e.get("id") or "").startswith(prefix)]
+
+
 def is_pending(entry):
     return str(entry.get("status") or "pending").strip().lower() == "pending"
 
@@ -141,9 +148,14 @@ def main():
     parser.add_argument("--live", action="store_true", help="actually queue, download, and mark done")
     parser.add_argument("--limit", type=int, default=0, help="max requests this run (0 = all)")
     parser.add_argument("--timeout", type=int, default=600, help="seconds to wait per job")
+    parser.add_argument(
+        "--id-prefix",
+        default=None,
+        help="only process requests whose id starts with this prefix (scope a run to one source/batch)",
+    )
     args = parser.parse_args()
 
-    requests = [r for r in load_requests() if is_pending(r)]
+    requests = filter_by_id_prefix([r for r in load_requests() if is_pending(r)], args.id_prefix)
 
     # Already-rendered requests self-drain: mark done, never regenerate.
     satisfied = [r for r in requests if already_satisfied(r)]
