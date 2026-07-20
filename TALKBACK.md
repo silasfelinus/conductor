@@ -8052,3 +8052,50 @@ the deploy-wait step again, check `Wait for deploy to go live`'s log for the spe
 failure shape (timeout vs. actual test failures) before assuming it's another
 test-payload bug in the chase-#516 lineage; it may be a third distinct failure mode
 this fix and #719-#727 don't yet cover.
+
+## 2026-07-20 | Reviewer (agent run) | conductor/rotation-collision | todo #516 independently re-derived and duplicated, caught before push
+
+**Decision:** no code change — flagging a near-miss collision, not a defect in the
+merged fix itself (PR #728, previous entry, looks correct and this session's own
+independent replay agrees with it).
+
+**Detail:**
+- This session started its own sweep of todo #516 in parallel with the session that
+  produced PR #728, working from the same starting point: run `29784481012` (commit
+  `a5862945`, PR #727) timed out at "Wait for deploy to go live." Independently
+  diagnosed the identical root cause (Vercel's `ignoreCommand`/`vercel-ignore-build.mjs`
+  correctly skipping the deploy for a Cypress-spec-only commit, `cypress.yml`'s
+  deploy-wait loop having no acceptance path for "TARGET_SHA will never get its own
+  deploy"), confirmed it the same way (Vercel MCP `get_deployment` showing
+  `readyState: CANCELED` / `errorLink: .../ignored-build-step` on the `a5862945`
+  deployment), and implemented an equivalent fix: extracted the ignored-path predicate
+  into a shared module, added a `check-deploy-<noop|ignored-diff>.mjs` script wired
+  into `cypress.yml`'s wait loop as a third acceptance path, plus a hermetic
+  `verifyDeployWait*.ts` regression test wired into `contract-tests.yml` — structurally
+  the same shape as PR #728, different file/function names.
+- Caught the collision before pushing: created the branch via `create_branch` (per the
+  413 workaround), then `git fetch origin main` immediately before the actual `git
+  push` came back with a new tip (`d9a6a40`, PR #728) that didn't exist moments
+  earlier when this session last fetched. Read the incoming commit, recognized it as
+  the same fix, deleted the local branch without ever pushing it, and confirmed via
+  `fetch_todos.py` that todo #516 was already closed.
+- Root cause of the near-miss: unlike roadmap tasks, CI-janitor todos have no
+  `claim_task.py`-equivalent lock — `next_ready_task.py`'s rotation-collision problem
+  (TALKBACK 2026-07-14, `animation-manager/t-008`, conductor/t-040) applies just as
+  much to `fetch_todos.py`'s OPEN-todo queue, and today's conductor session volume
+  around this exact CI incident (at least 5 distinct TALKBACK entries chasing
+  #506/#516 within a few hours) made two sessions landing on the same todo at the same
+  moment likely rather than a fluke.
+- No harm resulted this time only because this session happened to fetch before
+  pushing rather than after (the reverse ordering — push, then discover the collision
+  — is exactly how `animation-manager/t-008` got built twice). Nothing about
+  `fetch_todos.py` or the todo lifecycle currently guarantees that ordering.
+
+**Suggested action:** consider a lightweight claim step for CI-janitor todos —
+even just a `status: IN_PROGRESS`-style field set via the same kind_robots Todo API
+`complete_todo.py` already talks to, checked fresh (not from local state) immediately
+before implementing a fix — mirroring what `claim_task.py` already does for roadmap
+tasks. Until that exists, a session picking up an OPEN CI-janitor todo should
+`git fetch origin main` again right before its first push (not just at session start)
+specifically because these todos see unusually high concurrent session traffic when a
+CI incident is actively being chased.
