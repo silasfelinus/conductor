@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-20T05:10:29.979701+00:00",
+  "generated_at": "2026-07-20T05:12:55.687865+00:00",
   "summary": {
     "roadmaps": 40,
     "active_projects": 31,
@@ -7,10 +7,10 @@
     "ready": 50,
     "waiting": 45,
     "needs_human": 34,
-    "in_progress": 1,
-    "done": 488,
+    "in_progress": 2,
+    "done": 487,
     "errors": 0,
-    "warnings": 9,
+    "warnings": 7,
     "info": 46
   },
   "projects": [
@@ -350,15 +350,16 @@
       "autonomous": false,
       "task_count": 8,
       "counts": {
-        "done": 8
+        "done": 7,
+        "review": 1
       },
-      "open_count": 0,
+      "open_count": 1,
       "human_attention": 0,
       "ready": 0,
       "waiting": 0,
       "claimed": 0,
-      "review": 0,
-      "done": 8
+      "review": 1,
+      "done": 7
     },
     {
       "slug": "conductor",
@@ -798,20 +799,6 @@
       "project": "conductor",
       "task": "t-073",
       "message": "needs-human has no obvious hard-gate marker; consider returning it to ready, setting soft_gate: true, or documenting the actual gate."
-    },
-    {
-      "severity": "warning",
-      "code": "ACTIVE_PROJECT_ALL_DONE",
-      "project": "ecosystem-map",
-      "task": null,
-      "message": "All tasks are done but project override remains active."
-    },
-    {
-      "severity": "warning",
-      "code": "ACTIVE_PROJECT_NO_OPEN_TASKS",
-      "project": "ecosystem-map",
-      "task": null,
-      "message": "Active project has no open tasks; mark finished/paused or add an intentional recurring task."
     },
     {
       "severity": "warning",
