@@ -1311,3 +1311,42 @@ recurring-task claim race this cycle hit is the same class already tracked by
 - None significant this cycle.
 
 **Kaizen task:** deferred — this cycle's own PR body already proposed a concrete kaizen (`scripts/consume_art_requests.py --live` gives zero incremental progress output until it either claims or hits its full timeout; a verbose/`--poll-interval` flag that prints intermediate `status`/`updatedAt` snapshots would let a session confirm "accepted by the API" immediately instead of waiting the full window to learn anything). Not filed as a separate roadmap task since it's tooling-scope, not ai-art-academy-scope, and a future lane-2 (roadmap accuracy) cycle or a conductor-project tooling task is a better home for it than this project's roadmap.
+
+## 2026-07-20 | Reviewer (agent run) | ai-art-academy/t-010 | pattern
+
+**Decision:** implemented and self-merged (session claude-conductor-agent-20260720T1830Z, kind_robots PR #672).
+
+**Failure category:** none — clean first pass.
+
+**What was good:**
+- Session-start sweep found no open PRs on either repo and confirmed via
+  `next_ready_task.py` that ai-art-academy/t-010 was the genuinely top-priority
+  ready task (higher-priority projects in `priority.yaml` had nothing ready or
+  were already claimed/needs-human). Claimed cleanly via `claim_task.py`.
+- Rather than re-running a generic front-end sweep, dispatched an Explore
+  subagent with an explicit exclusion list of every pattern already fixed
+  across ~20 prior lane-1 cycles (aria-pressed, aria-label/aria-controls,
+  focus-management, dead no-op handlers, duplicated local state, search-field
+  coverage, stale copy) — forcing it to find something genuinely new rather
+  than re-flag settled ground. It found a real bug: `image-upload.vue`'s
+  `handleBatchUpload()` set the success banner text and then immediately
+  called `clearQueue()`, which resets `message`/`error` back to `''` on the
+  very next line — silently swallowing the confirmation banner on every
+  fully-successful upload (the majority case). The asymmetry (only the happy
+  path breaks; failure/partial paths are unaffected since `clearQueue()`
+  isn't called there) explains why 20 prior polish passes missed it.
+- Verified independently before merging: `npx eslint`/`npx prettier --check`
+  clean, full-project `vue-tsc --noEmit` exit 0, all 3 kind_robots PR checks
+  green (TypeScript, Contract verifiers, GitGuardian).
+- Updated `continuous-improvement-checklist.md`'s rotation state and the task
+  note with full detail before rearming to `ready`.
+
+**What to improve:** none this cycle.
+
+**Kaizen task:** none filed — this was a small, fully self-contained bug fix
+within lane 1's existing scope; no follow-on work identified.
+
+**Pattern note:** Bugs that only manifest on the *success* path (rather than
+the error path agents naturally stress-test while verifying) may be
+systematically under-caught by review — worth keeping in mind for future
+front-end polish passes across other "Polish and upgrade X" recurring tasks.
