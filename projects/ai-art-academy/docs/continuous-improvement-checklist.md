@@ -15,7 +15,24 @@ Record the lane, files changed, and verification in the task note before rearmin
 
 ### Rotation state
 
-- Last completed lane: Curriculum depth (lane 4), 2026-07-20 (~00:15-01:10 UTC). Lane 3
+- Last completed lane: Front-end polish (lane 1), 2026-07-20 (~02:16-02:30 UTC). Dispatched
+  an Explore-style search over all 7 in-scope files plus their `academyStore.ts`/
+  `styleHelper.ts` dependencies, cross-checked against `git log` on each file to confirm
+  which prior PRs already touched it. Found a real, verifiable gap: `art-styler.vue`'s
+  `handleDrop` silently discarded any dragged file whose `type` didn't start with `image/`
+  (or had no MIME type) — `isDragging` reset, no error, no state change, total silence.
+  This is the same drag-and-drop silent-rejection bug class already fixed in
+  `image-upload.vue` (PR #547), but that PR never touched `art-styler.vue`, which has its
+  own independent drop handler. Fixed by reusing the component's existing `errorMessage`
+  feedback pattern (already used in `selectStarterEntry`/`runStyleTransfer`'s catch blocks)
+  rather than adding new UI. kind_robots PR #603 (branch
+  `claude/ai-art-academy-t010-art-styler-drop-feedback`): all 3 CI checks green
+  (TypeScript, Contract verifiers, GitGuardian), merged squash `2bf1bf7`.
+  Everything else in the 7-file set was checked and ruled out: focus-restoration,
+  `aria-*` wiring, `showRemixButton` contract, Set-based file-identity keys, and the
+  `aria-pressed` grids are all already correct per prior cycles (#275/#301/#385/#397/#515/
+  #520/#544/#547).
+- Previously: Curriculum depth (lane 4), 2026-07-20 (~00:15-01:10 UTC). Lane 3
   (inspiration/preview assets) was tried first per the prior cycle's preferred-lane note
   and found genuinely blocked: `python scripts/consume_art_requests.py --id-prefix
   "kind-robots-academy-style-preview-" --live --limit 2` (added the `--id-prefix` filter
@@ -37,12 +54,11 @@ Record the lane, files changed, and verification in the task note before rearmin
   PRs — conductor-docs-only change this cycle, no kind_robots PR.
 - Previously: Roadmap accuracy (lane 2), 2026-07-19 (~22:00-22:20 UTC). Milestone audit came back clean (no drift). Fixed a real tooling bug found while auditing: `scripts/check_pr_merged_drift.py` treated failed GitHub API lookups (this session type only has GitHub MCP tools, not direct REST/token access — every lookup 403'd) identically to confirmed-open PRs, so a 100%-failed run silently reported "No drift found" with exit 0, indistinguishable from a genuine clean audit. `check()`/`render()` now surface unresolved lookups explicitly and `main()` exits 2 (not 0) when anything couldn't be verified. Tests updated/added in `tests/test_check_pr_merged_drift.py`; full suite green (427 passed, 1 pre-existing skip). Conductor-only change, no kind_robots PR.
 - Before that: Front-end polish (lane 1), 2026-07-19 (~19:04-19:15 UTC). Fixed `image-upload.vue`'s `addFiles()` silently dropping non-PNG/JPEG/WebP files (drag-and-drop bypasses the input's `accept` attribute) with zero user-visible feedback — now sets `error.value` to a skip-count message. kind_robots PR #547, merged 2026-07-19T19:14Z.
-- Next preferred lane: Front-end polish (lane 1) — rotation completes 1→2→3→4 and this
-  cycle used lane 4 (lane 3 was attempted but blocked, not completed). Lane 3 remains
-  blocked on home-relay reachability; do not re-probe it with a fresh live queue attempt
-  until relay/DB state is confirmed to have changed (see `EGRESS-BLOCKERS.md` convention)
-  — checking `GET /api/art/queue/<id>` on the still-pending job 816 first is cheaper than
-  queuing a new one.
+- Next preferred lane: Roadmap accuracy (lane 2) — rotation completes 1→2→3→4 and this
+  cycle used lane 1. Lane 3 remains blocked on home-relay reachability; do not re-probe it
+  with a fresh live queue attempt until relay/DB state is confirmed to have changed (see
+  `EGRESS-BLOCKERS.md` convention) — checking `GET /api/art/queue/<id>` on the still-pending
+  job 816 first is cheaper than queuing a new one.
 - Override the preferred lane only when it is blocked or a higher-severity reversible issue is newly verified; record that reason in the task note.
 
 This explicit state is the handoff between recurring cycles. Update it in the same PR as each `t-010` improvement so the next Worker does not infer rotation from a long roadmap note.
