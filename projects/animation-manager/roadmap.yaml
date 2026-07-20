@@ -325,7 +325,7 @@ tasks:
   - id: t-012
     milestone: m4
     title: "Auto-supersede the prior WORKING build when Animation Manager promotes a new one"
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -341,6 +341,18 @@ tasks:
       attempt per effect. Verify with a focused addition to
       utils/scripts/verifyAnimationComponentAttempts.ts or a small new store-level test if one
       exists; full vue-tsc + eslint as usual.
+
+
+      DONE 2026-07-20 (conductor burst cycle claude-conductor-burst-20260720T0500Z):
+      extracted the lookup as a pure findAttemptToSupersede() helper in
+      stores/helpers/animationComponentHelper.ts (finds the other WORKING attempt for the
+      same slug, excluding the one being promoted, or null if unparseable/none found) and
+      wired promoteAttempt() to call componentStore.linkSupersededAnimationAttempt() on it
+      before setting the promoted attempt's own status. Covered slug-matching,
+      self-exclusion, no-prior-WORKING, and unparseable-componentName cases in
+      verifyAnimationComponentAttempts.ts. Verified via npm run test:animation-component-attempts,
+      full npm test (vue-tsc, clean), and eslint on all changed files (clean). kind_robots
+      PR #613, squash f276662.
     claimed_by: claude-conductor-burst-20260720T0500Z
     claimed_at: '2026-07-20T04:05:35Z'
     updated: '2026-07-20T04:05:35Z'
