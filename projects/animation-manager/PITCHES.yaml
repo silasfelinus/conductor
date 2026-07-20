@@ -35,7 +35,7 @@ pitches:
 
   - id: paper-lantern-weather
     title: Paper Lantern Weather
-    status: pitched
+    status: candidate
     priority: 2
     surprise: Folded paper lanterns behave like a tiny weather system, dimming before gusts and relighting in sheltered eddies.
     passive_loop: Lanterns drift in layered parallax while soft paper creases flex and rare gust fronts reorganize the flock.
@@ -47,6 +47,21 @@ pitches:
     acceptance:
       - lantern silhouettes remain readable over light and dark themes
       - rare gust event is visible but not disruptive
+    builds:
+      - version: 1
+        status: candidate
+        component: components/screenfx/paper-lantern-weather.vue
+        pull_request: silasfelinus/kind_robots#627
+        verification:
+          - TypeScript Type Check
+          - eslint
+          - test:animation-catalog
+          - test:animation-component-attempts
+        deferred:
+          - Live browser smoke test (docs/architecture/animation-catalog-smoke-matrix.md) --
+            no reachable DATABASE_URL in the sandbox; server/utils/prisma.ts throws on every
+            SSR request.
+          - Component attempt record (SPEC.md "Attempt records") -- same DB blocker.
 
   - id: magnetic-sand-garden
     title: Magnetic Sand Garden
