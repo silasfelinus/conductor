@@ -1,6 +1,6 @@
 project: storymaker
 kind: software
-notes_from_silas: 'Build the collaborative storytelling experience layer on top of the existing Kind Robots models. Support guided adventure and limited-visibility collaboration modes with async-first play, branching choices, custom inputs, rewards, inventory, and reusable story state.'
+notes_from_silas: 'Build the collaborative storytelling experience layer on top of the existing Kind Robots models. Support guided adventure and limited-visibility collaboration modes with async-first play, branching choices, custom inputs, rewards, inventory, and reusable story state. Boundaries with Da Vinci (see projects/davinci/docs/storymaker-boundary-comparison.md): no shared run/session tables, no columns added to Life* models — shared behavior only through existing Kind Robots models (Bot, Chat, Character, Dream, Scenario, ArtCollection, Milestone) or extracted pure utilities. Respect this when designing the session schema.'
 milestones:
 - id: m1
   title: Session model and boundaries
@@ -102,7 +102,7 @@ tasks:
 - id: t-009
   milestone: m1
   title: Cross-link the Da Vinci boundary rules before designing session schema
-  status: claimed
+  status: review
   owner: worker
   passes: 0
   stakes: reversible
@@ -113,6 +113,16 @@ tasks:
     session data model doc (or a pointer in notes_from_silas) so schema design
     respects: no shared run/session tables, no columns added to Life* models,
     shared behavior only via existing KR models or extracted pure utilities.
+    DONE: no standalone "session data model doc" file exists (t-001's model was
+    approved via its roadmap note only, no doc artifact), so used the task's own
+    fallback — added a "Boundaries with Da Vinci" pointer to this roadmap's
+    notes_from_silas, summarizing the concrete rules from
+    projects/davinci/docs/storymaker-boundary-comparison.md's "Concrete boundary
+    rules" section: no shared run/session tables, no columns on Life* models,
+    shared behavior only via existing KR models or extracted pure utilities.
+    Any future session-schema design task will read notes_from_silas first per
+    AGENTS.md's picking-order rules, so this is in the right place to actually
+    be seen before schema work starts.
   claimed_by: claude-conductor-scheduled-20260720T0511Z
   claimed_at: '2026-07-20T05:13:44Z'
   updated: '2026-07-20T05:13:44Z'
