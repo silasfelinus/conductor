@@ -165,3 +165,12 @@ reachable (HTTP 200)
 
 ## 2026-07-18T11:17:11Z | kind-robots.vercel.app | reachable | ai-art-academy/t-004
 reachable (HTTP 200)
+
+## 2026-07-20T22:14:06Z | artic.edu | bot-challenged | ai-art-academy/t-010
+bot-challenged (HTTP 403, cf-mitigated: challenge)
+
+## 2026-07-20T22:14:24Z | huggingface.co | reachable | ai-art-academy/t-010
+reachable (HTTP 200)
+
+## 2026-07-20T22:14:25Z | civitai.com | reachable | ai-art-academy/t-010
+reachable (HTTP 200)

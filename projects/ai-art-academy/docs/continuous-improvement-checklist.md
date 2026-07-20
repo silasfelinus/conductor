@@ -15,6 +15,33 @@ Record the lane, files changed, and verification in the task note before rearmin
 
 ### Rotation state
 
+- Last completed lane: Curriculum depth (lane 4, LoRA-registry follow-up),
+  2026-07-20 (~22:10-22:35 UTC, claude-conductor-agentrun-20260720T2210Z). Lane 3
+  (inspiration/preview assets) was next preferred per the prior cycle's note,
+  tried first with a genuinely fresh queued job (job 1014, greek-vase-painting.webp,
+  not 816/855/957): timed out after 90s, direct API check confirmed
+  `status: PENDING` with `updatedAt` unchanged since `createdAt` — same
+  never-claimed signature as every prior attempt, home relay still down. Fell
+  back to lane 4 per the checklist's own instruction. `docs/style-lora-registry.md`
+  had no entry at all for `persian-miniature` (added to the curriculum two cycles
+  earlier) — with Hugging Face and Civitai both freshly confirmed reachable this
+  cycle (`recheck_egress_blocks.py`, both HTTP 200), ran a real LoRA search
+  instead of deferring it again. Found `batchku/storai-persian-miniature`
+  (Hugging Face, FLUX.1-dev, no login) but did not promote it: the model card
+  discloses no training artists/artwork, so the dead-70-years ethical boundary
+  can't be confirmed — same standard already applied to the rejected `gothic`
+  Civitai candidate (S-8). Added `persian-miniature` as an 11th prompt-mode
+  registry entry (machine-readable block, curriculum-slug-mapping table, and a
+  full per-style notes section documenting the LoRA search and rejection
+  rationale), `prompt_hint` copied verbatim from `curriculum-outline.md` §25's
+  remix_hint. Verified the registry's `styles:` YAML block still parses clean
+  (23 entries, 11 prompt / 12 lora, `persian-miniature` present) and
+  `scripts/audit_roadmaps.py` reports the same 0-errors/11-warnings/46-info
+  baseline as before this change, none touching this project.
+  Conductor-docs-only change; no kind_robots PR needed this cycle (the registry
+  is a conductor-repo doc, not synced into the kind_robots front end). Next
+  preferred lane is front-end polish (lane 1) — this cycle ran lane 4, so lane 1
+  is next in the 1→2→3→4 rotation.
 - Last completed lane: Roadmap accuracy (lane 2), 2026-07-20 (~20:00-20:20 UTC,
   claude-conductor-burst-20260720T2000Z). Spot-checked PR-merge drift via GitHub
   MCP `pull_request_read` (kind_robots#672, kind_robots#650, conductor#868 — all
