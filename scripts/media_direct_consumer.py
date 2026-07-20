@@ -19,6 +19,16 @@ MEDIA_ORIGIN = os.environ.get(
     "KR_MEDIA_ORIGIN", "https://media.acrocatranch.com"
 ).rstrip("/")
 
+# A HEAD existence check against a static file host, not a render wait -- keep
+# this short. consume_art_requests.py calls already_satisfied() once per
+# pending request (unbounded by --limit, since satisfied requests self-drain
+# regardless of this run's batch size), so a slow or unreachable media host
+# multiplies straight into the workflow step's total wall time. 30s per call
+# against a backlog of 100+ requests was enough on its own to blow well past
+# the step's intended --timeout-bounded runtime (conductor art-generator-
+# connect/t-022).
+MEDIA_EXISTS_TIMEOUT_SECONDS = 8
+
 
 def _target_repo(entry, default_target_repo):
     return str(entry.get("target_repo") or default_target_repo).strip()
@@ -44,7 +54,9 @@ def _media_url(image_path):
 def _media_exists(image_path):
     request = urllib.request.Request(_media_url(image_path), method="HEAD")
     try:
-        with urllib.request.urlopen(request, timeout=30) as response:
+        with urllib.request.urlopen(
+            request, timeout=MEDIA_EXISTS_TIMEOUT_SECONDS
+        ) as response:
             return 200 <= response.status < 300
     except (urllib.error.URLError, TimeoutError, OSError):
         return False

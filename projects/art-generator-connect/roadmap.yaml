@@ -451,7 +451,7 @@ tasks:
 - id: t-022
   milestone: m5
   title: 'Investigate why the "Submit + wait + verify art requests" step in auto-art-generate.yml runs far longer than its --limit/--timeout should allow'
-  status: claimed
+  status: done
   owner: worker
   passes: 0
   stakes: reversible
@@ -472,9 +472,46 @@ tasks:
     eligible entries because already_satisfied() is under-matching). Check
     the finished run's logs once it completes for the actual per-item timing
     before changing behavior.
+    RESOLVED 2026-07-20 (conductor agent session
+    claude-conductor-agent-20260720T1315Z): root cause was not the
+    wait_for_job/--timeout path at all -- that loop is correctly bounded to
+    args.limit items each waiting at most args.timeout. It was
+    consume_art_requests.py's self-drain pre-scan: `already_satisfied(r)` ran
+    over EVERY pending request (154 in art-prompts.yaml right now, 120 of
+    them kind_robots media targets), not just the `--limit`-bounded batch,
+    and was called TWICE per entry (once building `satisfied`, once building
+    `todo`, since neither comprehension cached the result). For a
+    kind_robots-media-target entry, `already_satisfied()` resolves to
+    media_direct_consumer._media_exists(), a live HTTP HEAD request to
+    media.acrocatranch.com with a 30s timeout -- so with the media host
+    unreachable during the box-down window, this pre-scan alone could run up
+    to 120 entries x 2 calls x 30s = 7200s (120 min), independent of
+    --limit/--timeout, fully explaining the observed 85+ minutes against a
+    "project-art" step (no self-drain pre-scan, hence no unbounded network
+    fan-out) that stayed within its ~25 minute ceiling. Fixed both
+    contributing factors: (1) scripts/consume_art_requests.py now computes
+    already_satisfied(r) exactly once per entry in a single pass instead of
+    once per comprehension: (2) scripts/media_direct_consumer.py's
+    _media_exists() HEAD-check timeout dropped from 30s to 8s
+    (MEDIA_EXISTS_TIMEOUT_SECONDS) -- it is a lightweight existence probe
+    against a static file host, not a render wait, so 30s per call was never
+    warranted. Together this bounds worst-case pre-scan time to roughly
+    (pending backlog size) x 8s instead of x 60s, a ~7.5x reduction, and the
+    actual --limit/--timeout-bounded generation loop is unaffected. No
+    already_satisfied() "under-matching" bug was found -- the hypothesis in
+    this task's original note was not the cause. Verified: full `pytest
+    tests/` (429 tests, 428 passed + 1 pre-existing skip, 0 new failures);
+    added a standalone repro confirming already_satisfied is now called
+    exactly once per entry (was twice before the fix); `py_compile` on both
+    changed files; `python scripts/audit_roadmaps.py` (0 errors). No live
+    workflow re-run performed (would require the actual GitHub Actions
+    schedule/dispatch and a reachable media host neither available from this
+    sandbox) -- the fix is a direct, provable elimination of the redundant
+    network fan-out that the run log's timing already demonstrated, not a
+    speculative change.
   claimed_by: claude-conductor-agent-20260720T1315Z
   claimed_at: '2026-07-20T13:17:12Z'
-  updated: '2026-07-20T13:17:12Z'
+  updated: '2026-07-20T13:21:55Z'
 - id: t-020
   milestone: m4
   title: Re-tighten ArtQueueEntry.variant from string back to the ArtVariant union in kind_robots' server/utils/artRequestYaml.ts

@@ -1,14 +1,14 @@
 # Roadmap Audit
 
-Generated: `2026-07-20T12:40:24.886064+00:00`
+Generated: `2026-07-20T13:23:05.226027+00:00`
 
 This is a conservative structural audit. It reports suspicious state; it does not automatically change task status or remove human gates.
 
 ## Portfolio snapshot
 
 - **40** roadmaps, **31** active projects, **631** tasks
-- **48 ready**, **45 waiting**, **34 needs-human**, **1 claimed/review**, **492 done**
-- Findings: **0 errors**, **9 warnings**, **46 informational**
+- **47 ready**, **45 waiting**, **34 needs-human**, **1 claimed/review**, **493 done**
+- Findings: **0 errors**, **11 warnings**, **46 informational**
 
 ## Project inventory
 
@@ -36,7 +36,7 @@ This is a conservative structural audit. It reports suspicious state; it does no
 | 20 | `serendipity` | active | software | 1 | 0 | 0 | 0 | 11 / 12 |
 | 21 | `storymaker` | active | software | 1 | 0 | 0 | 0 | 9 / 10 |
 | 22 | `davinci` | active | software | 2 | 0 | 0 | 0 | 13 / 15 |
-| 23 | `art-generator-connect` | active | software | 1 | 0 | 0 | 0 | 21 / 22 |
+| 23 | `art-generator-connect` | active | software | 0 | 0 | 0 | 0 | 22 / 22 |
 | 24 | `mural-design` | active | content | 1 | 3 | 1 | 0 | 2 / 7 |
 | 25 | `coat-dance` | active | content | 2 | 0 | 0 | 0 | 0 / 10 |
 | 26 | `career-transition` | retired | content | 3 | 4 | 0 | 0 | 1 / 8 |
@@ -61,8 +61,10 @@ This is a conservative structural audit. It reports suspicious state; it does no
 
 _None._
 
-### Warning (9)
+### Warning (11)
 
+- **ACTIVE_PROJECT_ALL_DONE** — `art-generator-connect`: All tasks are done but project override remains active.
+- **ACTIVE_PROJECT_NO_OPEN_TASKS** — `art-generator-connect`: Active project has no open tasks; mark finished/paused or add an intentional recurring task.
 - **SOFT_NEEDS_HUMAN** — `conductor` / `t-034`: needs-human has no obvious hard-gate marker; consider returning it to ready, setting soft_gate: true, or documenting the actual gate.
 - **SOFT_NEEDS_HUMAN** — `conductor` / `t-073`: needs-human has no obvious hard-gate marker; consider returning it to ready, setting soft_gate: true, or documenting the actual gate.
 - **ACTIVE_PROJECT_ALL_DONE** — `ecosystem-map`: All tasks are done but project override remains active.

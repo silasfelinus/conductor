@@ -158,8 +158,17 @@ def main():
     requests = filter_by_id_prefix([r for r in load_requests() if is_pending(r)], args.id_prefix)
 
     # Already-rendered requests self-drain: mark done, never regenerate.
-    satisfied = [r for r in requests if already_satisfied(r)]
-    todo = [r for r in requests if not already_satisfied(r)]
+    # `already_satisfied()` is a network call for kind_robots media targets
+    # (see media_direct_consumer._media_exists) -- call it exactly once per
+    # entry rather than once per comprehension, or a large pending backlog
+    # doubles the wall time this pre-scan takes for no reason (conductor
+    # art-generator-connect/t-022: this doubling, on a ~120-entry backlog
+    # against an unreachable media host, is what pushed a single workflow
+    # step to 85+ minutes against a --timeout meant to bound it near 25).
+    satisfied = []
+    todo = []
+    for r in requests:
+        (satisfied if already_satisfied(r) else todo).append(r)
     if args.limit > 0:
         todo = todo[: args.limit]
 
