@@ -3694,3 +3694,12 @@ records:
   outcome: done
   failure_category: null
   lesson: "Burst-mode rotation picking superkate-hairstyle-ai/t-019 and model-builder/t-022, t-029, t-031 next in priority.yaml order all turned out to need a live deployed backend (a Tailscale ts.net Comfy box or an admin-only action) this sandbox can't reach -- confirmed via each task's own note/TALKBACK history before skipping rather than claiming and stalling. animation-manager/t-012 (a kaizen from t-005's review) was the first genuinely pure-code ready task further down the list. The fix itself was a clean first pass: extracted the WORKING-attempt-to-supersede lookup as a pure, testable helper (findAttemptToSupersede in animationComponentHelper.ts) instead of inlining the filter in the store action, matching the existing listAnimationAttempts/getLatestAnimationAttempt pattern and letting the new behavior be covered in the same DB-free verify script (verifyAnimationComponentAttempts.ts) rather than needing a Pinia-mocking store test that doesn't exist yet for this store."
+- date: '2026-07-20'
+  project: storymaker
+  task: t-009
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "A task that says 'add a section to the session data model doc (or a pointer in notes_from_silas)' should not assume the primary doc exists -- t-001's 'session data model' was approved via its roadmap note only, never written as a standalone doc file, so checking for the doc's actual existence before picking an implementation shape (rather than defaulting to the first-listed option) avoided inventing an unread new file. notes_from_silas is a good landing spot for cross-project boundary rules precisely because AGENTS.md's picking-order rules make every future session read it first."
