@@ -103,6 +103,22 @@ def apply_moves(moves: list[dict], root: Path, apply: bool) -> dict:
             stats["missing"] += 1
             continue
 
+        # Non-destructive copy (kind "copy"): place a pitch-sheet card from
+        # /images/sheets/<slug>.webp as the dream folder's canonical
+        # <slug>-card.webp without removing the original. Runs before the folder
+        # moves in the manifest so this real card wins over the ensure_dream_card
+        # fallback. Skips if the card is already there.
+        if kind == "copy":
+            if dst.exists():
+                stats["already"] += 1
+                continue
+            print(f"  {'COPY ' if apply else '[dry] COPY '}{src}  ->  {dst}")
+            if apply:
+                dst.parent.mkdir(parents=True, exist_ok=True)
+                shutil.copy2(str(src), str(dst))
+            stats["moved"] += 1
+            continue
+
         # Whole-folder relocation (kind "folder", or the source is a directory):
         # a misplaced collection folder like /images/the-lantern-greenhouse-collection
         # -> /images/dreams/lantern-greenhouse. Merge into an existing dest folder
