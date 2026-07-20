@@ -362,3 +362,49 @@ PR #108 review and no new deferred cleanup surfaced while implementing it.
 
 **Kaizen task:** t-022 — investigate why the "art requests" step runs far
 longer than its own `--limit`/`--timeout` would predict.
+
+## 2026-07-20 | Worker | art-generator-connect/t-022 | done (conductor PR pending)
+
+**Decision:** implemented, self-verified, self-merge planned (session
+claude-conductor-agent-20260720T1315Z).
+
+**Failure category:** none — root-caused and fixed first pass.
+
+**What was good:**
+- Did not accept the original note's hypothesis at face value ("already_satisfied()
+  under-matching" / a retry loop around wait_for_job). Read `wait_for_job` first and
+  confirmed it *is* correctly bounded by `args.timeout`, then worked outward from there
+  instead of guessing inside the flagged function.
+- Found the actual mechanism: `consume_art_requests.py`'s self-drain pre-scan calls
+  `already_satisfied(r)` over every pending request (154 right now, 120 kind_robots
+  media targets) — unbounded by `--limit` by design (satisfied requests self-drain
+  regardless of batch size) — and calls it **twice** per entry, once building
+  `satisfied` and once building `todo`, since neither list comprehension cached the
+  result. For a kind_robots media target, `already_satisfied()` resolves to a live
+  HTTP HEAD request (`media_direct_consumer._media_exists`) with a 30s timeout. With
+  the media host unreachable during a box-down window, that pre-scan alone could run
+  up to 120 × 2 × 30s = 7200s (120 min) — independent of `--limit`/`--timeout` — fully
+  explaining the observed 85+ minutes against the "project-art" step's clean ~25
+  minutes (that step has no self-drain pre-scan, hence no unbounded network fan-out).
+- Fixed both contributing factors, not just the more obvious one: (1) single-pass
+  partition in `consume_art_requests.py` so `already_satisfied` runs once per entry,
+  and (2) dropped `_media_exists`'s HEAD-check timeout from 30s to 8s
+  (`MEDIA_EXISTS_TIMEOUT_SECONDS`) since it is a lightweight existence probe, not a
+  render wait. Together this is a ~7.5x worst-case reduction on the pre-scan phase.
+- Verified with a standalone repro proving `already_satisfied` now runs exactly once
+  per entry (was twice before), plus full `pytest tests/` (428 passed, 1 pre-existing
+  skip, 0 new failures), `py_compile` on both changed files, and
+  `python scripts/audit_roadmaps.py` (0 errors). Explicitly did not claim a live
+  workflow re-run as verification — no reachable media host or Actions dispatch from
+  this sandbox — and said so plainly in the task note rather than implying more
+  verification happened than did.
+- Closing t-022 leaves art-generator-connect with 0 open tasks (all done). Left
+  `project-overrides.yaml`'s `active` status alone rather than flipping it unilaterally
+  — same precedent as ecosystem-map/t-006 earlier today and the pre-existing
+  humboldt-scoop case — and is flagging it here / in the PR for Silas instead.
+
+**What to improve:** none this cycle.
+
+**Kaizen task:** none filed this cycle — the fix is complete and the remaining
+`ACTIVE_PROJECT_ALL_DONE` warning is a Silas-only status-override decision, not new
+implementation work.

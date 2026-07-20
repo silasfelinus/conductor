@@ -1,16 +1,16 @@
 {
-  "generated_at": "2026-07-20T12:40:24.886064+00:00",
+  "generated_at": "2026-07-20T13:23:05.226027+00:00",
   "summary": {
     "roadmaps": 40,
     "active_projects": 31,
     "tasks": 631,
-    "ready": 48,
+    "ready": 47,
     "waiting": 45,
     "needs_human": 34,
     "in_progress": 1,
-    "done": 492,
+    "done": 493,
     "errors": 0,
-    "warnings": 9,
+    "warnings": 11,
     "info": 46
   },
   "projects": [
@@ -445,16 +445,15 @@
       "autonomous": false,
       "task_count": 22,
       "counts": {
-        "done": 21,
-        "ready": 1
+        "done": 22
       },
-      "open_count": 1,
+      "open_count": 0,
       "human_attention": 0,
-      "ready": 1,
+      "ready": 0,
       "waiting": 0,
       "claimed": 0,
       "review": 0,
-      "done": 21
+      "done": 22
     },
     {
       "slug": "mural-design",
@@ -785,6 +784,20 @@
     }
   ],
   "findings": [
+    {
+      "severity": "warning",
+      "code": "ACTIVE_PROJECT_ALL_DONE",
+      "project": "art-generator-connect",
+      "task": null,
+      "message": "All tasks are done but project override remains active."
+    },
+    {
+      "severity": "warning",
+      "code": "ACTIVE_PROJECT_NO_OPEN_TASKS",
+      "project": "art-generator-connect",
+      "task": null,
+      "message": "Active project has no open tasks; mark finished/paused or add an intentional recurring task."
+    },
     {
       "severity": "warning",
       "code": "SOFT_NEEDS_HUMAN",
