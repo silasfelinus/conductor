@@ -1295,3 +1295,19 @@ recurring-task claim race this cycle hit is the same class already tracked by
 - None significant this cycle.
 
 **Kaizen task:** none new this cycle — the two deferred gaps (curriculum-outline.md v1.5 re-check paragraph for §25; persian-miniature's remix-quality tier placement) are already recorded in the checklist's rotation-state note as ready-to-pick fallbacks for a future lane-4 cycle, so a separate roadmap task would be redundant bookkeeping.
+## 2026-07-20 | Reviewer (conductor agent run) | ai-art-academy/t-010 | pattern
+
+**Decision:** self-merged (conductor PR #922) — lane 4 fallback pick (curriculum-outline.md v1.5 public-domain re-check + persian-miniature remix-quality tier flag), the two gaps the immediately-prior cycle's own rotation-state note had already identified and deferred as ready-to-pick fallbacks.
+
+**Failure category:** none — no pass consumed, conductor-docs-only change.
+
+**What was good:**
+- Followed the checklist's rotation discipline exactly: tried lane 3 first with a genuinely fresh queued job (957) rather than re-polling a stale one (816/855 pattern from prior cycles), per the prior cycle's explicit instruction not to re-poll job 816.
+- When the queueing script itself failed with `Connection reset by peer` mid-poll — a new failure *shape*, not the usual clean 10-minute PENDING timeout — did not over-interpret it as either "relay recovered" or "new relay-side bug." Made a cheap, direct follow-up API check (plain `curl` to the job's status endpoint) to distinguish "transient network blip in this session's egress path" from "relay state changed," and confirmed the former (job 957 was still PENDING, `updatedAt` unchanged since creation). This matches the checklist's "Blocker discipline" guidance to recheck only when something material actually changed, applied at finer grain than previous cycles needed to.
+- Cleared both outstanding lane-4 gaps in one pass rather than picking just one, since they were small, independent, and already scoped by name in the prior cycle's note — avoided scope creep by not also touching the unrelated `curriculum-outline.md` structure or re-litigating tier placements for other movements.
+- Kept `ROADMAP-AUDIT.json`/`.md` out of both commits (discarded local regeneration diffs before committing) since those are auto-generated and get refreshed by CI on every push — avoided adding noise unrelated to the actual change.
+
+**What to improve:**
+- None significant this cycle.
+
+**Kaizen task:** deferred — this cycle's own PR body already proposed a concrete kaizen (`scripts/consume_art_requests.py --live` gives zero incremental progress output until it either claims or hits its full timeout; a verbose/`--poll-interval` flag that prints intermediate `status`/`updatedAt` snapshots would let a session confirm "accepted by the API" immediately instead of waiting the full window to learn anything). Not filed as a separate roadmap task since it's tooling-scope, not ai-art-academy-scope, and a future lane-2 (roadmap accuracy) cycle or a conductor-project tooling task is a better home for it than this project's roadmap.
