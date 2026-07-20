@@ -182,10 +182,10 @@ tasks:
 - id: t-010
   milestone: m3
   title: Capture local Echo dry-run transcript and approval checklist
-  status: ready
-  owner: null
-  updated: '2026-07-03T22:20:00-07:00'
-  passes: 0
+  status: needs-human
+  owner: claude
+  updated: '2026-07-20T22:30:00Z'
+  passes: 1
   stakes: reversible
   gate_human: true
   depends_on:
@@ -194,10 +194,31 @@ tasks:
   - t-008
   - t-009
   - t-011
-  note: 'Before real-world use, capture a local dry-run transcript proving the router, chat/Character,
-    Dream story, art generation, local music, and project-work paths. FOR SILAS: approve only after reviewing
-    the transcript, auth model, disable switch, and exact endpoint exposure plan. No public skill or live
-    endpoint before this gate.'
+  note: 'FOR SILAS: the dry-run transcript is at projects/alexa-integration/docs/t-010-dry-run-transcript.md
+    (conductor burst-rotation session, 2026-07-20). It runs all 10 lines of rollout-safety-checklist.md
+    Section 4 against silasfelinus/serendipity-voice main via the CLI (npm run handle), with every feature
+    flag at its safe default (no .env, art/chat/music all off, no service token) — the same entry point
+    the real relay uses.
+
+    What it contains: a pass/fail table for all 10 lines, and 4 findings from the runs: (1) "what is next"
+    and "what is the goal" return the same PROJECT Dream summary rather than naming a specific ready task;
+    (2) "ask AMI ..." routes to the character domain rather than chat (arguably correct, checklist wording
+    is stale); (3) the checklist''s own sample Dream-story line ("start a cozy mystery in the redwood
+    library") never matches any router pattern because dreamPatterns require the literal word "story" —
+    filed as new task t-017; (4) "deploy the relay" / "change DNS" fall through to a generic clarification
+    instead of the specific blocked-refusal message approve/merge/publish/etc. get, because blockedActions
+    in voice-router.ts omits deploy/DNS-shaped words — filed as new task t-018. Nothing in any of the 10
+    runs wrote to Conductor, called a network API, played a file, or mutated state — the safety boundary
+    itself held in every case, including the two "blocked" partials.
+
+    TO APPROVE: read the transcript doc, physical-echo-runbook.md, and rollout-safety-checklist.md, then
+    decide on the auth model, disable switch, and exact endpoint exposure plan (Cloudflare Tunnel / Lambda
+    / small host — runbook Step 3). Set approved_by_human: true and status: done here when ready to move
+    toward a real (still local-network-only, still feature-flagged) Echo test. This does not by itself
+    authorize a public skill or live endpoint — that still needs the exposure-plan decision above.
+
+    Unblocks: nothing else is currently depends_on t-010 in this roadmap, but this is the last gate before
+    any real Echo hardware test per physical-echo-runbook.md.'
 - id: t-011
   milestone: m5
   title: Wire art generation intents
@@ -326,3 +347,40 @@ tasks:
     checks via npm run parse for the bug phrase, the nameless-theme case, and the "use the retro theme"
     case all behave correctly. No CI configured in this repo (no .github/workflows); merged on clean
     local verification per repo convention.'
+- id: t-017
+  milestone: m4
+  title: Dream-story router pattern requires the literal word "story", missing the checklist's own sample phrasing
+  status: ready
+  owner: null
+  updated: '2026-07-20T22:30:00Z'
+  passes: 0
+  stakes: reversible
+  note: 'Found while capturing the t-010 dry-run transcript. dreamPatterns[0] in serendipity-voice
+    src/voice-router.ts (~line 71) is /\bstart (?:a |an )?(?<genre>...) story in (?<location>...)\b/i --
+    it only matches "start a <genre> story in <location>". rollout-safety-checklist.md''s own canonical
+    test line 5, "Serendipity: start a cozy mystery in the redwood library.", omits the word "story" and
+    so never matches any router pattern, falling through to the generic unknown-domain clarification
+    instead of starting a Dream story seed. Fix: broaden dreamPatterns[0] to make " story" optional (e.g.
+    /\bstart (?:a |an )?(?<genre>[a-z0-9][a-z0-9 _-]*?) in (?<location>[a-z0-9][a-z0-9 _-]*)\b/i, careful
+    with the non-greedy genre group so it does not over-match against project/character patterns that also
+    use "in"), and add a regression test asserting the checklist''s exact sample phrase now routes to
+    dream. See projects/alexa-integration/docs/t-010-dry-run-transcript.md Finding 3 for the full repro.'
+- id: t-018
+  milestone: m4
+  title: blockedActions list in voice-router.ts omits "deploy" and DNS-shaped words from the checklist's own Blocked-mode table
+  status: ready
+  owner: null
+  updated: '2026-07-20T22:30:00Z'
+  passes: 0
+  stakes: reversible
+  note: 'Found while capturing the t-010 dry-run transcript. blockedActions in serendipity-voice
+    src/voice-router.ts (~line 36) is [approve, merge, publish, release, spend, buy, purchase, delete,
+    rename, force push, force-push] -- it does not include deploy, expose, or dns, even though
+    rollout-safety-checklist.md Section 3''s Blocked-mode table explicitly lists "publish, deploy, expose
+    endpoints, spend money, change DNS...". "Serendipity: deploy the relay." and "Serendipity: change
+    DNS." both still take no action (they fall through to the generic router clarification, same as any
+    unmatched phrase), so this is not a safety gap, but the spoken response does not name the specific
+    blocked action the way approve/merge/publish/etc. do. Fix: add deploy, expose, dns (and consider
+    endpoint) to blockedActions, and add a regression test asserting both checklist sample lines now
+    return the specific "needs a safer review path" blockedReason. See
+    projects/alexa-integration/docs/t-010-dry-run-transcript.md Finding 4 for the full repro.'
