@@ -534,7 +534,7 @@ tasks:
   - id: t-029
     milestone: m6
     title: "Polish and upgrade Model Builder front-end surface"
-    status: claimed
+    status: ready
     owner: reviewer
     passes: 0
     stakes: reversible
@@ -557,9 +557,23 @@ tasks:
       and now the t-027 quantity batch editor -- not a placeholder scaffold. Remaining and kept
       ready: step (1) dashboard-tab + tutorial .webp art (needs the generation backend/egress) and
       step (3) the liveUrl backfill (an admin Placements click, not an agent action).
+
+      PROGRESS 2026-07-20 (conductor-burst rotation, claude-burst-rotation-20260720T1810Z): step
+      (4) follow-on -- found a real gap while re-reading the interactive experience components:
+      model-builder-run-history.vue's "Cancel run" trash-icon button fired store.cancelRun(run.id)
+      (a PATCH to CANCELLED, irreversible, and it drops the run from local history) on a single
+      click with zero confirmation -- the only destructive action anywhere in the model-builder
+      surface with no guard. Added the arm-on-first-click/fire-on-second-click/disarm-on-blur
+      confirm pattern already established in components/art/art-interact.vue's delete button, so
+      it now takes a deliberate second click. Verified: eslint clean, prettier clean, full-project
+      `npm run test` (vue-tsc --noEmit) exit 0. kind_robots PR #671 (branch
+      claude/keen-fermat-96x6u6) -- MERGED. Steps (1) and (3) remain genuinely blocked as
+      documented above; not touched this cycle. Kept at `ready` (not `done`) since those two
+      steps are still outstanding, matching how other "Polish and upgrade X" tasks with a
+      genuinely blocked substep handled the same situation this week (e.g. media-watchlist/t-006).
     claimed_by: claude-burst-rotation-20260720T1810Z
     claimed_at: '2026-07-20T18:06:27Z'
-    updated: '2026-07-20T18:06:27Z'
+    updated: '2026-07-20T18:20:00Z'
 
   - id: t-030
     milestone: m6
