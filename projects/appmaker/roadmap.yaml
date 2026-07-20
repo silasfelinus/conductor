@@ -194,8 +194,8 @@ tasks:
 - id: t-011
   milestone: m2
   title: Flag bare-scaffold apps that go stale so the fleet doesn't accumulate untouched shells
-  status: ready
-  owner: null
+  status: claimed
+  owner: worker
   passes: 0
   stakes: reversible
   note: 'Kaizen from Reviewer on the PR #104 merge (2026-07-03): PR #104 scaffolded apps/ for every existing
@@ -205,6 +205,9 @@ tasks:
     so Silas can decide build vs. retire instead of the fleet growing silently.
 
     '
+  claimed_by: claude-conductor-agentrun-20260720-appmaker-t011
+  claimed_at: '2026-07-20T10:17:24Z'
+  updated: '2026-07-20T10:17:24Z'
 - id: t-012
   milestone: m4
   title: Polish and upgrade AppMaker front-end surface
