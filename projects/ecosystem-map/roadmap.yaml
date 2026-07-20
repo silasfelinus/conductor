@@ -142,7 +142,7 @@ tasks:
   - id: t-006
     milestone: m2
     title: "Create implementation tasks for confirmed gaps"
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -160,6 +160,31 @@ tasks:
       to TAB-INTEGRATION.md; WonderLab is the fallback, and a new channel requires
       explicit human approval. FRONTEND-SURFACE-MAP.md currently identifies 15 missing
       or incomplete surfaces and prioritizes already-built partial integrations first.
+      RAN 2026-07-20 (claude-conductor-burst-20260720T0700Z): verified live against
+      kind_robots main (not just re-reading the 2026-07-10 audit) before writing any new
+      tasks, since the audit note flagged partial integrations as the priority. Checked
+      stores/helpers/dashboardHelper.ts and content/*.md for all 15 rows marked "missing"
+      or "incomplete": every one (Humboldt Scoop, Humboldt Scoop CMS, Sketchy, Storymaker,
+      Da Vinci, Media Watchlist, Conductor App, Alexa Integration/Voice Lab, Mermaids of
+      Venice, Packmaker, Coat Dance, Wishmaster, Challenge Center, Serendipity, AppMaker)
+      now has a registered dashboard tab, a channelKey/tabKey pair, and a content/<slug>.md
+      route rendering the shared project-front-page scaffold (the project-frontend-pages
+      pass referenced in this doc's own 2026-07-12 update). Then checked each of those 15
+      projects' own roadmap.yaml for the corresponding follow-up implementation task: all
+      15 already have a "Polish and upgrade <Project> front-end surface" task (the standard
+      task shape used across every project for exactly this "evolve the scaffold into the
+      full interactive experience" step) — 5 already `done` (Humboldt Scoop/t-008, Humboldt
+      Scoop CMS/t-011, Mermaids of Venice/t-012, Packmaker/t-006, Challenge Center/t-019)
+      and the remaining 10 already `ready` and queued in priority.yaml order (AppMaker/t-012,
+      Coat Dance/t-010, Conductor App/t-013, Da Vinci/t-014, Media Watchlist/t-006,
+      Alexa Integration/t-015, Serendipity/t-012, Sketchy/t-007, Storymaker/t-010,
+      Wishmaster/t-003). No new implementation tasks were needed — creating duplicates of the existing
+      "polish and upgrade" tasks would only fork the same work into two roadmap entries.
+      Updated FRONTEND-SURFACE-MAP.md to record this re-audit so the next cycle reads
+      current reality instead of the stale 2026-07-10 snapshot. Marking t-006 done: its
+      job (confirm gaps -> route implementation tasks to the right project roadmaps) is
+      complete — the gaps were closed by intervening project-frontend-pages + per-project
+      polish work between 2026-07-12 and now, this cycle only confirmed and documented it.
     claimed_by: claude-conductor-burst-20260720T0700Z
     claimed_at: '2026-07-20T05:09:10Z'
     updated: '2026-07-20T05:09:10Z'
