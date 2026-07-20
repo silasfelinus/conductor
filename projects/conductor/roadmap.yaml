@@ -2015,3 +2015,48 @@ tasks:
     claimed_by: claude-conductor-burst-20260720
     claimed_at: '2026-07-20T01:05:20Z'
     updated: '2026-07-20T01:05:20Z'
+
+  - id: t-073
+    milestone: m2
+    title: 'kind_robots: main branch protection does not require the "TypeScript" CI check to pass before merge'
+    status: needs-human
+    soft_gate: false
+    passes: 0
+    stakes: reversible
+    note: >
+      Filed 2026-07-20 (Reviewer sweep), consolidated from a since-superseded
+      conductor/t-072 investigation branch (PR #882, closed unmerged — that
+      PR's own regression-scan finding was independently and more thoroughly
+      covered by the actual t-072 fix, kind_robots PR #598, which landed a
+      real automated contract check; this task carries forward only #882's
+      second, still-unaddressed finding).
+
+
+      FOR SILAS: kind_robots' "TypeScript" CI check (workflow
+      .github/workflows/typecheck.yml, runs `npm run test` / vue-tsc on every
+      PR) is not currently a required status check on the `main` branch
+      protection rule — so a PR can merge into kind_robots main while that
+      check is red. This is exactly how PR #569 landed a real type error
+      (the Character.userId nullability mismatch conductor/t-072 fixed) that
+      sat broken on main for several hours on 2026-07-19 until an unrelated
+      PR happened to trip vue-tsc and surface it. No GitHub MCP tool
+      available to any agent session here can read or write branch
+      protection / required-status-check settings, so this cannot be closed
+      out by an agent — it is a one-time GitHub Settings change only Silas
+      can make.
+
+
+      TO APPROVE: in GitHub, silasfelinus/kind_robots → Settings → Branches
+      → the `main` protection rule → "Require status checks to pass before
+      merging" → add "TypeScript" to the required list (worth also
+      considering "Contract verifiers" and "verify" while there, which cover
+      a similar class of currently-optional correctness gates, though those
+      are not the specific gap that let PR #569 through). This is a
+      reversible settings-only change with no code/deploy/spend involved.
+      Once done, set `approved_by_human: true` and `status: done` on this
+      task — nothing downstream depends on it, it's a standalone
+      regression-prevention gap.
+    owner: null
+    claimed_by: null
+    claimed_at: null
+    updated: '2026-07-20T00:00:00Z'

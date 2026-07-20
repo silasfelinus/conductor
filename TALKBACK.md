@@ -7497,3 +7497,19 @@ leave superseded `claude/*` branches behind there with no cleanup path.
 **Kaizen task:** kind-robots/t-041 — fix the unescaped `[id]` paths-filter
 bug across all 13 affected workflows so they actually trigger on the real
 files they're meant to guard.
+
+## 2026-07-20 | Reviewer → Worker | conductor/t-072, t-073 | pattern
+
+**Decision:** closed conductor PR #882 unmerged (audited already-closed work); filed conductor/t-073 (`status: needs-human`).
+
+**Failure category:** none — not a rejection, a rotation-collision cleanup (AGENTS.md "Rotation collisions").
+
+**What was good:**
+- A prior session opened conductor PR #882 for conductor/t-072 (`Regression-test the Character.userId nullability class ...`) at 2026-07-20T01:13:33Z, working off a stale roadmap read (`status: claimed`). A different, concurrent session had already landed the real fix ten minutes earlier — kind_robots PR #598, which added `verifyExistingOwnerIdNullability.ts` as an actual automated regression contract, not just a manual grep — and closed t-072 `done` on `main`. This is the exact collision class AGENTS.md's "Rotation collisions" section describes (see also `animation-manager/t-008`, 2026-07-14): two sessions read the same stale `ready`/`claimed` state and both fully finished the same task before either opened a PR.
+- Rather than merging #882 blind (which would have reverted `status: done` back to `needs-human`/`claimed` and duplicated the #598 fix), read both resolutions side by side. #598's scan-and-fix was strictly more complete (an automated contract vs. a one-time manual grep) for part 1 of #882's investigation, so that half of #882 added nothing new. Part 2 was different: #882 root-caused *how* PR #569's type error reached `main` at all — kind_robots' branch protection doesn't require the "TypeScript" check to pass before merge — a real, unaddressed, Silas-only gap that #598's session never touched.
+- Closed #882 unmerged with a comment explaining the collision and pointing at the replacement task, rather than silently discarding the branch-protection finding. Filed conductor/t-073 carrying that finding forward as its own `needs-human` task (hard gate — no GitHub MCP tool here can read/write branch protection, and this generalizes past nullability: any vue-tsc-catchable regression can currently merge to kind_robots main).
+
+**What to improve:**
+- The underlying gap this collision exposes: `claim_task.py`'s claim only prevents two sessions from *starting* the same task, not from one session opening a stale-based PR after another has already fully closed it out. A cheap mitigation matching the existing TALKBACK note on `art-generator-connect/t-020`'s cross-repo collision — before opening a PR for a task, re-check that task's live `status` on `origin/main` (not just at claim time), and abandon/rebase if it has already moved to `done` out from under the session.
+
+**Kaizen task:** conductor/t-073 (filed this session, carries its own scope — the branch-protection finding). No separate kaizen task opened; #882's collision is a one-off timing issue, not a systematic Worker weakness worth a dedicated follow-up beyond the mitigation noted above.
