@@ -450,7 +450,7 @@ tasks:
     recurring: true
     passes: 0
     stakes: reversible
-    updated: '2026-07-20T08:06:34Z'
+    updated: '2026-07-20T10:04:51Z'
     note: |-
       Standing never-idle task (re-arms to ready after every completion, per the recurring-task rule). Each cycle pick ONE: (a) front-end style/polish pass on Academy or art-styler surfaces, (b) roadmap upgrade — refine tasks, detail the next milestone, prune stale notes, (c) generate more art inspirations or style preview thumbnails, (d) expand the curriculum with a new movement/artist entry (respecting PUBLIC-DOMAIN-POLICY.md). Note which option ran in the PR. This task never reaches done and does not count toward milestone progress.
       RAN 2026-07-19 (~11:04-11:15 UTC, claude-conductor-burst-20260719T1104Z): option (a) front-end polish, per the checklist's rotation rule (previous cycle ran lane 2, roadmap accuracy, so lane 1 was next preferred). Dispatched an Explore subagent over every Academy component (academy-manager.vue, academy-timeline.vue, academy-styles-browser.vue, academy-style-detail.vue, academy-remix.vue) plus the two shared components/art/ surfaces (art-styler.vue, image-upload.vue), with an explicit exclusion list of everything already fixed in prior cycles (PRs #275, #301, #332, #371, #380, #383, #385, #387, #397, #515). Found a real, verifiable focus-management bug: `academy-styles-browser.vue`'s `closeStyle()` restores keyboard focus to the grid button that opened the style detail panel, but that button unmounts (deleting its `gridRefs` entry) when an active search query no longer matches its style while the panel is still open — closing the panel at that point silently dropped focus to `<body>`, exactly the regression this code was originally written to prevent. Added a `searchInputRef` (always mounted) as a fallback focus target when the original grid button is gone. Verified: `npx eslint` and `npx prettier --check` both clean, `npm run test` (`vue-tsc --noEmit`) 0 errors. kind_robots PR #520 (branch claude/keen-fermat-academy-focus-fallback): all 3 CI checks green (TypeScript, Contract verifiers, GitGuardian), no review comments — merged squash `a174d16`. Rearmed to `ready` per the recurring-task convention — continuous-improvement-checklist.md's rotation state updated to record front-end polish as the completed lane, next preferred roadmap accuracy.
@@ -595,8 +595,8 @@ tasks:
       (still 404) is not a fresh live-queue probe. Rearming to `ready` per the
       recurring-task convention.
     owner: worker
-    claimed_by: claude-conductor-burst-20260720080634Z
-    claimed_at: '2026-07-20T08:06:34Z'
+    claimed_by: burst-1784541890
+    claimed_at: '2026-07-20T10:04:51Z'
 
   - id: t-015
     milestone: m4
