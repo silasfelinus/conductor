@@ -76,7 +76,7 @@ tasks:
 - id: t-003
   milestone: m3
   title: Spec the AI critique rubric and follow-up assignment logic
-  status: claimed
+  status: done
   owner: reviewer
   passes: 0
   stakes: reversible
@@ -85,7 +85,24 @@ tasks:
     stays encouraging, and how critique results select the next assignment. Include safety/privacy notes
     for image uploads.
 
-    '
+    DONE 2026-07-20 (conductor agent session claude-conductor-agent-20260720T1620Z): added
+    projects/sketchy/CRITIQUE-RUBRIC.md. Read PRODUCT-SPEC.md''s existing 5-dimension critique
+    table + JSON output shape, SKILL-LADDER.md''s illustrative routing examples + friendly
+    progression rules, and docs/ai-critique-apis.md''s integration notes before writing, to build
+    on what already existed instead of duplicating it. New doc adds: (1) 1-10 scoring anchors
+    (low/mid/high) per dimension so two critique calls score consistently; (2) a full
+    dimension-applicability table across all 9 SKILL-LADDER categories, formalizing the
+    "some dimensions get skipped" rule PRODUCT-SPEC.md only gestured at; (3) a deterministic
+    weakest-skill routing algorithm (tie-break order, dimension-to-category map, the
+    friendly-progression override so two corrections never run back to back, an all-dimensions-high
+    branch) that turns SKILL-LADDER''s illustrative examples into something implementable; (4) the
+    actual critique-call system prompt template (tone rules, cacheable rubric portion per
+    ai-critique-apis.md''s note to cache the rubric and vary only image/skill-level) plus edge-case
+    handling for blank submissions, off-topic images, and API content-policy refusals; (5) explicit
+    acceptance criteria. Safety/privacy is cross-referenced to PRODUCT-SPEC.md and
+    ai-critique-apis.md rather than duplicated, since both already cover it adequately. No
+    gate_human -- this elaborates an already-approved product spec (t-001) rather than setting new
+    product direction, matching how t-002''s SKILL-LADDER.md closed.'
   claimed_by: claude-conductor-agent-20260720T1620Z
   claimed_at: '2026-07-20T16:33:09Z'
   updated: '2026-07-20T16:33:09Z'
