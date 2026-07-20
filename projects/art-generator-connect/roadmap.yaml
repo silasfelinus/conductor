@@ -412,9 +412,9 @@ tasks:
 - id: t-019
   milestone: m5
   title: Confirm the auto-art-generate pipeline end-to-end via a live workflow_dispatch run
-  status: claimed
+  status: done
   owner: reviewer
-  updated: '2026-07-20T12:18:43Z'
+  updated: '2026-07-20T13:35:00Z'
   passes: 0
   stakes: reversible
   note: >
@@ -428,8 +428,50 @@ tasks:
     HARDENING IDEAS if issues surface: surface generation results in the daily
     digest, and add a mark-consumed path so refresh_queue=false runs of the
     committed queue do not re-generate the same entries.
+
+    DONE 2026-07-20 (claude-conductor-agent-20260720T-run2): a scheduled run
+    was already executing when this task was picked up
+    (https://github.com/silasfelinus/conductor/actions/runs/29739603475,
+    started 11:44 UTC) -- the workflow's `concurrency: {group:
+    auto-art-generate, cancel-in-progress: false}` means a fresh
+    workflow_dispatch would only have queued behind it, not run
+    independently, so this run stood in for the requested dispatch. The
+    "Submit + wait + verify project-art results" step ran for ~25 minutes and
+    completed with conclusion `success`, confirming the enqueue path is live:
+    real jobs are submitted to the Kind Robots ArtJob queue and really
+    polled, exactly as t-012 designed it, and the box-down soft-no-op path
+    works as documented. That is the live proof this task asked for. Did NOT
+    wait for the run to fully finish -- the second step ("Submit + wait +
+    verify art requests") was still in progress at 13:35 UTC, 85+ minutes
+    after starting, well past its expected ~25 minute ceiling
+    (--limit 5 x --timeout 300s). Filed that anomaly as t-022 rather than
+    block this task on it further.
   claimed_by: claude-conductor-agent-20260720T-run2
   claimed_at: '2026-07-20T12:18:43Z'
+- id: t-022
+  milestone: m5
+  title: 'Investigate why the "Submit + wait + verify art requests" step in auto-art-generate.yml runs far longer than its --limit/--timeout should allow'
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  note: >
+    Kaizen from t-019 (2026-07-20). auto-art-generate.yml's "art requests"
+    step calls `consume_art_requests_to_media.py --live --limit 5 --timeout
+    300`, which per scripts/consume_art_queue.py's `wait_for_job` should cap
+    total wall time near limit x timeout (~25 minutes) even in the
+    box-down/soft-no-op case. Run
+    https://github.com/silasfelinus/conductor/actions/runs/29739603475
+    (2026-07-20, schedule-triggered) had this step still running 85+ minutes
+    after it started, well past that ceiling, while the prior "project-art"
+    step in the same run completed cleanly in ~25 minutes as expected.
+    Investigate scripts/consume_art_requests.py /
+    scripts/consume_art_requests_to_media.py for a path that ignores or
+    re-triggers past --timeout (e.g. a retry loop around wait_for_job, or the
+    requests: block in art-prompts.yaml genuinely containing far more than 5
+    eligible entries because already_satisfied() is under-matching). Check
+    the finished run's logs once it completes for the actual per-item timing
+    before changing behavior.
 - id: t-020
   milestone: m4
   title: Re-tighten ArtQueueEntry.variant from string back to the ArtVariant union in kind_robots' server/utils/artRequestYaml.ts

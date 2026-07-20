@@ -327,3 +327,38 @@ Silas knowing this class of race isn't unique to the Worker.
 
 **Kaizen task:** none filed — this task was itself a kaizen follow-on from the
 PR #108 review and no new deferred cleanup surfaced while implementing it.
+
+## 2026-07-20 | Reviewer (conductor agent run) | art-generator-connect/t-019 | done (observed live run, no fresh dispatch)
+
+**Decision:** closed at `status: done`, no PR — roadmap/TALKBACK bookkeeping only.
+
+**Failure category:** none.
+
+**What was good:**
+- Before triggering a fresh `workflow_dispatch`, checked the workflow's recent
+  run history first and found a scheduled run already executing
+  (https://github.com/silasfelinus/conductor/actions/runs/29739603475,
+  started 11:44 UTC). `auto-art-generate.yml` sets `concurrency: {group:
+  auto-art-generate, cancel-in-progress: false}`, so a manual dispatch at that
+  point would only have queued behind it, not produced independent evidence —
+  watching the in-flight run was the correct choice, not a shortcut.
+- Watched via `mcp__github__actions_list`/`actions_get` rather than guessing:
+  confirmed the "Submit + wait + verify project-art results" step actually
+  completed with `conclusion: success` after ~25 minutes, which is genuine
+  live proof of the enqueue → poll → verify path t-012 built, not just "the
+  workflow file parses."
+- Did not block the whole session on the run finishing. The second step
+  ("art requests") was still going 85+ minutes in — well past its
+  `--limit 5 --timeout 300` expected ceiling — so rather than keep waiting
+  indefinitely, filed that anomaly as a new task (t-022) with the run URL and
+  a concrete investigation angle, and closed t-019 on the evidence already in
+  hand.
+
+**What to improve:**
+- Could have checked whether an earlier scheduled run (2026-07-19) showed the
+  same step-7 duration pattern, to know immediately whether t-022 describes a
+  new regression or a long-standing quirk. Left that for whoever picks up
+  t-022.
+
+**Kaizen task:** t-022 — investigate why the "art requests" step runs far
+longer than its own `--limit`/`--timeout` would predict.
