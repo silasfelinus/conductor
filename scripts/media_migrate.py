@@ -46,6 +46,10 @@ IMAGE_EXTS = {".webp", ".png", ".jpg", ".jpeg"}
 # The public URL prefix that maps to the media root. imagePath
 # "/images/dreams/x.webp" is the file "<root>/dreams/x.webp".
 URL_PREFIX = "/images/"
+# Default manifest is repo-relative so the script works from the repo root
+# regardless of the caller's CWD.
+_REPO_ROOT = Path(__file__).resolve().parents[1]
+DEFAULT_MANIFEST = _REPO_ROOT / "projects" / "dream-cycle" / "media-migration-manifest.json"
 # The kindrobots images share as seen from the conductor box under WSL. Override
 # with --root (Windows: Z:\kindrobots\images) or $KR_IMAGES_ROOT (Unraid-local:
 # /mnt/user/pc/kindrobots/images).
@@ -88,6 +92,37 @@ def apply_moves(moves: list[dict], root: Path, apply: bool) -> dict:
             print(f"  MISSING source, cannot move: {src}  (-> {dst})")
             stats["missing"] += 1
             continue
+
+        # Whole-folder relocation (kind "folder", or the source is a directory):
+        # a misplaced collection folder like /images/the-lantern-greenhouse-collection
+        # -> /images/dreams/lantern-greenhouse. Merge into an existing dest folder
+        # rather than fail, and never overwrite a file already there.
+        if kind == "folder" or src.is_dir():
+            print(f"  {'FOLDER' if apply else '[dry] FOLDER'} {src}  ->  {dst}")
+            if apply:
+                dst.mkdir(parents=True, exist_ok=True)
+                for item in list(src.iterdir()):
+                    target = dst / item.name
+                    if target.exists():
+                        print(f"    keep existing, skip: {target.name}")
+                        continue
+                    shutil.move(str(item), str(target))
+                # remove the now-empty (or manifest/leftover-only) source dir
+                remaining = [p for p in src.iterdir()]
+                if not remaining:
+                    src.rmdir()
+                else:
+                    print(f"    left {len(remaining)} item(s) in {src} (name clash)")
+                # For a dream collection, the DB PitchSheet points at
+                # <slug>/<slug>-card.webp. The folder's files are arbitrarily
+                # named, so guarantee that canonical card exists by copying the
+                # best candidate image (keeps the original too).
+                if dst.parent.name == "dreams":
+                    ensure_dream_card(dst)
+            touched_dirs.add(dst)
+            stats["moved"] += 1
+            continue
+
         if dst.exists():
             print(f"  CONFLICT dest exists, skipping: {dst}  (from {src})")
             stats["conflict"] += 1
@@ -100,6 +135,31 @@ def apply_moves(moves: list[dict], root: Path, apply: bool) -> dict:
         touched_dirs.add(src.parent)
         stats["moved"] += 1
     return stats
+
+
+_CARD_PREFERENCE = ("card", "hero", "key", "cover", "title", "main", "dream")
+
+
+def ensure_dream_card(folder: Path) -> None:
+    """Make sure <folder>/<slug>-card.webp exists (the DB PitchSheet path) by
+    copying the most card-like image in the folder. No-op if it already exists
+    or the folder has no images."""
+    slug = folder.name
+    target = folder / f"{slug}-card.webp"
+    if target.exists():
+        return
+    imgs = sorted(f for f in folder.iterdir()
+                  if f.is_file() and f.suffix.lower() in IMAGE_EXTS)
+    if not imgs:
+        return
+    best = None
+    for pref in _CARD_PREFERENCE:
+        best = next((f for f in imgs if pref in f.stem.lower()), None)
+        if best:
+            break
+    best = best or imgs[0]
+    shutil.copy2(str(best), str(target))
+    print(f"    card: copied {best.name} -> {target.name}")
 
 
 def has_images(d: Path) -> bool:
@@ -146,7 +206,7 @@ def regen_collections(root: Path, apply: bool) -> dict:
 
 def main() -> int:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--manifest", default="media-migration-manifest.json")
+    ap.add_argument("--manifest", default=str(DEFAULT_MANIFEST))
     ap.add_argument("--root", default=DEFAULT_ROOT,
                     help=f"media images root (default {DEFAULT_ROOT}, or $KR_IMAGES_ROOT)")
     ap.add_argument("--apply", action="store_true", help="actually move (default: dry-run)")
@@ -166,15 +226,27 @@ def main() -> int:
 
     stats = apply_moves(moves, root, args.apply)
 
-    # regenerate manifests for every folder that gained files, plus the index
-    print("Regenerating gallery.json / collections.json ...")
-    for d in sorted({root / rel(m["new"]) for m in moves if m.get("new")}):
-        regen_gallery(d.parent, args.apply)
-    idx = regen_collections(root, args.apply)
-    print(f"  collections.json: {len(idx)} folder(s){'' if args.apply else ' [dry]'}")
+    # Regenerate manifests only on --apply. The dry-run skips this: walking the
+    # whole 2000+ file tree to preview collections.json is slow over a network
+    # mount and changes nothing. For a folder move the new path IS the folder;
+    # for a file move it's the file, so regen its parent.
+    if args.apply:
+        print("Regenerating gallery.json / collections.json ...")
+        regen_targets = set()
+        for m in moves:
+            if not m.get("new"):
+                continue
+            d = root / rel(m["new"])
+            regen_targets.add(d if (m.get("kind") == "folder" or d.is_dir()) else d.parent)
+        for d in sorted(regen_targets):
+            regen_gallery(d, True)
+        idx = regen_collections(root, True)
+        print(f"  collections.json: {len(idx)} folder(s)")
+
     print(f"\n{stats}")
     if not args.apply:
-        print("Dry-run only. Re-run with --apply to move the files.")
+        print("Dry-run only (manifest + collections.json regen skipped). "
+              "Re-run with --apply to move the files.")
     return 0
 
 
