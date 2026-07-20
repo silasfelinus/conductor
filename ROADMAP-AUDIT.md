@@ -1,13 +1,13 @@
 # Roadmap Audit
 
-Generated: `2026-07-20T00:33:23.200614+00:00`
+Generated: `2026-07-20T01:25:28.668677+00:00`
 
 This is a conservative structural audit. It reports suspicious state; it does not automatically change task status or remove human gates.
 
 ## Portfolio snapshot
 
-- **40** roadmaps, **31** active projects, **626** tasks
-- **53 ready**, **45 waiting**, **33 needs-human**, **2 claimed/review**, **482 done**
+- **40** roadmaps, **31** active projects, **628** tasks
+- **54 ready**, **45 waiting**, **33 needs-human**, **2 claimed/review**, **483 done**
 - Findings: **0 errors**, **6 warnings**, **46 informational**
 
 ## Project inventory
@@ -22,17 +22,17 @@ This is a conservative structural audit. It reports suspicious state; it does no
 | 6 | `digital-storefront` | active | software | 0 | 2 | 4 | 0 | 17 / 23 |
 | 7 | `packmaker` | active | software | 0 | 0 | 0 | 0 | 10 / 10 |
 | 8 | `mermaids-of-venice` | retired | content | 0 | 0 | 8 | 0 | 4 / 12 |
-| 9 | `kind-robots` | active | software | 1 | 0 | 4 | 0 | 35 / 40 |
+| 9 | `kind-robots` | active | software | 2 | 0 | 4 | 0 | 35 / 41 |
 | 10 | `kindrobots-unraid` | active | software | 0 | 7 | 1 | 0 | 4 / 12 |
 | 11 | `global-ui` | active | software | 0 | 0 | 1 | 0 | 24 / 25 |
 | 12 | `superkate-services-calculator` | active | software | 0 | 0 | 1 | 0 | 35 / 36 |
 | 13 | `superkate-hairstyle-ai` | active | software | 1 | 0 | 2 | 0 | 18 / 21 |
 | 14 | `newsfeed` | active | software | 0 | 0 | 2 | 0 | 19 / 21 |
 | 15 | `model-builder` | active | software | 3 | 0 | 0 | 0 | 28 / 31 |
-| 16 | `animation-manager` | active | software | 2 | 0 | 0 | 1 | 8 / 11 |
+| 16 | `animation-manager` | active | software | 3 | 0 | 0 | 0 | 9 / 12 |
 | 17 | `animation-studio` | retired | software | 3 | 4 | 0 | 0 | 1 / 8 |
 | 18 | `ecosystem-map` | active | software | 1 | 0 | 0 | 0 | 7 / 8 |
-| 19 | `conductor` | active | software | 1 | 0 | 4 | 1 | 66 / 72 |
+| 19 | `conductor` | active | software | 0 | 0 | 4 | 2 | 66 / 72 |
 | 20 | `serendipity` | active | software | 1 | 0 | 0 | 0 | 11 / 12 |
 | 21 | `storymaker` | active | software | 2 | 0 | 0 | 0 | 8 / 10 |
 | 22 | `davinci` | active | software | 1 | 0 | 0 | 0 | 13 / 14 |

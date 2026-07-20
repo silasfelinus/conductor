@@ -7446,3 +7446,54 @@ strings already appear in PR bodies here) as a second check beyond
 `claim_task.py`. Separately, kind_robots would benefit from its own
 `branch-janitor`-equivalent workflow, since cross-repo tasks now regularly
 leave superseded `claude/*` branches behind there with no cleanup path.
+
+## 2026-07-20 | Reviewer (burst) | conductor/t-072 | pattern
+
+**Decision:** merged (kind_robots PR #598, squash `a137d565`); task closed at `status: done`.
+
+**Failure category:** none — clean first-pass implementation.
+
+**What was good:**
+- Investigated before broadening: kaizen from conductor/t-069 asked for a
+  regression guard on the Character.userId nullability class "beyond this
+  one call site," but its own note (citing kind-robots/t-033's discipline)
+  cautioned against a broad heuristic without a confirmed second instance.
+  `grep -rn "existing[A-Za-z]*Id" server/api` found exactly two
+  `existing<Owner>Id`-style ownership-reassignment guards in the whole
+  codebase — characters and resources — both already correctly typed
+  `number | null`. Scoped the new static contract
+  (`verifyExistingOwnerIdNullability.ts`) to that exact naming convention
+  rather than every nullable `Int?` field in `prisma/schema.prisma` (100+),
+  which would have false-positived on the many `authenticatedUserId`/
+  `callerUserId` params that are genuinely non-nullable (session-sourced,
+  not a DB row).
+- Extracted `assertOwnershipIsUnchanged` out of
+  `server/api/resources/[id].patch.ts` into a new
+  `server/api/resources/compatibility.ts`, mirroring
+  `characters/compatibility.ts`, specifically so the behavioral regression
+  test (`verifyOwnershipNullability.test.ts`) could exercise the real
+  exported function without transitively importing the Prisma client (the
+  route handler imports `server/utils/prisma.ts` at module scope, which
+  throws synchronously without `DATABASE_URL`) — kept genuinely DB-free
+  without requiring CI to set any new env var.
+- Verified locally before opening the PR: full `npm run test` (vue-tsc)
+  clean, `eslint` clean on all changed/new files, both new contracts
+  passing, and confirmed the pre-existing
+  `verifyResourceMutationOwnership.ts` static-text contract still passes
+  unchanged (it scans for a literal call-site string, unaffected by which
+  file exports the function).
+- Spotted and filed (didn't fix inline, correctly out of scope) a real,
+  separate CI gap while checking PR #598's checks: 13 workflows —
+  including `resource-mutation-ownership.yml`, the one most relevant to
+  this very PR — have an unescaped `[id]` in their `paths:` filter
+  (GitHub Actions treats `[...]` as a glob character class, so
+  `server/api/resources/[id].patch.ts` never matches the real filename).
+  Confirmed via `list_workflow_runs` filtered to this PR's branch
+  (`total_count: 0` for that workflow) that it silently never triggered.
+  Filed as kind-robots/t-041 rather than scope-creeping this PR.
+
+**What to improve:** none this cycle.
+
+**Kaizen task:** kind-robots/t-041 — fix the unescaped `[id]` paths-filter
+bug across all 13 affected workflows so they actually trigger on the real
+files they're meant to guard.
