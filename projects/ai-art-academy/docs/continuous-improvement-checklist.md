@@ -15,6 +15,16 @@ Record the lane, files changed, and verification in the task note before rearmin
 
 ### Rotation state
 
+- Last completed lane: Roadmap accuracy (lane 2), 2026-07-20 (~14:11-14:35 UTC). Ran
+  `scripts/check_pr_merged_drift.py` (clean) and `scripts/audit_roadmaps.py` (same 2
+  pre-existing info-level findings, not defects). Reconfirmed t-019 still genuinely
+  blocked (`public/images/academy/styles/` still 404s on kind_robots). Found and fixed
+  a real staleness bug: t-033's note claimed kind-robots/t-038 as a live co-blocker of
+  the "Contract verifiers" CI check, but t-038 has been `done` since 2026-07-18
+  (resolved ~6 minutes after t-033's note was written) — confirmed the check is
+  healthy on recent kind_robots PRs (#646, #648). Corrected t-033's note so its
+  remaining blocker reads as solely the Academy examples-manifest home-relay
+  write-access issue. Conductor-docs-only change; no kind_robots PR needed.
 - Last completed lane: Front-end polish (lane 1), 2026-07-20 (~12:07-12:30 UTC).
   Dispatched a general-purpose subagent over all 7 in-scope files with an explicit
   exclusion list of every previously-fixed bug class (PRs #275, #301, #332, #371,
@@ -139,13 +149,11 @@ Record the lane, files changed, and verification in the task note before rearmin
   PRs — conductor-docs-only change this cycle, no kind_robots PR.
 - Previously: Roadmap accuracy (lane 2), 2026-07-19 (~22:00-22:20 UTC). Milestone audit came back clean (no drift). Fixed a real tooling bug found while auditing: `scripts/check_pr_merged_drift.py` treated failed GitHub API lookups (this session type only has GitHub MCP tools, not direct REST/token access — every lookup 403'd) identically to confirmed-open PRs, so a 100%-failed run silently reported "No drift found" with exit 0, indistinguishable from a genuine clean audit. `check()`/`render()` now surface unresolved lookups explicitly and `main()` exits 2 (not 0) when anything couldn't be verified. Tests updated/added in `tests/test_check_pr_merged_drift.py`; full suite green (427 passed, 1 pre-existing skip). Conductor-only change, no kind_robots PR.
 - Before that: Front-end polish (lane 1), 2026-07-19 (~19:04-19:15 UTC). Fixed `image-upload.vue`'s `addFiles()` silently dropping non-PNG/JPEG/WebP files (drag-and-drop bypasses the input's `accept` attribute) with zero user-visible feedback — now sets `error.value` to a skip-count message. kind_robots PR #547, merged 2026-07-19T19:14Z.
-- Next preferred lane: Roadmap accuracy (lane 2) — this cycle completed lane 1
-  (academy-styles-browser.vue viewed-tracking remount fix, PR #646). Lane 3
-  (inspiration/preview assets) was last confirmed blocked 2026-07-20 ~10:04Z by
-  directly polling `GET /api/art/queue/816` (`status: PENDING`, `updatedAt`
-  unchanged since ~00:14Z); a future cycle should queue and poll a *new* job rather
-  than re-check 816 again, since it will never resolve once the relay is back (it's
-  not being retried). If lane 2 is exhausted or blocked, lane 4's two
+- Next preferred lane: Inspiration/preview assets (lane 3) — this cycle completed
+  lane 2 (roadmap accuracy, t-033 stale co-blocker fix). Recheck with a *fresh*
+  queued job, not another poll of job 816 (last confirmed blocked 2026-07-20
+  ~10:04Z, `status: PENDING` unchanged since ~00:14Z — it will never resolve once
+  the relay is back since it isn't being retried). If still blocked, lane 4's two
   already-identified small gaps (curriculum-outline.md's missing v1.5 policy
   re-check paragraph for §25; persian-miniature not yet in the remix-quality tier
   lists) are ready-to-pick fallbacks.
