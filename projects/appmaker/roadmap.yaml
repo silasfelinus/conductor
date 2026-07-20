@@ -194,7 +194,7 @@ tasks:
 - id: t-011
   milestone: m2
   title: Flag bare-scaffold apps that go stale so the fleet doesn't accumulate untouched shells
-  status: claimed
+  status: review
   owner: worker
   passes: 0
   stakes: reversible
@@ -203,6 +203,27 @@ tasks:
     as bare `flutter create` shells with no roadmap task driving them to build-out. Add a check (script
     or CI note) that surfaces apps/<slug>/ folders whose lib/ has never grown past main.dart after N days,
     so Silas can decide build vs. retire instead of the fleet growing silently.
+
+    DONE 2026-07-20 (agent run): added scripts/flag_stale_apps.py. Bareness detection is structural,
+    not date-based -- flags apps/<slug>/ whose lib/ contains exactly the untouched main.dart
+    scripts/new_app.py scaffolds (matched by its "scaffolded by AppMaker" marker string), so it stays
+    correct even for apps built without that script (e.g. the PR #104 batch). Age comes from each
+    file''s earliest commit via the GitHub REST API (GET /repos/silasfelinus/conductor/commits?path=...),
+    not local git log -- this repo''s local clones are frequently shallow/squash-merged (confirmed
+    this session: apps/wishmaster and apps/appmaker each showed only one commit in local history,
+    both misleadingly identical), so local git history is not a reliable source of true file age
+    here. Currently flags 8 of 10 apps/ as still-bare (appmaker, humboldt-scoop-cms, kind-robots,
+    media-watchlist, recipe-box, sketchy, storymaker, wishmaster); conductor and
+    superkate-services-calculator are correctly excluded as genuinely built out. Verified locally:
+    `python -m py_compile` clean, `python scripts/flag_stale_apps.py` / `--json` / `--strict` all run
+    and correctly identify the 8 bare folders. The GitHub API age lookup itself could not be
+    live-verified from this interactive sandbox -- direct `api.github.com` calls 403 here by
+    organization egress policy (same limitation already present in scripts/check_repos.py, which
+    uses the identical GITHUB_TOKEN+urllib pattern) -- but will run with real network access under
+    the workflow''s real `GITHUB_TOKEN` in GitHub Actions or a local Silas run, same as
+    check_repos.py already does. Kept as a standalone script per the task''s "script or CI note"
+    wording rather than wiring a new recurring workflow, to keep the diff scoped; wiring it into an
+    existing periodic workflow is a natural follow-up if Silas wants it automatic.
 
     '
   claimed_by: claude-conductor-agentrun-20260720-appmaker-t011
