@@ -3757,3 +3757,12 @@ records:
   outcome: done
   failure_category: null
   lesson: "When a spec-writing task's target area already has partial coverage scattered across sibling docs (PRODUCT-SPEC.md's dimension table, SKILL-LADDER.md's routing examples, docs/ai-critique-apis.md's integration notes), the value-add is turning illustrative/example-based coverage into deterministic, implementable rules (numeric anchors, explicit tie-break order, the literal prompt text) rather than re-describing what already exists — read every referenced sibling doc in full before drafting."
+- date: '2026-07-20'
+  project: ai-art-academy
+  task: t-010
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "Milestone status can drift not just from new tasks appearing done/not-done under it, but from an *existing* task being re-tagged into a milestone that was already marked done (t-035 landed under m6 alongside the t-029/t-030 kaizen follow-ons after m6 had last been verified done, and the milestone was never revisited) -- a roadmap-accuracy audit should re-check a milestone's task list for membership changes, not just each member task's status, whenever a milestone is already 'done'."
