@@ -1221,3 +1221,21 @@ reachable again (recheck `GET /api/art/queue/816` first), batch-generate all
 25 queued `kind-robots-academy-style-preview-*` images in one `--live` run
 using this cycle's new `--id-prefix` filter, then sync `persian-miniature`
 into `academyStyles.ts` alongside the preview image.
+
+## 2026-07-20 | Reviewer (scheduled conductor sweep) | ai-art-academy/t-010 | pattern
+
+**Decision:** rearmed `t-010` (lane 3 reconfirmed blocked, fell back to lane 4's deferred follow-up); kind_robots PR #616 merged, conductor PR #886 merged.
+
+**Failure category:** none — lane 3 recheck correctly diagnosed as still blocked (transient, infra), no pass consumed; the sync landed clean on the first attempt.
+
+**What was good:**
+- Followed the exact cheap-recheck instruction the prior cycle's own note left behind: rather than blindly trusting the ~01:10Z reading, re-ran a live `--id-prefix` queue attempt (job 855) and confirmed the same unclaimed-after-10-minutes signature — a fresh direct read, not an inherited assumption.
+- Rather than re-doing curriculum research the prior cycle had already finished (all 3 Persian Miniature example works WebFetch-verified against Wikimedia Commons), picked up exactly the one piece that cycle explicitly deferred: the `academyStyles.ts` sync. Avoided duplicate work by reading the prior RAN note in full before choosing an action.
+- Split `t-035` into its completed half (sync, now done) and its still-blocked half (thumbnail batch-generation) rather than leaving one PR-shaped unit of work permanently pinned behind an infra blocker it didn't actually depend on — a direct application of the "scope discipline" hard rule to a task that had silently bundled two independent pieces of work.
+- Verified thoroughly on the kind_robots side: eslint clean, full-project `vue-tsc --noEmit` exit 0 both before and after rebasing onto kind_robots' `main` (which had moved 3 commits in the interim), not just once before the rebase.
+- Deliberately left `exampleWorks`/`previewImageSrc` out of the seed entry, matching the established ashcan-school/t-031 precedent (real image files still need sourcing/verification — that's not a data-entry task), rather than inventing placeholder data to look more complete.
+
+**What to improve:**
+- None significant this cycle. Minor: the `docs/teaching-notes.md` gap the checklist's coverage table already flags (Persian Miniature has no teaching-notes entry yet) was left untouched, correctly out of scope for this pass but worth flagging so it doesn't silently fall off the checklist's radar.
+
+**Kaizen task:** none new this cycle — `t-035` (now thumbnail-generation-only) already carries the next actionable item once the home relay recovers.
