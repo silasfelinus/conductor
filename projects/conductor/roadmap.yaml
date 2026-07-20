@@ -1987,7 +1987,6 @@ tasks:
   - id: t-072
     milestone: m2
     title: Regression-test the Character.userId nullability class of Prisma-vs-vue-tsc mismatch beyond this one call site
-    status: claimed
     passes: 0
     stakes: reversible
     note: >
@@ -2011,7 +2010,67 @@ tasks:
       checking staging.  Cross-reference kind-robots/t-033's note on keeping heuristic
       pattern checks narrow to avoid false positives -- confirm a concrete second
       instance exists before broadening scope, same discipline as that task.
+
+
+      INVESTIGATED 2026-07-20 (conductor-burst-hourly rotation): two-part follow-up,
+      per the note's own two questions.
+
+
+      (1) Regression scan for sibling instances of the exact bug class (a Prisma
+      nullable-Int field passed straight through to a helper param typed
+      non-nullable `number`): grepped kind_robots for `existing[A-Z]\w*: number`
+      (the `assertCharacterPatchCompatibility` shape) across server/ -- the only
+      other hits are `existingId` in components/reconcile.post.ts,
+      icons/create.ts, and achievements/definition.ts, all primary-key `id`
+      params (always non-null in Prisma, so `number` is correct there, not a
+      bug) plus the two call sites that already use `number | null`
+      (resources/[id].patch.ts, utils/serverApi.ts). Then ran the actual
+      regression test that matters: provisioned kind_robots deps
+      (`source scripts/provision_kind_robots_deps.sh`) and ran a clean
+      `npm run test` (full-project vue-tsc) against current main -- exit 0,
+      zero errors. Unlike the InputJsonValue cast class (which needs
+      verifyNoPrismaJsonCast.ts because `as Prisma.InputJsonValue` casts defeat
+      the type checker), THIS bug class is a plain type mismatch that vue-tsc
+      already catches natively and exhaustively across every call site in one
+      pass -- no new heuristic script adds coverage beyond what `npm run test`
+      already provides. So: no new contract-check script needed here; confirmed
+      main is currently clean of this pattern.
+
+
+      (2) The CI-enforcement question ("if it isn't already blocking merges"):
+      it isn't. Pulled PR #569's check runs via the GitHub MCP
+      (pull_request_read/get_check_runs) -- the "TypeScript" check run shows
+      `conclusion: failure`, yet the PR merged into main anyway (its
+      compatibility.ts bug is what conductor/t-069 later tripped over and fixed
+      inline). typecheck.yml itself is correctly configured (runs `npm run
+      test` on every PR to main) -- the gap is that GitHub branch protection
+      for kind_robots main does not require the "TypeScript" check to pass
+      before merge, so a red typecheck is currently informational only. This is
+      the actual root cause of the whole incident, and it generalizes past
+      nullability: ANY vue-tsc-catchable regression can currently merge to
+      kind_robots main. No GitHub MCP tool in this session's toolset can read
+      or write branch-protection/required-status-check settings (repo Settings
+      -> Branches is not exposed via list_*/get_*/update_* tools here), so this
+      can't be closed out by an agent.
+
+
+      FOR SILAS: The "TypeScript" CI check on kind_robots (silasfelinus/kind_robots,
+      workflow .github/workflows/typecheck.yml) runs on every PR but is not a
+      required status check, so PRs can merge to main while it's red -- this is
+      exactly how PR #569 landed a type error that sat broken on main for
+      several hours (2026-07-19) until an unrelated PR happened to trip
+      vue-tsc. TO APPROVE: in GitHub, repo Settings -> Branches -> the `main`
+      protection rule -> "Require status checks to pass before merging" -> add
+      "TypeScript" (and, while there, consider "Contract verifiers" and
+      "verify" too, which cover a similar class of currently-optional
+      correctness gates) to the required list. This is a one-time settings
+      change, fully reversible, no code/deploy involved. Once done, set
+      `approved_by_human: true` and `status: done` on this task (or just flip
+      status: done with a note citing the change) -- nothing downstream depends
+      on this task, it's a standalone regression-prevention gap.
     owner: reviewer
     claimed_by: claude-conductor-burst-20260720
     claimed_at: '2026-07-20T01:05:20Z'
     updated: '2026-07-20T01:05:20Z'
+    status: needs-human
+    soft_gate: false
