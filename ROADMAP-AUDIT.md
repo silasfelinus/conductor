@@ -1,6 +1,6 @@
 # Roadmap Audit
 
-Generated: `2026-07-20T10:14:35.491346+00:00`
+Generated: `2026-07-20T10:23:54.706489+00:00`
 
 This is a conservative structural audit. It reports suspicious state; it does not automatically change task status or remove human gates.
 
@@ -15,7 +15,7 @@ This is a conservative structural audit. It reports suspicious state; it does no
 | # | Project | State | Kind | Ready | Waiting | Human | In progress | Done / Total |
 |---:|---|---|---|---:|---:|---:|---:|---:|
 | 1 | `challenge-center` | finished | software | 0 | 0 | 0 | 0 | 20 / 20 |
-| 2 | `ai-art-academy` | active | software | 2 | 0 | 3 | 1 | 29 / 35 |
+| 2 | `ai-art-academy` | active | software | 3 | 0 | 3 | 0 | 29 / 35 |
 | 3 | `coloring-book` | active | software | 0 | 9 | 1 | 0 | 19 / 29 |
 | 4 | `humboldt-scoop` | active | software | 0 | 0 | 0 | 0 | 8 / 8 |
 | 5 | `humboldt-scoop-cms` | active | software | 0 | 4 | 1 | 0 | 6 / 11 |
@@ -42,7 +42,7 @@ This is a conservative structural audit. It reports suspicious state; it does no
 | 26 | `career-transition` | retired | content | 3 | 4 | 0 | 0 | 1 / 8 |
 | 27 | `alexa-integration` | active | software | 2 | 0 | 0 | 0 | 14 / 16 |
 | 28 | `conductor-app` | active | software | 5 | 0 | 0 | 0 | 8 / 13 |
-| 29 | `appmaker` | active | software | 3 | 2 | 0 | 0 | 7 / 12 |
+| 29 | `appmaker` | active | software | 2 | 2 | 0 | 1 | 7 / 12 |
 | 30 | `media-watchlist` | active | software | 1 | 0 | 0 | 0 | 6 / 7 |
 | 31 | `sketchy` | active | software | 3 | 0 | 0 | 0 | 4 / 7 |
 | 32 | `pinball-hero` | retired | content | 2 | 2 | 0 | 0 | 2 / 6 |

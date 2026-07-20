@@ -97,7 +97,7 @@ or style registry.
 
 ---
 
-## 3. Per-style teaching notes (all 24 movements)
+## 3. Per-style teaching notes (all 25 movements)
 
 Remix-difficulty tiers match `curriculum-outline.md`'s "Lesson-only vs remixable" section:
 **Easy** = strong transfer, ship first; **Medium** = good but watch the output;
@@ -131,6 +131,7 @@ slugs — e.g. `renaissance-fresco`, `baroque-chiaroscuro`, `post-impressionism-
 | 22 | Suprematism (`suprematism`) | prompt | **Hard** | Feeling over depiction; geometry alone as the subject | Faithful remix discards the source subject almost entirely — frame as a reduction exercise, not a restyle (see `docs/suprematism-lesson.md`, this movement's dedicated worked lesson) |
 | 23 | Ashcan School (`ashcan-school`) | prompt | Medium | Everyday city grit given the seriousness of history painting | Under-cooks toward a lightly-graded photo if the prompt underweights brushwork/palette — lean on "gestural," "murky," "low-key lighting" |
 | 24 | American Regionalism (`american-regionalism`) | prompt | Medium | Everyday rural America made monumental; smooth sculptural realism as quiet ambiguity | Under-cooks toward a lightly-processed photo if the prompt underweights the smoothed, sculptural simplification — lean on "crisp outlines," "simplified sculptural forms," "dramatic rolling sky" |
+| 25 | Persian Miniature Painting (`persian-miniature`) | prompt | **Hard** | A page built to be read, not viewed — space organized by narrative distance (higher on the page, not smaller), not camera geometry | Preserving the source composition fights the movement's own logic (no linear perspective, no cast shadow); model likely defaults to a generic "Middle Eastern ornament" filter while keeping Western depth cues — lean on the remix_hint's explicit "no Western perspective or cast shadow" and the dense floral/geometric border |
 
 ---
 
