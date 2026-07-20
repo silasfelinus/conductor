@@ -146,7 +146,9 @@ KR_BASE_URL = "https://kind-robots.vercel.app"
 # 307-redirects /images/, which email clients render unreliably.
 KR_MEDIA_ORIGIN = os.environ.get(
     "KR_MEDIA_ORIGIN", "https://media.acrocatranch.com").rstrip("/")
-DAILY_DREAM_PAGE = f"{KR_BASE_URL}/daily-dream"
+# The /daily-dream front page was removed from kind_robots; the digest no longer
+# links to it (the dream-cycle art still renders inline).
+DAILY_DREAM_PAGE = ""
 
 
 def _public_url(rel):
@@ -333,7 +335,7 @@ def main():
                 key: (len(val) if isinstance(val, list) else 1)
                 for key, val in records.items()
             }
-            yesterday_output["page"] = built.get("page", DAILY_DREAM_PAGE)
+            yesterday_output["page"] = ""  # /daily-dream page removed
 
     payload = {
         "date": datetime.datetime.now(_TZ).date().isoformat(),
