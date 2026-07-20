@@ -15,6 +15,18 @@ Record the lane, files changed, and verification in the task note before rearmin
 
 ### Rotation state
 
+- Last completed lane: Roadmap accuracy (lane 2), 2026-07-20 (~20:00-20:20 UTC,
+  claude-conductor-burst-20260720T2000Z). Spot-checked PR-merge drift via GitHub
+  MCP `pull_request_read` (kind_robots#672, kind_robots#650, conductor#868 — all
+  confirmed merged, no drift). `scripts/audit_roadmaps.py` clean (same 2
+  pre-existing info findings). Reconfirmed t-019 still blocked (`public/images/academy/styles/`
+  still 404s). Found and fixed a real milestone-accuracy bug: m6 ("Continuous
+  improvement loop") was `status: done` but carries t-035 (non-recurring,
+  `status: ready`) — flipped m6 to `in-progress` to match. Moves ai-art-academy's
+  computed progress from 77.5% to 72.5% on the next STATUS.md regen — a real
+  correction. Conductor-docs-only change; no kind_robots PR needed. Next
+  preferred lane is inspiration/preview assets (lane 3, recheck with a fresh
+  queued job, not 957) falling back to lane 4 if still blocked.
 - Last completed lane: Front-end polish (lane 1), 2026-07-20 (~18:12-18:35 UTC,
   claude-conductor-agent-20260720T1830Z). Dispatched an Explore subagent over
   all 5 Academy components plus art-styler.vue/image-upload.vue with an
@@ -188,12 +200,11 @@ Record the lane, files changed, and verification in the task note before rearmin
   PRs — conductor-docs-only change this cycle, no kind_robots PR.
 - Previously: Roadmap accuracy (lane 2), 2026-07-19 (~22:00-22:20 UTC). Milestone audit came back clean (no drift). Fixed a real tooling bug found while auditing: `scripts/check_pr_merged_drift.py` treated failed GitHub API lookups (this session type only has GitHub MCP tools, not direct REST/token access — every lookup 403'd) identically to confirmed-open PRs, so a 100%-failed run silently reported "No drift found" with exit 0, indistinguishable from a genuine clean audit. `check()`/`render()` now surface unresolved lookups explicitly and `main()` exits 2 (not 0) when anything couldn't be verified. Tests updated/added in `tests/test_check_pr_merged_drift.py`; full suite green (427 passed, 1 pre-existing skip). Conductor-only change, no kind_robots PR.
 - Before that: Front-end polish (lane 1), 2026-07-19 (~19:04-19:15 UTC). Fixed `image-upload.vue`'s `addFiles()` silently dropping non-PNG/JPEG/WebP files (drag-and-drop bypasses the input's `accept` attribute) with zero user-visible feedback — now sets `error.value` to a skip-count message. kind_robots PR #547, merged 2026-07-19T19:14Z.
-- Next preferred lane: Front-end polish (lane 1) — this cycle completed lane 4
-  (curriculum depth, the persian-miniature policy-recheck + tier-list fallback)
-  after lane 3 was rechecked with a fresh job (957) and confirmed still blocked
-  (`status: PENDING`, never claimed). No outstanding lane-4 gaps remain from
-  this batch; the next lane-3 recheck should queue a fresh job again rather
-  than poll 816 or 957.
+- (This trailing bullet is now superseded by the entries above — the current
+  "next preferred lane" pointer lives at the end of the most recent entry at
+  the top of this list, not here. Left in place as historical record rather
+  than pruned, per this task's own no-prune convention, but do not read it as
+  live state.)
 - Override the preferred lane only when it is blocked or a higher-severity reversible issue is newly verified; record that reason in the task note.
 
 This explicit state is the handoff between recurring cycles. Update it in the same PR as each `t-010` improvement so the next Worker does not infer rotation from a long roadmap note.

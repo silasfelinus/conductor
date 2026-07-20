@@ -1350,3 +1350,38 @@ within lane 1's existing scope; no follow-on work identified.
 the error path agents naturally stress-test while verifying) may be
 systematically under-caught by review — worth keeping in mind for future
 front-end polish passes across other "Polish and upgrade X" recurring tasks.
+
+## 2026-07-20 | Reviewer (burst-mode cycle) | ai-art-academy/t-010 | pattern
+
+**Decision:** audited already-merged work (lane 2, roadmap accuracy) — no PR needed.
+
+**Detail:**
+- Ran the checklist's standard roadmap-accuracy pass: PR-merge drift spot-check
+  (kind_robots#672, kind_robots#650, conductor#868 via GitHub MCP
+  `pull_request_read` — `check_pr_merged_drift.py`'s direct API calls still
+  403 in this sandbox, same known limitation), `scripts/audit_roadmaps.py`
+  (0 errors, same 2 pre-existing info findings), and reconfirmed t-019's
+  blocker (`public/images/academy/styles/` still 404s on kind_robots).
+- Found a real milestone-accuracy bug: m6 ("Continuous improvement loop") was
+  `status: done` while carrying t-035 (non-recurring, `status: ready`) —
+  drifted after t-035 was tagged onto m6 alongside the t-029/t-030 kaizen
+  follow-ons, sometime after m6 was last verified done. Flipped m6 to
+  `in-progress`; verified the effect on `build_status.py`'s weighted formula
+  (77.5% → 72.5% on next STATUS.md regen).
+- Also cleaned up a stale, contradictory "Next preferred lane" bullet at the
+  bottom of `continuous-improvement-checklist.md` left over from before the
+  checklist switched to embedding the next-lane pointer in each entry's own
+  text — it still said lane 1 while every entry above it already pointed
+  elsewhere, a real (if minor) source of confusion for a future reader
+  scanning for the current pointer.
+
+**What to improve:** none this cycle.
+
+**Kaizen task:** none filed — both findings were fixed in place within lane
+2's existing scope.
+
+**Pattern note:** this is the second time a milestone drifted after a task
+was *re-tagged* into it post-hoc (m3/m4 in the 2026-07-19 09:13 cycle drifted
+from new tasks being added; this one drifted from an existing task's
+milestone reassignment). Worth flagging for whoever eventually builds
+`conductor/t-071`-style tooling for milestone drift, not just PR-merge drift.
