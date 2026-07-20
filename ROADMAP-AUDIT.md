@@ -1,13 +1,13 @@
 # Roadmap Audit
 
-Generated: `2026-07-20T17:11:11.885975+00:00`
+Generated: `2026-07-20T18:14:15.535201+00:00`
 
 This is a conservative structural audit. It reports suspicious state; it does not automatically change task status or remove human gates.
 
 ## Portfolio snapshot
 
 - **40** roadmaps, **31** active projects, **634** tasks
-- **43 ready**, **44 waiting**, **35 needs-human**, **3 claimed/review**, **498 done**
+- **42 ready**, **44 waiting**, **35 needs-human**, **3 claimed/review**, **499 done**
 - Findings: **0 errors**, **11 warnings**, **46 informational**
 
 ## Project inventory
@@ -28,7 +28,7 @@ This is a conservative structural audit. It reports suspicious state; it does no
 | 12 | `superkate-services-calculator` | active | software | 0 | 0 | 1 | 0 | 35 / 36 |
 | 13 | `superkate-hairstyle-ai` | active | software | 1 | 0 | 2 | 0 | 18 / 21 |
 | 14 | `newsfeed` | active | software | 0 | 0 | 2 | 0 | 19 / 21 |
-| 15 | `model-builder` | active | software | 3 | 0 | 0 | 0 | 28 / 31 |
+| 15 | `model-builder` | active | software | 2 | 0 | 0 | 1 | 28 / 31 |
 | 16 | `animation-manager` | active | software | 2 | 0 | 0 | 0 | 10 / 12 |
 | 17 | `animation-studio` | retired | software | 3 | 4 | 0 | 0 | 1 / 8 |
 | 18 | `ecosystem-map` | active | software | 0 | 0 | 0 | 0 | 8 / 8 |
@@ -48,7 +48,7 @@ This is a conservative structural audit. It reports suspicious state; it does no
 | 32 | `pinball-hero` | retired | content | 2 | 2 | 0 | 0 | 2 / 6 |
 | 33 | `recipe-box` | retired | software | 1 | 2 | 0 | 0 | 0 / 3 |
 | 34 | `brainstorm` | active | proposal | 1 | 0 | 0 | 0 | 0 / 1 |
-| 35 | `wishmaster` | active | software | 1 | 0 | 0 | 1 | 1 / 3 |
+| 35 | `wishmaster` | active | software | 1 | 0 | 0 | 0 | 2 / 3 |
 | 36 | `engagement` | finished | software | 0 | 0 | 0 | 0 | 3 / 3 |
 | 37 | `ruler-hooked` | active | software | 2 | 1 | 0 | 0 | 9 / 12 |
 | 38 | `dream-cycle` | active | software | 3 | 0 | 0 | 0 | 14 / 17 |
