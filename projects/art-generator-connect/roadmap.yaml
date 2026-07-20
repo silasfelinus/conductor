@@ -412,9 +412,9 @@ tasks:
 - id: t-019
   milestone: m5
   title: Confirm the auto-art-generate pipeline end-to-end via a live workflow_dispatch run
-  status: ready
-  owner: null
-  updated: '2026-07-13T09:53:16Z'
+  status: claimed
+  owner: reviewer
+  updated: '2026-07-20T12:18:43Z'
   passes: 0
   stakes: reversible
   note: >
@@ -428,6 +428,8 @@ tasks:
     HARDENING IDEAS if issues surface: surface generation results in the daily
     digest, and add a mark-consumed path so refresh_queue=false runs of the
     committed queue do not re-generate the same entries.
+  claimed_by: claude-conductor-agent-20260720T-run2
+  claimed_at: '2026-07-20T12:18:43Z'
 - id: t-020
   milestone: m4
   title: Re-tighten ArtQueueEntry.variant from string back to the ArtVariant union in kind_robots' server/utils/artRequestYaml.ts
