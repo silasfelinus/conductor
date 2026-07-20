@@ -1235,7 +1235,7 @@ tasks:
   - id: t-041
     milestone: m1
     title: Fix unescaped [id] in GitHub Actions paths filters across 13 workflows so they actually trigger
-    status: review
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -1270,6 +1270,36 @@ tasks:
       runs fine locally/via `workflow_dispatch` -- this is purely about the
       pull_request trigger never firing, not about the underlying checks
       being wrong.
+
+
+      DONE 2026-07-20 (conductor burst cycle claude-conductor-burst-20260720T0300Z):
+      escaped `[id]`/`[dreamId]` to `\[id\]`/`\[dreamId\]` in the `paths:`
+      lists of all 13 affected workflows (22 entries total -- 7 in
+      delete-response-envelope.yml, 2 each in reaction-subpatch-envelope.yml,
+      sheet-mutation-input-parity.yml, and todo-mutation-input-parity.yml, 1
+      each elsewhere). Verified all 13 files still parse as valid YAML and no
+      unescaped `[...]` remained in any `paths:` list. First CI pass on
+      kind_robots PR #604 surfaced a second, self-inflicted bug: this repo's
+      own `utils/scripts/verifyWorkflowPaths.ts` contract does a literal
+      filesystem-existence check on trigger-path entries (not a glob-aware
+      one), so the newly-escaped strings read as 22 missing files -- the
+      escape backslash isn't part of the real on-disk filename. Fixed by
+      adding `unescapeGlobLiteral()` (strips `\[`/`\]` back to `[`/`]`)
+      applied only to `source: 'trigger paths'` hits before the existence
+      check, scoped so run-step shell-token paths (which don't use this
+      escaping) are unaffected. Confirmed locally
+      (`npx tsx utils/scripts/verifyWorkflowPaths.ts` passes: 29 workflow
+      files, 331 path references checked) and via CI: all 16 checks green on
+      the second push, including the 13 individually-triggered `verify` jobs
+      (each workflow now runs itself as a live test, since it lists its own
+      `.github/workflows/<name>.yml` path). One CI check
+      (academy-examples-manifest, part of "Contract verifiers") failed on the
+      first push; confirmed via `git stash` + local run that it fails
+      identically against the unmodified base commit and reads its manifest
+      from a live external media host, not the repo -- pre-existing/flaky,
+      unrelated to this change, and it passed cleanly on the second CI run
+      with no code change on my side. kind_robots PR #604 merged (squash
+      ed949309).
     claimed_by: claude-conductor-burst-20260720T0300Z
     claimed_at: '2026-07-20T03:05:05Z'
     updated: '2026-07-20T03:05:05Z'

@@ -7513,3 +7513,57 @@ files they're meant to guard.
 - The underlying gap this collision exposes: `claim_task.py`'s claim only prevents two sessions from *starting* the same task, not from one session opening a stale-based PR after another has already fully closed it out. A cheap mitigation matching the existing TALKBACK note on `art-generator-connect/t-020`'s cross-repo collision — before opening a PR for a task, re-check that task's live `status` on `origin/main` (not just at claim time), and abandon/rebase if it has already moved to `done` out from under the session.
 
 **Kaizen task:** conductor/t-073 (filed this session, carries its own scope — the branch-protection finding). No separate kaizen task opened; #882's collision is a one-off timing issue, not a systematic Worker weakness worth a dedicated follow-up beyond the mitigation noted above.
+
+## 2026-07-20 | Worker (burst) | kind-robots/t-041 | done (kind_robots PR #604 merged)
+
+**Decision:** implemented, self-merged (session claude-conductor-burst-20260720T0300Z).
+
+**Failure category:** none — clean implementation, one real self-caught regression before merge.
+
+**What was good:**
+- Rotation: ai-art-academy/t-010 (recurring never-idle task) was the top of
+  `next_ready_task.py`'s output again this cycle since it re-arms
+  immediately on completion, but it had just been worked the prior cycle
+  (PR #885). Picked the next project down with genuine `ready` work instead
+  (kind-robots, per `priority.yaml` order) rather than re-running the same
+  project two cycles straight — matches the "rotate through the list"
+  intent of burst mode even though `next_ready_task.py` itself doesn't
+  track recency.
+- Escaped `[id]`/`[dreamId]` to `\[id\]`/`\[dreamId\]` in all 13 workflows'
+  `paths:` lists per t-041's note, then verified with a targeted YAML parse
+  that no unescaped bracket remained and nothing else in the 13 files
+  changed.
+- First CI pass caught a second bug the fix itself introduced: this repo's
+  own `verifyWorkflowPaths.ts` contract does a literal filesystem-existence
+  check on trigger-path entries, so the newly-escaped strings (which are
+  correct for GitHub's glob syntax) read as 22 missing files to that
+  script's naive check. Root-caused with `git stash` + local script runs
+  before touching anything, confirmed the failure was self-inflicted (not
+  pre-existing), and fixed the actual gap — the contract needed to unescape
+  `\[`/`\]` before checking existence — rather than reverting to the
+  unescaped (GitHub-broken) form or silently accepting a red check.
+- Also hit an unrelated, pre-existing "Contract verifiers" failure
+  (academy-examples-manifest) on the first CI pass. Confirmed via
+  `git stash` that it fails identically against the unmodified base commit,
+  and that its manifest source is a live external media host, not a
+  repo-committed file — genuinely flaky/external, not caused by this PR.
+  Left it alone rather than scope-creeping into an unrelated fix; it passed
+  cleanly on its own by the second CI run.
+- Verified locally before both pushes:
+  `npx tsx utils/scripts/verifyWorkflowPaths.ts` (29 workflow files, 331
+  path references checked, 0 errors) and a YAML-parse sanity check across
+  all 13 edited files. Confirmed all 16 PR checks green (including the 13
+  individually-triggered `verify` jobs, each now running itself as a live
+  test of the fix) before merging.
+
+**What to improve:**
+- `next_ready_task.py` always resurfaces the top-priority recurring
+  autonomous task (ai-art-academy/t-010) immediately after it completes,
+  since `recurring: true` re-arms it to `ready` the same cycle. That's
+  correct for its own idle-filling purpose but means burst-mode sessions
+  have to manually recognize "this was just done last cycle, skip it for
+  rotation diversity" rather than getting that from the picker. Not filing
+  a kaizen task for this — it's a one-line judgment call each cycle, not
+  worth a scripted heuristic yet.
+
+**Kaizen task:** none this cycle.
