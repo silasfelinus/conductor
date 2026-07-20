@@ -186,14 +186,12 @@ tasks:
 - id: t-011
   milestone: m1
   title: Add CI guard that every conductor write endpoint in kind_robots calls an auth guard
-  status: review
-  owner: worker
+  status: done
+  owner: null
   passes: 0
   stakes: reversible
-  note: 'Kaizen from Reviewer on the kind_robots PR #70 security-fix merge (2026-07-02): a lint or test check over server/api/conductor/*.post.ts that fails CI if a route does not call requireApiUser or requireAdminApiUser, so a missing auth guard on a new endpoint is caught before merge instead of by manual audit. RAN 2026-07-20 (claude-burst-hourly-20260720-0203, burst-mode project rotation): added utils/scripts/verifyConductorApiAuthGuards.ts, a CI contract check over server/api/conductor/*.{post,put,patch,delete}.ts. Broadened beyond the two named functions to also accept the validateApiKey(...)+userIsAdmin(...) manual pattern already used by art-request.post.ts and curate-request.post.ts (same JWT/user-api-key/beta-admin-token resolution as requireAdminApiUser, just not routed through that helper) -- a guard scoped only to the two named functions would have false-flagged both of those already-secured endpoints. Self-test in verifyConductorApiAuthGuards.test.ts covers both guard shapes plus an unguarded case and a guard-less .get.ts that must be ignored. Wired into contract-tests.yml. Verified: npm run test:conductor-api-auth-guards passes (7 endpoints, 0 unguarded), self-test 8/8 pass, eslint/prettier clean, full npm run test (vue-tsc --noEmit) 0 errors. kind_robots PR #602 (branch claude/keen-fermat-ulch6b), CI running at review time.'
-  claimed_by: claude-burst-hourly-20260720-0203
-  claimed_at: '2026-07-20T02:08:54Z'
-  updated: '2026-07-20T02:18:19Z'
+  note: 'Kaizen from Reviewer on the kind_robots PR #70 security-fix merge (2026-07-02): a lint or test check over server/api/conductor/*.post.ts that fails CI if a route does not call requireApiUser or requireAdminApiUser, so a missing auth guard on a new endpoint is caught before merge instead of by manual audit. RAN 2026-07-20 (claude-burst-hourly-20260720-0203, burst-mode project rotation): added utils/scripts/verifyConductorApiAuthGuards.ts, a CI contract check over server/api/conductor/*.{post,put,patch,delete}.ts. Broadened beyond the two named functions to also accept the validateApiKey(...)+userIsAdmin(...) manual pattern already used by art-request.post.ts and curate-request.post.ts (same JWT/user-api-key/beta-admin-token resolution as requireAdminApiUser, just not routed through that helper) -- a guard scoped only to the two named functions would have false-flagged both of those already-secured endpoints. Self-test in verifyConductorApiAuthGuards.test.ts covers both guard shapes plus an unguarded case and a guard-less .get.ts that must be ignored. Wired into contract-tests.yml. Verified: npm run test:conductor-api-auth-guards passes (7 endpoints, 0 unguarded), self-test 8/8 pass, eslint/prettier clean, full npm run test (vue-tsc --noEmit) 0 errors. kind_robots PR #602 (branch claude/keen-fermat-ulch6b), CI running at review time. DONE 2026-07-20 (~03:11 UTC): kind_robots PR #602 merged by Silas.'
+  updated: '2026-07-20T03:12:00Z'
 - id: t-013
   milestone: m1
   title: Polish and upgrade Conductor App front-end surface
