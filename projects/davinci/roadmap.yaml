@@ -332,9 +332,9 @@ tasks:
   - id: t-015
     milestone: m2
     title: "Spec the AI-narration layer that generates Da Vinci chapter prompts/choices"
-    status: ready
-    owner: null
-    passes: 0
+    status: done
+    owner: worker
+    passes: 1
     stakes: reversible
     note: >
       Kaizen from t-014 (kind_robots PR #645). The play-loop API
@@ -353,3 +353,29 @@ tasks:
       actual blocker between the existing backend and a real playable run UI --
       not front-end polish (see t-014's note for why a UI build was deferred
       instead of attempted this cycle).
+
+      PROGRESS 2026-07-20 (conductor burst session, docs-only, conductor repo):
+      wrote projects/davinci/docs/narration-layer-spec.md. Narrator selection
+      reuses the existing GET /api/narrators/[type]/[slug] route via LifeRun's
+      existing botId/characterId links (no new lookup subsystem). Contract:
+      a new server/utils/davinciNarration.ts + POST /api/davinci/runs/:id/narrate
+      route that only *proposes* DaVinciNarrationResult (narrativeText, 2-4
+      choices with DAVINCI_DIMENSIONS-keyed effect deltas clamped to [-2,2],
+      optional artPrompt, display-only milestoneCandidate) -- the client still
+      calls the existing /choices and /resolve endpoints separately, so no new
+      state ownership is introduced. Validation follows the existing
+      requestOpenAiReview/validateGeneratedPayload pattern already live in
+      server/utils/wonderLabReviewDraftGenerator.ts (json_schema strict mode +
+      server-side re-validation + one retry) rather than inventing a new
+      contract style. Freeform text input explicitly deferred past the first
+      build slice to keep the validation surface to a small choice enum.
+      Cross-referenced storymaker-boundary-comparison.md and shaped the request
+      contract to stay extraction-ready (plain values, no LifeRun-specific
+      fields) without extracting anything now, per that doc's "revisit after
+      both MVPs" rule. One open question flagged for Silas in the doc: the
+      [-2,2] effect clamp and the chapter>=3 end-run gate are both design
+      defaults to revisit after the first slice sees real playtesting, not
+      values pulled from an existing spec. This unblocks a follow-up build
+      task for the actual narrate endpoint + minimal run-screen UI (not filed
+      yet -- left for Silas/next cycle to scope as its own task rather than
+      bundling a large implementation into this spec-only pass).

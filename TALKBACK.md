@@ -7675,3 +7675,57 @@ files they're meant to guard.
 
 **Kaizen task:** none this cycle — this cycle's task was itself a verification/kaizen
 pass over ecosystem-map's own backlog.
+
+## 2026-07-20 | Worker (burst) | davinci/t-015 | done (conductor PR pending)
+
+**Decision:** implemented (docs-only, conductor repo), self-merge candidate.
+
+**Failure category:** none — clean first pass.
+
+**What was good:**
+- Rotation diversity: `next_ready_task.py` again surfaced ai-art-academy/t-010
+  (run twice today already). Walked `priority.yaml` past kind-robots/t-033
+  (rechecked twice already, no new evidence) and superkate-hairstyle-ai/t-019
+  (needs a live Comfy/Kontext box to tune against — not reachable this
+  session) and model-builder/t-029 (remaining steps gated on art-generation
+  egress plus an admin-only Placements click, same live-dependency shape as
+  the projects above). Also skipped kind-robots, animation-manager, and
+  ecosystem-map since those were each worked earlier in today's rotation.
+  Landed on davinci/t-015 — a kaizen davinci/t-014 filed last cycle, ready,
+  reversible, and answerable entirely by reading existing code (no live
+  environment or egress dependency).
+- Grounded the spec in real code rather than inventing a contract: read
+  `server/utils/davinci.ts` (DAVINCI_DIMENSIONS + resolve flow),
+  `prisma/schema.prisma` (LifeRun/LifeChoice/LifeStat/LifeRunArt shapes),
+  the existing `GET /api/narrators/[type]/[slug]` route (reused as-is for
+  narrator lookup via LifeRun's existing botId/characterId links), and the
+  OpenAI `json_schema` strict-mode + server-side re-validation pattern
+  already live in `server/utils/wonderLabReviewDraftGenerator.ts` — the new
+  narration layer's validation contract mirrors that existing pattern
+  instead of inventing a new one.
+- Kept the design honest about state ownership: the proposed
+  `POST /api/davinci/runs/:id/narrate` route only returns a candidate
+  `DaVinciNarrationResult` (chapter prose, 2-4 choices with
+  DAVINCI_DIMENSIONS-keyed effect deltas clamped to [-2,2], optional art
+  prompt, display-only milestoneCandidate); the client still calls the
+  existing `/choices` and `/resolve` endpoints separately, so the play-loop
+  doc's "AI narrates, app owns state" boundary holds with no new
+  state-mutation path introduced.
+- Cross-referenced `storymaker-boundary-comparison.md` and shaped the
+  request contract to stay extraction-ready (plain values, no
+  LifeRun-specific fields in the interface) without extracting a shared
+  utility now — Storymaker still has no schema, so there is nothing real to
+  extract from yet, per that doc's own "revisit after both MVPs" rule.
+- Wrote `projects/davinci/docs/narration-layer-spec.md` and appended full
+  detail to `projects/davinci/TALKBACK.md` (this project keeps its own
+  TALKBACK history alongside the top-level one). Left the actual
+  `/narrate` route + client run-screen implementation unfiled as a new
+  task rather than scoping it in the same docs-only pass.
+- `python scripts/audit_roadmaps.py` — 0 errors before and after the
+  roadmap edit, no new davinci warnings.
+
+**What to improve:** none this cycle.
+
+**Kaizen task:** none filed this cycle — the natural next task (build the
+`/narrate` endpoint + minimal run-screen UI per the spec's "First build
+slice" section) is real but deliberately left unfiled per the note above.

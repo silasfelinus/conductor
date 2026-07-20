@@ -252,3 +252,50 @@ kind-robots/t-033 had already been rechecked twice with no new evidence.
 **Kaizen task:** t-015 — spec the AI-narration layer that generates Da Vinci
 chapter prompts/choices, the actual blocker between the existing play-loop
 API and a real playable run UI.
+
+## 2026-07-20 | Worker (burst) | davinci/t-015 | done (conductor PR pending)
+
+**Decision:** implemented (docs-only, conductor repo), self-merge candidate.
+
+**Failure category:** none — clean first pass, no live environment or
+egress dependency, so nothing blocked this cycle.
+
+**What was good:**
+- Rotation landed here after ai-art-academy (run twice today, recurring
+  filler), kind-robots/t-033 (rechecked twice already, no new evidence),
+  superkate-hairstyle-ai/t-019 (needs a live Comfy/Kontext box, not
+  reachable this cycle), and model-builder/t-029 (remaining steps gated on
+  art-generation egress + an admin-only Placements click) were all either
+  already covered today or genuinely blocked — davinci/t-015 was the next
+  priority.yaml entry with ready, tractable, non-live-dependent work.
+- Grounded the spec in real code instead of inventing a contract from
+  scratch: read `server/utils/davinci.ts` (DAVINCI_DIMENSIONS, resolve
+  flow), `prisma/schema.prisma` (LifeRun/LifeChoice/LifeStat/LifeRunArt
+  shapes), the existing `GET /api/narrators/[type]/[slug]` route (reused
+  as-is for narrator lookup), and the OpenAI `json_schema` strict-mode +
+  server-side re-validation pattern already live in
+  `server/utils/wonderLabReviewDraftGenerator.ts` — the narration layer's
+  validation contract mirrors that rather than a new bespoke shape.
+- Kept the design honest about state ownership: the proposed
+  `/narrate` endpoint only returns a candidate `DaVinciNarrationResult`;
+  the client still calls the existing `/choices` and `/resolve` endpoints
+  separately, so no new durable-state owner is introduced and the
+  play-loop doc's "AI narrates, app owns state" boundary holds.
+- Wrote projects/davinci/docs/narration-layer-spec.md rather than editing
+  design-brief.md in place — the design brief is the project-level pitch
+  doc (already referenced by storymaker-boundary-comparison.md); this is a
+  focused implementation-contract doc for one layer, consistent with how
+  storymaker-boundary-comparison.md itself is a separate focused doc.
+- Left the actual `/narrate` route + client run-screen implementation
+  unfiled as a new task rather than scoping it myself in the same pass —
+  a docs-only spec cycle shouldn't also invent the next task's exact
+  shape; better for Silas or the next cycle to size that build task
+  fresh against the finished spec.
+- `python scripts/audit_roadmaps.py` — 0 errors both before and after the
+  roadmap edit.
+
+**What to improve:** none this cycle.
+
+**Kaizen task:** none filed this cycle — the natural next task (build the
+`/narrate` endpoint + minimal run-screen UI per the spec's "First build
+slice" section) is real but deliberately left unfiled per the note above.
