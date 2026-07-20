@@ -20,6 +20,23 @@ Robots, or where it should be stitched next.
 > via project hero art today), tutorialCards sections, and verifying each PROJECT
 > Dream `liveUrl` points at the new route.
 
+> **Re-audit — 2026-07-20 (ecosystem-map/t-006, claude-conductor-burst-20260720T0700Z):**
+> re-verified all 15 rows below live against `kind_robots` main
+> (`stores/helpers/dashboardHelper.ts` + `content/*.md`), not just this doc's text. Every
+> one of the 15 now has a registered dashboard tab and a `content/<slug>.md` scaffold
+> route, confirming the 2026-07-12 stitching pass covered the full set. Each of the 15
+> projects also already carries its own "Polish and upgrade `<Project>` front-end
+> surface" roadmap task to evolve that scaffold into the full interactive experience —
+> 5 are `done` (Humboldt Scoop, Humboldt Scoop CMS, Mermaids of Venice, Packmaker,
+> Challenge Center) and 10 are `ready` and queued (AppMaker, Coat Dance, Conductor App,
+> Da Vinci, Media Watchlist, Alexa Integration, Serendipity, Sketchy, Storymaker,
+> Wishmaster). No new implementation tasks were filed this cycle — t-006's own job
+> (routing confirmed gaps to project-owned tasks) was already satisfied by that existing
+> work, so this pass only confirmed and closed the loop. See each project's own
+> roadmap.yaml for current status and `Dream.liveUrl` verification, which remains an
+> open per-project item (see "Evidence and limits" below) wherever its polish task is
+> still `ready` rather than `done`.
+
 ## Audit rules
 
 - A project is **complete** only when a useful surface is reachable and renders its
