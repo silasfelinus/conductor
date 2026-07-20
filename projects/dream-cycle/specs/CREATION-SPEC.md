@@ -79,7 +79,9 @@ Content-writing stages create **content rows or set files, never backend code**:
 
 Every created row carries `designer` (`"dream-cycle"`) and source metadata (the
 originating slug / `proposalDate`) so a whole creation is **traceable and removable** —
-this is what keeps the loop reversible. kind_robots backend code stays
+this is what keeps the loop reversible. Slugs across every created row follow one
+canonical rule — `specs/SLUG-POLICY.md` — and autonomously-authored dreams carry
+`creationSource: "AI"` (not `HUMAN`). kind_robots backend code stays
 read-only/external: a missing endpoint becomes a kind_robots roadmap task or pitch,
 never a direct backend edit.
 

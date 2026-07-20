@@ -85,6 +85,10 @@ KR_MEDIA_ORIGIN = os.environ.get(
     "KR_MEDIA_ORIGIN", "https://media.acrocatranch.com").rstrip("/")
 KR_API_TOKEN = os.environ.get("KR_API_TOKEN", "").strip()
 DESIGNER = "dream-cycle"
+# The daily fast-lane authors dreams autonomously (no human wrote this specific
+# dream), so its rows are AI, not HUMAN. Override to HYBRID via env when the loop
+# builds a Silas-seeded proposal. See specs/SLUG-POLICY.md (creationSource note).
+CREATION_SOURCE = os.environ.get("DREAM_CREATION_SOURCE", "AI").strip().upper() or "AI"
 PAGE_URL = f"{KR_BASE_URL}/daily-dream"
 
 CARD_SIZE = "512x768"  # pitch-card portrait, matches the site's card asset standard
@@ -202,9 +206,23 @@ def eligible_proposal(date_override: Optional[str]) -> tuple[Optional[Path], str
     return None, reason
 
 
+_LEADING_ARTICLES = ("the-", "a-", "an-")
+
+
 def slugify(text: str) -> str:
+    """kebab-case a title per specs/SLUG-POLICY.md. Drops a leading article
+    (the-/a-/an-) unless doing so would leave a single bare word (so genuine
+    two-word proper names like `the-marrow` / `the-tangle` survive; multi-word
+    `the-comet-market` becomes `comet-market`)."""
     s = re.sub(r"[^a-z0-9]+", "-", text.lower()).strip("-")
-    return re.sub(r"-{2,}", "-", s) or "element"
+    s = re.sub(r"-{2,}", "-", s)
+    for art in _LEADING_ARTICLES:
+        if s.startswith(art):
+            rest = s[len(art):]
+            if rest and "-" in rest:  # still ≥2 words after strip → drop article
+                s = rest
+            break
+    return s or "element"
 
 
 # ── Art queueing (append to art-prompts.yaml requests:, comment-preserving) ──
@@ -397,11 +415,17 @@ def build_records(proposal: dict, slug: str, pdate: str, dry_run: bool) -> tuple
 
     def card_dream(dream_type: str, dtitle: str, description: str, flavor: str,
                    art_prompt: str, icon: str, element_slug: str,
-                   sheet_overrides: dict) -> Optional[dict]:
-        """Create a card Dream + its PitchSheet (via by-dream). Returns the dream."""
+                   sheet_overrides: dict, dream_slug: Optional[str] = None) -> Optional[dict]:
+        """Create a card Dream + its PitchSheet (via by-dream). Returns the dream.
+
+        `dream_slug` pins an explicit, policy-clean slug (used for the world card,
+        which must own the proposal's canonical slug so it never collides with a
+        same-titled LOCATION — the old bug behind `comet-market` + `the-comet-market-2`).
+        Callers that omit it get a de-duplicated slugify of the title. See
+        specs/SLUG-POLICY.md."""
         dream = kr_call("POST", "/api/dreams", {
-            "title": dtitle, "slug": uniq_slug(dtitle),
-            "dreamType": dream_type, "designer": DESIGNER,
+            "title": dtitle, "slug": dream_slug or uniq_slug(dtitle),
+            "dreamType": dream_type, "designer": DESIGNER, "creationSource": CREATION_SOURCE,
             "isPublic": True, "description": description,
             "flavorText": flavor[:500] if flavor else None,
             "artPrompt": art_prompt or None, "icon": icon,
@@ -430,6 +454,11 @@ def build_records(proposal: dict, slug: str, pdate: str, dry_run: bool) -> tuple
         return body
 
     # 1. The world card (PITCH Dream) — the header card for the page + digest.
+    #    It OWNS the proposal's canonical slug (registered first) so a same-titled
+    #    LOCATION can never steal it and get a `-2`/`the-` collision slug instead
+    #    (specs/SLUG-POLICY.md rule 4).
+    world_slug = slugify(slug)
+    used_slugs.add(world_slug)
     world = card_dream(
         "PITCH", title, proposal.get("idea", ""), vibe_line,
         f"establishing key art for {title}: {vibe_line}, {HOUSE_PROMPT_TAIL}",
@@ -438,6 +467,7 @@ def build_records(proposal: dict, slug: str, pdate: str, dry_run: bool) -> tuple
          **trio([("Promise", vibe_line),
                  ("Builds Into", "characters, locations, rewards, a narrator"),
                  ("Status", f"proposed {pdate}, built by dream-cycle")])},
+        dream_slug=world_slug,
     )
     if world:
         built["records"]["world"] = {"model": "Dream", "id": world.get("id"), "title": title}
@@ -451,7 +481,7 @@ def build_records(proposal: dict, slug: str, pdate: str, dry_run: bool) -> tuple
     genre = kr_call("POST", "/api/dreams", {
         "title": vibe.get("title", f"{title} Vibe"), "dreamType": "GENRE",
         "slug": uniq_slug(vibe.get("title", f"{title} Vibe")),
-        "designer": DESIGNER, "isPublic": True, "description": vibe_line,
+        "designer": DESIGNER, "creationSource": CREATION_SOURCE, "isPublic": True, "description": vibe_line,
         "flavorText": vibe_line[:500], "icon": "kind-icon:palette",
     }, dry_run, results, f"GENRE dream: {vibe.get('title')}")
     if genre:
