@@ -1505,10 +1505,19 @@ generic realism filter toward the movement's distinctive smoothed-and-stylized l
   "faithful" remix is definitionally a handful of floating shapes with no trace of
   the source. Frame it the same playful way ("Malevich-ify: reduce your image to
   pure geometry") rather than promising the model will preserve composition.
+- `persian-miniature` — shares `cubism`'s tension rather than `de-stijl`/
+  `suprematism`'s: it doesn't discard the subject, but "preserve the user's
+  composition" fights the movement's own logic (no linear perspective, no cast
+  shadow, distant elements placed higher rather than smaller). The likelier
+  failure mode is the model defaulting to a generic "Middle Eastern ornament"
+  filter — dense border, jewel palette — while quietly keeping Western depth
+  cues (shading, foreshortening) rather than actually inverting the spatial
+  logic. Keep the lesson regardless; ship the remix only if t-004 A/B results
+  show the flattening genuinely landing, not just the ornament.
 
-No movement is lesson-only in v1 — even the flagged three get a remix config — but
-`cubism`, `de-stijl`, and `suprematism` should carry a "results vary, that's part of
-the fun" note until t-004 evaluates them.
+No movement is lesson-only in v1 — even the flagged four get a remix config — but
+`cubism`, `de-stijl`, `suprematism`, and `persian-miniature` should carry a
+"results vary, that's part of the fun" note until t-004 evaluates them.
 
 ## Public-domain safety check (t-006 preview)
 
@@ -1582,3 +1591,17 @@ search matching title, artist, date, collection, and (for *American Gothic*)
 accession number, but not by directly reading the live page's license tag. Spot-check
 against live pages when a session with open museum/Commons egress runs (same
 follow-up pattern as the §17-21 batch).
+
+**v1.5 addition (2026-07-20) re-check.** Section 25 (Persian Miniature Painting)
+clears the PUBLIC-DOMAIN-POLICY.md §1.3 both-prongs rule for both named artists:
+Kamal ud-Din Bihzad (d. 1535) and Sultan Muhammad (d. before 1555) both died well
+before the 1956 cutoff — comfortably clear of even the newest death on record in
+this document (John Sloan, 1951). All three example works (1488, c. 1494-95,
+1494-95) predate the 1930 US publication cutoff by four centuries, so they do not
+disturb the curriculum's most-recent-example-work record, which stays at 1930
+(*American Gothic* / *Stone City, Iowa*, §24). Unlike the §24 batch, this session
+had working egress to `commons.wikimedia.org` (confirmed via WebFetch, HTTP 200 on
+all three file pages), so all three example-work URLs are marked VERIFIED against
+their live Wikimedia Commons file pages and PD license tags (Public Domain Mark
+1.0 and PD-Art/PD-old-100-expired), not "(unverified)" — matching the §22-23
+precedent rather than the §24 one.
