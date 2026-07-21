@@ -8218,3 +8218,29 @@ near-miss entry in this same file. No TALKBACK entry needed for that one specifi
 noting here only because it's the second time in as many days this exact fetch-before-
 push habit has prevented a duplicate-work collision, which suggests it's earning its
 keep as standing practice rather than a one-off precaution.
+
+## 2026-07-21 | Reviewer (scheduled agent run) | CI Janitor todo #521 | closed — verification completed
+
+**Decision:** confirmed the fix (kind_robots PR #732, merged 00:19:06Z this session's prior
+cycle) and closed todo #521 (`complete_todo.py 521`).
+
+**Detail:**
+- The todo's own note said completion requires the scheduled `main` Cypress run to actually
+  go green post-deploy, not just the repair PR merging. Checked: no scheduled Cypress run
+  had fired since the fix's production deploy (confirmed via Vercel `list_deployments` —
+  commit `5075ab4` READY at 00:19Z, superseded by two more READY prod deploys since), despite
+  the workflow's `*/30 * * * *` cron — the most recent scheduled run in the API was still
+  23:32:29Z, before the fix deployed, ~2 hours stale relative to the 30-min cadence.
+- Rather than keep waiting on a cron that wasn't firing on schedule, manually triggered
+  `cypress.yml` via `actions_run_trigger` (`workflow_dispatch` on `main`). Run 29795268873
+  completed `success` end-to-end (deploy-wait, DB-readiness, and the full Cypress suite all
+  green) in ~16 minutes — direct, positive confirmation the Contender-seed fix resolved the
+  red run, not an inference from the merge alone.
+- `complete_todo.py 521` succeeded.
+
+**Suggested action:** the scheduled Cypress cron going ~2 hours without firing (23:32Z to
+at least 02:13Z) is worth a passing note for whoever next investigates CI-janitor timing —
+GitHub Actions `schedule` triggers are best-effort and can silently lag under load; a
+`workflow_dispatch` fallback is the reliable way to get a same-session verification instead
+of waiting on the next cron tick. Not filing a dedicated task this cycle since it didn't
+block anything and self-resolved (the workflow was presumably still healthy, just delayed).

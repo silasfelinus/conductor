@@ -15,6 +15,28 @@ Record the lane, files changed, and verification in the task note before rearmin
 
 ### Rotation state
 
+- Last completed lane: Front-end polish (lane 1), 2026-07-21 (~02:35-02:45 UTC,
+  claude-conductor-agentrun-20260721T0235Z). Dispatched an Explore subagent over
+  the in-scope Academy surface (art-styler.vue, image-upload.vue, all
+  components/academy/*.vue, academyStore.ts, styleHelper.ts) with the checklist's
+  full exclusion list of already-fixed bug classes. Found a real, verifiable gap:
+  `academy-remix.vue`'s `<academy-style-detail>` usage (the Remix Studio sidebar)
+  had no `:key`, so switching styles in the embedded `art-styler` grid patched the
+  same component instance in place instead of remounting it — `academy-style-detail.vue`
+  only calls `markLessonViewed()` in `onMounted`, so every style opened this way
+  after the first in a session silently never got credited as viewed (no
+  checkmark, no `lessonsViewedCount` increment, no error, miss persisted to
+  `localStorage`). Same bug class PR #646 already fixed in
+  `academy-styles-browser.vue`, but that fix never touched this component's
+  independent instance — confirmed by reading both files directly before fixing.
+  Fixed by adding `:key="academyStore.selectedStyle.slug"`, mirroring the
+  existing `academy-styles-browser.vue` pattern exactly. Verified: `npx eslint`
+  and `npx prettier --check` both clean, full-project `npm run test`
+  (`vue-tsc --noEmit`) exit 0. kind_robots PR #737 (branch
+  `claude/vigilant-edison-3owhvw`): all 3 CI checks green (TypeScript, Contract
+  verifiers, GitGuardian) — merged squash `5ad8b57`. Next preferred lane is
+  roadmap accuracy (lane 2) — this cycle ran lane 1, so lane 2 is next in the
+  1→2→3→4 rotation.
 - Last completed lane: Curriculum depth (lane 4, LoRA-registry follow-up),
   2026-07-21 (~02:11-02:35 UTC, claude-conductor-agentrun-20260721T0211Z). Lane 3
   (inspiration/preview assets) was next preferred per the prior cycle's note, tried
