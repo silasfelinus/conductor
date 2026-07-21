@@ -1,30 +1,30 @@
 #!/usr/bin/env python3
-"""Submit and retrieve canonical coloring-book COLOR proposal ArtJobs.
+"""Submit, validate, and retrieve canonical coloring-book COLOR ArtJobs.
 
-The queue contains all three 36-image books. A normal pass handles 18 color
-proposals. Black-and-white work is deliberately excluded: BW is derived only
-after Silas accepts a color composition.
-
-Dry-run is the default. `--live` submits real kind_robots ArtJobs, waits for
-results, saves them under each book's generated/color-proposals-v1 directory,
-and marks only successfully landed renders as done.
+A render is accepted only after both the local mechanical gate and the shared
+vision-based semantic gate pass. Semantic failures are preserved under
+rejected/semantic/, recorded in the queue, and retried with bounded explicit
+lineage, a changed seed, and compact literal subject guidance.
 """
 
 from __future__ import annotations
 
 import argparse
 import base64
+import hashlib
 import io
+import json
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Any
+from typing import Any, Callable
 
 import yaml
 
 sys.path.insert(0, str(Path(__file__).parent))
 import art_quality  # noqa: E402
 import consume_art_queue as consumer  # noqa: E402
+import semantic_art_quality  # noqa: E402
 
 ROOT = consumer.ROOT
 QUEUE_FILE = ROOT / "projects" / "coloring-book" / "color-art-jobs.yaml"
@@ -56,8 +56,23 @@ def load_yaml(path: Path) -> dict[str, Any]:
     return data
 
 
+def write_queue(queue: dict[str, Any]) -> None:
+    QUEUE_FILE.write_text(
+        yaml.safe_dump(queue, sort_keys=False, allow_unicode=True, width=110),
+        encoding="utf-8",
+    )
+
+
 def clean(value: Any) -> str:
     return " ".join(str(value or "").split())
+
+
+def now_iso() -> str:
+    return datetime.now(timezone.utc).replace(microsecond=0).isoformat().replace("+00:00", "Z")
+
+
+def prompt_fingerprint(prompt: str) -> str:
+    return hashlib.sha256(clean(prompt).encode("utf-8")).hexdigest()
 
 
 def find_source_prompt(source_ref: str) -> tuple[str, str]:
@@ -116,7 +131,17 @@ def build_entries(book_filter: str | None = None) -> tuple[dict[str, Any], list[
             if not scene_prompt:
                 raise RuntimeError(f"{book_slug}/{source.get('id')}: missing color prompt")
 
+            semantic_attempts = max(0, int(source.get("semantic_attempts") or 0))
+            attempted_prompt = scene_prompt
+            if semantic_attempts:
+                attempted_prompt = semantic_art_quality.literal_retry_prompt(
+                    scene_prompt,
+                    title,
+                    semantic_attempts,
+                )
+
             suffix = LOGO_SUFFIX if source.get("allow_logo_emblem") else COLOR_SUFFIX
+            full_prompt = clean(attempted_prompt + suffix)
             entry = {
                 "id": f"coloring-book-{book_slug}-{source['id']}-color",
                 "queue_id": str(source["id"]),
@@ -126,7 +151,9 @@ def build_entries(book_filter: str | None = None) -> tuple[dict[str, Any], list[
                 "title": title,
                 "variant": "color",
                 "image_path": str(source["image_path"]),
-                "prompt": scene_prompt + suffix,
+                "scene_prompt": scene_prompt,
+                "prompt": full_prompt,
+                "prompt_fingerprint": prompt_fingerprint(full_prompt),
                 "target_repo": defaults.get("target_repo", "silasfelinus/conductor"),
                 "size": str(defaults.get("size", "1024x1536")),
                 "engine": str(defaults.get("engine", "flux")),
@@ -134,6 +161,7 @@ def build_entries(book_filter: str | None = None) -> tuple[dict[str, Any], list[
                 "steps": int(defaults.get("steps", 36)),
                 "guidance": float(defaults.get("guidance", 3.5)),
                 "seed": int(source.get("seed") or 0),
+                "semantic_attempts": semantic_attempts,
                 "source_ref": source.get("source_ref"),
                 "reference_images": source.get("reference_images") or [],
             }
@@ -182,36 +210,193 @@ def save_result(entry: dict[str, Any], image_b64: str) -> Path:
     return destination
 
 
+def find_queue_entry(
+    queue: dict[str, Any],
+    book_slug: str,
+    queue_id: str,
+) -> dict[str, Any]:
+    for book in queue.get("books") or []:
+        if not isinstance(book, dict) or str(book.get("slug")) != book_slug:
+            continue
+        for source in book.get("entries") or []:
+            if isinstance(source, dict) and str(source.get("id")) == queue_id:
+                return source
+    raise RuntimeError(f"Queue entry not found: {book_slug}/{queue_id}")
+
+
+def mutate_queue_entry(
+    entry: dict[str, Any],
+    mutate: Callable[[dict[str, Any]], None],
+) -> None:
+    queue = load_yaml(QUEUE_FILE)
+    source = find_queue_entry(queue, str(entry["set"]), str(entry["queue_id"]))
+    mutate(source)
+    write_queue(queue)
+
+
 def mark_done(completed: list[dict[str, Any]]) -> int:
     if not completed:
         return 0
     queue = load_yaml(QUEUE_FILE)
-    by_id = {str(entry["queue_id"]): entry for entry in completed}
     changed = 0
-    now = datetime.now(timezone.utc).replace(microsecond=0).isoformat().replace("+00:00", "Z")
 
-    for book in queue.get("books") or []:
-        if not isinstance(book, dict):
-            continue
-        for entry in book.get("entries") or []:
-            if not isinstance(entry, dict):
-                continue
-            done = by_id.get(str(entry.get("id")))
-            if not done:
-                continue
-            entry["status"] = "done"
-            entry["rendered_path"] = str(done["image_path"])
-            if done.get("art_image_id") is not None:
-                entry["art_image_id"] = int(done["art_image_id"])
-            entry["completed_at"] = now
-            changed += 1
+    for done in completed:
+        source = find_queue_entry(queue, str(done["set"]), str(done["queue_id"]))
+        source["status"] = "done"
+        source["rendered_path"] = str(done["image_path"])
+        if done.get("art_image_id") is not None:
+            source["art_image_id"] = int(done["art_image_id"])
+        source["completed_at"] = now_iso()
+        source["prompt_fingerprint"] = str(done["prompt_fingerprint"])
+        source["semantic_verdict"] = done.get("semantic_verdict")
+        source["semantic_score"] = done.get("semantic_score")
+        source["subject_match"] = done.get("subject_match") is True
+        source["on_brief"] = done.get("on_brief") is True
+        source["semantic_model"] = done.get("semantic_model")
+        source.pop("semantic_gate_error", None)
+        changed += 1
 
     if changed:
-        QUEUE_FILE.write_text(
-            yaml.safe_dump(queue, sort_keys=False, allow_unicode=True, width=110),
-            encoding="utf-8",
-        )
+        write_queue(queue)
     return changed
+
+
+def rejection_destination(
+    destination: Path,
+    entry: dict[str, Any],
+    category: str,
+) -> Path:
+    attempt = int(entry.get("semantic_attempts") or 0) + 1
+    seed = int(entry.get("seed") or 0)
+    filename = f"{destination.stem}-attempt-{attempt}-seed-{seed}{destination.suffix}"
+    rejected = destination.parent / "rejected" / "semantic" / category / filename
+    rejected.parent.mkdir(parents=True, exist_ok=True)
+    if rejected.exists():
+        rejected.unlink()
+    destination.replace(rejected)
+    return rejected
+
+
+def record_semantic_rejection(
+    entry: dict[str, Any],
+    semantic: dict[str, Any],
+    rejected: Path,
+) -> str:
+    next_attempt = int(entry.get("semantic_attempts") or 0) + 1
+    max_attempts = max(1, semantic_art_quality.DEFAULT_MAX_ATTEMPTS)
+    next_status = "pending" if next_attempt < max_attempts else "needs_review"
+
+    def mutate(source: dict[str, Any]) -> None:
+        current_seed = int(source.get("seed") or entry.get("seed") or 0)
+        history = source.get("semantic_rejections")
+        if not isinstance(history, list):
+            history = []
+        history.append(
+            {
+                "attempt": next_attempt,
+                "seed": current_seed,
+                "art_image_id": entry.get("art_image_id"),
+                "prompt_fingerprint": entry.get("prompt_fingerprint"),
+                "score": semantic.get("score"),
+                "verdict": semantic.get("verdict"),
+                "subject_match": semantic.get("subject_match") is True,
+                "on_brief": semantic.get("on_brief") is True,
+                "reasons": semantic.get("reasons") or [],
+                "rejected_path": str(rejected.relative_to(ROOT)),
+                "reviewed_at": now_iso(),
+                "model": semantic.get("model"),
+            }
+        )
+        source["semantic_rejections"] = history
+        source["semantic_attempts"] = next_attempt
+        source["last_rejected_art_image_id"] = entry.get("art_image_id")
+        source["last_semantic_score"] = semantic.get("score")
+        source["last_semantic_reasons"] = semantic.get("reasons") or []
+        source["status"] = next_status
+        source.pop("art_image_id", None)
+        source.pop("completed_at", None)
+        if next_status == "pending":
+            source["previous_seed"] = current_seed
+            source["seed"] = semantic_art_quality.next_retry_seed(current_seed, next_attempt)
+
+    mutate_queue_entry(entry, mutate)
+    return next_status
+
+
+def record_semantic_gate_error(entry: dict[str, Any], error: Exception) -> None:
+    def mutate(source: dict[str, Any]) -> None:
+        source["semantic_gate_error"] = str(error)[:1000]
+        source["semantic_gate_error_at"] = now_iso()
+        source["status"] = "pending"
+
+    mutate_queue_entry(entry, mutate)
+
+
+def stable_job_body(entry: dict[str, Any]) -> dict[str, Any]:
+    job = consumer.entry_to_job(entry)
+    payload = job.get("payload") if isinstance(job.get("payload"), dict) else {}
+    workflow = payload.get("workflow") if isinstance(payload.get("workflow"), dict) else {}
+    text_node = workflow.get("59") if isinstance(workflow.get("59"), dict) else {}
+    inputs = text_node.get("inputs") if isinstance(text_node.get("inputs"), dict) else {}
+    if inputs:
+        inputs["seed"] = (int(entry.get("seed") or 0) + 59_059) % 2_147_483_647
+
+    payload["attempt"] = {
+        "project": "coloring-book",
+        "set": entry.get("set"),
+        "conceptId": entry.get("concept_id"),
+        "semanticAttempt": int(entry.get("semantic_attempts") or 0),
+        "seed": int(entry.get("seed") or 0),
+        "promptFingerprint": entry.get("prompt_fingerprint"),
+        "sourceRef": entry.get("source_ref"),
+    }
+    key_material = {
+        "set": entry.get("set"),
+        "concept": entry.get("concept_id"),
+        "semanticAttempt": int(entry.get("semantic_attempts") or 0),
+        "seed": int(entry.get("seed") or 0),
+        "promptFingerprint": entry.get("prompt_fingerprint"),
+    }
+    key_hash = hashlib.sha256(
+        json.dumps(key_material, sort_keys=True, separators=(",", ":")).encode("utf-8")
+    ).hexdigest()
+    job["idempotencyKey"] = f"coloring-book:{entry['set']}:{entry['concept_id']}:{key_hash}"
+    job["requireCompletionProof"] = False
+    return job
+
+
+def enqueue(entry: dict[str, Any]) -> tuple[int, bool]:
+    status, response = consumer.http_json(
+        "POST",
+        f"{consumer.KR_BASE_URL}/api/art/queue",
+        stable_job_body(entry),
+    )
+    if status not in (200, 201) or not response or not response.get("success"):
+        message = response.get("message") if isinstance(response, dict) else response
+        raise RuntimeError(f"enqueue failed: HTTP {status} {message}")
+    data = response.get("data") or {}
+    job = data.get("job") or {}
+    return int(job["id"]), bool(data.get("deduplicated"))
+
+
+def validate_candidate(entry: dict[str, Any], destination: Path) -> tuple[bool, dict[str, Any]]:
+    ok, reasons, _info = art_quality.assess_file(destination, "color")
+    if ok is False:
+        return False, {
+            "model": "mechanical",
+            "score": 0,
+            "verdict": "reject",
+            "subject_match": False,
+            "on_brief": False,
+            "reasons": reasons,
+        }
+    if ok is None:
+        raise RuntimeError(reasons[0] if reasons else "mechanical image gate unavailable")
+
+    return semantic_art_quality.assess_semantic_file(
+        destination,
+        str(entry["scene_prompt"]),
+    )
 
 
 def main() -> int:
@@ -225,14 +410,7 @@ def main() -> int:
     queue, pending = build_entries(args.book)
     configured_limit = int(((queue.get("batch_policy") or {}).get("worker_pass_size")) or 18)
     limit = args.limit if args.limit > 0 else configured_limit
-
-    already_present = [entry for entry in pending if target_path(entry).exists()]
-    todo = [entry for entry in pending if not target_path(entry).exists()][:limit]
-
-    if already_present and args.live:
-        for entry in already_present:
-            entry["art_image_id"] = None
-        mark_done(already_present)
+    todo = pending[:limit]
 
     if not todo:
         print("No pending coloring-book color ArtJobs.")
@@ -245,11 +423,12 @@ def main() -> int:
 
     if not args.live:
         for entry in todo:
-            job = consumer.entry_to_job(entry)
+            job = stable_job_body(entry)
             refs = f" refs={len(entry.get('reference_images') or [])}" if entry.get("reference_images") else ""
             print(
                 f"  {entry['set']}/{entry['concept_id']} -> {entry['image_path']} "
-                f"[{job['payload']['width']}x{job['payload']['height']}] seed={entry['seed']}{refs}"
+                f"[{job['payload']['width']}x{job['payload']['height']}] seed={entry['seed']} "
+                f"semantic_attempt={entry['semantic_attempts']}{refs}"
             )
         return 0
 
@@ -261,36 +440,58 @@ def main() -> int:
     failures = 0
 
     for entry in todo:
+        destination = target_path(entry)
         try:
-            job_id = consumer.enqueue(consumer.entry_to_job(entry))
-            print(f"  queued ArtJob {job_id} for {entry['set']}/{entry['concept_id']} color - waiting...")
-            job = consumer.wait_for_job(job_id, args.timeout)
-            image_b64 = consumer.fetch_image_b64(job["artImageId"])
-            destination = save_result(entry, image_b64)
+            if destination.exists():
+                print(
+                    f"  validating existing candidate for {entry['set']}/{entry['concept_id']} "
+                    f"at {destination.relative_to(ROOT)}"
+                )
+            else:
+                job_id, deduplicated = enqueue(entry)
+                suffix = " (existing matching attempt)" if deduplicated else ""
+                print(
+                    f"  queued ArtJob {job_id}{suffix} for "
+                    f"{entry['set']}/{entry['concept_id']} color - waiting..."
+                )
+                job = consumer.wait_for_job(job_id, args.timeout)
+                entry["art_image_id"] = int(job["artImageId"])
+                image_b64 = consumer.fetch_image_b64(job["artImageId"])
+                destination = save_result(entry, image_b64)
 
-            ok, reasons, _info = art_quality.assess_file(destination, "color")
-            if ok is False:
-                rejected = destination.parent / "rejected" / destination.name
-                rejected.parent.mkdir(parents=True, exist_ok=True)
-                destination.replace(rejected)
+            accepted, semantic = validate_candidate(entry, destination)
+            if not accepted:
+                rejected = rejection_destination(destination, entry, "rejected")
+                next_status = record_semantic_rejection(entry, semantic, rejected)
                 failures += 1
                 print(
-                    f"  REJECTED {entry['set']}/{entry['concept_id']}: {'; '.join(reasons)} "
-                    f"-> {rejected.relative_to(ROOT)} (left pending)",
+                    f"  SEMANTIC-REJECT {entry['set']}/{entry['concept_id']}: "
+                    f"{' ; '.join(semantic.get('reasons') or [])} -> "
+                    f"{rejected.relative_to(ROOT)} ({next_status})",
                     file=sys.stderr,
                 )
                 continue
-            if ok is None:
-                print(f"    NOTE: {reasons[0]} — cannot fully verify this render")
 
-            entry["art_image_id"] = int(job["artImageId"])
+            entry["semantic_verdict"] = semantic.get("verdict")
+            entry["semantic_score"] = semantic.get("score")
+            entry["subject_match"] = semantic.get("subject_match") is True
+            entry["on_brief"] = semantic.get("on_brief") is True
+            entry["semantic_model"] = semantic.get("model")
             completed.append(entry)
             print(
                 f"  DONE {entry['set']}/{entry['concept_id']} -> "
-                f"{destination.relative_to(ROOT)} (ArtImage {job['artImageId']})"
+                f"{destination.relative_to(ROOT)} "
+                f"(ArtImage {entry.get('art_image_id') or 'existing'}, semantic={semantic.get('score')})"
             )
         except Exception as error:  # noqa: BLE001
             failures += 1
+            if destination.exists():
+                try:
+                    rejected = rejection_destination(destination, entry, "unverified")
+                    print(f"    unverified candidate moved to {rejected.relative_to(ROOT)}", file=sys.stderr)
+                except Exception:  # noqa: BLE001
+                    pass
+            record_semantic_gate_error(entry, error)
             print(f"  FAILED {entry['set']}/{entry['concept_id']}: {error}", file=sys.stderr)
 
     marked = mark_done(completed)
