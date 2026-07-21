@@ -8244,3 +8244,65 @@ GitHub Actions `schedule` triggers are best-effort and can silently lag under lo
 `workflow_dispatch` fallback is the reliable way to get a same-session verification instead
 of waiting on the next cron tick. Not filing a dedicated task this cycle since it didn't
 block anything and self-resolved (the workflow was presumably still healthy, just delayed).
+
+## 2026-07-21 | Reviewer (conductor scheduled agent) | system-wide | pattern
+
+**Subject:** Discovered kind_robots' `utils/projectPlacements.ts` — a hardcoded,
+authoritative map of every project's `channelKey`/`tabKey`/`route` — and used it to
+correctly backfill the Project DB row's `liveUrl`/`channelKey`/`tabKey` for 24
+projects in one pass (2 via individual task work — serendipity/t-012,
+storymaker/t-010 — plus 22 more bulk-added since the same map covers them all).
+
+**Detail:**
+- Many projects' "Polish and upgrade X front-end surface" tasks (a standing
+  template repeated across ~20 project roadmaps) list step (3) as "admin can run
+  the Conductor 'Placements' button to backfill channelKey/tabKey/liveUrl" —
+  every prior cycle treated this as a human-only action and left it undone.
+- It isn't human-only: `project-overrides.yaml` already supports per-slug
+  `liveUrl`/`channelKey`/`tabKey` fields (precedent: `art-generator-connect`),
+  synced live to the kind_robots Project row by `scripts/sync_projects.py`
+  (described in CONTROL.md as "the canonical conductor → kind_robots bridge").
+  What was missing was the correct *values* — and kind_robots'
+  `utils/projectPlacements.ts` (fetched and read in full, not paraphrased) turned
+  out to be exactly that authoritative source, already covering 26 project slugs.
+- **Self-caught mistake, worth flagging as a pattern risk:** the first attempt
+  (serendipity/t-012) guessed `channelKey: scenario` from an unrelated grouping —
+  `tutorialChannels.scenario.sections` in `stores/helpers/tutorialCards.ts`, which
+  organizes *tutorial cards*, not dashboard placement. It happened to share a
+  vaguely plausible name ("scenario") with the real dashboard channel system, but
+  the real answer (`channelKey: play`) came from a completely different file.
+  Caught it one task later by fetching `utils/projectPlacements.ts` directly for
+  a sibling task (storymaker/t-010) and cross-checking serendipity's entry too;
+  corrected via a second `sync_projects.py` run before this cycle's PR opened, so
+  the bad value never shipped in the merged PR body's stated final values (PR
+  #953's description reflects the corrected value). Lesson: when a kind_robots
+  concept name is ambiguous, fetch the actual authoritative file before writing a
+  guessed value into a live DB row — cheap file reads are far cheaper than a
+  wrong production write, even a reversible one.
+- Bulk-applied the verified map to 22 more active projects still null in the DB:
+  coloring-book, wishmaster, appmaker, model-builder, sketchy, packmaker, davinci,
+  media-watchlist, coat-dance, ruler-hooked, newsfeed, humboldt-scoop,
+  humboldt-scoop-cms, conductor-app, alexa-integration,
+  superkate-services-calculator, superkate-hairstyle-ai, digital-storefront,
+  ai-art-academy, brainstorm, mural-design, conductor. Verified every single one
+  live via `GET /api/projects` after `sync_projects.py` reported them `UPDATED`
+  (not just trusted the script's own log line). Projects still null afterward
+  (animation-manager, challenge-center, kindrobots-unraid, mermaids-of-venice,
+  ecosystem-map, global-ui, kind-robots, engagement, recipe-box, career-transition,
+  pinball-hero, approval-portal, dream-cycle) are correctly absent from
+  `projectPlacements.ts` or are retired/finished/paused — not a gap, a boundary.
+- Each of those 22 projects' own roadmap "polish" task notes are intentionally
+  left untouched (out of scope for this diff) — their next touch will find
+  `liveUrl` already set on a live `GET /api/projects` check and can skip that
+  step without re-deriving anything.
+
+**Suggested action:** any future "Polish and upgrade X front-end surface" task
+that still lists "needs an admin Placements click" for step (3) can be treated as
+stale framing for every slug now covered by `projectPlacements.ts` — check
+`GET /api/projects` first before assuming it's still blocked.
+
+**Kaizen task:** none filed this cycle for a dedicated cross-repo sweep — the
+one-time bulk fix above already closed the gap for every currently-eligible
+project; a new project added later just needs its `projectPlacements.ts` entry
+mirrored into `project-overrides.yaml`, which is small enough to fold into
+whichever task adds that project's dashboard placement in the first place.

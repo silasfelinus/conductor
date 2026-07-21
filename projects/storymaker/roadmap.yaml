@@ -129,39 +129,12 @@ tasks:
 - id: t-010
   milestone: m4
   title: Polish and upgrade Storymaker front-end surface
-  status: claimed
-  owner: reviewer
+  status: ready
+  owner: null
   passes: 0
   stakes: reversible
-  note: >
-    UI polish + upgrade for the storymaker front end now that the scaffold page is
-    live at /storymaker. Steps: (1) generate final dashboard-tab art at
-    public/images/dashboard-tabs/scenario/storymaker.webp and tutorial art at
-    public/images/tutorials/scenario/storymaker.webp; (2) add a matching section
-    for 'storymaker' under tutorialChannels.scenario.sections in
-    kind_robots/stores/helpers/tutorialCards.ts; (3) verify the PROJECT Dream
-    liveUrl points at /storymaker (admin can run the Conductor 'Placements' button
-    to backfill channelKey/tabKey/liveUrl); (4) evolve the placeholder scaffold
-    page into the full interactive experience for this project.
-
-    PROGRESS 2026-07-20 (conductor agent session claude-conductor-agentrun-20260720-storymaker,
-    kind_robots PR #640 merged squash b6adafd8): step (2) done -- added a 'storymaker' section
-    under tutorialChannels.scenario.sections in stores/helpers/tutorialCards.ts, mirroring the
-    existing serendipity entry, resolving via tutorialImage('scenario', 'storymaker') with a
-    placeholder fallback until dedicated art lands. Step (4) partially advanced rather than
-    confirmed already-covered: the scaffold's #interactive slot was a static card linking out to
-    /stories with no real data, so wired it to scenarioStore (initialize() on mount, cheap
-    local/seed data only, no live fetch, matching the SSR-safe pattern already used in
-    scenario-gallery.vue/scenario-interact.vue/dream-manager.vue) to show a live scenario count
-    plus up to 3 scenario titles linking to /stories, alongside the existing CTA. Not a full
-    dedicated Storymaker UI -- that would be materially larger scope than a polish pass; left as
-    a genuinely open step for a future cycle if Silas wants a bespoke flow rather than reuse of
-    the Stories engine. Remaining and kept ready: step (1) dashboard-tab + tutorial .webp art
-    (needs the generation backend/egress -- relay confirmed still down this session, see
-    ai-art-academy/t-035) and step (3) the liveUrl backfill (an admin Placements click, not an
-    agent action). Verified: eslint + prettier clean on both changed files, full-project
-    vue-tsc --noEmit exit 0. All 3 kind_robots PR checks green (TypeScript, Contract verifiers,
-    GitGuardian).
-  updated: '2026-07-21T04:28:11Z'
-  claimed_by: claude-conductor-scheduled-20260721T0410Z
-  claimed_at: '2026-07-21T04:28:11Z'
+  note: |-
+    UI polish + upgrade for the storymaker front end now that the scaffold page is live at /storymaker. Steps: (1) generate final dashboard-tab art at public/images/dashboard-tabs/scenario/storymaker.webp and tutorial art at public/images/tutorials/scenario/storymaker.webp; (2) add a matching section for 'storymaker' under tutorialChannels.scenario.sections in kind_robots/stores/helpers/tutorialCards.ts; (3) verify the PROJECT Dream liveUrl points at /storymaker (admin can run the Conductor 'Placements' button to backfill channelKey/tabKey/liveUrl); (4) evolve the placeholder scaffold page into the full interactive experience for this project.
+    PROGRESS 2026-07-20 (conductor agent session claude-conductor-agentrun-20260720-storymaker, kind_robots PR #640 merged squash b6adafd8): step (2) done -- added a 'storymaker' section under tutorialChannels.scenario.sections in stores/helpers/tutorialCards.ts, mirroring the existing serendipity entry, resolving via tutorialImage('scenario', 'storymaker') with a placeholder fallback until dedicated art lands. Step (4) partially advanced rather than confirmed already-covered: the scaffold's #interactive slot was a static card linking out to /stories with no real data, so wired it to scenarioStore (initialize() on mount, cheap local/seed data only, no live fetch, matching the SSR-safe pattern already used in scenario-gallery.vue/scenario-interact.vue/dream-manager.vue) to show a live scenario count plus up to 3 scenario titles linking to /stories, alongside the existing CTA. Not a full dedicated Storymaker UI -- that would be materially larger scope than a polish pass; left as a genuinely open step for a future cycle if Silas wants a bespoke flow rather than reuse of the Stories engine. Remaining and kept ready: step (1) dashboard-tab + tutorial .webp art (needs the generation backend/egress -- relay confirmed still down this session, see ai-art-academy/t-035) and step (3) the liveUrl backfill (an admin Placements click, not an agent action). Verified: eslint + prettier clean on both changed files, full-project vue-tsc --noEmit exit 0. All 3 kind_robots PR checks green (TypeScript, Contract verifiers, GitGuardian).
+     PROGRESS 2026-07-21 (~04:29 UTC, conductor scheduled agent run, claude-conductor-scheduled-20260721T0410Z): step (3) DONE -- this project's Project row liveUrl/channelKey/tabKey are NOT an admin-only action after all. Discovered kind_robots utils/projectPlacements.ts, a hardcoded canonical map the front end reads at runtime for every project's channelKey/tabKey/route (storymaker: channelKey 'play', tabKey 'storymaker', route '/storymaker' -- confirmed by directly fetching the file, not just a subagent's paraphrase). Mirrored those exact values into project-overrides.yaml and ran scripts/sync_projects.py; confirmed live via GET /api/projects that the Project row (id=10) now carries all three fields matching the canonical map exactly. NOTE: caught and fixed a real mistake in the same cycle -- serendipity/t-012's equivalent backfill (done just before this task) had initially used channelKey: scenario, guessed from the tutorialChannels.scenario grouping, which is a DIFFERENT and unrelated concept from PROJECT_PLACEMENTS' channelKey; corrected to 'play' once projectPlacements.ts was found and verified. Given this map is authoritative and already covers 26 project slugs, also bulk-backfilled the same fields for every other ACTIVE project appearing in it that was still null in the DB (22 projects: coloring-book, wishmaster, appmaker, model-builder, sketchy, packmaker, davinci, media-watchlist, coat-dance, ruler-hooked, newsfeed, humboldt-scoop, humboldt-scoop-cms, conductor-app, alexa-integration, superkate-services-calculator, superkate-hairstyle-ai, digital-storefront, ai-art-academy, brainstorm, mural-design, conductor) -- see root TALKBACK.md for the full account. Their own project roadmap notes are left untouched (out of scope for one task's diff); any of their 'polish' tasks can now skip the Placements step entirely on next touch. Step (1) art still blocked -- relay confirmed down again this session (see serendipity/t-012's note for the corrected recheck method).
+  updated: '2026-07-21T04:35:20Z'

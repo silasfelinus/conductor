@@ -10,11 +10,23 @@ overrides:
     status: active
     priority: normal
     kind: software
+    # Frontend placement — synced to the kind_robots Project row by
+    # sync_projects.py. Values match the canonical PROJECT_PLACEMENTS entry
+    # for 'superkate-services-calculator' in kind_robots utils/projectPlacements.ts (conductor/t-per-project polish tasks).
+    liveUrl: /stylist
+    channelKey: lab
+    tabKey: stylist
 
   - slug: superkate-hairstyle-ai
     status: active
     priority: normal
     kind: software
+    # Frontend placement — synced to the kind_robots Project row by
+    # sync_projects.py. Values match the canonical PROJECT_PLACEMENTS entry
+    # for 'superkate-hairstyle-ai' in kind_robots utils/projectPlacements.ts (conductor/t-per-project polish tasks).
+    liveUrl: /stylist
+    channelKey: lab
+    tabKey: stylist
 
   - slug: kindrobots-unraid
     status: active
@@ -24,6 +36,12 @@ overrides:
   - slug: conductor
     status: active
     priority: normal
+    # Frontend placement — synced to the kind_robots Project row by
+    # sync_projects.py. Values match the canonical PROJECT_PLACEMENTS entry
+    # for 'conductor' in kind_robots utils/projectPlacements.ts (conductor/t-per-project polish tasks).
+    liveUrl: /conductor
+    channelKey: plan
+    tabKey: projects
 
   - slug: kind-robots
     status: active
@@ -33,6 +51,12 @@ overrides:
     status: active
     priority: high
     kind: software
+    # Frontend placement — synced to the kind_robots Project row by
+    # sync_projects.py. Values match the canonical PROJECT_PLACEMENTS entry
+    # for 'newsfeed' in kind_robots utils/projectPlacements.ts (conductor/t-per-project polish tasks).
+    liveUrl: /newsfeed
+    channelKey: lab
+    tabKey: newsfeed
 
   - slug: global-ui
     status: active
@@ -47,15 +71,33 @@ overrides:
   - slug: humboldt-scoop
     status: active
     priority: normal
+    # Frontend placement — synced to the kind_robots Project row by
+    # sync_projects.py. Values match the canonical PROJECT_PLACEMENTS entry
+    # for 'humboldt-scoop' in kind_robots utils/projectPlacements.ts (conductor/t-per-project polish tasks).
+    liveUrl: /humboldt-scoop
+    channelKey: lab
+    tabKey: humboldt-scoop
 
   - slug: humboldt-scoop-cms
     status: active
     priority: normal
+    # Frontend placement — synced to the kind_robots Project row by
+    # sync_projects.py. Values match the canonical PROJECT_PLACEMENTS entry
+    # for 'humboldt-scoop-cms' in kind_robots utils/projectPlacements.ts (conductor/t-per-project polish tasks).
+    liveUrl: /scoop-cms
+    channelKey: admin
+    tabKey: scoop-cms
 
   - slug: model-builder
     status: active
     priority: high
     kind: software
+    # Frontend placement — synced to the kind_robots Project row by
+    # sync_projects.py. Values match the canonical PROJECT_PLACEMENTS entry
+    # for 'model-builder' in kind_robots utils/projectPlacements.ts (conductor/t-per-project polish tasks).
+    liveUrl: /model-builder
+    channelKey: build
+    tabKey: model-builder
 
   - slug: animation-manager
     status: active
@@ -84,16 +126,34 @@ overrides:
     status: active
     priority: high
     kind: software
+    # Frontend placement — synced to the kind_robots Project row by
+    # sync_projects.py. Values match the canonical PROJECT_PLACEMENTS entry
+    # for 'digital-storefront' in kind_robots utils/projectPlacements.ts (conductor/t-per-project polish tasks).
+    liveUrl: /sanctuary
+    channelKey: sanctuary
+    tabKey: giftshop
 
   - slug: ai-art-academy
     status: active
     priority: high
     kind: software
+    # Frontend placement — synced to the kind_robots Project row by
+    # sync_projects.py. Values match the canonical PROJECT_PLACEMENTS entry
+    # for 'ai-art-academy' in kind_robots utils/projectPlacements.ts (conductor/t-per-project polish tasks).
+    liveUrl: /academy
+    channelKey: play
+    tabKey: academy
 
   - slug: coloring-book
     status: active
     priority: high
     kind: software
+    # Frontend placement — synced to the kind_robots Project row by
+    # sync_projects.py. Values match the canonical PROJECT_PLACEMENTS entry
+    # for 'coloring-book' in kind_robots utils/projectPlacements.ts (conductor/t-per-project polish tasks).
+    liveUrl: /coloring
+    channelKey: play
+    tabKey: coloring
 
   - slug: humboldt-impropriety-calendar
     status: retired
@@ -103,11 +163,23 @@ overrides:
   - slug: brainstorm
     status: active
     priority: normal
+    # Frontend placement — synced to the kind_robots Project row by
+    # sync_projects.py. Values match the canonical PROJECT_PLACEMENTS entry
+    # for 'brainstorm' in kind_robots utils/projectPlacements.ts (conductor/t-per-project polish tasks).
+    liveUrl: /brainstorm
+    channelKey: build
+    tabKey: brainstorm
 
   - slug: sketchy
     status: active
     priority: normal
     kind: software
+    # Frontend placement — synced to the kind_robots Project row by
+    # sync_projects.py. Values match the canonical PROJECT_PLACEMENTS entry
+    # for 'sketchy' in kind_robots utils/projectPlacements.ts (conductor/t-per-project polish tasks).
+    liveUrl: /sketchy
+    channelKey: lab
+    tabKey: sketchy
 
   - slug: pinball-hero
     status: retired
@@ -128,31 +200,68 @@ overrides:
   - slug: mural-design
     status: active
     priority: high
+    # Frontend placement — synced to the kind_robots Project row by
+    # sync_projects.py. Values match the canonical PROJECT_PLACEMENTS entry
+    # for 'mural-design' in kind_robots utils/projectPlacements.ts (conductor/t-per-project polish tasks).
+    liveUrl: /mural
+    channelKey: lab
+    tabKey: mural
 
   - slug: storymaker
     status: active
     priority: normal
     kind: software
+    # Frontend placement — synced to the kind_robots Project row by
+    # sync_projects.py. Values match the canonical PROJECT_PLACEMENTS entry for
+    # 'storymaker' in kind_robots utils/projectPlacements.ts (channelKey: 'play',
+    # tabKey: 'storymaker', route: '/storymaker') — conductor/storymaker t-010.
+    liveUrl: /storymaker
+    channelKey: play
+    tabKey: storymaker
 
   - slug: davinci
     status: active
     priority: normal
     kind: software
+    # Frontend placement — synced to the kind_robots Project row by
+    # sync_projects.py. Values match the canonical PROJECT_PLACEMENTS entry
+    # for 'davinci' in kind_robots utils/projectPlacements.ts (conductor/t-per-project polish tasks).
+    liveUrl: /davinci
+    channelKey: lab
+    tabKey: davinci
 
   - slug: media-watchlist
     status: active
     priority: normal
     kind: software
+    # Frontend placement — synced to the kind_robots Project row by
+    # sync_projects.py. Values match the canonical PROJECT_PLACEMENTS entry
+    # for 'media-watchlist' in kind_robots utils/projectPlacements.ts (conductor/t-per-project polish tasks).
+    liveUrl: /watchlist
+    channelKey: lab
+    tabKey: watchlist
 
   - slug: conductor-app
     status: active
     priority: normal
     kind: software
+    # Frontend placement — synced to the kind_robots Project row by
+    # sync_projects.py. Values match the canonical PROJECT_PLACEMENTS entry
+    # for 'conductor-app' in kind_robots utils/projectPlacements.ts (conductor/t-per-project polish tasks).
+    liveUrl: /conductor-app
+    channelKey: plan
+    tabKey: conductor-app
 
   - slug: alexa-integration
     status: active
     priority: normal
     kind: software
+    # Frontend placement — synced to the kind_robots Project row by
+    # sync_projects.py. Values match the canonical PROJECT_PLACEMENTS entry
+    # for 'alexa-integration' in kind_robots utils/projectPlacements.ts (conductor/t-per-project polish tasks).
+    liveUrl: /voice-lab
+    channelKey: lab
+    tabKey: voice-lab
 
   - slug: mermaids-of-venice
     status: retired # archived 2026-07-16 by Silas — not fixed on current tasks; may revisit
@@ -163,11 +272,23 @@ overrides:
     status: active
     priority: normal
     kind: software
+    # Frontend placement — synced to the kind_robots Project row by
+    # sync_projects.py. Values match the canonical PROJECT_PLACEMENTS entry
+    # for 'packmaker' in kind_robots utils/projectPlacements.ts (conductor/t-per-project polish tasks).
+    liveUrl: /packs
+    channelKey: build
+    tabKey: packs
 
   - slug: coat-dance
     status: active
     priority: normal
     kind: content
+    # Frontend placement — synced to the kind_robots Project row by
+    # sync_projects.py. Values match the canonical PROJECT_PLACEMENTS entry
+    # for 'coat-dance' in kind_robots utils/projectPlacements.ts (conductor/t-per-project polish tasks).
+    liveUrl: /coat-dance
+    channelKey: lab
+    tabKey: coat-dance
 
   - slug: career-transition
     status: retired # archived (reaffirmed 2026-07-16 by Silas) — conductor itself may become the career
@@ -183,6 +304,12 @@ overrides:
     status: active
     priority: normal
     kind: software
+    # Frontend placement — synced to the kind_robots Project row by
+    # sync_projects.py. Values match the canonical PROJECT_PLACEMENTS entry
+    # for 'wishmaster' in kind_robots utils/projectPlacements.ts (conductor/t-per-project polish tasks).
+    liveUrl: /wishmaster
+    channelKey: plan
+    tabKey: wishmaster
 
   - slug: challenge-center
     status: finished # 20/20 tasks done — flipped 2026-07-17 with Silas's in-session approval
@@ -194,18 +321,27 @@ overrides:
     priority: normal
     kind: software
     # Frontend placement — synced to the kind_robots Project row by
-    # sync_projects.py, same mechanism as art-generator-connect. serendipity-page.vue
-    # is a full standalone page at /serendipity; tabKey mirrors the 'serendipity'
-    # section key already present under tutorialChannels.scenario.sections in
-    # kind_robots stores/helpers/tutorialCards.ts (conductor/serendipity t-012).
+    # sync_projects.py, same mechanism as art-generator-connect. Values match the
+    # canonical PROJECT_PLACEMENTS entry for 'serendipity' in kind_robots
+    # utils/projectPlacements.ts (channelKey: 'play', tabKey: 'serendipity',
+    # route: '/serendipity') — NOT tutorialChannels.scenario, which is a
+    # different, unrelated grouping used only by the tutorial-card system
+    # (conductor/serendipity t-012; corrected same session after initially
+    # writing channelKey: scenario by mistake).
     liveUrl: /serendipity
-    channelKey: scenario
+    channelKey: play
     tabKey: serendipity
 
   - slug: appmaker
     status: active
     priority: normal
     kind: software
+    # Frontend placement — synced to the kind_robots Project row by
+    # sync_projects.py. Values match the canonical PROJECT_PLACEMENTS entry
+    # for 'appmaker' in kind_robots utils/projectPlacements.ts (conductor/t-per-project polish tasks).
+    liveUrl: /appmaker
+    channelKey: plan
+    tabKey: appmaker
 
   - slug: recipe-box
     status: retired
@@ -216,6 +352,12 @@ overrides:
     status: active
     priority: normal
     kind: software
+    # Frontend placement — synced to the kind_robots Project row by
+    # sync_projects.py. Values match the canonical PROJECT_PLACEMENTS entry
+    # for 'ruler-hooked' in kind_robots utils/projectPlacements.ts (conductor/t-per-project polish tasks).
+    liveUrl: /ruler-hooked
+    channelKey: lab
+    tabKey: ruler-hooked
 
   - slug: dream-cycle
     status: active
