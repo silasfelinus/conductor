@@ -4,7 +4,7 @@ date: 2026-07-10
 task: ai-art-academy/t-005
 status: draft for review (content complete, one source URL verified per movement)
 
-This is the curriculum: 25 movements spanning the timeline from Greek vases to
+This is the curriculum: 26 movements spanning the timeline from Greek vases to
 American Regionalism. Every artist named here is long dead (all listed artists died
 before 1955), and every example work is a public-domain original held (or expected)
 in an open-access collection. See the ethical boundary in DESIGN-BRIEF.md and the
@@ -17,8 +17,10 @@ addition (t-010 cycle): Suprematism. Section 23 is the 2026-07-18 v1.3 addition
 (t-010 cycle): Ashcan School. Section 24 is the 2026-07-19 v1.4 addition (t-010
 cycle): American Regionalism. Section 25 is the 2026-07-20 v1.5 addition (t-010
 cycle): Persian Miniature Painting — the first non-Western, non-Japanese entry
-beyond Ukiyo-e. They are appended (rather than renumbered into place) but belong
-chronologically among the earlier movements — read the `era` field in the
+beyond Ukiyo-e. Section 26 is the 2026-07-21 v1.6 addition (t-010 cycle): Song
+Dynasty Landscape Painting — the second non-Western entry and the first from East
+Asia beyond Ukiyo-e. They are appended (rather than renumbered into place) but
+belong chronologically among the earlier movements — read the `era` field in the
 machine-readable skeleton for true ordering; the front-end seed (t-020, t-031)
 inserts them in chronological position.
 
@@ -205,6 +207,18 @@ movements:
     artist_slugs: [kamal-ud-din-bihzad, sultan-muhammad]
     example_count: 3
     remix_hint: "Repaint this image as a Persian miniature: flat, high-vantage compositions with distant figures placed higher rather than smaller, brilliant unshaded jewel colors, intricate architectural or garden detail, patterned textiles, and a dense floral or geometric border, no Western perspective or cast shadow"
+  # --- v1.6 addition (2026-07-21, t-010 cycle, lane 4) ---
+  # Second non-Western entry (after persian-miniature) and the first from East
+  # Asia beyond ukiyo-e. Belongs chronologically around
+  # byzantine-mosaic/illuminated-manuscript (see `era`); appended here to avoid
+  # renumbering the sections above. A future seed-sync task inserts it in
+  # chronological position in academyStyles.ts, mirroring t-020/t-031/t-034.
+  - slug: song-dynasty-landscape
+    name: Song Dynasty Landscape Painting
+    era: "c. 950-1130 (Northern Song monumental landscape)"
+    artist_slugs: [fan-kuan, guo-xi, xu-daoning]
+    example_count: 3
+    remix_hint: "Repaint this image as a Northern Song Chinese ink landscape: monochrome ink wash on silk, a towering central mountain peak dominating the composition, tiny travelers dwarfed by scale, layered misty atmospheric distance between foreground and peak, textured brushwork on rock faces, no cast shadows, tall vertical hanging-scroll framing"
 ```
 
 ---
@@ -1440,6 +1454,81 @@ compositions with distant figures placed higher rather than smaller, brilliant
 unshaded jewel colors, intricate architectural or garden detail, patterned
 textiles, and a dense floral or geometric border, no Western perspective or cast
 shadow"
+
+---
+
+## 26. Song Dynasty Landscape Painting (`song-dynasty-landscape`)
+
+**Era:** c. 950-1130 (Northern Song monumental landscape)
+
+**Key ideas.** Northern Song painters developed the "monumental landscape"
+(daguan shan, roughly "landscape of great overview"): a single towering
+mountain fills most of the composition, rendered so its scale is felt
+physically rather than measured geometrically. Painters worked in ink,
+sometimes with light color washes, on silk hanging scrolls meant to be
+contemplated at a distance, not read up close like a manuscript page. Space
+is organized through what later theorists (Guo Xi's own *Linquan Gaozhi*, "The
+Lofty Message of Forests and Streams") called the "three distances" — high
+distance looking up at a peak from its base, deep distance looking through
+overlapping ranges toward an unseen depth, and level distance looking across
+a near hill toward a far one — often combined within a single scroll rather
+than a single fixed viewpoint. Human figures, temples, and travelers appear
+only as small incidental details, dwarfed by the landscape, expressing nature
+as an overwhelming moral and cosmological order rather than scenery. Surfaces
+are built from repeated, textured brushstrokes ("cun" texture strokes —
+raindrop, axe-cut, hemp-fiber) rather than outline-and-fill, giving rock and
+foliage a felt, almost sculptural density despite the monochrome palette.
+
+**Recognition cues:**
+- Monochrome or near-monochrome ink on silk, with at most light,
+  desaturated color washes
+- A single dominant, towering central peak organizing the whole composition
+- Tiny human figures, temples, or travelers dwarfed by the landscape's scale
+- Layered atmospheric space — mist or void separating near, middle, and
+  distant ground rather than one continuous receding plane
+- Dense, repeated textured brushstrokes ("cun" strokes) building rock and
+  cliff surfaces, not outline-and-flat-fill
+- No cast shadows and no single fixed light source
+- Tall vertical hanging-scroll format emphasizing upward scale
+- Sparse motifs recur: twisted pines, thin waterfalls, mist-wrapped
+  pavilions or temple roofs half-hidden in the rock
+
+**Notable artists:**
+- **Fan Kuan** (c. 960 – c. 1030) — Northern Song master whose *Travelers Among
+  Mountains and Streams* is considered the movement's definitive
+  monumental-landscape statement; only one surviving work is confidently
+  attributed to him.
+- **Guo Xi** (c. 1020-1090) — Court painter and theorist whose treatise
+  *The Lofty Message of Forests and Streams* codified the "three distances"
+  principle that shaped how the school organized space.
+- **Xu Daoning** (c. 970-1052) — Known for austere winter and river scenes;
+  his handscroll format shows the same monumental idiom unrolling
+  horizontally rather than in a single vertical view.
+
+**Example works:**
+- *Travelers Among Mountains and Streams*, Fan Kuan, c. 1000 — hanging
+  scroll, ink and light color on silk. **VERIFIED**, National Palace Museum,
+  Taipei; public domain (Creative Commons Public Domain Mark 1.0 — author's
+  life + 100 years or fewer, and published before 1931) via Wikimedia
+  Commons:
+  https://commons.wikimedia.org/wiki/File:Fan_Kuan_-_Travelers_Among_Mountains_and_Streams_-_Google_Art_Project.jpg
+- *Early Spring*, Guo Xi, 1072 — hanging scroll, ink and light color on
+  silk. **VERIFIED**, National Palace Museum, Taipei; public domain
+  (Creative Commons Public Domain Mark 1.0 — author's life + 100 years or
+  fewer, and published before 1931) via Wikimedia Commons:
+  https://commons.wikimedia.org/wiki/File:Guo_Xi_-_Early_Spring_(large).jpg
+- *Fishermen on a Mountain Stream*, Xu Daoning, c. 1049 — handscroll, ink
+  and light color on silk. **VERIFIED**, The Nelson-Atkins Museum of Art,
+  Kansas City; public domain (Creative Commons Public Domain Mark 1.0 —
+  "the author died in 1052," and published before 1931) via Wikimedia
+  Commons:
+  https://commons.wikimedia.org/wiki/File:Xu_Daoning_-_Fishermen_on_a_Mountain_Stream_-_Google_Art_Project.jpg
+
+**remix_hint:** "Repaint this image as a Northern Song Chinese ink landscape:
+monochrome ink wash on silk, a towering central mountain peak dominating the
+composition, tiny travelers dwarfed by scale, layered misty atmospheric
+distance between foreground and peak, textured brushwork on rock faces, no
+cast shadows, tall vertical hanging-scroll framing"
 
 ---
 
