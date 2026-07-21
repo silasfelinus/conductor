@@ -7,7 +7,10 @@ import os
 from pathlib import Path
 from typing import Any
 
-import curate_art
+try:
+    import curate_art
+except ModuleNotFoundError:
+    from scripts import curate_art
 
 DEFAULT_MIN_SCORE = int(os.environ.get("COLOR_ART_MIN_SEMANTIC_SCORE", "75"))
 DEFAULT_MAX_ATTEMPTS = int(os.environ.get("COLOR_ART_MAX_SEMANTIC_ATTEMPTS", "3"))
