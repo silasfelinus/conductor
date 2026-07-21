@@ -1,16 +1,16 @@
 {
-  "generated_at": "2026-07-21T19:18:58.619808+00:00",
+  "generated_at": "2026-07-21T21:31:20.319948+00:00",
   "summary": {
     "roadmaps": 40,
     "active_projects": 31,
-    "tasks": 645,
+    "tasks": 648,
     "ready": 33,
     "waiting": 42,
     "needs_human": 42,
-    "in_progress": 1,
-    "done": 516,
+    "in_progress": 2,
+    "done": 518,
     "errors": 0,
-    "warnings": 12,
+    "warnings": 14,
     "info": 44
   },
   "projects": [
@@ -40,16 +40,15 @@
       "autonomous": true,
       "task_count": 36,
       "counts": {
-        "claimed": 1,
         "done": 30,
         "needs-human": 3,
-        "ready": 2
+        "ready": 3
       },
       "open_count": 6,
       "human_attention": 3,
-      "ready": 2,
+      "ready": 3,
       "waiting": 0,
-      "claimed": 1,
+      "claimed": 0,
       "review": 0,
       "done": 30
     },
@@ -233,17 +232,18 @@
       "override_status": "active",
       "priority_index": 12,
       "autonomous": false,
-      "task_count": 36,
+      "task_count": 37,
       "counts": {
         "done": 35,
-        "needs-human": 1
+        "needs-human": 1,
+        "review": 1
       },
-      "open_count": 1,
+      "open_count": 2,
       "human_attention": 1,
       "ready": 0,
       "waiting": 0,
       "claimed": 0,
-      "review": 0,
+      "review": 1,
       "done": 35
     },
     {
@@ -367,16 +367,17 @@
       "override_status": "active",
       "priority_index": 19,
       "autonomous": false,
-      "task_count": 76,
+      "task_count": 77,
       "counts": {
+        "claimed": 1,
         "done": 71,
         "needs-human": 5
       },
-      "open_count": 5,
+      "open_count": 6,
       "human_attention": 5,
       "ready": 0,
       "waiting": 0,
-      "claimed": 0,
+      "claimed": 1,
       "review": 0,
       "done": 71
     },
@@ -426,16 +427,15 @@
       "autonomous": false,
       "task_count": 15,
       "counts": {
-        "done": 14,
-        "ready": 1
+        "done": 15
       },
-      "open_count": 1,
+      "open_count": 0,
       "human_attention": 0,
-      "ready": 1,
+      "ready": 0,
       "waiting": 0,
       "claimed": 0,
       "review": 0,
-      "done": 14
+      "done": 15
     },
     {
       "slug": "art-generator-connect",
@@ -600,9 +600,9 @@
       "override_status": "active",
       "priority_index": 31,
       "autonomous": false,
-      "task_count": 7,
+      "task_count": 8,
       "counts": {
-        "done": 6,
+        "done": 7,
         "ready": 1
       },
       "open_count": 1,
@@ -611,7 +611,7 @@
       "waiting": 0,
       "claimed": 0,
       "review": 0,
-      "done": 6
+      "done": 7
     },
     {
       "slug": "pinball-hero",
@@ -812,6 +812,20 @@
       "project": "conductor",
       "task": "t-073",
       "message": "needs-human has no obvious hard-gate marker; consider returning it to ready, setting soft_gate: true, or documenting the actual gate."
+    },
+    {
+      "severity": "warning",
+      "code": "ACTIVE_PROJECT_ALL_DONE",
+      "project": "davinci",
+      "task": null,
+      "message": "All tasks are done but project override remains active."
+    },
+    {
+      "severity": "warning",
+      "code": "ACTIVE_PROJECT_NO_OPEN_TASKS",
+      "project": "davinci",
+      "task": null,
+      "message": "Active project has no open tasks; mark finished/paused or add an intentional recurring task."
     },
     {
       "severity": "warning",

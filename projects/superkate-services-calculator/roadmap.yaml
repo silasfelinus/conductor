@@ -598,7 +598,7 @@ tasks:
 - id: t-037
   milestone: m3
   title: 'test/csv_export_widget_test.dart: "export flow shares exactly the two written CSV paths" hangs until the 10-minute test timeout in CI'
-  status: claimed
+  status: review
   owner: worker
   passes: 0
   stakes: reversible
@@ -634,5 +634,33 @@ tasks:
     matrix (isolated failure blast radius) or at minimum a per-app timeout
     shorter than the shared job's overall runtime budget so one hang doesn't
     silently eat ~10 minutes of CI on someone else's PR.
+
+
+    FIXED 2026-07-21 (conductor burst-mode session, ~21:07 UTC): reproduced
+    locally by provisioning Flutter fresh and running
+    `flutter test test/csv_export_widget_test.dart` -- hangs indefinitely,
+    same as CI. Bisected with a minimal standalone widget test: a bare
+    `await Directory.systemTemp.createTemp(...)` inside a `testWidgets` body
+    hangs forever in this environment when called directly, but succeeds
+    immediately when wrapped in `tester.runAsync()`. Root cause: testWidgets
+    bodies run inside flutter_test's FakeAsync zone (for animation/timer
+    control), and in this environment genuine dart:io async completions
+    (temp-dir creation, file writes) never get drained by that zone's
+    pump()/pumpAndSettle() -- they need the real zone tester.runAsync()
+    provides. It is not merely a timing race: an unwrapped real dart:io call
+    hangs 100% of the time, not intermittently. Fix applied to
+    csv_export_widget_test.dart: (1) create the temp `Directory` inside
+    `tester.runAsync()` instead of a bare `await`; (2) drive the
+    confirm-export tap itself (whose onPressed chain triggers
+    FileCsvExportService's real file writes) from inside a `runAsync` block
+    too, polling `tester.pump()` + a short real delay until
+    `shareGateway.shareCount` increments (capped at 500 x 10ms attempts so a
+    future regression fails the assertion instead of reintroducing a silent
+    hang); (3) the `addTearDown` directory cleanup also now runs through
+    `runAsync`. Verified: `flutter test test/csv_export_widget_test.dart`
+    (3/3 passing, ~2s), full `flutter test` for the app (98/98 passing),
+    `flutter analyze --fatal-infos` (0 issues), `dart format` (already
+    formatted). The separate shared-CI-job blast-radius question from the
+    note above is left as a conductor-side follow-up, not part of this fix.
   claimed_by: 2026-07-21T21:07:35Z-burst-t037
   claimed_at: '2026-07-21T21:07:36Z'
