@@ -1139,9 +1139,12 @@ tasks:
   - id: t-036
     milestone: m6
     title: t-010's lane-1 cycles should merge+rearm their own kind_robots sync PR in the same session instead of leaving it for a later Reviewer sweep
-    status: ready
+    status: claimed
     passes: 0
     stakes: reversible
-    updated: '2026-07-21T16:20:00Z'
+    updated: '2026-07-21T18:11:51Z'
     note: |-
       Kaizen from a Reviewer pass, 2026-07-21 ~16:20 UTC: the claude-conductor-burst-20260721T1600Z cycle opened kind_robots PR #814 (mughal-miniature academyStyles.ts sync, all 3 CI checks green) but exited the session without merging it or rearming t-010 to `ready`, leaving the recurring task stranded at `status: claimed` with an unmerged-but-green PR — same failure shape as the earlier PR #942 incident logged in this task's own 2026-07-21 ~01:00 UTC note (status field never flipped after a merge). A later Reviewer-role session had to notice the open PR, verify CI, and merge+rearm manually. Add an explicit last-step checklist item to t-010's standing instructions (or continuous-improvement-checklist.md): before ending any lane-1 cycle that opened a kind_robots PR, poll its CI status and merge it (or explicitly note why it's being left open) in the same session, then rearm — do not treat "PR opened" as the cycle's terminal state.
+    owner: reviewer
+    claimed_by: claude-conductor-agentrun-20260721T181150Z-t036
+    claimed_at: '2026-07-21T18:11:51Z'
