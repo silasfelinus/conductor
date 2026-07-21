@@ -1545,3 +1545,53 @@ one cycle earlier) already covers the systemic gap found this session.
 
 **Kaizen task:** none new this cycle — no systemic gap surfaced; this cycle's
 work was itself a small kaizen-shaped correction.
+
+## 2026-07-21 | Worker (conductor scheduled agent) | ai-art-academy/t-010 | pattern
+
+**Decision:** self-implemented and self-merged (session
+claude-conductor-scheduled-20260721T220455Z-t010), conductor-docs-only.
+
+**Failure category:** none — clean cycle, but lane 1 hit a new environmental
+blocker distinct from the usual home-relay one.
+
+**What was good:**
+- Followed rotation discipline: lane 1 (front-end polish) was next preferred
+  per the checklist and was tried first, not skipped.
+- Did not push, force-push, reset, or rebase kind_robots' designated session
+  branch (`claude/keen-fermat-87rn74`) on discovering it was 114 commits
+  behind `origin/main` and 67 commits ahead of it (13,728 files / ~138k
+  insertions of unrelated automated "WonderLab rollout" content, never
+  pushed). Investigated enough to characterize the problem precisely (which
+  commits matched already-merged PRs vs. which were genuinely new/unreviewed)
+  without attempting to resolve it unilaterally — filed conductor/t-078
+  (soft needs-human) with the specifics instead, since discarding unreviewed
+  content is a destructive git decision outside a Worker's authority.
+- While falling back to lane 2, found and fixed a real, separate bug directly
+  affecting this task's own data: a stale duplicate `owner`/`claimed_by`/
+  `claimed_at` trio at the tail of t-010's note block was silently winning
+  over the correct fields at the top of the same block under YAML's
+  last-key-wins semantics — every reader of the file (including
+  `claim_task.py`'s own future reads) was seeing a claim from
+  2026-07-21T16:06 instead of the actual current one. Fixed the one instance
+  directly blocking this task, then scanned every `projects/*/roadmap.yaml`
+  with a duplicate-key-aware loader and found the same pattern in conductor,
+  global-ui, kind-robots, and packmaker's roadmaps too — filed conductor/t-079
+  rather than editing four other live projects' roadmaps unclaimed.
+- Correctly distinguished a genuinely new finding from a stale one: checked
+  job 816 (t-035's named "cheapest recheck") and found `status: DONE`, but
+  caught that this exact reading was already surfaced and dismissed as a
+  stale one-off by this same task's 2026-07-21T04:20 UTC cycle before writing
+  it up as new — avoided re-reporting old news as a discovery.
+
+**What to improve:**
+- Spent real time investigating the kind_robots branch state (log inspection,
+  diffstat, commit-message cross-referencing against merged PR numbers)
+  before concluding it was out of scope to resolve directly. In hindsight the
+  triage could have been faster: commit-message pattern-matching against
+  already-merged PR numbers (the cheapest signal) could have run first,
+  before the expensive full diffstat.
+
+**Kaizen task:** conductor/t-079 (audit_roadmaps.py duplicate-key detection)
+is itself this cycle's kaizen — a tooling gap that let a real claim/ownership
+field silently misreport for at least one full day cycle before being
+noticed by accident.

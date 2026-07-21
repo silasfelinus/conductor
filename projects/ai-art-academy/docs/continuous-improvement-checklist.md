@@ -15,6 +15,42 @@ Record the lane, files changed, and verification in the task note before rearmin
 
 ### Rotation state
 
+- Last completed lane: Roadmap accuracy (lane 2, fallback), 2026-07-21
+  (~22:05-22:35 UTC, claude-conductor-scheduled-20260721T220455Z-t010). Lane 1
+  (front-end polish) was next preferred per the prior cycle's note and was
+  tried first, but this session's designated kind_robots branch
+  (`claude/keen-fermat-87rn74`) turned out to be unsafe to develop or push
+  from: local `HEAD` is 114 commits behind `origin/main` and, separately, 67
+  commits ahead of it, with a combined diff of 13,728 files / ~138k insertions
+  relative to `origin/main` — almost entirely unrelated automated "WonderLab
+  rollout"/"draft inventory"/"curated-publish" commits spanning
+  2026-07-21T01:46-15:02 local time, never pushed to origin. A handful of the
+  67 (ruler-hooked, kind-robots/t-042, davinci/t-014, appmaker/t-009, and this
+  project's own t-010 Mughal sync) match already-merged conductor PRs
+  #811-#814/#822 by commit message, so part of the gap is just staleness on
+  top of the branch's own merged work — but the bulk (WonderLab rollouts
+  032-041 plus draft-inventory commits) is new, unreviewed content with no
+  corresponding conductor task tracking it. Did not push, force-push, reset,
+  or rebase this branch. Filed conductor/t-078 (soft needs-human) so a
+  session with fuller context — or Silas — can decide whether to preserve,
+  rebase, or discard it; lane 1 may stay blocked by this until t-078 resolves,
+  a distinct blocker from the home-relay one below. Fell back to lane 2:
+  `audit_roadmaps.py` (0 errors, 44 info, same baseline; the 14 warnings are
+  all in other projects) and `check_pr_merged_drift.py` (0 claimed/review PRs
+  to check) both clean; all 6 milestones re-verified against actual task
+  statuses — still accurate, no drift. Spot-checked lane 3's headline blocker
+  for currency (not claiming the lane, just checking before leaving it for
+  the next cycle): job 816 (the id t-035's note used to name as the "cheapest
+  recheck") shows `status: DONE`, `claimedAt: 2026-07-20T12:51:03Z` — but
+  t-035's own 2026-07-21T04:20 UTC entry already caught and dismissed this
+  exact reading as a stale one-off completion, not evidence of current
+  availability, so it isn't new information. Checked the 3 most recently
+  queued preview jobs instead (1229, 1242, 1275, spanning 2026-07-20 to
+  2026-07-21): all still `PENDING` with no `claimedAt`, confirmed live this
+  cycle — consistent with every prior cycle back to 2026-07-18, no change.
+  t-035 stays blocked. Next preferred lane is inspiration/preview assets
+  (lane 3) if lane 1 is still blocked when the next cycle runs — re-probe
+  with a fresh job id, not 816/1229/1242/1275 again.
 - Last completed lane: Curriculum depth (lane 4, documentation-accuracy
   follow-up), 2026-07-21 (~19:10-19:30 UTC,
   claude-conductor-agentrun-20260721T1910Z-t010). Lane 3 (inspiration/preview

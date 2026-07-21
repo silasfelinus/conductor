@@ -2196,3 +2196,144 @@ tasks:
     claimed_by: claude-conductor-agentrun-20260721T2115Z-t077
     claimed_at: '2026-07-21T21:16:18Z'
     updated: '2026-07-21T21:16:18Z'
+
+  - id: t-078
+    milestone: m2
+    title: 'kind_robots session branch claude/keen-fermat-87rn74 has ~138k lines
+      of unpushed, unrelated automated WonderLab content sitting local-only'
+    status: needs-human
+    soft_gate: true
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: |-
+      FOR SILAS: discovered 2026-07-21 ~22:10 UTC (ai-art-academy/t-010 cycle,
+      claude-conductor-scheduled-20260721T220455Z-t010) while trying to do a
+      routine kind_robots front-end polish pass. The kind_robots checkout in
+      this session's sandbox, on the branch this environment designates for
+      kind_robots work (`claude/keen-fermat-87rn74`), is 114 commits behind
+      `origin/main` and, separately, 67 commits ahead of it — a combined diff
+      of 13,728 files / ~138,201 insertions / 40,542 deletions versus
+      `origin/main`. Almost all of that is automated "WonderLab rollout"/
+      "draft inventory"/"curated-publish" commits (messages like "Execute
+      WonderLab rollout 041 [wonderlab-editorial-batch]", "Publish WonderLab
+      rollout 040 [wonderlab-curated-publish]"), timestamped 2026-07-21
+      01:46-15:02 local time, with none of it ever pushed to `origin`. A
+      handful of the 67 commits are just staleness, not new content — their
+      messages match already-merged conductor PRs (ruler-hooked #811,
+      kind-robots/t-042 #813, davinci/t-014 #822, appmaker/t-009 #812,
+      ai-art-academy/t-010's Mughal sync #814) — but the WonderLab rollout/
+      draft-inventory commits are new, unreviewed, and have no corresponding
+      conductor task tracking them anywhere in this repo (grepped every
+      roadmap.yaml for "wonderlab" — only unrelated references in
+      kind-robots/newsfeed/animation-manager/mural-design docs, nothing
+      matching "rollout 0XX" or "draft inventory").
+      WHAT IT CONTAINS: 67 unpushed local commits on that branch, spanning
+      WonderLab rollouts 032-041 (each a Plan/Execute/Publish triad) plus a
+      "draft inventory" mini-workflow (trigger, inventory, expose, record,
+      publish, remove) added and then partially reverted within the same
+      local history. I did not read the diff content in depth — only commit
+      messages, file/insertion counts, and dates — since deep-diffing 13,728
+      files was out of scope for the task I was actually doing.
+      TO APPROVE: this needs a decision, not just an unblock. Two questions:
+      (1) Is this real work from some other automated pipeline that should be
+      pushed/reviewed/landed (in which case: confirm whether it's safe to
+      open as its own PR, likely needs review in smaller batches, not one
+      138k-line PR), or is it disposable/already-superseded scratch state
+      that's safe to discard (in which case: say so and a future session can
+      reset the branch to `origin/main` without worrying about losing
+      anything)? (2) Separately: why did ~13 hours of an apparently-recurring
+      job never manage to push even once — is there a broken push step in
+      whatever produces these commits, and if so it may still be silently
+      failing right now, in which case newer, still-undiscovered work could
+      already be at the same risk. NEXT: once you say keep-and-land,
+      discard-it's-fine, or investigate-the-push-failure, a session can act;
+      until then I left the branch exactly as found (did not push, force-push,
+      reset, or rebase it) since discarding unreviewed content is a
+      destructive git action outside my authority to decide alone. This does
+      not block ai-art-academy/t-010's other lanes (roadmap accuracy,
+      curriculum depth, inspiration assets); it only blocks lane 1 (front-end
+      polish) and any other conductor task needing to push kind_robots work
+      through this session's designated branch, until resolved.
+    claimed_by: null
+    claimed_at: null
+    updated: '2026-07-21T22:35:00Z'
+
+  - id: t-079
+    milestone: m2
+    title: 'audit_roadmaps.py does not detect duplicate YAML keys within a task
+      block, which silently lets stale owner/claimed_by/approved_by_human
+      values win over current ones'
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: |-
+      Found 2026-07-21 ~22:20 UTC (ai-art-academy/t-010 cycle,
+      claude-conductor-scheduled-20260721T220455Z-t010) while fixing an
+      unrelated bug in ai-art-academy/roadmap.yaml: t-010's `owner`/
+      `claimed_by`/`claimed_at` fields were set correctly at the top of the
+      task block, but a stale duplicate `owner: worker` / `claimed_by:
+      claude-conductor-burst-20260721T1600Z` / `claimed_at:
+      '2026-07-21T16:06:13Z'` trio sat at the very end of the same block,
+      after the long recurring-task `note:` block scalar. Under YAML's
+      standard last-key-wins mapping semantics (confirmed via
+      `yaml.safe_load`), the trailing duplicate silently won — every reader
+      of that file (`claim_task.py`, `next_ready_task.py`,
+      `audit_roadmaps.py`, this note itself before I fixed it) was seeing the
+      wrong owner/claim timestamp for that task, even though `status:` (not
+      duplicated) stayed correct. Root cause is almost certainly an editor
+      pattern where a session appends a new `RAN ...` paragraph to the note
+      block and then re-adds owner/claimed_by/claimed_at below it instead of
+      updating the existing fields above the note — the same failure mode
+      hard rule 9 already warns about for STATUS.md/workspace.html conflicts,
+      just self-inflicted instead of a merge artifact.
+      SCOPE: fixed the one instance directly blocking my own claimed task
+      (ai-art-academy/roadmap.yaml, t-010) as part of that cycle. A repo-wide
+      scan (custom PyYAML loader that flags repeated keys within the same
+      mapping instead of silently overwriting) found it is NOT isolated:
+        - projects/conductor/roadmap.yaml: duplicate `updated` near source
+          lines ~1278, ~1528ish, ~1587ish, ~1606ish, ~1627ish, ~1656ish (6
+          instances — line numbers shift as the file grows; re-run the scan
+          below rather than trusting these literally)
+        - projects/global-ui/roadmap.yaml: duplicate `updated` (1 instance)
+        - projects/kind-robots/roadmap.yaml: duplicate `approved_by_human`
+          (both `true`, so no behavior change there) and duplicate
+          `claimed_by`/`claimed_at` on a `status: done` task (no behavior
+          change since status itself isn't duplicated) — 2 locations
+        - projects/packmaker/roadmap.yaml: duplicate `updated` (2 instances)
+      All of the ones outside ai-art-academy are currently low-consequence
+      (`updated` timestamp cosmetics, or duplicates with identical values, or
+      duplicates on already-`done` tasks) — none flipped a live claim or
+      approval gate at scan time. But the *pattern* is a real safety-relevant
+      gap: this exact shape could silently corrupt `approved_by_human` or
+      `status` on a live task, and nothing currently catches it. Left these
+      other projects' roadmap.yaml files untouched rather than editing them
+      without a claim (four different active projects, collision risk).
+      TO DO:
+      1. Add a duplicate-key check to `scripts/audit_roadmaps.py` (or a new
+         small script it calls) so this becomes a normal audit finding
+         instead of something only found by accident. A minimal repro
+         loader:
+         ```python
+         class DupKeyLoader(yaml.SafeLoader): pass
+         def construct_mapping(loader, node, deep=False):
+             mapping = {}
+             for k_node, v_node in node.value:
+                 k = loader.construct_object(k_node, deep=deep)
+                 if k in mapping:
+                     raise ValueError(f"duplicate key {k!r} at line {k_node.start_mark.line+1}")
+                 mapping[k] = loader.construct_object(v_node, deep=deep)
+             return mapping
+         DupKeyLoader.add_constructor(yaml.resolver.BaseResolver.DEFAULT_MAPPING_TAG, construct_mapping)
+         ```
+      2. Once the check exists, fix the remaining instances in conductor,
+         global-ui, kind-robots, and packmaker's roadmap.yaml (claim each
+         project normally before editing its roadmap, per the usual rule —
+         this is 4 small, independent, mechanical fixes, not one cross-project
+         diff).
+      Kaizen-shaped task; stakes: reversible (docs/tooling only, no runtime
+      behavior change to the app).
+    claimed_by: null
+    claimed_at: null
+    updated: '2026-07-21T22:35:00Z'
