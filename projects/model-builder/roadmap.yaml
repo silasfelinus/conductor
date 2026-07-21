@@ -534,7 +534,7 @@ tasks:
   - id: t-029
     milestone: m6
     title: "Polish and upgrade Model Builder front-end surface"
-    status: review
+    status: ready
     owner: reviewer
     passes: 0
     stakes: reversible
@@ -590,11 +590,13 @@ tasks:
       git-stash confirmation) -- likely a prettier-version mismatch between this sandbox and
       whatever last formatted the file; did not run a blanket --write since that would balloon a
       14-line fix into an ~80-line unrelated reformat, flagged as a Kaizen suggestion instead of
-      fixed inline. kind_robots PR #735 (branch worker/model-builder-t-029) -- open, CI running.
-      Steps (1) and (3) remain genuinely blocked as documented above; not touched this cycle.
+      fixed inline. kind_robots PR #735 (branch worker/model-builder-t-029) -- MERGED (squash
+      9f24085). Steps (1) and (3) remain genuinely blocked as documented above; not touched this
+      cycle. Kept at `ready` (not `done`), same pattern as the 2026-07-20 cycle -- those two steps
+      are still outstanding.
     claimed_by: claude-conductor-burst-20260721T0204Z
     claimed_at: '2026-07-21T02:05:28Z'
-    updated: '2026-07-21T02:14:00Z'
+    updated: '2026-07-21T02:17:00Z'
 
   - id: t-030
     milestone: m6
