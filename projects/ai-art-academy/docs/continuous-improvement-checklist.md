@@ -15,6 +15,18 @@ Record the lane, files changed, and verification in the task note before rearmin
 
 ### Rotation state
 
+- Last completed lane: Roadmap accuracy (lane 2), 2026-07-21 (~10:12-10:20 UTC,
+  claude-conductor-scheduled-20260721T1012Z). `audit_roadmaps.py` clean (0
+  errors, 11 warnings, 45 info, same baseline); `check_pr_merged_drift.py`'s
+  22 candidates were all this task's own historical PR references, direct-
+  checked the newest (kind_robots#789) via GitHub MCP — confirmed merged, no
+  drift. Re-verified milestones m2/m3/m5/m6 against every task in each
+  bucket directly — all four already correct, no drift found this cycle.
+  Rechecked t-019's blocker (still 404) and lane 3 (home relay) with a fresh
+  queued job (1229) — still times out unclaimed, same signature since
+  2026-07-18. Next preferred lane is inspiration/preview assets (lane 3,
+  recheck with a fresh job, not 1229) falling back to lane 4 if still
+  blocked.
 - Last completed lane: Front-end polish (lane 1), 2026-07-21 (~08:20-08:35 UTC,
   claude-conductor-agentrun-20260721T0811Z). Dispatched an Explore subagent over
   the full in-scope surface (art-styler.vue, image-upload.vue, all
