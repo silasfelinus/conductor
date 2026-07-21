@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-07-21T12:21:46Z
+Generated: 2026-07-21T12:32:26Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **320**
-- Outcomes: blocked: 12, done: 308
+- Closed tasks recorded: **321**
+- Outcomes: blocked: 12, done: 309
 - Success rate: **96%**
 - Average passes on successful tasks: **0.0**
 
@@ -42,7 +42,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | mural-design | 1 | 100% |
 | newsfeed | 20 | 100% |
 | packmaker | 10 | 100% |
-| ruler-hooked | 3 | 100% |
+| ruler-hooked | 4 | 100% |
 | serendipity | 3 | 100% |
 | sketchy | 1 | 100% |
 | storymaker | 1 | 100% |
@@ -54,7 +54,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 15 | 40% |
-| software | 305 | 99% |
+| software | 306 | 99% |
 
 ## Failure categories
 
@@ -74,6 +74,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-07-21 `ruler-hooked/t-007` — A task can outlive its own blocker without anyone noticing: t-007's completion condition (PR #328 merged AND t-012 landing the playable screen meeting all four DESIGN-BRIEF m2 exit criteria) had been fully satisfied since t-012 merged earlier the same day, but t-007 itself still sat at status: ready/claimed pending someone to actually check and flip it. When a task's note already states an explicit, checkable completion condition, re-verify it directly (fresh checkout, self-tests, full typecheck) before assuming more code work is needed -- sometimes the task is closing bookkeeping, not new implementation.
 - 2026-07-21 `ruler-hooked/t-012` — A task's retry_context can go stale when a human merges the referenced PR directly, bypassing the normal reject->retry->re-review loop (t-012's retry_context described a pass-1 rejection of kind_robots PR #329 written at 21:55Z on 2026-07-16, but Silas merged that same PR 9 minutes later at 22:04:56Z). Before acting on any retry_context for a cross-repo task, check whether the referenced PR already merged and re-verify against current target-repo main first -- don't assume a recorded rejection is still live. See conductor/t-074 (kaizen task filed this cycle) for the AGENTS.md doc fix.
 - 2026-07-21 `media-watchlist/t-011` — Confirmed the same pattern as t-010's lesson: with the top of priority.yaml blocked on external infra (ai-art-academy t-019/t-035 need at least one landed thumbnail or a live relay; kind-robots t-033 was already rechecked clean 4x this same day), a small self-contained kaizen task one project down the list (server route + schema field already shipped, only the UI control missing) lands clean first pass with zero design ambiguity. Also: a chained `git fetch && git checkout <branch> && git pull` in one Bash call can get SIGTERM'd by the tool's 2-minute timeout mid-checkout on a repo with a large/rewritten history (kind_robots had just force-updated origin/main), leaving the working tree with hundreds of stray unstaged deletions/modifications/untracked files even though HEAD never actually moved. Recovery was safe here only because `git status` was checked immediately and confirmed nothing was staged and the tree had been clean moments before -- `git checkout -- .` + `git clean -fd` cleanly restored it. Split multi-step git network operations into separate, shorter Bash calls (or raise the timeout) instead of chaining them, so a slow fetch/checkout can't silently corrupt working-tree state mid-operation.
 - 2026-07-21 `media-watchlist/t-010` — When most of the priority queue is blocked (art relay down, live Comfy box unreachable, daily creative-loop caps already used today), a kaizen task with a fully self-contained spec (write route + UI panel, no external service dependency) is the highest-value pick -- media-watchlist/t-010 landed clean first pass because BROWSE-UX.md already fully specified the UI/API contract and the schema fields existed from t-008, leaving zero open design questions.
@@ -83,7 +84,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-07-20 `sketchy/t-003` — When a spec-writing task's target area already has partial coverage scattered across sibling docs (PRODUCT-SPEC.md's dimension table, SKILL-LADDER.md's routing examples, docs/ai-critique-apis.md's integration notes), the value-add is turning illustrative/example-based coverage into deterministic, implementable rules (numeric anchors, explicit tie-break order, the literal prompt text) rather than re-describing what already exists — read every referenced sibling doc in full before drafting.
 - 2026-07-20 `conductor-app/t-007` — Before implementing a roadmap task's stated problem, verify the problem still exists on current main -- t-007's premise (pitch votes and project priorities stuck in per-browser localStorage) was already false: priorities had already migrated to a real Prisma column and votes already flow through a real per-pitch API endpoint, just not via the code paths the task's note assumed. An Explore agent pass against the live repo (grep for the exact localStorage keys named in the task) caught this before any code was written; filed the genuinely-open sub-question (real per-user multi-voter tallying vs. today's single-admin-status design) as a separate soft-needs-human task instead of building speculative scope.
 - 2026-07-20 `art-generator-connect/t-022` — When a workflow step blows past a --limit/--timeout ceiling that looks correctly plumbed, check for unbounded work happening BEFORE the bounded loop, not just inside it -- consume_art_requests.py's self-drain pre-scan (already_satisfied()) ran over the full pending backlog (not --limit-bounded, by design) and called the network-backed check twice per entry via two separate list comprehensions, which is what actually blew the ceiling, not wait_for_job/--timeout as the original note hypothesized.
-- 2026-07-20 `appmaker/t-011` — For 'file age' checks in this repo, local git log is not trustworthy -- local clones are frequently shallow/squash-merged, and two unrelated apps/<slug>/lib/main.dart files both showed exactly one, identical-timestamp commit locally despite being scaffolded on different dates. Querying the GitHub REST API's commits?path=... endpoint for a file's earliest commit gives the true creation date regardless of local clone depth; scripts/check_repos.py's existing GITHUB_TOKEN+urllib pattern is the right template to reuse, even though the API call itself can't be live-verified from this interactive sandbox (org egress policy 403s api.github.com here) -- that's a known, pre-existing limitation, not new.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-07-21T12:21:46Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-07-21T12:32:26Z_
