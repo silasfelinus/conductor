@@ -174,3 +174,15 @@ reachable (HTTP 200)
 
 ## 2026-07-20T22:14:25Z | civitai.com | reachable | ai-art-academy/t-010
 reachable (HTTP 200)
+
+## 2026-07-21T02:15:45Z | artic.edu | bot-challenged | ai-art-academy/t-010
+bot-challenged (HTTP 403, cf-mitigated: challenge)
+
+## 2026-07-21T02:15:46Z | www.artic.edu | bot-challenged | ai-art-academy/t-010
+bot-challenged (HTTP 403, cf-mitigated: challenge)
+
+## 2026-07-21T02:16:11Z | huggingface.co | reachable | ai-art-academy/t-010
+reachable (HTTP 200)
+
+## 2026-07-21T02:16:12Z | civitai.com | reachable | ai-art-academy/t-010
+reachable (HTTP 200)

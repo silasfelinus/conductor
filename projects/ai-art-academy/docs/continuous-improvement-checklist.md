@@ -15,6 +15,31 @@ Record the lane, files changed, and verification in the task note before rearmin
 
 ### Rotation state
 
+- Last completed lane: Curriculum depth (lane 4, LoRA-registry follow-up),
+  2026-07-21 (~02:11-02:35 UTC, claude-conductor-agentrun-20260721T0211Z). Lane 3
+  (inspiration/preview assets) was next preferred per the prior cycle's note, tried
+  first with a genuinely fresh queued job (job 1175, greek-vase-painting.webp, not
+  1173/1014/957/855/816): `status: PENDING`, unclaimed, `updatedAt` unchanged since
+  creation — same never-claimed signature as every prior check since 2026-07-18,
+  home relay still down. Fell back to lane 4 per the checklist's own instruction.
+  `neoclassicism` (curriculum §6, one of the original 16 target styles) had no
+  registry entry at all — deferred across many prior cycles in favor of newer
+  movements. With Hugging Face and Civitai both freshly confirmed reachable
+  (`recheck_egress_blocks.py`, both HTTP 200), searched for the movement's central
+  figure and found `NobodyButMeow/french-neoclassic-portrait-style-jacques-louis-david`
+  (Civitai, FLUX.1 D) — trained exclusively on 19 Jacques-Louis David portraits
+  (d. 1825), disclosed provenance, no-login download verified end-to-end (followed
+  the actual `307` redirect to `b2.civitai.com` → `200`, not just the page).
+  Promoted `neoclassicism` to LoRA mode in `style-lora-registry.md` (v1.5 update,
+  curriculum-slug-mapping table, machine-readable block, full per-style notes).
+  Also rechecked `artic.edu` (American Regionalism §24 example works, still
+  unverified from a prior cycle): still blocked, now bot-challenged rather than a
+  `402` — logged to `EGRESS-BLOCKERS.md`, same practical outcome, not re-litigated
+  in prose here. `scripts/audit_roadmaps.py` — 0 errors, same 11-warning/46-info
+  baseline. Conductor-docs-only change; no kind_robots PR needed (the registry is a
+  conductor-repo doc, not synced into the kind_robots front end). Next preferred
+  lane is front-end polish (lane 1) — this cycle ran lane 4, so lane 1 is next in
+  the 1→2→3→4 rotation.
 - Last completed lane: Roadmap accuracy (lane 2), 2026-07-21 (~01:00-01:20 UTC,
   claude-conductor-burst-20260721T0100Z). Found and fixed a process-accuracy bug
   in `t-010` itself: the immediately-prior cycle's note said it would rearm to
