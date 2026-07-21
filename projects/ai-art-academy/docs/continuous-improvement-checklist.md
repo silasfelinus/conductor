@@ -15,6 +15,34 @@ Record the lane, files changed, and verification in the task note before rearmin
 
 ### Rotation state
 
+- Last completed lane: Roadmap accuracy (lane 2), 2026-07-21 (~06:11-06:30 UTC,
+  claude-conductor-scheduled-burst-20260721T0611Z). Ran `scripts/audit_roadmaps.py`
+  (same 0-errors/11-warnings/46-info baseline, no findings touching this project)
+  and re-verified milestones m1-m6 against current task statuses directly (not just
+  spot-checked) — all six already match their tasks' actual statuses, no drift.
+  Reconfirmed t-019 (`public/images/academy/styles/` still 404s on kind_robots) and
+  t-033/t-004/t-009 blockers unchanged, same signatures as every prior check.
+  `check_pr_merged_drift.py`'s 23 candidates were all this task's own historical PR
+  references (unverifiable via this sandbox's 403'd direct API, as usual) — not new
+  drift, just noise from this task's own fresh claim. Found and closed a real,
+  concrete documentation gap instead: Song Dynasty Landscape Painting (§26, added
+  the immediately-prior cycle) was missing from every downstream coverage doc this
+  checklist tracks — `docs/teaching-notes.md` had no row 26 (and still said
+  "24"/"25 movements" in two places, both stale since the §26 addition landed —
+  corrected both plus added the row), `docs/style-lora-registry.md`'s curriculum-slug-mapping table had no
+  entry at all (not even a placeholder, unlike `ashcan-school`/`american-regionalism`'s
+  convention — added one), and `docs/curriculum-outline.md`'s "Lesson-only vs
+  remixable" tier lists never classified it (added to "Flagged as likely-poor
+  remixers," reasoning: the movement's core identity is a specific composition — a
+  single dominant vertical peak, tiny human figures — that most user photos won't
+  have, the same "preserve composition fights the style's own logic" tension as
+  `persian-miniature`) plus its missing "v1.6 addition re-check" PUBLIC-DOMAIN-POLICY.md
+  paragraph (present for every other addition since v1.1; all three artists died
+  ~900-1000 years ago and all three example works predate 1930 by centuries — the
+  widest safety margin of any addition so far). Verified the registry's `styles:`
+  YAML block still parses clean after the edit. Conductor-docs-only change; no
+  kind_robots PR needed. Next preferred lane is inspiration/preview assets (lane 3,
+  recheck with a fresh queued job, not 1184) falling back to lane 4 if still blocked.
 - Last completed lane: Front-end polish (lane 1), 2026-07-21 (~05:05-05:57 UTC,
   claude-conductor-scheduled-burst-20260721T0505Z). Dispatched an Explore
   subagent over the full in-scope surface (art-styler.vue, image-upload.vue,
@@ -425,7 +453,7 @@ coverage gaps below unless a newly discovered issue is more urgent.
 | Starter library | 21 starter images and provenance manifest complete — coverage intentionally movement-agnostic (2026-07-18: confirmed no movement-specific starters exist for any of the 8 movements added after v1, and an abstract Suprematist work would fail the library's own selection criteria; see starter-image-library.md) | Keep source-picker integration aligned with the manifest; no new starter entries needed |
 | Style previews | 26 prompts queued (Suprematism queued 2026-07-18, `kind-robots-academy-style-preview-suprematism`; Ashcan School queued the same cycle it was added, `kind-robots-academy-style-preview-ashcan-school`; American Regionalism queued 2026-07-19, `kind-robots-academy-style-preview-american-regionalism`; Persian Miniature Painting queued 2026-07-20, `kind-robots-academy-style-preview-persian-miniature`; Song Dynasty Landscape Painting queued 2026-07-21, `kind-robots-academy-style-preview-song-dynasty-landscape`; all in `art-prompts.yaml`). All 26 are still `status: pending` — the home relay is not claiming jobs (2026-07-20 ~10:04Z: job 816 accepted but never claimed after 10+ minutes; 2026-07-20 ~17:12Z: fresh job 957 also accepted but still `status: PENDING`/unclaimed; 2026-07-21 ~04:06Z: fresh job 1184 also accepted but still `status: PENDING`/unclaimed, `updatedAt` unchanged since creation, confirmed via direct API check) | Blocked on home-relay reachability, not on this queue. Re-run `python scripts/consume_art_requests.py --id-prefix "kind-robots-academy-style-preview-" --live` with a fresh job (not 816, 855, 957, 1014, 1175, or 1184) once relay/DB state is confirmed to have changed |
 | Remix configs | Registry exists; A/B generation blocked | Resume only after the relay, database, and approved generation path are available |
-| Teaching scaffold | Written in `docs/teaching-notes.md`, covering movements 1-25 including Persian Miniature Painting (row 25 added 2026-07-20); wired into `academy-style-detail.vue`'s Try It / Reflect sections (t-023, done — verified 2026-07-18 via `grep -n "Try it\|Reflect" components/academy/academy-style-detail.vue` on kind_robots main). Song Dynasty Landscape Painting (§26) has no row yet | Add a `teaching-notes.md` row for `song-dynasty-landscape` (Try It / Reflect prompts tuned to its "three distances" and monumental-scale logic) |
+| Teaching scaffold | Written in `docs/teaching-notes.md`, covering all 26 movements including Song Dynasty Landscape Painting (row 26 added 2026-07-21, this cycle — also fixed two stale "24/25 movements" count references in the same file); wired into `academy-style-detail.vue`'s Try It / Reflect sections (t-023, done — verified 2026-07-18 via `grep -n "Try it\|Reflect" components/academy/academy-style-detail.vue` on kind_robots main) | Coverage complete; no open action |
 
 ## Blocker discipline
 

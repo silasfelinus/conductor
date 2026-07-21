@@ -1603,10 +1603,22 @@ generic realism filter toward the movement's distinctive smoothed-and-stylized l
   cues (shading, foreshortening) rather than actually inverting the spatial
   logic. Keep the lesson regardless; ship the remix only if t-004 A/B results
   show the flattening genuinely landing, not just the ornament.
+- `song-dynasty-landscape` — shares `persian-miniature`'s tension: the subject
+  isn't discarded, but the movement's core identity is a *specific*
+  composition (a single towering peak dominating the frame, human figures
+  reduced to tiny incidental scale) that most user photos simply won't have.
+  "Preserve the user's composition" and "monumental landscape logic" pull in
+  opposite directions whenever the source photo isn't already a vertical,
+  peak-dominated scene. The likelier failure mode is a generic "ink wash
+  filter" over the source's existing composition — monochrome and textured
+  brushwork present, but without the scale-dwarfing and "three distances"
+  space that actually define the movement. Keep the lesson regardless; ship
+  the remix only if t-004 A/B results show genuine scale/space restructuring,
+  not just a grayscale-ink palette swap.
 
-No movement is lesson-only in v1 — even the flagged four get a remix config — but
-`cubism`, `de-stijl`, `suprematism`, and `persian-miniature` should carry a
-"results vary, that's part of the fun" note until t-004 evaluates them.
+No movement is lesson-only in v1 — even the flagged five get a remix config — but
+`cubism`, `de-stijl`, `suprematism`, `persian-miniature`, and `song-dynasty-landscape`
+should carry a "results vary, that's part of the fun" note until t-004 evaluates them.
 
 ## Public-domain safety check (t-006 preview)
 
@@ -1694,3 +1706,16 @@ all three file pages), so all three example-work URLs are marked VERIFIED agains
 their live Wikimedia Commons file pages and PD license tags (Public Domain Mark
 1.0 and PD-Art/PD-old-100-expired), not "(unverified)" — matching the §22-23
 precedent rather than the §24 one.
+
+**v1.6 addition (2026-07-21) re-check.** Section 26 (Song Dynasty Landscape
+Painting) clears the PUBLIC-DOMAIN-POLICY.md §1.3 both-prongs rule with the
+widest margin of any movement added so far: all three named artists (Fan Kuan,
+d. c. 1030; Guo Xi, d. c. 1090; Xu Daoning, d. 1052) died roughly 900-1000
+years ago, and all three example works (c. 1000, 1072, c. 1049) predate the
+1930 US-publication cutoff by nearly nine centuries — neither prong is close
+to the boundary the way §17-25's 20th-century entries are. Does not disturb
+the curriculum's most-recent-example-work record, which stays at 1930
+(*American Gothic* / *Stone City, Iowa*, §24). All three example-work URLs
+were confirmed VERIFIED directly via `WebFetch` of their live Wikimedia
+Commons file pages (Public Domain Mark 1.0 tags), matching the §22-23/§25
+precedent.
