@@ -534,8 +534,8 @@ tasks:
   - id: t-029
     milestone: m6
     title: "Polish and upgrade Model Builder front-end surface"
-    status: claimed
-    owner: worker
+    status: ready
+    owner: null
     passes: 0
     stakes: reversible
     note: >
@@ -594,6 +594,22 @@ tasks:
       9f24085). Steps (1) and (3) remain genuinely blocked as documented above; not touched this
       cycle. Kept at `ready` (not `done`), same pattern as the 2026-07-20 cycle -- those two steps
       are still outstanding.
+
+      PROGRESS 2026-07-21 (~10:25 UTC, claude-conductor-scheduled-20260721T1012Z): step (3)
+      correction -- this note's "an admin Placements click, not an agent action" framing is
+      stale. `project-overrides.yaml` already carries `liveUrl: /model-builder`,
+      `channelKey: build`, `tabKey: model-builder` for this slug (added in a prior bulk
+      cross-repo sweep, per root `TALKBACK.md` 2026-07-21), and a live `GET
+      https://kind-robots.vercel.app/api/projects` this cycle confirms the kind_robots
+      Project row already reflects the same three values (verified directly, not just
+      trusted the overrides file). Step (3) is done. Step (1) (dashboard-tab + tutorial
+      .webp art) is still genuinely blocked: confirmed via GitHub `get_file_contents` that
+      neither `public/images/dashboard-tabs/builder/model-builder.webp` nor
+      `public/images/tutorials/builder/model-builder.webp` exist yet, and this cycle's
+      fresh live probe of the art-generation home relay (ai-art-academy/t-010, job 1229)
+      timed out unclaimed -- same shared-relay-down signature, so re-queuing this project's
+      own art request would just waste a slot. Conductor-docs-only change; no kind_robots PR
+      needed. Kept at `ready` -- step (1) is the only remaining blocker now.
     claimed_by: claude-conductor-scheduled-20260721T1012Z
     claimed_at: '2026-07-21T10:22:16Z'
     updated: '2026-07-21T10:22:16Z'
