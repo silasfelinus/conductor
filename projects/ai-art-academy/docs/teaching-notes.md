@@ -11,7 +11,7 @@ worked example lessons — so every style page in the Academy teaches the same w
 converts cleanly into front-end lesson copy.
 
 Companion files:
-- `docs/curriculum-outline.md` — the 24 movements (source of truth for facts/works/hints)
+- `docs/curriculum-outline.md` — the 26 movements (source of truth for facts/works/hints)
 - `docs/style-lora-registry.md` — per-style remix mode (`prompt` vs `lora`) + `prompt_hint`
 - `PUBLIC-DOMAIN-POLICY.md` — the eligibility rule every example work must pass (§1.3) and
   the provenance schema (§3)
@@ -97,7 +97,7 @@ or style registry.
 
 ---
 
-## 3. Per-style teaching notes (all 25 movements)
+## 3. Per-style teaching notes (all 26 movements)
 
 Remix-difficulty tiers match `curriculum-outline.md`'s "Lesson-only vs remixable" section:
 **Easy** = strong transfer, ship first; **Medium** = good but watch the output;
@@ -132,6 +132,7 @@ slugs — e.g. `renaissance-fresco`, `baroque-chiaroscuro`, `post-impressionism-
 | 23 | Ashcan School (`ashcan-school`) | prompt | Medium | Everyday city grit given the seriousness of history painting | Under-cooks toward a lightly-graded photo if the prompt underweights brushwork/palette — lean on "gestural," "murky," "low-key lighting" |
 | 24 | American Regionalism (`american-regionalism`) | prompt | Medium | Everyday rural America made monumental; smooth sculptural realism as quiet ambiguity | Under-cooks toward a lightly-processed photo if the prompt underweights the smoothed, sculptural simplification — lean on "crisp outlines," "simplified sculptural forms," "dramatic rolling sky" |
 | 25 | Persian Miniature Painting (`persian-miniature`) | prompt | **Hard** | A page built to be read, not viewed — space organized by narrative distance (higher on the page, not smaller), not camera geometry | Preserving the source composition fights the movement's own logic (no linear perspective, no cast shadow); model likely defaults to a generic "Middle Eastern ornament" filter while keeping Western depth cues — lean on the remix_hint's explicit "no Western perspective or cast shadow" and the dense floral/geometric border |
+| 26 | Song Dynasty Landscape Painting (`song-dynasty-landscape`) | prompt | **Hard** | A single towering peak organizes everything; people are scale, not subject | Most source photos aren't already a vertical, peak-dominated scene, so "preserve composition" fights the movement's defining scale-dwarfing logic; model likely defaults to a generic monochrome ink-wash filter over the existing composition rather than restructuring space into the "three distances" — lean on the remix_hint's explicit peak-dominant framing and mist-layered depth |
 
 ---
 
