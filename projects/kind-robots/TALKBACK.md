@@ -1031,3 +1031,33 @@ of routing it through the kaizen slot.
 
 **Kaizen task:** deferred — this was itself the follow-up from t-039's kaizen;
 no new gap surfaced while implementing it.
+
+## 2026-07-21 | Worker (conductor scheduled agent) | kind-robots/t-042 | pattern
+
+**Decision:** implemented, self-merged (session claude-conductor-agentrun-20260721T-fetchlint).
+kind_robots PR #813 merged (squash 3d1da45e).
+
+**Failure category:** none — clean first pass, no CI rework needed.
+
+**What was good:**
+- This task was its own prior cycle's kaizen suggestion (appmaker/t-009, kind_robots
+  PR #812) — picked it up directly rather than letting it sit, since it was concrete,
+  self-contained, and needed no external service/live DB access, unlike most of the
+  rest of the priority queue at the time (ai-art-academy blocked on the art relay,
+  confirmed via a fresh job recheck this same cycle before moving on).
+- Matched the existing contract-test convention in this repo exactly
+  (`verifyNoPrismaJsonCast.ts` / `verifyNoUnquotedReservedWordTables.ts`'s shape:
+  plain static-source scan, no live network/DB, self-excluded from its own scan,
+  wired into both `package.json` and `contract-tests.yml`) rather than inventing a
+  new pattern.
+- Did not trust the detection logic on faith. Wrote a synthetic throwaway sample file
+  with 3 distinct violation shapes (single-generic, no-generic, and a nested-generic
+  single-arg call — the last one specifically to stress-test the bracket-depth parser
+  against false negatives from nested `<>`) plus one correctly-pinned call, confirmed
+  the script flagged exactly the 3 violations and passed the correct one, then removed
+  the sample before committing. Only after that ran it against the real (already-fixed)
+  codebase to confirm a clean pass on real code, not just the synthetic case.
+
+**What to improve:** none this cycle.
+
+**Kaizen task:** none new — this cycle's work *was* the prior cycle's kaizen task.
