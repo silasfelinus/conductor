@@ -191,12 +191,11 @@ tasks:
 - id: t-008
   milestone: m2
   title: Build the initial Sketchy Flutter app core loop (calibration, assignment, submission, critique) on mock data
-  status: review
+  status: done
   owner: worker
   claimed_by: claude-conductor-burst-20260721T2017Z-sketchy-t008
   claimed_at: '2026-07-21T20:17:01Z'
-  updated: '2026-07-21T20:25:53Z'
-  updated: '2026-07-21T20:17:01Z'
+  updated: '2026-07-21T20:44:57Z'
   passes: 0
   stakes: reversible
   note: >
@@ -274,3 +273,16 @@ tasks:
     m2/m3 were not-started despite this task now moving them forward -- flipped
     m1 to done and m2/m3 to in-progress to match actual task state, same
     milestone-accuracy pattern seen in ai-art-academy/kind-robots sessions.
+
+    Merged conductor PR #994 (squash b4f5378) this same session. app-ci.yml's
+    "test" check took ~14 minutes and initially looked stuck/failed, but the
+    failure was NOT this task's diff: sketchy's own analyze (0 issues) and all
+    15 tests passed within the first ~12s of that job; the job then hung for
+    10 more minutes on an unrelated pre-existing test in
+    superkate-services-calculator (csv_export_widget_test.dart) before timing
+    out, because app-ci.yml's fallback runs every app in apps/ in one shared
+    job when the changed-app diff detection doesn't isolate to just this PR's
+    app. Confirmed via full job log before merging. Filed
+    superkate-services-calculator/t-037 for that pre-existing hang (and the
+    shared-job blast-radius design question) rather than fixing an unrelated
+    app's test inside this task.

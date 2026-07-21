@@ -53,3 +53,46 @@ type: critique | pattern | challenge | response | security-flag
 
 **Kaizen task:** none filed — t-004 (token tiers) is next in the milestone and already
 exists as a `ready` task; no new gap surfaced.
+
+## 2026-07-21 | Worker (burst) | t-008 | done
+
+**Decision:** filed and implemented in the same session (reversible, scoped —
+session claude-conductor-burst-20260721T2017Z-sketchy-t008, conductor PR #994,
+squash b4f5378).
+
+**Context:** milestones m2/m3 had every spec task marked done but nothing had
+ever built against those specs -- `apps/sketchy/lib/main.dart` was still the
+untouched AppMaker boilerplate. Built the full core loop (calibration ->
+assignment -> submission -> critique -> next assignment) on mock/local data:
+30 assignments sourced from SKILL-LADDER.md's actual sample prompts, and a
+critique/routing engine implementing CRITIQUE-RUBRIC.md §2's dimension table
+and §3's weakest-skill routing (tie-break order, friendly-progression
+override, all-8+ terminal case) rather than a stub. flutter_riverpod +
+go_router, matching apps/conductor's conventions.
+
+**What was good:**
+- Grounded every piece of mock content in the project's own docs instead of
+  inventing placeholder text -- assignment prompts/success-criteria are
+  SKILL-LADDER.md's real samples, and the critique dimensions/anchors/routing
+  table come straight from CRITIQUE-RUBRIC.md, not paraphrased loosely.
+- Verified with the real toolchain, not just review: `flutter analyze
+  --fatal-infos` (0 issues) and `flutter test` (15/15, 12 new unit tests
+  covering every routing branch) both passed locally before pushing.
+- Fixed a real correctness bug analyze caught: the router was being rebuilt
+  from scratch on every `SketchyApp.build()` call (would have reset
+  navigation state on any rebuild) -- moved it into a cached `Provider<GoRouter>`.
+- Diagnosed a scary-looking CI failure correctly instead of assuming a
+  regression: app-ci.yml ran every app in one job (not just sketchy), and the
+  failure was a pre-existing hang in superkate-services-calculator's
+  csv_export_widget_test.dart, unrelated to this diff. Read the full job log
+  before merging rather than guessing; filed
+  superkate-services-calculator/t-037 for the actual hang instead of touching
+  an unrelated project's test inside this task.
+- Fixed milestone-status drift found along the way (m1 done-but-marked-not-started,
+  m2/m3 not-started despite this task moving them forward).
+
+**What to improve:** none this cycle.
+
+**Kaizen task:** none filed here — the one real gap found (the shared
+apps/-in-one-job CI hang) is filed on superkate-services-calculator/t-037,
+where the actionable fix actually lives.
