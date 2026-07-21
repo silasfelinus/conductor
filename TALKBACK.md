@@ -8099,3 +8099,72 @@ tasks. Until that exists, a session picking up an OPEN CI-janitor todo should
 `git fetch origin main` again right before its first push (not just at session start)
 specifically because these todos see unusually high concurrent session traffic when a
 CI incident is actively being chased.
+
+## 2026-07-21 | Worker (burst-mode hourly cycle) | CI Janitor todo #521 | Kind Robots Cypress Tests — Contender roster never seeded
+
+**Decision:** root-caused the red run (`29787521411`, current at cycle start — a
+newer failure than the todo's own linked run `29784481012`) to a genuinely
+unseeded production table, not another one-off test-payload bug. kind_robots PR
+#732 merged (squash `5075ab4`) after both required PR checks (TypeScript Type
+Check, Contract Tests) went green.
+
+**Detail:**
+- Only failing spec: `cypress/e2e/api/challenge-submissions.cy.ts`, `before()` hook:
+  `AssertionError: an active seeded Contender: expected undefined to exist` — the
+  live `GET /api/contenders` call in the hook returned `{success:true, data:[]}`.
+- `server/api/contenders/index.get.ts` already filters `where: { isActive: true }`
+  server-side, so an empty array can only mean the `Contender` table itself is
+  empty in production — not a filtering bug and not another spec mutating state
+  (no other spec/route touches `Contender` at all; `server/api/contenders/`
+  has no POST/PATCH/DELETE route).
+- `scripts/seed_contenders.ts` (idempotent upsert, 9-row roster, `--write`-gated)
+  has existed since 2026-07-13/14 but was only ever wired into a DB-free dry-run
+  step in `.github/workflows/contract-tests.yml` — nothing anywhere ever ran it
+  with `--write` against production. Confirmed via `search_code`/history that no
+  workflow, `scripts/vercel-build.mjs`, or `scripts/prisma-migrate-deploy.mjs` step
+  invokes any of the app's several `--write`-gated seed scripts against prod; this
+  would have been the first.
+- Also found (and fixed, since it blocked the actual repair) a latent connectivity
+  bug in the seed script itself: `createSeedPrismaClient()` built its adapter with
+  a bare `new PrismaMariaDb(databaseUrl)`. Per `server/utils/databaseAdapterConfig.ts`'s
+  own comment, ProxySQL rejects that with "Access denied ... SSL is required" —
+  the running server and other maintenance scripts (`utils/scripts/backfillSlugs.ts`,
+  `snapshotFallback.ts`) instead build via the shared SSL-aware
+  `createDatabaseAdapter()` helper. Switched `seed_contenders.ts` to the same
+  helper. Same bug is present in 8 other seed/maintenance scripts
+  (`seed_challenges.ts`, `seed_achievements.ts`, `seed_products.ts`,
+  `seed_media_entries.ts`, `generate_achievement_art.ts`,
+  `utils/scripts/setFacetAliases.ts`, `utils/scripts/migratePromptsToArtJobs.ts`,
+  `utils/scripts/seedDaVinciEndings.ts`, `prisma/seeds/inspiration-prompts.ts`) —
+  left those alone since none of them are wired to run against prod yet and none
+  are implicated in this incident; flagging for a future pass so nobody hits the
+  same "SSL is required" surprise the first time one of them is actually wired in
+  or run with `--write` locally against a real ProxySQL endpoint.
+- Fix: wired the now-fixed, idempotent seed into `scripts/vercel-build.mjs` right
+  after `prisma migrate deploy`, under the same `!isVercelBuild || isProductionDeployment`
+  guard migrations already use — so the Challenge Center roster gets (re)seeded on
+  every future production deploy automatically, not just once by hand.
+- Verified locally (via `conductor/scripts/provision_kind_robots_deps.sh`):
+  `npm run test:seed-contenders` (dry run) prints the 9-row table clean with the
+  new import; `npm run test` (vue-tsc `--noEmit`) exits 0; `eslint` on both changed
+  files is clean. Could not verify an actual `--write` run against production from
+  this sandbox (no live `DATABASE_URL`/`DATABASE_SSL_CA_BASE64` access) — that only
+  happens for real on the next production deploy.
+- Todo #521 left OPEN rather than completed: per CI-JANITOR.md, completion requires
+  the relevant verification to have passed. This PR's own CI (TypeScript, Contract
+  Tests) is green and it's merged, but the thing the todo actually watches — the
+  scheduled `main` Cypress run — won't reflect the fix until (a) this merge triggers
+  a production deploy that runs the new seed step, and (b) the next scheduled
+  Cypress run (cron, ~30 min cadence per `CI-JANITOR.md`) fires after that. A future
+  cycle should check the next scheduled run and only then run `complete_todo.py 521`
+  (or, if it's still red for a different reason, treat it as a fresh incident).
+
+**Suggested action:** if `challenge-submissions.cy.ts` is still red on the *next*
+scheduled run after this merge, check first whether a production deploy actually
+happened (Vercel MCP `list_deployments` for the merge commit `5075ab4`) before
+assuming the seed step itself is broken — `vercel-ignore-build.mjs` skips deploys
+for change sets it considers deploy-inert, and `scripts/vercel-build.mjs` changes
+don't obviously fall in or out of that list from memory alone. Also worth a
+standalone follow-up: the 8 other bare-`PrismaMariaDb(url)` scripts noted above
+are a "next Contender-shaped incident" waiting to happen the first time one of them
+gets wired into automation the way this one just was.
