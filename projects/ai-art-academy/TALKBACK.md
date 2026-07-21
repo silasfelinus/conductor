@@ -1438,3 +1438,15 @@ milestone reassignment). Worth flagging for whoever eventually builds
 **Kaizen task:** none filed — the fix is complete within lane 2's existing scope (closing a documentation-propagation gap), and the underlying pattern (new curriculum movements needing a documented multi-file propagation checklist) is already implicitly covered by how the last five movements each landed their downstream docs across separate cycles rather than in one shot.
 
 **Pattern note:** this is the third consecutive lane-4 cycle to add a movement whose downstream doc propagation (teaching-notes/registry/tier-list) landed in a *later*, separate cycle rather than the same one (see persian-miniature's registry entry, curriculum-outline PD re-check, and teaching-notes row each landing in different 2026-07-20 cycles) — worth noting for whoever eventually tightens the lane-4 checklist item, since a lane-4 cycle that added the propagation checklist as an explicit sub-step of "add a new movement" (rather than relying on a later lane-2 pass to notice the gap) would close this loop one cycle earlier each time.
+
+## 2026-07-21 | Reviewer (conductor scheduled agent) | ai-art-academy/t-010 | pattern
+
+**Decision:** merged already-open PR (kind_robots #771, squash `296fafb`) — closed out lane-4 work left in-flight by the ~07:15Z cycle rather than re-implementing.
+
+**Failure category:** none — this cycle found the task at `status: claimed` with a fully-formed, CI-green PR already open (the prior cycle ran out of turn before merging its own work). Verified both required checks (TypeScript, Contract Tests) via `actions_list` before merging; no new code written.
+
+**What was good:** the ~07:15Z cycle's PR body and diff were clean and scoped exactly to its stated task (core lesson fields only, `exampleWorks`/`previewImageSrc` correctly deferred to t-033) — nothing to correct on review.
+
+**What to improve:** none — routine handoff between cycles working the same recurring task.
+
+**Kaizen task:** none filed — this cycle's action was administrative (merge + rearm), not new scope.
