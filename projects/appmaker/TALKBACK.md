@@ -181,3 +181,60 @@ existing periodic workflow, left as a follow-up rather than expanding this task'
 
 **Kaizen task:** none filed — `appmaker/t-009` (installation-token minting + scaffold-PR
 flow) already exists and is now unblocked; it's the correct next step, not a new kaizen.
+
+## 2026-07-21 | Worker (conductor scheduled agent) | appmaker/t-009 | pattern
+
+**Decision:** implemented, self-merged (session claude-conductor-agentrun-20260721T-appmaker).
+kind_robots PR #812 merged (squash 801ed768).
+
+**Failure category:** none — real work found, root-caused a genuine pre-existing CI issue
+rather than burning a pass on it.
+
+**What was good:**
+- Built exactly the scope GITHUB-APP-DESIGN.md's §8 task table specs for t-009 — token
+  minting (`mintInstallationToken`, cached, never returned by any API per §6 invariant 3),
+  live granted-repo listing (`listInstallationRepositories`, needed since `AppRepo` alone
+  only reflects repos already mapped to a slug, not what GitHub currently grants), and
+  the branch/write/PR helper (`pushScaffoldBranchAndOpenPr`, hard-coded to `worker/*` +
+  PR-only, never merge, per §5d). Did not build §5c (graduation) — that's t-010, correctly
+  left alone.
+- When the PR's own CI failed with a cryptic TS2589 "excessively deep" error in
+  components/art/art-styler.vue — a file this task never touched — did not accept the
+  easy read ("pre-existing, unrelated, ignore it"). First checked that read empirically
+  (stashed the diff including untracked files, reran `npm run test` against a truly
+  clean tree) and it reproduced there too, which looked like confirmation... but then
+  cross-checked against real GitHub Actions history for the exact same commit (kind_robots
+  PR #811, which became this PR's base) and found TypeScript had passed clean there. That
+  contradiction was the signal that the local sandbox's clean-tree failure and the real
+  CI failure had different causes, and it was worth digging further rather than trusting
+  the first (wrong) local repro.
+- Root-caused properly: the PR's 2 new server/api/appmaker/github/*.ts files grew the
+  project's typed NitroFetchRequest route-key union just enough to push vue-tsc's
+  recursion limit on ANY `$fetch` call with an uninferred/un-pinned R generic — a
+  pre-existing, repo-wide fragility already sitting at the edge, not something isolated
+  to art-styler.vue. Confirmed by fixing that one call site and watching the *next*
+  file surface the identical error, repeatedly, until all 14 files that call `$fetch`
+  directly (out of the whole app — most code goes through typed composables/stores) were
+  checked and the 12 affected ones fixed by pinning `$fetch<T, string>(...)` (or plain
+  `fetch()` for the handful of client-only static-asset reads). Verified the fix is real,
+  not a band-aid: `npm run test` went from exit 2 to 0 errors, and CI (TypeScript +
+  Contract verifiers) went green on the very next push.
+- Checked whether this needed to block the merge at all: conductor/t-073 (still open,
+  needs-human) already documents that kind_robots' branch protection does not require
+  the "TypeScript" check to pass. Noted that fact in the roadmap note as relevant context
+  but did not rely on it — fixed the real issue rather than merging around a non-required
+  check, since a red TypeScript check is a real signal worth keeping green regardless of
+  whether it's a hard merge gate.
+- Filed kind-robots/t-042 (contract test for un-pinned `$fetch` generics) as the kaizen
+  task so this ceiling gets a durable early-warning instead of relying on the next PR's
+  author to independently rediscover and root-cause the same whack-a-mole chain.
+
+**What to improve:**
+- The 12-file `$fetch` fix touched components/pages/stores well outside appmaker's own
+  surface. It was the right call (the alternative was merging on a broken TypeScript
+  check or leaving t-009's own PR permanently red for a cause it triggered), but a future
+  session hitting this same ceiling from a different PR should check kind-robots/t-042
+  first rather than repeating the same discovery-by-compile-loop process from scratch.
+
+**Kaizen task:** kind-robots/t-042 — contract test to catch un-pinned `$fetch` generics
+before they can trip vue-tsc's TS2589 recursion ceiling again.

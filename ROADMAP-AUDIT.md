@@ -1,13 +1,13 @@
 # Roadmap Audit
 
-Generated: `2026-07-21T12:27:45.724399+00:00`
+Generated: `2026-07-21T14:11:20.195510+00:00`
 
 This is a conservative structural audit. It reports suspicious state; it does not automatically change task status or remove human gates.
 
 ## Portfolio snapshot
 
-- **40** roadmaps, **31** active projects, **640** tasks
-- **40 ready**, **43 waiting**, **37 needs-human**, **0 claimed/review**, **509 done**
+- **40** roadmaps, **31** active projects, **641** tasks
+- **39 ready**, **42 waiting**, **37 needs-human**, **2 claimed/review**, **510 done**
 - Findings: **0 errors**, **11 warnings**, **45 informational**
 
 ## Project inventory
@@ -15,14 +15,14 @@ This is a conservative structural audit. It reports suspicious state; it does no
 | # | Project | State | Kind | Ready | Waiting | Human | In progress | Done / Total |
 |---:|---|---|---|---:|---:|---:|---:|---:|
 | 1 | `challenge-center` | finished | software | 0 | 0 | 0 | 0 | 20 / 20 |
-| 2 | `ai-art-academy` | active | software | 3 | 0 | 3 | 0 | 29 / 35 |
+| 2 | `ai-art-academy` | active | software | 2 | 0 | 3 | 1 | 29 / 35 |
 | 3 | `coloring-book` | active | software | 0 | 9 | 1 | 0 | 19 / 29 |
 | 4 | `humboldt-scoop` | active | software | 0 | 0 | 0 | 0 | 8 / 8 |
 | 5 | `humboldt-scoop-cms` | active | software | 0 | 4 | 1 | 0 | 6 / 11 |
 | 6 | `digital-storefront` | active | software | 0 | 2 | 4 | 0 | 17 / 23 |
 | 7 | `packmaker` | active | software | 0 | 0 | 0 | 0 | 10 / 10 |
 | 8 | `mermaids-of-venice` | retired | content | 0 | 0 | 8 | 0 | 4 / 12 |
-| 9 | `kind-robots` | active | software | 1 | 0 | 4 | 0 | 36 / 41 |
+| 9 | `kind-robots` | active | software | 2 | 0 | 4 | 0 | 36 / 42 |
 | 10 | `kindrobots-unraid` | active | software | 0 | 7 | 1 | 0 | 4 / 12 |
 | 11 | `global-ui` | active | software | 0 | 0 | 1 | 0 | 24 / 25 |
 | 12 | `superkate-services-calculator` | active | software | 0 | 0 | 1 | 0 | 35 / 36 |
@@ -38,11 +38,11 @@ This is a conservative structural audit. It reports suspicious state; it does no
 | 22 | `davinci` | active | software | 1 | 0 | 0 | 0 | 14 / 15 |
 | 23 | `art-generator-connect` | active | software | 0 | 0 | 0 | 0 | 22 / 22 |
 | 24 | `mural-design` | active | content | 1 | 3 | 1 | 0 | 2 / 7 |
-| 25 | `coat-dance` | active | content | 2 | 0 | 0 | 0 | 0 / 10 |
+| 25 | `coat-dance` | active | content | 1 | 0 | 0 | 1 | 0 / 10 |
 | 26 | `career-transition` | retired | content | 3 | 4 | 0 | 0 | 1 / 8 |
 | 27 | `alexa-integration` | active | software | 1 | 0 | 1 | 0 | 16 / 18 |
 | 28 | `conductor-app` | active | software | 3 | 0 | 1 | 0 | 10 / 14 |
-| 29 | `appmaker` | active | software | 2 | 1 | 0 | 0 | 9 / 12 |
+| 29 | `appmaker` | active | software | 2 | 0 | 0 | 0 | 10 / 12 |
 | 30 | `media-watchlist` | active | software | 1 | 0 | 0 | 0 | 10 / 11 |
 | 31 | `sketchy` | active | software | 2 | 0 | 0 | 0 | 5 / 7 |
 | 32 | `pinball-hero` | retired | content | 2 | 2 | 0 | 0 | 2 / 6 |
