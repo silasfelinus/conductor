@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-07-21T15:31:45Z
+Generated: 2026-07-21T15:34:34Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **324**
-- Outcomes: blocked: 12, done: 312
+- Closed tasks recorded: **325**
+- Outcomes: blocked: 12, done: 313
 - Success rate: **96%**
 - Average passes on successful tasks: **0.0**
 
@@ -26,7 +26,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | coat-dance | 8 | 0% |
 | coloring-book | 13 | 100% |
 | conductor | 45 | 100% |
-| conductor-app | 1 | 100% |
+| conductor-app | 2 | 100% |
 | digital-storefront | 12 | 100% |
 | dream-cycle | 14 | 100% |
 | ecosystem-map | 5 | 100% |
@@ -54,7 +54,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 15 | 40% |
-| software | 309 | 99% |
+| software | 310 | 99% |
 
 ## Failure categories
 
@@ -74,6 +74,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-07-21 `conductor-app/t-012` — Before assuming a feature needs new backend endpoints, check what the existing API already returns/accepts -- GET /api/dreams/:id already embedded up to 12 linked ArtCollections with up to 12 ArtImages each, and POST /api/conductor/art-request already existed pre-built and admin-gated, so the whole task (ArtCollection browsing + admin art-request form) was pure Flutter client work with zero kind_robots changes needed. Also: a sandboxed toolchain pinned to a fixed version can silently drift stale against CI's unpinned 'stable' channel and produce false-positive analyze errors (including on files never touched this cycle) -- when a fresh error appears on pre-existing code, suspect the toolchain version before the diff, and verify against the actual current stable before trusting the result.
 - 2026-07-21 `conductor/t-075` — A reused coarse hour/rotation-label session id never breaks claim_task.py's correctness (it keys on project/task), but it does corrupt the audit trail when two concurrent sessions pick the same label within the same hour, making one session's TALKBACK/claimed_by history look like it belongs to another. Prefer a full ISO timestamp with seconds plus a task-specific suffix, or a random token, over a coarse label string.
 - 2026-07-21 `kind-robots/t-042` — A new static-source contract test is only trustworthy once it's been proven to actually catch the pattern it claims to guard against -- write a synthetic violating sample first (cover edge cases like nested generics that could produce false negatives in a bracket-depth parser), confirm it fails as expected, then remove the sample and confirm the real codebase passes clean. Testing only the 'passes on real code' direction would have missed a parser bug that let violations through silently.
 - 2026-07-21 `appmaker/t-009` — A cryptic CI type error in a file the task never touched is not automatically 'pre-existing and unrelated' -- it can be a genuine, if indirect, regression the diff triggered (here: 2 new server/api/** route files grew the typed $fetch route-key union just enough to push vue-tsc's TS2589 recursion limit on unrelated call sites). A same-tree local repro without the diff isn't conclusive either, since sandbox vs real CI can diverge -- cross-check against the base commit's actual CI history before concluding a failure is pre-existing. Root-causing (pinning $fetch's R generic, 12 files) was cheap once understood and is a durable fix, versus a band-aid on the one file CI happened to name first.
@@ -83,7 +84,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-07-21 `media-watchlist/t-010` — When most of the priority queue is blocked (art relay down, live Comfy box unreachable, daily creative-loop caps already used today), a kaizen task with a fully self-contained spec (write route + UI panel, no external service dependency) is the highest-value pick -- media-watchlist/t-010 landed clean first pass because BROWSE-UX.md already fully specified the UI/API contract and the schema fields existed from t-008, leaving zero open design questions.
 - 2026-07-21 `conductor/t-028` — A stale-claim task with no PR/TALKBACK evidence of prior implementation work is safe to reclaim once past CLAIM_TTL_MINUTES via claim_task.py, but check the free-standing conflict risk on the follow-up status commit -- a direct-to-main claim commit (or its auto STATUS.md refresh) landing between a session's local edit and its push produces a real (not auto-gen-only) roadmap.yaml conflict on the task's own claimed_by/claimed_at/updated fields, since the session's local copy still shows the old stale values. Also: flutter test's first cold AOT compile can exceed several minutes in a CPU-constrained sandbox even though flutter analyze/pub get complete in under 20s -- budget for that gap rather than treating a slow flutter test as a broken toolchain.
 - 2026-07-20 `media-watchlist/t-009` — A prior spec-only task (t-008) that reconciles a proposal against real imported data before any code is written turns the follow-on build task into a single clean pass with zero open design questions -- worth doing as a standing pattern for any Prisma-model-plus-API task where the real data shape might differ from an earlier proposal.
-- 2026-07-20 `ai-art-academy/t-010` — Milestone status can drift not just from new tasks appearing done/not-done under it, but from an *existing* task being re-tagged into a milestone that was already marked done (t-035 landed under m6 alongside the t-029/t-030 kaizen follow-ons after m6 had last been verified done, and the milestone was never revisited) -- a roadmap-accuracy audit should re-check a milestone's task list for membership changes, not just each member task's status, whenever a milestone is already 'done'.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-07-21T15:31:45Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-07-21T15:34:34Z_
