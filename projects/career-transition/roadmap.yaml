@@ -76,26 +76,17 @@ tasks:
 - id: t-003
   milestone: m1
   title: Research and rank specific job roles and companies to target
-  status: claimed
+  status: needs-human
   owner: worker
   passes: 0
   stakes: reversible
   depends_on: t-001
   gate_human: true
   approved_by_human: false
-  note: "Using the approved skills-map.md, produce projects/career-transition/job-targeting.md.\nFor each\
-    \ of the 5 target role types in notes_from_silas:\n  - Typical title variations used in job postings\n\
-    \  - Realistic salary range (remote, US market, 2025\u20132026)\n  - Core skills hiring managers screen\
-    \ for \u2014 which does Silas have, which is he missing\n  - Types of companies most likely to hire\
-    \ someone with a nontraditional background\n    (startups, AI-first companies, developer-tools companies,\
-    \ nonprofits, agencies)\n  - 5-10 specific companies worth watching that are known to value demonstrated\
-    \ skill\n    over credentials (include AI startups, developer-tools, and Anthropic/OpenAI partner\n\
-    \    ecosystem companies if relevant)\n  - Honest assessment: is this realistic now, in 3 months with\
-    \ portfolio work, or in\n    6+ months\n\nEnd at needs-human so Silas can steer which roles to prioritize\
-    \ before downstream tasks.\n"
+  note: 'FOR SILAS: projects/career-transition/job-targeting.md is the role/company targeting research for all 5 target role types from your notes (AI engineer/prompt engineer, junior full-stack Nuxt/Vue, developer relations, technical community manager, no-code/low-code specialist). It contains: per-role salary ranges (live July 2026 data), which of your skills each role screens for vs. your biggest gap, 3-6 specific companies worth watching per role (Anthropic Claude Partner Network, Vercel, Supabase, PostHog, n8n, Zapier, Retool, Nuxt.com''s own jobs board), and a realistic timeline (now / 3 months / 6+ months) per role. A cross-role summary table and recommended sequencing are at the end. TO APPROVE: read job-targeting.md, correct any role priority you''d steer differently, then set approved_by_human: true and status: done here. Unblocks: t-005 (portfolio writeups), t-006 (cover letter templates), t-007 (interview prep guide) — all currently status: waiting on this task.'
   claimed_by: claude-conductor-scheduled-20260721T1420Z
   claimed_at: '2026-07-21T14:18:18Z'
-  updated: '2026-07-21T14:18:18Z'
+  updated: '2026-07-21T14:21:28Z'
 - id: t-004
   milestone: m3
   title: Write GitHub profile README and pinned repo recommendations
