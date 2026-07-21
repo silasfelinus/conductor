@@ -12,8 +12,9 @@ the job is reported FAILED and remains retryable instead of silently completing
 with a missing public file.
 
 All other jobs use relay_agent.py unchanged, except that Comfy prompt submission
-uses a longer timeout and can recover a prompt id from /queue when Comfy accepted
-the prompt but its HTTP response arrived too late.
+uses a longer timeout, can recover a prompt id from /queue when Comfy accepted
+the prompt but its HTTP response arrived too late, and preserves the exact
+prompt/output/image provenance required by Kind Robots completion verification.
 """
 
 import base64
@@ -143,8 +144,6 @@ def refresh_manifests(root, destination):
     else:
         index = {}
 
-    # Folder collections use the leaf directory name as their slug. The exact
-    # folder path is retained as the value, matching collections.json today.
     index[folder.name] = folder_relative
     atomic_write_json(index_path, index)
 
@@ -158,7 +157,6 @@ def write_direct_media(job, media):
     destination = (root / relative).resolve()
     if destination != root and root not in destination.parents:
         raise ValueError(f"Media destination escaped root: {destination}")
-
     suffix = destination.suffix.lower()
     raw = base64.b64decode(media["data_b64"])
     if media.get("is_video"):
@@ -265,7 +263,9 @@ def run_comfy_with_recovery(payload):
         entry = history.get(prompt_id)
         if not entry:
             continue
-        result = relay.extract_comfy_output(entry.get("outputs") or {}, want_video)
+        result = relay.extract_comfy_output(
+            entry.get("outputs") or {}, want_video, prompt_id=prompt_id
+        )
         if result:
             return result
         comfy_status = (entry.get("status") or {}).get("status_str")
@@ -291,12 +291,14 @@ def process_with_media(job):
 
     if engine == "COMFY":
         media = relay.run_comfy(payload)
+        provenance = relay.completion_provenance(payload, media)
     else:
         media = {
             "data_b64": relay.run_a1111(payload),
             "file_type": "png",
             "is_video": False,
         }
+        provenance = None
 
     staged_art_image_id = relay.upload_result(job, media)
     if not staged_art_image_id:
@@ -305,7 +307,10 @@ def process_with_media(job):
     destination = write_direct_media(job, media)
 
     completed_job = relay.complete_job(
-        job_id, True, art_image_id=staged_art_image_id
+        job_id,
+        True,
+        art_image_id=staged_art_image_id,
+        provenance=provenance,
     )
     final_art_image_id = completed_job.get("artImageId") or staged_art_image_id
 
