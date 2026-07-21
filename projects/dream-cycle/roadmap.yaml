@@ -151,12 +151,12 @@ tasks:
   - id: t-006
     milestone: m4
     title: 'Creation-a-day: advance the active creation build one stage'
-    status: ready
+    status: claimed
     recurring: true
-    owner: null
+    owner: worker
     passes: 0
     stakes: reversible
-    updated: '2026-07-10T00:00:00Z'
+    updated: '2026-07-21T23:17:30Z'
     depends_on: t-004
     note: >
       THE idle-fallback loop (recurring — re-arms to ready after every cycle,
@@ -175,6 +175,8 @@ tasks:
       (coloring-book) advance their home project's tasks and update both records;
       never double-claim a home task the Worker is already actively building —
       pick the next queued creation instead.
+    claimed_by: claude-conductor-burst-20260721T232500Z-dc-t006
+    claimed_at: '2026-07-21T23:17:30Z'
   - id: t-007
     milestone: m5
     title: Generate dream-cycle project art (icon, card, hero)
