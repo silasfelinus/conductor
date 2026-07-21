@@ -197,8 +197,8 @@ tasks:
 - id: t-012
   milestone: m3
   title: 'App: ArtCollection inspiration gallery and admin art-request submission form'
-  status: ready
-  owner: null
+  status: claimed
+  owner: worker
   passes: 0
   stakes: reversible
   depends_on: t-009
@@ -206,6 +206,9 @@ tasks:
     admin-gated form to submit a new art request into the art-prompts.yaml queue.
 
     '
+  claimed_by: claude-conductor-burst-20260721T1505Z-conductorapp
+  claimed_at: '2026-07-21T15:12:58Z'
+  updated: '2026-07-21T15:12:58Z'
 - id: t-010
   milestone: m4
   title: 'Store readiness: signing, privacy labels, account deletion, release checklist'

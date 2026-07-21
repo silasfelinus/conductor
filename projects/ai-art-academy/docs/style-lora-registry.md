@@ -157,6 +157,7 @@ lesson to the wrong registry entry by assuming the slugs always match.
 | `american-regionalism` | *(none)* | not yet in the registry — added to curriculum-outline.md v1.4 (2026-07-19); no dedicated LoRA search performed this cycle |
 | `persian-miniature` | `persian-miniature` | matches — added v1.4 (2026-07-20, this cycle), prompt-mode; see per-style notes |
 | `song-dynasty-landscape` | *(none)* | not yet in the registry — added to curriculum-outline.md v1.6 (2026-07-21); no dedicated LoRA search performed this cycle |
+| `mughal-miniature` | *(none)* | not yet in the registry — added to curriculum-outline.md v1.7 (2026-07-21); no dedicated LoRA search performed this cycle |
 
 Registry-only entries with **no curriculum-outline.md counterpart at all** — general
 painting techniques/bonus styles, not tied to a specific lesson movement, so a
