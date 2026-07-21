@@ -3865,3 +3865,12 @@ records:
   outcome: done
   failure_category: null
   lesson: "A recurring rotation task (t-010) can strand a green, unmerged kind_robots PR at session end if the completion checklist only names the terminal-state requirement generically instead of listing 'poll CI and merge (or explicitly park) before the cycle ends' as its own explicit bullet -- this had already happened twice (PR #942, PR #814) under slightly different framings before it was made an explicit, lane-agnostic checklist item. When a recurring task's own history shows the same failure shape twice, generalize the fix beyond the specific lane/step where it was first noticed, since the underlying gap (an implicit 'PR opened' being mistaken for 'cycle done') can recur on any lane that opens a PR."
+- date: '2026-07-21'
+  project: davinci
+  task: t-014
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "set_task_field.py edits whatever is on the caller's local working tree, unlike claim_task.py which fetches origin/main fresh and pushes via git plumbing -- calling set_task_field.py right after claim_task.py in the same session without an intervening fetch+ff-only can silently reapply a stale claimed_by/claimed_at (or any other field) on top of the real claim. Always fetch and fast-forward the local branch before any set_task_field.py call that follows a claim_task.py call. Separately: hand-appending a new paragraph to a folded (>) YAML note: field needs a blank line between paragraphs, not just a newline -- YAML's folded-scalar rule collapses adjacent non-blank lines into one line with a space, so a missing blank line silently merges the new paragraph into the previous one on next parse. Verify by re-parsing the note and diffing paragraph-boundary bytes, not by eyeballing the raw text diff."

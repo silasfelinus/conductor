@@ -299,3 +299,71 @@ egress dependency, so nothing blocked this cycle.
 **Kaizen task:** none filed this cycle — the natural next task (build the
 `/narrate` endpoint + minimal run-screen UI per the spec's "First build
 slice" section) is real but deliberately left unfiled per the note above.
+
+## 2026-07-21 | Worker (burst) | davinci/t-014 | done
+
+**Decision:** implemented, merged this session (reversible, scoped — session
+claude-conductor-agentrun-20260721T2000Z-davinci-t014).
+
+**Failure category:** none — clean first pass.
+
+**What was good:**
+- Picked up the gap the 2026-07-20 cycle (kind_robots PR #645) deliberately
+  left open: that cycle judged a full playable run UI premature because the
+  AI-narration layer (design-brief.md's Chat-as-narrator contract) wasn't
+  specced yet, and shipped only a static achievements list instead. The
+  narration spec landed later that same day (davinci/t-015, done) but still
+  has no implementation, so this cycle built a genuinely playable first
+  slice without waiting further: a curated 8-chapter content pool (one
+  chapter per narrative-device pattern named in design-brief.md) drives the
+  UI, while all durable state and outcome math stay server-side through the
+  existing play-loop API exactly as designed — the curated content is
+  swappable flavor text, not a second source of truth. This matches
+  design-brief.md's own "First build slice" guidance ("add a minimal run
+  shell only if needed for testing unlocks") more literally than either
+  waiting indefinitely or building a second state layer would have.
+- Read the actual implementation before writing UI code instead of
+  guessing at shapes: `server/utils/davinci.ts` (resolve math, play-loop
+  helpers), all 4 `server/api/davinci/**` route files (request/response
+  wrapper conventions), and the `LifeRun`/`LifeChoice`/`LifeStat`/
+  `LifeEnding` Prisma models directly — caught the `recordLifeChoice`
+  "only advances currentChapter when the submitted chapter is greater"
+  quirk early and designed around it (chapter pointer tracked as
+  `Choices.length + 1` client-side rather than trusting `currentChapter`
+  naively, which would have skipped chapter 1 on a fresh run).
+  Cross-referenced `challenge-center-page.vue` (a finished, fully
+  interactive `#interactive`-slot project) for the `performFetch` +
+  loading/error-state conventions rather than inventing new ones.
+- Hit a real process bug mid-cycle and caught it before it shipped:
+  `claim_task.py` pushes its claim commit straight to `origin/main` via git
+  plumbing without touching the caller's working tree, so the local
+  conductor checkout stayed stale after claiming; `set_task_field.py`
+  edits whatever's on disk. Running `set_task_field.py status review`
+  against that stale tree would have silently reintroduced a week-old
+  `claimed_by`/`claimed_at` and clobbered the actual claim. Caught by
+  diffing the field values against what had just been claimed, fixed by
+  fetching + fast-forwarding before reapplying. Also caught and fixed a
+  second, subtler bug of my own making: appending a new `note:` paragraph
+  by hand without a blank-line separator collapsed all three PROGRESS
+  paragraphs into one run-on line under YAML's folded (`>`) scalar rules
+  once re-parsed — verified by re-parsing the note (not just eyeballing
+  the raw diff) and comparing the paragraph-boundary bytes against the
+  original file's own convention before committing.
+- Verified: `npm run test` (`vue-tsc --noEmit`) exit 0, `eslint` clean,
+  `prettier --check` clean (after `--write`); `audit_roadmaps.py` — 0
+  errors, same 12-warning/44-info baseline before and after. kind_robots
+  PR #822: all 3 CI checks green (TypeScript, Contract verifiers,
+  GitGuardian) — merged squash `24ccea95`. Conductor PR #993: all 23 CI
+  checks green — merged squash `941865af`.
+
+**What to improve:** none this cycle.
+
+**Kaizen task:** conductor/t-077 (new) — `set_task_field.py`'s docstring
+doesn't warn that (unlike `claim_task.py`) it operates on the caller's
+local working tree rather than fetching `origin/main` fresh, which is
+exactly the staleness trap this cycle hit right after using
+`claim_task.py` in the same session. Add an explicit warning to the
+docstring/usage text recommending `git fetch origin main && git merge
+origin/main --ff-only` (or equivalent) immediately before any
+`set_task_field.py` call that follows a `claim_task.py` call in the same
+session.
