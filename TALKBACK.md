@@ -8855,3 +8855,37 @@ better proxy/relay visibility rather than guessing at a fix here.
 **Kaizen task:** none filed — this closes a self-contained CI-hang bug with a real regression
 guard (the 500-attempt poll cap fails the assertion instead of hanging again); no further
 follow-up work is implied.
+
+## 2026-07-21 | Worker+Reviewer (same session) | ai-art-academy/t-010 | pattern
+
+**Decision:** merged (kind_robots PR #831, squash `5920dbe4`)
+
+**Failure category:** null (clean first-pass cycle)
+
+**What was good:**
+- Continued a claim this same session had already made moments earlier (`claude-conductor-scheduled-20260721T220455Z-t010`,
+  claimed_at 22:04:55Z, per the checklist's next-preferred-lane pointer: lane 1, front-end polish)
+  rather than treating the sweep as a reason to re-derive from scratch.
+- Dispatched an Explore subagent with the checklist's full exclusion list of ~25 prior cycles'
+  fixed bug classes, so it had to find something genuinely new rather than restating a known gap.
+  It surfaced a real race condition (stale-async-response overwrite in `selectGalleryImage()`) —
+  confirmed by direct code read before fixing, not taken on faith.
+- Full local verification before opening the PR: provisioned kind_robots deps via
+  `scripts/provision_kind_robots_deps.sh`, ran `eslint`/`prettier --check` on the changed file and
+  the full-project `vue-tsc --noEmit` (exit 0) rather than relying on CI alone to catch a type error.
+- Polled kind_robots PR #831's CI to completion (all 3 checks green) via the GitHub MCP tools
+  before merging — direct GitHub REST API access is unavailable in this sandbox
+  (`GitHub access is not enabled for this session`), confirmed by a failed raw `curl` test rather
+  than assumed; used `pull_request_read`/`merge_pull_request` throughout instead.
+- Rearmed `t-010` to `ready` and updated the checklist's rotation-state pointer (next lane: 2,
+  roadmap accuracy) in the same pass the PR merged — closing the exact gap this checklist's own
+  "Completion test" section calls out from the PR #814/t-036 incident (a green PR left unmerged
+  and the task stranded at `claimed`).
+
+**What to improve:** none this cycle — the fix is small, scoped, and the whole cycle (claim →
+fix → verify → PR → CI → merge → rearm) closed within one session with no stranding.
+
+**Kaizen task:** none filed — the Explore agent itself already flagged a real, small follow-up
+(no per-thumbnail loading/disabled state on the gallery grid while a fetch is in flight) in the
+PR's own "Kaizen suggestion" section, which is enough for a future lane-1 cycle to pick up without
+a separate roadmap task.

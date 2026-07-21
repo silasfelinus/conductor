@@ -15,6 +15,26 @@ Record the lane, files changed, and verification in the task note before rearmin
 
 ### Rotation state
 
+- Last completed lane: Front-end polish (lane 1), 2026-07-21 (~22:04-22:21 UTC,
+  claude-conductor-scheduled-20260721T220455Z-t010). Dispatched an Explore
+  subagent over the full in-scope surface (art-styler.vue, image-upload.vue,
+  all components/academy/*.vue, academyStore.ts, styleHelper.ts,
+  academyStyles.ts) with this checklist's exclusion list of every bug class
+  already fixed in prior cycles. Found a real, verifiable race condition in
+  `art-styler.vue`'s `selectGalleryImage()`: rapid clicks on two different
+  not-yet-cached gallery thumbnails fire overlapping `getArtImageById()`
+  fetches with no way to discard a stale response — whichever resolves last
+  unconditionally wins regardless of click order, silently snapping
+  `selectedSourceImage` back to a no-longer-selected image. Fixed with a
+  monotonic `gallerySelectionToken` guard on both the success and catch
+  branches' writes to `selectedSourceImage.value`; the `galleryThumbs` cache
+  write still happens unconditionally (harmless). Verified: `npx
+  eslint`/`npx prettier --check` clean, full-project `npm run test`
+  (`vue-tsc --noEmit`) exit 0. kind_robots PR #831 (branch
+  `claude/vigilant-edison-kjvawv`): all 3 CI checks green (TypeScript,
+  Contract verifiers, GitGuardian) — merged squash `5920dbe4`. Next
+  preferred lane is roadmap accuracy (lane 2) — this cycle ran lane 1, so
+  lane 2 is next in the 1→2→3→4 rotation.
 - Last completed lane: Curriculum depth (lane 4, documentation-accuracy
   follow-up), 2026-07-21 (~19:10-19:30 UTC,
   claude-conductor-agentrun-20260721T1910Z-t010). Lane 3 (inspiration/preview
