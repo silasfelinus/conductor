@@ -15,6 +15,36 @@ Record the lane, files changed, and verification in the task note before rearmin
 
 ### Rotation state
 
+- Last completed lane: Curriculum depth (lane 4, documentation-accuracy
+  follow-up), 2026-07-21 (~19:10-19:30 UTC,
+  claude-conductor-agentrun-20260721T1910Z-t010). Lane 3 (inspiration/preview
+  assets) was next preferred per the prior cycle's note, tried first with a
+  genuinely fresh queued job (job 1275, greek-vase-painting.webp, not 1242 or
+  earlier): timed out after 60s still queued, same never-claimed home-relay
+  signature as every prior check since 2026-07-18. Fell back to lane 4. Found
+  a real, verifiable documentation-staleness bug while checking this lane's
+  headline "known gap": this section (below) and its coverage table both
+  still said Mughal Miniature Painting (§27) "has not yet been synced" to
+  `academyStyles.ts`, but kind_robots PR #814 already landed that exact sync
+  and merged at 2026-07-21T16:12:09Z (confirmed via `get_file_contents` on
+  kind_robots' current `stores/seeds/academyStyles.ts` — the `mughal-miniature`
+  entry is present with `recognitionCues`/`artists`/`failureMode`/`remix`
+  fields matching the curriculum doc) — the ~16:06 UTC cycle that opened #814
+  and the ~16:20 UTC Reviewer pass that merged it both updated the roadmap's
+  RAN note but neither updated this checklist's summary prose, so it drifted
+  one merge behind its own rotation-state entry (same staleness *shape* as
+  the coat-dance/t-010 and ai-art-academy/t-010 self-corrections logged
+  earlier in this file, just in a doc this task also maintains rather than
+  `status:`). Corrected the "Current curriculum coverage" section and table
+  below to 27/27 synced. With the sync gap now closed, every remaining
+  coverage-table row (example works, style previews, remix configs) is
+  blocked solely on the same home-relay-down signature reconfirmed this
+  cycle — no other unblocked lane-4 work remains before a 28th movement.
+  `scripts/audit_roadmaps.py` — 0 errors, same baseline, no new findings.
+  Conductor-docs-only change; no kind_robots PR needed (nothing to sync,
+  the front-end already has it). Next preferred lane is front-end polish
+  (lane 1) — this cycle ran lane 4, so lane 1 is next in the 1→2→3→4
+  rotation.
 - Last completed lane: Roadmap accuracy (lane 2), 2026-07-21 (~16:30 UTC,
   claude-conductor-scheduled-20260721T1630Z-t010). `audit_roadmaps.py` and
   `check_pr_merged_drift.py` both clean; all 6 milestones re-verified
@@ -535,20 +565,21 @@ This explicit state is the handoff between recurring cycles. Update it in the sa
 
 ## Current curriculum coverage
 
-The Academy currently has 27 movement entries in `curriculum-outline.md`, 26 of them
-synced to `academyStyles.ts` (t-031 landed the Suprematism sync 2026-07-18; t-034
+The Academy currently has 27 movement entries in `curriculum-outline.md`, all 27 of
+them synced to `academyStyles.ts` (t-031 landed the Suprematism sync 2026-07-18; t-034
 landed the Ashcan School sync 2026-07-18, kind_robots PR #464; the 2026-07-19 cycle
 landed the American Regionalism sync, kind_robots PR #506; the 2026-07-20 ~04:10-04:40
 UTC cycle landed the Persian Miniature Painting sync, kind_robots PR #616; the
 2026-07-21 ~07:11-07:15 UTC cycle landed the Song Dynasty Landscape Painting sync,
-kind_robots PR #771, merged ~08:14 UTC). Mughal Miniature Painting (§27, added this
-cycle) has not yet been synced — its front-end sync is deliberately deferred to a
-future cycle per rotation-state convention. Before adding a 28th movement, finish the
-known coverage gaps below unless a newly discovered issue is more urgent.
+kind_robots PR #771, merged ~08:14 UTC; the 2026-07-21 ~16:06-16:20 UTC cycle landed
+the Mughal Miniature Painting sync, kind_robots PR #814, merged 16:12:09Z). Before
+adding a 28th movement, finish the known coverage gaps below unless a newly
+discovered issue is more urgent — as of the 2026-07-21 ~19:10 UTC cycle, every
+remaining gap is blocked solely on home-relay reachability.
 
 | Area | Current state | Next verifiable action |
 |---|---|---|
-| Lesson seed entries | 26 of 27 movements in curriculum-outline.md are synced to `academyStyles.ts` (Persian Miniature Painting landed 2026-07-20, kind_robots PR #616; Song Dynasty Landscape Painting landed 2026-07-21, kind_robots PR #771, mirroring t-020/t-031/t-034/PR #506) | Sync Mughal Miniature Painting (§27) to `academyStyles.ts` in a future cycle, mirroring the same pattern |
+| Lesson seed entries | 27 of 27 movements in curriculum-outline.md are synced to `academyStyles.ts` (Persian Miniature Painting landed 2026-07-20, kind_robots PR #616; Song Dynasty Landscape Painting landed 2026-07-21, kind_robots PR #771; Mughal Miniature Painting landed 2026-07-21, kind_robots PR #814 — mirroring t-020/t-031/t-034/PR #506) | Complete — no open action until a 28th movement is added |
 | Example works | 24 movements complete, including Persian Miniature Painting (3 works, all **VERIFIED** by direct `WebFetch` of their Wikimedia Commons file pages — 2026-07-20 egress to commons.wikimedia.org worked, unlike the earlier `artic.edu` 402s), Song Dynasty Landscape Painting (3 works, all **VERIFIED** the same way, 2026-07-21), and Mughal Miniature Painting (3 works, all **VERIFIED** the same way, 2026-07-21). Ashcan School's 4 VERIFIED works are written up in curriculum-outline.md §23 but not yet in `examples.manifest.json` (confirmed absent: no `exampleWorks` field on the `ashcan-school` entry in `stores/seeds/academyStyles.ts` as of 2026-07-19). American Regionalism's 4 works are written up in curriculum-outline.md §24 (sourced, but marked "unverified this cycle" — `WebFetch` to museum hosts returned HTTP 402 through the session egress proxy) | Blocked on media-server write access — same blocker as t-033 (confirmed 2026-07-19: `examples.manifest.json` lives on `media.acrocatranch.com`, not in the kind_robots git repo; this session has `KR_API_TOKEN` but no `KR_RELAY_TOKEN`/`KR_RELAY_USER_ID` and found no in-repo upload path, so it cannot write the manifest or upload images from here). Research/sourcing is already done (curriculum-outline.md §23-27); only the write step remains, plus a direct-fetch spot-check of §24's four URLs when museum/Commons egress is open. Resume once a session with media-server/relay write access is available — do not re-attempt from a sandbox without it |
 | Starter library | 21 starter images and provenance manifest complete — coverage intentionally movement-agnostic (2026-07-18: confirmed no movement-specific starters exist for any of the 8 movements added after v1, and an abstract Suprematist work would fail the library's own selection criteria; see starter-image-library.md) | Keep source-picker integration aligned with the manifest; no new starter entries needed |
 | Style previews | 27 prompts queued (Suprematism queued 2026-07-18, `kind-robots-academy-style-preview-suprematism`; Ashcan School queued the same cycle it was added, `kind-robots-academy-style-preview-ashcan-school`; American Regionalism queued 2026-07-19, `kind-robots-academy-style-preview-american-regionalism`; Persian Miniature Painting queued 2026-07-20, `kind-robots-academy-style-preview-persian-miniature`; Song Dynasty Landscape Painting queued 2026-07-21, `kind-robots-academy-style-preview-song-dynasty-landscape`; Mughal Miniature Painting queued 2026-07-21, `kind-robots-academy-style-preview-mughal-miniature`; all in `art-prompts.yaml`). All 27 are still `status: pending` — the home relay is not claiming jobs (2026-07-20 ~10:04Z: job 816 accepted but never claimed after 10+ minutes; 2026-07-20 ~17:12Z: fresh job 957 also accepted but still `status: PENDING`/unclaimed; 2026-07-21 ~04:06Z: fresh job 1184 also accepted but still `status: PENDING`/unclaimed; 2026-07-21 ~14:xx UTC: fresh job 1242 also accepted but still `status: PENDING`/unclaimed, `updatedAt` unchanged since creation) | Blocked on home-relay reachability, not on this queue. Re-run `python scripts/consume_art_requests.py --id-prefix "kind-robots-academy-style-preview-" --live` with a fresh job (not 816, 855, 957, 1014, 1175, 1184, or 1242) once relay/DB state is confirmed to have changed |
