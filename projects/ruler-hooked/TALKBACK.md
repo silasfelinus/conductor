@@ -78,3 +78,39 @@ review comment and t-012's `retry_context`.
 
 **Kaizen task:** none filed this cycle — the tooling fix already exists (t-046); the
 gap is a session not using it, which retry_context addresses directly.
+
+## 2026-07-21 | Worker (scheduled) | ruler-hooked/t-007 | done (no PR needed — verification + bookkeeping)
+
+**Decision:** closed out (session claude-conductor-scheduled-20260721T1214Z).
+
+**Failure category:** none — clean, no retry needed.
+
+**What was good:**
+- t-007's note already stated an explicit completion condition: "Mark t-007 done once
+  PR #328 merges AND t-012 lands the playable screen meeting all four DESIGN-BRIEF m2
+  exit criteria." Both were true as of t-012's merge earlier the same day (kind_robots
+  PR #811), but t-007 itself hadn't been flipped — picked it up specifically to close
+  that gap rather than treat it as new implementation work.
+- Did not trust t-012's prior "confirmed the four exit criteria" note at face value
+  (the freshly-added AGENTS.md retry_context guidance from this same day's t-074 kaizen
+  applies just as much to a completion claim as to a rejection). Re-verified
+  independently against a fresh kind_robots checkout at current main (736b663f):
+  `npx tsx utils/rulerHooked/engine.selftest.ts` and `game.selftest.ts` both ALL PASS,
+  and the full `npm run test` (vue-tsc --noEmit) gate is green (exit 0) — confirming
+  the 2026-07-16 red-main TypeScript regression this task's own note flagged is
+  resolved, not just the narrower isolated-tsc proxy check the earlier PROGRESS entries
+  above warned against relying on alone.
+- Confirmed all four DESIGN-BRIEF m2 exit criteria are structurally wired, not just
+  passing at the engine level: `components/ruler-hooked/ruler-hooked-page.vue` (mounted
+  at `content/ruler-hooked.md`'s `#interactive` slot) composes `ruler-hooked-game.vue`
+  (playable session + event cards/narrative arc), `ruler-hooked-stage.vue` (composited
+  landscape regions), `ruler-hooked-health.vue`, and `ruler-hooked-slots.vue` (multiple
+  save slots).
+- No kind_robots code change needed — conductor-only close-out. Claimed via
+  `claim_task.py` before editing.
+
+**What to improve:** none this cycle.
+
+**Kaizen task:** none this cycle — m2's remaining ready task (t-010, the open-ended
+"polish and upgrade" pass) already covers ongoing front-end improvement; no new gap
+found worth a separate task.
