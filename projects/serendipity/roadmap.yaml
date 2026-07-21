@@ -205,11 +205,11 @@ tasks:
 - id: t-012
   milestone: m5
   title: Polish and upgrade Serendipity front-end surface
-  status: ready
+  status: claimed
   owner: reviewer
-  updated: '2026-07-20T08:15:00Z'
+  updated: '2026-07-21T04:14:28Z'
   passes: 0
   stakes: reversible
   note: 'UI polish + upgrade for the serendipity front end now that the scaffold page is live at /serendipity. Steps: (1) generate final dashboard-tab art at public/images/dashboard-tabs/scenario/serendipity.webp and tutorial art at public/images/tutorials/scenario/serendipity.webp; (2) add a matching section for ''serendipity'' under tutorialChannels.scenario.sections in kind_robots/stores/helpers/tutorialCards.ts; (3) verify the PROJECT Dream liveUrl points at /serendipity (admin can run the Conductor ''Placements'' button to backfill channelKey/tabKey/liveUrl); (4) evolve the placeholder scaffold page into the full interactive experience for this project. PROGRESS 2026-07-20 (conductor agent session, kind_robots PR #636 merged squash 650a2c9): step (2) done -- added a ''serendipity'' section under tutorialChannels.scenario.sections in stores/helpers/tutorialCards.ts (Stories tutorial channel), resolving via the existing tutorialImage(''scenario'', ''serendipity'') helper with a placeholder fallback until dedicated art lands. Step (4) is effectively covered, not actually a placeholder: components/pages/serendipity-page.vue already implements the full story-weaving loop (LOCATION Dreams, Facets, momentum-driven narrative beats, HONEYDO/needs-human task weaving, Story ledger Apply write-back) per milestones m2/m4/m5 already done. Remaining and kept ready: step (1) dashboard-tab + tutorial .webp art -- confirmed the art-generation relay is still down this session (job 816, queued 2026-07-20T00:14Z, still PENDING/unclaimed 8+ hours later, same as ai-art-academy/t-035''s finding); and step (3) the liveUrl/channelKey/tabKey backfill -- confirmed via GET /api/projects that all three are still null for conductorSlug: serendipity, needs an admin Placements click. Verified before merge: eslint clean, prettier clean, full-project npm run test (vue-tsc --noEmit) exit 0. All 3 kind_robots PR checks green (TypeScript, Contract verifiers, GitGuardian).'
-  claimed_by: claude-conductor-scheduled-20260720081134Z
-  claimed_at: '2026-07-20T08:15:00Z'
+  claimed_by: claude-conductor-scheduled-20260721T0410Z
+  claimed_at: '2026-07-21T04:14:28Z'
