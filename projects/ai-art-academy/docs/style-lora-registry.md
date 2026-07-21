@@ -85,6 +85,22 @@ Added `persian-miniature` as an 11th prompt-mode style, `prompt_hint` copied
 verbatim from `curriculum-outline.md` §25's remix_hint. Full detail in the
 persian-miniature per-style notes entry below.
 
+**v1.5 update (2026-07-21, t-010 cycle):** `neoclassicism` (movement §6, curriculum
+since v1) had no registry entry — the curriculum-slug-mapping table still said "not
+yet in the registry," one of the original 16 target styles that lane-4 cycles kept
+deferring in favor of newer movements. With Hugging Face and Civitai both directly
+reachable this cycle (rechecked fresh, see `EGRESS-BLOCKERS.md`), ran a targeted
+search for the movement's central figure and found **`NobodyButMeow/french-neoclassic-portrait-style-jacques-louis-david`**
+(Civitai, FLUX.1 D, no login/API key required — verified by following the actual
+download redirect to a `200`, not just reading the page). Model card explicitly
+discloses its sole training corpus as nineteen portrait paintings by Jacques-Louis
+David (1748-1825, the movement's central figure per curriculum-outline.md §6,
+comfortably past the dead-70-years boundary). Promoted to LoRA mode — see the
+per-style notes entry below. Also rechecked `artic.edu` for the still-unverified
+American Regionalism (§24) example works: still blocked, now bot-challenged
+(`cf-mitigated: challenge`) rather than the earlier `402`, same practical outcome —
+logged to `EGRESS-BLOCKERS.md` instead of repeating recheck prose here.
+
 ### Licensing headline (flag for t-004 and Silas)
 
 Almost every FLUX LoRA in the ecosystem is published under the **FLUX.1 [dev]
@@ -120,7 +136,7 @@ lesson to the wrong registry entry by assuming the slugs always match.
 | `illuminated-manuscript` | `illuminated-manuscript` | matches |
 | `renaissance` | `renaissance-fresco` | **divergent** — registry entry is a Raphael-LoRA + fresco-texture take, not the movement generically |
 | `baroque` | `baroque-chiaroscuro` | **divergent** — registry entry is the chiaroscuro-lighting prompt-mode recipe specifically |
-| `neoclassicism` | *(none)* | not yet in the registry |
+| `neoclassicism` | `neoclassicism` | matches — added v1.5 (2026-07-21, this cycle), see per-style notes |
 | `ukiyo-e` | `ukiyo-e` | matches |
 | `romanticism` | *(none)* | not yet in the registry |
 | `realism` | *(none)* | not yet in the registry |
@@ -279,6 +295,14 @@ styles:
   - style_slug: persian-miniature
     mode: prompt
     prompt_hint: "Repaint this image as a Persian miniature: flat, high-vantage compositions with distant figures placed higher rather than smaller, brilliant unshaded jewel colors, intricate architectural or garden detail, patterned textiles, and a dense floral or geometric border, no Western perspective or cast shadow"
+  - style_slug: neoclassicism
+    mode: lora
+    lora_name: NobodyButMeow/french-neoclassic-portrait-style-jacques-louis-david
+    source_url: https://civitai.com/models/1113267/french-neoclassic-portrait-style-jacques-louis-david
+    license: "FLUX.1 [dev] Non-Commercial License (commercial: no; generation-service: no without BFL license)"
+    base_model: flux-dev
+    trigger: "jldavid1 painting"
+    weight: 0.9
   # Bonus styles (not in the t-003 target list, free wins from the Kontext pack)
   - style_slug: post-impressionism-van-gogh
     mode: lora
@@ -626,6 +650,30 @@ styles:
   whether generated output places distant elements higher (not just smaller) on
   the page; if not, the remix reads as generic "colorful storybook art," not
   Persian miniature.
+
+### neoclassicism — LoRA (Jacques-Louis David)
+
+- Backs curriculum movement §6 (Neoclassicism, c. 1750-1830: David d. 1825, Ingres
+  d. 1867, Canova d. 1822, Kauffman d. 1807 — all comfortably in-bounds).
+- **Found 2026-07-21 (t-010 cycle), Hugging Face and Civitai both directly
+  reachable:** **`NobodyButMeow/french-neoclassic-portrait-style-jacques-louis-david`**
+  (Civitai model 1113267, version 1251005), FLUX.1 D, trigger `jldavid1 painting`.
+  Model card discloses its exact training corpus as nineteen portrait paintings by
+  Jacques-Louis David — the movement's own central figure per curriculum-outline.md
+  §6, its "Roman history paintings doubled as political manifestos" entry — the same
+  clean founding-master match already established as the registry's gold standard by
+  `northern-renaissance` (Jan van Eyck). Unlike the gated `pointillism` (S-7) Civitai
+  entry, this file's actual download link was followed end-to-end this cycle
+  (`https://civitai.com/api/download/models/1251005?fileId=1156481` → `307` →
+  `b2.civitai.com` → `200`) with no account or API key — genuinely no-login,
+  verified directly rather than assumed from the page.
+- **Teaching note / t-004 watch-item:** the LoRA is trained specifically on David's
+  *portraits*, not his large-scale history paintings (*Oath of the Horatii*, *The
+  Death of Socrates*) that the curriculum's example works and remix_hint actually
+  foreground — friezelike multi-figure compositions with classical props. Treat this
+  as a strong lead for portrait-subject remixes but validate in t-004 whether it
+  generalizes to the frieze-like, prop-heavy compositions the lesson teaches, or
+  whether it under-delivers on anything that isn't a single posed figure.
 
 ### Bonus: post-impressionism (Van Gogh) and pop-art — LoRA
 
