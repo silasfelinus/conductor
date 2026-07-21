@@ -289,42 +289,16 @@ tasks:
   - id: t-014
     milestone: m4
     title: "Polish and upgrade Da Vinci front-end surface"
-    status: claimed
+    status: review
     owner: worker
     passes: 0
     stakes: reversible
     note: >
-      UI polish + upgrade for the davinci front end now that the scaffold page is
-      live at /davinci. Steps: (1) generate final dashboard-tab art at
-      public/images/dashboard-tabs/wonder/davinci.webp and tutorial art at
-      public/images/tutorials/wonder/davinci.webp; (2) add a matching section for
-      'davinci' under tutorialChannels.wonder.sections in
-      kind_robots/stores/helpers/tutorialCards.ts; (3) verify the PROJECT Dream
-      liveUrl points at /davinci (admin can run the Conductor 'Placements' button
-      to backfill channelKey/tabKey/liveUrl); (4) evolve the placeholder scaffold
-      page into the full interactive experience for this project.
+      UI polish + upgrade for the davinci front end now that the scaffold page is live at /davinci. Steps: (1) generate final dashboard-tab art at public/images/dashboard-tabs/wonder/davinci.webp and tutorial art at public/images/tutorials/wonder/davinci.webp; (2) add a matching section for 'davinci' under tutorialChannels.wonder.sections in kind_robots/stores/helpers/tutorialCards.ts; (3) verify the PROJECT Dream liveUrl points at /davinci (admin can run the Conductor 'Placements' button to backfill channelKey/tabKey/liveUrl); (4) evolve the placeholder scaffold page into the full interactive experience for this project.
 
-      PROGRESS 2026-07-20 (conductor agent session claude-conductor-agent-20260720T-run1,
-      kind_robots PR #645): step (2) confirmed already done -- a 'davinci' section
-      already exists under tutorialChannels.wonder.sections in
-      stores/helpers/tutorialCards.ts, no action needed. Step (4) advanced within
-      polish-pass scope rather than built in full: added a #interactive slot to
-      davinci-page.vue that fetches achievements client-side and lists the seeded
-      davinci-ending-* achievements (title + live count), mirroring the
-      storymaker-page.vue pattern of wiring live store data into the front page. A
-      full playable run UI is NOT built -- the play-loop API
-      (POST /api/davinci/runs, choices, resolve) exists server-side but there is no
-      AI-narration layer yet to generate actual chapter content, so a playable UI
-      would have nothing real to show; same judgment call storymaker/t-010 made.
-      Filed a kaizen suggestion (in the PR body) to spec that narration layer next.
-      Remaining and kept ready: step (1) dashboard-tab + hero art (already queued
-      in art-prompts.yaml as kind-robots-davinci-image-* / conductor-davinci-hero-*,
-      blocked on the art-generation relay -- confirmed still down this session via
-      the same relay-status pattern serendipity/t-012 and storymaker/t-010 found
-      today) and step (3) the liveUrl/channelKey/tabKey backfill (confirmed still
-      null via GET /api/projects, needs an admin Placements click). Verified before
-      opening the PR: npm run test (vue-tsc --noEmit) exit 0, eslint clean, prettier
-      clean. Full CI check status pending on kind_robots PR #645.
+      PROGRESS 2026-07-20 (conductor agent session claude-conductor-agent-20260720T-run1, kind_robots PR #645): step (2) confirmed already done -- a 'davinci' section already exists under tutorialChannels.wonder.sections in stores/helpers/tutorialCards.ts, no action needed. Step (4) advanced within polish-pass scope rather than built in full: added a #interactive slot to davinci-page.vue that fetches achievements client-side and lists the seeded davinci-ending-* achievements (title + live count), mirroring the storymaker-page.vue pattern of wiring live store data into the front page. A full playable run UI is NOT built -- the play-loop API (POST /api/davinci/runs, choices, resolve) exists server-side but there is no AI-narration layer yet to generate actual chapter content, so a playable UI would have nothing real to show; same judgment call storymaker/t-010 made. Filed a kaizen suggestion (in the PR body) to spec that narration layer next. Remaining and kept ready: step (1) dashboard-tab + hero art (already queued in art-prompts.yaml as kind-robots-davinci-image-* / conductor-davinci-hero-*, blocked on the art-generation relay -- confirmed still down this session via the same relay-status pattern serendipity/t-012 and storymaker/t-010 found today) and step (3) the liveUrl/channelKey/tabKey backfill (confirmed still null via GET /api/projects, needs an admin Placements click). Verified before opening the PR: npm run test (vue-tsc --noEmit) exit 0, eslint clean, prettier clean. Full CI check status pending on kind_robots PR #645.
+
+      PROGRESS 2026-07-21 (conductor agent session claude-conductor-agentrun-20260721T2000Z-davinci-t014): step (4) built for real this cycle, closing the gap the 2026-07-20 cycle deliberately left open. Rather than wait on the still-unspecced AI-narration layer, built a self-contained playable life-run UI against the existing play-loop API (POST /api/davinci/runs, POST .../choices, POST .../resolve, GET .../:id) using a curated 8-chapter pool of narrative scenes/choices (one per design-brief.md narrative device: temptation, sacrifice, mentor encounter, dream gate, false victory, return, inheritance, collapse), each choice posting real effects to the server's LifeStat model -- the app still owns all durable state and outcome math, per the design brief's boundary rule; the curated content is flavor, not a second source of truth. Covers: start-a-life form (protagonist name/genre), a live 10-dimension pass/fail stat grid, chapter-by-chapter choice UI, resolve-to-ending screen (title/summary/victory badge, achievement-awarded note), resume-in-progress-run via localStorage + GET, and a logged-out gate. This is a genuinely playable first slice per design-brief.md's 'First build slice' section, not the full AI-narrated experience -- narration-layer work (spec already done, davinci/t-015) remains a separate future upgrade that can swap the curated pool for generated content without changing the state/API contract. Verified: npm run test (vue-tsc --noEmit) exit 0, eslint clean, prettier --check clean (after --write). Remaining and kept ready: step (1) dashboard-tab + hero art still blocked on the art-generation relay (not rechecked this cycle -- no new signal expected since every other session today found it still down) and step (3) the liveUrl/channelKey/tabKey admin Placements backfill. kind_robots PR pending open this cycle.
     claimed_by: claude-conductor-agentrun-20260721T2000Z-davinci-t014
     claimed_at: '2026-07-21T20:13:36Z'
     updated: '2026-07-21T20:13:36Z'
