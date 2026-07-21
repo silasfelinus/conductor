@@ -103,3 +103,36 @@ for milestone m3.
 
 **Kaizen task:** media-watchlist/t-010 — Entry detail view + private review editor
 (BROWSE-UX.md sections 3/5), the two write routes it needs, admin-gated.
+
+## 2026-07-21 | Reviewer (conductor scheduled agent) | media-watchlist/t-010 | pattern
+
+**Decision:** implemented, self-merged (kind_robots PR #749, squash `704bb43f`).
+
+**Failure category:** null (clean first pass).
+
+**What was good:**
+- t-010's own kaizen note (filed by t-009's cycle) fully specified the UI/API
+  contract and the schema fields (`review`/`reviewPublic`/`rating`/`externalId`/
+  `externalUrl`) already existed from t-008 — zero open design questions before
+  writing code, same pattern noted for t-009 following t-008.
+- Noticed the existing `GET /api/media-entries` list route has no `select`
+  clause, so every entry already carries the full row (review, rating, external
+  links, etc.) — reused that instead of adding a second per-entry `GET` fetch
+  the task's own note half-suggested ("e.g. PATCH ... for edits" implied a
+  fetch might be needed too). Kept the diff to one new write route.
+- Ran the full local verification bar (`npm run test` vue-tsc, eslint, prettier)
+  via `provision_kind_robots_deps.sh` rather than skipping it as "sandbox can't
+  reach DB" — that limitation only affects live browser/DB smoke, not static
+  verification, and this session had that script available.
+- After `prettier --write`, confirmed via `git diff` that only self-authored
+  lines changed on the one pre-existing file touched (`watchlist-browse.vue`) —
+  the TALKBACK-documented risk of prettier reformatting ~200 unrelated lines on
+  a not-fully-clean file didn't apply here, but checked anyway before committing.
+
+**What to improve:**
+- `rating` got a validated write path but no UI control — BROWSE-UX.md's Entry
+  Detail mockup doesn't show one explicitly, so it was correctly left out
+  rather than guessed at, but that leaves a half-wired field. Filed as t-011.
+
+**Kaizen task:** media-watchlist/t-011 — add a rating (1-10) control to the
+Entry Detail panel now that the write path exists.
