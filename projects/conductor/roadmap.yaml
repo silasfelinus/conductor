@@ -2099,7 +2099,7 @@ tasks:
     milestone: m2
     title: 'AGENTS.md: session ids for claimed_by should be collision-resistant,
       not a reused hour-label string'
-    status: claimed
+    status: review
     owner: reviewer
     passes: 0
     stakes: reversible
@@ -2120,6 +2120,15 @@ tasks:
       multiple concurrent burst-mode sessions could plausibly reuse. Doc-only
       change; no script behavior needs to change since claim correctness
       itself was never at risk.
+
+      DONE 2026-07-21 (~15:15 UTC, claude-conductor-agentrun-20260721T151500Z-t075):
+      added the recommended-session-id guidance directly to AGENTS.md's "Picking
+      what to work on" step 6, right after the `ALREADY_CLAIMED` rotation
+      instruction, and mirrored a matching short note in `scripts/claim_task.py`'s
+      own module docstring (both cite this task and coat-dance/t-001 by name).
+      Doc-only change, no script behavior touched — verified `python -m py_compile
+      scripts/claim_task.py` still passes and `scripts/audit_roadmaps.py` shows 0
+      errors, same 11 warnings/44 info baseline as before this change.
     claimed_by: claude-conductor-agentrun-20260721T151500Z-t075
     claimed_at: '2026-07-21T15:15:45Z'
-    updated: '2026-07-21T15:15:45Z'
+    updated: '2026-07-21T15:16:30Z'

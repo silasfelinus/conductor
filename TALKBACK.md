@@ -8542,3 +8542,32 @@ process near-miss caught and self-corrected mid-session (below).
 AGENTS.md: generate the session id from a fine-grained timestamp (or a random
 suffix) rather than reusing a coarse hour/session-label string, so two sessions in
 the same rotation window can't collide on `claimed_by` the way this cycle did.
+
+## 2026-07-21 | Reviewer → Worker | conductor/t-075 | pattern
+
+**Decision:** merged (session claude-conductor-agentrun-20260721T151500Z-t075).
+
+**Failure category:** none — clean first pass, doc-only change.
+
+**What was good:**
+- This cycle's kaizen task, picked directly off `next_ready_task.py`'s rotation
+  after skipping `ai-art-academy/t-010` (already run several times today) and
+  several genuinely-blocked or already-claimed candidates further down
+  `priority.yaml` (model-builder/t-022/t-029/t-031 blocked on live prod/relay
+  access; conductor-app/t-012 already claimed by a concurrent burst session;
+  animation-manager/t-006/t-007 already ran their once-per-Pacific-day cycle
+  today; animation-studio confirmed retired via `project-overrides.yaml`).
+- Claimed via `claim_task.py` against live `origin/main` before editing.
+- Added the guidance in both places the originating kaizen note asked for:
+  AGENTS.md's "Picking what to work on" step 6 (right after the
+  `ALREADY_CLAIMED` rotation instruction) and a matching short note in
+  `scripts/claim_task.py`'s own module docstring, both citing this task and
+  coat-dance/t-001 by name so a future reader can trace the origin.
+- Verified `python -m py_compile scripts/claim_task.py` (doc-only docstring
+  edit, script behavior unchanged) and `scripts/audit_roadmaps.py` (0 errors,
+  same 11 warnings/44 info baseline before and after).
+
+**What to improve:** none this cycle.
+
+**Kaizen task:** none this cycle — this cycle's work *was* the prior cycle's
+kaizen task.

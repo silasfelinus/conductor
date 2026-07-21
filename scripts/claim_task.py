@@ -13,6 +13,13 @@ Usage:
     python scripts/claim_task.py <project> <task-id> --owner worker --session <id>
     python scripts/claim_task.py <project> <task-id> --owner reviewer --session <id> --dry-run
 
+Pick a collision-resistant --session <id> -- a full ISO timestamp with seconds plus
+a short task-specific suffix, or a random token -- not a coarse hour/rotation label.
+Claiming keys on project/task, not session id, so a reused label never causes a false
+ALREADY_CLAIMED, but it does leave the claimed_by/TALKBACK trail looking like one
+continuous session did unrelated work when two concurrent sessions reuse the same
+label within the same hour (coat-dance/t-001, 2026-07-21 -- see root TALKBACK.md).
+
 What it does:
     1. Fetches `origin/main` and reads the task straight out of that ref's
        roadmap.yaml -- never the local working tree, which is exactly the stale
