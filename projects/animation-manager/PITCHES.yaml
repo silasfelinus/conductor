@@ -1,4 +1,4 @@
-updated: "2026-07-20T00:15:00-07:00"
+updated: "2026-07-21T01:20:00-07:00"
 
 pitches:
   - id: bioluminescent-tide
@@ -65,7 +65,7 @@ pitches:
 
   - id: magnetic-sand-garden
     title: Magnetic Sand Garden
-    status: pitched
+    status: candidate
     priority: 3
     surprise: Metallic sand grains gather into temporary topographic islands, then collapse and reform around invisible magnets.
     passive_loop: Flow-field bands continuously comb the sand into ridges, valleys, and occasional geometric blooms.
@@ -77,6 +77,21 @@ pitches:
     acceptance:
       - forms evolve rather than merely translating
       - coarse simulation remains attractive at desktop scale
+    builds:
+      - version: 1
+        status: candidate
+        component: components/screenfx/magnetic-sand-garden.vue
+        pull_request: silasfelinus/kind_robots#785
+        verification:
+          - TypeScript Type Check
+          - eslint
+          - test:animation-catalog
+          - test:animation-component-attempts
+        deferred:
+          - Live browser smoke test (docs/architecture/animation-catalog-smoke-matrix.md) --
+            no reachable DATABASE_URL in the sandbox; server/utils/prisma.ts throws on every
+            SSR request.
+          - Component attempt record (SPEC.md "Attempt records") -- same DB blocker.
 
   - id: stained-glass-rain
     title: Stained Glass Rain

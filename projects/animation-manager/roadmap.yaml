@@ -234,7 +234,7 @@ tasks:
   - id: t-007
     milestone: m5
     title: "Build or polish one animation candidate from reaction evidence"
-    status: claimed
+    status: ready
     owner: worker
     passes: 0
     stakes: reversible
@@ -269,9 +269,33 @@ tasks:
       GitGuardian). PITCHES.yaml's paper-lantern-weather entry carries a `builds:` record
       (status: candidate, pending the deferred live-smoke pass before promoting to shipped).
       Rearming to ready per the recurring-task convention.
-    claimed_by: claude-conductor-burst-20260721T080625Z
-    claimed_at: '2026-07-21T08:06:25Z'
-    updated: '2026-07-21T08:06:25Z'
+
+      RAN 2026-07-21 (~08:06-08:20 UTC, claude-conductor-burst-20260721T080625Z): built
+      magnetic-sand-garden, the highest-priority unbuilt pitch in PITCHES.yaml (priority 3,
+      next after paper-lantern-weather which remains a candidate pending live smoke). New
+      components/screenfx/magnetic-sand-garden.vue: a coarse-grid (~260-760 cells, bounded by
+      viewport area) metallic sand simulation combed by layered flow-field sine bands into
+      ridges/valleys, with the pointer as a weak Gaussian-falloff magnet and a click flipping
+      global polarity + spawning an expanding ring ripple that reorganizes the field along its
+      front. Follows the shipped bioluminescent-tide.vue/paper-lantern-weather.vue pattern
+      (Canvas 2D, ResizeObserver sizing, prefers-reduced-motion handling -- smaller grid + far
+      slower ease/time rates, not a full freeze -- full RAF/observer/listener cleanup on
+      unmount) plus the stores/animationCatalog.ts entry (generationSafe: true,
+      preferredSurface: fullscreen, no blocksInput). Verified: npm run test:animation-catalog
+      (32 effects, unique ids, all screenfx components resolve, aliases checked), npm run
+      test:animation-component-attempts (naming/attempt conventions verified for all 32
+      catalog slugs), eslint clean, prettier clean on the new file (pre-existing
+      animationCatalog.ts prettier drift left untouched, same call as t-029's prior cycles),
+      full-project npm run test (vue-tsc --noEmit) exit 0. Live browser smoke test and the
+      Component attempt record (SPEC.md "Attempt records") are BOTH deferred: no reachable
+      DATABASE_URL in this sandbox -- same class of blocker as model-builder/t-031,
+      davinci/t-014, and this task's own 2026-07-20 run. kind_robots PR #785 (branch
+      claude/keen-fermat-42qyne) open, CI pending. PITCHES.yaml's magnetic-sand-garden entry
+      updated with a `builds:` record (status: candidate, pending the deferred live-smoke pass
+      before promoting to shipped). Rearming to ready per the recurring-task convention.
+    claimed_by: null
+    claimed_at: null
+    updated: '2026-07-21T08:20:00Z'
 
   - id: t-008
     milestone: m3
