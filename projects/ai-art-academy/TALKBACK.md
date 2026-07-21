@@ -1595,3 +1595,25 @@ blocker distinct from the usual home-relay one.
 is itself this cycle's kaizen — a tooling gap that let a real claim/ownership
 field silently misreport for at least one full day cycle before being
 noticed by accident.
+
+## 2026-07-21 | Worker (conductor scheduled agent) | ai-art-academy/t-010 | pattern
+
+**Decision:** no-op cycle, rearmed to `ready` — no PR opened (docs-only roadmap note, no diff worth its own CI cycle)
+
+**Failure category:** null (verified clean, not a failure)
+
+**What was good:**
+- Followed `continuous-improvement-checklist.md`'s own explicit guidance ("before adding a
+  28th movement, finish the known coverage gaps below") instead of rushing new curriculum
+  content just to have a diff — every remaining gap is relay/media-server blocked, not
+  research-blocked, so a 28th movement would just be another blocked entry.
+- Cross-checked lane 4 against a fourth, independent source this cycle: fetched kind_robots'
+  live `stores/seeds/academyStyles.ts` via GitHub MCP and diffed its 27 `slug:` values against
+  `curriculum-outline.md`'s 27 movement headings directly, rather than trusting the checklist's
+  own prose claim of "27/27 synced" at face value.
+- Recognized PR #999 (open at the time, lane 1 + lane 2 for this same rotation window) was
+  already in flight and did not duplicate that work by re-running lane 1/2 here.
+
+**What to improve:** none this cycle.
+
+**Kaizen task:** none filed — no systemic gap surfaced.
