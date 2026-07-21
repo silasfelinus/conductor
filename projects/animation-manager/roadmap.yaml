@@ -234,7 +234,7 @@ tasks:
   - id: t-007
     milestone: m5
     title: "Build or polish one animation candidate from reaction evidence"
-    status: claimed
+    status: ready
     owner: worker
     passes: 0
     stakes: reversible
@@ -248,6 +248,25 @@ tasks:
       existing effect whose Reaction ratings/comments identify a specific weakness. Create a new
       Component build record rather than erasing the old attempt. Ship only after typecheck,
       contract tests, reduced-motion review, resize cleanup review, and a visual browser smoke.
+
+      RAN 2026-07-21 (~08:06-08:15 UTC, worker/claude-conductor-burst-20260721T080625Z, merged
+      ~08:19 UTC by claude-conductor-agentrun-20260721T0811Z): built magnetic-sand-garden, the
+      highest-priority unbuilt pitch in PITCHES.yaml (priority 3, next after paper-lantern-weather).
+      New components/screenfx/magnetic-sand-garden.vue (Canvas 2D coarse-grid metallic-sand
+      simulation combed by layered flow-field sine bands into ridges/valleys, pointer acts as a
+      weak magnet, click flips polarity and sends an expanding rearrangement ripple; ResizeObserver
+      sizing, prefers-reduced-motion handling, full RAF/observer/listener cleanup on unmount --
+      follows the bioluminescent-tide/paper-lantern-weather pattern) plus the
+      stores/animationCatalog.ts entry (generationSafe: true, preferredSurface: fullscreen, no
+      blocksInput). Verified by the building session: eslint clean, prettier clean, npm run
+      test:animation-catalog (32 effects, unique ids, all resolve), npm run
+      test:animation-component-attempts, full-project npm run test (vue-tsc --noEmit) exit 0. Live
+      browser smoke test and the Component attempt record (SPEC.md "Attempt records") deferred --
+      no reachable DATABASE_URL in this sandbox, same class of blocker as model-builder/t-031 and
+      davinci/t-014's notes. kind_robots PR #785: left open by the building session; this cycle
+      reviewed the diff directly (clean, matches the established screensaver-effect pattern, proper
+      cleanup on unmount) and confirmed both required CI checks green (TypeScript, Contract Tests)
+      before merging (squash 309d1f0). Rearming to ready per the recurring-task convention.
 
       RAN 2026-07-20 (~07:09-07:45 UTC, claude-conductor-burst-20260720T0750Z): built
       paper-lantern-weather, the highest-priority unbuilt pitch in PITCHES.yaml (priority 2,
@@ -269,9 +288,9 @@ tasks:
       GitGuardian). PITCHES.yaml's paper-lantern-weather entry carries a `builds:` record
       (status: candidate, pending the deferred live-smoke pass before promoting to shipped).
       Rearming to ready per the recurring-task convention.
-    claimed_by: claude-conductor-burst-20260721T080625Z
-    claimed_at: '2026-07-21T08:06:25Z'
-    updated: '2026-07-21T08:06:25Z'
+    claimed_by: null
+    claimed_at: null
+    updated: '2026-07-21T08:19:00Z'
 
   - id: t-008
     milestone: m3

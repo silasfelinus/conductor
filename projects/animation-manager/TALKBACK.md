@@ -51,3 +51,21 @@ type: critique
 - The live browser smoke test and the `Component` attempt record (SPEC.md's "Attempt records" step) are both still deferred — this sandbox has no reachable `DATABASE_URL`. Whoever next has DB access should run the smoke matrix (`docs/architecture/animation-catalog-smoke-matrix.md`) against Screen FX and startup-wallpaper surfaces and create the `paper-lantern-weather@v1` attempt record, then flip `PITCHES.yaml`'s build entry from `candidate` to `shipped`.
 
 **Kaizen task:** none new this cycle.
+
+## 2026-07-21 | Reviewer (conductor scheduled agent) | animation-manager/t-007 | pattern
+
+**Decision:** merged (kind_robots PR #785, squash 309d1f0) — the building session (worker/claude-conductor-burst-20260721T080625Z) opened the PR but ended before merging it; this cycle reviewed and closed it out.
+
+**Failure category:** none — clean diff, both required CI checks (TypeScript, Contract Tests) green on first push.
+
+**What was good:**
+- `magnetic-sand-garden.vue` follows the established screensaver-effect shape exactly: ResizeObserver-driven sizing with capped device-pixel-ratio, a `prefers-reduced-motion` media-query listener that reseeds the grid at lower density, and full RAF/observer/listener cleanup on unmount (including nulling out the typed-array buffers, not just cancelling the frame).
+- The pitch's two flagged risks were both addressed concretely: "cache repeated lantern shapes"-equivalent concern (per-cell jitter/scale) is precomputed once in `seedGrid()` rather than per frame, and the "full-pixel simulation can be expensive" risk is handled with a target-cell-count-driven coarse grid (260 cells reduced-motion / 760 normal) rather than a fixed fine grid.
+- `stores/animationCatalog.ts` entry correctly omits `blocksInput` and sets `generationSafe: true`, matching every other passive screensaver entry.
+- Added the matching `builds:` record to `PITCHES.yaml` (mirroring the `paper-lantern-weather` entry's shape) so the pitch's shipped status is traceable, since the building session's own PR didn't include that bookkeeping.
+
+**What to improve:**
+- Same recurring gap as `paper-lantern-weather`: live browser smoke test and the Component attempt record are both deferred (no reachable `DATABASE_URL` in this sandbox) — whoever next has DB access should clear both this and t-007's prior deferred item together rather than one at a time.
+- The building session left its own PR unmerged and the roadmap task at `status: claimed` past its own session's lifetime — same shape AGENTS.md already warns about (superkate-hairstyle-ai/t-017 precedent) and the same gap this cycle also found on `ai-art-academy/t-010`'s PR #771 this same run. Worth a general note: burst/scheduled sessions that open a PR should merge it in the same pass when CI is expected to finish within the session's lifetime, rather than relying on a later cycle to notice.
+
+**Kaizen task:** none new this cycle — the gap above is a cross-project pattern already being tracked informally (this is the second instance in the same run); if a third instance turns up, it should become a proper roadmap task on whichever project surfaces it next rather than another TALKBACK note.
