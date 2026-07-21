@@ -8345,3 +8345,43 @@ stale-project rotation sweeps: check `project-overrides.yaml` `status` per-slug 
 picking a "never touched" project, not just its roadmap's own `status: ready` field —
 a task can be `ready` in its own roadmap while its project is `retired` at the
 overrides layer, and only the overrides layer is authoritative for claimability.
+
+## 2026-07-21 | Worker (burst) | alexa-integration/t-017, t-018 | done (serendipity-voice PR #26 merged)
+
+**Decision:** implemented, self-merged (session claude-conductor-burst-20260721T1007Z).
+
+**Failure category:** none — clean first pass.
+
+**What was good:**
+- Rotation: `next_ready_task.py` surfaced `ai-art-academy/t-010` (recurring filler,
+  already worked twice today per this file), and `animation-manager`/`kind-robots` were
+  also touched in the last few hours. Skipped all three for rotation diversity and
+  walked `priority.yaml` order to `alexa-integration`, which hadn't been touched since
+  the `t-010` dry-run findings landed yesterday and had two small, concrete, non-gated
+  bug-fix tasks (`t-017`, `t-018`) rather than another asset-generation "polish" pass.
+- Both fixes were scoped exactly to their task notes: `t-017` made `" story"` optional
+  in `dreamPatterns[0]` (non-greedy genre group, as the note itself suggested) so
+  `rollout-safety-checklist.md`'s own canonical sample line routes to `dream`; `t-018`
+  added `deploy`/`expose`/`dns` to `blockedActions` so the same checklist's Blocked-mode
+  table names get the specific safer-review-path refusal instead of the generic
+  clarification. Deliberately left bare `"endpoint"` out of the blocked list (the note
+  said "consider endpoint") since it would also catch safe read questions like "what is
+  the relay endpoint" — a judgment call documented in both tasks' resolution notes.
+  Verified all three checklist utterances directly via `npm run handle -- "<utterance>"`
+  against the fixed code, not just the added test assertions. Also caught and fixed a
+  pre-existing off-by-one in `voice-router.test.ts`'s own trailing `console.log`
+  (it said "23 checks passed" while 24 already existed before this change) — updated
+  it to the true post-change count, 27, rather than leaving the drift for the next
+  session to trip over.
+- Verified before merging: `npm test` (all 12 suites green, voice-router 27/27 checks)
+  and `npm run typecheck` (clean) in serendipity-voice; `python scripts/audit_roadmaps.py`
+  (0 errors, no new warnings on alexa-integration) in conductor. serendipity-voice PR #26
+  had one CI check (GitGuardian) green with no review comments before squash-merging.
+  Claimed both tasks with `claim_task.py` up front (session
+  `claude-conductor-burst-20260721T1007Z`), set `status: review` before opening the PR,
+  then `status: done` with a resolution note appended to each task's existing note right
+  after the merge, per this file's own standing convention.
+
+**What to improve:** none this cycle.
+
+**Kaizen task:** none this cycle.
