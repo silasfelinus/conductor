@@ -350,9 +350,9 @@ tasks:
 - id: t-017
   milestone: m4
   title: Dream-story router pattern requires the literal word "story", missing the checklist's own sample phrasing
-  status: ready
-  owner: null
-  updated: '2026-07-20T22:30:00Z'
+  status: claimed
+  owner: worker
+  updated: '2026-07-21T10:07:31Z'
   passes: 0
   stakes: reversible
   note: 'Found while capturing the t-010 dry-run transcript. dreamPatterns[0] in serendipity-voice
@@ -365,6 +365,8 @@ tasks:
     with the non-greedy genre group so it does not over-match against project/character patterns that also
     use "in"), and add a regression test asserting the checklist''s exact sample phrase now routes to
     dream. See projects/alexa-integration/docs/t-010-dry-run-transcript.md Finding 3 for the full repro.'
+  claimed_by: claude-conductor-burst-20260721T1007Z
+  claimed_at: '2026-07-21T10:07:31Z'
 - id: t-018
   milestone: m4
   title: blockedActions list in voice-router.ts omits "deploy" and DNS-shaped words from the checklist's own Blocked-mode table
