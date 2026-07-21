@@ -33,3 +33,29 @@ flipped to `needs-human` — a template-discipline gap from whatever session pro
 that bookkeeping (and refreshing the survey's stale market-date caveat) as a follow-on in this
 same session rather than filing a separate kaizen task, since it's a direct correction, not a
 new idea.
+
+## 2026-07-21 | Worker (scheduled) | career-transition/t-008 | needs-human (bookkeeping correction)
+
+**Decision:** corrected, ended at `needs-human` (session claude-conductor-scheduled-20260721T1420Z).
+
+**Failure category:** none for this session's handling — the original gap was a template-discipline
+miss from whichever session wrote the file on 2026-06-30 (owner/status left at ready/worker with
+no corresponding TALKBACK entry, no LEARNING.yaml record, and no needs-human flip despite the
+file's own header already saying "Status: needs-human").
+
+**What was good:**
+- Did not blindly re-run the survey from scratch on seeing `status: ready` — read the existing
+  `job-postings-survey.md` first and recognized the deliverable already existed, avoiding wasted
+  duplicate web research.
+- Cross-checked its salary figures against this session's own fresh `t-003` research rather than
+  trusting the file's 2026-06-30 numbers at face value — found real drift on 3 of 5 roles and
+  added a scoped refresh note instead of a full rewrite (proportionate to what actually changed).
+- Claimed via `claim_task.py` before editing, same as t-003.
+
+**What to improve:** none this cycle.
+
+**Kaizen task:** none this cycle — this cycle's fix already targets exactly this pattern (a
+finished deliverable stuck at `ready`/`claimed` because the closing bookkeeping step was skipped),
+which is the same class of gap AGENTS.md already documents for `superkate-hairstyle-ai/t-017`.
+Not filing a new kaizen task since the existing convention (flip status, write the FOR SILAS
+note, log it here) is already the correct fix and was just missed once, not a process gap.
