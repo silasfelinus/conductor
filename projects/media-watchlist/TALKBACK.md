@@ -136,3 +136,37 @@ for milestone m3.
 
 **Kaizen task:** media-watchlist/t-011 — add a rating (1-10) control to the
 Entry Detail panel now that the write path exists.
+
+## 2026-07-21 | Reviewer (conductor scheduled agent) | media-watchlist/t-011 | pattern
+
+**Decision:** merged | kind_robots PR #775 (squash 8037e267), task set to `done`.
+
+**Failure category:** none — clean first pass.
+
+**What was good:**
+- Task note left zero open design questions: the server route already validated
+  `rating` (1-10 or null), the `MediaEntryDetail` type already carried the field,
+  and BROWSE-UX.md's silence on a specific widget shape was already flagged as
+  "left out on purpose," not an oversight to second-guess. Picking this task
+  meant implementation, not design.
+
+**What to improve:**
+- Nothing specific to this task — see the pattern note below, which is really
+  about task *selection* upstream of this one.
+
+**Kaizen task:** media-watchlist/t-006 (Polish and upgrade Media Watchlist
+front-end surface) still has its own step (1) art-generation sub-step blocked
+on the same down home relay confirmed again this cycle (15 consecutive
+PENDING/unclaimed jobs spanning 2+ hours as of ~07:12 UTC) — no new task filed,
+just noting the blocker is still live for whoever next checks it.
+
+**Pattern note:** with ai-art-academy (t-019/t-035) and kind-robots (t-033,
+4 consecutive clean rechecks the same day) both effectively unpickable this
+cycle — one on a down relay, the other a no-new-evidence watch task — this
+session dropped to media-watchlist/t-011 in priority order rather than
+re-running kind-robots/t-033's sweep a 5th time for no new information. Same
+judgment call as the 2026-07-20 cycle that picked t-010 for the identical
+reason (see this file's t-010 entry). Worth naming as standing practice: a
+recheck-only task with N consecutive clean results in the same day is lower
+value than the next genuinely workable ready task, even if it's technically
+"first" in priority order.

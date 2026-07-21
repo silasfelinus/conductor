@@ -3793,3 +3793,12 @@ records:
   outcome: done
   failure_category: null
   lesson: "When most of the priority queue is blocked (art relay down, live Comfy box unreachable, daily creative-loop caps already used today), a kaizen task with a fully self-contained spec (write route + UI panel, no external service dependency) is the highest-value pick -- media-watchlist/t-010 landed clean first pass because BROWSE-UX.md already fully specified the UI/API contract and the schema fields existed from t-008, leaving zero open design questions."
+- date: '2026-07-21'
+  project: media-watchlist
+  task: t-011
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "Confirmed the same pattern as t-010's lesson: with the top of priority.yaml blocked on external infra (ai-art-academy t-019/t-035 need at least one landed thumbnail or a live relay; kind-robots t-033 was already rechecked clean 4x this same day), a small self-contained kaizen task one project down the list (server route + schema field already shipped, only the UI control missing) lands clean first pass with zero design ambiguity. Also: a chained `git fetch && git checkout <branch> && git pull` in one Bash call can get SIGTERM'd by the tool's 2-minute timeout mid-checkout on a repo with a large/rewritten history (kind_robots had just force-updated origin/main), leaving the working tree with hundreds of stray unstaged deletions/modifications/untracked files even though HEAD never actually moved. Recovery was safe here only because `git status` was checked immediately and confirmed nothing was staged and the tree had been clean moments before -- `git checkout -- .` + `git clean -fd` cleanly restored it. Split multi-step git network operations into separate, shorter Bash calls (or raise the timeout) instead of chaining them, so a slow fetch/checkout can't silently corrupt working-tree state mid-operation."
