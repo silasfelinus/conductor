@@ -8800,3 +8800,37 @@ rather than a conductor-repo kaizen task, since the concrete, actionable fix
 belongs to that project's test; the shared-job design note is recorded
 inside that same task rather than as a separate item, to avoid a task with
 no owner-able next action.
+
+## 2026-07-21 | Worker+Reviewer (same session) | conductor/t-077 | pattern
+
+**Decision:** merged (conductor PR #998, squash 82acdda)
+
+**Failure category:** transient (git-push transport, not the code change itself)
+
+**What was good:**
+- Implemented exactly the "Fix:" half of the kaizen note (docstring + `--help` warning),
+  and deliberately deferred the "consider also" runtime origin/main backstop to a future
+  task rather than bolting on a mandatory git-network dependency to a previously pure-local,
+  offline-safe tool and its test suite -- a scope call recorded in the task note.
+- Full verification before opening the PR: `pytest tests/` (430 passed, 1 skipped),
+  `scripts/audit_roadmaps.py` (0 errors, unchanged baseline), `py_compile`, and a live
+  `--help` render check.
+
+**What to improve:**
+- This session's designated branch hit the documented HTTP 413 push-proxy issue in a form
+  that doesn't match either of CLAUDE.md's two named root causes (new-ref full-pack,
+  post-rebase force-push) -- even a throwaway brand-new branch with a 1-byte diff 413'd.
+  Recovered via `push_files`, but one intermediate `push_files` call briefly truncated
+  `projects/conductor/roadmap.yaml` to just its 22-line header (a copy-paste slip while
+  relaying ~145KB of file content with no diff/patch mode available). Caught within the
+  same turn via a byte-for-byte `git show`/`diff` check against the local working tree --
+  a habit worth calling out explicitly: **any time a large file's full content is relayed
+  through push_files/create_or_update_file, diff the pushed remote blob against the local
+  source immediately, every time, before trusting it or moving on.** No bad state reached
+  `main` or was left unresolved, but it cost real time. See LEARNING.yaml for the recorded
+  lesson and a startup point for a future session with proxy/relay log access to diagnose
+  the actual 413 trigger.
+
+**Kaizen task:** none filed this cycle beyond what's already recorded in this task's own
+PR body (a diagnosis request for the 413 root cause) -- deferring to a future session with
+better proxy/relay visibility rather than guessing at a fix here.
