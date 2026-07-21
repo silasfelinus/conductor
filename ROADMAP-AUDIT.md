@@ -1,28 +1,28 @@
 # Roadmap Audit
 
-Generated: `2026-07-21T14:15:29.662748+00:00`
+Generated: `2026-07-21T14:28:38.536295+00:00`
 
 This is a conservative structural audit. It reports suspicious state; it does not automatically change task status or remove human gates.
 
 ## Portfolio snapshot
 
-- **40** roadmaps, **31** active projects, **641** tasks
-- **39 ready**, **42 waiting**, **37 needs-human**, **2 claimed/review**, **510 done**
-- Findings: **0 errors**, **11 warnings**, **45 informational**
+- **40** roadmaps, **31** active projects, **642** tasks
+- **37 ready**, **42 waiting**, **38 needs-human**, **4 claimed/review**, **510 done**
+- Findings: **0 errors**, **11 warnings**, **44 informational**
 
 ## Project inventory
 
 | # | Project | State | Kind | Ready | Waiting | Human | In progress | Done / Total |
 |---:|---|---|---|---:|---:|---:|---:|---:|
 | 1 | `challenge-center` | finished | software | 0 | 0 | 0 | 0 | 20 / 20 |
-| 2 | `ai-art-academy` | active | software | 2 | 0 | 3 | 1 | 29 / 35 |
+| 2 | `ai-art-academy` | active | software | 3 | 0 | 3 | 0 | 29 / 35 |
 | 3 | `coloring-book` | active | software | 0 | 9 | 1 | 0 | 19 / 29 |
 | 4 | `humboldt-scoop` | active | software | 0 | 0 | 0 | 0 | 8 / 8 |
 | 5 | `humboldt-scoop-cms` | active | software | 0 | 4 | 1 | 0 | 6 / 11 |
 | 6 | `digital-storefront` | active | software | 0 | 2 | 4 | 0 | 17 / 23 |
 | 7 | `packmaker` | active | software | 0 | 0 | 0 | 0 | 10 / 10 |
 | 8 | `mermaids-of-venice` | retired | content | 0 | 0 | 8 | 0 | 4 / 12 |
-| 9 | `kind-robots` | active | software | 2 | 0 | 4 | 0 | 36 / 42 |
+| 9 | `kind-robots` | active | software | 1 | 0 | 4 | 1 | 36 / 42 |
 | 10 | `kindrobots-unraid` | active | software | 0 | 7 | 1 | 0 | 4 / 12 |
 | 11 | `global-ui` | active | software | 0 | 0 | 1 | 0 | 24 / 25 |
 | 12 | `superkate-services-calculator` | active | software | 0 | 0 | 1 | 0 | 35 / 36 |
@@ -32,14 +32,14 @@ This is a conservative structural audit. It reports suspicious state; it does no
 | 16 | `animation-manager` | active | software | 2 | 0 | 0 | 0 | 10 / 12 |
 | 17 | `animation-studio` | retired | software | 3 | 4 | 0 | 0 | 1 / 8 |
 | 18 | `ecosystem-map` | active | software | 0 | 0 | 0 | 0 | 8 / 8 |
-| 19 | `conductor` | active | software | 0 | 0 | 5 | 0 | 69 / 74 |
+| 19 | `conductor` | active | software | 1 | 0 | 5 | 0 | 69 / 75 |
 | 20 | `serendipity` | active | software | 1 | 0 | 0 | 0 | 11 / 12 |
 | 21 | `storymaker` | active | software | 1 | 0 | 0 | 0 | 9 / 10 |
 | 22 | `davinci` | active | software | 1 | 0 | 0 | 0 | 14 / 15 |
 | 23 | `art-generator-connect` | active | software | 0 | 0 | 0 | 0 | 22 / 22 |
 | 24 | `mural-design` | active | content | 1 | 3 | 1 | 0 | 2 / 7 |
-| 25 | `coat-dance` | active | content | 1 | 0 | 0 | 1 | 0 / 10 |
-| 26 | `career-transition` | retired | content | 3 | 4 | 0 | 0 | 1 / 8 |
+| 25 | `coat-dance` | active | content | 1 | 0 | 1 | 0 | 0 / 10 |
+| 26 | `career-transition` | retired | content | 0 | 4 | 0 | 3 | 1 / 8 |
 | 27 | `alexa-integration` | active | software | 1 | 0 | 1 | 0 | 16 / 18 |
 | 28 | `conductor-app` | active | software | 3 | 0 | 1 | 0 | 10 / 14 |
 | 29 | `appmaker` | active | software | 2 | 0 | 0 | 0 | 10 / 12 |
@@ -75,7 +75,7 @@ _None._
 - **ACTIVE_PROJECT_ALL_DONE** — `packmaker`: All tasks are done but project override remains active.
 - **ACTIVE_PROJECT_NO_OPEN_TASKS** — `packmaker`: Active project has no open tasks; mark finished/paused or add an intentional recurring task.
 
-### Info (45)
+### Info (44)
 
 - **APPROVAL_WITHOUT_GATE** — `ai-art-academy` / `t-002`: approved_by_human is set on a task that is not human-gated.
 - **APPROVAL_WITHOUT_GATE** — `ai-art-academy` / `t-011`: approved_by_human is set on a task that is not human-gated.
@@ -85,7 +85,6 @@ _None._
 - **MISSING_GOAL** — `approval-portal`: Roadmap has no friendly goal/definition of done.
 - **MISSING_GOAL** — `art-generator-connect`: Roadmap has no friendly goal/definition of done.
 - **MISSING_GOAL** — `brainstorm`: Roadmap has no friendly goal/definition of done.
-- **INACTIVE_PROJECT_HAS_READY_TASKS** — `career-transition`: Inactive project retains 3 ready task(s); harmless but misleading in generated status.
 - **MISSING_GOAL** — `career-transition`: Roadmap has no friendly goal/definition of done.
 - **MISSING_GOAL** — `challenge-center`: Roadmap has no friendly goal/definition of done.
 - **MISSING_GOAL** — `coat-dance`: Roadmap has no friendly goal/definition of done.
