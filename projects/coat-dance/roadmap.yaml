@@ -192,8 +192,8 @@ tasks:
   - id: t-010
     milestone: m1
     title: "Polish and upgrade Coat Dance front-end surface"
-    status: review
-    owner: worker
+    status: ready
+    owner: null
     passes: 0
     stakes: reversible
     note: >
@@ -223,6 +223,20 @@ tasks:
       and step (3) liveUrl/channelKey/tabKey backfill (admin Placements click, not an agent
       action). Verified before merge: prettier clean, eslint clean, full-project npm run test
       (vue-tsc --noEmit) exit 0. kind_robots PR #650 (branch claude/keen-fermat-4ytr28).
-    claimed_by: claude-burst-rotation-20260720T1440Z
-    claimed_at: '2026-07-20T15:14:05Z'
-    updated: '2026-07-20T15:25:03Z'
+
+      DRIFT FIX 2026-07-21 (ai-art-academy/t-010 lane-2 roadmap-accuracy cycle,
+      claude-conductor-scheduled-burst-20260721): `scripts/check_pr_merged_drift.py`
+      flagged this task as a candidate (status: review referencing kind_robots PR
+      #650) that its own GitHub-API lookup couldn't verify (sandboxed session, 403).
+      Confirmed independently via GitHub MCP `pull_request_read`: PR #650 merged
+      2026-07-20T16:12:43Z (head `claude/keen-fermat-4ytr28`, squash into main) —
+      over a day before this check, so the branch was never actually stuck; only the
+      roadmap `status:` field was never flipped after merge, same bug class as the
+      2026-07-21 ~01:00 UTC ai-art-academy/t-010 self-correction. The note above
+      already says step (1) and step (3) were "kept ready," confirming the intended
+      post-merge state was `ready`, not `review` — flipping to match. Remaining
+      scope unchanged: step (1) art gen still needs a working art-generation relay,
+      step (3) still needs Silas's admin Placements click.
+    updated: '2026-07-21T03:07:33Z'
+    claimed_by: null
+    claimed_at: null

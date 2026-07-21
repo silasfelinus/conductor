@@ -15,6 +15,33 @@ Record the lane, files changed, and verification in the task note before rearmin
 
 ### Rotation state
 
+- Last completed lane: Roadmap accuracy (lane 2), 2026-07-21 (~03:00-03:10 UTC,
+  claude-conductor-scheduled-burst-20260721). Ran `scripts/audit_roadmaps.py`
+  (same 0-errors/11-warnings/46-info baseline, only the 2 pre-existing
+  `APPROVAL_WITHOUT_GATE` info findings for this project) and
+  `scripts/check_pr_merged_drift.py` (all 20 candidates unverifiable via this
+  session's sandboxed API access, per usual — cross-checked manually via
+  GitHub MCP `pull_request_read`). Found and fixed a real, verifiable
+  cross-project staleness bug (not in ai-art-academy itself, but the kind the
+  drift script surfaces): `coat-dance/t-010` sat at `status: review`
+  referencing kind_robots PR #650, but that PR merged 2026-07-20T16:12:43Z —
+  over a day earlier. The task's own note already said the remaining scope
+  (art-relay-blocked asset gen, admin Placements click) was "kept ready,"
+  confirming the intended post-merge state was `ready`, but the `status:`
+  field was never flipped — same bug class as the 2026-07-21 ~01:00 UTC
+  ai-art-academy/t-010 self-correction (a status field silently stuck one
+  step behind its own note). Fixed by setting `coat-dance/t-010` to
+  `status: ready`, `owner: null`, clearing `claimed_by`/`claimed_at`, and
+  recording the drift-fix rationale in its note. Also spot-checked
+  `kind_robots#834` (referenced in this project's own t-010 history) —
+  confirmed already correctly documented as a prior no-op-diff merge, not
+  live drift. Did not re-probe t-019/t-033 (public/images/academy/styles/
+  still-404 and home-relay-down blockers) — both were fresh-checked only
+  ~2 hours earlier this same day with no signal anything changed, per this
+  checklist's own blocker-discipline rule. Conductor-docs-only change; no
+  kind_robots PR needed. Next preferred lane is inspiration/preview assets
+  (lane 3, recheck with a fresh queued job, not 1175) falling back to lane 4
+  if still blocked.
 - Last completed lane: Front-end polish (lane 1), 2026-07-21 (~02:35-02:45 UTC,
   claude-conductor-agentrun-20260721T0235Z). Dispatched an Explore subagent over
   the in-scope Academy surface (art-styler.vue, image-upload.vue, all
