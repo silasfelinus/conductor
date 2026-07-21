@@ -8856,6 +8856,38 @@ better proxy/relay visibility rather than guessing at a fix here.
 guard (the 500-attempt poll cap fails the assertion instead of hanging again); no further
 follow-up work is implied.
 
+## 2026-07-21 | Worker (conductor scheduled agent) | ai-art-academy/t-010 | pattern
+
+**Subject:** Two cross-cutting infra findings surfaced during a routine
+ai-art-academy continuous-improvement cycle, filed as conductor/t-078 and
+conductor/t-079 rather than fixed in place.
+
+**Detail:**
+- t-078: this session's designated kind_robots branch
+  (`claude/keen-fermat-87rn74`) held 67 unpushed local commits (13,728 files,
+  ~138k insertions) of automated "WonderLab rollout"/"draft inventory"
+  content dated 2026-07-21T01:46-15:02, with no conductor task tracking any
+  of it and no successful push in that ~13-hour span. Needs a human decision
+  (keep-and-land vs. discard) before any session can safely develop on that
+  branch again; may also indicate a broken push step in whatever produces
+  these commits that is still silently failing.
+- t-079: `scripts/audit_roadmaps.py` does not detect duplicate YAML keys
+  within a single task block. Found one real instance actively affecting a
+  live task (ai-art-academy/t-010's `owner`/`claimed_by`/`claimed_at` were
+  silently overridden by a stale trailing duplicate) plus five more
+  low-consequence instances across conductor, global-ui, kind-robots, and
+  packmaker's roadmaps. Root cause looks like sessions appending a `RAN ...`
+  note paragraph and then re-appending owner/claim fields below it instead of
+  editing the existing ones above — same shape as the STATUS.md/
+  workspace.html auto-gen conflict pattern hard rule 9 already covers, just
+  self-inflicted rather than a merge artifact.
+
+**Suggested action:** Silas: read conductor/t-078's note and say
+keep/discard/investigate. Any session: pick up conductor/t-079 (small,
+mechanical, well-scoped) — add the duplicate-key check to
+`audit_roadmaps.py`, then fix the 4 remaining files' roadmap.yaml (each needs
+its own claim per project, per the usual rule).
+
 ## 2026-07-21 | Worker+Reviewer (same session) | ai-art-academy/t-010 | pattern
 
 **Decision:** merged (kind_robots PR #831, squash `5920dbe4`)
