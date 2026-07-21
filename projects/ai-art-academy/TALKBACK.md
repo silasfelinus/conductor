@@ -1420,3 +1420,21 @@ milestone reassignment). Worth flagging for whoever eventually builds
 **Kaizen task:** none filed — the fix (flip `status: ready`) is complete in this cycle's own diff, and the lesson above is now recorded here plus in `continuous-improvement-checklist.md`'s rotation state for the next cycle to internalize without a separate roadmap task.
 
 **Pattern note:** this is a new failure shape for this task's audit history — not a code bug, milestone drift, or stale blocker note, but a *self-referential* roadmap-accuracy bug where the task's own note asserted a future action that the note-writing PR itself was supposed to perform but didn't. `scripts/check_pr_merged_drift.py` does not catch this shape (it only flags claimed/review tasks with a merged cross-repo PR reference, which did apply here, but its GitHub API calls 403 in this sandbox — this was caught by manual inspection of the PR #942 diff instead, not the tooling). Worth a note for whoever next touches that script: cross-checking `status: claimed` + "rearming to ready" note language + a confirmed-merged referenced PR would make this specific shape machine-detectable.
+
+## 2026-07-21 | Reviewer (scheduled burst) | ai-art-academy/t-010 | pattern
+
+**Decision:** implemented, PR merged (conductor #958) — lane 2 (roadmap accuracy), per the checklist's rotation (previous cycle ran lane 1, PR #745).
+
+**Failure category:** none — clean first pass; milestone/blocker audit came back with no drift.
+
+**What was good:**
+- Re-verified all six milestones directly against current task statuses (not just spot-checked a subset) — confirmed no drift this cycle, a genuine negative result rather than an assumed one.
+- Rather than stopping at "no drift found" for the fourth-plus consecutive lane-2 cycle in a row, went looking for a different class of staleness — downstream documentation coverage — and found a real one: Song Dynasty Landscape Painting (§26, added the immediately-prior lane-4 cycle) had been added to the curriculum but never propagated to `teaching-notes.md` (no row, plus two stale movement-count references), `style-lora-registry.md` (no entry at all, not even a placeholder), or the "Lesson-only vs remixable" tier lists (unclassified) — plus its PUBLIC-DOMAIN-POLICY.md re-check paragraph, present for every other addition since v1.1, was missing.
+- Classified the new movement's remix-difficulty tier with actual reasoning (not just copied a neighboring entry): flagged it "likely-poor remixer" because its defining single-dominant-peak composition conflicts with arbitrary user-photo composition, the same tension already documented for `persian-miniature` — and explained the *specific* failure mode expected (generic ink-wash filter over existing composition, not genuine scale/space restructuring) so a future t-004 A/B pass has something concrete to check against.
+- Also correctly identified that `check_pr_merged_drift.py`'s 23 flagged candidates this cycle were all this task's own historical PR references (an artifact of the task's own note text plus a fresh claim), not new drift — avoided burning time re-verifying PRs already confirmed merged in prior cycles' notes.
+
+**What to improve:** none significant this cycle.
+
+**Kaizen task:** none filed — the fix is complete within lane 2's existing scope (closing a documentation-propagation gap), and the underlying pattern (new curriculum movements needing a documented multi-file propagation checklist) is already implicitly covered by how the last five movements each landed their downstream docs across separate cycles rather than in one shot.
+
+**Pattern note:** this is the third consecutive lane-4 cycle to add a movement whose downstream doc propagation (teaching-notes/registry/tier-list) landed in a *later*, separate cycle rather than the same one (see persian-miniature's registry entry, curriculum-outline PD re-check, and teaching-notes row each landing in different 2026-07-20 cycles) — worth noting for whoever eventually tightens the lane-4 checklist item, since a lane-4 cycle that added the propagation checklist as an explicit sub-step of "add a new movement" (rather than relying on a later lane-2 pass to notice the gap) would close this loop one cycle earlier each time.
