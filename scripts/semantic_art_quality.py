@@ -15,13 +15,42 @@ except ModuleNotFoundError:
 DEFAULT_MIN_SCORE = int(os.environ.get("COLOR_ART_MIN_SEMANTIC_SCORE", "75"))
 DEFAULT_MAX_ATTEMPTS = int(os.environ.get("COLOR_ART_MAX_SEMANTIC_ATTEMPTS", "3"))
 
+COLORING_SEMANTIC_RUBRIC = """\
+You are the semantic acceptance gate for a full-color coloring-book design master.
+Judge the candidate against the exact intended concept included with the image, not
+against generic visual attractiveness and not against any franchise you recognize.
+
+The most important checks are:
+- subject_match: every specifically named person, creature, object, count,
+  relationship, and required action is visibly present. A symbolic substitute,
+  abstract shape, unrelated landscape, generic lone figure, or merely similar mood
+  is a failure.
+- on_brief: the scene and setting match the request and read as one coherent,
+  full-frame illustration suitable for later line-art conversion. Reject posters,
+  grids, collages, title cards, borders, readable text, watermarks, and unrelated
+  visual genres.
+- anatomy_ok: no accidental extra limbs or broken contact points.
+- matches_approved_bar: the result looks intentional and finished enough to review
+  as a real book candidate.
+
+The schema also asks for camp_reads and horror_reads because it is shared with other
+curation jobs. Set either field true when that quality is present OR when it was not
+requested and therefore is not a defect. Set it false only when the prompt requested
+that quality and the candidate failed to deliver it. Full-color candidates should set
+line_art_valid=true unless the composition is too muddy, open, or painterly to support
+a later faithful line-art conversion.
+
+Score 0-100. Use promote for a clearly correct finished candidate, revise for the
+right scene with a repairable flaw, and reject for wrong/missing subjects, wrong scene,
+or a hard structural mismatch. Return ONLY the JSON object matching the schema."""
+
 
 def assess_semantic_file(
     path: Path,
     scene_prompt: str,
     min_score: int = DEFAULT_MIN_SCORE,
 ) -> tuple[bool, dict[str, Any]]:
-    """Judge subject fidelity and brief compliance with the shared curator rubric.
+    """Judge subject fidelity and brief compliance with the shared curator schema.
 
     Production callers must not silently degrade to mechanical-only validation. A
     missing vision credential or an API failure raises, leaving the source item
@@ -40,7 +69,7 @@ def assess_semantic_file(
         "color",
         scene_prompt,
         [],
-        rubric=curate_art.RUBRIC,
+        rubric=COLORING_SEMANTIC_RUBRIC,
         schema=curate_art.VERDICT_SCHEMA,
     )
 
