@@ -96,6 +96,19 @@ try:
 except Exception as e:
     lines += [f"Open PRs check error: {e}", ""]
 
+flutter_home = Path(os.environ.get("FLUTTER_HOME", str(Path.home() / ".flutter")))
+flutter_bin = flutter_home / "bin" / "flutter"
+if flutter_bin.exists():
+    lines += [f"Flutter SDK: already provisioned at {flutter_home}.", ""]
+else:
+    lines += [
+        "Flutter SDK: not yet provisioned this session. If a task touches apps/* "
+        "(Flutter), run `source scripts/provision_flutter.sh` first (~1-2 min, "
+        "one-time download) so `flutter analyze`/`flutter test` can actually verify "
+        "the change instead of relying on inspection alone (conductor/t-028).",
+        "",
+    ]
+
 lines += ["NOTE: Read AGENTS.md for the full operating manual before responding."]
 lines += ["=== END SWEEP ==="]
 
