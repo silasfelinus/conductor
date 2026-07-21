@@ -20,3 +20,2179 @@ milestones:
     weight: 80
     status: not-started
 tasks:
+  - id: t-001
+    milestone: m1
+    title: Add GitHub Actions CI lint/build gate for worker/* PRs
+    status: done
+    owner: worker
+    updated: '2026-06-30T00:00:00Z'
+    passes: 0
+    stakes: reversible
+    note: >
+      Created .github/workflows/ci.yml with three jobs: validate-yaml (all roadmap.yaml + project-overrides.yaml),
+      lint-python (py_compile check for scripts/*.py), build-ts-projects (npm ci + build + lint for any
+      TypeScript subproject touched in the PR). Skips STATUS.md and workspace.html paths. Branch protection
+      update is a human action (requires GitHub admin settings).
+  - id: t-002
+    milestone: m2
+    title: Build PR triage board script
+    status: done
+    owner: worker
+    updated: '2026-06-30T00:00:00Z'
+    passes: 0
+    stakes: reversible
+    note: >
+      Created scripts/build_pr_triage.py. Reads project-overrides.yaml for active slugs, loads all
+      roadmaps, calls GitHub PR API (GITHUB_TOKEN env var) for open worker/* PRs, and writes PR-TRIAGE.md
+      with three sections: open PRs table (mergeability, gate status, next action), in-flight tasks roadmap
+      snapshot, and pending human approval gates. Degrades gracefully when GITHUB_TOKEN is absent. Run:
+      python scripts/build_pr_triage.py
+  - id: t-003
+    milestone: m3
+    title: "Build scripts/build_kaizen.py — per-project kaizen prompt + honey-do list"
+    status: done
+    owner: worker
+    updated: '2026-06-30T00:00:00Z'
+    passes: 0
+    stakes: reversible
+    depends_on: t-002
+    note: >
+      Build scripts/build_kaizen.py. For each active project it emits:
+      1. KAIZEN PROMPT — the single most impactful action Silas can take right now, one sentence framed as a direct instruction (e.g. "Approve the stack spec in humboldt-scoop-cms/t-001"). Priority order: needs-human tasks first, then gate_human gates with approved_by_human: false, then passes==3 blocked tasks, then stale claimed tasks with no recent commit.
+      2. HONEY-DO LIST — every other action only Silas can unblock, as a markdown checkbox list ordered by downstream impact. Each item names the task id and the exact decision or file to touch. Agent-workable items are excluded entirely.
+      Output: KAIZEN.md at the repo root, regenerated each cycle alongside PR-TRIAGE.md. The approval-portal (when built) reads the same data to render interactive checkboxes on each project card.
+  - id: t-004
+    milestone: m4
+    title: Write SECURITY-MANAGER.md threat model and audit runbook
+    status: done
+    owner: worker
+    updated: '2026-07-01T00:00:00Z'
+    passes: 0
+    stakes: needs-human
+    gate_human: true
+    approved_by_human: true
+    note: >
+      FOR SILAS: SECURITY-MANAGER.md is at the repo root. It defines the security manager role, threat
+      model covering Dreams/projects/private files/family-only access/agent write boundaries, a severity
+      ladder, and safe automation rules for agents (Vercel, GitHub Actions, secrets, production data, deployment
+      gates). No live auth, secrets, or deploys were touched. TO APPROVE: Read SECURITY-MANAGER.md. Set
+      approved_by_human: true and status: done in this task. Unblocks: conductor/t-005 (authz regression
+      tests).
+  - id: t-005
+    milestone: m4
+    title: Add automated authz regression tests for Dreams and projects
+    status: done
+    owner: worker
+    updated: '2026-07-02T15:12:48-07:00'
+    passes: 0
+    stakes: reversible
+    depends_on: t-004
+    note: >
+      Added fixture-only authz regression checks in scripts/authz_regression.py and tests/test_authz_regression.py.
+      Coverage includes anonymous, non-owner, non-family, normal-user, family-member, agent, and admin access
+      for private Dreams, project files, project metadata, generated assets, family-only resources, prompt
+      instruction influence, write/delete boundaries, and claimed-user-id API bypass attempts. Merged in PR #89.
+  - id: t-006
+    milestone: m4
+    title: Add GitHub Actions security audit workflow
+    status: done
+    owner: worker
+    updated: '2026-07-02T17:22:00-07:00'
+    passes: 0
+    stakes: needs-human
+    gate_human: true
+    depends_on:
+      - t-004
+      - t-005
+    note: >
+      Added .github/workflows/security-audit.yml and merged in PR #95. It runs on PRs
+      to main, manual dispatch, and a weekly cron. Checks include dependency audits where
+      lockfiles exist, roadmap YAML validation, Python syntax checks, fixture authz regression
+      tests, a simple secret-pattern smoke check, and safe no-token smoke runs for conductor
+      scripts. It does not use secrets, call live authenticated endpoints, probe external
+      targets, change Vercel, deploy, publish, or touch production data.
+    approved_by_human: true
+  - id: t-007
+    milestone: m4
+    title: Build security report artifact and maintenance queue
+    status: done
+    owner: worker
+    updated: '2026-07-03T03:11:45-07:00'
+    passes: 0
+    stakes: reversible
+    depends_on: t-006
+    note: >
+      Completed in PR #109. Added scripts/build_security_report.py and SECURITY-REPORT.md.
+      The report builder writes a safe summary with audit status, authz fixture findings,
+      configuration-marker warnings, open security PRs, and a prioritized maintenance queue.
+      It avoids including credential values, private file contents, personal data, or live endpoint probes.
+  - id: t-008
+    milestone: m2
+    title: Cross-repo image distribution pipeline (distribute_images.py)
+    status: done
+    owner: worker
+    updated: '2026-06-30T00:00:00Z'
+    passes: 0
+    stakes: reversible
+    note: >
+      Added scripts/distribute_images.py (three-tier routing from projects/process/), scripts/setup_hooks.py
+      + scripts/hooks/pre-commit (git hook installer), and build_workspace.py updates (inspirations: section
+      preservation, KIND_ROBOTS_ROOT awareness). Distributed 10 conductor project assets (engagement, global-ui,
+      wishmaster, media-watchlist icon/card/hero). Merged via PR #52 (branch claude/cross-repo-image-organization-flm391).
+      Protocol violations (no task claim, wrong branch prefix, Claude acting as Worker) documented in TALKBACK.md
+      and projects/conductor/TALKBACK.md.
+  - id: t-009
+    milestone: m2
+    title: "Build scripts/sync_projects_to_dreams.py — slug-parity sync bridge"
+    status: done
+    owner: worker
+    updated: '2026-06-30T00:00:00Z'
+    passes: 0
+    stakes: reversible
+    note: >
+      Build scripts/sync_projects_to_dreams.py. For each active conductor project (from project-overrides.yaml where status == active), call the kind_robots API to upsert a Dream with dreamType PROJECT and matching slug. Sync fields: title (from roadmap project:), description (from notes_from_silas first paragraph), projectStatus (map conductor active→ARCHIVED). Use PATCH /api/dreams/<id> if a Dream with that slug already exists, POST /api/dreams otherwise. Requires KR_API_TOKEN env var. Log each upsert (created/updated/skipped) to stdout. Never delete a Dream; only create or update. This is the canonical conductor → kind_robots bridge; run it at the end of each Worker cycle after task work is complete.
+  - id: t-011
+    milestone: m2
+    title: Add Claude session startup sweep hook
+    status: done
+    owner: worker
+    updated: '2026-07-01T00:00:00Z'
+    passes: 0
+    stakes: reversible
+    note: >
+      Added .claude/hooks/session-start.sh and .claude/settings.json. Hook fires only in remote Claude
+      Code sessions (CLAUDE_CODE_REMOTE guard), collects git state, roadmap ready/needs-human/claimed tasks,
+      and TALKBACK tail. Merged via PR #73 (branch claude/startup-sweep-test-bh0w3s). Automates the session
+      startup steps defined in CLAUDE.md. Gap: no open-PR check (requires GitHub API credentials from within
+      the hook) — tracked as t-012.
+  - id: t-012
+    milestone: m2
+    title: Add open-PR check to session startup sweep hook
+    status: done
+    owner: worker
+    updated: '2026-07-01T00:00:00Z'
+    passes: 0
+    stakes: reversible
+    depends_on: t-011
+    note: >
+      The session-start.sh sweep (t-011) collects git state, roadmap tasks, and TALKBACK tail but skips
+      step 3 from CLAUDE.md (check for open PRs). Add a curl call to the GitHub API using GITHUB_TOKEN env
+      var to list open worker/* and claude/* PRs and include them in the sweep output. Degrade gracefully
+      if GITHUB_TOKEN is absent. Output format should match the existing sections in the hook.
+  - id: t-013
+    milestone: m2
+    title: "Add GitHub Actions workflow to auto-run sync_projects_to_dreams.py on push to main"
+    status: done
+    owner: worker
+    updated: '2026-07-02T16:30:00-07:00'
+    passes: 0
+    stakes: reversible
+    depends_on: t-009
+    note: >
+      Added .github/workflows/project-dream-sync.yml and merged in PR #94. It runs on pushes
+      to main and manual dispatch; installs PyYAML; runs scripts/sync_projects_to_dreams.py
+      with KR_API_TOKEN from repository secrets; and writes the script output to the GitHub
+      Actions step summary. The script already skips cleanly when KR_API_TOKEN is absent.
+  - id: t-010
+    milestone: m2
+    title: "Write scripts/generate_changelog.py — per-cycle change summary"
+    status: done
+    owner: worker
+    updated: '2026-06-30T00:00:00Z'
+    passes: 0
+    stakes: reversible
+    note: >
+      Currently the only change record is STATUS.md (auto-generated, broad) and individual task notes.
+      Add scripts/generate_changelog.py: reads git log since the last CHANGELOG.md entry, groups commits
+      by project slug, and appends a dated section to CHANGELOG.md at the repo root. Format: date header,
+      then one bullet per project that changed listing task id + commit title. Runs at the end of each Worker
+      cycle alongside sync_projects_to_dreams.py.
+  - id: t-014
+    milestone: m2
+    title: "Run authz regression tests in Worker PR CI (ci.yml), not only Security Audit"
+    status: done
+    owner: worker
+    updated: '2026-07-02T23:17:30-07:00'
+    passes: 0
+    stakes: reversible
+    note: >
+      Completed in PR #108. Worker PR CI now includes an authz-regression job that installs pytest
+      and runs tests/test_authz_regression.py, matching the fixture command from security-audit.yml.
+  - id: t-015
+    milestone: m2
+    title: "Document a cross-repo task mode in AGENTS.md for connector branch-creation blocks"
+    status: done
+    owner: worker
+    updated: '2026-07-03T17:11:19-07:00'
+    passes: 0
+    stakes: reversible
+    note: >
+      Completed in PR #141. Added a Cross-repo tasks section to AGENTS.md documenting
+      target-repo branch/PR handling and the conductor-doc fallback when connector/tooling
+      blocks target-repo branch creation or writes.
+  - id: t-016
+    milestone: m2
+    title: Add a targeted single-field roadmap.yaml updater so cross-repo fallback tasks can flip task status without a full-file rewrite
+    status: done
+    owner: worker
+    updated: '2026-07-04T00:11:14-07:00'
+    passes: 1
+    stakes: reversible
+    note: >
+      Completed in PR #148 (script) and PR #149 (tests + multiline-safety fixes). scripts/set_task_field.py updates one scalar field on one task with a line-oriented edit, preserving surrounding YAML; when PyYAML is available it re-parses the result and refuses invalid writes. Verified by tests/test_set_task_field.py, run in Worker PR CI. This note was itself written by the script as a live multiline-note replacement test.
+  - id: t-017
+    milestone: m2
+    title: Fix failing test_queue_missing_project_art ordering/default-size assertion
+    status: done
+    owner: worker
+    updated: '2026-07-04T01:18:00-07:00'
+    passes: 0
+    stakes: reversible
+    note: >
+      Completed in PR #150. The queue script behavior was kept project-first/variant-order;
+      the brittle test now looks entries up by (project, variant) before asserting default
+      sizes, and Worker PR CI now includes tests/test_queue_missing_project_art.py.
+  - id: t-018
+    milestone: m2
+    title: Wire scripts/set_task_field.py into the Worker cycle for claim and status roadmap updates
+    status: done
+    owner: null
+    updated: '2026-07-04T10:26:14Z'
+    passes: 1
+    stakes: reversible
+    note: >
+      Reviewer audit (pass 2, PR #153): confirmed. write_roadmap() removed from run_worker.py; claim_task() and set_task_status() now shell into scripts/worker_task_status.py, exactly the remaining work called out in the prior audit note. Verified: 21 tests pass (test_run_worker_status_integration.py + test_worker_task_status.py + test_set_task_field.py), py_compile clean, and a live --dry-run of set_task_field.py against this roadmap confirms only this task's status line changes. Merged to main as PR #153.
+  - id: t-019
+    milestone: m2
+    title: Add a --dry-run mode to worker_task_status.py that prints the fields it would change without writing
+    status: done
+    owner: worker
+    updated: '2026-07-04T11:45:00Z'
+    passes: 0
+    stakes: reversible
+    note: >
+      Completed in PR #155 (self-merged by Worker). Reviewer audit: ran the full suite locally (pytest tests/test_worker_task_status.py tests/test_set_task_field.py tests/test_run_worker_status_integration.py -- 23 passed, including the two new dry-run tests), py_compile clean, and a live --dry-run against a real task confirmed no roadmap write occurs. Diff is scoped to worker_task_status.py + its test file only. Confirmed done.
+  - id: t-020
+    milestone: m2
+    title: Add a CI smoke job that runs worker_task_status.py --dry-run against a scratch roadmap fixture so a regression in the dry-run/no-write guarantee fails CI, not just local pytest
+    status: done
+    owner: worker
+    updated: '2026-07-04T12:30:00Z'
+    passes: 0
+    stakes: reversible
+    note: >
+      Completed in PR #157 (self-merged by Worker; no open worker/* PR remained at Reviewer session start, so this is a post-merge audit). Reviewer audit: read the diff (adds a worker-status-dry-run-smoke job to .github/workflows/ci.yml), confirmed it is additive-only alongside the existing jobs, and reproduced the job body locally -- wrote the same scratch projects/ci-dry-run-smoke/roadmap.yaml fixture, ran worker_task_status.py --dry-run claim then --dry-run done --note against it, hashed before/after, confirmed byte-identical. Also confirmed --dry-run is a top-level flag on the argparse parser so the job's command-line ordering (--dry-run before the subcommand) is valid, python -m py_compile on worker_task_status.py is clean, and .github/workflows/ci.yml parses as valid YAML. Task itself was left at status: ready with owner: null after the merge -- Worker did not flip its own roadmap status in this cycle. Confirmed done.
+  - id: t-021
+    milestone: m2
+    title: Add a scripts/worker_merge_pr.py helper that merges the Worker's own PR and immediately calls worker_task_status.py done in one atomic step, so a self-merge can never land without its roadmap status flip
+    status: done
+    owner: worker
+    updated: '2026-07-04T06:19:00-07:00'
+    passes: 0
+    stakes: reversible
+    note: >
+      Completed in PR #159. Added scripts/worker_merge_pr.py plus tests/test_worker_merge_pr.py. The helper squash-merges a Worker PR, pulls main, calls scripts/worker_task_status.py done, commits the roadmap status update, and pushes main as one CLI path so the merge/status flip are paired. Reviewer audit: py_compile clean, full pytest suite (44 tests) green including the 2 new tests. Confirmed done.
+  - id: t-022
+    milestone: m2
+    title: Make scripts/worker_merge_pr.py recover from an already-merged PR by treating GitHub's "already merged" response as success and still calling worker_task_status.py done, instead of erroring before the status flip
+    status: done
+    owner: worker
+    updated: '2026-07-04T17:30:00Z'
+    passes: 0
+    stakes: reversible
+    note: >
+      Completed in Silas-directed session (worker pass). merge_pr now carries the HTTP status on WorkerMergeError; a 405 from the merge endpoint triggers a GET verification — if the PR is already merged, the script continues to mark_task_done instead of erroring, closing the merged-but-not-marked-done gap. Distinguishes 405 already-merged from 405 not-mergeable (the latter still errors). Covered by two new tests in tests/test_worker_merge_pr.py; full suite 46 passed.
+  - id: t-023
+    milestone: m2
+    title: worker_merge_pr.py falls back to the session branch when pushing the done-status flip to main is rejected
+    status: done
+    owner: reviewer
+    updated: '2026-07-14T17:08:34Z'
+    passes: 0
+    stakes: reversible
+    note: 'Fixed: commit_done_status() now falls back to the session''s own branch and pushes there when push origin main is rejected (permission-restricted session), instead of leaving a merged-but-not-marked-done gap. Added regression tests for both the fallback path and the no-fallback-branch error path. See TALKBACK.md for detail.'
+    claimed_by: reviewer-burst-1784048827
+    claimed_at: '2026-07-14T17:07:07Z'
+  - id: t-024
+    milestone: m1
+    title: Fix pre-existing failures in tests/test_run_worker_status_integration.py
+    status: done
+    owner: claude
+    updated: '2026-07-08T00:00:00Z'
+    passes: 1
+    stakes: reversible
+    note: >
+      DONE (Claude, 2026-07-08): Diagnosis — stale tests, not a regression.
+      conductor #254 rewrote run_worker.py from a task-claiming worker into a
+      read-only healthcheck; claim_task/set_task_status/_run_worker_task_status
+      were removed but the tests still scraped for them, so they raised
+      ValueError('substring not found') on clean main. Rewrote the file to pin
+      the CURRENT contract: no task-status mutation surface, never serializes
+      YAML back out, only write_text is the transient digest, plus a
+      py_compile smoke test. Full suite now green (72 passed). Bonus: found and
+      fixed a second stale test of the same kind — test_distribute_images.py
+      test_write_gallery_manifest_nested still asserted stem-only manifest
+      entries after conductor #260 deliberately switched to full filenames.
+  - id: t-025
+    milestone: m2
+    title: Build a new-project scaffold helper script
+    status: done
+    owner: worker
+    updated: '2026-07-16T19:30:00Z'
+    passes: 0
+    stakes: reversible
+    note: >
+      DONE (2026-07-16). The one-pass scaffolder already existed as scripts/intake.py
+      (roadmap.yaml from _template, CHANGELOG.md, priority.yaml, project-overrides.yaml,
+      art-prompts.yaml, repos.yaml) — so rather than duplicate it, extended it to close
+      the exact gap the kaizen named: it now also writes projects/<slug>/DESIGN-BRIEF.md
+      (title/goal-seeded, sectioned stub) and appends a Per-project direction block to
+      CONTROL.md (comment-safe text insertion into the ## Per-project direction section,
+      idempotent), and accepts --title/--goal. Added tests/test_intake.py (7 tests;
+      intake.py had none) covering every surface, DESIGN-BRIEF title/goal, CONTROL block
+      placement/idempotency/section-append, and the existing-dir abort. Verified
+      end-to-end on a throwaway slug (all surfaces touched, roadmaps valid) then reverted.
+      Follow-up filed as t-055 (register_override/register_priority yaml.safe_dump clobbers
+      those files' header comments — pre-existing, surfaced by the e2e run).
+  - id: t-026
+    milestone: m2
+    title: Reviewer trigger fires with no open worker/* PR to review, repeatedly
+    status: needs-human
+    owner: null
+    updated: '2026-07-13T08:36:00Z'
+    passes: 0
+    stakes: reversible
+    note: >
+      FOR SILAS: The Reviewer session trigger is firing far more often than there
+      is Worker PR volume to review — this is a platform/scheduling issue, not
+      something fixable from inside the repo.
+
+      UPDATE 2026-07-13 08:36: 48th recurrence. Same shape — zero open worker/*
+      PRs and zero live worker/* branches in either repo, confirmed via
+      list_pull_requests, search_pull_requests, and list_branches. kind_robots'
+      open PR (#212) is still the same draft on a non-worker branch authored
+      directly by Silas, out of scope while draft. This session also found its
+      own designated `claude/hopeful-dirac-os6v8t` branch had diverged from
+      `main` with no shared history and no PR ever opened from it — restarted
+      it fresh from origin/main per the branch-recovery rule before logging
+      this entry, rather than pushing a broken giant diff. challenge-center/t-006
+      is unchanged from the 47th recurrence (same 2026-07-13T00:36:30Z updated
+      timestamp), now ~8 hours stranded — no new information, not
+      re-escalating further. Not re-notifying — same reasoning as recurrences
+      33-47. See TALKBACK.md 2026-07-13 08:36 entry.
+
+      UPDATE 2026-07-13 07:36: 47th recurrence. Same shape — zero open
+      worker/* PRs and zero live worker/* branches in either repo, confirmed
+      via list_pull_requests, search_pull_requests, and list_branches.
+      kind_robots' open PR (#212) is a draft on a non-worker branch authored
+      directly by Silas, out of scope while draft. challenge-center/t-006 is
+      unchanged from the 46th recurrence (same updated timestamp), now ~7
+      hours stranded — no new information, not re-escalating further. Not
+      re-notifying — same reasoning as recurrences 33-46. See TALKBACK.md
+      2026-07-13 07:36 entry.
+
+      UPDATE 2026-07-13 06:36: 46th recurrence. Same shape — zero open worker/*
+      PRs and zero live worker/* branches in either repo, confirmed via both
+      list_pull_requests and list_branches. All commits in both repos since the
+      45th recurrence are Silas's own direct work, zero Worker activity.
+      challenge-center/t-006 is unchanged from the 45th recurrence (same
+      updated timestamp), now ~6 hours stranded with no branch/commit/PR — no
+      new information, already escalated last cycle, not re-escalating
+      further. Not re-notifying — same reasoning as recurrences 33-45. See
+      TALKBACK.md 2026-07-13 06:36 entry.
+
+      UPDATE 2026-07-13 04:37: 45th recurrence. Same shape — zero open worker/*
+      PRs in either repo (list_pull_requests and list_branches both confirm;
+      kind_robots' previously-tracked draft PR #211 was merged directly by
+      Silas at 03:07 UTC, so it's clean too). Not re-notifying on the base
+      "no PR" finding — same reasoning as recurrences 33-44. NEW this cycle:
+      challenge-center/t-006 (claimed 2026-07-13T00:36:30Z) is now ~4 hours
+      unbranched with zero commits anywhere and both its dependencies already
+      done — escalating from "worth a closer look" to "looks stranded" across
+      4+ consecutive sweeps (42-45). Reviewer has no mandate to reclaim it, so
+      flagging for Silas or the next Worker cycle to reset it to ready/owner:
+      null if the claim is dead. See TALKBACK.md 2026-07-13 04:37 entry.
+
+      UPDATE 2026-07-13 03:36: 44th recurrence. Same shape — zero open worker/*
+      PRs in either repo (list_pull_requests confirms both empty; the
+      search_pull_requests is:open head:worker check 502'd but is redundant
+      given list_pull_requests already showed zero). The previously-tracked
+      kind_robots draft PR #211 is gone (merged/closed since the 43rd
+      recurrence) — kind_robots now has zero open PRs too. The one live
+      status: claimed task (challenge-center t-006, claimed by worker at
+      00:36:30) is still unbranched across 4+ recurrences (42, 43, 44) —
+      flagged for the next Reviewer cycle to check whether it's a stranded
+      claim rather than normal in-progress state, but not conclusive enough
+      to escalate yet. Not re-notifying Silas — same reasoning as recurrences
+      33-43. See TALKBACK.md 2026-07-13 03:36 entry for detail.
+
+      UPDATE 2026-07-13 02:13: 42nd recurrence. Same shape — zero open worker/*
+      PRs in either repo (list_pull_requests and search_pull_requests
+      is:open head:worker both confirm), no roadmap task at status:
+      review/claimed. One live status: claimed task exists (challenge-center
+      t-006, claimed by worker at 00:36:30, no branch/PR yet) — normal
+      Worker-in-progress state, not a review target. kind_robots has one open
+      PR (#211, "Add local animation preferences and polish startup effects")
+      but it's a draft authored directly by Silas on branch
+      `feature/user-animation-preferences` — not a worker/* branch, out of
+      Reviewer scope while draft. Not re-notifying Silas — same reasoning as
+      recurrences 33-41. See TALKBACK.md 2026-07-13 02:13 entry for detail.
+
+      UPDATE 2026-07-12 23:35: 41st recurrence. Same shape — zero open worker/*
+      PRs in either repo, no roadmap task at status: review/claimed. kind_robots
+      has one open PR (#205) but it's a draft on a non-worker branch authored
+      directly by Silas, out of Reviewer scope while draft. Not re-notifying
+      Silas — same reasoning as recurrences 33-40. See TALKBACK.md 2026-07-12
+      23:35 entry for detail.
+
+      UPDATE 2026-07-12 22:40: 40th recurrence. Same shape — zero open worker/*
+      PRs in either repo, no roadmap task at status: review/claimed. Not
+      re-notifying Silas — same reasoning as recurrences 33-39. See
+      TALKBACK.md 2026-07-12 22:40 entry for detail.
+
+      UPDATE 2026-07-12 21:10: 39th recurrence. Same shape — zero open worker/*
+      PRs in either repo, no roadmap task at status: review/claimed. Not
+      re-notifying Silas — same reasoning as recurrences 33-38. See
+      TALKBACK.md 2026-07-12 21:10 entry for detail.
+
+      UPDATE 2026-07-12 19:40: 38th recurrence. Same shape — zero open worker/*
+      PRs in either repo, no roadmap task at status: review/claimed. The
+      previously-flagged `agent/marketing-deck-and-hss-route-maker` branch no
+      longer exists on the conductor remote (superseded PR #400 is closed,
+      branch cleaned up) — nothing further to action there. Not re-notifying
+      Silas — same reasoning as recurrences 33-37. See TALKBACK.md 2026-07-12
+      19:40 entry for detail.
+
+      UPDATE 2026-07-12 18:36: 37th recurrence. Same shape — zero open worker/*
+      PRs in either repo, no roadmap task at status: review/claimed. The
+      untracked `agent/marketing-deck-and-hss-route-maker` branch is still
+      there with no PR. Also restored this note's UPDATE chain: the 36th
+      recurrence PR (#436) only appended to TALKBACK.md and skipped this
+      roadmap note. Not re-notifying Silas — same reasoning as recurrences
+      33-36. See TALKBACK.md 2026-07-12 18:36 entry for detail.
+
+      UPDATE 2026-07-12 17:36: 36th recurrence. Same shape — zero open worker/*
+      PRs in either repo, no roadmap task at status: review/claimed. Not
+      re-notifying Silas — same reasoning as recurrences 33-35. See TALKBACK.md
+      2026-07-12 17:36 entry for detail.
+
+      UPDATE 2026-07-12 17:05: 35th recurrence. Same shape — zero open worker/*
+      PRs in either repo, no roadmap task at status: review/claimed. Not
+      re-notifying Silas — same reasoning as recurrences 33-34. See
+      TALKBACK.md 2026-07-12 (35th recurrence) entry for detail.
+
+      UPDATE 2026-07-12 15:35: 34th recurrence. Same shape — zero open worker/*
+      PRs in either repo, no roadmap task at status: review/claimed. Not
+      re-notifying Silas — same reasoning as the 33rd recurrence. See
+      TALKBACK.md 2026-07-12 15:35 entry for detail.
+
+      UPDATE 2026-07-12 14:36: 33rd recurrence. Same shape — zero open worker/*
+      PRs in either repo, no roadmap task at status: review/claimed. Not
+      re-notifying Silas — 33 identical occurrences carry no new information.
+      See TALKBACK.md 2026-07-12 14:36 entry for detail.
+
+      UPDATE 2026-07-12 13:40: 32nd recurrence. Same shape — zero open worker/*
+      PRs in either repo, no roadmap task at status: review/claimed. The
+      untracked `agent/marketing-deck-and-hss-route-maker` branch is still
+      there with no PR (unchanged since 30th/31st). See TALKBACK.md
+      2026-07-12 13:40 entry for detail.
+
+      UPDATE 2026-07-12 12:35: 31st recurrence. Same shape — zero open worker/*
+      PRs in either repo, no roadmap task at status: review/claimed. The
+      untracked `agent/marketing-deck-and-hss-route-maker` branch is still
+      there with no PR. See TALKBACK.md 2026-07-12 12:35 entry for detail.
+
+      UPDATE 2026-07-12 11:50: 30th recurrence. Same shape — zero open worker/*
+      PRs in either repo, no roadmap task at status: review/claimed. Also found
+      an untracked `agent/marketing-deck-and-hss-route-maker` branch in
+      conductor with no PR opened against it — noted but not actioned (Reviewer
+      cannot open PRs). See TALKBACK.md 2026-07-12 11:50 entry for detail.
+
+      UPDATE 2026-07-12 04:36: 27th recurrence. Same shape as the 26th: no
+      worker/* (or Silas-directed claude/*) PR open in either repo (kind_robots
+      #185 is open but draft, from silasfelinus directly, not a Worker PR).
+      Throughput between 02:36 and now stayed healthy (PRs #402-#408 landed in
+      that window), this firing just caught another empty queue an hour later.
+      Urgency unchanged from the 26th update — worth fixing the cadence/gating,
+      not blocking the pipeline. See TALKBACK.md 2026-07-12 04:36 entry for detail.
+
+      UPDATE 2026-07-12 10:50: 29th recurrence. Same shape — zero open worker/*
+      PRs in either repo, no roadmap task at status: review/claimed. Real work
+      continues to land between firings (conductor #409-#420, kind_robots
+      #187-#190), so throughput is healthy; this is purely idle-cycle overhead.
+      See TALKBACK.md 2026-07-12 10:50 entry for detail.
+
+      UPDATE 2026-07-12 05:36: 28th recurrence. Zero open PRs in either repo
+      (kind_robots #185/#186 from the 27th update have since merged); no
+      roadmap task at status: review/claimed. Same empty-queue pattern, no new
+      urgency. See TALKBACK.md 2026-07-12 05:36 entry for detail.
+
+      UPDATE 2026-07-12 02:36: 26th recurrence, but throughput looks healthy —
+      between the 25th firing (21:36) and this one, conductor #375 merged and
+      four more sessions closed real work (challenge-center/t-003, the
+      kind_robots migration, and a genuine worker-shaped PR #402/#403). This
+      firing just caught an empty queue. Downgrading urgency: still worth
+      fixing the cadence/gating to cut session-cost waste, but it is not
+      blocking the pipeline. See TALKBACK.md 2026-07-12 entry for detail.
+
+      What's happening: at least 25 Reviewer sessions now (root TALKBACK.md
+      2026-07-05 evening, 2026-07-07 PR #345, 2026-07-10 14:35 PR #348, 2026-07-10
+      ~15:35, 2026-07-11 00:37 PR #371, 2026-07-11 01:36, 2026-07-11 04:37,
+      2026-07-11 05:36, 2026-07-11 06:36, 2026-07-11 07:36, 2026-07-11 08:36,
+      2026-07-11 09:36, 2026-07-11 10:36, 2026-07-11 11:36, 2026-07-11 12:37,
+      2026-07-11 13:37, 2026-07-11 14:37, 2026-07-11 15:36, 2026-07-11 16:36,
+      2026-07-11 17:36, 2026-07-11 18:36, 2026-07-11 19:36, 2026-07-11 20:36, and
+      2026-07-11 21:36) have fired on an hourly cadence. The first several found zero
+      open PRs anywhere and no roadmap task at status: review/claimed. Starting 04:37
+      the pattern shifted: each session re-fires almost exactly 1 hour after the prior
+      session had already reviewed conductor PR #375 (requested changes, logged in
+      TALKBACK) — with zero new commits, comments, or state change on that PR in
+      between firings. So the trigger isn't only firing into an empty queue; it's also
+      repeatedly re-firing on the same already-reviewed PR before the Worker
+      could plausibly have responded. Each occurrence burns a full sweep (git
+      log, PR list, roadmap grep, TALKBACK tail) to reach the same "nothing new
+      to do" conclusion. The 2026-07-11 21:36 occurrence is a seventeenth instance
+      of that exact pattern: PR #375 still has only the one original commit and
+      the one review comment from 03:37 — no Worker response in the ~18 hours
+      since. The Worker side also looks stalled independent of this PR: its last
+      claim commit on this roadmap was 2026-07-08, and the last worker/* PR
+      merged anywhere in scope was ~2026-07-10 22:31 UTC — Silas may want to
+      check whether the Worker's own hourly trigger is still firing.
+
+      TO APPROVE: This needs a change to how/how-often the Reviewer session is
+      triggered (cron cadence, or a webhook/condition gate that only fires the
+      Reviewer when an actual worker/* PR is opened) — that configuration lives
+      outside this repo, so no agent can fix it directly. Please check the trigger
+      config for this session and either slow its interval or make it conditional
+      on an open worker/* PR existing. Once addressed, set status: done here (or
+      leave a note if you want the roadmap task kept open to track effectiveness).
+
+      What unblocks: nothing depends on this — it's pure session-cost waste, not
+      a blocker. Logging the recurrence here (rather than yet another passive
+      pattern note) since prior soft notes did not surface a fix; escalating
+      instead of repeating a full redundant sweep, per this task's own point about
+      the cost of doing that every cycle.
+    soft_gate: true
+  - id: t-027
+    milestone: m2
+    title: Include project priority in the kind_robots Project sync payload
+    status: done
+    owner: reviewer
+    updated: '2026-07-12T00:00:00Z'
+    passes: 0
+    stakes: reversible
+    depends_on: t-009
+    note: >
+      Closed 2026-07-12 by the Dream->Project sync cutover (Silas-directed session):
+      sync_projects_to_dreams.py was replaced by scripts/sync_projects.py, which
+      upserts first-class kind_robots Projects via /api/projects keyed on
+      conductorSlug and sends priority (mapped from project-overrides.yaml:
+      low->LOW, normal->NORMAL, high/urgent->HIGH) plus lastSyncedAt on every
+      create and update. Original ask (priority metadata in the sync payload)
+      is fully covered by the rewrite.
+  - id: t-028
+    milestone: m1
+    title: Bake the Flutter SDK into the web-session startup hook so app tasks self-verify
+    status: done
+    owner: reviewer
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-21T01:42:40Z'
+    note: >
+      Kaizen from superkate/t-022 (PR #343, merged 2026-07-10) and a recurring
+      TALKBACK theme: web sessions historically lacked a Flutter toolchain, so
+      apps/* tasks were inspected rather than verified. This cycle proved a
+      plain SDK download works in the session container (3.32.5, ~5 min,
+      storage.googleapis.com is reachable). Add it to the SessionStart hook or
+      a cached setup script (guard: skip when flutter is already on PATH, and
+      set git safe.directory for the SDK checkout) so flutter analyze/test run
+      in every future cycle.
+    claimed_by: claude-conductor-web-20260721T0120Z
+    claimed_at: '2026-07-21T01:17:13Z'
+
+  - id: t-030
+    milestone: m2
+    title: "Adopt PortOS CoS learnings: failure triage, retry context, learning ledger"
+    status: done
+    owner: claude
+    passes: 0
+    stakes: reversible
+    updated: "2026-07-11T21:30:00Z"
+    note: >
+      Retroactive task; Silas-directed session on branch
+      claude/conductor-portos-comparison-wdpdoq. Added AGENTS.md sections "Failure
+      triage" (transient/actionable/quality/scope — only quality/scope consume a
+      pass), "Retry context" (Reviewer writes retry_context: on rejection; Worker
+      must read it before re-claiming), and "Learning ledger" (LEARNING.yaml
+      append-only outcome records + scripts/build_learning_summary.py ->
+      LEARNING-REPORT.md, wired into kaizen targeting). Updated
+      prompts/hourly-worker.md steps 3/8/9 and both role definitions. 16 new tests
+      in tests/test_build_learning_summary.py; full suite 103 passed. Design record:
+      docs/2026-07-11-portos-cos-learnings.md.
+
+  - id: t-031
+    milestone: m2
+    title: Wire LEARNING-REPORT.md regeneration and its tests into CI
+    status: done
+    owner: worker
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-16T20:00:00Z'
+    depends_on: t-030
+    note: >
+      DONE 2026-07-16 (Reviewer merge, conductor PR #641, squash). Added a
+      "Regenerate LEARNING-REPORT.md" step to refresh-status.yml next to the
+      STATUS.md/workspace.html regen, added LEARNING.yaml to the workflow's
+      trigger paths, and regenerated the then-stale report (194->199 closed).
+      No ci.yml change needed: the "Authz regression tests" job already runs
+      the full pytest tests/ suite (t-047), which discovers
+      tests/test_build_learning_summary.py. 16/16 tests passed.
+
+      Original note: Follow-up to t-030. Add tests/test_build_learning_summary.py to
+      the Worker PR CI job list (ci.yml) and regenerate LEARNING-REPORT.md on pushes
+      to main the same way STATUS.md/KAIZEN.md are rebuilt, so the report never
+      drifts from the ledger.
+    claimed_by: claude-overnight-sxndmc
+    claimed_at: '2026-07-16T18:57:24Z'
+
+  - id: t-032
+    milestone: m2
+    title: Backfill LEARNING.yaml from recent git history and TALKBACK
+    status: done
+    owner: worker
+    passes: 0
+    stakes: reversible
+    updated: "2026-07-16T00:00:00Z"
+    depends_on: t-030
+    note: >
+      DONE (2026-07-16). The task's "ledger starts empty" premise was stale — the
+      auto-appender had already filled 81 records (2026-07-11..16) — so this became a
+      fill-the-gaps, de-duped backfill. Added scripts/backfill_learning.py (reuses
+      process_task_events.prepare_learning for the (project,task,outcome) dedup +
+      write_learning_record for the append-only write) and tests/test_backfill_learning.py
+      (15 tests incl. idempotency + a schema-conformance guard over the real ledger).
+      Ran the default curated+recent scope (last 7 days + one curated high-signal
+      lesson, conductor/t-014): appended 100 records (81 -> 181), every backfilled
+      lesson prefixed "backfilled:". Re-run appends zero (idempotent); existing 81
+      records byte-preserved. --since all remains for a later exhaustive sweep.
+      Regenerated LEARNING-REPORT.md.
+
+  - id: t-033
+    milestone: m2
+    title: "Pitch: worktree-parallel Workers with claim leases"
+    status: needs-human
+    owner: worker
+    passes: 0
+    stakes: reversible
+    soft_gate: true
+    updated: '2026-07-16T19:10:41Z'
+    note: >
+      PITCH WRITTEN (2026-07-16, claude-overnight-sxndmc):
+      pitches/2026-07-16-concurrent-worker-claim-leases.md. Proposal-kind task, so
+      it ends at needs-human for Silas to vet. FOR SILAS: the pitch proposes
+      allowing N concurrent Worker claims via the existing lease
+      (claimed_by/claimed_at + CLAIM_TTL_MINUTES) plus a global concurrency cap and
+      a git-worktree per session, mirroring PortOS CoS's 3-agent model — the
+      claim/lease primitives already exist in claim_task.py/roadmap_claims.py.
+      TO APPROVE: read the pitch; if you want it, set status: ready with a note and
+      the suggested first task (a projects/conductor/docs/concurrent-claims.md
+      design doc pinning the contention model) becomes the next pickup. Original
+      note below.
+      Deferred from the PortOS comparison (docs/2026-07-11-portos-cos-learnings.md).
+      Conductor's one-atomic-claim-commit rule serializes the Worker; PortOS CoS runs
+      3 concurrent agents via a git worktree per agent plus claim leases. Write a
+      pitch to pitches/ evaluating whether/how conductor's claim protocol could allow
+      N concurrent Worker claims safely (per-project caps, lease staleness, TALKBACK
+      contention). This is a structural change — pitch only, no implementation.
+    claimed_by: claude-overnight-sxndmc
+    claimed_at: '2026-07-16T19:10:41Z'
+
+  - id: t-034
+    milestone: m2
+    title: "Pitch: kind_robots dashboard as shared front-end for Conductor + PortOS CoS"
+    status: needs-human
+    owner: claude
+    passes: 0
+    stakes: reversible
+    updated: "2026-07-19T02:30:00Z"
+    note: >
+      FOR SILAS: pitch written to pitches/2026-07-19-kind-robots-dashboard-shared-frontend.md.
+      Proposes extending the existing `portos` tab in kind_robots'
+      stores/helpers/conductorTabs.ts (already a stub with forward-looking narrative
+      text, currently unbacked) into a real second-runtime view if/when a CoS-style
+      runtime is ever adopted, fed by a new read-only server/api/conductor/*
+      endpoint mirroring the existing projects.get.ts/prs.get.ts pattern.
+      TO APPROVE: read the pitch, set status: approved in the pitch file's front
+      matter if you like the direction, and (optional) greenlight the suggested
+      first task -- a design-note-only write to
+      projects/conductor/docs/portos-dashboard-shape.md, no code, no runtime
+      decision implied. This does not authorize or depend on conductor/t-033
+      (worktree-parallel Workers, still needs-human) -- either can proceed
+      independently. Deferred from the PortOS comparison
+      (docs/2026-07-11-portos-cos-learnings.md).
+
+  - id: t-029
+    milestone: m1
+    title: Promote the reconcile_expressions offline harness into the pytest suite
+    status: done
+    owner: worker
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-16T06:10:00Z'
+    note: >
+      DONE 2026-07-16 (conductor-burst-hourly): added tests/test_reconcile_expressions.py
+      covering all four cases from the original kaizen note against a fake api()
+      stub (no network, no real kind_robots checkout) — narrator lookup wins and
+      the bulk /api/bots list is never queried when it succeeds; a 404 falls back
+      to the bulk list with existing=None, producing create-only rows (never a
+      "missing"/deactivate row, since drift can't be judged without known rows);
+      character owner id resolves from sourceCharacterId, not the narrator
+      payload's own id (that's the default narrator bot's id); and
+      fetch_owner_ids' pagination-stall detection (len(ids) == before) is
+      unit-tested directly against a stubbed always-same-100-rows response,
+      the exact shape of the broken /api/bots pagination PR #360 fixed around.
+      Verified: full `pytest tests/` — 241 passed (was 235; +6 new), `python -m
+      py_compile` clean. No CI wiring change needed — ci.yml already runs
+      `pytest tests/` (whole directory, since t-047), so the new file is
+      auto-discovered.
+    claimed_by: claude-burst-hourly-20260716-0608
+    claimed_at: '2026-07-16T06:08:34Z'
+
+  - id: t-035
+    milestone: m1
+    title: Refresh the KR_API_TOKEN secret so the project sync can authenticate
+    status: done
+    owner: reviewer
+    passes: 0
+    stakes: reversible
+    gate_human: true
+    approved_by_human: true
+    updated: "2026-07-12T05:00:00Z"
+    note: >
+      Closed 2026-07-12: Silas refreshed the KR_API_TOKEN secret and cleared
+      this gate in the live session (CONTROL.md in-session clearance rule).
+      Verified by Project Sync run 7 (workflow_dispatch, all green): every
+      active project UPDATED or CREATED — ai-art-academy (56), coloring-book
+      (57), and dream-cycle (58) were created; the rest updated in place.
+      The conductor -> kind_robots /api/projects bridge is confirmed live
+      end-to-end.
+
+  - id: t-036
+    milestone: m2
+    title: Fix LEARNING.yaml's broken block-sequence indentation so it parses again
+    status: done
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-14T10:07:59Z'
+    note: >
+      Found while closing challenge-center/t-008 (2026-07-14): root LEARNING.yaml
+      fails yaml.safe_load entirely — "expected <block end>, but found '-'" at the
+      record starting "- date: 2026-07-12 / project: challenge-center / task:
+      t-004". Every record before that point is indented as "  - date: ..." (2
+      spaces, nested under the records: key); every record from that one onward
+      reverts to "- date: ..." (0 indent, flush with records:). Mixing the two
+      indent depths within one YAML block sequence is what breaks the parser —
+      earlier entries parse fine in isolation but the file as a whole does not.
+      This is a real, not cosmetic, bug: process_task_events.py's
+      append_learning() calls load_yaml() on this exact file before appending,
+      so any task-event done/blocked closure carrying a learning: payload has
+      been raising an exception (and failing the whole event, per the atomic
+      processing in t-020's future scope) since whichever merge introduced the
+      indent switch. build_learning_summary.py likely fails the same way.
+      Fix: pick one indent convention (0-indent "- date:" matches the majority
+      of later, more-recent entries and needs no reflow of most of the file)
+      and normalize every entry to it in one pass; verify with
+      yaml.safe_load and confirm scripts/build_learning_summary.py runs clean
+      afterward. Do not touch record content, only indentation — this is a
+      formatting-only fix on an append-only ledger.
+
+  - id: t-037
+    milestone: m2
+    title: Investigate why creating the animation-manager kind_robots Project deterministically fails (connection closed)
+    status: done
+    owner: reviewer
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-17T19:35:00Z'
+    note: >
+      CLOSED 2026-07-17T19:35Z (claude-sweep-20260717-fqdd6v, same session as
+      the ungate): VERIFIED FIXED. Project Sync run 29606412293 (main @
+      2e882a4a, 19:08Z) syncs all 32 active projects clean — and both
+      previously-failing WRITE targets now EXIST as kind_robots Project rows:
+      animation-manager UNCHANGED (id=1285), kindrobots-unraid UNCHANGED
+      (id=1281). Zero retries, zero JWTExpired, zero connection-closed errors
+      in the run log. The high row ids (1281/1285 vs 1-95 for the older
+      projects) confirm the creates landed recently — i.e. once the
+      KR_API_TOKEN was refreshed and the t-022 DB-pool incident (one-shot
+      fallback pool, reverted in kind_robots PR #342) was resolved, the
+      deterministic failure disappeared with no conductor code change needed
+      beyond the already-merged retry improvement (PR #503). Root cause per
+      the investigation below: expired JWT (KR_API_TOKEN) paired with the
+      DB-pool connection-closed signature — both since fixed.
+
+      UNGATED 2026-07-17 (Silas, in-session): "remove hard gates on 3 and 4,
+      should now be working" — gate_human removed, back to ready. The DB-pool
+      incident (kind-robots t-022, closed same session — root cause PR #336's
+      one-shot fallback pool, reverted in kind_robots PR #342) plausibly
+      explains the "connection closed" write failures recorded below. Next
+      pickup: trigger/observe a Project Sync run (scripts/sync_projects.py)
+      and confirm the animation-manager and kindrobots-unraid Project CREATEs
+      now succeed; if they do, close done with the run link. Also confirm the
+      JWTExpired pairing noted below is gone now that KR_API_TOKEN was
+      refreshed. If the write still deterministically fails post-t-022-fix,
+      escalate back to needs-human with the fresh log signature.
+
+
+      FOR SILAS / next Worker with backend log access: conductor/PR #503 fixed
+      sync_projects.py's retry logic to also retry HTTP-400-wrapped transient
+      DB-connection errors (it previously only retried on 429/500/502/503/504
+      status codes). Confirmed the fix works -- the very next Project Sync run
+      after merging (run 29323797261, commit 84f460c3) now correctly retried 3
+      times with backoff -- but animation-manager still failed all 4 attempts
+      with the identical error every time: POST /api/projects ->
+      "'{"success":false,"message":"Cannot execute new commands: connection
+      closed","statusCode":400}'. That's different from ordinary transient
+      flakiness (which would recover on at least one of 4 tries): all 31 other
+      projects (read-only GET, all UNCHANGED) succeeded in the same run, and
+      animation-manager's create (the only WRITE in that run) failed 4/4
+      times with byte-identical output -- i.e. deterministic, not random.
+      Checked the payload (server/utils via sync_projects.build_project_payload)
+      for anomalies -- title/description/goal are normal length, no unusual
+      characters. Checked server/api/projects/index.post.ts and projectCap.ts --
+      enforceProjectCap only runs for non-admin users and the sync token is
+      Silas's (admin), so it short-circuits; projectInclude is a light
+      select-only include, not a heavy nested query. Nothing found client-side
+      that would explain a deterministic write failure. Needs someone with
+      Vercel function logs / direct DB access to see the actual Prisma/driver
+      error around this specific INSERT (is it a real ProxySQL write-path
+      outage distinct from the read path, a unique-constraint clash against
+      an existing-but-hidden project row for this slug, or something else).
+      Soft gate: sync_projects.py's retry improvement (PR #503) is still a net
+      win for genuine transient blips even though this specific case needs
+      backend investigation -- other conductor work is not blocked by this.
+
+
+      UPDATE 2026-07-14T19:20 UTC (Reviewer, this session has live Vercel MCP
+      log access the prior investigation lacked): pulled `get_runtime_logs`
+      for kind_robots' Vercel project (prj_x6HB2IPpQbvqNqiYVgu3IibJ6FZf) for
+      the exact failure window of the 18:14:36 UTC Project Sync run. Every
+      failing `POST /api/projects` (deployment dpl_PCMGFcwbkcDQS5JwgrxithyXCzmv)
+      logs TWO paired "Operation failed" errors on the same request:
+      `JWTExpired: "exp" claim timestamp check failed` immediately followed by
+      `DriverAdapterError: Cannot execute new commands: connection closed`.
+      `kindrobots-unraid` now fails with the byte-identical signature too (not
+      just animation-manager as originally filed) -- both are simply the only
+      two projects that needed a WRITE (create/update) in these runs; the 31
+      UNCHANGED projects only ever GET, so they never exercise this path.
+      This strongly points to KR_API_TOKEN (per sync_projects.py's own docstring,
+      "a valid kind_robots JWT for Silas's account") having expired again --
+      same failure class as t-035, refreshed 2026-07-12, ~2 days before this
+      recurrence -- with a separate kind_robots-side bug where the expired-JWT
+      auth failure doesn't cleanly short-circuit to a 401 and instead falls
+      through to a DB call on an already-torn-down connection, surfacing the
+      misleading "connection closed" DriverAdapterError instead of a clear
+      auth error. Caveat: kind_robots' own session-JWT mint path
+      (server/api/auth/index.ts, `SignJWT`) sets `.setExpirationTime('360d')`,
+      which doesn't obviously explain a ~2-day recurrence, so either
+      KR_API_TOKEN isn't sourced from that exact mint path or something else
+      (rotation-on-login, manual short-lived reissue, revocation) is
+      invalidating it faster than 360 days -- worth Silas checking how this
+      specific token was generated.
+      TO APPROVE / ACT: (1) refresh KR_API_TOKEN the same way as t-035, which
+      should immediately restore Project Sync for both stuck projects; (2)
+      consider whether the token needs periodic rotation on a shorter cadence
+      than assumed, or a longer-lived token minted specifically for this
+      service-to-service use case instead of a personal session JWT; (3) a
+      kind_robots-side fix (new reversible task, not filed here to keep this
+      diff scoped) so an expired/invalid auth token returns a clean 401
+      instead of masquerading as a DB connection error -- would make this
+      failure mode self-diagnosing for whoever hits it next.
+    claimed_by: claude-sweep-20260717-fqdd6v
+    claimed_at: '2026-07-17T19:11:58Z'
+  - id: t-038
+    milestone: m2
+    title: Reconcile CONTROL.md's stated priority band with priority.yaml's actual order
+    status: done
+    owner: reviewer
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-14T16:50:40Z'
+    note: 'Found by scripts/audit_roadmaps.py (CONTROL_PRIORITY_DRIFT, error severity): CONTROL.md''s "Priority order this week" line lists challenge-center → ai-art-academy → coloring-book → humboldt-scoop → humboldt-scoop-cms → digital-storefront → packmaker → mermaids-of-venice → kind-robots → global-ui, but projects/priority.yaml''s matching prefix inserts kindrobots-unraid between kind-robots and global-ui. Checked git history (git log -p --follow on both files): this drift is not a recent edit -- priority.yaml has carried kindrobots-unraid in that slot since the file was created, and CONTROL.md''s band text has never listed it, so this looks like the CONTROL.md prose simply never got updated to mirror priority.yaml rather than a real prioritization disagreement. Not resolving unilaterally since priority band ordering is Silas''s call (CONTROL.md: "the one file Silas edits to steer everything"). Two textual-only fixes to choose between: (a) add kindrobots-unraid to CONTROL.md''s band text to match current priority.yaml (if the existing order is intended), or (b) move kindrobots-unraid out of priority.yaml''s top band to match CONTROL.md''s stated intent (if it should rank lower). Either is a one-line, reversible, non-code edit -- no gate_human needed, just a judgment call on which document reflects true intent. Re-run `python scripts/audit_roadmaps.py` after to confirm CONTROL_PRIORITY_DRIFT clears. RESOLVED 2026-07-14 (Reviewer, idle-cycle burst-mode pick per conductor/t-026''s established pattern): chose option (a) -- added kindrobots-unraid to CONTROL.md''s band text between kind-robots and global-ui, matching priority.yaml''s existing order, since the investigation above already concluded this was prose drift rather than an intended reprioritization. Re-ran scripts/audit_roadmaps.py: CONTROL_PRIORITY_DRIFT cleared (0 errors, 1 pre-existing warning unchanged, already deferred to t-039).'
+    claimed_by: reviewer-great-goldberg-20260714T164946Z
+    claimed_at: '2026-07-14T16:49:52Z'
+  - id: t-039
+    milestone: m2
+    title: Decide whether to retire animation-studio now that animation-manager supersedes it
+    status: done
+    owner: worker
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-19T00:28:00Z'
+    note: >
+      Found while triaging scripts/audit_roadmaps.py's ROADMAP_MISSING_OVERRIDE
+      warning for animation-studio (it has no projects/project-overrides.yaml
+      entry, so it reads as override_status: missing rather than active).
+      Investigation: animation-manager was created by kind_robots-adjacent PR
+      #494 ("Create the autonomous Animation Manager program") and its goal
+      text and t-001/t-002 (both done) closely mirror animation-studio's
+      original t-001 (research)/t-002 (pitch queue), still sitting at ready.
+      animation-studio/t-003 ("Ship Gravity Garden") was genuinely distinct
+      completed work -- verified kind_robots PR #238 merged 2026-07-14T07:40Z
+      via pull_request_read and flipped it ready->done directly this cycle
+      (LEARNING.yaml entry logged) since that was unambiguous. What's NOT
+      resolved: whether animation-studio's remaining tasks (t-001 ready, t-002
+      ready, t-004 ready, t-005-008 waiting) are stale duplicates that should
+      be formally retired (status: retired in project-overrides.yaml, folded
+      into animation-manager's roadmap) now that animation-manager is the
+      active continuation, or whether the two are intentionally separate
+      programs. Did not add an "active" override entry as a quick fix --
+      that would let a Worker start claiming t-001/t-002/t-004 and risk
+      redoing work animation-manager already shipped. Needs a human or a
+      Worker with more project history to decide retire-vs-keep-separate,
+      then either add the override entry (if kept separate) or mark
+      project-overrides.yaml status: retired + close out the roadmap (if
+      superseded).
+
+      DECIDED 2026-07-19 (conductor agent run, claude-conductor-agent-20260719T0011Z):
+      retired. Confirmed animation-studio's three remaining ready tasks (t-001
+      research, t-002 pitch queue, t-004 reaction-backed attempts) each
+      functionally duplicate animation-manager scope that is already done
+      (t-001/t-002) or already ready under the identical description (t-004
+      "Track animation attempts as Component records with Reactions" here vs.
+      animation-studio's own t-004 "Design reaction-backed animation attempts
+      and revision lineage"). animation-manager is the actively-developed,
+      autonomous:true continuation (4/10 tasks done, coherent in-flight
+      pipeline) vs. animation-studio's 1/8 (only the genuinely distinct Gravity
+      Garden work). Added project-overrides.yaml status: retired for
+      animation-studio with the full rationale inline there; left
+      roadmap.yaml untouched as historical record rather than deleting or
+      editing its tasks (retired override already makes it unclaimable per
+      AGENTS.md step 3, so no roadmap edit needed to enforce that). This
+      resolves the ROADMAP_MISSING_OVERRIDE warning audit_roadmaps.py had been
+      flagging for animation-studio.
+    claimed_by: claude-conductor-agent-20260719T0011Z
+    claimed_at: '2026-07-19T00:24:39Z'
+
+  - id: t-040
+    milestone: m2
+    title: Burst-mode rotation has no claim step, so concurrent hourly triggers can pick the same project/task
+    status: done
+    owner: reviewer
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-14T15:16:44Z'
+    note: >
+      Original finding (full account in TALKBACK.md, 2026-07-14
+      "ecosystem-map/t-001, t-003 | burst-mode pattern + rotation-collision
+      finding"): two concurrent burst-mode sessions independently picked and
+      fully implemented animation-manager/t-008, discovered only at push
+      time; no data was lost but the duplicate implementation was pure waste
+      and a less careful session could have force-pushed over the real merge.
+
+      Fix shipped this cycle: `scripts/claim_task.py` (new), backed by
+      `scripts/git_plumbing.py` (new -- builds and pushes a single-file
+      commit via a scratch git index, without touching the caller's checked-
+      out branch/working tree/HEAD) and `scripts/roadmap_claims.py` (new --
+      shared claimability/staleness rule: `status: ready`, or `status:
+      claimed` with `claimed_at` older than `CLAIM_TTL_MINUTES` = 90).
+      `claim_task.py` re-reads the task straight from `origin/main` (not the
+      local checkout), refuses with exit 3 (`ALREADY_CLAIMED`) if someone
+      else already holds it, and otherwise pushes a small `status: claimed`
+      commit straight to `origin/main` before real implementation work
+      starts, with bounded retry-on-race (re-fetch, re-check claimability,
+      rebuild the commit). `set_task_field.py` gained `claimed_by`/
+      `claimed_at` to its allowed-fields set; fixing this also surfaced and
+      fixed a real latent bug in its `normalize_scalar` -- a literal
+      timestamp value (as opposed to the `now` keyword) was left unquoted
+      and silently reparsed by PyYAML as a native `datetime` instead of a
+      string (caught by the new test suite, not by inspection).
+      `next_ready_task.py` now treats a stale `claimed` task as pickable
+      again, so a crashed claiming session can't lock a task forever.
+      AGENTS.md's "Picking what to work on" and the Worker's "Step 2 --
+      Claim" now document the required claim step and a new "Rotation
+      collisions" subsection explains why it exists. Covered by
+      tests/test_claim_task.py (real throwaway git repos exercising the
+      actual commit/push/race-rejection plumbing, not just the YAML edit),
+      tests/test_roadmap_claims.py, and a new case in
+      tests/test_set_task_field.py; full suite green (155 passed) and
+      `scripts/audit_roadmaps.py` unchanged (still the same 1 error / 1
+      warning already deferred to t-038/t-039).
+
+      Deliberately out of scope: this only closes the gap for sessions that
+      actually run `claim_task.py` -- it can't force a session to call it,
+      and doesn't touch `scripts/run_worker.py`'s separate, purely
+      informational `find_ready_task()` (that script explicitly never
+      executes tasks; see its module docstring). It also doesn't resolve the
+      pre-existing tension between AGENTS.md's formal "Reviewer CANNOT...
+      set status: claimed" rule and the established burst-mode practice of
+      Claude sessions claiming/implementing conductor-tooling tasks directly
+      under Silas's in-session direction (the "CAN... claude/* branches...
+      directed by Silas" carve-out) -- flagging it here rather than
+      resolving it unilaterally, since it's a process-authority question for
+      Silas, not a one-line fix.
+
+  - id: t-041
+    milestone: m2
+    title: Document the "create branch via API before first git push" step for sessions whose designated branch doesn't exist on the remote yet
+    status: done
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-14T17:49:58Z'
+    note: >
+      Kaizen from t-038 (PR #515, merged 2026-07-14). This session's designated
+      branch (claude/great-goldberg-4srsd6) had never had a PR opened from it,
+      so it did not yet exist on the actual GitHub remote even though the
+      local checkout's remote-tracking ref showed a SHA for it (stale/local-
+      only knowledge). A plain `git push -u origin <branch>` for a genuinely
+      new remote branch failed with HTTP 413 from the git-smart-HTTP proxy --
+      GIT_TRACE_CURL showed it attempting to send an ~500MB pack (matching
+      the full .git size) instead of a small delta, apparently because the
+      proxy's handling of a brand-new ref requires a full pack rather than
+      computing one relative to objects already reachable via other refs
+      (e.g. main). Workaround that worked: call the GitHub MCP
+      `create_branch` tool (owner/repo/branch/from_branch: main) first --
+      this creates the ref instantly via the API with zero data transfer,
+      since it just points at a commit the remote already has -- then the
+      normal `git push` of the session's actual commits went through as a
+      small, fast delta. Add this as a documented step in AGENTS.md or
+      CLAUDE.md's session-startup guidance (something like: "if `git push -u
+      origin <your-branch>` fails with HTTP 413 and the branch has no prior
+      PR, the branch likely doesn't exist on the remote yet -- create it via
+      the GitHub API/MCP `create_branch` from main first, then push normally")
+      so the next session that hits this doesn't have to re-diagnose it from
+      a raw curl trace.
+    claimed_by: reviewer-hourly-1784051334
+    claimed_at: '2026-07-14T17:48:54Z'
+  - id: t-042
+    milestone: m2
+    title: Fix task-events queue head-of-line blocking on a stale/invalid event
+    status: done
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Found during the 2026-07-14 18:48 UTC hourly sweep: the "Process task
+      events" workflow had been failing on every run since 04:18 UTC (7 runs),
+      because scripts/process_task_events.py's main() aborts the entire batch
+      and returns 1 on the FIRST event that raises -- and a stale
+      task-events/20260714T041245Z-challenge-center-t-008-claim.yaml (a claim
+      for a task that was later marked done through a different path) can
+      never succeed. Per the .github/workflows/process-task-events.yml design,
+      "Validate roadmaps"/"Commit processed state" only run on step success,
+      so this one bad event silently blocked every other queued event too --
+      including a real 18:16 UTC worker claim on challenge-center/t-013 that
+      never got applied. Fix: main() now continues past a failing event
+      instead of returning immediately, so valid events in the same batch
+      still get applied/committed; the workflow step is continue-on-error so
+      later steps still run, with a final step that fails the job (for
+      visibility) only after the commit step has run. Deleted the stale
+      t-008 event as part of this fix since it can never succeed (t-008 is
+      already done). Added tests/test_process_task_events.py coverage
+      (test_main_applies_valid_events_even_when_an_earlier_one_fails) that
+      reproduces the alphabetical head-of-line-blocking scenario directly.
+    claimed_by: reviewer-hourly-20260714T1848
+    claimed_at: '2026-07-14T18:56:54Z'
+    updated: '2026-07-14T19:10:19Z'
+
+  - id: t-043
+    milestone: m2
+    title: Deduplicate the three independent copies of dependency-satisfaction logic (resolve_deps.py, next_ready_task.py, audit_roadmaps.py)
+    status: done
+    owner: reviewer
+    passes: 0
+    stakes: reversible
+    note: >
+      DONE 2026-07-16 (claude-burst-hourly-20260716-0410): extracted
+      scripts/roadmap_deps.py with a single dependency_satisfied(task) helper
+      (mirrors roadmap_claims.py's centralization pattern) and pointed all
+      three call sites at it. resolve_deps.py imports it as
+      `dependency_satisfied as satisfied` so its existing tests
+      (tests/test_resolve_deps.py, which call resolve_deps.satisfied()
+      directly) keep passing unchanged. next_ready_task.py and
+      audit_roadmaps.py each dropped their local re-implementation and import
+      the shared function directly; audit_roadmaps.py needed the same
+      `sys.path.insert(0, ...)` pattern resolve_deps.py/next_ready_task.py
+      already use for their sibling-module imports, since it's loaded via
+      importlib.util.spec_from_file_location in
+      tests/test_audit_roadmaps_policy.py with no package context.
+      Verified no behavior change: full suite (235 tests, up from 200 --
+      picked up new tests landed by other cycles since t-012) green;
+      `resolve_deps.py --dry-run`, `next_ready_task.py`, and
+      `audit_roadmaps.py` all produce identical output to pre-change runs
+      (0 errors / 5 warnings / 47 info on the audit, matching the committed
+      ROADMAP-AUDIT.md modulo this task's own claimed→done state change).
+    claimed_by: claude-burst-hourly-20260716-0410
+    claimed_at: '2026-07-16T04:07:23Z'
+    updated: '2026-07-16T04:15:00Z'
+
+  - id: t-044
+    milestone: m2
+    title: Fix stale tutorialChannels.<channelKey> phrasing in the "Polish and upgrade X front-end surface" task notes
+    status: done
+    owner: reviewer
+    passes: 0
+    stakes: reversible
+    note: >
+      DONE 2026-07-15 (claude-hourly-2026-07-15-0900): humboldt-scoop-cms/t-011
+      turned out already fixed inline when it closed (PR #273, applying the
+      corrected convention directly). Fixed the remaining two ready instances —
+      packmaker/t-006 and mermaids-of-venice/t-012 — replacing the stale
+      "add a matching section under tutorialChannels.<channelKey>.sections"
+      phrasing with "add a NEW top-level ExtraTutorialKey channel keyed by
+      '<tabKey>'" and correcting the tutorial-art path from
+      tutorials/<channelKey>/<slug>.webp to tutorials/<tabKey>/<tabKey>.webp
+      (verified tabKeys 'packs'/'mermaids' against
+      kind_robots/utils/projectPlacements.ts and confirmed the ExtraTutorialKey
+      pattern against kind_robots/stores/helpers/tutorialCards.ts). Ran
+      scripts/audit_roadmaps.py after editing: 0 errors, same warning/info
+      counts as before the change.
+    claimed_by: claude-hourly-2026-07-15-0900
+    claimed_at: '2026-07-15T08:50:09Z'
+    updated: '2026-07-15T09:05:00Z'
+
+  - id: t-045
+    milestone: m2
+    title: Have Worker sessions rebase their branch onto origin/main immediately before opening a PR, to avoid dumping trivial auto-gen conflicts on the Reviewer
+    status: done
+    owner: worker
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-16T20:00:00Z'
+    note: >
+      DONE 2026-07-16 (Reviewer merge, conductor PR #640, squash). Added the
+      fetch+rebase step to AGENTS.md's Worker section. Note from the same
+      Reviewer sweep that merged this: the auto-gen race is broader than one
+      Worker PR being stale before it opens — refresh-status.yml's chore
+      commit landed on main after nearly every single merge in this cycle's
+      8-PR backlog, re-conflicting each subsequent PR in the queue seconds
+      later. Filed t-056 to cover the Reviewer-side batch-merge half of this
+      problem that this task didn't reach.
+
+      Original note: >
+      Kaizen from Reviewer merge of conductor PR #550 (kindrobots-unraid/t-005,
+      hourly cycle 2026-07-15). The PR's merge-base was one commit behind
+      origin/main (a "chore: refresh STATUS.md and workspace.html" auto-commit
+      landed on main between the Worker's claim and its PR open), producing a
+      guaranteed STATUS.md merge conflict that the Reviewer then had to resolve
+      by hand (take main's copy per hard rule 9, since refresh-status.yml
+      regenerates it anyway). This is pure friction: STATUS.md/ROADMAP-AUDIT.*
+      are regenerated on every main push, so any Worker branch older than the
+      most recent chore commit will conflict on these files 100% of the time.
+      Fix: add a step to the Worker cycle (AGENTS.md "Worker" section, near PR
+      open) that runs `git fetch origin main && git rebase origin/main` (or
+      merges, resolving STATUS.md/workspace.html/ROADMAP-AUDIT.* to main's copy
+      per hard rule 9) immediately before `gh pr create`, so the PR opens
+      already conflict-free against current main instead of drifting stale
+      while it waits for review.
+    claimed_by: claude-overnight-sxndmc
+    claimed_at: '2026-07-16T18:55:33Z'
+
+  - id: t-046
+    milestone: m2
+    title: Cache a kind_robots node_modules install (or Nuxt type-stub cache) reachable through the sandbox proxy allowlist, so burst-mode sessions can run vue-tsc/eslint locally
+    status: done
+    owner: worker
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-16T20:00:00Z'
+    note: |-
+      DONE 2026-07-16 (Reviewer merge, conductor PR #645, squash). Added
+      scripts/provision_kind_robots_deps.sh, mirroring provision_node24.sh's
+      idempotent/no-root style: sources provision_node24.sh, exports a dummy
+      DATABASE_URL, runs `CYPRESS_INSTALL_BINARY=0 npm ci --no-audit --no-fund`
+      then `prisma generate`. Verified end-to-end against the sibling
+      kind_robots checkout (1238 packages in ~30s, vue-tsc present, idempotent
+      re-run skips correctly). Filed t-057 (the PR's own kaizen suggestion):
+      mention the script in AGENTS.md near the cross-repo/verification
+      guidance so future sessions discover it without grepping.
+
+      Original note: |-
+      Kaizen from Reviewer's coloring-book/t-020 pass (hourly burst-mode, kind_robots
+      PR #290, 2026-07-15). challenge-center/t-021 (conductor PR #535) already solved
+      getting a matching Node 24.x runtime into the sandbox via
+      scripts/provision_node24.sh (nodejs.org's dist host is reachable through the
+      proxy; nodesource apt is not).
+
+      UPDATE (same session, before this task was even picked up): answered the open
+      question directly while investigating the #290 TypeScript CI failure. npmjs.org's
+      registry IS reachable through the sandbox proxy -- `cd kind_robots && source
+      scripts/provision_node24.sh && npm ci --no-audit --no-fund` completes in ~25s
+      (1238 packages, npm's own local cache warm from a prior attempt). The ONLY blocker
+      is unrelated to the registry: cypress@15.18.1's postinstall script tries to
+      download its standalone binary from Cypress' own CDN, which the sandbox's egress
+      allowlist rejects (ECONNRESET), and that aborts the whole `npm ci` before
+      node_modules finishes. Workaround: `CYPRESS_INSTALL_BINARY=0 npm ci --no-audit
+      --no-fund` skips just that download; everything else (including the
+      postinstall-triggered `nuxi prepare`, which is what actually generates the
+      `.nuxt` type-stub directory `vue-tsc` needs) completes normally. Also needed a
+      dummy `DATABASE_URL` env var (Prisma config loading fails without one, doesn't
+      need real DB connectivity for `prisma generate` or `vue-tsc`) -- CI sets
+      `mysql://...@127.0.0.1:3306/kindrobots`-shaped value, any well-formed value works
+      locally. Confirmed the full recipe works end-to-end: `npm ci` (skip Cypress) ->
+      `npx prisma generate` -> `npm run test` (vue-tsc) produces the exact same error
+      set as CI.
+
+      Remaining scope for this task: turn the above into a real script
+      (scripts/provision_kind_robots_deps.sh or similar), mirroring
+      provision_node24.sh's idempotent/no-root style, so future sessions run one
+      command instead of re-deriving the CYPRESS_INSTALL_BINARY+DATABASE_URL
+      combination from scratch. Lower priority than originally filed since the
+      manual recipe already unblocks sessions that know to ask for it -- this is now
+      about convenience/discoverability, not a hard wall.
+    claimed_by: claude-overnight-sxndmc
+    claimed_at: '2026-07-16T19:05:30Z'
+
+  - id: t-047
+    milestone: m2
+    title: Switch ci.yml's authz-regression job from a test-file whitelist to pytest tests/
+    status: done
+    owner: worker
+    passes: 0
+    stakes: reversible
+    note: |-
+      Kaizen from Reviewer's packmaker/t-007 pass (hourly burst-mode, conductor
+      PR #566, 2026-07-15). .github/workflows/ci.yml's authz-regression job runs
+      an explicit hardcoded list of six test files (pytest tests/test_authz_regression.py
+      tests/test_set_task_field.py tests/test_queue_missing_project_art.py
+      tests/test_roadmap_text_patch.py tests/test_process_task_events.py
+      tests/test_validate_roadmaps.py) rather than the full tests/ directory.
+      Roughly 19 of the ~25 files currently in tests/ (including the new
+      test_validate_pack_manifest.py from t-007) are never actually run in CI --
+      they only run if a human or agent remembers to invoke pytest locally.
+
+      Switch the job to `pytest tests/` (or `pytest tests/ --ignore=tests/<slow-or-flaky>.py`
+      if any specific file turns out to need exclusion -- audit first) so new test
+      files are covered by default. Verify the full suite still passes in the CI
+      environment (it passes locally: 235 passed as of this task's filing) and that
+      runtime stays reasonable for a PR-gating job before landing.
+
+      DONE 2026-07-15: merged as conductor PR #570 (squash). All 19 CI checks
+      green, including the job's own new `pytest tests/` run. Filed t-048 to
+      revisit the job's now-stale display name.
+    claimed_by: claude-burst-2026-07-15-1930
+    claimed_at: '2026-07-15T19:06:39Z'
+    updated: '2026-07-15T19:20:51Z'
+
+  - id: t-048
+    milestone: m2
+    title: Rename ci.yml's authz-regression job now that it runs the full pytest suite
+    status: needs-human
+    soft_gate: true
+    owner: reviewer
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-17T08:35:00Z'
+    note: |-
+      FOR SILAS: this rename is blocked on one fact only you can see. ci.yml's
+      job key/name is still `authz-regression` / "Authz regression tests" even
+      though it now runs the full pytest suite (t-047). If that exact check name
+      is listed as a REQUIRED status check in the conductor repo's branch
+      protection settings (Settings → Branches → main), renaming the job would
+      break merges until the setting is updated in the same window.
+      TO APPROVE: check whether "Authz regression tests" is a required check.
+      If NOT required — reply/note "not required" and set this task back to
+      status: ready; any agent can then do the one-line rename to "Test suite
+      (pytest tests/)". If it IS required — either update the required-check
+      name yourself when the rename PR lands, or note that here and an agent
+      will coordinate both in one window. Flipped to soft needs-human
+      2026-07-17 because branch protection cannot be inspected from agent
+      sessions (no branch-protection API access), per this task's own spec.
+      Original spec:
+      Kaizen from t-047 (Reviewer, autonomous hourly burst cycle, 2026-07-15).
+      t-047 switched the job's run step to `pytest tests/` but deliberately left
+      the job key/name (`authz-regression` / "Authz regression tests") unchanged,
+      since GitHub branch protection may reference that exact check name as a
+      required status check and an agent has no way to see or update that
+      config from the repo. Confirm with Silas (or check the repo's branch
+      protection settings directly) whether "Authz regression tests" is a
+      required check; if not, rename the job to something accurate like
+      "Test suite (pytest tests/)" in one PR. If it IS required, this needs a
+      coordinated update (rename in ci.yml + update the required-check setting
+      in the same window) rather than an agent-only change -- soft needs-human
+      if branch protection can't be inspected from this environment.
+    updated: '2026-07-17T07:53:22Z'
+
+  - id: t-049
+    milestone: m2
+    title: Audit conductorCards.ts entries against project-overrides.yaml + roadmap state
+    status: done
+    owner: worker
+    passes: 0
+    stakes: reversible
+    note: |-
+      Kaizen from mermaids-of-venice/t-012 (Worker, hourly burst-mode cycle,
+      2026-07-16). kind_robots/stores/helpers/conductorCards.ts's
+      mermaids-of-venice card was found stale during that task -- still
+      `kind: 'proposal'`, `status: 'waiting'`, "Paused brainstorm concept",
+      despite the project being active `content` work with a live landing
+      page (t-001) and a completed editorial pipeline (t-004/t-005/t-006/
+      t-007/t-010). Fixed as a drive-by in kind_robots PR #304, but the drift
+      is likely not unique to this one card. Compare every conductorCards.ts
+      entry's `kind`/`status`/tagline against project-overrides.yaml's `kind`
+      + the project's actual roadmap `ready`/`done` counts in one pass, and
+      correct any that have drifted from reality.
+
+      RAN 2026-07-18 (~06:20 UTC, conductor-burst rotation,
+      claude-conductor-burst-20260718T060659Z): did the full pass across all
+      22 conductorCards.ts entries. Nine had drifted: challenge-center,
+      humboldt-scoop, and engagement all showed `taskStatus: 'ready'` despite
+      zero ready tasks in their roadmaps (all done/finished) -> `'done'`;
+      humboldt-scoop-cms showed `'ready'` despite zero ready tasks (1
+      needs-human, 4 waiting, 6 done) -> `'needs-human'`; approval-portal
+      showed `'waiting'` despite zero waiting tasks (2 blocked, 3 done) ->
+      `'blocked'`; mermaids-of-venice (the original t-012 fix) had regressed
+      back to `'ready'` despite zero ready tasks (8 needs-human, 4 done) ->
+      `'needs-human'`; digital-storefront's `projectKind: 'content'`
+      contradicted its explicit override `kind: software` -> `'software'`;
+      humboldt-impropriety-calendar's `projectKind: 'content'` contradicted
+      the override's `kind: brainstorm` (mapped to `'proposal'` since
+      kind_robots' `ConductorProjectKind` type has no `brainstorm` variant --
+      same convention the `brainstorm` project's own card already uses) and
+      its `taskStatus: 'ready'` was wrong (0 ready; 1 blocked, 5 waiting) ->
+      `'blocked'`; coat-dance was the worst case -- `projectKind: 'proposal'`
+      and `taskStatus: 'waiting'` both contradicted the override (active,
+      `kind: content`) and the roadmap (2 ready, 8 blocked, 0 waiting), and
+      its description still called it "a paused brainstorm concept" retained
+      "until it earns active work again" even though it's an active project
+      with real ready work -- fixed kind/status and rewrote the
+      tagline/description from the actual task titles (beat-mapping, style-
+      frame pack, section remix pipeline). Also refreshed humboldt-scoop's
+      tagline/description to past tense now that all 8 tasks are done.
+      Verified: eslint clean, prettier clean, full-project `vue-tsc --noEmit`
+      exit 0 via conductor's `provision_kind_robots_deps.sh` (caught one real
+      type error along the way -- `'brainstorm'` isn't a valid
+      `ConductorProjectKind`, hence the proposal mapping above). kind_robots
+      PR #386 (branch `claude/keen-fermat-qxctg4`); will flip to `done` once
+      merged.
+
+      DONE 2026-07-18 (Reviewer, conductor-scheduled-20260718T0705Z): kind_robots
+      PR #386 merged clean (TypeScript, Contract verifiers, GitGuardian all
+      green, squash 897597d).
+    claimed_by: claude-conductor-burst-20260718T060659Z
+    claimed_at: '2026-07-18T06:06:59Z'
+    updated: '2026-07-18T06:20:00Z'
+  - id: t-050
+    milestone: m1
+    title: Extend reconcile_expressions test coverage to the --deactivate missing-file path and orphan-loop skip
+    status: done
+    owner: reviewer
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-16T06:56:00Z'
+    note: >
+      Closed 2026-07-16 (autonomous hourly cycle). Added
+      test_plan_owner_deactivates_row_whose_file_is_gone,
+      test_plan_owner_never_deactivates_when_rows_unreadable, and
+      test_plan_owner_reports_loop_with_no_matching_still to
+      tests/test_reconcile_expressions.py — three direct plan_owner() unit
+      tests covering both branches named below plus the existing=None guard
+      (never invent a deactivation from an unknown baseline). Full suite
+      verified green: 244 passed (up from 235), no regressions. Conductor-only
+      change, no cross-repo PR needed.
+
+      Original note (Kaizen from t-029, Worker, hourly burst-mode cycle,
+      2026-07-16): The new
+      tests/test_reconcile_expressions.py covers the four cases named in t-029's
+      own kaizen note (narrator-wins, 404-fallback rows-unknown, character
+      sourceCharacterId, pagination-stall truncation) but two other branches in
+      plan_owner() are still only exercised manually: (a) the "rows whose file
+      is gone" missing/deactivate path (existing is not None and a previously
+      known key has no matching still on disk -- should produce an isActive:false
+      row, and only when existing was actually readable), and (b) the "loop
+      video with no still" skip note (a *_loop.webp with no matching numbered
+      still for that key -- should be reported, not silently upserted as a
+      row with only a videoPath). Both are pure plan_owner() unit tests, no
+      main()/argparse plumbing needed.
+
+  - id: t-051
+    milestone: m1
+    title: Extend reconcile_expressions test coverage to the --apply/--deactivate CLI gating
+    status: done
+    owner: worker
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-16T20:00:00Z'
+    note: >
+      DONE 2026-07-16 (Reviewer merge, conductor PR #643, squash). Added 4
+      main()-level tests + a _apply_setup helper: --apply without --deactivate
+      detects/counts missing rows but never posts them; --apply --deactivate
+      posts the soft-disable batch; the stderr deactivate_note appears only
+      when appropriate. 13/13 tests passed (9 existing + 4 new). Filed t-058
+      (the PR's own kaizen suggestion): a test asserting --apply with no
+      KR_API_TOKEN returns 1 early, the one remaining untested CLI-gating
+      branch.
+
+      Original note: >
+      Kaizen from t-050 (Reviewer, autonomous hourly cycle, 2026-07-16). t-050
+      covered plan_owner()'s missing/deactivate and orphan-loop branches at the
+      unit level, but main()'s CLI gating around them is still untested: with
+      --apply but no --deactivate, all_missing rows are computed (and counted
+      in totals["missing"]) but must NOT be POSTed (see
+      scripts/reconcile_expressions.py's `if all_missing and args.deactivate:`
+      gate); only --apply --deactivate together should call post_batch on
+      them. Also untested: the stderr `deactivate_note` text that appends
+      "(missing-file rows reported only; --apply --deactivate to soft-disable)"
+      exactly when there's missing drift but --deactivate wasn't passed, and
+      is empty otherwise. Write 2-3 integration-level tests (extending the
+      existing narrator-lookup/bulk-fallback pattern in
+      tests/test_reconcile_expressions.py, monkeypatching `api` to assert
+      which paths ARE and ARE NOT called) covering: --apply without
+      --deactivate (missing computed, not posted), --apply --deactivate
+      (missing posted), and the stderr note text in each case.
+    claimed_by: claude-overnight-sxndmc
+    claimed_at: '2026-07-16T19:01:20Z'
+
+  - id: t-052
+    milestone: m2
+    title: Add a shared known-egress-blockers mechanism instead of copy-pasted recheck notes per task
+    status: done
+    owner: reviewer
+    passes: 0
+    stakes: reversible
+    note: 'DONE 2026-07-16 (option b, single ledger — less roadmap-schema churn per the task''s own recommendation): added root-level EGRESS-BLOCKERS.md (append-only, TALKBACK.md-style) plus scripts/recheck_egress_blocks.py, which HEAD-probes a host through the sandbox agent proxy and appends one timestamped blocked/reachable line, optionally linked to a project/task-id. Connection-level failures (refused/reset/timeout/DNS) count as blocked; any actual HTTP response including 4xx counts as reachable, since the remote connection succeeded. Verified live: registry.npmjs.org -> reachable (HTTP 200), metmuseum.org -> blocked (Tunnel connection failed: 403 Forbidden), matching the exact pattern ai-art-academy/t-008 and t-013 have hand-logged repeatedly. 10 new unit tests (tests/test_recheck_egress_blocks.py, network mocked via monkeypatch, tmp_path ledger so the real file is never touched by CI) plus the full 291-test suite pass. Added a one-paragraph pointer in AGENTS.md''s Failure-triage section so future sessions discover the tool instead of re-deriving prose rechecks. Did not migrate ai-art-academy/t-008''s, t-013''s, or digital-storefront''s existing recheck prose into the ledger retroactively -- out of scope for this task; the next session that touches those tasks can link forward instead.'
+    claimed_by: claude-conductor-burst-20260716-t052
+    claimed_at: '2026-07-16T15:06:58Z'
+    updated: '2026-07-16T15:10:09Z'
+
+  - id: t-053
+    milestone: m2
+    title: Flag kind_robots PRs referencing a conductor task id that are missing a "Kaizen suggestion" section
+    status: done
+    owner: worker
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-18T07:35:00Z'
+    note: >
+      Pattern note from ai-art-academy/t-023's TALKBACK entry (Reviewer, autonomous
+      hourly conductor cycle, 2026-07-16) — third occurrence this week of a merged
+      kind_robots PR missing the "Kaizen suggestion" section from the PR handoff
+      template (see also t-027, t-034/kind-robots-t-034 in TALKBACK.md), each time
+      caught only because the Reviewer happened to notice by hand. Add a lightweight
+      check — either a kind_robots CI step that greps the PR body for a "### Kaizen
+      suggestion" heading when the PR description contains a conductor task-id
+      pattern (`<project>/t-\d+`), or a conductor-side script the Reviewer runs
+      before closing review — that flags (does not block) a missing section so it
+      shows up as an explicit TALKBACK "what to improve" note instead of relying on
+      manual catch-rate. Should not fail CI outright (some PRs genuinely have no
+      kaizen to suggest) — a soft warning/comment is enough.
+
+      DONE 2026-07-18 (session claude-conductor-scheduled-20260718T0705Z): took
+      the second option — a conductor-side script (`scripts/check_pr_kaizen.py`)
+      the Reviewer runs against a PR's title + body right before closing review.
+      Deliberately no network access (a prior TALKBACK entry, 2026-07-17,
+      recorded that `$GITHUB_TOKEN` has no working REST API auth in this
+      sandbox) — it's a pure text check over content the Reviewer already has
+      from the GitHub MCP `pull_request_read` call, passed via `--body`/
+      `--body-file`/stdin. Detects a `<project>/t-\d+`-shaped task id in the
+      title+body; if found and no `### Kaizen suggestion` (any heading depth,
+      case-insensitive) heading exists in the body, prints one soft WARNING
+      line and always exits 0 — never blocks. Silent when no task id is
+      referenced or the section is present. Verified with three cases (task id
+      + missing section warns; task id + section present is silent; no task id
+      is silent) and `python -m py_compile` (matches this repo's "Lint Python
+      scripts" CI step, which only syntax-checks `scripts/*.py`).
+
+  - id: t-054
+    milestone: m2
+    title: Migrate ai-art-academy/t-008, t-013, and digital-storefront's hand-written egress-recheck prose into EGRESS-BLOCKERS.md
+    status: done
+    owner: reviewer
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-17T08:30:00Z'
+    note: >
+      DONE 2026-07-17 (Silas-directed session, claude/projects-db-down-q2yfu0):
+      seeded ledger entries via recheck_egress_blocks.py for ai-art-academy/t-013
+      (metmuseum.org, upload.wikimedia.org) and digital-storefront/t-011
+      (api.stripe.com) — t-008 already had three same-day entries — and replaced
+      the five tasks' hand-written RECHECKED paragraphs (t-008, t-013, and all
+      three Stripe tasks t-011/t-012/t-013, which shared identical prose) with a
+      one-line EGRESS pointer keeping a dated summary. No status semantics
+      changed. NOTABLE: this session's probes found ALL hosts REACHABLE
+      (metmuseum 429, wikimedia 200, stripe 404) — the 403 egress block appears
+      lifted or environment-specific; recorded in the ledger and the task notes.
+      Original spec:
+      Kaizen from conductor/t-052 (Reviewer, autonomous hourly conductor cycle,
+      2026-07-16, PR #631). t-052 built the shared `EGRESS-BLOCKERS.md` ledger and
+      `scripts/recheck_egress_blocks.py` but deliberately left the three existing
+      tasks' own hand-written "RECHECKED <date>: still a fresh connect_rejected/403"
+      paragraphs (ai-art-academy/t-008, ai-art-academy/t-013, digital-storefront's
+      Stripe task) untouched, as out-of-scope retroactive migration. For each of the
+      three: run `python scripts/recheck_egress_blocks.py <host> --task <project>/<task-id>`
+      to seed a fresh ledger entry, then replace the task's repeated prose paragraphs
+      with a single sentence pointing at `EGRESS-BLOCKERS.md` (keep one summary line
+      of history, don't delete the task's own note entirely). Purely record-keeping —
+      should not change any task's `status`/`needs-human` semantics.
+    updated: '2026-07-17T07:50:32Z'
+
+  - id: t-055
+    milestone: m2
+    title: Make intake.py's priority/override registration comment-preserving
+    status: done
+    owner: worker
+    passes: 0
+    stakes: reversible
+    note: >
+      Kaizen from conductor/t-025 (2026-07-16). t-025 extended scripts/intake.py to
+      cover DESIGN-BRIEF.md + a CONTROL.md block (both comment-safe text inserts), but
+      register_priority() and register_override() still round-trip projects/priority.yaml
+      and project-overrides.yaml through yaml.safe_dump — which strips those files'
+      header comments and inter-entry spacing (surfaced by t-025's end-to-end smoke run,
+      which reformatted project-overrides.yaml's "# Human-managed project overrides"
+      header before it was reverted). Make both registrations comment-preserving via a
+      text-surgery append (mirror t-025's register_control_block, or the LEARNING.yaml
+      splice pattern), or adopt ruamel.yaml round-tripping. Add a test asserting a
+      seeded header comment survives an intake.py run.
+    claimed_by: claude-zealous-euler-7qjjdl
+    claimed_at: '2026-07-18T03:16:04Z'
+    updated: '2026-07-18T03:16:04Z'
+
+  - id: t-056
+    milestone: m2
+    title: Document the Reviewer batch-merge auto-gen race in AGENTS.md
+    status: done
+    owner: reviewer
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-17T08:10:00Z'
+    note: >
+      DONE 2026-07-17 (Silas-directed session, claude/projects-db-down-q2yfu0):
+      added the "Reviewer batch-merge note (companion to rule 9)" paragraph to
+      AGENTS.md immediately after the hard-rules list — expect the
+      refresh-status.yml race after each merge in a sweep, retry before treating
+      dirty as a real conflict, take main's copy for auto-gen files, keep both
+      sides for append-only files. Original spec:
+      Kaizen from this cycle's Reviewer sweep (2026-07-16, conductor PRs
+      #640/#641/#643/#644/#645/#646/#647/#648, an 8-PR backlog cleared in one
+      session). t-045 (this same cycle) covers the Worker-side half of the
+      auto-gen conflict problem (rebase before opening a PR), but the
+      Reviewer-side half is distinct and was hit repeatedly here:
+      refresh-status.yml's "chore: refresh STATUS.md and workspace.html"
+      commit lands on main within seconds of every merge, so when the
+      Reviewer clears several backlogged PRs back-to-back, nearly every merge
+      after the first races that auto-commit and turns mergeable_state dirty
+      moments after it was clean — no amount of Worker-side rebase-before-PR
+      prevents this, since the staleness is introduced by the Reviewer's own
+      prior merge, not by anything the Worker did. Add a short "Reviewer
+      batch-merge" note to AGENTS.md (near hard rule 9): when clearing
+      multiple PRs in one sweep, expect this race after each merge; re-fetch
+      main and retry rather than treating mergeable_state:dirty as a real
+      conflict on the first try. For genuine conflicts, the resolution is
+      the same as any auto-gen conflict — take main's copy for
+      STATUS.md/ROADMAP-AUDIT.*/LEARNING-REPORT.md and regenerate; for
+      append-only files (TALKBACK.md, LEARNING.yaml) that both sides touched,
+      keep both sides' entries rather than picking one.
+    updated: '2026-07-17T07:47:54Z'
+
+  - id: t-057
+    milestone: m2
+    title: Mention provision_kind_robots_deps.sh in AGENTS.md near the cross-repo/verification guidance
+    status: done
+    owner: reviewer
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-17T08:05:00Z'
+    note: >
+      DONE 2026-07-17 (Silas-directed session, claude/projects-db-down-q2yfu0):
+      added a short paragraph to AGENTS.md's Cross-repo tasks section pointing at
+      `source scripts/provision_kind_robots_deps.sh` and naming the two baked-in
+      workarounds. Original spec: Kaizen from conductor/t-046 (2026-07-16, PR #645). The script exists and is
+      proven end-to-end but is discoverable only by grepping scripts/ — add a
+      one-line pointer in AGENTS.md's cross-repo/verification section so future
+      sessions run it instead of re-deriving the CYPRESS_INSTALL_BINARY +
+      DATABASE_URL combination from scratch.
+    updated: '2026-07-17T07:46:52Z'
+
+  - id: t-058
+    milestone: m1
+    title: Test that reconcile_expressions main() --apply with no KR_API_TOKEN returns 1 early
+    status: done
+    owner: reviewer
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-17T08:20:00Z'
+    note: >
+      DONE 2026-07-17 (Silas-directed session, claude/projects-db-down-q2yfu0):
+      added test_apply_without_token_returns_1_before_any_work — monkeypatches
+      KR_API_TOKEN to empty, asserts exit code 1, the stderr message, and that
+      api() is never called (exploding stub). Suite: 14 passed. Original spec:
+      Kaizen from conductor/t-051 (2026-07-16, PR #643). t-051 covered the
+      --apply/--deactivate CLI gating but left one branch untested: main()
+      returns 1 immediately when --apply is passed without KR_API_TOKEN set.
+      A tiny test (monkeypatch rex.KR_API_TOKEN to None/empty, assert exit
+      code 1, assert post_batch never called) closes the last CLI-gating gap
+      in this file.
+    updated: '2026-07-17T07:48:52Z'
+
+  - id: t-060
+    milestone: m3
+    title: Fix priority.yaml drift — add animation-studio, career-transition, pinball-hero, recipe-box to the order list
+    status: done
+    owner: reviewer
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-17T07:46:23Z'
+    note: >
+      DONE 2026-07-17 (Silas-directed session, claude/projects-db-down-q2yfu0):
+      added the four projects to priority.yaml's order list — animation-studio
+      after animation-manager, career-transition after coat-dance, pinball-hero
+      and recipe-box after sketchy; dream-cycle stays last. validate_roadmaps.py
+      passes. Original spec below.
+
+      Found during 2026-07-16 autonomous Reviewer sweep (no open PRs to review this
+      cycle). projects/priority.yaml's header comment says "every active project
+      should appear exactly once" in its `order:` list, but four projects with live
+      `ready`/`needs-human` tasks are absent from it: animation-studio,
+      career-transition, pinball-hero, recipe-box. They still get worked (picking
+      logic falls back to roadmap files not just priority.yaml), but their absence
+      means CONTROL.md's priority-order commentary and priority.yaml drift out of
+      sync with which projects actually have live work — same class of prose-drift
+      previously fixed for kindrobots-unraid in conductor/t-038. Add the four to
+      projects/priority.yaml's `order:` list in a reasonable position (below the
+      named priority band, alongside similarly-scoped projects), verify with
+      scripts/validate_roadmaps.py, no code/behavior change.
+    updated: '2026-07-17T07:45:37Z'
+
+  - id: t-059
+    milestone: m2
+    title: Branch janitor + "finish on clean main" policy so runs stop stranding branches
+    status: done
+    owner: worker
+    updated: '2026-07-16T20:30:00Z'
+    passes: 0
+    stakes: reversible
+    note: >
+      DONE (2026-07-16, Silas-directed). Runs kept ending with open PRs / stranded
+      branches because merging was treated as opt-in ("cleanly park") and session
+      credentials 403 on ref deletion, so nothing cleaned no-PR branches. Fix, two
+      parts: (1) tooling — scripts/branch_janitor.py + .github/workflows/branch-janitor.yml
+      (hourly + workflow_dispatch, GITHUB_TOKEN can delete refs): auto-deletes
+      claude/*|worker/* branches that are strict ancestors of main, REPORTS (never
+      auto-deletes) unmerged stale branches, and takes a force_delete_branches list for
+      verified-superseded ones; 8 tests in tests/test_branch_janitor.py. (2) policy —
+      AGENTS.md ("Finish on clean main" section + Worker/Reviewer steps: merge safe work
+      by default, no leftover branch; gates at CAN/CANNOT unchanged), CLAUDE.md session-end,
+      and prompts/hourly-worker.md (new step 10 + report field). Human gates
+      (needs-human/outward-facing/irreversible/secrets/DNS/deploy) preserved verbatim.
+      Follow-up for Silas: enable the repo "Automatically delete head branches" setting
+      (kind_robots has it; conductor relies on the janitor until then).
+
+  - id: t-061
+    milestone: m2
+    title: 'scripts/git_plumbing.py: sign direct-to-ref commits when commit.gpgsign is configured'
+    status: done
+    owner: worker
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-17T23:55:00Z'
+    note: >
+      Filed 2026-07-17 (burst-mode cycle, ai-art-academy/t-021, see TALKBACK.md same
+      date for full detail). `commit_file_on_ref()` in `scripts/git_plumbing.py` builds
+      its commit with plain `git commit-tree tree -p parent -m message` — this does NOT
+      apply `commit.gpgsign`/`user.signingkey` the way porcelain `git commit` does; a
+      `-S` flag (or `gpg.sign`-equivalent) is required explicitly. Confirmed via
+      `git cat-file commit <sha>` on a commit this helper pushed directly to `main`:
+      no `gpgsig` header, even though this session's git config has
+      `commit.gpgsign=true`, `gpg.format=ssh`, and `user.signingkey` all set. Since
+      `claim_task.py` uses this exact helper for every claim/status commit across every
+      project's roadmap, every direct-to-ref commit this whole system has made this way
+      is likely unsigned and shows as "Unverified" on GitHub.
+      Fix: in `commit_file_on_ref`, read `commit.gpgsign` (and `user.signingkey`/
+      `gpg.format`) via `git config --get`, and when signing is enabled, pass `-S` to
+      the `commit-tree` invocation (git's `commit-tree -S` reads the same
+      `user.signingkey`/`gpg.format` config as `git commit -S`, so no separate signing
+      logic should be needed — just the flag). Add a test asserting the resulting
+      commit's raw object contains a `gpgsig` header when `commit.gpgsign` is true in
+      the test git config, and that it's absent (and commit still succeeds) when
+      signing isn't configured, so the helper keeps working in environments without a
+      signing key set up (e.g. CI). Do NOT attempt to retroactively re-sign or rewrite
+      any already-pushed commit made via this helper — `main` has multiple concurrent
+      agent sessions fetching it at any given time (observed directly the day this was
+      filed), so a rewrite-and-force-push to fix historical Unverified badges is not
+      worth the real risk of breaking someone else's in-flight rebase. This task is
+      forward-looking only: sign commits made by this helper from here on.
+
+      RAN 2026-07-17 (~23:20 UTC, conductor-burst rotation, claude-conductor-burst-20260717T2300Z):
+      implemented exactly as specced. Added `gpgsign_enabled(root)` to
+      `scripts/git_plumbing.py` — reads `commit.gpgsign` via a plain
+      `git config --get` (not `run_git`, since an unset key exits non-zero and
+      `run_git` would raise `GitError` on the common case) and returns True only on
+      an exact `"true"` value. `commit_file_on_ref` now appends `-S` to the
+      `commit-tree` argv when that's true; no separate signing-key plumbing needed
+      since `commit-tree -S` reads `user.signingkey`/`gpg.format` the same way
+      `git commit -S` does. New `tests/test_git_plumbing.py` (4 cases): signed vs
+      unsigned commits actually produce/omit a `gpgsig` header in the raw commit
+      object (verified via `git cat-file commit`), plus `gpgsign_enabled`'s
+      absent/false-config cases. All isolated from the host's real global/system git
+      config via `GIT_CONFIG_GLOBAL`/`GIT_CONFIG_SYSTEM=os.devnull` — this sandbox's
+      own signing setup (`commit.gpgsign=true` globally) would otherwise make the
+      "not configured" cases false-negative. The real-signing test is
+      `skipif(shutil.which("ssh-keygen") is None)`: this sandbox has no `ssh`
+      client tools installed at all (confirmed: no `/usr/bin/ssh*`, only a harness
+      commit-signing wrapper at `gpg.ssh.program`), so it skips locally but runs for
+      real on CI's ubuntu-latest, which ships `openssh-client`. Verified: full suite
+      `pytest tests/` 350 passed / 1 skipped (the new skip), `py_compile` clean on
+      both changed files. Did not touch any already-pushed historical commit, per
+      the note above. Next `claim_task.py`-driven commit onto any project's `main`
+      (including this task's own future claim commits) should carry a real
+      `gpgsig` header when the calling session has signing configured.
+
+      MERGED 2026-07-17 (~23:55 UTC, autonomous hourly conductor cycle, Reviewer): PR #734
+      was 21/21 CI green (CodeQL, static checks, full pytest suite, security scans).
+      Squash-merged into main (96bda46). Reversible, scoped, well-tested — no changes
+      requested.
+    claimed_by: claude-conductor-burst-20260717T2300Z
+    claimed_at: '2026-07-17T23:08:51Z'
+
+  - id: t-062
+    milestone: m2
+    title: 'scripts/ci_janitor.py: do not file a Todo for a cancelled run superseded by a passing later run'
+    status: done
+    owner: worker
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-18T00:05:00Z'
+    note: >
+      Filed 2026-07-17 (burst-mode cycle, claude-conductor-burst-20260717T2300Z), correcting
+      a mistaken attribution in TALKBACK.md's 2026-07-17 "kind_robots ci-janitor Todo #371"
+      entry: that entry says "ci-janitor lives in kind_robots' own tooling, not a
+      conductor-tracked project" and declines to file a task here. That's wrong —
+      `scripts/ci_janitor.py` (+ `.github/workflows/ci-janitor.yml`, `CI-JANITOR.md`,
+      `tests/test_ci_janitor.py`) all live in *this* repo; it polls kind_robots' Cypress
+      workflow via the GitHub API and files a HIGH-priority kind_robots Todo when the
+      latest completed run's conclusion is in `RED_CONCLUSIONS` (includes `cancelled`).
+      Confirmed the exact same false-positive pattern recurred a second time same day:
+      Todo #385 flagged run 29615947794 (commit `26eecbcb`, `cancelled`) — investigation via
+      GitHub MCP `actions_get`/`list_workflow_runs`/`list_commits` showed `cypress.yml`'s
+      `concurrency: { group: cypress-${{ github.ref }}, cancel-in-progress: true }` killed
+      it because commit `c7a4324a` (the very next commit on `main`, run 29616829952) landed
+      seconds later and its own run completed `success` ~16 minutes after. Closed Todo #385
+      `DONE` with no code change (nothing was ever broken) — same resolution as #371.
+      Fix (per #371's own suggested action, now actually actionable since this is a
+      conductor task): in `latest_completed_run()` or right after it in `main()`, when the
+      fetched run's conclusion is `cancelled`, look at the *next* run on the same
+      branch/workflow (one more page of `?branch=...&status=completed&per_page=2`, or check
+      if a newer run exists via `?branch=...&per_page=1` regardless of status) — if that
+      later run's `head_sha` differs and its conclusion is `success`, treat the cancelled
+      run as noise (skip, do not create a Todo) rather than red. Only file a Todo when the
+      *latest* run on the branch is itself red, not any older cancelled one. Keep the other
+      `RED_CONCLUSIONS` values (`failure`, `timed_out`, etc.) filing exactly as before — this
+      only changes `cancelled` handling. Add test cases to `tests/test_ci_janitor.py`
+      covering: cancelled-then-success-elsewhere (no Todo), cancelled-and-still-latest (Todo
+      filed), and the existing non-cancelled red cases (unchanged).
+
+      RAN 2026-07-17 (~23:55 UTC, conductor-burst rotation, claude-conductor-burst-20260717T2300Z):
+      implemented with one refinement over the original spec. Rather than checking a *second
+      completed* run, added `latest_run_for_branch()` (no `status=` filter, `per_page=1`) — the
+      single most recent run on the branch/workflow regardless of status — and
+      `cancelled_run_is_superseded()`, which compares its `head_sha` against the cancelled
+      run's. This also correctly covers the real-world race in Todo #385: at the moment
+      ci-janitor polled, the superseding run (`c7a4324a`) hadn't *completed* yet (it finished
+      ~10 minutes after the Todo was filed, confirmed via the run's created_at vs the Todo's
+      createdAt), so a "check the next completed run" approach as originally specced would
+      have found nothing newer and still filed the Todo. Comparing against the latest run of
+      any status catches this: a differing head_sha on a newer run means the concurrency
+      group's cancel-in-progress superseded this one, whether or not that newer run has
+      finished yet — so it's noise either way, not the branch's real current state. Only
+      `cancelled` conclusions get this extra check; `main()`'s existing loop still bails out
+      with `::error::` on a genuine API failure while checking (matching the file's existing
+      error-handling style for every other network call here). Added 2 tests to
+      `tests/test_ci_janitor.py`: superseded-cancelled (no Todo, "superseded" in output) and
+      still-latest-cancelled (Todo filed as before) — 6/6 pass, existing 4 unaffected since
+      they use non-cancelled conclusions. Full suite: `pytest tests/` 352 passed / 1 skipped
+      (unchanged pre-existing skip). `validate_roadmaps.py` clean, `py_compile` clean.
+
+      MERGED 2026-07-18 (~00:05 UTC, autonomous hourly conductor cycle, Reviewer): PR #736
+      was 21/21 CI green (full pytest suite, CodeQL, static checks, security scans).
+      Squash-merged into main (946a7f3). Well-scoped fix with a real root-cause refinement
+      over the original spec (compares against the latest run of any status, not just the
+      latest completed one) — no changes requested.
+    claimed_by: claude-conductor-burst-20260717T2300Z
+    claimed_at: '2026-07-17T23:51:18Z'
+
+  - id: t-063
+    milestone: m2
+    title: 'LEARNING.yaml: fix malformed lesson field breaking test_committed_ledger_schema_conformance on every PR'
+    status: done
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-18T01:00:56Z'
+    note: 'Fixed 2026-07-18T01:10Z (conductor-hourly-20260718T0048Z): quoted LEARNING.yaml line 3164''s `lesson:` value in double quotes so the embedded "(confirmed here: 9 minutes later)" colon+space no longer breaks the YAML parse. Swept the entire file for other unquoted plain-scalar `lesson:` values containing ": " via a small script checking every `lesson: `-prefixed line that doesn''t already start with a quote/block-scalar marker -- only line 3164 matched; no other instances found. Root-cause note: the offending entry was a hand-appended plain scalar (a session used a literal heredoc/cat append rather than process_task_events.write_learning_record, whose yaml.safe_dump already auto-quotes values needing it), so the bug wasn''t in the live append path itself. Added a regression test anyway (tests/test_process_task_events.py::test_learning_lesson_with_colon_space_round_trips) asserting a lesson containing an embedded ": " round-trips through write_learning_record and the resulting file re-parses cleanly, locking in that the live writer path stays safe against this exact pattern even though it wasn''t the actual cause. Verified: python3 -m pytest tests/ -q -> 353 passed, 1 skipped (up from 352/1, the new test); scripts/validate_roadmaps.py -> valid; test_backfill_learning.py::test_committed_ledger_schema_conformance (the test this task was filed to fix) now passes. No kind_robots change; conductor-only.'
+    owner: worker
+    claimed_by: claude-conductor-hourly-20260718T0048Z
+    claimed_at: '2026-07-18T00:58:38Z'
+
+  - id: t-064
+    milestone: m2
+    title: 'set_task_field.py: preserve block-literal formatting when a note value contains embedded newlines'
+    status: done
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-18T16:15:45Z'
+    note: 'Kaizen from ai-art-academy/t-010 (2026-07-18, claude-conductor-scheduled-20260718T0705Z). scripts/set_task_field.py''s own docstring says "Newlines in a new value are flattened to spaces — the writer emits exactly one line per field," by design, for every field including `note`. But in practice, every recurring/multi-cycle task''s `note` field (t-010 itself has 21+ entries) is hand-maintained as a `note: |-` block-literal scalar with one `RAN <date>: ...` paragraph per line, specifically so the roadmap stays human-readable and diff-friendly for Silas. Calling `set_task_field.py <project> <task-id> note "<existing note>\n<new RAN paragraph>"` silently collapses that entire multi-paragraph history into one giant single-line quoted flow scalar, destroying the paragraph breaks (content is preserved, formatting is not) -- caught this in dry-run/diff review before pushing (had to `git reset --soft`+`git checkout HEAD --` to recover the original block-literal file and hand-append the new paragraph with Edit instead), so no bad state landed on main, but a less careful session would ship the flattened version and every note field that gets touched this way afterward stays flattened forever (the script always re-flattens on the next edit, so the format never self-heals). Fix: when the field is `note` (or any field whose incoming value contains embedded newlines) and the existing field being replaced was itself a block-literal (`key: |-` / `key: >-` etc.), emit the new value in the same block style instead of collapsing to a quoted flow scalar -- preserves the established per-paragraph-per-line convention. Add a regression test asserting a multi-paragraph note round-trips through the block-literal form. Until this lands, the safe pattern for appending to a multi-paragraph note is a direct Edit/text insertion of the new paragraph line, not `set_task_field.py note "..."`. DONE 2026-07-18 (conductor Agent session): implemented in scripts/set_task_field.py — when the existing field is a block-literal (note: |- / >- etc.) and the new value contains embedded newlines, the writer now re-emits the same block style (render_block_scalar()) instead of collapsing to a quoted flow scalar; a plain quoted-scalar or single-line field still flattens as before (unchanged, documented behavior). Added two regression tests to tests/test_set_task_field.py (block-literal preservation, and confirming the no-prior-block-style case still flattens) plus a demo dry-run against the real ai-art-academy/t-010 note (21+ RAN paragraphs) confirming round-trip fidelity through yaml.safe_load. Full pytest suite: 360 passed, 1 skipped. kind_robots not touched — conductor-tooling-only change.'
+
+  - id: t-065
+    milestone: m2
+    title: Two concurrent scheduled sessions computed the identical session id, defeating claim_task.py collision detection
+    status: done
+    passes: 0
+    stakes: reversible
+    note: >
+      Observed 2026-07-18: two concurrent conductor sessions both independently claimed and ran a full ai-art-academy/t-010 cycle (a recurring task) at essentially the same time, using the LITERAL SAME session identity string `claude-conductor-scheduled-20260718T0705Z` (visible in both cycles' `claimed_by`/RAN-entry text; presumably the scheduler names sessions by truncating to the minute, and two triggers landed in the same minute). This time the collision resolved harmlessly by luck: one session did option (a) front-end polish (kind_robots PR #387) and the other did option (d) curriculum-coverage docs, and their roadmap.yaml note edits happened to land in different parts of the same block-literal `note` field, so `git rebase`/merge combined both without a real conflict. But `claim_task.py`'s collision check almost certainly compares the incoming `--session` value against the existing `claimed_by` field -- if both sessions present the identical identity, the second claim looks like "the same session re-confirming its own claim" rather than a genuine second claimant, which is exactly the gap t-040 (2026-07-14) was meant to close. A future collision on a task whose two independent diffs touch the *same* lines (e.g. both editing `status:` or the same note paragraph) would not resolve as cleanly. Fix: make session identities actually unique across concurrent triggers of the same scheduled task (e.g. append a short random suffix or a monotonic counter, not just a to-the-minute timestamp) so `claim_task.py` can always distinguish two real concurrent sessions from one session's repeat calls.
+
+      RAN 2026-07-18 (~23:20 UTC, conductor-burst-hourly rotation, claude-conductor-burst-20260718T230803Z): traced the actual claim mechanism instead of extending the speculation. `roadmap_claims.task_is_claimable()` -- the sole function claim_task.py's `check_claimable()` consults -- decides claimability purely from the task's `status` and `claimed_at` read off `origin/main`; it never compares the incoming `--session` value against the existing `claimed_by` field. So a second caller presenting the IDENTICAL session string as an already-landed claim is rejected exactly like any other second claimant (status is `claimed` and not stale) -- there is no special-case path where matching claimed_by is treated as "the same session re-confirming its own claim." Added test_identical_session_string_does_not_bypass_collision_check to tests/test_claim_task.py to lock this guarantee in as a regression test (full suite: 361 passed, 1 skipped). This means the specific mechanism this note speculated about is not a gap in claim_task.py itself. The real explanation for the observed 2026-07-18 collision is almost certainly that ai-art-academy/t-010 is a recurring task: per AGENTS.md's recurring-task rule, its status flips back to `ready` immediately after each cycle (not held at `claimed`/`review` like a normal task), so two triggers landing minutes apart can each legitimately claim, run, and re-arm the SAME recurring task in quick succession -- that's the intended re-entrant design for recurring tasks, not a collision bug. The remaining actionable idea from this note (unique-per-invocation session identities, e.g. a random/monotonic suffix on scheduler-assigned session ids) is still a reasonable defense-in-depth / audit-readability improvement, but it isn't fixing a proven vote-splitting defect -- punting that as a genuine UX nice-to-have rather than implementing a session-id-format change speculatively, since it would touch how every scheduled session is named (outside this repo's control) for marginal benefit over the now-verified git-plumbing guarantee.
+    owner: reviewer
+    claimed_by: claude-conductor-burst-20260718T230803Z
+    claimed_at: '2026-07-18T23:12:03Z'
+    updated: '2026-07-18T23:19:32Z'
+
+  - id: t-066
+    milestone: m2
+    title: A background subagent delegated a file push, then completed after the dispatching session had already pushed further changes to the same file directly, overwriting them
+    status: done
+    passes: 0
+    stakes: reversible
+    note: >
+      Observed 2026-07-18 (kind-robots/t-038 burst-mode cycle). Hit conductor's documented HTTP 413 push failure on this session's own designated branch and delegated the documented `push_files` MCP workaround to a background subagent, handing it the file content as it stood at that moment. Before the subagent returned, this session found and used a faster/different fix directly in the foreground (`create_branch` + rebase + normal `git push`) and kept committing further changes to the SAME file on top of that (a status flip from `review` to `done` plus a completion note). The background subagent, with no way to know its task had been superseded, eventually finished and pushed its own `push_files` commit built from the STALE content it was dispatched with -- landing on top of the branch tip and silently reverting the file back to the earlier `status: review` state, dropping both later edits. Caught immediately via the task-completion notification, refetched `origin/<branch>`, and reapplied the dropped edits, so no permanent loss -- but it cost an extra round-trip and could easily go unnoticed for a subagent whose output isn't re-read afterward. This is a real write race, not just wasted work: a background subagent operating on a file the dispatching session is concurrently editing can clobber later commits even within a single session with no other human or agent involved. Fix ideas (pick one or combine): (a) when a workaround is resolved in the foreground while a delegated subagent for the same fix is still in flight, explicitly cancel/ignore that subagent's eventual result rather than letting it complete and push unsupervised; (b) never delegate a git-state-mutating workaround (push_files, create_branch, etc.) to a background subagent for a problem already being actively fixed inline -- reserve background delegation for genuinely independent work; (c) if delegation is unavoidable, have the subagent re-fetch and diff against the CURRENT remote tip immediately before its push (not just use content handed to it at dispatch time), so a stale push_files call fails loudly on an unexpected base instead of silently overwriting newer commits.
+
+      RAN 2026-07-18 (~23:08 UTC, conductor-burst-hourly rotation, claude-conductor-burst-20260718T230803Z): implemented fix (b) as the primary rule (simplest and most robust: never delegate a git-state-mutating workaround to a background subagent for a problem being fixed inline) plus fix (c) as a fallback for when delegation is unavoidable (subagent must re-fetch and diff against the current remote tip immediately before pushing, not rely on dispatch-time content). Documented both in CLAUDE.md's new "Don't delegate an in-flight git workaround to a background subagent" subsection (right after the two HTTP 413 workaround sections it extends) and cross-referenced from a new rule 11 in AGENTS.md's Hard safety rules so it applies globally, not just to sessions that load this repo's CLAUDE.md. Docs-only change (no code path exists to enforce this mechanically -- the failure mode is a session behavior choice, not a script bug), so no test suite change. kind_robots PR not applicable (conductor-repo-only).
+    owner: reviewer
+    claimed_by: claude-conductor-burst-20260718T230803Z
+    claimed_at: '2026-07-18T23:08:07Z'
+    updated: '2026-07-18T23:12:32Z'
+
+  - id: t-067
+    milestone: m2
+    title: A task-events entry stuck behind a malformed-YAML sibling file applied stale roadmap state on top of a newer, unrelated claim once unblocked
+    status: done
+    passes: 0
+    stakes: reversible
+    note: 'Fixed: process_task_events.py now checks a queued event''s own `updated` timestamp against the live task''s `claimed_at`/`updated` before applying it. If the task has moved on since the event was generated (e.g. it was claimed again after the event was queued but before it got applied, as happened for ai-art-academy/t-010 in this task''s own report), the event is now skipped and logged as STALE instead of silently patching over the newer state. Added stale_reason() with 4 new unit tests covering: the reported regression scenario, dry-run behavior, events with no updated timestamp (never flagged, nothing to compare), and the ordinary newer-event-than-claim flow (still applies normally). Full test suite (378 tests) passes. Reviewed and merged conductor PR #844 (squash `73c2177`) — all 22 CI checks green, diff scoped to exactly the fix + tests, no scope creep.'
+    owner: worker
+    claimed_by: claude-conductor-burst-20260719-rotation-conductor
+    claimed_at: '2026-07-19T09:05:59Z'
+    updated: '2026-07-19T09:20:00Z'
+
+  - id: t-068
+    milestone: m2
+    title: Validate task-events/*.yaml syntax at write time or in CI, not first discovered when the shared process job breaks
+    status: done
+    passes: 0
+    stakes: reversible
+    note: 'Fixed: added scripts/validate_task_events.py (YAML syntax + required-field shape checks, no side effects) and wired it into ci.yml''s Worker PR CI as a new validate-task-events job. A malformed task-events/*.yaml file is now rejected at its own PR instead of landing on main and failing the shared process-task-events job for every unrelated PR. 11 new tests, including a direct regression for the unquoted-colon-in-a-note shape from the original t-067 incident. Merged conductor PR #851 (squash 70062dc) -- all 23 CI checks green.'
+    owner: reviewer
+    claimed_by: claude-conductor-agentrun-20260719T1204Z
+    claimed_at: '2026-07-19T12:17:44Z'
+    updated: '2026-07-19T12:17:44Z'
+
+  - id: t-069
+    milestone: m2
+    title: Flag unquoted MariaDB/MySQL reserved words used as raw-SQL table identifiers in kind_robots
+    status: done
+    passes: 0
+    stakes: reversible
+    note: >
+      Kaizen from newsfeed/t-017 (Reviewer, kind_robots PR #517, merged 2026-07-19): CHARACTER
+      is a reserved word in MariaDB's grammar; an unquoted `LEFT JOIN Character c ON ...` /
+      `FROM Character` in raw SQL (`$queryRaw`/`$queryRawUnsafe`/a raw driver `.query()`) throws
+      ER_PARSE_ERROR at query time. This exact shape shipped across four call sites in kind_robots
+      (a migration-repair script that runs during `npm run vercel-build`, plus three API/util
+      files) in the same PR cluster (#511-#515) before anyone noticed -- the migration-repair one
+      broke every production deploy until PR #517 fixed it. The existing contract-test mocks for
+      these files (e.g. verify-known-migration-repair.mjs's fakeConnection) match on SQL text
+      prefixes and can never catch a real grammar/parse error, so this class of bug has no
+      regression guard today. Add a lightweight check (a script grepping new/changed raw-SQL call
+      sites for unquoted reserved-word table names, run in kind_robots CI, starting with
+      `Character` since it's the one that already bit us and expanding the word list as more
+      surface) so the next one is caught before merge instead of in production. This is a
+      kind_robots code change, not a conductor one -- file the concrete script/CI-step work as a
+      kind_robots task if this project tracks kind_robots CI work, or as a direct kind_robots PR
+      when picked up.
+
+      DONE 2026-07-19 (conductor scheduled agent run): implemented and merged kind_robots PR #575
+      -- added utils/scripts/verifyNoUnquotedReservedWordTables.ts (scans $queryRaw/
+      $queryRawUnsafe/$executeRaw/$executeRawUnsafe/.query() call sites for reserved words used as
+      unquoted table identifiers after FROM/JOIN/INTO/UPDATE/TABLE, starting with `Character`),
+      wired into contract-tests.yml, plus the `test:no-unquoted-reserved-word-tables` npm script.
+      Verified clean against main (21 raw-SQL files, 0 unquoted `Character` identifiers) and
+      confirmed the check actually catches the bug via a deliberately reintroduced unquoted
+      `LEFT JOIN Character c ON ...` in a throwaway temp file before removing it. PR's own
+      TypeScript CI initially failed on an unrelated pre-existing main break (Character.userId
+      nullability vs. a non-nullable helper param, from same-day PR #569) -- fixed inline
+      (one-line type widening, full `npm run test` verified clean) since it was blocking this
+      PR's own green CI; flagged transparently in the PR body and filed conductor/t-072 for the
+      broader pattern. Merged (silasfelinus).
+    owner: reviewer
+    claimed_by: claude-conductor-scheduled-20260719T221307Z
+    claimed_at: '2026-07-19T22:13:07Z'
+    updated: '2026-07-19T22:13:07Z'
+
+  - id: t-070
+    milestone: m2
+    title: Consolidate check_pr_kaizen.py and check_pr_file_overlap.py into one pre-merge advisory pass
+    status: done
+    passes: 0
+    stakes: reversible
+    note: >
+      Kaizen from newsfeed/t-016 (Reviewer, conductor PR #849, merged 2026-07-19):
+      check_pr_file_overlap.py was built to match check_pr_kaizen.py's existing
+      convention (pure no-network function over pre-fetched PR title/body/files,
+      invoked manually by a Reviewer session, not wired into CI). Now that there
+      are two such advisory checks with the same invocation shape, consider a
+      single pre_merge_checks.py that runs both (and any future advisory PR
+      check) in one pass over one set of GitHub MCP-fetched PR data, so the
+      Reviewer only needs to remember/run one script per PR under review instead
+      of several. Keep each individual check's logic and tests separate --
+      this is purely about the invocation surface, not merging the checks
+      themselves.
+
+
+      RAN 2026-07-19 (burst-mode cycle, claude-conductor-burst-20260719T-t070):
+      added scripts/pre_merge_checks.py, importing check_pr_kaizen.check() and
+      check_pr_file_overlap.find_overlaps()/format_warning() unchanged and
+      running both against one --target/--others JSON pair (same shape
+      check_pr_file_overlap.py already used), printing any combined warnings
+      and exiting 0 (advisory only). Neither underlying check's logic or tests
+      were touched -- this is purely the shared invocation surface the task
+      asked for. Added tests/test_pre_merge_checks.py (13 tests: run_checks
+      isolation per-check, format_results empty-when-clean and both-sections,
+      main() CLI text/--json/error-path). No AGENTS.md doc pointer existed to
+      update -- the two prior scripts were only ever invoked ad hoc by a
+      Reviewer, not referenced in the documented workflow. Verified: full
+      `pytest tests/` (413 passed, 1 skipped, same baseline as before this
+      change) and `scripts/audit_roadmaps.py` (0 errors, 6 pre-existing
+      warnings, unchanged).
+    owner: reviewer
+    claimed_by: claude-conductor-burst-20260719T-t070
+    claimed_at: '2026-07-19T17:08:24Z'
+    updated: '2026-07-19T17:22:26Z'
+
+  - id: t-071
+    milestone: m2
+    title: Flag conductor tasks stuck at claimed/review whose cross-repo target PR already merged
+    status: done
+    passes: 0
+    stakes: reversible
+    note: >
+      Kaizen from newsfeed/t-020 (Reviewer, burst-mode, 2026-07-19): the conductor claim commit for t-020 landed at 16:06:48Z, but the real implementation (kind_robots PR #543) merged ten minutes later at 16:16:31Z with no `status: review` checkpoint in between, and the roadmap close-out only happened on this session's next sweep after manually re-checking kind_robots' commit history -- roadmap state alone gave no signal the work was already done. This is the same class of gap AGENTS.md's step 7 already cites twice (superkate-hairstyle-ai/t-017, PR #317 merging while the task sat at `claimed`). Add a script (or extend an existing sweep/audit script) that, for every conductor task at `status: claimed` or `status: review` whose note/title references a specific cross-repo PR number, checks via the GitHub MCP/API whether that PR has since merged, and flags the mismatch (print or a small report) so a Reviewer sweep catches drift within the same cycle instead of relying on a session happening to notice.
+
+      RAN 2026-07-19 (claude-burst-0fb5003f, burst-mode project rotation): added scripts/check_pr_merged_drift.py -- a standalone, read-only sweep (matches the check_repos.py/check_scheduler_drift.py family, not folded into audit_roadmaps.py since that script is intentionally network-free). It scans every projects/*/roadmap.yaml for tasks at status: claimed or status: review, extracts any `<repo> PR #<n>` reference from the task's title/note via a fixed alias table (conductor, kind_robots, kindrobots-unraid, serendipity-voice, comfyui, PortOS -- the repos this conductor instance actually pushes to), looks up each PR's merge state via the GitHub REST API, and reports (or --json-emits) every task whose referenced PR has already merged. Bare `PR #N` references with no repo prefix are skipped, not guessed, since they're genuinely ambiguous across repos. 13 new tests in tests/test_check_pr_merged_drift.py (regex extraction, scan filtering by status, and check() against a mocked urlopen -- no live network in the suite); full pytest run 426 passed / 1 skipped, up from 413 baseline. Live-validated the extraction logic against the real roadmaps (found real `kind_robots PR #NNN` references across several projects) and cross-checked two of them via the GitHub MCP pull_request_read tool directly (kind_robots #543 and #544, both merged: true) since this sandbox's direct api.github.com calls 403 without a real token (confirmed check_repos.py hits the identical 403 here -- a pre-existing sandbox limitation, not a regression). Along the way the tool surfaced a live instance of exactly this drift class: ai-art-academy/t-010 (a recurring task) sat at status: claimed with a note saying its kind_robots PR #544 had merged and it was 'rearming to ready', but the status field was never actually flipped. Left that alone rather than editing another session's in-flight task out of caution (AGENTS.md's rotation-collision warning), but it's a real early catch this tool would have flagged in a live sweep with a working token.
+    owner: null
+    claimed_by: null
+    claimed_at: null
+    updated: '2026-07-19T18:14:51Z'
+
+  - id: t-072
+    milestone: m2
+    title: Regression-test the Character.userId nullability class of Prisma-vs-vue-tsc mismatch beyond this one call site
+    status: done
+    passes: 0
+    stakes: reversible
+    note: >
+      Kaizen from conductor/t-069 (Reviewer, kind_robots PR #575, 2026-07-19): while
+      landing the unquoted-reserved-word-table contract check, that PR's own TypeScript
+      CI check failed for an unrelated reason -- `assertCharacterPatchCompatibility` in
+      server/api/characters/compatibility.ts typed its `existingUserId` parameter as
+      non-nullable `number`, but `Character.userId` is `Int?` in prisma/schema.prisma and
+      its only call site (server/api/characters/[id].patch.ts:75) passes the nullable
+      field straight through. This had already broken `main` earlier the same day via
+      PR #569 (commit 60a32129, "Apply Character patch compatibility boundary") with no
+      CI catching it until the next unrelated PR ran vue-tsc. Fixed inline (type-only
+      widening to `number | null`, verified via a clean full `npm run test` vue-tsc run)
+      since it was blocking this PR's own green CI, but the underlying pattern --
+      a Prisma nullable-Int field passed to a helper typed as non-nullable, only caught
+      when vue-tsc happens to run against the exact changed file -- has no regression
+      guard of its own (unlike the InputJsonValue cast class covered by
+      verifyNoPrismaJsonCast.ts / kind-robots/t-033). Consider whether a lightweight
+      contract check (or just running `npm run test` as its own always-green CI gate,
+      if it isn't already blocking merges) would catch this class earlier; also worth
+      checking staging.  Cross-reference kind-robots/t-033's note on keeping heuristic
+      pattern checks narrow to avoid false positives -- confirm a concrete second
+      instance exists before broadening scope, same discipline as that task.
+    owner: reviewer
+    claimed_by: claude-conductor-burst-20260720
+    claimed_at: '2026-07-20T01:05:20Z'
+    updated: '2026-07-20T01:05:20Z'
+
+  - id: t-073
+    milestone: m2
+    title: 'kind_robots: main branch protection does not require the "TypeScript" CI check to pass before merge'
+    status: needs-human
+    soft_gate: false
+    passes: 0
+    stakes: reversible
+    note: >
+      Filed 2026-07-20 (Reviewer sweep), consolidated from a since-superseded
+      conductor/t-072 investigation branch (PR #882, closed unmerged — that
+      PR's own regression-scan finding was independently and more thoroughly
+      covered by the actual t-072 fix, kind_robots PR #598, which landed a
+      real automated contract check; this task carries forward only #882's
+      second, still-unaddressed finding).
+
+
+      FOR SILAS: kind_robots' "TypeScript" CI check (workflow
+      .github/workflows/typecheck.yml, runs `npm run test` / vue-tsc on every
+      PR) is not currently a required status check on the `main` branch
+      protection rule — so a PR can merge into kind_robots main while that
+      check is red. This is exactly how PR #569 landed a real type error
+      (the Character.userId nullability mismatch conductor/t-072 fixed) that
+      sat broken on main for several hours on 2026-07-19 until an unrelated
+      PR happened to trip vue-tsc and surface it. No GitHub MCP tool
+      available to any agent session here can read or write branch
+      protection / required-status-check settings, so this cannot be closed
+      out by an agent — it is a one-time GitHub Settings change only Silas
+      can make.
+
+
+      TO APPROVE: in GitHub, silasfelinus/kind_robots → Settings → Branches
+      → the `main` protection rule → "Require status checks to pass before
+      merging" → add "TypeScript" to the required list (worth also
+      considering "Contract verifiers" and "verify" while there, which cover
+      a similar class of currently-optional correctness gates, though those
+      are not the specific gap that let PR #569 through). This is a
+      reversible settings-only change with no code/deploy/spend involved.
+      Once done, set `approved_by_human: true` and `status: done` on this
+      task — nothing downstream depends on it, it's a standalone
+      regression-prevention gap.
+    owner: null
+    claimed_by: null
+    claimed_at: null
+    updated: '2026-07-20T00:00:00Z'
+
+  - id: t-074
+    milestone: m2
+    title: "AGENTS.md: retry_context can go stale when a human merges the PR directly, bypassing the reject-retry loop"
+    status: done
+    owner: worker
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-21T13:00:00Z'
+    note: >
+      Kaizen from ruler-hooked/t-012 (burst-mode session, 2026-07-21). t-012 sat at
+      `status: ready`, `passes: 1`, with a `retry_context` describing a Reviewer
+      rejection of kind_robots PR #329 (12 vue-tsc type errors) written at
+      2026-07-16T21:55Z — but Silas merged PR #329 directly 9 minutes later
+      (2026-07-16T22:04:56Z), apparently overriding the rejection rather than
+      routing back through the normal reject -> retry -> re-review loop the
+      roadmap state implied was still open. The roadmap field never got updated
+      to reflect that, so it sat stale for 5 days looking like unresolved,
+      actionable work (a future session could easily have burned a retry pass
+      re-fixing type errors that no longer existed on main).
+
+      Add a line to AGENTS.md's "Retry context" section: before acting on a
+      `retry_context` for a cross-repo task, check whether the PR it references
+      already merged (or the task's `passes/status` otherwise looks inconsistent
+      with an open PR) and re-verify against current target-repo `main` first,
+      rather than assuming the recorded rejection still holds. This is a small
+      doc addition, not a script change — no existing tooling needs to be
+      touched, just the guidance agents read before retrying.
+
+      DONE 2026-07-21 (burst-mode session, claude-conductor-burst-20260721T1300Z):
+      added the guidance as a new bullet directly under the existing "no
+      retry_context on a passes>0 task" bullet in AGENTS.md's "Retry context —
+      failed passes must teach the next one" section, citing this task and the
+      ruler-hooked/t-012 case as the worked example.
+
+  - id: t-075
+    milestone: m2
+    title: 'AGENTS.md: session ids for claimed_by should be collision-resistant,
+      not a reused hour-label string'
+    status: done
+    owner: reviewer
+    passes: 0
+    stakes: reversible
+    note: >
+      Kaizen from coat-dance/t-001 (burst-mode session, 2026-07-21, root
+      TALKBACK.md same date). This session picked `claude-conductor-burst-
+      20260721T1300Z` as its own session id for `claim_task.py`/`claimed_by`
+      without checking uniqueness, and it turned out to already be in use by an
+      unrelated earlier session that same hour (conductor/t-074). Not a claim
+      conflict — `claim_task.py` keys on project/task, not session id — but it
+      left the `claimed_by`/TALKBACK trail looking like one continuous session
+      did two unrelated tasks, until caught and relabeled mid-session.
+
+      Add a short note to AGENTS.md's "Picking what to work on" step 6 (the
+      `claim_task.py` step) recommending a collision-resistant session id —
+      e.g. a full ISO timestamp with seconds plus a short task-specific suffix,
+      or a random token — rather than a coarse rotation/hour label that
+      multiple concurrent burst-mode sessions could plausibly reuse. Doc-only
+      change; no script behavior needs to change since claim correctness
+      itself was never at risk.
+
+      DONE 2026-07-21 (~15:15 UTC, claude-conductor-agentrun-20260721T151500Z-t075):
+      added the recommended-session-id guidance directly to AGENTS.md's "Picking
+      what to work on" step 6, right after the `ALREADY_CLAIMED` rotation
+      instruction, and mirrored a matching short note in `scripts/claim_task.py`'s
+      own module docstring (both cite this task and coat-dance/t-001 by name).
+      Doc-only change, no script behavior touched — verified `python -m py_compile
+      scripts/claim_task.py` still passes and `scripts/audit_roadmaps.py` shows 0
+      errors, same 11 warnings/44 info baseline as before this change.
+    claimed_by: claude-conductor-agentrun-20260721T151500Z-t075
+    claimed_at: '2026-07-21T15:15:45Z'
+    updated: '2026-07-21T15:16:30Z'
+
+  - id: t-076
+    milestone: m2
+    title: 'scripts/provision_flutter.sh: bump the pinned FLUTTER_VERSION default
+      to track app-ci.yml''s rolling stable channel'
+    status: done
+    owner: worker
+    passes: 0
+    stakes: reversible
+    note: >
+      Kaizen from conductor-app/t-012 (burst-mode session, 2026-07-21).
+      provision_flutter.sh pins FLUTTER_VERSION=3.32.5 (a build from
+      2025-06-24), but app-ci.yml's subosito/flutter-action uses `channel:
+      stable` unpinned, which by 2026-07-21 had moved to 3.44.7. Running
+      `flutter analyze` under the stale pinned 3.32.5 in this sandbox produced
+      4 false-positive `undefined_named_parameter` errors on
+      `DropdownButtonFormField`'s `initialValue` (renamed from `value` in a
+      later Flutter release) — including on pre-existing code this session
+      never touched (todos_screen.dart), not just the new file being verified.
+      Running `flutter upgrade` mid-session to the real current stable made
+      `flutter analyze` clean and all tests pass, but that cost real time and
+      a ~2-minute command timeout on the first attempt (the upgrade itself
+      completed in the background before the timeout fired). This exact risk
+      was already flagged as a deferred/speculative kaizen suggestion in PR
+      #945's body (mirrored in this file's history around 2026-07-19) but
+      never filed as a roadmap task, so it recurred.
+
+      Fix: either (a) bump provision_flutter.sh's FLUTTER_VERSION default to
+      a currently-current stable release and add a short comment noting it
+      should be re-bumped periodically, or (b) drop the hard pin and default
+      to `flutter channel stable && flutter upgrade` so the sandbox always
+      tracks whatever app-ci.yml actually runs against, accepting the slower
+      first-provision cost. Whichever approach, note the tradeoff in the
+      script's header comment so it doesn't silently go stale again.
+
+      DONE 2026-07-21 (worker/claude-conductor-burst-20260721T180528Z-t076):
+      took option (a). Bumped FLUTTER_VERSION default from 3.32.5 to 3.44.7
+      (confirmed the archive exists at the expected storage.googleapis.com
+      URL before committing) and added a header comment above the default
+      explaining app-ci.yml's unpinned `channel: stable` will keep drifting
+      ahead of this pin, pointing at the Flutter release archive as where to
+      check the current stable when re-bumping, and citing this task +
+      conductor-app/t-012 as the concrete recurrence this guards against.
+      Verified with `bash -n scripts/provision_flutter.sh`. Did not do a full
+      `flutter --version` provisioning run in this session (no apps/* task
+      in flight to need it) — script logic is unchanged, only the default
+      value and a comment, so behavior is verified by inspection plus the
+      archive existence check.
+    claimed_by: claude-conductor-burst-20260721T180528Z-t076
+    claimed_at: '2026-07-21T18:05:32Z'
+    updated: '2026-07-21T18:09:25Z'
+
+  - id: t-077
+    milestone: m2
+    title: 'scripts/set_task_field.py: warn that it edits the local working
+      tree, not origin/main fresh, unlike claim_task.py'
+    status: review
+    owner: worker
+    passes: 0
+    stakes: reversible
+    note: 'Fixed: added an explicit WARNING to set_task_field.py''s module docstring and to the argparse --help epilog, stating it edits the local working tree only (never fetches/reads origin/main) and recommending `git fetch origin main && git merge origin/main --ff-only` before calling it whenever claim_task.py or another direct-to-origin/main push happened earlier in the session. Left the optional runtime origin/main comparison backstop (the ''consider also'' half of the kaizen note) for a future task -- it would add a mandatory git-network dependency to a previously pure-local, offline-safe tool and its test suite (tests invoke this script via subprocess against tmp_path fixtures with no git repo), which is a bigger, riskier change than this task''s core ask. Verified: full pytest suite (431 items) green, audit_roadmaps.py clean, py_compile clean, --help renders the new epilog.'
+    claimed_by: claude-conductor-agentrun-20260721T2115Z-t077
+    claimed_at: '2026-07-21T21:16:18Z'
+    updated: '2026-07-21T21:16:18Z'
