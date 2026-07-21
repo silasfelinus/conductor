@@ -1403,3 +1403,20 @@ milestone reassignment). Worth flagging for whoever eventually builds
 **Kaizen task:** none filed — small, fully self-contained fix within lane 1's existing scope.
 
 **Pattern note:** worth generalizing for future front-end polish passes — when a component has two entry points for logically equivalent user actions (browse vs. drag-drop, keyboard vs. mouse, etc.), check that both paths apply the *same* validation/guard logic, not just that each path individually looks correct in isolation.
+
+## 2026-07-21 | Reviewer (burst-mode) | ai-art-academy/t-010 | pattern
+
+**Decision:** audited already-merged work, fixed a process-accuracy bug found in the process — lane 2 (roadmap accuracy), per the checklist's rotation (previous cycle ran lane 1).
+
+**Failure category:** actionable — a genuine roadmap-state bug, not a code defect, and not worth retrying blind (the fix is a one-line status flip, not a re-implementation).
+
+**What was good (prior cycle, ~00:11-00:30 UTC):**
+- The lane-1 implementation itself (kind_robots PR #733, `art-styler.vue` file-type validation) was clean and already merged by the time this cycle started.
+
+**What to improve:**
+- The prior cycle's conductor PR (#942) wrote "Rearming to `ready` per the recurring-task convention once PR #733 merges" into the task note, but the PR's own diff only added that note text — it never actually changed the `status:` field. Since #733 (the condition the note deferred on) hadn't merged yet at the moment #942's diff was authored, nothing in that PR *could* flip the status accurately, but nothing came back afterward to finish the deferred step either. Net effect: `t-010` sat at `status: claimed` holding a fresh, non-stale claim (so `claim_task.py` correctly refused to let a later session reclaim it) with no session actually working it, until this cycle noticed and fixed it directly.
+- General lesson for any recurring-task cycle whose rearm depends on a fact not yet true when the PR is written (e.g. "once PR #N merges"): either hold the PR open until that fact becomes true and update the status in the same PR before merging, or explicitly leave a same-day follow-up marker instead of writing prose that promises a field change nothing is scheduled to perform. A future session reading the note as ground truth (rather than checking the actual `status:` field) would have wrongly assumed the task was back in rotation.
+
+**Kaizen task:** none filed — the fix (flip `status: ready`) is complete in this cycle's own diff, and the lesson above is now recorded here plus in `continuous-improvement-checklist.md`'s rotation state for the next cycle to internalize without a separate roadmap task.
+
+**Pattern note:** this is a new failure shape for this task's audit history — not a code bug, milestone drift, or stale blocker note, but a *self-referential* roadmap-accuracy bug where the task's own note asserted a future action that the note-writing PR itself was supposed to perform but didn't. `scripts/check_pr_merged_drift.py` does not catch this shape (it only flags claimed/review tasks with a merged cross-repo PR reference, which did apply here, but its GitHub API calls 403 in this sandbox — this was caught by manual inspection of the PR #942 diff instead, not the tooling). Worth a note for whoever next touches that script: cross-checking `status: claimed` + "rearming to ready" note language + a confirmed-merged referenced PR would make this specific shape machine-detectable.
