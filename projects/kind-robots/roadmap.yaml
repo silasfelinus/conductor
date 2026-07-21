@@ -1303,3 +1303,45 @@ tasks:
     claimed_by: claude-conductor-burst-20260720T0300Z
     claimed_at: '2026-07-20T03:05:05Z'
     updated: '2026-07-20T03:05:05Z'
+  - id: t-042
+    milestone: m1
+    title: Add a contract test that catches un-pinned $fetch generics before they trip vue-tsc's TS2589 recursion ceiling
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Kaizen from appmaker/t-009 (kind_robots PR #812, 2026-07-21): that PR's
+      2 new server/api/appmaker/github/*.ts route files grew the project's
+      typed NitroFetchRequest route-key union just enough to push vue-tsc
+      over its internal recursion limit (TS2589 "Type instantiation is
+      excessively deep") on any `$fetch` call whose request-type generic (R)
+      was left to infer from the full route union instead of being pinned
+      explicitly. This was not confined to one file -- fixing the first
+      failing call site (components/art/art-styler.vue) revealed the next
+      one, then the next, all the way through 12 files before `npm run test`
+      went clean again (see PR #812's second commit, 58b516c8, for the full
+      list and the fix pattern: `$fetch<T, string>(...)` or plain `fetch()`
+      for client-only static-asset reads). Confirmed via a stashed-diff
+      local repro that this ceiling already sat right at the edge on main's
+      own tip before that PR -- any 1-2 new server/api/** route files from
+      ANY future PR can trip the same failure in a completely unrelated
+      file, with no warning until CI (or a full local vue-tsc run) surfaces
+      it. Build a lint/contract check (in the `test:*` family wired into
+      contract-tests.yml, matching the verifyNoPrismaJsonCast.ts /
+      verifyNoUnquotedReservedWordTables.ts style: a plain static-source
+      scan, no live network/DB needed) that flags any direct `$fetch<...>(`
+      or bare `$fetch(` call in components/**, server/**, stores/**,
+      utils/**, pages/** whose call does NOT pin a second generic argument
+      (or isn't provably a literal route string with zero dynamic
+      segments) -- so a PR that adds this pattern gets a clear, actionable
+      failure message pointing at the exact file/line, instead of a cryptic
+      TS2589 stack trace that (as this cycle found) can appear in a totally
+      unrelated file several commits away from the actual trigger. Cross-
+      reference conductor/t-073 (kind-robots, still open needs-human): that
+      task separately flags that kind_robots' branch protection does not
+      currently require the "TypeScript" check to pass before merge, which
+      is why this class of failure hasn't blocked a merge yet -- worth
+      considering together, since a real contract test here is a more
+      durable fix than relying on TypeScript being non-required.
+

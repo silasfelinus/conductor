@@ -129,7 +129,7 @@ tasks:
 - id: t-009
   milestone: m3
   title: 'Worker external-repo support: installation tokens + scaffold PR flow'
-  status: review
+  status: done
   owner: worker
   passes: 0
   stakes: reversible
@@ -137,14 +137,45 @@ tasks:
   note: 'Mint installation tokens server-side, push worker/scaffold-<slug> branches to user repos, open
     PRs. Worker role rules from design section 5d apply unchanged.
 
+    DONE 2026-07-21 (conductor scheduled agent run, claude-conductor-agentrun-20260721T-appmaker):
+    kind_robots PR #812 merged (squash 801ed768). Built exactly what GITHUB-APP-DESIGN.md''s
+    §8 task table specs for t-009 -- mintInstallationToken/listInstallationRepositories/pushScaffoldBranchAndOpenPr
+    in server/utils/appmakerGithub.ts (token never returned by any API, per §6 invariant
+    3), repos.get.ts extended with live availableRepos, create-app.post.ts (self-serve
+    external-repo app creation, §5b steps 1-2) and scaffold.post.ts (admin/Worker-only
+    mint+branch+PR, §5b step 3, requireAdminApiUser matching the KR_API_TOKEN Worker-auth
+    convention). Did not build §5c graduation flow -- that is t-010, gated separately.
+    Real find this cycle: the PR''s own CI (TypeScript check) failed on the first two
+    pushes with a TS2589 "excessively deep" recursion error in components/art/art-styler.vue,
+    unrelated on its face to appmaker. Root-caused rather than worked around: the 2 new
+    server/api/appmaker/github/*.ts route files grew the project''s typed NitroFetchRequest
+    route-key union just enough to push vue-tsc''s recursion limit on ANY $fetch call
+    whose R (request) generic was left to infer from the full route union instead of
+    being pinned explicitly -- a pre-existing, repo-wide fragility already sitting at
+    the edge (confirmed: main''s own tip reproduces the same failure once nudged, e.g.
+    by any 1-2 new route files). Fixing art-styler.vue''s call site only revealed the
+    next-worst one; chased all the way through the codebase (there are only 14 files
+    that call $fetch directly -- the rest goes through typed composables/stores) and
+    pinned $fetch''s R generic (`$fetch<T, string>` or plain `fetch()` for client-only
+    static-asset reads) in all 12 affected files: art-styler.vue, coloring-book-manager.vue,
+    dream-inspire-button.vue, newsfeed-feed.vue, super-form.vue, watchlist-browse.vue,
+    watchlist-entry-detail.vue, leaderboard.vue, currentModel.get.ts, google/callback.ts,
+    muralStore.ts, collectionCardImage.ts. Zero behavior change, verified via vue-tsc
+    --noEmit (0 errors, was exit 2), eslint, and prettier all clean across all 16 changed
+    files, then confirmed green in real CI (TypeScript + Contract verifiers both success)
+    before merging. Also confirmed via conductor/t-073 (still open, needs-human) that
+    the TypeScript check is not actually a required kind_robots branch-protection gate
+    -- did not rely on that to merge, since the underlying issue was fixed for real, but
+    noting it as relevant context for whoever closes t-073.
+
     '
   claimed_by: claude-conductor-agentrun-20260721T-appmaker
   claimed_at: '2026-07-21T13:14:51Z'
-  updated: '2026-07-21T13:14:51Z'
+  updated: '2026-07-21T14:09:00Z'
 - id: t-010
   milestone: m3
   title: Graduation flow (monorepo app to its own repo)
-  status: waiting
+  status: ready
   owner: null
   passes: 0
   stakes: irreversible
