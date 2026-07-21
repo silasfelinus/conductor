@@ -289,7 +289,7 @@ tasks:
   - id: t-014
     milestone: m4
     title: "Polish and upgrade Da Vinci front-end surface"
-    status: review
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -301,7 +301,7 @@ tasks:
       PROGRESS 2026-07-21 (conductor agent session claude-conductor-agentrun-20260721T2000Z-davinci-t014): step (4) built for real this cycle, closing the gap the 2026-07-20 cycle deliberately left open. Rather than wait on the still-unspecced AI-narration layer, built a self-contained playable life-run UI against the existing play-loop API (POST /api/davinci/runs, POST .../choices, POST .../resolve, GET .../:id) using a curated 8-chapter pool of narrative scenes/choices (one per design-brief.md narrative device: temptation, sacrifice, mentor encounter, dream gate, false victory, return, inheritance, collapse), each choice posting real effects to the server's LifeStat model -- the app still owns all durable state and outcome math, per the design brief's boundary rule; the curated content is flavor, not a second source of truth. Covers: start-a-life form (protagonist name/genre), a live 10-dimension pass/fail stat grid, chapter-by-chapter choice UI, resolve-to-ending screen (title/summary/victory badge, achievement-awarded note), resume-in-progress-run via localStorage + GET, and a logged-out gate. This is a genuinely playable first slice per design-brief.md's 'First build slice' section, not the full AI-narrated experience -- narration-layer work (spec already done, davinci/t-015) remains a separate future upgrade that can swap the curated pool for generated content without changing the state/API contract. Verified: npm run test (vue-tsc --noEmit) exit 0, eslint clean, prettier --check clean (after --write). Remaining and kept ready: step (1) dashboard-tab + hero art still blocked on the art-generation relay (not rechecked this cycle -- no new signal expected since every other session today found it still down) and step (3) the liveUrl/channelKey/tabKey admin Placements backfill. kind_robots PR pending open this cycle.
     claimed_by: claude-conductor-agentrun-20260721T2000Z-davinci-t014
     claimed_at: '2026-07-21T20:13:36Z'
-    updated: '2026-07-21T20:13:36Z'
+    updated: '2026-07-21T20:34:23Z'
 
   - id: t-015
     milestone: m2

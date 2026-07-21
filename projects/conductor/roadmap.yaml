@@ -2183,3 +2183,37 @@ tasks:
     claimed_by: claude-conductor-burst-20260721T180528Z-t076
     claimed_at: '2026-07-21T18:05:32Z'
     updated: '2026-07-21T18:09:25Z'
+
+  - id: t-077
+    milestone: m2
+    title: 'scripts/set_task_field.py: warn that it edits the local working
+      tree, not origin/main fresh, unlike claim_task.py'
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Kaizen from davinci/t-014 (burst-mode session, 2026-07-21).
+      claim_task.py fetches origin/main fresh and pushes its claim commit
+      via git plumbing directly, never touching the caller's working
+      tree/branch/HEAD. set_task_field.py has no such fetch step — it just
+      edits whatever roadmap.yaml is on disk. Calling set_task_field.py
+      right after claim_task.py in the same session (a very common
+      sequence: claim, then later set status: review/done) can silently
+      reapply stale field values from before the claim if the local
+      checkout wasn't independently fetched/fast-forwarded in between —
+      in this case it briefly clobbered the just-written claimed_by/
+      claimed_at with a week-old value from the local tree's stale copy,
+      caught only by diffing the result against what had just been
+      claimed rather than trusting the script's success message.
+
+      Fix: add an explicit warning to set_task_field.py's module
+      docstring and/or --help text noting that it operates on the local
+      working tree only, and recommending `git fetch origin main && git
+      merge origin/main --ff-only` (or equivalent) immediately beforehand
+      whenever a set_task_field.py call follows a claim_task.py call (or
+      any other direct-to-origin/main push) earlier in the same session.
+      Consider also having the script itself compare the task's
+      claimed_by/claimed_at against origin/main's current value and warn
+      (not block) on mismatch, as a runtime backstop for sessions that
+      miss the docstring warning.
