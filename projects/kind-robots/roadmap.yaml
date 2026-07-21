@@ -1306,8 +1306,8 @@ tasks:
   - id: t-042
     milestone: m1
     title: Add a contract test that catches un-pinned $fetch generics before they trip vue-tsc's TS2589 recursion ceiling
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     note: >
@@ -1344,4 +1344,7 @@ tasks:
       is why this class of failure hasn't blocked a merge yet -- worth
       considering together, since a real contract test here is a more
       durable fix than relying on TypeScript being non-required.
+    claimed_by: claude-conductor-agentrun-20260721T-fetchlint
+    claimed_at: '2026-07-21T14:17:23Z'
+    updated: '2026-07-21T14:17:23Z'
 
