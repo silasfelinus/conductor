@@ -2049,8 +2049,7 @@ tasks:
       TO APPROVE: in GitHub, silasfelinus/kind_robots → Settings → Branches
       → the `main` protection rule → "Require status checks to pass before
       merging" → add "TypeScript" to the required list (worth also
-      considering "Contract verifiers" and "verify" while there, which cover
-      a similar class of currently-optional correctness gates, though those
+      considering "Contract verifiers" and "verify" while there, though those
       are not the specific gap that let PR #569 through). This is a
       reversible settings-only change with no code/deploy/spend involved.
       Once done, set `approved_by_human: true` and `status: done` on this
@@ -2188,35 +2187,11 @@ tasks:
     milestone: m2
     title: 'scripts/set_task_field.py: warn that it edits the local working
       tree, not origin/main fresh, unlike claim_task.py'
-    status: claimed
+    status: review
     owner: worker
     passes: 0
     stakes: reversible
-    note: >
-      Kaizen from davinci/t-014 (burst-mode session, 2026-07-21).
-      claim_task.py fetches origin/main fresh and pushes its claim commit
-      via git plumbing directly, never touching the caller's working
-      tree/branch/HEAD. set_task_field.py has no such fetch step — it just
-      edits whatever roadmap.yaml is on disk. Calling set_task_field.py
-      right after claim_task.py in the same session (a very common
-      sequence: claim, then later set status: review/done) can silently
-      reapply stale field values from before the claim if the local
-      checkout wasn't independently fetched/fast-forwarded in between —
-      in this case it briefly clobbered the just-written claimed_by/
-      claimed_at with a week-old value from the local tree's stale copy,
-      caught only by diffing the result against what had just been
-      claimed rather than trusting the script's success message.
-
-      Fix: add an explicit warning to set_task_field.py's module
-      docstring and/or --help text noting that it operates on the local
-      working tree only, and recommending `git fetch origin main && git
-      merge origin/main --ff-only` (or equivalent) immediately beforehand
-      whenever a set_task_field.py call follows a claim_task.py call (or
-      any other direct-to-origin/main push) earlier in the same session.
-      Consider also having the script itself compare the task's
-      claimed_by/claimed_at against origin/main's current value and warn
-      (not block) on mismatch, as a runtime backstop for sessions that
-      miss the docstring warning.
+    note: 'Fixed: added an explicit WARNING to set_task_field.py''s module docstring and to the argparse --help epilog, stating it edits the local working tree only (never fetches/reads origin/main) and recommending `git fetch origin main && git merge origin/main --ff-only` before calling it whenever claim_task.py or another direct-to-origin/main push happened earlier in the session. Left the optional runtime origin/main comparison backstop (the ''consider also'' half of the kaizen note) for a future task -- it would add a mandatory git-network dependency to a previously pure-local, offline-safe tool and its test suite (tests invoke this script via subprocess against tmp_path fixtures with no git repo), which is a bigger, riskier change than this task''s core ask. Verified: full pytest suite (431 items) green, audit_roadmaps.py clean, py_compile clean, --help renders the new epilog.'
     claimed_by: claude-conductor-agentrun-20260721T2115Z-t077
     claimed_at: '2026-07-21T21:16:18Z'
     updated: '2026-07-21T21:16:18Z'
