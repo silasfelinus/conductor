@@ -1,0 +1,51 @@
+name: Coloring Semantic Gate Contract
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "scripts/consume_coloring_book_color_art.py"
+      - "scripts/semantic_art_quality.py"
+      - "scripts/curate_art.py"
+      - "scripts/art_quality.py"
+      - "tests/test_coloring_book_semantic_gate.py"
+      - ".github/workflows/coloring-semantic-contract.yml"
+  pull_request:
+    branches: [main]
+    paths:
+      - "scripts/consume_coloring_book_color_art.py"
+      - "scripts/semantic_art_quality.py"
+      - "scripts/curate_art.py"
+      - "scripts/art_quality.py"
+      - "tests/test_coloring_book_semantic_gate.py"
+      - ".github/workflows/coloring-semantic-contract.yml"
+  workflow_dispatch:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install --disable-pip-version-check pyyaml Pillow
+
+      - name: Compile production scripts
+        run: |
+          python -m py_compile \
+            scripts/consume_coloring_book_color_art.py \
+            scripts/semantic_art_quality.py \
+            scripts/curate_art.py \
+            scripts/art_quality.py
+
+      - name: Verify semantic rejection and retry contracts
+        run: python -m unittest discover -s tests -p "test_coloring_book_semantic_gate.py"
+
+      - name: Verify dry-run queue construction
+        run: python scripts/consume_coloring_book_color_art.py --limit 1
