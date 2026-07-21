@@ -56,49 +56,31 @@ tasks:
 - id: t-002
   milestone: m2
   title: Write resume first draft (tech-targeted)
-  status: claimed
+  status: needs-human
   owner: worker
   passes: 0
   stakes: reversible
   depends_on: t-001
   gate_human: true
   approved_by_human: false
-  note: "Using the approved skills-map.md, write projects/career-transition/resume-v1.md.\nFormat it as\
-    \ a clean, ATS-friendly markdown resume. Sections: Summary (3 sentences: who Silas is technically,\
-    \ what he's built, what he's looking for), Technical Skills (grouped by category), Projects (kind_robots,\
-    \ conductor, nonprofit \u2014 each with a one-line impact statement and tech stack), Experience (reverse-chron,\
-    \ lead with IT/tech-adjacent roles, frame others for transferable value \u2014 don't bury 11 years\
-    \ casino dealing but don't lead with it either), Education (degrees + any self-directed learning worth\
-    \ naming).\nKey framing guidance: \"AI practitioner since 2001\" is a genuine differentiator \u2014\
-    \ lead with it in the summary. Running a multi-agent autonomous system (conductor) is senior- adjacent\
-    \ work even for a \"junior\" application. Frame non-tech experience as evidence of reliability and\
-    \ people skills, not a liability.\nEnd at needs-human. Silas will edit before this is used anywhere.\n"
+  note: 'FOR SILAS: projects/career-transition/resume-v1.md is a general-purpose first-draft resume. Sections: Summary (leads with ''AI practitioner since 2001''), Technical Skills (grouped), Projects (Conductor + kind_robots with impact statements, plus a placeholder for the nonprofit -- I don''t have public-facing details to describe it accurately), Experience (reverse-chron, IT admin leads, casino dealing framed for transferable skill rather than buried or leading), Education (degrees + 35+ years self-directed technical education framed as the primary credential). Left bracketed placeholders for contact info and exact employment years -- I did not invent specific dates I wasn''t given. TO APPROVE: fill in the placeholders, correct any framing you''d change, then set approved_by_human: true and status: done here. Unblocks: t-004 (GitHub profile README).'
   claimed_by: claude-conductor-scheduled-20260721T1420Z
   claimed_at: '2026-07-21T14:24:29Z'
-  updated: '2026-07-21T14:24:29Z'
+  updated: '2026-07-21T14:25:20Z'
 - id: t-003
   milestone: m1
   title: Research and rank specific job roles and companies to target
-  status: claimed
+  status: needs-human
   owner: worker
   passes: 0
   stakes: reversible
   depends_on: t-001
   gate_human: true
   approved_by_human: false
-  note: "Using the approved skills-map.md, produce projects/career-transition/job-targeting.md.\nFor each\
-    \ of the 5 target role types in notes_from_silas:\n  - Typical title variations used in job postings\n\
-    \  - Realistic salary range (remote, US market, 2025\u20132026)\n  - Core skills hiring managers screen\
-    \ for \u2014 which does Silas have, which is he missing\n  - Types of companies most likely to hire\
-    \ someone with a nontraditional background\n    (startups, AI-first companies, developer-tools companies,\
-    \ nonprofits, agencies)\n  - 5-10 specific companies worth watching that are known to value demonstrated\
-    \ skill\n    over credentials (include AI startups, developer-tools, and Anthropic/OpenAI partner\n\
-    \    ecosystem companies if relevant)\n  - Honest assessment: is this realistic now, in 3 months with\
-    \ portfolio work, or in\n    6+ months\n\nEnd at needs-human so Silas can steer which roles to prioritize\
-    \ before downstream tasks.\n"
+  note: 'FOR SILAS: projects/career-transition/job-targeting.md is the role/company targeting research for all 5 target role types from your notes (AI engineer/prompt engineer, junior full-stack Nuxt/Vue, developer relations, technical community manager, no-code/low-code specialist). It contains: per-role salary ranges (live July 2026 data), which of your skills each role screens for vs. your biggest gap, 3-6 specific companies worth watching per role (Anthropic Claude Partner Network, Vercel, Supabase, PostHog, n8n, Zapier, Retool, Nuxt.com''s own jobs board), and a realistic timeline (now / 3 months / 6+ months) per role. A cross-role summary table and recommended sequencing are at the end. TO APPROVE: read job-targeting.md, correct any role priority you''d steer differently, then set approved_by_human: true and status: done here. Unblocks: t-005 (portfolio writeups), t-006 (cover letter templates), t-007 (interview prep guide) — all currently status: waiting on this task.'
   claimed_by: claude-conductor-scheduled-20260721T1420Z
   claimed_at: '2026-07-21T14:18:18Z'
-  updated: '2026-07-21T14:18:18Z'
+  updated: '2026-07-21T14:21:28Z'
 - id: t-004
   milestone: m3
   title: Write GitHub profile README and pinned repo recommendations
@@ -181,16 +163,11 @@ tasks:
 - id: t-008
   milestone: m1
   title: Survey active AI engineer and junior dev job postings
-  status: claimed
+  status: needs-human
   owner: worker
-  updated: '2026-07-21T14:21:54Z'
+  updated: '2026-07-21T14:22:41Z'
   passes: 0
   stakes: reversible
-  note: "Runs parallel to t-001 \u2014 no dependency on Silas approving the skills map. Search current\
-    \ job boards (LinkedIn, Indeed, Wellfound, HN Who's Hiring) for postings matching: AI engineer, prompt\
-    \ engineer, AI product, junior full-stack (Nuxt/Vue/TypeScript), and developer advocate. Write projects/career-transition/job-postings-survey.md\
-    \ with: top required skills (frequency count), salary ranges by role type, common red flags in JDs,\
-    \ and 5+ specific companies that appear promising for Silas's nontraditional background. No applications,\
-    \ no account creation. Ends needs-human.\n"
+  note: 'FOR SILAS: projects/career-transition/job-postings-survey.md was written 2026-06-30 but the task was never flipped out of ready -- a template-discipline gap from that session, corrected now. The file itself is sound (title variations, red flags, and company list are still valid) but its salary figures had drifted: this cycle''s t-003 research (job-targeting.md) found DevRel, community-manager, and no-code-specialist pay running noticeably higher in live July 2026 data -- a REFRESH NOTE was added at the top of this file pointing to job-targeting.md for current figures rather than rewriting the whole survey. TO APPROVE: read job-postings-survey.md (particularly the refresh note), then set approved_by_human: true and status: done here if the content and correction look right.'
   claimed_by: claude-conductor-scheduled-20260721T1420Z
   claimed_at: '2026-07-21T14:21:54Z'

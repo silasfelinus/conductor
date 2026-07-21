@@ -1,8 +1,19 @@
 # AI Engineer and Junior Dev Job Postings Survey
 
-Generated: 2026-06-30
+Generated: 2026-06-30 (bookkeeping corrected 2026-07-21 — this file was written but the
+roadmap task was never flipped out of `ready`; see career-transition/TALKBACK.md)
 Task: career-transition/t-008
-Status: needs-human — verify current postings; market data reflects late-2024/early-2025 conditions and should be refreshed before Silas applies
+Status: needs-human
+
+**REFRESH NOTE (2026-07-21):** Live salary data pulled this cycle for `career-transition/t-003`
+(see `job-targeting.md`) shows this survey's DevRel, community-manager, and no-code-specialist
+figures below have drifted meaningfully low — current remote-market averages run roughly
+20-40% higher for those three roles (e.g. this file's "$55k-$85k" community-manager range vs.
+a live $98k average / $36k-$162k range found this cycle; this file's "$80k-$110k" junior DevRel
+vs. a live ~$116k-$143k junior average). The AI-engineer and full-stack ranges below are still
+broadly consistent with fresh data. Treat `job-targeting.md` as the more current source for
+salary figures specifically; this file's title variations, red-flag list, and company
+rationale are still valid and not superseded.
 
 ---
 
