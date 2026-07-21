@@ -23,15 +23,15 @@ milestones:
 - id: m1
   title: Product spec and boundaries
   weight: 30
-  status: not-started
+  status: done
 - id: m2
   title: Skill ladder and assignment engine
   weight: 30
-  status: not-started
+  status: in-progress
 - id: m3
   title: AI critique and next-assignment loop
   weight: 25
-  status: not-started
+  status: in-progress
 - id: m4
   title: Token tiers and Kind Robots integration
   weight: 15
@@ -188,3 +188,89 @@ tasks:
     liveUrl points at /sketchy (admin can run the Conductor 'Placements' button to
     backfill channelKey/tabKey/liveUrl); (4) evolve the placeholder scaffold page
     into the full interactive experience for this project.
+- id: t-008
+  milestone: m2
+  title: Build the initial Sketchy Flutter app core loop (calibration, assignment, submission, critique) on mock data
+  status: review
+  owner: worker
+  claimed_by: claude-conductor-burst-20260721T2017Z-sketchy-t008
+  claimed_at: '2026-07-21T20:17:01Z'
+  updated: '2026-07-21T20:25:53Z'
+  updated: '2026-07-21T20:17:01Z'
+  passes: 0
+  stakes: reversible
+  note: >
+    Gap found during a 2026-07-21 burst-mode cycle: milestones m2 ("Skill ladder
+    and assignment engine") and m3 ("AI critique and next-assignment loop") were
+    both still status: not-started even though their spec tasks (t-002, t-003)
+    are done -- because no task existed yet to actually BUILD anything against
+    those specs. apps/sketchy/ (the Flutter app scaffold from scripts/new_app.py)
+    was still the untouched generated boilerplate (lib/main.dart == generic
+    AppMaker "Sketchy — scaffolded by AppMaker" placeholder), while
+    components/conductor/sketchy-page.vue in kind_robots is a separate, unrelated
+    marketing/pitch-board placeholder (ProjectFrontPage + ProjectPitchBoard) --
+    neither is the real app.
+
+    Scope: implement PRODUCT-SPEC.md's "Core Loop" (calibration -> assignment ->
+    upload -> critique -> next assignment) as a real, navigable Flutter app using
+    mock/local data only (no backend exists yet -- no Prisma schema, no API
+    routes, no live AI critique call). Specifically:
+    - Calibration screen: the 3 first-session questions from PRODUCT-SPEC.md
+      (experience length, focus area, comfort sliders) computing a starting
+      SkillTier (beginner/intermediate/advanced).
+    - Assignment screen: shows a tier-appropriate assignment pulled from a local
+      mock bank seeded with real sample prompts from SKILL-LADDER.md (not
+      invented text), success criteria, time window, reference-allowed note.
+    - Submission screen: mock "attach drawing" step (no real image upload/network
+      call -- there is no backend to receive one yet).
+    - Critique screen: mock critique using CRITIQUE-RUBRIC.md's 5 scoring
+      dimensions (construction, proportions, line quality, value/light,
+      observation) and the weakest-skill routing algorithm from that doc's §3
+      to pick the next assignment's category.
+    Follow apps/conductor's established package conventions (flutter_riverpod +
+    go_router) rather than introducing a new state-management pattern. Ship only
+    after `flutter analyze --fatal-infos` and `flutter test` both pass (per
+    apps/README.md's CI contract) -- run scripts/provision_flutter.sh to get a
+    local toolchain in this sandbox rather than skipping verification.
+
+    Explicitly OUT of scope for this task (left for follow-ups once a real
+    backend exists): Prisma schema / server API routes for
+    assignments/critiques/skill-progress (would live in kind_robots per the
+    shared-economy note in PRODUCT-SPEC.md, and needs its own scoped task plus
+    the still-open cross-app mana-charge-endpoint pitch from sketchy/t-004), a
+    real image picker/upload flow, wiring a live Claude Vision critique call,
+    and replacing kind_robots' sketchy-page.vue placeholder (that's sketchy/t-007
+    step 4's concern, tracked separately).
+
+    DONE 2026-07-21 (claude-conductor-burst-20260721T2017Z-sketchy-t008): built
+    the full core loop in apps/sketchy/lib/ -- core/models (SkillTier,
+    FocusArea, AssignmentCategory, Assignment, CritiqueDimension,
+    CritiqueResult), core/data/assignment_bank.dart (30 assignments, one per
+    category x tier, prompts/success-criteria drawn from SKILL-LADDER.md's
+    actual sample lists), core/data/critique_engine.dart (applicableDimensions
+    per CRITIQUE-RUBRIC.md §2's table, deterministic mock scoring seeded on
+    assignment id, and nextCategoryFor implementing §3 steps 3-5: the
+    weakest-dimension mapping, the friendly-progression override, and the
+    all-8+ -> Finished pieces/Style studies terminal case), core/app_state.dart
+    (a Notifier tying the loop together), and four screens (calibration,
+    assignment, submission, critique) wired with go_router + flutter_riverpod
+    (matching apps/conductor's package choices). pubspec.yaml gained
+    flutter_riverpod ^2.5.1 and go_router ^14.2.0. Added test/critique_engine_test.dart
+    (12 unit tests covering the routing algorithm's every branch, including the
+    override-wins-over-mapping and all-strong-routes-to-finished-pieces cases)
+    and rewrote test/widget_test.dart (3 widget tests: boots on calibration,
+    calibration advances to an assignment, and the full loop reaches a critique
+    and loads a next assignment). Verified: `flutter analyze --fatal-infos`
+    clean (0 issues), `flutter test` 15/15 passing, `dart format` applied.
+    `scripts/audit_roadmaps.py` -- 0 errors, 12 warnings (same baseline as the
+    prior sketchy/t-004 cycle this same day, no new findings), 44 info. This
+    task's own status was hand-set to claimed/review in this same session
+    (no separate origin/main claim-commit round-trip) since the task itself
+    was created and claimed within one continuous session -- no collision risk
+    per AGENTS.md's rotation-collision rationale (nobody else could know about
+    this task id before this commit lands). No kind_robots change needed --
+    entirely within apps/sketchy/ in this repo. Also fixed milestone drift while
+    here: m1 (t-001, its only task) was done but still marked not-started, and
+    m2/m3 were not-started despite this task now moving them forward -- flipped
+    m1 to done and m2/m3 to in-progress to match actual task state, same
+    milestone-accuracy pattern seen in ai-art-academy/kind-robots sessions.

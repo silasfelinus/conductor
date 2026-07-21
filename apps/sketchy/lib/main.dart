@@ -1,22 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-void main() => runApp(const SketchyApp());
+import 'app.dart';
 
-class SketchyApp extends StatelessWidget {
-  const SketchyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Sketchy',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF6750A4)),
-        useMaterial3: true,
-      ),
-      home: Scaffold(
-        appBar: AppBar(title: const Text('Sketchy')),
-        body: const Center(child: Text('Sketchy — scaffolded by AppMaker')),
-      ),
-    );
-  }
+void main() {
+  runApp(const ProviderScope(child: SketchyApp()));
 }
