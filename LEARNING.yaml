@@ -3874,3 +3874,12 @@ records:
   outcome: done
   failure_category: null
   lesson: "set_task_field.py edits whatever is on the caller's local working tree, unlike claim_task.py which fetches origin/main fresh and pushes via git plumbing -- calling set_task_field.py right after claim_task.py in the same session without an intervening fetch+ff-only can silently reapply a stale claimed_by/claimed_at (or any other field) on top of the real claim. Always fetch and fast-forward the local branch before any set_task_field.py call that follows a claim_task.py call. Separately: hand-appending a new paragraph to a folded (>) YAML note: field needs a blank line between paragraphs, not just a newline -- YAML's folded-scalar rule collapses adjacent non-blank lines into one line with a space, so a missing blank line silently merges the new paragraph into the previous one on next parse. Verify by re-parsing the note and diffing paragraph-boundary bytes, not by eyeballing the raw text diff."
+- date: '2026-07-21'
+  project: sketchy
+  task: t-008
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "A project's milestones can show every spec task as done while nothing has actually been built against those specs -- check milestone status against real code state (does the app scaffold still show generated boilerplate?), not just task-list completion, before assuming a project has no available work. Also: app-ci.yml tests every app in apps/ within one shared job whenever its changed-app diff detection doesn't isolate to a single app, so an unrelated app's flaky/hung test can make an otherwise-clean PR's CI look broken -- read the full job log for which app actually failed before assuming your own diff caused it; a test that passes cleanly in the first few seconds of a job that then hangs for 10 more minutes on a different app's test file is not your regression."

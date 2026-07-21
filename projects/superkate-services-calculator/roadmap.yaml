@@ -595,3 +595,42 @@ tasks:
     since ~13:00 UTC 2026-07-10 — unrelated to the PRs that surfaced it.
     Fixed by wrapping the card body in Material(type: transparency).
     Completed in this session's conductor PR.
+- id: t-037
+  milestone: m3
+  title: 'test/csv_export_widget_test.dart: "export flow shares exactly the two written CSV paths" hangs until the 10-minute test timeout in CI'
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  updated: '2026-07-21T21:00:00Z'
+  note: >
+    Found 2026-07-21 (conductor burst-mode session working sketchy/t-008,
+    conductor PR #994): app-ci.yml's "Analyze and test each app" step runs
+    every app in apps/ in one shared job (falls back to `ls apps` whenever
+    the changed-app diff detection doesn't isolate to a single app -- this
+    run touched only apps/sketchy but still executed the full apps/ list,
+    superkate-services-calculator included). This test
+    ("export flow shares exactly the two written CSV paths", added by
+    t-035/PR #365) hung with `TimeoutException after 0:10:00.000000: Test
+    timed out after 10 minutes` at `dart:isolate _RawReceivePort._handleMessage`,
+    failing the shared job and blocking an otherwise fully green,
+    unrelated PR (sketchy/t-008 -- see run
+    https://github.com/silasfelinus/conductor/actions/runs/29865852390/job/88753749403).
+    The other two tests in the same file (the InMemoryCsvExportService-backed
+    flow and the cancel-dialog flow) passed fine; only the FileCsvExportService
+    + real temp-directory + InMemoryCsvShareGateway variant hangs. Likely
+    culprit: something in FileCsvExportService's real file-write path (or a
+    timer/animation it triggers) never settles, so `tester.pumpAndSettle()`
+    (or an awaited Future) blocks forever instead of throwing promptly --
+    worth checking whether FileCsvExportService's share step touches a real
+    plugin channel despite the injected fake gateway, or whether a SnackBar/
+    animation controller from the confirm dialog is the one not settling.
+    Reproduce locally with `flutter test test/csv_export_widget_test.dart`
+    (fast on a real machine if it's CI-environment-specific hardware/headless
+    timing, but likely reproduces anywhere if it's a genuine unsettled
+    Future/Timer). Separately worth a conductor-side follow-up: app-ci.yml
+    testing every app in one job means one hung/flaky test in any single app
+    can block PRs for every other unrelated app -- consider per-app job
+    matrix (isolated failure blast radius) or at minimum a per-app timeout
+    shorter than the shared job's overall runtime budget so one hang doesn't
+    silently eat ~10 minutes of CI on someone else's PR.

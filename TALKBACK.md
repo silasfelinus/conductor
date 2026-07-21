@@ -8728,3 +8728,75 @@ existing spec before building on it (below).
 
 **Kaizen task:** none this cycle — no new systemic gap surfaced beyond the
 already-filed pitch.
+
+## 2026-07-21 | Worker (burst) | sketchy/t-008 | done
+
+**Decision:** implemented, merged this session (reversible, scoped, new app
+code + tests — session claude-conductor-burst-20260721T2017Z-sketchy-t008,
+conductor PR #994).
+
+**Failure category:** none for this task's own diff — but a pre-existing,
+unrelated CI hang in a different app briefly looked like a failure of this
+PR (see below).
+
+**What was good:**
+- Rotation: `ai-art-academy/t-010` (the recurring never-idle task) had already
+  run 3+ times today per its own note; `t-019`/`t-035` (its only other ready
+  tasks) were both confirmed genuinely blocked on the down art-generation
+  relay by prior sessions' own fresh rechecks. Walked `priority.yaml` past
+  several more "ready" hits that turned out to be false positives on closer
+  read (a plain-text `status: ready` string appearing inside a *note*, not an
+  actual task field — e.g. mermaids-of-venice/t-012 is `status: done`, its
+  note just narrates a change made *to* another file's `status: ready`
+  field). Re-did the ready-task scan with actual YAML parsing instead of
+  grep to avoid that trap.
+- Found a genuine, previously-unfiled gap rather than re-picking an
+  already-exhausted-today task: sketchy's milestones m2 ("Skill ladder and
+  assignment engine") and m3 ("AI critique and next-assignment loop") had
+  spec tasks marked done but no task existed to actually *build* anything —
+  `apps/sketchy/lib/main.dart` was still untouched AppMaker boilerplate.
+  Filed and immediately implemented `sketchy/t-008` (created and claimed
+  within the same session, so no `claim_task.py` round-trip was needed —
+  no other session could know about the task id before this commit).
+- Built the full core loop (calibration -> assignment -> submission ->
+  critique -> next assignment) on mock/local data, grounded in the project's
+  own design docs rather than inventing content: 30 mock assignments sourced
+  verbatim from SKILL-LADDER.md's sample prompts, and a critique/routing
+  engine implementing CRITIQUE-RUBRIC.md's §2 dimension-applicability table
+  and §3's weakest-skill routing algorithm (including the tie-break order,
+  the friendly-progression override, and the all-8+ terminal case) instead of
+  a placeholder scoring stub.
+- Verified for real, not just by inspection: provisioned Flutter via
+  `scripts/provision_flutter.sh`, ran `flutter analyze --fatal-infos` (0
+  issues after fixing a real type error + an unstable-router-per-rebuild bug
+  caught by analyze) and `flutter test` (15/15 passing, including 12 new
+  unit tests covering the routing algorithm's every branch), `dart format`,
+  and `scripts/audit_roadmaps.py` (0 errors both before and after).
+- CI surfaced an initially alarming ~14-minute-and-failing "test" check;
+  read the actual job log line-by-line before assuming this diff broke
+  something. sketchy's own analyze+test finished cleanly in the first ~12s
+  of that job (app-ci.yml's fallback runs every app in `apps/` in one shared
+  job when the diff doesn't isolate to a single app). The job then hung for
+  10 more minutes on a pre-existing, unrelated test in
+  `superkate-services-calculator` (`csv_export_widget_test.dart`, added by
+  that project's own t-035/PR #365 back on 2026-07-10) before timing out.
+  Confirmed via the full log rather than assuming a rerun would fix it or
+  that the failure blocked this diff. Merged PR #994 once satisfied the
+  failure was unrelated. Filed `superkate-services-calculator/t-037` for the
+  hang itself, and flagged the shared-job blast-radius design question
+  (one app's flaky test can block every other app's unrelated PR) for a
+  future conductor-side CI improvement.
+- Also fixed accurate-but-neglected milestone drift while in sketchy's
+  roadmap: m1 was done but marked `not-started`; flipped it and m2/m3 to
+  match actual task state.
+
+**What to improve:** caught my own duplicate-YAML-key slip mid-session (two
+`updated:` fields on the same task after a copy-paste edit) before pushing —
+worth a habit of re-reading a just-edited task block in full rather than
+only the lines touched by the last `Edit` call.
+
+**Kaizen task:** filed `superkate-services-calculator/t-037` (the CI hang)
+rather than a conductor-repo kaizen task, since the concrete, actionable fix
+belongs to that project's test; the shared-job design note is recorded
+inside that same task rather than as a separate item, to avoid a task with
+no owner-able next action.
