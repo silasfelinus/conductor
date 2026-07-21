@@ -4,7 +4,7 @@ date: 2026-07-10
 task: ai-art-academy/t-005
 status: draft for review (content complete, one source URL verified per movement)
 
-This is the curriculum: 26 movements spanning the timeline from Greek vases to
+This is the curriculum: 27 movements spanning the timeline from Greek vases to
 American Regionalism. Every artist named here is long dead (all listed artists died
 before 1955), and every example work is a public-domain original held (or expected)
 in an open-access collection. See the ethical boundary in DESIGN-BRIEF.md and the
@@ -19,10 +19,15 @@ cycle): American Regionalism. Section 25 is the 2026-07-20 v1.5 addition (t-010
 cycle): Persian Miniature Painting — the first non-Western, non-Japanese entry
 beyond Ukiyo-e. Section 26 is the 2026-07-21 v1.6 addition (t-010 cycle): Song
 Dynasty Landscape Painting — the second non-Western entry and the first from East
-Asia beyond Ukiyo-e. They are appended (rather than renumbered into place) but
-belong chronologically among the earlier movements — read the `era` field in the
-machine-readable skeleton for true ordering; the front-end seed (t-020, t-031)
-inserts them in chronological position.
+Asia beyond Ukiyo-e. Section 27 is the 2026-07-21 v1.7 addition (t-010 cycle):
+Mughal Miniature Painting — a related but visually distinct Indo-Persian tradition
+from Section 25's Timurid/Safavid Persian miniature (naturalistic faces and
+atmospheric recession vs. flat color fields), previously identified as off-register
+for the Persian lesson and deferred as its own future entry. They are appended
+(rather than renumbered into place) but belong chronologically among the earlier
+movements — read the `era` field in the machine-readable skeleton for true
+ordering; the front-end seed (t-020, t-031) inserts them in chronological
+position.
 
 Verification method note: direct API/page fetches to museum hosts are blocked by the
 session egress proxy, so verification was done via web search returning the live
@@ -219,6 +224,20 @@ movements:
     artist_slugs: [fan-kuan, guo-xi, xu-daoning]
     example_count: 3
     remix_hint: "Repaint this image as a Northern Song Chinese ink landscape: monochrome ink wash on silk, a towering central mountain peak dominating the composition, tiny travelers dwarfed by scale, layered misty atmospheric distance between foreground and peak, textured brushwork on rock faces, no cast shadows, tall vertical hanging-scroll framing"
+  # --- v1.7 addition (2026-07-21, t-010 cycle, lane 4) ---
+  # A related but visually distinct Indo-Persian tradition from persian-miniature
+  # (naturalistic faces, atmospheric recession, sparing local gold vs. flat color
+  # fields) -- previously identified as off-register for the Persian lesson (LoRA
+  # search note, 2026-07-20 cycle) and deferred as its own entry. Belongs
+  # chronologically after persian-miniature/renaissance (see `era`); appended here
+  # to avoid renumbering the sections above. A future seed-sync task inserts it in
+  # chronological position in academyStyles.ts, mirroring t-020/t-031/t-034.
+  - slug: mughal-miniature
+    name: Mughal Miniature Painting
+    era: "c. 1560-1650 (Imperial atelier under Akbar, Jahangir, and early Shah Jahan)"
+    artist_slugs: [basawan, bichitr, ustad-mansur]
+    example_count: 3
+    remix_hint: "Repaint this image as a Mughal miniature: naturalistic, individualized faces with fine stippled modeling, atmospheric landscape recession, gold used sparingly for thrones/halos/ornament only, dense precise brushwork on brocade and jewelry, and a wide floral or scrollwork decorative border, distinct from flatter Persian miniature color fields"
 ```
 
 ---
@@ -1532,6 +1551,79 @@ cast shadows, tall vertical hanging-scroll framing"
 
 ---
 
+## 27. Mughal Miniature Painting (`mughal-miniature`)
+
+**Era:** c. 1560-1650 (Imperial atelier under Akbar, Jahangir, and early Shah Jahan)
+
+**Key ideas.** Akbar's Imperial atelier fused the flat, jewel-toned Persian
+manuscript tradition (already covered in Lesson 25) with Indian color sense and
+an increasingly naturalistic, observational eye — figures gained volume and
+individualized faces, and landscapes gained atmospheric recession that Persian
+miniatures deliberately avoided. Akbar-era works (Basawan and peers) are
+crowded narrative scenes illustrating dynastic chronicles like the *Akbarnama*,
+built from teams of specialist painters — one artist for composition
+(*tarh*), another for coloring (*rang*), another for portrait faces (*chihra*).
+Under Jahangir the emphasis shifted from crowded narrative toward exacting
+single-subject portraiture, allegorical court scenes, and scientific
+nature studies of the animals and plants his menagerie collected — Ustad
+Mansur's studies of birds and animals are considered unmatched for their
+observational precision. Gold is used more sparingly and locally than in
+Persian work, reserved for thrones, halos, and ornament rather than whole
+sky fields; modeling with fine stippled brushwork gives faces and fabric a
+rounded, almost sculptural finish quite distinct from Persian flat color
+fields.
+
+**Recognition cues:**
+- Individualized, naturalistic faces with fine stippled modeling rather than
+  Persian miniature's flatter, more stylized features
+- Landscape recedes with atmospheric haze and diminishing scale (unlike
+  Persian miniature's higher-not-smaller convention)
+- Gold used locally and sparingly — thrones, halos, jewelry — not as a flat
+  background field
+- Crowded, staged narrative compositions (Akbar-era) or a single
+  emphatically isolated portrait/animal/plant subject on a plain ground
+  (Jahangir-era)
+- Fine, dense brushwork rendering brocade and jewelry with near-scientific
+  precision
+- A wide decorative border of scrollwork or florals framing the central
+  scene, separate in style from the painting itself
+
+**Notable artists:**
+- **Basawan** (fl. 1560-1600) — Leading painter of Akbar's atelier, celebrated
+  for naturalistic figures and psychological nuance within densely staged
+  *Akbarnama* narrative scenes.
+- **Bichitr** (fl. 17th century, active into the 1640s) — Court painter under
+  Jahangir and Shah Jahan known for elaborate allegorical compositions
+  and precise portraiture, including a self-portrait worked into his own
+  paintings.
+- **Ustad Mansur** (fl. c. 1590 - d. 1624) — Jahangir's court naturalist-painter,
+  titled *Nadir al-Asr* ("Wonder of the Age"), renowned for scientifically
+  exacting studies of birds, animals, and plants.
+
+**Example works:**
+- *The Young Emperor Akbar Arrests the Insolent Shah Abu'l-Maali*, Basawan,
+  c. 1585-1595 — folio from a manuscript of the *Akbarnama*. **VERIFIED**, Art
+  Institute of Chicago (1919.898); public domain (CC0 1.0 Universal Public
+  Domain Dedication; published before 1931) via Wikimedia Commons:
+  https://commons.wikimedia.org/wiki/File:Basawan_-_The_Young_Emperor_Akbar_Arrests_the_Insolent_Shah_Abu%E2%80%99l-Maali,_page_from_a_manuscript_of_the_Akbarnama_-_1919.898_-_Art_Institute_of_Chicago.jpg
+- *Jahangir Preferring a Sufi Shaikh to Kings*, Bichitr, 1615-1618 — folio
+  from the St. Petersburg Album. **VERIFIED**, Freer Gallery of Art,
+  Smithsonian Institution (F1942.15a); public domain (published before
+  January 1, 1931) via Wikimedia Commons:
+  https://commons.wikimedia.org/wiki/File:Bichitr_-_Jahangir_Preferring_a_Sufi_Shaikh_to_Kings,_from_the_St._Petersburg_album_-_Google_Art_Project.jpg
+- *Turkey Cock*, Ustad Mansur, c. 1612 — opaque watercolor and gold on paper.
+  **VERIFIED**, Victoria and Albert Museum; public domain (author's life +
+  100 years or fewer) via Wikimedia Commons:
+  https://commons.wikimedia.org/wiki/File:Turkey_Cock,_by_Mansur,_opaque_watercolour_and_gold_on_paper,_Mughal,_ca._1612.jpg
+
+**remix_hint:** "Repaint this image as a Mughal miniature: naturalistic,
+individualized faces with fine stippled modeling, atmospheric landscape
+recession, gold used sparingly for thrones/halos/ornament only, dense precise
+brushwork on brocade and jewelry, and a wide floral or scrollwork decorative
+border, distinct from flatter Persian miniature color fields"
+
+---
+
 ## Lesson-only vs remixable
 
 Every movement above maps to a remix config (mode `prompt` to start; t-003/t-004
@@ -1615,9 +1707,21 @@ generic realism filter toward the movement's distinctive smoothed-and-stylized l
   space that actually define the movement. Keep the lesson regardless; ship
   the remix only if t-004 A/B results show genuine scale/space restructuring,
   not just a grayscale-ink palette swap.
+- `mughal-miniature` — a milder version of `persian-miniature`'s tension: it
+  doesn't fight "preserve composition" the way Persian miniature's inverted
+  perspective does (Mughal work keeps atmospheric recession and naturalistic
+  faces, both photo-compatible), but its identity is defined largely by what
+  distinguishes it *from* `persian-miniature` — sparing local gold instead of
+  flat gold fields, stippled naturalistic faces instead of flat stylized ones.
+  The likelier failure mode is the model collapsing both lessons into one
+  generic "Indo-Persian miniature" filter rather than actually hitting the
+  distinguishing traits. Keep the lesson regardless; ship the remix only if
+  t-004 A/B results show the two styles are visibly distinguishable
+  side-by-side, not just palette-shifted twins.
 
-No movement is lesson-only in v1 — even the flagged five get a remix config — but
-`cubism`, `de-stijl`, `suprematism`, `persian-miniature`, and `song-dynasty-landscape`
+No movement is lesson-only in v1 — even the flagged six get a remix config — but
+`cubism`, `de-stijl`, `suprematism`, `persian-miniature`, `song-dynasty-landscape`,
+and `mughal-miniature`
 should carry a "results vary, that's part of the fun" note until t-004 evaluates them.
 
 ## Public-domain safety check (t-006 preview)
