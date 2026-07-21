@@ -1512,3 +1512,36 @@ later Reviewer sweep to notice.
 
 **Kaizen task:** none new this cycle — this cycle's own kaizen task (t-036, filed
 one cycle earlier) already covers the systemic gap found this session.
+
+## 2026-07-21 | Reviewer (agent run) | ai-art-academy/t-010 | audited already-merged work
+
+**Decision:** merged (session claude-conductor-agentrun-20260721T1910Z-t010, PR #989, squash `898d14d`).
+
+**Failure category:** none — clean cycle, doc-only fix.
+
+**What was good:**
+- Lane 3 (home relay) re-checked with a genuinely fresh queued job (1275, not
+  reusing 1242) before falling back to lane 4, per rotation discipline.
+- Found a real, verifiable documentation-staleness bug rather than defaulting to
+  "add a 28th movement": `continuous-improvement-checklist.md`'s "Current
+  curriculum coverage" summary and table still said Mughal Miniature Painting
+  (§27) hadn't been synced to `academyStyles.ts`, but kind_robots PR #814 already
+  landed and merged that exact sync (confirmed by reading kind_robots'
+  `stores/seeds/academyStyles.ts` directly via GitHub MCP `get_file_contents` —
+  the `mughal-miniature` entry is present with matching fields). The checklist's
+  own rotation-state entry for that cycle recorded the merge correctly; only the
+  separate summary section lagged behind it — same staleness shape as several
+  prior self-corrections in this file, just in a doc this task also maintains.
+- Corrected both the summary paragraph and the coverage-table row to 27/27
+  synced, closing the last unblocked lane-4 item before a 28th movement.
+- Verified `scripts/audit_roadmaps.py` (0 errors, same 44-info baseline) and
+  confirmed the PR's actual diff (44 additions/12 deletions/2 files) matched
+  the local change exactly, no drift.
+- Hit the documented first-push HTTP 413 (branch not yet on the actual remote
+  despite a stale local tracking ref) — worked around via `create_branch` +
+  rebase + push per CLAUDE.md, no force-push.
+
+**What to improve:** none this cycle.
+
+**Kaizen task:** none new this cycle — no systemic gap surfaced; this cycle's
+work was itself a small kaizen-shaped correction.
