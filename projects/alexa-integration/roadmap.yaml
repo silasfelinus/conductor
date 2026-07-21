@@ -370,9 +370,9 @@ tasks:
 - id: t-018
   milestone: m4
   title: blockedActions list in voice-router.ts omits "deploy" and DNS-shaped words from the checklist's own Blocked-mode table
-  status: ready
-  owner: null
-  updated: '2026-07-20T22:30:00Z'
+  status: claimed
+  owner: worker
+  updated: '2026-07-21T10:07:34Z'
   passes: 0
   stakes: reversible
   note: 'Found while capturing the t-010 dry-run transcript. blockedActions in serendipity-voice
@@ -386,3 +386,5 @@ tasks:
     endpoint) to blockedActions, and add a regression test asserting both checklist sample lines now
     return the specific "needs a safer review path" blockedReason. See
     projects/alexa-integration/docs/t-010-dry-run-transcript.md Finding 4 for the full repro.'
+  claimed_by: claude-conductor-burst-20260721T1007Z
+  claimed_at: '2026-07-21T10:07:34Z'
