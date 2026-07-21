@@ -3829,3 +3829,12 @@ records:
   outcome: done
   failure_category: null
   lesson: "A cryptic CI type error in a file the task never touched is not automatically 'pre-existing and unrelated' -- it can be a genuine, if indirect, regression the diff triggered (here: 2 new server/api/** route files grew the typed $fetch route-key union just enough to push vue-tsc's TS2589 recursion limit on unrelated call sites). A same-tree local repro without the diff isn't conclusive either, since sandbox vs real CI can diverge -- cross-check against the base commit's actual CI history before concluding a failure is pre-existing. Root-causing (pinning $fetch's R generic, 12 files) was cheap once understood and is a durable fix, versus a band-aid on the one file CI happened to name first."
+- date: '2026-07-21'
+  project: kind-robots
+  task: t-042
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "A new static-source contract test is only trustworthy once it's been proven to actually catch the pattern it claims to guard against -- write a synthetic violating sample first (cover edge cases like nested generics that could produce false negatives in a bracket-depth parser), confirm it fails as expected, then remove the sample and confirm the real codebase passes clean. Testing only the 'passes on real code' direction would have missed a parser bug that let violations through silently."
