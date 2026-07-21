@@ -15,6 +15,39 @@ Record the lane, files changed, and verification in the task note before rearmin
 
 ### Rotation state
 
+- Last completed lane: Front-end polish (lane 1), 2026-07-21 (~05:05-05:57 UTC,
+  claude-conductor-scheduled-burst-20260721T0505Z). Dispatched an Explore
+  subagent over the full in-scope surface (art-styler.vue, image-upload.vue,
+  all components/academy/*.vue, academyStore.ts, styleHelper.ts,
+  academyStyles.ts) with this checklist's exclusion list of already-fixed bug
+  classes. Found a real, verifiable rendering bug: `art-styler.vue`'s
+  `sourceImageSrc`/`resultImageSrc` computeds treated `img.path` as a URL
+  fallback whenever `img.imagePath` was empty. `ArtImage.path` is a real URL
+  only for folder-synced collections; every upload flow (this component,
+  image-upload.vue, art-maker.vue, the add-bot/-character/-reward/-scenario
+  targets) instead writes a bracketed placeholder tag like `'[UploadedImage]'`
+  into it, and `imagePath` is only populated outside production
+  (`server/utils/UploadArtImage.ts`). In production, selecting an uploaded
+  gallery image as a remix source rendered a broken-image icon in both the
+  "Ready to style" banner and the Source/Result comparison panel, even though
+  a usable `thumbnailData` payload had just been fetched and was sitting
+  unused one branch below. Fixed with a small `isPlaceholderImagePath()`
+  guard so the fallback chain skips a bracketed tag and falls through to
+  `thumbnailData`/`imageData`; folder-synced images (genuine URL in `path`)
+  are unaffected. Noted for a future cycle, not fixed here: two competing
+  shared resolvers already exist (`utils/artImageSource.ts`'s
+  `isProbablyPath()`, which already handles this case correctly, and
+  `utils/artImageSrc.ts`'s `resolveArtImageSrc`, which has the same bug this
+  fix just patched locally) but neither is used by any Academy/art-styler
+  component, and the two files collision-warn on a duplicated `ArtImageLike`
+  export at build time — consolidating onto one of them is a bigger, separate
+  refactor. Verified: `npx eslint`/`npx prettier --check` clean, full-project
+  `npm run test` (`vue-tsc --noEmit`) exit 0. kind_robots PR #745 (branch
+  `claude/keen-fermat-vev7uz`): all 3 CI checks green (TypeScript, Contract
+  verifiers, GitGuardian) — merged, 1 commit/15 additions/2 deletions/1 file,
+  matching this session's diff exactly with no drift. Next preferred lane is
+  roadmap accuracy (lane 2) — this cycle ran lane 1, so lane 2 is next in the
+  1→2→3→4 rotation.
 - Last completed lane: Curriculum depth (lane 4), 2026-07-21 (~04:05-04:35 UTC,
   claude-conductor-scheduled-burst-20260721T0405Z). Lane 3 (inspiration/preview
   assets) was tried first per the prior cycle's preferred-lane note, with a
