@@ -1,4 +1,4 @@
-updated: "2026-07-20T00:15:00-07:00"
+updated: "2026-07-21T04:20:00-07:00"
 
 pitches:
   - id: bioluminescent-tide
@@ -295,3 +295,41 @@ pitches:
       - at least one full marble circuit (drop to elevator return) is visible within thirty seconds
       - contact-triggered flourishes (bell/pinwheel/seesaw) never desync from the marble that caused them
       - underlying page clicks remain functional through the click interaction
+
+  - id: strandbeest-migration
+    title: Strandbeest Migration
+    status: pitched
+    priority: 15
+    surprise: >
+      A herd of wind-powered wire-legged walker sculptures ambles across a dune
+      horizon, wind gusts visibly quickening or slowing their gait as they cross
+      the screen and loop back for another pass.
+    passive_loop: >
+      Each walker cycles a fixed multi-bar leg-linkage gait driven by a shared
+      crank phase offset per leg pair; a slow ambient wind value (sine plus light
+      noise) scales stride length and speed, and walkers drift along a parallax
+      dune baseline before wrapping to a fresh silhouette on re-entry.
+    optional_interaction: >
+      Pointer acts as a local wind gust that visibly speeds up nearby walkers'
+      gait and lightly tilts their stride direction; click spawns one new walker
+      at the horizon that joins the herd's migration.
+    technique: >
+      Precomputed multi-bar linkage leg curves (classic Jansen-linkage joint
+      coordinates) driven by a shared crank angle per walker, rendered as simple
+      stroked struts and joints; walker body position advances along a parallax
+      dune baseline rather than a fixed track.
+    reduced_motion: Two walkers, slow fixed gait with no wind variance, no gust interaction, no spawning.
+    performance_risk: >
+      Many simultaneous walkers each recomputing joint linkage per frame; cap
+      the herd size and precompute a lookup table of joint positions per
+      crank-angle step instead of solving the linkage live every frame.
+    novelty: >
+      Wind-driven linkage-based leg locomotion across a horizon is distinct from
+      marble-run-contraption's fixed track-position circuit, ant-farm-excavation's
+      grid-based digging simulation, and celestial-mobile's free-hanging balance
+      physics — no existing pitch or shipped effect uses procedural leg-linkage
+      walking.
+    acceptance:
+      - at least three walkers are visible ambling across the screen at any time during normal (non-reduced-motion) play
+      - the wind gust interaction visibly changes at least one walker's gait speed within one second of pointer movement
+      - a walker that exits one edge re-enters from the opposite edge without a visible teleport pop (fade or off-screen buffer)

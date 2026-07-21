@@ -188,7 +188,7 @@ tasks:
   - id: t-006
     milestone: m5
     title: "Research and pitch one genuinely new passive animation"
-    status: claimed
+    status: ready
     owner: worker
     passes: 0
     stakes: reversible
@@ -227,9 +227,28 @@ tasks:
       consistent with how the prior cycle read the same rule going from 11 to
       exactly 12). No kind_robots code touched (pitch-only) -- re-armed to ready
       per the recurring-task convention.
-    claimed_by: claude-conductor-scheduled-20260721T1113Z
-    claimed_at: '2026-07-21T11:14:57Z'
-    updated: '2026-07-21T11:14:57Z'
+
+      RAN 2026-07-21 (~11:15 UTC, conductor scheduled session,
+      claude-conductor-scheduled-20260721T1113Z): new Pacific calendar day (last
+      run was 2026-07-20T07:17 UTC / 2026-07-20T00:17 -07:00) and the buildable
+      queue was at 11 (two prior pitches -- paper-lantern-weather and
+      magnetic-sand-garden -- had since moved to status: candidate, pulling the
+      pitched count back down from the prior cycle's 13), so neither no-op
+      condition applied. Added `strandbeest-migration` (a herd of wind-powered,
+      Jansen-linkage wire-legged walker sculptures migrating across a dune
+      horizon; wind gusts scale gait speed, click spawns a new walker), checked
+      against all 14 existing pitches. Distinct from marble-run-contraption
+      (fixed track-position circuit, not leg locomotion), ant-farm-excavation
+      (grid-based digging, not walking), and celestial-mobile (free-hanging
+      balance physics, not linkage-driven legs) -- no existing pitch or shipped
+      effect uses procedural leg-linkage walking. Ran
+      `scripts/check_animation_novelty.py --strict` -- no collisions at or above
+      the 0.2 threshold across all 15 pitches. Brings the buildable queue to
+      exactly 12, at the cap but not above it. No kind_robots code touched
+      (pitch-only) -- re-armed to ready per the recurring-task convention.
+    claimed_by: null
+    claimed_at: null
+    updated: '2026-07-21T11:20:00Z'
 
   - id: t-007
     milestone: m5
