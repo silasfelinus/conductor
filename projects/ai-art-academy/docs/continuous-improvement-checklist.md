@@ -15,6 +15,12 @@ Record the lane, files changed, and verification in the task note before rearmin
 
 ### Rotation state
 
+- **Note (rotation collision):** the two entries below both cite session label
+  `claude-conductor-scheduled-20260721T220455Z-t010` but are two distinct
+  concurrent sessions that reused the same label (see root `TALKBACK.md`
+  2026-07-21, coat-dance/t-001 for the same pattern) — not one session
+  contradicting itself. Each did real, non-duplicate work on a different
+  branch, so both are kept.
 - Last completed lane: Roadmap accuracy (lane 2, fallback), 2026-07-21
   (~22:05-22:35 UTC, claude-conductor-scheduled-20260721T220455Z-t010). Lane 1
   (front-end polish) was next preferred per the prior cycle's note and was
@@ -33,8 +39,7 @@ Record the lane, files changed, and verification in the task note before rearmin
   corresponding conductor task tracking it. Did not push, force-push, reset,
   or rebase this branch. Filed conductor/t-078 (soft needs-human) so a
   session with fuller context — or Silas — can decide whether to preserve,
-  rebase, or discard it; lane 1 may stay blocked by this until t-078 resolves,
-  a distinct blocker from the home-relay one below. Fell back to lane 2:
+  rebase, or discard it. Fell back to lane 2:
   `audit_roadmaps.py` (0 errors, 44 info, same baseline; the 14 warnings are
   all in other projects) and `check_pr_merged_drift.py` (0 claimed/review PRs
   to check) both clean; all 6 milestones re-verified against actual task
@@ -48,9 +53,29 @@ Record the lane, files changed, and verification in the task note before rearmin
   queued preview jobs instead (1229, 1242, 1275, spanning 2026-07-20 to
   2026-07-21): all still `PENDING` with no `claimedAt`, confirmed live this
   cycle — consistent with every prior cycle back to 2026-07-18, no change.
-  t-035 stays blocked. Next preferred lane is inspiration/preview assets
-  (lane 3) if lane 1 is still blocked when the next cycle runs — re-probe
-  with a fresh job id, not 816/1229/1242/1275 again.
+  t-035 stays blocked.
+- Last completed lane: Front-end polish (lane 1), 2026-07-21 (~22:04-22:21 UTC,
+  claude-conductor-scheduled-20260721T220455Z-t010). Dispatched an Explore
+  subagent over the full in-scope surface (art-styler.vue, image-upload.vue,
+  all components/academy/*.vue, academyStore.ts, styleHelper.ts,
+  academyStyles.ts) with this checklist's exclusion list of every bug class
+  already fixed in prior cycles. Found a real, verifiable race condition in
+  `art-styler.vue`'s `selectGalleryImage()`: rapid clicks on two different
+  not-yet-cached gallery thumbnails fire overlapping `getArtImageById()`
+  fetches with no way to discard a stale response — whichever resolves last
+  unconditionally wins regardless of click order, silently snapping
+  `selectedSourceImage` back to a no-longer-selected image. Fixed with a
+  monotonic `gallerySelectionToken` guard on both the success and catch
+  branches' writes to `selectedSourceImage.value`; the `galleryThumbs` cache
+  write still happens unconditionally (harmless). Verified: `npx
+  eslint`/`npx prettier --check` clean, full-project `npm run test`
+  (`vue-tsc --noEmit`) exit 0. kind_robots PR #831 (branch
+  `claude/vigilant-edison-kjvawv`): all 3 CI checks green (TypeScript,
+  Contract verifiers, GitGuardian) — merged squash `5920dbe4`.
+- Both lane 1 and lane 2 ran this rotation (see collision note above). Next
+  preferred lane is inspiration and preview assets (lane 3) — lane 3 stayed
+  blocked on the home-relay preview-job backlog as of the lane-2 cycle's
+  spot check above; re-probe with a fresh job id.
 - Last completed lane: Curriculum depth (lane 4, documentation-accuracy
   follow-up), 2026-07-21 (~19:10-19:30 UTC,
   claude-conductor-agentrun-20260721T1910Z-t010). Lane 3 (inspiration/preview

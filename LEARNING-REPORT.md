@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-07-21T22:05:20Z
+Generated: 2026-07-21T23:11:55Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **330**
-- Outcomes: blocked: 12, done: 318
+- Closed tasks recorded: **331**
+- Outcomes: blocked: 12, cancelled: 1, done: 318
 - Success rate: **96%**
 - Average passes on successful tasks: **0.0**
 
@@ -18,7 +18,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | ai-art-academy | 35 | 100% |
 | alexa-integration | 2 | 100% |
 | animation-manager | 8 | 100% |
-| animation-studio | 1 | 100% |
+| animation-studio | 2 | 50% |
 | appmaker | 5 | 100% |
 | approval-portal | 2 | 0% |
 | art-generator-connect | 3 | 100% |
@@ -55,26 +55,27 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 15 | 40% |
-| software | 315 | 99% |
+| software | 316 | 99% |
 
 ## Failure categories
 
 | Category | Count |
 |---|---|
+| actionable | 7 |
 | quality | 6 |
-| actionable | 6 |
 | transient | 5 |
 
 ## Kaizen targets
 
 - project `coat-dance` — 0% success over 8 closed tasks; aim the next kaizen task here
 - kind `content` — 40% success over 15 closed tasks; aim the next kaizen task here
+- failure category `actionable` — 7 occurrences; look for the shared cause across its records
 - failure category `quality` — 6 occurrences; look for the shared cause across its records
-- failure category `actionable` — 6 occurrences; look for the shared cause across its records
 - failure category `transient` — 5 occurrences; look for the shared cause across its records
 
 ## Recent lessons
 
+- 2026-07-21 `animation-studio/t-001` — A hand-rolled ready-task scan (used to pick a rotation target instead of next_ready_task.py's priority-order pick) computed the active-project set from project-overrides.yaml but never filtered the priority.yaml walk by it, so a retired project (animation-studio, superseded by animation-manager) surfaced a claimable ready task. Caught before any PR opened, via audit_roadmaps.py's project-inventory table showing the retired status -- run that check (or grep the specific project's status: line) as the last step immediately before claim_task.py, not just earlier in a broad sweep. claim_task.py itself has no active/retired guard.
 - 2026-07-21 `superkate-services-calculator/t-037` — dart:io real filesystem work (temp-dir creation, real file writes) inside a testWidgets body can hang indefinitely under flutter_test's FakeAsync zone -- wrap it in tester.runAsync() (with a bounded tester.pump() poll loop for the async completion signal) rather than assuming a widget test's async gaps are always safely fake-clock-driven. A test that genuinely needs real I/O will hang to CI's timeout, not fail fast, so a hang in a shared multi-app CI job can look like it's blocking an unrelated app's PR.
 - 2026-07-21 `conductor/t-077` — This session's designated git-push transport (http://127.0.0.1:41729 relay) 413'd on every plain `git push` to its own session branch -- even a brand-new throwaway branch with a 1-byte diff and a ~59KB pack -- while pushing directly to `main` via claim_task.py's git-plumbing helper worked fine. This doesn't match either of CLAUDE.md's two documented HTTP-413 causes (new-ref full-pack, post-rebase force-push). Workaround that eventually worked: retry the SAME single-file git-plumbing commit approach (scratch index + commit-tree + `git push <sha>:<ref>`) against the session branch itself, not just main -- it succeeded where a bulkier `git push -u origin <branch>` failed, before falling back to the heavier push_files MCP tool. Separately: when relaying a large file's full content through push_files (no diff/patch mode exists), ALWAYS diff the pushed remote content byte-for-byte against the local working tree immediately after (e.g. `git show origin/<branch>:<path> | diff - <local-path>`) before trusting it -- a transcription slip during one such relay silently dropped a clause from one note field, and a later slip (pasting an incomplete draft) briefly truncated the entire 2198-line roadmap.yaml to just its 22-line header, discovered only because this verification step is now habitual. Both were caught and fixed before the PR was even opened, with zero cost to Silas -- but only because verification happened immediately, not after moving on.
 - 2026-07-21 `sketchy/t-008` — A project's milestones can show every spec task as done while nothing has actually been built against those specs -- check milestone status against real code state (does the app scaffold still show generated boilerplate?), not just task-list completion, before assuming a project has no available work. Also: app-ci.yml tests every app in apps/ within one shared job whenever its changed-app diff detection doesn't isolate to a single app, so an unrelated app's flaky/hung test can make an otherwise-clean PR's CI look broken -- read the full job log for which app actually failed before assuming your own diff caused it; a test that passes cleanly in the first few seconds of a job that then hangs for 10 more minutes on a different app's test file is not your regression.
@@ -84,7 +85,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-07-21 `conductor/t-075` — A reused coarse hour/rotation-label session id never breaks claim_task.py's correctness (it keys on project/task), but it does corrupt the audit trail when two concurrent sessions pick the same label within the same hour, making one session's TALKBACK/claimed_by history look like it belongs to another. Prefer a full ISO timestamp with seconds plus a task-specific suffix, or a random token, over a coarse label string.
 - 2026-07-21 `kind-robots/t-042` — A new static-source contract test is only trustworthy once it's been proven to actually catch the pattern it claims to guard against -- write a synthetic violating sample first (cover edge cases like nested generics that could produce false negatives in a bracket-depth parser), confirm it fails as expected, then remove the sample and confirm the real codebase passes clean. Testing only the 'passes on real code' direction would have missed a parser bug that let violations through silently.
 - 2026-07-21 `appmaker/t-009` — A cryptic CI type error in a file the task never touched is not automatically 'pre-existing and unrelated' -- it can be a genuine, if indirect, regression the diff triggered (here: 2 new server/api/** route files grew the typed $fetch route-key union just enough to push vue-tsc's TS2589 recursion limit on unrelated call sites). A same-tree local repro without the diff isn't conclusive either, since sandbox vs real CI can diverge -- cross-check against the base commit's actual CI history before concluding a failure is pre-existing. Root-causing (pinning $fetch's R generic, 12 files) was cheap once understood and is a durable fix, versus a band-aid on the one file CI happened to name first.
-- 2026-07-21 `ruler-hooked/t-007` — A task can outlive its own blocker without anyone noticing: t-007's completion condition (PR #328 merged AND t-012 landing the playable screen meeting all four DESIGN-BRIEF m2 exit criteria) had been fully satisfied since t-012 merged earlier the same day, but t-007 itself still sat at status: ready/claimed pending someone to actually check and flip it. When a task's note already states an explicit, checkable completion condition, re-verify it directly (fresh checkout, self-tests, full typecheck) before assuming more code work is needed -- sometimes the task is closing bookkeeping, not new implementation.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-07-21T22:05:20Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-07-21T23:11:55Z_
