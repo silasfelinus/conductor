@@ -161,7 +161,7 @@ tasks:
   - id: t-007
     milestone: m2
     title: Build the slideshow play-loop proof of concept in kind_robots
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -193,9 +193,23 @@ tasks:
       rejected pass 1 for 3 further new errors plus needing to clean up these 9 —
       see t-012's retry_context. Re-added as an explicit t-007 dependency; will
       flip back to ready once t-012 lands with a green vue-tsc gate.
-    updated: '2026-07-21T12:21:22Z'
-    claimed_by: claude-conductor-scheduled-20260721T1214Z
-    claimed_at: '2026-07-21T12:21:22Z'
+
+      DONE 2026-07-21 (scheduled session, claude-conductor-scheduled-20260721T1214Z):
+      both remaining conditions hold on current kind_robots main (736b663f):
+      PR #328 is merged, and t-012 (PR #811, merged 2026-07-21) landed the
+      playable screen. Did not just trust t-012's prior note — re-verified
+      independently against a fresh kind_robots checkout: `npx tsx
+      utils/rulerHooked/engine.selftest.ts` and `game.selftest.ts` both
+      ALL PASS, and the full `npm run test` (vue-tsc --noEmit) gate is green
+      (exit 0), so the 2026-07-16 red-main TypeScript regression this task's
+      own note flagged is resolved. All four DESIGN-BRIEF m2 exit criteria are
+      structurally present and wired: components/ruler-hooked/ruler-hooked-page.vue
+      (mounted at content/ruler-hooked.md's #interactive slot) composes
+      ruler-hooked-game.vue (playable session + event cards/narrative arc),
+      ruler-hooked-stage.vue (composited landscape regions), ruler-hooked-health.vue,
+      and ruler-hooked-slots.vue (multiple save slots). No kind_robots code
+      change needed this cycle — purely a verification + bookkeeping close-out.
+    updated: '2026-07-21T12:26:00Z'
 
   - id: t-008
     milestone: m1
