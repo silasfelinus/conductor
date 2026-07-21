@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-07-21T01:42:55Z
+Generated: 2026-07-21T01:48:30Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **316**
-- Outcomes: blocked: 12, done: 304
+- Closed tasks recorded: **317**
+- Outcomes: blocked: 12, done: 305
 - Success rate: **96%**
 - Average passes on successful tasks: **0.0**
 
@@ -25,7 +25,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | challenge-center | 16 | 100% |
 | coat-dance | 8 | 0% |
 | coloring-book | 13 | 100% |
-| conductor | 43 | 100% |
+| conductor | 44 | 100% |
 | conductor-app | 1 | 100% |
 | digital-storefront | 12 | 100% |
 | dream-cycle | 14 | 100% |
@@ -54,7 +54,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 15 | 40% |
-| software | 301 | 99% |
+| software | 302 | 99% |
 
 ## Failure categories
 
@@ -74,6 +74,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-07-21 `conductor/t-028` — A stale-claim task with no PR/TALKBACK evidence of prior implementation work is safe to reclaim once past CLAIM_TTL_MINUTES via claim_task.py, but check the free-standing conflict risk on the follow-up status commit -- a direct-to-main claim commit (or its auto STATUS.md refresh) landing between a session's local edit and its push produces a real (not auto-gen-only) roadmap.yaml conflict on the task's own claimed_by/claimed_at/updated fields, since the session's local copy still shows the old stale values. Also: flutter test's first cold AOT compile can exceed several minutes in a CPU-constrained sandbox even though flutter analyze/pub get complete in under 20s -- budget for that gap rather than treating a slow flutter test as a broken toolchain.
 - 2026-07-20 `media-watchlist/t-009` — A prior spec-only task (t-008) that reconciles a proposal against real imported data before any code is written turns the follow-on build task into a single clean pass with zero open design questions -- worth doing as a standing pattern for any Prisma-model-plus-API task where the real data shape might differ from an earlier proposal.
 - 2026-07-20 `ai-art-academy/t-010` — Milestone status can drift not just from new tasks appearing done/not-done under it, but from an *existing* task being re-tagged into a milestone that was already marked done (t-035 landed under m6 alongside the t-029/t-030 kaizen follow-ons after m6 had last been verified done, and the milestone was never revisited) -- a roadmap-accuracy audit should re-check a milestone's task list for membership changes, not just each member task's status, whenever a milestone is already 'done'.
 - 2026-07-20 `sketchy/t-003` — When a spec-writing task's target area already has partial coverage scattered across sibling docs (PRODUCT-SPEC.md's dimension table, SKILL-LADDER.md's routing examples, docs/ai-critique-apis.md's integration notes), the value-add is turning illustrative/example-based coverage into deterministic, implementable rules (numeric anchors, explicit tie-break order, the literal prompt text) rather than re-describing what already exists — read every referenced sibling doc in full before drafting.
@@ -83,7 +84,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-07-20 `appmaker/t-006` — Before implementing a 'create the kind_robots Project for slug parity' task, run scripts/sync_projects.py live first -- it's idempotent and prints UNCHANGED (with a real field-by-field comparison, not just a slug match) when parity is already satisfied, which was the case here (id=24 already had conductorSlug=appmaker). Confirmed this session also has genuine KR_API_TOKEN + kind_robots API egress, unlike ai-art-academy's documented relay/museum-egress blocks -- worth checking live rather than assuming blocked.
 - 2026-07-20 `ecosystem-map/t-006` — Before writing new implementation tasks off a stale audit doc, re-verify the audit's claims live against the target repo -- FRONTEND-SURFACE-MAP.md's 2026-07-10 snapshot of 15 missing/incomplete surfaces was 10 days out of date; checking kind_robots main's dashboardHelper.ts and content/*.md directly showed all 15 already had scaffold routes, and each project's own roadmap.yaml already carried the matching 'Polish and upgrade <Project> front-end surface' follow-up task (5 done, 10 ready). Filing new tasks from the doc's text alone would have created 15 duplicate entries forking the same work into two roadmap locations. Also: closing a project's last open task can flip it into ACTIVE_PROJECT_ALL_DONE/ACTIVE_PROJECT_NO_OPEN_TASKS in audit_roadmaps.py -- left project-overrides.yaml's status untouched since flipping active->finished/paused looks like a Silas-approval decision per that file's existing precedent comments, matching how humboldt-scoop already sits in the identical state unremediated.
 - 2026-07-20 `storymaker/t-009` — A task that says 'add a section to the session data model doc (or a pointer in notes_from_silas)' should not assume the primary doc exists -- t-001's 'session data model' was approved via its roadmap note only, never written as a standalone doc file, so checking for the doc's actual existence before picking an implementation shape (rather than defaulting to the first-listed option) avoided inventing an unread new file. notes_from_silas is a good landing spot for cross-project boundary rules precisely because AGENTS.md's picking-order rules make every future session read it first.
-- 2026-07-20 `animation-manager/t-012` — Burst-mode rotation picking superkate-hairstyle-ai/t-019 and model-builder/t-022, t-029, t-031 next in priority.yaml order all turned out to need a live deployed backend (a Tailscale ts.net Comfy box or an admin-only action) this sandbox can't reach -- confirmed via each task's own note/TALKBACK history before skipping rather than claiming and stalling. animation-manager/t-012 (a kaizen from t-005's review) was the first genuinely pure-code ready task further down the list. The fix itself was a clean first pass: extracted the WORKING-attempt-to-supersede lookup as a pure, testable helper (findAttemptToSupersede in animationComponentHelper.ts) instead of inlining the filter in the store action, matching the existing listAnimationAttempts/getLatestAnimationAttempt pattern and letting the new behavior be covered in the same DB-free verify script (verifyAnimationComponentAttempts.ts) rather than needing a Pinia-mocking store test that doesn't exist yet for this store.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-07-21T01:42:55Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-07-21T01:48:30Z_
