@@ -1,4 +1,4 @@
-name: Coloring Book Color ArtJobs
+name: Coloring Book ArtJobs
 
 on:
   push:
@@ -8,9 +8,6 @@ on:
       - "projects/coloring-book/sets/*/proposals.yaml"
       - "scripts/consume_coloring_book_color_art.py"
       - "scripts/consume_monster_recast_art.py"
-      - ".github/workflows/monster-recast-art-jobs.yml"
-  schedule:
-    - cron: "30 9 * * *"
   workflow_dispatch:
     inputs:
       limit:
@@ -94,5 +91,5 @@ jobs:
           if [ "${{ steps.consume.outcome }}" = "success" ]; then
             echo "Coloring-book color proposal batch advanced successfully."
           else
-            echo "::warning::One or more color proposal jobs failed or timed out. Successful renders were still committed; failed entries remain pending."
+            echo "::warning::One or more color proposal ArtJobs failed or timed out. Successful renders were still committed; failed entries remain pending."
           fi
