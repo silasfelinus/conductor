@@ -2060,3 +2060,30 @@ tasks:
     claimed_by: null
     claimed_at: null
     updated: '2026-07-20T00:00:00Z'
+
+  - id: t-074
+    milestone: m2
+    title: "AGENTS.md: retry_context can go stale when a human merges the PR directly, bypassing the reject-retry loop"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Kaizen from ruler-hooked/t-012 (burst-mode session, 2026-07-21). t-012 sat at
+      `status: ready`, `passes: 1`, with a `retry_context` describing a Reviewer
+      rejection of kind_robots PR #329 (12 vue-tsc type errors) written at
+      2026-07-16T21:55Z — but Silas merged PR #329 directly 9 minutes later
+      (2026-07-16T22:04:56Z), apparently overriding the rejection rather than
+      routing back through the normal reject -> retry -> re-review loop the
+      roadmap state implied was still open. The roadmap field never got updated
+      to reflect that, so it sat stale for 5 days looking like unresolved,
+      actionable work (a future session could easily have burned a retry pass
+      re-fixing type errors that no longer existed on main).
+
+      Add a line to AGENTS.md's "Retry context" section: before acting on a
+      `retry_context` for a cross-repo task, check whether the PR it references
+      already merged (or the task's `passes/status` otherwise looks inconsistent
+      with an open PR) and re-verify against current target-repo `main` first,
+      rather than assuming the recorded rejection still holds. This is a small
+      doc addition, not a script change — no existing tooling needs to be
+      touched, just the guidance agents read before retrying.
