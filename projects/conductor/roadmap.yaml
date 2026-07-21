@@ -2188,8 +2188,8 @@ tasks:
     milestone: m2
     title: 'scripts/set_task_field.py: warn that it edits the local working
       tree, not origin/main fresh, unlike claim_task.py'
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     note: >
@@ -2217,3 +2217,6 @@ tasks:
       claimed_by/claimed_at against origin/main's current value and warn
       (not block) on mismatch, as a runtime backstop for sessions that
       miss the docstring warning.
+    claimed_by: claude-conductor-agentrun-20260721T2115Z-t077
+    claimed_at: '2026-07-21T21:16:18Z'
+    updated: '2026-07-21T21:16:18Z'
