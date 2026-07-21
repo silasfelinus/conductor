@@ -1118,38 +1118,7 @@ tasks:
     status: ready
     passes: 0
     stakes: reversible
-    updated: '2026-07-20T04:35:00Z'
-    note: >-
-      Kaizen from the 2026-07-20 t-010 cycle. All 25 `kind-robots-academy-style-preview-*`
-      requests in `projects/art-prompts.yaml` are queued and `status: pending`, but the home
-      relay is not claiming jobs -- confirmed live this cycle, not just inferred from the
-      target directory's absence: `python scripts/consume_art_requests.py --id-prefix
-      "kind-robots-academy-style-preview-" --live --limit 2` got job 816 accepted by
-      `POST /api/art/queue` (200 OK) but it sat `status: PENDING`, `claimedAt`/`claimedBy`
-      both null, for 10+ minutes of direct polling. Cheapest recheck: `GET
-      /api/art/queue/816` first (no new job needed) -- once it shows a non-PENDING status,
-      the relay is back. When it is: run `python scripts/consume_art_requests.py --id-prefix
-      "kind-robots-academy-style-preview-" --live` (no --limit) to drain all 25 in one pass
-      -- the `--id-prefix` filter added this cycle keeps it from also draining the ~130
-      other unrelated pending requests sharing that same queue.
-
-      SPLIT 2026-07-20T04:35Z (claude-conductor-scheduled-20260720T0410Z, t-010 cycle):
-      this task originally bundled the thumbnail batch-generation above with a separate,
-      unblocked half -- syncing the 25th movement, Persian Miniature Painting, into
-      stores/seeds/academyStyles.ts. Split them out since the sync half didn't need the
-      relay at all. DONE (sync half): kind_robots PR #616 merged (squash 99ba5ff3).
-      Added the `persian-miniature` entry (era c. 1400-1600, sortYear 1400, artists Kamal
-      ud-Din Bihzad and Sultan Muhammad), inserted between `renaissance` and
-      `northern-renaissance` per its era. Content sourced verbatim from
-      curriculum-outline.md §25 -- no new facts invented. exampleWorks/previewImageSrc
-      deliberately left for a follow-up (same pattern as ashcan-school/t-031), since real
-      image files still need sourcing/verification, not just data entry. Verified:
-      eslint clean, full-project `npm run test` (vue-tsc --noEmit) exit 0 both before and
-      after rebasing onto latest main, prettier unchanged. All 3 kind_robots PR checks
-      green (TypeScript, Contract verifiers, GitGuardian) before merge. This task
-      (t-035) now covers only the still-blocked thumbnail-generation half; re-ran the
-      relay recheck this same cycle (queued job 855 for greek-vase-painting via
-      consume_art_requests.py --live) and it again sat PENDING/unclaimed after 10+
-      minutes -- home relay still down, no change from the 2026-07-20T01:10Z reading.
-      Stays `ready`-but-blocked (transient, no pass burned) for a session with the home
-      relay reachable, or Silas's own environment.
+    updated: '2026-07-21T04:25:04Z'
+    note: |-
+      Kaizen from the 2026-07-20 t-010 cycle. All 25 `kind-robots-academy-style-preview-*` requests in `projects/art-prompts.yaml` are queued and `status: pending`, but the home relay is not claiming jobs -- confirmed live this cycle, not just inferred from the target directory's absence: `python scripts/consume_art_requests.py --id-prefix "kind-robots-academy-style-preview-" --live --limit 2` got job 816 accepted by `POST /api/art/queue` (200 OK) but it sat `status: PENDING`, `claimedAt`/`claimedBy` both null, for 10+ minutes of direct polling. Cheapest recheck: `GET /api/art/queue/816` first (no new job needed) -- once it shows a non-PENDING status, the relay is back. When it is: run `python scripts/consume_art_requests.py --id-prefix "kind-robots-academy-style-preview-" --live` (no --limit) to drain all 25 in one pass -- the `--id-prefix` filter added this cycle keeps it from also draining the ~130 other unrelated pending requests sharing that same queue.
+      SPLIT 2026-07-20T04:35Z (claude-conductor-scheduled-20260720T0410Z, t-010 cycle): this task originally bundled the thumbnail batch-generation above with a separate, unblocked half -- syncing the 25th movement, Persian Miniature Painting, into stores/seeds/academyStyles.ts. Split them out since the sync half didn't need the relay at all. DONE (sync half): kind_robots PR #616 merged (squash 99ba5ff3). Added the `persian-miniature` entry (era c. 1400-1600, sortYear 1400, artists Kamal ud-Din Bihzad and Sultan Muhammad), inserted between `renaissance` and `northern-renaissance` per its era. Content sourced verbatim from curriculum-outline.md §25 -- no new facts invented. exampleWorks/previewImageSrc deliberately left for a follow-up (same pattern as ashcan-school/t-031), since real image files still need sourcing/verification, not just data entry. Verified: eslint clean, full-project `npm run test` (vue-tsc --noEmit) exit 0 both before and after rebasing onto latest main, prettier unchanged. All 3 kind_robots PR checks green (TypeScript, Contract verifiers, GitGuardian) before merge. This task (t-035) now covers only the still-blocked thumbnail-generation half; re-ran the relay recheck this same cycle (queued job 855 for greek-vase-painting via consume_art_requests.py --live) and it again sat PENDING/unclaimed after 10+ minutes -- home relay still down, no change from the 2026-07-20T01:10Z reading. Stays `ready`-but-blocked (transient, no pass burned) for a session with the home relay reachable, or Silas's own environment. RECHECKED 2026-07-21 (~04:20 UTC, conductor scheduled agent run): correction to this task's own cheap-recheck heuristic -- 'GET /api/art/queue/816 first, once it shows a non-PENDING status the relay is back' is NOT reliable evidence of current availability. Checked it this cycle and it now shows status: DONE, but updatedAt is 2026-07-20T12:52:34Z -- a one-off completion many hours in the past, not proof the relay is online right now. Verified the relay is in fact still down for new work: queued a fresh serendipity dashboard-tab art request (kind_robots-bound, conductor/serendipity t-012) as job 1187 and it FAILED (connection reset by peer, never claimed); spot-checked five more recent job ids (1180-1186, created within the prior ~40 minutes) and all sat PENDING/unclaimed. Did NOT attempt the 25-thumbnail batch this cycle given this evidence -- would have wasted 25 live generation slots against a relay that isn't accepting work. Next session: recheck relay availability by queuing a FRESH job (or checking the newest few job ids), not by re-checking job 816's now-stale terminal status.
