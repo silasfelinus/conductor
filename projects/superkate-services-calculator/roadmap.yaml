@@ -598,11 +598,11 @@ tasks:
 - id: t-037
   milestone: m3
   title: 'test/csv_export_widget_test.dart: "export flow shares exactly the two written CSV paths" hangs until the 10-minute test timeout in CI'
-  status: ready
-  owner: null
+  status: claimed
+  owner: worker
   passes: 0
   stakes: reversible
-  updated: '2026-07-21T21:00:00Z'
+  updated: '2026-07-21T21:07:36Z'
   note: >
     Found 2026-07-21 (conductor burst-mode session working sketchy/t-008,
     conductor PR #994): app-ci.yml's "Analyze and test each app" step runs
@@ -634,3 +634,5 @@ tasks:
     matrix (isolated failure blast radius) or at minimum a per-app timeout
     shorter than the shared job's overall runtime budget so one hang doesn't
     silently eat ~10 minutes of CI on someone else's PR.
+  claimed_by: 2026-07-21T21:07:35Z-burst-t037
+  claimed_at: '2026-07-21T21:07:36Z'
