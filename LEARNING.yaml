@@ -3901,3 +3901,12 @@ records:
   outcome: done
   failure_category: null
   lesson: "dart:io real filesystem work (temp-dir creation, real file writes) inside a testWidgets body can hang indefinitely under flutter_test's FakeAsync zone -- wrap it in tester.runAsync() (with a bounded tester.pump() poll loop for the async completion signal) rather than assuming a widget test's async gaps are always safely fake-clock-driven. A test that genuinely needs real I/O will hang to CI's timeout, not fail fast, so a hang in a shared multi-app CI job can look like it's blocking an unrelated app's PR."
+- date: '2026-07-21'
+  project: animation-studio
+  task: t-001
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: cancelled
+  failure_category: actionable
+  lesson: "A hand-rolled ready-task scan (used to pick a rotation target instead of next_ready_task.py's priority-order pick) computed the active-project set from project-overrides.yaml but never filtered the priority.yaml walk by it, so a retired project (animation-studio, superseded by animation-manager) surfaced a claimable ready task. Caught before any PR opened, via audit_roadmaps.py's project-inventory table showing the retired status -- run that check (or grep the specific project's status: line) as the last step immediately before claim_task.py, not just earlier in a broad sweep. claim_task.py itself has no active/retired guard."

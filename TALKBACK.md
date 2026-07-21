@@ -8889,3 +8889,44 @@ fix → verify → PR → CI → merge → rearm) closed within one session with
 (no per-thumbnail loading/disabled state on the gallery grid while a fetch is in flight) in the
 PR's own "Kaizen suggestion" section, which is enough for a future lane-1 cycle to pick up without
 a separate roadmap task.
+
+## 2026-07-21 | Worker (scheduled burst) | conductor/rotation-selection | pattern
+
+**Decision:** self-caught and reverted before any PR opened — no code/doc change merged.
+
+**Failure category:** actionable (a real gap in the ad-hoc selection script, not environment noise)
+
+**Subject:** A manual ready-task scan across all projects built the active-project set from
+`project-overrides.yaml` but never actually filtered the priority-order walk by it, so a
+**retired** project's `ready` task (`animation-studio/t-001`) surfaced as pickable and got
+claimed and worked (RESEARCH.md drafted, TALKBACK entry written) before the mistake was
+caught — `project-overrides.yaml` marks `animation-studio: status: retired` (2026-07-19,
+conductor/t-039), superseded by `animation-manager`, which already did the equivalent
+research/pitch-queue tasks.
+
+**Detail:**
+- This session's goal was explicit project *rotation* (not just `next_ready_task.py`'s
+  highest-priority pick, which would have deterministically re-picked `ai-art-academy/t-010`
+  — already fully cycled ~30min earlier this same hour). That meant hand-rolling a
+  full-portfolio ready-task scan instead of using the vetted `next_ready_task.py`/
+  `claim_task.py` pipeline's own active-project filtering for the *selection* step (claiming
+  itself still went through `claim_task.py`, which is why this was caught: the retraction
+  had to be written by hand since there's no "release claim" helper).
+- Root cause: wrote `active = {o['slug'] for o in overrides if o.get('status')=='active'}`
+  but then iterated `for proj in priority: ...` without an `if proj not in active: continue`
+  guard — the variable was computed and silently unused.
+- Caught only because `python scripts/audit_roadmaps.py`'s diff (run before committing, as
+  routine verification) showed `animation-studio` as `retired` in its project-inventory
+  table — worth noting that `audit_roadmaps.py`'s own project-inventory table is actually a
+  faster active/retired sanity check than re-deriving the set by hand.
+
+**Suggested action:** a future ad-hoc rotation-style scan should either (a) reuse
+`next_ready_task.py`'s own active-project filtering logic instead of re-deriving it inline,
+or (b) run `python scripts/audit_roadmaps.py` — or at minimum grep
+`project-overrides.yaml` for the specific candidate project's `status:` line — as the very
+last check immediately before `claim_task.py`, not just as part of an earlier broad sweep.
+`claim_task.py` itself has no independent active/retired check (it only guards against
+double-claiming a task), so it will happily claim a task on a retired project if asked to.
+
+**Kaizen task:** none filed as a roadmap task — the fix is a scan-methodology lesson, not a
+code gap; recorded here and in `LEARNING.yaml` instead.
