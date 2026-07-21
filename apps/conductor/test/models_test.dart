@@ -1,3 +1,4 @@
+import 'package:conductor_app/features/projects/art_models.dart';
 import 'package:conductor_app/features/projects/project_models.dart';
 import 'package:conductor_app/features/todos/todo_models.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -56,6 +57,40 @@ void main() {
         'unknownField': {'nested': true},
       });
       expect(project.projectStatus, 'ACTIVE');
+    });
+  });
+
+  group('ArtCollectionSummary', () {
+    test('parses the dream-embedded ArtCollection shape with nested images',
+        () {
+      final collection = ArtCollectionSummary.fromJson({
+        'id': 42,
+        'label': 'Sketchy inspiration',
+        'description': 'Reference art for the drawing app',
+        'imagePath': '/images/collections/sketchy.webp',
+        'artPrompt': 'loose pencil sketches',
+        'ArtImages': [
+          {
+            'id': 1,
+            'imagePath': '/images/art/one.webp',
+            'promptString': 'a robot sketching',
+          },
+          {
+            'id': 2,
+            'path': '/images/art/two.webp',
+          },
+        ],
+      });
+      expect(collection.displayLabel, 'Sketchy inspiration');
+      expect(collection.images, hasLength(2));
+      expect(collection.images.first.displayPath, '/images/art/one.webp');
+      expect(collection.images.last.displayPath, '/images/art/two.webp');
+    });
+
+    test('tolerates missing label and empty image list', () {
+      final collection = ArtCollectionSummary.fromJson({'id': 7});
+      expect(collection.displayLabel, 'Untitled collection');
+      expect(collection.images, isEmpty);
     });
   });
 }

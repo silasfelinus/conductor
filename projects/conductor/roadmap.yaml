@@ -2132,3 +2132,37 @@ tasks:
     claimed_by: claude-conductor-agentrun-20260721T151500Z-t075
     claimed_at: '2026-07-21T15:15:45Z'
     updated: '2026-07-21T15:16:30Z'
+
+  - id: t-076
+    milestone: m2
+    title: 'scripts/provision_flutter.sh: bump the pinned FLUTTER_VERSION default
+      to track app-ci.yml''s rolling stable channel'
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Kaizen from conductor-app/t-012 (burst-mode session, 2026-07-21).
+      provision_flutter.sh pins FLUTTER_VERSION=3.32.5 (a build from
+      2025-06-24), but app-ci.yml's subosito/flutter-action uses `channel:
+      stable` unpinned, which by 2026-07-21 had moved to 3.44.7. Running
+      `flutter analyze` under the stale pinned 3.32.5 in this sandbox produced
+      4 false-positive `undefined_named_parameter` errors on
+      `DropdownButtonFormField`'s `initialValue` (renamed from `value` in a
+      later Flutter release) — including on pre-existing code this session
+      never touched (todos_screen.dart), not just the new file being verified.
+      Running `flutter upgrade` mid-session to the real current stable made
+      `flutter analyze` clean and all tests pass, but that cost real time and
+      a ~2-minute command timeout on the first attempt (the upgrade itself
+      completed in the background before the timeout fired). This exact risk
+      was already flagged as a deferred/speculative kaizen suggestion in PR
+      #945's body (mirrored in this file's history around 2026-07-19) but
+      never filed as a roadmap task, so it recurred.
+
+      Fix: either (a) bump provision_flutter.sh's FLUTTER_VERSION default to
+      a currently-current stable release and add a short comment noting it
+      should be re-bumped periodically, or (b) drop the hard pin and default
+      to `flutter channel stable && flutter upgrade` so the sandbox always
+      tracks whatever app-ci.yml actually runs against, accepting the slower
+      first-provision cost. Whichever approach, note the tradeoff in the
+      script's header comment so it doesn't silently go stale again.

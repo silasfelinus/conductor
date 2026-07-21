@@ -8571,3 +8571,64 @@ the same rotation window can't collide on `claimed_by` the way this cycle did.
 
 **Kaizen task:** none this cycle — this cycle's work *was* the prior cycle's
 kaizen task.
+
+## 2026-07-21 | Worker (burst) | conductor-app/t-012 | done (conductor PR pending)
+
+**Decision:** implemented, verified, merging this session (reversible, scoped, not
+human-gated — session claude-conductor-burst-20260721T1505Z-conductorapp).
+
+**Failure category:** none — clean implementation; one environment false-positive
+caught and resolved mid-session (below).
+
+**What was good:**
+- Rotation: `next_ready_task.py` surfaced `ai-art-academy/t-019`, but its own note says
+  not to claim it before verifying at least one of the 16 queued style-preview
+  thumbnails actually exists in kind_robots — checked `origin/main` of kind_robots
+  directly (`git ls-tree`) and confirmed `public/images/academy/styles/` is still
+  empty, so it stays blocked. Walked `priority.yaml` past several other candidates
+  that need external infra unreachable from this sandbox (model-builder/t-022/t-031:
+  prod deploy; superkate-hairstyle-ai/t-019, mural-design/t-002: live Comfy/Kontext
+  render box; ai-art-academy/t-035: home art relay, confirmed still down by an
+  earlier session today) to `conductor-app/t-012`, fully self-contained inside this
+  repo (the Flutter app lives at `apps/conductor/`, not a separate repo). Noted in
+  passing: `career-transition` carries `status: retired` in `project-overrides.yaml`
+  (reaffirmed 2026-07-16) yet has an active `claimed` task (t-002, claimed 14:24Z by
+  a different concurrent session) — a real inconsistency worth a Reviewer look, but
+  left untouched since it wasn't this session's claim to unwind and the claim was
+  still within `CLAIM_TTL_MINUTES`.
+- Implemented `App: ArtCollection inspiration gallery and admin art-request
+  submission form` (t-012) with zero kind_robots backend changes: read
+  `server/api/dreams/[id].get.ts`'s `dreamInclude` first and found it already embeds
+  up to 12 linked ArtCollections (primary + many-to-many) with up to 12 ArtImages
+  each, and `server/api/conductor/art-request.post.ts` already exists, admin-gated
+  server-side (`userIsAdmin`), and already appends straight into
+  `projects/art-prompts.yaml`. Added `art_models.dart`, `art_repository.dart`
+  (local/remote-null Riverpod pattern mirroring `apiClientProvider`), and two widgets
+  (`art_inspiration_section.dart`, `art_request_form_sheet.dart`, the latter admin-UI
+  -gated via `AppUser.isAdmin`), wired into `project_detail_screen.dart` below
+  `WishlistSection`. Added `ArtCollectionSummary`/`ArtImageSummary` parsing tests to
+  `models_test.dart`.
+- Claimed via `claim_task.py` before writing any implementation (not after, unlike a
+  near-miss earlier today per this file's coat-dance/t-001 entry).
+- Caught and self-corrected an environment issue rather than reporting a false
+  positive: `scripts/provision_flutter.sh` pins `FLUTTER_VERSION=3.32.5`
+  (2025-06-24), stale against `app-ci.yml`'s unpinned `channel: stable` (now
+  3.44.7). `flutter analyze` under the pinned version threw 4 false-positive
+  `undefined_named_parameter` errors on `DropdownButtonFormField`'s `initialValue`,
+  including on `todos_screen.dart` — code this session never touched — which was the
+  tell that the toolchain, not the diff, was the problem. Ran `flutter upgrade` to
+  the real current stable mid-session; `flutter analyze` came back clean (0 issues)
+  and `flutter test` passed all 20 tests (18 pre-existing + 2 new). Filed
+  conductor/t-076 (kaizen) rather than silently absorbing the cost every future
+  session — PR #945 had already flagged this exact risk as deferred/speculative and
+  it recurred for real this cycle.
+- Verified: `python scripts/audit_roadmaps.py` (0 errors, 40 roadmaps, same warning
+  count as before) and a YAML parse check on both touched roadmaps
+  (`conductor-app`, `conductor`) before committing.
+
+**What to improve:** none this cycle.
+
+**Kaizen task:** conductor/t-076 (new) — bump or unpin `provision_flutter.sh`'s
+`FLUTTER_VERSION` default so the sandbox's Flutter toolchain doesn't silently drift
+stale against `app-ci.yml`'s rolling `stable` channel; see the task note for two
+concrete fix options.
