@@ -59,3 +59,26 @@ finished deliverable stuck at `ready`/`claimed` because the closing bookkeeping 
 which is the same class of gap AGENTS.md already documents for `superkate-hairstyle-ai/t-017`.
 Not filing a new kaizen task since the existing convention (flip status, write the FOR SILAS
 note, log it here) is already the correct fix and was just missed once, not a process gap.
+
+## 2026-07-21 | Worker (scheduled) | career-transition/t-002 | needs-human
+
+**Decision:** implemented, ended at `needs-human` per this task's own `gate_human: true` (session claude-conductor-scheduled-20260721T1420Z).
+
+**Failure category:** none — clean first pass, content-kind, no code touched.
+
+**What was good:**
+- Claimed via `claim_task.py` before writing.
+- Followed the task's framing guidance precisely: led the summary with "AI practitioner
+  since 2001," framed Conductor as senior-adjacent work, and gave casino dealing (11
+  years) a full transferable-skill treatment rather than burying or leading with it,
+  per the note's explicit instruction.
+- Did not invent employment dates, contact details, or nonprofit specifics not present
+  in `skills-map.md` or `notes_from_silas` — left explicit bracketed placeholders with a
+  note at the top explaining why, rather than guessing years that could read as sloppy
+  or simply wrong if incorrect.
+
+**What to improve:** none this cycle.
+
+**Kaizen task:** none this cycle — three related m1/m2 tasks (t-002, t-003, t-008) closed
+out in one session; leaving t-004/t-005/t-006/t-007 `waiting` for Silas's review of these
+three rather than continuing further down a project whose next tasks all gate on his input.

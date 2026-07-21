@@ -56,26 +56,17 @@ tasks:
 - id: t-002
   milestone: m2
   title: Write resume first draft (tech-targeted)
-  status: claimed
+  status: needs-human
   owner: worker
   passes: 0
   stakes: reversible
   depends_on: t-001
   gate_human: true
   approved_by_human: false
-  note: "Using the approved skills-map.md, write projects/career-transition/resume-v1.md.\nFormat it as\
-    \ a clean, ATS-friendly markdown resume. Sections: Summary (3 sentences: who Silas is technically,\
-    \ what he's built, what he's looking for), Technical Skills (grouped by category), Projects (kind_robots,\
-    \ conductor, nonprofit \u2014 each with a one-line impact statement and tech stack), Experience (reverse-chron,\
-    \ lead with IT/tech-adjacent roles, frame others for transferable value \u2014 don't bury 11 years\
-    \ casino dealing but don't lead with it either), Education (degrees + any self-directed learning worth\
-    \ naming).\nKey framing guidance: \"AI practitioner since 2001\" is a genuine differentiator \u2014\
-    \ lead with it in the summary. Running a multi-agent autonomous system (conductor) is senior- adjacent\
-    \ work even for a \"junior\" application. Frame non-tech experience as evidence of reliability and\
-    \ people skills, not a liability.\nEnd at needs-human. Silas will edit before this is used anywhere.\n"
+  note: 'FOR SILAS: projects/career-transition/resume-v1.md is a general-purpose first-draft resume. Sections: Summary (leads with ''AI practitioner since 2001''), Technical Skills (grouped), Projects (Conductor + kind_robots with impact statements, plus a placeholder for the nonprofit -- I don''t have public-facing details to describe it accurately), Experience (reverse-chron, IT admin leads, casino dealing framed for transferable skill rather than buried or leading), Education (degrees + 35+ years self-directed technical education framed as the primary credential). Left bracketed placeholders for contact info and exact employment years -- I did not invent specific dates I wasn''t given. TO APPROVE: fill in the placeholders, correct any framing you''d change, then set approved_by_human: true and status: done here. Unblocks: t-004 (GitHub profile README).'
   claimed_by: claude-conductor-scheduled-20260721T1420Z
   claimed_at: '2026-07-21T14:24:29Z'
-  updated: '2026-07-21T14:24:29Z'
+  updated: '2026-07-21T14:25:20Z'
 - id: t-003
   milestone: m1
   title: Research and rank specific job roles and companies to target
