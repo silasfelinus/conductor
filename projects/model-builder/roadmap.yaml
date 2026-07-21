@@ -534,7 +534,7 @@ tasks:
   - id: t-029
     milestone: m6
     title: "Polish and upgrade Model Builder front-end surface"
-    status: claimed
+    status: review
     owner: reviewer
     passes: 0
     stakes: reversible
@@ -571,9 +571,30 @@ tasks:
       documented above; not touched this cycle. Kept at `ready` (not `done`) since those two
       steps are still outstanding, matching how other "Polish and upgrade X" tasks with a
       genuinely blocked substep handled the same situation this week (e.g. media-watchlist/t-006).
+
+      PROGRESS 2026-07-21 (conductor-burst rotation, claude-conductor-burst-20260721T0204Z): step
+      (4) follow-on -- re-read the interactive components again and found another real gap
+      adjacent to the t-671 cancel-confirm fix: cancelRun() removed the run from local state but
+      never signalled pollAsyncArtJob (the async GENERATE_ASSETS poll loop, keyed on
+      `item.artJobId === jobId`) to stop. A job that finished rendering after the user cancelled
+      the run would still POST an artifact and PATCH the item via
+      /api/model-builder/items/{id}/artifacts and /api/model-builder/items/{id}, and pop a
+      misleading "Generated a candidate for X" success toast for work the user had just told the
+      app they no longer wanted. Fixed by clearing artJobId/queueState on every item of the
+      cancelled run inside cancelRun(), which the poll loop already checks at its next iteration
+      (or immediately after its next getArtJobStatus await resolves) and exits cleanly instead of
+      writing to a dead run. Verified: eslint clean on the changed file except 2 pre-existing
+      no-empty errors in unrelated catch{} blocks (confirmed pre-existing via git stash, same 2
+      errors with and without this diff); full-project `npm run test` (vue-tsc --noEmit) exit 0.
+      Note: `prettier --check` on this file reports drift that pre-dates this change too (same
+      git-stash confirmation) -- likely a prettier-version mismatch between this sandbox and
+      whatever last formatted the file; did not run a blanket --write since that would balloon a
+      14-line fix into an ~80-line unrelated reformat, flagged as a Kaizen suggestion instead of
+      fixed inline. kind_robots PR #735 (branch worker/model-builder-t-029) -- open, CI running.
+      Steps (1) and (3) remain genuinely blocked as documented above; not touched this cycle.
     claimed_by: claude-conductor-burst-20260721T0204Z
     claimed_at: '2026-07-21T02:05:28Z'
-    updated: '2026-07-21T02:05:28Z'
+    updated: '2026-07-21T02:14:00Z'
 
   - id: t-030
     milestone: m6
