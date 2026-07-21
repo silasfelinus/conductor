@@ -83,6 +83,13 @@ todo explicitly asks for it. Scope is exactly what the title/description says.
    (`ALREADY_CLAIMED`), someone else is already on that project/task — do not implement
    it; go back to step 5 and pick the next `ready` task instead. See "Rotation
    collisions" below for why this step exists.
+   Pick a collision-resistant `--session <id>`: a full ISO timestamp with seconds
+   plus a short task-specific suffix (or a random token), not a coarse hour/rotation
+   label — `claim_task.py` keys on project/task rather than session id, so a reused
+   label never causes a false claim conflict, but it does leave the `claimed_by`/
+   TALKBACK trail looking like one continuous session did unrelated work when two
+   concurrent burst-mode sessions happen to reuse the same label within the same
+   hour (coat-dance/t-001, 2026-07-21 — see root `TALKBACK.md` same date).
 7. **Set `status: review` before opening the PR — every session, not just hourly
    `worker/*` runs.** This applies equally to Silas-directed `claude/*` sessions and
    burst-mode cycles doing Worker-style roadmap pickup, not only the OpenAI hourly

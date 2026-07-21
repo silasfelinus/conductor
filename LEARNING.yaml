@@ -3838,3 +3838,12 @@ records:
   outcome: done
   failure_category: null
   lesson: "A new static-source contract test is only trustworthy once it's been proven to actually catch the pattern it claims to guard against -- write a synthetic violating sample first (cover edge cases like nested generics that could produce false negatives in a bracket-depth parser), confirm it fails as expected, then remove the sample and confirm the real codebase passes clean. Testing only the 'passes on real code' direction would have missed a parser bug that let violations through silently."
+- date: '2026-07-21'
+  project: conductor
+  task: t-075
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "A reused coarse hour/rotation-label session id never breaks claim_task.py's correctness (it keys on project/task), but it does corrupt the audit trail when two concurrent sessions pick the same label within the same hour, making one session's TALKBACK/claimed_by history look like it belongs to another. Prefer a full ISO timestamp with seconds plus a task-specific suffix, or a random token, over a coarse label string."
