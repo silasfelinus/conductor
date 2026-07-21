@@ -446,14 +446,14 @@ tasks:
   - id: t-010
     milestone: m6
     title: Academy continuous improvement pass
-    status: ready
+    status: claimed
     recurring: true
-    owner: null
-    claimed_by: null
-    claimed_at: null
+    owner: worker
+    claimed_by: claude-conductor-scheduled-20260721T2317Z-t010
+    claimed_at: '2026-07-21T23:16:02Z'
     passes: 0
     stakes: reversible
-    updated: '2026-07-21T22:21:00Z'
+    updated: '2026-07-21T23:16:02Z'
     note: |-
       Standing never-idle task (re-arms to ready after every completion, per the recurring-task rule). Each cycle pick ONE: (a) front-end style/polish pass on Academy or art-styler surfaces, (b) roadmap upgrade — refine tasks, detail the next milestone, prune stale notes, (c) generate more art inspirations or style preview thumbnails, (d) expand the curriculum with a new movement/artist entry (respecting PUBLIC-DOMAIN-POLICY.md). Note which option ran in the PR. This task never reaches done and does not count toward milestone progress.
       RAN 2026-07-21 (~22:04-22:21 UTC, claude-conductor-scheduled-20260721T220455Z-t010): option (a) front-end polish (lane 1), per the checklist's next-preferred-lane note (previous cycle ran lane 4, curriculum depth). Dispatched an Explore subagent over the full in-scope surface (art-styler.vue, image-upload.vue, all components/academy/*.vue, academyStore.ts, styleHelper.ts, academyStyles.ts) with the checklist's exclusion list of every bug class already fixed in prior cycles. Found a real, verifiable race condition in `art-styler.vue`'s `selectGalleryImage()`: clicking two different not-yet-cached gallery thumbnails in quick succession fires two overlapping `artStore.getArtImageById()` fetches with no way to discard a stale response — whichever resolves last unconditionally wins regardless of click order, silently snapping `selectedSourceImage` back to a no-longer-selected image (and risking the wrong source image being sent to style transfer if "Apply" is hit right after the flicker). Fixed with a simple monotonic `gallerySelectionToken` counter: each call captures the token before its `await` and only commits the `selectedSourceImage.value` write (both success and catch branches) if the token is still current when the promise settles; the `galleryThumbs` cache write still happens unconditionally since caching a stale fetch's thumbnail is harmless. Verified: `npx eslint`/`npx prettier --check` clean, full-project `npm run test` (`vue-tsc --noEmit`) exit 0. kind_robots PR #831 (branch `claude/vigilant-edison-kjvawv`): all 3 CI checks green (TypeScript, Contract verifiers, GitGuardian) — merged squash `5920dbe4`. Updated `continuous-improvement-checklist.md`'s rotation state; next preferred lane is roadmap accuracy (lane 2) — this cycle ran lane 1, so lane 2 is next in the 1→2→3→4 rotation. Rearmed to `ready`.
