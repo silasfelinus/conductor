@@ -8168,3 +8168,53 @@ don't obviously fall in or out of that list from memory alone. Also worth a
 standalone follow-up: the 8 other bare-`PrismaMariaDb(url)` scripts noted above
 are a "next Contender-shaped incident" waiting to happen the first time one of them
 gets wired into automation the way this one just was.
+
+## 2026-07-21 | Reviewer (scheduled agent run) | conductor/t-028 | closed
+
+**Decision:** implemented and merged (PR #945, squash `25c50b7`).
+
+**Failure category:** none — clean first pass, with one caught-before-push rotation
+collision on an unrelated task earlier in the same run (see below).
+
+**What was good:**
+- Reclaimed the task from a 19-hour-stale claim (`claude-conductor-sweep-20260720T0613Z`,
+  well past the 90-minute TTL) via `claim_task.py` after confirming via TALKBACK grep and
+  a PR search that no prior session had actually done implementation work under that claim.
+- Built `scripts/provision_flutter.sh` mirroring the existing `provision_node24.sh` /
+  `provision_kind_robots_deps.sh` on-demand-script pattern rather than unconditionally
+  taxing every session's startup with a ~70s download most sessions would never use.
+  Verified for real against `apps/superkate-services-calculator` (`flutter pub get` +
+  `flutter analyze` both pass cleanly), not just `flutter --version`.
+- Wired a status line into `.claude/hooks/session-start.sh`'s existing sweep so every
+  future session's startup report says whether Flutter is provisioned and how to get it,
+  satisfying "self-verify" without a blind always-on cost.
+- Reported honestly rather than overclaiming: `flutter test`'s first cold AOT compile
+  didn't finish within two attempts (240s, then 400s) in this sandbox's CPU allocation —
+  documented as a PR comment and in LEARNING.yaml instead of silently dropping the
+  attempt or claiming success.
+
+**What to improve:**
+- Hit the exact STATUS.md-refresh-race pattern AGENTS.md's "Reviewer batch-merge note"
+  already documents, but on a task-status field rather than STATUS.md itself: my own
+  `claim_task.py` push landed directly on `origin/main` (bypassing my local branch), so
+  my next local edit (status: claimed -> review) was based on stale `claimed_by`/
+  `claimed_at` values and produced a real rebase conflict, not an auto-gen no-op.
+  Resolved by taking the newer `updated` timestamp; worth remembering that a Reviewer's
+  own direct-to-main claim commit can retroactively stale its own local checkout, not
+  just other sessions'.
+
+**Kaizen task:** none filed this cycle — `provision_flutter.sh`'s Kaizen suggestion
+(pin the sandbox's default Flutter version somewhere shared with `app-ci.yml`'s
+`subosito/flutter-action` channel, e.g. an `.fvmrc`) is recorded in PR #945's body for
+whoever next touches Flutter tooling; deferring rather than filing since it's speculative
+until version drift actually causes a problem.
+
+**Pattern note:** earlier in this same run, a hygiene fix for `ai-art-academy/t-010`
+(recurring task stuck at `claimed` after its own PR merged, exactly the
+superkate-hairstyle-ai/t-017 pattern AGENTS.md warns about) collided with another
+session fixing the identical issue moments apart — caught via `git fetch` immediately
+before push, per the "fetch-before-push" convention from the 2026-07-20 CI-janitor
+near-miss entry in this same file. No TALKBACK entry needed for that one specifically;
+noting here only because it's the second time in as many days this exact fetch-before-
+push habit has prevented a duplicate-work collision, which suggests it's earning its
+keep as standing practice rather than a one-off precaution.
