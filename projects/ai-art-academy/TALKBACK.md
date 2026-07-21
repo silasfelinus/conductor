@@ -1450,3 +1450,19 @@ milestone reassignment). Worth flagging for whoever eventually builds
 **What to improve:** none — routine handoff between cycles working the same recurring task.
 
 **Kaizen task:** none filed — this cycle's action was administrative (merge + rearm), not new scope.
+
+## 2026-07-21 | Reviewer (conductor scheduled agent) | ai-art-academy/t-010 | pattern
+
+**Decision:** implemented, PR open (kind_robots #789) — lane 1 (front-end polish), per the checklist's rotation (previous action this run was the administrative PR #771 merge, not a rotation lane).
+
+**Failure category:** none — clean first pass.
+
+**What was good:**
+- Dispatched an Explore subagent with the full exclusion list of every bug class already fixed across ~25 prior lane-1 cycles, forcing it past re-flagging settled ground.
+- Found a genuinely new bug shape: `image-upload.vue`'s success-checkmark overlay (`succeededFiles`) was populated and then made unobservable in the same synchronous tick, every time, in every code path — not a conditional edge case but structurally dead UI. Distinct from the two previously-fixed bugs in the same function (message/error-ordering vs `clearQueue()`, and duplicate-reupload-on-retry).
+- The fix (a short `await nextTick()` + `setTimeout`) was scoped to exactly the gap found, and explicitly preserved the established `clearQueue()`-before-message-assignment ordering from a prior fix — the implementing pass first got this backwards (moved the message assignment earlier) and caught it via self-review before opening the PR, re-reading the prior TALKBACK entry that explains why the ordering matters.
+
+**What to improve:**
+- Same recurring gap as every cycle since the DB became unreachable in this sandbox: live browser confirmation of the visual fix (does the checkmark actually appear for ~700ms before removal) is deferred to whoever next has DB access.
+
+**Kaizen task:** none new this cycle — no systemic gap found, just a normal lane-1 bug fix.

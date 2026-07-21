@@ -15,6 +15,28 @@ Record the lane, files changed, and verification in the task note before rearmin
 
 ### Rotation state
 
+- Last completed lane: Front-end polish (lane 1), 2026-07-21 (~08:20-08:35 UTC,
+  claude-conductor-agentrun-20260721T0811Z). Dispatched an Explore subagent over
+  the full in-scope surface (art-styler.vue, image-upload.vue, all
+  components/academy/*.vue, academyStore.ts, styleHelper.ts, academyStyles.ts)
+  with this checklist's exclusion list of every bug class already fixed in
+  prior cycles. Found a real, verifiable gap: `image-upload.vue`'s
+  `handleBatchUpload()` populated `succeededFiles` purely to drive the
+  per-thumbnail success checkmark overlay, but in every real code path the
+  same synchronous tick immediately spliced those items out of `queuedFiles`
+  (or cleared the whole queue on a fully-clean batch) before Vue ever flushed
+  a DOM update showing the checkmark — the overlay markup and its backing
+  `Set` were dead code in every real path, distinct from the already-fixed
+  message/error-ordering bug in the same function. Fixed by awaiting
+  `nextTick()` plus a short `setTimeout` (700ms) after populating
+  `succeededFiles`, before the queue is pruned/cleared, so the checkmark
+  actually gets a frame to paint; preserved the existing
+  clearQueue-before-message-assignment ordering unchanged. Verified: `npx
+  eslint`/`npx prettier --check` clean, full-project `npm run test`
+  (`vue-tsc --noEmit`) exit 0. kind_robots PR #789 (branch
+  `claude/vigilant-edison-imk3ia`). Next preferred lane is roadmap accuracy
+  (lane 2) — this cycle ran lane 1, so lane 2 is next in the 1→2→3→4
+  rotation.
 - Administrative cycle (not a rotation lane), 2026-07-21 (~08:11-08:14 UTC,
   claude-conductor-agentrun-20260721T0811Z). The ~07:15Z cycle below (lane 4)
   left kind_robots PR #771 open without merging it and without recording its
