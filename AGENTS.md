@@ -570,6 +570,15 @@ retry_context: >
 - A task at `passes > 0` with no `retry_context` is a template-discipline gap — the
   Worker should note it in TALKBACK and reconstruct the context from the PR comments
   before retrying blind.
+- `retry_context` can go stale when a human merges the referenced PR directly,
+  bypassing the reject-retry loop (Silas can and does override a Reviewer rejection).
+  Before acting on a `retry_context` for a cross-repo task, check whether the PR it
+  references already merged — or whether the task's `passes`/`status` otherwise looks
+  inconsistent with an open PR — and re-verify against current target-repo `main`
+  first, rather than assuming the recorded rejection still holds. See
+  ruler-hooked/t-012 (conductor/t-074) for the case that prompted this: a
+  `retry_context` sat stale for 5 days describing a rejection Silas had already
+  overridden by merging directly.
 
 ## Learning ledger — outcomes feed back into behavior
 

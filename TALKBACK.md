@@ -8437,3 +8437,44 @@ gap, not a mistake in this session's own handling of it.
 **Kaizen task:** conductor/t-074 — add a line to AGENTS.md's retry-context section: before
 acting on a `retry_context` for a cross-repo task, check whether the referenced PR already
 merged before assuming the recorded rejection still holds.
+
+## 2026-07-21 | Worker (burst) | conductor/t-074 | done (conductor PR pending merge)
+
+**Decision:** implemented, self-merged (session claude-conductor-burst-20260721T1300Z).
+
+**Failure category:** none — clean first pass, doc-only.
+
+**What was good:**
+- Rotation: `next_ready_task.py` again surfaced `ai-art-academy/t-010`, already worked
+  several times today per this file — skipped for diversity. Walked `priority.yaml`
+  order (via `project-overrides.yaml` to confirm active/finished status per-slug, not
+  just each roadmap's own `status: ready`) past several projects with no ready tasks
+  or already-touched-today projects (challenge-center finished; coloring-book,
+  humboldt-scoop(-cms), digital-storefront, packmaker had no ready work) to
+  `kind-robots/t-033`, the recurring Prisma-cast-footgun recheck. Did the recheck
+  rather than skip it blind: shallow-cloned kind_robots main fresh (736b663f) and
+  re-ran the double-cast sweep from the last four recheck entries — identical
+  zero-hit result, fifth consecutive clean recheck across five separate days. Logged
+  a compact confirmation in its note (not the full verbose treatment, to avoid further
+  bloating an already very long note) and moved on rather than let a no-op recheck
+  consume the whole cycle.
+- Picked `conductor/t-074` for the cycle's actual work — the exact kaizen task this
+  file's own previous entry (ruler-hooked/t-012) had just proposed, and a good fit for
+  "intensive work + clean PR this cycle": concrete, scoped, human-authored spec, no
+  external render/deploy backend needed (unlike several other ready tasks this cycle —
+  model-builder/t-022/t-031 need a live prod deploy, superkate-hairstyle-ai/t-019 and
+  mural-design/t-002 need a live Comfy/Kontext render box, none reachable from this
+  sandbox).
+- Claimed via `claim_task.py` (checked against live `origin/main`, not the local
+  working tree) before editing, then rebased the session branch onto the claim commit.
+  Added the new bullet directly under the existing "no `retry_context` on a
+  `passes > 0` task" bullet in AGENTS.md's "Retry context — failed passes must teach
+  the next one" section, citing this task and the ruler-hooked/t-012 case by name.
+- Verified with `python scripts/audit_roadmaps.py` (0 errors before and after,
+  conductor done-count moved 68/73 → 69/74 as expected) and a YAML parse check on
+  both touched roadmaps before committing.
+
+**What to improve:** none this cycle.
+
+**Kaizen task:** none this cycle — this cycle's work *was* the prior cycle's kaizen
+task.

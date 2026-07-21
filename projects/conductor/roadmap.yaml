@@ -2064,10 +2064,11 @@ tasks:
   - id: t-074
     milestone: m2
     title: "AGENTS.md: retry_context can go stale when a human merges the PR directly, bypassing the reject-retry loop"
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
+    updated: '2026-07-21T13:00:00Z'
     note: >
       Kaizen from ruler-hooked/t-012 (burst-mode session, 2026-07-21). t-012 sat at
       `status: ready`, `passes: 1`, with a `retry_context` describing a Reviewer
@@ -2087,6 +2088,9 @@ tasks:
       rather than assuming the recorded rejection still holds. This is a small
       doc addition, not a script change — no existing tooling needs to be
       touched, just the guidance agents read before retrying.
-    claimed_by: claude-conductor-burst-20260721T1300Z
-    claimed_at: '2026-07-21T12:08:26Z'
-    updated: '2026-07-21T12:08:26Z'
+
+      DONE 2026-07-21 (burst-mode session, claude-conductor-burst-20260721T1300Z):
+      added the guidance as a new bullet directly under the existing "no
+      retry_context on a passes>0 task" bullet in AGENTS.md's "Retry context —
+      failed passes must teach the next one" section, citing this task and the
+      ruler-hooked/t-012 case as the worked example.
