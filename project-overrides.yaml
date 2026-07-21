@@ -193,6 +193,14 @@ overrides:
     status: active
     priority: normal
     kind: software
+    # Frontend placement — synced to the kind_robots Project row by
+    # sync_projects.py, same mechanism as art-generator-connect. serendipity-page.vue
+    # is a full standalone page at /serendipity; tabKey mirrors the 'serendipity'
+    # section key already present under tutorialChannels.scenario.sections in
+    # kind_robots stores/helpers/tutorialCards.ts (conductor/serendipity t-012).
+    liveUrl: /serendipity
+    channelKey: scenario
+    tabKey: serendipity
 
   - slug: appmaker
     status: active
