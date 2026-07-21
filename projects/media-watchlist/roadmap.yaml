@@ -286,20 +286,11 @@ tasks:
 - id: t-011
   milestone: m3
   title: Add a rating (1-10) control to the Entry Detail panel
-  status: review
+  status: done
   passes: 0
   stakes: reversible
-  note: >
-    Kaizen from t-010 (kind_robots PR #749, 2026-07-21). server/api/media-entries/[id].patch.ts
-    already accepts and validates a `rating` field (integer 1-10 or null), but
-    watchlist-entry-detail.vue has no UI control to set it -- BROWSE-UX.md's
-    Entry Detail mockup doesn't show one explicitly either, so this was left out
-    of t-010's scope rather than guessed at. Add a simple rating widget (e.g. a
-    1-10 number stepper or star-style picker consistent with the rest of the
-    panel's daisyUI styling) that PATCHes `rating` the same way the starred
-    toggle does, and surface the current rating value somewhere in the browse
-    list or detail header once set.
+  note: 'Kaizen from t-010 (kind_robots PR #749, 2026-07-21). server/api/media-entries/[id].patch.ts already accepts and validates a `rating` field (integer 1-10 or null), but watchlist-entry-detail.vue has no UI control to set it -- BROWSE-UX.md''s Entry Detail mockup doesn''t show one explicitly either, so this was left out of t-010''s scope rather than guessed at. Add a simple rating widget (e.g. a 1-10 number stepper or star-style picker consistent with the rest of the panel''s daisyUI styling) that PATCHes `rating` the same way the starred toggle does, and surface the current rating value somewhere in the browse list or detail header once set. DONE 2026-07-21 (conductor scheduled agent, claude-conductor-scheduled-20260721T0714Z): kind_robots PR #775 merged (squash 8037e267). Added a 1-10 +/-/clear stepper to watchlist-entry-detail.vue''s header dl, PATCHing the already-validated `rating` field the same way toggleStarred() does; surfaced the saved rating as a small star+number badge in watchlist-browse.vue''s list rows per the note''s own ask. No server change needed. Verified: eslint clean, prettier clean (fixed formatting drift from the new markup), full-project `npm run test` (vue-tsc --noEmit) exit 0. All 3 kind_robots PR checks green (TypeScript, Contract verifiers, GitGuardian) before merge.'
   owner: reviewer
   claimed_by: claude-conductor-scheduled-20260721T0714Z
   claimed_at: '2026-07-21T07:14:48Z'
-  updated: '2026-07-21T07:14:48Z'
+  updated: '2026-07-21T07:26:42Z'
