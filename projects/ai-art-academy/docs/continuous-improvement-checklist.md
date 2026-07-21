@@ -569,4 +569,18 @@ A `t-010` cycle is complete when all of the following are true:
 - the change is scoped and reversible;
 - verification is recorded;
 - no live generation, publishing, deployment, spend, secrets, or production mutation occurred;
+- **if the cycle opened a kind_robots PR, its CI status was polled and the PR was
+  either merged or explicitly left open with a documented reason** (do not treat
+  "PR opened" as the cycle's terminal state — a green, unmerged PR stranded at
+  session end is not done; see the PR #814/t-036 incident below);
 - the recurring task is rearmed to `ready` after merge.
+
+Kaizen from a Reviewer pass, 2026-07-21 (t-036): a lane-1 cycle opened kind_robots
+PR #814 (all 3 CI checks green) but ended the session without merging it or
+rearming `t-010`, leaving the recurring task stranded at `status: claimed` with an
+unmerged-but-green PR — the same failure shape as the earlier PR #942 incident
+logged in this task's own roadmap note (2026-07-21 ~01:00 UTC: status field never
+flipped after a merge). A later Reviewer-role session had to notice the open PR,
+verify CI, and merge + rearm manually. The bullet above closes this gap for every
+lane, not just lane 1 — any cycle that opens a kind_robots PR owns polling its CI
+and merging (or explicitly parking it) before the cycle ends.
