@@ -271,23 +271,31 @@ tasks:
 - id: t-010
   milestone: m3
   title: Entry detail view + private review editor (BROWSE-UX.md sections 3/5)
-  status: claimed
+  status: done
   owner: reviewer
   passes: 0
   stakes: reversible
   note: >
-    Kaizen from t-009 (kind_robots PR #696, 2026-07-20). The minimal browse
-    UI (components/watchlist/watchlist-browse.vue) lists entries but has no
-    detail view -- clicking an entry does nothing yet. The MediaEntry model
-    already has review/reviewPublic/rating/externalId/externalUrl columns
-    (t-008's spec) with no write path. Build the Entry Detail panel
-    (BROWSE-UX.md section 3: title/type/year/starred header, a private
-    markdown review editor with auto-save draft + explicit Publish action
-    that only sets reviewPublic -- no external push per the MVP rule) and
-    the two write routes it needs (e.g. PATCH /api/media-entries/:id for
-    review/rating/starred edits). Admin-gated, same as the browse/stats
-    routes. The Stats view's CSV export button (BROWSE-UX.md section 4) is a
-    separate, smaller follow-on -- not part of this task's scope.
+    Kaizen from t-009 (kind_robots PR #696, 2026-07-20). The minimal browse UI (components/watchlist/watchlist-browse.vue) lists entries but has no detail view -- clicking an entry does nothing yet. The MediaEntry model already has review/reviewPublic/rating/externalId/externalUrl columns (t-008's spec) with no write path. Build the Entry Detail panel (BROWSE-UX.md section 3: title/type/year/starred header, a private markdown review editor with auto-save draft + explicit Publish action that only sets reviewPublic -- no external push per the MVP rule) and the two write routes it needs (e.g. PATCH /api/media-entries/:id for review/rating/starred edits). Admin-gated, same as the browse/stats routes. The Stats view's CSV export button (BROWSE-UX.md section 4) is a separate, smaller follow-on -- not part of this task's scope.
+
+    DONE 2026-07-21 (conductor scheduled agent, claude-conductor-scheduled-20260721T0511Z): built components/watchlist/watchlist-entry-detail.vue (starred toggle, private markdown review editor with debounced auto-save + one-way Publish button setting reviewPublic=true, read-only external-links section) and server/api/media-entries/[id].patch.ts (admin-gated, validates review length <=4000, rating 1-10, starred boolean). Wired into watchlist-browse.vue: list rows are now clickable buttons opening the detail panel; MediaEntrySummary now reuses the full row type already returned by the existing list endpoint (no second fetch needed). No schema change required -- review/reviewPublic/rating/externalId/externalUrl already existed from t-008. Verified: npm run test (vue-tsc --noEmit) exit 0, eslint clean on all 3 files, prettier --write applied then confirmed via git diff that only self-authored lines changed. Live DB/browser smoke not possible in this sandbox (no reachable DATABASE_URL), relying on kind_robots CI. kind_robots PR #749, all 3 checks green (TypeScript, Contract verifiers, GitGuardian), merged squash 704bb43f. CSV export (BROWSE-UX.md section 4) remains out of scope, and a rating UI control is a natural follow-up (write path now exists, no widget yet).
   claimed_by: claude-conductor-scheduled-20260721T0511Z
   claimed_at: '2026-07-21T05:15:03Z'
-  updated: '2026-07-21T05:15:03Z'
+  updated: '2026-07-21T05:46:13Z'
+
+- id: t-011
+  milestone: m3
+  title: Add a rating (1-10) control to the Entry Detail panel
+  status: ready
+  passes: 0
+  stakes: reversible
+  note: >
+    Kaizen from t-010 (kind_robots PR #749, 2026-07-21). server/api/media-entries/[id].patch.ts
+    already accepts and validates a `rating` field (integer 1-10 or null), but
+    watchlist-entry-detail.vue has no UI control to set it -- BROWSE-UX.md's
+    Entry Detail mockup doesn't show one explicitly either, so this was left out
+    of t-010's scope rather than guessed at. Add a simple rating widget (e.g. a
+    1-10 number stepper or star-style picker consistent with the rest of the
+    panel's daisyUI styling) that PATCHes `rating` the same way the starred
+    toggle does, and surface the current rating value somewhere in the browse
+    list or detail header once set.

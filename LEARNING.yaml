@@ -3784,3 +3784,12 @@ records:
   outcome: done
   failure_category: null
   lesson: "A stale-claim task with no PR/TALKBACK evidence of prior implementation work is safe to reclaim once past CLAIM_TTL_MINUTES via claim_task.py, but check the free-standing conflict risk on the follow-up status commit -- a direct-to-main claim commit (or its auto STATUS.md refresh) landing between a session's local edit and its push produces a real (not auto-gen-only) roadmap.yaml conflict on the task's own claimed_by/claimed_at/updated fields, since the session's local copy still shows the old stale values. Also: flutter test's first cold AOT compile can exceed several minutes in a CPU-constrained sandbox even though flutter analyze/pub get complete in under 20s -- budget for that gap rather than treating a slow flutter test as a broken toolchain."
+- date: '2026-07-21'
+  project: media-watchlist
+  task: t-010
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "When most of the priority queue is blocked (art relay down, live Comfy box unreachable, daily creative-loop caps already used today), a kaizen task with a fully self-contained spec (write route + UI panel, no external service dependency) is the highest-value pick -- media-watchlist/t-010 landed clean first pass because BROWSE-UX.md already fully specified the UI/API contract and the schema fields existed from t-008, leaving zero open design questions."
