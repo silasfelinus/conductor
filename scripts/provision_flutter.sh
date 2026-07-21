@@ -23,10 +23,19 @@
 #
 # Override the exact version with FLUTTER_VERSION (default: latest known-good stable
 # confirmed working in this sandbox).
+#
+# app-ci.yml's subosito/flutter-action runs an UNPINNED `channel: stable`, so this
+# default silently drifts behind CI's actual toolchain over time (conductor/t-076,
+# kaizen from conductor-app/t-012, 2026-07-21: the pin sat 13 months stale at
+# 3.32.5 while CI had moved to 3.44.7, producing false-positive `flutter analyze`
+# errors — e.g. DropdownButtonFormField's `initialValue` param — on code the
+# session never touched). Re-bump this default periodically (check the current
+# `stable` release at https://docs.flutter.dev/release/archive) rather than
+# reactively chasing the same false positives every time it goes stale.
 
 set -euo pipefail
 
-FLUTTER_VERSION="${FLUTTER_VERSION:-3.32.5}"
+FLUTTER_VERSION="${FLUTTER_VERSION:-3.44.7}"
 FLUTTER_HOME="${FLUTTER_HOME:-$HOME/.flutter}"
 ARCHIVE="flutter_linux_${FLUTTER_VERSION}-stable.tar.xz"
 URL="https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/${ARCHIVE}"
