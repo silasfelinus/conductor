@@ -446,14 +446,14 @@ tasks:
   - id: t-010
     milestone: m6
     title: Academy continuous improvement pass
-    status: ready
+    status: claimed
     recurring: true
-    owner: null
-    claimed_by: null
-    claimed_at: null
+    owner: reviewer
+    claimed_by: claude-conductor-agentrun-20260721T1910Z-t010
+    claimed_at: '2026-07-21T19:11:41Z'
     passes: 0
     stakes: reversible
-    updated: '2026-07-21T16:35:00Z'
+    updated: '2026-07-21T19:11:41Z'
     note: |-
       Standing never-idle task (re-arms to ready after every completion, per the recurring-task rule). Each cycle pick ONE: (a) front-end style/polish pass on Academy or art-styler surfaces, (b) roadmap upgrade — refine tasks, detail the next milestone, prune stale notes, (c) generate more art inspirations or style preview thumbnails, (d) expand the curriculum with a new movement/artist entry (respecting PUBLIC-DOMAIN-POLICY.md). Note which option ran in the PR. This task never reaches done and does not count toward milestone progress.
       RAN 2026-07-21 (~16:30 UTC, claude-conductor-scheduled-20260721T1630Z-t010): option (b) roadmap accuracy (lane 2), per the checklist's next-preferred-lane note (previous cycle ran lane 1, front-end polish, PR #814). `scripts/audit_roadmaps.py` — 0 errors, 11 warnings, 44 info findings, same baseline, no new findings touching this project. `scripts/check_pr_merged_drift.py` — no claimed/review-status PR references outstanding, nothing to check. Re-verified all 6 milestones programmatically against their tasks' actual current statuses (done iff every non-recurring task in the bucket is done): m1 done (2/2), m2 in-progress (t-004 needs-human), m3 in-progress (t-033 needs-human), m4 done (15/15), m5 in-progress (t-009 needs-human, t-019 ready-but-blocked), m6 in-progress (t-035 ready-but-blocked, t-036 ready) — all six already accurate, no drift. Did not re-probe t-004/t-009/t-019/t-033's blockers (home relay / egress) since the immediately-prior cycle (~14:00-14:40 UTC, same day) already rechecked lane 3's home-relay signature fresh (job 1242, still unclaimed) — re-probing again within the same few hours would just repeat the same evidence per the blocker-discipline rule. Conductor-docs-only change; no kind_robots PR needed this cycle. Updated continuous-improvement-checklist.md's rotation state; next preferred lane is inspiration/preview assets (lane 3, recheck with a fresh queued job, not 1242) falling back to lane 4 if still blocked. Rearmed to `ready`.
