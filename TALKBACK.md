@@ -8385,3 +8385,55 @@ overrides layer, and only the overrides layer is authoritative for claimability.
 **What to improve:** none this cycle.
 
 **Kaizen task:** none this cycle.
+
+## 2026-07-21 | Worker (burst) | ruler-hooked/t-012 | done (kind_robots PR #811 merged, conductor PR #971 merged)
+
+**Decision:** implemented, self-merged (session claude-conductor-burst-20260721T1130Z).
+
+**Failure category:** none — clean recheck, no retry needed.
+
+**What was good:**
+- Rotation: skipped `ai-art-academy/t-010` (hammered several times already this shift per
+  this file) and `model-builder/t-029` (a concurrent scheduled session had just claimed
+  it, commit `3a5b818`). Walked `priority.yaml` order past several projects with zero
+  ready tasks to `serendipity/t-012` (found it mostly blocked on an external art-relay
+  outage already documented twice), then further to `ruler-hooked/t-012`, which had real,
+  concrete, non-gated work: a `retry_context` describing a specific, reproducible failure
+  rather than another generic "polish the front end" pass.
+- Did not trust the `retry_context` at face value. It described a Reviewer rejection of
+  kind_robots PR #329 (12 vue-tsc type errors) — but PR #329 had actually been merged
+  directly by Silas 9 minutes after that rejection was written (2026-07-16T22:04:56Z vs
+  21:55Z), 5 days before this session. Re-verified against current kind_robots `main`
+  from scratch instead of assuming the note was live: provisioned deps via
+  `scripts/provision_kind_robots_deps.sh`, ran the real `npm run test` (vue-tsc --noEmit,
+  exit 0), cross-checked kind_robots CI directly (`typecheck.yml` run 29821460238,
+  success), and ran both headless self-tests (`engine.selftest.ts`, `game.selftest.ts`,
+  ALL PASS) confirming the four DESIGN-BRIEF m2 exit criteria still hold. None of the 12
+  retry_context errors reproduced — the stale note would have sent a less careful session
+  into re-fixing already-fixed code.
+- Found (via `eslint`, not part of `npm run test`/CI but repo convention) 2 small
+  pre-existing lint errors outside the retry_context's scope and fixed both:
+  `stores/rulerHookedStore.ts` `prefer-const`, `utils/rulerHooked/applyEffects.ts`
+  `@typescript-eslint/no-dynamic-delete` (switched to `Reflect.deleteProperty`, matching
+  the existing convention in `stores/helpers/botHelper.ts`). Verified vue-tsc/eslint/both
+  self-tests all green after the fix, opened kind_robots PR #811, watched it via
+  `subscribe_pr_activity`, and merged once its 4 CI checks (TypeScript, Contract
+  verifiers, GitGuardian, plus its own workflow run) went green.
+- Followed the branch convention correctly for a harness-assigned session: this session's
+  kind_robots branch is pinned to `claude/keen-fermat-njvo76` by the harness (not the
+  AGENTS.md `worker/*` default), so committed there instead of creating a `worker/*`
+  branch, per the outer session instructions taking precedence over the repo-internal
+  convention for this specific session.
+- Set `status: review` on `ruler-hooked/t-012` before opening the conductor PR (#971),
+  waited for its own 4 CI checks (Worker PR CI, Process task events, Security Audit,
+  Roadmap Audit) to go green, merged, then flipped to `status: done`, removed the now-
+  resolved `retry_context`, ran `scripts/resolve_deps.py` (unblocked `t-007`, all of
+  whose other deps — t-004/t-005/t-006 — were already done), and bumped milestone `m2`
+  from `not-started` to `in-progress` to match reality (t-012 done, t-007 ready).
+
+**What to improve:** none this cycle — the stale-retry_context pattern below is a system
+gap, not a mistake in this session's own handling of it.
+
+**Kaizen task:** conductor/t-074 — add a line to AGENTS.md's retry-context section: before
+acting on a `retry_context` for a cross-repo task, check whether the referenced PR already
+merged before assuming the recorded rejection still holds.

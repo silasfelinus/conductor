@@ -3802,3 +3802,12 @@ records:
   outcome: done
   failure_category: null
   lesson: "Confirmed the same pattern as t-010's lesson: with the top of priority.yaml blocked on external infra (ai-art-academy t-019/t-035 need at least one landed thumbnail or a live relay; kind-robots t-033 was already rechecked clean 4x this same day), a small self-contained kaizen task one project down the list (server route + schema field already shipped, only the UI control missing) lands clean first pass with zero design ambiguity. Also: a chained `git fetch && git checkout <branch> && git pull` in one Bash call can get SIGTERM'd by the tool's 2-minute timeout mid-checkout on a repo with a large/rewritten history (kind_robots had just force-updated origin/main), leaving the working tree with hundreds of stray unstaged deletions/modifications/untracked files even though HEAD never actually moved. Recovery was safe here only because `git status` was checked immediately and confirmed nothing was staged and the tree had been clean moments before -- `git checkout -- .` + `git clean -fd` cleanly restored it. Split multi-step git network operations into separate, shorter Bash calls (or raise the timeout) instead of chaining them, so a slow fetch/checkout can't silently corrupt working-tree state mid-operation."
+- date: 2026-07-21
+  project: ruler-hooked
+  task: t-012
+  kind: software
+  stakes: reversible
+  passes: 1
+  outcome: done
+  failure_category: null
+  lesson: "A task's retry_context can go stale when a human merges the referenced PR directly, bypassing the normal reject->retry->re-review loop (t-012's retry_context described a pass-1 rejection of kind_robots PR #329 written at 21:55Z on 2026-07-16, but Silas merged that same PR 9 minutes later at 22:04:56Z). Before acting on any retry_context for a cross-repo task, check whether the referenced PR already merged and re-verify against current target-repo main first -- don't assume a recorded rejection is still live. See conductor/t-074 (kaizen task filed this cycle) for the AGENTS.md doc fix."
