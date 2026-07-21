@@ -15,6 +15,24 @@ Record the lane, files changed, and verification in the task note before rearmin
 
 ### Rotation state
 
+- Last completed lane: Front-end polish (lane 1), 2026-07-21 (~00:11-00:25 UTC,
+  claude-conductor-scheduled-20260721T0011Z). Dispatched an Explore subagent over
+  the full in-scope surface with an explicit exclusion list of every bug class
+  already fixed in prior cycles. Found a real, verifiable gap: `art-styler.vue`'s
+  `handleFileSelect` (the browse/click file-input path) passed any OS-picked file
+  straight to `processUploadedFile()` with zero type validation, while its sibling
+  `handleDrop` (drag-and-drop path) validated via `file.type.startsWith('image/')`
+  — most OS file dialogs let a user switch to "All Files" even with `accept` set,
+  so a non-image selected via browse could silently produce a broken preview or an
+  opaque backend error on style transfer. Extracted a shared
+  `isAcceptedImageFile()` predicate (exact match against `image/png` /
+  `image/jpeg` / `image/webp`) and applied it to both handlers, also tightening
+  `handleDrop`'s looser `startsWith('image/')` check (previously let GIF/SVG/
+  BMP/TIFF through silently, contradicting the "PNG · JPEG · WebP" UI copy).
+  Verified: `npx eslint` clean, `npx prettier --check` clean, full-project
+  `npm run test` (`vue-tsc --noEmit`) exit 0. kind_robots PR #733 (branch
+  `claude/vigilant-edison-w3m45u`). Next preferred lane is roadmap accuracy
+  (lane 2) — this cycle ran lane 1, so lane 2 is next in the 1→2→3→4 rotation.
 - Last completed lane: Curriculum depth (lane 4, LoRA-registry follow-up),
   2026-07-20 (~22:10-22:35 UTC, claude-conductor-agentrun-20260720T2210Z). Lane 3
   (inspiration/preview assets) was next preferred per the prior cycle's note,

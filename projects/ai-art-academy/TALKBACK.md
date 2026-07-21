@@ -1385,3 +1385,21 @@ was *re-tagged* into it post-hoc (m3/m4 in the 2026-07-19 09:13 cycle drifted
 from new tasks being added; this one drifted from an existing task's
 milestone reassignment). Worth flagging for whoever eventually builds
 `conductor/t-071`-style tooling for milestone drift, not just PR-merge drift.
+
+## 2026-07-21 | Reviewer (agent run) | ai-art-academy/t-010 | pattern
+
+**Decision:** implemented, PR open (kind_robots #733) — lane 1 (front-end polish), per the checklist's rotation (previous cycle ran lane 4).
+
+**Failure category:** none — clean first pass.
+
+**What was good:**
+- Dispatched an Explore subagent with the full, explicit exclusion list of every bug class already fixed across ~20+ prior lane-1 cycles, forcing it past re-flagging settled ground.
+- Found a real, asymmetric validation gap: `art-styler.vue`'s browse-click path (`handleFileSelect`) had zero file-type validation while its drag-and-drop sibling (`handleDrop`) did — an inconsistency between two code paths doing conceptually the same job, a bug shape distinct from anything caught in prior cycles (which mostly found single-path bugs, not cross-path inconsistencies).
+- While fixing, also tightened `handleDrop`'s looser `startsWith('image/')` check to the same exact-match predicate, since it silently let GIF/SVG/BMP/TIFF through despite the UI declaring PNG/JPEG/WebP-only support — a small adjacent correctness fix bundled with the primary one since it shares the same root cause and predicate.
+- Verified via eslint, prettier --check, and full-project vue-tsc before opening the PR; noted a prettier double-pass quirk (an unrelated `hydrated` type-union cast reformatted on the first `--write` and reverted after a second pass) — resolved by re-running `--write` until `--check` was clean, keeping the diff scoped to the actual fix.
+
+**What to improve:** none significant this cycle.
+
+**Kaizen task:** none filed — small, fully self-contained fix within lane 1's existing scope.
+
+**Pattern note:** worth generalizing for future front-end polish passes — when a component has two entry points for logically equivalent user actions (browse vs. drag-drop, keyboard vs. mouse, etc.), check that both paths apply the *same* validation/guard logic, not just that each path individually looks correct in isolation.
