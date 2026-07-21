@@ -1,7 +1,7 @@
 # Health watchdog for the pm2-managed art backends.
 # pm2 restarts a process that EXITS; this catches one that is alive but hung
 # (API stops answering) and restarts it via pm2. Schedule via Task Scheduler
-# every 5 minutes — see README.md.
+# every 5 minutes - see README.md.
 #
 # It also emails an alert when it has to restart something, so a failing/hung
 # ComfyUI reaches you instead of being silently self-healed. Alerts reuse the
@@ -10,7 +10,11 @@
 #   setx BREVO_API_KEY "your-brevo-key"
 #   setx DIGEST_TO     "silasfelinus@gmail.com"     (or ALERT_TO)
 #   setx DIGEST_FROM   "ops@your-verified-sender"   (or ALERT_FROM)
-# With no BREVO_API_KEY set, the watchdog still restarts — it just doesn't email.
+# With no BREVO_API_KEY set, the watchdog still restarts - it just doesn't email.
+#
+# Keep this file ASCII-only: Windows PowerShell 5.1 reads a no-BOM script as the
+# system ANSI codepage, so any UTF-8 punctuation (em-dash, smart quotes) inside a
+# string literal corrupts parsing. Plain ASCII avoids the whole problem.
 
 $ErrorActionPreference = 'SilentlyContinue'
 
@@ -99,7 +103,7 @@ $alertState = Get-AlertState
 $hostName = $env:COMPUTERNAME
 
 foreach ($t in $targets) {
-    # Only police processes pm2 believes are online — a deliberate `pm2 stop`
+    # Only police processes pm2 believes are online - a deliberate `pm2 stop`
     # (e.g. freeing the GPU) must not be fought by the watchdog.
     $status = (& pm2 jlist | ConvertFrom-Json) |
         Where-Object { $_.name -eq $t.Name } |
@@ -114,7 +118,7 @@ foreach ($t in $targets) {
     } catch { $ok = $false }
 
     if (-not $ok) {
-        Write-Log "$($t.Name): health probe failed ($($t.Url)) — restarting via pm2"
+        Write-Log "$($t.Name): health probe failed ($($t.Url)) - restarting via pm2"
         & pm2 restart $t.Name | Out-Null
 
         # Confirm whether it came back before deciding what to say, then alert
@@ -129,16 +133,16 @@ foreach ($t in $targets) {
         if (Test-AlertDue $alertState $t.Name) {
             $stamp = Get-Date -Format 'yyyy-MM-dd HH:mm:ss'
             if ($recovered) {
-                Send-Alert "WARNING: $($t.Name) was hung on $hostName — auto-restarted" `
+                Send-Alert "WARNING: $($t.Name) was hung on $hostName - auto-restarted" `
                     "The $($t.Name) backend stopped answering $($t.Url) and the health watchdog restarted it via pm2. It is answering again as of $stamp. No action needed unless this repeats."
             } else {
-                Send-Alert "DOWN: $($t.Name) on $hostName — restart did not recover" `
+                Send-Alert "DOWN: $($t.Name) on $hostName - restart did not recover" `
                     "The $($t.Name) backend stopped answering $($t.Url); the watchdog ran 'pm2 restart $($t.Name)' at $stamp but it is still not responding. This one likely needs a look (GPU/driver, disk, crash-loop). Check pm2 logs and logs\healthcheck.log on $hostName."
             }
             $alertState[$t.Name] = $stamp
             Save-AlertState $alertState
         } else {
-            Write-Log "$($t.Name): restart alert suppressed (within $cooldownMinutes-min cooldown)"
+            Write-Log "$($t.Name): restart alert suppressed (within $($cooldownMinutes)-min cooldown)"
         }
     }
 }
