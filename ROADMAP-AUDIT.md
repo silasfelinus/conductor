@@ -1,13 +1,13 @@
 # Roadmap Audit
 
-Generated: `2026-07-21T14:13:15.712271+00:00`
+Generated: `2026-07-21T14:24:34.947481+00:00`
 
 This is a conservative structural audit. It reports suspicious state; it does not automatically change task status or remove human gates.
 
 ## Portfolio snapshot
 
 - **40** roadmaps, **31** active projects, **642** tasks
-- **40 ready**, **42 waiting**, **38 needs-human**, **1 claimed/review**, **510 done**
+- **37 ready**, **42 waiting**, **38 needs-human**, **3 claimed/review**, **511 done**
 - Findings: **0 errors**, **11 warnings**, **45 informational**
 
 ## Project inventory
@@ -22,7 +22,7 @@ This is a conservative structural audit. It reports suspicious state; it does no
 | 6 | `digital-storefront` | active | software | 0 | 2 | 4 | 0 | 17 / 23 |
 | 7 | `packmaker` | active | software | 0 | 0 | 0 | 0 | 10 / 10 |
 | 8 | `mermaids-of-venice` | retired | content | 0 | 0 | 8 | 0 | 4 / 12 |
-| 9 | `kind-robots` | active | software | 2 | 0 | 4 | 0 | 36 / 42 |
+| 9 | `kind-robots` | active | software | 1 | 0 | 4 | 0 | 37 / 42 |
 | 10 | `kindrobots-unraid` | active | software | 0 | 7 | 1 | 0 | 4 / 12 |
 | 11 | `global-ui` | active | software | 0 | 0 | 1 | 0 | 24 / 25 |
 | 12 | `superkate-services-calculator` | active | software | 0 | 0 | 1 | 0 | 35 / 36 |
@@ -39,7 +39,7 @@ This is a conservative structural audit. It reports suspicious state; it does no
 | 23 | `art-generator-connect` | active | software | 0 | 0 | 0 | 0 | 22 / 22 |
 | 24 | `mural-design` | active | content | 1 | 3 | 1 | 0 | 2 / 7 |
 | 25 | `coat-dance` | active | content | 1 | 0 | 1 | 0 | 0 / 10 |
-| 26 | `career-transition` | retired | content | 3 | 4 | 0 | 0 | 1 / 8 |
+| 26 | `career-transition` | retired | content | 1 | 4 | 0 | 2 | 1 / 8 |
 | 27 | `alexa-integration` | active | software | 1 | 0 | 1 | 0 | 16 / 18 |
 | 28 | `conductor-app` | active | software | 3 | 0 | 1 | 0 | 10 / 14 |
 | 29 | `appmaker` | active | software | 2 | 0 | 0 | 0 | 10 / 12 |
@@ -85,7 +85,7 @@ _None._
 - **MISSING_GOAL** — `approval-portal`: Roadmap has no friendly goal/definition of done.
 - **MISSING_GOAL** — `art-generator-connect`: Roadmap has no friendly goal/definition of done.
 - **MISSING_GOAL** — `brainstorm`: Roadmap has no friendly goal/definition of done.
-- **INACTIVE_PROJECT_HAS_READY_TASKS** — `career-transition`: Inactive project retains 3 ready task(s); harmless but misleading in generated status.
+- **INACTIVE_PROJECT_HAS_READY_TASKS** — `career-transition`: Inactive project retains 1 ready task(s); harmless but misleading in generated status.
 - **MISSING_GOAL** — `career-transition`: Roadmap has no friendly goal/definition of done.
 - **MISSING_GOAL** — `challenge-center`: Roadmap has no friendly goal/definition of done.
 - **MISSING_GOAL** — `coat-dance`: Roadmap has no friendly goal/definition of done.
