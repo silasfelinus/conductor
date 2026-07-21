@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-07-21T14:25:01Z
+Generated: 2026-07-21T14:34:02Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **322**
-- Outcomes: blocked: 12, done: 310
+- Closed tasks recorded: **323**
+- Outcomes: blocked: 12, done: 311
 - Success rate: **96%**
 - Average passes on successful tasks: **0.0**
 
@@ -34,7 +34,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | humboldt-impropriety-calendar | 1 | 0% |
 | humboldt-scoop | 1 | 100% |
 | humboldt-scoop-cms | 1 | 100% |
-| kind-robots | 29 | 97% |
+| kind-robots | 30 | 97% |
 | kindrobots-unraid | 4 | 100% |
 | media-watchlist | 4 | 100% |
 | mermaids-of-venice | 3 | 100% |
@@ -54,7 +54,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 15 | 40% |
-| software | 307 | 99% |
+| software | 308 | 99% |
 
 ## Failure categories
 
@@ -74,6 +74,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-07-21 `kind-robots/t-042` — A new static-source contract test is only trustworthy once it's been proven to actually catch the pattern it claims to guard against -- write a synthetic violating sample first (cover edge cases like nested generics that could produce false negatives in a bracket-depth parser), confirm it fails as expected, then remove the sample and confirm the real codebase passes clean. Testing only the 'passes on real code' direction would have missed a parser bug that let violations through silently.
 - 2026-07-21 `appmaker/t-009` — A cryptic CI type error in a file the task never touched is not automatically 'pre-existing and unrelated' -- it can be a genuine, if indirect, regression the diff triggered (here: 2 new server/api/** route files grew the typed $fetch route-key union just enough to push vue-tsc's TS2589 recursion limit on unrelated call sites). A same-tree local repro without the diff isn't conclusive either, since sandbox vs real CI can diverge -- cross-check against the base commit's actual CI history before concluding a failure is pre-existing. Root-causing (pinning $fetch's R generic, 12 files) was cheap once understood and is a durable fix, versus a band-aid on the one file CI happened to name first.
 - 2026-07-21 `ruler-hooked/t-007` — A task can outlive its own blocker without anyone noticing: t-007's completion condition (PR #328 merged AND t-012 landing the playable screen meeting all four DESIGN-BRIEF m2 exit criteria) had been fully satisfied since t-012 merged earlier the same day, but t-007 itself still sat at status: ready/claimed pending someone to actually check and flip it. When a task's note already states an explicit, checkable completion condition, re-verify it directly (fresh checkout, self-tests, full typecheck) before assuming more code work is needed -- sometimes the task is closing bookkeeping, not new implementation.
 - 2026-07-21 `ruler-hooked/t-012` — A task's retry_context can go stale when a human merges the referenced PR directly, bypassing the normal reject->retry->re-review loop (t-012's retry_context described a pass-1 rejection of kind_robots PR #329 written at 21:55Z on 2026-07-16, but Silas merged that same PR 9 minutes later at 22:04:56Z). Before acting on any retry_context for a cross-repo task, check whether the referenced PR already merged and re-verify against current target-repo main first -- don't assume a recorded rejection is still live. See conductor/t-074 (kaizen task filed this cycle) for the AGENTS.md doc fix.
@@ -83,7 +84,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-07-20 `media-watchlist/t-009` — A prior spec-only task (t-008) that reconciles a proposal against real imported data before any code is written turns the follow-on build task into a single clean pass with zero open design questions -- worth doing as a standing pattern for any Prisma-model-plus-API task where the real data shape might differ from an earlier proposal.
 - 2026-07-20 `ai-art-academy/t-010` — Milestone status can drift not just from new tasks appearing done/not-done under it, but from an *existing* task being re-tagged into a milestone that was already marked done (t-035 landed under m6 alongside the t-029/t-030 kaizen follow-ons after m6 had last been verified done, and the milestone was never revisited) -- a roadmap-accuracy audit should re-check a milestone's task list for membership changes, not just each member task's status, whenever a milestone is already 'done'.
 - 2026-07-20 `sketchy/t-003` — When a spec-writing task's target area already has partial coverage scattered across sibling docs (PRODUCT-SPEC.md's dimension table, SKILL-LADDER.md's routing examples, docs/ai-critique-apis.md's integration notes), the value-add is turning illustrative/example-based coverage into deterministic, implementable rules (numeric anchors, explicit tie-break order, the literal prompt text) rather than re-describing what already exists — read every referenced sibling doc in full before drafting.
-- 2026-07-20 `conductor-app/t-007` — Before implementing a roadmap task's stated problem, verify the problem still exists on current main -- t-007's premise (pitch votes and project priorities stuck in per-browser localStorage) was already false: priorities had already migrated to a real Prisma column and votes already flow through a real per-pitch API endpoint, just not via the code paths the task's note assumed. An Explore agent pass against the live repo (grep for the exact localStorage keys named in the task) caught this before any code was written; filed the genuinely-open sub-question (real per-user multi-voter tallying vs. today's single-admin-status design) as a separate soft-needs-human task instead of building speculative scope.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-07-21T14:25:01Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-07-21T14:34:02Z_
