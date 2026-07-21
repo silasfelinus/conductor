@@ -8306,3 +8306,42 @@ one-time bulk fix above already closed the gap for every currently-eligible
 project; a new project added later just needs its `projectPlacements.ts` entry
 mirrored into `project-overrides.yaml`, which is small enough to fold into
 whichever task adds that project's dashboard placement in the first place.
+
+## 2026-07-21 | Reviewer (conductor scheduled agent) | system-wide | pattern
+
+**Subject:** recipe-box/t-001 was claimed and worked (PR #965) despite recipe-box being
+`status: retired` in `project-overrides.yaml` — a scope-check gap in the claiming
+session, not a security flag, but worth a pattern note.
+
+**Detail:**
+- `project-overrides.yaml` has carried `recipe-box: status: retired` since commit
+  `7612ec4` (2026-07-20 21:39 -0700 / 2026-07-21 04:39Z).
+- A burst-mode session (`claude-conductor-burst-20260721T0937Z`) claimed
+  `recipe-box/t-001` directly to `main` at 2026-07-21T09:06:57Z — over 4 hours after
+  the retirement — and opened PR #965 (SPEC.md for the app), with its own PR notes
+  citing "picked deliberately this cycle to give a stalled/never-started project its
+  first real attention." That framing suggests the session enumerated stale/untouched
+  projects without cross-checking `project-overrides.yaml`'s `status` field first (step
+  3 of AGENTS.md's "Picking what to work on").
+- Impact was low: `t-001` carries `gate_human: true` regardless, so it could only ever
+  land at `needs-human`, and the produced artifact is an inert spec document — no code,
+  no build, no spend. I merged PR #965 as-is (docs-only, harmless, CI green) rather than
+  discard the work, but did not treat it as "done" — it's still gated on Silas's review,
+  and recipe-box's `retired` status means no further task (including `t-002`, still
+  `waiting`) should be claimed there even after he reviews the spec.
+- Distinguishing this from the `mermaids-of-venice`/`career-transition`-style
+  retirements: those carry inline comments explaining why (archived by Silas, superseded,
+  etc.). `recipe-box`'s entry has no such comment, which may have made it easier to miss
+  as "just another normal-priority active project" during a scan — worth Silas adding a
+  one-line reason comment (as the other retired entries already do) if the retirement is
+  intentional and durable.
+
+**Suggested action:** no roadmap/task change needed beyond what's already in PR #965
+(task sits at `needs-human`). For Silas: confirm whether recipe-box should stay retired
+(nothing further to do — the spec is a free-standing reference if you ever revive it) or
+be reactivated (flip `project-overrides.yaml`'s `recipe-box` entry to `active` so
+`t-002` can unblock once the spec is approved). For future sessions doing
+stale-project rotation sweeps: check `project-overrides.yaml` `status` per-slug before
+picking a "never touched" project, not just its roadmap's own `status: ready` field —
+a task can be `ready` in its own roadmap while its project is `retired` at the
+overrides layer, and only the overrides layer is authoritative for claimability.
