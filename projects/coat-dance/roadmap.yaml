@@ -62,17 +62,31 @@ tasks:
   - id: t-001
     milestone: m1
     title: "Draft production brief and asset checklist"
-    status: claimed
+    status: needs-human
     owner: worker
     passes: 0
     stakes: reversible
     gate_human: true
     note: >
-      Turn Silas's pitch into a one-page production brief with the core premise,
-      target runtime assumptions, required source assets, suggested working folders,
-      and open questions. End at needs-human so Silas can provide the original video
-      and confirm the desired music/video direction before production starts.
-    claimed_by: claude-conductor-burst-20260721T1300Z
+      FOR SILAS: Production brief written to projects/coat-dance/BRIEF.md. It covers
+      the core premise, target runtime assumptions, a required-assets checklist, and
+      a suggested (not-yet-created) working-folder layout.
+
+
+      Correction worth flagging: the brief's source note assumed the original video
+      still needed to be provided — it doesn't. `coat dance_x264.mp4` is already in
+      projects/coat-dance/ (has been since 2026-07-17). Read directly from the file
+      (no ffmpeg in this sandbox, so parsed the MP4 box headers by hand): 720x480
+      H.264, ~5:32 runtime, and it already has a synced audio track (44.1kHz) — not
+      silent, contrary to what "provide the original video" implied.
+
+
+      TO APPROVE: read BRIEF.md's "Open questions" section (5 questions) and answer
+      at least Q1 (does the final cut use the original audio, new music, or a blend?)
+      either in a reply or by editing this note. Then set this task's status: done.
+      What unblocks when he does: t-002 (video beat-transcription tool research)
+      moves from blocked to ready.
+    claimed_by: claude-conductor-burst-20260721T1321Z-coatdance
     claimed_at: '2026-07-21T13:21:12Z'
     updated: '2026-07-21T13:21:12Z'
 
