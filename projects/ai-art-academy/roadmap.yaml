@@ -446,14 +446,14 @@ tasks:
   - id: t-010
     milestone: m6
     title: Academy continuous improvement pass
-    status: ready
+    status: claimed
     recurring: true
-    owner: null
-    claimed_by: null
-    claimed_at: null
+    owner: worker
+    claimed_by: claude-conductor-scheduled-20260721T1630Z-t010
+    claimed_at: '2026-07-21T16:14:52Z'
     passes: 0
     stakes: reversible
-    updated: '2026-07-21T16:20:00Z'
+    updated: '2026-07-21T16:14:52Z'
     note: |-
       Standing never-idle task (re-arms to ready after every completion, per the recurring-task rule). Each cycle pick ONE: (a) front-end style/polish pass on Academy or art-styler surfaces, (b) roadmap upgrade — refine tasks, detail the next milestone, prune stale notes, (c) generate more art inspirations or style preview thumbnails, (d) expand the curriculum with a new movement/artist entry (respecting PUBLIC-DOMAIN-POLICY.md). Note which option ran in the PR. This task never reaches done and does not count toward milestone progress.
       RAN 2026-07-21 (~16:20 UTC, claude-conductor-scheduled-20260721T1620Z): Reviewer pass — the prior cycle (claude-conductor-burst-20260721T1600Z, claimed 16:06:13Z) had opened kind_robots PR #814 (branch `claude/keen-fermat-dc1kvj`, option (a)/lane-1 front-end sync of the mughal-miniature entry added the prior cycle into `stores/seeds/academyStyles.ts`, mirroring the established persian-miniature/song-dynasty-landscape sync pattern) but exited without merging or rearming the task, leaving it at `status: claimed` with an open PR. Reviewed the diff directly (single new array entry, 27th style, no unrelated changes) and confirmed all 3 CI checks green (TypeScript, Contract verifiers, GitGuardian) via `pull_request_read`. Merged squash `eb1c7e2`. Rearmed to `ready` per the recurring-task convention.
