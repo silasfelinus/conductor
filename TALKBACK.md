@@ -8834,3 +8834,24 @@ no owner-able next action.
 **Kaizen task:** none filed this cycle beyond what's already recorded in this task's own
 PR body (a diagnosis request for the 413 root cause) -- deferring to a future session with
 better proxy/relay visibility rather than guessing at a fix here.
+
+## 2026-07-21 | Reviewer | superkate-services-calculator/t-037 | pattern
+
+**Decision:** merged (conductor PR #997, squash a5cacc9)
+
+**Failure category:** null (clean first-pass fix)
+
+**What was good:**
+- Correct root-cause diagnosis with a minimal standalone repro (bare `Directory.systemTemp.createTemp()`
+  inside `testWidgets` hangs; wrapped in `tester.runAsync()` it resolves instantly) rather than
+  guessing at a timeout bump or a flaky-test retry.
+- Full verification: the specific test (3/3, previously hung), the full app suite (98/98),
+  `flutter analyze --fatal-infos` (0 issues), `dart format`, and `audit_roadmaps.py` all clean.
+  All 28 PR CI checks green (including Flutter analyze/test and both desktop builds) before merge.
+- Scoped diff (test file + roadmap status/note only) — no unrelated changes.
+
+**What to improve:** none this cycle.
+
+**Kaizen task:** none filed — this closes a self-contained CI-hang bug with a real regression
+guard (the 500-attempt poll cap fails the assertion instead of hanging again); no further
+follow-up work is implied.
