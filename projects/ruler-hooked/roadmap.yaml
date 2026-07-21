@@ -265,6 +265,27 @@ tasks:
       points at /ruler-hooked (admin can run the Conductor 'Placements' button to
       backfill channelKey/tabKey/liveUrl); (4) evolve the placeholder scaffold page into
       the full interactive experience for this project.
+      RECHECKED 2026-07-21 (~23:12 UTC, conductor scheduled burst,
+      claude-conductor-burst-20260721T231500Z-rh-t010): steps (2), (3), and (4) are
+      ALL already done, not just "kept ready" placeholders -- verified directly against
+      kind_robots main (a688bfef): (2) stores/helpers/tutorialCards.ts already has a
+      full 'ruler-hooked' entry under tutorialChannels.wonder.sections (title/body/image,
+      matches every other shipped project's entry shape); (3) utils/projectPlacements.ts
+      already has a correct PROJECT_PLACEMENTS['ruler-hooked'] entry (channelKey: lab,
+      tabKey: ruler-hooked, route: /ruler-hooked) -- this is the hardcoded map the front
+      end actually reads for routing/display (per the storymaker/t-010 precedent), so the
+      live behavior is already correct independent of whether the admin-only 'Placements'
+      DB-backfill button has ever been clicked; (4) components/conductor/ruler-hooked-page.vue's
+      #interactive slot already mounts the real <RulerHookedGame /> component (shipped by
+      t-007/t-012's Phase 1+2 build) -- not a placeholder scaffold. Only step (1) art
+      remains open, and it is still genuinely blocked: called the live relay-status API
+      directly (GET https://kind-robots.vercel.app/api/art/queue/relay-status,
+      authenticated) and got {"agents":[]} -- zero relay agents currently registered/
+      reporting at all (not just a stuck queue item), confirming the home ComfyUI relay
+      is offline right now, consistent with every other project's finding this week.
+      No kind_robots code change needed this cycle -- re-armed to ready
+      (transient/external block, no pass consumed) rather than left at review/claimed.
+    updated: '2026-07-21T23:12:33Z'
 
   - id: t-011
     milestone: m1
