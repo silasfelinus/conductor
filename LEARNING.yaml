@@ -3856,3 +3856,12 @@ records:
   outcome: done
   failure_category: null
   lesson: "Before assuming a feature needs new backend endpoints, check what the existing API already returns/accepts -- GET /api/dreams/:id already embedded up to 12 linked ArtCollections with up to 12 ArtImages each, and POST /api/conductor/art-request already existed pre-built and admin-gated, so the whole task (ArtCollection browsing + admin art-request form) was pure Flutter client work with zero kind_robots changes needed. Also: a sandboxed toolchain pinned to a fixed version can silently drift stale against CI's unpinned 'stable' channel and produce false-positive analyze errors (including on files never touched this cycle) -- when a fresh error appears on pre-existing code, suspect the toolchain version before the diff, and verify against the actual current stable before trusting the result."
+- date: '2026-07-21'
+  project: ai-art-academy
+  task: t-036
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "A recurring rotation task (t-010) can strand a green, unmerged kind_robots PR at session end if the completion checklist only names the terminal-state requirement generically instead of listing 'poll CI and merge (or explicitly park) before the cycle ends' as its own explicit bullet -- this had already happened twice (PR #942, PR #814) under slightly different framings before it was made an explicit, lane-agnostic checklist item. When a recurring task's own history shows the same failure shape twice, generalize the fix beyond the specific lane/step where it was first noticed, since the underlying gap (an implicit 'PR opened' being mistaken for 'cycle done') can recur on any lane that opens a PR."

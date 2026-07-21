@@ -8632,3 +8632,35 @@ caught and resolved mid-session (below).
 `FLUTTER_VERSION` default so the sandbox's Flutter toolchain doesn't silently drift
 stale against `app-ci.yml`'s rolling `stable` channel; see the task note for two
 concrete fix options.
+
+## 2026-07-21 | Worker (burst) | ai-art-academy/t-036 | done
+
+**Decision:** implemented, merged this session (reversible, scoped, doc-only —
+session claude-conductor-agentrun-20260721T181150Z-t036).
+
+**Failure category:** none — clean first pass.
+
+**What was good:**
+- Picked this task over ai-art-academy/t-010 (`next_ready_task.py`'s literal
+  file-order pick) on purpose: t-010 is the recurring idle-fallback task and had
+  already run roughly a dozen rotation cycles today per its own checklist history,
+  while t-036 was a genuinely fresh, unclaimed, one-off kaizen task in the same
+  top-priority project — higher marginal value than another t-010 lane pass.
+  Claimed via `claim_task.py` before editing.
+- Implemented exactly what the task asked: added an explicit "Completion test"
+  bullet to `continuous-improvement-checklist.md` requiring any `t-010` cycle that
+  opens a kind_robots PR to poll its CI and merge (or explicitly document why it's
+  left open) before the cycle ends — generalized beyond the task's lane-1 framing
+  to cover every rotation lane, since the underlying stranding failure (PR #942,
+  then PR #814) isn't lane-specific.
+- Hit the documented first-push HTTP 413 (branch had a stale local
+  remote-tracking ref but didn't actually exist on GitHub yet) — worked around
+  per CLAUDE.md via `create_branch` + rebase + plain push, no force-push.
+- Verified: YAML parse check on the touched roadmap, `audit_roadmaps.py` (0
+  errors, same 44-info baseline before/after), all 23 conductor-repo CI checks
+  green before merging PR #987 (squash).
+
+**What to improve:** none this cycle.
+
+**Kaizen task:** deferred — no new systemic gap surfaced; this task's own fix
+already closes the two known recurrences of this failure shape.
