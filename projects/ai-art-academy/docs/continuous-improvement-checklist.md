@@ -15,6 +15,22 @@ Record the lane, files changed, and verification in the task note before rearmin
 
 ### Rotation state
 
+- Last completed lane: Roadmap accuracy (lane 2), 2026-07-21 (~01:00-01:20 UTC,
+  claude-conductor-burst-20260721T0100Z). Found and fixed a process-accuracy bug
+  in `t-010` itself: the immediately-prior cycle's note said it would rearm to
+  `ready` once kind_robots PR #733 merged, and the conductor PR that recorded
+  that note (#942) only appended the note text — it never flipped the `status:`
+  field — so `t-010` sat at `status: claimed` with a fresh (non-stale) claim and
+  no session actively working it, even though #733 had already merged. Fixed by
+  setting `status: ready` directly. Also reconfirmed `t-019` still genuinely
+  blocked (`public/images/academy/styles/` still 404s on kind_robots) and
+  re-checked lane 3 with one fresh queued job (job 1173, greek-vase-painting.webp)
+  — still unclaimed after queuing, same home-relay-down signature as every prior
+  check since 2026-07-18. `scripts/audit_roadmaps.py` clean (same 2 pre-existing
+  info findings); milestones m1-m6 re-verified against current task statuses, no
+  drift. Conductor-docs-only change; no kind_robots PR needed. Next preferred
+  lane is inspiration/preview assets (lane 3, recheck with a fresh queued job,
+  not 1173) falling back to lane 4 if still blocked.
 - Last completed lane: Front-end polish (lane 1), 2026-07-21 (~00:11-00:25 UTC,
   claude-conductor-scheduled-20260721T0011Z). Dispatched an Explore subagent over
   the full in-scope surface with an explicit exclusion list of every bug class
