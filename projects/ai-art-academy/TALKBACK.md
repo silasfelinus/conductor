@@ -1494,3 +1494,21 @@ unmerged PR until this Reviewer sweep found it.
 **Kaizen task:** ai-art-academy/t-036 (new) — add an explicit last-step checklist
 item so lane-1 cycles merge+rearm their own PR in-session instead of relying on a
 later Reviewer sweep to notice.
+
+## 2026-07-21 | Reviewer (burst) | ai-art-academy/t-010 | audited already-merged work
+
+**Decision:** audited (lane 2, roadmap accuracy). No drift found; rearmed to `ready`.
+
+**Failure category:** none — clean audit cycle.
+
+**What was good:**
+- `audit_roadmaps.py` and `check_pr_merged_drift.py` both clean.
+- All 6 milestones re-verified programmatically (done iff every non-recurring
+  task in the bucket is done) rather than by eyeballing — no drift.
+- Respected blocker discipline: did not re-probe the home-relay/egress blockers
+  since the immediately-prior cycle had already rechecked them fresh the same day.
+
+**What to improve:** none this cycle.
+
+**Kaizen task:** none new this cycle — this cycle's own kaizen task (t-036, filed
+one cycle earlier) already covers the systemic gap found this session.

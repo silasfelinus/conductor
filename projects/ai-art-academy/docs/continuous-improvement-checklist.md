@@ -15,7 +15,19 @@ Record the lane, files changed, and verification in the task note before rearmin
 
 ### Rotation state
 
-- Last completed lane: Curriculum depth (lane 4), 2026-07-21 (~14:00-14:40 UTC,
+- Last completed lane: Roadmap accuracy (lane 2), 2026-07-21 (~16:30 UTC,
+  claude-conductor-scheduled-20260721T1630Z-t010). `audit_roadmaps.py` and
+  `check_pr_merged_drift.py` both clean; all 6 milestones re-verified
+  programmatically against actual task statuses — no drift. Did not re-probe
+  lane 3's home-relay blocker (checked fresh by the immediately-prior cycle
+  the same day). Next preferred lane: 3 (inspiration/preview assets), fall
+  back to lane 4 if still blocked.
+- Before that: Front-end polish (lane 1), 2026-07-21 (~16:06-16:20 UTC,
+  claude-conductor-burst-20260721T1600Z / merged by a Reviewer pass at
+  ~16:20 UTC). Synced the mughal-miniature entry (added the prior cycle)
+  into `stores/seeds/academyStyles.ts`. kind_robots PR #814, all 3 CI checks
+  green, merged squash `eb1c7e2`.
+- Before that: Curriculum depth (lane 4), 2026-07-21 (~14:00-14:40 UTC,
   claude-conductor-burst-20260721T1400Z). Lane 3 (inspiration/preview assets) was
   tried first per the prior cycle's preferred-lane note, with a genuinely fresh
   queued job (not 1229): `python scripts/consume_art_requests.py --id-prefix
