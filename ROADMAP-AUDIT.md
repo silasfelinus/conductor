@@ -1,13 +1,13 @@
 # Roadmap Audit
 
-Generated: `2026-07-21T15:24:28.695290+00:00`
+Generated: `2026-07-21T16:11:09.854568+00:00`
 
 This is a conservative structural audit. It reports suspicious state; it does not automatically change task status or remove human gates.
 
 ## Portfolio snapshot
 
-- **40** roadmaps, **31** active projects, **642** tasks
-- **35 ready**, **42 waiting**, **41 needs-human**, **1 claimed/review**, **512 done**
+- **40** roadmaps, **31** active projects, **643** tasks
+- **35 ready**, **42 waiting**, **41 needs-human**, **1 claimed/review**, **513 done**
 - Findings: **0 errors**, **11 warnings**, **44 informational**
 
 ## Project inventory
@@ -15,7 +15,7 @@ This is a conservative structural audit. It reports suspicious state; it does no
 | # | Project | State | Kind | Ready | Waiting | Human | In progress | Done / Total |
 |---:|---|---|---|---:|---:|---:|---:|---:|
 | 1 | `challenge-center` | finished | software | 0 | 0 | 0 | 0 | 20 / 20 |
-| 2 | `ai-art-academy` | active | software | 3 | 0 | 3 | 0 | 29 / 35 |
+| 2 | `ai-art-academy` | active | software | 2 | 0 | 3 | 1 | 29 / 35 |
 | 3 | `coloring-book` | active | software | 0 | 9 | 1 | 0 | 19 / 29 |
 | 4 | `humboldt-scoop` | active | software | 0 | 0 | 0 | 0 | 8 / 8 |
 | 5 | `humboldt-scoop-cms` | active | software | 0 | 4 | 1 | 0 | 6 / 11 |
@@ -32,7 +32,7 @@ This is a conservative structural audit. It reports suspicious state; it does no
 | 16 | `animation-manager` | active | software | 2 | 0 | 0 | 0 | 10 / 12 |
 | 17 | `animation-studio` | retired | software | 3 | 4 | 0 | 0 | 1 / 8 |
 | 18 | `ecosystem-map` | active | software | 0 | 0 | 0 | 0 | 8 / 8 |
-| 19 | `conductor` | active | software | 0 | 0 | 5 | 0 | 70 / 75 |
+| 19 | `conductor` | active | software | 1 | 0 | 5 | 0 | 70 / 76 |
 | 20 | `serendipity` | active | software | 1 | 0 | 0 | 0 | 11 / 12 |
 | 21 | `storymaker` | active | software | 1 | 0 | 0 | 0 | 9 / 10 |
 | 22 | `davinci` | active | software | 1 | 0 | 0 | 0 | 14 / 15 |
@@ -41,7 +41,7 @@ This is a conservative structural audit. It reports suspicious state; it does no
 | 25 | `coat-dance` | active | content | 1 | 0 | 1 | 0 | 0 / 10 |
 | 26 | `career-transition` | retired | content | 0 | 4 | 3 | 0 | 1 / 8 |
 | 27 | `alexa-integration` | active | software | 1 | 0 | 1 | 0 | 16 / 18 |
-| 28 | `conductor-app` | active | software | 2 | 0 | 1 | 1 | 10 / 14 |
+| 28 | `conductor-app` | active | software | 2 | 0 | 1 | 0 | 11 / 14 |
 | 29 | `appmaker` | active | software | 2 | 0 | 0 | 0 | 10 / 12 |
 | 30 | `media-watchlist` | active | software | 1 | 0 | 0 | 0 | 10 / 11 |
 | 31 | `sketchy` | active | software | 2 | 0 | 0 | 0 | 5 / 7 |

@@ -1466,3 +1466,31 @@ milestone reassignment). Worth flagging for whoever eventually builds
 - Same recurring gap as every cycle since the DB became unreachable in this sandbox: live browser confirmation of the visual fix (does the checkmark actually appear for ~700ms before removal) is deferred to whoever next has DB access.
 
 **Kaizen task:** none new this cycle — no systemic gap found, just a normal lane-1 bug fix.
+
+## 2026-07-21 | Reviewer → Worker | ai-art-academy/t-010 | pattern
+
+**Decision:** merged (kind_robots PR #814, squash `eb1c7e2`); rearmed t-010 to `ready`.
+
+**Failure category:** none for the PR itself (clean, scoped, all 3 CI checks green) —
+but a process gap: the claude-conductor-burst-20260721T1600Z cycle opened the PR
+(lane-1 sync of `mughal-miniature` into `academyStyles.ts`) and left the session
+without merging it or rearming the task, so it sat at `status: claimed` with an
+unmerged PR until this Reviewer sweep found it.
+
+**What was good:**
+- The PR itself: a clean, minimal, additive diff (one new array entry), mirroring
+  the established persian-miniature/song-dynasty-landscape sync pattern exactly,
+  correctly sourced from the prior cycle's curriculum-outline.md §27 / teaching-notes.md
+  row 27 content with no invented facts.
+
+**What to improve:**
+- This is the second time a t-010 lane-1 cycle has opened a green kind_robots PR and
+  ended the session without closing the loop (merge + rearm) — see this task's own
+  2026-07-21 ~01:00 UTC note for the first instance (PR #942, status field never
+  flipped after a merge). Recommend the standing lane-1 instructions explicitly say
+  the cycle isn't done until the PR is merged (or explicitly left open with a reason)
+  and the task rearmed.
+
+**Kaizen task:** ai-art-academy/t-036 (new) — add an explicit last-step checklist
+item so lane-1 cycles merge+rearm their own PR in-session instead of relying on a
+later Reviewer sweep to notice.
