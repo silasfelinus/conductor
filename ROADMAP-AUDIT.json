@@ -1,16 +1,16 @@
 {
-  "generated_at": "2026-07-21T18:09:29.705930+00:00",
+  "generated_at": "2026-07-21T19:18:58.619808+00:00",
   "summary": {
     "roadmaps": 40,
     "active_projects": 31,
-    "tasks": 644,
-    "ready": 36,
+    "tasks": 645,
+    "ready": 33,
     "waiting": 42,
-    "needs_human": 41,
-    "in_progress": 0,
-    "done": 514,
+    "needs_human": 42,
+    "in_progress": 1,
+    "done": 516,
     "errors": 0,
-    "warnings": 11,
+    "warnings": 12,
     "info": 44
   },
   "projects": [
@@ -40,17 +40,18 @@
       "autonomous": true,
       "task_count": 36,
       "counts": {
-        "done": 29,
+        "claimed": 1,
+        "done": 30,
         "needs-human": 3,
-        "ready": 4
+        "ready": 2
       },
-      "open_count": 7,
+      "open_count": 6,
       "human_attention": 3,
-      "ready": 4,
+      "ready": 2,
       "waiting": 0,
-      "claimed": 0,
+      "claimed": 1,
       "review": 0,
-      "done": 29
+      "done": 30
     },
     {
       "slug": "coloring-book",
@@ -173,14 +174,14 @@
       "override_status": "active",
       "priority_index": 9,
       "autonomous": false,
-      "task_count": 42,
+      "task_count": 43,
       "counts": {
         "done": 37,
-        "needs-human": 4,
+        "needs-human": 5,
         "ready": 1
       },
-      "open_count": 5,
-      "human_attention": 4,
+      "open_count": 6,
+      "human_attention": 5,
       "ready": 1,
       "waiting": 0,
       "claimed": 0,
@@ -601,16 +602,16 @@
       "autonomous": false,
       "task_count": 7,
       "counts": {
-        "done": 5,
-        "ready": 2
+        "done": 6,
+        "ready": 1
       },
-      "open_count": 2,
+      "open_count": 1,
       "human_attention": 0,
-      "ready": 2,
+      "ready": 1,
       "waiting": 0,
       "claimed": 0,
       "review": 0,
-      "done": 5
+      "done": 6
     },
     {
       "slug": "pinball-hero",
@@ -845,6 +846,13 @@
       "code": "SOFT_NEEDS_HUMAN",
       "project": "kind-robots",
       "task": "t-037",
+      "message": "needs-human has no obvious hard-gate marker; consider returning it to ready, setting soft_gate: true, or documenting the actual gate."
+    },
+    {
+      "severity": "warning",
+      "code": "SOFT_NEEDS_HUMAN",
+      "project": "kind-robots",
+      "task": "t-043",
       "message": "needs-human has no obvious hard-gate marker; consider returning it to ready, setting soft_gate: true, or documenting the actual gate."
     },
     {

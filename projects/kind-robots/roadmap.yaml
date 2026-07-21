@@ -1366,3 +1366,33 @@ tasks:
     claimed_at: '2026-07-21T14:17:23Z'
     updated: '2026-07-21T14:17:23Z'
 
+  - id: t-043
+    milestone: m1
+    title: 'Pitch: trusted-caller mana-charge endpoint so external apps (Sketchy) can debit mana for actions performed on their own infrastructure'
+    status: needs-human
+    owner: worker
+    passes: 0
+    stakes: reversible
+    note: "FOR SILAS: Pitch written and filed at pitches/2026-07-21-sketchy-cross-app-mana-charge-endpoint.md\
+      \ -- a small authenticated route (e.g. POST /api/economy/mana/charge) reusing\
+      \ the existing manaGate/applyMana/requireMachineUser mechanism verbatim, so a\
+      \ trusted external app can charge a Kind Robots user's mana for work it did on\
+      \ its own infrastructure. Raised while writing sketchy/t-004's TOKEN-TIERS.md:\
+      \ every existing mana-gated route in kind_robots gates an action it also performs\
+      \ in-process (e.g. server/api/art/enqueue.post.ts); Sketchy is a separate app\
+      \ with its own DB per its PRODUCT-SPEC.md and cannot call withTextMana in-process,\
+      \ so there is currently no way for it to debit real mana at all without either\
+      \ writing to the shared User/ManaTransaction tables directly (forbidden by this\
+      \ project's own BOUNDARY.md) or skipping real mana accounting entirely. No schema\
+      \ change, no new ManaReason, no new mana math -- just one route plus a scoped\
+      \ trusted-caller credential. TO APPROVE: read the pitch, especially its 2 open\
+      \ questions (whether the trusted-caller credential should be a new Role/scoped\
+      \ API key or reuse the existing Comfy machine-user mechanism; whether the endpoint\
+      \ needs its own abuse-rate-limit separate from the per-user mana balance check).\
+      \ Set the pitch's `status:` to `approved` or `rejected` in the file, and set this\
+      \ task to `status: done` (or `status: ready` with a note if you want changes\
+      \ first). What unblocks: sketchy/t-004's TOKEN-TIERS.md spec can only be implemented\
+      \ once this lands -- until then Sketchy's tier limits work via its own daily-count\
+      \ ceilings but real mana debit stays unimplemented.\n"
+    updated: '2026-07-21T19:15:00Z'
+

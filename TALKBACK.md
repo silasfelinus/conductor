@@ -8664,3 +8664,67 @@ session claude-conductor-agentrun-20260721T181150Z-t036).
 
 **Kaizen task:** deferred — no new systemic gap surfaced; this task's own fix
 already closes the two known recurrences of this failure shape.
+
+## 2026-07-21 | Worker (burst) | sketchy/t-004 | done
+
+**Decision:** implemented, merging this session (reversible, scoped, doc-only —
+session claude-conductor-burst-20260721T191532Z-sketchy-t004).
+
+**Failure category:** none — clean first pass, but caught two wrong claims in the
+existing spec before building on it (below).
+
+**What was good:**
+- Rotation: `next_ready_task.py` surfaced `ai-art-academy/t-010`, but its own note
+  shows it already ran this same hour (claimed 16:06, "RAN ~16:30 UTC" logged in its
+  own note) — re-running a recurring never-idle task twice in the same hour is low
+  value. Walked `priority.yaml` past it looking for a project actually untouched this
+  cycle. Nearly claimed `animation-studio/t-004` (design a reaction-backed animation
+  attempt/revision contract) before checking `project-overrides.yaml` — caught in
+  time that `animation-studio` has been `status: retired` since 2026-07-19
+  (conductor/t-039), explicitly because it duplicates the more-advanced
+  `animation-manager` project (4/10 tasks done there vs. 1/8 here, same t-004 title
+  verbatim). No claim was made, no work done on the retired project — just spent a
+  research cycle before catching my own skipped step-3 check. Confirmed
+  `animation-manager`'s own recurring tasks (t-006/t-007) had *also* already run
+  today (daily-cadence tasks, both already fired this Pacific day) before moving on.
+  Confirmed `serendipity/t-012` and `storymaker/t-010` are both down to their last
+  step (dashboard-tab/tutorial art), blocked on the home art relay (checked job 1189
+  fresh — created 04:21 UTC, still `PENDING`/unclaimed 15+ hours later — relay still
+  down, consistent with every other session's finding today). Landed on
+  `sketchy/t-004`: genuinely unclaimed, no external-infra dependency, matches the
+  established pattern of `t-001`-`t-003` (markdown spec docs, not app code, since
+  Sketchy has no scaffold/live page yet).
+- Researched before writing rather than restating the placeholder table: read
+  `prisma/schema.prisma`'s `User`/`ManaTransaction`/`KarmaTransaction` models,
+  `server/utils/mana.ts`, `manaGate.ts`, `manaCost.ts`, `comfyGate.ts`,
+  `generationMana.ts`, `karma.ts`, and the Stripe webhook handlers before writing
+  `projects/sketchy/TOKEN-TIERS.md`. Found and corrected two wrong claims already
+  sitting in the approved `PRODUCT-SPEC.md`: (1) `withArtMana` (image-generation
+  costing) was named as the critique mana hook, but a critique is a vision+text call
+  — `withTextMana`/`kind:'text'` is the correct fit; (2) "paid tier has higher mana
+  ceiling via the existing subscription model" doesn't exist — `manaCap` is a flat
+  `Int` per user with no tier override anywhere in `manaGate.ts`.
+- Resolved the actual blocker instead of hand-waving past it: guests have no `User`
+  row (no mana account at all) and mana has no daily-reset cron
+  (`lastManaRefill`/`CYCLE_REFILL` are unused schema plumbing), so "daily free-tier
+  reset" was never going to be a mana question. Split the job in the new spec: real
+  mana debit still gates every call (currency check), while the per-tier daily
+  ceiling is Sketchy's own row-count check against its app-owned
+  `SketchyCritique`/`SketchyAssignment` tables — zero kind_robots changes needed for
+  tiering itself. This narrowed the original 3-item backend-pitch table down to one
+  real gap.
+- Filed that one real gap properly rather than leaving it implicit:
+  `pitches/2026-07-21-sketchy-cross-app-mana-charge-endpoint.md` (Sketchy is a
+  separate app with its own DB that cannot call `withTextMana` in-process the way
+  every existing kind_robots route does) plus `kind-robots/t-043` (`needs-human`,
+  mirrors the `t-037` pitch-task pattern) pointing at it.
+- Verified: YAML parse check on both touched roadmaps, `python
+  scripts/audit_roadmaps.py` — 0 errors, 12 warnings (11 baseline + 1 new, and the
+  new one is the same `SOFT_NEEDS_HUMAN` warning the existing `t-037` pitch-task
+  already carries — expected for an awaiting-Silas pitch, not a real problem), same
+  44-info baseline.
+
+**What to improve:** none this cycle.
+
+**Kaizen task:** none this cycle — no new systemic gap surfaced beyond the
+already-filed pitch.

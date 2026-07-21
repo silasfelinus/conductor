@@ -1,28 +1,28 @@
 # Roadmap Audit
 
-Generated: `2026-07-21T18:09:29.705930+00:00`
+Generated: `2026-07-21T19:19:09.982730+00:00`
 
 This is a conservative structural audit. It reports suspicious state; it does not automatically change task status or remove human gates.
 
 ## Portfolio snapshot
 
-- **40** roadmaps, **31** active projects, **644** tasks
-- **36 ready**, **42 waiting**, **41 needs-human**, **0 claimed/review**, **514 done**
-- Findings: **0 errors**, **11 warnings**, **44 informational**
+- **40** roadmaps, **31** active projects, **645** tasks
+- **33 ready**, **42 waiting**, **42 needs-human**, **1 claimed/review**, **516 done**
+- Findings: **0 errors**, **12 warnings**, **44 informational**
 
 ## Project inventory
 
 | # | Project | State | Kind | Ready | Waiting | Human | In progress | Done / Total |
 |---:|---|---|---|---:|---:|---:|---:|---:|
 | 1 | `challenge-center` | finished | software | 0 | 0 | 0 | 0 | 20 / 20 |
-| 2 | `ai-art-academy` | active | software | 4 | 0 | 3 | 0 | 29 / 36 |
+| 2 | `ai-art-academy` | active | software | 2 | 0 | 3 | 1 | 30 / 36 |
 | 3 | `coloring-book` | active | software | 0 | 9 | 1 | 0 | 19 / 29 |
 | 4 | `humboldt-scoop` | active | software | 0 | 0 | 0 | 0 | 8 / 8 |
 | 5 | `humboldt-scoop-cms` | active | software | 0 | 4 | 1 | 0 | 6 / 11 |
 | 6 | `digital-storefront` | active | software | 0 | 2 | 4 | 0 | 17 / 23 |
 | 7 | `packmaker` | active | software | 0 | 0 | 0 | 0 | 10 / 10 |
 | 8 | `mermaids-of-venice` | retired | content | 0 | 0 | 8 | 0 | 4 / 12 |
-| 9 | `kind-robots` | active | software | 1 | 0 | 4 | 0 | 37 / 42 |
+| 9 | `kind-robots` | active | software | 1 | 0 | 5 | 0 | 37 / 43 |
 | 10 | `kindrobots-unraid` | active | software | 0 | 7 | 1 | 0 | 4 / 12 |
 | 11 | `global-ui` | active | software | 0 | 0 | 1 | 0 | 24 / 25 |
 | 12 | `superkate-services-calculator` | active | software | 0 | 0 | 1 | 0 | 35 / 36 |
@@ -44,7 +44,7 @@ This is a conservative structural audit. It reports suspicious state; it does no
 | 28 | `conductor-app` | active | software | 2 | 0 | 1 | 0 | 11 / 14 |
 | 29 | `appmaker` | active | software | 2 | 0 | 0 | 0 | 10 / 12 |
 | 30 | `media-watchlist` | active | software | 1 | 0 | 0 | 0 | 10 / 11 |
-| 31 | `sketchy` | active | software | 2 | 0 | 0 | 0 | 5 / 7 |
+| 31 | `sketchy` | active | software | 1 | 0 | 0 | 0 | 6 / 7 |
 | 32 | `pinball-hero` | retired | content | 2 | 2 | 0 | 0 | 2 / 6 |
 | 33 | `recipe-box` | retired | software | 0 | 2 | 1 | 0 | 0 / 3 |
 | 34 | `brainstorm` | active | proposal | 1 | 0 | 0 | 0 | 0 / 1 |
@@ -61,7 +61,7 @@ This is a conservative structural audit. It reports suspicious state; it does no
 
 _None._
 
-### Warning (11)
+### Warning (12)
 
 - **ACTIVE_PROJECT_ALL_DONE** — `art-generator-connect`: All tasks are done but project override remains active.
 - **ACTIVE_PROJECT_NO_OPEN_TASKS** — `art-generator-connect`: Active project has no open tasks; mark finished/paused or add an intentional recurring task.
@@ -72,6 +72,7 @@ _None._
 - **ACTIVE_PROJECT_ALL_DONE** — `humboldt-scoop`: All tasks are done but project override remains active.
 - **ACTIVE_PROJECT_NO_OPEN_TASKS** — `humboldt-scoop`: Active project has no open tasks; mark finished/paused or add an intentional recurring task.
 - **SOFT_NEEDS_HUMAN** — `kind-robots` / `t-037`: needs-human has no obvious hard-gate marker; consider returning it to ready, setting soft_gate: true, or documenting the actual gate.
+- **SOFT_NEEDS_HUMAN** — `kind-robots` / `t-043`: needs-human has no obvious hard-gate marker; consider returning it to ready, setting soft_gate: true, or documenting the actual gate.
 - **ACTIVE_PROJECT_ALL_DONE** — `packmaker`: All tasks are done but project override remains active.
 - **ACTIVE_PROJECT_NO_OPEN_TASKS** — `packmaker`: Active project has no open tasks; mark finished/paused or add an intentional recurring task.
 
