@@ -12,6 +12,18 @@ Usage:
 This is intentionally line-oriented instead of yaml.safe_dump so agents can flip a single
 roadmap task field without rewriting quoted strings, multiline notes, comments, or ordering.
 
+WARNING -- local working tree only: unlike claim_task.py, this script never fetches or
+reads from origin/main. It edits whatever projects/<project>/roadmap.yaml is already on
+disk in the caller's checkout. If claim_task.py (or any other script that pushes straight
+to origin/main) ran earlier in this same session, and this checkout was not independently
+fetched/fast-forwarded afterward, a call here can silently overwrite that push with a
+stale value from the local tree's old copy. Run `git fetch origin main && git merge
+origin/main --ff-only` (or equivalent) immediately before calling this script whenever a
+direct-to-origin/main push happened earlier in the session -- especially the common
+claim-then-later-set-status sequence. (conductor/t-077, kaizen from davinci/t-014: this
+exact sequence briefly clobbered a just-written claimed_by/claimed_at with a week-old
+value.)
+
 Multiline field values (folded `note: >` blocks, quoted notes spanning lines, and
 `depends_on` block lists) are replaced as a whole; new fields are inserted at the end of
 the task block so they can never land inside another field's value. Newlines in a new
@@ -289,7 +301,12 @@ def build_diff(path: pathlib.Path, before: str, after: str) -> str:
 
 def main() -> int:
     parser = argparse.ArgumentParser(
-        description="Set one field on one task in projects/<project>/roadmap.yaml without YAML reserialization."
+        description="Set one field on one task in projects/<project>/roadmap.yaml without YAML reserialization.",
+        epilog="WARNING: operates on the local working tree only -- it never fetches or reads "
+        "origin/main (unlike claim_task.py). If claim_task.py or any other direct-to-origin/main "
+        "push happened earlier in this session, run `git fetch origin main && git merge "
+        "origin/main --ff-only` first, or this call can silently overwrite that push with a "
+        "stale local value.",
     )
     parser.add_argument("project", help="Project slug, matching projects/<project>/")
     parser.add_argument("task_id", help="Task id, such as t-016")
