@@ -35,7 +35,7 @@ milestones:
 - id: m4
   title: Token tiers and Kind Robots integration
   weight: 15
-  status: not-started
+  status: done
 - id: m5
   title: Workspace UI project art
   weight: 10
@@ -109,18 +109,41 @@ tasks:
 - id: t-004
   milestone: m4
   title: Spec free and paid token/request tiers using Kind Robots economy
-  status: claimed
+  status: done
   owner: worker
   passes: 0
   stakes: reversible
   depends_on: t-001
-  note: 'Define practical request limits for free and paid tiers, how critique and assignment generation
-    consume tokens, and how Sketchy should display remaining usage without adding a competing token system.
-
-    '
+  note: "Define practical request limits for free and paid tiers, how critique and assignment generation\
+    \ consume tokens, and how Sketchy should display remaining usage without adding a competing token system.\n\
+    DONE 2026-07-21 (conductor burst session, claude-conductor-burst-20260721T191532Z-sketchy-t004):\
+    \ added projects/sketchy/TOKEN-TIERS.md, replacing PRODUCT-SPEC.md's placeholder\
+    \ tier table with one grounded in the actual kind_robots mana implementation (read\
+    \ prisma/schema.prisma's User/ManaTransaction/KarmaTransaction models, server/utils/mana.ts,\
+    \ manaGate.ts, manaCost.ts, comfyGate.ts, generationMana.ts, and the Stripe webhook\
+    \ handlers before writing, rather than guessing). Corrected two wrong claims in\
+    \ the original spec: (1) critique calls belong with withTextMana/kind:'text', not\
+    \ withArtMana, since a critique is a vision+text call, not image generation; (2)\
+    \ there is no tier-based manaCap override anywhere in the codebase, so \"higher\
+    \ mana ceiling for paid\" was aspirational, not real. Resolved the actual blocker\
+    \ (guests have no mana account at all, and mana has no daily-reset cron) by splitting\
+    \ the job: real mana debit still gates every call (currency check, same as every\
+    \ other AI action in Kind Robots), while the per-tier daily ceiling (2/5/20 etc.)\
+    \ is enforced by Sketchy's own app-owned SketchyCritique/SketchyAssignment row counts\
+    \ -- zero kind_robots changes needed for tiering itself. Set concrete flat mana\
+    \ costs (8/critique, 1/assignment) from docs/ai-critique-apis.md's own $0.005-0.01\
+    \ cost survey via the real manaGate.ts formula (cost = ceil(estCostUsd * 1000)).\
+    \ Narrowed PRODUCT-SPEC.md's 3-item backend-pitch table down to one real gap: Sketchy\
+    \ is a separate app with its own DB that cannot call withTextMana in-process, so\
+    \ there's no existing way for it to debit mana for work performed on its own infrastructure\
+    \ -- filed pitches/2026-07-21-sketchy-cross-app-mana-charge-endpoint.md and kind-robots/t-043\
+    \ (needs-human) for the one small endpoint that closes that gap, reusing manaGate/applyMana/requireMachineUser\
+    \ verbatim. No gate_human on this task itself -- it elaborates the already-approved\
+    \ t-001 product spec rather than setting new product direction, matching how t-002/t-003\
+    \ closed.\n"
   claimed_by: claude-conductor-burst-20260721T191532Z-sketchy-t004
   claimed_at: '2026-07-21T19:15:33Z'
-  updated: '2026-07-21T19:15:33Z'
+  updated: '2026-07-21T19:35:00Z'
 - id: t-005
   milestone: m5
   title: Generate Sketchy workspace image prompts
