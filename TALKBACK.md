@@ -8478,3 +8478,67 @@ merged before assuming the recorded rejection still holds.
 
 **Kaizen task:** none this cycle — this cycle's work *was* the prior cycle's kaizen
 task.
+
+## 2026-07-21 | Worker (burst) | coat-dance/t-001 | needs-human (conductor PR #976 open)
+
+**Decision:** implemented, left unmerged at needs-human per hard gate (session
+claude-conductor-burst-20260721T1321Z-coatdance).
+
+**Failure category:** none — clean first pass on the task actually worked; one
+process near-miss caught and self-corrected mid-session (below).
+
+**What was good:**
+- Rotation collision handled correctly: `next_ready_task.py` surfaced
+  `ai-art-academy/t-010` (already run multiple times today, skipped for diversity per
+  the last several entries in this file), so walked `priority.yaml` order past
+  several no-ready/already-blocked projects to `appmaker/t-009` (Worker external-repo
+  installation-token + scaffold-PR flow, unblocked now that t-008 is done). Fully
+  designed and implemented it in the kind_robots checkout (installation-token minting
+  with an in-memory cache in `appmakerGithub.ts`, a new `appmakerScaffold.ts` Git
+  Data API push-branch-and-open-PR flow, and two endpoints) before running
+  `claim_task.py` — which returned `ALREADY_CLAIMED` against a different session
+  (`claude-conductor-agentrun-20260721T-appmaker`) that had claimed the same task
+  seconds earlier. Per the Rotation Collisions section, discarded the unpushed,
+  uncommitted kind_robots work immediately (`git checkout --` + delete the new
+  files) rather than racing the other session, and rotated to the next candidate.
+  **Process note for future sessions: claim BEFORE writing implementation, not
+  after** — this session got lucky that nothing had been pushed yet; had the
+  kind_robots changes been committed/pushed first, unwinding would have been much
+  messier.
+- Landed on `coat-dance/t-001` (draft production brief, `gate_human: true`,
+  untouched today, no external-relay dependency unlike most other ready tasks this
+  cycle). Read the source pitch (`notes_from_silas`) directly rather than inventing
+  scope, and found a real, useful correction along the way: `coat dance_x264.mp4` was
+  already sitting in the project folder (since 2026-07-17), contradicting the task
+  note's assumption that Silas still needed to provide it. No `ffmpeg`/`cv2`
+  available in this sandbox, so parsed the MP4 box headers by hand (`ftyp`/`moov`/
+  `mvhd`/`tkhd`/`mdhd`) to get real technical facts (720x480 H.264, ~5:32 runtime,
+  synced 44.1kHz audio track already muxed in) instead of leaving the brief
+  generic. Wrote `projects/coat-dance/BRIEF.md` (premise, runtime assumptions, asset
+  checklist, suggested folder layout, 5 open questions) and a FOR-SILAS roadmap note
+  per the template. Verified: `python scripts/audit_roadmaps.py` (0 errors, no new
+  warnings) and a YAML parse check.
+- Caught and fixed a self-inflicted small mistake before it mattered: had picked
+  `claude-conductor-burst-20260721T1300Z` as this session's id without checking
+  uniqueness — it turned out to already be in use by an unrelated earlier session
+  today (`conductor/t-074`, logged just above in this file). Not a claim conflict
+  (`claim_task.py` keys on project/task, not session id), but it would have made the
+  audit trail look like one continuous session did both unrelated tasks. Relabeled to
+  `claude-conductor-burst-20260721T1321Z-coatdance` via a follow-up commit before
+  opening the PR.
+- Left conductor PR #976 open, not merged: `gate_human: true` is a hard gate per
+  AGENTS.md's "Finish on clean main" rule (genuinely gated work ends unmerged, PR
+  open so it isn't lost) — did not merge just because the diff itself is low-risk
+  markdown/YAML.
+
+**What to improve:**
+- Should have run `claim_task.py` before starting the appmaker/t-009 implementation,
+  not after finishing it — AGENTS.md step 6 already says "claim it before doing real
+  work," and this session did the opposite for the first pick. No harm done this time
+  only because nothing reached git.
+
+**Kaizen task:** conductor/t-075 (new) — add a one-line reminder near
+`scripts/claim_task.py`'s docstring and/or step 6 of "Picking what to work on" in
+AGENTS.md: generate the session id from a fine-grained timestamp (or a random
+suffix) rather than reusing a coarse hour/session-label string, so two sessions in
+the same rotation window can't collide on `claimed_by` the way this cycle did.

@@ -2094,3 +2094,29 @@ tasks:
       retry_context on a passes>0 task" bullet in AGENTS.md's "Retry context —
       failed passes must teach the next one" section, citing this task and the
       ruler-hooked/t-012 case as the worked example.
+
+  - id: t-075
+    milestone: m2
+    title: 'AGENTS.md: session ids for claimed_by should be collision-resistant,
+      not a reused hour-label string'
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Kaizen from coat-dance/t-001 (burst-mode session, 2026-07-21, root
+      TALKBACK.md same date). This session picked `claude-conductor-burst-
+      20260721T1300Z` as its own session id for `claim_task.py`/`claimed_by`
+      without checking uniqueness, and it turned out to already be in use by an
+      unrelated earlier session that same hour (conductor/t-074). Not a claim
+      conflict — `claim_task.py` keys on project/task, not session id — but it
+      left the `claimed_by`/TALKBACK trail looking like one continuous session
+      did two unrelated tasks, until caught and relabeled mid-session.
+
+      Add a short note to AGENTS.md's "Picking what to work on" step 6 (the
+      `claim_task.py` step) recommending a collision-resistant session id —
+      e.g. a full ISO timestamp with seconds plus a short task-specific suffix,
+      or a random token — rather than a coarse rotation/hour label that
+      multiple concurrent burst-mode sessions could plausibly reuse. Doc-only
+      change; no script behavior needs to change since claim correctness
+      itself was never at risk.
