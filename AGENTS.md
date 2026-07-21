@@ -565,6 +565,17 @@ retry_context: >
 
 - The Worker MUST read `retry_context` before re-claiming any task with `passes > 0`,
   and the retry PR's "Flags for Reviewer" section must say how the attempt addressed it.
+- **Before acting on a `retry_context` for a cross-repo task, check whether it's still
+  live.** Silas sometimes merges the referenced PR directly, overriding the Reviewer's
+  rejection without routing back through the normal reject → retry → re-review loop —
+  the roadmap's `retry_context` then sits stale, describing a rejection that no longer
+  holds (kaizen from ruler-hooked/t-012, conductor/t-074, 2026-07-21: a `retry_context`
+  described 12 vue-tsc errors from a rejected kind_robots PR, but Silas had merged that
+  PR directly 9 minutes after the rejection was written, 5 days before the next session
+  picked up the task — the stale note nearly caused a wasted pass re-fixing already-fixed
+  code). Check whether the referenced PR already merged, or whether `passes`/`status`
+  otherwise look inconsistent with an open PR, and re-verify against current target-repo
+  `main` from scratch before assuming the recorded rejection still applies.
 - The Reviewer overwrites `retry_context` on each subsequent rejection (git history
   preserves priors) and removes the field when the task reaches `done`.
 - A task at `passes > 0` with no `retry_context` is a template-discipline gap — the
