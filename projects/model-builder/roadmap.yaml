@@ -534,8 +534,8 @@ tasks:
   - id: t-029
     milestone: m6
     title: "Polish and upgrade Model Builder front-end surface"
-    status: claimed
-    owner: reviewer
+    status: ready
+    owner: null
     passes: 0
     stakes: reversible
     note: >
@@ -610,6 +610,24 @@ tasks:
       timed out unclaimed -- same shared-relay-down signature, so re-queuing this project's
       own art request would just waste a slot. Conductor-docs-only change; no kind_robots PR
       needed. Kept at `ready` -- step (1) is the only remaining blocker now.
+
+      PROGRESS 2026-07-22 (conductor burst-mode cycle, claude-conductor-scheduled-20260722T030537Z):
+      step (4) follow-on -- re-read the interactive components again (continuing the
+      07-20/07-21 pattern) and found another real gap in model-builder-item-panel.vue: the
+      three local textarea refs (pitch/fields/prompt) were kept in sync via one combined
+      `watch` over `[item.pitch, item.fieldsDraft, item.promptDraft]`. Because the callback
+      unconditionally reset all three refs whenever *any* single one changed in the store,
+      drafting one field with AI (or auto-build's sequential per-field drafting) silently
+      clobbered unsaved edits the user was mid-typing in the *other* two textareas of the
+      same item -- no warning, no conflict indicator, just silent data loss. Fixed by
+      splitting into three independent per-field watches so each only reacts to its own
+      value. Verified: eslint clean; full-project `npm run test` (vue-tsc --noEmit) exit 0;
+      `prettier --check` drift on this file confirmed pre-existing via git-stash (same
+      warning without the diff), consistent with the prettier-version-mismatch note from the
+      07-21 cycle -- no blanket reformat. kind_robots PR #850 (branch
+      claude/keen-fermat-a76onp) -- MERGED. Steps (1) and (3) remain as documented in the
+      prior entry; not touched this cycle. Kept at `ready` (not `done`), same pattern as the
+      07-20/07-21 cycles -- those two steps are still outstanding.
     claimed_by: claude-conductor-scheduled-20260722T030537Z
     claimed_at: '2026-07-22T03:05:37Z'
     updated: '2026-07-22T03:05:37Z'
