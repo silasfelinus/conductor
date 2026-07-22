@@ -174,8 +174,10 @@ tasks:
 - id: t-007
   milestone: m5
   title: Polish and upgrade Sketchy front-end surface
-  status: claimed
+  status: review
   owner: worker
+  claimed_by: claude-conductor-burst-20260722T020545Z-sketchy-t007
+  claimed_at: '2026-07-22T02:05:45Z'
   passes: 0
   stakes: reversible
   note: >
@@ -188,6 +190,45 @@ tasks:
     liveUrl points at /sketchy (admin can run the Conductor 'Placements' button to
     backfill channelKey/tabKey/liveUrl); (4) evolve the placeholder scaffold page
     into the full interactive experience for this project.
+
+    PROGRESS 2026-07-22 (conductor burst session,
+    claude-conductor-burst-20260722T020545Z-sketchy-t007, kind_robots PR #848):
+    found and fixed a real bug rather than following steps (1)/(2) as literally
+    written -- this task's own note (and sketchy-page.vue's
+    ProjectFrontConfig.channelKey) said 'academy', but that key does not exist
+    anywhere in kind_robots/stores/helpers/tutorialCards.ts's TutorialChannelKey
+    union (verified: only games/scenario/dream/character/reward/bot/art/sanctuary/
+    builder/home/mural/challenges/mermaids/conductor/packs/wonder exist there).
+    'academy' IS a real key, but in the separate dashboardHelper.ts *dashboard-tab*
+    system (Art Academy dashboard, unrelated to tutorialChannels) -- that's where
+    the note's mix-up came from. Sketchy's content lives in
+    content/channels/lab/sketchy.md alongside davinci, watchlist, ruler-hooked, and
+    voice-lab, which all correctly use tutorialChannels key 'wonder' -- corrected
+    sketchy to match its actual siblings rather than inventing a new
+    TutorialChannelKey. Step (1)'s two art paths split accordingly: the
+    dashboard-tab path (public/images/dashboard-tabs/academy/sketchy.webp) was
+    already correct (dashboardKey really is 'academy' there) and already had a
+    pending art-prompts.yaml request from an earlier cycle; added a new one for
+    the corrected tutorial-art path (public/images/tutorials/wonder/sketchy.webp,
+    id kind-robots-sketchy-tutorial-a3f0e6c2) since the old path didn't exist.
+    Step (2) done: added the 'sketchy' section under
+    tutorialChannels.wonder.sections plus the /sketchy entry in wonder's tutorial
+    route map. Step (4) advanced: replaced the #interactive slot's generic
+    ProjectPitchBoard (a user-submitted-pitch board that doesn't match Sketchy's
+    actual product -- an AI-assigned drawing prompt, not a user draft board) with
+    a tier-selectable sample-assignment preview built from real
+    SKILL-LADDER.md/CRITIQUE-RUBRIC.md content (Fundamentals-category sample per
+    tier, applicable critique dimensions) rather than fabricated copy -- no
+    backend/API exists yet for a live version (sketchy/t-008 explicitly scoped
+    that out), so this stays an honest static preview. Remaining and kept ready:
+    step (1) art generation -- queued both the pre-existing dashboard-tab request
+    (job 1320) and the new tutorial-art request (job 1295) live via
+    consume_art_requests.py --live this session; both confirmed still
+    PENDING/unclaimed several minutes later, consistent with every other
+    project's finding today that the art-generation relay is down; and step (3)
+    the liveUrl/channelKey/tabKey backfill, an admin Placements click not doable
+    from this session. Verified before merge: eslint clean, prettier clean, full
+    kind_robots `npm run test` (vue-tsc --noEmit) exit 0.
   claimed_by: claude-conductor-burst-20260722T020545Z-sketchy-t007
   claimed_at: '2026-07-22T02:05:48Z'
   updated: '2026-07-22T02:05:48Z'
