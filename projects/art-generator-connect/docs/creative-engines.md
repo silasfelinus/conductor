@@ -45,14 +45,14 @@ finished color master.
 
 ### Model files to download (home ComfyUI box)
 
-Krea 2 Turbo:
-- `krea2_turbo_fp8_scaled.safetensors` → `models/diffusion_models/` (or a
-  `krea2-turbo` GGUF → `models/unet/`; prefer GGUF Q5/Q6 on 12GB)
-- `qwen3vl_4b_fp8_scaled.safetensors` → `models/text_encoders/`
-- `qwen_image_vae.safetensors` → `models/vae/`
+Krea 2 Turbo (diffusion model is GGUF; encoder + VAE are the Comfy-Org fp8
+safetensors — they load independently of the diffusion quant):
+- `Krea-2-Turbo-Q5_K_S.gguf` (realrebelai/KREA-2_GGUFs) → `models/unet/`
+- `qwen3vl_4b_fp8_scaled.safetensors` (Comfy-Org/Krea-2) → `models/text_encoders/`
+- `qwen_image_vae.safetensors` (Comfy-Org/Krea-2) → `models/vae/`
 
 Flux.2 Klein 4B:
-- Klein 4B GGUF (e.g. `flux2-klein-4b-Q5_K_M.gguf`) → `models/unet/`
+- `flux-2-klein-4b-Q4_K_M.gguf` → `models/unet/`
 - Flux.2 Klein text encoder (Comfy-Org Flux.2 release) → `models/text_encoders/`
 - `flux2-vae.safetensors` → `models/vae/`
 
