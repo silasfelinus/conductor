@@ -62,17 +62,19 @@ def test_find_output_file_returns_none_when_absent():
 
 
 def test_extract_comfy_output_video(monkeypatch):
-    monkeypatch.setattr(relay, "download_comfy_file", lambda meta: MP4_B64)
+    monkeypatch.setattr(relay, "download_comfy_file", lambda meta: MP4_BYTES)
     outputs = {"341": {"images": [{"filename": "clip.mp4", "type": "output"}]}}
 
     result = relay.extract_comfy_output(outputs, want_video=True)
 
-    assert result == {"data_b64": MP4_B64, "file_type": "mp4", "is_video": True}
+    assert result["data_b64"] == MP4_B64
+    assert result["file_type"] == "mp4"
+    assert result["is_video"] is True
 
 
 def test_extract_comfy_output_video_falls_back_to_mp4(monkeypatch):
     # A SaveVideo output missing an extension should still be treated as mp4.
-    monkeypatch.setattr(relay, "download_comfy_file", lambda meta: MP4_B64)
+    monkeypatch.setattr(relay, "download_comfy_file", lambda meta: MP4_BYTES)
     outputs = {"341": {"images": [{"filename": "clip.webm", "type": "output"}]}}
 
     result = relay.extract_comfy_output(outputs, want_video=True)
@@ -81,15 +83,17 @@ def test_extract_comfy_output_video_falls_back_to_mp4(monkeypatch):
 
 
 def test_extract_comfy_output_image(monkeypatch):
-    monkeypatch.setattr(relay, "download_comfy_file", lambda meta: "cGl4ZWxz")
+    monkeypatch.setattr(relay, "download_comfy_file", lambda meta: b"pixels")
     outputs = {"9": {"images": [{"filename": "art.png", "type": "output"}]}}
 
     result = relay.extract_comfy_output(outputs, want_video=False)
-    assert result == {"data_b64": "cGl4ZWxz", "file_type": "png", "is_video": False}
+    assert result["data_b64"] == base64.b64encode(b"pixels").decode()
+    assert result["file_type"] == "png"
+    assert result["is_video"] is False
 
 
 def test_extract_comfy_output_not_ready_returns_none(monkeypatch):
-    monkeypatch.setattr(relay, "download_comfy_file", lambda meta: MP4_B64)
+    monkeypatch.setattr(relay, "download_comfy_file", lambda meta: MP4_BYTES)
     assert relay.extract_comfy_output({}, want_video=True) is None
 
 
