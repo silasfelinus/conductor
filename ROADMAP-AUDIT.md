@@ -1,14 +1,14 @@
 # Roadmap Audit
 
-Generated: `2026-07-22T04:29:39.668576+00:00`
+Generated: `2026-07-22T05:23:25.654460+00:00`
 
 This is a conservative structural audit. It reports suspicious state; it does not automatically change task status or remove human gates.
 
 ## Portfolio snapshot
 
 - **40** roadmaps, **31** active projects, **650** tasks
-- **32 ready**, **42 waiting**, **43 needs-human**, **0 claimed/review**, **522 done**
-- Findings: **0 errors**, **12 warnings**, **44 informational**
+- **30 ready**, **42 waiting**, **43 needs-human**, **2 claimed/review**, **522 done**
+- Findings: **0 errors**, **12 warnings**, **43 informational**
 
 ## Project inventory
 
@@ -45,7 +45,7 @@ This is a conservative structural audit. It reports suspicious state; it does no
 | 29 | `appmaker` | active | software | 2 | 0 | 0 | 0 | 10 / 12 |
 | 30 | `media-watchlist` | active | software | 1 | 0 | 0 | 0 | 10 / 11 |
 | 31 | `sketchy` | active | software | 0 | 0 | 0 | 0 | 8 / 8 |
-| 32 | `pinball-hero` | retired | content | 2 | 2 | 0 | 0 | 2 / 6 |
+| 32 | `pinball-hero` | retired | content | 0 | 2 | 0 | 2 | 2 / 6 |
 | 33 | `recipe-box` | retired | software | 0 | 2 | 1 | 0 | 0 / 3 |
 | 34 | `brainstorm` | active | proposal | 1 | 0 | 0 | 0 | 0 / 1 |
 | 35 | `wishmaster` | active | software | 1 | 0 | 0 | 0 | 2 / 3 |
@@ -76,7 +76,7 @@ _None._
 - **ACTIVE_PROJECT_ALL_DONE** — `sketchy`: All tasks are done but project override remains active.
 - **ACTIVE_PROJECT_NO_OPEN_TASKS** — `sketchy`: Active project has no open tasks; mark finished/paused or add an intentional recurring task.
 
-### Info (44)
+### Info (43)
 
 - **APPROVAL_WITHOUT_GATE** — `ai-art-academy` / `t-002`: approved_by_human is set on a task that is not human-gated.
 - **APPROVAL_WITHOUT_GATE** — `ai-art-academy` / `t-011`: approved_by_human is set on a task that is not human-gated.
@@ -111,7 +111,6 @@ _None._
 - **MISSING_GOAL** — `newsfeed`: Roadmap has no friendly goal/definition of done.
 - **NEEDS_HUMAN_NOTE_FORMAT** — `newsfeed` / `t-021`: needs-human note does not use the AGENTS.md FOR SILAS action format.
 - **MISSING_GOAL** — `packmaker`: Roadmap has no friendly goal/definition of done.
-- **INACTIVE_PROJECT_HAS_READY_TASKS** — `pinball-hero`: Inactive project retains 2 ready task(s); harmless but misleading in generated status.
 - **MISSING_GOAL** — `pinball-hero`: Roadmap has no friendly goal/definition of done.
 - **MISSING_GOAL** — `recipe-box`: Roadmap has no friendly goal/definition of done.
 - **APPROVAL_WITHOUT_GATE** — `ruler-hooked` / `t-002`: approved_by_human is set on a task that is not human-gated.
