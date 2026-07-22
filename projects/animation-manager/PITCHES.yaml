@@ -1,4 +1,4 @@
-updated: "2026-07-21T17:07:06-07:00"
+updated: "2026-07-22T09:42:00-07:00"
 
 pitches:
   - id: bioluminescent-tide
@@ -128,7 +128,7 @@ pitches:
 
   - id: clockwork-greenhouse
     title: Clockwork Greenhouse
-    status: pitched
+    status: candidate
     priority: 5
     surprise: Tiny brass stems grow leaves, gears pollinate mechanical flowers, and the garden quietly resets through seasons.
     passive_loop: Plants grow and fold on staggered timelines while pollinator gears move between blooms.
@@ -140,6 +140,24 @@ pitches:
     acceptance:
       - visible lifecycle includes growth, bloom, seed, and reset
       - no interaction is needed to populate the garden
+    builds:
+      - version: 1
+        status: candidate
+        component: components/screenfx/clockwork-greenhouse.vue
+        pull_request: silasfelinus/kind_robots#887
+        commit: d50f83ca91fa40d52c8415b2f867b7c3ce39d583
+        verification:
+          - TypeScript Type Check
+          - Contract Tests
+          - eslint
+          - prettier
+          - test:animation-catalog
+          - test:animation-component-attempts
+        deferred:
+          - Live browser smoke test (docs/architecture/animation-catalog-smoke-matrix.md) --
+            no reachable DATABASE_URL in the sandbox; server/utils/prisma.ts throws on every
+            SSR request.
+          - Component attempt record (SPEC.md "Attempt records") -- same DB blocker.
 
   - id: cloud-city-drift
     title: Cloud City Drift
@@ -349,3 +367,36 @@ pitches:
       - at least three walkers are visible ambling across the screen at any time during normal (non-reduced-motion) play
       - the wind gust interaction visibly changes at least one walker's gait speed within one second of pointer movement
       - a walker that exits one edge re-enters from the opposite edge without a visible teleport pop (fade or off-screen buffer)
+
+  - id: shadow-puppet-theater
+    title: Shadow Puppet Theater
+    status: pitched
+    priority: 16
+    surprise: >
+      A backlit paper screen where jointed shadow-puppet cutouts (a bird, a boat, a
+      lantern-bearer) perform a short wordless vignette that subtly reshuffles its
+      blocking and lighting angle each time it loops, so it never plays identically twice.
+    passive_loop: >
+      A rod-puppet cast cycles through 2-3 short vignettes (a bird released from a cage,
+      a boat crossing choppy water, a lantern-bearer climbing a hill) with joint-driven
+      walk/flight cycles; the backlight position drifts slowly over the course of a loop,
+      subtly changing every puppet's cast-shadow angle and softness.
+    optional_interaction: >
+      Pointer position casts a soft hand-shadow silhouette that "joins" the scene without
+      disrupting the puppets; click advances early to the next vignette in the rotation.
+    technique: >
+      Cached silhouette Path2D cutouts with per-joint rotation (a handful of rigid bones
+      per puppet), rendered against a soft radial backlight gradient that itself animates
+      position over the loop.
+    reduced_motion: One puppet performing a single slow gesture loop, fixed backlight, no hand-shadow, no vignette switching.
+    performance_risk: >
+      Multiple jointed puppets with soft shadow-blur gradients per frame; precompute
+      silhouette paths once and cap concurrent puppets to the active vignette's cast.
+    novelty: >
+      Backlit rod-puppetry with joint-driven blocking and a slow-drifting light source is
+      distinct from every shipped/pitched entry -- no existing effect uses articulated
+      shadow-theater staging or narrative vignette rotation.
+    acceptance:
+      - at least one full vignette (start pose to resolution pose) completes within twenty seconds
+      - backlight drift is visible across a loop without ever fully silhouette-flattening or washing out a puppet
+      - hand-shadow interaction never blocks or offsets the actual page pointer

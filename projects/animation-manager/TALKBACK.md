@@ -69,3 +69,21 @@ type: critique
 - The building session left its own PR unmerged and the roadmap task at `status: claimed` past its own session's lifetime — same shape AGENTS.md already warns about (superkate-hairstyle-ai/t-017 precedent) and the same gap this cycle also found on `ai-art-academy/t-010`'s PR #771 this same run. Worth a general note: burst/scheduled sessions that open a PR should merge it in the same pass when CI is expected to finish within the session's lifetime, rather than relying on a later cycle to notice.
 
 **Kaizen task:** none new this cycle — the gap above is a cross-project pattern already being tracked informally (this is the second instance in the same run); if a third instance turns up, it should become a proper roadmap task on whichever project surfaces it next rather than another TALKBACK note.
+
+## 2026-07-22 | Reviewer (conductor scheduled agent) | animation-manager/t-007 | pattern
+
+**Decision:** merged (kind_robots PR #887, squash d50f83c) — built and merged in the same session/pass.
+
+**Failure category:** none — clean diff, all 4 CI checks (verify, Contract verifiers, TypeScript, GitGuardian) green on first push.
+
+**What was good:**
+- `clockwork-greenhouse.vue` follows the established screensaver shape: `ResizeObserver` sizing with capped device-pixel-ratio, a `prefers-reduced-motion` listener, and full RAF/observer/listener cleanup on unmount (including nulling the cached `Path2D` handles and plant/pollinator/spark arrays).
+- Addressed the pitch's stated performance risk ("too many independent timelines; use pooled state machines and capped plant count") directly: a fixed four-phase (`growing`/`bloom`/`seed`/`reset`) state machine per plant with a capped permanent-plant count (4 reduced-motion / 6 normal) and a hard cap of 2 concurrent click-planted temporary seeds.
+- Reduced motion isn't just "slower" — it structurally holds every plant in a static mature-bloom pose (no phase advancement) while still rotating pollinator gears and drifting ambient light, matching the pitch's own reduced-motion plan ("mature garden with only subtle gear rotation and light shifts") rather than a generic slowdown.
+- PR opened and merged in the same session once all 4 CI checks came back green, closing the gap flagged in this file's 2026-07-21 entry (building sessions leaving their own PR unmerged for a later cycle to notice).
+- Added the matching `builds:` record to `PITCHES.yaml` inline with this cycle's merge, not a decoupled follow-up.
+
+**What to improve:**
+- Same recurring gap as every prior build this week: live browser smoke test and the Component attempt record are both deferred (no reachable `DATABASE_URL` in this sandbox). Four consecutive builds (paper-lantern-weather, magnetic-sand-garden, stained-glass-rain, clockwork-greenhouse) now carry this identical deferred item — worth promoting from a per-PR note to an actual roadmap task once a session with DB access is available, per this cycle's kaizen suggestion below.
+
+**Kaizen task:** Filed as a suggestion in kind_robots PR #887's description (provision a sandbox-reachable throwaway DB for the live-smoke step, or fold "deferred, same sandbox limitation" into the task's formal acceptance bar) rather than a new roadmap task this cycle — four instances of the identical note is a strong enough signal that the next session touching t-007 or t-022/t-031 (model-builder's equivalent deferred-smoke tasks) should turn this into a real task instead of a fifth repetition of this paragraph.
