@@ -9016,3 +9016,71 @@ by-hand discovery like t-010's.
 **Kaizen task:** none filed — the natural next step (periodically re-running the scan) is
 already covered by `audit_roadmaps.py`'s existing recurring invocation; no further followup
 identified.
+
+## 2026-07-22 | Reviewer (scheduled agent run) | conductor/t-004 (PR #1004 close) | pattern
+
+**Decision:** closed PR #1004 without merging (superseded, not a review rejection).
+
+**Failure category:** null — this is a rotation-collision cleanup, not a task failure.
+
+**Subject:** Found an open conductor PR (#1004, conductor/t-079 duplicate-key detection) whose
+work was already superseded by a different, more complete fix that had merged first as PR #1005.
+
+**Detail:**
+- Both PRs targeted the same t-079 gap (stale duplicate YAML keys silently winning under
+  last-key-wins semantics) from concurrent sessions. #1005 merged first and fixed all 11
+  known instances across conductor/global-ui/kind-robots/packmaker; #1004 only fixed
+  conductor's own 6 and was left open, `mergeable_state: dirty` against current main.
+  `projects/conductor/roadmap.yaml` t-079 was already `status: done` via #1005.
+- Verified via `git diff --stat` against #1004's PR base commit that the divergence was real
+  (not just auto-gen file noise) before concluding it was a genuine duplicate rather than a
+  false positive from the STATUS.md-refresh-race pattern documented elsewhere in this file.
+  Commented on #1004 explaining the supersession and closed it (not merged) so its branch
+  can be cleaned up by branch-janitor.
+
+**Suggested action:** none — this is exactly the rotation-collision risk `claim_task.py` and
+step 6 of "Picking what to work on" exist to reduce; both sessions did claim correctly, they
+just happened to run concurrently before either pushed. No process gap found.
+
+**Kaizen task:** none filed — isolated collision, no recurring pattern identified this cycle.
+
+## 2026-07-22 | Reviewer (scheduled agent run) | ai-art-academy/t-010 | pattern
+
+**Decision:** merged (kind_robots PR #849, lane 1 front-end polish)
+
+**Failure category:** null (clean cycle; self-caught and corrected one implementation mistake
+before it reached verification, see below)
+
+**Subject:** Continued the established t-010 continuous-improvement rotation: lane 3 reconfirmed
+still blocked (relay unclaimed after a fresh 4-minute poll), lane 4 has no unblocked work left
+per its own coverage table, fell to lane 1 and fixed a real cross-tab source-selection race in
+`art-styler.vue`.
+
+**Detail:**
+- Followed the checklist's own rotation/blocker-discipline rules rather than re-deriving
+  selection logic by hand: `next_ready_task.py` picked ai-art-academy/t-010 as the top
+  priority-ordered ready task, and the project's own `continuous-improvement-checklist.md`
+  said lane 3 was next preferred, falling back to lane 4. Queued a genuinely fresh job (1319)
+  rather than trusting a stale prior job id's terminal status, consistent with the t-035
+  lesson about stale-completion false positives.
+- The Explore subagent's report initially proposed a fix that would have introduced a new
+  bug: gating the `finally` block's `isLoadingStarterImage.value = false` reset on the new
+  `sourceSelectionToken` would have permanently disabled every starter thumbnail (the
+  template binds `:disabled="isLoadingStarterImage"` on all of them) after any stale race,
+  since no other code path resets that flag. Caught this by reading the template's actual
+  bindings before finalizing the fix, not just the store logic — worth calling out as a
+  general lesson: token-guard fixes for async races need to check whether *every* write in
+  the guarded block is safe to skip, not just the "obviously stale" one.
+- Verified with the full local kind_robots toolchain (`provision_kind_robots_deps.sh`):
+  eslint, prettier, and `vue-tsc --noEmit` all clean, re-run after rebasing onto a newer
+  kind_robots main that had landed mid-cycle (PR #848, unrelated sketchy work).
+
+**Suggested action:** none specific to the Worker — this was a Reviewer-role solo cycle. The
+self-caught regression is a useful pattern to keep in mind for future token-guard fixes in
+this same file (now two instances: gallery-to-gallery in PR #831, cross-tab in #849) — noted
+in the PR's own kaizen suggestion (a shared `useLatestSelection()` composable if a third
+instance turns up).
+
+**Kaizen task:** none filed as a new roadmap task this cycle — the composable suggestion is
+recorded in kind_robots PR #849's description for a future lane-1 cycle to pick up if the
+pattern recurs a third time; deferred rather than pre-built speculatively.
