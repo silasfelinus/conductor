@@ -109,8 +109,8 @@ DEFAULT_NEGATIVE_PROMPT = (
 # VERIFY these filenames against your ComfyUI/models folders after download —
 # quant/release naming varies. GGUF users: set KREA2_UNET_LOADER to
 # "UnetLoaderGGUF" and point KREA2_MODEL at the .gguf (lighter on 12GB VRAM).
-KREA2_UNET_LOADER = "UNETLoader"  # or "UnetLoaderGGUF" for a .gguf
-KREA2_MODEL = "krea2_turbo_fp8_scaled.safetensors"
+KREA2_UNET_LOADER = "UnetLoaderGGUF"  # GGUF quant (lighter on 12GB VRAM)
+KREA2_MODEL = "Krea-2-Turbo-Q5_K_S.gguf"  # realrebelai/KREA-2_GGUFs -> models/unet/
 KREA2_MODEL_DTYPE = "default"  # UNETLoader weight_dtype; ignored by the GGUF loader
 KREA2_CLIP = "qwen3vl_4b_fp8_scaled.safetensors"
 KREA2_CLIP_TYPE = "krea2"
@@ -131,8 +131,8 @@ KREA2_SCHEDULER = "simple"
 # encoder and VAE (different from Flux.1).
 #
 # VERIFY these filenames against the Comfy-Org Flux.2 release you download.
-FLUX2_KLEIN_UNET_LOADER = "UnetLoaderGGUF"  # Klein 4B ships as GGUF
-FLUX2_KLEIN_MODEL = "flux2-klein-4b-Q5_K_M.gguf"
+FLUX2_KLEIN_UNET_LOADER = "UnetLoaderGGUF"  # Klein 4B GGUF -> models/unet/
+FLUX2_KLEIN_MODEL = "flux-2-klein-4b-Q4_K_M.gguf"
 FLUX2_KLEIN_CLIP = "flux2_klein_text_encoder_fp8_scaled.safetensors"
 FLUX2_KLEIN_CLIP_TYPE = "flux2"
 FLUX2_KLEIN_VAE = "flux2-vae.safetensors"
