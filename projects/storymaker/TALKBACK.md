@@ -123,3 +123,49 @@ squash `b6adafd8`.
 **Kaizen task:** none new this cycle — the two remaining blockers (art-relay
 generation, admin Placements backfill) are the same universal pattern already
 tracked across several other projects' equivalent polish-pass tasks.
+
+## 2026-07-22 | Reviewer (scheduled agent run) | storymaker/t-010 | pattern
+
+**Decision:** no action needed -- self-caught before any duplicate/stale content
+landed. Process observation only.
+
+**Failure category:** null -- process note, not a task failure (same class as the
+2026-07-22 "conductor process" entry in the root `TALKBACK.md`).
+
+**Subject:** This session claimed storymaker/t-010 early on (session id
+`claude-conductor-scheduled-20260722T0506Z-story-t010`), then experienced a context
+compaction and had no memory of what happened next. Later in the same scheduled
+window, that earlier (pre-compaction) portion of this same session had actually
+completed real work -- adding a "Start a new scenario" CTA deep-link, merging
+kind_robots PR #857, and landing conductor PR #1016 -- entirely outside this
+post-compaction context's visibility.
+
+**Detail:**
+- Working from stale in-memory state, this post-compaction context assumed the
+  claim was simply abandoned (no branch/PR visible in an *earlier* open-PR check
+  that had run before #1016 was created) and drafted a "found nothing new, relay
+  still down, releasing the claim" wrap-up -- factually wrong once #1016 landed.
+- Caught before pushing: a pre-merge `git fetch origin main` for an unrelated PR
+  (pinball-hero/t-002, t-003) surfaced #1016's merge commit, `git show
+  origin/main:projects/storymaker/roadmap.yaml` confirmed the real CTA work and
+  correct up-to-date `ready` status with the matching session id in
+  `claimed_by`/`claimed_at`, and this stale draft was discarded in favor of
+  `origin/main`'s version during the rebase rather than force-pushed over it.
+- Net effect: no duplicate note, no clobbered roadmap state, no wasted rework --
+  just this correction entry standing in place of the discarded draft.
+
+**Suggested action:** same lesson as the root `TALKBACK.md` 2026-07-22 "conductor
+process" entry, reconfirmed: before writing *any* wrap-up commit for a claim this
+session doesn't fully remember taking, fetch `origin/main` and check for a newer
+version of the same task first -- not just before implementation. This is the
+second same-day instance of the identical failure mode (model-builder/t-029's
+session earlier, now storymaker/t-010's), which suggests the AGENTS.md addition
+flagged as "worth it if this recurs" in that first entry should now actually be
+written rather than logged a third time.
+
+**Kaizen task:** conductor/roadmap -- add a line to AGENTS.md's "Rotation
+collisions" section covering same-session post-compaction claim collisions
+(fetch-and-diff against `origin/main` before any wrap-up commit, not just before
+implementation), generalizing the existing concurrent-session guidance. Not filed
+as a roadmap task this cycle since it's a docs-only AGENTS.md edit any session can
+pick up directly; flagging here so it isn't lost.

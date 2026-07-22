@@ -55,37 +55,55 @@ tasks:
 - id: t-002
   milestone: m2
   title: Research BOM tiers and common-source parts
-  status: claimed
+  status: needs-human
   owner: worker
   passes: 0
   stakes: reversible
-  updated: '2026-07-22T05:18:31Z'
+  gate_human: true
+  updated: '2026-07-22T05:25:00Z'
   depends_on: t-001
-  note: 'Create starter, solid, and deluxe bill-of-materials tiers. Favor reliable common parts: plywood
+  note: |-
+    Create starter, solid, and deluxe bill-of-materials tiers. Favor reliable common parts: plywood
     or MDF cabinet material, acrylic/polycarbonate, commodity switches/sensors, buttons, wiring, fasteners,
     power supplies, coils/solenoids where appropriate, microcontroller options, LED options, and printed
     hardware. Call out where used/salvaged pinball parts are better than printing.
-
-    '
-  claimed_by: claude-conductor-scheduled-20260722T0506Z-pinball-t002
-  claimed_at: '2026-07-22T05:18:31Z'
+    FOR SILAS: projects/pinball-hero/BOM-TIERS.md is the bill of materials, written 2026-07-22. It covers
+    common-to-all-tiers parts (cabinet, playfield hardware, electronics core, lighting/display) plus
+    Starter/Solid/Deluxe tier-specific add-ons (flipper drive, pop bumper, ramp, audio), each with spec,
+    estimated cost, and source. Also reconciles this document's fuller itemized total against
+    DESIGN-BRIEF.md's original tier-delta estimate (no change to the brief's numbers, just showing the math).
+    TO APPROVE: read projects/pinball-hero/BOM-TIERS.md, especially its "Open questions this BOM inherits
+    from DESIGN-BRIEF.md" section (flipper drive tier placement, score display type, cabinet material) --
+    those are DESIGN-BRIEF.md's original open questions, still unresolved, repeated here because they
+    directly change BOM line items. Set approved_by_human: true and status: done (with any direction
+    changes noted here) once satisfied. Unblocks: pinball-hero/t-004 (electronics and control plan), which
+    needs the flipper-drive answer specifically.
 - id: t-003
   milestone: m3
   title: Specify the 3D printable model set
-  status: claimed
+  status: needs-human
   owner: worker
   passes: 0
   stakes: reversible
-  updated: '2026-07-22T05:18:35Z'
+  gate_human: true
+  updated: '2026-07-22T05:25:00Z'
   depends_on: t-001
-  note: 'Define the printable model catalog: brackets, guides, wireforms substitutes, lane plastics, posts,
+  note: |-
+    Define the printable model catalog: brackets, guides, wireforms substitutes, lane plastics, posts,
     target housings, ball trough helpers, ramps if feasible, playfield fixtures, cable clips, and cabinet
     helpers. Include recommended materials, orientations, tolerances, heat/wear notes, and whether each
     part should be STL, 3MF, or editable CAD source.
-
-    '
-  claimed_by: claude-conductor-scheduled-20260722T0506Z-pinball-t003
-  claimed_at: '2026-07-22T05:18:35Z'
+    FOR SILAS: projects/pinball-hero/PRINTABLE-MODELS.md is the printable model catalog, written 2026-07-22.
+    It covers every printed part (flipper arms, pivot brackets, pop bumper, bumper caps, rail guides, ball
+    trough, plunger housing, slingshot brackets, ramp system, backglass mounts, wire clips, post inserts,
+    LED diffuser channels) with material (PLA+/PETG), print orientation, supports, tolerance, and file
+    format (STL/3MF/STEP source) for each, plus a Bambu A1 print-settings summary table and an M3
+    heat-set-insert assembly convention.
+    TO APPROVE: read projects/pinball-hero/PRINTABLE-MODELS.md, especially "Open items this catalog
+    inherits from DESIGN-BRIEF.md" (ramp-in-MVP, theme, and a ball-trough size check still pending final
+    layout) -- same open questions as t-002, repeated because they affect which parts get modeled first.
+    Set approved_by_human: true and status: done (with any direction changes noted here) once satisfied.
+    Unblocks: pinball-hero/t-005 (final build package outline) and feeds t-004's mounting-interface needs.
 - id: t-004
   milestone: m4
   title: Design the electronics and control plan

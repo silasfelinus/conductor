@@ -126,6 +126,22 @@ finishing, the claim self-expires after `CLAIM_TTL_MINUTES` (90 minutes, see
 `scripts/roadmap_claims.py`) so the task doesn't stay locked forever — `next_ready_task.py`
 surfaces a stale-claimed task as pickable again automatically.
 
+**Same-session post-compaction collisions** are the identical failure mode with a
+different trigger: a session's context gets compacted mid-run and loses memory of
+work it already completed earlier in the same scheduled window. Resuming from stale
+in-memory state, it can find its own now-outdated `status: claimed` snapshot,
+correctly avoid re-implementing (an open-PR check usually catches that part), but
+then still draft an inaccurate wrap-up commit (roadmap/TALKBACK note) describing a
+"nothing to do" or "releasing the claim" outcome that a real merge has since made
+false. Hit twice the same day (2026-07-22): model-builder/t-029 and
+storymaker/t-010, both in root/project `TALKBACK.md`. The fix is the same as the
+concurrent-session case, just applied to the wrap-up step too, not only the
+implementation step: **before writing any wrap-up commit for a claim this session
+doesn't fully remember taking, `git fetch origin main` and diff the task's current
+state** — a newer merge under the same or a related session id is the signal that
+the "resume" is actually stale, and the wrap-up should defer to `origin/main`'s
+version (via rebase, keeping the newer content) rather than push over it.
+
 ### Task dependencies (pipelines)
 A task may declare `depends_on: <task-id>` (or a list). A task is only workable when every
 dependency is `status: done` AND, if the dependency is human-gated, `approved_by_human: true`.
