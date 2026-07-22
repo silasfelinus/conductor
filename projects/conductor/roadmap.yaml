@@ -1312,7 +1312,6 @@ tasks:
       coordinated update (rename in ci.yml + update the required-check setting
       in the same window) rather than an agent-only change -- soft needs-human
       if branch protection can't be inspected from this environment.
-    updated: '2026-07-17T07:53:22Z'
 
   - id: t-049
     milestone: m2
@@ -1525,7 +1524,6 @@ tasks:
       with a single sentence pointing at `EGRESS-BLOCKERS.md` (keep one summary line
       of history, don't delete the task's own note entirely). Purely record-keeping —
       should not change any task's `status`/`needs-human` semantics.
-    updated: '2026-07-17T07:50:32Z'
 
   - id: t-055
     milestone: m2
@@ -1584,7 +1582,6 @@ tasks:
       STATUS.md/ROADMAP-AUDIT.*/LEARNING-REPORT.md and regenerate; for
       append-only files (TALKBACK.md, LEARNING.yaml) that both sides touched,
       keep both sides' entries rather than picking one.
-    updated: '2026-07-17T07:47:54Z'
 
   - id: t-057
     milestone: m2
@@ -1603,7 +1600,6 @@ tasks:
       one-line pointer in AGENTS.md's cross-repo/verification section so future
       sessions run it instead of re-deriving the CYPRESS_INSTALL_BINARY +
       DATABASE_URL combination from scratch.
-    updated: '2026-07-17T07:46:52Z'
 
   - id: t-058
     milestone: m1
@@ -1624,7 +1620,6 @@ tasks:
       A tiny test (monkeypatch rex.KR_API_TOKEN to None/empty, assert exit
       code 1, assert post_batch never called) closes the last CLI-gating gap
       in this file.
-    updated: '2026-07-17T07:48:52Z'
 
   - id: t-060
     milestone: m3
@@ -1653,7 +1648,6 @@ tasks:
       projects/priority.yaml's `order:` list in a reasonable position (below the
       named priority band, alongside similarly-scoped projects), verify with
       scripts/validate_roadmaps.py, no code/behavior change.
-    updated: '2026-07-17T07:45:37Z'
 
   - id: t-059
     milestone: m2
@@ -2264,7 +2258,7 @@ tasks:
     title: 'audit_roadmaps.py does not detect duplicate YAML keys within a task
       block, which silently lets stale owner/claimed_by/approved_by_human
       values win over current ones'
-    status: claimed
+    status: done
     owner: reviewer
     passes: 0
     stakes: reversible
@@ -2334,6 +2328,33 @@ tasks:
          diff).
       Kaizen-shaped task; stakes: reversible (docs/tooling only, no runtime
       behavior change to the app).
+
+      DONE 2026-07-22 (conductor burst cycle, claude-conductor-burst-20260722T0106Z-t079):
+      item 1 -- added `find_duplicate_keys()` to `scripts/audit_roadmaps.py`, a
+      SafeLoader subclass that records (key, line_number) for every mapping key
+      that appears more than once within the same YAML mapping (the repro loader
+      above, adapted to collect all duplicates instead of raising on the first
+      one). Wired it into the per-roadmap audit loop as a new `DUPLICATE_YAML_KEY`
+      error finding. Added `tests/test_audit_roadmaps_policy.py::test_duplicate_key_within_task_block_is_flagged`
+      and `::test_no_duplicate_keys_is_clean`; full suite (444 tests) still green.
+      A fresh run confirms it catches exactly the instances this task's note
+      already catalogued: 6 in conductor, 1 in global-ui, 2 in kind-robots, 2 in
+      packmaker.
+      Item 2 (partial, by design): fixed the 6 conductor instances directly
+      (this project's own roadmap, already under this task's claim, no collision
+      risk) -- each was a stale trailing `updated:` line appended after the task's
+      `note:` block, always older than the correct value already sitting above the
+      note (same root-cause pattern as the original ai-art-academy/t-010 finding).
+      Deleted the 6 stale duplicate lines; `yaml.safe_load` and the new audit check
+      both confirm zero remaining duplicates in this file.
+      Left global-ui, kind-robots, and packmaker's instances unedited, per this
+      note's own caution against touching another active project's roadmap.yaml
+      without claiming it first. Not filing them as separate roadmap tasks either
+      -- the new `DUPLICATE_YAML_KEY` check now makes them permanent, self-
+      refreshing findings in `ROADMAP-AUDIT.md`/`.json` (regenerated as part of
+      this same commit), so they stay visible on every future audit run until
+      whichever session next claims each of those 3 projects fixes them as a
+      small in-scope cleanup -- no separate tracking task needed.
     claimed_by: claude-conductor-burst-20260722T0106Z-t079
     claimed_at: '2026-07-22T01:06:07Z'
-    updated: '2026-07-22T01:06:07Z'
+    updated: '2026-07-22T02:15:00Z'

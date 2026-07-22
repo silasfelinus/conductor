@@ -44,3 +44,13 @@ def test_needs_human_stakes_is_hard_marker(tmp_path):
 def test_open_unexplained_gate_still_warns(tmp_path):
     result = findings_for(tmp_path, '  - id: t-001\n    milestone: m1\n    title: Suspicious gate\n    status: ready\n    stakes: reversible\n    gate_human: true\n    approved_by_human: false\n    note: Ordinary internal task.\n')
     assert 'POSSIBLY_UNNECESSARY_GATE' in codes(result)
+
+def test_duplicate_key_within_task_block_is_flagged(tmp_path):
+    result = findings_for(tmp_path, '  - id: t-001\n    milestone: m1\n    title: Stale duplicate field\n    status: needs-human\n    stakes: reversible\n    owner: reviewer\n    updated: "2026-07-17T08:35:00Z"\n    note: "FOR SILAS: has a trailing duplicate below."\n    updated: "2026-07-17T07:53:22Z"\n')
+    dup = [item for item in result if item['code'] == 'DUPLICATE_YAML_KEY']
+    assert len(dup) == 1
+    assert 'updated' in dup[0]['message']
+
+def test_no_duplicate_keys_is_clean(tmp_path):
+    result = findings_for(tmp_path, '  - id: t-001\n    milestone: m1\n    title: Clean task\n    status: ready\n    stakes: reversible\n    note: Nothing duplicated here.\n')
+    assert 'DUPLICATE_YAML_KEY' not in codes(result)

@@ -1,15 +1,15 @@
 {
-  "generated_at": "2026-07-21T23:29:51.768962+00:00",
+  "generated_at": "2026-07-22T01:10:07.692579+00:00",
   "summary": {
     "roadmaps": 40,
     "active_projects": 31,
     "tasks": 650,
-    "ready": 34,
+    "ready": 33,
     "waiting": 42,
     "needs_human": 43,
     "in_progress": 0,
-    "done": 520,
-    "errors": 0,
+    "done": 521,
+    "errors": 6,
     "warnings": 14,
     "info": 44
   },
@@ -368,17 +368,16 @@
       "autonomous": false,
       "task_count": 79,
       "counts": {
-        "done": 72,
-        "needs-human": 6,
-        "ready": 1
+        "done": 73,
+        "needs-human": 6
       },
-      "open_count": 7,
+      "open_count": 6,
       "human_attention": 6,
-      "ready": 1,
+      "ready": 0,
       "waiting": 0,
       "claimed": 0,
       "review": 0,
-      "done": 72
+      "done": 73
     },
     {
       "slug": "serendipity",
@@ -784,6 +783,48 @@
     }
   ],
   "findings": [
+    {
+      "severity": "error",
+      "code": "DUPLICATE_YAML_KEY",
+      "project": "global-ui",
+      "task": null,
+      "message": "Duplicate mapping key 'updated' at line 117. YAML last-key-wins semantics mean the value at this line silently overrides an earlier one in the same block -- merge them into a single key by hand."
+    },
+    {
+      "severity": "error",
+      "code": "DUPLICATE_YAML_KEY",
+      "project": "kind-robots",
+      "task": null,
+      "message": "Duplicate mapping key 'approved_by_human' at line 95. YAML last-key-wins semantics mean the value at this line silently overrides an earlier one in the same block -- merge them into a single key by hand."
+    },
+    {
+      "severity": "error",
+      "code": "DUPLICATE_YAML_KEY",
+      "project": "kind-robots",
+      "task": null,
+      "message": "Duplicate mapping key 'claimed_by' at line 838. YAML last-key-wins semantics mean the value at this line silently overrides an earlier one in the same block -- merge them into a single key by hand."
+    },
+    {
+      "severity": "error",
+      "code": "DUPLICATE_YAML_KEY",
+      "project": "kind-robots",
+      "task": null,
+      "message": "Duplicate mapping key 'claimed_at' at line 839. YAML last-key-wins semantics mean the value at this line silently overrides an earlier one in the same block -- merge them into a single key by hand."
+    },
+    {
+      "severity": "error",
+      "code": "DUPLICATE_YAML_KEY",
+      "project": "packmaker",
+      "task": null,
+      "message": "Duplicate mapping key 'updated' at line 160. YAML last-key-wins semantics mean the value at this line silently overrides an earlier one in the same block -- merge them into a single key by hand."
+    },
+    {
+      "severity": "error",
+      "code": "DUPLICATE_YAML_KEY",
+      "project": "packmaker",
+      "task": null,
+      "message": "Duplicate mapping key 'updated' at line 239. YAML last-key-wins semantics mean the value at this line silently overrides an earlier one in the same block -- merge them into a single key by hand."
+    },
     {
       "severity": "warning",
       "code": "ACTIVE_PROJECT_ALL_DONE",

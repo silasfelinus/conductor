@@ -1,14 +1,14 @@
 # Roadmap Audit
 
-Generated: `2026-07-21T23:29:51.768962+00:00`
+Generated: `2026-07-22T01:10:07.692579+00:00`
 
 This is a conservative structural audit. It reports suspicious state; it does not automatically change task status or remove human gates.
 
 ## Portfolio snapshot
 
 - **40** roadmaps, **31** active projects, **650** tasks
-- **34 ready**, **42 waiting**, **43 needs-human**, **0 claimed/review**, **520 done**
-- Findings: **0 errors**, **14 warnings**, **44 informational**
+- **33 ready**, **42 waiting**, **43 needs-human**, **0 claimed/review**, **521 done**
+- Findings: **6 errors**, **14 warnings**, **44 informational**
 
 ## Project inventory
 
@@ -32,7 +32,7 @@ This is a conservative structural audit. It reports suspicious state; it does no
 | 16 | `animation-manager` | active | software | 2 | 0 | 0 | 0 | 10 / 12 |
 | 17 | `animation-studio` | retired | software | 3 | 4 | 0 | 0 | 1 / 8 |
 | 18 | `ecosystem-map` | active | software | 0 | 0 | 0 | 0 | 8 / 8 |
-| 19 | `conductor` | active | software | 1 | 0 | 6 | 0 | 72 / 79 |
+| 19 | `conductor` | active | software | 0 | 0 | 6 | 0 | 73 / 79 |
 | 20 | `serendipity` | active | software | 1 | 0 | 0 | 0 | 11 / 12 |
 | 21 | `storymaker` | active | software | 1 | 0 | 0 | 0 | 9 / 10 |
 | 22 | `davinci` | active | software | 0 | 0 | 0 | 0 | 15 / 15 |
@@ -57,9 +57,14 @@ This is a conservative structural audit. It reports suspicious state; it does no
 
 ## Findings by severity
 
-### Error (0)
+### Error (6)
 
-_None._
+- **DUPLICATE_YAML_KEY** — `global-ui`: Duplicate mapping key 'updated' at line 117. YAML last-key-wins semantics mean the value at this line silently overrides an earlier one in the same block -- merge them into a single key by hand.
+- **DUPLICATE_YAML_KEY** — `kind-robots`: Duplicate mapping key 'approved_by_human' at line 95. YAML last-key-wins semantics mean the value at this line silently overrides an earlier one in the same block -- merge them into a single key by hand.
+- **DUPLICATE_YAML_KEY** — `kind-robots`: Duplicate mapping key 'claimed_by' at line 838. YAML last-key-wins semantics mean the value at this line silently overrides an earlier one in the same block -- merge them into a single key by hand.
+- **DUPLICATE_YAML_KEY** — `kind-robots`: Duplicate mapping key 'claimed_at' at line 839. YAML last-key-wins semantics mean the value at this line silently overrides an earlier one in the same block -- merge them into a single key by hand.
+- **DUPLICATE_YAML_KEY** — `packmaker`: Duplicate mapping key 'updated' at line 160. YAML last-key-wins semantics mean the value at this line silently overrides an earlier one in the same block -- merge them into a single key by hand.
+- **DUPLICATE_YAML_KEY** — `packmaker`: Duplicate mapping key 'updated' at line 239. YAML last-key-wins semantics mean the value at this line silently overrides an earlier one in the same block -- merge them into a single key by hand.
 
 ### Warning (14)
 

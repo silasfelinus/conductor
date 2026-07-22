@@ -45,6 +45,40 @@ def load_yaml(path: Path) -> dict[str, Any]:
     return data if isinstance(data, dict) else {}
 
 
+class _DupKeyLoader(yaml.SafeLoader):
+    """SafeLoader that records duplicate mapping keys instead of silently
+    letting the later one win, so callers can flag YAML files where
+    last-key-wins semantics would silently discard an earlier value
+    (see conductor/t-079)."""
+
+
+def _construct_mapping_recording_duplicates(loader: yaml.SafeLoader, node: yaml.MappingNode, duplicates: list[tuple[str, int]]) -> dict[Any, Any]:
+    mapping: dict[Any, Any] = {}
+    seen_lines: dict[Any, int] = {}
+    for key_node, value_node in node.value:
+        key = loader.construct_object(key_node, deep=False)
+        line = key_node.start_mark.line + 1
+        if key in seen_lines:
+            duplicates.append((str(key), line))
+        seen_lines[key] = line
+        mapping[key] = loader.construct_object(value_node, deep=False)
+    return mapping
+
+
+def find_duplicate_keys(path: Path) -> list[tuple[str, int]]:
+    """Return (key, line_number) for every mapping key that appears more than
+    once within the same YAML mapping in `path`. `line_number` is where the
+    duplicate (the one that silently wins under last-key-wins semantics) sits."""
+    duplicates: list[tuple[str, int]] = []
+    loader_cls = type("_DupKeyLoaderInstance", (_DupKeyLoader,), {})
+    loader_cls.add_constructor(
+        yaml.resolver.BaseResolver.DEFAULT_MAPPING_TAG,
+        lambda loader, node: _construct_mapping_recording_duplicates(loader, node, duplicates),
+    )
+    yaml.load(path.read_text(encoding="utf-8"), Loader=loader_cls)
+    return duplicates
+
+
 def as_list(value: Any) -> list[str]:
     if value is None:
         return []
@@ -159,6 +193,17 @@ def audit() -> dict[str, Any]:
         if slug == "_template":
             continue
         data = load_yaml(path)
+        for dup_key, dup_line in find_duplicate_keys(path):
+            findings.append(
+                issue(
+                    "error",
+                    "DUPLICATE_YAML_KEY",
+                    slug,
+                    f"Duplicate mapping key {dup_key!r} at line {dup_line}. YAML last-key-wins "
+                    "semantics mean the value at this line silently overrides an earlier one in "
+                    "the same block -- merge them into a single key by hand.",
+                )
+            )
         tasks = [task for task in data.get("tasks", []) if isinstance(task, dict)]
         task_by_id = {str(task.get("id")): task for task in tasks if task.get("id")}
         graph: dict[str, list[str]] = {}
