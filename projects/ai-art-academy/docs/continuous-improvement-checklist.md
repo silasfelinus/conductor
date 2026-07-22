@@ -15,6 +15,50 @@ Record the lane, files changed, and verification in the task note before rearmin
 
 ### Rotation state
 
+- Last completed lane: Roadmap accuracy (lane 2), 2026-07-22 (~04:12-04:19 UTC,
+  claude-conductor-scheduled-20260722T0412Z-t010). Per the prior cycle's note,
+  lane 2 was next in the 1→2→3→4 rotation after lane 1 ran last. Did not
+  re-probe lane 3's home-relay blocker — the immediately-prior cycle
+  (~02:11-02:36 UTC, under two hours earlier) already reconfirmed it fresh
+  with job 1319, no material change since. `scripts/audit_roadmaps.py` found
+  real drift this cycle, not just a clean re-check: warnings had risen from
+  the prior 14-warning baseline to 18 after conductor/t-079's new
+  `DUPLICATE_YAML_KEY` check (PR #1005, landed 2026-07-21 evening) caught a
+  genuine instance in `sketchy/roadmap.yaml` t-007 — a duplicate
+  `claimed_by`/`claimed_at` pair (once before the task's `note:`, once after)
+  introduced by a burst cycle appending its PROGRESS note without removing
+  the original fields; both values were 3 seconds apart from the same
+  session so no data was actually wrong, but YAML's last-wins semantics made
+  it a latent trap for the next edit — removed the earlier duplicate. Also
+  found 4 new `SOFT_NEEDS_HUMAN` warnings (conductor/t-034, conductor/t-073,
+  kind-robots/t-037, kind-robots/t-043) — all four are genuinely hard gates
+  (three are "Pitch: ..." tasks awaiting Silas's read/approve-or-reject
+  decision, which no agent can make on the pitch author's own behalf; the
+  fourth, conductor/t-073, is a GitHub branch-protection Settings change no
+  available MCP tool can make) but none carried an explicit `gate_human`
+  marker for the audit's heuristic to recognize, so all four got
+  `gate_human: true` added — accurate metadata, not a status change, and
+  resolves the false positive permanently rather than re-flagging it every
+  cycle. The remaining 12 warnings (`ACTIVE_PROJECT_ALL_DONE`/
+  `ACTIVE_PROJECT_NO_OPEN_TASKS` across art-generator-connect, davinci,
+  ecosystem-map, humboldt-scoop, packmaker, sketchy) are a known,
+  already-escalated pattern (see TALKBACK.md 2026-07-20 ecosystem-map/t-006
+  entry) — flipping `project-overrides.yaml` status to `finished`/`paused`
+  has precedent requiring Silas's in-session approval (see the `challenge-center`
+  entry's comment), so left unchanged rather than guessed at again.
+  `scripts/check_pr_merged_drift.py` flagged its usual 27 unverifiable-via-
+  sandbox candidates (all this task's own historical PR references); spot-
+  checked the newest, kind_robots#849, via GitHub MCP `pull_request_read` —
+  confirmed merged, 24/-4/1-file, matches this file's own record exactly, no
+  drift. All 6 milestones re-verified programmatically (each milestone's
+  `status:` cross-checked against every task assigned to it via
+  `milestone:`) — m1 (done, 0 open), m2 (in-progress, t-004 open), m3
+  (in-progress, t-033 open), m4 (done, 0 open), m5 (in-progress, t-009/t-019
+  open), m6 (in-progress, t-010 recurring + t-035 open) — all six already
+  match, no drift. Conductor-docs-only change (roadmap.yaml x3 + this
+  checklist); no kind_robots PR needed. Next preferred lane is inspiration
+  and preview assets (lane 3, recheck with a fresh queued job, not 1319)
+  falling back to lane 4 if still blocked.
 - Last completed lane: Front-end polish (lane 1), 2026-07-22 (~02:11-02:35 UTC,
   claude-conductor-agentrun-20260722T0211Z-t010). Lane 3 (inspiration/preview
   assets) was next preferred per the prior cycle's note, tried first with a
