@@ -45,6 +45,33 @@ def load_yaml(path: Path) -> dict[str, Any]:
     return data if isinstance(data, dict) else {}
 
 
+def find_duplicate_keys(text: str) -> list[tuple[str, int]]:
+    """Return (key, line) for every key that appears more than once within
+    the same YAML mapping. yaml.safe_load silently lets the last occurrence
+    win, which has previously let a stale trailing owner/claimed_by/status
+    trio override the real one (conductor/t-079)."""
+    duplicates: list[tuple[str, int]] = []
+
+    class _DupKeyLoader(yaml.SafeLoader):
+        pass
+
+    def construct_mapping(loader: yaml.SafeLoader, node: yaml.Node, deep: bool = False) -> dict[Any, Any]:
+        mapping: dict[Any, Any] = {}
+        for key_node, value_node in node.value:
+            key = loader.construct_object(key_node, deep=deep)
+            if key in mapping:
+                duplicates.append((str(key), key_node.start_mark.line + 1))
+            mapping[key] = loader.construct_object(value_node, deep=deep)
+        return mapping
+
+    _DupKeyLoader.add_constructor(yaml.resolver.BaseResolver.DEFAULT_MAPPING_TAG, construct_mapping)
+    try:
+        yaml.load(text, Loader=_DupKeyLoader)
+    except yaml.YAMLError:
+        pass
+    return duplicates
+
+
 def as_list(value: Any) -> list[str]:
     if value is None:
         return []
@@ -159,6 +186,17 @@ def audit() -> dict[str, Any]:
         if slug == "_template":
             continue
         data = load_yaml(path)
+        for key, line in find_duplicate_keys(path.read_text(encoding="utf-8")):
+            findings.append(
+                issue(
+                    "warning",
+                    "DUPLICATE_YAML_KEY",
+                    slug,
+                    f"Duplicate key {key!r} at line {line} — YAML mapping semantics let the "
+                    "last occurrence silently win; check for a stale trailing owner/claimed_by/"
+                    "status value overriding the real one.",
+                )
+            )
         tasks = [task for task in data.get("tasks", []) if isinstance(task, dict)]
         task_by_id = {str(task.get("id")): task for task in tasks if task.get("id")}
         graph: dict[str, list[str]] = {}

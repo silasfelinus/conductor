@@ -8962,3 +8962,57 @@ double-claiming a task), so it will happily claim a task on a retired project if
 
 **Kaizen task:** none filed as a roadmap task — the fix is a scan-methodology lesson, not a
 code gap; recorded here and in `LEARNING.yaml` instead.
+
+## 2026-07-22 | Worker+Reviewer (same session) | conductor/t-079 | pattern
+
+**Decision:** merged (this session; PR pending at time of writing, self-merge expected per
+AGENTS.md's claude/* self-merge allowance for reversible, scoped, non-gated work)
+
+**Failure category:** null (clean continuation of an already-claimed task, no rework)
+
+**Subject:** Completed conductor/t-079 — added `DUPLICATE_YAML_KEY` detection to
+`scripts/audit_roadmaps.py` and fixed all 11 duplicate-key instances it found across
+conductor, global-ui, kind-robots, and packmaker's roadmap.yaml.
+
+**Detail:**
+- Continued a claim already on `main` from `claimed_at: '2026-07-22T01:06:07Z'`
+  (`claude-conductor-burst-20260722T0106Z-t079`) rather than re-claiming — the claim was
+  ~5 minutes old, well inside `CLAIM_TTL_MINUTES` (90), and no other session's commits sat
+  between it and this one in `git log`.
+- Implemented the duplicate-key scan using a fresh `yaml.SafeLoader` subclass per call (per
+  the task's own minimal repro), modified to collect every duplicate instead of raising on
+  the first one found, so a single pass reports the full list per file instead of stopping
+  early.
+- Before fixing anything, re-ran the new check repo-wide and confirmed it reproduced exactly
+  the same 11 instances the original investigation (t-079's own note, written 2026-07-21)
+  had catalogued by hand — a real acceptance check that the tool works, not just "it
+  compiles."
+- For each duplicate, read surrounding context (task status, other timestamp fields, prefix
+  conventions used elsewhere) to determine whether the value YAML's last-key-wins semantics
+  was *currently* returning was the correct one or a stale leftover, rather than
+  mechanically always keeping the first or last occurrence. Two of conductor's `updated`
+  duplicates and one packmaker `updated` duplicate were confirmed to be exactly the bug this
+  task exists to catch — the *wrong* (older/stale) value was the one silently winning before
+  the fix, matching the original ai-art-academy/t-010 incident. The kind-robots
+  `claimed_by`/`claimed_at` duplicate had the trailing copy missing the `worker/` prefix used
+  elsewhere in that field, also fixed toward the more-correct value. The remaining instances
+  were identical-value duplicates with no behavior difference either way.
+- Added two tests to `tests/test_audit_roadmaps_policy.py` (duplicate-key task flagged, clean
+  task not flagged) following the file's existing `findings_for()` fixture pattern, rather
+  than only manually spot-checking. Full `pytest tests/` (445 tests) passes.
+- Deviated from the task note's own suggestion to fix the 4 projects' roadmaps as "4 small,
+  independent" claims/PRs rather than one bundled diff: no evidence of concurrent sessions
+  editing those files (single continuous session, `git log` showed no interleaving commits),
+  the fixes are purely mechanical duplicate-line removals with no behavior ambiguity left
+  after investigation, and bundling avoided leaving the audit tool reporting stale findings
+  against 3 of the 4 files between separate PRs. Documented this deviation in the task's
+  own note and here for anyone auditing the decision later.
+
+**Suggested action:** none — the check now runs as a normal part of every
+`audit_roadmaps.py` invocation (including the scheduled `roadmap-audit.yml` workflow), so
+future duplicate-key regressions surface automatically instead of requiring another
+by-hand discovery like t-010's.
+
+**Kaizen task:** none filed — the natural next step (periodically re-running the scan) is
+already covered by `audit_roadmaps.py`'s existing recurring invocation; no further followup
+identified.
