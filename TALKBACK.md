@@ -9129,3 +9129,54 @@ before writing, reconcile via diff rather than blind force-push) are identical e
 
 **Kaizen task:** none filed this cycle — logging the pattern here is the intended first step;
 if this recurs, promote it to an AGENTS.md addition rather than a repeated TALKBACK note.
+
+## 2026-07-22 | Reviewer (scheduled agent run) | ai-art-academy/t-010 | pattern
+
+**Decision:** merged (conductor-only, no kind_robots PR needed) — lane 2 (roadmap accuracy).
+
+**Failure category:** null — clean cycle, real drift found and fixed.
+
+**Subject:** Ran ai-art-academy/t-010's roadmap-accuracy lane; found and fixed real drift
+surfaced by a check that only landed the previous evening (conductor/t-079's
+`DUPLICATE_YAML_KEY` audit, PR #1005), plus 4 false-positive `SOFT_NEEDS_HUMAN` warnings
+from tasks that are genuinely hard-gated but never carried an explicit `gate_human` marker.
+
+**Detail:**
+- `scripts/audit_roadmaps.py`'s warning count had risen from the established 14-warning
+  baseline to 18. Diffed against the prior cycle's recorded baseline rather than assuming
+  it was noise: `sketchy/roadmap.yaml`'s t-007 carried a real duplicate `claimed_by`/
+  `claimed_at` pair (once before the task's `note:`, once 3 seconds later after it) —
+  introduced by a burst cycle appending its PROGRESS note without removing the original
+  fields. Both values happened to agree (same session, seconds apart) so nothing was
+  actually wrong yet, but YAML's last-wins mapping semantics made it a latent trap for the
+  next edit to silently clobber. Removed the earlier duplicate.
+- 4 tasks (conductor/t-034, conductor/t-073, kind-robots/t-037, kind-robots/t-043) triggered
+  `SOFT_NEEDS_HUMAN` — the audit's heuristic looks for `gate_human: true`, an
+  outward-facing/irreversible `stakes`, or a content/proposal project `kind`, but the check
+  only reads *project*-level `kind`, not a per-task override, so pitch-shaped tasks living
+  inside a `kind: software` project roadmap (three "Pitch: ..." tasks awaiting Silas's
+  approve/reject call, one a GitHub branch-protection Settings change no available MCP tool
+  can make) never matched any of its three signals even though all four are genuinely hard
+  gates no agent can clear. Added `gate_human: true` to all four — accurate metadata that
+  resolves the false positive permanently instead of it re-triggering every future audit run.
+- Left the remaining 12 warnings (`ACTIVE_PROJECT_ALL_DONE`/`ACTIVE_PROJECT_NO_OPEN_TASKS`
+  across art-generator-connect, davinci, ecosystem-map, humboldt-scoop, packmaker, and now
+  sketchy) alone — this is a known pattern flagged repeatedly since 2026-07-20
+  (ecosystem-map/t-006 entry above) where flipping `project-overrides.yaml` status to
+  `finished`/`paused` has precedent requiring Silas's explicit in-session approval (see
+  that file's own `challenge-center` comment). Guessing at 6 more flips wasn't this cycle's
+  call to make.
+- Spot-checked the newest PR-merge-drift candidate (kind_robots#849) via GitHub MCP
+  `pull_request_read` — confirmed merged, diff stats match the roadmap's own record exactly.
+  Re-verified all 6 ai-art-academy milestones programmatically against actual task statuses
+  — no drift.
+
+**Suggested action:** none specific — the pattern worth remembering is generic: when a
+project's roadmap-accuracy lane finds a warning-count delta from the recorded baseline,
+diff against what changed in `audit_roadmaps.py` itself (new check vs. new drift) before
+assuming either "nothing to do" or "something's broken." Both were true here simultaneously
+(new check, but it caught a real instance).
+
+**Kaizen task:** none filed this cycle — the `gate_human` fix already closes the gap the
+kaizen would have targeted (audit's `SOFT_NEEDS_HUMAN` check only reading project-level
+`kind`); revisit only if it produces more false positives on task-level pitches in the future.

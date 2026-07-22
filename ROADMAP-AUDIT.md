@@ -1,14 +1,14 @@
 # Roadmap Audit
 
-Generated: `2026-07-22T01:23:47.976019+00:00`
+Generated: `2026-07-22T04:20:14.271450+00:00`
 
 This is a conservative structural audit. It reports suspicious state; it does not automatically change task status or remove human gates.
 
 ## Portfolio snapshot
 
 - **40** roadmaps, **31** active projects, **650** tasks
-- **33 ready**, **42 waiting**, **43 needs-human**, **0 claimed/review**, **521 done**
-- Findings: **0 errors**, **14 warnings**, **44 informational**
+- **31 ready**, **42 waiting**, **43 needs-human**, **1 claimed/review**, **522 done**
+- Findings: **0 errors**, **12 warnings**, **44 informational**
 
 ## Project inventory
 
@@ -33,7 +33,7 @@ This is a conservative structural audit. It reports suspicious state; it does no
 | 17 | `animation-studio` | retired | software | 3 | 4 | 0 | 0 | 1 / 8 |
 | 18 | `ecosystem-map` | active | software | 0 | 0 | 0 | 0 | 8 / 8 |
 | 19 | `conductor` | active | software | 0 | 0 | 6 | 0 | 73 / 79 |
-| 20 | `serendipity` | active | software | 1 | 0 | 0 | 0 | 11 / 12 |
+| 20 | `serendipity` | active | software | 0 | 0 | 0 | 1 | 11 / 12 |
 | 21 | `storymaker` | active | software | 1 | 0 | 0 | 0 | 9 / 10 |
 | 22 | `davinci` | active | software | 0 | 0 | 0 | 0 | 15 / 15 |
 | 23 | `art-generator-connect` | active | software | 0 | 0 | 0 | 0 | 22 / 22 |
@@ -44,7 +44,7 @@ This is a conservative structural audit. It reports suspicious state; it does no
 | 28 | `conductor-app` | active | software | 2 | 0 | 1 | 0 | 11 / 14 |
 | 29 | `appmaker` | active | software | 2 | 0 | 0 | 0 | 10 / 12 |
 | 30 | `media-watchlist` | active | software | 1 | 0 | 0 | 0 | 10 / 11 |
-| 31 | `sketchy` | active | software | 1 | 0 | 0 | 0 | 7 / 8 |
+| 31 | `sketchy` | active | software | 0 | 0 | 0 | 0 | 8 / 8 |
 | 32 | `pinball-hero` | retired | content | 2 | 2 | 0 | 0 | 2 / 6 |
 | 33 | `recipe-box` | retired | software | 0 | 2 | 1 | 0 | 0 / 3 |
 | 34 | `brainstorm` | active | proposal | 1 | 0 | 0 | 0 | 0 / 1 |
@@ -61,22 +61,20 @@ This is a conservative structural audit. It reports suspicious state; it does no
 
 _None._
 
-### Warning (14)
+### Warning (12)
 
 - **ACTIVE_PROJECT_ALL_DONE** — `art-generator-connect`: All tasks are done but project override remains active.
 - **ACTIVE_PROJECT_NO_OPEN_TASKS** — `art-generator-connect`: Active project has no open tasks; mark finished/paused or add an intentional recurring task.
-- **SOFT_NEEDS_HUMAN** — `conductor` / `t-034`: needs-human has no obvious hard-gate marker; consider returning it to ready, setting soft_gate: true, or documenting the actual gate.
-- **SOFT_NEEDS_HUMAN** — `conductor` / `t-073`: needs-human has no obvious hard-gate marker; consider returning it to ready, setting soft_gate: true, or documenting the actual gate.
 - **ACTIVE_PROJECT_ALL_DONE** — `davinci`: All tasks are done but project override remains active.
 - **ACTIVE_PROJECT_NO_OPEN_TASKS** — `davinci`: Active project has no open tasks; mark finished/paused or add an intentional recurring task.
 - **ACTIVE_PROJECT_ALL_DONE** — `ecosystem-map`: All tasks are done but project override remains active.
 - **ACTIVE_PROJECT_NO_OPEN_TASKS** — `ecosystem-map`: Active project has no open tasks; mark finished/paused or add an intentional recurring task.
 - **ACTIVE_PROJECT_ALL_DONE** — `humboldt-scoop`: All tasks are done but project override remains active.
 - **ACTIVE_PROJECT_NO_OPEN_TASKS** — `humboldt-scoop`: Active project has no open tasks; mark finished/paused or add an intentional recurring task.
-- **SOFT_NEEDS_HUMAN** — `kind-robots` / `t-037`: needs-human has no obvious hard-gate marker; consider returning it to ready, setting soft_gate: true, or documenting the actual gate.
-- **SOFT_NEEDS_HUMAN** — `kind-robots` / `t-043`: needs-human has no obvious hard-gate marker; consider returning it to ready, setting soft_gate: true, or documenting the actual gate.
 - **ACTIVE_PROJECT_ALL_DONE** — `packmaker`: All tasks are done but project override remains active.
 - **ACTIVE_PROJECT_NO_OPEN_TASKS** — `packmaker`: Active project has no open tasks; mark finished/paused or add an intentional recurring task.
+- **ACTIVE_PROJECT_ALL_DONE** — `sketchy`: All tasks are done but project override remains active.
+- **ACTIVE_PROJECT_NO_OPEN_TASKS** — `sketchy`: Active project has no open tasks; mark finished/paused or add an intentional recurring task.
 
 ### Info (44)
 
