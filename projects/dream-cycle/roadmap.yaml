@@ -151,12 +151,12 @@ tasks:
   - id: t-006
     milestone: m4
     title: 'Creation-a-day: advance the active creation build one stage'
-    status: ready
+    status: claimed
     recurring: true
-    owner: null
+    owner: worker
     passes: 0
     stakes: reversible
-    updated: '2026-07-21T23:17:30Z'
+    updated: '2026-07-22T04:24:28Z'
     depends_on: t-004
     note: >
       THE idle-fallback loop (recurring — re-arms to ready after every cycle,
@@ -192,6 +192,8 @@ tasks:
       doesn't remove it from the count until shipped). Re-armed to ready per the
       recurring-task convention -- next cycle continues with lantern-post's
       Stage 2 (Dreams: location + vibe + relations).
+    claimed_by: claude-conductor-burst-20260722T0425Z-dc-t006
+    claimed_at: '2026-07-22T04:24:28Z'
   - id: t-007
     milestone: m5
     title: Generate dream-cycle project art (icon, card, hero)
