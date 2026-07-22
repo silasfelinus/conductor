@@ -95,3 +95,34 @@ instruction) — kind_robots PR #406
 **Kaizen task:** `model-builder/t-031` — live smoke test of the t-025 async path on
 `/model-builder` once the ComfyUI/Alexandria render backend is confirmed healthy
 (tracked via `coloring-book/t-022`'s existing FOR-SILAS note).
+
+## 2026-07-22 | Worker+Reviewer (scheduled agent, same session) | model-builder/t-029 | pattern
+
+**Decision:** merged (kind_robots PR #850, squash `48730f7`); task kept at `status: ready`
+(step (1) art generation is the only remaining blocker, same as prior cycles).
+
+**Failure category:** none — clean first-pass implementation.
+
+**What was good:**
+- Continued the established t-029 rotation of re-reading the interactive components for
+  real gaps rather than inventing busywork. Found that
+  `model-builder-item-panel.vue`'s three local textarea refs (pitch, fields, prompt) were
+  synced via one combined `watch` over all three store values — any single-field AI draft
+  resolving (including auto-build's sequential per-field drafting) reset all three local
+  refs, silently discarding unsaved edits in the other two textareas of the same item.
+  Same class of bug as the t-671/t-735 fixes in this task's history: a real correctness gap
+  found by reading actual component behavior, not a cosmetic pass.
+- Fixed by splitting into three independent per-field watches — minimal, scoped diff (14
+  lines) with no behavior change beyond removing the cross-field clobber.
+- Verified eslint clean, `vue-tsc --noEmit` passes, and confirmed prettier drift on the file
+  pre-dates this change via `git stash` before merging, consistent with how prior cycles on
+  this task handled the same pre-existing-drift situation.
+- This session picked up its own claim from earlier in the same scheduled window (claim
+  commit `45c9061` at 03:05:37Z, PR opened 03:10:15Z) and finished the cycle by watching CI
+  to green and merging rather than leaving a completed PR open for a human to merge, per
+  AGENTS.md's "finish on clean main" rule.
+
+**What to improve:** none this cycle.
+
+**Kaizen task:** none filed — no new pattern beyond what's already tracked for this task
+(step (1) art generation remains the standing blocker, already known).
