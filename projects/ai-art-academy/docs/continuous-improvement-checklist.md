@@ -15,6 +15,57 @@ Record the lane, files changed, and verification in the task note before rearmin
 
 ### Rotation state
 
+- Last completed lane: Curriculum depth (lane 4), 2026-07-22 (~16:06 UTC,
+  claude-conductor-burst-20260722T1606Z-t010, scheduled burst-mode cycle). Per
+  the prior cycle's note, lane 3 (inspiration/preview assets) was next
+  preferred — tried first with a genuinely fresh queued job (job 1426,
+  greek-vase-painting.webp, not 816/855/957/1014/1175/1184/1242):
+  `consume_art_requests.py --id-prefix "kind-robots-academy-style-preview-"
+  --live --limit 1 --timeout 60` queued it but it timed out after 60s still
+  queued/running — same never-claimed home-relay signature as every check
+  since 2026-07-18. Also confirmed `commons.wikimedia.org` freshly reachable
+  (`recheck_egress_blocks.py`, HTTP 200) before falling back. Fell back to
+  lane 4 per this checklist's own instruction; per its "finish known coverage
+  gaps before a 29th movement" rule, checked whether any non-relay-blocked gap
+  remained first — none did (same conclusion as the 2026-07-21 ~19:10 UTC
+  cycle) — so added a 28th movement instead: Fayum Mummy Portraits
+  (`fayum-mummy-portraits`, curriculum-outline.md §28), the third non-Western
+  entry and the first anonymous-artist entry since Byzantine Mosaic (§2). All
+  3 example works confirmed **VERIFIED** directly against the Met Collection
+  API (`collectionapi.metmuseum.org/public/collection/v1/objects/<id>`),
+  reading each object's own `isPublicDomain` field rather than a third-party
+  Commons tag — a stronger verification method than the WebFetch-Commons-page
+  method used for §17-27: *Portrait of the Boy Eutyches* (Met 18.9.2, A.D.
+  100-150), *Portrait of a Thin-Faced Man* (Met 09.181.3, A.D. 140-170), and
+  *Portrait of a Young Woman with a Gilded Wreath* (Met 09.181.7, A.D.
+  120-140) — all CC0, all anonymous ancient painters, clearing
+  PUBLIC-DOMAIN-POLICY.md §1.3 with the widest margin of any addition so far
+  (no named artist at all, ~1,800 years past any death-based cutoff). Also
+  noticed and backfilled a real, pre-existing documentation gap while in this
+  section: §27 (Mughal Miniature Painting, added 2026-07-21) never got its
+  "v1.7 addition re-check" paragraph in the Public-domain safety check
+  section, unlike every other addition since v1.1 — added it alongside the
+  new v1.8 paragraph. Queued the style-preview prompt in `art-prompts.yaml`
+  (`kind-robots-academy-style-preview-fayum-mummy-portraits`), still blocked
+  on the same relay issue as the other 27. Added the curriculum-slug-mapping
+  placeholder row to `style-lora-registry.md` (no dedicated LoRA search this
+  cycle) and row 28 to `docs/teaching-notes.md`'s per-style table (mode
+  `prompt`, difficulty **Medium** — flagged in curriculum-outline.md's remix
+  tier list as the most photorealistic style in the curriculum, so its
+  biggest risk is under-cooking into a generic "vintage photo" filter rather
+  than the movement's actual signature traits). Front-end sync to
+  `academyStyles.ts` deliberately deferred to a future cycle, matching how
+  persian-miniature/song-dynasty-landscape/mughal-miniature landed across
+  separate cycles. Verified `yaml.safe_load` parses clean on both
+  `art-prompts.yaml` and this project's `roadmap.yaml`, and that the
+  curriculum-outline.md machine-readable skeleton still parses as 28 entries.
+  `scripts/audit_roadmaps.py` not re-run this cycle (no roadmap-status field
+  changed by this lane's work beyond this task's own claim/rearm). Updated
+  this checklist's rotation state and curriculum-coverage table above.
+  Conductor-docs-only change; no kind_robots PR needed this cycle (nothing to
+  sync yet — front-end sync is the deferred follow-up). Next preferred lane
+  is front-end polish (lane 1) — this cycle ran lane 4, so lane 1 is next in
+  the 1→2→3→4 rotation. Rearmed to `ready`.
 - Last completed lane: Roadmap accuracy (lane 2), 2026-07-22 (~04:12-04:19 UTC,
   claude-conductor-scheduled-20260722T0412Z-t010). Per the prior cycle's note,
   lane 2 was next in the 1→2→3→4 rotation after lane 1 ran last. Did not
@@ -742,26 +793,28 @@ This explicit state is the handoff between recurring cycles. Update it in the sa
 
 ## Current curriculum coverage
 
-The Academy currently has 27 movement entries in `curriculum-outline.md`, all 27 of
+The Academy currently has 28 movement entries in `curriculum-outline.md`, 27 of
 them synced to `academyStyles.ts` (t-031 landed the Suprematism sync 2026-07-18; t-034
 landed the Ashcan School sync 2026-07-18, kind_robots PR #464; the 2026-07-19 cycle
 landed the American Regionalism sync, kind_robots PR #506; the 2026-07-20 ~04:10-04:40
 UTC cycle landed the Persian Miniature Painting sync, kind_robots PR #616; the
 2026-07-21 ~07:11-07:15 UTC cycle landed the Song Dynasty Landscape Painting sync,
 kind_robots PR #771, merged ~08:14 UTC; the 2026-07-21 ~16:06-16:20 UTC cycle landed
-the Mughal Miniature Painting sync, kind_robots PR #814, merged 16:12:09Z). Before
-adding a 28th movement, finish the known coverage gaps below unless a newly
-discovered issue is more urgent — as of the 2026-07-21 ~19:10 UTC cycle, every
-remaining gap is blocked solely on home-relay reachability.
+the Mughal Miniature Painting sync, kind_robots PR #814, merged 16:12:09Z). The 28th,
+Fayum Mummy Portraits, was added 2026-07-22 (this cycle) and is not yet synced — its
+front-end sync follows the same t-020/t-031/t-034 pattern as a future cycle's task.
+Before adding a 29th movement, finish the known coverage gaps below unless a newly
+discovered issue is more urgent — as of this cycle, every remaining gap (aside from
+the new §28 sync itself) is blocked solely on home-relay reachability.
 
 | Area | Current state | Next verifiable action |
 |---|---|---|
-| Lesson seed entries | 27 of 27 movements in curriculum-outline.md are synced to `academyStyles.ts` (Persian Miniature Painting landed 2026-07-20, kind_robots PR #616; Song Dynasty Landscape Painting landed 2026-07-21, kind_robots PR #771; Mughal Miniature Painting landed 2026-07-21, kind_robots PR #814 — mirroring t-020/t-031/t-034/PR #506) | Complete — no open action until a 28th movement is added |
-| Example works | 24 movements complete, including Persian Miniature Painting (3 works, all **VERIFIED** by direct `WebFetch` of their Wikimedia Commons file pages — 2026-07-20 egress to commons.wikimedia.org worked, unlike the earlier `artic.edu` 402s), Song Dynasty Landscape Painting (3 works, all **VERIFIED** the same way, 2026-07-21), and Mughal Miniature Painting (3 works, all **VERIFIED** the same way, 2026-07-21). Ashcan School's 4 VERIFIED works are written up in curriculum-outline.md §23 but not yet in `examples.manifest.json` (confirmed absent: no `exampleWorks` field on the `ashcan-school` entry in `stores/seeds/academyStyles.ts` as of 2026-07-19). American Regionalism's 4 works are written up in curriculum-outline.md §24 (sourced, but marked "unverified this cycle" — `WebFetch` to museum hosts returned HTTP 402 through the session egress proxy) | Blocked on media-server write access — same blocker as t-033 (confirmed 2026-07-19: `examples.manifest.json` lives on `media.acrocatranch.com`, not in the kind_robots git repo; this session has `KR_API_TOKEN` but no `KR_RELAY_TOKEN`/`KR_RELAY_USER_ID` and found no in-repo upload path, so it cannot write the manifest or upload images from here). Research/sourcing is already done (curriculum-outline.md §23-27); only the write step remains, plus a direct-fetch spot-check of §24's four URLs when museum/Commons egress is open. Resume once a session with media-server/relay write access is available — do not re-attempt from a sandbox without it |
+| Lesson seed entries | 27 of 28 movements in curriculum-outline.md are synced to `academyStyles.ts` (Persian Miniature Painting landed 2026-07-20, kind_robots PR #616; Song Dynasty Landscape Painting landed 2026-07-21, kind_robots PR #771; Mughal Miniature Painting landed 2026-07-21, kind_robots PR #814 — mirroring t-020/t-031/t-034/PR #506) | Sync Fayum Mummy Portraits (§28, added 2026-07-22) into `academyStyles.ts` via a kind_robots PR, mirroring the prior five syncs |
+| Example works | 24 movements complete, including Persian Miniature Painting (3 works, all **VERIFIED** by direct `WebFetch` of their Wikimedia Commons file pages — 2026-07-20 egress to commons.wikimedia.org worked, unlike the earlier `artic.edu` 402s), Song Dynasty Landscape Painting (3 works, all **VERIFIED** the same way, 2026-07-21), and Mughal Miniature Painting (3 works, all **VERIFIED** the same way, 2026-07-21). Fayum Mummy Portraits (3 works, all **VERIFIED** directly against the Met Collection API's `isPublicDomain` field, 2026-07-22 — see curriculum-outline.md §28) is written up but not yet in `examples.manifest.json`. Ashcan School's 4 VERIFIED works are written up in curriculum-outline.md §23 but not yet in `examples.manifest.json` (confirmed absent: no `exampleWorks` field on the `ashcan-school` entry in `stores/seeds/academyStyles.ts` as of 2026-07-19). American Regionalism's 4 works are written up in curriculum-outline.md §24 (sourced, but marked "unverified this cycle" — `WebFetch` to museum hosts returned HTTP 402 through the session egress proxy) | Blocked on media-server write access — same blocker as t-033 (confirmed 2026-07-19: `examples.manifest.json` lives on `media.acrocatranch.com`, not in the kind_robots git repo; this session has `KR_API_TOKEN` but no `KR_RELAY_TOKEN`/`KR_RELAY_USER_ID` and found no in-repo upload path, so it cannot write the manifest or upload images from here). Research/sourcing is already done (curriculum-outline.md §23-28); only the write step remains, plus a direct-fetch spot-check of §24's four URLs when museum/Commons egress is open. Resume once a session with media-server/relay write access is available — do not re-attempt from a sandbox without it |
 | Starter library | 21 starter images and provenance manifest complete — coverage intentionally movement-agnostic (2026-07-18: confirmed no movement-specific starters exist for any of the 8 movements added after v1, and an abstract Suprematist work would fail the library's own selection criteria; see starter-image-library.md) | Keep source-picker integration aligned with the manifest; no new starter entries needed |
-| Style previews | 27 prompts queued (Suprematism queued 2026-07-18, `kind-robots-academy-style-preview-suprematism`; Ashcan School queued the same cycle it was added, `kind-robots-academy-style-preview-ashcan-school`; American Regionalism queued 2026-07-19, `kind-robots-academy-style-preview-american-regionalism`; Persian Miniature Painting queued 2026-07-20, `kind-robots-academy-style-preview-persian-miniature`; Song Dynasty Landscape Painting queued 2026-07-21, `kind-robots-academy-style-preview-song-dynasty-landscape`; Mughal Miniature Painting queued 2026-07-21, `kind-robots-academy-style-preview-mughal-miniature`; all in `art-prompts.yaml`). All 27 are still `status: pending` — the home relay is not claiming jobs (2026-07-20 ~10:04Z: job 816 accepted but never claimed after 10+ minutes; 2026-07-20 ~17:12Z: fresh job 957 also accepted but still `status: PENDING`/unclaimed; 2026-07-21 ~04:06Z: fresh job 1184 also accepted but still `status: PENDING`/unclaimed; 2026-07-21 ~14:xx UTC: fresh job 1242 also accepted but still `status: PENDING`/unclaimed, `updatedAt` unchanged since creation) | Blocked on home-relay reachability, not on this queue. Re-run `python scripts/consume_art_requests.py --id-prefix "kind-robots-academy-style-preview-" --live` with a fresh job (not 816, 855, 957, 1014, 1175, 1184, or 1242) once relay/DB state is confirmed to have changed |
+| Style previews | 28 prompts queued (Suprematism queued 2026-07-18, `kind-robots-academy-style-preview-suprematism`; Ashcan School queued the same cycle it was added, `kind-robots-academy-style-preview-ashcan-school`; American Regionalism queued 2026-07-19, `kind-robots-academy-style-preview-american-regionalism`; Persian Miniature Painting queued 2026-07-20, `kind-robots-academy-style-preview-persian-miniature`; Song Dynasty Landscape Painting queued 2026-07-21, `kind-robots-academy-style-preview-song-dynasty-landscape`; Mughal Miniature Painting queued 2026-07-21, `kind-robots-academy-style-preview-mughal-miniature`; Fayum Mummy Portraits queued 2026-07-22, `kind-robots-academy-style-preview-fayum-mummy-portraits`; all in `art-prompts.yaml`). All 28 are still `status: pending` — the home relay is not claiming jobs (2026-07-20 ~10:04Z: job 816 accepted but never claimed after 10+ minutes; 2026-07-20 ~17:12Z: fresh job 957 also accepted but still `status: PENDING`/unclaimed; 2026-07-21 ~04:06Z: fresh job 1184 also accepted but still `status: PENDING`/unclaimed; 2026-07-21 ~14:xx UTC: fresh job 1242 also accepted but still `status: PENDING`/unclaimed; 2026-07-22 ~16:06 UTC: fresh job 1426 also accepted but timed out after 60s still queued/running, `updatedAt` unchanged since creation) | Blocked on home-relay reachability, not on this queue. Re-run `python scripts/consume_art_requests.py --id-prefix "kind-robots-academy-style-preview-" --live` with a fresh job (not 816, 855, 957, 1014, 1175, 1184, 1242, or 1426) once relay/DB state is confirmed to have changed |
 | Remix configs | Registry exists; A/B generation blocked | Resume only after the relay, database, and approved generation path are available |
-| Teaching scaffold | Written in `docs/teaching-notes.md`, covering all 27 movements including Mughal Miniature Painting (row 27 added 2026-07-21, this cycle); wired into `academy-style-detail.vue`'s Try It / Reflect sections (t-023, done — verified 2026-07-18 via `grep -n "Try it\|Reflect" components/academy/academy-style-detail.vue` on kind_robots main) | Coverage complete; no open action |
+| Teaching scaffold | Written in `docs/teaching-notes.md`, covering all 28 movements including Fayum Mummy Portraits (row 28 added 2026-07-22, this cycle); wired into `academy-style-detail.vue`'s Try It / Reflect sections (t-023, done — verified 2026-07-18 via `grep -n "Try it\|Reflect" components/academy/academy-style-detail.vue` on kind_robots main) | Coverage complete; no open action |
 
 ## Blocker discipline
 

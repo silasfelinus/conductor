@@ -4,7 +4,7 @@ date: 2026-07-10
 task: ai-art-academy/t-005
 status: draft for review (content complete, one source URL verified per movement)
 
-This is the curriculum: 27 movements spanning the timeline from Greek vases to
+This is the curriculum: 28 movements spanning the timeline from Ancient Egypt to
 American Regionalism. Every artist named here is long dead (all listed artists died
 before 1955), and every example work is a public-domain original held (or expected)
 in an open-access collection. See the ethical boundary in DESIGN-BRIEF.md and the
@@ -23,11 +23,15 @@ Asia beyond Ukiyo-e. Section 27 is the 2026-07-21 v1.7 addition (t-010 cycle):
 Mughal Miniature Painting — a related but visually distinct Indo-Persian tradition
 from Section 25's Timurid/Safavid Persian miniature (naturalistic faces and
 atmospheric recession vs. flat color fields), previously identified as off-register
-for the Persian lesson and deferred as its own future entry. They are appended
-(rather than renumbered into place) but belong chronologically among the earlier
-movements — read the `era` field in the machine-readable skeleton for true
-ordering; the front-end seed (t-020, t-031) inserts them in chronological
-position.
+for the Persian lesson and deferred as its own future entry. Section 28 is the
+2026-07-22 v1.8 addition (t-010 cycle): Fayum Mummy Portraits — the third
+non-Western entry (after Persian and Mughal miniature painting) and the first
+anonymous-artist entry since Section 2's Byzantine Mosaic, and the first movement
+whose named "artists" are unknown ancient painters rather than an individual or
+school. They are appended (rather than renumbered into place) but belong
+chronologically among the earlier movements — read the `era` field in the
+machine-readable skeleton for true ordering; the front-end seed (t-020, t-031)
+inserts them in chronological position.
 
 Verification method note: direct API/page fetches to museum hosts are blocked by the
 session egress proxy, so verification was done via web search returning the live
@@ -238,6 +242,19 @@ movements:
     artist_slugs: [basawan, bichitr, ustad-mansur]
     example_count: 3
     remix_hint: "Repaint this image as a Mughal miniature: naturalistic, individualized faces with fine stippled modeling, atmospheric landscape recession, gold used sparingly for thrones/halos/ornament only, dense precise brushwork on brocade and jewelry, and a wide floral or scrollwork decorative border, distinct from flatter Persian miniature color fields"
+  # --- v1.8 addition (2026-07-22, t-010 cycle, lane 4) ---
+  # Third non-Western entry (after persian-miniature, mughal-miniature) and the
+  # first anonymous-artist entry since byzantine-mosaic -- named artists are
+  # unknown ancient painters, not an individual or school. Belongs
+  # chronologically around renaissance/baroque (see `era`); appended here to
+  # avoid renumbering the sections above. A future seed-sync task inserts it in
+  # chronological position in academyStyles.ts, mirroring t-020/t-031/t-034.
+  - slug: fayum-mummy-portraits
+    name: Fayum Mummy Portraits
+    era: "c. A.D. 50-250 (Roman Egypt)"
+    artist_slugs: [anonymous-fayum-painters]
+    example_count: 3
+    remix_hint: "Repaint this image as a Fayum mummy portrait: a direct frontal or slightly turned gaze with large dark almond-shaped eyes and heavy dark brows, warm honey-toned skin built from thick encaustic wax brushstrokes with visible ridge texture, simple Roman-style hair and dress, a plain flat dark background, and a thin gold-leaf wreath or jewelry accent"
 ```
 
 ---
@@ -1624,6 +1641,67 @@ border, distinct from flatter Persian miniature color fields"
 
 ---
 
+## 28. Fayum Mummy Portraits (`fayum-mummy-portraits`)
+
+**Era:** c. A.D. 50-250 (Roman Egypt)
+
+**Key ideas.** In Roman-era Egypt, funerary practice fused Egyptian mummification
+with imported Greco-Roman portrait painting: a lifelike panel portrait of the
+deceased, painted in encaustic (pigmented hot wax, occasionally tempera) on a thin
+wood panel, was wrapped directly into the mummy's linen bandaging over the face.
+Named for the Fayum oasis where the largest number survive (examples are also
+known from Antinoopolis, Memphis, and elsewhere along the Nile), these are among
+the only large surviving body of painted portraiture from the ancient
+Mediterranean world — most later Greek and Roman panel painting is lost entirely,
+known only through written descriptions. The style is strikingly naturalistic for
+its era: modeled flesh tones, individualized features, and direct psychological
+presence, sitting at the meeting point of Egyptian funerary tradition and Roman
+portrait convention. Almost nothing is known of the individual painters — no
+signed Fayum portrait survives — so, like Byzantine Mosaic (Lesson 2), this
+lesson credits the tradition's anonymous makers rather than any named artist.
+
+**Recognition cues:**
+- Large, dark, almond-shaped eyes with heavy brows, gazing directly at (or just
+  past) the viewer — the single most distinctive trait of the style
+- Warm, honey-toned modeled skin built up in visible ridges of thick encaustic
+  wax, not smooth glazed paint
+- A plain, flat, dark or muted background with no setting, landscape, or
+  architecture
+- Simple Roman-style hairstyles and drapery, occasionally with modest gold-leaf
+  jewelry, a wreath, or a diadem
+- Three-quarter or fully frontal head-and-shoulders framing, cropped close, no
+  hands or body beyond the chest
+- No cast shadow or single light source modeling — illumination reads as even
+  and frontal rather than dramatic
+
+**Notable artists:** None identifiable. No Fayum portrait carries a painter's
+signature or attribution, and no ancient text names an individual practitioner —
+the tradition is credited here to its anonymous makers (`anonymous-fayum-painters`),
+the same treatment already used for Byzantine Mosaic's anonymous Ravenna and
+Constantinople mosaicists (Lesson 2).
+
+**Example works:**
+- *Portrait of the Boy Eutyches*, unknown painter, A.D. 100-150 — encaustic on
+  wood. **VERIFIED**, The Metropolitan Museum of Art (accession 18.9.2, Gift of
+  Edward S. Harkness, 1918); public domain (CC0, Met Open Access):
+  https://www.metmuseum.org/art/collection/search/547951
+- *Portrait of a Thin-Faced Man*, unknown painter, A.D. 140-170 — encaustic on
+  limewood with gold leaf. **VERIFIED**, The Metropolitan Museum of Art
+  (accession 09.181.3, Rogers Fund, 1909); public domain (CC0, Met Open Access):
+  https://www.metmuseum.org/art/collection/search/547858
+- *Portrait of a Young Woman with a Gilded Wreath*, unknown painter, A.D.
+  120-140 — encaustic on wood with gold leaf. **VERIFIED**, The Metropolitan
+  Museum of Art (accession 09.181.7, Rogers Fund, 1909); public domain (CC0,
+  Met Open Access): https://www.metmuseum.org/art/collection/search/547861
+
+**remix_hint:** "Repaint this image as a Fayum mummy portrait: a direct frontal
+or slightly turned gaze with large dark almond-shaped eyes and heavy dark brows,
+warm honey-toned skin built from thick encaustic wax brushstrokes with visible
+ridge texture, simple Roman-style hair and dress, a plain flat dark background,
+and a thin gold-leaf wreath or jewelry accent"
+
+---
+
 ## Lesson-only vs remixable
 
 Every movement above maps to a remix config (mode `prompt` to start; t-003/t-004
@@ -1670,6 +1748,13 @@ under-cooking risk from the opposite direction: its smooth, sculptural finish is
 close to a lightly-processed photo already, so the remix_hint leans on "simplified
 sculptural forms," "crisp outlines," and "dramatic rolling sky" to push past a
 generic realism filter toward the movement's distinctive smoothed-and-stylized look.
+`fayum-mummy-portraits` shares the same under-cooking risk from the strongest angle
+yet: it is the most photorealistic style in the curriculum, so the model's likeliest
+failure is a generic warm-toned "vintage photo" filter that skips the style's actual
+signature — the remix_hint leans hard on the specific, checkable traits (oversized
+almond eyes, visible encaustic ridge texture, flat dark background, no cast shadow)
+precisely because "old painting of a person" alone would not distinguish it from
+`realism` or `renaissance` portraiture.
 
 **Flagged as likely-poor remixers:**
 - `cubism` — faceting while "preserving the composition" is partly contradictory;
@@ -1823,3 +1908,30 @@ the curriculum's most-recent-example-work record, which stays at 1930
 were confirmed VERIFIED directly via `WebFetch` of their live Wikimedia
 Commons file pages (Public Domain Mark 1.0 tags), matching the §22-23/§25
 precedent.
+
+**v1.7 addition (2026-07-21) re-check (backfilled 2026-07-22, t-010 cycle).**
+Section 27 (Mughal Miniature Painting) clears the PUBLIC-DOMAIN-POLICY.md §1.3
+both-prongs rule for all three named artists: Basawan (fl. 1560-1600, presumed
+dead well over 70 years), Bichitr (active into the 1640s), and Ustad Mansur (d.
+1624) all died centuries before the 1956 cutoff. All three example works
+(c. 1585-95, 1615-18, c. 1612) predate the 1930 US-publication cutoff by three
+centuries and do not disturb the curriculum's most-recent-example-work record,
+which stays at 1930 (*American Gothic* / *Stone City, Iowa*, §24). All three
+example-work URLs were confirmed VERIFIED via Wikimedia Commons file pages at
+the time §27 was added — this paragraph itself was simply never written in the
+same pass, a documentation gap noticed and closed while adding §28 below.
+
+**v1.8 addition (2026-07-22) re-check.** Section 28 (Fayum Mummy Portraits)
+clears the PUBLIC-DOMAIN-POLICY.md §1.3 both-prongs rule with the widest margin
+possible on prong 1: no individual artist is named at all (the tradition is
+credited to `anonymous-fayum-painters`), so there is no living-memory risk
+whatsoever — the entire genre ended with the practice of mummification itself,
+roughly 1,800 years ago. All three example works (A.D. 100-150, 140-170,
+120-140) predate the 1930 US-publication cutoff by nearly two millennia and do
+not disturb the curriculum's most-recent-example-work record, which stays at
+1930 (*American Gothic* / *Stone City, Iowa*, §24). All three example-work URLs
+were confirmed VERIFIED directly against the Met Collection API
+(`collectionapi.metmuseum.org`), each returning `isPublicDomain: true` under
+the Met's CC0 Open Access program — a stronger, more direct verification than
+the Wikimedia-Commons-file-page method used for §17-27, since it reads the
+holding institution's own rights-status field rather than a third-party tag.
