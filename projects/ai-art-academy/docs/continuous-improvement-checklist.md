@@ -15,6 +15,25 @@ Record the lane, files changed, and verification in the task note before rearmin
 
 ### Rotation state
 
+- Last completed lane: Front-end polish (lane 1), 2026-07-22 (~00:17-00:40 UTC,
+  claude-conductor-agentrun-20260722T0016Z-t010). Lane 3 (inspiration/preview
+  assets) re-probed first with a fresh queued job (1307, greek-vase-painting.webp)
+  — still unclaimed after queuing, same never-claimed home-relay signature since
+  2026-07-18. Lane 4 deliberately skipped (the immediately-prior cycle's reasoning
+  still holds: every remaining curriculum-depth gap is relay-blocked, not
+  research-blocked). Dispatched a subagent to read every in-scope Academy file in
+  full and found a real, verifiable gap in `art-styler.vue`'s
+  `selectStarterEntry()`: `selectedStarterFile.value` was assigned only after the
+  fetch resolved, in the same synchronous block as the `finally` clearing the
+  loading flag — with no `await` between them, Vue batched both reactive writes
+  into one render, so the loading-spinner state for starter thumbnails was dead
+  code (unchanged since the starters feature shipped in #366). Fixed by setting
+  `selectedStarterFile.value` immediately on click, with a rollback to `null` in
+  the `catch` block. Verified: `npx eslint`/`npx prettier --check` clean,
+  full-project `npm run test` (`vue-tsc --noEmit`) exit 0. kind_robots PR #840,
+  all 4 CI checks green, merged squash `cc0b0ebf`. Next preferred lane is roadmap
+  accuracy (lane 2) — this cycle ran lane 1, so lane 2 is next in the 1→2→3→4
+  rotation.
 - **Note (rotation collision):** the two entries below both cite session label
   `claude-conductor-scheduled-20260721T220455Z-t010` but are two distinct
   concurrent sessions that reused the same label (see root `TALKBACK.md`
