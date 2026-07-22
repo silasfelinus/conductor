@@ -72,11 +72,11 @@ tasks:
 - id: t-003
   milestone: m3
   title: Specify the 3D printable model set
-  status: ready
-  owner: null
+  status: claimed
+  owner: worker
   passes: 0
   stakes: reversible
-  updated: 2026-06-29
+  updated: '2026-07-22T05:18:35Z'
   depends_on: t-001
   note: 'Define the printable model catalog: brackets, guides, wireforms substitutes, lane plastics, posts,
     target housings, ball trough helpers, ramps if feasible, playfield fixtures, cable clips, and cabinet
@@ -84,6 +84,8 @@ tasks:
     part should be STL, 3MF, or editable CAD source.
 
     '
+  claimed_by: claude-conductor-scheduled-20260722T0506Z-pinball-t003
+  claimed_at: '2026-07-22T05:18:35Z'
 - id: t-004
   milestone: m4
   title: Design the electronics and control plan
