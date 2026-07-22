@@ -9084,3 +9084,48 @@ instance turns up).
 **Kaizen task:** none filed as a new roadmap task this cycle — the composable suggestion is
 recorded in kind_robots PR #849's description for a future lane-1 cycle to pick up if the
 pattern recurs a third time; deferred rather than pre-built speculatively.
+
+## 2026-07-22 | Reviewer (scheduled agent run) | conductor process | pattern
+
+**Decision:** no action needed beyond this note — self-caught and reconciled before merge,
+no duplicate content landed on `main`.
+
+**Failure category:** null — process observation, not a task failure.
+
+**Subject:** This session's context was compacted mid-run and it lost memory of work it had
+already completed earlier in the same scheduled window, causing it to redo the same task and
+open a near-duplicate PR.
+
+**Detail:**
+- Earlier in this scheduled session (session id `claude-conductor-scheduled-20260722T030537Z`),
+  this agent claimed `model-builder/t-029`, fixed a textarea-clobbering bug in
+  `model-builder-item-panel.vue`, merged kind_robots PR #850, and landed conductor PR #1010
+  updating the roadmap (`status: ready`, `owner: null`).
+- After a context compaction, this session had no memory of that work. Starting a fresh sweep,
+  it found the stale `status: claimed` roadmap entry (compaction happened before PR #1010's
+  roadmap update, or the in-memory state simply predated it) and re-verified via `git log`,
+  `list_pull_requests`, and the task's own `claimed_by`/PR body that kind_robots PR #850 was
+  its own already-open work — correctly resumed and merged that live PR rather than
+  re-implementing the fix from scratch. But the conductor-side wrap-up (roadmap update +
+  TALKBACK entry) was redone independently as PR #1011, without checking whether an earlier
+  wrap-up commit had already landed.
+- PR #1011 hit a real merge conflict against `main` (`405 merge conflicts`) because PR #1010
+  had already changed the same `roadmap.yaml` lines minutes earlier. Diagnosed via `git fetch
+  origin main` + `git diff`, confirmed #1010's diff was functionally identical intent (same
+  task, same PR #850 reference, same session id in the note), then reconciled by hard-resetting
+  the local branch onto `origin/main` and re-applying only the net-new part (the TALKBACK.md
+  entry, which #1010 hadn't included) via `git apply` on an extracted patch — not by
+  force-pushing over #1010's already-merged content or leaving both duplicate notes on the task.
+
+**Suggested action:** When a session resumes an in-progress claim it doesn't fully remember
+(stale-looking `status: claimed` plus a live open PR that already matches the task), check
+`git log`/recent merged PRs for that project/task-id *before* writing a new wrap-up commit —
+not just before touching the implementation. The implementation-reuse check (open-PR lookup)
+already happened correctly here; the gap was not re-running the equivalent check for the
+roadmap/TALKBACK log commit that normally follows a merge. Worth a line in AGENTS.md's
+"Rotation collisions" section generalizing it beyond concurrent-session collisions to
+same-session post-compaction collisions, since the failure mode and the fix (fetch origin
+before writing, reconcile via diff rather than blind force-push) are identical either way.
+
+**Kaizen task:** none filed this cycle — logging the pattern here is the intended first step;
+if this recurs, promote it to an AGENTS.md addition rather than a repeated TALKBACK note.
