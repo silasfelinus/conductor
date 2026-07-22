@@ -95,6 +95,81 @@ DEFAULT_NEGATIVE_PROMPT = (
     "collage, frame, border, ugly, grainy"
 )
 
+# ---------------------------------------------------------------------------
+# Krea 2 Turbo (default for coloring-book color masters)
+# ---------------------------------------------------------------------------
+# Krea 2 Turbo is an 8-step distilled DiT tuned for illustration/painting — the
+# "extreme creativity" lane the coloring books want, and fast enough to iterate
+# on a 12GB card (~sub-minute vs Flux-dev's ~30 min at 36 steps). Its stack is
+# Qwen-Image lineage, NOT Flux: a single CLIPLoader with type "krea2" feeding
+# the Qwen3-VL text encoder, the Qwen-Image VAE (not Flux's ae.safetensors),
+# and a plain KSampler (no FluxGuidance node). Negative conditioning is wired
+# correctly but has little effect at cfg 1 (the model is distilled for it).
+#
+# VERIFY these filenames against your ComfyUI/models folders after download —
+# quant/release naming varies. GGUF users: set KREA2_UNET_LOADER to
+# "UnetLoaderGGUF" and point KREA2_MODEL at the .gguf (lighter on 12GB VRAM).
+KREA2_UNET_LOADER = "UNETLoader"  # or "UnetLoaderGGUF" for a .gguf
+KREA2_MODEL = "krea2_turbo_fp8_scaled.safetensors"
+KREA2_MODEL_DTYPE = "default"  # UNETLoader weight_dtype; ignored by the GGUF loader
+KREA2_CLIP = "qwen3vl_4b_fp8_scaled.safetensors"
+KREA2_CLIP_TYPE = "krea2"
+KREA2_VAE = "qwen_image_vae.safetensors"
+KREA2_STEPS = 8
+KREA2_CFG = 1
+KREA2_SAMPLER = "euler"
+KREA2_SCHEDULER = "simple"
+
+# ---------------------------------------------------------------------------
+# Flux.2 Klein 4B (the JSON-structured-prompt option)
+# ---------------------------------------------------------------------------
+# Klein 4B is Apache-2.0 (clean for storefront/POD), 4-step, <12GB, and takes
+# JSON structured prompts that bind compositions ("head": "giant fly", ...) far
+# more faithfully than a run-on sentence — the fix for renders that "veer off".
+# Pass an entry's `json_prompt:` mapping and it is serialized into the text
+# encode; otherwise the plain prompt string is used. Flux.2 uses its OWN text
+# encoder and VAE (different from Flux.1).
+#
+# VERIFY these filenames against the Comfy-Org Flux.2 release you download.
+FLUX2_KLEIN_UNET_LOADER = "UnetLoaderGGUF"  # Klein 4B ships as GGUF
+FLUX2_KLEIN_MODEL = "flux2-klein-4b-Q5_K_M.gguf"
+FLUX2_KLEIN_CLIP = "flux2_klein_text_encoder_fp8_scaled.safetensors"
+FLUX2_KLEIN_CLIP_TYPE = "flux2"
+FLUX2_KLEIN_VAE = "flux2-vae.safetensors"
+FLUX2_KLEIN_STEPS = 4
+FLUX2_KLEIN_CFG = 1
+FLUX2_KLEIN_SAMPLER = "euler"
+FLUX2_KLEIN_SCHEDULER = "simple"
+
+# Engine name normalization. Every alias resolves to a canonical engine so a
+# queue entry (or a defaults block) can say "krea", "klein", "flux2", etc.
+ENGINE_ALIASES = {
+    "krea": "krea2",
+    "krea2-turbo": "krea2",
+    "krea-2": "krea2",
+    "flux2": "flux2-klein",
+    "klein": "flux2-klein",
+    "flux2-klein-4b": "flux2-klein",
+    "flux-2": "flux2-klein",
+}
+
+# Engines that emit a full ComfyUI graph (relay engine "COMFY"). Everything
+# else (a1111, sdxl, plain "comfy") stays on the raw-txt2img/passthrough path
+# so existing behavior is preserved.
+COMFY_WORKFLOW_ENGINES = ("flux", "krea2", "flux2-klein")
+
+# Per-engine native step counts, used when an entry/defaults block does not
+# name an explicit step budget so each model runs at its designed cadence.
+ENGINE_DEFAULT_STEPS = {
+    "krea2": KREA2_STEPS,
+    "flux2-klein": FLUX2_KLEIN_STEPS,
+}
+
+
+def normalize_engine(engine):
+    name = str(engine or DEFAULT_ENGINE).strip().lower()
+    return ENGINE_ALIASES.get(name, name)
+
 
 def http_json(method, url, body=None, timeout=60):
     data = json.dumps(body).encode() if body is not None else None
@@ -211,6 +286,192 @@ def build_flux_workflow(prompt, width, height, steps, guidance, seed, unet):
     }
 
 
+def _lora_from_entry(entry):
+    """Optional style-LoRA hook shared by the Comfy engines. Returns
+    (lora_name, strength) or (None, _). Use a comic/ink/lineart style LoRA here
+    to push the color master toward the bold-contour 'inked illustration' house
+    look (the coloring-book target), not a painterly render."""
+    lora = entry.get("lora")
+    if not lora:
+        return None, 0.0
+    try:
+        strength = float(entry.get("lora_strength", 1.0))
+    except (TypeError, ValueError):
+        strength = 1.0
+    return str(lora), strength
+
+
+def _build_simple_comfy_workflow(
+    *,
+    prompt,
+    negative,
+    width,
+    height,
+    steps,
+    cfg,
+    seed,
+    sampler,
+    scheduler,
+    unet_loader,
+    unet_name,
+    unet_dtype,
+    clip_name,
+    clip_type,
+    vae_name,
+    filename_prefix,
+    lora=None,
+    lora_strength=1.0,
+):
+    """A generic checkpoint->clip->ksampler->vae ComfyUI graph.
+
+    Krea 2 Turbo and Flux.2 Klein share this exact shape (unlike Flux.1, which
+    needs a DualCLIPLoader + FluxGuidance). They differ only in loaders, the
+    CLIPLoader `type`, VAE, and sampler settings — all passed in. Negative
+    conditioning is wired properly (its own CLIPTextEncode), so 'no text/border'
+    negatives are live wherever cfg > 1; at cfg 1 they are simply inert rather
+    than silently mis-wired to the positive node (the Flux.1 path's known bug)."""
+    text = prompt or "a beautiful, richly detailed illustration"
+    sampler_seed = resolve_seed(seed)
+
+    if unet_loader == "UnetLoaderGGUF":
+        loader_inputs = {"unet_name": unet_name}
+    else:  # UNETLoader (safetensors / fp8)
+        loader_inputs = {"unet_name": unet_name, "weight_dtype": unet_dtype}
+
+    model_ref = ["1", 0]
+    workflow = {
+        "1": {
+            "inputs": loader_inputs,
+            "class_type": unet_loader,
+            "_meta": {"title": "Load Diffusion Model"},
+        },
+        "2": {
+            "inputs": {"clip_name": clip_name, "type": clip_type, "device": "default"},
+            "class_type": "CLIPLoader",
+            "_meta": {"title": "Load CLIP"},
+        },
+        "3": {
+            "inputs": {"text": text, "clip": ["2", 0]},
+            "class_type": "CLIPTextEncode",
+            "_meta": {"title": "Positive Prompt"},
+        },
+        "4": {
+            "inputs": {"text": negative or "", "clip": ["2", 0]},
+            "class_type": "CLIPTextEncode",
+            "_meta": {"title": "Negative Prompt"},
+        },
+        "5": {
+            "inputs": {"vae_name": vae_name},
+            "class_type": "VAELoader",
+            "_meta": {"title": "Load VAE"},
+        },
+        "6": {
+            "inputs": {"width": width, "height": height, "batch_size": 1},
+            "class_type": "EmptyLatentImage",
+            "_meta": {"title": "Empty Latent Image"},
+        },
+        "7": {
+            "inputs": {
+                "seed": sampler_seed,
+                "steps": steps,
+                "cfg": cfg,
+                "sampler_name": sampler,
+                "scheduler": scheduler,
+                "denoise": 1,
+                "model": model_ref,
+                "positive": ["3", 0],
+                "negative": ["4", 0],
+                "latent_image": ["6", 0],
+            },
+            "class_type": "KSampler",
+            "_meta": {"title": "KSampler"},
+        },
+        "8": {
+            "inputs": {"samples": ["7", 0], "vae": ["5", 0]},
+            "class_type": "VAEDecode",
+            "_meta": {"title": "VAE Decode"},
+        },
+        "9": {
+            "inputs": {"filename_prefix": filename_prefix, "images": ["8", 0]},
+            "class_type": "SaveImage",
+            "_meta": {"title": "Save Image"},
+        },
+    }
+
+    if lora:
+        # Model-only style LoRA: cfg~1 distilled models take the aesthetic from
+        # the diffusion model, so wrap only the model path (their text encoders
+        # are model-specific and not what these style LoRAs were trained on).
+        workflow["10"] = {
+            "inputs": {
+                "model": ["1", 0],
+                "lora_name": lora,
+                "strength_model": lora_strength,
+            },
+            "class_type": "LoraLoaderModelOnly",
+            "_meta": {"title": "Style LoRA"},
+        }
+        workflow["7"]["inputs"]["model"] = ["10", 0]
+
+    return workflow
+
+
+def build_krea2_workflow(prompt, negative, width, height, steps, seed, entry=None):
+    """Krea 2 Turbo (Qwen-lineage) ComfyUI graph. See KREA2_* constants."""
+    lora, strength = _lora_from_entry(entry or {})
+    return _build_simple_comfy_workflow(
+        prompt=prompt,
+        negative=negative,
+        width=width,
+        height=height,
+        steps=steps,
+        cfg=KREA2_CFG,
+        seed=seed,
+        sampler=KREA2_SAMPLER,
+        scheduler=KREA2_SCHEDULER,
+        unet_loader=KREA2_UNET_LOADER,
+        unet_name=KREA2_MODEL,
+        unet_dtype=KREA2_MODEL_DTYPE,
+        clip_name=KREA2_CLIP,
+        clip_type=KREA2_CLIP_TYPE,
+        vae_name=KREA2_VAE,
+        filename_prefix="kindrobots_krea2",
+        lora=lora,
+        lora_strength=strength,
+    )
+
+
+def build_flux2_klein_workflow(prompt, negative, width, height, steps, seed, entry=None):
+    """Flux.2 Klein 4B ComfyUI graph. If the entry carries a `json_prompt`
+    mapping, it is serialized to JSON for the text encode (Flux.2's structured
+    prompt path). See FLUX2_KLEIN_* constants."""
+    entry = entry or {}
+    lora, strength = _lora_from_entry(entry)
+    json_prompt = entry.get("json_prompt")
+    if isinstance(json_prompt, (dict, list)) and json_prompt:
+        prompt = json.dumps(json_prompt, ensure_ascii=False)
+    return _build_simple_comfy_workflow(
+        prompt=prompt,
+        negative=negative,
+        width=width,
+        height=height,
+        steps=steps,
+        cfg=FLUX2_KLEIN_CFG,
+        seed=seed,
+        sampler=FLUX2_KLEIN_SAMPLER,
+        scheduler=FLUX2_KLEIN_SCHEDULER,
+        unet_loader=FLUX2_KLEIN_UNET_LOADER,
+        unet_name=FLUX2_KLEIN_MODEL,
+        unet_dtype="default",
+        clip_name=FLUX2_KLEIN_CLIP,
+        clip_type=FLUX2_KLEIN_CLIP_TYPE,
+        vae_name=FLUX2_KLEIN_VAE,
+        filename_prefix="kindrobots_flux2_klein",
+        lora=lora,
+        lora_strength=strength,
+    )
+
+
 def entry_to_job(entry):
     """Map an art-generate.yaml entry to an ArtJob enqueue body.
 
@@ -223,18 +484,21 @@ def entry_to_job(entry):
     module constants and may be overridden per entry. Optional knobs (sampler,
     seed) are only sent when set, so an untouched batch keeps the relay's own
     defaults."""
-    engine = str(entry.get("engine") or DEFAULT_ENGINE).strip().lower()
+    engine = normalize_engine(entry.get("engine"))
     width, height = parse_size(entry.get("size"))
     prompt = " ".join(str(entry.get("prompt") or "").split())
     negative = " ".join(
         str(entry.get("negative_prompt") or DEFAULT_NEGATIVE_PROMPT).split()
     )
 
+    variant = None
     if engine == "flux":
         variant = str(entry.get("flux_variant") or FLUX_VARIANT).strip().lower()
         if variant not in FLUX_MODELS:
             variant = FLUX_VARIANT
         steps = int(entry.get("steps") or FLUX_MODELS[variant]["steps"])
+    elif engine in ENGINE_DEFAULT_STEPS:
+        steps = int(entry.get("steps") or ENGINE_DEFAULT_STEPS[engine])
     else:
         steps = int(entry.get("steps") or DEFAULT_STEPS)
 
@@ -258,17 +522,34 @@ def entry_to_job(entry):
     if entry.get("seed") is not None:
         payload["seed"] = entry["seed"]
 
-    if engine == "flux":
-        # Emit a COMFY job carrying the Flux graph; the relay drives ComfyUI.
-        payload["workflow"] = build_flux_workflow(
-            prompt=prompt,
-            width=width,
-            height=height,
-            steps=steps,
-            guidance=entry.get("guidance", FLUX_MODELS[variant]["guidance"]),
-            seed=entry.get("seed"),
-            unet=FLUX_MODELS[variant]["unet"],
-        )
+    # `resolvedSeed` is the concrete seed the render actually uses. For the graph
+    # engines we resolve it here (random when the entry omits it or passes -1),
+    # bake that exact value into the workflow, AND report it on the job so the
+    # caller can record "the real seed used" and reproduce an accepted render
+    # later. For the raw/a1111/passthrough path the backend assigns the seed, so
+    # we can only echo whatever the entry supplied (may be None).
+    resolved_seed = entry.get("seed")
+
+    if engine in COMFY_WORKFLOW_ENGINES:
+        resolved_seed = resolve_seed(entry.get("seed"))
+        if engine == "flux":
+            payload["workflow"] = build_flux_workflow(
+                prompt=prompt,
+                width=width,
+                height=height,
+                steps=steps,
+                guidance=entry.get("guidance", FLUX_MODELS[variant]["guidance"]),
+                seed=resolved_seed,
+                unet=FLUX_MODELS[variant]["unet"],
+            )
+        elif engine == "krea2":
+            payload["workflow"] = build_krea2_workflow(
+                prompt, negative, width, height, steps, resolved_seed, entry
+            )
+        else:  # flux2-klein
+            payload["workflow"] = build_flux2_klein_workflow(
+                prompt, negative, width, height, steps, resolved_seed, entry
+            )
         relay_engine = "COMFY"
     else:
         relay_engine = engine.upper()
@@ -277,6 +558,7 @@ def entry_to_job(entry):
         "engine": relay_engine,
         "projectSlug": entry.get("project") or None,
         "payload": payload,
+        "resolvedSeed": resolved_seed,
     }
 
 

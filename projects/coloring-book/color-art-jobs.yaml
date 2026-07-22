@@ -9,12 +9,17 @@ batch_policy:
   meaning: One pass may prepare, submit, retrieve, or review up to 18 color proposals. Do not spend a pass writing
     one to six isolated prompts when a full half-book batch is available.
 defaults:
+  # Krea 2 Turbo is the default color-master engine: an 8-step distilled DiT
+  # tuned for illustration, fast on a 12GB card, and Apache/community-licensed
+  # for the storefront. Per-entry `engine:` (krea2 | flux2-klein | flux | sdxl)
+  # overrides this, so a batch can mix engines. `steps` is intentionally unset
+  # so each engine runs at its native cadence (Krea2 8, Klein 4, Flux 30/36).
   target_repo: silasfelinus/conductor
   size: 1024x1536
-  engine: flux
-  flux_variant: dev
-  steps: 36
-  guidance: 3.5
+  engine: krea2
+  # Seeds randomize every attempt so repeated renders of a concept differ. Once
+  # a color master is accepted, set `lock_seed: true` on that entry (with the
+  # `render_seed` recorded on it) to reproduce it for the BW coloring page.
   output_version: color-proposals-v1
 status_meanings:
   pending: ready to submit as a color ArtJob

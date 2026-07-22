@@ -84,6 +84,81 @@ def test_entry_to_job_flux_schnell_variant():
     )
 
 
+def test_entry_to_job_krea2_builds_qwen_lineage_graph():
+    job = consumer.entry_to_job(
+        {
+            "image_path": "public/images/x.webp",
+            "prompt": "a haunted doll, inked comic style",
+            "engine": "krea2",
+        }
+    )
+    assert job["engine"] == "COMFY"
+    wf = job["payload"]["workflow"]
+    # Krea 2 stack: single CLIPLoader (type krea2), Qwen VAE, plain KSampler
+    assert wf["2"]["class_type"] == "CLIPLoader"
+    assert wf["2"]["inputs"]["type"] == consumer.KREA2_CLIP_TYPE
+    assert wf["5"]["inputs"]["vae_name"] == consumer.KREA2_VAE
+    assert wf["7"]["class_type"] == "KSampler"
+    # native 8-step cadence applied when the entry names no steps
+    assert job["payload"]["steps"] == consumer.KREA2_STEPS
+    assert wf["7"]["inputs"]["steps"] == consumer.KREA2_STEPS
+    # negative is wired to its OWN encode node (not the positive), unlike the
+    # broken flux path — live wherever cfg > 1, inert (not mis-wired) at cfg 1
+    assert wf["7"]["inputs"]["negative"] == ["4", 0]
+    assert wf["7"]["inputs"]["positive"] == ["3", 0]
+    # a concrete seed is resolved and reported so the caller can record it
+    assert isinstance(job["resolvedSeed"], int)
+    assert wf["7"]["inputs"]["seed"] == job["resolvedSeed"]
+
+
+def test_entry_to_job_flux2_klein_alias_and_json_prompt():
+    job = consumer.entry_to_job(
+        {
+            "image_path": "public/images/x.webp",
+            "prompt": "fallback text",
+            "engine": "flux2",  # alias -> flux2-klein
+            "json_prompt": {"subject": "curvy pinup", "head": "giant fly"},
+        }
+    )
+    assert job["engine"] == "COMFY"
+    wf = job["payload"]["workflow"]
+    assert wf["1"]["inputs"]["unet_name"] == consumer.FLUX2_KLEIN_MODEL
+    assert wf["2"]["inputs"]["type"] == consumer.FLUX2_KLEIN_CLIP_TYPE
+    assert job["payload"]["steps"] == consumer.FLUX2_KLEIN_STEPS
+    # JSON structured prompt is serialized into the positive text encode
+    encoded = wf["3"]["inputs"]["text"]
+    assert '"head": "giant fly"' in encoded
+
+
+def test_entry_to_job_style_lora_wraps_model_only():
+    job = consumer.entry_to_job(
+        {
+            "image_path": "public/images/x.webp",
+            "prompt": "inked slasher at the lake",
+            "engine": "krea2",
+            "lora": "comic_inks_v2.safetensors",
+            "lora_strength": 0.8,
+        }
+    )
+    wf = job["payload"]["workflow"]
+    assert wf["10"]["class_type"] == "LoraLoaderModelOnly"
+    assert wf["10"]["inputs"]["lora_name"] == "comic_inks_v2.safetensors"
+    assert wf["10"]["inputs"]["strength_model"] == 0.8
+    # sampler now pulls the model through the LoRA, clip stays on the encoder
+    assert wf["7"]["inputs"]["model"] == ["10", 0]
+
+
+def test_entry_to_job_random_seed_when_unset_is_reported():
+    job = consumer.entry_to_job(
+        {"image_path": "public/images/x.webp", "prompt": "a fox", "engine": "krea2"}
+    )
+    # no seed on the entry -> a concrete random seed is resolved and reported,
+    # and it is NOT surfaced as a fixed payload["seed"] (relay/graph own it)
+    assert isinstance(job["resolvedSeed"], int)
+    assert job["resolvedSeed"] >= 0
+    assert "seed" not in job["payload"]
+
+
 def test_entry_to_job_honors_per_entry_quality_overrides():
     job = consumer.entry_to_job(
         {

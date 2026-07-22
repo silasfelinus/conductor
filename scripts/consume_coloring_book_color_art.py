@@ -29,23 +29,34 @@ import semantic_art_quality  # noqa: E402
 ROOT = consumer.ROOT
 QUEUE_FILE = ROOT / "projects" / "coloring-book" / "color-art-jobs.yaml"
 
+# House style anchor. These books want INKED COMIC art — bold clean black ink
+# linework with flat, cel-shaded comic color, in the tradition of European
+# bande dessinee / vintage comic inking — NOT a painterly or photographic
+# render. The color master is the same drawing the black-and-white coloring
+# page will be traced from, so every form must be bounded by a confident,
+# closed ink outline. This anchor is what keeps a creative model from drifting
+# into soft airbrushed illustration (the failure mode of the old flux path).
+INKED_STYLE = (
+    "bold clean black ink linework, confident closed contours around every form, "
+    "flat cel-shaded comic color, crisp bounded color fills, hard-edged shapes, "
+    "high organized detail, strong readable silhouette, in the tradition of "
+    "European bande dessinee and vintage comic inking"
+)
+
 COLOR_SUFFIX = (
-    " Render this as a finished full-color coloring-book design master, portrait 2:3: "
-    "one coherent full-bleed scene, thick confident black contours, crisp bounded color, "
-    "hard-edged value shapes, high organized detail, strong readable silhouette, clear "
-    "hands and contact points, and enough closed shapes to support a later faithful line-art "
-    "conversion. Fill the frame edge to edge. No border, no comic panels, no collage, no "
-    "contact sheet, no readable text, no watermark, no signature, no brand marks, no soft "
-    "airbrush haze, and no painterly blur."
+    f" Render this as a finished inked-comic coloring-book design master, portrait 2:3: {INKED_STYLE}. "
+    "One coherent full-bleed scene, clear hands and contact points, and enough closed shapes to "
+    "support a later faithful line-art conversion. Fill the frame edge to edge. No border, no "
+    "comic panels, no collage, no contact sheet, no readable text, no watermark, no signature, "
+    "no brand marks, no soft airbrush haze, no painterly blur, no photographic rendering."
 )
 
 LOGO_SUFFIX = (
-    " Render this as a finished full-color coloring-book design master, portrait 2:3: "
-    "one coherent full-bleed scene, thick confident black contours, crisp bounded color, "
-    "hard-edged value shapes, high organized detail, and a strong iconic silhouette. A "
-    "recognizable emblem or mascot variation is allowed because this is the designated "
-    "Kind Robots logo page, but include no readable words, letters, watermark, signature, "
-    "border, comic panels, collage, contact sheet, soft airbrush haze, or painterly blur."
+    f" Render this as a finished inked-comic coloring-book design master, portrait 2:3: {INKED_STYLE}, "
+    "and a strong iconic silhouette. A recognizable emblem or mascot variation is allowed because "
+    "this is the designated Kind Robots logo page, but include no readable words, letters, watermark, "
+    "signature, border, comic panels, collage, contact sheet, soft airbrush haze, painterly blur, "
+    "or photographic rendering."
 )
 
 
@@ -142,6 +153,20 @@ def build_entries(book_filter: str | None = None) -> tuple[dict[str, Any], list[
 
             suffix = LOGO_SUFFIX if source.get("allow_logo_emblem") else COLOR_SUFFIX
             full_prompt = clean(attempted_prompt + suffix)
+
+            # Seed policy: explore with a RANDOM seed every attempt (so repeated
+            # submissions of the same concept actually differ) and record the
+            # concrete seed each render used. Only reuse a stored seed when the
+            # entry is explicitly `lock_seed: true` — the state you want once a
+            # composition is accepted and must be reproduced to derive its BW
+            # coloring page. A stored `seed:` on an unlocked entry is treated as
+            # provenance (last render), NOT as an input, so it no longer forces
+            # identical iterations.
+            locked = bool(source.get("lock_seed"))
+            stored_seed = source.get("seed")
+            seed = int(stored_seed) if (locked and stored_seed is not None) else None
+
+            engine = str(source.get("engine") or defaults.get("engine") or "krea2")
             entry = {
                 "id": f"coloring-book-{book_slug}-{source['id']}-color",
                 "queue_id": str(source["id"]),
@@ -155,16 +180,25 @@ def build_entries(book_filter: str | None = None) -> tuple[dict[str, Any], list[
                 "prompt": full_prompt,
                 "prompt_fingerprint": prompt_fingerprint(full_prompt),
                 "target_repo": defaults.get("target_repo", "silasfelinus/conductor"),
-                "size": str(defaults.get("size", "1024x1536")),
-                "engine": str(defaults.get("engine", "flux")),
-                "flux_variant": str(defaults.get("flux_variant", "dev")),
-                "steps": int(defaults.get("steps", 36)),
-                "guidance": float(defaults.get("guidance", 3.5)),
-                "seed": int(source.get("seed") or 0),
+                "size": str(source.get("size") or defaults.get("size", "1024x1536")),
+                "engine": engine,
+                "flux_variant": str(source.get("flux_variant") or defaults.get("flux_variant", "dev")),
+                "guidance": float(source.get("guidance") or defaults.get("guidance", 3.5)),
+                "seed": seed,
+                "lock_seed": locked,
                 "semantic_attempts": semantic_attempts,
                 "source_ref": source.get("source_ref"),
                 "reference_images": source.get("reference_images") or [],
             }
+            # Steps: only pin when defaults/source ask for it, otherwise let each
+            # engine run at its native cadence (Krea2 8, Klein 4, Flux-dev 30/36).
+            explicit_steps = source.get("steps", defaults.get("steps"))
+            if explicit_steps is not None:
+                entry["steps"] = int(explicit_steps)
+            # Per-concept overrides so a batch can mix engines / styles freely.
+            for opt in ("lora", "lora_strength", "json_prompt", "sampler", "cfg", "negative_prompt"):
+                if source.get(opt) is not None:
+                    entry[opt] = source[opt]
             entries.append(entry)
 
     entries.sort(key=lambda item: (book_order(queue, str(item["set"])), slot_for(queue, str(item["queue_id"]))))
@@ -246,6 +280,12 @@ def mark_done(completed: list[dict[str, Any]]) -> int:
         source["rendered_path"] = str(done["image_path"])
         if done.get("art_image_id") is not None:
             source["art_image_id"] = int(done["art_image_id"])
+        # Record the concrete seed + engine this accepted render used so it can
+        # be reproduced (set `lock_seed: true` + this seed) when deriving the BW
+        # coloring page from the accepted color master.
+        if done.get("resolved_seed") is not None:
+            source["render_seed"] = done["resolved_seed"]
+        source["render_engine"] = done.get("engine")
         source["completed_at"] = now_iso()
         source["prompt_fingerprint"] = str(done["prompt_fingerprint"])
         source["semantic_verdict"] = done.get("semantic_verdict")
@@ -267,7 +307,9 @@ def rejection_destination(
     category: str,
 ) -> Path:
     attempt = int(entry.get("semantic_attempts") or 0) + 1
-    seed = int(entry.get("seed") or 0)
+    seed = entry.get("resolved_seed")
+    if seed is None:
+        seed = entry.get("seed") or 0
     filename = f"{destination.stem}-attempt-{attempt}-seed-{seed}{destination.suffix}"
     rejected = destination.parent / "rejected" / "semantic" / category / filename
     rejected.parent.mkdir(parents=True, exist_ok=True)
@@ -286,15 +328,18 @@ def record_semantic_rejection(
     max_attempts = max(1, semantic_art_quality.DEFAULT_MAX_ATTEMPTS)
     next_status = "pending" if next_attempt < max_attempts else "needs_review"
 
+    used_seed = entry.get("resolved_seed")
+
     def mutate(source: dict[str, Any]) -> None:
-        current_seed = int(source.get("seed") or entry.get("seed") or 0)
+        seed_for_history = used_seed if used_seed is not None else source.get("seed")
         history = source.get("semantic_rejections")
         if not isinstance(history, list):
             history = []
         history.append(
             {
                 "attempt": next_attempt,
-                "seed": current_seed,
+                "seed": seed_for_history,
+                "engine": entry.get("engine"),
                 "art_image_id": entry.get("art_image_id"),
                 "prompt_fingerprint": entry.get("prompt_fingerprint"),
                 "score": semantic.get("score"),
@@ -310,14 +355,19 @@ def record_semantic_rejection(
         source["semantic_rejections"] = history
         source["semantic_attempts"] = next_attempt
         source["last_rejected_art_image_id"] = entry.get("art_image_id")
+        source["last_render_seed"] = seed_for_history
         source["last_semantic_score"] = semantic.get("score")
         source["last_semantic_reasons"] = semantic.get("reasons") or []
         source["status"] = next_status
         source.pop("art_image_id", None)
         source.pop("completed_at", None)
-        if next_status == "pending":
-            source["previous_seed"] = current_seed
-            source["seed"] = semantic_art_quality.next_retry_seed(current_seed, next_attempt)
+        if next_status == "pending" and bool(source.get("lock_seed")):
+            # Locked concept: keep the deterministic seed rotation so a
+            # reproducible render can still explore a few variants on retry.
+            base = int(source.get("seed") or seed_for_history or 0)
+            source["previous_seed"] = base
+            source["seed"] = semantic_art_quality.next_retry_seed(base, next_attempt)
+        # Unlocked concepts leave `seed` unset so the next attempt randomizes.
 
     mutate_queue_entry(entry, mutate)
     return next_status
@@ -335,26 +385,33 @@ def record_semantic_gate_error(entry: dict[str, Any], error: Exception) -> None:
 def stable_job_body(entry: dict[str, Any]) -> dict[str, Any]:
     job = consumer.entry_to_job(entry)
     payload = job.get("payload") if isinstance(job.get("payload"), dict) else {}
-    workflow = payload.get("workflow") if isinstance(payload.get("workflow"), dict) else {}
-    text_node = workflow.get("59") if isinstance(workflow.get("59"), dict) else {}
-    inputs = text_node.get("inputs") if isinstance(text_node.get("inputs"), dict) else {}
-    if inputs:
-        inputs["seed"] = (int(entry.get("seed") or 0) + 59_059) % 2_147_483_647
+
+    # The concrete seed the render will use — random for an unlocked exploration
+    # attempt, the pinned seed for a locked one. entry_to_job baked this exact
+    # value into the workflow graph; stash it on the entry so the caller records
+    # "the real seed used" on the queue after the render lands.
+    resolved_seed = job.get("resolvedSeed")
+    entry["resolved_seed"] = resolved_seed
 
     payload["attempt"] = {
         "project": "coloring-book",
         "set": entry.get("set"),
         "conceptId": entry.get("concept_id"),
         "semanticAttempt": int(entry.get("semantic_attempts") or 0),
-        "seed": int(entry.get("seed") or 0),
+        "seed": resolved_seed,
+        "engine": entry.get("engine"),
         "promptFingerprint": entry.get("prompt_fingerprint"),
         "sourceRef": entry.get("source_ref"),
     }
+    # Include the resolved seed in the idempotency key so each fresh (randomized)
+    # attempt is a distinct render, while a retry of the *same* built job still
+    # dedupes. A locked seed therefore dedupes across runs; a random one does not.
     key_material = {
         "set": entry.get("set"),
         "concept": entry.get("concept_id"),
         "semanticAttempt": int(entry.get("semantic_attempts") or 0),
-        "seed": int(entry.get("seed") or 0),
+        "seed": resolved_seed,
+        "engine": entry.get("engine"),
         "promptFingerprint": entry.get("prompt_fingerprint"),
     }
     key_hash = hashlib.sha256(
@@ -425,10 +482,12 @@ def main() -> int:
         for entry in todo:
             job = stable_job_body(entry)
             refs = f" refs={len(entry.get('reference_images') or [])}" if entry.get("reference_images") else ""
+            seed_label = job.get("resolvedSeed")
+            seed_label = "random" if entry.get("seed") is None else seed_label
             print(
                 f"  {entry['set']}/{entry['concept_id']} -> {entry['image_path']} "
-                f"[{job['payload']['width']}x{job['payload']['height']}] seed={entry['seed']} "
-                f"semantic_attempt={entry['semantic_attempts']}{refs}"
+                f"[{job['payload']['width']}x{job['payload']['height']}] engine={entry.get('engine')} "
+                f"seed={seed_label} semantic_attempt={entry['semantic_attempts']}{refs}"
             )
         return 0
 
