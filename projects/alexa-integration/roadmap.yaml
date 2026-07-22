@@ -350,37 +350,22 @@ tasks:
 - id: t-017
   milestone: m4
   title: Dream-story router pattern requires the literal word "story", missing the checklist's own sample phrasing
-  status: ready
-  owner: null
-  updated: '2026-07-20T22:30:00Z'
+  status: done
+  owner: worker
+  updated: '2026-07-21T10:12:40Z'
   passes: 0
   stakes: reversible
-  note: 'Found while capturing the t-010 dry-run transcript. dreamPatterns[0] in serendipity-voice
-    src/voice-router.ts (~line 71) is /\bstart (?:a |an )?(?<genre>...) story in (?<location>...)\b/i --
-    it only matches "start a <genre> story in <location>". rollout-safety-checklist.md''s own canonical
-    test line 5, "Serendipity: start a cozy mystery in the redwood library.", omits the word "story" and
-    so never matches any router pattern, falling through to the generic unknown-domain clarification
-    instead of starting a Dream story seed. Fix: broaden dreamPatterns[0] to make " story" optional (e.g.
-    /\bstart (?:a |an )?(?<genre>[a-z0-9][a-z0-9 _-]*?) in (?<location>[a-z0-9][a-z0-9 _-]*)\b/i, careful
-    with the non-greedy genre group so it does not over-match against project/character patterns that also
-    use "in"), and add a regression test asserting the checklist''s exact sample phrase now routes to
-    dream. See projects/alexa-integration/docs/t-010-dry-run-transcript.md Finding 3 for the full repro.'
+  note: 'Found while capturing the t-010 dry-run transcript. dreamPatterns[0] in serendipity-voice src/voice-router.ts (~line 71) is /\bstart (?:a |an )?(?<genre>...) story in (?<location>...)\b/i -- it only matches "start a <genre> story in <location>". rollout-safety-checklist.md''s own canonical test line 5, "Serendipity: start a cozy mystery in the redwood library.", omits the word "story" and so never matches any router pattern, falling through to the generic unknown-domain clarification instead of starting a Dream story seed. Fix: broaden dreamPatterns[0] to make " story" optional (e.g. /\bstart (?:a |an )?(?<genre>[a-z0-9][a-z0-9 _-]*?) in (?<location>[a-z0-9][a-z0-9 _-]*)\b/i, careful with the non-greedy genre group so it does not over-match against project/character patterns that also use "in"), and add a regression test asserting the checklist''s exact sample phrase now routes to dream. See projects/alexa-integration/docs/t-010-dry-run-transcript.md Finding 3 for the full repro. RESOLVED (2026-07-21, burst-mode session): made " story" optional in dreamPatterns[0] with a non-greedy genre group, exactly as suggested. Verified "start a cozy mystery in the redwood library" now routes to dream (dreamSlug cozy-mystery-the-redwood-library) via npm run handle, and that project/character patterns are unaffected (neither starts with "start", so no over-match risk). Added a regression test for the checklist''s exact no-story phrasing. npm test (12 suites, voice-router 27/27) and npm run typecheck both clean. serendipity-voice PR #26 merged (squash cbffa3c).'
+  claimed_by: claude-conductor-burst-20260721T1007Z
+  claimed_at: '2026-07-21T10:07:31Z'
 - id: t-018
   milestone: m4
   title: blockedActions list in voice-router.ts omits "deploy" and DNS-shaped words from the checklist's own Blocked-mode table
-  status: ready
-  owner: null
-  updated: '2026-07-20T22:30:00Z'
+  status: done
+  owner: worker
+  updated: '2026-07-21T10:12:40Z'
   passes: 0
   stakes: reversible
-  note: 'Found while capturing the t-010 dry-run transcript. blockedActions in serendipity-voice
-    src/voice-router.ts (~line 36) is [approve, merge, publish, release, spend, buy, purchase, delete,
-    rename, force push, force-push] -- it does not include deploy, expose, or dns, even though
-    rollout-safety-checklist.md Section 3''s Blocked-mode table explicitly lists "publish, deploy, expose
-    endpoints, spend money, change DNS...". "Serendipity: deploy the relay." and "Serendipity: change
-    DNS." both still take no action (they fall through to the generic router clarification, same as any
-    unmatched phrase), so this is not a safety gap, but the spoken response does not name the specific
-    blocked action the way approve/merge/publish/etc. do. Fix: add deploy, expose, dns (and consider
-    endpoint) to blockedActions, and add a regression test asserting both checklist sample lines now
-    return the specific "needs a safer review path" blockedReason. See
-    projects/alexa-integration/docs/t-010-dry-run-transcript.md Finding 4 for the full repro.'
+  note: 'Found while capturing the t-010 dry-run transcript. blockedActions in serendipity-voice src/voice-router.ts (~line 36) is [approve, merge, publish, release, spend, buy, purchase, delete, rename, force push, force-push] -- it does not include deploy, expose, or dns, even though rollout-safety-checklist.md Section 3''s Blocked-mode table explicitly lists "publish, deploy, expose endpoints, spend money, change DNS...". "Serendipity: deploy the relay." and "Serendipity: change DNS." both still take no action (they fall through to the generic router clarification, same as any unmatched phrase), so this is not a safety gap, but the spoken response does not name the specific blocked action the way approve/merge/publish/etc. do. Fix: add deploy, expose, dns (and consider endpoint) to blockedActions, and add a regression test asserting both checklist sample lines now return the specific "needs a safer review path" blockedReason. See projects/alexa-integration/docs/t-010-dry-run-transcript.md Finding 4 for the full repro. RESOLVED (2026-07-21, burst-mode session): added deploy and dns to blockedActions (expose also added, which covers "expose endpoints" as a substring match; left bare "endpoint" out of the list since it would also match safe read questions like "what is the relay endpoint", not just the blocking verb). Verified "deploy the relay" and "change DNS" both now return the specific safer-review-path blockedReason via npm run handle. Added regression tests for both checklist sample lines. npm test (12 suites, voice-router 27/27) and npm run typecheck both clean. serendipity-voice PR #26 merged (squash cbffa3c).'
+  claimed_by: claude-conductor-burst-20260721T1007Z
+  claimed_at: '2026-07-21T10:07:34Z'

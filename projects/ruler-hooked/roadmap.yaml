@@ -32,7 +32,7 @@ milestones:
   - id: m2
     title: "BUILD — slideshow play-loop proof of concept (web)"
     weight: 50
-    status: not-started
+    status: in-progress
   - id: m3
     title: "POLISH & SHIP — content depth, app packaging, Steam/Unreal research"
     weight: 25
@@ -161,7 +161,7 @@ tasks:
   - id: t-007
     milestone: m2
     title: Build the slideshow play-loop proof of concept in kind_robots
-    status: waiting
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -193,7 +193,23 @@ tasks:
       rejected pass 1 for 3 further new errors plus needing to clean up these 9 —
       see t-012's retry_context. Re-added as an explicit t-007 dependency; will
       flip back to ready once t-012 lands with a green vue-tsc gate.
-    updated: '2026-07-16T21:55:00Z'
+
+      DONE 2026-07-21 (scheduled session, claude-conductor-scheduled-20260721T1214Z):
+      both remaining conditions hold on current kind_robots main (736b663f):
+      PR #328 is merged, and t-012 (PR #811, merged 2026-07-21) landed the
+      playable screen. Did not just trust t-012's prior note — re-verified
+      independently against a fresh kind_robots checkout: `npx tsx
+      utils/rulerHooked/engine.selftest.ts` and `game.selftest.ts` both
+      ALL PASS, and the full `npm run test` (vue-tsc --noEmit) gate is green
+      (exit 0), so the 2026-07-16 red-main TypeScript regression this task's
+      own note flagged is resolved. All four DESIGN-BRIEF m2 exit criteria are
+      structurally present and wired: components/ruler-hooked/ruler-hooked-page.vue
+      (mounted at content/ruler-hooked.md's #interactive slot) composes
+      ruler-hooked-game.vue (playable session + event cards/narrative arc),
+      ruler-hooked-stage.vue (composited landscape regions), ruler-hooked-health.vue,
+      and ruler-hooked-slots.vue (multiple save slots). No kind_robots code
+      change needed this cycle — purely a verification + bookkeeping close-out.
+    updated: '2026-07-21T12:26:00Z'
 
   - id: t-008
     milestone: m1
@@ -249,6 +265,27 @@ tasks:
       points at /ruler-hooked (admin can run the Conductor 'Placements' button to
       backfill channelKey/tabKey/liveUrl); (4) evolve the placeholder scaffold page into
       the full interactive experience for this project.
+      RECHECKED 2026-07-21 (~23:12 UTC, conductor scheduled burst,
+      claude-conductor-burst-20260721T231500Z-rh-t010): steps (2), (3), and (4) are
+      ALL already done, not just "kept ready" placeholders -- verified directly against
+      kind_robots main (a688bfef): (2) stores/helpers/tutorialCards.ts already has a
+      full 'ruler-hooked' entry under tutorialChannels.wonder.sections (title/body/image,
+      matches every other shipped project's entry shape); (3) utils/projectPlacements.ts
+      already has a correct PROJECT_PLACEMENTS['ruler-hooked'] entry (channelKey: lab,
+      tabKey: ruler-hooked, route: /ruler-hooked) -- this is the hardcoded map the front
+      end actually reads for routing/display (per the storymaker/t-010 precedent), so the
+      live behavior is already correct independent of whether the admin-only 'Placements'
+      DB-backfill button has ever been clicked; (4) components/conductor/ruler-hooked-page.vue's
+      #interactive slot already mounts the real <RulerHookedGame /> component (shipped by
+      t-007/t-012's Phase 1+2 build) -- not a placeholder scaffold. Only step (1) art
+      remains open, and it is still genuinely blocked: called the live relay-status API
+      directly (GET https://kind-robots.vercel.app/api/art/queue/relay-status,
+      authenticated) and got {"agents":[]} -- zero relay agents currently registered/
+      reporting at all (not just a stuck queue item), confirming the home ComfyUI relay
+      is offline right now, consistent with every other project's finding this week.
+      No kind_robots code change needed this cycle -- re-armed to ready
+      (transient/external block, no pass consumed) rather than left at review/claimed.
+    updated: '2026-07-21T23:12:33Z'
 
   - id: t-011
     milestone: m1
@@ -277,31 +314,10 @@ tasks:
   - id: t-012
     milestone: m2
     title: "Ruler Hooked PoC — Phase 2: play-screen UI, store, and content bundle"
-    status: ready
+    status: done
     owner: worker
     passes: 1
     stakes: reversible
-    retry_context: >
-      pass 1 failed (quality): kind_robots PR #329's `npm run test` (vue-tsc) check
-      failed for real (reproduced locally, not the sandbox OOM the Worker flagged —
-      full review comment on the PR). 12 type errors total. 3 are new in this PR:
-      components/ruler-hooked/ruler-hooked-stage.vue(78,34) TS2769 (Layer.src needs
-      `?? null` on the assetCandidates lookup), utils/rulerHooked/loop.ts(61,18)
-      TS2532, utils/rulerHooked/game.selftest.ts(55,16)/(77,16)/(79,31) TS2532/TS2345
-      — all "possibly undefined" on indexed/.find() lookups used without a guard.
-      The other 9 (applyEffects.ts(73,9); compositor.ts(25,3)/(38,3);
-      engine.selftest.ts(52,45)/(56,16); select.ts(35,13)/(36,19)/(38,3)/(61,48))
-      are pre-existing on main as of the #328 merge commit itself (confirmed via
-      GH Actions run 29536584357 on df89de7c, conclusion: failure) — not introduced
-      by t-012, but the merge gate won't go green until they're fixed too, and t-012
-      depends on these same files. Do differently: push a fix commit to the existing
-      PR #329 branch (claude/ruler-hooked-t-012-sxndmc) covering all 12 — a guard/
-      non-null-assertion pass across applyEffects.ts/compositor.ts/select.ts/loop.ts/
-      game.selftest.ts plus the one Layer.src type fix in ruler-hooked-stage.vue —
-      then actually run `npm run test` before resubmitting (CYPRESS_INSTALL_BINARY=0
-      npm install first if the sandbox blocks the Cypress binary download; that
-      doesn't affect vue-tsc). Flags for Reviewer in the retry PR should confirm the
-      full gate ran green this time, not "expected green."
     note: >
       DELIVERED 2026-07-16 (claude-build-sxndmc) — kind_robots PR #329 (open,
       for review/CI). Makes /ruler-hooked playable: content bundle
@@ -344,6 +360,31 @@ tasks:
       scripts/provision_kind_robots_deps.sh` then `npm run test` (vue-tsc) and
       `npm run dev` — note the kind_robots toolchain is memory-heavy and has
       OOM-restarted this sandbox, so run the vue-tsc/dev gate carefully.
-    claimed_by: claude-build-sxndmc
-    claimed_at: '2026-07-16T21:30:36Z'
-    updated: '2026-07-16T21:30:36Z'
+      RECHECK 2026-07-21 (burst-mode session, claude-conductor-burst-20260721T1130Z):
+      re-verified this task from scratch rather than trusting the stale
+      retry_context above — PR #329 was actually merged directly by Silas on
+      2026-07-16T22:04:56Z (5 days after the pass-1 rejection at 21:55Z the same
+      day), so the retry_context's "push a fix to PR #329" instruction was already
+      moot. Provisioned kind_robots deps via
+      scripts/provision_kind_robots_deps.sh and ran the real gates against current
+      main (branch claude/keen-fermat-njvo76, in sync with origin/main): `npm run
+      test` (vue-tsc --noEmit) exits 0 — none of the 12 type errors from the
+      retry_context reproduce; also cross-checked kind_robots CI directly
+      (typecheck.yml run 29821460238, conclusion success, on main tip 48ed8265).
+      Both headless self-tests (engine.selftest.ts, game.selftest.ts) ALL PASS,
+      confirming the four DESIGN-BRIEF m2 exit criteria still hold at the logic
+      layer. ruler-hooked-page.vue wires <RulerHookedGame /> into
+      ProjectFrontPage's #interactive slot, so /ruler-hooked is genuinely
+      playable. eslint (not part of npm run test / CI, but repo convention) found
+      2 small pre-existing errors outside the retry_context's scope
+      (stores/rulerHookedStore.ts prefer-const, applyEffects.ts
+      no-dynamic-delete) — fixed both and re-verified vue-tsc/eslint/self-tests
+      all still green; opened kind_robots PR #811 for that 2-line lint-only diff.
+      Setting status: review (not done yet) pending that PR's merge; retry_context
+      left in place for now per convention (removed only once this reaches done).
+      When PR #811 merges, set t-012 to done and re-run
+      scripts/resolve_deps.py to unblock t-007 (all its other deps — t-004,
+      t-005, t-006 — are already done).
+    claimed_by: claude-conductor-burst-20260721T1130Z
+    claimed_at: '2026-07-21T11:18:51Z'
+    updated: '2026-07-21T11:23:33Z'

@@ -593,11 +593,11 @@ tasks:
   - id: t-028
     milestone: m1
     title: Bake the Flutter SDK into the web-session startup hook so app tasks self-verify
-    status: claimed
+    status: done
     owner: reviewer
     passes: 0
     stakes: reversible
-    updated: '2026-07-20T06:15:15Z'
+    updated: '2026-07-21T01:42:40Z'
     note: >
       Kaizen from superkate/t-022 (PR #343, merged 2026-07-10) and a recurring
       TALKBACK theme: web sessions historically lacked a Flutter toolchain, so
@@ -607,8 +607,8 @@ tasks:
       a cached setup script (guard: skip when flutter is already on PATH, and
       set git safe.directory for the SDK checkout) so flutter analyze/test run
       in every future cycle.
-    claimed_by: claude-conductor-sweep-20260720T0613Z
-    claimed_at: '2026-07-20T06:15:15Z'
+    claimed_by: claude-conductor-web-20260721T0120Z
+    claimed_at: '2026-07-21T01:17:13Z'
 
   - id: t-030
     milestone: m2
@@ -711,6 +711,7 @@ tasks:
     milestone: m2
     title: "Pitch: kind_robots dashboard as shared front-end for Conductor + PortOS CoS"
     status: needs-human
+    gate_human: true
     owner: claude
     passes: 0
     stakes: reversible
@@ -1312,7 +1313,6 @@ tasks:
       coordinated update (rename in ci.yml + update the required-check setting
       in the same window) rather than an agent-only change -- soft needs-human
       if branch protection can't be inspected from this environment.
-    updated: '2026-07-17T07:53:22Z'
 
   - id: t-049
     milestone: m2
@@ -1525,7 +1525,6 @@ tasks:
       with a single sentence pointing at `EGRESS-BLOCKERS.md` (keep one summary line
       of history, don't delete the task's own note entirely). Purely record-keeping —
       should not change any task's `status`/`needs-human` semantics.
-    updated: '2026-07-17T07:50:32Z'
 
   - id: t-055
     milestone: m2
@@ -1584,7 +1583,6 @@ tasks:
       STATUS.md/ROADMAP-AUDIT.*/LEARNING-REPORT.md and regenerate; for
       append-only files (TALKBACK.md, LEARNING.yaml) that both sides touched,
       keep both sides' entries rather than picking one.
-    updated: '2026-07-17T07:47:54Z'
 
   - id: t-057
     milestone: m2
@@ -1603,7 +1601,6 @@ tasks:
       one-line pointer in AGENTS.md's cross-repo/verification section so future
       sessions run it instead of re-deriving the CYPRESS_INSTALL_BINARY +
       DATABASE_URL combination from scratch.
-    updated: '2026-07-17T07:46:52Z'
 
   - id: t-058
     milestone: m1
@@ -1624,7 +1621,6 @@ tasks:
       A tiny test (monkeypatch rex.KR_API_TOKEN to None/empty, assert exit
       code 1, assert post_batch never called) closes the last CLI-gating gap
       in this file.
-    updated: '2026-07-17T07:48:52Z'
 
   - id: t-060
     milestone: m3
@@ -1653,7 +1649,6 @@ tasks:
       projects/priority.yaml's `order:` list in a reasonable position (below the
       named priority band, alongside similarly-scoped projects), verify with
       scripts/validate_roadmaps.py, no code/behavior change.
-    updated: '2026-07-17T07:45:37Z'
 
   - id: t-059
     milestone: m2
@@ -2020,6 +2015,7 @@ tasks:
     milestone: m2
     title: 'kind_robots: main branch protection does not require the "TypeScript" CI check to pass before merge'
     status: needs-human
+    gate_human: true
     soft_gate: false
     passes: 0
     stakes: reversible
@@ -2060,3 +2056,313 @@ tasks:
     claimed_by: null
     claimed_at: null
     updated: '2026-07-20T00:00:00Z'
+
+  - id: t-074
+    milestone: m2
+    title: "AGENTS.md: retry_context can go stale when a human merges the PR directly, bypassing the reject-retry loop"
+    status: done
+    owner: worker
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-21T13:00:00Z'
+    note: >
+      Kaizen from ruler-hooked/t-012 (burst-mode session, 2026-07-21). t-012 sat at
+      `status: ready`, `passes: 1`, with a `retry_context` describing a Reviewer
+      rejection of kind_robots PR #329 (12 vue-tsc type errors) written at
+      2026-07-16T21:55Z — but Silas merged PR #329 directly 9 minutes later
+      (2026-07-16T22:04:56Z), apparently overriding the rejection rather than
+      routing back through the normal reject -> retry -> re-review loop the
+      roadmap state implied was still open. The roadmap field never got updated
+      to reflect that, so it sat stale for 5 days looking like unresolved,
+      actionable work (a future session could easily have burned a retry pass
+      re-fixing type errors that no longer existed on main).
+
+      Add a line to AGENTS.md's "Retry context" section: before acting on a
+      `retry_context` for a cross-repo task, check whether the PR it references
+      already merged (or the task's `passes/status` otherwise looks inconsistent
+      with an open PR) and re-verify against current target-repo `main` first,
+      rather than assuming the recorded rejection still holds. This is a small
+      doc addition, not a script change — no existing tooling needs to be
+      touched, just the guidance agents read before retrying.
+
+      DONE 2026-07-21 (burst-mode session, claude-conductor-burst-20260721T1300Z):
+      added the guidance as a new bullet directly under the existing "no
+      retry_context on a passes>0 task" bullet in AGENTS.md's "Retry context —
+      failed passes must teach the next one" section, citing this task and the
+      ruler-hooked/t-012 case as the worked example.
+
+  - id: t-075
+    milestone: m2
+    title: 'AGENTS.md: session ids for claimed_by should be collision-resistant,
+      not a reused hour-label string'
+    status: done
+    owner: reviewer
+    passes: 0
+    stakes: reversible
+    note: >
+      Kaizen from coat-dance/t-001 (burst-mode session, 2026-07-21, root
+      TALKBACK.md same date). This session picked `claude-conductor-burst-
+      20260721T1300Z` as its own session id for `claim_task.py`/`claimed_by`
+      without checking uniqueness, and it turned out to already be in use by an
+      unrelated earlier session that same hour (conductor/t-074). Not a claim
+      conflict — `claim_task.py` keys on project/task, not session id — but it
+      left the `claimed_by`/TALKBACK trail looking like one continuous session
+      did two unrelated tasks, until caught and relabeled mid-session.
+
+      Add a short note to AGENTS.md's "Picking what to work on" step 6 (the
+      `claim_task.py` step) recommending a collision-resistant session id —
+      e.g. a full ISO timestamp with seconds plus a short task-specific suffix,
+      or a random token — rather than a coarse rotation/hour label that
+      multiple concurrent burst-mode sessions could plausibly reuse. Doc-only
+      change; no script behavior needs to change since claim correctness
+      itself was never at risk.
+
+      DONE 2026-07-21 (~15:15 UTC, claude-conductor-agentrun-20260721T151500Z-t075):
+      added the recommended-session-id guidance directly to AGENTS.md's "Picking
+      what to work on" step 6, right after the `ALREADY_CLAIMED` rotation
+      instruction, and mirrored a matching short note in `scripts/claim_task.py`'s
+      own module docstring (both cite this task and coat-dance/t-001 by name).
+      Doc-only change, no script behavior touched — verified `python -m py_compile
+      scripts/claim_task.py` still passes and `scripts/audit_roadmaps.py` shows 0
+      errors, same 11 warnings/44 info baseline as before this change.
+    claimed_by: claude-conductor-agentrun-20260721T151500Z-t075
+    claimed_at: '2026-07-21T15:15:45Z'
+    updated: '2026-07-21T15:16:30Z'
+
+  - id: t-076
+    milestone: m2
+    title: 'scripts/provision_flutter.sh: bump the pinned FLUTTER_VERSION default
+      to track app-ci.yml''s rolling stable channel'
+    status: done
+    owner: worker
+    passes: 0
+    stakes: reversible
+    note: >
+      Kaizen from conductor-app/t-012 (burst-mode session, 2026-07-21).
+      provision_flutter.sh pins FLUTTER_VERSION=3.32.5 (a build from
+      2025-06-24), but app-ci.yml's subosito/flutter-action uses `channel:
+      stable` unpinned, which by 2026-07-21 had moved to 3.44.7. Running
+      `flutter analyze` under the stale pinned 3.32.5 in this sandbox produced
+      4 false-positive `undefined_named_parameter` errors on
+      `DropdownButtonFormField`'s `initialValue` (renamed from `value` in a
+      later Flutter release) — including on pre-existing code this session
+      never touched (todos_screen.dart), not just the new file being verified.
+      Running `flutter upgrade` mid-session to the real current stable made
+      `flutter analyze` clean and all tests pass, but that cost real time and
+      a ~2-minute command timeout on the first attempt (the upgrade itself
+      completed in the background before the timeout fired). This exact risk
+      was already flagged as a deferred/speculative kaizen suggestion in PR
+      #945's body (mirrored in this file's history around 2026-07-19) but
+      never filed as a roadmap task, so it recurred.
+
+      Fix: either (a) bump provision_flutter.sh's FLUTTER_VERSION default to
+      a currently-current stable release and add a short comment noting it
+      should be re-bumped periodically, or (b) drop the hard pin and default
+      to `flutter channel stable && flutter upgrade` so the sandbox always
+      tracks whatever app-ci.yml actually runs against, accepting the slower
+      first-provision cost. Whichever approach, note the tradeoff in the
+      script's header comment so it doesn't silently go stale again.
+
+      DONE 2026-07-21 (worker/claude-conductor-burst-20260721T180528Z-t076):
+      took option (a). Bumped FLUTTER_VERSION default from 3.32.5 to 3.44.7
+      (confirmed the archive exists at the expected storage.googleapis.com
+      URL before committing) and added a header comment above the default
+      explaining app-ci.yml's unpinned `channel: stable` will keep drifting
+      ahead of this pin, pointing at the Flutter release archive as where to
+      check the current stable when re-bumping, and citing this task +
+      conductor-app/t-012 as the concrete recurrence this guards against.
+      Verified with `bash -n scripts/provision_flutter.sh`. Did not do a full
+      `flutter --version` provisioning run in this session (no apps/* task
+      in flight to need it) — script logic is unchanged, only the default
+      value and a comment, so behavior is verified by inspection plus the
+      archive existence check.
+    claimed_by: claude-conductor-burst-20260721T180528Z-t076
+    claimed_at: '2026-07-21T18:05:32Z'
+    updated: '2026-07-21T18:09:25Z'
+
+  - id: t-077
+    milestone: m2
+    title: 'scripts/set_task_field.py: warn that it edits the local working
+      tree, not origin/main fresh, unlike claim_task.py'
+    status: done
+    owner: worker
+    passes: 0
+    stakes: reversible
+    note: 'Fixed: added an explicit WARNING to set_task_field.py''s module docstring and to the argparse --help epilog, stating it edits the local working tree only (never fetches/reads origin/main) and recommending `git fetch origin main && git merge origin/main --ff-only` before calling it whenever claim_task.py or another direct-to-origin/main push happened earlier in the session. Left the optional runtime origin/main comparison backstop (the ''consider also'' half of the kaizen note) for a future task -- it would add a mandatory git-network dependency to a previously pure-local, offline-safe tool and its test suite (tests invoke this script via subprocess against tmp_path fixtures with no git repo), which is a bigger, riskier change than this task''s core ask. Verified: full pytest suite (431 items) green, audit_roadmaps.py clean, py_compile clean, --help renders the new epilog.'
+    claimed_by: claude-conductor-agentrun-20260721T2115Z-t077
+    claimed_at: '2026-07-21T21:16:18Z'
+    updated: '2026-07-21T21:16:18Z'
+
+  - id: t-078
+    milestone: m2
+    title: 'kind_robots session branch claude/keen-fermat-87rn74 has ~138k lines
+      of unpushed, unrelated automated WonderLab content sitting local-only'
+    status: needs-human
+    soft_gate: true
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: |-
+      FOR SILAS: discovered 2026-07-21 ~22:10 UTC (ai-art-academy/t-010 cycle,
+      claude-conductor-scheduled-20260721T220455Z-t010) while trying to do a
+      routine kind_robots front-end polish pass. The kind_robots checkout in
+      this session's sandbox, on the branch this environment designates for
+      kind_robots work (`claude/keen-fermat-87rn74`), is 114 commits behind
+      `origin/main` and, separately, 67 commits ahead of it — a combined diff
+      of 13,728 files / ~138,201 insertions / 40,542 deletions versus
+      `origin/main`. Almost all of that is automated "WonderLab rollout"/
+      "draft inventory"/"curated-publish" commits (messages like "Execute
+      WonderLab rollout 041 [wonderlab-editorial-batch]", "Publish WonderLab
+      rollout 040 [wonderlab-curated-publish]"), timestamped 2026-07-21
+      01:46-15:02 local time, with none of it ever pushed to `origin`. A
+      handful of the 67 commits are just staleness, not new content — their
+      messages match already-merged conductor PRs (ruler-hooked #811,
+      kind-robots/t-042 #813, davinci/t-014 #822, appmaker/t-009 #812,
+      ai-art-academy/t-010's Mughal sync #814) — but the WonderLab rollout/
+      draft-inventory commits are new, unreviewed, and have no corresponding
+      conductor task tracking them anywhere in this repo (grepped every
+      roadmap.yaml for "wonderlab" — only unrelated references in
+      kind-robots/newsfeed/animation-manager/mural-design docs, nothing
+      matching "rollout 0XX" or "draft inventory").
+      WHAT IT CONTAINS: 67 unpushed local commits on that branch, spanning
+      WonderLab rollouts 032-041 (each a Plan/Execute/Publish triad) plus a
+      "draft inventory" mini-workflow (trigger, inventory, expose, record,
+      publish, remove) added and then partially reverted within the same
+      local history. I did not read the diff content in depth — only commit
+      messages, file/insertion counts, and dates — since deep-diffing 13,728
+      files was out of scope for the task I was actually doing.
+      TO APPROVE: this needs a decision, not just an unblock. Two questions:
+      (1) Is this real work from some other automated pipeline that should be
+      pushed/reviewed/landed (in which case: confirm whether it's safe to
+      open as its own PR, likely needs review in smaller batches, not one
+      138k-line PR), or is it disposable/already-superseded scratch state
+      that's safe to discard (in which case: say so and a future session can
+      reset the branch to `origin/main` without worrying about losing
+      anything)? (2) Separately: why did ~13 hours of an apparently-recurring
+      job never manage to push even once — is there a broken push step in
+      whatever produces these commits, and if so it may still be silently
+      failing right now, in which case newer, still-undiscovered work could
+      already be at the same risk. NEXT: once you say keep-and-land,
+      discard-it's-fine, or investigate-the-push-failure, a session can act;
+      until then I left the branch exactly as found (did not push, force-push,
+      reset, or rebase it) since discarding unreviewed content is a
+      destructive git action outside my authority to decide alone. This does
+      not block ai-art-academy/t-010's other lanes (roadmap accuracy,
+      curriculum depth, inspiration assets); it only blocks lane 1 (front-end
+      polish) and any other conductor task needing to push kind_robots work
+      through this session's designated branch, until resolved.
+    claimed_by: null
+    claimed_at: null
+    updated: '2026-07-21T22:35:00Z'
+
+  - id: t-079
+    milestone: m2
+    title: 'audit_roadmaps.py does not detect duplicate YAML keys within a task
+      block, which silently lets stale owner/claimed_by/approved_by_human
+      values win over current ones'
+    status: done
+    owner: reviewer
+    passes: 0
+    stakes: reversible
+    note: |-
+      Found 2026-07-21 ~22:20 UTC (ai-art-academy/t-010 cycle,
+      claude-conductor-scheduled-20260721T220455Z-t010) while fixing an
+      unrelated bug in ai-art-academy/roadmap.yaml: t-010's `owner`/
+      `claimed_by`/`claimed_at` fields were set correctly at the top of the
+      task block, but a stale duplicate `owner: worker` / `claimed_by:
+      claude-conductor-burst-20260721T1600Z` / `claimed_at:
+      '2026-07-21T16:06:13Z'` trio sat at the very end of the same block,
+      after the long recurring-task `note:` block scalar. Under YAML's
+      standard last-key-wins mapping semantics (confirmed via
+      `yaml.safe_load`), the trailing duplicate silently won — every reader
+      of that file (`claim_task.py`, `next_ready_task.py`,
+      `audit_roadmaps.py`, this note itself before I fixed it) was seeing the
+      wrong owner/claim timestamp for that task, even though `status:` (not
+      duplicated) stayed correct. Root cause is almost certainly an editor
+      pattern where a session appends a new `RAN ...` paragraph to the note
+      block and then re-adds owner/claimed_by/claimed_at below it instead of
+      updating the existing fields above the note — the same failure mode
+      hard rule 9 already warns about for STATUS.md/workspace.html conflicts,
+      just self-inflicted instead of a merge artifact.
+      SCOPE: fixed the one instance directly blocking my own claimed task
+      (ai-art-academy/roadmap.yaml, t-010) as part of that cycle. A repo-wide
+      scan (custom PyYAML loader that flags repeated keys within the same
+      mapping instead of silently overwriting) found it is NOT isolated:
+        - projects/conductor/roadmap.yaml: duplicate `updated` near source
+          lines ~1278, ~1528ish, ~1587ish, ~1606ish, ~1627ish, ~1656ish (6
+          instances — line numbers shift as the file grows; re-run the scan
+          below rather than trusting these literally)
+        - projects/global-ui/roadmap.yaml: duplicate `updated` (1 instance)
+        - projects/kind-robots/roadmap.yaml: duplicate `approved_by_human`
+          (both `true`, so no behavior change there) and duplicate
+          `claimed_by`/`claimed_at` on a `status: done` task (no behavior
+          change since status itself isn't duplicated) — 2 locations
+        - projects/packmaker/roadmap.yaml: duplicate `updated` (2 instances)
+      All of the ones outside ai-art-academy are currently low-consequence
+      (`updated` timestamp cosmetics, or duplicates with identical values, or
+      duplicates on already-`done` tasks) — none flipped a live claim or
+      approval gate at scan time. But the *pattern* is a real safety-relevant
+      gap: this exact shape could silently corrupt `approved_by_human` or
+      `status` on a live task, and nothing currently catches it. Left these
+      other projects' roadmap.yaml files untouched rather than editing them
+      without a claim (four different active projects, collision risk).
+      TO DO:
+      1. Add a duplicate-key check to `scripts/audit_roadmaps.py` (or a new
+         small script it calls) so this becomes a normal audit finding
+         instead of something only found by accident. A minimal repro
+         loader:
+         ```python
+         class DupKeyLoader(yaml.SafeLoader): pass
+         def construct_mapping(loader, node, deep=False):
+             mapping = {}
+             for k_node, v_node in node.value:
+                 k = loader.construct_object(k_node, deep=deep)
+                 if k in mapping:
+                     raise ValueError(f"duplicate key {k!r} at line {k_node.start_mark.line+1}")
+                 mapping[k] = loader.construct_object(v_node, deep=deep)
+             return mapping
+         DupKeyLoader.add_constructor(yaml.resolver.BaseResolver.DEFAULT_MAPPING_TAG, construct_mapping)
+         ```
+      2. Once the check exists, fix the remaining instances in conductor,
+         global-ui, kind-robots, and packmaker's roadmap.yaml (claim each
+         project normally before editing its roadmap, per the usual rule —
+         this is 4 small, independent, mechanical fixes, not one cross-project
+         diff).
+      Kaizen-shaped task; stakes: reversible (docs/tooling only, no runtime
+      behavior change to the app).
+      DONE 2026-07-22 (same claim, continued): added `find_duplicate_keys()`
+      to scripts/audit_roadmaps.py — a fresh PyYAML SafeLoader subclass per
+      call (per the repro loader above, but collecting every duplicate
+      instead of raising on the first) — wired into the per-roadmap audit
+      loop as a new `DUPLICATE_YAML_KEY` warning finding (project + key +
+      line). Re-ran it repo-wide: found exactly the same 11 instances this
+      task's note already catalogued (6 conductor, 1 global-ui, 2
+      kind-robots, 2 packmaker) confirming the scan was reproducible, not a
+      one-off. Fixed all 11: for each, read the surrounding context to
+      determine which occurrence YAML's last-key-wins semantics currently
+      returns and whether that value is the correct/current one or a stale
+      leftover, then deleted the wrong occurrence — conductor's 6 (all
+      `updated`) had a newer, correct value earlier in the block and a stale
+      trailing duplicate after the note (the exact bug pattern from t-010:
+      the trailing one was silently winning), so the trailing one was
+      deleted in each case; kind-robots's `approved_by_human` dup and
+      packmaker's t-003 `updated` dup were identical values (no behavior
+      difference, just deleted the redundant copy); kind-robots's
+      `claimed_by`/`claimed_at` dup on t-026 had the trailing copy missing
+      the `worker/` prefix the rest of that field's format uses, so deleted
+      the trailing copy and kept the properly-prefixed original; packmaker's
+      t-006 `updated` dup had the trailing value wrongly equal to
+      `claimed_at` (claim time, not completion time) silently winning over
+      the correct completion timestamp earlier in the block, so deleted the
+      trailing one. Verified: `python scripts/audit_roadmaps.py` now reports
+      0 DUPLICATE_YAML_KEY findings and the same 14/44 warning/info baseline
+      as before this task (the 12 new findings the check itself introduced
+      are exactly the ones now fixed); `scripts/validate_roadmaps.py` passes;
+      all 4 touched roadmap.yaml files still parse with `yaml.safe_load`;
+      added two new tests to tests/test_audit_roadmaps_policy.py (duplicate
+      key flagged, clean task not flagged); full `pytest tests/` suite
+      (445 tests) passes; `python -m py_compile` on the changed script
+      passes. No runtime/app behavior change — docs/tooling only, as scoped.
+    claimed_by: claude-conductor-burst-20260722T0106Z-t079
+    claimed_at: '2026-07-22T01:06:07Z'
+    updated: '2026-07-22T01:34:00Z'

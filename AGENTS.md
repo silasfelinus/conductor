@@ -83,6 +83,13 @@ todo explicitly asks for it. Scope is exactly what the title/description says.
    (`ALREADY_CLAIMED`), someone else is already on that project/task — do not implement
    it; go back to step 5 and pick the next `ready` task instead. See "Rotation
    collisions" below for why this step exists.
+   Pick a collision-resistant `--session <id>`: a full ISO timestamp with seconds
+   plus a short task-specific suffix (or a random token), not a coarse hour/rotation
+   label — `claim_task.py` keys on project/task rather than session id, so a reused
+   label never causes a false claim conflict, but it does leave the `claimed_by`/
+   TALKBACK trail looking like one continuous session did unrelated work when two
+   concurrent burst-mode sessions happen to reuse the same label within the same
+   hour (coat-dance/t-001, 2026-07-21 — see root `TALKBACK.md` same date).
 7. **Set `status: review` before opening the PR — every session, not just hourly
    `worker/*` runs.** This applies equally to Silas-directed `claude/*` sessions and
    burst-mode cycles doing Worker-style roadmap pickup, not only the OpenAI hourly
@@ -118,6 +125,22 @@ the claim and retries under a push race, so a losing session fails fast into
 finishing, the claim self-expires after `CLAIM_TTL_MINUTES` (90 minutes, see
 `scripts/roadmap_claims.py`) so the task doesn't stay locked forever — `next_ready_task.py`
 surfaces a stale-claimed task as pickable again automatically.
+
+**Same-session post-compaction collisions** are the identical failure mode with a
+different trigger: a session's context gets compacted mid-run and loses memory of
+work it already completed earlier in the same scheduled window. Resuming from stale
+in-memory state, it can find its own now-outdated `status: claimed` snapshot,
+correctly avoid re-implementing (an open-PR check usually catches that part), but
+then still draft an inaccurate wrap-up commit (roadmap/TALKBACK note) describing a
+"nothing to do" or "releasing the claim" outcome that a real merge has since made
+false. Hit twice the same day (2026-07-22): model-builder/t-029 and
+storymaker/t-010, both in root/project `TALKBACK.md`. The fix is the same as the
+concurrent-session case, just applied to the wrap-up step too, not only the
+implementation step: **before writing any wrap-up commit for a claim this session
+doesn't fully remember taking, `git fetch origin main` and diff the task's current
+state** — a newer merge under the same or a related session id is the signal that
+the "resume" is actually stale, and the wrap-up should defer to `origin/main`'s
+version (via rebase, keeping the newer content) rather than push over it.
 
 ### Task dependencies (pipelines)
 A task may declare `depends_on: <task-id>` (or a list). A task is only workable when every
@@ -570,6 +593,15 @@ retry_context: >
 - A task at `passes > 0` with no `retry_context` is a template-discipline gap — the
   Worker should note it in TALKBACK and reconstruct the context from the PR comments
   before retrying blind.
+- `retry_context` can go stale when a human merges the referenced PR directly,
+  bypassing the reject-retry loop (Silas can and does override a Reviewer rejection).
+  Before acting on a `retry_context` for a cross-repo task, check whether the PR it
+  references already merged — or whether the task's `passes`/`status` otherwise looks
+  inconsistent with an open PR — and re-verify against current target-repo `main`
+  first, rather than assuming the recorded rejection still holds. See
+  ruler-hooked/t-012 (conductor/t-074) for the case that prompted this: a
+  `retry_context` sat stale for 5 days describing a rejection Silas had already
+  overridden by merging directly.
 
 ## Learning ledger — outcomes feed back into behavior
 

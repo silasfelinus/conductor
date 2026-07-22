@@ -4,7 +4,7 @@ date: 2026-07-10
 task: ai-art-academy/t-005
 status: draft for review (content complete, one source URL verified per movement)
 
-This is the curriculum: 25 movements spanning the timeline from Greek vases to
+This is the curriculum: 28 movements spanning the timeline from Ancient Egypt to
 American Regionalism. Every artist named here is long dead (all listed artists died
 before 1955), and every example work is a public-domain original held (or expected)
 in an open-access collection. See the ethical boundary in DESIGN-BRIEF.md and the
@@ -17,7 +17,18 @@ addition (t-010 cycle): Suprematism. Section 23 is the 2026-07-18 v1.3 addition
 (t-010 cycle): Ashcan School. Section 24 is the 2026-07-19 v1.4 addition (t-010
 cycle): American Regionalism. Section 25 is the 2026-07-20 v1.5 addition (t-010
 cycle): Persian Miniature Painting — the first non-Western, non-Japanese entry
-beyond Ukiyo-e. They are appended (rather than renumbered into place) but belong
+beyond Ukiyo-e. Section 26 is the 2026-07-21 v1.6 addition (t-010 cycle): Song
+Dynasty Landscape Painting — the second non-Western entry and the first from East
+Asia beyond Ukiyo-e. Section 27 is the 2026-07-21 v1.7 addition (t-010 cycle):
+Mughal Miniature Painting — a related but visually distinct Indo-Persian tradition
+from Section 25's Timurid/Safavid Persian miniature (naturalistic faces and
+atmospheric recession vs. flat color fields), previously identified as off-register
+for the Persian lesson and deferred as its own future entry. Section 28 is the
+2026-07-22 v1.8 addition (t-010 cycle): Fayum Mummy Portraits — the third
+non-Western entry (after Persian and Mughal miniature painting) and the first
+anonymous-artist entry since Section 2's Byzantine Mosaic, and the first movement
+whose named "artists" are unknown ancient painters rather than an individual or
+school. They are appended (rather than renumbered into place) but belong
 chronologically among the earlier movements — read the `era` field in the
 machine-readable skeleton for true ordering; the front-end seed (t-020, t-031)
 inserts them in chronological position.
@@ -205,6 +216,45 @@ movements:
     artist_slugs: [kamal-ud-din-bihzad, sultan-muhammad]
     example_count: 3
     remix_hint: "Repaint this image as a Persian miniature: flat, high-vantage compositions with distant figures placed higher rather than smaller, brilliant unshaded jewel colors, intricate architectural or garden detail, patterned textiles, and a dense floral or geometric border, no Western perspective or cast shadow"
+  # --- v1.6 addition (2026-07-21, t-010 cycle, lane 4) ---
+  # Second non-Western entry (after persian-miniature) and the first from East
+  # Asia beyond ukiyo-e. Belongs chronologically around
+  # byzantine-mosaic/illuminated-manuscript (see `era`); appended here to avoid
+  # renumbering the sections above. A future seed-sync task inserts it in
+  # chronological position in academyStyles.ts, mirroring t-020/t-031/t-034.
+  - slug: song-dynasty-landscape
+    name: Song Dynasty Landscape Painting
+    era: "c. 950-1130 (Northern Song monumental landscape)"
+    artist_slugs: [fan-kuan, guo-xi, xu-daoning]
+    example_count: 3
+    remix_hint: "Repaint this image as a Northern Song Chinese ink landscape: monochrome ink wash on silk, a towering central mountain peak dominating the composition, tiny travelers dwarfed by scale, layered misty atmospheric distance between foreground and peak, textured brushwork on rock faces, no cast shadows, tall vertical hanging-scroll framing"
+  # --- v1.7 addition (2026-07-21, t-010 cycle, lane 4) ---
+  # A related but visually distinct Indo-Persian tradition from persian-miniature
+  # (naturalistic faces, atmospheric recession, sparing local gold vs. flat color
+  # fields) -- previously identified as off-register for the Persian lesson (LoRA
+  # search note, 2026-07-20 cycle) and deferred as its own entry. Belongs
+  # chronologically after persian-miniature/renaissance (see `era`); appended here
+  # to avoid renumbering the sections above. A future seed-sync task inserts it in
+  # chronological position in academyStyles.ts, mirroring t-020/t-031/t-034.
+  - slug: mughal-miniature
+    name: Mughal Miniature Painting
+    era: "c. 1560-1650 (Imperial atelier under Akbar, Jahangir, and early Shah Jahan)"
+    artist_slugs: [basawan, bichitr, ustad-mansur]
+    example_count: 3
+    remix_hint: "Repaint this image as a Mughal miniature: naturalistic, individualized faces with fine stippled modeling, atmospheric landscape recession, gold used sparingly for thrones/halos/ornament only, dense precise brushwork on brocade and jewelry, and a wide floral or scrollwork decorative border, distinct from flatter Persian miniature color fields"
+  # --- v1.8 addition (2026-07-22, t-010 cycle, lane 4) ---
+  # Third non-Western entry (after persian-miniature, mughal-miniature) and the
+  # first anonymous-artist entry since byzantine-mosaic -- named artists are
+  # unknown ancient painters, not an individual or school. Belongs
+  # chronologically around renaissance/baroque (see `era`); appended here to
+  # avoid renumbering the sections above. A future seed-sync task inserts it in
+  # chronological position in academyStyles.ts, mirroring t-020/t-031/t-034.
+  - slug: fayum-mummy-portraits
+    name: Fayum Mummy Portraits
+    era: "c. A.D. 50-250 (Roman Egypt)"
+    artist_slugs: [anonymous-fayum-painters]
+    example_count: 3
+    remix_hint: "Repaint this image as a Fayum mummy portrait: a direct frontal or slightly turned gaze with large dark almond-shaped eyes and heavy dark brows, warm honey-toned skin built from thick encaustic wax brushstrokes with visible ridge texture, simple Roman-style hair and dress, a plain flat dark background, and a thin gold-leaf wreath or jewelry accent"
 ```
 
 ---
@@ -1443,6 +1493,215 @@ shadow"
 
 ---
 
+## 26. Song Dynasty Landscape Painting (`song-dynasty-landscape`)
+
+**Era:** c. 950-1130 (Northern Song monumental landscape)
+
+**Key ideas.** Northern Song painters developed the "monumental landscape"
+(daguan shan, roughly "landscape of great overview"): a single towering
+mountain fills most of the composition, rendered so its scale is felt
+physically rather than measured geometrically. Painters worked in ink,
+sometimes with light color washes, on silk hanging scrolls meant to be
+contemplated at a distance, not read up close like a manuscript page. Space
+is organized through what later theorists (Guo Xi's own *Linquan Gaozhi*, "The
+Lofty Message of Forests and Streams") called the "three distances" — high
+distance looking up at a peak from its base, deep distance looking through
+overlapping ranges toward an unseen depth, and level distance looking across
+a near hill toward a far one — often combined within a single scroll rather
+than a single fixed viewpoint. Human figures, temples, and travelers appear
+only as small incidental details, dwarfed by the landscape, expressing nature
+as an overwhelming moral and cosmological order rather than scenery. Surfaces
+are built from repeated, textured brushstrokes ("cun" texture strokes —
+raindrop, axe-cut, hemp-fiber) rather than outline-and-fill, giving rock and
+foliage a felt, almost sculptural density despite the monochrome palette.
+
+**Recognition cues:**
+- Monochrome or near-monochrome ink on silk, with at most light,
+  desaturated color washes
+- A single dominant, towering central peak organizing the whole composition
+- Tiny human figures, temples, or travelers dwarfed by the landscape's scale
+- Layered atmospheric space — mist or void separating near, middle, and
+  distant ground rather than one continuous receding plane
+- Dense, repeated textured brushstrokes ("cun" strokes) building rock and
+  cliff surfaces, not outline-and-flat-fill
+- No cast shadows and no single fixed light source
+- Tall vertical hanging-scroll format emphasizing upward scale
+- Sparse motifs recur: twisted pines, thin waterfalls, mist-wrapped
+  pavilions or temple roofs half-hidden in the rock
+
+**Notable artists:**
+- **Fan Kuan** (c. 960 – c. 1030) — Northern Song master whose *Travelers Among
+  Mountains and Streams* is considered the movement's definitive
+  monumental-landscape statement; only one surviving work is confidently
+  attributed to him.
+- **Guo Xi** (c. 1020-1090) — Court painter and theorist whose treatise
+  *The Lofty Message of Forests and Streams* codified the "three distances"
+  principle that shaped how the school organized space.
+- **Xu Daoning** (c. 970-1052) — Known for austere winter and river scenes;
+  his handscroll format shows the same monumental idiom unrolling
+  horizontally rather than in a single vertical view.
+
+**Example works:**
+- *Travelers Among Mountains and Streams*, Fan Kuan, c. 1000 — hanging
+  scroll, ink and light color on silk. **VERIFIED**, National Palace Museum,
+  Taipei; public domain (Creative Commons Public Domain Mark 1.0 — author's
+  life + 100 years or fewer, and published before 1931) via Wikimedia
+  Commons:
+  https://commons.wikimedia.org/wiki/File:Fan_Kuan_-_Travelers_Among_Mountains_and_Streams_-_Google_Art_Project.jpg
+- *Early Spring*, Guo Xi, 1072 — hanging scroll, ink and light color on
+  silk. **VERIFIED**, National Palace Museum, Taipei; public domain
+  (Creative Commons Public Domain Mark 1.0 — author's life + 100 years or
+  fewer, and published before 1931) via Wikimedia Commons:
+  https://commons.wikimedia.org/wiki/File:Guo_Xi_-_Early_Spring_(large).jpg
+- *Fishermen on a Mountain Stream*, Xu Daoning, c. 1049 — handscroll, ink
+  and light color on silk. **VERIFIED**, The Nelson-Atkins Museum of Art,
+  Kansas City; public domain (Creative Commons Public Domain Mark 1.0 —
+  "the author died in 1052," and published before 1931) via Wikimedia
+  Commons:
+  https://commons.wikimedia.org/wiki/File:Xu_Daoning_-_Fishermen_on_a_Mountain_Stream_-_Google_Art_Project.jpg
+
+**remix_hint:** "Repaint this image as a Northern Song Chinese ink landscape:
+monochrome ink wash on silk, a towering central mountain peak dominating the
+composition, tiny travelers dwarfed by scale, layered misty atmospheric
+distance between foreground and peak, textured brushwork on rock faces, no
+cast shadows, tall vertical hanging-scroll framing"
+
+---
+
+## 27. Mughal Miniature Painting (`mughal-miniature`)
+
+**Era:** c. 1560-1650 (Imperial atelier under Akbar, Jahangir, and early Shah Jahan)
+
+**Key ideas.** Akbar's Imperial atelier fused the flat, jewel-toned Persian
+manuscript tradition (already covered in Lesson 25) with Indian color sense and
+an increasingly naturalistic, observational eye — figures gained volume and
+individualized faces, and landscapes gained atmospheric recession that Persian
+miniatures deliberately avoided. Akbar-era works (Basawan and peers) are
+crowded narrative scenes illustrating dynastic chronicles like the *Akbarnama*,
+built from teams of specialist painters — one artist for composition
+(*tarh*), another for coloring (*rang*), another for portrait faces (*chihra*).
+Under Jahangir the emphasis shifted from crowded narrative toward exacting
+single-subject portraiture, allegorical court scenes, and scientific
+nature studies of the animals and plants his menagerie collected — Ustad
+Mansur's studies of birds and animals are considered unmatched for their
+observational precision. Gold is used more sparingly and locally than in
+Persian work, reserved for thrones, halos, and ornament rather than whole
+sky fields; modeling with fine stippled brushwork gives faces and fabric a
+rounded, almost sculptural finish quite distinct from Persian flat color
+fields.
+
+**Recognition cues:**
+- Individualized, naturalistic faces with fine stippled modeling rather than
+  Persian miniature's flatter, more stylized features
+- Landscape recedes with atmospheric haze and diminishing scale (unlike
+  Persian miniature's higher-not-smaller convention)
+- Gold used locally and sparingly — thrones, halos, jewelry — not as a flat
+  background field
+- Crowded, staged narrative compositions (Akbar-era) or a single
+  emphatically isolated portrait/animal/plant subject on a plain ground
+  (Jahangir-era)
+- Fine, dense brushwork rendering brocade and jewelry with near-scientific
+  precision
+- A wide decorative border of scrollwork or florals framing the central
+  scene, separate in style from the painting itself
+
+**Notable artists:**
+- **Basawan** (fl. 1560-1600) — Leading painter of Akbar's atelier, celebrated
+  for naturalistic figures and psychological nuance within densely staged
+  *Akbarnama* narrative scenes.
+- **Bichitr** (fl. 17th century, active into the 1640s) — Court painter under
+  Jahangir and Shah Jahan known for elaborate allegorical compositions
+  and precise portraiture, including a self-portrait worked into his own
+  paintings.
+- **Ustad Mansur** (fl. c. 1590 - d. 1624) — Jahangir's court naturalist-painter,
+  titled *Nadir al-Asr* ("Wonder of the Age"), renowned for scientifically
+  exacting studies of birds, animals, and plants.
+
+**Example works:**
+- *The Young Emperor Akbar Arrests the Insolent Shah Abu'l-Maali*, Basawan,
+  c. 1585-1595 — folio from a manuscript of the *Akbarnama*. **VERIFIED**, Art
+  Institute of Chicago (1919.898); public domain (CC0 1.0 Universal Public
+  Domain Dedication; published before 1931) via Wikimedia Commons:
+  https://commons.wikimedia.org/wiki/File:Basawan_-_The_Young_Emperor_Akbar_Arrests_the_Insolent_Shah_Abu%E2%80%99l-Maali,_page_from_a_manuscript_of_the_Akbarnama_-_1919.898_-_Art_Institute_of_Chicago.jpg
+- *Jahangir Preferring a Sufi Shaikh to Kings*, Bichitr, 1615-1618 — folio
+  from the St. Petersburg Album. **VERIFIED**, Freer Gallery of Art,
+  Smithsonian Institution (F1942.15a); public domain (published before
+  January 1, 1931) via Wikimedia Commons:
+  https://commons.wikimedia.org/wiki/File:Bichitr_-_Jahangir_Preferring_a_Sufi_Shaikh_to_Kings,_from_the_St._Petersburg_album_-_Google_Art_Project.jpg
+- *Turkey Cock*, Ustad Mansur, c. 1612 — opaque watercolor and gold on paper.
+  **VERIFIED**, Victoria and Albert Museum; public domain (author's life +
+  100 years or fewer) via Wikimedia Commons:
+  https://commons.wikimedia.org/wiki/File:Turkey_Cock,_by_Mansur,_opaque_watercolour_and_gold_on_paper,_Mughal,_ca._1612.jpg
+
+**remix_hint:** "Repaint this image as a Mughal miniature: naturalistic,
+individualized faces with fine stippled modeling, atmospheric landscape
+recession, gold used sparingly for thrones/halos/ornament only, dense precise
+brushwork on brocade and jewelry, and a wide floral or scrollwork decorative
+border, distinct from flatter Persian miniature color fields"
+
+---
+
+## 28. Fayum Mummy Portraits (`fayum-mummy-portraits`)
+
+**Era:** c. A.D. 50-250 (Roman Egypt)
+
+**Key ideas.** In Roman-era Egypt, funerary practice fused Egyptian mummification
+with imported Greco-Roman portrait painting: a lifelike panel portrait of the
+deceased, painted in encaustic (pigmented hot wax, occasionally tempera) on a thin
+wood panel, was wrapped directly into the mummy's linen bandaging over the face.
+Named for the Fayum oasis where the largest number survive (examples are also
+known from Antinoopolis, Memphis, and elsewhere along the Nile), these are among
+the only large surviving body of painted portraiture from the ancient
+Mediterranean world — most later Greek and Roman panel painting is lost entirely,
+known only through written descriptions. The style is strikingly naturalistic for
+its era: modeled flesh tones, individualized features, and direct psychological
+presence, sitting at the meeting point of Egyptian funerary tradition and Roman
+portrait convention. Almost nothing is known of the individual painters — no
+signed Fayum portrait survives — so, like Byzantine Mosaic (Lesson 2), this
+lesson credits the tradition's anonymous makers rather than any named artist.
+
+**Recognition cues:**
+- Large, dark, almond-shaped eyes with heavy brows, gazing directly at (or just
+  past) the viewer — the single most distinctive trait of the style
+- Warm, honey-toned modeled skin built up in visible ridges of thick encaustic
+  wax, not smooth glazed paint
+- A plain, flat, dark or muted background with no setting, landscape, or
+  architecture
+- Simple Roman-style hairstyles and drapery, occasionally with modest gold-leaf
+  jewelry, a wreath, or a diadem
+- Three-quarter or fully frontal head-and-shoulders framing, cropped close, no
+  hands or body beyond the chest
+- No cast shadow or single light source modeling — illumination reads as even
+  and frontal rather than dramatic
+
+**Notable artists:** None identifiable. No Fayum portrait carries a painter's
+signature or attribution, and no ancient text names an individual practitioner —
+the tradition is credited here to its anonymous makers (`anonymous-fayum-painters`),
+the same treatment already used for Byzantine Mosaic's anonymous Ravenna and
+Constantinople mosaicists (Lesson 2).
+
+**Example works:**
+- *Portrait of the Boy Eutyches*, unknown painter, A.D. 100-150 — encaustic on
+  wood. **VERIFIED**, The Metropolitan Museum of Art (accession 18.9.2, Gift of
+  Edward S. Harkness, 1918); public domain (CC0, Met Open Access):
+  https://www.metmuseum.org/art/collection/search/547951
+- *Portrait of a Thin-Faced Man*, unknown painter, A.D. 140-170 — encaustic on
+  limewood with gold leaf. **VERIFIED**, The Metropolitan Museum of Art
+  (accession 09.181.3, Rogers Fund, 1909); public domain (CC0, Met Open Access):
+  https://www.metmuseum.org/art/collection/search/547858
+- *Portrait of a Young Woman with a Gilded Wreath*, unknown painter, A.D.
+  120-140 — encaustic on wood with gold leaf. **VERIFIED**, The Metropolitan
+  Museum of Art (accession 09.181.7, Rogers Fund, 1909); public domain (CC0,
+  Met Open Access): https://www.metmuseum.org/art/collection/search/547861
+
+**remix_hint:** "Repaint this image as a Fayum mummy portrait: a direct frontal
+or slightly turned gaze with large dark almond-shaped eyes and heavy dark brows,
+warm honey-toned skin built from thick encaustic wax brushstrokes with visible
+ridge texture, simple Roman-style hair and dress, a plain flat dark background,
+and a thin gold-leaf wreath or jewelry accent"
+
+---
+
 ## Lesson-only vs remixable
 
 Every movement above maps to a remix config (mode `prompt` to start; t-003/t-004
@@ -1489,6 +1748,13 @@ under-cooking risk from the opposite direction: its smooth, sculptural finish is
 close to a lightly-processed photo already, so the remix_hint leans on "simplified
 sculptural forms," "crisp outlines," and "dramatic rolling sky" to push past a
 generic realism filter toward the movement's distinctive smoothed-and-stylized look.
+`fayum-mummy-portraits` shares the same under-cooking risk from the strongest angle
+yet: it is the most photorealistic style in the curriculum, so the model's likeliest
+failure is a generic warm-toned "vintage photo" filter that skips the style's actual
+signature — the remix_hint leans hard on the specific, checkable traits (oversized
+almond eyes, visible encaustic ridge texture, flat dark background, no cast shadow)
+precisely because "old painting of a person" alone would not distinguish it from
+`realism` or `renaissance` portraiture.
 
 **Flagged as likely-poor remixers:**
 - `cubism` — faceting while "preserving the composition" is partly contradictory;
@@ -1514,10 +1780,34 @@ generic realism filter toward the movement's distinctive smoothed-and-stylized l
   cues (shading, foreshortening) rather than actually inverting the spatial
   logic. Keep the lesson regardless; ship the remix only if t-004 A/B results
   show the flattening genuinely landing, not just the ornament.
+- `song-dynasty-landscape` — shares `persian-miniature`'s tension: the subject
+  isn't discarded, but the movement's core identity is a *specific*
+  composition (a single towering peak dominating the frame, human figures
+  reduced to tiny incidental scale) that most user photos simply won't have.
+  "Preserve the user's composition" and "monumental landscape logic" pull in
+  opposite directions whenever the source photo isn't already a vertical,
+  peak-dominated scene. The likelier failure mode is a generic "ink wash
+  filter" over the source's existing composition — monochrome and textured
+  brushwork present, but without the scale-dwarfing and "three distances"
+  space that actually define the movement. Keep the lesson regardless; ship
+  the remix only if t-004 A/B results show genuine scale/space restructuring,
+  not just a grayscale-ink palette swap.
+- `mughal-miniature` — a milder version of `persian-miniature`'s tension: it
+  doesn't fight "preserve composition" the way Persian miniature's inverted
+  perspective does (Mughal work keeps atmospheric recession and naturalistic
+  faces, both photo-compatible), but its identity is defined largely by what
+  distinguishes it *from* `persian-miniature` — sparing local gold instead of
+  flat gold fields, stippled naturalistic faces instead of flat stylized ones.
+  The likelier failure mode is the model collapsing both lessons into one
+  generic "Indo-Persian miniature" filter rather than actually hitting the
+  distinguishing traits. Keep the lesson regardless; ship the remix only if
+  t-004 A/B results show the two styles are visibly distinguishable
+  side-by-side, not just palette-shifted twins.
 
-No movement is lesson-only in v1 — even the flagged four get a remix config — but
-`cubism`, `de-stijl`, `suprematism`, and `persian-miniature` should carry a
-"results vary, that's part of the fun" note until t-004 evaluates them.
+No movement is lesson-only in v1 — even the flagged six get a remix config — but
+`cubism`, `de-stijl`, `suprematism`, `persian-miniature`, `song-dynasty-landscape`,
+and `mughal-miniature`
+should carry a "results vary, that's part of the fun" note until t-004 evaluates them.
 
 ## Public-domain safety check (t-006 preview)
 
@@ -1605,3 +1895,43 @@ all three file pages), so all three example-work URLs are marked VERIFIED agains
 their live Wikimedia Commons file pages and PD license tags (Public Domain Mark
 1.0 and PD-Art/PD-old-100-expired), not "(unverified)" — matching the §22-23
 precedent rather than the §24 one.
+
+**v1.6 addition (2026-07-21) re-check.** Section 26 (Song Dynasty Landscape
+Painting) clears the PUBLIC-DOMAIN-POLICY.md §1.3 both-prongs rule with the
+widest margin of any movement added so far: all three named artists (Fan Kuan,
+d. c. 1030; Guo Xi, d. c. 1090; Xu Daoning, d. 1052) died roughly 900-1000
+years ago, and all three example works (c. 1000, 1072, c. 1049) predate the
+1930 US-publication cutoff by nearly nine centuries — neither prong is close
+to the boundary the way §17-25's 20th-century entries are. Does not disturb
+the curriculum's most-recent-example-work record, which stays at 1930
+(*American Gothic* / *Stone City, Iowa*, §24). All three example-work URLs
+were confirmed VERIFIED directly via `WebFetch` of their live Wikimedia
+Commons file pages (Public Domain Mark 1.0 tags), matching the §22-23/§25
+precedent.
+
+**v1.7 addition (2026-07-21) re-check (backfilled 2026-07-22, t-010 cycle).**
+Section 27 (Mughal Miniature Painting) clears the PUBLIC-DOMAIN-POLICY.md §1.3
+both-prongs rule for all three named artists: Basawan (fl. 1560-1600, presumed
+dead well over 70 years), Bichitr (active into the 1640s), and Ustad Mansur (d.
+1624) all died centuries before the 1956 cutoff. All three example works
+(c. 1585-95, 1615-18, c. 1612) predate the 1930 US-publication cutoff by three
+centuries and do not disturb the curriculum's most-recent-example-work record,
+which stays at 1930 (*American Gothic* / *Stone City, Iowa*, §24). All three
+example-work URLs were confirmed VERIFIED via Wikimedia Commons file pages at
+the time §27 was added — this paragraph itself was simply never written in the
+same pass, a documentation gap noticed and closed while adding §28 below.
+
+**v1.8 addition (2026-07-22) re-check.** Section 28 (Fayum Mummy Portraits)
+clears the PUBLIC-DOMAIN-POLICY.md §1.3 both-prongs rule with the widest margin
+possible on prong 1: no individual artist is named at all (the tradition is
+credited to `anonymous-fayum-painters`), so there is no living-memory risk
+whatsoever — the entire genre ended with the practice of mummification itself,
+roughly 1,800 years ago. All three example works (A.D. 100-150, 140-170,
+120-140) predate the 1930 US-publication cutoff by nearly two millennia and do
+not disturb the curriculum's most-recent-example-work record, which stays at
+1930 (*American Gothic* / *Stone City, Iowa*, §24). All three example-work URLs
+were confirmed VERIFIED directly against the Met Collection API
+(`collectionapi.metmuseum.org`), each returning `isPublicDomain: true` under
+the Met's CC0 Open Access program — a stronger, more direct verification than
+the Wikimedia-Commons-file-page method used for §17-27, since it reads the
+holding institution's own rights-status field rather than a third-party tag.

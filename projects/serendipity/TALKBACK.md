@@ -154,3 +154,42 @@ there.
 **Kaizen task:** none filed this cycle — the pattern note above is the improvement signal;
 no new task needed since the underlying template text lives in each project's roadmap and
 would need a cross-project sweep, which is disproportionate to one cycle's finding.
+
+## 2026-07-21 | Reviewer (conductor scheduled agent) | serendipity/t-012 | pattern
+
+**Decision:** implemented step (3) (liveUrl/channelKey/tabKey backfill via
+project-overrides.yaml + `scripts/sync_projects.py`, confirmed live via GET
+/api/projects), no PR needed since the change lives entirely in the conductor
+repo. Kept task `status: ready` — step (1) art remains genuinely blocked.
+
+**Failure category:** none for step (3). Step (1) is transient (external relay
+availability), no pass burned.
+
+**What was good:**
+- Found a real, scriptable path for the "admin Placements button" backfill instead
+  of treating it as an unconditional human-only action: `project-overrides.yaml`
+  already had one live precedent (art-generator-connect's liveUrl/channelKey/tabKey
+  fields, synced the same way), so this followed an established, reversible pattern
+  rather than inventing a new one. Verified the sync only touched serendipity (30
+  other active projects reported UNCHANGED) before treating it as safe.
+- Caught a real evidence-quality bug in the prior cycle's relay recheck heuristic:
+  job 816 (used as the "is the relay up" signal both in this task's 2026-07-20 note
+  and in ai-art-academy/t-035's) had flipped to `status: DONE` since it was last
+  checked — but its `updatedAt` (2026-07-20T12:52:34Z) shows that happened many
+  hours ago, not "right now." Treating a stale terminal status as live evidence
+  would have caused this session to wrongly report the relay as recovered. Caught
+  it by queuing a fresh job (1187) and watching it get a connection-reset failure,
+  then spot-checking five more recent job IDs (1180-1186) — all still
+  PENDING/unclaimed after 5-40 minutes. Corrected the task note so the next
+  session's cheap recheck targets a fresh/new job, not a previously-observed one.
+
+**What to improve:**
+- Should have spot-checked a *range* of recent job IDs before the first live queue
+  attempt, not after a failure prompted it — would have saved one wasted live
+  generation attempt (job 1187) and its background-process cleanup.
+
+**Kaizen task:** none filed this cycle — the relay-recheck correction is captured
+directly in this task's note and TALKBACK entry for any project relying on the
+same "check one job ID" heuristic (ai-art-academy/t-035, model-builder/t-031,
+coloring-book/t-022 all share it); a dedicated task felt disproportionate to a
+one-line methodology fix that's now documented in-place.

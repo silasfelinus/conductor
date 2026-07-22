@@ -1,4 +1,4 @@
-updated: "2026-07-20T00:15:00-07:00"
+updated: "2026-07-22T09:42:00-07:00"
 
 pitches:
   - id: bioluminescent-tide
@@ -65,7 +65,7 @@ pitches:
 
   - id: magnetic-sand-garden
     title: Magnetic Sand Garden
-    status: pitched
+    status: candidate
     priority: 3
     surprise: Metallic sand grains gather into temporary topographic islands, then collapse and reform around invisible magnets.
     passive_loop: Flow-field bands continuously comb the sand into ridges, valleys, and occasional geometric blooms.
@@ -77,10 +77,27 @@ pitches:
     acceptance:
       - forms evolve rather than merely translating
       - coarse simulation remains attractive at desktop scale
+    builds:
+      - version: 1
+        status: candidate
+        component: components/screenfx/magnetic-sand-garden.vue
+        pull_request: silasfelinus/kind_robots#785
+        verification:
+          - TypeScript Type Check
+          - Contract Tests
+          - eslint
+          - prettier
+          - test:animation-catalog
+          - test:animation-component-attempts
+        deferred:
+          - Live browser smoke test (docs/architecture/animation-catalog-smoke-matrix.md) --
+            no reachable DATABASE_URL in the sandbox; server/utils/prisma.ts throws on every
+            SSR request.
+          - Component attempt record (SPEC.md "Attempt records") -- same DB blocker.
 
   - id: stained-glass-rain
     title: Stained Glass Rain
-    status: pitched
+    status: candidate
     priority: 4
     surprise: Raindrops refract the desktop into slowly changing stained-glass fragments without obscuring content.
     passive_loop: Transparent polygon panes drift, merge, and split as rain lines trace leaded boundaries.
@@ -92,10 +109,26 @@ pitches:
     acceptance:
       - content remains legible
       - effect has a no-backdrop-filter fallback
+    builds:
+      - version: 1
+        status: candidate
+        component: components/screenfx/stained-glass-rain.vue
+        pull_request: silasfelinus/kind_robots#838
+        verification:
+          - TypeScript Type Check
+          - eslint
+          - prettier
+          - test:animation-catalog
+          - test:animation-component-attempts
+        deferred:
+          - Live browser smoke test (docs/architecture/animation-catalog-smoke-matrix.md) --
+            no reachable DATABASE_URL in the sandbox; server/utils/prisma.ts throws on every
+            SSR request.
+          - Component attempt record (SPEC.md "Attempt records") -- same DB blocker.
 
   - id: clockwork-greenhouse
     title: Clockwork Greenhouse
-    status: pitched
+    status: candidate
     priority: 5
     surprise: Tiny brass stems grow leaves, gears pollinate mechanical flowers, and the garden quietly resets through seasons.
     passive_loop: Plants grow and fold on staggered timelines while pollinator gears move between blooms.
@@ -107,6 +140,24 @@ pitches:
     acceptance:
       - visible lifecycle includes growth, bloom, seed, and reset
       - no interaction is needed to populate the garden
+    builds:
+      - version: 1
+        status: candidate
+        component: components/screenfx/clockwork-greenhouse.vue
+        pull_request: silasfelinus/kind_robots#887
+        commit: d50f83ca91fa40d52c8415b2f867b7c3ce39d583
+        verification:
+          - TypeScript Type Check
+          - Contract Tests
+          - eslint
+          - prettier
+          - test:animation-catalog
+          - test:animation-component-attempts
+        deferred:
+          - Live browser smoke test (docs/architecture/animation-catalog-smoke-matrix.md) --
+            no reachable DATABASE_URL in the sandbox; server/utils/prisma.ts throws on every
+            SSR request.
+          - Component attempt record (SPEC.md "Attempt records") -- same DB blocker.
 
   - id: cloud-city-drift
     title: Cloud City Drift
@@ -278,3 +329,74 @@ pitches:
       - at least one full marble circuit (drop to elevator return) is visible within thirty seconds
       - contact-triggered flourishes (bell/pinwheel/seesaw) never desync from the marble that caused them
       - underlying page clicks remain functional through the click interaction
+
+  - id: strandbeest-migration
+    title: Strandbeest Migration
+    status: pitched
+    priority: 15
+    surprise: >
+      A herd of wind-powered wire-legged walker sculptures ambles across a dune
+      horizon, wind gusts visibly quickening or slowing their gait as they cross
+      the screen and loop back for another pass.
+    passive_loop: >
+      Each walker cycles a fixed multi-bar leg-linkage gait driven by a shared
+      crank phase offset per leg pair; a slow ambient wind value (sine plus light
+      noise) scales stride length and speed, and walkers drift along a parallax
+      dune baseline before wrapping to a fresh silhouette on re-entry.
+    optional_interaction: >
+      Pointer acts as a local wind gust that visibly speeds up nearby walkers'
+      gait and lightly tilts their stride direction; click spawns one new walker
+      at the horizon that joins the herd's migration.
+    technique: >
+      Precomputed multi-bar linkage leg curves (classic Jansen-linkage joint
+      coordinates) driven by a shared crank angle per walker, rendered as simple
+      stroked struts and joints; walker body position advances along a parallax
+      dune baseline rather than a fixed track.
+    reduced_motion: Two walkers, slow fixed gait with no wind variance, no gust interaction, no spawning.
+    performance_risk: >
+      Many simultaneous walkers each recomputing joint linkage per frame; cap
+      the herd size and precompute a lookup table of joint positions per
+      crank-angle step instead of solving the linkage live every frame.
+    novelty: >
+      Wind-driven linkage-based leg locomotion across a horizon is distinct from
+      marble-run-contraption's fixed track-position circuit, ant-farm-excavation's
+      grid-based digging simulation, and celestial-mobile's free-hanging balance
+      physics — no existing pitch or shipped effect uses procedural leg-linkage
+      walking.
+    acceptance:
+      - at least three walkers are visible ambling across the screen at any time during normal (non-reduced-motion) play
+      - the wind gust interaction visibly changes at least one walker's gait speed within one second of pointer movement
+      - a walker that exits one edge re-enters from the opposite edge without a visible teleport pop (fade or off-screen buffer)
+
+  - id: shadow-puppet-theater
+    title: Shadow Puppet Theater
+    status: pitched
+    priority: 16
+    surprise: >
+      A backlit paper screen where jointed shadow-puppet cutouts (a bird, a boat, a
+      lantern-bearer) perform a short wordless vignette that subtly reshuffles its
+      blocking and lighting angle each time it loops, so it never plays identically twice.
+    passive_loop: >
+      A rod-puppet cast cycles through 2-3 short vignettes (a bird released from a cage,
+      a boat crossing choppy water, a lantern-bearer climbing a hill) with joint-driven
+      walk/flight cycles; the backlight position drifts slowly over the course of a loop,
+      subtly changing every puppet's cast-shadow angle and softness.
+    optional_interaction: >
+      Pointer position casts a soft hand-shadow silhouette that "joins" the scene without
+      disrupting the puppets; click advances early to the next vignette in the rotation.
+    technique: >
+      Cached silhouette Path2D cutouts with per-joint rotation (a handful of rigid bones
+      per puppet), rendered against a soft radial backlight gradient that itself animates
+      position over the loop.
+    reduced_motion: One puppet performing a single slow gesture loop, fixed backlight, no hand-shadow, no vignette switching.
+    performance_risk: >
+      Multiple jointed puppets with soft shadow-blur gradients per frame; precompute
+      silhouette paths once and cap concurrent puppets to the active vignette's cast.
+    novelty: >
+      Backlit rod-puppetry with joint-driven blocking and a slow-drifting light source is
+      distinct from every shipped/pitched entry -- no existing effect uses articulated
+      shadow-theater staging or narrative vignette rotation.
+    acceptance:
+      - at least one full vignette (start pose to resolution pose) completes within twenty seconds
+      - backlight drift is visible across a loop without ever fully silhouette-flattening or washing out a puppet
+      - hand-shadow interaction never blocks or offsets the actual page pointer

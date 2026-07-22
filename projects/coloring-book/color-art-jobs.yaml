@@ -9,12 +9,17 @@ batch_policy:
   meaning: One pass may prepare, submit, retrieve, or review up to 18 color proposals. Do not spend a pass writing
     one to six isolated prompts when a full half-book batch is available.
 defaults:
+  # Krea 2 Turbo is the default color-master engine: an 8-step distilled DiT
+  # tuned for illustration, fast on a 12GB card, and Apache/community-licensed
+  # for the storefront. Per-entry `engine:` (krea2 | flux2-klein | flux | sdxl)
+  # overrides this, so a batch can mix engines. `steps` is intentionally unset
+  # so each engine runs at its native cadence (Krea2 8, Klein 4, Flux 30/36).
   target_repo: silasfelinus/conductor
   size: 1024x1536
-  engine: flux
-  flux_variant: dev
-  steps: 36
-  guidance: 3.5
+  engine: krea2
+  # Seeds randomize every attempt so repeated renders of a concept differ. Once
+  # a color master is accepted, set `lock_seed: true` on that entry (with the
+  # `render_seed` recorded on it) to reproduce it for the BW coloring page.
   output_version: color-proposals-v1
 status_meanings:
   pending: ready to submit as a color ArtJob
@@ -34,6 +39,8 @@ books:
     seed: 840001
     image_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-001-perfect-woman.webp
     source_ref: projects/coloring-book/sets/monster-recast/art-modeler-request.yaml#mr-001
+    semantic_gate_error: job 1308 timed out after 600s (still queued/running)
+    semantic_gate_error_at: '2026-07-22T00:33:11Z'
   - slot: 2
     id: mr-002
     slug: dream-killer
@@ -66,6 +73,8 @@ books:
     seed: 840005
     image_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-005-moon-torn.webp
     source_ref: projects/coloring-book/sets/monster-recast/art-modeler-request.yaml#mr-005
+    semantic_gate_error: job 1309 timed out after 600s (still queued/running)
+    semantic_gate_error_at: '2026-07-22T00:43:13Z'
   - slot: 6
     id: mr-006
     slug: screwhead
@@ -74,6 +83,8 @@ books:
     seed: 840006
     image_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-006-screwhead.webp
     source_ref: projects/coloring-book/sets/monster-recast/art-modeler-request.yaml#mr-006
+    semantic_gate_error: job 1310 timed out after 600s (still queued/running)
+    semantic_gate_error_at: '2026-07-22T00:53:20Z'
   - slot: 7
     id: mr-007
     slug: pound-foolish
@@ -82,6 +93,8 @@ books:
     seed: 840007
     image_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-007-pound-foolish.webp
     source_ref: projects/coloring-book/sets/monster-recast/art-modeler-request.yaml#mr-007
+    semantic_gate_error: job 1311 timed out after 600s (still queued/running)
+    semantic_gate_error_at: '2026-07-22T01:03:27Z'
   - slot: 8
     id: mr-008
     slug: game-mistress
@@ -90,6 +103,8 @@ books:
     seed: 840008
     image_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-008-game-mistress.webp
     source_ref: projects/coloring-book/sets/monster-recast/art-modeler-request.yaml#mr-008
+    semantic_gate_error: job 1312 timed out after 600s (still queued/running)
+    semantic_gate_error_at: '2026-07-22T01:13:30Z'
   - slot: 9
     id: mr-009
     slug: draculina-husbands
@@ -98,6 +113,8 @@ books:
     seed: 840009
     image_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-009-draculina-husbands.webp
     source_ref: projects/coloring-book/sets/monster-recast/art-modeler-request.yaml#mr-009
+    semantic_gate_error: job 1313 timed out after 600s (still queued/running)
+    semantic_gate_error_at: '2026-07-22T01:23:33Z'
   - slot: 10
     id: mr-010
     slug: madam-hat
@@ -106,6 +123,8 @@ books:
     seed: 840010
     image_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-010-madam-hat.webp
     source_ref: projects/coloring-book/sets/monster-recast/art-modeler-request.yaml#mr-010
+    semantic_gate_error: job 1314 timed out after 600s (still queued/running)
+    semantic_gate_error_at: '2026-07-22T01:33:38Z'
   - slot: 11
     id: mr-011
     slug: alien-king
@@ -114,6 +133,8 @@ books:
     seed: 840011
     image_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-011-alien-king.webp
     source_ref: projects/coloring-book/sets/monster-recast/art-modeler-request.yaml#mr-011
+    semantic_gate_error: job 1315 timed out after 600s (still queued/running)
+    semantic_gate_error_at: '2026-07-22T01:43:44Z'
   - slot: 12
     id: mr-012
     slug: hush-dummy
@@ -122,6 +143,8 @@ books:
     seed: 840012
     image_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-012-hush-dummy.webp
     source_ref: projects/coloring-book/sets/monster-recast/art-modeler-request.yaml#mr-012
+    semantic_gate_error: job 1316 timed out after 600s (still queued/running)
+    semantic_gate_error_at: '2026-07-22T01:53:50Z'
   - slot: 13
     id: mr-013
     slug: ansel-bell
@@ -130,6 +153,8 @@ books:
     seed: 840013
     image_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-013-ansel-bell.webp
     source_ref: projects/coloring-book/sets/monster-recast/art-modeler-request.yaml#mr-013
+    semantic_gate_error: job 1317 timed out after 600s (still queued/running)
+    semantic_gate_error_at: '2026-07-22T02:03:56Z'
   - slot: 14
     id: mr-014
     slug: bathtub-shave
@@ -138,6 +163,8 @@ books:
     seed: 840014
     image_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-014-bathtub-shave.webp
     source_ref: projects/coloring-book/sets/monster-recast/art-modeler-request.yaml#mr-014
+    semantic_gate_error: job 1318 timed out after 600s (still queued/running)
+    semantic_gate_error_at: '2026-07-22T02:13:58Z'
   - slot: 15
     id: mr-015
     slug: red-carpet-mummy
@@ -146,6 +173,8 @@ books:
     seed: 840015
     image_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-015-red-carpet-mummy.webp
     source_ref: projects/coloring-book/sets/monster-recast/art-modeler-request.yaml#mr-015
+    semantic_gate_error: job 1321 timed out after 600s (still queued/running)
+    semantic_gate_error_at: '2026-07-22T02:24:01Z'
   - slot: 16
     id: mr-016
     slug: creature-drag
@@ -154,6 +183,8 @@ books:
     seed: 840016
     image_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-016-creature-drag.webp
     source_ref: projects/coloring-book/sets/monster-recast/art-modeler-request.yaml#mr-016
+    semantic_gate_error: job 1322 timed out after 600s (still queued/running)
+    semantic_gate_error_at: '2026-07-22T02:34:04Z'
   - slot: 17
     id: mr-017
     slug: trophy-queen
@@ -162,6 +193,8 @@ books:
     seed: 840017
     image_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-017-trophy-queen.webp
     source_ref: projects/coloring-book/sets/monster-recast/art-modeler-request.yaml#mr-017
+    semantic_gate_error: job 1323 timed out after 600s (still queued/running)
+    semantic_gate_error_at: '2026-07-22T02:44:07Z'
   - slot: 18
     id: mr-018
     slug: doctor-feast
@@ -170,6 +203,8 @@ books:
     seed: 840018
     image_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-018-doctor-feast.webp
     source_ref: projects/coloring-book/sets/monster-recast/art-modeler-request.yaml#mr-018
+    semantic_gate_error: job 1324 timed out after 600s (still queued/running)
+    semantic_gate_error_at: '2026-07-22T02:54:11Z'
   - slot: 19
     id: mr-019
     slug: countess-vermin
@@ -178,6 +213,8 @@ books:
     seed: 840019
     image_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-019-countess-vermin.webp
     source_ref: projects/coloring-book/sets/monster-recast/art-modeler-request.yaml#mr-019
+    semantic_gate_error: job 1325 timed out after 600s (still queued/running)
+    semantic_gate_error_at: '2026-07-22T03:04:18Z'
   - slot: 20
     id: mr-020
     slug: fly-girl-summer
@@ -186,6 +223,8 @@ books:
     seed: 840020
     image_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-020-fly-girl-summer.webp
     source_ref: projects/coloring-book/sets/monster-recast/art-modeler-request.yaml#mr-020
+    semantic_gate_error: job 1326 timed out after 600s (still queued/running)
+    semantic_gate_error_at: '2026-07-22T03:14:25Z'
   - slot: 21
     id: mr-021
     slug: invisible-flasher
@@ -194,6 +233,8 @@ books:
     seed: 840021
     image_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-021-invisible-flasher.webp
     source_ref: projects/coloring-book/sets/monster-recast/art-modeler-request.yaml#mr-021
+    semantic_gate_error: job 1327 timed out after 600s (still queued/running)
+    semantic_gate_error_at: '2026-07-22T03:24:33Z'
   - slot: 22
     id: mr-022
     slug: prom-king

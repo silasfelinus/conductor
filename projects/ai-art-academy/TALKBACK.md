@@ -1403,3 +1403,217 @@ milestone reassignment). Worth flagging for whoever eventually builds
 **Kaizen task:** none filed — small, fully self-contained fix within lane 1's existing scope.
 
 **Pattern note:** worth generalizing for future front-end polish passes — when a component has two entry points for logically equivalent user actions (browse vs. drag-drop, keyboard vs. mouse, etc.), check that both paths apply the *same* validation/guard logic, not just that each path individually looks correct in isolation.
+
+## 2026-07-21 | Reviewer (burst-mode) | ai-art-academy/t-010 | pattern
+
+**Decision:** audited already-merged work, fixed a process-accuracy bug found in the process — lane 2 (roadmap accuracy), per the checklist's rotation (previous cycle ran lane 1).
+
+**Failure category:** actionable — a genuine roadmap-state bug, not a code defect, and not worth retrying blind (the fix is a one-line status flip, not a re-implementation).
+
+**What was good (prior cycle, ~00:11-00:30 UTC):**
+- The lane-1 implementation itself (kind_robots PR #733, `art-styler.vue` file-type validation) was clean and already merged by the time this cycle started.
+
+**What to improve:**
+- The prior cycle's conductor PR (#942) wrote "Rearming to `ready` per the recurring-task convention once PR #733 merges" into the task note, but the PR's own diff only added that note text — it never actually changed the `status:` field. Since #733 (the condition the note deferred on) hadn't merged yet at the moment #942's diff was authored, nothing in that PR *could* flip the status accurately, but nothing came back afterward to finish the deferred step either. Net effect: `t-010` sat at `status: claimed` holding a fresh, non-stale claim (so `claim_task.py` correctly refused to let a later session reclaim it) with no session actually working it, until this cycle noticed and fixed it directly.
+- General lesson for any recurring-task cycle whose rearm depends on a fact not yet true when the PR is written (e.g. "once PR #N merges"): either hold the PR open until that fact becomes true and update the status in the same PR before merging, or explicitly leave a same-day follow-up marker instead of writing prose that promises a field change nothing is scheduled to perform. A future session reading the note as ground truth (rather than checking the actual `status:` field) would have wrongly assumed the task was back in rotation.
+
+**Kaizen task:** none filed — the fix (flip `status: ready`) is complete in this cycle's own diff, and the lesson above is now recorded here plus in `continuous-improvement-checklist.md`'s rotation state for the next cycle to internalize without a separate roadmap task.
+
+**Pattern note:** this is a new failure shape for this task's audit history — not a code bug, milestone drift, or stale blocker note, but a *self-referential* roadmap-accuracy bug where the task's own note asserted a future action that the note-writing PR itself was supposed to perform but didn't. `scripts/check_pr_merged_drift.py` does not catch this shape (it only flags claimed/review tasks with a merged cross-repo PR reference, which did apply here, but its GitHub API calls 403 in this sandbox — this was caught by manual inspection of the PR #942 diff instead, not the tooling). Worth a note for whoever next touches that script: cross-checking `status: claimed` + "rearming to ready" note language + a confirmed-merged referenced PR would make this specific shape machine-detectable.
+
+## 2026-07-21 | Reviewer (scheduled burst) | ai-art-academy/t-010 | pattern
+
+**Decision:** implemented, PR merged (conductor #958) — lane 2 (roadmap accuracy), per the checklist's rotation (previous cycle ran lane 1, PR #745).
+
+**Failure category:** none — clean first pass; milestone/blocker audit came back with no drift.
+
+**What was good:**
+- Re-verified all six milestones directly against current task statuses (not just spot-checked a subset) — confirmed no drift this cycle, a genuine negative result rather than an assumed one.
+- Rather than stopping at "no drift found" for the fourth-plus consecutive lane-2 cycle in a row, went looking for a different class of staleness — downstream documentation coverage — and found a real one: Song Dynasty Landscape Painting (§26, added the immediately-prior lane-4 cycle) had been added to the curriculum but never propagated to `teaching-notes.md` (no row, plus two stale movement-count references), `style-lora-registry.md` (no entry at all, not even a placeholder), or the "Lesson-only vs remixable" tier lists (unclassified) — plus its PUBLIC-DOMAIN-POLICY.md re-check paragraph, present for every other addition since v1.1, was missing.
+- Classified the new movement's remix-difficulty tier with actual reasoning (not just copied a neighboring entry): flagged it "likely-poor remixer" because its defining single-dominant-peak composition conflicts with arbitrary user-photo composition, the same tension already documented for `persian-miniature` — and explained the *specific* failure mode expected (generic ink-wash filter over existing composition, not genuine scale/space restructuring) so a future t-004 A/B pass has something concrete to check against.
+- Also correctly identified that `check_pr_merged_drift.py`'s 23 flagged candidates this cycle were all this task's own historical PR references (an artifact of the task's own note text plus a fresh claim), not new drift — avoided burning time re-verifying PRs already confirmed merged in prior cycles' notes.
+
+**What to improve:** none significant this cycle.
+
+**Kaizen task:** none filed — the fix is complete within lane 2's existing scope (closing a documentation-propagation gap), and the underlying pattern (new curriculum movements needing a documented multi-file propagation checklist) is already implicitly covered by how the last five movements each landed their downstream docs across separate cycles rather than in one shot.
+
+**Pattern note:** this is the third consecutive lane-4 cycle to add a movement whose downstream doc propagation (teaching-notes/registry/tier-list) landed in a *later*, separate cycle rather than the same one (see persian-miniature's registry entry, curriculum-outline PD re-check, and teaching-notes row each landing in different 2026-07-20 cycles) — worth noting for whoever eventually tightens the lane-4 checklist item, since a lane-4 cycle that added the propagation checklist as an explicit sub-step of "add a new movement" (rather than relying on a later lane-2 pass to notice the gap) would close this loop one cycle earlier each time.
+
+## 2026-07-21 | Reviewer (conductor scheduled agent) | ai-art-academy/t-010 | pattern
+
+**Decision:** merged already-open PR (kind_robots #771, squash `296fafb`) — closed out lane-4 work left in-flight by the ~07:15Z cycle rather than re-implementing.
+
+**Failure category:** none — this cycle found the task at `status: claimed` with a fully-formed, CI-green PR already open (the prior cycle ran out of turn before merging its own work). Verified both required checks (TypeScript, Contract Tests) via `actions_list` before merging; no new code written.
+
+**What was good:** the ~07:15Z cycle's PR body and diff were clean and scoped exactly to its stated task (core lesson fields only, `exampleWorks`/`previewImageSrc` correctly deferred to t-033) — nothing to correct on review.
+
+**What to improve:** none — routine handoff between cycles working the same recurring task.
+
+**Kaizen task:** none filed — this cycle's action was administrative (merge + rearm), not new scope.
+
+## 2026-07-21 | Reviewer (conductor scheduled agent) | ai-art-academy/t-010 | pattern
+
+**Decision:** implemented, PR open (kind_robots #789) — lane 1 (front-end polish), per the checklist's rotation (previous action this run was the administrative PR #771 merge, not a rotation lane).
+
+**Failure category:** none — clean first pass.
+
+**What was good:**
+- Dispatched an Explore subagent with the full exclusion list of every bug class already fixed across ~25 prior lane-1 cycles, forcing it past re-flagging settled ground.
+- Found a genuinely new bug shape: `image-upload.vue`'s success-checkmark overlay (`succeededFiles`) was populated and then made unobservable in the same synchronous tick, every time, in every code path — not a conditional edge case but structurally dead UI. Distinct from the two previously-fixed bugs in the same function (message/error-ordering vs `clearQueue()`, and duplicate-reupload-on-retry).
+- The fix (a short `await nextTick()` + `setTimeout`) was scoped to exactly the gap found, and explicitly preserved the established `clearQueue()`-before-message-assignment ordering from a prior fix — the implementing pass first got this backwards (moved the message assignment earlier) and caught it via self-review before opening the PR, re-reading the prior TALKBACK entry that explains why the ordering matters.
+
+**What to improve:**
+- Same recurring gap as every cycle since the DB became unreachable in this sandbox: live browser confirmation of the visual fix (does the checkmark actually appear for ~700ms before removal) is deferred to whoever next has DB access.
+
+**Kaizen task:** none new this cycle — no systemic gap found, just a normal lane-1 bug fix.
+
+## 2026-07-21 | Reviewer → Worker | ai-art-academy/t-010 | pattern
+
+**Decision:** merged (kind_robots PR #814, squash `eb1c7e2`); rearmed t-010 to `ready`.
+
+**Failure category:** none for the PR itself (clean, scoped, all 3 CI checks green) —
+but a process gap: the claude-conductor-burst-20260721T1600Z cycle opened the PR
+(lane-1 sync of `mughal-miniature` into `academyStyles.ts`) and left the session
+without merging it or rearming the task, so it sat at `status: claimed` with an
+unmerged PR until this Reviewer sweep found it.
+
+**What was good:**
+- The PR itself: a clean, minimal, additive diff (one new array entry), mirroring
+  the established persian-miniature/song-dynasty-landscape sync pattern exactly,
+  correctly sourced from the prior cycle's curriculum-outline.md §27 / teaching-notes.md
+  row 27 content with no invented facts.
+
+**What to improve:**
+- This is the second time a t-010 lane-1 cycle has opened a green kind_robots PR and
+  ended the session without closing the loop (merge + rearm) — see this task's own
+  2026-07-21 ~01:00 UTC note for the first instance (PR #942, status field never
+  flipped after a merge). Recommend the standing lane-1 instructions explicitly say
+  the cycle isn't done until the PR is merged (or explicitly left open with a reason)
+  and the task rearmed.
+
+**Kaizen task:** ai-art-academy/t-036 (new) — add an explicit last-step checklist
+item so lane-1 cycles merge+rearm their own PR in-session instead of relying on a
+later Reviewer sweep to notice.
+
+## 2026-07-21 | Reviewer (burst) | ai-art-academy/t-010 | audited already-merged work
+
+**Decision:** audited (lane 2, roadmap accuracy). No drift found; rearmed to `ready`.
+
+**Failure category:** none — clean audit cycle.
+
+**What was good:**
+- `audit_roadmaps.py` and `check_pr_merged_drift.py` both clean.
+- All 6 milestones re-verified programmatically (done iff every non-recurring
+  task in the bucket is done) rather than by eyeballing — no drift.
+- Respected blocker discipline: did not re-probe the home-relay/egress blockers
+  since the immediately-prior cycle had already rechecked them fresh the same day.
+
+**What to improve:** none this cycle.
+
+**Kaizen task:** none new this cycle — this cycle's own kaizen task (t-036, filed
+one cycle earlier) already covers the systemic gap found this session.
+
+## 2026-07-21 | Reviewer (agent run) | ai-art-academy/t-010 | audited already-merged work
+
+**Decision:** merged (session claude-conductor-agentrun-20260721T1910Z-t010, PR #989, squash `898d14d`).
+
+**Failure category:** none — clean cycle, doc-only fix.
+
+**What was good:**
+- Lane 3 (home relay) re-checked with a genuinely fresh queued job (1275, not
+  reusing 1242) before falling back to lane 4, per rotation discipline.
+- Found a real, verifiable documentation-staleness bug rather than defaulting to
+  "add a 28th movement": `continuous-improvement-checklist.md`'s "Current
+  curriculum coverage" summary and table still said Mughal Miniature Painting
+  (§27) hadn't been synced to `academyStyles.ts`, but kind_robots PR #814 already
+  landed and merged that exact sync (confirmed by reading kind_robots'
+  `stores/seeds/academyStyles.ts` directly via GitHub MCP `get_file_contents` —
+  the `mughal-miniature` entry is present with matching fields). The checklist's
+  own rotation-state entry for that cycle recorded the merge correctly; only the
+  separate summary section lagged behind it — same staleness shape as several
+  prior self-corrections in this file, just in a doc this task also maintains.
+- Corrected both the summary paragraph and the coverage-table row to 27/27
+  synced, closing the last unblocked lane-4 item before a 28th movement.
+- Verified `scripts/audit_roadmaps.py` (0 errors, same 44-info baseline) and
+  confirmed the PR's actual diff (44 additions/12 deletions/2 files) matched
+  the local change exactly, no drift.
+- Hit the documented first-push HTTP 413 (branch not yet on the actual remote
+  despite a stale local tracking ref) — worked around via `create_branch` +
+  rebase + push per CLAUDE.md, no force-push.
+
+**What to improve:** none this cycle.
+
+**Kaizen task:** none new this cycle — no systemic gap surfaced; this cycle's
+work was itself a small kaizen-shaped correction.
+
+## 2026-07-21 | Worker (conductor scheduled agent) | ai-art-academy/t-010 | pattern
+
+**Decision:** self-implemented and self-merged (session
+claude-conductor-scheduled-20260721T220455Z-t010), conductor-docs-only.
+
+**Failure category:** none — clean cycle, but lane 1 hit a new environmental
+blocker distinct from the usual home-relay one.
+
+**What was good:**
+- Followed rotation discipline: lane 1 (front-end polish) was next preferred
+  per the checklist and was tried first, not skipped.
+- Did not push, force-push, reset, or rebase kind_robots' designated session
+  branch (`claude/keen-fermat-87rn74`) on discovering it was 114 commits
+  behind `origin/main` and 67 commits ahead of it (13,728 files / ~138k
+  insertions of unrelated automated "WonderLab rollout" content, never
+  pushed). Investigated enough to characterize the problem precisely (which
+  commits matched already-merged PRs vs. which were genuinely new/unreviewed)
+  without attempting to resolve it unilaterally — filed conductor/t-078
+  (soft needs-human) with the specifics instead, since discarding unreviewed
+  content is a destructive git decision outside a Worker's authority.
+- While falling back to lane 2, found and fixed a real, separate bug directly
+  affecting this task's own data: a stale duplicate `owner`/`claimed_by`/
+  `claimed_at` trio at the tail of t-010's note block was silently winning
+  over the correct fields at the top of the same block under YAML's
+  last-key-wins semantics — every reader of the file (including
+  `claim_task.py`'s own future reads) was seeing a claim from
+  2026-07-21T16:06 instead of the actual current one. Fixed the one instance
+  directly blocking this task, then scanned every `projects/*/roadmap.yaml`
+  with a duplicate-key-aware loader and found the same pattern in conductor,
+  global-ui, kind-robots, and packmaker's roadmaps too — filed conductor/t-079
+  rather than editing four other live projects' roadmaps unclaimed.
+- Correctly distinguished a genuinely new finding from a stale one: checked
+  job 816 (t-035's named "cheapest recheck") and found `status: DONE`, but
+  caught that this exact reading was already surfaced and dismissed as a
+  stale one-off by this same task's 2026-07-21T04:20 UTC cycle before writing
+  it up as new — avoided re-reporting old news as a discovery.
+
+**What to improve:**
+- Spent real time investigating the kind_robots branch state (log inspection,
+  diffstat, commit-message cross-referencing against merged PR numbers)
+  before concluding it was out of scope to resolve directly. In hindsight the
+  triage could have been faster: commit-message pattern-matching against
+  already-merged PR numbers (the cheapest signal) could have run first,
+  before the expensive full diffstat.
+
+**Kaizen task:** conductor/t-079 (audit_roadmaps.py duplicate-key detection)
+is itself this cycle's kaizen — a tooling gap that let a real claim/ownership
+field silently misreport for at least one full day cycle before being
+noticed by accident.
+
+## 2026-07-21 | Worker (conductor scheduled agent) | ai-art-academy/t-010 | pattern
+
+**Decision:** no-op cycle, rearmed to `ready` — no PR opened (docs-only roadmap note, no diff worth its own CI cycle)
+
+**Failure category:** null (verified clean, not a failure)
+
+**What was good:**
+- Followed `continuous-improvement-checklist.md`'s own explicit guidance ("before adding a
+  28th movement, finish the known coverage gaps below") instead of rushing new curriculum
+  content just to have a diff — every remaining gap is relay/media-server blocked, not
+  research-blocked, so a 28th movement would just be another blocked entry.
+- Cross-checked lane 4 against a fourth, independent source this cycle: fetched kind_robots'
+  live `stores/seeds/academyStyles.ts` via GitHub MCP and diffed its 27 `slug:` values against
+  `curriculum-outline.md`'s 27 movement headings directly, rather than trusting the checklist's
+  own prose claim of "27/27 synced" at face value.
+- Recognized PR #999 (open at the time, lane 1 + lane 2 for this same rotation window) was
+  already in flight and did not duplicate that work by re-running lane 1/2 here.
+
+**What to improve:** none this cycle.
+
+**Kaizen task:** none filed — no systemic gap surfaced.

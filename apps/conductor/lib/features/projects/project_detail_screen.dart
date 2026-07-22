@@ -7,6 +7,7 @@ import '../auth/auth_controller.dart';
 import '../todos/todos_repository.dart';
 import 'project_models.dart';
 import 'projects_repository.dart';
+import 'widgets/art_inspiration_section.dart';
 import 'widgets/intent_editor_sheet.dart';
 import 'widgets/wishlist_section.dart';
 
@@ -23,7 +24,8 @@ class ProjectDetailScreen extends ConsumerWidget {
       return const Scaffold(body: Center(child: CircularProgressIndicator()));
     }
     final todos = (ref.watch(todosControllerProvider).valueOrNull ?? [])
-        .where((t) => t.dreamId == project.id && t.category != 'DESIRED_FEATURE')
+        .where(
+            (t) => t.dreamId == project.id && t.category != 'DESIRED_FEATURE')
         .toList();
 
     return Scaffold(
@@ -96,8 +98,7 @@ class ProjectDetailScreen extends ConsumerWidget {
                     'DONE',
                     'ARCHIVED'
                   ],
-                  onChanged: (v) =>
-                      _patch(ref, project, {'projectStatus': v}),
+                  onChanged: (v) => _patch(ref, project, {'projectStatus': v}),
                 ),
               ),
               const SizedBox(width: 12),
@@ -124,8 +125,7 @@ class ProjectDetailScreen extends ConsumerWidget {
               value: todo.isDone,
               title: Text(todo.title,
                   style: todo.isDone
-                      ? const TextStyle(
-                          decoration: TextDecoration.lineThrough)
+                      ? const TextStyle(decoration: TextDecoration.lineThrough)
                       : null),
               onChanged: (checked) => ref
                   .read(todosControllerProvider.notifier)
@@ -133,6 +133,8 @@ class ProjectDetailScreen extends ConsumerWidget {
             ),
           const SizedBox(height: 24),
           WishlistSection(project: project),
+          const SizedBox(height: 24),
+          ArtInspirationSection(project: project),
           const SizedBox(height: 48),
         ],
       ),

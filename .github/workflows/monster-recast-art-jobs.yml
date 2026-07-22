@@ -1,4 +1,4 @@
-name: Coloring Book Color ArtJobs
+name: Coloring Book ArtJobs
 
 on:
   push:
@@ -8,9 +8,11 @@ on:
       - "projects/coloring-book/sets/*/proposals.yaml"
       - "scripts/consume_coloring_book_color_art.py"
       - "scripts/consume_monster_recast_art.py"
+      - "scripts/semantic_art_quality.py"
+      - "scripts/curate_art.py"
+      - "scripts/art_quality.py"
+      - "tests/test_coloring_book_semantic_gate.py"
       - ".github/workflows/monster-recast-art-jobs.yml"
-  schedule:
-    - cron: "30 9 * * *"
   workflow_dispatch:
     inputs:
       limit:
@@ -48,11 +50,17 @@ jobs:
       - name: Install dependencies
         run: pip install --disable-pip-version-check pyyaml Pillow
 
-      - name: Submit color proposal ArtJobs
+      - name: Verify semantic gate contracts
+        run: python -m unittest tests.test_coloring_book_semantic_gate
+
+      - name: Submit and semantically review color proposal ArtJobs
         id: consume
         continue-on-error: true
         env:
           KR_API_TOKEN: ${{ secrets.KR_API_TOKEN }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          COLOR_ART_MIN_SEMANTIC_SCORE: "75"
+          COLOR_ART_MAX_SEMANTIC_ATTEMPTS: "3"
         run: |
           BOOK_ARGS=()
           if [ -n "${{ github.event.inputs.book }}" ]; then
@@ -63,7 +71,7 @@ jobs:
             --timeout ${{ github.event.inputs.timeout || '600' }} \
             "${BOOK_ARGS[@]}"
 
-      - name: Commit completed renders and queue progress
+      - name: Commit accepted renders, semantic rejections, and queue progress
         run: |
           git config user.name "conductor-bot"
           git config user.email "conductor-bot@users.noreply.github.com"
@@ -78,7 +86,7 @@ jobs:
             echo "No coloring-book color-job changes to commit."
             exit 0
           fi
-          git commit -m "art: advance 18-image coloring-book color batch [skip ci]"
+          git commit -m "art: advance semantically reviewed coloring-book batch [skip ci]"
           for attempt in 1 2 3 4 5; do
             if git push; then
               exit 0
@@ -92,7 +100,7 @@ jobs:
       - name: Report outcome
         run: |
           if [ "${{ steps.consume.outcome }}" = "success" ]; then
-            echo "Coloring-book color proposal batch advanced successfully."
+            echo "Coloring-book color proposal batch passed mechanical and semantic review."
           else
-            echo "::warning::One or more color proposal jobs failed or timed out. Successful renders were still committed; failed entries remain pending."
+            echo "::warning::One or more proposals failed, timed out, or were semantically rejected. Accepted renders and rejection evidence were still committed; retryable entries remain pending."
           fi

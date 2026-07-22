@@ -100,3 +100,28 @@ type: response
 **Suggested action:** none — flagging the residual-window boundary for the
 Reviewer to confirm the sweep-ordering follow-up (pull/push around --check /
 --from-json) is tracked, or file it if not.
+
+## 2026-07-21 | Worker (scheduled burst) | dream-cycle/t-006 | pattern
+
+**Decision:** merged directly to main (recurring, no-PR bookkeeping task per convention)
+
+**Failure category:** null (clean first-pass; monster-recast's block was pre-existing, not caused here)
+
+**What was good:**
+- Correctly deferred monster-recast (status: `approved`, top of the promotion order) after
+  confirming — not assuming — its delegated home task is genuinely blocked: called the live
+  relay-status API directly and got zero registered agents, matching coloring-book/t-022's
+  own `needs-human` note.
+- Picked the next candidate by the documented tie-break (oldest `created`, alphabetical among
+  ties) rather than an arbitrary pick, and ran Stage 1 exactly as specced: no API calls, filled
+  the two genuinely thin sections (character `Look`/`Drive`, reward `rewardType`), verified
+  against the full Stage 1 checklist before flipping `status: building`.
+- This cycle's task selection was itself a rotation pick (this session's broader goal), after
+  two earlier picks this same hour turned out to be dead ends: `animation-studio/t-001` was
+  claimed in error (project is retired — see root TALKBACK.md) and reverted before any PR, and
+  `ruler-hooked/t-010` turned out to already be fully done except for the same art-relay block.
+  dream-cycle's idle-fallback task was the one candidate this cycle that could produce genuine
+  forward progress with zero external dependencies.
+
+**Kaizen task:** none filed — Stage 1's thin-section-filling worked exactly as designed; no
+gap found in the playbook itself this cycle.

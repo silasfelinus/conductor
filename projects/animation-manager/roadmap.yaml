@@ -227,9 +227,46 @@ tasks:
       consistent with how the prior cycle read the same rule going from 11 to
       exactly 12). No kind_robots code touched (pitch-only) -- re-armed to ready
       per the recurring-task convention.
+
+      RAN 2026-07-21 (~11:15 UTC, conductor scheduled session,
+      claude-conductor-scheduled-20260721T1113Z): new Pacific calendar day (last
+      run was 2026-07-20T07:17 UTC / 2026-07-20T00:17 -07:00) and the buildable
+      queue was at 11 (two prior pitches -- paper-lantern-weather and
+      magnetic-sand-garden -- had since moved to status: candidate, pulling the
+      pitched count back down from the prior cycle's 13), so neither no-op
+      condition applied. Added `strandbeest-migration` (a herd of wind-powered,
+      Jansen-linkage wire-legged walker sculptures migrating across a dune
+      horizon; wind gusts scale gait speed, click spawns a new walker), checked
+      against all 14 existing pitches. Distinct from marble-run-contraption
+      (fixed track-position circuit, not leg locomotion), ant-farm-excavation
+      (grid-based digging, not walking), and celestial-mobile (free-hanging
+      balance physics, not linkage-driven legs) -- no existing pitch or shipped
+      effect uses procedural leg-linkage walking. Ran
+      `scripts/check_animation_novelty.py --strict` -- no collisions at or above
+      the 0.2 threshold across all 15 pitches. Brings the buildable queue to
+      exactly 12, at the cap but not above it. No kind_robots code touched
+      (pitch-only) -- re-armed to ready per the recurring-task convention.
+
+      RAN 2026-07-22 (~16:42 UTC / 09:42 -07:00, conductor scheduled agent
+      session): new Pacific calendar day (last run was 2026-07-21T11:15 UTC /
+      2026-07-21T04:15 -07:00) and the buildable queue was at 11 (t-007's
+      2026-07-22 build moved stained-glass-rain to status: candidate, pulling
+      the pitched count back down from the prior cycle's 12), so neither no-op
+      condition applied. Added `shadow-puppet-theater` (backlit rod-puppet
+      cutouts performing short wordless vignettes with joint-driven
+      walk/flight cycles and a slow-drifting backlight), checked against all
+      15 existing pitches. Distinct from bioluminescent-tide (ambient
+      particle drift, not articulated figures), moth-constellation and every
+      other entry -- no existing pitch or shipped effect uses backlit
+      rod-puppetry or narrative vignette rotation. Ran
+      `scripts/check_animation_novelty.py --strict` -- no collisions at or
+      above the 0.2 threshold across all 16 pitches. Brings the buildable
+      queue to exactly 12, at the cap but not above it. No kind_robots code
+      touched (pitch-only) -- re-armed to ready per the recurring-task
+      convention.
     claimed_by: null
     claimed_at: null
-    updated: '2026-07-20T07:19:36Z'
+    updated: '2026-07-22T16:42:00Z'
 
   - id: t-007
     milestone: m5
@@ -242,36 +279,21 @@ tasks:
     depends_on:
       - t-003
       - t-004
-    note: >
-      Daily implementation loop, at most one animation build per Pacific calendar day. Prefer
-      the highest-priority accepted pitch when the queue needs new work; otherwise polish an
-      existing effect whose Reaction ratings/comments identify a specific weakness. Create a new
-      Component build record rather than erasing the old attempt. Ship only after typecheck,
-      contract tests, reduced-motion review, resize cleanup review, and a visual browser smoke.
+    note: |-
+      Daily implementation loop, at most one animation build per Pacific calendar day. Prefer the highest-priority accepted pitch when the queue needs new work; otherwise polish an existing effect whose Reaction ratings/comments identify a specific weakness. Create a new Component build record rather than erasing the old attempt. Ship only after typecheck, contract tests, reduced-motion review, resize cleanup review, and a visual browser smoke.
+      RAN 2026-07-21 (~08:06-08:15 UTC, worker/claude-conductor-burst-20260721T080625Z, merged ~08:19 UTC by claude-conductor-agentrun-20260721T0811Z): built magnetic-sand-garden, the highest-priority unbuilt pitch in PITCHES.yaml (priority 3, next after paper-lantern-weather). New components/screenfx/magnetic-sand-garden.vue (Canvas 2D coarse-grid metallic-sand simulation combed by layered flow-field sine bands into ridges/valleys, pointer acts as a weak magnet, click flips polarity and sends an expanding rearrangement ripple; ResizeObserver sizing, prefers-reduced-motion handling, full RAF/observer/listener cleanup on unmount -- follows the bioluminescent-tide/paper-lantern-weather pattern) plus the stores/animationCatalog.ts entry (generationSafe: true, preferredSurface: fullscreen, no blocksInput). Verified by the building session: eslint clean, prettier clean, npm run test:animation-catalog (32 effects, unique ids, all resolve), npm run test:animation-component-attempts, full-project npm run test (vue-tsc --noEmit) exit 0. Live browser smoke test and the Component attempt record (SPEC.md "Attempt records") deferred -- no reachable DATABASE_URL in this sandbox, same class of blocker as model-builder/t-031 and davinci/t-014's notes. kind_robots PR #785: left open by the building session; this cycle reviewed the diff directly (clean, matches the established screensaver-effect pattern, proper cleanup on unmount) and confirmed both required CI checks green (TypeScript, Contract Tests) before merging (squash 309d1f0). Rearming to ready per the recurring-task convention.
+      RAN 2026-07-20 (~07:09-07:45 UTC, claude-conductor-burst-20260720T0750Z): built paper-lantern-weather, the highest-priority unbuilt pitch in PITCHES.yaml (priority 2, next after bioluminescent-tide). New components/screenfx/paper-lantern-weather.vue (Canvas 2D, cached Path2D lantern shapes per size bucket, ResizeObserver sizing, prefers-reduced-motion handling, full RAF/observer/listener cleanup on unmount -- follows the shipped bioluminescent-tide.vue pattern) plus the stores/animationCatalog.ts entry (generationSafe: true, preferredSurface: fullscreen, no blocksInput). Verified: npm test (vue-tsc --noEmit, clean), eslint (clean), npm run test:animation-catalog (31 effects, unique ids, component resolves, aliases checked), npm run test:animation-component-attempts (naming/attempt conventions verified for all 31 catalog slugs). Live browser smoke test and the Component attempt record (SPEC.md "Attempt records") are BOTH deferred: this sandbox has no reachable DATABASE_URL, so server/utils/prisma.ts throws on every SSR request and the Nuxt dev server 500s on all routes -- same class of blocker as model-builder/t-031 and davinci/t-014's notes. Confirmed via a local temp test page (removed before commit, not part of the diff) that the 500 is a global SSR/DB issue, not specific to this route. kind_robots PR #627 merged (squash 398a327a) after all 3 CI checks passed (Contract verifiers, TypeScript, GitGuardian). PITCHES.yaml's paper-lantern-weather entry carries a `builds:` record (status: candidate, pending the deferred live-smoke pass before promoting to shipped). Rearming to ready per the recurring-task convention.
 
-      RAN 2026-07-20 (~07:09-07:45 UTC, claude-conductor-burst-20260720T0750Z): built
-      paper-lantern-weather, the highest-priority unbuilt pitch in PITCHES.yaml (priority 2,
-      next after bioluminescent-tide). New components/screenfx/paper-lantern-weather.vue
-      (Canvas 2D, cached Path2D lantern shapes per size bucket, ResizeObserver sizing,
-      prefers-reduced-motion handling, full RAF/observer/listener cleanup on unmount --
-      follows the shipped bioluminescent-tide.vue pattern) plus the stores/animationCatalog.ts
-      entry (generationSafe: true, preferredSurface: fullscreen, no blocksInput). Verified:
-      npm test (vue-tsc --noEmit, clean), eslint (clean), npm run test:animation-catalog (31
-      effects, unique ids, component resolves, aliases checked), npm run
-      test:animation-component-attempts (naming/attempt conventions verified for all 31
-      catalog slugs). Live browser smoke test and the Component attempt record (SPEC.md
-      "Attempt records") are BOTH deferred: this sandbox has no reachable DATABASE_URL, so
-      server/utils/prisma.ts throws on every SSR request and the Nuxt dev server 500s on all
-      routes -- same class of blocker as model-builder/t-031 and davinci/t-014's notes.
-      Confirmed via a local temp test page (removed before commit, not part of the diff) that
-      the 500 is a global SSR/DB issue, not specific to this route. kind_robots PR #627 merged
-      (squash 398a327a) after all 3 CI checks passed (Contract verifiers, TypeScript,
-      GitGuardian). PITCHES.yaml's paper-lantern-weather entry carries a `builds:` record
-      (status: candidate, pending the deferred live-smoke pass before promoting to shipped).
-      Rearming to ready per the recurring-task convention.
-    claimed_by: claude-conductor-burst-20260720T0750Z
-    claimed_at: '2026-07-20T07:09:09Z'
-    updated: '2026-07-20T07:09:09Z'
+      PROGRESS 2026-07-22 (conductor-burst rotation, claude-conductor-burst-20260722T000706Z-am-t007): built the next queued candidate, stained-glass-rain (priority 4 in PITCHES.yaml, after paper-lantern-weather and magnetic-sand-garden which are both still awaiting the deferred live smoke pass). New components/screenfx/stained-glass-rain.vue -- a grid of leaded glass panes whose seams toggle open/closed via independent per-seam oscillators (giving a continuous merge/split read without a full BSP/union-find tree), a rain-droplet sheen traveling down open vertical seams, pointer-proximity refraction tilt, and a click-triggered rose-window bloom (additive wedge fan, fades over ~1.6s). Reduced motion disables seam toggling and the sheen, keeping only a slow ambient color-temperature drift. Catalog entry added to stores/animationCatalog.ts (generationSafe: true, preferredSurface: fullscreen), resolved automatically by the existing filename-based component loader -- no registry entry needed. Verified: eslint clean, prettier clean (this new file only -- stores/animationCatalog.ts carries pre-existing prettier drift confirmed via git stash, same as prior cycles noted on t-029), full-project npm run test (vue-tsc --noEmit) exit 0, npm run test:animation-catalog (33 effects, unique ids, all components resolve) and npm run test:animation-component-attempts (33 slugs) both pass. Live browser smoke test and the Component attempt record (SPEC.md "Attempt records") are BOTH deferred -- same no-reachable-DATABASE_URL sandbox limitation documented on paper-lantern-weather and magnetic-sand-garden's t-007 entries. kind_robots PR #838 (branch claude/keen-fermat-6o78ty) -- open, CI running. Set status: review; will flip to done once CI is green and the PR merges.
+
+      MERGED 2026-07-22 (~00:25 UTC, same session claude-conductor-burst-20260722T000706Z-am-t007): kind_robots PR #838 confirmed all 4 CI checks green (Contract verifiers, TypeScript, verify, GitGuardian), no review comments, squash-merged (92a4a3e). Rearming to ready per the recurring-task convention.
+
+      PROGRESS 2026-07-22 (~16:53 UTC, conductor scheduled agent session): new Pacific calendar day since the last build (stained-glass-rain, merged ~00:25 UTC same Pacific day as this cycle's start, i.e. 2026-07-21 -07:00), so eligible. Built the next queued candidate, clockwork-greenhouse (priority 5 in PITCHES.yaml, next after stained-glass-rain). New components/screenfx/clockwork-greenhouse.vue -- brass-stemmed plants growing, blooming, seeding, and resetting (withering back to the ground) on staggered per-plant timelines via a four-phase deterministic state machine, gear-shaped pollinators continuously visiting whichever plants are currently in bloom, cursor-proximity warmth accelerating nearby growth, and a click planting one temporary seed that runs a single lifecycle before being removed (capped at 2 concurrent). Catalog entry added to stores/animationCatalog.ts (generationSafe: true, preferredSurface: fullscreen, icon kind-icon:greenhouse -- confirmed present in assets/icons/greenhouse.svg and loaded by the Nuxt Icon build). Reduced motion freezes the garden into a mature/static bloom state (skips phase progression) with only gear rotation and ambient light drift, matching the pitch's reduced-motion plan. Verified: eslint clean on both changed files; prettier clean on the new component (ran --write on it only -- stores/animationCatalog.ts carries pre-existing prettier drift confirmed via git stash, same pattern noted on stained-glass-rain/t-029); full-project npm run test (vue-tsc --noEmit) exit 0; npm run test:animation-catalog (34 effects, unique ids, all resolve) and npm run test:animation-component-attempts (34 slugs) both pass. Live browser smoke test and the Component attempt record (SPEC.md "Attempt records") are BOTH deferred -- same no-reachable-DATABASE_URL sandbox limitation as every prior t-007 entry this week. kind_robots PR #887 (branch claude/tender-wright-1qkfwz) -- open, CI running. Set status: review; will flip to done once CI is green and the PR merges.
+
+      MERGED 2026-07-22 (~16:56 UTC, same session): kind_robots PR #887 confirmed all 4 CI checks green (verify, Contract verifiers, TypeScript, GitGuardian), no review comments, squash-merged (d50f83c). PITCHES.yaml's clockwork-greenhouse entry updated to status: candidate with a builds: record (pending the deferred live-smoke pass before promoting to shipped, same as paper-lantern-weather/magnetic-sand-garden/stained-glass-rain). Rearming to ready per the recurring-task convention.
+    claimed_by: null
+    claimed_at: null
+    updated: '2026-07-22T16:56:00Z'
 
   - id: t-008
     milestone: m3
@@ -397,3 +419,36 @@ tasks:
     claimed_by: claude-conductor-burst-20260720T0500Z
     claimed_at: '2026-07-20T04:05:35Z'
     updated: '2026-07-20T04:05:35Z'
+
+  - id: t-013
+    milestone: m6
+    title: "Clear the four deferred live-smoke builds once DB access is available (or find a sandbox workaround)"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Kaizen from t-007 (Reviewer, kind_robots PR #887, 2026-07-22): four consecutive
+      animation-manager builds -- paper-lantern-weather (PR #627), magnetic-sand-garden
+      (PR #785), stained-glass-rain (PR #838), and clockwork-greenhouse (PR #887) -- all
+      carry the identical deferred item in PITCHES.yaml's builds: record: "Live browser
+      smoke test (docs/architecture/animation-catalog-smoke-matrix.md) -- no reachable
+      DATABASE_URL in the sandbox; server/utils/prisma.ts throws on every SSR request"
+      plus the matching deferred Component attempt record (SPEC.md "Attempt records").
+      Four repeats of the same paragraph is the threshold this file's own convention
+      uses to promote a recurring note into a real task instead of a fifth PR carrying
+      the same caveat.
+
+      Two ways to close this out, either is acceptable:
+      (a) A session with real DATABASE_URL/Vercel preview access (see AGENTS.md's
+      "Visually verifying a front-end change" section for the Vercel MCP path) runs the
+      smoke matrix against all four candidates on a live deployment, creates each
+      effect's Component attempt record, and promotes each PITCHES.yaml builds: entry
+      from candidate to shipped.
+      (b) If no such access materializes for a while, investigate whether a throwaway
+      SQLite or local Postgres the sandbox *can* reach would let server/utils/prisma.ts
+      not throw on SSR for just enough of a smoke pass to satisfy the matrix, without
+      touching any real database -- and if that's not practical either, fold "deferred,
+      same sandbox limitation" into this task's own formal acceptance bar so future PRs
+      stop re-explaining it per diff.
+    updated: '2026-07-22T16:57:00Z'

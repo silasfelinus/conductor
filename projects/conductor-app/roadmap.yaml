@@ -197,15 +197,15 @@ tasks:
 - id: t-012
   milestone: m3
   title: 'App: ArtCollection inspiration gallery and admin art-request submission form'
-  status: ready
-  owner: null
+  status: done
+  owner: worker
   passes: 0
   stakes: reversible
   depends_on: t-009
-  note: 'Remaining scope split off t-009: browse ArtCollection by project slug for inspiration, and an
-    admin-gated form to submit a new art request into the art-prompts.yaml queue.
-
-    '
+  note: 'Merged to main via PR #983 (2026-07-21). Implemented entirely client-side in apps/conductor (no kind_robots backend changes needed -- both endpoints already existed): GET /api/dreams/:id already embeds up to 12 linked ArtCollections (primary + many-to-many), each with up to 12 ArtImages, and POST /api/conductor/art-request (admin-gated server-side via userIsAdmin) already appends a queue entry to art-prompts.yaml. Added: art_models.dart (ArtImageSummary, ArtCollectionSummary), art_repository.dart (ArtRepository/RemoteArtRepository + artCollectionsForProjectProvider, mirrors the existing local/remote-null pattern -- provider is null in local mode, matching apiClientProvider), widgets/art_inspiration_section.dart (horizontal image-strip per collection, tap-to-enlarge dialog with prompt text, hidden entirely in local mode), widgets/art_request_form_sheet.dart (admin-only bottom sheet -- image path/label/prompt/variant/pageUrl -- gated in the UI by AppUser.isAdmin, submits via the existing endpoint, snackbar on success/failure mirroring the appmaker_screen.dart pattern). Wired into project_detail_screen.dart below WishlistSection. Verification note for future sessions: this sandbox''s scripts/provision_flutter.sh pins FLUTTER_VERSION=3.32.5 (mid-2025), which is now stale against app-ci.yml''s unpinned `channel: stable` -- flutter analyze under 3.32.5 threw 4 false-positive `initialValue` undefined-parameter errors, including on pre-existing unrelated code (todos_screen.dart) never touched this cycle. Ran `flutter upgrade` to the actual current stable (3.44.7) before verifying; analyze was clean (0 issues) and all 20 tests passed (incl. 2 new ArtCollectionSummary parsing tests in models_test.dart) under that version. Did not bump provision_flutter.sh''s pin this cycle (out of scope for t-012; filed as a fresh kaizen task, conductor/t-076, since PR #945''s body already flagged this as deferred/speculative and it just cost a real cycle here). Added test: models_test.dart ''ArtCollectionSummary'' group (dream-embedded nested-image parsing + missing-field tolerance).'
+  claimed_by: claude-conductor-burst-20260721T1505Z-conductorapp
+  claimed_at: '2026-07-21T15:12:58Z'
+  updated: '2026-07-21T15:34:40Z'
 - id: t-010
   milestone: m4
   title: 'Store readiness: signing, privacy labels, account deletion, release checklist'

@@ -53,8 +53,21 @@ void main() {
   testWidgets('export flow shares exactly the two written CSV paths',
       (tester) async {
     _useTallSurface(tester);
-    final directory = await Directory.systemTemp.createTemp('superkate-share-');
-    addTearDown(() => directory.delete(recursive: true));
+
+    // FileCsvExportService performs real dart:io work (temp-directory
+    // creation and file writes). testWidgets bodies run inside a FakeAsync
+    // zone for animation/timer control, and that zone never resolves
+    // genuine OS-level async I/O -- it just hangs until the suite's 10-minute
+    // timeout. tester.runAsync() steps outside the fake zone so real async
+    // calls actually complete; every real dart:io call in this test must be
+    // made from inside one.
+    late final Directory directory;
+    await tester.runAsync(() async {
+      directory = await Directory.systemTemp.createTemp('superkate-share-');
+    });
+    addTearDown(() async {
+      await tester.runAsync(() => directory.delete(recursive: true));
+    });
     final shareGateway = InMemoryCsvShareGateway();
     final exporter = FileCsvExportService(
       directory: directory,
@@ -72,7 +85,19 @@ void main() {
 
     await tester.tap(find.byKey(const ValueKey('export-csv-button')));
     await tester.pumpAndSettle();
-    await tester.tap(find.byKey(const ValueKey('confirm-export-button')));
+    // The confirm tap's onPressed chain runs FileCsvExportService's real
+    // file writes. Driving the tap and its follow-up pumps from inside
+    // runAsync keeps that real I/O's completion on the real event loop
+    // instead of the fake-async zone pump() alone can never drain here.
+    await tester.runAsync(() async {
+      await tester.tap(find.byKey(const ValueKey('confirm-export-button')));
+      var attempts = 0;
+      while (shareGateway.shareCount == 0 && attempts < 500) {
+        await tester.pump(const Duration(milliseconds: 10));
+        await Future<void>.delayed(const Duration(milliseconds: 10));
+        attempts++;
+      }
+    });
     await tester.pumpAndSettle();
 
     final customersPath =
