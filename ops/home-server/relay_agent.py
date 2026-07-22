@@ -6,7 +6,7 @@ Runs on the home server beside ComfyUI/A1111:
   1. claim a runnable ArtJob from kind_robots
   2. render it on the local engine
   3. upload the bytes through /api/art/save-generated
-  4. complete the ArtJob
+  4. complete the ArtJob with exact Comfy request and output provenance
 
 The upload creates a staging ArtImage. Normal jobs keep that id. An OVERWRITE
 retry is finalized by kind_robots into its stable target ArtImage id; completion
@@ -16,6 +16,7 @@ server's overwrite transaction.
 """
 
 import base64
+import hashlib
 import io
 import json
 import os
@@ -37,6 +38,10 @@ POLL_SECONDS = float(os.environ.get("POLL_SECONDS", "10"))
 GEN_TIMEOUT = float(os.environ.get("GEN_TIMEOUT", "600"))
 AGENT_ID = os.environ.get("AGENT_ID", socket.gethostname())
 HEARTBEAT_SECONDS = float(os.environ.get("HEARTBEAT_SECONDS", "60"))
+RELAY_VERSION = os.environ.get(
+    "KR_RELAY_VERSION", "conductor-relay-completion-proof-v1"
+).strip()
+RELAY_COMMIT = os.environ.get("KR_RELAY_COMMIT", "").strip()
 
 VIDEO_EXTENSIONS = (".mp4", ".webm", ".mov", ".mkv", ".gif")
 
@@ -99,7 +104,12 @@ def claim_job():
     status, response = http_json(
         "POST",
         f"{KR_BASE_URL}/api/art/queue/claim",
-        {"agentId": AGENT_ID, "supportsInputImages": True},
+        {
+            "agentId": AGENT_ID,
+            "agentVersion": RELAY_VERSION,
+            "supportsInputImages": True,
+            "supportsCompletionProof": True,
+        },
         bearer=KR_RELAY_TOKEN,
     )
     if status == 404:
@@ -234,18 +244,24 @@ def download_comfy_file(file_meta):
     )
     request = urllib.request.Request(f"{COMFY_URL}/view?{query}")
     with urllib.request.urlopen(request, timeout=180) as response:
-        return base64.b64encode(response.read()).decode()
+        return response.read()
 
 
-def extract_comfy_output(outputs, want_video):
+def extract_comfy_output(outputs, want_video, prompt_id=None):
     file_meta = find_output_file(outputs, want_video)
     if not file_meta:
         return None
+    raw = download_comfy_file(file_meta)
     extension = file_extension(file_meta["filename"])
     return {
-        "data_b64": download_comfy_file(file_meta),
+        "data_b64": base64.b64encode(raw).decode(),
         "file_type": extension or ("mp4" if want_video else "png"),
         "is_video": bool(want_video),
+        "comfy": {
+            "prompt_id": prompt_id,
+            "output": file_meta,
+            "image_hash": hashlib.sha256(raw).hexdigest(),
+        },
     }
 
 
@@ -286,7 +302,9 @@ def run_comfy(payload):
         entry = history.get(prompt_id)
         if not entry:
             continue
-        result = extract_comfy_output(entry.get("outputs") or {}, want_video)
+        result = extract_comfy_output(
+            entry.get("outputs") or {}, want_video, prompt_id=prompt_id
+        )
         if result:
             return result
         comfy_status = (entry.get("status") or {}).get("status_str")
@@ -295,6 +313,30 @@ def run_comfy(payload):
 
     kind = "video" if want_video else "image"
     raise RuntimeError(f"ComfyUI {kind} job timed out after {GEN_TIMEOUT}s")
+
+
+def completion_provenance(payload, media):
+    request_provenance = payload.get("provenance") or {}
+    comfy = media.get("comfy") or {}
+    required = {
+        "promptId": comfy.get("prompt_id"),
+        "promptHash": request_provenance.get("promptHash"),
+        "workflowHash": request_provenance.get("workflowHash"),
+        "workflowPromptHash": request_provenance.get("workflowPromptHash"),
+        "imageHash": comfy.get("image_hash"),
+        "output": comfy.get("output"),
+    }
+    missing = [key for key, value in required.items() if not value]
+    if missing:
+        raise RuntimeError(
+            "cannot complete strict COMFY ArtJob; missing provenance: "
+            + ", ".join(missing)
+        )
+    return {
+        "relayVersion": RELAY_VERSION,
+        "relayCommit": RELAY_COMMIT or None,
+        **required,
+    }
 
 
 def upload_result(job, media):
@@ -329,7 +371,7 @@ def upload_result(job, media):
 
 def encode_webp(raw):
     try:
-        from PIL import Image  # optional dependency
+        from PIL import Image
 
         with Image.open(io.BytesIO(raw)) as image:
             buffer = io.BytesIO()
@@ -364,12 +406,14 @@ def write_local_copy(job, art_image_id, media):
         log(f"local copy failed (job still DONE): {error}")
 
 
-def complete_job(job_id, success, art_image_id=None, error=None):
+def complete_job(job_id, success, art_image_id=None, error=None, provenance=None):
     body = {"success": success}
     if art_image_id:
         body["artImageId"] = art_image_id
     if error:
         body["error"] = str(error)[:4000]
+    if provenance:
+        body["provenance"] = provenance
     status, response = http_json(
         "POST",
         f"{KR_BASE_URL}/api/art/queue/{job_id}/complete",
@@ -394,19 +438,24 @@ def process(job):
 
     if engine == "COMFY":
         media = run_comfy(payload)
+        provenance = completion_provenance(payload, media)
     else:
         media = {
             "data_b64": run_a1111(payload),
             "file_type": "png",
             "is_video": False,
         }
+        provenance = None
 
     staged_art_image_id = upload_result(job, media)
     if not staged_art_image_id:
         raise RuntimeError("upload returned no ArtImage id")
 
     completed_job = complete_job(
-        job_id, True, art_image_id=staged_art_image_id
+        job_id,
+        True,
+        art_image_id=staged_art_image_id,
+        provenance=provenance,
     )
     final_art_image_id = completed_job.get("artImageId") or staged_art_image_id
 
@@ -426,7 +475,10 @@ def main():
         log("KR_RELAY_TOKEN and KR_RELAY_USER_ID are required - exiting")
         sys.exit(1)
 
-    log(f"agent {AGENT_ID} polling {KR_BASE_URL} every {POLL_SECONDS}s")
+    log(
+        f"agent {AGENT_ID} ({RELAY_VERSION}) polling {KR_BASE_URL} "
+        f"every {POLL_SECONDS}s"
+    )
     last_heartbeat = 0.0
     while True:
         job = None
