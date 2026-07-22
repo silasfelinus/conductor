@@ -15,6 +15,41 @@ Record the lane, files changed, and verification in the task note before rearmin
 
 ### Rotation state
 
+- Last completed lane: Front-end polish (lane 1), 2026-07-22 (~02:11-02:35 UTC,
+  claude-conductor-agentrun-20260722T0211Z-t010). Lane 3 (inspiration/preview
+  assets) was next preferred per the prior cycle's note, tried first with a
+  genuinely fresh queued job (1319, greek-vase-painting.webp): polled every
+  30s for 8 rounds (~4 minutes) and it stayed `PENDING`/unclaimed the whole
+  time — same never-claimed home-relay signature as every check since
+  2026-07-18. Fell back toward lane 4, but its own coverage table shows every
+  remaining lane-4 gap already blocked on the same relay/media-server-write
+  issue (no unblocked action available before a 28th movement), so fell
+  through to lane 1 instead. Dispatched an Explore subagent to read every
+  in-scope Academy file in full (art-styler.vue 1600 lines, image-upload.vue
+  833 lines, all components/academy/*.vue, academyStore.ts, styleHelper.ts,
+  academyStyles.ts) against the exclusion list of every bug class already
+  fixed in prior cycles. Found a real, verifiable cross-tab race in
+  `art-styler.vue`: the source-tab buttons and gallery thumbnails are never
+  disabled while a starter image is loading, so a user could click a starter
+  thumbnail (slow fetch begins), switch to Gallery or Upload, pick a
+  different image, and have the stale starter fetch silently overwrite that
+  newer selection once it finally resolved — `selectStarterEntry()`'s success
+  path wrote `uploadedImageData`/`selectedSourceImage` unconditionally, and
+  the existing `gallerySelectionToken` guard only covered gallery-to-gallery
+  races, not races against the other two tabs. Fixed by widening the token
+  into a single `sourceSelectionToken` shared by `processUploadedFile()`,
+  `selectStarterEntry()`, and `selectGalleryImage()`, so whichever selection
+  happens last always wins. Caught and fixed a self-introduced regression
+  during implementation before verifying: gating the `finally` block's
+  `isLoadingStarterImage.value = false` reset on the token would have left
+  every starter thumbnail permanently disabled (via `:disabled` in the
+  template) after any stale race, since nothing else resets that flag — left
+  it unconditional. Verified: `npx eslint`/`npx prettier --check` clean,
+  full-project `npm run test` (`vue-tsc --noEmit`) exit 0 both before and
+  after rebasing onto latest main. kind_robots PR #849, all 4 CI checks green
+  (Contract verifiers, TypeScript, verify, GitGuardian), merged squash
+  `f9a26d8a`. Next preferred lane is roadmap accuracy (lane 2) — this cycle
+  ran lane 1, so lane 2 is next in the 1→2→3→4 rotation.
 - Last completed lane: Roadmap accuracy (lane 2), 2026-07-22 (~01:40-01:50 UTC,
   claude-conductor-burst-20260722T0140Z-t010). Per blocker discipline, did not
   re-probe lane 3's home-relay blocker — the immediately-prior cycle (~00:17-00:40

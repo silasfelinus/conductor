@@ -3928,3 +3928,12 @@ records:
   outcome: done
   failure_category: null
   lesson: "The 'polish front-end' task template's channelKey wording can be wrong for a project without anyone noticing, because ProjectFrontConfig.channelKey (tutorialChannels.ts, e.g. 'wonder'/'builder'/'scenario') and dashboardHelper.ts's dashboardKey (e.g. 'academy') are two independent namespaces that sometimes share a value and sometimes don't -- sketchy's task note and its own -page.vue both said 'academy' for the tutorial-channel field, copying the (correct, but different-system) dashboardKey value, and the mistake was invisible until checked against TutorialChannelKey's actual union. Before writing a tutorialChannels.<key>.sections entry from a roadmap note, verify <key> actually exists in stores/helpers/tutorialCards.ts rather than trusting the note's channel name -- cross-check the project's physical content/channels/<x>/*.md siblings (which tutorialChannels key do they use?) when in doubt."
+- date: '2026-07-22'
+  project: ai-art-academy
+  task: t-010
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "When widening an async-race token guard to cover a new code path, checking only the 'obviously stale' write is not enough -- every write inside the guarded block needs its own safety check. Fixing art-styler.vue's selectStarterEntry() to skip its selectedSourceImage write on a stale sourceSelectionToken almost shipped with the adjacent isLoadingStarterImage reset also gated on the same token, which would have permanently disabled every starter thumbnail (template binds :disabled to that flag) after any stale race, since no other code path resets it. Caught by reading the template's actual bindings for every ref touched in the guarded function, not just tracing the store/script logic -- a token guard is only correct once you've confirmed which of the block's several writes are actually invalidated by staleness and which need to run unconditionally regardless of which async call won."
