@@ -446,14 +446,14 @@ tasks:
   - id: t-010
     milestone: m6
     title: Academy continuous improvement pass
-    status: ready
+    status: claimed
     recurring: true
     owner: reviewer
-    claimed_by: claude-conductor-agentrun-20260722T0211Z-t010
-    claimed_at: '2026-07-22T02:12:58Z'
+    claimed_by: claude-conductor-scheduled-20260722T0412Z-t010
+    claimed_at: '2026-07-22T04:13:29Z'
     passes: 0
     stakes: reversible
-    updated: '2026-07-22T02:36:00Z'
+    updated: '2026-07-22T04:13:29Z'
     note: |-
       Standing never-idle task (re-arms to ready after every completion, per the recurring-task rule). Each cycle pick ONE: (a) front-end style/polish pass on Academy or art-styler surfaces, (b) roadmap upgrade — refine tasks, detail the next milestone, prune stale notes, (c) generate more art inspirations or style preview thumbnails, (d) expand the curriculum with a new movement/artist entry (respecting PUBLIC-DOMAIN-POLICY.md). Note which option ran in the PR. This task never reaches done and does not count toward milestone progress.
       RAN 2026-07-22 (~02:11-02:36 UTC, claude-conductor-agentrun-20260722T0211Z-t010): option (a) front-end polish (lane 1), per the checklist's next-preferred-lane note. Tried lane 3 (inspiration/preview assets) first with a genuinely fresh queued job (1319, greek-vase-painting.webp): polled 8x over ~4 minutes, stayed PENDING/unclaimed — same home-relay signature as every check since 2026-07-18. Lane 4's own coverage table shows every remaining gap already blocked on the same relay/media-server issue, so fell through to lane 1. Dispatched an Explore subagent to read every in-scope Academy file in full against the exclusion list of prior fixes; found a real cross-tab race in `art-styler.vue` — a slow starter-image fetch could resolve after the user switched to Gallery/Upload and picked a different image, silently overwriting that newer selection, since the existing `gallerySelectionToken` guard only covered gallery-to-gallery races. Widened it into a shared `sourceSelectionToken` covering all three source-selection paths. Caught and fixed a self-introduced regression during implementation (gating the `finally` block's `isLoadingStarterImage` reset on the token would have stranded every starter thumbnail permanently disabled after a stale race) before verifying. Verified: `npx eslint`/`npx prettier --check` clean, full-project `npm run test` (`vue-tsc --noEmit`) exit 0 before and after rebasing onto latest kind_robots main. kind_robots PR #849, all 4 CI checks green (Contract verifiers, TypeScript, verify, GitGuardian), merged squash `f9a26d8a`. Updated `continuous-improvement-checklist.md`'s rotation state; next preferred lane is roadmap accuracy (lane 2). Rearmed to `ready`.
