@@ -1312,7 +1312,6 @@ tasks:
       coordinated update (rename in ci.yml + update the required-check setting
       in the same window) rather than an agent-only change -- soft needs-human
       if branch protection can't be inspected from this environment.
-    updated: '2026-07-17T07:53:22Z'
 
   - id: t-049
     milestone: m2
@@ -1525,7 +1524,6 @@ tasks:
       with a single sentence pointing at `EGRESS-BLOCKERS.md` (keep one summary line
       of history, don't delete the task's own note entirely). Purely record-keeping —
       should not change any task's `status`/`needs-human` semantics.
-    updated: '2026-07-17T07:50:32Z'
 
   - id: t-055
     milestone: m2
@@ -1584,7 +1582,6 @@ tasks:
       STATUS.md/ROADMAP-AUDIT.*/LEARNING-REPORT.md and regenerate; for
       append-only files (TALKBACK.md, LEARNING.yaml) that both sides touched,
       keep both sides' entries rather than picking one.
-    updated: '2026-07-17T07:47:54Z'
 
   - id: t-057
     milestone: m2
@@ -1603,7 +1600,6 @@ tasks:
       one-line pointer in AGENTS.md's cross-repo/verification section so future
       sessions run it instead of re-deriving the CYPRESS_INSTALL_BINARY +
       DATABASE_URL combination from scratch.
-    updated: '2026-07-17T07:46:52Z'
 
   - id: t-058
     milestone: m1
@@ -1624,7 +1620,6 @@ tasks:
       A tiny test (monkeypatch rex.KR_API_TOKEN to None/empty, assert exit
       code 1, assert post_batch never called) closes the last CLI-gating gap
       in this file.
-    updated: '2026-07-17T07:48:52Z'
 
   - id: t-060
     milestone: m3
@@ -1653,7 +1648,6 @@ tasks:
       projects/priority.yaml's `order:` list in a reasonable position (below the
       named priority band, alongside similarly-scoped projects), verify with
       scripts/validate_roadmaps.py, no code/behavior change.
-    updated: '2026-07-17T07:45:37Z'
 
   - id: t-059
     milestone: m2
@@ -2264,7 +2258,7 @@ tasks:
     title: 'audit_roadmaps.py does not detect duplicate YAML keys within a task
       block, which silently lets stale owner/claimed_by/approved_by_human
       values win over current ones'
-    status: claimed
+    status: done
     owner: reviewer
     passes: 0
     stakes: reversible
@@ -2334,6 +2328,39 @@ tasks:
          diff).
       Kaizen-shaped task; stakes: reversible (docs/tooling only, no runtime
       behavior change to the app).
+      DONE 2026-07-22 (same claim, continued): added `find_duplicate_keys()`
+      to scripts/audit_roadmaps.py — a fresh PyYAML SafeLoader subclass per
+      call (per the repro loader above, but collecting every duplicate
+      instead of raising on the first) — wired into the per-roadmap audit
+      loop as a new `DUPLICATE_YAML_KEY` warning finding (project + key +
+      line). Re-ran it repo-wide: found exactly the same 11 instances this
+      task's note already catalogued (6 conductor, 1 global-ui, 2
+      kind-robots, 2 packmaker) confirming the scan was reproducible, not a
+      one-off. Fixed all 11: for each, read the surrounding context to
+      determine which occurrence YAML's last-key-wins semantics currently
+      returns and whether that value is the correct/current one or a stale
+      leftover, then deleted the wrong occurrence — conductor's 6 (all
+      `updated`) had a newer, correct value earlier in the block and a stale
+      trailing duplicate after the note (the exact bug pattern from t-010:
+      the trailing one was silently winning), so the trailing one was
+      deleted in each case; kind-robots's `approved_by_human` dup and
+      packmaker's t-003 `updated` dup were identical values (no behavior
+      difference, just deleted the redundant copy); kind-robots's
+      `claimed_by`/`claimed_at` dup on t-026 had the trailing copy missing
+      the `worker/` prefix the rest of that field's format uses, so deleted
+      the trailing copy and kept the properly-prefixed original; packmaker's
+      t-006 `updated` dup had the trailing value wrongly equal to
+      `claimed_at` (claim time, not completion time) silently winning over
+      the correct completion timestamp earlier in the block, so deleted the
+      trailing one. Verified: `python scripts/audit_roadmaps.py` now reports
+      0 DUPLICATE_YAML_KEY findings and the same 14/44 warning/info baseline
+      as before this task (the 12 new findings the check itself introduced
+      are exactly the ones now fixed); `scripts/validate_roadmaps.py` passes;
+      all 4 touched roadmap.yaml files still parse with `yaml.safe_load`;
+      added two new tests to tests/test_audit_roadmaps_policy.py (duplicate
+      key flagged, clean task not flagged); full `pytest tests/` suite
+      (445 tests) passes; `python -m py_compile` on the changed script
+      passes. No runtime/app behavior change — docs/tooling only, as scoped.
     claimed_by: claude-conductor-burst-20260722T0106Z-t079
     claimed_at: '2026-07-22T01:06:07Z'
-    updated: '2026-07-22T01:06:07Z'
+    updated: '2026-07-22T01:34:00Z'
