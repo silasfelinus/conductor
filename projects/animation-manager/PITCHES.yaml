@@ -1,4 +1,4 @@
-updated: "2026-07-21T04:20:00-07:00"
+updated: "2026-07-21T17:07:06-07:00"
 
 pitches:
   - id: bioluminescent-tide
@@ -97,7 +97,7 @@ pitches:
 
   - id: stained-glass-rain
     title: Stained Glass Rain
-    status: pitched
+    status: candidate
     priority: 4
     surprise: Raindrops refract the desktop into slowly changing stained-glass fragments without obscuring content.
     passive_loop: Transparent polygon panes drift, merge, and split as rain lines trace leaded boundaries.
@@ -109,6 +109,22 @@ pitches:
     acceptance:
       - content remains legible
       - effect has a no-backdrop-filter fallback
+    builds:
+      - version: 1
+        status: candidate
+        component: components/screenfx/stained-glass-rain.vue
+        pull_request: silasfelinus/kind_robots#838
+        verification:
+          - TypeScript Type Check
+          - eslint
+          - prettier
+          - test:animation-catalog
+          - test:animation-component-attempts
+        deferred:
+          - Live browser smoke test (docs/architecture/animation-catalog-smoke-matrix.md) --
+            no reachable DATABASE_URL in the sandbox; server/utils/prisma.ts throws on every
+            SSR request.
+          - Component attempt record (SPEC.md "Attempt records") -- same DB blocker.
 
   - id: clockwork-greenhouse
     title: Clockwork Greenhouse
