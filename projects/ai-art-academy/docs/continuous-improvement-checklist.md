@@ -15,6 +15,24 @@ Record the lane, files changed, and verification in the task note before rearmin
 
 ### Rotation state
 
+- Last completed lane: Roadmap accuracy (lane 2), 2026-07-22 (~01:40-01:50 UTC,
+  claude-conductor-burst-20260722T0140Z-t010). Per blocker discipline, did not
+  re-probe lane 3's home-relay blocker — the immediately-prior cycle (~00:17-00:40
+  UTC, less than an hour earlier) already re-confirmed it fresh with job 1307, no
+  material change since. `scripts/audit_roadmaps.py` — same 0-errors/14-warnings/
+  44-info baseline, no findings touching this project. Verified the newest
+  cross-repo PR reference (kind_robots#840, the immediately-prior lane-1 cycle's
+  fix) via GitHub MCP `pull_request_read` — confirmed merged 2026-07-22T00:29:43Z,
+  matches the checklist's own record, no drift. Re-verified all 6 milestones
+  programmatically (each milestone's `status:` field cross-checked against every
+  task assigned to it via `milestone:`) rather than spot-checking: m1 (done, 2/2
+  tasks done), m2 (in-progress, t-004 open), m3 (in-progress, t-033 open), m4
+  (done, 15/15 tasks done), m5 (in-progress, t-009/t-019 open), m6 (in-progress,
+  t-010 recurring + t-035 open) — all six already match their tasks' actual
+  statuses, no drift found. Conductor-docs-only change (this checklist +
+  roadmap.yaml note); no kind_robots PR needed. Next preferred lane is
+  inspiration/preview assets (lane 3, recheck with a fresh queued job, not 1307)
+  falling back to lane 4 if still blocked.
 - Last completed lane: Front-end polish (lane 1), 2026-07-22 (~00:17-00:40 UTC,
   claude-conductor-agentrun-20260722T0016Z-t010). Lane 3 (inspiration/preview
   assets) re-probed first with a fresh queued job (1307, greek-vase-painting.webp)
