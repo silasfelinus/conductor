@@ -15,6 +15,33 @@ Record the lane, files changed, and verification in the task note before rearmin
 
 ### Rotation state
 
+- Last completed lane: Front-end polish (lane 1), 2026-07-23 (~16:11-16:18 UTC,
+  claude-conductor-burst-20260723T1611Z-t010, scheduled burst-mode cycle). Per
+  the prior cycle's note, lane 1 was next in the 1→2→3→4 rotation after lane 4
+  ran last. Dispatched an Explore subagent to read the full checklist (building
+  the exclusion list of every bug class already fixed across PRs #275-#849)
+  plus every in-scope file in full. Found a real, previously-unfixed gap:
+  `applySourceImageId()` — the `sourceImageId`-prop/deep-link path used by
+  `/coloring-page?imageId=...` — was never wired into the `sourceSelectionToken`
+  guard PR #849 introduced for the other three source-selection paths
+  (upload/starter/gallery). Since `pages/coloring-page.vue` derives the prop
+  reactively from `route.query.imageId` on an instance Vue Router reuses across
+  query-only navigations, a slow deep-link fetch could resolve after the user
+  had already picked a different source and silently overwrite it back — a
+  genuine, reachable data-correctness race. Fixed by bringing
+  `applySourceImageId()` into the same token guard (capture before the await,
+  bail if stale after) and bumping the token in `clearSourceImage()` too,
+  matching the existing pattern exactly. Verified: `npx eslint`/
+  `npx prettier --check` clean on the changed file; full-project `npm run test`
+  (`vue-tsc --noEmit`) confirmed zero new errors from this change. While
+  polling CI, found main itself red since Build Bench (PR #897) merged
+  without its own CI confirmed green: `build-bench.vue`'s "Run both" button
+  called a bare `runBoth` (only `store.runBoth` exists) and
+  `buildBenchStore.ts`'s `engineDef()` fallback didn't type-narrow under
+  `noUncheckedIndexedAccess`. Fixed both in the same PR so CI goes green
+  instead of staying red for the next push. kind_robots PR #899. Next
+  preferred lane is roadmap accuracy (lane 2) — this cycle ran lane 1, so
+  lane 2 is next in the 1→2→3→4 rotation.
 - Last completed lane: Curriculum depth (lane 4), 2026-07-22 (~16:06 UTC,
   claude-conductor-burst-20260722T1606Z-t010, scheduled burst-mode cycle). Per
   the prior cycle's note, lane 3 (inspiration/preview assets) was next
