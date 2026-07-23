@@ -534,8 +534,8 @@ tasks:
   - id: t-029
     milestone: m6
     title: "Polish and upgrade Model Builder front-end surface"
-    status: review
-    owner: reviewer
+    status: ready
+    owner: null
     passes: 0
     stakes: reversible
     note: >
@@ -574,9 +574,10 @@ tasks:
       `npx prettier --check` shows the same pre-existing drift as `main` (confirmed via `git stash`
       before this change, matching how prior cycles handled the same file's pre-existing formatting
       drift) -- kept the diff to a minimal 3-line hand-applied addition rather than running
-      `--write` on the whole file; full-project `vue-tsc --noEmit` exit 0. kind_robots PR #900,
-      open, CI pending at write time. Steps (1) and (3) remain genuinely blocked as documented above;
-      not touched this cycle. Will merge PR #900 and rearm this task to `ready` once CI is green.
+      `--write` on the whole file; full-project `vue-tsc --noEmit` exit 0. kind_robots PR #900:
+      all 4 CI checks green (TypeScript, Contract verifiers, verify, GitGuardian) -- merged squash
+      `04433b8e`. Steps (1) and (3) remain genuinely blocked as documented above; not touched this
+      cycle. Rearmed to `ready`.
 
       PROGRESS 2026-07-20 (conductor-burst rotation, claude-burst-rotation-20260720T1810Z): step
       (4) follow-on -- found a real gap while re-reading the interactive experience components:
@@ -650,7 +651,7 @@ tasks:
       07-20/07-21 cycles -- those two steps are still outstanding.
     claimed_by: claude-conductor-agentrun-20260723T164245Z-t029
     claimed_at: '2026-07-23T16:42:46Z'
-    updated: '2026-07-23T16:51:34Z'
+    updated: '2026-07-23T16:52:59Z'
 
   - id: t-030
     milestone: m6
