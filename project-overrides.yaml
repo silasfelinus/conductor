@@ -359,6 +359,15 @@ overrides:
     channelKey: lab
     tabKey: ruler-hooked
 
+  - slug: music-mentor
+    status: active
+    priority: normal
+    kind: software
+    # Frontend placement deferred to music-mentor/t-006: add the canonical
+    # PROJECT_PLACEMENTS entry in kind_robots utils/projectPlacements.ts first
+    # (channelKey: play, tabKey: music-mentor, route: /music-mentor), then mirror
+    # liveUrl/channelKey/tabKey here so sync_projects.py pushes a matching row.
+
   - slug: dream-cycle
     status: active
     priority: low # idle fallback by design — must never outrank real ready work
