@@ -534,8 +534,8 @@ tasks:
   - id: t-029
     milestone: m6
     title: "Polish and upgrade Model Builder front-end surface"
-    status: claimed
-    owner: reviewer
+    status: ready
+    owner: null
     passes: 0
     stakes: reversible
     note: >
@@ -557,6 +557,27 @@ tasks:
       and now the t-027 quantity batch editor -- not a placeholder scaffold. Remaining and kept
       ready: step (1) dashboard-tab + tutorial .webp art (needs the generation backend/egress) and
       step (3) the liveUrl backfill (an admin Placements click, not an agent action).
+
+      PROGRESS 2026-07-23 (conductor scheduled agent run, claude-conductor-agentrun-20260723T164245Z-t029):
+      step (4) follow-on -- dispatched an Explore subagent to read every model-builder component and
+      the store in full, with the exclusion list of every bug class already fixed by prior cycles of
+      this task (run-history cancel confirm, item-panel per-field textarea watches, state-free async
+      poll). Found a real, previously-unfixed gating race: `canApproveAssets` in
+      `model-builder-item-panel.vue` only checked `isLocked('GENERATE_ASSETS')` and truthiness of
+      `item.artImageId` -- it never consulted `isGenerating`/`isQueued`, both already computed in the
+      same file and already used to disable the generate/regenerate buttons a few lines above. Since
+      neither `generateItemAsset` nor `generateItemAssetAsync` clears `artImageId` while a (re)render is
+      in flight, "Keep this asset" stayed clickable throughout, so a user could approve (and then
+      commit) a stale candidate moments before the in-flight regeneration silently overwrote
+      `artImageId` and reset the just-approved stage back to `ready` underneath them. Fixed by adding
+      the same `isGenerating`/`isQueued` gate to `canApproveAssets`. Verified: `npx eslint` clean;
+      `npx prettier --check` shows the same pre-existing drift as `main` (confirmed via `git stash`
+      before this change, matching how prior cycles handled the same file's pre-existing formatting
+      drift) -- kept the diff to a minimal 3-line hand-applied addition rather than running
+      `--write` on the whole file; full-project `vue-tsc --noEmit` exit 0. kind_robots PR #900:
+      all 4 CI checks green (TypeScript, Contract verifiers, verify, GitGuardian) -- merged squash
+      `04433b8e`. Steps (1) and (3) remain genuinely blocked as documented above; not touched this
+      cycle. Rearmed to `ready`.
 
       PROGRESS 2026-07-20 (conductor-burst rotation, claude-burst-rotation-20260720T1810Z): step
       (4) follow-on -- found a real gap while re-reading the interactive experience components:
@@ -630,7 +651,7 @@ tasks:
       07-20/07-21 cycles -- those two steps are still outstanding.
     claimed_by: claude-conductor-agentrun-20260723T164245Z-t029
     claimed_at: '2026-07-23T16:42:46Z'
-    updated: '2026-07-23T16:42:46Z'
+    updated: '2026-07-23T16:52:59Z'
 
   - id: t-030
     milestone: m6

@@ -126,3 +126,38 @@ instruction) — kind_robots PR #406
 
 **Kaizen task:** none filed — no new pattern beyond what's already tracked for this task
 (step (1) art generation remains the standing blocker, already known).
+
+## 2026-07-23 | Reviewer (conductor scheduled agent run) | model-builder/t-029 | pattern
+
+**Decision:** merged (kind_robots PR #900, squash `04433b8e`); task kept at `status: ready`
+(steps (1)/(3) remain the only outstanding blockers, unchanged from prior cycles).
+
+**Failure category:** none — clean first-pass implementation.
+
+**What was good:**
+- Dispatched an Explore subagent with the full exclusion list of every bug class already
+  fixed across this task's history (run-history cancel confirm, item-panel per-field
+  watches, state-free async poll) so it had to find something genuinely new rather than
+  re-reporting known-fixed shapes; it read every model-builder component and the store in
+  full before reporting.
+- Found a real gating race: `canApproveAssets` in `model-builder-item-panel.vue` never
+  checked `isGenerating`/`isQueued` (both already computed in the same file and already
+  used to disable the generate/regenerate buttons), so "Keep this asset" stayed clickable
+  while a regenerate was in flight — a user could approve a stale `artImageId` moments
+  before the in-flight render silently overwrote it and reset the just-approved stage back
+  to `ready` underneath them.
+- Fixed with a minimal one-line-condition addition mirroring the existing button-disable
+  pattern exactly, rather than a broader refactor.
+- Caught that `npx prettier --write` would have reformatted ~150 unrelated pre-existing-drift
+  lines in the file (confirmed via `git stash` that the drift predates this change) —
+  reverted and hand-applied only the 3-line functional diff, matching how a prior t-029
+  cycle handled the same situation in this same file.
+- Watched kind_robots PR #900's CI to green (TypeScript, Contract verifiers, verify,
+  GitGuardian all passed) and merged it in the same session rather than leaving it open,
+  then rearmed the conductor task to `ready` — full close-the-loop per AGENTS.md's
+  "finish on clean main" rule.
+
+**What to improve:** none this cycle.
+
+**Kaizen task:** none filed — no new systemic pattern; the standing step (1)/(3) blockers
+are already tracked and unchanged.
