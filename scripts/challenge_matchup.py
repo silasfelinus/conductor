@@ -66,6 +66,14 @@ ART_GENERATORS = {
     "art-sd": "a1111",
     "comfy-flux": "flux",
     "comfy-sdxl": "comfy",
+    "comfy-krea2": "krea2",
+    "comfy-flux2": "flux2",
+    # accept the bare engine names too, so a contender's generator can just be
+    # the engine the /api/art/enqueue dispatcher expects
+    "krea2": "krea2",
+    "flux2": "flux2",
+    "sdxl": "comfy",
+    "flux": "flux",
 }
 
 
@@ -254,6 +262,11 @@ def enqueue_art(
         "serverId",
         "serverName",
         "priority",
+        # new-engine knobs: optional style LoRA (krea2/flux2/comfy) and Flux.2's
+        # structured JSON prompt
+        "loraName",
+        "loraStrength",
+        "jsonPrompt",
     }
     payload = {
         "engine": engine,
