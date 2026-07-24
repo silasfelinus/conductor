@@ -446,14 +446,14 @@ tasks:
   - id: t-010
     milestone: m6
     title: Academy continuous improvement pass
-    status: ready
+    status: claimed
     recurring: true
     owner: reviewer
-    claimed_by: claude-conductor-burst-20260724T1730Z-t010
-    claimed_at: '2026-07-24T16:07:15Z'
+    claimed_by: claude-conductor-agentrun-20260724T1730Z-t010b
+    claimed_at: '2026-07-24T16:44:43Z'
     passes: 0
     stakes: reversible
-    updated: '2026-07-24T16:20:00Z'
+    updated: '2026-07-24T16:44:43Z'
     note: |-
       Standing never-idle task (re-arms to ready after every completion, per the recurring-task rule). Each cycle pick ONE: (a) front-end style/polish pass on Academy or art-styler surfaces, (b) roadmap upgrade — refine tasks, detail the next milestone, prune stale notes, (c) generate more art inspirations or style preview thumbnails, (d) expand the curriculum with a new movement/artist entry (respecting PUBLIC-DOMAIN-POLICY.md). Note which option ran in the PR. This task never reaches done and does not count toward milestone progress.
       RAN 2026-07-24 (~16:07-16:20 UTC, claude-conductor-burst-20260724T1730Z-t010, scheduled burst-mode cycle): option (b) roadmap accuracy (lane 2), per the checklist's next-preferred-lane note (previous cycle ran lane 1). Ran `scripts/check_pr_merged_drift.py` (0 claimed/review PR references outstanding) and `scripts/audit_roadmaps.py` (41 roadmaps, 0 errors, 13 warnings, 44 info). Diffed against the established 12-warning `ACTIVE_PROJECT_ALL_DONE`/`ACTIVE_PROJECT_NO_OPEN_TASKS` baseline (art-generator-connect, davinci, ecosystem-map, humboldt-scoop, packmaker, sketchy — left alone again, needs Silas's call per prior cycles) and found one genuinely new finding: `SLUG_MISMATCH` on `music-mentor` (`roadmap.yaml` had `project: Music Mentor` instead of the directory slug `music-mentor` — the only mismatch across all 41 roadmaps besides the `_template` placeholder). Not cosmetic: `scripts/next_ready_task.py`/`scripts/run_worker.py` both resolve the task-project identifier via `roadmap.get('project') or slug`, so a ready music-mentor task would surface as `Music Mentor/t-XXX`, a string `scripts/claim_task.py` can't resolve to a directory — breaking the claim step for that project's task queue (music-mentor/t-007 is currently `status: ready`, so this was live, not theoretical). It also silently dropped music-mentor from `ROADMAP-AUDIT.md`'s project inventory table (confirmed before/after: table jumped row 37 `ruler-hooked` straight to `dream-cycle`; music-mentor now appears as its own row). Fixed `projects/music-mentor/roadmap.yaml`'s `project:` field to `music-mentor`; verified no script/data file keys off the literal `"Music Mentor"` string for lookups (only prose/labels in `art-prompts.yaml`). Re-ran both scripts post-fix: 12 warnings, regenerated `ROADMAP-AUDIT.json`/`.md`. Cross-checked ai-art-academy's own 6 milestones programmatically against actual task statuses — all consistent, no drift. `tests/test_audit_roadmaps_policy.py` + `tests/test_validate_roadmaps.py` pass (10/10). Conductor PR only, no kind_robots change needed this cycle. Updated `continuous-improvement-checklist.md`'s rotation state; next preferred lane is inspiration/preview assets (lane 3) — this cycle ran lane 2, so lane 3 is next in the 1→2→3→4 rotation.
