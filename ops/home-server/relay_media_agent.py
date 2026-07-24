@@ -22,6 +22,7 @@ import io
 import json
 import os
 import time
+import urllib.parse
 from pathlib import Path, PurePosixPath
 
 import relay_agent as relay
@@ -48,10 +49,38 @@ def job_payload(job):
     return payload
 
 
+def normalize_kindrobots_image_path(value):
+    """Normalize historical frontend/media paths to ``public/images/...``.
+
+    Jobs created before the direct-media contract used several equivalent forms:
+    ``/images/...``, ``images/...``, ``/public/images/...``, Windows separators,
+    and full media URLs. Normalize only those recognizable image roots; unrelated
+    paths remain unchanged and fail the safety validation below.
+    """
+
+    image_path = str(value or "").strip().replace("\\", "/")
+    if not image_path:
+        return ""
+
+    parsed = urllib.parse.urlparse(image_path)
+    if parsed.scheme in ("http", "https") or parsed.netloc:
+        image_path = urllib.parse.unquote(parsed.path or "")
+    else:
+        image_path = image_path.split("?", 1)[0].split("#", 1)[0]
+
+    while image_path.startswith("./"):
+        image_path = image_path[2:]
+    image_path = image_path.lstrip("/")
+
+    if image_path.startswith("images/"):
+        return f"public/{image_path}"
+    return image_path
+
+
 def direct_media_relative(job):
     payload = job_payload(job)
     target_repo = str(payload.get("targetRepo") or "").strip()
-    image_path = str(payload.get("imagePath") or "").strip().replace("\\", "/")
+    image_path = normalize_kindrobots_image_path(payload.get("imagePath"))
 
     if target_repo != KIND_ROBOTS_REPO or not image_path:
         return None
