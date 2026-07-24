@@ -34,12 +34,44 @@ def _target_repo(entry, default_target_repo):
     return str(entry.get("target_repo") or default_target_repo).strip()
 
 
-def _image_path(entry):
-    return str(entry.get("image_path") or "").strip()
+def normalize_kindrobots_image_path(value):
+    """Return the canonical repository-style path used by direct media jobs.
+
+    Older queue entries used frontend paths (``/images/...``), bare paths
+    (``images/...``), leading-slash repository paths, Windows separators, or a
+    full public media URL. They all identify the same logical destination and
+    are safe to normalize before the ArtJob reaches the relay. Unrelated paths
+    are intentionally left unchanged so the relay still rejects them.
+    """
+
+    image_path = str(value or "").strip().replace("\\", "/")
+    if not image_path:
+        return ""
+
+    parsed = urllib.parse.urlparse(image_path)
+    if parsed.scheme in ("http", "https") or parsed.netloc:
+        image_path = urllib.parse.unquote(parsed.path or "")
+    else:
+        image_path = image_path.split("?", 1)[0].split("#", 1)[0]
+
+    while image_path.startswith("./"):
+        image_path = image_path[2:]
+    image_path = image_path.lstrip("/")
+
+    if image_path.startswith("images/"):
+        return f"public/{image_path}"
+    return image_path
+
+
+def _image_path(entry, default_target_repo):
+    image_path = str(entry.get("image_path") or "").strip()
+    if _target_repo(entry, default_target_repo) == KIND_ROBOTS_REPO:
+        return normalize_kindrobots_image_path(image_path)
+    return image_path
 
 
 def _is_kindrobots_media_target(entry, default_target_repo):
-    image_path = _image_path(entry)
+    image_path = _image_path(entry, default_target_repo)
     return (
         _target_repo(entry, default_target_repo) == KIND_ROBOTS_REPO
         and image_path.startswith("public/images/")
@@ -76,12 +108,12 @@ def patch_consumer(consumer, default_target_repo):
         job = original_entry_to_job(entry)
         payload = job.setdefault("payload", {})
         payload["targetRepo"] = _target_repo(entry, default_target_repo)
-        payload["imagePath"] = _image_path(entry)
+        payload["imagePath"] = _image_path(entry, default_target_repo)
         return job
 
     def save_result(entry, image_b64):
         if _is_kindrobots_media_target(entry, default_target_repo):
-            image_path = _image_path(entry)
+            image_path = _image_path(entry, default_target_repo)
             if _media_exists(image_path):
                 relative = Path(image_path).relative_to("public/images")
                 virtual_path = consumer.ROOT / ".media-direct" / relative
