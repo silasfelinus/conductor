@@ -15,6 +15,41 @@ Record the lane, files changed, and verification in the task note before rearmin
 
 ### Rotation state
 
+- Last completed lane: Roadmap accuracy (lane 2), 2026-07-24 (~16:07-16:20 UTC,
+  claude-conductor-burst-20260724T1730Z-t010, scheduled burst-mode cycle). Per
+  the prior cycle's note, lane 2 was next in the 1→2→3→4 rotation after lane 1
+  ran last. Ran `scripts/check_pr_merged_drift.py` (0 claimed/review PR
+  references outstanding, nothing to reconcile) and `scripts/audit_roadmaps.py`
+  (41 roadmaps, 0 errors, 13 warnings, 44 info). Diffed the warning set against
+  the established 12-warning baseline (the `ACTIVE_PROJECT_ALL_DONE`/
+  `ACTIVE_PROJECT_NO_OPEN_TASKS` pattern across art-generator-connect, davinci,
+  ecosystem-map, humboldt-scoop, packmaker, sketchy — left alone again, same
+  reasoning as every prior cycle: flipping `project-overrides.yaml` status
+  needs Silas's call, not a guess) and found one genuinely new finding:
+  `SLUG_MISMATCH` on `music-mentor` — its `roadmap.yaml` had
+  `project: Music Mentor` instead of the directory slug `music-mentor` (the
+  only mismatch across all 41 roadmaps besides the `_template` placeholder).
+  This was not cosmetic: `scripts/next_ready_task.py` and `scripts/run_worker.py`
+  both resolve the task's project identifier via `roadmap.get('project') or
+  slug`, so any music-mentor task reaching `ready` would have surfaced as
+  `Music Mentor/t-XXX` — a string `scripts/claim_task.py` can't resolve to a
+  directory, breaking the claim step for that project's only real task queue.
+  It also silently excluded music-mentor from `ROADMAP-AUDIT.md`'s project
+  inventory table entirely (confirmed: the table jumped from row 37
+  `ruler-hooked` straight to row 38 `dream-cycle` before the fix; music-mentor
+  now appears correctly as row 38 with dream-cycle shifted to 39). Fixed by
+  changing the field to `project: music-mentor`; verified no other script or
+  data file keys off the literal string `"Music Mentor"` for lookups (only
+  `art-prompts.yaml` prose/labels, which are display text, not identifiers).
+  Re-ran both scripts after the fix: 12 warnings (SLUG_MISMATCH gone),
+  regenerated `ROADMAP-AUDIT.json`/`.md`. Cross-checked ai-art-academy's own
+  6 milestones programmatically against actual task statuses — all consistent
+  (`done` milestones fully done, `in-progress` milestones have exactly the
+  expected non-done tasks), no drift. `tests/test_audit_roadmaps_policy.py`
+  and `tests/test_validate_roadmaps.py` pass (10/10). Conductor-only change,
+  no kind_robots PR needed. Next preferred lane is inspiration/preview assets
+  (lane 3) — this cycle ran lane 2, so lane 3 is next in the 1→2→3→4 rotation
+  (lane 1 already ran this rotation on 2026-07-23).
 - Last completed lane: Front-end polish (lane 1), 2026-07-23 (~16:11-16:18 UTC,
   claude-conductor-burst-20260723T1611Z-t010, scheduled burst-mode cycle). Per
   the prior cycle's note, lane 1 was next in the 1→2→3→4 rotation after lane 4

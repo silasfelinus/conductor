@@ -1,14 +1,14 @@
 # Roadmap Audit
 
-Generated: `2026-07-23T16:28:31.656108+00:00`
+Generated: `2026-07-24T16:11:08.634861+00:00`
 
 This is a conservative structural audit. It reports suspicious state; it does not automatically change task status or remove human gates.
 
 ## Portfolio snapshot
 
-- **40** roadmaps, **31** active projects, **651** tasks
-- **31 ready**, **42 waiting**, **45 needs-human**, **0 claimed/review**, **522 done**
-- Findings: **0 errors**, **12 warnings**, **43 informational**
+- **41** roadmaps, **32** active projects, **659** tasks
+- **32 ready**, **42 waiting**, **45 needs-human**, **0 claimed/review**, **529 done**
+- Findings: **0 errors**, **12 warnings**, **44 informational**
 
 ## Project inventory
 
@@ -51,7 +51,8 @@ This is a conservative structural audit. It reports suspicious state; it does no
 | 35 | `wishmaster` | active | software | 1 | 0 | 0 | 0 | 2 / 3 |
 | 36 | `engagement` | finished | software | 0 | 0 | 0 | 0 | 3 / 3 |
 | 37 | `ruler-hooked` | active | software | 1 | 0 | 0 | 0 | 11 / 12 |
-| 38 | `dream-cycle` | active | software | 4 | 0 | 0 | 0 | 14 / 18 |
+| 38 | `music-mentor` | active | software | 1 | 0 | 0 | 0 | 7 / 8 |
+| 39 | `dream-cycle` | active | software | 4 | 0 | 0 | 0 | 14 / 18 |
 | — | `approval-portal` | retired | software | 0 | 0 | 0 | 0 | 3 / 5 |
 | — | `humboldt-impropriety-calendar` | retired | brainstorm | 0 | 5 | 0 | 0 | 0 / 6 |
 
@@ -76,7 +77,7 @@ _None._
 - **ACTIVE_PROJECT_ALL_DONE** — `sketchy`: All tasks are done but project override remains active.
 - **ACTIVE_PROJECT_NO_OPEN_TASKS** — `sketchy`: Active project has no open tasks; mark finished/paused or add an intentional recurring task.
 
-### Info (43)
+### Info (44)
 
 - **APPROVAL_WITHOUT_GATE** — `ai-art-academy` / `t-002`: approved_by_human is set on a task that is not human-gated.
 - **APPROVAL_WITHOUT_GATE** — `ai-art-academy` / `t-011`: approved_by_human is set on a task that is not human-gated.
@@ -108,6 +109,7 @@ _None._
 - **APPROVAL_WITHOUT_GATE** — `kindrobots-unraid` / `t-002`: approved_by_human is set on a task that is not human-gated.
 - **MISSING_GOAL** — `media-watchlist`: Roadmap has no friendly goal/definition of done.
 - **MISSING_GOAL** — `mermaids-of-venice`: Roadmap has no friendly goal/definition of done.
+- **MISSING_GOAL** — `music-mentor`: Roadmap has no friendly goal/definition of done.
 - **MISSING_GOAL** — `newsfeed`: Roadmap has no friendly goal/definition of done.
 - **NEEDS_HUMAN_NOTE_FORMAT** — `newsfeed` / `t-021`: needs-human note does not use the AGENTS.md FOR SILAS action format.
 - **MISSING_GOAL** — `packmaker`: Roadmap has no friendly goal/definition of done.
