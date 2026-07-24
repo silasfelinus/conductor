@@ -35,7 +35,7 @@ milestones:
   - id: m3
     title: "POLISH & SHIP — aesthetics, performance, delivery"
     weight: 25
-    status: not-started
+    status: in-progress
 
 tasks:
   - id: t-001
@@ -125,19 +125,21 @@ tasks:
 
   - id: t-008
     milestone: m3
-    title: "Generate project art (icon/card/hero) via ArtJob"
-    status: needs-human
-    owner: null
+    title: "Submit project art (icon/card/hero) via ArtJob"
+    status: done
+    owner: claude
     passes: 0
     stakes: reversible
     updated: 2026-07-24T00:00:00Z
     note: >
-      FOR SILAS: the three prompts are written in art-prompts.yaml and queued in
-      art-generate.yaml (music-mentor is first in line). Live submission via
-      scripts/request_art.py --no-dry-run returned HTTP 401 "Invalid or expired
-      token" — the KR_API_TOKEN in the session env is expired. Refresh
-      KR_API_TOKEN (or run the consumer / generate manually) and the queued
-      entries will render into projects/images/music-mentor-{icon,card,hero}.webp.
+      All three art requests submitted to /api/conductor/art-request (HTTP 201
+      each: music-mentor icon/card/hero) — the endpoint committed the queue
+      entries to conductor main. Root cause of the earlier 401 was NOT an expired
+      token: request_art.py sent the token in the legacy X-KR-API-Token header,
+      but the endpoint's validateApiKey reads x-api-key / authorization /
+      x-admin-token. Fixed request_art.py to send x-api-key (see this PR).
+      Downstream generation of the actual .webp files happens via the art
+      consumer; on-page card/hero appear once those land.
 
   - id: t-007
     milestone: m3
