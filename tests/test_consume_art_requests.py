@@ -34,7 +34,7 @@ SAMPLE = textwrap.dedent(
 
 def test_is_pending():
     assert cr.is_pending({"status": "pending"}) is True
-    assert cr.is_pending({}) is True  # default
+    assert cr.is_pending({}) is True
     assert cr.is_pending({"status": "done"}) is False
     assert cr.is_pending({"status": "DONE"}) is False
 
@@ -53,93 +53,86 @@ def test_target_path_maps_repo_root(tmp_path, monkeypatch):
     assert cr.target_path(
         {"target_repo": "silasfelinus/kind_robots", "image_path": "public/y.webp"}
     ) == Path("/kr/public/y.webp")
-    # unknown repo falls back to conductor root
     assert cr.target_path({"target_repo": "who/what", "image_path": "z.webp"}) == Path("/c/z.webp")
 
 
 def test_load_requests(tmp_path, monkeypatch):
-    f = tmp_path / "art-prompts.yaml"
-    f.write_text(SAMPLE)
-    monkeypatch.setattr(cr, "ART_PROMPTS_FILE", f)
-    reqs = cr.load_requests()
-    assert [r["id"] for r in reqs] == [
+    file = tmp_path / "art-prompts.yaml"
+    file.write_text(SAMPLE)
+    monkeypatch.setattr(cr, "ART_PROMPTS_FILE", file)
+    requests = cr.load_requests()
+    assert [request["id"] for request in requests] == [
         "conductor-davinci-card-2e72bbc9",
         "kind-robots-fox-image-abc123",
     ]
 
 
 def test_set_request_status_flips_only_target():
-    out, changed = cr.set_request_status(SAMPLE, "conductor-davinci-card-2e72bbc9", "done")
+    output, changed = cr.set_request_status(SAMPLE, "conductor-davinci-card-2e72bbc9", "done")
     assert changed is True
-    # the davinci request is now done
-    assert "status: done\n" in out
-    # the fox request is untouched (still pending)
-    fox_block = out.split('- id: "kind-robots-fox-image-abc123"')[1]
+    assert "status: done\n" in output
+    fox_block = output.split('- id: "kind-robots-fox-image-abc123"')[1]
     assert "status: pending" in fox_block
-    # the header comment and images: prompt survive
-    assert "header comment that must survive" in out
-    assert "prompt: an icon" in out
+    assert "header comment that must survive" in output
+    assert "prompt: an icon" in output
 
 
 def test_set_request_status_handles_quoted_id():
-    out, changed = cr.set_request_status(SAMPLE, "kind-robots-fox-image-abc123", "done")
+    output, changed = cr.set_request_status(SAMPLE, "kind-robots-fox-image-abc123", "done")
     assert changed is True
-    fox_block = out.split('- id: "kind-robots-fox-image-abc123"')[1]
+    fox_block = output.split('- id: "kind-robots-fox-image-abc123"')[1]
     assert "status: done" in fox_block
-    # davinci stays pending
-    dv_block = out.split("- id: conductor-davinci-card-2e72bbc9")[1].split("- id:")[0]
-    assert "status: pending" in dv_block
+    davinci_block = output.split("- id: conductor-davinci-card-2e72bbc9")[1].split("- id:")[0]
+    assert "status: pending" in davinci_block
 
 
 def test_set_request_status_missing_id_is_noop():
-    out, changed = cr.set_request_status(SAMPLE, "nope-not-here", "done")
+    output, changed = cr.set_request_status(SAMPLE, "nope-not-here", "done")
     assert changed is False
-    assert out == SAMPLE
+    assert output == SAMPLE
 
 
 def test_mark_done_writes_file(tmp_path, monkeypatch):
-    f = tmp_path / "art-prompts.yaml"
-    f.write_text(SAMPLE)
-    monkeypatch.setattr(cr, "ART_PROMPTS_FILE", f)
-    n = cr.mark_done(["conductor-davinci-card-2e72bbc9"])
-    assert n == 1
-    text = f.read_text()
-    dv_block = text.split("- id: conductor-davinci-card-2e72bbc9")[1].split("- id:")[0]
-    assert "status: done" in dv_block
+    file = tmp_path / "art-prompts.yaml"
+    file.write_text(SAMPLE)
+    monkeypatch.setattr(cr, "ART_PROMPTS_FILE", file)
+    count = cr.mark_done(["conductor-davinci-card-2e72bbc9"])
+    assert count == 1
+    text = file.read_text()
+    davinci_block = text.split("- id: conductor-davinci-card-2e72bbc9")[1].split("- id:")[0]
+    assert "status: done" in davinci_block
 
 
 def test_filter_by_id_prefix():
-    entries = [{"id": "kind-robots-academy-style-preview-cubism"}, {"id": "conductor-davinci-card-2e72bbc9"}]
+    entries = [
+        {"id": "kind-robots-academy-style-preview-cubism"},
+        {"id": "conductor-davinci-card-2e72bbc9"},
+    ]
     assert cr.filter_by_id_prefix(entries, "kind-robots-academy-style-preview-") == [entries[0]]
-    # falsy prefix is a no-op
     assert cr.filter_by_id_prefix(entries, None) == entries
     assert cr.filter_by_id_prefix(entries, "") == entries
 
 
 def test_entry_to_job_reused_for_a_request():
-    # a request dict (no 'project') maps cleanly via the shared consumer
     job = cr.consumer.entry_to_job(
         {"image_path": "public/images/serendipity/a-fox.webp", "prompt": "a fox", "variant": "image"}
     )
-    # default engine is Flux (a COMFY job carrying the workflow graph)
     assert job["engine"] == "COMFY"
     assert job["payload"]["promptString"] == "a fox"
-    # no size on an image request => consumer's 1024x1024 default
     assert job["payload"]["width"] == 1024
     assert job["payload"]["height"] == 1024
 
 
 def test_filler_steps_default_is_lower_than_project_lane():
-    # The whole point: filler art costs fewer steps than the 30-step project lane.
     assert cr.FILLER_STEPS < cr.consumer.DEFAULT_STEPS
     assert cr.FILLER_STEPS < cr.consumer.FLUX_MODELS["dev"]["steps"]
 
 
 def test_apply_default_steps_fills_only_unset():
     entries = [
-        {"image_path": "a.webp"},               # no steps -> gets the default
-        {"image_path": "b.webp", "steps": 40},  # explicit -> preserved
-        {"image_path": "c.webp", "steps": 0},   # falsy -> treated as unset
+        {"image_path": "a.webp"},
+        {"image_path": "b.webp", "steps": 40},
+        {"image_path": "c.webp", "steps": 0},
     ]
     cr.apply_default_steps(entries, 20)
     assert entries[0]["steps"] == 20
@@ -148,8 +141,6 @@ def test_apply_default_steps_fills_only_unset():
 
 
 def test_filler_steps_reach_the_flux_workflow():
-    # A request with no steps, once defaulted, renders at the filler count end to
-    # end -- both the payload and the Flux KSampler node carry it.
     entry = {
         "image_path": "public/images/x.webp",
         "prompt": "x",
@@ -159,5 +150,26 @@ def test_filler_steps_reach_the_flux_workflow():
     cr.apply_default_steps([entry], cr.FILLER_STEPS)
     job = cr.consumer.entry_to_job(entry)
     assert job["payload"]["steps"] == cr.FILLER_STEPS
-    ksampler = job["payload"]["workflow"]["52"]["inputs"]
-    assert ksampler["steps"] == cr.FILLER_STEPS
+    sampler = job["payload"]["workflow"]["52"]["inputs"]
+    assert sampler["steps"] == cr.FILLER_STEPS
+
+
+def test_weak_prompt_reason_blocks_legacy_image_id_fallback():
+    entry = {
+        "prompt": "polished web illustration for Image 529, clear subject, cohesive Kind Robots visual style, no text"
+    }
+    assert cr.weak_prompt_reason(entry) == "legacy generic missing-image fallback"
+
+
+def test_weak_prompt_reason_blocks_named_legacy_fallback_too():
+    entry = {
+        "prompt": "polished web illustration for Music Mentor, clear subject, cohesive Kind Robots visual style, no text"
+    }
+    assert cr.weak_prompt_reason(entry) == "legacy generic missing-image fallback"
+
+
+def test_weak_prompt_reason_allows_concrete_prompt():
+    entry = {
+        "prompt": "A singer at a warm studio microphone while a friendly companion robot traces pitch ribbons through amber light, crisp modern animation, no readable text"
+    }
+    assert cr.weak_prompt_reason(entry) is None

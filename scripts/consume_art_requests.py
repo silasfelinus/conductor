@@ -38,9 +38,6 @@ from pathlib import Path
 
 import yaml
 
-# Reuse the proven queue client (enqueue/poll/fetch/save + quality defaults)
-# rather than reinventing it. Add scripts/ to the path so this works both when
-# run as a script and when imported as scripts.consume_art_requests under pytest.
 sys.path.insert(0, str(Path(__file__).parent))
 import consume_art_queue as consumer  # noqa: E402
 
@@ -48,18 +45,57 @@ ROOT = consumer.ROOT
 ART_PROMPTS_FILE = ROOT / "projects" / "art-prompts.yaml"
 KIND_ROBOTS_ROOT = ROOT.parent / "kind_robots"
 
-# Filler art (missing frontend images, ad-hoc, voice) does not need the 30-step
-# "hero" budget the project-art lane spends. These are throwaway web
-# illustrations behind a card/thumbnail, and the backlog only drains as fast as
-# each render finishes -- fewer steps means more images per run off the same
-# box. 20 steps on Flux-dev keeps the look while cutting ~a third of the render
-# time. Any request may still override with its own explicit `steps:`.
 FILLER_STEPS = 20
 
 REPO_ROOTS = {
     "silasfelinus/conductor": ROOT,
     "silasfelinus/kind_robots": KIND_ROBOTS_ROOT,
 }
+
+LEGACY_WEAK_PROMPT_PATTERNS = [
+    re.compile(
+        r"^flat minimal app icon for .+?, bold clean vector shapes, square composition, no text$",
+        re.IGNORECASE,
+    ),
+    re.compile(
+        r"^polished portrait illustration for .+?, centered subject, rich Kind Robots visual style, no text, 2:3 portrait composition$",
+        re.IGNORECASE,
+    ),
+    re.compile(
+        r"^wide cinematic hero image for .+?, expressive scene with clear atmosphere and personality, no text, 16:9 landscape composition$",
+        re.IGNORECASE,
+    ),
+    re.compile(
+        r"^polished web illustration for .+?, clear subject, cohesive Kind Robots visual style, no text$",
+        re.IGNORECASE,
+    ),
+]
+GENERIC_IMAGE_ID = re.compile(r"\b(?:art\s*)?image\s*#?\s*\d+\b", re.IGNORECASE)
+
+
+def normalized_prompt(entry):
+    return " ".join(str(entry.get("prompt") or "").split())
+
+
+def weak_prompt_reason(entry):
+    """Return why a request is unsafe to render, or None when it is usable.
+
+    These are the exact boilerplate prompts formerly produced by the Kind Robots
+    missing-image fallback. An image model cannot resolve a database id such as
+    "Image 529", and "Kind Robots visual style" is not concrete art direction.
+    Keep the request pending for repair instead of spending GPU time on generic
+    robot filler.
+    """
+    prompt = normalized_prompt(entry)
+    if not prompt:
+        return "empty prompt"
+    if any(pattern.match(prompt) for pattern in LEGACY_WEAK_PROMPT_PATTERNS):
+        return "legacy generic missing-image fallback"
+    if GENERIC_IMAGE_ID.search(prompt) and (
+        "clear subject" in prompt.lower() or "visual style" in prompt.lower()
+    ):
+        return "database image id used as the subject"
+    return None
 
 
 def load_requests():
@@ -104,7 +140,8 @@ def apply_default_steps(entries, steps):
     entry_to_job() reads `steps` off the entry, so this scopes the filler-tuned
     step count to this lane (missing-image / ad-hoc / voice) and leaves the
     project-art lane on its own 30-step default. Mutates in place; not persisted
-    -- mark_done does surgical line edits, never a full YAML re-dump."""
+    -- mark_done does surgical line edits, never a full YAML re-dump.
+    """
     for entry in entries:
         if not entry.get("steps"):
             entry["steps"] = steps
@@ -115,7 +152,8 @@ def set_request_status(text, req_id, new_status):
     """Flip the status line of the requests: entry whose id == req_id.
 
     Surgical, comment-preserving line edit (pyyaml round-trip would drop the
-    file's curated header + images: prompts). Returns (new_text, changed)."""
+    file's curated header + images: prompts). Returns (new_text, changed).
+    """
     lines = text.splitlines(keepends=True)
     id_pat = re.compile(r'^(\s*)-\s+id:\s*["\']?' + re.escape(str(req_id)) + r'["\']?\s*$')
     status_pat = re.compile(r'^(\s*)status:\s*["\']?[A-Za-z0-9_-]+["\']?\s*(#.*)?$')
@@ -123,29 +161,28 @@ def set_request_status(text, req_id, new_status):
     start = None
     indent = ""
     for idx, line in enumerate(lines):
-        m = id_pat.match(line)
-        if m:
+        match = id_pat.match(line)
+        if match:
             start = idx
-            indent = m.group(1)
+            indent = match.group(1)
             break
     if start is None:
         return text, False
 
-    j = start + 1
-    while j < len(lines):
-        line = lines[j]
+    index = start + 1
+    while index < len(lines):
+        line = lines[index]
         if line.strip():
-            cur_indent = len(line) - len(line.lstrip())
-            # end of this entry's block: next sibling list item or a dedent
+            current_indent = len(line) - len(line.lstrip())
             if re.match(r"^" + re.escape(indent) + r"-\s", line):
                 break
-            if cur_indent <= len(indent):
+            if current_indent <= len(indent):
                 break
-        sm = status_pat.match(line)
-        if sm:
-            lines[j] = f"{sm.group(1)}status: {new_status}\n"
+        status_match = status_pat.match(line)
+        if status_match:
+            lines[index] = f"{status_match.group(1)}status: {new_status}\n"
             return "".join(lines), True
-        j += 1
+        index += 1
     return text, False
 
 
@@ -182,28 +219,40 @@ def main():
     )
     args = parser.parse_args()
 
-    requests = filter_by_id_prefix([r for r in load_requests() if is_pending(r)], args.id_prefix)
+    pending = filter_by_id_prefix(
+        [request for request in load_requests() if is_pending(request)],
+        args.id_prefix,
+    )
+    blocked = [
+        (request, weak_prompt_reason(request))
+        for request in pending
+        if weak_prompt_reason(request)
+    ]
+    requests = [request for request in pending if not weak_prompt_reason(request)]
 
-    # Already-rendered requests self-drain: mark done, never regenerate.
-    # `already_satisfied()` is a network call for kind_robots media targets
-    # (see media_direct_consumer._media_exists) -- call it exactly once per
-    # entry rather than once per comprehension, or a large pending backlog
-    # doubles the wall time this pre-scan takes for no reason (conductor
-    # art-generator-connect/t-022: this doubling, on a ~120-entry backlog
-    # against an unreachable media host, is what pushed a single workflow
-    # step to 85+ minutes against a --timeout meant to bound it near 25).
+    if blocked:
+        print(f"BLOCKED: {len(blocked)} weak prompt request(s) need repair; none will be queued.")
+        for request, reason in blocked:
+            print(
+                f"  blocked {request.get('id') or request.get('image_path')}: {reason} — "
+                f'"{normalized_prompt(request)[:100]}"'
+            )
+        print()
+
     satisfied = []
     todo = []
-    for r in requests:
-        (satisfied if already_satisfied(r) else todo).append(r)
+    for request in requests:
+        (satisfied if already_satisfied(request) else todo).append(request)
     if args.limit > 0:
         todo = todo[: args.limit]
 
-    # Give every request a filler-tuned step count unless it asked for its own.
     apply_default_steps(todo, args.steps)
 
     if not requests:
-        print("No pending requests in projects/art-prompts.yaml - nothing to do.")
+        if blocked:
+            print("No safe pending requests remain; blocked entries stay pending for prompt repair.")
+        else:
+            print("No pending requests in projects/art-prompts.yaml - nothing to do.")
         return 0
 
     print(
@@ -212,17 +261,17 @@ def main():
     )
 
     if satisfied:
-        for r in satisfied:
-            print(f"  already present, will mark done: {r['image_path']}")
+        for request in satisfied:
+            print(f"  already present, will mark done: {request['image_path']}")
         if args.live:
-            n = mark_done([r["id"] for r in satisfied if r.get("id")])
-            print(f"  marked {n} satisfied request(s) done.\n")
+            count = mark_done([request["id"] for request in satisfied if request.get("id")])
+            print(f"  marked {count} satisfied request(s) done.\n")
 
     if not args.live:
-        for r in todo:
-            job = consumer.entry_to_job(r)
+        for request in todo:
+            job = consumer.entry_to_job(request)
             print(
-                f"  would queue {r['image_path']}"
+                f"  would queue {request['image_path']}"
                 f"  [{job['payload']['width']}x{job['payload']['height']}]"
                 f"  \"{job['payload']['promptString'][:60]}\""
             )
@@ -235,22 +284,22 @@ def main():
 
     done_ids = []
     failures = 0
-    for r in todo:
-        name = r["image_path"]
+    for request in todo:
+        name = request["image_path"]
         try:
-            job_id = consumer.enqueue(consumer.entry_to_job(r))
+            job_id = consumer.enqueue(consumer.entry_to_job(request))
             print(f"  queued job {job_id} for {name} - waiting...")
             job = consumer.wait_for_job(job_id, args.timeout)
             image_b64 = consumer.fetch_image_b64(job["artImageId"])
-            out, warning = consumer.save_result(r, image_b64)
-            print(f"  DONE {name} -> {out.relative_to(ROOT)} (ArtImage {job['artImageId']})")
+            output, warning = consumer.save_result(request, image_b64)
+            print(f"  DONE {name} -> {output.relative_to(ROOT)} (ArtImage {job['artImageId']})")
             if warning:
                 print(f"    WARNING: {warning}")
-            if r.get("id"):
-                done_ids.append(r["id"])
-        except Exception as e:  # noqa: BLE001 - keep draining the batch
+            if request.get("id"):
+                done_ids.append(request["id"])
+        except Exception as error:  # noqa: BLE001 - keep draining the batch
             failures += 1
-            print(f"  FAILED {name}: {e}", file=sys.stderr)
+            print(f"  FAILED {name}: {error}", file=sys.stderr)
 
     marked = mark_done(done_ids)
     print(
