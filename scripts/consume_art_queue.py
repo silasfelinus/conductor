@@ -65,12 +65,14 @@ POLL_SECONDS = 5
 # (steps, cfg, sampler, negative_prompt, seed, engine) so a batch can spend
 # more on hero key art than on throwaway icons.
 #
-# Default engine is FLUX (dev) — the beautiful-by-default path. A flux entry is
-# emitted as a COMFY job carrying the full Flux workflow graph below, which the
-# home relay's run_comfy drives on ComfyUI. Set `engine: a1111` on an entry to
-# fall back to the A1111 txt2img path (raw KR-style keys the relay consumes
-# directly) — useful when ComfyUI is down or for quick SD-only tests.
-DEFAULT_ENGINE = "flux"
+# Default engine is KREA2 (Krea 2 Turbo) — the fast, VRAM-friendly, extreme-
+# creativity path that renders reliably on the home box. A krea2 entry is emitted
+# as a COMFY job carrying the full Krea 2 workflow graph below, which the home
+# relay's run_comfy drives on ComfyUI. Flux (dev) stays available per-entry
+# (`engine: flux`) for anything that genuinely needs it, and Kontext for edits;
+# set `engine: a1111` to fall back to the A1111 txt2img path (raw KR-style keys
+# the relay consumes directly) — useful when ComfyUI is down or for SD-only tests.
+DEFAULT_ENGINE = "krea2"
 DEFAULT_STEPS = 30
 DEFAULT_CFG = 7
 
@@ -215,7 +217,7 @@ def build_flux_workflow(prompt, width, height, steps, guidance, seed, unet):
     return {
         "4": {
             "inputs": {
-                "clip_name1": "umt5_xxl_fp8_e4m3fn_scaled.safetensors",
+                "clip_name1": "t5xxl_fp8_e4m3fn_scaled.safetensors",
                 "clip_name2": "clip_l.safetensors",
                 "type": "flux",
                 "device": "default",
@@ -475,10 +477,11 @@ def build_flux2_klein_workflow(prompt, negative, width, height, steps, seed, ent
 def entry_to_job(entry):
     """Map an art-generate.yaml entry to an ArtJob enqueue body.
 
-    Default engine is Flux: the entry becomes a COMFY job whose payload carries
-    the full Flux workflow graph (native 1MP, beta scheduler, guidance 3.5).
-    `engine: a1111` on an entry instead emits KR-style txt2img keys the relay's
-    run_a1111 consumes directly.
+    Default engine is Krea 2 (krea2): the entry becomes a COMFY job whose payload
+    carries the full Krea 2 workflow graph (native 8-step cadence, Qwen lineage).
+    `engine: flux` selects the Flux graph (native 1MP, beta scheduler, guidance
+    3.5) for entries that specifically want it; `engine: a1111` instead emits
+    KR-style txt2img keys the relay's run_a1111 consumes directly.
 
     Quality knobs (steps, cfg, negative prompt, sampler, seed) default to the
     module constants and may be overridden per entry. Optional knobs (sampler,
