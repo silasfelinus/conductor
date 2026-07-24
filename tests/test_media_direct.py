@@ -26,26 +26,61 @@ def fake_consumer(tmp_path):
     )
 
 
-def test_consumer_adds_exact_destination(tmp_path, monkeypatch):
+@pytest.mark.parametrize(
+    "image_path",
+    [
+        "public/images/bots/test/test.webp",
+        "/public/images/bots/test/test.webp",
+        "images/bots/test/test.webp",
+        "/images/bots/test/test.webp",
+        r"public\images\bots\test\test.webp",
+        "https://media.acrocatranch.com/images/bots/test/test.webp?cache=1",
+    ],
+)
+def test_consumer_adds_normalized_exact_destination(tmp_path, monkeypatch, image_path):
     consumer = fake_consumer(tmp_path)
-    monkeypatch.setattr(media_direct_consumer, "_media_exists", lambda _path: True)
+    verified_paths = []
+
+    def media_exists(path):
+        verified_paths.append(path)
+        return True
+
+    monkeypatch.setattr(media_direct_consumer, "_media_exists", media_exists)
     media_direct_consumer.patch_consumer(
         consumer, media_direct_consumer.KIND_ROBOTS_REPO
     )
 
     entry = {
         "prompt": "a friendly robot",
-        "image_path": "public/images/bots/test/test.webp",
+        "image_path": image_path,
     }
     job = consumer.entry_to_job(entry)
 
+    canonical = "public/images/bots/test/test.webp"
     assert job["payload"]["targetRepo"] == "silasfelinus/kind_robots"
-    assert job["payload"]["imagePath"] == entry["image_path"]
+    assert job["payload"]["imagePath"] == canonical
 
     output, warning = consumer.save_result(entry, base64.b64encode(b"bytes").decode())
+    assert verified_paths == [canonical]
     assert output == tmp_path / ".media-direct" / "bots" / "test" / "test.webp"
     assert "directly" in warning
     assert not (tmp_path / "process" / "test.webp").exists()
+
+
+def test_consumer_keeps_non_kindrobots_paths_unchanged(tmp_path):
+    consumer = fake_consumer(tmp_path)
+    media_direct_consumer.patch_consumer(
+        consumer, media_direct_consumer.CONDUCTOR_REPO
+    )
+
+    entry = {
+        "prompt": "a friendly robot",
+        "image_path": "projects/images/test.webp",
+    }
+    job = consumer.entry_to_job(entry)
+
+    assert job["payload"]["targetRepo"] == "silasfelinus/conductor"
+    assert job["payload"]["imagePath"] == entry["image_path"]
 
 
 def test_consumer_keeps_fallback_when_public_media_does_not_verify(
@@ -59,7 +94,7 @@ def test_consumer_keeps_fallback_when_public_media_does_not_verify(
 
     entry = {
         "prompt": "a friendly robot",
-        "image_path": "public/images/bots/test/test.webp",
+        "image_path": "/images/bots/test/test.webp",
     }
     output, warning = consumer.save_result(entry, base64.b64encode(b"bytes").decode())
 
@@ -81,14 +116,25 @@ def load_relay_media_module(monkeypatch):
     return module
 
 
-def test_relay_maps_exact_kindrobots_path(monkeypatch):
+@pytest.mark.parametrize(
+    "image_path",
+    [
+        "public/images/bots/avatars/test.webp",
+        "/public/images/bots/avatars/test.webp",
+        "images/bots/avatars/test.webp",
+        "/images/bots/avatars/test.webp",
+        r"public\images\bots\avatars\test.webp",
+        "https://media.acrocatranch.com/images/bots/avatars/test.webp?cache=1",
+    ],
+)
+def test_relay_maps_legacy_kindrobots_paths(monkeypatch, image_path):
     relay_media = load_relay_media_module(monkeypatch)
 
     relative = relay_media.direct_media_relative(
         {
             "payload": {
                 "targetRepo": "silasfelinus/kind_robots",
-                "imagePath": "public/images/bots/avatars/test.webp",
+                "imagePath": image_path,
             }
         }
     )
@@ -99,9 +145,11 @@ def test_relay_maps_exact_kindrobots_path(monkeypatch):
 @pytest.mark.parametrize(
     "image_path",
     [
-        "images/test.webp",
+        "projects/images/test.webp",
+        "public/assets/test.webp",
         "public/images/../secret.webp",
         "public/images/../../secret.webp",
+        "https://example.com/projects/images/test.webp",
     ],
 )
 def test_relay_rejects_unsafe_kindrobots_paths(monkeypatch, image_path):
@@ -129,7 +177,7 @@ def test_relay_writes_file_and_refreshes_manifests(tmp_path, monkeypatch):
         {
             "payload": {
                 "targetRepo": "silasfelinus/kind_robots",
-                "imagePath": "public/images/test/sample.webp",
+                "imagePath": "/images/test/sample.webp",
             }
         },
         {
