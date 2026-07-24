@@ -150,7 +150,12 @@ def test_apply_default_steps_fills_only_unset():
 def test_filler_steps_reach_the_flux_workflow():
     # A request with no steps, once defaulted, renders at the filler count end to
     # end -- both the payload and the Flux KSampler node carry it.
-    entry = {"image_path": "public/images/x.webp", "prompt": "x", "variant": "image"}
+    entry = {
+        "image_path": "public/images/x.webp",
+        "prompt": "x",
+        "variant": "image",
+        "engine": "flux",
+    }
     cr.apply_default_steps([entry], cr.FILLER_STEPS)
     job = cr.consumer.entry_to_job(entry)
     assert job["payload"]["steps"] == cr.FILLER_STEPS

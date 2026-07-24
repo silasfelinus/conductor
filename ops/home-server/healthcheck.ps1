@@ -4,9 +4,12 @@
 # every 5 minutes - see README.md.
 #
 # It also emails an alert when it has to restart something, so a failing/hung
-# ComfyUI reaches you instead of being silently self-healed. Alerts reuse the
-# same Brevo secrets as the daily digest; set these once on the box (setx), then
-# open a NEW shell:
+# ComfyUI reaches you instead of being silently self-healed. A second watchdog
+# (see "Render-failure watchdog" below) catches a ComfyUI that answers fine but
+# fails every render - it watches the ArtJob queue's FAILED/DONE counts via
+# /api/art/queue/stats (needs KR_API_TOKEN) and alerts on a failure burst.
+# Alerts reuse the same Brevo secrets as the daily digest; set these once on the
+# box (setx), then open a NEW shell:
 #   setx BREVO_API_KEY "your-brevo-key"
 #   setx DIGEST_TO     "silasfelinus@gmail.com"     (or ALERT_TO)
 #   setx DIGEST_FROM   "ops@your-verified-sender"   (or ALERT_FROM)
@@ -144,5 +147,89 @@ foreach ($t in $targets) {
         } else {
             Write-Log "$($t.Name): restart alert suppressed (within $($cooldownMinutes)-min cooldown)"
         }
+    }
+}
+
+# --- Render-failure watchdog -------------------------------------------------
+# The liveness probes above catch a ComfyUI that stops ANSWERING. They do NOT
+# catch a ComfyUI that answers fine but fails every render (a bad model/encoder
+# config, a corrupt checkpoint, a broken custom node) - the API stays 200 while
+# the ArtJob queue quietly fills with FAILED. This block watches the pipeline's
+# own scoreboard (/api/art/queue/stats) and reacts to a burst of new failures
+# that are NOT accompanied by new successes.
+#
+# Policy (set with Silas 2026-07-24): EMAIL ALWAYS on a detected spike (he wants
+# to know every time, even asleep), but RESTART comfyui at most once per cooldown
+# (a restart won't fix a config bug, so hammering it is pointless - one nudge in
+# case it's a transient GPU/driver wedge, then leave it for a human).
+#
+# Detection uses per-tick DELTAS of the all-time DONE/FAILED counts, so it is
+# self-normalizing: re-enqueueing failures (FAILED drops) yields a negative delta
+# and never false-alarms; only NEW failures outpacing NEW successes trip it.
+$krBase = if ($env:KR_BASE_URL) { $env:KR_BASE_URL.TrimEnd('/') } else { 'https://kind-robots.vercel.app' }
+$krToken = $env:KR_API_TOKEN
+
+$failSpikeThreshold = 5
+if ($env:FAILURE_SPIKE_THRESHOLD) {
+    [int]::TryParse($env:FAILURE_SPIKE_THRESHOLD, [ref]$failSpikeThreshold) | Out-Null
+}
+
+if (-not $krToken) {
+    Write-Log "render watchdog skipped (no KR_API_TOKEN set)"
+} else {
+    $stats = $null
+    try {
+        $stats = Invoke-RestMethod -Uri "$krBase/api/art/queue/stats" -TimeoutSec 30 `
+            -Headers @{ 'Authorization' = "Bearer $krToken"; 'accept' = 'application/json' }
+    } catch {
+        Write-Log "render watchdog: stats fetch FAILED ($($_.Exception.Message))"
+    }
+
+    if ($stats -and $stats.data -and $stats.data.queueDepth) {
+        $depth = $stats.data.queueDepth
+        $done = 0; $failed = 0
+        if ($depth.PSObject.Properties['DONE'])   { $done   = [int]$depth.DONE }
+        if ($depth.PSObject.Properties['FAILED']) { $failed = [int]$depth.FAILED }
+
+        $haveBaseline = $alertState.ContainsKey('render_last_done') -and $alertState.ContainsKey('render_last_failed')
+        $lastDone = 0; $lastFailed = 0
+        if ($haveBaseline) {
+            [int]::TryParse([string]$alertState['render_last_done'], [ref]$lastDone) | Out-Null
+            [int]::TryParse([string]$alertState['render_last_failed'], [ref]$lastFailed) | Out-Null
+        }
+
+        # Always roll the baseline forward for the next tick.
+        $alertState['render_last_done'] = $done
+        $alertState['render_last_failed'] = $failed
+
+        if ($haveBaseline) {
+            $deltaDone = $done - $lastDone
+            $deltaFailed = $failed - $lastFailed
+            Write-Log "render watchdog: DONE $lastDone->$done (+$deltaDone), FAILED $lastFailed->$failed (+$deltaFailed)"
+
+            # Spike = a meaningful burst of NEW failures that outnumber NEW successes.
+            if (($deltaFailed -ge $failSpikeThreshold) -and ($deltaFailed -gt $deltaDone)) {
+                $stamp = Get-Date -Format 'yyyy-MM-dd HH:mm:ss'
+
+                # EMAIL ALWAYS (not cooldown-gated). Naturally self-limits: emails
+                # stop once failures stop accruing (delta returns to ~0).
+                Send-Alert "RENDER FAILURES: +$deltaFailed failed on $hostName (only +$deltaDone done)" `
+                    "The art pipeline logged $deltaFailed new FAILED job(s) and only $deltaDone new DONE since the last check (all-time totals now DONE=$done FAILED=$failed) as of $stamp on $hostName. ComfyUI is still answering its API, so this is a RENDER config failure, not a hang - check the newest FAILED job's error (bad model/encoder/checkpoint or a broken custom node). See /api/art/queue/stats recentFailed and pm2 logs."
+
+                # RESTART comfyui at most once per cooldown, in case it's a wedged
+                # GPU/driver state a restart can shake loose.
+                if (Test-AlertDue $alertState 'render-watchdog-restart') {
+                    Write-Log "render watchdog: failure spike (+$deltaFailed) - restarting comfyui via pm2"
+                    & pm2 restart comfyui | Out-Null
+                    $alertState['render-watchdog-restart'] = $stamp
+                } else {
+                    Write-Log "render watchdog: comfyui restart suppressed (within $($cooldownMinutes)-min cooldown)"
+                }
+            }
+        } else {
+            Write-Log "render watchdog: baseline set (DONE=$done FAILED=$failed) - deltas start next tick"
+        }
+
+        Save-AlertState $alertState
     }
 }

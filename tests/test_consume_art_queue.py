@@ -19,9 +19,10 @@ def test_entry_to_job_maps_fields():
             "image_path": "projects/images/coat-dance-hero.webp",
             "size": "1280x720",
             "prompt": "  a   coat   dancing  ",
+            "engine": "flux",
         }
     )
-    # default engine is Flux, emitted as a COMFY job carrying the workflow graph
+    # Flux is emitted as a COMFY job carrying the full workflow graph
     assert job["engine"] == "COMFY"
     assert job["projectSlug"] == "coat-dance"
     assert job["payload"]["promptString"] == "a coat dancing"
@@ -43,12 +44,15 @@ def test_entry_to_job_maps_fields():
     assert wf["24"]["inputs"]["unet_name"] == "flux1-dev-Q8_0.gguf"
 
 
-def test_entry_to_job_flux_untargeted_lands_in_flux_folder():
+def test_entry_to_job_untargeted_lands_in_default_engine_folder():
+    # An untargeted entry (no project, no engine) falls back to the default
+    # engine's model-family folder -- krea2 since it became the default.
     job = consumer.entry_to_job(
         {"image_path": "public/images/x.webp", "prompt": "a fox"}
     )
     assert job["engine"] == "COMFY"
-    assert job["payload"]["collection"] == "flux"
+    assert job["payload"]["collection"] == "krea2"
+    assert job["payload"]["collection"] == consumer.DEFAULT_ENGINE
     assert "workflow" in job["payload"]
 
 
@@ -74,6 +78,7 @@ def test_entry_to_job_flux_schnell_variant():
         {
             "image_path": "public/images/x.webp",
             "prompt": "quick sketch",
+            "engine": "flux",
             "flux_variant": "schnell",
         }
     )
