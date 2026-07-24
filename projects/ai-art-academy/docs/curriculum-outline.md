@@ -4,7 +4,7 @@ date: 2026-07-10
 task: ai-art-academy/t-005
 status: draft for review (content complete, one source URL verified per movement)
 
-This is the curriculum: 28 movements spanning the timeline from Ancient Egypt to
+This is the curriculum: 29 movements spanning the timeline from Ancient Egypt to
 American Regionalism. Every artist named here is long dead (all listed artists died
 before 1955), and every example work is a public-domain original held (or expected)
 in an open-access collection. See the ethical boundary in DESIGN-BRIEF.md and the
@@ -28,7 +28,12 @@ for the Persian lesson and deferred as its own future entry. Section 28 is the
 non-Western entry (after Persian and Mughal miniature painting) and the first
 anonymous-artist entry since Section 2's Byzantine Mosaic, and the first movement
 whose named "artists" are unknown ancient painters rather than an individual or
-school. They are appended (rather than renumbered into place) but belong
+school. Section 29 is the 2026-07-24 v1.9 addition (t-010 cycle): Vienna
+Secession — a return to a single-named-artist (Klimt) movement after Section 28's
+anonymous entry, and the first entry whose defining visual signature is applied
+gold leaf as flat ornamental pattern rather than as illumination (cf. Section 3's
+Illuminated Manuscript) or mosaic tessellation (cf. Section 2's Byzantine Mosaic).
+They are appended (rather than renumbered into place) but belong
 chronologically among the earlier movements — read the `era` field in the
 machine-readable skeleton for true ordering; the front-end seed (t-020, t-031)
 inserts them in chronological position.
@@ -255,6 +260,20 @@ movements:
     artist_slugs: [anonymous-fayum-painters]
     example_count: 3
     remix_hint: "Repaint this image as a Fayum mummy portrait: a direct frontal or slightly turned gaze with large dark almond-shaped eyes and heavy dark brows, warm honey-toned skin built from thick encaustic wax brushstrokes with visible ridge texture, simple Roman-style hair and dress, a plain flat dark background, and a thin gold-leaf wreath or jewelry accent"
+  # --- v1.9 addition (2026-07-24, t-010 cycle, lane 4) ---
+  # Single-named-artist entry (Klimt) after v1.8's anonymous Fayum painters.
+  # Defining signature is flat ornamental gold-leaf pattern, distinct from
+  # illuminated-manuscript's gold-as-illumination and byzantine-mosaic's gold
+  # tesserae. Belongs chronologically after art-nouveau/symbolism (see `era`);
+  # appended here to avoid renumbering the sections above. A future seed-sync
+  # task inserts it in chronological position in academyStyles.ts, mirroring
+  # t-020/t-031/t-034.
+  - slug: vienna-secession
+    name: Vienna Secession
+    era: "c. 1897-1918 (Vienna, Austria)"
+    artist_slugs: [gustav-klimt]
+    example_count: 3
+    remix_hint: "Repaint this image as a Vienna Secession painting in the style of Gustav Klimt: flat ornamental fields of gold leaf and gold-toned metallic pattern (spirals, eyes, rectangles) replacing background depth, an elongated figure rendered with fine naturalistic detail in face and hands set against the abstract gold pattern, rich jewel-toned color islands within the gold, no cast shadow or realistic perspective, a strong decorative border"
 ```
 
 ---
@@ -1702,6 +1721,65 @@ and a thin gold-leaf wreath or jewelry accent"
 
 ---
 
+## 29. Vienna Secession (`vienna-secession`)
+
+**Era:** c. 1897-1918 (Vienna, Austria)
+
+**Key ideas.** Founded in 1897 when Gustav Klimt and a group of Viennese artists
+broke from the conservative Künstlerhaus academy under the motto "Der Zeit ihre
+Kunst, der Kunst ihre Freiheit" ("To every age its art, to art its freedom"), the
+Vienna Secession fused Art Nouveau's organic decorative line (Lesson 12) with a
+new, almost proto-abstract flatness: whole passages of a picture dissolve into
+pure ornamental pattern — gold-leaf spirals, eyes, rectangles, checkerboards —
+while the figures' faces and hands remain rendered with sharp, almost
+photographic naturalism. The effect sits deliberately between two-dimensional
+pattern and three-dimensional portraiture in the same canvas, applied to
+symbolic and allegorical subjects (love, mortality, myth) rather than everyday
+scenes. Klimt's late "Golden Phase" (c. 1899-1910) is the movement's best-known
+and most visually distinctive output and is the sole example source for this
+lesson.
+
+**Recognition cues:**
+- Large flat fields of gold leaf or gold-toned metallic paint applied as
+  ornamental pattern (spirals, concentric eyes, rectangles), not as
+  illumination or light
+- A jarring contrast between finely modeled, naturalistic faces/hands and the
+  totally flat, non-representational ornament surrounding them
+- Elongated, stylized figures with little or no anatomical volume below the
+  head and hands
+- Rich, saturated jewel-toned color "islands" (deep reds, greens, blues) set
+  within or against the gold field
+- Symbolic or mythic subject matter — lovers, femme fatale figures, allegorical
+  women — rather than portraiture of daily life
+- No cast shadow, no realistic perspective or setting; a strong decorative
+  border or framing device
+
+**Notable artists:** Gustav Klimt (1862-1918), founding president of the Vienna
+Secession.
+
+**Example works:**
+- *The Kiss (Der Kuss)*, 1907-08 — oil and gold leaf on canvas. **VERIFIED**,
+  Österreichische Galerie Belvedere, Vienna; public domain (`PD-old-100-expired`,
+  `CC-PD-Mark`, confirmed live via the Wikimedia Commons API):
+  https://commons.wikimedia.org/wiki/File:Gustav_Klimt_016.jpg
+- *Portrait of Adele Bloch-Bauer I*, 1907 — oil, silver, and gold on canvas.
+  **VERIFIED**, Neue Galerie New York; public domain (`PD-old-100-expired`,
+  `CC-PD-Mark`, confirmed live via the Wikimedia Commons API):
+  https://commons.wikimedia.org/wiki/File:Gustav_Klimt_046.jpg
+- *Judith I*, 1901 — oil on canvas. **VERIFIED**, Österreichische Galerie
+  Belvedere, Vienna; public domain (`PD-old-100-expired`, `CC-PD-Mark`,
+  confirmed live via the Wikimedia Commons API):
+  https://commons.wikimedia.org/wiki/File:Gustav_Klimt_039.jpg
+
+**remix_hint:** "Repaint this image as a Vienna Secession painting in the style
+of Gustav Klimt: flat ornamental fields of gold leaf and gold-toned metallic
+pattern (spirals, eyes, rectangles) replacing background depth, an elongated
+figure rendered with fine naturalistic detail in face and hands set against the
+abstract gold pattern, rich jewel-toned color islands within the gold, no cast
+shadow or realistic perspective, a strong decorative border"
+
+---
+
 ## Lesson-only vs remixable
 
 Every movement above maps to a remix config (mode `prompt` to start; t-003/t-004
@@ -1754,7 +1832,14 @@ failure is a generic warm-toned "vintage photo" filter that skips the style's ac
 signature — the remix_hint leans hard on the specific, checkable traits (oversized
 almond eyes, visible encaustic ridge texture, flat dark background, no cast shadow)
 precisely because "old painting of a person" alone would not distinguish it from
-`realism` or `renaissance` portraiture.
+`realism` or `renaissance` portraiture. `vienna-secession` shares `gothic` and
+`byzantine-mosaic`'s gold-ground appeal but with the opposite risk: the model may
+gild the whole image into a uniform "gold filter" and lose the style's defining
+contrast between flat, non-representational ornament and a sharply naturalistic
+face/hands — the remix_hint keeps that tension explicit ("elongated figure
+rendered with fine naturalistic detail... set against the abstract gold
+pattern") so t-004 should specifically check that the face stays legible and
+photographic rather than dissolving into the pattern too.
 
 **Flagged as likely-poor remixers:**
 - `cubism` — faceting while "preserving the composition" is partly contradictory;
@@ -1935,3 +2020,16 @@ were confirmed VERIFIED directly against the Met Collection API
 the Met's CC0 Open Access program — a stronger, more direct verification than
 the Wikimedia-Commons-file-page method used for §17-27, since it reads the
 holding institution's own rights-status field rather than a third-party tag.
+
+**v1.9 addition (2026-07-24) re-check.** Section 29 (Vienna Secession) clears
+the PUBLIC-DOMAIN-POLICY.md §1.3 both-prongs rule with a comfortable margin:
+sole named artist Gustav Klimt died in 1918 — 108 years ago, well past the
+1956 cutoff and earlier than every other named-artist death on record in this
+document. All three example works (1901, 1907, 1907-08) predate the 1930
+US-publication cutoff and do not disturb the curriculum's
+most-recent-example-work record, which stays at 1930 (*American Gothic* /
+*Stone City, Iowa*, §24). This session had working egress to
+`commons.wikimedia.org` (confirmed via direct API query, HTTP 200 on all
+three file pages), so all three example-work URLs are marked VERIFIED against
+their live `extmetadata` rights-status categories (`PD-old-100-expired` and
+`CC-PD-Mark`), matching the §22-23/§25-27 precedent.
