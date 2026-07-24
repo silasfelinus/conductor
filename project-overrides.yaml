@@ -363,10 +363,13 @@ overrides:
     status: active
     priority: normal
     kind: software
-    # Frontend placement deferred to music-mentor/t-006: add the canonical
-    # PROJECT_PLACEMENTS entry in kind_robots utils/projectPlacements.ts first
-    # (channelKey: play, tabKey: music-mentor, route: /music-mentor), then mirror
-    # liveUrl/channelKey/tabKey here so sync_projects.py pushes a matching row.
+    # Frontend placement — synced to the kind_robots Project row by
+    # sync_projects.py. Values match the canonical PROJECT_PLACEMENTS entry for
+    # 'music-mentor' in kind_robots utils/projectPlacements.ts (channelKey: play,
+    # tabKey: music-mentor, route: /music-mentor) — conductor music-mentor/t-006.
+    liveUrl: /music-mentor
+    channelKey: play
+    tabKey: music-mentor
 
   - slug: dream-cycle
     status: active

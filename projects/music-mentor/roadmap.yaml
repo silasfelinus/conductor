@@ -30,7 +30,7 @@ milestones:
   - id: m2
     title: "BUILD — actualize, adjust, test"
     weight: 50
-    status: in-progress
+    status: done
 
   - id: m3
     title: "POLISH & SHIP — aesthetics, performance, delivery"
@@ -66,11 +66,11 @@ tasks:
   - id: t-003
     milestone: m2
     title: "Client-side Web Audio feature extraction (composable)"
-    status: review
+    status: done
     owner: claude
     passes: 0
     stakes: reversible
-    updated: 2026-07-23T00:00:00Z
+    updated: 2026-07-24T00:00:00Z
     pr: "https://github.com/silasfelinus/kind_robots/pull/920"
     note: >
       composables/useAudioAnalysis.ts — decode audio to AudioBuffer, compute a
@@ -81,11 +81,11 @@ tasks:
   - id: t-004
     milestone: m2
     title: "Analyze endpoint + Pinia store"
-    status: review
+    status: done
     owner: claude
     passes: 0
     stakes: reversible
-    updated: 2026-07-23T00:00:00Z
+    updated: 2026-07-24T00:00:00Z
     pr: "https://github.com/silasfelinus/kind_robots/pull/920"
     note: >
       server/api/music-mentor/analyze.post.ts (manaGate + callSuggestProvider,
@@ -96,11 +96,11 @@ tasks:
   - id: t-005
     milestone: m2
     title: "/music-mentor page"
-    status: review
+    status: done
     owner: claude
     passes: 0
     stakes: reversible
-    updated: 2026-07-23T00:00:00Z
+    updated: 2026-07-24T00:00:00Z
     pr: "https://github.com/silasfelinus/kind_robots/pull/920"
     note: >
       pages/music-mentor.vue — DaisyUI page: audio file-input, setlist textarea,
@@ -110,18 +110,34 @@ tasks:
 
   - id: t-006
     milestone: m3
-    title: "Frontend placement + project art (icon/card/hero)"
-    status: ready
+    title: "Frontend nav placement for /music-mentor"
+    status: done
+    owner: claude
+    passes: 0
+    stakes: reversible
+    updated: 2026-07-24T00:00:00Z
+    pr: "https://github.com/silasfelinus/kind_robots/pull/922"
+    note: >
+      Added a canonical PROJECT_PLACEMENTS entry in kind_robots
+      utils/projectPlacements.ts (channelKey: play, tabKey: music-mentor,
+      route: /music-mentor) and mirrored liveUrl/channelKey/tabKey into
+      project-overrides.yaml.
+
+  - id: t-008
+    milestone: m3
+    title: "Generate project art (icon/card/hero) via ArtJob"
+    status: needs-human
     owner: null
     passes: 0
     stakes: reversible
-    updated: 2026-07-23T00:00:00Z
+    updated: 2026-07-24T00:00:00Z
     note: >
-      Add a canonical PROJECT_PLACEMENTS entry in kind_robots
-      utils/projectPlacements.ts (channelKey: play, tabKey: music-mentor,
-      route: /music-mentor), then mirror liveUrl/channelKey/tabKey into
-      project-overrides.yaml. Generate the three project images queued in
-      art-prompts.yaml.
+      FOR SILAS: the three prompts are written in art-prompts.yaml and queued in
+      art-generate.yaml (music-mentor is first in line). Live submission via
+      scripts/request_art.py --no-dry-run returned HTTP 401 "Invalid or expired
+      token" — the KR_API_TOKEN in the session env is expired. Refresh
+      KR_API_TOKEN (or run the consumer / generate manually) and the queued
+      entries will render into projects/images/music-mentor-{icon,card,hero}.webp.
 
   - id: t-007
     milestone: m3
