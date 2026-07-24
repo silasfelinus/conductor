@@ -8,7 +8,8 @@ holds KR_API_TOKEN (admin API key), not a user JWT or user apiKey.
 
 Endpoint contract (from docs/art-api.md):
   POST /api/conductor/art-request
-  Auth: X-KR-API-Token: <KR_API_TOKEN>
+  Auth: x-api-key: <KR_API_TOKEN>   (validateApiKey reads x-api-key /
+        authorization / x-admin-token — NOT the legacy X-KR-API-Token header)
   Body: { src, pageUrl?, alt?, label?, variant?, prompt? }
   Response: { success, message, entry: { src, label, variant, prompt } }
 
@@ -146,6 +147,11 @@ def send_request(payload: dict, base_url: str, api_token: str) -> dict:
         method="POST",
         headers={
             "Content-Type": "application/json",
+            # The endpoint authenticates via validateApiKey(), which reads the
+            # token from x-api-key / authorization / x-admin-token — NOT the
+            # legacy X-KR-API-Token header. Send x-api-key (the header actually
+            # checked); keep the legacy header too for any other consumer.
+            "x-api-key": api_token,
             "X-KR-API-Token": api_token,
         },
     )
@@ -277,7 +283,7 @@ def main(argv: list[str] | None = None) -> int:
         print("[request_art] DRY-RUN — payload (not sent):")
         print(json.dumps(payload, indent=2))
         print(f"\n[request_art] Would POST to: {base_url.rstrip('/')}{ENDPOINT_PATH}")
-        print("[request_art] Auth header: X-KR-API-Token: <KR_API_TOKEN from env>")
+        print("[request_art] Auth header: x-api-key: <KR_API_TOKEN from env>")
         return 0
 
     # --- Live mode ---
