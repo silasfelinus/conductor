@@ -1,0 +1,138 @@
+# Music Mentor — audio singing & arrangement feedback tool, built in kind_robots.
+# Cross-repo software project: roadmap here owns task state; the implementation
+# ships as a page + composable + endpoint in silasfelinus/kind_robots.
+project: Music Mentor
+kind: software
+
+notes_from_silas: |
+  Silas writes musical medleys and wants to upload a recording and get back
+  feedback on singing quality and arrangement, with toggleable choices for the
+  kind of feedback. Front-end page on kind_robots (originally imagined as a
+  ComfyUI node graph — moved to a site page).
+
+  Honest scope: no tool judges "good singing" like a vocal coach (tone, emotion,
+  style are subjective). What this DOES: the browser extracts objective audio
+  signals via the Web Audio API — pitch/intonation, timing/tempo, dynamics, key,
+  rough section structure — then an LLM reasons over those numbers plus the
+  user's setlist to give singing + arrangement feedback. Feature extraction runs
+  client-side (no Comfy GPU, no Python, works on Vercel); audio never leaves the
+  browser (ephemeral — nothing stored).
+
+  This project has write access to develop the music-mentor page and its
+  supporting composable/endpoint in kind_robots.
+
+milestones:
+  - id: m1
+    title: "SHAPE — outline, brainstorm, design brief"
+    weight: 25
+    status: done
+
+  - id: m2
+    title: "BUILD — actualize, adjust, test"
+    weight: 50
+    status: in-progress
+
+  - id: m3
+    title: "POLISH & SHIP — aesthetics, performance, delivery"
+    weight: 25
+    status: not-started
+
+tasks:
+  - id: t-001
+    milestone: m1
+    title: "Write the design brief and start building"
+    status: done
+    owner: claude
+    passes: 0
+    stakes: reversible
+    updated: 2026-07-23T00:00:00Z
+    note: >
+      DESIGN-BRIEF.md written (what it is, who it serves, creative direction,
+      MVP shape). Silas-directed session; build started immediately.
+
+  - id: t-002
+    milestone: m1
+    title: "Confirm scope with Silas"
+    status: done
+    owner: claude
+    passes: 0
+    stakes: reversible
+    updated: 2026-07-23T00:00:00Z
+    note: >
+      Scope confirmed live with Silas: slug music-mentor, four feedback
+      dimensions (intonation, timing, dynamics, arrangement), ephemeral
+      (audio never uploaded, nothing persisted).
+
+  - id: t-003
+    milestone: m2
+    title: "Client-side Web Audio feature extraction (composable)"
+    status: review
+    owner: claude
+    passes: 0
+    stakes: reversible
+    updated: 2026-07-23T00:00:00Z
+    pr: "https://github.com/silasfelinus/kind_robots/pull/920"
+    note: >
+      composables/useAudioAnalysis.ts — decode audio to AudioBuffer, compute a
+      compact feature summary: pitch/intonation (median pitch, voiced %, cents
+      deviation, estimated key, vibrato), timing (tempo + stability), dynamics
+      (loudness range, contrast), structure (section count). Dependency-free.
+
+  - id: t-004
+    milestone: m2
+    title: "Analyze endpoint + Pinia store"
+    status: review
+    owner: claude
+    passes: 0
+    stakes: reversible
+    updated: 2026-07-23T00:00:00Z
+    pr: "https://github.com/silasfelinus/kind_robots/pull/920"
+    note: >
+      server/api/music-mentor/analyze.post.ts (manaGate + callSuggestProvider,
+      reusing the suggest provider plumbing) and stores/musicMentorStore.ts
+      (runs extraction locally, POSTs the summary + setlist + selected
+      dimensions, returns feedback). Ephemeral — no DB write.
+
+  - id: t-005
+    milestone: m2
+    title: "/music-mentor page"
+    status: review
+    owner: claude
+    passes: 0
+    stakes: reversible
+    updated: 2026-07-23T00:00:00Z
+    pr: "https://github.com/silasfelinus/kind_robots/pull/920"
+    note: >
+      pages/music-mentor.vue — DaisyUI page: audio file-input, setlist textarea,
+      four dimension toggles, analyze button, feedback panel, collapsible
+      feature-summary. Soft-gated on userStore.isLoggedIn, mirrors
+      pages/video-generator.vue conventions.
+
+  - id: t-006
+    milestone: m3
+    title: "Frontend placement + project art (icon/card/hero)"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: 2026-07-23T00:00:00Z
+    note: >
+      Add a canonical PROJECT_PLACEMENTS entry in kind_robots
+      utils/projectPlacements.ts (channelKey: play, tabKey: music-mentor,
+      route: /music-mentor), then mirror liveUrl/channelKey/tabKey into
+      project-overrides.yaml. Generate the three project images queued in
+      art-prompts.yaml.
+
+  - id: t-007
+    milestone: m3
+    title: "Accuracy pass — evaluate a heavier pitch model"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: 2026-07-23T00:00:00Z
+    note: >
+      The MVP uses a dependency-free autocorrelation pitch tracker (good for
+      monophonic takes, degrades on mixed/polyphonic audio). Evaluate a stronger
+      option (e.g. pitchy / a YIN lib / CREPE) behind the same feature-summary
+      shape so the endpoint and page don't change.
