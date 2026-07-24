@@ -15,6 +15,48 @@ Record the lane, files changed, and verification in the task note before rearmin
 
 ### Rotation state
 
+- Last completed lane: Curriculum depth (lane 4), 2026-07-24 (~16:45-17:10 UTC,
+  claude-conductor-agentrun-20260724T1730Z-t010b, scheduled agent run). Per the
+  prior cycle's note, lane 3 (inspiration/preview assets) was next — tried first
+  with a genuinely fresh queued job (job 2195, greek-vase-painting.webp, not
+  1426/1173/957/etc.): `GET /api/art/queue/stats` shows the home relay is no
+  longer fully stalled (a real change from every prior cycle's "never claimed"
+  signature) — `RUNNING: 1`, `DONE: 46` in the last 24h window, 141 images
+  created — but severely backlogged: 132 jobs `PENDING`, oldest queued at
+  11:00 UTC (~5.8h old at check time) and job 2195 itself still `PENDING`
+  after a 45s wait. This is a queue-depth/throughput problem on hardware this
+  sandbox can't act on (per BOUNDARY.md), not the same failure mode as the
+  earlier fully-stuck signature — worth noting for whoever next checks lane 3,
+  since "still blocked" no longer accurately describes it; "queued but slow"
+  does. Fell back to lane 4 per the checklist's own fallback rule. Added a
+  29th movement: Vienna Secession (`vienna-secession`, curriculum-outline.md
+  §29) — a single-named-artist (Gustav Klimt, d. 1918) entry whose defining
+  visual signature (flat ornamental gold-leaf pattern beside a photorealistic
+  face) is distinct from every prior gold-adjacent entry (`byzantine-mosaic`'s
+  tesserae, `illuminated-manuscript`'s gold-as-illumination, `gothic`'s gold
+  ground). All three example works (*The Kiss* 1907-08, *Portrait of Adele
+  Bloch-Bauer I* 1907, *Judith I* 1901) confirmed **VERIFIED** directly via
+  the Wikimedia Commons API's `extmetadata` rights-status categories
+  (`PD-old-100-expired`, `CC-PD-Mark`) — this session had working egress to
+  `commons.wikimedia.org` (confirmed via direct `curl` to the MediaWiki API).
+  Queued the style-preview prompt in `art-prompts.yaml`
+  (`kind-robots-academy-style-preview-vienna-secession`), still subject to the
+  same lane-3 backlog as the other 28. Added the placeholder row to
+  `style-lora-registry.md` and row 29 to `teaching-notes.md` (mode `prompt`,
+  difficulty Medium — flagged risk: the model may gild the whole image
+  uniformly and lose the defining ornament/face contrast). Front-end sync to
+  `academyStyles.ts` deliberately deferred to a future cycle, matching how
+  persian-miniature/song-dynasty-landscape/mughal-miniature/fayum-mummy-portraits
+  landed across separate cycles. Verified the curriculum-outline.md machine-
+  readable skeleton parses as 29 entries (`yaml.safe_load` on the extracted
+  block) and `art-prompts.yaml` parses clean. `tests/test_audit_roadmaps_policy.py`,
+  `tests/test_validate_roadmaps.py`, `tests/test_roadmap_claims.py` pass
+  (18/18); `scripts/audit_roadmaps.py` — 0 errors, 12 warnings, 44 info,
+  unchanged from the prior cycle's post-fix baseline. Conductor-docs-only
+  change; no kind_robots PR needed this cycle (front-end sync deferred, as
+  above). Updated this checklist's rotation state; next preferred lane is
+  front-end polish (lane 1) — this cycle ran lane 4, so lane 1 is next in the
+  1→2→3→4 rotation.
 - Last completed lane: Roadmap accuracy (lane 2), 2026-07-24 (~16:07-16:20 UTC,
   claude-conductor-burst-20260724T1730Z-t010, scheduled burst-mode cycle). Per
   the prior cycle's note, lane 2 was next in the 1→2→3→4 rotation after lane 1
