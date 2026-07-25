@@ -15,6 +15,29 @@ Record the lane, files changed, and verification in the task note before rearmin
 
 ### Rotation state
 
+- Last completed lane: Front-end polish (lane 1), 2026-07-25 (~15:06-15:33 UTC,
+  claude-conductor-scheduled-20260725T1506Z-t010-lane1, scheduled agent run). Per
+  the prior cycle's note, lane 1 was next after lane 4 ran. Dispatched a
+  general-purpose subagent over the in-scope surface with this checklist's
+  exclusion list of every bug class already fixed across PRs #275-#1022. Found a
+  real, previously-unfixed gap in `art-styler.vue`'s `runStyleTransfer()`: no
+  interactive selection element (style grid, source tabs, gallery/starter
+  selection, upload dropzone, "Clear source") was disabled while `isGenerating`
+  was true, so switching style/source or clearing the source mid-generation let
+  the original request's `resultImage`/`successMessage`/`errorMessage` write
+  land on top of the new selection once it resolved — silently reattaching a
+  stale result or reviving a cleared preview. Distinct from the prior
+  source-selection token races (PRs #831/#849/#899, which guard the *selection
+  fetches* against each other) — this guards the *generation call* against
+  later selection changes. Fixed with a `generationToken` counter following the
+  established `sourceSelectionToken` pattern, bumped by every selection-changing
+  action; the `generated` event still fires unconditionally so downstream
+  credit (`academyStore.markStyleRemixed`) is unaffected. Verified: eslint/
+  prettier clean, full-project `vue-tsc --noEmit` 0 new errors (pre-existing
+  unrelated Prisma-schema errors elsewhere confirmed present on main before this
+  change). kind_robots PR #952, all 5 CI checks green, merged squash `7b0193b`.
+  Next preferred lane is roadmap accuracy (lane 2) — this cycle ran lane 1, so
+  lane 2 is next in the 1→2→3→4 rotation.
 - Last completed lane: Curriculum depth (lane 4), 2026-07-25 (~14:30-15:05 UTC,
   claude-conductor-agentrun-20260725T1430Z-t010-lane4, scheduled agent run,
   falling forward from a blocked lane 3 — same live art-generation relay check
