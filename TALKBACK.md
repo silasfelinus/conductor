@@ -9264,3 +9264,26 @@ kaizen would have targeted (audit's `SOFT_NEEDS_HUMAN` check only reading projec
 - Verified against the real production signal (Vercel deployment state + build log timing), not just "PR merged" or "CI green" — the incident was a build timeout, so those alone wouldn't have proven anything.
 
 **Kaizen task:** none filed — see the prior entry's kaizen note (deferred: a `facet_contract`-style local test DB for `utils/scripts/` maintenance scripts, to close the "can't run this end-to-end in-sandbox" gap if it recurs).
+
+## 2026-07-25 | Reviewer (scheduled burst-mode agent run) | ci-janitor todo #751/#752 | pattern
+
+**Decision:** merged kind_robots PR #955 (own fix, no Worker involved this cycle).
+
+**Failure category:** null — real production outage found, root-caused, and fixed; also caught a second, related bug live while verifying the first fix.
+
+**Subject:** Todos (#751, #752, both HIGH, "Fix red CI: Kind Robots Cypress Tests") took priority over roadmap rotation per AGENTS.md step 0. Investigation found the Cypress CI redness was a symptom, not the disease: kind_robots production had been failing to deploy at all for 4.5+ hours (`BUILD_EXCEEDED_MAXIMUM_TIME` on 6 consecutive production builds since commit `3b69cff`), so the Cypress workflow's "wait for deploy" step was timing out waiting for a deploy that would never land.
+
+**Detail:**
+- Root cause: the same-day "Make Facets the canonical creative catalog" cutover (`7c47da2`) added `utils/scripts/seedFacetCatalog.ts`, run unconditionally on every production build via `scripts/vercel-build.mjs`. It re-read the DB with a `findUnique` per candidate/alias/character-field (~1300 catalog candidates + a full `Character` table backfill, several thousand serial WAN round trips against a ProxySQL host with pipelining disabled) — enough to blow Vercel's build time ceiling on every single deploy since.
+- By the time I'd diagnosed this and was about to write a fix, another session/agent had already landed and merged kind_robots PR #953 (`fix(facet-catalog): stop production builds timing out during seed`) — same root cause, same fix shape (preload state once instead of per-record reads, spread writes across the connection pool). Verified rather than duplicated: watched `#953`'s production deploy go READY (~14.5min build, vs. the prior 45min+ timeouts) via the Vercel MCP connector.
+- While that deploy was finishing, a second production build (`#954`, pushed ~2s after `#953`) started concurrently and got stuck — caught this live rather than assuming green. Root cause: `seedFacetCatalog.ts`'s create-vs-update branch decides per-run from its own up-front snapshot, so two concurrent seed runs can both see the same slug as "new" and both call `facet.create()`; the loser hit a `Facet_slug_key` unique-constraint violation (P2002). Worse, that per-item throw escaped `runWithConcurrency`'s `Promise.all` (which rejects the instant the *first* lane throws) while the other 7 lanes kept running against the same Prisma client — `main()`'s `finally` then disconnected that client while those lanes were still mid-query, hanging them forever and silently reintroducing `BUILD_EXCEEDED_MAXIMUM_TIME` all over again (confirmed stuck 45+min with no further build log output).
+- Fixed and merged kind_robots PR #955: (1) `runWithConcurrency` now catches per-item inside each lane and aggregates errors, so every lane fully drains before the shared client disconnects; (2) the facet-create path (`createOrRecoverFacet`) catches P2002 and recovers by reading the race winner's row and updating it instead of failing/hanging the whole seed. Verified `tsc --noEmit` / `eslint` / `prettier --check` locally (provisioned via `provision_kind_robots_deps.sh`), then confirmed on the real PR: TypeScript, Contract verifiers, facet-catalog, and GitGuardian checks all green; merged squash `9be40e8`. Watched that deploy go READY cleanly (~12.3min) and manually triggered `cypress.yml` via `workflow_dispatch` (it's schedule-triggered, not push-triggered, per its own header comment) to confirm green rather than waiting up to 30min for the next scheduled run.
+- Completed both Todos (`complete_todo.py 751`, `752`) once production was confirmed healthy on the fixed commit.
+
+**What was good:**
+- Didn't stop at "someone else already fixed it" — actually watched the fix deploy through to READY instead of assuming a merged PR meant the incident was over. That's what caught the second, genuinely new concurrent-seed-race bug before it could cause another silent outage.
+
+**What to improve:**
+- None specific — this was reactive incident response on infrastructure code outside any project roadmap, not a roadmap task's checklist to improve.
+
+**Kaizen task:** none filed — this fix already targets the exact systemic weakness (concurrent-write safety in one-time backfill scripts run from build hooks); no roadmap project owns `utils/scripts/seedFacetCatalog.ts` to attach a kaizen task to. Worth remembering generically: any script invoked from `vercel-build.mjs` can run concurrently across back-to-back production deploys (a common conductor pattern when several PRs merge in quick succession) and must be safe under that, not just under repeated-but-serial invocation.
