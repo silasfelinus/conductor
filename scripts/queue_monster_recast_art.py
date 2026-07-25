@@ -26,11 +26,12 @@ TARGET_REPO = "silasfelinus/conductor"
 PROJECT = "coloring-book"
 SIZE = "2048x2732"
 
-# Medium/style block. Applied as a SUFFIX (subject first, style after) so Flux
-# weights the distinctive character/scene ahead of the house look. Front-loading
-# this block was collapsing non-cosmic concepts into generic posters (see
-# IMAGE-GEN-QUALITY-REVIEW.md 2a). "full-bleed, edge to edge, no border" is
-# stated positively because negatives are inert on the Flux path (cfg=1).
+# Medium/style block. Applied as a SUFFIX (subject first, style after) so the
+# engine weights the distinctive character/scene ahead of the house look.
+# Front-loading this block was collapsing non-cosmic concepts into generic
+# posters (see IMAGE-GEN-QUALITY-REVIEW.md 2a). "full-bleed, edge to edge, no
+# border" is stated positively because negatives are inert on the cfg=1
+# distilled-model path (Krea 2 Turbo, same as Flux before it).
 STYLE_SUFFIX = (
     "Render this as a premium full-color graphic-horror illustration for the Monster Recast "
     "coloring book: thick confident black outlines, extremely detailed but readable shapes, "
@@ -75,8 +76,8 @@ def character_entry(character: dict[str, Any]) -> dict[str, Any]:
         "image_path": f"projects/coloring-book/sets/monster-recast/generated/color/characters/{slug}.webp",
         "size": SIZE,
         "status": "pending",
-        "engine": "flux",
-        "steps": 36,
+        "engine": "krea2",
+        "steps": 8,
         "prompt": f"{prompt} {STYLE_SUFFIX}",
         "source_file": "projects/coloring-book/sets/monster-recast/characters.yaml",
         "source_slug": slug,
@@ -114,8 +115,8 @@ def page_entry(page: dict[str, Any], by_slug: dict[str, dict[str, Any]]) -> dict
         "image_path": f"projects/coloring-book/sets/monster-recast/generated/color/pages/{slug}.webp",
         "size": SIZE,
         "status": "pending",
-        "engine": "flux",
-        "steps": 36,
+        "engine": "krea2",
+        "steps": 8,
         "prompt": prompt,
         "source_file": "projects/coloring-book/sets/monster-recast/pages.yaml",
         "source_slug": slug,
@@ -137,8 +138,8 @@ def cover_entry(cover: dict[str, Any]) -> dict[str, Any]:
         "image_path": f"projects/coloring-book/sets/monster-recast/generated/color/cover/{slug}.webp",
         "size": SIZE,
         "status": "pending",
-        "engine": "flux",
-        "steps": 40,
+        "engine": "krea2",
+        "steps": 8,
         "prompt": f"{prompt} {STYLE_SUFFIX}",
         "source_file": "projects/coloring-book/sets/monster-recast/pages.yaml",
         "source_slug": slug,
