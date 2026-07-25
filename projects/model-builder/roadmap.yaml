@@ -534,8 +534,8 @@ tasks:
   - id: t-029
     milestone: m6
     title: "Polish and upgrade Model Builder front-end surface"
-    status: claimed
-    owner: worker
+    status: ready
+    owner: null
     passes: 0
     stakes: reversible
     note: >
@@ -678,6 +678,35 @@ tasks:
       `content` parameter (no manual base64 needed) instead. Steps (1) and (3) remain
       genuinely blocked/pending as documented in prior entries; not touched this cycle. Rearmed
       to `ready`.
+
+      PROGRESS 2026-07-25 (conductor scheduled burst rotation, reviewer/claude-conductor-burst-20260725T140608-mb-t029):
+      step (4) follow-on -- re-verified steps (2)/(3)'s plumbing is still intact (tutorialCards.ts
+      'model-builder' section, dashboardHelper.ts builder-channel tab entry, and
+      content/channels/build/models.md channel-tab content all correctly wired to route
+      /model-builder; step (1) art generation remains genuinely blocked, public/images/** is
+      gitignored so it isn't a git-committable deliverable from this sandbox). Dispatched a
+      general-purpose subagent to read the full store (1532 lines), the recipe catalog, all 6
+      components, and all 11 server/api/model-builder routes against the exclusion list of every
+      bug class already fixed by prior cycles (t-671 cancel-confirm, t-20260721 poll-cancel
+      signal, PR #948 generatingItemId ownership fix, PR #900 canApproveAssets gating). Found 3
+      more instances of the same store-wide-singleton unconditional-clear race PR #948 fixed for
+      generatingItemId, in three siblings that share the identical shape but weren't covered by
+      that fix: (a) autoBuildItem's autoBuildingItemId -- clicking "Auto" on a different row
+      while one item's auto-build is still running let the finishing call null out the
+      still-in-flight row's guard, allowing a duplicate concurrent auto-build of the same item;
+      (b) loadSources -- switching source-type tabs quickly had no correlation check, so a
+      slower response for a previously-selected tab could land after a newer one and silently
+      overwrite the currently-displayed source list with records of the wrong type; (c)
+      draftText -- the pitch/fields/prompt textarea stays editable while an AI draft is in
+      flight, so a manual edit committed via @change during that window was silently clobbered
+      when the draft resolved (draftingField is also a store-wide singleton with the same
+      overwrite-then-clear race as autoBuildingItemId). Fixed all three following #948's exact
+      pattern (only clear a store-wide singleton if it's still ours) plus a "still current" value
+      check for the draft-overwrite case. kind_robots PR #951: all 5 CI checks green
+      (TypeScript, Contract verifiers, verify, facet-catalog, GitGuardian) -- merged squash
+      `84bc9209`. Steps (1) and (3) remain genuinely blocked/pending as documented above; not
+      touched this cycle. Rearmed to `ready` since steps (1)/(3) are still outstanding, same
+      pattern as every prior cycle of this task.
     claimed_by: reviewer/claude-conductor-burst-20260725T140608-mb-t029
     claimed_at: '2026-07-25T14:06:09Z'
     updated: '2026-07-25T14:06:09Z'
