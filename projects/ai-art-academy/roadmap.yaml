@@ -446,11 +446,11 @@ tasks:
   - id: t-010
     milestone: m6
     title: Academy continuous improvement pass
-    status: ready
+    status: claimed
     recurring: true
     passes: 0
     stakes: reversible
-    updated: '2026-07-25T20:12:16Z'
+    updated: '2026-07-25T21:05:06Z'
     note: |-
       Standing never-idle task (re-arms to ready after every completion, per the recurring-task rule). Each cycle pick ONE: (a) front-end style/polish pass on Academy or art-styler surfaces, (b) roadmap upgrade — refine tasks, detail the next milestone, prune stale notes, (c) generate more art inspirations or style preview thumbnails, (d) expand the curriculum with a new movement/artist entry (respecting PUBLIC-DOMAIN-POLICY.md). Note which option ran in the PR. This task never reaches done and does not count toward milestone progress.
       RAN 2026-07-25 (~20:03-20:27 UTC, claude-conductor-agentrun-20260725T2003Z-t010-lane1, scheduled agent run): option (a) front-end polish (lane 1), per the checklist's next-preferred-lane note (previous cycle ran lane 2). Dispatched a general-purpose subagent to read the full checklist exclusion list plus every in-scope file in full. Found a real, previously-unfixed gap in `art-styler.vue`'s `handleFileSelect()` and `handleDrop()`: the MIME-rejection branches (added in PR #733) only ever set `errorMessage`, never clearing a leftover `successMessage` from a prior generation — every other selection path in the file (`processUploadedFile`, `selectGalleryImage`, `selectStarterEntry`, `selectStyle`, `clearSelection`, `runStyleTransfer`, etc.) already clears both messages together. Concrete failure scenario: user completes a style transfer (success banner shown), then drops/selects a non-PNG/JPEG/WebP file — the new rejection error rendered right alongside the stale "Style applied!" banner since the two are independent `v-if` blocks in the template. Fixed by adding `successMessage.value = ''` to both rejection branches, matching the established pattern exactly. Verified: `npx prettier --check` on the changed file reproduces one pre-existing warning (line 1278, unrelated `hydrateGalleryThumbs` union-type formatting) confirmed present identically on main via stash/diff — not a regression; the added lines themselves are prettier-clean. `npx eslint`/`npx nuxi prepare` could not run in this sandbox (no `.nuxt`/`node_modules` — same known limitation as every prior lane-1 cycle); relied on kind_robots CI instead. kind_robots PR #962: all 5 checks green (GitGuardian, facet-catalog, verify, TypeScript, Contract verifiers), merged squash `bfbfb792`. Updated `continuous-improvement-checklist.md`'s rotation state; next preferred lane is roadmap accuracy (lane 2) — this cycle ran lane 1, so lane 2 is next in the 1→2→3→4 rotation. Rearmed to `ready`.
@@ -645,9 +645,9 @@ tasks:
       RAN 2026-07-25 (~13:21-13:31 UTC, worker-conductor-20260725T132100Z-8c41): option (d) curriculum depth, after skipping lane 3 because the immediately preceding cycle documented a deterministic seed-overflow failure in the shared art queue. Added projects/ai-art-academy/docs/curriculum-candidates/hudson-river-school.md: a complete Hudson River School lesson candidate with recognition cues, Thomas Cole/Frederic Edwin Church/Albert Bierstadt context, public-domain sourcing, prompt-mode remix config, Try-It/Reflect prompts, and an explicit Manifest Destiny/Indigenous-erasure teaching note. Conductor PR #1041 passed all Worker PR CI and Security Audit jobs with no review comments and merged squash as e945f14670afdbaccda38a0a1fd744c344356c49. Rearmed recurring task to ready.
 
       Closed recurring roadmap-accuracy pass after conductor PR #1056 merged green as squash commit 9fc95539a9916db3f580c2284cf8e42aa1ef5aa9. All Worker PR CI, Security Audit, Roadmap Audit, and Process task events workflows passed; no review threads or requested changes. Rearming for the next continuous-improvement lane.
-    claimed_by: null
-    claimed_at: null
-    owner: null
+    claimed_by: claude-conductor-burst-20260725T2100Z-t010-lane2
+    claimed_at: '2026-07-25T21:05:06Z'
+    owner: worker
 
   - id: t-015
     milestone: m4
