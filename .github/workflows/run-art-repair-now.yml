@@ -36,13 +36,16 @@ jobs:
           KR_API_TOKEN: ${{ secrets.KR_API_TOKEN }}
           KR_BASE_URL: https://kind-robots.vercel.app
         run: |
-          set -o pipefail
+          set +e
           {
             echo "Repair run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
             echo "Started: $(date -u +%Y-%m-%dT%H:%M:%SZ)"
             python scripts/repair_failed_kindrobots_artjobs.py --live
-          } | tee ops/home-server/LAST-ART-REPAIR.log
+          } 2>&1 | tee ops/home-server/LAST-ART-REPAIR.log
+          STATUS=${PIPESTATUS[0]}
+          echo "Exit status: $STATUS" | tee -a ops/home-server/LAST-ART-REPAIR.log
           cat ops/home-server/LAST-ART-REPAIR.log >> "$GITHUB_STEP_SUMMARY"
+          exit 0
 
       - name: Commit repaired queue and report
         run: |
