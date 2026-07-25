@@ -67,7 +67,13 @@ class TaskEventProcessorTests(unittest.TestCase):
     def test_claim_consumes_event_and_sets_owner(self):
         event = self.write_event(
             "claim.yaml",
-            {"version": 1, "project": "demo", "task": "t-001", "operation": "claim"},
+            {
+                "version": 1,
+                "project": "demo",
+                "task": "t-001",
+                "operation": "claim",
+                "session": "sess-A",
+            },
         )
 
         result = MODULE.process(event, dry_run=False)
@@ -76,7 +82,23 @@ class TaskEventProcessorTests(unittest.TestCase):
         self.assertEqual(result, "demo/t-001: claim")
         self.assertEqual(task["status"], "claimed")
         self.assertEqual(task["owner"], "worker")
+        self.assertEqual(task["claimed_by"], "sess-A")
+        self.assertIn("claimed_at", task)
         self.assertFalse(event.exists())
+
+    def test_claim_requires_session_field(self):
+        # conductor/#1036: a claim with no session can't be told apart from a rival
+        # concurrent claim, so the processor refuses it (surfaced for diagnosis).
+        event = self.write_event(
+            "sessionless-claim.yaml",
+            {"version": 1, "project": "demo", "task": "t-001", "operation": "claim"},
+        )
+
+        with self.assertRaisesRegex(ValueError, "session"):
+            MODULE.process(event, dry_run=False)
+
+        self.assertTrue(event.exists())
+        self.assertEqual(self.roadmap()["tasks"][0]["status"], "ready")
 
     def test_done_appends_learning_once(self):
         roadmap = self.roadmap()
@@ -166,7 +188,13 @@ class TaskEventProcessorTests(unittest.TestCase):
     def test_claim_rejects_non_ready_without_force(self):
         event = self.write_event(
             "bad-claim.yaml",
-            {"version": 1, "project": "demo", "task": "t-002", "operation": "claim"},
+            {
+                "version": 1,
+                "project": "demo",
+                "task": "t-002",
+                "operation": "claim",
+                "session": "sess-A",
+            },
         )
 
         with self.assertRaisesRegex(ValueError, "requires status ready"):
@@ -181,7 +209,13 @@ class TaskEventProcessorTests(unittest.TestCase):
         before = (self.root / "projects" / "demo" / "roadmap.yaml").read_text(encoding="utf-8")
         event = self.write_event(
             "claim.yaml",
-            {"version": 1, "project": "demo", "task": "t-001", "operation": "claim"},
+            {
+                "version": 1,
+                "project": "demo",
+                "task": "t-001",
+                "operation": "claim",
+                "session": "sess-A",
+            },
         )
 
         MODULE.process(event, dry_run=False)
@@ -200,7 +234,13 @@ class TaskEventProcessorTests(unittest.TestCase):
     def test_note_unicode_survives_process_unescaped(self):
         event = self.write_event(
             "claim.yaml",
-            {"version": 1, "project": "demo", "task": "t-001", "operation": "claim"},
+            {
+                "version": 1,
+                "project": "demo",
+                "task": "t-001",
+                "operation": "claim",
+                "session": "sess-A",
+            },
         )
         MODULE.process(event, dry_run=False)
         done_event = self.write_event(
@@ -225,7 +265,13 @@ class TaskEventProcessorTests(unittest.TestCase):
     def test_multiline_note_is_appended_as_literal_block_not_flattened(self):
         claim = self.write_event(
             "claim.yaml",
-            {"version": 1, "project": "demo", "task": "t-001", "operation": "claim"},
+            {
+                "version": 1,
+                "project": "demo",
+                "task": "t-001",
+                "operation": "claim",
+                "session": "sess-A",
+            },
         )
         MODULE.process(claim, dry_run=False)
         done_event = self.write_event(
@@ -278,23 +324,189 @@ class TaskEventProcessorTests(unittest.TestCase):
         ledger = yaml.safe_load((self.root / "LEARNING.yaml").read_text(encoding="utf-8"))
         self.assertEqual(ledger["records"], [])
 
-    def test_repeat_claim_same_owner_is_a_true_noop_zero_diff(self):
+    def test_repeat_claim_same_session_is_a_true_noop_zero_diff(self):
         first = self.write_event(
             "claim.yaml",
-            {"version": 1, "project": "demo", "task": "t-001", "operation": "claim"},
+            {
+                "version": 1,
+                "project": "demo",
+                "task": "t-001",
+                "operation": "claim",
+                "session": "sess-A",
+            },
         )
         MODULE.process(first, dry_run=False)
         after_first = (self.root / "projects" / "demo" / "roadmap.yaml").read_text(encoding="utf-8")
 
         second = self.write_event(
             "claim-again.yaml",
-            {"version": 1, "project": "demo", "task": "t-001", "operation": "claim", "owner": "worker"},
+            {
+                "version": 1,
+                "project": "demo",
+                "task": "t-001",
+                "operation": "claim",
+                "owner": "worker",
+                "session": "sess-A",
+            },
         )
-        MODULE.process(second, dry_run=False)
+        result = MODULE.process(second, dry_run=False)
 
         after_second = (self.root / "projects" / "demo" / "roadmap.yaml").read_text(encoding="utf-8")
+        self.assertEqual(result, "demo/t-001: claim")
         self.assertEqual(after_first, after_second)
         self.assertFalse(second.exists())
+
+    def test_different_session_claim_collides_and_is_consumed_without_mutation(self):
+        # conductor/#1036: the crux. A second session claiming a task the first
+        # session already holds must NOT collapse into an owner-level no-op --
+        # that would let two rival Worker sessions both believe they own it. The
+        # losing claim is consumed as ALREADY_CLAIMED with zero roadmap mutation.
+        first = self.write_event(
+            "claim.yaml",
+            {
+                "version": 1,
+                "project": "demo",
+                "task": "t-001",
+                "operation": "claim",
+                "session": "sess-A",
+            },
+        )
+        MODULE.process(first, dry_run=False)
+        after_first = (self.root / "projects" / "demo" / "roadmap.yaml").read_text(encoding="utf-8")
+
+        second = self.write_event(
+            "rival-claim.yaml",
+            {
+                "version": 1,
+                "project": "demo",
+                "task": "t-001",
+                "operation": "claim",
+                "session": "sess-B",
+            },
+        )
+        result = MODULE.process(second, dry_run=False)
+
+        after_second = (self.root / "projects" / "demo" / "roadmap.yaml").read_text(encoding="utf-8")
+        self.assertIn("ALREADY_CLAIMED", result)
+        # Winner (sess-A) still owns it; the losing claim changed nothing.
+        self.assertEqual(after_first, after_second)
+        self.assertEqual(self.roadmap()["tasks"][0]["claimed_by"], "sess-A")
+        # Losing event is consumed (not a poison event), so the shared queue stays clean.
+        self.assertFalse(second.exists())
+
+    def test_collision_dry_run_leaves_losing_event_in_place(self):
+        first = self.write_event(
+            "claim.yaml",
+            {
+                "version": 1,
+                "project": "demo",
+                "task": "t-001",
+                "operation": "claim",
+                "session": "sess-A",
+            },
+        )
+        MODULE.process(first, dry_run=False)
+
+        second = self.write_event(
+            "rival-claim.yaml",
+            {
+                "version": 1,
+                "project": "demo",
+                "task": "t-001",
+                "operation": "claim",
+                "session": "sess-B",
+            },
+        )
+        result = MODULE.process(second, dry_run=True)
+
+        self.assertIn("ALREADY_CLAIMED", result)
+        self.assertTrue(second.exists())
+
+    def test_later_done_from_non_owning_session_is_rejected_as_collision(self):
+        # "later review/done event ownership checks": a session that lost the claim
+        # must not be able to flip the winner's task to done just by queueing a
+        # session-tagged done event.
+        claim = self.write_event(
+            "claim.yaml",
+            {
+                "version": 1,
+                "project": "demo",
+                "task": "t-001",
+                "operation": "claim",
+                "session": "sess-A",
+            },
+        )
+        MODULE.process(claim, dry_run=False)
+        before = (self.root / "projects" / "demo" / "roadmap.yaml").read_text(encoding="utf-8")
+
+        intruder_done = self.write_event(
+            "done.yaml",
+            {
+                "version": 1,
+                "project": "demo",
+                "task": "t-001",
+                "operation": "done",
+                "session": "sess-B",
+            },
+        )
+        result = MODULE.process(intruder_done, dry_run=False)
+
+        after = (self.root / "projects" / "demo" / "roadmap.yaml").read_text(encoding="utf-8")
+        self.assertIn("ALREADY_CLAIMED", result)
+        self.assertEqual(before, after)
+        self.assertEqual(self.roadmap()["tasks"][0]["status"], "claimed")
+        self.assertFalse(intruder_done.exists())
+
+    def test_later_done_from_owning_session_applies(self):
+        claim = self.write_event(
+            "claim.yaml",
+            {
+                "version": 1,
+                "project": "demo",
+                "task": "t-001",
+                "operation": "claim",
+                "session": "sess-A",
+            },
+        )
+        MODULE.process(claim, dry_run=False)
+
+        owner_done = self.write_event(
+            "done.yaml",
+            {
+                "version": 1,
+                "project": "demo",
+                "task": "t-001",
+                "operation": "done",
+                "session": "sess-A",
+            },
+        )
+        result = MODULE.process(owner_done, dry_run=False)
+
+        self.assertNotIn("ALREADY_CLAIMED", result)
+        self.assertEqual(self.roadmap()["tasks"][0]["status"], "done")
+
+    def test_sessionless_done_still_applies_backward_compatible(self):
+        # Legacy path: a done event with no session skips the ownership check and
+        # applies as before, so existing sessionless workflows keep working.
+        claim = self.write_event(
+            "claim.yaml",
+            {
+                "version": 1,
+                "project": "demo",
+                "task": "t-001",
+                "operation": "claim",
+                "session": "sess-A",
+            },
+        )
+        MODULE.process(claim, dry_run=False)
+
+        legacy_done = self.write_event(
+            "done.yaml",
+            {"version": 1, "project": "demo", "task": "t-001", "operation": "done"},
+        )
+        MODULE.process(legacy_done, dry_run=False)
+
+        self.assertEqual(self.roadmap()["tasks"][0]["status"], "done")
 
     def test_stale_event_is_skipped_and_does_not_revert_newer_claim(self):
         # conductor/t-067: a queued "review" event generated at 07:20 sat unapplied
@@ -412,11 +624,23 @@ class TaskEventProcessorTests(unittest.TestCase):
         # prevent later, valid events in the same batch from being applied.
         bad = self.write_event(
             "bad-claim.yaml",
-            {"version": 1, "project": "demo", "task": "t-002", "operation": "claim"},
+            {
+                "version": 1,
+                "project": "demo",
+                "task": "t-002",
+                "operation": "claim",
+                "session": "sess-A",
+            },
         )
         good = self.write_event(
             "good-claim.yaml",
-            {"version": 1, "project": "demo", "task": "t-001", "operation": "claim"},
+            {
+                "version": 1,
+                "project": "demo",
+                "task": "t-001",
+                "operation": "claim",
+                "session": "sess-A",
+            },
         )
 
         original_resolver = MODULE.run_resolver
