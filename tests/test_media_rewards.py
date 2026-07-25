@@ -23,6 +23,8 @@ def load_relay_media_module(monkeypatch):
 @pytest.mark.parametrize(
     "image_path",
     [
+        "public/images/rewards/favor/test.webp",
+        "/public/images/rewards/favor/test.webp",
         "public/rewards/favor/test.webp",
         "/public/rewards/favor/test.webp",
         "rewards/favor/test.webp",
@@ -30,8 +32,14 @@ def load_relay_media_module(monkeypatch):
         r"public\rewards\favor\test.webp",
     ],
 )
-def test_relay_maps_reward_paths_under_images(monkeypatch, image_path):
+def test_relay_canonicalizes_reward_paths_under_public_images(
+    monkeypatch, image_path
+):
     relay_media = load_relay_media_module(monkeypatch)
+
+    assert relay_media.normalize_kindrobots_image_path(image_path) == (
+        "public/images/rewards/favor/test.webp"
+    )
 
     media_kind, relative = relay_media.direct_media_target(
         {
@@ -42,7 +50,7 @@ def test_relay_maps_reward_paths_under_images(monkeypatch, image_path):
         }
     )
 
-    assert media_kind == "rewards"
+    assert media_kind == "images"
     assert relative == Path("rewards/favor/test.webp")
     assert relay_media.direct_media_relative(
         {
@@ -56,8 +64,8 @@ def test_relay_maps_reward_paths_under_images(monkeypatch, image_path):
 
 def test_relay_writes_rewards_inside_image_root(tmp_path, monkeypatch):
     relay_media = load_relay_media_module(monkeypatch)
-    images_root = tmp_path / "kindrobots" / "images"
-    monkeypatch.setattr(relay_media, "MEDIA_ROOT_VALUE", str(images_root))
+    image_root = tmp_path / "kindrobots" / "image"
+    monkeypatch.setattr(relay_media, "MEDIA_ROOT_VALUE", str(image_root))
     monkeypatch.setattr(
         relay_media, "encode_image_for_suffix", lambda raw, _suffix: raw
     )
@@ -66,7 +74,7 @@ def test_relay_writes_rewards_inside_image_root(tmp_path, monkeypatch):
         {
             "payload": {
                 "targetRepo": "silasfelinus/kind_robots",
-                "imagePath": "public/rewards/favor/sample.webp",
+                "imagePath": "public/images/rewards/favor/sample.webp",
             }
         },
         {
@@ -76,17 +84,40 @@ def test_relay_writes_rewards_inside_image_root(tmp_path, monkeypatch):
         },
     )
 
-    assert destination == images_root / "rewards" / "favor" / "sample.webp"
+    assert destination == image_root / "rewards" / "favor" / "sample.webp"
     assert destination.read_bytes() == b"encoded-image"
-    assert not (destination.parent / "gallery.json").exists()
-    assert not (images_root / "collections.json").exists()
+    assert (destination.parent / "gallery.json").exists()
+    assert (image_root / "collections.json").exists()
+
+
+def test_relay_rejects_non_image_public_roots(monkeypatch):
+    relay_media = load_relay_media_module(monkeypatch)
+
+    with pytest.raises(ValueError, match="public/images/"):
+        relay_media.direct_media_target(
+            {
+                "payload": {
+                    "targetRepo": "silasfelinus/kind_robots",
+                    "imagePath": "public/assets/test.webp",
+                }
+            }
+        )
+
+
+def test_relay_rejects_path_traversal(monkeypatch):
+    relay_media = load_relay_media_module(monkeypatch)
+
+    with pytest.raises(ValueError, match="Unsafe media imagePath"):
+        relay_media.normalize_kindrobots_image_path(
+            "public/images/rewards/../secret.webp"
+        )
 
 
 def test_relay_uses_configured_image_root_without_sibling_mapping(
     tmp_path, monkeypatch
 ):
     relay_media = load_relay_media_module(monkeypatch)
-    images_root = tmp_path / "media-cache"
-    monkeypatch.setattr(relay_media, "MEDIA_ROOT_VALUE", str(images_root))
+    image_root = tmp_path / "media-cache"
+    monkeypatch.setattr(relay_media, "MEDIA_ROOT_VALUE", str(image_root))
 
-    assert relay_media.media_root() == images_root.resolve()
+    assert relay_media.media_root() == image_root.resolve()
