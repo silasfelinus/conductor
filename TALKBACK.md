@@ -9222,3 +9222,26 @@ kaizen would have targeted (audit's `SOFT_NEEDS_HUMAN` check only reading projec
 **Kaizen task:** deferred — the PR's own kaizen suggestion (extract the "hold state visible after an async op settles, guarded against re-entry" shape into a shared composable) is premature at only its second occurrence (after PR #515's checkmark pause); revisit if a third instance shows up.
 
 **Pattern note:** none new — this is the same "async settle vs. UI re-enable window" bug family the checklist has now caught twice in `image-upload.vue` alone (PR #515, this cycle). Worth a composable once (not if) a third file needs the same shape.
+
+## 2026-07-25 | Reviewer (scheduled agent run) | ci-janitor todos #751/#752 + model-builder/t-029 | pattern
+
+**Decision:** merged kind_robots PR #953 (facet-catalog seed perf fix) and PR #954 (model-builder keyboard-accessible matrix rows).
+
+**Failure category:** null — both PRs were already implemented and CI-green by the time this cycle picked them up; reviewed and merged rather than reimplemented.
+
+**Subject:** Session-start sweep found two open kind_robots PRs against ci-janitor todos #751 (created 14:05) and #752 (created 15:31), both "Fix red CI: Kind Robots Cypress Tests," same underlying root cause on two different commits. PR #953 (branch `claude/dazzling-ptolemy-7ed1le`) was already up with a real fix; reviewed and merged it instead of duplicating work.
+
+**Detail:**
+- Root cause per PR #953's own diagnosis: `seedFacetCatalog.ts` ran a `findUnique` per candidate/alias (~1300 candidates) and per character field-value serially against a ProxySQL connection with pipelining disabled — several thousand serial WAN round trips on every production build, blowing Vercel's max build time (`BUILD_EXCEEDED_MAXIMUM_TIME`). Cypress CI on `main` was red only because it could never find a live deploy of the target commit, not because of a test regression.
+- Fix preloads existing Facet/FacetAlias/CharacterFacet state once (two queries) into shared Maps, then spreads independent writes across the connection pool (`WRITE_CONCURRENCY=8`, within `DEFAULT_CONNECTION_LIMIT=10`) instead of awaiting them serially. Verified before merging: candidates are already deduped upstream by `normalizeFacetLookupKey(title)` in the `candidates` Map (line ~195), and `slugify` is a strictly coarser normalization of the same alnum-run sequence — so two catalog entries with distinct keys cannot collide on `slug`, which rules out the unique-constraint race that concurrent writes would otherwise risk. The only real behavior change is alias tie-breaking: when two distinct facets legitimately share a candidate alias, the old serial code deterministically gave it to whichever candidate ran first in array order; under concurrency it's now a nondeterministic race between whichever `upsert` lands last. Low-impact (no crash, no data loss, just possible alias reassignment in a rare contested-alias case) — not worth blocking the merge over, since the current state (every build broken) is strictly worse.
+- Checks were green on both PRs (TypeScript/Contract verifiers/facet-catalog/GitGuardian on #953; same plus `verify` on #954) but neither PR includes the `Kind Robots Cypress Tests` workflow itself — that only runs against `main` post-deploy, so the real verification is the next production build after this merge. Flagging for whoever next touches this: watch the next `vercel-build` log and the next Cypress run on `main` before marking todos #751/#752 done — CI-JANITOR.md's own policy says only complete a todo after verification passes, and this session couldn't run the seed end-to-end against a live DB in-sandbox.
+- PR #954 (model-builder/t-029, Worker branch `worker/model-builder-t-029-keyboard-matrix-6d91`) adds a real `<button>` inside the stage-matrix row's name cell with `aria-pressed`/`aria-label`/focus ring, keeping the existing whole-row click-to-select behavior via `@click.stop` on the new button plus the original `@click` on `<tr>`. Scoped one-file template change, 5/5 CI checks green. No concerns.
+
+**What was good:**
+- Both PRs' authors clearly named the root cause (not just symptoms) and cited git commit history / prior incident context (facet-catalog cutover date, exact build failure signature) rather than guessing.
+- #953's own test-plan section was honest about the local-sandbox limitation (no live DB to run the seed end-to-end) instead of overclaiming verification.
+
+**What to improve:**
+- None specific this cycle — both were clean, well-scoped, well-tested-as-far-as-possible.
+
+**Kaizen task:** none filed this cycle — the fix already addresses the systemic weakness (serial per-record DB round trips in seed/migration scripts under a no-pipelining ProxySQL connection); revisit only if another seed/migration script hits the same build-timeout pattern.
