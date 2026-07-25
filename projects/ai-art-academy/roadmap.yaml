@@ -446,11 +446,11 @@ tasks:
   - id: t-010
     milestone: m6
     title: Academy continuous improvement pass
-    status: ready
+    status: claimed
     recurring: true
     passes: 0
     stakes: reversible
-    updated: '2026-07-25T17:30:00Z'
+    updated: '2026-07-25T18:04:22Z'
     note: |-
       Standing never-idle task (re-arms to ready after every completion, per the recurring-task rule). Each cycle pick ONE: (a) front-end style/polish pass on Academy or art-styler surfaces, (b) roadmap upgrade — refine tasks, detail the next milestone, prune stale notes, (c) generate more art inspirations or style preview thumbnails, (d) expand the curriculum with a new movement/artist entry (respecting PUBLIC-DOMAIN-POLICY.md). Note which option ran in the PR. This task never reaches done and does not count toward milestone progress.
       RAN 2026-07-25 (~17:05-17:30 UTC, claude-conductor-burst-20260725T1700Z-t010-lane2, scheduled burst-mode cycle): option (b) roadmap accuracy (lane 2), per the checklist's next-preferred-lane note (previous cycle ran lane 1). `audit_roadmaps.py` (0 errors, 12 warnings, 44 info — same baseline) clean. `check_pr_merged_drift.py`'s 31 unverifiable-via-sandbox candidates were all this task's own historical PR references; spot-checked the newest, kind_robots#952, via GitHub MCP `pull_request_read` — confirmed merged, diff matches this task's own record exactly, no drift. Re-verified all 6 milestones programmatically against actual task statuses — all six already match, no drift. While spot-checking lane 3's relay health with a fresh authenticated `GET /api/art/queue/stats` (cheaper than queuing a live job), found the relay is no longer in the fully-stuck never-claimed state every prior check has hit since 2026-07-18 (RUNNING: 1, DONE: 1438/24h) but is backlogged (59 PENDING, oldest ~30h old), and its `recentFailed` list surfaced a genuine, previously-undocumented production bug: three daily-dream reward-art jobs (2219/2220/2221) permanently FAILED with "imagePath must begin with public/images/" even though their `public/rewards/favor/*.webp` path is the project's own correct, established reward-art convention (confirmed against the real kind_robots repo layout and 18 existing `art-prompts.yaml` entries using the same pattern) — root-caused to `ops/home-server/relay_media_agent.py`'s `direct_media_relative()` only recognizing `public/images/...`. Not fixed inline (different project — dream-cycle, not ai-art-academy — and a naive fix risks silently writing the file to the wrong physical folder on Silas's box; see the filed task for the two correct fix shapes). Filed `dream-cycle/t-019` (ready) with full root-cause detail per hard rule 6. Conductor-docs-only change (this roadmap, `continuous-improvement-checklist.md`, `dream-cycle/roadmap.yaml`); no kind_robots PR needed. Updated `continuous-improvement-checklist.md`'s rotation state; next preferred lane is inspiration/preview assets (lane 3) — this cycle ran lane 2, so lane 3 is next in the 1→2→3→4 rotation; re-probe with a fresh queued job rather than assuming either the old fully-stuck signature or a clean recovery. Rearmed to `ready`.
@@ -640,8 +640,8 @@ tasks:
       Lane 3 preview generation was not attempted because the latest roadmap cycle already identified a deterministic seed-overflow failure in the shared art queue. Used the documented fallback lane 4 and added a complete Hudson River School curriculum module with public-domain sourcing, remix configuration, teaching prompts, and an explicit Manifest Destiny/Indigenous-erasure context note.
 
       RAN 2026-07-25 (~13:21-13:31 UTC, worker-conductor-20260725T132100Z-8c41): option (d) curriculum depth, after skipping lane 3 because the immediately preceding cycle documented a deterministic seed-overflow failure in the shared art queue. Added projects/ai-art-academy/docs/curriculum-candidates/hudson-river-school.md: a complete Hudson River School lesson candidate with recognition cues, Thomas Cole/Frederic Edwin Church/Albert Bierstadt context, public-domain sourcing, prompt-mode remix config, Try-It/Reflect prompts, and an explicit Manifest Destiny/Indigenous-erasure teaching note. Conductor PR #1041 passed all Worker PR CI and Security Audit jobs with no review comments and merged squash as e945f14670afdbaccda38a0a1fd744c344356c49. Rearmed recurring task to ready.
-    claimed_by: claude-conductor-burst-20260725T1700Z-t010-lane2
-    claimed_at: '2026-07-25T17:04:17Z'
+    claimed_by: claude-conductor-burst-20260725T1800Z-t010-lane3
+    claimed_at: '2026-07-25T18:04:22Z'
     owner: reviewer
 
   - id: t-015
