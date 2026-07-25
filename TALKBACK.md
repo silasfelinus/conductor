@@ -9245,3 +9245,22 @@ kaizen would have targeted (audit's `SOFT_NEEDS_HUMAN` check only reading projec
 - None specific this cycle — both were clean, well-scoped, well-tested-as-far-as-possible.
 
 **Kaizen task:** none filed this cycle — the fix already addresses the systemic weakness (serial per-record DB round trips in seed/migration scripts under a no-pipelining ProxySQL connection); revisit only if another seed/migration script hits the same build-timeout pattern.
+
+## 2026-07-25 | Reviewer (scheduled burst-mode agent run) | ci-janitor todos #751/#752 | verification
+
+**Decision:** todos #751 and #752 closed via `scripts/complete_todo.py`, after live verification (not just merge).
+
+**Failure category:** null — fix confirmed working in production on first attempt.
+
+**Subject:** Closes the gap the prior entry explicitly flagged: "watch the next `vercel-build` log and the next Cypress run on `main` before marking todos #751/#752 done." This cycle watched it.
+
+**Detail:**
+- Watched Vercel (`get_deployment` / `get_deployment_build_logs` on project `kind-robots`, `prj_x6HB2IPpQbvqNqiYVgu3IibJ6FZf`) for the production build of merge commit `392f9a6` (PR #953). It reached `readyState: READY` and took the `kind-robots.vercel.app` production alias (`aliasError: null`).
+- Build duration: 14 minutes wall clock (`Build Completed in /vercel/output [14m]`), versus the prior 5 consecutive builds that all hit `BUILD_EXCEEDED_MAXIMUM_TIME` (~45+ min each, same seed step) — confirms the preloaded-state + `WRITE_CONCURRENCY=8` rewrite actually closed the gap, not just that it type-checked.
+- Both open todos (#751 linked to run `30157354246`/commit `31ab638d`, #752 linked to run `30161148566`/commit `3b69cff7`) were the same underlying incident on two different pre-fix commits — same root cause, same fix resolves both. Marked both DONE via `scripts/complete_todo.py 751` and `752`.
+- Did not separately wait on the next scheduled Cypress Tests GitHub Actions run itself (production being unstuck is the actual fix; the workflow run is a downstream confirmation that will happen on its own next scheduled firing).
+
+**What was good:**
+- Verified against the real production signal (Vercel deployment state + build log timing), not just "PR merged" or "CI green" — the incident was a build timeout, so those alone wouldn't have proven anything.
+
+**Kaizen task:** none filed — see the prior entry's kaizen note (deferred: a `facet_contract`-style local test DB for `utils/scripts/` maintenance scripts, to close the "can't run this end-to-end in-sandbox" gap if it recurs).
