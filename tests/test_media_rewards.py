@@ -30,7 +30,7 @@ def load_relay_media_module(monkeypatch):
         r"public\rewards\favor\test.webp",
     ],
 )
-def test_relay_maps_reward_paths(monkeypatch, image_path):
+def test_relay_maps_reward_paths_under_images(monkeypatch, image_path):
     relay_media = load_relay_media_module(monkeypatch)
 
     media_kind, relative = relay_media.direct_media_target(
@@ -43,7 +43,7 @@ def test_relay_maps_reward_paths(monkeypatch, image_path):
     )
 
     assert media_kind == "rewards"
-    assert relative == Path("favor/test.webp")
+    assert relative == Path("rewards/favor/test.webp")
     assert relay_media.direct_media_relative(
         {
             "payload": {
@@ -51,12 +51,12 @@ def test_relay_maps_reward_paths(monkeypatch, image_path):
                 "imagePath": image_path,
             }
         }
-    ) == Path("favor/test.webp")
+    ) == Path("rewards/favor/test.webp")
 
 
-def test_relay_writes_rewards_to_sibling_public_root(tmp_path, monkeypatch):
+def test_relay_writes_rewards_inside_image_root(tmp_path, monkeypatch):
     relay_media = load_relay_media_module(monkeypatch)
-    images_root = tmp_path / "public" / "images"
+    images_root = tmp_path / "kindrobots" / "images"
     monkeypatch.setattr(relay_media, "MEDIA_ROOT_VALUE", str(images_root))
     monkeypatch.setattr(
         relay_media, "encode_image_for_suffix", lambda raw, _suffix: raw
@@ -76,15 +76,17 @@ def test_relay_writes_rewards_to_sibling_public_root(tmp_path, monkeypatch):
         },
     )
 
-    assert destination == tmp_path / "public" / "rewards" / "favor" / "sample.webp"
+    assert destination == images_root / "rewards" / "favor" / "sample.webp"
     assert destination.read_bytes() == b"encoded-image"
     assert not (destination.parent / "gallery.json").exists()
-    assert not (tmp_path / "public" / "rewards" / "collections.json").exists()
+    assert not (images_root / "collections.json").exists()
 
 
-def test_relay_rejects_ambiguous_rewards_root(tmp_path, monkeypatch):
+def test_relay_uses_configured_image_root_without_sibling_mapping(
+    tmp_path, monkeypatch
+):
     relay_media = load_relay_media_module(monkeypatch)
-    monkeypatch.setattr(relay_media, "MEDIA_ROOT_VALUE", str(tmp_path / "media-cache"))
+    images_root = tmp_path / "media-cache"
+    monkeypatch.setattr(relay_media, "MEDIA_ROOT_VALUE", str(images_root))
 
-    with pytest.raises(RuntimeError, match="must end in /images"):
-        relay_media.media_root("rewards")
+    assert relay_media.media_root() == images_root.resolve()
