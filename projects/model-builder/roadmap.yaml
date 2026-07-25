@@ -534,182 +534,26 @@ tasks:
   - id: t-029
     milestone: m6
     title: "Polish and upgrade Model Builder front-end surface"
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
-    note: >
-      UI polish + upgrade for the model-builder front end now that the scaffold page is live at
-      /model-builder. Steps: (1) generate final dashboard-tab art at
-      public/images/dashboard-tabs/builder/model-builder.webp and tutorial art at
-      public/images/tutorials/builder/model-builder.webp; (2) add a matching section for 'model-builder'
-      under tutorialChannels.builder.sections in kind_robots/stores/helpers/tutorialCards.ts; (3) verify
-      the PROJECT Dream liveUrl points at /model-builder (admin can run the Conductor 'Placements' button
-      to backfill channelKey/tabKey/liveUrl); (4) evolve the placeholder scaffold page into the full
-      interactive experience for this project.
+    note: |-
+      UI polish + upgrade for the model-builder front end now that the scaffold page is live at /model-builder. Steps: (1) generate final dashboard-tab art at public/images/dashboard-tabs/builder/model-builder.webp and tutorial art at public/images/tutorials/builder/model-builder.webp; (2) add a matching section for 'model-builder' under tutorialChannels.builder.sections in kind_robots/stores/helpers/tutorialCards.ts; (3) verify the PROJECT Dream liveUrl points at /model-builder (admin can run the Conductor 'Placements' button to backfill channelKey/tabKey/liveUrl); (4) evolve the placeholder scaffold page into the full interactive experience for this project.
+      PROGRESS 2026-07-17 (Silas-directed session, kind_robots PR #353 squash 4878064a): step (2) done -- added a 'model-builder' section under tutorialChannels.builder.sections in stores/helpers/tutorialCards.ts (image resolves via tutorialImage('builder','model-builder'), falls back to a placeholder until the art lands). Step (4) is effectively covered: the /model-builder mount (content/model-builder.md -> :model-builder-manager) is already the full interactive experience -- source picker, recipe selector, gated progress matrix, run history, and now the t-027 quantity batch editor -- not a placeholder scaffold. Remaining and kept ready: step (1) dashboard-tab + tutorial .webp art (needs the generation backend/egress) and step (3) the liveUrl backfill (an admin Placements click, not an agent action).
+      PROGRESS 2026-07-23 (conductor scheduled agent run, claude-conductor-agentrun-20260723T164245Z-t029): step (4) follow-on -- dispatched an Explore subagent to read every model-builder component and the store in full, with the exclusion list of every bug class already fixed by prior cycles of this task (run-history cancel confirm, item-panel per-field textarea watches, state-free async poll). Found a real, previously-unfixed gating race: `canApproveAssets` in `model-builder-item-panel.vue` only checked `isLocked('GENERATE_ASSETS')` and truthiness of `item.artImageId` -- it never consulted `isGenerating`/`isQueued`, both already computed in the same file and already used to disable the generate/regenerate buttons a few lines above. Since neither `generateItemAsset` nor `generateItemAssetAsync` clears `artImageId` while a (re)render is in flight, "Keep this asset" stayed clickable throughout, so a user could approve (and then commit) a stale candidate moments before the in-flight regeneration silently overwrote `artImageId` and reset the just-approved stage back to `ready` underneath them. Fixed by adding the same `isGenerating`/`isQueued` gate to `canApproveAssets`. Verified: `npx eslint` clean; `npx prettier --check` shows the same pre-existing drift as `main` (confirmed via `git stash` before this change, matching how prior cycles handled the same file's pre-existing formatting drift) -- kept the diff to a minimal 3-line hand-applied addition rather than running `--write` on the whole file; full-project `vue-tsc --noEmit` exit 0. kind_robots PR #900: all 4 CI checks green (TypeScript, Contract verifiers, verify, GitGuardian) -- merged squash `04433b8e`. Steps (1) and (3) remain genuinely blocked as documented above; not touched this cycle. Rearmed to `ready`.
+      PROGRESS 2026-07-20 (conductor-burst rotation, claude-burst-rotation-20260720T1810Z): step (4) follow-on -- found a real gap while re-reading the interactive experience components: model-builder-run-history.vue's "Cancel run" trash-icon button fired store.cancelRun(run.id) (a PATCH to CANCELLED, irreversible, and it drops the run from local history) on a single click with zero confirmation -- the only destructive action anywhere in the model-builder surface with no guard. Added the arm-on-first-click/fire-on-second-click/disarm-on-blur confirm pattern already established in components/art/art-interact.vue's delete button, so it now takes a deliberate second click. Verified: eslint clean, prettier clean, full-project `npm run test` (vue-tsc --noEmit) exit 0. kind_robots PR #671 (branch claude/keen-fermat-96x6u6) -- MERGED. Steps (1) and (3) remain genuinely blocked as documented above; not touched this cycle. Kept at `ready` (not `done`) since those two steps are still outstanding, matching how other "Polish and upgrade X" tasks with a genuinely blocked substep handled the same situation this week (e.g. media-watchlist/t-006).
+      PROGRESS 2026-07-21 (conductor-burst rotation, claude-conductor-burst-20260721T0204Z): step (4) follow-on -- re-read the interactive components again and found another real gap adjacent to the t-671 cancel-confirm fix: cancelRun() removed the run from local state but never signalled pollAsyncArtJob (the async GENERATE_ASSETS poll loop, keyed on `item.artJobId === jobId`) to stop. A job that finished rendering after the user cancelled the run would still POST an artifact and PATCH the item via /api/model-builder/items/{id}/artifacts and /api/model-builder/items/{id}, and pop a misleading "Generated a candidate for X" success toast for work the user had just told the app they no longer wanted. Fixed by clearing artJobId/queueState on every item of the cancelled run inside cancelRun(), which the poll loop already checks at its next iteration (or immediately after its next getArtJobStatus await resolves) and exits cleanly instead of writing to a dead run. Verified: eslint clean on the changed file except 2 pre-existing no-empty errors in unrelated catch{} blocks (confirmed pre-existing via git stash, same 2 errors with and without this diff); full-project `npm run test` (vue-tsc --noEmit) exit 0. Note: `prettier --check` on this file reports drift that pre-dates this change too (same git-stash confirmation) -- likely a prettier-version mismatch between this sandbox and whatever last formatted the file; did not run a blanket --write since that would balloon a 14-line fix into an ~80-line unrelated reformat, flagged as a Kaizen suggestion instead of fixed inline. kind_robots PR #735 (branch worker/model-builder-t-029) -- MERGED (squash 9f24085). Steps (1) and (3) remain genuinely blocked as documented above; not touched this cycle. Kept at `ready` (not `done`), same pattern as the 2026-07-20 cycle -- those two steps are still outstanding.
+      PROGRESS 2026-07-21 (~10:25 UTC, claude-conductor-scheduled-20260721T1012Z): step (3) correction -- this note's "an admin Placements click, not an agent action" framing is stale. `project-overrides.yaml` already carries `liveUrl: /model-builder`, `channelKey: build`, `tabKey: model-builder` for this slug (added in a prior bulk cross-repo sweep, per root `TALKBACK.md` 2026-07-21), and a live `GET https://kind-robots.vercel.app/api/projects` this cycle confirms the kind_robots Project row already reflects the same three values (verified directly, not just trusted the overrides file). Step (3) is done. Step (1) (dashboard-tab + tutorial .webp art) is still genuinely blocked: confirmed via GitHub `get_file_contents` that neither `public/images/dashboard-tabs/builder/model-builder.webp` nor `public/images/tutorials/builder/model-builder.webp` exist yet, and this cycle's fresh live probe of the art-generation home relay (ai-art-academy/t-010, job 1229) timed out unclaimed -- same shared-relay-down signature, so re-queuing this project's own art request would just waste a slot. Conductor-docs-only change; no kind_robots PR needed. Kept at `ready` -- step (1) is the only remaining blocker now.
+      PROGRESS 2026-07-22 (conductor burst-mode cycle, claude-conductor-scheduled-20260722T030537Z): step (4) follow-on -- re-read the interactive components again (continuing the 07-20/07-21 pattern) and found another real gap in model-builder-item-panel.vue: the three local textarea refs (pitch/fields/prompt) were kept in sync via one combined `watch` over `[item.pitch, item.fieldsDraft, item.promptDraft]`. Because the callback unconditionally reset all three refs whenever *any* single one changed in the store, drafting one field with AI (or auto-build's sequential per-field drafting) silently clobbered unsaved edits the user was mid-typing in the *other* two textareas of the same item -- no warning, no conflict indicator, just silent data loss. Fixed by splitting into three independent per-field watches so each only reacts to its own value. Verified: eslint clean; full-project `npm run test` (vue-tsc --noEmit) exit 0; `prettier --check` drift on this file confirmed pre-existing via git-stash (same warning without the diff), consistent with the prettier-version-mismatch note from the 07-21 cycle -- no blanket reformat. kind_robots PR #850 (branch claude/keen-fermat-a76onp) -- MERGED. Steps (1) and (3) remain as documented in the prior entry; not touched this cycle. Kept at `ready` (not `done`), same pattern as the 07-20/07-21 cycles -- those two steps are still outstanding.
+      PROGRESS 2026-07-25 (conductor scheduled agent run, claude-conductor-agentrun-20260725T121559-t029): step (4) follow-on -- dispatched an Explore subagent to read the full model-builder surface (stores/modelBuilderStore.ts, modelBuilderRecipes.ts/modelBuilderFields.ts, and every components/model-builder/*.vue file) against the exclusion list of every bug class already fixed by prior cycles of this task. Found a real, previously-unfixed cross-item race: `generateItemAsset`'s `finally` block unconditionally cleared the store-wide `state.generatingItemId` singleton, unlike the per-item `artJobId`/`queueState` pattern the async generation path already uses correctly. Selecting a different row and clicking "Generate candidate" while another item's `generateItemAsset` call is still awaiting `artStore.generateCurrentArt()` lets the new item's start overwrite `generatingItemId`; when the first call resolves, its `finally` then nulls the flag out from under the second item -- clearing its spinner/disabled state and defeating `canApproveAssets`' `isGenerating` guard (the exact guard t-029's 2026-07-23 cycle added to fix the sibling bug class), letting a user approve a stale/about-to-be-overwritten `artImageId` or fire a second concurrent generation for the same item. Fixed by guarding the clear with an ownership check (`if (state.generatingItemId === item.id) state.generatingItemId = null`), mirroring `pollAsyncArtJob`'s existing `item.artJobId === jobId` pattern. Confirmed the race is reachable by reading `model-builder-progress-matrix.vue`'s row-selection handler directly -- row clicks (`@click="selectedItemId = item.id"`) carry no guard tied to `generatingItemId`. kind_robots PR #948: all 5 CI checks green (TypeScript, Contract verifiers, verify, facet-catalog, GitGuardian) -- merged squash `cc6102b0`. Note on this cycle's own process: an earlier push attempt to the PR branch was corrupted by hand-typed/hallucinated base64 content (a mis-encoded multi-byte `×` character, some dropped indentation) -- caught by fetching the pushed file back and diffing against the local source before opening the PR, and fixed by re-pushing with the tool's plain-text `content` parameter (no manual base64 needed) instead. Steps (1) and (3) remain genuinely blocked/pending as documented in prior entries; not touched this cycle. Rearmed to `ready`.
+      PROGRESS 2026-07-25 (conductor scheduled burst rotation, reviewer/claude-conductor-burst-20260725T140608-mb-t029): step (4) follow-on -- re-verified steps (2)/(3)'s plumbing is still intact (tutorialCards.ts 'model-builder' section, dashboardHelper.ts builder-channel tab entry, and content/channels/build/models.md channel-tab content all correctly wired to route /model-builder; step (1) art generation remains genuinely blocked, public/images/** is gitignored so it isn't a git-committable deliverable from this sandbox). Dispatched a general-purpose subagent to read the full store (1532 lines), the recipe catalog, all 6 components, and all 11 server/api/model-builder routes against the exclusion list of every bug class already fixed by prior cycles (t-671 cancel-confirm, t-20260721 poll-cancel signal, PR #948 generatingItemId ownership fix, PR #900 canApproveAssets gating). Found 3 more instances of the same store-wide-singleton unconditional-clear race PR #948 fixed for generatingItemId, in three siblings that share the identical shape but weren't covered by that fix: (a) autoBuildItem's autoBuildingItemId -- clicking "Auto" on a different row while one item's auto-build is still running let the finishing call null out the still-in-flight row's guard, allowing a duplicate concurrent auto-build of the same item; (b) loadSources -- switching source-type tabs quickly had no correlation check, so a slower response for a previously-selected tab could land after a newer one and silently overwrite the currently-displayed source list with records of the wrong type; (c) draftText -- the pitch/fields/prompt textarea stays editable while an AI draft is in flight, so a manual edit committed via @change during that window was silently clobbered when the draft resolved (draftingField is also a store-wide singleton with the same overwrite-then-clear race as autoBuildingItemId). Fixed all three following #948's exact pattern (only clear a store-wide singleton if it's still ours) plus a "still current" value check for the draft-overwrite case. kind_robots PR #951: all 5 CI checks green (TypeScript, Contract verifiers, verify, facet-catalog, GitGuardian) -- merged squash `84bc9209`. Steps (1) and (3) remain genuinely blocked/pending as documented above; not touched this cycle. Rearmed to `ready` since steps (1)/(3) are still outstanding, same pattern as every prior cycle of this task.
 
-      PROGRESS 2026-07-17 (Silas-directed session, kind_robots PR #353 squash 4878064a): step (2)
-      done -- added a 'model-builder' section under tutorialChannels.builder.sections in
-      stores/helpers/tutorialCards.ts (image resolves via tutorialImage('builder','model-builder'),
-      falls back to a placeholder until the art lands). Step (4) is effectively covered: the
-      /model-builder mount (content/model-builder.md -> :model-builder-manager) is already the full
-      interactive experience -- source picker, recipe selector, gated progress matrix, run history,
-      and now the t-027 quantity batch editor -- not a placeholder scaffold. Remaining and kept
-      ready: step (1) dashboard-tab + tutorial .webp art (needs the generation backend/egress) and
-      step (3) the liveUrl backfill (an admin Placements click, not an agent action).
 
-      PROGRESS 2026-07-23 (conductor scheduled agent run, claude-conductor-agentrun-20260723T164245Z-t029):
-      step (4) follow-on -- dispatched an Explore subagent to read every model-builder component and
-      the store in full, with the exclusion list of every bug class already fixed by prior cycles of
-      this task (run-history cancel confirm, item-panel per-field textarea watches, state-free async
-      poll). Found a real, previously-unfixed gating race: `canApproveAssets` in
-      `model-builder-item-panel.vue` only checked `isLocked('GENERATE_ASSETS')` and truthiness of
-      `item.artImageId` -- it never consulted `isGenerating`/`isQueued`, both already computed in the
-      same file and already used to disable the generate/regenerate buttons a few lines above. Since
-      neither `generateItemAsset` nor `generateItemAssetAsync` clears `artImageId` while a (re)render is
-      in flight, "Keep this asset" stayed clickable throughout, so a user could approve (and then
-      commit) a stale candidate moments before the in-flight regeneration silently overwrote
-      `artImageId` and reset the just-approved stage back to `ready` underneath them. Fixed by adding
-      the same `isGenerating`/`isQueued` gate to `canApproveAssets`. Verified: `npx eslint` clean;
-      `npx prettier --check` shows the same pre-existing drift as `main` (confirmed via `git stash`
-      before this change, matching how prior cycles handled the same file's pre-existing formatting
-      drift) -- kept the diff to a minimal 3-line hand-applied addition rather than running
-      `--write` on the whole file; full-project `vue-tsc --noEmit` exit 0. kind_robots PR #900:
-      all 4 CI checks green (TypeScript, Contract verifiers, verify, GitGuardian) -- merged squash
-      `04433b8e`. Steps (1) and (3) remain genuinely blocked as documented above; not touched this
-      cycle. Rearmed to `ready`.
-
-      PROGRESS 2026-07-20 (conductor-burst rotation, claude-burst-rotation-20260720T1810Z): step
-      (4) follow-on -- found a real gap while re-reading the interactive experience components:
-      model-builder-run-history.vue's "Cancel run" trash-icon button fired store.cancelRun(run.id)
-      (a PATCH to CANCELLED, irreversible, and it drops the run from local history) on a single
-      click with zero confirmation -- the only destructive action anywhere in the model-builder
-      surface with no guard. Added the arm-on-first-click/fire-on-second-click/disarm-on-blur
-      confirm pattern already established in components/art/art-interact.vue's delete button, so
-      it now takes a deliberate second click. Verified: eslint clean, prettier clean, full-project
-      `npm run test` (vue-tsc --noEmit) exit 0. kind_robots PR #671 (branch
-      claude/keen-fermat-96x6u6) -- MERGED. Steps (1) and (3) remain genuinely blocked as
-      documented above; not touched this cycle. Kept at `ready` (not `done`) since those two
-      steps are still outstanding, matching how other "Polish and upgrade X" tasks with a
-      genuinely blocked substep handled the same situation this week (e.g. media-watchlist/t-006).
-
-      PROGRESS 2026-07-21 (conductor-burst rotation, claude-conductor-burst-20260721T0204Z): step
-      (4) follow-on -- re-read the interactive components again and found another real gap
-      adjacent to the t-671 cancel-confirm fix: cancelRun() removed the run from local state but
-      never signalled pollAsyncArtJob (the async GENERATE_ASSETS poll loop, keyed on
-      `item.artJobId === jobId`) to stop. A job that finished rendering after the user cancelled
-      the run would still POST an artifact and PATCH the item via
-      /api/model-builder/items/{id}/artifacts and /api/model-builder/items/{id}, and pop a
-      misleading "Generated a candidate for X" success toast for work the user had just told the
-      app they no longer wanted. Fixed by clearing artJobId/queueState on every item of the
-      cancelled run inside cancelRun(), which the poll loop already checks at its next iteration
-      (or immediately after its next getArtJobStatus await resolves) and exits cleanly instead of
-      writing to a dead run. Verified: eslint clean on the changed file except 2 pre-existing
-      no-empty errors in unrelated catch{} blocks (confirmed pre-existing via git stash, same 2
-      errors with and without this diff); full-project `npm run test` (vue-tsc --noEmit) exit 0.
-      Note: `prettier --check` on this file reports drift that pre-dates this change too (same
-      git-stash confirmation) -- likely a prettier-version mismatch between this sandbox and
-      whatever last formatted the file; did not run a blanket --write since that would balloon a
-      14-line fix into an ~80-line unrelated reformat, flagged as a Kaizen suggestion instead of
-      fixed inline. kind_robots PR #735 (branch worker/model-builder-t-029) -- MERGED (squash
-      9f24085). Steps (1) and (3) remain genuinely blocked as documented above; not touched this
-      cycle. Kept at `ready` (not `done`), same pattern as the 2026-07-20 cycle -- those two steps
-      are still outstanding.
-
-      PROGRESS 2026-07-21 (~10:25 UTC, claude-conductor-scheduled-20260721T1012Z): step (3)
-      correction -- this note's "an admin Placements click, not an agent action" framing is
-      stale. `project-overrides.yaml` already carries `liveUrl: /model-builder`,
-      `channelKey: build`, `tabKey: model-builder` for this slug (added in a prior bulk
-      cross-repo sweep, per root `TALKBACK.md` 2026-07-21), and a live `GET
-      https://kind-robots.vercel.app/api/projects` this cycle confirms the kind_robots
-      Project row already reflects the same three values (verified directly, not just
-      trusted the overrides file). Step (3) is done. Step (1) (dashboard-tab + tutorial
-      .webp art) is still genuinely blocked: confirmed via GitHub `get_file_contents` that
-      neither `public/images/dashboard-tabs/builder/model-builder.webp` nor
-      `public/images/tutorials/builder/model-builder.webp` exist yet, and this cycle's
-      fresh live probe of the art-generation home relay (ai-art-academy/t-010, job 1229)
-      timed out unclaimed -- same shared-relay-down signature, so re-queuing this project's
-      own art request would just waste a slot. Conductor-docs-only change; no kind_robots PR
-      needed. Kept at `ready` -- step (1) is the only remaining blocker now.
-
-      PROGRESS 2026-07-22 (conductor burst-mode cycle, claude-conductor-scheduled-20260722T030537Z):
-      step (4) follow-on -- re-read the interactive components again (continuing the
-      07-20/07-21 pattern) and found another real gap in model-builder-item-panel.vue: the
-      three local textarea refs (pitch/fields/prompt) were kept in sync via one combined
-      `watch` over `[item.pitch, item.fieldsDraft, item.promptDraft]`. Because the callback
-      unconditionally reset all three refs whenever *any* single one changed in the store,
-      drafting one field with AI (or auto-build's sequential per-field drafting) silently
-      clobbered unsaved edits the user was mid-typing in the *other* two textareas of the
-      same item -- no warning, no conflict indicator, just silent data loss. Fixed by
-      splitting into three independent per-field watches so each only reacts to its own
-      value. Verified: eslint clean; full-project `npm run test` (vue-tsc --noEmit) exit 0;
-      `prettier --check` drift on this file confirmed pre-existing via git-stash (same
-      warning without the diff), consistent with the prettier-version-mismatch note from the
-      07-21 cycle -- no blanket reformat. kind_robots PR #850 (branch
-      claude/keen-fermat-a76onp) -- MERGED. Steps (1) and (3) remain as documented in the
-      prior entry; not touched this cycle. Kept at `ready` (not `done`), same pattern as the
-      07-20/07-21 cycles -- those two steps are still outstanding.
-
-      PROGRESS 2026-07-25 (conductor scheduled agent run, claude-conductor-agentrun-20260725T121559-t029):
-      step (4) follow-on -- dispatched an Explore subagent to read the full model-builder
-      surface (stores/modelBuilderStore.ts, modelBuilderRecipes.ts/modelBuilderFields.ts, and
-      every components/model-builder/*.vue file) against the exclusion list of every bug class
-      already fixed by prior cycles of this task. Found a real, previously-unfixed cross-item
-      race: `generateItemAsset`'s `finally` block unconditionally cleared the store-wide
-      `state.generatingItemId` singleton, unlike the per-item `artJobId`/`queueState` pattern
-      the async generation path already uses correctly. Selecting a different row and clicking
-      "Generate candidate" while another item's `generateItemAsset` call is still awaiting
-      `artStore.generateCurrentArt()` lets the new item's start overwrite `generatingItemId`;
-      when the first call resolves, its `finally` then nulls the flag out from under the
-      second item -- clearing its spinner/disabled state and defeating `canApproveAssets`'
-      `isGenerating` guard (the exact guard t-029's 2026-07-23 cycle added to fix the sibling
-      bug class), letting a user approve a stale/about-to-be-overwritten `artImageId` or fire a
-      second concurrent generation for the same item. Fixed by guarding the clear with an
-      ownership check (`if (state.generatingItemId === item.id) state.generatingItemId = null`),
-      mirroring `pollAsyncArtJob`'s existing `item.artJobId === jobId` pattern. Confirmed the
-      race is reachable by reading `model-builder-progress-matrix.vue`'s row-selection handler
-      directly -- row clicks (`@click="selectedItemId = item.id"`) carry no guard tied to
-      `generatingItemId`. kind_robots PR #948: all 5 CI checks green (TypeScript, Contract
-      verifiers, verify, facet-catalog, GitGuardian) -- merged squash `cc6102b0`. Note on this
-      cycle's own process: an earlier push attempt to the PR branch was corrupted by
-      hand-typed/hallucinated base64 content (a mis-encoded multi-byte `×` character, some
-      dropped indentation) -- caught by fetching the pushed file back and diffing against the
-      local source before opening the PR, and fixed by re-pushing with the tool's plain-text
-      `content` parameter (no manual base64 needed) instead. Steps (1) and (3) remain
-      genuinely blocked/pending as documented in prior entries; not touched this cycle. Rearmed
-      to `ready`.
-
-      PROGRESS 2026-07-25 (conductor scheduled burst rotation, reviewer/claude-conductor-burst-20260725T140608-mb-t029):
-      step (4) follow-on -- re-verified steps (2)/(3)'s plumbing is still intact (tutorialCards.ts
-      'model-builder' section, dashboardHelper.ts builder-channel tab entry, and
-      content/channels/build/models.md channel-tab content all correctly wired to route
-      /model-builder; step (1) art generation remains genuinely blocked, public/images/** is
-      gitignored so it isn't a git-committable deliverable from this sandbox). Dispatched a
-      general-purpose subagent to read the full store (1532 lines), the recipe catalog, all 6
-      components, and all 11 server/api/model-builder routes against the exclusion list of every
-      bug class already fixed by prior cycles (t-671 cancel-confirm, t-20260721 poll-cancel
-      signal, PR #948 generatingItemId ownership fix, PR #900 canApproveAssets gating). Found 3
-      more instances of the same store-wide-singleton unconditional-clear race PR #948 fixed for
-      generatingItemId, in three siblings that share the identical shape but weren't covered by
-      that fix: (a) autoBuildItem's autoBuildingItemId -- clicking "Auto" on a different row
-      while one item's auto-build is still running let the finishing call null out the
-      still-in-flight row's guard, allowing a duplicate concurrent auto-build of the same item;
-      (b) loadSources -- switching source-type tabs quickly had no correlation check, so a
-      slower response for a previously-selected tab could land after a newer one and silently
-      overwrite the currently-displayed source list with records of the wrong type; (c)
-      draftText -- the pitch/fields/prompt textarea stays editable while an AI draft is in
-      flight, so a manual edit committed via @change during that window was silently clobbered
-      when the draft resolved (draftingField is also a store-wide singleton with the same
-      overwrite-then-clear race as autoBuildingItemId). Fixed all three following #948's exact
-      pattern (only clear a store-wide singleton if it's still ours) plus a "still current" value
-      check for the draft-overwrite case. kind_robots PR #951: all 5 CI checks green
-      (TypeScript, Contract verifiers, verify, facet-catalog, GitGuardian) -- merged squash
-      `84bc9209`. Steps (1) and (3) remain genuinely blocked/pending as documented above; not
-      touched this cycle. Rearmed to `ready` since steps (1)/(3) are still outstanding, same
-      pattern as every prior cycle of this task.
-    claimed_by: reviewer/claude-conductor-burst-20260725T140608-mb-t029
-    claimed_at: '2026-07-25T14:06:09Z'
-    updated: '2026-07-25T14:06:09Z'
+      Connector-native claim for the Model Builder front-end polish cycle.
+    claimed_by: worker-conductor-20260725T151232Z-mb-t029-6d91
+    claimed_at: '2026-07-25T15:12:32Z'
+    updated: '2026-07-25T15:12:32Z'
 
   - id: t-030
     milestone: m6
