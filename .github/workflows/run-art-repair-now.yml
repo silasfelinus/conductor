@@ -1,0 +1,53 @@
+name: Run Art Repair Now
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - ".github/workflows/run-art-repair-now.yml"
+
+concurrency:
+  group: run-art-repair-now
+  cancel-in-progress: false
+
+jobs:
+  repair:
+    if: github.head_ref == 'agent/run-art-repair-now'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Canonicalize source queue
+        run: python scripts/repair_art_request_defaults.py --write
+
+      - name: Repair and requeue failed ArtJobs
+        env:
+          KR_API_TOKEN: ${{ secrets.KR_API_TOKEN }}
+          KR_BASE_URL: https://kind-robots.vercel.app
+        run: |
+          set -o pipefail
+          {
+            echo "Repair run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+            echo "Started: $(date -u +%Y-%m-%dT%H:%M:%SZ)"
+            python scripts/repair_failed_kindrobots_artjobs.py --live
+          } | tee ops/home-server/LAST-ART-REPAIR.log
+          cat ops/home-server/LAST-ART-REPAIR.log >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Commit repaired queue and report
+        run: |
+          git config user.name "conductor-bot"
+          git config user.email "conductor-bot@users.noreply.github.com"
+          git add projects/art-prompts.yaml ops/home-server/LAST-ART-REPAIR.log
+          git commit -m "chore: repair failed ArtJobs and canonicalize queue" || exit 0
+          git push origin HEAD:${{ github.event.pull_request.head.ref }}
