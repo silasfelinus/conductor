@@ -1633,3 +1633,31 @@ noticed by accident.
 **What to improve:** none this cycle.
 
 **Kaizen task:** none filed for ai-art-academy itself — the finding is filed as `coloring-book/t-030` (a genuine, scoped, reversible fix: clamp the shared seed generator to the 32-bit range at ~10 call sites plus a defensive clamp in `save-generated.post.ts`). Worth a Worker pickup soon — it's silently killing coloring-book's production art generation, including jobs plausibly related to the currently-`needs-human` t-022 production pass.
+
+## 2026-07-25 | Reviewer (conductor scheduled agent run) | ai-art-academy/t-010 | pattern
+
+**Decision:** merged kind_robots PR #952 (squash `7b0193b`), lane 1 (front-end polish).
+
+**Failure category:** none — clean diff, all 5 CI checks green on first push.
+
+**What was good:**
+- `generationToken` follows the exact established shape of `sourceSelectionToken`
+  (PRs #831/#849/#899) rather than inventing a new pattern, and correctly scopes
+  itself to the *generation call* rather than re-guarding the selection fetches
+  those prior fixes already cover — no overlap with the exclusion list.
+- Kept the `generated` event firing unconditionally so real, saved generations
+  still credit `academyStore.markStyleRemixed` even when the result display
+  itself is suppressed as stale — a subtle distinction (data correctness vs.
+  UI display correctness) that a less careful fix could have collapsed.
+- Reverted incidental `package-lock.json` churn from a sandbox `npm install`
+  before committing, keeping the diff to the one intended file.
+
+**What to improve:** none this cycle.
+
+**Kaizen task:** deferred — this is now the fourth distinct race-condition class
+found in `art-styler.vue`/`image-upload.vue` across lane-1 cycles (gallery
+race, cross-tab race, deep-link race, now generation-result race). All four
+share the same "capture a token before an async op, bail if stale on resolve"
+shape. Still deferring the shared-composable extraction (as prior cycles have)
+since each instance is small and the pattern is already consistent — revisit
+if a fifth instance appears.
