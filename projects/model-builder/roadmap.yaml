@@ -534,7 +534,7 @@ tasks:
   - id: t-029
     milestone: m6
     title: "Polish and upgrade Model Builder front-end surface"
-    status: review
+    status: ready
     passes: 0
     stakes: reversible
     note: |-
@@ -558,10 +558,11 @@ tasks:
       Connector Worker claim for a focused Model Builder run-history accessibility polish pass.
 
       Improved Model Builder run-history accessibility on worker/model-builder-t-029-run-history-a11y-12a7: announced loading state, hid decorative icons from assistive technology, and gave the icon-only cancel control a run-specific accessible name.
+
+      PROGRESS 2026-07-25 (connector Worker, worker-conductor-20260725T181204Z-mb-t029-12a7): kind_robots PR #957 merged as squash 92f35ef470c3f93f8c654913ed969a9934a75dbc. Improved run-history accessibility by announcing loading state, hiding decorative icons, and naming the icon-only cancel action for its target run. All four PR workflows passed; no reviews or unresolved threads. Original generated-art deliverable remains outstanding, so the finite polish task returned to ready.
     claimed_by: worker-conductor-20260725T181204Z-mb-t029-12a7
     claimed_at: '2026-07-25T18:12:04Z'
-    updated: '2026-07-25T18:20:00Z'
-    owner: worker
+    updated: '2026-07-25T18:30:00Z'
 
   - id: t-030
     milestone: m6
