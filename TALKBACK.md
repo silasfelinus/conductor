@@ -9287,3 +9287,19 @@ kaizen would have targeted (audit's `SOFT_NEEDS_HUMAN` check only reading projec
 - None specific — this was reactive incident response on infrastructure code outside any project roadmap, not a roadmap task's checklist to improve.
 
 **Kaizen task:** none filed — this fix already targets the exact systemic weakness (concurrent-write safety in one-time backfill scripts run from build hooks); no roadmap project owns `utils/scripts/seedFacetCatalog.ts` to attach a kaizen task to. Worth remembering generically: any script invoked from `vercel-build.mjs` can run concurrently across back-to-back production deploys (a common conductor pattern when several PRs merge in quick succession) and must be safe under that, not just under repeated-but-serial invocation.
+
+## 2026-07-25 | Reviewer (scheduled agent run) | ci-janitor todo #766 | verification
+
+**Decision:** closed todo #766 with no code change — root cause was a transient CI flake, not a product regression.
+
+**Failure category:** transient — a single Cypress spec's `before all` hook (`cypress/e2e/api/art-image-collection-connections.cy.ts`, `cy.visit` to the site root in `cypress/support/api-auth.ts`) hit `CypressError: Timed out after waiting 60000ms for your remote page to load` on the scheduled run (`30172303542`, commit `8605cf9`). 59 of 60 specs (476 of 477 tests) in that same run passed against the same production origin, and the Vercel deployment for that exact commit (`dpl_Et6mPeubt1N2xMPncuWjSRKkdFoX`) was already `READY` (production, verified checkmark) at the time the run executed — ruling out an actual production outage.
+
+**Detail:**
+- Downloaded the run's raw log ZIP directly (`get_workflow_run_logs_url` + `curl`, since `get_job_logs` truncates before reaching this spec's output in a 60-spec run) rather than guessing from the summary table.
+- Confirmed the very next scheduled `cypress.yml` run on `main` (`30176294763` et al., commit `a1dff33`, 21:46 UTC) completed with `conclusion: success` — the flake did not reproduce.
+- No code, test, or infra change made — nothing to fix. This matches the "CI flake" example explicitly named as `transient` in AGENTS.md's failure-triage table.
+
+**What was good:**
+- Verified against both the historical run (root cause) and the current state (next green run + live Vercel deployment health) before closing, rather than assuming "1 failing spec" implied a real regression worth a PR.
+
+**Kaizen task:** none filed — a single non-reproducing 60s page-load timeout on a scheduled CI run against a confirmed-healthy production deployment isn't a systemic pattern (contrast with the facet-catalog build-timeout incidents earlier the same day, which reproduced across 6 consecutive builds and had a real root cause). Revisit only if this same spec/hook times out again.
