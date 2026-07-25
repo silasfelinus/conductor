@@ -3955,3 +3955,12 @@ records:
   outcome: done
   failure_category: null
   lesson: "Local-only verification scripts (npm run test:animation-catalog, invoked from SPEC.md's shipping checklist but never referenced by any GitHub Actions workflow) can silently regress for days with zero signal, because nothing ever runs them except a session that happens to remember to. Caught this cycle only because building a new animation required running the script locally to verify the new catalog entry -- DEFAULT_PREFERENCES.startupEffect's 'random' sentinel had been failing verifyAnimationCatalog.ts's literal-catalog-id assertion since 2026-07-22 with no CI check ever red for it. Before trusting a 'ship only after X' checklist item, confirm X is actually wired into CI (grep the workflow YAML for the exact npm script name) rather than assuming a script's existence in package.json means it runs automatically."
+- date: '2026-07-25'
+  project: coloring-book
+  task: t-030
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "A shared fallback value duplicated across many call sites (here: 14 ComfyUI job-builder seed generators all independently writing Math.floor(Math.random() * 1_000_000_000_000_000)) is a latent multi-site bug waiting for one schema constraint to expose it -- the seed column was a 32-bit Int the whole time, but nothing failed until real traffic hit it. When fixing this class of bug, grep for the literal/pattern across the whole repo before assuming a single call site is the only offender; a fix at one site while 13 siblings keep the same defect just delays the next incident."

@@ -477,12 +477,34 @@ tasks:
 - id: t-030
   milestone: m4
   title: 'kind_robots: fix ArtJob seed overflow silently killing coloring-book generation jobs'
-  status: claimed
+  status: done
   owner: reviewer
   passes: 0
   stakes: reversible
-  updated: '2026-07-25T14:03:44Z'
+  updated: '2026-07-25T14:11:00Z'
   note: >
+    DONE 2026-07-25 (claude-conductor-agentrun-20260725T140344Z-t030): clamped all
+    14 fallback seed-generator call sites (`server/api/comfy/**`,
+    `server/utils/artJobRetry.ts`, `server/utils/comfyTestClient.ts`,
+    `server/api/art/queue/[id]/edit.post.ts`) from
+    `Math.floor(Math.random() * 1_000_000_000_000_000)` to
+    `Math.floor(Math.random() * 2_147_483_647)`, plus added a defensive
+    `clampArtImageSeed()` at the single Prisma write site
+    (`server/api/art/save-generated.post.ts`). Verified: prettier/eslint clean on
+    all touched files (pre-existing unrelated warnings on 4 files confirmed
+    present on main too, not introduced here), full-project `vue-tsc --noEmit`
+    (via `npm run test`) 0 errors. kind_robots PR #950, all 7 CI checks green
+    (Contract verifiers, TypeScript, facet-catalog, verify x3, GitGuardian),
+    merged squash `6de92c3`. Also directly reconfirmed the bug live while
+    rechecking ai-art-academy/t-010 lane 3 the same session: job 2276 (queued
+    ~14:08 UTC, before this fix's deploy) carries seed `25204709996469`, itself
+    an out-of-range value that would have failed identically -- confirms the fix
+    lands against a real, still-active failure mode, not a stale one. Impact
+    check deferred to a future cycle (worth re-running `GET
+    /api/art/queue/stats` once this PR's deploy is live to confirm the
+    seed-overflow error class stops recurring project-wide, not just for
+    coloring-book).
+
     Filed 2026-07-25 (ai-art-academy/t-010 lane-2 roadmap-accuracy cycle,
     session claude-conductor-agentrun-scheduled-t010-lane2) while spot-checking the
     art-generation relay's health via `GET /api/art/queue/stats`. Found 17+
