@@ -137,8 +137,8 @@ jobs:
           test "$before" = "$after"
           echo "OK: worker_task_status.py --dry-run left scratch roadmap unchanged"
 
-  authz-regression:
-    name: Authz regression tests
+  pytest-suite:
+    name: Python test suite
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4

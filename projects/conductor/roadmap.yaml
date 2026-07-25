@@ -367,6 +367,38 @@ tasks:
       is Worker PR volume to review — this is a platform/scheduling issue, not
       something fixable from inside the repo.
 
+      UPDATE 2026-07-25: Silas asked "we no longer have an active reviewer...
+      we should have transitioned into a system where roles are assigned to
+      agents when they visit, not beforehand, and those agents disperse and
+      work as needed. is this the case?" Investigated directly — answer is
+      NO, that transition has not actually happened, despite being discussed.
+      AGENTS.md still hard-codes two separately-scheduled roles ("Worker
+      (OpenAI, hourly)" and "Reviewer (event-triggered on worker/* PR
+      opened)" — the Reviewer's own label CLAIMS event-based triggering, but
+      that's aspirational relative to what's actually configured on the
+      platform side). scripts/run_worker.py and scripts/run_reviewer.py each
+      only implement their OWN role's healthcheck — neither contains any
+      "check live state, then decide which role to be" logic; there is no
+      shared entry point that picks a role dynamically. TALKBACK.md has
+      direct historical proof this was diagnosed as schedule-based (not
+      event-based) as far back as 2026-06-30, including a note that an
+      event-triggered reviewer.yml fix was once drafted but "exists only on
+      this branch, not yet on main" — i.e. never landed. No task or doc
+      anywhere proposes or implements the self-assigning model Silas
+      described. This is a real, two-part gap: (1) the acute bug (Reviewer
+      firing on a timer regardless of real PR volume) is still a
+      platform-side scheduling config fix; (2) Silas's actual desired
+      end-state — one trigger, agents check state on arrival and self-assign
+      Worker/Reviewer/idle, then disperse — would require rewriting
+      AGENTS.md's "the two roles" section and retiring run_worker.py/
+      run_reviewer.py as separate scripts in favor of one role-selecting
+      entry point. NOT attempting that redesign unilaterally this session —
+      it's an architecture change to how every future session behaves,
+      worth Silas's explicit go-ahead before a session rewrites AGENTS.md's
+      core operating contract. FOR SILAS: want a scoped design task filed
+      for the unified-trigger/self-assign rewrite, or is the platform-side
+      scheduling fix (stop firing Reviewer on a dumb timer) enough for now?
+
       UPDATE 2026-07-13 08:36: 48th recurrence. Same shape — zero open worker/*
       PRs and zero live worker/* branches in either repo, confirmed via
       list_pull_requests, search_pull_requests, and list_branches. kind_robots'
@@ -680,7 +712,8 @@ tasks:
   - id: t-033
     milestone: m2
     title: "Pitch: worktree-parallel Workers with claim leases"
-    status: needs-human
+    status: ready
+    approved_by_human: true
     owner: worker
     passes: 0
     stakes: reversible
@@ -698,6 +731,9 @@ tasks:
       the suggested first task (a projects/conductor/docs/concurrent-claims.md
       design doc pinning the contention model) becomes the next pickup. Original
       note below.
+
+      APPROVED 2026-07-25: Silas — "sure, approved." Flipping to ready; next
+      pickup is the suggested first task (concurrent-claims.md design doc).
       Deferred from the PortOS comparison (docs/2026-07-11-portos-cos-learnings.md).
       Conductor's one-atomic-claim-commit rule serializes the Worker; PortOS CoS runs
       3 concurrent agents via a git worktree per agent plus claim leases. Write a
@@ -710,8 +746,9 @@ tasks:
   - id: t-034
     milestone: m2
     title: "Pitch: kind_robots dashboard as shared front-end for Conductor + PortOS CoS"
-    status: needs-human
+    status: ready
     gate_human: true
+    approved_by_human: true
     owner: claude
     passes: 0
     stakes: reversible
@@ -731,6 +768,20 @@ tasks:
       (worktree-parallel Workers, still needs-human) -- either can proceed
       independently. Deferred from the PortOS comparison
       (docs/2026-07-11-portos-cos-learnings.md).
+
+      APPROVED 2026-07-25: Silas — "we should have a front end interaction
+      piece for portos. conductor already exists on Plan/Projects. Info for
+      portOs is at silasfelinus/portOs, but the real version exists on
+      atomantic/PortOS if you need guidance." Recording this for whoever
+      picks up the suggested first task (portos-dashboard-shape.md design
+      note): neither silasfelinus/portOs nor atomantic/PortOS is in this
+      session's GitHub tool scope (currently limited to silasfelinus/
+      kind_robots and silasfelinus/conductor), so this session could not
+      read either repo directly to fold their detail into the design note.
+      A session with expanded repo scope should consult both -- atomantic/
+      PortOS specifically as the upstream reference implementation Silas
+      pointed at for guidance -- before writing portos-dashboard-shape.md.
+      Flipping to ready; next pickup is that design-note-only first task.
 
   - id: t-029
     milestone: m1
@@ -1279,7 +1330,8 @@ tasks:
   - id: t-048
     milestone: m2
     title: Rename ci.yml's authz-regression job now that it runs the full pytest suite
-    status: needs-human
+    status: done
+    approved_by_human: true
     soft_gate: true
     owner: reviewer
     passes: 0
@@ -1313,6 +1365,19 @@ tasks:
       coordinated update (rename in ci.yml + update the required-check setting
       in the same window) rather than an agent-only change -- soft needs-human
       if branch protection can't be inspected from this environment.
+
+      DONE 2026-07-25: Silas -- "there is zero reason for that name and no
+      attachment to it persisting." Renamed the job in .github/workflows/ci.yml
+      from `authz-regression`/"Authz regression tests" to `pytest-suite`/
+      "Python test suite" (no `needs:` references to the old key anywhere in
+      the file, so nothing else broke). NOTE: security-audit.yml has its OWN,
+      separate `authz-regression` job that only runs
+      `tests/test_authz_regression.py` specifically -- that name is still
+      accurate and was deliberately left untouched; don't confuse the two.
+      Flagged in t-073's note that Silas should check whether "Authz
+      regression tests" was ever a required branch-protection check in
+      *conductor's* own repo settings while he's in there for t-073's
+      kind_robots change, since no agent tool can inspect that either way.
 
   - id: t-049
     milestone: m2
@@ -2052,10 +2117,28 @@ tasks:
       Once done, set `approved_by_human: true` and `status: done` on this
       task — nothing downstream depends on it, it's a standalone
       regression-prevention gap.
+
+      ANSWERED 2026-07-25 (Silas asked "how do I set it?"): exact path is
+      already above — in the **kind_robots** repo (not conductor):
+      1. github.com/silasfelinus/kind_robots → Settings → Branches
+      2. Click "Edit" (or "..." → Edit) on the `main` branch protection rule
+      3. Under "Require status checks to pass before merging," use the
+         search box to find and add "TypeScript" to the required list
+      4. Optionally also add "Contract verifiers" and "verify" while there
+      5. Save
+      No code change, no deploy, fully reversible from the same screen.
+      Separately, unrelated to this task but a heads-up: this session
+      renamed conductor's own `authz-regression` CI job to `pytest-suite`
+      (t-048, since it now runs the full suite) — if "Authz regression
+      tests" was ever a required check in *conductor's* branch protection
+      (github.com/silasfelinus/conductor → Settings → Branches), that
+      required-check name needs updating to "Python test suite" or PRs may
+      stop being mergeable there. No tool available to any agent session can
+      check this either way — worth a quick look while you're in Settings.
     owner: null
     claimed_by: null
     claimed_at: null
-    updated: '2026-07-20T00:00:00Z'
+    updated: '2026-07-25T00:00:00Z'
 
   - id: t-074
     milestone: m2
@@ -2197,7 +2280,7 @@ tasks:
     milestone: m2
     title: 'kind_robots session branch claude/keen-fermat-87rn74 has ~138k lines
       of unpushed, unrelated automated WonderLab content sitting local-only'
-    status: needs-human
+    status: done
     soft_gate: true
     owner: null
     passes: 0
@@ -2251,9 +2334,53 @@ tasks:
       curriculum depth, inspiration assets); it only blocks lane 1 (front-end
       polish) and any other conductor task needing to push kind_robots work
       through this session's designated branch, until resolved.
+
+      RESOLVED 2026-07-25: per Silas's own note, this session's understanding
+      is "everything on main that we need" already landed and this specific
+      branch is likely dead. Verified directly against the LIVE remote (not
+      cached branch knowledge, per Silas's explicit warning to check for
+      staleness): `list_branches` on silasfelinus/kind_robots right now
+      returns only `main` plus 8 unrelated `agent/facet-*` branches —
+      `claude/keen-fermat-87rn74` does not exist and never did on the actual
+      GitHub remote. Its 67 commits were genuinely local-only inside a
+      since-terminated sandbox and are not recoverable in any form (no ref,
+      no reachable commit SHAs) — there is nothing left to review, salvage,
+      or discard; it's simply gone. `claude/keen-fermat-*` branch names are
+      confirmed (via TALKBACK.md history) to be a fresh per-session sandbox
+      designation, not a reused/persistent branch, so this doesn't affect any
+      other session's kind_robots work.
+
+      Separately investigated Silas's actual underlying worry — whether
+      WonderLab content reads as naturalistic/amusing museum-visitor chat vs.
+      dry technical component-review prose. Since this specific branch's
+      diffs are gone, checked the ALREADY-LANDED, live WonderLab review
+      pipeline on kind_robots main instead (config/wonderlab-review-
+      acceptance.json, wonderlab-editorial-batch.json,
+      wonderLabReviewDraftGenerator.ts) — this is the real comparison point
+      ("actual reactions we ran with"). Finding worth your attention: even
+      merged/live content oscillates between genuinely voiced lines and the
+      exact failure mode you're worried about — e.g. one accepted review
+      recites component internals almost verbatim with a thin character
+      voice over top ("it declares allowArt, canCreateArt, isBuilderMode,
+      rewardSlots, and sheet, then emits remove-reward, remove-section, and
+      select-card"). So this isn't just a dead-branch problem — the
+      generator itself needs a pass to push consistently toward the
+      naturalistic/amusing register rather than reciting prop/emit names.
+      Not filing that as a new task without your read first, since "kill
+      the technical-sounding reviews" vs. "the museum concept is allowed to
+      be a little technical, it's a backend-museum premise" is a judgment
+      call only you can make — flagging here for your call on whether it's
+      worth a dedicated cleanup pass.
+
+      The other open thread (why ~13 hours of an apparently-recurring job
+      never managed to push once) could not be root-caused since the branch
+      itself is gone — nothing to diff. Worth a follow-up ONLY if whatever
+      produced those commits is still running unattended somewhere; if it
+      was a one-off sandbox session (as the per-session branch-naming
+      pattern suggests), there's nothing currently at risk.
     claimed_by: null
     claimed_at: null
-    updated: '2026-07-21T22:35:00Z'
+    updated: '2026-07-25T00:00:00Z'
 
   - id: t-079
     milestone: m2

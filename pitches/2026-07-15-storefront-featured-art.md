@@ -1,7 +1,7 @@
 # Pitch: Add ArtImage.storefrontFeatured (curated swag rail)
 date: 2026-07-15
 project-target: kind-robots
-status: awaiting-silas
+status: approved
 
 ## The idea
 Add a way to mark specific `ArtImage` rows in kind_robots as curated for the
