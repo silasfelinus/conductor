@@ -105,14 +105,41 @@ tasks:
   - id: t-004
     milestone: m2
     title: Evaluate prompt-only Kontext vs LoRA per style and record remix configs
-    status: claimed
+    status: waiting
     soft_gate: true
-    owner: worker
+    owner: null
     passes: 0
     stakes: reversible
-    updated: '2026-07-25T22:08:11Z'
-    depends_on: t-003
+    updated: '2026-07-25T22:15:00Z'
+    depends_on: [t-003, t-037]
     note: >
+      FOR SILAS: UPDATE 2026-07-25 (claude-conductor-scheduled-20260725T220810Z-aa-t004)
+      — claimed this task after the go-ahead below and got as far as researching the
+      actual generation API before finding a structural blocker the prior "relay/DB up"
+      framing never covered: the Kontext image-remix workflow builder
+      (kind_robots server/api/comfy/kontext/utils/workflow.ts:103-242,
+      buildKontextWorkflow) wires CLIPTextEncode -> FluxGuidance -> UnetLoaderGGUF only
+      — there is NO LoraLoader/LoraLoaderModelOnly node in the graph at all (contrast
+      server/api/comfy/utils/simpleCheckpointWorkflow.ts:127-135 and
+      server/api/comfy/ltx/utils/imageToVideoWorkflow.ts:109-112, which do apply one).
+      The `loraPath`/`loraWeight` fields already recorded for ~13 styles in this
+      project's own style-lora-registry.md (mode: lora) flow only into
+      server/api/art/enqueue.post.ts:104-105,252 as provenance metadata
+      (resourceProvenance.ts) — never into the actual render graph. Concretely: every
+      Kontext remix request today is prompt-only regardless of what `mode` a style
+      carries, so the planned "prompt-only vs LoRA" A/B has no LoRA arm to test against
+      yet, and the registry's mode:lora entries are currently aspirational/misleading
+      about what the live product actually does. Separately (operational, not
+      structural): GET /api/art/queue/stats showed 82 PENDING jobs, oldest ~35h old
+      (id 2017, queued 2026-07-24T11:00 UTC) — even a pure prompt-only enqueue/poll
+      cycle would not resolve within one session right now, so live verification of
+      *any* A/B result is impractical until the backlog clears regardless of the
+      LoRA gap. Filed the LoRA-loader gap as new task t-037 (kind: software, kind_robots,
+      reversible, scoped — add the missing node) and set this task `waiting` on it
+      (per AGENTS.md's actionable-failure triage: fix the roadmap, don't retry blind).
+      Once t-037 ships AND the render queue is closer to real-time, t-004 becomes
+      workable end-to-end. No pass consumed (actionable, not quality/scope) per
+      AGENTS.md Failure Triage.
       FOR SILAS: UPDATE 2026-07-18 — the sandbox-egress clause below is stale:
       EGRESS-BLOCKERS.md now shows kind-robots.vercel.app reachable (HTTP 200,
       2026-07-18T11:17:11Z, grep "ai-art-academy/t-004"), not blocked as the
@@ -169,8 +196,6 @@ tasks:
       comparison images as traceable evidence (prompt/model/seed metadata per the
       generated-art rule). If any must-have style fails on Kontext entirely, document
       the SDXL+IP-Adapter fallback case in the same file rather than building it.
-    claimed_by: claude-conductor-scheduled-20260725T220810Z-aa-t004
-    claimed_at: '2026-07-25T22:08:11Z'
   - id: t-005
     milestone: m3
     title: Write the art-history curriculum outline (movements, styles, artists)
@@ -1206,3 +1231,46 @@ tasks:
     owner: reviewer
     claimed_by: claude-conductor-agentrun-20260721T181150Z-t036
     claimed_at: '2026-07-21T18:11:51Z'
+
+  - id: t-037
+    milestone: m2
+    title: Wire LoRA loading into the Kontext generation workflow (currently prompt-only regardless of registry mode)
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-25T22:15:00Z'
+    note: >
+      Filed 2026-07-25 from a t-004 claim attempt (claude-conductor-scheduled-
+      20260725T220810Z-aa-t004) that stopped short of running the planned A/B once
+      this was found. kind_robots server/api/comfy/kontext/utils/workflow.ts:103-242
+      (buildKontextWorkflow) only wires CLIPTextEncode -> FluxGuidance ->
+      UnetLoaderGGUF (base flux1-kontext-dev-Q5_K_M.gguf) — there is no
+      LoraLoader/LoraLoaderModelOnly node anywhere in the graph, so a Kontext remix
+      request today is prompt-only no matter what `mode`/`loraPath`/`loraWeight` the
+      caller sends. Compare the pattern already used elsewhere in this codebase:
+      server/api/comfy/utils/simpleCheckpointWorkflow.ts:127-135 and
+      server/api/comfy/ltx/utils/imageToVideoWorkflow.ts:109-112 both apply a
+      LoraLoaderModelOnly node between the base loader and the sampler. The
+      `loraPath`/`loraWeight` fields the frontend already sends
+      (components/art/art-styler.vue:657-780 BUILTIN_STYLES,
+      stores/seeds/academyStyles.ts:47-53 AcademyRemixConfig) currently flow only
+      into server/api/art/enqueue.post.ts:104-105,252 as provenance metadata
+      (resourceProvenance.ts) — never into the render graph itself. This means
+      ai-art-academy's own style-lora-registry.md currently records ~13 styles as
+      `mode: lora` that are, in the live product, indistinguishable from
+      prompt-mode.
+      Scope: add a LoraLoaderModelOnly node to buildKontextWorkflow, gated on
+      whether the request/style carries a loraPath (no LoRA -> keep today's
+      base-only graph unchanged, so prompt-mode styles are unaffected). Wire
+      art/enqueue.post.ts's already-parsed loraPath/loraWeight into the workflow
+      builder call instead of only recording them as provenance. Verify against a
+      real render once the relay's job queue isn't badly backlogged (GET
+      /api/art/queue/stats showed 82 PENDING/oldest ~35h on 2026-07-25 — pick a
+      quieter window to confirm the new node actually renders, not just that it
+      type-checks). Note the base_model compatibility caveat already flagged in
+      style-lora-registry.md's YAML header: flux-dev-trained LoRAs "generally also
+      load against Kontext dev but need t-004 eval" — worth a quick sanity check
+      with one flux-dev LoRA and one kontext-dev-native LoRA (from
+      Owen777/Kontext-Style-Loras) rather than assuming universal compatibility.
+      Unblocks ai-art-academy/t-004 (depends_on this task).
