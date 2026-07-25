@@ -58,6 +58,9 @@ When asked for a batch, generate up to ten images in the same order as the queue
 - `humboldt-scoop-cms` — inspiration-01, 02, 03
 - `kind-robots` — inspiration-01, 02, 03
 - `mermaids-of-venice` — inspiration-01, 02, 03
+- `ai-art-academy` — teaching-strip-impressionism, teaching-strip-art-nouveau,
+  teaching-strip-cubism, teaching-strip-suprematism (4 images: Hokusai's Great Wave
+  composition re-imagined across four curriculum movements, see art-prompts.yaml)
 
 All inspiration images save to `silasfelinus/kind_robots` at:
 
