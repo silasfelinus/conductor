@@ -15,6 +15,21 @@ Record the lane, files changed, and verification in the task note before rearmin
 
 ### Rotation state
 
+- Last completed lane: Roadmap accuracy (lane 2), 2026-07-25 (~21:05-21:15 UTC,
+  claude-conductor-burst-20260725T2100Z-t010-lane2, scheduled burst-mode cycle).
+  Per the prior cycle's note, lane 2 was next after lane 1 ran.
+  `scripts/audit_roadmaps.py` clean (0 errors, 12 warnings, 42 info — identical
+  to the immediately-prior lane-2 cycle's baseline). `scripts/check_pr_merged_drift.py`
+  flagged 42 unverifiable-via-sandbox candidates (up from 31, purely from this
+  task's and model-builder/t-029's growing PR-reference history); spot-checked
+  the newest (kind_robots#962) via GitHub MCP `pull_request_read` — confirmed
+  merged, 10/-0/1-file, no drift. All 6 milestones re-verified programmatically
+  against actual task statuses — no drift. Spot-checked t-019's blocker for
+  currency: `public/images/academy/styles/` still absent in kind_robots — no
+  change. Conductor-docs-only change (roadmap.yaml + this checklist); no
+  kind_robots PR needed. Next preferred lane is inspiration/preview assets
+  (lane 3) — this cycle ran lane 2, so lane 3 is next in the 1→2→3→4 rotation;
+  re-probe with a fresh queued job.
 - Last completed lane: Front-end polish (lane 1), 2026-07-25 (~20:03-20:27 UTC,
   claude-conductor-agentrun-20260725T2003Z-t010-lane1, scheduled agent run). Per
   the prior cycle's note, lane 1 was next after lane 2 ran (it hadn't run since
