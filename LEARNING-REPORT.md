@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-07-25T14:08:54Z
+Generated: 2026-07-25T14:26:43Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **336**
-- Outcomes: blocked: 12, cancelled: 1, done: 323
+- Closed tasks recorded: **337**
+- Outcomes: blocked: 12, cancelled: 1, done: 324
 - Success rate: **96%**
 - Average passes on successful tasks: **0.0**
 
@@ -24,7 +24,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | art-generator-connect | 3 | 100% |
 | challenge-center | 16 | 100% |
 | coat-dance | 8 | 0% |
-| coloring-book | 13 | 100% |
+| coloring-book | 14 | 100% |
 | conductor | 47 | 100% |
 | conductor-app | 2 | 100% |
 | davinci | 1 | 100% |
@@ -55,7 +55,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 15 | 40% |
-| software | 321 | 99% |
+| software | 322 | 99% |
 
 ## Failure categories
 
@@ -75,6 +75,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-07-25 `coloring-book/t-030` — A shared fallback value duplicated across many call sites (here: 14 ComfyUI job-builder seed generators all independently writing Math.floor(Math.random() * 1_000_000_000_000_000)) is a latent multi-site bug waiting for one schema constraint to expose it -- the seed column was a 32-bit Int the whole time, but nothing failed until real traffic hit it. When fixing this class of bug, grep for the literal/pattern across the whole repo before assuming a single call site is the only offender; a fix at one site while 13 siblings keep the same defect just delays the next incident.
 - 2026-07-25 `animation-manager/t-007` — Local-only verification scripts (npm run test:animation-catalog, invoked from SPEC.md's shipping checklist but never referenced by any GitHub Actions workflow) can silently regress for days with zero signal, because nothing ever runs them except a session that happens to remember to. Caught this cycle only because building a new animation required running the script locally to verify the new catalog entry -- DEFAULT_PREFERENCES.startupEffect's 'random' sentinel had been failing verifyAnimationCatalog.ts's literal-catalog-id assertion since 2026-07-22 with no CI check ever red for it. Before trusting a 'ship only after X' checklist item, confirm X is actually wired into CI (grep the workflow YAML for the exact npm script name) rather than assuming a script's existence in package.json means it runs automatically.
 - 2026-07-25 `model-builder/t-029` — Never hand-generate a base64 (or any binary-safe) encoding of file content as text output when pushing via a GitHub-file-write MCP tool -- an LLM cannot reliably reproduce an exact byte-for-byte encoding of a multi-KB file by 'typing' it, and a single wrong byte (here: a multi-byte × character mis-encoded, plus dropped indentation whitespace) silently corrupts the pushed file without any tool-level error. create_or_update_file's `content` parameter takes plain text directly and the server encodes it -- there is no need to hand-encode at all. Whenever a file-write tool's schema is ambiguous about raw-text-vs-pre-encoded, or after any push whose content you generated as long text rather than copied verbatim from a Read, fetch the pushed content back and diff it against the verified-correct source before treating the push as done, not after opening the PR.
 - 2026-07-22 `ai-art-academy/t-010` — When widening an async-race token guard to cover a new code path, checking only the 'obviously stale' write is not enough -- every write inside the guarded block needs its own safety check. Fixing art-styler.vue's selectStarterEntry() to skip its selectedSourceImage write on a stale sourceSelectionToken almost shipped with the adjacent isLoadingStarterImage reset also gated on the same token, which would have permanently disabled every starter thumbnail (template binds :disabled to that flag) after any stale race, since no other code path resets it. Caught by reading the template's actual bindings for every ref touched in the guarded function, not just tracing the store/script logic -- a token guard is only correct once you've confirmed which of the block's several writes are actually invalidated by staleness and which need to run unconditionally regardless of which async call won.
@@ -84,7 +85,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-07-21 `superkate-services-calculator/t-037` — dart:io real filesystem work (temp-dir creation, real file writes) inside a testWidgets body can hang indefinitely under flutter_test's FakeAsync zone -- wrap it in tester.runAsync() (with a bounded tester.pump() poll loop for the async completion signal) rather than assuming a widget test's async gaps are always safely fake-clock-driven. A test that genuinely needs real I/O will hang to CI's timeout, not fail fast, so a hang in a shared multi-app CI job can look like it's blocking an unrelated app's PR.
 - 2026-07-21 `conductor/t-077` — This session's designated git-push transport (http://127.0.0.1:41729 relay) 413'd on every plain `git push` to its own session branch -- even a brand-new throwaway branch with a 1-byte diff and a ~59KB pack -- while pushing directly to `main` via claim_task.py's git-plumbing helper worked fine. This doesn't match either of CLAUDE.md's two documented HTTP-413 causes (new-ref full-pack, post-rebase force-push). Workaround that eventually worked: retry the SAME single-file git-plumbing commit approach (scratch index + commit-tree + `git push <sha>:<ref>`) against the session branch itself, not just main -- it succeeded where a bulkier `git push -u origin <branch>` failed, before falling back to the heavier push_files MCP tool. Separately: when relaying a large file's full content through push_files (no diff/patch mode exists), ALWAYS diff the pushed remote content byte-for-byte against the local working tree immediately after (e.g. `git show origin/<branch>:<path> | diff - <local-path>`) before trusting it -- a transcription slip during one such relay silently dropped a clause from one note field, and a later slip (pasting an incomplete draft) briefly truncated the entire 2198-line roadmap.yaml to just its 22-line header, discovered only because this verification step is now habitual. Both were caught and fixed before the PR was even opened, with zero cost to Silas -- but only because verification happened immediately, not after moving on.
 - 2026-07-21 `sketchy/t-008` — A project's milestones can show every spec task as done while nothing has actually been built against those specs -- check milestone status against real code state (does the app scaffold still show generated boilerplate?), not just task-list completion, before assuming a project has no available work. Also: app-ci.yml tests every app in apps/ within one shared job whenever its changed-app diff detection doesn't isolate to a single app, so an unrelated app's flaky/hung test can make an otherwise-clean PR's CI look broken -- read the full job log for which app actually failed before assuming your own diff caused it; a test that passes cleanly in the first few seconds of a job that then hangs for 10 more minutes on a different app's test file is not your regression.
-- 2026-07-21 `davinci/t-014` — set_task_field.py edits whatever is on the caller's local working tree, unlike claim_task.py which fetches origin/main fresh and pushes via git plumbing -- calling set_task_field.py right after claim_task.py in the same session without an intervening fetch+ff-only can silently reapply a stale claimed_by/claimed_at (or any other field) on top of the real claim. Always fetch and fast-forward the local branch before any set_task_field.py call that follows a claim_task.py call. Separately: hand-appending a new paragraph to a folded (>) YAML note: field needs a blank line between paragraphs, not just a newline -- YAML's folded-scalar rule collapses adjacent non-blank lines into one line with a space, so a missing blank line silently merges the new paragraph into the previous one on next parse. Verify by re-parsing the note and diffing paragraph-boundary bytes, not by eyeballing the raw text diff.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-07-25T14:08:54Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-07-25T14:26:43Z_
