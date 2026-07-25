@@ -6,12 +6,12 @@ Kind Robots-targeted jobs that carry both:
 - targetRepo: silasfelinus/kind_robots
 - imagePath: public/images/<path> or public/rewards/<path>
 
-are written to the exact equivalent public-media path before the ArtJob is
-marked successful. ``public/images/...`` uses KR_MEDIA_IMAGES_DIR directly;
-``public/rewards/...`` maps to its sibling rewards directory only when the
-configured image root is unambiguously named ``images``. If the filesystem
-write or manifest update fails, the job is reported FAILED and remains
-retryable instead of silently completing with a missing public file.
+are written beneath KR_MEDIA_IMAGES_DIR before the ArtJob is marked successful.
+``public/images/...`` maps directly beneath that image root, while the legacy
+logical ``public/rewards/...`` convention maps beneath its ``rewards/``
+subdirectory. If the filesystem write or manifest update fails, the job is
+reported FAILED and remains retryable instead of silently completing with a
+missing public file.
 
 All other jobs use relay_agent.py unchanged, except that Comfy prompt submission
 uses a longer timeout, can recover a prompt id from /queue when Comfy accepted
@@ -58,7 +58,7 @@ def normalize_kindrobots_image_path(value):
     Jobs created before the direct-media contract used several equivalent forms:
     ``/images/...``, ``images/...``, ``/public/images/...``, Windows separators,
     and full media URLs. Reward jobs also use the established ``/rewards/...``
-    sibling root. Normalize only those recognizable roots; unrelated paths remain
+    logical path. Normalize only those recognizable roots; unrelated paths remain
     unchanged and fail the safety validation below.
     """
 
@@ -105,7 +105,11 @@ def direct_media_target(job):
     if any(part in ("", ".", "..") for part in relative_parts):
         raise ValueError(f"Unsafe media imagePath: {image_path}")
 
-    return parts[1], Path(*relative_parts)
+    media_kind = parts[1]
+    if media_kind == "rewards":
+        relative_parts = ("rewards", *relative_parts)
+
+    return media_kind, Path(*relative_parts)
 
 
 def direct_media_relative(job):
@@ -113,25 +117,12 @@ def direct_media_relative(job):
     return target[1] if target is not None else None
 
 
-def media_root(media_kind="images"):
-    if media_kind not in DIRECT_MEDIA_ROOTS:
-        raise ValueError(f"Unsupported Kind Robots media root: {media_kind}")
+def media_root():
     if not MEDIA_ROOT_VALUE:
         raise RuntimeError(
             "KR_MEDIA_IMAGES_DIR is required for direct Kind Robots media jobs"
         )
-
-    images_root = Path(MEDIA_ROOT_VALUE).expanduser().resolve()
-    if media_kind == "images":
-        root = images_root
-    else:
-        if images_root.name.lower() != "images":
-            raise RuntimeError(
-                "Cannot safely map public/rewards/ from KR_MEDIA_IMAGES_DIR: "
-                "the configured directory must end in /images"
-            )
-        root = images_root.parent / "rewards"
-
+    root = Path(MEDIA_ROOT_VALUE).expanduser().resolve()
     root.mkdir(parents=True, exist_ok=True)
     return root
 
@@ -210,7 +201,7 @@ def write_direct_media(job, media):
         return None
 
     media_kind, relative = target
-    root = media_root(media_kind)
+    root = media_root()
     destination = (root / relative).resolve()
     if destination != root and root not in destination.parents:
         raise ValueError(f"Media destination escaped root: {destination}")
@@ -348,7 +339,7 @@ def process_with_media(job):
     payload["_relayClientId"] = f"{relay.AGENT_ID}-artjob-{job_id}"
     relay.log(
         f"job {job_id}: {engine} direct media -> "
-        f"{media_kind}/{relative.as_posix()}"
+        f"{relative.as_posix()} (logical root: {media_kind})"
     )
 
     if engine == "COMFY":
