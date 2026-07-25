@@ -3937,3 +3937,12 @@ records:
   outcome: done
   failure_category: null
   lesson: "When widening an async-race token guard to cover a new code path, checking only the 'obviously stale' write is not enough -- every write inside the guarded block needs its own safety check. Fixing art-styler.vue's selectStarterEntry() to skip its selectedSourceImage write on a stale sourceSelectionToken almost shipped with the adjacent isLoadingStarterImage reset also gated on the same token, which would have permanently disabled every starter thumbnail (template binds :disabled to that flag) after any stale race, since no other code path resets it. Caught by reading the template's actual bindings for every ref touched in the guarded function, not just tracing the store/script logic -- a token guard is only correct once you've confirmed which of the block's several writes are actually invalidated by staleness and which need to run unconditionally regardless of which async call won."
+- date: '2026-07-25'
+  project: model-builder
+  task: t-029
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "Never hand-generate a base64 (or any binary-safe) encoding of file content as text output when pushing via a GitHub-file-write MCP tool -- an LLM cannot reliably reproduce an exact byte-for-byte encoding of a multi-KB file by 'typing' it, and a single wrong byte (here: a multi-byte × character mis-encoded, plus dropped indentation whitespace) silently corrupts the pushed file without any tool-level error. create_or_update_file's `content` parameter takes plain text directly and the server encodes it -- there is no need to hand-encode at all. Whenever a file-write tool's schema is ambiguous about raw-text-vs-pre-encoded, or after any push whose content you generated as long text rather than copied verbatim from a Read, fetch the pushed content back and diff it against the verified-correct source before treating the push as done, not after opening the PR."

@@ -534,7 +534,7 @@ tasks:
   - id: t-029
     milestone: m6
     title: "Polish and upgrade Model Builder front-end surface"
-    status: review
+    status: ready
     owner: reviewer
     passes: 0
     stakes: reversible
@@ -649,6 +649,35 @@ tasks:
       claude/keen-fermat-a76onp) -- MERGED. Steps (1) and (3) remain as documented in the
       prior entry; not touched this cycle. Kept at `ready` (not `done`), same pattern as the
       07-20/07-21 cycles -- those two steps are still outstanding.
+
+      PROGRESS 2026-07-25 (conductor scheduled agent run, claude-conductor-agentrun-20260725T121559-t029):
+      step (4) follow-on -- dispatched an Explore subagent to read the full model-builder
+      surface (stores/modelBuilderStore.ts, modelBuilderRecipes.ts/modelBuilderFields.ts, and
+      every components/model-builder/*.vue file) against the exclusion list of every bug class
+      already fixed by prior cycles of this task. Found a real, previously-unfixed cross-item
+      race: `generateItemAsset`'s `finally` block unconditionally cleared the store-wide
+      `state.generatingItemId` singleton, unlike the per-item `artJobId`/`queueState` pattern
+      the async generation path already uses correctly. Selecting a different row and clicking
+      "Generate candidate" while another item's `generateItemAsset` call is still awaiting
+      `artStore.generateCurrentArt()` lets the new item's start overwrite `generatingItemId`;
+      when the first call resolves, its `finally` then nulls the flag out from under the
+      second item -- clearing its spinner/disabled state and defeating `canApproveAssets`'
+      `isGenerating` guard (the exact guard t-029's 2026-07-23 cycle added to fix the sibling
+      bug class), letting a user approve a stale/about-to-be-overwritten `artImageId` or fire a
+      second concurrent generation for the same item. Fixed by guarding the clear with an
+      ownership check (`if (state.generatingItemId === item.id) state.generatingItemId = null`),
+      mirroring `pollAsyncArtJob`'s existing `item.artJobId === jobId` pattern. Confirmed the
+      race is reachable by reading `model-builder-progress-matrix.vue`'s row-selection handler
+      directly -- row clicks (`@click="selectedItemId = item.id"`) carry no guard tied to
+      `generatingItemId`. kind_robots PR #948: all 5 CI checks green (TypeScript, Contract
+      verifiers, verify, facet-catalog, GitGuardian) -- merged squash `cc6102b0`. Note on this
+      cycle's own process: an earlier push attempt to the PR branch was corrupted by
+      hand-typed/hallucinated base64 content (a mis-encoded multi-byte `×` character, some
+      dropped indentation) -- caught by fetching the pushed file back and diffing against the
+      local source before opening the PR, and fixed by re-pushing with the tool's plain-text
+      `content` parameter (no manual base64 needed) instead. Steps (1) and (3) remain
+      genuinely blocked/pending as documented in prior entries; not touched this cycle. Rearmed
+      to `ready`.
     claimed_by: claude-conductor-agentrun-20260725T121559-t029
     claimed_at: '2026-07-25T12:15:59Z'
     updated: '2026-07-25T12:15:59Z'
