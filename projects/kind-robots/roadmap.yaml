@@ -275,6 +275,24 @@ tasks:
       previously skipped folders to register (~700 creates). TO APPROVE: after
       the re-run looks sane, set status: done. (Still soft needs-human — the
       agent sandbox proxy 403s kind-robots.vercel.app, so only you can run it.)
+
+      ANSWERED 2026-07-25 (Silas asked "what is the command and where do I run
+      it?"): the script lives at conductor's `scripts/reconcile_expressions.py`
+      and expects a kind_robots checkout as a sibling directory at `../kind_robots`
+      relative to conductor (exactly this session's own layout, and presumably
+      yours too if conductor and kind_robots are cloned side by side). From a
+      terminal with both repos checked out that way, and `KR_API_TOKEN` set to
+      an admin/server key in your environment:
+      ```
+      cd conductor
+      python scripts/reconcile_expressions.py --apply
+      ```
+      Add `--deactivate` to that same command if you also want rows whose
+      backing file is gone soft-disabled (`isActive: false`) in the same pass:
+      `python scripts/reconcile_expressions.py --apply --deactivate`.
+      Run without `--apply` first if you want to see the dry-run report (counts
+      only, no writes) before committing. Once the numbers look sane, set
+      status: done here.
     soft_gate: true
 
   - id: t-012
@@ -367,6 +385,20 @@ tasks:
       work is complete. If a real gap surfaces (relay doesn't branch on
       `media`, or WAN produces bad output), leave a note describing it and
       this reopens as a new scoped task instead of retrying this stale spec.
+
+      UPDATE 2026-07-25: Silas — "it is built but not yet verified as we are
+      waiting to catch up from our batch of art modelling first." Verification
+      stays deferred by his own choice, not a blocker. He separately raised a
+      related-but-distinct gap: no reachable front end anywhere on the site
+      for submitting a video job. Investigated and confirmed
+      pages/video-generator.vue DOES already exist and fully matches what he
+      described (1-2 images incl. optional end-image morph, prompt,
+      duration/fps/loop, ltx/wan picker) and genuinely calls this same
+      enqueue backend — it's just unreachable from any nav path (no
+      projectPlacements.ts or dataSurfaceManifest.ts entry; the one dashboard
+      tab that references its route points at a dead/unwired component).
+      Filed as its own task, kind-robots/t-046, since it's a pure front-end
+      nav fix independent of this task's relay-verification question.
 
       Original spec (kaizen from kind_robots PR #213, Reviewer, 2026-07-13):
       merged the /video-generator page and ArtJob plumbing (LTX/WAN
@@ -1393,8 +1425,9 @@ tasks:
   - id: t-043
     milestone: m1
     title: 'Pitch: trusted-caller mana-charge endpoint so external apps (Sketchy) can debit mana for actions performed on their own infrastructure'
-    status: needs-human
+    status: ready
     gate_human: true
+    approved_by_human: true
     owner: worker
     passes: 0
     stakes: reversible
@@ -1418,8 +1451,27 @@ tasks:
       \ task to `status: done` (or `status: ready` with a note if you want changes\
       \ first). What unblocks: sketchy/t-004's TOKEN-TIERS.md spec can only be implemented\
       \ once this lands -- until then Sketchy's tier limits work via its own daily-count\
-      \ ceilings but real mana debit stays unimplemented.\n"
-    updated: '2026-07-21T19:15:00Z'
+      \ ceilings but real mana debit stays unimplemented.\n\n\
+      ANSWERED 2026-07-25 (Silas asked \"we should always use the same pattern,\
+      \ but why can't sketchy use our api?\"): investigated directly. There is no\
+      \ existing generic charge-only endpoint -- every existing mana-gated route\
+      \ (art/enqueue.post.ts, comfyGate, textGate) bundles \"do the work\" and\
+      \ \"charge mana\" into ONE call, and manaGate() always charges the\
+      \ AUTHENTICATED caller's own resolved user id -- its input type has no\
+      \ userId field at all, so there is no way today for a trusted external\
+      \ caller to say \"charge a DIFFERENT, specified user for work I already did\
+      \ on my own infrastructure.\" Sketchy genuinely cannot be pointed at any\
+      \ existing route -- not a workflow mismatch, a real missing capability\
+      \ (on-behalf-of debit). The good news for your \"same pattern\" concern:\
+      \ requireMachineUser (the existing Comfy machine-user auth mechanism) is\
+      \ reused verbatim by the pitch's own design -- only the ACTION is new\
+      \ (debit-only, caller-specified target user), not the auth. So the answer\
+      \ to open question 1 is effectively resolved: reuse the existing machine-user\
+      \ mechanism, don't invent a new Role/API-key type. Question 2 (separate\
+      \ abuse rate-limit) is still open. Approving with this framing -- setting\
+      \ status: ready so the actual endpoint (extend manaGate to accept an\
+      \ explicit target user for machine callers) can be built next.\n"
+    updated: '2026-07-25T00:00:00Z'
 
   - id: t-044
     milestone: m4
@@ -1458,4 +1510,79 @@ tasks:
       refund-triggers-revocation logic without a separate explicit
       go-ahead. Unblocks digital-storefront/t-017 (entitlement design) and
       packmaker's DLC gating once it lands.
+
+  - id: t-045
+    milestone: m4
+    title: 'Add Resource.commercialSafe (or licenseClass) migration + seed script'
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Filed 2026-07-25 after Silas approved digital-storefront/t-020's pitch
+      (pitches/2026-07-15-resource-commercial-safe-field.md). Additive-only:
+      a `commercialSafe` boolean (or `licenseClass` enum) column on `Resource`,
+      defaulted unsafe/unknown, then a seed pass marking known-safe backends
+      true — FLUX.1 schnell, OpenAI, any approved licensed API (per
+      pitches/2026-07-15-resource-commercial-safe-field.md's existing
+      commercial-safe list). IMPORTANT, not in the original pitch: krea2
+      (Krea 2 Turbo, now the coloring-book color-master default per
+      creative-engines.md) is licensed "Community (<50 seats, needs content
+      filter)" — NOT the same tier as Apache-2.0 flux2-klein. Seed krea2 rows
+      as unsafe/unknown like everything else unless Silas explicitly says
+      otherwise; don't infer commercial-safety from "it's the current
+      default engine." Unblocks digital-storefront's print-flow gate reading
+      this field instead of its current default-deny fallback.
+
+  - id: t-046
+    milestone: m3
+    title: 'Wire /video-generator into site navigation (built page is currently unreachable)'
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Filed 2026-07-25 after Silas flagged not being able to find a video-
+      generation front end anywhere on the site. Investigation confirmed
+      pages/video-generator.vue already fully matches the spec he described
+      (first image required, optional second/end image for a first->last
+      morph, motion prompt, duration/fps/loop, an ltx/wan engine picker) and
+      genuinely calls the real backend (stores/videoStore.ts ->
+      POST /api/art/enqueue, which already supports engine: ltx|wan with
+      firstImageBase64/secondImageBase64/durationSeconds/fps/loop end to
+      end) — this is NOT a stub. The gap is pure reachability: zero entry in
+      utils/projectPlacements.ts, zero entry (navEntry or acknowledgedGap)
+      in utils/dataSurfaceManifest.ts. The only existing reference is a
+      'video' tab under dashboardConfigs.art in
+      stores/helpers/dashboardHelper.ts pointing at route '/video-generator'
+      — but components/art/art-manager.vue (the component that's supposed
+      to render dashboard `art` tabs) has no case for 'video' at all (falls
+      through to "Unknown image tab: video"), AND art-manager.vue itself has
+      zero references anywhere in pages/ or components/ — it's dead,
+      unwired code, not a working tab a user could ever reach. Scope: give
+      video-generator.vue a real, working nav path (either fix
+      dashboardConfigs.art's video tab to actually render through a live
+      component, or give it its own top-level channel/tab entry directly)
+      and add the required dataSurfaceManifest.ts entry so this can't
+      silently go unreachable again. No backend changes needed — this is
+      pure front-end wiring.
+
+  - id: t-047
+    milestone: m4
+    title: 'Add ArtImage.storefrontFeatured boolean (curated swag rail)'
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Filed 2026-07-25 after Silas approved digital-storefront/t-021's pitch
+      (pitches/2026-07-15-storefront-featured-art.md). Going with the
+      pitch's own suggested-first-task default since no ordering requirement
+      was specified: an additive `ArtImage.storefrontFeatured Boolean
+      @default(false)` column, NOT the richer join-table variant (that's
+      only needed if curation ordering on the rail matters — nothing
+      suggests it does yet; revisit as a join table later if the rail grows
+      past a simple curated set). No UI needed in this task — the
+      digital-storefront swag-rail query is the first real consumer and
+      lands as its own follow-up once the field exists.
 

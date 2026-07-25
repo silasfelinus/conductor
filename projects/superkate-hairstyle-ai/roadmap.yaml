@@ -216,11 +216,12 @@ tasks:
   - id: t-011
     milestone: m3
     title: "PLAN paid gating + free trial (do NOT implement billing)"
-    status: needs-human
+    status: done
     owner: human
     passes: 0
     stakes: outward-facing
-    updated: 2026-07-09
+    approved_by_human: true
+    updated: '2026-07-25T00:00:00Z'
     note: >
       FOR SILAS: human-gated PLANNING only. Before Hair Studio charges anyone, Silas decides:
       free-trial shape (how many free generations), price/service charge, whether this stays
@@ -229,6 +230,18 @@ tasks:
       write the plan doc but must NOT wire real billing, payment, signup, or production access.
       TO APPROVE a build step: Silas leaves a concrete decision in this note and creates a
       scoped reversible follow-up task; nothing bills money without that.
+
+      DONE 2026-07-25: Silas — "this project is low priority, literally just
+      make choices and run with it." Wrote BILLING-PLAN.md with concrete
+      defaults: 3 free transformations per user, then billed via the
+      EXISTING Kind Robots mana rail (no new payment infra — Hair Studio
+      already charges mana per Kontext call for the internal phase, public
+      launch just keeps that), stays inside Hair by Superkate (no
+      separate-app spin-off), no special access gate beyond normal Kind
+      Robots auth. No billing code, signup flow, or production access
+      touched — plan doc only, per this task's own explicit boundary.
+      Unblocks t-012 (public launch readiness) once someone's ready to flip
+      the switch — that task still needs its own explicit go-ahead.
 
   - id: t-012
     milestone: m3

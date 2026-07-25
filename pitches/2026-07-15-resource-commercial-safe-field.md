@@ -1,7 +1,7 @@
 # Pitch: Add Resource.commercialSafe (licensing gate for gallery-to-swag)
 date: 2026-07-15
 project-target: kind-robots
-status: awaiting-silas
+status: approved
 
 ## The idea
 Add an additive Prisma field to the `Resource` model (kind_robots' LoRA/checkpoint

@@ -330,8 +330,30 @@ tasks:
 
 
     FOR SILAS: SITE-AUDIT-AGENT.md defines the weekly Claude Code Remote trigger, but this Worker session cannot inspect or create Claude Code Remote triggers. Create one with cron_expression "0 9 * * 1", the prompt in projects/global-ui/SITE-AUDIT-AGENT.md, create_new_session_on_fire true, and push notifications enabled. Review each generated audit PR before merging. This is a soft gate; unrelated Worker tasks remain eligible.
+
+    UPDATE 2026-07-25: Silas said "that should be a routine on your side
+    (claude) not a cron on mine, as if I do it it will be an api charge for
+    each access." Checked what's actually available from an agent session:
+    there IS a CronCreate tool, but it's explicitly session-only and
+    ephemeral -- it lives in-memory for the CURRENT session, auto-expires
+    after 7 days even if the session stays open, and is gone entirely once
+    the session ends. It genuinely cannot serve as a standing weekly
+    routine; it would silently stop firing days or weeks in, with nobody
+    watching for that. The mechanism this task actually describes (a
+    Claude Code Remote "Trigger" -- durable, survives session end, exactly
+    what a weekly recurring audit needs) is a Settings-level feature only
+    Silas can create from his own Claude Code account -- no agent tool can
+    create or inspect it (that limitation is already why this task exists
+    at needs-human at all). FOR SILAS: if the concern is specifically
+    "don't make me set up something that bills per access," that's worth
+    clarifying directly -- is it the GitHub Actions/external-cron-hitting-a-
+    paid-API model you want to avoid (in which case a Claude Code Remote
+    Trigger, which is a native scheduled-session feature rather than an
+    external API call, may not actually have that cost shape), or is there
+    a different mechanism in mind? Left at needs-human rather than guessing
+    at billing specifics this session can't verify.
   soft_gate: true
-  updated: '2026-07-17 23:16:20+00:00'
+  updated: '2026-07-25T00:00:00Z'
 - id: t-017
   milestone: m5
   title: Add a nav-manifest-style registry so missing top-level nav entries fail CI
