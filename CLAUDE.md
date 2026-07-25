@@ -9,7 +9,14 @@ At the start of every session, before responding to any task, run a conductor sw
 1. Read `AGENTS.md` in full
 2. Run `git status` and `git log --oneline -5`
 3. Check for open PRs (use GitHub MCP tools if available)
-4. Scan all `projects/*/roadmap.yaml` for tasks with `status: ready`, `status: needs-human`, or `status: claimed`
+4. Scan all `projects/*/roadmap.yaml` for tasks with `status: ready`, `status: needs-human`, or `status: claimed` —
+   **first check `project-overrides.yaml` and skip any project whose `status` there is not `active`** (`paused`,
+   `retired`, `finished`). Several projects (career-transition, pinball-hero, recipe-box, mermaids-of-venice,
+   others) are deliberately tabled/closed there; a scan that reads `roadmap.yaml` directly without cross-checking
+   this file resurfaces their stale tasks every session regardless (2026-07-25 — this exact bug surfaced
+   career-transition/t-003 and pinball-hero/t-002 as live "needs-human" items after both had been `retired` for
+   over a week). Before proposing a new project-status value to fix a "closed project keeps coming up" complaint,
+   confirm the project isn't already correctly marked in `project-overrides.yaml` and simply not being checked.
 5. Check `TALKBACK.md` tail for any unresolved escalations or security flags
 6. Run `python scripts/build_dream_proposal.py --check`. If today's daily-dream
    proposal is missing, YOU author it — you are the generator (no API calls,
