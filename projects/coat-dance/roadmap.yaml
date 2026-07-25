@@ -62,11 +62,12 @@ tasks:
   - id: t-001
     milestone: m1
     title: "Draft production brief and asset checklist"
-    status: needs-human
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
     gate_human: true
+    approved_by_human: true
     note: >
       FOR SILAS: Production brief written to projects/coat-dance/BRIEF.md. It covers
       the core premise, target runtime assumptions, a required-assets checklist, and
@@ -81,10 +82,14 @@ tasks:
       silent, contrary to what "provide the original video" implied.
 
 
-      TO APPROVE: read BRIEF.md's "Open questions" section (5 questions) and answer
-      at least Q1 (does the final cut use the original audio, new music, or a blend?)
-      either in a reply or by editing this note. Then set this task's status: done.
-      What unblocks when he does: t-002 (video beat-transcription tool research)
+      ANSWERED 2026-07-25: Silas confirmed Q1 (music direction) — "there is very
+      specific audio used in the video, currently no interest in changing it at
+      this point." Original audio only, preserved as-is; no new/replacement track,
+      no blend. Recorded in BRIEF.md's Open Questions section (also resolves Q2 by
+      implication: the audio is intentional, not disposable). Q3-Q5 (tool
+      inventory, surviving stills/notes, target runtime length) remain open but are
+      not blockers for t-002. Unblocking t-002 (video beat-transcription tool
+      research).
       moves from blocked to ready.
     claimed_by: claude-conductor-burst-20260721T1321Z-coatdance
     claimed_at: '2026-07-21T13:21:12Z'
@@ -93,7 +98,7 @@ tasks:
   - id: t-002
     milestone: m1
     title: "Research video beat transcription and shot-slicing tools"
-    status: blocked
+    status: ready
     owner: null
     passes: 0
     stakes: reversible

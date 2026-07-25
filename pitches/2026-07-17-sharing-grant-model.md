@@ -1,7 +1,7 @@
 # Pitch: Add a generalized Grant model for private-but-shared content and project sharing
 date: 2026-07-17
 project-target: kind-robots
-status: awaiting-silas
+status: approved
 
 ## The idea
 Add one new Prisma model, `Grant`, to `silasfelinus/kind_robots`, replacing the
@@ -85,3 +85,16 @@ more, per its own recommendation on open question 3 below:
    in the same migration that creates `Pack`, rather than adding an unused
    enum value now. This pitch follows that recommendation — flagging here in
    case you'd rather add it preemptively.
+
+## Resolution (2026-07-25)
+
+Silas: "Grant model approved." Recorded against the three questions above:
+1. Flat VIEW/ADMIN split for the first cut — taking the pitch's own default,
+   not overridden.
+2. NOT decided — approving the model isn't the same as deciding this
+   behavior. Implementation task (kind-robots/t-044) builds revocation as a
+   manual/admin-only action; do not wire automatic refund-triggered
+   revocation without a separate explicit go-ahead.
+3. Deferring `GrantSubject.PACK`, per this pitch's own recommendation — lands
+   alongside the still-separate Pack-model pitch (`2026-07-18-pack-model-
+   dlc-unlocks.md`) once that one is approved on its own.

@@ -901,11 +901,12 @@ tasks:
   - id: t-029
     milestone: m4
     title: Draft the Grant-model migration pitch using SHARING-SPEC.md as design input
-    status: needs-human
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
     soft_gate: true
+    approved_by_human: true
     note: >
       FOR SILAS: Pitch written at pitches/2026-07-17-sharing-grant-model.md.
       It proposes one new Prisma model (Grant: granterId/granteeId/
@@ -927,9 +928,22 @@ tasks:
       itself (Grant model + 3 enums + server/utils/contentAccess.ts,
       scoped exactly as the pitch's "Suggested first task" section
       describes — no route rewiring, no Pack enum value).
+
+      APPROVED 2026-07-25: Silas — "Grant model approved." Recording the
+      resolution on the 3 open questions: (1) ADMIN sub-permission
+      granularity — going with the pitch's flat VIEW/ADMIN split for the
+      first cut (not overridden, so taking the draft's own default); (3)
+      GrantSubject.PACK — deferred, per the pitch's own recommendation, to
+      land alongside the still-separate Pack-model pitch (t-037), not now.
+      (2) Whether revocation should trigger a refund flow — NOT decided;
+      Silas approved the Grant model itself, not this specific behavior.
+      Filed the migration task (t-044) with revocation as a manual/admin-only
+      action (no auto-refund-trigger) as the safe, reversible default —
+      flag this specific point back to Silas before wiring any refund-driven
+      auto-revocation. Pitch frontmatter flipped to status: approved.
     claimed_by: claude-burst-2026-07-17-hourly
     claimed_at: '2026-07-17T03:07:31Z'
-    updated: '2026-07-17T03:07:31Z'
+    updated: '2026-07-25T00:00:00Z'
 
   - id: t-031
     milestone: m1
@@ -1130,9 +1144,19 @@ tasks:
       task, not filed yet — filed once you approve so it reflects any answers
       to the open questions above), which in turn unblocks
       digital-storefront's DLC-fulfillment webhook follow-on.
+
+      UPDATE 2026-07-25: the sibling Grant-model pitch (t-029) is now
+      approved (Silas: "Grant model approved") and its migration is filed as
+      its own standalone task (kind-robots/t-044) — resolving this pitch's
+      open question 1 (sequencing) by implication: Grant lands first, on its
+      own, and this Pack pitch follows as a separate second migration once
+      it exists (not combined). This pitch itself is still NOT approved —
+      its own two remaining questions (Pack.ownerId; whether refund
+      auto-revokes the paired Grant) haven't been answered yet, so it stays
+      needs-human pending Silas's read of this pitch specifically.
     claimed_by: claude-conductor-scheduled-20260718T0510Z
     claimed_at: '2026-07-18T05:13:46Z'
-    updated: '2026-07-18T05:14:53Z'
+    updated: '2026-07-25T00:00:00Z'
 
   - id: t-038
     milestone: m1
@@ -1396,4 +1420,42 @@ tasks:
       \ once this lands -- until then Sketchy's tier limits work via its own daily-count\
       \ ceilings but real mana debit stays unimplemented.\n"
     updated: '2026-07-21T19:15:00Z'
+
+  - id: t-044
+    milestone: m4
+    title: 'Implement the Grant model migration (additive) + server/utils/contentAccess.ts'
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Filed 2026-07-25 after Silas approved the Grant-model pitch (t-029,
+      pitches/2026-07-17-sharing-grant-model.md). Scoped to exactly that
+      pitch's "Suggested first task" section, no more:
+      - `CREATE TABLE "Grant"` (granterId, granteeId, subjectType, subjectId,
+        level, source, refId, status, expiresAt) with the two indexes the
+        pitch specifies (`[granteeId, subjectType, subjectId, status]`,
+        `[subjectType, subjectId]`).
+      - New enums: `GrantSubject { PROJECT RESOURCE }` (PACK deliberately
+        NOT added yet — deferred to land alongside kind-robots/t-037's
+        still-separate Pack-model pitch, per both pitches' own
+        recommendation), `GrantLevel { VIEW ADMIN }` (flat split approved,
+        no finer ADMIN sub-permissions for this first cut), `GrantSource
+        { MANUAL PURCHASE SUBSCRIPTION ADMIN }`, `GrantStatus { ACTIVE
+        REVOKED EXPIRED }`.
+      - `server/utils/contentAccess.ts`: `canView(subject, user)` and
+        `existsActiveGrant(userId, subjectType, subjectId, minLevel)`, new
+        file only — no existing route rewired onto it in this task.
+      - No new API routes (`POST /api/grants` etc.) — a natural follow-up
+        once the model exists.
+      Additive-only: no column changes, no data migration/backfill on any
+      existing table.
+      OPEN, NOT DEFAULTED: whether a revoked Entitlement-linked Grant should
+      auto-flip on a refund, vs. staying a manual/admin action — Silas
+      approved the Grant model itself but did not decide this specific
+      behavior. Build revocation as a manual/admin-only status flip (the
+      safe, reversible default) and do NOT wire any automatic
+      refund-triggers-revocation logic without a separate explicit
+      go-ahead. Unblocks digital-storefront/t-017 (entitlement design) and
+      packmaker's DLC gating once it lands.
 

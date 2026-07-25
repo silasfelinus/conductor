@@ -94,15 +94,15 @@ file lands, per the milestones' actual `not-started` state.
 
 ## Open questions for Silas
 
-1. **Music direction.** Does the final cut use (a) the original performance's
-   own audio (verified present, unclear quality/intent), (b) a new/different
-   music track chosen for the remix, or (c) a blend (original audio for some
-   sections, music for others)? This directly sets the target runtime and
-   how t-004's section treatment paces cuts.
-2. **Original audio quality/intent.** Is the audio track in the file actual
-   performance sound worth preserving (voice, foley, room tone, live music),
-   or is it disposable (e.g., a rehearsal room's ambient noise)? Worth a
-   quick listen before t-002 starts on beat/shot segmentation.
+1. **Music direction — ANSWERED 2026-07-25.** Silas: "there is very specific
+   audio used in the video, currently no interest in changing it at this
+   point." Decision: (a) the original performance's own audio, preserved
+   as-is — no new/replacement music track, no blend. The audio is
+   intentional, not incidental, which also resolves Q2 below.
+2. **Original audio quality/intent — ANSWERED 2026-07-25 (by implication of
+   Q1).** "Very specific audio" confirms this is deliberate performance
+   sound worth preserving in full, not disposable room tone — treat it as
+   load-bearing for the edit, not something to strip or drown out.
 3. **Tool inventory.** What's actually available in the target render
    environment — ComfyUI workflow set, LAX and Wan availability, GPU/VRAM
    constraints, installed video utilities (this sandbox has neither `ffmpeg`

@@ -186,12 +186,12 @@ tasks:
 - id: t-022
   milestone: m2
   title: 'kind_robots: Stripe webhook (checkout.session.completed, payment mode) credits an Entitlement for the Mermaids PDF product'
-  status: needs-human
+  status: done
   owner: worker
   passes: 0
   stakes: outward-facing
   gate_human: true
-  approved_by_human: false
+  approved_by_human: true
   soft_gate: false
   depends_on:
   - t-011
@@ -218,6 +218,12 @@ tasks:
     What unblocks: t-023 (product page + checkout session + secure download
     route) depends on this task and can then set metadata.productSlug /
     metadata.userId on its checkout session to match this handler's contract.
+
+    CONFIRMED 2026-07-25: Silas — "that pr was approved and merged LOOOOOOOOONG
+    ago." Verified via GitHub MCP: kind_robots PR #426 merged 2026-07-18T18:41:54Z
+    by silasfelinus. This roadmap task was simply never flipped after the merge —
+    a week of stale needs-human noise for already-done work. Flipping to done,
+    approved_by_human: true. t-023 is unblocked.
 
     Verified before opening the PR: full-project `npm run test` (vue-tsc
     --noEmit) exit 0, eslint clean, prettier clean, `prisma validate` clean
@@ -247,7 +253,7 @@ tasks:
 - id: t-023
   milestone: m2
   title: 'kind_robots: Mermaids of Venice PDF product page + Stripe checkout + secure entitlement-gated download route'
-  status: waiting
+  status: ready
   owner: null
   passes: 0
   stakes: outward-facing
@@ -637,7 +643,7 @@ tasks:
 - id: t-026
   milestone: m5
   title: 'kind_robots: extend Stripe webhook fulfillment to DLC products (Entitlement + Grant)'
-  status: waiting
+  status: ready
   owner: null
   passes: 0
   stakes: outward-facing
