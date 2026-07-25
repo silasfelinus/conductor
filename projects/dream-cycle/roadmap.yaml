@@ -232,20 +232,35 @@ tasks:
   - id: t-008
     milestone: m5
     title: First-creation retrospective — tighten the specs from what actually happened
-    status: ready
+    status: blocked
     owner: null
     passes: 0
     stakes: reversible
-    updated: '2026-07-10T00:00:00Z'
+    updated: '2026-07-25T00:00:00Z'
     depends_on: t-004
     note: >
-      After the FIRST creation ships via t-006: compare the build against
-      CREATION-SPEC.md and its type playbook — stages that didn't fit a single
-      cycle, missing verification, art-pipeline friction, API gaps hit in
-      practice, delegation friction with the home project (if coloring-book
-      shipped first). Amend the specs and file any new kind_robots or
-      coloring-book tasks. Summarize for Silas in the PR so he can judge whether
-      the one-creation-a-day cadence held.
+      After the FIRST creation ships via t-006 (the stage-by-stage idle loop —
+      NOT the daily-dream fast lane/build_dream_records.py, which is a separate
+      track per CREATION-SPEC.md and has already shipped comet-market,
+      marrow-library, and kite-string-exchange in one shot each; those don't
+      count for this retrospective): compare the build against CREATION-SPEC.md
+      and its type playbook — stages that didn't fit a single cycle, missing
+      verification, art-pipeline friction, API gaps hit in practice, delegation
+      friction with the home project (if coloring-book shipped first). Amend
+      the specs and file any new kind_robots or coloring-book tasks. Summarize
+      for Silas in the PR so he can judge whether the one-creation-a-day
+      cadence held.
+
+      BLOCKED 2026-07-25 (audit pass): was sitting at `status: ready` but its
+      precondition isn't met yet — no creation has shipped via t-006 at all.
+      lantern-post is the only card ever promoted into the real t-006 idle
+      loop (`backlog/lantern-post.md`, `status: building`) and is still only at
+      Stage 2 of 8 (Dreams — location + vibe + relations) as of its last build
+      log entry, 2026-07-22. Not a roadmap-resolver-trackable dependency (the
+      gate is a backlog-file state, not another task's `status: done`, so
+      `scripts/resolve_deps.py` can't flip this automatically) — re-check
+      `backlog/lantern-post.md`'s frontmatter `status` by hand each cycle and
+      flip this back to `ready` once it reads `built`.
   - id: t-009
     milestone: m2
     title: Write specs/coloring-book.md — the coloring-book day-type playbook
