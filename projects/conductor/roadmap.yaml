@@ -357,9 +357,10 @@ tasks:
   - id: t-026
     milestone: m2
     title: Reviewer trigger fires with no open worker/* PR to review, repeatedly
-    status: needs-human
+    status: done
+    approved_by_human: true
     owner: null
-    updated: '2026-07-13T08:36:00Z'
+    updated: '2026-07-25T00:00:00Z'
     passes: 0
     stakes: reversible
     note: >
@@ -398,6 +399,39 @@ tasks:
       core operating contract. FOR SILAS: want a scoped design task filed
       for the unified-trigger/self-assign rewrite, or is the platform-side
       scheduling fix (stop firing Reviewer on a dumb timer) enough for now?
+
+      DONE 2026-07-25: Silas — "just work on it directly, don't make a new
+      task." Implemented the repo-side half of the redesign (the platform
+      trigger-schedule setting itself is still outside this repo's control,
+      unchanged from the analysis above):
+      - New `scripts/select_role.py` composes `run_reviewer.py`'s open-
+        `worker/*`-branch check with `run_worker.py`'s ready-task check into
+        one role recommendation (`reviewer` if any worker/* branch is open
+        and unmerged, `worker` if a ready task exists, `idle` otherwise) —
+        no model calls, same read-only contract as its two sources. 6 new
+        tests in tests/test_select_role.py (decision priority, network-
+        failure degradation, read-only contract pin); full suite 504 passed
+        / 1 skipped (up from 429 baseline).
+      - Rewrote AGENTS.md's "## The two roles" section into "## Role
+        assignment — decided on arrival, not by which trigger fired":
+        every session now runs `select_role.py` first and follows whichever
+        of "If you're working" / "If you're reviewing" it recommends,
+        re-checking mid-session rather than stopping once its first role's
+        queue empties -- matching "roles are assigned to agents when they
+        visit... and those agents disperse and work as needed" even though
+        the underlying trigger names/schedule are unchanged. The two roles'
+        actual step-by-step content is untouched -- only how a session
+        arrives at which one applies changed.
+      - Fixed reviewer.yml's dead "echo reviewer action disabled"
+        placeholder into a real healthcheck (parity with worker.yml),
+        since it was directly adjacent to what this task touched.
+      Verified: `python scripts/select_role.py --dry-run` runs clean against
+      this repo's live state; `python -m pytest tests/` 504 passed / 1
+      skipped; `python scripts/audit_roadmaps.py` unaffected (this doesn't
+      touch roadmap task fields). Did NOT touch the platform-level trigger
+      schedule/consolidation -- no tool available to any agent session can
+      read or write that, same limitation this task's own history already
+      established.
 
       UPDATE 2026-07-13 08:36: 48th recurrence. Same shape — zero open worker/*
       PRs and zero live worker/* branches in either repo, confirmed via

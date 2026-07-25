@@ -1,10 +1,25 @@
-name: reviewer
+name: Reviewer Healthcheck
 
 on:
   workflow_dispatch:
 
 jobs:
-  reviewer:
+  reviewer-healthcheck:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
     steps:
-      - run: echo reviewer action disabled
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install pyyaml
+
+      - name: Run reviewer healthcheck
+        run: python scripts/run_reviewer.py --dry-run
