@@ -15,6 +15,43 @@ Record the lane, files changed, and verification in the task note before rearmin
 
 ### Rotation state
 
+- Last completed lane: Roadmap accuracy (lane 2), 2026-07-25 (~17:05-17:30 UTC,
+  claude-conductor-burst-20260725T1700Z-t010-lane2, scheduled burst-mode cycle).
+  Per the prior cycle's note, lane 2 was next after lane 1 ran. `audit_roadmaps.py`
+  (0 errors, 12 warnings, 44 info — same baseline) clean. `check_pr_merged_drift.py`
+  flagged its usual 31 unverifiable-via-sandbox candidates (all this task's own
+  historical PR references); spot-checked the newest, kind_robots#952, via GitHub
+  MCP `pull_request_read` — confirmed merged, diff matches this checklist's own
+  record exactly, no drift. All 6 milestones re-verified programmatically against
+  actual task statuses (m1 done/0 open, m2 in-progress/t-004 needs-human, m3
+  in-progress/t-033 needs-human, m4 done/0 open, m5 in-progress/t-009 needs-human
+  + t-019 ready, m6 in-progress/t-010 claimed + t-035 ready) — all six already
+  match, no drift. While spot-checking lane 3's relay health with a fresh,
+  authenticated `GET /api/art/queue/stats` (not a queued job this time — cheaper
+  check, same intent), found the relay is no longer in the fully-stuck
+  never-claimed state every prior lane-3 check has hit since 2026-07-18
+  (RUNNING: 1, DONE: 1438 in the last 24h) but is backlogged (59 PENDING, oldest
+  ~30h old) and its `recentFailed` list surfaced a genuine, previously-undocumented
+  production bug distinct from the coloring-book/t-030 seed-overflow finding: three
+  daily-dream reward-art jobs (2219/2220/2221, all from 2026-07-24 21:37-21:47 UTC)
+  permanently FAILED with "Kind Robots media job imagePath must begin with
+  public/images/" even though their `imagePath` (`public/rewards/favor/*.webp`)
+  is the project's own correct, established convention for reward art (confirmed:
+  `public/rewards/` is a real top-level directory in kind_robots, sibling to
+  `public/images/`, matching 18 existing `art-prompts.yaml` entries and the header
+  note in `scripts/dream_slug_image_cleanup.py`). Root-caused to
+  `ops/home-server/relay_media_agent.py`'s `direct_media_relative()`, which only
+  recognizes `public/images/...`. Not fixed inline — different project (dream-cycle,
+  not ai-art-academy) and out of lane 2's docs-only scope, and a naive fix would
+  silently write the file to the wrong physical folder on Silas's box rather than
+  just failing loudly (see the filed task for why). Filed as
+  `dream-cycle/t-019` (ready) with full root-cause detail, exact job ids, and the
+  two fix-shape options for whoever picks it up, per hard rule 6. Conductor-docs-only
+  change (this checklist + `dream-cycle/roadmap.yaml`); no kind_robots PR needed.
+  Next preferred lane is inspiration/preview assets (lane 3) — this cycle ran lane
+  2, so lane 3 is next in the 1→2→3→4 rotation; per the relay-stats check above,
+  re-probe with a fresh queued job rather than assuming either the old
+  fully-stuck signature or a clean recovery.
 - Last completed lane: Front-end polish (lane 1), 2026-07-25 (~15:06-15:33 UTC,
   claude-conductor-scheduled-20260725T1506Z-t010-lane1, scheduled agent run). Per
   the prior cycle's note, lane 1 was next after lane 4 ran. Dispatched a
