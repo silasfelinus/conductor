@@ -4,14 +4,13 @@
 Kind Robots-targeted jobs that carry both:
 
 - targetRepo: silasfelinus/kind_robots
-- imagePath: public/images/<path> or public/rewards/<path>
+- imagePath: public/images/<path>
 
 are written beneath KR_MEDIA_IMAGES_DIR before the ArtJob is marked successful.
-``public/images/...`` maps directly beneath that image root, while the legacy
-logical ``public/rewards/...`` convention maps beneath its ``rewards/``
-subdirectory. If the filesystem write or manifest update fails, the job is
-reported FAILED and remains retryable instead of silently completing with a
-missing public file.
+Historical ``images/...`` and reward-path forms are normalized to the single
+canonical ``public/images/...`` contract before validation. If the filesystem
+write or manifest update fails, the job is reported FAILED and remains retryable
+instead of silently completing with a missing public file.
 
 All other jobs use relay_agent.py unchanged, except that Comfy prompt submission
 uses a longer timeout, can recover a prompt id from /queue when Comfy accepted
@@ -34,7 +33,6 @@ MEDIA_ROOT_VALUE = (
     os.environ.get("KR_MEDIA_IMAGES_DIR", "").strip()
     or os.environ.get("KR_LOCAL_IMAGES_DIR", "").strip()
 )
-DIRECT_MEDIA_ROOTS = {"images", "rewards"}
 IMAGE_EXTENSIONS = {".webp", ".png", ".jpg", ".jpeg", ".gif", ".svg"}
 GENERATED_IMAGE_EXTENSIONS = {".webp", ".png", ".jpg", ".jpeg", ".gif"}
 VIDEO_EXTENSIONS = {".mp4", ".webm", ".mov", ".mkv"}
@@ -53,31 +51,41 @@ def job_payload(job):
 
 
 def normalize_kindrobots_image_path(value):
-    """Normalize historical frontend/media paths to a supported public root.
+    """Normalize historical frontend/media paths to ``public/images/...``.
 
     Jobs created before the direct-media contract used several equivalent forms:
     ``/images/...``, ``images/...``, ``/public/images/...``, Windows separators,
-    and full media URLs. Reward jobs also use the established ``/rewards/...``
-    logical path. Normalize only those recognizable roots; unrelated paths remain
-    unchanged and fail the safety validation below.
+    full media URLs, and a separate ``public/rewards/...`` logical root. The
+    relay accepts those historical spellings only long enough to canonicalize
+    them. Unrelated paths remain unchanged and fail the safety validation below.
     """
 
     image_path = str(value or "").strip().replace("\\", "/")
     if not image_path:
         return ""
 
+    raw_path = image_path.split("?", 1)[0].split("#", 1)[0]
+    if ".." in raw_path.split("/"):
+        raise ValueError(f"Unsafe media imagePath: {image_path}")
+
     parsed = urllib.parse.urlparse(image_path)
     if parsed.scheme in ("http", "https") or parsed.netloc:
         image_path = urllib.parse.unquote(parsed.path or "")
     else:
-        image_path = image_path.split("?", 1)[0].split("#", 1)[0]
+        image_path = raw_path
 
     while image_path.startswith("./"):
         image_path = image_path[2:]
     image_path = image_path.lstrip("/")
 
-    if image_path.startswith(("images/", "rewards/")):
+    if image_path.startswith("public/images/"):
+        return image_path
+    if image_path.startswith("images/"):
         return f"public/{image_path}"
+    if image_path.startswith("public/rewards/"):
+        return f"public/images/{image_path[len('public/'):]}"
+    if image_path.startswith("rewards/"):
+        return f"public/images/{image_path}"
     return image_path
 
 
@@ -91,25 +99,16 @@ def direct_media_target(job):
 
     logical = PurePosixPath(image_path)
     parts = logical.parts
-    if (
-        len(parts) < 3
-        or parts[0] != "public"
-        or parts[1] not in DIRECT_MEDIA_ROOTS
-    ):
+    if len(parts) < 3 or parts[0] != "public" or parts[1] != "images":
         raise ValueError(
-            "Kind Robots media job imagePath must begin with "
-            "public/images/ or public/rewards/"
+            "Kind Robots media job imagePath must begin with public/images/"
         )
 
     relative_parts = parts[2:]
     if any(part in ("", ".", "..") for part in relative_parts):
         raise ValueError(f"Unsafe media imagePath: {image_path}")
 
-    media_kind = parts[1]
-    if media_kind == "rewards":
-        relative_parts = ("rewards", *relative_parts)
-
-    return media_kind, Path(*relative_parts)
+    return "images", Path(*relative_parts)
 
 
 def direct_media_relative(job):
