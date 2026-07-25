@@ -254,6 +254,19 @@ tasks:
       post-merge state was `ready`, not `review` — flipping to match. Remaining
       scope unchanged: step (1) art gen still needs a working art-generation relay,
       step (3) still needs Silas's admin Placements click.
-    updated: '2026-07-21T03:07:33Z'
+
+      PROGRESS 2026-07-25: found the dashboard-tab request already queued
+      (`kind-robots-coat-dance-image-af95a710` in `projects/art-prompts.yaml`,
+      still `pending`) but no tutorial-card request existed at all for
+      `public/images/tutorials/art/coat-dance.webp`. Added one
+      (`kind-robots-art-tutorial-coat-dance01`, themed on the actual 2006 HSU
+      trench-coat premise, matching the existing coloring-book tutorial-card
+      convention) and confirmed via `consume_art_requests.py`'s dry-run that it's
+      recognized and would queue correctly. Both requests now sit `pending` and
+      will self-drain through the daily `auto-art-generate` workflow (the same
+      pipeline whose stalled schedule was fixed today, PR #1058) — no more agent
+      action needed for step (1). Step (3) (admin Placements click) remains the
+      only actually human-gated remainder.
+    updated: '2026-07-25T00:00:00Z'
     claimed_by: null
     claimed_at: null
