@@ -11,7 +11,7 @@ worked example lessons — so every style page in the Academy teaches the same w
 converts cleanly into front-end lesson copy.
 
 Companion files:
-- `docs/curriculum-outline.md` — the 29 movements (source of truth for facts/works/hints)
+- `docs/curriculum-outline.md` — the 30 movements (source of truth for facts/works/hints)
 - `docs/style-lora-registry.md` — per-style remix mode (`prompt` vs `lora`) + `prompt_hint`
 - `PUBLIC-DOMAIN-POLICY.md` — the eligibility rule every example work must pass (§1.3) and
   the provenance schema (§3)
@@ -97,7 +97,7 @@ or style registry.
 
 ---
 
-## 3. Per-style teaching notes (all 29 movements)
+## 3. Per-style teaching notes (all 30 movements)
 
 Remix-difficulty tiers match `curriculum-outline.md`'s "Lesson-only vs remixable" section:
 **Easy** = strong transfer, ship first; **Medium** = good but watch the output;
@@ -136,6 +136,7 @@ slugs — e.g. `renaissance-fresco`, `baroque-chiaroscuro`, `post-impressionism-
 | 27 | Mughal Miniature Painting (`mughal-miniature`) | prompt | Medium | Persian tradition meets naturalism — individualized faces and atmospheric depth, gold spent sparingly instead of everywhere | Risks collapsing into a generic "Indo-Persian miniature" filter indistinguishable from Persian Miniature Painting; lean on the remix_hint's stippled naturalistic faces, atmospheric haze, and sparing local gold to keep the two movements visually distinct |
 | 28 | Fayum Mummy Portraits (`fayum-mummy-portraits`) | prompt | Medium | Ancient Egypt's afterlife met Roman portraiture — anonymous painters made faces this lifelike 1,800 years ago | The most photorealistic style in the curriculum, so the likeliest failure is a generic "vintage photo" filter that skips the actual signature; lean on the remix_hint's oversized almond eyes, visible encaustic ridge texture, flat dark background, and absence of cast shadow to keep it distinct from `realism`/`renaissance` portraiture |
 | 29 | Vienna Secession (`vienna-secession`) | prompt | Medium | Ornament and realism collide on the same canvas — flat gold pattern beside a photographic face | Model may gild everything uniformly and lose the defining contrast between flat ornament and naturalistic face/hands; lean on the remix_hint's explicit "fine naturalistic detail... set against the abstract gold pattern" to keep the face legible rather than dissolved into pattern |
+| 30 | Joseon Dynasty Korean Genre Painting (`joseon-genre-painting`) | prompt | Medium | A handful of court painters turned Korea's disciplined scholarly brush toward candid, often funny scenes of ordinary people, on almost-empty paper | Likely fails toward a generic "sumi-e"/ink-wash filter that keeps the photo's real background instead of emptying the frame; lean on the remix_hint's explicit "almost no background detail beyond a single ground line" and "plain paper" to distinguish it from `song-dynasty-landscape`'s ink-wash family |
 
 ---
 

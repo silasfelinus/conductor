@@ -4,7 +4,7 @@ date: 2026-07-10
 task: ai-art-academy/t-005
 status: draft for review (content complete, one source URL verified per movement)
 
-This is the curriculum: 29 movements spanning the timeline from Ancient Egypt to
+This is the curriculum: 30 movements spanning the timeline from Ancient Egypt to
 American Regionalism. Every artist named here is long dead (all listed artists died
 before 1955), and every example work is a public-domain original held (or expected)
 in an open-access collection. See the ethical boundary in DESIGN-BRIEF.md and the
@@ -33,6 +33,12 @@ Secession — a return to a single-named-artist (Klimt) movement after Section 2
 anonymous entry, and the first entry whose defining visual signature is applied
 gold leaf as flat ornamental pattern rather than as illumination (cf. Section 3's
 Illuminated Manuscript) or mosaic tessellation (cf. Section 2's Byzantine Mosaic).
+Section 30 is the 2026-07-25 v1.10 addition (t-010 cycle, lane 4): Joseon Dynasty
+Korean Genre Painting — a fourth non-Western entry and the first from Korea,
+visually distinct from every other Asian entry in the curriculum (Song Dynasty's
+monumental monochrome peaks, Ukiyo-e's flat multi-block color, Mughal's dense
+courtly ornament): loose, economical brushwork on plain paper depicting candid,
+often humorous scenes of Joseon-era commoners, with little to no background at all.
 They are appended (rather than renumbered into place) but belong
 chronologically among the earlier movements — read the `era` field in the
 machine-readable skeleton for true ordering; the front-end seed (t-020, t-031)
@@ -274,6 +280,19 @@ movements:
     artist_slugs: [gustav-klimt]
     example_count: 3
     remix_hint: "Repaint this image as a Vienna Secession painting in the style of Gustav Klimt: flat ornamental fields of gold leaf and gold-toned metallic pattern (spirals, eyes, rectangles) replacing background depth, an elongated figure rendered with fine naturalistic detail in face and hands set against the abstract gold pattern, rich jewel-toned color islands within the gold, no cast shadow or realistic perspective, a strong decorative border"
+  # --- v1.10 addition (2026-07-25, t-010 cycle, lane 4) ---
+  # Fourth non-Western entry (after persian-miniature, mughal-miniature,
+  # song-dynasty-landscape, fayum-mummy-portraits) and the first from Korea.
+  # Belongs chronologically around rococo/american-regionalism (see `era`);
+  # appended here to avoid renumbering the sections above. A future seed-sync
+  # task inserts it in chronological position in academyStyles.ts, mirroring
+  # t-020/t-031/t-034.
+  - slug: joseon-genre-painting
+    name: Joseon Dynasty Korean Genre Painting
+    era: "c. 1750-1820 (Late Joseon Dynasty, Korea)"
+    artist_slugs: [kim-hong-do, sin-yun-bok]
+    example_count: 3
+    remix_hint: "Repaint this image as a late-Joseon Korean genre painting (pungsokhwa) in the style of Kim Hong-do: loose, economical brush-line figures with light, translucent color wash on plain paper, a candid or gently humorous everyday moment, almost no background detail beyond a single ground line, muted earthy palette of pale ochre, indigo, and dull red, a small red seal stamp in one corner, no cast shadow or linear perspective"
 ```
 
 ---
@@ -1780,6 +1799,78 @@ shadow or realistic perspective, a strong decorative border"
 
 ---
 
+## 30. Joseon Dynasty Korean Genre Painting (`joseon-genre-painting`)
+
+**Era:** c. 1750-1820 (Late Joseon Dynasty, Korea)
+
+**Key ideas.** For most of the Joseon Dynasty, Korean painting followed Chinese
+scholarly convention: monochrome ink landscapes and disciplined calligraphic
+brushwork, made by and for the yangban aristocracy. In the late 18th century a
+handful of court painters turned that same economical brush toward something
+almost nobody had painted seriously before: ordinary people doing ordinary
+things — wrestling matches, village schoolrooms, courting couples, market
+stalls. This genre-painting tradition (pungsokhwa, "pictures of customs") is
+candid and often funny, with a light touch that assumes the viewer already
+knows the joke. Unlike the courtly Persian and Mughal miniatures elsewhere in
+this curriculum, there is no dense border, no gold, and often barely any
+background at all — figures float on plain paper, caught mid-gesture, the
+whole scene carried by a few confident, economical lines.
+
+**Recognition cues:**
+- Thin, quick, calligraphic brush lines describing figures with very few
+  strokes — closer to gesture drawing than to finished modeling
+- Light, translucent color washes (pale ochre, dull red, indigo, soft gray)
+  over ink outline, never opaque or richly layered paint
+- Little or no background: figures are placed on bare paper with at most a
+  single horizon line or a suggested patch of ground, unlike the dense
+  borders and settings of Persian/Mughal miniature or the towering landscapes
+  of Song Dynasty painting
+- Candid, often humorous everyday subject matter — commoners at work, play,
+  or courtship — rather than court portraiture, myth, or religious subjects
+- Figures grouped in loose circular or diagonal clusters (a wrestling ring, a
+  classroom of scattered students) rather than a formal frontal arrangement
+- A small red seal (dojang) stamped in one corner
+- No cast shadow, no linear perspective — space is implied by placement on
+  the page, not by a horizon or vanishing point
+
+**Notable artists:**
+- **Kim Hong-do** (pen name Danwon; 1745 - c. 1806) — Court painter to King
+  Jeongjo and the movement's central figure, best known for his *Album of
+  Genre Paintings* (Danwon pungsokdo cheop, South Korea's National Treasure
+  527): unpretentious, warm-humored scenes of commoners at work and play.
+- **Sin Yun-bok** (pen name Hyewon; 1758 - after 1813) — A generation younger
+  than Kim Hong-do, and expelled from the royal painting bureau (Dohwaseo) for
+  subject matter the court considered too informal; specialized in scenes of
+  courtship and leisure among ordinary townspeople, painted with the same
+  light, economical brush.
+
+**Example works:**
+- *Ssireum (Korean Wrestling)*, Kim Hong-do, late 18th century (from Danwon
+  pungsokdo cheop) — ink and light color on paper. **VERIFIED**, Wikimedia
+  Commons file page: rights template `PD-Art (PD-old-100)` — "public domain
+  ... where the copyright term is the author's life plus 100 years or fewer,"
+  plus a Creative Commons Public Domain Mark 1.0 designation:
+  https://commons.wikimedia.org/wiki/File:Danwon_Ssireum.jpg
+- *Seodang (The Village School)*, Kim Hong-do, late 18th century (from Danwon
+  pungsokdo cheop) — ink and light color on paper. **VERIFIED**, Wikimedia
+  Commons file page: same `PD-Art (PD-old-100)` template plus Creative Commons
+  Public Domain Mark 1.0:
+  https://commons.wikimedia.org/wiki/File:Danwon_Seodang.jpg
+- *Wolha jeongin (Moonlit Lovers)*, Sin Yun-bok, c. 1805 — ink and light color
+  on paper. **VERIFIED**, Wikimedia Commons file page: rights template reads
+  "public domain ... where the copyright term is the author's life plus 70
+  years or fewer," plus a Creative Commons Public Domain Mark 1.0 designation:
+  https://commons.wikimedia.org/wiki/File:Hyewon-Wolha-jeongin-2.jpg
+
+**remix_hint:** "Repaint this image as a late-Joseon Korean genre painting
+(pungsokhwa) in the style of Kim Hong-do: loose, economical brush-line figures
+with light, translucent color wash on plain paper, a candid or gently
+humorous everyday moment, almost no background detail beyond a single ground
+line, muted earthy palette of pale ochre, indigo, and dull red, a small red
+seal stamp in one corner, no cast shadow or linear perspective"
+
+---
+
 ## Lesson-only vs remixable
 
 Every movement above maps to a remix config (mode `prompt` to start; t-003/t-004
@@ -1839,7 +1930,16 @@ contrast between flat, non-representational ornament and a sharply naturalistic
 face/hands — the remix_hint keeps that tension explicit ("elongated figure
 rendered with fine naturalistic detail... set against the abstract gold
 pattern") so t-004 should specifically check that the face stays legible and
-photographic rather than dissolving into the pattern too.
+photographic rather than dissolving into the pattern too. `joseon-genre-painting`
+shares `song-dynasty-landscape`'s East Asian ink-and-wash family but with the
+opposite risk profile: instead of discarding a specific mandatory composition,
+its defining trait is *emptying* the frame — almost no background beyond a bare
+ground line — which fights against a source photo that has one. The likelier
+failure mode is the model keeping the photo's background largely intact under a
+thin ink-wash filter, reading as generic "sumi-e" rather than pungsokhwa's
+actual candid, mostly-blank-paper look; the remix_hint leans on "almost no
+background detail" and "plain paper" explicitly, and t-004 should check that
+the background is genuinely simplified away, not just desaturated.
 
 **Flagged as likely-poor remixers:**
 - `cubism` — faceting while "preserving the composition" is partly contradictory;
@@ -2033,3 +2133,22 @@ most-recent-example-work record, which stays at 1930 (*American Gothic* /
 three file pages), so all three example-work URLs are marked VERIFIED against
 their live `extmetadata` rights-status categories (`PD-old-100-expired` and
 `CC-PD-Mark`), matching the §22-23/§25-27 precedent.
+
+**v1.10 addition (2026-07-25) re-check.** Section 30 (Joseon Dynasty Korean
+Genre Painting) clears the PUBLIC-DOMAIN-POLICY.md §1.3 both-prongs rule for
+both named artists with a wide margin: Kim Hong-do (1745 - c. 1806) and Sin
+Yun-bok (1758 - after 1813) both died over 200 years ago, far past the 1956
+cutoff and earlier than every other named-artist death on record in this
+document except the ancient/medieval entries (§2, §17, §25-28). All three
+example works — *Ssireum* and *Seodang* (both late 18th century, from Kim
+Hong-do's *Danwon pungsokdo cheop*) and *Wolha jeongin* (Sin Yun-bok, c.
+1805) — predate the 1930 US-publication cutoff by over a century and do not
+disturb the curriculum's most-recent-example-work record, which stays at 1930
+(*American Gothic* / *Stone City, Iowa*, §24). This session had working
+egress to `commons.wikimedia.org` (confirmed via direct `WebFetch`, live
+content returned on all three file pages), so all three example-work URLs
+are marked VERIFIED directly against their live rights-status templates —
+`PD-Art (PD-old-100)` for the two Kim Hong-do works (life+100 years or
+fewer) and the equivalent life+70 template for the Sin Yun-bok work, each
+also carrying a Creative Commons Public Domain Mark 1.0 designation — matching
+the §22-23/§25-27/§29 direct-file-page-verification precedent.

@@ -15,6 +15,60 @@ Record the lane, files changed, and verification in the task note before rearmin
 
 ### Rotation state
 
+- Last completed lane: Curriculum depth (lane 4), 2026-07-25 (~14:30-15:05 UTC,
+  claude-conductor-agentrun-20260725T1430Z-t010-lane4, scheduled agent run,
+  falling forward from a blocked lane 3 — same live art-generation relay check
+  as every prior lane-3 attempt since 2026-07-18). Per the prior cycle's note,
+  lane 2 (roadmap accuracy) had just run, so lane 3 was next in the 1→2→3→4
+  rotation; lane 3 stayed blocked (same session claim note, not re-probed this
+  pass since the immediately-prior cycle already reconfirmed it fresh), so this
+  cycle fell forward to lane 4. Added a 30th movement: Joseon Dynasty Korean
+  Genre Painting (`joseon-genre-painting`, curriculum-outline.md §30) — a
+  fourth non-Western entry and the first from Korea, chosen specifically for
+  visual distinctness from every existing Asian entry (Song Dynasty's
+  monumental monochrome peaks, Ukiyo-e's flat multi-block color, Mughal's dense
+  courtly ornament): loose economical brush-line genre scenes of Joseon-era
+  commoners on nearly blank paper, no background, no gold, no dense border.
+  All three example works confirmed **VERIFIED** directly via WebFetch of their
+  live Wikimedia Commons file pages (this session had working egress to
+  `commons.wikimedia.org`): Kim Hong-do's *Ssireum* (Korean Wrestling) and
+  *Seodang* (The Village School), both late 18th century from his *Danwon
+  pungsokdo cheop* album (National Treasure 527), rights template `PD-Art
+  (PD-old-100)` plus Creative Commons Public Domain Mark 1.0; and Sin Yun-bok's
+  *Wolha jeongin* (Moonlit Lovers), c. 1805, rights template reading "life plus
+  70 years or fewer" plus the same PD Mark 1.0. Both artists (Kim Hong-do,
+  1745-c.1806; Sin Yun-bok, 1758-after 1813) died over 200 years ago and all
+  three works predate the 1930 US-publication cutoff by over a century —
+  clears PUBLIC-DOMAIN-POLICY.md §1.3's both-prongs rule with a wide margin,
+  matching the §22-23/§25-27/§29 direct-file-page-verification precedent
+  rather than a web-search-snippet check. Deliberately chose Kim Hong-do's
+  tamer genre scenes (wrestling, a classroom) and Sin Yun-bok's most
+  G-rated well-known work (a fully-clothed moonlit courtship scene) over
+  either artist's more explicit "chunhwado"/erotic-genre output, consistent
+  with the Academy's general-audience framing — not a PD-policy requirement,
+  but worth recording since Sin Yun-bok's oeuvre includes both registers.
+  Queued the style-preview prompt in `art-prompts.yaml`
+  (`kind-robots-academy-style-preview-joseon-genre-painting`), still subject to
+  the same lane-3 backlog/blocker as the other 29. Added the placeholder row
+  to `style-lora-registry.md`'s curriculum-slug-mapping table and row 30 to
+  `teaching-notes.md` (mode `prompt`, difficulty Medium — flagged risk: the
+  model likely keeps the source photo's real background under a thin
+  ink-wash filter instead of genuinely emptying the frame, reading as generic
+  "sumi-e" rather than pungsokhwa's actual near-blank-paper look). Also added
+  a distinguishing-risk paragraph to curriculum-outline.md's "Lesson-only vs
+  remixable" section contrasting this movement's "empty the frame" risk with
+  `song-dynasty-landscape`'s "discard-the-photo's-composition" risk, since
+  both share the same ink-and-wash family but fail in opposite directions.
+  Front-end sync to `academyStyles.ts` deliberately deferred to a future
+  cycle, matching how persian-miniature/song-dynasty-landscape/
+  mughal-miniature/fayum-mummy-portraits/vienna-secession landed across
+  separate cycles. Verified the curriculum-outline.md machine-readable
+  skeleton parses as 30 entries (`yaml.safe_load` on the extracted block) and
+  `art-prompts.yaml` parses clean (188 requests). Conductor-docs-only change;
+  no kind_robots PR needed this cycle (front-end sync deferred, as above).
+  Updated this checklist's rotation state; next preferred lane is front-end
+  polish (lane 1) — this cycle ran lane 4, so lane 1 is next in the
+  1→2→3→4 rotation.
 - Last completed lane: Roadmap accuracy (lane 2), 2026-07-25 (~13:04-13:20 UTC,
   claude-conductor-agentrun-scheduled-t010-lane2, scheduled agent run). Per the
   prior cycle's note, lane 2 was next after lane 1 ran. `audit_roadmaps.py` (0
