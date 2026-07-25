@@ -271,8 +271,8 @@ tasks:
   - id: t-007
     milestone: m5
     title: "Build or polish one animation candidate from reaction evidence"
-    status: ready
-    owner: worker
+    status: claimed
+    owner: reviewer
     passes: 0
     stakes: reversible
     recurring: true
@@ -291,9 +291,9 @@ tasks:
       PROGRESS 2026-07-22 (~16:53 UTC, conductor scheduled agent session): new Pacific calendar day since the last build (stained-glass-rain, merged ~00:25 UTC same Pacific day as this cycle's start, i.e. 2026-07-21 -07:00), so eligible. Built the next queued candidate, clockwork-greenhouse (priority 5 in PITCHES.yaml, next after stained-glass-rain). New components/screenfx/clockwork-greenhouse.vue -- brass-stemmed plants growing, blooming, seeding, and resetting (withering back to the ground) on staggered per-plant timelines via a four-phase deterministic state machine, gear-shaped pollinators continuously visiting whichever plants are currently in bloom, cursor-proximity warmth accelerating nearby growth, and a click planting one temporary seed that runs a single lifecycle before being removed (capped at 2 concurrent). Catalog entry added to stores/animationCatalog.ts (generationSafe: true, preferredSurface: fullscreen, icon kind-icon:greenhouse -- confirmed present in assets/icons/greenhouse.svg and loaded by the Nuxt Icon build). Reduced motion freezes the garden into a mature/static bloom state (skips phase progression) with only gear rotation and ambient light drift, matching the pitch's reduced-motion plan. Verified: eslint clean on both changed files; prettier clean on the new component (ran --write on it only -- stores/animationCatalog.ts carries pre-existing prettier drift confirmed via git stash, same pattern noted on stained-glass-rain/t-029); full-project npm run test (vue-tsc --noEmit) exit 0; npm run test:animation-catalog (34 effects, unique ids, all resolve) and npm run test:animation-component-attempts (34 slugs) both pass. Live browser smoke test and the Component attempt record (SPEC.md "Attempt records") are BOTH deferred -- same no-reachable-DATABASE_URL sandbox limitation as every prior t-007 entry this week. kind_robots PR #887 (branch claude/tender-wright-1qkfwz) -- open, CI running. Set status: review; will flip to done once CI is green and the PR merges.
 
       MERGED 2026-07-22 (~16:56 UTC, same session): kind_robots PR #887 confirmed all 4 CI checks green (verify, Contract verifiers, TypeScript, GitGuardian), no review comments, squash-merged (d50f83c). PITCHES.yaml's clockwork-greenhouse entry updated to status: candidate with a builds: record (pending the deferred live-smoke pass before promoting to shipped, same as paper-lantern-weather/magnetic-sand-garden/stained-glass-rain). Rearming to ready per the recurring-task convention.
-    claimed_by: null
-    claimed_at: null
-    updated: '2026-07-22T16:56:00Z'
+    claimed_by: claude-conductor-burst-20260725T130552-am-t007
+    claimed_at: '2026-07-25T13:05:53Z'
+    updated: '2026-07-25T13:05:53Z'
 
   - id: t-008
     milestone: m3
