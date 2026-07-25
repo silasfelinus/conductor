@@ -1661,3 +1661,25 @@ share the same "capture a token before an async op, bail if stale on resolve"
 shape. Still deferring the shared-composable extraction (as prior cycles have)
 since each instance is small and the pattern is already consistent — revisit
 if a fifth instance appears.
+
+## 2026-07-25 | Reviewer (scheduled agent run) | ai-art-academy/t-010 | pattern
+
+**Decision:** merged kind_robots PR #962.
+
+**Failure category:** null — real bug found and fixed, first-pass clean.
+
+**Subject:** Burst-mode/scheduled rotation picked ai-art-academy/t-010 lane 1 (front-end polish), most overdue lane per the checklist (hadn't run since ~15:06 UTC). Dispatched a general-purpose subagent over the full in-scope surface with the checklist's cumulative exclusion list; it found a genuine, previously-unfixed message-clearing gap in `art-styler.vue`.
+
+**Detail:**
+- The MIME-rejection branches in `handleFileSelect()` and `handleDrop()` (added in PR #733) only ever set `errorMessage.value`, never clearing a leftover `successMessage.value` from a prior generation. Every other selection path in the same file (`processUploadedFile`, `selectGalleryImage`, `selectStarterEntry`, `selectStyle`, `clearSelection`, `runStyleTransfer`) already clears both messages together, so this was a genuine inconsistency, not a new pattern needing a design decision.
+- Concrete failure scenario: user completes a style transfer (success banner shown), then drops or selects a non-PNG/JPEG/WebP file. The rejection error and the stale success banner both render simultaneously since they're independent `v-if` blocks in the template.
+- Fix: two-line addition (`successMessage.value = ''` before each `errorMessage.value` assignment), matching the established pattern exactly.
+- Verified `npx prettier --check` reproduces one pre-existing, unrelated warning (line 1278) present identically on `main` — confirmed via stash/diff, not a regression. `npx eslint`/`npx nuxi prepare` failed on the known sandbox limitation (no `.nuxt`/`node_modules`); relied on kind_robots CI. All 5 checks green (GitGuardian, facet-catalog, verify, TypeScript, Contract verifiers) — merged squash `bfbfb792`.
+
+**What was good:**
+- Subagent correctly distinguished this from the many already-fixed race-condition/token-guard bug classes in the exclusion list — this is a simpler state-consistency gap, not a race, and it recognized the difference rather than forcing a token-guard fix where a plain clear sufficed.
+
+**What to improve:**
+- None specific this cycle.
+
+**Kaizen task:** none filed — narrow, well-precedented fix; no systemic pattern to extract yet.
