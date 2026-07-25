@@ -1617,3 +1617,19 @@ noticed by accident.
 **What to improve:** none this cycle.
 
 **Kaizen task:** none filed — no systemic gap surfaced.
+
+## 2026-07-25 | Reviewer (scheduled agent run) | ai-art-academy/t-010 | pattern
+
+**Decision:** no-op cycle for this project (docs-only lane, rearmed to `ready`) — but found and filed a genuine cross-project production bug in kind_robots.
+
+**Failure category:** null (verified clean, not a failure)
+
+**Subject:** Lane 2 (roadmap accuracy) cycle. `audit_roadmaps.py`/`check_pr_merged_drift.py`/milestone re-verification all clean, same baseline as the prior lane-2 cycle. While spot-checking lane 3's relay health via `GET /api/art/queue/stats` (routine currency check, not a lane-3 attempt), noticed 17+ ArtJobs permanently failing with an identical Prisma error, all `projectSlug: coloring-book`.
+
+**What was good:**
+- Did not stop at "interesting error in the stats output" — dispatched a subagent to read the actual kind_robots source (`prisma/schema.prisma`, `artJobRetry.ts`, `save-generated.post.ts`) and confirm the root cause with file:line references before writing anything down, rather than speculating from the error string alone.
+- Correctly did not fix it inline: the bug is in kind_robots, a different project (coloring-book, not ai-art-academy), and this lane is scoped to conductor-docs-only work. Filed `coloring-book/t-030` with the full root-cause writeup and a concrete suggested fix instead, per hard rule 6 (scope discipline).
+
+**What to improve:** none this cycle.
+
+**Kaizen task:** none filed for ai-art-academy itself — the finding is filed as `coloring-book/t-030` (a genuine, scoped, reversible fix: clamp the shared seed generator to the 32-bit range at ~10 call sites plus a defensive clamp in `save-generated.post.ts`). Worth a Worker pickup soon — it's silently killing coloring-book's production art generation, including jobs plausibly related to the currently-`needs-human` t-022 production pass.
