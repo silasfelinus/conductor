@@ -18,7 +18,7 @@ title: Demo Dream
 type: dream
 status: outline
 narrator: yes
-created: '2026-07-24'
+created: '2026-07-25'
 ---
 
 ## Creative seeds
@@ -68,9 +68,9 @@ title: Daily Dream
 type: dream
 status: outline
 narrator: 'yes'
-created: '2026-07-24'
+created: '2026-07-25'
 proposal: true
-proposal_date: '2026-07-24'
+proposal_date: '2026-07-25'
 ---
 
 ## Creative seeds
@@ -155,7 +155,7 @@ def test_narratorless_ok(backlog):
 
 
 def test_legacy_pre_contract_outline_is_grandfathered(backlog):
-    legacy = SEED_OK.replace("created: '2026-07-24'", "created: '2026-07-23'")
+    legacy = SEED_OK.replace("created: '2026-07-25'", "created: '2026-07-24'")
     start = legacy.index("## Creative seeds")
     end = legacy.index("## The idea")
     legacy = legacy[:start] + legacy[end:]
