@@ -4,11 +4,11 @@ check_dream_outlines.py — CI preflight: is each dream backlog outline buildabl
 
 The dream-cycle build loop (t-006) turns a `type: dream` backlog outline into real
 kind_robots records following `specs/dream.md`. If an outline is missing a required
-piece — no vibe, too few characters, rewards with no rarity spread, a `narrator: yes`
-with no narrator block — the loop can't build it cleanly, and today that's only
-caught when a build actually runs (which needs live API egress). This preflight
-catches it offline, in CI, the way `check_scheduler_drift.py` guards coloring-book
-cards.
+piece — no seed fusion, no vibe, too few characters, rewards with no rarity spread,
+a `narrator: yes` with no narrator block — the loop can't build it cleanly, and
+today that's only caught when a build actually runs (which needs live API egress).
+This preflight catches it offline, in CI, the way `check_scheduler_drift.py` guards
+coloring-book cards.
 
 Read-only, no API calls. For each buildable dream outline (`type: dream`, status
 `outline`/`approved`), it checks the structure `specs/dream.md` requires and exits
@@ -21,10 +21,15 @@ Both outline shapes are accepted (matched by heading keyword, not exact text):
 Requirements per outline:
   * sections present: idea, location(s), vibe/genre, characters, rewards, scenarios, narrator
   * idea / location / vibe / narrator: non-placeholder prose
+  * for outlines planned on/after 2026-07-24: a Creative seeds section containing
+    1-2 genres, one occupation, one animal/species, and a fusion explanation
   * characters: 2–5 entries
   * rewards: 2–8 entries; if ≥3, at least 2 distinct rarities (a spread)
   * scenarios: 1–3 entries
   * narrator: `narrator: yes` → a real narrator block; `narrator: no` → fine (skips cleanly)
+
+The date gate grandfathers already-planned backlog files while enforcing Silas's
+2026-07-24 "from now on" direction on every new plan and daily proposal.
 
 Usage:
   python scripts/check_dream_outlines.py            # check the real backlog, exit 1 on problems
@@ -47,6 +52,7 @@ DEFAULT_BACKLOG = ROOT / "projects" / "dream-cycle" / "backlog"
 
 RARITIES = {"COMMON", "UNCOMMON", "RARE", "EPIC", "LEGENDARY", "MYTHIC"}
 BUILDABLE_STATUSES = {"outline", "approved"}
+SEED_CONTRACT_DATE = "2026-07-24"
 
 # (concept, heading-keyword) — first section whose heading contains the keyword.
 SECTION_KEYS = [
@@ -133,6 +139,58 @@ def _rarities_present(body: str) -> set[str]:
     return {r for r in RARITIES if re.search(rf"\b{r}\b", up)}
 
 
+def _seed_contract_applies(fm: dict[str, Any]) -> bool:
+    """Apply to plans dated on/after Silas's 2026-07-24 direction.
+
+    Daily proposals use proposal_date; manually planned outlines use created.
+    YAML date objects stringify to ISO, so lexical comparison is safe here.
+    """
+    raw = fm.get("proposal_date") or fm.get("created")
+    return bool(raw and str(raw) >= SEED_CONTRACT_DATE)
+
+
+def _labeled_value(body: str, *labels: str) -> Optional[str]:
+    """Return the value after a bold markdown label such as `**Genres:**`."""
+    for label in labels:
+        m = re.search(rf"^[-*]\s+\*\*{re.escape(label)}:\*\*\s*(.+?)\s*$",
+                      body, re.IGNORECASE | re.MULTILINE)
+        if m:
+            return m.group(1).strip()
+    return None
+
+
+def _check_creative_seeds(name: str, sections: dict[str, str]) -> list[Finding]:
+    findings: list[Finding] = []
+    body = find_section(sections, "creative seed")
+    if body is None or is_placeholder(body):
+        return [Finding(name, "seed-missing",
+                        "no complete 'Creative seeds' section (genres, occupation, "
+                        "animal/species, fusion)")]
+
+    genres = _labeled_value(body, "Genres", "Genre")
+    if not genres:
+        findings.append(Finding(name, "seed-genres", "missing Genres value"))
+    else:
+        parts = [part.strip() for part in re.split(r"\s*(?:\+|,)\s*", genres) if part.strip()]
+        if not (1 <= len(parts) <= 2):
+            findings.append(Finding(name, "seed-genres",
+                                    f"{len(parts)} genre seed(s); expected 1–2"))
+
+    occupation = _labeled_value(body, "Occupation")
+    if not occupation:
+        findings.append(Finding(name, "seed-occupation", "missing Occupation value"))
+
+    species = _labeled_value(body, "Animal / species", "Animal/species", "Species")
+    if not species:
+        findings.append(Finding(name, "seed-species", "missing Animal / species value"))
+
+    fusion = _labeled_value(body, "Fusion")
+    if not fusion or len(fusion) < 25:
+        findings.append(Finding(name, "seed-fusion",
+                                "Fusion must explain concrete consequences of all three seeds"))
+    return findings
+
+
 def check_outline(path: Path) -> list[Finding]:
     text = path.read_text(encoding="utf-8")
     fm = parse_frontmatter(text)
@@ -151,6 +209,9 @@ def check_outline(path: Path) -> list[Finding]:
         bodies[concept] = body
         if body is None:
             findings.append(Finding(name, "missing-section", f"no '{concept}' section"))
+
+    if _seed_contract_applies(fm):
+        findings.extend(_check_creative_seeds(name, sections))
 
     # Prose sections must have real content.
     for concept in ("idea", "location", "vibe"):
