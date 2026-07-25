@@ -203,3 +203,13 @@ pushed content back and diffing against source before treating the push as done.
 singleton pattern is flagged in the PR body's own kaizen suggestion (convert to per-item
 state before a future feature introduces concurrent commits/auto-builds); revisit if a
 similar race surfaces in one of the other two singletons.
+
+## 2026-07-25 | Worker → Reviewer | model-builder/t-029 | pattern
+
+**Subject:** Run-history controls now expose their state and destructive target to assistive technology.
+
+**Detail:**
+- kind_robots PR #957 added a polite busy status for run-history loading, hid decorative icons from the accessibility tree, and gave the icon-only cancel button a run-specific accessible name.
+- The change stayed within `components/model-builder/model-builder-run-history.vue`; TypeScript, Contract Tests, API Client Follow-ups, and Facet Catalog checks all passed before squash merge `92f35ef4`.
+
+**Suggested action:** add a focused accessibility contract that flags icon-only buttons without visible text, `aria-label`, or `aria-labelledby` so this class of omission is caught before review.
