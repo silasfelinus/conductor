@@ -13,6 +13,7 @@
 const COMFY_DIR = 'D:/comfy/comfy-fast'
 const SD_DIR = 'D:/code/sd-webui-forge-neo'
 const LOG_DIR = `${__dirname}/logs`
+const KR_MEDIA_IMAGES_DIR = 'Z:/kindrobots/image'
 // ----------------------------------------------------------------------------
 
 module.exports = {
@@ -31,9 +32,9 @@ module.exports = {
       interpreter: 'none',
       windowsHide: true,
       autorestart: true,
-      restart_delay: 5000, // give CUDA a beat before relaunch
-      max_restarts: 50, // per crash-window; stops true crash-loops
-      min_uptime: 30000, // <30s alive counts as a failed start
+      restart_delay: 5000,
+      max_restarts: 50,
+      min_uptime: 30000,
       kill_timeout: 15000,
       out_file: `${LOG_DIR}/comfyui.out.log`,
       error_file: `${LOG_DIR}/comfyui.err.log`,
@@ -67,10 +68,6 @@ module.exports = {
         '--skip-python-version-check',
         '--reserve-vram',
         '2',
-        // --listen makes forge lock the Extensions tab (AssertionError:
-        // "extension access disabled because of command line flags").
-        // The box is only reachable via LAN/tailscale, so re-enabling
-        // extension management is fine here.
         '--enable-insecure-extension-access'
       ].join(' '),
       interpreter: 'none',
@@ -89,12 +86,13 @@ module.exports = {
     // writes Kind Robots-targeted jobs to their exact self-hosted media path
     // before reporting the job successful.
     //
-    // One-time, in PowerShell (keeps secrets and machine paths out of git):
+    // One-time, in PowerShell (keeps secrets out of git):
     //   setx KR_RELAY_TOKEN "your-admin-apikey"
     //   setx KR_RELAY_USER_ID "1"
-    //   setx KR_MEDIA_IMAGES_DIR "Z:/kindrobots/images"
     //   py -3.12 -m pip install Pillow
     //
+    // The canonical media destination is Z:/kindrobots/image. Override
+    // KR_MEDIA_IMAGES_DIR only when intentionally moving the mounted image root.
     // Open a NEW shell after setx, then:
     //   pm2 start ecosystem.config.js --only kr-relay
     //   pm2 save
@@ -102,7 +100,7 @@ module.exports = {
     {
       name: 'kr-relay',
       cwd: __dirname,
-      script: 'C:/Python312/python.exe', // any Python 3.9+; Pillow required for webp targets
+      script: 'C:/Python312/python.exe',
       args: 'relay_media_agent.py',
       interpreter: 'none',
       windowsHide: true,
@@ -111,18 +109,12 @@ module.exports = {
       env: {
         KR_RELAY_TOKEN: process.env.KR_RELAY_TOKEN || '',
         KR_RELAY_USER_ID: process.env.KR_RELAY_USER_ID || '',
-        // Prod currently lives on the vercel.app host; switch to
-        // kindrobots.org when that domain points at prod.
         KR_BASE_URL: 'https://kind-robots.vercel.app',
-        // Exact backing directory for https://media.acrocatranch.com/images/.
-        KR_MEDIA_IMAGES_DIR: process.env.KR_MEDIA_IMAGES_DIR || '',
-        // Optional generic ArtImage-id copies for jobs without an exact target.
+        KR_MEDIA_IMAGES_DIR:
+          process.env.KR_MEDIA_IMAGES_DIR || KR_MEDIA_IMAGES_DIR,
         KR_LOCAL_IMAGES_DIR: process.env.KR_LOCAL_IMAGES_DIR || '',
-        // Flux validation/submission can take over a minute on this machine.
-        // Recovery uses a unique Comfy client id to avoid duplicate submissions.
         COMFY_PROMPT_TIMEOUT: process.env.COMFY_PROMPT_TIMEOUT || '180',
         COMFY_RECOVERY_SECONDS: process.env.COMFY_RECOVERY_SECONDS || '45',
-        // Large 1024px Flux jobs on the RTX 3060 can exceed ten minutes.
         GEN_TIMEOUT: process.env.GEN_TIMEOUT || '1800'
       },
       out_file: `${LOG_DIR}/kr-relay.out.log`,
