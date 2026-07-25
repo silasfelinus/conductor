@@ -474,3 +474,53 @@ tasks:
     return tuple, so extending it with the new needs_verification list was a safe, local change.'
   claimed_by: claude-conductor-hourly-20260717d
   claimed_at: '2026-07-17T18:05:22Z'
+- id: t-030
+  milestone: m4
+  title: 'kind_robots: fix ArtJob seed overflow silently killing coloring-book generation jobs'
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  updated: '2026-07-25T13:10:00Z'
+  note: >
+    Filed 2026-07-25 (ai-art-academy/t-010 lane-2 roadmap-accuracy cycle,
+    session claude-conductor-agentrun-scheduled-t010-lane2) while spot-checking the
+    art-generation relay's health via `GET /api/art/queue/stats`. Found 17+
+    permanently-failed jobs (attempts: 3, projectSlug: "coloring-book") between
+    2026-07-25T05:23-11:27 UTC, every one with the identical error:
+    "save-generated failed: HTTP 500 Database operation failed: Invalid
+    prisma.artImage.update() invocation: Value out of range for the type: Out of
+    range value for column 'seed' at row 1". Root cause confirmed via a
+    general-purpose subagent reading kind_robots source directly (not guessed):
+    `prisma/schema.prisma`'s `ArtImage.seed` field is a plain `Int` (32-bit MySQL
+    INT, range +/-2147483647), but the shared fallback seed generator duplicated
+    across the ComfyUI job builders (`server/api/comfy/kontext/utils/workflow.ts`,
+    `server/api/comfy/flux/utils/workflow.ts`, and ~8 other call sites, plus
+    `server/utils/artJobRetry.ts`'s `nextSeed()` at ~line 20, which regenerates the
+    seed on every retry) all use `Math.floor(Math.random() * 1_000_000_000_000_000)`
+    -- six orders of magnitude past the column's max, so almost every seed produced
+    lands out of range. `server/api/art/save-generated.post.ts` (~line 166) passes
+    `requestData.seed ?? -1` straight to the Prisma update with no clamping or
+    validation, so the failure is deterministic: `artJobRetry.ts`'s
+    `refreshConcreteSeeds()` regenerates a fresh (still oversized) seed on each of
+    the 3 retry attempts, explaining why every attempt fails identically instead of
+    eventually succeeding.
+
+    Suggested fix: clamp/mod the generated value into the signed 32-bit range at
+    the source (e.g. `Math.floor(Math.random() * 2_147_483_647)`) in every
+    fallback-seed generator listed above, and add a defensive clamp in
+    `save-generated.post.ts` before the Prisma write as a second line of defense
+    against any other future caller passing an oversized seed. Small, scoped,
+    reversible -- not a schema change (widening the column to BigInt is a bigger,
+    separate migration option only worth it if a legitimate use case needs seeds
+    above 2^31, which none of the call sites currently do).
+
+    Impact: this silently kills coloring-book art-generation jobs specifically
+    (all 17+ observed failures carried projectSlug "coloring-book") and plausibly
+    affects any other project routing through the same ComfyUI job builders --
+    worth a broader grep across generated jobs once the fix lands to see if the
+    failure rate drops project-wide, not just for coloring-book. Directly relevant
+    to t-022 (Monster Recast production pass, currently needs-human) since a stuck
+    seed-overflow failure could be silently eating production-pass generation
+    attempts without an obvious surfaced cause.
+
