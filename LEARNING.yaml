@@ -3946,3 +3946,12 @@ records:
   outcome: done
   failure_category: null
   lesson: "Never hand-generate a base64 (or any binary-safe) encoding of file content as text output when pushing via a GitHub-file-write MCP tool -- an LLM cannot reliably reproduce an exact byte-for-byte encoding of a multi-KB file by 'typing' it, and a single wrong byte (here: a multi-byte × character mis-encoded, plus dropped indentation whitespace) silently corrupts the pushed file without any tool-level error. create_or_update_file's `content` parameter takes plain text directly and the server encodes it -- there is no need to hand-encode at all. Whenever a file-write tool's schema is ambiguous about raw-text-vs-pre-encoded, or after any push whose content you generated as long text rather than copied verbatim from a Read, fetch the pushed content back and diff it against the verified-correct source before treating the push as done, not after opening the PR."
+- date: '2026-07-25'
+  project: animation-manager
+  task: t-007
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "Local-only verification scripts (npm run test:animation-catalog, invoked from SPEC.md's shipping checklist but never referenced by any GitHub Actions workflow) can silently regress for days with zero signal, because nothing ever runs them except a session that happens to remember to. Caught this cycle only because building a new animation required running the script locally to verify the new catalog entry -- DEFAULT_PREFERENCES.startupEffect's 'random' sentinel had been failing verifyAnimationCatalog.ts's literal-catalog-id assertion since 2026-07-22 with no CI check ever red for it. Before trusting a 'ship only after X' checklist item, confirm X is actually wired into CI (grep the workflow YAML for the exact npm script name) rather than assuming a script's existence in package.json means it runs automatically."

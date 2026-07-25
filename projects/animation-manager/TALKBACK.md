@@ -87,3 +87,21 @@ type: critique
 - Same recurring gap as every prior build this week: live browser smoke test and the Component attempt record are both deferred (no reachable `DATABASE_URL` in this sandbox). Four consecutive builds (paper-lantern-weather, magnetic-sand-garden, stained-glass-rain, clockwork-greenhouse) now carry this identical deferred item — worth promoting from a per-PR note to an actual roadmap task once a session with DB access is available, per this cycle's kaizen suggestion below.
 
 **Kaizen task:** Filed as a suggestion in kind_robots PR #887's description (provision a sandbox-reachable throwaway DB for the live-smoke step, or fold "deferred, same sandbox limitation" into the task's formal acceptance bar) rather than a new roadmap task this cycle — four instances of the identical note is a strong enough signal that the next session touching t-007 or t-022/t-031 (model-builder's equivalent deferred-smoke tasks) should turn this into a real task instead of a fifth repetition of this paragraph.
+
+## 2026-07-25 | Reviewer (conductor scheduled burst-mode rotation) | animation-manager/t-007 | pattern
+
+**Decision:** merged (kind_robots PR #949, squash 3b69cff) — built and merged in the same session/pass.
+
+**Failure category:** none — clean diff, all 5 CI checks (verify, facet-catalog, TypeScript, Contract verifiers, GitGuardian) green on first push.
+
+**What was good:**
+- `cloud-city-drift.vue` follows the established screensaver shape: cached `Path2D` puff clusters per size bucket (mirrors `paper-lantern-weather`'s folded-shape caching), `ResizeObserver` sizing with capped device-pixel-ratio, a `prefers-reduced-motion` listener, and full RAF/observer/listener cleanup on unmount (puff-shape cache cleared, cloud array truncated).
+- Addressed the pitch's stated performance risk ("overdraw from translucent clouds; pre-render cloud sprites or use low layer count") directly: puffs are cached `Path2D` objects reused every frame rather than redrawn per-frame gradients, and cloud count is capped (6 reduced-motion / 7-16 normal, scaled to viewport area).
+- The pitch's "impossible miniature cities... occasionally rotating to reveal streets on the underside" was implemented as a genuine flip illusion (vertical `scale()` collapsing toward 0 then recovering, swapping the drawn content from cloud puffs to a procedurally seeded skyline silhouette past the halfway point) rather than a simpler crossfade — closer to the pitch's "surprise" framing than the minimum-effort version would have been.
+- Found and fixed a real, pre-existing, CI-uncaught bug while verifying: `utils/scripts/verifyAnimationCatalog.ts` asserted `DEFAULT_PREFERENCES.startupEffect` must always resolve to a literal catalog id, but `StartupAnimationChoice` legitimately includes the `'random'`/`'none'` sentinels and the actual default is `'random'` — reproduced identically on `main` before this PR (confirmed via `git stash`), uncaught because `test:animation-catalog` isn't wired into any GitHub Actions workflow (only `test:animation-component-attempts` is, in `contract-tests.yml`). Fixed in the same PR since it directly blocked the local verification gate this task's own checklist requires.
+- PR opened and merged in the same session once all 5 CI checks came back green; `PITCHES.yaml`'s `builds:` record added inline with the merge, not a decoupled follow-up.
+
+**What to improve:**
+- Same recurring gap as every prior build (paper-lantern-weather, magnetic-sand-garden, stained-glass-rain, clockwork-greenhouse): live browser smoke test and the Component attempt record are both deferred (no reachable `DATABASE_URL` in this sandbox). This is now the fifth consecutive instance — already tracked by `animation-manager/t-013` (filed 2026-07-22), so no new task needed; whoever picks up t-013 should clear all five at once.
+
+**Kaizen task:** Filed `animation-manager/t-014` — wire `npm run test:animation-catalog` into `.github/workflows/contract-tests.yml` alongside `test:animation-component-attempts`, so a future regression like the `startupEffect` sentinel bug fails CI immediately instead of only surfacing when a session happens to run the script locally.

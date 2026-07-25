@@ -161,7 +161,7 @@ pitches:
 
   - id: cloud-city-drift
     title: Cloud City Drift
-    status: pitched
+    status: candidate
     priority: 6
     surprise: Impossible miniature cities float inside cloud banks, occasionally rotating to reveal streets on the underside.
     passive_loop: Layered clouds cross at different depths while towers, bridges, and lights emerge and disappear.
@@ -173,6 +173,22 @@ pitches:
     acceptance:
       - city remains subtle enough for wallpaper use
       - underside reveal occurs rarely and smoothly
+    builds:
+      - version: 1
+        pull_request: silasfelinus/kind_robots#949
+        commit: 3b69cff7327b25532d218489f50c5f7c21753aad
+        component: components/screenfx/cloud-city-drift.vue
+        status: candidate
+        verification:
+          - TypeScript Type Check
+          - Contract Tests
+          - eslint
+          - prettier
+          - test:animation-catalog
+          - test:animation-component-attempts
+        deferred:
+          - Live browser smoke test (docs/architecture/animation-catalog-smoke-matrix.md) -- no reachable DATABASE_URL in the sandbox; server/utils/prisma.ts throws on every SSR request.
+          - Component attempt record (SPEC.md "Attempt records") -- same DB blocker.
 
   - id: moth-constellation
     title: Moth Constellation

@@ -271,7 +271,7 @@ tasks:
   - id: t-007
     milestone: m5
     title: "Build or polish one animation candidate from reaction evidence"
-    status: review
+    status: ready
     owner: reviewer
     passes: 0
     stakes: reversible
@@ -293,9 +293,9 @@ tasks:
       MERGED 2026-07-22 (~16:56 UTC, same session): kind_robots PR #887 confirmed all 4 CI checks green (verify, Contract verifiers, TypeScript, GitGuardian), no review comments, squash-merged (d50f83c). PITCHES.yaml's clockwork-greenhouse entry updated to status: candidate with a builds: record (pending the deferred live-smoke pass before promoting to shipped, same as paper-lantern-weather/magnetic-sand-garden/stained-glass-rain). Rearming to ready per the recurring-task convention.
 
       PROGRESS 2026-07-25 (~13:05-13:20 UTC, conductor scheduled burst-mode rotation, claude-conductor-burst-20260725T130552-am-t007): new Pacific calendar day since the last build (clockwork-greenhouse, merged 2026-07-22), so eligible. Built the next queued candidate, cloud-city-drift (priority 6 in PITCHES.yaml, next after clockwork-greenhouse). New components/screenfx/cloud-city-drift.vue -- layered parallax clouds drifting at different depths; each cloud rarely performs a slow vertical-scale flip revealing a procedurally seeded skyline silhouette (twinkling lit windows) on its underside before flipping back. Pointer motion parts nearby clouds (wind); click triggers a distant beacon light pulse on the farthest cloud not already mid-flip/flash. Reduced motion freezes drift/flip/parting, keeping only slow window twinkling. Catalog entry added to stores/animationCatalog.ts (generationSafe: true, preferredSurface: fullscreen, icon kind-icon:cloud). Also fixed a pre-existing bug found while verifying: utils/scripts/verifyAnimationCatalog.ts asserted DEFAULT_PREFERENCES.startupEffect must always be a literal catalog id, but it can legitimately be the 'random' sentinel (StartupAnimationChoice = AnimationEffectId | 'random' | 'none') -- reproduced identically on kind_robots main before this change, uncaught because the script isn't wired into any CI workflow (only test:animation-component-attempts is, in contract-tests.yml). Verified: eslint clean on all 3 changed files; prettier clean on the new component (animationCatalog.ts and verifyAnimationCatalog.ts carry pre-existing drift, confirmed via git stash, same as prior cycles); full-project npm run test (vue-tsc --noEmit) exit 0; npm run test:animation-catalog (35 effects, unique ids, 48 screenfx components resolved, 42 narrator aliases checked -- only passes after the sentinel fix); npm run test:animation-component-attempts (35 slugs). Live browser smoke test and the Component attempt record (SPEC.md "Attempt records") are BOTH deferred -- same no-reachable-DATABASE_URL sandbox limitation as every prior t-007 entry. kind_robots PR #949 -- open, CI running. Set status: review; will flip to done once CI is green and the PR merges.
-    claimed_by: claude-conductor-burst-20260725T130552-am-t007
-    claimed_at: '2026-07-25T13:05:53Z'
-    updated: '2026-07-25T13:20:00Z'
+
+      MERGED 2026-07-25 (~13:30 UTC, same session claude-conductor-burst-20260725T130552-am-t007): kind_robots PR #949 confirmed all 5 CI checks green (verify, facet-catalog, TypeScript, Contract verifiers, GitGuardian), no review comments, squash-merged (3b69cff). PITCHES.yaml's cloud-city-drift entry updated to status: candidate with a builds: record (pending the deferred live-smoke pass before promoting to shipped, same as paper-lantern-weather/magnetic-sand-garden/stained-glass-rain/clockwork-greenhouse). Rearming to ready per the recurring-task convention.
+    updated: '2026-07-25T13:30:00Z'
 
   - id: t-008
     milestone: m3
@@ -454,3 +454,26 @@ tasks:
       same sandbox limitation" into this task's own formal acceptance bar so future PRs
       stop re-explaining it per diff.
     updated: '2026-07-22T16:57:00Z'
+
+  - id: t-014
+    milestone: m6
+    title: "Wire npm run test:animation-catalog into contract-tests.yml CI"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Kaizen from t-007 (Reviewer, kind_robots PR #949, 2026-07-25): while building
+      cloud-city-drift this cycle, found utils/scripts/verifyAnimationCatalog.ts had
+      been throwing on current kind_robots main for three days (since commit b3d75ab,
+      2026-07-22) -- DEFAULT_PREFERENCES.startupEffect legitimately resolves to the
+      'random' sentinel, but the script asserted it must always be a literal catalog
+      id. Fixed in PR #949, but it only surfaced because this session happened to run
+      the script locally while verifying: .github/workflows/contract-tests.yml only
+      runs test:animation-component-attempts, never test:animation-catalog, so the
+      regression was invisible to CI the whole time. Add a
+      "Animation catalog contract" step running `npm run test:animation-catalog`
+      alongside the existing animation-component-attempts step in contract-tests.yml,
+      so a future regression in catalog/id/surface/generationSafe invariants fails
+      CI immediately instead of waiting for a session to notice locally.
+    updated: '2026-07-25T13:30:00Z'
