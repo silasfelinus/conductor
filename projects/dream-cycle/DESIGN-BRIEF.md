@@ -1,8 +1,8 @@
 # Dream Cycle — Design Brief
 
-date: 2026-07-10 (revised same day: generalized from dreams-only to typed creations)
+date: 2026-07-10 (revised same day: generalized from dreams-only to typed creations; revised 2026-07-24: seed-first Dream planning)
 author: Reviewer (Claude), from Silas's session direction
-status: awaiting soft scope confirmation (t-002) — development proceeds in parallel
+status: scope confirmed; later direction in `CREATIVE-SEED-CONTRACT.md` is authoritative for Dreams
 
 ## What this is
 
@@ -20,10 +20,23 @@ writing one.
 
 ### `type: dream` (playbook: specs/dream.md, from t-004)
 
-A complete, self-consistent slice of kind_robots content:
+A complete, self-consistent slice of kind_robots content. Every newly planned
+Dream begins with the mandatory creative seed contract in
+`CREATIVE-SEED-CONTRACT.md`:
 
-- a **location** (a LOCATION Dream) with a **vibe** (a GENRE Dream, new or existing),
-  joined by DreamRelation edges
+- **1-2 story genres**
+- **1 occupation, trade, duty, or vocation**
+- **1 animal or species**
+
+The author chooses those before inventing the location. The three ingredients
+must fuse into consequences: each changes at least two parts of the world,
+conflict, work routines, bodies/senses, locations, rewards, or visual language.
+A removable seed is decorative and fails the contract.
+
+The resulting Dream includes:
+
+- a **location** (a LOCATION Dream) with a **genre-bearing vibe** (a GENRE Dream,
+  new or existing), joined by DreamRelation edges
 - **characters** who inhabit it, **rewards** it can grant, **scenarios** that play
   out there
 - optionally a **bot narrator** who hosts it — with an expression set, topics, threads
@@ -32,7 +45,8 @@ Everything already exists in the kind_robots schema (Dream, DreamRelation,
 Character, Reward, Scenario, Bot, ExpressionMedia, ExpressionTransition,
 NarratorTopic, NarratorThread). No new models. Stages:
 
-1. **Flesh out** — promote the outline into a full spec in its backlog file.
+1. **Seed, fuse, and flesh out** — record the genre(s), occupation, and species,
+   pass the fusion test, then promote the outline into a full spec in its backlog file.
 2. **Dreams** — LOCATION + vibe GENRE Dream (reuse existing GENRE when it fits) + relations.
 3. **Characters** — 2–4, with backstory, drive, quirks, stats, art prompts.
 4. **Rewards** — 3–6 with a rarity spread.
@@ -42,6 +56,11 @@ NarratorTopic, NarratorThread). No new models. Stages:
    (NEUTRAL + ≥5 emotions + ≥2 actions).
 7. **Art** — everything via the pre-approved pipeline, prompt/model/seed metadata kept.
 8. **Ship** — verify checklist, mark `built`, ledger entry, replenish backlog.
+
+**Variety law:** do not default to another enchanted lighthouse, mystical bell
+tower, magical archive, cozy market, lantern-lit workshop, or vaguely whimsical
+tower with renamed nouns. Architecture follows from the seed fusion; it is not
+the seed.
 
 ### `type: coloring-book` (playbook: specs/coloring-book.md, from t-009)
 
@@ -80,6 +99,9 @@ files are the product surface between Silas and the agents:
 - Frontmatter: `type`, and `status` (`outline | approved | building | built |
   parked | vetoed`) plus `priority` (`low | normal | high`) that Silas can flip
   directly.
+- Every Dream file begins with **`## Creative seeds`**, recording Genres,
+  Occupation, Animal / species, and a Fusion explanation. Daily proposal JSON
+  carries the same data as `creative_seeds` and is rejected when it is missing.
 - Every file has a **`## Notes from Silas`** section. Agents MUST read and fold in
   any notes there before starting or continuing that creation's build, and must
   never edit or delete Silas's notes (append-only for agents, Silas-owned).
@@ -92,7 +114,8 @@ files are the product surface between Silas and the agents:
 
 Replenishment is part of the loop: when fewer than 5 buildable outlines
 (`outline`/`approved` with a playbook-backed type) remain, the build task's final
-stage generates new ones — a standing runway of future developments.
+stage generates new ones — a standing runway of future developments. Every new
+Dream added during replenishment follows the creative seed contract.
 
 ## The build loop — one creation, one day
 
@@ -129,4 +152,4 @@ Pre-approved: art generation for all creation entities (generated-art rule,
 2026-07-06); content-row creation via existing API endpoints once t-003/t-004
 verify the path. Hard gates unchanged: spend, publishing, schema changes,
 secrets, deploys. Silas steers through backlog file notes, frontmatter flips,
-and CONTROL.md — course correction is expected and cheap.
+CONTROL.md, and the seed contract — course correction is expected and cheap.

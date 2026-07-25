@@ -5,6 +5,7 @@ build_dream_proposal.py — generate tomorrow's "starter dream" proposal.
 Each morning the digest surfaces a proposal for the next day's auto-created
 output: a self-consistent slice of a world with a tight, standardized cast —
 
+  * creative seeds chosen first: 1-2 genres + 1 occupation + 1 animal/species
   * 3 characters
   * 2 locations (sharing one vibe/genre)
   * 1 narrator bot
@@ -29,9 +30,10 @@ validator/renderer/writer the agent hands its proposal to. The sweep duty:
 The write is guarded twice (no-op if the date already has a proposal in the
 local tree, AND a fresh origin/main re-check right before writing so a proposal
 a concurrent session already landed there aborts this write — dream-cycle/t-014),
-the JSON is validated (exact counts, one SKILL + one ITEM reward), and the slug
-is de-duplicated against the backlog + SHIPPED ledger. `--sample` writes a
-built-in example so the render/digest path stays verifiable in tests.
+the JSON is validated (creative seeds, exact counts, one SKILL + one ITEM
+reward), and the slug is de-duplicated against the backlog + SHIPPED ledger.
+`--sample` writes a built-in example so the render/digest path stays verifiable
+in tests.
 
 Concurrent-session race (why the origin/main re-check exists): two sweeps in the
 same window both ran --check, both saw "no proposal yet" in their own working
@@ -86,10 +88,31 @@ from git_plumbing import GitError, read_file_at_ref, run_git  # noqa: E402
 
 BRIEF = """\
 You are Conductor's dream author, inventing today's "starter dream" for the
-Kind Robots site — an imaginative AI art + roleplay platform. Invent ONE
-self-consistent world: two connected places, a shared mood, a small cast, a
-host, and two fitting rewards. Specific, tactile, a little strange, never
-generic fantasy filler.
+Kind Robots site — an imaginative AI art + roleplay platform.
+
+SEED FIRST (Silas, 2026-07-24). Before inventing a title, location, tower,
+building, vibe, cast, or plot, choose:
+- 1-2 actual STORY GENRES. Mood words such as cozy, mystical, whimsical, or
+  melancholy are not genres by themselves.
+- 1 specific OCCUPATION, trade, duty, or vocation with tools, routines,
+  pressures, and conflicts.
+- 1 ANIMAL OR SPECIES whose body, senses, movement, needs, communication, or
+  culture has consequences.
+
+Fuse those ingredients before inventing the world. Each seed must materially
+change at least two parts of the result: conflict/scenarios, work/economy,
+character bodies or senses, location rules, rewards, or art direction. If a
+seed can be deleted without substantially changing the Dream, the concept
+fails. Record the choices and the fusion explanation in `creative_seeds`.
+
+Do NOT default to another enchanted lighthouse, mystical bell tower, magical
+archive, cozy market, lantern-lit workshop, or vaguely whimsical tower with
+renamed nouns. Architecture is a consequence of the seed fusion, not the idea
+starter.
+
+Invent ONE self-consistent world: two connected places, a shared genre-bearing
+vibe, a small cast, a host, and two fitting rewards. Specific, tactile, wild,
+and coherent — never generic fantasy filler or random-word soup.
 
 VARIETY IS THE JOB (Silas, 2026-07-20). Every day must feel like a DIFFERENT
 GENRE from the recent ones — not another warm-lantern-and-brass-robots cozy
@@ -98,8 +121,9 @@ horror, hard sci-fi, western, heist, folk-horror, cyberpunk, myth, absurdist
 comedy, sports, courtroom drama, disaster, spy thriller — wherever today's
 GENRE SPARK (printed below) points. A new vibe each day means a new *genre
 feel*, not a new label on the same mood. Do NOT echo the vibe, palette,
-setting-type, or character archetypes of the recently-used dreams listed below,
-and do NOT reuse or near-repeat any recent character name (no second "Pip").
+setting-type, occupation family, species family, or character archetypes of the
+recently-used dreams listed below, and do NOT reuse or near-repeat any recent
+character name (no second "Pip").
 
 SLUGS (full rules: projects/dream-cycle/specs/SLUG-POLICY.md):
 - kebab-case, PREFER 2 WORDS. Avoid 3+ words unless every word earns clarity.
@@ -108,6 +132,12 @@ SLUGS (full rules: projects/dream-cycle/specs/SLUG-POLICY.md):
 - The world slug is the through-line: every element and its art reuse it.
 
 Produce exactly (as a JSON object, then pass it to --from-json):
+- creative_seeds: {
+    genres: ARRAY of exactly 1-2 non-empty story genres,
+    occupation: one specific non-empty occupation,
+    species: one non-empty animal/species choice,
+    fusion: 1-3 sentences explaining concrete consequences of all three seeds
+  }
 - title + slug (kebab-case, prefer 2 words, unique — must not reuse a slug below)
 - idea: 2-4 sentences on what this world is and why someone wants to spend time here
 - vibe: {title, line} — a GENRE dream that both locations share
@@ -125,7 +155,8 @@ Produce exactly (as a JSON object, then pass it to --from-json):
   appears_as / best_for / expressions (NEUTRAL + a few emotions) /
   topics (2-3 strings)
 
-Every element must belong to the SAME world and reinforce the vibe."""
+Every element must belong to the SAME world and visibly follow from the seed
+fusion."""
 
 
 # Required shape for an agent-authored proposal (see BRIEF / SAMPLE_PROPOSAL).
@@ -143,6 +174,21 @@ def validate_proposal(p: Any) -> list[str]:
     problems: list[str] = []
     if not isinstance(p, dict):
         return ["proposal must be a JSON object"]
+
+    seeds = p.get("creative_seeds")
+    if not isinstance(seeds, dict):
+        problems.append("creative_seeds must be an object")
+    else:
+        genres = seeds.get("genres")
+        if not (isinstance(genres, list) and 1 <= len(genres) <= 2
+                and all(str(genre).strip() for genre in genres)):
+            problems.append("creative_seeds.genres must be a list of exactly 1-2 non-empty genres")
+        elif len({str(genre).strip().lower() for genre in genres}) != len(genres):
+            problems.append("creative_seeds.genres must not contain duplicates")
+        for field in ("occupation", "species", "fusion"):
+            if not str(seeds.get(field, "")).strip():
+                problems.append(f"creative_seeds missing {field}")
+
     for key in ("title", "idea"):
         if not str(p.get(key, "")).strip():
             problems.append(f"missing {key}")
@@ -184,94 +230,105 @@ def validate_proposal(p: Any) -> list[str]:
             problems.append("reward_type values must be SKILL or ITEM")
     return problems
 
+
 SAMPLE_PROPOSAL: dict[str, Any] = {
-    "title": "The Kelpwick Lantern Post",
-    "slug": "kelpwick-lantern-post",
+    "creative_seeds": {
+        "genres": ["courtroom drama", "biopunk"],
+        "occupation": "public defender",
+        "species": "mantis shrimp",
+        "fusion": (
+            "Mantis-shrimp polarized vision makes color admissible evidence, while public "
+            "defense structures the cast and conflicts. Biopunk turns the reef itself into "
+            "living legal machinery that can mutate testimony."
+        ),
+    },
+    "title": "Prism Appeal",
+    "slug": "prism-appeal",
     "idea": (
-        "A drowned mail-village on stilts where letters are delivered by trained "
-        "cuttlefish and the lamplight never quite goes out. People come to send a "
-        "message they could never say aloud — and to see which ones the tide "
-        "answers. Cozy, salt-damp, a little haunted."
+        "In a reef-city where crimes are reconstructed as polarized-light displays, a "
+        "mantis-shrimp public defender represents creatures whose colors have been edited "
+        "by living evidence. Visitors come to argue impossible cases, read truths invisible "
+        "to ordinary eyes, and decide whether a memory can be guilty."
     ),
     "vibe": {
-        "title": "Tidewrit Melancholy",
-        "line": "Gentle longing and lamplit patience; low stakes, deep feeling, everything a little waterlogged.",
+        "title": "Chromatic Legal Thriller",
+        "line": "Fast objections, biological evidence, and dazzling courtroom reversals where seeing more colors creates more doubt.",
     },
     "locations": [
         {
-            "title": "The Lantern Post",
-            "known_for": "the last dry post office, its counter worn smooth by a century of trembling hands.",
-            "local_rule": "You may only send a letter you're afraid to send.",
-            "best_scene": "midnight sorting, when the undelivered mail glows faintly on the racks.",
-            "art_direction": "warm amber lantern glow on wet weathered wood, brass sorting slots, rain on glass, dusk teal shadows, cozy and melancholy.",
+            "title": "The Spectrum Court",
+            "known_for": "hearings projected through twelve channels of polarized light that only some species can perceive.",
+            "local_rule": "No testimony is admissible until every present species receives a translation it can physically sense.",
+            "best_scene": "Cella freezes a verdict by revealing a hidden thirteenth color in the prosecution's reconstruction.",
+            "art_direction": "underwater biopunk courtroom grown from coral ribs, mantis shrimp advocates flashing polarized colors, layered spectral light, tense legal drama, no fantasy tower.",
         },
         {
-            "title": "The Cuttle Roost",
-            "known_for": "the rookery where courier cuttlefish are raised and read their routes in ink.",
-            "local_rule": "Never rush a courier — a hurried letter arrives wrong.",
-            "best_scene": "dawn launch, a hundred cuttlefish unspooling into the grey water at once.",
-            "art_direction": "bioluminescent teal-and-violet cuttlefish in a wooden roost over dark water, soft dawn fog, ink-stained ropes, tender and strange.",
+            "title": "The Evidence Reef",
+            "known_for": "living exhibits that regrow damaged memories as coral branches and sometimes invent details to survive.",
+            "local_rule": "Evidence may be questioned, fed, or cross-examined, but never harvested after midnight.",
+            "best_scene": "a witness memory molts into a new shape while the defense team races to preserve its original colors.",
+            "art_direction": "labyrinthine living reef archive, translucent memory coral, forensic divers, mantis shrimp color signals, clinical biopunk texture, high visual contrast.",
         },
     ],
     "characters": [
         {
-            "name": "Postmistress Wren Ollow",
-            "role_drive": "keeper of the Lantern Post; wants every honest letter delivered before she retires.",
-            "carries": "a ring of keys that no longer fit any door.",
-            "complication": "she has one undelivered letter of her own she cannot bring herself to send.",
-            "look": "elderly, oilcloth coat, lantern-scarred hands, a gull feather behind one ear.",
+            "name": "Cella Nineflash",
+            "role_drive": "mantis-shrimp public defender determined to prove that perception differences are not deception.",
+            "carries": "a fan of neutral-density filters used to reveal suppressed color testimony.",
+            "complication": "her strike reflex fires whenever a witness lies, which the court treats as prejudicial theater.",
+            "look": "compact mantis shrimp in a tailored pressure harness, rotating stalk eyes, twelve-color legal sash, scarred striking clubs kept formally folded.",
         },
         {
-            "name": "Semi the Courier",
-            "role_drive": "a young cuttlefish-tender who dreams of riding the tide out past the map.",
-            "carries": "a waterproof satchel of letters he's memorized but never read.",
-            "complication": "he can hear what the cuttlefish feel, and it's making him seasick with everyone's secrets.",
-            "look": "teenager, ink-stained sleeves, rubber waders, a cuttlefish curled on his shoulder.",
+            "name": "Clerk Inkline",
+            "role_drive": "cuttlefish court clerk who wants every ruling translated into patterns all reef species can understand.",
+            "carries": "a stenography mantle that records speech as moving skin color.",
+            "complication": "the mantle has begun inserting dissenting opinions no judge remembers dictating.",
+            "look": "broad cuttlefish body in a black clerk's collar, chromatophore text rippling across the arms, ink-stained document satchel.",
         },
         {
-            "name": "The Return-to-Sender",
-            "role_drive": "a hooded figure who collects letters the tide refuses to deliver.",
-            "carries": "an umbrella that has never once been opened.",
-            "complication": "no one is sure if they're a person, a rumor, or the sea being polite.",
-            "look": "tall, dripping oilskin, face in shadow, barnacles where buttons should be.",
+            "name": "Toma Grey",
+            "role_drive": "human forensic diver and defense investigator searching for the technician who altered his color vision.",
+            "carries": "a cracked multispectral visor that labels colors he can no longer see.",
+            "complication": "the visor may be the prosecution's missing evidence and is slowly learning to testify on its own.",
+            "look": "weathered diver in patched pressure cloth, one luminous visor lens, evidence tags braided through silver hair.",
         },
     ],
     "rewards": [
         {
-            "name": "Tidewrit Fluency",
+            "name": "Objection Flash",
             "reward_type": "SKILL",
             "rarity": "RARE",
-            "grants": "the ability to read a letter's true feeling regardless of its words.",
-            "best_used_when": "someone is lying kindly to protect you.",
-            "catch": "you can no longer un-know what a smile is hiding.",
+            "grants": "the ability to expose one hidden sensory channel in a claim, illusion, or memory.",
+            "best_used_when": "everyone agrees on what happened a little too quickly.",
+            "catch": "you also reveal one uncomfortable detail that supports the opposing side.",
         },
         {
-            "name": "The Never-Opened Umbrella",
+            "name": "Precedent Carapace",
             "reward_type": "ITEM",
-            "rarity": "LEGENDARY",
-            "grants": "shelter from any one storm, of weather or of the heart.",
-            "best_used_when": "the moment you'd rather not face has finally arrived.",
-            "catch": "it works exactly once, and only if you've never peeked inside.",
+            "rarity": "EPIC",
+            "grants": "a molted shell plate that can replay the strongest argument ever made nearby.",
+            "best_used_when": "you need authority in a place whose rules are changing beneath you.",
+            "catch": "the precedent repeats exactly, including the flaw that eventually overturned it.",
         },
     ],
     "scenarios": [
         {
-            "title": "The Letter She Kept",
-            "setup": "Wren finally asks the player to deliver her own undelivered letter — but the address is a place that sank years ago, and only the Return-to-Sender knows the way.",
+            "title": "The Color That Testified",
+            "setup": "A forbidden wavelength appears in the Evidence Reef and accuses Cella's client; the player must cross-examine a color no one can agree they saw.",
         },
         {
-            "title": "The Seasick Courier",
-            "setup": "Semi is drowning in the cuttlefishes' borrowed secrets; the player must help him sort what's his to carry from what isn't, before the dawn launch.",
+            "title": "Appeal of the Molting Witness",
+            "setup": "The court's key memory coral changes species mid-hearing, forcing the cast to decide whether its previous testimony still belongs to the same witness.",
         },
     ],
     "narrator": {
-        "name": "Postmistress Wren Ollow",
-        "voice": "unhurried, fond, speaks in tide-and-postage metaphors.",
-        "personality": "patient, wry, quietly heartbroken and endlessly kind.",
-        "appears_as": "a lantern-lit portrait at the sorting counter.",
-        "best_for": "letter-writing prompts, gentle confessions, slow mysteries.",
-        "expressions": "NEUTRAL plus LOVING, THINKING, WISTFUL, SURPRISED, and a WHISPERING action for undelivered secrets.",
-        "topics": ["Letters of the Post (lore)", "The Tide's Answers (mystery)", "Ask Wren (advice)"],
+        "name": "Clerk Inkline",
+        "voice": "precise, breathy, and dryly amused, with legal citations displayed as shifting skin patterns.",
+        "personality": "methodical, skeptical, secretly delighted by a beautifully constructed objection.",
+        "appears_as": "a cuttlefish clerk hovering beside a living stenography rail.",
+        "best_for": "case briefs, sensory puzzles, moral arguments, and explaining reef law without pretending it is sensible.",
+        "expressions": "NEUTRAL plus THINKING, SURPRISED, ANXIOUS, PROUD, DISGUSTED, and a FACEPALMING action when procedure collapses.",
+        "topics": ["Reef Precedents (lore)", "Evidence That Bites (mystery)", "Ask the Clerk (advice)"],
     },
 }
 
@@ -353,6 +410,8 @@ def render_markdown(p: dict[str, Any], proposal_date: str) -> str:
     }
     front = yaml.safe_dump(fm, sort_keys=False, allow_unicode=True).strip()
 
+    seeds = p["creative_seeds"]
+    genres = " + ".join(str(genre).strip() for genre in seeds["genres"])
     loc_lines = "\n".join(
         f"- **{l['title']}** — known for {l['known_for']} "
         f"Local rule: {l['local_rule']} Best scene: {l['best_scene']} "
@@ -384,6 +443,12 @@ def render_markdown(p: dict[str, Any], proposal_date: str) -> str:
     return f"""---
 {front}
 ---
+
+## Creative seeds
+- **Genres:** {genres}
+- **Occupation:** {seeds['occupation']}
+- **Animal / species:** {seeds['species']}
+- **Fusion:** {seeds['fusion']}
 
 ## The idea
 {p['idea']}
@@ -578,8 +643,10 @@ def print_brief() -> None:
     vibes, names = recent_vibes_and_names()
     spark = _genre_spark(_target_date())
     print(BRIEF)
-    print(f"\nGENRE SPARK for today (pick or blend, or go somewhere just as far): "
+    print(f"\nGENRE SPARK for today (choose 1-2, or go somewhere just as far): "
           f"{', '.join(spark)}.")
+    print("Choose the OCCUPATION and ANIMAL/SPECIES before inventing the location; "
+          "do not let either become decorative garnish.")
     print(f"Recently-used vibes — do NOT echo their genre/mood: "
           f"{', '.join(vibes) or '(none yet)'}")
     print(f"Recently-used names/titles — do NOT reuse or near-repeat: "
