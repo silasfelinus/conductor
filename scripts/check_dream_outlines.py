@@ -21,15 +21,16 @@ Both outline shapes are accepted (matched by heading keyword, not exact text):
 Requirements per outline:
   * sections present: idea, location(s), vibe/genre, characters, rewards, scenarios, narrator
   * idea / location / vibe / narrator: non-placeholder prose
-  * for outlines planned on/after 2026-07-24: a Creative seeds section containing
+  * for outlines planned on/after 2026-07-25: a Creative seeds section containing
     1-2 genres, one occupation, one animal/species, and a fusion explanation
   * characters: 2–5 entries
   * rewards: 2–8 entries; if ≥3, at least 2 distinct rarities (a spread)
   * scenarios: 1–3 entries
   * narrator: `narrator: yes` → a real narrator block; `narrator: no` → fine (skips cleanly)
 
-The date gate grandfathers already-planned backlog files while enforcing Silas's
-2026-07-24 "from now on" direction on every new plan and daily proposal.
+The date gate grandfathers outlines already planned earlier on 2026-07-24 before
+Silas gave the new direction, while enforcing the contract on the next planning
+day and every proposal after it.
 
 Usage:
   python scripts/check_dream_outlines.py            # check the real backlog, exit 1 on problems
@@ -52,7 +53,7 @@ DEFAULT_BACKLOG = ROOT / "projects" / "dream-cycle" / "backlog"
 
 RARITIES = {"COMMON", "UNCOMMON", "RARE", "EPIC", "LEGENDARY", "MYTHIC"}
 BUILDABLE_STATUSES = {"outline", "approved"}
-SEED_CONTRACT_DATE = "2026-07-24"
+SEED_CONTRACT_DATE = "2026-07-25"
 
 # (concept, heading-keyword) — first section whose heading contains the keyword.
 SECTION_KEYS = [
@@ -140,7 +141,7 @@ def _rarities_present(body: str) -> set[str]:
 
 
 def _seed_contract_applies(fm: dict[str, Any]) -> bool:
-    """Apply to plans dated on/after Silas's 2026-07-24 direction.
+    """Apply to plans dated on/after the first planning day after Silas's direction.
 
     Daily proposals use proposal_date; manually planned outlines use created.
     YAML date objects stringify to ISO, so lexical comparison is safe here.
