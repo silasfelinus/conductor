@@ -3973,3 +3973,13 @@ records:
   outcome: done
   failure_category: null
   lesson: "A monitoring/recheck task with no recurring: true flag and no defined stopping criterion will keep surfacing as the highest-priority ready task in its project every time rotation lands there, even after the finding has been negative for a week straight (seven consecutive clean rechecks, 07-18 through 07-25, for kind-robots/t-033's Prisma cast-bypass sweep) -- each cycle burns a full rotation slot re-confirming the same zero-evidence result instead of doing new work. When a task's own note pattern is wait-for-new-evidence-recheck-meanwhile with no cadence limit, either mark it recurring: true (if the check itself is the ongoing value) or close it once repeated evidence makes the standing caution well-established, documenting that a genuine new instance should get a fresh task rather than reopening the closed one. Do not leave an indefinite-monitoring task at bare status: ready."
+- date: '2026-07-25'
+  project: animation-manager
+  task: t-014
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: Existing invariant-verifier scripts need explicit CI wiring or real regressions can remain invisible
+    until a developer happens to run them locally.
