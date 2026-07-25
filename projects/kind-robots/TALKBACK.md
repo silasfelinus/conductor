@@ -1061,3 +1061,46 @@ kind_robots PR #813 merged (squash 3d1da45e).
 **What to improve:** none this cycle.
 
 **Kaizen task:** none new — this cycle's work *was* the prior cycle's kaizen task.
+
+## 2026-07-25 | Reviewer (scheduled burst-mode agent run) | kind-robots/t-033 | pattern
+
+**Decision:** closed `done` (own recheck + roadmap-hygiene decision, no PR to kind_robots this cycle).
+
+**Failure category:** null — this was a verification/hygiene action, not a code fix.
+
+**Subject:** Rotation landed on kind-robots as the highest-priority active project with genuine
+`ready` work this cycle (ai-art-academy, ranked above it, had already run multiple lane cycles
+today per this session's own earlier TALKBACK entries, and its two remaining `ready` tasks —
+t-019, t-035 — are both soft-blocked on the still-down home art relay, confirmed repeatedly by
+prior cycles). t-033's own note showed six consecutive daily rechecks (07-18 through 07-22) all
+finding zero new instances of the Prisma cast-bypass bug class it exists to catch.
+
+**Detail:**
+- Ran the identical sweep a seventh time against a fresh shallow clone of kind_robots `main`:
+  zero double-cast bypasses (`as (unknown as )?Prisma.\w+(Create|Update|Where|...)Input`, bare
+  `as any as [A-Z]\w*`), same three narrow single-cast sites as every prior recheck
+  (`server/api/bots/index.ts:56`, `server/api/dreams/[id].patch.ts:32`,
+  `server/api/art/queue/index.get.ts:40`), same two `InputJsonObject` sites still carrying their
+  explanatory comments citing this task.
+- Judgment call: rather than re-arm to `ready` an eighth time, closed the task `done`. It was
+  never flagged `recurring: true`, so it had been sitting as an indefinitely-reopened `ready`
+  task by accident of convention rather than design — each cycle that landed on it (being the
+  single highest-ready-priority task in kind-robots) spent a full rotation slot reconfirming a
+  result already established six times over, which is exactly the "busywork" this session's
+  brief said to avoid inventing. The note documents that a genuine new instance of the pattern
+  should get a fresh task rather than reopening this one, and that the standing caution against
+  speculatively widening `BAD_CAST_PATTERN` without a concrete second example still holds.
+- Appended a `LEARNING.yaml` record generalizing the pattern: an open-ended monitoring task with
+  no `recurring: true` and no stopping criterion will keep winning rotation priority forever,
+  even after the evidence has been negative for a week straight.
+
+**What was good:**
+- Did the actual recheck (not just closed on priors) before deciding — the seventh clean result
+  is what justified the closure, not an assumption that six was already enough.
+
+**What to improve:**
+- None specific — flagging for Silas in case he'd rather this stay open indefinitely as a
+  standing watch; happy to reopen if so.
+
+**Kaizen task:** none filed — the LEARNING.yaml record captures the generalizable lesson; no
+single project owns "roadmap hygiene for stale monitoring tasks" to attach a kaizen task to.

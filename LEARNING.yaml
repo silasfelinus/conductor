@@ -3964,3 +3964,12 @@ records:
   outcome: done
   failure_category: null
   lesson: "A shared fallback value duplicated across many call sites (here: 14 ComfyUI job-builder seed generators all independently writing Math.floor(Math.random() * 1_000_000_000_000_000)) is a latent multi-site bug waiting for one schema constraint to expose it -- the seed column was a 32-bit Int the whole time, but nothing failed until real traffic hit it. When fixing this class of bug, grep for the literal/pattern across the whole repo before assuming a single call site is the only offender; a fix at one site while 13 siblings keep the same defect just delays the next incident."
+- date: '2026-07-25'
+  project: kind-robots
+  task: t-033
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "A monitoring/recheck task with no recurring: true flag and no defined stopping criterion will keep surfacing as the highest-priority ready task in its project every time rotation lands there, even after the finding has been negative for a week straight (seven consecutive clean rechecks, 07-18 through 07-25, for kind-robots/t-033's Prisma cast-bypass sweep) -- each cycle burns a full rotation slot re-confirming the same zero-evidence result instead of doing new work. When a task's own note pattern is wait-for-new-evidence-recheck-meanwhile with no cadence limit, either mark it recurring: true (if the check itself is the ongoing value) or close it once repeated evidence makes the standing caution well-established, documenting that a genuine new instance should get a fresh task rather than reopening the closed one. Do not leave an indefinite-monitoring task at bare status: ready."

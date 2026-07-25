@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-07-25T19:11:13Z
+Generated: 2026-07-25T19:10:32Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **337**
-- Outcomes: blocked: 12, cancelled: 1, done: 324
+- Closed tasks recorded: **338**
+- Outcomes: blocked: 12, cancelled: 1, done: 325
 - Success rate: **96%**
 - Average passes on successful tasks: **0.0**
 
@@ -35,7 +35,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | humboldt-impropriety-calendar | 1 | 0% |
 | humboldt-scoop | 1 | 100% |
 | humboldt-scoop-cms | 1 | 100% |
-| kind-robots | 30 | 97% |
+| kind-robots | 31 | 97% |
 | kindrobots-unraid | 4 | 100% |
 | media-watchlist | 4 | 100% |
 | mermaids-of-venice | 3 | 100% |
@@ -55,7 +55,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 15 | 40% |
-| software | 322 | 99% |
+| software | 323 | 99% |
 
 ## Failure categories
 
@@ -75,6 +75,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-07-25 `kind-robots/t-033` — A monitoring/recheck task with no recurring: true flag and no defined stopping criterion will keep surfacing as the highest-priority ready task in its project every time rotation lands there, even after the finding has been negative for a week straight (seven consecutive clean rechecks, 07-18 through 07-25, for kind-robots/t-033's Prisma cast-bypass sweep) -- each cycle burns a full rotation slot re-confirming the same zero-evidence result instead of doing new work. When a task's own note pattern is wait-for-new-evidence-recheck-meanwhile with no cadence limit, either mark it recurring: true (if the check itself is the ongoing value) or close it once repeated evidence makes the standing caution well-established, documenting that a genuine new instance should get a fresh task rather than reopening the closed one. Do not leave an indefinite-monitoring task at bare status: ready.
 - 2026-07-25 `coloring-book/t-030` — A shared fallback value duplicated across many call sites (here: 14 ComfyUI job-builder seed generators all independently writing Math.floor(Math.random() * 1_000_000_000_000_000)) is a latent multi-site bug waiting for one schema constraint to expose it -- the seed column was a 32-bit Int the whole time, but nothing failed until real traffic hit it. When fixing this class of bug, grep for the literal/pattern across the whole repo before assuming a single call site is the only offender; a fix at one site while 13 siblings keep the same defect just delays the next incident.
 - 2026-07-25 `animation-manager/t-007` — Local-only verification scripts (npm run test:animation-catalog, invoked from SPEC.md's shipping checklist but never referenced by any GitHub Actions workflow) can silently regress for days with zero signal, because nothing ever runs them except a session that happens to remember to. Caught this cycle only because building a new animation required running the script locally to verify the new catalog entry -- DEFAULT_PREFERENCES.startupEffect's 'random' sentinel had been failing verifyAnimationCatalog.ts's literal-catalog-id assertion since 2026-07-22 with no CI check ever red for it. Before trusting a 'ship only after X' checklist item, confirm X is actually wired into CI (grep the workflow YAML for the exact npm script name) rather than assuming a script's existence in package.json means it runs automatically.
 - 2026-07-25 `model-builder/t-029` — Never hand-generate a base64 (or any binary-safe) encoding of file content as text output when pushing via a GitHub-file-write MCP tool -- an LLM cannot reliably reproduce an exact byte-for-byte encoding of a multi-KB file by 'typing' it, and a single wrong byte (here: a multi-byte × character mis-encoded, plus dropped indentation whitespace) silently corrupts the pushed file without any tool-level error. create_or_update_file's `content` parameter takes plain text directly and the server encodes it -- there is no need to hand-encode at all. Whenever a file-write tool's schema is ambiguous about raw-text-vs-pre-encoded, or after any push whose content you generated as long text rather than copied verbatim from a Read, fetch the pushed content back and diff it against the verified-correct source before treating the push as done, not after opening the PR.
@@ -84,7 +85,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-07-21 `animation-studio/t-001` — A hand-rolled ready-task scan (used to pick a rotation target instead of next_ready_task.py's priority-order pick) computed the active-project set from project-overrides.yaml but never filtered the priority.yaml walk by it, so a retired project (animation-studio, superseded by animation-manager) surfaced a claimable ready task. Caught before any PR opened, via audit_roadmaps.py's project-inventory table showing the retired status -- run that check (or grep the specific project's status: line) as the last step immediately before claim_task.py, not just earlier in a broad sweep. claim_task.py itself has no active/retired guard.
 - 2026-07-21 `superkate-services-calculator/t-037` — dart:io real filesystem work (temp-dir creation, real file writes) inside a testWidgets body can hang indefinitely under flutter_test's FakeAsync zone -- wrap it in tester.runAsync() (with a bounded tester.pump() poll loop for the async completion signal) rather than assuming a widget test's async gaps are always safely fake-clock-driven. A test that genuinely needs real I/O will hang to CI's timeout, not fail fast, so a hang in a shared multi-app CI job can look like it's blocking an unrelated app's PR.
 - 2026-07-21 `conductor/t-077` — This session's designated git-push transport (http://127.0.0.1:41729 relay) 413'd on every plain `git push` to its own session branch -- even a brand-new throwaway branch with a 1-byte diff and a ~59KB pack -- while pushing directly to `main` via claim_task.py's git-plumbing helper worked fine. This doesn't match either of CLAUDE.md's two documented HTTP-413 causes (new-ref full-pack, post-rebase force-push). Workaround that eventually worked: retry the SAME single-file git-plumbing commit approach (scratch index + commit-tree + `git push <sha>:<ref>`) against the session branch itself, not just main -- it succeeded where a bulkier `git push -u origin <branch>` failed, before falling back to the heavier push_files MCP tool. Separately: when relaying a large file's full content through push_files (no diff/patch mode exists), ALWAYS diff the pushed remote content byte-for-byte against the local working tree immediately after (e.g. `git show origin/<branch>:<path> | diff - <local-path>`) before trusting it -- a transcription slip during one such relay silently dropped a clause from one note field, and a later slip (pasting an incomplete draft) briefly truncated the entire 2198-line roadmap.yaml to just its 22-line header, discovered only because this verification step is now habitual. Both were caught and fixed before the PR was even opened, with zero cost to Silas -- but only because verification happened immediately, not after moving on.
-- 2026-07-21 `sketchy/t-008` — A project's milestones can show every spec task as done while nothing has actually been built against those specs -- check milestone status against real code state (does the app scaffold still show generated boilerplate?), not just task-list completion, before assuming a project has no available work. Also: app-ci.yml tests every app in apps/ within one shared job whenever its changed-app diff detection doesn't isolate to a single app, so an unrelated app's flaky/hung test can make an otherwise-clean PR's CI look broken -- read the full job log for which app actually failed before assuming your own diff caused it; a test that passes cleanly in the first few seconds of a job that then hangs for 10 more minutes on a different app's test file is not your regression.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-07-25T19:11:13Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-07-25T19:10:32Z_
