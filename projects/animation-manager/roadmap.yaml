@@ -398,24 +398,15 @@ tasks:
   - id: t-014
     milestone: m6
     title: "Wire npm run test:animation-catalog into contract-tests.yml CI"
-    status: claimed
+    status: review
     owner: worker
     passes: 0
     stakes: reversible
-    note: >
-      Kaizen from t-007 (Reviewer, kind_robots PR #949, 2026-07-25): while building
-      cloud-city-drift this cycle, found utils/scripts/verifyAnimationCatalog.ts had
-      been throwing on current kind_robots main for three days (since commit b3d75ab,
-      2026-07-22) -- DEFAULT_PREFERENCES.startupEffect legitimately resolves to the
-      'random' sentinel, but the script asserted it must always be a literal catalog
-      id. Fixed in PR #949, but it only surfaced because this session happened to run
-      the script locally while verifying: .github/workflows/contract-tests.yml only
-      runs test:animation-component-attempts, never test:animation-catalog, so the
-      regression was invisible to CI the whole time. Add a
-      "Animation catalog contract" step running `npm run test:animation-catalog`
-      alongside the existing animation-component-attempts step in contract-tests.yml,
-      so a future regression in catalog/id/surface/generationSafe invariants fails
-      CI immediately instead of waiting for a session to notice locally.
-    updated: '2026-07-25T20:10:35Z'
+    note: |-
+      Kaizen from t-007 (Reviewer, kind_robots PR #949, 2026-07-25): while building cloud-city-drift this cycle, found utils/scripts/verifyAnimationCatalog.ts had been throwing on current kind_robots main for three days (since commit b3d75ab, 2026-07-22) -- DEFAULT_PREFERENCES.startupEffect legitimately resolves to the 'random' sentinel, but the script asserted it must always be a literal catalog id. Fixed in PR #949, but it only surfaced because this session happened to run the script locally while verifying: .github/workflows/contract-tests.yml only runs test:animation-component-attempts, never test:animation-catalog, so the regression was invisible to CI the whole time. Add a "Animation catalog contract" step running `npm run test:animation-catalog` alongside the existing animation-component-attempts step in contract-tests.yml, so a future regression in catalog/id/surface/generationSafe invariants fails CI immediately instead of waiting for a session to notice locally.
+
+
+      Added the animation catalog contract to kind_robots contract-tests.yml so catalog regressions fail CI alongside animation attempt conventions.
+    updated: '2026-07-25T20:17:00Z'
     claimed_by: 2026-07-25T201035Z-animation-manager-t-014-7c4e
     claimed_at: '2026-07-25T20:10:35Z'
