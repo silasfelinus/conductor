@@ -16,11 +16,32 @@ A default `fetch_file` response may be abbreviated for display. That does not me
 
 When updating an existing file, pass the exact current blob SHA to `update_file`. A SHA conflict means the file moved: re-fetch current state and reconsider the mutation. Never force or overwrite newer content.
 
-## Claims use a direct compare-and-swap roadmap update
+## Claims are session-aware task events
 
-A claim must reserve the task immediately and identify the exact session. Until `task-events` claim operations are session-aware, do not use an event file to claim work.
+A claim must reserve the task immediately and identify the exact session. `task-events` claim operations are session-aware: a `claim` event **requires** a non-empty, collision-resistant `session`, and the processor preserves the same atomic `ALREADY_CLAIMED` invariant as `scripts/claim_task.py`.
 
-For a connector-native claim:
+For a connector-native claim, create a small unique event file directly on Conductor `main`:
+
+```yaml
+version: 1
+project: ai-art-academy
+task: t-010
+operation: claim
+owner: worker
+session: 2026-07-25T100000Z-ai-art-academy-t-010-a1b2
+updated: '2026-07-25T10:00:00Z'
+```
+
+On a successful claim the processor sets `status: claimed`, `owner`, `claimed_by: <session>`, `claimed_at`, and `updated`. Two concurrent claims are resolved deterministically:
+
+- A repeat claim from the **same** `owner` **and** `session` is a true no-op (idempotent replay), so retrying is safe.
+- A claim from a **different** session against an already-claimed task loses the race: the processor consumes the losing event as `ALREADY_CLAIMED` with **zero** roadmap mutation, rather than leaving it as a poison event. Re-fetch the roadmap; if it does not name your session, rotate to the next `ready` task.
+
+After creating a claim event, follow the "After creating an event" checklist below (inspect the Actions run, re-fetch, and verify the task names your session) before starting implementation.
+
+### Direct compare-and-swap alternative
+
+If you prefer not to wait for the task-event processor, you can still claim with a direct compare-and-swap roadmap update:
 
 1. Page-fetch the complete current `projects/<project>/roadmap.yaml` from `main`.
 2. Confirm the task is still eligible under `AGENTS.md`, including stale-claim rules.
@@ -61,6 +82,7 @@ Rules:
 
 - Quote free-form scalar text or use a YAML block scalar. An unquoted `: ` can make the event invalid.
 - Include `soft_gate`, `owner`, `note`, or `learning` only when applicable.
+- Optionally include your `session` on `review`/`done`/etc. events. When present, the processor verifies it matches the task's live `claimed_by` and consumes the event as `ALREADY_CLAIMED` (no mutation) if a different session now owns the task — so a session that lost the claim cannot later close the winner's task. Omitting `session` keeps the legacy sessionless behavior.
 - Do not use `force: true` without explicit approval for that override.
 - Do not assume creation means application.
 

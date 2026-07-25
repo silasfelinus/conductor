@@ -43,6 +43,17 @@ ALLOWED_OPERATIONS = {
 CLOSED_OPERATIONS = {"done", "blocked"}
 
 
+class TaskEventCollision(Exception):
+    """A claim (or later transition) that lost a race to another session.
+
+    Raised so process() can *consume* the losing event -- delete it, mutate no
+    roadmap state -- as a benign ALREADY_CLAIMED/collision result, instead of
+    leaving it queued as a poison event that fails every future processor run for
+    every unrelated PR (the same failure shape conductor/t-067 hit with malformed
+    files). Restores the atomic ALREADY_CLAIMED invariant claim_task.py provides.
+    """
+
+
 def load_yaml(path: Path) -> dict[str, Any]:
     data = yaml.safe_load(path.read_text(encoding="utf-8"))
     if not isinstance(data, dict):
@@ -105,30 +116,78 @@ def stale_reason(task: dict[str, Any], event: dict[str, Any]) -> str | None:
     return None
 
 
+def verify_event_ownership(task: dict[str, Any], event: dict[str, Any], operation: str) -> None:
+    """For a non-claim transition that names a `session`, refuse to mutate a task a
+    *different* session currently owns.
+
+    Opt-in and backward compatible: an event with no `session` (the legacy path)
+    is unaffected, so existing sessionless review/done events keep working. When a
+    session IS named and it does not match the task's live `claimed_by`, raise
+    TaskEventCollision so process() consumes the losing event rather than letting a
+    session that lost the claim later flip the winner's task to review/done/etc.
+    A `force: true` event bypasses this check (explicit override).
+    """
+    if event.get("force") or event.get("session") is None:
+        return
+    session = require_string(event, "session")
+    claimed_by = task.get("claimed_by")
+    if claimed_by is not None and claimed_by != session:
+        raise TaskEventCollision(
+            f"ALREADY_CLAIMED: {operation} not permitted -- task claimed_by="
+            f"{claimed_by!r} but event session={session!r} (not this session's claim)"
+        )
+
+
 def compute_transition_ops(
     task: dict[str, Any], event: dict[str, Any], operation: str
 ) -> list[tuple[str, str, Any]]:
     """Decide which fields change for this event, without mutating `task` or
     touching any file. Returns a list of ("set"|"unset", field, value) ops in
     application order; an empty list means the event is a true no-op (e.g. a
-    repeat claim by the same owner)."""
+    repeat claim by the same owner *and* session).
+
+    Raises TaskEventCollision when a claim (or session-tagged later transition)
+    loses a race to a different session -- callers consume that as an
+    ALREADY_CLAIMED result, not a hard error."""
     current = task.get("status")
     force = bool(event.get("force", False))
     ops: list[tuple[str, str, Any]] = []
 
+    timestamp = event.get("updated")
+    if timestamp is None:
+        timestamp = dt.datetime.now(dt.timezone.utc).replace(microsecond=0).isoformat()
+
     if operation == "claim":
-        if current == "claimed" and task.get("owner") == event.get("owner", "worker"):
-            return []
+        # Every claim must name the session that owns it, so a later collision or
+        # ownership check has something concrete to compare (owner alone collapses
+        # two concurrent Worker sessions into one owner-level no-op).
+        session = require_string(event, "session")
+        owner = event.get("owner", "worker")
+        if current == "claimed" and not force:
+            # A repeat claim is a true no-op ONLY when the same owner AND the same
+            # session already hold it (idempotent replay). A different session on
+            # an already-claimed task lost the race -- surface it as a collision so
+            # the losing event is consumed, preserving the atomic ALREADY_CLAIMED
+            # invariant instead of silently no-op'ing two rival claims into one.
+            if task.get("owner") == owner and task.get("claimed_by") == session:
+                return []
+            raise TaskEventCollision(
+                f"ALREADY_CLAIMED: task claimed_by={task.get('claimed_by')!r} "
+                f"(owner={task.get('owner')!r}); losing claim session={session!r}"
+            )
         if current != "ready" and not force:
             raise ValueError(f"claim requires status ready, found {current!r}")
         ops.append(("set", "status", "claimed"))
-        ops.append(("set", "owner", event.get("owner", "worker")))
+        ops.append(("set", "owner", owner))
+        ops.append(("set", "claimed_by", session))
+        ops.append(("set", "claimed_at", timestamp))
     elif operation == "rearm":
         if not task.get("recurring") and not force:
             raise ValueError("rearm requires recurring: true")
         ops.append(("set", "status", "ready"))
         ops.append(("unset", "owner", None))
     else:
+        verify_event_ownership(task, event, operation)
         target = operation
         if not (operation in CLOSED_OPERATIONS and current == target):
             ops.append(("set", "status", target))
@@ -140,9 +199,6 @@ def compute_transition_ops(
     elif operation in {"ready", "claim", "done", "blocked", "rearm"}:
         ops.append(("unset", "soft_gate", None))
 
-    timestamp = event.get("updated")
-    if timestamp is None:
-        timestamp = dt.datetime.now(dt.timezone.utc).replace(microsecond=0).isoformat()
     ops.append(("set", "updated", timestamp))
 
     note = event.get("note")
@@ -266,7 +322,18 @@ def process(path: Path, dry_run: bool) -> str:
     # Compute everything (transition + learning validation) before writing anything,
     # so an invalid learning payload can't leave a half-applied, now-unrepeatable
     # transition behind with its event file stranded (atomicity requirement).
-    ops = compute_transition_ops(task, event, operation)
+    try:
+        ops = compute_transition_ops(task, event, operation)
+    except TaskEventCollision as collision:
+        # A claim (or session-tagged transition) that lost a race to another
+        # session. Consume it with NO roadmap mutation -- the winning session's
+        # claim stands untouched. Leaving it queued would poison every future
+        # processor run for every unrelated PR, so this is a consumed result, not
+        # an error (exit 0, event deleted), unlike a genuinely malformed event.
+        if not dry_run:
+            path.unlink()
+        return f"{project}/{task_id}: {collision}"
+
     learning_record = prepare_learning(event, project, task_id, operation)
 
     if not dry_run:

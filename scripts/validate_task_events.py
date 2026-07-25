@@ -77,6 +77,16 @@ def validate(path: Path) -> str | None:
     if operation not in ALLOWED_OPERATIONS:
         return f"unsupported operation {operation!r}"
 
+    # A claim event MUST name its session so the processor can tell two concurrent
+    # Worker claims apart (owner alone collapses them). Any other event may carry a
+    # session (used for the later ownership check) but must not carry an empty one.
+    session = event.get("session")
+    if operation == "claim":
+        if not isinstance(session, str) or not session.strip():
+            return "claim events require a non-empty 'session' field"
+    elif session is not None and (not isinstance(session, str) or not session.strip()):
+        return "session must be a non-empty string when supplied"
+
     roadmap_path = ROOT / "projects" / project / "roadmap.yaml"
     if not roadmap_path.is_file():
         return f"unknown project roadmap: projects/{project}/roadmap.yaml"

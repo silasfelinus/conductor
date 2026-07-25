@@ -90,6 +90,15 @@ todo explicitly asks for it. Scope is exactly what the title/description says.
    TALKBACK trail looking like one continuous session did unrelated work when two
    concurrent burst-mode sessions happen to reuse the same label within the same
    hour (coat-dance/t-001, 2026-07-21 — see root `TALKBACK.md` same date).
+   **Connector-only Workers** (connected GitHub tools but no local shell/Python)
+   claim, review, and close out through session-aware `task-events` instead:
+   a `claim` event now **requires** a non-empty, collision-resistant `session`,
+   the processor writes `claimed_by`/`claimed_at` and preserves the same atomic
+   `ALREADY_CLAIMED` invariant as `claim_task.py` (a rival session's claim is
+   consumed as a collision with no roadmap mutation, not collapsed into an
+   owner-level no-op), and `review`/`done` events may carry a matching `session`
+   so a session that lost the claim cannot later close the winner's task. See
+   `docs/github-connector-worker.md` for the full connector runbook.
 7. **Set `status: review` before opening the PR — every session, not just hourly
    `worker/*` runs.** This applies equally to Silas-directed `claude/*` sessions and
    burst-mode cycles doing Worker-style roadmap pickup, not only the OpenAI hourly

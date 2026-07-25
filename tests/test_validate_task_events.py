@@ -54,10 +54,55 @@ class ValidateTaskEventsTests(unittest.TestCase):
     def test_well_formed_event_is_valid(self):
         event = self.write_event(
             "claim.yaml",
-            {"version": 1, "project": "demo", "task": "t-001", "operation": "claim"},
+            {
+                "version": 1,
+                "project": "demo",
+                "task": "t-001",
+                "operation": "claim",
+                "session": "sess-A",
+            },
         )
         self.assertIsNone(MODULE.validate(event))
         self.assertEqual(MODULE.main(), 0)
+
+    def test_claim_without_session_is_rejected(self):
+        # conductor/#1036: a claim event MUST name its session so the processor
+        # can distinguish two concurrent Worker claims from a single idempotent one.
+        event = self.write_event(
+            "sessionless-claim.yaml",
+            {"version": 1, "project": "demo", "task": "t-001", "operation": "claim"},
+        )
+        error = MODULE.validate(event)
+        self.assertIn("session", error)
+        self.assertEqual(MODULE.main(), 1)
+
+    def test_claim_with_blank_session_is_rejected(self):
+        event = self.write_event(
+            "blank-session.yaml",
+            {
+                "version": 1,
+                "project": "demo",
+                "task": "t-001",
+                "operation": "claim",
+                "session": "   ",
+            },
+        )
+        error = MODULE.validate(event)
+        self.assertIn("session", error)
+
+    def test_blank_session_on_non_claim_event_is_rejected(self):
+        event = self.write_event(
+            "blank-session-done.yaml",
+            {
+                "version": 1,
+                "project": "demo",
+                "task": "t-001",
+                "operation": "done",
+                "session": "",
+            },
+        )
+        error = MODULE.validate(event)
+        self.assertIn("session", error)
 
     def test_syntax_error_is_caught(self):
         # conductor/t-067: an unquoted colon inside a free-text note field is
@@ -88,7 +133,13 @@ class ValidateTaskEventsTests(unittest.TestCase):
     def test_unknown_project_is_rejected(self):
         event = self.write_event(
             "bad-project.yaml",
-            {"version": 1, "project": "does-not-exist", "task": "t-001", "operation": "claim"},
+            {
+                "version": 1,
+                "project": "does-not-exist",
+                "task": "t-001",
+                "operation": "claim",
+                "session": "sess-A",
+            },
         )
         error = MODULE.validate(event)
         self.assertIn("unknown project roadmap", error)
@@ -101,6 +152,7 @@ class ValidateTaskEventsTests(unittest.TestCase):
                 "project": "demo",
                 "task": "t-001",
                 "operation": "claim",
+                "session": "sess-A",
                 "learning": {"kind": "software", "stakes": "reversible", "lesson": "x"},
             },
         )
@@ -124,7 +176,14 @@ class ValidateTaskEventsTests(unittest.TestCase):
     def test_empty_note_is_rejected(self):
         event = self.write_event(
             "blank-note.yaml",
-            {"version": 1, "project": "demo", "task": "t-001", "operation": "claim", "note": "   "},
+            {
+                "version": 1,
+                "project": "demo",
+                "task": "t-001",
+                "operation": "claim",
+                "session": "sess-A",
+                "note": "   ",
+            },
         )
         error = MODULE.validate(event)
         self.assertIn("note must be a non-empty string", error)
