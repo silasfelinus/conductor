@@ -1,6 +1,15 @@
 name: Coloring Book ArtJobs
 
 on:
+  schedule:
+    # Daily. Matches the batch_policy worker_pass_size of 18 (half a book) per
+    # run; book-order-then-slot means monster-recast drains first, then
+    # hollywood-recast, then kind-robots, across successive daily runs. This
+    # trigger was previously silent-dropped from this workflow at some point
+    # after 2026-07-20 (last scheduled run: 2026-07-20T12:00Z), leaving all 3
+    # books' color-proposal queues un-submitted until a manual dispatch
+    # restarted them (Silas, 2026-07-25 — see TALKBACK.md).
+    - cron: "0 11 * * *"
   push:
     branches: [main]
     paths:
