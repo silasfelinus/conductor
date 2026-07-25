@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     permissions:
-      contents: read
+      contents: write
 
     steps:
       - uses: actions/checkout@v4
@@ -24,17 +24,30 @@ jobs:
           ref: ${{ github.event.pull_request.head.ref }}
           fetch-depth: 1
 
-      - uses: actions/setup-python@v5
+      - id: existing-report
+        name: Check for completed repair
+        run: |
+          if [ -f ops/home-server/LAST-ART-REPAIR.log ]; then
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "exists=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - if: steps.existing-report.outputs.exists != 'true'
+        uses: actions/setup-python@v5
         with:
           python-version: "3.12"
 
-      - name: Install repair dependencies
+      - if: steps.existing-report.outputs.exists != 'true'
+        name: Install repair dependencies
         run: python -m pip install pyyaml
 
-      - name: Canonicalize source queue
+      - if: steps.existing-report.outputs.exists != 'true'
+        name: Canonicalize source queue
         run: python scripts/repair_art_request_defaults.py --write
 
-      - name: Repair and requeue failed ArtJobs
+      - if: steps.existing-report.outputs.exists != 'true'
+        name: Repair and requeue failed ArtJobs
         env:
           KR_API_TOKEN: ${{ secrets.KR_API_TOKEN }}
           KR_BASE_URL: https://kind-robots.vercel.app
@@ -50,7 +63,8 @@ jobs:
           cat ops/home-server/LAST-ART-REPAIR.log >> "$GITHUB_STEP_SUMMARY"
           exit 0
 
-      - name: Upload repaired queue and report
+      - if: steps.existing-report.outputs.exists != 'true'
+        name: Upload repaired queue and report
         uses: actions/upload-artifact@v4
         with:
           name: art-repair-results
@@ -59,3 +73,31 @@ jobs:
             ops/home-server/LAST-ART-REPAIR.log
           if-no-files-found: error
           retention-days: 1
+
+      - if: steps.existing-report.outputs.exists != 'true'
+        name: Publish repaired queue and report to PR branch
+        env:
+          GH_TOKEN: ${{ github.token }}
+          BRANCH: ${{ github.event.pull_request.head.ref }}
+        run: |
+          publish_file() {
+            FILE="$1"
+            MESSAGE="$2"
+            CONTENT=$(base64 -w 0 "$FILE")
+            SHA=$(gh api --method GET "repos/$GITHUB_REPOSITORY/contents/$FILE" \
+              -f ref="$BRANCH" --jq .sha 2>/dev/null || true)
+            if [ -n "$SHA" ]; then
+              gh api --method PUT "repos/$GITHUB_REPOSITORY/contents/$FILE" \
+                -f message="$MESSAGE" -f content="$CONTENT" \
+                -f branch="$BRANCH" -f sha="$SHA" >/dev/null
+            else
+              gh api --method PUT "repos/$GITHUB_REPOSITORY/contents/$FILE" \
+                -f message="$MESSAGE" -f content="$CONTENT" \
+                -f branch="$BRANCH" >/dev/null
+            fi
+          }
+
+          publish_file ops/home-server/LAST-ART-REPAIR.log \
+            "chore: record failed ArtJob repair"
+          publish_file projects/art-prompts.yaml \
+            "chore: canonicalize queued art paths and prompts"
