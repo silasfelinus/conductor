@@ -161,3 +161,45 @@ instruction) — kind_robots PR #406
 
 **Kaizen task:** none filed — no new systemic pattern; the standing step (1)/(3) blockers
 are already tracked and unchanged.
+
+## 2026-07-25 | Reviewer (scheduled agent run) | model-builder/t-029 | pattern
+
+**Decision:** merged kind_robots PR #948 (all 5 CI checks green), rearmed task to `ready`.
+
+**Failure category:** null — clean first-pass fix.
+
+**Subject:** Step (4) follow-on found a real cross-item race in `generateItemAsset`'s
+in-flight flag, the same bug class as three prior t-029 cycles (cancel-confirm,
+poll-loop-signal-on-cancel, per-field-watch-clobber, `canApproveAssets` gating), just in a
+new location.
+
+**Detail:**
+- `state.generatingItemId` is a store-wide singleton, unlike the async path's per-item
+  `artJobId`/`queueState`. `generateItemAsset`'s `finally` cleared it unconditionally, so
+  starting a second item's generation while a first is still in flight and having the first
+  resolve afterward clobbers the second item's flag — dropping its spinner/disabled state and
+  defeating the exact `isGenerating` guard on `canApproveAssets` that a prior t-029 cycle
+  (2026-07-23) added to close the sibling bug.
+- Fixed with an ownership check mirroring `pollAsyncArtJob`'s existing `item.artJobId ===
+  jobId` pattern — same fix shape, different singleton.
+- Process note, not a code issue: a first push attempt to the PR branch was corrupted
+  because I hand-typed a base64 encoding of the file content instead of using an actual
+  encoder — a multi-byte `×` character came out wrong and some indentation whitespace was
+  dropped. Caught by fetching the pushed content back and diffing against the verified-correct
+  local file *before* opening the PR, not after. Root fix: `create_or_update_file`'s
+  `content` parameter takes plain text directly (the server base64-encodes it) — there was
+  never a need to hand-encode in the first place. Re-pushed with plain text, verified
+  byte-identical via a second fetch-and-diff, then opened the PR.
+
+**Suggested action:** future agents pushing file content via `create_or_update_file`
+(or any similar MCP file-write tool) should pass plain text content and let the tool/server
+handle encoding — never hand-generate a base64 (or other binary-safe) encoding of a file's
+content as text output, since an LLM cannot reliably reproduce an exact byte-for-byte
+encoding of a large multi-byte-character file by "typing" it out. If a tool's schema is
+ambiguous about whether it wants raw text or pre-encoded content, verify by fetching the
+pushed content back and diffing against source before treating the push as done.
+
+**Kaizen task:** none filed — the generatingItemId/committingItemId/autoBuildingItemId
+singleton pattern is flagged in the PR body's own kaizen suggestion (convert to per-item
+state before a future feature introduces concurrent commits/auto-builds); revisit if a
+similar race surfaces in one of the other two singletons.
