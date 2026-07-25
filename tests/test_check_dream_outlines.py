@@ -11,10 +11,6 @@ import pytest
 import scripts.check_dream_outlines as dc
 
 
-# --------------------------------------------------------------------------- #
-# Fixtures
-# --------------------------------------------------------------------------- #
-
 SEED_OK = """\
 ---
 slug: demo-dream
@@ -22,34 +18,41 @@ title: Demo Dream
 type: dream
 status: outline
 narrator: yes
+created: '2026-07-24'
 ---
 
+## Creative seeds
+- **Genres:** sports comedy + procedural
+- **Occupation:** scorekeeper
+- **Animal / species:** octopus
+- **Fusion:** Eight-arm scorekeeping changes the tools and action, while the procedural genre turns disputed points into investigations that drive every scene.
+
 ## The idea
-A cozy, specific little world with a tactile hook and a reason to linger here.
+A specific underwater tournament where recordkeeping matters more than enchanted architecture.
 
 ## Location dream
-**The Demo Hall** — LOCATION. A warm, strange place rendered in amber light.
+**The Demo Arena** — LOCATION. An underwater venue built around eight-armed officials.
 
 ## Vibe / genre dream
-**Demo Reverie** — GENRE. Gentle wonder, low stakes, deep feeling.
+**Comic Review** — GENRE. Competitive comedy with procedural mysteries.
 
 ## Characters (2-4)
-- **Ada** — the keeper; wants every visitor to leave lighter.
-- **Bram** — the apprentice; keeps almost breaking things beautifully.
-- **The Hush** — a presence that only speaks in weather.
+- **Ada** — octopus scorekeeper; wants every point recorded fairly.
+- **Bram** — rookie competitor; keeps inventing accidental rules.
+- **The Hush** — a replay drone that only speaks in timestamps.
 
 ## Rewards (3-6)
 - **Warm Token** (COMMON) — a small comfort you can keep.
-- **Bright Key** (UNCOMMON) — opens one door you were afraid of.
-- **The True Map** (LEGENDARY) — shows the way you already knew.
+- **Bright Key** (UNCOMMON) — opens one disputed locker.
+- **The True Map** (LEGENDARY) — shows the play everyone missed.
 
 ## Scenarios (1-2)
-- **Opening Night** — help Ada ready the hall before the first visitor.
+- **Opening Match** — help Ada investigate a point that appeared before the game began.
 
 ## Narrator (if narrator: yes)
-**Ada** as narrator bot: warm, unhurried, speaks in lamplight metaphors.
-Expressions: NEUTRAL, LOVING, THINKING, SURPRISED, WINKING; action WHISPERING.
-Topics/threads: "Hall Lore", "Ask Ada".
+**Ada** as narrator bot: brisk, fair, dryly funny.
+Expressions: NEUTRAL, PROUD, ANXIOUS, SURPRISED, THINKING; action SHOUTING.
+Topics/threads: "Rules", "Replay Review".
 
 ## Notes from Silas
 - (leave notes here)
@@ -65,35 +68,42 @@ title: Daily Dream
 type: dream
 status: outline
 narrator: 'yes'
+created: '2026-07-24'
 proposal: true
-proposal_date: '2026-07-20'
+proposal_date: '2026-07-24'
 ---
 
+## Creative seeds
+- **Genres:** courtroom drama + biopunk
+- **Occupation:** public defender
+- **Animal / species:** mantis shrimp
+- **Fusion:** Polarized vision becomes evidence, public defense structures the conflict, and living reef technology changes testimony during the hearing.
+
 ## The idea
-Two connected places sharing one mood, a small cast, and a host who ties it together.
+Two connected places sharing a legal-biological conflict, a small cast, and a host.
 
 ## Vibe / genre dream
-**Daily Reverie** — GENRE. Cozy wonder with an edge.
+**Chromatic Appeal** — GENRE. Fast objections and biological evidence.
 
 ## Locations (2)
-- **The First Place** — known for its warm strangeness. Art: amber light.
-- **The Second Place** — known for its quiet machinery. Art: teal dusk.
+- **The Spectrum Court** — known for polarized-light testimony. Art: living coral courtroom.
+- **The Evidence Reef** — known for memories that change form. Art: forensic biopunk reef.
 
 ## Characters (3)
-- **One** — role and drive in a line.
-- **Two** — role and drive in a line.
-- **Three** — role and drive in a line.
+- **One** — mantis-shrimp defender with a sensory conflict.
+- **Two** — cuttlefish clerk translating testimony.
+- **Three** — human investigator carrying disputed evidence.
 
 ## Rewards (2 — one skill, one item)
-- **A Skill** (SKILL, RARE) — grants a useful ability.
-- **An Item** (ITEM, LEGENDARY) — a tangible object that matters.
+- **A Skill** (SKILL, RARE) — grants a useful sensory objection.
+- **An Item** (ITEM, LEGENDARY) — a tangible precedent shell.
 
 ## Scenarios (1-2)
-- **The Setup** — the cast, the place, and what the player does.
+- **The Setup** — the cast, the court, and what the player must prove.
 
 ## Narrator
-**The Host** as narrator bot: warm, wry, patient. Expressions: NEUTRAL plus LOVING,
-THINKING. Topics: "Lore", "Advice".
+**The Clerk** as narrator bot: precise, skeptical, patient. Expressions: NEUTRAL plus
+THINKING, SURPRISED. Topics: "Precedent", "Evidence".
 
 ## Notes from Silas
 - (leave notes here)
@@ -104,9 +114,9 @@ THINKING. Topics: "Lore", "Advice".
 
 NARRATORLESS_OK = SEED_OK.replace("narrator: yes", "narrator: no").replace(
     """## Narrator (if narrator: yes)
-**Ada** as narrator bot: warm, unhurried, speaks in lamplight metaphors.
-Expressions: NEUTRAL, LOVING, THINKING, SURPRISED, WINKING; action WHISPERING.
-Topics/threads: "Hall Lore", "Ask Ada".""",
+**Ada** as narrator bot: brisk, fair, dryly funny.
+Expressions: NEUTRAL, PROUD, ANXIOUS, SURPRISED, THINKING; action SHOUTING.
+Topics/threads: "Rules", "Replay Review".""",
     """## Narrator (if narrator: yes)
 narrator: no — this dream stays narratorless on purpose.""",
 )
@@ -129,10 +139,6 @@ def kinds(findings):
     return {f.kind for f in findings}
 
 
-# --------------------------------------------------------------------------- #
-# Clean cases
-# --------------------------------------------------------------------------- #
-
 def test_seed_shape_ok(backlog):
     write(backlog, "seed.md", SEED_OK)
     assert dc.collect(backlog) == []
@@ -148,6 +154,15 @@ def test_narratorless_ok(backlog):
     assert dc.collect(backlog) == []
 
 
+def test_legacy_pre_contract_outline_is_grandfathered(backlog):
+    legacy = SEED_OK.replace("created: '2026-07-24'", "created: '2026-07-23'")
+    start = legacy.index("## Creative seeds")
+    end = legacy.index("## The idea")
+    legacy = legacy[:start] + legacy[end:]
+    write(backlog, "legacy.md", legacy)
+    assert dc.collect(backlog) == []
+
+
 def test_non_dream_and_non_buildable_are_ignored(backlog):
     write(backlog, "coloring.md", SEED_OK.replace("type: dream", "type: coloring-book"))
     write(backlog, "built.md", SEED_OK.replace("status: outline", "status: built"))
@@ -156,40 +171,70 @@ def test_non_dream_and_non_buildable_are_ignored(backlog):
 
 
 def test_real_backlog_is_buildable():
-    """The committed dream outlines must all pass, so the CI guard stays green
-    until a real outline actually regresses."""
     assert dc.collect(dc.DEFAULT_BACKLOG) == []
 
 
-# --------------------------------------------------------------------------- #
-# Failure modes
-# --------------------------------------------------------------------------- #
+def test_missing_creative_seed_section(backlog):
+    text = SEED_OK
+    start = text.index("## Creative seeds")
+    end = text.index("## The idea")
+    text = text[:start] + text[end:]
+    findings = dc.collect(write(backlog, "x.md", text).parent)
+    assert "seed-missing" in kinds(findings)
+
+
+def test_too_many_genre_seeds(backlog):
+    text = SEED_OK.replace(
+        "**Genres:** sports comedy + procedural",
+        "**Genres:** sports comedy + procedural + mystery",
+    )
+    findings = dc.collect(write(backlog, "x.md", text).parent)
+    assert "seed-genres" in kinds(findings)
+
+
+def test_missing_species_seed(backlog):
+    text = SEED_OK.replace("- **Animal / species:** octopus\n", "")
+    findings = dc.collect(write(backlog, "x.md", text).parent)
+    assert "seed-species" in kinds(findings)
+
+
+def test_thin_fusion_seed(backlog):
+    text = SEED_OK.replace(
+        "Eight-arm scorekeeping changes the tools and action, while the procedural genre turns disputed points into investigations that drive every scene.",
+        "They combine.",
+    )
+    findings = dc.collect(write(backlog, "x.md", text).parent)
+    assert "seed-fusion" in kinds(findings)
+
 
 def test_missing_vibe_section(backlog):
-    text = SEED_OK.replace("## Vibe / genre dream\n**Demo Reverie** — GENRE. Gentle wonder, low stakes, deep feeling.\n\n", "")
+    text = SEED_OK.replace(
+        "## Vibe / genre dream\n**Comic Review** — GENRE. Competitive comedy with procedural mysteries.\n\n",
+        "",
+    )
     write(backlog, "x.md", text)
     assert "missing-section" in kinds(dc.collect(backlog))
 
 
 def test_too_few_characters(backlog):
     text = SEED_OK.replace(
-        "- **Bram** — the apprentice; keeps almost breaking things beautifully.\n", ""
-    ).replace("- **The Hush** — a presence that only speaks in weather.\n", "")
+        "- **Bram** — rookie competitor; keeps inventing accidental rules.\n", ""
+    ).replace("- **The Hush** — a replay drone that only speaks in timestamps.\n", "")
     findings = dc.collect(write(backlog, "x.md", text).parent)
     assert "characters-count" in kinds(findings)
 
 
 def test_rewards_no_rarity_spread(backlog):
-    text = SEED_OK.replace("(COMMON)", "(COMMON)").replace("(UNCOMMON)", "(COMMON)").replace("(LEGENDARY)", "(COMMON)")
+    text = SEED_OK.replace("(UNCOMMON)", "(COMMON)").replace("(LEGENDARY)", "(COMMON)")
     findings = dc.collect(write(backlog, "x.md", text).parent)
     assert "rewards-rarity" in kinds(findings)
 
 
 def test_narrator_yes_but_no_block(backlog):
     text = SEED_OK.replace(
-        """**Ada** as narrator bot: warm, unhurried, speaks in lamplight metaphors.
-Expressions: NEUTRAL, LOVING, THINKING, SURPRISED, WINKING; action WHISPERING.
-Topics/threads: "Hall Lore", "Ask Ada".""",
+        """**Ada** as narrator bot: brisk, fair, dryly funny.
+Expressions: NEUTRAL, PROUD, ANXIOUS, SURPRISED, THINKING; action SHOUTING.
+Topics/threads: "Rules", "Replay Review".""",
         "- (leave notes here)",
     )
     findings = dc.collect(write(backlog, "x.md", text).parent)
@@ -198,7 +243,7 @@ Topics/threads: "Hall Lore", "Ask Ada".""",
 
 def test_empty_idea_section(backlog):
     text = SEED_OK.replace(
-        "A cozy, specific little world with a tactile hook and a reason to linger here.",
+        "A specific underwater tournament where recordkeeping matters more than enchanted architecture.",
         "",
     )
     findings = dc.collect(write(backlog, "x.md", text).parent)
@@ -207,7 +252,7 @@ def test_empty_idea_section(backlog):
 
 def test_too_many_scenarios(backlog):
     text = SEED_OK.replace(
-        "- **Opening Night** — help Ada ready the hall before the first visitor.\n",
+        "- **Opening Match** — help Ada investigate a point that appeared before the game began.\n",
         "- **A** — one.\n- **B** — two.\n- **C** — three.\n- **D** — four.\n",
     )
     findings = dc.collect(write(backlog, "x.md", text).parent)
