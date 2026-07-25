@@ -416,18 +416,59 @@ tasks:
   - id: t-022
     milestone: m5
     title: "Live post-deploy smoke: promote an asset and replay a Dream expansion commit"
-    status: ready
-    owner: null
+    status: done
+    owner: worker
     passes: 0
     stakes: reversible
     note: >
-      The COMMIT executor (PR #190, t-013/t-014/t-015) is implemented and CI-typechecked
-      but not yet exercised against prod. Run a live smoke: (1) ASSET_ONLY — promote a
-      Character hero and confirm character.artImageId is set; (2) CREATE — run a Dream ->
-      3 Characters expansion, confirm exactly three private/inactive Characters are created
-      and linked to the Dream, then re-trigger commit on the same items and confirm NO
-      duplicates (idempotencyKey guard). Record findings; file any fix as a new task.
+      RAN 2026-07-25 (~21:10-21:15 UTC, claude-conductor-scheduled-20260725T2110Z-mb-t022,
+      scheduled agent run): live-tested the COMMIT executor (server/api/model-builder/
+      items/[id]/commit.post.ts) against kind-robots.vercel.app prod using the
+      BETA_ADMIN_TOKEN (KR_API_TOKEN, sent as x-api-key). Both required flows pass clean —
+      no bug found, no fix task filed.
+
+      CREATE (Dream -> 3 Characters): created a private/inactive throwaway Dream (id 3821),
+      then POST /api/model-builder/runs with sourceType=Dream/sourceId=3821 and 3 items
+      (outputKey=expand-characters, action=CREATE). Dry-ran item 6's commit first (plan
+      correctly showed action=CREATE, targetType=Character) then committed all 3 items for
+      real: each returned `target.created=true, target.linked=true` with new Character ids
+      1895/1896/1897. Verified via GET /api/characters/{id} and GET /api/dreams/3821 that
+      all three Characters were created with isPublic=false/isActive=false (the `priv`
+      override in commit.post.ts's createRecord, not just a schema default) and that
+      Dream.Characters contained exactly the 3 new ids — no more, no fewer. Re-POSTed
+      commit on item 6 with no dryRun: got `alreadyCommitted: true` with the same target
+      id 1895 and no new Character was created — idempotencyKey guard confirmed.
+
+      ASSET_ONLY (promote a Character hero): built a second run with sourceType=Character/
+      sourceId=1896 (one of the freshly created test characters) and one ASSET_ONLY item,
+      PATCHed a real public ArtImage id (12198) onto it, dry-ran (plan correctly showed
+      field=artImageId/value=12198/targetId=1896), then committed for real — response
+      confirmed `target.created=false, target.id=1896`, and GET /api/characters/1896 showed
+      artImageId=12198 with isPublic/isActive still false. Re-POSTed the same commit and got
+      `alreadyCommitted: true` — no double-write.
+
+      One correction to how this task was scoped: ASSET_ONLY promotes onto the *run's
+      source record* (whatever sourceType/sourceId the run was created against), not
+      implicitly "whichever Character a CREATE step produced" — so a literal "promote a
+      Character hero" test needs its own Character-sourced run, which is what this cycle
+      did (using one of the CREATE step's own output characters as the target, to stay
+      fully self-contained). Also worth noting for future callers: GET /api/characters
+      does NOT filter by a `?id=` query string (it silently returns the full unfiltered
+      list) — the working lookup is the path param route GET /api/characters/{id}. Not
+      filing a fix task for this since it isn't part of the COMMIT executor under test and
+      didn't block verification, but flagging here in case another live-smoke task hits
+      the same surprise.
+
+      Cleanup: deleted all throwaway records afterward (DELETE /api/dreams/3821, then
+      DELETE /api/characters/1895, 1896, 1897) — both endpoints returned clean 200s: no
+      residue left in prod.
+
+      Conclusion: the COMMIT executor's CREATE, ASSET_ONLY, and idempotency-guard paths
+      all work correctly against a live deployment, matching PR #190's CI-only claims.
       This is the live proof behind the gated reference runs t-016/t-017/t-018.
+    claimed_by: claude-conductor-scheduled-20260725T2110Z-mb-t022
+    claimed_at: '2026-07-25T21:06:46Z'
+    updated: '2026-07-25T21:15:00Z'
 
   - id: t-023
     milestone: m6
