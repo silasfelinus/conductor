@@ -117,10 +117,7 @@ jobs:
         working-directory: conductor
         env:
           KR_API_TOKEN: ${{ secrets.KR_API_TOKEN }}
-        run: |
-          set -o pipefail
-          python scripts/repair_failed_kindrobots_artjobs.py --live \
-            | tee ops/home-server/LAST-ART-REPAIR.log
+        run: python scripts/repair_failed_kindrobots_artjobs.py --live
 
       - name: Refresh queue to currently-missing project art
         if: ${{ steps.boxhealth.outputs.up == 'true' && (github.event.inputs.refresh_queue || 'true') != 'false' }}
@@ -168,7 +165,7 @@ jobs:
         run: |
           git config user.name "conductor-bot"
           git config user.email "conductor-bot@users.noreply.github.com"
-          git add projects/images/ projects/process/ projects/art-generate.yaml projects/art-prompts.yaml ops/home-server/RENDER-BOX-STATUS ops/home-server/LAST-ART-REPAIR.log
+          git add projects/images/ projects/process/ projects/art-generate.yaml projects/art-prompts.yaml ops/home-server/RENDER-BOX-STATUS
           if git diff --staged --quiet; then
             echo "No conductor-side changes."
           else
