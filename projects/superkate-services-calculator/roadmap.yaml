@@ -497,11 +497,12 @@ tasks:
   stakes: needs-human
   depends_on: t-028
   updated: 2026-07-08
-  note: 'Human-gated planning task only. Before any production sync uses real customer data, Silas must
-    choose hosting location, database engine, domain/subdomain if any, secrets handling, backup schedule,
-    restore test process, and access policy. Workers must not touch DNS, secrets, production deploy settings,
-    production databases, billing, analytics, or real customer sync under this task without explicit concrete
-    approval.
+  note: 'FOR SILAS: human-gated planning task only — no agent output to review, this is a decision-only
+    gate. Before any production sync uses real customer data, choose hosting location, database engine,
+    domain/subdomain if any, secrets handling, backup schedule, restore test process, and access policy.
+    TO APPROVE: record your choices here (or in a linked doc), then set approved_by_human: true and
+    status: done. Workers must not touch DNS, secrets, production deploy settings, production databases,
+    billing, analytics, or real customer sync under this task without explicit concrete approval.
 
     '
 - id: t-031
