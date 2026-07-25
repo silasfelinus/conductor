@@ -534,8 +534,8 @@ tasks:
   - id: t-029
     milestone: m6
     title: "Polish and upgrade Model Builder front-end surface"
-    status: review
-    owner: worker
+    status: ready
+    owner: null
     passes: 0
     stakes: reversible
     note: >
@@ -702,9 +702,11 @@ tasks:
       when the draft resolved (draftingField is also a store-wide singleton with the same
       overwrite-then-clear race as autoBuildingItemId). Fixed all three following #948's exact
       pattern (only clear a store-wide singleton if it's still ours) plus a "still current" value
-      check for the draft-overwrite case. kind_robots PR #951 opened, CI pending at write time.
-      Steps (1) and (3) remain genuinely blocked/pending as documented above; not touched this
-      cycle.
+      check for the draft-overwrite case. kind_robots PR #951: all 5 CI checks green
+      (TypeScript, Contract verifiers, verify, facet-catalog, GitGuardian) -- merged squash
+      `84bc9209`. Steps (1) and (3) remain genuinely blocked/pending as documented above; not
+      touched this cycle. Rearmed to `ready` since steps (1)/(3) are still outstanding, same
+      pattern as every prior cycle of this task.
     claimed_by: reviewer/claude-conductor-burst-20260725T140608-mb-t029
     claimed_at: '2026-07-25T14:06:09Z'
     updated: '2026-07-25T14:06:09Z'
