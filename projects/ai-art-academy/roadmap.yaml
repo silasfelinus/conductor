@@ -105,12 +105,12 @@ tasks:
   - id: t-004
     milestone: m2
     title: Evaluate prompt-only Kontext vs LoRA per style and record remix configs
-    status: needs-human
+    status: ready
     soft_gate: true
     owner: null
     passes: 0
     stakes: reversible
-    updated: '2026-07-18T11:17:59Z'
+    updated: '2026-07-25T00:00:00Z'
     depends_on: t-003
     note: >
       FOR SILAS: UPDATE 2026-07-18 — the sandbox-egress clause below is stale:
@@ -143,6 +143,23 @@ tasks:
       up, dispatch `auto-art-generate` (limit 1) and confirm an image lands, THEN flip
       this to `ready` and run the A/B. Kept soft needs-human. Registry input (t-003) is
       complete.
+
+      GO-AHEAD GIVEN 2026-07-25: Silas — "confirmed home relay and kr db are up. go
+      ahead." Checked recent auto-art-generate.yml run history rather than dispatching
+      a redundant one (the workflow's `concurrency: {group: auto-art-generate,
+      cancel-in-progress: false}` means a new workflow_dispatch would only queue behind
+      what's already running/pending — there's currently a push-triggered run in flight
+      from this same session's earlier commits touching art-prompts.yaml). The last 4
+      scheduled runs (2026-07-25 03:25, 08:17, 13:50, 19:18 UTC) all completed
+      `conclusion: success`, and several other sessions are actively landing
+      hardening PRs against this exact pipeline today (#1061 "Repair canonical art
+      paths and requeue failed jobs", #1065 "Add auditable failed ArtJob repair
+      workflow", #1068 "Enforce public/images as the relay path contract", #1069
+      "Canonicalize queued art paths and prompts") — corroborating evidence the
+      relay+DB are genuinely up and being actively worked, not just self-reported.
+      Flipping to `ready`: the actual A/B (prompt-only vs LoRA per style, using the
+      generation backend now confirmed live) is real work for a normal cycle, not
+      something to rush through opportunistically.
       Original spec follows:
       Using the generation backend (pre-approved), A/B a fixed test image through each
       candidate Academy style: prompt-only instruction vs LoRA (where available in the
@@ -298,12 +315,12 @@ tasks:
   - id: t-009
     milestone: m5
     title: Generate project art and Academy inspiration images
-    status: needs-human
+    status: ready
     soft_gate: true
     owner: null
     passes: 0
     stakes: reversible
-    updated: '2026-07-18T11:17:59Z'
+    updated: '2026-07-25T00:00:00Z'
     note: >
       FOR SILAS: UPDATE 2026-07-18 — see t-004's 2026-07-18 update for the same
       correction: EGRESS-BLOCKERS.md now shows kind-robots.vercel.app reachable
@@ -325,6 +342,12 @@ tasks:
       generation is human-gated (needs Silas's explicit go-ahead per the safety gate).
       NEXT STEP: once the relay's stale token is fixed + DB up, dispatch auto-art-generate
       (limit 1), confirm an image lands, then flip this to `ready`. Kept soft needs-human.
+
+      GO-AHEAD GIVEN 2026-07-25: same confirmation and reasoning as t-004's
+      2026-07-25 update — Silas confirmed relay+DB up, recent scheduled
+      auto-art-generate runs are succeeding, and a manual dispatch would only
+      queue behind an already-in-flight run given the workflow's concurrency
+      group. Flipping to `ready`.
       Original spec follows:
       Icon/card/hero prompts are queued in projects/art-prompts.yaml (added 2026-07-10).
       Generate and commit them via the auto art pipeline (pre-approved), then generate
