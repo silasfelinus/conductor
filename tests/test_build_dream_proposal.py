@@ -27,6 +27,37 @@ def test_sample_proposal_validates_clean():
     assert bdp.validate_proposal(bdp.SAMPLE_PROPOSAL) == []
 
 
+def test_validate_requires_creative_seed_object():
+    bad = copy.deepcopy(bdp.SAMPLE_PROPOSAL)
+    bad.pop("creative_seeds")
+    problems = bdp.validate_proposal(bad)
+    assert "creative_seeds must be an object" in problems
+
+
+def test_validate_requires_one_or_two_genres():
+    empty = copy.deepcopy(bdp.SAMPLE_PROPOSAL)
+    empty["creative_seeds"]["genres"] = []
+    too_many = copy.deepcopy(bdp.SAMPLE_PROPOSAL)
+    too_many["creative_seeds"]["genres"] = ["noir", "sports", "biopunk"]
+    assert any("exactly 1-2" in p for p in bdp.validate_proposal(empty))
+    assert any("exactly 1-2" in p for p in bdp.validate_proposal(too_many))
+
+
+def test_validate_requires_occupation_species_and_fusion():
+    for field in ("occupation", "species", "fusion"):
+        bad = copy.deepcopy(bdp.SAMPLE_PROPOSAL)
+        bad["creative_seeds"][field] = ""
+        problems = bdp.validate_proposal(bad)
+        assert f"creative_seeds missing {field}" in problems
+
+
+def test_validate_rejects_duplicate_genres():
+    bad = copy.deepcopy(bdp.SAMPLE_PROPOSAL)
+    bad["creative_seeds"]["genres"] = ["Courtroom Drama", "courtroom drama"]
+    problems = bdp.validate_proposal(bad)
+    assert "creative_seeds.genres must not contain duplicates" in problems
+
+
 def test_validate_flags_wrong_counts_and_missing_fields():
     bad = copy.deepcopy(bdp.SAMPLE_PROPOSAL)
     bad["characters"] = bad["characters"][:2]      # needs exactly 3
@@ -54,9 +85,20 @@ def test_normalize_forces_one_skill_one_item():
 
 def test_normalize_deduplicates_slug_against_avoid_set():
     p = copy.deepcopy(bdp.SAMPLE_PROPOSAL)
-    p["slug"] = "kelpwick-lantern-post"
-    out = bdp.normalize(json.loads(json.dumps(p)), avoid={"kelpwick-lantern-post"})
-    assert out["slug"] == "kelpwick-lantern-post-2"
+    p["slug"] = "prism-appeal"
+    out = bdp.normalize(json.loads(json.dumps(p)), avoid={"prism-appeal"})
+    assert out["slug"] == "prism-appeal-2"
+
+
+def test_render_markdown_records_creative_seeds_before_idea():
+    markdown = bdp.render_markdown(copy.deepcopy(bdp.SAMPLE_PROPOSAL), "2026-07-24")
+    seed_index = markdown.index("## Creative seeds")
+    idea_index = markdown.index("## The idea")
+    assert seed_index < idea_index
+    assert "**Genres:** courtroom drama + biopunk" in markdown
+    assert "**Occupation:** public defender" in markdown
+    assert "**Animal / species:** mantis shrimp" in markdown
+    assert "**Fusion:**" in markdown
 
 
 # --------------------------------------------------------------------------- #
