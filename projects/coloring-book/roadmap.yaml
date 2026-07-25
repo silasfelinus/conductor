@@ -477,11 +477,11 @@ tasks:
 - id: t-030
   milestone: m4
   title: 'kind_robots: fix ArtJob seed overflow silently killing coloring-book generation jobs'
-  status: ready
-  owner: null
+  status: claimed
+  owner: reviewer
   passes: 0
   stakes: reversible
-  updated: '2026-07-25T13:10:00Z'
+  updated: '2026-07-25T14:03:44Z'
   note: >
     Filed 2026-07-25 (ai-art-academy/t-010 lane-2 roadmap-accuracy cycle,
     session claude-conductor-agentrun-scheduled-t010-lane2) while spot-checking the
@@ -523,4 +523,6 @@ tasks:
     to t-022 (Monster Recast production pass, currently needs-human) since a stuck
     seed-overflow failure could be silently eating production-pass generation
     attempts without an obvious surfaced cause.
+  claimed_by: claude-conductor-agentrun-20260725T140344Z-t030
+  claimed_at: '2026-07-25T14:03:44Z'
 
