@@ -416,8 +416,8 @@ tasks:
   - id: t-022
     milestone: m5
     title: "Live post-deploy smoke: promote an asset and replay a Dream expansion commit"
-    status: claimed
-    owner: reviewer
+    status: ready
+    owner: null
     passes: 0
     stakes: reversible
     note: >
@@ -426,11 +426,8 @@ tasks:
       Character hero and confirm character.artImageId is set; (2) CREATE — run a Dream ->
       3 Characters expansion, confirm exactly three private/inactive Characters are created
       and linked to the Dream, then re-trigger commit on the same items and confirm NO
-      duplicates (idempotencyKey guard). Record findings; file any fix as a new task. This
-      is the live proof behind the gated reference runs t-016/t-017/t-018.
-    claimed_by: claude-conductor-scheduled-20260725T2110Z-mb-t022
-    claimed_at: '2026-07-25T21:06:46Z'
-    updated: '2026-07-25T21:06:46Z'
+      duplicates (idempotencyKey guard). Record findings; file any fix as a new task.
+      This is the live proof behind the gated reference runs t-016/t-017/t-018.
 
   - id: t-023
     milestone: m6
@@ -537,7 +534,7 @@ tasks:
   - id: t-029
     milestone: m6
     title: "Polish and upgrade Model Builder front-end surface"
-    status: claimed
+    status: ready
     passes: 0
     stakes: reversible
     note: |-
@@ -563,10 +560,10 @@ tasks:
       Improved Model Builder run-history accessibility on worker/model-builder-t-029-run-history-a11y-12a7: announced loading state, hid decorative icons from assistive technology, and gave the icon-only cancel control a run-specific accessible name.
 
       PROGRESS 2026-07-25 (connector Worker, worker-conductor-20260725T181204Z-mb-t029-12a7): kind_robots PR #957 merged as squash 92f35ef470c3f93f8c654913ed969a9934a75dbc. Improved run-history accessibility by announcing loading state, hiding decorative icons, and naming the icon-only cancel action for its target run. All four PR workflows passed; no reviews or unresolved threads. Original generated-art deliverable remains outstanding, so the finite polish task returned to ready.
+      PROGRESS 2026-07-25 (~20:03-20:24 UTC, conductor scheduled burst rotation, reviewer/claude-conductor-burst-20260725T2010Z-mb-t029): step (4) follow-on -- this cycle rotated here after ai-art-academy/t-010 (the usual top-priority pick) was claimed by a concurrent session seconds before this one, and ai-art-academy's own remaining ready tasks (t-019, t-035) were confirmed still genuinely blocked (t-019: verified `public/images/academy/styles/` still absent in a fresh kind_robots checkout; t-035: same home-relay backlog documented in that project's own notes) -- rotated down projects/priority.yaml to the next project with real, unblocked ready work, per this task's own established exclusion-list-driven "read everything, find one new bug" pattern. Dispatched a general-purpose subagent to read the full store (stores/modelBuilderStore.ts), recipe/field catalogs, all components/model-builder/*.vue files, and all server/api/model-builder/ routes in full, against the exclusion list of every bug class already fixed by prior cycles (t-671 cancel-confirm, the async poll-cancel signal fix, PR #900 canApproveAssets gating, PR #948 generatingItemId ownership guard, PR #951's three sibling singleton races, PR #954/#957 accessibility fixes). Found a real, previously-unfixed gap in the *synchronous* generation path: `generateItemAsset` (the "Generate candidate" button, distinct from the async job-queue path `generateItemAssetAsync` that PR #735 already guards) held only its original `BuildItem` reference across the `artStore.generateCurrentArt()` await, with no check against the item's *run* having been cancelled in the meantime. Concrete failure: user clicks "Generate candidate" on an item, then switches to Run History and cancels that run before the synchronous render resolves -- the promise still resolves and unconditionally POSTs the artifact + PATCHes the item, persisting a candidate (and popping a misleading success toast) for a run the user had just abandoned. A plain post-await `findItem()` re-check can't distinguish "this run was cancelled" from "the user merely switched to a different still-active run" -- both leave the item unreachable from the current `state.run`, but only the cancelled case should discard the result. Fixed with a `cancelledRunIds: Set` on the store: `cancelRun` records the cancelled run's id, and `generateItemAsset` captures its run's id up front and bails (no artifact POST, no item PATCH, no toast) only if that specific run was cancelled, while still persisting normally on a mere run-switch. Verified: `npx prettier --check` on the changed lines clean (pre-existing drift on untouched lines of the same file confirmed via `git stash` comparison, consistent with every prior cycle's documented prettier-version-mismatch note); `npx eslint`/`vue-tsc --noEmit` could not run in this sandbox (no `node_modules`, same documented limitation as prior cycles) -- relied on kind_robots CI. kind_robots PR #964 (branch `claude/dazzling-ptolemy-wcahqx`, created via the GitHub MCP `create_branch` workaround since the branch didn't exist on the remote yet): all 5 CI checks passed (TypeScript, Contract verifiers, facet-catalog, verify, GitGuardian) -- merged squash `b36d9ee`. No review comments. Step (1) (dashboard-tab + tutorial .webp art) remains the sole outstanding original deliverable, still blocked on the external art-generation relay this sandbox cannot reach. Rearmed to `ready`.
     claimed_by: claude-conductor-burst-20260725T2010Z-mb-t029
     claimed_at: '2026-07-25T20:06:48Z'
-    updated: '2026-07-25T20:06:48Z'
-    owner: reviewer
+    updated: '2026-07-25T20:24:00Z'
 
   - id: t-030
     milestone: m6
