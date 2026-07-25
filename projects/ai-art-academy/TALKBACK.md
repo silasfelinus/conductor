@@ -1683,3 +1683,27 @@ if a fifth instance appears.
 - None specific this cycle.
 
 **Kaizen task:** none filed — narrow, well-precedented fix; no systemic pattern to extract yet.
+
+## 2026-07-25 | Worker (scheduled burst-mode agent run) | ai-art-academy/t-004 | pattern
+
+**Decision:** did not run the planned A/B. Claimed t-004, researched the actual generation API, found a structural blocker the task spec didn't anticipate, and rerouted: filed t-037 (kind_robots software fix) and set t-004 to `waiting` on it rather than retrying or forcing a partial result.
+
+**Failure category:** actionable — the task as specified cannot succeed yet regardless of retries; per AGENTS.md Failure Triage this doesn't consume a pass.
+
+**Subject:** t-004's own spec is "A/B prompt-only vs LoRA per style." The Kontext image-remix graph (kind_robots `server/api/comfy/kontext/utils/workflow.ts:103-242`) has no LoRA loader node at all — every request renders prompt-only today regardless of the `mode`/`loraPath` a caller sends. This means `style-lora-registry.md`'s ~13 `mode: lora` entries are currently aspirational: the live product can't actually exercise the LoRA arm of the comparison t-004 was asked to run.
+
+**Detail:**
+- Dispatched a research subagent (read-only) rather than guessing at the API shape; it found the exact file:line evidence (see t-037's roadmap note for the full citation list) and confirmed via contrast with two other workflow builders in the same codebase that *do* wire a `LoraLoaderModelOnly` node, showing this is an omission rather than an intentional design choice.
+- Separately confirmed (`GET /api/art/queue/stats`) the render queue is backlogged 82 PENDING jobs, oldest ~35h — even a pure prompt-only A/B couldn't be verified end-to-end within one session right now, a second independent reason not to force this cycle.
+- Filed `t-037` with the precise file:line fix scope (add the missing node, gate it on `loraPath` presence so prompt-mode styles are unaffected, verify against a real render once the queue is calmer, sanity-check both a flux-dev and a kontext-dev-native LoRA for base-model compatibility per the registry's own open question).
+- Set `t-004` `status: waiting`, `depends_on: [t-003, t-037]`. Released the claim (`owner: null`, dropped `claimed_by`/`claimed_at`) since this session isn't doing the implementation work itself this cycle.
+- `python3 scripts/audit_roadmaps.py`: 0 errors, 12 warnings, 43 info (unchanged baseline + expected). `python3 scripts/resolve_deps.py`: no-op, correctly (t-037 isn't done yet).
+
+**What was good:**
+- Didn't rubber-stamp the prior "relay/DB up, go ahead" framing as sufficient — actually traced the request path down to the ComfyUI graph JSON before attempting any live generation call, which is what surfaced the real gap.
+- Didn't burn a pass or leave the task in a confusing state — rerouted via the dependency mechanism precisely as AGENTS.md's actionable-failure triage prescribes, and left a self-contained note for whoever picks up t-037.
+
+**What to improve:**
+- None specific this cycle — this is exactly the kind of finding that's cheap to miss (the previous "go-ahead" was about operational readiness, not code completeness) and expensive to leave undiscovered (the registry would keep silently misrepresenting ~13 styles as LoRA-backed).
+
+**Kaizen task:** t-037 itself is this cycle's kaizen output — no separate one filed.
