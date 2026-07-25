@@ -15,6 +15,24 @@ Record the lane, files changed, and verification in the task note before rearmin
 
 ### Rotation state
 
+- Last completed lane: Front-end polish (lane 1), 2026-07-25 (~20:03-20:27 UTC,
+  claude-conductor-agentrun-20260725T2003Z-t010-lane1, scheduled agent run). Per
+  the prior cycle's note, lane 1 was next after lane 2 ran (it hadn't run since
+  ~15:06 UTC, over 4 hours). Dispatched a general-purpose subagent over the
+  in-scope surface with this checklist's exclusion list of every bug class
+  already fixed across PRs #275-#955+. Found a real, previously-unfixed gap in
+  `art-styler.vue`'s `handleFileSelect()`/`handleDrop()`: the MIME-rejection
+  branches (added in PR #733) only ever set `errorMessage`, never clearing a
+  leftover `successMessage` from a prior generation, so a stale "Style
+  applied!" banner could render right alongside a new rejection error — every
+  other selection path in the file already clears both messages together.
+  Fixed by adding `successMessage.value = ''` to both rejection branches.
+  `npx prettier --check` reproduces one pre-existing, unrelated warning
+  (confirmed present on main too); `npx eslint`/`nuxi prepare` couldn't run in
+  this sandbox (known limitation). kind_robots PR #962: all 5 CI checks green,
+  merged squash `bfbfb792`. Next preferred lane is roadmap accuracy (lane 2) —
+  this cycle ran lane 1, so lane 2 is next in the 1→2→3→4 rotation. Rearmed to
+  `ready`.
 - Last completed lane: Roadmap accuracy (lane 2), 2026-07-25 (~19:03-19:10 UTC,
   claude-conductor-agentrun-20260725T1903Z-t010-lane2, scheduled agent run). Per
   the prior cycle's note, lane 2 was next after lane 3 ran (with a front-end-sync
