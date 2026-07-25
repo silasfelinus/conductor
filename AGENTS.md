@@ -395,9 +395,46 @@ delete it now, not an observation for later. (Kaizen from challenge-center/t-002
 - Skip a `needs-human` gate on an `outward-facing` or `irreversible` task
 - Hold more than one claimed task at once (claims are sequential — finish, hand off, or cleanly park one before claiming the next)
 
-## The two roles
+## Role assignment — decided on arrival, not by which trigger fired
 
-### Worker (OpenAI, hourly)
+Historically "Worker" and "Reviewer" were treated as properties of *which platform
+trigger* fired a session (an hourly Worker trigger, a separately-scheduled Reviewer
+trigger). That caused a real, repeatedly-observed bug (conductor/t-026, 48+
+recurrences): the Reviewer trigger fired far more often than Worker PR volume
+justified, so sessions kept arriving with nothing to review and no fallback other
+than a no-op report. The platform-level trigger *schedule* is still outside this
+repo's control — but the SESSION's behavior no longer has to depend on it.
+
+**Every session, regardless of what a trigger happened to name it, decides its own
+role from live state on arrival:**
+
+1. Run `python scripts/select_role.py` (composes `run_reviewer.py`'s open-`worker/*`-
+   branch check with `run_worker.py`'s ready-task check into one recommendation — no
+   model calls, pure state check). It returns one of:
+   - **`role: reviewer`** — at least one `worker/*` branch is open and not yet merged
+     into `main`. Reviewing an existing PR is higher-leverage than starting new work,
+     so this wins even if a ready task also exists.
+   - **`role: worker`** — no open `worker/*` branch, but a `ready` task exists.
+   - **`role: idle`** — neither. Fall through to the idle-fallback rule (dream-cycle's
+     "nothing better to do" contract, or `autonomous: true` projects' own rule).
+2. Follow the matching section below (**"If you're working"** / **"If you're
+   reviewing"**). A session isn't locked to one role for its whole run: if you finish
+   reviewing everything open, re-run `select_role.py` — it may now recommend `worker`
+   — and pick up ready work in the same session rather than stopping. This is what
+   "agents disperse and work as needed" means in practice: the role is a live
+   recommendation you re-check, not a label stamped on you before you started.
+3. If a human explicitly asked for one role in this session (e.g. "review PR #123"),
+   honor that directly — `select_role.py` is for the *unprompted, trigger-fired* case,
+   not a override of an explicit instruction.
+
+This doesn't require the platform to merge its Worker/Reviewer triggers into one —
+it just means a session mislabeled by a stale trigger schedule self-corrects instead
+of silently no-op'ing. Consolidating the trigger schedule itself is a platform
+setting change outside this repo (see conductor/t-026's roadmap history) if Silas
+wants to pursue it further; this section is the repo-side half of the fix and does
+not depend on that happening.
+
+### If you're working
 - **Step 0 — Todos**: run `python scripts/fetch_todos.py`. Handle the top OPEN todo if
   any exist (see "Todos" section). Call `complete_todo.py <id>` when done.
 - **Step 1 — Resolve deps**: run `python scripts/resolve_deps.py`.
@@ -451,7 +488,7 @@ output that goes to Silas — the task itself just keeps cycling. A recurring ta
 produced nothing this cycle (e.g. pitch queue full) still re-arms to `ready`; note "no-op"
 in the PR. Recurring tasks don't count toward milestone progress.
 
-### Reviewer (Claude, event-triggered on `worker/*` PR opened)
+### If you're reviewing
 - Read the project's `kind` first.
 - **Before reviewing:** check the project's `TALKBACK.md` for any prior critique context
   on this task or recurring Worker patterns. Use it to calibrate your review.
