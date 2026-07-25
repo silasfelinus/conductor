@@ -9197,3 +9197,28 @@ kaizen would have targeted (audit's `SOFT_NEEDS_HUMAN` check only reading projec
 - The Build Bench PR #897's own body explicitly noted "Front-end SFCs can't be standalone type-checked here... full vue-tsc runs in CI" but was merged without that CI run being confirmed green first — the same failure shape as prior incidents already documented in this project's own checklist (PR #814/t-036: "a lane-1 cycle opened a PR but ended without merging or confirming CI"). Not filing a new kaizen for this specific incident since the checklist's existing completion-test bullet ("if the cycle opened a kind_robots PR, its CI status was polled...") already covers the *cause* (a cycle skipping the poll); the new failure mode here is a *different* session/task (Build Bench, not t-010) skipping it, which is outside this task's own checklist to enforce. Flagging here in case a repo-wide "don't self-merge without green CI" norm is worth stating explicitly somewhere more central (e.g. root AGENTS.md) if this recurs.
 
 **Kaizen task:** none filed this cycle — see the flag above; revisit if another PR merges to kind_robots main without CI confirmed green.
+
+## 2026-07-25 | Reviewer (scheduled burst-mode agent run) | ai-art-academy/t-010 | pattern
+
+**Decision:** merged kind_robots PR #947.
+
+**Failure category:** null — real bug found and fixed, first-pass clean.
+
+**Subject:** Burst-mode rotation picked ai-art-academy/t-010 lane 1 (front-end polish, next-preferred per the checklist after 2026-07-24's lane 4 run). Dispatched a general-purpose subagent over the full in-scope Academy/art-styler surface with the checklist's cumulative exclusion list (bug classes already fixed across PRs #275-#1022) and it found a genuine, previously-unfixed race in `image-upload.vue`.
+
+**Detail:**
+- Session-start sweep: `git status` clean, no open conductor or kind_robots PRs, no ready tasks ahead of ai-art-academy in `priority.yaml` (challenge-center is `status: finished`).
+- `handleBatchUpload()`'s only re-entry/button guard was `isUploading`, but `uploadStore.uploadBatchForActiveTarget()` flips that back to `false` the instant the network call settles — well before the handler finishes its own post-processing (a `nextTick()` + 700ms pause added in PR #515 so success checkmarks actually render, then filtering already-succeeded files out of `queuedFiles`). During that window the Upload/Remove/Clear buttons were all live again; a second click during the pause slipped past the guard, re-read the still-unfiltered queue, and fired a second upload call — duplicate `ArtImage` rows for every already-succeeded file, plus both calls racing on the same `succeededFiles`/`failedFiles`/`queuedFiles` refs. Fixed with a new `isFinalizingUpload` flag held for the whole function body (network call + pause + filtering, wrapped in try/finally), gating both the guard clause and all three buttons.
+- Verified `npx prettier --check` clean on the changed file. `npx eslint`/`vue-tsc` couldn't run in this sandbox (`.nuxt`/`@nuxt/kit` unresolved via `npx nuxi prepare`, no live `DATABASE_URL`) — same known limitation several prior lane-1 cycles have hit; relied on kind_robots CI instead. All 5 checks (TypeScript, verify, Contract verifiers, facet-catalog, GitGuardian) went green; merged squash `5d9148a`.
+- Local git-signing note for future sessions: this session's first conductor-repo commit initially showed `git log --show-signature`/`%G?` as unsigned (`N`) even though `commit.gpgsign=true` was configured correctly (matching committer email, `gpg.ssh.program` pointed at a working signer). Root cause was cosmetic, not a real missing signature: `git log --show-signature` errors on `gpg.ssh.allowedSignersFile needs to be configured` in this sandbox (no local allowed-signers file), and falls back to reporting `N`/"No signature" even when `git cat-file commit <sha> | grep gpgsig` shows a real embedded SSH signature block. Confirmed via `git cat-file` that the commit *was* signed both before and after an unnecessary `--amend`. Don't chase this further in future sessions — check `git cat-file commit <sha>` for an actual `gpgsig` block before concluding a commit needs re-signing; the stop-hook's `%G?`-based check can false-positive here.
+
+**What was good:**
+- Subagent read every in-scope file in full and cross-referenced the exclusion list (grepping for existing guard patterns like `sourceSelectionToken`) before concluding the bug was new, rather than re-reporting something already fixed.
+- Fix follows the exact shape of the project's established pattern (a scoped boolean ref + try/finally), matching PR #849/#946-adjacent guard-flag fixes.
+
+**What to improve:**
+- None specific this cycle.
+
+**Kaizen task:** deferred — the PR's own kaizen suggestion (extract the "hold state visible after an async op settles, guarded against re-entry" shape into a shared composable) is premature at only its second occurrence (after PR #515's checkmark pause); revisit if a third instance shows up.
+
+**Pattern note:** none new — this is the same "async settle vs. UI re-enable window" bug family the checklist has now caught twice in `image-upload.vue` alone (PR #515, this cycle). Worth a composable once (not if) a third file needs the same shape.

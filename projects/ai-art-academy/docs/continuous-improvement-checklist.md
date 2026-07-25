@@ -15,6 +15,19 @@ Record the lane, files changed, and verification in the task note before rearmin
 
 ### Rotation state
 
+- Last completed lane: Front-end polish (lane 1), 2026-07-25 (~12:05-12:20 UTC,
+  claude-conductor-burst-20260725T120528-t010, scheduled burst-mode cycle). Per
+  the prior cycle's note, lane 1 was next after lane 4 ran. Found a real,
+  previously-unfixed bug in `image-upload.vue`'s `handleBatchUpload()`: the
+  `isUploading` flag flips back to `false` as soon as the network call
+  settles, but the handler keeps running afterward (checkmark-display pause +
+  queue filtering), leaving the Upload/Remove/Clear buttons re-enabled and the
+  function's own re-entry guard bypassable during that window — a second
+  click could re-upload already-succeeded files, creating duplicate
+  `ArtImage` rows. Fixed with a new `isFinalizingUpload` flag held for the
+  whole function body. kind_robots PR #947, all 5 CI checks green, merged
+  squash `5d9148a`. See the full RAN entry on the roadmap task for details.
+  Next preferred lane is roadmap accuracy (lane 2).
 - Last completed lane: Curriculum depth (lane 4), 2026-07-24 (~16:45-17:10 UTC,
   claude-conductor-agentrun-20260724T1730Z-t010b, scheduled agent run). Per the
   prior cycle's note, lane 3 (inspiration/preview assets) was next — tried first
