@@ -105,12 +105,12 @@ tasks:
   - id: t-004
     milestone: m2
     title: Evaluate prompt-only Kontext vs LoRA per style and record remix configs
-    status: ready
+    status: claimed
     soft_gate: true
-    owner: null
+    owner: worker
     passes: 0
     stakes: reversible
-    updated: '2026-07-25T00:00:00Z'
+    updated: '2026-07-25T22:08:11Z'
     depends_on: t-003
     note: >
       FOR SILAS: UPDATE 2026-07-18 — the sandbox-egress clause below is stale:
@@ -169,6 +169,8 @@ tasks:
       comparison images as traceable evidence (prompt/model/seed metadata per the
       generated-art rule). If any must-have style fails on Kontext entirely, document
       the SDXL+IP-Adapter fallback case in the same file rather than building it.
+    claimed_by: claude-conductor-scheduled-20260725T220810Z-aa-t004
+    claimed_at: '2026-07-25T22:08:11Z'
   - id: t-005
     milestone: m3
     title: Write the art-history curriculum outline (movements, styles, artists)
