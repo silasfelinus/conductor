@@ -32,6 +32,9 @@ jobs:
         with:
           python-version: "3.12"
 
+      - name: Install repair dependencies
+        run: python -m pip install pyyaml
+
       - name: Canonicalize committed art requests
         working-directory: conductor
         run: python scripts/repair_art_request_defaults.py --write
