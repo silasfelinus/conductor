@@ -4,12 +4,14 @@
 Kind Robots-targeted jobs that carry both:
 
 - targetRepo: silasfelinus/kind_robots
-- imagePath: public/images/<path>
+- imagePath: public/images/<path> or public/rewards/<path>
 
-are written to the exact equivalent path under KR_MEDIA_IMAGES_DIR before the
-ArtJob is marked successful. If the filesystem write or manifest update fails,
-the job is reported FAILED and remains retryable instead of silently completing
-with a missing public file.
+are written to the exact equivalent public-media path before the ArtJob is
+marked successful. ``public/images/...`` uses KR_MEDIA_IMAGES_DIR directly;
+``public/rewards/...`` maps to its sibling rewards directory only when the
+configured image root is unambiguously named ``images``. If the filesystem
+write or manifest update fails, the job is reported FAILED and remains
+retryable instead of silently completing with a missing public file.
 
 All other jobs use relay_agent.py unchanged, except that Comfy prompt submission
 uses a longer timeout, can recover a prompt id from /queue when Comfy accepted
@@ -32,6 +34,7 @@ MEDIA_ROOT_VALUE = (
     os.environ.get("KR_MEDIA_IMAGES_DIR", "").strip()
     or os.environ.get("KR_LOCAL_IMAGES_DIR", "").strip()
 )
+DIRECT_MEDIA_ROOTS = {"images", "rewards"}
 IMAGE_EXTENSIONS = {".webp", ".png", ".jpg", ".jpeg", ".gif", ".svg"}
 GENERATED_IMAGE_EXTENSIONS = {".webp", ".png", ".jpg", ".jpeg", ".gif"}
 VIDEO_EXTENSIONS = {".mp4", ".webm", ".mov", ".mkv"}
@@ -50,12 +53,13 @@ def job_payload(job):
 
 
 def normalize_kindrobots_image_path(value):
-    """Normalize historical frontend/media paths to ``public/images/...``.
+    """Normalize historical frontend/media paths to a supported public root.
 
     Jobs created before the direct-media contract used several equivalent forms:
     ``/images/...``, ``images/...``, ``/public/images/...``, Windows separators,
-    and full media URLs. Normalize only those recognizable image roots; unrelated
-    paths remain unchanged and fail the safety validation below.
+    and full media URLs. Reward jobs also use the established ``/rewards/...``
+    sibling root. Normalize only those recognizable roots; unrelated paths remain
+    unchanged and fail the safety validation below.
     """
 
     image_path = str(value or "").strip().replace("\\", "/")
@@ -72,12 +76,12 @@ def normalize_kindrobots_image_path(value):
         image_path = image_path[2:]
     image_path = image_path.lstrip("/")
 
-    if image_path.startswith("images/"):
+    if image_path.startswith(("images/", "rewards/")):
         return f"public/{image_path}"
     return image_path
 
 
-def direct_media_relative(job):
+def direct_media_target(job):
     payload = job_payload(job)
     target_repo = str(payload.get("targetRepo") or "").strip()
     image_path = normalize_kindrobots_image_path(payload.get("imagePath"))
@@ -87,24 +91,47 @@ def direct_media_relative(job):
 
     logical = PurePosixPath(image_path)
     parts = logical.parts
-    if len(parts) < 3 or parts[:2] != ("public", "images"):
+    if (
+        len(parts) < 3
+        or parts[0] != "public"
+        or parts[1] not in DIRECT_MEDIA_ROOTS
+    ):
         raise ValueError(
-            "Kind Robots media job imagePath must begin with public/images/"
+            "Kind Robots media job imagePath must begin with "
+            "public/images/ or public/rewards/"
         )
 
     relative_parts = parts[2:]
     if any(part in ("", ".", "..") for part in relative_parts):
         raise ValueError(f"Unsafe media imagePath: {image_path}")
 
-    return Path(*relative_parts)
+    return parts[1], Path(*relative_parts)
 
 
-def media_root():
+def direct_media_relative(job):
+    target = direct_media_target(job)
+    return target[1] if target is not None else None
+
+
+def media_root(media_kind="images"):
+    if media_kind not in DIRECT_MEDIA_ROOTS:
+        raise ValueError(f"Unsupported Kind Robots media root: {media_kind}")
     if not MEDIA_ROOT_VALUE:
         raise RuntimeError(
             "KR_MEDIA_IMAGES_DIR is required for direct Kind Robots media jobs"
         )
-    root = Path(MEDIA_ROOT_VALUE).expanduser().resolve()
+
+    images_root = Path(MEDIA_ROOT_VALUE).expanduser().resolve()
+    if media_kind == "images":
+        root = images_root
+    else:
+        if images_root.name.lower() != "images":
+            raise RuntimeError(
+                "Cannot safely map public/rewards/ from KR_MEDIA_IMAGES_DIR: "
+                "the configured directory must end in /images"
+            )
+        root = images_root.parent / "rewards"
+
     root.mkdir(parents=True, exist_ok=True)
     return root
 
@@ -178,11 +205,12 @@ def refresh_manifests(root, destination):
 
 
 def write_direct_media(job, media):
-    relative = direct_media_relative(job)
-    if relative is None:
+    target = direct_media_target(job)
+    if target is None:
         return None
 
-    root = media_root()
+    media_kind, relative = target
+    root = media_root(media_kind)
     destination = (root / relative).resolve()
     if destination != root and root not in destination.parents:
         raise ValueError(f"Media destination escaped root: {destination}")
@@ -200,7 +228,8 @@ def write_direct_media(job, media):
         encoded = encode_image_for_suffix(raw, suffix)
 
     atomic_write(destination, encoded)
-    refresh_manifests(root, destination)
+    if media_kind == "images":
+        refresh_manifests(root, destination)
     relay.log(f"direct media: {destination}")
     return destination
 
@@ -308,15 +337,19 @@ def run_comfy_with_recovery(payload):
 
 
 def process_with_media(job):
-    relative = direct_media_relative(job)
-    if relative is None:
+    target = direct_media_target(job)
+    if target is None:
         return ORIGINAL_PROCESS(job)
 
+    media_kind, relative = target
     job_id = job["id"]
     engine = (job.get("engine") or "A1111").upper()
     payload = job_payload(job)
     payload["_relayClientId"] = f"{relay.AGENT_ID}-artjob-{job_id}"
-    relay.log(f"job {job_id}: {engine} direct media -> {relative.as_posix()}")
+    relay.log(
+        f"job {job_id}: {engine} direct media -> "
+        f"{media_kind}/{relative.as_posix()}"
+    )
 
     if engine == "COMFY":
         media = relay.run_comfy(payload)
