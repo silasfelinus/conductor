@@ -1,5 +1,7 @@
 name: Repair Failed ArtJobs
 
+# This workflow is intentionally independent from the full render drain so a
+# historical queue repair cannot sit behind unrelated long-running generations.
 on:
   push:
     branches: [main]
