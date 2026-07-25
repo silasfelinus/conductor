@@ -416,8 +416,8 @@ tasks:
   - id: t-022
     milestone: m5
     title: "Live post-deploy smoke: promote an asset and replay a Dream expansion commit"
-    status: ready
-    owner: null
+    status: claimed
+    owner: reviewer
     passes: 0
     stakes: reversible
     note: >
@@ -428,6 +428,9 @@ tasks:
       and linked to the Dream, then re-trigger commit on the same items and confirm NO
       duplicates (idempotencyKey guard). Record findings; file any fix as a new task. This
       is the live proof behind the gated reference runs t-016/t-017/t-018.
+    claimed_by: claude-conductor-scheduled-20260725T2110Z-mb-t022
+    claimed_at: '2026-07-25T21:06:46Z'
+    updated: '2026-07-25T21:06:46Z'
 
   - id: t-023
     milestone: m6
