@@ -16,13 +16,13 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     permissions:
-      contents: write
+      contents: read
 
     steps:
       - uses: actions/checkout@v4
         with:
           ref: ${{ github.event.pull_request.head.ref }}
-          fetch-depth: 0
+          fetch-depth: 1
 
       - uses: actions/setup-python@v5
         with:
@@ -47,10 +47,12 @@ jobs:
           cat ops/home-server/LAST-ART-REPAIR.log >> "$GITHUB_STEP_SUMMARY"
           exit 0
 
-      - name: Commit repaired queue and report
-        run: |
-          git config user.name "conductor-bot"
-          git config user.email "conductor-bot@users.noreply.github.com"
-          git add projects/art-prompts.yaml ops/home-server/LAST-ART-REPAIR.log
-          git commit -m "chore: repair failed ArtJobs and canonicalize queue" || exit 0
-          git push origin HEAD:${{ github.event.pull_request.head.ref }}
+      - name: Upload repaired queue and report
+        uses: actions/upload-artifact@v4
+        with:
+          name: art-repair-results
+          path: |
+            projects/art-prompts.yaml
+            ops/home-server/LAST-ART-REPAIR.log
+          if-no-files-found: error
+          retention-days: 1
