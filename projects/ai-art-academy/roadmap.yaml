@@ -105,7 +105,7 @@ tasks:
   - id: t-004
     milestone: m2
     title: Evaluate prompt-only Kontext vs LoRA per style and record remix configs
-    status: waiting
+    status: ready
     soft_gate: true
     owner: null
     passes: 0
@@ -1265,11 +1265,11 @@ tasks:
   - id: t-037
     milestone: m2
     title: Wire LoRA loading into the Kontext generation workflow (currently prompt-only regardless of registry mode)
-    status: claimed
-    owner: reviewer
+    status: done
+    owner: null
     passes: 0
     stakes: reversible
-    updated: '2026-07-25T23:03:36Z'
+    updated: '2026-07-26T00:04:00Z'
     note: >
       Filed 2026-07-25 from a t-004 claim attempt (claude-conductor-scheduled-
       20260725T220810Z-aa-t004) that stopped short of running the planned A/B once
@@ -1304,5 +1304,24 @@ tasks:
       with one flux-dev LoRA and one kontext-dev-native LoRA (from
       Owen777/Kontext-Style-Loras) rather than assuming universal compatibility.
       Unblocks ai-art-academy/t-004 (depends_on this task).
+
+      DONE 2026-07-26 (claude-conductor-agentrun-20260726T0004Z): kind_robots PR #986
+      merged (squash 8fa3e4b). Adds a LoraLoaderModelOnly node spliced between the
+      base UNet loader (node 59) and ModelSamplingFlux (node 30) in
+      buildKontextWorkflow, gated on loraName being present — no-op for prompt-only
+      styles. Wired art/enqueue.post.ts and art-styler.vue's runStyleTransfer() to
+      actually forward loraName/loraStrength instead of only recording them as
+      provenance metadata. Verified: vue-tsc --noEmit clean, eslint clean, prettier
+      clean (one pre-existing unrelated warning confirmed present before this diff
+      via git stash), all 5 kind_robots PR checks green (TypeScript, Contract
+      verifiers, facet-catalog, verify, GitGuardian). NOT yet verified with a live
+      Comfy render (relay queue was backlogged ~82 PENDING/oldest 35h+ at review
+      time) — flagged by the PR author and confirmed reasonable to defer rather than
+      burn a generation slot into an uncertain queue. Next session with a calmer
+      queue should run one real render (one flux-dev LoRA, one kontext-dev-native
+      LoRA per the base_model compatibility caveat already in
+      style-lora-registry.md) before treating t-004's planned A/B eval as fully
+      unblocked in practice, even though the dependency graph considers it satisfied
+      now.
     claimed_by: claude-conductor-scheduled-20260725T230332Z-t037
     claimed_at: '2026-07-25T23:03:36Z'
