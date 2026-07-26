@@ -993,6 +993,34 @@ tasks:
       as a normal kind_robots PR and run `npm run test:academy-examples-manifest`
       to confirm it passes -- that's the only remaining step, and it doesn't
       need home-relay access.
+
+      UPDATE 2026-07-26 (Silas: "example manifest has been updated"):
+      verified live via curl, not yet fully done. examples.manifest.json now
+      returns 200 (was previously reachable) and DOES contain the new
+      `expressionism` entry (19 total entries, up from 18) -- but `cubism`
+      and `bauhaus` are still missing from the array; only 1 of the 3 new
+      entries landed. Separately, and more importantly: none of the 3 actual
+      image files resolve yet --
+      `https://media.acrocatranch.com/images/academy/examples/the-yellow-cow-49-1210.jpg`
+      still 404s (checked directly, not through the manifest), same for the
+      other two. Confirmed this isn't a sandbox/proxy fluke -- an existing,
+      unrelated image from the same folder
+      (`terracotta-panathenaic-prize-amphora-14-130-12.jpg`) resolves fine
+      (200) from this same session. So despite the manifest gaining one
+      entry, none of the images it points at (including that one) are
+      actually being served yet -- the "images downloaded and placed on
+      Z:\kindrobots\images\academy\examples\..." step from the last update
+      may not have actually reached the location the media server serves
+      from, or the relay/nginx container hasn't picked them up. TO SILAS:
+      1. add the `cubism` and `bauhaus` entries too (only `expressionism`
+      landed), and 2. check that the 3 files are actually visible from
+      wherever `https://media.acrocatranch.com/images/academy/examples/`
+      serves from -- try
+      `curl -I https://media.acrocatranch.com/images/academy/examples/the-yellow-cow-49-1210.jpg`
+      yourself and confirm it's 200 before saying it's done. Once both the
+      full manifest and all 3 images actually resolve, ping back and the
+      academyStyles.ts PR + verification run is the very next (and only
+      remaining) step.
     claimed_by: claude-scheduled-20260718-1420-26944
     claimed_at: '2026-07-18T14:22:06Z'
     updated: '2026-07-18T14:24:39Z'
