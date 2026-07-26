@@ -4230,3 +4230,16 @@ records:
     extracting a shared helper immediately after the second bug fix (rather than leaving both copies as
     "matching patterns") is cheap while the logic is fresh and prevents the next fix from landing in only
     one copy again.
+- date: '2026-07-26'
+  project: humboldt-scoop-cms
+  task: t-012
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: Infra scaffolding that can't be executed in-sandbox (Docker, external data fetch) is still
+    verifiable to a meaningful degree without live execution -- config loads under its runtime, scripts
+    pass a syntax check, and the checked-in contract matches what the calling app code already expects.
+    Land it as scaffolding with an explicit "verify on the real box" flag rather than blocking on
+    infrastructure access no sandbox session will ever have.
