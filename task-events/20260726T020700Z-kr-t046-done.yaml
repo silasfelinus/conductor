@@ -1,0 +1,29 @@
+version: 1
+project: kind-robots
+task: t-046
+operation: done
+session: claude-conductor-burst-20260726T-kr-t046
+note: >
+  kind_robots PR #988 merged (https://github.com/silasfelinus/kind_robots/pull/988).
+  /video-generator is now reachable via a real lab/video-generator channel/tab
+  entry, and utils/dataSurfaceManifest.ts registers the surface so this can't
+  silently go unreachable again.
+learning:
+  date: 2026-07-26
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    art-manager.vue was dead, unwired code with zero callers anywhere despite
+    dashboardConfigs.art referencing a tab that pointed at it -- a config
+    entry existing is not evidence a component is reachable. When a task says
+    "fix component X to handle case Y" and X turns out to have no live
+    callers, check whether a smaller, direct top-level nav entry is a better
+    fix than resurrecting dead code just to route through it. Also confirmed:
+    when a plain git push to this repo hits a persistent HTTP 413/502 on a
+    branch that isn't newly-created and isn't post-rebase, the task-events
+    queue (small file, tiny REST-sized diff) is a reliable side-channel that
+    avoids the pack-transfer path entirely, without needing to touch the
+    large roadmap.yaml file directly.
