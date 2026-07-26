@@ -446,11 +446,11 @@ tasks:
   - id: t-010
     milestone: m6
     title: Academy continuous improvement pass
-    status: claimed
+    status: review
     recurring: true
     passes: 0
     stakes: reversible
-    updated: '2026-07-26T06:16:01Z'
+    updated: '2026-07-26T06:22:00Z'
     note: |-
       Standing never-idle task (re-arms to ready after every completion, per the recurring-task rule). Each cycle pick ONE: (a) front-end style/polish pass on Academy or art-styler surfaces, (b) roadmap upgrade — refine tasks, detail the next milestone, prune stale notes, (c) generate more art inspirations or style preview thumbnails, (d) expand the curriculum with a new movement/artist entry (respecting PUBLIC-DOMAIN-POLICY.md). Note which option ran in the PR. This task never reaches done and does not count toward milestone progress.
       RAN 2026-07-26 (reviewer merge, conductor session claude/festive-heisenberg-4m0r9x): option (c) inspiration/preview assets (lane 3), per the checklist's next-preferred-lane note (previous cycle ran lane 2). Worker session `worker-conductor-20260726T031600Z-aa-t010-7f3c` produced a four-image "Everyday Modernity" teaching sequence (`docs/inspiration-sets/everyday-modernity-teaching-sequence.md`) comparing Ashcan School, the Nabis, American Scene painting, and social-realist print language over one shared rainy-city source scene — includes a per-entry teaching goal, common-failure note, and a five-question comparison exercise, plus generation-metadata requirements (prompt/model/seed/source-image/LoRA path per result). Reviewed for `PUBLIC-DOMAIN-POLICY.md` compliance: all references are movement-level, no named living/recent artists, explicit anti-copying language in every prompt. Merged PR #1097 (squash `95ea71f`), all 22 checks green, mergeable_state clean, documentation-only additive one-file change. Filed kaizen task t-038 (inspiration-set template) per the PR's own suggestion. Rearmed to `ready`; next preferred lane is roadmap accuracy (lane 2) unless a session finds front-end polish (lane 1) more overdue by then.
@@ -671,6 +671,8 @@ tasks:
       RAN 2026-07-26 (Worker session worker-conductor-20260726T051305Z-aa-t010-5d2a): curriculum-depth lane. Added docs/curriculum-candidates/precisionism.md with movement-level historical framing, recognition cues, prompt-first remix guidance, exercises, common failure corrections, and explicit work-level rights checks for copyright-sensitive artists. Conductor PR #1101 merged squash 1179ebefe3320c6a361472b205295f05e9565c98 after Worker PR CI, Security Audit, and Process Task Events passed; no reviews or unresolved threads. Rearming recurring task to ready.
 
       Claimed for option (a), a focused Academy front-end accessibility and polish pass.
+
+      Option (a): improved Academy Style Gallery accessibility by hiding decorative icons from assistive technology and replacing the viewed-lesson icon title with explicit screen-reader text. Implementation branch: worker/ai-art-academy-t-010-gallery-a11y-0616 in silasfelinus/kind_robots.
     claimed_by: worker-conductor-20260726T061601Z-aa-t010-a11y
     claimed_at: '2026-07-26T06:16:01Z'
     owner: worker
