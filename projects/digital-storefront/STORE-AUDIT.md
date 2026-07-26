@@ -94,7 +94,7 @@ before webhooks start crediting mana or granting membership off `userId`.
 | `mana-wallet.vue` | **Wired** | Real `useManaStore()` → `GET /api/mana/[id]`, backed by `ManaTransaction`/`User.mana`. "Get more mana" just links to `/subscriptions`; no purchase flow embedded. |
 | `subscription-manager.vue` | **Half-wired** | `startSubscription()` is real (→ `cartStore.subscribe()` → `/api/stripe/subscribe` → Stripe redirect). `cancelSub()` calls `cartStore.cancelSubscription()`, which immediately returns `success: false, 'not implemented yet'` — no cancellation path exists anywhere. |
 | `print-swag.vue` | **Stub** | Product-type picker UI (print/shirt/sticker/mug) with a fully fake `addToCart()` (`console.log` + `alert`) — does not call `cartStore.addItem()` or any API despite looking like the real POD entry point. |
-| `social-publisher.vue` | **Wired (most mature piece)** | See §6 — real CRUD, real Discord integration, explicitly stubbed Mastodon/Bluesky, deliberate manual flow for Reddit/Facebook/Instagram. |
+| `social-publisher.vue` | **Removed 2026-07-18** | See §6 — was the most mature piece as of this audit's original 2026-07-15 date, but the whole feature (component + `SocialPost`/`SocialTarget` models) was removed three days later via kind_robots migration `20260718200000_remove_social_publishing` ("abandoned SocialPost/SocialTarget publishing prototype"). Confirmed gone from the current checkout. Do not treat this row as current giftshop state. |
 
 Note: several files still carry stale header-comment paths from before a
 directory move (`giftshop-manager.vue`, `credit-purchase.vue`,
@@ -160,9 +160,21 @@ creation without Silas (needs-human, unchanged by this audit).
 
 ---
 
-## 6. Social publishing (`social-publisher.vue`)
+## 6. Social publishing (`social-publisher.vue`) — REMOVED 2026-07-18
 
-Genuinely the most complete piece of the giftshop-adjacent surface:
+**Correction (added 2026-07-26, filed by the weekly site audit as t-027):** this
+section described the component as it existed at the original 2026-07-15 audit
+date. Three days later, kind_robots migration `20260718200000_remove_social_publishing`
+("abandoned SocialPost/SocialTarget publishing prototype") dropped the
+`SocialPost`/`SocialTarget` models and the component itself no longer exists in
+the current checkout. This §6 write-up and the giftshop table row above are kept
+below as a historical record of what was built, not as a description of current
+giftshop state — no other component from this audit's "wired" list was affected
+by the same removal. Whether social publishing gets rebuilt is a product
+decision for Silas, not implied by this correction.
+
+Original write-up (2026-07-15, now historical): genuinely the most complete
+piece of the giftshop-adjacent surface at the time:
 - Real CRUD via `useSocialStore()` → `server/api/socials/*` → Prisma
   `SocialPost`/`SocialTarget`.
 - `publish.post.ts` **does** call `validateApiKey(event)` and enforce
