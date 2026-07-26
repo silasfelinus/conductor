@@ -11,7 +11,7 @@ worked example lessons — so every style page in the Academy teaches the same w
 converts cleanly into front-end lesson copy.
 
 Companion files:
-- `docs/curriculum-outline.md` — the 31 movements (source of truth for facts/works/hints)
+- `docs/curriculum-outline.md` — the 32 movements (source of truth for facts/works/hints)
 - `docs/style-lora-registry.md` — per-style remix mode (`prompt` vs `lora`) + `prompt_hint`
 - `PUBLIC-DOMAIN-POLICY.md` — the eligibility rule every example work must pass (§1.3) and
   the provenance schema (§3)
@@ -138,6 +138,7 @@ slugs — e.g. `renaissance-fresco`, `baroque-chiaroscuro`, `post-impressionism-
 | 29 | Vienna Secession (`vienna-secession`) | prompt | Medium | Ornament and realism collide on the same canvas — flat gold pattern beside a photographic face | Model may gild everything uniformly and lose the defining contrast between flat ornament and naturalistic face/hands; lean on the remix_hint's explicit "fine naturalistic detail... set against the abstract gold pattern" to keep the face legible rather than dissolved into pattern |
 | 30 | Joseon Dynasty Korean Genre Painting (`joseon-genre-painting`) | prompt | Medium | A handful of court painters turned Korea's disciplined scholarly brush toward candid, often funny scenes of ordinary people, on almost-empty paper | Likely fails toward a generic "sumi-e"/ink-wash filter that keeps the photo's real background instead of emptying the frame; lean on the remix_hint's explicit "almost no background detail beyond a single ground line" and "plain paper" to distinguish it from `song-dynasty-landscape`'s ink-wash family |
 | 31 | The Nabis (`the-nabis`) | prompt | Medium | Before a painting depicts anything, it's "a flat surface covered with colors" (Denis) — pattern and mood over illusionistic depth | Instead of a coherent decorative motif like `art-nouveau`'s whiplash line or `vienna-secession`'s gold ornament, the model must *invent* wallpaper/textile pattern where the source photo has none; likely defaults to a generic "flat vector-art"/cartoon filter that flattens color without adding pattern — lean on the remix_hint's explicit "textiles, wallpaper, foliage, or architectural patterns organize the composition" to check pattern is actually present |
+| 32 | Hudson River School (`hudson-river-school`) | prompt | Medium | Panoramic American wilderness turned into a moral/spiritual stage via scale, light, and near-scientific natural detail — and a chance to teach the movement's Manifest Destiny framing honestly rather than as neutral scenery | Pulls two opposite ways at once: may over-cook into a generic fantasy-landscape or oversaturated look, or under-cook into a lightly-graded travel photo; lean on the remix_hint's "meticulous natural detail" and "tiny figures for scale" against under-cooking, and "believable geology" against over-cooking — check both directions |
 
 ---
 

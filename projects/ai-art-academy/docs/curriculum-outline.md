@@ -4,8 +4,8 @@ date: 2026-07-10
 task: ai-art-academy/t-005
 status: draft for review (content complete, one source URL verified per movement)
 
-This is the curriculum: 31 movements spanning the timeline from Ancient Egypt to
-the Nabis. Every artist named here is long dead (all listed artists died
+This is the curriculum: 32 movements spanning the timeline from Ancient Egypt to
+the Hudson River School. Every artist named here is long dead (all listed artists died
 before 1955), and every example work is a public-domain original held (or expected)
 in an open-access collection. See the ethical boundary in DESIGN-BRIEF.md and the
 PUBLIC-DOMAIN-POLICY.md (t-006).
@@ -47,7 +47,23 @@ National Gallery of Art) the candidate's own "definition of done" required
 before front-end promotion. It returns to Western Europe (Paris, 1888-1900)
 after several non-Western entries, and is the first entry whose own artists
 (Vuillard, Denis) explicitly cite an earlier non-Western entry in this same
-curriculum (Ukiyo-e, Section 7) as a direct visual influence.
+curriculum (Ukiyo-e, Section 7) as a direct visual influence. (This entry's
+own machine-readable skeleton row was backfilled 2026-07-26, t-010 lane 4 —
+the original v1.11 promotion added the prose section and the
+teaching-notes.md/art-prompts.yaml rows but silently missed the skeleton,
+the same "last file in the chain gets missed" gap this project has hit
+before; see `LEARNING.yaml`/TALKBACK for the pattern.)
+Section 32 is the 2026-07-26 v1.12 addition (t-010 cycle, lane 4): Hudson
+River School — promoted from
+`docs/curriculum-candidates/hudson-river-school.md`, whose research was
+already complete except one unverified source; this cycle verified *The
+Oxbow* on Wikimedia Commons (Met accession 08.228, Public Domain Mark +
+`PD-Art`), completing all three institution-verified example works the
+candidate's own "definition of done" required. It returns to the United
+States (c. 1825-1875) and, unlike Section 31, keeps its own cultural framing
+explicit in the lesson itself: the movement's sublime, "unoccupied"
+wilderness imagery overlaps with Manifest Destiny and can erase Indigenous
+presence, which the Reflect prompts ask students to interrogate directly.
 
 They are appended (rather than renumbered into place) but belong
 chronologically among the earlier movements — read the `era` field in the
@@ -303,6 +319,41 @@ movements:
     artist_slugs: [kim-hong-do, sin-yun-bok]
     example_count: 3
     remix_hint: "Repaint this image as a late-Joseon Korean genre painting (pungsokhwa) in the style of Kim Hong-do: loose, economical brush-line figures with light, translucent color wash on plain paper, a candid or gently humorous everyday moment, almost no background detail beyond a single ground line, muted earthy palette of pale ochre, indigo, and dull red, a small red seal stamp in one corner, no cast shadow or linear perspective"
+  # --- v1.11 addition (2026-07-26, t-010 cycle, lane 4) ---
+  # Promoted from docs/curriculum-candidates/the-nabis.md. Returns to Western
+  # Europe (Paris, 1888-1900) after several non-Western entries. Belongs
+  # chronologically after post-impressionism/art-nouveau (see `era`); appended
+  # here to avoid renumbering the sections above. A future seed-sync task
+  # inserts it in chronological position in academyStyles.ts, mirroring
+  # t-020/t-031/t-034.
+  #
+  # Backfilled 2026-07-26 (t-010 lane 4 cycle): this entry was missing from
+  # the skeleton when section 31 was originally promoted -- the prose section
+  # below and teaching-notes.md/art-prompts.yaml all got their the-nabis rows
+  # in the same or a follow-up cycle, but the machine-readable skeleton itself
+  # was silently skipped, the same "last file in the chain gets missed" gap
+  # t-041/the lane-2 2026-07-26T1802Z cycle already found twice elsewhere in
+  # this project's promotion chain.
+  - slug: the-nabis
+    name: The Nabis
+    era: "c. 1888-1900 (Paris)"
+    artist_slugs: [paul-serusier, edouard-vuillard, maurice-denis]
+    example_count: 3
+    remix_hint: "Reinterpret this image as a late-1890s Nabis decorative painting: flatten the depth into interlocking color shapes, simplify figures into rhythmic silhouettes, use strong contour edges, and let textiles, wallpaper, foliage, or architectural patterns organize the composition; favor intimate mood and designed surface rhythm over photographic realism"
+  # --- v1.12 addition (2026-07-26, t-010 cycle, lane 4) ---
+  # Promoted from docs/curriculum-candidates/hudson-river-school.md, the last
+  # remaining candidate with example works fully sourced (this cycle verified
+  # the one outstanding source, The Oxbow, via Wikimedia Commons -- Met
+  # accession 08.228, Public Domain Mark + PD-Art). Belongs chronologically
+  # around romanticism/realism (see `era`); appended here to avoid
+  # renumbering the sections above. A future seed-sync task inserts it in
+  # chronological position in academyStyles.ts, mirroring t-020/t-031/t-034.
+  - slug: hudson-river-school
+    name: Hudson River School
+    era: "c. 1825-1875 (United States)"
+    artist_slugs: [thomas-cole, frederic-edwin-church, albert-bierstadt]
+    example_count: 3
+    remix_hint: "Repaint this image as a Hudson River School landscape: panoramic wilderness, meticulous natural detail, deep atmospheric distance, tiny figures for scale, a shadowed foreground opening toward luminous golden light, reflective water, dramatic clouds, and a sublime theatrical sense of nature"
 ```
 
 ---
@@ -1947,6 +1998,71 @@ favor intimate mood and designed surface rhythm over photographic realism"
 
 ---
 
+## 32. Hudson River School (`hudson-river-school`)
+
+**Era:** c. 1825-1875 (United States)
+
+**Key ideas.** The Hudson River School is a major nineteenth-century American
+landscape tradition, visually distinct from this curriculum's Romanticism,
+Realism, American Regionalism, and Song Dynasty landscape entries. Its
+signature is not merely "dramatic nature": it combines panoramic scale,
+precise botanical and geological detail, theatrical light, deep atmospheric
+distance, and tiny human figures that turn the landscape into a moral or
+spiritual stage. The lesson should also address the movement's cultural
+framing honestly — these paintings often present American land as sublime,
+abundant, and apparently unoccupied, a visual language that overlaps with
+Manifest Destiny and can erase Indigenous presence and displacement. The
+Academy teaches the beauty and technique without treating the ideology as
+neutral scenery.
+
+**Recognition cues:**
+- Panoramic wilderness compositions with a high horizon and enormous depth
+- Luminous, often golden light breaking through clouds or mist
+- Meticulously rendered trees, rocks, water, and distant terrain
+- Tiny people, buildings, boats, or animals used mainly to establish scale
+- A staged progression from shadowed foreground to glowing distance
+- Calm reflective water or a dramatic weather break used as a compositional
+  hinge
+- Nature presented as sublime, spiritual, national, or morally instructive
+
+**Notable artists:**
+- **Thomas Cole** (1801-1848) — Founder of the movement, combining observed
+  American scenery with allegory, historical cycles, and warnings about
+  unchecked development.
+- **Frederic Edwin Church** (1826-1900) — Cole's pupil, known for enormous,
+  scientifically detailed landscapes assembled from travel studies and
+  displayed as public spectacles.
+- **Albert Bierstadt** (1830-1902) — Painter of monumental western landscapes
+  whose theatrical light and scale helped shape popular ideas of the American
+  West.
+
+All three artists died well before the Academy's conservative 1956 death-year
+cutoff.
+
+**Example works:**
+- *The Oxbow (View from Mount Holyoke, Northampton, Massachusetts, after a
+  Thunderstorm)*, Thomas Cole, 1836 — Metropolitan Museum of Art, New York
+  (accession 08.228). VERIFIED public domain (author died 1848, published
+  before 1931; Wikimedia Commons applies both Public Domain Mark 1.0 and
+  `PD-Art (PD-old-auto-expired)`):
+  https://commons.wikimedia.org/wiki/File:Thomas_Cole_-_View_from_Mount_Holyoke,_Northampton,_Massachusetts,_after_a_Thunderstorm-The_Oxbow.jpg
+- *The Heart of the Andes*, Frederic Edwin Church, 1859 — Metropolitan Museum
+  of Art, New York (accession 09.95). VERIFIED public domain (author died
+  1900, published before 1931; Public Domain Mark, Wikimedia Commons):
+  https://commons.wikimedia.org/wiki/File:Frederic_Edwin_Church_-_The_Heart_of_the_Andes.jpg
+- *Among the Sierra Nevada, California*, Albert Bierstadt, 1868 — Smithsonian
+  American Art Museum. VERIFIED public domain (author died 1902, more than
+  100 years ago; Public Domain Mark, Wikimedia Commons):
+  https://commons.wikimedia.org/wiki/File:Albert_Bierstadt_-_Among_the_Sierra_Nevada,_California_-_Google_Art_Project.jpg
+
+**remix_hint:** "Repaint this image as a Hudson River School landscape:
+panoramic wilderness, meticulous natural detail, deep atmospheric distance,
+tiny figures for scale, a shadowed foreground opening toward luminous golden
+light, reflective water, dramatic clouds, and a sublime theatrical sense of
+nature"
+
+---
+
 ## Lesson-only vs remixable
 
 Every movement above maps to a remix config (mode `prompt` to start; t-003/t-004
@@ -2026,6 +2142,17 @@ entirely. The likelier failure mode is the model defaulting to a generic
 decorative pattern language — the remix_hint leans on "textiles, wallpaper,
 foliage, or architectural patterns organize the composition" specifically so
 t-004 can check that pattern is actually present, not just flat color.
+`hudson-river-school` shares `romanticism`'s sublime-landscape territory but
+pulls in two opposite failure directions at once: the model may either
+over-cook into a generic fantasy-painting or oversaturated digital-wallpaper
+look, or under-cook into a lightly-graded travel photo that skips the
+movement's actual signature (believable, specific geology and vegetation
+rendered with near-scientific precision, and human/architectural elements
+kept genuinely tiny relative to the scene). The remix_hint leans on
+"meticulous natural detail" and "tiny figures for scale" to fight the
+under-cooking risk, and on "believable geology" (in the candidate doc's own
+failure-mode note) to fight the over-cooking one — t-004 should check both
+directions, not just one.
 
 **Flagged as likely-poor remixers:**
 - `cubism` — faceting while "preserving the composition" is partly contradictory;
