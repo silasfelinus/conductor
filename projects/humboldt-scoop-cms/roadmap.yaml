@@ -252,8 +252,8 @@ tasks:
   - id: t-008
     milestone: m6
     title: "Build dispatcher map UI and manual route editing"
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     depends_on: t-007
@@ -262,6 +262,9 @@ tasks:
       preview them on a map, optimize, inspect stop cards, drag/reorder, lock stops, remove/add
       customers, recalculate, and save a route draft. Display distance, estimated drive time,
       estimated service time, and route warnings. All component/API interaction goes through store state.
+    claimed_by: claude-conductor-scheduled-20260726T121447Z-hscms-t008
+    claimed_at: '2026-07-26T12:14:47Z'
+    updated: '2026-07-26T12:14:47Z'
 
   - id: t-009
     milestone: m6
