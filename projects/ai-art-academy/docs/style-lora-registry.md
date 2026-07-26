@@ -161,6 +161,7 @@ lesson to the wrong registry entry by assuming the slugs always match.
 | `fayum-mummy-portraits` | *(none)* | not yet in the registry — added to curriculum-outline.md v1.8 (2026-07-22); no dedicated LoRA search performed this cycle |
 | `vienna-secession` | *(none)* | not yet in the registry — added to curriculum-outline.md v1.9 (2026-07-24); no dedicated LoRA search performed this cycle |
 | `joseon-genre-painting` | *(none)* | not yet in the registry — added to curriculum-outline.md v1.10 (2026-07-25); no dedicated LoRA search performed this cycle |
+| `the-nabis` | *(none)* | not yet in the registry — added to curriculum-outline.md v1.11 (2026-07-26, this cycle), promoted from docs/curriculum-candidates/the-nabis.md; no dedicated LoRA search performed this cycle |
 
 Registry-only entries with **no curriculum-outline.md counterpart at all** — general
 painting techniques/bonus styles, not tied to a specific lesson movement, so a

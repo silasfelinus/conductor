@@ -1,5 +1,14 @@
 # The Nabis — Curriculum Candidate
 
+academy-cultural-context: required
+
+**Status: PROMOTED 2026-07-26** — now curriculum-outline.md §31 (`the-nabis`),
+v1.11. Three institution-verified public-domain example works (Musée d'Orsay,
+National Gallery of Art) satisfy this file's own "definition of done" below.
+Kept here as the source research for the promoted entry; not yet synced into
+kind_robots' `stores/seeds/academyStyles.ts` (a separate follow-up, same
+pattern as every prior curriculum-outline.md addition).
+
 ## Why this belongs in the Academy
 
 The Nabis were a loose group of young artists working mainly in Paris during the 1890s. Their name comes from the Hebrew word for “prophets,” reflecting their belief that painting could move beyond literal description and become a deliberately designed surface of color, pattern, rhythm, and feeling.
@@ -27,7 +36,9 @@ The group formed around 1888–1889 among students connected to the Académie Ju
 
 The Nabis were not stylistically identical. Some leaned toward mysticism and Symbolism, while others focused on modern domestic life, theater, posters, book illustration, folding screens, and decorative panels. They rejected the idea that easel painting stood above the so-called decorative arts.
 
-## Artists for this module
+## Artists
+
+**Rights boundary:** These artists are included for historical study. Generation guidance must describe movement-level visual decisions rather than invoking their names, and every displayed work still requires item-level rights verification.
 
 ### Paul Sérusier (1864–1927)
 
@@ -45,17 +56,33 @@ Bonnard connects the Nabis to later explorations of luminous color, memory, dome
 
 Denis provides the clearest theoretical entry point. His famous argument that a painting is first a flat surface covered with colors can be paraphrased for students as: before a painting depicts a person, horse, or story, it is an arrangement of shapes and colors.
 
-## Public-domain boundary
+## Public-domain and generation policy
 
-All named artists died more than seventy years ago. Use only works whose individual rights status is confirmed by the source institution or repository. Prefer open-access museum downloads and clearly marked public-domain reproductions.
+All named artists died more than seventy years ago, but each work still receives item-level review. Use only specific artwork whose rights status is confirmed by the source institution or repository. Prefer open-access museum downloads and clearly marked public-domain reproductions.
 
-Do not use later artists merely described as “Nabis-inspired” as style references. The teaching target is the historical movement, not imitation of living illustrators or contemporary decorative painters.
+Do not include artist names in remix presets or generation prompts. Do not use later artists merely described as “Nabis-inspired” as style references. The teaching target is the historical movement, not imitation of living illustrators or contemporary decorative painters.
 
-## Remix mode
+Negative generation guidance should prevent caricature and shortcut aesthetics: avoid generic retro-poster output, copied compositions, modern typography, and reducing Japanese visual traditions to exotic decoration.
+
+## Movement-level remix configuration
 
 **Recommended mode:** prompt-first historical movement study
 
 The movement is better represented through compositional and decorative instructions than through one artist-name trigger. A movement-level prompt also reduces the risk of producing a shallow imitation of one signature painter.
+
+```yaml
+slug: the-nabis
+prompt_guidance:
+  - flatten depth into interlocking color shapes
+  - simplify figures into rhythmic silhouettes
+  - use contour edges and decorative surface rhythm
+  - let textiles, wallpaper, foliage, or architecture organize the composition
+negative_guidance:
+  - no named-artist imitation
+  - no copied historical composition
+  - no modern typography or generic vector-poster treatment
+  - no exoticizing Japanese motifs
+```
 
 ### Prompt template
 
@@ -126,12 +153,12 @@ Prioritize open-access collections from institutions such as:
 
 Record the institution, object page, artist, title, date, and rights statement for every starter image before it enters the Academy seed set.
 
-## Definition of done for front-end promotion
+## Promotion checklist
 
-This candidate is ready to move into the main curriculum when:
-
-- At least three institution-verified public-domain example works are selected
-- Recognition cues are tested against those works and one non-Nabis comparison
-- The prompt is trialed on an interior and a landscape
-- The result avoids typography, generic retro-poster styling, and single-artist caricature
-- Source and rights metadata are recorded for every displayed artwork
+- [x] At least three institution-verified public-domain example works are selected and each work has an item-level reusable-rights record.
+- [ ] Recognition cues are tested against those works and one non-Nabis comparison.
+- [ ] The prompt is trialed on an interior and a landscape.
+- [ ] A cultural-history or representation reviewer checks the treatment of Japanese influence and domestic labor.
+- [x] Remix configuration excludes artist names and named-artist imitation.
+- [ ] The result avoids typography, generic retro-poster styling, and single-artist caricature.
+- [x] Source and rights metadata are recorded for every displayed artwork.

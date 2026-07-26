@@ -15,6 +15,27 @@ Record the lane, files changed, and verification in the task note before rearmin
 
 ### Rotation state
 
+- Last completed lane: Curriculum depth (lane 4), 2026-07-26 (~16:07-16:20 UTC,
+  claude-conductor-agentrun-20260726T160754-aa-t010-nabis-promote, scheduled
+  agent run). Preferred lane was inspiration/preview assets (lane 3); re-probed
+  via `GET /api/art/queue/stats` first (cheaper than a live job) and found the
+  backlog unchanged-to-slightly-worse (136 PENDING vs. 132 last check, oldest
+  ~53h vs. ~50h) plus a new `WinError 10061` connection-refused signature from
+  the relay's own ComfyUI call — fell back to lane 4 per this checklist's own
+  rule. Promoted the most complete unpromoted entry in
+  `docs/curriculum-candidates/` (The Nabis) into `curriculum-outline.md` as
+  section 31 (v1.11), sourcing and verifying its 3 required example works via
+  live Wikimedia Commons file-page fetches (Sérusier's *The Talisman*,
+  Vuillard's *The Yellow Curtain*, Denis's *Homage to Cézanne* — all confirmed
+  public domain). Also updated `style-lora-registry.md`'s mapping table and
+  marked the candidate file itself promoted. Note: this Rotation-state section
+  had drifted 2 cycles stale (the front-end-polish/PR#1015 and roadmap-
+  accuracy/PR#1149 cycles both said in the run log that they updated this
+  section but hadn't actually — fixed now by recording this entry directly;
+  no separate task filed since it's a one-line self-correcting drift, not a
+  recurring pattern yet). Next preferred lane is front-end polish (lane 1),
+  per the 1->2->3->4 rotation (a blocked-then-fallback cycle doesn't reset the
+  sequence, same convention as every prior lane-3-blocked cycle).
 - Last completed lane: Roadmap accuracy (lane 2), 2026-07-25 (~21:05-21:15 UTC,
   claude-conductor-burst-20260725T2100Z-t010-lane2, scheduled burst-mode cycle).
   Per the prior cycle's note, lane 2 was next after lane 1 ran.
