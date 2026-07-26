@@ -1,0 +1,45 @@
+name: Agent Project Art Completion Patch
+
+on:
+  push:
+    branches:
+      - agent/project-art-completion-sync
+    paths:
+      - scripts/agent_patch_project_art_completion.py
+      - .github/workflows/agent-project-art-completion.yml
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: agent/project-art-completion-sync
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Apply repository-aware patch
+        run: python scripts/agent_patch_project_art_completion.py
+
+      - name: Install validation dependencies
+        run: pip install pytest pyyaml Pillow
+
+      - name: Run focused art-pipeline tests
+        run: pytest tests/test_consume_art_requests.py tests/test_media_direct.py tests/test_consume_art_queue.py
+
+      - name: Commit finished patch
+        run: |
+          rm scripts/agent_patch_project_art_completion.py
+          rm .github/workflows/agent-project-art-completion.yml
+          git config user.name "kind-conductor"
+          git config user.email "kind-conductor@users.noreply.github.com"
+          git add scripts/consume_art_queue.py scripts/consume_art_requests.py scripts/media_direct_consumer.py tests/test_consume_art_requests.py tests/test_media_direct.py scripts/agent_patch_project_art_completion.py .github/workflows/agent-project-art-completion.yml
+          git commit -m "fix project art retries and completion synchronization"
+          git push origin HEAD:agent/project-art-completion-sync
