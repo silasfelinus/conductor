@@ -446,11 +446,11 @@ tasks:
   - id: t-010
     milestone: m6
     title: Academy continuous improvement pass
-    status: ready
+    status: claimed
     recurring: true
     passes: 0
     stakes: reversible
-    updated: '2026-07-26T04:10:46Z'
+    updated: '2026-07-26T05:13:05Z'
     note: |-
       Standing never-idle task (re-arms to ready after every completion, per the recurring-task rule). Each cycle pick ONE: (a) front-end style/polish pass on Academy or art-styler surfaces, (b) roadmap upgrade — refine tasks, detail the next milestone, prune stale notes, (c) generate more art inspirations or style preview thumbnails, (d) expand the curriculum with a new movement/artist entry (respecting PUBLIC-DOMAIN-POLICY.md). Note which option ran in the PR. This task never reaches done and does not count toward milestone progress.
       RAN 2026-07-26 (reviewer merge, conductor session claude/festive-heisenberg-4m0r9x): option (c) inspiration/preview assets (lane 3), per the checklist's next-preferred-lane note (previous cycle ran lane 2). Worker session `worker-conductor-20260726T031600Z-aa-t010-7f3c` produced a four-image "Everyday Modernity" teaching sequence (`docs/inspiration-sets/everyday-modernity-teaching-sequence.md`) comparing Ashcan School, the Nabis, American Scene painting, and social-realist print language over one shared rainy-city source scene — includes a per-entry teaching goal, common-failure note, and a five-question comparison exercise, plus generation-metadata requirements (prompt/model/seed/source-image/LoRA path per result). Reviewed for `PUBLIC-DOMAIN-POLICY.md` compliance: all references are movement-level, no named living/recent artists, explicit anti-copying language in every prompt. Merged PR #1097 (squash `95ea71f`), all 22 checks green, mergeable_state clean, documentation-only additive one-file change. Filed kaizen task t-038 (inspiration-set template) per the PR's own suggestion. Rearmed to `ready`; next preferred lane is roadmap accuracy (lane 2) unless a session finds front-end polish (lane 1) more overdue by then.
@@ -665,8 +665,9 @@ tasks:
       Option (c) inspiration-assets pass: added a four-image Everyday Modernity teaching sequence with movement-level prompts, comparison criteria, ethics checks, and reproducibility metadata guidance on worker/ai-art-academy-t-010-inspiration-7f3c.
 
       Closed the Everyday Modernity inspiration-assets pass after conductor PR #1097 merged as squash commit 95ea71fc620fba1dcce6b097a5411dbb1cd5d092. The additive four-image teaching sequence landed with no review blockers; rearming the recurring continuous-improvement task for its next authorized lane.
-    claimed_by: worker-conductor-20260726T031600Z-aa-t010-7f3c
-    claimed_at: '2026-07-26T03:16:00Z'
+    claimed_by: worker-conductor-20260726T051305Z-aa-t010-5d2a
+    claimed_at: '2026-07-26T05:13:05Z'
+    owner: worker
 
   - id: t-015
     milestone: m4
