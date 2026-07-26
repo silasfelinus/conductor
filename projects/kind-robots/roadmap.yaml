@@ -311,6 +311,37 @@ tasks:
          but works immediately.
       Either way should clear the error. Once the numbers look sane, set
       status: done here.
+
+      FIXED 2026-07-26 (Silas got past the token error, then ran --apply and
+      got 0 create/update/missing/transitions -- "script should be looking in
+      Z:/kindrobots/images/..."): real bug, not a usage error. Kind Robots
+      media was migrated off the git tree onto a self-hosted media share
+      (ops/home-server/SELF-HOSTED-MEDIA.md) -- on Silas's Windows relay
+      that's `Z:\kindrobots\images`, exposed via the `KR_MEDIA_IMAGES_DIR`
+      env var the relay already uses. reconcile_expressions.py had not been
+      updated for that migration -- it only ever looked for
+      `KIND_ROBOTS_ROOT/public/images/bots(or characters)/expressions`, a
+      git-checkout layout that no longer holds the real expression images,
+      so every folder scan silently found nothing (0 across the board,
+      no error, because the "no expressions dir -- skipping" info line prints
+      to stderr and is easy to miss).
+      Fixed in conductor (this session): the script now checks
+      `KR_MEDIA_IMAGES_DIR` first and scans directly under it
+      (`$KR_MEDIA_IMAGES_DIR/bots/expressions`,
+      `$KR_MEDIA_IMAGES_DIR/characters/expressions` -- no `public/` prefix,
+      matching the media share's actual layout) before falling back to the
+      old `KIND_ROBOTS_ROOT`-based checkout path. Added 3 new tests
+      (tests/test_reconcile_expressions.py) covering: media dir used when
+      set, media dir takes precedence over KIND_ROBOTS_ROOT, and a clear
+      error if KR_MEDIA_IMAGES_DIR is set but doesn't exist. Full suite green
+      (533 passed).
+      TO SILAS: if `KR_MEDIA_IMAGES_DIR` isn't already set in your normal
+      PowerShell environment (it should be, per the relay setup in
+      SELF-HOSTED-MEDIA.md -- `setx KR_MEDIA_IMAGES_DIR "Z:/kindrobots/images"`,
+      then a NEW window), set it (new window, or `$env:KR_MEDIA_IMAGES_DIR`
+      for just the current session) and re-run
+      `python3 scripts/reconcile_expressions.py --apply`. Once the numbers
+      look sane, set status: done here.
     soft_gate: true
 
   - id: t-012

@@ -38,7 +38,15 @@ Modes:
 Env:
   KR_API_TOKEN        required for --apply (admin or server key); reads are public
   KR_BASE_URL         default https://kind-robots.vercel.app
-  KIND_ROBOTS_ROOT    default <conductor>/../kind_robots
+  KR_MEDIA_IMAGES_DIR self-hosted media share root (e.g. Windows relay's
+                      Z:/kindrobots/images, see ops/home-server/SELF-HOSTED-MEDIA.md)
+                      — checked first; expression images live here now that
+                      Kind Robots media is served directly from the share
+                      instead of the git tree
+  KIND_ROBOTS_ROOT    fallback: a local kind_robots git checkout with
+                      public/images/... still present; default
+                      <conductor>/../kind_robots. Only used when
+                      KR_MEDIA_IMAGES_DIR is unset.
 
 Exit codes: 0 = ok / no drift, 1 = error, 2 = drift found (--check)
 """
@@ -56,6 +64,7 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 KIND_ROBOTS_ROOT = Path(
     os.environ.get("KIND_ROBOTS_ROOT", REPO_ROOT.parent / "kind_robots")
 )
+KR_MEDIA_IMAGES_DIR = os.environ.get("KR_MEDIA_IMAGES_DIR", "").strip()
 KR_BASE_URL = os.environ.get("KR_BASE_URL", "https://kind-robots.vercel.app").rstrip("/")
 KR_API_TOKEN = os.environ.get("KR_API_TOKEN", "").strip()
 
@@ -250,10 +259,19 @@ def main():
     if args.apply and not KR_API_TOKEN:
         print("❌ --apply requires KR_API_TOKEN (admin or server key).", file=sys.stderr)
         return 1
-    if not KIND_ROBOTS_ROOT.is_dir():
-        print(f"❌ kind_robots checkout not found at {KIND_ROBOTS_ROOT} "
-              "(set KIND_ROBOTS_ROOT).", file=sys.stderr)
-        return 1
+    if KR_MEDIA_IMAGES_DIR:
+        images_root = Path(KR_MEDIA_IMAGES_DIR)
+        if not images_root.is_dir():
+            print(f"❌ KR_MEDIA_IMAGES_DIR set but not found: {images_root}",
+                  file=sys.stderr)
+            return 1
+    else:
+        images_root = None
+        if not KIND_ROBOTS_ROOT.is_dir():
+            print(f"❌ kind_robots checkout not found at {KIND_ROBOTS_ROOT} "
+                  "(set KIND_ROBOTS_ROOT, or set KR_MEDIA_IMAGES_DIR to the "
+                  "self-hosted media share root instead).", file=sys.stderr)
+            return 1
 
     totals = {"create": 0, "update": 0, "missing": 0, "transitions": 0,
               "unmatched": 0, "unrecognized": 0}
@@ -262,9 +280,12 @@ def main():
     for owner_type, rel in OWNER_DIRS.items():
         if args.type and owner_type != args.type:
             continue
-        base = KIND_ROBOTS_ROOT / rel
+        if images_root is not None:
+            base = images_root / rel.removeprefix("public/images/")
+        else:
+            base = KIND_ROBOTS_ROOT / rel
         if not base.is_dir():
-            print(f"ℹ️  no {owner_type} expressions dir ({rel}) — skipping.", file=sys.stderr)
+            print(f"ℹ️  no {owner_type} expressions dir ({base}) — skipping.", file=sys.stderr)
             continue
 
         owner_ids = None  # fetched lazily, only if some narrator lookup 404s
