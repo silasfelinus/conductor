@@ -605,3 +605,33 @@ tasks:
       check generally). Needs Silas's read on his box's actual folder layout
       before landing, since a wrong guess fails silently (job succeeds, file
       lands in the wrong place) rather than loudly.
+
+  - id: t-020
+    milestone: m5
+    title: "Correct t-013's note — the Daily Dream page it describes as shipped was intentionally removed 2026-07-20"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-26T01:00:00Z'
+    note: >
+      Filed 2026-07-26 (weekly site audit, global-ui/SITE-AUDIT-AGENT.md).
+      t-013 is `status: done` with a note describing `/daily-dream`
+      (`components/pages/daily-dream-page.vue`, `content/daily-dream.md`,
+      `content/channels/play/daily-dream.md`, kind_robots PR #229, merged
+      2026-07-14) as a shipped, working page. None of those three files exist
+      on kind_robots `main` today — confirmed via the GitHub API against the
+      live default branch, not just a local shallow-clone gap. Root cause:
+      kind_robots commit `c4e28c6` (PR #644, 2026-07-20, Silas-directed)
+      deliberately removed the page ("was never finished — always showed 'no
+      dreams built yet' — and is no longer wanted"), and
+      `scripts/build_digest.py` was already updated in the same window to stop
+      linking to it (`DAILY_DREAM_PAGE = ""`, `yesterday_output["page"] = ""`)
+      — so there's no live broken link, this is pure roadmap-note drift, not a
+      functional bug.
+      TO DO: update t-013's note (or add a short addendum) to record the
+      2026-07-20 removal instead of leaving it read as still-shipped, so a
+      future reader doesn't rediscover this as a fresh "regression." No code
+      change implied — decide only whether the daily-dream front-end is worth
+      rebuilding properly later (Silas's call) or the pipeline should stay
+      backend-only (art + PitchSheets, no dedicated page) going forward.
