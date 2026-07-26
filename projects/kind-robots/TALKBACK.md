@@ -1104,3 +1104,39 @@ finding zero new instances of the Prisma cast-bypass bug class it exists to catc
 
 **Kaizen task:** none filed — the LEARNING.yaml record captures the generalizable lesson; no
 single project owns "roadmap hygiene for stale monitoring tasks" to attach a kaizen task to.
+
+## 2026-07-26 | Reviewer (scheduled agent run) | kind-robots/t-046 | pattern
+
+**Decision:** merged kind_robots PR #988 (nav wiring, all CI green, scoped/reversible) and
+the linked conductor task-event PR #1087 that flipped this task to `review`. By the time
+this session went to close the task out, a separate concurrent "worker-salvage" session had
+already pushed its own `done` task-event straight to `main` (with its own LEARNING.yaml
+entry) — so this session's job here is just the parts that salvage event didn't cover.
+
+**Failure category:** null — clean first-pass software task, template followed correctly.
+
+**What was good:**
+- The PR correctly diagnosed the actual bug (reachability, not a missing feature) before
+  touching any code — `pages/video-generator.vue` was already fully wired to a real backend,
+  the gap was purely `dataSurfaceManifest.ts`/nav registration. Good investigation discipline.
+- Registered the surface in `dataSurfaceManifest.ts` per its own contract so CI
+  (`test:data-surface-manifest`) now guards against this exact class of regression reopening
+  silently — closes the loop instead of just patching the one instance.
+
+**What to improve:**
+- The PR handoff omitted the "Kaizen suggestion" section entirely (template discipline gap —
+  AGENTS.md's PR handoff template requires it). The investigation surfaced an obvious
+  follow-up (dashboardConfigs.art's now-fully-dead `video` tab / `art-manager.vue`, which the
+  PR itself confirms has zero live callers) but it wasn't written up — I filed it myself as
+  `kind-robots/t-048` instead of deferring, since it was already fully diagnosed in the PR body.
+- Pattern note: three separate close-out attempts converged on this one task within about
+  15 minutes today (this session's direct roadmap edit, another session's task-events PR
+  #1089, and a third "worker-salvage" event that landed on `main` first) — all fixing the
+  exact same `review`→`done` transition. None of them collided destructively (task-events are
+  small and mostly additive, and this session caught the duplication before merging), but it's
+  a sign multiple concurrent scheduled sessions are picking up the same just-merged-PR
+  close-out independently rather than checking whether it's already been done. Worth a kaizen
+  on the close-out habit itself, not just this task.
+
+**Kaizen task:** kind-robots/t-048 — remove the now-dead `dashboardConfigs.art` 'video' tab /
+`art-manager.vue` path superseded by t-046's real nav entry.
