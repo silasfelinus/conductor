@@ -2705,11 +2705,11 @@ tasks:
   - id: t-085
     milestone: m2
     title: "Add a fetch-immediately-before-append commit wrapper for TALKBACK.md/LEARNING.yaml, reusing claim_task.py's commit_file_on_ref pattern"
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
-    updated: '2026-07-26T22:30:00Z'
+    updated: '2026-07-26T23:05:04Z'
     note: >
       Kaizen from Reviewer merging conductor PR #1182/t-033 (concurrent-claims.md
       design doc, 2026-07-26): section 3 of the design doc found that hard rule 9
@@ -2733,4 +2733,6 @@ tasks:
       window for the exact same race during any two overlapping sessions, burst
       mode or otherwise). Full context: projects/conductor/docs/concurrent-claims.md
       section 3, "Gaps to close before rollout."
+    claimed_by: claude-scheduled-20260726T230438Z-conductor-t085
+    claimed_at: '2026-07-26T23:05:04Z'
 
