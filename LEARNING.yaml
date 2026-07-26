@@ -4148,3 +4148,12 @@ records:
   outcome: done
   failure_category: null
   lesson: "A takedown/eligibility gate enforced only at checkout-creation time leaves a real gap for anything fulfilled asynchronously at webhook time -- the window between session-create and payment-complete is exactly where a moderation action would need to take effect. Reusing the existing checkPrintEligibility() helper verbatim at the second enforcement point (rather than writing new logic) kept the two checks mechanically identical, and recording the failure as a PrintJob with status: FAILED (instead of skipping creation) preserves an audit trail for a payment that succeeded but wasn't fulfilled."
+- date: '2026-07-26'
+  project: digital-storefront
+  task: t-032
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "Hand-typing a plausible-looking but coarse (round-hour) claim --session id instead of invoking date -u for real seconds precision is exactly the collision-prone pattern AGENTS.md's Rotation collisions section warns against -- this cycle hit a real concurrent-implementation collision on the same task (two sessions both shipped equivalent kind_robots PRs, #1008 and #1009, for digital-storefront/t-032) that a genuinely unique session id wouldn't have prevented outright (claim_task.py's atomicity gap is the deeper structural cause) but which muddies the claimed_by/TALKBACK trail in exactly the way the AGENTS.md warning describes. Always shell out to date -u +%Y%m%dT%H%M%SZ for the session id rather than typing a round timestamp by hand."
