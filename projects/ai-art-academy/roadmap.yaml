@@ -1231,10 +1231,32 @@ tasks:
   - id: t-040
     milestone: m6
     title: Add a curriculum-candidate schema check requiring explicit rights/representation/promotion sections for culturally sensitive movements
-    status: review
-    passes: 0
+    status: ready
+    passes: 1
     stakes: reversible
-    updated: '2026-07-26T14:24:00Z'
+    updated: '2026-07-26T14:30:00Z'
+    retry_context: >
+      pass 1 failed (quality): PR #1145's `section()` helper in
+      scripts/validate_academy_curriculum_candidates.py builds its regex as
+      `rf"^##\s+{heading_pattern}\s*$\n(?P<body>.*?)(?=^##\s+|\Z)"` where
+      heading_pattern is itself an alternation (e.g. `"Artists? for historical
+      study|Artists?|Historical artists?"`). Spliced in unparenthesized, `|`
+      has the lowest precedence, so the regex actually compiles as three
+      independent top-level alternatives instead of one grouped heading match
+      -- the shorter alternatives (e.g. plain `Artists?`) match first and don't
+      include the `body` named group, so `match.group("body")` is `None` and
+      `.strip()` raises AttributeError. Confirmed locally: 3 of 6 new pytest
+      cases fail, including the primary happy-path
+      test_complete_sensitive_candidate_passes; both `Python test suite` and
+      the PR's own new `Validate changed Academy curriculum candidates` CI
+      check are red for this reason (see PR #1145 review comment for the full
+      repro and traceback). Do differently: wrap heading_pattern in a
+      non-capturing group when splicing it into the outer pattern, e.g.
+      `rf"^##\s+(?:{heading_pattern})\s*$\n(?P<body>.*?)(?=^##\s+|\Z)"`, then
+      re-run the full local test suite (not just eyeball the regex) before
+      re-pushing -- every section() call site with a multi-alternative
+      heading_pattern (artist/policy/remix/checklist sections) has the same
+      bug.
     note: |-
       Kaizen from ai-art-academy/t-010 (PR #1119, 2026-07-26 curriculum-depth lane, Harlem Renaissance candidate). That PR hand-wrote display-rights, generation-rights, representation-risk, and a promotion checklist because the movement is culturally sensitive — but nothing enforces this for future curriculum-candidate docs (`projects/ai-art-academy/docs/curriculum-candidates/*.md`) the way `PUBLIC-DOMAIN-POLICY.md` enforces rights checks elsewhere. Add a lightweight check (a `scripts/` validator wired into CI, or a documented per-file checklist template) that flags a new curriculum-candidate file lacking an explicit rights-boundary-per-artist section, a generation negative-guidance list excluding protected artist names, and a promotion checklist, when the movement touches a specific living culture/ethnicity/ community rather than a purely formal style. Small, additive, reversible.
 
@@ -1246,6 +1268,10 @@ tasks:
       Claimed after recovering the abandoned prior session. Implementing the changed-file curriculum-candidate rights and representation validator with dedicated CI coverage.
 
       Implemented a changed-file curriculum-candidate validator, regression tests, and a dedicated CI guard. Culturally specific candidates must document artist-level rights boundaries, item-level display rights, protected-name exclusions, negative generation guidance, and a representation-aware promotion checklist.
+
+      REJECTED 2026-07-26 (Reviewer, conductor scheduled session, PR #1145): CI red for a real reason, not
+      flaky -- see retry_context above and the PR review comment for the full repro. Returned to `ready`
+      for the Worker to fix and re-push; the branch/PR are left open for the retry.
     claimed_by: worker-conductor-20260726T142200Z-aa-t040-29a7
     claimed_at: '2026-07-26T14:22:00Z'
-    owner: worker
+    owner: null
