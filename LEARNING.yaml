@@ -4139,3 +4139,12 @@ records:
   outcome: done
   failure_category: null
   lesson: "A kaizen note written by a prior cycle can undersell real scope -- 'wire the webhook branch' sounded like reusing an existing single-product handler, but the general cart's multi-item-per-session shape needed a genuinely different mechanism (per-line Stripe LineItem metadata, verified against the SDK's own .d.ts files rather than assumed), and the client was silently dropping data (artImageId) the task's author likely didn't know about. Treat a kaizen note as a hypothesis to verify by reading the actual current code before implementing, not a spec to build from directly -- and when research surfaces real complications, split the task rather than either attempting an oversized diff or silently narrowing scope without saying so. Also: extending a shared utility (applyMana) with an optional tx parameter to fix a transaction-atomicity gap is safer than either skipping the atomicity guarantee or duplicating the utility's logic inline -- check whether a shared helper already has this affordance before assuming you need a workaround."
+- date: '2026-07-26'
+  project: digital-storefront
+  task: t-032
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "A takedown/eligibility gate enforced only at checkout-creation time leaves a real gap for anything fulfilled asynchronously at webhook time -- the window between session-create and payment-complete is exactly where a moderation action would need to take effect. Reusing the existing checkPrintEligibility() helper verbatim at the second enforcement point (rather than writing new logic) kept the two checks mechanically identical, and recording the failure as a PrintJob with status: FAILED (instead of skipping creation) preserves an audit trail for a payment that succeeded but wasn't fulfilled."
