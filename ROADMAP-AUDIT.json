@@ -1,17 +1,17 @@
 {
-  "generated_at": "2026-07-26T11:03:58.344558+00:00",
+  "generated_at": "2026-07-26T11:07:19.595976+00:00",
   "summary": {
     "roadmaps": 42,
-    "active_projects": 24,
-    "tasks": 695,
-    "ready": 44,
+    "active_projects": 23,
+    "tasks": 696,
+    "ready": 45,
     "waiting": 49,
     "needs_human": 21,
-    "in_progress": 2,
-    "done": 568,
+    "in_progress": 1,
+    "done": 569,
     "errors": 0,
     "warnings": 0,
-    "info": 55
+    "info": 56
   },
   "projects": [
     {
@@ -117,19 +117,18 @@
       "override_status": "active",
       "priority_index": 6,
       "autonomous": false,
-      "task_count": 30,
+      "task_count": 31,
       "counts": {
-        "claimed": 1,
-        "done": 27,
-        "ready": 2
+        "done": 28,
+        "ready": 3
       },
       "open_count": 3,
       "human_attention": 0,
-      "ready": 2,
+      "ready": 3,
       "waiting": 0,
-      "claimed": 1,
+      "claimed": 0,
       "review": 0,
-      "done": 27
+      "done": 28
     },
     {
       "slug": "packmaker",
@@ -229,7 +228,7 @@
     {
       "slug": "mona-salai",
       "kind": "software",
-      "override_status": "active",
+      "override_status": "paused",
       "priority_index": 12,
       "autonomous": true,
       "task_count": 13,
@@ -1084,6 +1083,13 @@
       "project": "mermaids-of-venice",
       "task": null,
       "message": "Roadmap has no friendly goal/definition of done."
+    },
+    {
+      "severity": "info",
+      "code": "INACTIVE_PROJECT_HAS_READY_TASKS",
+      "project": "mona-salai",
+      "task": null,
+      "message": "Inactive project retains 3 ready task(s); harmless but misleading in generated status."
     },
     {
       "severity": "info",

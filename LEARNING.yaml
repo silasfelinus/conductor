@@ -4157,3 +4157,12 @@ records:
   outcome: done
   failure_category: null
   lesson: "Hand-typing a plausible-looking but coarse (round-hour) claim --session id instead of invoking date -u for real seconds precision is exactly the collision-prone pattern AGENTS.md's Rotation collisions section warns against -- this cycle hit a real concurrent-implementation collision on the same task (two sessions both shipped equivalent kind_robots PRs, #1008 and #1009, for digital-storefront/t-032) that a genuinely unique session id wouldn't have prevented outright (claim_task.py's atomicity gap is the deeper structural cause) but which muddies the claimed_by/TALKBACK trail in exactly the way the AGENTS.md warning describes. Always shell out to date -u +%Y%m%dT%H%M%SZ for the session id rather than typing a round timestamp by hand."
+- date: '2026-07-26'
+  project: digital-storefront
+  task: t-033
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "Splitting a task at implementation time when a fabricated artImageId would have been needed (rather than guessing) kept the client-tracked artImageId honest end-to-end; the real latent bug this surfaced (server-side dedup collapsing distinct art prints of the same catalog type) only showed up once artImageId was actually plumbed through, which is a good argument for wiring real identifiers through a pipeline early rather than deferring with placeholders."
