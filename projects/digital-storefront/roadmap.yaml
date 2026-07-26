@@ -864,3 +864,32 @@ tasks:
     per-product-type branching rather than duplicating it. Reversible,
     Stripe test-mode only, no live payment/vendor action.
   claimed_at: '2026-07-26T04:11:57Z'
+
+- id: t-032
+  milestone: m4
+  title: "kind_robots: re-check ArtImage takedown/eligibility at Stripe webhook time for POD purchases, not just at checkout-creation time"
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  depends_on: t-030
+  note: >
+    Kaizen from reviewing kind_robots PR #1004 (merged 2026-07-26, digital-storefront/t-030).
+    `server/api/store/pod-checkout.post.ts` correctly calls `checkPrintEligibility` (ownership,
+    isMature hard-deny, isActive, Resource.commercialSafe default-deny) before creating the
+    Stripe Checkout Session -- but the webhook's POD branch in
+    `server/api/stripe/webhook.post.ts` (`handleProductPurchase`, ~lines 194-224) does not
+    re-run that check when the session actually completes. It only reads `artImageId`/
+    `printfulVariantId` back out of `Product.metadata` and creates the `PrintJob` row directly.
+    This matches gallery-to-swag-pipeline.md's design doc section 4 (Takedown path):
+    "an image flagged between 'added to cart' and 'payment completed' should fail the
+    webhook's PrintJob creation step ... rather than silently shipping it." Currently inert
+    (no Printful vendor account/API key exists yet, so PrintJob rows stay PENDING with
+    printfulOrderId: null regardless -- nothing physically ships from this gap today), but
+    it should be closed before or alongside whatever task wires the real Printful
+    order-submission call, so a moderation action taken during the Stripe checkout window
+    isn't silently ignored once that call exists. Fix: call `checkPrintEligibility` again
+    inside the webhook's POD branch using the ArtImage's *current* state (re-fetch, don't
+    trust anything cached from checkout-creation time); on failure, create the `PrintJob`
+    with `status: FAILED` (or skip creation) and surface the reason rather than proceeding
+    silently. Reversible, Stripe test-mode only, no live vendor action.
