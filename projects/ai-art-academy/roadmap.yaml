@@ -342,9 +342,9 @@ tasks:
   - id: t-009
     milestone: m5
     title: Generate project art and Academy inspiration images
-    status: claimed
+    status: ready
     soft_gate: true
-    owner: reviewer
+    owner: null
     passes: 0
     stakes: reversible
     updated: '2026-07-25T23:05:34Z'
@@ -381,8 +381,35 @@ tasks:
       3+ Academy inspiration images (e.g. one landmark public-domain work re-imagined
       across several movements as a teaching strip). Keep prompt/model/source metadata.
       Remove ART-PROMPTS.md entries once files land in projects/images/.
-    claimed_by: claude-conductor-scheduled-20260725T230534Z-aa-t009
-    claimed_at: '2026-07-25T23:05:34Z'
+
+      PROGRESS 2026-07-25 (claude-conductor-scheduled-20260725T230534Z-aa-t009):
+      the icon/card/hero project-asset prompts were already queued (2026-07-10) but
+      still showed status: pending in projects/art-prompts.yaml — the auto-art-generate
+      workflow hasn't drained them yet (checked recent runs: several successful
+      scheduled completions today, but per-entry status in the committed queue only
+      flips once a job actually renders and the workflow commits the result). Added
+      the missing half of this task's spec: 4 Academy teaching-strip inspiration
+      images under a new `ai-art-academy` entry in art-prompts.yaml's `inspirations:`
+      block (target public/images/artcollections/ai-art-academy/ in kind_robots) —
+      Hokusai's "Under the Wave off Kanagawa" (The Great Wave; the exact worked
+      example already cited in this project's own PUBLIC-DOMAIN-POLICY.md §3
+      provenance schema) re-imagined across four curriculum movements chosen for
+      maximum visual contrast: Impressionism, Art Nouveau, Cubism, Suprematism. Each
+      prompt reuses that movement's own remix_hint language from
+      docs/curriculum-outline.md for consistency with the taught curriculum, applied
+      to the same shared wave/boats/Fuji composition so the four images read as one
+      teaching sequence. Mirrored the pending entry into ART-PROMPTS.md's inspiration
+      backlog list. This file's path is in auto-art-generate.yml's push-trigger
+      filter (projects/art-prompts.yaml), so pushing this commit queues a run in
+      addition to the existing 6-hour schedule.
+      NEXT STEP for whoever picks this up next: once auto-art-generate drains both
+      the pre-existing icon/card/hero entries and the new inspiration entries (watch
+      for their `status: pending` flipping and files landing in projects/images/ and
+      the kind_robots artcollections folder — see conductor/CLAUDE.md's Vercel/
+      deployment verification pattern used elsewhere in TALKBACK.md for how to
+      confirm rather than assume), remove the consumed ART-PROMPTS.md lines and flip
+      this task to done. Left status: ready (not done) — no generated files have
+      landed yet, this cycle only authored and queued the missing prompts.
   - id: t-011
     milestone: m2
     title: Decide the commercial-licensing posture for FLUX-dev/Kontext LoRAs
