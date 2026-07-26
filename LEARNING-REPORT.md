@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-07-26T11:36:00Z
+Generated: 2026-07-26T11:46:35Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **360**
-- Outcomes: blocked: 12, cancelled: 1, done: 347
+- Closed tasks recorded: **361**
+- Outcomes: blocked: 12, cancelled: 1, done: 348
 - Success rate: **96%**
 - Average passes on successful tasks: **0.0**
 
@@ -34,7 +34,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | global-ui | 13 | 100% |
 | humboldt-impropriety-calendar | 1 | 0% |
 | humboldt-scoop | 1 | 100% |
-| humboldt-scoop-cms | 1 | 100% |
+| humboldt-scoop-cms | 2 | 100% |
 | kind-robots | 39 | 97% |
 | kindrobots-unraid | 4 | 100% |
 | media-watchlist | 4 | 100% |
@@ -55,7 +55,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 15 | 40% |
-| software | 345 | 99% |
+| software | 346 | 99% |
 
 ## Failure categories
 
@@ -75,6 +75,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-07-26 `humboldt-scoop-cms/t-007` — Designing a pluggable RouteMatrixProvider interface let the deterministic route-plan API ship and be fully tested (including brute-force-verified optimizer correctness) even though no self-hosted OSRM/VROOM instance exists yet anywhere -- the Haversine fallback made the feature usable today, and the OSRM provider's request/response shape is already unit-tested against a mocked fetch, so standing up real infra later (t-012) is a config change, not a rewrite.
 - 2026-07-26 `kind-robots/t-050` — Following the immediately-prior additive migration's exact SQL shape (add_grant_model's enum-MODIFY + CreateTable + AddForeignKey pattern) let the migration.sql be hand-written correctly on the first attempt with no live DB to verify against -- matching an existing precedent migration in the same repo is a reliable substitute for `prisma migrate dev` when no DB is reachable.
 - 2026-07-26 `digital-storefront/t-033` — Carry identity-bearing fields through every checkout boundary and revalidate eligibility at fulfillment; dropping artImageId turned an apparently complete cart flow into audit-only fulfillment for physical goods.
 - 2026-07-26 `digital-storefront/t-032` — Hand-typing a plausible-looking but coarse (round-hour) claim --session id instead of invoking date -u for real seconds precision is exactly the collision-prone pattern AGENTS.md's Rotation collisions section warns against -- this cycle hit a real concurrent-implementation collision on the same task (two sessions both shipped equivalent kind_robots PRs, #1008 and #1009, for digital-storefront/t-032) that a genuinely unique session id wouldn't have prevented outright (claim_task.py's atomicity gap is the deeper structural cause) but which muddies the claimed_by/TALKBACK trail in exactly the way the AGENTS.md warning describes. Always shell out to date -u +%Y%m%dT%H%M%SZ for the session id rather than typing a round timestamp by hand.
@@ -84,7 +85,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-07-26 `digital-storefront/t-030` — When a task's own roadmap note pre-flags a likely needs-human gate ('expect this to reach needs-human once it touches a live payment provider'), verify the gate condition explicitly rather than trusting the PR's self-reported 'reversible' stakes label -- here that meant confirming getStripeClient() reads STRIPE_SECRET_KEY from env with no hardcoded key or forced live-mode flag, matching every other already-merged Stripe route, before merging test-mode payment/webhook code. Dispatching a subagent to independently audit the migration SQL and billing logic line-by-line (rather than reading the PR's own verification section at face value) caught nothing wrong here, but is the right level of scrutiny for anything touching schema + payment webhooks even when self-labeled reversible.
 - 2026-07-26 `ai-art-academy/t-039` — A mechanical prose-to-file migration (moving t-010's 78 historical RAN entries, ~164KB, out of the roadmap note into a separate ledger) is safe to do in one pass if the regression check is structural, not eyeballed: reconstruct the original content two independent ways (standing_line + moved_lines == original; ledger_body re-indented == moved_lines) and assert byte-for-byte equality before writing anything. That caught the exact failure mode the original audit warned about ("silently pruning the note would be data loss wearing a tidy haircut") with zero manual re-reading of 164KB of prose.
 - 2026-07-26 `model-builder/t-029` — After many cycles of an exclusion-list-driven 'read everything, find one new bug' task exhaust the obvious client-side races/gating/accessibility gaps, the next genuinely new find is likely to be server-side (a silent fallthrough in a relationship-linking function, an unhandled case in a catalog-to-handler mapping) rather than another variant of an already-fixed client pattern. Also: a subagent given the full exclusion list can correctly self-filter a near-duplicate finding (the committingItemId singleton race, same shape as two already-fixed siblings) instead of reporting it as new -- worth trusting that filtering rather than re-verifying every candidate from scratch when the list is this well-documented.
-- 2026-07-26 `kind-robots/t-049` — An investigate-type kaizen task can close cleanly with no code diff and no PR to the target repo when the investigation's own two open questions both resolve to 'already handled': check `git log -p --follow` on the file in question before assuming a protective setting (here, a job-level `timeout-minutes`) needs adding -- it may already predate the incident that prompted the task. Also worth a quick recent-run-history check via the GitHub Actions API before treating a single observed hang as a recurring pattern.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-07-26T11:36:00Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-07-26T11:46:35Z_
