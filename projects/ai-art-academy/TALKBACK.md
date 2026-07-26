@@ -1707,3 +1707,27 @@ if a fifth instance appears.
 - None specific this cycle — this is exactly the kind of finding that's cheap to miss (the previous "go-ahead" was about operational readiness, not code completeness) and expensive to leave undiscovered (the registry would keep silently misrepresenting ~13 styles as LoRA-backed).
 
 **Kaizen task:** t-037 itself is this cycle's kaizen output — no separate one filed.
+
+## 2026-07-25 | Reviewer (scheduled conductor agent run) | ai-art-academy/t-037 | pattern
+
+**Decision:** merged kind_robots PR #986 (own implementation, no Worker involved this cycle — claimed and built it directly per this session's Agent-run instructions).
+
+**Failure category:** null — clean first-pass implementation, verified as far as sandbox tooling allows.
+
+**Subject:** Picked up t-037 (filed by the prior 2026-07-25 Worker cycle above) as the top ready task in priority order once ai-art-academy came up: `buildKontextWorkflow` had no `LoraLoaderModelOnly` node, so `mode: lora` Academy styles rendered prompt-only in production.
+
+**Detail:**
+- Confirmed the field-name mismatch in the original task note before implementing: the note said `loraPath`/`loraWeight` flow "only into enqueue.post.ts:104-105,252 as provenance" — actually those lines are `loraName`/`loraStrength` (the generic krea2/flux2 fields), and the `kontext` engine branch didn't read them at all. `art-styler.vue`'s `loraPath`/`loraWeight` never left the frontend as structured fields — only baked into prompt text via `buildLoraReference()`. Traced the full chain (BUILTIN_STYLES → StyleEntry → runStyleTransfer → GenerateArtData → enqueue.post.ts) before writing any code, rather than trusting the note's line citations at face value.
+- Implementation mirrors the exact `LoraLoaderModelOnly` pattern already shipped in `simpleCheckpointWorkflow.ts` and `imageToVideoWorkflow.ts` — spliced between the base UNet loader (node 59) and `ModelSamplingFlux` (node 30), gated on `loraName` presence so prompt-mode styles keep their current (unchanged) graph.
+- Verified `vue-tsc --noEmit`, `eslint`, and `prettier --check` all clean on the three changed files (one pre-existing, unrelated prettier warning in `enqueue.post.ts` confirmed via `git stash` to predate this change). All 5 kind_robots CI checks (TypeScript, Contract verifiers, verify, facet-catalog, GitGuardian) went green; merged squash.
+- Did **not** attempt a live render — the task's own note flagged the relay queue as backlogged (~35h oldest-pending as of the note's writing) and this session had no fresher read on queue depth. Documented as an explicit open gap in the PR body rather than claiming full verification, per AGENTS.md's verification-honesty norm. This is a real risk (wrong ComfyUI input/node name would only surface at render time), mitigated by matching three other already-shipped call sites rather than inventing the shape from scratch.
+- Left `server/api/comfy/kontext/enqueue.post.ts` (separate mask-based hair-remix route) and the private duplicate builder in `generate.post.ts` untouched — out of scope per the task's own citations.
+- `ai-art-academy/t-004` (blocked, `depends_on: [t-003, t-037]`) partially unblocks — still waiting on t-003.
+
+**What was good:**
+- The prior Worker cycle's actionable-reroute (file t-037 instead of forcing t-004) paid off cleanly: t-037 was scoped tightly enough to implement and merge in one pass with no ambiguity.
+
+**What to improve:**
+- None specific this cycle.
+
+**Kaizen task:** filed as a note in the PR body (not a new roadmap task, since it's a one-line follow-up, not standalone work): `buildLoraReference()`'s `<lora:...>` prompt-text baking in `art-styler.vue` is now redundant now that the graph does the real work — worth stripping in a future style-lab polish pass. Deferred rather than filed as its own task; low enough value to bundle into t-015/whatever project's next polish-pass task touches this component.

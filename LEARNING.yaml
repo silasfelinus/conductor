@@ -3992,3 +3992,12 @@ records:
   outcome: done
   failure_category: null
   lesson: "The model-builder COMMIT executor's CREATE/ASSET_ONLY/idempotency paths (PR #190) had zero non-CI coverage (no test file, no live smoke) despite already backing gated reference runs t-016/t-017/t-018 -- a live prod round-trip (throwaway private/inactive Dream + Characters, cleaned up via DELETE after verification) was the only way to prove the idempotencyKey claim-then-write pattern and the isPublic/isActive=false override actually hold outside a type-checker. Also: GET /api/characters ignores a `?id=` query string and silently returns the unfiltered list -- the working per-id lookup is the path-param route GET /api/characters/{id}; worth knowing before the next live-smoke task on this surface."
+- date: '2026-07-25'
+  project: ai-art-academy
+  task: t-037
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "Kontext's buildKontextWorkflow had loraPath/loraWeight fields flowing all the way from BUILTIN_STYLES/AcademyRemixConfig through art-styler.vue, but only into an inert `<lora:...>` prompt-text tag (an A1111-only convention Comfy/Flux doesn't parse) plus loraResourceIds provenance -- no LoraLoaderModelOnly node ever existed in the graph, so ~13 styles registered as mode: lora in style-lora-registry.md were silently indistinguishable from prompt-mode in production. Three other engines (simpleCheckpointWorkflow.ts, imageToVideoWorkflow.ts, krea2/flux2) already had the correct LoraLoaderModelOnly-node pattern to copy. When a feature's fields are threaded all the way through a UI form to an API type, don't assume the render graph honors them -- grep the actual node-graph builder for the corresponding ComfyUI node class_type before trusting a `mode: lora` label. No live-render verification was possible this session (relay queue backlogged ~35h at last check) -- flagged as an open gap in the PR, not silently assumed correct from type-checking alone."
