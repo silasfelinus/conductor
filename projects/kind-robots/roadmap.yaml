@@ -1617,8 +1617,8 @@ tasks:
   - id: t-049
     milestone: m4
     title: 'Investigate whether facet-catalog-contract.yml can hang indefinitely on Install dependencies'
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     note: >
@@ -1637,3 +1637,6 @@ tasks:
       indefinitely)? Is there a flaky npm registry / dependency-cache-restore
       step in play? If it recurs, that's a stronger signal of a real
       workflow-level issue rather than transient infra.
+    claimed_by: claude-conductor-scheduled-20260726T070632Z-kr-t049
+    claimed_at: '2026-07-26T07:06:32Z'
+    updated: '2026-07-26T07:06:32Z'
