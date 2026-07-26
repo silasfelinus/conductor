@@ -10,6 +10,9 @@ on:
       - "tests/test_validate_academy_curriculum_candidates.py"
       - ".github/workflows/academy-curriculum-candidates.yml"
 
+permissions:
+  contents: read
+
 jobs:
   validate:
     name: Validate changed Academy curriculum candidates
