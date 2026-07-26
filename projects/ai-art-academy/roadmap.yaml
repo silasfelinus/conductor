@@ -1027,6 +1027,20 @@ tasks:
       full manifest and all 3 images actually resolve, ping back and the
       academyStyles.ts PR + verification run is the very next (and only
       remaining) step.
+
+      UPDATE 2026-07-26 (Silas: "example art should be now correct, I
+      accidentally uploaded without matching filenames"): re-checked live.
+      Progress, not yet complete: the-yellow-cow-49-1210.jpg and
+      composition-8-37-262.jpg both now resolve (200). fantomas-1976-59-1.jpg
+      still 404s. Manifest is unchanged since last check -- still only
+      `expressionism` present (19 entries); `cubism` and `bauhaus` are still
+      missing from examples.manifest.json. TO SILAS: 1. fix/re-upload the
+      Fantômas (cubism) image specifically -- the other two filename
+      mismatches are resolved but this one isn't yet, and 2. still need the
+      `cubism` and `bauhaus` manifest entries added (only `expressionism`
+      has ever landed in the array across both checks). Once all 3 images
+      return 200 and all 3 manifest entries are present, this is ready for
+      the academyStyles.ts PR + verification run.
     claimed_by: claude-scheduled-20260718-1420-26944
     claimed_at: '2026-07-18T14:22:06Z'
     updated: '2026-07-18T14:24:39Z'

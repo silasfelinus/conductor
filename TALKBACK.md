@@ -9536,3 +9536,34 @@ overlap).
 (teaching `select_role.py`/`next_ready_task.py` to surface "N ready tasks blocked on the
 same live RENDER-BACKLOG.md signature" as its own signal); deferring to that rather than
 writing a second, redundant one.
+
+## 2026-07-26 | Reviewer (conductor agent run) | digital-storefront | security-flag
+type: security-flag
+
+**Subject:** kind_robots `public/mermaids.pdf` is a live, unauthenticated, publicly
+reachable copy of the exact product `digital-storefront/t-023` is meant to sell behind a
+Stripe-paid Entitlement gate.
+
+**Detail:**
+- Found while scoping t-023 (not claimed/attempted — that task is a substantial
+  gate_human/outward-facing build in its own right, out of scope for this cycle).
+- `public/mermaids.pdf` (2.6MB) exists in the current kind_robots checkout at a path
+  Nuxt serves unauthenticated by convention (anything under `public/`).
+- `components/pages/mermaids-page.vue` does not currently link to this file, so it
+  isn't surfaced from the site's own UI — but the URL itself is not access-controlled,
+  gated, or removed, so it's downloadable by anyone who has or guesses it, independent
+  of whether/when the paywall in t-023 ships.
+- t-023's own task note already names the correct fix ("stream from server-side
+  storage — never public/") — this flag is that exactly this pre-existing file already
+  violates the constraint the task is designed to enforce going forward, not a new risk
+  the task's design misses.
+- Did not move or delete the file myself: no live DB/session access this cycle to
+  confirm whether it's the true final product or a stale placeholder, and destructively
+  altering a real product asset without that confirmation seemed like the wrong call to
+  make unilaterally.
+
+**Suggested action:** Silas (or whoever claims t-023) should confirm whether this is the
+real, final Mermaids of Venice PDF and, if so, move it out of `public/` (or otherwise
+restrict access) as part of — or before — building the entitlement-gated download route,
+rather than shipping the gate while the ungated copy still sits reachable at its current
+path. Noted in `projects/digital-storefront/roadmap.yaml`'s t-023 note as well.
