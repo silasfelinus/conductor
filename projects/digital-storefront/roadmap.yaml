@@ -716,8 +716,8 @@ tasks:
 - id: t-029
   milestone: m4
   title: 'Wire the print-eligibility gate to read Resource.commercialSafe instead of the checkpointResourceId-IS-NULL default-deny'
-  status: ready
-  owner: null
+  status: claimed
+  owner: worker
   passes: 0
   stakes: reversible
   depends_on: [t-020]
@@ -742,6 +742,9 @@ tasks:
     and sanity-check the classification output first — the seed script's
     backend matching is regex-based heuristics, not a verified mapping
     (flagged in kind-robots' TALKBACK 2026-07-26).
+  claimed_by: claude-conductor-scheduled-20260726T050916Z-ds-t029
+  claimed_at: '2026-07-26T05:09:17Z'
+  updated: '2026-07-26T05:09:17Z'
 
 - id: t-028
   milestone: m1
