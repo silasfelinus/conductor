@@ -1,14 +1,14 @@
 # Roadmap Audit
 
-Generated: `2026-07-26T00:23:00.219317+00:00`
+Generated: `2026-07-26T00:26:21.842858+00:00`
 
 This is a conservative structural audit. It reports suspicious state; it does not automatically change task status or remove human gates.
 
 ## Portfolio snapshot
 
-- **41** roadmaps, **32** active projects, **668** tasks
+- **41** roadmaps, **31** active projects, **668** tasks
 - **43 ready**, **40 waiting**, **26 needs-human**, **0 claimed/review**, **548 done**
-- Findings: **0 errors**, **14 warnings**, **53 informational**
+- Findings: **0 errors**, **12 warnings**, **53 informational**
 
 ## Project inventory
 
@@ -24,7 +24,7 @@ This is a conservative structural audit. It reports suspicious state; it does no
 | 8 | `mermaids-of-venice` | retired | content | 0 | 0 | 8 | 0 | 4 / 12 |
 | 9 | `kind-robots` | active | software | 5 | 0 | 3 | 0 | 39 / 47 |
 | 10 | `kindrobots-unraid` | active | software | 0 | 7 | 1 | 0 | 4 / 12 |
-| 11 | `global-ui` | active | software | 0 | 0 | 0 | 0 | 25 / 25 |
+| 11 | `global-ui` | finished | software | 0 | 0 | 0 | 0 | 25 / 25 |
 | 12 | `superkate-services-calculator` | active | software | 0 | 0 | 1 | 0 | 36 / 37 |
 | 13 | `superkate-hairstyle-ai` | active | software | 1 | 0 | 1 | 0 | 19 / 21 |
 | 14 | `newsfeed` | active | software | 1 | 0 | 0 | 0 | 21 / 22 |
@@ -62,7 +62,7 @@ This is a conservative structural audit. It reports suspicious state; it does no
 
 _None._
 
-### Warning (14)
+### Warning (12)
 
 - **ACTIVE_PROJECT_ALL_DONE** — `art-generator-connect`: All tasks are done but project override remains active.
 - **ACTIVE_PROJECT_NO_OPEN_TASKS** — `art-generator-connect`: Active project has no open tasks; mark finished/paused or add an intentional recurring task.
@@ -70,8 +70,6 @@ _None._
 - **ACTIVE_PROJECT_NO_OPEN_TASKS** — `davinci`: Active project has no open tasks; mark finished/paused or add an intentional recurring task.
 - **ACTIVE_PROJECT_ALL_DONE** — `ecosystem-map`: All tasks are done but project override remains active.
 - **ACTIVE_PROJECT_NO_OPEN_TASKS** — `ecosystem-map`: Active project has no open tasks; mark finished/paused or add an intentional recurring task.
-- **ACTIVE_PROJECT_ALL_DONE** — `global-ui`: All tasks are done but project override remains active.
-- **ACTIVE_PROJECT_NO_OPEN_TASKS** — `global-ui`: Active project has no open tasks; mark finished/paused or add an intentional recurring task.
 - **ACTIVE_PROJECT_ALL_DONE** — `humboldt-scoop`: All tasks are done but project override remains active.
 - **ACTIVE_PROJECT_NO_OPEN_TASKS** — `humboldt-scoop`: Active project has no open tasks; mark finished/paused or add an intentional recurring task.
 - **ACTIVE_PROJECT_ALL_DONE** — `packmaker`: All tasks are done but project override remains active.
