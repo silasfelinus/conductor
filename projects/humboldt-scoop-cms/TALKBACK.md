@@ -172,3 +172,25 @@ type: pattern
 - Whoever runs this on the real box first should fold the actual `pm2 start` output (does osrm-routed answer `/table/v1/driving/...`? does vroom's `/` health-check respond?) back into this task's note -- the scaffolding is unexecuted until then.
 
 **Kaizen task:** none filed -- the deferred VROOM app-integration is already named as explicit future work in this task's own spec (route-planner/SPEC.md §3a/§4's locked-stop VROOM constraints), not a new gap found this cycle.
+
+## 2026-07-26 | Reviewer (conductor scheduled session) | humboldt-scoop-cms/t-012 | pattern
+
+**Decision:** merged PR #1144 (`status: review`, CI-green).
+
+**Failure category:** null — clean first-pass, additive-only ops scaffolding.
+
+**What was good:**
+- Matched the exact HTTP contract `matrixProvider.ts`'s `OSRMMatrixProvider` already expects rather
+  than a generic OSRM setup, and explicitly did not overclaim VROOM integration that didn't happen.
+- Honest about the verification boundary: config loads under Node, script passes `bash -n`, and the
+  PR body/task note both flag that live execution needs Silas's actual box rather than pretending a
+  sandbox check proves the services work.
+- All 23 CI checks green; no app code touched (`OSRM_BASE_URL` unset still falls back to the existing
+  Haversine provider, so nothing regresses if this never gets turned on).
+
+**What to improve:**
+- None specific this cycle.
+
+**Kaizen task:** none filed — the deferred VROOM app-integration is already named as explicit future
+work in the task's own spec, and the "fold real pm2 output back into the task note" follow-up is
+already captured in the Worker's own TALKBACK entry above.
