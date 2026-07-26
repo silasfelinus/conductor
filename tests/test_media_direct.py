@@ -51,6 +51,8 @@ def test_consumer_adds_normalized_exact_destination(tmp_path, monkeypatch, image
     )
 
     entry = {
+        "id": "kind-robots-project-card-retry-2",
+        "project_slug": "project-card",
         "prompt": "a friendly robot",
         "image_path": image_path,
     }
@@ -59,6 +61,8 @@ def test_consumer_adds_normalized_exact_destination(tmp_path, monkeypatch, image
     canonical = "public/images/bots/test/test.webp"
     assert job["payload"]["targetRepo"] == "silasfelinus/kind_robots"
     assert job["payload"]["imagePath"] == canonical
+    assert job["idempotencyKey"] == "kind-robots-project-card-retry-2"
+    assert job["projectSlug"] == "project-card"
 
     output, warning = consumer.save_result(entry, base64.b64encode(b"bytes").decode())
     assert verified_paths == [canonical]

@@ -697,7 +697,7 @@ def save_result(entry, image_b64):
 
 def enqueue(job_body):
     status, resp = http_json("POST", f"{KR_BASE_URL}/api/art/queue", job_body)
-    if status != 201 or not resp or not resp.get("success"):
+    if status not in (200, 201) or not resp or not resp.get("success"):
         raise RuntimeError(f"enqueue failed: HTTP {status} {resp and resp.get('message')}")
     return resp["data"]["job"]["id"]
 
