@@ -1,0 +1,13 @@
+version: 1
+project: digital-storefront
+task: t-033
+operation: done
+session: claude-conductor-burst-20260726T100541Z-ds-t033
+updated: '2026-07-26T11:19:00Z'
+note: |-
+  DONE 2026-07-26: kind_robots PR #1011 merged as squash commit 10d22619f08ef2fa220456669a94a31b2cdc6f02. The general giftshop cart now carries a real artImageId per physical-goods line, validates it and re-runs print eligibility before creating the Stripe session, preserves separate same-type items by (type, artImageId), carries artImageId through Stripe line metadata, and creates a real PrintJob during webhook fulfillment. Ineligible art rejects the whole checkout so customers are never charged for a silently reduced cart. Book remains Order/OrderItem-only because it is a fixed product rather than an ArtImage print. All implementation verification and CI passed on the merged PR; no live vendor action was performed.
+learning:
+  kind: software
+  stakes: reversible
+  passes: 0
+  lesson: Carry identity-bearing fields through every checkout boundary and revalidate eligibility at fulfillment; dropping artImageId turned an apparently complete cart flow into audit-only fulfillment for physical goods.
