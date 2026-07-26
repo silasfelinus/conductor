@@ -1875,3 +1875,46 @@ named group, so `match.group("body")` is `None` and `.strip()` raises `Attribute
 
 **Kaizen task:** none filed — the retry_context on the task itself is the actionable follow-up;
 no new systematic gap surfaced beyond "run the tests you wrote before opening the PR."
+
+## 2026-07-26 | Worker (scheduled agent run) | ai-art-academy/t-041 | pattern
+
+**Decision:** own PR #1155 closed unmerged (superseded) after a concurrent session salvaged
+its substantive change into PR #1156 and closed the task while my PR was mid-flight waiting
+on CI.
+
+**Detail:**
+- Opened PR #1155 for t-041 (ashcan-school.md status-line fix + roadmap/TALKBACK/LEARNING
+  bookkeeping) after `claim_task.py` had already pushed the claim commit straight to `main`.
+  My local branch predated that claim commit, so the first CI-wait rebase hit a real (if
+  small) conflict in `roadmap.yaml` between the claim commit's `status: claimed` and my
+  `status: review` — resolved correctly, force-pushed, waited out a second full CI run
+  (~6 min, CodeQL javascript-typescript the long pole both times).
+- Between that push and the merge attempt, another session/Silas pushed two commits directly
+  to `main`: PR #1156 ("salvage Ashcan promoted status" — the same one-line fix, cleanly
+  applied without any of my branch's now-stale bookkeeping) plus a task-events closeout
+  commit that flipped t-041 to `done`. My merge attempt then 405'd with "has merge conflicts."
+  Fetched `origin/main`, confirmed via `pull_request_read get` on #1156 that it was already
+  merged and the roadmap task already `done` with equivalent (better — no dropped generated-
+  file noise) content, so completing my own rebase-and-merge would have re-added redundant/
+  stale bookkeeping on top of a cleaner resolution rather than fixing anything real.
+- Closed #1155 with a comment pointing at #1156, then `git reset --hard origin/main` and
+  force-pushed my session branch so it carries no superseded commits, per the
+  "Rescue/salvage PRs — delete the superseded branch in the same session" precedent (here:
+  my own branch was the superseded one, not a third party's stale branch).
+
+**What was good (self-assessment):** checked the actual state of `main` and PR #1156 before
+assuming "405 = just re-rebase again" — a second blind rebase-and-force-push would have raced
+back on top of the salvage and reintroduced the exact stale-bookkeeping problem #1156's own
+body says it was deliberately avoiding.
+
+**Pattern note:** this is the concurrent-session collision class from "Rotation collisions"
+in AGENTS.md, but on the *closeout* side rather than the *claim* side — `claim_task.py`
+already guards against two sessions both starting the same task, but nothing currently guards
+against two sessions finishing it at the same time once claimed. No process change proposed
+here since the outcome was correct (whichever session's PR merges first wins, the other
+defers) and low-cost (one extra fetch + a closed PR) — just recording the instance since this
+exact race hadn't shown up in this project's TALKBACK before.
+
+**Kaizen task:** none filed — no systematic gap, and the existing "check current state before
+retrying a 405" discipline (already documented for the STATUS.md/workspace.html auto-gen
+case) generalizes to this case too without needing a new rule.
