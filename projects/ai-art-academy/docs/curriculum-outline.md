@@ -4,8 +4,8 @@ date: 2026-07-10
 task: ai-art-academy/t-005
 status: draft for review (content complete, one source URL verified per movement)
 
-This is the curriculum: 30 movements spanning the timeline from Ancient Egypt to
-American Regionalism. Every artist named here is long dead (all listed artists died
+This is the curriculum: 31 movements spanning the timeline from Ancient Egypt to
+the Nabis. Every artist named here is long dead (all listed artists died
 before 1955), and every example work is a public-domain original held (or expected)
 in an open-access collection. See the ethical boundary in DESIGN-BRIEF.md and the
 PUBLIC-DOMAIN-POLICY.md (t-006).
@@ -39,6 +39,16 @@ visually distinct from every other Asian entry in the curriculum (Song Dynasty's
 monumental monochrome peaks, Ukiyo-e's flat multi-block color, Mughal's dense
 courtly ornament): loose, economical brushwork on plain paper depicting candid,
 often humorous scenes of Joseon-era commoners, with little to no background at all.
+Section 31 is the 2026-07-26 v1.11 addition (t-010 cycle, lane 4): The Nabis
+— promoted from `docs/curriculum-candidates/the-nabis.md`, which had already
+done the recognition-cue and prompt-template research; this cycle added the
+three institution-verified public-domain example works (Musée d'Orsay,
+National Gallery of Art) the candidate's own "definition of done" required
+before front-end promotion. It returns to Western Europe (Paris, 1888-1900)
+after several non-Western entries, and is the first entry whose own artists
+(Vuillard, Denis) explicitly cite an earlier non-Western entry in this same
+curriculum (Ukiyo-e, Section 7) as a direct visual influence.
+
 They are appended (rather than renumbered into place) but belong
 chronologically among the earlier movements — read the `era` field in the
 machine-readable skeleton for true ordering; the front-end seed (t-020, t-031)
@@ -1871,6 +1881,72 @@ seal stamp in one corner, no cast shadow or linear perspective"
 
 ---
 
+## 31. The Nabis (`the-nabis`)
+
+**Era:** c. 1888-1900 (Paris)
+
+**Key ideas.** The Nabis ("prophets," from the Hebrew) formed around 1888-1889
+among students connected to the Académie Julian, after Paul Sérusier returned
+from Pont-Aven with a small landscape painted under Paul Gauguin's direct
+guidance: instead of copying the scene's colors as observed, Sérusier
+organized it as patches of emotionally chosen, non-naturalistic color. That
+painting — nicknamed "The Talisman" by the group — became their founding
+icon. Maurice Denis crystallized the theory: before a painting depicts a
+person, a horse, or a story, "it is essentially a flat surface covered with
+colors assembled in a certain order." The group carried the flattened space
+and strong contours of Japanese ukiyo-e prints (see this curriculum's own
+entry 7) into decorative panels, posters, book illustration, and theater
+design, treating those "minor" decorative arts as equal in seriousness to
+easel painting — a bridge between Post-Impressionism/Symbolism and the
+following century's illustration and design-first color painting.
+
+**Recognition cues:**
+- Flattened, shallow pictorial space rather than Renaissance-style depth
+- Large, interlocking areas of unmodulated color rather than blended tonal
+  shading
+- Strong contour lines separating color areas, echoing Japanese woodblock
+  prints
+- Wallpaper, textiles, screens, and other domestic patterns treated as a
+  major structural element of the composition, not background filler
+- Cropped, off-center viewpoints suggesting a photograph or a print rather
+  than a staged studio arrangement
+- Quiet, intimate subject matter: interiors, gardens, theater scenes, and
+  domestic moments rather than history painting or grand landscape
+- Figures simplified toward silhouette or rhythmic pattern, sometimes nearly
+  dissolving into the surrounding decoration
+
+**Notable artists:**
+- **Paul Sérusier** (1864-1927) — Painted *The Talisman* under Gauguin's
+  direction at Pont-Aven in 1888; the small landscape's color-as-emotion
+  logic became the group's founding argument.
+- **Édouard Vuillard** (1868-1940) — Specialist in compressed, pattern-dense
+  interiors where figures nearly merge with wallpaper and upholstery.
+- **Maurice Denis** (1870-1943) — The movement's clearest theorist; his
+  "flat surface covered with colors" argument is the cleanest entry point for
+  students into why the Nabis painted the way they did.
+
+**Example works:**
+- *The Talisman (Landscape at the Bois d'Amour)*, Paul Sérusier, 1888 — Musée
+  d'Orsay, Paris. VERIFIED public domain (author died 1927, published before
+  1931, Wikimedia Commons, `PD-Art` template):
+  https://commons.wikimedia.org/wiki/File:Serusier_-_the_talisman.JPG
+- *The Yellow Curtain*, Édouard Vuillard, c. 1893 — National Gallery of Art,
+  Washington (Ailsa Mellon Bruce Collection, acc. 1970.17.95). VERIFIED public
+  domain (CC0 1.0, NGA Open Access, Wikimedia Commons):
+  https://commons.wikimedia.org/wiki/File:Edouard_Vuillard,_The_Yellow_Curtain,_c._1893,_NGA_52239.jpg
+- *Homage to Cézanne*, Maurice Denis, 1900 — Musée d'Orsay, Paris (acc. RF
+  1977 137). VERIFIED public domain (author died 1943, life+70 rule,
+  Wikimedia Commons):
+  https://commons.wikimedia.org/wiki/File:Maurice_Denis_Homage_to_Cezanne_1900.jpg
+
+**remix_hint:** "Reinterpret this image as a late-1890s Nabis decorative
+painting: flatten the depth into interlocking color shapes, simplify figures
+into rhythmic silhouettes, use strong contour edges, and let textiles,
+wallpaper, foliage, or architectural patterns organize the composition;
+favor intimate mood and designed surface rhythm over photographic realism"
+
+---
+
 ## Lesson-only vs remixable
 
 Every movement above maps to a remix config (mode `prompt` to start; t-003/t-004
@@ -1940,6 +2016,16 @@ thin ink-wash filter, reading as generic "sumi-e" rather than pungsokhwa's
 actual candid, mostly-blank-paper look; the remix_hint leans on "almost no
 background detail" and "plain paper" explicitly, and t-004 should check that
 the background is genuinely simplified away, not just desaturated.
+`the-nabis` shares `art-nouveau`'s and `vienna-secession`'s flattened-pattern
+appeal but with the opposite risk: instead of a coherent decorative motif
+(whiplash line, gold ornament), its identity depends on the model actually
+*inventing* wallpaper/textile pattern in areas of the source photo that have
+none, and simplifying figures toward silhouette without losing the subject
+entirely. The likelier failure mode is the model defaulting to a generic
+"flat vector-art" or "cartoon" filter that flattens color without adding any
+decorative pattern language — the remix_hint leans on "textiles, wallpaper,
+foliage, or architectural patterns organize the composition" specifically so
+t-004 can check that pattern is actually present, not just flat color.
 
 **Flagged as likely-poor remixers:**
 - `cubism` — faceting while "preserving the composition" is partly contradictory;

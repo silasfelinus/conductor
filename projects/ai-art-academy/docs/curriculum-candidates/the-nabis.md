@@ -1,5 +1,12 @@
 # The Nabis — Curriculum Candidate
 
+**Status: PROMOTED 2026-07-26** — now curriculum-outline.md §31 (`the-nabis`),
+v1.11. Three institution-verified public-domain example works (Musée d'Orsay,
+National Gallery of Art) satisfy this file's own "definition of done" below.
+Kept here as the source research for the promoted entry; not yet synced into
+kind_robots' `stores/seeds/academyStyles.ts` (a separate follow-up, same
+pattern as every prior curriculum-outline.md addition).
+
 ## Why this belongs in the Academy
 
 The Nabis were a loose group of young artists working mainly in Paris during the 1890s. Their name comes from the Hebrew word for “prophets,” reflecting their belief that painting could move beyond literal description and become a deliberately designed surface of color, pattern, rhythm, and feeling.
