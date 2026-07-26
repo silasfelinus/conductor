@@ -180,7 +180,7 @@ tasks:
   - id: t-007
     milestone: m6
     title: "Implement deterministic route-plan API with selected customer count"
-    status: claimed
+    status: review
     owner: worker
     passes: 0
     stakes: reversible
@@ -197,6 +197,52 @@ tasks:
       paid third-party API — see t-006's note for Silas's exact hosting
       constraints (his own box, bonus for pm2-from-conductor-repo). No
       OpenRouteService fallback; do not build against it.
+
+      IMPLEMENTED 2026-07-26 (conductor scheduled burst-mode rotation,
+      claude-conductor-burst-20260726T110853Z-hscms-t007): added `POST /routes/plan`
+      (`src/server.ts`) plus a new `src/routing/` module:
+      - `matrixProvider.ts`: a `RouteMatrixProvider` interface with two implementations --
+        `HaversineMatrixProvider` (deterministic straight-line distance/estimated-duration
+        fallback, zero network/keys, the default) and `OSRMMatrixProvider` (calls a
+        self-hosted OSRM instance's `/table` and `/route` HTTP endpoints via `OSRM_BASE_URL`,
+        matching t-006's approved stack -- this is the real integration point for once Silas
+        stands up OSRM; see new t-012 for that standup work, deliberately out of scope here).
+        Provider selection is `getConfiguredMatrixProvider()`: OSRM if `OSRM_BASE_URL` is set,
+        Haversine fallback otherwise, so the API is fully usable today with zero infra.
+      - `optimizer.ts`: nearest-neighbor construction + 2-opt improvement over a fixed-endpoint
+        open path (start -> stops -> end), per this task's own "nearest-neighbor plus 2-opt for
+        v1" note -- no LLM, no randomness, same input always produces the same order. Locked
+        stops use SPEC.md section 4's simpler v1 approach: optimize the unlocked subset, then
+        splice locked stops back in at their fixed position; out-of-range or colliding lock
+        requests are ignored and reported rather than silently dropped or applied wrong.
+      - `planRoute.ts`: orchestrates eligibility (date/filter match against seed visits),
+        explicit and fill-to-N selection (fill-to-N sorts by earliest-due or by proximity to
+        the start point), matrix + optimizer + geometry calls, per-stop ETA/cumulative
+        distance-time using a service-duration-per-yard-size constant, and assembles the
+        ordered-stops/totals/warnings/excluded response this task's note asks for. Any eligible
+        customer not selected, and any eligible customer whose property has no coordinates on
+        file, is surfaced in `excluded` with a reason -- never silently dropped.
+      - `schema.ts`: added optional `Property.coordinates` (dummy, approximate single-point
+        coordinates for named sample Humboldt-area neighborhoods -- not geocoded from any real
+        address) and four more dummy customers/properties/visits on a shared test date
+        (2026-07-28) so fill-to-N/explicit/locked-stop/missing-coordinates behavior has more
+        than one real candidate to exercise -- one of the five (`cus-alvarez`) deliberately has
+        no coordinates on file to cover the missing-coordinates exclusion path.
+      Verified: full-project `npm run build` (`tsc --noEmit`-equivalent) clean; added
+      `node --test`-based unit/integration tests (19 total, all passing) covering haversine math,
+      the OSRM provider's request/response shape (fetch mocked, no live network), the optimizer's
+      brute-force-verified optimality on a small deterministic layout plus its locked-stop
+      splicing and out-of-range/collision handling, and `planRoute`'s explicit/fill-to-N/
+      proximity/locked/neighborhood-filter/zero-stops/missing-coordinates behavior end to end
+      against the seed data. Also manually smoke-tested the running dev server with a live
+      `curl` POST to `/routes/plan` and inspected the full JSON response.
+      Not done here (explicitly out of scope for "the API"): the dispatcher map UI (t-008,
+      already `waiting` on this task), the Android client (t-009), and actually standing up a
+      live OSRM/VROOM instance on Silas's box -- no OSM extract can be fetched or docker
+      container run from this sandbox. Filed that standup + pm2-packaging work as new t-012
+      per t-006's "bonus points" note, `stakes: reversible`, no `depends_on` (independent infra
+      work; t-007/t-008 both work today against the Haversine fallback regardless of when t-012
+      lands).
     claimed_by: claude-conductor-burst-20260726T110853Z-hscms-t007
     claimed_at: '2026-07-26T11:08:54Z'
     updated: '2026-07-26T11:08:54Z'
@@ -279,3 +325,43 @@ tasks:
       files) so merged anyway. Building the actual admin CMS (customer/
       schedule/route console) remains out of scope, gated behind t-006
       (needs-human, still waiting on Silas).
+
+  - id: t-012
+    milestone: m6
+    title: "Stand up self-hosted OSRM + VROOM services and package pm2 startup from the conductor repo"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Filed 2026-07-26 (t-007 close-out kaizen). t-007 implemented `POST /routes/plan`
+      against a pluggable `RouteMatrixProvider` (`src/routing/matrixProvider.ts`) with a
+      working `HaversineMatrixProvider` fallback (no infra needed) and an `OSRMMatrixProvider`
+      that calls a self-hosted OSRM instance's `/table` and `/route` HTTP endpoints via
+      `OSRM_BASE_URL` -- but no actual OSRM (or VROOM) process exists yet anywhere. Per
+      t-006's approval note (Silas, 2026-07-26): "I have unraid and the same host box that
+      runs comfy and our comfy relay, as well as the serendipity voice relay... Bonus points
+      if the solution can be added directly from the conductor repo and ran as pm2." This task
+      is that standup:
+      (1) a small Humboldt-County-scale OpenStreetMap extract (single-digit MB per SPEC.md
+      section 3a) fetched/pinned for `osrm-backend` to build against;
+      (2) an `osrm-backend` process (Docker or native binary) serving the `/table` and
+      `/route` HTTP API t-007's `OSRMMatrixProvider` already expects;
+      (3) a `vroom` process/binary for stop-order optimization as a longer-term replacement
+      for t-007's nearest-neighbor+2-opt optimizer, if/when full VROOM integration is wanted
+      (SPEC.md section 3a notes VROOM "pairs directly with OSRM's matrix output") -- not
+      required for t-007/t-008 to work today, since the 2-opt optimizer is a complete v1 on
+      its own;
+      (4) pm2 process definitions (e.g. `ecosystem.config.cjs`-style, matching the existing
+      comfy/comfy-relay/serendipity-voice-relay convention on Silas's box) checked into the
+      conductor repo so both services start under pm2 rather than a separate standalone
+      deploy;
+      (5) documentation of the exact `OSRM_BASE_URL` value to set once running, and how to
+      refresh the OSM extract (SPEC.md suggests quarterly is plenty for a service area this
+      size).
+      This is infra/ops work, not app code -- independent of t-007/t-008/t-009, which all
+      already work against the Haversine fallback regardless of when this lands. No
+      `depends_on` since nothing in this milestone is blocked waiting on it. Actually running
+      the resulting pm2 processes happens on Silas's own box, outside any sandbox -- this task
+      covers getting the checked-in scripts/config to the point where that's a `pm2 start`
+      away, not remotely operating his infrastructure.

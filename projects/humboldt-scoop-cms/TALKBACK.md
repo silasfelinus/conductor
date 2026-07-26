@@ -110,3 +110,24 @@ precedents).
 (packmaker/t-006, mermaids-of-venice/t-012) — same fix applies. Also worth adding
 a one-line clarification to t-044's note itself: the dashboard-tab art path in
 these tasks is usually correct; only the tutorialChannels nesting claim is stale.
+
+## 2026-07-26 | Worker (conductor-scheduled burst-mode session) | humboldt-scoop-cms/t-007 | pattern
+
+type: pattern
+
+**Subject:** Implemented the deterministic route-plan API t-006 unblocked, using a pluggable routing-provider design so the feature works today (Haversine fallback) without waiting on Silas to stand up OSRM/VROOM.
+
+**Detail:**
+- Read SPEC.md and t-006's approval note in full before writing anything -- the "no LLM," "self-hosted only," and "nearest-neighbor + 2-opt for v1" constraints all came directly from those, not assumed.
+- Chose a `RouteMatrixProvider` interface (`src/routing/matrixProvider.ts`) specifically so the real OSRM integration point exists and is unit-tested (fetch mocked, URL/response-shape assertions) even though no live OSRM instance exists to test against in this sandbox -- rather than deferring the whole task until infra exists, or building something that would need a rewrite once OSRM is available.
+- Verified the optimizer against a brute-force-computed optimum on a small deterministic layout (5!  = 120 permutations), not just "it runs" -- this is the kind of correctness check that matters for something inherently algorithmic.
+- Expanded seed data (4 more dummy customers/properties, one deliberately missing coordinates) specifically to exercise the explicit/fill-to-N/locked/missing-coordinates/neighborhood-filter paths in integration tests -- the original 2-customer seed set couldn't have exercised most of this task's own requirements.
+- Filed the OSRM/VROOM standup + pm2 packaging as a separate task (t-012) rather than attempting it in-sandbox (no OSM extract fetch, no docker/root access here) or silently leaving it undocumented.
+
+**What was good:**
+- Task was genuinely unblocked (t-006 approved same day) and reversible with no gate_human -- good match for burst-mode intensive work rather than another recheck of the already-well-documented ai-art-academy/coloring-book render-queue blocker.
+
+**What to improve:**
+- None specific this cycle -- flagging for the next reviewer to double check the ETA/cumulative-duration math (services duration is added *after* recording each stop's arrival ETA, so ETA reflects arrival time before service, not departure) since that's the one piece of business logic without an obvious external reference to check against.
+
+**Kaizen task:** t-012 (stand up self-hosted OSRM + VROOM, package pm2 startup from the conductor repo) -- filed directly as part of this close-out per t-006's own "bonus points" note, rather than deferred to whoever reviews this PR.
