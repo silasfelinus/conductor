@@ -15,6 +15,54 @@ Record the lane, files changed, and verification in the task note before rearmin
 
 ### Rotation state
 
+- Last completed lane: Roadmap accuracy (lane 2), 2026-07-26 (~18:05-18:25 UTC,
+  claude-conductor-burst-20260726T1802Z-aa-t010-lane2, scheduled burst-mode
+  cycle). Per the prior cycle's note, lane 2 was next after lane 4 ran.
+  `scripts/audit_roadmaps.py`: 0 errors, 0 warnings, 56 info — a real
+  improvement over the long-standing 12-warning baseline (the
+  `ACTIVE_PROJECT_ALL_DONE`/`ACTIVE_PROJECT_NO_OPEN_TASKS` warnings this
+  checklist has left alone since 2026-07-20 pending Silas's call) — confirmed
+  this is because `project-overrides.yaml` was updated 2026-07-26 to flip
+  several of those exact projects (global-ui, ecosystem-map, humboldt-scoop,
+  packmaker, engagement, challenge-center, superkate-services-calculator) to
+  `finished`, resolving the warnings for real rather than the audit going
+  quiet. `scripts/validate_roadmaps.py`: valid. `scripts/check_pr_merged_drift.py`
+  flagged 2 unresolved candidates: this task's own kind_robots#1017 (my own
+  in-progress claim, not drift) and animation-manager/t-013's historical
+  kind_robots#887 reference (spot-checked via GitHub MCP `pull_request_read` —
+  confirmed merged 2026-07-22, but t-013 itself is mid-closeout by a concurrent
+  session with its own open PR #1160, not this project's concern). All 6
+  milestones re-verified programmatically against actual task statuses — no
+  drift (m1 done/0 open, m2 in-progress/t-004 ready, m3 in-progress/t-033
+  needs-human, m4 done/0 open, m5 in-progress/t-009+t-019 ready, m6
+  in-progress/t-010 claimed+t-035 ready). Spot-checked t-019's blocker for
+  currency: `public/images/academy/styles/` still 404s in kind_robots (via
+  GitHub MCP `get_file_contents`) — no change. Per t-004's own standing
+  instruction, did NOT re-run the render-queue-stats check this cycle (no
+  reason to believe it moved since the 2026-07-26T13:06Z reading).
+  **Real finding, not just a clean audit:** the immediately-prior lane-4
+  cycle's Nabis promotion (above) updated curriculum-outline.md and
+  style-lora-registry.md but silently skipped the two per-movement follow-ups
+  every prior addition (§17-30) got in the *same* cycle — a `teaching-notes.md`
+  row and an `art-prompts.yaml` style-preview prompt — leaving The Nabis
+  quietly behind on both axes the same way ashcan-school once fell behind on
+  example works (t-041's kaizen). Backfilled both this cycle: row 31 in
+  `teaching-notes.md` (mirroring row 30's shape, sourced from
+  curriculum-outline.md §31's key-ideas/recognition-cues and the "Lesson-only
+  vs remixable" section's existing Nabis risk paragraph — no new facts
+  invented) and `kind-robots-academy-style-preview-the-nabis` in
+  `art-prompts.yaml` (mirroring the other 30 entries' shared-subject prompt
+  shape exactly). Also fixed the "Current curriculum coverage" section below,
+  which still said "30 movement entries" / "before adding a 31st movement" —
+  stale since the lane-4 cycle above already added the 31st. Verified
+  `yaml.safe_load` on `art-prompts.yaml` (200 requests, 31 style-preview
+  entries, `the-nabis` present) and re-ran `scripts/audit_roadmaps.py` /
+  `scripts/validate_roadmaps.py` after all edits — still 0 errors, 0 warnings,
+  valid. Conductor-docs-only change (this checklist + teaching-notes.md +
+  art-prompts.yaml + roadmap.yaml); no kind_robots PR needed. Next preferred
+  lane is inspiration/preview assets (lane 3) — this cycle ran lane 2, so
+  lane 3 is next in the 1→2→3→4 rotation; re-probe with a fresh queued job
+  per t-004/t-035's blocker-discipline convention.
 - Last completed lane: Curriculum depth (lane 4), 2026-07-26 (~16:07-16:20 UTC,
   claude-conductor-agentrun-20260726T160754-aa-t010-nabis-promote, scheduled
   agent run). Preferred lane was inspiration/preview assets (lane 3); re-probed
@@ -1149,25 +1197,35 @@ This explicit state is the handoff between recurring cycles. Update it in the sa
 
 ## Current curriculum coverage
 
-The Academy currently has 30 movement entries in `curriculum-outline.md`. As of
-this cycle (2026-07-25 ~17:35-18:10 UTC, claude-conductor-burst-20260725T1800Z-t010-lane3,
-lane 3 fallback — see rotation state below), all 30 are synced to `academyStyles.ts`:
-this cycle's kind_robots PR lands the previously-deferred Fayum Mummy Portraits (§28,
-added 2026-07-22), Vienna Secession (§29, added 2026-07-24), and Joseon Dynasty Korean
-Genre Painting (§30, added 2026-07-25) entries in one PR, closing the front-end-sync
-backlog that had built up across three separate curriculum-depth (lane 4) additions.
-Before adding a 31st movement, finish the known coverage gaps below unless a newly
-discovered issue is more urgent — every remaining gap is blocked solely on
-home-relay/media-server reachability, not on research or write access to this repo.
+The Academy currently has 31 movement entries in `curriculum-outline.md` — The
+Nabis (§31) was promoted from `docs/curriculum-candidates/the-nabis.md` on
+2026-07-26 (claude-conductor-agentrun-20260726T160754-aa-t010-nabis-promote,
+lane 4). Updated this cycle (2026-07-26 ~18:05-18:20 UTC,
+claude-conductor-burst-20260726T1802Z-aa-t010-lane2, lane 2 roadmap-accuracy
+pass): the Nabis-promotion cycle's note only mentioned curriculum-outline.md
+and style-lora-registry.md's mapping table, but silently skipped the two
+per-movement follow-ups every prior addition (§17-30) got in the *same*
+cycle it was added — a teaching-notes.md row and an art-prompts.yaml
+style-preview prompt. Backfilled both this cycle (row 31 in
+`teaching-notes.md`'s per-style table; `kind-robots-academy-style-preview-the-nabis`
+in `art-prompts.yaml`, mirroring the existing 30 entries' shared-subject
+prompt shape) so The Nabis doesn't quietly stay behind on these two axes the
+way ashcan-school once did on example works (t-041's kaizen). Front-end sync
+to `academyStyles.ts` remains deferred, matching the established
+persian-miniature/song-dynasty-landscape/mughal-miniature/etc. pattern.
+Before adding a 32nd movement, finish the known coverage gaps below unless a
+newly discovered issue is more urgent — every remaining gap is blocked
+solely on home-relay/media-server reachability, not on research or write
+access to this repo.
 
 | Area | Current state | Next verifiable action |
 |---|---|---|
-| Lesson seed entries | 30 of 30 movements in curriculum-outline.md are synced to `academyStyles.ts` (Fayum Mummy Portraits, Vienna Secession, and Joseon Dynasty Korean Genre Painting landed together 2026-07-25 — mirroring t-020/t-031/t-034/PR #506/#616/#771/#814) | Coverage complete; sync each future new movement into `academyStyles.ts` as its own follow-up per the established pattern |
-| Example works | 24 movements complete, including Persian Miniature Painting (3 works, all **VERIFIED** by direct `WebFetch` of their Wikimedia Commons file pages — 2026-07-20 egress to commons.wikimedia.org worked, unlike the earlier `artic.edu` 402s), Song Dynasty Landscape Painting (3 works, all **VERIFIED** the same way, 2026-07-21), and Mughal Miniature Painting (3 works, all **VERIFIED** the same way, 2026-07-21). Fayum Mummy Portraits (3 works, **VERIFIED** against the Met Collection API's `isPublicDomain` field, 2026-07-22), Vienna Secession (3 works, **VERIFIED** via the Wikimedia Commons API, 2026-07-24), and Joseon Dynasty Korean Genre Painting (3 works, **VERIFIED** via direct Wikimedia Commons file pages, 2026-07-25) are all written up but not yet in `examples.manifest.json`. Ashcan School's 4 VERIFIED works are written up in curriculum-outline.md §23 but not yet in `examples.manifest.json` (confirmed absent: no `exampleWorks` field on the `ashcan-school` entry in `stores/seeds/academyStyles.ts` as of 2026-07-19). American Regionalism's 4 works are written up in curriculum-outline.md §24 (sourced, but marked "unverified this cycle" — `WebFetch` to museum hosts returned HTTP 402 through the session egress proxy) | Blocked on media-server write access — same blocker as t-033 (confirmed 2026-07-19: `examples.manifest.json` lives on `media.acrocatranch.com`, not in the kind_robots git repo; this session has `KR_API_TOKEN` but no `KR_RELAY_TOKEN`/`KR_RELAY_USER_ID` and found no in-repo upload path, so it cannot write the manifest or upload images from here). Research/sourcing is already done (curriculum-outline.md §23-30); only the write step remains, plus a direct-fetch spot-check of §24's four URLs when museum/Commons egress is open. Resume once a session with media-server/relay write access is available — do not re-attempt from a sandbox without it |
+| Lesson seed entries | 30 of 31 movements in curriculum-outline.md are synced to `academyStyles.ts` (Fayum Mummy Portraits, Vienna Secession, and Joseon Dynasty Korean Genre Painting landed together 2026-07-25 — mirroring t-020/t-031/t-034/PR #506/#616/#771/#814; The Nabis, §31, added 2026-07-26, front-end sync deliberately deferred per the same pattern) | Sync The Nabis into `academyStyles.ts` as its own follow-up (lane 1 or lane 3 cycle), then sync each future new movement the same way |
+| Example works | 24 movements complete, including Persian Miniature Painting (3 works, all **VERIFIED** by direct `WebFetch` of their Wikimedia Commons file pages — 2026-07-20 egress to commons.wikimedia.org worked, unlike the earlier `artic.edu` 402s), Song Dynasty Landscape Painting (3 works, all **VERIFIED** the same way, 2026-07-21), and Mughal Miniature Painting (3 works, all **VERIFIED** the same way, 2026-07-21). Fayum Mummy Portraits (3 works, **VERIFIED** against the Met Collection API's `isPublicDomain` field, 2026-07-22), Vienna Secession (3 works, **VERIFIED** via the Wikimedia Commons API, 2026-07-24), Joseon Dynasty Korean Genre Painting (3 works, **VERIFIED** via direct Wikimedia Commons file pages, 2026-07-25), and The Nabis (3 works, **VERIFIED** via direct Wikimedia Commons file pages, 2026-07-26) are all written up but not yet in `examples.manifest.json`. Ashcan School's 4 VERIFIED works are written up in curriculum-outline.md §23 but not yet in `examples.manifest.json` (confirmed absent: no `exampleWorks` field on the `ashcan-school` entry in `stores/seeds/academyStyles.ts` as of 2026-07-19). American Regionalism's 4 works are written up in curriculum-outline.md §24 (sourced, but marked "unverified this cycle" — `WebFetch` to museum hosts returned HTTP 402 through the session egress proxy) | Blocked on media-server write access — same blocker as t-033 (confirmed 2026-07-19: `examples.manifest.json` lives on `media.acrocatranch.com`, not in the kind_robots git repo; this session has `KR_API_TOKEN` but no `KR_RELAY_TOKEN`/`KR_RELAY_USER_ID` and found no in-repo upload path, so it cannot write the manifest or upload images from here). Research/sourcing is already done (curriculum-outline.md §23-31); only the write step remains, plus a direct-fetch spot-check of §24's four URLs when museum/Commons egress is open. Resume once a session with media-server/relay write access is available — do not re-attempt from a sandbox without it |
 | Starter library | 21 starter images and provenance manifest complete — coverage intentionally movement-agnostic (2026-07-18: confirmed no movement-specific starters exist for any of the 8 movements added after v1, and an abstract Suprematist work would fail the library's own selection criteria; see starter-image-library.md) | Keep source-picker integration aligned with the manifest; no new starter entries needed |
-| Style previews | 30 prompts queued (all 30 movements have a `kind-robots-academy-style-preview-*` entry in `art-prompts.yaml`, including Fayum Mummy Portraits, Vienna Secession, and Joseon Dynasty Korean Genre Painting). All 30 are still `status: pending` — the home relay is no longer in the fully-stuck never-claimed state seen 2026-07-18 through 2026-07-24 (`GET /api/art/queue/stats` this cycle: RUNNING 1, DONE 1445/24h) but is severely backlogged (52 PENDING, oldest ~31h old as of this cycle); a genuinely fresh probe job (2296, greek-vase-painting.webp) queued and timed out after 75s still queued/running, consistent with the backlog depth rather than a regression | Blocked on home-relay backlog depth, not on this queue. Re-run `python scripts/consume_art_requests.py --id-prefix "kind-robots-academy-style-preview-" --live` with a fresh job (not 816, 855, 957, 1014, 1175, 1184, 1242, 1426, or 2296) once the backlog has visibly drained (check `oldestPending`/`queueDepth.PENDING` via `GET /api/art/queue/stats` before re-probing with a full queued job) |
+| Style previews | 31 prompts queued (all 31 movements have a `kind-robots-academy-style-preview-*` entry in `art-prompts.yaml`, including Fayum Mummy Portraits, Vienna Secession, Joseon Dynasty Korean Genre Painting, and The Nabis — the last backfilled this cycle, 2026-07-26 lane 2, since the Nabis-promotion cycle hadn't queued it). All 31 are still `status: pending` — the home relay is no longer in the fully-stuck never-claimed state seen 2026-07-18 through 2026-07-24 (`GET /api/art/queue/stats` this cycle: RUNNING 1, DONE 1445/24h) but is severely backlogged (52 PENDING, oldest ~31h old as of the 2026-07-25 lane-3 check); a genuinely fresh probe job (2296, greek-vase-painting.webp) queued and timed out after 75s still queued/running, consistent with the backlog depth rather than a regression | Blocked on home-relay backlog depth, not on this queue. Re-run `python scripts/consume_art_requests.py --id-prefix "kind-robots-academy-style-preview-" --live` with a fresh job (not 816, 855, 957, 1014, 1175, 1184, 1242, 1426, or 2296) once the backlog has visibly drained (check `oldestPending`/`queueDepth.PENDING` via `GET /api/art/queue/stats` before re-probing with a full queued job) |
 | Remix configs | Registry exists; A/B generation blocked | Resume only after the relay, database, and approved generation path are available |
-| Teaching scaffold | Written in `docs/teaching-notes.md`, covering all 30 movements including Fayum Mummy Portraits (row 28), Vienna Secession (row 29), and Joseon Dynasty Korean Genre Painting (row 30); wired into `academy-style-detail.vue`'s Try It / Reflect sections (t-023, done — verified 2026-07-18 via `grep -n "Try it\|Reflect" components/academy/academy-style-detail.vue` on kind_robots main) | Coverage complete; no open action |
+| Teaching scaffold | Written in `docs/teaching-notes.md`, covering all 31 movements including Fayum Mummy Portraits (row 28), Vienna Secession (row 29), Joseon Dynasty Korean Genre Painting (row 30), and The Nabis (row 31 — backfilled this cycle, 2026-07-26 lane 2); wired into `academy-style-detail.vue`'s Try It / Reflect sections (t-023, done — verified 2026-07-18 via `grep -n "Try it\|Reflect" components/academy/academy-style-detail.vue` on kind_robots main) | Coverage complete; no open action |
 
 ## Blocker discipline
 
