@@ -4302,3 +4302,14 @@ records:
     degraded to role: worker while a fully-green, reviewable claude/* PR (this task's own #1168) sat open,
     caught only via a manual GitHub MCP list_pull_requests double-check. Filed t-084 so the JSON output
     itself flags the degraded-signal case instead of only printing a stderr warning a caller may not read.
+- date: '2026-07-26'
+  project: conductor
+  task: t-033
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'Concurrent Worker lanes need more than per-task leases: sessions must revalidate ownership
+    before review, the cap must be checked against fresh origin/main state, and append-only shared ledgers
+    need retry-safe compare-and-swap writes before parallel rollout.'
