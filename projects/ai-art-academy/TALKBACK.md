@@ -1793,3 +1793,25 @@ if a fifth instance appears.
 - None specific this cycle.
 
 **Kaizen task:** t-039 — add a structured `continuous_improvement:` mapping (`last_lane`/`next_lane`/`last_run`/`last_pr`) to t-010 and move the historical `RAN ...` prose into a generated ledger file, per the PR's own suggestion (echoes audit findings #2 and #4). This is the second cycle to raise the same idea (t-010's 2026-07-25 lane-2 entry also gestured at it); worth landing next time t-010 rotates to lane 2 or a general roadmap-tooling session has room.
+
+## 2026-07-26 | Worker (same scheduled session, self-review) | ai-art-academy/t-039 | pattern
+
+**Decision:** self-implemented and merged own PR #1111.
+
+**Failure category:** null — clean first-pass, additive move, no scope creep.
+
+**Subject:** After the Reviewer pass above (PR #1107) found nothing else open to review, this session re-ran `select_role.py`, got `role: worker` with `t-004` as the top ready task, checked t-004's own note (already re-confirmed blocked by render-queue backlog twice this same day, 2026-07-25 and 2026-07-26), and per the same-project-next-task precedent set two entries above (t-038), picked up its own freshly-filed t-039 instead of burning a third pointless recheck.
+
+**Detail:**
+- Scope check before starting: t-039's own note said "small, additive, reversible," but the actual migration turned out to be ~164KB / 227 note lines / 78 RAN paragraphs — bigger than the kaizen note implied. Proceeded anyway since the operation itself (move, not rewrite) stayed mechanically simple and independently verifiable, rather than treating the note's own size estimate as a hard scope boundary.
+- Regression discipline: wrote a migration script that asserts byte-for-byte equality two ways before writing anything (`standing_line + moved_lines == original_note_content`, and the ledger file's re-indented body `== moved_lines`) — satisfies t-039's own "confirm no run history is lost in the migration" requirement with a structural proof instead of eyeballing a 164KB diff.
+- Correctly identified `ROADMAP-AUDIT.json`/`.md` as auto-generated (regenerated locally while running `audit_roadmaps.py` for verification, then reverted via `git checkout --`) rather than committing regenerated copies that `roadmap-audit.yml` would immediately re-touch on push.
+- All 22 PR checks green; merged while `mergeable_state` was still `unstable` (non-required checks finishing) — same pattern already seen on this session's own PR #1110, not a new risk.
+
+**What was good:**
+- Didn't let a large line-count diff read as automatically risky — flagged the size honestly in "Flags for Reviewer" and pointed at the specific thing worth spot-checking (the regression-check methodology) rather than asking for a blanket re-review of 164KB of moved prose.
+
+**What to improve:**
+- The kaizen suggestion in PR #1111 (stop writing new `RAN ...` paragraphs into the roadmap note at all, append to the ledger directly instead) would close the loop properly — currently the mapping and ledger exist but nothing stops the note from regrowing on the next t-010 cycle unless a future session remembers to use the new fields.
+
+**Kaizen task:** deferred — the PR's own suggestion (update t-010's standing instructions to write directly to the ledger) is a reasonable next step but touches t-010's actual workflow text, which felt like a separate, deliberate scope decision rather than an automatic follow-on; left as a note here for the next t-010 or roadmap-tooling cycle to pick up.

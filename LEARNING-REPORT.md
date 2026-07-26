@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-07-26T08:13:47Z
+Generated: 2026-07-26T08:16:21Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **351**
-- Outcomes: blocked: 12, cancelled: 1, done: 338
+- Closed tasks recorded: **352**
+- Outcomes: blocked: 12, cancelled: 1, done: 339
 - Success rate: **96%**
 - Average passes on successful tasks: **0.0**
 
@@ -15,7 +15,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 | Project | Closed | Success rate |
 |---|---|---|
-| ai-art-academy | 38 | 100% |
+| ai-art-academy | 39 | 100% |
 | alexa-integration | 2 | 100% |
 | animation-manager | 10 | 100% |
 | animation-studio | 2 | 50% |
@@ -55,7 +55,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 15 | 40% |
-| software | 336 | 99% |
+| software | 337 | 99% |
 
 ## Failure categories
 
@@ -75,6 +75,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-07-26 `ai-art-academy/t-039` — A mechanical prose-to-file migration (moving t-010's 78 historical RAN entries, ~164KB, out of the roadmap note into a separate ledger) is safe to do in one pass if the regression check is structural, not eyeballed: reconstruct the original content two independent ways (standing_line + moved_lines == original; ledger_body re-indented == moved_lines) and assert byte-for-byte equality before writing anything. That caught the exact failure mode the original audit warned about ("silently pruning the note would be data loss wearing a tidy haircut") with zero manual re-reading of 164KB of prose.
 - 2026-07-26 `kind-robots/t-049` — An investigate-type kaizen task can close cleanly with no code diff and no PR to the target repo when the investigation's own two open questions both resolve to 'already handled': check `git log -p --follow` on the file in question before assuming a protective setting (here, a job-level `timeout-minutes`) needs adding -- it may already predate the incident that prompted the task. Also worth a quick recent-run-history check via the GitHub Actions API before treating a single observed hang as a recurring pattern.
 - 2026-07-26 `kind-robots/t-043` — For a cross-app authorization boundary (on-behalf-of mana charging), splitting the pure decision function into its own dependency-free module paid off immediately -- it let the security property get a direct 5-case unit test wired into CI, instead of relying on integration coverage that would need the full Nuxt runtime and a live DB. The one place this class of feature silently breaks is billing: on-behalf-of charges must debit the target user's own standing, not the caller's server-key standing, or every cross-app charge becomes accidentally free -- worth checking for explicitly in review whenever a machine-caller can act on behalf of another user.
 - 2026-07-26 `digital-storefront/t-029` — A prerequisite field landing first with a named downstream consumer already identified (t-020's Resource.commercialSafe migration named this exact task) means the wiring PR can be built and reviewed with zero ambiguity about intent or scope -- the diff was a pure function (checkPrintEligibility), one new authenticated GET endpoint mirroring an existing endpoint's auth pattern, and a UI wire-up, no schema changes. Reviewed and merged same-cycle with all CI green.
@@ -84,7 +85,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-07-26 `kind-robots/t-045` — Adding a NOT NULL/required column to a widely-selected Prisma model (Resource) breaks every narrower Prisma `select` object's derived type that a full-model-typed helper function consumes -- here resourceGallerySelect vs. checkpointScore(checkpoint: Resource, ...) in generate-preview.post.ts. A full vue-tsc/tsc run is the only reliable way to find every such break; grepping for the model name alone would have missed it. Also: this sandbox has no reachable DB, so any migration+seed-script task's live-data verification has to stop at typecheck/lint/a synthetic smoke test of the pure logic -- flag that gap explicitly in TALKBACK rather than claiming full verification.
 - 2026-07-26 `kind-robots/t-048` — A prior PR's 'zero callers' claim about a Vue component (art-manager.vue) was wrong because its grep only checked pages/ and components/, missing Nuxt Content .md files that embed components via MDC syntax (:component-name). Caught before implementation by re-grepping content/**/*.md as well. When trusting a 'this component/route is dead' claim before deleting or gating something, check content/**/*.md (or any CMS/markdown layer that can reference components) in addition to the usual source directories.
 - 2026-07-26 `kind-robots/t-044` — The Grant-model PR scoped itself tightly to exactly the pitch's first-task section (additive CREATE TABLE + 2 FKs, no route rewiring) and it paid off in review speed -- the migration.sql was auditable line-by-line in seconds (1 CREATE TABLE, 2 ADD CONSTRAINT, nothing else) precisely because nothing else was mixed into the diff. New authz helper (contentAccess.ts) shipped unwired on purpose, which kept the PR reviewable without needing to trace every call site it would eventually gate.
-- 2026-07-26 `kind-robots/t-046` — When a feature appears missing, verify reachability before rebuilding it: video-generator.vue was already complete, but its only prior route lived behind dead dashboard configuration and an unwired manager component.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-07-26T08:13:47Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-07-26T08:16:21Z_
