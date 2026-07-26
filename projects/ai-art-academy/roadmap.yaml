@@ -1280,3 +1280,27 @@ tasks:
       MERGED 2026-07-26: PR #1145 squash-merged as 388ba423 after fixing the alternation grouping regression and adding explicit `contents: read` workflow permissions. The changed-file curriculum guard, focused regression suite, roadmap validation, Security Audit, and full Worker PR CI all passed on the final head.
     claimed_by: claude-conductor-agentrun-20260726T150519Z-aa-t040-retry
     claimed_at: '2026-07-26T15:05:20Z'
+
+  - id: t-041
+    milestone: m6
+    title: Sweep docs/curriculum-candidates/ for already-promoted files whose status line still reads unpromoted
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-26T16:30:00Z'
+    note: >
+      Kaizen from ai-art-academy/t-010 (PR #1151, 2026-07-26 curriculum-depth
+      lane, The Nabis promotion). `docs/curriculum-candidates/ashcan-school.md`
+      was promoted into curriculum-outline.md as section 23 at some point in
+      the past, but the candidate file itself was never updated to reflect
+      that — it still reads `status: ready for curriculum integration`, so it
+      looks like an open item when it's actually done. (The Nabis got the
+      "Status: PROMOTED" treatment this cycle, per convention started here;
+      ashcan-school did not.) Spec: for each file in
+      `docs/curriculum-candidates/`, check whether its `movement_slug` (or
+      slug in the title/frontmatter) already has a matching numbered section
+      in `curriculum-outline.md`; if so and the candidate file doesn't already
+      say PROMOTED, add the same short status line The Nabis got (promoted
+      date, outline section number/version, one-line pointer). Small,
+      additive, docs-only, reversible — no kind_robots sync needed.
