@@ -2654,8 +2654,8 @@ tasks:
   - id: t-083
     milestone: m2
     title: "select_role.py's reviewer check only watches worker/* branches; teach it to also flag open, green, non-stale claude/* PRs as reviewable"
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     note: >
@@ -2677,7 +2677,7 @@ tasks:
       when directed by Silas in the session") -- this new check would surface such PRs
       as candidates for review, not auto-merge them; the actual merge decision is
       still the session's judgment call same as today.
-    claimed_by: null
-    claimed_at: null
-    updated: '2026-07-26T18:10:00Z'
+    claimed_by: claude-conductor-burst-20260726T1904Z-cd-t083
+    claimed_at: '2026-07-26T19:07:44Z'
+    updated: '2026-07-26T19:07:44Z'
 
