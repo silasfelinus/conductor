@@ -1,21 +1,21 @@
 # Roadmap Audit
 
-Generated: `2026-07-25T22:57:16.907252+00:00`
+Generated: `2026-07-26T00:02:58.426402+00:00`
 
 This is a conservative structural audit. It reports suspicious state; it does not automatically change task status or remove human gates.
 
 ## Portfolio snapshot
 
 - **41** roadmaps, **32** active projects, **668** tasks
-- **43 ready**, **41 waiting**, **27 needs-human**, **1 claimed/review**, **545 done**
-- Findings: **0 errors**, **12 warnings**, **51 informational**
+- **42 ready**, **41 waiting**, **26 needs-human**, **2 claimed/review**, **546 done**
+- Findings: **0 errors**, **12 warnings**, **52 informational**
 
 ## Project inventory
 
 | # | Project | State | Kind | Ready | Waiting | Human | In progress | Done / Total |
 |---:|---|---|---|---:|---:|---:|---:|---:|
 | 1 | `challenge-center` | finished | software | 0 | 0 | 0 | 0 | 20 / 20 |
-| 2 | `ai-art-academy` | active | software | 4 | 1 | 1 | 1 | 30 / 37 |
+| 2 | `ai-art-academy` | active | software | 3 | 1 | 1 | 2 | 30 / 37 |
 | 3 | `coloring-book` | active | software | 1 | 9 | 0 | 0 | 20 / 30 |
 | 4 | `humboldt-scoop` | active | software | 0 | 0 | 0 | 0 | 8 / 8 |
 | 5 | `humboldt-scoop-cms` | active | software | 0 | 4 | 1 | 0 | 6 / 11 |
@@ -32,7 +32,7 @@ This is a conservative structural audit. It reports suspicious state; it does no
 | 16 | `animation-manager` | active | software | 3 | 0 | 0 | 0 | 11 / 14 |
 | 17 | `animation-studio` | retired | software | 3 | 4 | 0 | 0 | 1 / 8 |
 | 18 | `ecosystem-map` | active | software | 0 | 0 | 0 | 0 | 8 / 8 |
-| 19 | `conductor` | active | software | 2 | 0 | 2 | 0 | 75 / 79 |
+| 19 | `conductor` | active | software | 2 | 0 | 1 | 0 | 76 / 79 |
 | 20 | `serendipity` | active | software | 1 | 0 | 0 | 0 | 11 / 12 |
 | 21 | `storymaker` | active | software | 1 | 0 | 0 | 0 | 9 / 10 |
 | 22 | `davinci` | active | software | 0 | 0 | 0 | 0 | 15 / 15 |
@@ -77,7 +77,7 @@ _None._
 - **ACTIVE_PROJECT_ALL_DONE** — `sketchy`: All tasks are done but project override remains active.
 - **ACTIVE_PROJECT_NO_OPEN_TASKS** — `sketchy`: Active project has no open tasks; mark finished/paused or add an intentional recurring task.
 
-### Info (51)
+### Info (52)
 
 - **APPROVAL_WITHOUT_GATE** — `ai-art-academy` / `t-002`: approved_by_human is set on a task that is not human-gated.
 - **APPROVAL_WITHOUT_GATE** — `ai-art-academy` / `t-011`: approved_by_human is set on a task that is not human-gated.
@@ -92,6 +92,7 @@ _None._
 - **MISSING_GOAL** — `coat-dance`: Roadmap has no friendly goal/definition of done.
 - **APPROVAL_WITHOUT_GATE** — `coloring-book` / `t-002`: approved_by_human is set on a task that is not human-gated.
 - **MISSING_GOAL** — `conductor`: Roadmap has no friendly goal/definition of done.
+- **APPROVAL_WITHOUT_GATE** — `conductor` / `t-026`: approved_by_human is set on a task that is not human-gated.
 - **APPROVAL_WITHOUT_GATE** — `conductor` / `t-033`: approved_by_human is set on a task that is not human-gated.
 - **APPROVAL_WITHOUT_GATE** — `conductor` / `t-048`: approved_by_human is set on a task that is not human-gated.
 - **MISSING_GOAL** — `conductor-app`: Roadmap has no friendly goal/definition of done.

@@ -408,24 +408,40 @@ repo's control — but the SESSION's behavior no longer has to depend on it.
 **Every session, regardless of what a trigger happened to name it, decides its own
 role from live state on arrival:**
 
-1. Run `python scripts/select_role.py` (composes `run_reviewer.py`'s open-`worker/*`-
-   branch check with `run_worker.py`'s ready-task check into one recommendation — no
-   model calls, pure state check). It returns one of:
+1. Run `python scripts/select_role.py` (composes four existing, no-model-call state
+   checks into one recommendation, in priority order). It returns one of:
    - **`role: reviewer`** — at least one `worker/*` branch is open and not yet merged
      into `main`. Reviewing an existing PR is higher-leverage than starting new work,
-     so this wins even if a ready task also exists.
-   - **`role: worker`** — no open `worker/*` branch, but a `ready` task exists.
-   - **`role: idle`** — neither. Fall through to the idle-fallback rule (dream-cycle's
-     "nothing better to do" contract, or `autonomous: true` projects' own rule).
-2. Follow the matching section below (**"If you're working"** / **"If you're
-   reviewing"**). A session isn't locked to one role for its whole run: if you finish
-   reviewing everything open, re-run `select_role.py` — it may now recommend `worker`
-   — and pick up ready work in the same session rather than stopping. This is what
-   "agents disperse and work as needed" means in practice: the role is a live
-   recommendation you re-check, not a label stamped on you before you started.
+     so this wins even if anything else below also applies.
+   - **`role: pr-medic`** — no branch to review, but an open PR (`run_reviewer.py`'s
+     scope) has red CI that's gone stale (no push in `--pr-stale-hours`, default 3h)
+     — a real error nobody is actively iterating on, not a PR mid-fix. See "If you're
+     fixing PR errors" below.
+   - **`role: branch-medic`** — nothing to review or fix, but `branch_janitor.py`'s
+     STRANDED tier is non-empty: a `claude/*`/`worker/*` branch with unique unmerged
+     commits, old enough (`--branch-stale-hours`, default 12h) that nobody's actively
+     pushing to it. `branch_janitor.py` itself deliberately never auto-acts on this
+     tier — see "If you're triaging stale branches" below.
+   - **`role: worker`** — none of the above, but a `ready` task exists.
+   - **`role: idle`** — none of the above. Fall through to the idle-fallback rule
+     (dream-cycle's "nothing better to do" contract, or `autonomous: true` projects'
+     own rule).
+2. Follow the matching section below. A session isn't locked to one role for its
+   whole run: if you finish reviewing everything open, re-run `select_role.py` — it
+   may now recommend `pr-medic`, `branch-medic`, or `worker` — and keep going in the
+   same session rather than stopping. This is what "agents disperse and work as
+   needed" means in practice: the role is a live recommendation you re-check, not a
+   label stamped on you before you started.
 3. If a human explicitly asked for one role in this session (e.g. "review PR #123"),
    honor that directly — `select_role.py` is for the *unprompted, trigger-fired* case,
    not a override of an explicit instruction.
+4. **Scope note:** `select_role.py`'s `pr-medic`/`branch-medic` signals only cover
+   this repo (conductor) — the one its own git checkout and `GITHUB_TOKEN` naturally
+   reach. Other repos a session can access (e.g. kind_robots) need the equivalent
+   check done via the session's own GitHub MCP tools (`list_pull_requests` +
+   `pull_request_read`'s `get_check_runs`/`get_status` method; `list_branches`), not
+   this script — a session with cross-repo access should check those too before
+   concluding there's nothing to fix/triage, not just conductor.
 
 This doesn't require the platform to merge its Worker/Reviewer triggers into one —
 it just means a session mislabeled by a stale trigger schedule self-corrects instead
@@ -522,6 +538,78 @@ in the PR. Recurring tasks don't count toward milestone progress.
 - **On a `challenged` task:** read the Worker's TALKBACK entry carefully. If the Worker's
   case has merit, adjust your decision and append a response. If not, escalate to
   `needs-human` for Silas to arbitrate — never re-reject a challenge silently.
+
+### If you're fixing PR errors
+
+`select_role.py` recommended `pr-medic`: an open PR has CI that's both **red** and
+**stale** (no push in the configured window despite failing) — a genuine orphaned
+error, distinct from a PR mid-iteration whose latest push just hasn't gone green yet.
+
+- For each PR in `red_stale_prs`: open it, read the actual failing check's logs (not
+  just the red status), and diagnose the real cause — flaky/transient infra vs. a
+  real regression vs. a pre-existing failure on the base branch the PR's diff didn't
+  cause (check whether the base branch itself is also red before blaming the PR).
+- **Fixable now:** push a commit that fixes it. Re-run/verify the check goes green.
+  This follows the same "drive to green" discipline as the PR-activity CI-failure
+  handling elsewhere in this manual — diagnose and push a fix, or reply explaining
+  why not; never leave a red check silently unaddressed.
+- **Base branch itself is broken** (the PR's own diff isn't the cause): say so once on
+  the PR (which check, confirmed also red on base) rather than repeatedly re-diagnosing
+  the same non-issue, and don't merge base into the PR until the base recovers.
+- **Not actually fixable / needs a human call** (e.g. the fix requires a decision only
+  Silas can make, or touches something outward-facing/irreversible): comment explaining
+  the real blocker and leave the task at `status: needs-human` — do not force a merge
+  past a red required check, and do not silently close the PR.
+- **The PR is simply abandoned** (author/owner unclear, work superseded elsewhere,
+  genuinely dead): don't unilaterally close someone else's PR — flag it in the
+  project's `TALKBACK.md` with your read and, if the underlying task's roadmap status
+  doesn't already reflect this, correct it (matching the same "roadmap state must
+  reflect live reality" principle as `check_pr_merged_drift.py`).
+- Cross-repo: `select_role.py` only checks conductor's own open PRs. If you have access
+  to other repos (kind_robots, etc.), check those too via GitHub MCP tools before
+  concluding there's nothing to fix.
+
+### If you're triaging stale branches
+
+`select_role.py` recommended `branch-medic`: `branch_janitor.py`'s STRANDED tier has
+entries — branches with unique unmerged commits, old enough that nobody's actively
+pushing to them. This is deliberately the ONE tier `branch_janitor.py` itself never
+acts on (it only auto-deletes MERGED/FORCE-named branches and *reports* STRANDED ones)
+— judgment is required, and that's this role's job:
+
+- For each stranded branch: read its actual diff against `main`, not just the commit
+  messages — is this real, reviewable, not-yet-landed work, or leftover scratch state
+  from an abandoned/superseded session?
+- **Real, reviewable work:** open a PR from it (or, if you're confident it's safe,
+  reversible, and scoped, finish and merge it directly per the normal Worker/Reviewer
+  merge rules) rather than leaving it to rot further. If it's stale enough that it
+  conflicts with current `main` in ways that need real judgment to resolve (not a
+  mechanical STATUS.md/ROADMAP-AUDIT.* auto-gen conflict), rebase and resolve properly
+  before opening the PR — do not force-push over unrelated newer history.
+  Reuse the git-race guardrail already in this manual (see "Don't delegate an in-flight
+  git workaround to a background subagent" pattern in `CLAUDE.md`-style operating
+  notes) — verify the branch's current remote tip immediately before touching it, since
+  time may have passed since `select_role.py` last checked.
+- **Confirmed superseded/scratch, safe to discard:** delete it yourself if your
+  session's credentials allow (`git push origin --delete <branch>`); if they 403 (the
+  documented sandbox limitation — session credentials can't delete refs, only the
+  `branch-janitor` workflow's `GITHUB_TOKEN` can), don't leave it hanging — trigger
+  `branch-janitor.yml` via `workflow_dispatch` with `force_delete_branches` set to the
+  branch name(s) you've verified, rather than reporting it and stopping.
+- **Genuinely ambiguous** (can't tell if it's real unfinished work without more context
+  than you have, e.g. a Silas-authored branch with unclear intent): do not guess either
+  way — leave it reported (this is exactly the case STRANDED exists to surface to a
+  human/session with more context) and note it in the project's `TALKBACK.md` or the
+  root one if it's not project-scoped.
+- Never touch `main` itself, and never delete a branch that still has an open PR
+  against it (that's the reviewer role's territory, not this one's).
+- Cross-repo: `branch_janitor.py`/`select_role.py` only cover conductor's own branches.
+  kind_robots and other repos accumulate the same kind of stale `claude/*` branches
+  (see conductor/t-078 for a real example) but have no equivalent automated janitor —
+  check those via GitHub MCP `list_branches` too when you have access, using the same
+  judgment above; there's no scripted STRANDED classification for them yet, so read
+  each candidate branch's actual state (merged? has an open PR? how old? real diff or
+  empty?) directly.
 
 ## Cross-vetting protocol
 
