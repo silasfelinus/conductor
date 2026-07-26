@@ -1,14 +1,14 @@
 # Roadmap Audit
 
-Generated: `2026-07-26T11:03:58.344558+00:00`
+Generated: `2026-07-26T11:07:43.274656+00:00`
 
 This is a conservative structural audit. It reports suspicious state; it does not automatically change task status or remove human gates.
 
 ## Portfolio snapshot
 
-- **42** roadmaps, **24** active projects, **695** tasks
+- **42** roadmaps, **23** active projects, **695** tasks
 - **44 ready**, **49 waiting**, **21 needs-human**, **2 claimed/review**, **568 done**
-- Findings: **0 errors**, **0 warnings**, **55 informational**
+- Findings: **0 errors**, **0 warnings**, **56 informational**
 
 ## Project inventory
 
@@ -25,7 +25,7 @@ This is a conservative structural audit. It reports suspicious state; it does no
 | 9 | `kind-robots` | active | software | 1 | 0 | 2 | 0 | 47 / 50 |
 | 10 | `kindrobots-unraid` | active | software | 0 | 7 | 1 | 0 | 4 / 12 |
 | 11 | `global-ui` | finished | software | 0 | 0 | 0 | 0 | 25 / 25 |
-| 12 | `mona-salai` | active | software | 3 | 10 | 0 | 0 | 0 / 13 |
+| 12 | `mona-salai` | paused | software | 3 | 10 | 0 | 0 | 0 / 13 |
 | 13 | `superkate-services-calculator` | finished | software | 0 | 0 | 0 | 0 | 37 / 37 |
 | 14 | `superkate-hairstyle-ai` | paused | software | 1 | 0 | 1 | 0 | 19 / 21 |
 | 15 | `newsfeed` | active | software | 1 | 0 | 0 | 0 | 21 / 22 |
@@ -67,7 +67,7 @@ _None._
 
 _None._
 
-### Info (55)
+### Info (56)
 
 - **APPROVAL_WITHOUT_GATE** — `ai-art-academy` / `t-002`: approved_by_human is set on a task that is not human-gated.
 - **APPROVAL_WITHOUT_GATE** — `ai-art-academy` / `t-011`: approved_by_human is set on a task that is not human-gated.
@@ -107,6 +107,7 @@ _None._
 - **APPROVAL_WITHOUT_GATE** — `kindrobots-unraid` / `t-002`: approved_by_human is set on a task that is not human-gated.
 - **MISSING_GOAL** — `media-watchlist`: Roadmap has no friendly goal/definition of done.
 - **MISSING_GOAL** — `mermaids-of-venice`: Roadmap has no friendly goal/definition of done.
+- **INACTIVE_PROJECT_HAS_READY_TASKS** — `mona-salai`: Inactive project retains 3 ready task(s); harmless but misleading in generated status.
 - **APPROVAL_WITHOUT_GATE** — `mural-design` / `t-006`: approved_by_human is set on a task that is not human-gated.
 - **MISSING_GOAL** — `music-mentor`: Roadmap has no friendly goal/definition of done.
 - **MISSING_GOAL** — `newsfeed`: Roadmap has no friendly goal/definition of done.

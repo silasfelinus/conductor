@@ -1,8 +1,8 @@
 {
-  "generated_at": "2026-07-26T11:03:58.344558+00:00",
+  "generated_at": "2026-07-26T11:07:43.274656+00:00",
   "summary": {
     "roadmaps": 42,
-    "active_projects": 24,
+    "active_projects": 23,
     "tasks": 695,
     "ready": 44,
     "waiting": 49,
@@ -11,7 +11,7 @@
     "done": 568,
     "errors": 0,
     "warnings": 0,
-    "info": 55
+    "info": 56
   },
   "projects": [
     {
@@ -229,7 +229,7 @@
     {
       "slug": "mona-salai",
       "kind": "software",
-      "override_status": "active",
+      "override_status": "paused",
       "priority_index": 12,
       "autonomous": true,
       "task_count": 13,
@@ -1084,6 +1084,13 @@
       "project": "mermaids-of-venice",
       "task": null,
       "message": "Roadmap has no friendly goal/definition of done."
+    },
+    {
+      "severity": "info",
+      "code": "INACTIVE_PROJECT_HAS_READY_TASKS",
+      "project": "mona-salai",
+      "task": null,
+      "message": "Inactive project retains 3 ready task(s); harmless but misleading in generated status."
     },
     {
       "severity": "info",
