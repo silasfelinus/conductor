@@ -509,3 +509,33 @@ type: pattern
 
 **Kaizen task:** none filed — this closes a previously-filed kaizen (from t-034) with no
 new gap surfaced.
+
+## 2026-07-26 | Worker → Reviewer | digital-storefront/t-026 | pattern
+
+**Decision:** implemented and opened kind_robots PR #1018, left at `status: needs-human`
+(hard gate: `gate_human: true`, `stakes: outward-facing`, real purchase-fulfillment logic).
+
+**What was good:**
+- Caught a real spec/schema drift before writing code instead of after: the task's
+  original note (filed 2026-07-18) specified `Grant.level: UNLOCK`, but the actual
+  `GrantLevel` enum (finalized by kind-robots/t-037, approved 2026-07-25/26) only has
+  `VIEW`/`ADMIN`. Grepped `server/utils/contentAccess.ts` first and found it already
+  gates Pack-owned content on `GrantLevel.VIEW` for an active `PACK` Grant — used `VIEW`
+  to match the code that will actually consume this Grant, rather than inventing a value
+  that doesn't exist in the schema or silently guessing.
+- Verified the task's stated precondition ("packmaker/t-004 admin generator has produced
+  an approved, purchasable pack") doesn't actually hold yet — grepped for any DLC Product
+  creation and found none; the packmaker admin panel builds `Pack` content bundles but no
+  priced `Product` row. Documented this gap explicitly in the PR and the FOR SILAS note
+  instead of quietly building code no one can currently exercise.
+- Full local verification available this cycle (`provision_kind_robots_deps.sh` +
+  `npm run test`/eslint/prettier, all clean) since a real kind_robots checkout exists in
+  this sandbox — no need for the CI-only fallback some prior cross-repo cycles used.
+
+**What to improve:**
+- None specific this cycle.
+
+**Kaizen suggestion:** a follow-up task to build the DLC Product-creation path
+(packmaker admin panel -> `Product` row with `type: DLC`, `metadata: {packId}`) so this
+fulfillment logic can be exercised end-to-end in test mode — noted in the PR itself,
+Reviewer/Silas can decide whether to file it now or after PR #1018 is approved.
