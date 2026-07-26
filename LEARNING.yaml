@@ -4121,3 +4121,12 @@ records:
   outcome: done
   failure_category: null
   lesson: "When a task's own roadmap note pre-flags a likely needs-human gate ('expect this to reach needs-human once it touches a live payment provider'), verify the gate condition explicitly rather than trusting the PR's self-reported 'reversible' stakes label -- here that meant confirming getStripeClient() reads STRIPE_SECRET_KEY from env with no hardcoded key or forced live-mode flag, matching every other already-merged Stripe route, before merging test-mode payment/webhook code. Dispatching a subagent to independently audit the migration SQL and billing logic line-by-line (rather than reading the PR's own verification section at face value) caught nothing wrong here, but is the right level of scrutiny for anything touching schema + payment webhooks even when self-labeled reversible."
+- date: '2026-07-26'
+  project: digital-storefront
+  task: t-030
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "When a design doc's own Prisma model draft predates the actually-landed schema (the doc used cuid()/String ids; the real Product/Order/OrderItem models all landed as Int autoincrement), a research-first pass reading the live schema.prisma directly caught the mismatch before it became a migration that wouldn't type-check -- worth always re-verifying a doc's schema draft against the current schema file rather than transcribing it as-is, even when the doc is recent and detailed."
