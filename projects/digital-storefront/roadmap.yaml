@@ -757,7 +757,7 @@ tasks:
 - id: t-030
   milestone: m4
   title: "Design a PrintJob model + real POD checkout flow to replace print-swag.vue's UI mock"
-  status: review
+  status: done
   owner: worker
   passes: 0
   stakes: reversible
@@ -773,6 +773,28 @@ tasks:
     outward-facing — expect this to reach `needs-human` once it touches a live
     payment provider or order fulfillment API; the schema/plumbing work up to
     that point is reversible software.
+
+    MERGED 2026-07-26 (~08:45 UTC, Reviewer, scheduled agent run): kind_robots
+    PR #1004 squash-merged (`e3d921b`). Dispatched a subagent to audit the
+    migration.sql line-by-line and the Stripe webhook billing logic before
+    merging, given the note's own outward-facing caution above. Findings: the
+    migration is additive-only (1 CREATE TABLE `PrintJob` + 2 ADD CONSTRAINT
+    FKs, no drops/rewrites) -- passes the migration-audit rule. `PrintJob`
+    creation in `handleProductPurchase` is atomic (same `$transaction` as the
+    Order/OrderItem it's keyed to) and mutually exclusive with the existing
+    Entitlement-creation branch, so no double-crediting risk. Stripe line-item
+    quantity is read from the trusted server-side `session.id` (not client
+    input), with a safe quantity=1 fallback on API failure. `getStripeClient()`
+    reads `STRIPE_SECRET_KEY` from env with no hardcoded key or forced
+    live-mode flag -- same pattern as every other already-merged Stripe route
+    in this codebase, so this stays reversible/test-mode plumbing, not a live
+    payment action; confirmed `pod-checkout.post.ts` re-validates print
+    eligibility server-side (fresh DB fetch + `checkPrintEligibility`) rather
+    than trusting client state. All 6 kind_robots CI checks green
+    (TypeScript, Contract verifiers, facet-catalog, verify, Preserve
+    Components/Reactions, GitGuardian). Actual Printful vendor submission
+    stays out of scope / needs-human per the PR's own disclosure (no vendor
+    API key exists) -- not a blocker for this schema/plumbing task.
   updated: '2026-07-26T07:05:35Z'
   claimed_by: claude-conductor-scheduled-20260726T070532Z-ds-t030
   claimed_at: '2026-07-26T07:05:35Z'
@@ -817,4 +839,28 @@ tasks:
     no review comments. Rail stays empty in production until Silas flags at
     least one ArtImage.storefrontFeatured=true via DB/admin tooling.
   claimed_by: claude-conductor-burst-20260726T0410Z-ds-t028
+
+- id: t-031
+  milestone: m4
+  title: "kind_robots: wire checkout.post.ts's general multi-item cart flow to actually fulfil (Order/OrderItem/Entitlement/PrintJob) whatever it sells"
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  depends_on: t-030
+  note: >
+    Kaizen from t-030 (kind_robots PR #1004, merged 2026-07-26). The general
+    multi-item cart checkout (`server/api/store/checkout.post.ts`) sets Stripe
+    session `metadata.kind: 'giftshop_checkout'`, which the webhook's
+    `handleProductPurchase` dispatch doesn't match against any branch -- so a
+    cart purchase of a `print`/`shirt`/`sticker`/`mug` today succeeds at
+    Stripe but never creates an `Order`, `OrderItem`, `Entitlement`, or (for
+    POD items) a `PrintJob`. Only the single-item, dedicated-route flows
+    (`topup.post.ts`, the new `pod-checkout.post.ts`) get real fulfillment
+    today; the shared cart checkout is decorative past the Stripe redirect.
+    Wire the general checkout's webhook branch to create the same
+    Order/OrderItem/Entitlement/PrintJob rows per line item that the
+    dedicated routes already create, reusing `handleProductPurchase`'s
+    per-product-type branching rather than duplicating it. Reversible,
+    Stripe test-mode only, no live payment/vendor action.
   claimed_at: '2026-07-26T04:11:57Z'

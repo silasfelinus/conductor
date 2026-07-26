@@ -4112,3 +4112,12 @@ records:
   failure_category: null
   lesson: "A mechanical prose-to-file migration (moving t-010's 78 historical RAN entries, ~164KB, out of the roadmap note into a separate ledger) is safe to do in one pass if the regression check is structural, not eyeballed: reconstruct the original content two independent ways (standing_line + moved_lines == original; ledger_body re-indented == moved_lines) and assert byte-for-byte equality before writing anything. That caught the exact failure mode the original audit warned about (\"silently pruning the note would be data loss wearing a tidy haircut\") with zero manual re-reading of 164KB of prose."
 
+- date: '2026-07-26'
+  project: digital-storefront
+  task: t-030
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "When a task's own roadmap note pre-flags a likely needs-human gate ('expect this to reach needs-human once it touches a live payment provider'), verify the gate condition explicitly rather than trusting the PR's self-reported 'reversible' stakes label -- here that meant confirming getStripeClient() reads STRIPE_SECRET_KEY from env with no hardcoded key or forced live-mode flag, matching every other already-merged Stripe route, before merging test-mode payment/webhook code. Dispatching a subagent to independently audit the migration SQL and billing logic line-by-line (rather than reading the PR's own verification section at face value) caught nothing wrong here, but is the right level of scrutiny for anything touching schema + payment webhooks even when self-labeled reversible."
