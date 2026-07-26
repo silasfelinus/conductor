@@ -4057,3 +4057,12 @@ records:
   outcome: done
   failure_category: null
   lesson: "Additive migrations that ship with an already-identified real consumer (the approved pitch named digital-storefront's swag-rail query as the next task) review fast because the diff never has to justify itself speculatively -- ADD COLUMN + CREATE INDEX only, no seed/UI. Separately: a CI check (facet-catalog) hung indefinitely on 'Install dependencies' after a rebase and cancel_workflow_run didn't unstick it; pushing a trivial empty commit to force a fresh check run against a new head SHA resolved it in the normal ~90s, faster than waiting out or repeatedly cancelling the stuck run."
+- date: '2026-07-26'
+  project: ai-art-academy
+  task: t-038
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "When the priority-order top task (t-004) is genuinely operationally blocked and has already been rechecked twice the same day per its own note, the right move is to pick a different ready task within the same top-priority project rather than re-checking the blocker a third time or dropping to a lower-priority project. t-038 (extract a reusable inspiration-set template from an existing hand-rolled example) had no dependency on the live render backend, so it was a clean, fast, fully-verifiable-locally pick. Docs-only PR, all CI green (conductor PR #1100), merged same cycle."

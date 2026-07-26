@@ -1749,3 +1749,24 @@ if a fifth instance appears.
 - None specific this cycle — see kaizen below for a structural improvement rather than a defect.
 
 **Kaizen task:** t-038 — extract a lightweight inspiration-set template/schema (shared source scene, teaching goal, failure mode, ethics question, generation metadata checklist) so future sets don't each reinvent this structure from scratch, per the PR's own kaizen suggestion.
+
+## 2026-07-26 | Reviewer (scheduled agent run) | ai-art-academy/t-038 | pattern
+
+**Decision:** self-implemented and merged own PR #1100 (conductor).
+
+**Failure category:** null — clean first-pass, docs-only, additive.
+
+**Subject:** `select_role.py` recommended `role: worker` (no open PRs to review in either repo). `next_ready_task.py` surfaced `ai-art-academy/t-004` first, but its own note already recorded two same-day rechecks (2026-07-25, 2026-07-26) of a genuine operational blocker — single-worker COMFY throughput, queue growing not draining (141 PENDING, oldest ~40h) — with an explicit "do not re-run the seed-bug check again" instruction for whoever picks it up next. Rather than burn a third recheck on an already-confirmed blocker, picked the next ready task within the same top-priority project: t-038, the kaizen this project's own t-010 review filed two entries above.
+
+**Detail:**
+- Wrote `docs/inspiration-sets/TEMPLATE.md`: instructional preamble + a copyable skeleton covering shared source scene, per-entry teaching goal/prompt/"look for" cues, a per-entry ethics/agency question (the existing example only asked this once, in its closing comparison exercise — added as its own per-entry field per the kaizen note's literal wording), common failure mode, closing comparison exercise, and the generation metadata checklist.
+- Verified against `everyday-modernity-teaching-sequence.md` (the set that prompted the kaizen) that every named element is covered.
+- All 23 PR checks green (CodeQL x4, GitGuardian, Python/TS suites, roadmap/task-event validators, dependency audit); squash-merged (`9b0fb15`).
+
+**What was good:**
+- Didn't treat "top of priority.yaml" as "the only task worth doing in that project" — t-004's own note already told the story of a real, non-code-fixable blocker; re-deriving that a third time would have been pure waste per the actionable-failure triage rule.
+
+**What to improve:**
+- None specific this cycle.
+
+**Kaizen task:** none filed — the PR's own kaizen suggestion (a `docs/inspiration-sets/README.md` index) is explicitly premature with only one set on the template so far; revisit once a second/third set exists.
