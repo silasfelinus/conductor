@@ -870,8 +870,8 @@ tasks:
 - id: t-031
   milestone: m4
   title: "kind_robots: wire checkout.post.ts's general multi-item cart flow to actually fulfil (Order/OrderItem/Entitlement/PrintJob) whatever it sells"
-  status: ready
-  owner: null
+  status: claimed
+  owner: worker
   passes: 0
   stakes: reversible
   depends_on: t-030
@@ -890,7 +890,9 @@ tasks:
     dedicated routes already create, reusing `handleProductPurchase`'s
     per-product-type branching rather than duplicating it. Reversible,
     Stripe test-mode only, no live payment/vendor action.
-  claimed_at: '2026-07-26T04:11:57Z'
+  claimed_at: '2026-07-26T08:36:42Z'
+  claimed_by: claude-conductor-scheduled-20260726T083600Z-ds-t031
+  updated: '2026-07-26T08:36:42Z'
 
 - id: t-032
   milestone: m4
