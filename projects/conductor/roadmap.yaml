@@ -2651,3 +2651,33 @@ tasks:
     claimed_at: null
     updated: '2026-07-26T16:35:00Z'
 
+  - id: t-083
+    milestone: m2
+    title: "select_role.py's reviewer check only watches worker/* branches; teach it to also flag open, green, non-stale claude/* PRs as reviewable"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Kaizen from Reviewer (animation-manager/t-013, conductor PR #1157, 2026-07-26):
+      a fully-green, reversible, bookkeeping-only PR opened from a `claude/*` branch
+      (`claude/loving-wright-wnugs2`) sat open on conductor for roughly an hour before a
+      later session's manual PR list check found it — `select_role.py`'s `reviewer` role
+      (see its own module docstring, "reviewer -- run_reviewer.py's open-worker/*-branch
+      check (conductor only)") only looks for `worker/*` branches, so it never
+      recommended `reviewer` for this PR and instead recommended `worker` (a `ready`
+      task existed). The PR was real, reviewable work, not a stale scratch branch.
+      Suggested fix: extend `select_role.py` (or `run_reviewer.py`) to also list open
+      conductor PRs whose head ref doesn't match `worker/*`, and flag one as
+      `reviewer`-worthy when its CI is fully green and it's been open longer than some
+      short grace period (a few minutes, to avoid flagging a PR its own author is still
+      actively pushing to) -- mirroring the pr-medic red/stale distinction but for the
+      green/reviewable case instead of the red/broken one. Cross-check against
+      AGENTS.md's existing carve-out ("Reviewer CAN merge ... from claude/* branches
+      when directed by Silas in the session") -- this new check would surface such PRs
+      as candidates for review, not auto-merge them; the actual merge decision is
+      still the session's judgment call same as today.
+    claimed_by: null
+    claimed_at: null
+    updated: '2026-07-26T18:10:00Z'
+
