@@ -2,7 +2,7 @@
 
 Append-only ledger of sandbox egress-allowlist rechecks. Several roadmap tasks
 (ai-art-academy/t-008, t-013; digital-storefront's Stripe task; art-generator-connect's
-Civitai/HF task) had each independently accumulated their own "RECHECKED &lt;date&gt;: still
+Civitai/HF task) had each independently accumulated their own "RECHECKED <date>: still
 a fresh connect_rejected/403" prose paragraph for the same known-blocked hosts — easy to
 skip, and impossible to grep "how many times has this been reconfirmed, and when" across
 tasks in one place. This file is that one place (conductor/t-052).
@@ -194,4 +194,7 @@ reachable (HTTP 200)
 reachable (HTTP 200)
 
 ## 2026-07-26T03:04:20Z | kind-robots.vercel.app | reachable | ai-art-academy/t-004
+reachable (HTTP 200)
+
+## 2026-07-26T05:05:45Z | kind-robots.vercel.app | reachable | coloring-book/t-022
 reachable (HTTP 200)

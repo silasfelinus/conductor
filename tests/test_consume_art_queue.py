@@ -161,7 +161,19 @@ def test_entry_to_job_random_seed_when_unset_is_reported():
     # and it is NOT surfaced as a fixed payload["seed"] (relay/graph own it)
     assert isinstance(job["resolvedSeed"], int)
     assert job["resolvedSeed"] >= 0
+    # ArtImage.seed is a MySQL signed INT (prisma/schema.prisma) -- a resolved
+    # seed outside this range fails the save with "Out of range value for
+    # column 'seed'" after the render already completed (18 consecutive
+    # coloring-book ArtJobs, ids 2146-2184, 2026-07-26).
+    assert job["resolvedSeed"] <= consumer.SEED_MAX
     assert "seed" not in job["payload"]
+
+
+def test_resolve_seed_clamps_out_of_range_and_random_values():
+    assert consumer.resolve_seed(None) <= consumer.SEED_MAX
+    assert consumer.resolve_seed(-1) <= consumer.SEED_MAX
+    assert consumer.resolve_seed(5) == 5
+    assert consumer.resolve_seed(consumer.SEED_MAX + 1_000_000_000_000) == consumer.SEED_MAX
 
 
 def test_entry_to_job_honors_per_entry_quality_overrides():
