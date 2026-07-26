@@ -1,6 +1,6 @@
 # Roadmap Audit
 
-Generated: `2026-07-26T10:48:18.918487+00:00`
+Generated: `2026-07-26T11:03:58.344558+00:00`
 
 This is a conservative structural audit. It reports suspicious state; it does not automatically change task status or remove human gates.
 
