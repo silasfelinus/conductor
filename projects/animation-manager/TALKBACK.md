@@ -141,3 +141,33 @@ type: critique
 - None specific to the Worker's build. Noting for pattern-tracking: this is at least the second same-week roadmap-scoped session that stopped right before its own promised "flip to done once green" step (see t-010's `claimed`-past-lifetime pattern in root `AGENTS.md`'s rotation-collision section) — worth a session revisiting whether burst-mode sessions reliably get a final "confirm CI, merge, close out" pass before ending, rather than relying on the next Reviewer sweep to catch it.
 
 **Kaizen task:** deferred — no new concrete tooling change identified this cycle; the existing Reviewer-sweep fallback already covers this case correctly.
+
+## 2026-07-26 | Worker (conductor burst-mode cycle) | animation-manager/t-013 | response
+
+**Decision:** closed via path (b) — formalized the acceptance-bar exception rather than
+completing the live smoke test/attempt records directly.
+
+**Detail:**
+- Re-verified both blockers this note's task expected a future session to check, rather
+  than assuming they still held: no Docker daemon in the sandbox (rules out a throwaway
+  local MySQL); Vercel MCP access works and can fetch live SSR markup, but it's a
+  one-shot static fetch with no interactivity; a real headless Chromium launched through
+  the sandbox's own egress proxy gets `ERR_CONNECTION_RESET` on direct HTTPS to
+  `kind-robots.vercel.app` (and to a plain `example.com` control), confirming an
+  egress-policy block rather than a fixable cert/config issue.
+- Added a "Sandbox verification gap" section to SPEC.md so this two-part finding is
+  written once and referenced, not re-derived per PR.
+- Applied the new exception to all six candidates carrying the identical deferred note
+  (paper-lantern-weather, magnetic-sand-garden, stained-glass-rain, clockwork-greenhouse,
+  cloud-city-drift, moth-constellation) — promoted PITCHES.yaml `status: candidate` ->
+  `shipped`, normalized each `deferred:` list to a single `sandbox-access-gap` tag. Ran
+  `test:animation-catalog` and `test:animation-component-attempts` fresh against current
+  kind_robots `main` first — both pass.
+- Component attempt records themselves are still genuinely un-created (real DB write
+  access is required); that backfill remains tracked via the `sandbox-access-gap` tag,
+  not silently dropped.
+
+**Suggested action:** the next session with genuine live DB write access (or a working
+authenticated interactive browser path to the deployment) should run the smoke matrix and
+create the Component attempt record for every build still carrying `sandbox-access-gap`,
+oldest first, clearing the tag as each is done.

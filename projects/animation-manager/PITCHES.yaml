@@ -1,4 +1,4 @@
-updated: "2026-07-26T02:07:00-07:00"
+updated: "2026-07-26T10:16:00-07:00"
 
 pitches:
   - id: bioluminescent-tide
@@ -35,7 +35,7 @@ pitches:
 
   - id: paper-lantern-weather
     title: Paper Lantern Weather
-    status: candidate
+    status: shipped
     priority: 2
     surprise: Folded paper lanterns behave like a tiny weather system, dimming before gusts and relighting in sheltered eddies.
     passive_loop: Lanterns drift in layered parallax while soft paper creases flex and rare gust fronts reorganize the flock.
@@ -49,7 +49,7 @@ pitches:
       - rare gust event is visible but not disruptive
     builds:
       - version: 1
-        status: candidate
+        status: shipped
         component: components/screenfx/paper-lantern-weather.vue
         pull_request: silasfelinus/kind_robots#627
         verification:
@@ -58,14 +58,11 @@ pitches:
           - test:animation-catalog
           - test:animation-component-attempts
         deferred:
-          - Live browser smoke test (docs/architecture/animation-catalog-smoke-matrix.md) --
-            no reachable DATABASE_URL in the sandbox; server/utils/prisma.ts throws on every
-            SSR request.
-          - Component attempt record (SPEC.md "Attempt records") -- same DB blocker.
+          - sandbox-access-gap (see SPEC.md "Sandbox verification gap")
 
   - id: magnetic-sand-garden
     title: Magnetic Sand Garden
-    status: candidate
+    status: shipped
     priority: 3
     surprise: Metallic sand grains gather into temporary topographic islands, then collapse and reform around invisible magnets.
     passive_loop: Flow-field bands continuously comb the sand into ridges, valleys, and occasional geometric blooms.
@@ -79,7 +76,7 @@ pitches:
       - coarse simulation remains attractive at desktop scale
     builds:
       - version: 1
-        status: candidate
+        status: shipped
         component: components/screenfx/magnetic-sand-garden.vue
         pull_request: silasfelinus/kind_robots#785
         verification:
@@ -90,14 +87,11 @@ pitches:
           - test:animation-catalog
           - test:animation-component-attempts
         deferred:
-          - Live browser smoke test (docs/architecture/animation-catalog-smoke-matrix.md) --
-            no reachable DATABASE_URL in the sandbox; server/utils/prisma.ts throws on every
-            SSR request.
-          - Component attempt record (SPEC.md "Attempt records") -- same DB blocker.
+          - sandbox-access-gap (see SPEC.md "Sandbox verification gap")
 
   - id: stained-glass-rain
     title: Stained Glass Rain
-    status: candidate
+    status: shipped
     priority: 4
     surprise: Raindrops refract the desktop into slowly changing stained-glass fragments without obscuring content.
     passive_loop: Transparent polygon panes drift, merge, and split as rain lines trace leaded boundaries.
@@ -111,7 +105,7 @@ pitches:
       - effect has a no-backdrop-filter fallback
     builds:
       - version: 1
-        status: candidate
+        status: shipped
         component: components/screenfx/stained-glass-rain.vue
         pull_request: silasfelinus/kind_robots#838
         verification:
@@ -121,14 +115,11 @@ pitches:
           - test:animation-catalog
           - test:animation-component-attempts
         deferred:
-          - Live browser smoke test (docs/architecture/animation-catalog-smoke-matrix.md) --
-            no reachable DATABASE_URL in the sandbox; server/utils/prisma.ts throws on every
-            SSR request.
-          - Component attempt record (SPEC.md "Attempt records") -- same DB blocker.
+          - sandbox-access-gap (see SPEC.md "Sandbox verification gap")
 
   - id: clockwork-greenhouse
     title: Clockwork Greenhouse
-    status: candidate
+    status: shipped
     priority: 5
     surprise: Tiny brass stems grow leaves, gears pollinate mechanical flowers, and the garden quietly resets through seasons.
     passive_loop: Plants grow and fold on staggered timelines while pollinator gears move between blooms.
@@ -142,7 +133,7 @@ pitches:
       - no interaction is needed to populate the garden
     builds:
       - version: 1
-        status: candidate
+        status: shipped
         component: components/screenfx/clockwork-greenhouse.vue
         pull_request: silasfelinus/kind_robots#887
         commit: d50f83ca91fa40d52c8415b2f867b7c3ce39d583
@@ -154,14 +145,11 @@ pitches:
           - test:animation-catalog
           - test:animation-component-attempts
         deferred:
-          - Live browser smoke test (docs/architecture/animation-catalog-smoke-matrix.md) --
-            no reachable DATABASE_URL in the sandbox; server/utils/prisma.ts throws on every
-            SSR request.
-          - Component attempt record (SPEC.md "Attempt records") -- same DB blocker.
+          - sandbox-access-gap (see SPEC.md "Sandbox verification gap")
 
   - id: cloud-city-drift
     title: Cloud City Drift
-    status: candidate
+    status: shipped
     priority: 6
     surprise: Impossible miniature cities float inside cloud banks, occasionally rotating to reveal streets on the underside.
     passive_loop: Layered clouds cross at different depths while towers, bridges, and lights emerge and disappear.
@@ -178,7 +166,7 @@ pitches:
         pull_request: silasfelinus/kind_robots#949
         commit: 3b69cff7327b25532d218489f50c5f7c21753aad
         component: components/screenfx/cloud-city-drift.vue
-        status: candidate
+        status: shipped
         verification:
           - TypeScript Type Check
           - Contract Tests
@@ -187,12 +175,11 @@ pitches:
           - test:animation-catalog
           - test:animation-component-attempts
         deferred:
-          - Live browser smoke test (docs/architecture/animation-catalog-smoke-matrix.md) -- no reachable DATABASE_URL in the sandbox; server/utils/prisma.ts throws on every SSR request.
-          - Component attempt record (SPEC.md "Attempt records") -- same DB blocker.
+          - sandbox-access-gap (see SPEC.md "Sandbox verification gap")
 
   - id: moth-constellation
     title: Moth Constellation
-    status: candidate
+    status: shipped
     priority: 7
     surprise: Moths gather around invisible moonlight and briefly align into recognizable constellations before scattering.
     passive_loop: Individual moths wander, rest, and regroup; constellation events are rare and seeded.
@@ -209,7 +196,7 @@ pitches:
         pull_request: silasfelinus/kind_robots#1010
         commit: 70e5c7966e86370f2b094a8fed1493b35e330537
         component: components/screenfx/moth-constellation.vue
-        status: candidate
+        status: shipped
         verification:
           - TypeScript Type Check
           - eslint
@@ -217,8 +204,7 @@ pitches:
           - test:animation-catalog
           - test:animation-component-attempts
         deferred:
-          - Live browser smoke test (docs/architecture/animation-catalog-smoke-matrix.md) -- no reachable DATABASE_URL in the sandbox; server/utils/prisma.ts throws on every SSR request.
-          - Component attempt record (SPEC.md "Attempt records") -- same DB blocker.
+          - sandbox-access-gap (see SPEC.md "Sandbox verification gap")
 
   - id: koi-memory-pond
     title: Koi Memory Pond

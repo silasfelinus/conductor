@@ -371,7 +371,7 @@ tasks:
   - id: t-013
     milestone: m6
     title: "Clear the four deferred live-smoke builds once DB access is available (or find a sandbox workaround)"
-    status: claimed
+    status: review
     owner: worker
     passes: 0
     stakes: reversible
@@ -399,7 +399,42 @@ tasks:
       touching any real database -- and if that's not practical either, fold "deferred,
       same sandbox limitation" into this task's own formal acceptance bar so future PRs
       stop re-explaining it per diff.
-    updated: '2026-07-26T17:06:28Z'
+
+      RESOLVED 2026-07-26 (burst-mode cycle, path (b)): re-verified both blockers before
+      falling back to the formal-acceptance-bar route. (1) Local DB workaround: no Docker
+      daemon is reachable in this sandbox (`docker info` fails, no `/var/run/docker.sock`),
+      so a throwaway local MySQL is not practical here; kind_robots'
+      `provision_kind_robots_deps.sh` dummy `DATABASE_URL` only unblocks `vue-tsc`/`prisma
+      generate`, never a running server, confirming the note above. (2) Vercel path:
+      confirmed Vercel MCP access works (`list_teams`/`list_projects`/`list_deployments`,
+      production `READY`) and its `web_fetch_vercel_url` can fetch the live homepage's
+      SSR markup server-side, but it is a one-shot static fetch -- no click/resize/
+      `prefers-reduced-motion` emulation -- so it cannot drive the smoke matrix's
+      interactive rows. Also tried a real headless Chromium (the sandbox's pre-installed
+      browser) through the sandbox's own egress proxy: `ERR_CONNECTION_RESET` on direct
+      HTTPS to `kind-robots.vercel.app` (and to a plain `example.com` control case),
+      confirming the egress policy -- not a cert/config bug -- blocks arbitrary
+      interactive browser sessions to the live site from here.
+      Formalized the fix per option (b): added a "Sandbox verification gap" section to
+      SPEC.md documenting both findings once and defining a standing acceptance-bar
+      exception -- a candidate that passes CI (TypeScript, contract tests,
+      test:animation-catalog, test:animation-component-attempts) and satisfies the
+      Non-negotiable experience contract by code review may ship with its live smoke
+      test and Component attempt record tracked under one stable tag
+      (`sandbox-access-gap`) instead of a fresh explanation per PR. Ran both verification
+      scripts fresh against current kind_robots main (via
+      provision_kind_robots_deps.sh) -- both pass. Applied the exception to all five
+      builds that had accumulated the identical deferred note (paper-lantern-weather,
+      magnetic-sand-garden, stained-glass-rain, clockwork-greenhouse, and a fifth that
+      landed since this task was filed, moth-constellation #1010) plus cloud-city-drift
+      (#949, same blocker, same fix, otherwise would have re-triggered this same kaizen
+      next cycle) -- promoted PITCHES.yaml status: candidate -> shipped and normalized
+      each `deferred:` list to the one-line tag. Component attempt records themselves
+      remain genuinely un-created (still require live DB write access) -- that
+      backfill work is tracked by the `sandbox-access-gap` tag on each build per the new
+      SPEC.md section, to be cleared by whichever future session has real DB/interactive
+      browser access, oldest first.
+    updated: '2026-07-26T17:16:00Z'
     claimed_by: claude-conductor-burst-20260726T180000Z-am-t013
     claimed_at: '2026-07-26T17:06:28Z'
 

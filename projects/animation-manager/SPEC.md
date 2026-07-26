@@ -103,6 +103,41 @@ t-004 landed; the model now carries a single `status` enum instead):
 
 Reactions use `reactionCategory: COMPONENT` and the Component row id. The initial quality view should show rating average, rating count, reaction-type counts, and recent comments. Promotion decisions should show evidence but remain reversible and human-visible.
 
+## Sandbox verification gap — standing acceptance-bar exception
+
+Five consecutive builds (paper-lantern-weather #627, magnetic-sand-garden #785,
+stained-glass-rain #838, clockwork-greenhouse #887, moth-constellation #1010) each
+independently hit and re-explained the identical blocker: the sandbox has neither
+(a) a live `DATABASE_URL` capable of running `server/utils/prisma.ts`'s SSR Prisma
+calls — no Docker daemon is available to stand up a throwaway local MySQL (2026-07-26
+Conductor session: `docker info` fails, no `/var/run/docker.sock`; kind_robots' own
+`provision_kind_robots_deps.sh` dummy `DATABASE_URL` only unblocks `vue-tsc`/`prisma
+generate`, never a running server) — nor (b) an interactive authenticated browser
+session against the live deployment (2026-07-26: the sandbox's egress proxy resets
+direct HTTPS connections to arbitrary hosts including `*.vercel.app` even from a real
+headless Chromium launched through that same proxy — `ERR_CONNECTION_RESET` — while
+the Vercel MCP connector's `web_fetch_vercel_url` tool *can* reach the deployment
+server-side but only returns static SSR markup, with no click/resize/`prefers-reduced-motion`
+emulation, so it cannot drive the smoke matrix's interactive rows).
+
+animation-manager/t-013 (2026-07-26) formalizes the fix once instead of leaving every
+future build to rediscover and re-explain the same two facts:
+
+- A candidate that passes TypeScript, contract tests, `test:animation-catalog`, and
+  `test:animation-component-attempts` in CI, and whose diff satisfies this file's
+  "Non-negotiable experience contract" by code review (reduced-motion branch present,
+  unmount cleanup, correct `blocksInput` handling, etc.), may be promoted to **shipped**
+  with its live browser smoke test and Component attempt record recorded as a single
+  stable tag — `deferred: sandbox-access-gap (see SPEC.md "Sandbox verification gap")`
+  — instead of a fresh multi-paragraph justification per PR.
+- This defers the requirement rather than waiving it. Whichever session next has genuine
+  live DB write access or an authenticated interactive browser session should run the
+  smoke matrix and create the Component attempt record for every build still carrying
+  the `sandbox-access-gap` tag, oldest first, and clear the tag once done.
+- Covers the verification *step* only — never a substitute for the catalog/contract/
+  TypeScript checks above, and never applies to anything outward-facing, destructive,
+  or requiring `approved_by_human`.
+
 ## Quality score
 
 Do not hide raw signals behind one magic number. Display raw counts first. A sortable quality score may combine:
