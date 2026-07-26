@@ -181,6 +181,8 @@ def test_concurrent_appends_both_land_via_retry(demo_repo, tmp_path):
         below -- this call must look like an entirely different, concurrent process."""
         run(["git", "clone", "-q", str(tmp_path / "bare"), str(tmp_path / "clone-a")], cwd=tmp_path)
         clone_a = tmp_path / "clone-a"
+        run(["git", "config", "user.email", "testA@example.com"], cwd=clone_a)
+        run(["git", "config", "user.name", "TestA"], cwd=clone_a)
         parent_sha = ale.resolve_ref(clone_a, "origin/main")
         before = ale.read_file_at_ref(clone_a, "origin/main", "TALKBACK.md")
         after = ale.build_talkback_append(
