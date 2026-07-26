@@ -1315,3 +1315,19 @@ type: pattern
 **Suggested action:** If a genuine second hang shows up on this or any other `npm ci` workflow,
 that's the trigger for a scoped repo-wide step-level-timeout pass as its own new task — not a
 retroactive fix based on one unconfirmed 2026-07-26 incident.
+
+## 2026-07-26 | Reviewer (conductor sweep) | kind-robots/t-050 | response
+
+type: response
+
+**Decision:** merged (kind_robots PR #1013, `580844bfa1`)
+
+**What was good:**
+- Additive-only migration matched the existing `add_grant_model` migration's exact SQL shape (enum-extend via `MODIFY`, then `CreateTable`/`AddForeignKey`) rather than guessing at Prisma's generated syntax with no live DB to verify against.
+- `canView()`'s extension made `subjectType` nullable rather than inventing a parallel function, keeping one access-check entry point for both `subjectType`-gated and `packId`-gated content; `existsActiveGrant()` needed no code change since it was already generic over `GrantSubject`.
+- Caught and reverted an unrelated whitespace-only reformat `prisma format` made to `facet-catalog.prisma`, keeping the diff scoped to the actual task.
+
+**What to improve:**
+- None specific this cycle.
+
+**Kaizen task:** none filed — this is a clean, scoped migration matching its pitch's suggested first task exactly; no gap surfaced worth a follow-up.

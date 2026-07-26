@@ -1730,7 +1730,7 @@ tasks:
   - id: t-050
     milestone: m2
     title: Implement the Pack model migration (additive) + packId FK + GrantSubject.PACK
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -1751,6 +1751,11 @@ tasks:
       action, two rows updated). No webhook code, no admin UI changes, no
       pack publication flow in this task -- those stay separate
       (digital-storefront's DLC-fulfillment follow-on).
+
+      IMPLEMENTED 2026-07-26: kind_robots PR #1013 merged
+      (580844bfa175dce24994f52c9d28e1922f955172), CI green (facet-catalog,
+      TypeScript, Contract verifiers, Preserve Components and Reactions,
+      GitGuardian).
     updated: '2026-07-26T11:14:12Z'
     claimed_by: claude-conductor-scheduled-20260726T111500Z-kr-t050
     claimed_at: '2026-07-26T11:14:12Z'

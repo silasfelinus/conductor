@@ -4168,3 +4168,12 @@ records:
   lesson: Carry identity-bearing fields through every checkout boundary and revalidate eligibility at
     fulfillment; dropping artImageId turned an apparently complete cart flow into audit-only fulfillment
     for physical goods.
+- date: '2026-07-26'
+  project: kind-robots
+  task: t-050
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "Following the immediately-prior additive migration's exact SQL shape (add_grant_model's enum-MODIFY + CreateTable + AddForeignKey pattern) let the migration.sql be hand-written correctly on the first attempt with no live DB to verify against -- matching an existing precedent migration in the same repo is a reliable substitute for `prisma migrate dev` when no DB is reachable."
