@@ -2702,3 +2702,35 @@ tasks:
     claimed_at: '2026-07-26T21:08:03Z'
     updated: '2026-07-26T21:08:03Z'
 
+  - id: t-085
+    milestone: m2
+    title: "Add a fetch-immediately-before-append commit wrapper for TALKBACK.md/LEARNING.yaml, reusing claim_task.py's commit_file_on_ref pattern"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-26T22:30:00Z'
+    note: >
+      Kaizen from Reviewer merging conductor PR #1182/t-033 (concurrent-claims.md
+      design doc, 2026-07-26): section 3 of the design doc found that hard rule 9
+      fully covers the CI-regenerated files (STATUS.md/workspace.html/
+      ROADMAP-AUDIT.*/LEARNING-REPORT.md) under concurrent writers, but does NOT
+      yet cover TALKBACK.md/LEARNING.yaml appends — those are hand-appended by
+      agents via whole-file edits, not CI-regenerated, and today's only
+      conflict-handling guidance (the Reviewer batch-merge companion note under
+      hard rule 9: "keep both sides' entries") assumes an occasional human/Reviewer
+      merge during a sweep, not an automated fetch-append-push loop running
+      unattended. This is the one piece of the N-concurrent-lanes rollout
+      (conductor/t-033's pitch) flagged as genuinely new plumbing rather than an
+      existing rule that already applies. Spec: extract or reuse
+      `claim_task.py`'s `commit_file_on_ref` pattern (scratch-index, single-file
+      commit built on a freshly-fetched `origin/main`, retried on non-fast-forward)
+      into a small helper any script can call to append a TALKBACK.md or
+      LEARNING.yaml entry safely under concurrent writers, instead of every
+      session hand-rolling its own git add/commit/push for these two files. Does
+      not require the cap-check or worktree-per-lane pieces of t-033's rollout to
+      land first — this piece is useful under today's N=1 model too (reduces the
+      window for the exact same race during any two overlapping sessions, burst
+      mode or otherwise). Full context: projects/conductor/docs/concurrent-claims.md
+      section 3, "Gaps to close before rollout."
+
