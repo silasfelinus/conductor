@@ -2669,7 +2669,7 @@ tasks:
   - id: t-084
     milestone: m2
     title: "select_role.py should surface 'GitHub API unreachable' in its JSON output, not just stderr, so a session doesn't mistake a silenced 403 for a genuine zero-signal result"
-    status: claimed
+    status: review
     owner: worker
     passes: 0
     stakes: reversible
@@ -2693,6 +2693,27 @@ tasks:
       stderr) can tell the two cases apart and knows to manually check
       `list_pull_requests`/`list_branches` via its own GitHub MCP connector
       before trusting a `role: worker`/`idle` recommendation as complete.
+
+
+      RESOLVED 2026-07-26 (claude-conductor-burst-20260726T2100Z-cond-t084): added
+      module-level `_unreachable_urls` tracking to `_gh_request()` (appends the URL
+      on any URLError/HTTPError/TimeoutError), reset at the start of every
+      `select_role()` call and read at the end. The returned dict now carries
+      `github_api_unreachable` (bool — true when GITHUB_TOKEN was missing OR any
+      real api.github.com call failed this run) and `github_api_unreachable_detail`
+      (str explaining which case). Verified against this exact session's own live
+      run: `select_role.py` now reports `github_api_unreachable: true` with "4
+      GitHub API call(s) failed" for the same kind of 403 that silently produced
+      empty `candidate_reviewable_pr_count`/`red_stale_pr_count`/
+      `stranded_branch_count` earlier this same hour (this session independently
+      caught a stray duplicate PR, #1175, via manual GitHub MCP checks before this
+      fix existed — exactly the failure mode this task closes). Added 6 new tests
+      (missing-token case, present-token/no-failure case, real urlopen-failure case
+      via the same HTTPError-mock pattern the existing `_gh_request` test uses,
+      tracker-reset-between-calls, and a low-level `_gh_request` tracking-append
+      test) — full suite 594 passed/1 skipped, `audit_roadmaps.py` 0 errors/0
+      warnings. Conductor-only change (`scripts/select_role.py`,
+      `tests/test_select_role.py`).
     claimed_by: claude-conductor-burst-20260726T2100Z-cond-t084
     claimed_at: '2026-07-26T21:08:03Z'
     updated: '2026-07-26T21:08:03Z'

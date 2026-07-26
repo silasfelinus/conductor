@@ -83,6 +83,14 @@ cleanly from a GitHub Actions job with open egress; every network call
 degrades to skipping that one check (never crashes) when the API is
 unreachable, same as those two scripts.
 
+conductor/t-084: because that degradation is silent to anything reading only
+the returned JSON (the warning only ever went to stderr), the output also
+carries `github_api_unreachable` (bool) and `github_api_unreachable_detail`
+(str | None) — true whenever GITHUB_TOKEN was missing or any api.github.com
+call failed this run, so a caller can tell "checked GitHub, found nothing"
+apart from "couldn't check GitHub, treated it as nothing" before trusting a
+`role: worker`/`idle` recommendation as complete.
+
 Usage:
   python scripts/select_role.py [--dry-run]
   python scripts/select_role.py --repos silasfelinus/conductor,silasfelinus/kind_robots
@@ -119,6 +127,19 @@ import scripts.run_worker as run_worker
 
 GITHUB_API = 'https://api.github.com'
 
+# Tracks GitHub API reachability across all _gh_request() calls made during a
+# single select_role() invocation. Reset at the start of select_role() and
+# read at the end (conductor/t-084): the JSON output previously had no way to
+# distinguish "checked GitHub, found nothing" from "couldn't reach GitHub,
+# treated it as nothing" -- a caller that only captures the returned JSON
+# (not stderr) could trust a `role: worker`/`idle` recommendation that was
+# actually built on silently-skipped signals.
+_unreachable_urls: list[str] = []
+
+
+def _reset_github_reachability_tracking() -> None:
+    _unreachable_urls.clear()
+
 # The repo this script's own checkout belongs to — the one branch_janitor.py's
 # local-git commands (git branch -r, git log) actually reach. Any other repo
 # in DEFAULT_REPOS is checked via the GitHub API instead (see module docstring).
@@ -154,6 +175,7 @@ def _gh_request(url: str, token: str) -> object | None:
             return json.loads(resp.read())
     except (urllib.error.URLError, urllib.error.HTTPError, TimeoutError) as error:
         print(f'[select-role] GitHub API unreachable for {url} ({error}); skipping', file=sys.stderr)
+        _unreachable_urls.append(url)
         return None
 
 
@@ -455,6 +477,7 @@ def select_role(
     pr_grace_minutes: float = DEFAULT_PR_GRACE_MINUTES,
 ) -> dict[str, object]:
     repos = list(repos) if repos else list(DEFAULT_REPOS)
+    _reset_github_reachability_tracking()
 
     try:
         run_reviewer.refresh_remotes()
@@ -498,6 +521,15 @@ def select_role(
         role = 'idle'
         reason = 'nothing to review, fix, triage, audit, or work — dream-cycle fallback applies'
 
+    github_token_missing = not github_token
+    if github_token_missing:
+        github_api_unreachable_detail = 'no GITHUB_TOKEN provided; GitHub-backed signals were never checked'
+    elif _unreachable_urls:
+        github_api_unreachable_detail = f'{len(_unreachable_urls)} GitHub API call(s) failed (see stderr for URLs)'
+    else:
+        github_api_unreachable_detail = None
+    github_api_unreachable = github_token_missing or bool(_unreachable_urls)
+
     return {
         'role': role,
         'reason': reason,
@@ -516,6 +548,8 @@ def select_role(
         'ready_task': ready_task,
         'projects_with_ready_tasks': queue.get('projects_with_ready_tasks', []),
         'projects_needing_human': queue.get('projects_needing_human', []),
+        'github_api_unreachable': github_api_unreachable,
+        'github_api_unreachable_detail': github_api_unreachable_detail,
     }
 
 
