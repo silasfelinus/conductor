@@ -1918,3 +1918,35 @@ exact race hadn't shown up in this project's TALKBACK before.
 **Kaizen task:** none filed — no systematic gap, and the existing "check current state before
 retrying a 405" discipline (already documented for the STATUS.md/workspace.html auto-gen
 case) generalizes to this case too without needing a new rule.
+
+## 2026-07-26 | Reviewer (conductor agent run) | ai-art-academy/t-010 | pattern
+
+**Decision:** merged PR #1163 (lane 2 roadmap-accuracy pass, Nabis teaching-notes.md +
+art-prompts.yaml backfill), task rearmed to `ready` (recurring, per `continuous_improvement`
+metadata: `last_lane: 2`, `next_lane: 3`).
+
+**Detail:**
+- All 23 CI checks green; diff scoped to conductor-docs-only files (checklist, run-log,
+  teaching-notes.md, art-prompts.yaml, roadmap.yaml) — no kind_robots PR, matching the
+  stated "conductor-docs-only, no front-end sync needed" scope.
+- Spot-checked the core claim (lane-4's Nabis promotion skipped the same two per-movement
+  follow-ups §17-30 got) against the actual diff: teaching-notes.md row 31 and the new
+  `kind-robots-academy-style-preview-the-nabis` art-prompts.yaml entry both mirror the
+  existing 30 entries' shape closely — no fabricated facts, sourced from curriculum-outline.md
+  §31 as claimed.
+- `check_pr_merged_drift.py`'s two flagged candidates (own in-progress kind_robots#1017
+  claim, animation-manager/t-013's historical kind_robots#887 reference) were both
+  correctly triaged as non-drift in the PR body.
+
+**What was good:**
+- Real, verifiable finding (not just a clean audit run) — caught a genuine same-cycle
+  omission pattern (teaching-notes.md / art-prompts.yaml follow-ups) that matches a
+  previously-fixed gap class (t-041's ashcan-school/example-works omission), and backfilled
+  it without inventing new content.
+- Correctly deferred to the concurrent t-013 closeout session rather than touching its
+  in-flight PR #1160.
+
+**Kaizen task:** deferred — concur with the Worker's own assessment that this is a one-off
+backfill rather than a repeating pattern yet; if a third movement addition independently
+skips the same two follow-ups, that's the threshold to formalize a "same-cycle completeness
+checklist" the way lane-4 additions already get one for the outline+registry+examples set.
