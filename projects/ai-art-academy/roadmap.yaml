@@ -525,11 +525,11 @@ tasks:
   - id: t-010
     milestone: m6
     title: Academy continuous improvement pass
-    status: ready
+    status: claimed
     recurring: true
     passes: 0
     stakes: reversible
-    updated: '2026-07-26T01:29:00Z'
+    updated: '2026-07-26T03:16:00Z'
     note: |-
       Standing never-idle task (re-arms to ready after every completion, per the recurring-task rule). Each cycle pick ONE: (a) front-end style/polish pass on Academy or art-styler surfaces, (b) roadmap upgrade — refine tasks, detail the next milestone, prune stale notes, (c) generate more art inspirations or style preview thumbnails, (d) expand the curriculum with a new movement/artist entry (respecting PUBLIC-DOMAIN-POLICY.md). Note which option ran in the PR. This task never reaches done and does not count toward milestone progress.
       RAN 2026-07-25 (~21:05-21:15 UTC, claude-conductor-burst-20260725T2100Z-t010-lane2, scheduled burst-mode cycle): option (b) roadmap accuracy (lane 2), per the checklist's next-preferred-lane note (previous cycle ran lane 1). `scripts/audit_roadmaps.py` clean: 0 errors, 12 warnings, 42 info — same established `ACTIVE_PROJECT_ALL_DONE`/`ACTIVE_PROJECT_NO_OPEN_TASKS` baseline (art-generator-connect/davinci/ecosystem-map/humboldt-scoop/packmaker/sketchy, left unchanged, needs Silas's call), identical to the immediately-prior lane-2 cycle's counts — no drift. `scripts/check_pr_merged_drift.py` flagged 42 unverifiable-via-sandbox candidates (up from 31 last lane-2 cycle, purely from this task's and model-builder/t-029's growing PR-reference history, all HTTP 403 direct-API as usual); spot-checked the newest (kind_robots#962) via GitHub MCP `pull_request_read` — confirmed merged, 10/-0/1-file, matches this task's own record exactly, no drift. Re-verified all 6 milestones programmatically against actual task statuses: m1 (done, 2/2), m2 (in-progress, t-004 needs-human), m3 (in-progress, t-033 needs-human), m4 (done, 15/15), m5 (in-progress, t-009 needs-human + t-019 ready), m6 (in-progress, t-010 claimed + t-035 ready) — all six already match, no drift. Spot-checked t-019's blocker for currency: `public/images/academy/styles/` still absent in kind_robots (confirmed via GitHub MCP `get_file_contents`, path-not-found) — no change, not re-filing. Noted in passing (not investigated further, out of lane 2's docs-only scope): model-builder/t-029 is concurrently claimed by another active session (`reviewer/claude-conductor-burst-20260725T2010Z-mb-t029`) — a normal concurrent-session state, no collision with this task. Conductor-docs-only change (this roadmap + the checklist); no kind_robots PR needed. Next preferred lane is inspiration/preview assets (lane 3) — this cycle ran lane 2, so lane 3 is next in the 1→2→3→4 rotation (lane 1 ran two cycles ago at ~20:03-20:27 UTC); re-probe with a fresh queued job rather than assuming either the old backlog depth or a clean recovery. Rearmed to `ready`.
@@ -737,8 +737,11 @@ tasks:
       Curriculum-depth lane: added the Nabis teaching candidate on worker/ai-art-academy-t-010-nabis-20260726, covering recognition cues, public-domain boundaries, movement-level remix guidance, failure modes, exercises, and cultural-exchange cautions.
 
       RAN 2026-07-26 (worker-conductor-20260726T011347Z-aa-t010-nabis): option (d), curriculum depth. Added the Nabis curriculum candidate in conductor PR #1086 and merged squash 4c28a9a67af947a4bd2de0bc7350027e62c88eab. The candidate covers recognition cues, Sérusier/Vuillard/Bonnard/Denis, movement-level remix guidance, failure modes, exercises, public-domain promotion criteria, and cultural-exchange cautions. All Worker PR CI, Security Audit, and task-event checks passed. Rearmed to ready.
-    claimed_by: worker-conductor-20260726T011347Z-aa-t010-nabis
-    claimed_at: '2026-07-26T01:13:47Z'
+
+      Autonomous inspiration-assets lane selected after the higher ready live-generation evaluation remained unavailable from this connector runtime.
+    claimed_by: worker-conductor-20260726T031600Z-aa-t010-7f3c
+    claimed_at: '2026-07-26T03:16:00Z'
+    owner: worker
 
   - id: t-015
     milestone: m4
