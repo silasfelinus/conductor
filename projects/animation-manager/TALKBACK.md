@@ -198,3 +198,11 @@ oldest first, clearing the tag as each is done.
 **Kaizen task:** deferred — the `select_role.py` scope gap above is worth its own
 `conductor` roadmap task rather than folding into this project's TALKBACK; will file it
 under `conductor/` in this same session.
+
+**Addendum:** a second, independent close-out PR (#1160, `claude/animation-manager-t013-close`,
+opened 2026-07-26T18:04:55Z — 25 seconds before this session's own #1161) also flips
+`t-013` `review` -> `done`, racing this same closeout. Since #1161 already merged (with
+the fuller Reviewer note above), #1160's diff is now against a stale base and redundant —
+not closing it myself per the "don't unilaterally close someone else's PR" convention for
+superseded work, just flagging it here so whichever session/Silas next touches this
+project knows #1160 can be closed without review (its content already landed via #1161).
