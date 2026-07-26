@@ -2547,7 +2547,7 @@ tasks:
     milestone: m2
     title: 'Investigate a fresh cluster of ComfyUI workflow-error ArtJob failures
       spanning 4 projects, distinct from the already-fixed seed-range bug'
-    status: claimed
+    status: review
     owner: reviewer
     passes: 0
     stakes: reversible
@@ -2583,6 +2583,38 @@ tasks:
       stopped recurring, downgrade this to a documented non-issue rather than
       chasing further. Filed as a normal `ready` task (not urgent/blocking)
       since it doesn't gate any currently in-flight work.
+
+      UPDATE 2026-07-26 ~12:10 UTC (claude-conductor-scheduled-20260726T121200Z-cd-t080):
+      re-checked queue-stats — the cluster is still live and has grown to 13
+      occurrences (09:10:42Z through 11:59:40Z), now also spanning
+      ruler-hooked (x3), still all `attempts: 3`/exhausted. Traced item (2)
+      from the prior note via an Explore agent reading the relay source
+      directly (`ops/home-server/relay_agent.py`, this repo, not kind_robots
+      — the self-hosted relay that actually talks to ComfyUI): `run_comfy()`'s
+      polling loop hits `GET /history/{prompt_id}`, sees
+      `status.status_str == "error"`, and raises the hardcoded string
+      `"ComfyUI reported a workflow error"` with NO inspection of
+      `status.messages`, which is where ComfyUI's own `execution_error` tuple
+      (node id, node type, exception message, traceback) actually lives.
+      `relay_media_agent.py`'s `run_comfy_with_recovery()` has an identical
+      copy of the same blind spot. Root cause of *why* jobs are failing is
+      therefore still unknown — genuinely unrecoverable from this session,
+      since ComfyUI's history entry is transient and the detail was never
+      logged, stored, or forwarded anywhere before this fix — but the
+      diagnostic gap itself was fixable in-repo. Fixed: added
+      `describe_comfy_error(entry)` to `relay_agent.py` (parses
+      `status.messages` for an `execution_error` entry and formats
+      `"node {id} ({type}): {exception_message}"`), and wired it into both
+      `run_comfy()`'s and `run_comfy_with_recovery()`'s error branch so the
+      ArtJob's stored `error` column will carry the real ComfyUI-side detail
+      the next time this fires, instead of the generic string. Added 4 new
+      tests (`tests/test_relay_completion_provenance.py`) covering the helper
+      directly and both call sites' propagation; full suite green (542
+      passed, 1 skipped). This does not fix the underlying failure cause —
+      only future occurrences will be diagnosable. Not spending further
+      passes chasing the live cause blind; re-open or file a follow-up task
+      once a future failure's `error` text carries real node/exception detail
+      to root-cause from.
     claimed_by: claude-conductor-scheduled-20260726T121200Z-cd-t080
     claimed_at: '2026-07-26T12:09:15Z'
     updated: '2026-07-26T12:09:15Z'

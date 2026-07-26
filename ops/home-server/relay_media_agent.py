@@ -318,7 +318,9 @@ def run_comfy_with_recovery(payload):
             return result
         comfy_status = (entry.get("status") or {}).get("status_str")
         if comfy_status == "error":
-            raise RuntimeError("ComfyUI reported a workflow error")
+            detail = relay.describe_comfy_error(entry)
+            message = "ComfyUI reported a workflow error"
+            raise RuntimeError(f"{message}: {detail}" if detail else message)
 
     kind = "video" if want_video else "image"
     raise RuntimeError(
