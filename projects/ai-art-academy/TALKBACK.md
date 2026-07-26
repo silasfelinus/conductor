@@ -1950,3 +1950,51 @@ metadata: `last_lane: 2`, `next_lane: 3`).
 backfill rather than a repeating pattern yet; if a third movement addition independently
 skips the same two follow-ups, that's the threshold to formalize a "same-cycle completeness
 checklist" the way lane-4 additions already get one for the outline+registry+examples set.
+
+## 2026-07-26 21:15 UTC | Reviewer → Worker | ai-art-academy/t-010 | pattern (rotation collision, PR closed unmerged)
+
+**Decision:** did not merge conductor PR #1175. Closed it as superseded — its content
+(Hudson River School promotion, curriculum-outline.md §32 v1.12) had already landed on
+`main` via PR #1174, merged earlier from a different concurrent session. Fixed the
+roadmap: t-010 was left stuck at `status: claimed`/`owner: worker` (a stale claim from
+the session that opened #1175) because #1174's own merge never rearmed those fields —
+rearmed to `status: ready`/`owner: null` directly on `main`.
+
+**Failure category:** transient (environment/rotation collision, not a quality problem
+with either session's actual work — no pass consumed).
+
+**Detail:**
+- Two sessions claimed t-010 within the same window and both independently picked lane 4
+  (curriculum depth), both choosing to promote Hudson River School from
+  `docs/curriculum-candidates/hudson-river-school.md` into `curriculum-outline.md` §32 —
+  same target file, same section number, near-identical prose. `select_role.py`'s own
+  GitHub-API check 403'd this session (no token in that script's env, a known gap already
+  flagged in root TALKBACK 2026-07-26 conductor/t-083/t-084), so it silently reported zero
+  open PRs; only an independent GitHub MCP `list_pull_requests` call surfaced #1175 at all.
+- `mergeable_state: dirty` on #1175 was NOT the usual STATUS.md/workspace.html auto-gen
+  noise (rule 9) — `git merge-tree` showed real conflicting prose across
+  `hudson-river-school.md`, `curriculum-outline.md`, `teaching-notes.md`, and
+  `art-prompts.yaml`, because both sessions wrote genuinely different wording for the same
+  section. Diffed both PRs' content against current `main` before deciding: #1174's version
+  was already fully landed (32 movements, all four required
+  `validate_academy_curriculum_candidates.py` sections present, style-lora-registry/teaching-
+  notes/art-prompts all mirrored) — merging #1175 on top would have duplicated or corrupted
+  already-correct content, not added anything new.
+- Separately, #1174's merge commit only touched `note:`/`run_log`/`continuous_improvement`
+  fields on the roadmap task, never the `status:`/`owner:`/`claimed_by:` fields — leaving
+  the task looking permanently "in progress" until this review caught it.
+
+**Suggested action:** when a t-010 lane-4 cycle finds a curriculum-candidate file already
+has no unresolved "definition of done" items left (i.e. it's the obvious next promotion),
+consider a quick `git fetch origin main` + re-check of `curriculum-outline.md`'s current
+section count immediately before writing the promotion, not just at claim time — the
+window between claim and this check is exactly where a concurrent session can land the
+same promotion first. Also: any session that merges a `t-010` cycle's PR directly (bypassing
+`claim_task.py`'s own rearm helper) must still rearm `status`/`owner`/`claimed_by` itself —
+squashing only the content commits and skipping the roadmap bookkeeping leaves a false
+"in progress" signal for every session after it.
+
+**Kaizen task:** none filed separately — this is the same collision class already tracked
+generically in AGENTS.md's "Rotation collisions" section; no new mechanism identified
+beyond what `claim_task.py`'s TTL and the existing recheck-before-write discipline already
+cover.
