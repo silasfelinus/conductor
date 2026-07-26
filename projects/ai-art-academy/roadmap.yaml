@@ -448,24 +448,24 @@ tasks:
   - id: t-010
     milestone: m6
     title: Academy continuous improvement pass
-    status: claimed
+    status: ready
     recurring: true
     passes: 0
     stakes: reversible
-    updated: '2026-07-26T20:10:20Z'
-    owner: worker
+    updated: '2026-07-26T21:10:00Z'
+    owner: null
     note: |-
       Standing never-idle task (re-arms to ready after every completion, per the recurring-task rule). Each cycle pick ONE: (a) front-end style/polish pass on Academy or art-styler surfaces, (b) roadmap upgrade — refine tasks, detail the next milestone, prune stale notes, (c) generate more art inspirations or style preview thumbnails, (d) expand the curriculum with a new movement/artist entry (respecting PUBLIC-DOMAIN-POLICY.md). Note which option ran in the PR. This task never reaches done and does not count toward milestone progress. See `run_log` for cycle history.
 
       RAN 2026-07-26 (lane 4, curriculum depth, via fallback from a blocked lane 3): re-probed the render queue via `scripts/recheck_render_queue.py` — still growing (PENDING=114, oldest job ~57h old); fell back to lane 4 per the checklist's rule. Promoted Hudson River School (docs/curriculum-candidates/hudson-river-school.md) into curriculum-outline.md as section 32 (v1.12), live-verifying its one remaining unverified example work. Also found and backfilled a gap in the immediately-prior lane-4 cycle's Nabis promotion (§31): it was never added to the curriculum-outline.md machine-readable skeleton YAML block, and its public-domain re-check paragraph was never written. Full detail in run_log. Conductor-docs-only; no kind_robots PR needed. Next preferred lane is front-end polish (lane 1).
+
+      REARM FIX 2026-07-26T21:10Z: PR #1174 merged this cycle's work but left `status: claimed`/`owner: worker`/stale `claimed_by`/`claimed_at` in place instead of rearming — the same stranded-recurring-task shape this task's own 2026-07-21 note already documents twice (kind_robots PR #814 and #942 incidents). A parallel same-session branch (`claude/ai-art-academy-t010-hudson-river-2010z`) had done equivalent Hudson River School work independently and raced PR #1174 to merge; its own PR (#1175) was correctly closed as a duplicate once #1174 landed first, but that left this status-field bug undiscovered until this follow-up. Flipping `status` back to `ready`, `owner` to `null`, and dropping the stale `claimed_by`/`claimed_at` pair to match the pre-claim shape.
     continuous_improvement:
       last_lane: 4  # 1=front-end polish, 2=roadmap accuracy, 3=inspiration assets, 4=curriculum depth
       next_lane: 1
       last_run: '2026-07-26T20:10:00Z'
       last_pr: 'https://github.com/silasfelinus/conductor/pull/1174'
     run_log: projects/ai-art-academy/docs/continuous-improvement-run-log.md
-    claimed_by: claude-conductor-burst-20260726T2010Z-aa-t010-lane3
-    claimed_at: '2026-07-26T20:10:20Z'
 
   - id: t-015
     milestone: m4
