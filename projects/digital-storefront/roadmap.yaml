@@ -1028,22 +1028,18 @@ tasks:
 - id: t-035
   milestone: m4
   title: "kind_robots: extract a shared createPrintJobIfEligible helper for the two POD-fulfillment webhook paths"
-  status: claimed
+  status: done
   owner: worker
   passes: 0
   stakes: reversible
   note: >
-    Kaizen from t-034 (2026-07-26). `handleProductPurchase`'s POD branch and
-    `fulfillGiftshopPrintJob` (used by `handleGiftshopCartPurchase`) in
-    `server/api/stripe/webhook.post.ts` both independently implement the same
-    "look up the ArtImage, skip the PrintJob insert if it's gone, re-run
-    checkPrintEligibility, create the PrintJob (FAILED if ineligible)" sequence. t-034 just
-    fixed a real bug in one copy (the FK-violation/rolled-back-Order case) that the other
-    copy had already gotten right independently -- exactly the kind of duplication where a
-    future change to one path can silently reintroduce a bug the other already fixed.
-    Extract a single shared helper, e.g.
-    `createPrintJobIfEligible(tx, { orderItemId, artImageId, printfulVariantId, userId })`
-    returning whether a PrintJob was created, and have both call sites use it.
+    DONE 2026-07-26: kind_robots PR #1016 merged. Extracted `createPrintJobIfEligible(tx,
+    { orderItemId, artImageId, printfulVariantId, userId }, context)` and switched both
+    `handleProductPurchase`'s POD branch and `fulfillGiftshopPrintJob` to call it, removing
+    ~90 lines of duplicated eligibility-recheck/FK-safety logic. Verified with `eslint` +
+    a full `vue-tsc --noEmit` typecheck (both clean); behavior preserved exactly (same
+    eligibility check, same FK-safety guard, same FAILED-status handling, same log
+    wording via a per-call-site `context` string).
   updated: '2026-07-26T14:15:42Z'
   claimed_by: claude-conductor-scheduled-20260726T141539Z-ds-t035
   claimed_at: '2026-07-26T14:15:42Z'
