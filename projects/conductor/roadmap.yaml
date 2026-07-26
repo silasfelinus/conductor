@@ -2547,75 +2547,16 @@ tasks:
     milestone: m2
     title: 'Investigate a fresh cluster of ComfyUI workflow-error ArtJob failures
       spanning 4 projects, distinct from the already-fixed seed-range bug'
-    status: review
-    owner: reviewer
+    status: done
     passes: 0
     stakes: reversible
-    note: >
-      Found 2026-07-26 ~11:10 UTC during a conductor sweep (rechecking
-      ai-art-academy/t-004's queue-backlog blocker before rotating away from
-      it). GET /api/art/queue/stats showed the same operational backlog
-      (PENDING=135, oldest ~48h, RUNNING=1, throughput DONE=59/window vs
-      PENDING inflow=133) as prior sessions already documented on t-004, so
-      no action there. But `recentFailed` also surfaced 9 jobs with
-      `attempts: 3` (retries exhausted) and error text exactly
-      "ComfyUI reported a workflow error", spanning updatedAt
-      2026-07-26T09:10:42Z through 2026-07-26T11:03:55Z, across FOUR
-      different projectSlugs (coloring-book x3, packmaker x2,
-      superkate-hairstyle-ai x2, music-mentor x1) — a genuinely new failure
-      signature, not the previously-diagnosed and already-fixed
-      out-of-range-seed bug (kind_robots commit 6de92c3, coloring-book/t-030)
-      which has a different, distinct error string ("Value out of range for
-      the type... column 'seed'"). No existing roadmap task tracks this
-      error text (grepped all projects/*/roadmap.yaml and TALKBACK.md files,
-      no hits) as of this note. Spanning 4 unrelated projects in under 2
-      hours suggests a shared-infra cause (COMFY worker/relay/workflow-graph
-      issue) rather than 4 independent per-project bugs, but this session did
-      not have access to ComfyUI/relay logs to diagnose further (conductor
-      sandbox egress + no direct COMFY dashboard access). NEXT STEP: whoever
-      picks this up should (1) re-check queue-stats' `recentFailed` for
-      whether this error text is still appearing / growing since this note,
-      (2) if the relay/render-box logs are reachable, find the actual
-      ComfyUI-side error for one of these job ids (2331-2339) to see if it's
-      a specific workflow-graph fault (e.g. a missing/misconfigured node,
-      similar in kind to the LoRA-loader gap ai-art-academy/t-037 found) vs.
-      a transient worker crash, (3) if it's a transient blip that has already
-      stopped recurring, downgrade this to a documented non-issue rather than
-      chasing further. Filed as a normal `ready` task (not urgent/blocking)
-      since it doesn't gate any currently in-flight work.
+    note: |-
+      Found 2026-07-26 ~11:10 UTC during a conductor sweep (rechecking ai-art-academy/t-004's queue-backlog blocker before rotating away from it). GET /api/art/queue/stats showed the same operational backlog (PENDING=135, oldest ~48h, RUNNING=1, throughput DONE=59/window vs PENDING inflow=133) as prior sessions already documented on t-004, so no action there. But `recentFailed` also surfaced 9 jobs with `attempts: 3` (retries exhausted) and error text exactly "ComfyUI reported a workflow error", spanning updatedAt 2026-07-26T09:10:42Z through 2026-07-26T11:03:55Z, across FOUR different projectSlugs (coloring-book x3, packmaker x2, superkate-hairstyle-ai x2, music-mentor x1) — a genuinely new failure signature, not the previously-diagnosed and already-fixed out-of-range-seed bug (kind_robots commit 6de92c3, coloring-book/t-030) which has a different, distinct error string ("Value out of range for the type... column 'seed'"). No existing roadmap task tracks this error text (grepped all projects/*/roadmap.yaml and TALKBACK.md files, no hits) as of this note. Spanning 4 unrelated projects in under 2 hours suggests a shared-infra cause (COMFY worker/relay/workflow-graph issue) rather than 4 independent per-project bugs, but this session did not have access to ComfyUI/relay logs to diagnose further (conductor sandbox egress + no direct COMFY dashboard access). NEXT STEP: whoever picks this up should (1) re-check queue-stats' `recentFailed` for whether this error text is still appearing / growing since this note, (2) if the relay/render-box logs are reachable, find the actual ComfyUI-side error for one of these job ids (2331-2339) to see if it's a specific workflow-graph fault (e.g. a missing/misconfigured node, similar in kind to the LoRA-loader gap ai-art-academy/t-037 found) vs. a transient worker crash, (3) if it's a transient blip that has already stopped recurring, downgrade this to a documented non-issue rather than chasing further. Filed as a normal `ready` task (not urgent/blocking) since it doesn't gate any currently in-flight work.
+      UPDATE 2026-07-26 ~12:10 UTC (claude-conductor-scheduled-20260726T121200Z-cd-t080): re-checked queue-stats — the cluster is still live and has grown to 13 occurrences (09:10:42Z through 11:59:40Z), now also spanning ruler-hooked (x3), still all `attempts: 3`/exhausted. Traced item (2) from the prior note via an Explore agent reading the relay source directly (`ops/home-server/relay_agent.py`, this repo, not kind_robots — the self-hosted relay that actually talks to ComfyUI): `run_comfy()`'s polling loop hits `GET /history/{prompt_id}`, sees `status.status_str == "error"`, and raises the hardcoded string `"ComfyUI reported a workflow error"` with NO inspection of `status.messages`, which is where ComfyUI's own `execution_error` tuple (node id, node type, exception message, traceback) actually lives. `relay_media_agent.py`'s `run_comfy_with_recovery()` has an identical copy of the same blind spot. Root cause of *why* jobs are failing is therefore still unknown — genuinely unrecoverable from this session, since ComfyUI's history entry is transient and the detail was never logged, stored, or forwarded anywhere before this fix — but the diagnostic gap itself was fixable in-repo. Fixed: added `describe_comfy_error(entry)` to `relay_agent.py` (parses `status.messages` for an `execution_error` entry and formats `"node {id} ({type}): {exception_message}"`), and wired it into both `run_comfy()`'s and `run_comfy_with_recovery()`'s error branch so the ArtJob's stored `error` column will carry the real ComfyUI-side detail the next time this fires, instead of the generic string. Added 4 new tests (`tests/test_relay_completion_provenance.py`) covering the helper directly and both call sites' propagation; full suite green (542 passed, 1 skipped). This does not fix the underlying failure cause — only future occurrences will be diagnosable. Not spending further passes chasing the live cause blind; re-open or file a follow-up task once a future failure's `error` text carries real node/exception detail to root-cause from.
 
-      UPDATE 2026-07-26 ~12:10 UTC (claude-conductor-scheduled-20260726T121200Z-cd-t080):
-      re-checked queue-stats — the cluster is still live and has grown to 13
-      occurrences (09:10:42Z through 11:59:40Z), now also spanning
-      ruler-hooked (x3), still all `attempts: 3`/exhausted. Traced item (2)
-      from the prior note via an Explore agent reading the relay source
-      directly (`ops/home-server/relay_agent.py`, this repo, not kind_robots
-      — the self-hosted relay that actually talks to ComfyUI): `run_comfy()`'s
-      polling loop hits `GET /history/{prompt_id}`, sees
-      `status.status_str == "error"`, and raises the hardcoded string
-      `"ComfyUI reported a workflow error"` with NO inspection of
-      `status.messages`, which is where ComfyUI's own `execution_error` tuple
-      (node id, node type, exception message, traceback) actually lives.
-      `relay_media_agent.py`'s `run_comfy_with_recovery()` has an identical
-      copy of the same blind spot. Root cause of *why* jobs are failing is
-      therefore still unknown — genuinely unrecoverable from this session,
-      since ComfyUI's history entry is transient and the detail was never
-      logged, stored, or forwarded anywhere before this fix — but the
-      diagnostic gap itself was fixable in-repo. Fixed: added
-      `describe_comfy_error(entry)` to `relay_agent.py` (parses
-      `status.messages` for an `execution_error` entry and formats
-      `"node {id} ({type}): {exception_message}"`), and wired it into both
-      `run_comfy()`'s and `run_comfy_with_recovery()`'s error branch so the
-      ArtJob's stored `error` column will carry the real ComfyUI-side detail
-      the next time this fires, instead of the generic string. Added 4 new
-      tests (`tests/test_relay_completion_provenance.py`) covering the helper
-      directly and both call sites' propagation; full suite green (542
-      passed, 1 skipped). This does not fix the underlying failure cause —
-      only future occurrences will be diagnosable. Not spending further
-      passes chasing the live cause blind; re-open or file a follow-up task
-      once a future failure's `error` text carries real node/exception detail
-      to root-cause from.
+
+      DONE 2026-07-26: merged conductor PR #1137 as squash commit 94d5b18. The home relay now preserves ComfyUI execution_error node/type/exception detail in both image and media recovery paths, so future workflow failures retain the evidence needed for root-cause diagnosis. All PR workflows passed and no blocking review remained. The underlying live ComfyUI failure cause is intentionally not guessed; investigate the next stored ArtJob error once it includes the new detail.
     claimed_by: claude-conductor-scheduled-20260726T121200Z-cd-t080
     claimed_at: '2026-07-26T12:09:15Z'
-    updated: '2026-07-26T12:09:15Z'
+    updated: '2026-07-26T12:22:00Z'
 
