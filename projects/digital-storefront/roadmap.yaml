@@ -713,6 +713,36 @@ tasks:
   claimed_by: claude-conductor-scheduled-20260726T031448Z-ds-t027
   claimed_at: '2026-07-26T03:14:48Z'
 
+- id: t-029
+  milestone: m4
+  title: 'Wire the print-eligibility gate to read Resource.commercialSafe instead of the checkpointResourceId-IS-NULL default-deny'
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  depends_on: [t-020]
+  note: >
+    RENUMBERED from t-028 during merge-conflict resolution (conductor PR
+    #1095): t-028 was independently taken by a concurrent live session's
+    kaizen task (kind-robots/t-047 follow-up, kind_robots PR #995 in
+    progress) before this PR merged — see root TALKBACK.md 2026-07-26 for
+    detail. This task's own content is unaffected by the renumber.
+    Kaizen from t-020's close: kind-robots/t-045 (kind_robots PR #993,
+    merged 2026-07-26) added `Resource.commercialSafe Boolean @default(false)`
+    plus `scripts/seed_resource_commercial_safe.ts` (dry-run by default,
+    `--write` to apply), seeding known-clean backends (OpenAI, FLUX.1
+    schnell, Flux.2 Klein, BFL Kontext pro/max, fal.ai/Replicate — NOT
+    Flux.1 dev, Kontext dev, or krea2). The field exists now but nothing
+    reads it yet: the actual "print my gallery art" eligibility check
+    (docs/gallery-to-swag-pipeline.md §4/§6) still needs to join
+    `ArtImage.checkpointResourceId -> Resource.commercialSafe` and gate on
+    it, replacing (or narrowing) the current conservative
+    `checkpointResourceId IS NULL` default-deny. Before wiring this: run
+    `npm run seed:resource-commercial-safe` (no --write) against real data
+    and sanity-check the classification output first — the seed script's
+    backend matching is regex-based heuristics, not a verified mapping
+    (flagged in kind-robots' TALKBACK 2026-07-26).
+
 - id: t-028
   milestone: m1
   title: "Wire ArtImage.storefrontFeatured into the swag-rail query now that the field exists (kind_robots PR #994)"
