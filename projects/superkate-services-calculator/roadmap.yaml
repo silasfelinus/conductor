@@ -491,20 +491,23 @@ tasks:
 - id: t-030
   milestone: m2
   title: Plan dedicated backend deployment, secrets, and backup gates
-  status: needs-human
+  status: done
   owner: human
   passes: 0
   stakes: needs-human
+  gate_human: true
+  approved_by_human: true
   depends_on: t-028
-  updated: 2026-07-08
-  note: 'FOR SILAS: human-gated planning task only — no agent output to review, this is a decision-only
-    gate. Before any production sync uses real customer data, choose hosting location, database engine,
-    domain/subdomain if any, secrets handling, backup schedule, restore test process, and access policy.
-    TO APPROVE: record your choices here (or in a linked doc), then set approved_by_human: true and
-    status: done. Workers must not touch DNS, secrets, production deploy settings, production databases,
-    billing, analytics, or real customer sync under this task without explicit concrete approval.
-
-    '
+  updated: 2026-07-26
+  note: >
+    DECIDED 2026-07-26 (Silas): no dedicated Hair by Superkate backend for now
+    — the app keeps using the existing kind_robots infra/fake-local backend
+    scaffold as-is. Only Superkate herself uses this app; a dedicated
+    deployment, secrets, and backup plan isn't worth building until usage
+    grows beyond her. Revisit this gate if/when someone besides Superkate
+    starts using it. No production sync, secrets, DNS, or real customer data
+    handling is authorized by this decision — that still needs its own future
+    gate if this ever gets revisited.
 - id: t-031
   milestone: m2
   title: Add widget test coverage for the customer profile add/edit/delete UI

@@ -1,14 +1,14 @@
 # Roadmap Audit
 
-Generated: `2026-07-26T02:03:59.491978+00:00`
+Generated: `2026-07-26T02:10:03.369204+00:00`
 
 This is a conservative structural audit. It reports suspicious state; it does not automatically change task status or remove human gates.
 
 ## Portfolio snapshot
 
-- **41** roadmaps, **25** active projects, **670** tasks
-- **44 ready**, **40 waiting**, **26 needs-human**, **1 claimed/review**, **548 done**
-- Findings: **0 errors**, **0 warnings**, **53 informational**
+- **41** roadmaps, **23** active projects, **670** tasks
+- **44 ready**, **40 waiting**, **25 needs-human**, **1 claimed/review**, **549 done**
+- Findings: **0 errors**, **0 warnings**, **54 informational**
 
 ## Project inventory
 
@@ -25,8 +25,8 @@ This is a conservative structural audit. It reports suspicious state; it does no
 | 9 | `kind-robots` | active | software | 4 | 0 | 3 | 1 | 39 / 47 |
 | 10 | `kindrobots-unraid` | active | software | 0 | 7 | 1 | 0 | 4 / 12 |
 | 11 | `global-ui` | finished | software | 0 | 0 | 0 | 0 | 25 / 25 |
-| 12 | `superkate-services-calculator` | active | software | 0 | 0 | 1 | 0 | 36 / 37 |
-| 13 | `superkate-hairstyle-ai` | active | software | 1 | 0 | 1 | 0 | 19 / 21 |
+| 12 | `superkate-services-calculator` | finished | software | 0 | 0 | 0 | 0 | 37 / 37 |
+| 13 | `superkate-hairstyle-ai` | paused | software | 1 | 0 | 1 | 0 | 19 / 21 |
 | 14 | `newsfeed` | active | software | 1 | 0 | 0 | 0 | 21 / 22 |
 | 15 | `model-builder` | active | software | 2 | 0 | 0 | 0 | 29 / 31 |
 | 16 | `animation-manager` | active | software | 3 | 0 | 0 | 0 | 11 / 14 |
@@ -66,7 +66,7 @@ _None._
 
 _None._
 
-### Info (53)
+### Info (54)
 
 - **APPROVAL_WITHOUT_GATE** — `ai-art-academy` / `t-002`: approved_by_human is set on a task that is not human-gated.
 - **APPROVAL_WITHOUT_GATE** — `ai-art-academy` / `t-011`: approved_by_human is set on a task that is not human-gated.
@@ -117,6 +117,7 @@ _None._
 - **MISSING_GOAL** — `serendipity`: Roadmap has no friendly goal/definition of done.
 - **MISSING_GOAL** — `sketchy`: Roadmap has no friendly goal/definition of done.
 - **MISSING_GOAL** — `storymaker`: Roadmap has no friendly goal/definition of done.
+- **INACTIVE_PROJECT_HAS_READY_TASKS** — `superkate-hairstyle-ai`: Inactive project retains 1 ready task(s); harmless but misleading in generated status.
 - **MISSING_GOAL** — `superkate-hairstyle-ai`: Roadmap has no friendly goal/definition of done.
 - **APPROVAL_WITHOUT_GATE** — `superkate-hairstyle-ai` / `t-011`: approved_by_human is set on a task that is not human-gated.
 - **MISSING_GOAL** — `superkate-services-calculator`: Roadmap has no friendly goal/definition of done.
