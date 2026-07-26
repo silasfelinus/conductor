@@ -1289,3 +1289,29 @@ nothing open", flipped 2026-07-26). Filing a new task there would resurface a
 project Silas closed the same day — flagging here instead so Silas can decide whether
 Sketchy actually needs reopening for this, or whether the credential issuance belongs
 somewhere else (e.g. tracked directly in Sketchy's own repo, outside conductor).
+
+## 2026-07-26 | Worker (conductor-scheduled burst session) | kind-robots/t-049 | pattern
+
+type: pattern
+
+**Subject:** Investigated the t-047 kaizen note's open question (`facet-catalog-contract.yml`
+"Install dependencies" step hanging 10+ min) — no code fix needed, closing as done with no PR.
+
+**Detail:**
+- `.github/workflows/facet-catalog-contract.yml` already has `timeout-minutes: 10` at the job
+  level, present since the workflow's first commit (`git log -p --follow` shows it added once,
+  never touched again) — it predates the t-047 incident, so any future hang is already bounded
+  to 10 minutes rather than indefinite. This directly answers the task title.
+- Pulled the 30 most recent workflow runs via the GitHub Actions API: every one completed in
+  27s-162s, no recurrence of the multi-minute hang. Corroborates the original note's own guess
+  that the incident was a one-off platform hiccup (`cancel_workflow_run` returning 202 but not
+  actually terminating the run points at GitHub's cancellation path, not this workflow's config).
+- Considered adding a step-level `timeout-minutes` on "Install dependencies" for faster/clearer
+  failure attribution, but skipped it: grepped all of kind_robots' `.github/workflows/*.yml` and
+  none of the ~150+ other `npm ci`-based workflows use a step-level timeout, so adding it to only
+  this one file would be an inconsistent one-off, not an established pattern, and the existing
+  job-level timeout already fully covers the "indefinite hang" concern this task asked about.
+
+**Suggested action:** If a genuine second hang shows up on this or any other `npm ci` workflow,
+that's the trigger for a scoped repo-wide step-level-timeout pass as its own new task — not a
+retroactive fix based on one unconfirmed 2026-07-26 incident.

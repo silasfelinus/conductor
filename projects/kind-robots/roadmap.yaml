@@ -1617,7 +1617,7 @@ tasks:
   - id: t-049
     milestone: m4
     title: 'Investigate whether facet-catalog-contract.yml can hang indefinitely on Install dependencies'
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -1637,6 +1637,36 @@ tasks:
       indefinitely)? Is there a flaky npm registry / dependency-cache-restore
       step in play? If it recurs, that's a stronger signal of a real
       workflow-level issue rather than transient infra.
+
+      INVESTIGATED 2026-07-26 (conductor-scheduled burst session): answered
+      both open questions from the kaizen note. (1) `timeout-minutes: 10` is
+      already set at the job level in
+      `.github/workflows/facet-catalog-contract.yml` (kind_robots) — `git log
+      -p --follow` on the file shows this line has been present since the
+      workflow's very first commit and was never added or changed since, so
+      it predates the t-047 hang and was already in effect when the hang was
+      observed. A future hang is bounded to 10 minutes total job runtime, not
+      indefinite, which directly answers the task title. (2) Checked the 30
+      most recent `facet-catalog-contract.yml` runs via the GitHub Actions
+      API (through today, 2026-07-26): every one completed in 27s-162s, no
+      recurrence of anything close to a multi-minute hang. Combined with (1),
+      this corroborates the original note's own guess that the t-047 incident
+      was a one-off GitHub Actions infra hiccup (the `cancel_workflow_run`
+      202-but-no-effect symptom points at the platform's own cancellation
+      path, not this workflow's config) rather than a recurring
+      dependency-install or cache-restore problem in this repo. Considered
+      also adding a step-level `timeout-minutes` on "Install dependencies"
+      for faster, more specific failure attribution if it ever does hang
+      again, but skipped it: none of the ~150+ other `npm ci`-based workflows
+      in kind_robots use a step-level timeout (grepped
+      `.github/workflows/*.yml`), so adding it to only this one file would be
+      an inconsistent one-off rather than an established pattern, and the
+      existing job-level timeout already fully closes the "indefinite hang"
+      gap this task asked about. No code change needed — closing as done,
+      no PR. If a genuine second hang is observed on this or any other
+      `npm ci` workflow, that would be the trigger for a repo-wide
+      step-level-timeout pass as its own new task, not a retroactive fix
+      here based on a single unconfirmed incident.
     claimed_by: claude-conductor-scheduled-20260726T070632Z-kr-t049
     claimed_at: '2026-07-26T07:06:32Z'
     updated: '2026-07-26T07:06:32Z'
