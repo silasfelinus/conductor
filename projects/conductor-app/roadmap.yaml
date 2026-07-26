@@ -269,7 +269,8 @@ tasks:
 - id: t-014
   milestone: m3
   title: 'Design true per-user multi-voter pitch voting (if actually wanted)'
-  status: needs-human
+  status: done
+  approved_by_human: true
   soft_gate: true
   owner: null
   passes: 0
@@ -289,3 +290,8 @@ tasks:
     server/api/conductor/pitch-votes endpoint. If the current single-admin-status design is
     actually what you want, set status: done with a note -- no code change needed either
     way, this is purely a scope question.
+
+    DECIDED 2026-07-26 (Silas): "the system we have is what i want, no need for
+    multi-user voting, this app is meant for solo users, with possibly a
+    public facing aspect, but no need for multi-user voting." Current
+    single-admin-status design is correct as-is; no code change needed.

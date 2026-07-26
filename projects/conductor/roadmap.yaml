@@ -780,7 +780,7 @@ tasks:
   - id: t-034
     milestone: m2
     title: "Pitch: kind_robots dashboard as shared front-end for Conductor + PortOS CoS"
-    status: needs-human
+    status: done
     gate_human: true
     approved_by_human: true
     passes: 0
@@ -795,6 +795,7 @@ tasks:
       It maps queue, agent, claim, completion, learning, and health data to real PortOS CoS primitives and proposes a graceful read-only API response shape. No runtime, deployment, nav, pairing, or production behavior changed.
       TO APPROVE: Read the design note and set approved_by_human: true with status: done if the shape is right, or leave course corrections in this task note.
       What unblocks: no current task is blocked; this is reference context for conductor/t-033 or a later PortOS dashboard implementation.
+      APPROVED 2026-07-26 (Silas): "portos dashboard approved." Design note stands as-is.
     claimed_by: claude-conductor-burst-20260726T-portos-shape
     claimed_at: '2026-07-26T00:07:31Z'
     soft_gate: false
@@ -2151,10 +2152,42 @@ tasks:
       required-check name needs updating to "Python test suite" or PRs may
       stop being mergeable there. No tool available to any agent session can
       check this either way — worth a quick look while you're in Settings.
+
+      CORRECTED 2026-07-26 (Silas reported the above instructions don't match
+      current GitHub UI): investigated via the GitHub API directly.
+      `list_branches` on silasfelinus/kind_robots shows `main` has
+      `"protected": false` — there is currently NO branch protection rule AND
+      no ruleset configured on `main` at all. That's the real reason the
+      "Settings → Branches → edit rule → search box" path didn't exist for
+      Silas: that UI only appears once a rule/ruleset already exists to edit;
+      with nothing configured, GitHub instead shows the empty-state options
+      Silas actually saw ("Add branch protection rule" / "Add branch
+      ruleset"). Separately confirmed the check name itself is exactly right:
+      `.github/workflows/typecheck.yml`'s job is literally named `TypeScript`
+      (workflow name: "TypeScript Type Check"), and it has run successfully
+      on `main` today — so once a rule/ruleset exists, "TypeScript" will be
+      selectable.
+
+      CORRECTED STEPS (GitHub's current Rulesets UI, matching what Silas saw
+      — "Add Branch Ruleset"):
+      1. silasfelinus/kind_robots → Settings → Rules → Rulesets → New branch
+         ruleset
+      2. Name it (e.g. "main protection"), set Enforcement status: Active
+      3. Target branches → Add target → Include default branch (or add
+         `main` explicitly)
+      4. Under Branch rules, check "Require status checks to pass"
+      5. Click "Add checks", search "TypeScript" — it should now appear
+         since the check has reported on `main` recently
+      6. Save/Create
+      Classic path (Settings → Branches → Add branch protection rule) works
+      identically if preferred instead of Rulesets — same search box, same
+      check name, just a different settings page. Either way, once the
+      TypeScript check is required, set approved_by_human: true and
+      status: done here.
     owner: null
     claimed_by: null
     claimed_at: null
-    updated: '2026-07-25T00:00:00Z'
+    updated: '2026-07-26T00:00:00Z'
 
   - id: t-074
     milestone: m2

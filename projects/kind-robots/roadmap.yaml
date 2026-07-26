@@ -293,6 +293,24 @@ tasks:
       Run without `--apply` first if you want to see the dry-run report (counts
       only, no writes) before committing. Once the numbers look sane, set
       status: done here.
+
+      ANSWERED 2026-07-26 (Silas ran `setx KR_API_TOKEN '...'` then
+      immediately `python3 scripts/reconcile_expressions.py --apply` in the
+      same PowerShell window and got "--apply requires KR_API_TOKEN"):
+      classic Windows `setx` gotcha — `setx` writes the value to the registry
+      for *future* processes, but it does NOT update the environment of the
+      PowerShell session it was run in. The window that ran `setx` still has
+      the old (unset) environment; only a *new* terminal window opened after
+      the `setx` call will see it. Two ways to fix:
+      1. Close and reopen PowerShell (a fresh window), then just run
+         `python3 scripts/reconcile_expressions.py --apply` directly — no
+         need to set anything again, `setx` already persisted it.
+      2. Or, without opening a new window, set it for just the current
+         session: `$env:KR_API_TOKEN = '...'` (PowerShell) then run the
+         script in that same window — this doesn't persist for next time,
+         but works immediately.
+      Either way should clear the error. Once the numbers look sane, set
+      status: done here.
     soft_gate: true
 
   - id: t-012
@@ -1152,8 +1170,9 @@ tasks:
   - id: t-037
     milestone: m4
     title: 'Pitch: Pack model + packId FK + GrantSubject.PACK migration for DLC unlocks'
-    status: needs-human
+    status: done
     gate_human: true
+    approved_by_human: true
     owner: worker
     passes: 0
     stakes: reversible
@@ -1186,9 +1205,15 @@ tasks:
       its own two remaining questions (Pack.ownerId; whether refund
       auto-revokes the paired Grant) haven't been answered yet, so it stays
       needs-human pending Silas's read of this pitch specifically.
+
+      APPROVED 2026-07-26 (Silas): "I own the dlc packs: userId=1. yes on
+      refund removing pack by default." Pack.ownerId = 1 for all DLC packs
+      (house-owned packs attributed to the admin account); refund
+      auto-revokes the paired Grant. Pitch file flipped to status: approved.
+      Implementation filed as kind-robots/t-050.
     claimed_by: claude-conductor-scheduled-20260718T0510Z
     claimed_at: '2026-07-18T05:13:46Z'
-    updated: '2026-07-25T00:00:00Z'
+    updated: '2026-07-26T00:00:00Z'
 
   - id: t-038
     milestone: m1
@@ -1670,3 +1695,29 @@ tasks:
     claimed_by: claude-conductor-scheduled-20260726T070632Z-kr-t049
     claimed_at: '2026-07-26T07:06:32Z'
     updated: '2026-07-26T07:06:32Z'
+
+  - id: t-050
+    milestone: m2
+    title: Implement the Pack model migration (additive) + packId FK + GrantSubject.PACK
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-044
+    note: >
+      Filed 2026-07-26 after Silas approved pitches/2026-07-18-pack-model-dlc-unlocks.md
+      (kind-robots/t-037). Additive-only migration per the pitch's suggested
+      first task: CREATE TABLE Pack (id, slug UNIQUE, title, ownerId,
+      createdAt); nullable packId FK (-> Pack.id) added to Dream, Facet,
+      Character, Reward with no backfill (existing rows get packId: null);
+      extend the GrantSubject enum with PACK (this is the migration
+      SHARING-SPEC.md and the pitch both said to wait for). Extend
+      canView()/existsActiveGrant() (from t-044's Grant model, which must
+      land first -- see depends_on) to check content.packId against an
+      active PACK-subject Grant. Silas's answers, recorded here for the
+      implementation: Pack.ownerId = 1 (Silas's own account) for all DLC
+      packs; refund auto-revokes the paired Grant by default (one admin
+      action, two rows updated). No webhook code, no admin UI changes, no
+      pack publication flow in this task -- those stay separate
+      (digital-storefront's DLC-fulfillment follow-on).
+    updated: '2026-07-26T00:00:00Z'
