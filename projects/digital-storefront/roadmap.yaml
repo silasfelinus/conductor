@@ -271,6 +271,22 @@ tasks:
     public/. `waiting` on t-022 (needs its Entitlement-granting webhook to gate
     against). Going live (real charges, live Stripe keys) stays a separate
     hard needs-human for Silas regardless of this task's own completion.
+
+    SECURITY FLAG 2026-07-26 (see root TALKBACK.md and this project's
+    TALKBACK.md same date): kind_robots' `public/mermaids.pdf` (2.6MB, present
+    in the current checkout) already sits at a public, unauthenticated URL —
+    this task's own spec line above ("stream from server-side storage — never
+    public/") already anticipated exactly this risk. `mermaids-page.vue` does
+    not currently link to it, so it's not linked-and-discoverable from the
+    site UI today, but it is not access-controlled either — anyone who
+    guesses/finds the URL can download the full product for free, regardless
+    of whether this task's paywall ever ships. Did not move/delete the file
+    (out of scope for the session that found it, and doing so without
+    confirming it's actually the final product vs. a placeholder risked
+    destroying the only copy) — whoever claims this task should confirm
+    whether this is the real product PDF and, if so, move it out of public/
+    (or otherwise gate/remove public access) as part of (or before) this
+    task's own work, not after.
 - id: t-012
   milestone: m3
   title: Wire one-time mana top-ups to Stripe checkout (test mode)
