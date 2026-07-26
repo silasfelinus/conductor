@@ -662,8 +662,8 @@ tasks:
 - id: t-026
   milestone: m5
   title: 'kind_robots: extend Stripe webhook fulfillment to DLC products (Entitlement + Grant)'
-  status: ready
-  owner: null
+  status: claimed
+  owner: worker
   passes: 0
   stakes: outward-facing
   gate_human: true
@@ -684,6 +684,9 @@ tasks:
     t-037 (the `Pack`/`GrantSubject.PACK` migration) landing first so `Grant`
     actually has a `PACK` subject type to write. TEST MODE ONLY — stays
     gate_human like t-022, this is real purchase-fulfillment logic.
+  claimed_by: claude-conductor-agentrun-20260726T182000Z-ds-t026
+  claimed_at: '2026-07-26T18:08:11Z'
+  updated: '2026-07-26T18:08:11Z'
 
 - id: t-027
   milestone: m1
