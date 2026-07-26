@@ -746,34 +746,19 @@ tasks:
   - id: t-033
     milestone: m2
     title: "Pitch: worktree-parallel Workers with claim leases"
-    status: claimed
+    status: review
     approved_by_human: true
     owner: worker
     passes: 0
     stakes: reversible
     soft_gate: true
-    updated: '2026-07-26T22:07:24Z'
+    updated: '2026-07-26T22:10:24Z'
     note: >
-      PITCH WRITTEN (2026-07-16, claude-overnight-sxndmc):
-      pitches/2026-07-16-concurrent-worker-claim-leases.md. Proposal-kind task, so
-      it ends at needs-human for Silas to vet. FOR SILAS: the pitch proposes
-      allowing N concurrent Worker claims via the existing lease
-      (claimed_by/claimed_at + CLAIM_TTL_MINUTES) plus a global concurrency cap and
-      a git-worktree per session, mirroring PortOS CoS's 3-agent model — the
-      claim/lease primitives already exist in claim_task.py/roadmap_claims.py.
-      TO APPROVE: read the pitch; if you want it, set status: ready with a note and
-      the suggested first task (a projects/conductor/docs/concurrent-claims.md
-      design doc pinning the contention model) becomes the next pickup. Original
-      note below.
+      PITCH WRITTEN (2026-07-16, claude-overnight-sxndmc): pitches/2026-07-16-concurrent-worker-claim-leases.md. Proposal-kind task, so it ends at needs-human for Silas to vet. FOR SILAS: the pitch proposes allowing N concurrent Worker claims via the existing lease (claimed_by/claimed_at + CLAIM_TTL_MINUTES) plus a global concurrency cap and a git-worktree per session, mirroring PortOS CoS's 3-agent model — the claim/lease primitives already exist in claim_task.py/roadmap_claims.py. TO APPROVE: read the pitch; if you want it, set status: ready with a note and the suggested first task (a projects/conductor/docs/concurrent-claims.md design doc pinning the contention model) becomes the next pickup. Original note below.
+      APPROVED 2026-07-25: Silas — "sure, approved." Flipping to ready; next pickup is the suggested first task (concurrent-claims.md design doc). Deferred from the PortOS comparison (docs/2026-07-11-portos-cos-learnings.md). Conductor's one-atomic-claim-commit rule serializes the Worker; PortOS CoS runs 3 concurrent agents via a git worktree per agent plus claim leases. Write a pitch to pitches/ evaluating whether/how conductor's claim protocol could allow N concurrent Worker claims safely (per-project caps, lease staleness, TALKBACK contention). This is a structural change — pitch only, no implementation.
 
-      APPROVED 2026-07-25: Silas — "sure, approved." Flipping to ready; next
-      pickup is the suggested first task (concurrent-claims.md design doc).
-      Deferred from the PortOS comparison (docs/2026-07-11-portos-cos-learnings.md).
-      Conductor's one-atomic-claim-commit rule serializes the Worker; PortOS CoS runs
-      3 concurrent agents via a git worktree per agent plus claim leases. Write a
-      pitch to pitches/ evaluating whether/how conductor's claim protocol could allow
-      N concurrent Worker claims safely (per-project caps, lease staleness, TALKBACK
-      contention). This is a structural change — pitch only, no implementation.
+
+      RAN 2026-07-26 (claude-conductor-burst-20260726T220724Z-cond-t033): wrote the suggested first-task design doc, projects/conductor/docs/concurrent-claims.md. Pins the contention model per the pitch's 4-point outline: (1) lease semantics -- confirmed CLAIM_TTL_MINUTES=90 stays correct under N lanes, and identified the one real gap (a session must re-fetch and re-verify its own claim is still intact immediately before flipping to status: review, since a second lane can now reclaim a stale-looking task within minutes instead of a full next cycle); (2) the cap-check predicate for claim_task.py's critical section -- global (not per-project) count of active non-stale claims across all projects.roadmap.yaml at origin/main, exits CAP_REACHED (code 3, same rotate-away behavior as ALREADY_CLAIMED, not a retry-loop candidate); (3) shared-writer safety -- built a full file-by-file table (roadmap.yaml same-task vs different-task, TALKBACK.md, LEARNING.yaml, the CI-regenerated files, pitches/docs, source files) and found hard rule 9 fully covers the CI-regenerated files but does NOT yet cover TALKBACK.md/LEARNING.yaml appends under unattended concurrent writers -- flagged reusing claim_task.py's own commit_file_on_ref (fetch-immediately-before-append, retry-on-non-fast-forward) as the one genuinely new piece of plumbing this rollout needs; (4) rollout -- recommended starting at N=2 (not the pitch's N=3) scoped to a single allowlisted project via a new CONCURRENT_PROJECTS-style constant rather than a harness-wide flag, picking coloring-book over ai-art-academy as the pilot project specifically because ai-art-academy/t-010 already had two independent real collisions this same day (PRs #1174/#1175, plus a separate rearm-status bug) that would confound a first concurrency measurement, while coloring-book's t-022 is well-scoped and its actual current bottleneck (external render backend) is unrelated to claim contention. Verified: python3 -c yaml.safe_load on the roadmap after edits; scripts/audit_roadmaps.py (0 errors/0 warnings, unchanged from baseline) and scripts/validate_roadmaps.py (valid) both clean. Conductor-docs-only change; no kind_robots PR needed -- this is a design doc per the pitch's own scope ("pitch only, no implementation"). Setting status: review; the follow-on implementation work (claim_task.py cap predicate, TALKBACK/LEARNING.yaml append-commit wrapper, harness-side worktree-per-lane orchestration, AGENTS.md hard rule 4 carve-out) is out of this task's scope per the doc's own "Out of scope" section and should become new ready task(s) once this design is accepted.
     claimed_by: claude-conductor-burst-20260726T220724Z-cond-t033
     claimed_at: '2026-07-26T22:07:24Z'
 
