@@ -1284,25 +1284,14 @@ tasks:
   - id: t-041
     milestone: m6
     title: Sweep docs/curriculum-candidates/ for already-promoted files whose status line still reads unpromoted
-    status: claimed
-    owner: worker
+    status: done
     passes: 0
     stakes: reversible
-    updated: '2026-07-26T17:02:53Z'
-    note: >
-      Kaizen from ai-art-academy/t-010 (PR #1151, 2026-07-26 curriculum-depth
-      lane, The Nabis promotion). `docs/curriculum-candidates/ashcan-school.md`
-      was promoted into curriculum-outline.md as section 23 at some point in
-      the past, but the candidate file itself was never updated to reflect
-      that — it still reads `status: ready for curriculum integration`, so it
-      looks like an open item when it's actually done. (The Nabis got the
-      "Status: PROMOTED" treatment this cycle, per convention started here;
-      ashcan-school did not.) Spec: for each file in
-      `docs/curriculum-candidates/`, check whether its `movement_slug` (or
-      slug in the title/frontmatter) already has a matching numbered section
-      in `curriculum-outline.md`; if so and the candidate file doesn't already
-      say PROMOTED, add the same short status line The Nabis got (promoted
-      date, outline section number/version, one-line pointer). Small,
-      additive, docs-only, reversible — no kind_robots sync needed.
+    updated: '2026-07-26T17:16:00Z'
+    note: |-
+      Kaizen from ai-art-academy/t-010 (PR #1151, 2026-07-26 curriculum-depth lane, The Nabis promotion). `docs/curriculum-candidates/ashcan-school.md` was promoted into curriculum-outline.md as section 23 at some point in the past, but the candidate file itself was never updated to reflect that — it still reads `status: ready for curriculum integration`, so it looks like an open item when it's actually done. (The Nabis got the "Status: PROMOTED" treatment this cycle, per convention started here; ashcan-school did not.) Spec: for each file in `docs/curriculum-candidates/`, check whether its `movement_slug` (or slug in the title/frontmatter) already has a matching numbered section in `curriculum-outline.md`; if so and the candidate file doesn't already say PROMOTED, add the same short status line The Nabis got (promoted date, outline section number/version, one-line pointer). Small, additive, docs-only, reversible — no kind_robots sync needed.
+
+
+      MERGED 2026-07-26: salvaged the substantive Ashcan School status correction from conflicted PR #1155 onto current main in PR #1156, squash-merged as 0f725ba4. The candidate now correctly records its prior promotion to curriculum-outline.md section 23 and existing kind_robots seed sync. Academy curriculum guard, Worker PR CI, Security Audit, and task-event processing all passed.
     claimed_by: claude-conductor-agentrun-20260726T170253-aa-t041-sweep
     claimed_at: '2026-07-26T17:02:53Z'
