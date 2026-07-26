@@ -1,0 +1,14 @@
+# VROOM router config -- points the "car" profile at the osrm-backend
+# service started by ecosystem.config.cjs. Assumes both containers run with
+# `--network host` (see README.md) so "localhost" resolves to the same host
+# network namespace osrm-backend is listening on.
+#
+# Not yet consumed by the app (../../src/routing/optimizer.ts's
+# nearest-neighbor + 2-opt is the working v1 stop-order optimizer per
+# route-planner/SPEC.md section 3a/5) -- this stands the service up for a
+# future full-VROOM integration (t-012 item 3) without blocking on it.
+router:
+  osrm:
+    car:
+      host: localhost
+      port: 5000

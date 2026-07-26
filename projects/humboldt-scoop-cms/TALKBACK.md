@@ -151,3 +151,24 @@ type: pattern
 - None specific this cycle.
 
 **Kaizen task:** none filed -- t-012 (OSRM/VROOM standup) already covers the one deferred piece (real road-network polylines instead of the haversine straight-line fallback), and on-map Leaflet-Routing-Machine dragging is noted as an explicit "revisit if wanted" deferral in t-008's own roadmap note rather than a gap worth a separate task.
+
+## 2026-07-26 | Worker (conductor burst-mode session) | humboldt-scoop-cms/t-012 | pattern
+
+type: pattern
+
+**Subject:** Delivered the OSRM + VROOM pm2 standup as checked-in scaffolding (`projects/humboldt-scoop-cms/ops/routing/`) rather than attempting to run Docker/fetch OSM data in-sandbox -- matches t-007's close-out note that this task requires the actual host box.
+
+**Detail:**
+- Read `route-planner/SPEC.md` section 3a/5 and `src/routing/matrixProvider.ts` closely before writing anything, so the pm2 services match the exact HTTP contract `OSRMMatrixProvider` already calls (`/table/v1/driving/...`, `/route/v1/driving/...`, `--algorithm mld`) rather than a generic OSRM setup that might not line up with the app's `getMatrix`/`getRouteGeometry` calls.
+- Matched the two existing pm2 conventions on Silas's box (`ops/home-server/ecosystem.config.js` at the conductor repo root, `serendipity-voice/ecosystem.config.cjs`): `docker run` in the foreground (no `-d`, with `--rm`) so pm2 -- not Docker's own restart policy -- owns crash detection and restarts, plus a "VERIFY ON THE ACTUAL HOST" caveat at the top since image tags/paths can't be checked from this sandbox (no Docker here).
+- `fetch-extract.sh` uses the Overpass API bbox pattern (`node;<;`) instead of downloading a full California Geofabrik extract and clipping it -- keeps the fetch itself small (matches SPEC.md's "single-digit MB" sizing) and avoids a second heavyweight clipping step.
+- Stood up VROOM (task item 3) but explicitly did NOT wire it into the app: t-007's nearest-neighbor + 2-opt optimizer is a complete v1 stop-order solver per SPEC.md, so treating VROOM as "available, not yet integrated" avoids overclaiming a behavior change that didn't happen.
+- Verified what's verifiable from this sandbox: `ecosystem.config.cjs` loads under `node -e "require(...)"` and produces the expected `docker run` argv, `fetch-extract.sh` passes `bash -n`. Did not and could not verify an actual OSRM/VROOM container starts or serves correct data -- that verification has to happen on Silas's box.
+
+**What was good:**
+- Picked up in-scope, reversible, ready work during a burst-mode cycle instead of re-running the already-well-documented ai-art-academy/t-004 render-queue recheck a third time in the same day (two other scheduled sessions had already logged "materially the same operational state" twice on 2026-07-26 alone).
+
+**What to improve:**
+- Whoever runs this on the real box first should fold the actual `pm2 start` output (does osrm-routed answer `/table/v1/driving/...`? does vroom's `/` health-check respond?) back into this task's note -- the scaffolding is unexecuted until then.
+
+**Kaizen task:** none filed -- the deferred VROOM app-integration is already named as explicit future work in this task's own spec (route-planner/SPEC.md §3a/§4's locked-stop VROOM constraints), not a new gap found this cycle.
