@@ -684,3 +684,29 @@ tasks:
     t-037 (the `Pack`/`GrantSubject.PACK` migration) landing first so `Grant`
     actually has a `PACK` subject type to write. TEST MODE ONLY — stays
     gate_human like t-022, this is real purchase-fulfillment logic.
+
+- id: t-027
+  milestone: m1
+  title: "Correct STORE-AUDIT.md / t-008 — social-publisher.vue was removed 2026-07-18, three days after being documented as the most-wired giftshop component"
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  updated: '2026-07-26T01:00:00Z'
+  note: >
+    Filed 2026-07-26 (weekly site audit, global-ui/SITE-AUDIT-AGENT.md).
+    t-008's DONE note and STORE-AUDIT.md §6 both describe
+    `components/giftshop/social-publisher.vue` as "Wired (most mature piece)"
+    with real CRUD and a real Discord integration, dated 2026-07-15. It no
+    longer exists in kind_robots: removed by migration
+    `prisma/migrations/20260718200000_remove_social_publishing`
+    ("abandoned SocialPost/SocialTarget publishing prototype"), 2026-07-18 —
+    three days after the audit. Confirmed via Glob against the current
+    kind_robots checkout; no other giftshop component from the audit's
+    "wired" list is affected.
+    TO DO: update STORE-AUDIT.md §6 and t-008's note (or add a short
+    addendum) to record the removal, so this project's audit trail doesn't
+    keep describing a component that no longer exists as the giftshop's most
+    mature piece. No code change implied — purely a documentation-accuracy
+    fix; confirm with Silas only if social publishing should be rebuilt
+    rather than left removed.
