@@ -245,7 +245,7 @@ tasks:
   - id: t-011
     milestone: m3
     title: "Build reconcile_expressions.py — expression folders → ExpressionMedia rows"
-    status: needs-human
+    status: done
     owner: reviewer
     updated: "2026-07-10T19:30:00Z"
     passes: 0
@@ -576,6 +576,22 @@ tasks:
       Once done, re-run reconcile_expressions.py --apply once more as a
       final check -- everything should show 0 create/0 update/0 unmatched.
       Set status: done here once that looks right.
+
+      DONE 2026-07-26: Silas ran it (single-line, after a PowerShell
+      backslash-continuation snag on the first two tries -- PowerShell uses
+      a backtick for line continuation, not backslash, so the earlier
+      multi-line example never actually executed). Result: 30/30 renames
+      applied, 0 errors (the 27 folder-scan renames plus the 2 explicit AMI
+      ones). Follow-up reconcile_expressions.py --apply: 0 unmatched, 0
+      unrecognized, 0 missing -- ami-matriarch and ami-swarm each showed 20
+      updates, which is exactly expected (their ExpressionMedia.imagePath
+      rows still referenced the OLD ami-bot/ami-butterfly folder paths
+      before the physical rename; those got corrected to the new
+      ami-matriarch/ami-swarm paths in the same pass). Every other bot: 0
+      create/0 update, confirming slug == folder name across the board now.
+      Root cause fully closed -- one name per bot, derived from the actual
+      expression folder, with no more avatarImage-fallback needed for any
+      of them going forward.
     soft_gate: true
 
   - id: t-012

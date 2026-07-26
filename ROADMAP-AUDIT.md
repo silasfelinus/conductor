@@ -1,13 +1,13 @@
 # Roadmap Audit
 
-Generated: `2026-07-26T21:34:37.877967+00:00`
+Generated: `2026-07-26T21:57:30.395188+00:00`
 
 This is a conservative structural audit. It reports suspicious state; it does not automatically change task status or remove human gates.
 
 ## Portfolio snapshot
 
 - **42** roadmaps, **23** active projects, **704** tasks
-- **41 ready**, **47 waiting**, **22 needs-human**, **0 claimed/review**, **583 done**
+- **41 ready**, **47 waiting**, **21 needs-human**, **0 claimed/review**, **584 done**
 - Findings: **0 errors**, **0 warnings**, **56 informational**
 
 ## Project inventory
@@ -22,7 +22,7 @@ This is a conservative structural audit. It reports suspicious state; it does no
 | 6 | `digital-storefront` | active | software | 1 | 0 | 1 | 0 | 30 / 32 |
 | 7 | `packmaker` | finished | software | 0 | 0 | 0 | 0 | 10 / 10 |
 | 8 | `mermaids-of-venice` | paused | content | 0 | 0 | 8 | 0 | 4 / 12 |
-| 9 | `kind-robots` | active | software | 0 | 0 | 2 | 0 | 48 / 50 |
+| 9 | `kind-robots` | active | software | 0 | 0 | 1 | 0 | 49 / 50 |
 | 10 | `kindrobots-unraid` | active | software | 0 | 7 | 1 | 0 | 4 / 12 |
 | 11 | `global-ui` | finished | software | 0 | 0 | 0 | 0 | 25 / 25 |
 | 12 | `mona-salai` | paused | software | 3 | 10 | 0 | 0 | 0 / 13 |
