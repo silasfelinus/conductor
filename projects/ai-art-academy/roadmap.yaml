@@ -113,6 +113,25 @@ tasks:
     updated: '2026-07-25T22:15:00Z'
     depends_on: [t-003, t-037]
     note: >
+      FOR SILAS: UPDATE 2026-07-26 (claude-conductor-burst-20260726T-aa-t004-check)
+      — checked GET /api/art/queue/stats before claiming this task this cycle
+      (t-037's LoRA-loader gap has since shipped, status: done, so the
+      structural blocker below is resolved). Operationally the queue has
+      gotten WORSE, not better, since the 2026-07-25 go-ahead: PENDING is now
+      141 (up from 82), and the oldest pending job is still the exact same
+      id 2017 from 2026-07-24T11:00 UTC (~40h old at check time) — i.e.
+      nothing has drained that job specifically in over a day despite
+      RUNNING showing 1. This reads as the home render relay stalled again
+      (or badly backlogged) despite Silas's 2026-07-25 "confirmed home relay
+      and kr db are up" — not re-litigating that call, just flagging that
+      the live evidence has since moved the other direction. Left `status:
+      ready`/`soft_gate: true` unchanged (not re-claiming into a queue that
+      can't resolve within one session) rather than burning a pass on a
+      transient/operational condition per AGENTS.md Failure Triage. NEXT
+      STEP: re-check `GET /api/art/queue/stats` oldestPending.id before the
+      next claim attempt — if it's still 2017, the relay is not actually
+      consuming jobs and that's worth Silas's direct attention rather than
+      another session rediscovering the same stat.
       FOR SILAS: UPDATE 2026-07-25 (claude-conductor-scheduled-20260725T220810Z-aa-t004)
       — claimed this task after the go-ahead below and got as far as researching the
       actual generation API before finding a structural blocker the prior "relay/DB up"
