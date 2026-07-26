@@ -2669,8 +2669,8 @@ tasks:
   - id: t-084
     milestone: m2
     title: "select_role.py should surface 'GitHub API unreachable' in its JSON output, not just stderr, so a session doesn't mistake a silenced 403 for a genuine zero-signal result"
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     note: >
@@ -2693,7 +2693,7 @@ tasks:
       stderr) can tell the two cases apart and knows to manually check
       `list_pull_requests`/`list_branches` via its own GitHub MCP connector
       before trusting a `role: worker`/`idle` recommendation as complete.
-    claimed_by: null
-    claimed_at: null
-    updated: '2026-07-26T20:10:00Z'
+    claimed_by: claude-conductor-burst-20260726T2100Z-cond-t084
+    claimed_at: '2026-07-26T21:08:03Z'
+    updated: '2026-07-26T21:08:03Z'
 
