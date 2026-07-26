@@ -1815,3 +1815,25 @@ if a fifth instance appears.
 - The kaizen suggestion in PR #1111 (stop writing new `RAN ...` paragraphs into the roadmap note at all, append to the ledger directly instead) would close the loop properly — currently the mapping and ledger exist but nothing stops the note from regrowing on the next t-010 cycle unless a future session remembers to use the new fields.
 
 **Kaizen task:** deferred — the PR's own suggestion (update t-010's standing instructions to write directly to the ledger) is a reasonable next step but touches t-010's actual workflow text, which felt like a separate, deliberate scope decision rather than an automatic follow-on; left as a note here for the next t-010 or roadmap-tooling cycle to pick up.
+
+## 2026-07-26 | Reviewer (scheduled agent run) | ai-art-academy/t-010 | pattern
+
+**Decision:** merged PR #1119 (`status: review`, CI-green, identified as the one open `worker/*` branch awaiting review by this session's `select_role.py` sweep).
+
+**Failure category:** null — clean first-pass, well-scoped, documentation-only.
+
+**Subject:** t-010 curriculum-depth lane (lane 4) cycle. Added a Harlem Renaissance curriculum candidate (`projects/ai-art-academy/docs/curriculum-candidates/harlem-renaissance.md`).
+
+**Detail:**
+- Verified the candidate teaches the movement as cultural/institutional history rather than surface aesthetic: historical framing, recognition cues, four artists for historical study each with an explicit rights boundary (Aaron Douglas d.1979, Meta Vaux Warrick Fuller d.1968, Archibald Motley d.1981, Augusta Savage d.1962 — none public domain, all excluded from generation presets by name), a movement-level remix config with anti-caricature/anti-stereotype negative guidance, exercises, common-failure documentation, and a promotion checklist gating front-end release on item-level rights verification plus a Black cultural-history reviewer sign-off.
+- Confirmed additive/scoped: single new file, 191 lines, no roadmap/runtime/production/generation/secrets/billing/deployment changes, no pre-existing file at the candidate path.
+- All 22 PR checks green (CodeQL x4, GitGuardian, Python/TS suites, roadmap/task-event validators, dependency audit). `mergeable_state` was `unknown` at merge time (still computing, same as several recent same-day merges) — squash-merged (`37381c2b`) without waiting further, consistent with established precedent.
+- Re-armed t-010 to `ready`, updated `continuous_improvement:` directly (`last_lane: 4`, `next_lane: 1`, `last_pr` → #1119) instead of leaving it stale, and migrated the roadmap task's lane-completion note into `continuous-improvement-run-log.md` per t-039's own note/ledger split — closing the loop the t-039 TALKBACK entry above flagged as still open (nothing previously stopped the note from regrowing; this cycle used the ledger directly instead of writing a new inline "RAN ..." paragraph on the roadmap task itself).
+
+**What was good:**
+- The Worker's rights-boundary discipline (per-artist death dates, explicit generation-preset exclusions, a promotion checklist requiring both a rights review and a cultural-history review before any front-end display) matches or exceeds every prior curriculum-depth cycle's public-domain rigor, applied here to a representation-sensitive subject rather than just a copyright one.
+
+**What to improve:**
+- None specific this cycle.
+
+**Kaizen task:** t-040 — add a curriculum-candidate schema check requiring explicit rights/representation/promotion sections for culturally sensitive movement modules, per the PR's own suggestion (verbatim from PR #1119's "Kaizen suggestion"; no systematic weakness in `LEARNING-REPORT.md` applied to this project, so used the Worker's suggestion as-is).
