@@ -173,3 +173,94 @@ def test_weak_prompt_reason_allows_concrete_prompt():
         "prompt": "A singer at a warm studio microphone while a friendly companion robot traces pitch ribbons through amber light, crisp modern animation, no readable text"
     }
     assert cr.weak_prompt_reason(entry) is None
+
+
+def test_project_art_sync_payload_prefers_explicit_metadata():
+    payload = cr.project_art_sync_payload(
+        {
+            "project_id": 42,
+            "project_slug": "music-mentor",
+            "project_field": "cardPath",
+            "variant": "card",
+            "target_repo": "silasfelinus/kind_robots",
+            "image_path": "public/images/projects/music-mentor-card.webp",
+            "source_url": "/images/projects/music-mentor-card.webp",
+        },
+        777,
+    )
+    assert payload == {
+        "projectId": 42,
+        "projectSlug": "music-mentor",
+        "projectField": "cardPath",
+        "variant": "card",
+        "targetRepo": "silasfelinus/kind_robots",
+        "imagePath": "public/images/projects/music-mentor-card.webp",
+        "sourceUrl": "/images/projects/music-mentor-card.webp",
+        "artImageId": 777,
+    }
+
+
+def test_project_art_sync_payload_infers_legacy_conductor_cover():
+    payload = cr.project_art_sync_payload(
+        {
+            "variant": "hero",
+            "target_repo": "silasfelinus/conductor",
+            "image_path": "projects/images/newsfeed-hero.webp",
+            "source_url": "https://raw.githubusercontent.com/silasfelinus/conductor/main/projects/images/newsfeed-hero.webp",
+        },
+        778,
+    )
+    assert payload["projectSlug"] == "newsfeed"
+    assert payload["projectField"] == "heroPath"
+    assert payload["artImageId"] == 778
+
+
+def test_project_art_sync_payload_ignores_non_project_art():
+    assert (
+        cr.project_art_sync_payload(
+            {
+                "variant": "image",
+                "image_path": "public/images/bots/ami.webp",
+            },
+            779,
+        )
+        is None
+    )
+
+
+def test_sync_project_art_posts_completion(monkeypatch):
+    calls = []
+
+    def fake_http_json(method, url, body=None, timeout=60):
+        calls.append((method, url, body, timeout))
+        return 200, {"success": True, "data": {"field": "cardPath"}}
+
+    monkeypatch.setattr(cr.consumer, "http_json", fake_http_json)
+    assert cr.sync_project_art(
+        {
+            "project_slug": "packmaker",
+            "project_field": "cardPath",
+            "variant": "card",
+            "target_repo": "silasfelinus/conductor",
+            "image_path": "projects/images/packmaker-card.webp",
+        },
+        780,
+    )
+    assert calls[0][0] == "POST"
+    assert calls[0][1].endswith("/api/conductor/project-art-complete")
+    assert calls[0][2]["artImageId"] == 780
+
+
+def test_enqueue_accepts_deduplicated_done_job(monkeypatch):
+    monkeypatch.setattr(
+        cr.consumer,
+        "http_json",
+        lambda *_args, **_kwargs: (
+            200,
+            {
+                "success": True,
+                "data": {"job": {"id": 881, "status": "DONE"}},
+            },
+        ),
+    )
+    assert cr.consumer.enqueue({"engine": "COMFY", "payload": {}}) == 881
