@@ -1,4 +1,4 @@
-updated: "2026-07-22T09:42:00-07:00"
+updated: "2026-07-26T02:07:00-07:00"
 
 pitches:
   - id: bioluminescent-tide
@@ -192,7 +192,7 @@ pitches:
 
   - id: moth-constellation
     title: Moth Constellation
-    status: pitched
+    status: candidate
     priority: 7
     surprise: Moths gather around invisible moonlight and briefly align into recognizable constellations before scattering.
     passive_loop: Individual moths wander, rest, and regroup; constellation events are rare and seeded.
@@ -204,6 +204,21 @@ pitches:
     acceptance:
       - constellation event reads clearly without text
       - normal wandering remains interesting between events
+    builds:
+      - version: 1
+        pull_request: silasfelinus/kind_robots#1010
+        commit: 48cbecb216d400bb093a3ecf19ca940360aab59f
+        component: components/screenfx/moth-constellation.vue
+        status: candidate
+        verification:
+          - TypeScript Type Check
+          - eslint
+          - prettier
+          - test:animation-catalog
+          - test:animation-component-attempts
+        deferred:
+          - Live browser smoke test (docs/architecture/animation-catalog-smoke-matrix.md) -- no reachable DATABASE_URL in the sandbox; server/utils/prisma.ts throws on every SSR request.
+          - Component attempt record (SPEC.md "Attempt records") -- same DB blocker.
 
   - id: koi-memory-pond
     title: Koi Memory Pond
