@@ -211,7 +211,7 @@ tasks:
   - id: t-007
     milestone: m5
     title: "Build or polish one animation candidate from reaction evidence"
-    status: review
+    status: ready
     owner: worker
     passes: 0
     stakes: reversible
@@ -237,9 +237,11 @@ tasks:
       MERGED 2026-07-25 (~13:30 UTC, same session claude-conductor-burst-20260725T130552-am-t007): kind_robots PR #949 confirmed all 5 CI checks green (verify, facet-catalog, TypeScript, Contract verifiers, GitGuardian), no review comments, squash-merged (3b69cff). PITCHES.yaml's cloud-city-drift entry updated to status: candidate with a builds: record (pending the deferred live-smoke pass before promoting to shipped, same as paper-lantern-weather/magnetic-sand-garden/stained-glass-rain/clockwork-greenhouse). Rearming to ready per the recurring-task convention.
 
       PROGRESS 2026-07-26 (~09:07-09:20 UTC, conductor scheduled burst-mode rotation, claude-conductor-burst-20260726T090722Z-am-t007): rotation landed on animation-manager this cycle; ai-art-academy's ready tasks (t-004/t-009/t-019/t-035) and coloring-book/t-022 were all still blocked on the same growing render-queue backlog documented in their own 2026-07-26 notes, so picked this project's own ready task instead. New Pacific calendar day since the last build (cloud-city-drift, merged 2026-07-25), so eligible. Built the next queued candidate, moth-constellation (priority 7 in PITCHES.yaml, next after cloud-city-drift). New components/screenfx/moth-constellation.vue -- a capped population (10-26, boids-lite with no pairwise neighbor checks per the pitch's own performance-risk note) of moths wander with per-moth personality-driven wobble and occasional resting, then periodically (every ~24-48s) gather into one of four seeded constellation point-shapes (connected by faint lines once aligned) before scattering back to wandering. Pointer proximity gently attracts nearby moths; a click pulses the local glow. Catalog entry added to stores/animationCatalog.ts (generationSafe: true, preferredSurface: fullscreen, icon kind-icon:moon -- confirmed present in assets/icons/moon.svg). Reduced motion drops to 8 moths, disables gather/scatter events and pointer attraction entirely, leaving only slow ambient wing motion. Verified: eslint clean on both changed files; prettier clean on the new component (animationCatalog.ts carries the same pre-existing prettier drift on unrelated lines confirmed via git stash against main, same pattern noted on every prior t-007 entry -- kept the new entry's tooltip on one line matching its neighbors rather than reformatting the whole file); full-project npm run test (vue-tsc --noEmit) exit 0 (required two rounds of `noUncheckedIndexedAccess`-driven null-safety fixes on array-index reads before it went clean); npm run test:animation-catalog (36 effects, unique ids, 49 screenfx components resolved, 42 narrator aliases checked) and npm run test:animation-component-attempts (36 slugs) both pass. Live browser smoke test and the Component attempt record (SPEC.md "Attempt records") are BOTH deferred -- same no-reachable-DATABASE_URL sandbox limitation as every prior t-007 entry. kind_robots PR #1010 (branch claude/dazzling-ptolemy-yks9fb) -- open, CI running. Set status: review; will flip to done once CI is green and the PR merges.
-    updated: '2026-07-26T09:07:29Z'
-    claimed_by: claude-conductor-burst-20260726T090722Z-am-t007
-    claimed_at: '2026-07-26T09:07:29Z'
+
+      MERGED 2026-07-26 (~10:30 UTC, reviewer session claude/festive-heisenberg-eo1pzy, conductor PR #1121 left open ~70 minutes with all CI green and no further activity from the building session): confirmed kind_robots PR #1010's 5 checks all green (Contract verifiers, TypeScript, facet-catalog, verify, GitGuardian) and conductor PR #1121's 24 checks all green, no review comments on either; squash-merged kind_robots#1010 (`70e5c796`) then conductor#1121 (`3a3cba56`). PITCHES.yaml's moth-constellation entry already carries its `builds:` record from #1121 (pending the deferred live-smoke pass before promoting to shipped, same as every prior candidate). Rearming to ready per the recurring-task convention.
+    updated: '2026-07-26T10:30:00Z'
+    claimed_by: null
+    claimed_at: null
 
   - id: t-008
     milestone: m3

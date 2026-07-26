@@ -121,3 +121,23 @@ type: critique
 - None this cycle — same dated-pitch-artifact-vs-canonical-queue gap already flagged by the Worker in its own "Flags for Reviewer" section (a future consolidation pass should fold these into `PITCHES.yaml` once a safe append processor exists).
 
 **Kaizen task:** deferred — the Worker's own kaizen suggestion (a connector-safe `pitch-events/` append processor mirroring `task-events/`) is reasonable but not urgent at one dated pitch file; revisit if the dated-artifact pattern accumulates further before a consolidation pass happens.
+
+## 2026-07-26 | Reviewer (scheduled agent run) | animation-manager/t-007 | pattern
+
+**Decision:** finished a stalled self-merge — merged kind_robots PR #1010 then conductor PR #1121 (squash `70e5c796` / `3a3cba56`).
+
+**Failure category:** transient — not a rejection. The building session (`claude-conductor-burst-20260726T090722Z-am-t007`) had written "will flip to done once CI is green and the PR merges" but both PRs sat fully green with no review comments for roughly 70 minutes with no further activity, consistent with the session ending before it returned to close its own loop.
+
+**Subject:** moth-constellation (priority 7 in PITCHES.yaml) — a boids-lite moth population that periodically gathers into seeded constellation shapes.
+
+**Detail:**
+- Verified rather than assumed: re-checked all 5 kind_robots PR #1010 checks (Contract verifiers, TypeScript, facet-catalog, verify, GitGuardian) and all 24 conductor PR #1121 checks were actually green, and that no review comments were outstanding on either, before merging.
+- This is the same "session's own self-merge step never happened" shape noted generally in root `TALKBACK.md` for PR-fix pushes — here applied to a same-session build+merge task that stopped one step early. No tooling gap to close: a Reviewer sweep picking up a fully-green, uncommented, stale-open PR from a `claude/*` branch and finishing the merge is exactly the intended fallback.
+
+**What was good:**
+- The building session's own roadmap note and PITCHES.yaml `builds:` record were already complete and accurate, including deferred-verification items (live browser smoke, attempt record) — nothing needed correcting, only the merge + status flip were missing.
+
+**What to improve:**
+- None specific to the Worker's build. Noting for pattern-tracking: this is at least the second same-week roadmap-scoped session that stopped right before its own promised "flip to done once green" step (see t-010's `claimed`-past-lifetime pattern in root `AGENTS.md`'s rotation-collision section) — worth a session revisiting whether burst-mode sessions reliably get a final "confirm CI, merge, close out" pass before ending, rather than relying on the next Reviewer sweep to catch it.
+
+**Kaizen task:** deferred — no new concrete tooling change identified this cycle; the existing Reviewer-sweep fallback already covers this case correctly.
