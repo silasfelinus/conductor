@@ -447,3 +447,20 @@ type: pattern
 - None specific this cycle.
 
 **Kaizen task:** none filed — this closes a previously-filed kaizen with no new gap surfaced. `t-033` (real artImageId/PrintJob wiring for the general cart's physical-goods types) remains the next open follow-up in this area.
+
+## 2026-07-26 | Worker (conductor-scheduled burst session) | digital-storefront/t-032 | pattern
+
+type: pattern
+
+**Subject:** Rotation collision — a second, concurrent session independently implemented an equivalent fix for this exact task and merged first (kind_robots PR #1008); this session's own PR #1009 hit a real merge conflict, was compared against #1008, confirmed equivalent, and closed unmerged rather than land a duplicate.
+
+**Detail:**
+- This session claimed t-032 via `claim_task.py` under session id `claude-conductor-scheduled-20260726T090000Z-ds-t032`, implemented kind_robots PR #1009, and only discovered the collision when `merge_pull_request` returned a genuine 405 conflict (not routine `STATUS.md` staleness) — `origin/main` had already absorbed an equivalent fix via kind_robots PR #1008 (branch `worker/digital-storefront-t-032`) moments earlier.
+- Compared both diffs directly rather than assuming equivalence: same core approach (re-fetch `ArtImage` inside the fulfillment transaction, re-run the unmodified `checkPrintEligibility`, record a `FAILED`-status `PrintJob` instead of shipping on ineligibility). Only difference: this session's version also re-derived the buyer's `isAdmin` status for the re-check via `userIsAdmin()`; PR #1008's omits it (passes `{ userId }` only) — a minor, arguably more-conservative behavior for a payment-fulfillment gate, not a defect either way.
+- Closed the redundant PR #1009 without merging, reset this session's kind_robots branch to drop the superseded commit, and found the roadmap task had *already* been fully closed out by the other session (a different "Worker (conductor-scheduled agent run)" TALKBACK entry, same date) by the time this session got back to writing its own close-out — so no roadmap/TALKBACK duplicate note was written, just this collision write-up.
+- Notable possible root cause, not fully confirmed: this session generated its claim `--session` id by hand-typing a plausible-looking but *coarse* on-the-hour timestamp (`...20260726T090000Z...`) rather than invoking `date -u` for real seconds-precision — exactly the anti-pattern AGENTS.md's "Rotation collisions" section warns against ("a full ISO timestamp with seconds... not a coarse hour/rotation label"). If the other concurrent session picked a similarly-rounded label, that would explain why both sessions' `claimed_by` trails look confusingly similar despite being genuinely different sessions — `claim_task.py` itself correctly keyed the actual claim/collision-prevention on project/task, not session id, so this didn't cause a *false* claim (both sessions still raced to real implementation, which is the underlying gap `claim_task.py` closes only partially — see the Suggested action on this same date's earlier `kind-robots/t-049`-adjacent... actually see the general "Rotation collisions" section of `AGENTS.md` itself, not a task-specific note).
+
+**What was good:**
+- Verified the two PRs were actually equivalent before discarding either — didn't just assume "someone else got there" and walk away blind.
+
+**Suggested action:** always invoke `date -u +%Y%m%dT%H%M%SZ` (or equivalent) for a claim's `--session` value rather than typing a plausible round-hour timestamp by hand — the latter is exactly the collision-prone pattern AGENTS.md already calls out, and this cycle is a concrete instance of it very likely contributing to (though not solely causing, since `claim_task.py`'s own project/task-keyed race window is the deeper structural gap) two sessions doing the same implementation work in parallel.
