@@ -1,0 +1,55 @@
+name: Academy curriculum candidate guard
+
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - "projects/ai-art-academy/docs/curriculum-candidates/*.md"
+      - "scripts/validate_academy_curriculum_candidates.py"
+      - "tests/test_validate_academy_curriculum_candidates.py"
+      - ".github/workflows/academy-curriculum-candidates.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: Validate changed Academy curriculum candidates
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Find changed curriculum candidates
+        id: changed
+        shell: bash
+        run: |
+          mapfile -t files < <(git diff --name-only --diff-filter=ACMR "origin/${{ github.base_ref }}...HEAD" -- \
+            'projects/ai-art-academy/docs/curriculum-candidates/*.md')
+          {
+            echo 'files<<EOF'
+            printf '%s\n' "${files[@]}"
+            echo EOF
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Validate changed curriculum candidates
+        env:
+          CHANGED_FILES: ${{ steps.changed.outputs.files }}
+        run: |
+          if [ -z "$CHANGED_FILES" ]; then
+            python scripts/validate_academy_curriculum_candidates.py /dev/null
+          else
+            mapfile -t files <<< "$CHANGED_FILES"
+            python scripts/validate_academy_curriculum_candidates.py "${files[@]}"
+          fi
+
+      - name: Run validator tests
+        run: |
+          python -m pip install pytest
+          pytest -q tests/test_validate_academy_curriculum_candidates.py
