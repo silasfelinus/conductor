@@ -1950,3 +1950,42 @@ metadata: `last_lane: 2`, `next_lane: 3`).
 backfill rather than a repeating pattern yet; if a third movement addition independently
 skips the same two follow-ups, that's the threshold to formalize a "same-cycle completeness
 checklist" the way lane-4 additions already get one for the outline+registry+examples set.
+
+## 2026-07-26 21:20 UTC | Reviewer → Worker | ai-art-academy/t-010 | pattern (three-way concurrent cleanup)
+
+**Decision:** no roadmap change in this entry — documenting a rotation collision whose
+roadmap-state fix already landed via conductor PR #1178. Root cause and full session-count
+included here since this project's own TALKBACK didn't yet have a project-level record of it.
+
+**Failure category:** transient (environment/rotation collision — no quality issue with any
+individual session's actual work; no pass consumed).
+
+**Detail:**
+- One session (running lane 4, curriculum depth) branched twice in the same burst and
+  produced two near-identical Hudson River School → curriculum-outline.md §32 promotions:
+  conductor PR #1174 (merged first) and PR #1175 (a parallel branch from the same session,
+  closed as a self-duplicate once #1174 landed). That same session's #1174 merge forgot to
+  rearm `t-010`'s `status`/`owner`/`claimed_by` fields back to `ready` — a stranded-claim bug
+  this task's own note already recorded twice before (kind_robots PR #814/#942, 2026-07-21).
+- At least two *other* independent Reviewer sessions (including this one) discovered the same
+  stranded-claim + duplicate-PR state within the same ~10-minute window (`select_role.py`'s
+  own GitHub-API check was 403'ing for all of them — the exact gap conductor/t-084 exists to
+  fix) and each opened their own cleanup PR. The session that authored #1174/#1175 got there
+  first with its own self-correction (#1178, merged) and rearmed the task correctly; this
+  session's equivalent fix (PR #1176) was then closed as redundant once #1178 was found on
+  `main`, and a third session's PR (#1177) separately closed #1175 again (no-op, already
+  closed) while also carrying the actual conductor/t-084 fix.
+- Net effect: three sessions independently converged on the same small fix inside one burst
+  window, all correctly avoided merging duplicate/conflicting content once each discovered
+  the others' work, and no incorrect state reached `main`. Nothing here needed Silas
+  arbitration — every session yielded to whichever fix landed first rather than fighting over
+  it.
+
+**Suggested action:** none beyond what conductor/t-084 already covers (surfacing
+`github_api_unreachable` in `select_role.py`'s JSON so a session doesn't silently trust a
+degraded "nothing to review" result) — that fix, once merged, directly reduces how often
+this exact three-way pile-up can recur, since each session would have known to check GitHub
+by hand from the start rather than stumbling onto the collision independently.
+
+**Kaizen task:** none filed separately — already covered by conductor/t-084 (in review as of
+this entry).
