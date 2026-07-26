@@ -530,19 +530,52 @@ tasks:
       something load-bearing. Set status: done here once the rename run
       looks right.
 
-      OPEN FOLLOW-UP (not part of this fix, flagging so it isn't lost):
-      Silas's fuller expressions-folder listing shows several folders with
-      no corresponding narrator-bot activity in any reconcile run at all
-      (e.g. ami-bot, ami-butterfly, agatha-crowley, captain-fluke,
-      cassandra-bot, cosmo-bot, and others matching the OLDER
-      stores/seeds/seedBots.ts roster, plus one, "ami-butterfly", that
-      looks like a stray/duplicate of "butterfly-ami" sitting unused next
-      to it) -- these never appear in reconcile_expressions.py's output at
-      all because their owner's slug already equals the folder name
-      exactly (a silent, healthy no-op, not a bug), so this fix doesn't
-      touch them. Worth a look at whether any of those "-bot"-suffixed or
-      duplicate-looking folders are genuinely stale/orphaned media worth
-      cleaning up, separately from the slug-consistency fix here.
+      RESOLVED 2026-07-26: the "ami-bot" / "ami-butterfly" /
+      "butterfly-ami" question above is settled. Confirmed all bot types
+      (narrator and promptbot alike) go through the exact same reconcile
+      path -- /api/narrators/bot/{slug} queries prisma.bot.findFirst with
+      no BotType filter, and reconcile_expressions.py's bot/character split
+      is about content-type (folder tree), never personality-type. The
+      original promptbot roster (ami-bot, cassandra-bot, cosmo-bot, etc.)
+      was resolving silently the whole session because their slugs already
+      matched their folders directly -- nothing narrator-specific about
+      the fix.
+      Silas clarified the three ami-related entries: "ami-bot" (an
+      unrelated, separate general-images folder in the MAIN kindrobots
+      images directory, used for site-mascot purposes -- memory match game,
+      collections gallery -- explicitly kept as-is) is DIFFERENT from the
+      "ami-bot" expression folder inside bots/expressions/, which is one of
+      two narrator/promptbot personas. Final naming decision: the
+      bots/expressions/ami-bot folder becomes "ami-matriarch" (the matron
+      persona), and bots/expressions/ami-butterfly becomes "ami-swarm" (the
+      butterfly-swarm persona). A third folder, "butterfly-ami", turned out
+      to be an inferior duplicate iteration of the matriarch persona --
+      Silas has already deleted it from the media share, so it's out of
+      scope entirely (won't be scanned since it no longer exists).
+      Since Silas is renaming the physical folders to these brand-new names
+      too (not just the slugs), the general folder-scan can't resolve them
+      automatically -- the new folder name was never the owner's existing
+      slug, avatarImage, or anything the three lookup tiers would find.
+      Added --rename OLD=NEW (repeatable) to
+      scripts/rename_bot_slugs_to_folder.py as the escape hatch for exactly
+      this kind of deliberate one-off rename: given a CURRENTLY-KNOWN slug,
+      it resolves the owner via direct narrator lookup (tried across bot
+      then character) and PATCHes straight to the new value, bypassing the
+      folder scan. 5 new tests added (12 total for this script). Full
+      conductor suite green (594 passed).
+      TO SILAS: once the two folders are physically renamed on the media
+      share (bots/expressions/ami-bot -> ami-matriarch,
+      bots/expressions/ami-butterfly -> ami-swarm), run everything in one
+      pass:
+      ```
+      python3 scripts/rename_bot_slugs_to_folder.py --apply \
+        --rename ami-bot=ami-matriarch --rename ami-butterfly=ami-swarm
+      ```
+      This applies the two explicit AMI renames AND the normal ~27-bot
+      folder-scan rename in the same run (drop --apply first to preview).
+      Once done, re-run reconcile_expressions.py --apply once more as a
+      final check -- everything should show 0 create/0 update/0 unmatched.
+      Set status: done here once that looks right.
     soft_gate: true
 
   - id: t-012
