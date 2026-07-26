@@ -9487,3 +9487,52 @@ hitting `ruler-hooked`.
 follow-up instruction (re-check `queue/stats`' `recentFailed` in a few cycles for an entry
 with real node/exception detail, and root-cause from there). Filing a separate task now
 would just duplicate that note with no new information to act on yet.
+
+## 2026-07-26 | Reviewer (scheduled agent run) | conductor/t-081 | pattern
+
+**Decision:** merged another session's PR #1152 (`claude/loving-wright-5y2z2g`,
+`RENDER-BACKLOG.md` ledger + `scripts/recheck_render_queue.py`), task closed `done`;
+also merged t-082 into the roadmap as a soft `needs-human` for Silas.
+
+**Failure category:** null — scoped, well-tested (19 new tests, full suite 567
+passed/1 skipped per the PR body), and correct on the underlying logic; the only
+thing needed was mechanical.
+
+**Subject:** Concurrent-session PR review during the same burst-mode window as this
+session's own ai-art-academy/t-010 cycle (PR #1151, The Nabis promotion) — the two
+sessions ran in parallel with no scope collision (confirmed in PR #1152's own "Notes
+for reviewer": it explicitly flagged the concurrent t-010 claim and confirmed no
+overlap).
+
+**Detail:**
+- `mcp__github__merge_pull_request` first returned a 405 "has merge conflicts" —
+  expected per this repo's own documented "Reviewer batch-merge note" (the auto-gen
+  `chore: refresh STATUS.md...`/`LEARNING-REPORT.md` commits from my own just-prior
+  merges of PR #1151/#1153 raced this PR's base). Fetched the branch locally, rebased
+  onto `origin/main`, hit exactly one conflict (`LEARNING-REPORT.md`, auto-generated),
+  resolved it by regenerating fresh via `scripts/build_learning_summary.py` rather than
+  hand-editing either side, force-pushed with `--force-with-lease` (safe: I had the
+  exact prior remote tip), waited for the fresh CI run (23 checks, ~5.5 min — the
+  `Analyze (javascript-typescript)` CodeQL job is consistently the long pole), then
+  merged clean.
+- Read the diff in full before merging, not just the PR body's claims: `RENDER-BACKLOG.md`
+  correctly mirrors `EGRESS-BLOCKERS.md`'s append-only convention, the recheck script has
+  real error handling (missing token, HTTP errors, malformed payload) and doesn't mutate
+  any roadmap task's status itself (leaves triage to the calling agent, as its own
+  docstring says), and the new t-082 task is a genuinely well-scoped soft needs-human —
+  it distinguishes "relay not restarted" from "restarted but this failure shape doesn't
+  populate an execution_error" rather than asserting one over the other from a sandbox
+  that can't tell the difference.
+
+**What was good:**
+- Correctly recognized the same shared-blocker duplication pattern three separate
+  ai-art-academy/coloring-book/newsfeed tasks had each independently hand-rolled, and
+  built the missing shared-ledger tool instead of a fourth duplicate paragraph — direct
+  application of the `EGRESS-BLOCKERS.md` precedent to a new domain.
+- Filed the relay-restart uncertainty as `needs-human` rather than guessing at which of
+  the two explanations was true from sandbox-only evidence.
+
+**Kaizen task:** none filed separately — PR #1152's own body already proposes one
+(teaching `select_role.py`/`next_ready_task.py` to surface "N ready tasks blocked on the
+same live RENDER-BACKLOG.md signature" as its own signal); deferring to that rather than
+writing a second, redundant one.
