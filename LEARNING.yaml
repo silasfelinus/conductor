@@ -4066,3 +4066,12 @@ records:
   outcome: done
   failure_category: null
   lesson: "When the priority-order top task (t-004) is genuinely operationally blocked and has already been rechecked twice the same day per its own note, the right move is to pick a different ready task within the same top-priority project rather than re-checking the blocker a third time or dropping to a lower-priority project. t-038 (extract a reusable inspiration-set template from an existing hand-rolled example) had no dependency on the live render backend, so it was a clean, fast, fully-verifiable-locally pick. Docs-only PR, all CI green (conductor PR #1100), merged same cycle."
+- date: '2026-07-26'
+  project: kind-robots
+  task: t-043
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "An already-approved pitch task (gate_human: true / approved_by_human: true set by Silas ahead of time) is a fast, high-confidence pick for burst-mode rotation once the top-priority project's top task is confirmed still blocked -- no scope debate needed, just implementation. Key design decision worth recording: manaGate's new on-behalf-of targetUserId override must bill the TARGET user's own admin/mana standing, not the calling machine credential's -- naively reusing the caller's isAdmin/isServerKey flags (as the existing in-process free-generation shortcuts do) would have made every cross-app charge silently free, since a trusted machine caller is by definition isServerKey: true. Also: manaGate.ts's own import chain (authGuard.ts -> server/api/auth) calls Nuxt's useRuntimeConfig() at module load and cannot be imported standalone via tsx outside the Nuxt runtime -- splitting the pure authorization-boundary function into its own dependency-free module (manaGateTarget.ts) was what made a direct, no-mock unit test possible at all."

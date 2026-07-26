@@ -9341,3 +9341,28 @@ kaizen would have targeted (audit's `SOFT_NEEDS_HUMAN` check only reading projec
 - None specific this cycle.
 
 **Kaizen task:** none filed — this is a straightforward feature-flag consumer with no systemic gap surfaced.
+
+## 2026-07-26 | Worker (scheduled burst-mode agent run) | kind-robots/t-043 | pattern
+
+**Decision:** merged kind_robots PR #999 (own implementation) and conductor PR #1103 (roadmap bookkeeping).
+
+**Failure category:** null — clean, well-scoped implementation of an already-approved pitch, shipped and merged in one cycle.
+
+**Subject:** Burst-mode project rotation. `next_ready_task.py` surfaced `ai-art-academy/t-004` first; rechecked live queue state directly (`GET /api/art/queue/stats`) rather than trusting the same-day note, confirmed the backlog is still growing (PENDING 144, oldest ~43h, up from 141 a few hours earlier) — consistent with the existing record, so moved on immediately instead of writing a third near-identical recheck paragraph the same day. `ai-art-academy`'s other ready tasks (t-009/t-019/t-035) are all gated on the same relay/queue throughput or an explicit do-not-claim precondition. Walked `priority.yaml` down further: `digital-storefront`'s two ready tasks (t-023, t-026) are both `stakes: outward-facing` real-Stripe work; `coloring-book`/`digital-storefront`'s other work was already claimed by concurrent sessions. Picked `kind-robots/t-043` — Silas had already approved the pitch and cleared `gate_human` on 2026-07-25, so it was ready to implement with no scope ambiguity.
+
+**Detail:**
+- Implemented `POST /api/economy/mana/charge` (`server/api/economy/mana/charge.post.ts`) reusing `requireMachineUser`/`manaGate`/`applyMana` verbatim per the pitch — no schema change, no new `ManaReason`.
+- The only new logic is `manaGate`'s `targetUserId` override, authorized by a new pure function `resolveManaGateTarget` (split into its own dependency-free `server/utils/manaGateTarget.ts` specifically so it could get a direct, no-mock unit test — `manaGate.ts`'s own import chain needs the Nuxt runtime, `useRuntimeConfig()` throws under plain `tsx`). Only a server-key caller may specify a different target user.
+- Caught and fixed a real design bug before it shipped: on-behalf-of charges must bill the *target* user's own admin/mana standing, not the calling machine credential's — the existing free-generation shortcuts (`isAdmin`, `isServerKey`) are keyed off the caller for good reason on in-process routes (caller == target there), but blindly reusing them here would have made every Sketchy charge silently free, since the trusted caller is by design `isServerKey: true`.
+- Added `utils/scripts/verifyManaGateOnBehalfOfTarget.ts` (5 cases: same-user always allowed; no-target resolves to caller; non-server-key caller rejected 403 targeting another user; server-key caller allowed; server-key caller targeting itself not flagged on-behalf-of), wired into `package.json` and `contract-tests.yml` so the authorization boundary is CI-gated going forward.
+- Verified locally via `provision_kind_robots_deps.sh`: `eslint` clean, `prettier --check` clean (after one auto-fix), full `vue-tsc --noEmit` typecheck exit 0 with zero errors. kind_robots PR #999 merged clean.
+- Hit the documented HTTP 413 push issue on the conductor side (both the brand-new-ref case AND, after that push succeeded, the same shape reappeared when `main` moved further before merge) — used the `create_branch`-then-push workaround from `CLAUDE.md` both times rather than retrying blind or force-pushing; worked cleanly.
+
+**What was good:**
+- Didn't burn a third cycle re-confirming an already-confirmed operational blocker on the priority-order top task; walked the list to a task that was both high-value and immediately actionable.
+- Identified and fixed the on-behalf-of billing bug through design review before writing the route, not after — would have been a silent security/accounting hole (free charges for every cross-app request) if shipped as a naive passthrough of the caller's own admin/server-key flags.
+
+**What to improve:**
+- None specific this cycle.
+
+**Kaizen task:** none filed — the implementation is complete and the pitch's own "Suggested first task" already scopes the remaining work (issuing Sketchy's actual scoped machine credential, wiring the two `sketchy/TOKEN-TIERS.md` call sites) as follow-on, out-of-scope-for-this-task items for whoever picks up that integration next.
