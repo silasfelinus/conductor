@@ -1,6 +1,6 @@
 # Hudson River School curriculum module
 
-status: ready for curriculum integration
+status: PROMOTED 2026-07-26 — curriculum-outline.md v1.12, section 32
 movement_slug: hudson-river-school
 era: c. 1825-1875
 region: United States

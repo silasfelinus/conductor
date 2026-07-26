@@ -4,8 +4,8 @@ date: 2026-07-10
 task: ai-art-academy/t-005
 status: draft for review (content complete, one source URL verified per movement)
 
-This is the curriculum: 31 movements spanning the timeline from Ancient Egypt to
-the Nabis. Every artist named here is long dead (all listed artists died
+This is the curriculum: 32 movements spanning the timeline from Ancient Egypt to
+the Hudson River School. Every artist named here is long dead (all listed artists died
 before 1955), and every example work is a public-domain original held (or expected)
 in an open-access collection. See the ethical boundary in DESIGN-BRIEF.md and the
 PUBLIC-DOMAIN-POLICY.md (t-006).
@@ -48,6 +48,17 @@ before front-end promotion. It returns to Western Europe (Paris, 1888-1900)
 after several non-Western entries, and is the first entry whose own artists
 (Vuillard, Denis) explicitly cite an earlier non-Western entry in this same
 curriculum (Ukiyo-e, Section 7) as a direct visual influence.
+
+Section 32 is the 2026-07-26 v1.12 addition (t-010 cycle, lane 4): Hudson
+River School — promoted from `docs/curriculum-candidates/hudson-river-school.md`,
+which had already done the recognition-cue, prompt-template, and two-of-three
+example-work verification; this cycle live-verified the remaining example
+work (*The Oxbow*, Thomas Cole, Met accession 08.228) against its Wikimedia
+Commons file page before promotion. It returns to landscape painting for the
+first time since Section 26's Song Dynasty entries, and is the first entry to
+name the movement's own ideological cost (Manifest Destiny, Indigenous
+displacement) directly in its lesson prose rather than leaving that context
+implicit.
 
 They are appended (rather than renumbered into place) but belong
 chronologically among the earlier movements — read the `era` field in the
@@ -303,6 +314,28 @@ movements:
     artist_slugs: [kim-hong-do, sin-yun-bok]
     example_count: 3
     remix_hint: "Repaint this image as a late-Joseon Korean genre painting (pungsokhwa) in the style of Kim Hong-do: loose, economical brush-line figures with light, translucent color wash on plain paper, a candid or gently humorous everyday moment, almost no background detail beyond a single ground line, muted earthy palette of pale ochre, indigo, and dull red, a small red seal stamp in one corner, no cast shadow or linear perspective"
+  # --- v1.11 addition (2026-07-26, t-010 cycle, lane 4) ---
+  # Backfilled 2026-07-26 (this cycle, lane 4): The Nabis was promoted into
+  # section 31 above but never got a skeleton entry — the same gap this
+  # checklist's lane-2 cycle found and fixed for teaching-notes.md and
+  # art-prompts.yaml, just missed here in the same pass.
+  - slug: the-nabis
+    name: The Nabis
+    era: "c. 1888-1900 (Paris)"
+    artist_slugs: [paul-serusier, edouard-vuillard, maurice-denis]
+    example_count: 3
+    remix_hint: "Reinterpret this image as a late-1890s Nabis decorative painting: flatten the depth into interlocking color shapes, simplify figures into rhythmic silhouettes, use strong contour edges, and let textiles, wallpaper, foliage, or architectural patterns organize the composition; favor intimate mood and designed surface rhythm over photographic realism"
+  # --- v1.12 addition (2026-07-26, t-010 cycle, lane 4) ---
+  # Promoted from docs/curriculum-candidates/hudson-river-school.md. Belongs
+  # chronologically before rococo/american-regionalism (see `era`); appended
+  # here to avoid renumbering the sections above, per the same convention as
+  # every prior addition.
+  - slug: hudson-river-school
+    name: Hudson River School
+    era: "c. 1825-1875"
+    artist_slugs: [thomas-cole, frederic-edwin-church, albert-bierstadt]
+    example_count: 3
+    remix_hint: "Repaint this image as a Hudson River School landscape: panoramic wilderness, meticulous natural detail, deep atmospheric distance, tiny figures for scale, a shadowed foreground opening toward luminous golden light, reflective water, dramatic clouds, and a sublime theatrical sense of nature"
 ```
 
 ---
@@ -1947,6 +1980,75 @@ favor intimate mood and designed surface rhythm over photographic realism"
 
 ---
 
+## 32. Hudson River School (`hudson-river-school`)
+
+**Era:** c. 1825-1875 (United States)
+
+**Key ideas.** The Hudson River School adds a major nineteenth-century
+landscape tradition, visually distinct from this curriculum's Romanticism,
+Realism, American Regionalism, and Song Dynasty landscape entries. Its
+signature is not merely "dramatic nature": it combines panoramic scale,
+precise botanical and geological detail, theatrical light, deep atmospheric
+distance, and tiny human figures that turn the landscape into a moral or
+spiritual stage. Thomas Cole founded the movement by combining observed
+American scenery with allegory and warnings about unchecked development;
+Frederic Edwin Church and Albert Bierstadt later scaled it up into enormous,
+scientifically detailed canvases displayed as public spectacles.
+
+The lesson addresses the movement's cultural framing honestly rather than
+teaching it as neutral scenery: these paintings often present American land
+as sublime, abundant, and apparently unoccupied, a visual language that
+overlaps with Manifest Destiny and can erase Indigenous presence and
+displacement.
+
+**Recognition cues:**
+- Panoramic wilderness compositions with a high horizon and enormous depth
+- Luminous, often golden light breaking through clouds or mist
+- Meticulously rendered trees, rocks, water, and distant terrain
+- Tiny people, buildings, boats, or animals used mainly to establish scale
+- A staged progression from shadowed foreground to glowing distance
+- Calm reflective water or a dramatic weather break used as a compositional
+  hinge
+- Nature presented as sublime, spiritual, national, or morally instructive
+
+**Notable artists:**
+- **Thomas Cole** (1801-1848) — Founder of the movement, combining observed
+  American scenery with allegory, historical cycles, and warnings about
+  unchecked development.
+- **Frederic Edwin Church** (1826-1900) — Cole's pupil, known for enormous,
+  scientifically detailed landscapes assembled from travel studies and
+  displayed as public spectacles.
+- **Albert Bierstadt** (1830-1902) — Painter of monumental western
+  landscapes whose theatrical light and scale helped shape popular ideas of
+  the American West.
+
+All three artists died well before the Academy's conservative 1956
+death-year cutoff.
+
+**Example works:**
+- *The Oxbow (View from Mount Holyoke, Northampton, Massachusetts, after a
+  Thunderstorm)*, Thomas Cole, 1836 — Metropolitan Museum of Art, accession
+  08.228. VERIFIED public domain (author died 1848, life+100 rule, published
+  well before 1931, Wikimedia Commons, Public Domain Mark 1.0 — confirmed
+  live via `WebFetch` this cycle):
+  https://commons.wikimedia.org/wiki/File:Cole_Thomas_The_Oxbow_(The_Connecticut_River_near_Northampton_1836).jpg
+- *The Heart of the Andes*, Frederic Edwin Church, 1859 — Metropolitan
+  Museum of Art, accession 09.95. VERIFIED public domain (author died 1900,
+  published before 1931, Wikimedia Commons, Public Domain Mark):
+  https://commons.wikimedia.org/wiki/File:Frederic_Edwin_Church_-_The_Heart_of_the_Andes.jpg
+- *Among the Sierra Nevada, California*, Albert Bierstadt, 1868 —
+  Smithsonian American Art Museum. VERIFIED public domain (author died 1902,
+  life+100 rule, Wikimedia Commons, Public Domain Mark):
+  https://commons.wikimedia.org/wiki/File:Albert_Bierstadt_-_Among_the_Sierra_Nevada,_California_-_Google_Art_Project.jpg
+
+**remix_hint:** "Repaint this image as a Hudson River School landscape:
+panoramic wilderness, meticulous natural detail, deep atmospheric distance,
+tiny figures for scale, a shadowed foreground opening toward luminous golden
+light, reflective water, dramatic clouds, and a sublime theatrical sense of
+nature"
+
+---
+
 ## Lesson-only vs remixable
 
 Every movement above maps to a remix config (mode `prompt` to start; t-003/t-004
@@ -2026,6 +2128,17 @@ entirely. The likelier failure mode is the model defaulting to a generic
 decorative pattern language — the remix_hint leans on "textiles, wallpaper,
 foliage, or architectural patterns organize the composition" specifically so
 t-004 can check that pattern is actually present, not just flat color.
+`hudson-river-school` shares `romanticism`'s landscape-and-atmosphere appeal
+but needs a source photo that actually contains a landscape to preserve —
+its risk is the opposite of `the-nabis`'s: rather than needing the model to
+invent pattern from nothing, the failure mode is a generic "dramatic sky
+filter" over the photo's existing composition that skips the movement's
+actual signature (panoramic depth, tiny scale-setting figures, a staged
+shadow-to-glow progression). The remix_hint leans on "tiny figures for
+scale" and "shadowed foreground opening toward luminous golden light"
+specifically so t-004 can check those structural roles are present, not just
+a warmer color grade; portrait or interior source photos are a poor fit for
+this style and should be expected to under-perform.
 
 **Flagged as likely-poor remixers:**
 - `cubism` — faceting while "preserving the composition" is partly contradictory;
@@ -2238,3 +2351,34 @@ are marked VERIFIED directly against their live rights-status templates —
 fewer) and the equivalent life+70 template for the Sin Yun-bok work, each
 also carrying a Creative Commons Public Domain Mark 1.0 designation — matching
 the §22-23/§25-27/§29 direct-file-page-verification precedent.
+
+**v1.11 addition (2026-07-26) re-check (backfilled 2026-07-26, t-010 cycle,
+lane 4).** Section 31 (The Nabis) clears the PUBLIC-DOMAIN-POLICY.md §1.3
+both-prongs rule for all three named artists: Paul Sérusier (d. 1927),
+Édouard Vuillard (d. 1940), and Maurice Denis (d. 1943) all died well past
+the 1956 cutoff. All three example works (1888, c. 1893, 1900) predate the
+1930 US-publication cutoff and do not disturb the curriculum's
+most-recent-example-work record, which stays at 1930 (*American Gothic* /
+*Stone City, Iowa*, §24). All three example-work URLs were confirmed
+VERIFIED via live Wikimedia Commons file pages at the time §31 was added —
+`PD-Art` for the Sérusier, CC0/NGA Open Access for the Vuillard, and the
+life+70 template for the Denis — this paragraph itself was simply never
+written in the same pass, the same documentation gap noticed and closed for
+§27 above.
+
+**v1.12 addition (2026-07-26) re-check.** Section 32 (Hudson River School)
+clears the PUBLIC-DOMAIN-POLICY.md §1.3 both-prongs rule for all three named
+artists: Thomas Cole (d. 1848), Frederic Edwin Church (d. 1900), and Albert
+Bierstadt (d. 1902) all died well past the 1956 cutoff. All three example
+works (1836, 1859, 1868) predate the 1930 US-publication cutoff by 60-95
+years and do not disturb the curriculum's most-recent-example-work record,
+which stays at 1930 (*American Gothic* / *Stone City, Iowa*, §24). This
+session had working egress to `commons.wikimedia.org` (confirmed via direct
+`WebFetch`, live content returned on all three file pages), so all three
+example-work URLs are marked VERIFIED directly against their live
+rights-status templates — a Creative Commons Public Domain Mark 1.0
+designation on all three — matching the §22-23/§25-27/§29-30 direct-file-page-
+verification precedent. *The Oxbow* was the only one of the three not
+already marked VERIFIED in the source candidate file; the other two
+(*The Heart of the Andes*, *Among the Sierra Nevada, California*) carried
+verified Wikimedia URLs already and were not re-fetched.

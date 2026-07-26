@@ -457,11 +457,11 @@ tasks:
     note: |-
       Standing never-idle task (re-arms to ready after every completion, per the recurring-task rule). Each cycle pick ONE: (a) front-end style/polish pass on Academy or art-styler surfaces, (b) roadmap upgrade — refine tasks, detail the next milestone, prune stale notes, (c) generate more art inspirations or style preview thumbnails, (d) expand the curriculum with a new movement/artist entry (respecting PUBLIC-DOMAIN-POLICY.md). Note which option ran in the PR. This task never reaches done and does not count toward milestone progress. See `run_log` for cycle history.
 
-      RAN 2026-07-26 (lane 2, roadmap accuracy): audit_roadmaps.py/validate_roadmaps.py both clean; check_pr_merged_drift.py's 2 flags were both accounted for (own in-progress claim + another project's in-flight closeout, no drift). Found and fixed a real gap: the immediately-prior lane-4 cycle's Nabis promotion (curriculum-outline.md §31) skipped the teaching-notes.md row and art-prompts.yaml style-preview prompt every prior movement addition got in the same cycle — backfilled both, plus the now-stale "30 movements" coverage table in this checklist. Conductor-docs-only; no kind_robots PR needed. Next preferred lane is inspiration/preview assets (lane 3).
+      RAN 2026-07-26 (lane 4, curriculum depth, via fallback from a blocked lane 3): re-probed the render queue via `scripts/recheck_render_queue.py` — still growing (PENDING=114, oldest job ~57h old); fell back to lane 4 per the checklist's rule. Promoted Hudson River School (docs/curriculum-candidates/hudson-river-school.md) into curriculum-outline.md as section 32 (v1.12), live-verifying its one remaining unverified example work. Also found and backfilled a gap in the immediately-prior lane-4 cycle's Nabis promotion (§31): it was never added to the curriculum-outline.md machine-readable skeleton YAML block, and its public-domain re-check paragraph was never written. Full detail in run_log. Conductor-docs-only; no kind_robots PR needed. Next preferred lane is front-end polish (lane 1).
     continuous_improvement:
-      last_lane: 2  # 1=front-end polish, 2=roadmap accuracy, 3=inspiration assets, 4=curriculum depth
-      next_lane: 3
-      last_run: '2026-07-26T18:25:00Z'
+      last_lane: 4  # 1=front-end polish, 2=roadmap accuracy, 3=inspiration assets, 4=curriculum depth
+      next_lane: 1
+      last_run: '2026-07-26T20:10:00Z'
       last_pr: 'https://github.com/silasfelinus/conductor/pull/1163'
     run_log: projects/ai-art-academy/docs/continuous-improvement-run-log.md
     claimed_by: claude-conductor-burst-20260726T2010Z-aa-t010-lane3
