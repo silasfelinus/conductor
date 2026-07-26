@@ -4001,3 +4001,14 @@ records:
   outcome: done
   failure_category: null
   lesson: "Kontext's buildKontextWorkflow lacked a LoraLoaderModelOnly node despite two sibling workflow builders (simpleCheckpointWorkflow.ts, imageToVideoWorkflow.ts) already using that exact pattern -- when adding a new generation route, check whether an existing sibling route already solved the same wiring problem before assuming a field like loraPath reaching enqueue.post.ts as provenance metadata means it also reaches the render graph."
+- date: '2026-07-26'
+  project: kind-robots
+  task: t-046
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'When a feature appears missing, verify reachability before rebuilding it: video-generator.vue
+    was already complete, but its only prior route lived behind dead dashboard configuration and an unwired
+    manager component.'
