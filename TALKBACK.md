@@ -9382,3 +9382,50 @@ session claiming/reviewing can lock against), but worth remembering: after pushi
 to any PR you don't own the merge button for, re-fetch and diff against the PR's actual
 merged state before assuming your push is what shipped — do not extrapolate the fix's
 presence from "I pushed it" alone.
+
+## 2026-07-26 | Reviewer (scheduled agent run) | ci-janitor todo #791 | verification
+
+**Decision:** closed todo #791 with no code change — root cause was a transient production
+database outage, not a product regression.
+
+**Failure category:** transient — the flagged run (`30195578848`, commit `b29064d9`,
+scheduled 08:58 UTC) failed 8 of 60 specs (41 of 477 tests) all cascading from the same
+upstream cause: `kind-robots.vercel.app`'s API returned repeated
+`503 { success: false, message: "Database connection was temporarily unavailable." }`
+responses between ~09:07:27 and ~09:07:43 UTC (seen directly in the `facet-assignments.cy.ts`
+and `dreams.cy.ts` request/response bodies in the job log). `dreams.cy.ts`'s setup `POST`
+hit the 503 first, leaving its `createdDreamId` unset; every subsequent DELETE/GET in that
+spec then hit `/api/dreams/0` and failed with a mismatched status code (400 instead of
+401/404) — a downstream symptom of the same outage, not a separate bug. `facet-assignments.cy.ts`,
+`friend-notifications.cy.ts`, and `friendships.cy.ts` failed the same way (503 on setup, or
+`registered user id: expected undefined to be a number` when user registration hit the
+outage window).
+
+**Detail:**
+- Pulled the failed job's full log via `get_job_logs` (`failed_only`, `tail_lines: 3000`;
+  the default tail was too short to reach the actual failure detail past the summary table)
+  and decoded the JSON + stripped ANSI codes locally to search it, since the raw payload
+  exceeded the tool's inline-return size limit twice.
+- Confirmed the very next scheduled `cypress.yml` run on `main` (`30198946900`, commit
+  `70e5c796`, 10:48:59 UTC — about 1h50m later) completed with `conclusion: success`,
+  i.e. the outage window had already closed and the same specs passed clean against the
+  same production origin — ruling out a code regression introduced by commit `b29064d9`
+  (PR #1007, giftshop cart fulfillment) or any other change on `main`.
+- Also checked the immediately-prior failing run (`30172303542`, 2026-07-25 19:47 UTC,
+  1 of 60 specs) for a possible recurring pattern — different root cause (a single
+  `cy.visit` 60s page-load timeout, already documented transient in the todo #766 entry
+  above) and already self-resolved by its own next run. No shared systemic cause across
+  the two incidents beyond "occasional infra flakiness," not worth a combined kaizen task.
+- No code, test, or infra change made — matches the "CI flake" example named `transient`
+  in AGENTS.md's failure-triage table. Closed via `scripts/complete_todo.py 791`.
+
+**What was good:**
+- Verified against the concrete evidence in the log (the literal 503 body) rather than
+  inferring "database issue" from the test names alone, and checked the next real
+  scheduled run before closing rather than assuming a single green re-run would exist.
+
+**Kaizen task:** none filed — a multi-minute Vercel/DB connectivity blip that clears on
+its own inside two hours isn't a pattern this repo's test suite can fix by retrying harder;
+revisit only if `kind-robots.vercel.app` starts returning this 503 body across multiple
+consecutive scheduled runs (that would point at a real backend/connection-pool problem
+worth its own kind_robots task).
