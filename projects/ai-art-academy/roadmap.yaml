@@ -446,11 +446,11 @@ tasks:
   - id: t-010
     milestone: m6
     title: Academy continuous improvement pass
-    status: review
+    status: ready
     recurring: true
     passes: 0
     stakes: reversible
-    updated: '2026-07-26T06:22:00Z'
+    updated: '2026-07-26T06:29:00Z'
     note: |-
       Standing never-idle task (re-arms to ready after every completion, per the recurring-task rule). Each cycle pick ONE: (a) front-end style/polish pass on Academy or art-styler surfaces, (b) roadmap upgrade — refine tasks, detail the next milestone, prune stale notes, (c) generate more art inspirations or style preview thumbnails, (d) expand the curriculum with a new movement/artist entry (respecting PUBLIC-DOMAIN-POLICY.md). Note which option ran in the PR. This task never reaches done and does not count toward milestone progress.
       RAN 2026-07-26 (reviewer merge, conductor session claude/festive-heisenberg-4m0r9x): option (c) inspiration/preview assets (lane 3), per the checklist's next-preferred-lane note (previous cycle ran lane 2). Worker session `worker-conductor-20260726T031600Z-aa-t010-7f3c` produced a four-image "Everyday Modernity" teaching sequence (`docs/inspiration-sets/everyday-modernity-teaching-sequence.md`) comparing Ashcan School, the Nabis, American Scene painting, and social-realist print language over one shared rainy-city source scene — includes a per-entry teaching goal, common-failure note, and a five-question comparison exercise, plus generation-metadata requirements (prompt/model/seed/source-image/LoRA path per result). Reviewed for `PUBLIC-DOMAIN-POLICY.md` compliance: all references are movement-level, no named living/recent artists, explicit anti-copying language in every prompt. Merged PR #1097 (squash `95ea71f`), all 22 checks green, mergeable_state clean, documentation-only additive one-file change. Filed kaizen task t-038 (inspiration-set template) per the PR's own suggestion. Rearmed to `ready`; next preferred lane is roadmap accuracy (lane 2) unless a session finds front-end polish (lane 1) more overdue by then.
@@ -673,9 +673,10 @@ tasks:
       Claimed for option (a), a focused Academy front-end accessibility and polish pass.
 
       Option (a): improved Academy Style Gallery accessibility by hiding decorative icons from assistive technology and replacing the viewed-lesson icon title with explicit screen-reader text. Implementation branch: worker/ai-art-academy-t-010-gallery-a11y-0616 in silasfelinus/kind_robots.
+
+      RAN 2026-07-26 (Worker burst, option a/front-end polish): improved `components/academy/academy-styles-browser.vue` accessibility in kind_robots PR #1000. Decorative palette/search icons and the temple emoji are now hidden from assistive technology; the viewed-lesson check no longer relies on a title tooltip and instead exposes stable `Lesson explored` screen-reader text. All four PR workflows passed (TypeScript Type Check, Contract Tests, Facet Catalog Contract, API Client Follow-ups Contract); no reviews or unresolved threads. Squash merged as `da4c9c7`. Rearmed to ready for the next continuous-improvement cycle.
     claimed_by: worker-conductor-20260726T061601Z-aa-t010-a11y
     claimed_at: '2026-07-26T06:16:01Z'
-    owner: worker
 
   - id: t-015
     milestone: m4
