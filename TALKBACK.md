@@ -9429,3 +9429,61 @@ its own inside two hours isn't a pattern this repo's test suite can fix by retry
 revisit only if `kind-robots.vercel.app` starts returning this 503 body across multiple
 consecutive scheduled runs (that would point at a real backend/connection-pool problem
 worth its own kind_robots task).
+
+## 2026-07-26 | Reviewer (scheduled agent run) | conductor/t-080 | pattern
+
+**Decision:** merged own conductor PR #1137 (`ops/home-server/relay_agent.py` +
+`relay_media_agent.py` fix), task closed `done`.
+
+**Failure category:** null — scoped, verified, and merged clean on first attempt; the
+underlying ComfyUI failure cause itself remains genuinely open (see below), not a failure
+of this task's actual scope.
+
+**Subject:** Continuation of the same-day investigation a prior session opened
+(`conductor/t-080`, filed after finding a fresh cross-project ArtJob failure cluster —
+`error: "ComfyUI reported a workflow error"` — spanning coloring-book, packmaker,
+superkate-hairstyle-ai, and music-mentor). Re-checked `GET /api/art/queue/stats` before
+touching anything: the cluster was still live and had grown to 13 occurrences, now also
+hitting `ruler-hooked`.
+
+**Detail:**
+- Dispatched an Explore agent (kept out of main context) to trace where the exact string
+  gets set. It found the string lives in *this* repo, not kind_robots:
+  `ops/home-server/relay_agent.py`'s `run_comfy()` and `relay_media_agent.py`'s duplicate
+  `run_comfy_with_recovery()` both poll ComfyUI's `GET /history/{prompt_id}`, see
+  `status.status_str == "error"`, and raise a hardcoded generic string — never inspecting
+  `status.messages`, which is where ComfyUI's own `execution_error` tuple (node id, node
+  type, exception message, traceback) actually lives. The detail is discarded permanently:
+  not logged, not stored, not forwarded to kind_robots' `ArtJob.error` column, which just
+  gets the generic string verbatim.
+- This means the *actual* root cause of why ComfyUI is failing is unrecoverable for any
+  of the 13 already-failed jobs — the ComfyUI history entries are transient and the detail
+  was never captured. Treated the diagnostic gap itself as the fixable, in-scope part of
+  an "investigate" task: added `describe_comfy_error(entry)` to `relay_agent.py` (parses
+  `status.messages` for an `execution_error` entry, formats `"node {id} ({type}):
+  {exception_message}"`) and wired it into both call sites' error branch.
+- Added 4 tests (`tests/test_relay_completion_provenance.py`): the helper directly (hit
+  and miss cases) plus both `run_comfy()` and `run_comfy_with_recovery()` end-to-end,
+  asserting the raised `RuntimeError` carries the real node/exception text. Ran the full
+  suite locally before opening the PR (542 passed, 1 skipped, pytest/pyyaml installed
+  fresh in-sandbox since neither was preinstalled) rather than relying on CI alone as the
+  first signal.
+- Did not attempt to guess or fix the underlying ComfyUI failure cause itself — no access
+  to the home-relay/ComfyUI logs from this sandbox, and guessing at a workflow-graph bug
+  without the actual exception text would be exactly the kind of unverified fix this repo's
+  rules warn against. Documented that explicitly in both the PR body and the task note so
+  the next session doesn't mistake "diagnostic gap fixed" for "root cause fixed."
+
+**What was good:**
+- Recognized that a generic, identically-worded error across unrelated projects was more
+  likely a reporting-code blind spot than four independent product bugs, and verified that
+  hypothesis by reading the actual relay source rather than guessing from the ArtJob error
+  text alone.
+- Didn't overstate the fix's scope — the PR body, roadmap note, and this entry all say
+  plainly that the underlying cause is still unknown and won't be knowable until a future
+  failure lands with the new detail.
+
+**Kaizen task:** none filed as a new task — the roadmap note itself already carries the
+follow-up instruction (re-check `queue/stats`' `recentFailed` in a few cycles for an entry
+with real node/exception detail, and root-cause from there). Filing a separate task now
+would just duplicate that note with no new information to act on yet.
