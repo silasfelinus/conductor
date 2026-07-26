@@ -1218,3 +1218,39 @@ mapping.
 **Kaizen task:** digital-storefront/t-028 — wire the print-eligibility gate
 to actually read `Resource.commercialSafe` (the field existing is necessary
 but not sufficient; nothing consumes it yet).
+
+## 2026-07-26 | Reviewer (scheduled agent run) | kind-robots/t-047 | pattern
+
+**Decision:** merged kind_robots PR #994 (ArtImage.storefrontFeatured, additive migration), all CI green.
+
+**Failure category:** null — clean first-pass, template followed correctly.
+
+**What was good:**
+- Migration was strictly additive: `ADD COLUMN storefrontFeatured BOOLEAN NOT
+  NULL DEFAULT false` plus one `CREATE INDEX`, nothing touching an existing
+  column or table's data — auditable in seconds against the additive-only bar.
+- Scope discipline: no seed script, no UI, matching the approved pitch's
+  "suggested first task" exactly (`conductor/pitches/2026-07-15-storefront-featured-art.md`)
+  — digital-storefront's swag-rail query is the real consumer and is filed as
+  its own follow-up rather than smuggled into this PR.
+- Verified `prisma validate`, `prisma generate`, and a full `vue-tsc --noEmit`
+  locally before opening the PR, not just relying on CI.
+
+**What to improve:**
+- The PR's `facet-catalog` CI check hung indefinitely on "Install dependencies"
+  (10+ minutes with zero progress, vs. ~40-90s for comparable runs on the same
+  workflow) after a rebase-triggered re-run. `cancel_workflow_run` was accepted
+  (202) twice but never actually terminated the run even after several minutes.
+  Worked around it by pushing a trivial empty commit to force a fresh check run
+  against a new head SHA, which completed normally in the usual time. Worth a
+  kaizen note for future sessions: if `facet-catalog` (or any check) is stuck
+  `in_progress` on "Install dependencies" well past its normal ~90s ceiling and
+  `cancel_workflow_run` doesn't take effect within ~2 minutes, don't keep
+  waiting on the same run — push an empty retrigger commit instead.
+
+**Kaizen task:** kind-robots/t-049 — investigate whether `facet-catalog-contract.yml`'s
+dependency-install step can hang indefinitely on a stuck GitHub-hosted runner
+(seen once this session, recovered via a retrigger; no confirmed root cause,
+may be a one-off Actions infra hiccup rather than anything in the workflow
+itself — worth checking for a stuck npm registry / cache-restore step or a
+missing timeout-minutes on that job either way).

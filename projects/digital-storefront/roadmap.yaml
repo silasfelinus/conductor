@@ -101,7 +101,7 @@ tasks:
   owner: reviewer
   passes: 0
   stakes: reversible
-  note: 'DONE 2026-07-15 (claude-burst-2026-07-15-0105): wrote projects/digital-storefront/STORE-AUDIT.md. Findings: Stripe checkout/subscribe routes work end to end up to the Stripe redirect but no webhook exists anywhere, so nothing downstream of a successful payment happens (no order record, no mana credit, no isMember flip). The Stripe checkout route prices against stores/seeds/cartItems.ts (7 items) as the real trusted catalog, but giftshop-interact.vue shows a different, unrelated 2-item demo array -- UI and real catalog are out of sync. Roughly half the giftshop components are wired to real state (shopping-cart.vue, mana-wallet.vue, social-publisher.vue, subscription-manager.vue''s start path) and half are alert()/console.log() stubs that look finished but do nothing (cart-interact.vue, credit-purchase.vue, print-swag.vue, subscription-manager.vue''s cancel path). No Order/Purchase/Cart/Subscription/Product Prisma models exist; commerce state lives only on User.stripeCustomerId. No POD vendor integration exists (0% wired). Neither Stripe route has an auth guard (contrast mana/social routes, which do) -- low severity today since nothing downstream trusts the session, but must be closed before a webhook starts crediting mana/membership off userId. Recommended next task: a Stripe webhook handler is the single highest-leverage next step -- every v1 catalog item (PDF delivery, subscription isMember flip, mana top-ups) needs it and none have it. No code changes made; audit only.'
+  note: 'DONE 2026-07-15 (claude-burst-2026-07-15-0105): wrote projects/digital-storefront/STORE-AUDIT.md. Findings: Stripe checkout/subscribe routes work end to end up to the Stripe redirect but no webhook exists anywhere, so nothing downstream of a successful payment happens (no order record, no mana credit, no isMember flip). The Stripe checkout route prices against stores/seeds/cartItems.ts (7 items) as the real trusted catalog, but giftshop-interact.vue shows a different, unrelated 2-item demo array -- UI and real catalog are out of sync. Roughly half the giftshop components are wired to real state (shopping-cart.vue, mana-wallet.vue, social-publisher.vue, subscription-manager.vue''s start path) and half are alert()/console.log() stubs that look finished but do nothing (cart-interact.vue, credit-purchase.vue, print-swag.vue, subscription-manager.vue''s cancel path). No Order/Purchase/Cart/Subscription/Product Prisma models exist; commerce state lives only on User.stripeCustomerId. No POD vendor integration exists (0% wired). Neither Stripe route has an auth guard (contrast mana/social routes, which do) -- low severity today since nothing downstream trusts the session, but must be closed before a webhook starts crediting mana/membership off userId. Recommended next task: a Stripe webhook handler is the single highest-leverage next step -- every v1 catalog item (PDF delivery, subscription isMember flip, mana top-ups) needs it and none have it. No code changes made; audit only. ADDENDUM 2026-07-26 (t-027): the social-publisher.vue row above described this audit''s original 2026-07-15 findings. It was removed from kind_robots three days later (migration 20260718200000_remove_social_publishing) and no longer exists — see STORE-AUDIT.md §2/§6 for the corrected, dated write-up. No other finding in this note is affected.'
   claimed_by: claude-burst-2026-07-15-0105
   claimed_at: '2026-07-15T01:07:47Z'
   updated: '2026-07-15T01:13:28Z'
@@ -688,7 +688,7 @@ tasks:
 - id: t-027
   milestone: m1
   title: "Correct STORE-AUDIT.md / t-008 — social-publisher.vue was removed 2026-07-18, three days after being documented as the most-wired giftshop component"
-  status: claimed
+  status: done
   owner: worker
   passes: 0
   stakes: reversible
@@ -737,3 +737,27 @@ tasks:
     and sanity-check the classification output first — the seed script's
     backend matching is regex-based heuristics, not a verified mapping
     (flagged in kind-robots' TALKBACK 2026-07-26).
+
+- id: t-029
+  milestone: m1
+  title: "Wire ArtImage.storefrontFeatured into the swag-rail query now that the field exists (kind_robots PR #994)"
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  updated: '2026-07-26T03:35:00Z'
+  note: >
+    Kaizen follow-up from kind-robots/t-047 (kind_robots PR #994, merged
+    2026-07-26): `ArtImage.storefrontFeatured Boolean @default(false)` now
+    exists (additive migration, indexed). Per the approved pitch
+    (conductor/pitches/2026-07-15-storefront-featured-art.md), digital-storefront's
+    swag-rail query is the first real consumer — query `ArtImage` filtered on
+    `storefrontFeatured: true` to populate the curated swag rail described in
+    docs/gallery-to-swag-pipeline.md §5, instead of the flat allow-list
+    fallback mentioned there. No admin UI to toggle the flag exists yet either
+    (Silas would need to set it directly via DB/admin tooling until one is
+    built) — note that gap in this task's PR rather than silently assuming a
+    toggle UI already exists.
+    RENUMBERED from t-028 during a merge-conflict resolution (conductor PR
+    #1095 vs. #1096, both filed a kaizen task as digital-storefront/t-028 in
+    the same window) — see root TALKBACK.md 2026-07-26 for detail.
