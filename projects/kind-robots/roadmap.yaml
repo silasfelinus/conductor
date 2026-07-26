@@ -1425,52 +1425,13 @@ tasks:
   - id: t-043
     milestone: m1
     title: 'Pitch: trusted-caller mana-charge endpoint so external apps (Sketchy) can debit mana for actions performed on their own infrastructure'
-    status: claimed
+    status: review
     gate_human: true
     approved_by_human: true
     owner: worker
     passes: 0
     stakes: reversible
-    note: "FOR SILAS: Pitch written and filed at pitches/2026-07-21-sketchy-cross-app-mana-charge-endpoint.md\
-      \ -- a small authenticated route (e.g. POST /api/economy/mana/charge) reusing\
-      \ the existing manaGate/applyMana/requireMachineUser mechanism verbatim, so a\
-      \ trusted external app can charge a Kind Robots user's mana for work it did on\
-      \ its own infrastructure. Raised while writing sketchy/t-004's TOKEN-TIERS.md:\
-      \ every existing mana-gated route in kind_robots gates an action it also performs\
-      \ in-process (e.g. server/api/art/enqueue.post.ts); Sketchy is a separate app\
-      \ with its own DB per its PRODUCT-SPEC.md and cannot call withTextMana in-process,\
-      \ so there is currently no way for it to debit real mana at all without either\
-      \ writing to the shared User/ManaTransaction tables directly (forbidden by this\
-      \ project's own BOUNDARY.md) or skipping real mana accounting entirely. No schema\
-      \ change, no new ManaReason, no new mana math -- just one route plus a scoped\
-      \ trusted-caller credential. TO APPROVE: read the pitch, especially its 2 open\
-      \ questions (whether the trusted-caller credential should be a new Role/scoped\
-      \ API key or reuse the existing Comfy machine-user mechanism; whether the endpoint\
-      \ needs its own abuse-rate-limit separate from the per-user mana balance check).\
-      \ Set the pitch's `status:` to `approved` or `rejected` in the file, and set this\
-      \ task to `status: done` (or `status: ready` with a note if you want changes\
-      \ first). What unblocks: sketchy/t-004's TOKEN-TIERS.md spec can only be implemented\
-      \ once this lands -- until then Sketchy's tier limits work via its own daily-count\
-      \ ceilings but real mana debit stays unimplemented.\n\n\
-      ANSWERED 2026-07-25 (Silas asked \"we should always use the same pattern,\
-      \ but why can't sketchy use our api?\"): investigated directly. There is no\
-      \ existing generic charge-only endpoint -- every existing mana-gated route\
-      \ (art/enqueue.post.ts, comfyGate, textGate) bundles \"do the work\" and\
-      \ \"charge mana\" into ONE call, and manaGate() always charges the\
-      \ AUTHENTICATED caller's own resolved user id -- its input type has no\
-      \ userId field at all, so there is no way today for a trusted external\
-      \ caller to say \"charge a DIFFERENT, specified user for work I already did\
-      \ on my own infrastructure.\" Sketchy genuinely cannot be pointed at any\
-      \ existing route -- not a workflow mismatch, a real missing capability\
-      \ (on-behalf-of debit). The good news for your \"same pattern\" concern:\
-      \ requireMachineUser (the existing Comfy machine-user auth mechanism) is\
-      \ reused verbatim by the pitch's own design -- only the ACTION is new\
-      \ (debit-only, caller-specified target user), not the auth. So the answer\
-      \ to open question 1 is effectively resolved: reuse the existing machine-user\
-      \ mechanism, don't invent a new Role/API-key type. Question 2 (separate\
-      \ abuse rate-limit) is still open. Approving with this framing -- setting\
-      \ status: ready so the actual endpoint (extend manaGate to accept an\
-      \ explicit target user for machine callers) can be built next.\n"
+    note: 'FOR SILAS: Pitch written and filed at pitches/2026-07-21-sketchy-cross-app-mana-charge-endpoint.md -- a small authenticated route (e.g. POST /api/economy/mana/charge) reusing the existing manaGate/applyMana/requireMachineUser mechanism verbatim, so a trusted external app can charge a Kind Robots user''s mana for work it did on its own infrastructure. Raised while writing sketchy/t-004''s TOKEN-TIERS.md: every existing mana-gated route in kind_robots gates an action it also performs in-process (e.g. server/api/art/enqueue.post.ts); Sketchy is a separate app with its own DB per its PRODUCT-SPEC.md and cannot call withTextMana in-process, so there is currently no way for it to debit real mana at all without either writing to the shared User/ManaTransaction tables directly (forbidden by this project''s own BOUNDARY.md) or skipping real mana accounting entirely. No schema change, no new ManaReason, no new mana math -- just one route plus a scoped trusted-caller credential. TO APPROVE: read the pitch, especially its 2 open questions (whether the trusted-caller credential should be a new Role/scoped API key or reuse the existing Comfy machine-user mechanism; whether the endpoint needs its own abuse-rate-limit separate from the per-user mana balance check). Set the pitch''s `status:` to `approved` or `rejected` in the file, and set this task to `status: done` (or `status: ready` with a note if you want changes first). What unblocks: sketchy/t-004''s TOKEN-TIERS.md spec can only be implemented once this lands -- until then Sketchy''s tier limits work via its own daily-count ceilings but real mana debit stays unimplemented. ANSWERED 2026-07-25 (Silas asked "we should always use the same pattern, but why can''t sketchy use our api?"): investigated directly. There is no existing generic charge-only endpoint -- every existing mana-gated route (art/enqueue.post.ts, comfyGate, textGate) bundles "do the work" and "charge mana" into ONE call, and manaGate() always charges the AUTHENTICATED caller''s own resolved user id -- its input type has no userId field at all, so there is no way today for a trusted external caller to say "charge a DIFFERENT, specified user for work I already did on my own infrastructure." Sketchy genuinely cannot be pointed at any existing route -- not a workflow mismatch, a real missing capability (on-behalf-of debit). The good news for your "same pattern" concern: requireMachineUser (the existing Comfy machine-user auth mechanism) is reused verbatim by the pitch''s own design -- only the ACTION is new (debit-only, caller-specified target user), not the auth. So the answer to open question 1 is effectively resolved: reuse the existing machine-user mechanism, don''t invent a new Role/API-key type. Question 2 (separate abuse rate-limit) is still open. Approving with this framing -- setting status: ready so the actual endpoint (extend manaGate to accept an explicit target user for machine callers) can be built next. FOR SILAS: UPDATE 2026-07-26 (claude-conductor-burst-20260726T060730Z-kr-t043) -- implemented the approved endpoint: POST /api/economy/mana/charge in kind_robots (server/api/economy/mana/charge.post.ts), reusing requireMachineUser/manaGate/applyMana verbatim per the pitch. The only new code is manaGate''s targetUserId override (server/utils/manaGate.ts + new server/utils/manaGateTarget.ts), gated so only a server-key caller may charge a different user, and on-behalf-of charges bill the target user''s own admin/mana standing rather than the caller''s, so cross-app charges can''t accidentally become free. Added a direct DB-free unit test (utils/scripts/verifyManaGateOnBehalfOfTarget.ts) and wired it into contract-tests.yml. Verified locally: eslint clean, prettier clean, full vue-tsc --noEmit typecheck exit 0. kind_robots PR #999 opened (claude/dazzling-ptolemy-o6nwbx -> main), watching CI. Out of scope per the pitch''s own "Suggested first task": issuing Sketchy''s actual scoped machine credential and wiring the two TOKEN-TIERS.md call sites -- those need a separate task once this merges.'
     updated: '2026-07-26T06:07:33Z'
     claimed_by: claude-conductor-burst-20260726T060730Z-kr-t043
     claimed_at: '2026-07-26T06:07:33Z'
