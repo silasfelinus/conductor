@@ -9319,3 +9319,25 @@ kaizen would have targeted (audit's `SOFT_NEEDS_HUMAN` check only reading projec
 **What was good (about the underlying PR):** the actual content (kind-robots/t-045 review record + the ai-art-academy/t-004 operational recheck) was accurate and well-evidenced; the only work needed was conflict resolution caused by normal concurrent-session timing, not a defect in the PR itself.
 
 **Suggested action / kaizen note:** two sessions filing a kaizen task from the *same* Reviewer-merge event (kind-robots/t-045 and t-047 both landed close together) independently computed "next free id" from a `main` that hadn't yet seen the other's addition, and a third session then started live-implementing one of the colliding ids before the conflict was even resolved. Worth considering whether `claim_task.py`-style atomic ID reservation (already used for task *claims*) should extend to new-task-id assignment for Reviewer-authored kaizen tasks, to close this same race for task creation, not just task claiming. When resolving a same-id collision, prefer keeping whichever side already has live external references (an open PR, a claim, a session id baked into commit messages) under its current id, and renumber the side with no external references yet — check for exactly this before assuming the earlier of two resolutions is still correct, since `main` can keep moving between merge attempts. Not filing a new task for this myself this cycle — flagging here for whoever next touches `scripts/claim_task.py`/roadmap tooling to weigh in, since it's a tooling design question rather than a scoped bug fix.
+
+## 2026-07-26 | Reviewer (scheduled burst-mode agent run) | digital-storefront/t-028 | pattern
+
+**Decision:** merged kind_robots PR #995 (own implementation).
+
+**Failure category:** null — clean, well-scoped kaizen follow-up shipped and merged in one cycle.
+
+**Subject:** Burst-mode project rotation. `next_ready_task.py` surfaced `ai-art-academy/t-004` first, but its own note (rechecked twice already, 2026-07-25 and 2026-07-26 same day) showed the same operational blocker persisting (art queue backlog growing, not draining — 141 PENDING, oldest ~40h old) with the other three `ai-art-academy` ready tasks (t-009, t-019, t-035) gated on the identical relay/queue throughput or an explicit "don't claim before verifying" precondition. Rather than burn this cycle re-confirming an already-confirmed blocker, moved down `priority.yaml` to `digital-storefront/t-028` — reversible, no `depends_on`, no gate, filed same-day off a just-merged migration (kind_robots PR #994's `ArtImage.storefrontFeatured` field).
+
+**Detail:**
+- Researched via a subagent (kept out of main context) the existing `ArtImage` public-query convention (`server/api/art/image/index.get.ts`'s `isPublic`/`isMature`/auth-soft-fallback pattern) before writing anything, rather than guessing at filters.
+- Added `GET /api/art/storefront-featured` (public, no auth) filtering `storefrontFeatured: true` + the same public-safety `where` convention, and wired a "Featured prints" rail into `giftshop-interact.vue`, replacing the previous hardcoded-only `showcaseItems` allow-list as the first real consumer of the field — matches the design in `digital-storefront/docs/gallery-to-swag-pipeline.md` §5.
+- Provisioned kind_robots deps locally (`provision_kind_robots_deps.sh`) and ran real `eslint`/`vue-tsc --noEmit`/`prettier --check` before opening the PR, rather than relying on CI alone as the first signal — all three clean. CI (TypeScript, verify, Contract verifiers, facet-catalog, GitGuardian) then also went green with no review comments; merged squash `05f0fd8`.
+- Left the same gap the task's own note flagged: no admin UI exists to toggle `storefrontFeatured` yet, so the rail stays empty until Silas sets the flag directly via DB/admin tooling. Noted in the PR body rather than silently implying a toggle UI exists.
+
+**What was good:**
+- Recognized a task queue where the *top* priority-ordered task was legitimately stuck (not just hard) and moved on to real, unblocked work instead of re-running the same diagnostic a third time in one day.
+
+**What to improve:**
+- None specific this cycle.
+
+**Kaizen task:** none filed — this is a straightforward feature-flag consumer with no systemic gap surfaced.

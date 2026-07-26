@@ -746,11 +746,11 @@ tasks:
 - id: t-028
   milestone: m1
   title: "Wire ArtImage.storefrontFeatured into the swag-rail query now that the field exists (kind_robots PR #994)"
-  status: review
+  status: done
   owner: reviewer
   passes: 0
   stakes: reversible
-  updated: '2026-07-26T04:13:59Z'
+  updated: '2026-07-26T04:19:22Z'
   note: >
     Kaizen follow-up from kind-robots/t-047 (kind_robots PR #994, merged
     2026-07-26): `ArtImage.storefrontFeatured Boolean @default(false)` now
@@ -776,5 +776,11 @@ tasks:
     (via provision_kind_robots_deps.sh); no live DB in-sandbox to exercise the
     query end-to-end, so CI is the verification gate before merge. Left the
     admin-toggle-UI gap noted in the PR body per this task's own instruction.
+
+
+    DONE 2026-07-26: kind_robots PR #995 merged (squash 05f0fd8) — all 5 checks
+    (TypeScript, verify, Contract verifiers, facet-catalog, GitGuardian) green,
+    no review comments. Rail stays empty in production until Silas flags at
+    least one ArtImage.storefrontFeatured=true via DB/admin tooling.
   claimed_by: claude-conductor-burst-20260726T0410Z-ds-t028
   claimed_at: '2026-07-26T04:11:57Z'
