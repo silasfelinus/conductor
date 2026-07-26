@@ -180,7 +180,7 @@ tasks:
   - id: t-007
     milestone: m6
     title: "Implement deterministic route-plan API with selected customer count"
-    status: review
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -243,6 +243,8 @@ tasks:
       per t-006's "bonus points" note, `stakes: reversible`, no `depends_on` (independent infra
       work; t-007/t-008 both work today against the Haversine fallback regardless of when t-012
       lands).
+
+      MERGED 2026-07-26: conductor PR #1132, merged by Silas directly -- squash `bd81377f`.
     claimed_by: claude-conductor-burst-20260726T110853Z-hscms-t007
     claimed_at: '2026-07-26T11:08:54Z'
     updated: '2026-07-26T11:08:54Z'

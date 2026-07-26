@@ -4177,3 +4177,12 @@ records:
   outcome: done
   failure_category: null
   lesson: "Following the immediately-prior additive migration's exact SQL shape (add_grant_model's enum-MODIFY + CreateTable + AddForeignKey pattern) let the migration.sql be hand-written correctly on the first attempt with no live DB to verify against -- matching an existing precedent migration in the same repo is a reliable substitute for `prisma migrate dev` when no DB is reachable."
+- date: '2026-07-26'
+  project: humboldt-scoop-cms
+  task: t-007
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "Designing a pluggable RouteMatrixProvider interface let the deterministic route-plan API ship and be fully tested (including brute-force-verified optimizer correctness) even though no self-hosted OSRM/VROOM instance exists yet anywhere -- the Haversine fallback made the feature usable today, and the OSRM provider's request/response shape is already unit-tested against a mocked fetch, so standing up real infra later (t-012) is a config change, not a rewrite."
