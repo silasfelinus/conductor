@@ -1770,3 +1770,26 @@ if a fifth instance appears.
 - None specific this cycle.
 
 **Kaizen task:** none filed — the PR's own kaizen suggestion (a `docs/inspiration-sets/README.md` index) is explicitly premature with only one set on the template so far; revisit once a second/third set exists.
+
+## 2026-07-26 | Reviewer (scheduled agent run) | ai-art-academy/t-010 | pattern
+
+**Decision:** merged PR #1107 (`status: review`, CI-green, identified as the one open `worker/*` branch awaiting review by this session's `select_role.py` sweep).
+
+**Failure category:** null — clean first-pass, well-scoped, documentation-only.
+
+**Subject:** t-010 lane 2 (roadmap accuracy) cycle. Wrote `docs/roadmap-audits/2026-07-26-roadmap-accuracy.md`, a full re-check of all 6 milestone statuses against live task state.
+
+**Detail:**
+- Verified the audit's own claims rather than trusting the doc on its face: cross-checked milestone table against actual task statuses in `roadmap.yaml` (m1 done/2-2, m2 in-progress/t-004 ready-but-gated, m3 in-progress, m4 done, m5 in-progress, m6 in-progress/t-010 recurring) — matches.
+- Good judgment call: t-004 stays `ready` (its `depends_on` is satisfied) rather than being artificially blocked, but the audit records render-queue health as an explicit first-acceptance-gate note instead of a status change — avoids both prematurely gating a technically-ready task and setting up another non-productive claim cycle.
+- Correctly declined to migrate t-010's own growing "RAN ..." history into a structured ledger in the same pass — flagged it as a separate scoped task instead of silently pruning provenance data. Agreed with that judgment; filed it as t-039 rather than doing the migration inline.
+- All 22 PR checks green (CodeQL x4, GitGuardian, Python/TS suites, roadmap/task-event validators, dependency audit); `mergeable_state: clean`. Squash-merged (`6b001d3`).
+
+**What was good:**
+- Didn't just restate milestone statuses — added a concrete, actionable acceptance-gate note to t-004 (check queue depth/oldest-pending-age before claiming) that the next session picking it up can act on directly instead of rediscovering the same operational blocker from scratch.
+- Explicitly declined to do more roadmap-only churn ("a second consecutive roadmap audit would mostly create paperwork about the paperwork") and named the next preferred lanes with reasoning instead of defaulting back to lane 2 again.
+
+**What to improve:**
+- None specific this cycle.
+
+**Kaizen task:** t-039 — add a structured `continuous_improvement:` mapping (`last_lane`/`next_lane`/`last_run`/`last_pr`) to t-010 and move the historical `RAN ...` prose into a generated ledger file, per the PR's own suggestion (echoes audit findings #2 and #4). This is the second cycle to raise the same idea (t-010's 2026-07-25 lane-2 entry also gestured at it); worth landing next time t-010 rotates to lane 2 or a general roadmap-tooling session has room.

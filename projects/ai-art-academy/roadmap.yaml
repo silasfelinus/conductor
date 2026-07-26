@@ -446,13 +446,14 @@ tasks:
   - id: t-010
     milestone: m6
     title: Academy continuous improvement pass
-    status: review
+    status: ready
     recurring: true
     passes: 0
     stakes: reversible
-    updated: '2026-07-26T07:22:30Z'
+    updated: '2026-07-26T08:04:35Z'
     note: |-
       Standing never-idle task (re-arms to ready after every completion, per the recurring-task rule). Each cycle pick ONE: (a) front-end style/polish pass on Academy or art-styler surfaces, (b) roadmap upgrade — refine tasks, detail the next milestone, prune stale notes, (c) generate more art inspirations or style preview thumbnails, (d) expand the curriculum with a new movement/artist entry (respecting PUBLIC-DOMAIN-POLICY.md). Note which option ran in the PR. This task never reaches done and does not count toward milestone progress.
+      RAN 2026-07-26 (~08:00 UTC, reviewer merge, conductor session claude/festive-heisenberg-dzzs13): option (b) roadmap accuracy (lane 2), per the checklist's next-preferred-lane note (previous cycle ran lane 3). Worker session (branch `worker/ai-art-academy-t-010-roadmap-audit-7b2d`) wrote `docs/roadmap-audits/2026-07-26-roadmap-accuracy.md`: re-verified all 6 milestone statuses against actual task state (no drift found), confirmed t-004 is technically `ready` but operationally gated by render-queue health (recorded as an explicit acceptance-gate note rather than a status change), confirmed m4 correctly stays `done` with recurring front-end polish belonging to m6, and flagged this task's own note as carrying too much historical prose to select from quickly. PR #1107: documentation-only, additive single-file change, all 22 checks green, mergeable_state clean. Squash-merged (`6b001d3`). Filed kaizen task t-039 (structured `continuous_improvement:` mapping — `last_lane`/`next_lane`/`last_run`/`last_pr` — to replace parsing this prose history for lane selection) per the PR's own suggestion, which itself echoes findings #2 and #4 in the audit doc. Rearmed to `ready`; next preferred lane is front-end polish (lane 1) or curriculum depth (lane 4), with inspiration assets (lane 3) conditional on render-queue health per the audit's own recommendation.
       RAN 2026-07-26 (reviewer merge, conductor session claude/festive-heisenberg-4m0r9x): option (c) inspiration/preview assets (lane 3), per the checklist's next-preferred-lane note (previous cycle ran lane 2). Worker session `worker-conductor-20260726T031600Z-aa-t010-7f3c` produced a four-image "Everyday Modernity" teaching sequence (`docs/inspiration-sets/everyday-modernity-teaching-sequence.md`) comparing Ashcan School, the Nabis, American Scene painting, and social-realist print language over one shared rainy-city source scene — includes a per-entry teaching goal, common-failure note, and a five-question comparison exercise, plus generation-metadata requirements (prompt/model/seed/source-image/LoRA path per result). Reviewed for `PUBLIC-DOMAIN-POLICY.md` compliance: all references are movement-level, no named living/recent artists, explicit anti-copying language in every prompt. Merged PR #1097 (squash `95ea71f`), all 22 checks green, mergeable_state clean, documentation-only additive one-file change. Filed kaizen task t-038 (inspiration-set template) per the PR's own suggestion. Rearmed to `ready`; next preferred lane is roadmap accuracy (lane 2) unless a session finds front-end polish (lane 1) more overdue by then.
       RAN 2026-07-25 (~21:05-21:15 UTC, claude-conductor-burst-20260725T2100Z-t010-lane2, scheduled burst-mode cycle): option (b) roadmap accuracy (lane 2), per the checklist's next-preferred-lane note (previous cycle ran lane 1). `scripts/audit_roadmaps.py` clean: 0 errors, 12 warnings, 42 info — same established `ACTIVE_PROJECT_ALL_DONE`/`ACTIVE_PROJECT_NO_OPEN_TASKS` baseline (art-generator-connect/davinci/ecosystem-map/humboldt-scoop/packmaker/sketchy, left unchanged, needs Silas's call), identical to the immediately-prior lane-2 cycle's counts — no drift. `scripts/check_pr_merged_drift.py` flagged 42 unverifiable-via-sandbox candidates (up from 31 last lane-2 cycle, purely from this task's and model-builder/t-029's growing PR-reference history, all HTTP 403 direct-API as usual); spot-checked the newest (kind_robots#962) via GitHub MCP `pull_request_read` — confirmed merged, 10/-0/1-file, matches this task's own record exactly, no drift. Re-verified all 6 milestones programmatically against actual task statuses: m1 (done, 2/2), m2 (in-progress, t-004 needs-human), m3 (in-progress, t-033 needs-human), m4 (done, 15/15), m5 (in-progress, t-009 needs-human + t-019 ready), m6 (in-progress, t-010 claimed + t-035 ready) — all six already match, no drift. Spot-checked t-019's blocker for currency: `public/images/academy/styles/` still absent in kind_robots (confirmed via GitHub MCP `get_file_contents`, path-not-found) — no change, not re-filing. Noted in passing (not investigated further, out of lane 2's docs-only scope): model-builder/t-029 is concurrently claimed by another active session (`reviewer/claude-conductor-burst-20260725T2010Z-mb-t029`) — a normal concurrent-session state, no collision with this task. Conductor-docs-only change (this roadmap + the checklist); no kind_robots PR needed. Next preferred lane is inspiration/preview assets (lane 3) — this cycle ran lane 2, so lane 3 is next in the 1→2→3→4 rotation (lane 1 ran two cycles ago at ~20:03-20:27 UTC); re-probe with a fresh queued job rather than assuming either the old backlog depth or a clean recovery. Rearmed to `ready`.
       RAN 2026-07-25 (~20:03-20:27 UTC, claude-conductor-agentrun-20260725T2003Z-t010-lane1, scheduled agent run): option (a) front-end polish (lane 1), per the checklist's next-preferred-lane note (previous cycle ran lane 2). Dispatched a general-purpose subagent to read the full checklist exclusion list plus every in-scope file in full. Found a real, previously-unfixed gap in `art-styler.vue`'s `handleFileSelect()` and `handleDrop()`: the MIME-rejection branches (added in PR #733) only ever set `errorMessage`, never clearing a leftover `successMessage` from a prior generation — every other selection path in the file (`processUploadedFile`, `selectGalleryImage`, `selectStarterEntry`, `selectStyle`, `clearSelection`, `runStyleTransfer`, etc.) already clears both messages together. Concrete failure scenario: user completes a style transfer (success banner shown), then drops/selects a non-PNG/JPEG/WebP file — the new rejection error rendered right alongside the stale "Style applied!" banner since the two are independent `v-if` blocks in the template. Fixed by adding `successMessage.value = ''` to both rejection branches, matching the established pattern exactly. Verified: `npx prettier --check` on the changed file reproduces one pre-existing warning (line 1278, unrelated `hydrateGalleryThumbs` union-type formatting) confirmed present identically on main via stash/diff — not a regression; the added lines themselves are prettier-clean. `npx eslint`/`npx nuxi prepare` could not run in this sandbox (no `.nuxt`/`node_modules` — same known limitation as every prior lane-1 cycle); relied on kind_robots CI instead. kind_robots PR #962: all 5 checks green (GitGuardian, facet-catalog, verify, TypeScript, Contract verifiers), merged squash `bfbfb792`. Updated `continuous-improvement-checklist.md`'s rotation state; next preferred lane is roadmap accuracy (lane 2) — this cycle ran lane 1, so lane 2 is next in the 1→2→3→4 rotation. Rearmed to `ready`.
@@ -681,7 +682,7 @@ tasks:
       Roadmap-accuracy lane: added a focused audit of milestone truth, t-004 queue-readiness semantics, recurring-note history bloat, and the next lane recommendation on branch worker/ai-art-academy-t-010-roadmap-audit-7b2d.
     claimed_by: worker-conductor-20260726T071537Z-aa-t010-7b2d
     claimed_at: '2026-07-26T07:15:37Z'
-    owner: worker
+    owner: null
 
   - id: t-015
     milestone: m4
@@ -1297,3 +1298,27 @@ tasks:
       (prompt/model/seed/source-image/LoRA path). Small, additive, reversible.
     claimed_by: claude-conductor-scheduled-20260726T050412Z-aa-t038
     claimed_at: '2026-07-26T05:04:13Z'
+  - id: t-039
+    milestone: m6
+    title: Add a structured continuous_improvement mapping to t-010 and move historical run prose into a generated ledger
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-26T08:04:35Z'
+    note: >
+      Kaizen from ai-art-academy/t-010 (PR #1107, 2026-07-26 roadmap accuracy
+      audit — docs/roadmap-audits/2026-07-26-roadmap-accuracy.md finding #2/#4).
+      t-010's `note:` field is now a long chronological "RAN ..." execution log
+      (dozens of paragraph-length entries going back to mid-July) that a session
+      must read in full to find the actionable rotation state: last completed
+      lane, next preferred lane, current blockers, latest merged PR. Add a small
+      structured mapping to the task (e.g. `continuous_improvement: {last_lane,
+      next_lane, last_run, last_pr}`) that a session can read directly instead of
+      parsing prose, and move the historical `RAN ...` paragraphs into a separate
+      generated ledger file (e.g.
+      projects/ai-art-academy/docs/continuous-improvement-run-log.md) so
+      provenance is preserved without bloating the roadmap task. Scope this as
+      its own task with a regression check (e.g. confirm no run history is lost
+      in the migration) rather than silently pruning the note. Small, additive,
+      reversible.
