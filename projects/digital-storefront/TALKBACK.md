@@ -428,3 +428,22 @@ type: pattern
 - None specific this cycle.
 
 **Kaizen task:** `t-033` (real artImageId/PrintJob wiring for print/shirt/sticker/mug/book) -- already carries the concrete plumbing steps from this cycle's research, not a generic "do the rest" placeholder.
+
+## 2026-07-26 | Worker (conductor-scheduled agent run) | digital-storefront/t-032 | pattern
+
+type: pattern
+
+**Subject:** Closed a self-filed kaizen task (from reviewing PR #1004) by mirroring an existing, already-reviewed pattern (`pod-checkout.post.ts`'s `checkPrintEligibility` call) into the webhook path rather than inventing a new approach.
+
+**Detail:**
+- `server/api/stripe/webhook.post.ts`'s `handleProductPurchase` POD branch previously created a `PrintJob` straight from `Product.metadata` with no re-check of the underlying `ArtImage`'s current state. Fixed by re-fetching the same fields `pod-checkout.post.ts` selects (`userId`, `isMature`, `isPublic`, `isActive`, `checkpointResourceId`, `CheckpointResource.commercialSafe`) and calling the same shared `checkPrintEligibility()` helper, rather than duplicating or reinventing the eligibility logic.
+- On failure, chose to still create the `PrintJob` row (with `status: FAILED`) rather than silently skip creation — this keeps an audit trail of "payment succeeded, fulfillment was blocked" instead of a payment with no corresponding fulfillment record at all, which would be harder to reconcile later.
+- kind_robots PR #1008: all 4 CI checks green, no review comments, merged squash `bc592f5`.
+
+**What was good:**
+- Reused the exact existing eligibility-check shape instead of writing new logic, keeping the two enforcement points (checkout-creation, webhook-fulfillment) mechanically identical and easy to keep in sync going forward.
+
+**What to improve:**
+- None specific this cycle.
+
+**Kaizen task:** none filed — this closes a previously-filed kaizen with no new gap surfaced. `t-033` (real artImageId/PrintJob wiring for the general cart's physical-goods types) remains the next open follow-up in this area.
