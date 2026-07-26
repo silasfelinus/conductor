@@ -4066,3 +4066,21 @@ records:
   outcome: done
   failure_category: null
   lesson: "When the priority-order top task (t-004) is genuinely operationally blocked and has already been rechecked twice the same day per its own note, the right move is to pick a different ready task within the same top-priority project rather than re-checking the blocker a third time or dropping to a lower-priority project. t-038 (extract a reusable inspiration-set template from an existing hand-rolled example) had no dependency on the live render backend, so it was a clean, fast, fully-verifiable-locally pick. Docs-only PR, all CI green (conductor PR #1100), merged same cycle."
+- date: '2026-07-26'
+  project: digital-storefront
+  task: t-029
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "A prerequisite field landing first with a named downstream consumer already identified (t-020's Resource.commercialSafe migration named this exact task) means the wiring PR can be built and reviewed with zero ambiguity about intent or scope -- the diff was a pure function (checkPrintEligibility), one new authenticated GET endpoint mirroring an existing endpoint's auth pattern, and a UI wire-up, no schema changes. Reviewed and merged same-cycle with all CI green."
+- date: '2026-07-26'
+  project: kind-robots
+  task: t-043
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "For a cross-app authorization boundary (on-behalf-of mana charging), splitting the pure decision function into its own dependency-free module paid off immediately -- it let the security property get a direct 5-case unit test wired into CI, instead of relying on integration coverage that would need the full Nuxt runtime and a live DB. The one place this class of feature silently breaks is billing: on-behalf-of charges must debit the target user's own standing, not the caller's server-key standing, or every cross-app charge becomes accidentally free -- worth checking for explicitly in review whenever a machine-caller can act on behalf of another user."

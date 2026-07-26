@@ -135,3 +135,31 @@ sites is already an established pattern in this codebase (matches, e.g., the rep
 `resolveSeed`/`sleep` helper duplication across the same files) and consolidating them is
 a larger refactor than this fix's scope — worth doing the next time one of these files is
 touched for an unrelated reason, not as a standalone task right now.
+
+## 2026-07-26 | Reviewer → Worker | coloring-book/t-022 | pattern
+
+**Decision:** merged conductor PR #1102 (branch `claude/loving-wright-5a3pvo`).
+
+**Failure category:** null — real production bug, found and fixed first-pass clean.
+
+**What was good:**
+- The Python-side fix (`scripts/consume_art_queue.py::resolve_seed()`, clamped to
+  `SEED_MAX = 2_147_483_647`) is distinct from the already-merged JS-side fix
+  (kind_robots PR #950, 2026-07-25, 14 call sites) for the same underlying `ArtImage.seed`
+  32-bit-Int constraint — this session correctly diagnosed it as a separate shared-queue
+  script rather than assuming the earlier fix already covered it, and did not duplicate
+  that prior work.
+- Added a dedicated regression test plus strengthened an existing one to assert the
+  upper bound; full conductor suite (531 tests) green before opening the PR. All 24 CI
+  checks green at review time.
+- Correctly re-armed the recurring task's status; documented the still-open relay-
+  throughput backlog (ArtJob 2445, queue depth 147) as a separate, already-tracked soft
+  gate rather than conflating it with this fix.
+
+**What to improve:**
+- Nothing notable this cycle.
+
+**Kaizen task:** deferred — same reasoning as the 2026-07-25 entry above (a shared
+`resolveSeed` helper would prevent this bug class recurring across both the Python queue
+scripts and the JS API routes, but consolidating a well-established duplicated pattern
+across two languages/repos is a larger refactor than either fix's scope).

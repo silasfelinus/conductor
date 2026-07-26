@@ -1254,3 +1254,38 @@ dependency-install step can hang indefinitely on a stuck GitHub-hosted runner
 may be a one-off Actions infra hiccup rather than anything in the workflow
 itself — worth checking for a stuck npm registry / cache-restore step or a
 missing timeout-minutes on that job either way).
+
+## 2026-07-26 | Reviewer → Worker | kind-robots/t-043 | pattern
+
+**Decision:** merged kind_robots PR #999 (own implementation, live burst-mode session).
+
+**Failure category:** null — clean, well-scoped, security-sensitive endpoint shipped
+correctly first pass.
+
+**What was good:**
+- The authorization boundary (`resolveManaGateTarget`) is the entire security property
+  this endpoint depends on, and it got a dedicated, dependency-free unit test with 5
+  explicit cases (same-user always allowed, no-target resolves to caller, non-server-key
+  caller rejected 403, server-key caller allowed, server-key-charging-self not flagged
+  on-behalf-of) — split into its own module specifically so it didn't need the Nuxt
+  runtime to test directly, and wired into `contract-tests.yml` so it's CI-gated going
+  forward, not just verified once locally.
+- Correctly reused `requireMachineUser`/`manaGate`/`applyMana` verbatim per the approved
+  pitch rather than inventing new auth/mana-math surface, and correctly billed
+  on-behalf-of charges against the *target* user's standing rather than the caller's
+  server-key standing (the one way this feature could have silently become "free
+  charges" if gotten wrong).
+- Matched an already-`gate_human: true` + `approved_by_human: true` pitch exactly — no
+  scope creep beyond what was approved.
+
+**What to improve:**
+- Nothing notable this cycle.
+
+**Kaizen task:** deferred, not filed — the natural follow-up (issuing Sketchy's actual
+scoped machine credential and wiring the two `TOKEN-TIERS.md` call sites, explicitly
+named as out-of-scope in this task's own note) would need a new `sketchy` project task,
+but `project-overrides.yaml` marks `sketchy` `status: finished` ("all 8 tasks done,
+nothing open", flipped 2026-07-26). Filing a new task there would resurface a
+project Silas closed the same day — flagging here instead so Silas can decide whether
+Sketchy actually needs reopening for this, or whether the credential issuance belongs
+somewhere else (e.g. tracked directly in Sketchy's own repo, outside conductor).

@@ -9341,3 +9341,44 @@ kaizen would have targeted (audit's `SOFT_NEEDS_HUMAN` check only reading projec
 - None specific this cycle.
 
 **Kaizen task:** none filed — this is a straightforward feature-flag consumer with no systemic gap surfaced.
+
+## 2026-07-26 | Reviewer (scheduled agent run) | kind_robots PR #998 | pattern
+
+**Decision:** no action needed — verified `main` is healthy; did not duplicate a fix that
+had already landed concurrently.
+
+**Subject:** kind_robots PR #998 ("Build nested Facet-driven Daily Dreams") had a red
+TypeScript check (`server/utils/rewardFacetCatalog.ts` — a type predicate asserting a
+narrow write-input type, `RewardFacetAssignment`, against a full Prisma row that carries
+extra fields, causing TS2677/TS2322). Diagnosed the exact root cause via a subagent
+(checked out the branch locally, ran the real `npm run test`/vue-tsc command instead of
+guessing from the truncated CI log), then wrote and pushed a fix
+(`server/utils/rewardFacetCatalog.ts`, commit `1f17023`: introduced a separate
+`RewardFacetRecord` type via `Prisma.RewardFacetGetPayload`, matching the existing
+`RawFacet` pattern in `facetCatalog.ts`, rather than widening the shared write-input
+type also used by `facets.put.ts`).
+
+**Detail — the race:** by the time the push landed, the PR had already been merged
+(`merged_by: silasfelinus`, squash commit `8dadfb1`) using an *earlier* version of the
+branch — a different, independently-written fix for the identical bug (an explicit
+`for`/`continue`/`push` loop building the assignments array by named field, avoiding the
+type-predicate narrowing entirely, rather than my `Prisma.RewardFacetGetPayload`
+approach). My pushed commit was never included in the merge and is now orphaned on the
+still-open branch `agent/daily-dream-facet-blueprints-v2` (session credentials 403 on
+`git push --delete`; no branch-janitor workflow exists in kind_robots to force-delete it
+the way conductor's does — left as harmless clutter, flagged here rather than silently
+dropped).
+- Verified before assuming a regression: rebased `claude/confident-bardeen-hfpf40` onto
+  the new `main`, regenerated the Prisma client, and ran the actual `npm run test`
+  (vue-tsc) locally — clean, 0 errors. The concurrent fix is correct; no follow-up work
+  needed on `main` itself.
+
+**Suggested action:** this is the same "two sessions converge on the same fix from
+different starting points" race already documented for roadmap-task claims
+(`claim_task.py`) and new-task-id assignment (2026-07-26 `digital-storefront/t-028`
+entry above) — just now observed on a PR-fix-push instead. No tooling gap to close here
+specifically (a squash-merge race on someone else's live PR isn't something a Reviewer
+session claiming/reviewing can lock against), but worth remembering: after pushing a fix
+to any PR you don't own the merge button for, re-fetch and diff against the PR's actual
+merged state before assuming your push is what shipped — do not extrapolate the fix's
+presence from "I pushed it" alone.

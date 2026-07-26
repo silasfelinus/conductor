@@ -315,6 +315,16 @@ tasks:
     passes spent this cycle chasing the same confirmed backlog a second time. Re-armed to
     ready per the recurring-task rule; ArtJob 2445 remains queued and will complete on its own
     once the backlog drains (mr-001's queue entry needs no manual resubmission).
+
+    REVIEWED AND MERGED 2026-07-26 (Reviewer, conductor sweep session): conductor PR #1102
+    (branch claude/loving-wright-5a3pvo) — the seed-overflow fix in
+    `scripts/consume_art_queue.py::resolve_seed()`, clamped to `SEED_MAX = 2_147_483_647`
+    matching kind_robots' `ArtImage.seed` (MySQL signed INT). Verified the fix is correct
+    (matches kind_robots' own `randomSeed()`), covered by a new regression test plus a
+    strengthened existing test, and the full 24-check CI suite (incl. full pytest run) was
+    green. Merged as-is. Setting status back to `ready` per the recurring-task rule (task
+    itself carries no further action this cycle beyond what the note above already records —
+    the backlog-drain wait is the only remaining blocker, and it self-resolves).
   recurring: true
   claimed_by: null
   claimed_at: null

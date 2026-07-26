@@ -278,3 +278,31 @@ since no `worker/*` PR was open at cycle start)
 **Kaizen task:** none filed separately — the natural follow-up (adding `pod-book` to
 `product-types.yaml`) is exactly the pitch this task filed; a fresh kaizen task would just
 duplicate it.
+
+## 2026-07-26 | Reviewer → Worker | digital-storefront/t-029 | pattern
+
+**Decision:** merged kind_robots PR #996.
+
+**Failure category:** null — clean first-pass implementation.
+
+**What was good:**
+- `checkPrintEligibility()` is a pure function implementing the pipeline doc's §4 rule
+  exactly (not-mature, owned-or-public, base-model-or-commercialSafe-checkpoint,
+  default-deny), tested in isolation from the HTTP layer.
+- The new `GET /api/art/image/:id/print-eligibility` endpoint reused the existing
+  `facets.get.ts` auth/visibility pattern (`getOptionalApiUser` + explicit `canView`
+  check) rather than inventing a new one — no schema changes, no live checkout/payment
+  logic touched, fully additive and reversible.
+- Correctly scoped: left the custom-pasted-image-URL case explicitly ungated (documented
+  in a code comment) rather than over-building eligibility logic for a case with no
+  underlying `ArtImage` record to check.
+- All CI green (verify, TypeScript, Contract verifiers, facet-catalog) at review time.
+
+**What to improve:**
+- Nothing notable this cycle.
+
+**Kaizen task:** t-030 created — design a `PrintJob` model + real POD checkout flow to
+replace `print-swag.vue`'s remaining UI mock (the Worker's own kaizen suggestion, taken
+as-is). Flagged in the roadmap note that payment/checkout integration will likely reach a
+hard `needs-human` gate once it touches a live payment provider, even though the
+schema/plumbing work leading up to that point is reversible software.
