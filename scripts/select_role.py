@@ -31,7 +31,11 @@ Worker/Reviewer cycle) — see AGENTS.md's "Cross-repo tasks" section.
 
 Six roles, each backed by an existing piece of tooling this script composes
 rather than duplicates:
-  - reviewer      — run_reviewer.py's open-worker/*-branch check (conductor only)
+  - reviewer      — run_reviewer.py's open-worker/*-branch check (conductor only),
+                    plus find_reviewable_claude_prs()'s check for any other open
+                    conductor PR (e.g. claude/*) whose CI is fully green and that
+                    has sat untouched for --pr-grace-minutes — a real reviewable
+                    PR isn't only ever opened from a worker/* branch (conductor/t-083)
   - pr-medic      — open PRs, across every repo in --repos, whose CI is red
                     AND stale (no push in --pr-stale-hours despite failing) —
                     an error nobody is actively fixing, as opposed to a PR
@@ -122,6 +126,11 @@ LOCAL_REPO = 'silasfelinus/conductor'
 DEFAULT_REPOS = ('silasfelinus/conductor', 'silasfelinus/kind_robots')
 
 DEFAULT_PR_STALE_HOURS = 3.0
+# Grace period before a green, open claude/* PR is considered reviewable --
+# short enough to not sit unreviewed for long, but long enough that a session
+# still actively pushing to its own branch isn't immediately flagged as
+# something else needs to review it (conductor/t-083).
+DEFAULT_PR_GRACE_MINUTES = 5.0
 DEFAULT_BRANCH_STALE_HOURS = branch_janitor.DEFAULT_STALE_HOURS
 DEFAULT_PREFIXES = branch_janitor.DEFAULT_PREFIXES
 
@@ -218,6 +227,64 @@ def find_red_stale_prs(
     flagged: list[dict] = []
     for repo in repos:
         flagged.extend(find_red_stale_prs_in_repo(repo, token, stale_hours=stale_hours, now=now))
+    return flagged
+
+
+# --- reviewer: green, open non-worker/* PRs (e.g. claude/*) awaiting a look -
+
+
+def find_reviewable_claude_prs(
+    repo: str,
+    token: str,
+    *,
+    grace_minutes: float = DEFAULT_PR_GRACE_MINUTES,
+    now: datetime | None = None,
+) -> list[dict]:
+    """Open PRs in `repo` whose head branch is NOT `worker/*` (those are
+    already covered by run_reviewer.remote_worker_branches()'s fast local-git
+    check), whose latest commit's combined CI status is green, and that have
+    sat untouched for at least `grace_minutes` -- long enough that its own
+    author is unlikely to still be actively pushing to it.
+
+    Fixes conductor/t-083: a fully-green, reversible, bookkeeping-only PR
+    opened from a `claude/*` branch sat open on conductor for roughly an hour
+    because select_role.py's reviewer signal only ever looked at `worker/*`
+    branches, so a real reviewable PR from any other branch naming went
+    unnoticed. This does NOT decide anything about merging -- it only
+    surfaces the PR as a candidate for a session to look at, same as
+    run_reviewer.py's own worker/* check."""
+    if not token:
+        return []
+
+    now = now or datetime.now(timezone.utc)
+    flagged: list[dict] = []
+    for pr in list_open_prs(repo, token):
+        head = pr.get('head') or {}
+        ref = head.get('ref') or ''
+        sha = head.get('sha')
+        updated_at = pr.get('updated_at')
+        if not sha or not updated_at or ref.startswith('worker/'):
+            continue
+
+        state = commit_combined_state(repo, sha, token)
+        if state != 'success':
+            continue
+
+        pushed_at = datetime.strptime(updated_at, '%Y-%m-%dT%H:%M:%SZ').replace(tzinfo=timezone.utc)
+        age_minutes = (now - pushed_at).total_seconds() / 60.0
+        if age_minutes < grace_minutes:
+            continue  # still fresh -- author may still be actively pushing
+
+        flagged.append({
+            'repo': repo,
+            'number': pr.get('number'),
+            'title': pr.get('title'),
+            'html_url': pr.get('html_url'),
+            'branch': ref,
+            'ci_state': state,
+            'age_minutes': round(age_minutes, 1),
+        })
+
     return flagged
 
 
@@ -385,6 +452,7 @@ def select_role(
     pr_stale_hours: float = DEFAULT_PR_STALE_HOURS,
     branch_stale_hours: float = DEFAULT_BRANCH_STALE_HOURS,
     audit_stale_days: float = DEFAULT_AUDIT_STALE_DAYS,
+    pr_grace_minutes: float = DEFAULT_PR_GRACE_MINUTES,
 ) -> dict[str, object]:
     repos = list(repos) if repos else list(DEFAULT_REPOS)
 
@@ -394,15 +462,21 @@ def select_role(
         print(f'[select-role] remote refresh warning: {error}', file=sys.stderr)
 
     review_branches = run_reviewer.remote_worker_branches()
+    reviewable_prs = find_reviewable_claude_prs(LOCAL_REPO, github_token, grace_minutes=pr_grace_minutes)
     red_prs = find_red_stale_prs(repos, github_token, stale_hours=pr_stale_hours)
     stranded = find_stranded_branches(repos, github_token, stale_hours=branch_stale_hours)
     audit = site_audit_status(stale_days=audit_stale_days)
     queue = run_worker.build_queue_summary()
     ready_task = queue.get('ready_task')
 
-    if review_branches:
+    if review_branches or reviewable_prs:
         role = 'reviewer'
-        reason = f'{len(review_branches)} open worker/* branch(es) awaiting review'
+        parts = []
+        if review_branches:
+            parts.append(f'{len(review_branches)} open worker/* branch(es)')
+        if reviewable_prs:
+            parts.append(f'{len(reviewable_prs)} green non-worker/* PR(s)')
+        reason = ' and '.join(parts) + ' awaiting review'
     elif red_prs:
         role = 'pr-medic'
         by_repo = ', '.join(sorted({pr['repo'] for pr in red_prs}))
@@ -430,6 +504,8 @@ def select_role(
         'repos_checked': repos,
         'candidate_worker_branch_count': len(review_branches),
         'candidate_worker_branches': review_branches,
+        'candidate_reviewable_pr_count': len(reviewable_prs),
+        'candidate_reviewable_prs': reviewable_prs,
         'red_stale_pr_count': len(red_prs),
         'red_stale_prs': red_prs,
         'stranded_branch_count': len(stranded),
@@ -456,6 +532,7 @@ def main() -> None:
     parser.add_argument('--pr-stale-hours', type=float, default=DEFAULT_PR_STALE_HOURS)
     parser.add_argument('--branch-stale-hours', type=float, default=DEFAULT_BRANCH_STALE_HOURS)
     parser.add_argument('--audit-stale-days', type=float, default=DEFAULT_AUDIT_STALE_DAYS)
+    parser.add_argument('--pr-grace-minutes', type=float, default=DEFAULT_PR_GRACE_MINUTES)
     args = parser.parse_args()
 
     print('[select-role] model API calls are disabled by design', file=sys.stderr)
@@ -467,6 +544,7 @@ def main() -> None:
         pr_stale_hours=args.pr_stale_hours,
         branch_stale_hours=args.branch_stale_hours,
         audit_stale_days=args.audit_stale_days,
+        pr_grace_minutes=args.pr_grace_minutes,
     )
     print(json.dumps(result, indent=2))
 

@@ -1,11 +1,16 @@
 """Tests for scripts/select_role.py (conductor/t-026, extended, cross-repo,
-+ weekly site audit).
++ weekly site audit, + green non-worker/* PR reviewer check).
 
-select_role.py composes five signals (open worker/* branches, red+stale open
-PRs, stranded branches, an overdue weekly site audit, ready tasks) into one
-role recommendation, in priority order, so a session decides its own role on
-arrival instead of following a trigger label that may not match what the
-repos actually need.
+select_role.py composes six signals (open worker/* branches, green non-
+worker/* PRs past a grace period, red+stale open PRs, stranded branches, an
+overdue weekly site audit, ready tasks) into one role recommendation, in
+priority order, so a session decides its own role on arrival instead of
+following a trigger label that may not match what the repos actually need.
+
+The reviewer signal isn't only ever a worker/* branch (conductor/t-083): a
+fully-green, reversible PR opened from a claude/* branch is just as
+reviewable, so find_reviewable_claude_prs() flags it once its CI is green
+and it's sat untouched past --pr-grace-minutes.
 
 pr-medic and branch-medic cover BOTH silasfelinus/conductor (via fast local
 git, through branch_janitor.py) and silasfelinus/kind_robots (via the GitHub
@@ -19,6 +24,7 @@ separately-approved Claude Code Remote Trigger (global-ui/t-016) — it rides
 whichever trigger fires next, as long as this script runs first.
 """
 
+import contextlib
 import py_compile
 import urllib.error
 from datetime import date, datetime, timezone
@@ -44,18 +50,22 @@ AUDIT_NEVER_RUN = {"overdue": True, "last_report": None, "days_since": None}
 
 def _patched(
     remote_worker_branches=(),
+    reviewable_claude_prs=(),
     red_stale_prs=(),
     stranded_branches=(),
     audit_status=None,
     queue_summary=None,
 ):
-    """One combined patch context covering all five signals, each defaulted
+    """One combined patch context covering all six signals, each defaulted
     to "nothing found"/"not overdue" and overridden per-test — keeps each
     test asserting only the signal(s) it's actually about."""
     return (
         mock.patch.object(select_role.run_reviewer, "refresh_remotes"),
         mock.patch.object(
             select_role.run_reviewer, "remote_worker_branches", return_value=list(remote_worker_branches)
+        ),
+        mock.patch.object(
+            select_role, "find_reviewable_claude_prs", return_value=list(reviewable_claude_prs)
         ),
         mock.patch.object(select_role, "find_red_stale_prs", return_value=list(red_stale_prs)),
         mock.patch.object(select_role, "find_stranded_branches", return_value=list(stranded_branches)),
@@ -66,8 +76,12 @@ def _patched(
     )
 
 
+@contextlib.contextmanager
 def _apply(patches):
-    return patches[0], patches[1], patches[2], patches[3], patches[4], patches[5]
+    with contextlib.ExitStack() as stack:
+        for patch in patches:
+            stack.enter_context(patch)
+        yield
 
 
 def test_script_compiles():
@@ -82,14 +96,13 @@ def test_default_repos_include_kind_robots():
 
 
 def test_reviewer_outranks_everything():
-    p = _apply(_patched(
+    with _apply(_patched(
         remote_worker_branches=[{"branch": "worker/x-t-001"}],
         red_stale_prs=[{"repo": "silasfelinus/conductor", "number": 1}],
         stranded_branches=[{"repo": "silasfelinus/kind_robots", "branch": "claude/some-stale"}],
         audit_status=AUDIT_OVERDUE,
         queue_summary=SOME_READY_TASK,
-    ))
-    with p[0], p[1], p[2], p[3], p[4], p[5]:
+    )):
         result = select_role.select_role()
 
     assert result["role"] == "reviewer"
@@ -103,14 +116,39 @@ def test_reviewer_outranks_everything():
     assert result["ready_task"]["task_id"] == "t-002"
 
 
+def test_reviewer_triggered_by_green_reviewable_pr_alone():
+    """No worker/* branch at all -- a lone green, grace-period-cleared
+    claude/* PR must still win the reviewer role (conductor/t-083)."""
+    with _apply(_patched(
+        reviewable_claude_prs=[{"repo": "silasfelinus/conductor", "number": 5, "branch": "claude/x"}],
+        queue_summary=SOME_READY_TASK,
+    )):
+        result = select_role.select_role()
+
+    assert result["role"] == "reviewer"
+    assert result["candidate_reviewable_pr_count"] == 1
+    assert "green non-worker/* PR" in result["reason"]
+
+
+def test_reviewer_reason_mentions_both_signals_when_both_present():
+    with _apply(_patched(
+        remote_worker_branches=[{"branch": "worker/x-t-001"}],
+        reviewable_claude_prs=[{"repo": "silasfelinus/conductor", "number": 5, "branch": "claude/x"}],
+    )):
+        result = select_role.select_role()
+
+    assert result["role"] == "reviewer"
+    assert "open worker/* branch" in result["reason"]
+    assert "green non-worker/* PR" in result["reason"]
+
+
 def test_pr_medic_outranks_branch_medic_audit_and_worker():
-    p = _apply(_patched(
+    with _apply(_patched(
         red_stale_prs=[{"repo": "silasfelinus/kind_robots", "number": 42, "ci_state": "failure"}],
         stranded_branches=[{"repo": "silasfelinus/conductor", "branch": "claude/some-stale"}],
         audit_status=AUDIT_OVERDUE,
         queue_summary=SOME_READY_TASK,
-    ))
-    with p[0], p[1], p[2], p[3], p[4], p[5]:
+    )):
         result = select_role.select_role()
 
     assert result["role"] == "pr-medic"
@@ -119,12 +157,11 @@ def test_pr_medic_outranks_branch_medic_audit_and_worker():
 
 
 def test_branch_medic_outranks_audit_and_worker():
-    p = _apply(_patched(
+    with _apply(_patched(
         stranded_branches=[{"repo": "silasfelinus/kind_robots", "branch": "claude/orphaned-work"}],
         audit_status=AUDIT_OVERDUE,
         queue_summary=SOME_READY_TASK,
-    ))
-    with p[0], p[1], p[2], p[3], p[4], p[5]:
+    )):
         result = select_role.select_role()
 
     assert result["role"] == "branch-medic"
@@ -133,8 +170,7 @@ def test_branch_medic_outranks_audit_and_worker():
 
 
 def test_site_auditor_outranks_worker_when_overdue():
-    p = _apply(_patched(audit_status=AUDIT_OVERDUE, queue_summary=SOME_READY_TASK))
-    with p[0], p[1], p[2], p[3], p[4], p[5]:
+    with _apply(_patched(audit_status=AUDIT_OVERDUE, queue_summary=SOME_READY_TASK)):
         result = select_role.select_role()
 
     assert result["role"] == "site-auditor"
@@ -145,8 +181,7 @@ def test_site_auditor_outranks_worker_when_overdue():
 
 
 def test_site_auditor_reason_when_audit_has_never_run():
-    p = _apply(_patched(audit_status=AUDIT_NEVER_RUN))
-    with p[0], p[1], p[2], p[3], p[4], p[5]:
+    with _apply(_patched(audit_status=AUDIT_NEVER_RUN)):
         result = select_role.select_role()
 
     assert result["role"] == "site-auditor"
@@ -155,8 +190,7 @@ def test_site_auditor_reason_when_audit_has_never_run():
 
 
 def test_worker_when_only_ready_task_exists_and_audit_not_due():
-    p = _apply(_patched(queue_summary=SOME_READY_TASK))
-    with p[0], p[1], p[2], p[3], p[4], p[5]:
+    with _apply(_patched(queue_summary=SOME_READY_TASK)):
         result = select_role.select_role()
 
     assert result["role"] == "worker"
@@ -164,8 +198,7 @@ def test_worker_when_only_ready_task_exists_and_audit_not_due():
 
 
 def test_idle_when_nothing_needs_doing():
-    p = _apply(_patched())
-    with p[0], p[1], p[2], p[3], p[4], p[5]:
+    with _apply(_patched()):
         result = select_role.select_role()
 
     assert result["role"] == "idle"
@@ -176,6 +209,8 @@ def test_remote_refresh_failure_does_not_crash_selection():
         select_role.run_reviewer, "refresh_remotes", side_effect=RuntimeError("network down")
     ), mock.patch.object(
         select_role.run_reviewer, "remote_worker_branches", return_value=[]
+    ), mock.patch.object(
+        select_role, "find_reviewable_claude_prs", return_value=[]
     ), mock.patch.object(
         select_role, "find_red_stale_prs", return_value=[]
     ), mock.patch.object(
@@ -195,6 +230,8 @@ def test_select_role_checks_both_default_repos():
     when the caller doesn't override `repos=`."""
     with mock.patch.object(select_role.run_reviewer, "refresh_remotes"), mock.patch.object(
         select_role.run_reviewer, "remote_worker_branches", return_value=[]
+    ), mock.patch.object(
+        select_role, "find_reviewable_claude_prs", return_value=[]
     ), mock.patch.object(
         select_role, "find_red_stale_prs", return_value=[]
     ) as find_red, mock.patch.object(
@@ -303,6 +340,102 @@ def test_find_red_stale_prs_aggregates_across_repos():
 
     assert {f["repo"] for f in flagged} == {"silasfelinus/conductor", "silasfelinus/kind_robots"}
     assert len(flagged) == 2
+
+
+# --- find_reviewable_claude_prs: green, open, non-worker/* PRs (conductor/t-083) --
+
+
+def test_find_reviewable_claude_prs_flags_green_pr_past_grace_period():
+    now = datetime(2026, 7, 26, 12, 0, 0, tzinfo=timezone.utc)
+    pr = {
+        "number": 5,
+        "title": "bookkeeping-only fix",
+        "html_url": "https://github.com/x/y/pull/5",
+        "head": {"sha": "feedface", "ref": "claude/loving-wright-wnugs2"},
+        "updated_at": "2026-07-26T11:30:00Z",  # 30 minutes old
+    }
+    routes = {
+        "/pulls?state=open": [pr],
+        "/commits/feedface/status": {"state": "success"},
+    }
+    with mock.patch.object(select_role, "_gh_request", side_effect=_fake_gh_request(routes)):
+        flagged = select_role.find_reviewable_claude_prs(
+            "silasfelinus/conductor", "fake-token", grace_minutes=5.0, now=now
+        )
+
+    assert len(flagged) == 1
+    assert flagged[0]["number"] == 5
+    assert flagged[0]["branch"] == "claude/loving-wright-wnugs2"
+    assert flagged[0]["ci_state"] == "success"
+
+
+def test_find_reviewable_claude_prs_ignores_worker_branches():
+    """worker/* branches are already covered by run_reviewer.remote_worker_branches()'s
+    fast local-git check -- this function must not double-count them."""
+    now = datetime(2026, 7, 26, 12, 0, 0, tzinfo=timezone.utc)
+    pr = {
+        "number": 6,
+        "head": {"sha": "abc111", "ref": "worker/some-project-t-001"},
+        "updated_at": "2026-07-26T11:00:00Z",
+    }
+    routes = {
+        "/pulls?state=open": [pr],
+        "/commits/abc111/status": {"state": "success"},
+    }
+    with mock.patch.object(select_role, "_gh_request", side_effect=_fake_gh_request(routes)):
+        flagged = select_role.find_reviewable_claude_prs(
+            "silasfelinus/conductor", "fake-token", grace_minutes=5.0, now=now
+        )
+
+    assert flagged == []
+
+
+def test_find_reviewable_claude_prs_ignores_non_green_ci():
+    now = datetime(2026, 7, 26, 12, 0, 0, tzinfo=timezone.utc)
+    pr = {
+        "number": 7,
+        "head": {"sha": "bbb222", "ref": "claude/some-branch"},
+        "updated_at": "2026-07-26T11:00:00Z",
+    }
+    routes = {
+        "/pulls?state=open": [pr],
+        "/commits/bbb222/status": {"state": "pending"},
+    }
+    with mock.patch.object(select_role, "_gh_request", side_effect=_fake_gh_request(routes)):
+        flagged = select_role.find_reviewable_claude_prs(
+            "silasfelinus/conductor", "fake-token", grace_minutes=5.0, now=now
+        )
+
+    assert flagged == []
+
+
+def test_find_reviewable_claude_prs_ignores_fresh_pr_still_pushing():
+    """A PR updated moments ago may still be having its author actively push
+    to it -- must not be flagged until it clears the grace period."""
+    now = datetime(2026, 7, 26, 12, 0, 0, tzinfo=timezone.utc)
+    pr = {
+        "number": 8,
+        "head": {"sha": "ccc333", "ref": "claude/some-branch"},
+        "updated_at": "2026-07-26T11:58:00Z",  # 2 minutes old
+    }
+    routes = {
+        "/pulls?state=open": [pr],
+        "/commits/ccc333/status": {"state": "success"},
+    }
+    with mock.patch.object(select_role, "_gh_request", side_effect=_fake_gh_request(routes)):
+        flagged = select_role.find_reviewable_claude_prs(
+            "silasfelinus/conductor", "fake-token", grace_minutes=5.0, now=now
+        )
+
+    assert flagged == []
+
+
+def test_find_reviewable_claude_prs_returns_empty_without_a_token():
+    with mock.patch.object(select_role, "list_open_prs") as list_open_prs:
+        flagged = select_role.find_reviewable_claude_prs("silasfelinus/conductor", "", grace_minutes=5.0)
+
+    list_open_prs.assert_not_called()
+    assert flagged == []
 
 
 def test_gh_request_degrades_on_unreachable_api_instead_of_crashing():
