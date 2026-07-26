@@ -757,8 +757,8 @@ tasks:
 - id: t-030
   milestone: m4
   title: "Design a PrintJob model + real POD checkout flow to replace print-swag.vue's UI mock"
-  status: ready
-  owner: null
+  status: claimed
+  owner: worker
   passes: 0
   stakes: reversible
   depends_on: [t-029]
@@ -773,7 +773,9 @@ tasks:
     outward-facing — expect this to reach `needs-human` once it touches a live
     payment provider or order fulfillment API; the schema/plumbing work up to
     that point is reversible software.
-  updated: '2026-07-26T06:10:00Z'
+  updated: '2026-07-26T07:05:35Z'
+  claimed_by: claude-conductor-scheduled-20260726T070532Z-ds-t030
+  claimed_at: '2026-07-26T07:05:35Z'
 
 - id: t-028
   milestone: m1
