@@ -780,15 +780,42 @@ tasks:
   - id: t-034
     milestone: m2
     title: "Pitch: kind_robots dashboard as shared front-end for Conductor + PortOS CoS"
-    status: claimed
+    status: needs-human
     gate_human: true
     approved_by_human: true
     owner: reviewer
     passes: 0
     stakes: reversible
-    updated: '2026-07-26T00:07:31Z'
+    updated: '2026-07-26T00:15:00Z'
     note: >
-      FOR SILAS: pitch written to pitches/2026-07-19-kind-robots-dashboard-shared-frontend.md.
+      FOR SILAS: design note written to projects/conductor/docs/portos-dashboard-shape.md
+      (2026-07-26, burst-mode cycle). This session had direct read access to both
+      silasfelinus/kind_robots AND silasfelinus/PortOS (the earlier 2026-07-25 attempt
+      was scoped to conductor+kind_robots only and had to defer this), so the note is
+      grounded in the actual PortOS CoS code (server/services/cosAgents.js,
+      cosJobScheduler.js, worktreeManager.js, cosTaskClaim.js, taskLearning.js) rather
+      than the docs-only comparison. It covers: (1) a table mapping each dashboard need
+      (queue depth, active worktrees/agents, claim/lease state, completions, model-routing
+      stats) to the specific CoS function that would supply it; (2) a proposed
+      server/api/conductor/portos-status.get.ts read-only endpoint shape (TypeScript
+      interfaces for PortosAgentSummary/PortosClaimSummary/PortosLearningSummary/
+      PortosStatus), mirroring the existing projects.get.ts/prs.get.ts pattern but
+      reading a paired PortOS install's own HTTP API instead of GitHub, with a
+      graceful-degrade shape (paired: false) since PortOS is Tailscale-only and often
+      unreachable; (3) explicit non-goals (no runtime built, no nav change, no touch to
+      the existing portos-tab pairing flow); (4) confirms this is informative context
+      for conductor/t-033, not a blocker on it.
+      TO APPROVE: read the design note. This is a docs-only deliverable with no code or
+      nav changes, so there's nothing to "approve" functionally -- the ask is just
+      confirmation the shape is right before anyone builds against it (t-033 or an
+      equivalent runtime pitch, still needs-human/unapproved). Set status: done if the
+      shape looks right, or leave a note here with course corrections.
+      What unblocks: nothing is blocked on this -- it's a reference doc for whoever
+      picks up t-033 next, not a dependency gate.
+
+      ---
+
+      FOR SILAS (original pitch text, preserved): pitch written to pitches/2026-07-19-kind-robots-dashboard-shared-frontend.md.
       Proposes extending the existing `portos` tab in kind_robots'
       stores/helpers/conductorTabs.ts (already a stub with forward-looking narrative
       text, currently unbacked) into a real second-runtime view if/when a CoS-style
