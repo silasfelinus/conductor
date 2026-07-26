@@ -989,7 +989,7 @@ tasks:
 - id: t-033
   milestone: m4
   title: "kind_robots: wire real artImageId through the general giftshop cart's print/shirt/sticker/mug/book checkout so those types can get a real PrintJob"
-  status: claimed
+  status: review
   owner: worker
   passes: 0
   stakes: reversible
@@ -1028,6 +1028,69 @@ tasks:
     work around; they're demo/placeholder UI, not real product listings, and may need their
     own follow-up to either wire real featured art or get removed. Reversible, Stripe
     test-mode only, no live vendor action.
+
+    IMPLEMENTED 2026-07-26 (conductor scheduled burst-mode rotation,
+    claude-conductor-burst-20260726T100541Z-ds-t033): kind_robots PR #1011. Resolved the
+    "reject vs. drop" product decision from (3) as reject-the-whole-checkout: an ineligible
+    art line throws a 403 before the Stripe session is created, matching this route's
+    existing all-or-nothing validation style (bad item id/quantity already block the entire
+    cart, not just one line) -- never charges a user for less than the cart they reviewed.
+    Clarified the "four types" vs. this task's own "print/shirt/sticker/mug/book" title:
+    `book` is excluded -- `stores/seeds/cartItems.ts` already marks `needsArt: false` for it
+    (it's the fixed "Mermaids of Venice (Signed)" product, not a print of a specific
+    ArtImage) and it has no `POD_CATALOG` entry, so it correctly stays Order/OrderItem-only,
+    same as donation. Dedup key in `checkout.post.ts`'s `parseCart` changed from `id` alone
+    to `id:artImageId` for needsArt types, fixing a latent bug the note didn't call out:
+    two different prints (distinct artImageId, same catalog type) would otherwise collapse
+    into one combined-quantity Stripe line with no way to tell which art each unit was for
+    -- client-side `cartStore.ts` already kept them distinct (item id is
+    `${type}-${artImageId}`), only the server-side payload collapsed them. Webhook's new
+    `fulfillGiftshopPrintJob` re-checks eligibility at fulfillment time (mirrors
+    `handleProductPurchase`'s POD branch) but deliberately does NOT insert a FAILED
+    `PrintJob` when `artImageId` is missing/invalid or the ArtImage no longer exists --
+    `PrintJob.artImageId` is a required non-null FK, so that insert would throw and roll
+    back the whole transaction, losing the Order/OrderItem audit record too (the sibling
+    `handleProductPurchase` branch has this same latent risk on its own "ArtImage not
+    found" path; not touched here, out of scope -- flagged as a kaizen follow-up, see
+    digital-storefront/t-034). Extracted `POD_CATALOG` out of `pod-checkout.post.ts` into
+    `server/api/store/podCatalog.ts` so both checkout paths share one source of truth.
+    Verified: eslint clean (2 pre-existing `cartStore.ts` no-empty errors on unrelated
+    lines 49/57 predate this change, confirmed via `git stash`), prettier clean, full-project
+    `npm run test` (vue-tsc --noEmit) exit 0. Live Stripe test-mode smoke deferred -- no
+    reachable DATABASE_URL/Stripe test keys in this sandbox, same limitation as every prior
+    digital-storefront PR in this series. Will flip to done and merge once CI is green.
   claimed_by: claude-conductor-burst-20260726T100541Z-ds-t033
   claimed_at: '2026-07-26T10:05:44Z'
   updated: '2026-07-26T10:05:44Z'
+
+- id: t-034
+  milestone: m4
+  title: "kind_robots: handleProductPurchase's POD 'ArtImage not found' branch inserts a PrintJob referencing a nonexistent FK, which can throw and roll back the whole Order"
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  note: >
+    Filed 2026-07-26 (t-033 close-out kaizen). `server/api/stripe/webhook.post.ts`'s
+    `handleProductPurchase` POD branch, when the ArtImage referenced by a POD Product's
+    metadata no longer exists, still calls `tx.printJob.create({data:{orderItemId,
+    artImageId, printfulVariantId, status:'FAILED'}})` with that same nonexistent
+    `artImageId`. `PrintJob.artImageId` is a required, non-null FK to `ArtImage`
+    (`prisma/schema.prisma`) with no `onDelete: SetNull` -- inserting a row that points at
+    a missing ArtImage id should violate the FK constraint, and since this happens inside
+    `prisma.$transaction(async (tx) => {...})`, the thrown error would roll back the entire
+    transaction, including the `Order`/`OrderItem` rows already created earlier in the same
+    callback. Net effect: a user who paid via Stripe for a POD item whose ArtImage was
+    deleted between checkout and webhook delivery would end up with no Order record at all,
+    not even a FAILED one -- worse than the FAILED status the code is trying to record.
+    t-033's new `fulfillGiftshopPrintJob` (general giftshop cart path) deliberately avoids
+    this by skipping PrintJob creation entirely when the ArtImage doesn't exist, leaving the
+    Order/OrderItem intact as the audit trail. This task is to apply the same
+    check-existence-before-insert fix to `handleProductPurchase`'s POD branch (the
+    `!artImage` check around line ~244 of webhook.post.ts) -- either skip the PrintJob
+    insert the same way, or restructure so the FAILED PrintJob is created outside/after the
+    Order-creating transaction so a construct failure there can't unwind the paid order.
+    Likely needs a fixture or a live DB session to actually trigger the FK violation and
+    confirm the rollback behavior (not verifiable in a sandbox with no reachable
+    DATABASE_URL) before picking the fix shape.
+
