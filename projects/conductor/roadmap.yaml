@@ -2654,7 +2654,7 @@ tasks:
   - id: t-083
     milestone: m2
     title: "select_role.py's reviewer check only watches worker/* branches; teach it to also flag open, green, non-stale claude/* PRs as reviewable"
-    status: review
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -2664,5 +2664,5 @@ tasks:
       DONE 2026-07-26 (burst-mode cycle, claude-conductor-burst-20260726T1904Z-cd-t083): extended select_role.py with find_reviewable_claude_prs() -- checks open PRs on silasfelinus/conductor whose head ref is NOT worker/* (those stay covered by run_reviewer.py's existing local-git check), flags one as reviewer-worthy once its combined CI status is success and it's sat untouched for --pr-grace-minutes (default 5.0). Wired into select_role()'s decision order: reviewer now triggers on review_branches OR reviewable_prs, with a combined reason string when both fire. Per AGENTS.md's existing carve-out, this only surfaces the PR as a candidate -- it does not auto-merge anything; the merge decision stays a session's judgment call. Added candidate_reviewable_pr_count/candidate_reviewable_prs to select_role()'s output and a --pr-grace-minutes CLI flag. 9 new tests in tests/test_select_role.py (green-past-grace flag, worker/* exclusion, non-green CI, fresh-PR grace exclusion, no-token short-circuit, reviewer-triggered-by-PR-alone, combined-reason-when-both-signals-present) plus the existing _patched()/_apply() test harness refactored to an ExitStack-based context manager to add the 7th mocked signal without a 6-way `with p[0]...p[5]:` per call site. Full suite green (578 passed, 1 skipped).
     claimed_by: claude-conductor-burst-20260726T1904Z-cd-t083
     claimed_at: '2026-07-26T19:07:44Z'
-    updated: '2026-07-26T19:11:42Z'
+    updated: '2026-07-26T20:05:42Z'
 
