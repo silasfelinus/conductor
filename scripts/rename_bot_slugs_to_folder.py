@@ -42,6 +42,18 @@ Usage:
   python scripts/rename_bot_slugs_to_folder.py             # dry-run plan
   python scripts/rename_bot_slugs_to_folder.py --apply     # perform renames
   python scripts/rename_bot_slugs_to_folder.py --type bot  # limit owner type
+  python scripts/rename_bot_slugs_to_folder.py \
+    --rename ami-bot=ami-matriarch --rename ami-butterfly=ami-swarm
+      # explicit override(s), repeatable: bypasses the folder scan entirely
+      # and PATCHes CURRENT_SLUG -> NEW_SLUG directly by narrator lookup.
+      # For deliberate one-off renames where a human is choosing a brand
+      # new name that ISN'T simply "whatever the folder is already called"
+      # -- e.g. when the folder itself is also being renamed at the same
+      # time, so the automatic folder-scan has nothing stable to resolve
+      # against (the old folder name is gone, the new one was never the
+      # owner's slug or avatarImage, so none of the three lookup tiers
+      # would ever find it). Still requires --apply and KR_API_TOKEN;
+      # without --apply these are only shown as a dry-run plan too.
 
 Exit codes: 0 = ok (plan or apply succeeded), 1 = error
 """
@@ -104,6 +116,22 @@ def resolve_folder_owner(owner_type, folder_slug, owner_ids_cache, avatar_map_ca
     return None, None
 
 
+def resolve_explicit_rename(owner_types, current_slug):
+    """owner_id for a manually-specified CURRENT_SLUG, tried across each
+    owner_type in turn via a direct narrator lookup (no avatarImage/bulk-
+    list fallback -- the caller already knows the exact current slug).
+    Returns (owner_type, owner_id) for the first type that resolves, or
+    (None, None) if none do."""
+    for owner_type in owner_types:
+        try:
+            owner_id, _ = rex.fetch_narrator(owner_type, current_slug)
+        except Exception:
+            owner_id = None
+        if owner_id:
+            return owner_type, owner_id
+    return None, None
+
+
 def build_rename_plan(owner_type, base_dir):
     """[(owner_id, current_slug, folder_name), ...] for every expression
     folder whose owner's current slug doesn't already match the folder
@@ -121,15 +149,70 @@ def build_rename_plan(owner_type, base_dir):
     return plan
 
 
+def _parse_rename_arg(raw):
+    if "=" not in raw:
+        raise ValueError(f"--rename must be OLD=NEW, got: {raw!r}")
+    old, new = raw.split("=", 1)
+    old, new = old.strip(), new.strip()
+    if not old or not new:
+        raise ValueError(f"--rename must be OLD=NEW, got: {raw!r}")
+    return old, new
+
+
+def apply_rename(owner_type, owner_id, current_slug, new_slug, dry_run):
+    """Print + (if not dry_run) PATCH one rename. Returns True on success,
+    False on HTTP error (already printed)."""
+    if dry_run:
+        print(f"  {owner_type}/{current_slug} -> {new_slug}  (id={owner_id}, dry-run)")
+        return True
+    patch_path = f"/api/bots/{owner_id}" if owner_type == "bot" else f"/api/characters/{owner_id}"
+    try:
+        rex.api(patch_path, payload={"slug": new_slug}, method="PATCH")
+        print(f"✅ {owner_type}/{current_slug} -> {new_slug}  (id={owner_id})")
+        return True
+    except urllib.error.HTTPError as e:
+        print(f"❌ {owner_type}/{current_slug} -> {new_slug} (id={owner_id}): "
+              f"HTTP {e.code} {e.reason}", file=sys.stderr)
+        return False
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[1])
     ap.add_argument("--apply", action="store_true", help="perform the renames")
     ap.add_argument("--type", choices=("bot", "character"), help="limit owner type")
+    ap.add_argument("--rename", action="append", default=[], metavar="OLD=NEW",
+                     help="explicit slug override, repeatable -- bypasses the "
+                          "folder scan (see module docstring)")
     args = ap.parse_args()
 
     if args.apply and not rex.KR_API_TOKEN:
         print("❌ --apply requires KR_API_TOKEN (admin or server key).", file=sys.stderr)
         return 1
+
+    try:
+        explicit_renames = [_parse_rename_arg(r) for r in args.rename]
+    except ValueError as e:
+        print(f"❌ {e}", file=sys.stderr)
+        return 1
+
+    owner_types = [args.type] if args.type else ["bot", "character"]
+    total_planned = 0
+    total_applied = 0
+    errors = []
+
+    for old_slug, new_slug in explicit_renames:
+        owner_type, owner_id = resolve_explicit_rename(owner_types, old_slug)
+        if not owner_id:
+            msg = f"could not resolve current slug {old_slug!r} to any {'/'.join(owner_types)}"
+            print(f"❌ {msg}", file=sys.stderr)
+            errors.append(msg)
+            continue
+        total_planned += 1
+        if apply_rename(owner_type, owner_id, old_slug, new_slug, dry_run=not args.apply):
+            if args.apply:
+                total_applied += 1
+        else:
+            errors.append(f"{owner_type}/{old_slug} -> {new_slug}")
 
     if rex.KR_MEDIA_IMAGES_DIR:
         images_root = Path(rex.KR_MEDIA_IMAGES_DIR)
@@ -143,11 +226,6 @@ def main():
                   "(set KIND_ROBOTS_ROOT, or set KR_MEDIA_IMAGES_DIR to the "
                   "self-hosted media share root instead).", file=sys.stderr)
             return 1
-
-    owner_types = [args.type] if args.type else ["bot", "character"]
-    total_planned = 0
-    total_applied = 0
-    errors = []
 
     for owner_type in owner_types:
         rel = OWNER_DIRS[owner_type]
@@ -169,18 +247,11 @@ def main():
 
         for owner_id, current_slug, folder_name in plan:
             total_planned += 1
-            if not args.apply:
-                print(f"  {owner_type}/{current_slug} -> {folder_name}  (id={owner_id}, dry-run)")
-                continue
-            patch_path = f"/api/bots/{owner_id}" if owner_type == "bot" else f"/api/characters/{owner_id}"
-            try:
-                rex.api(patch_path, payload={"slug": folder_name}, method="PATCH")
-                print(f"✅ {owner_type}/{current_slug} -> {folder_name}  (id={owner_id})")
-                total_applied += 1
-            except urllib.error.HTTPError as e:
-                msg = f"{owner_type}/{current_slug} -> {folder_name} (id={owner_id}): HTTP {e.code} {e.reason}"
-                print(f"❌ {msg}", file=sys.stderr)
-                errors.append(msg)
+            if apply_rename(owner_type, owner_id, current_slug, folder_name, dry_run=not args.apply):
+                if args.apply:
+                    total_applied += 1
+            else:
+                errors.append(f"{owner_type}/{current_slug} -> {folder_name}")
 
     print(json.dumps({
         "mode": "applied" if args.apply else "dry-run",
