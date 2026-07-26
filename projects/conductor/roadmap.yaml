@@ -780,44 +780,24 @@ tasks:
   - id: t-034
     milestone: m2
     title: "Pitch: kind_robots dashboard as shared front-end for Conductor + PortOS CoS"
-    status: claimed
+    status: needs-human
     gate_human: true
     approved_by_human: true
-    owner: reviewer
     passes: 0
     stakes: reversible
-    updated: '2026-07-26T00:07:31Z'
-    note: >
-      FOR SILAS: pitch written to pitches/2026-07-19-kind-robots-dashboard-shared-frontend.md.
-      Proposes extending the existing `portos` tab in kind_robots'
-      stores/helpers/conductorTabs.ts (already a stub with forward-looking narrative
-      text, currently unbacked) into a real second-runtime view if/when a CoS-style
-      runtime is ever adopted, fed by a new read-only server/api/conductor/*
-      endpoint mirroring the existing projects.get.ts/prs.get.ts pattern.
-      TO APPROVE: read the pitch, set status: approved in the pitch file's front
-      matter if you like the direction, and (optional) greenlight the suggested
-      first task -- a design-note-only write to
-      projects/conductor/docs/portos-dashboard-shape.md, no code, no runtime
-      decision implied. This does not authorize or depend on conductor/t-033
-      (worktree-parallel Workers, still needs-human) -- either can proceed
-      independently. Deferred from the PortOS comparison
-      (docs/2026-07-11-portos-cos-learnings.md).
+    updated: '2026-07-26T00:17:14Z'
+    note: |-
+      FOR SILAS: pitch written to pitches/2026-07-19-kind-robots-dashboard-shared-frontend.md. Proposes extending the existing `portos` tab in kind_robots' stores/helpers/conductorTabs.ts (already a stub with forward-looking narrative text, currently unbacked) into a real second-runtime view if/when a CoS-style runtime is ever adopted, fed by a new read-only server/api/conductor/* endpoint mirroring the existing projects.get.ts/prs.get.ts pattern. TO APPROVE: read the pitch, set status: approved in the pitch file's front matter if you like the direction, and (optional) greenlight the suggested first task -- a design-note-only write to projects/conductor/docs/portos-dashboard-shape.md, no code, no runtime decision implied. This does not authorize or depend on conductor/t-033 (worktree-parallel Workers, still needs-human) -- either can proceed independently. Deferred from the PortOS comparison (docs/2026-07-11-portos-cos-learnings.md).
+      APPROVED 2026-07-25: Silas — "we should have a front end interaction piece for portos. conductor already exists on Plan/Projects. Info for portOs is at silasfelinus/portOs, but the real version exists on atomantic/PortOS if you need guidance." Recording this for whoever picks up the suggested first task (portos-dashboard-shape.md design note): neither silasfelinus/portOs nor atomantic/PortOS is in this session's GitHub tool scope (currently limited to silasfelinus/ kind_robots and silasfelinus/conductor), so this session could not read either repo directly to fold their detail into the design note. A session with expanded repo scope should consult both -- atomantic/ PortOS specifically as the upstream reference implementation Silas pointed at for guidance -- before writing portos-dashboard-shape.md. Flipping to ready; next pickup is that design-note-only first task.
 
-      APPROVED 2026-07-25: Silas — "we should have a front end interaction
-      piece for portos. conductor already exists on Plan/Projects. Info for
-      portOs is at silasfelinus/portOs, but the real version exists on
-      atomantic/PortOS if you need guidance." Recording this for whoever
-      picks up the suggested first task (portos-dashboard-shape.md design
-      note): neither silasfelinus/portOs nor atomantic/PortOS is in this
-      session's GitHub tool scope (currently limited to silasfelinus/
-      kind_robots and silasfelinus/conductor), so this session could not
-      read either repo directly to fold their detail into the design note.
-      A session with expanded repo scope should consult both -- atomantic/
-      PortOS specifically as the upstream reference implementation Silas
-      pointed at for guidance -- before writing portos-dashboard-shape.md.
-      Flipping to ready; next pickup is that design-note-only first task.
+
+      FOR SILAS: PortOS dashboard design note is preserved in projects/conductor/docs/portos-dashboard-shape.md through a conflict-free salvage PR.
+      It maps queue, agent, claim, completion, learning, and health data to real PortOS CoS primitives and proposes a graceful read-only API response shape. No runtime, deployment, nav, pairing, or production behavior changed.
+      TO APPROVE: Read the design note and set approved_by_human: true with status: done if the shape is right, or leave course corrections in this task note.
+      What unblocks: no current task is blocked; this is reference context for conductor/t-033 or a later PortOS dashboard implementation.
     claimed_by: claude-conductor-burst-20260726T-portos-shape
     claimed_at: '2026-07-26T00:07:31Z'
+    soft_gate: false
 
   - id: t-029
     milestone: m1
