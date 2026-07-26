@@ -1,13 +1,13 @@
 # Roadmap Audit
 
-Generated: `2026-07-26T11:28:57.624712+00:00`
+Generated: `2026-07-26T14:07:56.564793+00:00`
 
 This is a conservative structural audit. It reports suspicious state; it does not automatically change task status or remove human gates.
 
 ## Portfolio snapshot
 
-- **42** roadmaps, **23** active projects, **696** tasks
-- **43 ready**, **49 waiting**, **21 needs-human**, **2 claimed/review**, **570 done**
+- **42** roadmaps, **23** active projects, **699** tasks
+- **45 ready**, **47 waiting**, **21 needs-human**, **1 claimed/review**, **574 done**
 - Findings: **0 errors**, **0 warnings**, **56 informational**
 
 ## Project inventory
@@ -18,8 +18,8 @@ This is a conservative structural audit. It reports suspicious state; it does no
 | 2 | `ai-art-academy` | active | software | 5 | 0 | 1 | 1 | 33 / 40 |
 | 3 | `coloring-book` | active | software | 1 | 9 | 0 | 0 | 20 / 30 |
 | 4 | `humboldt-scoop` | finished | software | 0 | 0 | 0 | 0 | 8 / 8 |
-| 5 | `humboldt-scoop-cms` | active | software | 0 | 3 | 0 | 1 | 7 / 11 |
-| 6 | `digital-storefront` | active | software | 2 | 0 | 0 | 0 | 28 / 30 |
+| 5 | `humboldt-scoop-cms` | active | software | 2 | 1 | 0 | 0 | 9 / 12 |
+| 6 | `digital-storefront` | active | software | 3 | 0 | 0 | 0 | 29 / 32 |
 | 7 | `packmaker` | finished | software | 0 | 0 | 0 | 0 | 10 / 10 |
 | 8 | `mermaids-of-venice` | paused | content | 0 | 0 | 8 | 0 | 4 / 12 |
 | 9 | `kind-robots` | active | software | 0 | 0 | 2 | 0 | 48 / 50 |
@@ -33,7 +33,7 @@ This is a conservative structural audit. It reports suspicious state; it does no
 | 17 | `animation-manager` | active | software | 3 | 0 | 0 | 0 | 11 / 14 |
 | 18 | `animation-studio` | retired | software | 3 | 4 | 0 | 0 | 1 / 8 |
 | 19 | `ecosystem-map` | finished | software | 0 | 0 | 0 | 0 | 8 / 8 |
-| 20 | `conductor` | active | software | 2 | 0 | 1 | 0 | 77 / 80 |
+| 20 | `conductor` | active | software | 1 | 0 | 1 | 0 | 78 / 80 |
 | 21 | `serendipity` | active | software | 1 | 0 | 0 | 0 | 11 / 12 |
 | 22 | `storymaker` | active | software | 1 | 0 | 0 | 0 | 9 / 10 |
 | 23 | `davinci` | finished | software | 0 | 0 | 0 | 0 | 15 / 15 |
