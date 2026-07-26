@@ -417,6 +417,55 @@ tasks:
       status: done here. (The unrelated glitch-pixl/0001surprised.webp
       filename issue from the last run still needs a manual rename to
       surprised_01.webp -- not something this fix touches.)
+
+      RESULT 2026-07-26 (Silas ran --apply): 27 of 29 folders resolved via
+      avatarImage ("resolved via avatarImage to slug '...'" lines) --
+      confirms the fix works. All 27 reported 0 create/0 update, which is
+      the expected healthy result IF those bots' ExpressionMedia rows were
+      already created (by whatever process originally generated these
+      narrator bots' images) with imagePath already pointing at the
+      folder/avatarImage-style path -- not a leftover bug in this fix. Worth
+      a quick manual spot-check on one bot's expressions in the live
+      app/admin to be fully sure this isn't a false-negative, but the code
+      path and diff logic were re-reviewed and look correct.
+      2 folders still unmatched -- BOTH are physical filename typos on the
+      Z:\kindrobots\images media share, not a script or DB problem. Checked
+      kind_robots' stores/seeds/narrators.ts directly:
+      - `godess-bastet` -- the seed's avatarImage is
+        `/images/bots/goddess-bastet.webp` (correct spelling, double d).
+        Silas's folder is missing a "d". Rename
+        `Z:\kindrobots\images\bots\expressions\godess-bastet` to
+        `goddess-bastet` to match.
+      - `straightjacket-tuesday` -- the seed's avatarImage is
+        `/images/bots/straitjacket-tuesday.webp` (no "gh" -- "straitjacket"
+        is the standard English spelling; "straightjacket" is the common
+        misspelling). Rename
+        `Z:\kindrobots\images\bots\expressions\straightjacket-tuesday` to
+        `straitjacket-tuesday` to match.
+      Once both are renamed, re-run --apply and both should resolve too.
+
+      SEPARATE CONCERN raised by Silas, not yet actioned (needs his
+      decision, this is live-DB data, not something to change unilaterally):
+      several of the 27 resolved real slugs are short/generic rather than
+      following the fuller "name-the-descriptor" pattern most others use
+      (pip-the-lampkeeper, barnaby-the-badger, thalassa-the-atlantean) --
+      specifically `ami` (butterfly-ami), `serendipity` (sentient-bar),
+      `puck` (trickster-puck), `glitch` (twitchy-glitch), `happyface`
+      (happyface-hr), and `the-three-little-dead` (three-dead). Checked
+      kind_robots' OLDER stores/seeds/seedBots.ts (the original, smaller bot
+      roster, separate from the narrators.ts batch) and confirmed a real
+      collision-risk example: there is already a distinct, unrelated bot
+      named exactly "Serendipity" (a task-manager/adventure-game concept, a
+      totally different bot than the "sentient-bar" narrator) which would
+      also naturally want slug "serendipity" -- worth confirming these
+      aren't actually the same live row that got repurposed, or two
+      different rows where one silently got suffixed
+      (getUniqueBotSlug adds a numeric suffix on collision, e.g.
+      "serendipity-2"), which would itself explain generic-looking slugs
+      behaving unexpectedly. TO SILAS: worth a systematic slug audit/rename
+      pass across the narrator roster for consistency and to rule out
+      collisions, as its own follow-up task once you've had a look --
+      flagging here rather than guessing new slugs myself.
     soft_gate: true
 
   - id: t-012
