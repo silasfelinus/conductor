@@ -713,7 +713,7 @@ tasks:
   claimed_by: claude-conductor-scheduled-20260726T031448Z-ds-t027
   claimed_at: '2026-07-26T03:14:48Z'
 
-- id: t-028
+- id: t-029
   milestone: m4
   title: 'Wire the print-eligibility gate to read Resource.commercialSafe instead of the checkpointResourceId-IS-NULL default-deny'
   status: ready
@@ -722,6 +722,11 @@ tasks:
   stakes: reversible
   depends_on: [t-020]
   note: >
+    RENUMBERED from t-028 during merge-conflict resolution (conductor PR
+    #1095): t-028 was independently taken by a concurrent live session's
+    kaizen task (kind-robots/t-047 follow-up, kind_robots PR #995 in
+    progress) before this PR merged — see root TALKBACK.md 2026-07-26 for
+    detail. This task's own content is unaffected by the renumber.
     Kaizen from t-020's close: kind-robots/t-045 (kind_robots PR #993,
     merged 2026-07-26) added `Resource.commercialSafe Boolean @default(false)`
     plus `scripts/seed_resource_commercial_safe.ts` (dry-run by default,
@@ -738,14 +743,14 @@ tasks:
     backend matching is regex-based heuristics, not a verified mapping
     (flagged in kind-robots' TALKBACK 2026-07-26).
 
-- id: t-029
+- id: t-028
   milestone: m1
   title: "Wire ArtImage.storefrontFeatured into the swag-rail query now that the field exists (kind_robots PR #994)"
-  status: ready
-  owner: null
+  status: review
+  owner: reviewer
   passes: 0
   stakes: reversible
-  updated: '2026-07-26T03:35:00Z'
+  updated: '2026-07-26T04:13:59Z'
   note: >
     Kaizen follow-up from kind-robots/t-047 (kind_robots PR #994, merged
     2026-07-26): `ArtImage.storefrontFeatured Boolean @default(false)` now
@@ -758,6 +763,18 @@ tasks:
     (Silas would need to set it directly via DB/admin tooling until one is
     built) — note that gap in this task's PR rather than silently assuming a
     toggle UI already exists.
-    RENUMBERED from t-028 during a merge-conflict resolution (conductor PR
-    #1095 vs. #1096, both filed a kaizen task as digital-storefront/t-028 in
-    the same window) — see root TALKBACK.md 2026-07-26 for detail.
+
+
+    UPDATE 2026-07-26 (claude-conductor-burst-20260726T0410Z-ds-t028): kind_robots
+    PR #995 open (branch claude/dazzling-ptolemy-cpiydi) — adds GET
+    /api/art/storefront-featured (mirrors art/image/index.get.ts's public
+    visibility where-clause: isPublic/isActive/!isMature, plus
+    storefrontFeatured: true) and wires a "Featured prints" rail into
+    giftshop-interact.vue that renders from it, replacing the previous flat
+    showcaseItems-only placeholder as the intended real consumer. eslint,
+    vue-tsc --noEmit (full project), and prettier --check all clean locally
+    (via provision_kind_robots_deps.sh); no live DB in-sandbox to exercise the
+    query end-to-end, so CI is the verification gate before merge. Left the
+    admin-toggle-UI gap noted in the PR body per this task's own instruction.
+  claimed_by: claude-conductor-burst-20260726T0410Z-ds-t028
+  claimed_at: '2026-07-26T04:11:57Z'
