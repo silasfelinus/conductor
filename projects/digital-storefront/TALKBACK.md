@@ -306,3 +306,27 @@ replace `print-swag.vue`'s remaining UI mock (the Worker's own kaizen suggestion
 as-is). Flagged in the roadmap note that payment/checkout integration will likely reach a
 hard `needs-human` gate once it touches a live payment provider, even though the
 schema/plumbing work leading up to that point is reversible software.
+
+## 2026-07-26 | Reviewer (scheduled agent run) | digital-storefront/t-030 | pattern
+
+**Decision:** merged kind_robots PR #1004 (`status: review`, CI-green, found as one of several open PRs a broader session-level clean-main sweep surfaced beyond `select_role.py`'s local heuristic, which had missed it because its GitHub API check 403s in this sandbox).
+
+**Failure category:** null — clean first-pass, matches the task exactly.
+
+**Subject:** t-030 asked for a `PrintJob` model + real POD checkout flow, replacing `print-swag.vue`'s mock. The task's own note flagged this as likely to reach a hard `needs-human` gate "once it touches a live payment provider" — worth checking carefully before merging rather than assuming the PR's own "reversible" self-classification was correct.
+
+**Detail:**
+- Dispatched a subagent to independently audit (1) the migration SQL line-by-line against this repo's additive-only rule and (2) the Stripe webhook's billing-correctness logic, rather than taking the PR description's verification section at face value.
+- Migration: `CREATE TABLE PrintJob` + 2 `ADD CONSTRAINT` FKs only — no drops, no rewrites. Passes.
+- Webhook: `PrintJob` creation happens inside the same `$transaction` as the `Order`/`OrderItem` it's keyed to (atomic), is mutually exclusive with the existing `Entitlement` branch (no double-crediting), and reads Stripe line-item quantity from the trusted server-side `session.id` rather than client input.
+- Confirmed the actual gate the task's note anticipated doesn't apply here: `getStripeClient()` reads `STRIPE_SECRET_KEY` from env with no hardcoded key or live-mode override — identical to every other already-merged Stripe route in this codebase (test-mode by configuration, same posture as the rest of the storefront work) — so this stays reversible software, not an outward-facing live-payment action. Printful vendor submission (the part that really would be outward-facing) is explicitly not implemented and stays its own needs-human step.
+- All 6 kind_robots CI checks green; squash-merged (`e3d921b`).
+
+**What was good:**
+- The PR author made a clear, well-justified scope call (dropping the freeform "paste an image URL" field since it had no `ArtImage` row to gate eligibility against) and flagged it explicitly in "Flags for Reviewer" instead of silently narrowing scope.
+- Server-side re-validation of print eligibility (fresh DB fetch, not trusting client state) — closes a real gap the removed mock field had left open.
+
+**What to improve:**
+- None specific this cycle.
+
+**Kaizen task:** t-031 — wire the general multi-item cart checkout (`checkout.post.ts`) to actually fulfil what it sells, per the PR's own kaizen suggestion (currently only single-item dedicated routes like this one get real Order/Entitlement/PrintJob creation; the shared cart flow is decorative past the Stripe redirect).
