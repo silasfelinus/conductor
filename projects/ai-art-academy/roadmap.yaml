@@ -448,14 +448,15 @@ tasks:
   - id: t-010
     milestone: m6
     title: Academy continuous improvement pass
-    status: review
+    status: ready
     recurring: true
     passes: 0
     stakes: reversible
-    updated: '2026-07-26T16:07:55Z'
-    owner: worker
+    updated: '2026-07-26T16:16:00Z'
     note: |-
       Standing never-idle task (re-arms to ready after every completion, per the recurring-task rule). Each cycle pick ONE: (a) front-end style/polish pass on Academy or art-styler surfaces, (b) roadmap upgrade — refine tasks, detail the next milestone, prune stale notes, (c) generate more art inspirations or style preview thumbnails, (d) expand the curriculum with a new movement/artist entry (respecting PUBLIC-DOMAIN-POLICY.md). Note which option ran in the PR. This task never reaches done and does not count toward milestone progress. See `run_log` for cycle history.
+
+      MERGED 2026-07-26: conductor PR #1151 (squash 9d66139f) promoted The Nabis into curriculum-outline.md as section 31, added verified public-domain examples and registry mapping, and updated the continuous-improvement rotation. During review, the new Academy curriculum candidate guard correctly rejected the modified legacy candidate; the same branch was patched to add explicit rights, negative-guidance, representation-review, and protected-name controls. All final-head checks passed, including the curriculum guard, Worker PR CI, Security Audit, Roadmap Audit, and task-event processing. Next preferred lane remains front-end polish (lane 1).
     continuous_improvement:
       last_lane: 4  # 1=front-end polish, 2=roadmap accuracy, 3=inspiration assets, 4=curriculum depth
       next_lane: 1
