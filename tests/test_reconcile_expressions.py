@@ -330,3 +330,85 @@ def test_apply_without_token_returns_1_before_any_work(tmp_path, monkeypatch, ca
 
     assert code == 1
     assert "--apply requires KR_API_TOKEN" in capsys.readouterr().err
+
+
+# ---------------------------------------------------------------------------
+# KR_MEDIA_IMAGES_DIR — self-hosted media share as the scan root (Silas,
+# 2026-07-26: expression images now live on the media share, not a
+# kind_robots git checkout's public/images/ tree)
+# ---------------------------------------------------------------------------
+
+def make_media_tree(tmp_path: Path, owner_type: str, slug: str, keys) -> Path:
+    """Fake self-hosted media share (KR_MEDIA_IMAGES_DIR points here directly
+    — no 'public/' prefix, unlike a git checkout)."""
+    rel = rex.OWNER_DIRS[owner_type].removeprefix("public/images/")
+    folder = tmp_path / rel / slug
+    folder.mkdir(parents=True)
+    for key in keys:
+        (folder / f"{key}_01.webp").write_bytes(b"x")
+    return tmp_path
+
+
+def test_media_images_dir_used_for_scanning_when_set(tmp_path, monkeypatch, capsys):
+    make_media_tree(tmp_path, "bot", "brass-lampkeeper", ["joyful"])
+    monkeypatch.setattr(rex, "KR_MEDIA_IMAGES_DIR", str(tmp_path))
+    # KIND_ROBOTS_ROOT deliberately points somewhere with nothing in it —
+    # if the script fell back to it, the folder scan would find no owners.
+    monkeypatch.setattr(rex, "KIND_ROBOTS_ROOT", tmp_path / "unused-checkout")
+
+    def fake_api(path, payload=None, method=None, timeout=30):
+        assert path == "/api/narrators/bot/brass-lampkeeper"
+        return {"data": {"id": 7, "ExpressionMedia": []}}
+
+    monkeypatch.setattr(rex, "api", fake_api)
+    monkeypatch.setattr(
+        "sys.argv",
+        ["reconcile_expressions.py", "--check", "--type", "bot", "--owner", "brass-lampkeeper"],
+    )
+
+    exit_code = rex.main()
+
+    totals = json.loads(capsys.readouterr().out.strip())
+    assert totals["create"] == 1  # found the folder via KR_MEDIA_IMAGES_DIR
+    assert exit_code == 2
+
+
+def test_media_images_dir_takes_precedence_over_kind_robots_root(tmp_path, monkeypatch, capsys):
+    media_root = tmp_path / "media"
+    checkout_root = tmp_path / "checkout"
+    make_media_tree(media_root, "bot", "brass-lampkeeper", ["joyful"])
+    # A DIFFERENT owner exists only in the (unused) checkout tree — if the
+    # script scanned it instead, this owner would show up and the media-only
+    # owner wouldn't.
+    make_expr_tree(checkout_root, "bot", "some-other-bot", ["joyful"])
+    monkeypatch.setattr(rex, "KR_MEDIA_IMAGES_DIR", str(media_root))
+    monkeypatch.setattr(rex, "KIND_ROBOTS_ROOT", checkout_root)
+
+    def fake_api(path, payload=None, method=None, timeout=30):
+        assert path == "/api/narrators/bot/brass-lampkeeper"
+        return {"data": {"id": 7, "ExpressionMedia": []}}
+
+    monkeypatch.setattr(rex, "api", fake_api)
+    monkeypatch.setattr(
+        "sys.argv",
+        ["reconcile_expressions.py", "--check", "--type", "bot"],
+    )
+
+    rex.main()
+
+    assert "some-other-bot" not in capsys.readouterr().err
+
+
+def test_media_images_dir_set_but_missing_errors_before_kind_robots_root_check(tmp_path, monkeypatch, capsys):
+    missing = tmp_path / "does-not-exist"
+    monkeypatch.setattr(rex, "KR_MEDIA_IMAGES_DIR", str(missing))
+    monkeypatch.setattr(rex, "KIND_ROBOTS_ROOT", tmp_path)  # valid, but must not matter
+    monkeypatch.setattr(
+        "sys.argv",
+        ["reconcile_expressions.py", "--check"],
+    )
+
+    code = rex.main()
+
+    assert code == 1
+    assert "KR_MEDIA_IMAGES_DIR set but not found" in capsys.readouterr().err

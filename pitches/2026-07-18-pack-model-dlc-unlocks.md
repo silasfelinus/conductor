@@ -1,7 +1,7 @@
 # Pitch: Pack model + packId FK + GrantSubject.PACK migration for DLC unlocks
 date: 2026-07-18
 project-target: kind-robots
-status: awaiting-silas
+status: approved
 
 ## The idea
 Add one new Prisma model, `Pack` (`id`, `slug` matching the packmaker manifest's
@@ -97,3 +97,15 @@ more:
    action) or a manual follow-up step? This pitch assumes automatic
    (one admin action, two rows updated) per the design doc, but it's your
    call.
+
+## Silas's answers (2026-07-26)
+1. Already resolved by t-029's approval: Grant lands first as its own
+   migration (kind-robots/t-044); this Pack migration follows as a second,
+   separate migration once Grant exists.
+2. `Pack.ownerId` = Silas's own account (`userId: 1`) for all DLC packs —
+   house-owned packs are attributed to the admin account, not a separate
+   system/house account.
+3. Yes — refund auto-revokes the paired Grant by default (one admin action,
+   two rows updated, matching the design doc's assumption).
+
+Approved. Implementation filed as kind-robots/t-050.

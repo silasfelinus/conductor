@@ -130,12 +130,12 @@ tasks:
   - id: t-006
     milestone: m6
     title: "Write the mapped customer route planner specification"
-    status: needs-human
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
     gate_human: true
-    approved_by_human: false
+    approved_by_human: true
     note: >
       FOR SILAS: wrote projects/humboldt-scoop-cms/route-planner/SPEC.md — the
       route-planner design brief this task asked for. It defines the selection model
@@ -151,14 +151,36 @@ tasks:
       questions (stack choice, Android client architecture, round-trip-by-default
       assumption) — answer those, then set approved_by_human: true and status: done
       to unblock t-007 (the deterministic route-plan API implementation).
+
+      APPROVED 2026-07-26 (Silas): "absolutely no paid API services. this is
+      generally always going to be my choice with the rarest of EXCEPTIONS. I
+      have unraid and the same host box that runs comfy and our comfy relay,
+      as well as the serendipity voice relay. We should always be able to
+      find a solution that can be hosted by me. Bonus points if the solution
+      can be added directly from the conductor repo and ran as pm2. Other
+      than that I do not care what we choose, other than to eliminate extra
+      costs and minimize complexity of setup." This rules out the
+      OpenRouteService fallback outright (it's a hosted third-party API) —
+      v1 stack is confirmed self-hosted OSRM + VROOM + Leaflet only, deployed
+      alongside the existing Comfy/Comfy-relay/serendipity-voice-relay
+      services on Silas's own box. Bonus goal for whoever implements t-007:
+      package OSRM/VROOM startup so it can be checked into the conductor repo
+      and run under pm2 (pm2 can manage arbitrary executables, not just Node
+      processes) rather than a separate standalone deploy. Section 8's other
+      two questions (Android client architecture, round-trip-by-default) are
+      NOT answered — Silas said "I do not care what we choose" on hosting/cost
+      only; those two remain implementation-time defaults (round-trip stands
+      as spec'd unless corrected; client architecture is whichever
+      implementer's call when the Android app itself is built) and do not
+      block starting t-007.
     claimed_by: claude-hourly-2026-07-15-0148
     claimed_at: '2026-07-15T01:53:37Z'
-    updated: '2026-07-15T01:53:37Z'
+    updated: '2026-07-26T00:00:00Z'
 
   - id: t-007
     milestone: m6
     title: "Implement deterministic route-plan API with selected customer count"
-    status: waiting
+    status: ready
     owner: null
     passes: 0
     stakes: reversible
@@ -169,6 +191,12 @@ tasks:
       deterministic optimizer appropriate for small service routes, such as nearest-neighbor
       plus 2-opt for v1 or an approved OR-Tools service. Return ordered stops, geometry or map
       instructions, totals, warnings, and an explanation of any excluded records. No real addresses.
+
+      UPDATE 2026-07-26: t-006 approved. Confirmed stack is self-hosted OSRM
+      (road-network matrix/polyline) + VROOM (stop-order optimization), no
+      paid third-party API — see t-006's note for Silas's exact hosting
+      constraints (his own box, bonus for pm2-from-conductor-repo). No
+      OpenRouteService fallback; do not build against it.
 
   - id: t-008
     milestone: m6
