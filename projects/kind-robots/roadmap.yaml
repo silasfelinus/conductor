@@ -1476,7 +1476,7 @@ tasks:
   - id: t-044
     milestone: m4
     title: 'Implement the Grant model migration (additive) + server/utils/contentAccess.ts'
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -1510,9 +1510,29 @@ tasks:
       refund-triggers-revocation logic without a separate explicit
       go-ahead. Unblocks digital-storefront/t-017 (entitlement design) and
       packmaker's DLC gating once it lands.
+      UPDATE 2026-07-26 (claude-conductor-scheduled-20260726T021653-kr-t044,
+      burst-mode rotation): implemented exactly the scoped first task. kind_robots
+      PR #991 (branch claude/dazzling-ptolemy-eatihv) adds the additive Grant
+      migration (prisma/migrations/20260726030000_add_grant_model, verified by hand
+      to contain only one CREATE TABLE + two ADD CONSTRAINT statements, no ALTER on
+      any existing table) and server/utils/contentAccess.ts with canView(subject,
+      subjectType, user) and existsActiveGrant(...) — subjectType is an explicit
+      third argument since Project/Resource rows carry no discriminator of their
+      own (a deliberate, documented deviation from the pitch's two-arg
+      canView(subject, user) shorthand, not an oversight). `npm run test` (vue-tsc
+      --noEmit) clean repo-wide, eslint/prettier clean on the new file. No live DB
+      in this sandbox, so the migration is unapplied/unverified against a real
+      MySQL instance — CI's Contract verifiers don't touch a live DB either;
+      real verification is the next `prisma migrate deploy` at production build
+      time. Picked ai-art-academy/t-004 first per priority.yaml, but its live A/B
+      needs the art-generation backend and the queue was worse than 2026-07-25's
+      check (132 PENDING, oldest ~39h, see EGRESS-BLOCKERS.md 2026-07-26T02:05Z) —
+      same operational blocker as before, not something this cycle could unblock,
+      so moved to this task instead per actionable-failure triage.
+      DONE 2026-07-26: kind_robots PR #991 merged (merged_by: silasfelinus).
     claimed_by: claude-conductor-scheduled-20260726T021653-kr-t044
     claimed_at: '2026-07-26T02:16:54Z'
-    updated: '2026-07-26T02:16:54Z'
+    updated: '2026-07-26T02:20:00Z'
 
   - id: t-045
     milestone: m4
