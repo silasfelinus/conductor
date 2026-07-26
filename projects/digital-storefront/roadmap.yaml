@@ -989,45 +989,15 @@ tasks:
 - id: t-033
   milestone: m4
   title: "kind_robots: wire real artImageId through the general giftshop cart's print/shirt/sticker/mug/book checkout so those types can get a real PrintJob"
-  status: claimed
-  owner: worker
+  status: done
   passes: 0
   stakes: reversible
   depends_on: t-031
-  note: >
-    Split off from t-031 during implementation (2026-07-26) rather than guessing at a
-    fabricated artImageId. `stores/cartStore.ts`'s client-side `CartItem` interface already
-    tracks a real `artImageId` per item (populated correctly for at least the "Featured
-    print" flow in `giftshop-interact.vue`'s `addFeaturedPrint`, which sources it from
-    `/api/art/storefront-featured`), but `cartStore.ts`'s own `checkout()` function drops it
-    before sending to the server -- the payload it builds is `{ id: item.type, quantity:
-    item.quantity }`, discarding `artImageId`/`imageUrl` entirely. `server/api/stripe/
-    checkout.post.ts`'s `parseCart` only ever accepted `{id, quantity}` too, so the server
-    never had anywhere to put it even if the client sent it. t-031 wired real Order/OrderItem
-    (+ mana crediting for tokens) fulfillment for every general-cart line item using only
-    `type`+`quantity`+the trusted server-side `stores/seeds/cartItems.ts` price/label -- it
-    deliberately does NOT create a `PrintJob` for print/shirt/sticker/mug/book line items,
-    since doing so would need a real, eligibility-checked `artImageId` that doesn't exist
-    anywhere in the current payload. To close this: (1) extend `cartStore.ts`'s `CartItem`
-    payload sent to `/api/stripe/checkout` to include `artImageId` per line; (2) extend
-    `checkout.post.ts`'s `parseCart` to accept and validate it (integer, required for
-    print/shirt/sticker/mug/book types, matching `pod-checkout.post.ts`'s validation shape);
-    (3) re-run `checkPrintEligibility` (`server/api/art/utils/printEligibility.ts`, already
-    reused unmodified by t-030's `pod-checkout.post.ts`) server-side per print-type line item
-    before creating the Stripe session -- decide and document what happens to the *rest* of
-    a multi-item cart if one line item fails eligibility (reject the whole checkout vs. drop
-    just that item vs. some other UX -- this is a real product decision, not just plumbing);
-    (4) carry the validated `artImageId` through the same per-line-item Stripe `metadata`
-    mechanism t-031 already established (`metadata: { giftshopType, artImageId }`) so
-    `handleGiftshopCartPurchase` in `server/api/stripe/webhook.post.ts` can create a real
-    `PrintJob` for those four types instead of stopping at Order/OrderItem. Note the demo
-    showcase items in `giftshop-interact.vue` (`addDemoItem`, "Butterfly Print" /
-    "Jellybean Token Pack") and `giving-page.vue`'s donation button use placeholder
-    `artImageId` values (1, 2, 0) that don't correspond to real `ArtImage` rows -- these will
-    fail a real eligibility check once (3) lands, which is correct behavior, not a bug to
-    work around; they're demo/placeholder UI, not real product listings, and may need their
-    own follow-up to either wire real featured art or get removed. Reversible, Stripe
-    test-mode only, no live vendor action.
+  note: |-
+    Split off from t-031 during implementation (2026-07-26) rather than guessing at a fabricated artImageId. `stores/cartStore.ts`'s client-side `CartItem` interface already tracks a real `artImageId` per item (populated correctly for at least the "Featured print" flow in `giftshop-interact.vue`'s `addFeaturedPrint`, which sources it from `/api/art/storefront-featured`), but `cartStore.ts`'s own `checkout()` function drops it before sending to the server -- the payload it builds is `{ id: item.type, quantity: item.quantity }`, discarding `artImageId`/`imageUrl` entirely. `server/api/stripe/ checkout.post.ts`'s `parseCart` only ever accepted `{id, quantity}` too, so the server never had anywhere to put it even if the client sent it. t-031 wired real Order/OrderItem (+ mana crediting for tokens) fulfillment for every general-cart line item using only `type`+`quantity`+the trusted server-side `stores/seeds/cartItems.ts` price/label -- it deliberately does NOT create a `PrintJob` for print/shirt/sticker/mug/book line items, since doing so would need a real, eligibility-checked `artImageId` that doesn't exist anywhere in the current payload. To close this: (1) extend `cartStore.ts`'s `CartItem` payload sent to `/api/stripe/checkout` to include `artImageId` per line; (2) extend `checkout.post.ts`'s `parseCart` to accept and validate it (integer, required for print/shirt/sticker/mug/book types, matching `pod-checkout.post.ts`'s validation shape); (3) re-run `checkPrintEligibility` (`server/api/art/utils/printEligibility.ts`, already reused unmodified by t-030's `pod-checkout.post.ts`) server-side per print-type line item before creating the Stripe session -- decide and document what happens to the *rest* of a multi-item cart if one line item fails eligibility (reject the whole checkout vs. drop just that item vs. some other UX -- this is a real product decision, not just plumbing); (4) carry the validated `artImageId` through the same per-line-item Stripe `metadata` mechanism t-031 already established (`metadata: { giftshopType, artImageId }`) so `handleGiftshopCartPurchase` in `server/api/stripe/webhook.post.ts` can create a real `PrintJob` for those four types instead of stopping at Order/OrderItem. Note the demo showcase items in `giftshop-interact.vue` (`addDemoItem`, "Butterfly Print" / "Jellybean Token Pack") and `giving-page.vue`'s donation button use placeholder `artImageId` values (1, 2, 0) that don't correspond to real `ArtImage` rows -- these will fail a real eligibility check once (3) lands, which is correct behavior, not a bug to work around; they're demo/placeholder UI, not real product listings, and may need their own follow-up to either wire real featured art or get removed. Reversible, Stripe test-mode only, no live vendor action.
+
+
+    DONE 2026-07-26: kind_robots PR #1011 merged as squash commit 10d22619f08ef2fa220456669a94a31b2cdc6f02. The general giftshop cart now carries a real artImageId per physical-goods line, validates it and re-runs print eligibility before creating the Stripe session, preserves separate same-type items by (type, artImageId), carries artImageId through Stripe line metadata, and creates a real PrintJob during webhook fulfillment. Ineligible art rejects the whole checkout so customers are never charged for a silently reduced cart. Book remains Order/OrderItem-only because it is a fixed product rather than an ArtImage print. All implementation verification and CI passed on the merged PR; no live vendor action was performed.
   claimed_by: claude-conductor-burst-20260726T100541Z-ds-t033
   claimed_at: '2026-07-26T10:05:44Z'
-  updated: '2026-07-26T10:05:44Z'
+  updated: '2026-07-26T11:19:00Z'
