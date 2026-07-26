@@ -1,6 +1,6 @@
 # Ashcan School curriculum module
 
-status: ready for curriculum integration
+status: PROMOTED 2026-07-18 — curriculum-outline.md §23 (`ashcan-school`), v1.3. Kept here as the source research for the promoted entry; already synced into kind_robots' `stores/seeds/academyStyles.ts`.
 movement_slug: ashcan-school
 era: c. 1900-1915
 region: United States
