@@ -224,6 +224,27 @@ and pre-approved. Surface only actual human gates; keep running without my input
 - Living-artist/brand styles (Disney, Gorillaz, DB4RZ…) may stay in the free-play
   Style Lab but are excluded from the taught curriculum.
 
+### mona-salai  (software, autonomous: true)
+**Direction (2026-07-26, new project):** Build a heavily sourced Kind Robots research page
+investigating the theory that Leonardo's Mona Lisa used Salaì as a model or incorporated
+his facial features. The project must be allowed to support, weaken, contradict, or leave
+the theory unresolved. Start with the historical record and existing scholarship, then
+run reproducible computer-vision experiments on public-domain artwork—especially Saint
+John the Baptist—using facial embeddings, manually reviewed landmarks, craniofacial
+proportions, and cautiously framed 3D-aware analysis.
+**Notes:**
+- The documented Lisa del Giocondo identification is the mainstream historical baseline.
+  Computational resemblance cannot erase documentary evidence.
+- Paintings are not biometric photographs. Test models on painted-portrait controls and
+  measure same-artist/style leakage before interpreting similarity scores.
+- Prefer "facial geometry" or "craniofacial proportion analysis" over "bone analysis"
+  unless a method genuinely recovers defensible 3D structure.
+- Pre-register comparisons and publish controls, negative results, model versions,
+  transforms, annotations, score distributions, and uncertainty. No magic AI percentage.
+- The reader-facing page should feel like an open research notebook, not a conspiracy kiosk.
+- Public-domain museum scans only for the core dataset. Expert outreach and public release
+  remain human-gated outward actions.
+
 ### dream-cycle  (software, autonomous: true)
 **Direction (2026-07-10, new project; generalized same day):** The creation-a-day
 idle fallback — testing a new option for conductor sweeps. When there isn't
@@ -328,110 +349,5 @@ of pretending every part should be printed.
 
 ### brainstorm  (proposal)
 **Direction:** Generate a few strong, specific, buildable pitches each cycle for me to vote
-on — new products (within approved types), content series, revenue streams, and AI_Networker
-upgrades. Quality over quantity. Don't repeat existing pitches.
-**Genre / content guidance (agents follow this for content pitches):**
-- (e.g. "comics: queer-positive, hopeful sci-fi, all-ages"; "RPG: rules-light, GM-friendly";
-  "coloring books: nature + whimsy". Add/replace anytime — this steers content pitches.)
-**Notes:**
-- (your notes)
-
-### career-transition  (content)
-**Direction:** Help me land a better-paying tech job that pays me for the AI and dev skills I
-already use as a hobby. Produce research, resume drafts, cover letter templates, and prep
-materials. HARD GATE: nothing goes out, nothing gets posted, no applications are sent without
-my explicit approval. Every task that produces outward-facing material ends at needs-human.
-**Notes:**
-- I've been coding since 1989 (TRS-80) and working with AI since 2001. Lead with that.
-- The casino dealer background is 11 years of financial reliability and high-stakes composure — frame it, don't bury it.
-- Remote-first roles, base >= $70k, AI-adjacent strongly preferred.
-- kind_robots (Nuxt 3 / Vue / Prisma / TypeScript) and conductor (multi-agent orchestration) are the portfolio anchors.
-
-### conductor  (software)
-**Direction:** Improvements to the conductor / AI_Networker system itself — CI, scripts,
-ops tooling. Keep changes small and reversible. Nothing outward-facing without needs-human.
-**Notes:**
-- (your notes)
-
-### alexa-integration  (software)
-**Direction:** Custom Alexa skill + local relay server for the Serendipity voice surface.
-The stable product contract is `Serendipity: <request>` from local Echo devices. Support
-custom LLM chat, Character roleplay, Dream story sessions, approved local music playback,
-and safe project work. Use Dream.goal and roadmap milestones for friendly project state;
-use Conductor roadmaps for authoritative agent tasks. Draft/prototype locally first — do NOT
-publish the skill, expose a live endpoint, touch DNS/secrets/billing, or bypass human gates
-without needs-human approval. Auth via KR_API_TOKEN where appropriate, with user/JWT or
-machine-auth questions handled explicitly before write actions.
-**Notes:**
-- This project should now build toward `projects/alexa-integration/docs/serendipity-voice-surface.md`.
-- Voice can read goals/milestones and draft Todos, but cannot approve, merge, deploy, publish, spend, or silently edit roadmap YAML.
-
-### conductor-app  (software)
-**Direction:** Flutter app (iOS/Android/macOS/web) over the kind_robots REST API.
-Build incrementally; each milestone should run standalone. Do NOT submit to any app
-store without needs-human. Auth secrets stay out of source control.
-**Notes:**
-- (your notes)
-
-### art-generator-connect  (software)
-**Direction:** Wire conductor Workers into the existing kind_robots art API (SD/ComfyUI).
-Treat the shared backend as read-only/external — consume endpoints, don't modify them.
-Backend changes become pitches, not direct code edits.
-**Notes:**
-- (your notes)
-
-### coat-dance  (content)
-**Direction:** Revived as an active creative content project. Use Silas's original circa-2006
-Humboldt State experimental coat dance video as the choreographic spine for an AI-assisted
-hybrid music video. The source piece is a weird avant-garde physical-theater duet between
-Silas and a black Goodwill trench coat, with object manipulation, juggling-adjacent movement,
-spins, pantomime, and theatrical strangeness. Plan it in small, reversible steps: source
-video ingest, beat/section mapping, style treatment, ComfyUI/LAX/Wan pipeline tests, section
-remixes, restitching, music alignment, and final review.
-**Notes:**
-- Preserve the human/coat duet as the soul of the project; AI should expand and remix it, not erase it.
-- First useful deliverable is a production brief and asset checklist so Silas can provide the source video and confirm music/style direction.
-- Research practical beat transcription and slicing tools before rendering. Likely candidates include ffmpeg scene detection, manual beat sheets, pose/action analysis, and video-to-video workflow notes.
-- No public release, paid tool spend, or final export decision without explicit Silas approval.
-
-### media-watchlist  (software)
-**Direction:** Parse + import Silas's personal media log, then surface it with browse,
-stats, and integrations (Letterboxd, Comic Vine, Tautulli). HARD GATE: no affiliate
-links and no public-facing pages without needs-human. Dummy/sample data only until
-the real log is shared.
-**Notes:**
-- (your notes)
-
-### serendipity  (software)
-**Direction:** Story-weaving experience inside kind_robots, directed by Silas (2026-07-02).
-The Serendipity bot uses dream vibes, LOCATION and GENRE dreams to spin a
-second-person story with the user as protagonist; the story's questions advance the
-real honey-dos and human-gated tasks of a chosen project. Build on existing
-infrastructure (chat streams, Bots, Dreams, Todos). This project has write access to
-develop the Serendipity component in kind_robots. Design brief first (t-001,
-needs-human gate) before any code; task write-back (t-006) is also human-gated.
-**Notes:**
-- Coordinate with alexa-integration for the voice surface. Alexa owns the Echo/relay
-  interface; Serendipity owns the story/chat/task-weaving experience.
-
-### storymaker  (software)
-**Direction:** Collaborative storytelling engine built on top of existing Kind Robots
-data models. App-owned logic only; shared backend is read-only/external.
-Start with the session data model (needs-human gate) before any play-mode code.
-**Notes:**
-- (your notes)
-
-### davinci  (software)
-**Direction:** Life simulator app/game/webgame built around branching life narrative,
-pass/fail victory conditions, 1024 achievements/endpoints, milestone unlocks, ending
-icons/heroes, and generated story art collections. Integrate with Kind Robots Characters,
-Dreams, Chat, Art, and Milestones. Focus development on the achievement/milestone/ending
-engine first so narrative generation has concrete targets.
-**Notes:**
-- Da Vinci may later share primitives with Storymaker, but do not merge them yet.
-  Storymaker is the broader collaborative storytelling engine; Da Vinci is the playable
-  life-sim ruleset with deterministic endpoints.
-- Reuse the existing milestone system where possible. Each ending should link to a
-  milestone icon/image path before proposing schema changes.
-- The AI narrator can generate prose, choices, and art prompts; the app must own durable
-  state, pass/fail outcome math, achievement rules, and unlock records.
+on. Favor projects that reuse existing systems, can ship in slices, and have a clear human
+benefit. Avoid vague "AI but for X" sludge.
