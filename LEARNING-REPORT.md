@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-07-26T03:24:06Z
+Generated: 2026-07-26T03:39:54Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **345**
-- Outcomes: blocked: 12, cancelled: 1, done: 332
+- Closed tasks recorded: **346**
+- Outcomes: blocked: 12, cancelled: 1, done: 333
 - Success rate: **96%**
 - Average passes on successful tasks: **0.0**
 
@@ -35,7 +35,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | humboldt-impropriety-calendar | 1 | 0% |
 | humboldt-scoop | 1 | 100% |
 | humboldt-scoop-cms | 1 | 100% |
-| kind-robots | 34 | 97% |
+| kind-robots | 35 | 97% |
 | kindrobots-unraid | 4 | 100% |
 | media-watchlist | 4 | 100% |
 | mermaids-of-venice | 3 | 100% |
@@ -55,7 +55,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 15 | 40% |
-| software | 330 | 99% |
+| software | 331 | 99% |
 
 ## Failure categories
 
@@ -75,6 +75,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-07-26 `kind-robots/t-047` — Additive migrations that ship with an already-identified real consumer (the approved pitch named digital-storefront's swag-rail query as the next task) review fast because the diff never has to justify itself speculatively -- ADD COLUMN + CREATE INDEX only, no seed/UI. Separately: a CI check (facet-catalog) hung indefinitely on 'Install dependencies' after a rebase and cancel_workflow_run didn't unstick it; pushing a trivial empty commit to force a fresh check run against a new head SHA resolved it in the normal ~90s, faster than waiting out or repeatedly cancelling the stuck run.
 - 2026-07-26 `digital-storefront/t-027` — Weekly site-audit findings can go stale within days when the audited code keeps moving -- STORE-AUDIT.md described social-publisher.vue as the giftshop's most mature wired piece, but it was removed (migration 20260718200000_remove_social_publishing) three days after the audit date. A generated audit document isn't self-updating like STATUS.md; treat its findings as dated snapshots and re-verify against the current checkout (Glob for the file/model) before relying on an audit claim that's more than a few days old, especially for a fast-moving surface.
 - 2026-07-26 `kind-robots/t-048` — A prior PR's 'zero callers' claim about a Vue component (art-manager.vue) was wrong because its grep only checked pages/ and components/, missing Nuxt Content .md files that embed components via MDC syntax (:component-name). Caught before implementation by re-grepping content/**/*.md as well. When trusting a 'this component/route is dead' claim before deleting or gating something, check content/**/*.md (or any CMS/markdown layer that can reference components) in addition to the usual source directories.
 - 2026-07-26 `kind-robots/t-044` — The Grant-model PR scoped itself tightly to exactly the pitch's first-task section (additive CREATE TABLE + 2 FKs, no route rewiring) and it paid off in review speed -- the migration.sql was auditable line-by-line in seconds (1 CREATE TABLE, 2 ADD CONSTRAINT, nothing else) precisely because nothing else was mixed into the diff. New authz helper (contentAccess.ts) shipped unwired on purpose, which kept the PR reviewable without needing to trace every call site it would eventually gate.
@@ -84,7 +85,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-07-25 `animation-manager/t-014` — Existing invariant-verifier scripts need explicit CI wiring or real regressions can remain invisible until a developer happens to run them locally.
 - 2026-07-25 `kind-robots/t-033` — A monitoring/recheck task with no recurring: true flag and no defined stopping criterion will keep surfacing as the highest-priority ready task in its project every time rotation lands there, even after the finding has been negative for a week straight (seven consecutive clean rechecks, 07-18 through 07-25, for kind-robots/t-033's Prisma cast-bypass sweep) -- each cycle burns a full rotation slot re-confirming the same zero-evidence result instead of doing new work. When a task's own note pattern is wait-for-new-evidence-recheck-meanwhile with no cadence limit, either mark it recurring: true (if the check itself is the ongoing value) or close it once repeated evidence makes the standing caution well-established, documenting that a genuine new instance should get a fresh task rather than reopening the closed one. Do not leave an indefinite-monitoring task at bare status: ready.
 - 2026-07-25 `coloring-book/t-030` — A shared fallback value duplicated across many call sites (here: 14 ComfyUI job-builder seed generators all independently writing Math.floor(Math.random() * 1_000_000_000_000_000)) is a latent multi-site bug waiting for one schema constraint to expose it -- the seed column was a 32-bit Int the whole time, but nothing failed until real traffic hit it. When fixing this class of bug, grep for the literal/pattern across the whole repo before assuming a single call site is the only offender; a fix at one site while 13 siblings keep the same defect just delays the next incident.
-- 2026-07-25 `animation-manager/t-007` — Local-only verification scripts (npm run test:animation-catalog, invoked from SPEC.md's shipping checklist but never referenced by any GitHub Actions workflow) can silently regress for days with zero signal, because nothing ever runs them except a session that happens to remember to. Caught this cycle only because building a new animation required running the script locally to verify the new catalog entry -- DEFAULT_PREFERENCES.startupEffect's 'random' sentinel had been failing verifyAnimationCatalog.ts's literal-catalog-id assertion since 2026-07-22 with no CI check ever red for it. Before trusting a 'ship only after X' checklist item, confirm X is actually wired into CI (grep the workflow YAML for the exact npm script name) rather than assuming a script's existence in package.json means it runs automatically.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-07-26T03:24:06Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-07-26T03:39:54Z_
