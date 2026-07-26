@@ -330,3 +330,16 @@ schema/plumbing work leading up to that point is reversible software.
 - None specific this cycle.
 
 **Kaizen task:** t-031 — wire the general multi-item cart checkout (`checkout.post.ts`) to actually fulfil what it sells, per the PR's own kaizen suggestion (currently only single-item dedicated routes like this one get real Order/Entitlement/PrintJob creation; the shared cart flow is decorative past the Stripe redirect).
+
+## 2026-07-26 | Reviewer (conductor-scheduled burst session, follow-up) | digital-storefront/t-030 | pattern
+
+type: pattern
+
+**Subject:** Independent re-review of already-merged kind_robots PR #1004 (dispatched before I saw it had already merged) turned up one additional gap the prior review entry didn't call out: the webhook's POD branch doesn't re-check `ArtImage` eligibility at payment-completion time, only at checkout-creation time.
+
+**Detail:**
+- `server/api/stripe/webhook.post.ts`'s POD branch in `handleProductPurchase` creates the `PrintJob` straight from `Product.metadata` (`artImageId`/`printfulVariantId`) with no fresh `checkPrintEligibility` re-check — matches design doc `gallery-to-swag-pipeline.md` §4's explicit "Takedown path" ask: an image flagged between cart-add and payment-completion should fail PrintJob creation, not ship silently.
+- Confirmed this is currently inert (no Printful vendor account/API key exists, so `PrintJob` rows stay `PENDING` regardless) rather than live-exploitable — so not a blocker on an already-merged, reversible, test-mode PR.
+- Filed as `digital-storefront/t-032` (`depends_on: t-030`) rather than reopening/reverting anything, so it's addressed before or alongside whatever task wires real Printful order submission.
+
+**Suggested action:** none beyond the filed task — flagging here so the next reviewer of a Printful-integration PR knows to check this specific re-validation exists before merging that one.
