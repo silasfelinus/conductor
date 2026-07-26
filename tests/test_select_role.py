@@ -247,6 +247,76 @@ def test_select_role_checks_both_default_repos():
     assert find_stranded.call_args.args[0] == list(select_role.DEFAULT_REPOS)
 
 
+# --- github_api_unreachable: conductor/t-084 --------------------------------
+
+
+def test_github_api_unreachable_when_token_missing():
+    """No GITHUB_TOKEN -> every GitHub-backed signal short-circuits to empty
+    without ever attempting a call. That's still "never actually checked",
+    not "checked and found nothing", so the flag must be set."""
+    with _apply(_patched()):
+        result = select_role.select_role(github_token='')
+
+    assert result["github_api_unreachable"] is True
+    assert "no GITHUB_TOKEN" in result["github_api_unreachable_detail"]
+
+
+def test_github_api_reachable_and_flag_false_when_token_present_and_no_failures():
+    with _apply(_patched()):
+        result = select_role.select_role(github_token='fake-token')
+
+    assert result["github_api_unreachable"] is False
+    assert result["github_api_unreachable_detail"] is None
+
+
+def test_github_api_unreachable_surfaced_when_real_requests_fail():
+    """A 403/network failure against api.github.com must flip the flag even
+    though every affected signal still degrades cleanly to an empty list
+    (conductor/t-084's whole point: that emptiness alone is indistinguishable
+    from a genuine zero-signal result unless this flag is checked)."""
+    with mock.patch.object(select_role.run_reviewer, "refresh_remotes"), mock.patch.object(
+        select_role.run_reviewer, "remote_worker_branches", return_value=[]
+    ), mock.patch.object(
+        select_role.branch_janitor, "list_remote_branches", return_value=[]
+    ), mock.patch.object(
+        select_role, "site_audit_status", return_value=AUDIT_NOT_OVERDUE
+    ), mock.patch.object(
+        select_role.run_worker, "build_queue_summary", return_value=EMPTY_QUEUE
+    ), mock.patch(
+        "urllib.request.urlopen",
+        side_effect=urllib.error.HTTPError("url", 403, "Forbidden", {}, None),
+    ):
+        result = select_role.select_role(github_token='fake-token')
+
+    assert result["role"] == "idle"
+    assert result["candidate_reviewable_pr_count"] == 0
+    assert result["github_api_unreachable"] is True
+    assert "GitHub API call(s) failed" in result["github_api_unreachable_detail"]
+
+
+def test_gh_request_records_failure_for_reachability_tracking():
+    select_role._reset_github_reachability_tracking()
+    with mock.patch(
+        "urllib.request.urlopen",
+        side_effect=urllib.error.HTTPError("url", 403, "Forbidden", {}, None),
+    ):
+        result = select_role._gh_request("https://api.github.com/repos/x/y/pulls", "token")
+
+    assert result is None
+    assert select_role._unreachable_urls == ["https://api.github.com/repos/x/y/pulls"]
+    select_role._reset_github_reachability_tracking()  # leave tracker clean for other tests
+
+
+def test_select_role_resets_tracker_between_calls():
+    """A stale failure from a prior call must never leak into a later,
+    fully-successful call's result."""
+    select_role._unreachable_urls.append("https://stale-from-a-previous-run")
+    with _apply(_patched()):
+        result = select_role.select_role(github_token='fake-token')
+
+    assert result["github_api_unreachable"] is False
+
+
 # --- find_red_stale_prs: aggregates across repos ---------------------------
 
 
