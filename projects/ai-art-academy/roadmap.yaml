@@ -1233,10 +1233,10 @@ tasks:
   - id: t-040
     milestone: m6
     title: Add a curriculum-candidate schema check requiring explicit rights/representation/promotion sections for culturally sensitive movements
-    status: review
+    status: done
     passes: 1
     stakes: reversible
-    updated: '2026-07-26T15:05:20Z'
+    updated: '2026-07-26T15:18:00Z'
     retry_context: >
       pass 1 failed (quality): PR #1145's `section()` helper in
       scripts/validate_academy_curriculum_candidates.py builds its regex as
@@ -1274,6 +1274,7 @@ tasks:
       REJECTED 2026-07-26 (Reviewer, conductor scheduled session, PR #1145): CI red for a real reason, not
       flaky -- see retry_context above and the PR review comment for the full repro. Returned to `ready`
       for the Worker to fix and re-push; the branch/PR are left open for the retry.
+
+      MERGED 2026-07-26: PR #1145 squash-merged as 388ba423 after fixing the alternation grouping regression and adding explicit `contents: read` workflow permissions. The changed-file curriculum guard, focused regression suite, roadmap validation, Security Audit, and full Worker PR CI all passed on the final head.
     claimed_by: claude-conductor-agentrun-20260726T150519Z-aa-t040-retry
     claimed_at: '2026-07-26T15:05:20Z'
-    owner: worker
