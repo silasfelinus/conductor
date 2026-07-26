@@ -466,6 +466,42 @@ tasks:
       pass across the narrator roster for consistency and to rule out
       collisions, as its own follow-up task once you've had a look --
       flagging here rather than guessing new slugs myself.
+
+      RESULT 2026-07-26 (all 29 folders now resolve, 0 unmatched): the
+      avatarImage-fallback fix fully works. Silas's response to the
+      slug-quality concern: he wants the SLUG changed to match the folder
+      name (not the other way around) -- "it would have been a much
+      clearer fix to rename the slugs to the proper folder names... I don't
+      like the bandaids that create multiple names in different locations."
+      Confirmed: folder names are good, unambiguous, and should be treated
+      as canonical; reconcile by updating slugs to match them, leaving
+      imagePath/avatarImage untouched.
+      Built scripts/rename_bot_slugs_to_avatar.py to do exactly that: reads
+      the same bulk /api/bots (or /api/characters) list, plans
+      old_slug -> avatarImage-filename-stem for every owner where they
+      differ, and PATCHes /api/bots/{id} (or /api/characters/{id}) with the
+      new slug through the existing endpoint -- which already runs the
+      value through getUniqueBotSlug(..., excludeId), so a collision
+      auto-suffixes instead of silently overwriting another bot's slug.
+      Dry-run by default; --apply requires KR_API_TOKEN, same convention as
+      reconcile_expressions.py. 6 tests added, full conductor suite green
+      (581 passed).
+      TO SILAS: from a terminal with KR_API_TOKEN set:
+      ```
+      python3 scripts/rename_bot_slugs_to_avatar.py            # review the plan first
+      python3 scripts/rename_bot_slugs_to_avatar.py --apply    # then apply it
+      ```
+      Expect ~27 renames (the same bots that needed the avatarImage
+      fallback this session), each printed as `old-slug -> new-slug`. This
+      also naturally resolves the "serendipity" collision-risk case noted
+      above: renaming the sentient-bar narrator's slug from "serendipity"
+      to "sentient-bar" frees that generic name back up rather than leaving
+      two concepts contesting it. Once applied, this closes the root cause
+      -- reconcile_expressions.py's avatarImage-fallback tier becomes a
+      dormant safety net for these bots rather than something load-bearing,
+      and any brand-new narrator bot created with slug == avatarImage from
+      the start will never need it at all. Set status: done here once the
+      rename run looks right.
     soft_gate: true
 
   - id: t-012
