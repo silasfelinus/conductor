@@ -1537,8 +1537,8 @@ tasks:
   - id: t-045
     milestone: m4
     title: 'Add Resource.commercialSafe (or licenseClass) migration + seed script'
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     note: >
@@ -1556,6 +1556,9 @@ tasks:
       otherwise; don't infer commercial-safety from "it's the current
       default engine." Unblocks digital-storefront's print-flow gate reading
       this field instead of its current default-deny fallback.
+    claimed_by: claude-conductor-burst-20260726T-kr-t045-1785035122
+    claimed_at: '2026-07-26T03:05:23Z'
+    updated: '2026-07-26T03:05:23Z'
 
   - id: t-046
     milestone: m3
