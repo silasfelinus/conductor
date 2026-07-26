@@ -125,6 +125,40 @@ def fetch_owner_ids(owner_type):
         page += 1
 
 
+def fetch_avatar_slug_map(owner_type):
+    """avatarImage-derived slug -> real DB slug, e.g. "brass-lampkeeper" ->
+    "pip-the-lampkeeper". Expression folders are named after the owner's
+    avatarImage filename (a short evocative descriptor picked when the art
+    was made), which can drift from the owner's actual slug (auto-generated
+    from its full display name at creation time, e.g. slugify("Pip the
+    Lampkeeper")) -- confirmed 2026-07-26 (Silas: narrator endpoint 404s on
+    "brass-lampkeeper", the real slug is "pip-the-lampkeeper"). Paginates
+    the same defensively as fetch_owner_ids, off the same bulk list (prisma
+    findMany returns every field including avatarImage, no extra query
+    needed)."""
+    path = "/api/bots" if owner_type == "bot" else "/api/characters"
+    avatar_to_slug, seen_ids, page = {}, set(), 1
+    while True:
+        body = api(f"{path}?page={page}&pageSize=100")
+        rows = body.get("data") or []
+        if isinstance(rows, dict):
+            rows = rows.get(f"{owner_type}s") or []
+        before = len(seen_ids)
+        for row in rows:
+            if row.get("id"):
+                seen_ids.add(row["id"])
+            real_slug = (row.get("slug") or "").strip()
+            avatar_image = (row.get("avatarImage") or "").strip()
+            if not (real_slug and avatar_image):
+                continue
+            avatar_slug = Path(avatar_image).stem.strip().lower()
+            if avatar_slug:
+                avatar_to_slug[avatar_slug] = real_slug
+        if len(seen_ids) == before or len(rows) < 100:
+            return avatar_to_slug
+        page += 1
+
+
 def fetch_narrator(owner_type, slug):
     """(owner_id, {key: row}) via the narrator endpoint — a per-slug lookup
     that dodges list pagination entirely and returns the active rows in the
@@ -289,6 +323,7 @@ def main():
             continue
 
         owner_ids = None  # fetched lazily, only if some narrator lookup 404s
+        avatar_map = None  # fetched lazily, only if slug AND avatar-map fallback both needed
 
         for folder in sorted(p for p in base.iterdir() if p.is_dir()):
             slug = folder.name
@@ -307,7 +342,32 @@ def main():
                       "falling back to list", file=sys.stderr)
                 owner_id, existing = None, None
 
-            # Fallback: bulk list, for inactive/private owners (rows unknown).
+            # Fallback: folder names follow the owner's avatarImage-derived
+            # descriptor (e.g. "brass-lampkeeper"), which can differ from
+            # its real DB slug (auto-generated from the full display name,
+            # e.g. "pip-the-lampkeeper"). Resolve through that mapping and
+            # retry the narrator lookup under the real slug before settling
+            # for the degraded bulk-list path below.
+            real_slug = None
+            if not owner_id:
+                if avatar_map is None:
+                    try:
+                        avatar_map = fetch_avatar_slug_map(owner_type)
+                    except Exception as e:
+                        print(f"⚠️  {owner_type}/{slug}: avatar-slug map fetch failed "
+                              f"({e}) — skipping that fallback", file=sys.stderr)
+                        avatar_map = {}
+                real_slug = avatar_map.get(slug.lower())
+                if real_slug and real_slug != slug:
+                    try:
+                        owner_id, existing = fetch_narrator(owner_type, real_slug)
+                    except Exception:
+                        owner_id, existing = None, None
+                    if owner_id:
+                        print(f"ℹ️  {owner_type}/{slug}: resolved via avatarImage to "
+                              f"slug '{real_slug}'", file=sys.stderr)
+
+            # Last resort: bulk list, for inactive/private owners (rows unknown).
             if not owner_id:
                 if owner_ids is None:
                     try:
@@ -316,7 +376,7 @@ def main():
                         print(f"❌ could not list {owner_type}s from the API: {e}",
                               file=sys.stderr)
                         return 1
-                owner_id = owner_ids.get(slug)
+                owner_id = owner_ids.get(real_slug or slug)
                 existing = None
 
             if not owner_id:

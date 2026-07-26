@@ -412,3 +412,126 @@ def test_media_images_dir_set_but_missing_errors_before_kind_robots_root_check(t
 
     assert code == 1
     assert "KR_MEDIA_IMAGES_DIR set but not found" in capsys.readouterr().err
+
+
+# ---------------------------------------------------------------------------
+# avatarImage-derived slug fallback (Silas, 2026-07-26: folder "brass-
+# lampkeeper" 404s against the narrator endpoint; the bot's real slug is
+# "pip-the-lampkeeper", auto-derived from its full display name -- folders
+# are named after avatarImage's filename, not the DB slug)
+# ---------------------------------------------------------------------------
+
+def test_avatar_slug_fallback_resolves_narrator_after_direct_lookup_404s(tmp_path, monkeypatch, capsys):
+    make_expr_tree(tmp_path, "bot", "brass-lampkeeper", ["joyful"])
+    monkeypatch.setattr(rex, "KIND_ROBOTS_ROOT", tmp_path)
+
+    calls = []
+
+    def fake_api(path, payload=None, method=None, timeout=30):
+        calls.append(path)
+        if path == "/api/narrators/bot/brass-lampkeeper":
+            raise http_404(path)
+        if path == "/api/narrators/bot/pip-the-lampkeeper":
+            return {"data": {"id": 42, "ExpressionMedia": []}}
+        if path.startswith("/api/bots?"):
+            return {"data": [{
+                "slug": "pip-the-lampkeeper", "id": 42,
+                "avatarImage": "/images/bots/brass-lampkeeper.webp",
+            }]}
+        raise AssertionError(f"unexpected call: {path}")
+
+    monkeypatch.setattr(rex, "api", fake_api)
+    monkeypatch.setattr(
+        "sys.argv",
+        ["reconcile_expressions.py", "--check", "--type", "bot", "--owner", "brass-lampkeeper"],
+    )
+
+    exit_code = rex.main()
+
+    captured = capsys.readouterr()
+    totals = json.loads(captured.out.strip())
+    assert totals["create"] == 1  # resolved via avatarImage, then matched via narrator
+    assert exit_code == 2
+    assert calls == [
+        "/api/narrators/bot/brass-lampkeeper",
+        "/api/bots?page=1&pageSize=100",
+        "/api/narrators/bot/pip-the-lampkeeper",
+    ]
+    assert "resolved via avatarImage to slug 'pip-the-lampkeeper'" in captured.err
+
+
+def test_avatar_slug_fallback_falls_through_to_bulk_list_when_narrator_still_fails(tmp_path, monkeypatch):
+    make_expr_tree(tmp_path, "bot", "brass-lampkeeper", ["joyful"])
+    monkeypatch.setattr(rex, "KIND_ROBOTS_ROOT", tmp_path)
+
+    def fake_api(path, payload=None, method=None, timeout=30):
+        if path in (
+            "/api/narrators/bot/brass-lampkeeper",
+            "/api/narrators/bot/pip-the-lampkeeper",
+        ):
+            raise http_404(path)
+        if path.startswith("/api/bots?"):
+            return {"data": [{
+                "slug": "pip-the-lampkeeper", "id": 42,
+                "avatarImage": "/images/bots/brass-lampkeeper.webp",
+            }]}
+        raise AssertionError(f"unexpected call: {path}")
+
+    monkeypatch.setattr(rex, "api", fake_api)
+    monkeypatch.setattr(
+        "sys.argv",
+        ["reconcile_expressions.py", "--check", "--type", "bot", "--owner", "brass-lampkeeper"],
+    )
+
+    exit_code = rex.main()
+
+    assert exit_code == 2  # still resolved (via the bulk list under the real slug), not unmatched
+
+
+def test_no_avatar_match_falls_back_to_bulk_list_by_folder_slug(tmp_path, monkeypatch):
+    # A folder whose name legitimately IS the real slug already (no
+    # avatarImage drift) must still resolve via the plain bulk-list path.
+    make_expr_tree(tmp_path, "bot", "barkeep-vox", ["joyful"])
+    monkeypatch.setattr(rex, "KIND_ROBOTS_ROOT", tmp_path)
+
+    def fake_api(path, payload=None, method=None, timeout=30):
+        if path == "/api/narrators/bot/barkeep-vox":
+            raise http_404(path)
+        if path.startswith("/api/bots?"):
+            return {"data": [{"slug": "barkeep-vox", "id": 9}]}  # no avatarImage field
+        raise AssertionError(f"unexpected call: {path}")
+
+    monkeypatch.setattr(rex, "api", fake_api)
+    monkeypatch.setattr(
+        "sys.argv",
+        ["reconcile_expressions.py", "--check", "--type", "bot", "--owner", "barkeep-vox"],
+    )
+
+    exit_code = rex.main()
+
+    assert exit_code == 2  # matched, not unmatched
+
+
+def test_fetch_avatar_slug_map_paginates_and_strips_extension(monkeypatch):
+    calls = []
+
+    def fake_api(path, payload=None, method=None, timeout=30):
+        calls.append(path)
+        if path == "/api/bots?page=1&pageSize=100":
+            return {"data": [
+                {"slug": "pip-the-lampkeeper", "id": 1,
+                 "avatarImage": "/images/bots/brass-lampkeeper.webp"},
+                {"slug": "barnaby-the-badger", "id": 2,
+                 "avatarImage": "/images/bots/badger-barnaby.webp"},
+            ] + [{"slug": f"filler-{i}", "id": i + 10,
+                  "avatarImage": f"/images/bots/filler-{i}.webp"} for i in range(98)]}
+        if path == "/api/bots?page=2&pageSize=100":
+            return {"data": []}
+        raise AssertionError(f"unexpected call: {path}")
+
+    monkeypatch.setattr(rex, "api", fake_api)
+    avatar_map = rex.fetch_avatar_slug_map("bot")
+
+    assert avatar_map["brass-lampkeeper"] == "pip-the-lampkeeper"
+    assert avatar_map["badger-barnaby"] == "barnaby-the-badger"
+    assert calls == ["/api/bots?page=1&pageSize=100", "/api/bots?page=2&pageSize=100"]

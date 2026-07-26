@@ -380,6 +380,43 @@ tasks:
       confirmed, since it's real DB-write work, not a one-line fix. If
       instead it returns 200 with some OTHER slug, the diagnosis above is
       wrong and it's back to being an actual naming-convention question.
+
+      CORRECTED 2026-07-26 (Silas confirmed via his own curl): 404 on
+      `/api/narrators/bot/brass-lampkeeper`, BUT Silas separately confirmed
+      the bot DOES exist -- its real slug is "pip-the-lampkeeper", not
+      "brass-lampkeeper". So the "never seeded" theory above was wrong; the
+      simpler original hypothesis was right after all -- folder names follow
+      the bot's avatarImage filename (a short evocative descriptor, e.g.
+      "brass-lampkeeper" from `/images/bots/brass-lampkeeper.webp"`), which
+      differs from the bot's actual DB slug (auto-generated from its full
+      display name, e.g. slugify("Pip the Lampkeeper") =
+      "pip-the-lampkeeper"). The bots exist; the folder-to-slug matching
+      strategy was just incomplete.
+      FIXED: reconcile_expressions.py now has a third resolution tier. Added
+      `fetch_avatar_slug_map()`, which paginates the same bulk /api/bots (or
+      /api/characters) list already used by the existing bulk-list fallback
+      and builds avatarImage-filename-stem -> real-slug (prisma's findMany
+      returns every field, avatarImage included, so no extra query is
+      needed). When the direct narrator-by-folder-slug lookup 404s, the
+      script now checks this map and retries the narrator lookup under the
+      REAL slug (recovering both the owner id and its existing
+      ExpressionMedia rows properly, not just a bare id from the degraded
+      bulk-list path) before falling all the way back to the plain bulk-list
+      match. Added 4 new tests (avatar-map resolves after direct 404,
+      falls through to bulk list if even the real-slug narrator lookup
+      fails, a folder whose name already IS the real slug still resolves
+      normally, and fetch_avatar_slug_map's own pagination/stem-stripping).
+      Full suite green (575 passed). TO SILAS: re-run
+      `python3 scripts/reconcile_expressions.py --apply` -- expect the ~29
+      previously-unmatched folders to now resolve via their avatarImage
+      mapping. Watch for the new `resolved via avatarImage to slug '...'`
+      info lines confirming the match; anything still unmatched after this
+      is a genuinely different problem (folder for a bot that really
+      doesn't exist, or an avatarImage field that's empty/missing on that
+      row) worth flagging back here. Once the numbers look sane, set
+      status: done here. (The unrelated glitch-pixl/0001surprised.webp
+      filename issue from the last run still needs a manual rename to
+      surprised_01.webp -- not something this fix touches.)
     soft_gate: true
 
   - id: t-012

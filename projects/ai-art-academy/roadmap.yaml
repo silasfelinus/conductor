@@ -877,7 +877,7 @@ tasks:
   - id: t-033
     milestone: m3
     title: 'kind_robots: fix examples.manifest.json contract failure (expressionism, cubism, bauhaus)'
-    status: needs-human
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -1039,9 +1039,24 @@ tasks:
       has ever landed in the array across both checks). Once all 3 images
       return 200 and all 3 manifest entries are present, this is ready for
       the academyStyles.ts PR + verification run.
+
+      DONE 2026-07-26: re-verified after Silas's fantomas filename fix --
+      all 3 images resolve (200) and all 3 manifest entries (expressionism,
+      cubism, bauhaus) are live (21 total entries). academyStyles.ts already
+      had the matching exampleWorks patches applied (landed separately).
+      One remaining piece: config/academy-example-manifest-pending.json
+      (kind_robots) was still tracking these 3 as not-yet-synced
+      placeholders, and the contract verifier correctly flagged them as
+      duplicates now that the real manifest caught up. Cleared it to an
+      empty array -- kind_robots PR #1019, merged. Verified
+      `npm run test:academy-examples-manifest` passes (21 entries, 0
+      pending), including with MEDIA_VERIFY_ASSETS=1 against the live media
+      origin (confirms actual asset existence, not just schema shape).
+      Contract failure is resolved; "Contract verifiers" CI unblocked for
+      all kind_robots PRs.
     claimed_by: claude-scheduled-20260718-1420-26944
     claimed_at: '2026-07-18T14:22:06Z'
-    updated: '2026-07-18T14:24:39Z'
+    updated: '2026-07-26T00:00:00Z'
     soft_gate: true
 
   - id: t-034
