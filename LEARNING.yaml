@@ -4313,3 +4313,14 @@ records:
   lesson: 'Concurrent Worker lanes need more than per-task leases: sessions must revalidate ownership
     before review, the cap must be checked against fresh origin/main state, and append-only shared ledgers
     need retry-safe compare-and-swap writes before parallel rollout.'
+- date: '2026-07-26'
+  project: conductor
+  task: t-085
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'Append-only coordination ledgers still need compare-and-swap behavior: compute each append
+    from a freshly fetched main tip and retry the entire transform after non-fast-forward rejection so
+    concurrent entries are preserved rather than overwritten.'
