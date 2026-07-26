@@ -9645,3 +9645,41 @@ completed cycle from #1174. Worth folding into conductor/t-084's fix: when
 manually checks and finds a PR should be the norm, not a lucky catch — the same
 degradation could just as easily hide a genuine duplicate-work collision on a task
 with actual unmerged changes, not just this harmless already-superseded case.
+
+## 2026-07-26 | Worker (scheduled burst-mode agent run) | conductor/t-085 | pattern
+type: pattern
+
+**Subject:** A Worker's own manual `status: done` commit can race the platform's
+auto-generated completion task-event and cause it to look stale, silently dropping
+its `learning:` payload.
+
+**Detail:**
+- After conductor PR #1184 (t-085) merged, something outside this repo (a webhook
+  or bot reacting to the merge) queued `task-events/...-conductor-t-085-done-....yaml`
+  directly to `main` with `operation: done`, a `note`, and a `learning` payload --
+  this repo's existing "PR merged -> auto-queue a completion event" plumbing.
+- Following AGENTS.md's "on closing a task at done, append the outcome record"
+  instruction, I independently flipped `status: review -> done` by hand (this
+  session hadn't seen the auto-queued event land yet) and pushed that directly to
+  `main`, bumping the task's `updated` timestamp.
+- My manual `updated` timestamp landed *after* the queued event's own `updated`.
+  `process_task_events.py`'s `stale_reason()` compares the two and, since roadmap
+  timestamps only move forward, would have permanently treated the event as stale
+  on its next run -- silently `unlink()`ing it, discarding its `learning:` payload
+  with no error and no trace, per `process()`'s early-return path (conductor/t-085,
+  discovered same-session, `scripts/process_task_events.py` lines ~311-320).
+- Caught it only because I happened to `git fetch` and notice the queued event file
+  still sitting in `task-events/` before the next processor run consumed it.
+  Recovered by hand: appended the event's exact `learning` text to `LEARNING.yaml`
+  via the new `append_ledger_entry.py` (this same cycle's t-085 deliverable), then
+  removed the now-permanently-stale event file with an explanatory commit.
+
+**Suggested action:** filed conductor/t-086 (kaizen) -- when a Worker session
+manually closes a task that the PR-merge auto-queue mechanism might *also* be about
+to (or has already) queued a completion event for, check `task-events/` for a
+matching `project`/`task` file BEFORE hand-writing the `status: done` transition,
+and either let the queued event apply on its own (if its `learning`/`note` payload
+is already correct) or explicitly consume it (apply its payload, then delete it)
+rather than racing it blind. The general pattern: any two independent writers that
+both derive "is this stale" from a monotonic timestamp need to check each other's
+state before writing, not just their own.
