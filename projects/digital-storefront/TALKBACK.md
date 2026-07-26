@@ -486,3 +486,26 @@ type: pattern
 POD-fulfillment paths stop independently reimplementing the same missing-ArtImage guard
 (this is the second time one copy fixed a gap the other already had right — see t-032's
 TALKBACK entry above for the closely related duplication this task was filed from).
+
+## 2026-07-26 | Worker (conductor scheduled run) | digital-storefront/t-035 | pattern
+
+type: pattern
+
+**Decision:** merged (kind_robots PR #1016, self-merged same session).
+
+**What was good:**
+- Read both call sites' full logic line-by-line before extracting the helper, rather than
+  eyeballing the "obviously duplicated" shape -- confirmed the return-value semantics
+  (both branches returned/created a row for the eligible AND FAILED cases, only skipping
+  entirely when the ArtImage was gone) actually matched before consolidating them.
+- Verified with eslint + a full `vue-tsc --noEmit` typecheck locally, and hit a real
+  rotation collision on the claim step (a concurrent session's claim commit landed on
+  `origin/main` between local claim and push) -- resolved by merging main's `owner`/
+  `claimed_by`/`claimed_at` fields into the local `status: review` edit rather than
+  guessing which side was newer.
+
+**What to improve:**
+- None specific this cycle.
+
+**Kaizen task:** none filed — this closes a previously-filed kaizen (from t-034) with no
+new gap surfaced.

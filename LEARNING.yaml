@@ -4218,3 +4218,15 @@ records:
   lesson: A failure-record insert must not reference the same missing foreign key that caused the failure;
     preserve the paid-order audit trail by omitting the dependent row when its required parent no longer
     exists.
+- date: '2026-07-26'
+  project: digital-storefront
+  task: t-035
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: When two call sites independently re-implement the same eligibility-check-then-insert sequence,
+    extracting a shared helper immediately after the second bug fix (rather than leaving both copies as
+    "matching patterns") is cheap while the logic is fresh and prevents the next fix from landing in only
+    one copy again.
