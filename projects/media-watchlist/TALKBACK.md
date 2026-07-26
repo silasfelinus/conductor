@@ -170,3 +170,36 @@ reason (see this file's t-010 entry). Worth naming as standing practice: a
 recheck-only task with N consecutive clean results in the same day is lower
 value than the next genuinely workable ready task, even if it's technically
 "first" in priority order.
+
+## 2026-07-26 | Worker (conductor burst-mode session) | media-watchlist/t-006 | pattern
+
+**Decision:** PR open | kind_robots PR #1006 (`claude/dazzling-ptolemy-1ljfjh`), task kept `status: ready` (recurring).
+
+**Failure category:** none — clean pass.
+
+**What was good:**
+- BROWSE-UX.md §4 fully specified the last unbuilt piece (CSV export: which
+  button, which view, "downloads a filtered view as CSV") — zero open design
+  questions, same pattern noted for t-009/t-010/t-011's cycles following t-008.
+- While implementing, noticed `watchlist-page.vue`'s `deliverables.next` still
+  listed "Entry detail view + private review editor" as future work, even
+  though t-010 and t-011 shipped it weeks ago — a second, independently-found
+  drift bug on the same page as the one t-006's 2026-07-20 cycle fixed
+  (`deliverables.done` claiming a nonexistent "Watchlist data model and API"
+  at the time). Worth flagging as a recurring failure mode: this project's
+  front-page `deliverables` fallback config drifts from the roadmap's actual
+  done/ready state because nothing enforces the two stay in sync — every
+  polish-pass cycle on this task should diff `deliverables` against the
+  roadmap's task statuses, not just look for new UI/API gaps to fill.
+- Confirmed the full-project `vue-tsc --noEmit` `rewardFacet` errors predate
+  this change via `git stash` (same verification discipline as prior cycles),
+  rather than assuming pre-existing without checking.
+
+**What to improve:**
+- Nothing specific to this cycle's implementation.
+
+**Kaizen suggestion:** file a lightweight consistency check (script or just a
+standing note in this task) that flags when a `conductor/*-page.vue`
+`deliverables` list hasn't been touched in N cycles while the underlying
+roadmap has moved — this is now the second time this exact page's
+`deliverables` list silently went stale between polish passes.
