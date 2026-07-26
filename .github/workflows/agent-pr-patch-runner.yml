@@ -1,0 +1,44 @@
+name: Agent PR Patch Runner
+
+on:
+  pull_request:
+    branches: [main]
+    types: [opened, reopened, synchronize]
+    paths:
+      - "scripts/agent_patch_project_art_completion.py"
+
+permissions:
+  contents: write
+
+jobs:
+  patch-project-art:
+    if: github.head_ref == 'agent/project-art-completion-sync-v2'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Apply rebased patch
+        run: python scripts/agent_patch_project_art_completion.py
+
+      - name: Install validation dependencies
+        run: pip install pytest pyyaml Pillow
+
+      - name: Run focused art-pipeline tests
+        run: pytest tests/test_consume_art_requests.py tests/test_media_direct.py tests/test_consume_art_queue.py
+
+      - name: Commit finished patch
+        run: |
+          rm scripts/agent_patch_project_art_completion.py
+          git config user.name "kind-conductor"
+          git config user.email "kind-conductor@users.noreply.github.com"
+          git add -A
+          git commit -m "fix project art retries and completion synchronization"
+          git push origin HEAD:${{ github.head_ref }}
