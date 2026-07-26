@@ -50,7 +50,7 @@ def is_culturally_sensitive(text: str) -> bool:
 
 def section(text: str, heading_pattern: str) -> str | None:
     match = re.search(
-        rf"^##\s+{heading_pattern}\s*$\n(?P<body>.*?)(?=^##\s+|\Z)",
+        rf"^##\s+(?:{heading_pattern})\s*$\n(?P<body>.*?)(?=^##\s+|\Z)",
         text,
         flags=re.IGNORECASE | re.MULTILINE | re.DOTALL,
     )
