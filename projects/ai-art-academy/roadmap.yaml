@@ -110,14 +110,44 @@ tasks:
     owner: null
     passes: 0
     stakes: reversible
-    updated: '2026-07-26T13:06:44Z'
+    updated: '2026-07-26T15:08:00Z'
     depends_on: [t-003, t-037]
     note: >
-      FOR SILAS: UPDATE 2026-07-25 (claude-conductor-scheduled-20260725T220810Z-aa-t004) — claimed this task after the go-ahead below and got as far as researching the actual generation API before finding a structural blocker the prior "relay/DB up" framing never covered: the Kontext image-remix workflow builder (kind_robots server/api/comfy/kontext/utils/workflow.ts:103-242, buildKontextWorkflow) wires CLIPTextEncode -> FluxGuidance -> UnetLoaderGGUF only — there is NO LoraLoader/LoraLoaderModelOnly node in the graph at all (contrast server/api/comfy/utils/simpleCheckpointWorkflow.ts:127-135 and server/api/comfy/ltx/utils/imageToVideoWorkflow.ts:109-112, which do apply one). The `loraPath`/`loraWeight` fields already recorded for ~13 styles in this project's own style-lora-registry.md (mode: lora) flow only into server/api/art/enqueue.post.ts:104-105,252 as provenance metadata (resourceProvenance.ts) — never into the actual render graph. Concretely: every Kontext remix request today is prompt-only regardless of what `mode` a style carries, so the planned "prompt-only vs LoRA" A/B has no LoRA arm to test against yet, and the registry's mode:lora entries are currently aspirational/misleading about what the live product actually does. Separately (operational, not structural): GET /api/art/queue/stats showed 82 PENDING jobs, oldest ~35h old (id 2017, queued 2026-07-24T11:00 UTC) — even a pure prompt-only enqueue/poll cycle would not resolve within one session right now, so live verification of *any* A/B result is impractical until the backlog clears regardless of the LoRA gap. Filed the LoRA-loader gap as new task t-037 (kind: software, kind_robots, reversible, scoped — add the missing node) and set this task `waiting` on it (per AGENTS.md's actionable-failure triage: fix the roadmap, don't retry blind). Once t-037 ships AND the render queue is closer to real-time, t-004 becomes workable end-to-end. No pass consumed (actionable, not quality/scope) per AGENTS.md Failure Triage. FOR SILAS: UPDATE 2026-07-18 — the sandbox-egress clause below is stale: EGRESS-BLOCKERS.md now shows kind-robots.vercel.app reachable (HTTP 200, 2026-07-18T11:17:11Z, grep "ai-art-academy/t-004"), not blocked as the 2026-07-16 text claimed. Reachability still varies by session (blocked as recently as 2026-07-17T10:55Z per the same ledger) — re-run `scripts/recheck_egress_blocks.py kind-robots.vercel.app --task ai-art-academy/t-004` before relying on it. This does NOT change the actual gate: item (2) below (home relay token + DB up) is still unverified from this sandbox and is the real blocker, and dispatching live production generation still needs Silas's explicit go-ahead regardless of egress state. FOR SILAS: UPDATE 2026-07-16 — KR_API_TOKEN is NO LONGER the blocker (it is now provisioned in the Claude Code environment env-var field + the GitHub Actions secret; verified present in a session env this date). But two things keep this task from running, and BOTH matter: (1) The conductor sandbox CANNOT reach the kind_robots API — the egress gateway returns 403 CONNECT to kind-robots.vercel.app (same allowlist block as the museum hosts), confirmed this date [SUPERSEDED, see 2026-07-18 update above]. So a burst/worker SANDBOX session can never run or verify generation directly; the real art pipeline is the `auto-art-generate` GitHub Action (runs on a GitHub runner with open egress + secrets.KR_API_TOKEN, has workflow_dispatch). (2) Rendering needs the home relay up with the correct KR_RELAY_TOKEN (a SEPARATE admin apiKey; can be the same value as KR_API_TOKEN as long as KR_RELAY_USER_ID == the server's BETA_ADMIN_USER_ID, default 1) AND the kind_robots DB up — the 2026-07-16 10:59Z auto-art-generate run showed both consume steps warning "home render box may be offline / jobs timed out" and "No image files in projects/process/", i.e. nothing rendered. NEXT STEP: this is human-gated (dispatching live production generation needs Silas's explicit go- ahead, per the safety gate). Once the relay's stale token is fixed + DB confirmed up, dispatch `auto-art-generate` (limit 1) and confirm an image lands, THEN flip this to `ready` and run the A/B. Kept soft needs-human. Registry input (t-003) is complete.
-      GO-AHEAD GIVEN 2026-07-25: Silas — "confirmed home relay and kr db are up. go ahead." Checked recent auto-art-generate.yml run history rather than dispatching a redundant one (the workflow's `concurrency: {group: auto-art-generate, cancel-in-progress: false}` means a new workflow_dispatch would only queue behind what's already running/pending — there's currently a push-triggered run in flight from this same session's earlier commits touching art-prompts.yaml). The last 4 scheduled runs (2026-07-25 03:25, 08:17, 13:50, 19:18 UTC) all completed `conclusion: success`, and several other sessions are actively landing hardening PRs against this exact pipeline today (#1061 "Repair canonical art paths and requeue failed jobs", #1065 "Add auditable failed ArtJob repair workflow", #1068 "Enforce public/images as the relay path contract", #1069 "Canonicalize queued art paths and prompts") — corroborating evidence the relay+DB are genuinely up and being actively worked, not just self-reported. Flipping to `ready`: the actual A/B (prompt-only vs LoRA per style, using the generation backend now confirmed live) is real work for a normal cycle, not something to rush through opportunistically. Original spec follows: Using the generation backend (pre-approved), A/B a fixed test image through each candidate Academy style: prompt-only instruction vs LoRA (where available in the registry from t-003). Judge composition preservation and style fidelity. Record a winning remix config per style (mode: prompt|lora|hybrid, prompt template, loraPath/trigger/weight) in docs/style-remix-configs.yaml, keeping the generated comparison images as traceable evidence (prompt/model/seed metadata per the generated-art rule). If any must-have style fails on Kontext entirely, document the SDXL+IP-Adapter fallback case in the same file rather than building it.
+      Depends on t-003 (done — LoRA registry) and t-037 (done 2026-07-26 — the
+      Kontext workflow builder now wires a LoraLoader node; before that fix every
+      remix request was prompt-only regardless of registry mode, so this task's
+      A/B had no LoRA arm to test against). GO-AHEAD GIVEN 2026-07-25 (Silas:
+      "confirmed home relay and kr db are up. go ahead."). Spec: using the
+      generation backend (pre-approved), A/B a fixed test image through each
+      candidate Academy style — prompt-only instruction vs LoRA (where available
+      per t-003's registry) — judge composition preservation and style fidelity,
+      and record a winning remix config per style (mode: prompt|lora|hybrid,
+      prompt template, loraPath/trigger/weight) in docs/style-remix-configs.yaml,
+      keeping the generated comparison images as traceable evidence (prompt/
+      model/seed metadata). Document any must-have style that fails on Kontext
+      entirely as an SDXL+IP-Adapter fallback case in the same file rather than
+      building it.
 
-      FOR SILAS: UPDATE 2026-07-26 (claude-conductor-scheduled-20260726T030957Z-aa-t004-recheck) — rechecked live queue state before touching this task again rather than retrying blind. GET /api/art/queue/stats (kind-robots.vercel.app reachable, HTTP 200) shows queueDepth.PENDING=141 (up from 82 on 2026-07-25), oldestPending id 2017 now ~40h old (createdAt 2026-07-24T11:00Z), and windowThroughput over the last 24h is only 59 DONE against 139 newly PENDING — the backlog is growing, not draining (RUNNING=1, i.e. a single COMFY worker slot). A live prompt-vs-LoRA A/B still cannot resolve within one session under this throughput. Also checked the FAILED-jobs cluster visible in the same stats payload (repeated 'Out of range value for column seed' on coloring-book ArtImage rows) in case it was silently eating queue capacity: it is NOT a live bug — already fixed in kind_robots commit 6de92c3 (coloring-book/t-030, merged 2026-07-25 14:11 UTC, clamps generated seeds to int32 range before every ComfyUI dispatch); the FAILED rows still showing that error text predate the fix and haven't been retried, so their stale error strings aren't evidence of an ongoing issue. No code fix filed from this finding. Leaving status: ready per the existing go-ahead — the blocker is genuinely operational (single-worker COMFY throughput vs. queue inflow), not something a conductor session can resolve by writing code or retrying. Whoever next picks this up: check queueDepth/oldestPending again before assuming the backlog has cleared; do not re-run the seed-bug check again unless queue-stats shows a fresh cluster of the same error message on rows created after 2026-07-25T14:11Z.
-      FOR SILAS: UPDATE 2026-07-26T13:06Z (claude-conductor-scheduled-20260726T1305Z-aa-t004-recheck) — rechecked again per the standing instruction above rather than skipping straight to other work. GET /api/art/queue/stats (KR_API_TOKEN present in this session's env, HTTP 200) shows queueDepth.PENDING=132, oldestPending still id 2017 (createdAt 2026-07-24T11:00Z, now ~50h old — same job, just older), windowThroughput 59 DONE vs 130 newly PENDING in the last 24h, RUNNING=1 (still a single COMFY worker slot). This is materially the same operational state as the 03:09Z recheck six hours prior — PENDING dropped slightly (141→132) but the oldest job hasn't moved and throughput is still far below inflow, so the backlog is not meaningfully draining. No new FAILED-cluster pattern beyond the already-fixed seed-clamp bug (recentFailed still shows only "ComfyUI reported a workflow error" entries, a different, already-known-generic error string, not the seed one). Leaving status: ready, no pass burned (actionable/operational, not quality or scope). Deferring this task this cycle in favor of ai-art-academy/t-010 (continuous improvement, front-end polish lane), which doesn't depend on live render throughput. Whoever picks this up next: if queueDepth.PENDING and oldestPending's age both drop substantially versus this entry's numbers, that's the actual signal the backlog cleared — re-running this same check again with no change in those two numbers is not a productive use of a cycle.
+      CURRENT BLOCKER (operational, not structural — last checked
+      2026-07-26T13:06Z): the shared render backend runs a single COMFY worker
+      slot and its queue is growing, not draining. `GET /api/art/queue/stats`
+      showed queueDepth.PENDING=132, oldestPending job 2017 (queued
+      2026-07-24T11:00Z, ~50h old), windowThroughput 59 DONE vs 130 newly
+      PENDING in the trailing 24h — a live A/B cannot resolve within one session
+      at this throughput. Three consecutive rechecks (2026-07-25, 2026-07-26
+      03:09Z, 2026-07-26 13:06Z) all found essentially the same state, so no
+      pass has been burned (actionable/operational per AGENTS.md Failure
+      Triage) and status stays `ready`. STANDING INSTRUCTION: do not re-run this
+      queue-stats check again unless queueDepth.PENDING and oldestPending's age
+      have BOTH dropped substantially from the numbers above — that's the
+      actual signal the backlog cleared. If they haven't moved, defer to
+      another ready task (e.g. t-010's continuous-improvement lane) instead of
+      spending a cycle re-confirming the same blocker. Full history of each
+      recheck (exact numbers, egress-reachability notes, the t-037 discovery
+      narrative) is preserved in this file's git history and
+      projects/ai-art-academy/TALKBACK.md — condensed here 2026-07-26 (t-010
+      lane 2, roadmap-accuracy pass) since five stacked "FOR SILAS: UPDATE"
+      paragraphs had made this task's live state hard to find at a glance.
   - id: t-005
     milestone: m3
     title: Write the art-history curriculum outline (movements, styles, artists)
@@ -269,69 +299,40 @@ tasks:
     owner: null
     passes: 0
     stakes: reversible
-    updated: '2026-07-25T23:05:34Z'
+    updated: '2026-07-26T15:08:00Z'
     note: >
-      FOR SILAS: UPDATE 2026-07-18 — see t-004's 2026-07-18 update for the same
-      correction: EGRESS-BLOCKERS.md now shows kind-robots.vercel.app reachable
-      (HTTP 200, grep "ai-art-academy/t-004"), not blocked as the 2026-07-16 text
-      below claims. Reachability varies by session; re-run
-      `scripts/recheck_egress_blocks.py kind-robots.vercel.app --task ai-art-academy/t-009`
-      before relying on it. Gate (2) below (home relay + DB) is unchanged and is the
-      real remaining blocker either way.
-      FOR SILAS: UPDATE 2026-07-16 — KR_API_TOKEN is NO LONGER the blocker (same
-      correction as t-004; token now in the env-var field + GitHub secret, verified
-      present this date). Remaining gates, both real: (1) the conductor sandbox can't
-      reach the kind_robots API (egress 403 CONNECT to kind-robots.vercel.app), so
-      [SUPERSEDED, see 2026-07-18 update above]
-      generation runs via the `auto-art-generate` GitHub Action (open-egress runner +
-      secrets.KR_API_TOKEN), not from a sandbox session; (2) the home render relay must
-      be up with the correct KR_RELAY_TOKEN (+ KR_RELAY_USER_ID == BETA_ADMIN_USER_ID)
-      and the kind_robots DB up — the 10:59Z auto-art-generate run this date rendered
-      nothing (both consume steps warned box-offline/timeout). Dispatching live
-      generation is human-gated (needs Silas's explicit go-ahead per the safety gate).
-      NEXT STEP: once the relay's stale token is fixed + DB up, dispatch auto-art-generate
-      (limit 1), confirm an image lands, then flip this to `ready`. Kept soft needs-human.
+      GO-AHEAD GIVEN 2026-07-25 (Silas: "confirmed home relay and kr db are up.
+      go ahead."; same reasoning as t-004's go-ahead — recent scheduled
+      auto-art-generate runs were succeeding, and a manual dispatch would only
+      queue behind one already in flight). Spec: icon/card/hero prompts were
+      queued in projects/art-prompts.yaml (2026-07-10); generate and commit
+      them via the auto art pipeline (pre-approved), then generate 3+ Academy
+      inspiration images (e.g. one landmark public-domain work re-imagined
+      across several movements as a teaching strip), keeping prompt/model/
+      source metadata. Remove ART-PROMPTS.md entries once files land in
+      projects/images/.
 
-      GO-AHEAD GIVEN 2026-07-25: same confirmation and reasoning as t-004's
-      2026-07-25 update — Silas confirmed relay+DB up, recent scheduled
-      auto-art-generate runs are succeeding, and a manual dispatch would only
-      queue behind an already-in-flight run given the workflow's concurrency
-      group. Flipping to `ready`.
-      Original spec follows:
-      Icon/card/hero prompts are queued in projects/art-prompts.yaml (added 2026-07-10).
-      Generate and commit them via the auto art pipeline (pre-approved), then generate
-      3+ Academy inspiration images (e.g. one landmark public-domain work re-imagined
-      across several movements as a teaching strip). Keep prompt/model/source metadata.
-      Remove ART-PROMPTS.md entries once files land in projects/images/.
+      QUEUED WORK (added 2026-07-25): a 4-image `ai-art-academy` teaching-strip
+      entry under art-prompts.yaml's `inspirations:` block — Hokusai's "Under
+      the Wave off Kanagawa" (the worked example in PUBLIC-DOMAIN-POLICY.md §3)
+      re-imagined across Impressionism, Art Nouveau, Cubism, and Suprematism,
+      each prompt reusing that movement's own remix_hint from
+      docs/curriculum-outline.md, target
+      public/images/artcollections/ai-art-academy/ in kind_robots.
 
-      PROGRESS 2026-07-25 (claude-conductor-scheduled-20260725T230534Z-aa-t009):
-      the icon/card/hero project-asset prompts were already queued (2026-07-10) but
-      still showed status: pending in projects/art-prompts.yaml — the auto-art-generate
-      workflow hasn't drained them yet (checked recent runs: several successful
-      scheduled completions today, but per-entry status in the committed queue only
-      flips once a job actually renders and the workflow commits the result). Added
-      the missing half of this task's spec: 4 Academy teaching-strip inspiration
-      images under a new `ai-art-academy` entry in art-prompts.yaml's `inspirations:`
-      block (target public/images/artcollections/ai-art-academy/ in kind_robots) —
-      Hokusai's "Under the Wave off Kanagawa" (The Great Wave; the exact worked
-      example already cited in this project's own PUBLIC-DOMAIN-POLICY.md §3
-      provenance schema) re-imagined across four curriculum movements chosen for
-      maximum visual contrast: Impressionism, Art Nouveau, Cubism, Suprematism. Each
-      prompt reuses that movement's own remix_hint language from
-      docs/curriculum-outline.md for consistency with the taught curriculum, applied
-      to the same shared wave/boats/Fuji composition so the four images read as one
-      teaching sequence. Mirrored the pending entry into ART-PROMPTS.md's inspiration
-      backlog list. This file's path is in auto-art-generate.yml's push-trigger
-      filter (projects/art-prompts.yaml), so pushing this commit queues a run in
-      addition to the existing 6-hour schedule.
-      NEXT STEP for whoever picks this up next: once auto-art-generate drains both
-      the pre-existing icon/card/hero entries and the new inspiration entries (watch
-      for their `status: pending` flipping and files landing in projects/images/ and
-      the kind_robots artcollections folder — see conductor/CLAUDE.md's Vercel/
-      deployment verification pattern used elsewhere in TALKBACK.md for how to
-      confirm rather than assume), remove the consumed ART-PROMPTS.md lines and flip
-      this task to done. Left status: ready (not done) — no generated files have
-      landed yet, this cycle only authored and queued the missing prompts.
+      CURRENT STATE (reconfirmed 2026-07-26T15:08Z): every entry — icon, card,
+      hero, and all 4 teaching-strip images — still shows `status: pending` in
+      projects/art-prompts.yaml, and no files have landed in projects/images/
+      or kind_robots' artcollections folder yet. Same single-COMFY-worker
+      backlog documented on t-004 is the likely shared cause. NEXT STEP for
+      whoever picks this up: watch for `status: pending` flipping and files
+      actually landing (see conductor/CLAUDE.md's Vercel/deployment
+      verification pattern for how to confirm rather than assume) — once they
+      do, remove the consumed ART-PROMPTS.md lines and flip this task to
+      `done`. Re-checking this same pending/landed state repeatedly without a
+      changed signal is not a productive use of a cycle (same logic as t-004's
+      standing instruction). Full landing history and the original per-cycle
+      narrative are preserved in this file's git history.
   - id: t-011
     milestone: m2
     title: Decide the commercial-licensing posture for FLUX-dev/Kontext LoRAs
@@ -447,7 +448,7 @@ tasks:
   - id: t-010
     milestone: m6
     title: Academy continuous improvement pass
-    status: claimed
+    status: review
     recurring: true
     passes: 0
     stakes: reversible
