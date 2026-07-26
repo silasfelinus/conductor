@@ -46,3 +46,6 @@ job 2373, updatedAt 15:33:14Z). NOTE: the most recent workflow-error failures in
 this same batch (jobs 2368-2372, updatedAt 15:27-15:33Z) still carry the old
 generic string, ~3 hours after PR #1137 merged — see conductor/t-082 (home relay
 likely hasn't restarted to pick up the fix yet).
+
+## 2026-07-26T20:09:58Z | growing
+queueDepth: PENDING=115, RUNNING=2, DONE=1578, FAILED=62, CANCELLED=765 (all-time). oldestPending: id=2017, age=205798s (~57.2h), engine=COMFY. windowThroughput (24h): PENDING=113, RUNNING=2, DONE=56, FAILED=43. recentFailed (last 25): 24/25 = generic workflow error (no node/exception detail forwarded); 1/25 = connection-refused to ComfyUI.
