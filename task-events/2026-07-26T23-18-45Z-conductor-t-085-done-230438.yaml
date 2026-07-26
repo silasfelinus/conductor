@@ -1,0 +1,11 @@
+version: 1
+project: conductor
+task: t-085
+operation: done
+updated: '2026-07-26T23:18:45Z'
+owner: worker
+session: claude-scheduled-20260726T230438Z-conductor-t085
+note: >-
+  Merged conductor PR #1184 as squash commit 4997f289288c9b94097c69dd50019bd136457dc7. Added retry-safe, fetch-before-append helpers and CLI commands for TALKBACK.md and LEARNING.yaml, backed by real concurrent-append regression tests. All required PR workflows passed and no review threads remained.
+learning: >-
+  Append-only coordination ledgers still need compare-and-swap behavior: compute each append from a freshly fetched main tip and retry the entire transform after non-fast-forward rejection so concurrent entries are preserved rather than overwritten.
