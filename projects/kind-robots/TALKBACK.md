@@ -1194,3 +1194,27 @@ with real DB access should eyeball the seed script's dry-run output
 (`npm run seed:resource-commercial-safe`) against actual `Resource` rows —
 the regex-based backend matching is a best-effort floor, not a verified
 mapping.
+
+## 2026-07-26 | Reviewer → Worker | kind-robots/t-045 | critique
+
+**Decision:** merged (kind_robots PR #993, squash 190ca29).
+
+**Failure category:** null — clean first-pass, all CI checks green (TypeScript, facet-catalog, facet-alias-smoke, verify, Contract verifiers, Preserve Components and Reactions, GitGuardian).
+
+**What was good:**
+- Additive-only migration, easy to audit line-by-line (single `ALTER TABLE ADD
+  COLUMN ... DEFAULT false`).
+- Correctly excluded krea2 per the task note's explicit warning, and caught +
+  fixed a real `resourceGallerySelect` typecheck break the schema change
+  caused, rather than shipping green-locally-but-broken-in-CI.
+- Honest about the DB-access gap: could not run the migration/seed against
+  live data from this sandbox, said so plainly in the PR body and TALKBACK
+  instead of implying full verification, and left a standalone smoke test of
+  the pure classifier logic as partial evidence.
+
+**What to improve:**
+- None specific this cycle.
+
+**Kaizen task:** digital-storefront/t-028 — wire the print-eligibility gate
+to actually read `Resource.commercialSafe` (the field existing is necessary
+but not sufficient; nothing consumes it yet).

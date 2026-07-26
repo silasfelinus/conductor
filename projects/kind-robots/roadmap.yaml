@@ -1537,11 +1537,27 @@ tasks:
   - id: t-045
     milestone: m4
     title: 'Add Resource.commercialSafe (or licenseClass) migration + seed script'
-    status: review
-    owner: worker
+    status: done
+    owner: null
     passes: 0
     stakes: reversible
     note: >
+      DONE 2026-07-26: kind_robots PR #993 merged (squash 190ca29). Added
+      `Resource.commercialSafe Boolean @default(false)` via additive
+      migration `20260726040000_resource_commercial_safe`, plus
+      `scripts/seed_resource_commercial_safe.ts` (dry-run by default,
+      `--write` to apply) implementing the known-safe-backend rules below
+      (OpenAI, FLUX.1 schnell, Flux.2 Klein, BFL Kontext pro/max,
+      fal.ai/Replicate — explicitly excluding Flux.1 dev, Kontext dev, and
+      krea2). Also fixed a real `npm run test` (vue-tsc) break the new
+      required field caused in `resourceGallerySelect`
+      (server/api/resources/gallery.ts). Verified via `npm run test`,
+      eslint, prettier, and a standalone smoke test of the classifier
+      against synthetic rows; could not run the migration/seed against a
+      live DB from this sandbox (no reachable database) — flagged in
+      TALKBACK for a DB-having session to sanity-check `--write` output
+      before running it against production.
+      Original spec follows:
       Filed 2026-07-25 after Silas approved digital-storefront/t-020's pitch
       (pitches/2026-07-15-resource-commercial-safe-field.md). Additive-only:
       a `commercialSafe` boolean (or `licenseClass` enum) column on `Resource`,

@@ -4030,3 +4030,12 @@ records:
   outcome: done
   failure_category: null
   lesson: "A prior PR's 'zero callers' claim about a Vue component (art-manager.vue) was wrong because its grep only checked pages/ and components/, missing Nuxt Content .md files that embed components via MDC syntax (:component-name). Caught before implementation by re-grepping content/**/*.md as well. When trusting a 'this component/route is dead' claim before deleting or gating something, check content/**/*.md (or any CMS/markdown layer that can reference components) in addition to the usual source directories."
+- date: '2026-07-26'
+  project: kind-robots
+  task: t-045
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "Adding a NOT NULL/required column to a widely-selected Prisma model (Resource) breaks every narrower Prisma `select` object's derived type that a full-model-typed helper function consumes -- here resourceGallerySelect vs. checkpointScore(checkpoint: Resource, ...) in generate-preview.post.ts. A full vue-tsc/tsc run is the only reliable way to find every such break; grepping for the model name alone would have missed it. Also: this sandbox has no reachable DB, so any migration+seed-script task's live-data verification has to stop at typecheck/lint/a synthetic smoke test of the pure logic -- flag that gap explicitly in TALKBACK rather than claiming full verification."
