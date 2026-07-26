@@ -2705,34 +2705,15 @@ tasks:
   - id: t-085
     milestone: m2
     title: "Add a fetch-immediately-before-append commit wrapper for TALKBACK.md/LEARNING.yaml, reusing claim_task.py's commit_file_on_ref pattern"
-    status: claimed
+    status: review
     owner: worker
     passes: 0
     stakes: reversible
-    updated: '2026-07-26T23:05:04Z'
+    updated: '2026-07-26T23:09:53Z'
     note: >
-      Kaizen from Reviewer merging conductor PR #1182/t-033 (concurrent-claims.md
-      design doc, 2026-07-26): section 3 of the design doc found that hard rule 9
-      fully covers the CI-regenerated files (STATUS.md/workspace.html/
-      ROADMAP-AUDIT.*/LEARNING-REPORT.md) under concurrent writers, but does NOT
-      yet cover TALKBACK.md/LEARNING.yaml appends — those are hand-appended by
-      agents via whole-file edits, not CI-regenerated, and today's only
-      conflict-handling guidance (the Reviewer batch-merge companion note under
-      hard rule 9: "keep both sides' entries") assumes an occasional human/Reviewer
-      merge during a sweep, not an automated fetch-append-push loop running
-      unattended. This is the one piece of the N-concurrent-lanes rollout
-      (conductor/t-033's pitch) flagged as genuinely new plumbing rather than an
-      existing rule that already applies. Spec: extract or reuse
-      `claim_task.py`'s `commit_file_on_ref` pattern (scratch-index, single-file
-      commit built on a freshly-fetched `origin/main`, retried on non-fast-forward)
-      into a small helper any script can call to append a TALKBACK.md or
-      LEARNING.yaml entry safely under concurrent writers, instead of every
-      session hand-rolling its own git add/commit/push for these two files. Does
-      not require the cap-check or worktree-per-lane pieces of t-033's rollout to
-      land first — this piece is useful under today's N=1 model too (reduces the
-      window for the exact same race during any two overlapping sessions, burst
-      mode or otherwise). Full context: projects/conductor/docs/concurrent-claims.md
-      section 3, "Gaps to close before rollout."
+      Kaizen from Reviewer merging conductor PR #1182/t-033 (concurrent-claims.md design doc, 2026-07-26): section 3 of the design doc found that hard rule 9 fully covers the CI-regenerated files (STATUS.md/workspace.html/ ROADMAP-AUDIT.*/LEARNING-REPORT.md) under concurrent writers, but does NOT yet cover TALKBACK.md/LEARNING.yaml appends — those are hand-appended by agents via whole-file edits, not CI-regenerated, and today's only conflict-handling guidance (the Reviewer batch-merge companion note under hard rule 9: "keep both sides' entries") assumes an occasional human/Reviewer merge during a sweep, not an automated fetch-append-push loop running unattended. This is the one piece of the N-concurrent-lanes rollout (conductor/t-033's pitch) flagged as genuinely new plumbing rather than an existing rule that already applies. Spec: extract or reuse `claim_task.py`'s `commit_file_on_ref` pattern (scratch-index, single-file commit built on a freshly-fetched `origin/main`, retried on non-fast-forward) into a small helper any script can call to append a TALKBACK.md or LEARNING.yaml entry safely under concurrent writers, instead of every session hand-rolling its own git add/commit/push for these two files. Does not require the cap-check or worktree-per-lane pieces of t-033's rollout to land first — this piece is useful under today's N=1 model too (reduces the window for the exact same race during any two overlapping sessions, burst mode or otherwise). Full context: projects/conductor/docs/concurrent-claims.md section 3, "Gaps to close before rollout."
+
+      RAN 2026-07-26 (scheduled burst-mode cycle): added scripts/append_ledger_entry.py, reusing git_plumbing.py's commit_file_on_ref exactly as spec'd -- a generic append_with_retry(root, path, build_new_text, message) that fetches origin/main, reads the file at that ref, applies a pure build_new_text(before)->after transform, and pushes a single-file commit straight to refs/heads/main, re-fetching and recomputing on a non-fast-forward race (bounded at MAX_ATTEMPTS=4, same shape as claim_task.py's retry loop). Two convenience wrappers on top: append_talkback_entry (matches the file's existing '## heading, one blank line between entries' convention, rejects entries not starting with '## ') and append_learning_record (mirrors process_task_events.py's write_learning_record fragment format so both writers produce identical on-disk shape, including the empty-ledger 'records: []' case). Also exposes a CLI (talkback/learning subcommands) for ad hoc use outside Python. Tests in tests/test_append_ledger_entry.py use real throwaway bare+clone repos (same pattern as test_claim_task.py/test_git_plumbing.py), including a genuine concurrent-append race test: two independent clones append to the same TALKBACK.md in the same window, the first lands, the second's push is rejected non-fast-forward, and the retry picks up the fresh tip and re-appends -- both entries land, neither is lost or clobbered. Full test suite (605 tests) still green. conductor PR opened from worker/conductor-t085.
     claimed_by: claude-scheduled-20260726T230438Z-conductor-t085
     claimed_at: '2026-07-26T23:05:04Z'
 
