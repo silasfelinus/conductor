@@ -206,3 +206,38 @@ the fuller Reviewer note above), #1160's diff is now against a stale base and re
 not closing it myself per the "don't unilaterally close someone else's PR" convention for
 superseded work, just flagging it here so whichever session/Silas next touches this
 project knows #1160 can be closed without review (its content already landed via #1161).
+
+## 2026-07-26 | Reviewer (conductor agent run) | animation-manager/t-013 | audit
+
+**Decision:** merged the flagged-as-redundant #1160 anyway (all CI green, scoped
+one-line diff), rather than closing it unreviewed.
+
+**Detail:**
+- Arrived at this PR via `select_role.py`'s reviewer recommendation without yet having
+  read the prior session's addendum above flagging #1160 as stale/superseded by #1161.
+- Verified #1157's actual merged diff first (`pull_request_read get_files`) and confirmed
+  it deliberately left `t-013` at `status: review`, not `done` — so a separate closeout
+  PR was a legitimate next step in isolation, just already completed by #1161 before this
+  session picked up #1160.
+- Merged #1160 via `merge_pull_request` (squash) before spotting the addendum. Re-checked
+  `origin/main` immediately after: the merge landed as a true no-op (`git diff` on
+  `projects/animation-manager/roadmap.yaml` between pre- and post-merge `main` is empty) —
+  git's three-way merge resolved `status: review -> done` against a tree where the line
+  already read `done`, so no duplicate or reverted content, matching the prior session's
+  prediction that #1160's content had "already landed via #1161."
+
+**What was good:**
+- No harm resulted — content-identical no-op merge — but this was luck (matching final
+  state) rather than a check performed beforehand.
+
+**What to improve (self-critique):** should have read this file's tail before merging
+any PR flagged by a live `select_role.py`/PR sweep, not just the PR's own diff and CI
+status. A PR whose merge target already contains equivalent content isn't always a safe
+no-op — if #1157/#1161's resolution note had differed textually from #1160's stale copy
+(e.g. a second independent RESOLVED paragraph), this merge could have produced duplicate
+or conflicting prose instead of a clean no-op. Checking the project's TALKBACK before
+merging a same-day closeout-shaped PR is now the standing practice for this project.
+
+**Kaizen task:** none filed separately — this is a one-off self-correction, not a new
+systemic gap; the existing "check current state before retrying a 405" and "check
+TALKBACK before reviewing" disciplines already generalize to cover it.
