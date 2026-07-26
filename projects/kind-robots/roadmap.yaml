@@ -1580,7 +1580,7 @@ tasks:
   - id: t-047
     milestone: m4
     title: 'Add ArtImage.storefrontFeatured boolean (curated swag rail)'
-    status: review
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -1623,3 +1623,27 @@ tasks:
     claimed_at: '2026-07-26T02:27:17Z'
     updated: '2026-07-26T02:36:20Z'
 
+
+  - id: t-049
+    milestone: m4
+    title: 'Investigate whether facet-catalog-contract.yml can hang indefinitely on Install dependencies'
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Kaizen from kind-robots/t-047 (kind_robots PR #994, 2026-07-26): that
+      PR's `facet-catalog` check hung `in_progress` on the "Install
+      dependencies" step for 10+ minutes with zero progress (comparable runs
+      on the same workflow, `.github/workflows/facet-catalog-contract.yml`,
+      normally complete the whole job in ~40-90s). `cancel_workflow_run`
+      returned 202 Accepted twice but never actually terminated the run even
+      several minutes later. Worked around it by pushing a trivial empty
+      commit to force a fresh check run against a new head SHA, which then
+      completed normally in ~90s. Only observed once this session — may be a
+      one-off GitHub Actions infra hiccup rather than anything wrong with the
+      workflow itself. Worth checking: does the job have a `timeout-minutes`
+      set (so a future hang fails loudly instead of blocking a PR
+      indefinitely)? Is there a flaky npm registry / dependency-cache-restore
+      step in play? If it recurs, that's a stronger signal of a real
+      workflow-level issue rather than transient infra.

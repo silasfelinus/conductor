@@ -4039,3 +4039,12 @@ records:
   outcome: done
   failure_category: null
   lesson: "Weekly site-audit findings can go stale within days when the audited code keeps moving -- STORE-AUDIT.md described social-publisher.vue as the giftshop's most mature wired piece, but it was removed (migration 20260718200000_remove_social_publishing) three days after the audit date. A generated audit document isn't self-updating like STATUS.md; treat its findings as dated snapshots and re-verify against the current checkout (Glob for the file/model) before relying on an audit claim that's more than a few days old, especially for a fast-moving surface."
+- date: '2026-07-26'
+  project: kind-robots
+  task: t-047
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "Additive migrations that ship with an already-identified real consumer (the approved pitch named digital-storefront's swag-rail query as the next task) review fast because the diff never has to justify itself speculatively -- ADD COLUMN + CREATE INDEX only, no seed/UI. Separately: a CI check (facet-catalog) hung indefinitely on 'Install dependencies' after a rebase and cancel_workflow_run didn't unstick it; pushing a trivial empty commit to force a fresh check run against a new head SHA resolved it in the normal ~90s, faster than waiting out or repeatedly cancelling the stuck run."
