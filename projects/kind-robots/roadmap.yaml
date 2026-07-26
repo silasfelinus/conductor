@@ -1576,8 +1576,8 @@ tasks:
   - id: t-048
     milestone: m3
     title: 'Remove dead dashboardConfigs.art "video" tab / art-manager.vue path now that video-generator has a real nav entry'
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     note: >
@@ -1593,4 +1593,7 @@ tasks:
       it's dead beyond just the video case) so this dangling path can't
       confuse the next person looking for the video generator's nav wiring.
       Small, scoped, reversible front-end cleanup only — no backend changes.
+    claimed_by: claude-scheduled-20260726T0227Z-kr-t048
+    claimed_at: '2026-07-26T02:27:17Z'
+    updated: '2026-07-26T02:27:17Z'
 
