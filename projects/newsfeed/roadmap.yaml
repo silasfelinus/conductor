@@ -692,8 +692,8 @@ tasks:
   - id: t-022
     milestone: m3
     title: 'Wire a pool of default placeholder images into feed-card.vue for items with no image'
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     note: >
@@ -726,3 +726,6 @@ tasks:
       starting the wiring half (self-draining queue — may need a cycle or
       two to land); if the pipeline is still catching up from other pending
       batches, check back rather than re-queuing duplicates.
+    claimed_by: claude-conductor-scheduled-20260726T123800Z-nf-t022
+    claimed_at: '2026-07-26T13:06:19Z'
+    updated: '2026-07-26T13:06:19Z'
