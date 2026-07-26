@@ -1231,15 +1231,21 @@ tasks:
   - id: t-040
     milestone: m6
     title: Add a curriculum-candidate schema check requiring explicit rights/representation/promotion sections for culturally sensitive movements
-    status: claimed
-    owner: worker
+    status: review
     passes: 0
     stakes: reversible
-    updated: '2026-07-26T10:23:00Z'
+    updated: '2026-07-26T14:24:00Z'
     note: |-
       Kaizen from ai-art-academy/t-010 (PR #1119, 2026-07-26 curriculum-depth lane, Harlem Renaissance candidate). That PR hand-wrote display-rights, generation-rights, representation-risk, and a promotion checklist because the movement is culturally sensitive — but nothing enforces this for future curriculum-candidate docs (`projects/ai-art-academy/docs/curriculum-candidates/*.md`) the way `PUBLIC-DOMAIN-POLICY.md` enforces rights checks elsewhere. Add a lightweight check (a `scripts/` validator wired into CI, or a documented per-file checklist template) that flags a new curriculum-candidate file lacking an explicit rights-boundary-per-artist section, a generation negative-guidance list excluding protected artist names, and a promotion checklist, when the movement touches a specific living culture/ethnicity/ community rather than a purely formal style. Small, additive, reversible.
 
 
       Claimed for a scoped curriculum-candidate validation and CI wiring pass.
-    claimed_by: worker-conductor-20260726T102300Z-aa-t040-6f4a
-    claimed_at: '2026-07-26T10:23:00Z'
+
+      Recovered stale claim after more than four hours with no open PR or implementation branch visible. Returning the task to ready so the current Worker can claim and complete it without bypassing session ownership.
+
+      Claimed after recovering the abandoned prior session. Implementing the changed-file curriculum-candidate rights and representation validator with dedicated CI coverage.
+
+      Implemented a changed-file curriculum-candidate validator, regression tests, and a dedicated CI guard. Culturally specific candidates must document artist-level rights boundaries, item-level display rights, protected-name exclusions, negative generation guidance, and a representation-aware promotion checklist.
+    claimed_by: worker-conductor-20260726T142200Z-aa-t040-29a7
+    claimed_at: '2026-07-26T14:22:00Z'
+    owner: worker

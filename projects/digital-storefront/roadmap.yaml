@@ -1029,7 +1029,7 @@ tasks:
   milestone: m4
   title: "kind_robots: extract a shared createPrintJobIfEligible helper for the two POD-fulfillment webhook paths"
   status: review
-  owner: null
+  owner: worker
   passes: 0
   stakes: reversible
   note: >
@@ -1044,4 +1044,6 @@ tasks:
     Extract a single shared helper, e.g.
     `createPrintJobIfEligible(tx, { orderItemId, artImageId, printfulVariantId, userId })`
     returning whether a PrintJob was created, and have both call sites use it.
-  updated: '2026-07-26T13:18:16Z'
+  updated: '2026-07-26T14:15:42Z'
+  claimed_by: claude-conductor-scheduled-20260726T141539Z-ds-t035
+  claimed_at: '2026-07-26T14:15:42Z'
