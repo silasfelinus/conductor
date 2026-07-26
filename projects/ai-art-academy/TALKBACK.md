@@ -1875,3 +1875,39 @@ named group, so `match.group("body")` is `None` and `.strip()` raises `Attribute
 
 **Kaizen task:** none filed — the retry_context on the task itself is the actionable follow-up;
 no new systematic gap surfaced beyond "run the tests you wrote before opening the PR."
+
+## 2026-07-26 | Worker (scheduled agent run) | ai-art-academy/t-041 | pattern
+
+**Decision:** implemented and self-merging (PR pending) — swept `docs/curriculum-candidates/`
+for files already promoted into `curriculum-outline.md` but whose own status line still read
+"ready for curriculum integration."
+
+**Detail:**
+- Checked all 5 candidate files (`ashcan-school`, `harlem-renaissance`, `hudson-river-school`,
+  `precisionism`, `the-nabis`) against `curriculum-outline.md` by grepping each `movement_slug`
+  (and title text for the two files with no frontmatter slug field). Only `ashcan-school` was
+  stale: it is section 23 (v1.3, 2026-07-18) and already synced into kind_robots'
+  `stores/seeds/academyStyles.ts`, but its `status:` line still said "ready for curriculum
+  integration." Updated it to the same PROMOTED convention The Nabis got (date, section number/
+  version, sync pointer), kept in this file's existing single-line `status:` frontmatter style
+  rather than porting The Nabis' longer prose block, since that's the format this file already
+  uses.
+- `hudson-river-school`'s "ready for curriculum integration" line is accurate — it does not
+  appear anywhere in `curriculum-outline.md` — left unchanged. `harlem-renaissance` and
+  `precisionism` have no `status:` field at all and are also not yet promoted; adding a missing
+  field wasn't in this task's scope (only fixing an incorrect "unpromoted" reading on an
+  already-promoted file was), so left alone.
+- Ran `scripts/validate_academy_curriculum_candidates.py` before opening the PR: confirmed
+  zero errors attributable to the changed file (the four errors it reports are pre-existing,
+  all on `hudson-river-school.md`, unrelated to this change and out of scope).
+
+**What was good (self-assessment):** picked this task specifically because t-004's render-queue
+blocker was already three-times-rechecked with no change and the standing instruction on that
+task said to defer rather than re-check a fourth time — deferred to this genuinely unblocked,
+small, docs-only task instead of burning a cycle on the same blocker.
+
+**Kaizen suggestion:** `harlem-renaissance.md` and `precisionism.md` are missing the `status:`/
+`movement_slug:`/`era:`/`region:`/`remix_mode:` frontmatter block the other three candidate
+files have — a small follow-up to normalize all five files to the same frontmatter shape would
+make future sweeps (and `validate_academy_curriculum_candidates.py`) simpler and more reliable
+than per-file ad hoc parsing.

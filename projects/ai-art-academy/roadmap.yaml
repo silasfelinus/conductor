@@ -1284,7 +1284,7 @@ tasks:
   - id: t-041
     milestone: m6
     title: Sweep docs/curriculum-candidates/ for already-promoted files whose status line still reads unpromoted
-    status: claimed
+    status: review
     owner: worker
     passes: 0
     stakes: reversible
@@ -1304,5 +1304,18 @@ tasks:
       say PROMOTED, add the same short status line The Nabis got (promoted
       date, outline section number/version, one-line pointer). Small,
       additive, docs-only, reversible — no kind_robots sync needed.
+
+      DONE 2026-07-26: checked all 5 candidate files against curriculum-outline.md
+      by movement_slug. Only ashcan-school.md was stale (section 23, v1.3,
+      2026-07-18, already synced into kind_robots' academyStyles.ts) — updated
+      its status line to PROMOTED with date/section/version, matching this
+      file's existing single-line frontmatter style rather than porting The
+      Nabis' longer prose block. hudson-river-school.md's "ready for curriculum
+      integration" is accurate (not yet promoted) — left unchanged.
+      harlem-renaissance.md and precisionism.md have no status field at all
+      (also not yet promoted) — adding a missing field was out of this task's
+      scope. Verified via `scripts/validate_academy_curriculum_candidates.py`:
+      zero errors on the changed file (its 4 reported errors are pre-existing
+      on hudson-river-school.md, unrelated to this change).
     claimed_by: claude-conductor-agentrun-20260726T170253-aa-t041-sweep
     claimed_at: '2026-07-26T17:02:53Z'
