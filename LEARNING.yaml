@@ -4021,3 +4021,12 @@ records:
   outcome: done
   failure_category: null
   lesson: "The Grant-model PR scoped itself tightly to exactly the pitch's first-task section (additive CREATE TABLE + 2 FKs, no route rewiring) and it paid off in review speed -- the migration.sql was auditable line-by-line in seconds (1 CREATE TABLE, 2 ADD CONSTRAINT, nothing else) precisely because nothing else was mixed into the diff. New authz helper (contentAccess.ts) shipped unwired on purpose, which kept the PR reviewable without needing to trace every call site it would eventually gate."
+- date: '2026-07-26'
+  project: kind-robots
+  task: t-048
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "A prior PR's 'zero callers' claim about a Vue component (art-manager.vue) was wrong because its grep only checked pages/ and components/, missing Nuxt Content .md files that embed components via MDC syntax (:component-name). Caught before implementation by re-grepping content/**/*.md as well. When trusting a 'this component/route is dead' claim before deleting or gating something, check content/**/*.md (or any CMS/markdown layer that can reference components) in addition to the usual source directories."
