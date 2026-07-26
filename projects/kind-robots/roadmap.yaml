@@ -1595,24 +1595,24 @@ tasks:
 
   - id: t-048
     milestone: m3
-    title: 'Remove dead dashboardConfigs.art "video" tab / art-manager.vue path now that video-generator has a real nav entry'
-    status: claimed
+    title: 'Remove the dead "video" tab entry from dashboardConfigs.art (art-manager.vue itself stays — it is live for other tabs)'
+    status: review
     owner: worker
     passes: 0
     stakes: reversible
     note: >
-      Kaizen from t-046 (PR #988, 2026-07-26): dashboardConfigs.art's 'video'
-      tab in stores/helpers/dashboardHelper.ts routes through
-      components/art/art-manager.vue, which has zero callers anywhere in
-      pages/ or components/ and no case for 'video' at all (falls through to
-      "Unknown image tab: video") — it was already dead, unreachable code
-      before t-046 gave video-generator.vue its own real top-level channel/tab
-      entry (content/channels/lab/video-generator.md). Confirm art-manager.vue
-      and the dashboardConfigs.art 'video' tab entry have no remaining live
-      callers, then remove both (or the whole art-manager.vue component if
-      it's dead beyond just the video case) so this dangling path can't
-      confuse the next person looking for the video generator's nav wiring.
-      Small, scoped, reversible front-end cleanup only — no backend changes.
+      Kaizen from t-046 (PR #988, 2026-07-26), scope corrected 2026-07-26:
+      the original note wrongly assumed art-manager.vue was dead code (a
+      pages/+components/-only grep missed its Nuxt Content MDC embeds in
+      content/art.md and content/artjob.md, which render 7 live tabs through
+      it). Corrected scope, then implemented: kind_robots PR #992 deletes
+      only the 13-line 'video' tab object in
+      stores/helpers/dashboardHelper.ts's dashboardConfigs.art.tabs (between
+      'coat-dance' and 'artjob') — art-manager.vue's own validTabs never
+      included 'video' in the first place, so this was always a dead link
+      with zero effect on the component. Nothing else touched.
+      `npm run test` (vue-tsc, full project), eslint, test:channel-content,
+      and test:data-surface-manifest all clean. Awaiting merge.
     claimed_by: claude-scheduled-20260726T0227Z-kr-t048
     claimed_at: '2026-07-26T02:27:17Z'
     updated: '2026-07-26T02:27:17Z'

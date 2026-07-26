@@ -4012,3 +4012,12 @@ records:
   lesson: 'When a feature appears missing, verify reachability before rebuilding it: video-generator.vue
     was already complete, but its only prior route lived behind dead dashboard configuration and an unwired
     manager component.'
+- date: '2026-07-26'
+  project: kind-robots
+  task: t-044
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "The Grant-model PR scoped itself tightly to exactly the pitch's first-task section (additive CREATE TABLE + 2 FKs, no route rewiring) and it paid off in review speed -- the migration.sql was auditable line-by-line in seconds (1 CREATE TABLE, 2 ADD CONSTRAINT, nothing else) precisely because nothing else was mixed into the diff. New authz helper (contentAccess.ts) shipped unwired on purpose, which kept the PR reviewable without needing to trace every call site it would eventually gate."
