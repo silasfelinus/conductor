@@ -1730,8 +1730,8 @@ tasks:
   - id: t-050
     milestone: m2
     title: Implement the Pack model migration (additive) + packId FK + GrantSubject.PACK
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     depends_on: t-044
@@ -1751,4 +1751,6 @@ tasks:
       action, two rows updated). No webhook code, no admin UI changes, no
       pack publication flow in this task -- those stay separate
       (digital-storefront's DLC-fulfillment follow-on).
-    updated: '2026-07-26T00:00:00Z'
+    updated: '2026-07-26T11:14:12Z'
+    claimed_by: claude-conductor-scheduled-20260726T111500Z-kr-t050
+    claimed_at: '2026-07-26T11:14:12Z'
