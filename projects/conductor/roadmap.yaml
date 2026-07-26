@@ -2542,3 +2542,45 @@ tasks:
     claimed_by: claude-conductor-burst-20260722T0106Z-t079
     claimed_at: '2026-07-22T01:06:07Z'
     updated: '2026-07-22T01:34:00Z'
+
+  - id: t-080
+    milestone: m2
+    title: 'Investigate a fresh cluster of ComfyUI workflow-error ArtJob failures
+      spanning 4 projects, distinct from the already-fixed seed-range bug'
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Found 2026-07-26 ~11:10 UTC during a conductor sweep (rechecking
+      ai-art-academy/t-004's queue-backlog blocker before rotating away from
+      it). GET /api/art/queue/stats showed the same operational backlog
+      (PENDING=135, oldest ~48h, RUNNING=1, throughput DONE=59/window vs
+      PENDING inflow=133) as prior sessions already documented on t-004, so
+      no action there. But `recentFailed` also surfaced 9 jobs with
+      `attempts: 3` (retries exhausted) and error text exactly
+      "ComfyUI reported a workflow error", spanning updatedAt
+      2026-07-26T09:10:42Z through 2026-07-26T11:03:55Z, across FOUR
+      different projectSlugs (coloring-book x3, packmaker x2,
+      superkate-hairstyle-ai x2, music-mentor x1) — a genuinely new failure
+      signature, not the previously-diagnosed and already-fixed
+      out-of-range-seed bug (kind_robots commit 6de92c3, coloring-book/t-030)
+      which has a different, distinct error string ("Value out of range for
+      the type... column 'seed'"). No existing roadmap task tracks this
+      error text (grepped all projects/*/roadmap.yaml and TALKBACK.md files,
+      no hits) as of this note. Spanning 4 unrelated projects in under 2
+      hours suggests a shared-infra cause (COMFY worker/relay/workflow-graph
+      issue) rather than 4 independent per-project bugs, but this session did
+      not have access to ComfyUI/relay logs to diagnose further (conductor
+      sandbox egress + no direct COMFY dashboard access). NEXT STEP: whoever
+      picks this up should (1) re-check queue-stats' `recentFailed` for
+      whether this error text is still appearing / growing since this note,
+      (2) if the relay/render-box logs are reachable, find the actual
+      ComfyUI-side error for one of these job ids (2331-2339) to see if it's
+      a specific workflow-graph fault (e.g. a missing/misconfigured node,
+      similar in kind to the LoRA-loader gap ai-art-academy/t-037 found) vs.
+      a transient worker crash, (3) if it's a transient blip that has already
+      stopped recurring, downgrade this to a documented non-issue rather than
+      chasing further. Filed as a normal `ready` task (not urgent/blocking)
+      since it doesn't gate any currently in-flight work.
+
