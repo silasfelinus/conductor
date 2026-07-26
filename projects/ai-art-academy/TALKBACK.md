@@ -1726,3 +1726,26 @@ if a fifth instance appears.
 - The PR author traced the fix against three other already-shipped call sites in the same codebase (`simpleCheckpointWorkflow.ts`, `imageToVideoWorkflow.ts`, existing krea2/flux2 wiring) to minimize the risk of a wrong ComfyUI node/input name, and was explicit in "Flags for Reviewer" about the one real verification gap instead of overclaiming.
 
 **Kaizen task:** none filed this cycle — the kaizen suggestion in the PR itself (strip the now-redundant `<lora:...>` inert prompt-text baking in `art-styler.vue`'s `buildLoraReference()`) is a reasonable small follow-up; deferred rather than auto-created since it's cosmetic/non-blocking and t-004's upcoming live-render work will touch the same file anyway.
+
+## 2026-07-26 | Reviewer (scheduled agent run) | ai-art-academy/t-010 | pattern
+
+**Decision:** merged PR #1097 (already implemented, `status: review`, CI-green when this session's `select_role.py` sweep identified it as the one open `worker/*` branch awaiting review).
+
+**Failure category:** null — clean first-pass, well-scoped, documentation-only.
+
+**Subject:** t-010 lane 3 (inspiration/preview assets) cycle. Worker session `worker-conductor-20260726T031600Z-aa-t010-7f3c` wrote a four-image "Everyday Modernity" teaching sequence (`docs/inspiration-sets/everyday-modernity-teaching-sequence.md`) comparing Ashcan School, the Nabis, American Scene painting, and social-realist print language over one shared rainy-city source scene.
+
+**Detail:**
+- Verified `PUBLIC-DOMAIN-POLICY.md` compliance: every prompt is movement-level with explicit anti-copying language ("avoid imitation of one named painting/mural/print"); no named living or recent artist referenced.
+- Structure matches (and slightly exceeds) prior sets: shared source scene, per-entry teaching goal, "look for" cues, common failure mode, plus a five-question comparison exercise and a generation-metadata checklist (prompt/model/seed/source-image/LoRA path) — good reproducibility discipline.
+- All 22 PR checks green (CodeQL x4 languages, GitGuardian, Python/TS build+test suites, roadmap/task-event YAML validators, dependency audit, etc.); `mergeable_state: clean`. Squash-merged (`95ea71f`).
+- The PR's "Flags for Reviewer" noted the task-event review transition might still be catching up on `main` — confirmed the roadmap already showed `status: review` correctly by the time of this review, no drift.
+
+**What was good:**
+- Consistent, comparable prompts (one shared scene, explicit "preserve X/Y/Z" instructions per variant) make the set genuinely useful for a side-by-side classroom demo, not just four disconnected images.
+- Ethics dimension (question 4 in the comparison exercise: does the treatment grant the flower seller agency, or use the figure as atmosphere?) is a good addition beyond earlier sets' formal-only comparisons.
+
+**What to improve:**
+- None specific this cycle — see kaizen below for a structural improvement rather than a defect.
+
+**Kaizen task:** t-038 — extract a lightweight inspiration-set template/schema (shared source scene, teaching goal, failure mode, ethics question, generation metadata checklist) so future sets don't each reinvent this structure from scratch, per the PR's own kaizen suggestion.
