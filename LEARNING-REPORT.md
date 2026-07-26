@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-07-26T05:07:26Z
+Generated: 2026-07-26T05:08:42Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **347**
-- Outcomes: blocked: 12, cancelled: 1, done: 334
+- Closed tasks recorded: **348**
+- Outcomes: blocked: 12, cancelled: 1, done: 335
 - Success rate: **96%**
 - Average passes on successful tasks: **0.0**
 
@@ -15,7 +15,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 | Project | Closed | Success rate |
 |---|---|---|
-| ai-art-academy | 37 | 100% |
+| ai-art-academy | 38 | 100% |
 | alexa-integration | 2 | 100% |
 | animation-manager | 10 | 100% |
 | animation-studio | 2 | 50% |
@@ -55,7 +55,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 15 | 40% |
-| software | 332 | 99% |
+| software | 333 | 99% |
 
 ## Failure categories
 
@@ -75,6 +75,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-07-26 `ai-art-academy/t-038` — When the priority-order top task (t-004) is genuinely operationally blocked and has already been rechecked twice the same day per its own note, the right move is to pick a different ready task within the same top-priority project rather than re-checking the blocker a third time or dropping to a lower-priority project. t-038 (extract a reusable inspiration-set template from an existing hand-rolled example) had no dependency on the live render backend, so it was a clean, fast, fully-verifiable-locally pick. Docs-only PR, all CI green (conductor PR #1100), merged same cycle.
 - 2026-07-26 `kind-robots/t-047` — Additive migrations that ship with an already-identified real consumer (the approved pitch named digital-storefront's swag-rail query as the next task) review fast because the diff never has to justify itself speculatively -- ADD COLUMN + CREATE INDEX only, no seed/UI. Separately: a CI check (facet-catalog) hung indefinitely on 'Install dependencies' after a rebase and cancel_workflow_run didn't unstick it; pushing a trivial empty commit to force a fresh check run against a new head SHA resolved it in the normal ~90s, faster than waiting out or repeatedly cancelling the stuck run.
 - 2026-07-26 `digital-storefront/t-027` — Weekly site-audit findings can go stale within days when the audited code keeps moving -- STORE-AUDIT.md described social-publisher.vue as the giftshop's most mature wired piece, but it was removed (migration 20260718200000_remove_social_publishing) three days after the audit date. A generated audit document isn't self-updating like STATUS.md; treat its findings as dated snapshots and re-verify against the current checkout (Glob for the file/model) before relying on an audit claim that's more than a few days old, especially for a fast-moving surface.
 - 2026-07-26 `kind-robots/t-045` — Adding a NOT NULL/required column to a widely-selected Prisma model (Resource) breaks every narrower Prisma `select` object's derived type that a full-model-typed helper function consumes -- here resourceGallerySelect vs. checkpointScore(checkpoint: Resource, ...) in generate-preview.post.ts. A full vue-tsc/tsc run is the only reliable way to find every such break; grepping for the model name alone would have missed it. Also: this sandbox has no reachable DB, so any migration+seed-script task's live-data verification has to stop at typecheck/lint/a synthetic smoke test of the pure logic -- flag that gap explicitly in TALKBACK rather than claiming full verification.
@@ -84,7 +85,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-07-26 `ai-art-academy/t-037` — Kontext's buildKontextWorkflow lacked a LoraLoaderModelOnly node despite two sibling workflow builders (simpleCheckpointWorkflow.ts, imageToVideoWorkflow.ts) already using that exact pattern -- when adding a new generation route, check whether an existing sibling route already solved the same wiring problem before assuming a field like loraPath reaching enqueue.post.ts as provenance metadata means it also reaches the render graph.
 - 2026-07-25 `model-builder/t-022` — The model-builder COMMIT executor's CREATE/ASSET_ONLY/idempotency paths (PR #190) had zero non-CI coverage (no test file, no live smoke) despite already backing gated reference runs t-016/t-017/t-018 -- a live prod round-trip (throwaway private/inactive Dream + Characters, cleaned up via DELETE after verification) was the only way to prove the idempotencyKey claim-then-write pattern and the isPublic/isActive=false override actually hold outside a type-checker. Also: GET /api/characters ignores a `?id=` query string and silently returns the unfiltered list -- the working per-id lookup is the path-param route GET /api/characters/{id}; worth knowing before the next live-smoke task on this surface.
 - 2026-07-25 `animation-manager/t-014` — Existing invariant-verifier scripts need explicit CI wiring or real regressions can remain invisible until a developer happens to run them locally.
-- 2026-07-25 `kind-robots/t-033` — A monitoring/recheck task with no recurring: true flag and no defined stopping criterion will keep surfacing as the highest-priority ready task in its project every time rotation lands there, even after the finding has been negative for a week straight (seven consecutive clean rechecks, 07-18 through 07-25, for kind-robots/t-033's Prisma cast-bypass sweep) -- each cycle burns a full rotation slot re-confirming the same zero-evidence result instead of doing new work. When a task's own note pattern is wait-for-new-evidence-recheck-meanwhile with no cadence limit, either mark it recurring: true (if the check itself is the ongoing value) or close it once repeated evidence makes the standing caution well-established, documenting that a genuine new instance should get a fresh task rather than reopening the closed one. Do not leave an indefinite-monitoring task at bare status: ready.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-07-26T05:07:26Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-07-26T05:08:42Z_
