@@ -486,10 +486,37 @@ tasks:
       Dry-run by default; --apply requires KR_API_TOKEN, same convention as
       reconcile_expressions.py. 6 tests added, full conductor suite green
       (581 passed).
-      TO SILAS: from a terminal with KR_API_TOKEN set:
+
+      CORRECTED 2026-07-26 (Silas, before running it): "no I did not say to
+      patch to match avatar image name, I said patch to folder name.
+      AvatarImages were rough draft titles that we ran with... we should
+      derive from the folder names in expressions as those were the final
+      drafts." Real distinction, not just wording -- avatarImage is a live
+      DB field someone could edit/typo/leave stale at any point; the actual
+      expression folder on the media share is the current, physical ground
+      truth (and per Silas: "the folder names are good, and I like them,
+      they fit our naming requirements and are unambiguous").
+      Rebuilt as scripts/rename_bot_slugs_to_folder.py (renamed from
+      rename_bot_slugs_to_avatar.py): instead of deriving the new slug from
+      each bot's avatarImage field via the bulk API list, it now walks the
+      REAL expression folders directly (same KR_MEDIA_IMAGES_DIR /
+      KIND_ROBOTS_ROOT env vars and directory layout as
+      reconcile_expressions.py), resolving each folder's owner by reusing
+      reconcile_expressions.py's own three-tier lookup (direct
+      narrator-by-folder-slug, avatarImage fallback, bulk-list fallback --
+      avatarImage is still used to help FIND the right owner, since that's
+      exactly the mismatch being bridged, but never as the value written
+      back), then plans old_slug -> folder_name (the literal directory
+      name being iterated) for every mismatch. Same PATCH endpoint, same
+      collision-safe getUniqueBotSlug behavior, same dry-run-by-default /
+      --apply convention. 7 tests rewritten for the new design (was 6).
+      Full conductor suite green (582 passed).
+      TO SILAS: from a terminal with KR_API_TOKEN set (and
+      KR_MEDIA_IMAGES_DIR or a kind_robots checkout available, same as
+      reconcile_expressions.py):
       ```
-      python3 scripts/rename_bot_slugs_to_avatar.py            # review the plan first
-      python3 scripts/rename_bot_slugs_to_avatar.py --apply    # then apply it
+      python3 scripts/rename_bot_slugs_to_folder.py            # review the plan first
+      python3 scripts/rename_bot_slugs_to_folder.py --apply    # then apply it
       ```
       Expect ~27 renames (the same bots that needed the avatarImage
       fallback this session), each printed as `old-slug -> new-slug`. This
@@ -497,11 +524,25 @@ tasks:
       above: renaming the sentient-bar narrator's slug from "serendipity"
       to "sentient-bar" frees that generic name back up rather than leaving
       two concepts contesting it. Once applied, this closes the root cause
-      -- reconcile_expressions.py's avatarImage-fallback tier becomes a
-      dormant safety net for these bots rather than something load-bearing,
-      and any brand-new narrator bot created with slug == avatarImage from
-      the start will never need it at all. Set status: done here once the
-      rename run looks right.
+      -- reconcile_expressions.py's direct narrator-by-folder-slug lookup
+      will succeed on the first try for these bots going forward, and its
+      avatarImage-fallback tier becomes a dormant safety net rather than
+      something load-bearing. Set status: done here once the rename run
+      looks right.
+
+      OPEN FOLLOW-UP (not part of this fix, flagging so it isn't lost):
+      Silas's fuller expressions-folder listing shows several folders with
+      no corresponding narrator-bot activity in any reconcile run at all
+      (e.g. ami-bot, ami-butterfly, agatha-crowley, captain-fluke,
+      cassandra-bot, cosmo-bot, and others matching the OLDER
+      stores/seeds/seedBots.ts roster, plus one, "ami-butterfly", that
+      looks like a stray/duplicate of "butterfly-ami" sitting unused next
+      to it) -- these never appear in reconcile_expressions.py's output at
+      all because their owner's slug already equals the folder name
+      exactly (a silent, healthy no-op, not a bug), so this fix doesn't
+      touch them. Worth a look at whether any of those "-bot"-suffixed or
+      duplicate-looking folders are genuinely stale/orphaned media worth
+      cleaning up, separately from the slug-consistency fix here.
     soft_gate: true
 
   - id: t-012
