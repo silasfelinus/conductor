@@ -4196,3 +4196,14 @@ records:
   failure_category: null
   lesson: Preserve upstream structured failure detail at the boundary where it would otherwise be collapsed
     into a generic error; diagnosis cannot recover evidence that was never stored.
+- date: '2026-07-26'
+  project: digital-storefront
+  task: t-034
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: A failure-record insert must not reference the same missing foreign key that caused the failure;
+    preserve the paid-order audit trail by omitting the dependent row when its required parent no longer
+    exists.
