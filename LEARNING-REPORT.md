@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-07-26T07:06:58Z
+Generated: 2026-07-26T07:15:43Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **350**
-- Outcomes: blocked: 12, cancelled: 1, done: 337
+- Closed tasks recorded: **351**
+- Outcomes: blocked: 12, cancelled: 1, done: 338
 - Success rate: **96%**
 - Average passes on successful tasks: **0.0**
 
@@ -35,7 +35,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | humboldt-impropriety-calendar | 1 | 0% |
 | humboldt-scoop | 1 | 100% |
 | humboldt-scoop-cms | 1 | 100% |
-| kind-robots | 37 | 97% |
+| kind-robots | 38 | 97% |
 | kindrobots-unraid | 4 | 100% |
 | media-watchlist | 4 | 100% |
 | mermaids-of-venice | 3 | 100% |
@@ -55,7 +55,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 15 | 40% |
-| software | 335 | 99% |
+| software | 336 | 99% |
 
 ## Failure categories
 
@@ -75,6 +75,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-07-26 `kind-robots/t-049` — An investigate-type kaizen task can close cleanly with no code diff and no PR to the target repo when the investigation's own two open questions both resolve to 'already handled': check `git log -p --follow` on the file in question before assuming a protective setting (here, a job-level `timeout-minutes`) needs adding -- it may already predate the incident that prompted the task. Also worth a quick recent-run-history check via the GitHub Actions API before treating a single observed hang as a recurring pattern.
 - 2026-07-26 `kind-robots/t-043` — For a cross-app authorization boundary (on-behalf-of mana charging), splitting the pure decision function into its own dependency-free module paid off immediately -- it let the security property get a direct 5-case unit test wired into CI, instead of relying on integration coverage that would need the full Nuxt runtime and a live DB. The one place this class of feature silently breaks is billing: on-behalf-of charges must debit the target user's own standing, not the caller's server-key standing, or every cross-app charge becomes accidentally free -- worth checking for explicitly in review whenever a machine-caller can act on behalf of another user.
 - 2026-07-26 `digital-storefront/t-029` — A prerequisite field landing first with a named downstream consumer already identified (t-020's Resource.commercialSafe migration named this exact task) means the wiring PR can be built and reviewed with zero ambiguity about intent or scope -- the diff was a pure function (checkPrintEligibility), one new authenticated GET endpoint mirroring an existing endpoint's auth pattern, and a UI wire-up, no schema changes. Reviewed and merged same-cycle with all CI green.
 - 2026-07-26 `ai-art-academy/t-038` — When the priority-order top task (t-004) is genuinely operationally blocked and has already been rechecked twice the same day per its own note, the right move is to pick a different ready task within the same top-priority project rather than re-checking the blocker a third time or dropping to a lower-priority project. t-038 (extract a reusable inspiration-set template from an existing hand-rolled example) had no dependency on the live render backend, so it was a clean, fast, fully-verifiable-locally pick. Docs-only PR, all CI green (conductor PR #1100), merged same cycle.
@@ -84,7 +85,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-07-26 `kind-robots/t-048` — A prior PR's 'zero callers' claim about a Vue component (art-manager.vue) was wrong because its grep only checked pages/ and components/, missing Nuxt Content .md files that embed components via MDC syntax (:component-name). Caught before implementation by re-grepping content/**/*.md as well. When trusting a 'this component/route is dead' claim before deleting or gating something, check content/**/*.md (or any CMS/markdown layer that can reference components) in addition to the usual source directories.
 - 2026-07-26 `kind-robots/t-044` — The Grant-model PR scoped itself tightly to exactly the pitch's first-task section (additive CREATE TABLE + 2 FKs, no route rewiring) and it paid off in review speed -- the migration.sql was auditable line-by-line in seconds (1 CREATE TABLE, 2 ADD CONSTRAINT, nothing else) precisely because nothing else was mixed into the diff. New authz helper (contentAccess.ts) shipped unwired on purpose, which kept the PR reviewable without needing to trace every call site it would eventually gate.
 - 2026-07-26 `kind-robots/t-046` — When a feature appears missing, verify reachability before rebuilding it: video-generator.vue was already complete, but its only prior route lived behind dead dashboard configuration and an unwired manager component.
-- 2026-07-26 `ai-art-academy/t-037` — Kontext's buildKontextWorkflow lacked a LoraLoaderModelOnly node despite two sibling workflow builders (simpleCheckpointWorkflow.ts, imageToVideoWorkflow.ts) already using that exact pattern -- when adding a new generation route, check whether an existing sibling route already solved the same wiring problem before assuming a field like loraPath reaching enqueue.post.ts as provenance metadata means it also reaches the render graph.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-07-26T07:06:58Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-07-26T07:15:43Z_
