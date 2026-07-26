@@ -716,8 +716,8 @@ tasks:
 - id: t-029
   milestone: m4
   title: 'Wire the print-eligibility gate to read Resource.commercialSafe instead of the checkpointResourceId-IS-NULL default-deny'
-  status: claimed
-  owner: worker
+  status: done
+  owner: reviewer
   passes: 0
   stakes: reversible
   depends_on: [t-020]
@@ -742,9 +742,38 @@ tasks:
     and sanity-check the classification output first — the seed script's
     backend matching is regex-based heuristics, not a verified mapping
     (flagged in kind-robots' TALKBACK 2026-07-26).
+
+    REVIEWED AND MERGED 2026-07-26 (Reviewer, conductor sweep session): kind_robots
+    PR #996 implements `checkPrintEligibility()` in `server/api/art/utils/printEligibility.ts`
+    exactly per the pipeline doc's §4 rule (not-mature, owned-or-public, base-model-or-
+    commercialSafe-checkpoint) plus `GET /api/art/image/:id/print-eligibility` (auth/
+    visibility gate mirrors `facets.get.ts`) and wired the gate into `print-swag.vue`'s
+    Add-to-Cart button. No schema changes, no live checkout/payment logic touched. All CI
+    green (verify, TypeScript, Contract verifiers, facet-catalog). Merged as-is.
   claimed_by: claude-conductor-scheduled-20260726T050916Z-ds-t029
   claimed_at: '2026-07-26T05:09:17Z'
-  updated: '2026-07-26T05:09:17Z'
+  updated: '2026-07-26T06:10:00Z'
+
+- id: t-030
+  milestone: m4
+  title: "Design a PrintJob model + real POD checkout flow to replace print-swag.vue's UI mock"
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  depends_on: [t-029]
+  note: >
+    Kaizen from t-029's close (kind_robots PR #996, merged 2026-07-26): the new
+    print-eligibility gate has a real, tested check but no live consumer — the
+    self-service print entry point (`print-swag.vue`) is still a UI mock
+    (`addToCart` just `console.log`s + `alert`s, no Stripe/order integration).
+    Per gallery-to-swag-pipeline.md §7 steps 2/5/6: define a `PrintJob` model
+    (additive migration) and a real checkout flow that calls the eligibility
+    endpoint before allowing a print/swag order. Payment/checkout integration is
+    outward-facing — expect this to reach `needs-human` once it touches a live
+    payment provider or order fulfillment API; the schema/plumbing work up to
+    that point is reversible software.
+  updated: '2026-07-26T06:10:00Z'
 
 - id: t-028
   milestone: m1
