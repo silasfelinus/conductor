@@ -109,6 +109,10 @@ def patch_consumer(consumer, default_target_repo):
         payload = job.setdefault("payload", {})
         payload["targetRepo"] = _target_repo(entry, default_target_repo)
         payload["imagePath"] = _image_path(entry, default_target_repo)
+        if entry.get("id"):
+            job["idempotencyKey"] = str(entry["id"])
+        if entry.get("project_slug"):
+            job["projectSlug"] = str(entry["project_slug"])
         return job
 
     def save_result(entry, image_b64):

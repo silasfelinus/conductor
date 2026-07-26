@@ -71,6 +71,15 @@ LEGACY_WEAK_PROMPT_PATTERNS = [
     ),
 ]
 GENERIC_IMAGE_ID = re.compile(r"\b(?:art\s*)?image\s*#?\s*\d+\b", re.IGNORECASE)
+PROJECT_ASSET_NAME = re.compile(
+    r"^(?P<slug>.+)-(?P<variant>icon|card|hero)\.[a-z0-9]+$",
+    re.IGNORECASE,
+)
+PROJECT_FIELD_BY_VARIANT = {
+    "icon": "imagePath",
+    "card": "cardPath",
+    "hero": "heroPath",
+}
 
 
 def normalized_prompt(entry):
@@ -201,6 +210,67 @@ def mark_done(req_ids):
     return changed
 
 
+def project_art_sync_payload(entry, art_image_id):
+    """Build the Kind Robots Project cover synchronization payload when applicable.
+
+    New missing-image reports carry explicit project metadata. Older Conductor
+    project-art requests are recoverable from `{slug}-{variant}.webp`, allowing
+    the existing backlog to self-heal without rewriting every historical entry.
+    """
+    image_path = str(entry.get("image_path") or "").strip().replace("\\", "/")
+    source_url = str(entry.get("source_url") or "").strip()
+    target_repo = str(entry.get("target_repo") or "").strip()
+    explicit_slug = str(entry.get("project_slug") or "").strip()
+    explicit_field = str(entry.get("project_field") or "").strip()
+    basename = Path(image_path).name
+    match = PROJECT_ASSET_NAME.match(basename)
+    variant = str(
+        entry.get("variant") or (match.group("variant") if match else "")
+    ).lower()
+    project_field = (
+        explicit_field
+        if explicit_field in PROJECT_FIELD_BY_VARIANT.values()
+        else PROJECT_FIELD_BY_VARIANT.get(variant)
+    )
+    project_slug = explicit_slug or (match.group("slug") if match else "")
+
+    if not project_slug or not project_field:
+        return None
+
+    project_id = entry.get("project_id")
+    try:
+        project_id = int(project_id) if project_id is not None else None
+    except (TypeError, ValueError):
+        project_id = None
+
+    return {
+        "projectId": project_id,
+        "projectSlug": project_slug,
+        "projectField": project_field,
+        "variant": variant,
+        "targetRepo": target_repo,
+        "imagePath": image_path,
+        "sourceUrl": source_url,
+        "artImageId": int(art_image_id),
+    }
+
+
+def sync_project_art(entry, art_image_id):
+    payload = project_art_sync_payload(entry, art_image_id)
+    if not payload:
+        return False
+
+    status, response = consumer.http_json(
+        "POST",
+        f"{consumer.KR_BASE_URL}/api/conductor/project-art-complete",
+        payload,
+    )
+    if status != 200 or not response or not response.get("success"):
+        detail = response.get("message") if isinstance(response, dict) else response
+        raise RuntimeError(f"project art sync failed: HTTP {status} {detail}")
+    return True
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--live", action="store_true", help="actually queue, download, and mark done")
@@ -295,6 +365,8 @@ def main():
             print(f"  DONE {name} -> {output.relative_to(ROOT)} (ArtImage {job['artImageId']})")
             if warning:
                 print(f"    WARNING: {warning}")
+            if sync_project_art(request, job["artImageId"]):
+                print("    synchronized Project cover path + ArtImage relation")
             if request.get("id"):
                 done_ids.append(request["id"])
         except Exception as error:  # noqa: BLE001 - keep draining the batch
