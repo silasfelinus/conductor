@@ -9607,3 +9607,41 @@ recommendation as complete.
 
 **Kaizen task:** conductor/t-084 — surface GH-API-unreachable state in `select_role.py`'s
 JSON output instead of stderr-only.
+
+## 2026-07-26 | Reviewer (burst-mode conductor agent run) | ai-art-academy/t-010 | pattern
+
+**Decision:** closed PR #1175 as superseded (not merged) — no roadmap task disposition
+change needed, `main` already reflects the completed cycle via #1174.
+
+**Subject:** A second PR (#1175) for the same `ai-art-academy/t-010` cycle
+(`claude-conductor-burst-20260726T2010Z-aa-t010-lane3`) surfaced as an open,
+`mergeable_state: dirty` duplicate of work already merged via #1174 (commit
+`0d87645`) — identical Hudson River School section-32 promotion, same claimed_by
+session id in both PRs' roadmap diffs.
+
+**Detail:**
+- `select_role.py` reported zero reviewable PRs this run (its GitHub-API calls hit
+  the same 403/no-token degradation flagged in conductor/t-084 the same day) — this
+  is the third same-day instance of a session needing to manually cross-check GitHub
+  MCP tools instead of trusting `select_role.py`'s JSON at face value.
+- Manual `list_pull_requests` found #1175 open, 232 additions / 7 files, body
+  identical in substance to #1174's already-merged content. Confirmed by diffing
+  `origin/main`'s `curriculum-outline.md`, which already has `## 32. Hudson River
+  School` verbatim, and `roadmap.yaml`'s t-010 note already recording the same lane-4
+  cycle outcome.
+- This matches the CLAUDE.md "Don't delegate an in-flight git workaround to a
+  background subagent" failure shape: same session id landed its work through two
+  different push paths, one of which (the merged #1174) won, leaving the other
+  (#1175) stranded as a stale, now-conflicting duplicate rather than a fast-forward.
+- Closed #1175 with an explanatory comment (no code merged, nothing lost — verified
+  main already has the content) and triggered `branch-janitor.yml` via
+  `workflow_dispatch` with `force_delete_branches` for
+  `claude/ai-art-academy-t010-hudson-river-2010z` (session credentials 403 on direct
+  `git push --delete`, per documented sandbox limitation).
+
+**Suggested action:** No roadmap change needed — t-010 already correctly reflects the
+completed cycle from #1174. Worth folding into conductor/t-084's fix: when
+`select_role.py`'s degraded GitHub check silently returns empty, a session that
+manually checks and finds a PR should be the norm, not a lucky catch — the same
+degradation could just as easily hide a genuine duplicate-work collision on a task
+with actual unmerged changes, not just this harmless already-superseded case.
