@@ -175,7 +175,7 @@ tasks:
 - id: t-022
   milestone: m4
   title: Monster Recast book 1 production pass — 36 final color/BW pairs
-  status: claimed
+  status: review
   passes: 0
   stakes: reversible
   updated: '2026-07-26T05:08:30Z'
@@ -276,6 +276,45 @@ tasks:
     FOR SILAS: The sole canonical Monster Recast 18-image color event is still present at color-art-events/20260717T203500Z-monster-recast-batch-01.yaml and has reached attempt_count 18 (last attempt 2026-07-19T19:37:03Z) without landing renders. Recent repository evidence says the shared ComfyUI/Alexandria render backend is failing every hourly run. No duplicate event or BW work was created. TO RESUME: restore/verify the home render backend, then set this task back to ready; the existing event will retry safely. This is a soft infrastructure gate and does not block unrelated roadmap work.
 
     CONFIRMED 2026-07-25: Silas — "confirmed it's working already." Flipping back to ready; also matches this morning's independent finding that monster-recast-art-jobs.yml's daily schedule had silently stopped (fixed, PR #1058) and recent auto-art-generate runs are completing successfully.
+
+    BURST-MODE CYCLE 2026-07-26 (claude-conductor-burst-20260726T0500Z-cb-t022): reconciliation
+    preflight (coloring_proposal_status.py --check) showed the queue in good order (3 of 36
+    Monster Recast concepts have a real Silas-approved color/BW pair per
+    sets/monster-recast/approved/manifest.yaml; next unclaimed slot is mr-001). Ran the actual
+    production pass -- consume_coloring_book_color_art.py --book monster-recast --live -- and
+    found two distinct problems, one now fixed and one still an open infra gate:
+    (1) FIXED (this session, conductor scripts/consume_art_queue.py): GET /api/art/queue/stats
+    showed 18 of the last 19 failed ArtJobs (ids 2146-2184, all coloring-book, all COMFY engine,
+    all exhausted at 3 attempts) dying with the identical error
+    "save-generated failed: HTTP 500 ... Invalid `prisma.artImage.update()` invocation: Value
+    out of range for the type: Out of range value for column 'seed'". Root cause:
+    resolve_seed() picked random.randint(0, 1_000_000_000_000_000) for any entry with no
+    pinned seed, but kind_robots' ArtImage.seed is a MySQL signed INT (max 2_147_483_647,
+    see kind_robots prisma/schema.prisma:33) -- every unseeded render completed generation
+    successfully and then failed permanently at the DB-save step. This is shared queue
+    machinery (consume_art_requests.py / ai-art-academy, consume_coloring_book_color_art.py /
+    coloring-book, consume_art_queue_to_media.py, consume_art_requests_to_media.py all import
+    it), so the bug and the fix are not coloring-book-specific. Fixed by clamping both the
+    random fallback and any caller-supplied seed to SEED_MAX = 2_147_483_647 (matches
+    kind_robots' own randomSeed() in server/api/art/queue/[id]/edit.post.ts); added
+    test_resolve_seed_clamps_out_of_range_and_random_values and strengthened
+    test_entry_to_job_random_seed_when_unset_is_reported to assert the upper bound. Full
+    conductor suite green (531 tests) before opening the PR. mr-001's own local queue entry
+    (color-art-jobs.yaml) was not part of the 18 -- it carries an explicit pinned seed
+    (840001, in-range) and was unaffected by this bug.
+    (2) STILL OPEN, soft infra gate, same shape as ai-art-academy/t-004's 2026-07-25/07-26
+    findings: submitted mr-001's color proposal live (ArtJob 2445, queued 05:12:30Z) and it
+    sat status: PENDING, claimedAt null, for the full 600s poll plus a follow-up manual check
+    minutes later -- never claimed. queue/stats confirms this is a capacity problem, not a
+    down relay: queueDepth PENDING=147 (oldest id 2017, ~42h old), RUNNING=1, and a 24h
+    windowThroughput of only 53 DONE against 145 newly PENDING -- the backlog is growing, not
+    draining, so a freshly queued job has no realistic chance of clearing within one session's
+    poll window regardless of the seed fix. Not a duplicate diagnosis: this is the identical
+    underlying relay-throughput gate ai-art-academy/t-004 already has open (same 2026-07-26
+    session window), just observed independently from the coloring-book side. No further retry
+    passes spent this cycle chasing the same confirmed backlog a second time. Re-armed to
+    ready per the recurring-task rule; ArtJob 2445 remains queued and will complete on its own
+    once the backlog drains (mr-001's queue entry needs no manual resubmission).
   recurring: true
   claimed_by: claude-conductor-burst-20260726T0500Z-cb-t022
   claimed_at: '2026-07-26T05:08:30Z'

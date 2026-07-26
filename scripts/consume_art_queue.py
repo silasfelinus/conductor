@@ -198,12 +198,21 @@ def parse_size(size, default=(1024, 1024)):
     return int(m.group(1)), int(m.group(2))
 
 
+SEED_MAX = 2_147_483_647  # MySQL signed INT max; ArtImage.seed is Int in prisma/schema.prisma
+
+
 def resolve_seed(seed):
-    """A concrete, in-range seed. Reuse a caller-supplied non-negative int;
-    otherwise pick a random one (matches the KR endpoint's -1 -> random)."""
+    """A concrete, in-range seed. Reuse a caller-supplied non-negative int (clamped
+    to fit the ArtImage.seed column, a MySQL signed INT); otherwise pick a random
+    one in the same range (matches the KR endpoint's -1 -> random, see randomSeed()
+    in kind_robots server/api/art/queue/[id]/edit.post.ts). A prior version picked
+    randint(0, 1_000_000_000_000_000) here, far outside INT range -- every render
+    using an unset seed landed a value the DB rejected at save time ("Out of range
+    value for column 'seed'"), permanently failing the job after retries (18
+    consecutive coloring-book ArtJobs, ids 2146-2184, 2026-07-26)."""
     if isinstance(seed, int) and not isinstance(seed, bool) and seed >= 0:
-        return seed
-    return random.randint(0, 1_000_000_000_000_000)
+        return min(seed, SEED_MAX)
+    return random.randint(0, SEED_MAX)
 
 
 def build_flux_workflow(prompt, width, height, steps, guidance, seed, unet):
