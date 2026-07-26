@@ -5,6 +5,12 @@ build_digest.py — daily digest for Conductor across all projects + pitches.
 Reads every projects/*/roadmap.yaml (skipping _template), scans pitches/ for items
 awaiting Silas, plus recent git history. Prints a JSON digest for the emailer.
 
+Projects whose project-overrides.yaml status is not "active" (paused, retired,
+finished) are skipped entirely -- same rule CLAUDE.md's session-startup sweep
+already applies, so a paused/retired/finished project's stale needs-human tasks
+and frozen milestones don't keep surfacing in the daily email after the tasks
+that made them stale are long gone.
+
 Usage: python scripts/build_digest.py [--since "24 hours ago"]
 """
 import subprocess, sys, json, argparse, datetime, glob, os, re
@@ -14,6 +20,30 @@ try:
 except ImportError:
     print("PyYAML not installed; run: pip install pyyaml", file=sys.stderr)
     sys.exit(1)
+
+ACTIVE_STATES = {"active"}
+
+
+def load_inactive_project_slugs():
+    """Set of project slugs whose project-overrides.yaml status is NOT
+    "active" (paused, retired, finished) -- the digest skips these entirely.
+    A project with no override entry at all is treated as active
+    (missing-override is its own separate audit finding, not a reason to
+    silently hide a project from the digest). Missing project-overrides.yaml
+    itself degrades to "nothing is inactive" rather than crashing the digest."""
+    try:
+        data = yaml.safe_load(open("project-overrides.yaml")) or {}
+    except FileNotFoundError:
+        return set()
+    overrides = {
+        str(entry.get("slug")): entry
+        for entry in data.get("overrides", [])
+        if isinstance(entry, dict) and entry.get("slug")
+    }
+    return {
+        slug for slug, entry in overrides.items()
+        if entry.get("status") not in ACTIVE_STATES
+    }
 
 def git(*args):
     return subprocess.run(["git", *args], capture_output=True, text=True).stdout.strip()
@@ -290,12 +320,17 @@ def main():
     ap.add_argument("--since", default="24 hours ago")
     args = ap.parse_args()
 
+    inactive_slugs = load_inactive_project_slugs()
+
     projects = []
     for path in sorted(glob.glob("projects/*/roadmap.yaml")):
         if os.sep + "_template" + os.sep in path:
             continue
+        slug = os.path.basename(os.path.dirname(path))
+        if slug in inactive_slugs:
+            continue
         rm = yaml.safe_load(open(path)) or {}
-        name = rm.get("project", os.path.basename(os.path.dirname(path)))
+        name = rm.get("project", slug)
         milestones = rm.get("milestones", [])
         tasks = rm.get("tasks", [])
         projects.append({
