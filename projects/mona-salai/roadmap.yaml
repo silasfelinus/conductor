@@ -1,0 +1,221 @@
+project: mona-salai
+kind: software
+autonomous: true
+goal: >
+  Build a transparent, heavily sourced public investigation of the hypothesis that
+  Leonardo's Mona Lisa incorporates or depicts features of Gian Giacomo Caprotti,
+  known as Salaì, using art history, reproducible computer vision, geometric facial
+  analysis, and explicit uncertainty rather than presenting an AI similarity score as proof.
+notes_from_silas: >
+  New project 2026-07-26. Create a front-end page explaining the theory that Salaì may
+  have been the Mona Lisa model, with strong sourcing and room for the evidence to support
+  or contradict it. Test the idea using modern facial-recognition, landmark, bone-structure,
+  and machine-learning methods across public-domain paintings and drawings associated with
+  Salaì, especially Leonardo's Saint John the Baptist because of the visual resemblance.
+  First determine what research already exists, what tools and image sources are available,
+  and whether a defensible experiment can be designed and replicated. Do not force a verdict.
+  Treat paintings as stylized, restored, differently posed artifacts—not biometric photos.
+milestones:
+  - id: m1
+    title: Historiography, sources, and hypothesis map
+    weight: 20
+    status: in-progress
+  - id: m2
+    title: Dataset provenance and image normalization
+    weight: 20
+    status: pending
+  - id: m3
+    title: Reproducible facial-geometry experiments
+    weight: 25
+    status: pending
+  - id: m4
+    title: Statistical controls, falsification, and expert review
+    weight: 20
+    status: pending
+  - id: m5
+    title: Kind Robots public research page
+    weight: 15
+    status: pending
+tasks:
+  - id: t-001
+    milestone: m1
+    title: Write the research design and evidence-standard brief
+    status: ready
+    owner: reviewer
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-26T09:00:00Z'
+    note: >
+      Define the claim carefully: distinguish "Lisa del Giocondo was the sitter," "Salaì
+      supplied reusable facial features," "the portrait became an idealized composite," and
+      "Salaì was the principal model." Establish an evidence ladder and falsification rules.
+      The documented Lisa del Giocondo identification must be treated as the mainstream
+      historical baseline, not hand-waved away. Explain why facial-recognition confidence on
+      artworks cannot establish identity by itself.
+  - id: t-002
+    milestone: m1
+    title: Build a heavily sourced historiography of Mona Lisa identity claims
+    status: ready
+    owner: reviewer
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-26T09:00:00Z'
+    note: >
+      Survey primary documents and serious scholarship supporting Lisa del Giocondo, the Salaì
+      hypothesis, composite/self-portrait arguments, and other major alternatives. Track who
+      made each claim, what evidence was used, scholarly reception, and whether the claim is
+      independently reproducible. Prefer museum, archive, peer-reviewed, and university sources.
+  - id: t-003
+    milestone: m1
+    title: Audit prior computational and forensic analyses of the Mona Lisa
+    status: ready
+    owner: reviewer
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-26T09:00:00Z'
+    note: >
+      Locate prior morphing, landmark, dental, gaze, expression, symmetry, facial-proportion,
+      and identity studies. Record datasets, algorithms, preprocessing, controls, limitations,
+      and whether code or measurements are available. Explicitly check whether a Mona Lisa vs
+      Salaì or Saint John comparison has already been attempted.
+  - id: t-004
+    milestone: m2
+    title: Create the candidate artwork and control-image registry
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-26T09:00:00Z'
+    depends_on: [t-001, t-002, t-003]
+    note: >
+      Build a provenance-first dataset registry for high-resolution public-domain images:
+      Mona Lisa scans; Saint John the Baptist; Bacchus; Angel Incarnate and drawings attributed
+      to or proposed as Salaì portraits; secure portraits of unrelated sitters by Leonardo and
+      contemporaries; same-artist and different-artist controls. Record museum source, date,
+      attribution confidence, crop, pose, restoration/scan notes, license, and checksum. Do not
+      silently treat every beautiful curly-haired youth as Salaì.
+  - id: t-005
+    milestone: m2
+    title: Design artwork-specific normalization and annotation pipeline
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-26T09:00:00Z'
+    depends_on: [t-004]
+    note: >
+      Specify face detection fallback, manual landmark review, pose estimation, left/right
+      reflection policy, perspective correction, crop masks, image-resolution thresholds,
+      uncertainty labels, and reproducible transforms. Preserve originals and produce a manifest
+      for every derivative. Avoid generative restoration or face completion in the primary test.
+  - id: t-006
+    milestone: m3
+    title: Benchmark modern face-embedding models on painted-portrait controls
+    status: waiting
+    owner: worker
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-26T09:00:00Z'
+    depends_on: [t-005]
+    note: >
+      Evaluate open models such as InsightFace/ArcFace and alternatives only after testing whether
+      they behave meaningfully on artworks. Use known-same-sitter and known-different-sitter painted
+      controls where available, plus same-artist controls to measure style leakage. Report score
+      distributions rather than a single magic percentage. No production biometric service needed.
+  - id: t-007
+    milestone: m3
+    title: Implement interpretable landmark and craniofacial proportion analysis
+    status: waiting
+    owner: worker
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-26T09:00:00Z'
+    depends_on: [t-005]
+    note: >
+      Compare stable geometric ratios and shape descriptors from manually reviewed landmarks:
+      orbital spacing, nasal proportions, mandibular contour, philtrum and mouth geometry,
+      brow arc, facial thirds, and silhouette where visible. Separate pose-dependent measurements
+      from approximately invariant ones. Call this facial geometry, not literal bone analysis,
+      unless 3D evidence supports a stronger term.
+  - id: t-008
+    milestone: m3
+    title: Test 3D-aware reconstruction and cross-pose consistency
+    status: waiting
+    owner: worker
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-26T09:00:00Z'
+    depends_on: [t-005]
+    note: >
+      Explore 3D morphable models or DECA-style reconstruction as a secondary experiment. Quantify
+      instability across crops, resolution, lighting, sfumato, and pose. Do not use generated frontal
+      faces as ground truth; publish sensitivity ranges and visual overlays.
+  - id: t-009
+    milestone: m4
+    title: Run blinded controls, permutation tests, and ablations
+    status: waiting
+    owner: reviewer
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-26T09:00:00Z'
+    depends_on: [t-006, t-007, t-008]
+    note: >
+      Pre-register comparisons before viewing final rankings. Test whether Mona Lisa–Saint John is
+      more similar than expected among Leonardo portraits, whether the result survives crop/pose/
+      model changes, and whether same-artist style explains the signal. Include shuffled labels,
+      unrelated-sitter controls, leave-one-method-out analysis, and multiple-comparison correction.
+  - id: t-010
+    milestone: m4
+    title: Produce a cautious findings report with competing explanations
+    status: waiting
+    owner: reviewer
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-26T09:00:00Z'
+    depends_on: [t-009]
+    note: >
+      Report evidence for and against each hypothesis. Separate historical evidence, visual analogy,
+      model outputs, and interpretation. A valid outcome may be inconclusive or may show that current
+      face models mostly detect Leonardo's recurring style. Include limitations, reproducibility files,
+      and what evidence would actually change the conclusion.
+  - id: t-011
+    milestone: m4
+    title: Seek art-history and computer-vision expert review
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: outward-facing
+    updated: '2026-07-26T09:00:00Z'
+    depends_on: [t-010]
+    note: >
+      Prepare a compact methods packet for review by at least one Leonardo/art-history specialist and
+      one computer-vision or biometrics researcher. Contacting experts or publishing requests is a
+      human gate. Incorporate critiques transparently; disagreement belongs on the page.
+  - id: t-012
+    milestone: m5
+    title: Build the sourced Mona Lisa / Salaì investigation page in kind_robots
+    status: waiting
+    owner: worker
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-26T09:00:00Z'
+    depends_on: [t-002, t-003, t-010]
+    note: >
+      Create an accessible Nuxt front-end page with: theory overview; mainstream Lisa del Giocondo
+      evidence; Salaì argument; interactive artwork comparison; methods; results; uncertainty meter;
+      strongest counterarguments; full citations; dataset and code links; and a change log. The page
+      must say what the experiment can and cannot establish. Use public-domain images with museum
+      attribution and avoid sensational certainty.
+  - id: t-013
+    milestone: m5
+    title: Add reproducibility bundle and machine-readable results
+    status: waiting
+    owner: worker
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-26T09:00:00Z'
+    depends_on: [t-009]
+    note: >
+      Publish manifests, landmark annotations, normalized derivatives where licensing permits,
+      model/version hashes, scripts, configuration, random seeds, score tables, and a plain-language
+      README. Make it possible for another researcher to rerun or contradict us without scraping the UI.
