@@ -4288,3 +4288,16 @@ records:
   lesson: When the same sandbox-access blocker (no local DB, no interactive browser egress) recurs across
     several builds, formalize a standing acceptance-bar exception in the project's own spec (one section,
     referenced by tag) instead of leaving each future PR to re-derive and re-explain the identical two facts.
+- date: '2026-07-26'
+  project: conductor
+  task: t-083
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: select_role.py's GitHub API calls can 403 in this sandbox (no GITHUB_TOKEN in the script's env,
+    a config gap not a real egress block) — observed live while reviewing this very task: the script
+    degraded to role: worker while a fully-green, reviewable claude/* PR (this task's own #1168) sat open,
+    caught only via a manual GitHub MCP list_pull_requests double-check. Filed t-084 so the JSON output
+    itself flags the degraded-signal case instead of only printing a stderr warning a caller may not read.

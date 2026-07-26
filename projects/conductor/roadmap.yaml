@@ -2666,3 +2666,34 @@ tasks:
     claimed_at: '2026-07-26T19:07:44Z'
     updated: '2026-07-26T20:05:42Z'
 
+  - id: t-084
+    milestone: m2
+    title: "select_role.py should surface 'GitHub API unreachable' in its JSON output, not just stderr, so a session doesn't mistake a silenced 403 for a genuine zero-signal result"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Kaizen from Reviewer merging conductor PR #1168/t-083 (2026-07-26): this
+      exact session's own `select_role.py` run hit "GitHub API unreachable ...
+      HTTP Error 403: Forbidden" for all three api.github.com calls (both
+      repos' PR lists, kind_robots branches) and degraded to an empty result
+      for every GitHub-backed signal (`candidate_reviewable_pr_count: 0`,
+      `red_stale_pr_count: 0`, `stranded_branch_count: 0`), silently
+      recommending `role: worker` — while a real, fully-green, reviewable
+      `claude/*` PR (#1168 itself, the fix for exactly this reviewer-signal
+      gap) was open on conductor at the same moment and only got caught
+      because this session independently double-checked via the GitHub MCP
+      `list_pull_requests` tool rather than trusting the script's JSON alone.
+      The warning already prints to stderr, but the returned JSON has no
+      field distinguishing "checked GitHub, found nothing" from "couldn't
+      reach GitHub, treated it as nothing." Fix: add a
+      `github_api_unreachable: bool` (or per-signal `_degraded` flags) to
+      `select_role()`'s output so a caller that only captures the JSON (not
+      stderr) can tell the two cases apart and knows to manually check
+      `list_pull_requests`/`list_branches` via its own GitHub MCP connector
+      before trusting a `role: worker`/`idle` recommendation as complete.
+    claimed_by: null
+    claimed_at: null
+    updated: '2026-07-26T20:10:00Z'
+

@@ -9567,3 +9567,43 @@ real, final Mermaids of Venice PDF and, if so, move it out of `public/` (or othe
 restrict access) as part of — or before — building the entitlement-gated download route,
 rather than shipping the gate while the ungated copy still sits reachable at its current
 path. Noted in `projects/digital-storefront/roadmap.yaml`'s t-023 note as well.
+
+## 2026-07-26 | Reviewer (burst-mode conductor agent run) | conductor/t-083 | pattern
+type: pattern
+
+**Subject:** Merged PR #1168 (conductor/t-083, `select_role.py` reviewer signal for green
+non-`worker/*` PRs) — this session's own `select_role.py` run was itself standing in
+exactly the scenario the PR fixes.
+
+**Detail:**
+- `select_role.py` recommended `role: worker` (ready task: ai-art-academy/t-004) because
+  all three GitHub-API-backed signals (reviewable PRs, red-stale PRs, stranded branches)
+  degraded silently to empty on a 403 (no `GITHUB_TOKEN` in this script's env — a config
+  gap, not a real egress block).
+- A manual double-check via the GitHub MCP `list_pull_requests`/`pull_request_read` tools
+  found PR #1168 itself: fully green (23/23 checks), opened from `claude/loving-wright-os2rkk`
+  (non-`worker/*`), sitting open. Read the diff in full before merging — the code correctly
+  implements what its own task note describes, tests cover the grace-period/worker-exclusion/
+  no-token edge cases, and the roadmap/TALKBACK bookkeeping in the diff was accurate. Merged
+  via squash.
+- By the time this session got back to closing the task out, a concurrent session
+  (same origin, `session_01SpDEgJ3iRpUcW5XjaYF94w` — evidently the original Worker session
+  that opened #1168, noticing its own merge) had already pushed the `status: done` flip
+  directly to `main` (commit `22000a43`). No conflict in practice — both sides agreed on the
+  outcome — but this session's own `status: done` commit was dropped as redundant once
+  discovered via a fresh `git fetch origin main`, keeping only the LEARNING.yaml record,
+  this TALKBACK entry, and the t-084 kaizen task, none of which the other session had added.
+- Ironic but instructive: had this session trusted `select_role.py`'s JSON output alone
+  (rather than independently checking GitHub MCP), it would have picked up ai-art-academy/t-004
+  instead and left this exact PR sitting unreviewed for another cycle — the same failure
+  mode t-083 itself was written to fix, just one layer up (API-auth-degraded instead of
+  branch-naming-blind).
+
+**Suggested action:** filed conductor/t-084 (kaizen) — `select_role.py` should surface a
+`github_api_unreachable`/degraded flag in its JSON output, not just a stderr print, so a
+session that only captures the JSON return value can tell "checked, found nothing" apart
+from "couldn't check, treated it as nothing" before trusting a `worker`/`idle`
+recommendation as complete.
+
+**Kaizen task:** conductor/t-084 — surface GH-API-unreachable state in `select_role.py`'s
+JSON output instead of stderr-only.
