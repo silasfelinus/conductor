@@ -180,8 +180,8 @@ tasks:
   - id: t-007
     milestone: m6
     title: "Implement deterministic route-plan API with selected customer count"
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     depends_on: t-006
@@ -197,6 +197,9 @@ tasks:
       paid third-party API — see t-006's note for Silas's exact hosting
       constraints (his own box, bonus for pm2-from-conductor-repo). No
       OpenRouteService fallback; do not build against it.
+    claimed_by: claude-conductor-burst-20260726T110853Z-hscms-t007
+    claimed_at: '2026-07-26T11:08:54Z'
+    updated: '2026-07-26T11:08:54Z'
 
   - id: t-008
     milestone: m6
