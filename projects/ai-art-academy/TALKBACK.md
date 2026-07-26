@@ -1707,3 +1707,22 @@ if a fifth instance appears.
 - None specific this cycle — this is exactly the kind of finding that's cheap to miss (the previous "go-ahead" was about operational readiness, not code completeness) and expensive to leave undiscovered (the registry would keep silently misrepresenting ~13 styles as LoRA-backed).
 
 **Kaizen task:** t-037 itself is this cycle's kaizen output — no separate one filed.
+
+## 2026-07-26 | Reviewer (scheduled agent run) | ai-art-academy/t-037 | pattern
+
+**Decision:** merged kind_robots PR #986 (already implemented and CI-green when this cycle's session-start sweep found it); closed t-037 as `done`.
+
+**Failure category:** null — the PR was well-scoped and matched the task's precise fix-scope note.
+
+**Subject:** t-037 (filed 2026-07-25 from the t-004 investigation, see the prior TALKBACK entry) asked for a `LoraLoaderModelOnly` node in `buildKontextWorkflow`, gated on `loraPath` presence. PR #986 delivered exactly that plus the two upstream wiring gaps the task note also named (`enqueue.post.ts` forwarding, `art-styler.vue`'s `runStyleTransfer()` actually sending the fields instead of only baking inert `<lora:...>` prompt text).
+
+**Detail:**
+- Verified the diff matches the task's stated scope: no LoRA → base graph unchanged (confirmed by reading the `if (loraName)` gate), so prompt-only styles are unaffected — exactly the safety property the task note required.
+- All 5 kind_robots PR checks green (TypeScript, Contract verifiers, facet-catalog, verify, GitGuardian). Squash-merged (`8fa3e4b`).
+- Real gap, correctly flagged by the PR author rather than glossed over: no live Comfy render was run to confirm the node actually renders (not just type-checks), because the relay queue was backlogged (~82 PENDING, oldest 35h+) at review time. Left this as an explicit next-step in t-037's closing note rather than blocking the merge on it — the code change is reversible and low-risk (additive node, gated no-op by default), and waiting for a live render would have stalled a clean, scoped fix indefinitely against an unrelated queue-depth problem.
+- Ran `resolve_deps.py`: this correctly flipped `t-004` (which depends_on `t-003, t-037`) from `waiting` to `ready` — the next session picking up ai-art-academy should treat the live-render/base-model-compatibility check as t-004's actual A/B work, not a separate follow-up.
+
+**What was good:**
+- The PR author traced the fix against three other already-shipped call sites in the same codebase (`simpleCheckpointWorkflow.ts`, `imageToVideoWorkflow.ts`, existing krea2/flux2 wiring) to minimize the risk of a wrong ComfyUI node/input name, and was explicit in "Flags for Reviewer" about the one real verification gap instead of overclaiming.
+
+**Kaizen task:** none filed this cycle — the kaizen suggestion in the PR itself (strip the now-redundant `<lora:...>` inert prompt-text baking in `art-styler.vue`'s `buildLoraReference()`) is a reasonable small follow-up; deferred rather than auto-created since it's cosmetic/non-blocking and t-004's upcoming live-render work will touch the same file anyway.

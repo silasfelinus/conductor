@@ -3992,3 +3992,12 @@ records:
   outcome: done
   failure_category: null
   lesson: "The model-builder COMMIT executor's CREATE/ASSET_ONLY/idempotency paths (PR #190) had zero non-CI coverage (no test file, no live smoke) despite already backing gated reference runs t-016/t-017/t-018 -- a live prod round-trip (throwaway private/inactive Dream + Characters, cleaned up via DELETE after verification) was the only way to prove the idempotencyKey claim-then-write pattern and the isPublic/isActive=false override actually hold outside a type-checker. Also: GET /api/characters ignores a `?id=` query string and silently returns the unfiltered list -- the working per-id lookup is the path-param route GET /api/characters/{id}; worth knowing before the next live-smoke task on this surface."
+- date: '2026-07-26'
+  project: ai-art-academy
+  task: t-037
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "Kontext's buildKontextWorkflow lacked a LoraLoaderModelOnly node despite two sibling workflow builders (simpleCheckpointWorkflow.ts, imageToVideoWorkflow.ts) already using that exact pattern -- when adding a new generation route, check whether an existing sibling route already solved the same wiring problem before assuming a field like loraPath reaching enqueue.post.ts as provenance metadata means it also reaches the render graph."
