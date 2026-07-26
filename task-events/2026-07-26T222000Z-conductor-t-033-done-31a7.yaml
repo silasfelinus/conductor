@@ -1,0 +1,14 @@
+version: 1
+project: conductor
+task: t-033
+operation: done
+session: claude-conductor-burst-20260726T220724Z-cond-t033
+updated: '2026-07-26T22:20:00Z'
+note: >-
+  Merged PR #1182 as commit bd9c19341f768fa9b2c37b9ae3a6de8a8fe196fd. The concurrent-claims design now pins lease revalidation, a global active-claim cap, append-safe shared writers, and an N=2 coloring-book pilot before implementation work begins.
+learning:
+  kind: software
+  stakes: reversible
+  passes: 0
+  lesson: >-
+    Concurrent Worker lanes need more than per-task leases: sessions must revalidate ownership before review, the cap must be checked against fresh origin/main state, and append-only shared ledgers need retry-safe compare-and-swap writes before parallel rollout.
