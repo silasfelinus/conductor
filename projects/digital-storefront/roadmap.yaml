@@ -716,11 +716,11 @@ tasks:
 - id: t-028
   milestone: m1
   title: "Wire ArtImage.storefrontFeatured into the swag-rail query now that the field exists (kind_robots PR #994)"
-  status: ready
-  owner: null
+  status: claimed
+  owner: reviewer
   passes: 0
   stakes: reversible
-  updated: '2026-07-26T03:35:00Z'
+  updated: '2026-07-26T04:11:57Z'
   note: >
     Kaizen follow-up from kind-robots/t-047 (kind_robots PR #994, merged
     2026-07-26): `ArtImage.storefrontFeatured Boolean @default(false)` now
@@ -733,3 +733,5 @@ tasks:
     (Silas would need to set it directly via DB/admin tooling until one is
     built) — note that gap in this task's PR rather than silently assuming a
     toggle UI already exists.
+  claimed_by: claude-conductor-burst-20260726T0410Z-ds-t028
+  claimed_at: '2026-07-26T04:11:57Z'
