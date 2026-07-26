@@ -1,0 +1,48 @@
+# RENDER-BACKLOG.md
+
+Append-only ledger of the shared ComfyUI render-queue's health (`GET
+/api/art/queue/stats` on kind_robots). At least three tasks — ai-art-academy/t-004,
+coloring-book/t-022, newsfeed/t-022 — had each independently re-probed the same
+single-worker backlog and hand-written their own "RECHECKED &lt;date&gt;: still
+PENDING=N, oldest ~Nh old" prose paragraph, the exact pattern `EGRESS-BLOCKERS.md`
+(conductor/t-052) already solved for sandbox egress. This file does the same job
+for the render pipeline: one append-only ledger, one stamped entry per recheck,
+greppable from any task instead of re-derived each time.
+
+**Never edit or delete a prior entry — append only, like `TALKBACK.md`.**
+
+## How to use this
+
+Run `python scripts/recheck_render_queue.py [--task <project>/<task-id>]` (requires
+`KR_API_TOKEN`, an admin-capable machine token) before leaving a task `ready` on a
+suspected render-backlog block, or before re-blocking a task that was already
+flagged. It queries `GET {KR_BASE_URL}/api/art/queue/stats` and appends one
+timestamped summary — `queueDepth.PENDING`, `oldestPending` age, the window's
+DONE-vs-newly-PENDING throughput, and a breakdown of `recentFailed` error
+signatures — below.
+
+A `growing`/`draining`/`healthy` classification here does **not** by itself change
+any task's status — the agent that ran the recheck still applies the normal
+Failure-triage rules (`AGENTS.md`) to the task it's unblocking. Per the "Blocker
+discipline" convention already used in `ai-art-academy/docs/continuous-improvement-checklist.md`:
+do not re-probe when this ledger already has a recent entry with the same
+signature — recheck only when enough time has passed that the backlog could
+plausibly have moved, or when a materially different signal (a fix landing, a
+relay restart, a Silas confirmation) suggests it might have.
+
+## Log
+
+## 2026-07-26T16:15:00Z | conductor/t-081 | growing
+queueDepth: PENDING=135, RUNNING=1, DONE=1546, FAILED=62 (all-time). oldestPending:
+id=2017, age=191547s (~53.2h), engine=COMFY. windowThroughput (24h): DONE=37,
+newly PENDING=133 — backlog still growing, not draining (consistent with every
+prior recheck on t-004/coloring-book-t-022/newsfeed-t-022 since 2026-07-24).
+recentFailed (last 25, all attempts=3/exhausted): 24/25 = generic "ComfyUI
+reported a workflow error" (kind_robots-side detail unavailable — see
+conductor/t-080, PR #1137, merged 2026-07-26T12:22:29Z, which added
+`describe_comfy_error()` to preserve real node/exception detail for *future*
+failures); 1/25 = connection-refused to `http://127.0.0.1:8188` (WinError 10061,
+job 2373, updatedAt 15:33:14Z). NOTE: the most recent workflow-error failures in
+this same batch (jobs 2368-2372, updatedAt 15:27-15:33Z) still carry the old
+generic string, ~3 hours after PR #1137 merged — see conductor/t-082 (home relay
+likely hasn't restarted to pick up the fix yet).

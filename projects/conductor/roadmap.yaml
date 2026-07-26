@@ -2560,3 +2560,94 @@ tasks:
     claimed_at: '2026-07-26T12:09:15Z'
     updated: '2026-07-26T12:22:00Z'
 
+  - id: t-081
+    milestone: m2
+    title: 'Add RENDER-BACKLOG.md ledger + recheck script for the shared
+      ComfyUI render-queue backlog, mirroring EGRESS-BLOCKERS.md'
+    status: done
+    passes: 0
+    stakes: reversible
+    note: |-
+      Filed and implemented 2026-07-26 (burst-mode cycle, claude-conductor-burst-20260726T1618Z):
+      found during rotation that ai-art-academy/t-004, coloring-book/t-022, and
+      newsfeed/t-022 had each independently re-probed the exact same shared
+      single-COMFY-worker render backlog and hand-written their own "RECHECKED
+      <date>: still PENDING=N, oldest ~Nh old" prose paragraph — the identical
+      duplication pattern EGRESS-BLOCKERS.md (conductor/t-052) already solved for
+      sandbox egress rechecks. No equivalent shared ledger existed for the render
+      pipeline.
+      IMPLEMENTED: added `RENDER-BACKLOG.md` (append-only ledger, same
+      never-edit-delete convention as TALKBACK.md/EGRESS-BLOCKERS.md) and
+      `scripts/recheck_render_queue.py`, which queries `GET
+      {KR_BASE_URL}/api/art/queue/stats` (admin-gated, requires KR_API_TOKEN),
+      classifies the backlog as growing/draining/healthy from
+      queueDepth.PENDING vs windowThroughput, groups `recentFailed` entries by
+      a normalized error signature (connection-refused / generic-workflow-error
+      / other, first-120-chars), and appends one timestamped entry per recheck
+      via `--task <project>/<task-id>`. Mirrors recheck_egress_blocks.py's
+      structure and test style exactly (19 new tests in
+      tests/test_recheck_render_queue.py, all passing; full suite 567
+      passed/1 skipped).
+      Seeded the ledger with a live probe run this session: queueDepth
+      PENDING=135 (all-time), oldestPending id=2017 age ~53.2h, windowThroughput
+      (24h) DONE=37 vs newly-PENDING=133 — still growing, unchanged in kind from
+      every prior recheck since 2026-07-24. recentFailed breakdown surfaced a
+      new detail none of the three duplicating tasks had captured: 24/25 of the
+      most recent exhausted-attempts failures are the generic "ComfyUI reported
+      a workflow error" string, and 1/25 is a direct ComfyUI connection-refused
+      (WinError 10061) at 15:33 UTC — see conductor/t-082 for the follow-up this
+      surfaced regarding conductor/t-080's fix not yet showing up in these
+      error strings.
+      Did not change any of the three consuming tasks' `status` — this is
+      tooling only; a follow-up docs pass can trim their notes to point at the
+      ledger instead of repeating the prose, but that's optional cleanup, not
+      required for this task's own completion.
+    claimed_by: claude-conductor-burst-20260726T1618Z-aa-t081
+    claimed_at: '2026-07-26T16:18:00Z'
+    updated: '2026-07-26T16:35:00Z'
+
+  - id: t-082
+    milestone: m2
+    title: 'FOR SILAS: confirm the home relay has restarted since t-080/PR
+      #1137 — recent ComfyUI failures still show the old generic error string'
+    status: needs-human
+    soft_gate: true
+    passes: 0
+    stakes: reversible
+    note: |-
+      FOR SILAS: what was found and where. conductor/t-080 (PR #1137, merged
+      2026-07-26T12:22:29Z) changed `ops/home-server/relay_agent.py` so that
+      when ComfyUI fails a job, the stored error should read `"ComfyUI reported
+      a workflow error: <node/exception detail>"` instead of the bare generic
+      string it used before. A live probe of kind_robots' `GET
+      /api/art/queue/stats` at 2026-07-26T16:15 UTC (see RENDER-BACKLOG.md's
+      first entry, and conductor/t-081 which built the tool that ran this
+      probe) shows the 24 most recent exhausted-attempts ComfyUI failures,
+      including several as late as 15:27-15:33 UTC — about 3 hours after the
+      fix merged — still carry the bare old string with no colon or detail
+      after it.
+      What this does and doesn't prove: this is consistent with the home relay
+      process (a long-running local Python script on your machine, not
+      something that redeploys itself) not having been restarted since the fix
+      merged, so it's still running the pre-fix code. It could also mean
+      `describe_comfy_error()` found no `execution_error` message in ComfyUI's
+      history entry for these particular failures (the function returns `None`
+      and falls back to the same bare string in that case) — i.e. the fix is
+      live but these specific jobs didn't produce the message shape it looks
+      for. This session has no way to tell which of the two from here.
+      TO CONFIRM: if you haven't restarted the relay process(es)
+      (`relay_agent.py` / `relay_media_agent.py`) since ~12:22 UTC today,
+      restarting them will resolve this on its own — no code change needed.
+      If they're already running the updated code and failures still show the
+      bare string, that means real ComfyUI executions aren't populating an
+      `execution_error` message for these specific failures, which would be
+      worth a fresh look at what `GET /history/<prompt_id>` actually returns
+      for one of them while it's still fresh.
+      What unblocks when he responds: nothing else depends on this — it's a
+      standalone confirmation. Once confirmed either way, set `status: done`
+      with a note on which case it was (or leave it — this doesn't block any
+      other task).
+    claimed_by: null
+    claimed_at: null
+    updated: '2026-07-26T16:35:00Z'
+
