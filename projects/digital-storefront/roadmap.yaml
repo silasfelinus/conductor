@@ -763,6 +763,33 @@ tasks:
   stakes: reversible
   depends_on: [t-029]
   note: >
+    DONE 2026-07-26 (claude-conductor-scheduled-20260726T070532Z-ds-t030):
+    kind_robots PR #1004 merged (Silas). Added the additive `PrintJob` model +
+    `PrintJobStatus` enum (migration `20260726070000_add_print_job`, matching
+    the real schema's `Int` autoincrement ids rather than the design doc's
+    `cuid()` draft), a new `server/api/store/pod-checkout.post.ts` route that
+    re-checks `checkPrintEligibility` server-side and creates a real Stripe
+    test-mode Checkout Session, and a `webhook.post.ts` branch that creates a
+    `PrintJob` (status PENDING) instead of an `Entitlement` when
+    `Product.type === 'POD'` — using the session's real line-item quantity
+    instead of the previous hardcoded 1. `print-swag.vue` now calls the real
+    route instead of its `console.log`/`alert()` mock; dropped its freeform
+    "paste an image URL" field since there's no `ArtImage` row to gate
+    eligibility against or attach a `PrintJob` to for an arbitrary URL.
+    Verified: `prisma validate`/`generate`, full-project `vue-tsc --noEmit`
+    (0 errors), `eslint`/`prettier` clean, `verifyNoPrismaJsonCast.ts` and
+    `verifyFetchGenericPinning.ts` both pass. Could not exercise a live Stripe
+    test-mode click-through from this sandbox (no `STRIPE_SECRET_KEY`/
+    `STRIPE_WEBHOOK_SECRET`). Submitting to a POD vendor (Printful) is
+    deliberately unimplemented — no vendor account/API key exists yet
+    (t-015, needs-human); `PrintJob` rows stay PENDING until that lands.
+    Found but did NOT fix (flagged in the PR, kaizen task t-031 filed): the
+    general multi-item cart checkout (`checkout.post.ts`) sets
+    `metadata.kind: 'giftshop_checkout'`, which matches no branch in the
+    webhook's dispatch, so a cart purchase of a print/shirt/sticker/mug today
+    succeeds at Stripe but never creates an Order — out of this task's scope
+    (t-030 was specifically print-swag.vue's own single-item flow).
+    Original spec follows:
     Kaizen from t-029's close (kind_robots PR #996, merged 2026-07-26): the new
     print-eligibility gate has a real, tested check but no live consumer — the
     self-service print entry point (`print-swag.vue`) is still a UI mock

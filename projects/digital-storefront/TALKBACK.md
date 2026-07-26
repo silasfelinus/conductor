@@ -307,6 +307,72 @@ as-is). Flagged in the roadmap note that payment/checkout integration will likel
 hard `needs-human` gate once it touches a live payment provider, even though the
 schema/plumbing work leading up to that point is reversible software.
 
+## 2026-07-26 | Worker → Reviewer | digital-storefront/t-030 | pattern
+
+**Decision:** merged (Silas), kind_robots PR #1004.
+
+**Failure category:** null — clean first-pass implementation.
+
+**Subject:** PrintJob model + real POD checkout flow, replacing print-swag.vue's mock.
+
+**Detail:**
+- Dispatched a research subagent first to map the exact current code
+  (print-swag.vue, t-029's eligibility endpoint, the real landed Prisma schema,
+  the webhook fan-out) rather than implementing straight from the design
+  doc's draft — this caught a real type mismatch (the doc's `PrintJob` draft
+  used `cuid()`/`String` ids; the actually-landed `Product`/`Order`/`OrderItem`
+  models all use `Int @id @default(autoincrement())`) before it became a
+  migration that wouldn't type-check against `OrderItem.id`.
+- Scoped down from the design doc's full ambition deliberately: built a
+  dedicated single-item `pod-checkout.post.ts` route matching print-swag.vue's
+  actual single-image-modal UI, rather than trying to also fix the general
+  multi-item cart checkout's fulfillment gap in the same PR (that gap is real —
+  `checkout.post.ts`'s cart flow sets `metadata.kind: 'giftshop_checkout'`,
+  which the webhook's dispatch doesn't handle at all, so cart-originated
+  purchases of any type currently never create an `Order`). Flagged this in
+  the PR as a follow-up rather than scope-creeping this PR.
+- Made one legitimate scope cut: dropped print-swag.vue's freeform "paste a
+  different image URL" input. It had no backing `ArtImage` row, so there was
+  no way to gate eligibility or attach a `PrintJob` to it — the design doc's
+  actual entry points (gallery / curated / upload) all produce a real
+  `ArtImage` row. Flagged this explicitly in the PR rather than silently
+  deleting a visible feature.
+- Fixed a real pre-existing bug as part of making the new POD path work
+  correctly: `handleProductPurchase` in the webhook hardcoded `quantity: 1`
+  for every product purchase regardless of what the Stripe session actually
+  sold; now reads the real quantity via `listLineItems`. This affects every
+  product type, not just POD, and is a correctness improvement the PR
+  description calls out explicitly rather than burying in an unrelated diff.
+- Regenerating the Prisma client picked up `models/RewardFacet.ts`, which an
+  earlier merged PR ("Build nested Facet-driven Daily Dreams") had added to
+  the schema but apparently never regenerated/committed for (likely one of
+  the `push_files`-workaround merges documented in CLAUDE.md, which can't run
+  `prisma generate`). Included it since leaving it out would have left the
+  committed generated client inconsistent with schema.prisma.
+- Verified locally via `provision_kind_robots_deps.sh`: `prisma validate` +
+  `generate`, full-project `vue-tsc --noEmit` (0 errors after two rounds of
+  fixes — a `$fetch` generic-instantiation-depth error and an
+  `catalogEntry possibly undefined` narrowing issue), `eslint`/`prettier`
+  clean, and the two relevant contract verifiers
+  (`verifyNoPrismaJsonCast.ts`, `verifyFetchGenericPinning.ts`) both passed.
+  Could not exercise a live Stripe test-mode click-through or webhook
+  delivery from this sandbox (no `STRIPE_SECRET_KEY`/`STRIPE_WEBHOOK_SECRET`)
+  — flagged this gap explicitly in the PR rather than claiming full
+  end-to-end verification.
+
+**What was good:**
+- Research-before-code caught a real type mismatch against the design doc.
+- Correctly declined to scope-creep into the general cart-checkout gap,
+  flagging it instead of expanding this PR.
+
+**What to improve:**
+- Nothing notable this cycle.
+
+**Kaizen task:** t-031 (filed by the Reviewer on merge, below) — wire
+`checkout.post.ts`'s general cart flow to actually fulfil what it sells
+(currently only single-item `productSlug`-metadata routes get real
+Order/fulfillment records).
+
 ## 2026-07-26 | Reviewer (scheduled agent run) | digital-storefront/t-030 | pattern
 
 **Decision:** merged kind_robots PR #1004 (`status: review`, CI-green, found as one of several open PRs a broader session-level clean-main sweep surfaced beyond `select_role.py`'s local heuristic, which had missed it because its GitHub API check 403s in this sandbox).
