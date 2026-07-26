@@ -942,8 +942,8 @@ tasks:
 - id: t-032
   milestone: m4
   title: "kind_robots: re-check ArtImage takedown/eligibility at Stripe webhook time for POD purchases, not just at checkout-creation time"
-  status: ready
-  owner: null
+  status: claimed
+  owner: worker
   passes: 0
   stakes: reversible
   depends_on: t-030
@@ -967,6 +967,9 @@ tasks:
     trust anything cached from checkout-creation time); on failure, create the `PrintJob`
     with `status: FAILED` (or skip creation) and surface the reason rather than proceeding
     silently. Reversible, Stripe test-mode only, no live vendor action.
+  claimed_by: claude-conductor-scheduled-20260726T090000Z-ds-t032
+  claimed_at: '2026-07-26T09:03:54Z'
+  updated: '2026-07-26T09:03:54Z'
 
 - id: t-033
   milestone: m4
