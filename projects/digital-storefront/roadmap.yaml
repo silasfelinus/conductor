@@ -1005,33 +1005,43 @@ tasks:
 - id: t-034
   milestone: m4
   title: "kind_robots: handleProductPurchase's POD 'ArtImage not found' branch inserts a PrintJob referencing a nonexistent FK, which can throw and roll back the whole Order"
-  status: review
+  status: done
   owner: worker
   passes: 0
   stakes: reversible
   note: >
-    Filed 2026-07-26 (t-033 close-out kaizen). `server/api/stripe/webhook.post.ts`'s
-    `handleProductPurchase` POD branch, when the ArtImage referenced by a POD Product's
-    metadata no longer exists, still calls `tx.printJob.create({data:{orderItemId,
-    artImageId, printfulVariantId, status:'FAILED'}})` with that same nonexistent
-    `artImageId`. `PrintJob.artImageId` is a required, non-null FK to `ArtImage`
-    (`prisma/schema.prisma`) with no `onDelete: SetNull` -- inserting a row that points at
-    a missing ArtImage id should violate the FK constraint, and since this happens inside
-    `prisma.$transaction(async (tx) => {...})`, the thrown error would roll back the entire
-    transaction, including the `Order`/`OrderItem` rows already created earlier in the same
-    callback. Net effect: a user who paid via Stripe for a POD item whose ArtImage was
-    deleted between checkout and webhook delivery would end up with no Order record at all,
-    not even a FAILED one -- worse than the FAILED status the code is trying to record.
-    t-033's new `fulfillGiftshopPrintJob` (general giftshop cart path) deliberately avoids
-    this by skipping PrintJob creation entirely when the ArtImage doesn't exist, leaving the
-    Order/OrderItem intact as the audit trail. This task is to apply the same
-    check-existence-before-insert fix to `handleProductPurchase`'s POD branch (the
-    `!artImage` check around line ~244 of webhook.post.ts) -- either skip the PrintJob
-    insert the same way, or restructure so the FAILED PrintJob is created outside/after the
-    Order-creating transaction so a construct failure there can't unwind the paid order.
-    Likely needs a fixture or a live DB session to actually trigger the FK violation and
-    confirm the rollback behavior (not verifiable in a sandbox with no reachable
-    DATABASE_URL) before picking the fix shape.
+    DONE 2026-07-26: kind_robots PR #1014 merged. `handleProductPurchase`'s POD branch no
+    longer inserts a `PrintJob` referencing a nonexistent `ArtImage` id when the eligibility
+    re-check finds it gone -- it skips the insert entirely (mirroring the existing
+    `fulfillGiftshopPrintJob` pattern from t-033), so the `Order`/`OrderItem` created earlier
+    in the same `$transaction` survive as the audit trail instead of being rolled back by
+    the FK violation. Verified with `eslint` + a full `vue-tsc --noEmit` typecheck (both
+    clean); live-DB rollback verification wasn't possible in this sandbox (no reachable
+    DATABASE_URL), noted as a flag on the PR. Kaizen: extract a shared
+    `createPrintJobIfEligible` helper so the two POD-fulfillment paths
+    (`handleProductPurchase` vs. `handleGiftshopCartPurchase`) stop reimplementing the same
+    missing-ArtImage guard independently -- filed as new task below.
   claimed_by: claude-conductor-burst-20260726T130000Z-ds-t034
   claimed_at: '2026-07-26T13:05:19Z'
-  updated: '2026-07-26T13:05:19Z'
+  updated: '2026-07-26T13:18:16Z'
+
+- id: t-035
+  milestone: m4
+  title: "kind_robots: extract a shared createPrintJobIfEligible helper for the two POD-fulfillment webhook paths"
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  note: >
+    Kaizen from t-034 (2026-07-26). `handleProductPurchase`'s POD branch and
+    `fulfillGiftshopPrintJob` (used by `handleGiftshopCartPurchase`) in
+    `server/api/stripe/webhook.post.ts` both independently implement the same
+    "look up the ArtImage, skip the PrintJob insert if it's gone, re-run
+    checkPrintEligibility, create the PrintJob (FAILED if ineligible)" sequence. t-034 just
+    fixed a real bug in one copy (the FK-violation/rolled-back-Order case) that the other
+    copy had already gotten right independently -- exactly the kind of duplication where a
+    future change to one path can silently reintroduce a bug the other already fixed.
+    Extract a single shared helper, e.g.
+    `createPrintJobIfEligible(tx, { orderItemId, artImageId, printfulVariantId, userId })`
+    returning whether a PrintJob was created, and have both call sites use it.
+  updated: '2026-07-26T13:18:16Z'

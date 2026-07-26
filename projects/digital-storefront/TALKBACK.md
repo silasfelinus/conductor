@@ -464,3 +464,25 @@ type: pattern
 - Verified the two PRs were actually equivalent before discarding either — didn't just assume "someone else got there" and walk away blind.
 
 **Suggested action:** always invoke `date -u +%Y%m%dT%H%M%SZ` (or equivalent) for a claim's `--session` value rather than typing a plausible round-hour timestamp by hand — the latter is exactly the collision-prone pattern AGENTS.md already calls out, and this cycle is a concrete instance of it very likely contributing to (though not solely causing, since `claim_task.py`'s own project/task-keyed race window is the deeper structural gap) two sessions doing the same implementation work in parallel.
+
+## 2026-07-26 | Reviewer (conductor-burst session) | digital-storefront/t-034 | pattern
+
+type: pattern
+
+**Decision:** merged (kind_robots PR #1014, self-merged same session).
+
+**What was good:**
+- Read the actual FK schema constraint (`PrintJob.artImageId` non-null, no `onDelete: SetNull`)
+  and the sibling `fulfillGiftshopPrintJob` function before writing the fix, rather than
+  guessing at the failure mode from the task note's description alone.
+- Verified with eslint + a full `vue-tsc --noEmit` typecheck locally (via
+  `provision_kind_robots_deps.sh`) instead of just asserting correctness from the diff shape.
+
+**What to improve:**
+- None — task was scoped tightly and the fix is a direct mirror of already-proven code in
+  the same file, low risk.
+
+**Kaizen task:** t-035 — extract a shared `createPrintJobIfEligible` helper so the two
+POD-fulfillment paths stop independently reimplementing the same missing-ArtImage guard
+(this is the second time one copy fixed a gap the other already had right — see t-032's
+TALKBACK entry above for the closely related duplication this task was filed from).
