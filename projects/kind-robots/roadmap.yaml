@@ -1425,7 +1425,7 @@ tasks:
   - id: t-043
     milestone: m1
     title: 'Pitch: trusted-caller mana-charge endpoint so external apps (Sketchy) can debit mana for actions performed on their own infrastructure'
-    status: review
+    status: done
     gate_human: true
     approved_by_human: true
     owner: worker
@@ -1435,6 +1435,17 @@ tasks:
     updated: '2026-07-26T06:07:33Z'
     claimed_by: claude-conductor-burst-20260726T060730Z-kr-t043
     claimed_at: '2026-07-26T06:07:33Z'
+    reviewed_note: >
+      REVIEWED AND MERGED 2026-07-26 (Reviewer, conductor sweep session): kind_robots
+      PR #999 implements POST /api/economy/mana/charge exactly per the approved pitch
+      -- requireMachineUser/manaGate/applyMana reused verbatim, the only new surface is
+      manaGate's targetUserId override (server/utils/manaGateTarget.ts), and it is
+      correctly gated so only a server-key caller can redirect a charge onto a
+      different user's balance. On-behalf-of charges bill the target user's own
+      standing, not the caller's, so a machine credential can't accidentally make
+      cross-app charges free. The authorization boundary has 5 direct unit-test cases
+      (utils/scripts/verifyManaGateOnBehalfOfTarget.ts) wired into contract-tests.yml.
+      All CI green at review time. Merged as-is.
 
   - id: t-044
     milestone: m4
