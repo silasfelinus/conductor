@@ -1837,3 +1837,41 @@ if a fifth instance appears.
 - None specific this cycle.
 
 **Kaizen task:** t-040 — add a curriculum-candidate schema check requiring explicit rights/representation/promotion sections for culturally sensitive movement modules, per the PR's own suggestion (verbatim from PR #1119's "Kaizen suggestion"; no systematic weakness in `LEARNING-REPORT.md` applied to this project, so used the Worker's suggestion as-is).
+
+## 2026-07-26 | Reviewer (conductor scheduled session) | ai-art-academy/t-040 | critique
+
+**Decision:** rejected (pass 1), PR #1145 left open for retry.
+
+**Failure category:** quality — CI was genuinely red, not flaky.
+
+**Subject:** `scripts/validate_academy_curriculum_candidates.py`'s `section()` helper has a
+regex-precedence bug: `heading_pattern` (itself a `|`-alternation) is spliced unparenthesized
+into a larger pattern, so `|`'s low precedence splits the *entire* outer regex instead of just
+the heading alternatives. The shorter alternatives match first and don't carry the `body`
+named group, so `match.group("body")` is `None` and `.strip()` raises `AttributeError`.
+
+**Detail:**
+- Reproduced locally (not just trusting the CI red X): `python -m pytest -q
+  tests/test_validate_academy_curriculum_candidates.py` → 3 of 6 new tests fail, including the
+  primary happy-path `test_complete_sensitive_candidate_passes`.
+- Both `Python test suite` and the PR's own new `Validate changed Academy curriculum
+  candidates` CI check are red for this same reason — confirmed via `get_check_runs`, not
+  assumed from a generic red status.
+- Left a specific PR comment with the exact regex-precedence explanation, a minimal repro
+  script, and the one-line fix (wrap `heading_pattern` in `(?:...)`), plus a note that every
+  `section()` call site with a multi-alternative `heading_pattern` (artist/policy/remix/
+  checklist) has the identical bug, not just the one that happened to trip the tests.
+
+**What was good:**
+- Test coverage design itself (six focused cases covering the happy path, formal-style bypass,
+  explicit exemption, keyword detection, and two missing-signal cases) was reasonable — the bug
+  is in the regex construction, not the test strategy.
+
+**What to improve:**
+- Run the new test suite locally before opening the PR (`pytest -q
+  tests/test_validate_academy_curriculum_candidates.py`), not just add tests and rely on CI to
+  be the first signal — this specific failure (3/6 including the happy path) would have been
+  caught in seconds locally.
+
+**Kaizen task:** none filed — the retry_context on the task itself is the actionable follow-up;
+no new systematic gap surfaced beyond "run the tests you wrote before opening the PR."
