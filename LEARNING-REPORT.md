@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-07-26T12:22:54Z
+Generated: 2026-07-26T12:27:45Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **361**
-- Outcomes: blocked: 12, cancelled: 1, done: 348
+- Closed tasks recorded: **362**
+- Outcomes: blocked: 12, cancelled: 1, done: 349
 - Success rate: **96%**
 - Average passes on successful tasks: **0.0**
 
@@ -25,7 +25,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | challenge-center | 16 | 100% |
 | coat-dance | 8 | 0% |
 | coloring-book | 14 | 100% |
-| conductor | 47 | 100% |
+| conductor | 48 | 100% |
 | conductor-app | 2 | 100% |
 | davinci | 1 | 100% |
 | digital-storefront | 20 | 100% |
@@ -55,7 +55,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 15 | 40% |
-| software | 346 | 99% |
+| software | 347 | 99% |
 
 ## Failure categories
 
@@ -75,6 +75,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-07-26 `conductor/t-080` — Preserve upstream structured failure detail at the boundary where it would otherwise be collapsed into a generic error; diagnosis cannot recover evidence that was never stored.
 - 2026-07-26 `humboldt-scoop-cms/t-007` — Designing a pluggable RouteMatrixProvider interface let the deterministic route-plan API ship and be fully tested (including brute-force-verified optimizer correctness) even though no self-hosted OSRM/VROOM instance exists yet anywhere -- the Haversine fallback made the feature usable today, and the OSRM provider's request/response shape is already unit-tested against a mocked fetch, so standing up real infra later (t-012) is a config change, not a rewrite.
 - 2026-07-26 `kind-robots/t-050` — Following the immediately-prior additive migration's exact SQL shape (add_grant_model's enum-MODIFY + CreateTable + AddForeignKey pattern) let the migration.sql be hand-written correctly on the first attempt with no live DB to verify against -- matching an existing precedent migration in the same repo is a reliable substitute for `prisma migrate dev` when no DB is reachable.
 - 2026-07-26 `digital-storefront/t-033` — Carry identity-bearing fields through every checkout boundary and revalidate eligibility at fulfillment; dropping artImageId turned an apparently complete cart flow into audit-only fulfillment for physical goods.
@@ -84,7 +85,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-07-26 `digital-storefront/t-030` — When a design doc's own Prisma model draft predates the actually-landed schema (the doc used cuid()/String ids; the real Product/Order/OrderItem models all landed as Int autoincrement), a research-first pass reading the live schema.prisma directly caught the mismatch before it became a migration that wouldn't type-check -- worth always re-verifying a doc's schema draft against the current schema file rather than transcribing it as-is, even when the doc is recent and detailed.
 - 2026-07-26 `digital-storefront/t-030` — When a task's own roadmap note pre-flags a likely needs-human gate ('expect this to reach needs-human once it touches a live payment provider'), verify the gate condition explicitly rather than trusting the PR's self-reported 'reversible' stakes label -- here that meant confirming getStripeClient() reads STRIPE_SECRET_KEY from env with no hardcoded key or forced live-mode flag, matching every other already-merged Stripe route, before merging test-mode payment/webhook code. Dispatching a subagent to independently audit the migration SQL and billing logic line-by-line (rather than reading the PR's own verification section at face value) caught nothing wrong here, but is the right level of scrutiny for anything touching schema + payment webhooks even when self-labeled reversible.
 - 2026-07-26 `ai-art-academy/t-039` — A mechanical prose-to-file migration (moving t-010's 78 historical RAN entries, ~164KB, out of the roadmap note into a separate ledger) is safe to do in one pass if the regression check is structural, not eyeballed: reconstruct the original content two independent ways (standing_line + moved_lines == original; ledger_body re-indented == moved_lines) and assert byte-for-byte equality before writing anything. That caught the exact failure mode the original audit warned about ("silently pruning the note would be data loss wearing a tidy haircut") with zero manual re-reading of 164KB of prose.
-- 2026-07-26 `model-builder/t-029` — After many cycles of an exclusion-list-driven 'read everything, find one new bug' task exhaust the obvious client-side races/gating/accessibility gaps, the next genuinely new find is likely to be server-side (a silent fallthrough in a relationship-linking function, an unhandled case in a catalog-to-handler mapping) rather than another variant of an already-fixed client pattern. Also: a subagent given the full exclusion list can correctly self-filter a near-duplicate finding (the committingItemId singleton race, same shape as two already-fixed siblings) instead of reporting it as new -- worth trusting that filtering rather than re-verifying every candidate from scratch when the list is this well-documented.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-07-26T12:22:54Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-07-26T12:27:45Z_
