@@ -213,3 +213,16 @@ similar race surfaces in one of the other two singletons.
 - The change stayed within `components/model-builder/model-builder-run-history.vue`; TypeScript, Contract Tests, API Client Follow-ups, and Facet Catalog checks all passed before squash merge `92f35ef4`.
 
 **Suggested action:** add a focused accessibility contract that flags icon-only buttons without visible text, `aria-label`, or `aria-labelledby` so this class of omission is caught before review.
+
+## 2026-07-26 | Worker (conductor-scheduled burst session) | model-builder/t-029 | pattern
+
+type: pattern
+
+**Subject:** Found a genuinely new, server-side bug after 9 prior cycles of client-side race/gating/accessibility fixes on the same task -- `linkSourceToTarget` was missing the Dream->Bot (narrator) case entirely.
+
+**Detail:**
+- kind_robots PR #1005: `linkSourceToTarget` in `server/api/model-builder/items/[id]/commit.post.ts` had an explicit `Project`->`Bot` case (sets `managerBotId`) but no `Dream`->`Bot` case, even though `CREATE_TARGETS['expand-narrator-bot'] = 'Bot'` targets Dream sources and `Dream.narratorId`/`Narrator` relation exists specifically for it. Committing a narrator-bot output created the `Bot` row but silently returned `linked: false` with no user-visible signal (plain success toast) -- an orphaned Bot the user believed was linked to their Dream.
+- Dispatched a general-purpose subagent with the full 9-entry exclusion list from this task's history before trusting any finding; it correctly identified and withheld a `committingItemId`-singleton race as a duplicate of the already-fixed `generatingItemId`/`autoBuildingItemId` pattern, rather than reporting it as new. That self-filtering is worth noting as a good sign for the exclusion-list-driven approach continuing to scale as the list grows.
+- All 4 CI checks green (TypeScript, Contract verifiers, facet-catalog, GitGuardian); merged squash `b6373c55`.
+
+**Suggested action:** the `linkSourceToTarget` function is a flat if-chain of `(sourceType, targetType)` pairs with a silent `return false` fallthrough for any unhandled combination -- worth a follow-up kaizen to cross-reference every `CREATE_TARGETS` entry in `modelBuilderFields.ts` against `linkSourceToTarget`'s handled pairs (a small script or a manual table) to check for other silently-unlinked combinations, rather than relying on read-everything passes to catch them one at a time.
