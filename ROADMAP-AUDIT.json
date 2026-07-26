@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-26T00:14:38.745691+00:00",
+  "generated_at": "2026-07-26T00:23:00.219317+00:00",
   "summary": {
     "roadmaps": 41,
     "active_projects": 32,
@@ -7,11 +7,11 @@
     "ready": 43,
     "waiting": 40,
     "needs_human": 26,
-    "in_progress": 1,
-    "done": 547,
+    "in_progress": 0,
+    "done": 548,
     "errors": 0,
-    "warnings": 12,
-    "info": 52
+    "warnings": 14,
+    "info": 53
   },
   "projects": [
     {
@@ -214,16 +214,15 @@
       "autonomous": false,
       "task_count": 25,
       "counts": {
-        "done": 24,
-        "needs-human": 1
+        "done": 25
       },
-      "open_count": 1,
-      "human_attention": 1,
+      "open_count": 0,
+      "human_attention": 0,
       "ready": 0,
       "waiting": 0,
       "claimed": 0,
       "review": 0,
-      "done": 24
+      "done": 25
     },
     {
       "slug": "superkate-services-calculator",
@@ -367,16 +366,15 @@
       "autonomous": false,
       "task_count": 79,
       "counts": {
-        "claimed": 1,
         "done": 76,
-        "needs-human": 1,
+        "needs-human": 2,
         "ready": 1
       },
       "open_count": 3,
-      "human_attention": 1,
+      "human_attention": 2,
       "ready": 1,
       "waiting": 0,
-      "claimed": 1,
+      "claimed": 0,
       "review": 0,
       "done": 76
     },
@@ -847,6 +845,20 @@
     {
       "severity": "warning",
       "code": "ACTIVE_PROJECT_ALL_DONE",
+      "project": "global-ui",
+      "task": null,
+      "message": "All tasks are done but project override remains active."
+    },
+    {
+      "severity": "warning",
+      "code": "ACTIVE_PROJECT_NO_OPEN_TASKS",
+      "project": "global-ui",
+      "task": null,
+      "message": "Active project has no open tasks; mark finished/paused or add an intentional recurring task."
+    },
+    {
+      "severity": "warning",
+      "code": "ACTIVE_PROJECT_ALL_DONE",
       "project": "humboldt-scoop",
       "task": null,
       "message": "All tasks are done but project override remains active."
@@ -1074,6 +1086,13 @@
       "project": "global-ui",
       "task": null,
       "message": "Roadmap has no friendly goal/definition of done."
+    },
+    {
+      "severity": "info",
+      "code": "APPROVAL_WITHOUT_GATE",
+      "project": "global-ui",
+      "task": "t-016",
+      "message": "approved_by_human is set on a task that is not human-gated."
     },
     {
       "severity": "info",

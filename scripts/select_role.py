@@ -29,7 +29,7 @@ this system's own architecture (kind_robots work is tracked as a conductor
 roadmap task that names a kind_robots PR, not as its own independent
 Worker/Reviewer cycle) — see AGENTS.md's "Cross-repo tasks" section.
 
-Five roles, each backed by an existing piece of tooling this script composes
+Six roles, each backed by an existing piece of tooling this script composes
 rather than duplicates:
   - reviewer      — run_reviewer.py's open-worker/*-branch check (conductor only)
   - pr-medic      — open PRs, across every repo in --repos, whose CI is red
@@ -42,18 +42,30 @@ rather than duplicates:
                     classifier, which deliberately never auto-acts on this
                     tier itself ("a human/session rescues it"); for other
                     repos it's the API-driven equivalent below
+  - site-auditor  — the weekly site audit (projects/global-ui/SITE-AUDIT-
+                    AGENT.md) is overdue: no AUDIT-REPORT-<date>.md exists, or
+                    the newest one is older than --audit-stale-days (default
+                    7). Folds global-ui/t-016's originally-planned dedicated
+                    Claude Code Remote Trigger into this same self-assigning
+                    system instead — the audit now rides on whichever trigger
+                    fires next (Worker/Reviewer-family, already far more
+                    frequent than weekly) rather than needing a brand-new,
+                    separately-approved platform trigger of its own.
   - worker        — run_worker.py's ready-task check (conductor only)
   - idle          — none of the above; dream-cycle fallback applies
 
 Decision order (first match wins) — reviewing fresh work stays highest
 leverage (keeps the pipeline flowing); fixing a broken PR recovers value
-already in flight before archaeology on stale branches; new work and idle
-fall through last:
+already in flight before archaeology on stale branches; the audit is time-
+boxed (must happen roughly weekly regardless of other queue state) so it
+outranks fresh ready-task pickup once overdue, but never preempts anything
+already broken or reviewable; idle falls through last:
   1. candidate_worker_branch_count > 0        -> reviewer
   2. red_stale_pr_count > 0                   -> pr-medic
   3. stranded_branch_count > 0                -> branch-medic
-  4. ready_task exists                        -> worker
-  5. none of the above                        -> idle
+  4. site_audit_overdue                       -> site-auditor
+  5. ready_task exists                        -> worker
+  6. none of the above                        -> idle
 
 This intentionally does not call OpenAI, Claude, or any other model API — same
 contract as the scripts it composes. Real role-appropriate work still happens
@@ -82,11 +94,12 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 import sys
 import urllib.error
 import urllib.parse
 import urllib.request
-from datetime import datetime, timezone
+from datetime import date, datetime, timezone
 from pathlib import Path
 
 # Allow `python scripts/select_role.py` (sys.path[0] == scripts/) as well as
@@ -111,6 +124,12 @@ DEFAULT_REPOS = ('silasfelinus/conductor', 'silasfelinus/kind_robots')
 DEFAULT_PR_STALE_HOURS = 3.0
 DEFAULT_BRANCH_STALE_HOURS = branch_janitor.DEFAULT_STALE_HOURS
 DEFAULT_PREFIXES = branch_janitor.DEFAULT_PREFIXES
+
+# projects/global-ui/SITE-AUDIT-AGENT.md's weekly report drop -- this repo's
+# own local checkout, no API needed, same as branch_janitor.py's local checks.
+AUDIT_REPORTS_DIR = _REPO_ROOT / 'projects' / 'global-ui'
+AUDIT_REPORT_RE = re.compile(r'^AUDIT-REPORT-(\d{4}-\d{2}-\d{2})\.md$')
+DEFAULT_AUDIT_STALE_DAYS = 7.0
 
 
 def _gh_request(url: str, token: str) -> object | None:
@@ -319,12 +338,53 @@ def find_stranded_branches(
     return stranded
 
 
+# --- site-auditor: is the weekly SITE-AUDIT-AGENT.md run overdue? ----------
+
+
+def find_last_audit_report(reports_dir: Path = AUDIT_REPORTS_DIR) -> tuple[str, date] | None:
+    """Most recent AUDIT-REPORT-<YYYY-MM-DD>.md in `reports_dir`, or None if
+    the audit has never run. Purely a filename-date parse -- no git history
+    walk needed, since the report's own name IS the date it ran."""
+    if not reports_dir.is_dir():
+        return None
+
+    found: list[tuple[str, date]] = []
+    for path in reports_dir.iterdir():
+        match = AUDIT_REPORT_RE.match(path.name)
+        if match:
+            found.append((path.name, date.fromisoformat(match.group(1))))
+
+    if not found:
+        return None
+    return max(found, key=lambda item: item[1])
+
+
+def site_audit_status(
+    *,
+    reports_dir: Path = AUDIT_REPORTS_DIR,
+    stale_days: float = DEFAULT_AUDIT_STALE_DAYS,
+    today: date | None = None,
+) -> dict[str, object]:
+    """Never-run counts as maximally overdue (stale_days is a lower bound,
+    not a grace period for a first run that's never happened)."""
+    today = today or datetime.now(timezone.utc).date()
+    last = find_last_audit_report(reports_dir)
+
+    if last is None:
+        return {'overdue': True, 'last_report': None, 'days_since': None}
+
+    name, report_date = last
+    days_since = (today - report_date).days
+    return {'overdue': days_since >= stale_days, 'last_report': name, 'days_since': days_since}
+
+
 def select_role(
     *,
     repos: list[str] | None = None,
     github_token: str = '',
     pr_stale_hours: float = DEFAULT_PR_STALE_HOURS,
     branch_stale_hours: float = DEFAULT_BRANCH_STALE_HOURS,
+    audit_stale_days: float = DEFAULT_AUDIT_STALE_DAYS,
 ) -> dict[str, object]:
     repos = list(repos) if repos else list(DEFAULT_REPOS)
 
@@ -336,6 +396,7 @@ def select_role(
     review_branches = run_reviewer.remote_worker_branches()
     red_prs = find_red_stale_prs(repos, github_token, stale_hours=pr_stale_hours)
     stranded = find_stranded_branches(repos, github_token, stale_hours=branch_stale_hours)
+    audit = site_audit_status(stale_days=audit_stale_days)
     queue = run_worker.build_queue_summary()
     ready_task = queue.get('ready_task')
 
@@ -350,12 +411,18 @@ def select_role(
         role = 'branch-medic'
         by_repo = ', '.join(sorted({b['repo'] for b in stranded}))
         reason = f'{len(stranded)} stranded branch(es) with unmerged work older than {branch_stale_hours}h ({by_repo})'
+    elif audit['overdue']:
+        role = 'site-auditor'
+        if audit['last_report'] is None:
+            reason = 'weekly site audit has never run'
+        else:
+            reason = f'weekly site audit overdue ({audit["days_since"]} days since {audit["last_report"]})'
     elif ready_task:
         role = 'worker'
         reason = f'ready task available: {ready_task.get("project")}/{ready_task.get("task_id")}'
     else:
         role = 'idle'
-        reason = 'nothing to review, fix, triage, or work — dream-cycle fallback applies'
+        reason = 'nothing to review, fix, triage, audit, or work — dream-cycle fallback applies'
 
     return {
         'role': role,
@@ -367,6 +434,9 @@ def select_role(
         'red_stale_prs': red_prs,
         'stranded_branch_count': len(stranded),
         'stranded_branches': stranded,
+        'site_audit_overdue': audit['overdue'],
+        'site_audit_last_report': audit['last_report'],
+        'site_audit_days_since': audit['days_since'],
         'ready_task': ready_task,
         'projects_with_ready_tasks': queue.get('projects_with_ready_tasks', []),
         'projects_needing_human': queue.get('projects_needing_human', []),
@@ -385,6 +455,7 @@ def main() -> None:
     )
     parser.add_argument('--pr-stale-hours', type=float, default=DEFAULT_PR_STALE_HOURS)
     parser.add_argument('--branch-stale-hours', type=float, default=DEFAULT_BRANCH_STALE_HOURS)
+    parser.add_argument('--audit-stale-days', type=float, default=DEFAULT_AUDIT_STALE_DAYS)
     args = parser.parse_args()
 
     print('[select-role] model API calls are disabled by design', file=sys.stderr)
@@ -395,6 +466,7 @@ def main() -> None:
         github_token=os.environ.get('GITHUB_TOKEN', '').strip(),
         pr_stale_hours=args.pr_stale_hours,
         branch_stale_hours=args.branch_stale_hours,
+        audit_stale_days=args.audit_stale_days,
     )
     print(json.dumps(result, indent=2))
 

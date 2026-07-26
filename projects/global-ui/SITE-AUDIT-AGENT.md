@@ -13,10 +13,22 @@ A recurring agent that periodically compares the active conductor roadmap vocabu
 
 ## Schedule
 
-**Interval:** Weekly (every Monday at 09:00 UTC).
-**Trigger:** Claude Code Remote cron trigger → fires into the conductor session.
+**Interval:** Weekly, or as close to it as the self-assigning role system below
+achieves.
 
-Cron expression: `0 9 * * 1`
+**Primary trigger (as of 2026-07-26, global-ui/t-016):** `scripts/select_role.py`
+recommends `role: site-auditor` whenever no `AUDIT-REPORT-<date>.md` exists yet, or
+the newest one is 7+ days old — riding whichever platform trigger (Worker/Reviewer-
+family) fires next, rather than needing its own dedicated schedule. See AGENTS.md's
+"If you're doing the weekly site audit" section — that's what a session actually
+follows; this file remains the authoritative scope/prompt/boundaries it points back
+to.
+
+**Optional secondary trigger:** a dedicated Claude Code Remote cron trigger (cron
+expression `0 9 * * 1`, Mondays 09:00 UTC) is still a valid way to layer a hard
+weekly guarantee on top, independent of other trigger volume — see "Setup
+Instructions" below. Not required for the audit to run at all; the self-assigning
+path above already covers that.
 
 ---
 
@@ -76,7 +88,11 @@ This is a read-and-report run. Changes to roadmaps are the ONLY writes permitted
 
 ---
 
-## Setup Instructions (for Silas to activate)
+## Setup Instructions (optional — only needed for the secondary hard-schedule trigger)
+
+The self-assigning `site-auditor` role (see "Schedule" above) requires no setup at
+all — it's already live as of `scripts/select_role.py`. These steps are only for
+layering the optional dedicated trigger on top:
 
 1. Create a Claude Code Remote cron trigger with:
    - `cron_expression: "0 9 * * 1"` (Mondays 09:00 UTC)

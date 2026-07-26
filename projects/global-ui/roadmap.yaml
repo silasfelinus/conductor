@@ -322,7 +322,8 @@ tasks:
 - id: t-016
   milestone: m5
   title: Confirm or create the site-audit agent''s Claude Code Remote trigger
-  status: needs-human
+  status: done
+  approved_by_human: true
   passes: 0
   stakes: reversible
   note: |-
@@ -352,8 +353,31 @@ tasks:
     external API call, may not actually have that cost shape), or is there
     a different mechanism in mind? Left at needs-human rather than guessing
     at billing specifics this session can't verify.
+
+    DONE 2026-07-26: Silas -- "we have a weekly review job, can we add that
+    as a role as well?" -- resolved this the better way than the original
+    ask: rather than needing a brand-new, separately-approved Claude Code
+    Remote Trigger at all, folded the weekly audit into conductor/t-026's
+    self-assigning role system (scripts/select_role.py) as a fifth role,
+    `site-auditor`. It checks projects/global-ui/ for the newest
+    `AUDIT-REPORT-<date>.md` and recommends this role whenever none exists
+    or the newest is 7+ days old (`--audit-stale-days` to change), ranked
+    just above fresh `worker` pickup so it actually happens close to weekly
+    instead of only when the queue runs dry. This directly answers the
+    2026-07-25 billing concern too: it now genuinely IS "a routine on your
+    side, not a cron on mine" -- it rides whichever trigger fires next
+    (Worker/Reviewer-family, already far more frequent than weekly), no new
+    platform trigger, no separate billing surface. AGENTS.md's "If you're
+    doing the weekly site audit" section points back to this file's own
+    Agent Prompt as the authoritative scope (unchanged, not duplicated).
+    9 new tests (31 total in tests/test_select_role.py); full suite 529
+    passed / 1 skipped. Closing -- no dedicated Trigger needed. (If Silas
+    ever wants a hard guarantee independent of other trigger volume, a
+    dedicated Trigger per the original setup instructions below is still a
+    valid option to layer on top -- just no longer required for this to
+    work at all.)
   soft_gate: true
-  updated: '2026-07-25T00:00:00Z'
+  updated: '2026-07-26T00:00:00Z'
 - id: t-017
   milestone: m5
   title: Add a nav-manifest-style registry so missing top-level nav entries fail CI
