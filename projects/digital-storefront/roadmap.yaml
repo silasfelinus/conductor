@@ -662,7 +662,7 @@ tasks:
 - id: t-026
   milestone: m5
   title: 'kind_robots: extend Stripe webhook fulfillment to DLC products (Entitlement + Grant)'
-  status: claimed
+  status: needs-human
   owner: worker
   passes: 0
   stakes: outward-facing
@@ -670,23 +670,45 @@ tasks:
   approved_by_human: false
   depends_on: t-022
   note: >
-    Filed 2026-07-18 (t-017's design close,
-    projects/digital-storefront/docs/dlc-unlock-design.md). Once t-022's
-    Mermaids-PDF-scoped webhook fulfillment lands and at least one DLC
-    `Product` row exists (packmaker/t-004 admin generator has produced an
-    approved, purchasable pack), extend the same
-    `server/api/stripe/webhook.post.ts` handler's `checkout.session.completed`
-    (mode: payment) branch to also handle `Product.type = DLC`: create the
-    `Entitlement` row exactly as for any other digital good, then create one
-    `Grant` row (`subjectType: PACK`, `subjectId` = the pack's id,
-    `level: UNLOCK`, `source: PURCHASE`, `refId` = the entitlement id,
-    `status: ACTIVE`) in the same fulfillment step. Depends on kind-robots
-    t-037 (the `Pack`/`GrantSubject.PACK` migration) landing first so `Grant`
-    actually has a `PACK` subject type to write. TEST MODE ONLY — stays
-    gate_human like t-022, this is real purchase-fulfillment logic.
+    FOR SILAS: kind_robots PR #1018 (branch `claude/confident-bardeen-qxqhun`)
+    extends `server/api/stripe/webhook.post.ts`'s per-product purchase
+    handler so a `Product.type = DLC` checkout also grants Pack access, not
+    just a bare Entitlement. All CI checks pass (TypeScript, eslint,
+    prettier); no live Stripe keys or deploy involved — this only changes
+    application code.
+
+    What it does: on a DLC product's `checkout.session.completed`, it reads
+    `packId` from the product's metadata (same JSON convention already used
+    for POD's artImageId/printfulVariantId) and creates a `Grant` row
+    (subjectType: PACK, level: VIEW, source: PURCHASE, status: ACTIVE)
+    alongside the existing Entitlement, inside the same transaction as the
+    Order/OrderItem.
+
+    ONE DECISION FOR YOU: the original task note (2026-07-18) specified
+    `level: UNLOCK`, but `GrantLevel` only defines VIEW/ADMIN (kind-robots/
+    t-037's schema, approved 2026-07-25/26) — no UNLOCK value exists. I used
+    VIEW, since `server/utils/contentAccess.ts` already gates Pack-owned
+    content on an active PACK Grant at GrantLevel.VIEW, so VIEW is what
+    actually unlocks a pack's content today. If you'd rather add a distinct
+    UNLOCK level (via a new additive migration) instead of reusing VIEW, say
+    so and a future task can do that migration + this file's one-line update.
+
+    ALSO NOTE: no checkout-creation route yet produces a DLC-type Product
+    with packId metadata (packmaker/t-004's admin generator builds Pack
+    content bundles, not a priced Product row), so this fulfillment path is
+    real but currently unexercised end-to-end — a follow-up task to wire a
+    DLC product-page/checkout-creation route (mirroring t-023's Mermaids PDF
+    page) would let it actually run in test mode.
+
+    TO APPROVE: review kind_robots PR #1018, and if the VIEW-vs-UNLOCK choice
+    and the code look right, merge it and set `approved_by_human: true` +
+    `status: done` here. What unblocks: nothing else currently depends on
+    this — it's the last open piece of the original DLC-unlock design
+    (projects/digital-storefront/docs/dlc-unlock-design.md) besides the
+    product-page/checkout-creation follow-up noted above.
   claimed_by: claude-conductor-agentrun-20260726T182000Z-ds-t026
   claimed_at: '2026-07-26T18:08:11Z'
-  updated: '2026-07-26T18:08:11Z'
+  updated: '2026-07-26T18:20:00Z'
 
 - id: t-027
   milestone: m1
