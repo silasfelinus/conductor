@@ -1,0 +1,8 @@
+version: 1
+project: newsfeed
+task: t-022
+operation: ready
+session: claude-conductor-scheduled-20260726T123800Z-nf-t022
+updated: '2026-07-26T13:20:00Z'
+note: |-
+  RECHECKED 2026-07-26: public/images/newsfeed/defaults/ does not yet exist in kind_robots, and all eight kind-robots-newsfeed-default-0N render requests remain pending in projects/art-prompts.yaml. The component wiring cannot be completed until those assets land. This is an actionable external dependency, not a quality failure, so the claim is released to ready without spending a pass. Re-check the directory and queued assets before implementing; do not enqueue duplicates.
