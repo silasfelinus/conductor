@@ -4204,6 +4204,17 @@ records:
   passes: 0
   outcome: done
   failure_category: null
+  lesson: When a sibling code path already handles a case correctly (fulfillGiftshopPrintJob
+    skipping PrintJob creation for a missing FK target), check for an older path implementing
+    the same operation less safely (handleProductPurchase) before assuming a fix is novel.
+- date: '2026-07-26'
+  project: digital-storefront
+  task: t-034
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
   lesson: A failure-record insert must not reference the same missing foreign key that caused the failure;
     preserve the paid-order audit trail by omitting the dependent row when its required parent no longer
     exists.
