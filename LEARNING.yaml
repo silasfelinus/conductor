@@ -4130,3 +4130,12 @@ records:
   outcome: done
   failure_category: null
   lesson: "When a design doc's own Prisma model draft predates the actually-landed schema (the doc used cuid()/String ids; the real Product/Order/OrderItem models all landed as Int autoincrement), a research-first pass reading the live schema.prisma directly caught the mismatch before it became a migration that wouldn't type-check -- worth always re-verifying a doc's schema draft against the current schema file rather than transcribing it as-is, even when the doc is recent and detailed."
+- date: '2026-07-26'
+  project: digital-storefront
+  task: t-031
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "A kaizen note written by a prior cycle can undersell real scope -- 'wire the webhook branch' sounded like reusing an existing single-product handler, but the general cart's multi-item-per-session shape needed a genuinely different mechanism (per-line Stripe LineItem metadata, verified against the SDK's own .d.ts files rather than assumed), and the client was silently dropping data (artImageId) the task's author likely didn't know about. Treat a kaizen note as a hypothesis to verify by reading the actual current code before implementing, not a spec to build from directly -- and when research surfaces real complications, split the task rather than either attempting an oversized diff or silently narrowing scope without saying so. Also: extending a shared utility (applyMana) with an optional tx parameter to fix a transaction-atomicity gap is safer than either skipping the atomicity guarantee or duplicating the utility's logic inline -- check whether a shared helper already has this affordance before assuming you need a workaround."

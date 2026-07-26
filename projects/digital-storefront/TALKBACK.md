@@ -409,3 +409,22 @@ type: pattern
 - Filed as `digital-storefront/t-032` (`depends_on: t-030`) rather than reopening/reverting anything, so it's addressed before or alongside whatever task wires real Printful order submission.
 
 **Suggested action:** none beyond the filed task — flagging here so the next reviewer of a Printful-integration PR knows to check this specific re-validation exists before merging that one.
+
+## 2026-07-26 | Worker (conductor-scheduled burst session) | digital-storefront/t-031 | pattern
+
+type: pattern
+
+**Subject:** Research-before-code caught a shape mismatch (single-Product-per-session webhook vs. multi-item cart) and a real data-loss bug (client drops artImageId before checkout) that the task's own kaizen note hadn't anticipated -- decomposed rather than guessed.
+
+**Detail:**
+- kind_robots PR #1007: the general cart checkout succeeded at Stripe but created no `Order`/`OrderItem` at all, because `handleProductPurchase` (the existing webhook handler) is keyed on a single session-level `metadata.productSlug` -- a shape that doesn't fit a multi-item cart. Confirmed via the Stripe SDK's own `.d.ts` files (not guessed, not tested live -- no `STRIPE_SECRET_KEY` in this sandbox) that Stripe `LineItem` objects carry their own per-line `metadata`, distinct from `price_data.product_data`, and round-trip through `listLineItems()` with no `expand` needed. Used that to add a new, separate `handleGiftshopCartPurchase` handler rather than overloading `handleProductPurchase`'s single-product assumptions.
+- Found mid-implementation that `stores/cartStore.ts`'s `checkout()` drops the client's own tracked `artImageId` before sending to the server (`{ id: item.type, quantity }` only), so there is no real art to attach a `PrintJob` to for print/shirt/sticker/mug/book today. Rather than fabricate an `artImageId` to satisfy the task's literal ask ("create the same ... PrintJob rows"), split that off as `digital-storefront/t-033` with the concrete plumbing steps already researched, and shipped the honest landable core: real `Order`/`OrderItem` for every type, plus real mana-crediting for `tokens` (an audit-only record would mean charging real money and granting nothing).
+- Extended `applyMana` with an optional `tx` parameter (backward compatible, every existing caller unaffected) so the mana credit commits atomically with the `Order`/`OrderItem` write instead of opening a second, non-atomic transaction -- a subtle correctness gap I caught by tracing what `applyMana`'s own `prisma.$transaction` call would do if invoked from inside a caller's already-open transaction (it wouldn't join it).
+
+**What was good:**
+- Treated the kaizen note's scope as a starting hypothesis to verify, not a spec to implement blind -- both real complications (metadata shape, dropped artImageId) were found during research, before any code was written, not discovered as a mid-review surprise.
+
+**What to improve:**
+- None specific this cycle.
+
+**Kaizen task:** `t-033` (real artImageId/PrintJob wiring for print/shirt/sticker/mug/book) -- already carries the concrete plumbing steps from this cycle's research, not a generic "do the rest" placeholder.

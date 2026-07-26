@@ -870,7 +870,7 @@ tasks:
 - id: t-031
   milestone: m4
   title: "kind_robots: wire checkout.post.ts's general multi-item cart flow to actually fulfil (Order/OrderItem/Entitlement/PrintJob) whatever it sells"
-  status: claimed
+  status: done
   owner: worker
   passes: 0
   stakes: reversible
@@ -890,6 +890,51 @@ tasks:
     dedicated routes already create, reusing `handleProductPurchase`'s
     per-product-type branching rather than duplicating it. Reversible,
     Stripe test-mode only, no live payment/vendor action.
+
+    DONE 2026-07-26 (claude-conductor-scheduled-20260726T083600Z-ds-t031): research first
+    (before writing code) surfaced two real complications the note above didn't anticipate:
+    (1) `handleProductPurchase` is a single-Product-per-session handler keyed on
+    `metadata.productSlug` -- a multi-item cart session needs a materially different shape,
+    since Stripe Checkout Sessions carry one flat `metadata` object at the *session* level but
+    multiple line items. Confirmed via the Stripe SDK's own type definitions
+    (`node_modules/stripe/esm/resources/LineItems.d.ts`) that the `LineItem` objects returned
+    by `checkout.sessions.listLineItems()` carry their own per-line `metadata` field (distinct
+    from `price_data.product_data`), which `checkout.sessions.create()`'s line item params also
+    accept -- so `checkout.post.ts` now stamps `metadata: { giftshopType: id }` on each line
+    item, and a new `handleGiftshopCartPurchase` webhook handler (dispatched on
+    `session.metadata?.kind === 'giftshop_checkout'`, kept separate from
+    `handleProductPurchase` rather than overloading it) reads it back per line via
+    `listLineItems` with no `expand` needed. (2) The client cart already tracks a real
+    `artImageId` per item (`stores/cartStore.ts`'s `CartItem` interface), but `checkout()`
+    drops it before sending to the server (`{ id: item.type, quantity }` only) -- so there is
+    no real, eligibility-checked art to attach a `PrintJob` to for print/shirt/sticker/mug/book
+    today. Filing a `PrintJob` against a fabricated `artImageId` would misrepresent what art is
+    being printed, so split that off as `t-033` rather than guessing. Implemented for this
+    task: every general-cart purchase now creates a real `Order` + one `OrderItem` per line
+    item (upserting a generic `Product` row per `stores/seeds/cartItems.ts` catalog type,
+    server-trusted price, same idempotency pattern as `handleProductPurchase` -- check-then-
+    transact, backstopped by `Order.stripeSessionId`'s unique constraint). Additionally
+    credits real mana for `tokens`-type line items (mirroring `handleManaTopup`'s
+    `PURCHASE`-reason pattern) since an audit-only record would mean charging real money for
+    "100 Boost Tokens" and granting nothing -- extended `applyMana` (`server/utils/mana.ts`)
+    to accept an optional `tx` parameter so this commits atomically inside the same
+    transaction as the Order/OrderItem write, rather than opening a second, non-atomic
+    transaction (a small, backward-compatible signature change; every other existing caller
+    is unaffected). `donation` and POD-mapped types (print/shirt/sticker/mug/book) get
+    Order/OrderItem only in this pass -- correct behavior, not a gap, for donation (nothing to
+    "own"); genuinely deferred for the POD types, tracked as `t-033`. Verified: `npx eslint`
+    clean on all three changed files; `npx prettier --check` clean; full-project `vue-tsc
+    --noEmit` (0 errors, after fixing one real type error -- the `GIFTSHOP_TYPE_TO_PRODUCT_TYPE`
+    map's keys must match `stores/seeds/cartItems.ts`'s narrower `CartItem['type']`, not the
+    similarly-named but broader client-side `stores/cartStore.ts` `CartItem` interface, which
+    also declares `extra`/`subscription` types that don't exist in the trusted server catalog);
+    `verifyNoPrismaJsonCast.ts` and `verifyFetchGenericPinning.ts` both pass. Could not exercise
+    a live Stripe test-mode click-through from this sandbox (no `STRIPE_SECRET_KEY`/
+    `STRIPE_WEBHOOK_SECRET`) -- the per-line `metadata` round-trip is verified against the
+    Stripe SDK's own type definitions rather than a live call. kind_robots PR #1007: all 4 CI
+    checks green (TypeScript, Contract verifiers, facet-catalog, GitGuardian) -- merged squash
+    `b29064d9`. No review comments. Follow-up split off as `t-033` (real artImageId/PrintJob
+    wiring for the four physical-goods cart types).
   claimed_at: '2026-07-26T08:36:42Z'
   claimed_by: claude-conductor-scheduled-20260726T083600Z-ds-t031
   updated: '2026-07-26T08:36:42Z'
@@ -922,3 +967,46 @@ tasks:
     trust anything cached from checkout-creation time); on failure, create the `PrintJob`
     with `status: FAILED` (or skip creation) and surface the reason rather than proceeding
     silently. Reversible, Stripe test-mode only, no live vendor action.
+
+- id: t-033
+  milestone: m4
+  title: "kind_robots: wire real artImageId through the general giftshop cart's print/shirt/sticker/mug/book checkout so those types can get a real PrintJob"
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  depends_on: t-031
+  note: >
+    Split off from t-031 during implementation (2026-07-26) rather than guessing at a
+    fabricated artImageId. `stores/cartStore.ts`'s client-side `CartItem` interface already
+    tracks a real `artImageId` per item (populated correctly for at least the "Featured
+    print" flow in `giftshop-interact.vue`'s `addFeaturedPrint`, which sources it from
+    `/api/art/storefront-featured`), but `cartStore.ts`'s own `checkout()` function drops it
+    before sending to the server -- the payload it builds is `{ id: item.type, quantity:
+    item.quantity }`, discarding `artImageId`/`imageUrl` entirely. `server/api/stripe/
+    checkout.post.ts`'s `parseCart` only ever accepted `{id, quantity}` too, so the server
+    never had anywhere to put it even if the client sent it. t-031 wired real Order/OrderItem
+    (+ mana crediting for tokens) fulfillment for every general-cart line item using only
+    `type`+`quantity`+the trusted server-side `stores/seeds/cartItems.ts` price/label -- it
+    deliberately does NOT create a `PrintJob` for print/shirt/sticker/mug/book line items,
+    since doing so would need a real, eligibility-checked `artImageId` that doesn't exist
+    anywhere in the current payload. To close this: (1) extend `cartStore.ts`'s `CartItem`
+    payload sent to `/api/stripe/checkout` to include `artImageId` per line; (2) extend
+    `checkout.post.ts`'s `parseCart` to accept and validate it (integer, required for
+    print/shirt/sticker/mug/book types, matching `pod-checkout.post.ts`'s validation shape);
+    (3) re-run `checkPrintEligibility` (`server/api/art/utils/printEligibility.ts`, already
+    reused unmodified by t-030's `pod-checkout.post.ts`) server-side per print-type line item
+    before creating the Stripe session -- decide and document what happens to the *rest* of
+    a multi-item cart if one line item fails eligibility (reject the whole checkout vs. drop
+    just that item vs. some other UX -- this is a real product decision, not just plumbing);
+    (4) carry the validated `artImageId` through the same per-line-item Stripe `metadata`
+    mechanism t-031 already established (`metadata: { giftshopType, artImageId }`) so
+    `handleGiftshopCartPurchase` in `server/api/stripe/webhook.post.ts` can create a real
+    `PrintJob` for those four types instead of stopping at Order/OrderItem. Note the demo
+    showcase items in `giftshop-interact.vue` (`addDemoItem`, "Butterfly Print" /
+    "Jellybean Token Pack") and `giving-page.vue`'s donation button use placeholder
+    `artImageId` values (1, 2, 0) that don't correspond to real `ArtImage` rows -- these will
+    fail a real eligibility check once (3) lands, which is correct behavior, not a bug to
+    work around; they're demo/placeholder UI, not real product listings, and may need their
+    own follow-up to either wire real featured art or get removed. Reversible, Stripe
+    test-mode only, no live vendor action.
