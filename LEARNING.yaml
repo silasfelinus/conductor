@@ -4253,3 +4253,16 @@ records:
   failure_category: null
   lesson: Group embedded regex alternations and run the real tests; new workflows should declare least-privilege
     token permissions from their first revision.
+- date: '2026-07-26'
+  project: conductor
+  task: t-081
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: Three separate tasks (ai-art-academy/t-004, coloring-book/t-022, newsfeed/t-022) had independently
+    hand-written the same "recheck the shared render backlog" prose paragraph -- the identical duplication
+    EGRESS-BLOCKERS.md already solved for sandbox egress. When a burst-mode rotation finds every priority-order
+    ready task blocked on the same shared cause, that's a signal to build the missing shared ledger/tool
+    instead of re-probing and re-writing the Nth near-duplicate paragraph.
