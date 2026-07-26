@@ -342,6 +342,44 @@ tasks:
       for just the current session) and re-run
       `python3 scripts/reconcile_expressions.py --apply`. Once the numbers
       look sane, set status: done here.
+
+      UPDATE 2026-07-26 (Silas ran --apply again after the KR_MEDIA_IMAGES_DIR
+      fix landed): env var picked up correctly this time -- script found the
+      real `Z:\kindrobots\images\bots\expressions\<slug>` folders and started
+      matching (barkeep-vox: +0 create, ~20 update). But 29 of ~30 folders
+      still failed with "folder matches no bot slug", plus one unrecognized
+      file (glitch-pixl/0001surprised.webp -- wrong naming convention, should
+      be surprised_01.webp; separate, minor, fixable by renaming the file to
+      match the {key}_{nn}.webp convention).
+      Investigated the slug mismatch. These are NOT simple rename typos --
+      root cause looks structural: the ~29 unmatched folder names
+      (brass-lampkeeper, badger-barnaby, kitsune-totomi, moonwreck-sabremoon,
+      etc.) match a NARRATOR-bot roster defined in kind_robots'
+      stores/seeds/narrators.ts (37 entries, "one NARRATOR bot per Dream",
+      added 2026-07-23 via the WonderLab commentary-batch PR #902). Checked:
+      that file's `narratorSeeds` export is never imported anywhere else in
+      the repo -- `server/api/bots/seed.post.ts` (the actual seeding
+      endpoint) only ever seeds the older, smaller `botData` array from
+      stores/seeds/seedBots.ts. So these 29 narrator bots most likely were
+      never actually created as Bot rows in the live database at all --
+      their expression images got generated and placed on the media share in
+      advance (dated 2026-07-17, before the seed file even existed in git),
+      but the DB-row half of the work looks like it never happened. That
+      would fully explain "folder matches no bot slug": there's no bot with
+      that slug (or any slug) to match, not a naming-convention drift.
+      Could NOT confirm this against the live DB -- api.github.com-style
+      calls to kind-robots.vercel.app are blocked from this sandbox the same
+      way they always have been for this task. TO SILAS: worth checking
+      directly -- e.g. `curl https://kind-robots.vercel.app/api/narrators/bot/brass-lampkeeper`
+      (or any of the other unmatched slugs) from your own machine. A 404
+      confirms these 37 narrator bots were never seeded and the real fix is
+      wiring `narratorSeeds` into a seed path (extending seed.post.ts, or a
+      one-off script) with each bot's `slug` set explicitly to its
+      avatarImage-derived name (e.g. slug: "brass-lampkeeper") so it matches
+      the pre-existing image folders -- filing that as a new task once
+      confirmed, since it's real DB-write work, not a one-line fix. If
+      instead it returns 200 with some OTHER slug, the diagnosis above is
+      wrong and it's back to being an actual naming-convention question.
     soft_gate: true
 
   - id: t-012
