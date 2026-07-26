@@ -435,13 +435,17 @@ role from live state on arrival:**
 3. If a human explicitly asked for one role in this session (e.g. "review PR #123"),
    honor that directly — `select_role.py` is for the *unprompted, trigger-fired* case,
    not a override of an explicit instruction.
-4. **Scope note:** `select_role.py`'s `pr-medic`/`branch-medic` signals only cover
-   this repo (conductor) — the one its own git checkout and `GITHUB_TOKEN` naturally
-   reach. Other repos a session can access (e.g. kind_robots) need the equivalent
-   check done via the session's own GitHub MCP tools (`list_pull_requests` +
-   `pull_request_read`'s `get_check_runs`/`get_status` method; `list_branches`), not
-   this script — a session with cross-repo access should check those too before
-   concluding there's nothing to fix/triage, not just conductor.
+4. **Scope note:** `select_role.py`'s `pr-medic`/`branch-medic` signals cover BOTH
+   `silasfelinus/conductor` and `silasfelinus/kind_robots` by default (`--repos` to
+   change) — "a conductor agent does this" doesn't mean it only watches its own
+   repo. Conductor's own checks use fast local git (via `branch_janitor.py`, no API
+   calls); kind_robots has no guaranteed local checkout in every session/job that
+   runs this script, so it's checked via the GitHub API instead (same information,
+   different transport — see the script's own docstring). If a session has access to
+   still other repos beyond these two, check those via the session's own GitHub MCP
+   tools (`list_pull_requests` + `pull_request_read`'s `get_check_runs`/`get_status`
+   method; `list_branches`) before concluding there's nothing to fix/triage —
+   `select_role.py`'s default two-repo scope isn't the ceiling, just the floor.
 
 This doesn't require the platform to merge its Worker/Reviewer triggers into one —
 it just means a session mislabeled by a stale trigger schedule self-corrects instead
@@ -565,9 +569,9 @@ error, distinct from a PR mid-iteration whose latest push just hasn't gone green
   project's `TALKBACK.md` with your read and, if the underlying task's roadmap status
   doesn't already reflect this, correct it (matching the same "roadmap state must
   reflect live reality" principle as `check_pr_merged_drift.py`).
-- Cross-repo: `select_role.py` only checks conductor's own open PRs. If you have access
-  to other repos (kind_robots, etc.), check those too via GitHub MCP tools before
-  concluding there's nothing to fix.
+- Cross-repo: `select_role.py` checks both conductor's and kind_robots' open PRs by
+  default. If you have access to still other repos, check those too via GitHub MCP
+  tools before concluding there's nothing to fix.
 
 ### If you're triaging stale branches
 
@@ -603,13 +607,15 @@ acts on (it only auto-deletes MERGED/FORCE-named branches and *reports* STRANDED
   root one if it's not project-scoped.
 - Never touch `main` itself, and never delete a branch that still has an open PR
   against it (that's the reviewer role's territory, not this one's).
-- Cross-repo: `branch_janitor.py`/`select_role.py` only cover conductor's own branches.
-  kind_robots and other repos accumulate the same kind of stale `claude/*` branches
-  (see conductor/t-078 for a real example) but have no equivalent automated janitor —
-  check those via GitHub MCP `list_branches` too when you have access, using the same
-  judgment above; there's no scripted STRANDED classification for them yet, so read
-  each candidate branch's actual state (merged? has an open PR? how old? real diff or
-  empty?) directly.
+- Cross-repo: `select_role.py`'s STRANDED check covers both conductor (via
+  `branch_janitor.py`'s local git) and kind_robots (via the GitHub API — the same
+  classification, `list_branches`/compare/commit-date, just without needing a local
+  checkout) by default. kind_robots branches accumulate the same way conductor's do
+  (see conductor/t-078 for a real example this exact gap once produced) and now get
+  the same STRANDED scrutiny. If you have access to still other repos beyond these
+  two, check them via GitHub MCP `list_branches` using the same judgment above — there's
+  no scripted classification for them yet, so read each candidate branch's actual
+  state (merged? open PR? how old? real diff or empty?) directly.
 
 ## Cross-vetting protocol
 

@@ -1,11 +1,15 @@
-"""Tests for scripts/select_role.py (conductor/t-026, extended).
+"""Tests for scripts/select_role.py (conductor/t-026, extended, cross-repo).
 
-select_role.py is the repo-side fix for "a session's role is decided by which
-platform trigger fired it, not by live state": it composes four existing
-signals (open worker/* branches, red+stale open PRs, stranded branches, ready
-tasks) into one recommendation, in priority order, so a session decides its
-own role on arrival instead of following a trigger label that may not match
-what the repo actually needs.
+select_role.py composes four signals (open worker/* branches, red+stale open
+PRs, stranded branches, ready tasks) into one role recommendation, in
+priority order, so a session decides its own role on arrival instead of
+following a trigger label that may not match what the repos actually need.
+
+pr-medic and branch-medic cover BOTH silasfelinus/conductor (via fast local
+git, through branch_janitor.py) and silasfelinus/kind_robots (via the GitHub
+API, since a session running this script has no guaranteed local kind_robots
+checkout) — "it's a conductor agent doing it" doesn't mean it only watches
+its own repo.
 """
 
 import py_compile
@@ -54,11 +58,18 @@ def test_script_compiles():
     py_compile.compile(str(SELECT_ROLE), doraise=True)
 
 
+def test_default_repos_include_kind_robots():
+    """The whole point of the 2026-07-26 extension: pr-medic/branch-medic
+    aren't conductor-only by default."""
+    assert "silasfelinus/conductor" in select_role.DEFAULT_REPOS
+    assert "silasfelinus/kind_robots" in select_role.DEFAULT_REPOS
+
+
 def test_reviewer_outranks_everything():
     patches = _patched(
         remote_worker_branches=[{"branch": "worker/x-t-001"}],
         red_stale_prs=[{"repo": "silasfelinus/conductor", "number": 1}],
-        stranded_branches=["claude/some-stale-branch"],
+        stranded_branches=[{"repo": "silasfelinus/kind_robots", "branch": "claude/some-stale"}],
         queue_summary=SOME_READY_TASK,
     )
     with patches[0], patches[1], patches[2], patches[3], patches[4]:
@@ -76,8 +87,8 @@ def test_reviewer_outranks_everything():
 
 def test_pr_medic_outranks_branch_medic_and_worker():
     patches = _patched(
-        red_stale_prs=[{"repo": "silasfelinus/conductor", "number": 42, "ci_state": "failure"}],
-        stranded_branches=["claude/some-stale-branch"],
+        red_stale_prs=[{"repo": "silasfelinus/kind_robots", "number": 42, "ci_state": "failure"}],
+        stranded_branches=[{"repo": "silasfelinus/conductor", "branch": "claude/some-stale"}],
         queue_summary=SOME_READY_TASK,
     )
     with patches[0], patches[1], patches[2], patches[3], patches[4]:
@@ -85,15 +96,20 @@ def test_pr_medic_outranks_branch_medic_and_worker():
 
     assert result["role"] == "pr-medic"
     assert "1 open PR" in result["reason"]
+    assert "silasfelinus/kind_robots" in result["reason"]
 
 
 def test_branch_medic_outranks_worker():
-    patches = _patched(stranded_branches=["claude/orphaned-work"], queue_summary=SOME_READY_TASK)
+    patches = _patched(
+        stranded_branches=[{"repo": "silasfelinus/kind_robots", "branch": "claude/orphaned-work"}],
+        queue_summary=SOME_READY_TASK,
+    )
     with patches[0], patches[1], patches[2], patches[3], patches[4]:
         result = select_role.select_role()
 
     assert result["role"] == "branch-medic"
-    assert result["stranded_branches"] == ["claude/orphaned-work"]
+    assert result["stranded_branches"][0]["branch"] == "claude/orphaned-work"
+    assert "silasfelinus/kind_robots" in result["reason"]
 
 
 def test_worker_when_only_ready_task_exists():
@@ -130,7 +146,25 @@ def test_remote_refresh_failure_does_not_crash_selection():
     assert result["role"] == "idle"
 
 
-# --- find_red_stale_prs: real decision logic (not the role-priority mocks above)
+def test_select_role_checks_both_default_repos():
+    """select_role() should pass DEFAULT_REPOS through to both aggregators
+    when the caller doesn't override `repos=`."""
+    with mock.patch.object(select_role.run_reviewer, "refresh_remotes"), mock.patch.object(
+        select_role.run_reviewer, "remote_worker_branches", return_value=[]
+    ), mock.patch.object(
+        select_role, "find_red_stale_prs", return_value=[]
+    ) as find_red, mock.patch.object(
+        select_role, "find_stranded_branches", return_value=[]
+    ) as find_stranded, mock.patch.object(
+        select_role.run_worker, "build_queue_summary", return_value=EMPTY_QUEUE
+    ):
+        select_role.select_role()
+
+    assert find_red.call_args.args[0] == list(select_role.DEFAULT_REPOS)
+    assert find_stranded.call_args.args[0] == list(select_role.DEFAULT_REPOS)
+
+
+# --- find_red_stale_prs: aggregates across repos ---------------------------
 
 
 def _fake_gh_request(routes):
@@ -160,7 +194,7 @@ def test_find_red_stale_prs_flags_failing_and_old_enough():
         "/commits/deadbeef/status": {"state": "failure"},
     }
     with mock.patch.object(select_role, "_gh_request", side_effect=_fake_gh_request(routes)):
-        flagged = select_role.find_red_stale_prs(
+        flagged = select_role.find_red_stale_prs_in_repo(
             "silasfelinus/conductor", "fake-token", stale_hours=3.0, now=now
         )
 
@@ -177,7 +211,7 @@ def test_find_red_stale_prs_ignores_fresh_failures_still_being_iterated():
         "/commits/cafef00d/status": {"state": "failure"},
     }
     with mock.patch.object(select_role, "_gh_request", side_effect=_fake_gh_request(routes)):
-        flagged = select_role.find_red_stale_prs(
+        flagged = select_role.find_red_stale_prs_in_repo(
             "silasfelinus/conductor", "fake-token", stale_hours=3.0, now=now
         )
 
@@ -192,7 +226,7 @@ def test_find_red_stale_prs_ignores_passing_ci():
         "/commits/abc123/status": {"state": "success"},
     }
     with mock.patch.object(select_role, "_gh_request", side_effect=_fake_gh_request(routes)):
-        flagged = select_role.find_red_stale_prs(
+        flagged = select_role.find_red_stale_prs_in_repo(
             "silasfelinus/conductor", "fake-token", stale_hours=3.0, now=now
         )
 
@@ -202,10 +236,27 @@ def test_find_red_stale_prs_ignores_passing_ci():
 def test_find_red_stale_prs_returns_empty_without_a_token():
     """No GITHUB_TOKEN -> skip cleanly, never attempt an unauthenticated call."""
     with mock.patch.object(select_role, "list_open_prs") as list_open_prs:
-        flagged = select_role.find_red_stale_prs("silasfelinus/conductor", "", stale_hours=3.0)
+        flagged = select_role.find_red_stale_prs_in_repo("silasfelinus/conductor", "", stale_hours=3.0)
 
     list_open_prs.assert_not_called()
     assert flagged == []
+
+
+def test_find_red_stale_prs_aggregates_across_repos():
+    now = datetime(2026, 7, 26, 12, 0, 0, tzinfo=timezone.utc)
+    conductor_pr = {"number": 1, "head": {"sha": "aaa"}, "updated_at": "2026-07-26T05:00:00Z"}
+    kr_pr = {"number": 2, "head": {"sha": "bbb"}, "updated_at": "2026-07-26T05:00:00Z"}
+
+    def fake_in_repo(repo, token, *, stale_hours, now=None):
+        return [{"repo": repo, "number": (conductor_pr if repo.endswith("conductor") else kr_pr)["number"]}]
+
+    with mock.patch.object(select_role, "find_red_stale_prs_in_repo", side_effect=fake_in_repo):
+        flagged = select_role.find_red_stale_prs(
+            ["silasfelinus/conductor", "silasfelinus/kind_robots"], "fake-token", stale_hours=3.0, now=now
+        )
+
+    assert {f["repo"] for f in flagged} == {"silasfelinus/conductor", "silasfelinus/kind_robots"}
+    assert len(flagged) == 2
 
 
 def test_gh_request_degrades_on_unreachable_api_instead_of_crashing():
@@ -220,10 +271,10 @@ def test_gh_request_degrades_on_unreachable_api_instead_of_crashing():
     assert result is None
 
 
-# --- find_stranded_branches: delegates to branch_janitor.py's own classifier
+# --- find_stranded_branches: local (conductor) vs API (kind_robots) --------
 
 
-def test_find_stranded_branches_delegates_to_branch_janitor_classify():
+def test_find_stranded_branches_local_delegates_to_branch_janitor_classify():
     with mock.patch.object(
         select_role.branch_janitor, "list_remote_branches", return_value=["claude/old-one"]
     ), mock.patch.object(
@@ -231,12 +282,12 @@ def test_find_stranded_branches_delegates_to_branch_janitor_classify():
     ), mock.patch.object(
         select_role.branch_janitor, "branch_age_hours", return_value=999.0
     ):
-        stranded = select_role.find_stranded_branches(stale_hours=12.0)
+        stranded = select_role.find_stranded_branches_local(stale_hours=12.0)
 
     assert stranded == ["claude/old-one"]
 
 
-def test_find_stranded_branches_excludes_merged_and_fresh():
+def test_find_stranded_branches_local_excludes_merged_and_fresh():
     with mock.patch.object(
         select_role.branch_janitor,
         "list_remote_branches",
@@ -246,9 +297,86 @@ def test_find_stranded_branches_excludes_merged_and_fresh():
     ), mock.patch.object(
         select_role.branch_janitor, "branch_age_hours", return_value=1.0
     ):
-        stranded = select_role.find_stranded_branches(stale_hours=12.0)
+        stranded = select_role.find_stranded_branches_local(stale_hours=12.0)
 
     assert stranded == []
+
+
+def test_find_stranded_branches_remote_flags_unmerged_and_old():
+    now = datetime(2026, 7, 26, 12, 0, 0, tzinfo=timezone.utc)
+    routes = {
+        "/branches?per_page=100": [{"name": "claude/keen-fermat-87rn74", "commit": {"sha": "abc"}}],
+        "/compare/main...claude%2Fkeen-fermat-87rn74": {"status": "diverged"},
+        "/commits/abc": {"commit": {"committer": {"date": "2026-07-21T22:00:00Z"}}},  # ~4 days old
+    }
+    with mock.patch.object(select_role, "_gh_request", side_effect=_fake_gh_request(routes)):
+        stranded = select_role.find_stranded_branches_remote(
+            "silasfelinus/kind_robots", "fake-token", stale_hours=12.0, now=now
+        )
+
+    assert len(stranded) == 1
+    assert stranded[0]["branch"] == "claude/keen-fermat-87rn74"
+    assert stranded[0]["repo"] == "silasfelinus/kind_robots"
+
+
+def test_find_stranded_branches_remote_excludes_merged():
+    now = datetime(2026, 7, 26, 12, 0, 0, tzinfo=timezone.utc)
+    routes = {
+        "/branches?per_page=100": [{"name": "claude/already-merged", "commit": {"sha": "def"}}],
+        "/compare/main...claude%2Falready-merged": {"status": "identical"},
+        "/commits/def": {"commit": {"committer": {"date": "2026-07-21T22:00:00Z"}}},
+    }
+    with mock.patch.object(select_role, "_gh_request", side_effect=_fake_gh_request(routes)):
+        stranded = select_role.find_stranded_branches_remote(
+            "silasfelinus/kind_robots", "fake-token", stale_hours=12.0, now=now
+        )
+
+    assert stranded == []
+
+
+def test_find_stranded_branches_remote_never_flags_undetermined_merge_state():
+    """A failed/ambiguous compare call must never be treated as "assume
+    stranded" -- that would risk flagging real merged work as needing a
+    branch-medic look."""
+    now = datetime(2026, 7, 26, 12, 0, 0, tzinfo=timezone.utc)
+    routes = {
+        "/branches?per_page=100": [{"name": "claude/unknown-state", "commit": {"sha": "ghi"}}],
+        # no /compare/ route -> _gh_request returns None -> status undetermined
+        "/commits/ghi": {"commit": {"committer": {"date": "2026-07-21T22:00:00Z"}}},
+    }
+    with mock.patch.object(select_role, "_gh_request", side_effect=_fake_gh_request(routes)):
+        stranded = select_role.find_stranded_branches_remote(
+            "silasfelinus/kind_robots", "fake-token", stale_hours=12.0, now=now
+        )
+
+    assert stranded == []
+
+
+def test_find_stranded_branches_remote_returns_empty_without_a_token():
+    with mock.patch.object(select_role, "list_branches_api") as list_branches_api:
+        stranded = select_role.find_stranded_branches_remote("silasfelinus/kind_robots", "", stale_hours=12.0)
+
+    list_branches_api.assert_not_called()
+    assert stranded == []
+
+
+def test_find_stranded_branches_routes_local_repo_to_local_and_others_to_remote():
+    with mock.patch.object(
+        select_role, "find_stranded_branches_local", return_value=["claude/conductor-stale"]
+    ) as local_fn, mock.patch.object(
+        select_role,
+        "find_stranded_branches_remote",
+        return_value=[{"repo": "silasfelinus/kind_robots", "branch": "claude/kr-stale", "stale_hours": 20.0}],
+    ) as remote_fn:
+        stranded = select_role.find_stranded_branches(
+            ["silasfelinus/conductor", "silasfelinus/kind_robots"], "fake-token", stale_hours=12.0
+        )
+
+    local_fn.assert_called_once()
+    remote_fn.assert_called_once()
+    assert remote_fn.call_args.args[0] == "silasfelinus/kind_robots"
+    repos_seen = {b["repo"] for b in stranded}
+    assert repos_seen == {"silasfelinus/conductor", "silasfelinus/kind_robots"}
 
 
 # --- read-only contract, same pin as run_worker.py/run_reviewer.py ---------
