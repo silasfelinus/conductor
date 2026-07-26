@@ -1,20 +1,27 @@
-"""Tests for scripts/select_role.py (conductor/t-026, extended, cross-repo).
+"""Tests for scripts/select_role.py (conductor/t-026, extended, cross-repo,
++ weekly site audit).
 
-select_role.py composes four signals (open worker/* branches, red+stale open
-PRs, stranded branches, ready tasks) into one role recommendation, in
-priority order, so a session decides its own role on arrival instead of
-following a trigger label that may not match what the repos actually need.
+select_role.py composes five signals (open worker/* branches, red+stale open
+PRs, stranded branches, an overdue weekly site audit, ready tasks) into one
+role recommendation, in priority order, so a session decides its own role on
+arrival instead of following a trigger label that may not match what the
+repos actually need.
 
 pr-medic and branch-medic cover BOTH silasfelinus/conductor (via fast local
 git, through branch_janitor.py) and silasfelinus/kind_robots (via the GitHub
 API, since a session running this script has no guaranteed local kind_robots
 checkout) — "it's a conductor agent doing it" doesn't mean it only watches
 its own repo.
+
+site-auditor folds projects/global-ui/SITE-AUDIT-AGENT.md's weekly audit into
+this same self-assigning system instead of needing its own dedicated,
+separately-approved Claude Code Remote Trigger (global-ui/t-016) — it rides
+whichever trigger fires next, as long as this script runs first.
 """
 
 import py_compile
 import urllib.error
-from datetime import datetime, timezone
+from datetime import date, datetime, timezone
 from pathlib import Path
 from unittest import mock
 
@@ -30,17 +37,21 @@ SOME_READY_TASK = {
     "projects_with_ready_tasks": ["some-project"],
     "projects_needing_human": [],
 }
+AUDIT_NOT_OVERDUE = {"overdue": False, "last_report": "AUDIT-REPORT-2026-07-24.md", "days_since": 1}
+AUDIT_OVERDUE = {"overdue": True, "last_report": "AUDIT-REPORT-2026-07-01.md", "days_since": 25}
+AUDIT_NEVER_RUN = {"overdue": True, "last_report": None, "days_since": None}
 
 
 def _patched(
     remote_worker_branches=(),
     red_stale_prs=(),
     stranded_branches=(),
+    audit_status=None,
     queue_summary=None,
 ):
-    """One combined patch context covering all four signals, each defaulted
-    to "nothing found" and overridden per-test — keeps each test asserting
-    only the signal(s) it's actually about."""
+    """One combined patch context covering all five signals, each defaulted
+    to "nothing found"/"not overdue" and overridden per-test — keeps each
+    test asserting only the signal(s) it's actually about."""
     return (
         mock.patch.object(select_role.run_reviewer, "refresh_remotes"),
         mock.patch.object(
@@ -48,10 +59,15 @@ def _patched(
         ),
         mock.patch.object(select_role, "find_red_stale_prs", return_value=list(red_stale_prs)),
         mock.patch.object(select_role, "find_stranded_branches", return_value=list(stranded_branches)),
+        mock.patch.object(select_role, "site_audit_status", return_value=audit_status or AUDIT_NOT_OVERDUE),
         mock.patch.object(
             select_role.run_worker, "build_queue_summary", return_value=queue_summary or EMPTY_QUEUE
         ),
     )
+
+
+def _apply(patches):
+    return patches[0], patches[1], patches[2], patches[3], patches[4], patches[5]
 
 
 def test_script_compiles():
@@ -66,13 +82,14 @@ def test_default_repos_include_kind_robots():
 
 
 def test_reviewer_outranks_everything():
-    patches = _patched(
+    p = _apply(_patched(
         remote_worker_branches=[{"branch": "worker/x-t-001"}],
         red_stale_prs=[{"repo": "silasfelinus/conductor", "number": 1}],
         stranded_branches=[{"repo": "silasfelinus/kind_robots", "branch": "claude/some-stale"}],
+        audit_status=AUDIT_OVERDUE,
         queue_summary=SOME_READY_TASK,
-    )
-    with patches[0], patches[1], patches[2], patches[3], patches[4]:
+    ))
+    with p[0], p[1], p[2], p[3], p[4], p[5]:
         result = select_role.select_role()
 
     assert result["role"] == "reviewer"
@@ -82,16 +99,18 @@ def test_reviewer_outranks_everything():
     # scratch for what's next.
     assert result["red_stale_pr_count"] == 1
     assert result["stranded_branch_count"] == 1
+    assert result["site_audit_overdue"] is True
     assert result["ready_task"]["task_id"] == "t-002"
 
 
-def test_pr_medic_outranks_branch_medic_and_worker():
-    patches = _patched(
+def test_pr_medic_outranks_branch_medic_audit_and_worker():
+    p = _apply(_patched(
         red_stale_prs=[{"repo": "silasfelinus/kind_robots", "number": 42, "ci_state": "failure"}],
         stranded_branches=[{"repo": "silasfelinus/conductor", "branch": "claude/some-stale"}],
+        audit_status=AUDIT_OVERDUE,
         queue_summary=SOME_READY_TASK,
-    )
-    with patches[0], patches[1], patches[2], patches[3], patches[4]:
+    ))
+    with p[0], p[1], p[2], p[3], p[4], p[5]:
         result = select_role.select_role()
 
     assert result["role"] == "pr-medic"
@@ -99,12 +118,13 @@ def test_pr_medic_outranks_branch_medic_and_worker():
     assert "silasfelinus/kind_robots" in result["reason"]
 
 
-def test_branch_medic_outranks_worker():
-    patches = _patched(
+def test_branch_medic_outranks_audit_and_worker():
+    p = _apply(_patched(
         stranded_branches=[{"repo": "silasfelinus/kind_robots", "branch": "claude/orphaned-work"}],
+        audit_status=AUDIT_OVERDUE,
         queue_summary=SOME_READY_TASK,
-    )
-    with patches[0], patches[1], patches[2], patches[3], patches[4]:
+    ))
+    with p[0], p[1], p[2], p[3], p[4], p[5]:
         result = select_role.select_role()
 
     assert result["role"] == "branch-medic"
@@ -112,9 +132,31 @@ def test_branch_medic_outranks_worker():
     assert "silasfelinus/kind_robots" in result["reason"]
 
 
-def test_worker_when_only_ready_task_exists():
-    patches = _patched(queue_summary=SOME_READY_TASK)
-    with patches[0], patches[1], patches[2], patches[3], patches[4]:
+def test_site_auditor_outranks_worker_when_overdue():
+    p = _apply(_patched(audit_status=AUDIT_OVERDUE, queue_summary=SOME_READY_TASK))
+    with p[0], p[1], p[2], p[3], p[4], p[5]:
+        result = select_role.select_role()
+
+    assert result["role"] == "site-auditor"
+    assert "25 days" in result["reason"]
+    assert "AUDIT-REPORT-2026-07-01.md" in result["reason"]
+    # Ready task still surfaced even though it didn't win.
+    assert result["ready_task"]["task_id"] == "t-002"
+
+
+def test_site_auditor_reason_when_audit_has_never_run():
+    p = _apply(_patched(audit_status=AUDIT_NEVER_RUN))
+    with p[0], p[1], p[2], p[3], p[4], p[5]:
+        result = select_role.select_role()
+
+    assert result["role"] == "site-auditor"
+    assert "never run" in result["reason"]
+    assert result["site_audit_last_report"] is None
+
+
+def test_worker_when_only_ready_task_exists_and_audit_not_due():
+    p = _apply(_patched(queue_summary=SOME_READY_TASK))
+    with p[0], p[1], p[2], p[3], p[4], p[5]:
         result = select_role.select_role()
 
     assert result["role"] == "worker"
@@ -122,8 +164,8 @@ def test_worker_when_only_ready_task_exists():
 
 
 def test_idle_when_nothing_needs_doing():
-    patches = _patched()
-    with patches[0], patches[1], patches[2], patches[3], patches[4]:
+    p = _apply(_patched())
+    with p[0], p[1], p[2], p[3], p[4], p[5]:
         result = select_role.select_role()
 
     assert result["role"] == "idle"
@@ -138,6 +180,8 @@ def test_remote_refresh_failure_does_not_crash_selection():
         select_role, "find_red_stale_prs", return_value=[]
     ), mock.patch.object(
         select_role, "find_stranded_branches", return_value=[]
+    ), mock.patch.object(
+        select_role, "site_audit_status", return_value=AUDIT_NOT_OVERDUE
     ), mock.patch.object(
         select_role.run_worker, "build_queue_summary", return_value=EMPTY_QUEUE
     ):
@@ -156,6 +200,8 @@ def test_select_role_checks_both_default_repos():
     ) as find_red, mock.patch.object(
         select_role, "find_stranded_branches", return_value=[]
     ) as find_stranded, mock.patch.object(
+        select_role, "site_audit_status", return_value=AUDIT_NOT_OVERDUE
+    ), mock.patch.object(
         select_role.run_worker, "build_queue_summary", return_value=EMPTY_QUEUE
     ):
         select_role.select_role()
@@ -377,6 +423,54 @@ def test_find_stranded_branches_routes_local_repo_to_local_and_others_to_remote(
     assert remote_fn.call_args.args[0] == "silasfelinus/kind_robots"
     repos_seen = {b["repo"] for b in stranded}
     assert repos_seen == {"silasfelinus/conductor", "silasfelinus/kind_robots"}
+
+
+# --- site-auditor: find_last_audit_report / site_audit_status --------------
+
+
+def _make_report(tmp_path, name):
+    (tmp_path / name).write_text("# audit\n")
+
+
+def test_find_last_audit_report_returns_none_when_dir_has_no_reports(tmp_path):
+    assert select_role.find_last_audit_report(tmp_path) is None
+
+
+def test_find_last_audit_report_returns_none_when_dir_missing(tmp_path):
+    assert select_role.find_last_audit_report(tmp_path / "does-not-exist") is None
+
+
+def test_find_last_audit_report_picks_the_newest_by_date_not_filename_sort(tmp_path):
+    # Deliberately out of lexicographic order to prove it's a real date parse,
+    # not a string sort (which would get 2026-07-9 vs 2026-07-10 wrong).
+    _make_report(tmp_path, "AUDIT-REPORT-2026-07-09.md")
+    _make_report(tmp_path, "AUDIT-REPORT-2026-07-10.md")
+    _make_report(tmp_path, "AUDIT-REPORT-2026-06-30.md")
+    _make_report(tmp_path, "not-an-audit-report.md")  # must be ignored
+
+    result = select_role.find_last_audit_report(tmp_path)
+
+    assert result == ("AUDIT-REPORT-2026-07-10.md", date(2026, 7, 10))
+
+
+def test_site_audit_status_never_run(tmp_path):
+    status = select_role.site_audit_status(reports_dir=tmp_path, stale_days=7.0, today=date(2026, 7, 26))
+    assert status == {"overdue": True, "last_report": None, "days_since": None}
+
+
+def test_site_audit_status_not_overdue(tmp_path):
+    _make_report(tmp_path, "AUDIT-REPORT-2026-07-24.md")
+    status = select_role.site_audit_status(reports_dir=tmp_path, stale_days=7.0, today=date(2026, 7, 26))
+    assert status == {"overdue": False, "last_report": "AUDIT-REPORT-2026-07-24.md", "days_since": 2}
+
+
+def test_site_audit_status_overdue_at_exactly_the_threshold(tmp_path):
+    """>= stale_days counts as overdue, not strictly >, so a run scheduled
+    for exactly one week later isn't treated as "still fine" for an extra
+    cycle."""
+    _make_report(tmp_path, "AUDIT-REPORT-2026-07-19.md")
+    status = select_role.site_audit_status(reports_dir=tmp_path, stale_days=7.0, today=date(2026, 7, 26))
+    assert status == {"overdue": True, "last_report": "AUDIT-REPORT-2026-07-19.md", "days_since": 7}
 
 
 # --- read-only contract, same pin as run_worker.py/run_reviewer.py ---------

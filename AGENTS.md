@@ -408,7 +408,7 @@ repo's control — but the SESSION's behavior no longer has to depend on it.
 **Every session, regardless of what a trigger happened to name it, decides its own
 role from live state on arrival:**
 
-1. Run `python scripts/select_role.py` (composes four existing, no-model-call state
+1. Run `python scripts/select_role.py` (composes five existing, no-model-call state
    checks into one recommendation, in priority order). It returns one of:
    - **`role: reviewer`** — at least one `worker/*` branch is open and not yet merged
      into `main`. Reviewing an existing PR is higher-leverage than starting new work,
@@ -422,16 +422,23 @@ role from live state on arrival:**
      commits, old enough (`--branch-stale-hours`, default 12h) that nobody's actively
      pushing to it. `branch_janitor.py` itself deliberately never auto-acts on this
      tier — see "If you're triaging stale branches" below.
+   - **`role: site-auditor`** — nothing to review/fix/triage, but the weekly site
+     audit (`projects/global-ui/SITE-AUDIT-AGENT.md`) is overdue: no
+     `AUDIT-REPORT-<date>.md` exists yet, or the newest one is `--audit-stale-days`
+     (default 7) old or older. This is time-boxed rather than purely reactive — it
+     outranks fresh `worker` pickup once overdue, so it actually happens close to
+     weekly instead of "whenever the queue happens to run dry." See "If you're doing
+     the weekly site audit" below.
    - **`role: worker`** — none of the above, but a `ready` task exists.
    - **`role: idle`** — none of the above. Fall through to the idle-fallback rule
      (dream-cycle's "nothing better to do" contract, or `autonomous: true` projects'
      own rule).
 2. Follow the matching section below. A session isn't locked to one role for its
    whole run: if you finish reviewing everything open, re-run `select_role.py` — it
-   may now recommend `pr-medic`, `branch-medic`, or `worker` — and keep going in the
-   same session rather than stopping. This is what "agents disperse and work as
-   needed" means in practice: the role is a live recommendation you re-check, not a
-   label stamped on you before you started.
+   may now recommend `pr-medic`, `branch-medic`, `site-auditor`, or `worker` — and
+   keep going in the same session rather than stopping. This is what "agents
+   disperse and work as needed" means in practice: the role is a live recommendation
+   you re-check, not a label stamped on you before you started.
 3. If a human explicitly asked for one role in this session (e.g. "review PR #123"),
    honor that directly — `select_role.py` is for the *unprompted, trigger-fired* case,
    not a override of an explicit instruction.
@@ -616,6 +623,40 @@ acts on (it only auto-deletes MERGED/FORCE-named branches and *reports* STRANDED
   two, check them via GitHub MCP `list_branches` using the same judgment above — there's
   no scripted classification for them yet, so read each candidate branch's actual
   state (merged? open PR? how old? real diff or empty?) directly.
+
+### If you're doing the weekly site audit
+
+`select_role.py` recommended `site-auditor`: the weekly gap-audit is overdue (never
+run, or `--audit-stale-days` old or older). This role folds
+`projects/global-ui/SITE-AUDIT-AGENT.md`'s originally-planned dedicated Claude Code
+Remote Trigger into the same self-assigning system every other role uses (Silas,
+2026-07-26: "we have a weekly review job, can we add that as a role as well?") — it
+no longer needs its own separately-approved platform trigger; it rides whichever
+trigger fires next, as long as `select_role.py` runs first and nothing higher-priority
+is pending.
+
+- Read `projects/global-ui/SITE-AUDIT-AGENT.md` in full and follow its **Agent
+  Prompt** section verbatim — that spec is authoritative for scope/boundaries, not a
+  paraphrase here. In short: cross-reference every active project's roadmap
+  vocabulary (API routes, Vue components, Pinia stores, schema models it mentions)
+  against what actually exists in `/home/user/kind_robots/`, using Glob/Grep — never
+  call the live site.
+- Write findings as a report to `projects/global-ui/AUDIT-REPORT-<YYYY-MM-DD>.md`
+  (today's date, matching `select_role.py`'s `AUDIT_REPORT_RE` filename contract
+  exactly — a differently-named file won't be recognized as satisfying this week's
+  audit, and the role will keep recommending itself next time).
+- Propose **up to 3** small, reversible follow-up tasks from the most impactful
+  gaps found — new `ready` tasks in the relevant `roadmap.yaml` files, `stakes:
+  reversible`, `owner: null`. This is a read-and-report run: roadmap task additions
+  are the only writes permitted besides the report itself and opening the PR.
+- Never modify a task marked `gate_human: true` without human review, never run
+  npm/pnpm builds, never push directly to `main` — one PR per run, same as any other
+  software-kind task, title `audit(site): weekly gap report YYYY-MM-DD`.
+- If `select_role.py` reports `site_audit_overdue` but you can't complete a full
+  audit this cycle (e.g. genuinely out of session budget), it's fine to leave it for
+  the next session that self-assigns this role — don't write a partial or empty
+  report just to stop the recommendation from firing; an honest "still overdue" is
+  better than a hollow report that silently lowers the bar for what counts as done.
 
 ## Cross-vetting protocol
 
