@@ -1005,8 +1005,8 @@ tasks:
 - id: t-034
   milestone: m4
   title: "kind_robots: handleProductPurchase's POD 'ArtImage not found' branch inserts a PrintJob referencing a nonexistent FK, which can throw and roll back the whole Order"
-  status: ready
-  owner: null
+  status: claimed
+  owner: worker
   passes: 0
   stakes: reversible
   note: >
@@ -1032,3 +1032,6 @@ tasks:
     Likely needs a fixture or a live DB session to actually trigger the FK violation and
     confirm the rollback behavior (not verifiable in a sandbox with no reachable
     DATABASE_URL) before picking the fix shape.
+  claimed_by: claude-conductor-burst-20260726T130000Z-ds-t034
+  claimed_at: '2026-07-26T13:05:19Z'
+  updated: '2026-07-26T13:05:19Z'
