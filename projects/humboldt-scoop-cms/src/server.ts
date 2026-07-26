@@ -1,8 +1,11 @@
 import { serve } from '@hono/node-server'
+import { serveStatic } from '@hono/node-server/serve-static'
 import { Hono } from 'hono'
 import { seedData } from './schema.js'
-import { planRoute, RoutePlanError } from './routing/planRoute.js'
-import type { RoutePlanRequest } from './routing/types.js'
+import { collectEligibleStops, planRoute, RoutePlanError } from './routing/planRoute.js'
+import { getDraft, listDrafts, saveDraft } from './routing/drafts.js'
+import type { RoutePlanRequest, RoutePlanResponse } from './routing/types.js'
+import { DISPATCH_PAGE_HTML } from './dispatchPage.js'
 
 const app = new Hono()
 const service = 'Humboldt Scoop CMS'
@@ -96,6 +99,70 @@ app.get('/routes/today', (c) => {
     data: routeCards,
   })
 })
+
+// GET /routes/eligible — eligible customers for a date/filter, before selection.
+// Powers the dispatcher UI's customer checklist (humboldt-scoop-cms/t-008).
+app.get('/routes/eligible', (c) => {
+  const date = c.req.query('date')
+  if (!date || !/^\d{4}-\d{2}-\d{2}/.test(date)) {
+    return c.json({ success: false, message: 'date query param is required and must be an ISO date (YYYY-MM-DD...).' }, 400)
+  }
+  const neighborhood = c.req.query('neighborhood') || undefined
+  const frequency = c.req.query('frequency') || undefined
+
+  const { eligible, missingCoordinates } = collectEligibleStops(seedData, date, { neighborhood, frequency })
+  return c.json({ success: true, notice: DUMMY_NOTICE, data: { eligible, missingCoordinates } })
+})
+
+// POST /routes/draft — save a planned route as a draft (dispatcher "Save Draft" action).
+// In-memory only; see routing/drafts.ts.
+app.post('/routes/draft', async (c) => {
+  const body = await c.req.json().catch(() => null)
+  const plan = (body as { plan?: RoutePlanResponse } | null)?.plan
+  if (!plan || !Array.isArray(plan.stops) || typeof plan.date !== 'string') {
+    return c.json({ success: false, message: 'Request body must include a plan (a full /routes/plan response).' }, 400)
+  }
+  const label = typeof (body as { label?: unknown }).label === 'string' ? (body as { label: string }).label : null
+  const draft = saveDraft(plan, label)
+  return c.json({ success: true, notice: DUMMY_NOTICE, data: draft })
+})
+
+// GET /routes/drafts — list saved drafts (summary only).
+app.get('/routes/drafts', (c) => {
+  const drafts = listDrafts().map((d) => ({
+    id: d.id,
+    createdAt: d.createdAt,
+    label: d.label,
+    date: d.plan.date,
+    stopCount: d.plan.stops.length,
+    distanceMeters: d.plan.totals.distanceMeters,
+    durationSeconds: d.plan.totals.durationSeconds,
+  }))
+  return c.json({ success: true, notice: DUMMY_NOTICE, data: drafts })
+})
+
+// GET /routes/drafts/:id — full saved draft, including the complete plan.
+app.get('/routes/drafts/:id', (c) => {
+  const draft = getDraft(c.req.param('id'))
+  if (!draft) return c.json({ success: false, message: 'Draft not found' }, 404)
+  return c.json({ success: true, notice: DUMMY_NOTICE, data: draft })
+})
+
+// GET /dispatch — dispatcher map UI (humboldt-scoop-cms/t-008). Self-contained
+// HTML/JS page; no build step, no framework, calls the JSON API above.
+app.get('/dispatch', (c) => c.html(DISPATCH_PAGE_HTML))
+
+// Serve Leaflet's own JS/CSS/marker images from node_modules -- vendored, not a
+// CDN, so the dispatcher map works without an external script/style fetch at
+// runtime (matches this project's self-hosting posture; only the map *tiles*
+// still come from the public OpenStreetMap tile server -- see dispatchPage.ts).
+app.use(
+  '/vendor/leaflet/*',
+  serveStatic({
+    root: './node_modules/leaflet/dist',
+    rewriteRequestPath: (path) => path.replace(/^\/vendor\/leaflet/, ''),
+  }),
+)
 
 // POST /routes/plan — deterministic mapped route for a selected set of customers.
 // See projects/humboldt-scoop-cms/route-planner/SPEC.md. No LLM involvement;

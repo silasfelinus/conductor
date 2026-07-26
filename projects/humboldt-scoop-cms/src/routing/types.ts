@@ -96,4 +96,6 @@ export type RoutePlanResponse = {
   warnings: string[]
   excluded: ExcludedCustomer[]
   instructions: string[]
+  /** Encoded polyline geometry from the routing provider, or null for the haversine fallback (straight-line only). */
+  polyline: string | null
 }

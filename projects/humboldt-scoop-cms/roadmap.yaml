@@ -252,7 +252,7 @@ tasks:
   - id: t-008
     milestone: m6
     title: "Build dispatcher map UI and manual route editing"
-    status: claimed
+    status: review
     owner: worker
     passes: 0
     stakes: reversible
@@ -262,6 +262,62 @@ tasks:
       preview them on a map, optimize, inspect stop cards, drag/reorder, lock stops, remove/add
       customers, recalculate, and save a route draft. Display distance, estimated drive time,
       estimated service time, and route warnings. All component/API interaction goes through store state.
+
+      IMPLEMENTED 2026-07-26 (claude-conductor-scheduled-20260726T121447Z-hscms-t008): built
+      GET /dispatch, a self-contained HTML/JS dispatcher page (no framework/bundler, matching
+      STACK.md's "small Hono service, admin UI later" direction -- there is no state-management
+      "store" library in this codebase yet, so "component/API interaction goes through store
+      state" is satisfied by the page's own local JS state instead, which is the equivalent this
+      stack actually has). Covers every listed behavior: date/neighborhood/frequency filter,
+      explicit multi-select (check/uncheck = add/remove) and fill-to-N selection modes, a Leaflet
+      map with numbered stop markers + polyline (decodes the routing provider's real polyline
+      when present, straight-line fallback otherwise -- see the polyline note below), draggable
+      stop cards for manual reorder, a per-stop "Lock position" toggle, a "Remove" action per
+      stop, live recalculation via POST /routes/plan on every change, and "Save draft" / "View
+      saved drafts" against two new endpoints.
+
+      New backend surface: GET /routes/eligible (exposes planRoute.ts's existing
+      collectEligibleStops -- exported, not duplicated -- so the UI's checklist and the plan
+      endpoint always agree on what "eligible" means), POST /routes/draft, GET /routes/drafts,
+      GET /routes/drafts/:id (src/routing/drafts.ts, in-memory only -- dummy data, no DB in this
+      project yet, drafts do not survive a restart; documented as a v1 placeholder in the module
+      comment, not a design decision to keep drafts ephemeral forever).
+
+      Fixed a real gap while wiring the map: RoutePlanResponse only ever exposed `instructions`
+      (text strings), never the routing provider's actual polyline geometry, even though
+      OSRMMatrixProvider.getRouteGeometry() already computes one -- planRoute.ts was silently
+      discarding it. Added `polyline: string | null` to RoutePlanResponse/planRoute.ts so the map
+      draws the real road-network line once Silas stands up OSRM (t-012); today (haversine
+      fallback) it's null and the UI falls back to straight stop-to-stop segments, matching what
+      SPEC.md says the fallback provider actually offers.
+
+      Leaflet is vendored from node_modules (server.ts serves /vendor/leaflet/* via
+      @hono/node-server's serveStatic) rather than loaded from a CDN -- found via an actual
+      Playwright browser test that a CDN script tag (unpkg) hit ERR_CONNECTION_RESET in this
+      sandbox's restricted egress and left the whole map dead ("L is not defined"); vendoring
+      removes that external runtime dependency entirely for whoever deploys this. Map *tiles*
+      still come from the public OpenStreetMap tile server (free, no key, no billing -- the
+      "free tile provider" option route-planner/SPEC.md's own §3a/§5 explicitly names as
+      acceptable); a tile-fetch failure only blanks the background imagery, markers/polyline/
+      stop-cards keep working regardless (verified this too, since some tile requests also hit
+      the sandbox's egress restriction).
+
+      Verified for real, not just typechecked: `npm run build` (tsc, clean) and `npm test`
+      (25/25 passing, incl. 6 new tests for the polyline field, collectEligibleStops's export,
+      and the drafts store) both green; then ran the actual dev server and drove /dispatch with
+      a headless Playwright browser (chromium at /opt/pw-browsers/chromium) -- loaded eligible
+      customers, planned a route, toggled a lock, removed a stop, dragged-reordered, saved a
+      draft, listed saved drafts, and switched selection mode/round-trip toggles, confirming no
+      JS errors and each action's expected DOM/state change actually happened (screenshot taken
+      of the rendered map+card layout).
+
+      Deferred, not attempted here: locked-stop drag interaction directly on the Leaflet map
+      itself (Leaflet Routing Machine's draggable waypoints, per SPEC.md §3a) -- the stop-card
+      list's drag/reorder covers the same manual-override requirement without that extra
+      dependency; revisit only if Silas specifically wants on-map dragging once OSRM/VROOM (t-012)
+      are live. Also deferred: a dedicated "add a specific not-yet-selected customer" control
+      beyond the existing explicit-mode checkbox list (the checklist already covers add/remove
+      since it lists every eligible customer, checked by default).
     claimed_by: claude-conductor-scheduled-20260726T121447Z-hscms-t008
     claimed_at: '2026-07-26T12:14:47Z'
     updated: '2026-07-26T12:14:47Z'

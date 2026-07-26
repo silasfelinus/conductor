@@ -2,7 +2,7 @@ import assert from 'node:assert/strict'
 import { test } from 'node:test'
 import { seedData } from '../schema.js'
 import { HaversineMatrixProvider } from './matrixProvider.js'
-import { planRoute, RoutePlanError } from './planRoute.js'
+import { collectEligibleStops, planRoute, RoutePlanError } from './planRoute.js'
 import type { RoutePlanRequest } from './types.js'
 
 const START = { lat: 40.8021, lng: -124.1637, label: 'Shop' }
@@ -128,4 +128,30 @@ test('planRoute filters by neighborhood', async () => {
   const plan = await planRoute(request, seedData, provider)
   assert.equal(plan.stops.length, 1)
   assert.equal(plan.stops[0]!.customerId, 'cus-nguyen')
+})
+
+test('planRoute reports a null polyline for the haversine-fallback provider (straight-line only)', async () => {
+  const request: RoutePlanRequest = {
+    date: '2026-07-28',
+    selection: { mode: 'explicit', customerIds: ['cus-rivera'] },
+    start: START,
+  }
+
+  const plan = await planRoute(request, seedData, provider)
+  assert.equal(plan.polyline, null)
+})
+
+test('collectEligibleStops returns eligible stops for a date and reports missing-coordinate customers separately', () => {
+  const { eligible, missingCoordinates } = collectEligibleStops(seedData, '2026-07-28', undefined)
+
+  const eligibleIds = eligible.map((s) => s.customerId).sort()
+  assert.deepEqual(eligibleIds, ['cus-brooks', 'cus-nguyen', 'cus-park', 'cus-rivera'])
+
+  const missingIds = missingCoordinates.map((c) => c.customerId)
+  assert.ok(missingIds.includes('cus-alvarez'))
+})
+
+test('collectEligibleStops applies the same neighborhood/frequency filter as planRoute', () => {
+  const { eligible } = collectEligibleStops(seedData, '2026-07-28', { neighborhood: 'Cutten' })
+  assert.deepEqual(eligible.map((s) => s.customerId), ['cus-nguyen'])
 })

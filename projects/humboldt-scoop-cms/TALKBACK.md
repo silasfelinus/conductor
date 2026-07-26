@@ -131,3 +131,23 @@ type: pattern
 - None specific this cycle -- flagging for the next reviewer to double check the ETA/cumulative-duration math (services duration is added *after* recording each stop's arrival ETA, so ETA reflects arrival time before service, not departure) since that's the one piece of business logic without an obvious external reference to check against.
 
 **Kaizen task:** t-012 (stand up self-hosted OSRM + VROOM, package pm2 startup from the conductor repo) -- filed directly as part of this close-out per t-006's own "bonus points" note, rather than deferred to whoever reviews this PR.
+
+## 2026-07-26 | Worker (conductor-scheduled burst-mode session) | humboldt-scoop-cms/t-008 | pattern
+
+type: pattern
+
+**Subject:** Built the dispatcher map UI (GET /dispatch) on top of t-007's route-plan API -- a plain HTML/JS page matching this project's actual "small Hono service, admin UI later" stack rather than assuming a frontend framework the codebase doesn't have.
+
+**Detail:**
+- Read STACK.md before deciding on an approach: no frontend framework or state-management "store" exists in this codebase (t-008's note phrase "goes through store state" is boilerplate carried over from a different task-note template) -- built a self-contained page with local JS state instead of introducing a framework just to satisfy that one phrase literally.
+- Fixed a real, previously-silent gap while wiring the map: `RoutePlanResponse` never exposed the routing provider's actual polyline geometry (`OSRMMatrixProvider.getRouteGeometry()` computes one; `planRoute.ts` discarded it, keeping only text `instructions`). Added `polyline: string | null` so the map will draw the real road-network line once t-012 (self-hosted OSRM) lands, not just forever-straight-line segments.
+- Caught a real runtime bug via an actual headless-browser test, not just `tsc`/unit tests: loading Leaflet from a CDN (`unpkg.com`) hit `ERR_CONNECTION_RESET` under this sandbox's restricted egress and left the whole map dead (`L is not defined`). Vendored Leaflet's JS/CSS/marker-images from `node_modules` instead, served via `@hono/node-server`'s `serveStatic` at `/vendor/leaflet/*` -- removes the external script/style dependency entirely regardless of where this ends up deployed. Map tiles still come from the free public OSM tile server (no key/billing, the option SPEC.md's own §3a/§5 name as acceptable); confirmed a tile-fetch failure only blanks the background image, not the markers/polyline/stop-cards.
+- Verified with Playwright (chromium at `/opt/pw-browsers/chromium`), not just `npm test`: drove the real dev server through load-eligible → plan → lock → remove → drag-reorder → save-draft → list-drafts → mode/round-trip toggles, confirming zero JS errors and the expected DOM change at each step, plus a rendered screenshot.
+
+**What was good:**
+- Didn't stop at "it typechecks" for a UI task -- ran a real browser against the real server and let that surface the CDN-egress bug, which `tsc`/`node:test` alone would never have caught.
+
+**What to improve:**
+- None specific this cycle.
+
+**Kaizen task:** none filed -- t-012 (OSRM/VROOM standup) already covers the one deferred piece (real road-network polylines instead of the haversine straight-line fallback), and on-map Leaflet-Routing-Machine dragging is noted as an explicit "revisit if wanted" deferral in t-008's own roadmap note rather than a gap worth a separate task.
