@@ -3,6 +3,8 @@ import hashlib
 import sys
 from pathlib import Path
 
+import pytest
+
 RELAY_DIR = Path(__file__).resolve().parents[1] / "ops" / "home-server"
 if str(RELAY_DIR) not in sys.path:
     sys.path.insert(0, str(RELAY_DIR))
@@ -241,3 +243,99 @@ def test_direct_media_process_completes_with_proof(monkeypatch, tmp_path):
     assert captured["provenance"]["imageHash"] == hashlib.sha256(
         b"job-a-pixels"
     ).hexdigest()
+
+
+def test_describe_comfy_error_extracts_execution_error_detail():
+    entry = {
+        "status": {
+            "status_str": "error",
+            "messages": [
+                ["execution_start", {}],
+                [
+                    "execution_error",
+                    {
+                        "node_id": "7",
+                        "node_type": "KSampler",
+                        "exception_message": "CUDA out of memory",
+                    },
+                ],
+            ],
+        }
+    }
+
+    assert relay.describe_comfy_error(entry) == "node 7 (KSampler): CUDA out of memory"
+
+
+def test_describe_comfy_error_returns_none_without_execution_error():
+    assert relay.describe_comfy_error({"status": {"status_str": "error"}}) is None
+    assert relay.describe_comfy_error({}) is None
+
+
+def test_run_comfy_raises_with_execution_error_detail(monkeypatch):
+    payload = request_payload()
+
+    def fake_http(method, url, body=None, bearer=None, timeout=60):
+        if method == "POST" and url.endswith("/prompt"):
+            return 200, {"prompt_id": "prompt-err"}
+        if method == "GET" and "/history/prompt-err" in url:
+            return 200, {
+                "prompt-err": {
+                    "outputs": {},
+                    "status": {
+                        "status_str": "error",
+                        "messages": [
+                            [
+                                "execution_error",
+                                {
+                                    "node_id": "7",
+                                    "node_type": "KSampler",
+                                    "exception_message": "CUDA out of memory",
+                                },
+                            ]
+                        ],
+                    },
+                }
+            }
+        raise AssertionError(f"unexpected relay request: {method} {url}")
+
+    monkeypatch.setattr(relay, "http_json", fake_http)
+    monkeypatch.setattr(relay, "upload_comfy_input_images", lambda _p: None)
+    monkeypatch.setattr(relay.time, "sleep", lambda _seconds: None)
+
+    with pytest.raises(RuntimeError, match=r"node 7 \(KSampler\): CUDA out of memory"):
+        relay.run_comfy(payload)
+
+
+def test_run_comfy_with_recovery_raises_with_execution_error_detail(monkeypatch):
+    payload = request_payload()
+
+    def fake_http(method, url, body=None, bearer=None, timeout=60):
+        if method == "POST" and url.endswith("/prompt"):
+            return 200, {"prompt_id": "prompt-err"}
+        if method == "GET" and "/history/prompt-err" in url:
+            return 200, {
+                "prompt-err": {
+                    "outputs": {},
+                    "status": {
+                        "status_str": "error",
+                        "messages": [
+                            [
+                                "execution_error",
+                                {
+                                    "node_id": "3",
+                                    "node_type": "VAEDecode",
+                                    "exception_message": "tensor size mismatch",
+                                },
+                            ]
+                        ],
+                    },
+                }
+            }
+        raise AssertionError(f"unexpected relay request: {method} {url}")
+
+    monkeypatch.setattr(media_relay.relay, "http_json", fake_http)
+    monkeypatch.setattr(media_relay.relay, "upload_comfy_input_images", lambda _p: None)
+    monkeypatch.setattr(media_relay.time, "sleep", lambda _seconds: None)
+
+    with pytest.raises(RuntimeError, match=r"node 3 \(VAEDecode\): tensor size mismatch"):
+        media_relay.run_comfy_with_recovery(payload)

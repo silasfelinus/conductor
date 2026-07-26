@@ -265,6 +265,27 @@ def extract_comfy_output(outputs, want_video, prompt_id=None):
     }
 
 
+def describe_comfy_error(entry):
+    """Pull the node/exception detail out of a ComfyUI history entry's
+    status.messages, when ComfyUI's error status includes one, instead of
+    letting the generic status_str == 'error' fire blind."""
+    messages = (entry.get("status") or {}).get("messages") or []
+    for message in messages:
+        if not isinstance(message, (list, tuple)) or len(message) != 2:
+            continue
+        message_type, detail = message
+        if message_type != "execution_error" or not isinstance(detail, dict):
+            continue
+        exception_message = detail.get("exception_message") or detail.get("exception_type")
+        if not exception_message:
+            continue
+        node_id = detail.get("node_id")
+        node_type = detail.get("node_type")
+        where = f"node {node_id} ({node_type})" if node_id else "workflow"
+        return f"{where}: {exception_message}"
+    return None
+
+
 def run_comfy(payload):
     workflow = payload.get("workflow")
     if not isinstance(workflow, dict) or not workflow:
@@ -309,7 +330,9 @@ def run_comfy(payload):
             return result
         comfy_status = (entry.get("status") or {}).get("status_str")
         if comfy_status == "error":
-            raise RuntimeError("ComfyUI reported a workflow error")
+            detail = describe_comfy_error(entry)
+            message = "ComfyUI reported a workflow error"
+            raise RuntimeError(f"{message}: {detail}" if detail else message)
 
     kind = "video" if want_video else "image"
     raise RuntimeError(f"ComfyUI {kind} job timed out after {GEN_TIMEOUT}s")
