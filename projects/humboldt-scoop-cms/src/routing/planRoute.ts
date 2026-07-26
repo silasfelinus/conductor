@@ -25,7 +25,7 @@ class RoutePlanError extends Error {
   }
 }
 
-function collectEligibleStops(
+export function collectEligibleStops(
   seedData: SeedData,
   date: string,
   filter: RoutePlanRequest['filter'],
@@ -249,6 +249,7 @@ async function planRouteWithProvider(request: RoutePlanRequest, seedData: SeedDa
     warnings,
     excluded,
     instructions: geometry.instructions,
+    polyline: geometry.polyline,
   }
 }
 
