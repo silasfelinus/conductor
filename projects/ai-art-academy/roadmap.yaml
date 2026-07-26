@@ -921,6 +921,78 @@ tasks:
       with no sign of that workflow-file failure recurring. This task's remaining
       blocker is solely the Academy examples-manifest home-relay write access described
       above; it is no longer compounded by an unrelated repo-wide CI break.
+
+      UPDATE 2026-07-26 (Silas): the 3 images are downloaded and placed at their
+      expected media-server folder location (kindrobots/images/academy/examples/
+      the-yellow-cow-49-1210.jpg, fantomas-1976-59-1.jpg,
+      composition-8-37-262.jpg) -- image upload half of the home-relay step is
+      done. Silas has NOT touched examples.manifest.json yet -- that still
+      needs the 3 entries below merged into its existing JSON array (same
+      media-server location, next to the images, not a kind_robots git
+      commit). Exact entries to append (from
+      docs/t-013-remaining-example-works.md, unchanged):
+      ```json
+      [
+        {
+          "movement": "expressionism",
+          "file": "public/images/academy/examples/the-yellow-cow-49-1210.jpg",
+          "workTitle": "The Yellow Cow",
+          "artist": "Franz Marc",
+          "artistDied": 1916,
+          "year": "1911",
+          "collection": "Solomon R. Guggenheim Museum",
+          "accessionId": "49.1210",
+          "sourceUrl": "https://commons.wikimedia.org/wiki/File:Franz_Marc-The_Yellow_Cow-1911.jpg",
+          "license": "PD-Mark",
+          "licenseTermsUrl": "https://commons.wikimedia.org/wiki/Commons:Reusing_content_outside_Wikimedia",
+          "retrievedDate": "2026-07-17",
+          "width": 1067,
+          "height": 797,
+          "bytes": 101693
+        },
+        {
+          "movement": "cubism",
+          "file": "public/images/academy/examples/fantomas-1976-59-1.jpg",
+          "workTitle": "Fantômas",
+          "artist": "Juan Gris",
+          "artistDied": 1927,
+          "year": "1915",
+          "collection": "National Gallery of Art, Washington",
+          "accessionId": "1976.59.1",
+          "sourceUrl": "https://www.nga.gov/artworks/56101-fantomas",
+          "license": "CC0",
+          "licenseTermsUrl": "https://www.nga.gov/artworks/free-images-and-open-access",
+          "retrievedDate": "2026-07-17",
+          "width": 1600,
+          "height": 1322,
+          "bytes": 680178
+        },
+        {
+          "movement": "bauhaus",
+          "file": "public/images/academy/examples/composition-8-37-262.jpg",
+          "workTitle": "Composition 8 (Komposition 8)",
+          "artist": "Wassily Kandinsky",
+          "artistDied": 1944,
+          "year": "July 1923",
+          "collection": "Solomon R. Guggenheim Museum",
+          "accessionId": "37.262",
+          "sourceUrl": "https://commons.wikimedia.org/wiki/File:Kandinsky_-_Composition_8,_1923.jpg",
+          "license": "PD-Mark",
+          "licenseTermsUrl": "https://commons.wikimedia.org/wiki/Commons:Reusing_content_outside_Wikimedia",
+          "retrievedDate": "2026-07-17",
+          "width": 980,
+          "height": 682,
+          "bytes": 218875
+        }
+      ]
+      ```
+      Splice these 3 objects into the existing examples.manifest.json array
+      (don't replace the whole file -- add alongside the current entries).
+      Once that's saved on the media server next to the images, tell any
+      session to apply the matching academyStyles.ts patch (same handoff doc)
+      as a normal kind_robots PR and run `npm run test:academy-examples-manifest`
+      to confirm it passes -- that's the only remaining step, and it doesn't
+      need home-relay access.
     claimed_by: claude-scheduled-20260718-1420-26944
     claimed_at: '2026-07-18T14:22:06Z'
     updated: '2026-07-18T14:24:39Z'
