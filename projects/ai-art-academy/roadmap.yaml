@@ -502,15 +502,17 @@ tasks:
   - id: t-010
     milestone: m6
     title: Academy continuous improvement pass
-    status: claimed
+    status: review
     recurring: true
     passes: 0
     stakes: reversible
-    updated: '2026-07-27T22:12:24Z'
+    updated: '2026-07-27T22:20:00Z'
     note: |-
       Standing never-idle task (re-arms to ready after every completion, per the recurring-task rule). Each cycle pick ONE: (a) front-end style/polish pass on Academy or art-styler surfaces, (b) roadmap upgrade — refine tasks, detail the next milestone, prune stale notes, (c) generate more art inspirations or style preview thumbnails, (d) expand the curriculum with a new movement/artist entry (respecting PUBLIC-DOMAIN-POLICY.md). Note which option ran in the PR. This task never reaches done and does not count toward milestone progress. See `run_log` for cycle history — do not re-accumulate RAN entries here.
 
       RAN 2026-07-27T21:12:10Z: option (d), curriculum depth. Promoted the Arts and Crafts Movement candidate (curriculum-outline.md §35) — full detail in `run_log`, including a backfilled entry for the immediately-prior lane-3 harbor-lesson cycle (PR #1257) whose `continuous_improvement` metadata update never actually landed. Next preferred lane is front-end polish (lane 1). Rearmed to ready.
+
+      Implemented the lane-one Academy gallery polish on worker/ai-art-academy-t-010-front-polish-a31 and prepared it for pull-request validation.
     continuous_improvement:
       last_lane: 4  # 1=front-end polish, 2=roadmap accuracy, 3=inspiration assets, 4=curriculum depth
       next_lane: 1
