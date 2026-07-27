@@ -1519,11 +1519,11 @@ tasks:
   - id: t-046
     milestone: m6
     title: 'scripts/: task-events rearm path should clear claimed_by/claimed_at (or migrate note content to run_log) on write'
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
-    updated: '2026-07-27T15:00:00Z'
+    updated: '2026-07-27T16:09:10Z'
     note: >-
       Kaizen from t-010's 2026-07-27T15:00:00Z lane-1 cycle (kind_robots PR
       #1052). The `rearm ai-art-academy t-010 after PR 1225` task-event
@@ -1543,5 +1543,5 @@ tasks:
       task's `run_log` file when one is declared, instead of leaving it in
       the note for a future session to prune. Add a regression test
       asserting a rearm event clears claim fields.
-    claimed_by: null
-    claimed_at: null
+    claimed_by: claude-conductor-agentrun-20260727T1610Z-t046
+    claimed_at: '2026-07-27T16:09:10Z'
