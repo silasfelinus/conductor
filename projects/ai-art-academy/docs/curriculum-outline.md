@@ -4,11 +4,11 @@ date: 2026-07-10
 task: ai-art-academy/t-005
 status: draft for review (content complete, one source URL verified per movement)
 
-This is the curriculum: 33 movements spanning the timeline from Ancient Egypt to
-American Precisionism. Every artist named here is long dead (all listed artists died
-before 1955), and every example work is a public-domain original held (or expected)
-in an open-access collection. See the ethical boundary in DESIGN-BRIEF.md and the
-PUBLIC-DOMAIN-POLICY.md (t-006).
+This is the curriculum: 34 movements spanning the timeline from Ancient Egypt to
+the Pre-Raphaelite Brotherhood. Every artist named here is long dead (all listed
+artists died before 1955), and every example work is a public-domain original held
+(or expected) in an open-access collection. See the ethical boundary in
+DESIGN-BRIEF.md and the PUBLIC-DOMAIN-POLICY.md (t-006).
 
 Sections 1-16 are the v1 set (chronological). Sections 17-21 are the 2026-07-16 v1.1
 expansion (t-010 cycle): Gothic panel painting, Northern Renaissance, Rococo,
@@ -69,6 +69,17 @@ where the movement's other commonly-cited figures (Sheeler, Crawford, O'Keeffe)
 are excluded from generation targets on prong-1 death-date grounds alone, rather
 than on missing verification — the same historical-context-only treatment
 Picasso/Braque and Thomas Hart Benton receive elsewhere in this document.
+
+Section 34 is the 2026-07-27 v1.14 addition (t-010 cycle, lane 4): Pre-Raphaelite
+Brotherhood — a fresh addition with no source candidate file in
+`docs/curriculum-candidates/` (all five existing candidates were already
+resolved: four promoted, one correctly held at ai-art-academy/t-043). Researched
+and WebFetch-verified all three example works this cycle. It returns to Western
+Europe (London, 1848-1900) and gives the curriculum its first explicit
+*rejection*-movement case study — a return-to-the-past idea built from
+opposition to prevailing academic convention, contrasting with Section 4's
+Renaissance and Section 8's Romanticism, which the lesson prose cross-references
+directly.
 
 They are appended (rather than renumbered into place) but belong
 chronologically among the earlier movements — read the `era` field in the
@@ -2153,6 +2164,90 @@ composition"
 
 ---
 
+## 34. Pre-Raphaelite Brotherhood (`pre-raphaelite`)
+
+**Era:** c. 1848-1900 (United Kingdom)
+
+**Key ideas.** Founded in 1848 by a group of London art students in
+deliberate reaction against the Royal Academy's Raphael-descended
+convention (soft "brown sauce" glazing, idealized generalized figures),
+the Pre-Raphaelite Brotherhood painted instead with thin glazes over a
+wet white ground to recover the jewel-bright color and obsessive,
+un-idealized natural detail they associated with art before Raphael. The
+lesson gives learners a useful contrast case against `renaissance` and
+`romanticism`: it shows a *rejection* movement built from a return-to-the-past
+idea, and a case where hyper-detailed naturalism serves symbolic and literary
+storytelling rather than documentary observation. Subjects draw heavily on
+medieval legend, Shakespeare, Dante, Keats, and Tennyson, and on Biblical
+scenes staged with contemporary models and props rather than generalized
+idealized bodies — a working method the movement itself considered
+scandalously "ugly" and true-to-life when first exhibited.
+
+**Recognition cues:**
+- Saturated, jewel-toned color (deep reds, greens, blues) rather than the
+  muted brown glazes of prior academic painting
+- Crisp, high-fidelity detail on hair, fabric, and foliage — every leaf and
+  strand rendered rather than suggested
+- Flowing, often flame-red or auburn hair on female figures; medieval or
+  Renaissance-inspired dress
+- Medieval, literary (Shakespeare, Dante, Keats, Tennyson), or Biblical
+  subject matter staged with specific, individualized models rather than
+  idealized generic figures
+- Densely symbolic objects and flowers placed with deliberate meaning
+  rather than as incidental still-life
+- Flattened, shallow pictorial space inherited from Quattrocento models,
+  avoiding Raphael-era illusionistic depth
+
+**Notable artists:**
+- **John Everett Millais** (1829-1896) — Co-founder; combined the
+  Brotherhood's obsessive natural detail with theatrical, often tragic
+  narrative staging.
+- **William Holman Hunt** (1827-1910) — Co-founder; the most doctrinally
+  committed member, painting directly from nature (including expeditions to
+  the Holy Land) in pursuit of literal truth-to-detail.
+- **Dante Gabriel Rossetti** (1828-1882) — Co-founder, poet-painter; shifted
+  the Brotherhood's early hyper-detailed naturalism toward moody,
+  symbol-laden single-figure "stunner" portraits in his later work.
+
+All three founders died between 1882 and 1910, comfortably clearing
+PUBLIC-DOMAIN-POLICY.md's 1956 death-date cutoff (prong 1) with 46-74 years
+of margin, and every example work below was completed and exhibited in the
+1850s-1870s, decades before the 1930 US publication cutoff (prong 2).
+
+**Example works:**
+- *Ophelia*, John Everett Millais, 1851-52 — Tate Britain, accession
+  N01506. VERIFIED public domain (author died 1896, life+70 rule clears the
+  1956 cutoff by 60 years; painted/exhibited 1852, well before the 1930 US
+  cutoff; Wikimedia Commons, PD-Art (PD-old-100-expired) — confirmed live via
+  `WebFetch` this cycle): Elizabeth Siddal modeling Shakespeare's drowning
+  Ophelia amid botanically exact riverbank flora, each plant chosen for its
+  own symbolic meaning.
+  https://commons.wikimedia.org/wiki/File:John_Everett_Millais_-_Ophelia_-_Google_Art_Project.jpg
+- *The Awakening Conscience*, William Holman Hunt, 1853 — Tate Britain,
+  accession T02075. VERIFIED public domain (author died 1910, life+70 rule
+  clears the 1956 cutoff by 46 years; painted/exhibited 1853-54, well before
+  the 1930 cutoff; Wikimedia Commons, PD-Art (PD-old-100-expired) — confirmed
+  live via `WebFetch` this cycle): a modern-dress moral-allegory interior,
+  every object in the cluttered room (sheet music, cat and bird, tapestry)
+  chosen as deliberate symbolic commentary.
+  https://commons.wikimedia.org/wiki/File:William_Holman_Hunt_-_The_Awakening_Conscience_-_Google_Art_Project.jpg
+- *Beata Beatrix*, Dante Gabriel Rossetti, c. 1864-1870 — Tate Britain,
+  accession N01279. VERIFIED public domain (author died 1882, life+70 rule
+  clears the 1956 cutoff by 74 years; painted 1864-70, well before the 1930
+  cutoff; Wikimedia Commons, PD-Art (PD-old-100-expired) — confirmed live via
+  `WebFetch` this cycle): a symbolic, single-figure "stunner" portrait of
+  Beatrice Portinari at the moment of death, illustrating the Brotherhood's
+  later shift toward moody, emblem-laden portraiture.
+  https://commons.wikimedia.org/wiki/File:Dante_Gabriel_Rossetti_-_Beata_Beatrix_-_Google_Art_Project.jpg
+
+**remix_hint:** "Recompose this image as a mid-nineteenth-century
+Pre-Raphaelite Brotherhood painting: saturated jewel-toned color, crisp
+high-fidelity detail on hair, fabric, and foliage, flowing hair on female
+figures, densely symbolic objects placed with deliberate meaning, flattened
+shallow pictorial space, and preserve the source composition"
+
+---
+
 ## Lesson-only vs remixable
 
 Every movement above maps to a remix config (mode `prompt` to start; t-003/t-004
@@ -2254,6 +2349,16 @@ early-20th-century industrial geometry rather than either extreme; portrait or
 close-up organic source photos are a poor fit and should be expected to
 under-perform, matching `hudson-river-school`'s note about needing a
 compatible source subject.
+`pre-raphaelite` shares `renaissance`'s and `romanticism`'s hyper-detailed
+figurative appeal but risks under-cooking from a specific angle: the model's
+likeliest failure is a generic "old oil painting" filter that adds warm
+varnish tone without the movement's actual signature — jewel-saturated
+(not muted) color and obsessively rendered hair/fabric/foliage detail. The
+remix_hint leans on "saturated jewel-toned color" explicitly (rather than
+just "painterly" or "old master") so t-004 can check the output reads as
+vivid rather than the sepia-toned look `renaissance` and `romanticism`
+remixes tend toward; portrait or figure source photos with visible hair
+and fabric are the best fit, matching the movement's own subject bias.
 
 **Flagged as likely-poor remixers:**
 - `cubism` — faceting while "preserving the composition" is partly contradictory;
@@ -2518,3 +2623,18 @@ session had working egress to `commons.wikimedia.org` (confirmed via direct
 example-work URLs are marked VERIFIED directly against their live
 rights-status templates — `PD-Art (PD-old-auto-expired)` on two, CC0 1.0
 Universal (Met Open Access) on the third.
+
+**v1.14 addition (2026-07-27) re-check.** Section 34 (Pre-Raphaelite
+Brotherhood) clears PUBLIC-DOMAIN-POLICY.md's both-prongs rule for all
+three named artists: John Everett Millais (d. 1896), William Holman Hunt
+(d. 1910), and Dante Gabriel Rossetti (d. 1882). Hunt's 1910 death is the
+newest of this batch but still well inside the "died 1953 or earlier"
+statement above, so no recency record moves. All three example works
+(1851-52, 1853, c. 1864-1870) predate the 1930 US-publication cutoff by a
+wide margin and do not disturb the curriculum's most-recent-example-work
+record, which stays at 1930 (American Gothic / Stone City, Iowa, Section
+24). This session had working egress to commons.wikimedia.org (confirmed
+via direct WebFetch, live content returned on all three file pages), so all
+three example-work URLs are marked VERIFIED directly against their live
+rights-status templates (PD-Art / PD-old-100-expired on all three, Tate
+Britain via Google Art Project).

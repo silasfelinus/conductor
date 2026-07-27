@@ -506,7 +506,7 @@ tasks:
     recurring: true
     passes: 0
     stakes: reversible
-    updated: '2026-07-27T18:19:30Z'
+    updated: '2026-07-27T18:22:00Z'
     note: |-
       Standing never-idle task (re-arms to ready after every completion, per the recurring-task rule). Each cycle pick ONE: (a) front-end style/polish pass on Academy or art-styler surfaces, (b) roadmap upgrade — refine tasks, detail the next milestone, prune stale notes, (c) generate more art inspirations or style preview thumbnails, (d) expand the curriculum with a new movement/artist entry (respecting PUBLIC-DOMAIN-POLICY.md). Note which option ran in the PR. This task never reaches done and does not count toward milestone progress. See `run_log` for cycle history — do not re-accumulate RAN entries here.
 
@@ -515,11 +515,13 @@ tasks:
       Option (d), curriculum depth: added an Arts and Crafts Movement curriculum candidate with movement-level remix guidance, public-domain Met examples, rights boundaries, labor-context framing, and promotion criteria on worker/ai-art-academy-t-010-arts-and-crafts-a31c.
 
       RAN 2026-07-27T18:19:30Z: option (d), curriculum depth. Conductor PR #1246 merged as a2a5b1dfe57f24914aaa8405e0b747bf2cb0575f, adding a rights-aware Arts and Crafts Movement curriculum candidate with movement-level remix guidance, three Met public-domain examples, May Morris and labor-context framing, and explicit promotion checks. Next preferred lane is front-end polish (lane 1).
+
+      RAN 2026-07-27T18:15:00Z (concurrent cycle, conductor scheduled burst-mode rotation, session claude-conductor-burst-20260727T18-aa-t010-lane4): option (d) curriculum depth — a rotation collision with the PR #1246 cycle above (both read `next_lane: 4` before either had merged; see AGENTS.md's "Rotation collisions" section). Checked `docs/curriculum-candidates/` before starting (at the time, all 5 existing files were already resolved — the PR #1246 cycle's new 6th candidate, `arts-and-crafts.md`, landed concurrently and wasn't visible yet), then did fresh research since the checklist's remaining coverage gaps are hard-blocked on relay/media-server access this sandbox doesn't hold. Added Pre-Raphaelite Brotherhood (curriculum-outline.md §34, slug `pre-raphaelite`) — a full promotion, not a candidate file — with 3 example works (Millais's *Ophelia*, Hunt's *The Awakening Conscience*, Rossetti's *Beata Beatrix*) VERIFIED via live Wikimedia Commons file pages this cycle. No content overlap with PR #1246's Arts and Crafts candidate, so nothing was duplicated despite the same-lane collision. Synced style-lora-registry.md, teaching-notes.md (row 34), and art-prompts.yaml (preview request queued, status pending). Not yet synced into kind_robots' academyStyles.ts — deferred to a future cycle, matching precedent. Full detail in `run_log`. Both concurrent cycles agree the next preferred lane is front-end polish (lane 1). Rearmed to ready.
     continuous_improvement:
-      last_lane: 3  # 1=front-end polish, 2=roadmap accuracy, 3=inspiration assets, 4=curriculum depth
-      next_lane: 4
-      last_run: '2026-07-27T17:15:00Z'
-      last_pr: 'kind_robots PR #1055 (wire previewImageSrc for remaining 32 movements)'
+      last_lane: 4  # 1=front-end polish, 2=roadmap accuracy, 3=inspiration assets, 4=curriculum depth
+      next_lane: 1
+      last_run: '2026-07-27T18:15:00Z'
+      last_pr: 'conductor-only (curriculum-outline.md §34 Pre-Raphaelite Brotherhood; no kind_robots PR this cycle) — concurrent with conductor PR #1246 (Arts and Crafts Movement candidate)'
     run_log: projects/ai-art-academy/docs/continuous-improvement-run-log.md
 
   - id: t-015
