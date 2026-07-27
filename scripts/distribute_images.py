@@ -15,14 +15,17 @@ For each image in projects/process/, determines the destination by:
        kind_robots: public/images/{slug}/{slug}-inspiration-{n}.webp
        conductor:  projects/{slug}/inspirations/{slug}-inspiration-{n}.webp
 
-If a destination file already exists, the original is preserved as a new
-inspiration in its slug's folder (kind_robots public/images/{slug}/) and,
-when the slug is a conductor project, also copied to projects/{slug}/inspirations/.
-The new image replaces it. On every run, collections.json and a gallery.json for
-every indexed folder are regenerated (with full filenames) so folder<->collection
-parity holds and each collection resolves on Vercel, where the CDN can't be globbed.
+Any target resolving to kind_robots is always RETAINED in projects/process/,
+never copied into a local kind_robots checkout. kind_robots' /public/images/**
+is git-ignored and ArtJobs targeting it now ship via the home relay's direct
+self-hosted media path, not git — a local copy used to look like delivery
+(when a session happened to have a kind_robots checkout) and get its
+art-prompts.yaml request pruned as done, silently losing the record that real
+delivery still hadn't happened (see ai-art-academy/t-010, 2026-07-27).
 
-Kind Robots repo is expected at ../kind_robots relative to the conductor root.
+On every run, collections.json and a gallery.json for every conductor-owned
+indexed folder are regenerated (with full filenames) so folder<->collection
+parity holds and each collection resolves on Vercel, where the CDN can't be globbed.
 
 Usage:
   python scripts/distribute_images.py           # move files
@@ -484,8 +487,21 @@ def distribute():
 
         dest = resolve_abs_path(match["image_path"], match["target_repo"])
 
-        if match["target_repo"] == "silasfelinus/kind_robots" and not KIND_ROBOTS_ROOT.exists():
-            print(f"  SKIP (no kind_robots repo)  {fname}  →  {match['target_repo']}:{match['image_path']}")
+        if match["target_repo"] == "silasfelinus/kind_robots":
+            # kind_robots' /public/images/** is git-ignored (see .gitignore) and
+            # ArtJobs targeting it now ship via the home relay's direct
+            # self-hosted media path, not git (distribute-images.yml's own
+            # "Report retained Kind Robots targets" step never checks out
+            # kind_robots or commits binaries for this exact reason). Writing
+            # the file into a local kind_robots checkout when one happens to be
+            # present (e.g. most agent sandboxes) used to look like a real
+            # delivery and get the source request pruned from art-prompts.yaml
+            # by prune_art_prompts() below, silently losing the "still needs
+            # delivery" record with no trace (root-caused 2026-07-27 via the
+            # ai-art-academy/t-010 style-preview requests that vanished the
+            # same way). Always retain in projects/process/ instead, regardless
+            # of whether a kind_robots checkout exists locally.
+            print(f"  RETAIN (needs relay/media-path delivery)  {fname}  →  {match['target_repo']}:{match['image_path']}")
             skipped_missing_repo.append(fname)
             continue
 
@@ -562,7 +578,6 @@ def distribute():
         print("  project inspiration mirrors staged for workflow commit")
 
     conductor_moved = [m for _, m in moved if m["target_repo"] == "silasfelinus/conductor"]
-    kr_moved = [m for _, m in moved if m["target_repo"] == "silasfelinus/kind_robots"]
 
     print(
         f"\n{'[dry run] ' if DRY_RUN else ''}"
@@ -575,12 +590,15 @@ def distribute():
         if conductor_moved or mirrored:
             print("  conductor:   git add projects/images/ projects/*/inspirations/ && git commit -m 'chore: add generated images'")
             print("  conductor:   python scripts/build_workspace.py  # prunes art-prompts.yaml")
-        if kr_moved:
-            print("  kind_robots: git add public/ && git commit -m 'chore: add generated images'")
 
     if unmatched:
         print("\nUnmatched files (no yaml entry or known naming convention):")
         for f in unmatched:
+            print(f"  {f}")
+
+    if skipped_missing_repo:
+        print("\nRetained (need kind_robots relay/media-path delivery, not git):")
+        for f in skipped_missing_repo:
             print(f"  {f}")
 
 

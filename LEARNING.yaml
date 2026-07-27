@@ -4434,3 +4434,21 @@ records:
     shape) is a complete deliverable on its own, matching the kind-robots/t-027 precedent (2026-07-16).
     Recording exactly what was searched and why each candidate was ruled out is what makes the negative
     result trustworthy enough that a future session does not need to re-run the same grep from scratch.
+- date: '2026-07-27'
+  project: ai-art-academy
+  task: t-010
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: quality
+  lesson: distribute_images.py silently ate the 33 previously-queued academy style-preview
+    requests because kind_robots-targeted files get copied into a LOCAL kind_robots
+    checkout (when one is present, which is the norm for agent sandboxes) even though
+    kind_robots' /public/images/** is git-ignored and never actually reaches production
+    that way -- then the "delivered" request gets pruned from art-prompts.yaml, destroying
+    the only record that real delivery (via the relay's direct media path) still hadn't
+    happened. Any pipeline step that "moves" a file into a target and then deletes the
+    pending-work record on that basis must confirm the move is actually durable (git-tracked,
+    or otherwise reachable in production) before treating it as done -- a local copy into a
+    git-ignored directory is indistinguishable from success unless someone checks .gitignore.

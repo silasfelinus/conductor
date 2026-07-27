@@ -85,3 +85,6 @@ queueDepth: PENDING=2, RUNNING=1, DONE=1845, FAILED=3, CANCELLED=768 (all-time).
 
 ## 2026-07-27T06:13:48Z | draining
 queueDepth: PENDING=2, RUNNING=1, DONE=1846, FAILED=3, CANCELLED=769 (all-time). oldestPending: id=2620, age=211s (~0.1h), engine=COMFY. windowThroughput (24h): PENDING=2, RUNNING=1, DONE=163, FAILED=1, CANCELLED=4. recentFailed (last 3): 2/3 = generic workflow error (no node/exception detail forwarded); 1/3 = ComfyUI POST /prompt failed at http://127.0.0.1:8188 (ComfyUI /prompt returned HTTP 400 at http://127.0.0.1:8188: {'61':.
+
+## 2026-07-27T09:06:42Z | healthy
+queueDepth: DONE=1920, FAILED=5, CANCELLED=771 (all-time). oldestPending: none. windowThroughput (24h): DONE=214, FAILED=3, CANCELLED=6. recentFailed (last 5): 3/5 = ComfyUI POST /prompt failed at http://127.0.0.1:8188 (ComfyUI /prompt returned HTTP 400 at http://127.0.0.1:8188: {'61':; 2/5 = generic workflow error (no node/exception detail forwarded).

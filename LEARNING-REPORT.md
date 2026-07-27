@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-07-27T08:16:42Z
+Generated: 2026-07-27T09:21:05Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **381**
-- Outcomes: blocked: 12, cancelled: 1, done: 368
+- Closed tasks recorded: **382**
+- Outcomes: blocked: 12, cancelled: 1, done: 369
 - Success rate: **97%**
 - Average passes on successful tasks: **0.0**
 
@@ -15,7 +15,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 | Project | Closed | Success rate |
 |---|---|---|
-| ai-art-academy | 44 | 100% |
+| ai-art-academy | 45 | 100% |
 | alexa-integration | 2 | 100% |
 | animation-manager | 11 | 100% |
 | animation-studio | 2 | 50% |
@@ -57,14 +57,14 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 15 | 40% |
-| software | 366 | 99% |
+| software | 367 | 99% |
 
 ## Failure categories
 
 | Category | Count |
 |---|---|
 | actionable | 8 |
-| quality | 6 |
+| quality | 7 |
 | transient | 5 |
 
 ## Kaizen targets
@@ -72,11 +72,12 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - project `coat-dance` — 0% success over 8 closed tasks; aim the next kaizen task here
 - kind `content` — 40% success over 15 closed tasks; aim the next kaizen task here
 - failure category `actionable` — 8 occurrences; look for the shared cause across its records
-- failure category `quality` — 6 occurrences; look for the shared cause across its records
+- failure category `quality` — 7 occurrences; look for the shared cause across its records
 - failure category `transient` — 5 occurrences; look for the shared cause across its records
 
 ## Recent lessons
 
+- 2026-07-27 `ai-art-academy/t-010` — distribute_images.py silently ate the 33 previously-queued academy style-preview requests because kind_robots-targeted files get copied into a LOCAL kind_robots checkout (when one is present, which is the norm for agent sandboxes) even though kind_robots' /public/images/** is git-ignored and never actually reaches production that way -- then the "delivered" request gets pruned from art-prompts.yaml, destroying the only record that real delivery (via the relay's direct media path) still hadn't happened. Any pipeline step that "moves" a file into a target and then deletes the pending-work record on that basis must confirm the move is actually durable (git-tracked, or otherwise reachable in production) before treating it as done -- a local copy into a git-ignored directory is indistinguishable from success unless someone checks .gitignore.
 - 2026-07-27 `ai-art-academy/t-042` — A kaizen task filed as "grep for other instances of this bug shape" can close clean with no code PR when the audit turns up nothing — closing done with the full per-file audit trail in the task note (files checked, patterns searched, why each slice(/splice(/Promise.all( hit was or was not the shape) is a complete deliverable on its own, matching the kind-robots/t-027 precedent (2026-07-16). Recording exactly what was searched and why each candidate was ruled out is what makes the negative result trustworthy enough that a future session does not need to re-run the same grep from scratch.
 - 2026-07-27 `ai-art-academy/t-004` — Verifying a "wired but unverified" code path (t-037's LoraLoaderModelOnly node) against a real render, rather than trusting that it works because the graph compiles, surfaced a genuine production bug affecting every BUILTIN_STYLES LoRA remix, not just this task's registry candidates — worth budgeting one real end-to-end render per newly-wired-but-unverified node before building further work on top of it. The actionable half (LoRA loading itself) was correctly split into its own task (t-044) rather than blocking the task's actual deliverable (a recorded config per style), which shipped complete at mode: prompt for all 18 styles.
 - 2026-07-27 `dream-cycle/t-018` — A "pull live data from the site API" task is safe to implement directly when the target endpoint is public and cheap to probe first (curl before coding) — confirming shape and reachability up front avoided over-designing the fetch helper. The reusable pattern: make the live source the default with a same-signature fallback (here, GENRE_FAMILIES) and never let the fetch failure mode (network, HTTP, bad JSON, empty body) propagate past a None return, so a scheduled sweep can never be blocked by an external API being down.
@@ -88,7 +89,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-07-27 `conductor/t-086` — A stale task-event that carries a learning/note payload used to vanish silently when process_task_events.py's stale_reason() dropped it -- the only trace was a terse STALE skip line easy to miss in a run's stdout. Added a visible WARNING to stderr specifically when the dropped event has non-empty learning/note, and closed the other half of the gap in AGENTS.md: before hand-writing a task's status: done transition, check task-events/ for an already-queued completion event for the same project/task first, rather than racing it blind.
 
 - 2026-07-26 `conductor/t-085` — Append-only coordination ledgers still need compare-and-swap behavior: compute each append from a freshly fetched main tip and retry the entire transform after non-fast-forward rejection so concurrent entries are preserved rather than overwritten.
-- 2026-07-26 `conductor/t-033` — Concurrent Worker lanes need more than per-task leases: sessions must revalidate ownership before review, the cap must be checked against fresh origin/main state, and append-only shared ledgers need retry-safe compare-and-swap writes before parallel rollout.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-07-27T08:16:42Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-07-27T09:21:05Z_
