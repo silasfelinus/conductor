@@ -211,8 +211,7 @@ tasks:
   - id: t-007
     milestone: m5
     title: "Build or polish one animation candidate from reaction evidence"
-    status: review
-    owner: worker
+    status: ready
     passes: 0
     stakes: reversible
     recurring: true
@@ -241,7 +240,9 @@ tasks:
       MERGED 2026-07-26 (~10:30 UTC, reviewer session claude/festive-heisenberg-eo1pzy, conductor PR #1121 left open ~70 minutes with all CI green and no further activity from the building session): confirmed kind_robots PR #1010's 5 checks all green (Contract verifiers, TypeScript, facet-catalog, verify, GitGuardian) and conductor PR #1121's 24 checks all green, no review comments on either; squash-merged kind_robots#1010 (`70e5c796`) then conductor#1121 (`3a3cba56`). PITCHES.yaml's moth-constellation entry already carries its `builds:` record from #1121 (pending the deferred live-smoke pass before promoting to shipped, same as every prior candidate). Rearming to ready per the recurring-task convention.
 
       PROGRESS 2026-07-27 (~00:00-00:20 UTC, conductor scheduled burst-mode rotation): new Pacific calendar day since the last build (moth-constellation, merged 2026-07-26), so eligible. Built the next queued candidate, koi-memory-pond (priority 8 in PITCHES.yaml, next after moth-constellation). New components/screenfx/koi-memory-pond.vue -- koi drift under floating leaves via a target/rest/re-target steering loop, leaves are gently displaced by nearby fish and ease back, a ripple compositor renders both ambient pond ripples and click-triggered food-ring ripples, and the pointer casts an avoidance "shadow" fish steer around. Implements the pitch's "koi remember paths ... develop favorite routes" hook with a small bounded local-memory feature: on each discrete fish-rest event, recordVisit() reinforces an existing nearby favorite or has a small chance to promote a new one (capped at 5, weakest evicted on replacement), persisted to localStorage only on that rest event -- not per frame -- via safeGet/safeSet-style try/catch guards (same idiom as utils/rulerHooked/save.ts). Target selection later steers toward established favorites with some probability, so the pond develops visible habits over repeated sessions. Reduced motion drops to 2 slow fish, freezes leaf drift, and disables pointer-avoidance/food-attraction, per the pitch's reduced-motion plan. Catalog entry added to stores/animationCatalog.ts (generationSafe: true, preferredSurface: fullscreen, icon kind-icon:fish -- confirmed present in assets/icons/fish.svg); kept to an 11-line targeted insertion rather than reformatting the whole file (pre-existing prettier drift confirmed via git stash, same pattern noted on every prior t-007 entry). Verified: prettier --check clean on the new component (global prettier 3.8.1, no node_modules in this sandbox); eslint/vue-tsc could not run (eslint.config.mjs needs .nuxt/eslint.config.mjs from a full `nuxt prepare`) -- as a substitute, extracted the <script setup> block and ran it through plain tsc --noEmit with strict + noUncheckedIndexedAccess against a minimal ref()/onMounted()/onBeforeUnmount() shim, passed clean. Live browser smoke test and the Component attempt record (SPEC.md "Attempt records") are BOTH deferred -- same no-reachable-DATABASE_URL sandbox limitation as every prior t-007 entry. kind_robots PR #1028 (branch claude/dazzling-ptolemy-txpoyz) -- open, CI running. Set status: review; will flip to done once CI is green and the PR merges.
-    updated: '2026-07-27T00:20:00Z'
+
+      MERGED 2026-07-27: kind_robots PR #1028 passed Contract Tests, TypeScript Type Check, Facet Catalog Contract, and API Client Follow-ups Contract, then squash-merged as 5c40bf0e69f338bfa61585b7554defe1625e67d8. Conductor PR #1186 passed Worker PR CI, Security Audit, Roadmap Audit, and Process Task Events, then squash-merged as 6b27fa566209540cb0da16f3cfdd587aa008bdaa. No review comments or unresolved threads. Rearming this recurring daily task.
+    updated: '2026-07-27T00:36:33Z'
     claimed_by: claude-conductor-scheduled-burst-20260727-am-t007
     claimed_at: '2026-07-27T00:00:00Z'
 
