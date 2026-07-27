@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-07-27T07:06:13Z
+Generated: 2026-07-27T07:10:04Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **379**
-- Outcomes: blocked: 12, cancelled: 1, done: 366
+- Closed tasks recorded: **380**
+- Outcomes: blocked: 12, cancelled: 1, done: 367
 - Success rate: **97%**
 - Average passes on successful tasks: **0.0**
 
@@ -15,7 +15,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 | Project | Closed | Success rate |
 |---|---|---|
-| ai-art-academy | 42 | 100% |
+| ai-art-academy | 43 | 100% |
 | alexa-integration | 2 | 100% |
 | animation-manager | 11 | 100% |
 | animation-studio | 2 | 50% |
@@ -57,13 +57,13 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 15 | 40% |
-| software | 364 | 99% |
+| software | 365 | 99% |
 
 ## Failure categories
 
 | Category | Count |
 |---|---|
-| actionable | 7 |
+| actionable | 8 |
 | quality | 6 |
 | transient | 5 |
 
@@ -71,12 +71,13 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 - project `coat-dance` — 0% success over 8 closed tasks; aim the next kaizen task here
 - kind `content` — 40% success over 15 closed tasks; aim the next kaizen task here
-- failure category `actionable` — 7 occurrences; look for the shared cause across its records
+- failure category `actionable` — 8 occurrences; look for the shared cause across its records
 - failure category `quality` — 6 occurrences; look for the shared cause across its records
 - failure category `transient` — 5 occurrences; look for the shared cause across its records
 
 ## Recent lessons
 
+- 2026-07-27 `ai-art-academy/t-004` — Verifying a "wired but unverified" code path (t-037's LoraLoaderModelOnly node) against a real render, rather than trusting that it works because the graph compiles, surfaced a genuine production bug affecting every BUILTIN_STYLES LoRA remix, not just this task's registry candidates — worth budgeting one real end-to-end render per newly-wired-but-unverified node before building further work on top of it. The actionable half (LoRA loading itself) was correctly split into its own task (t-044) rather than blocking the task's actual deliverable (a recorded config per style), which shipped complete at mode: prompt for all 18 styles.
 - 2026-07-27 `dream-cycle/t-018` — A "pull live data from the site API" task is safe to implement directly when the target endpoint is public and cheap to probe first (curl before coding) — confirming shape and reachability up front avoided over-designing the fetch helper. The reusable pattern: make the live source the default with a same-signature fallback (here, GENRE_FAMILIES) and never let the fetch failure mode (network, HTTP, bad JSON, empty body) propagate past a None return, so a scheduled sweep can never be blocked by an external API being down.
 - 2026-07-27 `ai-art-academy/t-009` — A "generate via the auto art pipeline" task can silently have no pipeline at all for its art-prompts.yaml section (the inspirations list had no consumer script, unlike the images/requests ones) — when a task assumes automation exists, verify a consumer actually reads that YAML key before trusting a "still pending" status as just a backlog problem. Separately, verify generated art landed on the real serving path (HEAD the public media URL), not just that the job returned success — the plain ArtJob response only writes a DB row plus a gitignored local checkout copy; only the direct-media payload fields make the relay write to production.
 - 2026-07-27 `mona-salai/t-001` — Historical-identity experiments need the documentary baseline, candidate-attribution uncertainty, same-artist controls, and explicit falsification criteria fixed before computational scores are viewed; otherwise a model can turn style recurrence and selection bias into false certainty.
@@ -88,7 +89,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-07-26 `conductor/t-085` — Append-only coordination ledgers still need compare-and-swap behavior: compute each append from a freshly fetched main tip and retry the entire transform after non-fast-forward rejection so concurrent entries are preserved rather than overwritten.
 - 2026-07-26 `conductor/t-033` — Concurrent Worker lanes need more than per-task leases: sessions must revalidate ownership before review, the cap must be checked against fresh origin/main state, and append-only shared ledgers need retry-safe compare-and-swap writes before parallel rollout.
 - 2026-07-26 `conductor/t-083` — select_role.py's GitHub API calls can 403 in this sandbox (no GITHUB_TOKEN in the script's env, a config gap not a real egress block) — observed live while reviewing this very task: the script degraded to role: worker while a fully-green, reviewable claude/* PR (this task's own #1168) sat open, caught only via a manual GitHub MCP list_pull_requests double-check. Filed t-084 so the JSON output itself flags the degraded-signal case instead of only printing a stderr warning a caller may not read.
-- 2026-07-26 `animation-manager/t-013` — When the same sandbox-access blocker (no local DB, no interactive browser egress) recurs across several builds, formalize a standing acceptance-bar exception in the project's own spec (one section, referenced by tag) instead of leaving each future PR to re-derive and re-explain the identical two facts.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-07-27T07:06:13Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-07-27T07:10:04Z_
