@@ -4514,3 +4514,14 @@ records:
     approved_by_human) rather than waiting for a separate roadmap-editing
     round from Silas -- close the loop (approved_by_human: true, status:
     done) in the same session once that signal is confirmed.'
+- date: 2026-07-27
+  project: media-watchlist
+  task: t-012
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: Third cycle in a row on watchlist-browse.vue finding server-computed/validated data (month/season
+    filters this time) that the UI never surfaced -- worth a full BROWSE-UX.md vs. UI audit rather than
+    one gap per cycle.
