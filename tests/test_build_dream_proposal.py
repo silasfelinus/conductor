@@ -12,6 +12,7 @@ Two layers:
 import copy
 import json
 import subprocess
+import urllib.error
 from pathlib import Path
 
 import pytest
@@ -99,6 +100,107 @@ def test_render_markdown_records_creative_seeds_before_idea():
     assert "**Occupation:** public defender" in markdown
     assert "**Animal / species:** mantis shrimp" in markdown
     assert "**Fusion:**" in markdown
+
+
+# --------------------------------------------------------------------------- #
+# Live GENRE facets (dream-cycle/t-018)
+# --------------------------------------------------------------------------- #
+
+class _FakeResponse:
+    def __init__(self, body: bytes):
+        self._body = body
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, *exc):
+        return False
+
+    def read(self):
+        return self._body
+
+
+def _facets_body(facets):
+    return json.dumps({"success": True, "data": facets, "count": len(facets)}).encode()
+
+
+def test_fetch_live_genre_facets_returns_titles_on_success(monkeypatch):
+    facets = [
+        {"title": "Dark Academia", "isActive": True},
+        {"title": "Cozy Horror", "isActive": True},
+    ]
+    monkeypatch.setattr(bdp.urllib.request, "urlopen",
+                        lambda *a, **kw: _FakeResponse(_facets_body(facets)))
+    assert bdp.fetch_live_genre_facets() == ["Dark Academia", "Cozy Horror"]
+
+
+def test_fetch_live_genre_facets_drops_inactive_and_blank_and_dedupes(monkeypatch):
+    facets = [
+        {"title": "Dark Academia", "isActive": True},
+        {"title": "Retired Genre", "isActive": False},
+        {"title": "  ", "isActive": True},
+        {"title": "Dark Academia", "isActive": True},
+    ]
+    monkeypatch.setattr(bdp.urllib.request, "urlopen",
+                        lambda *a, **kw: _FakeResponse(_facets_body(facets)))
+    assert bdp.fetch_live_genre_facets() == ["Dark Academia"]
+
+
+def test_fetch_live_genre_facets_none_on_network_error(monkeypatch):
+    def _raise(*a, **kw):
+        raise urllib.error.URLError("no route to host")
+    monkeypatch.setattr(bdp.urllib.request, "urlopen", _raise)
+    assert bdp.fetch_live_genre_facets() is None
+
+
+def test_fetch_live_genre_facets_none_on_malformed_body(monkeypatch):
+    monkeypatch.setattr(bdp.urllib.request, "urlopen",
+                        lambda *a, **kw: _FakeResponse(b"not json"))
+    assert bdp.fetch_live_genre_facets() is None
+
+    monkeypatch.setattr(bdp.urllib.request, "urlopen",
+                        lambda *a, **kw: _FakeResponse(json.dumps({"data": "nope"}).encode()))
+    assert bdp.fetch_live_genre_facets() is None
+
+    monkeypatch.setattr(bdp.urllib.request, "urlopen",
+                        lambda *a, **kw: _FakeResponse(_facets_body([])))
+    assert bdp.fetch_live_genre_facets() is None
+
+
+def test_genre_spark_is_deterministic_for_a_given_date_and_pool():
+    pool = ["alpha", "beta", "gamma", "delta", "epsilon"]
+    first = bdp._genre_spark("2026-07-27", pool=pool, recent_vibes=[])
+    second = bdp._genre_spark("2026-07-27", pool=pool, recent_vibes=[])
+    assert first == second
+    assert all(g in pool for g in first)
+
+
+def test_genre_spark_avoids_recently_used_vibes_when_enough_pool_remains():
+    pool = ["Dark Academia", "Cozy Horror", "Mystery", "Space Opera"]
+    spark = bdp._genre_spark("2026-07-27", pool=pool, recent_vibes=["a dark academia caper"])
+    assert "Dark Academia" not in spark
+
+
+def test_genre_spark_falls_back_to_full_pool_when_too_few_fresh_entries():
+    pool = ["Dark Academia", "Cozy Horror"]
+    # both entries echo a recent vibe, so the "fresh" subset would be empty --
+    # must still return real choices from the full pool rather than crashing.
+    spark = bdp._genre_spark(
+        "2026-07-27", pool=pool,
+        recent_vibes=["dark academia caper", "cozy horror night"],
+    )
+    assert all(g in pool for g in spark)
+
+
+def test_genre_spark_defaults_to_live_facets_then_falls_back(monkeypatch):
+    monkeypatch.setattr(bdp, "fetch_live_genre_facets", lambda: ["Live Genre One", "Live Genre Two", "Live Genre Three"])
+    monkeypatch.setattr(bdp, "recent_vibes_and_names", lambda *a, **kw: ([], []))
+    spark = bdp._genre_spark("2026-07-27")
+    assert all(g.startswith("Live Genre") for g in spark)
+
+    monkeypatch.setattr(bdp, "fetch_live_genre_facets", lambda: None)
+    spark = bdp._genre_spark("2026-07-27")
+    assert all(g in bdp.GENRE_FAMILIES for g in spark)
 
 
 # --------------------------------------------------------------------------- #

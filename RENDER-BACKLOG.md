@@ -59,6 +59,9 @@ queueDepth: PENDING=144, RUNNING=1, DONE=1645, CANCELLED=765 (all-time). oldestP
 ## 2026-07-27T02:05:55Z | ai-art-academy/t-004 | growing
 queueDepth: PENDING=112, RUNNING=1, DONE=1699, CANCELLED=765 (all-time). oldestPending: id=2017, age=227155s (~63.1h), engine=COMFY. windowThroughput (24h): PENDING=110, RUNNING=1, DONE=54. recentFailed: none.
 
+## 2026-07-27T05:05:33Z | ai-art-academy/t-010 | healthy
+queueDepth: DONE=1834, FAILED=2, CANCELLED=765 (all-time). oldestPending: none. windowThroughput (24h): DONE=159. recentFailed (last 2): 2/2 = generic workflow error (no node/exception detail forwarded).
+
 ## 2026-07-27T05:12:04Z | draining
 queueDepth: PENDING=1, RUNNING=1, DONE=1834, FAILED=2, CANCELLED=765 (all-time). oldestPending: id=2603, age=101s (~0.0h), engine=COMFY. windowThroughput (24h): PENDING=1, RUNNING=1, DONE=157. recentFailed (last 2): 2/2 = generic workflow error (no node/exception detail forwarded).
 

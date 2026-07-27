@@ -4376,3 +4376,32 @@ records:
   lesson: Historical-identity experiments need the documentary baseline, candidate-attribution uncertainty,
     same-artist controls, and explicit falsification criteria fixed before computational scores are viewed;
     otherwise a model can turn style recurrence and selection bias into false certainty.
+- date: '2026-07-27'
+  project: ai-art-academy
+  task: t-009
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'A "generate via the auto art pipeline" task can silently have no pipeline at all for its
+    art-prompts.yaml section (the inspirations list had no consumer script, unlike the images/requests
+    ones) — when a task assumes automation exists, verify a consumer actually reads that YAML key
+    before trusting a "still pending" status as just a backlog problem. Separately, verify generated
+    art landed on the real serving path (HEAD the public media URL), not just that the job returned
+    success — the plain ArtJob response only writes a DB row plus a gitignored local checkout copy;
+    only the direct-media payload fields make the relay write to production.'
+- date: '2026-07-27'
+  project: dream-cycle
+  task: t-018
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'A "pull live data from the site API" task is safe to implement directly when the target
+    endpoint is public and cheap to probe first (curl before coding) — confirming shape and reachability
+    up front avoided over-designing the fetch helper. The reusable pattern: make the live source the
+    default with a same-signature fallback (here, GENRE_FAMILIES) and never let the fetch failure mode
+    (network, HTTP, bad JSON, empty body) propagate past a None return, so a scheduled sweep can never
+    be blocked by an external API being down.'

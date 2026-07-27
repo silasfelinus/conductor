@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Run ad-hoc art requests with direct Kind Robots media destinations."""
+"""Run inspirations: art images with direct Kind Robots media destinations."""
 
 import sys
 from pathlib import Path
@@ -17,9 +17,9 @@ from media_direct_consumer import (  # noqa: E402
 
 patch_consumer(consumer, default_target_repo=KIND_ROBOTS_REPO)
 
-import consume_art_requests as requests  # noqa: E402
+import consume_art_inspirations as inspirations  # noqa: E402
 
-original_already_satisfied = requests.already_satisfied
+original_already_satisfied = inspirations.already_satisfied
 
 
 def already_satisfied(entry):
@@ -28,8 +28,8 @@ def already_satisfied(entry):
     return original_already_satisfied(entry)
 
 
-requests.already_satisfied = already_satisfied
+inspirations.already_satisfied = already_satisfied
 
 
 if __name__ == "__main__":
-    sys.exit(requests.main())
+    sys.exit(inspirations.main())

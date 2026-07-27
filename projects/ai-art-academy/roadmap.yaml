@@ -138,22 +138,22 @@ tasks:
       localPath under FLUX/ with both slash directions, bare filename -- full
       detail + ArtJob ids in style-remix-configs.yaml's header comment). This
       likely means LoRA-mode remixing is silently broken in production today,
-      not just for this task's registry candidates. Filed as new task t-043
+      not just for this task's registry candidates. Filed as new task t-044
       (ready) rather than burning more of this session's render budget
       guessing further naming conventions blind. Every style therefore ships
       `mode: prompt` for now; loraPath/loraTrigger/loraWeight are still
-      recorded wherever a candidate exists so t-043's fix unblocks an instant
+      recorded wherever a candidate exists so t-044's fix unblocks an instant
       re-test. Per-style completeness: 4/8 target LoRA-backed styles had a
       matching file actually cataloged on the relay and got a real generated
       prompt-only render (impressionism, illuminated-manuscript, watercolor,
       oil-painting) with loraPath still recorded for the re-test; the other 4
       (art-nouveau, renaissance-fresco, expressionism, sumi-e) have no
       matching file on the relay at all (verified via GET /api/resources) so
-      no LoRA is currently deployable for them regardless of t-043 -- recorded
+      no LoRA is currently deployable for them regardless of t-044 -- recorded
       prompt-mode with a `deployment_gap` note naming exactly what would need
       downloading. All 8 prompt-mode target styles recorded directly per the
       task's own scope note (no LoRA candidate exists, so no A/B needed).
-      Bonus pop-art got a real render (LoRA cataloged, same t-043 blocker);
+      Bonus pop-art got a real render (LoRA cataloged, same t-044 blocker);
       bonus post-impressionism-van-gogh recorded directly (no LoRA cataloged
       on the relay). illuminated-manuscript's prompt-only render under-
       delivers the gold-background/flattened-figure cues -- flagged
@@ -337,45 +337,56 @@ tasks:
   - id: t-009
     milestone: m5
     title: Generate project art and Academy inspiration images
-    status: ready
-    soft_gate: true
-    owner: null
+    status: done
+    owner: worker
     passes: 0
     stakes: reversible
-    updated: '2026-07-26T15:08:00Z'
+    updated: '2026-07-27T06:10:00Z'
     note: >
-      GO-AHEAD GIVEN 2026-07-25 (Silas: "confirmed home relay and kr db are up.
-      go ahead."; same reasoning as t-004's go-ahead — recent scheduled
-      auto-art-generate runs were succeeding, and a manual dispatch would only
-      queue behind one already in flight). Spec: icon/card/hero prompts were
-      queued in projects/art-prompts.yaml (2026-07-10); generate and commit
-      them via the auto art pipeline (pre-approved), then generate 3+ Academy
-      inspiration images (e.g. one landmark public-domain work re-imagined
-      across several movements as a teaching strip), keeping prompt/model/
-      source metadata. Remove ART-PROMPTS.md entries once files land in
-      projects/images/.
+      DONE 2026-07-27 (render backlog cleared overnight — queueDepth.PENDING
+      dropped from 144/~61h-oldest to 0/none, see RENDER-BACKLOG.md). Icon,
+      card, and hero were already present in projects/images/ (landed in an
+      earlier cycle; the prior "still pending" note was stale — their
+      art-prompts.yaml `images:` entries were already gone). The real
+      remaining scope was the 4-image Great Wave teaching strip under
+      `inspirations:`.
 
-      QUEUED WORK (added 2026-07-25): a 4-image `ai-art-academy` teaching-strip
-      entry under art-prompts.yaml's `inspirations:` block — Hokusai's "Under
-      the Wave off Kanagawa" (the worked example in PUBLIC-DOMAIN-POLICY.md §3)
-      re-imagined across Impressionism, Art Nouveau, Cubism, and Suprematism,
-      each prompt reusing that movement's own remix_hint from
-      docs/curriculum-outline.md, target
-      public/images/artcollections/ai-art-academy/ in kind_robots.
+      INFRASTRUCTURE GAP FOUND AND FIXED: no script actually consumed the
+      `inspirations:` block — `queue_missing_project_art.py` only reads
+      `images:`, `consume_art_requests.py` only reads `requests:`. That's why
+      these 4 entries sat at `status: pending` through every scheduled
+      auto-art-generate run since 2026-07-25. Added
+      `scripts/consume_art_inspirations.py` (+ a `_to_media` variant mirroring
+      the existing `consume_art_requests_to_media.py` pattern) to close that
+      gap generically — it also found 8 pending `ruler-hooked` inspirations
+      left un-drained the same way, out of scope for this task but now
+      unblocked for whoever picks that up.
 
-      CURRENT STATE (reconfirmed 2026-07-26T15:08Z): every entry — icon, card,
-      hero, and all 4 teaching-strip images — still shows `status: pending` in
-      projects/art-prompts.yaml, and no files have landed in projects/images/
-      or kind_robots' artcollections folder yet. Same single-COMFY-worker
-      backlog documented on t-004 is the likely shared cause. NEXT STEP for
-      whoever picks this up: watch for `status: pending` flipping and files
-      actually landing (see conductor/CLAUDE.md's Vercel/deployment
-      verification pattern for how to confirm rather than assume) — once they
-      do, remove the consumed ART-PROMPTS.md lines and flip this task to
-      `done`. Re-checking this same pending/landed state repeatedly without a
-      changed signal is not a productive use of a cycle (same logic as t-004's
-      standing instruction). Full landing history and the original per-cycle
-      narrative are preserved in this file's git history.
+      First live run "succeeded" but a HEAD check against
+      media.acrocatranch.com proved none of the 4 images were actually
+      served — the plain (non-direct-media) path only writes the ArtImage DB
+      row plus a gitignored local kind_robots checkout copy that never
+      reaches production. Re-ran through the `_to_media` path (relay writes
+      directly to self-hosted media); all 4 now verified live via HTTP 200 at
+      their public URLs. Also found and fixed a same-shaped latent bug in
+      `consume_art_requests_to_media.py`'s own direct-media check (called
+      `_image_path(entry)` with a missing required argument, `TypeError` on
+      every pending kind_robots-targeted ad-hoc request) — that script runs
+      in the scheduled `auto-art-generate.yml` workflow, so this was likely
+      silently failing that step on live runs already.
+
+      Quality note for whoever reviews the curriculum later: the cubism and
+      suprematism renders both preserved the source Great Wave composition
+      very literally rather than actually fragmenting into planes /
+      reducing to flat geometry — usable as a first pass, but worth a
+      revisit if these get promoted beyond placeholder teaching art.
+
+      Removed the consumed ART-PROMPTS.md lines (icon/card/hero already
+      gone; teaching-strip entries removed this cycle) and the
+      art-prompts.yaml `inspirations:` sub-entries (marked `status: done`,
+      consistent with how the `requests:` block handles completion).
+    claimed_by: 2026-07-27T05:18:09Z-ai-art-academy-t009-render-recovered
+    claimed_at: '2026-07-27T05:18:10Z'
   - id: t-011
     milestone: m2
     title: Decide the commercial-licensing posture for FLUX-dev/Kontext LoRAs
@@ -495,7 +506,7 @@ tasks:
     recurring: true
     passes: 0
     stakes: reversible
-    updated: '2026-07-27T04:24:30Z'
+    updated: '2026-07-27T06:30:00Z'
     note: |-
       Standing never-idle task (re-arms to ready after every completion, per the recurring-task rule). Each cycle pick ONE: (a) front-end style/polish pass on Academy or art-styler surfaces, (b) roadmap upgrade — refine tasks, detail the next milestone, prune stale notes, (c) generate more art inspirations or style preview thumbnails, (d) expand the curriculum with a new movement/artist entry (respecting PUBLIC-DOMAIN-POLICY.md). Note which option ran in the PR. This task never reaches done and does not count toward milestone progress. See `run_log` for cycle history.
 
@@ -508,14 +519,21 @@ tasks:
       Lane 2 roadmap-accuracy audit documents stale claim metadata surviving recurring rearm transitions and specifies the processor invariant and regression coverage.
 
       RAN 2026-07-27 (2026-07-27T04:11:30Z-ai-art-academy-t010-lane2-7c31): option (b), roadmap accuracy. Conductor PR #1200 merged as 83ee9781a4d6b2ac5169d064ec86626a243f7d1a, adding a focused audit of stale claim/session metadata surviving recurring rearm transitions and specifying the expected cleanup invariant plus regression coverage. Worker PR CI, Security Audit, and Process task events passed on the final head; no reviews or unresolved threads. Next preferred lane is inspiration assets (lane 3).
+
+      Option (c), inspiration assets: added a controlled one-room/four-movements teaching sequence with reproducibility, rights, and representation safeguards.
+
+      RAN 2026-07-27: option (c), inspiration assets. Conductor PR #1203 merged as 138a83a496dee83151923986cb218ab356932a69, adding the controlled One Room, Four Movements teaching sequence with movement-level prompts, comparison exercises, reproducibility metadata, rights boundaries, identity preservation, and representation-aware review. Worker PR CI, Security Audit, and Process task events passed; no reviews or unresolved threads. Next preferred lane is curriculum depth (lane 4).
+
+      RAN 2026-07-27 (claude-scheduled-20260727T060818Z-aa-t010-lane4): option (d), curriculum depth. The only unpromoted candidate left in `docs/curriculum-candidates/` is `harlem-renaissance.md` — its own text already rules out all four discussed artists (Douglas, Fuller, Motley, Savage) as generation-style/display sources since all died 1958 or later, well past PUBLIC-DOMAIN-POLICY.md's 1956 cutoff. Rather than skip the file, researched a distinct rights-clear option: Winold Reiss (d. 1953), commissioned in 1924 by Survey Graphic to portray Harlem Renaissance figures for its March 1925 "Harlem: Mecca of the New Negro" issue and Alain Locke's "The New Negro" (1925). Reiss clears both PUBLIC-DOMAIN-POLICY.md §1.3 prongs (died 1953; works published 1925). Verified four of his portraits are CC0 on the Smithsonian's own object pages via `WebSearch` (direct `WebFetch` to si.edu/npg.si.edu 403'd this session, same museum-egress limitation the policy doc's own verification log records): W.E.B. Du Bois (NPG.72.79), Roland Hayes (NPG.72.81), James Weldon Johnson (NPG.72.78), Countee Cullen (NPG.98.129.c) — cross-confirmed the Du Bois portrait's dual PD reasoning (1931 publication cutoff + 1953-death life+70) on its Wikimedia Commons file page. Also found two sibling Reiss portraits from the identical 1972 gift (Locke NPG.72.84, Hughes NPG.72.82) marked "Usage conditions apply / © Estate of Winold Reiss" despite an outwardly identical fact pattern — excluded both per PUBLIC-DOMAIN-POLICY.md §5's default-deny-under-ambiguity rule, used only the four confirmed-CC0 works. Did NOT promote the candidate into `curriculum-outline.md` this cycle: Reiss was not a Harlem Renaissance movement artist himself (a white, German-American illustrator commissioned to portray it), which is a materially different situation from every prior "one artist clears the cutoff" promotion (Precisionism §33, American Regionalism §24), and the candidate's own promotion checklist requires "a Black cultural-history reviewer checks the framing" before promotion — a call outside what this pass should make unilaterally. Documented the full research (with rights metadata per PUBLIC-DOMAIN-POLICY.md §3) in the candidate file's new "Research update" section, checked off the two rights-related checklist items, and left the reviewer item explicitly open with the reasoning. Filed ai-art-academy/t-043 (soft needs-human) so Silas can decide the path (historical-context-only display vs. hold for a movement-participant artist) before a future cycle promotes this candidate. Conductor PR #1206 (this branch); conductor-docs-only change, no kind_robots PR needed. Verified `audit_roadmaps.py`/`validate_roadmaps.py` clean after the new task. Next preferred lane is front-end polish (lane 1), per the 1->2->3->4 rotation. Rearmed to ready.
     continuous_improvement:
-      last_lane: 1  # 1=front-end polish, 2=roadmap accuracy, 3=inspiration assets, 4=curriculum depth
-      next_lane: 2
-      last_run: '2026-07-27T03:20:00Z'
-      last_pr: 'https://github.com/silasfelinus/kind_robots/pull/1037'
+      last_lane: 4  # 1=front-end polish, 2=roadmap accuracy, 3=inspiration assets, 4=curriculum depth
+      next_lane: 1
+      last_run: '2026-07-27T06:30:00Z'
+      last_pr: null  # conductor-docs-only cycle; no kind_robots PR this run
     run_log: projects/ai-art-academy/docs/continuous-improvement-run-log.md
-    claimed_by: 2026-07-27T04:11:30Z-ai-art-academy-t010-lane2-7c31
-    claimed_at: '2026-07-27T04:11:30Z'
+    claimed_by: null
+    claimed_at: null
+    owner: null
 
   - id: t-015
     milestone: m4
@@ -1399,7 +1417,7 @@ tasks:
       a UI that can show more than K items; fix or document any found.
     claimed_by: null
 
-  - id: t-043
+  - id: t-044
     milestone: m2
     title: 'kind_robots: fix Kontext LoRA loading -- every lora_name naming convention rejected by ComfyUI as not-in-list'
     status: ready
@@ -1455,4 +1473,50 @@ tasks:
       re-test the moment this is fixed) plus the other 5 styles whose LoRA
       candidates need downloading to the relay first (see the same file's
       per-style `deployment_gap` notes).
+    claimed_at: null
+
+  - id: t-043
+    milestone: m6
+    title: 'FOR SILAS: decide how to use the rights-clear Winold Reiss portraits in the Harlem Renaissance candidate'
+    status: needs-human
+    soft_gate: true
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-27T06:30:00Z'
+    note: |-
+      FOR SILAS: what was found and where. This cycle's curriculum-depth research
+      (ai-art-academy/t-010, lane 4) found four public-domain, CC0-licensed
+      portraits that could source a Harlem Renaissance Academy lesson --
+      documented in `docs/curriculum-candidates/harlem-renaissance.md`'s new
+      "Research update" section: W.E.B. Du Bois, Roland Hayes, James Weldon
+      Johnson, and Countee Cullen, all painted in 1925 by Winold Reiss (d. 1953)
+      for Survey Graphic's "Harlem: Mecca of the New Negro" issue and Alain
+      Locke's "The New Negro" anthology, all confirmed CC0 on the Smithsonian
+      National Portrait Gallery's own object pages.
+
+      What it contains: none of the movement's own artists discussed in the
+      candidate (Aaron Douglas, Meta Warrick Fuller, Archibald Motley, Augusta
+      Savage) clear PUBLIC-DOMAIN-POLICY.md's 1956 death-date cutoff -- all four
+      died 1958 or later -- so none of their own work can ever be a display
+      example under current policy. Reiss clears the policy technically (died
+      1953, works published 1925), but he was not a Harlem Renaissance artist --
+      he was a white, German-American illustrator commissioned to portray the
+      movement's Black cultural figures for a magazine audience. The candidate's
+      own promotion checklist requires "a Black cultural-history reviewer checks
+      the framing" before promotion, which is a judgment call outside what an
+      autonomous agent pass should decide unilaterally.
+
+      TO APPROVE: read `docs/curriculum-candidates/harlem-renaissance.md`'s
+      "Research update" section and choose one of: (a) approve using the four
+      Reiss works as historical-context display images only, with the
+      generation-style preset staying artist-anchor-free as already drafted, (b)
+      hold the candidate at historical-curriculum-only with no display images
+      until a rights-clear work by an actual movement participant is found, or
+      (c) something else. Set `status: done` here with a note recording the
+      decision once made.
+
+      What unblocks when he does: a future ai-art-academy/t-010 curriculum-depth
+      cycle promotes the candidate into `curriculum-outline.md` (or documents
+      why it stays historical-only) following whichever path Silas picks.
+    claimed_by: null
     claimed_at: null
