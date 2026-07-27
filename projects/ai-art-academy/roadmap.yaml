@@ -1570,11 +1570,11 @@ tasks:
   - id: t-047
     milestone: m6
     title: 'kind_robots: uploadStore consumers should clear their target on unmount'
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
-    updated: '2026-07-27T19:20:00Z'
+    updated: '2026-07-27T20:15:53Z'
     note: >-
       Kaizen from t-010's 2026-07-27T19:04:38Z lane-1 cycle (kind_robots PR
       #1058, which fixed the concrete Academy Style Lab symptom by having
@@ -1597,3 +1597,5 @@ tasks:
       surviving past its own unmount (e.g. a background upload continuing
       after navigation) before adding the clear -- if one does, scope that
       consumer out with a one-line note explaining why.
+    claimed_by: claude-conductor-agentrun-20260727T2015Z-aa-t047
+    claimed_at: '2026-07-27T20:15:53Z'
