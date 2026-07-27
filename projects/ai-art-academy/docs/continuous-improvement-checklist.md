@@ -15,7 +15,17 @@ Record the lane, files changed, and verification in the task note before rearmin
 
 ### Rotation state
 
-- Last completed lane: Curriculum depth (lane 4), 2026-07-27 (scheduled conductor
+- Last completed lane: Curriculum depth (lane 4), 2026-07-27T10:20:00Z (scheduled
+  conductor agent run, session 20260727T100513Z-agent-t010-lane4). Per this
+  checklist's own "Before adding a 34th movement, finish the known coverage gaps"
+  instruction (below), and with all 5 `docs/curriculum-candidates/` files already
+  resolved (4 promoted, harlem-renaissance correctly held on its own explicit
+  gate at ai-art-academy/t-043), closed the "Lesson seed entries" coverage gap
+  instead of drafting a new movement: synced The Nabis, Hudson River School, and
+  Precisionism into kind_robots' `stores/seeds/academyStyles.ts` (kind_robots PR
+  #1045). Full detail in `continuous-improvement-run-log.md`'s matching entry.
+  Next preferred lane is front-end polish (lane 1), per the 1→2→3→4 rotation.
+- Prior completed lane: Curriculum depth (lane 4), 2026-07-27 (scheduled conductor
   agent run, session claude-scheduled-20260727T000607Z-aa-t010-lane4-precisionism).
   Per the prior cycle's note, lane 2 (roadmap accuracy) had just run
   (2026-07-26T23:03:57Z), so lane 3 was next in the 1→2→3→4 rotation.
@@ -1304,16 +1314,26 @@ note, 3 verified example works, remix_hint), a remix-quality paragraph in
 paragraph, a `style-lora-registry.md` row, `teaching-notes.md` row 33, and
 `kind-robots-academy-style-preview-precisionism` in `art-prompts.yaml`.
 Marked `docs/curriculum-candidates/precisionism.md` itself `PROMOTED`.
-Front-end sync to `academyStyles.ts` remains deferred, matching the
-established persian-miniature/song-dynasty-landscape/mughal-miniature/etc.
-pattern. Before adding a 34th movement, finish the known coverage gaps below
+
+**Update (2026-07-27T10:20:00Z lane-4 cycle).** Per this section's own
+instruction below, checked `docs/curriculum-candidates/` before adding a 34th
+movement: all 5 files are already resolved (ashcan-school, hudson-river-school,
+precisionism, the-nabis promoted; harlem-renaissance correctly held at its own
+gate, ai-art-academy/t-043). Closed the "Lesson seed entries" gap instead: The
+Nabis, Hudson River School, and Precisionism are now synced into kind_robots'
+`stores/seeds/academyStyles.ts` (kind_robots PR #1045) — all 33 curriculum-outline.md
+movements are now represented in the front-end seed. `exampleWorks`/
+`previewImageSrc` remain deferred on all three (and on every other
+not-yet-imaged movement), matching every prior sync.
+
+Before adding a 34th movement, finish the known coverage gaps below
 unless a newly discovered issue is more urgent — every remaining gap is
 blocked solely on home-relay/media-server reachability, not on research or
 write access to this repo.
 
 | Area | Current state | Next verifiable action |
 |---|---|---|
-| Lesson seed entries | 30 of 33 movements in curriculum-outline.md are synced to `academyStyles.ts` (Fayum Mummy Portraits, Vienna Secession, and Joseon Dynasty Korean Genre Painting landed together 2026-07-25 — mirroring t-020/t-031/t-034/PR #506/#616/#771/#814; The Nabis §31, Hudson River School §32, and Precisionism §33, added 2026-07-26/2026-07-27, front-end sync deliberately deferred per the same pattern) | Sync The Nabis, Hudson River School, and Precisionism into `academyStyles.ts` as a follow-up (lane 1 or lane 3 cycle), then sync each future new movement the same way |
+| Lesson seed entries | 33 of 33 movements in curriculum-outline.md are synced to `academyStyles.ts` — The Nabis, Hudson River School, and Precisionism (the last 3 outstanding) landed 2026-07-27T10:20:00Z via kind_robots PR #1045, closing the gap this table flagged after Precisionism's promotion | Coverage complete for entries added so far; sync each future new movement into `academyStyles.ts` the same way (`exampleWorks`/`previewImageSrc` still deferred on all of them, see the row below) |
 | Example works | 25 movements complete, including Persian Miniature Painting (3 works, all **VERIFIED** by direct `WebFetch` of their Wikimedia Commons file pages — 2026-07-20 egress to commons.wikimedia.org worked, unlike the earlier `artic.edu` 402s), Song Dynasty Landscape Painting (3 works, all **VERIFIED** the same way, 2026-07-21), and Mughal Miniature Painting (3 works, all **VERIFIED** the same way, 2026-07-21). Fayum Mummy Portraits (3 works, **VERIFIED** against the Met Collection API's `isPublicDomain` field, 2026-07-22), Vienna Secession (3 works, **VERIFIED** via the Wikimedia Commons API, 2026-07-24), Joseon Dynasty Korean Genre Painting (3 works, **VERIFIED** via direct Wikimedia Commons file pages, 2026-07-25), The Nabis (3 works, **VERIFIED** via direct Wikimedia Commons file pages, 2026-07-26), Hudson River School (3 works, all **VERIFIED** via direct Wikimedia Commons file pages — 2 already verified in the source candidate, the third, *The Oxbow*, live-verified this cycle, 2026-07-26), and Precisionism (3 works, all **VERIFIED** via direct Wikimedia Commons file pages, 2026-07-27) are all written up but not yet in `examples.manifest.json`. Ashcan School's 4 VERIFIED works are written up in curriculum-outline.md §23 but not yet in `examples.manifest.json` (confirmed absent: no `exampleWorks` field on the `ashcan-school` entry in `stores/seeds/academyStyles.ts` as of 2026-07-19). American Regionalism's 4 works are written up in curriculum-outline.md §24 (sourced, but marked "unverified this cycle" — `WebFetch` to museum hosts returned HTTP 402 through the session egress proxy) | Blocked on media-server write access — same blocker as t-033 (confirmed 2026-07-19: `examples.manifest.json` lives on `media.acrocatranch.com`, not in the kind_robots git repo; this session has `KR_API_TOKEN` but no `KR_RELAY_TOKEN`/`KR_RELAY_USER_ID` and found no in-repo upload path, so it cannot write the manifest or upload images from here). Research/sourcing is already done (curriculum-outline.md §23-33); only the write step remains, plus a direct-fetch spot-check of §24's four URLs when museum/Commons egress is open. Resume once a session with media-server/relay write access is available — do not re-attempt from a sandbox without it |
 | Starter library | 21 starter images and provenance manifest complete — coverage intentionally movement-agnostic (2026-07-18: confirmed no movement-specific starters exist for any of the 8 movements added after v1, and an abstract Suprematist work would fail the library's own selection criteria; see starter-image-library.md) | Keep source-picker integration aligned with the manifest; no new starter entries needed |
 | Style previews | CORRECTION (2026-07-27 lane 3): the previously-reported "33 prompts queued, all pending" was stale/wrong — `art-prompts.yaml` actually had ZERO `kind-robots-academy-style-preview-*` entries left, and no academy images exist anywhere in kind_robots. Root cause found and fixed this cycle: `distribute_images.py` was copying kind_robots-targeted files into a local kind_robots checkout (git-ignored `/public/images/**`, never actually delivered) and then pruning the source request as done, silently erasing the "still needs delivery" record — this is exactly what ate the original 33 entries. Fixed (`distribute_images.py` now always retains kind_robots-targeted files in `projects/process/`, never prunes them; regression test added). Verified live: render relay read `healthy`/0-pending for the first time today (previously `growing`, PENDING=144); queued and rendered one fresh test (`greek-vase-painting`, ArtJob 2697, ArtImage 12885) — succeeded, and this time the request record survives (`status: done` + note) instead of vanishing | Pipeline bug is closed; relay is healthy as of 2026-07-27T09:19Z (re-check via `scripts/recheck_render_queue.py` before assuming it still is). A future lane-3 cycle can batch re-queue preview requests for the other ~29 movements (derive prompts from `curriculum-outline.md`'s per-style `remix_hint` fields or `style-remix-configs.yaml`'s `prompt_template`s) and run them through the now-safe `consume_art_requests.py --live` pipeline. Actual delivery of any generated image to kind_robots' deployed static path still needs relay/media-server write access this sandbox doesn't hold (same blocker class as t-033/t-034's `media.acrocatranch.com` gap) — generation succeeding is not the same as delivery succeeding |

@@ -502,28 +502,24 @@ tasks:
   - id: t-010
     milestone: m6
     title: Academy continuous improvement pass
-    status: claimed
+    status: ready
     recurring: true
     passes: 0
     stakes: reversible
-    updated: '2026-07-27T10:05:14Z'
+    updated: '2026-07-27T10:20:00Z'
     note: |-
       Standing never-idle task (re-arms to ready after every completion, per the recurring-task rule). Each cycle pick ONE: (a) front-end style/polish pass on Academy or art-styler surfaces, (b) roadmap upgrade — refine tasks, detail the next milestone, prune stale notes, (c) generate more art inspirations or style preview thumbnails, (d) expand the curriculum with a new movement/artist entry (respecting PUBLIC-DOMAIN-POLICY.md). Note which option ran in the PR. This task never reaches done and does not count toward milestone progress. See `run_log` for cycle history — do not re-accumulate RAN entries here.
 
-      Rotation collision (2026-07-27, both resolved as complementary rather than duplicate — see TALKBACK.md): two sessions independently claimed lane 3 this slot.
-
-      RAN 2026-07-27T09:18:00Z (worker/ai-art-academy-t-010-inspiration-a31, conductor PR #1214, merged): lane 3 inspiration-assets cycle: added Night Window, a controlled four-movement comparison teaching Tonalism, Fauvism, Metaphysical painting, and Harlem Renaissance mural-era visual language.
-
-      RAN 2026-07-27T09:19:08Z (this cycle, lane 3 inspiration assets): render relay read `healthy` (0 pending) via `recheck_render_queue.py` for the first time today after every earlier reading showed a growing backlog — a real window, so re-probed live instead of re-deferring to lane 4. Found and fixed a genuine bug while doing so: the 33 previously-queued `kind-robots-academy-style-preview-*` requests had vanished from `art-prompts.yaml` with no images ever landing in kind_robots — root cause is `distribute_images.py` copying kind_robots-targeted files into a LOCAL kind_robots checkout (when one happens to be present, as in most agent sandboxes) and then pruning the source request as done, even though kind_robots' `/public/images/**` is git-ignored and delivery for that target now goes through the home relay's direct media path, not git (the `distribute-images.yml` workflow already knew this and deliberately never checks out kind_robots for this reason — the script itself hadn't caught up). Fixed `distribute_images.py` to always retain kind_robots-targeted files in `projects/process/` instead of copying+pruning, added a regression test (`test_kind_robots_target_retained_not_pruned`), full suite green (623 passed, 1 skipped). Verified the fix live: queued one fresh test request (`greek-vase-painting`, 256x256), it rendered successfully (ArtJob 2697, ArtImage 12885) confirming the relay really is healthy again, and this time the request survives in `art-prompts.yaml` (status: done, with a note) instead of silently disappearing — recorded as the visible signal that delivery to kind_robots is the one remaining step. Did not re-queue the other ~29 movements this cycle (scope: prove + fix the pipeline bug, not bulk-generate); a future lane-3 cycle can safely re-batch them now that the prune bug is closed. kind_robots repo itself untouched (confirmed `git status` clean there) — this is a conductor-only PR. Next preferred lane is curriculum depth (lane 4), per the 1->2->3->4 rotation. Rearmed to ready.
+      RAN 2026-07-27T10:20:00Z (this cycle): see run_log — lane 4 (curriculum depth) cycle, deferred adding a 34th movement per continuous-improvement-checklist.md's own gate ("finish known coverage gaps before adding a 34th movement") and instead closed the lesson-seed-entries gap: synced The Nabis, Hudson River School, and Precisionism into kind_robots' academyStyles.ts. Rearmed to ready.
     continuous_improvement:
-      last_lane: 3  # 1=front-end polish, 2=roadmap accuracy, 3=inspiration assets, 4=curriculum depth
-      next_lane: 4
-      last_run: '2026-07-27T09:19:08Z'
-      last_pr: 'conductor PR #1214 (Night Window) + conductor (distribute_images.py kind_robots-prune fix + 1 test render), both this rotation slot'
+      last_lane: 4  # 1=front-end polish, 2=roadmap accuracy, 3=inspiration assets, 4=curriculum depth
+      next_lane: 1
+      last_run: '2026-07-27T10:20:00Z'
+      last_pr: 'kind_robots PR #1045 (academyStyles.ts sync)'
     run_log: projects/ai-art-academy/docs/continuous-improvement-run-log.md
-    claimed_by: 20260727T100513Z-agent-t010-lane4
-    claimed_at: '2026-07-27T10:05:14Z'
-    owner: worker
+    claimed_by: null
+    claimed_at: null
+    owner: null
 
   - id: t-015
     milestone: m4
