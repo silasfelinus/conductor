@@ -186,6 +186,8 @@ def compute_transition_ops(
             raise ValueError("rearm requires recurring: true")
         ops.append(("set", "status", "ready"))
         ops.append(("unset", "owner", None))
+        ops.append(("unset", "claimed_by", None))
+        ops.append(("unset", "claimed_at", None))
     else:
         verify_event_ownership(task, event, operation)
         target = operation

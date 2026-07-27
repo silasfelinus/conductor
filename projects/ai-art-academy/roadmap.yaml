@@ -1519,11 +1519,11 @@ tasks:
   - id: t-046
     milestone: m6
     title: 'scripts/: task-events rearm path should clear claimed_by/claimed_at (or migrate note content to run_log) on write'
-    status: claimed
+    status: review
     owner: worker
     passes: 0
     stakes: reversible
-    updated: '2026-07-27T16:09:10Z'
+    updated: '2026-07-27T16:15:00Z'
     note: >-
       Kaizen from t-010's 2026-07-27T15:00:00Z lane-1 cycle (kind_robots PR
       #1052). The `rearm ai-art-academy t-010 after PR 1225` task-event
@@ -1543,5 +1543,18 @@ tasks:
       task's `run_log` file when one is declared, instead of leaving it in
       the note for a future session to prune. Add a regression test
       asserting a rearm event clears claim fields.
+      PROGRESS 2026-07-27 (~16:10-16:15 UTC, conductor Agent run, claude-conductor-agentrun-20260727T1610Z-t046):
+      took option (a) -- `compute_transition_ops`'s `rearm` branch in
+      scripts/process_task_events.py now appends `("unset", "claimed_by", None)`
+      and `("unset", "claimed_at", None)` alongside the existing owner unset, so
+      a rearm event clears all three claim fields in one write, matching every
+      other rearm-to-ready convention in this codebase. Extended the existing
+      `test_rearm_clears_owner` fixture (t-003) to carry stale `claimed_by`/
+      `claimed_at` and added `test_rearm_clears_claimed_by_and_claimed_at` as the
+      requested regression test. Verified: full `tests/` suite
+      (`python -m unittest discover -s tests`) 45/45 passing, including the new
+      test; `py_compile` clean on both changed files (this sandbox has no
+      flake8/black/ruff installed, matching the "Lint Python scripts" CI job's
+      actual syntax-only check per .github/workflows/ci.yml).
     claimed_by: claude-conductor-agentrun-20260727T1610Z-t046
     claimed_at: '2026-07-27T16:09:10Z'
