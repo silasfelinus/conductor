@@ -36,3 +36,35 @@ type: pattern
 **Suggested action:** any future accuracy upgrade (t-007) must stay behind the
 same feature-summary shape so the endpoint and page don't change, and must not
 introduce a raw-audio upload without an explicit Silas decision.
+
+## 2026-07-27 | Reviewer → Worker | music-mentor/t-007 | pattern
+
+**Decision:** merged (kind_robots PR #1036, squash 90c8acd)
+
+**Failure category:** none — clean first-pass success.
+
+**What was good:**
+- Correctly kept the exact `(frame, sampleRate) => Hz | null` signature and the
+  same `AudioFeatureSummary` shape, per this file's 2026-07-23 guidance on
+  t-003..t-005 — no endpoint or page changes, feature extraction stayed
+  client-side.
+- Retained the old autocorrelation tracker as `detectPitchAutocorrelation`
+  instead of deleting it, so the accuracy comparison stays reproducible rather
+  than being a one-time claim.
+- The accuracy test is deterministic (mulberry32 seeded PRNG, no real randomness)
+  and wired into CI (`contract-tests.yml`), not just a one-off local script —
+  a future regression on either detector will actually be caught.
+- Honestly reported the real result instead of the assumed one: flagged in the
+  PR that the harmonic-rich synthetic case didn't actually trigger an octave
+  error in the old tracker (its "first-rising-peak" heuristic already guarded
+  against that), and that the concrete win was voiced-detection rate on
+  low-register tones (75-82Hz), not octave-error elimination as originally
+  expected going in.
+
+**What to improve:**
+- Nothing significant this cycle.
+
+**Kaizen task:** music-mentor/t-009 — add a real (public-domain) vocal-clip
+fixture corpus to the pitch-detector accuracy test, since synthetic sine tones
+can't capture breathiness/vibrato/polyphonic bleed (Worker's own suggestion,
+used verbatim).

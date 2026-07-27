@@ -35,7 +35,7 @@ milestones:
   - id: m3
     title: "POLISH & SHIP — aesthetics, performance, delivery"
     weight: 25
-    status: in-progress
+    status: done
 
 tasks:
   - id: t-001
@@ -144,15 +144,43 @@ tasks:
   - id: t-007
     milestone: m3
     title: "Accuracy pass — evaluate a heavier pitch model"
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
-    updated: '2026-07-27T03:07:49Z'
+    updated: '2026-07-27T03:35:00Z'
     note: >
-      The MVP uses a dependency-free autocorrelation pitch tracker (good for
-      monophonic takes, degrades on mixed/polyphonic audio). Evaluate a stronger
-      option (e.g. pitchy / a YIN lib / CREPE) behind the same feature-summary
-      shape so the endpoint and page don't change.
+      DONE 2026-07-27: replaced the MVP's plain autocorrelation pitch tracker
+      with a YIN detector (detectPitchYIN in composables/useAudioAnalysis.ts),
+      keeping the old tracker as detectPitchAutocorrelation for comparison.
+      Same (frame, sampleRate) => Hz|null signature and the same
+      AudioFeatureSummary shape — endpoint and page unchanged, per this
+      project's TALKBACK guidance on t-003..t-005. Synthetic accuracy suite
+      (utils/scripts/verifyPitchDetectorAccuracy.test.ts, wired into
+      contract-tests.yml) across pure/harmonic-rich/noisy tones: YIN 35/35
+      detected vs autocorrelation 32/35 (missed low-register 75-82Hz tones),
+      0 octave errors either way, YIN median 0.7c error vs 0.9c. kind_robots
+      PR #1036 (branch worker/music-mentor-t007), all 6 CI checks green
+      (TypeScript, Contract verifiers, facet-catalog, facet-alias-smoke,
+      verify, GitGuardian) — merged squash 90c8acd. Completes milestone m3.
     claimed_by: claude-scheduled-20260727T030748Z-mm-t007
     claimed_at: '2026-07-27T03:07:49Z'
+
+  - id: t-009
+    milestone: m3
+    title: Add a real (public-domain) vocal-clip fixture corpus to the pitch-detector accuracy test
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-27T03:35:00Z'
+    note: >
+      Kaizen from t-007 (PR #1036): utils/scripts/verifyPitchDetectorAccuracy.test.ts
+      only exercises synthetic sine-based frames (pure/harmonic-rich/noisy tones).
+      That can't capture breathiness, vibrato depth, or real polyphonic bleed —
+      exactly where a genuine accuracy gap between detectPitchYIN and
+      detectPitchAutocorrelation would show up in practice. Source a small set of
+      short a cappella public-domain vocal clips (respecting the same
+      public-domain-sourcing rigor used elsewhere, e.g. ai-art-academy's
+      PUBLIC-DOMAIN-POLICY.md pattern), extract frames, and extend the accuracy
+      suite with a real-audio comparison alongside the existing synthetic cases.

@@ -4340,3 +4340,20 @@ records:
     than racing it blind.
 
     '
+- date: 2026-07-27
+  project: music-mentor
+  task: t-007
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    A synthetic accuracy comparison (deterministic seeded frames, no real audio) was
+    sufficient to justify swapping the pitch detector because the test asserted the
+    concrete failure mode (octave errors, voiced-detection rate, cents accuracy) rather
+    than just "new detector exists" -- and the PR reported the actual measured win
+    (low-register detection) instead of the originally assumed one (octave-error
+    elimination), which the synthetic harmonic-rich case didn't actually reproduce
+    on the old tracker. Kaizen spun out a follow-up (t-009) for real-audio validation,
+    since synthetic tones can't capture breathiness/vibrato/polyphonic bleed.
