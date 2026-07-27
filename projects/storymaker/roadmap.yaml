@@ -129,8 +129,7 @@ tasks:
 - id: t-010
   milestone: m4
   title: Polish and upgrade Storymaker front-end surface
-  status: review
-  owner: worker
+  status: ready
   passes: 0
   stakes: reversible
   note: |-
@@ -141,6 +140,8 @@ tasks:
     PROGRESS 2026-07-27 (~15:09-15:35 UTC, conductor scheduled burst-mode rotation, claude-conductor-burst-20260727T150921Z-story-t010): step (4) follow-on -- the recent-scenarios list's links all pointed at the generic /stories browse view, so clicking one didn't actually reopen that scenario; the visitor had to re-find it in the gallery. Wired openScenario(id) to call scenarioStore.selectScenario(id) before navigating -- storyStore.phase reacts to scenarioStore.selectedScenario, so this now lands the visitor directly in that scenario's configure phase, mirroring the existing ?scenario=new deep-link pattern already used by the "Start a new scenario" CTA. Verified: eslint clean, prettier --check clean, full-project npm run test (vue-tsc --noEmit) exit 0 (node_modules were not present in this sandbox this cycle -- ran npm ci + nuxi prepare first, unlike prior cycles that had them already). Live browser smoke still deferred -- no reachable DATABASE_URL in this sandbox, same class of blocker as every prior entry on this task. kind_robots PR #1053 (branch claude/dazzling-ptolemy-gmxoaz) -- open, CI running. Set status: review; will flip to done once CI is green and the PR merges. Step (1) art and step (3)'s liveUrl note both already resolved by prior cycles; only step (4)'s remaining polish and step (1)'s art stay open. Kept at review (not done) pending CI.
     PROGRESS 2026-07-27 (~15:45 UTC, conductor Reviewer sweep, claude-conductor-reviewer-20260727T1545Z): kind_robots PR #1053 CI finished all 5 checks green (verify, TypeScript, Contract verifiers, facet-catalog, GitGuardian); merged squash d0d3c590. Reverting status to ready rather than done -- step (1)'s dashboard-tab/tutorial art is still the sole outstanding substep (blocked on the art-generation relay per every prior cycle's note), same precedent as the 2026-07-22 entry above.
     PROGRESS 2026-07-27 (~19:30 UTC, conductor burst-mode rotation, claude-conductor-burst-20260727T1930Z-story-t010): step (4) follow-on -- scenarioStore.initialize() already tracks a lastError on failure (stores/scenarioStore.ts), but storymaker-page.vue never read it, so a failed init was visually indistinguishable from the legitimate "no scenarios yet" empty state. Added a computed reading scenarioStore.lastError plus an alert block, reusing the exact pattern challenge-center-page.vue already uses (role="alert", alert alert-warning rounded-2xl text-sm, kind-icon:warning) -- no store changes needed. Verified: eslint clean, prettier --check clean, full-project npm run test (vue-tsc --noEmit) exit 0 (ran provision_kind_robots_deps.sh first; node_modules/.nuxt were not present this cycle). Live browser smoke deferred -- no reachable DATABASE_URL in this sandbox, same class of blocker as every prior entry on this task. kind_robots PR #1060 (branch claude/dazzling-ptolemy-3pziqi) -- open, CI running. Set status: review; will flip to ready (not done -- step (1)'s art substep remains open) once CI is green and the PR merges.
-  updated: '2026-07-27T19:34:17Z'
+
+    kind_robots PR #1060 merged as a6ba6a912b8cb2bdb1f4db8f1772fcb0cc96fe89 and Conductor PR #1255 merged as eedd4a2b22a51fcfb952651c59dc2ab2c58b6913. Scenario initialization failures are now surfaced on the Storymaker page. Rearmed because the recurring polish task still retains its separately blocked tutorial-art substep.
+  updated: '2026-07-27T19:41:30Z'
   claimed_at: '2026-07-27T19:34:17Z'
   claimed_by: claude-conductor-burst-20260727T1930Z-story-t010
