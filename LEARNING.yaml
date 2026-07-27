@@ -4452,3 +4452,18 @@ records:
     pending-work record on that basis must confirm the move is actually durable (git-tracked,
     or otherwise reachable in production) before treating it as done -- a local copy into a
     git-ignored directory is indistinguishable from success unless someone checks .gitignore.
+- date: '2026-07-27'
+  project: ai-art-academy
+  task: t-019
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'Once conductor PR #1215 fixed distribute_images.py and proved one thumbnail
+    (greek-vase-painting) actually live in production, t-019''s gate ("at least one queued
+    image present") was satisfied immediately — but the task itself sat unclaimed for a
+    cycle because nothing re-checked it after the fix. Wiring the single confirmed-live
+    image and shipping a graceful per-style fallback (rather than waiting for all 33
+    curriculum thumbnails to exist) let real progress land now instead of blocking on
+    t-035''s much larger re-queue-and-regenerate batch.'
