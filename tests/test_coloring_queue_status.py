@@ -23,6 +23,7 @@ def test_summarizes_statuses_and_next_batch():
     assert summary["statuses"] == {"approved": 1, "pending": 2}
     assert [entry["id"] for entry in summary["next_batch"]] == ["mr-001", "mr-003"]
     assert summary["blocked_pending"] == []
+    assert summary["queue_integrity_safe"] is True
     assert summary["retry_safe"] is True
     assert summary["actionable"] is True
     assert summary["actionable_count"] == 2
@@ -50,17 +51,18 @@ def test_semantic_gate_errors_are_blocked_and_excluded_from_next_batch():
     assert summary["pending_without_semantic_gate_error"] == 2
     assert [entry["id"] for entry in summary["next_batch"]] == ["mr-002", "mr-003"]
     assert [entry["id"] for entry in summary["blocked_pending"]] == ["mr-001"]
+    assert summary["blocked_pending"][0]["semantic_gate_job_id"] == 2474
     assert summary["retry_safe"] is False
     assert summary["actionable"] is False
     assert summary["actionable_count"] == 0
 
 
-def test_duplicate_job_ids_are_reported():
+def test_duplicate_job_ids_are_reported_for_supported_error_formats():
     summary = summarize_queue(
         queue(
             [
-                {"slot": 1, "id": "mr-001", "status": "pending", "semantic_gate_error": "job 2474 timed out"},
-                {"slot": 2, "id": "mr-002", "status": "pending", "semantic_gate_error": "job 2474 timed out"},
+                {"slot": 1, "id": "mr-001", "status": "pending", "semantic_gate_error": "Job #2474 timed out"},
+                {"slot": 2, "id": "mr-002", "status": "pending", "semantic_gate_error": "job 2474 still running"},
             ]
         ),
         "monster-recast",
@@ -71,6 +73,42 @@ def test_duplicate_job_ids_are_reported():
     assert summary["retry_safe"] is False
     assert summary["actionable"] is False
     assert summary["actionable_count"] == 0
+
+
+def test_duplicate_entry_ids_make_queue_unsafe():
+    summary = summarize_queue(
+        queue(
+            [
+                {"slot": 1, "id": "mr-001", "status": "pending"},
+                {"slot": 2, "id": "mr-001", "status": "pending"},
+            ]
+        ),
+        "monster-recast",
+    )
+
+    assert summary["duplicate_entry_ids"] == ["mr-001"]
+    assert summary["duplicate_slots"] == []
+    assert summary["queue_integrity_safe"] is False
+    assert summary["retry_safe"] is False
+    assert summary["actionable"] is False
+
+
+def test_duplicate_slots_make_queue_unsafe():
+    summary = summarize_queue(
+        queue(
+            [
+                {"slot": 1, "id": "mr-001", "status": "pending"},
+                {"slot": 1, "id": "mr-002", "status": "pending"},
+            ]
+        ),
+        "monster-recast",
+    )
+
+    assert summary["duplicate_entry_ids"] == []
+    assert summary["duplicate_slots"] == [1]
+    assert summary["queue_integrity_safe"] is False
+    assert summary["retry_safe"] is False
+    assert summary["actionable"] is False
 
 
 def test_empty_safe_queue_is_not_actionable():
