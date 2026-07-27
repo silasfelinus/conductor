@@ -91,3 +91,6 @@ queueDepth: DONE=1920, FAILED=5, CANCELLED=771 (all-time). oldestPending: none. 
 
 ## 2026-07-27T14:00:48Z | draining
 queueDepth: PENDING=7, RUNNING=1, DONE=1921, FAILED=5, CANCELLED=771 (all-time). oldestPending: id=2699, age=2093s (~0.6h), engine=COMFY. windowThroughput (24h): PENDING=7, RUNNING=1, DONE=199, FAILED=3, CANCELLED=6. recentFailed (last 5): 3/5 = ComfyUI POST /prompt failed at http://127.0.0.1:8188 (ComfyUI /prompt returned HTTP 400 at http://127.0.0.1:8188: {'61':; 2/5 = generic workflow error (no node/exception detail forwarded).
+
+## 2026-07-27T17:12:20Z | ai-art-academy/t-035 | draining
+queueDepth: PENDING=12, RUNNING=1, DONE=1921, FAILED=6, CANCELLED=771 (all-time). oldestPending: id=2700, age=13086s (~3.6h), engine=COMFY. windowThroughput (24h): PENDING=12, RUNNING=1, DONE=179, FAILED=4, CANCELLED=6. recentFailed (last 6): 3/6 = ComfyUI POST /prompt failed at http://127.0.0.1:8188 (ComfyUI /prompt returned HTTP 400 at http://127.0.0.1:8188: {'61':; 2/6 = generic workflow error (no node/exception detail forwarded); 1/6 = ComfyUI image job timed out after 1800.0s.
