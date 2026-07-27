@@ -483,7 +483,15 @@ not depend on that happening.
 - **software:** open a PR into `main`, fill the handoff template (including "Flags for
   Reviewer"), set task `status: review`, verify it, resolve conflicts if present, and **merge
   it** — reversible/scoped/verified software work is merged, not parked at an open PR. After a
-  successful safe merge, set task `status: done` (the branch is auto-removed on merge).
+  successful safe merge, **before hand-writing `status: done`**, check `task-events/` for an
+  already-queued event naming this same project/task (a "PR merged" auto-queue mechanism can
+  race a manual close-out — both derive staleness from the same monotonically increasing
+  `updated` timestamp, and whichever writes last makes the other look stale, silently
+  discarding its `learning`/`note` payload with no trace; see conductor/t-085, TALKBACK.md
+  2026-07-26). If a matching event exists, either let it apply on its own next processor run
+  (don't also hand-write the transition) or explicitly consume it first — apply its
+  `learning`/`note` payload, then delete the file — rather than racing it blind. Only once
+  that's clear, set task `status: done` (the branch is auto-removed on merge).
 - **content:** write the draft file, open a PR, set `status: needs-human`.
 - **proposal:** write `pitches/<date>-<slug>.md` using the pitch template, open a PR, set
   `status: needs-human`.

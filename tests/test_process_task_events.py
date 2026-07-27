@@ -1,4 +1,6 @@
+import contextlib
 import importlib.util
+import io
 import sys
 import tempfile
 import unittest
@@ -542,6 +544,67 @@ class TaskEventProcessorTests(unittest.TestCase):
         self.assertIn("STALE", result)
         self.assertEqual(before, after)
         self.assertFalse(stale_event.exists())
+
+    def test_stale_event_with_learning_payload_warns_on_stderr(self):
+        # conductor/t-086: a stale event carrying a note/learning payload used to
+        # vanish with no trace beyond the terse STALE skip line. A session should
+        # not have to catch this by chance via a well-timed git fetch.
+        roadmap = self.roadmap()
+        roadmap["tasks"][0]["status"] = "claimed"
+        roadmap["tasks"][0]["claimed_at"] = "2026-07-19T08:18:20Z"
+        roadmap["tasks"][0]["updated"] = "2026-07-19T08:18:20Z"
+        (self.root / "projects" / "demo" / "roadmap.yaml").write_text(
+            yaml.safe_dump(roadmap, sort_keys=False), encoding="utf-8"
+        )
+
+        stale_event = self.write_event(
+            "stale-review-with-note.yaml",
+            {
+                "version": 1,
+                "project": "demo",
+                "task": "t-001",
+                "operation": "review",
+                "updated": "2026-07-19T07:20:00Z",
+                "note": "Would have been lost silently.",
+            },
+        )
+
+        captured = io.StringIO()
+        with contextlib.redirect_stderr(captured):
+            result = MODULE.process(stale_event, dry_run=False)
+
+        self.assertIn("STALE", result)
+        stderr_output = captured.getvalue()
+        self.assertIn("WARNING", stderr_output)
+        self.assertIn("demo/t-001", stderr_output)
+        self.assertFalse(stale_event.exists())
+
+    def test_stale_event_without_learning_payload_is_silent_on_stderr(self):
+        roadmap = self.roadmap()
+        roadmap["tasks"][0]["status"] = "claimed"
+        roadmap["tasks"][0]["claimed_at"] = "2026-07-19T08:18:20Z"
+        roadmap["tasks"][0]["updated"] = "2026-07-19T08:18:20Z"
+        (self.root / "projects" / "demo" / "roadmap.yaml").write_text(
+            yaml.safe_dump(roadmap, sort_keys=False), encoding="utf-8"
+        )
+
+        stale_event = self.write_event(
+            "stale-review-no-note.yaml",
+            {
+                "version": 1,
+                "project": "demo",
+                "task": "t-001",
+                "operation": "review",
+                "updated": "2026-07-19T07:20:00Z",
+            },
+        )
+
+        captured = io.StringIO()
+        with contextlib.redirect_stderr(captured):
+            result = MODULE.process(stale_event, dry_run=False)
+
+        self.assertIn("STALE", result)
+        self.assertEqual(captured.getvalue(), "")
 
     def test_stale_event_dry_run_leaves_event_file_in_place(self):
         roadmap = self.roadmap()
