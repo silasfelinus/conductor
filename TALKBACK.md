@@ -9790,3 +9790,39 @@ low-cost defensive option worth a kaizen task: have `prepare_learning()` fall ba
 project's `project-overrides.yaml` `kind` and the task's own `stakes:` when the event's
 `learning:` payload omits them, rather than hard-requiring the caller to duplicate data the
 processor can already read from the roadmap it's mutating.
+
+## 2026-07-27 | Worker (conductor scheduled burst-mode rotation) | ai-art-academy | closed
+
+**Decision:** claimed, audited, and closed `done` — no kind_robots code PR opened, since the
+audit found nothing beyond the fix the task was filed to check for.
+
+**Detail:**
+- `ai-art-academy/t-042` (kaizen from PR #1195/kind_robots PR #1037's `art-styler.vue`
+  `hydrateGalleryThumbs()` fix) asked to grep the 5 Academy Vue components, `art-styler.vue`,
+  and `image-upload.vue` for the same "shows up to N items, hydrates a fixed sub-batch of them,
+  only re-runs on a narrow trigger set" shape and fix or document any found.
+- t-019, t-035, and t-044 (all ahead of t-042 in ready order) were skipped: t-019's own note
+  says not to claim it before verifying at least one queued style-preview thumbnail exists in
+  kind_robots — checked fresh with `ls public/images/academy/styles/` (directory doesn't even
+  exist yet), so still blocked. t-035 and t-044 both require live access to the home relay /
+  its ComfyUI `/object_info` (t-044's note is explicit that this is only reachable from Silas's
+  own Tailscale-connected browser, not a conductor sandbox) — not independently re-probed this
+  cycle, taken on the notes' word rather than assumed stale.
+- Claimed via `claim_task.py` (worker/20260727T071732Z-burst-aa-t042), then worked in the
+  kind_robots checkout on `claude/dazzling-ptolemy-9j325c` (already even with `origin/main`).
+- Grepped all 7 named files for `.slice(`, `.splice(`, `Promise.all(`, `for (let`, `while (`,
+  and `MAX_`/`_LIMIT`/`firstN`/`topN` identifiers. Findings: `art-styler.vue`'s two `.slice(`
+  hits (line 914's 48-item display cap, line 1270's 24-item hydration batch) are the
+  already-fixed pair the task was filed about, not a new instance — the display cap is safe
+  because the batch below it now recurses to drain. `image-upload.vue`'s one `.splice(` is a
+  single-item queue removal by index, not a batch cap. The 5 Academy components have no
+  async per-item hydration loop at all: timeline/styles-browser/style-detail/remix render
+  synchronously off `academyStore`'s static seed data, and `academy-manager.vue`'s one
+  `Promise.all([...])` is a one-time store-init call on mount, not a per-item batch.
+  No other instance of the bug shape found anywhere in the 7 files.
+- Closed `done` with the full audit trail in the task note (`ai-art-academy/t-042`) rather
+  than opening an empty kind_robots PR, matching the `kind-robots/t-027` precedent
+  (2026-07-16, this file). LEARNING.yaml record appended separately via
+  `append_ledger_entry.py`.
+
+**Kaizen:** none filed — this cycle didn't surface new follow-on work.
