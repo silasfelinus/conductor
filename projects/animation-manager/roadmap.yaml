@@ -216,7 +216,7 @@ tasks:
   - id: t-007
     milestone: m5
     title: "Build or polish one animation candidate from reaction evidence"
-    status: review
+    status: ready
     passes: 0
     stakes: reversible
     recurring: true
@@ -251,10 +251,9 @@ tasks:
       NOTE 2026-07-27 (reviewer session rebasing conductor PR #1187 onto main): #1186's merge above updated this roadmap file but left PITCHES.yaml's koi-memory-pond entry at status: pitched with no builds: record. Applied #1187's PITCHES.yaml change here (status: candidate + builds: record referencing kind_robots#1028/5c40bf0), same as every prior candidate. Also clearing claimed_by/claimed_at to null to match the rearmed-to-ready convention (they were left stale pointing at the now-finished build session).
 
       PROGRESS 2026-07-27 (~22:10-22:20 UTC, conductor scheduled burst-mode rotation, claude-conductor-burst-20260727T2210Z-am-t007): rotation landed on animation-manager this cycle (ai-art-academy's t-010 recurring pass had just run minutes earlier in the prior cycle, so picked this project's own ready task for variety). New Pacific calendar day since the last build (koi-memory-pond, merged 2026-07-27 ~00:20 UTC / 2026-07-26 ~17:20 PDT, i.e. Pacific day 07-26), so eligible. Built the next queued candidate, impossible-terrarium (priority 9 in PITCHES.yaml, next after koi-memory-pond). New components/screenfx/impossible-terrarium.vue -- a glass terrarium tiled into 3-4 rectangular gravity pockets (fixed grammar, no runtime randomness in the tiling), each with its own down/up/left/right gravity direction so at least three directions are legible at once per the pitch's acceptance criteria; small inhabitants traverse their pocket's floor axis and can cross a temporary door to a neighboring pocket, water/spore droplets fall along each pocket's own gravity axis. Pointer eases a small rotation offset on only the local pocket it's over (does not change the fixed grammar itself); click opens the nearest door for ~3.2s. Reduced motion freezes droplets and pointer-driven tilt, keeping only slow inhabitant drift, per the pitch's reduced-motion plan. Catalog entry added to stores/animationCatalog.ts (generationSafe: true, preferredSurface: fullscreen, icon kind-icon:cube -- no terrarium/jar/glass-box icon exists in assets/icons/, cube is the closest fit; flagged as a kaizen candidate below); kept to an 11-line targeted insertion, not a full-file reformat (animationCatalog.ts carries pre-existing prettier drift elsewhere, confirmed via git stash against origin/main before editing, same pattern noted on every prior t-007 entry). Verified with the full provisioned toolchain (scripts/provision_kind_robots_deps.sh): eslint clean on both changed files; prettier --check clean on the new component and on the inserted catalog block; full-project npm run test (vue-tsc --noEmit) exit 0; npm run test:animation-catalog (38 effects, unique ids, 51 screenfx components resolved, 42 narrator aliases checked) and npm run test:animation-component-attempts (38 slugs) both pass. Live browser smoke test and the Component attempt record (SPEC.md "Attempt records") are BOTH deferred -- same no-reachable-DATABASE_URL sandbox limitation as every prior t-007 entry. kind_robots PR #1069 (branch claude/dazzling-ptolemy-ca39ga) -- open, CI running. Set status: review; will flip to done once CI is green and the PR merges.
-    updated: '2026-07-27T22:23:00Z'
-    claimed_by: claude-conductor-burst-20260727T2210Z-am-t007
-    claimed_at: '2026-07-27T22:11:07Z'
-    owner: worker
+
+      MERGED 2026-07-27: kind_robots PR #1069 shipped impossible-terrarium as squash 8e78fba after all five checks passed, and conductor PR #1264 recorded the implementation cycle as squash 70d4685. Rearm this recurring task to ready and clear the completed claim. PITCHES.yaml promotion remains in conflicted closeout PRs #1266/#1267 and should be salvaged separately rather than overwriting newer roadmap state.
+    updated: '2026-07-27T23:13:30Z'
 
   - id: t-008
     milestone: m3
