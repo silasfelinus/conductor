@@ -9697,3 +9697,45 @@ type: security-flag
 - I did not merge either PR, did not close either PR, and did not touch `projects/mona-salai/roadmap.yaml` — leaving all of it exactly as the Worker session left it for Silas to decide (un-pause and let the review PRs land, or hold).
 
 **Suggested action:** Silas: either (a) confirm mona-salai should stay paused, in which case someone should close/park PRs #1194 and #1196 without merging and set `t-001` back to a non-`review` status reflecting "paused, do not advance," or (b) if the research work is welcome, flip `project-overrides.yaml`'s mona-salai entry back to `status: active` so the roadmap and the override file agree, then a normal review pass can proceed. Also worth a `project-overrides.yaml`-status check added to `claim_task.py` itself (it currently only checks live roadmap task state, not the project-level pause flag) so this can't recur silently — right now the pause is only enforced by agents reading the file themselves before claiming.
+
+## 2026-07-27 | Reviewer (conductor agent run) | conductor | pattern
+
+**Decision:** contributed conflict resolution to PR #1195 (later completed/merged by a
+concurrent session), and separately opened + merged #1199 (schema fix).
+
+**Subject:** Another same-day instance of the "two overlapping PRs from cumulative
+session branches" pattern already documented for the Hudson River School duplicate
+(2026-07-26) — #1195 (ai-art-academy/t-010) and #1197 (music-mentor/t-007 close-out)
+both carried the *same* music-mentor/t-007 close-out commit (same content, different
+SHAs) because each branch's diff was taken against a base several commits behind the
+other's. #1197 merged first; #1195 then had a real (not auto-gen) conflict on
+`LEARNING.yaml` and `projects/music-mentor/roadmap.yaml`.
+
+**Detail:**
+- Resolved the LEARNING.yaml (append-only, kept both sides) and task-events
+  modify/delete (accepted main's deletion — the event had already processed
+  successfully on main) conflicts, pushed, and moved on to other checks.
+- While CI ran, a concurrent session picked up the same branch, hit the *next*
+  conflict layer (main had since merged #1197 for real), resolved it the same way
+  ("re-defer to main's canonical music-mentor/t-007 close-out"), and merged #1195.
+  Both sessions' resolutions layered correctly with no lost work — but it's the
+  second same-week instance of independent sessions doing serial conflict-resolution
+  passes on the same PR because of stale-base diff overlap, not just the first
+  duplicate-PR case.
+- Separately, PR #1195/#1197's cumulative diff surfaced a real, unrelated bug:
+  `LEARNING.yaml`'s mona-salai/t-001 record (added when #1198 closed that task) used
+  `kind: research`, not a member of `test_backfill_learning.py`'s `VALID_KINDS =
+  {software, content, proposal}` — failing the "Python test suite" check on `main`
+  itself, which would have failed every subsequent PR's CI until fixed. Fixed and
+  merged directly as #1199 (`kind: software`, matching the project's kind in
+  `project-overrides.yaml`); confirmed pre-existing on `main` before attributing it
+  to my own merge.
+
+**Suggested action:** the underlying fix for the stale-base overlap pattern is
+already tracked generically (rebase-before-PR, take-latest-on-auto-gen-conflict);
+no new kaizen task needed specifically for this recurrence. Worth noting for the
+next test-schema change: any script that writes `kind:`/`stakes:` values into
+`LEARNING.yaml` outside the three declared kinds should validate against
+`VALID_KINDS` before writing, not rely on the test suite to catch it after the fact
+(mona-salai's task added `kind: research` — a semantically reasonable label for a
+research-design task, but not in the schema's fixed enum).
