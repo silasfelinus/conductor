@@ -302,11 +302,24 @@ tasks:
 - id: t-012
   milestone: m3
   title: Wire the Month and Season filters from BROWSE-UX.md §2 into watchlist-browse.vue
-  status: claimed
+  status: done
   owner: worker
   passes: 0
   stakes: reversible
-  note: 'Kaizen from t-006 (kind_robots PR #1051, 2026-07-27). That cycle wired the Year pill selector and two Stats-view tiles (comics read, TV seasons) into watchlist-browse.vue -- both already computed/accepted by the API, just not reachable from the UI. The same gap exists for the two remaining BROWSE-UX.md §2 filters: Month (Jan-Dec multi-select) and Season (TV only, number range or "any"). server/api/media-entries/index.get.ts already accepts and validates both (`month` as a comma-separated int list, `season` as a single int) -- see the `months`/`season` handling already in that route -- so this is again pure front-end wiring, not new backend scope. Thread both through the same pattern activeYear used: a ref, into the loadEntries() query, and into exportCsv()''s params (export.get.ts does NOT yet accept month/season either -- add that alongside the UI, mirroring how year was added there in t-006). Season only makes sense when the TV type chip is active or no type filter is set; consider gating its visibility on that rather than always showing it.'
+  note: 'Kaizen from t-006 (kind_robots PR #1051, 2026-07-27). That cycle wired the Year pill selector and two Stats-view tiles (comics read, TV seasons) into watchlist-browse.vue -- both already computed/accepted by the API, just not reachable from the UI. The same gap exists for the two remaining BROWSE-UX.md §2 filters: Month (Jan-Dec multi-select) and Season (TV only, number range or "any"). server/api/media-entries/index.get.ts already accepts and validates both (`month` as a comma-separated int list, `season` as a single int) -- see the `months`/`season` handling already in that route -- so this is again pure front-end wiring, not new backend scope. Thread both through the same pattern activeYear used: a ref, into the loadEntries() query, and into exportCsv()''s params (export.get.ts does NOT yet accept month/season either -- add that alongside the UI, mirroring how year was added there in t-006). Season only makes sense when the TV type chip is active or no type filter is set; consider gating its visibility on that rather than always showing it.
+
+    DONE 2026-07-27 (conductor scheduled agent, burst-20260727T181522Z-mw-t012): added a Month multi-select dropdown (Jan-Dec toggle chips) and a Season number input to watchlist-browse.vue''s filter bar, threaded into loadEntries() and exportCsv() the same way activeYear/activeTypes already were. Season is gated on showSeasonFilter (TV active, or no type filter set) and resets when hidden, since the backend only supports a single season int, not a range. Added matching month/season query parsing to export.get.ts, which did not accept either yet. Verified: eslint clean, prettier clean, full-project vue-tsc --noEmit exit 0. Live browser smoke deferred (no reachable DATABASE_URL in this sandbox). kind_robots PR #1057, all 5 checks green (facet-catalog, TypeScript, Contract verifiers, verify, GitGuardian), merged squash 4097e98f.'
   claimed_by: burst-20260727T181522Z-mw-t012
   claimed_at: '2026-07-27T18:15:22Z'
-  updated: '2026-07-27T18:15:22Z'
+  updated: '2026-07-27T18:30:00Z'
+
+- id: t-013
+  milestone: m3
+  title: Wire the "most active month" home-dashboard stat from BROWSE-UX.md §1 into the UI
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  note: 'Kaizen from t-012 (kind_robots PR #1057, 2026-07-27). BROWSE-UX.md §1''s Home/Summary Dashboard stats bar specs "Most active month: ''You consumed the most in [Month]: N entries''" -- this hasn''t been wired into any UI yet (the current Stats strip in watchlist-browse.vue only shows totals/starred/audiobook-hours/pages/comics/TV-seasons, no per-month breakdown). Check whether server/api/media-entries/stats.get.ts already computes a per-month breakdown (t-006''s PR mentioned per-month data existing for the Home dashboard spec) -- if so, this is front-end-only wiring like t-006/t-012 before it; if not, add the aggregation to stats.get.ts first. Surface it as a single stat line/tile, not a full calendar view (BROWSE-UX.md doesn''t spec more than the one sentence).'
+  claimed_by: null
+  claimed_at: null
