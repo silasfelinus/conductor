@@ -448,12 +448,11 @@ tasks:
   - id: t-010
     milestone: m6
     title: Academy continuous improvement pass
-    status: review
+    status: ready
     recurring: true
     passes: 0
     stakes: reversible
-    updated: '2026-07-27T04:16:00Z'
-    owner: worker
+    updated: '2026-07-27T04:24:30Z'
     note: |-
       Standing never-idle task (re-arms to ready after every completion, per the recurring-task rule). Each cycle pick ONE: (a) front-end style/polish pass on Academy or art-styler surfaces, (b) roadmap upgrade — refine tasks, detail the next milestone, prune stale notes, (c) generate more art inspirations or style preview thumbnails, (d) expand the curriculum with a new movement/artist entry (respecting PUBLIC-DOMAIN-POLICY.md). Note which option ran in the PR. This task never reaches done and does not count toward milestone progress. See `run_log` for cycle history.
 
@@ -464,6 +463,8 @@ tasks:
       RAN 2026-07-27 (claude-scheduled-20260727T030609Z-aa-t010-lane1-resume): option (a), front-end polish. The prior claim on this task (claude-scheduled-20260727T001733Z-aa-t010-lane1, claimed_at 00:17:33Z) sat past CLAIM_TTL_MINUTES with no PR/branch to show for it — reclaimed via claim_task.py rather than treated as active work. Dispatched an Explore agent over all 5 Academy components, academyStore.ts, academyStyles.ts, and art-styler.vue/image-upload.vue with the full exclusion list of previously-fixed bug classes (PRs #275-#622, #1000, #1015, #1017, #1027). Found and independently verified a real bug in `art-styler.vue`: `galleryImages` shows up to 48 images in the Remix Studio "Gallery" source tab, but `hydrateGalleryThumbs()` only fetched thumbnail data for the first 24 missing images per call, and was only ever triggered on tab-open or a `gallerySearch` change — any user with more than 24 gallery images saw everything past #24 permanently stuck on the placeholder icon (still selectable, just no thumbnail; the only accidental workaround was narrowing the list via search). Fixed by making `hydrateGalleryThumbs()` recurse after each batch to drain the rest, adding a `failedGalleryThumbIds` Set so a permanently-unfetchable image (404/network error/no thumbnail or imagePath in the response) can't keep the recursion running forever. Verified: `npx eslint` clean, `npm run test` (`vue-tsc --noEmit`) exit 0, `npx prettier --write` (only reformatted the changed hunk). kind_robots PR #1037 (branch `claude/ai-art-academy-t010-gallery-thumbs-lane1`), all 5 CI checks green (TypeScript, Contract verifiers, facet-catalog, verify, GitGuardian), no review comments — merged squash `a9ba675`. Next preferred lane is roadmap accuracy (lane 2), per the 1->2->3->4 rotation. Rearmed to ready.
 
       Lane 2 roadmap-accuracy audit documents stale claim metadata surviving recurring rearm transitions and specifies the processor invariant and regression coverage.
+
+      RAN 2026-07-27 (2026-07-27T04:11:30Z-ai-art-academy-t010-lane2-7c31): option (b), roadmap accuracy. Conductor PR #1200 merged as 83ee9781a4d6b2ac5169d064ec86626a243f7d1a, adding a focused audit of stale claim/session metadata surviving recurring rearm transitions and specifying the expected cleanup invariant plus regression coverage. Worker PR CI, Security Audit, and Process task events passed on the final head; no reviews or unresolved threads. Next preferred lane is inspiration assets (lane 3).
     continuous_improvement:
       last_lane: 1  # 1=front-end polish, 2=roadmap accuracy, 3=inspiration assets, 4=curriculum depth
       next_lane: 2
