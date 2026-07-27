@@ -41,7 +41,7 @@ milestones:
   - id: m5
     title: Project art and inspiration assets
     weight: 5
-    status: in-progress
+    status: done
   - id: m6
     title: Continuous improvement loop
     weight: 10
@@ -502,26 +502,21 @@ tasks:
   - id: t-010
     milestone: m6
     title: Academy continuous improvement pass
-    status: claimed
+    status: ready
     recurring: true
     passes: 0
     stakes: reversible
-    updated: '2026-07-27T19:28:48Z'
+    updated: '2026-07-27T19:32:00Z'
     note: |-
       Standing never-idle task (re-arms to ready after every completion, per the recurring-task rule). Each cycle pick ONE: (a) front-end style/polish pass on Academy or art-styler surfaces, (b) roadmap upgrade — refine tasks, detail the next milestone, prune stale notes, (c) generate more art inspirations or style preview thumbnails, (d) expand the curriculum with a new movement/artist entry (respecting PUBLIC-DOMAIN-POLICY.md). Note which option ran in the PR. This task never reaches done and does not count toward milestone progress. See `run_log` for cycle history — do not re-accumulate RAN entries here.
 
-      Trimmed 2026-07-27T19:20:00Z (this cycle): moved three stacked RAN entries (17:15Z lane-3, 18:19:30Z + 18:15Z concurrent lane-4) into `run_log` per this note's own instruction, which had drifted unenforced across several intervening cycles. Full text preserved there, unedited.
-
-      RAN 2026-07-27T19:04:38Z: option (a), front-end polish. Fixed `academy-manager.vue`'s Style Lab tab never setting an upload target for its sidebar `<image-upload>` widget — left the button permanently disabled in a fresh session, or (worse) silently applied an Academy upload to whatever unrelated model (e.g. a Bot avatar) last set the shared `uploadStore` target. kind_robots PR #1058 merged squash `7aaa186a`. Full detail in `run_log`. Next preferred lane is roadmap accuracy (lane 2). Rearmed to ready.
+      RAN 2026-07-27T19:28:48Z: option (b), roadmap accuracy. Standard hygiene sweep clean (audit/validate/resolve_deps/PR-drift/stale-claim scan). Found and fixed a real milestone drift: m5 was `in-progress` with all 3 of its tasks `done` — flipped to `done`. Full detail in `run_log`. Next preferred lane is inspiration assets (lane 3). Rearmed to ready.
     continuous_improvement:
-      last_lane: 1  # 1=front-end polish, 2=roadmap accuracy, 3=inspiration assets, 4=curriculum depth
-      next_lane: 2
-      last_run: '2026-07-27T19:04:38Z'
-      last_pr: 'kind_robots PR #1058 (merged squash 7aaa186a)'
+      last_lane: 2  # 1=front-end polish, 2=roadmap accuracy, 3=inspiration assets, 4=curriculum depth
+      next_lane: 3
+      last_run: '2026-07-27T19:28:48Z'
+      last_pr: 'conductor-only (m5 milestone-accuracy fix; no kind_robots PR this cycle)'
     run_log: projects/ai-art-academy/docs/continuous-improvement-run-log.md
-    owner: reviewer
-    claimed_by: claude-conductor-agent-20260727T192843Z-aa-t010-lane2
-    claimed_at: '2026-07-27T19:28:48Z'
 
   - id: t-015
     milestone: m4
