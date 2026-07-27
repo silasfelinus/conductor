@@ -452,11 +452,11 @@ tasks:
   - id: t-010
     milestone: m6
     title: Academy continuous improvement pass
-    status: review
+    status: ready
     recurring: true
     passes: 0
     stakes: reversible
-    updated: '2026-07-27T05:19:10Z'
+    updated: '2026-07-27T05:28:30Z'
     note: |-
       Standing never-idle task (re-arms to ready after every completion, per the recurring-task rule). Each cycle pick ONE: (a) front-end style/polish pass on Academy or art-styler surfaces, (b) roadmap upgrade — refine tasks, detail the next milestone, prune stale notes, (c) generate more art inspirations or style preview thumbnails, (d) expand the curriculum with a new movement/artist entry (respecting PUBLIC-DOMAIN-POLICY.md). Note which option ran in the PR. This task never reaches done and does not count toward milestone progress. See `run_log` for cycle history.
 
@@ -471,6 +471,8 @@ tasks:
       RAN 2026-07-27 (2026-07-27T04:11:30Z-ai-art-academy-t010-lane2-7c31): option (b), roadmap accuracy. Conductor PR #1200 merged as 83ee9781a4d6b2ac5169d064ec86626a243f7d1a, adding a focused audit of stale claim/session metadata surviving recurring rearm transitions and specifying the expected cleanup invariant plus regression coverage. Worker PR CI, Security Audit, and Process task events passed on the final head; no reviews or unresolved threads. Next preferred lane is inspiration assets (lane 3).
 
       Option (c), inspiration assets: added a controlled one-room/four-movements teaching sequence with reproducibility, rights, and representation safeguards.
+
+      RAN 2026-07-27: option (c), inspiration assets. Conductor PR #1203 merged as 138a83a496dee83151923986cb218ab356932a69, adding the controlled One Room, Four Movements teaching sequence with movement-level prompts, comparison exercises, reproducibility metadata, rights boundaries, identity preservation, and representation-aware review. Worker PR CI, Security Audit, and Process task events passed; no reviews or unresolved threads. Next preferred lane is curriculum depth (lane 4).
     continuous_improvement:
       last_lane: 1  # 1=front-end polish, 2=roadmap accuracy, 3=inspiration assets, 4=curriculum depth
       next_lane: 2
@@ -479,7 +481,6 @@ tasks:
     run_log: projects/ai-art-academy/docs/continuous-improvement-run-log.md
     claimed_by: 2026-07-27T05:16:48Z-ai-art-academy-t010-inspiration-a31f
     claimed_at: '2026-07-27T05:16:48Z'
-    owner: worker
 
   - id: t-015
     milestone: m4
