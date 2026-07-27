@@ -502,28 +502,24 @@ tasks:
   - id: t-010
     milestone: m6
     title: Academy continuous improvement pass
-    status: claimed
+    status: ready
     recurring: true
     passes: 0
     stakes: reversible
-    updated: '2026-07-27T14:12:42Z'
+    updated: '2026-07-27T15:00:00Z'
     note: |-
       Standing never-idle task (re-arms to ready after every completion, per the recurring-task rule). Each cycle pick ONE: (a) front-end style/polish pass on Academy or art-styler surfaces, (b) roadmap upgrade — refine tasks, detail the next milestone, prune stale notes, (c) generate more art inspirations or style preview thumbnails, (d) expand the curriculum with a new movement/artist entry (respecting PUBLIC-DOMAIN-POLICY.md). Note which option ran in the PR. This task never reaches done and does not count toward milestone progress. See `run_log` for cycle history — do not re-accumulate RAN entries here.
 
-      RAN 2026-07-27T13:00:00Z (this cycle): see run_log — lane 2 (roadmap accuracy) cycle. Corrected t-019 and t-035, both stale since conductor PR #1215 (lane 3, earlier same day) fixed the distribute_images.py prune bug and proved delivery end-to-end for one style (greek-vase-painting) without updating either downstream task. Conductor-docs-only; no kind_robots PR needed. Rearmed to ready.
-
-      Lane 3 inspiration-assets cycle: added a controlled Garden Gate four-movement teaching sequence on worker/ai-art-academy-t-010-lane3-31c9.
-
-      Merged Conductor PR #1225 (squash d132abce0779d870e2dbcb406dc8518b686b2d5d): added the Garden Gate four-movement inspiration set. Lane 3 complete; rotate next preferred lane to curriculum depth.
+      RAN 2026-07-27T15:00:00Z (this cycle, conductor Agent run): option (a) front-end polish. Merged kind_robots PR #1052 (squash b118598c): verifyAcademyStarterManifest.ts never validated the `file` field, unlike its sibling verifyAcademyExamplesManifest.ts. See run_log for full detail. Next preferred lane is roadmap accuracy (lane 2). Rearmed to ready.
     continuous_improvement:
-      last_lane: 2  # 1=front-end polish, 2=roadmap accuracy, 3=inspiration assets, 4=curriculum depth
-      next_lane: 3
-      last_run: '2026-07-27T13:00:00Z'
-      last_pr: 'none this cycle (docs-only)'
+      last_lane: 1  # 1=front-end polish, 2=roadmap accuracy, 3=inspiration assets, 4=curriculum depth
+      next_lane: 2
+      last_run: '2026-07-27T15:00:00Z'
+      last_pr: 'kind_robots PR #1052 (squash b118598c)'
     run_log: projects/ai-art-academy/docs/continuous-improvement-run-log.md
-    claimed_by: 20260727T1500Z-aa-t010-lane4-conductor-agent
-    claimed_at: '2026-07-27T14:12:42Z'
-    owner: reviewer
+    owner: null
+    claimed_by: null
+    claimed_at: null
 
   - id: t-015
     milestone: m4
@@ -1517,5 +1513,35 @@ tasks:
       What unblocks when he does: a future ai-art-academy/t-010 curriculum-depth
       cycle promotes the candidate into `curriculum-outline.md` (or documents
       why it stays historical-only) following whichever path Silas picks.
+    claimed_by: null
+    claimed_at: null
+
+  - id: t-046
+    milestone: m6
+    title: 'scripts/: task-events rearm path should clear claimed_by/claimed_at (or migrate note content to run_log) on write'
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-27T15:00:00Z'
+    note: >-
+      Kaizen from t-010's 2026-07-27T15:00:00Z lane-1 cycle (kind_robots PR
+      #1052). The `rearm ai-art-academy t-010 after PR 1225` task-event
+      (task-events/2026-07-27T13-42-00Z-ai-art-academy-t-010-rearm-31c9.yaml)
+      updated the roadmap task's note and rotated `continuous_improvement`
+      fields, but left `claimed_by`/`claimed_at` stale from the prior claim
+      all the way through the next full cycle, and never migrated its note
+      content into `docs/continuous-improvement-run-log.md` the way a full
+      lane cycle does — the Garden Gate inspiration-assets record (Conductor
+      PR #1225) sat only in the accumulating roadmap note until the next
+      cycle happened to notice and recover it by hand (see
+      projects/ai-art-academy/TALKBACK.md same date). Fix the task-events
+      processor (likely `scripts/process_task_events.py` or similar) so a
+      `rearm` operation either (a) clears `claimed_by`/`claimed_at` to null
+      when it sets `status: ready`, matching every other rearm-to-ready
+      convention in this codebase, or (b) appends its note straight into the
+      task's `run_log` file when one is declared, instead of leaving it in
+      the note for a future session to prune. Add a regression test
+      asserting a rearm event clears claim fields.
     claimed_by: null
     claimed_at: null
