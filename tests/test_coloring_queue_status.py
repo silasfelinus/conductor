@@ -24,6 +24,8 @@ def test_summarizes_statuses_and_next_batch():
     assert [entry["id"] for entry in summary["next_batch"]] == ["mr-001", "mr-003"]
     assert summary["blocked_pending"] == []
     assert summary["retry_safe"] is True
+    assert summary["actionable"] is True
+    assert summary["actionable_count"] == 2
 
 
 def test_semantic_gate_errors_are_blocked_and_excluded_from_next_batch():
@@ -49,6 +51,8 @@ def test_semantic_gate_errors_are_blocked_and_excluded_from_next_batch():
     assert [entry["id"] for entry in summary["next_batch"]] == ["mr-002", "mr-003"]
     assert [entry["id"] for entry in summary["blocked_pending"]] == ["mr-001"]
     assert summary["retry_safe"] is False
+    assert summary["actionable"] is False
+    assert summary["actionable_count"] == 0
 
 
 def test_duplicate_job_ids_are_reported():
@@ -65,6 +69,17 @@ def test_duplicate_job_ids_are_reported():
     assert summary["duplicate_semantic_gate_job_ids"] == [2474]
     assert summary["next_batch"] == []
     assert summary["retry_safe"] is False
+    assert summary["actionable"] is False
+    assert summary["actionable_count"] == 0
+
+
+def test_empty_safe_queue_is_not_actionable():
+    summary = summarize_queue(queue([{"slot": 1, "id": "mr-001", "status": "approved"}]), "monster-recast")
+
+    assert summary["retry_safe"] is True
+    assert summary["next_batch"] == []
+    assert summary["actionable"] is False
+    assert summary["actionable_count"] == 0
 
 
 def test_batch_size_must_be_positive():
