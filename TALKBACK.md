@@ -10087,9 +10087,8 @@ deployments (`dpl_71AuwesjXThaksA8HJ8nTxUSHhrs`, `dpl_7buQonKQyxxiL72WhwvXMsfCHt
   direct verification rather than inferring recovery from deployment state alone: `Wait for
   deploy to go live` and `Verify database readiness` both completed successfully
   within seconds (vs. the prior 1200s timeouts), confirming the specific gate that failed twice is
-  now healthy. The Cypress test step itself was still running when this todo was closed (a long
-  suite, unrelated to the deploy-wait gate this todo was filed for) — if it surfaces a real spec
-  failure, ci-janitor will file a fresh, separately-deduplicated Todo keyed to that run id.
+  now healthy. That run (`30292269425`) has since finished: `conclusion: success` — a fully green
+  Cypress Tests run against current `main`, confirming main is restored, not just the deploy gate.
 - This is the same underlying category (ProxySQL/database connectivity under build/production
   load) as the recurring incidents logged earlier in this file (2026-07-14 outage, kindrobots-unraid
   t-012) and the 2026-07-25 facet-catalog build-timeout incidents — kindrobots-unraid/t-012
