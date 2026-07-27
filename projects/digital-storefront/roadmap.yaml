@@ -253,8 +253,8 @@ tasks:
 - id: t-023
   milestone: m2
   title: 'kind_robots: Mermaids of Venice PDF product page + Stripe checkout + secure entitlement-gated download route'
-  status: ready
-  owner: null
+  status: claimed
+  owner: worker
   passes: 0
   stakes: outward-facing
   gate_human: true
@@ -287,6 +287,9 @@ tasks:
     whether this is the real product PDF and, if so, move it out of public/
     (or otherwise gate/remove public access) as part of (or before) this
     task's own work, not after.
+  claimed_by: burst-20260727T170948Z-ds-t023
+  claimed_at: '2026-07-27T17:09:49Z'
+  updated: '2026-07-27T17:09:49Z'
 - id: t-012
   milestone: m3
   title: Wire one-time mana top-ups to Stripe checkout (test mode)
