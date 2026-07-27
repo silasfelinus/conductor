@@ -575,7 +575,7 @@ tasks:
   - id: t-029
     milestone: m6
     title: "Polish and upgrade Model Builder front-end surface"
-    status: ready
+    status: claimed
     recurring: true
     passes: 0
     stakes: reversible
@@ -615,10 +615,10 @@ tasks:
       PROGRESS 2026-07-27 (conductor scheduled agent run, closing out claude-conductor-burst-20260727T1109Z-mb-t029-singleton): kind_robots PR #1049 (createOwnedSingleton() helper collapsing the 5 store-wide singleton race-guards into one primitive) confirmed merged squash `8e3de5c`. Step (1) (dashboard-tab + tutorial .webp art) remains the sole outstanding original deliverable, still blocked on the external art-generation relay. Rearmed to `ready`, matching every prior cycle's pattern for this recurring task.
 
       CORRECTION 2026-07-27T13:15:00Z: the squash sha recorded above (`8e3de5c`) was wrong -- that's kind_robots PR #1043's squash commit (an unrelated ci-janitor fix seen in the same TALKBACK sweep), not #1049's. #1049's actual squash merge commit is `ab1556e9` (confirmed via kind_robots commit history, authored 2026-07-27T12:13:07Z). Also: this close-out (conductor PR #1219) rearmed `status` to `ready` but never cleared `claimed_by`/`claimed_at`/`owner`, leaving the task looking like a stale claim -- which is exactly what led a concurrent session to open a duplicate close-out (conductor PR #1221, now closed as redundant/superseded by this same PR #1219). Clearing the claim fields now.
-    claimed_by: null
-    claimed_at: null
-    updated: '2026-07-27T13:15:00Z'
-    owner: null
+    claimed_by: claude-conductor-burst-20260727T200726Z-mb-t029
+    claimed_at: '2026-07-27T20:07:27Z'
+    updated: '2026-07-27T20:07:27Z'
+    owner: worker
 
   - id: t-030
     milestone: m6
