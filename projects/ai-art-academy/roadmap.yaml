@@ -502,24 +502,24 @@ tasks:
   - id: t-010
     milestone: m6
     title: Academy continuous improvement pass
-    status: claimed
+    status: ready
     recurring: true
     passes: 0
     stakes: reversible
-    updated: '2026-07-27T16:09:20Z'
+    updated: '2026-07-27T16:26:00Z'
     note: |-
       Standing never-idle task (re-arms to ready after every completion, per the recurring-task rule). Each cycle pick ONE: (a) front-end style/polish pass on Academy or art-styler surfaces, (b) roadmap upgrade — refine tasks, detail the next milestone, prune stale notes, (c) generate more art inspirations or style preview thumbnails, (d) expand the curriculum with a new movement/artist entry (respecting PUBLIC-DOMAIN-POLICY.md). Note which option ran in the PR. This task never reaches done and does not count toward milestone progress. See `run_log` for cycle history — do not re-accumulate RAN entries here.
 
-      RAN 2026-07-27T15:07:01Z (this cycle, conductor Agent run): option (b) roadmap accuracy. continuous-improvement-checklist.md's own "Rotation state" prose had grown to ~1,290 lines (same anti-pattern t-039 already fixed once for this task's own note) and had drifted stale, plausibly feeding the next_lane-drift this cycle's predecessor flagged. Moved the history verbatim to a new continuous-improvement-lane-rotation-history.md and pointed the checklist at this task's own continuous_improvement field as the authoritative live pointer instead. See run_log for full detail. Next preferred lane is inspiration/preview assets (lane 3). Rearmed to ready.
+      RAN 2026-07-27T16:26:00Z (this cycle, scheduled burst-mode agent run, session burst-20260727T160920Z-aa-t010): tried option (c) lane 3 (inspiration/preview assets) first, per next_lane. Blocked: `GET /api/art/queue/stats` returned HTTP 503 ("Database connection was temporarily unavailable") — a different failure signature than lane 3's last-recorded state (healthy, PENDING=0, as of 2026-07-27T09:19Z per the checklist), so not a stale re-probe, a genuinely new transient DB-connectivity blocker on kind-robots.vercel.app itself, outside this session's control. Rotated to option (a) lane 1 (front-end polish) per blocker discipline. Dispatched a subagent to read the full checklist/run-log exclusion list plus every in-scope file (art-styler.vue, image-upload.vue, art-maker.vue, the academy/* components, academyStore, academyStyles.ts) in full. Found a real, previously-unfixed gap in `art-styler.vue`'s `runStyleTransfer()`: the lazy `imageData` fetch (fired whenever the selected source only has `thumbnailData`, i.e. essentially every gallery-picked source) wrote `selectedSourceImage.value = fetched` unconditionally once it resolved — the sole write in this function not gated by the existing `generationToken`/`sourceSelectionToken` guards used for every other write to that ref. A user switching to a different source image while that fetch was in flight could have it resolve afterward and silently revert the visible selection back to the stale image. Fixed by gating the write with the same `if (token === generationToken)` pattern already used a few lines below for `resultImage`/`successMessage` in the same function — 1 file, 11 insertions, 1 deletion. `npx eslint`/`npx prettier --check` clean (prettier's one pre-existing warning confirmed present identically on main via `git stash`, not a regression); `vue-tsc --noEmit` (`npm run test`) passed with 0 errors. kind_robots PR #1054: all 5 CI checks green (facet-catalog, Contract verifiers, verify, TypeScript, GitGuardian), no review comments, merged squash `5c5954f0`. Next preferred lane is roadmap accuracy (lane 2), per the 1→2→3→4 rotation. Rearmed to ready.
     continuous_improvement:
-      last_lane: 2  # 1=front-end polish, 2=roadmap accuracy, 3=inspiration assets, 4=curriculum depth
-      next_lane: 3
-      last_run: '2026-07-27T15:07:01Z'
-      last_pr: 'conductor docs-only (checklist rotation-state migration, no kind_robots PR)'
+      last_lane: 1  # 1=front-end polish, 2=roadmap accuracy, 3=inspiration assets, 4=curriculum depth
+      next_lane: 2
+      last_run: '2026-07-27T16:26:00Z'
+      last_pr: 'kind_robots PR #1054 (guard stale source-image write in runStyleTransfer)'
     run_log: projects/ai-art-academy/docs/continuous-improvement-run-log.md
-    owner: worker
-    claimed_by: burst-20260727T160920Z-aa-t010
-    claimed_at: '2026-07-27T16:09:20Z'
+    owner: null
+    claimed_by: null
+    claimed_at: null
 
   - id: t-015
     milestone: m4
