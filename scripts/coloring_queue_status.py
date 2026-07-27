@@ -64,6 +64,9 @@ def summarize_queue(data: dict[str, Any], book_slug: str, batch_size: int | None
             "semantic_gate_error_at": entry.get("semantic_gate_error_at"),
         }
 
+    retry_safe = len(errored) == 0 and len(duplicate_job_ids) == 0
+    actionable = retry_safe and len(next_batch) > 0
+
     return {
         "book": book_slug,
         "total_entries": len(normalized),
@@ -74,7 +77,9 @@ def summarize_queue(data: dict[str, Any], book_slug: str, batch_size: int | None
         "next_batch": [entry_summary(entry) for entry in next_batch],
         "blocked_pending": [entry_summary(entry) for entry in errored],
         "duplicate_semantic_gate_job_ids": duplicate_job_ids,
-        "retry_safe": len(errored) == 0 and len(duplicate_job_ids) == 0,
+        "retry_safe": retry_safe,
+        "actionable": actionable,
+        "actionable_count": len(next_batch) if retry_safe else 0,
     }
 
 
@@ -84,6 +89,7 @@ def main() -> int:
     parser.add_argument("--book", default="monster-recast")
     parser.add_argument("--batch-size", type=int)
     parser.add_argument("--require-retry-safe", action="store_true")
+    parser.add_argument("--require-actionable", action="store_true")
     args = parser.parse_args()
 
     try:
@@ -94,6 +100,8 @@ def main() -> int:
 
     print(json.dumps(summary, indent=2))
     if args.require_retry_safe and not summary["retry_safe"]:
+        return 1
+    if args.require_actionable and not summary["actionable"]:
         return 1
     return 0
 
