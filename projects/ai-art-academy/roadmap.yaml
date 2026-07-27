@@ -1397,24 +1397,11 @@ tasks:
   - id: t-042
     milestone: m6
     title: Grep the Academy front end for other "shows up to N, hydrates a fixed sub-batch on fixed triggers" bugs
-    status: claimed
+    status: done
     passes: 0
     stakes: reversible
-    updated: '2026-07-27T07:17:35Z'
-    note: >
-      Kaizen from t-010's PR #1195 (lane 1, 2026-07-27): `art-styler.vue`'s
-      `hydrateGalleryThumbs()` showed up to 48 gallery images but only ever
-      hydrated thumbnails for the first 24 per call, and only re-triggered on
-      tab-open/search-change — anything past #24 stayed permanently stuck on
-      the placeholder icon. Fixed by making it recurse until the batch drains
-      (kind_robots PR #1037). The PR's own kaizen note flagged this as a
-      *shape* of bug, not a one-off: any other component that (a) displays up
-      to some N items but (b) only hydrates/loads a fixed-size sub-batch of
-      them, and (c) only re-runs that hydration on a narrow set of triggers,
-      is a candidate for the same silent-truncation failure. Grep the 5
-      Academy Vue components, `art-styler.vue`, and `image-upload.vue` for
-      similar "slice(0, K)" / fixed-batch-size hydration patterns paired with
-      a UI that can show more than K items; fix or document any found.
+    updated: '2026-07-27T07:19:48Z'
+    note: 'Kaizen from t-010''s PR #1195 (lane 1, 2026-07-27): `art-styler.vue`''s `hydrateGalleryThumbs()` showed up to 48 gallery images but only ever hydrated thumbnails for the first 24 per call, and only re-triggered on tab-open/search-change -- anything past #24 stayed permanently stuck on the placeholder icon. Fixed by making it recurse until the batch drains (kind_robots PR #1037). Grepped the 7 named files (academy-manager.vue, academy-remix.vue, academy-style-detail.vue, academy-styles-browser.vue, academy-timeline.vue, art-styler.vue, image-upload.vue) for `.slice(`, `.splice(`, `Promise.all(`, `for (let`, `while (`, and MAX_/_LIMIT/firstN/topN identifiers -- the shapes that could hide a fixed-batch-size hydration. Findings: art-styler.vue:914 `.slice(0, 48)` is the gallery *display* cap (paired with the already-fixed recursive hydrateGalleryThumbs at line 1264, so it''s not truncated); art-styler.vue:1270 `.slice(0, 24)` is that same already-fixed hydration batch, not a new instance; image-upload.vue:723 `queuedFiles.value.splice(index, 1)` is a single-item removal by index, not a batch cap. academy-manager.vue''s one `Promise.all([...])` loads serverStore+artStore once on mount, not a per-item batch. The 5 Academy components have no async per-item hydration loop at all -- timeline/styles-browser/style-detail/remix render synchronously off academyStore''s static seed data, and academy-remix.vue only maps styles into StyleEntry, no fetch. No other instance of the ''shows up to N, hydrates a fixed sub-batch on fixed triggers'' shape found in any of the 7 files. Closing done with no kind_robots PR opened -- nothing to fix, this note is the audit trail.'
     claimed_by: 20260727T071732Z-burst-aa-t042
     owner: worker
     claimed_at: '2026-07-27T07:17:35Z'
