@@ -15,6 +15,60 @@ Record the lane, files changed, and verification in the task note before rearmin
 
 ### Rotation state
 
+- Last completed lane: Curriculum depth (lane 4), 2026-07-27 (scheduled conductor
+  agent run, session claude-scheduled-20260727T000607Z-aa-t010-lane4-precisionism).
+  Per the prior cycle's note, lane 2 (roadmap accuracy) had just run
+  (2026-07-26T23:03:57Z), so lane 3 was next in the 1→2→3→4 rotation.
+  Re-probed lane 3 with `scripts/recheck_render_queue.py`: still `growing` —
+  PENDING=144 (up from 114), oldestPending job 2017 now ~61.1h old (up from
+  ~57.1h), 24h window newly-PENDING=142 vs. DONE=34. Fell back to lane 4 per
+  the checklist's own fallback rule (see RENDER-BACKLOG.md for the full
+  stamped entry). Promoted Precisionism from
+  `docs/curriculum-candidates/precisionism.md` into `curriculum-outline.md`
+  as section 33 (v1.13): the candidate named four figures (Demuth, Sheeler,
+  Crawford, O'Keeffe) but only Demuth (d. 1935) clears
+  PUBLIC-DOMAIN-POLICY.md §1.3's 1956 death-date prong — the other three
+  died after 1956 and are excluded from the generation target and from
+  exhibited example works, named only as historical-context prose (matching
+  how Picasso/Braque and Thomas Hart Benton are handled elsewhere in
+  curriculum-outline.md). Verified all three of Demuth's example works
+  directly via live Wikimedia Commons file pages (*My Egypt* 1927, PD-Art
+  PD-old-auto-expired; *I Saw the Figure 5 in Gold* 1928, Met Open Access
+  CC0 1.0; *Incense of a New Church* 1921, PD-Art PD-old-auto-expired). Did
+  every axis together in one pass, following the Hudson River School cycle's
+  precedent rather than backfilling piecemeal: skeleton YAML entry, section
+  33 prose, a remix-quality paragraph in "Lesson-only vs remixable", a
+  `v1.13 addition re-check` public-domain paragraph, a
+  `style-lora-registry.md` row, `teaching-notes.md` row 33, and
+  `kind-robots-academy-style-preview-precisionism` in `art-prompts.yaml`.
+  Marked `docs/curriculum-candidates/precisionism.md` itself `PROMOTED`.
+  Updated this checklist's "Current curriculum coverage" table (32→33 across
+  every row) and rotation state. Front-end sync to `academyStyles.ts`
+  deliberately deferred, matching every prior promotion. Verified:
+  `yaml.safe_load` on curriculum-outline.md's machine-readable skeleton (33
+  entries, no duplicate slugs, `precisionism` present) and on
+  `art-prompts.yaml` (201 requests, no duplicate ids); `scripts/audit_roadmaps.py`
+  and `scripts/validate_roadmaps.py` both clean after all edits.
+  Conductor-docs-only change (curriculum-outline.md, style-lora-registry.md,
+  teaching-notes.md, art-prompts.yaml, this checklist, the candidate file,
+  roadmap.yaml, RENDER-BACKLOG.md); no kind_robots PR needed this cycle. Next
+  preferred lane is front-end polish (lane 1) — this cycle ran lane 4 (via
+  fallback from a blocked lane 3), so lane 1 is next in the 1→2→3→4
+  rotation. Rearmed to `ready`.
+- Last completed lane: Roadmap accuracy (lane 2), 2026-07-26T23:03:57Z
+  (claude-scheduled-20260726T230357Z-aa-t010-lane2, scheduled conductor
+  agent run; entry backfilled 2026-07-27, this cycle — the run itself was
+  already recorded in `continuous-improvement-run-log.md` and the task's own
+  `continuous_improvement`/note fields, but this rotation-state section
+  skipped a matching entry, the same one-cycle-lag gap this section calls
+  out elsewhere). Flipped milestone m3 (Curriculum content) from
+  `in-progress` to `done` — all 4 of its tasks were already `status: done`.
+  Condensed t-035's stacked home-relay recheck notes into one current-state
+  block. `audit_roadmaps.py`/`validate_roadmaps.py` clean; `check_pr_merged_drift.py`
+  skipped (GitHub API 403'd this session) in favor of a manual GitHub MCP
+  check (conductor 0 open PRs, kind_robots 1 — Silas's own unrelated draft
+  #1025). Conductor-docs-only change; no kind_robots PR needed. Next
+  preferred lane was inspiration assets (lane 3), per the 1→2→3→4 rotation.
 - Last completed lane: Curriculum depth (lane 4), 2026-07-26 (scheduled conductor
   agent run). Preferred lane was inspiration/preview assets (lane 3); re-probed
   via `scripts/recheck_render_queue.py` (RENDER-BACKLOG.md's own shared-ledger
@@ -1230,40 +1284,41 @@ This explicit state is the handoff between recurring cycles. Update it in the sa
 
 ## Current curriculum coverage
 
-The Academy currently has 32 movement entries in `curriculum-outline.md` —
-Hudson River School (§32) was promoted from
-`docs/curriculum-candidates/hudson-river-school.md` this cycle (2026-07-26,
+The Academy currently has 33 movement entries in `curriculum-outline.md` —
+Precisionism (§33) was promoted from
+`docs/curriculum-candidates/precisionism.md` this cycle (2026-07-27,
 scheduled agent run, lane 4 — lane 3/inspiration-assets re-confirmed blocked
-via `scripts/recheck_render_queue.py`, PENDING=114/oldestPending~57h/still
-`growing`, before falling back). While choosing what to promote, found the
-prior lane-4 cycle's Nabis promotion (§31) had itself skipped a step this
-checklist didn't previously call out: The Nabis was never added to
-`curriculum-outline.md`'s own "Machine-readable skeleton" YAML block, and its
-public-domain safety-check re-check paragraph was never written — the exact
-same pattern as the teaching-notes.md/art-prompts.yaml gap the immediately
-following lane-2 cycle already caught and fixed. Backfilled both for The
-Nabis (`the-nabis` skeleton entry; a `v1.11 addition re-check` paragraph) in
-the same pass as adding Hudson River School's own skeleton entry, section 32
-prose, remix-quality paragraph, `v1.12 addition re-check` paragraph,
-style-lora-registry.md row, teaching-notes.md row 32, and
-`kind-robots-academy-style-preview-hudson-river-school` in `art-prompts.yaml`
-— every axis a promotion needs, done together this time rather than
-backfilled piecemeal across three separate cycles. Front-end sync to
-`academyStyles.ts` remains deferred, matching the established
-persian-miniature/song-dynasty-landscape/mughal-miniature/etc. pattern.
-Before adding a 33rd movement, finish the known coverage gaps below unless a
-newly discovered issue is more urgent — every remaining gap is blocked
-solely on home-relay/media-server reachability, not on research or write
-access to this repo.
+via `scripts/recheck_render_queue.py`, PENDING=144/oldestPending~61h/still
+`growing`, before falling back). Precisionism's source candidate named four
+figures (Demuth, Sheeler, Crawford, O'Keeffe) but only Demuth (d. 1935)
+clears PUBLIC-DOMAIN-POLICY.md's 1956 death-date cutoff — the other three
+died after 1956 and are excluded from the generation target and from
+exhibited example works, named only as historical-context prose (same
+treatment as Picasso/Braque in Cubism and Thomas Hart Benton in American
+Regionalism). Verified all three of Demuth's example works (*My Egypt* 1927,
+*I Saw the Figure 5 in Gold* 1928, *Incense of a New Church* 1921) directly
+via live Wikimedia Commons file pages. Did every axis together in one cycle:
+skeleton YAML entry, section 33 prose (key ideas, recognition cues, artist
+note, 3 verified example works, remix_hint), a remix-quality paragraph in
+"Lesson-only vs remixable", a `v1.13 addition re-check` public-domain
+paragraph, a `style-lora-registry.md` row, `teaching-notes.md` row 33, and
+`kind-robots-academy-style-preview-precisionism` in `art-prompts.yaml`.
+Marked `docs/curriculum-candidates/precisionism.md` itself `PROMOTED`.
+Front-end sync to `academyStyles.ts` remains deferred, matching the
+established persian-miniature/song-dynasty-landscape/mughal-miniature/etc.
+pattern. Before adding a 34th movement, finish the known coverage gaps below
+unless a newly discovered issue is more urgent — every remaining gap is
+blocked solely on home-relay/media-server reachability, not on research or
+write access to this repo.
 
 | Area | Current state | Next verifiable action |
 |---|---|---|
-| Lesson seed entries | 30 of 32 movements in curriculum-outline.md are synced to `academyStyles.ts` (Fayum Mummy Portraits, Vienna Secession, and Joseon Dynasty Korean Genre Painting landed together 2026-07-25 — mirroring t-020/t-031/t-034/PR #506/#616/#771/#814; The Nabis §31 and Hudson River School §32, added 2026-07-26, front-end sync deliberately deferred per the same pattern) | Sync The Nabis and Hudson River School into `academyStyles.ts` as a follow-up (lane 1 or lane 3 cycle), then sync each future new movement the same way |
-| Example works | 25 movements complete, including Persian Miniature Painting (3 works, all **VERIFIED** by direct `WebFetch` of their Wikimedia Commons file pages — 2026-07-20 egress to commons.wikimedia.org worked, unlike the earlier `artic.edu` 402s), Song Dynasty Landscape Painting (3 works, all **VERIFIED** the same way, 2026-07-21), and Mughal Miniature Painting (3 works, all **VERIFIED** the same way, 2026-07-21). Fayum Mummy Portraits (3 works, **VERIFIED** against the Met Collection API's `isPublicDomain` field, 2026-07-22), Vienna Secession (3 works, **VERIFIED** via the Wikimedia Commons API, 2026-07-24), Joseon Dynasty Korean Genre Painting (3 works, **VERIFIED** via direct Wikimedia Commons file pages, 2026-07-25), The Nabis (3 works, **VERIFIED** via direct Wikimedia Commons file pages, 2026-07-26), and Hudson River School (3 works, all **VERIFIED** via direct Wikimedia Commons file pages — 2 already verified in the source candidate, the third, *The Oxbow*, live-verified this cycle, 2026-07-26) are all written up but not yet in `examples.manifest.json`. Ashcan School's 4 VERIFIED works are written up in curriculum-outline.md §23 but not yet in `examples.manifest.json` (confirmed absent: no `exampleWorks` field on the `ashcan-school` entry in `stores/seeds/academyStyles.ts` as of 2026-07-19). American Regionalism's 4 works are written up in curriculum-outline.md §24 (sourced, but marked "unverified this cycle" — `WebFetch` to museum hosts returned HTTP 402 through the session egress proxy) | Blocked on media-server write access — same blocker as t-033 (confirmed 2026-07-19: `examples.manifest.json` lives on `media.acrocatranch.com`, not in the kind_robots git repo; this session has `KR_API_TOKEN` but no `KR_RELAY_TOKEN`/`KR_RELAY_USER_ID` and found no in-repo upload path, so it cannot write the manifest or upload images from here). Research/sourcing is already done (curriculum-outline.md §23-32); only the write step remains, plus a direct-fetch spot-check of §24's four URLs when museum/Commons egress is open. Resume once a session with media-server/relay write access is available — do not re-attempt from a sandbox without it |
+| Lesson seed entries | 30 of 33 movements in curriculum-outline.md are synced to `academyStyles.ts` (Fayum Mummy Portraits, Vienna Secession, and Joseon Dynasty Korean Genre Painting landed together 2026-07-25 — mirroring t-020/t-031/t-034/PR #506/#616/#771/#814; The Nabis §31, Hudson River School §32, and Precisionism §33, added 2026-07-26/2026-07-27, front-end sync deliberately deferred per the same pattern) | Sync The Nabis, Hudson River School, and Precisionism into `academyStyles.ts` as a follow-up (lane 1 or lane 3 cycle), then sync each future new movement the same way |
+| Example works | 25 movements complete, including Persian Miniature Painting (3 works, all **VERIFIED** by direct `WebFetch` of their Wikimedia Commons file pages — 2026-07-20 egress to commons.wikimedia.org worked, unlike the earlier `artic.edu` 402s), Song Dynasty Landscape Painting (3 works, all **VERIFIED** the same way, 2026-07-21), and Mughal Miniature Painting (3 works, all **VERIFIED** the same way, 2026-07-21). Fayum Mummy Portraits (3 works, **VERIFIED** against the Met Collection API's `isPublicDomain` field, 2026-07-22), Vienna Secession (3 works, **VERIFIED** via the Wikimedia Commons API, 2026-07-24), Joseon Dynasty Korean Genre Painting (3 works, **VERIFIED** via direct Wikimedia Commons file pages, 2026-07-25), The Nabis (3 works, **VERIFIED** via direct Wikimedia Commons file pages, 2026-07-26), Hudson River School (3 works, all **VERIFIED** via direct Wikimedia Commons file pages — 2 already verified in the source candidate, the third, *The Oxbow*, live-verified this cycle, 2026-07-26), and Precisionism (3 works, all **VERIFIED** via direct Wikimedia Commons file pages, 2026-07-27) are all written up but not yet in `examples.manifest.json`. Ashcan School's 4 VERIFIED works are written up in curriculum-outline.md §23 but not yet in `examples.manifest.json` (confirmed absent: no `exampleWorks` field on the `ashcan-school` entry in `stores/seeds/academyStyles.ts` as of 2026-07-19). American Regionalism's 4 works are written up in curriculum-outline.md §24 (sourced, but marked "unverified this cycle" — `WebFetch` to museum hosts returned HTTP 402 through the session egress proxy) | Blocked on media-server write access — same blocker as t-033 (confirmed 2026-07-19: `examples.manifest.json` lives on `media.acrocatranch.com`, not in the kind_robots git repo; this session has `KR_API_TOKEN` but no `KR_RELAY_TOKEN`/`KR_RELAY_USER_ID` and found no in-repo upload path, so it cannot write the manifest or upload images from here). Research/sourcing is already done (curriculum-outline.md §23-33); only the write step remains, plus a direct-fetch spot-check of §24's four URLs when museum/Commons egress is open. Resume once a session with media-server/relay write access is available — do not re-attempt from a sandbox without it |
 | Starter library | 21 starter images and provenance manifest complete — coverage intentionally movement-agnostic (2026-07-18: confirmed no movement-specific starters exist for any of the 8 movements added after v1, and an abstract Suprematist work would fail the library's own selection criteria; see starter-image-library.md) | Keep source-picker integration aligned with the manifest; no new starter entries needed |
-| Style previews | 32 prompts queued (all 32 movements have a `kind-robots-academy-style-preview-*` entry in `art-prompts.yaml`, including Fayum Mummy Portraits, Vienna Secession, Joseon Dynasty Korean Genre Painting, The Nabis, and Hudson River School — the last added this cycle, 2026-07-26 lane 4). All 32 are still `status: pending` — the home relay is no longer in the fully-stuck never-claimed state seen 2026-07-18 through 2026-07-24 but is still backlogged and growing (`GET /api/art/queue/stats` this cycle, via `scripts/recheck_render_queue.py`: PENDING=114, oldest job 2017 ~57h old, 24h window newly-PENDING 112 vs. DONE 58 — see RENDER-BACKLOG.md for the full stamped entry) | Blocked on home-relay backlog depth, not on this queue. Re-run `python scripts/consume_art_requests.py --id-prefix "kind-robots-academy-style-preview-" --live` with a fresh job once the backlog has visibly drained (check `oldestPending`/`queueDepth.PENDING` via `scripts/recheck_render_queue.py` before re-probing with a full queued job — do not re-probe if RENDER-BACKLOG.md's newest entry is still recent and shows the same `growing` signature) |
+| Style previews | 33 prompts queued (all 33 movements have a `kind-robots-academy-style-preview-*` entry in `art-prompts.yaml`, including Fayum Mummy Portraits, Vienna Secession, Joseon Dynasty Korean Genre Painting, The Nabis, Hudson River School, and Precisionism — the last added this cycle, 2026-07-27 lane 4). All 33 are still `status: pending` — the home relay is no longer in the fully-stuck never-claimed state seen 2026-07-18 through 2026-07-24 but is still backlogged and growing (`GET /api/art/queue/stats` this cycle, via `scripts/recheck_render_queue.py`: PENDING=144, oldest job 2017 ~61h old, 24h window newly-PENDING 142 vs. DONE 34 — see RENDER-BACKLOG.md for the full stamped entry) | Blocked on home-relay backlog depth, not on this queue. Re-run `python scripts/consume_art_requests.py --id-prefix "kind-robots-academy-style-preview-" --live` with a fresh job once the backlog has visibly drained (check `oldestPending`/`queueDepth.PENDING` via `scripts/recheck_render_queue.py` before re-probing with a full queued job — do not re-probe if RENDER-BACKLOG.md's newest entry is still recent and shows the same `growing` signature) |
 | Remix configs | Registry exists; A/B generation blocked | Resume only after the relay, database, and approved generation path are available |
-| Teaching scaffold | Written in `docs/teaching-notes.md`, covering all 32 movements including Fayum Mummy Portraits (row 28), Vienna Secession (row 29), Joseon Dynasty Korean Genre Painting (row 30), The Nabis (row 31), and Hudson River School (row 32 — added this cycle, 2026-07-26 lane 4); wired into `academy-style-detail.vue`'s Try It / Reflect sections (t-023, done — verified 2026-07-18 via `grep -n "Try it\|Reflect" components/academy/academy-style-detail.vue` on kind_robots main) | Coverage complete; no open action |
+| Teaching scaffold | Written in `docs/teaching-notes.md`, covering all 33 movements including Fayum Mummy Portraits (row 28), Vienna Secession (row 29), Joseon Dynasty Korean Genre Painting (row 30), The Nabis (row 31), Hudson River School (row 32), and Precisionism (row 33 — added this cycle, 2026-07-27 lane 4); wired into `academy-style-detail.vue`'s Try It / Reflect sections (t-023, done — verified 2026-07-18 via `grep -n "Try it\|Reflect" components/academy/academy-style-detail.vue` on kind_robots main) | Coverage complete; no open action |
 
 ## Blocker discipline
 

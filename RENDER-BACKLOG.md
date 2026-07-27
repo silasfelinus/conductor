@@ -52,3 +52,6 @@ queueDepth: PENDING=114, RUNNING=2, DONE=1578, FAILED=62, CANCELLED=765 (all-tim
 
 ## 2026-07-26T20:09:58Z | growing
 queueDepth: PENDING=115, RUNNING=2, DONE=1578, FAILED=62, CANCELLED=765 (all-time). oldestPending: id=2017, age=205798s (~57.2h), engine=COMFY. windowThroughput (24h): PENDING=113, RUNNING=2, DONE=56, FAILED=43. recentFailed (last 25): 24/25 = generic workflow error (no node/exception detail forwarded); 1/25 = connection-refused to ComfyUI.
+
+## 2026-07-27T00:06:03Z | ai-art-academy/t-010 | growing
+queueDepth: PENDING=144, RUNNING=1, DONE=1645, CANCELLED=765 (all-time). oldestPending: id=2017, age=219963s (~61.1h), engine=COMFY. windowThroughput (24h): PENDING=142, RUNNING=1, DONE=34. recentFailed: none.

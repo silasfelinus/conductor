@@ -4,8 +4,8 @@ date: 2026-07-10
 task: ai-art-academy/t-005
 status: draft for review (content complete, one source URL verified per movement)
 
-This is the curriculum: 32 movements spanning the timeline from Ancient Egypt to
-the Hudson River School. Every artist named here is long dead (all listed artists died
+This is the curriculum: 33 movements spanning the timeline from Ancient Egypt to
+American Precisionism. Every artist named here is long dead (all listed artists died
 before 1955), and every example work is a public-domain original held (or expected)
 in an open-access collection. See the ethical boundary in DESIGN-BRIEF.md and the
 PUBLIC-DOMAIN-POLICY.md (t-006).
@@ -59,6 +59,16 @@ first time since Section 26's Song Dynasty entries, and is the first entry to
 name the movement's own ideological cost (Manifest Destiny, Indigenous
 displacement) directly in its lesson prose rather than leaving that context
 implicit.
+
+Section 33 is the 2026-07-27 v1.13 addition (t-010 cycle, lane 4): Precisionism
+— promoted from `docs/curriculum-candidates/precisionism.md`, which had already
+done the recognition-cue and prompt-template research; this cycle verified all
+three example works against their live Wikimedia Commons file pages. It is the
+first entry with only one public-domain-eligible named artist (Charles Demuth)
+where the movement's other commonly-cited figures (Sheeler, Crawford, O'Keeffe)
+are excluded from generation targets on prong-1 death-date grounds alone, rather
+than on missing verification — the same historical-context-only treatment
+Picasso/Braque and Thomas Hart Benton receive elsewhere in this document.
 
 They are appended (rather than renumbered into place) but belong
 chronologically among the earlier movements — read the `era` field in the
@@ -336,6 +346,20 @@ movements:
     artist_slugs: [thomas-cole, frederic-edwin-church, albert-bierstadt]
     example_count: 3
     remix_hint: "Repaint this image as a Hudson River School landscape: panoramic wilderness, meticulous natural detail, deep atmospheric distance, tiny figures for scale, a shadowed foreground opening toward luminous golden light, reflective water, dramatic clouds, and a sublime theatrical sense of nature"
+  # --- v1.13 addition (2026-07-27, t-010 cycle, lane 4) ---
+  # Promoted from docs/curriculum-candidates/precisionism.md. Belongs
+  # chronologically alongside cubism/ashcan-school/de-stijl/bauhaus (see
+  # `era`); appended here to avoid renumbering the sections above, per the
+  # same convention as every prior addition. Single public-domain-eligible
+  # artist (Demuth, d. 1935); Sheeler/Crawford/O'Keeffe are named in prose
+  # only (all died after the 1956 cutoff) per the candidate file's own
+  # rights boundaries.
+  - slug: precisionism
+    name: Precisionism
+    era: "c. 1915-1935 (United States)"
+    artist_slugs: [charles-demuth]
+    example_count: 3
+    remix_hint: "Recompose this image as an early twentieth-century American Precisionist scene: reduce structures and objects to crisp geometric masses, flatten incidental detail, use controlled daylight and exact-edged shadows, compress depth, remove visual clutter, and preserve the source composition"
 ```
 
 ---
@@ -2049,6 +2073,86 @@ nature"
 
 ---
 
+## 33. Precisionism (`precisionism`)
+
+**Era:** c. 1915-1935 (United States)
+
+**Key ideas.** Precisionism gives learners a clean bridge between Cubist
+simplification, American industrial modernity, photography, and later
+graphic design: a repeatable visual grammar of hard-edged geometry,
+compressed depth, and controlled light rather than one painter's
+brushwork. The label was applied retrospectively to artists who shared a
+highly controlled approach to factories, grain elevators, bridges, city
+architecture, machinery, and simplified rural buildings, absorbing lessons
+from Cubism, Futurism, photography, commercial illustration, and
+machine-age design without forming a single manifesto-driven group.
+
+The lesson addresses the movement's framing honestly rather than teaching
+it as neutral scenery: these paintings often remove people, smoke, and
+clutter from industrial scenes, producing images that are simultaneously
+celebratory, uncanny, and emotionally distant — a useful prompt for asking
+what labor and environmental cost disappears when a factory is rendered as
+pristine geometry.
+
+**Recognition cues:**
+- Crisp, sharply bounded shapes; simplified cylinders, rectangles, cones,
+  and stepped planes
+- Compressed or shallow spatial depth; clean architectural silhouettes
+- Little or no visible brush texture; strong sunlight producing broad,
+  exact shadows
+- Factories, silos, smokestacks, bridges, skyscrapers, barns, or machinery
+- Very few people, vehicles, signs, or incidental details
+- A quiet, suspended atmosphere despite industrial subject matter;
+  compositions that feel designed rather than casually observed
+
+**Notable artists:**
+- **Charles Demuth** (1883-1935) — Transformed industrial buildings, signs,
+  and vernacular architecture into layered geometric compositions; useful
+  for teaching how text fragments and architecture become structural
+  rather than merely descriptive. The only Precisionist figure whose death
+  (1935) clears PUBLIC-DOMAIN-POLICY.md's 1956 cutoff with a comfortable
+  margin.
+
+Charles Sheeler (1883-1965), Ralston Crawford (1906-1978), and Georgia
+O'Keeffe (1887-1986) are commonly discussed alongside Demuth in
+general-audience accounts of this movement but are deliberately **not
+named as generation-style targets** here: all three died after 1956, so
+none clears PUBLIC-DOMAIN-POLICY.md §1.3's first prong, regardless of any
+individual work's publication date. They may be referenced only as
+historical context in classroom prose, matching the same treatment
+Picasso/Braque receive in the Cubism entry above — never as a preset name
+or a source of exhibited/remixed example works.
+
+**Example works:**
+- *My Egypt*, Charles Demuth, 1927 — Whitney Museum of American Art,
+  accession 31.172. VERIFIED public domain (author died 1935, life+70 rule
+  comfortably clears the 1956 cutoff; published 1927, well before the 1930
+  US cutoff; Wikimedia Commons, PD-Art (PD-old-auto-expired) — confirmed
+  live via `WebFetch` this cycle): depicts a Lancaster, Pennsylvania grain
+  elevator, the movement's signature industrial subject.
+  https://commons.wikimedia.org/wiki/File:Charles_Demuth_-_My_Egypt.jpg
+- *I Saw the Figure 5 in Gold*, Charles Demuth, 1928 — Metropolitan Museum
+  of Art. VERIFIED public domain (author died 1935; published 1928, before
+  the 1930 cutoff; Metropolitan Museum Open Access, CC0 1.0 Universal —
+  confirmed live via `WebFetch` this cycle). Used only as one of three
+  representative works, not as a template to reproduce — the movement-level
+  prompt below does not target this specific composition.
+  https://commons.wikimedia.org/wiki/File:I_Saw_the_Figure_5_in_Gold_MET_DP236148.jpg
+- *Incense of a New Church*, Charles Demuth, 1921 — Columbus Museum of Art.
+  VERIFIED public domain (author died 1935; published 1921, well before the
+  1930 cutoff; Wikimedia Commons, PD-Art (PD-old-auto-expired) — confirmed
+  live via `WebFetch` this cycle): a factory scene with rising smoke, an
+  earlier and more overtly industrial composition than the other two.
+  https://commons.wikimedia.org/wiki/File:Charles_Demuth_-_Incense_of_a_New_Church.jpg
+
+**remix_hint:** "Recompose this image as an early twentieth-century American
+Precisionist scene: reduce structures and objects to crisp geometric
+masses, flatten incidental detail, use controlled daylight and exact-edged
+shadows, compress depth, remove visual clutter, and preserve the source
+composition"
+
+---
+
 ## Lesson-only vs remixable
 
 Every movement above maps to a remix config (mode `prompt` to start; t-003/t-004
@@ -2139,6 +2243,17 @@ scale" and "shadowed foreground opening toward luminous golden light"
 specifically so t-004 can check those structural roles are present, not just
 a warmer color grade; portrait or interior source photos are a poor fit for
 this style and should be expected to under-perform.
+`precisionism` shares `american-regionalism`'s smooth, sculptural-simplification
+risk but from an architectural rather than figurative angle: the model's likeliest
+failure is either reverting to a lightly-processed photo (under-cooking) or
+sliding into a glossy science-fiction city (over-cooking, importing futuristic
+materials and neon lighting the movement never had). The remix_hint leans on
+"crisp geometric masses," "controlled daylight and exact-edged shadows," and
+"remove visual clutter" specifically so t-004 can check the result reads as
+early-20th-century industrial geometry rather than either extreme; portrait or
+close-up organic source photos are a poor fit and should be expected to
+under-perform, matching `hudson-river-school`'s note about needing a
+compatible source subject.
 
 **Flagged as likely-poor remixers:**
 - `cubism` — faceting while "preserving the composition" is partly contradictory;
@@ -2382,3 +2497,24 @@ verification precedent. *The Oxbow* was the only one of the three not
 already marked VERIFIED in the source candidate file; the other two
 (*The Heart of the Andes*, *Among the Sierra Nevada, California*) carried
 verified Wikimedia URLs already and were not re-fetched.
+
+**v1.13 addition (2026-07-27) re-check.** Section 33 (Precisionism) clears
+PUBLIC-DOMAIN-POLICY.md §1.3's both-prongs rule on exactly one named artist:
+Charles Demuth (d. 1935) — well past the 1956 cutoff, though the newest
+death among *any* named artist in this document remains Gleizes/Kirchner/
+Mucha/Kandinsky/Mondrian/Munch (1938-1953) from the original v1 check, so
+this addition does not set a new most-recent-death record. The other three
+figures the source candidate discusses (Charles Sheeler d. 1965, Ralston
+Crawford d. 1978, Georgia O'Keeffe d. 1986) all died *after* 1956 and are
+therefore excluded from the generation-style target and from any exhibited
+example work — named only in curriculum prose as historical context,
+mirroring how Picasso/Braque are handled in the Cubism entry and Thomas
+Hart Benton's exclusion is handled in the American Regionalism entry (§24).
+All three example works (1921, 1927, 1928) predate the 1930 US-publication
+cutoff and do not disturb the curriculum's most-recent-example-work record,
+which stays at 1930 (*American Gothic* / *Stone City, Iowa*, §24). This
+session had working egress to `commons.wikimedia.org` (confirmed via direct
+`WebFetch`, live content returned on all three file pages), so all three
+example-work URLs are marked VERIFIED directly against their live
+rights-status templates — `PD-Art (PD-old-auto-expired)` on two, CC0 1.0
+Universal (Met Open Access) on the third.

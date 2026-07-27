@@ -1,3 +1,12 @@
+**PROMOTED 2026-07-27 (ai-art-academy/t-010, lane 4).** Landed in
+`curriculum-outline.md` as section 33 (v1.13), using Charles Demuth (the only
+named figure here who clears PUBLIC-DOMAIN-POLICY.md's 1956 death-date cutoff)
+and three of his pre-1930 works (*My Egypt* 1927, *I Saw the Figure 5 in Gold*
+1928, *Incense of a New Church* 1921), all verified live via Wikimedia Commons.
+Sheeler/Crawford/O'Keeffe remain historical-context-only per this file's own
+rights boundaries. This file is kept for its research/reasoning detail; do not
+re-promote.
+
 # Precisionism — Curriculum Candidate
 
 ## Why it belongs in the Academy
