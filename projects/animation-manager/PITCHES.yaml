@@ -1,4 +1,4 @@
-updated: "2026-07-26T10:16:00-07:00"
+updated: "2026-07-26T17:38:00-07:00"
 
 pitches:
   - id: bioluminescent-tide
@@ -208,7 +208,7 @@ pitches:
 
   - id: koi-memory-pond
     title: Koi Memory Pond
-    status: pitched
+    status: candidate
     priority: 8
     surprise: Koi remember paths across sessions locally and slowly develop favorite routes, crossings, and resting places.
     passive_loop: Fish swim under transparent water, disturb floating leaves, and occasionally follow one another.
@@ -220,6 +220,20 @@ pitches:
     acceptance:
       - local memory is optional and bounded
       - fish remain convincing without detailed artwork assets
+    builds:
+      - version: 1
+        pull_request: silasfelinus/kind_robots#1028
+        commit: 5c40bf0
+        component: components/screenfx/koi-memory-pond.vue
+        status: candidate
+        verification:
+          - TypeScript
+          - Contract verifiers
+          - facet-catalog
+          - verify
+          - GitGuardian Security Checks
+        deferred:
+          - sandbox-access-gap (see SPEC.md "Sandbox verification gap")
 
   - id: impossible-terrarium
     title: Impossible Terrarium
