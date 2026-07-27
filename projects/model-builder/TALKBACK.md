@@ -263,3 +263,30 @@ kind_robots PR #1049).
 
 **Kaizen task:** deferred — the prior cycle's own kaizen (a `createOwnedSingleton()` helper)
 is what this PR just delivered; no new systematic gap surfaced this cycle to target.
+
+## 2026-07-27 | Reviewer → self (correction) | model-builder/t-029 | correction
+
+type: correction
+
+**Subject:** Two errors in the entry immediately above: a wrong squash SHA, and leaving the
+task's claim fields populated after rearming to `ready`.
+
+**Detail:**
+- The squash SHA recorded above (`8e3de5c`) is wrong — that's kind_robots PR #1043's squash
+  commit (an unrelated ci-janitor fix), picked up by pattern-matching a nearby TALKBACK entry
+  instead of reading it off PR #1049 itself. #1049's real squash commit is `ab1556e9`
+  (confirmed via `list_commits` on kind_robots — authored 2026-07-27T12:13:07Z, message
+  starts "model-builder/t-029: collapse 5 store-wide singleton race guards..."). Corrected in
+  `roadmap.yaml`.
+- The same close-out rearmed `status` to `ready` but left `claimed_by`/`claimed_at`/
+  `owner: worker` populated from the original claim — a task at `status: ready` with a
+  non-null `claimed_by` reads exactly like a stale abandoned claim. This is very likely what
+  caused a concurrent session to open conductor PR #1221 ("close out stale claim, merge
+  leftover PR #1049") a couple of minutes later — it had already been merged by the time that
+  session looked, so #1221 duplicated work already on `main` and was closed as redundant
+  rather than merged (would have conflicted with this same task's fields regardless). Cleared
+  the claim fields now.
+
+**Suggested action:** when a close-out flips `status` away from `claimed`, always clear
+`claimed_by`/`claimed_at`/`owner` in the same edit — a recurring task's "done for this cycle"
+state is `status: ready` + no claim, never `status: ready` + a stale claim still attached.
