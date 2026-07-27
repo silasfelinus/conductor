@@ -502,15 +502,17 @@ tasks:
   - id: t-010
     milestone: m6
     title: Academy continuous improvement pass
-    status: claimed
+    status: review
     recurring: true
     passes: 0
     stakes: reversible
-    updated: '2026-07-27T13:33:36Z'
+    updated: '2026-07-27T13:38:00Z'
     note: |-
       Standing never-idle task (re-arms to ready after every completion, per the recurring-task rule). Each cycle pick ONE: (a) front-end style/polish pass on Academy or art-styler surfaces, (b) roadmap upgrade — refine tasks, detail the next milestone, prune stale notes, (c) generate more art inspirations or style preview thumbnails, (d) expand the curriculum with a new movement/artist entry (respecting PUBLIC-DOMAIN-POLICY.md). Note which option ran in the PR. This task never reaches done and does not count toward milestone progress. See `run_log` for cycle history — do not re-accumulate RAN entries here.
 
       RAN 2026-07-27T13:00:00Z (this cycle): see run_log — lane 2 (roadmap accuracy) cycle. Corrected t-019 and t-035, both stale since conductor PR #1215 (lane 3, earlier same day) fixed the distribute_images.py prune bug and proved delivery end-to-end for one style (greek-vase-painting) without updating either downstream task. Conductor-docs-only; no kind_robots PR needed. Rearmed to ready.
+
+      Lane 3 inspiration-assets cycle: added a controlled Garden Gate four-movement teaching sequence on worker/ai-art-academy-t-010-lane3-31c9.
     continuous_improvement:
       last_lane: 2  # 1=front-end polish, 2=roadmap accuracy, 3=inspiration assets, 4=curriculum depth
       next_lane: 3
