@@ -1,0 +1,9 @@
+version: 1
+project: coloring-book
+task: t-022
+operation: rearm
+owner: worker
+session: 2026-07-27T161358Z-coloring-book-t-022-b31
+updated: '2026-07-27T16:24:00Z'
+note: >-
+  Merged PR #1236 (squash 7cb305e8de588bf4c95510d766541fd74578057e): the read-only queue diagnostic now excludes semantic-gate timeout entries from the actionable next batch, reports them separately as blocked_pending, rejects invalid batch sizes, and has focused regression coverage. No ArtJobs were submitted, retried, or mutated. Timed-out entries must remain visible without being presented as safe work.
