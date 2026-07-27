@@ -1,8 +1,0 @@
-version: 1
-project: coloring-book
-task: t-022
-operation: rearm
-session: 20260727T144500Z-coloring-book-t022-queue-audit
-owner: worker
-updated: '2026-07-27T14:55:00Z'
-note: 'Merged PR #1230 (squash 1a563d252593b29d758a2a5965b223b57cccfb5a): added a read-only canonical queue diagnostic with bounded-batch, semantic-timeout, and duplicate-ArtJob reporting. Current queue is not retry-safe while timed-out jobs remain recorded; no duplicate generation was submitted. Lesson: a production retry lane should expose queue evidence as a deterministic read-only report before any resubmission -- timed-out ArtJob records are a stop signal, not permission to enqueue duplicates.'
