@@ -461,11 +461,11 @@ tasks:
   - id: t-010
     milestone: m6
     title: Academy continuous improvement pass
-    status: claimed
+    status: ready
     recurring: true
     passes: 0
     stakes: reversible
-    updated: '2026-07-27T06:08:24Z'
+    updated: '2026-07-27T06:30:00Z'
     note: |-
       Standing never-idle task (re-arms to ready after every completion, per the recurring-task rule). Each cycle pick ONE: (a) front-end style/polish pass on Academy or art-styler surfaces, (b) roadmap upgrade — refine tasks, detail the next milestone, prune stale notes, (c) generate more art inspirations or style preview thumbnails, (d) expand the curriculum with a new movement/artist entry (respecting PUBLIC-DOMAIN-POLICY.md). Note which option ran in the PR. This task never reaches done and does not count toward milestone progress. See `run_log` for cycle history.
 
@@ -482,15 +482,17 @@ tasks:
       Option (c), inspiration assets: added a controlled one-room/four-movements teaching sequence with reproducibility, rights, and representation safeguards.
 
       RAN 2026-07-27: option (c), inspiration assets. Conductor PR #1203 merged as 138a83a496dee83151923986cb218ab356932a69, adding the controlled One Room, Four Movements teaching sequence with movement-level prompts, comparison exercises, reproducibility metadata, rights boundaries, identity preservation, and representation-aware review. Worker PR CI, Security Audit, and Process task events passed; no reviews or unresolved threads. Next preferred lane is curriculum depth (lane 4).
+
+      RAN 2026-07-27 (claude-scheduled-20260727T060818Z-aa-t010-lane4): option (d), curriculum depth. The only unpromoted candidate left in `docs/curriculum-candidates/` is `harlem-renaissance.md` — its own text already rules out all four discussed artists (Douglas, Fuller, Motley, Savage) as generation-style/display sources since all died 1958 or later, well past PUBLIC-DOMAIN-POLICY.md's 1956 cutoff. Rather than skip the file, researched a distinct rights-clear option: Winold Reiss (d. 1953), commissioned in 1924 by Survey Graphic to portray Harlem Renaissance figures for its March 1925 "Harlem: Mecca of the New Negro" issue and Alain Locke's "The New Negro" (1925). Reiss clears both PUBLIC-DOMAIN-POLICY.md §1.3 prongs (died 1953; works published 1925). Verified four of his portraits are CC0 on the Smithsonian's own object pages via `WebSearch` (direct `WebFetch` to si.edu/npg.si.edu 403'd this session, same museum-egress limitation the policy doc's own verification log records): W.E.B. Du Bois (NPG.72.79), Roland Hayes (NPG.72.81), James Weldon Johnson (NPG.72.78), Countee Cullen (NPG.98.129.c) — cross-confirmed the Du Bois portrait's dual PD reasoning (1931 publication cutoff + 1953-death life+70) on its Wikimedia Commons file page. Also found two sibling Reiss portraits from the identical 1972 gift (Locke NPG.72.84, Hughes NPG.72.82) marked "Usage conditions apply / © Estate of Winold Reiss" despite an outwardly identical fact pattern — excluded both per PUBLIC-DOMAIN-POLICY.md §5's default-deny-under-ambiguity rule, used only the four confirmed-CC0 works. Did NOT promote the candidate into `curriculum-outline.md` this cycle: Reiss was not a Harlem Renaissance movement artist himself (a white, German-American illustrator commissioned to portray it), which is a materially different situation from every prior "one artist clears the cutoff" promotion (Precisionism §33, American Regionalism §24), and the candidate's own promotion checklist requires "a Black cultural-history reviewer checks the framing" before promotion — a call outside what this pass should make unilaterally. Documented the full research (with rights metadata per PUBLIC-DOMAIN-POLICY.md §3) in the candidate file's new "Research update" section, checked off the two rights-related checklist items, and left the reviewer item explicitly open with the reasoning. Filed ai-art-academy/t-043 (soft needs-human) so Silas can decide the path (historical-context-only display vs. hold for a movement-participant artist) before a future cycle promotes this candidate. Conductor-docs-only change; no kind_robots PR needed. Verified `audit_roadmaps.py`/`validate_roadmaps.py` clean after the new task. Next preferred lane is front-end polish (lane 1), per the 1->2->3->4 rotation. Rearmed to ready.
     continuous_improvement:
-      last_lane: 1  # 1=front-end polish, 2=roadmap accuracy, 3=inspiration assets, 4=curriculum depth
-      next_lane: 2
-      last_run: '2026-07-27T03:20:00Z'
-      last_pr: 'https://github.com/silasfelinus/kind_robots/pull/1037'
+      last_lane: 4  # 1=front-end polish, 2=roadmap accuracy, 3=inspiration assets, 4=curriculum depth
+      next_lane: 1
+      last_run: '2026-07-27T06:30:00Z'
+      last_pr: null  # conductor-docs-only cycle; no kind_robots PR this run
     run_log: projects/ai-art-academy/docs/continuous-improvement-run-log.md
-    claimed_by: claude-scheduled-20260727T060818Z-aa-t010-lane4
-    claimed_at: '2026-07-27T06:08:24Z'
-    owner: worker
+    claimed_by: null
+    claimed_at: null
+    owner: null
 
   - id: t-015
     milestone: m4
@@ -1372,5 +1374,51 @@ tasks:
       Academy Vue components, `art-styler.vue`, and `image-upload.vue` for
       similar "slice(0, K)" / fixed-batch-size hydration patterns paired with
       a UI that can show more than K items; fix or document any found.
+    claimed_by: null
+    claimed_at: null
+
+  - id: t-043
+    milestone: m6
+    title: 'FOR SILAS: decide how to use the rights-clear Winold Reiss portraits in the Harlem Renaissance candidate'
+    status: needs-human
+    soft_gate: true
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-27T06:30:00Z'
+    note: |-
+      FOR SILAS: what was found and where. This cycle's curriculum-depth research
+      (ai-art-academy/t-010, lane 4) found four public-domain, CC0-licensed
+      portraits that could source a Harlem Renaissance Academy lesson --
+      documented in `docs/curriculum-candidates/harlem-renaissance.md`'s new
+      "Research update" section: W.E.B. Du Bois, Roland Hayes, James Weldon
+      Johnson, and Countee Cullen, all painted in 1925 by Winold Reiss (d. 1953)
+      for Survey Graphic's "Harlem: Mecca of the New Negro" issue and Alain
+      Locke's "The New Negro" anthology, all confirmed CC0 on the Smithsonian
+      National Portrait Gallery's own object pages.
+
+      What it contains: none of the movement's own artists discussed in the
+      candidate (Aaron Douglas, Meta Warrick Fuller, Archibald Motley, Augusta
+      Savage) clear PUBLIC-DOMAIN-POLICY.md's 1956 death-date cutoff -- all four
+      died 1958 or later -- so none of their own work can ever be a display
+      example under current policy. Reiss clears the policy technically (died
+      1953, works published 1925), but he was not a Harlem Renaissance artist --
+      he was a white, German-American illustrator commissioned to portray the
+      movement's Black cultural figures for a magazine audience. The candidate's
+      own promotion checklist requires "a Black cultural-history reviewer checks
+      the framing" before promotion, which is a judgment call outside what an
+      autonomous agent pass should decide unilaterally.
+
+      TO APPROVE: read `docs/curriculum-candidates/harlem-renaissance.md`'s
+      "Research update" section and choose one of: (a) approve using the four
+      Reiss works as historical-context display images only, with the
+      generation-style preset staying artist-anchor-free as already drafted, (b)
+      hold the candidate at historical-curriculum-only with no display images
+      until a rights-clear work by an actual movement participant is found, or
+      (c) something else. Set `status: done` here with a note recording the
+      decision once made.
+
+      What unblocks when he does: a future ai-art-academy/t-010 curriculum-depth
+      cycle promotes the candidate into `curriculum-outline.md` (or documents
+      why it stays historical-only) following whichever path Silas picks.
     claimed_by: null
     claimed_at: null
