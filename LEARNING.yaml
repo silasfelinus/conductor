@@ -4324,3 +4324,18 @@ records:
   lesson: 'Append-only coordination ledgers still need compare-and-swap behavior: compute each append
     from a freshly fetched main tip and retry the entire transform after non-fast-forward rejection so
     concurrent entries are preserved rather than overwritten.'
+- date: '2026-07-27'
+  project: conductor
+  task: t-086
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  lesson: 'A stale task-event that carries a learning/note payload used to vanish silently when process_task_events.py''s
+    stale_reason() dropped it -- the only trace was a terse STALE skip line easy to miss in a run''s stdout.
+    Added a visible WARNING to stderr specifically when the dropped event has non-empty learning/note,
+    and closed the other half of the gap in AGENTS.md: before hand-writing a task''s status: done transition,
+    check task-events/ for an already-queued completion event for the same project/task first, rather
+    than racing it blind.
+
+    '
