@@ -4482,3 +4482,19 @@ records:
     predates the UI work, diff the API response/query-param shape against what the
     component actually renders/sends before assuming new backend scope is needed --
     the gap is often pure wiring, which keeps the diff small and the pass clean.'
+- date: '2026-07-27'
+  project: ai-art-academy
+  task: t-046
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'A rearm-to-ready transition is not automatically symmetric with every
+    other ready transition in the same processor -- the rearm branch of
+    compute_transition_ops had cleared owner but not claimed_by/claimed_at,
+    letting stale claim metadata survive an entire cycle. When adding a new
+    status-transition branch to a shared state-machine function, diff its field
+    clears against the other branches for the same target status rather than
+    assuming symmetry; the regression test should assert clearance, not just
+    the status value.'

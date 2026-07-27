@@ -1519,11 +1519,11 @@ tasks:
   - id: t-046
     milestone: m6
     title: 'scripts/: task-events rearm path should clear claimed_by/claimed_at (or migrate note content to run_log) on write'
-    status: review
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
-    updated: '2026-07-27T16:15:00Z'
+    updated: '2026-07-27T16:22:00Z'
     note: >-
       Kaizen from t-010's 2026-07-27T15:00:00Z lane-1 cycle (kind_robots PR
       #1052). The `rearm ai-art-academy t-010 after PR 1225` task-event
@@ -1555,6 +1555,7 @@ tasks:
       (`python -m unittest discover -s tests`) 45/45 passing, including the new
       test; `py_compile` clean on both changed files (this sandbox has no
       flake8/black/ruff installed, matching the "Lint Python scripts" CI job's
-      actual syntax-only check per .github/workflows/ci.yml).
+      actual syntax-only check per .github/workflows/ci.yml). Conductor PR #1235
+      merged squash fc2d4e8f, all 23 CI checks green.
     claimed_by: claude-conductor-agentrun-20260727T1610Z-t046
     claimed_at: '2026-07-27T16:09:10Z'
