@@ -327,8 +327,7 @@ tasks:
   - id: t-009
     milestone: m6
     title: "Add Android-first crew route view with Linux/iOS-safe architecture"
-    status: review
-    owner: worker
+    status: done
     passes: 0
     stakes: reversible
     depends_on: t-008
@@ -339,14 +338,16 @@ tasks:
       Claiming the highest-priority eligible ready task after the Academy collision and the shared render-backlog production task were skipped.
 
       Implemented an Android-first Flutter field client with today route, next stop, route cards, completion notes, navigation handoff, dummy data, and abstracted API/storage/navigation services.
+
+      MERGED 2026-07-27: PR #1193 squash-merged as 53da495e. Added an Android-first Flutter crew client with today-route progress, next-stop focus, pet and yard notes, crew notes, visit completion, explicit installed-navigation handoff, dummy-data startup, and injectable API/storage/navigation boundaries for Linux and iOS reuse.
     claimed_by: claude-scheduled-20260727T022230Z-hscms-t009
     claimed_at: '2026-07-27T02:22:30Z'
-    updated: '2026-07-27T02:28:00Z'
+    updated: '2026-07-27T02:31:30Z'
 
   - id: t-010
     milestone: m6
     title: "Review real-address privacy, map costs, and launch gates"
-    status: waiting
+    status: ready
     owner: null
     passes: 0
     stakes: sensitive
