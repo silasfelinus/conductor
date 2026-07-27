@@ -4331,6 +4331,7 @@ records:
   stakes: reversible
   passes: 0
   outcome: done
+  failure_category: null
   lesson: 'A stale task-event that carries a learning/note payload used to vanish silently when process_task_events.py''s
     stale_reason() dropped it -- the only trace was a terse STALE skip line easy to miss in a run''s stdout.
     Added a visible WARNING to stderr specifically when the dropped event has non-empty learning/note,
