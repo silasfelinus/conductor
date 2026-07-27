@@ -1,4 +1,4 @@
-updated: "2026-07-27T10:14:33+00:00"
+updated: "2026-07-27T19:21:25+00:00"
 
 pitches:
   - id: bioluminescent-tide
@@ -469,3 +469,58 @@ pitches:
       - gold seams remain readable on light and dark themes without obscuring page content
       - reduced-motion mode creates no new fractures
       - pointer and click interactions never block underlying page input
+
+  - id: tapestry-loom
+    title: Tapestry Loom
+    status: pitched
+    priority: 18
+    surprise: >
+      A hand loom's shuttle glides steadily back and forth across taut warp threads, and with
+      every pass a fresh row of colored weft thread appears, slowly building a woven motif.
+      Once the tapestry completes, it unravels from the top down -- threads visibly retracting
+      and coiling onto a small bobbin -- leaving bare warp for the loom to begin weaving an
+      entirely new pattern in a different palette.
+    passive_loop: >
+      Fixed vertical warp threads form the background. A shuttle icon interpolates left-right
+      along the current row, depositing a weft segment that alternates over/under adjacent
+      warp threads to fake woven texture. Every few passes advances a deterministic pattern
+      state machine (stripes, then chevron, then diamond) rather than random color choice.
+      Once the full row count for the current motif is reached, the tapestry holds briefly,
+      then unravels top-down row by row with an eased retraction toward a bobbin icon,
+      returning to bare warp before the next motif and palette begin.
+    optional_interaction: >
+      Hovering the pointer near the loom slows the shuttle, as though the visitor is watching
+      closely, and highlights the full run of whichever row's thread sits under the cursor
+      across the tapestry. A click plucks the nearest weft thread, sending a brief visual
+      twang ripple across its row without triggering unraveling or blocking the underlying
+      page click.
+    technique: >
+      Canvas 2D. Warp is a static set of vertical line segments computed once per resize. Weft
+      rows are horizontal path segments with a per-column vertical offset alternated by parity
+      to simulate over/under weave, drawn into a single offscreen buffer that grows by one row
+      per pass rather than redrawing history every frame. The shuttle is one small sprite
+      eased along x per row. Unraveling reverses the row list with a short retraction tween
+      per row instead of an instant clear.
+    reduced_motion: >
+      A single static completed tapestry in one motif and palette, no shuttle motion, no
+      unraveling, and no pointer slow-down or highlight response -- only a very slow color-
+      temperature drift across the existing threads.
+    performance_risk: >
+      Warp/weft counts scale with viewport width and could grow unbounded on wide displays.
+      Cap warp column count and rows-per-motif to fixed maximums regardless of viewport size,
+      and draw into a single reusable offscreen buffer rather than allocating a new canvas
+      layer per row.
+    novelty: >
+      The core loop is additive weaving followed by a full unravel-and-rebuild in a new
+      pattern, driven by a deterministic motif state machine rather than physics or growth.
+      This is distinct from clockwork-greenhouse's organic growth state machine (no weaving,
+      no thread), marble-run-contraption's fixed physical track (no fabric, no accumulation-
+      then-reset lifecycle), and kintsugi-weather's fracture-and-heal cycle (repair of
+      existing damage, not progressive construction and full unraveling of a pattern). No
+      existing pitch uses a textile/loom motif or an additive-then-fully-reset weave cycle.
+    acceptance:
+      - a complete weave-to-unravel-to-new-motif cycle finishes within forty-five seconds
+      - row count and motif progression are state-driven and deterministic, not randomized per frame
+      - reduced-motion mode shows one static completed tapestry with no shuttle or unraveling motion
+      - pointer hover slow-down, row highlight, and click-pluck ripple never block underlying page input
+      - thread palette remains readable on both light and dark themes
