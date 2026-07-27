@@ -1411,23 +1411,13 @@ tasks:
   - id: t-044
     milestone: m2
     title: 'kind_robots: fix Kontext LoRA loading -- every lora_name naming convention rejected by ComfyUI as not-in-list'
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
-    updated: '2026-07-27T07:00:00Z'
-    note: >
-      Filed 2026-07-27 from t-004's live-render A/B pass (docs/style-remix-configs.yaml).
-      t-037 (merged 2026-07-26) wired a LoraLoaderModelOnly node into
-      buildKontextWorkflow but explicitly flagged it as not yet verified
-      against a real render. This session ran that verification for real via
-      POST /api/art/enqueue {engine:"kontext", loraName, loraStrength} and it
-      fails 100% of the time: ComfyUI rejects every lora_name value with
-      `{'61': {'errors': [{'type': 'value_not_in_list', ... 'details':
-      "lora_name: '<value>' not in (list of length 2096)" ...}]}}`. FOUR
-      independent naming conventions were tried and all four failed the same
-      way (see style-remix-configs.yaml's header comment for full detail and
-      ArtJob ids):
+    updated: '2026-07-27T07:35:00Z'
+    note: |-
+      Filed 2026-07-27 from t-004's live-render A/B pass (docs/style-remix-configs.yaml). t-037 (merged 2026-07-26) wired a LoraLoaderModelOnly node into buildKontextWorkflow but explicitly flagged it as not yet verified against a real render. This session ran that verification for real via POST /api/art/enqueue {engine:"kontext", loraName, loraStrength} and it fails 100% of the time: ComfyUI rejects every lora_name value with `{'61': {'errors': [{'type': 'value_not_in_list', ... 'details': "lora_name: '<value>' not in (list of length 2096)" ...}]}}`. FOUR independent naming conventions were tried and all four failed the same way (see style-remix-configs.yaml's header comment for full detail and ArtJob ids):
         1. the style-lora-registry.md HF repo name (e.g.
            "UmeAiRT/FLUX.1-dev-LoRA-Impressionism") -- ArtJob 2603
         2. the Resource table's `localPath` under Kontext/ (e.g.
@@ -1439,32 +1429,12 @@ tasks:
            relay's Windows client id "Silas-PC-prompt-...")
         4. the bare filename with no folder prefix ("impressionist.safetensors")
            -- ArtJob 2620
-      Since attempt #3 is the literal string production's Remix Studio
-      already sends for impressionism/watercolor/oil-painting/illuminated-
-      manuscript, this strongly suggests LoRA-mode remixes are ALREADY
-      silently broken in production for every BUILTIN_STYLES entry today, not
-      just this task's registry-derived candidates -- worth checking
-      independent of the Academy curriculum scope. GET /api/resources
-      confirms 47 Kontext-native LoRA files ARE cataloged in the DB, so the
-      files plausibly exist on the relay's disk; the mismatch is between
-      whatever string the KR database stores as `localPath` and whatever
-      string ComfyUI's local `models/loras` folder scan actually returns for
-      the LoraLoaderModelOnly node's dropdown. This needs someone with direct
-      access to the relay (or its ComfyUI /object_info, reachable only from
-      Silas's own Tailscale-connected browser per stores/serverStore.ts's
-      fetchComfyObjectInfo -- not reachable from a conductor sandbox) to read
-      the actual valid `lora_name` list and compare it against the DB's
-      localPath values, then either fix the DB records to match reality or
-      add a normalization step in buildKontextWorkflow /
-      simpleCheckpointWorkflow.ts (also affected, same lora_name pass-through
-      pattern) that maps a Resource's localPath to whatever ComfyUI expects.
-      Unblocks re-running t-004's A/B for impressionism, illuminated-
-      manuscript, watercolor, oil-painting, and pop-art (loraPath/loraTrigger/
-      loraWeight already recorded in style-remix-configs.yaml, ready to
-      re-test the moment this is fixed) plus the other 5 styles whose LoRA
-      candidates need downloading to the relay first (see the same file's
-      per-style `deployment_gap` notes).
-    claimed_at: null
+      Since attempt #3 is the literal string production's Remix Studio already sends for impressionism/watercolor/oil-painting/illuminated- manuscript, this strongly suggests LoRA-mode remixes are ALREADY silently broken in production for every BUILTIN_STYLES entry today, not just this task's registry-derived candidates -- worth checking independent of the Academy curriculum scope. GET /api/resources confirms 47 Kontext-native LoRA files ARE cataloged in the DB, so the files plausibly exist on the relay's disk; the mismatch is between whatever string the KR database stores as `localPath` and whatever string ComfyUI's local `models/loras` folder scan actually returns for the LoraLoaderModelOnly node's dropdown. This needs someone with direct access to the relay (or its ComfyUI /object_info, reachable only from Silas's own Tailscale-connected browser per stores/serverStore.ts's fetchComfyObjectInfo -- not reachable from a conductor sandbox) to read the actual valid `lora_name` list and compare it against the DB's localPath values, then either fix the DB records to match reality or add a normalization step in buildKontextWorkflow / simpleCheckpointWorkflow.ts (also affected, same lora_name pass-through pattern) that maps a Resource's localPath to whatever ComfyUI expects. Unblocks re-running t-004's A/B for impressionism, illuminated- manuscript, watercolor, oil-painting, and pop-art (loraPath/loraTrigger/ loraWeight already recorded in style-remix-configs.yaml, ready to re-test the moment this is fixed) plus the other 5 styles whose LoRA candidates need downloading to the relay first (see the same file's per-style `deployment_gap` notes).
+
+
+      Connector Worker claim for the highest-priority eligible ready task after the concurrent t-010 cycle completed.
+    claimed_at: '2026-07-27T07:35:00Z'
+    claimed_by: 2026-07-27T07:35:00Z-worker-ai-art-academy-t044-a31d
 
   - id: t-045
     milestone: m2
