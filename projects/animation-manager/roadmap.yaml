@@ -216,7 +216,7 @@ tasks:
   - id: t-007
     milestone: m5
     title: "Build or polish one animation candidate from reaction evidence"
-    status: ready
+    status: claimed
     passes: 0
     stakes: reversible
     recurring: true
@@ -249,9 +249,10 @@ tasks:
       MERGED 2026-07-27: kind_robots PR #1028 passed Contract Tests, TypeScript Type Check, Facet Catalog Contract, and API Client Follow-ups Contract, then squash-merged as 5c40bf0e69f338bfa61585b7554defe1625e67d8. Conductor PR #1186 passed Worker PR CI, Security Audit, Roadmap Audit, and Process Task Events, then squash-merged as 6b27fa566209540cb0da16f3cfdd587aa008bdaa. No review comments or unresolved threads. Rearming this recurring daily task.
 
       NOTE 2026-07-27 (reviewer session rebasing conductor PR #1187 onto main): #1186's merge above updated this roadmap file but left PITCHES.yaml's koi-memory-pond entry at status: pitched with no builds: record. Applied #1187's PITCHES.yaml change here (status: candidate + builds: record referencing kind_robots#1028/5c40bf0), same as every prior candidate. Also clearing claimed_by/claimed_at to null to match the rearmed-to-ready convention (they were left stale pointing at the now-finished build session).
-    updated: '2026-07-27T00:40:00Z'
-    claimed_by: null
-    claimed_at: null
+    updated: '2026-07-27T22:11:07Z'
+    claimed_by: claude-conductor-burst-20260727T2210Z-am-t007
+    claimed_at: '2026-07-27T22:11:07Z'
+    owner: worker
 
   - id: t-008
     milestone: m3
