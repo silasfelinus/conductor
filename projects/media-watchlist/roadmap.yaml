@@ -302,10 +302,11 @@ tasks:
 - id: t-012
   milestone: m3
   title: Wire the Month and Season filters from BROWSE-UX.md §2 into watchlist-browse.vue
-  status: ready
-  owner: null
+  status: claimed
+  owner: worker
   passes: 0
   stakes: reversible
   note: 'Kaizen from t-006 (kind_robots PR #1051, 2026-07-27). That cycle wired the Year pill selector and two Stats-view tiles (comics read, TV seasons) into watchlist-browse.vue -- both already computed/accepted by the API, just not reachable from the UI. The same gap exists for the two remaining BROWSE-UX.md §2 filters: Month (Jan-Dec multi-select) and Season (TV only, number range or "any"). server/api/media-entries/index.get.ts already accepts and validates both (`month` as a comma-separated int list, `season` as a single int) -- see the `months`/`season` handling already in that route -- so this is again pure front-end wiring, not new backend scope. Thread both through the same pattern activeYear used: a ref, into the loadEntries() query, and into exportCsv()''s params (export.get.ts does NOT yet accept month/season either -- add that alongside the UI, mirroring how year was added there in t-006). Season only makes sense when the TV type chip is active or no type filter is set; consider gating its visibility on that rather than always showing it.'
-  claimed_by: null
-  claimed_at: null
+  claimed_by: burst-20260727T181522Z-mw-t012
+  claimed_at: '2026-07-27T18:15:22Z'
+  updated: '2026-07-27T18:15:22Z'
