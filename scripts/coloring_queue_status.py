@@ -40,7 +40,9 @@ def summarize_queue(data: dict[str, Any], book_slug: str, batch_size: int | None
 
     configured_batch_size = data.get("batch_policy", {}).get("worker_pass_size", 18)
     effective_batch_size = batch_size or int(configured_batch_size)
-    next_batch = pending[:effective_batch_size]
+    if effective_batch_size < 1:
+        raise ValueError("batch size must be at least 1")
+    next_batch = clean_pending[:effective_batch_size]
 
     job_ids: list[int] = []
     duplicate_job_ids: list[int] = []
@@ -53,6 +55,15 @@ def summarize_queue(data: dict[str, Any], book_slug: str, batch_size: int | None
                 duplicate_job_ids.append(job_id)
             job_ids.append(job_id)
 
+    def entry_summary(entry: dict[str, Any]) -> dict[str, Any]:
+        return {
+            "slot": entry.get("slot"),
+            "id": entry.get("id"),
+            "status": entry.get("status"),
+            "semantic_gate_error": entry.get("semantic_gate_error"),
+            "semantic_gate_error_at": entry.get("semantic_gate_error_at"),
+        }
+
     return {
         "book": book_slug,
         "total_entries": len(normalized),
@@ -60,16 +71,8 @@ def summarize_queue(data: dict[str, Any], book_slug: str, batch_size: int | None
         "pending": len(pending),
         "pending_with_semantic_gate_error": len(errored),
         "pending_without_semantic_gate_error": len(clean_pending),
-        "next_batch": [
-            {
-                "slot": entry.get("slot"),
-                "id": entry.get("id"),
-                "status": entry.get("status"),
-                "semantic_gate_error": entry.get("semantic_gate_error"),
-                "semantic_gate_error_at": entry.get("semantic_gate_error_at"),
-            }
-            for entry in next_batch
-        ],
+        "next_batch": [entry_summary(entry) for entry in next_batch],
+        "blocked_pending": [entry_summary(entry) for entry in errored],
         "duplicate_semantic_gate_job_ids": duplicate_job_ids,
         "retry_safe": len(errored) == 0 and len(duplicate_job_ids) == 0,
     }
