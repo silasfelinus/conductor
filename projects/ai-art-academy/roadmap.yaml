@@ -448,11 +448,11 @@ tasks:
   - id: t-010
     milestone: m6
     title: Academy continuous improvement pass
-    status: claimed
+    status: ready
     recurring: true
     passes: 0
     stakes: reversible
-    updated: '2026-07-27T03:06:10Z'
+    updated: '2026-07-27T03:25:00Z'
     owner: worker
     note: |-
       Standing never-idle task (re-arms to ready after every completion, per the recurring-task rule). Each cycle pick ONE: (a) front-end style/polish pass on Academy or art-styler surfaces, (b) roadmap upgrade — refine tasks, detail the next milestone, prune stale notes, (c) generate more art inspirations or style preview thumbnails, (d) expand the curriculum with a new movement/artist entry (respecting PUBLIC-DOMAIN-POLICY.md). Note which option ran in the PR. This task never reaches done and does not count toward milestone progress. See `run_log` for cycle history.
@@ -460,11 +460,13 @@ tasks:
       RAN 2026-07-26 (claude-scheduled-20260726T230357Z-aa-t010-lane2): option (b), roadmap accuracy. All 4 tasks under milestone m3 (t-005, t-006, t-024, t-033) are `status: done` — flipped m3 itself from `in-progress` to `done` in the milestones block, which had gone stale. Condensed t-035's note (5 stacked recheck paragraphs from 2026-07-20/07-21 about the home-relay outage) down to one current-state block, preserving the load-bearing "don't trust an old job id's cached status" heuristic and the standing recheck instruction, same treatment t-004/t-009 already got in the 2026-07-26T15:06Z lane-2 cycle. Ran `audit_roadmaps.py` (0 errors/warnings, 56 info — unchanged, pre-existing APPROVAL_WITHOUT_GATE infos on t-002/t-011 only) and `validate_roadmaps.py` (valid) as this lane's standard checks; skipped `check_pr_merged_drift.py` since it hits the GitHub API directly and this sandbox's local git/API access to it is 403'd the same way `select_role.py`'s was this session — cross-checked open PRs manually via GitHub MCP `list_pull_requests` instead (conductor: 0 open; kind_robots: 1 open, Silas's own draft #1025, unrelated to this project). Did not touch t-004/t-009's render-backlog blocker per their own standing instruction not to re-check without a changed signal. Next preferred lane is inspiration assets (lane 3), per the 1->2->3->4 rotation. Rearmed to ready.
 
       RAN 2026-07-27 (claude-scheduled-20260727T000607Z-aa-t010-lane4-precisionism): option (d), curriculum depth (lane 4, fallback from a blocked lane 3 — `recheck_render_queue.py` showed the backlog still growing: PENDING=144, oldestPending ~61.1h, up from 114/~57.1h at the last reading). Promoted Precisionism from `docs/curriculum-candidates/precisionism.md` into `curriculum-outline.md` as section 33 (v1.13). Only Charles Demuth (d. 1935) of the candidate's four named figures clears PUBLIC-DOMAIN-POLICY.md's 1956 death-date cutoff; Sheeler/Crawford/O'Keeffe (all died after 1956) are historical-context prose only, never a generation target or example-work source. Verified all 3 example works (My Egypt 1927, I Saw the Figure 5 in Gold 1928, Incense of a New Church 1921) live via Wikimedia Commons. Did every axis in one pass: skeleton entry, section prose, remix-quality note, public-domain re-check paragraph, style-lora-registry.md row, teaching-notes.md row 33, art-prompts.yaml style-preview entry, candidate file marked PROMOTED, checklist coverage table and rotation state updated (also backfilled the immediately-prior lane-2 cycle's missing rotation-state entry). Full detail in `run_log`. Verified: `yaml.safe_load` clean (33 skeleton entries, no dup slugs; 201 art-prompts.yaml requests, no dup ids); `audit_roadmaps.py`/`validate_roadmaps.py` clean. Conductor-docs-only change; no kind_robots PR needed. Next preferred lane is front-end polish (lane 1), per the 1->2->3->4 rotation. Rearmed to ready.
+
+      RAN 2026-07-27 (claude-scheduled-20260727T030609Z-aa-t010-lane1-resume): option (a), front-end polish. The prior claim on this task (claude-scheduled-20260727T001733Z-aa-t010-lane1, claimed_at 00:17:33Z) sat past CLAIM_TTL_MINUTES with no PR/branch to show for it — reclaimed via claim_task.py rather than treated as active work. Dispatched an Explore agent over all 5 Academy components, academyStore.ts, academyStyles.ts, and art-styler.vue/image-upload.vue with the full exclusion list of previously-fixed bug classes (PRs #275-#622, #1000, #1015, #1017, #1027). Found and independently verified a real bug in `art-styler.vue`: `galleryImages` shows up to 48 images in the Remix Studio "Gallery" source tab, but `hydrateGalleryThumbs()` only fetched thumbnail data for the first 24 missing images per call, and was only ever triggered on tab-open or a `gallerySearch` change — any user with more than 24 gallery images saw everything past #24 permanently stuck on the placeholder icon (still selectable, just no thumbnail; the only accidental workaround was narrowing the list via search). Fixed by making `hydrateGalleryThumbs()` recurse after each batch to drain the rest, adding a `failedGalleryThumbIds` Set so a permanently-unfetchable image (404/network error/no thumbnail or imagePath in the response) can't keep the recursion running forever. Verified: `npx eslint` clean, `npm run test` (`vue-tsc --noEmit`) exit 0, `npx prettier --write` (only reformatted the changed hunk). kind_robots PR #1037 (branch `claude/ai-art-academy-t010-gallery-thumbs-lane1`), all 5 CI checks green (TypeScript, Contract verifiers, facet-catalog, verify, GitGuardian), no review comments — merged squash `a9ba675`. Next preferred lane is roadmap accuracy (lane 2), per the 1->2->3->4 rotation. Rearmed to ready.
     continuous_improvement:
-      last_lane: 4  # 1=front-end polish, 2=roadmap accuracy, 3=inspiration assets, 4=curriculum depth
-      next_lane: 1
-      last_run: '2026-07-27T00:12:28Z'
-      last_pr: null
+      last_lane: 1  # 1=front-end polish, 2=roadmap accuracy, 3=inspiration assets, 4=curriculum depth
+      next_lane: 2
+      last_run: '2026-07-27T03:20:00Z'
+      last_pr: 'https://github.com/silasfelinus/kind_robots/pull/1037'
     run_log: projects/ai-art-academy/docs/continuous-improvement-run-log.md
     claimed_by: claude-scheduled-20260727T030609Z-aa-t010-lane1-resume
     claimed_at: '2026-07-27T03:06:10Z'
