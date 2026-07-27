@@ -575,7 +575,7 @@ tasks:
   - id: t-029
     milestone: m6
     title: "Polish and upgrade Model Builder front-end surface"
-    status: ready
+    status: claimed
     recurring: true
     passes: 0
     stakes: reversible
@@ -608,9 +608,10 @@ tasks:
       PROGRESS 2026-07-27 (conductor scheduled agent run, claude-conductor-scheduled-20260727T0110Z-mb-t029): step (4) follow-on -- picked up the one lead the 2026-07-26 cycle's note left open: it had spotted the identical unconditional-clear race in `commitItem`'s `committingItemId` singleton (same shape as the already-fixed `generatingItemId`/`autoBuildingItemId`) but only logged it as a withheld duplicate rather than fixing it. Dispatched a general-purpose subagent to confirm the code was still unguarded (it was) and apply the fix, mirroring the exact ownership-check pattern and comment style of the `generatingItemId`/`autoBuildingItemId` fixes: `if (state.committingItemId === item.id) state.committingItemId = null` in `commitItem`'s `finally` block. Failure scenario: clicking "Commit" on row B while row A's commit request is still in flight (up to 60s) lets A's `finally` null out B's still-in-flight `committingItemId` the moment A resolves, silently dropping B's committing/disabled UI state and permitting a duplicate click. Verified independently (not just trusting the subagent's report): `npx eslint stores/modelBuilderStore.ts` shows only the 2 pre-existing `no-empty` errors at lines 203/210, confirmed present via `git stash` with and without this change; full-project `npm run test` (`vue-tsc --noEmit`) exit 0 after provisioning deps via `provision_kind_robots_deps.sh`. kind_robots PR #1029 (branch claude/confident-bardeen-chlog4) -- all 5 CI checks green (TypeScript, Contract verifiers, facet-catalog, verify, GitGuardian Security Checks), no review comments, merged squash `d007d08f`. Step (1) (dashboard-tab + tutorial .webp art) remains the sole outstanding original deliverable, still blocked on the external art-generation relay. Rearmed to `ready`.
 
       kind_robots PR #1029 merged as squash d007d08f after all required checks passed. Fixed the commitItem committingItemId ownership race so an earlier commit cannot clear a later row's in-flight UI guard. The generated dashboard/tutorial art remains the only outstanding original deliverable, so this recurring polish task returns to ready.
-    claimed_by: null
-    claimed_at: null
-    updated: '2026-07-27T01:24:00Z'
+    claimed_by: claude-conductor-agentrun-20260727T020530-mb-t029
+    claimed_at: '2026-07-27T02:05:31Z'
+    updated: '2026-07-27T02:05:31Z'
+    owner: worker
 
   - id: t-030
     milestone: m6
