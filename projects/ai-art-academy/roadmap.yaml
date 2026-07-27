@@ -502,7 +502,7 @@ tasks:
   - id: t-010
     milestone: m6
     title: Academy continuous improvement pass
-    status: claimed
+    status: ready
     recurring: true
     passes: 0
     stakes: reversible
@@ -510,16 +510,16 @@ tasks:
     note: |-
       Standing never-idle task (re-arms to ready after every completion, per the recurring-task rule). Each cycle pick ONE: (a) front-end style/polish pass on Academy or art-styler surfaces, (b) roadmap upgrade — refine tasks, detail the next milestone, prune stale notes, (c) generate more art inspirations or style preview thumbnails, (d) expand the curriculum with a new movement/artist entry (respecting PUBLIC-DOMAIN-POLICY.md). Note which option ran in the PR. This task never reaches done and does not count toward milestone progress. See `run_log` for cycle history — do not re-accumulate RAN entries here.
 
-      RAN 2026-07-27T15:00:00Z (this cycle, conductor Agent run): option (a) front-end polish. Merged kind_robots PR #1052 (squash b118598c): verifyAcademyStarterManifest.ts never validated the `file` field, unlike its sibling verifyAcademyExamplesManifest.ts. See run_log for full detail. Next preferred lane is roadmap accuracy (lane 2). Rearmed to ready.
+      RAN 2026-07-27T15:07:01Z (this cycle, conductor Agent run): option (b) roadmap accuracy. continuous-improvement-checklist.md's own "Rotation state" prose had grown to ~1,290 lines (same anti-pattern t-039 already fixed once for this task's own note) and had drifted stale, plausibly feeding the next_lane-drift this cycle's predecessor flagged. Moved the history verbatim to a new continuous-improvement-lane-rotation-history.md and pointed the checklist at this task's own continuous_improvement field as the authoritative live pointer instead. See run_log for full detail. Next preferred lane is inspiration/preview assets (lane 3). Rearmed to ready.
     continuous_improvement:
-      last_lane: 1  # 1=front-end polish, 2=roadmap accuracy, 3=inspiration assets, 4=curriculum depth
-      next_lane: 2
-      last_run: '2026-07-27T15:00:00Z'
-      last_pr: 'kind_robots PR #1052 (squash b118598c)'
+      last_lane: 2  # 1=front-end polish, 2=roadmap accuracy, 3=inspiration assets, 4=curriculum depth
+      next_lane: 3
+      last_run: '2026-07-27T15:07:01Z'
+      last_pr: 'conductor docs-only (checklist rotation-state migration, no kind_robots PR)'
     run_log: projects/ai-art-academy/docs/continuous-improvement-run-log.md
-    owner: worker
-    claimed_by: 20260727T150701Z-agentrun-aa-t010
-    claimed_at: '2026-07-27T15:07:01Z'
+    owner: null
+    claimed_by: null
+    claimed_at: null
 
   - id: t-015
     milestone: m4
