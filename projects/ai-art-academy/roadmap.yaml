@@ -105,12 +105,12 @@ tasks:
   - id: t-004
     milestone: m2
     title: Evaluate prompt-only Kontext vs LoRA per style and record remix configs
-    status: ready
+    status: claimed
     soft_gate: true
-    owner: null
+    owner: worker
     passes: 0
     stakes: reversible
-    updated: '2026-07-26T15:08:00Z'
+    updated: '2026-07-27T05:14:00Z'
     depends_on: [t-003, t-037]
     note: >
       Depends on t-003 (done — LoRA registry) and t-037 (done 2026-07-26 — the
@@ -148,6 +148,8 @@ tasks:
       projects/ai-art-academy/TALKBACK.md — condensed here 2026-07-26 (t-010
       lane 2, roadmap-accuracy pass) since five stacked "FOR SILAS: UPDATE"
       paragraphs had made this task's live state hard to find at a glance.
+    claimed_by: 2026-07-27T05-15-00Z-aa-t004-abtest
+    claimed_at: '2026-07-27T05:14:00Z'
   - id: t-005
     milestone: m3
     title: Write the art-history curriculum outline (movements, styles, artists)
@@ -342,6 +344,8 @@ tasks:
       gone; teaching-strip entries removed this cycle) and the
       art-prompts.yaml `inspirations:` sub-entries (marked `status: done`,
       consistent with how the `requests:` block handles completion).
+    claimed_by: 2026-07-27T05:18:09Z-ai-art-academy-t009-render-recovered
+    claimed_at: '2026-07-27T05:18:10Z'
   - id: t-011
     milestone: m2
     title: Decide the commercial-licensing posture for FLUX-dev/Kontext LoRAs
@@ -457,11 +461,11 @@ tasks:
   - id: t-010
     milestone: m6
     title: Academy continuous improvement pass
-    status: ready
+    status: claimed
     recurring: true
     passes: 0
     stakes: reversible
-    updated: '2026-07-27T04:24:30Z'
+    updated: '2026-07-27T06:08:24Z'
     note: |-
       Standing never-idle task (re-arms to ready after every completion, per the recurring-task rule). Each cycle pick ONE: (a) front-end style/polish pass on Academy or art-styler surfaces, (b) roadmap upgrade — refine tasks, detail the next milestone, prune stale notes, (c) generate more art inspirations or style preview thumbnails, (d) expand the curriculum with a new movement/artist entry (respecting PUBLIC-DOMAIN-POLICY.md). Note which option ran in the PR. This task never reaches done and does not count toward milestone progress. See `run_log` for cycle history.
 
@@ -474,14 +478,19 @@ tasks:
       Lane 2 roadmap-accuracy audit documents stale claim metadata surviving recurring rearm transitions and specifies the processor invariant and regression coverage.
 
       RAN 2026-07-27 (2026-07-27T04:11:30Z-ai-art-academy-t010-lane2-7c31): option (b), roadmap accuracy. Conductor PR #1200 merged as 83ee9781a4d6b2ac5169d064ec86626a243f7d1a, adding a focused audit of stale claim/session metadata surviving recurring rearm transitions and specifying the expected cleanup invariant plus regression coverage. Worker PR CI, Security Audit, and Process task events passed on the final head; no reviews or unresolved threads. Next preferred lane is inspiration assets (lane 3).
+
+      Option (c), inspiration assets: added a controlled one-room/four-movements teaching sequence with reproducibility, rights, and representation safeguards.
+
+      RAN 2026-07-27: option (c), inspiration assets. Conductor PR #1203 merged as 138a83a496dee83151923986cb218ab356932a69, adding the controlled One Room, Four Movements teaching sequence with movement-level prompts, comparison exercises, reproducibility metadata, rights boundaries, identity preservation, and representation-aware review. Worker PR CI, Security Audit, and Process task events passed; no reviews or unresolved threads. Next preferred lane is curriculum depth (lane 4).
     continuous_improvement:
       last_lane: 1  # 1=front-end polish, 2=roadmap accuracy, 3=inspiration assets, 4=curriculum depth
       next_lane: 2
       last_run: '2026-07-27T03:20:00Z'
       last_pr: 'https://github.com/silasfelinus/kind_robots/pull/1037'
     run_log: projects/ai-art-academy/docs/continuous-improvement-run-log.md
-    claimed_by: 2026-07-27T04:11:30Z-ai-art-academy-t010-lane2-7c31
-    claimed_at: '2026-07-27T04:11:30Z'
+    claimed_by: claude-scheduled-20260727T060818Z-aa-t010-lane4
+    claimed_at: '2026-07-27T06:08:24Z'
+    owner: worker
 
   - id: t-015
     milestone: m4
