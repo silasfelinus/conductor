@@ -151,6 +151,30 @@ state** — a newer merge under the same or a related session id is the signal t
 the "resume" is actually stale, and the wrap-up should defer to `origin/main`'s
 version (via rebase, keeping the newer content) rather than push over it.
 
+**Concurrent PR-conflict-resolution races** are a third variant: two independent
+sessions both notice the *same* open PR has gone stale against `main` (e.g. because a
+third PR just merged and moved the base) and both fix it themselves, unaware of each
+other. Observed 2026-07-27: PR #1195 (ai-art-academy/t-010) and PR #1197
+(music-mentor/t-007 close-out) both touched `music-mentor/roadmap.yaml` and
+`LEARNING.yaml`. A Reviewer session merged #1197 first, then found #1195 conflicted
+and fixed it by hand (dropping #1195's now-redundant duplicate music-mentor bundle,
+keeping only its actual ai-art-academy scope) — but a *second*, independent session
+had, in the meantime, pushed its own conflict-resolution commit to the same PR #1195
+branch that took the opposite, wrong approach: it re-merged `main` but kept #1195's
+stale, less-complete version of the music-mentor content instead of deferring to
+what #1197 had already landed, which would have silently downgraded/reverted the
+already-merged canonical entry had it been pushed on its own. The Reviewer session's
+own second push caught this the normal way — `git push` (no force) failed with a
+plain non-fast-forward rejection because the remote branch had moved — which is
+exactly the safety net this depends on: **never force-push to resolve a PR conflict.**
+The correct recovery is the same shape as the two collisions above: `git fetch` the
+branch's actual current remote tip, `git merge` it in (not overwrite it), re-resolve
+favoring whichever side matches `origin/main`'s already-merged canonical content for
+any file both sides touched, verify the resulting diff against `origin/main` is
+exactly the intended scope (`git diff origin/main --stat` should show only files the
+PR is actually supposed to touch), and push normally. If a plain push is rejected,
+that rejection is doing its job — fetch-merge-reresolve, don't force past it.
+
 ### Task dependencies (pipelines)
 A task may declare `depends_on: <task-id>` (or a list). A task is only workable when every
 dependency is `status: done` AND, if the dependency is human-gated, `approved_by_human: true`.
