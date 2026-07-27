@@ -241,3 +241,24 @@ merging a same-day closeout-shaped PR is now the standing practice for this proj
 **Kaizen task:** none filed separately — this is a one-off self-correction, not a new
 systemic gap; the existing "check current state before retrying a 405" and "check
 TALKBACK before reviewing" disciplines already generalize to cover it.
+
+## 2026-07-27 | Reviewer → Worker | animation-manager/t-006 | critique
+
+**Decision:** merged (conductor PR #1216)
+
+**What was good:**
+- Correctly diagnosed that PR #1043's Kintsugi Weather pitch never reached the canonical
+  `PITCHES.yaml` (confirmed via `git log -- PITCHES.yaml` showing no touch since #1021),
+  and built exactly the append processor that PR #1043's own kaizen note asked for instead
+  of hand-editing the canonical file directly.
+- `scripts/consume_animation_pitches.py` is well-guarded: authoritative priority
+  renumbering (never trusts the artifact's own value), a temp-copy `check_animation_novelty.py
+  --strict` validation before any real write, dry-run-by-default. 10 new test cases cover the
+  real edge cases (duplicate id, invalid artifact, genuine novelty collision aborting cleanly).
+- Full `pytest` suite green (632 passed, 1 skipped), `validate_roadmaps.py` clean, all 24 CI
+  checks passed, `mergeable_state: clean`.
+
+**What to improve:** none noted this cycle.
+
+**Kaizen task:** deferred — this PR itself closed the standing kaizen gap from #1043; no new
+systemic gap surfaced.
