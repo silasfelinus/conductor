@@ -4420,3 +4420,17 @@ records:
     before building further work on top of it. The actionable half (LoRA loading itself) was
     correctly split into its own task (t-044) rather than blocking the task''s actual deliverable
     (a recorded config per style), which shipped complete at mode: prompt for all 18 styles.'
+- date: '2026-07-27'
+  project: ai-art-academy
+  task: t-042
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: A kaizen task filed as "grep for other instances of this bug shape" can close clean with no
+    code PR when the audit turns up nothing — closing done with the full per-file audit trail in the task
+    note (files checked, patterns searched, why each slice(/splice(/Promise.all( hit was or was not the
+    shape) is a complete deliverable on its own, matching the kind-robots/t-027 precedent (2026-07-16).
+    Recording exactly what was searched and why each candidate was ruled out is what makes the negative
+    result trustworthy enough that a future session does not need to re-run the same grep from scratch.
