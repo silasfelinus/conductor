@@ -54,7 +54,11 @@ REPO_ROOTS = {
 }
 
 ENTRY_START_PAT = re.compile(r"^(\s*)-\s")
-IMAGE_PATH_PAT = re.compile(r"^\s*image_path:\s*(.+?)\s*$")
+# image_path is the first key of each inspirations: list item, so it shares
+# its line with the "- " marker (`  - image_path: ...`) rather than sitting
+# on its own line the way consume_art_queue.py's art-generate.yaml entries
+# do (project/variant/target_repo precede image_path there) — match both.
+IMAGE_PATH_PAT = re.compile(r"^\s*(?:-\s*)?image_path:\s*(.+?)\s*$")
 STATUS_PAT = re.compile(r'^(\s*)status:\s*["\']?[A-Za-z0-9_-]+["\']?\s*(#.*)?$')
 
 
