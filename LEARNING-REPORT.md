@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-07-27T20:27:57Z
+Generated: 2026-07-27T20:33:13Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **387**
-- Outcomes: blocked: 12, cancelled: 1, done: 374
+- Closed tasks recorded: **388**
+- Outcomes: blocked: 12, cancelled: 1, done: 375
 - Success rate: **97%**
 - Average passes on successful tasks: **0.0**
 
@@ -15,7 +15,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 | Project | Closed | Success rate |
 |---|---|---|
-| ai-art-academy | 47 | 100% |
+| ai-art-academy | 48 | 100% |
 | alexa-integration | 2 | 100% |
 | animation-manager | 11 | 100% |
 | animation-studio | 2 | 50% |
@@ -57,7 +57,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 15 | 40% |
-| software | 372 | 99% |
+| software | 373 | 99% |
 
 ## Failure categories
 
@@ -77,6 +77,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-07-27 `ai-art-academy/t-047` — A kaizen task naming the exact fix (which consumers, which store method) still needs an investigation pass before editing -- checking whether the target genuinely never needs to survive a component's unmount (in-flight uploads, other readers) turned a plausible-looking one-liner into a verified-safe change across all 7 call sites in one pass.
 - 2026-07-27 `media-watchlist/t-012` — Third cycle in a row on watchlist-browse.vue finding server-computed/validated data (month/season filters this time) that the UI never surfaced -- worth a full BROWSE-UX.md vs. UI audit rather than one gap per cycle.
 - 2026-07-27 `digital-storefront/t-023` — A hard needs-human gate does not have to sit idle waiting for a scheduled Reviewer sweep -- Silas merged kind_robots PR #1056 directly within ~30 minutes of it opening. Treat a direct merge by the repo owner as the explicit clearance event itself (confirm via merged_by on the PR, not just merged: true, since an agent must never self-grant approved_by_human) rather than waiting for a separate roadmap-editing round from Silas -- close the loop (approved_by_human: true, status: done) in the same session once that signal is confirmed.
 - 2026-07-27 `ai-art-academy/t-046` — A rearm-to-ready transition is not automatically symmetric with every other ready transition in the same processor -- the rearm branch of compute_transition_ops had cleared owner but not claimed_by/claimed_at, letting stale claim metadata survive an entire cycle. When adding a new status-transition branch to a shared state-machine function, diff its field clears against the other branches for the same target status rather than assuming symmetry; the regression test should assert clearance, not just the status value.
@@ -86,7 +87,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-07-27 `ai-art-academy/t-042` — A kaizen task filed as "grep for other instances of this bug shape" can close clean with no code PR when the audit turns up nothing — closing done with the full per-file audit trail in the task note (files checked, patterns searched, why each slice(/splice(/Promise.all( hit was or was not the shape) is a complete deliverable on its own, matching the kind-robots/t-027 precedent (2026-07-16). Recording exactly what was searched and why each candidate was ruled out is what makes the negative result trustworthy enough that a future session does not need to re-run the same grep from scratch.
 - 2026-07-27 `ai-art-academy/t-004` — Verifying a "wired but unverified" code path (t-037's LoraLoaderModelOnly node) against a real render, rather than trusting that it works because the graph compiles, surfaced a genuine production bug affecting every BUILTIN_STYLES LoRA remix, not just this task's registry candidates — worth budgeting one real end-to-end render per newly-wired-but-unverified node before building further work on top of it. The actionable half (LoRA loading itself) was correctly split into its own task (t-044) rather than blocking the task's actual deliverable (a recorded config per style), which shipped complete at mode: prompt for all 18 styles.
 - 2026-07-27 `dream-cycle/t-018` — A "pull live data from the site API" task is safe to implement directly when the target endpoint is public and cheap to probe first (curl before coding) — confirming shape and reachability up front avoided over-designing the fetch helper. The reusable pattern: make the live source the default with a same-signature fallback (here, GENRE_FAMILIES) and never let the fetch failure mode (network, HTTP, bad JSON, empty body) propagate past a None return, so a scheduled sweep can never be blocked by an external API being down.
-- 2026-07-27 `ai-art-academy/t-009` — A "generate via the auto art pipeline" task can silently have no pipeline at all for its art-prompts.yaml section (the inspirations list had no consumer script, unlike the images/requests ones) — when a task assumes automation exists, verify a consumer actually reads that YAML key before trusting a "still pending" status as just a backlog problem. Separately, verify generated art landed on the real serving path (HEAD the public media URL), not just that the job returned success — the plain ArtJob response only writes a DB row plus a gitignored local checkout copy; only the direct-media payload fields make the relay write to production.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-07-27T20:27:57Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-07-27T20:33:13Z_
