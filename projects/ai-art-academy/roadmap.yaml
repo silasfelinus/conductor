@@ -1411,11 +1411,11 @@ tasks:
   - id: t-044
     milestone: m2
     title: 'kind_robots: fix Kontext LoRA loading -- every lora_name naming convention rejected by ComfyUI as not-in-list'
-    status: claimed
+    status: review
     owner: worker
     passes: 0
     stakes: reversible
-    updated: '2026-07-27T07:35:00Z'
+    updated: '2026-07-27T07:42:00Z'
     note: |-
       Filed 2026-07-27 from t-004's live-render A/B pass (docs/style-remix-configs.yaml). t-037 (merged 2026-07-26) wired a LoraLoaderModelOnly node into buildKontextWorkflow but explicitly flagged it as not yet verified against a real render. This session ran that verification for real via POST /api/art/enqueue {engine:"kontext", loraName, loraStrength} and it fails 100% of the time: ComfyUI rejects every lora_name value with `{'61': {'errors': [{'type': 'value_not_in_list', ... 'details': "lora_name: '<value>' not in (list of length 2096)" ...}]}}`. FOUR independent naming conventions were tried and all four failed the same way (see style-remix-configs.yaml's header comment for full detail and ArtJob ids):
         1. the style-lora-registry.md HF repo name (e.g.
@@ -1433,6 +1433,8 @@ tasks:
 
 
       Connector Worker claim for the highest-priority eligible ready task after the concurrent t-010 cycle completed.
+
+      Added an offline, default-deny comparator and focused tests so the relay's authoritative ComfyUI LoRA dropdown can be reconciled with Kind Robots Resource localPath values without further path guessing. The final runtime fix still requires one private relay capture.
     claimed_at: '2026-07-27T07:35:00Z'
     claimed_by: 2026-07-27T07:35:00Z-worker-ai-art-academy-t044-a31d
 
