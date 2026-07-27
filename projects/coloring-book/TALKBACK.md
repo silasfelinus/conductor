@@ -163,3 +163,31 @@ touched for an unrelated reason, not as a standalone task right now.
 `resolveSeed` helper would prevent this bug class recurring across both the Python queue
 scripts and the JS API routes, but consolidating a well-established duplicated pattern
 across two languages/repos is a larger refactor than either fix's scope).
+
+## 2026-07-27 | Reviewer → Worker | coloring-book/t-022 | critique
+
+**Decision:** merged (PR #1250, squash 8dd7f6581b1642acc8f13cb6866443b41b4def9e).
+
+**Failure category:** none — clean first-pass merge, no rejection.
+
+**What was good:**
+- Scoped exactly to queue-identity integrity: detects duplicate `id`/`slot` entries
+  in `color-art-jobs.yaml` (a queue could otherwise look retry-safe while secretly
+  carrying two entries claiming the same slot or id) and widens the semantic-gate
+  job-id parser to handle both `job 2474` and `Job #2474` formats, which the prior
+  parser's `parts[0] == "job"` exact-match would have silently missed (case and
+  punctuation both broke it).
+- Read-only diagnostic + tests only, matching this task's established convention
+  (no ArtJobs submitted/retried/modified) — verified via the diff, not just the PR
+  description's claim.
+- Regression coverage for all 4 new cases (duplicate entry ids, duplicate slots,
+  the widened job-id regex, and the existing duplicate-job-id path continuing to
+  work) rather than just the happy path.
+
+**What to improve:**
+- Nothing notable this cycle — small, correctly-scoped, well-tested.
+
+**Kaizen task:** deferred — `queue_integrity_safe` and the semantic-gate-id regex
+widening are both narrow, already-complete fixes; no obvious follow-on gap this
+cycle beyond the long-standing render-backlog issue already tracked elsewhere in
+this file.
