@@ -252,8 +252,13 @@ tasks:
 
       PROGRESS 2026-07-27 (~22:10-22:20 UTC, conductor scheduled burst-mode rotation, claude-conductor-burst-20260727T2210Z-am-t007): rotation landed on animation-manager this cycle (ai-art-academy's t-010 recurring pass had just run minutes earlier in the prior cycle, so picked this project's own ready task for variety). New Pacific calendar day since the last build (koi-memory-pond, merged 2026-07-27 ~00:20 UTC / 2026-07-26 ~17:20 PDT, i.e. Pacific day 07-26), so eligible. Built the next queued candidate, impossible-terrarium (priority 9 in PITCHES.yaml, next after koi-memory-pond). New components/screenfx/impossible-terrarium.vue -- a glass terrarium tiled into 3-4 rectangular gravity pockets (fixed grammar, no runtime randomness in the tiling), each with its own down/up/left/right gravity direction so at least three directions are legible at once per the pitch's acceptance criteria; small inhabitants traverse their pocket's floor axis and can cross a temporary door to a neighboring pocket, water/spore droplets fall along each pocket's own gravity axis. Pointer eases a small rotation offset on only the local pocket it's over (does not change the fixed grammar itself); click opens the nearest door for ~3.2s. Reduced motion freezes droplets and pointer-driven tilt, keeping only slow inhabitant drift, per the pitch's reduced-motion plan. Catalog entry added to stores/animationCatalog.ts (generationSafe: true, preferredSurface: fullscreen, icon kind-icon:cube -- no terrarium/jar/glass-box icon exists in assets/icons/, cube is the closest fit; flagged as a kaizen candidate below); kept to an 11-line targeted insertion, not a full-file reformat (animationCatalog.ts carries pre-existing prettier drift elsewhere, confirmed via git stash against origin/main before editing, same pattern noted on every prior t-007 entry). Verified with the full provisioned toolchain (scripts/provision_kind_robots_deps.sh): eslint clean on both changed files; prettier --check clean on the new component and on the inserted catalog block; full-project npm run test (vue-tsc --noEmit) exit 0; npm run test:animation-catalog (38 effects, unique ids, 51 screenfx components resolved, 42 narrator aliases checked) and npm run test:animation-component-attempts (38 slugs) both pass. Live browser smoke test and the Component attempt record (SPEC.md "Attempt records") are BOTH deferred -- same no-reachable-DATABASE_URL sandbox limitation as every prior t-007 entry. kind_robots PR #1069 (branch claude/dazzling-ptolemy-ca39ga) -- open, CI running. Set status: review; will flip to done once CI is green and the PR merges.
 
-      MERGED 2026-07-27: kind_robots PR #1069 shipped impossible-terrarium as squash 8e78fba after all five checks passed, and conductor PR #1264 recorded the implementation cycle as squash 70d4685. Rearm this recurring task to ready and clear the completed claim. PITCHES.yaml promotion remains in conflicted closeout PRs #1266/#1267 and should be salvaged separately rather than overwriting newer roadmap state.
-    updated: '2026-07-27T23:13:30Z'
+      MERGED 2026-07-27 (~23:01 UTC, conductor scheduled Agent session, claude/festive-heisenberg-jz9y92): kind_robots PR #1069 confirmed all 5 CI checks green (Contract verifiers, TypeScript, facet-catalog, verify, GitGuardian), no review comments, squash-merged (8e78fba). Conductor PR #1264 (this roadmap note) also merged (squash 70d4685). PITCHES.yaml's impossible-terrarium entry updated to status: candidate with a builds: record (pending the deferred live-smoke pass before promoting to shipped, same as every prior candidate). Rearming to ready per the recurring-task convention.
+
+      NOTE 2026-07-27T23:13:30Z (Silas task-event, processed on main as a concurrent rearm while this PR was still pending CI): the event's own note correctly deferred the PITCHES.yaml promotion to this PR/#1267 rather than overwriting it ("PITCHES.yaml promotion remains in conflicted closeout PRs #1266/#1267 and should be salvaged separately"). Resolved the resulting conflict by keeping this PR's version (already carries the PITCHES.yaml `builds:` record the event was waiting on) rather than the event's shorter placeholder note, per its own instruction. #1267 (the other closeout PR referenced) was closed as a duplicate/superseded by this PR.
+    updated: '2026-07-27T23:40:00Z'
+    claimed_by: null
+    claimed_at: null
+    owner: worker
 
   - id: t-008
     milestone: m3
@@ -466,3 +471,22 @@ tasks:
     updated: '2026-07-25T20:25:00Z'
     claimed_by: 2026-07-25T201035Z-animation-manager-t-014-7c4e
     claimed_at: '2026-07-25T20:10:35Z'
+
+  - id: t-015
+    milestone: m6
+    title: "Request a terrarium/jar/glass-box icon for the animation catalog"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Kaizen from t-007 (Worker, kind_robots PR #1069, 2026-07-27): impossible-terrarium's
+      catalog entry had to fall back to icon kind-icon:cube since assets/icons/ has no
+      terrarium/jar/glass-box icon, a loosely-fitting match. Flagged as worth a dedicated
+      icon-request pass rather than each future pitch picking the nearest existing icon
+      ad hoc. Generate (or otherwise source) a terrarium/jar/glass-box icon, add it to
+      assets/icons/, and swap impossible-terrarium's catalog entry (and any other pending
+      candidate that reuses cube/box as a placeholder) to reference it.
+    updated: '2026-07-27T23:01:00Z'
+    claimed_by: null
+    claimed_at: null
