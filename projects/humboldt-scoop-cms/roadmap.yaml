@@ -327,16 +327,19 @@ tasks:
   - id: t-009
     milestone: m6
     title: "Add Android-first crew route view with Linux/iOS-safe architecture"
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     depends_on: t-008
-    note: >
-      Create or extend a Flutter client for Android-first field use: today's route, map, next stop,
-      route card, visit completion, notes, and safe handoff to installed navigation. Keep provider,
-      storage, permissions, and deep-link services abstracted so Linux and iOS builds can consume
-      the same API and route-plan records. Use dummy data and no background customer tracking.
+    note: |-
+      Create or extend a Flutter client for Android-first field use: today's route, map, next stop, route card, visit completion, notes, and safe handoff to installed navigation. Keep provider, storage, permissions, and deep-link services abstracted so Linux and iOS builds can consume the same API and route-plan records. Use dummy data and no background customer tracking.
+
+
+      Claiming the highest-priority eligible ready task after the Academy collision and the shared render-backlog production task were skipped.
+    claimed_by: claude-scheduled-20260727T022230Z-hscms-t009
+    claimed_at: '2026-07-27T02:22:30Z'
+    updated: '2026-07-27T02:22:30Z'
 
   - id: t-010
     milestone: m6
