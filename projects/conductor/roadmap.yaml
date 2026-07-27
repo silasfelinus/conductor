@@ -2720,10 +2720,12 @@ tasks:
   - id: t-086
     milestone: m2
     title: "Check task-events/ for an already-queued completion event before hand-writing a task's status: done transition"
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
-    updated: '2026-07-26T23:25:00Z'
+    updated: '2026-07-27T01:06:05Z'
     note: >
       Kaizen from a Worker's own near-miss this cycle (conductor/t-085 close-out, TALKBACK.md 2026-07-26 "pattern" entry): after merging a PR, a Worker session manually flipping its task's status to done (per AGENTS.md's close-out step) can race a platform-generated "PR merged" auto-queued task-event in task-events/ for the SAME task -- both derive staleness from a monotonically increasing `updated` timestamp, and whichever writes last makes the other look stale. process_task_events.py's stale_reason() then silently unlink()s the losing event next run, discarding its `learning:`/`note:` payload with no error and no trace (scripts/process_task_events.py process(), ~lines 311-320). Spec: before a Worker session hand-writes a `status: done` transition, check task-events/ for an already-queued event naming the same project/task; if one exists, either let it apply on its own (don't also hand-write the transition) or explicitly consume it first (apply its learning/note payload, then delete the file) instead of racing it blind. Consider also hardening process_task_events.py itself: when an event is dropped as stale AND it carries a non-empty `learning`/`note` payload, log a visible warning (not just the terse STALE skip line) so a lost payload is at least noticeable, rather than requiring a session to catch it by chance via a well-timed git fetch, as happened this cycle.
+    claimed_by: claude-scheduled-20260727T010602Z-cond-t086
+    claimed_at: '2026-07-27T01:06:05Z'
