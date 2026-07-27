@@ -9860,3 +9860,8 @@ posture on a session's own PR).
 
 **Kaizen:** none filed this cycle — this looks like a one-off spec left behind by the taxonomy
 migration, not a recurring pattern worth its own follow-on task.
+
+## 2026-07-27 | Worker (conductor scheduled burst-mode rotation) | kind_robots (ci-janitor Todo #836) | closed
+
+**Decision:** Follow-up to this file's earlier same-day entry on Todo #836 — kind_robots
+PR #1043 merged; marked Todo #836 `DONE` via `complete_todo.py`. No further action needed.
