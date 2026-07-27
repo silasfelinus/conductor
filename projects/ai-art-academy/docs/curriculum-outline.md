@@ -2248,6 +2248,89 @@ shallow pictorial space, and preserve the source composition"
 
 ---
 
+## 35. Arts and Crafts Movement (`arts-and-crafts`)
+
+**Era:** c. 1860-1914 (Britain, later international)
+
+**Key ideas.** The Arts and Crafts movement gives learners a lesson about
+design ethics rather than a single painting look: it answered industrial
+mass production with visible handwork, honest materials, integrated
+interiors, and the belief that useful objects could also be beautiful. It
+connects the curriculum's `gothic`, `art-nouveau`, and `bauhaus` entries
+while explaining why those movements disagree about ornament and machines.
+The movement did not enforce one visual style, so the lesson teaches a
+family of recognition cues and a design philosophy rather than treating
+every Arts and Crafts object as identical to William Morris wallpaper.
+
+The lesson presents the movement's central contradiction honestly:
+reformers wanted dignified labor and beautiful everyday surroundings, but
+labor-intensive handmade objects were often too expensive for the workers
+whose lives the movement hoped to improve — a useful prompt for discussing
+what "handmade" costs versus what it promises.
+
+**Recognition cues:**
+- Repeating botanical or animal motifs organized into dense, readable
+  rhythms
+- Flat or shallow space, with outlines and simplified natural forms rather
+  than illusionistic depth
+- Visible evidence of process: block printing, embroidery, joinery,
+  hammered metal, woven structure, or hand-set type
+- Materials and construction treated as part of the design instead of
+  hidden beneath surface decoration
+- Domestic-scale objects and integrated rooms — wallpaper, textiles, books,
+  furniture, stained glass, and metalwork designed as a coherent environment
+- Medieval and vernacular references used as an alternative to anonymous
+  industrial production
+
+**Notable artists:**
+- **William Morris** (1834-1896) — Movement's best-known designer and
+  organizer; argued for reuniting design and making, producing wallpapers,
+  textiles, furniture, stained glass, and books through Morris & Company.
+- **May Morris** (1862-1938) — Designer, embroiderer, and leader of the
+  Morris & Co. embroidery workshop, plus lecturer and historian of her
+  father's work; named independently here, not merely as William Morris's
+  daughter, to keep the lesson from collapsing a collaborative
+  decorative-arts movement into one famous man.
+- **Walter Crane** (1845-1915) and **C. R. Ashbee** (1863-1942) — Named as
+  historical context for the movement's illustration and guild-workshop
+  branches; no example works by either are exhibited below.
+
+All four died between 1896 and 1942, comfortably clearing
+PUBLIC-DOMAIN-POLICY.md's 1956 death-date cutoff (prong 1) with 84-130
+years of margin, and every example work below dates 1864-1890s, decades
+before the 1930 US publication cutoff (prong 2).
+
+**Example works:**
+- *Daisy*, William Morris, 1864 — Metropolitan Museum of Art, accession
+  23.163.4b. VERIFIED public domain (author died 1896, life+70 rule clears
+  the 1956 cutoff by 60 years; block-printed 1864, well before the 1930 US
+  cutoff; Metropolitan Museum Open Access — confirmed live this cycle via
+  the Met Collection API, `isPublicDomain: true`): one of Morris's earliest
+  and best-known repeating wallpaper patterns.
+  https://www.metmuseum.org/art/collection/search/384017
+- *Wild Tulip*, William Morris, 1884 — Metropolitan Museum of Art, accession
+  23.163.4f. VERIFIED public domain (same author/date margin as above;
+  block-printed 1884; Metropolitan Museum Open Access — confirmed live this
+  cycle via the Met Collection API, `isPublicDomain: true`): a later,
+  denser hand-blocked floral repeat typical of Morris's mature work.
+  https://www.metmuseum.org/art/collection/search/375808
+- *Five pink flowers with foliated tendrils*, Morris & Company, last
+  quarter of the 19th century — Metropolitan Museum of Art, accession
+  2021.7.4. VERIFIED public domain (produced under the Morris & Co.
+  embroidery workshop May Morris led; dated to the 1875-1900 range, well
+  before the 1930 cutoff; Metropolitan Museum Open Access — confirmed live
+  this cycle via the Met Collection API, `isPublicDomain: true`): silk
+  embroidery on linen, representing the workshop's textile output rather
+  than Morris's printed wallpapers.
+  https://www.metmuseum.org/art/collection/search/760427
+
+**remix_hint:** "Redesign this image as an Arts and Crafts decorative
+composition: hand-drawn botanical forms, rhythmic repeating pattern, honest
+natural materials, flattened color, and visible craft structure rather than
+a glossy machine-perfect finish, and preserve the source composition"
+
+---
+
 ## Lesson-only vs remixable
 
 Every movement above maps to a remix config (mode `prompt` to start; t-003/t-004
@@ -2359,6 +2442,17 @@ just "painterly" or "old master") so t-004 can check the output reads as
 vivid rather than the sepia-toned look `renaissance` and `romanticism`
 remixes tend toward; portrait or figure source photos with visible hair
 and fabric are the best fit, matching the movement's own subject bias.
+`arts-and-crafts` shares `the-nabis`'s and `vienna-secession`'s
+invent-the-pattern risk: instead of a coherent single ornament vocabulary,
+the model must generate a plausible botanical/animal repeat where the
+source photo has none, while keeping visible "hand-process" texture rather
+than a seamless digital repeat. The likelier failure mode is a generic flat
+"decorative pattern" filter that skips the movement's actual signature —
+block-print/embroidery/joinery texture and honest material structure — the
+remix_hint leans on "visible craft structure" and "natural materials"
+explicitly so t-004 can check the result reads as handmade rather than
+vector-perfect; still-life, botanical, or textile-rich source photos are
+the best fit.
 
 **Flagged as likely-poor remixers:**
 - `cubism` — faceting while "preserving the composition" is partly contradictory;
@@ -2638,3 +2732,21 @@ via direct WebFetch, live content returned on all three file pages), so all
 three example-work URLs are marked VERIFIED directly against their live
 rights-status templates (PD-Art / PD-old-100-expired on all three, Tate
 Britain via Google Art Project).
+
+**v1.15 addition (2026-07-27) re-check.** Section 35 (Arts and Crafts
+Movement) clears PUBLIC-DOMAIN-POLICY.md's both-prongs rule for all four
+named figures: William Morris (d. 1896), May Morris (d. 1938), Walter Crane
+(d. 1915), and C. R. Ashbee (d. 1942). Ashbee's 1942 death is the newest of
+this batch but still well inside the "died 1953 or earlier" statement
+above, so no recency record moves. All three example works (1864, 1884,
+last quarter of the 19th century) predate the 1930 US-publication cutoff by
+a wide margin and do not disturb the curriculum's most-recent-example-work
+record, which stays at 1930 (American Gothic / Stone City, Iowa, Section
+24). This session verified all three example-work URLs directly against
+the Met Collection API (`collectionapi.metmuseum.org`), each returning
+`isPublicDomain: true` and matching the candidate file's claimed title,
+artist, date, and accession number exactly — the same direct
+rights-status-field method used for Section 28 (Fayum Mummy Portraits),
+stronger than a third-party Wikimedia tag. Promoted from
+`docs/curriculum-candidates/arts-and-crafts-movement.md`, which is now
+marked `PROMOTED`.

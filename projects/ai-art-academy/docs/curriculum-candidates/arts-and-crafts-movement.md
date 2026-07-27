@@ -1,10 +1,16 @@
 # Arts and Crafts Movement — curriculum candidate
 
-status: candidate
+status: PROMOTED
 project: ai-art-academy
 task: t-010
 lane: curriculum depth
 created: 2026-07-27
+promoted: 2026-07-27 (t-010, lane 4) — see curriculum-outline.md §35 and its
+  "v1.15 addition" re-check paragraph. All three example works verified
+  directly via the Met Collection API (`isPublicDomain: true`, matching
+  accession numbers exactly). Not yet synced into kind_robots'
+  `stores/seeds/academyStyles.ts` — deferred to a future cycle, matching
+  every prior movement addition.
 
 ## Why this belongs
 

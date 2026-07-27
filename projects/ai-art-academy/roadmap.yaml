@@ -502,7 +502,7 @@ tasks:
   - id: t-010
     milestone: m6
     title: Academy continuous improvement pass
-    status: claimed
+    status: review
     recurring: true
     passes: 0
     stakes: reversible
@@ -510,16 +510,12 @@ tasks:
     note: |-
       Standing never-idle task (re-arms to ready after every completion, per the recurring-task rule). Each cycle pick ONE: (a) front-end style/polish pass on Academy or art-styler surfaces, (b) roadmap upgrade — refine tasks, detail the next milestone, prune stale notes, (c) generate more art inspirations or style preview thumbnails, (d) expand the curriculum with a new movement/artist entry (respecting PUBLIC-DOMAIN-POLICY.md). Note which option ran in the PR. This task never reaches done and does not count toward milestone progress. See `run_log` for cycle history — do not re-accumulate RAN entries here.
 
-      RAN 2026-07-27T19:28:48Z: option (b), roadmap accuracy. Standard hygiene sweep clean (audit/validate/resolve_deps/PR-drift/stale-claim scan). Found and fixed a real milestone drift: m5 was `in-progress` with all 3 of its tasks `done` — flipped to `done`. Full detail in `run_log`. Next preferred lane is inspiration assets (lane 3). Rearmed to ready.
-
-      Lane 3 inspiration asset implemented on worker/ai-art-academy-t-010-inspiration-a31e: added a controlled harbor comparison lesson across Impressionism, Precisionism, Tonalism, and Fauvism.
-
-      Rearmed after conductor PR #1257 merged as 56a970ad21ba395af8ac11bd0b76a427af098e2d, adding the harbor four-movements inspiration lesson. Rotate the next preferred lane from inspiration assets to curriculum depth.
+      RAN 2026-07-27T21:12:10Z: option (d), curriculum depth. Promoted the Arts and Crafts Movement candidate (curriculum-outline.md §35) — full detail in `run_log`, including a backfilled entry for the immediately-prior lane-3 harbor-lesson cycle (PR #1257) whose `continuous_improvement` metadata update never actually landed. Next preferred lane is front-end polish (lane 1). Rearmed to ready.
     continuous_improvement:
-      last_lane: 2  # 1=front-end polish, 2=roadmap accuracy, 3=inspiration assets, 4=curriculum depth
-      next_lane: 3
-      last_run: '2026-07-27T19:28:48Z'
-      last_pr: 'conductor-only (m5 milestone-accuracy fix; no kind_robots PR this cycle)'
+      last_lane: 4  # 1=front-end polish, 2=roadmap accuracy, 3=inspiration assets, 4=curriculum depth
+      next_lane: 1
+      last_run: '2026-07-27T21:12:10Z'
+      last_pr: 'conductor-only (curriculum-outline.md §35 Arts and Crafts Movement promotion; no kind_robots PR this cycle)'
     run_log: projects/ai-art-academy/docs/continuous-improvement-run-log.md
     owner: worker
     claimed_by: claude-conductor-agentrun-20260727T2112Z-aa-t010-lane4
