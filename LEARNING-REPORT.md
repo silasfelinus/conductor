@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-07-27T03:08:15Z
+Generated: 2026-07-27T04:08:45Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **374**
-- Outcomes: blocked: 12, cancelled: 1, done: 361
+- Closed tasks recorded: **377**
+- Outcomes: blocked: 12, cancelled: 1, done: 364
 - Success rate: **97%**
 - Average passes on successful tasks: **0.0**
 
@@ -34,13 +34,15 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | global-ui | 13 | 100% |
 | humboldt-impropriety-calendar | 1 | 0% |
 | humboldt-scoop | 1 | 100% |
-| humboldt-scoop-cms | 3 | 100% |
+| humboldt-scoop-cms | 4 | 100% |
 | kind-robots | 39 | 97% |
 | kindrobots-unraid | 4 | 100% |
 | media-watchlist | 4 | 100% |
 | mermaids-of-venice | 3 | 100% |
 | model-builder | 32 | 100% |
+| mona-salai | 1 | 100% |
 | mural-design | 1 | 100% |
+| music-mentor | 1 | 100% |
 | newsfeed | 20 | 100% |
 | packmaker | 10 | 100% |
 | ruler-hooked | 4 | 100% |
@@ -55,7 +57,8 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 15 | 40% |
-| software | 359 | 99% |
+| research | 1 | 100% |
+| software | 361 | 99% |
 
 ## Failure categories
 
@@ -75,6 +78,10 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-07-27 `mona-salai/t-001` — Historical-identity experiments need the documentary baseline, candidate-attribution uncertainty, same-artist controls, and explicit falsification criteria fixed before computational scores are viewed; otherwise a model can turn style recurrence and selection bias into false certainty.
+- 2026-07-27 `music-mentor/t-007` — Implementing YIN alongside the incumbent autocorrelation tracker and measuring both with a synthetic accuracy suite (not just trusting the textbook octave-error argument) surfaced a different real advantage than expected -- low-register voiced-detection rate, not octave-error count, which were tied at zero for both. For "evaluate X vs Y" tasks, build the comparison harness and report the measured mechanism, not the assumed one.
+
+- 2026-07-27 `humboldt-scoop-cms/t-009` — For a portable field client, keep route data, persistence, and navigation handoff behind interfaces; boot with dummy data so UI work stays safe before real-address privacy and rollout gates are cleared.
 - 2026-07-27 `conductor/t-086` — A stale task-event that carries a learning/note payload used to vanish silently when process_task_events.py's stale_reason() dropped it -- the only trace was a terse STALE skip line easy to miss in a run's stdout. Added a visible WARNING to stderr specifically when the dropped event has non-empty learning/note, and closed the other half of the gap in AGENTS.md: before hand-writing a task's status: done transition, check task-events/ for an already-queued completion event for the same project/task first, rather than racing it blind.
 
 - 2026-07-26 `conductor/t-085` — Append-only coordination ledgers still need compare-and-swap behavior: compute each append from a freshly fetched main tip and retry the entire transform after non-fast-forward rejection so concurrent entries are preserved rather than overwritten.
@@ -83,9 +90,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-07-26 `animation-manager/t-013` — When the same sandbox-access blocker (no local DB, no interactive browser egress) recurs across several builds, formalize a standing acceptance-bar exception in the project's own spec (one section, referenced by tag) instead of leaving each future PR to re-derive and re-explain the identical two facts.
 - 2026-07-26 `ai-art-academy/t-041` — When a small useful change is trapped in a conflicted bookkeeping-heavy PR, salvage only the substantive file onto current main and perform roadmap closeout through a session-owned task event rather than resolving conflicts by carrying stale generated or ledger edits.
 - 2026-07-26 `conductor/t-081` — Three separate tasks (ai-art-academy/t-004, coloring-book/t-022, newsfeed/t-022) had independently hand-written the same "recheck the shared render backlog" prose paragraph -- the identical duplication EGRESS-BLOCKERS.md already solved for sandbox egress. When a burst-mode rotation finds every priority-order ready task blocked on the same shared cause, that's a signal to build the missing shared ledger/tool instead of re-probing and re-writing the Nth near-duplicate paragraph.
-- 2026-07-26 `ai-art-academy/t-040` — Group embedded regex alternations and run the real tests; new workflows should declare least-privilege token permissions from their first revision.
-- 2026-07-26 `humboldt-scoop-cms/t-012` — Infra scaffolding that can't be executed in-sandbox (Docker, external data fetch) is still verifiable to a meaningful degree without live execution -- config loads under its runtime, scripts pass a syntax check, and the checked-in contract matches what the calling app code already expects. Land it as scaffolding with an explicit "verify on the real box" flag rather than blocking on infrastructure access no sandbox session will ever have.
-- 2026-07-26 `digital-storefront/t-035` — When two call sites independently re-implement the same eligibility-check-then-insert sequence, extracting a shared helper immediately after the second bug fix (rather than leaving both copies as "matching patterns") is cheap while the logic is fresh and prevents the next fix from landing in only one copy again.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-07-27T03:08:15Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-07-27T04:08:45Z_
