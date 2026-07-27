@@ -9826,3 +9826,37 @@ audit found nothing beyond the fix the task was filed to check for.
   `append_ledger_entry.py`.
 
 **Kaizen:** none filed — this cycle didn't surface new follow-on work.
+
+## 2026-07-27 | Worker (conductor scheduled burst-mode rotation) | kind_robots (ci-janitor Todo #836) | fix
+
+**Decision:** Diagnosed and fixed; PR open, not yet merged (CI just started on the fix branch
+at time of writing — this entry will be followed up once green/merged per the drive-to-green
+posture on a session's own PR).
+
+**Detail:**
+- ci-janitor Todo #836 (HIGH) flagged kind_robots run 30236959387 (`main`, commit `90c8acd6`)
+  red on Cypress Tests. Per AGENTS.md's Todo-first rule, handled before any roadmap task.
+- Root cause: PR "Make Facet taxonomy authoritative" (`e202b5a`, 2026-07-26 19:32 PDT) made
+  `POST`/`PATCH /api/facets` reject any request body containing `kind` with a 400
+  (`assertLegacyFacetKindAbsent` in `server/utils/facetProfileInput.ts` — `kind` is now a
+  deprecated compatibility column, `taxonomy` is authoritative) but never updated
+  `cypress/e2e/api/facet-assignments.cy.ts`, which still POSTed `kind: 'CORE'` and PATCHed
+  `kind: 'THEME'`. 6 of that spec's 7 tests had been failing with `400: Bad Request` on every
+  scheduled run since the merge (confirmed via `get_job_logs` on the flagged run — the actual
+  failure detail lives ~400 lines before the tail the default `tail_lines` window returns, so
+  needed a larger `tail_lines`/full-log slice to find the real `CypressError` body rather than
+  just the summary table).
+  reflect the switch — the server still returns a `kind` field on Facet reads (derived from
+  `taxonomy` via `legacyFacetKindForTaxonomy`), it just no longer accepts it as input.
+- Verified locally via `scripts/provision_kind_robots_deps.sh`: `npx eslint` clean, `npm run
+  test` (`vue-tsc --noEmit`) exit 0, `npx prettier --check` clean. Could not run the actual
+  Cypress API suite in this sandbox (no live Vercel deploy/DB to point it at), so correctness
+  rests on the diagnosis + type/lint checks, not a green local Cypress run.
+- kind_robots PR #1043 (branch `claude/dazzling-ptolemy-vy952g`), subscribed to PR activity;
+  will merge once CI is green per the session's own drive-to-green posture. Left Todo #836 open
+  pending that (CI-JANITOR.md: "complete this Todo only after the relevant verification has
+  passed or the remaining gate is clearly documented" — stricter than AGENTS.md's general
+  Todo-done-on-PR-opened default, followed the more specific rule for this incident class).
+
+**Kaizen:** none filed this cycle — this looks like a one-off spec left behind by the taxonomy
+migration, not a recurring pattern worth its own follow-on task.
