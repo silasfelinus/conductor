@@ -1,0 +1,418 @@
+# Style Remix Configs — AI Art Academy (task t-004)
+#
+# Records the WINNING remix config per style after A/B'ing prompt-only Kontext
+# instruction vs LoRA (where docs/style-lora-registry.md documents a LoRA
+# candidate), using kind_robots' live production path: POST /api/art/enqueue
+# {engine:"kontext", promptString, sourceImageBase64, loraName?, loraStrength?}
+# -> buildKontextWorkflow (server/api/comfy/kontext/utils/workflow.ts), the
+# exact code path art-styler.vue's Remix Studio hits (not a hand-rolled
+# duplicate graph), so results reflect what a real user would see.
+#
+# Scope (per t-004's task note): the ORIGINAL 16 target styles from
+# style-lora-registry.md's "Coverage summary" (8 LoRA-backed + 8 prompt-mode),
+# plus the 2 bonus LoRA-backed styles (Van Gogh, Pop Art) where capacity
+# allowed. Newer curriculum movements (northern-renaissance, rococo,
+# symbolism, precisionism, etc.) are explicitly out of scope for this pass.
+#
+# Fixed test image (same source used for every remix job below):
+#   subject: "A small friendly robot with round glowing eyes sitting on a
+#     wooden windowsill beside a potted green plant, soft warm daylight
+#     through the window, simple cozy room background, photographic, medium
+#     shot, no text, no watermark"
+#   generation: engine=krea2 (Krea 2 Turbo), seed=424242, KR ArtJob 2604,
+#     ArtImage 12777. Evidence thumbnail: t-004-remix-evidence/_reference.webp
+#   remix seed: 909090 for every kontext job below.
+#
+# ============================================================================
+# REAL FINDING (2026-07-27, this session) -- Kontext LoRA loading is broken in
+# production for every naming convention this session could construct, so
+# EVERY style below ships mode: prompt for now, including the 4 styles whose
+# LoRA files are actually present on the relay.
+# ============================================================================
+# t-037 (merged 2026-07-26) wired a LoraLoaderModelOnly node into
+# buildKontextWorkflow but explicitly flagged it as NOT YET VERIFIED against a
+# live render. This session ran that verification and it fails: every kontext
+# job with a non-empty loraName 400s at the relay's ComfyUI with
+#   {'61': {'errors': [{'type': 'value_not_in_list', 'message': 'Value not in
+#     list', 'details': "lora_name: '<value>' not in (list of length 2096)",
+#     ...}], 'class_type': 'LoraLoaderModelOnly'}}
+# Four independent naming conventions were tried and ALL rejected the same way:
+#   1. the registry's own HF repo name, e.g. "UmeAiRT/FLUX.1-dev-LoRA-Impressionism"
+#      (ArtJob 2603, pre-existing on the relay before this session -- same error)
+#   2. the Resource table's `localPath` under the Kontext/ category, e.g.
+#      "Kontext/SFW/impressionist.safetensors" (ArtJob 2609)
+#   3. the Resource table's `localPath` under the FLUX/ category -- the EXACT
+#      string kind_robots' own production art-styler.vue BUILTIN_STYLES sends
+#      today for these same 4 styles, e.g. "FLUX/impressionist.safetensors"
+#      (ArtJob 2611, forward slash) and "FLUX\impressionist.safetensors"
+#      (backslash, matching the relay's Windows client id "Silas-PC-prompt-...")
+#   4. the bare filename with no folder prefix, "impressionist.safetensors"
+#      (ArtJob 2620)
+# GET /api/resources confirms 47 Kontext-native LoRA files ARE cataloged
+# (localPath entries under `Kontext/SFW/`, matching the Owen777-style pack
+# already documented for oil-painting/sumi-e/van-gogh/pop-art in
+# style-lora-registry.md), so the files plausibly exist somewhere on the
+# relay's disk -- but none of the 4 name conventions this session could derive
+# from the KR database matches what ComfyUI's local `models/loras` folder scan
+# actually returns. This session has no way to read that scan's raw output
+# directly (ComfyUI's own /object_info lives on the relay's private
+# Tailscale-only network, reachable only from Silas's browser via
+# stores/serverStore.ts's fetchComfyObjectInfo, not from this sandbox). This
+# means BUILTIN_STYLES' own loraPath values are LIKELY ALSO BROKEN in
+# production today, not just this task's registry-derived guesses -- worth an
+# urgent, narrowly-scoped follow-up task (see roadmap note) rather than
+# guessing a 5th naming convention blind and burning more relay time.
+# Every style below is therefore `mode: prompt` for this pass; `loraPath`/
+# `loraTrigger`/`loraWeight` fields are still recorded wherever a LoRA
+# candidate is documented, so a follow-up A/B can re-run instantly once the
+# naming bug is fixed.
+status: complete
+
+styles:
+  # ============================================================
+  # 8 LoRA-backed target styles (style-lora-registry.md coverage summary)
+  # ============================================================
+
+  - style_slug: impressionism
+    ab_tested: true
+    winner: prompt
+    mode: prompt
+    prompt_template: "Repaint this image in an Impressionist style: visible short broken brushstrokes, dappled natural light, vibrant unmixed color, soft edges, outdoor daylight atmosphere, no sharp outlines, in the manner of Monet and Renoir"
+    loraPath: "FLUX/impressionist.safetensors"
+    loraTrigger: "Turn this image into the Impressionist style."
+    loraWeight: 1.0
+    reasoning: >
+      Prompt-only arm rendered a strong, confident Impressionist result:
+      visible broken brushwork, warm dappled light, vibrant unmixed color,
+      subject/composition fully preserved. The LoRA arm could not be tested --
+      every lora_name value this session tried (including the exact string
+      production's BUILTIN_STYLES already uses) was rejected by ComfyUI as
+      "not in list" (see the file-level LoRA-loading finding above). Winner is
+      prompt by default (the only arm that actually renders) but the
+      prompt-only quality is genuinely good on its own merits, not just a
+      fallback.
+    evidence:
+      prompt_only: t-004-remix-evidence/impressionism-prompt.webp
+      lora_attempted: null  # every naming convention 400'd before rendering; no image produced
+    generation_metadata:
+      engine: kontext
+      seed: 909090
+      art_job_id: 2606
+      art_image_id: 12779
+      source_image: t-004-remix-evidence/_reference.webp
+    lora_attempt_evidence:
+      art_job_ids_tried: [2609, 2611, 2620]
+      error_class: "ComfyUI 400: lora_name value_not_in_list (LoraLoaderModelOnly)"
+
+  - style_slug: illuminated-manuscript
+    ab_tested: true
+    winner: prompt
+    mode: prompt
+    prompt_template: "Repaint this image as an illuminated manuscript page: gold leaf background accents, intricate decorative border, flattened medieval figures, jewel-toned tempera colors, fine linework, parchment texture"
+    loraPath: "FLUX/manuscript_illustration_kontext.safetensors"
+    loraTrigger: "Turn this image into the Medieval Manuscript style."
+    loraWeight: 1.0
+    reasoning: >
+      Prompt-only arm got the ornamental blue/gold border and page-like framing
+      right, but under-delivered on the core manuscript cues: no gold-leaf
+      background, and the robot figure stayed a rounded illustrated cartoon
+      rather than the flattened, elongated medieval figure style the template
+      asks for. Composition/subject preserved well. This is the weakest
+      prompt-only result of the batch -- flagging for a prompt-template
+      refinement pass (try leading with "gold background" and "flat, no
+      shading" more forcefully) once a follow-up session has time, rather than
+      treating this as a finished, polished config. LoRA arm untestable this
+      session (see file-level finding above) -- winner is prompt by default,
+      not by quality conviction.
+    evidence:
+      prompt_only: t-004-remix-evidence/illuminated-manuscript-prompt.webp
+      lora_attempted: null
+    generation_metadata:
+      engine: kontext
+      seed: 909090
+      art_job_id: 2614
+      art_image_id: 12787
+      source_image: t-004-remix-evidence/_reference.webp
+    needs_refinement: true
+
+  - style_slug: watercolor
+    ab_tested: true
+    winner: prompt
+    mode: prompt
+    prompt_template: "Repaint this image as a watercolor painting: soft transparent washes of color, visible paper texture, gentle bleeding edges, light delicate brushwork, airy and luminous"
+    loraPath: "FLUX/watercolor.safetensors"
+    loraTrigger: "Turn this image into the Watercolor style."
+    loraWeight: 1.0
+    reasoning: >
+      Prompt-only arm produced a convincing watercolor result: soft washes,
+      visible torn-paper edge vignette, delicate light brushwork, airy feel,
+      composition/subject fully preserved. Good quality on its own merits.
+      LoRA arm untestable this session (see file-level finding above); winner
+      is prompt by default but a genuinely strong result.
+    evidence:
+      prompt_only: t-004-remix-evidence/watercolor-prompt.webp
+      lora_attempted: null
+    generation_metadata:
+      engine: kontext
+      seed: 909090
+      art_job_id: 2623
+      art_image_id: 12788
+      source_image: t-004-remix-evidence/_reference.webp
+
+  - style_slug: oil-painting
+    ab_tested: true
+    winner: prompt
+    mode: prompt
+    prompt_template: "Repaint this image as a classical oil painting: rich visible brushstrokes, deep saturated color, subtle canvas texture, painterly blending, warm gallery lighting"
+    loraPath: "FLUX/flux1-kt_oil_painting_lora_v2.safetensors"
+    loraTrigger: "Turn this image into the Oil Painting style."
+    loraWeight: 1.0
+    reasoning: >
+      Prompt-only arm produced a convincing classical oil painting: warm
+      saturated palette, visible painterly brushwork, subtle canvas texture,
+      composition/subject fully preserved. Good quality on its own merits.
+      LoRA arm untestable this session (see file-level finding above); winner
+      is prompt by default but a genuinely strong result.
+    evidence:
+      prompt_only: t-004-remix-evidence/oil-painting-prompt.webp
+      lora_attempted: null
+    generation_metadata:
+      engine: kontext
+      seed: 909090
+      art_job_id: 2626
+      art_image_id: 12789
+      source_image: t-004-remix-evidence/_reference.webp
+
+  - style_slug: art-nouveau
+    ab_tested: false
+    winner: prompt
+    mode: prompt
+    prompt_template: "Repaint this image in the Art Nouveau style: sinuous flowing organic lines, decorative floral and vine motifs, flat elegant silhouettes, muted jewel tones with gold accent linework, in the manner of Alphonse Mucha"
+    reasoning: >
+      Registry documents dvyio/flux-lora-art-nouveau (FLUX.1-dev, HF) as a LoRA
+      candidate; it is not among the 47 Kontext-native resources cataloged on
+      the relay (GET /api/resources, 2026-07-27), and even the styles that ARE
+      cataloged could not be made to render this session (see file-level
+      finding above). Recorded as prompt-mode; no generation attempted for
+      this style specifically since the LoRA-loading path is confirmed broken
+      regardless of which name is tried.
+    deployment_gap: >
+      dvyio/flux-lora-art-nouveau (https://huggingface.co/dvyio/flux-lora-art-nouveau)
+      is not deployed on the relay at all, on top of the general LoRA-loading
+      bug -- two separate blockers before this style could reach mode: lora.
+
+  - style_slug: renaissance-fresco
+    ab_tested: false
+    winner: prompt
+    mode: prompt
+    prompt_template: "Repaint this image as a Renaissance fresco: soft sfumato shading, classical balanced composition, warm earthen palette, painted on aged plaster with matte mineral pigments, in the manner of Raphael"
+    reasoning: >
+      Registry documents davidrd123/Flux-Raphael-LoRA (a LyCORIS adapter) as a
+      candidate; not cataloged on the relay, and the registry itself already
+      flagged an unresolved LyCORIS-loader-compatibility caveat on this entry.
+      Combined with the file-level LoRA-loading bug, demoting to prompt-mode
+      is the conservative, defensible call.
+    deployment_gap: >
+      davidrd123/Flux-Raphael-LoRA (https://huggingface.co/davidrd123/Flux-Raphael-LoRA)
+      is not deployed on the relay, LyCORIS-loader support is unconfirmed, AND
+      the general LoRA-loading bug applies on top -- three blockers.
+
+  - style_slug: expressionism
+    ab_tested: false
+    winner: prompt
+    mode: prompt
+    prompt_template: "Repaint this image as a German Expressionist painting: jagged angular forms, clashing non-naturalistic colors, raw visible brushwork, emotional intensity, in the manner of Ernst Ludwig Kirchner"
+    reasoning: >
+      Registry documents davidrd123/lora-Kirchner-flux as a candidate; not
+      cataloged on the relay under that name. The relay does carry a generic
+      "Expressive Kontext Dev LoRA" (Kontext/SFW/expressive.safetensors) but
+      that is a broad painterly-expressiveness style, not the Kirchner/German-
+      Expressionism movement this lesson teaches -- an off-register mismatch,
+      same standard style-lora-registry.md already applies elsewhere (e.g. the
+      rococo/cubism rejections). Demoted to prompt-mode; LoRA-loading bug
+      applies regardless.
+    deployment_gap: >
+      davidrd123/lora-Kirchner-flux (https://huggingface.co/davidrd123/lora-Kirchner-flux)
+      is not deployed. Kontext/SFW/expressive.safetensors exists but is a
+      different, broader style -- not a substitute.
+
+  - style_slug: sumi-e
+    ab_tested: false
+    winner: prompt
+    mode: prompt
+    prompt_template: "Repaint this image as a Japanese sumi-e ink wash painting: monochrome black ink on white ground, minimal confident brush strokes, varying ink tone from wet to dry, empty negative space, no color"
+    reasoning: >
+      Registry documents Kontext-Style/Chinese_Ink_lora (Owen777 Kontext pack)
+      as the candidate; not cataloged on the relay under that name (the
+      relay's Kontext/ resources include impressionist/watercolor/oil_painting/
+      manuscript/popart from an overlapping pack, but no chinese_ink/sumi
+      entry). The relay does carry Kontext/NSFW/ink_style-4-500.safetensors
+      ("Kontext Ink style") from a different pack, filed under the NSFW
+      bucket and of unconfirmed register -- not used here. Demoted to
+      prompt-mode; LoRA-loading bug applies regardless.
+    deployment_gap: >
+      Kontext-Style/Chinese_Ink_lora (https://huggingface.co/Owen777/Kontext-Style-Loras)
+      is not deployed on the relay.
+
+  # ============================================================
+  # 8 prompt-mode target styles (no LoRA candidate exists in the registry --
+  # recorded directly per the task's scope note, no A/B needed)
+  # ============================================================
+
+  - style_slug: ukiyo-e
+    ab_tested: false
+    winner: prompt
+    mode: prompt
+    prompt_template: "Repaint this image as an ukiyo-e woodblock print in the style of Hokusai: flat color planes, bold black outlines, visible woodgrain texture, no text, no stamps, no border"
+    reasoning: >
+      No login-free, openly licensed FLUX ukiyo-e LoRA exists per
+      style-lora-registry.md (candidates live on Civitai, login-gated -- see
+      registry needs-Silas S-2/S-3/S-4). Base-model knowledge of Hokusai is
+      strong; recorded directly per the task's prompt-mode scope note.
+
+  - style_slug: baroque-chiaroscuro
+    ab_tested: false
+    winner: prompt
+    mode: prompt
+    prompt_template: "Repaint this image as a baroque oil painting with dramatic chiaroscuro lighting, in the style of Caravaggio and Rembrandt: deep shadows, a single warm light source, rich dark palette"
+    reasoning: >
+      No dedicated FLUX baroque-painting LoRA found (registry: only unverified
+      generic "lighting" LoRAs, not a painting-style match). Recorded directly
+      per the prompt-mode scope note.
+
+  - style_slug: cubism
+    ab_tested: false
+    winner: prompt
+    mode: prompt
+    prompt_template: "Repaint this image as an analytic cubist painting: fragmented geometric planes, multiple simultaneous viewpoints, muted browns and greys"
+    reasoning: >
+      Picasso (d. 1973) and Braque (d. 1963) are both inside the 70-year
+      public-domain window, so cubism ships as a movement-only prompt by
+      policy, never an artist-name LoRA (style-lora-registry.md). The relay
+      does carry a generic Kontext/SFW/cubist.safetensors, but adopting an
+      unresearched LoRA outside this task's registry-driven scope is left for
+      a future pass. Recorded directly per the prompt-mode scope note.
+
+  - style_slug: stained-glass
+    ab_tested: false
+    winner: prompt
+    mode: prompt
+    prompt_template: "Repaint this image as a stained glass window: black lead lines, jewel-toned translucent glass, gothic tracery"
+    reasoning: >
+      FLUX stained-glass LoRAs exist only on Civitai, login-gated (registry
+      S-6). Base model handles the look well. Recorded directly per the
+      prompt-mode scope note.
+
+  - style_slug: pointillism
+    ab_tested: false
+    winner: prompt
+    mode: prompt
+    prompt_template: "Repaint this image using pointillist technique: thousands of tiny separate dots of pure unmixed color that blend in the eye, a luminous divisionist surface, even all-over stippling, bright balanced light, in the manner of Seurat and Signac"
+    reasoning: >
+      The one verified candidate (registry S-7, Signac/van Rysselberghe
+      -trained, ethically clean) still 401s on direct download without a
+      Civitai account -- stays in the needs-Silas table. Recorded directly per
+      the prompt-mode scope note. Registry flags this as the most *mechanical*
+      style in the set (dot density can lapse into ordinary Impressionist
+      dabs) -- worth a follow-up visual QA pass once a test render exists.
+
+  - style_slug: gothic
+    ab_tested: false
+    winner: prompt
+    mode: prompt
+    prompt_template: "Repaint this image as a late-medieval Gothic panel painting: figures on a burnished gold-leaf ground, elongated bodies with gentle S-curves, jewel-toned tempera, pointed-arch framing, flattened space, no modern shading"
+    reasoning: >
+      The one Civitai candidate (registry S-8) discloses no training
+      provenance at all -- correctly never promoted, since the dead-70-years
+      boundary can't be confirmed. Recorded directly per the prompt-mode scope
+      note.
+
+  - style_slug: byzantine-mosaic
+    ab_tested: false
+    winner: prompt
+    mode: prompt
+    prompt_template: "Repaint this image as a Byzantine mosaic of small glass tesserae: gold background, frontal iconographic figures, visible grout lines"
+    reasoning: >
+      No Byzantine-specific LoRA found; only generic/modern mosaic-tile LoRAs
+      on Civitai (registry). The relay does carry a generic
+      Kontext/SFW/mosaic.safetensors, left unresearched/out of scope for this
+      pass same as cubism above. Recorded directly per the prompt-mode scope
+      note.
+
+  - style_slug: art-deco
+    ab_tested: false
+    winner: prompt
+    mode: prompt
+    prompt_template: "Repaint this image as a 1920s Art Deco poster: streamlined geometric forms, strong symmetry, gold and jewel tones, sunburst motifs"
+    reasoning: >
+      Only Civitai candidates found (registry S-10), HF's one hit is an
+      off-register noir-deco hybrid. Art Deco is well represented in base
+      training data. Recorded directly per the prompt-mode scope note.
+
+  # ============================================================
+  # +2 bonus LoRA-backed styles (beyond the original 16 -- covered since
+  # capacity allowed; see style-lora-registry.md's "Coverage summary")
+  # ============================================================
+
+  - style_slug: pop-art
+    ab_tested: true
+    winner: prompt
+    mode: prompt
+    prompt_template: "Repaint this image in a Pop Art style: bold flat colors, thick black outlines, halftone dot shading, high-contrast graphic composition"
+    loraPath: "Kontext/SFW/popart.safetensors"
+    loraTrigger: "Turn this image into the Pop Art style."
+    loraWeight: 1.0
+    reasoning: >
+      Prompt-only arm was the strongest result of the whole batch: bold flat
+      Lichtenstein-style color blocking, thick black outlines, clean Ben-Day
+      halftone dot shading, high contrast, composition/subject fully
+      preserved. LoRA arm untestable this session (see file-level finding
+      above, same bug). Winner is prompt by default but this result needs no
+      LoRA to look production-ready.
+    evidence:
+      prompt_only: t-004-remix-evidence/pop-art-prompt.webp
+      lora_attempted: null
+    generation_metadata:
+      engine: kontext
+      seed: 909090
+      art_job_id: 2628
+      art_image_id: 12795
+      source_image: t-004-remix-evidence/_reference.webp
+    note: >
+      Pop Art enters as a movement-level lesson only per style-lora-registry.md
+      (Warhol d.1987 / Lichtenstein d.1997 are inside the 70-year window, so no
+      artist-name imitation).
+
+  - style_slug: post-impressionism-van-gogh
+    ab_tested: false
+    winner: prompt
+    mode: prompt
+    prompt_template: "Repaint this image as a Post-Impressionist painting in the style of Van Gogh: thick swirling impasto brushstrokes, bold expressive color, energetic directional strokes, heightened emotional intensity"
+    reasoning: >
+      Registry documents Kontext-Style/Van_Gogh_lora (Owen777 Kontext pack) as
+      the candidate; not cataloged on the relay under that name (no
+      van_gogh/vangogh match among the 47 Kontext/ resources). No generation
+      attempted for this bonus style specifically -- recorded directly as
+      prompt-mode given the confirmed general LoRA-loading bug and the missing
+      deployment.
+    deployment_gap: >
+      Kontext-Style/Van_Gogh_lora (https://huggingface.co/Owen777/Kontext-Style-Loras)
+      is not deployed on the relay.
+
+# ============================================================================
+# Follow-up needed (not filed as a new roadmap task by this session -- see
+# roadmap.yaml t-004 note for the actual task-tracking entry):
+#   1. URGENT: the Kontext LoraLoaderModelOnly `lora_name` value this session
+#      sent (matching production's own BUILTIN_STYLES convention exactly) was
+#      rejected by ComfyUI as not-in-list. This likely means LoRA-mode remixes
+#      are silently broken for EVERY art-styler.vue BUILTIN_STYLES entry in
+#      production today, not just this task's registry-driven candidates --
+#      worth an urgent check independent of this task's curriculum scope.
+#   2. Once (1) is fixed, re-run the LoRA arm for the 4 core styles above
+#      (impressionism, illuminated-manuscript, watercolor, oil-painting) plus
+#      pop-art, using this file's already-recorded loraPath/loraTrigger/
+#      loraWeight values, and promote any that win to mode: lora.
+#   3. illuminated-manuscript's prompt-only result (needs_refinement: true
+#      above) under-delivers the movement's gold-background/flattened-figure
+#      cues -- worth a template iteration pass independent of the LoRA fix.
+# ============================================================================
