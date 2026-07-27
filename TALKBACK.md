@@ -9683,3 +9683,17 @@ is already correct) or explicitly consume it (apply its payload, then delete it)
 rather than racing it blind. The general pattern: any two independent writers that
 both derive "is this stale" from a monotonic timestamp need to check each other's
 state before writing, not just their own.
+
+## 2026-07-27 | Reviewer (conductor agent run) | mona-salai | security-flag
+type: security-flag
+
+**Subject:** A Worker session claimed, implemented, and opened two PRs against `mona-salai/t-001` while the project has been `status: paused` in `project-overrides.yaml` since 2026-07-26 ("tabled 2026-07-26 by Silas — preserve roadmap and research for possible revival").
+
+**Detail:**
+- `project-overrides.yaml` (current `origin/main`) still shows `mona-salai: status: paused`.
+- `projects/mona-salai/roadmap.yaml` on `origin/main` shows `t-001` at `status: review`, `claimed_by: worker-20260727T031218Z-mona-salai-t001-31a9`, `claimed_at: '2026-07-27T03:12:18Z'` — this morning, well after the pause.
+- Two open conductor PRs exist for the same task: #1194 (`worker/mona-salai-t-001-research-design-31a9`) and #1196 (`worker/mona-salai-t-001-research-design-31a9-r2`, whose own body says it "Supersedes #1194, whose CI merge ref captured a now-consumed task-event from `main`").
+- Content itself (a research-evidence-standards brief) looks careful and low-risk on a skim — this flag is about the process violation (working a paused project), not the content.
+- I did not merge either PR, did not close either PR, and did not touch `projects/mona-salai/roadmap.yaml` — leaving all of it exactly as the Worker session left it for Silas to decide (un-pause and let the review PRs land, or hold).
+
+**Suggested action:** Silas: either (a) confirm mona-salai should stay paused, in which case someone should close/park PRs #1194 and #1196 without merging and set `t-001` back to a non-`review` status reflecting "paused, do not advance," or (b) if the research work is welcome, flip `project-overrides.yaml`'s mona-salai entry back to `status: active` so the roadmap and the override file agree, then a normal review pass can proceed. Also worth a `project-overrides.yaml`-status check added to `claim_task.py` itself (it currently only checks live roadmap task state, not the project-level pause flag) so this can't recur silently — right now the pause is only enforced by agents reading the file themselves before claiming.
