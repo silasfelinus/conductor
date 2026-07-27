@@ -502,26 +502,28 @@ tasks:
   - id: t-010
     milestone: m6
     title: Academy continuous improvement pass
-    status: review
+    status: ready
     recurring: true
     passes: 0
     stakes: reversible
-    updated: '2026-07-27T09:18:00Z'
+    updated: '2026-07-27T09:19:08Z'
     note: |-
-      Standing never-idle task (re-arms to ready after every completion, per the recurring-task rule). Each cycle pick ONE: (a) front-end style/polish pass on Academy or art-styler surfaces, (b) roadmap upgrade — refine tasks, detail the next milestone, prune stale notes, (c) generate more art inspirations or style preview thumbnails, (d) expand the curriculum with a new movement/artist entry (respecting PUBLIC-DOMAIN-POLICY.md). Note which option ran in the PR. This task never reaches done and does not count toward milestone progress. See `run_log` for cycle history — do not re-accumulate RAN entries here; every entry below this line as of 2026-07-27 was already archived verbatim in `run_log` before being pruned (kaizen: this note had re-bloated back past the t-039 fix's original intent since the last prune).
+      Standing never-idle task (re-arms to ready after every completion, per the recurring-task rule). Each cycle pick ONE: (a) front-end style/polish pass on Academy or art-styler surfaces, (b) roadmap upgrade — refine tasks, detail the next milestone, prune stale notes, (c) generate more art inspirations or style preview thumbnails, (d) expand the curriculum with a new movement/artist entry (respecting PUBLIC-DOMAIN-POLICY.md). Note which option ran in the PR. This task never reaches done and does not count toward milestone progress. See `run_log` for cycle history — do not re-accumulate RAN entries here.
 
-      RAN 2026-07-27 (this cycle, lane 2 roadmap accuracy): pruned this note back down per its own standing instruction — the prior six RAN entries (2026-07-26 lane2 through 2026-07-27T07:15 lane1) were all already present verbatim in `run_log`, so nothing was lost. `audit_roadmaps.py` (0 errors, 0 warnings, 56 info — unchanged baseline) and `validate_roadmaps.py` (valid) clean. `resolve_deps.py`: nothing to unblock. `check_pr_merged_drift.py` flagged 2 unverifiable-via-sandbox candidates (kind_robots#1037, #1040); cross-checked both via GitHub MCP `pull_request_read` — both `merged: true`, matching this task's own record exactly, no drift. No stale `status: claimed` tasks anywhere in the repo besides this cycle's own claim. No stuck `task-events/`. This project's own 6 milestones re-verified against actual task statuses — all six already match. Next preferred lane is inspiration assets (lane 3), per the 1->2->3->4 rotation. Rearmed to ready.
+      Rotation collision (2026-07-27, both resolved as complementary rather than duplicate — see TALKBACK.md): two sessions independently claimed lane 3 this slot.
 
-      Lane 3 inspiration-assets cycle: added Night Window, a controlled four-movement comparison teaching Tonalism, Fauvism, Metaphysical painting, and Harlem Renaissance mural-era visual language.
+      RAN 2026-07-27T09:18:00Z (worker/ai-art-academy-t-010-inspiration-a31, conductor PR #1214, merged): lane 3 inspiration-assets cycle: added Night Window, a controlled four-movement comparison teaching Tonalism, Fauvism, Metaphysical painting, and Harlem Renaissance mural-era visual language.
+
+      RAN 2026-07-27T09:19:08Z (this cycle, lane 3 inspiration assets): render relay read `healthy` (0 pending) via `recheck_render_queue.py` for the first time today after every earlier reading showed a growing backlog — a real window, so re-probed live instead of re-deferring to lane 4. Found and fixed a genuine bug while doing so: the 33 previously-queued `kind-robots-academy-style-preview-*` requests had vanished from `art-prompts.yaml` with no images ever landing in kind_robots — root cause is `distribute_images.py` copying kind_robots-targeted files into a LOCAL kind_robots checkout (when one happens to be present, as in most agent sandboxes) and then pruning the source request as done, even though kind_robots' `/public/images/**` is git-ignored and delivery for that target now goes through the home relay's direct media path, not git (the `distribute-images.yml` workflow already knew this and deliberately never checks out kind_robots for this reason — the script itself hadn't caught up). Fixed `distribute_images.py` to always retain kind_robots-targeted files in `projects/process/` instead of copying+pruning, added a regression test (`test_kind_robots_target_retained_not_pruned`), full suite green (623 passed, 1 skipped). Verified the fix live: queued one fresh test request (`greek-vase-painting`, 256x256), it rendered successfully (ArtJob 2697, ArtImage 12885) confirming the relay really is healthy again, and this time the request survives in `art-prompts.yaml` (status: done, with a note) instead of silently disappearing — recorded as the visible signal that delivery to kind_robots is the one remaining step. Did not re-queue the other ~29 movements this cycle (scope: prove + fix the pipeline bug, not bulk-generate); a future lane-3 cycle can safely re-batch them now that the prune bug is closed. kind_robots repo itself untouched (confirmed `git status` clean there) — this is a conductor-only PR. Next preferred lane is curriculum depth (lane 4), per the 1->2->3->4 rotation. Rearmed to ready.
     continuous_improvement:
-      last_lane: 2  # 1=front-end polish, 2=roadmap accuracy, 3=inspiration assets, 4=curriculum depth
-      next_lane: 3
-      last_run: '2026-07-27T08:11:05Z'
-      last_pr: 'conductor (note prune + audit, this cycle)'
+      last_lane: 3  # 1=front-end polish, 2=roadmap accuracy, 3=inspiration assets, 4=curriculum depth
+      next_lane: 4
+      last_run: '2026-07-27T09:19:08Z'
+      last_pr: 'conductor PR #1214 (Night Window) + conductor (distribute_images.py kind_robots-prune fix + 1 test render), both this rotation slot'
     run_log: projects/ai-art-academy/docs/continuous-improvement-run-log.md
-    claimed_by: 2026-07-27T09:13:08Z-ai-art-academy-t010-inspiration-a31
-    claimed_at: '2026-07-27T09:13:08Z'
-    owner: worker
+    claimed_by: null
+    claimed_at: null
+    owner: null
 
   - id: t-015
     milestone: m4

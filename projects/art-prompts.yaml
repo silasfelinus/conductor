@@ -627,6 +627,29 @@ requests:
     and personality, no text, 16:9 landscape composition
 
     '
+- id: kind-robots-academy-style-preview-greek-vase-painting
+  source: ai-art-academy-style-preview
+  status: done
+  target_repo: silasfelinus/kind_robots
+  image_path: public/images/academy/styles/greek-vase-painting.webp
+  variant: image
+  size: 256x256
+  label: 'Academy style preview: Ancient Greek Vase Painting'
+  note: >-
+    Generated 2026-07-27 (ArtJob 2697, ArtImage 12885) confirming the render
+    relay is healthy again after a day-long backlog. Still needs delivery to
+    kind_robots via the home relay's direct media path (public/images/** is
+    git-ignored there) -- distribute_images.py no longer auto-prunes this kind
+    of entry once "done" (fixed same cycle, see conductor scripts/
+    distribute_images.py), so this record now persists as the visible signal
+    that delivery is the remaining step, not generation.
+  prompt: 'A museum-quality example of ancient Greek black-figure vase painting: a
+    single athlete or god shown in confident silhouetted profile, glossy black
+    figure on warm terracotta orange clay, fine incised linework detail,
+    decorative geometric border band along the edge, classical pottery
+    aesthetic, centered square composition, no text, no watermark
+
+    '
 inspirations:
 - project: ruler-hooked
   target_repo: silasfelinus/kind_robots

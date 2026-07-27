@@ -87,6 +87,55 @@ def test_write_collections_index_precedence(tmp_path, monkeypatch):
     assert "dreams" not in index
 
 
+def test_kind_robots_target_retained_not_pruned(tmp_path, monkeypatch):
+    """A kind_robots-targeted request must never be copied into a local
+    checkout or pruned from art-prompts.yaml, even when a kind_robots checkout
+    happens to exist locally — public/images/** is git-ignored there and
+    delivery goes through the relay's direct media path, not git. Copying it
+    in used to look like delivery and silently drop the pending-request
+    record with no trace of the file ever needing real delivery (conductor
+    ai-art-academy/t-010, 2026-07-27)."""
+    process_dir = tmp_path / "conductor" / "projects" / "process"
+    process_dir.mkdir(parents=True)
+    src = process_dir / "test-style.webp"
+    src.write_bytes(b"fake-image-bytes")
+
+    art_prompts = tmp_path / "conductor" / "projects" / "art-prompts.yaml"
+    art_prompts.write_text(
+        "images: []\n"
+        "requests:\n"
+        "- id: kind-robots-academy-style-preview-test-style\n"
+        "  source: ai-art-academy-style-preview\n"
+        "  status: done\n"
+        "  target_repo: silasfelinus/kind_robots\n"
+        "  image_path: public/images/academy/styles/test-style.webp\n"
+        "  variant: image\n"
+        "  size: 256x256\n"
+        "  label: 'Academy style preview: Test Style'\n"
+        "  prompt: 'a test style preview prompt'\n"
+    )
+
+    kr = tmp_path / "kind_robots"
+    (kr / "public" / "images").mkdir(parents=True)
+
+    monkeypatch.setattr(di, "REPO_ROOT", tmp_path / "conductor")
+    monkeypatch.setattr(di, "PROCESS_DIR", process_dir)
+    monkeypatch.setattr(di, "UNMATCHED_DIR", process_dir / "unmatched")
+    monkeypatch.setattr(di, "ART_GENERATE_FILE", tmp_path / "conductor" / "projects" / "art-generate.yaml")
+    monkeypatch.setattr(di, "ART_PROMPTS_FILE", art_prompts)
+    monkeypatch.setattr(di, "KIND_ROBOTS_ROOT", kr)
+    monkeypatch.setattr(di, "DRY_RUN", False)
+
+    di.distribute()
+
+    # File stays put -- never copied into the kind_robots checkout.
+    assert src.exists()
+    assert not (kr / "public" / "images" / "academy" / "styles" / "test-style.webp").exists()
+
+    # The request record survives untouched -- distribute() must not prune it.
+    assert "kind-robots-academy-style-preview-test-style" in art_prompts.read_text()
+
+
 def test_write_gallery_manifest_nested(tmp_path, monkeypatch):
     kr = make_images_tree(tmp_path)
     monkeypatch.setattr(di, "KIND_ROBOTS_ROOT", kr)
