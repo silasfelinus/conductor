@@ -240,3 +240,26 @@ type: pattern
 - Step (1) (dashboard-tab + tutorial art) remains blocked on the same shared render-backend backlog documented on ai-art-academy/t-004 -- rechecked this cycle via `recheck_render_queue.py` before picking this task, still growing (PENDING=112, oldestPending job 2017 ~63.1h old).
 
 **Suggested action:** the kaizen suggestion recorded on the task note this cycle (a small `createOwnedSingleton()` helper to collapse the now-5 duplicated ownership-check implementations into one reusable primitive) is worth turning into an actual follow-up task rather than letting a 6th ad-hoc singleton slip through uncovered in a future feature.
+
+## 2026-07-27 | Reviewer (conductor scheduled agent run) | model-builder/t-029 | audit
+
+**Decision:** merged conductor PR #1219 (roadmap-only follow-up to a burst-mode cycle's
+kind_robots PR #1049).
+
+**Detail:**
+- kind_robots PR #1049 implemented the exact `createOwnedSingleton()` helper this task's
+  previous cycle had recorded as its own kaizen suggestion — collapsing the 5 duplicated
+  ownership-check singletons (`generatingItemId`, `committingItemId`, `autoBuildingItemId`,
+  `batchingOutputKey`, `draftingField`) into one reusable primitive. Confirmed merged squash
+  `8e3de5c` before touching the roadmap.
+- Conductor PR #1219 had only flipped the task to `status: review` pending that merge; all
+  23 conductor CI checks were already green. Advanced the roadmap the rest of the way:
+  rearmed `status: ready` (this is a `recurring: true` task, so it never reaches `done`) and
+  appended a closing PROGRESS note recording the PR #1049 merge. Step (1), the dashboard-tab/
+  tutorial art, remains the sole outstanding original deliverable, still blocked on the
+  external art-generation relay per every prior cycle's note.
+- Purely mechanical refactor per the PR's own description (no behavior change) — nothing to
+  push back on.
+
+**Kaizen task:** deferred — the prior cycle's own kaizen (a `createOwnedSingleton()` helper)
+is what this PR just delivered; no new systematic gap surfaced this cycle to target.
