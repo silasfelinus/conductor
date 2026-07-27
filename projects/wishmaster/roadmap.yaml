@@ -86,14 +86,9 @@ tasks:
     owner: null
     passes: 0
     stakes: reversible
-    updated: "2026-07-13T00:00:00Z"
+    updated: '2026-07-27T02:10:41Z'
     note: >
-      UI polish + upgrade for the wishmaster front end now that the scaffold page is live
-      at /wishmaster. Steps: (1) generate final dashboard-tab art at
-      public/images/dashboard-tabs/conductor/wishmaster.webp and tutorial art at
-      public/images/tutorials/conductor/wishmaster.webp; (2) add a matching section for
-      'wishmaster' under tutorialChannels.conductor.sections in
-      kind_robots/stores/helpers/tutorialCards.ts; (3) verify the PROJECT Dream liveUrl
-      points at /wishmaster (admin can run the Conductor 'Placements' button to backfill
-      channelKey/tabKey/liveUrl); (4) evolve the placeholder scaffold page into the full
-      interactive experience for this project.
+      UI polish + upgrade for the wishmaster front end now that the scaffold page is live at /wishmaster. Steps: (1) generate final dashboard-tab art at public/images/dashboard-tabs/conductor/wishmaster.webp and tutorial art at public/images/tutorials/conductor/wishmaster.webp; (2) add a matching section for 'wishmaster' under tutorialChannels.conductor.sections in kind_robots/stores/helpers/tutorialCards.ts; (3) verify the PROJECT Dream liveUrl points at /wishmaster (admin can run the Conductor 'Placements' button to backfill channelKey/tabKey/liveUrl); (4) evolve the placeholder scaffold page into the full interactive experience for this project.
+      PROGRESS 2026-07-27 (conductor burst-mode rotation, claude-conductor-burst-20260727T020619Z-wm-t003): step (2) done -- added a 'wishmaster' section to tutorialChannels.conductor.sections in kind_robots/stores/helpers/tutorialCards.ts (image resolves via tutorialImage('conductor', 'wishmaster')). kind_robots PR #1031, awaiting CI. Checked the rest of the surface while in there: /wishmaster (wishmaster-page.vue) is already a real interactive page -- lists active/total/inactive Dream(dreamType: WISH) counts, a new-wish form wired to dreamStore.createDream, and a recent-wishes list -- not a placeholder scaffold, so step (4) is further along than the note implied; deeper evolution (Composition-backed wish -> costed plan -> assembled output per INTERFACE-DESIGN.md) stays needs-human gated since the Composition model itself doesn't exist yet (INTERFACE-DESIGN.md section 0/9) and scope.md/INTERFACE-DESIGN.md are both explicitly "not an implementation authorization." Step (1) art: the dashboard-tab image was already auto-queued in art-prompts.yaml (kind-robots-wishmaster-image-35c97a38); the tutorial image will auto-queue on the next intake pass now that step (2)'s reference exists -- same render-backend backlog affecting ai-art-academy/t-004 and newsfeed/t-022 applies here too, so no fresh check needed until that backlog signal changes. Step (3) (liveUrl backfill) remains an admin Placements-button action. Releasing the claim; kept at status: ready since steps (1)/(3)/(4) remain open, same convention as other projects' recurring "Polish and upgrade" tasks.
+    claimed_by: null
+    claimed_at: null
