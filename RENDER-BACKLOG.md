@@ -55,3 +55,6 @@ queueDepth: PENDING=115, RUNNING=2, DONE=1578, FAILED=62, CANCELLED=765 (all-tim
 
 ## 2026-07-27T00:06:03Z | ai-art-academy/t-010 | growing
 queueDepth: PENDING=144, RUNNING=1, DONE=1645, CANCELLED=765 (all-time). oldestPending: id=2017, age=219963s (~61.1h), engine=COMFY. windowThroughput (24h): PENDING=142, RUNNING=1, DONE=34. recentFailed: none.
+
+## 2026-07-27T02:05:55Z | ai-art-academy/t-004 | growing
+queueDepth: PENDING=112, RUNNING=1, DONE=1699, CANCELLED=765 (all-time). oldestPending: id=2017, age=227155s (~63.1h), engine=COMFY. windowThroughput (24h): PENDING=110, RUNNING=1, DONE=54. recentFailed: none.
