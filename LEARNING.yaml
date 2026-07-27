@@ -4467,3 +4467,18 @@ records:
     image and shipping a graceful per-style fallback (rather than waiting for all 33
     curriculum thumbnails to exist) let real progress land now instead of blocking on
     t-035''s much larger re-queue-and-regenerate batch.'
+- date: '2026-07-27'
+  project: media-watchlist
+  task: t-006
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'Third cycle in a row on this recurring polish task (2026-07-20, 2026-07-26,
+    2026-07-27) that found real server-side data already computed/accepted (CSV export
+    filters, then Year+comics+TV-season stats) sitting unused because the front end never
+    caught up. When touching a "polish the front end" task on a project whose backend
+    predates the UI work, diff the API response/query-param shape against what the
+    component actually renders/sends before assuming new backend scope is needed --
+    the gap is often pure wiring, which keeps the diff small and the pass clean.'

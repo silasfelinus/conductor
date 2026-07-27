@@ -203,3 +203,41 @@ standing note in this task) that flags when a `conductor/*-page.vue`
 `deliverables` list hasn't been touched in N cycles while the underlying
 roadmap has moved — this is now the second time this exact page's
 `deliverables` list silently went stale between polish passes.
+
+## 2026-07-27 | Reviewer → Worker | media-watchlist/t-006 | pattern
+
+**Decision:** merged (kind_robots PR #1051, squash 8033fe9)
+
+**Failure category:** n/a (clean first-pass success)
+
+**What was good:**
+- Correctly identified that BROWSE-UX.md §2 (Year filter) and §4 (Stats view:
+  comics read, TV seasons) were already fully supported server-side
+  (`index.get.ts`'s `year` param, `stats.get.ts`'s `comicIssuesRead`/
+  `tvSeasonCount`/`tvShowCount`) and simply never reached the UI — this kept
+  the diff to pure front-end wiring plus one small, consistent backend
+  addition (a `years` list on the stats response, `year` support on export)
+  instead of inventing new scope.
+- Kept the CSV export filter-parity discipline t-006's prior cycle
+  established: adding a UI filter (Year) came with the matching export
+  route change in the same PR, so "export what I'm looking at" stayed true.
+- Verified before merge: eslint clean, prettier clean (ran `--write` once,
+  reverified), full-project `vue-tsc --noEmit` exit 0 — same bar as every
+  prior cycle on this task.
+- Explicitly scoped out the Month/Season filters (also API-ready, UI-missing)
+  rather than growing the PR further, and filed them as this cycle's kaizen
+  task (t-012) instead of silently leaving the gap undocumented.
+
+**What to improve:**
+- Nothing specific to this cycle's implementation.
+
+**Kaizen task:** t-012 — wire the Month and Season filters from BROWSE-UX.md
+§2 into watchlist-browse.vue (server already accepts both; UI still doesn't
+expose them). `stakes: reversible`.
+
+**Pattern note:** This is the third media-watchlist/t-006 cycle in a row
+(2026-07-20, 2026-07-26, 2026-07-27) that found real, already-computed
+server-side data sitting unused because the UI never caught up — CSV export
+in the prior cycle, Year+comics+TV-seasons in this one. Worth checking new
+stats/browse API fields against the UI on every future touch of this file,
+since the pattern keeps recurring rather than being a one-off.
