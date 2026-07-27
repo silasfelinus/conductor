@@ -315,6 +315,17 @@ def process(path: Path, dry_run: bool) -> str:
         # recently. Drop the event rather than patch over newer state -- replaying
         # it again next cycle can never become non-stale, since roadmap timestamps
         # only move forward.
+        if event.get("learning") or event.get("note"):
+            # conductor/t-086: a stale event can carry a learning/note payload that
+            # would otherwise vanish with no trace beyond this terse skip line (the
+            # near-miss that motivated this task -- see TALKBACK.md 2026-07-26). Make
+            # the loss impossible to miss instead of relying on a session noticing the
+            # file in task-events/ by chance before this unlink() runs.
+            print(
+                f"WARNING {path.relative_to(ROOT)}: dropping STALE event for "
+                f"{project}/{task_id} that carries a learning/note payload -- {reason}",
+                file=sys.stderr,
+            )
         if not dry_run:
             path.unlink()
         return f"{project}/{task_id}: STALE skip ({operation}) -- {reason}"
