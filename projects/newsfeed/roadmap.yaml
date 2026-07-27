@@ -692,8 +692,8 @@ tasks:
   - id: t-022
     milestone: m3
     title: 'Wire a pool of default placeholder images into feed-card.vue for items with no image'
-    status: claimed
-    owner: worker
+    status: ready
+    owner: null
     passes: 0
     stakes: reversible
     note: >
@@ -739,6 +739,22 @@ tasks:
       spending a pass. Releasing the claim, no code change. Whoever picks
       this up next: re-check the defaults/ directory and the 8 queue entries
       before starting the wiring half.
-    claimed_by: claude-conductor-burst-20260727T2100Z-nf-t022
-    claimed_at: '2026-07-27T21:09:20Z'
-    updated: '2026-07-27T21:09:20Z'
+
+      RECHECKED 2026-07-27 ~21:00 UTC (claude-conductor-burst-20260727T2100Z-nf-t022):
+      the 8 kind-robots-newsfeed-default-0N entries were NOT actually present
+      in projects/art-prompts.yaml this session (grep found zero matches, and
+      the images still don't exist in kind_robots public/images/newsfeed/defaults/)
+      despite this note's 2026-07-25/26 claims that they were queued and
+      pending -- this repo checkout is shallow so the exact history of how
+      they went missing (never pushed vs. pruned by a stale already_satisfied
+      check) couldn't be confirmed. Re-added all 8 entries fresh this session
+      (same ids, same target path/size as originally specified) so the
+      self-draining art pipeline can actually pick them up. Whoever picks
+      this up next: verify public/images/newsfeed/defaults/ has all 8 files
+      AND that the art-prompts.yaml entries are still present/pending
+      (don't assume either from this note alone) before starting the wiring
+      half, and if they've vanished again without the images existing,
+      escalate to needs-human rather than re-queuing a third time.
+    claimed_by: null
+    claimed_at: null
+    updated: '2026-07-27T21:11:23Z'
