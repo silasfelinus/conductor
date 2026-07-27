@@ -1989,3 +1989,76 @@ by hand from the start rather than stumbling onto the collision independently.
 
 **Kaizen task:** none filed separately — already covered by conductor/t-084 (in review as of
 this entry).
+
+## 2026-07-27 | Reviewer (conductor agent run) | ai-art-academy/t-004 | pattern
+type: pattern
+
+**Subject:** t-004's real blocker isn't the render queue (which cleared this cycle) — it's that
+every `mode: lora` entry in `style-lora-registry.md` uses an HF-repo-slug `lora_name`
+(e.g. `UmeAiRT/FLUX.1-dev-LoRA-Impressionism`) that ComfyUI's `LoraLoaderModelOnly` cannot
+resolve, because none of those weights were ever actually downloaded onto the home relay
+(the registry's own header says so: "research complete — no downloads performed"). But the
+relay is NOT empty of style LoRAs — `GET /api/resources` (machine-auth, no special scope)
+returns a 2382-row synced catalog of everything actually present, and it includes a
+Kontext-native "style pack" (53 `supportedServer: KONTEXT` rows) with real, ComfyUI-loadable
+`localPath` values and baked-in trigger phrases that directly match several curriculum styles:
+
+- `impressionism` → `Kontext/SFW/impressionist.safetensors` (trigger: "Convert this image into
+  impressionist art style")
+- `cubism` → `Kontext/SFW/cubist.safetensors` ("...cubist art style") — registry currently has
+  this as `mode: prompt`; this would be a real upgrade candidate
+- `oil-painting` → `Kontext/SFW/oil_painting.safetensors` ("...heavy oil paint brush strokes
+  style") — registry's existing `mode: lora` entry points at the wrong (HF) path; swap it
+- `watercolor` → `Kontext/SFW/watercolor.safetensors` or `watercolor_art_style.safetensors` —
+  same wrong-path issue
+- `pop-art` → `Kontext/SFW/popart.safetensors` — same wrong-path issue
+- `illuminated-manuscript` → `Kontext/SFW/manuscript_illustration_kontext.safetensors`
+  ("...make it a manuscript illustration") — same wrong-path issue
+
+None of the other `mode: lora` entries (art-nouveau, renaissance-fresco, expressionism,
+northern-renaissance, symbolism, sumi-e, neoclassicism, post-impressionism-van-gogh) have a
+match in this catalog — those genuinely need the actual weight file placed on the relay
+(Silas's home box) before any LoRA-mode test can run; that part of the blocker is real and
+`actionable`, not something an agent session can route around.
+
+**Detail:**
+- Confirmed the failure mode directly, not just by inference: enqueued a live job with
+  `loraName: "UmeAiRT/FLUX.1-dev-LoRA-Impressionism"` (`POST /api/art/enqueue`,
+  `engine: kontext`) — it errored `value_not_in_list ... not in (list of length 2096)` at the
+  `LoraLoaderModelOnly` node. The relay has 2096+ loras loaded; that specific HF slug just
+  isn't one of the local filenames.
+- Confirmed the harness end-to-end on the *prompt-mode* arm instead: same endpoint, no
+  `loraName`, prompt = the registry's existing `ukiyo-e` `prompt_hint`, source image =
+  `projects/images/ai-art-academy-card.webp` (the project's own hero/card art — a museum
+  gallery scene with several human figures, a robot, a dragon mascot, and a painting-within-
+  the-image, 512×768). Job succeeded end-to-end (`artImageId` returned, image downloaded and
+  viewed). Composition and the painting-within-painting held up well and the ukiyo-e look
+  (flat color planes, bold outlines) came through clearly, but the robot and dragon mascots
+  were both reinterpreted as human figures — worth watching for on other styles too: style
+  fidelity can come at the cost of preserving non-human/mascot subjects specifically, which
+  the curriculum's normal "does it keep the person's face" framing doesn't cover.
+- This card image is a reasonable candidate for the task's "fixed test image": rights-clean
+  (it's the project's own art), portrait orientation matching the Remix Studio's typical
+  input, and visually complex enough (multiple faces, an existing artwork inside the frame,
+  architectural line work, a non-human mascot) to stress composition preservation harder than
+  a plain single-subject photo would.
+- Did not implement any of this into `style-remix-configs.yaml` myself: `claim_task.py`
+  returned `ALREADY_CLAIMED` for this task (owner=worker, session
+  `2026-07-27T05-14-00Z-aa-t004-abtest`, claimed ~1 minute before this session's own attempt)
+  — a live collision, not a stale claim. Posting this here instead of implementing, so
+  whoever holds the claim doesn't have to re-derive the registry-path bug or re-discover the
+  `/api/resources` catalog from scratch. Left the two probe jobs (2602 ukiyo-e prompt-mode,
+  succeeded; 2603 impressionism with the broken HF-path loraName, failed as described above)
+  in the queue as-is — both are harmless, real evidence either session is free to reuse or
+  ignore.
+
+**Suggested action:** whoever is holding the t-004 claim: swap the six wrong-path registry
+entries above to their real `localPath` values and actually run their A/B (they're free right
+now — no download needed), demote-or-flag the remaining unmatched `mode: lora` entries as
+`actionable`/needs-Silas (weight file must be placed on the relay directly, which no agent
+session can do), and consider `impressionist`/`Kontext/SFW/impressionist.safetensors` as a
+priority since the Academy's `impressionism` movement already has no working LoRA otherwise. A
+kaizen candidate for the next full sweep of `style-lora-registry.md`: cross-check the *whole*
+`mode: lora` list against `GET /api/resources` (filter `resourceType: LORA|LYCORIS`,
+`supportedServer: KONTEXT|FLUX`) before trusting any HF-repo-slug `lora_name` as loadable —
+this bug likely affects every entry in the registry, not just the six confirmed above.
