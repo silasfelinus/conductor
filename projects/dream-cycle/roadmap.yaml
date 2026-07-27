@@ -526,11 +526,11 @@ tasks:
   - id: t-018
     milestone: m5
     title: Seed each daily dream from 1-2 live facets (genre mixing for fresher ideas)
-    status: claimed
+    status: review
     owner: worker
     passes: 0
     stakes: reversible
-    updated: '2026-07-27T06:11:33Z'
+    updated: '2026-07-27T06:14:41Z'
     note: >
       Silas 2026-07-20: to get fresher, more original daily dreams, the creation
       should START by choosing 1-2 genres from our Facet rows (GET /api/facets) and
@@ -543,6 +543,8 @@ tasks:
       to keep spreading). Keep the recently-used-vibe guard. Was explicitly out of
       scope for the 2026-07-20 slug/image cleanup; captured here as the next
       loop-quality refinement.
+
+      DONE 2026-07-27 (~06:15-06:45 UTC, conductor scheduled burst-mode rotation): added fetch_live_genre_facets() to scripts/build_dream_proposal.py -- a best-effort GET against https://kind-robots.vercel.app/api/facets?taxonomy=GENRE (confirmed reachable and returning 100+ real GENRE facets, e.g. "Dark Academia", "Cosmic Dread", "Municipal Necromancy" -- far more variety than the 28-entry hardcoded GENRE_FAMILIES list). _genre_spark() now takes an optional pool/recent_vibes and defaults to live facets, falling back to GENRE_FAMILIES on any fetch failure (network error, bad JSON, empty/malformed body) so the sweep never blocks on the API being down. Weighting: filters out any pool entry whose text overlaps a recent vibe line from recent_vibes_and_names() (the existing "don't echo the last few days" guard) unless that would leave fewer than 3 candidates, in which case it falls back to the full pool rather than erroring. print_brief() reports which source produced the day's spark ("live kind_robots GENRE facets" vs the fallback label) so a reader of the brief output can tell live data was actually used. Verified live via `python scripts/build_dream_proposal.py --brief` (returned real facets: Arabian Nights Redux, Mystery, Dark Academia). Added 8 new unit tests to tests/test_build_dream_proposal.py covering fetch_live_genre_facets (success, inactive/blank/dup filtering, network error, malformed body) and _genre_spark (determinism, recency weighting, fallback-when-too-few-fresh, live-vs-fallback pool selection) -- full suite grew from 608 to 616 collected (615 passed, 1 pre-existing skip). No kind_robots changes needed; this is conductor-only (build_dream_proposal.py runs in this repo).
     claimed_by: claude-conductor-burst-20260727T061132Z-dc-t018
     claimed_at: '2026-07-27T06:11:33Z'
 

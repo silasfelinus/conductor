@@ -62,6 +62,8 @@ import glob
 import json
 import re
 import sys
+import urllib.error
+import urllib.request
 from pathlib import Path
 from typing import Any, Optional
 
@@ -585,6 +587,9 @@ def _write(proposal: dict[str, Any], date: str, dry_run: bool) -> Optional[Path]
 # Distant genre/tone families to rotate through, so the daily dream stops
 # converging on one cozy-lantern mood. The brief surfaces a date-seeded few as the
 # day's "genre spark" — a push away from yesterday, not a hard constraint.
+# Fallback only: _genre_spark() prefers live GENRE facets from kind_robots
+# (dream-cycle/t-018) and only falls back to this fixed list when the site is
+# unreachable, so this can go stale without breaking anything.
 GENRE_FAMILIES = [
     "hardboiled noir", "cosmic/eldritch horror", "hard science fiction",
     "weird western", "high-stakes heist", "folk horror", "cyberpunk",
@@ -596,6 +601,34 @@ GENRE_FAMILIES = [
     "hardscrabble frontier", "psychedelic surrealism", "wuxia",
     "cozy mystery (but make the genre feel unmistakable)",
 ]
+
+FACETS_API_URL = "https://kind-robots.vercel.app/api/facets?taxonomy=GENRE"
+
+
+def fetch_live_genre_facets(timeout: int = 8) -> Optional[list[str]]:
+    """Best-effort pull of live GENRE facet titles from kind_robots (dream-cycle/t-018),
+    so the day's genre spark is grounded in the site's real, growing taxonomy instead
+    of the fixed GENRE_FAMILIES list. Returns None on ANY failure (network, HTTP,
+    malformed body, empty result) so callers fall back to GENRE_FAMILIES — this must
+    never block or fail the sweep on an unreachable API."""
+    try:
+        with urllib.request.urlopen(FACETS_API_URL, timeout=timeout) as resp:
+            body = json.loads(resp.read())
+    except (urllib.error.URLError, urllib.error.HTTPError, OSError, TimeoutError,
+            json.JSONDecodeError, ValueError):
+        return None
+    data = body.get("data") if isinstance(body, dict) else None
+    if not isinstance(data, list):
+        return None
+    titles = [
+        f["title"].strip()
+        for f in data
+        if isinstance(f, dict) and isinstance(f.get("title"), str)
+        and f["title"].strip() and f.get("isActive", True)
+    ]
+    # de-dup, keep API order
+    titles = list(dict.fromkeys(titles))
+    return titles or None
 
 
 def _recent_proposals(limit: int = 6) -> list[str]:
@@ -631,19 +664,37 @@ def recent_vibes_and_names(limit: int = 6) -> tuple[list[str], list[str]]:
     return list(dict.fromkeys(vibes)), list(dict.fromkeys(names))
 
 
-def _genre_spark(date: str) -> list[str]:
-    """A deterministic-by-date pick of distant genre families for the day."""
+def _genre_spark(date: str, pool: Optional[list[str]] = None,
+                  recent_vibes: Optional[list[str]] = None) -> list[str]:
+    """A deterministic-by-date pick of distant genre families for the day.
+
+    `pool` defaults to live GENRE facets fetched from kind_robots (dream-cycle/t-018),
+    falling back to the fixed GENRE_FAMILIES list when the site is unreachable or
+    returns nothing usable — this must always produce a spark, live or not. Weights
+    away from any pool entry that echoes a recently-used vibe line (Silas's "don't
+    echo the last few days" rule) by preferring the subset that doesn't, when that
+    subset is large enough to still offer real choice.
+    """
+    if pool is None:
+        pool = fetch_live_genre_facets() or GENRE_FAMILIES
+    if recent_vibes is None:
+        recent_vibes, _ = recent_vibes_and_names()
+    recent_lower = [v.lower() for v in recent_vibes]
+    fresh = [g for g in pool if not any(g.lower() in v or v in g.lower() for v in recent_lower)]
+    candidates = fresh if len(fresh) >= 3 else pool
     seed = sum(ord(c) for c in date)
-    return [GENRE_FAMILIES[(seed + i * 7) % len(GENRE_FAMILIES)] for i in range(3)]
+    return [candidates[(seed + i * 7) % len(candidates)] for i in range(3)]
 
 
 def print_brief() -> None:
     """Print the authoring brief for the sweeping agent (spec + slugs/vibes to avoid)."""
     avoid = ", ".join(sorted(existing_slugs())) or "(none yet)"
     vibes, names = recent_vibes_and_names()
-    spark = _genre_spark(_target_date())
+    live_facets = fetch_live_genre_facets()
+    spark = _genre_spark(_target_date(), pool=live_facets or GENRE_FAMILIES, recent_vibes=vibes)
+    spark_source = "live kind_robots GENRE facets" if live_facets else "fallback list (kind_robots facets API unreachable)"
     print(BRIEF)
-    print(f"\nGENRE SPARK for today (choose 1-2, or go somewhere just as far): "
+    print(f"\nGENRE SPARK for today, from {spark_source} (choose 1-2, or go somewhere just as far): "
           f"{', '.join(spark)}.")
     print("Choose the OCCUPATION and ANIMAL/SPECIES before inventing the location; "
           "do not let either become decorative garnish.")
