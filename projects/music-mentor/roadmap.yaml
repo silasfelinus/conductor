@@ -144,15 +144,35 @@ tasks:
   - id: t-007
     milestone: m3
     title: "Accuracy pass — evaluate a heavier pitch model"
-    status: review
-    owner: worker
+    status: done
+    owner: null
     passes: 0
     stakes: reversible
     updated: '2026-07-27T03:07:49Z'
     note: >
-      The MVP uses a dependency-free autocorrelation pitch tracker (good for
-      monophonic takes, degrades on mixed/polyphonic audio). Evaluate a stronger
-      option (e.g. pitchy / a YIN lib / CREPE) behind the same feature-summary
-      shape so the endpoint and page don't change.
+      The MVP uses a dependency-free autocorrelation pitch tracker (good for monophonic takes, degrades on mixed/polyphonic audio). Evaluate a stronger option (e.g. pitchy / a YIN lib / CREPE) behind the same feature-summary shape so the endpoint and page don't change.
+
+      DONE 2026-07-27 (claude-scheduled-20260727T030748Z-mm-t007): implemented a YIN pitch detector (de Cheveigne & Kawahara 2002) in kind_robots composables/useAudioAnalysis.ts, kept the old tracker as detectPitchAutocorrelation for reference, and added a synthetic accuracy suite (utils/scripts/verifyPitchDetectorAccuracy.test.ts) comparing them on pure/harmonic-rich/noisy tones across 75-1046Hz. Results: YIN detected 35/35 test frames vs. autocorrelation's 32/35 (missed low-register 75-82Hz tones specifically), both 0 octave errors, YIN median 0.7c error vs 0.9c. Switched analyzeAudioFile to YIN. No change to AudioFeatureSummary, the endpoint, or the page. Did not pursue CREPE (would need TensorFlow.js + model weights, at odds with the project's dependency-free client-side design) or pitchy (an npm dependency) since a hand-rolled YIN matched the existing code's style and closed the gap already found. Merged via kind_robots PR #1036.
     claimed_by: claude-scheduled-20260727T030748Z-mm-t007
     claimed_at: '2026-07-27T03:07:49Z'
+
+  - id: t-009
+    milestone: m3
+    title: "Add a small real-vocal-clip fixture corpus for pitch-detector accuracy testing"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-27T03:07:49Z'
+    note: >
+      Kaizen from t-007 (2026-07-27): the YIN-vs-autocorrelation accuracy comparison in
+      utils/scripts/verifyPitchDetectorAccuracy.test.ts is necessarily synthetic (sine
+      tones + synthetic harmonics/noise) — no real vocal audio was available in-sandbox.
+      Synthetic tones can't capture breathiness, vibrato depth, or true polyphonic bleed,
+      which is where a real accuracy difference between trackers would actually show up.
+      Source 2-4 short (5-15s) public-domain a cappella or solo-vocal clips (respecting
+      the same PUBLIC-DOMAIN-POLICY.md standard used elsewhere), commit them as test
+      fixtures, and extend the accuracy suite to run both detectors against them —
+      reporting median/max cents drift and voiced-percent rather than a pass/fail
+      assertion, since there's no absolute ground-truth pitch track for real recordings
+      without a reference annotation tool.
