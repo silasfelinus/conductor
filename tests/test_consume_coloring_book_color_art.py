@@ -1,6 +1,7 @@
 from pathlib import Path
 
 import pytest
+import yaml
 
 from scripts import consume_coloring_book_color_art as mod
 
@@ -106,3 +107,44 @@ def test_recover_returns_none_on_unreachable_backend(monkeypatch):
     monkeypatch.setattr(mod.consumer, "http_json", lambda method, url: (503, None))
 
     assert mod.recover_timed_out_job(entry(), 2702) is None
+
+
+def test_build_entries_carries_semantic_gate_error_onto_the_consumption_entry(monkeypatch, tmp_path):
+    # Regression: build_entries() previously only copied a fixed allowlist of
+    # fields from the raw queue source onto the entry used by main()'s loop,
+    # silently dropping semantic_gate_error. referenced_job_id(entry) then
+    # always saw None in production, so recover_timed_out_job() never fired
+    # and a live run submitted a genuine duplicate ArtJob for a concept whose
+    # prior job had already completed (mr-001 -> job 2715 alongside the
+    # already-DONE job 2702, caught live 2026-07-27).
+    queue_file = tmp_path / "color-art-jobs.yaml"
+    queue_file.write_text(
+        yaml.safe_dump(
+            {
+                "defaults": {},
+                "books": [
+                    {
+                        "slug": "monster-recast",
+                        "entries": [
+                            {
+                                "id": "mr-001",
+                                "status": "pending",
+                                "title": "Perfect Woman",
+                                "prompt": "A vampire family portrait",
+                                "image_path": "projects/coloring-book/sets/monster-recast/generated/mr-001.webp",
+                                "semantic_gate_error": "job 2702 timed out after 600s (still queued/running)",
+                                "semantic_gate_error_at": "2026-07-27T13:51:38Z",
+                            }
+                        ],
+                    }
+                ],
+            }
+        ),
+        encoding="utf-8",
+    )
+    monkeypatch.setattr(mod, "QUEUE_FILE", queue_file)
+
+    _queue, entries = mod.build_entries("monster-recast")
+
+    assert len(entries) == 1
+    assert mod.referenced_job_id(entries[0]) == 2702

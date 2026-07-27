@@ -190,6 +190,7 @@ def build_entries(book_filter: str | None = None) -> tuple[dict[str, Any], list[
                 "semantic_attempts": semantic_attempts,
                 "source_ref": source.get("source_ref"),
                 "reference_images": source.get("reference_images") or [],
+                "semantic_gate_error": source.get("semantic_gate_error"),
             }
             # Steps: only pin when defaults/source ask for it, otherwise let each
             # engine run at its native cadence (Krea2 8, Klein 4, Flux-dev 30/36).
