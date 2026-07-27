@@ -1475,6 +1475,29 @@ tasks:
       per-style `deployment_gap` notes).
     claimed_at: null
 
+  - id: t-045
+    milestone: m2
+    title: Re-run LoRA arm for the 5 styles with recorded loraPath and promote winners to mode lora
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-044
+    updated: '2026-07-27T07:15:00Z'
+    note: >
+      Kaizen follow-up from t-004 (PR #1207, merged 2026-07-27). Once t-044's
+      lora_name mismatch is fixed, re-run the LoRA arm in
+      docs/style-remix-configs.yaml for the 5 styles that already have a
+      recorded loraPath/loraTrigger/loraWeight and a real relay-cataloged
+      file (impressionism, illuminated-manuscript, watercolor, oil-painting,
+      pop-art) against the same fixed reference image (ArtJob 2604 / ArtImage
+      12777) and remix seed (909090) used for their prompt-only arm, so the
+      comparison is apples-to-apples. Promote any style whose LoRA render
+      beats its existing prompt-only winner to `mode: lora`, updating the
+      `winner`/`evidence` fields in place. No new research needed -- this is
+      purely re-running jobs once the naming bug is fixed.
+    claimed_at: null
+
   - id: t-043
     milestone: m6
     title: 'FOR SILAS: decide how to use the rights-clear Winold Reiss portraits in the Harlem Renaissance candidate'

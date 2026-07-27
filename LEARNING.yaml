@@ -4405,3 +4405,18 @@ records:
     default with a same-signature fallback (here, GENRE_FAMILIES) and never let the fetch failure mode
     (network, HTTP, bad JSON, empty body) propagate past a None return, so a scheduled sweep can never
     be blocked by an external API being down.'
+- date: '2026-07-27'
+  project: ai-art-academy
+  task: t-004
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: actionable
+  lesson: 'Verifying a "wired but unverified" code path (t-037''s LoraLoaderModelOnly node) against
+    a real render, rather than trusting that it works because the graph compiles, surfaced a genuine
+    production bug affecting every BUILTIN_STYLES LoRA remix, not just this task''s registry
+    candidates — worth budgeting one real end-to-end render per newly-wired-but-unverified node
+    before building further work on top of it. The actionable half (LoRA loading itself) was
+    correctly split into its own task (t-044) rather than blocking the task''s actual deliverable
+    (a recorded config per style), which shipped complete at mode: prompt for all 18 styles.'

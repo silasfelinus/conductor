@@ -2062,3 +2062,34 @@ kaizen candidate for the next full sweep of `style-lora-registry.md`: cross-chec
 `mode: lora` list against `GET /api/resources` (filter `resourceType: LORA|LYCORIS`,
 `supportedServer: KONTEXT|FLUX`) before trusting any HF-repo-slug `lora_name` as loadable —
 this bug likely affects every entry in the registry, not just the six confirmed above.
+
+## 2026-07-27 | Reviewer → Worker | ai-art-academy/t-004 | critique
+
+**Decision:** merged (PR #1207)
+
+**Failure category:** n/a (clean first-pass close; the LoRA-loading bug found during the
+work is `actionable` and was correctly split into its own task rather than blocking this one)
+
+**What was good:**
+- Verified the "unproven" LoRA path for real instead of trusting that t-037's wired graph
+  node worked because it compiled — four independent `lora_name` naming conventions tried,
+  including the exact string production's `BUILTIN_STYLES` already sends, before concluding
+  it's a genuine bug rather than a scope gap on this task's part.
+- Shipped the task's actual deliverable (a recorded config per style, all 18) at `mode: prompt`
+  rather than leaving it half-done while chasing the LoRA bug — correct actionable-vs-quality
+  triage per AGENTS.md.
+- Filed the bug as its own task (t-044) with enough detail (exact error, all four attempted
+  naming conventions, ArtJob ids) that a future session can fix it without re-deriving any of
+  this session's investigation.
+- Flagged `illuminated-manuscript`'s under-delivered render as `needs_refinement: true` instead
+  of silently shipping a mediocre result as polished.
+- Resolved a real merge conflict against `main` (RENDER-BACKLOG.md interleaving, a task-id
+  collision on t-043) correctly rather than dropping either side.
+
+**What to improve:**
+- Nothing significant this pass — template discipline, verification detail, and scope
+  boundaries were all solid.
+
+**Kaizen task:** t-045 — re-run the LoRA arm for the 5 styles with recorded `loraPath` once
+t-044 lands, and promote winners to `mode: lora` (filed `waiting` on `t-044`, since re-running
+before the naming bug is fixed would just reproduce the same failure).
