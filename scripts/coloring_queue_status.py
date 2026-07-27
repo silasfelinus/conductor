@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 from collections import Counter
 from pathlib import Path
 from typing import Any
@@ -10,6 +11,7 @@ from typing import Any
 import yaml
 
 DEFAULT_QUEUE = Path("projects/coloring-book/color-art-jobs.yaml")
+JOB_ID_PATTERN = re.compile(r"\bjob\s+#?(\d+)\b", re.IGNORECASE)
 
 
 def load_queue(path: Path) -> dict[str, Any]:
@@ -17,6 +19,16 @@ def load_queue(path: Path) -> dict[str, Any]:
     if not isinstance(data, dict):
         raise ValueError("queue root must be a mapping")
     return data
+
+
+def duplicate_values(values: list[Any]) -> list[Any]:
+    counts = Counter(value for value in values if value is not None)
+    return sorted(value for value, count in counts.items() if count > 1)
+
+
+def semantic_gate_job_id(entry: dict[str, Any]) -> int | None:
+    match = JOB_ID_PATTERN.search(str(entry.get("semantic_gate_error", "")))
+    return int(match.group(1)) if match else None
 
 
 def summarize_queue(data: dict[str, Any], book_slug: str, batch_size: int | None = None) -> dict[str, Any]:
@@ -44,16 +56,10 @@ def summarize_queue(data: dict[str, Any], book_slug: str, batch_size: int | None
         raise ValueError("batch size must be at least 1")
     next_batch = clean_pending[:effective_batch_size]
 
-    job_ids: list[int] = []
-    duplicate_job_ids: list[int] = []
-    for entry in errored:
-        message = str(entry.get("semantic_gate_error", ""))
-        parts = message.split()
-        if len(parts) >= 2 and parts[0] == "job" and parts[1].isdigit():
-            job_id = int(parts[1])
-            if job_id in job_ids and job_id not in duplicate_job_ids:
-                duplicate_job_ids.append(job_id)
-            job_ids.append(job_id)
+    semantic_job_ids = [job_id for entry in errored if (job_id := semantic_gate_job_id(entry)) is not None]
+    duplicate_job_ids = duplicate_values(semantic_job_ids)
+    duplicate_entry_ids = duplicate_values([entry.get("id") for entry in normalized])
+    duplicate_slots = duplicate_values([entry.get("slot") for entry in normalized])
 
     def entry_summary(entry: dict[str, Any]) -> dict[str, Any]:
         return {
@@ -62,9 +68,11 @@ def summarize_queue(data: dict[str, Any], book_slug: str, batch_size: int | None
             "status": entry.get("status"),
             "semantic_gate_error": entry.get("semantic_gate_error"),
             "semantic_gate_error_at": entry.get("semantic_gate_error_at"),
+            "semantic_gate_job_id": semantic_gate_job_id(entry),
         }
 
-    retry_safe = len(errored) == 0 and len(duplicate_job_ids) == 0
+    queue_integrity_safe = len(duplicate_entry_ids) == 0 and len(duplicate_slots) == 0
+    retry_safe = len(errored) == 0 and len(duplicate_job_ids) == 0 and queue_integrity_safe
     actionable = retry_safe and len(next_batch) > 0
 
     return {
@@ -77,6 +85,9 @@ def summarize_queue(data: dict[str, Any], book_slug: str, batch_size: int | None
         "next_batch": [entry_summary(entry) for entry in next_batch],
         "blocked_pending": [entry_summary(entry) for entry in errored],
         "duplicate_semantic_gate_job_ids": duplicate_job_ids,
+        "duplicate_entry_ids": duplicate_entry_ids,
+        "duplicate_slots": duplicate_slots,
+        "queue_integrity_safe": queue_integrity_safe,
         "retry_safe": retry_safe,
         "actionable": actionable,
         "actionable_count": len(next_batch) if retry_safe else 0,
