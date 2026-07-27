@@ -1,4 +1,4 @@
-updated: "2026-07-26T17:38:00-07:00"
+updated: "2026-07-27T10:14:33+00:00"
 
 pitches:
   - id: bioluminescent-tide
@@ -431,3 +431,41 @@ pitches:
       - at least one full vignette (start pose to resolution pose) completes within twenty seconds
       - backlight drift is visible across a loop without ever fully silhouette-flattening or washing out a puppet
       - hand-shadow interaction never blocks or offsets the actual page pointer
+
+  - id: kintsugi-weather
+    title: Kintsugi Weather
+    status: pitched
+    priority: 17
+    surprise: >
+      Hairline fractures quietly travel through a transparent porcelain-like surface, then
+      repair themselves with warm gold seams before fading back into an unbroken glaze.
+    passive_loop: >
+      Small stress lines nucleate at sparse edge points, branch across a bounded local region,
+      pause, and then heal from root to tip as luminous seams chase the crack geometry. Healed
+      seams cool and dissolve before the next fracture begins elsewhere, creating a slow cycle
+      of breakage, repair, and renewal without covering the whole desktop.
+    optional_interaction: >
+      Pointer warmth accelerates healing near the cursor. A click introduces one short-lived
+      hairline crack at that location while allowing the underlying page click to continue.
+    technique: >
+      Canvas 2D or SVG path graph with deterministic branching segments, cached crack
+      geometry, animated stroke-dash offsets for the repair pass, and soft additive gold
+      gradients.
+    reduced_motion: >
+      One static repaired seam with a very slow gold-temperature shift; no new cracks,
+      branching, pointer acceleration, or click-created fractures.
+    performance_risk: >
+      Unbounded recursive branching and blur-heavy gold strokes could increase draw cost. Cap
+      graph depth and active crack count, cache path geometry, and use a small fixed blur
+      radius.
+    novelty: >
+      The core loop is visible damage followed by kintsugi-style repair. It is distinct from
+      stained-glass-rain's persistent polygon panes, ink-oracle's fluid diffusion, and
+      magnetic-sand-garden's granular rearrangement; none of the existing pitches uses a
+      fracture-and-heal lifecycle or repair as the visual payoff.
+    acceptance:
+      - a complete crack-to-gold-repair-to-clear cycle finishes within thirty seconds
+      - no more than two crack systems are active simultaneously
+      - gold seams remain readable on light and dark themes without obscuring page content
+      - reduced-motion mode creates no new fractures
+      - pointer and click interactions never block underlying page input
