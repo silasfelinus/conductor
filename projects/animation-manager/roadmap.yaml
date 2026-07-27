@@ -188,7 +188,7 @@ tasks:
   - id: t-006
     milestone: m5
     title: "Research and pitch one genuinely new passive animation"
-    status: review
+    status: ready
     owner: reviewer
     passes: 0
     stakes: reversible
@@ -206,9 +206,11 @@ tasks:
       Added Kintsugi Weather as the 2026-07-25 passive-animation research pitch on worker/animation-manager-t-006-20260725-8f2c. Reviewed and merged conductor PR #1043 (all 22 CI checks green, additive-only pitch YAML) -- re-armed to ready per the recurring-task convention.
 
       FIXED 2026-07-27 (~10:14-10:20 UTC, conductor scheduled burst-mode rotation, reviewer/20260727T0940Z-am-t006-pitch-consolidation): PR #1043's Kintsugi Weather pitch was never actually consolidated into PITCHES.yaml -- its "Flags for Reviewer" note said as much explicitly (stored as a dated additive file under projects/animation-manager/pitches/ to avoid an unsafe connector-side full-file rewrite, "a later consolidation pass can fold dated pitch artifacts into the canonical queue once the repository exposes a safe append processor"). Confirmed via `git log -- PITCHES.yaml` that no commit since #1021 (2026-07-22) had touched the file, while `projects/animation-manager/pitches/2026-07-25-kintsugi-weather.yaml` sat orphaned -- kintsugi-weather was invisible to check_animation_novelty.py and to t-007's "highest-priority unbuilt pitch" pick, even though PR #1043 reported success. Built the missing processor per the kaizen suggestion: new `scripts/consume_animation_pitches.py` drains dated `projects/animation-manager/pitches/*.yaml` artifacts into PITCHES.yaml as a targeted text insertion (not a full YAML re-dump, which would reformat every existing entry's folded-scalar style), authoritatively renumbers `priority` to max+1 (never trusts the artifact's own value, so two artifacts queued out of order can't collide), validates the merged result against `check_animation_novelty.py --strict` on a temp copy before writing anything real, and deletes the artifact once consumed. Dry-run by default, `--live` to apply. Added `tests/test_consume_animation_pitches.py` (10 cases: no-op, dry-run leaves files untouched, live run consolidates + deletes, priority is recomputed not trusted, `created` field dropped from the canonical entry, duplicate id is skipped and its stale artifact removed, invalid artifact is skipped not fatal, a genuine novelty collision aborts with nothing written, folded vs plain field formatting). Ran it live: kintsugi-weather (priority 17, no novelty collisions across all 17 pitches) is now in PITCHES.yaml and the orphaned artifact file is gone. Full `pytest` suite green (632 passed, 1 skipped). Not spending this cycle's daily-pitch pass on a new pitch -- today's Pacific slot is better used consolidating the backlog than adding to it while the drain gap existed. Re-arming to ready per the recurring-task convention.
-    claimed_by: 20260727T0940Z-am-t006-pitch-consolidation
-    claimed_at: '2026-07-27T10:14:12Z'
-    updated: '2026-07-27T10:15:28Z'
+
+      ROADMAP-ACCURACY FIX 2026-07-27T17:05:00Z (conductor scheduled Agent run, ai-art-academy/t-010 lane 2): `status:` was left at `review` by conductor PR #1216 even though that same PR's own note text says "Re-arming to ready per the recurring-task convention" -- classic note/field drift (AGENTS.md's task-events-race pattern, just via a manual PR edit instead of a race). Confirmed via `pull_request_read` that PR #1216 is merged and its diff shows `status: claimed -> review` with no later commit correcting it to `ready`; no open PR references this task (`list_pull_requests` on conductor returned none) and `claimed_by`/`claimed_at` were 7+ hours stale (past `CLAIM_TTL_MINUTES: 90`). Corrected `status` to `ready` and cleared the stale claim fields so the daily-pitch cadence isn't silently stuck.
+    claimed_by: null
+    claimed_at: null
+    updated: '2026-07-27T17:05:00Z'
 
   - id: t-007
     milestone: m5
