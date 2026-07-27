@@ -42,6 +42,8 @@ class TaskEventProcessorTests(unittest.TestCase):
                             "status": "claimed",
                             "owner": "worker",
                             "recurring": True,
+                            "claimed_by": "sess-stale",
+                            "claimed_at": "2026-07-01T00:00:00Z",
                         },
                     ],
                 },
@@ -186,6 +188,22 @@ class TaskEventProcessorTests(unittest.TestCase):
         task = self.roadmap()["tasks"][2]
         self.assertEqual(task["status"], "ready")
         self.assertNotIn("owner", task)
+
+    def test_rearm_clears_claimed_by_and_claimed_at(self):
+        # ai-art-academy/t-046: a rearm event previously left claimed_by/claimed_at
+        # stale from the prior claim all the way through the next full cycle,
+        # unlike every other rearm-to-ready convention in this codebase.
+        event = self.write_event(
+            "rearm-claim-fields.yaml",
+            {"version": 1, "project": "demo", "task": "t-003", "operation": "rearm"},
+        )
+
+        MODULE.process(event, dry_run=False)
+
+        task = self.roadmap()["tasks"][2]
+        self.assertEqual(task["status"], "ready")
+        self.assertNotIn("claimed_by", task)
+        self.assertNotIn("claimed_at", task)
 
     def test_claim_rejects_non_ready_without_force(self):
         event = self.write_event(
