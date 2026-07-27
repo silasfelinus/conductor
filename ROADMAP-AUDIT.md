@@ -1,13 +1,13 @@
 # Roadmap Audit
 
-Generated: `2026-07-27T02:21:17.536469+00:00`
+Generated: `2026-07-27T03:27:55.219683+00:00`
 
 This is a conservative structural audit. It reports suspicious state; it does not automatically change task status or remove human gates.
 
 ## Portfolio snapshot
 
-- **42** roadmaps, **23** active projects, **706** tasks
-- **39 ready**, **47 waiting**, **21 needs-human**, **1 claimed/review**, **587 done**
+- **42** roadmaps, **23** active projects, **707** tasks
+- **38 ready**, **46 waiting**, **21 needs-human**, **2 claimed/review**, **589 done**
 - Findings: **0 errors**, **0 warnings**, **56 informational**
 
 ## Project inventory
@@ -18,14 +18,14 @@ This is a conservative structural audit. It reports suspicious state; it does no
 | 2 | `ai-art-academy` | active | software | 4 | 0 | 0 | 1 | 36 / 41 |
 | 3 | `coloring-book` | active | software | 1 | 9 | 0 | 0 | 20 / 30 |
 | 4 | `humboldt-scoop` | finished | software | 0 | 0 | 0 | 0 | 8 / 8 |
-| 5 | `humboldt-scoop-cms` | active | software | 1 | 1 | 0 | 0 | 10 / 12 |
+| 5 | `humboldt-scoop-cms` | active | software | 1 | 0 | 0 | 0 | 11 / 12 |
 | 6 | `digital-storefront` | active | software | 1 | 0 | 1 | 0 | 30 / 32 |
 | 7 | `packmaker` | finished | software | 0 | 0 | 0 | 0 | 10 / 10 |
 | 8 | `mermaids-of-venice` | paused | content | 0 | 0 | 8 | 0 | 4 / 12 |
 | 9 | `kind-robots` | active | software | 0 | 0 | 1 | 0 | 49 / 50 |
 | 10 | `kindrobots-unraid` | active | software | 0 | 7 | 1 | 0 | 4 / 12 |
 | 11 | `global-ui` | finished | software | 0 | 0 | 0 | 0 | 25 / 25 |
-| 12 | `mona-salai` | paused | software | 3 | 10 | 0 | 0 | 0 / 13 |
+| 12 | `mona-salai` | paused | software | 2 | 10 | 0 | 1 | 0 / 13 |
 | 13 | `superkate-services-calculator` | finished | software | 0 | 0 | 0 | 0 | 37 / 37 |
 | 14 | `superkate-hairstyle-ai` | paused | software | 1 | 0 | 1 | 0 | 19 / 21 |
 | 15 | `newsfeed` | active | software | 1 | 0 | 0 | 0 | 21 / 22 |
@@ -52,7 +52,7 @@ This is a conservative structural audit. It reports suspicious state; it does no
 | 36 | `wishmaster` | active | software | 1 | 0 | 0 | 0 | 2 / 3 |
 | 37 | `engagement` | finished | software | 0 | 0 | 0 | 0 | 3 / 3 |
 | 38 | `ruler-hooked` | active | software | 1 | 0 | 0 | 0 | 11 / 12 |
-| 39 | `music-mentor` | active | software | 1 | 0 | 0 | 0 | 7 / 8 |
+| 39 | `music-mentor` | active | software | 1 | 0 | 0 | 0 | 8 / 9 |
 | 40 | `dream-cycle` | active | software | 5 | 0 | 0 | 0 | 14 / 20 |
 | — | `approval-portal` | retired | software | 0 | 0 | 0 | 0 | 3 / 5 |
 | — | `humboldt-impropriety-calendar` | retired | brainstorm | 0 | 5 | 0 | 0 | 0 / 6 |
@@ -107,7 +107,7 @@ _None._
 - **APPROVAL_WITHOUT_GATE** — `kindrobots-unraid` / `t-002`: approved_by_human is set on a task that is not human-gated.
 - **MISSING_GOAL** — `media-watchlist`: Roadmap has no friendly goal/definition of done.
 - **MISSING_GOAL** — `mermaids-of-venice`: Roadmap has no friendly goal/definition of done.
-- **INACTIVE_PROJECT_HAS_READY_TASKS** — `mona-salai`: Inactive project retains 3 ready task(s); harmless but misleading in generated status.
+- **INACTIVE_PROJECT_HAS_READY_TASKS** — `mona-salai`: Inactive project retains 2 ready task(s); harmless but misleading in generated status.
 - **APPROVAL_WITHOUT_GATE** — `mural-design` / `t-006`: approved_by_human is set on a task that is not human-gated.
 - **MISSING_GOAL** — `music-mentor`: Roadmap has no friendly goal/definition of done.
 - **MISSING_GOAL** — `newsfeed`: Roadmap has no friendly goal/definition of done.
