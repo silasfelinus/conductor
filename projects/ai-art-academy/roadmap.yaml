@@ -502,15 +502,17 @@ tasks:
   - id: t-010
     milestone: m6
     title: Academy continuous improvement pass
-    status: claimed
+    status: review
     recurring: true
     passes: 0
     stakes: reversible
-    updated: '2026-07-27T20:09:46Z'
+    updated: '2026-07-27T20:13:30Z'
     note: |-
       Standing never-idle task (re-arms to ready after every completion, per the recurring-task rule). Each cycle pick ONE: (a) front-end style/polish pass on Academy or art-styler surfaces, (b) roadmap upgrade — refine tasks, detail the next milestone, prune stale notes, (c) generate more art inspirations or style preview thumbnails, (d) expand the curriculum with a new movement/artist entry (respecting PUBLIC-DOMAIN-POLICY.md). Note which option ran in the PR. This task never reaches done and does not count toward milestone progress. See `run_log` for cycle history — do not re-accumulate RAN entries here.
 
       RAN 2026-07-27T19:28:48Z: option (b), roadmap accuracy. Standard hygiene sweep clean (audit/validate/resolve_deps/PR-drift/stale-claim scan). Found and fixed a real milestone drift: m5 was `in-progress` with all 3 of its tasks `done` — flipped to `done`. Full detail in `run_log`. Next preferred lane is inspiration assets (lane 3). Rearmed to ready.
+
+      Lane 3 inspiration asset implemented on worker/ai-art-academy-t-010-inspiration-a31e: added a controlled harbor comparison lesson across Impressionism, Precisionism, Tonalism, and Fauvism.
     continuous_improvement:
       last_lane: 2  # 1=front-end polish, 2=roadmap accuracy, 3=inspiration assets, 4=curriculum depth
       next_lane: 3
