@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-07-27T17:57:47Z
+Generated: 2026-07-27T18:10:30Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **385**
-- Outcomes: blocked: 12, cancelled: 1, done: 372
+- Closed tasks recorded: **386**
+- Outcomes: blocked: 12, cancelled: 1, done: 373
 - Success rate: **97%**
 - Average passes on successful tasks: **0.0**
 
@@ -28,7 +28,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | conductor | 53 | 100% |
 | conductor-app | 2 | 100% |
 | davinci | 1 | 100% |
-| digital-storefront | 23 | 100% |
+| digital-storefront | 24 | 100% |
 | dream-cycle | 15 | 100% |
 | ecosystem-map | 5 | 100% |
 | global-ui | 13 | 100% |
@@ -57,7 +57,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 15 | 40% |
-| software | 370 | 99% |
+| software | 371 | 99% |
 
 ## Failure categories
 
@@ -77,6 +77,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-07-27 `digital-storefront/t-023` — A hard needs-human gate does not have to sit idle waiting for a scheduled Reviewer sweep -- Silas merged kind_robots PR #1056 directly within ~30 minutes of it opening. Treat a direct merge by the repo owner as the explicit clearance event itself (confirm via merged_by on the PR, not just merged: true, since an agent must never self-grant approved_by_human) rather than waiting for a separate roadmap-editing round from Silas -- close the loop (approved_by_human: true, status: done) in the same session once that signal is confirmed.
 - 2026-07-27 `ai-art-academy/t-046` — A rearm-to-ready transition is not automatically symmetric with every other ready transition in the same processor -- the rearm branch of compute_transition_ops had cleared owner but not claimed_by/claimed_at, letting stale claim metadata survive an entire cycle. When adding a new status-transition branch to a shared state-machine function, diff its field clears against the other branches for the same target status rather than assuming symmetry; the regression test should assert clearance, not just the status value.
 - 2026-07-27 `media-watchlist/t-006` — Third cycle in a row on this recurring polish task (2026-07-20, 2026-07-26, 2026-07-27) that found real server-side data already computed/accepted (CSV export filters, then Year+comics+TV-season stats) sitting unused because the front end never caught up. When touching a "polish the front end" task on a project whose backend predates the UI work, diff the API response/query-param shape against what the component actually renders/sends before assuming new backend scope is needed -- the gap is often pure wiring, which keeps the diff small and the pass clean.
 - 2026-07-27 `ai-art-academy/t-019` — Once conductor PR #1215 fixed distribute_images.py and proved one thumbnail (greek-vase-painting) actually live in production, t-019's gate ("at least one queued image present") was satisfied immediately — but the task itself sat unclaimed for a cycle because nothing re-checked it after the fix. Wiring the single confirmed-live image and shipping a graceful per-style fallback (rather than waiting for all 33 curriculum thumbnails to exist) let real progress land now instead of blocking on t-035's much larger re-queue-and-regenerate batch.
@@ -86,8 +87,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-07-27 `dream-cycle/t-018` — A "pull live data from the site API" task is safe to implement directly when the target endpoint is public and cheap to probe first (curl before coding) — confirming shape and reachability up front avoided over-designing the fetch helper. The reusable pattern: make the live source the default with a same-signature fallback (here, GENRE_FAMILIES) and never let the fetch failure mode (network, HTTP, bad JSON, empty body) propagate past a None return, so a scheduled sweep can never be blocked by an external API being down.
 - 2026-07-27 `ai-art-academy/t-009` — A "generate via the auto art pipeline" task can silently have no pipeline at all for its art-prompts.yaml section (the inspirations list had no consumer script, unlike the images/requests ones) — when a task assumes automation exists, verify a consumer actually reads that YAML key before trusting a "still pending" status as just a backlog problem. Separately, verify generated art landed on the real serving path (HEAD the public media URL), not just that the job returned success — the plain ArtJob response only writes a DB row plus a gitignored local checkout copy; only the direct-media payload fields make the relay write to production.
 - 2026-07-27 `mona-salai/t-001` — Historical-identity experiments need the documentary baseline, candidate-attribution uncertainty, same-artist controls, and explicit falsification criteria fixed before computational scores are viewed; otherwise a model can turn style recurrence and selection bias into false certainty.
-- 2026-07-27 `music-mentor/t-007` — Implementing YIN alongside the incumbent autocorrelation tracker and measuring both with a synthetic accuracy suite (not just trusting the textbook octave-error argument) surfaced a different real advantage than expected -- low-register voiced-detection rate, not octave-error count, which were tied at zero for both. For "evaluate X vs Y" tasks, build the comparison harness and report the measured mechanism, not the assumed one.
-
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-07-27T17:57:47Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-07-27T18:10:30Z_
