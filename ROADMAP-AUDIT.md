@@ -1,6 +1,6 @@
 # Roadmap Audit
 
-Generated: `2026-07-27T21:27:05.507882+00:00`
+Generated: `2026-07-27T22:58:50.329373+00:00`
 
 This is a conservative structural audit. It reports suspicious state; it does not automatically change task status or remove human gates.
 
@@ -28,9 +28,9 @@ This is a conservative structural audit. It reports suspicious state; it does no
 | 12 | `mona-salai` | paused | software | 2 | 10 | 0 | 0 | 1 / 13 |
 | 13 | `superkate-services-calculator` | finished | software | 0 | 0 | 0 | 0 | 37 / 37 |
 | 14 | `superkate-hairstyle-ai` | paused | software | 1 | 0 | 1 | 0 | 19 / 21 |
-| 15 | `newsfeed` | active | software | 0 | 0 | 0 | 1 | 21 / 22 |
+| 15 | `newsfeed` | active | software | 1 | 0 | 0 | 0 | 21 / 22 |
 | 16 | `model-builder` | active | software | 1 | 0 | 0 | 1 | 29 / 31 |
-| 17 | `animation-manager` | active | software | 2 | 0 | 0 | 0 | 12 / 14 |
+| 17 | `animation-manager` | active | software | 1 | 0 | 0 | 1 | 12 / 14 |
 | 18 | `animation-studio` | retired | software | 3 | 4 | 0 | 0 | 1 / 8 |
 | 19 | `ecosystem-map` | finished | software | 0 | 0 | 0 | 0 | 8 / 8 |
 | 20 | `conductor` | active | software | 0 | 0 | 2 | 0 | 84 / 86 |

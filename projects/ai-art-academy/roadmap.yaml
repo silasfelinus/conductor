@@ -502,11 +502,11 @@ tasks:
   - id: t-010
     milestone: m6
     title: Academy continuous improvement pass
-    status: claimed
+    status: ready
     recurring: true
     passes: 0
     stakes: reversible
-    updated: '2026-07-27T22:46:58Z'
+    updated: '2026-07-27T23:00:00Z'
     note: |-
       Standing never-idle task (re-arms to ready after every completion, per the recurring-task rule). Each cycle pick ONE: (a) front-end style/polish pass on Academy or art-styler surfaces, (b) roadmap upgrade — refine tasks, detail the next milestone, prune stale notes, (c) generate more art inspirations or style preview thumbnails, (d) expand the curriculum with a new movement/artist entry (respecting PUBLIC-DOMAIN-POLICY.md). Note which option ran in the PR. This task never reaches done and does not count toward milestone progress. See `run_log` for cycle history — do not re-accumulate RAN entries here.
 
@@ -515,15 +515,14 @@ tasks:
       Implemented the lane-one Academy gallery polish on worker/ai-art-academy-t-010-front-polish-a31 and prepared it for pull-request validation.
 
       RAN 2026-07-27T22:25:00Z: option (a), front-end polish. Kind Robots PR #1068 merged as 690d878a98d2594273fcff7578ade7c92a0369e7. The Academy Style Gallery now offers All, New, and Explored progress filters, live lesson/progress counts, clear and reset actions, and progress-aware empty states while preserving the existing local viewed-lesson store and remix flow. All four Kind Robots workflows passed; no reviews or unresolved threads. Next preferred lane is roadmap accuracy (lane 2).
+
+      RAN 2026-07-27T23:00:00Z (20260727T224658Z-conductor-scheduled-aa-t010-lane1): option (a), front-end polish, immediately following on from PR #1068 — this cycle claimed the task before that PR's metadata update had landed, so it ran a second lane-1 pass rather than lane 2; deliberate given what it found. Dispatched an Explore agent over the 6 Academy components, academyStore.ts, academyStyles.ts, and art-styler.vue/image-upload.vue with the full exclusion list of previously-fixed bug classes (PRs #275-#622, #1000, #1015, #1017, #1027, #1037, #1040). Found a real, previously-unfixed bug in the New/Explored progress filter that PR #1068 had just added: `academy-styles-browser.vue`'s grid (`filteredStyles`) and its detail panel (`expandedStyle`) read progress from two independent sources, and `academy-style-detail.vue` marks a lesson viewed as soon as it mounts — so under the "New" filter, opening a still-unviewed lesson caused its own tile to vanish from the grid on the next reactive tick while its detail panel was still open, and silently broke `closeStyle()`'s focus restoration (its `gridRefs` entry was already gone once the tile unmounted). Fixed by keeping the currently-expanded style's tile in `filteredStyles` regardless of the progress filter, so it only leaves the "New" list once the user closes it. Verified: `npx vue-tsc --noEmit` clean, `npx prettier --check` clean (one unrelated pre-existing formatting drift reverted to keep the diff to the intended single line). kind_robots PR #1071 (branch `claude/confident-bardeen-6d1bxn`), all 5 CI checks green (TypeScript, Contract verifiers, facet-catalog, verify, GitGuardian), no review comments — merged squash `a1f130a`. Next preferred lane is roadmap accuracy (lane 2), per the 1->2->3->4 rotation. Rearmed to ready.
     continuous_improvement:
-      last_lane: 4  # 1=front-end polish, 2=roadmap accuracy, 3=inspiration assets, 4=curriculum depth
-      next_lane: 1
-      last_run: '2026-07-27T21:12:10Z'
-      last_pr: 'conductor-only (curriculum-outline.md §35 Arts and Crafts Movement promotion; no kind_robots PR this cycle)'
+      last_lane: 1  # 1=front-end polish, 2=roadmap accuracy, 3=inspiration assets, 4=curriculum depth
+      next_lane: 2
+      last_run: '2026-07-27T23:00:00Z'
+      last_pr: 'kind_robots PR #1071 (squash a1f130ac87236941c806e67a111fa801676db05d)'
     run_log: projects/ai-art-academy/docs/continuous-improvement-run-log.md
-    owner: worker
-    claimed_by: 20260727T224658Z-conductor-scheduled-aa-t010-lane1
-    claimed_at: '2026-07-27T22:46:58Z'
 
   - id: t-015
     milestone: m4
