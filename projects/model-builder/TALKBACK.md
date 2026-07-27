@@ -226,3 +226,17 @@ type: pattern
 - All 4 CI checks green (TypeScript, Contract verifiers, facet-catalog, GitGuardian); merged squash `b6373c55`.
 
 **Suggested action:** the `linkSourceToTarget` function is a flat if-chain of `(sourceType, targetType)` pairs with a silent `return false` fallthrough for any unhandled combination -- worth a follow-up kaizen to cross-reference every `CREATE_TARGETS` entry in `modelBuilderFields.ts` against `linkSourceToTarget`'s handled pairs (a small script or a manual table) to check for other silently-unlinked combinations, rather than relying on read-everything passes to catch them one at a time.
+
+## 2026-07-27 | Worker (conductor agent run) | model-builder/t-029 | pattern
+
+type: pattern
+
+**Subject:** Fifth instance of the same store-wide-singleton ownership-race pattern found, this time in `batchingOutputKey` -- the exclusion-list-driven read-everything approach keeps scaling as the list grows.
+
+**Detail:**
+- kind_robots PR #1032: `batchDraftField`/`batchAutoBuild` both write `state.batchingOutputKey` and unconditionally cleared it in their `finally` block, unlike the ownership-check pattern already applied to `generatingItemId`, `committingItemId`, `autoBuildingItemId`, and `draftingField`. Starting a batch op on one group while a different group's batch op was still in flight let the first-to-finish group's `finally` null out the still-running group's guard, re-enabling its batch buttons and allowing a duplicate concurrent batch operation over the same items.
+- Dispatched an Explore subagent with the full 11-entry exclusion list from this task's history (now spanning 5 different store-wide singletons plus a11y/server-side fixes); it found this one cleanly and did not re-flag any already-fixed pattern.
+- All 5 CI checks green (TypeScript, Contract verifiers, facet-catalog, verify, GitGuardian); merged squash `4f9d5323`.
+- Step (1) (dashboard-tab + tutorial art) remains blocked on the same shared render-backend backlog documented on ai-art-academy/t-004 -- rechecked this cycle via `recheck_render_queue.py` before picking this task, still growing (PENDING=112, oldestPending job 2017 ~63.1h old).
+
+**Suggested action:** the kaizen suggestion recorded on the task note this cycle (a small `createOwnedSingleton()` helper to collapse the now-5 duplicated ownership-check implementations into one reusable primitive) is worth turning into an actual follow-up task rather than letting a 6th ad-hoc singleton slip through uncovered in a future feature.
