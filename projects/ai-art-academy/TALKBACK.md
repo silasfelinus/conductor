@@ -2224,3 +2224,35 @@ type: pattern
 **Suggested action:** none beyond what's already noted in the run log — the recurring
 sandbox limitation (no local eslint/vue-tsc for kind_robots subagent work) is already a known,
 accepted constraint across many prior cycles, not a new gap worth its own task.
+
+## 2026-07-27 | Worker (conductor scheduled agent run) | ai-art-academy/t-010 | pattern
+
+type: pattern
+
+**Subject:** Lane-2 (roadmap accuracy) cycle found that a prior same-day cycle's PR body and
+run-log entry (conductor PR #1215) asserted a blocker was still in place without re-checking
+it — it had actually already cleared.
+
+**Detail:**
+- PR #1215 (lane 3, 09:32:06Z merge) fixed a real `distribute_images.py` bug and proved the
+  fix by queuing one fresh Academy style-preview request (`greek-vase-painting`), but its own
+  body and run-log entry stated "t-019 remains correctly blocked -- no static file actually
+  reached kind_robots' deployed path this cycle." That claim went unverified against the
+  actual production media host.
+- This cycle fetched `https://media.acrocatranch.com/images/academy/styles/greek-vase-painting.webp`
+  directly: HTTP 200, genuine 12.4KB webp (RIFF/WEBP file signature, not an error page). The
+  image is live. The prior cycle's "still blocked" claim was wrong at the time it was
+  written, or became wrong shortly after — either way, t-019's actual gate condition (at
+  least one queued image existing in production) has been satisfied since PR #1215 merged,
+  and no downstream task note reflected that until this cycle.
+- Also found t-035's title/note had gone stale independent of this: it still said "batch-generate
+  the 25 queued" thumbnails, but `git log -p` on `art-prompts.yaml` shows all ~33 of them were
+  removed by the same prune bug PR #1215 fixed, and the curriculum has grown to 33 movements
+  (was 21 when t-035 was titled). Corrected both tasks with the current ground truth and a
+  concrete next-step recipe for whoever runs lane 3 next.
+
+**Suggested action:** when a cycle's own PR body claims something is "still blocked" or
+"not yet delivered," a later cycle picking up a dependent task should re-verify that claim
+directly (e.g. fetch the actual production URL) rather than trusting the prose — delivery
+pipelines with an external write step (relay/media host) can flip state between when a
+claim is written and when the next session reads it.
