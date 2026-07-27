@@ -4525,3 +4525,15 @@ records:
   lesson: Third cycle in a row on watchlist-browse.vue finding server-computed/validated data (month/season
     filters this time) that the UI never surfaced -- worth a full BROWSE-UX.md vs. UI audit rather than
     one gap per cycle.
+- date: 2026-07-27
+  project: ai-art-academy
+  task: t-047
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: A kaizen task naming the exact fix (which consumers, which store method) still needs an
+    investigation pass before editing -- checking whether the target genuinely never needs to
+    survive a component's unmount (in-flight uploads, other readers) turned a plausible-looking
+    one-liner into a verified-safe change across all 7 call sites in one pass.
