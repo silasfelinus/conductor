@@ -1170,14 +1170,17 @@ tasks:
   - id: t-035
     milestone: m6
     title: 'kind_robots: re-queue and batch-generate Academy style-preview thumbnails for all 33 curriculum movements'
-    status: ready
+    status: claimed
     passes: 0
     stakes: reversible
-    updated: '2026-07-27T13:00:00Z'
+    updated: '2026-07-27T13:13:01Z'
     note: |-
       Kaizen from the 2026-07-20 t-010 cycle. Sync half (Persian Miniature Painting entry into stores/seeds/academyStyles.ts) shipped 2026-07-20 via kind_robots PR #616 (squash 99ba5ff3) and is done; this task now covers only the remaining, still-blocked half -- batch-generating `kind-robots-academy-style-preview-*` thumbnail requests in `projects/art-prompts.yaml`.
       CORRECTION 2026-07-27 (t-010 lane 2, roadmap-accuracy pass): the title/note's "25 queued" framing is now stale and the old `--id-prefix "kind-robots-academy-style-preview-" --live` drain instruction is moot -- conductor PR #1215 (t-010 lane 3, same date) root-caused why: `distribute_images.py` was silently pruning every kind_robots-targeted request as "delivered" the moment it copied the file into a local kind_robots checkout, even though kind_robots' `public/images/**` is git-ignored and that copy never reaches production. All ~33 previously-queued academy-style-preview requests were lost this way with no image ever actually landing -- confirmed via `git log -p -- projects/art-prompts.yaml`, which shows all of them removed in that same commit with no prior "delivered" evidence. PR #1215 fixed the script (kind_robots-targeted files now always retain their request record) and proved the fix end-to-end: queued one fresh request (`greek-vase-painting`, ArtJob 2697/ArtImage 12885) and confirmed it live at the production media host (`https://media.acrocatranch.com/images/academy/styles/greek-vase-painting.webp`, HTTP 200, verified this cycle) instead of vanishing. Deliberately did not bulk-generate the rest that cycle (scope: prove + fix the pipeline, not bulk-generate).
       CURRENT STATE (confirmed 2026-07-27T13:00Z, this cycle): render queue is healthy -- `recheck_render_queue.py` reports `oldestPending: none`, 0 pending, 214 DONE in the trailing 24h. `docs/curriculum-outline.md` now has 33 movements total (grew from the 21 this task's title originally referenced); only `greek-vase-painting` (1/33) has a request record and a confirmed-live thumbnail. NEXT STEP for whoever picks this up: re-queue the other 32 movements' `kind-robots-academy-style-preview-<slug>` requests in `projects/art-prompts.yaml` (same prompt-construction pattern the original 21+5+bonus batches used -- shared subject, `recognitionCues`/`remix_hint`-derived prompt, 256x256, `public/images/academy/styles/{slug}.webp`), then drain with `python scripts/consume_art_requests.py --id-prefix "kind-robots-academy-style-preview-" --live` (no --limit) -- the fixed `distribute_images.py` will now retain each request's record instead of pruning it, so verify delivery per-image the same way this cycle did (HEAD/fetch the production media URL) rather than trusting `status: done` alone.
+    owner: worker
+    claimed_by: claude-conductor-burst-20260727-aa-t035
+    claimed_at: '2026-07-27T13:13:01Z'
   - id: t-036
     milestone: m6
     title: t-010's lane-1 cycles should merge+rearm their own kind_robots sync PR in the same session instead of leaving it for a later Reviewer sweep
