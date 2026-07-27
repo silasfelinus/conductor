@@ -9753,3 +9753,40 @@ next test-schema change: any script that writes `kind:`/`stakes:` values into
 `VALID_KINDS` before writing, not rely on the test suite to catch it after the fact
 (mona-salai's task added `kind: research` — a semantically reasonable label for a
 research-design task, but not in the schema's fixed enum).
+
+## 2026-07-27 | Worker (conductor scheduled burst-mode rotation) | conductor | pattern
+
+**Subject:** The external "PR merged → auto-queue a task-events completion event" mechanism
+(first observed on ai-art-academy/t-085, see 2026-07-26 entry above) queued an event for
+dream-cycle/t-018 whose `learning:` payload is missing the required `kind`/`stakes` fields
+that both `scripts/process_task_events.py`'s `prepare_learning()` and
+`scripts/validate_task_events.py` require (`required = {"kind", "stakes", "lesson"}` in both).
+
+**Detail:**
+- `task-events/2026-07-27T06-36-41Z-dream-cycle-t-018-done-dc-t018.yaml` (commit `f8dac244`,
+  pushed directly to `main`, not through a PR) carried `learning: {outcome: success,
+  failure_category: null, lesson: "..."}` — no `kind`, no `stakes`.
+- Had this event reached `process_task_events.py` unmodified, `prepare_learning()` would have
+  raised `ValueError: learning is missing required fields: kind, stakes` — not a silent
+  failure, but it would have blocked that event's processing (and, depending on the runner's
+  error handling, possibly the whole batch) rather than cleanly appending a `LEARNING.yaml`
+  record.
+- This session had already independently closed the task (status `done`, its own
+  correctly-shaped `LEARNING.yaml` record) before noticing the queued event, per the
+  conductor/t-085 race pattern this manual carefully avoided repeating: rebased onto the
+  event's commit, merged its `note` text into the task's `note:` field, and deleted the event
+  file rather than letting a malformed payload sit in `task-events/` or racing a second
+  write against it.
+- Did not chase down where this external mechanism lives (confirmed via grep it isn't
+  produced by anything in this repo — no workflow or script here writes `event: complete`
+  commits) or attempt to fix its schema; that's outside conductor's own boundary per the
+  original t-085 note.
+
+**Suggested action:** whoever owns the external "PR merge → queue completion event" bot
+should add `kind`/`stakes` to its `learning:` payload (both are cheaply derivable: `kind`
+from the project's `project-overrides.yaml` entry, `stakes` from the roadmap task's own
+`stakes:` field) so future events don't hit this validation gap. In the meantime, a
+low-cost defensive option worth a kaizen task: have `prepare_learning()` fall back to the
+project's `project-overrides.yaml` `kind` and the task's own `stakes:` when the event's
+`learning:` payload omits them, rather than hard-requiring the caller to duplicate data the
+processor can already read from the roadmap it's mutating.
