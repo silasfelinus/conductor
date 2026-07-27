@@ -125,3 +125,37 @@ Reviewer to confirm the sweep-ordering follow-up (pull/push around --check /
 
 **Kaizen task:** none filed — Stage 1's thin-section-filling worked exactly as designed; no
 gap found in the playbook itself this cycle.
+
+## 2026-07-27 | Worker (conductor scheduled burst-mode rotation) | dream-cycle/t-018 | pattern
+
+**Decision:** implemented and set `status: review`, opening a PR (not merging directly —
+leaving the merge to a Reviewer pass per normal software-task flow, since this isn't a
+recurring/no-PR bookkeeping task).
+
+**Failure category:** null (clean first pass).
+
+**What was good:**
+- Confirmed the target API (`https://kind-robots.vercel.app/api/facets?taxonomy=GENRE`)
+  was actually reachable and returned real, filterable GENRE-taxonomy data before writing
+  any code, rather than assuming the shape from the task note alone.
+- Kept the fallback path unconditional: `fetch_live_genre_facets()` returns `None` on any
+  failure mode (network, HTTP, bad JSON, empty body), and `_genre_spark()` always falls back
+  to the existing `GENRE_FAMILIES` list rather than raising — the daily sweep can never be
+  blocked by the kind_robots API being down.
+- Verified live end-to-end via `python scripts/build_dream_proposal.py --brief`, which
+  printed real facets (Arabian Nights Redux, Mystery, Dark Academia) and correctly labeled
+  the source, not just relying on unit tests with mocked responses.
+- Added 8 new unit tests (fetch success/filtering/error paths, spark determinism, recency
+  weighting, fallback-when-too-few-fresh) — full suite went from 608 to 616 collected
+  (615 passed, 1 pre-existing skip).
+
+**What to improve:**
+- Did not add a live (non-mocked) integration test that hits the real API — deliberately,
+  since conductor's test suite should stay network-independent, but worth a note for
+  whoever next touches this: the mocked tests can't catch a future API response-shape
+  change (e.g. `title` renamed) on their own; the `--brief` manual check is the fallback
+  verification until/unless a smoke test is added elsewhere.
+
+**Kaizen task:** deferred — no gap in the playbook surfaced; the existing "best-effort
+external fetch, always degrade gracefully" pattern (already used by `fetch_main()`) applied
+cleanly here.
