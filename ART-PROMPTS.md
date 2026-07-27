@@ -35,7 +35,6 @@ When asked for a batch, generate up to ten images in the same order as the queue
 - `appmaker` — icon, card, hero → `projects/images/appmaker-{type}.webp` in `silasfelinus/conductor`
 - `packmaker` — icon, card, hero → `projects/images/packmaker-{type}.webp` in `silasfelinus/conductor`
 - `ruler-hooked` — icon, card, hero → `projects/images/ruler-hooked-{type}.webp` in `silasfelinus/conductor`
-- `ai-art-academy` — icon, card, hero → `projects/images/ai-art-academy-{type}.webp` in `silasfelinus/conductor`
 - `coloring-book` — icon, card, hero → `projects/images/coloring-book-{type}.webp` in `silasfelinus/conductor`
 - `dream-cycle` — icon, card, hero → `projects/images/dream-cycle-{type}.webp` in `silasfelinus/conductor`
 
@@ -58,9 +57,6 @@ When asked for a batch, generate up to ten images in the same order as the queue
 - `humboldt-scoop-cms` — inspiration-01, 02, 03
 - `kind-robots` — inspiration-01, 02, 03
 - `mermaids-of-venice` — inspiration-01, 02, 03
-- `ai-art-academy` — teaching-strip-impressionism, teaching-strip-art-nouveau,
-  teaching-strip-cubism, teaching-strip-suprematism (4 images: Hokusai's Great Wave
-  composition re-imagined across four curriculum movements, see art-prompts.yaml)
 
 All inspiration images save to `silasfelinus/kind_robots` at:
 

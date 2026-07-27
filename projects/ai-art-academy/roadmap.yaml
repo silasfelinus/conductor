@@ -296,45 +296,54 @@ tasks:
   - id: t-009
     milestone: m5
     title: Generate project art and Academy inspiration images
-    status: claimed
-    soft_gate: true
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
-    updated: '2026-07-27T05:18:10Z'
+    updated: '2026-07-27T06:10:00Z'
     note: >
-      GO-AHEAD GIVEN 2026-07-25 (Silas: "confirmed home relay and kr db are up.
-      go ahead."; same reasoning as t-004's go-ahead — recent scheduled
-      auto-art-generate runs were succeeding, and a manual dispatch would only
-      queue behind one already in flight). Spec: icon/card/hero prompts were
-      queued in projects/art-prompts.yaml (2026-07-10); generate and commit
-      them via the auto art pipeline (pre-approved), then generate 3+ Academy
-      inspiration images (e.g. one landmark public-domain work re-imagined
-      across several movements as a teaching strip), keeping prompt/model/
-      source metadata. Remove ART-PROMPTS.md entries once files land in
-      projects/images/.
+      DONE 2026-07-27 (render backlog cleared overnight — queueDepth.PENDING
+      dropped from 144/~61h-oldest to 0/none, see RENDER-BACKLOG.md). Icon,
+      card, and hero were already present in projects/images/ (landed in an
+      earlier cycle; the prior "still pending" note was stale — their
+      art-prompts.yaml `images:` entries were already gone). The real
+      remaining scope was the 4-image Great Wave teaching strip under
+      `inspirations:`.
 
-      QUEUED WORK (added 2026-07-25): a 4-image `ai-art-academy` teaching-strip
-      entry under art-prompts.yaml's `inspirations:` block — Hokusai's "Under
-      the Wave off Kanagawa" (the worked example in PUBLIC-DOMAIN-POLICY.md §3)
-      re-imagined across Impressionism, Art Nouveau, Cubism, and Suprematism,
-      each prompt reusing that movement's own remix_hint from
-      docs/curriculum-outline.md, target
-      public/images/artcollections/ai-art-academy/ in kind_robots.
+      INFRASTRUCTURE GAP FOUND AND FIXED: no script actually consumed the
+      `inspirations:` block — `queue_missing_project_art.py` only reads
+      `images:`, `consume_art_requests.py` only reads `requests:`. That's why
+      these 4 entries sat at `status: pending` through every scheduled
+      auto-art-generate run since 2026-07-25. Added
+      `scripts/consume_art_inspirations.py` (+ a `_to_media` variant mirroring
+      the existing `consume_art_requests_to_media.py` pattern) to close that
+      gap generically — it also found 8 pending `ruler-hooked` inspirations
+      left un-drained the same way, out of scope for this task but now
+      unblocked for whoever picks that up.
 
-      CURRENT STATE (reconfirmed 2026-07-26T15:08Z): every entry — icon, card,
-      hero, and all 4 teaching-strip images — still shows `status: pending` in
-      projects/art-prompts.yaml, and no files have landed in projects/images/
-      or kind_robots' artcollections folder yet. Same single-COMFY-worker
-      backlog documented on t-004 is the likely shared cause. NEXT STEP for
-      whoever picks this up: watch for `status: pending` flipping and files
-      actually landing (see conductor/CLAUDE.md's Vercel/deployment
-      verification pattern for how to confirm rather than assume) — once they
-      do, remove the consumed ART-PROMPTS.md lines and flip this task to
-      `done`. Re-checking this same pending/landed state repeatedly without a
-      changed signal is not a productive use of a cycle (same logic as t-004's
-      standing instruction). Full landing history and the original per-cycle
-      narrative are preserved in this file's git history.
+      First live run "succeeded" but a HEAD check against
+      media.acrocatranch.com proved none of the 4 images were actually
+      served — the plain (non-direct-media) path only writes the ArtImage DB
+      row plus a gitignored local kind_robots checkout copy that never
+      reaches production. Re-ran through the `_to_media` path (relay writes
+      directly to self-hosted media); all 4 now verified live via HTTP 200 at
+      their public URLs. Also found and fixed a same-shaped latent bug in
+      `consume_art_requests_to_media.py`'s own direct-media check (called
+      `_image_path(entry)` with a missing required argument, `TypeError` on
+      every pending kind_robots-targeted ad-hoc request) — that script runs
+      in the scheduled `auto-art-generate.yml` workflow, so this was likely
+      silently failing that step on live runs already.
+
+      Quality note for whoever reviews the curriculum later: the cubism and
+      suprematism renders both preserved the source Great Wave composition
+      very literally rather than actually fragmenting into planes /
+      reducing to flat geometry — usable as a first pass, but worth a
+      revisit if these get promoted beyond placeholder teaching art.
+
+      Removed the consumed ART-PROMPTS.md lines (icon/card/hero already
+      gone; teaching-strip entries removed this cycle) and the
+      art-prompts.yaml `inspirations:` sub-entries (marked `status: done`,
+      consistent with how the `requests:` block handles completion).
     claimed_by: 2026-07-27T05:18:09Z-ai-art-academy-t009-render-recovered
     claimed_at: '2026-07-27T05:18:10Z'
   - id: t-011
