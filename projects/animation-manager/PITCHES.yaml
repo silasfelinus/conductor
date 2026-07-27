@@ -1,4 +1,4 @@
-updated: "2026-07-27T19:21:25+00:00"
+updated: "2026-07-27T22:26:00+00:00"
 
 pitches:
   - id: bioluminescent-tide
@@ -237,7 +237,7 @@ pitches:
 
   - id: impossible-terrarium
     title: Impossible Terrarium
-    status: pitched
+    status: candidate
     priority: 9
     surprise: A glass terrarium contains stairways, roots, waterfalls, and rooms whose gravity directions disagree.
     passive_loop: Tiny inhabitants traverse impossible routes while water and spores obey different gravity fields.
@@ -249,6 +249,20 @@ pitches:
     acceptance:
       - at least three gravity directions are legible
       - scene remains transparent outside the terrarium forms
+    builds:
+      - version: 1
+        pull_request: silasfelinus/kind_robots#1069
+        commit: 8e78fba
+        component: components/screenfx/impossible-terrarium.vue
+        status: candidate
+        verification:
+          - TypeScript
+          - Contract verifiers
+          - facet-catalog
+          - verify
+          - GitGuardian Security Checks
+        deferred:
+          - sandbox-access-gap (see SPEC.md "Sandbox verification gap")
 
   - id: ink-oracle
     title: Ink Oracle
