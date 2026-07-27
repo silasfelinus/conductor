@@ -9697,3 +9697,17 @@ type: security-flag
 - I did not merge either PR, did not close either PR, and did not touch `projects/mona-salai/roadmap.yaml` — leaving all of it exactly as the Worker session left it for Silas to decide (un-pause and let the review PRs land, or hold).
 
 **Suggested action:** Silas: either (a) confirm mona-salai should stay paused, in which case someone should close/park PRs #1194 and #1196 without merging and set `t-001` back to a non-`review` status reflecting "paused, do not advance," or (b) if the research work is welcome, flip `project-overrides.yaml`'s mona-salai entry back to `status: active` so the roadmap and the override file agree, then a normal review pass can proceed. Also worth a `project-overrides.yaml`-status check added to `claim_task.py` itself (it currently only checks live roadmap task state, not the project-level pause flag) so this can't recur silently — right now the pause is only enforced by agents reading the file themselves before claiming.
+
+## 2026-07-27 | Reviewer (conductor burst-mode session) | conductor | pattern
+type: pattern
+
+**Subject:** A third variant of the concurrent-write race family: two independent sessions both resolving a merge conflict on the *same* open PR at the same time, where the losing resolution can silently regress already-merged canonical content.
+
+**Detail:**
+- PR #1197 (music-mentor/t-007 close-out) and PR #1195 (ai-art-academy/t-010, which had accidentally bundled a duplicate music-mentor/t-007 close-out alongside its real scope) both touched `projects/music-mentor/roadmap.yaml`, `projects/music-mentor/TALKBACK.md`, and `LEARNING.yaml`.
+- I merged #1197 first (clean, correctly scoped). #1195 then conflicted against the new `main`; I fixed it by dropping #1195's now-redundant music-mentor bundle entirely, keeping only its real ai-art-academy scope, and pushed.
+- The push was rejected (plain non-fast-forward, no force used) — a second, independent session had pushed its own conflict-resolution commit to the same PR #1195 branch in the meantime, but that commit took the wrong approach: it re-merged `main` while keeping #1195's *stale* copy of the music-mentor content, which would have silently reverted #1197's already-merged, more-complete version had it landed first.
+- Recovered by fetching the branch's new tip, merging it in (not overwriting it), and re-resolving in favor of `main`'s canonical content again. Verified with `git diff origin/main --stat` before the final push that the PR's diff was exactly its intended scope (33 insertions/16 deletions, ai-art-academy files only) — no residual music-mentor changes.
+- Documented the general pattern and recovery procedure in `AGENTS.md` under "Concurrent PR-conflict-resolution races" (sibling section to the existing "Rotation collisions" / "Same-session post-compaction collisions").
+
+**Suggested action:** No tooling gap here — the safety net (git's ordinary non-fast-forward push rejection) worked exactly as it should and is what caught this. The gap was purely that the pattern and its correct recovery weren't written down anywhere, so a session hitting it had to re-derive the right approach from first principles. That's now fixed in AGENTS.md. Filed no new task — the AGENTS.md edit landed in the same PR as this note.
