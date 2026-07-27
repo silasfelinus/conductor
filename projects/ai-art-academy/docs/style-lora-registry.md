@@ -163,6 +163,7 @@ lesson to the wrong registry entry by assuming the slugs always match.
 | `joseon-genre-painting` | *(none)* | not yet in the registry — added to curriculum-outline.md v1.10 (2026-07-25); no dedicated LoRA search performed this cycle |
 | `the-nabis` | *(none)* | not yet in the registry — added to curriculum-outline.md v1.11 (2026-07-26, this cycle), promoted from docs/curriculum-candidates/the-nabis.md; no dedicated LoRA search performed this cycle |
 | `hudson-river-school` | *(none)* | not yet in the registry — added to curriculum-outline.md v1.12 (2026-07-26, this cycle), promoted from docs/curriculum-candidates/hudson-river-school.md; no dedicated LoRA search performed this cycle |
+| `precisionism` | *(none)* | not yet in the registry — added to curriculum-outline.md v1.13 (2026-07-27, this cycle), promoted from docs/curriculum-candidates/precisionism.md; no dedicated LoRA search performed this cycle |
 
 Registry-only entries with **no curriculum-outline.md counterpart at all** — general
 painting techniques/bonus styles, not tied to a specific lesson movement, so a
