@@ -1,6 +1,6 @@
 # Roadmap Audit
 
-Generated: `2026-07-27T02:21:17.536469+00:00`
+Generated: `2026-07-27T03:19:34.988533+00:00`
 
 This is a conservative structural audit. It reports suspicious state; it does not automatically change task status or remove human gates.
 
@@ -15,10 +15,10 @@ This is a conservative structural audit. It reports suspicious state; it does no
 | # | Project | State | Kind | Ready | Waiting | Human | In progress | Done / Total |
 |---:|---|---|---|---:|---:|---:|---:|---:|
 | 1 | `challenge-center` | finished | software | 0 | 0 | 0 | 0 | 20 / 20 |
-| 2 | `ai-art-academy` | active | software | 4 | 0 | 0 | 1 | 36 / 41 |
+| 2 | `ai-art-academy` | active | software | 5 | 0 | 0 | 0 | 36 / 41 |
 | 3 | `coloring-book` | active | software | 1 | 9 | 0 | 0 | 20 / 30 |
 | 4 | `humboldt-scoop` | finished | software | 0 | 0 | 0 | 0 | 8 / 8 |
-| 5 | `humboldt-scoop-cms` | active | software | 1 | 1 | 0 | 0 | 10 / 12 |
+| 5 | `humboldt-scoop-cms` | active | software | 0 | 1 | 0 | 1 | 10 / 12 |
 | 6 | `digital-storefront` | active | software | 1 | 0 | 1 | 0 | 30 / 32 |
 | 7 | `packmaker` | finished | software | 0 | 0 | 0 | 0 | 10 / 10 |
 | 8 | `mermaids-of-venice` | paused | content | 0 | 0 | 8 | 0 | 4 / 12 |
