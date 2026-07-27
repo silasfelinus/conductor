@@ -502,24 +502,24 @@ tasks:
   - id: t-010
     milestone: m6
     title: Academy continuous improvement pass
-    status: claimed
+    status: ready
     recurring: true
     passes: 0
     stakes: reversible
-    updated: '2026-07-27T17:12:10Z'
+    updated: '2026-07-27T17:15:00Z'
     note: |-
       Standing never-idle task (re-arms to ready after every completion, per the recurring-task rule). Each cycle pick ONE: (a) front-end style/polish pass on Academy or art-styler surfaces, (b) roadmap upgrade — refine tasks, detail the next milestone, prune stale notes, (c) generate more art inspirations or style preview thumbnails, (d) expand the curriculum with a new movement/artist entry (respecting PUBLIC-DOMAIN-POLICY.md). Note which option ran in the PR. This task never reaches done and does not count toward milestone progress. See `run_log` for cycle history — do not re-accumulate RAN entries here.
 
-      RAN 2026-07-27T17:05:00Z (this cycle, conductor scheduled Agent run, session burst-20260727T170414Z-aa-t010-lane2): option (b) roadmap accuracy. Full hygiene sweep clean (audit/validate/resolve_deps/PR-merge-drift, repo-wide stale-claim scan). Found and fixed a real drift bug: `animation-manager/t-006` was stuck at `status: review` despite its own merged PR's note saying it had re-armed to ready — corrected to `ready`, cleared stale claim fields. Full detail in `run_log`. Conductor-docs-only; no kind_robots PR needed. Next preferred lane is inspiration/preview assets (lane 3). Rearmed to ready.
+      RAN 2026-07-27T17:15:00Z (this cycle, conductor scheduled Agent run, session burst-20260727T171206Z-aa-t010-lane3): option (c) inspiration/preview assets. Render queue recovered (draining, low failure rate) and t-035's remaining 32 thumbnails finished generating via an automated bot commit; verified all 33 live at their production media URLs, then closed the follow-on gap by wiring `previewImageSrc` for the remaining 32 movements in kind_robots (PR #1055). Marked t-035 `done`. Full detail in `run_log`. Next preferred lane is curriculum depth (lane 4). Rearmed to ready.
     continuous_improvement:
-      last_lane: 2  # 1=front-end polish, 2=roadmap accuracy, 3=inspiration assets, 4=curriculum depth
-      next_lane: 3
-      last_run: '2026-07-27T17:05:00Z'
-      last_pr: 'none (conductor-docs-only: fixed animation-manager/t-006 status drift)'
+      last_lane: 3  # 1=front-end polish, 2=roadmap accuracy, 3=inspiration assets, 4=curriculum depth
+      next_lane: 4
+      last_run: '2026-07-27T17:15:00Z'
+      last_pr: 'kind_robots PR #1055 (wire previewImageSrc for remaining 32 movements)'
     run_log: projects/ai-art-academy/docs/continuous-improvement-run-log.md
-    owner: worker
-    claimed_by: burst-20260727T171206Z-aa-t010-lane3
-    claimed_at: '2026-07-27T17:12:10Z'
+    owner: null
+    claimed_by: null
+    claimed_at: null
 
   - id: t-015
     milestone: m4
@@ -593,6 +593,11 @@ tasks:
       `greek-vase-painting` only and confirm the graceful no-image fallback
       renders correctly for every other style — do not wait for all 33 before
       starting, but also don't expect a fully-populated browser yet.
+
+      FOLLOW-UP CLOSED 2026-07-27T17:12Z (t-010 lane 3, via t-035's closeout): all 33
+      thumbnails are now live in production. kind_robots PR #1055 wired `previewImageSrc`
+      for the remaining 32 movements this task deliberately deferred — the style browser
+      now renders every curriculum movement's thumbnail, not just greek-vase-painting.
     claimed_by: claude-scheduled-20260727-131647-aa-t019
     claimed_at: '2026-07-27T13:17:03Z'
 
@@ -1172,15 +1177,15 @@ tasks:
   - id: t-035
     milestone: m6
     title: 'kind_robots: re-queue and batch-generate Academy style-preview thumbnails for all 33 curriculum movements'
-    status: ready
+    status: done
     passes: 0
     stakes: reversible
-    soft_gate: true
-    updated: '2026-07-27T14:05:00Z'
+    updated: '2026-07-27T17:12:00Z'
     note: |-
       Kaizen from the 2026-07-20 t-010 cycle. Sync half (Persian Miniature Painting entry into stores/seeds/academyStyles.ts) shipped 2026-07-20 via kind_robots PR #616 (squash 99ba5ff3) and is done; this task now covers only the remaining, still-blocked half -- batch-generating `kind-robots-academy-style-preview-*` thumbnail requests in `projects/art-prompts.yaml`.
       CORRECTION 2026-07-27 (t-010 lane 2, roadmap-accuracy pass): the title/note's "25 queued" framing is now stale and the old `--id-prefix "kind-robots-academy-style-preview-" --live` drain instruction is moot -- conductor PR #1215 (t-010 lane 3, same date) root-caused why: `distribute_images.py` was silently pruning every kind_robots-targeted request as "delivered" the moment it copied the file into a local kind_robots checkout, even though kind_robots' `public/images/**` is git-ignored and that copy never reaches production. All ~33 previously-queued academy-style-preview requests were lost this way with no image ever actually landing -- confirmed via `git log -p -- projects/art-prompts.yaml`, which shows all of them removed in that same commit with no prior "delivered" evidence. PR #1215 fixed the script (kind_robots-targeted files now always retain their request record) and proved the fix end-to-end: queued one fresh request (`greek-vase-painting`, ArtJob 2697/ArtImage 12885) and confirmed it live at the production media host (`https://media.acrocatranch.com/images/academy/styles/greek-vase-painting.webp`, HTTP 200, verified this cycle) instead of vanishing. Deliberately did not bulk-generate the rest that cycle (scope: prove + fix the pipeline, not bulk-generate).
       RAN 2026-07-27T14:05Z (burst-mode cycle, claude-conductor-burst-20260727-aa-t035): re-queued all 32 remaining movements' `kind-robots-academy-style-preview-<slug>` requests in `projects/art-prompts.yaml` (prompts derived from each movement's `remix_hint` in docs/curriculum-outline.md, same museum-quality-example convention as the greek-vase-painting proof-of-concept). Attempted the first live drain batch (`--live --id-prefix "kind-robots-academy-style-preview-" --limit 6`): all 6 (byzantine-mosaic, illuminated-manuscript, renaissance, baroque, neoclassicism, ukiyo-e) FAILED -- either a 600s client-side timeout or a connection-reset while polling. Root-caused via `recheck_render_queue.py` and a direct `GET /api/art/queue/<id>` check: the render queue had gone from healthy (0 pending at 09:06Z) to draining (PENDING=7, oldest job age ~35min) by 14:00Z, and the oldest of my own jobs (2699) was still sitting at `status: PENDING, attempts: 0, claimedAt: null` -- the home relay worker was not claiming jobs at all during this window, not merely slow on them. `recentFailed` on the same check shows 3/5 recent failures are `ComfyUI POST /prompt failed ... HTTP 400` at the relay's local ComfyUI instance -- a relay-side problem (missing/changed node or model), not a prompt-construction issue on the conductor side. This is a transient infra failure (home relay unavailable/erroring), not a quality problem with the queued requests, so no pass burned and the task stays `ready`/`soft_gate: true` rather than `blocked`. NEXT STEP for whoever picks this up: confirm the relay is healthy again (`python scripts/recheck_render_queue.py`, expect `oldestPending: none`) before re-attempting `python scripts/consume_art_requests.py --id-prefix "kind-robots-academy-style-preview-" --live` (no `--limit` once healthy; the 6 already-queued jobs 2698-2704 will simply be picked up alongside the rest) -- do not re-run the request-construction step, only the drain. If the relay is a physical machine only Silas can restart, flag it to him; RENDER-BACKLOG.md now has the full timeline.
+      DONE 2026-07-27T17:12Z (conductor scheduled Agent run, t-010 lane 3, session burst-20260727T171206Z-aa-t010-lane3): the relay recovered on its own and an automated `chore: auto-generate project art [skip ci]` bot commit (`d3631f5f`) drained all remaining requests -- `projects/art-prompts.yaml` now shows all 33 `kind-robots-academy-style-preview-*` requests at `status: done`. Independently re-verified rather than trusting the bot commit: fetched all 33 production media URLs directly (`https://media.acrocatranch.com/images/academy/styles/<slug>.webp`), all returned HTTP 200. Batch-generation scope is fully complete. Also closed the follow-on gap this left (t-019 only wired `previewImageSrc` for greek-vase-painting): wired the remaining 32 in kind_robots `stores/seeds/academyStyles.ts` directly this cycle (PR #1055) rather than filing a separate task, since the 33-file verification was already done as part of confirming this task's own completion.
     owner: null
     claimed_by: null
     claimed_at: null
