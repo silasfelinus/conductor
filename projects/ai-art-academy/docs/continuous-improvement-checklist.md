@@ -15,7 +15,21 @@ Record the lane, files changed, and verification in the task note before rearmin
 
 ### Rotation state
 
-- Last completed lane: Curriculum depth (lane 4), 2026-07-27T10:20:00Z (scheduled
+- Last completed lane: Front-end polish (lane 1), 2026-07-27T11:17:00Z (scheduled
+  conductor agent run, session 20260727T110803-agent-t010-lane1). Per the prior
+  cycle's note, lane 1 was next after lane 4 ran. Dispatched a general-purpose
+  subagent over the in-scope surface (art-styler.vue, image-upload.vue,
+  art-maker.vue, add-bot/-character/-reward/-scenario, academyStyles.ts) with
+  this checklist's exclusion list of every bug class already fixed in prior
+  cycles. Found a real, verifiable gap: `image-upload.vue` never emitted
+  `uploaded` at any point in its history, so `art-maker.vue`'s "Remix Image"
+  disclosure (which listens for `@uploaded`) silently never showed its upload
+  confirmation or switched to the Selected tab, even though the underlying
+  upload succeeded. Fixed with a typed `uploaded` emit (one file, 19 insertions).
+  Full detail in `continuous-improvement-run-log.md`'s matching entry. kind_robots
+  PR #1048, all 5 CI checks green, merged (squash, sha 157bbcd0). Next preferred
+  lane is roadmap accuracy (lane 2), per the 1→2→3→4 rotation.
+- Prior completed lane: Curriculum depth (lane 4), 2026-07-27T10:20:00Z (scheduled
   conductor agent run, session 20260727T100513Z-agent-t010-lane4). Per this
   checklist's own "Before adding a 34th movement, finish the known coverage gaps"
   instruction (below), and with all 5 `docs/curriculum-candidates/` files already
