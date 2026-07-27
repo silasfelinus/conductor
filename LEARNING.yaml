@@ -4498,3 +4498,19 @@ records:
     clears against the other branches for the same target status rather than
     assuming symmetry; the regression test should assert clearance, not just
     the status value.'
+- date: 2026-07-27
+  project: digital-storefront
+  task: t-023
+  kind: software
+  stakes: outward-facing
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'A hard needs-human gate does not have to sit idle waiting for a
+    scheduled Reviewer sweep -- Silas merged kind_robots PR #1056 directly
+    within ~30 minutes of it opening. Treat a direct merge by the repo owner
+    as the explicit clearance event itself (confirm via merged_by on the PR,
+    not just merged: true, since an agent must never self-grant
+    approved_by_human) rather than waiting for a separate roadmap-editing
+    round from Silas -- close the loop (approved_by_human: true, status:
+    done) in the same session once that signal is confirmed.'

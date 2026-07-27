@@ -253,12 +253,12 @@ tasks:
 - id: t-023
   milestone: m2
   title: 'kind_robots: Mermaids of Venice PDF product page + Stripe checkout + secure entitlement-gated download route'
-  status: needs-human
+  status: done
   owner: worker
   passes: 0
   stakes: outward-facing
   gate_human: true
-  approved_by_human: false
+  approved_by_human: true
   soft_gate: false
   depends_on:
   - t-022
@@ -273,8 +273,8 @@ tasks:
     needs-human for Silas regardless of this task's own completion.
 
     DONE (implementation) 2026-07-27 (conductor scheduled burst-mode session,
-    claimed as burst-20260727T170948Z-ds-t023): kind_robots PR #1056 (open,
-    not merged — hard gate, outward-facing real-money checkout). Delivered all
+    claimed as burst-20260727T170948Z-ds-t023): kind_robots PR #1056 (merged
+    by Silas same day — see CLEARED note below). Delivered all
     three remaining pieces: (1) server/api/store/product-checkout.post.ts, a
     generic single-Product Stripe Checkout Session route for Entitlement-
     granting products (mirrors the existing pod-checkout.post.ts pattern,
@@ -319,17 +319,20 @@ tasks:
     Stripe Checkout Session, a secure download route that only serves the
     file to someone who actually paid, and moves the PDF out of public/ so it
     can no longer be downloaded for free by anyone who finds the URL.
-    TO APPROVE: this needs your review before merging because it's real money
-    (Stripe charges) and a real product download — not something I'll
-    self-merge. Two things only you can do: (1) confirm STRIPE_SECRET_KEY and
-    STRIPE_WEBHOOK_SECRET are set to real (or intentionally test-mode) values
-    in the deployment, and that `npx tsx scripts/seed_products.ts --write` has
-    been run so the Product row exists (the route 404s otherwise); (2) review
-    and merge kind_robots PR #1056, or comment on it with changes needed. Once
-    merged, set this task's status: done and approved_by_human: true.
+    CLEARED 2026-07-27T17:56:21Z: kind_robots PR #1056 merged directly by
+    Silas (merged_by: silasfelinus, confirmed via the GitHub API) — the
+    explicit human clearance this hard gate was waiting for. Per AGENTS.md's
+    "Human gate clearance rule," setting approved_by_human: true and
+    status: done on that basis. Still open (not this task's job, and not
+    reversible/agent-doable): confirming STRIPE_SECRET_KEY/
+    STRIPE_WEBHOOK_SECRET are live-ready and that
+    `npx tsx scripts/seed_products.ts --write` has run against the production
+    DB so the mermaids-of-venice-pdf Product row exists — the checkout route
+    404s otherwise. Flagging this in case it wasn't already part of the merge
+    decision, but it's a deploy/ops step outside this roadmap task's scope.
   claimed_by: burst-20260727T170948Z-ds-t023
   claimed_at: '2026-07-27T17:09:49Z'
-  updated: '2026-07-27T17:56:00Z'
+  updated: '2026-07-27T17:56:21Z'
 - id: t-012
   milestone: m3
   title: Wire one-time mana top-ups to Stripe checkout (test mode)
