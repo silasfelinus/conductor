@@ -14,6 +14,7 @@ import base64
 import hashlib
 import io
 import json
+import re
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
@@ -436,6 +437,57 @@ def enqueue(entry: dict[str, Any]) -> tuple[int, bool]:
     return int(job["id"]), bool(data.get("deduplicated"))
 
 
+JOB_ID_PATTERN = re.compile(r"\bjob\s+#?(\d+)\b", re.IGNORECASE)
+
+
+def referenced_job_id(entry: dict[str, Any]) -> int | None:
+    """A prior run's timeout error names the ArtJob it was waiting on. Extract
+    it so a later run can check whether that job actually finished instead of
+    submitting a fresh (differently-seeded) duplicate."""
+    match = JOB_ID_PATTERN.search(str(entry.get("semantic_gate_error") or ""))
+    return int(match.group(1)) if match else None
+
+
+def recover_timed_out_job(entry: dict[str, Any], job_id: int) -> tuple[bool, dict[str, Any]] | None:
+    """Check a job a prior run gave up on waiting for. Unlocked entries pick a
+    fresh random seed on every enqueue() call, so blindly resubmitting after a
+    timeout creates a duplicate ArtJob against the render backend rather than
+    reusing the one already in flight -- this recovers the original instead.
+
+    Returns None if the job is still queued/running (leave it for next cycle).
+    Raises if the job failed/was cancelled, or if it belongs to a different
+    concept than expected (caller records that as a fresh semantic_gate_error,
+    same as any other failure).
+    """
+    status, response = consumer.http_json("GET", f"{consumer.KR_BASE_URL}/api/art/queue/{job_id}")
+    if status != 200 or not response or not response.get("success"):
+        return None
+    job = response.get("data", {}).get("job") or {}
+    if job.get("status") in ("PENDING", "RUNNING"):
+        return None
+    if job.get("status") != "DONE":
+        raise RuntimeError(f"job {job_id} {job.get('status')}: {job.get('error')}")
+
+    art_image_id = job.get("artImageId")
+    if not art_image_id:
+        raise RuntimeError(f"job {job_id} DONE with no artImageId")
+
+    attempt = (job.get("payload") or {}).get("attempt") or {}
+    if attempt.get("conceptId") and str(attempt["conceptId"]) != str(entry["concept_id"]):
+        raise RuntimeError(
+            f"job {job_id} belongs to concept {attempt.get('conceptId')!r}, "
+            f"expected {entry['concept_id']!r}"
+        )
+
+    entry["art_image_id"] = int(art_image_id)
+    if attempt.get("seed") is not None:
+        entry["resolved_seed"] = attempt["seed"]
+
+    image_b64 = consumer.fetch_image_b64(art_image_id)
+    destination = save_result(entry, image_b64)
+    return validate_candidate(entry, destination)
+
+
 def validate_candidate(entry: dict[str, Any], destination: Path) -> tuple[bool, dict[str, Any]]:
     ok, reasons, _info = art_quality.assess_file(destination, "color")
     if ok is False:
@@ -501,10 +553,24 @@ def main() -> int:
     for entry in todo:
         destination = target_path(entry)
         try:
+            recovered: tuple[bool, dict[str, Any]] | None = None
             if destination.exists():
                 print(
                     f"  validating existing candidate for {entry['set']}/{entry['concept_id']} "
                     f"at {destination.relative_to(ROOT)}"
+                )
+            elif (stuck_job_id := referenced_job_id(entry)) is not None:
+                recovered = recover_timed_out_job(entry, stuck_job_id)
+                if recovered is None:
+                    print(
+                        f"  job {stuck_job_id} for {entry['set']}/{entry['concept_id']} still "
+                        "queued/running - leaving for next cycle, no duplicate submitted"
+                    )
+                    continue
+                destination = target_path(entry)
+                print(
+                    f"  recovered completed ArtJob {stuck_job_id} for "
+                    f"{entry['set']}/{entry['concept_id']} (no duplicate submitted)"
                 )
             else:
                 job_id, deduplicated = enqueue(entry)
@@ -518,7 +584,7 @@ def main() -> int:
                 image_b64 = consumer.fetch_image_b64(job["artImageId"])
                 destination = save_result(entry, image_b64)
 
-            accepted, semantic = validate_candidate(entry, destination)
+            accepted, semantic = recovered if recovered is not None else validate_candidate(entry, destination)
             if not accepted:
                 rejected = rejection_destination(destination, entry, "rejected")
                 next_status = record_semantic_rejection(entry, semantic, rejected)
