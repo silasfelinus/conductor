@@ -253,12 +253,13 @@ tasks:
 - id: t-023
   milestone: m2
   title: 'kind_robots: Mermaids of Venice PDF product page + Stripe checkout + secure entitlement-gated download route'
-  status: claimed
+  status: needs-human
   owner: worker
   passes: 0
   stakes: outward-facing
   gate_human: true
   approved_by_human: false
+  soft_gate: false
   depends_on:
   - t-022
   note: >
@@ -268,28 +269,67 @@ tasks:
     mermaids landing page (components/pages/mermaids-page.vue) and giftshop,
     and a secure download route that checks the caller's Entitlement (via
     t-022's webhook) before streaming the PDF from server-side storage — never
-    public/. `waiting` on t-022 (needs its Entitlement-granting webhook to gate
-    against). Going live (real charges, live Stripe keys) stays a separate
-    hard needs-human for Silas regardless of this task's own completion.
+    public/. Going live (real charges, live Stripe keys) stays a separate hard
+    needs-human for Silas regardless of this task's own completion.
 
-    SECURITY FLAG 2026-07-26 (see root TALKBACK.md and this project's
-    TALKBACK.md same date): kind_robots' `public/mermaids.pdf` (2.6MB, present
-    in the current checkout) already sits at a public, unauthenticated URL —
-    this task's own spec line above ("stream from server-side storage — never
-    public/") already anticipated exactly this risk. `mermaids-page.vue` does
-    not currently link to it, so it's not linked-and-discoverable from the
-    site UI today, but it is not access-controlled either — anyone who
-    guesses/finds the URL can download the full product for free, regardless
-    of whether this task's paywall ever ships. Did not move/delete the file
-    (out of scope for the session that found it, and doing so without
-    confirming it's actually the final product vs. a placeholder risked
-    destroying the only copy) — whoever claims this task should confirm
-    whether this is the real product PDF and, if so, move it out of public/
-    (or otherwise gate/remove public access) as part of (or before) this
-    task's own work, not after.
+    DONE (implementation) 2026-07-27 (conductor scheduled burst-mode session,
+    claimed as burst-20260727T170948Z-ds-t023): kind_robots PR #1056 (open,
+    not merged — hard gate, outward-facing real-money checkout). Delivered all
+    three remaining pieces: (1) server/api/store/product-checkout.post.ts, a
+    generic single-Product Stripe Checkout Session route for Entitlement-
+    granting products (mirrors the existing pod-checkout.post.ts pattern,
+    blocks repurchase if an active Entitlement already exists); (2)
+    server/api/store/entitlements.get.ts, returning the caller's own active
+    entitlement slugs; (3) server/api/store/download/[slug].get.ts, streaming
+    the file from a new private storage root only after re-checking
+    Entitlement on every request. Front end: components/giftshop/
+    mermaids-pdf-purchase.vue (Buy $9.99 / Download / log-in-to-buy states)
+    replaces the old "coming to the giftshop" placeholder badge in
+    mermaids-page.vue. The webhook, schema, and Product seed row already
+    existed from t-011/t-022 — this closes the remaining gap.
+
+    SECURITY FLAG 2026-07-26 RESOLVED this session: the flag below (public,
+    unauthenticated public/mermaids.pdf) is fixed as part of this same PR —
+    git mv'd to storage/products/mermaids-of-venice-pdf.pdf (outside Nitro's
+    public/ static server), behind a new server/utils/productStorageRoot.ts
+    (env-overridable root, same pattern as imageStorageRoot.ts) so the file is
+    no longer publicly reachable at any URL. Confirmed via full-repo grep that
+    nothing else referenced the old public/ path before moving it.
+
+    Verified before opening the PR: eslint clean, prettier clean, full-project
+    `npm run test` (vue-tsc --noEmit) exit 0. Could NOT exercise a live
+    Stripe checkout/webhook round-trip or a real file download in-sandbox (no
+    STRIPE_SECRET_KEY / reachable DATABASE_URL) — this is the "verification
+    still needed" gap a human/live environment closes, not a known defect.
+
+    Original security-flag text (2026-07-26), preserved for the record: kind_robots'
+    `public/mermaids.pdf` (2.6MB, present in the current checkout) already sits at
+    a public, unauthenticated URL — this task's own spec line above ("stream
+    from server-side storage — never public/") already anticipated exactly
+    this risk. `mermaids-page.vue` does not currently link to it, so it's not
+    linked-and-discoverable from the site UI today, but it is not
+    access-controlled either — anyone who guesses/finds the URL can download
+    the full product for free, regardless of whether this task's paywall ever
+    ships.
+
+    FOR SILAS: kind_robots PR #1056 (https://github.com/silasfelinus/kind_robots/pull/1056)
+    adds real Stripe checkout + a gated download for the Mermaids of Venice
+    PDF, and fixes the public/mermaids.pdf security flag in the same change.
+    It contains: a $9.99 "Buy PDF" button on /mermaids that creates a real
+    Stripe Checkout Session, a secure download route that only serves the
+    file to someone who actually paid, and moves the PDF out of public/ so it
+    can no longer be downloaded for free by anyone who finds the URL.
+    TO APPROVE: this needs your review before merging because it's real money
+    (Stripe charges) and a real product download — not something I'll
+    self-merge. Two things only you can do: (1) confirm STRIPE_SECRET_KEY and
+    STRIPE_WEBHOOK_SECRET are set to real (or intentionally test-mode) values
+    in the deployment, and that `npx tsx scripts/seed_products.ts --write` has
+    been run so the Product row exists (the route 404s otherwise); (2) review
+    and merge kind_robots PR #1056, or comment on it with changes needed. Once
+    merged, set this task's status: done and approved_by_human: true.
   claimed_by: burst-20260727T170948Z-ds-t023
   claimed_at: '2026-07-27T17:09:49Z'
-  updated: '2026-07-27T17:09:49Z'
+  updated: '2026-07-27T17:56:00Z'
 - id: t-012
   milestone: m3
   title: Wire one-time mana top-ups to Stripe checkout (test mode)
