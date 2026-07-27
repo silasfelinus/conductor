@@ -1570,7 +1570,7 @@ tasks:
   - id: t-047
     milestone: m6
     title: 'kind_robots: uploadStore consumers should clear their target on unmount'
-    status: review
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -1599,3 +1599,23 @@ tasks:
       consumer out with a one-line note explaining why.
     claimed_by: claude-conductor-agentrun-20260727T2015Z-aa-t047
     claimed_at: '2026-07-27T20:15:53Z'
+
+  - id: t-048
+    milestone: m6
+    title: 'kind_robots: clear uploadStore target on unmount in avatar-picker.vue and user-dashboard.vue'
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Kaizen from t-047 (kind_robots PR #1063). The investigation for t-047's
+      onUnmounted(clearTarget) fix found two more consumers of the same
+      uploadStore.activeTarget singleton via setAvatarTarget() that were out
+      of that task's listed scope but have the identical latent bug: neither
+      `components/user/avatar-picker.vue` (setTarget call ~line 186) nor
+      `components/user/user-dashboard.vue` (~line 506) calls
+      `uploadStore.clearTarget()` on unmount. Apply the same fix shape as
+      t-047: add `onUnmounted(() => uploadStore.clearTarget())` after
+      confirming (same checks as t-047) that clearing on unmount doesn't
+      break an in-flight upload or any code expecting the target to persist
+      past this component's own lifetime.
