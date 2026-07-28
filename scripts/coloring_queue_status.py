@@ -49,6 +49,8 @@ def summarize_queue(data: dict[str, Any], book_slug: str, batch_size: int | None
     pending = [entry for entry in normalized if entry.get("status") == "pending"]
     errored = [entry for entry in pending if entry.get("semantic_gate_error")]
     clean_pending = [entry for entry in pending if not entry.get("semantic_gate_error")]
+    recovery_candidates = [entry for entry in errored if semantic_gate_job_id(entry) is not None]
+    fresh_submission_blocked = [entry for entry in errored if semantic_gate_job_id(entry) is None]
 
     configured_batch_size = data.get("batch_policy", {}).get("worker_pass_size", 18)
     effective_batch_size = batch_size or int(configured_batch_size)
@@ -72,7 +74,8 @@ def summarize_queue(data: dict[str, Any], book_slug: str, batch_size: int | None
         }
 
     queue_integrity_safe = len(duplicate_entry_ids) == 0 and len(duplicate_slots) == 0
-    retry_safe = len(errored) == 0 and len(duplicate_job_ids) == 0 and queue_integrity_safe
+    recovery_safe = len(duplicate_job_ids) == 0 and queue_integrity_safe
+    retry_safe = len(errored) == 0 and recovery_safe
     actionable = retry_safe and len(next_batch) > 0
 
     return {
@@ -84,10 +87,15 @@ def summarize_queue(data: dict[str, Any], book_slug: str, batch_size: int | None
         "pending_without_semantic_gate_error": len(clean_pending),
         "next_batch": [entry_summary(entry) for entry in next_batch],
         "blocked_pending": [entry_summary(entry) for entry in errored],
+        "recovery_candidates": [entry_summary(entry) for entry in recovery_candidates],
+        "recovery_candidate_count": len(recovery_candidates) if recovery_safe else 0,
+        "fresh_submission_blocked": [entry_summary(entry) for entry in fresh_submission_blocked],
+        "fresh_submission_blocked_count": len(fresh_submission_blocked),
         "duplicate_semantic_gate_job_ids": duplicate_job_ids,
         "duplicate_entry_ids": duplicate_entry_ids,
         "duplicate_slots": duplicate_slots,
         "queue_integrity_safe": queue_integrity_safe,
+        "recovery_safe": recovery_safe,
         "retry_safe": retry_safe,
         "actionable": actionable,
         "actionable_count": len(next_batch) if retry_safe else 0,
@@ -101,6 +109,7 @@ def main() -> int:
     parser.add_argument("--batch-size", type=int)
     parser.add_argument("--require-retry-safe", action="store_true")
     parser.add_argument("--require-actionable", action="store_true")
+    parser.add_argument("--require-recovery-candidates", action="store_true")
     args = parser.parse_args()
 
     try:
@@ -113,6 +122,8 @@ def main() -> int:
     if args.require_retry_safe and not summary["retry_safe"]:
         return 1
     if args.require_actionable and not summary["actionable"]:
+        return 1
+    if args.require_recovery_candidates and summary["recovery_candidate_count"] == 0:
         return 1
     return 0
 

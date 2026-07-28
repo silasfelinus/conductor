@@ -23,13 +23,16 @@ def test_summarizes_statuses_and_next_batch():
     assert summary["statuses"] == {"approved": 1, "pending": 2}
     assert [entry["id"] for entry in summary["next_batch"]] == ["mr-001", "mr-003"]
     assert summary["blocked_pending"] == []
+    assert summary["recovery_candidates"] == []
+    assert summary["fresh_submission_blocked"] == []
     assert summary["queue_integrity_safe"] is True
+    assert summary["recovery_safe"] is True
     assert summary["retry_safe"] is True
     assert summary["actionable"] is True
     assert summary["actionable_count"] == 2
 
 
-def test_semantic_gate_errors_are_blocked_and_excluded_from_next_batch():
+def test_semantic_gate_errors_are_classified_for_recovery_or_fresh_submission():
     summary = summarize_queue(
         queue(
             [
@@ -40,24 +43,35 @@ def test_semantic_gate_errors_are_blocked_and_excluded_from_next_batch():
                     "semantic_gate_error": "job 2474 timed out after 600s (still queued/running)",
                     "semantic_gate_error_at": "2026-07-26T12:18:00Z",
                 },
-                {"slot": 2, "id": "mr-002", "status": "pending"},
+                {
+                    "slot": 2,
+                    "id": "mr-002",
+                    "status": "pending",
+                    "semantic_gate_error": "enqueue failed: HTTP 503 Database connection was temporarily unavailable",
+                },
                 {"slot": 3, "id": "mr-003", "status": "pending"},
+                {"slot": 4, "id": "mr-004", "status": "pending"},
             ]
         ),
         "monster-recast",
     )
 
-    assert summary["pending_with_semantic_gate_error"] == 1
+    assert summary["pending_with_semantic_gate_error"] == 2
     assert summary["pending_without_semantic_gate_error"] == 2
-    assert [entry["id"] for entry in summary["next_batch"]] == ["mr-002", "mr-003"]
-    assert [entry["id"] for entry in summary["blocked_pending"]] == ["mr-001"]
-    assert summary["blocked_pending"][0]["semantic_gate_job_id"] == 2474
+    assert [entry["id"] for entry in summary["next_batch"]] == ["mr-003", "mr-004"]
+    assert [entry["id"] for entry in summary["blocked_pending"]] == ["mr-001", "mr-002"]
+    assert [entry["id"] for entry in summary["recovery_candidates"]] == ["mr-001"]
+    assert summary["recovery_candidates"][0]["semantic_gate_job_id"] == 2474
+    assert summary["recovery_candidate_count"] == 1
+    assert [entry["id"] for entry in summary["fresh_submission_blocked"]] == ["mr-002"]
+    assert summary["fresh_submission_blocked_count"] == 1
+    assert summary["recovery_safe"] is True
     assert summary["retry_safe"] is False
     assert summary["actionable"] is False
     assert summary["actionable_count"] == 0
 
 
-def test_duplicate_job_ids_are_reported_for_supported_error_formats():
+def test_duplicate_job_ids_make_recovery_unsafe():
     summary = summarize_queue(
         queue(
             [
@@ -70,6 +84,8 @@ def test_duplicate_job_ids_are_reported_for_supported_error_formats():
 
     assert summary["duplicate_semantic_gate_job_ids"] == [2474]
     assert summary["next_batch"] == []
+    assert summary["recovery_safe"] is False
+    assert summary["recovery_candidate_count"] == 0
     assert summary["retry_safe"] is False
     assert summary["actionable"] is False
     assert summary["actionable_count"] == 0
@@ -89,6 +105,7 @@ def test_duplicate_entry_ids_make_queue_unsafe():
     assert summary["duplicate_entry_ids"] == ["mr-001"]
     assert summary["duplicate_slots"] == []
     assert summary["queue_integrity_safe"] is False
+    assert summary["recovery_safe"] is False
     assert summary["retry_safe"] is False
     assert summary["actionable"] is False
 
@@ -107,6 +124,7 @@ def test_duplicate_slots_make_queue_unsafe():
     assert summary["duplicate_entry_ids"] == []
     assert summary["duplicate_slots"] == [1]
     assert summary["queue_integrity_safe"] is False
+    assert summary["recovery_safe"] is False
     assert summary["retry_safe"] is False
     assert summary["actionable"] is False
 
@@ -118,6 +136,7 @@ def test_empty_safe_queue_is_not_actionable():
     assert summary["next_batch"] == []
     assert summary["actionable"] is False
     assert summary["actionable_count"] == 0
+    assert summary["recovery_candidate_count"] == 0
 
 
 def test_batch_size_must_be_positive():
