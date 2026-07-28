@@ -6,9 +6,11 @@ on:
       - main
     paths:
       - "color-art-events/*.yaml"
+      - "projects/coloring-book/cover-art-jobs.yaml"
       - "scripts/process_coloring_art_events.py"
       - "scripts/consume_coloring_book_studio_request.py"
       - "scripts/manage_coloring_book_production.py"
+      - "scripts/manage_coloring_book_cover.py"
       - "scripts/adopt_coloring_book_asset.py"
       - "scripts/consume_coloring_book_color_art.py"
       - "scripts/semantic_art_quality.py"
@@ -16,6 +18,7 @@ on:
       - "scripts/art_quality.py"
       - "tests/test_coloring_book_studio_events.py"
       - "tests/test_coloring_book_production.py"
+      - "tests/test_coloring_book_cover.py"
       - "tests/test_coloring_book_asset_adoption.py"
       - ".github/workflows/process-color-art-events.yml"
   schedule:
@@ -52,9 +55,10 @@ jobs:
           python -m unittest \
             tests.test_coloring_book_studio_events \
             tests.test_coloring_book_production \
+            tests.test_coloring_book_cover \
             tests.test_coloring_book_asset_adoption
 
-      - name: Process one proposal-targeted event
+      - name: Process one targeted event
         id: consume
         continue-on-error: true
         env:
@@ -69,7 +73,11 @@ jobs:
         run: |
           git config user.name "conductor-coloring-studio[bot]"
           git config user.email "conductor-coloring-studio[bot]@users.noreply.github.com"
-          git add -A color-art-events projects/coloring-book/color-art-jobs.yaml projects/coloring-book/sets
+          git add -A \
+            color-art-events \
+            projects/coloring-book/color-art-jobs.yaml \
+            projects/coloring-book/cover-art-jobs.yaml \
+            projects/coloring-book/sets
 
           if git diff --staged --quiet; then
             echo "No Coloring Book Studio changes to commit."
