@@ -506,17 +506,20 @@ tasks:
     recurring: true
     passes: 0
     stakes: reversible
-    updated: '2026-07-28T14:10:31Z'
+    updated: '2026-07-28T14:26:20Z'
     note: |-
       Standing never-idle task (re-arms to ready after every completion, per the recurring-task rule). Each cycle pick ONE: (a) front-end style/polish pass on Academy or art-styler surfaces, (b) roadmap upgrade — refine tasks, detail the next milestone, prune stale notes, (c) generate more art inspirations or style preview thumbnails, (d) expand the curriculum with a new movement/artist entry (respecting PUBLIC-DOMAIN-POLICY.md). Note which option ran in the PR. This task never reaches done and does not count toward milestone progress. See `run_log` for cycle history — do not re-accumulate RAN entries here.
 
-      RAN 2026-07-28T13:14:21Z (claude-conductor-scheduled-20260728T131419Z-aa-t010-lane1): option (a), front-end polish. Fixed missing label[for]/id pairing on two Style Lab select controls in image-upload.vue (Add to collection, Link image owner to model) — a WCAG 4.1.2 accessibility gap. kind_robots PR #1105 (squash 2485c57). Full detail in `run_log`.
+      RAN 2026-07-28T14:26:20Z (2026-07-28T142620-conductor-scheduled-aa-t010-lane2): option (b), roadmap accuracy. Live-verified (and reverted) the prior lane-2 cycle's optimistic t-044 flip to `ready` -- two real ArtJobs both still fail with the pre-PR-#1090 error, see conductor PR #1330. Then fixed the exact gap `audit_roadmaps.py` flagged on the corrected task: added `gate_human: true` so t-044's hard-gate status is machine-readable, not just prose. Full detail in `run_log`.
     continuous_improvement:
-      last_lane: 1  # 1=front-end polish, 2=roadmap accuracy, 3=inspiration assets, 4=curriculum depth
-      next_lane: 2
-      last_run: '2026-07-28T14:12:01Z'
-      last_pr: 'kind_robots PR #1105 (squash 2485c57): image-upload.vue label/id pairing'
+      last_lane: 2  # 1=front-end polish, 2=roadmap accuracy, 3=inspiration assets, 4=curriculum depth
+      next_lane: 3
+      last_run: '2026-07-28T14:26:20Z'
+      last_pr: 'conductor PR #1330: t-044 live-verify + gate_human fix'
     run_log: projects/ai-art-academy/docs/continuous-improvement-run-log.md
+    owner: reviewer
+    claimed_by: null
+    claimed_at: null
 
   - id: t-015
     milestone: m4
@@ -1257,11 +1260,17 @@ tasks:
   - id: t-044
     milestone: m2
     title: 'kind_robots: fix Kontext LoRA loading -- every lora_name naming convention rejected by ComfyUI as not-in-list'
-    status: claimed
+    status: needs-human
+    gate_human: true
     passes: 0
     stakes: reversible
-    updated: '2026-07-28T14:07:46Z'
+    updated: '2026-07-28T14:22:16Z'
     note: |-
+      LIVE VERIFICATION 2026-07-28 (~14:22 UTC, conductor Reviewer scheduled run, session 2026-07-28T140745-conductor-scheduled-aa-t044-liveverify): Ran the exact test the prior note called for -- POST /api/art/enqueue against https://kind-robots.vercel.app (the live production API, reachable with KR_API_TOKEN), engine: kontext, source image = the project's own rights-clean projects/images/ai-art-academy-card.webp. TWO real ArtJobs, both FAILED with the identical pre-PR-#1090 error: ArtJob 2773 (Kontext-native LoRA, Resource 1284, localPath "Kontext/SFW/acrylic.safetensors") -- ComfyUI /prompt HTTP 400 `lora_name: 'Kontext/SFW/acrylic.safetensors' not in (list of length 2096)`; ArtJob 2774 (FLUX-dev LoRA, Resource 1055, localPath "Flux/SFW/3D_Cartoon_Vision_flux_v1.safetensors") -- same error, `lora_name: 'Flux/SFW/3D_Cartoon_Vision_flux_v1.safetensors' not in (list of length 2096)`. This DISPROVES the prior note's optimistic reading of PR #1090: that PR fixed the *routing* (`server/utils/artLoraResource.ts`'s `resolveEnqueueLoraResource()` now reliably forwards the Resource's own `localPath` as `lora_name` instead of a stale caller-provided string) but did NOT touch the underlying data -- the Resource `localPath` values in the DB still do not match whatever ComfyUI's local `models/loras` folder scan actually returns for the `LoraLoaderModelOnly` dropdown. Confirmed with two independent Resources under two different localPath prefix conventions (`Kontext/SFW/` and `Flux/SFW/`), both rejected identically, so this is not a one-off bad row -- the whole convention is off.
+
+      FOR SILAS: this task cannot progress further from a conductor sandbox -- there is no code fix left to guess at (five naming conventions have now failed identically across two sessions). What's needed is exactly what docs/t-044-comfy-lora-path-diagnostics.md has asked for since 2026-07-27 and still hasn't been run: from your own Tailscale-connected machine, save ComfyUI's `/object_info` response and Kind Robots `/api/resources` response as local JSON files, then run `python scripts/compare_comfy_lora_paths.py --object-info object-info.json --resources resources.json --output lora-path-report.json` (the comparator, merged via PR #1212). That report will show which Resource `localPath` values need correcting in the DB, or reveal a stable prefix-rewrite rule agents can implement in `resolveEnqueueLoraResource`. Do not commit the captures -- they may expose private model inventory and local folder paths. TO APPROVE: once the DB rows are corrected (or a rewrite rule is implemented and deployed), set `status: ready` so the next cycle re-runs this same live test -- the exact repro is saved (POST /api/art/enqueue, engine: kontext, loraResourceIds: [1284] or [1055], sourceImageBase64 from projects/images/ai-art-academy-card.webp) and will confirm before marking t-044 done. This unblocks t-045.
+
+      --- prior history below ---
       ROADMAP-ACCURACY UPDATE 2026-07-28 (~09:30 UTC, conductor Reviewer sweep, claude-conductor-agentrun-20260728-aa-t010-lane2): Silas merged kind_robots PR #1090 ("Resolve Resource LoRAs and add WAN/LTX video support", squash-equivalent, merged directly by silasfelinus) at 09:19:23Z -- this is the shared resolver this task's own note called for. `server/utils/artLoraResource.ts`'s `resolveEnqueueLoraResource()` now resolves every Kontext/Krea2/Flux2/LTX/WAN enqueue request's `loraName`/`loraResourceIds` through the Resource table before building the Comfy workflow (exact `localPath` match first, then name/label/source-URL match, then unique basename/stem match), rejecting inaccessible, ambiguous, or pathless selections up front instead of letting a stale caller-provided string reach Comfy. `server/api/art/enqueue.post.ts` now calls this resolver before `buildJobPayload`, so the workflow's `lora_name` node input is always the Resource's own authoritative `localPath`, not whatever the caller happened to send. This is architecturally exactly the fix this task's note called for ("implement one shared resolver ... that maps a Resource's localPath to whatever ComfyUI expects"), and its timing (right after the FOR SILAS diagnostics handoff referencing PR #1212's comparator) strongly suggests Silas ran the private relay capture and used it to correct the underlying data/path mismatch, not just the routing bug. NOT independently live-verified this cycle (no live relay/DATABASE_URL access from this sandbox, same limitation as every prior note on this task) -- per this task's own instruction, returning to `ready` rather than `done`: the next cycle with live access should run one Kontext-native and one FLUX-dev LoRA through the real queue (POST /api/art/enqueue) and confirm ComfyUI accepts the workflow and saves an image before marking this `done`, which will unblock t-045 via resolve_deps.py.
 
       --- prior history below ---
@@ -1288,8 +1297,8 @@ tasks:
       It compares Kind Robots Resource `localPath` values against ComfyUI's authoritative `LoraLoaderModelOnly` dropdown, accepts normalized exact or unique-basename matches, and refuses ambiguous guesses.
       TO RESUME: from a Tailscale-connected machine, save ComfyUI `/object_info` and Kind Robots `/api/resources` as private local JSON files, run the documented comparator command, and use the report to correct exact Resource paths or implement one shared resolver. Do not commit the captures because they may expose private model inventory and local paths.
       Before marking this task done, run one Kontext-native and one FLUX-dev LoRA through the real queue and confirm ComfyUI accepts the workflow and saves an image. Then return t-044 to ready for the implementation/live-verification pass; this unblocks t-045.
-    claimed_at: '2026-07-28T14:07:46Z'
-    claimed_by: 2026-07-28T140745-conductor-scheduled-aa-t044-liveverify
+    claimed_at: null
+    claimed_by: null
     owner: reviewer
 
   - id: t-045
