@@ -1,0 +1,148 @@
+"""Relay-side model/LoRA name resolution against ComfyUI's live filename lists.
+
+Reproduces the real 2026-07-28 Kind Robots queue failures: workflows carried
+checkpoint/LoRA names whose slash direction, case, or folder prefix drifted
+from what ComfyUI's object_info actually lists, so ComfyUI rejected the whole
+prompt with HTTP 400 `value_not_in_list` even though the files were on disk.
+"""
+
+import sys
+from pathlib import Path
+
+RELAY_DIR = Path(__file__).resolve().parents[1] / "ops" / "home-server"
+if str(RELAY_DIR) not in sys.path:
+    sys.path.insert(0, str(RELAY_DIR))
+
+import relay_agent as relay  # noqa: E402
+
+
+def object_info(loras=None, checkpoints=None):
+    """Minimal object_info: a LoRA loader and a checkpoint loader, each with a
+    combo `*_name` input plus a non-combo input that must be left alone."""
+    return {
+        "LoraLoaderModelOnly": {
+            "input": {
+                "required": {
+                    "lora_name": [list(loras or []), {}],
+                    "strength_model": ["FLOAT", {"default": 1.0}],
+                }
+            }
+        },
+        "CheckpointLoaderSimple": {
+            "input": {"required": {"ckpt_name": [list(checkpoints or []), {}]}}
+        },
+    }
+
+
+def lora_node(name):
+    return {
+        "class_type": "LoraLoaderModelOnly",
+        "inputs": {"lora_name": name, "strength_model": 1.0, "model": ["59", 0]},
+    }
+
+
+def ckpt_node(name):
+    return {"class_type": "CheckpointLoaderSimple", "inputs": {"ckpt_name": name}}
+
+
+def test_forward_slash_stored_but_list_uses_backslash():
+    # Job #2774-style: stored forward-slash, ComfyUI (Windows) lists backslash.
+    live = "Flux\\SFW\\3D_Cartoon_Vision_flux_v1.safetensors"
+    workflow = {"61": lora_node("Flux/SFW/3D_Cartoon_Vision_flux_v1.safetensors")}
+    remaps, unresolved = relay.resolve_workflow_asset_names(
+        workflow, object_info(loras=[live])
+    )
+    assert workflow["61"]["inputs"]["lora_name"] == live
+    assert unresolved == []
+    assert remaps and remaps[0][3] == live
+
+
+def test_backslash_stored_but_list_uses_forward_slash():
+    # Job #2615-style: stored `FLUX\impressionist`, list has `flux/impressionist`.
+    live = "flux/impressionist.safetensors"
+    workflow = {"61": lora_node("FLUX\\impressionist.safetensors")}
+    remaps, unresolved = relay.resolve_workflow_asset_names(
+        workflow, object_info(loras=[live])
+    )
+    assert workflow["61"]["inputs"]["lora_name"] == live
+    assert unresolved == []
+
+
+def test_case_only_drift_is_resolved():
+    # Job #2621-style: `FLUX/...` stored, list has `Flux/...`.
+    live = "Flux/manuscript_illustration_kontext.safetensors"
+    workflow = {"61": lora_node("FLUX/manuscript_illustration_kontext.safetensors")}
+    relay.resolve_workflow_asset_names(workflow, object_info(loras=[live]))
+    assert workflow["61"]["inputs"]["lora_name"] == live
+
+
+def test_checkpoint_backslash_prefix_resolved():
+    # Jobs #2758/#2756-style: hardcoded `ltx\ltx-...` vs listed `ltx/ltx-...`.
+    live = "ltx/ltx-2.3-22b-dev-fp8.safetensors"
+    workflow = {"317": ckpt_node("ltx\\ltx-2.3-22b-dev-fp8.safetensors")}
+    relay.resolve_workflow_asset_names(workflow, object_info(checkpoints=[live]))
+    assert workflow["317"]["inputs"]["ckpt_name"] == live
+
+
+def test_unique_basename_fallback_across_different_folder():
+    # Same file, moved to a different subfolder than the job recorded.
+    live = "styles/acrylic.safetensors"
+    workflow = {"61": lora_node("Kontext/SFW/acrylic.safetensors")}
+    remaps, unresolved = relay.resolve_workflow_asset_names(
+        workflow, object_info(loras=[live])
+    )
+    assert workflow["61"]["inputs"]["lora_name"] == live
+    assert unresolved == []
+
+
+def test_ambiguous_basename_is_not_guessed():
+    workflow = {"61": lora_node("a/style.safetensors")}
+    remaps, unresolved = relay.resolve_workflow_asset_names(
+        workflow,
+        object_info(loras=["x/style.safetensors", "y/style.safetensors"]),
+    )
+    # Two files share the basename -> refuse to guess, leave the value, report it.
+    assert workflow["61"]["inputs"]["lora_name"] == "a/style.safetensors"
+    assert remaps == []
+    assert unresolved == [("LoraLoaderModelOnly", "lora_name", "a/style.safetensors")]
+
+
+def test_genuinely_missing_name_is_reported_not_rewritten():
+    # Job #2603-style: a Hugging Face repo id, no extension, no such file.
+    workflow = {"61": lora_node("UmeAiRT/FLUX.1-dev-LoRA-Impressionism")}
+    remaps, unresolved = relay.resolve_workflow_asset_names(
+        workflow, object_info(loras=["Flux/SFW/other.safetensors"])
+    )
+    assert remaps == []
+    assert unresolved and unresolved[0][2] == "UmeAiRT/FLUX.1-dev-LoRA-Impressionism"
+
+
+def test_already_correct_name_is_untouched():
+    live = "Flux/SFW/3D_Cartoon_Vision_flux_v1.safetensors"
+    workflow = {"61": lora_node(live)}
+    remaps, unresolved = relay.resolve_workflow_asset_names(
+        workflow, object_info(loras=[live])
+    )
+    assert remaps == []
+    assert unresolved == []
+    assert workflow["61"]["inputs"]["lora_name"] == live
+
+
+def test_non_combo_inputs_are_left_alone():
+    # strength_model is a FLOAT input, never a filename -- must not be touched
+    # even if its stringified value somehow collided with the resolver.
+    workflow = {"61": lora_node("Flux/SFW/x.safetensors")}
+    workflow["61"]["inputs"]["strength_model"] = "0.8"
+    relay.resolve_workflow_asset_names(
+        workflow, object_info(loras=["Flux/SFW/x.safetensors"])
+    )
+    assert workflow["61"]["inputs"]["strength_model"] == "0.8"
+
+
+def test_unknown_node_class_is_skipped():
+    workflow = {"99": {"class_type": "SomeCustomNode", "inputs": {"lora_name": "x"}}}
+    remaps, unresolved = relay.resolve_workflow_asset_names(
+        workflow, object_info(loras=["Flux/y.safetensors"])
+    )
+    assert remaps == []
+    assert unresolved == []
