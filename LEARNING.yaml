@@ -4815,3 +4815,19 @@ records:
     vs §2 distinction) shipped in the same continuous-improvement-checklist.md edit as
     t-051 (PR #1344). See t-051''s record for the reusable lesson about combining
     same-paragraph kaizen tasks.'
+- date: 2026-07-28
+  project: coloring-book
+  task: t-035
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'Clean first-pass fix, same shape as t-032''s recovery-path fix but for the
+    fresh-submission branch of the same loop: record_semantic_gate_error() now stamps the
+    newly enqueued ArtJob''s id onto the stored error whenever the message does not already
+    carry a "job N" reference, so a missing-credential verification failure after a
+    successful render stays recoverable instead of forcing a duplicate resubmission. Mirrors
+    t-032''s own regression test shape closely enough that reusing that test as a template
+    for the new fresh-submission case caught the right edge cases (double-stamp avoidance,
+    enqueue()-failure leaving the field unstamped) on the first attempt.'
