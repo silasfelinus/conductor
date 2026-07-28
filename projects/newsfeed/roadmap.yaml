@@ -692,69 +692,33 @@ tasks:
   - id: t-022
     milestone: m3
     title: 'Wire a pool of default placeholder images into feed-card.vue for items with no image'
-    status: ready
+    status: done
     owner: null
     passes: 0
     stakes: reversible
+    pr: https://github.com/silasfelinus/kind_robots/pull/1075
     note: >
-      Filed 2026-07-25 (Silas: "I did have a request that we add a default
-      image (or ten) to the newsfeed front end when we have no image (on
-      KR). there's a lot of blank images and so the feed is a sea of empty
-      boxes."). Checked kind_robots components/newsfeed/feed-card.vue: it's
-      not literally blank -- when `item.image` is empty (`imageSrc` computed
-      at line 111) it already falls back to a gradient box with a single
-      generic `kind-icon:news` icon (line 22-27) -- but that exact same
-      placeholder repeats identically on every image-less card, which reads
-      as "a sea of empty boxes" once there are several in a row, matching
-      Silas's complaint even though it's not technically blank.
-      Two-part fix: (1) DONE this session -- queued 8 default placeholder
-      illustrations into projects/art-prompts.yaml
-      (kind-robots-newsfeed-default-01 through -08, target path
-      public/images/newsfeed/defaults/default-0N.webp, 1024x576 to match the
-      card's existing aspect-video framing), pending through the normal
-      self-draining art pipeline. (2) REMAINING: once those 8 files exist,
-      update feed-card.vue so the `v-else` gradient-box branch (or the
-      `imageSrc` computed itself) deterministically picks one of the 8
-      defaults per item — e.g. hash `item.id`/`item.title` into an index
-      0-7 — instead of the identical static icon placeholder, so a feed full
-      of image-less cards looks varied rather than repetitive. Keep the
-      existing `@error="imageFailed = true"` fallback behavior for items
-      that DO have an image URL but it 404s/fails to load — that path
-      should also land on one of the 8 defaults rather than the plain icon
-      box, for the same visual-variety reason.
-      Verify: check public/images/newsfeed/defaults/ has all 8 files before
-      starting the wiring half (self-draining queue — may need a cycle or
-      two to land); if the pipeline is still catching up from other pending
-      batches, check back rather than re-queuing duplicates.
+      Filed 2026-07-25 (Silas: "a lot of blank images and so the feed is a
+      sea of empty boxes"). The 8 default placeholder illustrations
+      (kind-robots-newsfeed-default-01 through -08) are done and confirmed
+      live in production (direct HTTP fetch of all 8
+      public/images/newsfeed/defaults/default-0N.webp returned 200, not
+      just trusting art-prompts.yaml's own status: done field, per this
+      task's own prior caution).
 
-      RECHECKED 2026-07-26 ~13:06 UTC (claude-conductor-scheduled-20260726T123800Z-nf-t022):
-      confirmed via `mcp__github__get_file_contents` that
-      public/images/newsfeed/defaults/ does not exist yet in kind_robots, and
-      all 8 kind-robots-newsfeed-default-0N entries in
-      projects/art-prompts.yaml are still status: pending. This matches the
-      same COMFY render-queue backlog documented the same day on
-      ai-art-academy/t-004 and coloring-book/t-022 (single COMFY worker,
-      queue depth 130+, growing not draining) — not specific to this task.
-      Actionable per AGENTS.md Failure Triage: nothing to wire yet, so not
-      spending a pass. Releasing the claim, no code change. Whoever picks
-      this up next: re-check the defaults/ directory and the 8 queue entries
-      before starting the wiring half.
-
-      RECHECKED 2026-07-27 ~21:00 UTC (claude-conductor-burst-20260727T2100Z-nf-t022):
-      the 8 kind-robots-newsfeed-default-0N entries were NOT actually present
-      in projects/art-prompts.yaml this session (grep found zero matches, and
-      the images still don't exist in kind_robots public/images/newsfeed/defaults/)
-      despite this note's 2026-07-25/26 claims that they were queued and
-      pending -- this repo checkout is shallow so the exact history of how
-      they went missing (never pushed vs. pruned by a stale already_satisfied
-      check) couldn't be confirmed. Re-added all 8 entries fresh this session
-      (same ids, same target path/size as originally specified) so the
-      self-draining art pipeline can actually pick them up. Whoever picks
-      this up next: verify public/images/newsfeed/defaults/ has all 8 files
-      AND that the art-prompts.yaml entries are still present/pending
-      (don't assume either from this note alone) before starting the wiring
-      half, and if they've vanished again without the images existing,
-      escalate to needs-human rather than re-queuing a third time.
-    claimed_by: null
-    claimed_at: null
-    updated: '2026-07-27T21:11:23Z'
+      DONE 2026-07-28 (conductor burst cycle): wired feed-card.vue's
+      `v-else` branch to a `fallbackImageSrc` computed that hashes
+      `item.id` into one of the 8 defaults (simple string hash, deterministic
+      per item so a card doesn't flicker between defaults across
+      re-renders), replacing the single static `kind-icon:news` icon box.
+      The existing `@error="imageFailed = true"` path (image URL present
+      but 404s) now falls through to the same `v-else` branch, landing on
+      the pool too, per the task's own scope note. Verified: `npx eslint
+      components/newsfeed/feed-card.vue` clean, `npm run test`
+      (`vue-tsc --noEmit`, full project) exit 0, `npx prettier --check`
+      clean. kind_robots PR #1075 merged squash `b951d4f4` with all 5 CI
+      checks green (Contract verifiers, TypeScript, facet-catalog, verify,
+      GitGuardian).
+    claimed_by: conductor-burst-20260728T0300Z-nf-t022
+    claimed_at: '2026-07-28T03:30:00Z'
+    updated: '2026-07-28T03:30:00Z'

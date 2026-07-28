@@ -1,16 +1,16 @@
 {
-  "generated_at": "2026-07-28T03:11:09.792823+00:00",
+  "generated_at": "2026-07-28T03:25:19.198653+00:00",
   "summary": {
     "roadmaps": 42,
     "active_projects": 23,
     "tasks": 722,
-    "ready": 35,
+    "ready": 33,
     "waiting": 47,
     "needs_human": 24,
-    "in_progress": 1,
-    "done": 604,
+    "in_progress": 2,
+    "done": 605,
     "errors": 0,
-    "warnings": 0,
+    "warnings": 2,
     "info": 56
   },
   "projects": [
@@ -62,16 +62,16 @@
       "task_count": 32,
       "counts": {
         "done": 20,
-        "ready": 2,
-        "review": 1,
+        "ready": 1,
+        "review": 2,
         "waiting": 9
       },
       "open_count": 12,
       "human_attention": 0,
-      "ready": 2,
+      "ready": 1,
       "waiting": 9,
       "claimed": 0,
-      "review": 1,
+      "review": 2,
       "done": 20
     },
     {
@@ -290,16 +290,15 @@
       "autonomous": false,
       "task_count": 22,
       "counts": {
-        "done": 21,
-        "ready": 1
+        "done": 22
       },
-      "open_count": 1,
+      "open_count": 0,
       "human_attention": 0,
-      "ready": 1,
+      "ready": 0,
       "waiting": 0,
       "claimed": 0,
       "review": 0,
-      "done": 21
+      "done": 22
     },
     {
       "slug": "model-builder",
@@ -818,6 +817,20 @@
     }
   ],
   "findings": [
+    {
+      "severity": "warning",
+      "code": "ACTIVE_PROJECT_ALL_DONE",
+      "project": "newsfeed",
+      "task": null,
+      "message": "All tasks are done but project override remains active."
+    },
+    {
+      "severity": "warning",
+      "code": "ACTIVE_PROJECT_NO_OPEN_TASKS",
+      "project": "newsfeed",
+      "task": null,
+      "message": "Active project has no open tasks; mark finished/paused or add an intentional recurring task."
+    },
     {
       "severity": "info",
       "code": "APPROVAL_WITHOUT_GATE",
