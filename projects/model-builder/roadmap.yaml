@@ -751,7 +751,7 @@ tasks:
   - id: t-034
     milestone: m6
     title: "Give Facet real relationship-expansion targets or drop it from relationship-expansion's sourceTypes"
-    status: claimed
+    status: review
     passes: 0
     stakes: reversible
     owner: worker
@@ -773,6 +773,18 @@ tasks:
       it doesn't. Decide by checking whether Facets are meant to spawn related
       Characters/Rewards/Scenarios/Bots at all in the product design -- this task does
       not assume the answer.
+
+      DECIDED (b): removed 'relationship-expansion' from Facet's SOURCE_TYPES.recipes
+      (and 'Facet' from relationship-expansion's own sourceTypes list). Facet's only
+      real Prisma relations to Dream/Scenario are DreamFacet/ScenarioFacet -- explicit
+      tag-attachment join tables that attach a Facet to an *existing* Dream/Scenario
+      (server/api/{dreams,scenarios}/[id]/facets.put.ts, scenarioGenreFacetSync.ts),
+      the same shape used for genre/mood/theme tagging. That's structurally different
+      from every linkSourceToTarget case, which all link a newly-created child record
+      back to its parent -- there is no such parent->child relation from Facet to
+      Character, Reward, Scenario, Dream, or Bot. Facet keeps art-upgrade only.
+      Verified via eslint, verifyModelBuilderLinkCoverage.ts (still passes, unaffected),
+      and `npm test` (vue-tsc --noEmit, clean). kind_robots PR #1108 opened, CI pending.
     claimed_by: conductor-scheduled-20260728T1614Z-mb-t034-burst
     claimed_at: '2026-07-28T16:15:00Z'
-    updated: '2026-07-28T16:15:00Z'
+    updated: '2026-07-28T16:35:00Z'
