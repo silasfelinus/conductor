@@ -2786,15 +2786,16 @@ tasks:
   - id: t-088
     milestone: m2
     title: Backfill projects/images/manifest.json's model field once a real generator supplies an engine/model value
-    status: review
+    status: done
     passes: 0
     stakes: reversible
-    updated: '2026-07-28T04:25:00Z'
+    updated: '2026-07-28T04:32:00Z'
     note: |-
       Kaizen from t-087 (PR #1279): record_project_art_provenance() already carries a `model` field through projects/images/manifest.json's schema, but writes it as null today because neither art-prompts.yaml/art-generate.yaml nor the generator scripts (queue_missing_project_art.py, consume_art_requests.py) populate an engine/model value anywhere in this pipeline yet. Once a real generator (or ArtJob-based generation, if wired into this pipeline) does supply one, thread it through build_lookup() into the manifest entries rather than leaving the field permanently null.
 
 
       Thread project-art model or engine metadata from art-prompts.yaml through art-generate.yaml so distribute_images.py can persist non-null model provenance when a generator supplies it.
-    owner: worker
+
+      Merged PR #1287 as 1adbbf740ecccd03c3ebc5db04597c3eee90e5a6. queue_missing_project_art.py now preserves explicit model metadata, or an engine fallback, through art-generate.yaml so distribute_images.py can persist non-null project-art provenance when supplied; absent metadata remains omitted.
     claimed_by: 20260728T042000Z-worker-conductor-t088-a31e
     claimed_at: '2026-07-28T04:20:00Z'
