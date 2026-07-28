@@ -4908,3 +4908,22 @@ records:
     this session only needed to verify CI and merge both PRs in order (implementation repo
     first, then the conductor tracking PR), matching the "Notes for reviewer" instructions
     left in the PR body.'
+- date: '2026-07-28'
+  project: model-builder
+  task: t-036
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'Running a newly-written static checker against the real file BEFORE writing
+    any fix (rather than writing the checker to match a known-clean state) is worth doing
+    by default -- it immediately found a genuine, previously-unfixed instance of the exact
+    bug class it was built to catch (an unconditional COMMIT-stage write in commitItem(),
+    same shape as the GENERATE_ASSETS bug t-029 fixed ad hoc), which a code-review-only
+    pass over commitItem() had not caught in three prior cycles of this file. Also
+    reconfirmed: mirror the reference checker exactly on the main()-guard idiom
+    (`if (process.argv[1] && import.meta.url === ...) main()`) whenever the new checker
+    will be imported from its own self-test file -- an unconditional module-level main()
+    call (fine for a checker with no test importer, like verifyModelBuilderLinkCoverage.ts)
+    fires as a side effect on import and pollutes/masks the self-test''s own output.'
