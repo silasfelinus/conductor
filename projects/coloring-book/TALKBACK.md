@@ -231,3 +231,31 @@ this file.
 **Kaizen task:** t-031 — audit `consume_art_queue.py` and `consume_art_requests.py` for the
 same unlocked-entry duplicate-submission risk on a `wait_for_job()` timeout (both share the
 same timeout-message pattern t-022 just fixed for coloring-book).
+
+## 2026-07-28 | Reviewer (conductor scheduled Agent run) | coloring-book/t-022 | pattern
+
+**Decision:** merged (PR #1275, squash f610700).
+
+**Failure category:** none — clean first-pass merge, no rejection.
+
+**What was good:**
+- Correctly scoped as read-only: `recovery_batch`/`recovery_actionable` are additive fields
+  on the existing diagnostic (`coloring_queue_status.py`), and the PR's own note is explicit
+  that no ArtJobs were submitted, retried, mutated, or deleted this cycle — an honest
+  boundary for a connector-only run with no `KR_API_TOKEN`/GitHub egress to execute live.
+- New regression test (`test_recovery_batch_is_bounded_by_worker_pass_size`) actually proves
+  the bounding behavior (3 candidates → batch of 2 at the configured pass size), not just
+  that the field exists; existing tests were extended in place rather than duplicated.
+- All required checks green; only one non-required in-progress CodeQL
+  (javascript-typescript) job was still running at merge time, matching the established
+  "don't block on a non-required in-progress check" precedent from prior sweeps.
+
+**What to improve:**
+- Nothing specific to this diff — it's a small, well-tested, correctly-scoped diagnostic
+  addition.
+
+**Kaizen task:** t-032 — a future cycle with real execution access should actually run the
+bounded `recovery_batch` this PR added against the live Monster Recast queue and confirm no
+duplicate ArtJob gets submitted for an entry whose original job already completed; consider
+wiring `--require-recovery-actionable` into the relevant workflow as a guard once that's
+proven out.
