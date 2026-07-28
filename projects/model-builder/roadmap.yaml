@@ -840,3 +840,36 @@ tasks:
     claimed_by: claude-conductor-scheduled-20260728T181326Z-mb-t035
     claimed_at: '2026-07-28T18:13:26Z'
     updated: '2026-07-28T18:13:26Z'
+
+  - id: t-036
+    milestone: m6
+    title: "Add a lint/regression guard for GENERATE_ASSETS-style completion-write races in modelBuilderStore.ts"
+    status: ready
+    passes: 0
+    stakes: reversible
+    owner: null
+    note: >
+      Kaizen from t-029 (kind_robots PR #1114, 2026-07-28): a GENERATE_ASSETS render
+      completion handler (generateItemAsset/pollAsyncArtJob/generateItemAssetAsync)
+      held only its original item reference and unconditionally overwrote the stage
+      status on completion, silently clobbering a concurrent upstream reopen's
+      'stale' marker. Fixed ad hoc with finishGenerateAssets(item, next), which only
+      writes if the stage is still 'in-progress'. This is now the third distinct
+      "review/re-review gate silently bypassed" bug class found by manual read-through
+      in modelBuilderStore.ts (after canApproveAssets and the batch-editor
+      stage-approval-gate fixes) -- each one only caught because a cycle happened to
+      read that exact code path. Add a repo-side static check (mirroring
+      verifyModelBuilderLinkCoverage.ts's approach from t-032/t-035) that walks every
+      async completion/write site touching a stage-status field in
+      modelBuilderStore.ts and flags any that don't gate on the stage's current status
+      before writing -- so this bug class is caught mechanically instead of requiring
+      a full manual store re-read every burst cycle. Front-end/test-only change; no
+      schema change expected.
+
+      Provenance note: this task idea originated in a concurrent session's PR
+      (conductor PR #1360) that collided with this session's own t-029 close-out
+      (conductor PR #1362, merged first) -- both sessions independently reviewed the
+      same kind_robots PR #1114 within the same minute. PR #1360's roadmap/pitch edits
+      were superseded and closed unmerged, but this specific kaizen idea was salvaged
+      here since it's a genuinely good, independent suggestion distinct from anything
+      this session's own review proposed.
