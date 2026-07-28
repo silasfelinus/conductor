@@ -191,3 +191,43 @@ across two languages/repos is a larger refactor than either fix's scope).
 widening are both narrow, already-complete fixes; no obvious follow-on gap this
 cycle beyond the long-standing render-backlog issue already tracked elsewhere in
 this file.
+
+## 2026-07-28 | Reviewer (conductor scheduled Agent run) | coloring-book/t-022 | critique
+
+**Decision:** merged (PR #1268, squash b873712).
+
+**Failure category:** none — clean first-pass merge, no rejection.
+
+**What was good:**
+- Found and fixed a real, previously-unnoticed bug through actual live verification, not
+  just unit tests: unlocked color-art entries re-randomize their seed on every `enqueue()`
+  call, so a stale `wait_for_job()` timeout is indistinguishable from a genuinely stuck job
+  on the next cycle — a plain retry would silently submit a duplicate ArtJob even when the
+  original had since completed (8 of 18 Monster Recast blocked entries had this exact
+  situation: `DONE` jobs sitting unused behind a stale timeout error).
+- Caught its own fix's incompleteness by running `--live` against the real queue instead of
+  trusting the first commit's unit tests alone: `build_entries()` dropped
+  `semantic_gate_error` from the allowlisted fields it copies onto the working entry, so
+  the new recovery branch could never fire in production. This produced one real duplicate
+  ArtJob (2715 alongside already-`DONE` 2702) before the gap was found — the Worker caught
+  it, added a regression test proving the fix, and reverted the live run's file mutations
+  so the queue still names the valid job for the next cycle to recover.
+- Honest, specific "not completed this cycle" note: the recovery path is unit-tested but
+  unexercised end-to-end because this sandbox has `KR_API_TOKEN` but not
+  `ANTHROPIC_API_KEY`, so no live candidate can clear the semantic gate here regardless of
+  submission path. Left a clear pointer to what the next cycle (with a real key) should see
+  happen (mr-001, mr-005–mr-011 recovered with no duplicate submission).
+- All 25 CI checks green (including CodeQL, Python test suite, roadmap validation); diff
+  scoped to exactly the fix (`consume_coloring_book_color_art.py`), its regression test,
+  and the roadmap note.
+
+**What to improve:**
+- The task was left at `status: claimed` rather than `status: review` before the PR was
+  opened (the roadmap diff shows the flip to `review` happening inside the same PR, not as
+  a separate pre-PR commit) — a minor template-discipline gap per AGENTS.md step 7. Didn't
+  affect this review since the PR was still findable directly, but worth the Worker
+  double-checking this step goes out ahead of `gh pr create` next time, not bundled into it.
+
+**Kaizen task:** t-031 — audit `consume_art_queue.py` and `consume_art_requests.py` for the
+same unlocked-entry duplicate-submission risk on a `wait_for_job()` timeout (both share the
+same timeout-message pattern t-022 just fixed for coloring-book).
