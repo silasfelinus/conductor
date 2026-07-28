@@ -575,7 +575,7 @@ tasks:
   - id: t-029
     milestone: m6
     title: "Polish and upgrade Model Builder front-end surface"
-    status: ready
+    status: claimed
     recurring: true
     passes: 0
     stakes: reversible
@@ -619,10 +619,10 @@ tasks:
       PROGRESS 2026-07-27 (conductor scheduled burst rotation, claude-conductor-burst-20260727T200726Z-mb-t029): step (4) follow-on -- dispatched a general-purpose subagent to read the full store, all six components/model-builder/*.vue files, and the recipe/fields stores against the exclusion list of every bug class already fixed by prior cycles (see the six prior PROGRESS entries above for the full list, most recently the createOwnedSingleton() collapse in PR #1049). Found a real, previously-unfixed run-level race in `autoBuildRun()`: it loops over a snapshot of the active run's items, awaiting `autoBuildItem()` per item, without ever re-checking whether `state.run` is still the same run across those awaits. `state.autoBuilding` is a store-wide (not per-run) flag and nothing in the UI gates switching runs (via History) on it. Failure scenario: user clicks "Auto-build all" on Run A while an item's art generation is in flight, then opens Run B via History mid-loop -- the loop's remaining iterations fail fast against the new run (`findItem` can't locate Run A's item ids in Run B, so no data corruption), but `state.autoBuilding` stays stuck `true`, keeping Run B's own "Auto-build all" button disabled until Run A's abandoned in-flight item resolves, and the eventual `setStatus('success', 'Auto-build finished: X/Y committed.')` then overwrites Run B's status banner with a stale count describing the run the user navigated away from. This is the run-level counterpart of the already-fixed item-level singleton races. Fixed by capturing `state.run.id` before the loop, bailing per-iteration (`finally` still clears `autoBuilding`) if the active run has changed, and gating the completion `setStatus` call the same way. Verified independently: `npx eslint stores/modelBuilderStore.ts` shows only the 2 pre-existing `no-empty` errors at lines 203/210 (confirmed via `git stash` with and without this diff); full-project `npx vue-tsc --noEmit` shows 0 errors both before and after. kind_robots PR #1062 (branch `claude/dazzling-ptolemy-2vi3y3`): all 5 CI checks green (TypeScript, Contract verifiers, facet-catalog, verify, GitGuardian Security Checks), no review comments, merged squash `eb7928cc`. Step (1) (dashboard-tab + tutorial .webp art) remains the sole outstanding original deliverable, still blocked on the external art-generation relay. Rearmed to `ready`; claim fields cleared below per the 07-27T13:15 correction's lesson.
 
       CORRECTION 2026-07-27T23:30:00Z (ai-art-academy/t-010 lane-2 roadmap-accuracy pass, conductor-scheduled-agent-20260727T2325Z-aa-t010-lane2): the 20:26 close-out above cleared `claimed_by`/`claimed_at`/`owner` as intended but left the top-level `status:` field itself stuck at `claimed` -- the exact note/field-drift pattern this same task's 07-27T13:15 correction already documented once, just missing one more field this time. Confirmed via GitHub MCP `list_pull_requests` that kind_robots has zero open PRs (nothing mid-flight that this claimed status could legitimately represent), and the note above already says "Rearmed to ready" in plain text. Flipped `status` to `ready`.
-    claimed_by: null
-    claimed_at: null
-    updated: '2026-07-27T23:30:00Z'
-    owner: null
+    claimed_by: claude-conductor-burst-20260728T0730Z-mb-t029
+    claimed_at: '2026-07-28T05:09:49Z'
+    updated: '2026-07-28T05:09:49Z'
+    owner: worker
 
   - id: t-030
     milestone: m6
