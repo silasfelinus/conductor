@@ -575,7 +575,7 @@ tasks:
   - id: t-029
     milestone: m6
     title: "Polish and upgrade Model Builder front-end surface"
-    status: review
+    status: ready
     recurring: true
     passes: 0
     stakes: reversible
@@ -619,10 +619,14 @@ tasks:
       PROGRESS 2026-07-27 (conductor scheduled burst rotation, claude-conductor-burst-20260727T200726Z-mb-t029): step (4) follow-on -- dispatched a general-purpose subagent to read the full store, all six components/model-builder/*.vue files, and the recipe/fields stores against the exclusion list of every bug class already fixed by prior cycles (see the six prior PROGRESS entries above for the full list, most recently the createOwnedSingleton() collapse in PR #1049). Found a real, previously-unfixed run-level race in `autoBuildRun()`: it loops over a snapshot of the active run's items, awaiting `autoBuildItem()` per item, without ever re-checking whether `state.run` is still the same run across those awaits. `state.autoBuilding` is a store-wide (not per-run) flag and nothing in the UI gates switching runs (via History) on it. Failure scenario: user clicks "Auto-build all" on Run A while an item's art generation is in flight, then opens Run B via History mid-loop -- the loop's remaining iterations fail fast against the new run (`findItem` can't locate Run A's item ids in Run B, so no data corruption), but `state.autoBuilding` stays stuck `true`, keeping Run B's own "Auto-build all" button disabled until Run A's abandoned in-flight item resolves, and the eventual `setStatus('success', 'Auto-build finished: X/Y committed.')` then overwrites Run B's status banner with a stale count describing the run the user navigated away from. This is the run-level counterpart of the already-fixed item-level singleton races. Fixed by capturing `state.run.id` before the loop, bailing per-iteration (`finally` still clears `autoBuilding`) if the active run has changed, and gating the completion `setStatus` call the same way. Verified independently: `npx eslint stores/modelBuilderStore.ts` shows only the 2 pre-existing `no-empty` errors at lines 203/210 (confirmed via `git stash` with and without this diff); full-project `npx vue-tsc --noEmit` shows 0 errors both before and after. kind_robots PR #1062 (branch `claude/dazzling-ptolemy-2vi3y3`): all 5 CI checks green (TypeScript, Contract verifiers, facet-catalog, verify, GitGuardian Security Checks), no review comments, merged squash `eb7928cc`. Step (1) (dashboard-tab + tutorial .webp art) remains the sole outstanding original deliverable, still blocked on the external art-generation relay. Rearmed to `ready`; claim fields cleared below per the 07-27T13:15 correction's lesson.
 
       CORRECTION 2026-07-27T23:30:00Z (ai-art-academy/t-010 lane-2 roadmap-accuracy pass, conductor-scheduled-agent-20260727T2325Z-aa-t010-lane2): the 20:26 close-out above cleared `claimed_by`/`claimed_at`/`owner` as intended but left the top-level `status:` field itself stuck at `claimed` -- the exact note/field-drift pattern this same task's 07-27T13:15 correction already documented once, just missing one more field this time. Confirmed via GitHub MCP `list_pull_requests` that kind_robots has zero open PRs (nothing mid-flight that this claimed status could legitimately represent), and the note above already says "Rearmed to ready" in plain text. Flipped `status` to `ready`.
-    claimed_by: claude-conductor-burst-20260728T0730Z-mb-t029
-    claimed_at: '2026-07-28T05:09:49Z'
-    updated: '2026-07-28T05:09:49Z'
-    owner: worker
+
+      PROGRESS 2026-07-28 (conductor scheduled burst rotation, claude-conductor-burst-20260728T0730Z-mb-t029): step (4) follow-on -- dispatched an Explore subagent to read the full store, all six components/model-builder/*.vue files, every server/api/model-builder/** route, and cross-check against prisma/schema.prisma, against the exclusion list of every bug class already fixed by prior cycles (see the eight prior PROGRESS entries above for the full list, most recently the autoBuildRun() run-id staleness fix in PR #1062). Found a real, previously-unfixed gap in `linkSourceToTarget` (server/api/model-builder/items/[id]/commit.post.ts): it handled `Scenario -> Character` (and Dream/Reward/Bot siblings) but had no case for the reverse `Character -> Scenario` pairing, even though `prisma/schema.prisma` models a genuine bidirectional many-to-many relation (`Character.Scenarios` / `Scenario.Characters`, `@relation("CharacterToScenario")`). `getOutputsForRecipe` filters `OUTPUT_CATALOG` only by recipe key, not source type, so a `Character` source running `relationship-expansion` with the `expand-scenarios` output reaches this path through the normal UI, not just a crafted request. Committing that item created the new `Scenario` row but silently returned `linked: false`, leaving the relation unpopulated with no indication to the user. Fixed by mirroring the existing `Scenario -> Character` branch's shape. Verified: `npx eslint` on the changed file clean; full-project `npm run test` (`vue-tsc --noEmit`) exit 0 after provisioning deps via `provision_kind_robots_deps.sh`; diff scoped to exactly the one file (`git status --porcelain` showed only this file before commit). kind_robots PR #1079 (branch `claude/model-builder-t029-scenario-link`): all 4 CI checks green (TypeScript, Contract verifiers, facet-catalog, GitGuardian) -- merged squash `8d4deb33`. No review comments. Step (1) (dashboard-tab + tutorial .webp art) remains the sole outstanding original deliverable, still blocked on the external art-generation relay. Rearmed to `ready`; claim fields cleared below.
+
+      Kaizen suggestion from this cycle: add a small dev-time consistency check (or unit test) that walks every `CREATE_TARGETS` entry in `modelBuilderFields.ts` and asserts `linkSourceToTarget` has a matching `(sourceType, targetType)` case wherever a bidirectional Prisma relation exists between the two models. Would have caught this gap (and the earlier `Dream -> Bot` gap fixed in PR #1005) automatically instead of relying on a manual read-through each cycle. Two related, lower-confidence sibling gaps also noticed but not fixed this cycle (need relation verification first): `Reward -> Character` despite `Character -> Reward` and `Reward.Characters` existing; other `CREATE_TARGETS` pairs (`Project`/`Facet`/`Reward -> Scenario`, etc.) also unhandled but unconfirmed against schema relations.
+    claimed_by: null
+    claimed_at: null
+    updated: '2026-07-28T05:30:00Z'
+    owner: null
 
   - id: t-030
     milestone: m6
@@ -663,3 +667,26 @@ tasks:
       artImageId/imagePath land correctly per item, and confirm the existing synchronous
       "Generate candidate" button still works unchanged. Record findings; file any fix as a
       new task.
+
+  - id: t-032
+    milestone: m6
+    title: "Add a dev-time consistency check between CREATE_TARGETS and linkSourceToTarget"
+    status: ready
+    passes: 0
+    stakes: reversible
+    owner: null
+    updated: '2026-07-28T05:30:00Z'
+    note: >
+      Kaizen from t-029 (kind_robots PR #1079, 2026-07-28, Character->Scenario link gap;
+      same shape as PR #1005's earlier Dream->Bot gap). server/api/model-builder/items/[id]/commit.post.ts's
+      linkSourceToTarget is a hand-maintained switch over (sourceType, targetType) pairs with
+      no structural guarantee it covers every CREATE_TARGETS entry in stores/helpers/modelBuilderFields.ts
+      that corresponds to a real bidirectional Prisma relation -- two such gaps have now been
+      found by manual read-through across separate cycles. Add a small dev-time check (unit
+      test or a boot-time assertion) that walks CREATE_TARGETS, and for each (sourceType,
+      targetType) pair where prisma/schema.prisma defines a relation between the two models,
+      asserts linkSourceToTarget has a matching case. Also worth a look while there: two
+      lower-confidence sibling gaps noticed during t-029's 2026-07-28 cycle but not verified --
+      Reward -> Character (Character -> Reward and Reward.Characters both exist) and other
+      CREATE_TARGETS pairs (Project/Facet/Reward -> Scenario, etc.) whose matching relations
+      weren't confirmed. Front-end/test-only change; no schema change expected.
