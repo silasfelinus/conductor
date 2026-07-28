@@ -9,7 +9,13 @@ Choose the first useful lane that has not run in the previous cycle:
 1. Front-end polish
 2. Roadmap accuracy
 3. Inspiration and preview assets
-4. Curriculum depth
+4. Curriculum depth — if this cycle adds or edits a `stores/seeds/academyStyles.ts`
+   entry, add or confirm the matching `curriculum-outline.md` section in the *same*
+   cycle (or explicitly note the deferral in the task note); do not let the two
+   drift, and do not treat clearing PUBLIC-DOMAIN-POLICY.md §1.3 (death date +
+   creation date) as settling a curriculum "Example works" entry — §2 (an
+   institution's accepted-license image) is a separate, per-work check (see
+   ai-art-academy/t-050, t-051, t-052).
 
 Record the lane, files changed, and verification in the task note before rearming `t-010`.
 
