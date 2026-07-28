@@ -4879,3 +4879,18 @@ records:
     concurrent in-flight state) and stage-approval-gate fixes (guarding against overwriting
     already-reviewed/settled state) are distinct bug classes in this store -- batchDraftField/
     batchSetField needed the latter, not another instance of the former.'
+- date: 2026-07-28
+  project: media-watchlist
+  task: t-015
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'Scoping (t-014) before implementing (t-015) paid off directly -- t-014 had already
+    confirmed GET /api/media-entries needs no new route for an unfiltered take/sort call, so
+    t-015 was pure front-end wiring with zero backend risk. Also: a Record<EnumType, string>
+    icon/label map is a good place to let the TypeScript compiler catch an incomplete
+    enumeration (vue-tsc flagged 6 missing MediaType keys) rather than relying on a manual
+    read-through to notice the map was built against the smaller MEDIA_TYPE_CHIPS subset
+    instead of the full schema enum.'
