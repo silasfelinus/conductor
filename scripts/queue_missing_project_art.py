@@ -12,6 +12,7 @@ can be copied into the human image-generation workflow or passed to request_art.
 from __future__ import annotations
 
 import argparse
+import os
 from pathlib import Path
 from typing import Any
 
@@ -23,6 +24,7 @@ PROMPT_CATALOG = ROOT / "projects" / "art-prompts.yaml"
 OUTPUT_QUEUE = ROOT / "projects" / "art-generate.yaml"
 PROJECT_IMAGE_REPO = "silasfelinus/conductor"
 VARIANT_ORDER = ("icon", "card", "hero")
+DEFAULT_PROJECT_ART_MODEL = os.environ.get("PROJECT_ART_DEFAULT_MODEL", "krea2").strip() or "krea2"
 
 
 def load_yaml(path: Path) -> dict[str, Any]:
@@ -76,9 +78,8 @@ def iter_missing_project_assets(catalog: dict[str, Any]) -> list[dict[str, Any]]
                 "status": "pending",
                 "prompt": " ".join(prompt.split()),
             }
-            model = asset.get("model") or asset.get("engine")
-            if isinstance(model, str) and model.strip():
-                entry["model"] = model.strip()
+            model = asset.get("model") or asset.get("engine") or DEFAULT_PROJECT_ART_MODEL
+            entry["model"] = str(model).strip() or DEFAULT_PROJECT_ART_MODEL
             entries.append(entry)
 
     return entries
