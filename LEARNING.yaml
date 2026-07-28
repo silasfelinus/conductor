@@ -4587,3 +4587,15 @@ records:
     CONTINUOUS_IMPROVEMENT_NOTE_DRIFT check (t-049, same session) caught this on its first
     live run against this exact task, confirming the checker earns its keep immediately
     rather than only in theory.
+- date: 2026-07-28
+  project: conductor
+  task: t-087
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: The "Analyze (javascript-typescript)" CodeQL check routinely runs 40+ minutes in this
+    repo (confirmed on three separate PRs in one session) but does not gate merge -- attempting
+    a merge once every other check is green succeeds immediately rather than needing to wait
+    for CodeQL to finish. Don't block a merge decision on it; treat it as informational.
