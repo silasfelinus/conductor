@@ -63,7 +63,7 @@ class ColoringBookAssetAdoptionTests(unittest.TestCase):
                 "safe_source",
                 return_value=("approved/legacy.webp", source),
             ),
-            patch.object(MODULE.production, "mechanical_check"),
+            patch.object(MODULE, "assess_existing", return_value=(True, [], {})),
             patch.object(
                 MODULE.production,
                 "load_yaml",
@@ -82,8 +82,13 @@ class ColoringBookAssetAdoptionTests(unittest.TestCase):
             patch.object(MODULE.production, "replace_ledger_pair_value") as replace,
             patch.object(MODULE.production, "write_yaml") as write,
         ):
-            MODULE.adopt_color("monster-recast", "mr-001", "approved/legacy.webp")
+            adopted = MODULE.adopt_color(
+                "monster-recast",
+                "mr-001",
+                "approved/legacy.webp",
+            )
 
+        self.assertTrue(adopted)
         self.assertEqual(proposal["accepted"]["color"], "approved/legacy.webp")
         self.assertEqual(queue_entry["status"], "approved")
         self.assertEqual(
@@ -93,6 +98,55 @@ class ColoringBookAssetAdoptionTests(unittest.TestCase):
         self.assertFalse(queue_entry["lock_seed"])
         self.assertNotIn("art_image_id", queue_entry)
         replace.assert_called_once()
+        write.assert_called_once()
+
+    def test_mechanical_color_rejection_is_terminal_review_evidence(self) -> None:
+        queue_entry = {"status": "pending"}
+        proposal = {"accepted": {"color": None, "bw": None}}
+        queue = {"books": []}
+        ledger = {"proposals": []}
+        source = self.root / "approved" / "legacy.webp"
+
+        with (
+            patch.object(
+                MODULE,
+                "safe_source",
+                return_value=("approved/legacy.webp", source),
+            ),
+            patch.object(
+                MODULE,
+                "assess_existing",
+                return_value=(False, ["wrong dimensions"], {"width": 512}),
+            ),
+            patch.object(
+                MODULE.production,
+                "load_yaml",
+                side_effect=[queue, ledger],
+            ),
+            patch.object(
+                MODULE.production,
+                "find_queue_entry",
+                return_value=queue_entry,
+            ),
+            patch.object(
+                MODULE.production,
+                "find_proposal",
+                return_value=proposal,
+            ),
+            patch.object(MODULE.production, "write_yaml") as write,
+            patch.object(MODULE.production, "replace_ledger_pair_value") as replace,
+        ):
+            adopted = MODULE.adopt_color(
+                "monster-recast",
+                "mr-001",
+                "approved/legacy.webp",
+            )
+
+        self.assertFalse(adopted)
+        self.assertIsNone(proposal["accepted"]["color"])
+        self.assertEqual(queue_entry["status"], "needs_review")
+        self.assertEqual(queue_entry["color_adoption_reasons"], ["wrong dimensions"])
+        replace.assert_not_called()
         write.assert_called_once()
 
     def test_adopt_bw_records_review_instead_of_accepting_failed_pair(self) -> None:
@@ -115,6 +169,7 @@ class ColoringBookAssetAdoptionTests(unittest.TestCase):
                 "safe_source",
                 return_value=("approved/bw.webp", source),
             ),
+            patch.object(MODULE, "assess_existing", return_value=(True, [], {})),
             patch.object(MODULE.production, "mechanical_check"),
             patch.object(
                 MODULE.production,

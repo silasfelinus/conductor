@@ -11,6 +11,7 @@ from __future__ import annotations
 import argparse
 import sys
 from pathlib import Path
+from typing import Any
 
 sys.path.insert(0, str(Path(__file__).parent))
 import manage_coloring_book_production as production  # noqa: E402
@@ -45,24 +46,43 @@ def safe_source(book_slug: str, source_path: str) -> tuple[str, Path]:
     return clean, absolute
 
 
-def adopt_color(book_slug: str, proposal_id: str, source_path: str) -> None:
-    relative, absolute = safe_source(book_slug, source_path)
-    production.mechanical_check(absolute, "color")
+def assess_existing(path: Path, variant: str) -> tuple[bool, list[str], dict[str, Any]]:
+    ok, reasons, info = production.art_quality.assess_file(path, variant)
+    if ok is None:
+        raise RuntimeError(reasons[0] if reasons else "image quality gate unavailable")
+    return bool(ok), [str(reason) for reason in reasons], info
 
+
+def adopt_color(book_slug: str, proposal_id: str, source_path: str) -> bool:
+    relative, absolute = safe_source(book_slug, source_path)
     queue = production.load_yaml(production.QUEUE_FILE)
     ledger = production.load_yaml(production.ledger_path(book_slug))
     queue_entry = production.find_queue_entry(queue, book_slug, proposal_id)
     proposal = production.find_proposal(ledger, proposal_id)
     accepted = production.ensure_pair(proposal, "accepted")
 
-    accepted["color"] = relative
-    queue_entry["status"] = "approved"
-    queue_entry["approved_at"] = production.now_iso()
     queue_entry["rendered_path"] = (
         f"projects/coloring-book/sets/{book_slug}/{relative}"
     )
     queue_entry["adopted_color_path"] = relative
     queue_entry["adopted_color_at"] = production.now_iso()
+    mechanical_ok, reasons, info = assess_existing(absolute, "color")
+    if not mechanical_ok:
+        queue_entry["status"] = "needs_review"
+        queue_entry["color_adoption_reasons"] = reasons
+        queue_entry["color_adoption_info"] = info
+        production.write_yaml(production.QUEUE_FILE, queue)
+        print(
+            f"  ADOPTION-REVIEW {book_slug}/{proposal_id} color: "
+            + "; ".join(reasons)
+        )
+        return False
+
+    accepted["color"] = relative
+    queue_entry["status"] = "approved"
+    queue_entry["approved_at"] = production.now_iso()
+    queue_entry.pop("color_adoption_reasons", None)
+    queue_entry.pop("color_adoption_info", None)
     if queue_entry.get("render_seed") is not None:
         queue_entry["lock_seed"] = True
         queue_entry["seed"] = queue_entry["render_seed"]
@@ -77,12 +97,11 @@ def adopt_color(book_slug: str, proposal_id: str, source_path: str) -> None:
         relative,
     )
     production.write_yaml(production.QUEUE_FILE, queue)
+    return True
 
 
 def adopt_bw(book_slug: str, proposal_id: str, source_path: str) -> bool:
     relative, absolute = safe_source(book_slug, source_path)
-    production.mechanical_check(absolute, "bw")
-
     queue = production.load_yaml(production.QUEUE_FILE)
     ledger = production.load_yaml(production.ledger_path(book_slug))
     queue_entry = production.find_queue_entry(queue, book_slug, proposal_id)
@@ -98,16 +117,30 @@ def adopt_bw(book_slug: str, proposal_id: str, source_path: str) -> bool:
     if not color.is_file():
         raise RuntimeError(f"Accepted color master does not exist: {color}")
     production.mechanical_check(color, "color")
-    pair_ok, semantic = production.pair_vision(color, absolute)
 
     queue_entry["bw_rendered_path"] = relative
+    queue_entry["bw_completed_at"] = production.now_iso()
+    queue_entry["adopted_bw_path"] = relative
+    queue_entry["adopted_bw_at"] = production.now_iso()
+    mechanical_ok, reasons, info = assess_existing(absolute, "bw")
+    if not mechanical_ok:
+        queue_entry["bw_status"] = "needs_review"
+        queue_entry["bw_semantic_verdict"] = "mechanical-reject"
+        queue_entry["bw_semantic_reasons"] = reasons
+        queue_entry["bw_mechanical_info"] = info
+        production.write_yaml(production.QUEUE_FILE, queue)
+        print(
+            f"  ADOPTION-REVIEW {book_slug}/{proposal_id} B&W: "
+            + "; ".join(reasons)
+        )
+        return False
+
+    pair_ok, semantic = production.pair_vision(color, absolute)
     queue_entry["bw_semantic_model"] = semantic.get("model")
     queue_entry["bw_semantic_score"] = semantic.get("score")
     queue_entry["bw_semantic_verdict"] = semantic.get("verdict")
     queue_entry["bw_semantic_reasons"] = semantic.get("reasons")
-    queue_entry["bw_completed_at"] = production.now_iso()
-    queue_entry["adopted_bw_path"] = relative
-    queue_entry["adopted_bw_at"] = production.now_iso()
+    queue_entry.pop("bw_mechanical_info", None)
 
     if not pair_ok:
         queue_entry["bw_status"] = "needs_review"
@@ -155,8 +188,9 @@ def main() -> int:
         return 0
 
     if args.operation == "accept-color":
-        adopt_color(args.book, args.proposal_id, args.source_path)
-        print(f"  ADOPTED color {args.book}/{args.proposal_id}")
+        adopted = adopt_color(args.book, args.proposal_id, args.source_path)
+        if adopted:
+            print(f"  ADOPTED color {args.book}/{args.proposal_id}")
         return 0
 
     adopted = adopt_bw(args.book, args.proposal_id, args.source_path)
