@@ -4574,3 +4574,16 @@ records:
     fixture) is a strong sanity check -- the new CONTINUOUS_IMPROVEMENT_NOTE_DRIFT rule
     immediately flagged the exact real-world t-010 drift it was written to catch, on the first
     run.
+- date: 2026-07-28
+  project: ai-art-academy
+  task: t-010
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: A recurring task's continuous_improvement block can drift from its own note within
+    a single cycle (note updated, structured block not) -- the new audit_roadmaps.py
+    CONTINUOUS_IMPROVEMENT_NOTE_DRIFT check (t-049, same session) caught this on its first
+    live run against this exact task, confirming the checker earns its keep immediately
+    rather than only in theory.

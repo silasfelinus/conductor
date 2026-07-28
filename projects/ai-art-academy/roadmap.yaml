@@ -502,7 +502,7 @@ tasks:
   - id: t-010
     milestone: m6
     title: Academy continuous improvement pass
-    status: claimed
+    status: ready
     recurring: true
     passes: 0
     stakes: reversible
@@ -510,20 +510,13 @@ tasks:
     note: |-
       Standing never-idle task (re-arms to ready after every completion, per the recurring-task rule). Each cycle pick ONE: (a) front-end style/polish pass on Academy or art-styler surfaces, (b) roadmap upgrade — refine tasks, detail the next milestone, prune stale notes, (c) generate more art inspirations or style preview thumbnails, (d) expand the curriculum with a new movement/artist entry (respecting PUBLIC-DOMAIN-POLICY.md). Note which option ran in the PR. This task never reaches done and does not count toward milestone progress. See `run_log` for cycle history — do not re-accumulate RAN entries here.
 
-      RAN 2026-07-28T01:30:00Z (conductor-scheduled-agent-20260728T010700Z-aa-t010-lane4): option (d), curriculum depth. Added a new curriculum entry, Italian Futurism (`italian-futurism`, curriculum-outline.md §36), anchored solely on Umberto Boccioni (the only 1910 Futurist-manifesto co-signer whose death clears the policy's 1956 cutoff). Three example works verified directly against the Met Collection API. Full detail in `run_log`.
-
-      Implemented lane 1 front-end polish on worker/ai-art-academy-t-010-continue-learning-a31f: added a progress summary and one-click continuation into the next unexplored Academy lesson.
-
-      RAN 2026-07-28T01:53:00Z (2026-07-28T013928Z-ai-art-academy-t-010-a31f): option (a), front-end polish. Kind Robots PR #1074 merged as b65bfb4d135d15f6ca4295f1ff207295500d4cf1, adding Academy progress and one-click continuation to the next unexplored lesson. The same PR repaired the pre-existing Facet Gallery contract drift exposed by CI while preserving all read-only and admin-gating assertions. Next preferred lane: roadmap accuracy (lane 2).
+      RAN 2026-07-28T02:12:06Z (2026-07-28T02-12-06Z-aa-t010-lane2-roadmap-accuracy): option (b), roadmap accuracy. Also merged conductor PR #1278 (ai-art-academy/t-049), which added a drift check that immediately caught this task's own stale continuous_improvement block; backfilled the missing prior RAN entry, trued up the block, and condensed this note. Full detail in `run_log`.
     continuous_improvement:
-      last_lane: 4  # 1=front-end polish, 2=roadmap accuracy, 3=inspiration assets, 4=curriculum depth
-      next_lane: 1
-      last_run: '2026-07-28T01:30:00Z'
-      last_pr: 'conductor-only (lane-4 curriculum depth: new italian-futurism curriculum entry, promoted from docs/curriculum-candidates/italian-futurism.md; no kind_robots PR this cycle)'
+      last_lane: 2  # 1=front-end polish, 2=roadmap accuracy, 3=inspiration assets, 4=curriculum depth
+      next_lane: 3
+      last_run: '2026-07-28T02:12:06Z'
+      last_pr: 'conductor-only (lane-2 roadmap accuracy: fixed continuous_improvement drift on this task, backfilled run_log, condensed note; no kind_robots PR this cycle)'
     run_log: projects/ai-art-academy/docs/continuous-improvement-run-log.md
-    owner: worker
-    claimed_by: 2026-07-28T02-12-06Z-aa-t010-lane2-roadmap-accuracy
-    claimed_at: '2026-07-28T02:12:06Z'
 
   - id: t-015
     milestone: m4
