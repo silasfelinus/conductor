@@ -116,9 +116,11 @@ todo explicitly asks for it. Scope is exactly what the title/description says.
    under `CLAIM_TTL_MINUTES` while the PR is still open. If your session merges its
    own PR in the same run (see "Reviewer (Claude) — CAN merge ... from `claude/*`
    branches" below), it's fine for `status: review` to be short-lived — set it before
-   `gh pr create` and flip straight to `status: done` right after the merge — the
-   point is that roadmap state never silently jumps from `claimed` to `done` with no
-   externally-visible checkpoint in between.
+   `gh pr create` and flip to `status: done` right after the merge via
+   `scripts/close_task.py` (own branch + its own small PR, never a direct push to
+   `main` — see the "software" close-out step below) — the point is that roadmap
+   state never silently jumps from `claimed` to `done` with no externally-visible
+   checkpoint in between.
 
 ### Rotation collisions
 
@@ -515,7 +517,20 @@ not depend on that happening.
   2026-07-26). If a matching event exists, either let it apply on its own next processor run
   (don't also hand-write the transition) or explicitly consume it first — apply its
   `learning`/`note` payload, then delete the file — rather than racing it blind. Only once
-  that's clear, set task `status: done` (the branch is auto-removed on merge).
+  that's clear, close the task out with `python scripts/close_task.py <project> <task-id>
+  done --session <id>` (the branch is auto-removed on merge) — **never** a plain
+  `set_task_field.py` edit followed by a direct `git commit && git push` to `main`.
+  `close_task.py` pushes the `status: done` edit to its own small branch (checked fresh
+  against `origin/main`, same collision-resistant git plumbing as `claim_task.py`); open a
+  tiny PR from that branch into `main` and merge it, exactly like any other software
+  change. Hard safety rule 1 ("PRs only into `main`, except the Worker's atomic claim
+  commit") does not carve out a second exception for close-out bookkeeping — a direct push
+  here is exactly the gap conductor/t-091 self-flagged from the coloring-book/t-036
+  close-out (2026-07-28): every prior close-out commit in this repo's history carries a
+  `(#PR)` suffix, meaning a small follow-up PR was always the actual convention, just not
+  the tooling default. Several close-outs from the same PR/session can share one
+  `close_task.py` branch (call it once per task with the same `--branch`) so one PR closes
+  a whole batch.
 - **content:** write the draft file, open a PR, set `status: needs-human`.
 - **proposal:** write `pitches/<date>-<slug>.md` using the pitch template, open a PR, set
   `status: needs-human`.
