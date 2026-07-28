@@ -2733,11 +2733,11 @@ tasks:
   - id: t-087
     milestone: m2
     title: "Project icon/card/hero art has no provenance metadata, unlike inspiration images' gallery.json"
-    status: claimed
+    status: review
     owner: worker
     passes: 0
     stakes: reversible
-    updated: '2026-07-28T02:12:42Z'
+    updated: '2026-07-28T02:13:35Z'
     note: >
       Kaizen from closing dream-cycle/t-007 (2026-07-28 burst-mode rotation cycle): its three
       files (projects/images/dream-cycle-{icon,card,hero}.webp) had already landed via the auto
@@ -2754,5 +2754,26 @@ tasks:
       source art-generate.yaml entry whenever an icon/card/hero file lands, mirroring the
       inspiration gallery.json shape closely enough that a future consumer doesn't need two
       different parsers.
+      DONE 2026-07-28 (conductor burst-mode rotation, claude-conductor-burst-20260728T021241Z-cd-t087):
+      implemented the shared-manifest option from the spec above. distribute_images.py's
+      build_lookup() now carries slug/variant/prompt/model/source alongside image_path/
+      target_repo for both the art-prompts.yaml `images:` entries and the art-generate.yaml
+      `batch.entries` (neither yaml section nor the generator scripts (queue_missing_project_art.py,
+      consume_art_requests.py) actually populate a model/engine field anywhere in this pipeline
+      today, so that field is carried through and written as null until a future generator adds
+      one -- the schema doesn't need to wait for the data). New record_project_art_provenance()
+      writes/merges projects/images/manifest.json (keyed by filename) whenever a landed file's
+      target_repo is conductor AND its image_path is under projects/images/ (i.e. an icon/card/
+      hero, never an inspiration mirror) -- called from both the dry-run and real-move branches
+      of distribute(), right where each file is appended to `moved`. Verified: two new pytest
+      cases (manifest write + merge-not-clobber, and the conductor/non-project-art skip paths)
+      plus a manual end-to-end distribute() run through a fake process/ file with an
+      art-generate.yaml batch entry, confirming the file moves, the manifest is written with the
+      right prompt/slug/variant/source, and the source entry is pruned as before. Full suite:
+      `python3 -m pytest tests/` -- 653 passed, 1 skipped (pre-existing skip, unrelated). Did not
+      backfill a manifest entry for the dream-cycle icon/card/hero trio that prompted this task --
+      those files already landed before this manifest existed and their original prompts aren't
+      recoverable from this sandbox; the manifest only covers files landing from here forward,
+      same as gallery.json only covers what's on disk when it's (re)generated.
     claimed_by: claude-conductor-burst-20260728T021241Z-cd-t087
     claimed_at: '2026-07-28T02:12:42Z'
