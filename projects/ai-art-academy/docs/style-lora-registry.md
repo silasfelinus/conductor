@@ -167,6 +167,7 @@ lesson to the wrong registry entry by assuming the slugs always match.
 | `pre-raphaelite` | *(none)* | not yet in the registry — added to curriculum-outline.md v1.14 (2026-07-27, this cycle), fresh research (no source candidate file); no dedicated LoRA search performed this cycle |
 | `arts-and-crafts` | *(none)* | not yet in the registry — added to curriculum-outline.md v1.15 (2026-07-27, this cycle), promoted from docs/curriculum-candidates/arts-and-crafts-movement.md; no dedicated LoRA search performed this cycle |
 | `italian-futurism` | *(none)* | not yet in the registry — added to curriculum-outline.md v1.16 (2026-07-28, this cycle), promoted from docs/curriculum-candidates/italian-futurism.md; no dedicated LoRA search performed this cycle |
+| `fauvism` | *(none)* | not yet in the registry — added to curriculum-outline.md v1.18 (2026-07-28, this cycle), backfilling the existing `stores/seeds/academyStyles.ts` entry; no dedicated LoRA search performed this cycle |
 
 Registry-only entries with **no curriculum-outline.md counterpart at all** — general
 painting techniques/bonus styles, not tied to a specific lesson movement, so a
