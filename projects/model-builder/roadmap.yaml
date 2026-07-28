@@ -696,7 +696,7 @@ tasks:
   - id: t-033
     milestone: m6
     title: "Restrict relationship-expansion CREATE outputs to source types with a real relation"
-    status: review
+    status: done
     passes: 0
     stakes: reversible
     owner: worker
@@ -738,9 +738,13 @@ tasks:
       (previously it saw all 6, all of which would have orphaned on commit). Strict
       improvement, but the recipe is effectively non-functional for Facet until real
       link cases exist. Filed as t-034.
+
+      DONE 2026-07-28: kind_robots PR #1100 merged (CI green). conductor PR #1317
+      (roadmap/TALKBACK bookkeeping) merged (Worker PR CI, Roadmap Audit, Security
+      Audit, Process task events all green).
     claimed_by: burst-20260728-mb-t033-relexpand
     claimed_at: '2026-07-28T11:12:17Z'
-    updated: '2026-07-28T11:12:17Z'
+    updated: '2026-07-28T11:23:34Z'
 
   - id: t-034
     milestone: m6
