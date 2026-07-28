@@ -8,9 +8,13 @@ on:
       - "color-art-events/*.yaml"
       - "scripts/process_coloring_art_events.py"
       - "scripts/consume_coloring_book_studio_request.py"
+      - "scripts/manage_coloring_book_production.py"
       - "scripts/consume_coloring_book_color_art.py"
       - "scripts/semantic_art_quality.py"
+      - "scripts/curate_art.py"
       - "scripts/art_quality.py"
+      - "tests/test_coloring_book_studio_events.py"
+      - "tests/test_coloring_book_production.py"
       - ".github/workflows/process-color-art-events.yml"
   schedule:
     - cron: "27 * * * *"
@@ -42,7 +46,10 @@ jobs:
         run: python -m pip install --disable-pip-version-check pyyaml Pillow
 
       - name: Verify studio event contracts
-        run: python -m unittest tests.test_coloring_book_studio_events
+        run: |
+          python -m unittest \
+            tests.test_coloring_book_studio_events \
+            tests.test_coloring_book_production
 
       - name: Process one proposal-targeted event
         id: consume
@@ -52,9 +59,10 @@ jobs:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           COLOR_ART_MIN_SEMANTIC_SCORE: "75"
           COLOR_ART_MAX_SEMANTIC_ATTEMPTS: "3"
+          BW_PAIR_MIN_SEMANTIC_SCORE: "80"
         run: python scripts/process_coloring_art_events.py --live --max-events 1
 
-      - name: Commit landed renders, revisions, and queue state
+      - name: Commit landed renders, decisions, revisions, and queue state
         run: |
           git config user.name "conductor-coloring-studio[bot]"
           git config user.email "conductor-coloring-studio[bot]@users.noreply.github.com"
@@ -79,5 +87,5 @@ jobs:
       - name: Report unsuccessful event
         if: ${{ steps.consume.outcome != 'success' }}
         run: |
-          echo "::warning::The targeted coloring event was preserved for retry or human review."
+          echo "::warning::The targeted coloring event was preserved for retry."
           exit 1

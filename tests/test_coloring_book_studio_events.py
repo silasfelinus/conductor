@@ -39,18 +39,36 @@ class ColoringBookStudioEventTests(unittest.TestCase):
         path.write_text(yaml.safe_dump(payload, sort_keys=False), encoding="utf-8")
         return path
 
-    def test_load_event_accepts_targeted_proposals(self) -> None:
+    def test_load_event_accepts_targeted_color_proposals(self) -> None:
         event = MODULE.load_event(
             self.write_event(proposal_ids=["mr-009", "mr-010"], force=True)
         )
 
+        self.assertEqual(event.operation, "generate-color-proposals")
         self.assertEqual(event.book, "monster-recast")
         self.assertEqual(event.proposal_ids, ("mr-009", "mr-010"))
         self.assertTrue(event.force)
         command = event.command(live=True)
+        self.assertIn("consume_coloring_book_studio_request.py", command[1])
         self.assertIn("--force", command)
         self.assertEqual(command.count("--proposal-id"), 2)
         self.assertEqual(command[-1], "--live")
+
+    def test_production_action_routes_to_management_consumer(self) -> None:
+        event = MODULE.load_event(
+            self.write_event(operation="generate-bw", force=True)
+        )
+        command = event.command(live=False)
+        self.assertIn("manage_coloring_book_production.py", command[1])
+        self.assertIn("generate-bw", command)
+        self.assertIn("--force", command)
+
+    def test_accept_and_finalize_operations_are_valid(self) -> None:
+        for operation in ("accept-color", "accept-bw", "finalize-pair"):
+            with self.subTest(operation=operation):
+                event = MODULE.load_event(self.write_event(operation=operation))
+                self.assertEqual(event.operation, operation)
+                self.assertNotIn("--force", event.command(live=False))
 
     def test_load_event_deduplicates_ids_without_reordering(self) -> None:
         event = MODULE.load_event(
@@ -64,10 +82,16 @@ class ColoringBookStudioEventTests(unittest.TestCase):
                 self.write_event(book="kind-robots", proposal_ids=["mr-009"])
             )
 
+    def test_force_is_restricted_to_generation_operations(self) -> None:
+        with self.assertRaisesRegex(ValueError, "force is only supported"):
+            MODULE.load_event(
+                self.write_event(operation="accept-color", force=True)
+            )
+
     def test_load_event_rejects_unsafe_values(self) -> None:
         cases = [
             ("version", 2, "version must be 1"),
-            ("operation", "shell", "operation must be generate-color-proposals"),
+            ("operation", "shell", "operation must be one of"),
             ("book", "other", "book must be one of"),
             ("proposal_ids", [], "proposal_ids must be a non-empty list"),
             ("proposal_ids", ["mr-9"], "does not belong"),
