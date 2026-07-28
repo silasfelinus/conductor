@@ -1,0 +1,87 @@
+schema_version: 1
+project: coloring-book
+purpose: Canonical source-asset and print-layout readiness for the three Coloring Book titles.
+requirements:
+  interior_slots: 36
+  source_orientation: portrait
+  source_aspect_ratio: '2:3'
+  source_pixel_size: 1024x1536
+  print_interior_variant: bw
+  archive_color_masters: true
+  final_cover_source_required: true
+  source_ready_definition: All 36 final color/BW pairs exist and the final front-cover source exists.
+  package_ready_definition: Source assets are ready, print layout fields are complete, and exported package files exist.
+books:
+- order: 1
+  slug: monster-recast
+  title: Monster Recast
+  ledger_path: projects/coloring-book/sets/monster-recast/proposals.yaml
+  cover_queue_path: projects/coloring-book/cover-art-jobs.yaml
+  package_directory: projects/coloring-book/packages/monster-recast
+  layout:
+    trim_width_inches: null
+    trim_height_inches: null
+    bleed_inches: null
+    binding: null
+    paper: null
+    interior_color_mode: null
+    cover_color_mode: null
+    printer_template: null
+    page_count_includes_blanks: null
+    inside_cover_printing: null
+    barcode_area_reserved: null
+  exports:
+    ordered_interior_manifest: projects/coloring-book/packages/monster-recast/interiors.yaml
+    interior_pdf: null
+    cover_wrap_pdf: null
+    source_archive: null
+- order: 2
+  slug: hollywood-recast
+  title: Hollywood Recast
+  ledger_path: projects/coloring-book/sets/hollywood-recast/proposals.yaml
+  cover_queue_path: projects/coloring-book/cover-art-jobs.yaml
+  package_directory: projects/coloring-book/packages/hollywood-recast
+  layout:
+    trim_width_inches: null
+    trim_height_inches: null
+    bleed_inches: null
+    binding: null
+    paper: null
+    interior_color_mode: null
+    cover_color_mode: null
+    printer_template: null
+    page_count_includes_blanks: null
+    inside_cover_printing: null
+    barcode_area_reserved: null
+  exports:
+    ordered_interior_manifest: projects/coloring-book/packages/hollywood-recast/interiors.yaml
+    interior_pdf: null
+    cover_wrap_pdf: null
+    source_archive: null
+- order: 3
+  slug: kind-robots
+  title: Kind Robots
+  ledger_path: projects/coloring-book/sets/kind-robots/proposals.yaml
+  cover_queue_path: projects/coloring-book/cover-art-jobs.yaml
+  package_directory: projects/coloring-book/packages/kind-robots
+  layout:
+    trim_width_inches: null
+    trim_height_inches: null
+    bleed_inches: null
+    binding: null
+    paper: null
+    interior_color_mode: null
+    cover_color_mode: null
+    printer_template: null
+    page_count_includes_blanks: null
+    inside_cover_printing: null
+    barcode_area_reserved: null
+  exports:
+    ordered_interior_manifest: projects/coloring-book/packages/kind-robots/interiors.yaml
+    interior_pdf: null
+    cover_wrap_pdf: null
+    source_archive: null
+notes:
+- The existing 1024x1536 images are source assets, not a chosen physical trim size.
+- Do not crop or scale to a printer template until trim, bleed, binding, paper, and printer are selected.
+- The final cover source is portrait front art only; a complete cover-wrap PDF still needs typography, spine, back cover, barcode area, bleed, and template alignment.
