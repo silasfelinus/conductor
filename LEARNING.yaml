@@ -4752,3 +4752,26 @@ records:
     underused verification channel for tasks that look relay-blocked but are only blocked
     for browser-based /object_info access, not for server-side API calls the KR backend
     itself proxies to the relay.'
+- date: 2026-07-28
+  project: ai-art-academy
+  task: t-050
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'Passing PUBLIC-DOMAIN-POLICY.md paragraph 1.3 (artist died 70+ years ago AND
+    work predates the US cutoff year) does not guarantee an institution has released an
+    accepted-license image under paragraph 2 -- these are separate checks. A prior cycle
+    added Fauvism to academyStyles.ts reasoning only from paragraph 1.3 (Matisse/Derain/Dufy
+    all clear the death-date threshold, core works 1904-1908 well before 1930), which is
+    fully valid for that entry''s actual use (prompt-only style reference under paragraph 4
+    rule 1, no displayed artwork image) but does not by itself clear the stricter bar this
+    curriculum doc''s "Example works" require. Direct Met/AIC API queries this cycle found
+    a verified public-domain Matisse work (Still Life with Geranium, 1906, AIC object 87045)
+    but zero for Derain or Dufy despite both clearing paragraph 1.3 with equal margin --
+    every institution-held Fauvist-period Derain/Dufy work checked came back
+    isPublicDomain/is_public_domain: false. Lesson: always run the per-work museum-API
+    check before treating a death-date-cleared artist as curriculum-ready, and ship with
+    fewer verified example works rather than assume prong-1 clearance implies image
+    availability.'

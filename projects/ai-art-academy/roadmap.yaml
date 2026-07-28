@@ -1493,7 +1493,7 @@ tasks:
   - id: t-050
     milestone: m3
     title: 'Add a curriculum-outline.md section for Fauvism to match its academyStyles.ts entry'
-    status: review
+    status: done
     passes: 0
     stakes: reversible
     updated: '2026-07-28T16:09:12Z'
@@ -1561,3 +1561,27 @@ tasks:
       ("Curriculum depth") rotation instructions: a cycle that adds a new academyStyles.ts
       entry must add the matching curriculum-outline.md section in the same cycle, or
       explicitly note the deferral in the task note, so this doesn't recur silently.
+
+  - id: t-052
+    milestone: m1
+    title: Add a checklist reminder that PUBLIC-DOMAIN-POLICY.md §1.3 clearance does not imply an accepted-license image exists (§2 is separate)
+    status: ready
+    passes: 0
+    stakes: reversible
+    owner: null
+    updated: '2026-07-28T16:35:00Z'
+    note: >
+      KAIZEN (from PR #1341, t-050, 2026-07-28): the task note that filed t-050 read
+      academyStyles.ts's fauvism entry ("Matisse/Derain/Dufy all died before 1956; core
+      works 1904-1908, well before the 1930 cutoff") as having settled Fauvism's curriculum
+      eligibility. That reasoning only covers PUBLIC-DOMAIN-POLICY.md §1.3 (the death-date
+      and creation-date prongs) -- it says nothing about §2 (whether an institution has
+      actually released an accepted-license image of a specific work). t-050's own
+      Met/AIC API checks found a verified public-domain Matisse work but zero for Derain or
+      Dufy despite identical §1.3 margin. Add a one-line reminder to
+      continuous-improvement-checklist.md (near the lane-4 curriculum-depth instructions
+      t-051 is already touching) that clearing §1.3 for a named artist does not by itself
+      clear a curriculum "Example works" entry -- always run the per-work museum-API check
+      (Met/AIC isPublicDomain field, or an equivalent accepted-institution license) before
+      treating the artist as generation-ready, and ship with fewer verified works rather
+      than assume prong-1 clearance implies image availability.
