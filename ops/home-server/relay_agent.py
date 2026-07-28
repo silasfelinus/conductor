@@ -315,13 +315,22 @@ def _asset_basename(value):
 
 def _combo_candidates(definition):
     """Return the list of string choices for an object_info input definition,
-    or None when the input is not a filename/enum combo (e.g. INT/FLOAT/STRING).
-    Combo inputs are shaped `[[<choices>], {opts}]`."""
-    if isinstance(definition, list) and definition and isinstance(definition[0], list):
-        choices = definition[0]
-        if choices and all(isinstance(item, str) for item in choices):
-            return choices
-    return None
+    or None when the input is not a resolvable filename/enum combo (e.g.
+    INT/FLOAT/STRING, or an upload-backed input). Combo inputs are shaped
+    `[[<choices>], {opts}]`."""
+    if not (isinstance(definition, list) and definition and isinstance(definition[0], list)):
+        return None
+    choices = definition[0]
+    if not choices or not all(isinstance(item, str) for item in choices):
+        return None
+    opts = definition[1] if len(definition) > 1 and isinstance(definition[1], dict) else {}
+    # Upload-backed combos (LoadImage `image`/`mask`, video loaders) are
+    # populated from Comfy's input dir. The relay uploads those files separately
+    # (upload_comfy_input_images), and a cached/stale object_info won't list a
+    # just-uploaded name -- so never remap or fail-fast on them.
+    if any("upload" in str(key).lower() for key in opts):
+        return None
+    return choices
 
 
 def _resolve_against_candidates(value, candidates):
@@ -417,12 +426,15 @@ def fetch_comfy_object_info(force=False):
 
 def align_workflow_asset_names(workflow):
     """Resolve every checkpoint/LoRA/unet/vae/clip name in `workflow` against
-    the live ComfyUI lists before submission. Refetches object_info once if a
-    name is unresolved against the cached copy (a model may have just been
-    added). Logs each remap and each name that still has no match."""
+    the live ComfyUI lists before submission, rewriting each to the exact
+    current list entry. Refetches object_info once if a name is unresolved
+    against the cached copy (a model may have just been added). Logs each
+    remap; returns the still-unresolved names as (class_type, input_name,
+    value) tuples so the caller can fail fast. Returns [] when object_info
+    can't be fetched (resolution skipped, submit as-is)."""
     object_info = fetch_comfy_object_info()
     if object_info is None:
-        return
+        return []
 
     remaps, unresolved = resolve_workflow_asset_names(workflow, object_info)
     if unresolved:
@@ -432,11 +444,8 @@ def align_workflow_asset_names(workflow):
 
     for class_type, input_name, old, new in remaps:
         log(f"🔧 {class_type}.{input_name}: {old!r} -> {new!r}")
-    for class_type, input_name, value in unresolved:
-        log(
-            f"⚠️ {class_type}.{input_name}={value!r} is not in ComfyUI's list "
-            "-- the file is missing/misnamed on this box; ComfyUI will reject it"
-        )
+
+    return unresolved
 
 
 def run_comfy(payload):
@@ -445,7 +454,24 @@ def run_comfy(payload):
         raise ValueError('COMFY payload needs a "workflow" object (API format)')
 
     upload_comfy_input_images(payload)
-    align_workflow_asset_names(workflow)
+
+    # Fail fast on model names ComfyUI's live list can't match, rather than
+    # POSTing a prompt it will reject with a 400 and then waiting out the
+    # accept/generation timeout (× the queue's retry budget). ComfyUI validates
+    # these combo inputs itself, so an unresolved name here is a guaranteed
+    # rejection -- surface it immediately with the exact node/input/value.
+    unresolved = align_workflow_asset_names(workflow)
+    if unresolved:
+        details = "; ".join(
+            f"{class_type}.{input_name}={value!r}"
+            for class_type, input_name, value in unresolved
+        )
+        raise RuntimeError(
+            f"ComfyUI has no matching file for: {details}. Not in the live model "
+            f"list at {COMFY_URL} (missing, misnamed, or an ambiguous basename). "
+            "Failing fast instead of submitting a prompt ComfyUI would reject."
+        )
+
     want_video = str(payload.get("media") or "").strip().lower() == "video"
 
     try:

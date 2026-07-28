@@ -146,3 +146,51 @@ def test_unknown_node_class_is_skipped():
     )
     assert remaps == []
     assert unresolved == []
+
+
+def test_align_applies_remaps_and_returns_unresolved(monkeypatch):
+    # One name resolves (case drift) and gets rewritten in place; one is truly
+    # missing and comes back as unresolved for the caller to fail fast on.
+    info = object_info(loras=["Flux/manuscript_illustration_kontext.safetensors"])
+    monkeypatch.setattr(relay, "fetch_comfy_object_info", lambda force=False: info)
+
+    workflow = {
+        "61": lora_node("FLUX/manuscript_illustration_kontext.safetensors"),
+        "62": lora_node("UmeAiRT/FLUX.1-dev-LoRA-Impressionism"),
+    }
+    unresolved = relay.align_workflow_asset_names(workflow)
+
+    assert (
+        workflow["61"]["inputs"]["lora_name"]
+        == "Flux/manuscript_illustration_kontext.safetensors"
+    )
+    assert [u[2] for u in unresolved] == ["UmeAiRT/FLUX.1-dev-LoRA-Impressionism"]
+
+
+def test_align_skips_when_object_info_unavailable(monkeypatch):
+    monkeypatch.setattr(relay, "fetch_comfy_object_info", lambda force=False: None)
+    workflow = {"61": lora_node("whatever/x.safetensors")}
+    assert relay.align_workflow_asset_names(workflow) == []
+    assert workflow["61"]["inputs"]["lora_name"] == "whatever/x.safetensors"
+
+
+def test_upload_backed_image_input_is_never_touched():
+    # LoadImage's `image` combo is populated from Comfy's input dir; the relay
+    # uploads that file separately, so a cached object_info won't list it yet.
+    # It must not be remapped OR flagged as unresolved.
+    info = {
+        "LoadImage": {
+            "input": {
+                "required": {
+                    "image": [["existing_a.png", "existing_b.png"], {"image_upload": True}]
+                }
+            }
+        }
+    }
+    workflow = {
+        "10": {"class_type": "LoadImage", "inputs": {"image": "job-2774-source.png"}}
+    }
+    remaps, unresolved = relay.resolve_workflow_asset_names(workflow, info)
+    assert remaps == []
+    assert unresolved == []
+    assert workflow["10"]["inputs"]["image"] == "job-2774-source.png"
