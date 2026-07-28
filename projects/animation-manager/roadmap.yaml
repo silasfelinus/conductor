@@ -216,7 +216,7 @@ tasks:
   - id: t-007
     milestone: m5
     title: "Build or polish one animation candidate from reaction evidence"
-    status: ready
+    status: claimed
     passes: 0
     stakes: reversible
     recurring: true
@@ -255,9 +255,9 @@ tasks:
       MERGED 2026-07-27 (~23:01 UTC, conductor scheduled Agent session, claude/festive-heisenberg-jz9y92): kind_robots PR #1069 confirmed all 5 CI checks green (Contract verifiers, TypeScript, facet-catalog, verify, GitGuardian), no review comments, squash-merged (8e78fba). Conductor PR #1264 (this roadmap note) also merged (squash 70d4685). PITCHES.yaml's impossible-terrarium entry updated to status: candidate with a builds: record (pending the deferred live-smoke pass before promoting to shipped, same as every prior candidate). Rearming to ready per the recurring-task convention.
 
       NOTE 2026-07-27T23:13:30Z (Silas task-event, processed on main as a concurrent rearm while this PR was still pending CI): the event's own note correctly deferred the PITCHES.yaml promotion to this PR/#1267 rather than overwriting it ("PITCHES.yaml promotion remains in conflicted closeout PRs #1266/#1267 and should be salvaged separately"). Resolved the resulting conflict by keeping this PR's version (already carries the PITCHES.yaml `builds:` record the event was waiting on) rather than the event's shorter placeholder note, per its own instruction. #1267 (the other closeout PR referenced) was closed as a duplicate/superseded by this PR.
-    updated: '2026-07-27T23:40:00Z'
-    claimed_by: null
-    claimed_at: null
+    updated: '2026-07-28T15:11:04Z'
+    claimed_by: conductor-scheduled-20260728T1510Z-am-t007-burst
+    claimed_at: '2026-07-28T15:11:04Z'
     owner: worker
 
   - id: t-008
