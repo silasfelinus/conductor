@@ -81,3 +81,37 @@ def test_main_dry_run_json_reports_plan(monkeypatch, capsys):
     assert rc == 0
     assert '"deleted"' in out and "claude/gone" in out
     assert "claude/keep" in out  # left active
+
+
+def test_force_delete_bypasses_prefix_filter(monkeypatch, capsys):
+    # A branch outside claude/*|worker/* (e.g. reviewer/*) named via --force-delete
+    # must still be picked up, not silently dropped by the prefix scan.
+    monkeypatch.setattr(bj, "refresh_remotes", lambda: None)
+    monkeypatch.setattr(bj, "list_remote_branches", lambda prefixes: ["claude/keep"])
+    monkeypatch.setattr(
+        bj, "list_all_remote_branches",
+        lambda: ["claude/keep", "reviewer/stray-branch"],
+    )
+    monkeypatch.setattr(bj, "is_merged", lambda b, base="origin/main": False)
+    monkeypatch.setattr(bj, "branch_age_hours", lambda b, now=None: 1.0)
+
+    rc = bj.main(["--dry-run", "--json", "--force-delete", "reviewer/stray-branch"])
+    out = capsys.readouterr().out
+    assert rc == 0
+    assert "reviewer/stray-branch" in out
+    assert '"deleted"' in out
+
+
+def test_force_delete_ignores_nonexistent_branch_name(monkeypatch, capsys):
+    # A --force-delete name that doesn't actually exist as a remote branch must not
+    # be fabricated into the plan.
+    monkeypatch.setattr(bj, "refresh_remotes", lambda: None)
+    monkeypatch.setattr(bj, "list_remote_branches", lambda prefixes: ["claude/keep"])
+    monkeypatch.setattr(bj, "list_all_remote_branches", lambda: ["claude/keep"])
+    monkeypatch.setattr(bj, "is_merged", lambda b, base="origin/main": False)
+    monkeypatch.setattr(bj, "branch_age_hours", lambda b, now=None: 1.0)
+
+    rc = bj.main(["--dry-run", "--json", "--force-delete", "reviewer/does-not-exist"])
+    out = capsys.readouterr().out
+    assert rc == 0
+    assert "reviewer/does-not-exist" not in out

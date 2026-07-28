@@ -68,6 +68,21 @@ def list_remote_branches(prefixes: tuple[str, ...]) -> list[str]:
     return out
 
 
+def list_all_remote_branches() -> list[str]:
+    """Return every remote branch short name (no 'origin/'), minus main/HEAD — no prefix filter."""
+    raw = git("branch", "-r", "--format=%(refname:short)")
+    out: list[str] = []
+    for line in raw.splitlines():
+        ref = line.strip()
+        if not ref.startswith("origin/"):
+            continue
+        name = ref[len("origin/"):]
+        if name in ("main", "HEAD") or "->" in ref:
+            continue
+        out.append(name)
+    return out
+
+
 def is_merged(branch: str, base: str = "origin/main") -> bool:
     """True if branch tip is a strict ancestor of base (fully merged)."""
     rc = subprocess.run(
@@ -140,6 +155,14 @@ def main(argv=None) -> int:
     prefixes = tuple(p for p in (s.strip() for s in args.prefixes.split(",")) if p)
     force_set = {b.strip() for b in args.force_delete.split(",") if b.strip()}
     branches = list_remote_branches(prefixes)
+
+    # A forced name is explicit operator/agent intent regardless of naming convention —
+    # it must not be silently dropped just because it falls outside --prefixes.
+    if force_set:
+        existing = force_set & set(list_all_remote_branches())
+        for b in existing:
+            if b not in branches:
+                branches.append(b)
 
     plan = classify(
         branches,
