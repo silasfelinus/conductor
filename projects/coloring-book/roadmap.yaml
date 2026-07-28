@@ -684,11 +684,11 @@ tasks:
 - id: t-031
   milestone: m4
   title: Audit other art-consumption scripts for t-022's unlocked-entry duplicate-submission bug
-  status: ready
+  status: claimed
   passes: 0
   stakes: reversible
-  owner: null
-  updated: '2026-07-28T00:06:42Z'
+  owner: worker
+  updated: '2026-07-28T03:10:14Z'
   note: >
     KAIZEN (from PR #1268, t-022, 2026-07-27): t-022 fixed a real bug in
     consume_coloring_book_color_art.py where an unlocked entry picks a fresh
@@ -704,6 +704,8 @@ tasks:
     and either port recover_timed_out_job()'s pattern if the bug reproduces,
     or record why it doesn't apply (e.g. already idempotency-keyed) so this
     doesn't need re-auditing later.
+  claimed_by: 2026-07-28T03-10-14Z-coloring-book-t-031-a31d
+  claimed_at: '2026-07-28T03:10:14Z'
 
 - id: t-032
   milestone: m4
