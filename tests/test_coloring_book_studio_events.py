@@ -47,6 +47,7 @@ class ColoringBookStudioEventTests(unittest.TestCase):
         self.assertEqual(event.operation, "generate-color-proposals")
         self.assertEqual(event.book, "monster-recast")
         self.assertEqual(event.proposal_ids, ("mr-009", "mr-010"))
+        self.assertIsNone(event.source_path)
         self.assertTrue(event.force)
         command = event.command(live=True)
         self.assertIn("consume_coloring_book_studio_request.py", command[1])
@@ -62,6 +63,19 @@ class ColoringBookStudioEventTests(unittest.TestCase):
         self.assertIn("manage_coloring_book_production.py", command[1])
         self.assertIn("generate-bw", command)
         self.assertIn("--force", command)
+
+    def test_existing_asset_adoption_routes_to_dedicated_consumer(self) -> None:
+        event = MODULE.load_event(
+            self.write_event(
+                operation="accept-color",
+                source_path="projects/coloring-book/sets/monster-recast/approved/fly-beach-color.webp",
+            )
+        )
+        self.assertEqual(event.source_path, "approved/fly-beach-color.webp")
+        command = event.command(live=False)
+        self.assertIn("adopt_coloring_book_asset.py", command[1])
+        self.assertEqual(command.count("--proposal-id"), 1)
+        self.assertIn("approved/fly-beach-color.webp", command)
 
     def test_accept_and_finalize_operations_are_valid(self) -> None:
         for operation in ("accept-color", "accept-bw", "finalize-pair"):
@@ -87,6 +101,40 @@ class ColoringBookStudioEventTests(unittest.TestCase):
             MODULE.load_event(
                 self.write_event(operation="accept-color", force=True)
             )
+
+    def test_source_path_is_restricted_to_single_acceptance(self) -> None:
+        cases = [
+            (
+                {"operation": "generate-bw", "source_path": "approved/pair.webp"},
+                "supported only",
+            ),
+            (
+                {
+                    "operation": "accept-color",
+                    "proposal_ids": ["mr-009", "mr-010"],
+                    "source_path": "approved/pair.webp",
+                },
+                "exactly one proposal",
+            ),
+            (
+                {
+                    "operation": "accept-color",
+                    "source_path": "../approved/pair.webp",
+                },
+                "safe image path",
+            ),
+            (
+                {
+                    "operation": "accept-bw",
+                    "source_path": "projects/coloring-book/sets/kind-robots/approved/pair.webp",
+                },
+                "must belong",
+            ),
+        ]
+        for overrides, message in cases:
+            with self.subTest(overrides=overrides):
+                with self.assertRaisesRegex(ValueError, message):
+                    MODULE.load_event(self.write_event(**overrides))
 
     def test_load_event_rejects_unsafe_values(self) -> None:
         cases = [
