@@ -696,7 +696,7 @@ tasks:
   - id: t-033
     milestone: m6
     title: "Restrict relationship-expansion CREATE outputs to source types with a real relation"
-    status: claimed
+    status: review
     passes: 0
     stakes: reversible
     owner: worker
@@ -713,6 +713,59 @@ tasks:
       already derives from prisma/schema.prisma) so the picker only ever offers
       expand-* outputs a source type actually has a relation for. Front-end/store change;
       no schema change expected.
+
+      IMPLEMENTED 2026-07-28 (burst-20260728-mb-t033-relexpand): kind_robots PR #1100.
+      Added `sourceTypes?: SourceTypeKey[]` to `BuildOutputConfig`
+      (stores/helpers/modelBuilderRecipes.ts), populated per expand-* output from the
+      actual (sourceType, targetType) pairs `linkSourceToTarget` handles in
+      server/api/model-builder/items/[id]/commit.post.ts: expand-characters ->
+      [Dream, Reward, Scenario], expand-rewards -> [Dream, Character], expand-scenarios
+      -> [Dream, Character], expand-narrator-bot -> [Dream] (links via
+      Dream.narratorId), expand-manager-bot -> [Project] (links via
+      Project.managerBotId), expand-signature-rewards -> [Character].
+      `getOutputsForRecipe(recipeKey, sourceType?)` now filters by this list when
+      present; `modelBuilderStore.ts`'s `recipeOutputs` computed and `selectRecipe()`
+      both pass `state.sourceType` through, so the existing recipe-selector component
+      picks this up with no template change. Verified
+      `npx tsx utils/scripts/verifyModelBuilderLinkCoverage.ts` still passes (this
+      change doesn't touch commit.post.ts or the schema). Could not run the full
+      vue-tsc typecheck locally (no node_modules in this sandbox) -- PR CI's
+      TypeScript check is the verification gate.
+
+      KAIZEN FOUND: Facet is still listed in SOURCE_TYPES.recipes as eligible for
+      relationship-expansion, but has zero linkSourceToTarget cases at all -- so after
+      this fix, a Facet source now sees 0 available expand-* outputs for that recipe
+      (previously it saw all 6, all of which would have orphaned on commit). Strict
+      improvement, but the recipe is effectively non-functional for Facet until real
+      link cases exist. Filed as t-034.
     claimed_by: burst-20260728-mb-t033-relexpand
     claimed_at: '2026-07-28T11:12:17Z'
     updated: '2026-07-28T11:12:17Z'
+
+  - id: t-034
+    milestone: m6
+    title: "Give Facet real relationship-expansion targets or drop it from relationship-expansion's sourceTypes"
+    status: ready
+    passes: 0
+    stakes: reversible
+    owner: null
+    note: >
+      Kaizen from t-033 (kind_robots PR #1100, 2026-07-28). SOURCE_TYPES['Facet'].recipes
+      in stores/helpers/modelBuilderRecipes.ts still lists 'relationship-expansion' as
+      eligible, but server/api/model-builder/items/[id]/commit.post.ts's
+      linkSourceToTarget has zero `sourceType === 'Facet'` cases -- no real Prisma
+      relation from Facet to Character, Reward, Scenario, or Bot exists to link a
+      created record back to it. Before t-033, a Facet source silently showed all 6
+      expand-* outputs, every one of which would orphan on commit (create a record
+      with no link back to the source Facet). t-033's per-output sourceTypes filter now
+      hides all of them for Facet instead (0 outputs shown), which is strictly safer
+      but leaves the recipe chip visibly selectable and functionally empty for Facet.
+      Either (a) add real relation(s) from Facet to one or more of Character/Reward/
+      Scenario/Bot in prisma/schema.prisma plus matching linkSourceToTarget case(s) and
+      matching expand-* sourceTypes entries, if such a relation makes product sense, or
+      (b) remove 'relationship-expansion' from Facet's SOURCE_TYPES.recipes entirely if
+      it doesn't. Decide by checking whether Facets are meant to spawn related
+      Characters/Rewards/Scenarios/Bots at all in the product design -- this task does
+      not assume the answer.
+    claimed_by: null
+    claimed_at: null
