@@ -4753,6 +4753,21 @@ records:
     for browser-based /object_info access, not for server-side API calls the KR backend
     itself proxies to the relay.'
 - date: 2026-07-28
+  project: model-builder
+  task: t-034
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'Kaizen-chain closeout: t-033 exposed t-034 (Facet recipe chip visibly
+    selectable but functionally empty), and this task closed cleanly first pass by
+    checking Prisma schema relations directly rather than guessing -- DreamFacet/
+    ScenarioFacet are tag-attachment joins, not parent->child creation links, so
+    dropping relationship-expansion from Facet was correct over fabricating a fake
+    relation. kind_robots PR #1108 (7/7 checks green) merged same cycle as the
+    conductor bookkeeping close-out.'
+- date: 2026-07-28
   project: ai-art-academy
   task: t-050
   kind: software

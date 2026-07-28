@@ -751,7 +751,7 @@ tasks:
   - id: t-034
     milestone: m6
     title: "Give Facet real relationship-expansion targets or drop it from relationship-expansion's sourceTypes"
-    status: claimed
+    status: done
     passes: 0
     stakes: reversible
     owner: worker
@@ -773,6 +773,43 @@ tasks:
       it doesn't. Decide by checking whether Facets are meant to spawn related
       Characters/Rewards/Scenarios/Bots at all in the product design -- this task does
       not assume the answer.
+
+      DECIDED (b): removed 'relationship-expansion' from Facet's SOURCE_TYPES.recipes
+      (and 'Facet' from relationship-expansion's own sourceTypes list). Facet's only
+      real Prisma relations to Dream/Scenario are DreamFacet/ScenarioFacet -- explicit
+      tag-attachment join tables that attach a Facet to an *existing* Dream/Scenario
+      (server/api/{dreams,scenarios}/[id]/facets.put.ts, scenarioGenreFacetSync.ts),
+      the same shape used for genre/mood/theme tagging. That's structurally different
+      from every linkSourceToTarget case, which all link a newly-created child record
+      back to its parent -- there is no such parent->child relation from Facet to
+      Character, Reward, Scenario, Dream, or Bot. Facet keeps art-upgrade only.
+      Verified via eslint, verifyModelBuilderLinkCoverage.ts (still passes, unaffected),
+      and `npm test` (vue-tsc --noEmit, clean). kind_robots PR #1108 merged (CI green,
+      7/7 checks passed).
     claimed_by: conductor-scheduled-20260728T1614Z-mb-t034-burst
     claimed_at: '2026-07-28T16:15:00Z'
-    updated: '2026-07-28T16:15:00Z'
+    updated: '2026-07-28T17:05:00Z'
+
+  - id: t-035
+    milestone: m6
+    title: "verifyModelBuilderLinkCoverage.ts doesn't catch join-table-only relations, letting non-functional recipe entries ship silently"
+    status: ready
+    passes: 0
+    stakes: reversible
+    owner: null
+    note: >
+      Kaizen from t-034 (kind_robots PR #1108, 2026-07-28). It took three cycles
+      (t-032 built the coverage guard, t-033 found Facet had zero real
+      linkSourceToTarget cases despite listing relationship-expansion as eligible,
+      t-034 finally removed it) to fully resolve one bad SOURCE_TYPES.recipes entry,
+      because verifyModelBuilderLinkCoverage.ts only matches direct-typed Prisma
+      relation fields (the shape most CREATE_TARGETS pairs use) and has no way to
+      flag a source type whose only relations to a candidate target are join-table
+      tag-attachments (Facet's DreamFacet/ScenarioFacet) rather than a parent->child
+      creation link. Extend the guard to also detect this case -- e.g. when a source
+      type lists a recipe/output eligible for a target type, but the only
+      prisma/schema.prisma relation between them is via an explicit join model (no
+      direct FK either direction), flag it the same way an entirely-missing relation
+      is flagged today. This would have caught Facet's bad relationship-expansion
+      entry at t-032 time instead of needing a dedicated t-033/t-034 investigation.
+      Front-end/test-only change; no schema change expected.
