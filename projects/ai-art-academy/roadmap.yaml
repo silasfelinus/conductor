@@ -1613,3 +1613,29 @@ tasks:
     claimed_by: 20260727T211039Z-worker-ai-art-academy-t048-a31f
     claimed_at: '2026-07-27T21:10:39Z'
     updated: '2026-07-27T21:19:43Z'
+
+  - id: t-049
+    milestone: m6
+    title: 'audit_roadmaps.py: flag recurring-task note/continuous_improvement drift automatically'
+    status: ready
+    passes: 0
+    stakes: reversible
+    note: |-
+      Kaizen from the t-010 lane-3 cycle (conductor PR #1272, 2026-07-28). This project's
+      TALKBACK.md already documents two real instances (PR #1257's harbor-comparison cycle,
+      and the backfilled lane-4 correction that followed it) of a session writing a recurring
+      task's rotation outcome ("rotate next preferred lane to X") only into the roadmap
+      `note:` field while leaving the task's own `continuous_improvement` block
+      (`last_lane`/`next_lane`/`last_run`/`last_pr`) and `run_log` untouched — silent drift
+      that only a human or a later session happening to notice catches. Add a check to
+      `scripts/audit_roadmaps.py` that, for any task carrying a `continuous_improvement`
+      block, flags (as a warning, not an error) when the task's `note:` text contains a lane-
+      rotation phrase (e.g. "next preferred lane", "rotate") but the task's `updated`
+      timestamp is newer than `continuous_improvement.last_run` — the same signature this
+      project's t-010 has hit twice by hand. Keep it generic (matched by field shape, not by
+      hardcoding `ai-art-academy`) so it protects any other project that adopts the same
+      recurring-task rotation pattern. Cover with a unit test using a synthetic drifted
+      fixture.
+    owner: null
+    claimed_by: null
+    claimed_at: null
