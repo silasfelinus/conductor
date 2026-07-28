@@ -80,6 +80,19 @@ def summarize_queue(data: dict[str, Any], book_slug: str, batch_size: int | None
     retry_safe = len(errored) == 0 and recovery_safe
     actionable = retry_safe and len(next_batch) > 0
 
+    if not queue_integrity_safe or duplicate_job_ids:
+        recommended_action = "repair-queue-integrity"
+    elif recovery_actionable:
+        recommended_action = "recover-existing-jobs"
+    elif fresh_submission_blocked:
+        recommended_action = "resolve-fresh-submission-errors"
+    elif actionable:
+        recommended_action = "submit-next-batch"
+    elif pending:
+        recommended_action = "inspect-blocked-pending"
+    else:
+        recommended_action = "complete"
+
     return {
         "book": book_slug,
         "total_entries": len(normalized),
@@ -104,6 +117,7 @@ def summarize_queue(data: dict[str, Any], book_slug: str, batch_size: int | None
         "retry_safe": retry_safe,
         "actionable": actionable,
         "actionable_count": len(next_batch) if retry_safe else 0,
+        "recommended_action": recommended_action,
     }
 
 
