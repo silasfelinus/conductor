@@ -2866,7 +2866,7 @@ tasks:
   - id: t-091
     milestone: m2
     title: "Give task close-out (status: done bookkeeping) an atomic, PR-based or fetch-check-push helper like claim_task.py"
-    status: claimed
+    status: review
     passes: 0
     stakes: reversible
     owner: worker
@@ -2900,6 +2900,34 @@ tasks:
       Either way, update AGENTS.md's "software" close-out step to point at the new
       helper so this doesn't get re-derived ad hoc by the next session that reaches
       this same step.
+
+
+      RESOLVED (2026-07-28, conductor burst-mode cycle, PR pending): built
+      scripts/close_task.py (option (a) from this task's note) -- a close-out helper
+      that mirrors claim_task.py's fetch-check git plumbing but pushes the
+      status/field edit to its own branch instead of `refs/heads/main`, so a real PR
+      (open + verify + merge) is what lands the change, never a direct push. It
+      supports --set field=value for extra fields (soft_gate, note, owner, etc.)
+      alongside the status transition, and multiple close_task.py calls can share one
+      --branch so a session bundling several task close-outs shares a single PR (the
+      pattern already used historically, e.g. PR #1362's "media-watchlist/t-015 done,
+      model-builder/t-029 rearmed"). Covered by tests/test_close_task.py (9 cases,
+      against a throwaway local bare+clone remote, no network) exercising: pushes to
+      a branch not main, no-op refusal without --force, --force + --set together,
+      missing-task error, extra-field application, and non-fast-forward retry when a
+      branch is reused across two tasks in the same project.
+
+      Updated AGENTS.md's "software" close-out step (previously "set task `status:
+      done`") and step 7's short-lived-review guidance (previously "flip straight to
+      `status: done`") to both call out `close_task.py` and its own small PR instead
+      of a direct push, per hard rule 1.
+
+      Left as option (a), not (b): this task's own note offered a second path (a
+      deliberate, explicitly-sanctioned direct-to-main push, built the same way as
+      claim_task.py). No such sign-off exists in this session, and PR-based close-out
+      matches every prior close-out commit's own convention (`(#PR)` suffix), so (a)
+      needed no new exception to hard rule 1 -- it just needed the tooling to stop
+      defaulting to a shortcut.
     claimed_by: claude-conductor-scheduled-20260728T221031Z-conductor-t091
     claimed_at: '2026-07-28T22:10:32Z'
     updated: '2026-07-28T22:10:32Z'
