@@ -1,4 +1,4 @@
-updated: "2026-07-27T19:21:25+00:00"
+updated: "2026-07-28T21:10:35+00:00"
 
 pitches:
   - id: bioluminescent-tide
@@ -551,3 +551,61 @@ pitches:
       - reduced-motion mode shows one static completed tapestry with no shuttle or unraveling motion
       - pointer hover slow-down, row highlight, and click-pluck ripple never block underlying page input
       - thread palette remains readable on both light and dark themes
+
+  - id: sundial-garden
+    title: Sundial Garden
+    status: pitched
+    priority: 19
+    surprise: >
+      A stone sundial's gnomon casts a shadow that sweeps in sync with the visitor's actual
+      local time of day, brushing across a ring of dial-flowers that briefly wake and bloom as
+      the shadow passes over them, then quietly close again once it moves on -- the wallpaper
+      is genuinely telling the time rather than just simulating an internal clock.
+    passive_loop: >
+      The gnomon's shadow angle is derived from local wall-clock time (mapped onto a
+      compressed daylight arc so a full bloom-and-close cycle is visible in minutes rather
+      than real hours), and twelve dial-flowers arranged around the base each run a
+      deterministic wake/bloom/close state machine keyed to their angular proximity to the
+      shadow. The shadow itself lengthens and shortens using ordinary sundial shadow-angle
+      trigonometry as it sweeps, and the whole arc repeats once the compressed "day" elapses.
+    optional_interaction: >
+      Pointer proximity gently nudges the nearest flower to bloom slightly early or a touch
+      wider without disturbing the shadow's actual schedule. A click drops a small brass
+      marker pin at the shadow's current angle that fades over about four seconds -- a quiet
+      "you were here at this moment" gesture, non-blocking to underlying page clicks.
+    technique: >
+      Canvas 2D. Shadow angle is computed from Date.now() local hours/minutes via a linear
+      day-progress-to-angle map, recomputed roughly once per second rather than every RAF tick
+      to avoid unnecessary Date churn; the shadow wedge itself is redrawn every frame using
+      timestamp-delta interpolation between recomputes so the sweep still reads smoothly.
+      Twelve flowers are cached Path2D shapes with a small per-flower wake/bloom/close timer
+      keyed to shadow-angle distance. ResizeObserver sizing; ordinary RAF/listener/timer
+      cleanup on unmount.
+    reduced_motion: >
+      Freezes the shadow at its current real angle (no compressed sweep animation) and shows
+      whichever flower is nearest that angle in a static half-open pose; disables the pointer
+      nudge and click marker-pin entirely, keeping only a very slow ambient petal-color drift.
+    performance_risk: >
+      Cheap by construction: twelve static cached flower shapes plus one shadow wedge redrawn
+      per frame, no particle systems and no per-frame allocation. The only risk is calling
+      Date.now() (or worse, `new Date()`) on every RAF tick instead of throttling the angle
+      recompute to about once per second -- must guard against that during implementation, and
+      also verify the angle handles a tab left open across local midnight (day rollover)
+      without freezing or jumping backward.
+    novelty: >
+      Every existing pitch and shipped effect drives its motion from an internal simulation
+      clock, a seeded RNG, or reaction-driven state (bioluminescent-tide's tide bands,
+      clockwork-greenhouse's phase timers, moth-constellation's gather events, ink-oracle's
+      vortex drift, tapestry-loom's shuttle passes, kintsugi-weather's crack/repair cycle) --
+      none reflects the visitor's actual real-world local time. Distinct from clockwork-
+      greenhouse (organic growth phases unrelated to wall-clock time) and celestial-mobile
+      (balance physics, not a time-of-day sweep); Sundial Garden is the first effect in the
+      catalog whose visible state genuinely reports something true about the moment you're
+      looking at it rather than an internal fiction.
+    acceptance:
+      - passive loop is complete and visually coherent without any interaction, and its shadow angle correctly reflects the visitor's current local time-of-day arc
+      - underlying page clicks remain functional
+      - startup wallpaper and clipped Screen FX surfaces both render the full dial ring legibly at their given size
+      - reduced-motion mode freezes the sweep but still shows a coherent static scene
+      - shadow angle updates correctly across a tab left open past local midnight (day rollover) without a stale or backward-jumping angle
+      - no resource leaks (RAF, timers, observers, listeners) across repeated mounts
