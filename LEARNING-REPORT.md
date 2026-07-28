@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-07-28T14:18:16Z
+Generated: 2026-07-28T14:26:56Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **403**
-- Outcomes: blocked: 12, cancelled: 1, done: 390
+- Closed tasks recorded: **404**
+- Outcomes: blocked: 13, cancelled: 1, done: 390
 - Success rate: **97%**
 - Average passes on successful tasks: **0.0**
 
@@ -15,7 +15,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 | Project | Closed | Success rate |
 |---|---|---|
-| ai-art-academy | 51 | 100% |
+| ai-art-academy | 52 | 98% |
 | alexa-integration | 2 | 100% |
 | animation-manager | 12 | 100% |
 | animation-studio | 2 | 50% |
@@ -57,7 +57,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 15 | 40% |
-| software | 388 | 99% |
+| software | 389 | 99% |
 
 ## Failure categories
 
@@ -77,6 +77,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-07-28 `ai-art-academy/t-044` — A prior cycle read kind_robots PR #1090 optimistically ("architecturally exactly the fix," "strongly suggests Silas... corrected the underlying data/path mismatch") from the diff alone, then correctly flagged it unverified and left the task ready. This cycle had a live path to verify (KR_API_TOKEN + the public kind-robots.vercel.app API) and used it instead of re-reading the diff again: two real POST /api/art/enqueue jobs against two independent LoRA Resources under different localPath prefix conventions both failed with the exact same ComfyUI value_not_in_list error as before the PR. The PR fixed routing (the resolver now reliably forwards the Resource's own localPath) but never touched the underlying DB data, which still does not match ComfyUI's real lora_name dropdown. Lesson: when a fix's own diff looks architecturally right but the task explicitly says "not independently verified," a session with any live-testable surface should spend the few extra minutes to actually call it rather than propagating the optimistic read forward another cycle -- production API tokens set as env vars (KR_API_TOKEN here) are a real, underused verification channel for tasks that look relay-blocked but are only blocked for browser-based /object_info access, not for server-side API calls the KR backend itself proxies to the relay.
 - 2026-07-28 `coloring-book/t-032` — A live recovery pass that reuses an already-completed ArtJob can still silently destroy its own recoverability: when validate_candidate() fails for an environment reason (missing ANTHROPIC_API_KEY) rather than a real image judgment, overwriting the entry's error text erases the "job N timed out" reference a future recovery pass parses to find the same completed job -- converting a genuinely recoverable entry into one that looks like it needs a brand-new (duplicate) submission. Distinguish environment/tooling failures from real semantic verdicts before writing to any field a recovery mechanism depends on.
 - 2026-07-28 `coloring-book/t-033` — Second same-day coloring-book PR (after t-022) merged with no roadmap task claimed beforehand -- both were only discoverable via mcp__github__list_pull_requests, not roadmap state. Retroactively logging the task after merge keeps the audit trail intact but does not fix the root habit; worth enforcing claim-before-implement if a third instance appears in this project.
 - 2026-07-28 `model-builder/t-033` — When a picker/config restriction should mirror a relation graph (here: which source types may create which related model), trace the actual linked-pair cases in the commit/link handler rather than the coarser raw schema-relation check alone -- two output keys can target the same model through different fields (Project.managerBotId vs Dream.narratorId), which a schema-relation-only check cannot distinguish. The fix also surfaced a pre-existing gap (Facet listed as recipe-eligible with zero real link cases) that was silently broken before and is now visibly empty instead -- filed as a separate kaizen task rather than silently expanding scope.
@@ -86,7 +87,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-07-28 `model-builder/t-032` — A structural dev-time check (walk CREATE_TARGETS x the Prisma relation graph, assert linkSourceToTarget has a matching case) immediately caught a real gap (Reward -> Character) the same day it was written -- two prior gaps of this exact shape (Dream->Bot, Character->Scenario) had only ever surfaced via manual read-through across separate cycles. Where a hand-maintained mapping mirrors a second source of truth (here: Prisma relations), prefer a structural consistency check over relying on the next manual audit to catch drift.
 - 2026-07-28 `ai-art-academy/t-010` — Running claim_task.py only after implementing (instead of before, per AGENTS.md step 6) turns the claim check into a post-hoc formality instead of a reservation — this session duplicated another session's identical lane-4 sync work and had to close its own kind_robots PR as superseded. Claim first, implement second, every time, even when the task looks unclaimed at a glance.
 - 2026-07-28 `conductor/t-088` — A well-templated connector-only Worker PR (What changed/How I verified/Flags/Kaizen all filled in specifically) needs no manual roadmap close-out — the task-events auto-processor flipped this task to done within the same minute the merge landed.
-- 2026-07-28 `coloring-book/t-031` — A local polling timeout is not proof that an asynchronous ArtJob failed. Generic consumers must rebuild an identical request identity on retry or persist and recover the original job id; otherwise a fresh randomized seed silently converts a retry into duplicate production work. Compatibility tests must also preserve the public module's monkeypatch surface when a long implementation is wrapped rather than edited in place.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-07-28T14:18:16Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-07-28T14:26:56Z_
