@@ -844,10 +844,10 @@ tasks:
   - id: t-036
     milestone: m6
     title: "Add a lint/regression guard for GENERATE_ASSETS-style completion-write races in modelBuilderStore.ts"
-    status: ready
+    status: claimed
     passes: 0
     stakes: reversible
-    owner: null
+    owner: worker
     note: >
       Kaizen from t-029 (kind_robots PR #1114, 2026-07-28): a GENERATE_ASSETS render
       completion handler (generateItemAsset/pollAsyncArtJob/generateItemAssetAsync)
@@ -873,3 +873,6 @@ tasks:
       were superseded and closed unmerged, but this specific kaizen idea was salvaged
       here since it's a genuinely good, independent suggestion distinct from anything
       this session's own review proposed.
+    claimed_by: claude-conductor-agentrun-20260728T220700-mb-t036
+    claimed_at: '2026-07-28T22:06:58Z'
+    updated: '2026-07-28T22:06:58Z'
