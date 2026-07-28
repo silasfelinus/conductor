@@ -74,6 +74,7 @@ def test_iter_missing_project_assets_skips_existing_and_done_assets(tmp_path: Pa
 
 def test_iter_missing_project_assets_normalizes_prompt_default_sizes_and_model(tmp_path: Path, monkeypatch) -> None:
     monkeypatch.setattr(art_queue, "ROOT", tmp_path)
+    monkeypatch.setattr(art_queue, "DEFAULT_PROJECT_ART_MODEL", "krea2")
 
     entries = art_queue.iter_missing_project_assets(make_catalog())
     by_project_variant = {(entry["project"], entry["variant"]): entry for entry in entries}
@@ -95,7 +96,21 @@ def test_iter_missing_project_assets_normalizes_prompt_default_sizes_and_model(t
     assert by_project_variant[("beta", "icon")]["size"] == "256x256"
     assert by_project_variant[("beta", "card")]["size"] == "512x768"
     assert by_project_variant[("beta", "hero")]["size"] == "1280x720"
-    assert "model" not in by_project_variant[("beta", "icon")]
+    assert by_project_variant[("beta", "icon")]["model"] == "krea2"
+    assert by_project_variant[("beta", "card")]["model"] == "krea2"
+    assert by_project_variant[("beta", "hero")]["model"] == "krea2"
+
+
+def test_iter_missing_project_assets_uses_configured_default_model(tmp_path: Path, monkeypatch) -> None:
+    monkeypatch.setattr(art_queue, "ROOT", tmp_path)
+    monkeypatch.setattr(art_queue, "DEFAULT_PROJECT_ART_MODEL", "flux2-klein")
+
+    entries = art_queue.iter_missing_project_assets(make_catalog())
+    by_project_variant = {(entry["project"], entry["variant"]): entry for entry in entries}
+
+    assert by_project_variant[("beta", "icon")]["model"] == "flux2-klein"
+    assert by_project_variant[("beta", "card")]["model"] == "flux2-klein"
+    assert by_project_variant[("beta", "hero")]["model"] == "flux2-klein"
 
 
 def test_write_queue_outputs_expected_dry_run_shape(tmp_path: Path) -> None:
