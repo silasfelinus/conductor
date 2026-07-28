@@ -1,22 +1,22 @@
 # Roadmap Audit
 
-Generated: `2026-07-28T09:11:29.643203+00:00`
+Generated: `2026-07-28T14:28:54.787186+00:00`
 
 This is a conservative structural audit. It reports suspicious state; it does not automatically change task status or remove human gates.
 
 ## Portfolio snapshot
 
-- **42** roadmaps, **23** active projects, **726** tasks
-- **32 ready**, **47 waiting**, **24 needs-human**, **2 claimed/review**, **610 done**
-- Findings: **0 errors**, **3 warnings**, **56 informational**
+- **42** roadmaps, **23** active projects, **731** tasks
+- **32 ready**, **47 waiting**, **25 needs-human**, **1 claimed/review**, **615 done**
+- Findings: **0 errors**, **2 warnings**, **56 informational**
 
 ## Project inventory
 
 | # | Project | State | Kind | Ready | Waiting | Human | In progress | Done / Total |
 |---:|---|---|---|---:|---:|---:|---:|---:|
 | 1 | `challenge-center` | finished | software | 0 | 0 | 0 | 0 | 20 / 20 |
-| 2 | `ai-art-academy` | active | software | 0 | 1 | 2 | 1 | 45 / 49 |
-| 3 | `coloring-book` | active | software | 2 | 9 | 0 | 0 | 21 / 32 |
+| 2 | `ai-art-academy` | active | software | 1 | 1 | 2 | 0 | 45 / 49 |
+| 3 | `coloring-book` | active | software | 2 | 9 | 1 | 0 | 23 / 35 |
 | 4 | `humboldt-scoop` | finished | software | 0 | 0 | 0 | 0 | 8 / 8 |
 | 5 | `humboldt-scoop-cms` | active | software | 0 | 0 | 1 | 0 | 11 / 12 |
 | 6 | `digital-storefront` | active | software | 0 | 0 | 1 | 0 | 31 / 32 |
@@ -29,13 +29,13 @@ This is a conservative structural audit. It reports suspicious state; it does no
 | 13 | `superkate-services-calculator` | finished | software | 0 | 0 | 0 | 0 | 37 / 37 |
 | 14 | `superkate-hairstyle-ai` | paused | software | 1 | 0 | 1 | 0 | 19 / 21 |
 | 15 | `newsfeed` | active | software | 0 | 0 | 0 | 0 | 22 / 22 |
-| 16 | `model-builder` | active | software | 3 | 0 | 0 | 0 | 30 / 33 |
-| 17 | `animation-manager` | active | software | 3 | 0 | 0 | 0 | 13 / 16 |
+| 16 | `model-builder` | active | software | 2 | 0 | 0 | 1 | 31 / 34 |
+| 17 | `animation-manager` | active | software | 2 | 0 | 0 | 0 | 14 / 16 |
 | 18 | `animation-studio` | retired | software | 3 | 4 | 0 | 0 | 1 / 8 |
 | 19 | `ecosystem-map` | finished | software | 0 | 0 | 0 | 0 | 8 / 8 |
 | 20 | `conductor` | active | software | 0 | 0 | 2 | 0 | 87 / 89 |
 | 21 | `serendipity` | active | software | 1 | 0 | 0 | 0 | 11 / 12 |
-| 22 | `storymaker` | active | software | 0 | 0 | 0 | 1 | 9 / 10 |
+| 22 | `storymaker` | active | software | 1 | 0 | 0 | 0 | 9 / 10 |
 | 23 | `davinci` | finished | software | 0 | 0 | 0 | 0 | 15 / 15 |
 | 24 | `art-generator-connect` | finished | software | 0 | 0 | 0 | 0 | 22 / 22 |
 | 25 | `mural-design` | active | content | 1 | 3 | 0 | 0 | 3 / 7 |
@@ -44,7 +44,7 @@ This is a conservative structural audit. It reports suspicious state; it does no
 | 28 | `alexa-integration` | active | software | 1 | 0 | 1 | 0 | 16 / 18 |
 | 29 | `conductor-app` | active | software | 2 | 0 | 0 | 0 | 12 / 14 |
 | 30 | `appmaker` | active | software | 2 | 0 | 0 | 0 | 10 / 12 |
-| 31 | `media-watchlist` | active | software | 2 | 0 | 0 | 0 | 11 / 13 |
+| 31 | `media-watchlist` | active | software | 2 | 0 | 0 | 0 | 12 / 14 |
 | 32 | `sketchy` | finished | software | 0 | 0 | 0 | 0 | 8 / 8 |
 | 33 | `pinball-hero` | retired | content | 0 | 2 | 2 | 0 | 2 / 6 |
 | 34 | `recipe-box` | retired | software | 0 | 2 | 1 | 0 | 0 / 3 |
@@ -63,9 +63,8 @@ This is a conservative structural audit. It reports suspicious state; it does no
 
 _None._
 
-### Warning (3)
+### Warning (2)
 
-- **CONTINUOUS_IMPROVEMENT_NOTE_DRIFT** — `ai-art-academy` / `t-010`: Task note mentions a lane rotation but continuous_improvement.last_run predates the task's updated timestamp — the continuous_improvement block (last_lane/next_lane/last_run/last_pr) may be stale relative to the note.
 - **ACTIVE_PROJECT_ALL_DONE** — `newsfeed`: All tasks are done but project override remains active.
 - **ACTIVE_PROJECT_NO_OPEN_TASKS** — `newsfeed`: Active project has no open tasks; mark finished/paused or add an intentional recurring task.
 
