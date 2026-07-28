@@ -4685,3 +4685,18 @@ records:
     (process_coloring_art_events.py and adopt_coloring_book_asset.py both re-validate source_path
     independently) is a defense-in-depth pattern worth reusing for other event-driven scripts that
     accept a filesystem path from an external event file.'
+- date: 2026-07-28
+  project: model-builder
+  task: t-033
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'When a picker/config restriction should mirror a relation graph (here: which source
+    types may create which related model), trace the actual linked-pair cases in the commit/link
+    handler rather than the coarser raw schema-relation check alone -- two output keys can target
+    the same model through different fields (Project.managerBotId vs Dream.narratorId), which a
+    schema-relation-only check cannot distinguish. The fix also surfaced a pre-existing gap (Facet
+    listed as recipe-eligible with zero real link cases) that was silently broken before and is now
+    visibly empty instead -- filed as a separate kaizen task rather than silently expanding scope.'
