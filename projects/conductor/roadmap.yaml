@@ -2803,25 +2803,15 @@ tasks:
   - id: t-089
     milestone: m2
     title: No art-prompts.yaml asset currently sets model/engine, so t-088's new provenance plumbing stays dormant
-    status: claimed
+    status: review
     passes: 0
     stakes: reversible
     owner: worker
-    note: >
-      Kaizen from t-088/PR #1287 (Reviewer merge, 2026-07-28): queue_missing_project_art.py
-      now threads an asset's `model`/`engine` field through art-generate.yaml into
-      distribute_images.py's manifest.json provenance record when one is present — but a
-      scan of the live projects/art-prompts.yaml at merge time found zero project-art assets
-      (icon/card/hero) actually setting either field, so the new plumbing has nothing to
-      carry yet and manifest.json will keep recording model: null for every project-art
-      entry until something upstream sets it. Two candidate fixes, either is fine: (a) have
-      whatever generates/queues project-art prompts stamp the actual model/engine used at
-      generation time (mirrors how inspiration-asset generation could self-report), or (b)
-      if that's not readily available, have queue_missing_project_art.py default `model` to
-      a configured constant for the current generation backend rather than leaving it wholly
-      dependent on upstream data that doesn't exist yet. Either way, verify with a fresh
-      `grep -c "model:\|engine:" projects/art-prompts.yaml` before and after to confirm the
-      plumbing actually gets exercised, not just present.
+    note: |-
+      Kaizen from t-088/PR #1287 (Reviewer merge, 2026-07-28): queue_missing_project_art.py now threads an asset's `model`/`engine` field through art-generate.yaml into distribute_images.py's manifest.json provenance record when one is present — but a scan of the live projects/art-prompts.yaml at merge time found zero project-art assets (icon/card/hero) actually setting either field, so the new plumbing has nothing to carry yet and manifest.json will keep recording model: null for every project-art entry until something upstream sets it. Two candidate fixes, either is fine: (a) have whatever generates/queues project-art prompts stamp the actual model/engine used at generation time (mirrors how inspiration-asset generation could self-report), or (b) if that's not readily available, have queue_missing_project_art.py default `model` to a configured constant for the current generation backend rather than leaving it wholly dependent on upstream data that doesn't exist yet. Either way, verify with a fresh `grep -c "model:\|engine:" projects/art-prompts.yaml` before and after to confirm the plumbing actually gets exercised, not just present.
+
+
+      Implemented configured default project-art model provenance with focused regression coverage on worker/conductor-t-089-default-model-a31.
     claimed_by: 20260728T061055Z-worker-conductor-t089-a31
     claimed_at: '2026-07-28T06:10:55Z'
-    updated: '2026-07-28T06:10:55Z'
+    updated: '2026-07-28T06:16:00Z'
