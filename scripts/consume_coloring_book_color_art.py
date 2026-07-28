@@ -375,9 +375,18 @@ def record_semantic_rejection(
     return next_status
 
 
-def record_semantic_gate_error(entry: dict[str, Any], error: Exception) -> None:
+def record_semantic_gate_error(entry: dict[str, Any], error: Exception, job_id: int | None = None) -> None:
     def mutate(source: dict[str, Any]) -> None:
-        source["semantic_gate_error"] = str(error)[:1000]
+        message = str(error)[:1000]
+        # A fresh submission's ArtJob completed and rendered (job_id is set) but
+        # validate_candidate() then failed -- e.g. no ANTHROPIC_API_KEY. Without a
+        # "job N" reference in the stored error, referenced_job_id() can never find
+        # it and every future pass, credentialed or not, is forced into a genuine
+        # duplicate resubmission for an image that already rendered. Stamp the id in
+        # (only if the message doesn't already carry one, e.g. from a recovery path).
+        if job_id is not None and JOB_ID_PATTERN.search(message) is None:
+            message = f"job {job_id}: {message}"[:1000]
+        source["semantic_gate_error"] = message
         source["semantic_gate_error_at"] = now_iso()
         source["status"] = "pending"
 
@@ -573,6 +582,7 @@ def main() -> int:
     for entry in todo:
         destination = target_path(entry)
         stuck_job_id: int | None = None
+        submitted_job_id: int | None = None
         try:
             recovered: tuple[bool, dict[str, Any]] | None = None
             if destination.exists():
@@ -595,6 +605,7 @@ def main() -> int:
                 )
             else:
                 job_id, deduplicated = enqueue(entry)
+                submitted_job_id = job_id
                 suffix = " (existing matching attempt)" if deduplicated else ""
                 print(
                     f"  queued ArtJob {job_id}{suffix} for "
@@ -653,7 +664,7 @@ def main() -> int:
                     file=sys.stderr,
                 )
             else:
-                record_semantic_gate_error(entry, error)
+                record_semantic_gate_error(entry, error, job_id=submitted_job_id)
                 print(f"  FAILED {entry['set']}/{entry['concept_id']}: {error}", file=sys.stderr)
 
     marked = mark_done(completed)
