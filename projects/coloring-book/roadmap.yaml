@@ -701,11 +701,11 @@ tasks:
 - id: t-032
   milestone: m4
   title: Execute a live recovery_batch pass against the Monster Recast queue
-  status: claimed
+  status: ready
   passes: 0
   stakes: reversible
-  owner: reviewer
-  updated: '2026-07-28T07:11:30Z'
+  owner: null
+  updated: '2026-07-28T07:12:58Z'
   note: >
     KAIZEN (from PR #1275, t-022, 2026-07-28): t-022's connector-only session
     added a bounded recovery_batch / recovery_actionable / recovery_actionable_count
@@ -723,6 +723,19 @@ tasks:
     completed, and (3) if useful going forward, wire
     `--require-recovery-actionable` into the relevant GitHub Actions workflow as
     a guard before an automated recovery run.
-  claimed_by: claude-conductor-burst-20260728T0800Z-cb-t032
-  claimed_at: '2026-07-28T07:11:30Z'
+
+    CHECKED 2026-07-28T07:12:58Z (conductor burst-mode cycle, real shell + KR_API_TOKEN
+    present this session): ran `python scripts/coloring_queue_status.py --book
+    monster-recast` live. Current state: recovery_candidate_count is 0 and
+    recovery_actionable is false — none of the 18 blocked_pending/fresh_submission_blocked
+    entries currently carry a semantic_gate_job_id, so there is no in-flight ArtJob for
+    recover_timed_out_job() to reconcile against right now (the queue looks clean of the
+    specific stale-timeout-behind-a-DONE-job situation t-022 fixed, not populated with
+    fresh failures to recover). Nothing to execute against this cycle — releasing back to
+    `ready` rather than forcing an unrelated fresh-submission `--live` run under this
+    task's scope. Re-check after the next daily monster-recast-art-jobs.yml run (11:00 UTC)
+    submits new entries and any of them time out; that is the next point a non-empty
+    recovery_batch can appear. Step 3 (wiring `--require-recovery-actionable` into the
+    workflow) stays deferred until step 2 is actually proven live, per the original kaizen
+    note.
 
