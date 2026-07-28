@@ -4927,3 +4927,19 @@ records:
     will be imported from its own self-test file -- an unconditional module-level main()
     call (fine for a checker with no test importer, like verifyModelBuilderLinkCoverage.ts)
     fires as a side effect on import and pollutes/masks the self-test''s own output.'
+- date: 2026-07-28
+  project: conductor
+  task: t-092
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    Direct api.github.com calls 403 from this sandbox even with a valid
+    GITHUB_TOKEN and Authorization header (confirmed independently while
+    building this task, matching select_role.py's existing finding) -- any
+    new tool that needs live GitHub state from this environment should
+    either go through the GitHub MCP tools or be written transport-agnostic
+    (pure decision logic separated from the network call) rather than
+    assuming urllib/requests against api.github.com will work.
