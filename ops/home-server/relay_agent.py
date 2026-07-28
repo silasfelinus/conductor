@@ -286,12 +286,192 @@ def describe_comfy_error(entry):
     return None
 
 
+# --- model/LoRA name resolution against ComfyUI's live filename lists ---------
+#
+# A workflow baked upstream (kind_robots) carries checkpoint/LoRA/unet/vae/clip
+# names as literal strings. ComfyUI validates each against its object_info combo
+# list and rejects the whole prompt with HTTP 400 `value_not_in_list` if the
+# string does not match a list entry EXACTLY -- and the list entries drift from
+# what a job stored: slash direction (`Flux\SFW\x` vs `Flux/SFW/x`), case
+# (`FLUX/` vs `Flux/`), and folder prefix all vary across ComfyUI versions and
+# installs. This burned nine real queue jobs even though every file was present
+# on disk. We resolve each name against the live list here -- ignoring case and
+# slash direction, with a unique-basename fallback -- and substitute the exact
+# current entry before POSTing. Mirrors scripts/compare_comfy_lora_paths.py so
+# the two agree on what "the same LoRA" means. A value ComfyUI already accepts
+# is left untouched, so correct jobs are unaffected.
+
+_OBJECT_INFO_TTL = 120.0
+_object_info_cache = {"at": 0.0, "data": None}
+
+
+def _normalize_asset_name(value):
+    return value.strip().replace("\\", "/").strip("/").casefold()
+
+
+def _asset_basename(value):
+    return _normalize_asset_name(value).rsplit("/", 1)[-1]
+
+
+def _combo_candidates(definition):
+    """Return the list of string choices for an object_info input definition,
+    or None when the input is not a resolvable filename/enum combo (e.g.
+    INT/FLOAT/STRING, or an upload-backed input). Combo inputs are shaped
+    `[[<choices>], {opts}]`."""
+    if not (isinstance(definition, list) and definition and isinstance(definition[0], list)):
+        return None
+    choices = definition[0]
+    if not choices or not all(isinstance(item, str) for item in choices):
+        return None
+    opts = definition[1] if len(definition) > 1 and isinstance(definition[1], dict) else {}
+    # Upload-backed combos (LoadImage `image`/`mask`, video loaders) are
+    # populated from Comfy's input dir. The relay uploads those files separately
+    # (upload_comfy_input_images), and a cached/stale object_info won't list a
+    # just-uploaded name -- so never remap or fail-fast on them.
+    if any("upload" in str(key).lower() for key in opts):
+        return None
+    return choices
+
+
+def _resolve_against_candidates(value, candidates):
+    """Best current-list entry for `value`, or None. Exact match wins (caller
+    skips those); then normalized-exact (case/slash-insensitive); then a unique
+    basename match. Ambiguous basenames are left for a human, not guessed."""
+    by_norm = {}
+    for candidate in candidates:
+        by_norm.setdefault(_normalize_asset_name(candidate), candidate)
+    match = by_norm.get(_normalize_asset_name(value))
+    if match is not None:
+        return match
+
+    by_base = {}
+    for candidate in candidates:
+        by_base.setdefault(_asset_basename(candidate), []).append(candidate)
+    base_matches = by_base.get(_asset_basename(value), [])
+    if len(base_matches) == 1:
+        return base_matches[0]
+    return None
+
+
+def resolve_workflow_asset_names(workflow, object_info):
+    """Rewrite filename-combo inputs in `workflow` in place to match the live
+    `object_info` lists. Returns (remaps, unresolved): remaps is a list of
+    (class_type, input_name, old, new); unresolved is (class_type, input_name,
+    value) for names with no confident match. Values ComfyUI already lists are
+    left as-is."""
+    remaps = []
+    unresolved = []
+    if not isinstance(object_info, dict):
+        return remaps, unresolved
+
+    for node in workflow.values():
+        if not isinstance(node, dict):
+            continue
+        class_type = node.get("class_type")
+        inputs = node.get("inputs")
+        if not class_type or not isinstance(inputs, dict):
+            continue
+        spec = object_info.get(class_type)
+        if not isinstance(spec, dict):
+            continue
+        node_inputs = spec.get("input")
+        if not isinstance(node_inputs, dict):
+            continue
+        required = node_inputs.get("required") if isinstance(node_inputs.get("required"), dict) else {}
+        optional = node_inputs.get("optional") if isinstance(node_inputs.get("optional"), dict) else {}
+
+        for input_name, value in list(inputs.items()):
+            if not isinstance(value, str):
+                continue
+            definition = required.get(input_name, optional.get(input_name))
+            candidates = _combo_candidates(definition)
+            if not candidates or value in candidates:
+                continue
+            match = _resolve_against_candidates(value, candidates)
+            if match is None:
+                unresolved.append((class_type, input_name, value))
+            elif match != value:
+                inputs[input_name] = match
+                remaps.append((class_type, input_name, value, match))
+
+    return remaps, unresolved
+
+
+def fetch_comfy_object_info(force=False):
+    """Fetch ComfyUI's /object_info (node schemas + filename lists), cached for
+    a short TTL to avoid refetching the multi-MB blob on every job. Returns the
+    dict, or None when the fetch fails (resolution is then skipped, never fatal)."""
+    now = time.time()
+    if (
+        not force
+        and _object_info_cache["data"] is not None
+        and now - _object_info_cache["at"] < _OBJECT_INFO_TTL
+    ):
+        return _object_info_cache["data"]
+
+    try:
+        status, info = http_json("GET", f"{COMFY_URL}/object_info", timeout=30)
+    except Exception as error:  # noqa: BLE001 - resolution is best-effort
+        log(f"⚠️ could not fetch ComfyUI object_info for name resolution: {error}")
+        return _object_info_cache["data"]
+
+    if status != 200 or not isinstance(info, dict):
+        log(f"⚠️ ComfyUI /object_info returned HTTP {status}; skipping name resolution")
+        return _object_info_cache["data"]
+
+    _object_info_cache["at"] = now
+    _object_info_cache["data"] = info
+    return info
+
+
+def align_workflow_asset_names(workflow):
+    """Resolve every checkpoint/LoRA/unet/vae/clip name in `workflow` against
+    the live ComfyUI lists before submission, rewriting each to the exact
+    current list entry. Refetches object_info once if a name is unresolved
+    against the cached copy (a model may have just been added). Logs each
+    remap; returns the still-unresolved names as (class_type, input_name,
+    value) tuples so the caller can fail fast. Returns [] when object_info
+    can't be fetched (resolution skipped, submit as-is)."""
+    object_info = fetch_comfy_object_info()
+    if object_info is None:
+        return []
+
+    remaps, unresolved = resolve_workflow_asset_names(workflow, object_info)
+    if unresolved:
+        fresh = fetch_comfy_object_info(force=True)
+        if fresh is not None and fresh is not object_info:
+            remaps, unresolved = resolve_workflow_asset_names(workflow, fresh)
+
+    for class_type, input_name, old, new in remaps:
+        log(f"🔧 {class_type}.{input_name}: {old!r} -> {new!r}")
+
+    return unresolved
+
+
 def run_comfy(payload):
     workflow = payload.get("workflow")
     if not isinstance(workflow, dict) or not workflow:
         raise ValueError('COMFY payload needs a "workflow" object (API format)')
 
     upload_comfy_input_images(payload)
+
+    # Fail fast on model names ComfyUI's live list can't match, rather than
+    # POSTing a prompt it will reject with a 400 and then waiting out the
+    # accept/generation timeout (× the queue's retry budget). ComfyUI validates
+    # these combo inputs itself, so an unresolved name here is a guaranteed
+    # rejection -- surface it immediately with the exact node/input/value.
+    unresolved = align_workflow_asset_names(workflow)
+    if unresolved:
+        details = "; ".join(
+            f"{class_type}.{input_name}={value!r}"
+            for class_type, input_name, value in unresolved
+        )
+        raise RuntimeError(
+            f"ComfyUI has no matching file for: {details}. Not in the live model "
+            f"list at {COMFY_URL} (missing, misnamed, or an ambiguous basename). "
+            "Failing fast instead of submitting a prompt ComfyUI would reject."
+        )
+
     want_video = str(payload.get("media") or "").strip().lower() == "video"
 
     try:
