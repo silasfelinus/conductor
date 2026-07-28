@@ -4612,3 +4612,26 @@ records:
     a fresh randomized seed silently converts a retry into duplicate production work. Compatibility tests
     must also preserve the public module's monkeypatch surface when a long implementation is wrapped rather
     than edited in place.
+- date: '2026-07-28'
+  project: conductor
+  task: t-088
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: A well-templated connector-only Worker PR (What changed/How I verified/Flags/Kaizen all filled
+    in specifically) needs no manual roadmap close-out — the task-events auto-processor flipped this task
+    to done within the same minute the merge landed.
+- date: '2026-07-28'
+  project: ai-art-academy
+  task: t-010
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: transient
+  lesson: Running claim_task.py only after implementing (instead of before, per AGENTS.md step 6) turns
+    the claim check into a post-hoc formality instead of a reservation — this session duplicated another
+    session's identical lane-4 sync work and had to close its own kind_robots PR as superseded. Claim
+    first, implement second, every time, even when the task looks unclaimed at a glance.
