@@ -4662,3 +4662,14 @@ records:
     regenerated seed file) verify fast and merge clean when the implementer confirms the
     regenerated file came straight from the existing generator script rather than a hand
     edit -- worth keeping as the template for future one-off icon/asset requests.'
+- date: '2026-07-28'
+  project: media-watchlist
+  task: t-013
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'Kaizen-generated tasks that say "check whether the backend already computes X"
+    keep paying off on this file (fourth cycle in a row) -- always grep the relevant
+    server route for the field before assuming new backend scope is needed.'

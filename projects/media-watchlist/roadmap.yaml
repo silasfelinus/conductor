@@ -316,11 +316,11 @@ tasks:
 - id: t-013
   milestone: m3
   title: Wire the "most active month" home-dashboard stat from BROWSE-UX.md §1 into the UI
-  status: review
+  status: done
   owner: worker
   passes: 0
   stakes: reversible
-  note: 'Kaizen from t-012 (kind_robots PR #1057, 2026-07-27). BROWSE-UX.md §1''s Home/Summary Dashboard stats bar specs "Most active month: ''You consumed the most in [Month]: N entries''" -- this hasn''t been wired into any UI yet (the current Stats strip in watchlist-browse.vue only shows totals/starred/audiobook-hours/pages/comics/TV-seasons, no per-month breakdown). Check whether server/api/media-entries/stats.get.ts already computes a per-month breakdown (t-006''s PR mentioned per-month data existing for the Home dashboard spec) -- if so, this is front-end-only wiring like t-006/t-012 before it; if not, add the aggregation to stats.get.ts first. Surface it as a single stat line/tile, not a full calendar view (BROWSE-UX.md doesn''t spec more than the one sentence).'
+  note: 'Kaizen from t-012 (kind_robots PR #1057, 2026-07-27). BROWSE-UX.md §1''s Home/Summary Dashboard stats bar specs "Most active month: ''You consumed the most in [Month]: N entries''" -- this hasn''t been wired into any UI yet (the current Stats strip in watchlist-browse.vue only shows totals/starred/audiobook-hours/pages/comics/TV-seasons, no per-month breakdown). Check whether server/api/media-entries/stats.get.ts already computes a per-month breakdown (t-006''s PR mentioned per-month data existing for the Home dashboard spec) -- if so, this is front-end-only wiring like t-006/t-012 before it; if not, add the aggregation to stats.get.ts first. Surface it as a single stat line/tile, not a full calendar view (BROWSE-UX.md doesn''t spec more than the one sentence). PROGRESS 2026-07-28 (conductor scheduled burst session): kind_robots PR #1093 merged -- added countByMonth to the frontend MediaEntryStats type (stats.get.ts already computed it server-side) and a mostActiveMonth computed property picking the max, rendered as a single line above the stats strip: "You consumed the most in [Month]: N entries" per BROWSE-UX.md section 1 wording exactly. Verified eslint/prettier/vue-tsc (vue-tsc --noEmit) all clean. No live browser smoke -- no reachable DATABASE_URL in this sandbox, same recurring blocker as t-006/t-010/t-012.'
   claimed_by: claude-conductor-burst-20260728T-mw-t013
   claimed_at: '2026-07-28T10:08:44Z'
-  updated: '2026-07-28T10:12:55Z'
+  updated: '2026-07-28T11:06:59Z'
