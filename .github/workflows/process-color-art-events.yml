@@ -16,11 +16,14 @@ on:
       - "scripts/semantic_art_quality.py"
       - "scripts/curate_art.py"
       - "scripts/art_quality.py"
+      - "scripts/coloring_queue_status.py"
       - "scripts/coloring_book_package_status.py"
       - "tests/test_coloring_book_studio_events.py"
+      - "tests/test_coloring_book_studio_workflow.py"
       - "tests/test_coloring_book_production.py"
       - "tests/test_coloring_book_cover.py"
       - "tests/test_coloring_book_asset_adoption.py"
+      - "tests/test_coloring_queue_status.py"
       - "tests/test_coloring_book_package_status.py"
       - ".github/workflows/process-color-art-events.yml"
   schedule:
@@ -56,13 +59,40 @@ jobs:
         run: |
           python -m unittest \
             tests.test_coloring_book_studio_events \
+            tests.test_coloring_book_studio_workflow \
             tests.test_coloring_book_production \
             tests.test_coloring_book_cover \
             tests.test_coloring_book_asset_adoption \
+            tests.test_coloring_queue_status \
             tests.test_coloring_book_package_status
+
+      - name: Check semantic-gate credentials
+        id: queue_preflight
+        shell: bash
+        run: |
+          set +e
+          python scripts/coloring_queue_status.py \
+            --book monster-recast \
+            --require-no-semantic-gate-error \
+            > /tmp/coloring-queue-status.json
+          status=$?
+          set -e
+
+          cat /tmp/coloring-queue-status.json
+          if [ "$status" -eq 0 ]; then
+            echo "process=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          if [ "$status" -eq 1 ]; then
+            echo "process=false" >> "$GITHUB_OUTPUT"
+            echo "::warning::Skipping Coloring Book Studio submission while pending entries are blocked by the ANTHROPIC_API_KEY credential gate."
+            exit 0
+          fi
+          exit "$status"
 
       - name: Process one targeted event
         id: consume
+        if: ${{ steps.queue_preflight.outputs.process == 'true' }}
         continue-on-error: true
         env:
           KR_API_TOKEN: ${{ secrets.KR_API_TOKEN }}
@@ -104,7 +134,7 @@ jobs:
           exit 1
 
       - name: Report unsuccessful event
-        if: ${{ steps.consume.outcome != 'success' }}
+        if: ${{ steps.queue_preflight.outputs.process == 'true' && steps.consume.outcome != 'success' }}
         run: |
           echo "::warning::The targeted coloring event was preserved for retry."
           exit 1
