@@ -706,11 +706,11 @@ tasks:
 - id: t-032
   milestone: m4
   title: Execute a live recovery_batch pass against the Monster Recast queue
-  status: review
+  status: done
   passes: 0
   stakes: reversible
-  owner: worker
-  updated: '2026-07-28T13:28:40Z'
+  owner: null
+  updated: '2026-07-28T13:32:00Z'
   note: |-
     KAIZEN (from PR #1275, t-022, 2026-07-28): t-022's connector-only session added a bounded recovery_batch / recovery_actionable / recovery_actionable_count output to scripts/coloring_queue_status.py (read-only diagnostic, no ArtJobs touched) plus a --require-recovery-actionable automation guard, but could not exercise it live — this sandbox has no GitHub egress or KR_API_TOKEN in a connector-only run. No workflow or script currently consumes recovery_batch/--require-recovery-actionable yet. Next cycle with real execution access: (1) run `python scripts/coloring_queue_status.py --book monster-recast` and confirm recovery_actionable is true with a non-empty recovery_batch, (2) run the actual recovery pass (consume_coloring_book_color_art.py --live, per t-022's established recover_timed_out_job() pattern) bounded to that batch, verifying no duplicate ArtJob is submitted for an entry whose original job already completed, and (3) if useful going forward, wire `--require-recovery-actionable` into the relevant GitHub Actions workflow as a guard before an automated recovery run.
     CHECKED 2026-07-28T07:12:58Z (conductor burst-mode cycle, real shell + KR_API_TOKEN present this session): ran `python scripts/coloring_queue_status.py --book monster-recast` live. Current state: recovery_candidate_count is 0 and recovery_actionable is false — none of the 18 blocked_pending/fresh_submission_blocked entries currently carry a semantic_gate_job_id, so there is no in-flight ArtJob for recover_timed_out_job() to reconcile against right now (the queue looks clean of the specific stale-timeout-behind-a-DONE-job situation t-022 fixed, not populated with fresh failures to recover). Nothing to execute against this cycle — releasing back to `ready` rather than forcing an unrelated fresh-submission `--live` run under this task's scope. Re-check after the next daily monster-recast-art-jobs.yml run (11:00 UTC) submits new entries and any of them time out; that is the next point a non-empty recovery_batch can appear. Step 3 (wiring `--require-recovery-actionable` into the workflow) stays deferred until step 2 is actually proven live, per the original kaizen note.
@@ -759,3 +759,31 @@ tasks:
     Monster Recast book 1) can then generate the ordered interior PDF, cover-wrap PDF, and
     source archive against real values instead of guessing a trim size.'
 
+- id: t-035
+  milestone: m4
+  title: Record a fresh submission's new ArtJob id so a missing-credential semantic-gate failure is recoverable too
+  status: ready
+  passes: 0
+  stakes: reversible
+  owner: null
+  updated: '2026-07-28T13:32:00Z'
+  note: >
+    KAIZEN (from PR #1327, t-032, 2026-07-28): t-032 fixed consume_coloring_book_color_art.py
+    so a *recovery* attempt (an entry whose semantic_gate_error already names a stuck job id)
+    that fails validate_candidate() solely because ANTHROPIC_API_KEY is missing no longer
+    overwrites that job-id reference -- a future pass with real credentials can still recover
+    the already-completed render instead of submitting a duplicate. The 14 monster-recast
+    entries currently in fresh_submission_blocked (mr-001, mr-005 through mr-015, mr-017,
+    mr-018 as of 2026-07-28) have the identical underlying risk on the *other* branch of the
+    same loop: a fresh submission calls enqueue() and waits for the new ArtJob to complete,
+    but if validate_candidate() then fails on the same missing-credential error, the new job's
+    id is never written into semantic_gate_error (record_semantic_gate_error() just stores
+    str(error), which is "ANTHROPIC_API_KEY is required..." with no job id in it) -- so
+    referenced_job_id() can never find it, and there is no way for any future pass, credentialed
+    or not, to recover that already-rendered image; only a genuinely fresh resubmission is
+    possible for these 14, which duplicates render-backend work for images that likely already
+    completed. Fix: when a fresh enqueue()'s resulting validate_candidate() call fails, include
+    the new ArtJob's id in the recorded semantic_gate_error (matching the "job N timed out"
+    text format referenced_job_id() already parses) so it becomes recoverable via the same
+    recover_timed_out_job() path t-032 just hardened, instead of only degrading to a fresh
+    resubmission. Add regression coverage mirroring t-032's tests.

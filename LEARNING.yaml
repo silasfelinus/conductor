@@ -4713,3 +4713,18 @@ records:
     state. Retroactively logging the task after merge keeps the audit trail intact but does not
     fix the root habit; worth enforcing claim-before-implement if a third instance appears in
     this project.'
+- date: 2026-07-28
+  project: coloring-book
+  task: t-032
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'A live recovery pass that reuses an already-completed ArtJob can still silently
+    destroy its own recoverability: when validate_candidate() fails for an environment reason
+    (missing ANTHROPIC_API_KEY) rather than a real image judgment, overwriting the entry''s
+    error text erases the "job N timed out" reference a future recovery pass parses to find
+    the same completed job -- converting a genuinely recoverable entry into one that looks
+    like it needs a brand-new (duplicate) submission. Distinguish environment/tooling failures
+    from real semantic verdicts before writing to any field a recovery mechanism depends on.'

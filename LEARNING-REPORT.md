@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-07-28T13:35:03Z
+Generated: 2026-07-28T13:37:16Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **402**
-- Outcomes: blocked: 12, cancelled: 1, done: 389
+- Closed tasks recorded: **403**
+- Outcomes: blocked: 12, cancelled: 1, done: 390
 - Success rate: **97%**
 - Average passes on successful tasks: **0.0**
 
@@ -24,7 +24,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | art-generator-connect | 3 | 100% |
 | challenge-center | 16 | 100% |
 | coat-dance | 8 | 0% |
-| coloring-book | 18 | 100% |
+| coloring-book | 19 | 100% |
 | conductor | 55 | 100% |
 | conductor-app | 2 | 100% |
 | davinci | 1 | 100% |
@@ -57,7 +57,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 15 | 40% |
-| software | 387 | 99% |
+| software | 388 | 99% |
 
 ## Failure categories
 
@@ -77,6 +77,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-07-28 `coloring-book/t-032` — A live recovery pass that reuses an already-completed ArtJob can still silently destroy its own recoverability: when validate_candidate() fails for an environment reason (missing ANTHROPIC_API_KEY) rather than a real image judgment, overwriting the entry's error text erases the "job N timed out" reference a future recovery pass parses to find the same completed job -- converting a genuinely recoverable entry into one that looks like it needs a brand-new (duplicate) submission. Distinguish environment/tooling failures from real semantic verdicts before writing to any field a recovery mechanism depends on.
 - 2026-07-28 `coloring-book/t-033` — Second same-day coloring-book PR (after t-022) merged with no roadmap task claimed beforehand -- both were only discoverable via mcp__github__list_pull_requests, not roadmap state. Retroactively logging the task after merge keeps the audit trail intact but does not fix the root habit; worth enforcing claim-before-implement if a third instance appears in this project.
 - 2026-07-28 `model-builder/t-033` — When a picker/config restriction should mirror a relation graph (here: which source types may create which related model), trace the actual linked-pair cases in the commit/link handler rather than the coarser raw schema-relation check alone -- two output keys can target the same model through different fields (Project.managerBotId vs Dream.narratorId), which a schema-relation-only check cannot distinguish. The fix also surfaced a pre-existing gap (Facet listed as recipe-eligible with zero real link cases) that was silently broken before and is now visibly empty instead -- filed as a separate kaizen task rather than silently expanding scope.
 - 2026-07-28 `coloring-book/t-022` — Path-safety logic duplicated at both the event-intake layer and the executing script (process_coloring_art_events.py and adopt_coloring_book_asset.py both re-validate source_path independently) is a defense-in-depth pattern worth reusing for other event-driven scripts that accept a filesystem path from an external event file.
@@ -86,7 +87,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-07-28 `ai-art-academy/t-010` — Running claim_task.py only after implementing (instead of before, per AGENTS.md step 6) turns the claim check into a post-hoc formality instead of a reservation — this session duplicated another session's identical lane-4 sync work and had to close its own kind_robots PR as superseded. Claim first, implement second, every time, even when the task looks unclaimed at a glance.
 - 2026-07-28 `conductor/t-088` — A well-templated connector-only Worker PR (What changed/How I verified/Flags/Kaizen all filled in specifically) needs no manual roadmap close-out — the task-events auto-processor flipped this task to done within the same minute the merge landed.
 - 2026-07-28 `coloring-book/t-031` — A local polling timeout is not proof that an asynchronous ArtJob failed. Generic consumers must rebuild an identical request identity on retry or persist and recover the original job id; otherwise a fresh randomized seed silently converts a retry into duplicate production work. Compatibility tests must also preserve the public module's monkeypatch surface when a long implementation is wrapped rather than edited in place.
-- 2026-07-28 `conductor/t-087` — The "Analyze (javascript-typescript)" CodeQL check routinely runs 40+ minutes in this repo (confirmed on three separate PRs in one session) but does not gate merge -- attempting a merge once every other check is green succeeds immediately rather than needing to wait for CodeQL to finish. Don't block a merge decision on it; treat it as informational.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-07-28T13:35:03Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-07-28T13:37:16Z_
