@@ -175,7 +175,7 @@ tasks:
 - id: t-022
   milestone: m4
   title: Monster Recast book 1 production pass — 36 final color/BW pairs
-  status: claimed
+  status: review
   passes: 0
   stakes: reversible
   updated: '2026-07-27T23:07:17Z'
@@ -339,6 +339,67 @@ tasks:
     Merged conductor PR #1239 as b9d46b5a42246a400db73a18d61e5f552c88909f. The read-only queue diagnostic now reports actionable state and supports --require-actionable, distinguishing safe non-empty batches from blocked and completed queues. No ArtJobs were submitted, retried, or mutated.
 
     Added duplicate proposal-id and slot detection plus robust semantic-gate ArtJob parsing to the read-only queue diagnostic.
+
+    BURST-MODE CYCLE 2026-07-27 (conductor-burst rotation, session
+    20260727T230716Z-conductor-burst-coloring-t022): investigated why all 18
+    of Monster Recast's blocked_pending entries carry a "job N timed out
+    after 600s" semantic_gate_error. Checked the referenced ArtJob ids
+    directly against GET /api/art/queue/{id}: 8 of them (mr-001, mr-005
+    through mr-011, jobs 2702/2705-2711) had actually reached status DONE
+    hours after the local 600s wait_for_job() timeout gave up on them --
+    the render backend just runs slower than the local poll window, not
+    down. The remaining 10 (mr-012 through mr-021) never got that far;
+    their stored error is "enqueue failed: HTTP 503 Database connection was
+    temporarily unavailable" with no job to recover.
+
+    This is a real, previously-unnoticed bug, not just a diagnostic gap:
+    unlocked entries pick a fresh random seed on every enqueue() call, so
+    the server's attemptFingerprint-based dedup (matches on the full
+    request payload, not just the idempotencyKey string) never recognizes
+    a retry of the "same" concept -- confirmed by tracing
+    server/api/art/queue/index.post.ts in kind_robots. A plain re-run of
+    consume_coloring_book_color_art.py --live against these entries would
+    therefore submit a brand-new duplicate ArtJob for each one instead of
+    picking up the completed render, silently wasting render-backend
+    capacity every cycle this task has retried since 2026-07-17.
+
+    Fixed in scripts/consume_coloring_book_color_art.py: added
+    recover_timed_out_job(), which extracts the job id named in a stale
+    timeout error and checks its live status before falling back to
+    enqueue() -- DONE reuses the existing render, PENDING/RUNNING leaves it
+    for the next cycle untouched, FAILED/CANCELLED surfaces as a fresh
+    error. Caught a second bug proving the first fix alone was insufficient:
+    build_entries() only copies a fixed allowlist of fields from the raw
+    queue source onto the entry object main()'s loop actually uses, and
+    semantic_gate_error wasn't in that list -- so referenced_job_id(entry)
+    always saw None and the recovery branch could never fire. Found this
+    by actually running --live against the real queue (this sandbox has
+    KR_API_TOKEN) rather than trusting the first fix's unit tests alone:
+    mr-001 got a genuine new duplicate (ArtJob 2715) submitted alongside
+    the already-DONE 2702 before the bug was caught. Added a regression
+    test that fails against the first commit and passes after the
+    build_entries() fix; full local pytest suite green (650 tests) both
+    times. Reverted the live run's file mutations (color-art-jobs.yaml,
+    the generated/ dir) back to their pre-run state so mr-001's queue entry
+    still names the valid, already-DONE job 2702 -- not the accidental
+    2715 duplicate -- for the next run to recover.
+
+    NOT completed this cycle: actually exercising the fixed recovery path
+    live. This sandbox has KR_API_TOKEN but not ANTHROPIC_API_KEY, so any
+    fetched candidate fails the local semantic gate immediately regardless
+    of whether it came from a fresh submission or a correct recovery --
+    running it further here would only risk repeating the same
+    silent-duplicate failure mode through some other latent gap, with no
+    way to actually validate a recovered image to close the loop. The fix
+    is unit-tested and ready; the next cycle with a real ANTHROPIC_API_KEY
+    (the hourly/daily GitHub Actions workflow, or a future session that has
+    it) should pick up mr-001 and mr-005 through mr-011 via
+    recover_timed_out_job() with no duplicate submission. mr-012 through
+    mr-021 still need a normal fresh submission (no job to recover). ArtJob
+    2715 (mr-001) and 2716 (mr-005, submitted then abandoned mid-wait when
+    this session killed the run) will complete on the backend regardless
+    and are simply unreferenced -- harmless, not cleaned up, not worth a
+    manual DB edit.
   recurring: true
   owner: worker
   claimed_by: 20260727T230716Z-conductor-burst-coloring-t022
