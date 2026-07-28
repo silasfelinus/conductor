@@ -356,11 +356,11 @@ tasks:
 - id: t-016
   milestone: m3
   title: Extend MEDIA_TYPE_CHIPS to cover all 12 MediaType values (or fold the rare 6 into their nearest sibling chip)
-  status: claimed
+  status: review
   owner: worker
   passes: 0
   stakes: reversible
-  note: 'Kaizen from t-015 (kind_robots PR #1115, 2026-07-28). MEDIA_TYPE_CHIPS (the Browse filter-chip list) only covers 6 of the 12 MediaType enum values (MOVIE, TV, BOOK, COMIC, AUDIOBOOK, VIDEO_GAME). The other 6 (NOVELLA, ANIME, PODCAST, THEATRE, SHORT, VIDEO_GAME_SHORT) can now be seen (via the new Recent entries list, t-015) and stored, but cannot be filtered on directly. Either add dedicated chips for the missing 6, or explicitly fold each into its nearest sibling chip''s filter value (matching the icon-grouping judgment calls already made in t-015''s MEDIA_TYPE_ICON map) so every stored entry is filterable.'
+  note: 'Kaizen from t-015 (kind_robots PR #1115, 2026-07-28). MEDIA_TYPE_CHIPS (the Browse filter-chip list) only covers 6 of the 12 MediaType enum values (MOVIE, TV, BOOK, COMIC, AUDIOBOOK, VIDEO_GAME). The other 6 (NOVELLA, ANIME, PODCAST, THEATRE, SHORT, VIDEO_GAME_SHORT) can now be seen (via the new Recent entries list, t-015) and stored, but cannot be filtered on directly. Either add dedicated chips for the missing 6, or explicitly fold each into its nearest sibling chip''s filter value (matching the icon-grouping judgment calls already made in t-015''s MEDIA_TYPE_ICON map) so every stored entry is filterable. PROGRESS 2026-07-28 (conductor scheduled Agent run, claude-conductor-agentrun-20260728T212607-mw-t016): implemented on kind_robots branch claude/confident-bardeen-kbvai8, kind_robots PR #1120 (open, CI running) -- folded the 5 rare types with an icon sibling into their nearest chip (NOVELLA -> Books, ANIME -> TV, PODCAST -> Audiobooks, SHORT -> Movies, VIDEO_GAME_SHORT -> Games) via a new group field on each MEDIA_TYPE_CHIPS entry, and added a THEATRE-only chip since it has no sibling. Added expandActiveTypes() to expand a toggled chip into its full group before building the mediaType query param, wired into both the live filter and CSV export. No backend change needed. Verified: eslint clean, prettier --check clean (ran --write once for the new multi-line const), full-project vue-tsc --noEmit exit 0. Will update with final CI/merge status.'
   claimed_by: claude-conductor-agentrun-20260728T212607-mw-t016
   claimed_at: '2026-07-28T21:26:07Z'
-  updated: '2026-07-28T21:26:07Z'
+  updated: '2026-07-28T21:30:01Z'
