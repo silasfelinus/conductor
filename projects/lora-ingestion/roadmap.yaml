@@ -48,15 +48,18 @@ tasks:
 - id: t-002
   milestone: m2
   title: Build the watched-folder LoRA import agent
-  status: review
+  status: done
   owner: claude
   stakes: reversible
-  note: 'conductor/ops/home-server/lora_import_agent.py — stdlib poller mirroring
-    relay_agent.py; on a stable drop it runs kind_robots scan_loras.py
-    (--organize move) then import_catalog.py --upsert. Registered as pm2 app
-    kr-lora-import in ecosystem.config.js. Recommended host: the Linux array box
-    (alexandria) so moves happen on the case-sensitive local FS. Needs live
-    verification with ume_classic_impressionist.safetensors.'
+  note: 'conductor/ops/home-server/lora_import_agent.py — stdlib poller; on a
+    stable drop it runs kind_robots scan_loras.py (--organize move) then
+    import_catalog.py --upsert. Runs embedded as a daemon thread inside kr-relay
+    (relay_media_agent.start_lora_watcher) — one process/token/log, watcher and
+    render loop cannot stall each other. Host: the pm2 render box (alexandria is
+    a locked-down NAS; SMB is case-insensitive so Windows moves are safe post
+    case_merge). Verified live 2026-07-28 with ume_classic_impressionist
+    (detected Flux, moved, Resource created:1); Civitai flagged it nsfw so it
+    sorted NSFW — override to SFW via scan --overrides if wrong.'
 - id: t-003
   milestone: m2
   title: Verify end-to-end on alexandria with ume_classic_impressionist
@@ -64,11 +67,12 @@ tasks:
   owner: null
   stakes: reversible
   gate_human: true
-  note: 'Set env (KR_RELAY_TOKEN, LORA_ROOT, SCAN_SCRIPT, IMPORT_SCRIPT,
-    CIVITAI_TOKEN), start the agent, drop the file into Lora/import, confirm it
-    sorts to Flux/SFW/ and GET /api/resources shows the row with correct
-    localPath + Flux + SFW + preview. Then confirm a krea2/flux2 render using it
-    succeeds (path bug closed end-to-end).'
+  note: 'Import half CONFIRMED 2026-07-28: standalone run detected ume as Flux,
+    moved it, and upserted the Resource (created:1). Remaining: (1) run it as
+    the embedded kr-relay thread on the pm2 box (pm2 restart kr-relay after
+    setx CIVITAI_TOKEN), and (2) confirm a krea2/flux2 render selecting that
+    Resource succeeds — closes the path bug end-to-end. Note ume sorted NSFW
+    because Civitai flags the model nsfw; override to SFW if wrong.'
 - id: t-004
   milestone: m3
   title: Add civitaiModelId/civitaiModelVersionId + fix resourceMutationSelect
