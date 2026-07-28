@@ -2733,12 +2733,17 @@ tasks:
   - id: t-087
     milestone: m2
     title: "Project icon/card/hero art has no provenance metadata, unlike inspiration images' gallery.json"
-    status: review
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
-    updated: '2026-07-28T02:13:35Z'
+    updated: '2026-07-28T02:59:00Z'
     note: >
+      MERGED 2026-07-28 (Reviewer, conductor scheduled Agent run): PR #1279 squash-merged as
+      8ef8193. All checks green except the "Analyze (javascript-typescript)" CodeQL job (still
+      in_progress after 40+ minutes at merge time; confirmed non-blocking, per conductor/t-033's
+      TALKBACK entry noting the same check runs long without gating merge).
+
       Kaizen from closing dream-cycle/t-007 (2026-07-28 burst-mode rotation cycle): its three
       files (projects/images/dream-cycle-{icon,card,hero}.webp) had already landed via the auto
       art pipeline's "process task events" flow days before the task was ever picked up, but the
@@ -2777,3 +2782,22 @@ tasks:
       same as gallery.json only covers what's on disk when it's (re)generated.
     claimed_by: claude-conductor-burst-20260728T021241Z-cd-t087
     claimed_at: '2026-07-28T02:12:42Z'
+
+  - id: t-088
+    milestone: m2
+    title: Backfill projects/images/manifest.json's model field once a real generator supplies an engine/model value
+    status: ready
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-28T02:59:00Z'
+    note: >
+      Kaizen from t-087 (PR #1279): record_project_art_provenance() already carries a `model`
+      field through projects/images/manifest.json's schema, but writes it as null today because
+      neither art-prompts.yaml/art-generate.yaml nor the generator scripts
+      (queue_missing_project_art.py, consume_art_requests.py) populate an engine/model value
+      anywhere in this pipeline yet. Once a real generator (or ArtJob-based generation, if wired
+      into this pipeline) does supply one, thread it through build_lookup() into the manifest
+      entries rather than leaving the field permanently null.
+    owner: null
+    claimed_by: null
+    claimed_at: null
