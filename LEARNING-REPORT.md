@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-07-28T02:05:13Z
+Generated: 2026-07-28T02:11:12Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **390**
-- Outcomes: blocked: 12, cancelled: 1, done: 377
+- Closed tasks recorded: **391**
+- Outcomes: blocked: 12, cancelled: 1, done: 378
 - Success rate: **97%**
 - Average passes on successful tasks: **0.0**
 
@@ -15,7 +15,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 | Project | Closed | Success rate |
 |---|---|---|
-| ai-art-academy | 48 | 100% |
+| ai-art-academy | 49 | 100% |
 | alexa-integration | 2 | 100% |
 | animation-manager | 11 | 100% |
 | animation-studio | 2 | 50% |
@@ -57,7 +57,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 15 | 40% |
-| software | 375 | 99% |
+| software | 376 | 99% |
 
 ## Failure categories
 
@@ -77,6 +77,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-07-28 `ai-art-academy/t-049` — Validating a new audit heuristic against the live roadmap tree (not just a synthetic fixture) is a strong sanity check -- the new CONTINUOUS_IMPROVEMENT_NOTE_DRIFT rule immediately flagged the exact real-world t-010 drift it was written to catch, on the first run.
 - 2026-07-28 `dream-cycle/t-007` — A ready task can be stale-done, not stale-blocked -- before assuming a long-untouched ready task needs implementation work, check whether its deliverable already landed via a side channel (here, the auto art pipeline's task-events flow beat the roadmap task to completion by over two weeks). Verifying file existence/shape first turned this into a same-cycle close instead of a duplicate art-generation request.
 - 2026-07-28 `coloring-book/t-022` — Live-testing a fix against the real queue (not just unit tests) caught a second bug the first commit alone would have shipped silently -- build_entries() dropped the very field (semantic_gate_error) the new recovery logic needed to fire. Worth running --live whenever a sandbox has the token for it, even when unit coverage already looks complete.
 - 2026-07-27 `ai-art-academy/t-047` — A kaizen task naming the exact fix (which consumers, which store method) still needs an investigation pass before editing -- checking whether the target genuinely never needs to survive a component's unmount (in-flight uploads, other readers) turned a plausible-looking one-liner into a verified-safe change across all 7 call sites in one pass.
@@ -86,7 +87,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-07-27 `media-watchlist/t-006` — Third cycle in a row on this recurring polish task (2026-07-20, 2026-07-26, 2026-07-27) that found real server-side data already computed/accepted (CSV export filters, then Year+comics+TV-season stats) sitting unused because the front end never caught up. When touching a "polish the front end" task on a project whose backend predates the UI work, diff the API response/query-param shape against what the component actually renders/sends before assuming new backend scope is needed -- the gap is often pure wiring, which keeps the diff small and the pass clean.
 - 2026-07-27 `ai-art-academy/t-019` — Once conductor PR #1215 fixed distribute_images.py and proved one thumbnail (greek-vase-painting) actually live in production, t-019's gate ("at least one queued image present") was satisfied immediately — but the task itself sat unclaimed for a cycle because nothing re-checked it after the fix. Wiring the single confirmed-live image and shipping a graceful per-style fallback (rather than waiting for all 33 curriculum thumbnails to exist) let real progress land now instead of blocking on t-035's much larger re-queue-and-regenerate batch.
 - 2026-07-27 `ai-art-academy/t-010` — distribute_images.py silently ate the 33 previously-queued academy style-preview requests because kind_robots-targeted files get copied into a LOCAL kind_robots checkout (when one is present, which is the norm for agent sandboxes) even though kind_robots' /public/images/** is git-ignored and never actually reaches production that way -- then the "delivered" request gets pruned from art-prompts.yaml, destroying the only record that real delivery (via the relay's direct media path) still hadn't happened. Any pipeline step that "moves" a file into a target and then deletes the pending-work record on that basis must confirm the move is actually durable (git-tracked, or otherwise reachable in production) before treating it as done -- a local copy into a git-ignored directory is indistinguishable from success unless someone checks .gitignore.
-- 2026-07-27 `ai-art-academy/t-042` — A kaizen task filed as "grep for other instances of this bug shape" can close clean with no code PR when the audit turns up nothing — closing done with the full per-file audit trail in the task note (files checked, patterns searched, why each slice(/splice(/Promise.all( hit was or was not the shape) is a complete deliverable on its own, matching the kind-robots/t-027 precedent (2026-07-16). Recording exactly what was searched and why each candidate was ruled out is what makes the negative result trustworthy enough that a future session does not need to re-run the same grep from scratch.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-07-28T02:05:13Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-07-28T02:11:12Z_
