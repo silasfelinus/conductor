@@ -706,11 +706,11 @@ tasks:
 - id: t-032
   milestone: m4
   title: Execute a live recovery_batch pass against the Monster Recast queue
-  status: ready
+  status: claimed
   passes: 0
   stakes: reversible
-  owner: null
-  updated: '2026-07-28T07:12:58Z'
+  owner: reviewer
+  updated: '2026-07-28T13:19:20Z'
   note: >
     KAIZEN (from PR #1275, t-022, 2026-07-28): t-022's connector-only session
     added a bounded recovery_batch / recovery_actionable / recovery_actionable_count
@@ -743,6 +743,8 @@ tasks:
     recovery_batch can appear. Step 3 (wiring `--require-recovery-actionable` into the
     workflow) stays deferred until step 2 is actually proven live, per the original kaizen
     note.
+  claimed_by: claude-conductor-agentrun-20260728T131919Z-cb-t032
+  claimed_at: '2026-07-28T13:19:20Z'
 - id: t-033
   milestone: m6
   title: 'Vendor-neutral print-package readiness manifest and status script'
