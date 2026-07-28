@@ -502,11 +502,11 @@ tasks:
   - id: t-010
     milestone: m6
     title: Academy continuous improvement pass
-    status: review
+    status: ready
     recurring: true
     passes: 0
     stakes: reversible
-    updated: '2026-07-28T10:12:00Z'
+    updated: '2026-07-28T10:17:00Z'
     note: |-
       Standing never-idle task (re-arms to ready after every completion, per the recurring-task rule). Each cycle pick ONE: (a) front-end style/polish pass on Academy or art-styler surfaces, (b) roadmap upgrade — refine tasks, detail the next milestone, prune stale notes, (c) generate more art inspirations or style preview thumbnails, (d) expand the curriculum with a new movement/artist entry (respecting PUBLIC-DOMAIN-POLICY.md). Note which option ran in the PR. This task never reaches done and does not count toward milestone progress. See `run_log` for cycle history — do not re-accumulate RAN entries here.
 
@@ -515,15 +515,14 @@ tasks:
       RAN 2026-07-28T09:30:00Z (claude-conductor-agentrun-20260728-aa-t010-lane2): option (b), roadmap accuracy. Found ai-art-academy/t-044 (needs-human, blocking t-045) was stale: Silas's kind_robots PR #1090 (merged minutes earlier) implements the exact Resource-authoritative LoRA resolver t-044's note called for. Flipped t-044 to ready pending live verification, cleared its stale soft_gate. Full detail in `run_log`.
 
       RAN 2026-07-28T10:12:00Z (claude-conductor-scheduled-20260728T100512Z-aa-t010-lane3): option (c), inspiration assets. Added a fourth-tradition-diverse teaching sequence, "Mountain Gate, Four Traditions" (Persian Miniature, Mughal Miniature, Song Dynasty Landscape, Joseon Genre Painting), extending flower-arranger's precedent of spanning non-Western/non-adjacent traditions. Prompt-first planning artifact, no live generation dependency. Conductor PR #1309. Full detail in `run_log`.
+
+      Merged conductor PR #1309 as squash 053ea1bd3d7aae886afecdf2b2eea3c21c65a904 after Worker PR CI (23/23 checks) passed. The inspiration-assets cycle (lane 3) added docs/inspiration-sets/mountain-gate-four-traditions.md (Persian Miniature, Mughal Miniature, Song Dynasty Landscape, Joseon Genre Painting) and rotated the next preferred lane to curriculum depth (lane 4).
     continuous_improvement:
       last_lane: 3  # 1=front-end polish, 2=roadmap accuracy, 3=inspiration assets, 4=curriculum depth
       next_lane: 4
       last_run: '2026-07-28T10:12:00Z'
       last_pr: 'Conductor PR #1309: docs/inspiration-sets/mountain-gate-four-traditions.md'
     run_log: projects/ai-art-academy/docs/continuous-improvement-run-log.md
-    owner: worker
-    claimed_by: claude-conductor-scheduled-20260728T100512Z-aa-t010-lane3
-    claimed_at: '2026-07-28T10:05:12Z'
 
   - id: t-015
     milestone: m4
