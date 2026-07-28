@@ -316,11 +316,20 @@ tasks:
 - id: t-013
   milestone: m3
   title: Wire the "most active month" home-dashboard stat from BROWSE-UX.md §1 into the UI
-  status: claimed
+  status: done
   owner: worker
   passes: 0
   stakes: reversible
-  note: 'Kaizen from t-012 (kind_robots PR #1057, 2026-07-27). BROWSE-UX.md §1''s Home/Summary Dashboard stats bar specs "Most active month: ''You consumed the most in [Month]: N entries''" -- this hasn''t been wired into any UI yet (the current Stats strip in watchlist-browse.vue only shows totals/starred/audiobook-hours/pages/comics/TV-seasons, no per-month breakdown). Check whether server/api/media-entries/stats.get.ts already computes a per-month breakdown (t-006''s PR mentioned per-month data existing for the Home dashboard spec) -- if so, this is front-end-only wiring like t-006/t-012 before it; if not, add the aggregation to stats.get.ts first. Surface it as a single stat line/tile, not a full calendar view (BROWSE-UX.md doesn''t spec more than the one sentence).'
+  note: 'DONE 2026-07-28: kind_robots PR #1093 squash-merged bf3c707. Confirmed server/api/media-entries/stats.get.ts already computed countByMonth (t-006-era addition), so this was front-end-only wiring: a computed mostActiveMonth in watchlist-browse.vue picks the max-count month from the existing breakdown and renders "You consumed the most in [Month]: N entries" above the stats strip, hidden when there is no data. All 6 required checks green (TypeScript, Contract Tests, and 3 contract workflows). Fifth consecutive cycle on this file finding already-computed server data needing only UI wiring (t-006, t-010, t-012, t-013) -- see kaizen task t-014.'
   claimed_by: claude-conductor-burst-20260728T-mw-t013
   claimed_at: '2026-07-28T10:08:44Z'
-  updated: '2026-07-28T10:08:44Z'
+  updated: '2026-07-28T11:20:00Z'
+
+- id: t-014
+  milestone: m3
+  title: Scope whether BROWSE-UX.md §1's Home/Summary Dashboard needs its own route
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  note: 'Kaizen from t-013 (kind_robots PR #1093, 2026-07-28). BROWSE-UX.md §1 also specs "Recent entries (last 10, reverse-chronological; grouped by media type icon)" and "Quick filter chips" for a dedicated Home/Summary Dashboard view. Currently /watchlist only renders the Browse view (watchlist-browse.vue) -- there is no separate Home dashboard page. Three stats-bar items (audiobook hours/pages/comics-TV from t-006/t-012, now most-active-month from t-013) live inside the Browse view''s stats strip, but the other §1 elements (recent-entries list, quick-filter chips as their own affordance distinct from Browse''s existing filters) still do not exist anywhere. Determine whether §1 needs its own route/component or whether the remaining elements should also fold into watchlist-browse.vue, then scope the actual implementation task(s).'
