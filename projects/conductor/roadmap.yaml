@@ -2902,3 +2902,50 @@ tasks:
       this same step.
     claimed_by: null
     claimed_at: null
+
+  - id: t-092
+    milestone: m2
+    title: "Add a lightweight review-claim marker so concurrent sessions stop duplicating PR review/close-out work"
+    status: ready
+    passes: 0
+    stakes: reversible
+    owner: null
+    note: |
+      KAIZEN (from a four-way rotation collision, 2026-07-28, see root TALKBACK.md
+      this same date): this session and at least three other concurrent sessions
+      independently discovered the same two open, green kind_robots PRs (#1114,
+      #1115) and all raced to review/merge them and close out the same recurring
+      conductor tasks (model-builder/t-029, media-watchlist/t-015,
+      animation-manager/t-006) within roughly the same minute. `claim_task.py`
+      already solves this for *implementation* (a Worker claiming a `ready` task),
+      but there is no equivalent for *review*: nothing stops N sessions from all
+      seeing the same reviewable PR and starting a review pass on it simultaneously.
+      Root trigger: `select_role.py`'s direct `api.github.com` calls keep 403ing in
+      this sandbox (recurring, already flagged multiple times in TALKBACK today),
+      so every affected session falls back to checking PRs directly via GitHub MCP
+      tools -- which works, but several sessions doing that fallback at the same
+      moment have no shared signal that another session already started.
+
+      Outcome this time: no data was lost (git's non-fast-forward rejection is the
+      real safety net, same as documented elsewhere in AGENTS.md's rotation-collision
+      section), but real duplicate work happened -- 3 redundant conductor PRs opened
+      and had to be manually triaged/closed after the fact, and one of them (a second
+      animation-manager/t-006 daily pitch, `sundial-garden`) would have breached the
+      "at most one new pitch per Pacific day" rule if it had merged.
+
+      Build a lightweight review-claim mechanism, analogous to `claim_task.py` but
+      for the *reviewing* side: before starting a review pass on an open PR, a
+      session posts a claim marker (a PR comment with a recognizable prefix, e.g.
+      "REVIEWING: <session-id>", or a label) via the GitHub MCP tools already
+      available in every session; a session should check for an existing marker
+      (posted within some recent window, e.g. the last 15-30 minutes) before
+      starting its own review pass on the same PR, and skip to the next item if one
+      is found. Keep it advisory/best-effort (a missed check shouldn't be treated as
+      a hard failure -- git's own conflict rejection remains the real backstop), but
+      it should meaningfully cut down on the wasted-PR-churn class of collision this
+      session hit. Consider whether the same marker convention should also cover the
+      recurring daily-pitch tasks specifically (animation-manager/t-006,
+      brainstorm's recurring pitch task, etc.), since those don't have a PR to claim
+      against until after the work is already done.
+    claimed_by: null
+    claimed_at: null
