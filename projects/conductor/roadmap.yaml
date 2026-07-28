@@ -2816,3 +2816,49 @@ tasks:
     claimed_by: 20260728T061055Z-worker-conductor-t089-a31
     claimed_at: '2026-07-28T06:10:55Z'
     updated: '2026-07-28T06:22:00Z'
+
+  - id: t-090
+    milestone: m2
+    title: "LEARNING.yaml schema conformance test now fails on main (invalid failure_category value from PR #1330)"
+    status: needs-human
+    gate_human: true
+    passes: 0
+    stakes: reversible
+    note: |
+      FOR SILAS: `tests/test_backfill_learning.py::test_committed_ledger_schema_conformance` is
+      failing on `main` (confirmed at commit `fb39820`, PR #1330's merge) and will fail on
+      every subsequent PR's "Python test suite" check until fixed.
+
+      What happened: PR #1330 (ai-art-academy/t-044 live-verify session) appended a
+      `LEARNING.yaml` record with `failure_category: verification-access` -- not one of the
+      four values the schema (and AGENTS.md's own Failure Triage table) define:
+      `transient | actionable | quality | scope`. The record is otherwise well-formed; only
+      that one field violates the enum. It's the record at `date: 2026-07-28, project:
+      ai-art-academy, task: t-044`. PR #1330 merged despite this check already showing red
+      at merge time, so "Python test suite" is evidently not a required/blocking status check
+      -- this hasn't stopped anyone from merging, but it does mean the check has been silently
+      red since, and will stay red for every future PR until someone fixes it (confirmed
+      independently by this session's own unrelated PR #1331 inheriting the same red check
+      from its base).
+
+      TO APPROVE: I did not fix this myself because hard rule 7 (AGENTS.md) says LEARNING.yaml
+      is append-only -- "never edit or delete a prior record" -- and correcting this one field
+      value would mean editing an existing record, not appending. That rule is unconditional
+      as written, so I'm treating "may an agent correct one invalid enum value in an existing
+      record to fix a real schema violation" as needing your explicit call rather than assuming
+      it. Two options, your choice:
+      (a) Silas (or an agent with your explicit go-ahead in-session) edits that one record's
+      `failure_category` from `verification-access` to `actionable` (the closest documented
+      category -- it matches the Failure Triage table's "missing access/credentials for the
+      core work... verification permanently impossible" description) and nothing else in the
+      record changes.
+      (b) Silas decides `verification-access` should become a real 5th category in the
+      taxonomy (AGENTS.md's Failure Triage table + `tests/test_backfill_learning.py`'s
+      `VALID_FAILURE` set both updated to match), if this is a meaningfully distinct failure
+      mode worth naming going forward.
+
+      What unblocks: once resolved, "Python test suite" goes green again on `main` and on every
+      open/future PR that rebases past this point. No task currently depends on this via
+      `depends_on`.
+    claimed_by: null
+    claimed_at: null
