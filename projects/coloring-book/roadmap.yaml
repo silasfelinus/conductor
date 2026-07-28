@@ -706,43 +706,21 @@ tasks:
 - id: t-032
   milestone: m4
   title: Execute a live recovery_batch pass against the Monster Recast queue
-  status: claimed
+  status: review
   passes: 0
   stakes: reversible
-  owner: reviewer
-  updated: '2026-07-28T13:19:20Z'
-  note: >
-    KAIZEN (from PR #1275, t-022, 2026-07-28): t-022's connector-only session
-    added a bounded recovery_batch / recovery_actionable / recovery_actionable_count
-    output to scripts/coloring_queue_status.py (read-only diagnostic, no ArtJobs
-    touched) plus a --require-recovery-actionable automation guard, but could not
-    exercise it live — this sandbox has no GitHub egress or KR_API_TOKEN in a
-    connector-only run. No workflow or script currently consumes
-    recovery_batch/--require-recovery-actionable yet. Next cycle with real
-    execution access: (1) run
-    `python scripts/coloring_queue_status.py --book monster-recast` and confirm
-    recovery_actionable is true with a non-empty recovery_batch, (2) run the
-    actual recovery pass (consume_coloring_book_color_art.py --live, per t-022's
-    established recover_timed_out_job() pattern) bounded to that batch, verifying
-    no duplicate ArtJob is submitted for an entry whose original job already
-    completed, and (3) if useful going forward, wire
-    `--require-recovery-actionable` into the relevant GitHub Actions workflow as
-    a guard before an automated recovery run.
+  owner: worker
+  updated: '2026-07-28T13:28:40Z'
+  note: |-
+    KAIZEN (from PR #1275, t-022, 2026-07-28): t-022's connector-only session added a bounded recovery_batch / recovery_actionable / recovery_actionable_count output to scripts/coloring_queue_status.py (read-only diagnostic, no ArtJobs touched) plus a --require-recovery-actionable automation guard, but could not exercise it live — this sandbox has no GitHub egress or KR_API_TOKEN in a connector-only run. No workflow or script currently consumes recovery_batch/--require-recovery-actionable yet. Next cycle with real execution access: (1) run `python scripts/coloring_queue_status.py --book monster-recast` and confirm recovery_actionable is true with a non-empty recovery_batch, (2) run the actual recovery pass (consume_coloring_book_color_art.py --live, per t-022's established recover_timed_out_job() pattern) bounded to that batch, verifying no duplicate ArtJob is submitted for an entry whose original job already completed, and (3) if useful going forward, wire `--require-recovery-actionable` into the relevant GitHub Actions workflow as a guard before an automated recovery run.
+    CHECKED 2026-07-28T07:12:58Z (conductor burst-mode cycle, real shell + KR_API_TOKEN present this session): ran `python scripts/coloring_queue_status.py --book monster-recast` live. Current state: recovery_candidate_count is 0 and recovery_actionable is false — none of the 18 blocked_pending/fresh_submission_blocked entries currently carry a semantic_gate_job_id, so there is no in-flight ArtJob for recover_timed_out_job() to reconcile against right now (the queue looks clean of the specific stale-timeout-behind-a-DONE-job situation t-022 fixed, not populated with fresh failures to recover). Nothing to execute against this cycle — releasing back to `ready` rather than forcing an unrelated fresh-submission `--live` run under this task's scope. Re-check after the next daily monster-recast-art-jobs.yml run (11:00 UTC) submits new entries and any of them time out; that is the next point a non-empty recovery_batch can appear. Step 3 (wiring `--require-recovery-actionable` into the workflow) stays deferred until step 2 is actually proven live, per the original kaizen note.
 
-    CHECKED 2026-07-28T07:12:58Z (conductor burst-mode cycle, real shell + KR_API_TOKEN
-    present this session): ran `python scripts/coloring_queue_status.py --book
-    monster-recast` live. Current state: recovery_candidate_count is 0 and
-    recovery_actionable is false — none of the 18 blocked_pending/fresh_submission_blocked
-    entries currently carry a semantic_gate_job_id, so there is no in-flight ArtJob for
-    recover_timed_out_job() to reconcile against right now (the queue looks clean of the
-    specific stale-timeout-behind-a-DONE-job situation t-022 fixed, not populated with
-    fresh failures to recover). Nothing to execute against this cycle — releasing back to
-    `ready` rather than forcing an unrelated fresh-submission `--live` run under this
-    task's scope. Re-check after the next daily monster-recast-art-jobs.yml run (11:00 UTC)
-    submits new entries and any of them time out; that is the next point a non-empty
-    recovery_batch can appear. Step 3 (wiring `--require-recovery-actionable` into the
-    workflow) stays deferred until step 2 is actually proven live, per the original kaizen
-    note.
+    EXECUTED 2026-07-28T13:19Z (conductor Agent run, session claude-conductor-agentrun-20260728T131919Z-cb-t032, real shell + KR_API_TOKEN present): re-ran `coloring_queue_status.py --book monster-recast` and this time recovery_actionable is true with a 4-entry recovery_batch (mr-016 job 2751, mr-019 job 2754, mr-020 job 2755, mr-021 job 2757, all "timed out after 600s" from the 2026-07-28 10:58-11:37Z window) -- exactly the condition step 1 was waiting for.
+    Step 2: consume_coloring_book_color_art.py had no way to bound a --live pass to a specific set of queue_ids -- a plain --limit takes the next N pending entries in slot order, and slots 1-21 mix the 4 recoverable entries with 14 other entries already blocked_pending on a *different*, non-recoverable problem (missing ANTHROPIC_API_KEY, no job id in their error text), which the existing code would have treated as fresh submissions via enqueue(). Added `--ids` (comma-separated queue_id filter, limit ignored when set) so the recovery pass could be run bounded to exactly the 4-entry batch without touching those other 14.
+    Ran `consume_coloring_book_color_art.py --live --book monster-recast --ids mr-016,mr-019,mr-020,mr-021 --timeout 600`. First run surfaced a real, previously-unnoticed bug: this sandbox also has no ANTHROPIC_API_KEY, so validate_candidate() failed the same "ANTHROPIC_API_KEY is required" error recover_timed_out_job() itself doesn't call enqueue() on that path (confirmed: recovery fetched each already-DONE job's existing image via GET /api/art/queue/{id}, no new ArtJob was submitted for any of the 4) -- but the generic except-block handler still overwrote each entry's semantic_gate_error with the API-key message, erasing the "job N timed out" text a *future* recovery pass parses via referenced_job_id(). That would have converted all 4 into ordinary fresh_submission_blocked entries: a later cycle (even one with a real ANTHROPIC_API_KEY) would then see no job to recover and submit a genuine duplicate ArtJob for a render that already completed -- the exact failure mode t-022's original recover_timed_out_job() was built to prevent, reintroduced through this specific credential-missing path. Reverted the accidental mutation (`git checkout -- projects/coloring-book/color-art-jobs.yaml`, removed the 4 stray unverified webp files it produced) before it could be committed.
+    Fixed in scripts/consume_coloring_book_color_art.py: the per-entry loop now tracks whether the current attempt was a recovery (stuck_job_id) and, when the failure is specifically the missing-semantic-credential RuntimeError, leaves semantic_gate_error/semantic_gate_job_id untouched and logs "RECOVERY UNVERIFIED" instead of calling record_semantic_gate_error -- every other failure path (fresh-submission errors, genuinely failed/cancelled jobs, wrong-concept jobs) is unchanged. Added two regression tests: test_dry_run_with_ids_bounds_pass_to_exactly_those_entries (the --ids filter itself) and test_live_recovery_blocked_by_missing_semantic_credential_preserves_job_reference (asserts enqueue() is never called and semantic_gate_error survives byte-for-byte after a simulated missing-credential failure mid-recovery). Full local pytest suite green (699 passed, 1 skipped) both before and after.
+    Re-ran the same live recovery pass after the fix: all 4 entries now log "RECOVERY UNVERIFIED ... job N reference left intact ... no duplicate submitted", `git diff` on color-art-jobs.yaml is empty (the job 2751/2754/2755/2757 references are byte-for-byte unchanged), and each already-DONE render was saved and moved to generated/color-proposals-v1/rejected/semantic/unverified/ (the same convention many other mr- entries already use in that folder) pending real semantic verification.
+    Net result: the recovery mechanism itself is now proven live end-to-end -- no duplicate ArtJob was submitted for any of the 4 already-completed jobs, and the fix closes a real gap that would have caused duplicates on a future cycle. What remains outstanding is downstream of this task's scope: the 4 recovered images still need semantic verification with a real ANTHROPIC_API_KEY (same missing-credential limitation flagged throughout this project's notes, e.g. t-022's 2026-07-27 entry) before they can be accepted or rejected into the book -- that continues under t-022's normal production-pass scope, not this task's. Step 3 of the original kaizen note (wiring --require-recovery-actionable into a workflow) stays deferred, unchanged from the prior check-in.
   claimed_by: claude-conductor-agentrun-20260728T131919Z-cb-t032
   claimed_at: '2026-07-28T13:19:20Z'
 - id: t-033

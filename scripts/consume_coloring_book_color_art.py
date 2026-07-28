@@ -515,12 +515,31 @@ def main() -> int:
     parser.add_argument("--limit", type=int, default=0, help="0 uses queue batch_policy.worker_pass_size")
     parser.add_argument("--timeout", type=int, default=600)
     parser.add_argument("--book", choices=("monster-recast", "hollywood-recast", "kind-robots"))
+    parser.add_argument(
+        "--ids",
+        help=(
+            "Comma-separated queue_id list. When set, bounds the pass to exactly these "
+            "pending entries (queue order preserved, --limit ignored) instead of the next "
+            "N pending entries -- use this to run a recovery pass against a specific "
+            "recovery_batch (see scripts/coloring_queue_status.py) without also touching "
+            "unrelated pending entries that would otherwise fall within a plain --limit."
+        ),
+    )
     args = parser.parse_args()
 
     queue, pending = build_entries(args.book)
-    configured_limit = int(((queue.get("batch_policy") or {}).get("worker_pass_size")) or 18)
-    limit = args.limit if args.limit > 0 else configured_limit
-    todo = pending[:limit]
+    if args.ids:
+        wanted = {piece.strip() for piece in args.ids.split(",") if piece.strip()}
+        todo = [entry for entry in pending if entry["queue_id"] in wanted]
+        missing = wanted - {entry["queue_id"] for entry in todo}
+        if missing:
+            print(f"WARNING: --ids not found in pending queue: {sorted(missing)}", file=sys.stderr)
+        limit_label = f"ids={sorted(wanted)}"
+    else:
+        configured_limit = int(((queue.get("batch_policy") or {}).get("worker_pass_size")) or 18)
+        limit = args.limit if args.limit > 0 else configured_limit
+        todo = pending[:limit]
+        limit_label = f"limit={limit}"
 
     if not todo:
         print("No pending coloring-book color ArtJobs.")
@@ -528,7 +547,7 @@ def main() -> int:
 
     print(
         f"{'LIVE' if args.live else 'DRY RUN'}: {len(todo)} of {len(pending)} pending "
-        f"color proposal ArtJob(s) via {consumer.KR_BASE_URL}; pass limit={limit}"
+        f"color proposal ArtJob(s) via {consumer.KR_BASE_URL}; pass {limit_label}"
     )
 
     if not args.live:
@@ -553,6 +572,7 @@ def main() -> int:
 
     for entry in todo:
         destination = target_path(entry)
+        stuck_job_id: int | None = None
         try:
             recovered: tuple[bool, dict[str, Any]] | None = None
             if destination.exists():
@@ -617,8 +637,24 @@ def main() -> int:
                     print(f"    unverified candidate moved to {rejected.relative_to(ROOT)}", file=sys.stderr)
                 except Exception:  # noqa: BLE001
                     pass
-            record_semantic_gate_error(entry, error)
-            print(f"  FAILED {entry['set']}/{entry['concept_id']}: {error}", file=sys.stderr)
+            if stuck_job_id is not None and "ANTHROPIC_API_KEY" in str(error):
+                # Recovery already reconciled a completed ArtJob (no duplicate was
+                # submitted) -- the only thing that failed is verification, because
+                # this pass has no semantic-gate credential. Overwriting
+                # semantic_gate_error here would destroy the "job N timed out"
+                # text a future recovery pass parses via referenced_job_id(), and
+                # that future pass would then have no choice but to submit a
+                # genuine duplicate ArtJob for the same already-completed render.
+                # Leave the entry's recoverable reference untouched instead.
+                print(
+                    f"  RECOVERY UNVERIFIED {entry['set']}/{entry['concept_id']}: {error} -- "
+                    f"job {stuck_job_id} reference left intact for a future pass with "
+                    "semantic-gate credentials, no duplicate submitted",
+                    file=sys.stderr,
+                )
+            else:
+                record_semantic_gate_error(entry, error)
+                print(f"  FAILED {entry['set']}/{entry['concept_id']}: {error}", file=sys.stderr)
 
     marked = mark_done(completed)
     print(f"{len(todo) - failures}/{len(todo)} succeeded; {marked} queue entries marked done.")
