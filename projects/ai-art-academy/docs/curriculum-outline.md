@@ -2331,6 +2331,86 @@ a glossy machine-perfect finish, and preserve the source composition"
 
 ---
 
+## 36. Italian Futurism (`italian-futurism`)
+
+**Era:** c. 1909-1916 (Italy)
+
+**Key ideas.** Futurism gives learners a lesson distinct from every movement
+already in the curriculum: instead of restyling a static subject, it tries to
+depict motion, speed, and simultaneity — a subject shown as if several instants
+of its own movement were compressed into one image. Where Cubism (§14) fractures
+a *static* subject into multiple viewpoints at once, Futurism fractures a
+*moving* one into multiple instants — a related but distinct device worth
+teaching alongside Cubism rather than folded into it.
+
+The lesson addresses the movement's history honestly: several of its founders,
+Marinetti chief among them, later aligned with Italian Fascism, and the 1909
+founding manifesto explicitly glorified speed, machinery, youth, and violence.
+Teaching the movement's formal innovations does not mean teaching that stance
+as neutral.
+
+**Recognition cues:**
+- overlapping, semi-transparent repetitions of a single form suggesting
+  successive instants of motion
+- sharp diagonal "force lines" radiating from or trailing a moving subject
+- fragmented, crystalline facets organized around implied motion and energy,
+  rather than a single fixed viewpoint
+- subjects drawn from modern speed and industry — automobiles, trains, crowds,
+  machinery, urban street scenes
+- dynamic, unstable compositions with no single resting point for the eye
+
+**Notable artists:**
+- **Umberto Boccioni** (1882-1916) — Futurism's leading painter and sculptor;
+  the only 1910 Futurist-manifesto co-signer whose death (1916, from injuries
+  sustained falling from a horse during military training) clears
+  PUBLIC-DOMAIN-POLICY.md's 1956 cutoff. Boccioni is this entry's sole
+  generation-style anchor.
+
+Giacomo Balla (1871-1958), Carlo Carrà (1881-1966), and Gino Severini
+(1883-1966) are commonly discussed alongside Boccioni in general-audience
+accounts of this movement but are deliberately **not named anywhere in this
+entry**: all three died within the 70-year window (after 1956), so
+PUBLIC-DOMAIN-POLICY.md §4 rule 2 excludes them even as historical-context
+prose — matching how Thomas Hart Benton is excluded from the American
+Regionalism entry (§24). Luigi Russolo (1885-1947) clears the 70-year window
+(unlike the three above) but no verifiable public-domain example of his work
+was found this cycle, so he is not named as a generation-style target.
+
+**Example works:**
+- *Unique Forms of Continuity in Space*, Umberto Boccioni, modeled 1913 (this
+  cast 1950) — Metropolitan Museum of Art, bronze. VERIFIED public domain
+  directly against the Met Collection API this cycle (`isPublicDomain: true`).
+  Boccioni's single most recognizable work and the definitive visual shorthand
+  for Futurist "dynamism." Dating nuance flagged transparently: the design
+  dates to 1913 (Boccioni's lifetime, well before the 1930 cutoff), but this
+  specific bronze was cast in 1950 by a foundry acting on his estate's
+  authority, since his wax/plaster originals were largely lost — the standard
+  way this sculpture is known and exhibited worldwide. The Met's own catalog
+  record (an accepted institutional determination under
+  PUBLIC-DOMAIN-POLICY.md §2, not mere Bridgeman-reasoning) lists it public
+  domain.
+  https://www.metmuseum.org/art/collection/search/489932
+- *Study for "Modern Idol"*, Umberto Boccioni, 1911 — Metropolitan Museum of
+  Art, graphite on paper. VERIFIED public domain directly against the Met
+  Collection API this cycle (`isPublicDomain: true`); an unambiguous period
+  drawing with no casting-date question, toward one of Boccioni's key early
+  Futurist paintings.
+- *Head Against the Light (The Artist's Sister)*, Umberto Boccioni, 1912 —
+  Metropolitan Museum of Art, pen and brown ink with traces of graphite on
+  paper. VERIFIED public domain directly against the Met Collection API this
+  cycle (`isPublicDomain: true`); shows the movement's facet/force-line
+  vocabulary applied to a quiet portrait rather than an explicit "speed"
+  subject.
+
+**remix_hint:** "Recompose this image to depict dynamism and motion in the
+Italian Futurist manner: overlapping, semi-transparent repetitions of the
+subject's form suggesting successive instants of movement, sharp diagonal
+force lines, and fragmented crystalline facets organized around implied
+energy rather than a fixed viewpoint, and preserve the source subject's
+identity and general pose"
+
+---
+
 ## Lesson-only vs remixable
 
 Every movement above maps to a remix config (mode `prompt` to start; t-003/t-004
@@ -2455,6 +2535,14 @@ vector-perfect; still-life, botanical, or textile-rich source photos are
 the best fit.
 
 **Flagged as likely-poor remixers:**
+- `italian-futurism` — shares `cubism`'s faceting-vs-composition tension, plus its
+  own additional problem: the movement's actual device is *repeated, overlapping
+  instants* of a moving subject, which Kontext may collapse into either a static
+  faceted image (losing the motion entirely) or a generic photographic motion-blur
+  filter (losing the constructed force-line/facet structure entirely). Keep the
+  lesson regardless — the Try It exercise's direct Cubism-vs-Futurism contrast is
+  worth teaching even if the remix itself under-delivers; ship the remix only if
+  t-004 A/B results show genuine repeated-form dynamism, not a blur filter.
 - `cubism` — faceting while "preserving the composition" is partly contradictory;
   Kontext may produce shallow "crystallized photo" effects rather than true
   analytic fragmentation. Keep the lesson regardless; ship the remix only if
@@ -2502,9 +2590,9 @@ the best fit.
   t-004 A/B results show the two styles are visibly distinguishable
   side-by-side, not just palette-shifted twins.
 
-No movement is lesson-only in v1 — even the flagged six get a remix config — but
+No movement is lesson-only in v1 — even the flagged seven get a remix config — but
 `cubism`, `de-stijl`, `suprematism`, `persian-miniature`, `song-dynasty-landscape`,
-and `mughal-miniature`
+`mughal-miniature`, and `italian-futurism`
 should carry a "results vary, that's part of the fun" note until t-004 evaluates them.
 
 ## Public-domain safety check (t-006 preview)
@@ -2750,3 +2838,30 @@ rights-status-field method used for Section 28 (Fayum Mummy Portraits),
 stronger than a third-party Wikimedia tag. Promoted from
 `docs/curriculum-candidates/arts-and-crafts-movement.md`, which is now
 marked `PROMOTED`.
+
+**v1.16 addition (2026-07-28) re-check.** Section 36 (Italian Futurism)
+clears PUBLIC-DOMAIN-POLICY.md's both-prongs rule for its sole named
+figure, Umberto Boccioni (d. 1916) — the newest death among any named
+artist anywhere in the curriculum remains Gleizes (1953, per the summary
+above); Boccioni's 1916 death does not move that record. Every other 1910
+Futurist-manifesto co-signer was checked and excluded: Balla (d. 1958) and
+Severini (d. 1966) both fail prong 1 outright; Carrà (d. 1966) likewise;
+Russolo (d. 1947) passes prong 1 but no verifiable public-domain example
+work was found this cycle, so he is not named as a generation-style target
+(may appear in historical prose only, since he does clear the 70-year
+window — unlike Balla/Carrà/Severini, who are excluded from prose entirely
+per §4 rule 2, matching how Thomas Hart Benton is excluded from Section 24).
+Two of the three example works (1911, 1912) are unambiguous period
+drawings predating the 1930 cutoff by a wide margin. The third — *Unique
+Forms of Continuity in Space* — was modeled in 1913 but this particular
+bronze was cast in 1950, after Boccioni's death; the Met's own catalog
+still lists it `isPublicDomain: true`, and the curriculum candidate file
+records this dating nuance transparently rather than silently omitting it.
+This session verified all three example-work records directly against the
+Met Collection API (`collectionapi.metmuseum.org`), each returning
+`isPublicDomain: true` — the same direct rights-status-field method used
+for Section 28 (Fayum Mummy Portraits) and Section 35 (Arts and Crafts).
+None of these three works is more recent than the curriculum's existing
+most-recent-example-work record (1930, American Gothic / Stone City, Iowa,
+Section 24). Promoted from `docs/curriculum-candidates/italian-futurism.md`,
+which is now marked `PROMOTED`.
