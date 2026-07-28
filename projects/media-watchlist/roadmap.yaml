@@ -342,8 +342,11 @@ tasks:
 - id: t-015
   milestone: m3
   title: Add a "Recent entries" list (last 10, reverse-chronological, grouped by media-type icon) to watchlist-browse.vue
-  status: ready
-  owner: null
+  status: claimed
+  owner: worker
   passes: 0
   stakes: reversible
   note: 'Scope output of t-014 (kept ready, not yet implemented). BROWSE-UX.md §1''s last remaining gap after t-006/t-012/t-013 folded the stats strip and t-014''s decision confirmed MEDIA_TYPE_CHIPS already covers the "quick filter chips" element. Add a compact "Recent entries" section to watchlist-browse.vue (above or beside the Stats strip): fetch the 10 most recent entries sorted by watchedMonth/watchedDay desc with NO other filters applied (a separate, unfiltered query -- do not reuse the user''s active search/year/type/starred/month/season state, since BROWSE-UX.md §1 specs this as a fixed global view, not a filtered one), and render each grouped/tagged by media-type icon per §1 (reuse the same MediaType -> icon mapping watchlist-entry-detail.vue or the MEDIA_TYPE_CHIPS labels already use, for icons see kind-icon: usage elsewhere in the two watchlist components). Check whether GET /api/media-entries already supports a plain limit=10+sort=date_desc call with year/type/month/season all unset returning the true global recent list -- t-006/t-012 added those filter params on top of an unfiltered base, so this is very likely a zero-backend-change UI addition; if the route needs a small tweak, keep it additive. No new route (per t-014).'
+  claimed_by: claude-conductor-agentrun-20260728T200742-mw-t015
+  claimed_at: '2026-07-28T20:07:44Z'
+  updated: '2026-07-28T20:07:44Z'
