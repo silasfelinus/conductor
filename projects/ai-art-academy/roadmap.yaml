@@ -502,7 +502,7 @@ tasks:
   - id: t-010
     milestone: m6
     title: Academy continuous improvement pass
-    status: claimed
+    status: ready
     recurring: true
     passes: 0
     stakes: reversible
@@ -510,16 +510,16 @@ tasks:
     note: |-
       Standing never-idle task (re-arms to ready after every completion, per the recurring-task rule). Each cycle pick ONE: (a) front-end style/polish pass on Academy or art-styler surfaces, (b) roadmap upgrade — refine tasks, detail the next milestone, prune stale notes, (c) generate more art inspirations or style preview thumbnails, (d) expand the curriculum with a new movement/artist entry (respecting PUBLIC-DOMAIN-POLICY.md). Note which option ran in the PR. This task never reaches done and does not count toward milestone progress. See `run_log` for cycle history — do not re-accumulate RAN entries here.
 
-      RAN 2026-07-28T13:14:21Z (claude-conductor-scheduled-20260728T131419Z-aa-t010-lane1): option (a), front-end polish. Fixed missing label[for]/id pairing on two Style Lab select controls in image-upload.vue (Add to collection, Link image owner to model) — a WCAG 4.1.2 accessibility gap. kind_robots PR #1105 (squash 2485c57). Full detail in `run_log`.
+      RAN 2026-07-28T14:26:20Z (2026-07-28T142620-conductor-scheduled-aa-t010-lane2): option (b), roadmap accuracy. Live-verified (and reverted) the prior lane-2 cycle's optimistic t-044 flip to `ready` -- two real ArtJobs both still fail with the pre-PR-#1090 error, see conductor PR #1330. Then fixed the exact gap `audit_roadmaps.py` flagged on the corrected task: added `gate_human: true` so t-044's hard-gate status is machine-readable, not just prose. Full detail in `run_log`.
     continuous_improvement:
-      last_lane: 1  # 1=front-end polish, 2=roadmap accuracy, 3=inspiration assets, 4=curriculum depth
-      next_lane: 2
-      last_run: '2026-07-28T14:12:01Z'
-      last_pr: 'kind_robots PR #1105 (squash 2485c57): image-upload.vue label/id pairing'
+      last_lane: 2  # 1=front-end polish, 2=roadmap accuracy, 3=inspiration assets, 4=curriculum depth
+      next_lane: 3
+      last_run: '2026-07-28T14:26:20Z'
+      last_pr: 'conductor PR #1330: t-044 live-verify + gate_human fix'
     run_log: projects/ai-art-academy/docs/continuous-improvement-run-log.md
     owner: reviewer
-    claimed_by: 2026-07-28T142620-conductor-scheduled-aa-t010-lane2
-    claimed_at: '2026-07-28T14:26:20Z'
+    claimed_by: null
+    claimed_at: null
 
   - id: t-015
     milestone: m4
@@ -1261,6 +1261,7 @@ tasks:
     milestone: m2
     title: 'kind_robots: fix Kontext LoRA loading -- every lora_name naming convention rejected by ComfyUI as not-in-list'
     status: needs-human
+    gate_human: true
     passes: 0
     stakes: reversible
     updated: '2026-07-28T14:22:16Z'
