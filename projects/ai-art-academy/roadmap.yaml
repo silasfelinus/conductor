@@ -502,7 +502,7 @@ tasks:
   - id: t-010
     milestone: m6
     title: Academy continuous improvement pass
-    status: claimed
+    status: review
     recurring: true
     passes: 0
     stakes: reversible
@@ -510,12 +510,12 @@ tasks:
     note: |-
       Standing never-idle task (re-arms to ready after every completion, per the recurring-task rule). Each cycle pick ONE: (a) front-end style/polish pass on Academy or art-styler surfaces, (b) roadmap upgrade — refine tasks, detail the next milestone, prune stale notes, (c) generate more art inspirations or style preview thumbnails, (d) expand the curriculum with a new movement/artist entry (respecting PUBLIC-DOMAIN-POLICY.md). Note which option ran in the PR. This task never reaches done and does not count toward milestone progress. See `run_log` for cycle history — do not re-accumulate RAN entries here.
 
-      RAN 2026-07-28T04:34:30Z (claude-conductor-scheduled-20260728T0433Z-aa-t010-lane1): option (a), front-end polish. Full detail in `run_log`.
+      RAN 2026-07-28T05:15:00Z (claude-conductor-scheduled-20260728T050454Z-aa-t010-lane2): option (b), roadmap accuracy. Full detail in `run_log`.
     continuous_improvement:
-      last_lane: 1  # 1=front-end polish, 2=roadmap accuracy, 3=inspiration assets, 4=curriculum depth
-      next_lane: 2
-      last_run: '2026-07-28T04:34:30Z'
-      last_pr: 'kind_robots PR #1078'
+      last_lane: 2  # 1=front-end polish, 2=roadmap accuracy, 3=inspiration assets, 4=curriculum depth
+      next_lane: 3
+      last_run: '2026-07-28T05:15:00Z'
+      last_pr: 'conductor-only (lane-2 roadmap accuracy: condensed t-033''s 100+-line resolved note to a short summary pointing at docs/t-013-remaining-example-works.md, which itself gained a RESOLVED banner; audit_roadmaps.py/validate_roadmaps.py confirmed clean before and after; no kind_robots PR this cycle)'
     run_log: projects/ai-art-academy/docs/continuous-improvement-run-log.md
     owner: worker
     claimed_by: claude-conductor-scheduled-20260728T050454Z-aa-t010-lane2
@@ -958,178 +958,18 @@ tasks:
     passes: 0
     stakes: reversible
     note: >-
-      FOR SILAS: Blocked on media-server write access, not on missing research. `npm run
-      test:academy-examples-manifest` fails on kind_robots main because the `expressionism`,
-      `cubism`, and `bauhaus` entries in stores/seeds/academyStyles.ts each reference an
-      exampleWorks image (the-yellow-cow-49-1210.jpg, fantomas-1976-59-1.jpg,
-      composition-8-37-262.jpg) that returns 404 from https://media.acrocatranch.com --
-      confirmed by curl from this session. academyStyles.ts is the canonical metadata copy
-      and examples.manifest.json is its media mirror (see the header comment in
-      verifyAcademyExamplesManifest.ts), so the fix is uploading the 3 missing entries and
-      images, not deleting the seed data. The full patch -- exact academyStyles.ts diff,
-      exact examples.manifest.json entries (with real width/height/bytes), and the verified
-      public-domain source URLs for all 3 works (Wikimedia Commons + NGA, CC0/PD-Mark) -- was
-      already assembled by an earlier session and is sitting unapplied at
-      projects/ai-art-academy/docs/t-013-remaining-example-works.md. That session hit the
-      same wall: uploading to media.acrocatranch.com requires the home Windows relay
-      (ops/home-server/SELF-HOSTED-MEDIA.md), which no sandboxed agent session can reach.
-      TO APPROVE: run the acquisition + upload for the 3 images named in the handoff doc
-      through the home relay (or drop them in manually at the paths listed), then have any
-      session apply the academyStyles.ts + manifest patch from that doc and confirm `npm run
-      test:academy-examples-manifest` passes. That unblocks the "Contract verifiers" CI
-      check for every kind_robots PR, not just Academy ones -- also referenced by
-      kind-robots/t-038 (stale workflow file) as a co-blocker of the same check.
-      UPDATE 2026-07-20 (t-010 roadmap-accuracy cycle): corrected a stale assumption inside
-      the handoff doc itself -- it previously listed examples.manifest.json and the 3 images
-      as files to commit directly in the kind_robots git repo. Confirmed via kind_robots
-      source (utils/scripts/mediaContractSource.ts, verifyAcademyExamplesManifest.ts) and a
-      live check (get_file_contents on public/images/academy/examples/ 404s -- the directory
-      does not exist in git) that only stores/seeds/academyStyles.ts is an in-repo commit;
-      examples.manifest.json and the images are fetched from
-      https://media.acrocatranch.com/images/academy/examples/... at build/test time and must
-      go through the home relay, never a GitHub PR. Doc corrected in place (see its
-      2026-07-20 correction note); this task's actual blocker (home-relay write access) is
-      unchanged.
-      UPDATE 2026-07-20 (t-010 roadmap-accuracy cycle, later same day): the
-      "also referenced by kind-robots/t-038 ... as a co-blocker of the same check" line
-      above is now stale. Checked projects/kind-robots/roadmap.yaml: t-038 (delete the
-      stale thin-social-store-codemod.yml workflow breaking `test:workflow-paths`/
-      "Contract verifiers" CI) shows `status: done`, resolved 2026-07-18T14:30:32Z --
-      about 6 minutes after this task's note above was originally written at 14:24:39Z,
-      so it was accurate at the time but has been fixed since. Confirmed the
-      "Contract verifiers" check is healthy on recent kind_robots PRs (e.g. #646, #648)
-      with no sign of that workflow-file failure recurring. This task's remaining
-      blocker is solely the Academy examples-manifest home-relay write access described
-      above; it is no longer compounded by an unrelated repo-wide CI break.
-
-      UPDATE 2026-07-26 (Silas): the 3 images are downloaded and placed at their
-      expected media-server folder location (kindrobots/images/academy/examples/
-      the-yellow-cow-49-1210.jpg, fantomas-1976-59-1.jpg,
-      composition-8-37-262.jpg) -- image upload half of the home-relay step is
-      done. Silas has NOT touched examples.manifest.json yet -- that still
-      needs the 3 entries below merged into its existing JSON array (same
-      media-server location, next to the images, not a kind_robots git
-      commit). Exact entries to append (from
-      docs/t-013-remaining-example-works.md, unchanged):
-      ```json
-      [
-        {
-          "movement": "expressionism",
-          "file": "public/images/academy/examples/the-yellow-cow-49-1210.jpg",
-          "workTitle": "The Yellow Cow",
-          "artist": "Franz Marc",
-          "artistDied": 1916,
-          "year": "1911",
-          "collection": "Solomon R. Guggenheim Museum",
-          "accessionId": "49.1210",
-          "sourceUrl": "https://commons.wikimedia.org/wiki/File:Franz_Marc-The_Yellow_Cow-1911.jpg",
-          "license": "PD-Mark",
-          "licenseTermsUrl": "https://commons.wikimedia.org/wiki/Commons:Reusing_content_outside_Wikimedia",
-          "retrievedDate": "2026-07-17",
-          "width": 1067,
-          "height": 797,
-          "bytes": 101693
-        },
-        {
-          "movement": "cubism",
-          "file": "public/images/academy/examples/fantomas-1976-59-1.jpg",
-          "workTitle": "Fantômas",
-          "artist": "Juan Gris",
-          "artistDied": 1927,
-          "year": "1915",
-          "collection": "National Gallery of Art, Washington",
-          "accessionId": "1976.59.1",
-          "sourceUrl": "https://www.nga.gov/artworks/56101-fantomas",
-          "license": "CC0",
-          "licenseTermsUrl": "https://www.nga.gov/artworks/free-images-and-open-access",
-          "retrievedDate": "2026-07-17",
-          "width": 1600,
-          "height": 1322,
-          "bytes": 680178
-        },
-        {
-          "movement": "bauhaus",
-          "file": "public/images/academy/examples/composition-8-37-262.jpg",
-          "workTitle": "Composition 8 (Komposition 8)",
-          "artist": "Wassily Kandinsky",
-          "artistDied": 1944,
-          "year": "July 1923",
-          "collection": "Solomon R. Guggenheim Museum",
-          "accessionId": "37.262",
-          "sourceUrl": "https://commons.wikimedia.org/wiki/File:Kandinsky_-_Composition_8,_1923.jpg",
-          "license": "PD-Mark",
-          "licenseTermsUrl": "https://commons.wikimedia.org/wiki/Commons:Reusing_content_outside_Wikimedia",
-          "retrievedDate": "2026-07-17",
-          "width": 980,
-          "height": 682,
-          "bytes": 218875
-        }
-      ]
-      ```
-      Splice these 3 objects into the existing examples.manifest.json array
-      (don't replace the whole file -- add alongside the current entries).
-      Once that's saved on the media server next to the images, tell any
-      session to apply the matching academyStyles.ts patch (same handoff doc)
-      as a normal kind_robots PR and run `npm run test:academy-examples-manifest`
-      to confirm it passes -- that's the only remaining step, and it doesn't
-      need home-relay access.
-
-      UPDATE 2026-07-26 (Silas: "example manifest has been updated"):
-      verified live via curl, not yet fully done. examples.manifest.json now
-      returns 200 (was previously reachable) and DOES contain the new
-      `expressionism` entry (19 total entries, up from 18) -- but `cubism`
-      and `bauhaus` are still missing from the array; only 1 of the 3 new
-      entries landed. Separately, and more importantly: none of the 3 actual
-      image files resolve yet --
-      `https://media.acrocatranch.com/images/academy/examples/the-yellow-cow-49-1210.jpg`
-      still 404s (checked directly, not through the manifest), same for the
-      other two. Confirmed this isn't a sandbox/proxy fluke -- an existing,
-      unrelated image from the same folder
-      (`terracotta-panathenaic-prize-amphora-14-130-12.jpg`) resolves fine
-      (200) from this same session. So despite the manifest gaining one
-      entry, none of the images it points at (including that one) are
-      actually being served yet -- the "images downloaded and placed on
-      Z:\kindrobots\images\academy\examples\..." step from the last update
-      may not have actually reached the location the media server serves
-      from, or the relay/nginx container hasn't picked them up. TO SILAS:
-      1. add the `cubism` and `bauhaus` entries too (only `expressionism`
-      landed), and 2. check that the 3 files are actually visible from
-      wherever `https://media.acrocatranch.com/images/academy/examples/`
-      serves from -- try
-      `curl -I https://media.acrocatranch.com/images/academy/examples/the-yellow-cow-49-1210.jpg`
-      yourself and confirm it's 200 before saying it's done. Once both the
-      full manifest and all 3 images actually resolve, ping back and the
-      academyStyles.ts PR + verification run is the very next (and only
-      remaining) step.
-
-      UPDATE 2026-07-26 (Silas: "example art should be now correct, I
-      accidentally uploaded without matching filenames"): re-checked live.
-      Progress, not yet complete: the-yellow-cow-49-1210.jpg and
-      composition-8-37-262.jpg both now resolve (200). fantomas-1976-59-1.jpg
-      still 404s. Manifest is unchanged since last check -- still only
-      `expressionism` present (19 entries); `cubism` and `bauhaus` are still
-      missing from examples.manifest.json. TO SILAS: 1. fix/re-upload the
-      Fantômas (cubism) image specifically -- the other two filename
-      mismatches are resolved but this one isn't yet, and 2. still need the
-      `cubism` and `bauhaus` manifest entries added (only `expressionism`
-      has ever landed in the array across both checks). Once all 3 images
-      return 200 and all 3 manifest entries are present, this is ready for
-      the academyStyles.ts PR + verification run.
-
-      DONE 2026-07-26: re-verified after Silas's fantomas filename fix --
-      all 3 images resolve (200) and all 3 manifest entries (expressionism,
-      cubism, bauhaus) are live (21 total entries). academyStyles.ts already
-      had the matching exampleWorks patches applied (landed separately).
-      One remaining piece: config/academy-example-manifest-pending.json
-      (kind_robots) was still tracking these 3 as not-yet-synced
-      placeholders, and the contract verifier correctly flagged them as
-      duplicates now that the real manifest caught up. Cleared it to an
-      empty array -- kind_robots PR #1019, merged. Verified
-      `npm run test:academy-examples-manifest` passes (21 entries, 0
-      pending), including with MEDIA_VERIFY_ASSETS=1 against the live media
-      origin (confirms actual asset existence, not just schema shape).
-      Contract failure is resolved; "Contract verifiers" CI unblocked for
-      all kind_robots PRs.
+      DONE 2026-07-26: `examples.manifest.json`'s missing expressionism/cubism/bauhaus
+      entries and their 3 images are all live on media.acrocatranch.com (21 total
+      manifest entries), academyStyles.ts already carried the matching exampleWorks
+      patches, and the stale kind_robots `config/academy-example-manifest-pending.json`
+      placeholders were cleared (PR #1019, merged). `npm run test:academy-examples-manifest`
+      passes with `MEDIA_VERIFY_ASSETS=1` against the live media origin. "Contract
+      verifiers" CI is unblocked for all kind_robots PRs. Full back-and-forth (the
+      home-relay write-access blocker, the multi-round upload/manifest-sync corrections
+      with Silas, the exact patch content) is preserved in this file's git history and
+      in `docs/t-013-remaining-example-works.md` (marked RESOLVED) — condensed here
+      2026-07-28 (t-010 lane 2, roadmap-accuracy pass) since the accumulated note had
+      grown to over 100 lines describing a task that finished two days earlier.
     claimed_by: claude-scheduled-20260718-1420-26944
     claimed_at: '2026-07-18T14:22:06Z'
     updated: '2026-07-26T00:00:00Z'
