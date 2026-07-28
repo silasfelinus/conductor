@@ -1,4 +1,4 @@
-updated: "2026-07-27T19:21:25+00:00"
+updated: "2026-07-28T21:10:05+00:00"
 
 pitches:
   - id: bioluminescent-tide
@@ -551,3 +551,66 @@ pitches:
       - reduced-motion mode shows one static completed tapestry with no shuttle or unraveling motion
       - pointer hover slow-down, row highlight, and click-pluck ripple never block underlying page input
       - thread palette remains readable on both light and dark themes
+
+  - id: hourglass-cascade
+    title: Hourglass Cascade
+    status: pitched
+    priority: 19
+    surprise: >
+      A glass hourglass sits center-stage, individual grains streaming from the top bulb
+      through the neck and piling into a growing cone in the bottom bulb, each grain settling
+      with a small believable bounce and occasional micro-avalanche as the pile steepens past
+      its angle of repose. Once the top bulb empties, the whole hourglass slowly rotates a
+      half-turn, and the cycle restarts with grains falling the other way -- the piled cone
+      now becoming the source.
+    passive_loop: >
+      A fixed glass silhouette (two bulbs joined by a neck) never moves except during the
+      flip. Grains are lightweight point/short-line sprites spawned at the neck at a steady
+      low rate, falling under simple gravity with a narrow horizontal jitter, and settling
+      into a height map for the receiving bulb's pile rather than being simulated as full
+      rigid bodies. Whenever a column's height map exceeds its neighbors' by more than the
+      angle-of-repose threshold, a small run of grains slides sideways to level it, producing
+      an occasional visible slump instead of a perfectly smooth cone. When the source bulb's
+      grain count reaches zero, the hourglass eases through a half-rotation flip and the two
+      bulbs' roles swap.
+    optional_interaction: >
+      Hovering the pointer over the neck narrows the stream slightly, as though a visitor
+      pinched the flow, and widens again on pointer-out -- a small acknowledgment with no
+      lasting state change. A click on the glass triggers an early flip (with the same eased
+      half-rotation), but only once per completed pour to avoid turning the piece into a toy
+      that fights its own passive cadence.
+    technique: >
+      Canvas 2D. The glass silhouette is a static clipped path computed once per resize. Each
+      bulb's settled pile is stored as a 1D height-map array (one value per horizontal bin,
+      not per-grain history) redrawn as a filled polygon each frame, so pile rendering cost
+      stays flat regardless of how many grains have fallen. In-flight grains are a small
+      bounded pool (falling only until they hit the height map, then removed and folded into
+      it) rather than an ever-growing particle list. The flip is a CSS/canvas-transform
+      rotation on the whole hourglass group, swapping which height-map array is "receiving"
+      once the animation settles.
+    reduced_motion: >
+      A single static hourglass frozen mid-pour (one bulb roughly two-thirds full, the other
+      filling), no grain motion, no avalanches, and no flip -- only a very slow, subtle glass-
+      tint drift to confirm the piece is still alive rather than a dead screenshot.
+    performance_risk: >
+      An unbounded in-flight grain pool or per-grain history (rather than a folded height map)
+      would grow memory and per-frame draw cost over a long-running session. Bound the in-
+      flight pool to a small fixed maximum and always fold settled grains into the height-map
+      array immediately, so steady-state cost depends only on the fixed bin count, never on
+      total elapsed grains poured.
+    novelty: >
+      The core loop is bounded gravity-fed accumulation into a self-leveling pile followed by
+      a full role-swap flip, distinct from every existing pitch: magnetic-sand-garden
+      continuously combs a static sand bed with a flow field and never accumulates or empties
+      it; ant-farm- excavation is agent-driven tunnel digging through a fixed sand column, not
+      falling grains piling under gravity; marble-run-contraption moves discrete objects along
+      a fixed physical track with no accumulation or pile state; tapestry-loom is additive-
+      then-fully-unraveled construction of a woven pattern, not gravity accumulation with a
+      flip-triggered role swap. No existing pitch uses falling-grain accumulation, angle-of-
+      repose pile leveling, or a physical flip-to-reverse mechanic.
+    acceptance:
+      - a complete top-to-bottom pour and half-turn flip cycle finishes within ninety seconds
+      - pile leveling only triggers visible slumps past a fixed angle-of-repose threshold, never a fully smooth cone every frame
+      - reduced-motion mode shows one static mid-pour hourglass with no grain motion, avalanches, or flip
+      - pointer hover-narrow and click-triggered early flip never block underlying page input, and click-flip is rate-limited to once per completed pour
+      - in-flight grain count and height-map bin count stay fixed regardless of viewport size or elapsed session time
