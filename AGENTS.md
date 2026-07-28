@@ -177,6 +177,42 @@ exactly the intended scope (`git diff origin/main --stat` should show only files
 PR is actually supposed to touch), and push normally. If a plain push is rejected,
 that rejection is doing its job — fetch-merge-reresolve, don't force past it.
 
+### Review-claim markers — avoiding duplicate review work
+
+`claim_task.py` prevents two sessions from both *implementing* the same roadmap
+task, but there was no equivalent for *reviewing* — nothing stopped several
+concurrent sessions from all picking up the same open, green PR and racing to
+review/merge/close it out. This happened for real (conductor/t-092, 2026-07-28
+"four-way rotation collision" — see root `TALKBACK.md` that date): this session
+and at least three others independently found the same two open kind_robots PRs
+and the same recurring-task close-outs within about a minute of each other,
+producing three redundant conductor PRs that had to be manually triaged after
+the fact. No data was lost — git's non-fast-forward rejection is still the real
+backstop, same as every other rotation-collision case above — but the duplicate
+work itself is worth avoiding when practical.
+
+Before starting a review pass on an open PR (this repo or kind_robots):
+1. Fetch the PR's issue/PR comments using whatever GitHub access this session
+   already has (GitHub MCP tools, `gh pr view --comments`, or a direct API call
+   — read-only, so any working transport is fine even in a sandbox where direct
+   `api.github.com` calls 403, as `select_role.py`'s docstring documents for at
+   least one sandbox shape).
+2. Call `scripts/review_claim.py`'s `find_active_claim(comments)` (or reimplement
+   the same check inline: look for a comment matching `REVIEWING: <session> at
+   <ISO8601>` posted within the last `REVIEW_CLAIM_TTL_MINUTES` — 20 minutes by
+   default). If it returns a claim from a *different* session, skip this PR —
+   someone else is already reviewing it — and move on to the next reviewable item.
+3. Otherwise, post a marker comment (`scripts/review_claim.py format <session-id>`
+   prints the exact text to post) *before* starting the substantive review.
+4. This is advisory/best-effort, not a hard lock: a missed check is wasted
+   duplicate work, not a safety violation. Never skip the normal git-conflict
+   safety net described above on the assumption a marker makes it unnecessary.
+
+The module is intentionally transport-agnostic — it defines the marker format,
+the freshness rule, and the pure decision logic, but never calls the GitHub API
+itself, since the right transport differs per session/platform. See
+`tests/test_review_claim.py` for the full behavioral contract.
+
 ### Task dependencies (pipelines)
 A task may declare `depends_on: <task-id>` (or a list). A task is only workable when every
 dependency is `status: done` AND, if the dependency is human-gated, `approved_by_human: true`.
