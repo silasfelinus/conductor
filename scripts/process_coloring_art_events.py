@@ -16,8 +16,16 @@ import yaml
 
 ROOT = Path(__file__).resolve().parents[1]
 EVENT_DIR = ROOT / "color-art-events"
-CONSUMER = ROOT / "scripts" / "consume_coloring_book_studio_request.py"
+COLOR_CONSUMER = ROOT / "scripts" / "consume_coloring_book_studio_request.py"
+PRODUCTION_CONSUMER = ROOT / "scripts" / "manage_coloring_book_production.py"
 ALLOWED_BOOKS = ("monster-recast", "hollywood-recast", "kind-robots")
+ALLOWED_OPERATIONS = (
+    "generate-color-proposals",
+    "accept-color",
+    "generate-bw",
+    "accept-bw",
+    "finalize-pair",
+)
 BOOK_PATTERNS = {
     "monster-recast": re.compile(r"^(?:mr-\d{3}|mr-group-\d{3})$"),
     "hollywood-recast": re.compile(r"^hwr-\d{3}$"),
@@ -42,20 +50,33 @@ MAX_PROPOSALS = 18
 @dataclass(frozen=True)
 class ColorArtEvent:
     path: Path
+    operation: str
     book: str
     proposal_ids: tuple[str, ...]
     timeout: int
     force: bool
 
     def command(self, *, live: bool) -> list[str]:
-        command = [
-            sys.executable,
-            str(CONSUMER),
-            "--book",
-            self.book,
-            "--timeout",
-            str(self.timeout),
-        ]
+        if self.operation == "generate-color-proposals":
+            command = [
+                sys.executable,
+                str(COLOR_CONSUMER),
+                "--book",
+                self.book,
+                "--timeout",
+                str(self.timeout),
+            ]
+        else:
+            command = [
+                sys.executable,
+                str(PRODUCTION_CONSUMER),
+                "--operation",
+                self.operation,
+                "--book",
+                self.book,
+                "--timeout",
+                str(self.timeout),
+            ]
         for proposal_id in self.proposal_ids:
             command.extend(("--proposal-id", proposal_id))
         if self.force:
@@ -81,8 +102,12 @@ def load_event(path: Path) -> ColorArtEvent:
         raise ValueError(f"unsupported event fields: {', '.join(unknown)}")
     if data.get("version") != 1:
         raise ValueError("version must be 1")
-    if data.get("operation") != "generate-color-proposals":
-        raise ValueError("operation must be generate-color-proposals")
+
+    operation = data.get("operation")
+    if operation not in ALLOWED_OPERATIONS:
+        raise ValueError(
+            f"operation must be one of: {', '.join(ALLOWED_OPERATIONS)}"
+        )
 
     book = data.get("book")
     if book not in ALLOWED_BOOKS:
@@ -111,9 +136,14 @@ def load_event(path: Path) -> ColorArtEvent:
     force = data.get("force", False)
     if not isinstance(force, bool):
         raise ValueError("force must be a boolean")
+    if force and operation not in ("generate-color-proposals", "generate-bw"):
+        raise ValueError(
+            "force is only supported for generate-color-proposals and generate-bw"
+        )
 
     return ColorArtEvent(
         path=path,
+        operation=str(operation),
         book=str(book),
         proposal_ids=tuple(proposal_ids),
         timeout=timeout,
@@ -129,16 +159,31 @@ def queued_events() -> list[Path]:
 
 def process_event(event: ColorArtEvent, *, live: bool) -> int:
     command = event.command(live=live)
-    print(f"{'LIVE' if live else 'DRY RUN'} event {event.path.name}: {' '.join(command)}")
+    print(
+        f"{'LIVE' if live else 'DRY RUN'} event {event.path.name}: "
+        + " ".join(command)
+    )
 
     if not live:
         return 0
-    if not os.environ.get("KR_API_TOKEN"):
-        print("KR_API_TOKEN is required for live coloring-art events.", file=sys.stderr)
-        return 1
-    if not os.environ.get("ANTHROPIC_API_KEY"):
-        print("ANTHROPIC_API_KEY is required for the coloring semantic gate.", file=sys.stderr)
-        return 1
+    if event.operation in ("generate-color-proposals", "generate-bw"):
+        if not os.environ.get("KR_API_TOKEN"):
+            print(
+                "KR_API_TOKEN is required for live coloring generation events.",
+                file=sys.stderr,
+            )
+            return 1
+    if event.operation in (
+        "generate-color-proposals",
+        "generate-bw",
+        "finalize-pair",
+    ):
+        if not os.environ.get("ANTHROPIC_API_KEY"):
+            print(
+                "ANTHROPIC_API_KEY is required for semantic coloring review.",
+                file=sys.stderr,
+            )
+            return 1
 
     result = subprocess.run(command, cwd=ROOT, check=False)
     if result.returncode == 0:
@@ -146,7 +191,8 @@ def process_event(event: ColorArtEvent, *, live: bool) -> int:
         print(f"Consumed {event.path.relative_to(ROOT)}")
     else:
         print(
-            f"Consumer exited {result.returncode}; preserving {event.path.relative_to(ROOT)} for retry.",
+            f"Consumer exited {result.returncode}; preserving "
+            f"{event.path.relative_to(ROOT)} for retry.",
             file=sys.stderr,
         )
     return result.returncode
@@ -171,7 +217,10 @@ def main() -> int:
         try:
             events.append(load_event(path))
         except (OSError, ValueError, yaml.YAMLError) as error:
-            print(f"Invalid event {path.relative_to(ROOT)}: {error}", file=sys.stderr)
+            print(
+                f"Invalid event {path.relative_to(ROOT)}: {error}",
+                file=sys.stderr,
+            )
             return 1
 
     for event in events:
