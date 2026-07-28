@@ -16,10 +16,12 @@ on:
       - "scripts/semantic_art_quality.py"
       - "scripts/curate_art.py"
       - "scripts/art_quality.py"
+      - "scripts/coloring_book_package_status.py"
       - "tests/test_coloring_book_studio_events.py"
       - "tests/test_coloring_book_production.py"
       - "tests/test_coloring_book_cover.py"
       - "tests/test_coloring_book_asset_adoption.py"
+      - "tests/test_coloring_book_package_status.py"
       - ".github/workflows/process-color-art-events.yml"
   schedule:
     - cron: "27 * * * *"
@@ -50,13 +52,14 @@ jobs:
       - name: Install dependencies
         run: python -m pip install --disable-pip-version-check pyyaml Pillow
 
-      - name: Verify studio event contracts
+      - name: Verify studio and package contracts
         run: |
           python -m unittest \
             tests.test_coloring_book_studio_events \
             tests.test_coloring_book_production \
             tests.test_coloring_book_cover \
-            tests.test_coloring_book_asset_adoption
+            tests.test_coloring_book_asset_adoption \
+            tests.test_coloring_book_package_status
 
       - name: Process one targeted event
         id: consume
@@ -69,7 +72,10 @@ jobs:
           BW_PAIR_MIN_SEMANTIC_SCORE: "80"
         run: python scripts/process_coloring_art_events.py --live --max-events 1
 
-      - name: Commit landed renders, decisions, revisions, and queue state
+      - name: Refresh print-package readiness
+        run: python scripts/coloring_book_package_status.py --check
+
+      - name: Commit landed renders, decisions, revisions, and readiness
         run: |
           git config user.name "conductor-coloring-studio[bot]"
           git config user.email "conductor-coloring-studio[bot]@users.noreply.github.com"
@@ -77,14 +83,16 @@ jobs:
             color-art-events \
             projects/coloring-book/color-art-jobs.yaml \
             projects/coloring-book/cover-art-jobs.yaml \
-            projects/coloring-book/sets
+            projects/coloring-book/sets \
+            projects/coloring-book/print-readiness.yaml \
+            projects/coloring-book/packages
 
           if git diff --staged --quiet; then
-            echo "No Coloring Book Studio changes to commit."
+            echo "Coloring Book Studio and package readiness are current."
             exit 0
           fi
 
-          git commit -m "art: process Coloring Book Studio request [skip ci]"
+          git commit -m "art: process Coloring Book Studio request and readiness [skip ci]"
           for attempt in 1 2 3 4 5; do
             if git push origin HEAD:main; then
               exit 0
