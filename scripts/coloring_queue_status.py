@@ -12,6 +12,14 @@ import yaml
 
 DEFAULT_QUEUE = Path("projects/coloring-book/color-art-jobs.yaml")
 JOB_ID_PATTERN = re.compile(r"\bjob\s+#?(\d+)\b", re.IGNORECASE)
+RECOMMENDED_ACTIONS = (
+    "repair-queue-integrity",
+    "recover-existing-jobs",
+    "resolve-fresh-submission-errors",
+    "submit-next-batch",
+    "inspect-blocked-pending",
+    "complete",
+)
 
 
 def load_queue(path: Path) -> dict[str, Any]:
@@ -29,6 +37,10 @@ def duplicate_values(values: list[Any]) -> list[Any]:
 def semantic_gate_job_id(entry: dict[str, Any]) -> int | None:
     match = JOB_ID_PATTERN.search(str(entry.get("semantic_gate_error", "")))
     return int(match.group(1)) if match else None
+
+
+def requirement_satisfied(summary: dict[str, Any], required_action: str | None) -> bool:
+    return required_action is None or summary.get("recommended_action") == required_action
 
 
 def summarize_queue(data: dict[str, Any], book_slug: str, batch_size: int | None = None) -> dict[str, Any]:
@@ -130,6 +142,7 @@ def main() -> int:
     parser.add_argument("--require-actionable", action="store_true")
     parser.add_argument("--require-recovery-candidates", action="store_true")
     parser.add_argument("--require-recovery-actionable", action="store_true")
+    parser.add_argument("--require-recommended-action", choices=RECOMMENDED_ACTIONS)
     args = parser.parse_args()
 
     try:
@@ -146,6 +159,8 @@ def main() -> int:
     if args.require_recovery_candidates and summary["recovery_candidate_count"] == 0:
         return 1
     if args.require_recovery_actionable and not summary["recovery_actionable"]:
+        return 1
+    if not requirement_satisfied(summary, getattr(args, "require_recommended_action", None)):
         return 1
     return 0
 
