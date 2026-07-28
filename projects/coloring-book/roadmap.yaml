@@ -723,6 +723,41 @@ tasks:
     Net result: the recovery mechanism itself is now proven live end-to-end -- no duplicate ArtJob was submitted for any of the 4 already-completed jobs, and the fix closes a real gap that would have caused duplicates on a future cycle. What remains outstanding is downstream of this task's scope: the 4 recovered images still need semantic verification with a real ANTHROPIC_API_KEY (same missing-credential limitation flagged throughout this project's notes, e.g. t-022's 2026-07-27 entry) before they can be accepted or rejected into the book -- that continues under t-022's normal production-pass scope, not this task's. Step 3 of the original kaizen note (wiring --require-recovery-actionable into a workflow) stays deferred, unchanged from the prior check-in.
   claimed_by: claude-conductor-agentrun-20260728T131919Z-cb-t032
   claimed_at: '2026-07-28T13:19:20Z'
+- id: t-033
+  milestone: m6
+  title: 'Vendor-neutral print-package readiness manifest and status script'
+  status: done
+  owner: reviewer
+  passes: 0
+  stakes: reversible
+  updated: '2026-07-28T12:05:00Z'
+  note: 'conductor PR #1322 (merged) added projects/coloring-book/print-package.yaml (per-book
+    layout/export fields, all null until Silas picks a printer), scripts/coloring_book_package_status.py
+    (source/layout/exports readiness state machine + ordered interior manifest generation),
+    tests/test_coloring_book_package_status.py, and a main-branch workflow that refreshes
+    print-readiness.yaml on relevant pushes. No trim/bleed/binding/paper/printer decisions are
+    made or assumed; nothing is published. Retroactively logged here — the PR opened from a
+    branch outside the worker/*-claude/* claim flow with no prior roadmap task, so t-025
+    (Package and register Monster Recast book 1) still gates final packaging on t-022 as before.
+    This task exists only to give the merged infra an audit trail.'
+- id: t-034
+  milestone: m6
+  title: Wire print-package.yaml layout fields once Silas picks a printer/trim/binding
+  status: needs-human
+  owner: null
+  passes: 0
+  stakes: reversible
+  soft_gate: true
+  updated: '2026-07-28T12:05:00Z'
+  note: 'FOR SILAS: scripts/coloring_book_package_status.py (conductor PR #1322) tracks per-book
+    print layout as explicit null fields in projects/coloring-book/print-package.yaml (trim_width_inches,
+    trim_height_inches, bleed_inches, binding, paper, interior_color_mode, cover_color_mode,
+    printer_template, page_count_includes_blanks, inside_cover_printing, barcode_area_reserved).
+    TO APPROVE: pick a printer/POD vendor and fill in those fields for at least Monster Recast
+    (order 1) — once source assets are also complete (t-022), the status script will report
+    exports-needed with the exact next action. What unblocks: t-025 (package and register
+    Monster Recast book 1) can then generate the ordered interior PDF, cover-wrap PDF, and
+    source archive against real values instead of guessing a trim size.'
 
 - id: t-035
   milestone: m4
