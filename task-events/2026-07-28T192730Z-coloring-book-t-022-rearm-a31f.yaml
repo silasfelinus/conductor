@@ -1,0 +1,9 @@
+version: 1
+project: coloring-book
+task: t-022
+operation: rearm
+owner: worker
+session: 2026-07-28T191546Z-coloring-book-t-022-preflight-a31f
+updated: '2026-07-28T19:27:30Z'
+note: >-
+  Merged PR #1357 as 19438556976d1b86c3e233fb86b9c1f26643b59a. The hourly Coloring Book Studio workflow now skips live submission when the canonical Monster Recast queue reports the missing ANTHROPIC_API_KEY credential wall, while malformed queue/config errors still fail and print-readiness refresh continues. No ArtJobs or queue records were submitted or mutated in this cycle.
