@@ -136,6 +136,69 @@ def test_kind_robots_target_retained_not_pruned(tmp_path, monkeypatch):
     assert "kind-robots-academy-style-preview-test-style" in art_prompts.read_text()
 
 
+def test_record_project_art_provenance_writes_manifest(tmp_path, monkeypatch):
+    manifest_path = tmp_path / "conductor" / "projects" / "images" / "manifest.json"
+    monkeypatch.setattr(di, "REPO_ROOT", tmp_path / "conductor")
+    monkeypatch.setattr(di, "PROJECT_ART_MANIFEST", manifest_path)
+    monkeypatch.setattr(di, "DRY_RUN", False)
+
+    match = {
+        "image_path": "projects/images/coat-dance-icon.webp",
+        "target_repo": "silasfelinus/conductor",
+        "slug": "coat-dance",
+        "variant": "icon",
+        "prompt": "a friendly coat mid-dance, studio lighting",
+        "model": None,
+        "source": "art-prompts.yaml:images",
+    }
+    di.record_project_art_provenance("coat-dance-icon.webp", match, {"coat-dance"})
+
+    manifest = json.loads(manifest_path.read_text())
+    entry = manifest["coat-dance-icon.webp"]
+    assert entry["slug"] == "coat-dance"
+    assert entry["variant"] == "icon"
+    assert entry["prompt"] == "a friendly coat mid-dance, studio lighting"
+    assert entry["source"] == "art-prompts.yaml:images"
+    assert "landed_at" in entry
+
+    # A second, unrelated file merges into the existing manifest rather than
+    # clobbering it.
+    other_match = {
+        "image_path": "projects/images/wishmaster-hero.webp",
+        "target_repo": "silasfelinus/conductor",
+        "slug": "wishmaster",
+        "variant": "hero",
+        "prompt": "a genie lamp granting a small wish",
+        "model": None,
+        "source": "art-generate.yaml:batch",
+    }
+    di.record_project_art_provenance("wishmaster-hero.webp", other_match, {"coat-dance", "wishmaster"})
+    manifest = json.loads(manifest_path.read_text())
+    assert set(manifest) == {"coat-dance-icon.webp", "wishmaster-hero.webp"}
+
+
+def test_record_project_art_provenance_skips_non_conductor_and_non_project_art(tmp_path, monkeypatch):
+    manifest_path = tmp_path / "conductor" / "projects" / "images" / "manifest.json"
+    monkeypatch.setattr(di, "REPO_ROOT", tmp_path / "conductor")
+    monkeypatch.setattr(di, "PROJECT_ART_MANIFEST", manifest_path)
+    monkeypatch.setattr(di, "DRY_RUN", False)
+
+    # kind_robots-targeted inspiration: not project icon/card/hero art.
+    di.record_project_art_provenance(
+        "flower-inspiration-1.webp",
+        {"image_path": "public/images/flower/flower-inspiration-1.webp", "target_repo": "silasfelinus/kind_robots"},
+        {"flower"},
+    )
+    # conductor-targeted but not under projects/images/ (e.g. a project inspiration mirror).
+    di.record_project_art_provenance(
+        "coat-dance-inspiration-1.webp",
+        {"image_path": "projects/coat-dance/inspirations/coat-dance-inspiration-1.webp", "target_repo": "silasfelinus/conductor"},
+        {"coat-dance"},
+    )
+
+    assert not manifest_path.exists()
+
+
 def test_write_gallery_manifest_nested(tmp_path, monkeypatch):
     kr = make_images_tree(tmp_path)
     monkeypatch.setattr(di, "KIND_ROBOTS_ROOT", kr)
