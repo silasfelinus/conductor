@@ -13,8 +13,10 @@ on:
   push:
     branches: [main]
     paths:
+      # Canonical queue changes may intentionally wake the regular batch runner.
+      # Proposal-ledger edits do not: the Coloring Book Studio must be able to
+      # save a prompt without silently launching up to eighteen unrelated jobs.
       - "projects/coloring-book/color-art-jobs.yaml"
-      - "projects/coloring-book/sets/*/proposals.yaml"
       - "scripts/consume_coloring_book_color_art.py"
       - "scripts/consume_monster_recast_art.py"
       - "scripts/semantic_art_quality.py"
