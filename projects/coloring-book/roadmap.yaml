@@ -768,11 +768,11 @@ tasks:
 - id: t-035
   milestone: m4
   title: Record a fresh submission's new ArtJob id so a missing-credential semantic-gate failure is recoverable too
-  status: ready
+  status: claimed
   passes: 0
   stakes: reversible
-  owner: null
-  updated: '2026-07-28T13:32:00Z'
+  owner: worker
+  updated: '2026-07-28T17:09:54Z'
   note: >
     KAIZEN (from PR #1327, t-032, 2026-07-28): t-032 fixed consume_coloring_book_color_art.py
     so a *recovery* attempt (an entry whose semantic_gate_error already names a stuck job id)
@@ -793,6 +793,8 @@ tasks:
     text format referenced_job_id() already parses) so it becomes recoverable via the same
     recover_timed_out_job() path t-032 just hardened, instead of only degrading to a fresh
     resubmission. Add regression coverage mirroring t-032's tests.
+  claimed_by: conductor-scheduled-20260728T1700Z-cb-t035-burst
+  claimed_at: '2026-07-28T17:09:54Z'
 
 - id: t-036
   milestone: m4
