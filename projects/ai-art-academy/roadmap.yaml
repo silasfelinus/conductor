@@ -502,24 +502,24 @@ tasks:
   - id: t-010
     milestone: m6
     title: Academy continuous improvement pass
-    status: claimed
+    status: ready
     recurring: true
     passes: 0
     stakes: reversible
-    updated: '2026-07-28T03:08:24Z'
+    updated: '2026-07-28T03:15:00Z'
     note: |-
       Standing never-idle task (re-arms to ready after every completion, per the recurring-task rule). Each cycle pick ONE: (a) front-end style/polish pass on Academy or art-styler surfaces, (b) roadmap upgrade — refine tasks, detail the next milestone, prune stale notes, (c) generate more art inspirations or style preview thumbnails, (d) expand the curriculum with a new movement/artist entry (respecting PUBLIC-DOMAIN-POLICY.md). Note which option ran in the PR. This task never reaches done and does not count toward milestone progress. See `run_log` for cycle history — do not re-accumulate RAN entries here.
 
-      RAN 2026-07-28T02:12:06Z (2026-07-28T02-12-06Z-aa-t010-lane2-roadmap-accuracy): option (b), roadmap accuracy. Also merged conductor PR #1278 (ai-art-academy/t-049), which added a drift check that immediately caught this task's own stale continuous_improvement block; backfilled the missing prior RAN entry, trued up the block, and condensed this note. Full detail in `run_log`.
+      RAN 2026-07-28T03:15:00Z (2026-07-28T03-10-00Z-aa-t010-lane3-italian-futurism): option (c), inspiration/preview assets. Full detail in `run_log`.
     continuous_improvement:
-      last_lane: 2  # 1=front-end polish, 2=roadmap accuracy, 3=inspiration assets, 4=curriculum depth
-      next_lane: 3
-      last_run: '2026-07-28T02:12:06Z'
-      last_pr: 'conductor-only (lane-2 roadmap accuracy: fixed continuous_improvement drift on this task, backfilled run_log, condensed note; no kind_robots PR this cycle)'
+      last_lane: 3  # 1=front-end polish, 2=roadmap accuracy, 3=inspiration assets, 4=curriculum depth
+      next_lane: 4
+      last_run: '2026-07-28T03:15:00Z'
+      last_pr: 'conductor-only (lane-3 inspiration assets: drained the italian-futurism style-preview request; no kind_robots PR this cycle — image retained in projects/process/ pending relay delivery)'
     run_log: projects/ai-art-academy/docs/continuous-improvement-run-log.md
-    owner: worker
-    claimed_by: 2026-07-28T03-10-00Z-aa-t010-lane3-italian-futurism
-    claimed_at: '2026-07-28T03:08:24Z'
+    owner: null
+    claimed_by: null
+    claimed_at: null
 
   - id: t-015
     milestone: m4
