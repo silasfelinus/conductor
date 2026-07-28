@@ -4864,3 +4864,18 @@ records:
     the same infra gate" instead of a human/agent re-deriving it from raw queue state each cycle.
 
     '
+- date: 2026-07-28
+  project: model-builder
+  task: t-029
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'Before dispatching a fresh explore-and-fix pass, actually run any regression
+    guard a prior cycle''s kaizen suggestion produced (e.g. verifyModelBuilderLinkCoverage.ts)
+    rather than trusting the roadmap note''s "unconfirmed" framing -- it may already be
+    closed by an intervening task chain. Also: singleton-ownership-race fixes (guarding
+    concurrent in-flight state) and stage-approval-gate fixes (guarding against overwriting
+    already-reviewed/settled state) are distinct bug classes in this store -- batchDraftField/
+    batchSetField needed the latter, not another instance of the former.'
