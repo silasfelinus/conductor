@@ -52,3 +52,41 @@ def test_duplicate_task_key_is_flagged(tmp_path):
 def test_no_duplicate_keys_is_clean(tmp_path):
     result = findings_for(tmp_path, '  - id: t-001\n    milestone: m1\n    title: Clean task\n    status: ready\n    stakes: reversible\n    note: Some note text.\n')
     assert 'DUPLICATE_YAML_KEY' not in codes(result)
+
+def test_continuous_improvement_note_drift_is_flagged(tmp_path):
+    result = findings_for(
+        tmp_path,
+        '  - id: t-001\n'
+        '    milestone: m1\n'
+        '    title: Recurring improvement pass\n'
+        '    status: ready\n'
+        '    stakes: reversible\n'
+        "    updated: '2026-07-28T01:53:00Z'\n"
+        '    note: |-\n'
+        '      RAN 2026-07-28T01:53:00Z: option (a), front-end polish. Next preferred lane: roadmap accuracy (lane 2).\n'
+        '    continuous_improvement:\n'
+        '      last_lane: 4\n'
+        '      next_lane: 1\n'
+        "      last_run: '2026-07-28T01:30:00Z'\n"
+        '      last_pr: some-pr-reference\n',
+    )
+    assert 'CONTINUOUS_IMPROVEMENT_NOTE_DRIFT' in codes(result)
+
+def test_continuous_improvement_in_sync_is_clean(tmp_path):
+    result = findings_for(
+        tmp_path,
+        '  - id: t-001\n'
+        '    milestone: m1\n'
+        '    title: Recurring improvement pass\n'
+        '    status: ready\n'
+        '    stakes: reversible\n'
+        "    updated: '2026-07-28T01:30:00Z'\n"
+        '    note: |-\n'
+        '      RAN 2026-07-28T01:30:00Z: option (d), curriculum depth. Next preferred lane: front-end polish (lane 1).\n'
+        '    continuous_improvement:\n'
+        '      last_lane: 4\n'
+        '      next_lane: 1\n'
+        "      last_run: '2026-07-28T01:30:00Z'\n"
+        '      last_pr: some-pr-reference\n',
+    )
+    assert 'CONTINUOUS_IMPROVEMENT_NOTE_DRIFT' not in codes(result)

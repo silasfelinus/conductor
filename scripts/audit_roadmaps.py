@@ -283,6 +283,24 @@ def audit() -> dict[str, Any]:
             if status in OPEN_STATES and not task.get("stakes"):
                 findings.append(issue("info", "OPEN_TASK_MISSING_STAKES", slug, "Open task has no stakes classification.", task_id))
 
+            ci = task.get("continuous_improvement")
+            if isinstance(ci, dict):
+                note_text = str(task.get("note", "")).lower()
+                if any(phrase in note_text for phrase in ("next preferred lane", "rotate")):
+                    ci_last_run = parse_time(ci.get("last_run"))
+                    if updated and ci_last_run and updated > ci_last_run:
+                        findings.append(
+                            issue(
+                                "warning",
+                                "CONTINUOUS_IMPROVEMENT_NOTE_DRIFT",
+                                slug,
+                                "Task note mentions a lane rotation but continuous_improvement.last_run "
+                                "predates the task's updated timestamp — the continuous_improvement block "
+                                "(last_lane/next_lane/last_run/last_pr) may be stale relative to the note.",
+                                task_id,
+                            )
+                        )
+
         for cycle in find_cycles(graph):
             findings.append(issue("error", "DEPENDENCY_CYCLE", slug, "Dependency cycle: " + " -> ".join(cycle)))
 
