@@ -25,7 +25,7 @@ milestones:
 - id: m3
   title: Resource schema — Civitai version columns + mutation-select echo
   weight: 10
-  status: not-started
+  status: review
 - id: m4
   title: Front-end My Library browser (images, filters, edit)
   weight: 20
@@ -72,18 +72,23 @@ tasks:
 - id: t-004
   milestone: m3
   title: Add civitaiModelId/civitaiModelVersionId + fix resourceMutationSelect
-  status: ready
-  owner: null
+  status: review
+  owner: claude
   stakes: reversible
-  note: 'Cross-repo (kind_robots). New migration adding civitaiModelId +
-    civitaiModelVersionId to Resource; add those plus the currently-omitted
-    triggerWords/defaultTrigger/hash/previewImageUrl to resourceMutationSelect
-    and the batch upsert update block; emit the version ids from
-    scan_loras.py to_resource(). Small; coordinate against active main.'
+  note: 'Landed on kind_robots branch claude/lora-organization-catalog-coyhav
+    (commit f1a9585). Migration 20260728120000 adds civitaiModelId +
+    civitaiModelVersionId (Int?, indexed, ADD COLUMN IF NOT EXISTS);
+    create.ts validates/emits them and allows them through the field guard;
+    batch.post.ts carries them in the upsert update; resourceMutationSelect
+    now also echoes triggerWords/defaultTrigger/hash/previewImageUrl + the two
+    new columns; scan_loras.py captures modelId/modelVersionId (Civitai +
+    CivArchive) and emits them from to_resource(); prisma client regenerated.
+    Needs: a PR opened + merged to kind_robots main, then migrate deploy on
+    kindblank_fresh.'
 - id: t-005
   milestone: m4
   title: Front-end My Library LoRA browser
-  status: waiting
+  status: ready
   owner: null
   stakes: reversible
   depends_on: [t-004]
