@@ -15,6 +15,7 @@ def make_catalog() -> dict:
                     "size": "256x256",
                     "status": "pending",
                     "prompt": "  bright   alpha   icon  ",
+                    "model": " gpt-image-1 ",
                 },
                 "card": {
                     "image_path": "projects/images/alpha-card.webp",
@@ -27,6 +28,7 @@ def make_catalog() -> dict:
                     "size": "1280x720",
                     "status": "pending",
                     "prompt": "alpha hero prompt",
+                    "engine": "openai",
                 },
             },
             {
@@ -70,7 +72,7 @@ def test_iter_missing_project_assets_skips_existing_and_done_assets(tmp_path: Pa
     assert "projects/images/alpha-hero.webp" not in queued_paths
 
 
-def test_iter_missing_project_assets_normalizes_prompt_and_default_sizes(tmp_path: Path, monkeypatch) -> None:
+def test_iter_missing_project_assets_normalizes_prompt_default_sizes_and_model(tmp_path: Path, monkeypatch) -> None:
     monkeypatch.setattr(art_queue, "ROOT", tmp_path)
 
     entries = art_queue.iter_missing_project_assets(make_catalog())
@@ -85,12 +87,15 @@ def test_iter_missing_project_assets_normalizes_prompt_and_default_sizes(tmp_pat
         "size": "256x256",
         "status": "pending",
         "prompt": "bright alpha icon",
+        "model": "gpt-image-1",
     }
 
+    assert by_project_variant[("alpha", "hero")]["model"] == "openai"
     assert by_project_variant[("alpha", "hero")]["size"] == "1280x720"
     assert by_project_variant[("beta", "icon")]["size"] == "256x256"
     assert by_project_variant[("beta", "card")]["size"] == "512x768"
     assert by_project_variant[("beta", "hero")]["size"] == "1280x720"
+    assert "model" not in by_project_variant[("beta", "icon")]
 
 
 def test_write_queue_outputs_expected_dry_run_shape(tmp_path: Path) -> None:
@@ -104,6 +109,7 @@ def test_write_queue_outputs_expected_dry_run_shape(tmp_path: Path) -> None:
             "size": "256x256",
             "status": "pending",
             "prompt": "bright alpha icon",
+            "model": "gpt-image-1",
         }
     ]
 
