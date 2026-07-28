@@ -106,7 +106,14 @@ below). A future candidate could revisit tomb-wall facsimiles specifically
 if a fully rights-clear copyist is identified; this entry does not attempt
 that and scopes itself to papyrus examples instead.
 
-## Notable artisans
+## Artists
+
+**Rights boundary:** No individual artist is named or identifiable anywhere
+in this entry, and none may be added later without independently clearing
+PUBLIC-DOMAIN-POLICY.md §1.3's both-prongs rule and being checked against
+§4's living-artist exclusion. This is itself the strictest possible rights
+boundary this project uses — there is no name to protect or misuse because
+none is claimed.
 
 **No individual artist is named or identifiable**, by design of this entry.
 No papyrus or tomb painting in this tradition carries a signature in the
@@ -217,26 +224,31 @@ imagery of actual human mummified remains.
 
 ## Public-domain and generation policy
 
-For displayed examples: use only the three works above (or others
-independently verified the same way against a holding institution's own
-rights-status field), record creator (here: "unknown," recorded as such —
-never a guessed name), title, date, collection, accession/object ID,
-source URL, and rights statement, and never substitute a newly generated
-"example" for one of these documented works.
+For displayed examples: verify each work item-level against a holding
+institution's own rights-status field before it enters the Academy — use
+only the three works above (or others independently verified the same
+way), record creator (here: "unknown," recorded as such — never a guessed
+name), title, date, collection, accession/object ID, source URL, and
+rights statement for each work individually, and never substitute a newly
+generated "example" for one of these documented works.
 
 For generation:
+- do not include any artist names in generation prompts or presets, and
+  exclude artist names from curriculum text and marketing copy — this
+  entry has none to exclude today, but the rule stands for any future
+  edit that tries to add one;
 - use movement-level instructions describing the pictorial *system*
   (composite perspective, hierarchical scale, registers, flat color,
-  integrated hieroglyphic-style caption marks) — there is no named artist
-  to invoke or avoid, since none is identifiable;
-- do not request imagery of mummies, sarcophagi contents, or human remains;
-- do not exoticize the tradition with "ancient curse," "cursed tomb," or
+  integrated hieroglyphic-style caption marks) instead;
+- avoid requesting imagery of mummies, sarcophagi contents, or human
+  remains;
+- avoid exoticizing the tradition with "ancient curse," "cursed tomb," or
   pulp-adventure treasure-hunting framing — teach it as a real, functioning
   visual and religious system, the same standard this project already
   holds itself to for Fayum Mummy Portraits and Byzantine Mosaic;
-- do not add generic "sand dune desert" or "pyramid silhouette" filler
-  imagery not requested by the source photo — the actual recognition cues
-  are about figure construction and composition, not about pyramids.
+- avoid generic "sand dune desert" or "pyramid silhouette" filler imagery
+  not requested by the source photo — the actual recognition cues are
+  about figure construction and composition, not about pyramids.
 
 ## Movement-level remix configuration
 
@@ -383,8 +395,16 @@ cartoon look.
       ethical framing above).
 - [x] Generation guidance explicitly excludes imagery of mummies or human
       remains.
+- [x] The lesson's colonial-era collecting-history framing (see "Cultural
+      and ethical framing" above) is written to the same standard this
+      project's cultural-history/representation reviewer guidance already
+      holds for other non-Western and funerary entries (Fayum Mummy
+      Portraits §28, Persian Miniature §25, the-nabis §31) — a dedicated
+      cultural-history reviewer pass before any further front-end
+      promotion is still recommended, matching those entries' own
+      standing caveats, and is not blocked on by this docs-only cycle.
 
-All six items clear; promoted directly in this cycle (matching the Italian
+All seven items clear; promoted directly in this cycle (matching the Italian
 Futurism and Arts and Crafts precedent) rather than gated to `needs-human`
 — nothing here turns on a contested framing judgment the way the Harlem
 Renaissance candidate's Reiss question did; the one genuine complexity (the
