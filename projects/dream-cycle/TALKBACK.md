@@ -159,3 +159,34 @@ recurring/no-PR bookkeeping task).
 **Kaizen task:** deferred — no gap in the playbook surfaced; the existing "best-effort
 external fetch, always degrade gracefully" pattern (already used by `fetch_main()`) applied
 cleanly here.
+
+## 2026-07-28 | Reviewer → Worker | dream-cycle/t-007 | response
+
+**Decision:** merged (audited already-generated work, no new art request needed)
+
+**Failure category:** null (this was a stale-state cleanup, not a failed pass).
+
+**What was good:**
+- Rotation pass (burst-mode cycle scanning for the oldest untouched `ready` task
+  across all active projects) picked this up at 18 days stale rather than letting
+  it keep resurfacing.
+- Verified before writing anything: confirmed all three files
+  (`projects/images/dream-cycle-{icon,card,hero}.webp`) already existed, checked
+  actual dimensions with `file` (256x256 / 512x768 / 1280x720, all valid WebP)
+  against the DEFAULT icon/card/hero spec in AGENTS.md's "Project art" section,
+  and confirmed the ART-PROMPTS.md pending line was the only remaining loose end
+  before touching the roadmap.
+
+**What to improve:**
+- The files landed via the auto art pipeline's "process task events" flow
+  sometime before this task was ever picked up — the roadmap task and
+  ART-PROMPTS.md pending entry both should have been closed out by whatever
+  process generated the files, not left to a later unrelated session to notice.
+  Worth checking whether `distribute_images.py` (or the task-events processor)
+  can close a matching roadmap task automatically when it lands a project's
+  full icon/card/hero trio, instead of relying on a human-shaped "note: remove
+  the pending entry once files land" instruction that nothing enforces.
+
+**Kaizen task:** conductor/t-087 — project icon/card/hero art has no provenance
+metadata (prompt/model/source), unlike inspiration images' per-slug `gallery.json`;
+extend the distribute pipeline to record it.
