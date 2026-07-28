@@ -1,0 +1,8 @@
+version: 1
+project: coloring-book
+task: t-022
+operation: rearm
+session: 20260728T001420Z-coloring-book-t022-recovery-report
+owner: worker
+updated: '2026-07-28T00:22:10Z'
+note: 'Merged PR #1271 as 88fe965c5933ed59f1c62fab20f6c509be7a974b. The read-only queue diagnostic now separates timed-out ArtJobs that can be status-recovered from enqueue failures that have no job to recover, exposes recovery safety/counts, and adds a require-recovery-candidates guard. No ArtJobs were submitted, retried, mutated, or deleted.'
