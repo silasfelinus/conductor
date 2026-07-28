@@ -4850,3 +4850,17 @@ records:
     specific guard shapes textually -- read that linter''s own source for its
     recognized shapes rather than guessing when it flags new code TypeScript itself
     accepted.'
+- date: 2026-07-28
+  project: coloring-book
+  task: t-036
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'Distinguishing a credential-wall semantic_gate_error (ANTHROPIC_API_KEY is required) from a
+    recoverable job-timeout or transient-enqueue one by message content -- rather than lumping all semantic_gate_error
+    entries into one retry_safe check -- lets automation short-circuit "don''t bother retrying, it''s
+    the same infra gate" instead of a human/agent re-deriving it from raw queue state each cycle.
+
+    '
