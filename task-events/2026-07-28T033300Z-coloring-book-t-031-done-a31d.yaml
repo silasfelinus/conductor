@@ -1,0 +1,16 @@
+version: 1
+project: coloring-book
+task: t-031
+operation: done
+owner: worker
+session: 2026-07-28T03-10-14Z-coloring-book-t-031-a31d
+updated: '2026-07-28T03:33:00Z'
+note: >-
+  Completed in Conductor PR #1285, squash e2f2d3c8f59ba4a9fc11e60973e41c6b1a7c7972. Both generic consumers now rebuild retry-stable Comfy payloads after local polling timeouts, while specialized coloring attempts retain their explicit job-id recovery and fresh-seed policy.
+learning:
+  kind: software
+  stakes: reversible
+  passes: 3
+  failure_category: null
+  lesson: >-
+    A local polling timeout is not proof that an asynchronous ArtJob failed. Generic consumers must rebuild an identical request identity on retry or persist and recover the original job id; otherwise a fresh randomized seed silently converts a retry into duplicate production work. Compatibility tests must also preserve the public module's monkeypatch surface when a long implementation is wrapped rather than edited in place.
