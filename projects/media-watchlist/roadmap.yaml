@@ -316,11 +316,11 @@ tasks:
 - id: t-013
   milestone: m3
   title: Wire the "most active month" home-dashboard stat from BROWSE-UX.md §1 into the UI
-  status: claimed
+  status: review
   owner: worker
   passes: 0
   stakes: reversible
   note: 'Kaizen from t-012 (kind_robots PR #1057, 2026-07-27). BROWSE-UX.md §1''s Home/Summary Dashboard stats bar specs "Most active month: ''You consumed the most in [Month]: N entries''" -- this hasn''t been wired into any UI yet (the current Stats strip in watchlist-browse.vue only shows totals/starred/audiobook-hours/pages/comics/TV-seasons, no per-month breakdown). Check whether server/api/media-entries/stats.get.ts already computes a per-month breakdown (t-006''s PR mentioned per-month data existing for the Home dashboard spec) -- if so, this is front-end-only wiring like t-006/t-012 before it; if not, add the aggregation to stats.get.ts first. Surface it as a single stat line/tile, not a full calendar view (BROWSE-UX.md doesn''t spec more than the one sentence).'
   claimed_by: claude-conductor-burst-20260728T-mw-t013
   claimed_at: '2026-07-28T10:08:44Z'
-  updated: '2026-07-28T10:08:44Z'
+  updated: '2026-07-28T10:12:55Z'
