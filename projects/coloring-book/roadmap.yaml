@@ -701,11 +701,11 @@ tasks:
 - id: t-032
   milestone: m4
   title: Execute a live recovery_batch pass against the Monster Recast queue
-  status: ready
+  status: claimed
   passes: 0
   stakes: reversible
-  owner: null
-  updated: '2026-07-28T01:30:00Z'
+  owner: reviewer
+  updated: '2026-07-28T07:11:30Z'
   note: >
     KAIZEN (from PR #1275, t-022, 2026-07-28): t-022's connector-only session
     added a bounded recovery_batch / recovery_actionable / recovery_actionable_count
@@ -723,4 +723,6 @@ tasks:
     completed, and (3) if useful going forward, wire
     `--require-recovery-actionable` into the relevant GitHub Actions workflow as
     a guard before an automated recovery run.
+  claimed_by: claude-conductor-burst-20260728T0800Z-cb-t032
+  claimed_at: '2026-07-28T07:11:30Z'
 
