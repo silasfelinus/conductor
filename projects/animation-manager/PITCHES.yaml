@@ -266,7 +266,7 @@ pitches:
 
   - id: ink-oracle
     title: Ink Oracle
-    status: pitched
+    status: candidate
     priority: 10
     surprise: Floating ink blooms repeatedly suggest symbols, creatures, or faces but never settle into the same answer.
     passive_loop: Diffusion-like tendrils expand, fold, fade, and seed the next bloom.
@@ -278,6 +278,19 @@ pitches:
     acceptance:
       - patterns vary across restarts
       - no frame-to-frame flicker or muddy full-screen opacity
+    builds:
+      - version: 1
+        status: candidate
+        component: components/screenfx/ink-oracle.vue
+        pull_request: silasfelinus/kind_robots#1107
+        commit: f7a749402b054fa0adc8993f1f4fa7819d169725
+        verification:
+          - eslint
+          - prettier
+          - vue-tsc (full project)
+          - test:animation-catalog
+          - test:animation-component-attempts
+          - check_animation_novelty.py --strict
 
   - id: celestial-mobile
     title: Celestial Mobile
