@@ -822,20 +822,11 @@ tasks:
 - id: t-036
   milestone: m4
   title: Add a --require-no-semantic-gate-error flag to coloring_queue_status.py
-  status: claimed
+  status: review
   passes: 0
   stakes: reversible
   owner: worker
-  updated: '2026-07-28T19:05:56Z'
-  note: >
-    KAIZEN (from PR #1331, t-022, 2026-07-28): diagnosing t-022 this cycle required manually
-    reading color-art-jobs.yaml's raw pending_with_semantic_gate_error entries and cross-
-    referencing conductor-bot commit history by hand to confirm the 18 Monster Recast slots
-    stuck on the missing ANTHROPIC_API_KEY secret aren't worth retrying until Silas fixes the
-    secret (see projects/coloring-book/TALKBACK.md 2026-07-28 security-flag entry).
-    coloring_queue_status.py already surfaces pending_with_semantic_gate_error as a count and
-    has a --require-retry-safe flag; add a matching --require-no-semantic-gate-error flag so a
-    future automated cycle can programmatically detect "don't bother retrying these, it's the
-    same credential wall" instead of a human/agent re-deriving it from raw queue state each time.
+  updated: '2026-07-28T19:07:27Z'
+  note: 'Added --require-no-semantic-gate-error to scripts/coloring_queue_status.py: a new credential_gate_errors/credential_gate_error_count summary field (matching the ANTHROPIC_API_KEY-is-required message, distinct from recoverable timeout / transient enqueue semantic_gate_error entries) plus the CLI guard flag. Verified against the live projects/coloring-book/color-art-jobs.yaml queue: correctly reports credential_gate_error_count 18 and exits non-zero, matching the 18 Monster Recast slots already flagged stuck on the missing ANTHROPIC_API_KEY GitHub Actions secret (see TALKBACK.md 2026-07-28 security-flag entry -- still unresolved, needs Silas to check the repo secret). Two new regression tests added; full suite green (707 passed, 1 pre-existing skip).'
   claimed_by: claude-conductor-scheduled-20260728T1930Z-cb-t036
   claimed_at: '2026-07-28T19:05:56Z'

@@ -172,6 +172,58 @@ def test_empty_safe_queue_is_not_actionable():
     assert summary["recommended_action"] == "complete"
 
 
+def test_credential_gate_errors_are_identified_and_distinct_from_other_semantic_errors():
+    summary = summarize_queue(
+        queue(
+            [
+                {
+                    "slot": 1,
+                    "id": "mr-001",
+                    "status": "pending",
+                    "semantic_gate_error": "job 2788: ANTHROPIC_API_KEY is required for the production semantic art gate",
+                },
+                {
+                    "slot": 2,
+                    "id": "mr-002",
+                    "status": "pending",
+                    "semantic_gate_error": "job 2474 timed out after 600s (still queued/running)",
+                },
+                {
+                    "slot": 3,
+                    "id": "mr-003",
+                    "status": "pending",
+                    "semantic_gate_error": "enqueue failed: HTTP 503 Database connection was temporarily unavailable",
+                },
+                {"slot": 4, "id": "mr-004", "status": "pending"},
+            ]
+        ),
+        "monster-recast",
+    )
+
+    assert [entry["id"] for entry in summary["credential_gate_errors"]] == ["mr-001"]
+    assert summary["credential_gate_error_count"] == 1
+
+
+def test_no_credential_gate_errors_when_none_present():
+    summary = summarize_queue(
+        queue(
+            [
+                {
+                    "slot": 1,
+                    "id": "mr-001",
+                    "status": "pending",
+                    "semantic_gate_error": "job 2474 timed out after 600s (still queued/running)",
+                },
+                {"slot": 2, "id": "mr-002", "status": "pending"},
+            ]
+        ),
+        "monster-recast",
+    )
+
+    assert summary["credential_gate_errors"] == []
+    assert summary["credential_gate_error_count"] == 0
+
+
 def test_recommended_action_requirement_matches_exactly():
     summary = {"recommended_action": "recover-existing-jobs"}
 

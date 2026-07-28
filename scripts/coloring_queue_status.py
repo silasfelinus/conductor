@@ -12,6 +12,7 @@ import yaml
 
 DEFAULT_QUEUE = Path("projects/coloring-book/color-art-jobs.yaml")
 JOB_ID_PATTERN = re.compile(r"\bjob\s+#?(\d+)\b", re.IGNORECASE)
+CREDENTIAL_GATE_ERROR_PATTERN = re.compile(r"ANTHROPIC_API_KEY is required", re.IGNORECASE)
 RECOMMENDED_ACTIONS = (
     "repair-queue-integrity",
     "recover-existing-jobs",
@@ -39,6 +40,14 @@ def semantic_gate_job_id(entry: dict[str, Any]) -> int | None:
     return int(match.group(1)) if match else None
 
 
+def is_credential_gate_error(entry: dict[str, Any]) -> bool:
+    """True when a pending entry's semantic_gate_error is the missing
+    ANTHROPIC_API_KEY credential wall (scripts/semantic_art_quality.py), as
+    opposed to a recoverable timeout or a transient enqueue failure. No
+    retry -- live or recovery -- clears this one; only fixing the secret does."""
+    return bool(CREDENTIAL_GATE_ERROR_PATTERN.search(str(entry.get("semantic_gate_error", ""))))
+
+
 def requirement_satisfied(summary: dict[str, Any], required_action: str | None) -> bool:
     return required_action is None or summary.get("recommended_action") == required_action
 
@@ -63,6 +72,7 @@ def summarize_queue(data: dict[str, Any], book_slug: str, batch_size: int | None
     clean_pending = [entry for entry in pending if not entry.get("semantic_gate_error")]
     recovery_candidates = [entry for entry in errored if semantic_gate_job_id(entry) is not None]
     fresh_submission_blocked = [entry for entry in errored if semantic_gate_job_id(entry) is None]
+    credential_gate_errors = [entry for entry in errored if is_credential_gate_error(entry)]
 
     configured_batch_size = data.get("batch_policy", {}).get("worker_pass_size", 18)
     effective_batch_size = batch_size or int(configured_batch_size)
@@ -121,6 +131,8 @@ def summarize_queue(data: dict[str, Any], book_slug: str, batch_size: int | None
         "recovery_actionable_count": len(recovery_batch),
         "fresh_submission_blocked": [entry_summary(entry) for entry in fresh_submission_blocked],
         "fresh_submission_blocked_count": len(fresh_submission_blocked),
+        "credential_gate_errors": [entry_summary(entry) for entry in credential_gate_errors],
+        "credential_gate_error_count": len(credential_gate_errors),
         "duplicate_semantic_gate_job_ids": duplicate_job_ids,
         "duplicate_entry_ids": duplicate_entry_ids,
         "duplicate_slots": duplicate_slots,
@@ -143,6 +155,15 @@ def main() -> int:
     parser.add_argument("--require-recovery-candidates", action="store_true")
     parser.add_argument("--require-recovery-actionable", action="store_true")
     parser.add_argument("--require-recommended-action", choices=RECOMMENDED_ACTIONS)
+    parser.add_argument(
+        "--require-no-semantic-gate-error",
+        action="store_true",
+        help=(
+            "Fail if any pending entry is stuck on the ANTHROPIC_API_KEY credential "
+            "wall -- lets automation detect 'don't bother retrying, it's the same "
+            "credential wall' without re-deriving it from raw queue state."
+        ),
+    )
     args = parser.parse_args()
 
     try:
@@ -161,6 +182,8 @@ def main() -> int:
     if args.require_recovery_actionable and not summary["recovery_actionable"]:
         return 1
     if not requirement_satisfied(summary, getattr(args, "require_recommended_action", None)):
+        return 1
+    if args.require_no_semantic_gate_error and summary["credential_gate_error_count"] > 0:
         return 1
     return 0
 
