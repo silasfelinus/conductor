@@ -1,0 +1,107 @@
+project: lora-ingestion
+kind: infrastructure
+notes_from_silas: 'Auto-import LoRAs: drop a file into Lora/import on the home box
+
+and have it detected, sorted into <Base>/<SFW|NSFW>/, and registered as a
+
+kind_robots Resource with no manual input. Then a front-end browser (My Library
+
++ Discover tabs) to browse/manage owned LoRAs and download new ones from
+
+Civitai/CivArchive, with maturity + base-model filters, hide-owned, and
+
+update-to-new-version. Builds on the completed lora-catalog sort/import work.
+
+'
+milestones:
+- id: m1
+  title: ArtJob LoRA path resolution (loraResourceId/name -> localPath)
+  weight: 20
+  status: done
+- id: m2
+  title: Watched-folder import agent (drop -> sort -> upsert Resource)
+  weight: 30
+  status: in-progress
+- id: m3
+  title: Resource schema — Civitai version columns + mutation-select echo
+  weight: 10
+  status: not-started
+- id: m4
+  title: Front-end My Library browser (images, filters, edit)
+  weight: 20
+  status: not-started
+- id: m5
+  title: Discover tab — Civitai/CivArchive browse + download queue + versioning
+  weight: 30
+  status: not-started
+tasks:
+- id: t-001
+  milestone: m1
+  title: Resolve enqueue LoRA to Resource.localPath (never bare name)
+  status: done
+  owner: worker
+  stakes: reversible
+  note: 'Landed on kind_robots main as server/utils/artLoraResource.ts
+    (resolveEnqueueLoraResource) — resolves loraResourceIds/loraName to a LoRA
+    Resource, sets loraName = localPath, and 409s when a Resource has no
+    localPath. This is the server side of the ume_classic_impressionist bug.'
+- id: t-002
+  milestone: m2
+  title: Build the watched-folder LoRA import agent
+  status: review
+  owner: claude
+  stakes: reversible
+  note: 'conductor/ops/home-server/lora_import_agent.py — stdlib poller mirroring
+    relay_agent.py; on a stable drop it runs kind_robots scan_loras.py
+    (--organize move) then import_catalog.py --upsert. Registered as pm2 app
+    kr-lora-import in ecosystem.config.js. Recommended host: the Linux array box
+    (alexandria) so moves happen on the case-sensitive local FS. Needs live
+    verification with ume_classic_impressionist.safetensors.'
+- id: t-003
+  milestone: m2
+  title: Verify end-to-end on alexandria with ume_classic_impressionist
+  status: needs-human
+  owner: null
+  stakes: reversible
+  gate_human: true
+  note: 'Set env (KR_RELAY_TOKEN, LORA_ROOT, SCAN_SCRIPT, IMPORT_SCRIPT,
+    CIVITAI_TOKEN), start the agent, drop the file into Lora/import, confirm it
+    sorts to Flux/SFW/ and GET /api/resources shows the row with correct
+    localPath + Flux + SFW + preview. Then confirm a krea2/flux2 render using it
+    succeeds (path bug closed end-to-end).'
+- id: t-004
+  milestone: m3
+  title: Add civitaiModelId/civitaiModelVersionId + fix resourceMutationSelect
+  status: ready
+  owner: null
+  stakes: reversible
+  note: 'Cross-repo (kind_robots). New migration adding civitaiModelId +
+    civitaiModelVersionId to Resource; add those plus the currently-omitted
+    triggerWords/defaultTrigger/hash/previewImageUrl to resourceMutationSelect
+    and the batch upsert update block; emit the version ids from
+    scan_loras.py to_resource(). Small; coordinate against active main.'
+- id: t-005
+  milestone: m4
+  title: Front-end My Library LoRA browser
+  status: waiting
+  owner: null
+  stakes: reversible
+  depends_on: [t-004]
+  note: 'Cross-repo (kind_robots). New pages/lora.vue + components/lora/{lora-card,
+    add-lora}.vue reusing checkpoint-gallery/checkpoint-card/reactable-card +
+    art-gallery sort/paginate/bulk + lora-picker predicates. Maturity via
+    userStore.showMature. Optional: server-side filter params on
+    server/api/resources/index.get.ts.'
+- id: t-006
+  milestone: m5
+  title: Discover tab + DownloadRequest queue + version-update flow
+  status: waiting
+  owner: null
+  stakes: outward-facing
+  depends_on: [t-005]
+  note: 'Cross-repo. DownloadRequest Prisma model + /api/lora/download-request,
+    /download/claim, /download/[id]/complete (mirror the ArtJob queue);
+    server-side Civitai/CivArchive browse proxy; extend lora_import_agent.py to
+    claim download requests and fetch into Lora/import (reusing the m2 pipeline);
+    hide-owned via civitaiModelVersionId/hash; update-to-new-version enqueues a
+    download and upserts in place.'

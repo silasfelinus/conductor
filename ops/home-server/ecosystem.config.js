@@ -120,6 +120,47 @@ module.exports = {
       out_file: `${LOG_DIR}/kr-relay.out.log`,
       error_file: `${LOG_DIR}/kr-relay.err.log`,
       merge_logs: true
+    },
+    {
+      // LoRA auto-import watcher. Files dropped in <LORA_ROOT>/import are
+      // auto-detected (base model, SFW/NSFW, triggers, preview image), sorted
+      // into <Base>/<SFW|NSFW>/, and upserted as kind_robots Resources with the
+      // localPath the enqueue path (server/utils/artLoraResource.ts) needs.
+      // Reuses the kind_robots scan_loras.py + import_catalog.py tools.
+      //
+      // RECOMMENDED: run this on the Linux array host (alexandria) instead of
+      // here, so the file moves happen on the case-sensitive local filesystem
+      // (avoids the Windows/SMB case-folding issues). On alexandria, set the
+      // same env vars and run it under the unRAID User Scripts plugin or
+      // `nohup python3 lora_import_agent.py &`. This pm2 block is the Windows
+      // fallback; paths below are the Z: mount + the kind_robots checkout.
+      name: 'kr-lora-import',
+      cwd: __dirname,
+      script: 'C:/Python312/python.exe',
+      args: 'lora_import_agent.py',
+      interpreter: 'none',
+      windowsHide: true,
+      autorestart: true,
+      restart_delay: 10000,
+      env: {
+        KR_RELAY_TOKEN: process.env.KR_RELAY_TOKEN || '',
+        KR_BASE_URL: 'https://kind-robots.vercel.app',
+        LORA_ROOT: process.env.LORA_ROOT || 'Z:/ai/models/Lora',
+        LORA_IMPORT_DIR:
+          process.env.LORA_IMPORT_DIR || 'Z:/ai/models/Lora/import',
+        CIVITAI_TOKEN: process.env.CIVITAI_TOKEN || '',
+        POLL_SECONDS: process.env.POLL_SECONDS || '20',
+        PYTHON: 'C:/Python312/python.exe',
+        SCAN_SCRIPT:
+          process.env.SCAN_SCRIPT ||
+          'D:/code/kind_robots/scripts/lora-catalog/scan_loras.py',
+        IMPORT_SCRIPT:
+          process.env.IMPORT_SCRIPT ||
+          'D:/code/kind_robots/scripts/lora-catalog/import_catalog.py'
+      },
+      out_file: `${LOG_DIR}/kr-lora-import.out.log`,
+      error_file: `${LOG_DIR}/kr-lora-import.err.log`,
+      merge_logs: true
     }
   ]
 }
