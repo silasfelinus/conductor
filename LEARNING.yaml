@@ -4537,3 +4537,15 @@ records:
     investigation pass before editing -- checking whether the target genuinely never needs to
     survive a component's unmount (in-flight uploads, other readers) turned a plausible-looking
     one-liner into a verified-safe change across all 7 call sites in one pass.
+- date: 2026-07-28
+  project: coloring-book
+  task: t-022
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: Live-testing a fix against the real queue (not just unit tests) caught a second bug the
+    first commit alone would have shipped silently -- build_entries() dropped the very field
+    (semantic_gate_error) the new recovery logic needed to fire. Worth running --live whenever a
+    sandbox has the token for it, even when unit coverage already looks complete.
