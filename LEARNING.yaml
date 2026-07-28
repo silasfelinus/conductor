@@ -4562,3 +4562,15 @@ records:
     side channel (here, the auto art pipeline's task-events flow beat the roadmap task to
     completion by over two weeks). Verifying file existence/shape first turned this into a
     same-cycle close instead of a duplicate art-generation request.
+- date: 2026-07-28
+  project: ai-art-academy
+  task: t-049
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: Validating a new audit heuristic against the live roadmap tree (not just a synthetic
+    fixture) is a strong sanity check -- the new CONTINUOUS_IMPROVEMENT_NOTE_DRIFT rule
+    immediately flagged the exact real-world t-010 drift it was written to catch, on the first
+    run.
