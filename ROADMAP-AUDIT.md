@@ -1,13 +1,13 @@
 # Roadmap Audit
 
-Generated: `2026-07-28T19:15:31.757255+00:00`
+Generated: `2026-07-28T21:31:13.148086+00:00`
 
 This is a conservative structural audit. It reports suspicious state; it does not automatically change task status or remove human gates.
 
 ## Portfolio snapshot
 
-- **42** roadmaps, **23** active projects, **739** tasks
-- **30 ready**, **47 waiting**, **26 needs-human**, **2 claimed/review**, **623 done**
+- **42** roadmaps, **23** active projects, **742** tasks
+- **32 ready**, **47 waiting**, **26 needs-human**, **2 claimed/review**, **624 done**
 - Findings: **0 errors**, **2 warnings**, **56 informational**
 
 ## Project inventory
@@ -29,11 +29,11 @@ This is a conservative structural audit. It reports suspicious state; it does no
 | 13 | `superkate-services-calculator` | finished | software | 0 | 0 | 0 | 0 | 37 / 37 |
 | 14 | `superkate-hairstyle-ai` | paused | software | 1 | 0 | 1 | 0 | 19 / 21 |
 | 15 | `newsfeed` | active | software | 0 | 0 | 0 | 0 | 22 / 22 |
-| 16 | `model-builder` | active | software | 1 | 0 | 0 | 1 | 33 / 35 |
+| 16 | `model-builder` | active | software | 3 | 0 | 0 | 0 | 33 / 36 |
 | 17 | `animation-manager` | active | software | 2 | 0 | 0 | 0 | 14 / 16 |
 | 18 | `animation-studio` | retired | software | 3 | 4 | 0 | 0 | 1 / 8 |
 | 19 | `ecosystem-map` | finished | software | 0 | 0 | 0 | 0 | 8 / 8 |
-| 20 | `conductor` | active | software | 1 | 0 | 3 | 0 | 87 / 91 |
+| 20 | `conductor` | active | software | 2 | 0 | 3 | 0 | 87 / 92 |
 | 21 | `serendipity` | active | software | 1 | 0 | 0 | 0 | 11 / 12 |
 | 22 | `storymaker` | active | software | 1 | 0 | 0 | 0 | 9 / 10 |
 | 23 | `davinci` | finished | software | 0 | 0 | 0 | 0 | 15 / 15 |
@@ -44,7 +44,7 @@ This is a conservative structural audit. It reports suspicious state; it does no
 | 28 | `alexa-integration` | active | software | 1 | 0 | 1 | 0 | 16 / 18 |
 | 29 | `conductor-app` | active | software | 2 | 0 | 0 | 0 | 12 / 14 |
 | 30 | `appmaker` | active | software | 2 | 0 | 0 | 0 | 10 / 12 |
-| 31 | `media-watchlist` | active | software | 2 | 0 | 0 | 0 | 13 / 15 |
+| 31 | `media-watchlist` | active | software | 1 | 0 | 0 | 1 | 14 / 16 |
 | 32 | `sketchy` | finished | software | 0 | 0 | 0 | 0 | 8 / 8 |
 | 33 | `pinball-hero` | retired | content | 0 | 2 | 2 | 0 | 2 / 6 |
 | 34 | `recipe-box` | retired | software | 0 | 2 | 1 | 0 | 0 / 3 |
