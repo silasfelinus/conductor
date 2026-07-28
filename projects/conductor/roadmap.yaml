@@ -2862,3 +2862,43 @@ tasks:
       `depends_on`.
     claimed_by: null
     claimed_at: null
+
+  - id: t-091
+    milestone: m2
+    title: "Give task close-out (status: done bookkeeping) an atomic, PR-based or fetch-check-push helper like claim_task.py"
+    status: ready
+    passes: 0
+    stakes: reversible
+    owner: null
+    note: |
+      KAIZEN (from coloring-book/t-036 close-out, 2026-07-28, self-flagged in root
+      TALKBACK.md this same date): after merging a task's implementation PR, this
+      session used `set_task_field.py` to flip the task's roadmap status to `done`
+      and pushed that single-file bookkeeping commit straight to `main` with a plain
+      `git commit && git push` -- no PR. `git log --grep="close out"` shows every
+      prior close-out commit in this repo's history carries a `(#PR)` suffix (e.g.
+      `d430c6a` #1353, `85bc7b2` #1347, `aa5973e` #1345), meaning the established and
+      *correct* convention is a small follow-up PR, not a direct push -- hard rule 1
+      ("PRs only into `main` except the Worker's atomic claim commit") does not
+      exempt close-out commits. `set_task_field.py`'s own docstring only warns about
+      local-tree staleness vs. `origin/main`, not about this direct-push question, so
+      the gap is easy to fall into by omission rather than a deliberate choice.
+
+      No functional harm resulted this time (single-field, fetched-and-fast-forwarded
+      immediately before pushing, no collision), but the tooling shouldn't rely on an
+      agent remembering not to take the shortcut. Build either:
+      (a) a small `close_task.py` that opens (and, per the normal software-task rules,
+      merges) a tiny one-file PR setting `status: done` (mirroring how `claim_task.py`
+      handles the claim commit but via a PR instead of a direct push, since the claim
+      commit's own direct-push exemption is explicitly scoped to that one case), or
+      (b) if a direct-to-main push is still preferred for this narrow case, build it
+      the same deliberate way `claim_task.py` / `append_ledger_entry.py` were --
+      fetch `origin/main`, verify the task's live state, atomic commit-on-ref with
+      retry on non-fast-forward -- not a plain local commit + push, and get explicit
+      sign-off that this is meant to be a second sanctioned direct-to-main exception
+      rather than assuming it.
+      Either way, update AGENTS.md's "software" close-out step to point at the new
+      helper so this doesn't get re-derived ad hoc by the next session that reaches
+      this same step.
+    claimed_by: null
+    claimed_at: null
