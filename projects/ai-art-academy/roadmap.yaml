@@ -502,15 +502,17 @@ tasks:
   - id: t-010
     milestone: m6
     title: Academy continuous improvement pass
-    status: review
+    status: ready
     recurring: true
     passes: 0
     stakes: reversible
-    updated: '2026-07-28T06:13:00Z'
+    updated: '2026-07-28T06:27:00Z'
     note: |-
       Standing never-idle task (re-arms to ready after every completion, per the recurring-task rule). Each cycle pick ONE: (a) front-end style/polish pass on Academy or art-styler surfaces, (b) roadmap upgrade — refine tasks, detail the next milestone, prune stale notes, (c) generate more art inspirations or style preview thumbnails, (d) expand the curriculum with a new movement/artist entry (respecting PUBLIC-DOMAIN-POLICY.md). Note which option ran in the PR. This task never reaches done and does not count toward milestone progress. See `run_log` for cycle history — do not re-accumulate RAN entries here.
 
       RAN 2026-07-28T06:13:00Z (claude-conductor-scheduled-20260728T060705Z-aa-t010-lane3): option (c), inspiration/preview assets. Full detail in `run_log`.
+
+      Merged conductor PR #1294 as squash f3d54b52edac478ae023aa2bf069bc795027b115 after Worker PR CI (23/23 checks) passed. The inspiration-assets cycle (lane 3) added docs/inspiration-sets/keepsake-portrait-four-movements.md and rotated the next preferred lane to curriculum depth (lane 4).
     continuous_improvement:
       last_lane: 3  # 1=front-end polish, 2=roadmap accuracy, 3=inspiration assets, 4=curriculum depth
       next_lane: 4
