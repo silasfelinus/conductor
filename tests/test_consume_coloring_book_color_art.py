@@ -109,6 +109,73 @@ def test_recover_returns_none_on_unreachable_backend(monkeypatch):
     assert mod.recover_timed_out_job(entry(), 2702) is None
 
 
+def test_record_semantic_gate_error_stamps_job_id_when_missing(tmp_path, monkeypatch):
+    # t-035: a fresh submission's ArtJob completes and renders, but
+    # validate_candidate() then fails on something unrelated to the render (e.g. no
+    # ANTHROPIC_API_KEY). The raw error message has no job reference in it, so
+    # without stamping one on, referenced_job_id() can never recover the
+    # already-completed render and every future pass is forced into a genuine
+    # duplicate resubmission.
+    queue_file = tmp_path / "color-art-jobs.yaml"
+    queue_file.write_text(
+        yaml.safe_dump(
+            {
+                "defaults": {},
+                "books": [
+                    {
+                        "slug": "monster-recast",
+                        "entries": [{"id": "mr-018", "status": "pending", "title": "Blocked"}],
+                    }
+                ],
+            }
+        ),
+        encoding="utf-8",
+    )
+    monkeypatch.setattr(mod, "QUEUE_FILE", queue_file)
+
+    mod.record_semantic_gate_error(
+        entry(queue_id="mr-018"),
+        RuntimeError("ANTHROPIC_API_KEY is required for the production semantic art gate"),
+        job_id=3001,
+    )
+
+    stored = yaml.safe_load(queue_file.read_text())["books"][0]["entries"][0]["semantic_gate_error"]
+    assert stored == "job 3001: ANTHROPIC_API_KEY is required for the production semantic art gate"
+    assert mod.referenced_job_id({"semantic_gate_error": stored}) == 3001
+
+
+def test_record_semantic_gate_error_does_not_double_stamp_an_existing_job_reference(tmp_path, monkeypatch):
+    # A message that already names a job (e.g. the wait_for_job() timeout text)
+    # must not get a second, different job_id prepended -- that would make
+    # referenced_job_id() resolve to the wrong ArtJob.
+    queue_file = tmp_path / "color-art-jobs.yaml"
+    queue_file.write_text(
+        yaml.safe_dump(
+            {
+                "defaults": {},
+                "books": [
+                    {
+                        "slug": "monster-recast",
+                        "entries": [{"id": "mr-018", "status": "pending", "title": "Blocked"}],
+                    }
+                ],
+            }
+        ),
+        encoding="utf-8",
+    )
+    monkeypatch.setattr(mod, "QUEUE_FILE", queue_file)
+
+    mod.record_semantic_gate_error(
+        entry(queue_id="mr-018"),
+        RuntimeError("job 2751 timed out after 600s (still queued/running)"),
+        job_id=9999,
+    )
+
+    stored = yaml.safe_load(queue_file.read_text())["books"][0]["entries"][0]["semantic_gate_error"]
+    assert stored == "job 2751 timed out after 600s (still queued/running)"
+    assert mod.referenced_job_id({"semantic_gate_error": stored}) == 2751
+
+
 def test_build_entries_carries_semantic_gate_error_onto_the_consumption_entry(monkeypatch, tmp_path):
     # Regression: build_entries() previously only copied a fixed allowlist of
     # fields from the raw queue source onto the entry used by main()'s loop,
@@ -202,6 +269,71 @@ def test_dry_run_with_ids_bounds_pass_to_exactly_those_entries(monkeypatch, tmp_
     assert "1 of 2 pending" in out
     assert "ids=['mr-016']" in out
     assert "mr-001" not in out
+
+
+def test_live_fresh_submission_failure_stamps_job_id_for_future_recovery(monkeypatch, tmp_path, capsys):
+    # t-035: a *fresh* submission (no prior job reference at all -- distinct from
+    # the recovery-path regression above) enqueues, waits, and renders
+    # successfully, but validate_candidate() then fails (e.g. no
+    # ANTHROPIC_API_KEY). Before this fix the recorded semantic_gate_error had no
+    # "job N" text, so referenced_job_id() could never find the already-completed
+    # render on a later pass -- only a genuine (duplicate-risking) resubmission was
+    # possible. The newly submitted ArtJob's id must now end up recoverable.
+    queue_file = tmp_path / "color-art-jobs.yaml"
+    queue_file.write_text(
+        yaml.safe_dump(
+            {
+                "defaults": {},
+                "books": [
+                    {
+                        "slug": "monster-recast",
+                        "entries": [
+                            {
+                                "id": "mr-018",
+                                "status": "pending",
+                                "title": "Fresh Submission",
+                                "prompt": "A mummy family portrait",
+                                "image_path": "projects/coloring-book/sets/monster-recast/generated/mr-018.webp",
+                            }
+                        ],
+                    }
+                ],
+            }
+        ),
+        encoding="utf-8",
+    )
+    monkeypatch.setattr(mod, "QUEUE_FILE", queue_file)
+    monkeypatch.setattr(mod, "target_path", lambda entry: tmp_path / "candidate.webp")
+    monkeypatch.setattr(mod.consumer, "KR_API_TOKEN", "token")
+    monkeypatch.setattr(mod, "enqueue", lambda entry: (3001, False))
+    monkeypatch.setattr(mod.consumer, "wait_for_job", lambda job_id, timeout: {"artImageId": 555})
+    monkeypatch.setattr(mod.consumer, "fetch_image_b64", lambda art_image_id: "aGVsbG8=")
+
+    def fake_save_result(entry, image_b64):
+        destination = tmp_path / "candidate.webp"
+        destination.write_bytes(b"stub")
+        return destination
+
+    monkeypatch.setattr(mod, "save_result", fake_save_result)
+
+    def fake_validate_candidate(entry, destination):
+        raise RuntimeError("ANTHROPIC_API_KEY is required for the production semantic art gate")
+
+    monkeypatch.setattr(mod, "validate_candidate", fake_validate_candidate)
+    monkeypatch.setattr(
+        "sys.argv", ["consume_coloring_book_color_art.py", "--live", "--book", "monster-recast", "--ids", "mr-018"]
+    )
+
+    exit_code = mod.main()
+
+    assert exit_code == 1
+    stderr = capsys.readouterr().err
+    assert "FAILED" in stderr
+
+    _queue, entries = mod.build_entries("monster-recast")
+    stored_error = entries[0]["semantic_gate_error"]
+    assert stored_error == "job 3001: ANTHROPIC_API_KEY is required for the production semantic art gate"
+    assert mod.referenced_job_id(entries[0]) == 3001
 
 
 def test_live_recovery_blocked_by_missing_semantic_credential_preserves_job_reference(monkeypatch, tmp_path, capsys):

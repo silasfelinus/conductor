@@ -768,7 +768,7 @@ tasks:
 - id: t-035
   milestone: m4
   title: Record a fresh submission's new ArtJob id so a missing-credential semantic-gate failure is recoverable too
-  status: claimed
+  status: review
   passes: 0
   stakes: reversible
   owner: worker
@@ -793,6 +793,25 @@ tasks:
     text format referenced_job_id() already parses) so it becomes recoverable via the same
     recover_timed_out_job() path t-032 just hardened, instead of only degrading to a fresh
     resubmission. Add regression coverage mirroring t-032's tests.
+
+    DONE 2026-07-28: record_semantic_gate_error() now takes an optional job_id and stamps
+    "job N: <message>" onto the stored semantic_gate_error whenever the message doesn't
+    already carry a "job N" reference (so a recovery-path message that already names its
+    job, e.g. the wait_for_job() timeout text, is never double-stamped). main()'s fresh-
+    submission branch tracks the newly enqueued job's id in a submitted_job_id variable
+    (mirroring the existing stuck_job_id tracking for the recovery branch) and passes it
+    through on the record_semantic_gate_error() call in the except handler. enqueue()
+    failing outright (no ArtJob ever created, e.g. mr-018's HTTP 500) leaves
+    submitted_job_id unset, so that case is correctly left unstamped -- only a fresh
+    submission whose ArtJob actually completed and rendered, then failed verification,
+    gets a recoverable reference. Added 3 regression tests: two unit tests on
+    record_semantic_gate_error() (stamps when missing, does not double-stamp when
+    present) and one main()-level integration test mirroring t-032's
+    test_live_recovery_blocked_by_missing_semantic_credential_preserves_job_reference,
+    covering the fresh-submission path instead of the recovery path. Full suite:
+    705 passed, 1 pre-existing failure (test_committed_ledger_schema_conformance,
+    already tracked as hard needs-human at conductor/t-090, unrelated to this change --
+    confirmed unaffected with `git stash`), 1 skipped.
   claimed_by: conductor-scheduled-20260728T1700Z-cb-t035-burst
   claimed_at: '2026-07-28T17:09:54Z'
 
