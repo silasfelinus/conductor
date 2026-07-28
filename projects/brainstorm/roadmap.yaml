@@ -44,13 +44,41 @@ tasks:
   - id: t-001
     milestone: m1
     title: Generate this cycle's pitches
-    status: claimed
-    owner: worker
+    status: ready
+    owner: null
     updated: '2026-07-28T09:09:13Z'
     passes: 0
     stakes: reversible
     recurring: true
     note: >
+      2026-07-28 cycle (conductor burst rotation, claude-conductor-burst-20260728T0909Z-bs-t001):
+      queue was at 3/6 awaiting-silas before this cycle, leaving room for up to 3 new. Wrote 2
+      new pitches (kept to 2, not the full 3, on quality grounds — a third candidate around
+      Silas's "5 comic pitches under the genre guidelines" note was dropped because no genre
+      guidance actually exists in CONTROL.md's brainstorm section to write against; see the
+      dedup/gap note below rather than fabricating genres). (1)
+      pitches/2026-07-28-kind-robots-figurine-stl-line.md (new-products/cross-project) —
+      connects two already-designed-but-never-run halves: digital-storefront's pre-approved
+      `stl-3d` product type (unused by any current catalog item) and model-builder/t-012's
+      spec'd Hunyuan3D-to-STL pipeline (designed, never executed for a real Reward). (2)
+      pitches/2026-07-28-kind-robots-branch-janitor.md (ai-networker-upgrades) — ports
+      conductor's proven scripts/branch_janitor.py + workflow to kind_robots, which has no
+      equivalent; grounded in two independent 2026-07-28 TALKBACK entries that each hit the
+      identical missing capability this week. Checked both against pitches/*.md (all statuses),
+      every projects/*/roadmap.yaml goal/task, STATUS.md's active inventory, and the relevant
+      kind_robots-side folders (scripts/, .github/workflows/) before writing either — no
+      overlap found with existing pitches, shipped features, or roadmap tasks.
+
+      GAP NOTED (not fixed this cycle, scope creep to fix inline): brainstorm/roadmap.yaml's
+      own notes_from_silas references "genre and direction guidance in CONTROL.md" for comic
+      pitches, but CONTROL.md's `### brainstorm` section currently has no genre guidance at
+      all (checked the full file). This is the same class of prose-drift CONTROL.md itself
+      warns about elsewhere (see the kindrobots-unraid priority.yaml precedent, 2026-07-14) —
+      either the guidance was never written down, or it lives somewhere this pass didn't find.
+      Left as `needs-human` bait for Silas rather than guessing at genres and shipping
+      possibly-misaligned comic pitches; flagging here so a future cycle doesn't rediscover
+      this cold.
+
       2026-07-12 hygiene run: reviewed the six lingering awaiting-silas pitches.
       Archived the Kind Robots coloring pack and Conductor agent-health dashboard as
       duplicates, and superseded the AI session-credits subscription because the
@@ -66,5 +94,3 @@ tasks:
       inside an existing project, add a task or kaizen there instead of creating a
       pitch. Open one PR with all truly new pitches, return this recurring task to
       ready, and never set it to done.
-    claimed_by: claude-conductor-burst-20260728T0909Z-bs-t001
-    claimed_at: '2026-07-28T09:09:13Z'

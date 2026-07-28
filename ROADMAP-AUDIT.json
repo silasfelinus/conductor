@@ -1,16 +1,16 @@
 {
-  "generated_at": "2026-07-28T06:15:13.382699+00:00",
+  "generated_at": "2026-07-28T09:11:29.643203+00:00",
   "summary": {
     "roadmaps": 42,
     "active_projects": 23,
-    "tasks": 724,
-    "ready": 34,
+    "tasks": 726,
+    "ready": 32,
     "waiting": 47,
     "needs_human": 24,
-    "in_progress": 1,
-    "done": 607,
+    "in_progress": 2,
+    "done": 610,
     "errors": 0,
-    "warnings": 2,
+    "warnings": 3,
     "info": 56
   },
   "projects": [
@@ -40,16 +40,16 @@
       "autonomous": true,
       "task_count": 49,
       "counts": {
+        "claimed": 1,
         "done": 45,
         "needs-human": 2,
-        "ready": 1,
         "waiting": 1
       },
       "open_count": 4,
       "human_attention": 2,
-      "ready": 1,
+      "ready": 0,
       "waiting": 1,
-      "claimed": 0,
+      "claimed": 1,
       "review": 0,
       "done": 45
     },
@@ -62,16 +62,15 @@
       "task_count": 32,
       "counts": {
         "done": 21,
-        "ready": 1,
-        "review": 1,
+        "ready": 2,
         "waiting": 9
       },
       "open_count": 11,
       "human_attention": 0,
-      "ready": 1,
+      "ready": 2,
       "waiting": 9,
       "claimed": 0,
-      "review": 1,
+      "review": 0,
       "done": 21
     },
     {
@@ -306,9 +305,9 @@
       "override_status": "active",
       "priority_index": 16,
       "autonomous": false,
-      "task_count": 32,
+      "task_count": 33,
       "counts": {
-        "done": 29,
+        "done": 30,
         "ready": 3
       },
       "open_count": 3,
@@ -317,7 +316,7 @@
       "waiting": 0,
       "claimed": 0,
       "review": 0,
-      "done": 29
+      "done": 30
     },
     {
       "slug": "animation-manager",
@@ -325,9 +324,9 @@
       "override_status": "active",
       "priority_index": 17,
       "autonomous": true,
-      "task_count": 15,
+      "task_count": 16,
       "counts": {
-        "done": 12,
+        "done": 13,
         "ready": 3
       },
       "open_count": 3,
@@ -336,7 +335,7 @@
       "waiting": 0,
       "claimed": 0,
       "review": 0,
-      "done": 12
+      "done": 13
     },
     {
       "slug": "animation-studio",
@@ -384,17 +383,16 @@
       "autonomous": false,
       "task_count": 89,
       "counts": {
-        "done": 86,
-        "needs-human": 2,
-        "ready": 1
+        "done": 87,
+        "needs-human": 2
       },
-      "open_count": 3,
+      "open_count": 2,
       "human_attention": 2,
-      "ready": 1,
+      "ready": 0,
       "waiting": 0,
       "claimed": 0,
       "review": 0,
-      "done": 86
+      "done": 87
     },
     {
       "slug": "serendipity",
@@ -424,14 +422,14 @@
       "task_count": 10,
       "counts": {
         "done": 9,
-        "ready": 1
+        "review": 1
       },
       "open_count": 1,
       "human_attention": 0,
-      "ready": 1,
+      "ready": 0,
       "waiting": 0,
       "claimed": 0,
-      "review": 0,
+      "review": 1,
       "done": 9
     },
     {
@@ -817,6 +815,13 @@
     }
   ],
   "findings": [
+    {
+      "severity": "warning",
+      "code": "CONTINUOUS_IMPROVEMENT_NOTE_DRIFT",
+      "project": "ai-art-academy",
+      "task": "t-010",
+      "message": "Task note mentions a lane rotation but continuous_improvement.last_run predates the task's updated timestamp \u2014 the continuous_improvement block (last_lane/next_lane/last_run/last_pr) may be stale relative to the note."
+    },
     {
       "severity": "warning",
       "code": "ACTIVE_PROJECT_ALL_DONE",
