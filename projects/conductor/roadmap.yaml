@@ -2935,10 +2935,10 @@ tasks:
   - id: t-092
     milestone: m2
     title: "Add a lightweight review-claim marker so concurrent sessions stop duplicating PR review/close-out work"
-    status: ready
+    status: claimed
     passes: 0
     stakes: reversible
-    owner: null
+    owner: worker
     note: |
       KAIZEN (from a four-way rotation collision, 2026-07-28, see root TALKBACK.md
       this same date): this session and at least three other concurrent sessions
@@ -2976,5 +2976,6 @@ tasks:
       recurring daily-pitch tasks specifically (animation-manager/t-006,
       brainstorm's recurring pitch task, etc.), since those don't have a PR to claim
       against until after the work is already done.
-    claimed_by: null
-    claimed_at: null
+    claimed_by: reviewer/claude-conductor-agentrun-20260728T2320Z-c-t092
+    claimed_at: '2026-07-28T23:13:49Z'
+    updated: '2026-07-28T23:13:49Z'
