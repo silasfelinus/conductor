@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Process connector-safe, proposal-targeted Coloring Book Studio events."""
+"""Process connector-safe Coloring Book Studio events."""
 
 from __future__ import annotations
 
@@ -19,14 +19,17 @@ EVENT_DIR = ROOT / "color-art-events"
 COLOR_CONSUMER = ROOT / "scripts" / "consume_coloring_book_studio_request.py"
 PRODUCTION_CONSUMER = ROOT / "scripts" / "manage_coloring_book_production.py"
 ADOPTION_CONSUMER = ROOT / "scripts" / "adopt_coloring_book_asset.py"
+COVER_CONSUMER = ROOT / "scripts" / "manage_coloring_book_cover.py"
 ALLOWED_BOOKS = ("monster-recast", "hollywood-recast", "kind-robots")
-ALLOWED_OPERATIONS = (
+INTERIOR_OPERATIONS = (
     "generate-color-proposals",
     "accept-color",
     "generate-bw",
     "accept-bw",
     "finalize-pair",
 )
+COVER_OPERATIONS = ("generate-cover", "accept-cover", "finalize-cover")
+ALLOWED_OPERATIONS = INTERIOR_OPERATIONS + COVER_OPERATIONS
 BOOK_PATTERNS = {
     "monster-recast": re.compile(r"^(?:mr-\d{3}|mr-group-\d{3})$"),
     "hollywood-recast": re.compile(r"^hwr-\d{3}$"),
@@ -60,8 +63,25 @@ class ColorArtEvent:
     timeout: int
     force: bool
 
+    @property
+    def is_cover(self) -> bool:
+        return self.operation in COVER_OPERATIONS
+
     def command(self, *, live: bool) -> list[str]:
-        if self.operation == "generate-color-proposals":
+        if self.is_cover:
+            command = [
+                sys.executable,
+                str(COVER_CONSUMER),
+                "--operation",
+                self.operation,
+                "--book",
+                self.book,
+                "--timeout",
+                str(self.timeout),
+            ]
+            if self.source_path:
+                command.extend(("--source-path", self.source_path))
+        elif self.operation == "generate-color-proposals":
             command = [
                 sys.executable,
                 str(COLOR_CONSUMER),
@@ -111,21 +131,15 @@ def _integer(value: Any, field: str) -> int:
     return value
 
 
-def _source_path(
-    value: Any,
-    *,
-    book: str,
-    operation: str,
-    proposal_ids: list[str],
-) -> str | None:
+def _source_path(value: Any, *, book: str, operation: str) -> str | None:
     if value is None or value == "":
         return None
     if not isinstance(value, str):
         raise ValueError("source_path must be a string")
-    if operation not in ("accept-color", "accept-bw"):
-        raise ValueError("source_path is supported only for accept-color and accept-bw")
-    if len(proposal_ids) != 1:
-        raise ValueError("source_path requires exactly one proposal id")
+    if operation not in ("accept-color", "accept-bw", "accept-cover"):
+        raise ValueError(
+            "source_path is supported only for accept-color, accept-bw, and accept-cover"
+        )
 
     clean = value.strip().replace("\\", "/")
     prefix = f"projects/coloring-book/sets/{book}/"
@@ -143,6 +157,30 @@ def _source_path(
     ):
         raise ValueError("source_path must be a safe image path inside the selected set")
     return clean
+
+
+def _proposal_ids(data: dict[str, Any], book: str, operation: str) -> list[str]:
+    raw_ids = data.get("proposal_ids")
+    if operation in COVER_OPERATIONS:
+        if raw_ids not in (None, []):
+            raise ValueError("cover operations do not accept proposal_ids")
+        return []
+
+    if not isinstance(raw_ids, list) or not raw_ids:
+        raise ValueError("proposal_ids must be a non-empty list")
+    if len(raw_ids) > MAX_PROPOSALS:
+        raise ValueError(f"proposal_ids may contain at most {MAX_PROPOSALS} items")
+
+    proposal_ids: list[str] = []
+    for value in raw_ids:
+        if not isinstance(value, str) or not value.strip():
+            raise ValueError("proposal_ids must contain non-empty strings")
+        proposal_id = value.strip()
+        if not BOOK_PATTERNS[book].fullmatch(proposal_id):
+            raise ValueError(f"proposal id {proposal_id!r} does not belong to {book}")
+        if proposal_id not in proposal_ids:
+            proposal_ids.append(proposal_id)
+    return proposal_ids
 
 
 def load_event(path: Path) -> ColorArtEvent:
@@ -166,28 +204,16 @@ def load_event(path: Path) -> ColorArtEvent:
     if book not in ALLOWED_BOOKS:
         raise ValueError(f"book must be one of: {', '.join(ALLOWED_BOOKS)}")
 
-    raw_ids = data.get("proposal_ids")
-    if not isinstance(raw_ids, list) or not raw_ids:
-        raise ValueError("proposal_ids must be a non-empty list")
-    if len(raw_ids) > MAX_PROPOSALS:
-        raise ValueError(f"proposal_ids may contain at most {MAX_PROPOSALS} items")
-
-    proposal_ids: list[str] = []
-    for value in raw_ids:
-        if not isinstance(value, str) or not value.strip():
-            raise ValueError("proposal_ids must contain non-empty strings")
-        proposal_id = value.strip()
-        if not BOOK_PATTERNS[str(book)].fullmatch(proposal_id):
-            raise ValueError(f"proposal id {proposal_id!r} does not belong to {book}")
-        if proposal_id not in proposal_ids:
-            proposal_ids.append(proposal_id)
-
+    operation_text = str(operation)
+    book_text = str(book)
+    proposal_ids = _proposal_ids(data, book_text, operation_text)
     source_path = _source_path(
         data.get("source_path"),
-        book=str(book),
-        operation=str(operation),
-        proposal_ids=proposal_ids,
+        book=book_text,
+        operation=operation_text,
     )
+    if source_path and operation_text in INTERIOR_OPERATIONS and len(proposal_ids) != 1:
+        raise ValueError("source_path requires exactly one proposal id")
 
     timeout = _integer(data.get("timeout", 600), "timeout")
     if not MIN_TIMEOUT <= timeout <= MAX_TIMEOUT:
@@ -196,17 +222,21 @@ def load_event(path: Path) -> ColorArtEvent:
     force = data.get("force", False)
     if not isinstance(force, bool):
         raise ValueError("force must be a boolean")
-    if force and operation not in ("generate-color-proposals", "generate-bw"):
+    if force and operation_text not in (
+        "generate-color-proposals",
+        "generate-bw",
+        "generate-cover",
+    ):
         raise ValueError(
-            "force is only supported for generate-color-proposals and generate-bw"
+            "force is supported only for generate-color-proposals, generate-bw, and generate-cover"
         )
     if source_path and force:
         raise ValueError("source_path adoption cannot be combined with force")
 
     return ColorArtEvent(
         path=path,
-        operation=str(operation),
-        book=str(book),
+        operation=operation_text,
+        book=book_text,
         proposal_ids=tuple(proposal_ids),
         source_path=source_path,
         timeout=timeout,
@@ -229,18 +259,28 @@ def process_event(event: ColorArtEvent, *, live: bool) -> int:
 
     if not live:
         return 0
-    if event.operation in ("generate-color-proposals", "generate-bw"):
-        if not os.environ.get("KR_API_TOKEN"):
-            print(
-                "KR_API_TOKEN is required for live coloring generation events.",
-                file=sys.stderr,
-            )
-            return 1
     if event.operation in (
         "generate-color-proposals",
         "generate-bw",
+        "generate-cover",
+    ) and not os.environ.get("KR_API_TOKEN"):
+        print(
+            "KR_API_TOKEN is required for live coloring generation events.",
+            file=sys.stderr,
+        )
+        return 1
+
+    semantic_operations = {
+        "generate-color-proposals",
+        "generate-bw",
         "finalize-pair",
-    ) or (event.operation == "accept-bw" and event.source_path):
+        "generate-cover",
+        "accept-cover",
+        "finalize-cover",
+    }
+    if event.operation in semantic_operations or (
+        event.operation == "accept-bw" and event.source_path
+    ):
         if not os.environ.get("ANTHROPIC_API_KEY"):
             print(
                 "ANTHROPIC_API_KEY is required for semantic coloring review.",
