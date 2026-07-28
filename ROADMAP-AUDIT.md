@@ -1,13 +1,13 @@
 # Roadmap Audit
 
-Generated: `2026-07-28T17:14:25.489419+00:00`
+Generated: `2026-07-28T18:08:12.369914+00:00`
 
 This is a conservative structural audit. It reports suspicious state; it does not automatically change task status or remove human gates.
 
 ## Portfolio snapshot
 
-- **42** roadmaps, **23** active projects, **736** tasks
-- **31 ready**, **47 waiting**, **26 needs-human**, **3 claimed/review**, **618 done**
+- **42** roadmaps, **23** active projects, **738** tasks
+- **32 ready**, **47 waiting**, **26 needs-human**, **1 claimed/review**, **621 done**
 - Findings: **0 errors**, **2 warnings**, **56 informational**
 
 ## Project inventory
@@ -16,7 +16,7 @@ This is a conservative structural audit. It reports suspicious state; it does no
 |---:|---|---|---|---:|---:|---:|---:|---:|
 | 1 | `challenge-center` | finished | software | 0 | 0 | 0 | 0 | 20 / 20 |
 | 2 | `ai-art-academy` | active | software | 0 | 1 | 2 | 1 | 48 / 52 |
-| 3 | `coloring-book` | active | software | 2 | 9 | 1 | 1 | 23 / 36 |
+| 3 | `coloring-book` | active | software | 2 | 9 | 1 | 0 | 24 / 36 |
 | 4 | `humboldt-scoop` | finished | software | 0 | 0 | 0 | 0 | 8 / 8 |
 | 5 | `humboldt-scoop-cms` | active | software | 0 | 0 | 1 | 0 | 11 / 12 |
 | 6 | `digital-storefront` | active | software | 0 | 0 | 1 | 0 | 31 / 32 |
@@ -29,7 +29,7 @@ This is a conservative structural audit. It reports suspicious state; it does no
 | 13 | `superkate-services-calculator` | finished | software | 0 | 0 | 0 | 0 | 37 / 37 |
 | 14 | `superkate-hairstyle-ai` | paused | software | 1 | 0 | 1 | 0 | 19 / 21 |
 | 15 | `newsfeed` | active | software | 0 | 0 | 0 | 0 | 22 / 22 |
-| 16 | `model-builder` | active | software | 2 | 0 | 0 | 1 | 31 / 34 |
+| 16 | `model-builder` | active | software | 3 | 0 | 0 | 0 | 32 / 35 |
 | 17 | `animation-manager` | active | software | 2 | 0 | 0 | 0 | 14 / 16 |
 | 18 | `animation-studio` | retired | software | 3 | 4 | 0 | 0 | 1 / 8 |
 | 19 | `ecosystem-map` | finished | software | 0 | 0 | 0 | 0 | 8 / 8 |
@@ -44,7 +44,7 @@ This is a conservative structural audit. It reports suspicious state; it does no
 | 28 | `alexa-integration` | active | software | 1 | 0 | 1 | 0 | 16 / 18 |
 | 29 | `conductor-app` | active | software | 2 | 0 | 0 | 0 | 12 / 14 |
 | 30 | `appmaker` | active | software | 2 | 0 | 0 | 0 | 10 / 12 |
-| 31 | `media-watchlist` | active | software | 2 | 0 | 0 | 0 | 12 / 14 |
+| 31 | `media-watchlist` | active | software | 2 | 0 | 0 | 0 | 13 / 15 |
 | 32 | `sketchy` | finished | software | 0 | 0 | 0 | 0 | 8 / 8 |
 | 33 | `pinball-hero` | retired | content | 0 | 2 | 2 | 0 | 2 / 6 |
 | 34 | `recipe-box` | retired | software | 0 | 2 | 1 | 0 | 0 / 3 |
