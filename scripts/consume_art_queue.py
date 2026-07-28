@@ -60,15 +60,21 @@ def entry_to_job(entry: dict[str, Any]):
     engine = _core.normalize_engine(normalized.get("engine"))
     seed = normalized.get("seed")
     seed_is_unset = not isinstance(seed, int) or isinstance(seed, bool) or seed < 0
-
-    if (
+    synthetic_seed = (
         engine in _core.COMFY_WORKFLOW_ENGINES
         and seed_is_unset
         and not uses_specialized_attempt_recovery(normalized)
-    ):
+    )
+
+    if synthetic_seed:
         normalized["seed"] = stable_retry_seed(normalized)
 
-    return _core_entry_to_job(normalized)
+    job = _core_entry_to_job(normalized)
+    if synthetic_seed:
+        payload = job.get("payload")
+        if isinstance(payload, dict):
+            payload.pop("seed", None)
+    return job
 
 
 _core.retry_seed_identity = retry_seed_identity
