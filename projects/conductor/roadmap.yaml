@@ -2786,10 +2786,10 @@ tasks:
   - id: t-088
     milestone: m2
     title: Backfill projects/images/manifest.json's model field once a real generator supplies an engine/model value
-    status: ready
+    status: claimed
     passes: 0
     stakes: reversible
-    updated: '2026-07-28T02:59:00Z'
+    updated: '2026-07-28T04:20:00Z'
     note: >
       Kaizen from t-087 (PR #1279): record_project_art_provenance() already carries a `model`
       field through projects/images/manifest.json's schema, but writes it as null today because
@@ -2798,6 +2798,6 @@ tasks:
       anywhere in this pipeline yet. Once a real generator (or ArtJob-based generation, if wired
       into this pipeline) does supply one, thread it through build_lookup() into the manifest
       entries rather than leaving the field permanently null.
-    owner: null
-    claimed_by: null
-    claimed_at: null
+    owner: worker
+    claimed_by: 20260728T042000Z-worker-conductor-t088-a31e
+    claimed_at: '2026-07-28T04:20:00Z'
