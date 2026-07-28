@@ -4662,3 +4662,26 @@ records:
     regenerated seed file) verify fast and merge clean when the implementer confirms the
     regenerated file came straight from the existing generator script rather than a hand
     edit -- worth keeping as the template for future one-off icon/asset requests.'
+- date: 2026-07-28
+  project: media-watchlist
+  task: t-013
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'Fifth consecutive media-watchlist stats-wiring task (t-006, t-010, t-012, t-013) finding
+    server data already computed and needing only front-end wiring -- confirming the premise (grep
+    the API route) before writing UI code keeps these cycles fast and single-pass.'
+- date: 2026-07-28
+  project: coloring-book
+  task: t-022
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'Path-safety logic duplicated at both the event-intake layer and the executing script
+    (process_coloring_art_events.py and adopt_coloring_book_asset.py both re-validate source_path
+    independently) is a defense-in-depth pattern worth reusing for other event-driven scripts that
+    accept a filesystem path from an external event file.'
