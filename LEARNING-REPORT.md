@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-07-28T04:20:28Z
+Generated: 2026-07-28T04:25:41Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **394**
-- Outcomes: blocked: 12, cancelled: 1, done: 381
+- Closed tasks recorded: **396**
+- Outcomes: blocked: 12, cancelled: 1, done: 383
 - Success rate: **97%**
 - Average passes on successful tasks: **0.0**
 
@@ -15,7 +15,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 | Project | Closed | Success rate |
 |---|---|---|
-| ai-art-academy | 50 | 100% |
+| ai-art-academy | 51 | 100% |
 | alexa-integration | 2 | 100% |
 | animation-manager | 11 | 100% |
 | animation-studio | 2 | 50% |
@@ -25,7 +25,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | challenge-center | 16 | 100% |
 | coat-dance | 8 | 0% |
 | coloring-book | 16 | 100% |
-| conductor | 54 | 100% |
+| conductor | 55 | 100% |
 | conductor-app | 2 | 100% |
 | davinci | 1 | 100% |
 | digital-storefront | 24 | 100% |
@@ -57,7 +57,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 15 | 40% |
-| software | 379 | 99% |
+| software | 381 | 99% |
 
 ## Failure categories
 
@@ -65,7 +65,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 |---|---|
 | actionable | 8 |
 | quality | 7 |
-| transient | 5 |
+| transient | 6 |
 
 ## Kaizen targets
 
@@ -73,10 +73,12 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - kind `content` — 40% success over 15 closed tasks; aim the next kaizen task here
 - failure category `actionable` — 8 occurrences; look for the shared cause across its records
 - failure category `quality` — 7 occurrences; look for the shared cause across its records
-- failure category `transient` — 5 occurrences; look for the shared cause across its records
+- failure category `transient` — 6 occurrences; look for the shared cause across its records
 
 ## Recent lessons
 
+- 2026-07-28 `ai-art-academy/t-010` — Running claim_task.py only after implementing (instead of before, per AGENTS.md step 6) turns the claim check into a post-hoc formality instead of a reservation — this session duplicated another session's identical lane-4 sync work and had to close its own kind_robots PR as superseded. Claim first, implement second, every time, even when the task looks unclaimed at a glance.
+- 2026-07-28 `conductor/t-088` — A well-templated connector-only Worker PR (What changed/How I verified/Flags/Kaizen all filled in specifically) needs no manual roadmap close-out — the task-events auto-processor flipped this task to done within the same minute the merge landed.
 - 2026-07-28 `coloring-book/t-031` — A local polling timeout is not proof that an asynchronous ArtJob failed. Generic consumers must rebuild an identical request identity on retry or persist and recover the original job id; otherwise a fresh randomized seed silently converts a retry into duplicate production work. Compatibility tests must also preserve the public module's monkeypatch surface when a long implementation is wrapped rather than edited in place.
 - 2026-07-28 `conductor/t-087` — The "Analyze (javascript-typescript)" CodeQL check routinely runs 40+ minutes in this repo (confirmed on three separate PRs in one session) but does not gate merge -- attempting a merge once every other check is green succeeds immediately rather than needing to wait for CodeQL to finish. Don't block a merge decision on it; treat it as informational.
 - 2026-07-28 `ai-art-academy/t-010` — A recurring task's continuous_improvement block can drift from its own note within a single cycle (note updated, structured block not) -- the new audit_roadmaps.py CONTINUOUS_IMPROVEMENT_NOTE_DRIFT check (t-049, same session) caught this on its first live run against this exact task, confirming the checker earns its keep immediately rather than only in theory.
@@ -85,8 +87,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-07-28 `coloring-book/t-022` — Live-testing a fix against the real queue (not just unit tests) caught a second bug the first commit alone would have shipped silently -- build_entries() dropped the very field (semantic_gate_error) the new recovery logic needed to fire. Worth running --live whenever a sandbox has the token for it, even when unit coverage already looks complete.
 - 2026-07-27 `ai-art-academy/t-047` — A kaizen task naming the exact fix (which consumers, which store method) still needs an investigation pass before editing -- checking whether the target genuinely never needs to survive a component's unmount (in-flight uploads, other readers) turned a plausible-looking one-liner into a verified-safe change across all 7 call sites in one pass.
 - 2026-07-27 `media-watchlist/t-012` — Third cycle in a row on watchlist-browse.vue finding server-computed/validated data (month/season filters this time) that the UI never surfaced -- worth a full BROWSE-UX.md vs. UI audit rather than one gap per cycle.
-- 2026-07-27 `digital-storefront/t-023` — A hard needs-human gate does not have to sit idle waiting for a scheduled Reviewer sweep -- Silas merged kind_robots PR #1056 directly within ~30 minutes of it opening. Treat a direct merge by the repo owner as the explicit clearance event itself (confirm via merged_by on the PR, not just merged: true, since an agent must never self-grant approved_by_human) rather than waiting for a separate roadmap-editing round from Silas -- close the loop (approved_by_human: true, status: done) in the same session once that signal is confirmed.
-- 2026-07-27 `ai-art-academy/t-046` — A rearm-to-ready transition is not automatically symmetric with every other ready transition in the same processor -- the rearm branch of compute_transition_ops had cleared owner but not claimed_by/claimed_at, letting stale claim metadata survive an entire cycle. When adding a new status-transition branch to a shared state-machine function, diff its field clears against the other branches for the same target status rather than assuming symmetry; the regression test should assert clearance, not just the status value.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-07-28T04:20:28Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-07-28T04:25:41Z_
