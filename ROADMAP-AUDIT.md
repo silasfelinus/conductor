@@ -1,14 +1,14 @@
 # Roadmap Audit
 
-Generated: `2026-07-28T03:11:09.792823+00:00`
+Generated: `2026-07-28T03:25:15.651830+00:00`
 
 This is a conservative structural audit. It reports suspicious state; it does not automatically change task status or remove human gates.
 
 ## Portfolio snapshot
 
 - **42** roadmaps, **23** active projects, **722** tasks
-- **35 ready**, **47 waiting**, **24 needs-human**, **1 claimed/review**, **604 done**
-- Findings: **0 errors**, **0 warnings**, **56 informational**
+- **33 ready**, **47 waiting**, **24 needs-human**, **2 claimed/review**, **605 done**
+- Findings: **0 errors**, **2 warnings**, **56 informational**
 
 ## Project inventory
 
@@ -16,7 +16,7 @@ This is a conservative structural audit. It reports suspicious state; it does no
 |---:|---|---|---|---:|---:|---:|---:|---:|
 | 1 | `challenge-center` | finished | software | 0 | 0 | 0 | 0 | 20 / 20 |
 | 2 | `ai-art-academy` | active | software | 1 | 1 | 2 | 0 | 45 / 49 |
-| 3 | `coloring-book` | active | software | 2 | 9 | 0 | 1 | 20 / 32 |
+| 3 | `coloring-book` | active | software | 1 | 9 | 0 | 2 | 20 / 32 |
 | 4 | `humboldt-scoop` | finished | software | 0 | 0 | 0 | 0 | 8 / 8 |
 | 5 | `humboldt-scoop-cms` | active | software | 0 | 0 | 1 | 0 | 11 / 12 |
 | 6 | `digital-storefront` | active | software | 0 | 0 | 1 | 0 | 31 / 32 |
@@ -28,7 +28,7 @@ This is a conservative structural audit. It reports suspicious state; it does no
 | 12 | `mona-salai` | paused | software | 2 | 10 | 0 | 0 | 1 / 13 |
 | 13 | `superkate-services-calculator` | finished | software | 0 | 0 | 0 | 0 | 37 / 37 |
 | 14 | `superkate-hairstyle-ai` | paused | software | 1 | 0 | 1 | 0 | 19 / 21 |
-| 15 | `newsfeed` | active | software | 1 | 0 | 0 | 0 | 21 / 22 |
+| 15 | `newsfeed` | active | software | 0 | 0 | 0 | 0 | 22 / 22 |
 | 16 | `model-builder` | active | software | 2 | 0 | 0 | 0 | 29 / 31 |
 | 17 | `animation-manager` | active | software | 3 | 0 | 0 | 0 | 12 / 15 |
 | 18 | `animation-studio` | retired | software | 3 | 4 | 0 | 0 | 1 / 8 |
@@ -63,9 +63,10 @@ This is a conservative structural audit. It reports suspicious state; it does no
 
 _None._
 
-### Warning (0)
+### Warning (2)
 
-_None._
+- **ACTIVE_PROJECT_ALL_DONE** — `newsfeed`: All tasks are done but project override remains active.
+- **ACTIVE_PROJECT_NO_OPEN_TASKS** — `newsfeed`: Active project has no open tasks; mark finished/paused or add an intentional recurring task.
 
 ### Info (56)
 
