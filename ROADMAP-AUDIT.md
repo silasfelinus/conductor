@@ -1,13 +1,13 @@
 # Roadmap Audit
 
-Generated: `2026-07-28T18:34:18.488737+00:00`
+Generated: `2026-07-28T19:15:31.757255+00:00`
 
 This is a conservative structural audit. It reports suspicious state; it does not automatically change task status or remove human gates.
 
 ## Portfolio snapshot
 
-- **42** roadmaps, **23** active projects, **738** tasks
-- **31 ready**, **47 waiting**, **26 needs-human**, **1 claimed/review**, **622 done**
+- **42** roadmaps, **23** active projects, **739** tasks
+- **30 ready**, **47 waiting**, **26 needs-human**, **2 claimed/review**, **623 done**
 - Findings: **0 errors**, **2 warnings**, **56 informational**
 
 ## Project inventory
@@ -16,7 +16,7 @@ This is a conservative structural audit. It reports suspicious state; it does no
 |---:|---|---|---|---:|---:|---:|---:|---:|
 | 1 | `challenge-center` | finished | software | 0 | 0 | 0 | 0 | 20 / 20 |
 | 2 | `ai-art-academy` | active | software | 0 | 1 | 2 | 1 | 48 / 52 |
-| 3 | `coloring-book` | active | software | 2 | 9 | 1 | 0 | 24 / 36 |
+| 3 | `coloring-book` | active | software | 1 | 9 | 1 | 0 | 25 / 36 |
 | 4 | `humboldt-scoop` | finished | software | 0 | 0 | 0 | 0 | 8 / 8 |
 | 5 | `humboldt-scoop-cms` | active | software | 0 | 0 | 1 | 0 | 11 / 12 |
 | 6 | `digital-storefront` | active | software | 0 | 0 | 1 | 0 | 31 / 32 |
@@ -29,11 +29,11 @@ This is a conservative structural audit. It reports suspicious state; it does no
 | 13 | `superkate-services-calculator` | finished | software | 0 | 0 | 0 | 0 | 37 / 37 |
 | 14 | `superkate-hairstyle-ai` | paused | software | 1 | 0 | 1 | 0 | 19 / 21 |
 | 15 | `newsfeed` | active | software | 0 | 0 | 0 | 0 | 22 / 22 |
-| 16 | `model-builder` | active | software | 2 | 0 | 0 | 0 | 33 / 35 |
+| 16 | `model-builder` | active | software | 1 | 0 | 0 | 1 | 33 / 35 |
 | 17 | `animation-manager` | active | software | 2 | 0 | 0 | 0 | 14 / 16 |
 | 18 | `animation-studio` | retired | software | 3 | 4 | 0 | 0 | 1 / 8 |
 | 19 | `ecosystem-map` | finished | software | 0 | 0 | 0 | 0 | 8 / 8 |
-| 20 | `conductor` | active | software | 0 | 0 | 3 | 0 | 87 / 90 |
+| 20 | `conductor` | active | software | 1 | 0 | 3 | 0 | 87 / 91 |
 | 21 | `serendipity` | active | software | 1 | 0 | 0 | 0 | 11 / 12 |
 | 22 | `storymaker` | active | software | 1 | 0 | 0 | 0 | 9 / 10 |
 | 23 | `davinci` | finished | software | 0 | 0 | 0 | 0 | 15 / 15 |
