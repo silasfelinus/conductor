@@ -2803,10 +2803,10 @@ tasks:
   - id: t-089
     milestone: m2
     title: No art-prompts.yaml asset currently sets model/engine, so t-088's new provenance plumbing stays dormant
-    status: ready
+    status: claimed
     passes: 0
     stakes: reversible
-    owner: null
+    owner: worker
     note: >
       Kaizen from t-088/PR #1287 (Reviewer merge, 2026-07-28): queue_missing_project_art.py
       now threads an asset's `model`/`engine` field through art-generate.yaml into
@@ -2822,3 +2822,6 @@ tasks:
       dependent on upstream data that doesn't exist yet. Either way, verify with a fresh
       `grep -c "model:\|engine:" projects/art-prompts.yaml` before and after to confirm the
       plumbing actually gets exercised, not just present.
+    claimed_by: 20260728T061055Z-worker-conductor-t089-a31
+    claimed_at: '2026-07-28T06:10:55Z'
+    updated: '2026-07-28T06:10:55Z'
