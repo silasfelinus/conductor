@@ -35,8 +35,8 @@ Config via env (all have sensible defaults):
   CIVITAI_TOKEN      Civitai API token (optional but recommended)
   LORA_POLL_SECONDS  directory poll interval       (default 20)
   PYTHON             python executable to run the tools (default: this one)
-  SCAN_SCRIPT        path to scan_loras.py         [required]
-  IMPORT_SCRIPT      path to import_catalog.py     [required]
+  SCAN_SCRIPT        path to scan_loras.py    (default: vendored ./lora-catalog/)
+  IMPORT_SCRIPT      path to import_catalog.py(default: vendored ./lora-catalog/)
   CATALOG_OUT        scratch dir for the catalog   (default <LORA_ROOT>/.import-work)
   CACHE_DB           scanner sqlite cache path     (default: scanner picks <out>/;
                      set to LOCAL disk when the tree is an SMB mount)
@@ -61,8 +61,15 @@ CIVITAI_TOKEN = os.environ.get("CIVITAI_TOKEN", "").strip()
 # relay owns POLL_SECONDS for the render loop; the watcher paces itself.
 LORA_POLL_SECONDS = float(os.environ.get("LORA_POLL_SECONDS", "20"))
 PYTHON = os.environ.get("PYTHON", sys.executable)
-SCAN_SCRIPT = os.environ.get("SCAN_SCRIPT", "").strip()
-IMPORT_SCRIPT = os.environ.get("IMPORT_SCRIPT", "").strip()
+# The scan/import tools are vendored LOCALLY next to this agent (lora-catalog/)
+# so they run from the conductor checkout on the render box, never over the Z:
+# network mount. Only the LoRA files are remote; the code is local. Override
+# only to point at a different local checkout.
+_HERE = os.path.dirname(os.path.abspath(__file__))
+_DEFAULT_SCAN = os.path.join(_HERE, "lora-catalog", "scan_loras.py")
+_DEFAULT_IMPORT = os.path.join(_HERE, "lora-catalog", "import_catalog.py")
+SCAN_SCRIPT = (os.environ.get("SCAN_SCRIPT") or _DEFAULT_SCAN).strip()
+IMPORT_SCRIPT = (os.environ.get("IMPORT_SCRIPT") or _DEFAULT_IMPORT).strip()
 CATALOG_OUT = os.environ.get(
     "CATALOG_OUT", os.path.join(LORA_ROOT, ".import-work") if LORA_ROOT else ""
 ).strip()
@@ -154,12 +161,12 @@ def process_batch():
 
 
 def missing_config():
-    """Return the names of any required env vars that are unset."""
+    """Return the names of any required env vars that are unset. SCAN_SCRIPT /
+    IMPORT_SCRIPT are omitted — they default to the vendored local copies."""
     return [
         n for n, v in (
             ("KR_RELAY_TOKEN", KR_RELAY_TOKEN), ("LORA_ROOT", LORA_ROOT),
-            ("LORA_IMPORT_DIR", LORA_IMPORT_DIR), ("SCAN_SCRIPT", SCAN_SCRIPT),
-            ("IMPORT_SCRIPT", IMPORT_SCRIPT),
+            ("LORA_IMPORT_DIR", LORA_IMPORT_DIR),
         ) if not v
     ]
 

@@ -109,11 +109,11 @@ module.exports = {
     //
     // The canonical media destination is Z:/kindrobots/image. Override
     // KR_MEDIA_IMAGES_DIR only when intentionally moving the mounted image root.
-    // SCAN_SCRIPT/IMPORT_SCRIPT default to the copies on the Z: share
-    // (/mnt/user/pc/scripts/lora-catalog on alexandria); point them at a local
-    // kind_robots checkout instead if you keep one. Refresh those two scripts
-    // whenever the kind_robots lora-catalog tools change. Open a NEW shell
-    // after setx, then:
+    // The scan/import tools run from LOCAL disk — vendored copies in
+    // ops/home-server/lora-catalog/ (the agent defaults to them). Only the LoRA
+    // files are remote (LORA_ROOT=Z:). Re-sync those two scripts from kind_robots
+    // when its lora-catalog tools change (see lora-catalog/PROVENANCE.md).
+    // Open a NEW shell after setx, then:
     //   pm2 start ecosystem.config.js --only kr-relay
     //   pm2 save
     // NEVER paste the real token into this file — it is committed to git.
@@ -142,12 +142,9 @@ module.exports = {
           process.env.LORA_IMPORT_DIR || 'Z:/ai/models/Lora/import',
         CIVITAI_TOKEN: process.env.CIVITAI_TOKEN || '',
         LORA_POLL_SECONDS: process.env.LORA_POLL_SECONDS || '20',
-        SCAN_SCRIPT:
-          process.env.SCAN_SCRIPT ||
-          'Z:/scripts/lora-catalog/scan_loras.py',
-        IMPORT_SCRIPT:
-          process.env.IMPORT_SCRIPT ||
-          'Z:/scripts/lora-catalog/import_catalog.py',
+        // SCAN_SCRIPT/IMPORT_SCRIPT are intentionally NOT set here: the agent
+        // defaults to the vendored copies in ops/home-server/lora-catalog/,
+        // which run from LOCAL disk in this checkout — never over the Z: mount.
         // Keep the scanner's sqlite cache on LOCAL disk, not the SMB share.
         CACHE_DB: process.env.CACHE_DB || `${LOG_DIR}/.lora-cache.sqlite`
       },
