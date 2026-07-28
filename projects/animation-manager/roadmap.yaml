@@ -475,7 +475,7 @@ tasks:
   - id: t-015
     milestone: m6
     title: "Request a terrarium/jar/glass-box icon for the animation catalog"
-    status: claimed
+    status: review
     owner: reviewer
     passes: 0
     stakes: reversible
@@ -487,6 +487,14 @@ tasks:
       ad hoc. Generate (or otherwise source) a terrarium/jar/glass-box icon, add it to
       assets/icons/, and swap impossible-terrarium's catalog entry (and any other pending
       candidate that reuses cube/box as a placeholder) to reference it.
-    updated: '2026-07-28T07:16:45Z'
+
+      IMPLEMENTED 2026-07-28 (conductor burst-mode cycle): added a hand-drawn line-art
+      assets/icons/terrarium.svg matching the existing kind-icon style (24x24, currentColor
+      stroke), swapped impossible-terrarium's stores/animationCatalog.ts entry from
+      kind-icon:cube to kind-icon:terrarium (confirmed it was the only catalog entry
+      reusing cube/box as a placeholder), and regenerated stores/seeds/validIcons.ts via
+      the existing utils/scripts/updateKindIcons.js. kind_robots PR #1086 open, watching
+      CI.
+    updated: '2026-07-28T07:17:43Z'
     claimed_by: claude-conductor-burst-20260728T0800Z-am-t015
     claimed_at: '2026-07-28T07:16:45Z'
