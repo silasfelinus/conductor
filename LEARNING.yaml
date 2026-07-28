@@ -4635,3 +4635,18 @@ records:
     the claim check into a post-hoc formality instead of a reservation — this session duplicated another
     session's identical lane-4 sync work and had to close its own kind_robots PR as superseded. Claim
     first, implement second, every time, even when the task looks unclaimed at a glance.
+- date: '2026-07-28'
+  project: model-builder
+  task: t-032
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'A structural dev-time check (walk CREATE_TARGETS x the Prisma relation graph,
+    assert linkSourceToTarget has a matching case) immediately caught a real gap
+    (Reward -> Character) the same day it was written -- two prior gaps of this exact
+    shape (Dream->Bot, Character->Scenario) had only ever surfaced via manual
+    read-through across separate cycles. Where a hand-maintained mapping mirrors a
+    second source of truth (here: Prisma relations), prefer a structural consistency
+    check over relying on the next manual audit to catch drift.'

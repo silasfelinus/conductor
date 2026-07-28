@@ -671,7 +671,7 @@ tasks:
   - id: t-032
     milestone: m6
     title: "Add a dev-time consistency check between CREATE_TARGETS and linkSourceToTarget"
-    status: claimed
+    status: done
     passes: 0
     stakes: reversible
     owner: worker
@@ -692,3 +692,24 @@ tasks:
       weren't confirmed. Front-end/test-only change; no schema change expected.
     claimed_by: claude-conductor-burst-20260728T061206-mb-t032
     claimed_at: '2026-07-28T06:12:07Z'
+
+  - id: t-033
+    milestone: m6
+    title: "Restrict relationship-expansion CREATE outputs to source types with a real relation"
+    status: ready
+    passes: 0
+    stakes: reversible
+    owner: null
+    note: >
+      Kaizen from t-032 (kind_robots PR #1081, 2026-07-28). The relationship-expansion
+      recipe's OUTPUT_CATALOG (stores/helpers/modelBuilderRecipes.ts) does not currently
+      restrict which expand-* outputs are shown per source type -- RECIPES['relationship-
+      expansion'].sourceTypes just lists every eligible source model generically, so
+      nothing in the UI stops e.g. a Reward source from picking "Manager bot" or
+      "Narrator bot" (targetType Bot), which have no Prisma relation to Reward and would
+      create an orphaned, unlinked Bot on commit. Add a per-output source-type
+      restriction (e.g. a `sourceTypes?: SourceTypeKey[]` field on BuildOutputConfig,
+      populated from the same relation graph t-032's verifyModelBuilderLinkCoverage.ts
+      already derives from prisma/schema.prisma) so the picker only ever offers
+      expand-* outputs a source type actually has a relation for. Front-end/store change;
+      no schema change expected.
