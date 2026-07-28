@@ -219,16 +219,22 @@ tasks:
   - id: t-007
     milestone: m5
     title: Generate dream-cycle project art (icon, card, hero)
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
     updated: '2026-07-28T01:07:47Z'
     note: >
-      Prompts queued in projects/art-prompts.yaml (added 2026-07-10). Generate and
-      commit via the auto art pipeline (pre-approved) to projects/images/
-      dream-cycle-{icon,card,hero}.webp, keep prompt/model/source metadata, and
-      remove the ART-PROMPTS.md pending entries once files land.
+      All three assets already existed at projects/images/dream-cycle-{icon,card,hero}.webp
+      (landed via the auto art pipeline's "process task events" flow, committed
+      2026-07-27, prior to this task ever being picked up) — verified dimensions
+      match spec (icon 256x256, card 512x768, hero 1280x720, all valid WebP). The
+      roadmap task itself was just never flipped to done, and the ART-PROMPTS.md
+      pending entry was never removed, so the task kept surfacing as stale `ready`
+      work for 18+ days. This pass closes both gaps. No prompt/model/source metadata
+      file exists for these three files specifically (unlike inspiration images,
+      which get a gallery.json) — that's a genuine process gap worth a kaizen task
+      rather than something to fabricate after the fact.
     claimed_by: conductor-scheduled-agent-20260728T010746Z-dc-t007
     claimed_at: '2026-07-28T01:07:47Z'
   - id: t-008

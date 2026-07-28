@@ -2729,3 +2729,30 @@ tasks:
       Kaizen from a Worker's own near-miss this cycle (conductor/t-085 close-out, TALKBACK.md 2026-07-26 "pattern" entry): after merging a PR, a Worker session manually flipping its task's status to done (per AGENTS.md's close-out step) can race a platform-generated "PR merged" auto-queued task-event in task-events/ for the SAME task -- both derive staleness from a monotonically increasing `updated` timestamp, and whichever writes last makes the other look stale. process_task_events.py's stale_reason() then silently unlink()s the losing event next run, discarding its `learning:`/`note:` payload with no error and no trace (scripts/process_task_events.py process(), ~lines 311-320). Spec: before a Worker session hand-writes a `status: done` transition, check task-events/ for an already-queued event naming the same project/task; if one exists, either let it apply on its own (don't also hand-write the transition) or explicitly consume it first (apply its learning/note payload, then delete the file) instead of racing it blind. Consider also hardening process_task_events.py itself: when an event is dropped as stale AND it carries a non-empty `learning`/`note` payload, log a visible warning (not just the terse STALE skip line) so a lost payload is at least noticeable, rather than requiring a session to catch it by chance via a well-timed git fetch, as happened this cycle.
     claimed_by: claude-scheduled-20260727T010602Z-cond-t086
     claimed_at: '2026-07-27T01:06:05Z'
+
+  - id: t-087
+    milestone: m2
+    title: "Project icon/card/hero art has no provenance metadata, unlike inspiration images' gallery.json"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-28T01:07:47Z'
+    note: >
+      Kaizen from closing dream-cycle/t-007 (2026-07-28 burst-mode rotation cycle): its three
+      files (projects/images/dream-cycle-{icon,card,hero}.webp) had already landed via the auto
+      art pipeline's "process task events" flow days before the task was ever picked up, but the
+      task note asked to "keep prompt/model/source metadata" and there was nowhere for that to
+      live -- unlike ArtCollection inspirations, which get a per-slug gallery.json (see AGENTS.md
+      "Image intake pipeline"), a project's icon/card/hero trio has no equivalent record. This
+      makes two things harder: (1) verifying a stale-looking `ready` art task is actually already
+      done (had to fall back to file-existence + dimension checks instead of reading a manifest),
+      and (2) recreating/regenerating an asset later without re-deriving the original prompt from
+      scratch. Spec: extend distribute_images.py's project-art routing (or add a small sibling
+      script) to write/update a `projects/images/<slug>.meta.json` (or one shared
+      `projects/images/manifest.json` keyed by filename) recording prompt, engine/model, and
+      source art-generate.yaml entry whenever an icon/card/hero file lands, mirroring the
+      inspiration gallery.json shape closely enough that a future consumer doesn't need two
+      different parsers.
+    claimed_by: null
+    claimed_at: null

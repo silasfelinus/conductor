@@ -4549,3 +4549,16 @@ records:
     first commit alone would have shipped silently -- build_entries() dropped the very field
     (semantic_gate_error) the new recovery logic needed to fire. Worth running --live whenever a
     sandbox has the token for it, even when unit coverage already looks complete.
+- date: 2026-07-28
+  project: dream-cycle
+  task: t-007
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: A ready task can be stale-done, not stale-blocked -- before assuming a long-untouched
+    ready task needs implementation work, check whether its deliverable already landed via a
+    side channel (here, the auto art pipeline's task-events flow beat the roadmap task to
+    completion by over two weeks). Verifying file existence/shape first turned this into a
+    same-cycle close instead of a duplicate art-generation request.
