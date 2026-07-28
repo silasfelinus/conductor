@@ -737,4 +737,39 @@ tasks:
     recovery_batch can appear. Step 3 (wiring `--require-recovery-actionable` into the
     workflow) stays deferred until step 2 is actually proven live, per the original kaizen
     note.
+- id: t-033
+  milestone: m6
+  title: 'Vendor-neutral print-package readiness manifest and status script'
+  status: done
+  owner: reviewer
+  passes: 0
+  stakes: reversible
+  updated: '2026-07-28T12:05:00Z'
+  note: 'conductor PR #1322 (merged) added projects/coloring-book/print-package.yaml (per-book
+    layout/export fields, all null until Silas picks a printer), scripts/coloring_book_package_status.py
+    (source/layout/exports readiness state machine + ordered interior manifest generation),
+    tests/test_coloring_book_package_status.py, and a main-branch workflow that refreshes
+    print-readiness.yaml on relevant pushes. No trim/bleed/binding/paper/printer decisions are
+    made or assumed; nothing is published. Retroactively logged here — the PR opened from a
+    branch outside the worker/*-claude/* claim flow with no prior roadmap task, so t-025
+    (Package and register Monster Recast book 1) still gates final packaging on t-022 as before.
+    This task exists only to give the merged infra an audit trail.'
+- id: t-034
+  milestone: m6
+  title: Wire print-package.yaml layout fields once Silas picks a printer/trim/binding
+  status: needs-human
+  owner: null
+  passes: 0
+  stakes: reversible
+  soft_gate: true
+  updated: '2026-07-28T12:05:00Z'
+  note: 'FOR SILAS: scripts/coloring_book_package_status.py (conductor PR #1322) tracks per-book
+    print layout as explicit null fields in projects/coloring-book/print-package.yaml (trim_width_inches,
+    trim_height_inches, bleed_inches, binding, paper, interior_color_mode, cover_color_mode,
+    printer_template, page_count_includes_blanks, inside_cover_printing, barcode_area_reserved).
+    TO APPROVE: pick a printer/POD vendor and fill in those fields for at least Monster Recast
+    (order 1) — once source assets are also complete (t-022), the status script will report
+    exports-needed with the exact next action. What unblocks: t-025 (package and register
+    Monster Recast book 1) can then generate the ordered interior PDF, cover-wrap PDF, and
+    source archive against real values instead of guessing a trim size.'
 
