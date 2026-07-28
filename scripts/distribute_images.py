@@ -27,11 +27,19 @@ On every run, collections.json and a gallery.json for every conductor-owned
 indexed folder are regenerated (with full filenames) so folder<->collection
 parity holds and each collection resolves on Vercel, where the CDN can't be globbed.
 
+Whenever a project icon/card/hero file lands in projects/images/, its prompt,
+model, and source yaml section are recorded in projects/images/manifest.json
+(keyed by filename) — the project-art equivalent of an ArtCollection's
+gallery.json, so provenance survives even after the source art-generate.yaml /
+art-prompts.yaml entry is pruned.
+
 Usage:
   python scripts/distribute_images.py           # move files
   python scripts/distribute_images.py --dry-run  # preview without moving
 """
 
+import datetime as dt
+import json
 import os
 import re
 import shutil
@@ -47,6 +55,7 @@ UNMATCHED_DIR = PROCESS_DIR / "unmatched"
 ART_GENERATE_FILE = REPO_ROOT / "projects" / "art-generate.yaml"
 ART_PROMPTS_FILE = REPO_ROOT / "projects" / "art-prompts.yaml"
 KIND_ROBOTS_ROOT = REPO_ROOT.parent / "kind_robots"
+PROJECT_ART_MANIFEST = REPO_ROOT / "projects" / "images" / "manifest.json"
 
 IMAGE_EXTS = {".webp", ".png", ".jpg", ".jpeg"}
 DRY_RUN = "--dry-run" in sys.argv
@@ -74,6 +83,11 @@ def build_lookup(gen_data, prompts_data):
                 lookup[Path(path).name] = {
                     "image_path": path,
                     "target_repo": "silasfelinus/conductor",
+                    "slug": project.get("project"),
+                    "variant": variant,
+                    "prompt": entry.get("prompt"),
+                    "model": entry.get("model") or entry.get("engine"),
+                    "source": "art-prompts.yaml:images",
                 }
 
     for project in prompts_data.get("inspirations") or []:
@@ -106,6 +120,11 @@ def build_lookup(gen_data, prompts_data):
             lookup[Path(path).name] = {
                 "image_path": path,
                 "target_repo": entry.get("target_repo", "silasfelinus/conductor"),
+                "slug": entry.get("project"),
+                "variant": entry.get("variant"),
+                "prompt": entry.get("prompt"),
+                "model": entry.get("model") or entry.get("engine"),
+                "source": "art-generate.yaml:batch",
             }
 
     return lookup
@@ -276,8 +295,6 @@ def write_gallery_manifest(folder_rel):
     entry lacking an image extension, so a bare stem like "comfy-4032" would
     resolve to comfy-4032.webp and 404 a .png. Keeping the extension makes
     .png/.jpg/.gif folders resolve correctly."""
-    import json
-
     folder = KIND_ROBOTS_ROOT / "public" / "images" / folder_rel
     if not folder.exists():
         return
@@ -288,14 +305,59 @@ def write_gallery_manifest(folder_rel):
     (folder / "gallery.json").write_text(json.dumps(names) + "\n")
 
 
+def record_project_art_provenance(filename, match, slugs):
+    """Record prompt/model/source provenance for a landed project icon/card/hero
+    file in projects/images/manifest.json, keyed by filename.
+
+    Mirrors the per-collection gallery.json in spirit (a small sidecar record
+    next to the images it describes) so a project's icon/card/hero trio has
+    the same "how was this made" trail that ArtCollection inspirations already
+    get, instead of requiring the original prompt to be re-derived from
+    scratch or a stale-looking `ready` art task to be verified by file
+    existence alone (conductor/t-087).
+    """
+    if match.get("target_repo") != "silasfelinus/conductor":
+        return
+    if Path(match.get("image_path", "")).parent != Path("projects/images"):
+        return
+
+    slug, variant = slug_and_utility_from_dest_filename(filename, slugs)
+    if variant not in ("icon", "card", "hero"):
+        return
+
+    manifest = {}
+    if PROJECT_ART_MANIFEST.exists():
+        try:
+            manifest = json.loads(PROJECT_ART_MANIFEST.read_text())
+        except json.JSONDecodeError:
+            manifest = {}
+
+    manifest[filename] = {
+        "slug": match.get("slug") or slug,
+        "variant": match.get("variant") or variant,
+        "prompt": match.get("prompt"),
+        "model": match.get("model"),
+        "source": match.get("source"),
+        "landed_at": dt.date.today().isoformat(),
+    }
+
+    if DRY_RUN:
+        print(f"  would record provenance  projects/images/manifest.json[{filename}]")
+        return
+
+    PROJECT_ART_MANIFEST.parent.mkdir(parents=True, exist_ok=True)
+    PROJECT_ART_MANIFEST.write_text(
+        json.dumps(manifest, indent=2, sort_keys=True) + "\n"
+    )
+    print(f"  recorded provenance  projects/images/manifest.json[{filename}]")
+
+
 def write_collections_index():
     """Regenerate public/images/collections.json: slug -> folder path
     (relative to public/images). Lets the kind_robots folder-collection
     endpoint resolve nested folders on the CDN, where it cannot glob.
     Precedence per the placement convention: nested > flat > artcollections.
     """
-    import json
-
     images_root = KIND_ROBOTS_ROOT / "public" / "images"
     if not images_root.exists():
         return {}
@@ -527,6 +589,7 @@ def distribute():
                 mirrored.append(str(mirrored_dest.relative_to(REPO_ROOT)))
             print(f"  would move  {fname}  →  {match['target_repo']}:{match['image_path']}")
             moved.append((fname, match))
+            record_project_art_provenance(fname, match, slugs)
         else:
             if preserve_path:
                 preserve_match = {
@@ -553,6 +616,7 @@ def distribute():
             src.unlink()
             print(f"  moved  {fname}  →  {match['target_repo']}:{match['image_path']}")
             moved.append((fname, match))
+            record_project_art_provenance(fname, match, slugs)
 
         if match["target_repo"] == "silasfelinus/kind_robots":
             parts = Path(match["image_path"]).parts
