@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-07-28T02:19:47Z
+Generated: 2026-07-28T02:23:06Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **392**
-- Outcomes: blocked: 12, cancelled: 1, done: 379
+- Closed tasks recorded: **393**
+- Outcomes: blocked: 12, cancelled: 1, done: 380
 - Success rate: **97%**
 - Average passes on successful tasks: **0.0**
 
@@ -25,7 +25,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | challenge-center | 16 | 100% |
 | coat-dance | 8 | 0% |
 | coloring-book | 15 | 100% |
-| conductor | 53 | 100% |
+| conductor | 54 | 100% |
 | conductor-app | 2 | 100% |
 | davinci | 1 | 100% |
 | digital-storefront | 24 | 100% |
@@ -57,7 +57,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 15 | 40% |
-| software | 377 | 99% |
+| software | 378 | 99% |
 
 ## Failure categories
 
@@ -77,6 +77,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-07-28 `conductor/t-087` — The "Analyze (javascript-typescript)" CodeQL check routinely runs 40+ minutes in this repo (confirmed on three separate PRs in one session) but does not gate merge -- attempting a merge once every other check is green succeeds immediately rather than needing to wait for CodeQL to finish. Don't block a merge decision on it; treat it as informational.
 - 2026-07-28 `ai-art-academy/t-010` — A recurring task's continuous_improvement block can drift from its own note within a single cycle (note updated, structured block not) -- the new audit_roadmaps.py CONTINUOUS_IMPROVEMENT_NOTE_DRIFT check (t-049, same session) caught this on its first live run against this exact task, confirming the checker earns its keep immediately rather than only in theory.
 - 2026-07-28 `ai-art-academy/t-049` — Validating a new audit heuristic against the live roadmap tree (not just a synthetic fixture) is a strong sanity check -- the new CONTINUOUS_IMPROVEMENT_NOTE_DRIFT rule immediately flagged the exact real-world t-010 drift it was written to catch, on the first run.
 - 2026-07-28 `dream-cycle/t-007` — A ready task can be stale-done, not stale-blocked -- before assuming a long-untouched ready task needs implementation work, check whether its deliverable already landed via a side channel (here, the auto art pipeline's task-events flow beat the roadmap task to completion by over two weeks). Verifying file existence/shape first turned this into a same-cycle close instead of a duplicate art-generation request.
@@ -86,7 +87,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-07-27 `digital-storefront/t-023` — A hard needs-human gate does not have to sit idle waiting for a scheduled Reviewer sweep -- Silas merged kind_robots PR #1056 directly within ~30 minutes of it opening. Treat a direct merge by the repo owner as the explicit clearance event itself (confirm via merged_by on the PR, not just merged: true, since an agent must never self-grant approved_by_human) rather than waiting for a separate roadmap-editing round from Silas -- close the loop (approved_by_human: true, status: done) in the same session once that signal is confirmed.
 - 2026-07-27 `ai-art-academy/t-046` — A rearm-to-ready transition is not automatically symmetric with every other ready transition in the same processor -- the rearm branch of compute_transition_ops had cleared owner but not claimed_by/claimed_at, letting stale claim metadata survive an entire cycle. When adding a new status-transition branch to a shared state-machine function, diff its field clears against the other branches for the same target status rather than assuming symmetry; the regression test should assert clearance, not just the status value.
 - 2026-07-27 `media-watchlist/t-006` — Third cycle in a row on this recurring polish task (2026-07-20, 2026-07-26, 2026-07-27) that found real server-side data already computed/accepted (CSV export filters, then Year+comics+TV-season stats) sitting unused because the front end never caught up. When touching a "polish the front end" task on a project whose backend predates the UI work, diff the API response/query-param shape against what the component actually renders/sends before assuming new backend scope is needed -- the gap is often pure wiring, which keeps the diff small and the pass clean.
-- 2026-07-27 `ai-art-academy/t-019` — Once conductor PR #1215 fixed distribute_images.py and proved one thumbnail (greek-vase-painting) actually live in production, t-019's gate ("at least one queued image present") was satisfied immediately — but the task itself sat unclaimed for a cycle because nothing re-checked it after the fix. Wiring the single confirmed-live image and shipping a graceful per-style fallback (rather than waiting for all 33 curriculum thumbnails to exist) let real progress land now instead of blocking on t-035's much larger re-queue-and-regenerate batch.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-07-28T02:19:47Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-07-28T02:23:06Z_
