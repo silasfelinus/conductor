@@ -216,7 +216,7 @@ tasks:
   - id: t-007
     milestone: m5
     title: "Build or polish one animation candidate from reaction evidence"
-    status: claimed
+    status: ready
     passes: 0
     stakes: reversible
     recurring: true
@@ -255,9 +255,13 @@ tasks:
       MERGED 2026-07-27 (~23:01 UTC, conductor scheduled Agent session, claude/festive-heisenberg-jz9y92): kind_robots PR #1069 confirmed all 5 CI checks green (Contract verifiers, TypeScript, facet-catalog, verify, GitGuardian), no review comments, squash-merged (8e78fba). Conductor PR #1264 (this roadmap note) also merged (squash 70d4685). PITCHES.yaml's impossible-terrarium entry updated to status: candidate with a builds: record (pending the deferred live-smoke pass before promoting to shipped, same as every prior candidate). Rearming to ready per the recurring-task convention.
 
       NOTE 2026-07-27T23:13:30Z (Silas task-event, processed on main as a concurrent rearm while this PR was still pending CI): the event's own note correctly deferred the PITCHES.yaml promotion to this PR/#1267 rather than overwriting it ("PITCHES.yaml promotion remains in conflicted closeout PRs #1266/#1267 and should be salvaged separately"). Resolved the resulting conflict by keeping this PR's version (already carries the PITCHES.yaml `builds:` record the event was waiting on) rather than the event's shorter placeholder note, per its own instruction. #1267 (the other closeout PR referenced) was closed as a duplicate/superseded by this PR.
-    updated: '2026-07-28T15:11:04Z'
-    claimed_by: conductor-scheduled-20260728T1510Z-am-t007-burst
-    claimed_at: '2026-07-28T15:11:04Z'
+
+      PROGRESS 2026-07-28 (~15:05-15:20 UTC, conductor scheduled burst-mode rotation, conductor-scheduled-20260728T1510Z-am-t007-burst): rotation landed on animation-manager this cycle (ai-art-academy, coloring-book, and model-builder had all just been worked in the immediately preceding cycles today). New Pacific calendar day since the last build (impossible-terrarium, merged 2026-07-27 ~23:01 UTC / ~16:01 PDT, Pacific day 07-27), so eligible. Built the next queued candidate, ink-oracle (priority 10 in PITCHES.yaml, next after impossible-terrarium). New components/screenfx/ink-oracle.vue -- a coarse curl-noise-like flow field (summed potential-vortex contributions from 2-3 slowly drifting vortices) advects a low-resolution ink-density grid (Float32Array, semi-Lagrangian sampling + light 3x3 diffusion blend) so tendrils fold and fade without ever repeating; rendered into a small offscreen canvas (ImageData/putImageData) upscaled with smoothing onto the visible canvas to keep simulation cost small, with the simulation step throttled to ~26/sec independent of the RAF render rate per the pitch's own performance-risk note. Pointer motion locally biases the flow field ("currents bend ink"); a click stamps a temporary circular void re-zeroed every step for ~2.5-3.5s so ink visibly routes around it before it closes. Reduced motion stops vortex drift, disables pointer/click interaction entirely, and slows decay for long fades, per the pitch's reduced-motion plan. Catalog entry added to stores/animationCatalog.ts (generationSafe: true, preferredSurface: fullscreen, icon kind-icon:crystal-ball -- a real icon already in assets/icons/, not a placeholder). Verified with the full provisioned toolchain (scripts/provision_kind_robots_deps.sh): eslint clean; prettier clean; full-project npm run test (vue-tsc --noEmit) exit 0 (fixed two real type errors surfaced along the way -- a noUncheckedIndexedAccess possibly-undefined array write, and an ImageData/Uint8ClampedArray<ArrayBufferLike> overload mismatch under this project's ES2023+ESNext-lib tsconfig, resolved with a Uint8ClampedArray<ArrayBuffer> cast at the one `new ImageData(...)` call site); npm run test:animation-catalog (39 effects, unique ids, 52 screenfx components resolved, 42 narrator aliases checked); npm run test:animation-component-attempts (39 slugs). python scripts/check_animation_novelty.py --strict (this repo): no collisions at or above 0.2 across all 18 pitches. Live browser smoke test and the Component attempt record (SPEC.md "Attempt records") are BOTH deferred -- same no-reachable-DATABASE_URL sandbox limitation as every prior t-007 entry. kind_robots PR #1107 (branch claude/dazzling-ptolemy-vmkdlz) -- open, CI running. PITCHES.yaml's ink-oracle entry already updated to status: candidate with a builds: record referencing #1107/f7a7494. Set status: review; will flip to done once CI is green and the PR merges.
+
+      MERGED 2026-07-28 (~15:25 UTC, same session): kind_robots PR #1107 confirmed all 7 CI checks green (Dedicated Storymaker studio contract, Contract verifiers, verify, Shared narrative UI contract, facet-catalog, TypeScript, GitGuardian), no review comments, squash-merged (e954848). Rearming to ready per the recurring-task convention.
+    updated: '2026-07-28T15:25:00Z'
+    claimed_by: null
+    claimed_at: null
     owner: worker
 
   - id: t-008
