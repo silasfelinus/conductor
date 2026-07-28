@@ -75,6 +75,8 @@ def summarize_queue(data: dict[str, Any], book_slug: str, batch_size: int | None
 
     queue_integrity_safe = len(duplicate_entry_ids) == 0 and len(duplicate_slots) == 0
     recovery_safe = len(duplicate_job_ids) == 0 and queue_integrity_safe
+    recovery_batch = recovery_candidates[:effective_batch_size] if recovery_safe else []
+    recovery_actionable = recovery_safe and len(recovery_batch) > 0
     retry_safe = len(errored) == 0 and recovery_safe
     actionable = retry_safe and len(next_batch) > 0
 
@@ -89,6 +91,9 @@ def summarize_queue(data: dict[str, Any], book_slug: str, batch_size: int | None
         "blocked_pending": [entry_summary(entry) for entry in errored],
         "recovery_candidates": [entry_summary(entry) for entry in recovery_candidates],
         "recovery_candidate_count": len(recovery_candidates) if recovery_safe else 0,
+        "recovery_batch": [entry_summary(entry) for entry in recovery_batch],
+        "recovery_actionable": recovery_actionable,
+        "recovery_actionable_count": len(recovery_batch),
         "fresh_submission_blocked": [entry_summary(entry) for entry in fresh_submission_blocked],
         "fresh_submission_blocked_count": len(fresh_submission_blocked),
         "duplicate_semantic_gate_job_ids": duplicate_job_ids,
@@ -110,6 +115,7 @@ def main() -> int:
     parser.add_argument("--require-retry-safe", action="store_true")
     parser.add_argument("--require-actionable", action="store_true")
     parser.add_argument("--require-recovery-candidates", action="store_true")
+    parser.add_argument("--require-recovery-actionable", action="store_true")
     args = parser.parse_args()
 
     try:
@@ -124,6 +130,8 @@ def main() -> int:
     if args.require_actionable and not summary["actionable"]:
         return 1
     if args.require_recovery_candidates and summary["recovery_candidate_count"] == 0:
+        return 1
+    if args.require_recovery_actionable and not summary["recovery_actionable"]:
         return 1
     return 0
 

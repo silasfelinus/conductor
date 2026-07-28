@@ -24,6 +24,9 @@ def test_summarizes_statuses_and_next_batch():
     assert [entry["id"] for entry in summary["next_batch"]] == ["mr-001", "mr-003"]
     assert summary["blocked_pending"] == []
     assert summary["recovery_candidates"] == []
+    assert summary["recovery_batch"] == []
+    assert summary["recovery_actionable"] is False
+    assert summary["recovery_actionable_count"] == 0
     assert summary["fresh_submission_blocked"] == []
     assert summary["queue_integrity_safe"] is True
     assert summary["recovery_safe"] is True
@@ -63,12 +66,33 @@ def test_semantic_gate_errors_are_classified_for_recovery_or_fresh_submission():
     assert [entry["id"] for entry in summary["recovery_candidates"]] == ["mr-001"]
     assert summary["recovery_candidates"][0]["semantic_gate_job_id"] == 2474
     assert summary["recovery_candidate_count"] == 1
+    assert [entry["id"] for entry in summary["recovery_batch"]] == ["mr-001"]
+    assert summary["recovery_actionable"] is True
+    assert summary["recovery_actionable_count"] == 1
     assert [entry["id"] for entry in summary["fresh_submission_blocked"]] == ["mr-002"]
     assert summary["fresh_submission_blocked_count"] == 1
     assert summary["recovery_safe"] is True
     assert summary["retry_safe"] is False
     assert summary["actionable"] is False
     assert summary["actionable_count"] == 0
+
+
+def test_recovery_batch_is_bounded_by_worker_pass_size():
+    summary = summarize_queue(
+        queue(
+            [
+                {"slot": 1, "id": "mr-001", "status": "pending", "semantic_gate_error": "job 2474 timed out"},
+                {"slot": 2, "id": "mr-002", "status": "pending", "semantic_gate_error": "job 2475 timed out"},
+                {"slot": 3, "id": "mr-003", "status": "pending", "semantic_gate_error": "job 2476 timed out"},
+            ]
+        ),
+        "monster-recast",
+    )
+
+    assert summary["recovery_candidate_count"] == 3
+    assert [entry["id"] for entry in summary["recovery_batch"]] == ["mr-001", "mr-002"]
+    assert summary["recovery_actionable"] is True
+    assert summary["recovery_actionable_count"] == 2
 
 
 def test_duplicate_job_ids_make_recovery_unsafe():
@@ -86,6 +110,9 @@ def test_duplicate_job_ids_make_recovery_unsafe():
     assert summary["next_batch"] == []
     assert summary["recovery_safe"] is False
     assert summary["recovery_candidate_count"] == 0
+    assert summary["recovery_batch"] == []
+    assert summary["recovery_actionable"] is False
+    assert summary["recovery_actionable_count"] == 0
     assert summary["retry_safe"] is False
     assert summary["actionable"] is False
     assert summary["actionable_count"] == 0
@@ -137,6 +164,8 @@ def test_empty_safe_queue_is_not_actionable():
     assert summary["actionable"] is False
     assert summary["actionable_count"] == 0
     assert summary["recovery_candidate_count"] == 0
+    assert summary["recovery_batch"] == []
+    assert summary["recovery_actionable"] is False
 
 
 def test_batch_size_must_be_positive():
