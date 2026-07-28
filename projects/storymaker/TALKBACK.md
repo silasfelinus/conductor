@@ -169,3 +169,33 @@ collisions" section covering same-session post-compaction claim collisions
 implementation), generalizing the existing concurrent-session guidance. Not filed
 as a roadmap task this cycle since it's a docs-only AGENTS.md edit any session can
 pick up directly; flagging here so it isn't lost.
+
+## 2026-07-28 | Reviewer (agent run) | storymaker/t-010 | pattern
+
+**Decision:** merged (both PRs)
+
+**Failure category:** null -- clean first-pass merge, no rejection.
+
+**Subject:** Reviewed and merged kind_robots PR #1089 (arm-confirm the New story
+button) and conductor PR #1298 (the roadmap status update tracking it).
+
+**What was good:**
+- The prior burst-mode session's roadmap note named the exact repo pattern being
+  reused (art-interact.vue's arm-on-first-click/confirm-on-second, no
+  `window.confirm()`), so verifying the diff against the note took one read —
+  the fix does exactly what the note says, scoped to a single file.
+- All 7 kind_robots checks and all 21 conductor checks were green before this
+  session touched either PR; no CI babysitting needed.
+
+**What to improve:**
+- Nothing notable this cycle — routine, well-documented, safe merge.
+
+**Kaizen task:** deferred -- the standing kaizen suggestion from the 2026-07-22
+entry above (generalizing "fetch-and-diff before any wrap-up commit" into
+AGENTS.md's Rotation collisions section) has since been written into AGENTS.md's
+"Same-session post-compaction collisions" subsection; no new systematic weakness
+surfaced this cycle to target instead.
+
+Reverted `status` to `ready` (not `done`) -- step (1)'s dashboard-tab/tutorial art
+substep remains open, still blocked on the art-generation relay per every prior
+cycle's note on this task.
