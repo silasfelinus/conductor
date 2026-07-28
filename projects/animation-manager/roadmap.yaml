@@ -503,19 +503,15 @@ tasks:
   - id: t-016
     milestone: m6
     title: "Flag placeholder-icon reuse in animationCatalog.ts automatically instead of relying on manual kaizen passes"
-    status: claimed
+    status: review
     owner: reviewer
     passes: 0
     stakes: reversible
     note: >
-      Kaizen from t-015 (Reviewer, kind_robots PR #1086, 2026-07-28): t-015 existed only
-      because t-007 happened to notice impossible-terrarium was reusing kind-icon:cube as
-      a loosely-fitting placeholder. Add a lightweight structural check (e.g. a small
-      addition to utils/scripts/updateKindIcons.js or a standalone script run in CI) that
-      flags any stores/animationCatalog.ts entry whose icon is a generic placeholder
-      (kind-icon:cube, kind-icon:box, or similar) so a dedicated-icon request surfaces on
-      its own the next time this happens, instead of depending on a future kaizen note to
-      catch it by chance.
-    updated: '2026-07-28T12:27:06Z'
+      IN REVIEW 2026-07-28 (session 2026-07-28T12-25-00Z-am-t016-placeholder-icon): added a GENERIC_PLACEHOLDER_ICONS check (kind-icon:cube, kind-icon:box) to utils/scripts/verifyAnimationCatalog.ts (already wired into contract-tests.yml as test:animation-catalog) -- fails with a message pointing at the terrarium.svg precedent (assets/icons/, node utils/scripts/updateKindIcons.js) if a future ANIMATION_EFFECTS entry reuses a placeholder icon. Verified: npm run test:animation-catalog passes against the current 38-entry catalog; manually confirmed the check fails with a clear message when temporarily forced to kind-icon:cube (reverted before commit); eslint clean; prettier clean; vue-tsc --noEmit exit 0. kind_robots PR #1104 open.
+
+      Original spec follows:
+      Kaizen from t-015 (Reviewer, kind_robots PR #1086, 2026-07-28): t-015 existed only because t-007 happened to notice impossible-terrarium was reusing kind-icon:cube as a loosely-fitting placeholder. Add a lightweight structural check (e.g. a small addition to utils/scripts/updateKindIcons.js or a standalone script run in CI) that flags any stores/animationCatalog.ts entry whose icon is a generic placeholder (kind-icon:cube, kind-icon:box, or similar) so a dedicated-icon request surfaces on its own the next time this happens, instead of depending on a future kaizen note to catch it by chance.
+    updated: '2026-07-28T12:33:57Z'
     claimed_by: 2026-07-28T12-25-00Z-am-t016-placeholder-icon
     claimed_at: '2026-07-28T12:27:06Z'
