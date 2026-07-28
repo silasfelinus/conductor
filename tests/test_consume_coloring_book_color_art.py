@@ -148,3 +148,144 @@ def test_build_entries_carries_semantic_gate_error_onto_the_consumption_entry(mo
 
     assert len(entries) == 1
     assert mod.referenced_job_id(entries[0]) == 2702
+
+
+def test_dry_run_with_ids_bounds_pass_to_exactly_those_entries(monkeypatch, tmp_path, capsys):
+    # Regression: a plain --limit takes the next N pending entries in queue-slot
+    # order, which mixes recovery-eligible entries (a stuck job to reconcile) with
+    # entries blocked on something else entirely (e.g. a missing ANTHROPIC_API_KEY,
+    # which --live would then retry as a brand-new, likely-to-fail-again enqueue).
+    # --ids must let a caller bound a run to exactly the recovery_batch reported by
+    # scripts/coloring_queue_status.py, skipping every other pending entry even
+    # when it sits earlier in queue order.
+    queue_file = tmp_path / "color-art-jobs.yaml"
+    queue_file.write_text(
+        yaml.safe_dump(
+            {
+                "defaults": {},
+                "books": [
+                    {
+                        "slug": "monster-recast",
+                        "entries": [
+                            {
+                                "id": "mr-001",
+                                "status": "pending",
+                                "title": "Blocked On Fresh Submission",
+                                "prompt": "A vampire family portrait",
+                                "image_path": "projects/coloring-book/sets/monster-recast/generated/mr-001.webp",
+                                "semantic_gate_error": "ANTHROPIC_API_KEY is required for the production semantic art gate",
+                            },
+                            {
+                                "id": "mr-016",
+                                "status": "pending",
+                                "title": "Recovery Candidate",
+                                "prompt": "A werewolf family portrait",
+                                "image_path": "projects/coloring-book/sets/monster-recast/generated/mr-016.webp",
+                                "semantic_gate_error": "job 2751 timed out after 600s (still queued/running)",
+                            },
+                        ],
+                    }
+                ],
+            }
+        ),
+        encoding="utf-8",
+    )
+    monkeypatch.setattr(mod, "QUEUE_FILE", queue_file)
+    monkeypatch.setattr(
+        "sys.argv", ["consume_coloring_book_color_art.py", "--book", "monster-recast", "--ids", "mr-016"]
+    )
+
+    exit_code = mod.main()
+
+    assert exit_code == 0
+    out = capsys.readouterr().out
+    assert "1 of 2 pending" in out
+    assert "ids=['mr-016']" in out
+    assert "mr-001" not in out
+
+
+def test_live_recovery_blocked_by_missing_semantic_credential_preserves_job_reference(monkeypatch, tmp_path, capsys):
+    # Regression (found running t-032 live 2026-07-28): a live recovery pass with
+    # no ANTHROPIC_API_KEY reconciles a completed ArtJob's image without
+    # submitting a duplicate, but validate_candidate still fails (the semantic
+    # gate itself requires the credential). The generic except-block handler used
+    # to overwrite the entry's semantic_gate_error with that failure message,
+    # erasing the "job N timed out" text a future recovery pass parses via
+    # referenced_job_id() -- without it, the next pass sees no job to recover and
+    # submits a genuine duplicate ArtJob for the same already-completed render.
+    # The original recoverable reference must survive this specific failure mode.
+    queue_file = tmp_path / "color-art-jobs.yaml"
+    queue_file.write_text(
+        yaml.safe_dump(
+            {
+                "defaults": {},
+                "books": [
+                    {
+                        "slug": "monster-recast",
+                        "entries": [
+                            {
+                                "id": "mr-016",
+                                "status": "pending",
+                                "title": "Recovery Candidate",
+                                "prompt": "A werewolf family portrait",
+                                "image_path": "projects/coloring-book/sets/monster-recast/generated/mr-016.webp",
+                                "semantic_gate_error": "job 2751 timed out after 600s (still queued/running)",
+                                "semantic_gate_error_at": "2026-07-28T10:58:59Z",
+                            }
+                        ],
+                    }
+                ],
+            }
+        ),
+        encoding="utf-8",
+    )
+    monkeypatch.setattr(mod, "QUEUE_FILE", queue_file)
+    monkeypatch.setattr(mod, "target_path", lambda entry: tmp_path / "candidate.webp")
+    monkeypatch.setattr(mod.consumer, "KR_API_TOKEN", "token")
+    monkeypatch.setattr(
+        mod.consumer,
+        "http_json",
+        lambda method, url: (
+            200,
+            {
+                "success": True,
+                "data": {
+                    "job": {
+                        "status": "DONE",
+                        "artImageId": 555,
+                        "payload": {"attempt": {"conceptId": "mr-016", "seed": 840016}},
+                    }
+                },
+            },
+        ),
+    )
+    monkeypatch.setattr(mod.consumer, "fetch_image_b64", lambda art_image_id: "aGVsbG8=")
+
+    def fake_save_result(entry, image_b64):
+        destination = tmp_path / "candidate.webp"
+        destination.write_bytes(b"stub")
+        return destination
+
+    monkeypatch.setattr(mod, "save_result", fake_save_result)
+
+    def fake_validate_candidate(entry, destination):
+        raise RuntimeError("ANTHROPIC_API_KEY is required for the production semantic art gate")
+
+    monkeypatch.setattr(mod, "validate_candidate", fake_validate_candidate)
+
+    def fail_enqueue(entry):
+        raise AssertionError("must not submit a duplicate ArtJob")
+
+    monkeypatch.setattr(mod, "enqueue", fail_enqueue)
+    monkeypatch.setattr(
+        "sys.argv", ["consume_coloring_book_color_art.py", "--live", "--book", "monster-recast", "--ids", "mr-016"]
+    )
+
+    exit_code = mod.main()
+
+    assert exit_code == 1
+    stderr = capsys.readouterr().err
+    assert "RECOVERY UNVERIFIED" in stderr
+
+    _queue, entries = mod.build_entries("monster-recast")
+    assert entries[0]["semantic_gate_error"] == "job 2751 timed out after 600s (still queued/running)"
