@@ -844,7 +844,7 @@ tasks:
   - id: t-036
     milestone: m6
     title: "Add a lint/regression guard for GENERATE_ASSETS-style completion-write races in modelBuilderStore.ts"
-    status: claimed
+    status: review
     passes: 0
     stakes: reversible
     owner: worker
@@ -873,6 +873,28 @@ tasks:
       were superseded and closed unmerged, but this specific kaizen idea was salvaged
       here since it's a genuinely good, independent suggestion distinct from anything
       this session's own review proposed.
+
+      PROGRESS 2026-07-28 (conductor scheduled Agent run, claude-conductor-agentrun-20260728T220700-mb-t036):
+      implemented on kind_robots branch claude/confident-bardeen-oevtq7, kind_robots PR
+      #1122 (open, CI running). Added utils/scripts/verifyModelBuilderCompletionGate.ts,
+      mirroring verifyModelBuilderLinkCoverage.ts's regex-extraction approach: walks
+      every async function in modelBuilderStore.ts, finds any item.stages.<KEY> = write
+      after that function's own first await, and fails if it isn't wrapped (directly or
+      via a named helper like finishGenerateAssets) in an
+      if (item.stages.<KEY>.status === '...') guard for the same key. Added a self-test
+      (verifyModelBuilderCompletionGate.test.ts) against a synthetic fixture, wired both
+      into package.json and contract-tests.yml. Ran the checker against the store BEFORE
+      writing any fix and it immediately found a real, previously-unfixed instance of the
+      same bug class in commitItem(): the COMMIT stage write after the commit POST
+      resolves was unconditional, so a concurrent upstream edit landing mid-request would
+      silently overwrite a markDownstreamStale-set 'stale' marker back to 'approved'.
+      Fixed with finishCommit (mirrors finishGenerateAssets exactly), marking COMMIT
+      'in-progress' for the request duration and resetting it on failure via the same
+      gate. Verified: self-test passes; the checker also independently confirmed via
+      git-stash re-run against the pre-fix file that it correctly flags exactly that one
+      violation. eslint clean (2 pre-existing no-empty errors in modelBuilderStore.ts
+      confirmed pre-existing via git-stash). prettier --check clean. Full-project
+      vue-tsc --noEmit exit 0. Will update with final CI/merge status.
     claimed_by: claude-conductor-agentrun-20260728T220700-mb-t036
     claimed_at: '2026-07-28T22:06:58Z'
     updated: '2026-07-28T22:06:58Z'
