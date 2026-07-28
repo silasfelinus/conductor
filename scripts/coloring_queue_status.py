@@ -160,7 +160,7 @@ def main() -> int:
         return 1
     if args.require_recovery_actionable and not summary["recovery_actionable"]:
         return 1
-    if not requirement_satisfied(summary, args.require_recommended_action):
+    if not requirement_satisfied(summary, getattr(args, "require_recommended_action", None)):
         return 1
     return 0
 
