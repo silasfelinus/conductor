@@ -502,7 +502,7 @@ tasks:
   - id: t-010
     milestone: m6
     title: Academy continuous improvement pass
-    status: claimed
+    status: ready
     recurring: true
     passes: 0
     stakes: reversible
@@ -510,16 +510,16 @@ tasks:
     note: |-
       Standing never-idle task (re-arms to ready after every completion, per the recurring-task rule). Each cycle pick ONE: (a) front-end style/polish pass on Academy or art-styler surfaces, (b) roadmap upgrade — refine tasks, detail the next milestone, prune stale notes, (c) generate more art inspirations or style preview thumbnails, (d) expand the curriculum with a new movement/artist entry (respecting PUBLIC-DOMAIN-POLICY.md). Note which option ran in the PR. This task never reaches done and does not count toward milestone progress. See `run_log` for cycle history — do not re-accumulate RAN entries here.
 
-      RAN 2026-07-28T03:15:00Z (2026-07-28T03-10-00Z-aa-t010-lane3-italian-futurism): option (c), inspiration/preview assets. Full detail in `run_log`.
+      RAN 2026-07-28T04:11:42Z (burst-20260728-aa-t010-lane4): option (d)/lesson-seed sync, closing the checklist's "Lesson seed entries" gap. Full detail in `run_log`.
     continuous_improvement:
-      last_lane: 3  # 1=front-end polish, 2=roadmap accuracy, 3=inspiration assets, 4=curriculum depth
-      next_lane: 4
-      last_run: '2026-07-28T03:15:00Z'
-      last_pr: 'conductor-only (lane-3 inspiration assets: drained the italian-futurism style-preview request; no kind_robots PR this cycle — image retained in projects/process/ pending relay delivery)'
+      last_lane: 4  # 1=front-end polish, 2=roadmap accuracy, 3=inspiration assets, 4=curriculum depth
+      next_lane: 1
+      last_run: '2026-07-28T04:11:42Z'
+      last_pr: 'kind_robots PR #1076'
     run_log: projects/ai-art-academy/docs/continuous-improvement-run-log.md
-    owner: worker
-    claimed_by: burst-20260728-aa-t010-lane4
-    claimed_at: '2026-07-28T04:11:42Z'
+    owner: null
+    claimed_by: null
+    claimed_at: null
 
   - id: t-015
     milestone: m4
