@@ -1,13 +1,13 @@
 # Roadmap Audit
 
-Generated: `2026-07-28T01:04:35.169951+00:00`
+Generated: `2026-07-28T01:18:58.764557+00:00`
 
 This is a conservative structural audit. It reports suspicious state; it does not automatically change task status or remove human gates.
 
 ## Portfolio snapshot
 
 - **42** roadmaps, **23** active projects, **719** tasks
-- **36 ready**, **47 waiting**, **24 needs-human**, **0 claimed/review**, **601 done**
+- **35 ready**, **47 waiting**, **24 needs-human**, **1 claimed/review**, **601 done**
 - Findings: **0 errors**, **0 warnings**, **56 informational**
 
 ## Project inventory
@@ -53,7 +53,7 @@ This is a conservative structural audit. It reports suspicious state; it does no
 | 37 | `engagement` | finished | software | 0 | 0 | 0 | 0 | 3 / 3 |
 | 38 | `ruler-hooked` | active | software | 1 | 0 | 0 | 0 | 11 / 12 |
 | 39 | `music-mentor` | active | software | 1 | 0 | 0 | 0 | 8 / 9 |
-| 40 | `dream-cycle` | active | software | 4 | 0 | 0 | 0 | 15 / 20 |
+| 40 | `dream-cycle` | active | software | 3 | 0 | 0 | 1 | 15 / 20 |
 | — | `approval-portal` | retired | software | 0 | 0 | 0 | 0 | 3 / 5 |
 | — | `humboldt-impropriety-calendar` | retired | brainstorm | 0 | 5 | 0 | 0 | 0 / 6 |
 
