@@ -502,15 +502,17 @@ tasks:
   - id: t-010
     milestone: m6
     title: Academy continuous improvement pass
-    status: claimed
+    status: review
     recurring: true
     passes: 0
     stakes: reversible
-    updated: '2026-07-28T01:39:28Z'
+    updated: '2026-07-28T01:44:00Z'
     note: |-
       Standing never-idle task (re-arms to ready after every completion, per the recurring-task rule). Each cycle pick ONE: (a) front-end style/polish pass on Academy or art-styler surfaces, (b) roadmap upgrade — refine tasks, detail the next milestone, prune stale notes, (c) generate more art inspirations or style preview thumbnails, (d) expand the curriculum with a new movement/artist entry (respecting PUBLIC-DOMAIN-POLICY.md). Note which option ran in the PR. This task never reaches done and does not count toward milestone progress. See `run_log` for cycle history — do not re-accumulate RAN entries here.
 
       RAN 2026-07-28T01:30:00Z (conductor-scheduled-agent-20260728T010700Z-aa-t010-lane4): option (d), curriculum depth. Added a new curriculum entry, Italian Futurism (`italian-futurism`, curriculum-outline.md §36), anchored solely on Umberto Boccioni (the only 1910 Futurist-manifesto co-signer whose death clears the policy's 1956 cutoff). Three example works verified directly against the Met Collection API. Full detail in `run_log`.
+
+      Implemented lane 1 front-end polish on worker/ai-art-academy-t-010-continue-learning-a31f: added a progress summary and one-click continuation into the next unexplored Academy lesson.
     continuous_improvement:
       last_lane: 4  # 1=front-end polish, 2=roadmap accuracy, 3=inspiration assets, 4=curriculum depth
       next_lane: 1
