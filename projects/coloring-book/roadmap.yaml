@@ -768,10 +768,10 @@ tasks:
 - id: t-035
   milestone: m4
   title: Record a fresh submission's new ArtJob id so a missing-credential semantic-gate failure is recoverable too
-  status: review
+  status: done
   passes: 0
   stakes: reversible
-  owner: worker
+  owner: null
   updated: '2026-07-28T17:09:54Z'
   note: >
     KAIZEN (from PR #1327, t-032, 2026-07-28): t-032 fixed consume_coloring_book_color_art.py
@@ -812,6 +812,10 @@ tasks:
     705 passed, 1 pre-existing failure (test_committed_ledger_schema_conformance,
     already tracked as hard needs-human at conductor/t-090, unrelated to this change --
     confirmed unaffected with `git stash`), 1 skipped.
+
+    Merged PR #1346 (b23ce46a). The red "Python test suite" CI check on that PR was
+    the same pre-existing conductor/t-090 failure, confirmed unrelated in the PR
+    description and a PR comment; Silas merged past it directly.
   claimed_by: conductor-scheduled-20260728T1700Z-cb-t035-burst
   claimed_at: '2026-07-28T17:09:54Z'
 

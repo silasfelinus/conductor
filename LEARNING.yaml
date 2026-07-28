@@ -4815,3 +4815,23 @@ records:
     vs §2 distinction) shipped in the same continuous-improvement-checklist.md edit as
     t-051 (PR #1344). See t-051''s record for the reusable lesson about combining
     same-paragraph kaizen tasks.'
+- date: 2026-07-28
+  project: coloring-book
+  task: t-035
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'Extended t-032''s recovery-path job-id fix to the other branch of the same
+    loop: a fresh submission whose ArtJob completes and renders but then fails
+    validate_candidate() (missing ANTHROPIC_API_KEY) had no job reference recorded,
+    so referenced_job_id() could never recover it -- only a genuine duplicate
+    resubmission was possible. record_semantic_gate_error() now takes an optional
+    job_id and stamps one on only when the message does not already carry a "job N"
+    reference, so recovery-path messages are never double-stamped and outright
+    enqueue() failures (no ArtJob ever created) stay correctly unstamped. Mirrored
+    t-032''s test shape (unit tests + one main()-level integration test) for fast
+    review. No ANTHROPIC_API_KEY in this sandbox to exercise the recovery path live;
+    verified via regression tests only, same constraint every recent t-022/t-032/
+    t-035 cycle has hit.'
