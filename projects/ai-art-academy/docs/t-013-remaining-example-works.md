@@ -1,5 +1,14 @@
 # t-013 — Remaining Academy example works handoff
 
+**RESOLVED 2026-07-26** — both steps below landed: all 3 images and manifest
+entries are live on media.acrocatranch.com (21 total entries) and the matching
+`academyStyles.ts` `exampleWorks` patches merged in kind_robots PR #1019, which
+also cleared the stale `config/academy-example-manifest-pending.json`
+placeholders. `npm run test:academy-examples-manifest` passes against the live
+media origin. Kept below as the source research/patch record for ai-art-academy
+t-033; see that task's roadmap note for the short outcome summary and git
+history for the full multi-round upload/verification narrative.
+
 Date: 2026-07-17
 Target repository: `silasfelinus/kind_robots`
 Intended branch: `worker/ai-art-academy-t-013`
