@@ -81,6 +81,29 @@ opposition to prevailing academic convention, contrasting with Section 4's
 Renaissance and Section 8's Romanticism, which the lesson prose cross-references
 directly.
 
+Section 35 is the 2026-07-27 v1.15 addition (t-010 cycle, lane 4): Arts and
+Crafts Movement — promoted from `docs/curriculum-candidates/arts-and-crafts-movement.md`,
+a fully-written candidate found ready for promotion this cycle. It is a design-
+philosophy lesson rather than a single visual signature, connecting Gothic (§17),
+Art Nouveau (§12), and Bauhaus (§16).
+
+Section 36 is the 2026-07-28 v1.16 addition (t-010 cycle, lane 4): Italian
+Futurism — a fresh addition with no source candidate file at the time (found and
+written this cycle). It is the first entry whose defining device is depicting
+*motion through time* rather than restyling a static subject, taught directly
+alongside Cubism's static multi-viewpoint fracturing (§14).
+
+Section 37 is the 2026-07-28 v1.17 addition (t-010 cycle, lane 4): Ancient
+Egyptian Painting — a fresh addition with no source candidate file at the time
+(researched and written this cycle). It returns to the very beginning of the
+curriculum's timeline (predating even Section 1's Greek Vase Painting) and is
+the first entry built entirely around composite/"twisted" perspective and
+hierarchical scale, conventions no other entry teaches. Its three verified
+example works are anonymous-artist funerary papyri, deliberately distinguished
+in its own lesson prose from Section 28's Fayum Mummy Portraits, a much later,
+Greco-Roman-influenced, naturalistic style that is in most ways this entry's
+stylistic opposite.
+
 They are appended (rather than renumbered into place) but belong
 chronologically among the earlier movements — read the `era` field in the
 machine-readable skeleton for true ordering; the front-end seed (t-020, t-031)
@@ -371,6 +394,38 @@ movements:
     artist_slugs: [charles-demuth]
     example_count: 3
     remix_hint: "Recompose this image as an early twentieth-century American Precisionist scene: reduce structures and objects to crisp geometric masses, flatten incidental detail, use controlled daylight and exact-edged shadows, compress depth, remove visual clutter, and preserve the source composition"
+  # --- v1.14/v1.15/v1.16 backfill (2026-07-28, t-010 cycle, lane 4) ---
+  # Sections 34-36 were added to the document body in prior cycles but never
+  # added to this skeleton (a gap noticed and closed while adding section 37
+  # below, the same kind of documentation gap already fixed for §27/§31).
+  - slug: pre-raphaelite
+    name: Pre-Raphaelite Brotherhood
+    era: "c. 1848-1900 (United Kingdom)"
+    artist_slugs: [john-everett-millais, william-holman-hunt, dante-gabriel-rossetti]
+    example_count: 3
+    remix_hint: "Recompose this image as a mid-nineteenth-century Pre-Raphaelite Brotherhood painting: saturated jewel-toned color, crisp high-fidelity detail on hair, fabric, and foliage, flowing hair on female figures, densely symbolic objects placed with deliberate meaning, flattened shallow pictorial space, and preserve the source composition"
+  - slug: arts-and-crafts
+    name: Arts and Crafts Movement
+    era: "c. 1860-1914 (Britain, later international)"
+    artist_slugs: [william-morris, may-morris]
+    example_count: 3
+    remix_hint: "Redesign this image as an Arts and Crafts decorative composition: hand-drawn botanical forms, rhythmic repeating pattern, honest natural materials, flattened color, and visible craft structure rather than a glossy machine-perfect finish, and preserve the source composition"
+  - slug: italian-futurism
+    name: Italian Futurism
+    era: "c. 1909-1916 (Italy)"
+    artist_slugs: [umberto-boccioni]
+    example_count: 3
+    remix_hint: "Recompose this image to depict dynamism and motion in the Italian Futurist manner: overlapping, semi-transparent repetitions of the subject's form suggesting successive instants of movement, sharp diagonal force lines, and fragmented crystalline facets organized around implied energy rather than a fixed viewpoint, and preserve the source subject's identity and general pose"
+  # --- v1.17 addition (2026-07-28, t-010 cycle, lane 4) ---
+  # Promoted from docs/curriculum-candidates/ancient-egyptian-painting.md. No
+  # named artist: the tradition is credited to anonymous scribes/painters,
+  # matching byzantine-mosaic and fayum-mummy-portraits above.
+  - slug: egyptian-painting
+    name: Ancient Egyptian Painting
+    era: "c. 1390-950 BCE (New Kingdom-Third Intermediate Period Egypt)"
+    artist_slugs: [anonymous-egyptian-painters]
+    example_count: 3
+    remix_hint: "Recompose this image in the manner of ancient Egyptian tomb and papyrus painting: redraw any human figures using composite perspective (profile head, legs, and feet; frontal eye and shoulders), organize the composition into stacked horizontal register bands with a ground line, use flat unmodeled color fill inside firm dark outlines with no cast shadow, scale the most significant figure noticeably larger than secondary figures, and add small integrated hieroglyphic-style caption marks near key figures"
 ```
 
 ---
@@ -2411,6 +2466,89 @@ identity and general pose"
 
 ---
 
+## 37. Ancient Egyptian Painting (`egyptian-painting`)
+
+**Era:** c. 1390-950 BCE (New Kingdom-Third Intermediate Period Egypt); the
+underlying pictorial conventions appear already fully formed in Old Kingdom
+tomb decoration (from roughly the 26th century B.C.) and continued for well
+over two thousand years — this entry's verified examples fall within the
+later part of that span.
+
+**Key ideas.** Ancient Egyptian painting fixed a set of pictorial
+conventions — composite ("twisted") perspective, hierarchical scale, flat
+horizontal registers, and integrated hieroglyphic text — that were followed
+with remarkable consistency for well over two thousand years, making it the
+starting point of nearly every general art-history survey. Nothing already
+in the curriculum teaches this grammar: Fayum Mummy Portraits (§28) is a
+much later, Greco-Roman-influenced, *naturalistically modeled* Roman-Egypt
+style, and is in most ways this entry's stylistic opposite — a contrast the
+lesson calls out directly. The style is unusually procedural rather than
+personal: no single named artist invented it, and its devices can be
+described and checked for as a repeatable visual system, closer in spirit
+to how this curriculum already teaches Byzantine Mosaic (§2) than to a
+single-artist movement. This entry's three verified examples are funerary
+papyri from the "Book of the Dead" tradition — a portable medium sharing
+every recognition cue below with tomb wall painting, and with a
+substantially cleaner rights chain than most in-situ tomb photography or
+early-20th-century facsimile copies (several of whose copyists die within
+PUBLIC-DOMAIN-POLICY.md's 70-year window; checked and deliberately not used
+here — see the candidate file's "Notable artisans" section).
+
+**Recognition cues:**
+- composite ("twisted") perspective on the human figure: head, legs, and
+  feet in profile; eye and shoulders/torso frontal
+- hierarchical scale — the most important figure (a god, the pharaoh, the
+  tomb owner) drawn noticeably larger than secondary figures
+- registers: the composition divided into stacked horizontal ground-line
+  bands, each its own self-contained scene
+- flat, unmodeled color fill inside firm outlines, with no cast shadow and
+  no atmospheric perspective
+- integrated hieroglyphic-style caption marks worked directly into the
+  composition rather than added as a separate label
+- deities identifiable by attribute (animal heads, specific crowns, held
+  symbols) within an otherwise human-scaled scene
+
+**Notable artisans:** None identifiable. No papyrus or tomb painting in this
+tradition carries a signature in the modern sense, so this lesson credits
+the tradition to its anonymous scribes and painters
+(`anonymous-egyptian-painters`), the same treatment already used for
+Byzantine Mosaic's anonymous Ravenna/Constantinople mosaicists (§2) and
+Fayum Mummy Portraits' anonymous encaustic painters (§28). Because no
+individual is named, PUBLIC-DOMAIN-POLICY.md §1.3's first prong carries the
+widest possible margin — the tradition's active production ended well over
+two thousand years ago.
+
+**Example works:**
+- *Book of the Dead for the Chantress of Amun, Nauny*, unknown
+  scribe/painter, ca. 1050 B.C. — papyrus and paint. **VERIFIED**, The
+  Metropolitan Museum of Art (accession 30.3.31, Rogers Fund, 1930);
+  public domain (`isPublicDomain: true`, confirmed directly via the Met
+  Collection API this cycle): a richly painted funerary papyrus made for a
+  temple singer, showing multiple register scenes with offering and
+  judgment imagery.
+  https://www.metmuseum.org/art/collection/search/548344
+- *Funerary Papyrus of Tayuhenutmut*, unknown scribe/painter, ca. 1069-945
+  B.C. — papyrus and pigment. **VERIFIED**, Art Institute of Chicago
+  (object ID 805); public domain (CC0 1.0, confirmed directly via the AIC
+  public API this cycle, `is_public_domain: true`):
+  https://api.artic.edu/api/v1/artworks/805
+- *Fragments from a Book of the Dead*, unknown scribe/painter, ca.
+  1390-1353 B.C. — papyrus and ink. **VERIFIED**, The Metropolitan Museum
+  of Art (Rogers Fund, 1928); public domain (`isPublicDomain: true`,
+  confirmed directly via the Met Collection API this cycle):
+  https://www.metmuseum.org/art/collection/search/553721
+
+**remix_hint:** "Recompose this image in the manner of ancient Egyptian
+tomb and papyrus painting: redraw any human figures using composite
+perspective (profile head, legs, and feet; frontal eye and shoulders),
+organize the composition into stacked horizontal register bands with a
+ground line, use flat unmodeled color fill inside firm dark outlines with
+no cast shadow, scale the most significant figure noticeably larger than
+secondary figures, and add small integrated hieroglyphic-style caption
+marks near key figures"
+
+---
+
 ## Lesson-only vs remixable
 
 Every movement above maps to a remix config (mode `prompt` to start; t-003/t-004
@@ -2589,10 +2727,23 @@ the best fit.
   distinguishing traits. Keep the lesson regardless; ship the remix only if
   t-004 A/B results show the two styles are visibly distinguishable
   side-by-side, not just palette-shifted twins.
+- `egyptian-painting` — shares `persian-miniature`'s tension in an even more
+  extreme form: composite perspective (profile legs, frontal torso) and
+  hierarchical scale actively fight "preserve the user's composition" the
+  same way inverted spatial logic does, but here the target convention
+  restructures the human *figure itself*, not just the surrounding space.
+  The likelier failure mode is the model producing a generic flat "cartoon
+  Egyptian" look with a single consistent viewpoint and a border of
+  decorative hieroglyph-like squiggles, skipping composite perspective and
+  register bands entirely — the remix_hint spells out the profile/frontal
+  split and register bands explicitly so t-004 can check those specific
+  structural traits are present, not just flat color and squiggles. Keep
+  the lesson regardless; ship the remix only if t-004 A/B results show
+  genuine composite-perspective restructuring, not a decorative filter.
 
-No movement is lesson-only in v1 — even the flagged seven get a remix config — but
+No movement is lesson-only in v1 — even the flagged eight get a remix config — but
 `cubism`, `de-stijl`, `suprematism`, `persian-miniature`, `song-dynasty-landscape`,
-`mughal-miniature`, and `italian-futurism`
+`mughal-miniature`, `italian-futurism`, and `egyptian-painting`
 should carry a "results vary, that's part of the fun" note until t-004 evaluates them.
 
 ## Public-domain safety check (t-006 preview)
@@ -2865,3 +3016,42 @@ None of these three works is more recent than the curriculum's existing
 most-recent-example-work record (1930, American Gothic / Stone City, Iowa,
 Section 24). Promoted from `docs/curriculum-candidates/italian-futurism.md`,
 which is now marked `PROMOTED`.
+
+**v1.17 addition (2026-07-28) re-check.** Section 37 (Ancient Egyptian
+Painting) clears PUBLIC-DOMAIN-POLICY.md's both-prongs rule with the widest
+margin of any movement in this document, wider even than Fayum Mummy
+Portraits (§28): no individual artist is named at all (the tradition is
+credited to `anonymous-egyptian-painters`), so prong 1 carries zero
+living-memory risk, and all three example works (ca. 1390-1353 B.C.,
+1069-945 B.C., 1050 B.C.) predate the 1930 US-publication cutoff by roughly
+three thousand years, comfortably clearing prong 2 and not disturbing the
+curriculum's most-recent-example-work record, which stays at 1930
+(*American Gothic* / *Stone City, Iowa*, §24). This session verified two
+example-work records directly against the Met Collection API
+(`collectionapi.metmuseum.org`) and one directly against the Art Institute
+of Chicago public API (`api.artic.edu`), each returning a true
+public-domain/CC0 rights-status field — the same direct-field verification
+method used for §28 (Fayum Mummy Portraits), §35 (Arts and Crafts), and §36
+(Italian Futurism); the AIC work's human-facing museum webpage returned
+HTTP 402 from this session's egress proxy, so it is cited via its API
+endpoint instead, which is itself the institution's own rights-status
+record and not a weaker substitute. A set of Metropolitan Museum
+Egyptian-Expedition facsimile *tomb wall* paintings (1907-1941) was also
+checked and deliberately excluded: their named modern copyists split
+unevenly across the 1956 cutoff (Norman de Garis Davies, d. 1941, clears
+it; Nina de Garis Davies, d. 1965, and Charles K. Wilkinson, d. 1986, do
+not), and mixing a rights-clear copyist with rights-unclear ones in one
+lesson risked confusion rather than clarity — this entry scopes itself
+entirely to anonymous original papyri instead, sidestepping the question
+rather than guessing. No `needs-human` escalation was filed for this
+exclusion, since it is a scoping decision to keep the lesson's rights story
+simple rather than a genuine ambiguity about any specific work's status —
+all three works actually used are unambiguous. Promoted from
+`docs/curriculum-candidates/ancient-egyptian-painting.md`, which is now
+marked `PROMOTED`. Also backfilled three prior additions
+(Pre-Raphaelite Brotherhood §34, Arts and Crafts Movement §35, and Italian
+Futurism §36) into the "Machine-readable skeleton" YAML block above, which
+had never been updated for any of the three despite the document body
+carrying their sections since 2026-07-27 — a documentation gap noticed
+while adding this section's own skeleton entry and closed in the same
+pass, the same kind of gap already fixed for §27 and §31.
