@@ -328,8 +328,11 @@ tasks:
 - id: t-014
   milestone: m3
   title: Scope whether BROWSE-UX.md §1's Home/Summary Dashboard needs its own route
-  status: ready
-  owner: null
+  status: claimed
+  owner: reviewer
   passes: 0
   stakes: reversible
   note: 'Kaizen from t-013 (kind_robots PR #1093, 2026-07-28). BROWSE-UX.md §1 also specs "Recent entries (last 10, reverse-chronological; grouped by media type icon)" and "Quick filter chips" for a dedicated Home/Summary Dashboard view. Currently /watchlist only renders the Browse view (watchlist-browse.vue) -- there is no separate Home dashboard page. Three stats-bar items (audiobook hours/pages/comics-TV from t-006/t-012, now most-active-month from t-013) live inside the Browse view''s stats strip, but the other §1 elements (recent-entries list, quick-filter chips as their own affordance distinct from Browse''s existing filters) still do not exist anywhere. Determine whether §1 needs its own route/component or whether the remaining elements should also fold into watchlist-browse.vue, then scope the actual implementation task(s).'
+  claimed_by: claude-conductor-scheduled-20260728T1740Z-mw-t014-burst
+  claimed_at: '2026-07-28T18:06:41Z'
+  updated: '2026-07-28T18:06:41Z'
