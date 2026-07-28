@@ -499,3 +499,21 @@ tasks:
     updated: '2026-07-28T08:05:33Z'
     claimed_by: claude-conductor-burst-20260728T0800Z-am-t015
     claimed_at: '2026-07-28T07:16:45Z'
+
+  - id: t-016
+    milestone: m6
+    title: "Flag placeholder-icon reuse in animationCatalog.ts automatically instead of relying on manual kaizen passes"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Kaizen from t-015 (Reviewer, kind_robots PR #1086, 2026-07-28): t-015 existed only
+      because t-007 happened to notice impossible-terrarium was reusing kind-icon:cube as
+      a loosely-fitting placeholder. Add a lightweight structural check (e.g. a small
+      addition to utils/scripts/updateKindIcons.js or a standalone script run in CI) that
+      flags any stores/animationCatalog.ts entry whose icon is a generic placeholder
+      (kind-icon:cube, kind-icon:box, or similar) so a dedicated-icon request surfaces on
+      its own the next time this happens, instead of depending on a future kaizen note to
+      catch it by chance.
+    updated: '2026-07-28T08:10:00Z'
