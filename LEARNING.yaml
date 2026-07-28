@@ -4893,3 +4893,18 @@ records:
     already supported an unfiltered take/sort call for free (every filter param is optional
     and simply omitted when unset) -- worth checking existing route flexibility before
     assuming a backend change is needed for a "fixed global view" spec.'
+- date: '2026-07-28'
+  project: media-watchlist
+  task: t-016
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'Confirms the t-015 lesson: select_role.py reported candidate_reviewable_pr_count: 0
+    and github_api_unreachable: true, but mcp__github__list_pull_requests/pull_request_read
+    found this claude/* PR (and its kind_robots counterpart) fully green and ready to merge.
+    A prior session did the implementation and left status: review with a clear PROGRESS note;
+    this session only needed to verify CI and merge both PRs in order (implementation repo
+    first, then the conductor tracking PR), matching the "Notes for reviewer" instructions
+    left in the PR body.'
