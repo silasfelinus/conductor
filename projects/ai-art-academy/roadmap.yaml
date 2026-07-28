@@ -502,26 +502,25 @@ tasks:
   - id: t-010
     milestone: m6
     title: Academy continuous improvement pass
-    status: claimed
+    status: ready
     recurring: true
     passes: 0
     stakes: reversible
-    updated: '2026-07-28T08:09:20Z'
+    updated: '2026-07-28T08:19:13Z'
     note: |-
       Standing never-idle task (re-arms to ready after every completion, per the recurring-task rule). Each cycle pick ONE: (a) front-end style/polish pass on Academy or art-styler surfaces, (b) roadmap upgrade — refine tasks, detail the next milestone, prune stale notes, (c) generate more art inspirations or style preview thumbnails, (d) expand the curriculum with a new movement/artist entry (respecting PUBLIC-DOMAIN-POLICY.md). Note which option ran in the PR. This task never reaches done and does not count toward milestone progress. See `run_log` for cycle history — do not re-accumulate RAN entries here.
 
       RAN 2026-07-28T06:13:00Z (claude-conductor-scheduled-20260728T060705Z-aa-t010-lane3): option (c), inspiration/preview assets. Full detail in `run_log`.
 
       Merged conductor PR #1294 as squash f3d54b52edac478ae023aa2bf069bc795027b115 after Worker PR CI (23/23 checks) passed. The inspiration-assets cycle (lane 3) added docs/inspiration-sets/keepsake-portrait-four-movements.md and rotated the next preferred lane to curriculum depth (lane 4).
+
+      RAN 2026-07-28T08:19:13Z (2026-07-28T080900Z-aa-t010-sched14884): option (d), curriculum depth. Added Ancient Egyptian Painting (curriculum-outline.md §37, slug `egyptian-painting`; docs/curriculum-candidates/ancient-egyptian-painting.md now PROMOTED). Full detail in `run_log`.
     continuous_improvement:
-      last_lane: 3  # 1=front-end polish, 2=roadmap accuracy, 3=inspiration assets, 4=curriculum depth
-      next_lane: 4
-      last_run: '2026-07-28T06:13:00Z'
-      last_pr: 'conductor-only (lane-3 inspiration set: added docs/inspiration-sets/keepsake-portrait-four-movements.md, a new four-movement portrait comparison using Fayum Mummy Portraits/Northern Renaissance/Pre-Raphaelite Brotherhood/Symbolism — none used in any prior set; audit_roadmaps.py/validate_roadmaps.py confirmed clean; no kind_robots PR needed, teaching doc only)'
+      last_lane: 4  # 1=front-end polish, 2=roadmap accuracy, 3=inspiration assets, 4=curriculum depth
+      next_lane: 1
+      last_run: '2026-07-28T08:19:13Z'
+      last_pr: 'TBD (curriculum-depth cycle: added docs/curriculum-candidates/ancient-egyptian-painting.md and curriculum-outline.md §37, slug `egyptian-painting`, three anonymous-artist funerary papyri verified via Met/AIC APIs; no kind_robots PR needed, docs-only)'
     run_log: projects/ai-art-academy/docs/continuous-improvement-run-log.md
-    owner: worker
-    claimed_by: 2026-07-28T080900Z-aa-t010-sched14884
-    claimed_at: '2026-07-28T08:09:20Z'
 
   - id: t-015
     milestone: m4
