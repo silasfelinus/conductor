@@ -77,10 +77,49 @@ class ColoringBookStudioEventTests(unittest.TestCase):
         self.assertEqual(command.count("--proposal-id"), 1)
         self.assertIn("approved/fly-beach-color.webp", command)
 
+    def test_cover_generation_routes_without_fake_proposal_id(self) -> None:
+        event = MODULE.load_event(
+            self.write_event(
+                operation="generate-cover",
+                proposal_ids=None,
+                book="kind-robots",
+                force=True,
+            )
+        )
+        self.assertTrue(event.is_cover)
+        self.assertEqual(event.proposal_ids, ())
+        command = event.command(live=False)
+        self.assertIn("manage_coloring_book_cover.py", command[1])
+        self.assertIn("generate-cover", command)
+        self.assertIn("--force", command)
+        self.assertNotIn("--proposal-id", command)
+
+    def test_cover_adoption_accepts_one_set_local_source(self) -> None:
+        event = MODULE.load_event(
+            self.write_event(
+                operation="accept-cover",
+                proposal_ids=None,
+                source_path="projects/coloring-book/sets/monster-recast/approved/cover.webp",
+            )
+        )
+        self.assertEqual(event.source_path, "approved/cover.webp")
+        command = event.command(live=False)
+        self.assertIn("manage_coloring_book_cover.py", command[1])
+        self.assertIn("--source-path", command)
+        self.assertIn("approved/cover.webp", command)
+
     def test_accept_and_finalize_operations_are_valid(self) -> None:
         for operation in ("accept-color", "accept-bw", "finalize-pair"):
             with self.subTest(operation=operation):
                 event = MODULE.load_event(self.write_event(operation=operation))
+                self.assertEqual(event.operation, operation)
+                self.assertNotIn("--force", event.command(live=False))
+
+        for operation in ("accept-cover", "finalize-cover"):
+            with self.subTest(operation=operation):
+                event = MODULE.load_event(
+                    self.write_event(operation=operation, proposal_ids=None)
+                )
                 self.assertEqual(event.operation, operation)
                 self.assertNotIn("--force", event.command(live=False))
 
@@ -90,6 +129,10 @@ class ColoringBookStudioEventTests(unittest.TestCase):
         )
         self.assertEqual(event.proposal_ids, ("mr-010", "mr-009"))
 
+    def test_cover_operations_reject_proposal_ids(self) -> None:
+        with self.assertRaisesRegex(ValueError, "do not accept proposal_ids"):
+            MODULE.load_event(self.write_event(operation="generate-cover"))
+
     def test_load_event_rejects_cross_book_ids(self) -> None:
         with self.assertRaisesRegex(ValueError, "does not belong"):
             MODULE.load_event(
@@ -97,7 +140,7 @@ class ColoringBookStudioEventTests(unittest.TestCase):
             )
 
     def test_force_is_restricted_to_generation_operations(self) -> None:
-        with self.assertRaisesRegex(ValueError, "force is only supported"):
+        with self.assertRaisesRegex(ValueError, "force is supported only"):
             MODULE.load_event(
                 self.write_event(operation="accept-color", force=True)
             )
@@ -127,6 +170,14 @@ class ColoringBookStudioEventTests(unittest.TestCase):
                 {
                     "operation": "accept-bw",
                     "source_path": "projects/coloring-book/sets/kind-robots/approved/pair.webp",
+                },
+                "must belong",
+            ),
+            (
+                {
+                    "operation": "accept-cover",
+                    "proposal_ids": None,
+                    "source_path": "projects/coloring-book/sets/kind-robots/approved/cover.webp",
                 },
                 "must belong",
             ),
