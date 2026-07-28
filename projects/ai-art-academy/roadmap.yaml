@@ -1543,3 +1543,21 @@ tasks:
     owner: worker
     claimed_by: null
     claimed_at: null
+
+  - id: t-051
+    milestone: m1
+    title: Add a lane-4 checklist reminder to keep academyStyles.ts and curriculum-outline.md in sync in the same cycle
+    status: ready
+    passes: 0
+    stakes: reversible
+    owner: null
+    updated: '2026-07-28T15:35:00Z'
+    note: >
+      KAIZEN (from PR #1336, t-010 lane 3, 2026-07-28): this cycle found the first-ever
+      divergence between kind_robots' academyStyles.ts and curriculum-outline.md -- an earlier
+      same-day lane-4 cycle added a fauvism entry to academyStyles.ts with no matching
+      curriculum-outline.md section (see ai-art-academy/t-050, filed the same cycle, for the
+      fix). Add a one-line reminder to continuous-improvement-checklist.md's lane 4
+      ("Curriculum depth") rotation instructions: a cycle that adds a new academyStyles.ts
+      entry must add the matching curriculum-outline.md section in the same cycle, or
+      explicitly note the deferral in the task note, so this doesn't recur silently.
