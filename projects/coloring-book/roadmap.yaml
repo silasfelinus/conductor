@@ -684,16 +684,17 @@ tasks:
 - id: t-031
   milestone: m4
   title: Audit other art-consumption scripts for t-022's unlocked-entry duplicate-submission bug
-  status: review
+  status: done
   passes: 0
   stakes: reversible
-  owner: worker
-  updated: '2026-07-28T03:20:00Z'
+  updated: '2026-07-28T03:33:00Z'
   note: |-
     KAIZEN (from PR #1268, t-022, 2026-07-27): t-022 fixed a real bug in consume_coloring_book_color_art.py where an unlocked entry picks a fresh random seed on every enqueue() call, so a stale wait_for_job() timeout error caused the next run to blindly resubmit a duplicate ArtJob instead of recovering the original (which had often actually completed after the local poll gave up). scripts/consume_art_queue.py and scripts/consume_art_requests.py share the same wait_for_job() timeout-after-Ns-still-queued/running pattern (both call consumer.wait_for_job / a local equivalent) and were not checked for the same risk. Grep each for how it handles a wait_for_job timeout on retry, confirm whether entries are seed-locked or re-randomized on resubmission, and either port recover_timed_out_job()'s pattern if the bug reproduces, or record why it doesn't apply (e.g. already idempotency-keyed) so this doesn't need re-auditing later.
 
 
     Audited both generic art consumers and added retry-stable seed derivation at their shared queue boundary, while preserving the coloring consumer's specialized timed-out-job recovery and fresh-attempt seed policy.
+
+    Completed in Conductor PR #1285, squash e2f2d3c8f59ba4a9fc11e60973e41c6b1a7c7972. Both generic consumers now rebuild retry-stable Comfy payloads after local polling timeouts, while specialized coloring attempts retain their explicit job-id recovery and fresh-seed policy.
   claimed_by: 2026-07-28T03-10-14Z-coloring-book-t-031-a31d
   claimed_at: '2026-07-28T03:10:14Z'
 

@@ -4599,3 +4599,16 @@ records:
     repo (confirmed on three separate PRs in one session) but does not gate merge -- attempting
     a merge once every other check is green succeeds immediately rather than needing to wait
     for CodeQL to finish. Don't block a merge decision on it; treat it as informational.
+- date: '2026-07-28'
+  project: coloring-book
+  task: t-031
+  kind: software
+  stakes: reversible
+  passes: 3
+  outcome: done
+  failure_category: null
+  lesson: A local polling timeout is not proof that an asynchronous ArtJob failed. Generic consumers must
+    rebuild an identical request identity on retry or persist and recover the original job id; otherwise
+    a fresh randomized seed silently converts a retry into duplicate production work. Compatibility tests
+    must also preserve the public module's monkeypatch surface when a long implementation is wrapped rather
+    than edited in place.
