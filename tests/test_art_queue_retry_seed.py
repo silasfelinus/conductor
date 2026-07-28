@@ -40,7 +40,7 @@ def test_specialized_coloring_attempts_keep_fresh_seed_policy(monkeypatch):
     def resolve_like_production(seed):
         return next(seeds) if seed is None else seed
 
-    monkeypatch.setattr(consumer._core, "resolve_seed", resolve_like_production)
+    monkeypatch.setattr(consumer, "resolve_seed", resolve_like_production)
     entry = {
         **generic_entry(),
         "set": "monster-recast",

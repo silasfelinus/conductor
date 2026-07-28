@@ -24,10 +24,6 @@ try:
 except ImportError:
     import consume_art_queue_core as _core
 
-for _name in dir(_core):
-    if not _name.startswith("__"):
-        globals()[_name] = getattr(_core, _name)
-
 _core_entry_to_job = _core.entry_to_job
 
 
@@ -37,7 +33,7 @@ def retry_seed_identity(entry: dict[str, Any]) -> dict[str, str]:
         "image_path": str(entry.get("image_path") or ""),
         "project": str(entry.get("project") or ""),
         "prompt": " ".join(str(entry.get("prompt") or "").split()),
-        "engine": normalize_engine(entry.get("engine")),
+        "engine": _core.normalize_engine(entry.get("engine")),
     }
 
 
@@ -48,7 +44,7 @@ def stable_retry_seed(entry: dict[str, Any]) -> int:
         separators=(",", ":"),
         ensure_ascii=False,
     ).encode("utf-8")
-    return int.from_bytes(hashlib.sha256(encoded).digest()[:8], "big") % (SEED_MAX + 1)
+    return int.from_bytes(hashlib.sha256(encoded).digest()[:8], "big") % (_core.SEED_MAX + 1)
 
 
 def uses_specialized_attempt_recovery(entry: dict[str, Any]) -> bool:
@@ -61,12 +57,12 @@ def uses_specialized_attempt_recovery(entry: dict[str, Any]) -> bool:
 
 def entry_to_job(entry: dict[str, Any]):
     normalized = dict(entry)
-    engine = normalize_engine(normalized.get("engine"))
+    engine = _core.normalize_engine(normalized.get("engine"))
     seed = normalized.get("seed")
     seed_is_unset = not isinstance(seed, int) or isinstance(seed, bool) or seed < 0
 
     if (
-        engine in COMFY_WORKFLOW_ENGINES
+        engine in _core.COMFY_WORKFLOW_ENGINES
         and seed_is_unset
         and not uses_specialized_attempt_recovery(normalized)
     ):
@@ -75,7 +71,11 @@ def entry_to_job(entry: dict[str, Any]):
     return _core_entry_to_job(normalized)
 
 
+_core.retry_seed_identity = retry_seed_identity
+_core.stable_retry_seed = stable_retry_seed
+_core.uses_specialized_attempt_recovery = uses_specialized_attempt_recovery
 _core.entry_to_job = entry_to_job
+sys.modules[__name__] = _core
 
 
 if __name__ == "__main__":
