@@ -7,6 +7,12 @@ Drop a LoRA file into the import folder and this agent auto-detects it
 with the correct `localPath` — the field the enqueue path
 (`server/utils/artLoraResource.ts`) resolves to ComfyUI's `lora_name`.
 
+It also drains the front-end download queue (Phase 3): each cycle it claims one
+PENDING DownloadRequest from kind_robots, fetches the file (Civitai by-version
+URL with CIVITAI_TOKEN, or a direct URL) into the same import folder, and marks
+it complete — so a "Download" click in the Discover browser flows through the
+exact same detect/sort/upsert pipeline as a manual drop.
+
 It is a thin orchestrator: it reuses the proven, dependency-free tools that
 already live in the kind_robots repo —
   scan_loras.py   (hash -> Civitai/CivArchive -> base model + maturity +
@@ -45,11 +51,18 @@ Embedding: import this module and, after checking missing_config() is empty,
 run watch_loop() on a daemon thread. Stdlib only. Python 3.8+.
 """
 
+import json
 import os
+import re
+import shutil
+import socket
 import subprocess
 import sys
 import time
+import urllib.error
+import urllib.request
 
+AGENT_ID = os.environ.get("LORA_AGENT_ID", "").strip() or f"{socket.gethostname()}-lora"
 KR_BASE_URL = os.environ.get("KR_BASE_URL", "https://kind-robots.vercel.app").rstrip("/")
 KR_RELAY_TOKEN = os.environ.get("KR_RELAY_TOKEN", "").strip()
 LORA_ROOT = os.environ.get("LORA_ROOT", "").strip()
@@ -134,6 +147,117 @@ def run(cmd, timeout):
     return True
 
 
+# ---------------------------------------------------------------------------
+# Download queue (Phase 3): claim a LoRA download request from kind_robots,
+# fetch the file into the import folder, and let the watch loop catalog it.
+# ---------------------------------------------------------------------------
+
+def http_json(method, path, body=None):
+    """Call a kind_robots JSON endpoint with the admin api-key. Returns the
+    parsed 'data' object (or {}); raises on transport/HTTP error."""
+    url = KR_BASE_URL + path
+    data = json.dumps(body).encode("utf-8") if body is not None else None
+    req = urllib.request.Request(url, data=data, method=method)
+    req.add_header("x-api-key", KR_RELAY_TOKEN)
+    req.add_header("Accept", "application/json")
+    if data is not None:
+        req.add_header("Content-Type", "application/json")
+    with urllib.request.urlopen(req, timeout=60) as resp:
+        parsed = json.loads(resp.read().decode("utf-8"))
+    return parsed.get("data") or {}
+
+
+def resolve_download_url(request):
+    url = str(request.get("downloadUrl") or "").strip()
+    version_id = request.get("civitaiModelVersionId")
+    if not url and version_id:
+        url = f"https://civitai.com/api/download/models/{version_id}"
+    if not url:
+        return None
+    # Attach the Civitai token as a query param for Civitai download links.
+    if CIVITAI_TOKEN and "civitai.com" in url and "token=" not in url:
+        sep = "&" if "?" in url else "?"
+        url = f"{url}{sep}token={CIVITAI_TOKEN}"
+    return url
+
+
+def _redact_url(url):
+    return re.sub(r"token=[^&]+", "token=***", url or "")
+
+
+def safe_filename(name):
+    name = os.path.basename(str(name or "")).strip()
+    name = re.sub(r"[^A-Za-z0-9._-]", "_", name)
+    if not name or name in (".", ".."):
+        return ""
+    if not name.lower().endswith(MODEL_EXTS):
+        name += ".safetensors"
+    return name
+
+
+def filename_from_headers(headers):
+    disposition = headers.get("Content-Disposition", "") or ""
+    match = re.search(r'filename\*?=(?:UTF-8\'\')?"?([^";]+)"?', disposition)
+    return safe_filename(match.group(1)) if match else ""
+
+
+def download_request_file(request):
+    """Fetch the request's file into LORA_IMPORT_DIR (atomically via a .part
+    temp) so the watch loop picks it up once stable. Returns the final path."""
+    url = resolve_download_url(request)
+    if not url:
+        raise RuntimeError("no download url or civitaiModelVersionId")
+    log(f"  downloading {_redact_url(url)}")
+    req = urllib.request.Request(url, headers={"User-Agent": "kr-lora-import"})
+    with urllib.request.urlopen(req, timeout=1800) as resp:
+        name = (
+            safe_filename(request.get("fileName"))
+            or filename_from_headers(resp.headers)
+            or safe_filename(f"civitai_{request.get('civitaiModelVersionId') or 'download'}")
+        )
+        dest = os.path.join(LORA_IMPORT_DIR, name)
+        tmp = dest + ".part"
+        with open(tmp, "wb") as handle:
+            shutil.copyfileobj(resp, handle, length=1024 * 1024)
+    os.replace(tmp, dest)
+    return dest
+
+
+def claim_and_download():
+    """Claim one pending download and fetch it. The subsequent watch cycle
+    catalogs + upserts it as a Resource. Best-effort: any failure is reported
+    back so the request can be retried or marked FAILED."""
+    try:
+        data = http_json("POST", "/api/lora/download/claim", {"agentId": AGENT_ID})
+    except (urllib.error.URLError, OSError, ValueError) as error:
+        log(f"claim failed: {error}")
+        return
+    request = data.get("request")
+    if not request:
+        return
+    request_id = request.get("id")
+    label = (
+        request.get("label")
+        or request.get("fileName")
+        or f"version {request.get('civitaiModelVersionId')}"
+    )
+    log(f"claimed download #{request_id}: {label}")
+    try:
+        dest = download_request_file(request)
+        log(f"  saved {os.path.basename(dest)} -> import will catalog it")
+        http_json("POST", f"/api/lora/download/{request_id}/complete", {"success": True})
+    except Exception as error:  # noqa: BLE001 - report and move on
+        log(f"download #{request_id} failed: {error}")
+        try:
+            http_json(
+                "POST",
+                f"/api/lora/download/{request_id}/complete",
+                {"success": False, "error": str(error)[:500]},
+            )
+        except Exception as report_error:  # noqa: BLE001
+            log(f"  could not report failure: {report_error}")
+
+
 def process_batch():
     os.makedirs(CATALOG_OUT, exist_ok=True)
     scan_cmd = [
@@ -181,6 +305,10 @@ def watch_loop():
     seen = {}  # path -> stat signature from the previous poll
     while True:
         try:
+            # Pull one queued front-end download (if any) into the import folder;
+            # the stability check below catalogs it on a later cycle.
+            claim_and_download()
+
             files = model_files(LORA_IMPORT_DIR)
             now = {f: stat_sig(f) for f in files}
             # A file is "stable" if its size+mtime are unchanged since last poll
