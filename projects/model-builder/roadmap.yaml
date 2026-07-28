@@ -751,10 +751,10 @@ tasks:
   - id: t-034
     milestone: m6
     title: "Give Facet real relationship-expansion targets or drop it from relationship-expansion's sourceTypes"
-    status: ready
+    status: claimed
     passes: 0
     stakes: reversible
-    owner: null
+    owner: worker
     note: >
       Kaizen from t-033 (kind_robots PR #1100, 2026-07-28). SOURCE_TYPES['Facet'].recipes
       in stores/helpers/modelBuilderRecipes.ts still lists 'relationship-expansion' as
@@ -773,5 +773,6 @@ tasks:
       it doesn't. Decide by checking whether Facets are meant to spawn related
       Characters/Rewards/Scenarios/Bots at all in the product design -- this task does
       not assume the answer.
-    claimed_by: null
-    claimed_at: null
+    claimed_by: conductor-scheduled-20260728T1614Z-mb-t034-burst
+    claimed_at: '2026-07-28T16:15:00Z'
+    updated: '2026-07-28T16:15:00Z'
