@@ -1,4 +1,4 @@
-from scripts.coloring_queue_status import summarize_queue
+from scripts.coloring_queue_status import requirement_satisfied, summarize_queue
 
 
 def queue(entries):
@@ -33,6 +33,7 @@ def test_summarizes_statuses_and_next_batch():
     assert summary["retry_safe"] is True
     assert summary["actionable"] is True
     assert summary["actionable_count"] == 2
+    assert summary["recommended_action"] == "submit-next-batch"
 
 
 def test_semantic_gate_errors_are_classified_for_recovery_or_fresh_submission():
@@ -75,6 +76,7 @@ def test_semantic_gate_errors_are_classified_for_recovery_or_fresh_submission():
     assert summary["retry_safe"] is False
     assert summary["actionable"] is False
     assert summary["actionable_count"] == 0
+    assert summary["recommended_action"] == "recover-existing-jobs"
 
 
 def test_recovery_batch_is_bounded_by_worker_pass_size():
@@ -116,6 +118,7 @@ def test_duplicate_job_ids_make_recovery_unsafe():
     assert summary["retry_safe"] is False
     assert summary["actionable"] is False
     assert summary["actionable_count"] == 0
+    assert summary["recommended_action"] == "repair-queue-integrity"
 
 
 def test_duplicate_entry_ids_make_queue_unsafe():
@@ -166,6 +169,15 @@ def test_empty_safe_queue_is_not_actionable():
     assert summary["recovery_candidate_count"] == 0
     assert summary["recovery_batch"] == []
     assert summary["recovery_actionable"] is False
+    assert summary["recommended_action"] == "complete"
+
+
+def test_recommended_action_requirement_matches_exactly():
+    summary = {"recommended_action": "recover-existing-jobs"}
+
+    assert requirement_satisfied(summary, None) is True
+    assert requirement_satisfied(summary, "recover-existing-jobs") is True
+    assert requirement_satisfied(summary, "submit-next-batch") is False
 
 
 def test_batch_size_must_be_positive():
