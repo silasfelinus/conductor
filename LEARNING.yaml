@@ -4650,3 +4650,15 @@ records:
     read-through across separate cycles. Where a hand-maintained mapping mirrors a
     second source of truth (here: Prisma relations), prefer a structural consistency
     check over relying on the next manual audit to catch drift.'
+- date: '2026-07-28'
+  project: animation-manager
+  task: t-015
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'Small, well-scoped asset-plus-one-line-swap PRs (new icon + catalog reference +
+    regenerated seed file) verify fast and merge clean when the implementer confirms the
+    regenerated file came straight from the existing generator script rather than a hand
+    edit -- worth keeping as the template for future one-off icon/asset requests.'
