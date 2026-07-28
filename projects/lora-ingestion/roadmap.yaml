@@ -29,7 +29,7 @@ milestones:
 - id: m4
   title: Front-end My Library browser (images, filters, edit)
   weight: 20
-  status: not-started
+  status: review
 - id: m5
   title: Discover tab — Civitai/CivArchive browse + download queue + versioning
   weight: 30
@@ -92,19 +92,21 @@ tasks:
 - id: t-005
   milestone: m4
   title: Front-end My Library LoRA browser
-  status: ready
-  owner: null
+  status: review
+  owner: claude
   stakes: reversible
   depends_on: [t-004]
-  note: 'Cross-repo (kind_robots). New pages/lora.vue + components/lora/{lora-card,
-    add-lora}.vue reusing checkpoint-gallery/checkpoint-card/reactable-card +
-    art-gallery sort/paginate/bulk + lora-picker predicates. Maturity via
-    userStore.showMature. Optional: server-side filter params on
-    server/api/resources/index.get.ts.'
+  note: 'Landed on kind_robots branch claude/lora-organization-catalog-coyhav
+    (commit c4bdb60). pages/lora.vue (My Library + Discover-stub tabs) +
+    components/lora/{lora-card,add-lora,lora-gallery}.vue built on
+    reactable-card; resourceStore.visibleLoras adds LORA/LYCORIS + maturity
+    gating. Search + base-model + maturity + sort filters, client-side
+    pagination, add/edit via updateResource (PATCH) / batch upsert. All SFCs
+    compile clean. Ships with t-004 in the same PR.'
 - id: t-006
   milestone: m5
   title: Discover tab + DownloadRequest queue + version-update flow
-  status: waiting
+  status: ready
   owner: null
   stakes: outward-facing
   depends_on: [t-005]
