@@ -356,8 +356,11 @@ tasks:
 - id: t-016
   milestone: m3
   title: Extend MEDIA_TYPE_CHIPS to cover all 12 MediaType values (or fold the rare 6 into their nearest sibling chip)
-  status: ready
-  owner: null
+  status: claimed
+  owner: worker
   passes: 0
   stakes: reversible
   note: 'Kaizen from t-015 (kind_robots PR #1115, 2026-07-28). MEDIA_TYPE_CHIPS (the Browse filter-chip list) only covers 6 of the 12 MediaType enum values (MOVIE, TV, BOOK, COMIC, AUDIOBOOK, VIDEO_GAME). The other 6 (NOVELLA, ANIME, PODCAST, THEATRE, SHORT, VIDEO_GAME_SHORT) can now be seen (via the new Recent entries list, t-015) and stored, but cannot be filtered on directly. Either add dedicated chips for the missing 6, or explicitly fold each into its nearest sibling chip''s filter value (matching the icon-grouping judgment calls already made in t-015''s MEDIA_TYPE_ICON map) so every stored entry is filterable.'
+  claimed_by: claude-conductor-agentrun-20260728T212607-mw-t016
+  claimed_at: '2026-07-28T21:26:07Z'
+  updated: '2026-07-28T21:26:07Z'
