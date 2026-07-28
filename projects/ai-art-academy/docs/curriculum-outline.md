@@ -104,6 +104,16 @@ in its own lesson prose from Section 28's Fayum Mummy Portraits, a much later,
 Greco-Roman-influenced, naturalistic style that is in most ways this entry's
 stylistic opposite.
 
+Section 38 is the 2026-07-28 v1.18 addition (t-010 cycle, lane 4): Fauvism
+(`fauvism`) — the entry existed fully in `stores/seeds/academyStyles.ts` (six
+recognition cues, three artists, remix template, preview thumbnail) before
+this lesson section did; a rare case of the front-end sync running ahead of
+this document instead of behind it (see the v1.1 correction note above for
+why the gap opened). It returns to Western Europe (Paris, 1904-1908) and
+gives the curriculum its first entry defined purely by liberating color from
+observed reality, taught directly alongside Impressionism/Post-Impressionism
+as the next step past color-from-light toward color-as-pure-expression.
+
 They are appended (rather than renumbered into place) but belong
 chronologically among the earlier movements — read the `era` field in the
 machine-readable skeleton for true ordering; the front-end seed (t-020, t-031)
@@ -426,6 +436,15 @@ movements:
     artist_slugs: [anonymous-egyptian-painters]
     example_count: 3
     remix_hint: "Recompose this image in the manner of ancient Egyptian tomb and papyrus painting: redraw any human figures using composite perspective (profile head, legs, and feet; frontal eye and shoulders), organize the composition into stacked horizontal register bands with a ground line, use flat unmodeled color fill inside firm dark outlines with no cast shadow, scale the most significant figure noticeably larger than secondary figures, and add small integrated hieroglyphic-style caption marks near key figures"
+  # --- v1.18 addition (2026-07-28, t-010 cycle, lane 4) ---
+  # Already present in stores/seeds/academyStyles.ts before this lesson
+  # section existed; this entry backfills the skeleton to match.
+  - slug: fauvism
+    name: Fauvism
+    era: "c. 1904-1908 (France)"
+    artist_slugs: [henri-matisse, andre-derain, raoul-dufy]
+    example_count: 1
+    remix_hint: "Recompose this image as an early Fauvist painting: unmixed, high-key non-naturalistic color applied in loose visible brushstrokes with no attempt at local color accuracy, bold dark contour outlines holding flat color areas together, warm and cool colors in direct high-contrast juxtaposition, and preserve the source composition and subject"
 ```
 
 ---
@@ -2549,6 +2568,88 @@ marks near key figures"
 
 ---
 
+## 38. Fauvism (`fauvism`)
+
+**Era:** c. 1904-1908 (France)
+
+**Key ideas.** Named in 1905 when a critic, startled by a room of canvases at
+the Salon d'Automne, called their painters "les fauves" ("the wild beasts"),
+Fauvism pushed color entirely free of description: a face could be painted
+green, a tree trunk orange, a sky yellow-green, with no attempt to record
+local color at all. The lesson gives learners a clean contrast against
+Impressionism (§9) and Post-Impressionism/Pointillism (§21) already in the
+curriculum: where those movements still built color from observed light,
+Fauvism used raw, unmixed, high-key pigment straight from the tube as an
+expressive end in itself, applied in loose, visibly brushy patches with heavy
+dark contour outlines holding the composition together. The movement was
+brief — its core years run 1904-1908, after which Matisse, Derain, and others
+each moved on to different concerns — but its central idea (color as
+independent expressive force) fed directly into Expressionism and much of the
+century that followed.
+
+**Recognition cues:**
+- unmixed, high-key primary and secondary colors applied straight from the
+  tube, with no attempt at naturalistic local color
+- loose, visibly brushy patches of paint rather than smooth blending
+- bold dark contour outlines (often black or deep blue) holding flat color
+  areas together
+- warm and cool colors placed in direct, high-contrast juxtaposition rather
+  than gradually blended
+- simplified, often flattened forms with minimal interior shading or modeling
+- everyday subjects — portraits, landscapes, harbor and window views —
+  rendered with startling, non-naturalistic color rather than exotic or
+  literary subject matter
+
+**Notable artists:**
+- **Henri Matisse** (1869-1954) — the movement's central figure; this
+  entry's sole verified generation-style anchor (see "Example works" below).
+
+`stores/seeds/academyStyles.ts`'s existing `fauvism` entry also names **André
+Derain** (1880-1954) and **Raoul Dufy** (1877-1953) as period artists — both
+clear PUBLIC-DOMAIN-POLICY.md §4 rule 1 (died 70+ years ago) and are
+legitimately named there, since that entry only does prompt-based style
+reference and displays no specific artwork image (§4 rule 1's bar, not the
+stricter §1.3-plus-§2 bar this document's "Example works" require). For
+*this* document's purposes, this cycle searched the Metropolitan Museum of
+Art and Art Institute of Chicago collection APIs for Derain and Dufy works
+from the 1904-1908 core period and found none marked public domain by either
+institution (Derain: several genuine Fauvist-period paintings found, e.g.
+*Portrait of Lucien Gilbert*, ca. 1905, Met — all `isPublicDomain: false`;
+Dufy: no period-matching work returned public-domain status at all). Passing
+§1.3's death/date thresholds does not by itself guarantee an institution has
+released an accepted-license image (§2) — this section names only the artist
+whose specific work actually cleared that check, per §5's "do not include
+the item while ambiguous" default-deny, rather than guessing that an old
+death date settles it. A future session with access to other accepted
+open-access institutions (National Gallery of Art, Wikimedia Commons — both
+unreachable from this session's egress, 403/404) should re-check Derain and
+Dufy specifically before assuming the gap is permanent.
+
+**Example works:**
+- *Still Life with Geranium*, Henri Matisse, 1906 — Art Institute of Chicago,
+  oil on canvas. **VERIFIED** public domain directly against the AIC public
+  API this cycle (`is_public_domain: true`, object id 87045, department
+  "Modern Art"): a potted geranium and studio still-life objects rendered in
+  unmixed, high-key color squarely within the movement's 1904-1908 core
+  period.
+  https://www.artic.edu/artworks/87045
+
+This entry ships with one verified example work rather than the usual three
+— see the artists note above for why Derain and Dufy are not yet
+represented here. Do not add a second or third work without an equivalent
+direct-API verification; do not reuse an `isPublicDomain: false` record on
+the assumption that the underlying work is old enough to qualify anyway.
+
+**remix_hint:** "Recompose this image as an early Fauvist painting: unmixed,
+high-key non-naturalistic color applied in loose visible brushstrokes with no
+attempt at local color accuracy, bold dark contour outlines holding flat
+color areas together, warm and cool colors in direct high-contrast
+juxtaposition, and preserve the source composition and subject" (reused
+verbatim from `stores/seeds/academyStyles.ts`'s existing `fauvism.remix.template`
+to keep this document and the shipped entry in sync).
+
+---
+
 ## Lesson-only vs remixable
 
 Every movement above maps to a remix config (mode `prompt` to start; t-003/t-004
@@ -2771,6 +2872,23 @@ excluded to stay clear of the boundary. All §17-21 example-work URLs are marked
 `(unverified)` because museum egress is 403-blocked this session; they carry real
 accession numbers to spot-check when a session with open museum egress runs (batches
 with t-008/t-013).
+
+**2026-07-28 correction note (ai-art-academy/t-050).** The paragraph above is
+**not** stale — it correctly quotes PUBLIC-DOMAIN-POLICY.md §1.3's own worked
+example ("Matisse... mostly ineligible for now; check per-work") — but it was
+read too broadly downstream: a later cycle added a full `fauvism` entry to
+`stores/seeds/academyStyles.ts` reasoning only that Matisse/Derain/Dufy pass
+the death-date threshold and Fauvism's core works predate 1930, without
+doing the per-work museum-API check this paragraph always said was required
+before treating a work as eligible. That entry itself remains policy-
+compliant (it only names artists for prompt-based style reference, the
+lower bar under §4 rule 1 — no specific artwork image is displayed), but it
+should not have been read as clearing Fauvism for this document's stricter
+"verified example work" bar. This cycle did the per-work check the original
+paragraph called for and found exactly one Matisse work that passes both
+§1.3 and §2 (see Section 38 below); Derain and Dufy still do not, as of this
+session's museum-API access. Section 38 is added on that narrower basis, not
+because the original caution here was wrong.
 
 **v1.2 addition (2026-07-18) re-check.** Section 22 (Suprematism) clears the
 PUBLIC-DOMAIN-POLICY.md §1.3 both-prongs rule with wide margin: sole artist Kazimir
@@ -3055,3 +3173,38 @@ had never been updated for any of the three despite the document body
 carrying their sections since 2026-07-27 — a documentation gap noticed
 while adding this section's own skeleton entry and closed in the same
 pass, the same kind of gap already fixed for §27 and §31.
+
+**v1.18 addition (2026-07-28) re-check (ai-art-academy/t-050).** Section 38
+(Fauvism) is the first entry in this document added with fewer than three
+verified example works, and the first whose gap is explained by a §2
+(accepted digitization license) failure rather than a §1.3 (death/date)
+failure. Sole named artist with a verified example work, Henri Matisse
+(d. 1954), passes prong 1 with the same margin as every other artist in
+this batch; his 1906 *Still Life with Geranium* (Art Institute of Chicago,
+object id 87045) predates the 1930 cutoff by a wide margin and does not
+move the curriculum's most-recent-example-work record (still 1930,
+*American Gothic* / *Stone City, Iowa*, §24). This session verified it
+directly against the AIC public API (`api.artic.edu`), returning
+`is_public_domain: true` — the same direct-field method used for §28, §35,
+§36, and §37. André Derain (d. 1954) and Raoul Dufy (d. 1953) both pass
+prong 1 with equal margin but are **not** named as generation-style anchors
+here: this session queried the Met and AIC collection APIs for each by name
+and by date range (1904-1908/1910) and every returned Fauvist-period work —
+including genuine period pieces like Derain's ca. 1905 *Portrait of Lucien
+Gilbert* (Met, object 481430) — came back `isPublicDomain`/`is_public_domain:
+false`. This is the document's first case of an artist clearing §1.3 but
+failing §2 outright rather than merely lacking a verification session; per
+§5, the item stays excluded rather than guessed at. National Gallery of Art
+(explicitly an accepted institution under policy §2.2) and Wikimedia Commons
+were both unreachable this session (HTTP 403 / 404 from this session's
+egress) and were not exhausted as alternate sources — a future session with
+different museum egress should re-check Derain and Dufy there before this
+gap is treated as permanent. Also corrected a downstream misreading (not the
+original text) of the v1.1 re-check paragraph above: that paragraph's
+"mostly ineligible... check per-work" caution was accurate and remains
+unedited; a later cycle's `academyStyles.ts` addition read the death/date
+thresholds alone as clearance without doing the per-work check the caution
+called for. That addition is independently policy-compliant under §4 rule 1
+(prompt-only style reference, no displayed artwork image), so no correction
+to shipped code is needed — only this document's own entry required the
+narrower, verified-per-work treatment above.
