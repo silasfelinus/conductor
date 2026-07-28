@@ -793,10 +793,10 @@ tasks:
   - id: t-035
     milestone: m6
     title: "verifyModelBuilderLinkCoverage.ts doesn't catch join-table-only relations, letting non-functional recipe entries ship silently"
-    status: ready
+    status: claimed
     passes: 0
     stakes: reversible
-    owner: null
+    owner: reviewer
     note: >
       Kaizen from t-034 (kind_robots PR #1108, 2026-07-28). It took three cycles
       (t-032 built the coverage guard, t-033 found Facet had zero real
@@ -813,3 +813,6 @@ tasks:
       is flagged today. This would have caught Facet's bad relationship-expansion
       entry at t-032 time instead of needing a dedicated t-033/t-034 investigation.
       Front-end/test-only change; no schema change expected.
+    claimed_by: claude-conductor-scheduled-20260728T181326Z-mb-t035
+    claimed_at: '2026-07-28T18:13:26Z'
+    updated: '2026-07-28T18:13:26Z'
