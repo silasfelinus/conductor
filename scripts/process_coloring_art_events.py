@@ -18,6 +18,7 @@ ROOT = Path(__file__).resolve().parents[1]
 EVENT_DIR = ROOT / "color-art-events"
 COLOR_CONSUMER = ROOT / "scripts" / "consume_coloring_book_studio_request.py"
 PRODUCTION_CONSUMER = ROOT / "scripts" / "manage_coloring_book_production.py"
+ADOPTION_CONSUMER = ROOT / "scripts" / "adopt_coloring_book_asset.py"
 ALLOWED_BOOKS = ("monster-recast", "hollywood-recast", "kind-robots")
 ALLOWED_OPERATIONS = (
     "generate-color-proposals",
@@ -36,12 +37,14 @@ ALLOWED_KEYS = {
     "operation",
     "book",
     "proposal_ids",
+    "source_path",
     "timeout",
     "force",
     "requested_by",
     "task",
     "note",
 }
+IMAGE_SUFFIXES = {".webp", ".png", ".jpg", ".jpeg"}
 MIN_TIMEOUT = 30
 MAX_TIMEOUT = 900
 MAX_PROPOSALS = 18
@@ -53,6 +56,7 @@ class ColorArtEvent:
     operation: str
     book: str
     proposal_ids: tuple[str, ...]
+    source_path: str | None
     timeout: int
     force: bool
 
@@ -66,6 +70,21 @@ class ColorArtEvent:
                 "--timeout",
                 str(self.timeout),
             ]
+            for proposal_id in self.proposal_ids:
+                command.extend(("--proposal-id", proposal_id))
+        elif self.source_path:
+            command = [
+                sys.executable,
+                str(ADOPTION_CONSUMER),
+                "--operation",
+                self.operation,
+                "--book",
+                self.book,
+                "--proposal-id",
+                self.proposal_ids[0],
+                "--source-path",
+                self.source_path,
+            ]
         else:
             command = [
                 sys.executable,
@@ -77,8 +96,8 @@ class ColorArtEvent:
                 "--timeout",
                 str(self.timeout),
             ]
-        for proposal_id in self.proposal_ids:
-            command.extend(("--proposal-id", proposal_id))
+            for proposal_id in self.proposal_ids:
+                command.extend(("--proposal-id", proposal_id))
         if self.force:
             command.append("--force")
         if live:
@@ -90,6 +109,40 @@ def _integer(value: Any, field: str) -> int:
     if isinstance(value, bool) or not isinstance(value, int):
         raise ValueError(f"{field} must be an integer")
     return value
+
+
+def _source_path(
+    value: Any,
+    *,
+    book: str,
+    operation: str,
+    proposal_ids: list[str],
+) -> str | None:
+    if value is None or value == "":
+        return None
+    if not isinstance(value, str):
+        raise ValueError("source_path must be a string")
+    if operation not in ("accept-color", "accept-bw"):
+        raise ValueError("source_path is supported only for accept-color and accept-bw")
+    if len(proposal_ids) != 1:
+        raise ValueError("source_path requires exactly one proposal id")
+
+    clean = value.strip().replace("\\", "/")
+    prefix = f"projects/coloring-book/sets/{book}/"
+    if clean.startswith(prefix):
+        clean = clean[len(prefix) :]
+    elif clean.startswith("projects/"):
+        raise ValueError(f"source_path must belong to the {book} set")
+
+    if (
+        not clean
+        or clean.startswith("/")
+        or ":" in clean
+        or ".." in Path(clean).parts
+        or Path(clean).suffix.lower() not in IMAGE_SUFFIXES
+    ):
+        raise ValueError("source_path must be a safe image path inside the selected set")
+    return clean
 
 
 def load_event(path: Path) -> ColorArtEvent:
@@ -129,6 +182,13 @@ def load_event(path: Path) -> ColorArtEvent:
         if proposal_id not in proposal_ids:
             proposal_ids.append(proposal_id)
 
+    source_path = _source_path(
+        data.get("source_path"),
+        book=str(book),
+        operation=str(operation),
+        proposal_ids=proposal_ids,
+    )
+
     timeout = _integer(data.get("timeout", 600), "timeout")
     if not MIN_TIMEOUT <= timeout <= MAX_TIMEOUT:
         raise ValueError(f"timeout must be between {MIN_TIMEOUT} and {MAX_TIMEOUT}")
@@ -140,12 +200,15 @@ def load_event(path: Path) -> ColorArtEvent:
         raise ValueError(
             "force is only supported for generate-color-proposals and generate-bw"
         )
+    if source_path and force:
+        raise ValueError("source_path adoption cannot be combined with force")
 
     return ColorArtEvent(
         path=path,
         operation=str(operation),
         book=str(book),
         proposal_ids=tuple(proposal_ids),
+        source_path=source_path,
         timeout=timeout,
         force=force,
     )
@@ -177,7 +240,7 @@ def process_event(event: ColorArtEvent, *, live: bool) -> int:
         "generate-color-proposals",
         "generate-bw",
         "finalize-pair",
-    ):
+    ) or (event.operation == "accept-bw" and event.source_path):
         if not os.environ.get("ANTHROPIC_API_KEY"):
             print(
                 "ANTHROPIC_API_KEY is required for semantic coloring review.",
