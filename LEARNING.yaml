@@ -4587,3 +4587,18 @@ records:
     CONTINUOUS_IMPROVEMENT_NOTE_DRIFT check (t-049, same session) caught this on its first
     live run against this exact task, confirming the checker earns its keep immediately
     rather than only in theory.
+- date: 2026-07-28
+  project: conductor
+  task: t-087
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    A freshly-created, self-contained roadmap task (no cross-repo dependency, no
+    art-relay/backlog blocker) is a good burst-mode rotation pick precisely because
+    it can't collide with the many concurrent sessions already re-working the same
+    handful of high-priority recurring tasks (ai-art-academy/t-010, coloring-book,
+    model-builder/t-029) — worth checking `updated:` recency across ready tasks,
+    not just priority.yaml order, before picking one.
