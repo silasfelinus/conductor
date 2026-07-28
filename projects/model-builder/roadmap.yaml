@@ -575,7 +575,7 @@ tasks:
   - id: t-029
     milestone: m6
     title: "Polish and upgrade Model Builder front-end surface"
-    status: ready
+    status: claimed
     recurring: true
     passes: 0
     stakes: reversible
@@ -623,10 +623,10 @@ tasks:
       PROGRESS 2026-07-28 (conductor scheduled burst rotation, claude-conductor-burst-20260728T0730Z-mb-t029): step (4) follow-on -- dispatched an Explore subagent to read the full store, all six components/model-builder/*.vue files, every server/api/model-builder/** route, and cross-check against prisma/schema.prisma, against the exclusion list of every bug class already fixed by prior cycles (see the eight prior PROGRESS entries above for the full list, most recently the autoBuildRun() run-id staleness fix in PR #1062). Found a real, previously-unfixed gap in `linkSourceToTarget` (server/api/model-builder/items/[id]/commit.post.ts): it handled `Scenario -> Character` (and Dream/Reward/Bot siblings) but had no case for the reverse `Character -> Scenario` pairing, even though `prisma/schema.prisma` models a genuine bidirectional many-to-many relation (`Character.Scenarios` / `Scenario.Characters`, `@relation("CharacterToScenario")`). `getOutputsForRecipe` filters `OUTPUT_CATALOG` only by recipe key, not source type, so a `Character` source running `relationship-expansion` with the `expand-scenarios` output reaches this path through the normal UI, not just a crafted request. Committing that item created the new `Scenario` row but silently returned `linked: false`, leaving the relation unpopulated with no indication to the user. Fixed by mirroring the existing `Scenario -> Character` branch's shape. Verified: `npx eslint` on the changed file clean; full-project `npm run test` (`vue-tsc --noEmit`) exit 0 after provisioning deps via `provision_kind_robots_deps.sh`; diff scoped to exactly the one file (`git status --porcelain` showed only this file before commit). kind_robots PR #1079 (branch `claude/model-builder-t029-scenario-link`): all 4 CI checks green (TypeScript, Contract verifiers, facet-catalog, GitGuardian) -- merged squash `8d4deb33`. No review comments. Step (1) (dashboard-tab + tutorial .webp art) remains the sole outstanding original deliverable, still blocked on the external art-generation relay. Rearmed to `ready`; claim fields cleared below.
 
       Kaizen suggestion from this cycle: add a small dev-time consistency check (or unit test) that walks every `CREATE_TARGETS` entry in `modelBuilderFields.ts` and asserts `linkSourceToTarget` has a matching `(sourceType, targetType)` case wherever a bidirectional Prisma relation exists between the two models. Would have caught this gap (and the earlier `Dream -> Bot` gap fixed in PR #1005) automatically instead of relying on a manual read-through each cycle. Two related, lower-confidence sibling gaps also noticed but not fixed this cycle (need relation verification first): `Reward -> Character` despite `Character -> Reward` and `Reward.Characters` existing; other `CREATE_TARGETS` pairs (`Project`/`Facet`/`Reward -> Scenario`, etc.) also unhandled but unconfirmed against schema relations.
-    claimed_by: null
-    claimed_at: null
-    updated: '2026-07-28T05:30:00Z'
-    owner: null
+    claimed_by: conductor-scheduled-20260728T141608Z-mb-t029-burst
+    claimed_at: '2026-07-28T14:16:08Z'
+    updated: '2026-07-28T14:16:08Z'
+    owner: worker
 
   - id: t-030
     milestone: m6
