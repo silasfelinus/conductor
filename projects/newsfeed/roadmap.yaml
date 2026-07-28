@@ -692,7 +692,7 @@ tasks:
   - id: t-022
     milestone: m3
     title: 'Wire a pool of default placeholder images into feed-card.vue for items with no image'
-    status: review
+    status: done
     owner: null
     passes: 0
     stakes: reversible
@@ -716,8 +716,9 @@ tasks:
       the pool too, per the task's own scope note. Verified: `npx eslint
       components/newsfeed/feed-card.vue` clean, `npm run test`
       (`vue-tsc --noEmit`, full project) exit 0, `npx prettier --check`
-      clean. kind_robots PR #1075 open, CI pending at claim time. Set
-      status: review; will flip to done once CI is green and the PR merges.
+      clean. kind_robots PR #1075 merged squash `b951d4f4` with all 5 CI
+      checks green (Contract verifiers, TypeScript, facet-catalog, verify,
+      GitGuardian).
     claimed_by: conductor-burst-20260728T0300Z-nf-t022
     claimed_at: '2026-07-28T03:30:00Z'
     updated: '2026-07-28T03:30:00Z'
