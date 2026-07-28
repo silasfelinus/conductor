@@ -67,17 +67,19 @@ def iter_missing_project_assets(catalog: dict[str, Any]) -> list[dict[str, Any]]
             if target.exists():
                 continue
 
-            entries.append(
-                {
-                    "project": slug,
-                    "variant": variant,
-                    "target_repo": PROJECT_IMAGE_REPO,
-                    "image_path": image_path,
-                    "size": str(size or default_size_for_variant(variant)),
-                    "status": "pending",
-                    "prompt": " ".join(prompt.split()),
-                }
-            )
+            entry = {
+                "project": slug,
+                "variant": variant,
+                "target_repo": PROJECT_IMAGE_REPO,
+                "image_path": image_path,
+                "size": str(size or default_size_for_variant(variant)),
+                "status": "pending",
+                "prompt": " ".join(prompt.split()),
+            }
+            model = asset.get("model") or asset.get("engine")
+            if isinstance(model, str) and model.strip():
+                entry["model"] = model.strip()
+            entries.append(entry)
 
     return entries
 
