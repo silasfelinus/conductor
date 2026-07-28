@@ -793,7 +793,7 @@ tasks:
   - id: t-035
     milestone: m6
     title: "verifyModelBuilderLinkCoverage.ts doesn't catch join-table-only relations, letting non-functional recipe entries ship silently"
-    status: review
+    status: done
     passes: 0
     stakes: reversible
     owner: reviewer
@@ -813,6 +813,24 @@ tasks:
       is flagged today. This would have caught Facet's bad relationship-expansion
       entry at t-032 time instead of needing a dedicated t-033/t-034 investigation.
       Front-end/test-only change; no schema change expected.
+
+
+      DONE 2026-07-28 (conductor scheduled Agent run, claude-conductor-scheduled-20260728T181326Z-mb-t035):
+      kind_robots PR #1109 (squash b5cc4026) merged green. Added extractCreateTargetMap,
+      extractOutputCatalogEntries, schemaHasJoinTableRelation (requires the @@id([...])
+      composite-key shape every real join table in this schema uses, to avoid
+      false-positiving on broad hub models like ArtImage that hold list-type
+      back-references to dozens of unrelated models), and
+      findJoinTableOnlyEligibilityPairs to verifyModelBuilderLinkCoverage.ts. Verified
+      via tsx run (clean on current config), a simulated regression (re-added Facet to
+      expand-scenarios's sourceTypes -- correctly failed, naming ScenarioFacet as the
+      join model), full vue-tsc (clean), and eslint (clean). First CI attempt failed
+      Contract verifiers: a repo-wide capture-group-guard heuristic linter
+      (verifyCaptureGroupGuards.ts, distinct from vue-tsc's real type narrowing) didn't
+      recognize a combined `if (!a || !b) continue` as guarding each variable, nor
+      `match[1]!` as guarding `match` before indexing. Fixed by splitting into two
+      single-variable guards and switching to `match?.[1] ?? null`; re-verified
+      unchanged behavior, second CI run green on all 6 checks.
     claimed_by: claude-conductor-scheduled-20260728T181326Z-mb-t035
     claimed_at: '2026-07-28T18:13:26Z'
     updated: '2026-07-28T18:13:26Z'

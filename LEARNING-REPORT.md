@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-07-28T18:30:25Z
+Generated: 2026-07-28T18:34:18Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **409**
-- Outcomes: blocked: 13, cancelled: 1, done: 395
+- Closed tasks recorded: **410**
+- Outcomes: blocked: 13, cancelled: 1, done: 396
 - Success rate: **97%**
 - Average passes on successful tasks: **0.0**
 
@@ -39,7 +39,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | kindrobots-unraid | 4 | 100% |
 | media-watchlist | 7 | 100% |
 | mermaids-of-venice | 3 | 100% |
-| model-builder | 35 | 100% |
+| model-builder | 36 | 100% |
 | mona-salai | 1 | 100% |
 | mural-design | 1 | 100% |
 | music-mentor | 1 | 100% |
@@ -57,7 +57,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 15 | 40% |
-| software | 394 | 99% |
+| software | 395 | 99% |
 
 ## Failure categories
 
@@ -77,6 +77,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-07-28 `model-builder/t-035` — Extending an existing schema-relation-vs-config-eligibility guard for a second failure direction (join-table-only relation claimed as CREATE-linkable) is clean on the first functional pass, but a naive "any model referencing both types" join-table heuristic false-positives on broad hub models (ArtImage) -- require the actual structural signature real join tables use in this schema (@@id([...]) composite key) before accepting a match. Separately: a green vue-tsc run does not guarantee a green CI, since this repo also runs a heuristic (non-type-checking) capture-group-guard linter that only recognizes specific guard shapes textually -- read that linter's own source for its recognized shapes rather than guessing when it flags new code TypeScript itself accepted.
 - 2026-07-28 `coloring-book/t-035` — Clean first-pass fix, same shape as t-032's recovery-path fix but for the fresh-submission branch of the same loop: record_semantic_gate_error() now stamps the newly enqueued ArtJob's id onto the stored error whenever the message does not already carry a "job N" reference, so a missing-credential verification failure after a successful render stays recoverable instead of forcing a duplicate resubmission. Mirrors t-032's own regression test shape closely enough that reusing that test as a template for the new fresh-submission case caught the right edge cases (double-stamp avoidance, enqueue()-failure leaving the field unstamped) on the first attempt.
 - 2026-07-28 `ai-art-academy/t-052` — Closed without a separate diff -- its content (PUBLIC-DOMAIN-POLICY.md §1.3 vs §2 distinction) shipped in the same continuous-improvement-checklist.md edit as t-051 (PR #1344). See t-051's record for the reusable lesson about combining same-paragraph kaizen tasks.
 - 2026-07-28 `ai-art-academy/t-051` — Small kaizen-generated checklist tasks (t-051, t-052) that land in the same rotation-instructions paragraph are cheaper to merge as one edit than as two sequential PRs -- worth checking a freshly filed kaizen task against other open kaizen tasks for the same project before implementing, in case they share a landing spot.
@@ -86,7 +87,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-07-28 `coloring-book/t-032` — A live recovery pass that reuses an already-completed ArtJob can still silently destroy its own recoverability: when validate_candidate() fails for an environment reason (missing ANTHROPIC_API_KEY) rather than a real image judgment, overwriting the entry's error text erases the "job N timed out" reference a future recovery pass parses to find the same completed job -- converting a genuinely recoverable entry into one that looks like it needs a brand-new (duplicate) submission. Distinguish environment/tooling failures from real semantic verdicts before writing to any field a recovery mechanism depends on.
 - 2026-07-28 `coloring-book/t-033` — Second same-day coloring-book PR (after t-022) merged with no roadmap task claimed beforehand -- both were only discoverable via mcp__github__list_pull_requests, not roadmap state. Retroactively logging the task after merge keeps the audit trail intact but does not fix the root habit; worth enforcing claim-before-implement if a third instance appears in this project.
 - 2026-07-28 `model-builder/t-033` — When a picker/config restriction should mirror a relation graph (here: which source types may create which related model), trace the actual linked-pair cases in the commit/link handler rather than the coarser raw schema-relation check alone -- two output keys can target the same model through different fields (Project.managerBotId vs Dream.narratorId), which a schema-relation-only check cannot distinguish. The fix also surfaced a pre-existing gap (Facet listed as recipe-eligible with zero real link cases) that was silently broken before and is now visibly empty instead -- filed as a separate kaizen task rather than silently expanding scope.
-- 2026-07-28 `coloring-book/t-022` — Path-safety logic duplicated at both the event-intake layer and the executing script (process_coloring_art_events.py and adopt_coloring_book_asset.py both re-validate source_path independently) is a defense-in-depth pattern worth reusing for other event-driven scripts that accept a filesystem path from an external event file.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-07-28T18:30:25Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-07-28T18:34:18Z_

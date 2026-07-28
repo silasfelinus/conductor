@@ -4831,3 +4831,22 @@ records:
     t-032''s own regression test shape closely enough that reusing that test as a template
     for the new fresh-submission case caught the right edge cases (double-stamp avoidance,
     enqueue()-failure leaving the field unstamped) on the first attempt.'
+- date: 2026-07-28
+  project: model-builder
+  task: t-035
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'Extending an existing schema-relation-vs-config-eligibility guard for a
+    second failure direction (join-table-only relation claimed as CREATE-linkable)
+    is clean on the first functional pass, but a naive "any model referencing both
+    types" join-table heuristic false-positives on broad hub models (ArtImage) --
+    require the actual structural signature real join tables use in this schema
+    (@@id([...]) composite key) before accepting a match. Separately: a green
+    vue-tsc run does not guarantee a green CI, since this repo also runs a
+    heuristic (non-type-checking) capture-group-guard linter that only recognizes
+    specific guard shapes textually -- read that linter''s own source for its
+    recognized shapes rather than guessing when it flags new code TypeScript itself
+    accepted.'
