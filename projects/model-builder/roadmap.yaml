@@ -696,10 +696,10 @@ tasks:
   - id: t-033
     milestone: m6
     title: "Restrict relationship-expansion CREATE outputs to source types with a real relation"
-    status: ready
+    status: claimed
     passes: 0
     stakes: reversible
-    owner: null
+    owner: worker
     note: >
       Kaizen from t-032 (kind_robots PR #1081, 2026-07-28). The relationship-expansion
       recipe's OUTPUT_CATALOG (stores/helpers/modelBuilderRecipes.ts) does not currently
@@ -713,3 +713,6 @@ tasks:
       already derives from prisma/schema.prisma) so the picker only ever offers
       expand-* outputs a source type actually has a relation for. Front-end/store change;
       no schema change expected.
+    claimed_by: burst-20260728-mb-t033-relexpand
+    claimed_at: '2026-07-28T11:12:17Z'
+    updated: '2026-07-28T11:12:17Z'
