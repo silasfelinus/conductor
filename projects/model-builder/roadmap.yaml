@@ -575,7 +575,7 @@ tasks:
   - id: t-029
     milestone: m6
     title: "Polish and upgrade Model Builder front-end surface"
-    status: ready
+    status: claimed
     recurring: true
     passes: 0
     stakes: reversible
@@ -631,10 +631,10 @@ tasks:
       PROGRESS 2026-07-28 (conductor-burst-hourly rotation, reviewer/claude-conductor-burst-20260728T-mb-t029): step (4) follow-on -- coloring-book/t-022 (top-priority active ready task) was skipped this cycle: its semantic art gate remains blocked on the missing ANTHROPIC_API_KEY credential (same known wall the PR #1357 fail-closed preflight now surfaces cleanly), so a retry here would be a no-op. Claimed this task instead. Dispatched an Explore subagent to read stores/modelBuilderStore.ts and all model-builder components in full against the exclusion list of every bug class fixed by prior cycles. Found a real, previously-unfixed race: a GENERATE_ASSETS render (sync generateItemAsset or async pollAsyncArtJob/generateItemAssetAsync) can be reopened upstream while still in flight -- markDownstreamStale correctly marks GENERATE_ASSETS 'stale' at that moment -- but the render's own completion handler holds only its original item reference and has no idea this happened, so it unconditionally overwrote the stage back to 'ready' on success/failure (and re-asserted 'in-progress' on every 5s async poll tick), silently erasing the 'needs re-review' signal for a candidate actually produced from an outdated prompt -- the same 'review gate bypassed' bug class as the canApproveAssets and batch-operation fixes above, just in the render-completion path. Fixed by adding finishGenerateAssets(item, next), which only applies a completion status write if the stage is still 'in-progress' (i.e. nothing else touched it while the call was awaiting), and using it at all six race-prone write sites. Verified: npx vue-tsc --noEmit clean; npx eslint stores/modelBuilderStore.ts shows only the 2 pre-existing no-empty errors at lines 203/210 (confirmed via git stash with and without this diff); prettier drift on this file confirmed pre-existing on main the same way; git status --porcelain showed only the one file touched. No live smoke test of the actual race was possible -- no reachable render backend from this sandbox -- verified by code trace instead. kind_robots PR #1114 (branch claude/dazzling-ptolemy-54n3h5), open, CI pending. Step (1) (dashboard-tab + tutorial .webp art) remains the sole outstanding original deliverable, still blocked on the external art-generation relay.
 
       REVIEWED 2026-07-28 (conductor agent run, claude-conductor-agentrun-20260728T-review): reviewed conductor PR #1359 and the kind_robots PR #1114 it tracks. Re-traced the finishGenerateAssets guard against markDownstreamStale directly in the store source: markDownstreamStale marks an 'in-progress' GENERATE_ASSETS stage 'stale' on upstream edit, so by the time an in-flight render's completion handler runs, the status guard (`=== 'in-progress'`) correctly evaluates false and skips the overwrite -- confirms the fix does what the PR claims. All 9 kind_robots CI checks green. Merged kind_robots #1114 (squash 7629a32c), then conductor #1359 (squash a655af6b). Rearmed to `ready` per the recurring-task rule; claim fields cleared below.
-    claimed_by: null
-    claimed_at: null
-    updated: '2026-07-28T21:06:30Z'
-    owner: null
+    claimed_by: claude-conductor-burst-20260728T2308Z-mb-t029
+    claimed_at: '2026-07-28T23:07:48Z'
+    updated: '2026-07-28T23:07:48Z'
+    owner: worker
 
   - id: t-030
     milestone: m6
