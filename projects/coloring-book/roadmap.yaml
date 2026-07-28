@@ -787,3 +787,22 @@ tasks:
     text format referenced_job_id() already parses) so it becomes recoverable via the same
     recover_timed_out_job() path t-032 just hardened, instead of only degrading to a fresh
     resubmission. Add regression coverage mirroring t-032's tests.
+
+- id: t-036
+  milestone: m4
+  title: Add a --require-no-semantic-gate-error flag to coloring_queue_status.py
+  status: ready
+  passes: 0
+  stakes: reversible
+  owner: null
+  updated: '2026-07-28T15:10:00Z'
+  note: >
+    KAIZEN (from PR #1331, t-022, 2026-07-28): diagnosing t-022 this cycle required manually
+    reading color-art-jobs.yaml's raw pending_with_semantic_gate_error entries and cross-
+    referencing conductor-bot commit history by hand to confirm the 18 Monster Recast slots
+    stuck on the missing ANTHROPIC_API_KEY secret aren't worth retrying until Silas fixes the
+    secret (see projects/coloring-book/TALKBACK.md 2026-07-28 security-flag entry).
+    coloring_queue_status.py already surfaces pending_with_semantic_gate_error as a count and
+    has a --require-retry-safe flag; add a matching --require-no-semantic-gate-error flag so a
+    future automated cycle can programmatically detect "don't bother retrying these, it's the
+    same credential wall" instead of a human/agent re-deriving it from raw queue state each time.
