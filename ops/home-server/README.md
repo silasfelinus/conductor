@@ -8,9 +8,10 @@ Files in this folder:
 
 | File | What it is |
 |---|---|
-| `ecosystem.config.js` | pm2 process definitions for `comfyui` and `sd-webui` (plus an opt-in `kr-relay`) |
+| `ecosystem.config.js` | pm2 process definitions for `comfyui` and `sd-webui` (plus opt-in `kr-relay` and `kr-download`) |
 | `healthcheck.ps1` | optional watchdog — probes the HTTP health endpoints and `pm2 restart`s a hung process |
 | `relay_agent.py` | pull-based bridge: claims ArtJobs from kind_robots and drives local ComfyUI/A1111 (enable after art-generator-connect/t-010 deploys) |
+| `relay_download_agent.py` | pull-based model downloader: claims queued LoRA/checkpoint downloads, fetches them onto the engine dirs, and catalogs them as Resources (the `kr-download` app) |
 | `start-engines.bat` | double-click launcher: starts both engines (no-op if running) and attaches the live log stream — the old bats' echo, without owning the processes |
 
 ---
@@ -181,6 +182,34 @@ enable: uncomment the `kr-relay` block in `ecosystem.config.js`, set
 user's id), then `pm2 start ecosystem.config.js --only kr-relay && pm2 save`.
 Needs any Python 3.9+ — stdlib only, no pip installs. Watch it with
 `pm2 logs kr-relay`.
+
+## The download agent (kr-download)
+
+`relay_download_agent.py` is the relay's companion for *models*. When you queue
+a LoRA or checkpoint from the Discover browser (`/models` → Discover), the
+server writes a `DownloadRequest` (PENDING). This agent polls
+`/api/lora/download/claim`, downloads the file, drops it into the right engine
+directory (LoRA → `Z:/ai/models/Lora`, checkpoint → `Z:/ai/models/Stable-diffusion`,
+picked from the row's `resourceType`), catalogs it as a Resource via
+`POST /api/resources`, then reports `.../complete` with the new `resourceId`.
+
+Same pull model and stdlib-only footprint as the relay — it reuses
+`relay_agent.py`'s `log`/`http_json`/token, so no new setup beyond the token
+you already set for kr-relay. To enable:
+
+```powershell
+# KR_RELAY_TOKEN is already set (shared with kr-relay). Optionally, for gated
+# Civitai downloads that need an API key:
+setx KR_CIVITAI_TOKEN "your-civitai-token"
+# open a NEW shell after setx, then:
+pm2 start ecosystem.config.js --only kr-download
+pm2 save
+pm2 logs kr-download --lines 20   # expect: "download agent … polling …" idle loop
+```
+
+Override `KR_LORA_DIR` / `KR_CHECKPOINT_DIR` only if your engine loads models
+from non-default paths. Like the relay, it runs whatever was on disk when pm2
+started it — `git pull && pm2 restart kr-download` to update.
 
 ### Updating a running relay (e.g. the 2026-07-10 Hair Studio upgrade)
 
