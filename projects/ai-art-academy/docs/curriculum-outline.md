@@ -128,6 +128,28 @@ clear PUBLIC-DOMAIN-POLICY.md §1.3's death-date prong easily but were not
 individually rights-verified this cycle — historical-context-only for now,
 the same treatment given to Precisionism's (§33) unverified figures.
 
+Section 40 is the 2026-07-29 v1.20 addition (t-010 cycle, lane 4): Barbizon
+School (`barbizon-school`) — a fresh addition with no source candidate file
+in `docs/curriculum-candidates/` (researched and written this cycle, since
+the one remaining candidate file, Harlem Renaissance, stays correctly held
+at ai-art-academy/t-043 pending a cultural-framing decision only Silas can
+make). The curriculum's own Tonalism entry (§39) already named the Barbizon
+School as a direct influence on American Tonalism's muted palette, so this
+section fills a dependency the document referenced but never taught. It is
+also the direct precursor Realism (§9, sharing Jean-François Millet) and
+Impressionism (§10, whose painters studied Barbizon's plein-air example
+directly) both build on, giving the curriculum an explicit chain from
+academic landscape convention through Barbizon's direct rural observation to
+Impressionism's broken-color optics. Three generation-style anchors —
+Théodore Rousseau (1812-1867), Jean-Baptiste-Camille Corot (1796-1875), and
+Charles-François Daubigny (1817-1878) — were verified this cycle: one work
+each, all confirmed CC0 via the Metropolitan Museum of Art's Open Access
+program on their live Wikimedia Commons file pages. Millet and Narcisse
+Díaz de la Peña (d. 1876) are named in the lesson prose as founding members
+of the Barbizon circle for historical context; Millet is not re-added as a
+second generation-style anchor here since he already anchors Realism (§9),
+and Díaz was not individually rights-verified this cycle.
+
 They are appended (rather than renumbered into place) but belong
 chronologically among the earlier movements — read the `era` field in the
 machine-readable skeleton for true ordering; the front-end seed (t-020, t-031)
@@ -465,6 +487,12 @@ movements:
     artist_slugs: [george-inness, dwight-tryon, ralph-albert-blakelock, j-francis-murphy]
     example_count: 3
     remix_hint: "Repaint this image as an American Tonalist landscape: a muted, close-value palette unified by a single dominant tone (soft gray, brown, or blue-green), soft diffused atmospheric light at dawn or dusk, simplified near-silhouette forms with blurred edges, thin translucent glazes of color, and a quiet, contemplative, melancholic mood. Preserve the source composition and subject; avoid imitating any single named artwork."
+  - slug: barbizon-school
+    name: Barbizon School
+    era: "c. 1830-1875 (France)"
+    artist_slugs: [theodore-rousseau, camille-corot, charles-francois-daubigny]
+    example_count: 3
+    remix_hint: "Repaint this image as a Barbizon School landscape: a muted, earthy palette of greens, browns, and greys, loose but controlled brushwork, soft overcast or late-day atmospheric light, direct unidealized observation of a specific rural landscape, and a quiet, humble mood with no academic or mythological staging. Preserve the source composition and subject."
 ```
 
 ---
@@ -2745,6 +2773,91 @@ composition and subject; avoid imitating any single named artwork."
 
 ---
 
+## 40. Barbizon School (`barbizon-school`)
+
+**Era:** c. 1830-1875 (France)
+
+**Key ideas.** The Barbizon School gives the curriculum its landscape hinge
+point: a group of painters who settled in and around the village of Barbizon
+on the edge of the Fontainebleau forest and insisted that the ordinary
+countryside, observed directly and without myth, allegory, or historical
+staging, was a worthy subject on its own terms. This directly rejected the
+academic hierarchy that ranked history and mythological painting above
+landscape. Barbizon painters worked outdoors from direct observation (though
+most still finished canvases in the studio), favored humble, unposed rural
+subjects — woodcutters, gleaners, cattle, a specific stretch of forest or
+farmland — over idealized or composite scenery, and painted in a muted,
+earthy, tonally unified palette. The school is the direct hinge between
+academic Neoclassical/Romantic landscape convention and Impressionism: Monet,
+Pissarro, and their circle studied and extended the Barbizon painters'
+plein-air practice, but pushed its muted tonal realism toward broken,
+optically accurate color. This curriculum's own Tonalism entry (§39) names
+Barbizon's muted palette and soft atmosphere as a direct influence on
+American Tonalism, and Realism (§9) shares Jean-François Millet, whose
+peasant subjects bridge both movements.
+
+**Recognition cues:**
+- a muted, earthy palette dominated by greens, browns, and greys rather than
+  bright or idealized color
+- loose, visible, but controlled brushwork — looser than academic finish,
+  tighter and more tonally unified than Impressionist broken color
+- soft, often overcast or late-day atmospheric light rather than dramatic
+  theatrical illumination
+- a specific, recognizable rural landscape (a named forest, village, or
+  field) rather than an idealized or composite scene
+- humble, unposed rural labor and rural life — woodcutters, farmers,
+  gleaners, livestock — treated with quiet dignity rather than sentimentality
+  or spectacle
+- an absence of mythological, historical, or religious staging; the
+  landscape and its inhabitants are the entire subject
+
+**Notable artists:**
+- **Théodore Rousseau** (1812-1867) — the school's acknowledged leader;
+  painted dense, specific studies of the Fontainebleau forest itself.
+- **Jean-Baptiste-Camille Corot** (1796-1875) — an early and frequent visitor
+  to Fontainebleau whose soft, silvery-toned forest and river views bridge
+  Barbizon and his own more independent later style.
+- **Charles-François Daubigny** (1817-1878) — extended Barbizon's plein-air
+  practice along the rivers of northern France, working increasingly from a
+  studio boat; among the most direct influences cited by the early
+  Impressionists.
+
+Jean-François Millet (1814-1875), a founding member of the Barbizon circle
+best known for dignified peasant-labor subjects, is this curriculum's
+Realism (§9) anchor rather than a second Barbizon anchor here — see that
+entry. Narcisse Díaz de la Peña (1807-1876), another founding member known
+for richly colored forest interiors, clears PUBLIC-DOMAIN-POLICY.md §1.3's
+death-date prong easily but was not individually rights-verified this cycle;
+named here for historical context only, per §5's default-deny under
+ambiguity.
+
+**Example works:**
+- *The Forest in Winter at Sunset*, Théodore Rousseau, c. 1846 — Metropolitan
+  Museum of Art, accession 11.4. VERIFIED CC0 this cycle via its Wikimedia
+  Commons file page (Met Open Access Policy):
+  https://commons.wikimedia.org/wiki/File:The_Forest_in_Winter_at_Sunset_MET_DP247630.jpg
+- *View of Lormes*, Jean-Baptiste-Camille Corot, early 1840s — Metropolitan
+  Museum of Art, accession 1980.203.4. VERIFIED CC0 this cycle via its
+  Wikimedia Commons file page (Met Open Access Policy):
+  https://commons.wikimedia.org/wiki/File:View_of_Lormes_MET_DT9008.jpg
+- *Landscape with a Sunlit Stream*, Charles-François Daubigny, c. 1877 —
+  Metropolitan Museum of Art, accession 08.136.4. VERIFIED CC0 this cycle via
+  its Wikimedia Commons file page (Met Open Access Policy):
+  https://commons.wikimedia.org/wiki/File:Landscape_with_a_Sunlit_Stream_MET_DT2146.jpg
+
+Do not add a Millet or Díaz de la Peña example here without first verifying
+that specific work's rights status directly (museum API or Wikimedia Commons
+file page), the same standard applied above; Millet's own verified example
+work belongs with the Realism (§9) entry, not duplicated here.
+
+**remix_hint:** "Repaint this image as a Barbizon School landscape: a muted,
+earthy palette of greens, browns, and greys, loose but controlled brushwork,
+soft overcast or late-day atmospheric light, direct unidealized observation
+of a specific rural landscape, and a quiet, humble mood with no academic or
+mythological staging. Preserve the source composition and subject."
+
+---
+
 ## Lesson-only vs remixable
 
 Every movement above maps to a remix config (mode `prompt` to start; t-003/t-004
@@ -3320,3 +3433,23 @@ this cycle. A future session should verify one work per artist before
 naming any of the three in the "Example works" list. Not yet synced into
 kind_robots' `stores/seeds/academyStyles.ts` — a separate follow-up, the
 same pattern as every other curriculum-outline.md addition since §31.
+
+**v1.20 addition (2026-07-29) re-check.** Section 40 (Barbizon School) clears
+PUBLIC-DOMAIN-POLICY.md §1.3's both-prongs rule for all three generation-style
+anchors with wide margin: Théodore Rousseau (d. 1867), Jean-Baptiste-Camille
+Corot (d. 1875), and Charles-François Daubigny (d. 1878) all died well over a
+century ago. This session verified one example work per artist directly
+against its live Wikimedia Commons file page (CC0 1.0 Universal via the
+Metropolitan Museum of Art's Open Access Policy, the same verification method
+used for §32, §33, and §39): Rousseau's *The Forest in Winter at Sunset*
+(c. 1846, Met accession 11.4), Corot's *View of Lormes* (early 1840s, Met
+accession 1980.203.4), and Daubigny's *Landscape with a Sunlit Stream*
+(c. 1877, Met accession 08.136.4) — none moves the curriculum's most-recent-
+example-work record (still 1930, §24). Jean-François Millet (d. 1875,
+already Realism's §9 anchor) and Narcisse Díaz de la Peña (d. 1876) are named
+in the entry's prose as founding Barbizon-circle members for historical
+context only; Díaz was not individually rights-verified this cycle and no
+work of his is listed as an example work, per §5's default-deny under
+ambiguity. Not yet synced into kind_robots' `stores/seeds/academyStyles.ts` —
+a separate follow-up, the same pattern as every other curriculum-outline.md
+addition since §31.
