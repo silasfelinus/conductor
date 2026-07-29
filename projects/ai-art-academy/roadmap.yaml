@@ -1639,11 +1639,11 @@ tasks:
   - id: t-054
     milestone: m6
     title: 'Migrate t-010''s accumulated RAN entries out of roadmap.yaml note into continuous-improvement-run-log.md'
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
-    updated: '2026-07-29T09:10:00Z'
+    updated: '2026-07-29T10:06:44Z'
     note: >
       Kaizen from Reviewer merge of kind_robots PR #1143 (2026-07-29, session
       claude-reviewer-burst-20260729T090540). t-010's own note field says "See `run_log` for
@@ -1659,3 +1659,5 @@ tasks:
       standing-instructions paragraph in the roadmap note. Do this without disturbing
       `continuous_improvement:` (lane tracking) or `claimed_by`/`claimed_at`. A future cycle
       should append new RAN entries directly to the run-log doc, not to the roadmap note.
+    claimed_by: claude-conductor-scheduled-20260729T100614Z-aa-t010-lane2
+    claimed_at: '2026-07-29T10:06:44Z'
