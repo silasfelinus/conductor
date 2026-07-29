@@ -1,21 +1,21 @@
 # Roadmap Audit
 
-Generated: `2026-07-29T00:14:49.386998+00:00`
+Generated: `2026-07-29T04:20:49.807707+00:00`
 
 This is a conservative structural audit. It reports suspicious state; it does not automatically change task status or remove human gates.
 
 ## Portfolio snapshot
 
-- **43** roadmaps, **23** active projects, **748** tasks
-- **29 ready**, **49 waiting**, **28 needs-human**, **2 claimed/review**, **629 done**
-- Findings: **0 errors**, **4 warnings**, **59 informational**
+- **43** roadmaps, **23** active projects, **751** tasks
+- **30 ready**, **47 waiting**, **28 needs-human**, **3 claimed/review**, **632 done**
+- Findings: **0 errors**, **6 warnings**, **58 informational**
 
 ## Project inventory
 
 | # | Project | State | Kind | Ready | Waiting | Human | In progress | Done / Total |
 |---:|---|---|---|---:|---:|---:|---:|---:|
 | 1 | `challenge-center` | finished | software | 0 | 0 | 0 | 0 | 20 / 20 |
-| 2 | `ai-art-academy` | active | software | 0 | 1 | 2 | 1 | 48 / 52 |
+| 2 | `ai-art-academy` | active | software | 1 | 1 | 2 | 0 | 49 / 53 |
 | 3 | `coloring-book` | active | software | 1 | 9 | 1 | 0 | 25 / 36 |
 | 4 | `humboldt-scoop` | finished | software | 0 | 0 | 0 | 0 | 8 / 8 |
 | 5 | `humboldt-scoop-cms` | active | software | 0 | 0 | 1 | 0 | 11 / 12 |
@@ -33,7 +33,7 @@ This is a conservative structural audit. It reports suspicious state; it does no
 | 17 | `animation-manager` | active | software | 2 | 0 | 0 | 0 | 14 / 16 |
 | 18 | `animation-studio` | retired | software | 3 | 4 | 0 | 0 | 1 / 8 |
 | 19 | `ecosystem-map` | finished | software | 0 | 0 | 0 | 0 | 8 / 8 |
-| 20 | `conductor` | active | software | 0 | 0 | 3 | 0 | 89 / 92 |
+| 20 | `conductor` | active | software | 1 | 0 | 3 | 0 | 90 / 94 |
 | 21 | `serendipity` | active | software | 1 | 0 | 0 | 0 | 11 / 12 |
 | 22 | `storymaker` | active | software | 1 | 0 | 0 | 0 | 9 / 10 |
 | 23 | `davinci` | finished | software | 0 | 0 | 0 | 0 | 15 / 15 |
@@ -56,7 +56,7 @@ This is a conservative structural audit. It reports suspicious state; it does no
 | 40 | `dream-cycle` | active | software | 3 | 0 | 0 | 0 | 16 / 20 |
 | — | `approval-portal` | retired | software | 0 | 0 | 0 | 0 | 3 / 5 |
 | — | `humboldt-impropriety-calendar` | retired | brainstorm | 0 | 5 | 0 | 0 | 0 / 6 |
-| — | `lora-ingestion` | missing | infrastructure | 1 | 2 | 1 | 1 | 1 / 6 |
+| — | `lora-ingestion` | missing | infrastructure | 0 | 0 | 1 | 3 | 2 / 6 |
 
 ## Findings by severity
 
@@ -64,14 +64,16 @@ This is a conservative structural audit. It reports suspicious state; it does no
 
 _None._
 
-### Warning (4)
+### Warning (6)
 
 - **ROADMAP_MISSING_OVERRIDE** — `lora-ingestion`: Roadmap has no project-overrides.yaml entry.
-- **IN_PROGRESS_WITHOUT_TIMESTAMP** — `lora-ingestion` / `t-002`: Claimed/review task has no parseable updated timestamp.
+- **IN_PROGRESS_WITHOUT_TIMESTAMP** — `lora-ingestion` / `t-004`: Claimed/review task has no parseable updated timestamp.
+- **IN_PROGRESS_WITHOUT_TIMESTAMP** — `lora-ingestion` / `t-005`: Claimed/review task has no parseable updated timestamp.
+- **IN_PROGRESS_WITHOUT_TIMESTAMP** — `lora-ingestion` / `t-006`: Claimed/review task has no parseable updated timestamp.
 - **ACTIVE_PROJECT_ALL_DONE** — `newsfeed`: All tasks are done but project override remains active.
 - **ACTIVE_PROJECT_NO_OPEN_TASKS** — `newsfeed`: Active project has no open tasks; mark finished/paused or add an intentional recurring task.
 
-### Info (59)
+### Info (58)
 
 - **APPROVAL_WITHOUT_GATE** — `ai-art-academy` / `t-002`: approved_by_human is set on a task that is not human-gated.
 - **APPROVAL_WITHOUT_GATE** — `ai-art-academy` / `t-011`: approved_by_human is set on a task that is not human-gated.
@@ -109,7 +111,6 @@ _None._
 - **APPROVAL_WITHOUT_GATE** — `kind-robots` / `t-029`: approved_by_human is set on a task that is not human-gated.
 - **MISSING_GOAL** — `kindrobots-unraid`: Roadmap has no friendly goal/definition of done.
 - **APPROVAL_WITHOUT_GATE** — `kindrobots-unraid` / `t-002`: approved_by_human is set on a task that is not human-gated.
-- **INACTIVE_PROJECT_HAS_READY_TASKS** — `lora-ingestion`: Inactive project retains 1 ready task(s); harmless but misleading in generated status.
 - **MISSING_GOAL** — `lora-ingestion`: Roadmap has no friendly goal/definition of done.
 - **NEEDS_HUMAN_NOTE_FORMAT** — `lora-ingestion` / `t-003`: needs-human note does not use the AGENTS.md FOR SILAS action format.
 - **MISSING_GOAL** — `media-watchlist`: Roadmap has no friendly goal/definition of done.
