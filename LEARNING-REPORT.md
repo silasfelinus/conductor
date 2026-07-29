@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-07-29T12:30:27Z
+Generated: 2026-07-29T12:41:18Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **425**
-- Outcomes: blocked: 13, cancelled: 1, done: 411
+- Closed tasks recorded: **426**
+- Outcomes: blocked: 13, cancelled: 1, done: 412
 - Success rate: **97%**
 - Average passes on successful tasks: **0.0**
 
@@ -29,7 +29,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | conductor-app | 2 | 100% |
 | davinci | 1 | 100% |
 | digital-storefront | 24 | 100% |
-| dream-cycle | 16 | 100% |
+| dream-cycle | 17 | 100% |
 | ecosystem-map | 5 | 100% |
 | global-ui | 13 | 100% |
 | humboldt-impropriety-calendar | 1 | 0% |
@@ -57,7 +57,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 15 | 40% |
-| software | 410 | 99% |
+| software | 411 | 99% |
 
 ## Failure categories
 
@@ -77,6 +77,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-07-29 `dream-cycle/t-019` — An unrelated-looking PR (#1399) had already landed both a fix and its matching tests for public/rewards/... path handling in relay_media_agent.py, all green -- but the tests locked in the same wrong assumption as the code (folding the reward-asset root into the images root instead of treating it as a real sibling directory), including a test explicitly named to assert away the correct sibling-root design. A passing, internally-consistent test suite is not proof a fix matches reality when the tests were written by the same reasoning that produced the bug -- cross-check against the actual external system (here: the target repo's real folder layout) before trusting "tests pass" as sufficient verification, especially when correcting or building on another agent's recent, already-merged work.
 - 2026-07-29 `coloring-book/t-022` — recover_timed_out_job()'s except-block guard in consume_coloring_book_color_art.py only preserved a stuck job's "job N" reference when the failure text literally contained "ANTHROPIC_API_KEY" -- any other exception during a recovery attempt (missing local dependency, transient network error checking job status) silently destroyed the reference, forcing the next pass into a genuine duplicate ArtJob submission for an already-completed render. Same failure shape as the ai-art-academy/t-010 fauvism incident: "status implies delivered/dead" reasoning is too eager whenever a script decides to discard a recovery pointer. Fixed with a narrow RecoveryAbandoned exception marking only the backend-confirmed-dead cases; every other exception now preserves the reference unconditionally. General lesson: a recovery/reconciliation guard should default to "preserve the pointer," and require an explicit, backend-confirmed signal to discard it -- never infer "safe to discard" from matching one specific known error string.
 - 2026-07-29 `conductor/t-095` — consume_art_requests.py's enqueue()->wait_for_job() gap: a submitted ArtJob's id was only ever printed to stdout, never persisted, before the (up to 600s) wait for completion -- so a timeout, FAILED/CANCELLED job, or killed process left no durable trace of which ArtJob had actually been submitted for a given request, exactly the shape of the ai-art-academy/t-010 fauvism incident (an id known only from a session's own prose, unrecoverable once out of context). Fixed by recording the id onto the request's own entry immediately after submission succeeds, before the blocking wait -- the general lesson: any script that submits an async job and then blocks waiting on it should persist the job id at submission time, not at completion time, so a timeout or crash mid-wait still leaves a recoverable trail. Separately confirmed via a new regression test that the non-zero-exit half of this kaizen was already correct; not every suspected two-part gap turns out to have two real parts.
 - 2026-07-29 `media-watchlist/t-006` — This recurring polish task's own note pointed at a stale kaizen (Month/Season filters) that t-012 and t-016 had already closed two cycles earlier -- re-implementing it blind would have been a pure no-op. Re-diffing BROWSE-UX.md against the live components before picking a slice caught the drift and surfaced a different, still-open gap (Entry Detail's "Related entries" section, §3) that the note never flagged. Kaizen: on a recurring task with a multi-cycle PROGRESS history, treat the latest PROGRESS note's "not done yet" list as a hypothesis to verify against current main, not a ready-made todo -- prior cycles closing kaizens out-of-band (via their own follow-on tasks) can leave the recurring task's own note pointing at already-finished work.
@@ -92,7 +93,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-07-28 `conductor/t-092` — Direct api.github.com calls 403 from this sandbox even with a valid GITHUB_TOKEN and Authorization header (confirmed independently while building this task, matching select_role.py's existing finding) -- any new tool that needs live GitHub state from this environment should either go through the GitHub MCP tools or be written transport-agnostic (pure decision logic separated from the network call) rather than assuming urllib/requests against api.github.com will work.
 
 - 2026-07-28 `model-builder/t-036` — Running a newly-written static checker against the real file BEFORE writing any fix (rather than writing the checker to match a known-clean state) is worth doing by default -- it immediately found a genuine, previously-unfixed instance of the exact bug class it was built to catch (an unconditional COMMIT-stage write in commitItem(), same shape as the GENERATE_ASSETS bug t-029 fixed ad hoc), which a code-review-only pass over commitItem() had not caught in three prior cycles of this file. Also reconfirmed: mirror the reference checker exactly on the main()-guard idiom (`if (process.argv[1] && import.meta.url === ...) main()`) whenever the new checker will be imported from its own self-test file -- an unconditional module-level main() call (fine for a checker with no test importer, like verifyModelBuilderLinkCoverage.ts) fires as a side effect on import and pollutes/masks the self-test's own output.
-- 2026-07-28 `media-watchlist/t-016` — Confirms the t-015 lesson: select_role.py reported candidate_reviewable_pr_count: 0 and github_api_unreachable: true, but mcp__github__list_pull_requests/pull_request_read found this claude/* PR (and its kind_robots counterpart) fully green and ready to merge. A prior session did the implementation and left status: review with a clear PROGRESS note; this session only needed to verify CI and merge both PRs in order (implementation repo first, then the conductor tracking PR), matching the "Notes for reviewer" instructions left in the PR body.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-07-29T12:30:27Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-07-29T12:41:18Z_
