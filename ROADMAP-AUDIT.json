@@ -1,17 +1,17 @@
 {
-  "generated_at": "2026-07-28T21:31:13.148086+00:00",
+  "generated_at": "2026-07-28T23:22:15.464271+00:00",
   "summary": {
-    "roadmaps": 42,
+    "roadmaps": 43,
     "active_projects": 23,
-    "tasks": 742,
-    "ready": 32,
-    "waiting": 47,
-    "needs_human": 26,
-    "in_progress": 2,
-    "done": 624,
+    "tasks": 748,
+    "ready": 30,
+    "waiting": 49,
+    "needs_human": 27,
+    "in_progress": 3,
+    "done": 628,
     "errors": 0,
-    "warnings": 2,
-    "info": 56
+    "warnings": 4,
+    "info": 59
   },
   "projects": [
     {
@@ -308,16 +308,16 @@
       "autonomous": false,
       "task_count": 36,
       "counts": {
-        "done": 33,
-        "ready": 3
+        "done": 34,
+        "ready": 2
       },
-      "open_count": 3,
+      "open_count": 2,
       "human_attention": 0,
-      "ready": 3,
+      "ready": 2,
       "waiting": 0,
       "claimed": 0,
       "review": 0,
-      "done": 33
+      "done": 34
     },
     {
       "slug": "animation-manager",
@@ -384,17 +384,17 @@
       "autonomous": false,
       "task_count": 92,
       "counts": {
-        "done": 87,
-        "needs-human": 3,
-        "ready": 2
+        "claimed": 1,
+        "done": 88,
+        "needs-human": 3
       },
-      "open_count": 5,
+      "open_count": 4,
       "human_attention": 3,
-      "ready": 2,
+      "ready": 0,
       "waiting": 0,
-      "claimed": 0,
+      "claimed": 1,
       "review": 0,
-      "done": 87
+      "done": 88
     },
     {
       "slug": "serendipity",
@@ -596,17 +596,16 @@
       "autonomous": false,
       "task_count": 16,
       "counts": {
-        "done": 14,
-        "ready": 1,
-        "review": 1
+        "done": 15,
+        "ready": 1
       },
-      "open_count": 2,
+      "open_count": 1,
       "human_attention": 0,
       "ready": 1,
       "waiting": 0,
       "claimed": 0,
-      "review": 1,
-      "done": 14
+      "review": 0,
+      "done": 15
     },
     {
       "slug": "sketchy",
@@ -815,9 +814,45 @@
       "claimed": 0,
       "review": 0,
       "done": 0
+    },
+    {
+      "slug": "lora-ingestion",
+      "kind": "infrastructure",
+      "override_status": "missing",
+      "priority_index": null,
+      "autonomous": false,
+      "task_count": 6,
+      "counts": {
+        "done": 1,
+        "needs-human": 1,
+        "ready": 1,
+        "review": 1,
+        "waiting": 2
+      },
+      "open_count": 5,
+      "human_attention": 1,
+      "ready": 1,
+      "waiting": 2,
+      "claimed": 0,
+      "review": 1,
+      "done": 1
     }
   ],
   "findings": [
+    {
+      "severity": "warning",
+      "code": "ROADMAP_MISSING_OVERRIDE",
+      "project": "lora-ingestion",
+      "task": null,
+      "message": "Roadmap has no project-overrides.yaml entry."
+    },
+    {
+      "severity": "warning",
+      "code": "IN_PROGRESS_WITHOUT_TIMESTAMP",
+      "project": "lora-ingestion",
+      "task": "t-002",
+      "message": "Claimed/review task has no parseable updated timestamp."
+    },
     {
       "severity": "warning",
       "code": "ACTIVE_PROJECT_ALL_DONE",
@@ -1083,6 +1118,27 @@
       "project": "kindrobots-unraid",
       "task": "t-002",
       "message": "approved_by_human is set on a task that is not human-gated."
+    },
+    {
+      "severity": "info",
+      "code": "INACTIVE_PROJECT_HAS_READY_TASKS",
+      "project": "lora-ingestion",
+      "task": null,
+      "message": "Inactive project retains 1 ready task(s); harmless but misleading in generated status."
+    },
+    {
+      "severity": "info",
+      "code": "MISSING_GOAL",
+      "project": "lora-ingestion",
+      "task": null,
+      "message": "Roadmap has no friendly goal/definition of done."
+    },
+    {
+      "severity": "info",
+      "code": "NEEDS_HUMAN_NOTE_FORMAT",
+      "project": "lora-ingestion",
+      "task": "t-003",
+      "message": "needs-human note does not use the AGENTS.md FOR SILAS action format."
     },
     {
       "severity": "info",
