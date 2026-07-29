@@ -24,7 +24,11 @@ PROMPT_CATALOG = ROOT / "projects" / "art-prompts.yaml"
 OUTPUT_QUEUE = ROOT / "projects" / "art-generate.yaml"
 PROJECT_IMAGE_REPO = "silasfelinus/conductor"
 VARIANT_ORDER = ("icon", "card", "hero")
-DEFAULT_PROJECT_ART_MODEL = os.environ.get("PROJECT_ART_DEFAULT_MODEL", "krea2").strip() or "krea2"
+DEFAULT_PROJECT_ART_ENGINE = (
+    os.environ.get("PROJECT_ART_DEFAULT_ENGINE")
+    or os.environ.get("PROJECT_ART_DEFAULT_MODEL")
+    or "flux"
+).strip() or "flux"
 
 
 def load_yaml(path: Path) -> dict[str, Any]:
@@ -78,8 +82,8 @@ def iter_missing_project_assets(catalog: dict[str, Any]) -> list[dict[str, Any]]
                 "status": "pending",
                 "prompt": " ".join(prompt.split()),
             }
-            model = asset.get("model") or asset.get("engine") or DEFAULT_PROJECT_ART_MODEL
-            entry["model"] = str(model).strip() or DEFAULT_PROJECT_ART_MODEL
+            engine = asset.get("engine") or asset.get("model") or DEFAULT_PROJECT_ART_ENGINE
+            entry["engine"] = str(engine).strip() or DEFAULT_PROJECT_ART_ENGINE
             entries.append(entry)
 
     return entries
@@ -100,10 +104,6 @@ def write_queue(entries: list[dict[str, Any]], output_path: Path) -> None:
         "generated_by": "scripts/queue_missing_project_art.py",
         "mode": "dry-run",
         "description": "Concrete project image requests ready for manual generation; no live API was called.",
-        # Canonical batch shape consumed by consume_art_queue.py and
-        # distribute_images.py (both read batch.entries). Previously this
-        # emitted a top-level `images:` list that no reader consumed, so a
-        # freshly queued batch silently produced "nothing to do".
         "batch": {"entries": entries},
     }
     output_path.parent.mkdir(parents=True, exist_ok=True)
