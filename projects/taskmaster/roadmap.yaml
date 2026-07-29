@@ -122,26 +122,11 @@ tasks:
   - id: t-003
     milestone: m3
     title: "Polish and upgrade Taskmaster front-end surface"
-    status: review
+    status: ready
     owner: worker
     passes: 0
     stakes: reversible
-    note: >
-      UI polish + dedicated art for Taskmaster now that the scaffold-vs-real question
-      is settled (t-001's audit: taskmaster-page.vue/taskmasterStore.ts are a mature,
-      complete implementation, not a scaffold -- this is pure art/polish, not feature
-      work). Steps: (1) generate dedicated dashboard-tab art at
-      public/images/dashboard-tabs/scenario/taskmaster.webp and tutorial art at
-      public/images/tutorials/scenario/taskmaster.webp (kind_robots); (2) point
-      stores/helpers/dashboardHelper.ts's and stores/helpers/tutorialCards.ts's
-      taskmaster entries at the new art instead of tabImage('scenario','storymaker')
-      / tutorialImage('scenario','storymaker'), and remove the "Shared temporarily"
-      comments; (3) add the three standard project-art request entries (icon/card/hero)
-      to root ART-PROMPTS.md and generate projects/images/taskmaster-{icon,card,hero}.webp
-      in this repo, following the template already in that file; (4) verify the
-      taskmaster PROJECT Dream's liveUrl/channelKey/tabKey match
-      project-overrides.yaml's taskmaster entry (route: /taskmaster, channelKey: play,
-      tabKey: taskmaster) via the Conductor "Placements" button if needed.
+    note: 'Kaizen from t-003 (kind_robots PR #1160, conductor PR #1443, 2026-07-29). Queued taskmaster''s dedicated icon/card/hero + dashboard-tab/tutorial art via consume_art_queue.py --live --no-wait (ArtJobs 2846-2850) and pointed dashboardHelper.ts/tutorialCards.ts at the new paths. Step (4) liveUrl/channelKey/tabKey confirmed already correct via sync_projects.py (UNCHANGED). Remaining: confirm jobs 2846-2850 rendered and run distribute_images.py (or confirm the distribute-images workflow already placed them) before closing to done.'
     claimed_by: claude-conductor-scheduled-20260729T180500Z-tm-t003
     claimed_at: '2026-07-29T18:11:19Z'
-    updated: '2026-07-29T18:11:19Z'
+    updated: '2026-07-29T18:35:45Z'
