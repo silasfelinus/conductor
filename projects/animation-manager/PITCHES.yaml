@@ -1,4 +1,4 @@
-updated: "2026-07-28T21:10:05+00:00"
+updated: "2026-07-29T19:06:47+00:00"
 
 pitches:
   - id: bioluminescent-tide
@@ -640,3 +640,46 @@ pitches:
       - reduced-motion mode shows one static mid-pour hourglass with no grain motion, avalanches, or flip
       - pointer hover-narrow and click-triggered early flip never block underlying page input, and click-flip is rate-limited to once per completed pour
       - in-flight grain count and height-map bin count stay fixed regardless of viewport size or elapsed session time
+
+  - id: geode-bloom
+    title: Geode Bloom
+    status: pitched
+    priority: 20
+    surprise: >
+      A dark hollow geode cross-section fills the desktop; faceted crystal clusters nucleate
+      in the cavity, grow outward along fixed lattice directions until they catch the light,
+      then slowly recede facet-by-facet to free room for the next formation elsewhere.
+    passive_loop: >
+      Two to four clusters are mid-formation at any time. Each nucleates from a seed point,
+      accretes new hexagonal facets one at a time along fixed lattice directions until it
+      reaches a capped size, holds briefly at full bloom, then recedes facet-by-facet in
+      reverse order before a fresh cluster nucleates elsewhere in the cavity.
+    optional_interaction: >
+      Pointer proximity acts as a faint light source, brightening the glint on nearby facets
+      without altering growth. A click plants a new nucleation seed near the cursor when the
+      concurrent-cluster cap allows it; the underlying page click still fires.
+    technique: >
+      Canvas 2D. Facet geometry is precomputed per cluster from a seeded hexagonal lattice
+      (deterministic PRNG per nucleation), cached as Path2D per facet. Growth and recession
+      advance on frame-timestamp deltas, not frame count, one facet transition at a time
+      rather than continuous geometry rebuilds.
+    reduced_motion: >
+      Freeze at a static, fully bloomed geode arrangement with nucleation, growth, and
+      recession cycling disabled; keep only a slow ambient facet-glint shimmer. Pointer light-
+      follow and click-to-seed are both disabled.
+    performance_risk: >
+      Unbounded facet count from continuous nucleation. Cap concurrent clusters at 4 and
+      facets per cluster at 12, cache each facet's Path2D once at nucleation instead of
+      rebuilding geometry per frame, and cap device-pixel ratio.
+    novelty: >
+      No existing pitch uses lattice-constrained faceted mineral growth. Distinct from
+      kintsugi-weather (fractures that repair with gold seams -- this pitch never fractures,
+      only grows and recedes additively), impossible-terrarium (disagreeing gravity-pocket
+      rooms, not crystal accretion), and clockwork-greenhouse (organic mechanical-plant phase
+      state machine, not hexagonal lattice geometry).
+    acceptance:
+      - passive loop is complete without interaction
+      - underlying clicks remain functional
+      - startup and clipped Screen FX surfaces both render
+      - no resource leaks across repeated mounts
+      - concurrent cluster cap and per-cluster facet cap hold under continuous nucleation
