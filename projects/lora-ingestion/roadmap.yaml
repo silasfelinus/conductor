@@ -110,15 +110,16 @@ tasks:
   owner: claude
   stakes: outward-facing
   depends_on: [t-005]
-  note: 'Landed. kind_robots (PR #1124): DownloadRequest model + migration
-    20260728133000; /api/lora/download-request (user enqueue, dedupes owned +
-    in-flight), /api/lora/download/claim (machine atomic claim + reaper),
-    /download/[id]/complete; browse.get.ts Civitai proxy (owned-flag +
-    maturity clamp); components/lora/lora-discover.vue + Discover tab.
-    conductor (commit 088ebfdc): lora_import_agent.py download loop —
-    claim -> fetch (Civitai by-version/token, redacted) -> .part atomic write
-    into import dir -> complete; watcher then catalogs it. NOT YET DONE:
-    CivArchive source (only Civitai wired), and explicit update-to-new-version
-    UI (hide-owned via civitaiModelVersionId works; a newer-version action is a
-    follow-up). resourceId back-link on complete is best-effort null in v1 —
-    owned-detection reads Resource.civitaiModelVersionId set by the catalog.'
+  note: 'Landed + gaps closed. kind_robots (PR #1124): DownloadRequest model +
+    migration 20260728133000; /api/lora/download-request (dedupes owned +
+    in-flight), /download/claim (atomic claim + reaper), /download/[id]/complete;
+    browse.get.ts is source-aware — Civitai keyword search AND CivArchive
+    by-id/URL lookup (recovers removed models), owned-flag + updatable
+    (own-a-different-version) + maturity clamp; lora-discover.vue with source
+    toggle + Update action + Discover tab. conductor (088ebfdc):
+    lora_import_agent.py download loop (claim -> fetch, Civitai token redacted,
+    .part atomic write -> complete; direct URLs cover CivArchive downloads).
+    Verified: npm run test (vue-tsc) clean + resource-ownership contract passes;
+    gallery/mutation selects echo the new columns. Remaining nicety: resourceId
+    back-link on complete is best-effort null (owned-detection reads
+    Resource.civitaiModelVersionId set by the catalog).'
