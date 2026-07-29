@@ -551,11 +551,11 @@ tasks:
   - id: t-019
     milestone: m4
     title: 'relay_media_agent.py rejects the legitimate public/rewards/... path, permanently failing daily-dream reward-art jobs'
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
-    updated: '2026-07-25T17:20:00Z'
+    updated: '2026-07-29T12:17:19Z'
     note: >
       Filed 2026-07-25 (ai-art-academy/t-010 lane 2, roadmap-accuracy cycle,
       while spot-checking the shared art-queue relay's live health). A fresh
@@ -609,6 +609,8 @@ tasks:
       check generally). Needs Silas's read on his box's actual folder layout
       before landing, since a wrong guess fails silently (job succeeds, file
       lands in the wrong place) rather than loudly.
+    claimed_by: claude-conductor-burst-20260729T121718Z-dc-t019
+    claimed_at: '2026-07-29T12:17:19Z'
 
   - id: t-020
     milestone: m5
