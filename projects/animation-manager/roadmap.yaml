@@ -534,7 +534,7 @@ tasks:
   - id: t-017
     milestone: m6
     title: "Document the sandbox pytest/pyyaml gap so future sessions don't rediscover it"
-    status: claimed
+    status: review
     passes: 0
     stakes: reversible
     owner: worker
@@ -554,3 +554,13 @@ tasks:
       note to AGENTS.md's cross-repo/tooling section (or a scripts/README) so
       future sessions recognize the symptom and apply the fix immediately instead
       of re-deriving it.
+
+      RESOLVED 2026-07-29T20:06:54Z (conductor scheduled burst-mode rotation,
+      claude-conductor-scheduled-20260729T200653Z-am-t017): added a "Sandbox
+      `pytest` is missing PyYAML" subsection to AGENTS.md, right after the
+      Cross-repo tasks section, documenting the `ModuleNotFoundError: yaml`
+      symptom under bare `pytest`, how it differs from `python3 -m pytest`'s
+      separate missing-module failure, and the fix (`uv tool install pytest
+      --with pyyaml --force`). Re-ran that exact command in this session to
+      confirm it still resolves the gap (pytest 9.1.1 + pyyaml 6.0.3 installed
+      cleanly). No script/roadmap-tooling changes needed beyond the doc note.
