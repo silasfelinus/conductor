@@ -2983,10 +2983,10 @@ tasks:
   - id: t-093
     milestone: m2
     title: "close_task.py should refuse/warn when closing a recurring: true task as status=done instead of ready"
-    status: ready
+    status: claimed
     passes: 0
     stakes: reversible
-    owner: null
+    owner: worker
     note: |
       KAIZEN (from model-builder/t-029 close-out review, 2026-07-29, see
       projects/model-builder/TALKBACK.md this date): conductor PR #1388 closed
@@ -3011,6 +3011,9 @@ tasks:
       unaffected. Keep the fix scoped to this one script -- no changes needed to
       claim_task.py or set_task_field.py, which don't carry this same "task
       permanently exits rotation" risk.
+    claimed_by: claude-conductor-agentrun-20260729T0404Z-t093
+    claimed_at: '2026-07-29T04:05:57Z'
+    updated: '2026-07-29T04:05:57Z'
   - id: t-094
     milestone: m2
     title: "Fix basename-collision bug in the project-art staging/lookup path (save_result / build_lookup)"
