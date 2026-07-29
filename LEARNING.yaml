@@ -5134,6 +5134,37 @@ records:
     external system (here: the target repo''s real folder layout) before trusting "tests
     pass" as sufficient verification, especially when correcting or building on another
     agent''s recent, already-merged work.'
+- date: '2026-07-29'
+  project: taskmaster
+  task: t-001
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'The audit surfaced a real, silent regression rather than a documentation gap:
+    a Serendipity->Taskmaster rename left stores/todoStore.ts''s AGENT-todo badging
+    heuristic matching the pre-rename icon/title/description shapes only, so every
+    Taskmaster-created needs-human todo since the rename silently miscategorized with
+    no error. Renames that touch generated-content shape (icons, title/description
+    prefixes used elsewhere as string-matched classifiers) need a grep for every
+    consumer of the old string shape, not just the producer -- an audit task that reads
+    the producer in isolation would have reported this capability as "present and
+    working" when it was actually broken for every row created after the rename.'
+- date: '2026-07-29'
+  project: taskmaster
+  task: t-002
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'kind_robots PR #1157 merged clean on first pass, all 11 checks green including
+    the project-specific "Taskmaster checkpoint contract" -- confirming in advance that
+    the contract verifiers only assert against stores/taskmasterStore.ts and
+    components/pages/taskmaster-page.vue content (not stores/todoStore.ts, the actual
+    file touched) avoided a wasted CI round trip on a fix that was never going to
+    trip those specific checks.'
 - date: 2026-07-29
   project: coloring-book
   task: t-037

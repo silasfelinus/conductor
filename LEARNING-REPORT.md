@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-07-29T17:13:55Z
+Generated: 2026-07-29T17:25:46Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **427**
-- Outcomes: blocked: 13, cancelled: 1, done: 413
+- Closed tasks recorded: **429**
+- Outcomes: blocked: 13, cancelled: 1, done: 415
 - Success rate: **97%**
 - Average passes on successful tasks: **0.0**
 
@@ -51,13 +51,14 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | storymaker | 1 | 100% |
 | superkate-hairstyle-ai | 18 | 100% |
 | superkate-services-calculator | 12 | 100% |
+| taskmaster | 2 | 100% |
 
 ## By kind
 
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 15 | 40% |
-| software | 412 | 99% |
+| software | 414 | 99% |
 
 ## Failure categories
 
@@ -78,6 +79,8 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 ## Recent lessons
 
 - 2026-07-29 `coloring-book/t-037` — Note-bloat extraction (moving a recurring task's accumulated RAN/incident history out of the roadmap note: field into a dedicated run-log.md, per the ai-art-academy/t-010 precedent) is now a proven, repeatable pattern for any long-running recurring task whose note has grown large enough to slow down reading/diffing the roadmap -- verify the move with a byte-identical diff check before trimming the original, and add a run_log: pointer field rather than just prose, so a script can find the log mechanically later.
+- 2026-07-29 `taskmaster/t-002` — kind_robots PR #1157 merged clean on first pass, all 11 checks green including the project-specific "Taskmaster checkpoint contract" -- confirming in advance that the contract verifiers only assert against stores/taskmasterStore.ts and components/pages/taskmaster-page.vue content (not stores/todoStore.ts, the actual file touched) avoided a wasted CI round trip on a fix that was never going to trip those specific checks.
+- 2026-07-29 `taskmaster/t-001` — The audit surfaced a real, silent regression rather than a documentation gap: a Serendipity->Taskmaster rename left stores/todoStore.ts's AGENT-todo badging heuristic matching the pre-rename icon/title/description shapes only, so every Taskmaster-created needs-human todo since the rename silently miscategorized with no error. Renames that touch generated-content shape (icons, title/description prefixes used elsewhere as string-matched classifiers) need a grep for every consumer of the old string shape, not just the producer -- an audit task that reads the producer in isolation would have reported this capability as "present and working" when it was actually broken for every row created after the rename.
 - 2026-07-29 `dream-cycle/t-019` — An unrelated-looking PR (#1399) had already landed both a fix and its matching tests for public/rewards/... path handling in relay_media_agent.py, all green -- but the tests locked in the same wrong assumption as the code (folding the reward-asset root into the images root instead of treating it as a real sibling directory), including a test explicitly named to assert away the correct sibling-root design. A passing, internally-consistent test suite is not proof a fix matches reality when the tests were written by the same reasoning that produced the bug -- cross-check against the actual external system (here: the target repo's real folder layout) before trusting "tests pass" as sufficient verification, especially when correcting or building on another agent's recent, already-merged work.
 - 2026-07-29 `coloring-book/t-022` — recover_timed_out_job()'s except-block guard in consume_coloring_book_color_art.py only preserved a stuck job's "job N" reference when the failure text literally contained "ANTHROPIC_API_KEY" -- any other exception during a recovery attempt (missing local dependency, transient network error checking job status) silently destroyed the reference, forcing the next pass into a genuine duplicate ArtJob submission for an already-completed render. Same failure shape as the ai-art-academy/t-010 fauvism incident: "status implies delivered/dead" reasoning is too eager whenever a script decides to discard a recovery pointer. Fixed with a narrow RecoveryAbandoned exception marking only the backend-confirmed-dead cases; every other exception now preserves the reference unconditionally. General lesson: a recovery/reconciliation guard should default to "preserve the pointer," and require an explicit, backend-confirmed signal to discard it -- never infer "safe to discard" from matching one specific known error string.
 - 2026-07-29 `conductor/t-095` — consume_art_requests.py's enqueue()->wait_for_job() gap: a submitted ArtJob's id was only ever printed to stdout, never persisted, before the (up to 600s) wait for completion -- so a timeout, FAILED/CANCELLED job, or killed process left no durable trace of which ArtJob had actually been submitted for a given request, exactly the shape of the ai-art-academy/t-010 fauvism incident (an id known only from a session's own prose, unrecoverable once out of context). Fixed by recording the id onto the request's own entry immediately after submission succeeds, before the blocking wait -- the general lesson: any script that submits an async job and then blocks waiting on it should persist the job id at submission time, not at completion time, so a timeout or crash mid-wait still leaves a recoverable trail. Separately confirmed via a new regression test that the non-zero-exit half of this kaizen was already correct; not every suspected two-part gap turns out to have two real parts.
@@ -89,10 +92,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 - 2026-07-29 `model-builder/t-029` — Manual read-through of an async completion handler found a real, previously-unfixed race: pollAsyncArtJob cleared item.artJobId (the item panel's only "still working" signal, via isQueued) before its own finalizeQueuedArtImage network round-trip. On a regenerate, this let canApproveAssets briefly evaluate true using the item's stale prior artImageId, so a premature "Keep this asset" click could lock the stage to 'approved' moments before the finishing render silently overwrote artImageId/imagePath underneath it -- a fourth instance of this file's recurring "review gate silently bypassed" bug class (after canApproveAssets' original isGenerating/isQueued gap, the batch-editor stage-approval gate, and the cancelled-run guard). Fixed with a narrow status==='approved' check before the image write, plus a new textual regression checker (verifyModelBuilderApprovedAssetGuard.ts) mirroring the existing cancelled-run-guard/completion-gate checkers. Kaizen: this bug class keeps recurring in modelBuilderStore.ts's async completion paths -- a future cycle should consider whether verifyModelBuilderCompletionGate.ts's static ungated-write scan can be generalized from item.stages.KEY writes to cover item.artImageId/item.imagePath too, so the next instance is caught automatically instead of needing another manual read-through to find.
 
-- 2026-07-29 `model-builder/t-029` — select_role.py's own api.github.com 403 (same known sandbox limitation as the t-092 entry above) made it report role=worker with zero open PRs visible, while GitHub-MCP-direct listing found one real open PR (#1377) waiting for review -- confirms AGENTS.md's existing guidance to cross-check GitHub MCP tools whenever select_role.py's github_api_unreachable flag is set, rather than trusting its worker/idle fallback at face value. Separately: the PR had gone stale (mergeable_state: dirty) against two STATUS.md/ROADMAP-AUDIT.* auto-gen commits that landed on main after it opened -- resolved per the existing hard-rule-9 convention (merge main in, take main's copy for the auto-generated files, keep the PR branch's real diff) rather than waiting for a human to notice the conflict.
-
-- 2026-07-28 `conductor/t-092` — Direct api.github.com calls 403 from this sandbox even with a valid GITHUB_TOKEN and Authorization header (confirmed independently while building this task, matching select_role.py's existing finding) -- any new tool that needs live GitHub state from this environment should either go through the GitHub MCP tools or be written transport-agnostic (pure decision logic separated from the network call) rather than assuming urllib/requests against api.github.com will work.
-
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-07-29T17:13:55Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-07-29T17:25:46Z_
