@@ -3075,3 +3075,24 @@ tasks:
       suite (the concurrent model-builder/t-029 close-out's ledger record was missing
       failure_category: null, the one field every other `done` record carries -- one-line fix,
       confirmed pre-existing via git stash before touching anything else).
+
+  - id: t-095
+    milestone: m2
+    title: "consume_art_requests.py --live: confirm submitted ArtJobs are durably recorded (id + non-zero exit on failure)"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Kaizen from Reviewer merge of PR #1394 (2026-07-29, ai-art-academy/t-010 stranded-state
+      correction). That cycle found the 2026-07-28 lane-3 RAN note's claimed fauvism
+      style-preview generation (ArtJob 2775, ArtImage 13125 per the note) never actually
+      landed: the media URL 404s and projects/art-prompts.yaml has no fauvism entry, with
+      no trace of either id anywhere in the repo. Not enough evidence to say whether
+      consume_art_requests.py --live silently exited after submission without recording
+      the ArtJob id anywhere durable, or the generation itself failed upstream with the
+      calling session not noticing a non-zero exit. Check both: (a) does --live record the
+      submitted ArtJob id to a durable log/manifest before returning, and (b) does a
+      submission failure propagate as a non-zero exit code the calling session would
+      actually see. Fix whichever gap is real so a repeat of this pattern is caught at the
+      source instead of discovered later as a stranded roadmap task.
