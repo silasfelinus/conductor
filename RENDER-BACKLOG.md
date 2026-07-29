@@ -106,3 +106,6 @@ queueDepth: DONE=1957, FAILED=5, CANCELLED=771 (all-time). oldestPending: none. 
 
 ## 2026-07-28T15:11:56Z | healthy
 queueDepth: DONE=1991, FAILED=9, CANCELLED=773 (all-time). oldestPending: none. windowThroughput (24h): DONE=56, FAILED=4, CANCELLED=2. recentFailed (last 9): 5/9 = ComfyUI POST /prompt failed at http://127.0.0.1:8188 (ComfyUI /prompt returned HTTP 400 at http://127.0.0.1:8188: {'61':; 2/9 = ComfyUI POST /prompt failed at http://127.0.0.1:8188 (ComfyUI /prompt returned HTTP 400 at http://127.0.0.1:8188: {'318'; 2/9 = generic workflow error (no node/exception detail forwarded).
+
+## 2026-07-29T06:06:08Z | ai-art-academy/t-010 | healthy
+queueDepth: DONE=2042, FAILED=7, CANCELLED=774 (all-time). oldestPending: none. windowThroughput (24h): DONE=83, FAILED=5, CANCELLED=2. recentFailed (last 7): 5/7 = ComfyUI POST /prompt failed at http://127.0.0.1:8188 (ComfyUI /prompt returned HTTP 400 at http://127.0.0.1:8188: {'61':; 2/7 = ComfyUI POST /prompt failed at http://127.0.0.1:8188 (ComfyUI /prompt returned HTTP 400 at http://127.0.0.1:8188: {'318'.

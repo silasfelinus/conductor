@@ -313,6 +313,32 @@ requests:
     include robots only when the subject or scene explicitly calls for them, no text
 
     '
+- id: kind-robots-academy-style-preview-fauvism
+  source: ai-art-academy-style-preview
+  status: pending
+  target_repo: silasfelinus/kind_robots
+  image_path: public/images/academy/styles/fauvism.webp
+  variant: image
+  size: 256x256
+  label: 'Academy style preview: Fauvism'
+  note: >-
+    Re-queued 2026-07-29 (t-010 lane 3) to replace an earlier, never-delivered
+    attempt: the 2026-07-28 lane-3 cycle generated an image (ArtJob 2775,
+    ArtImage 13125) without first creating this request entry, so
+    distribute_images.py had nothing to match it against and the file landed
+    in projects/process/unmatched/fauvism.webp instead of
+    public/images/academy/styles/fauvism.webp -- see ai-art-academy/t-010's
+    2026-07-29T04:20Z stranded-state correction note. This entry follows the
+    same kind-robots-academy-style-preview-* convention as every other
+    delivered movement so the normal request -> generate -> distribute path
+    can pick it up cleanly.
+  prompt: >-
+    A museum-quality example of an early Fauvist painting: an everyday subject
+    (portrait, landscape, or harbor view) rendered in unmixed, high-key
+    non-naturalistic color applied in loose, visibly brushy patches, bold dark
+    contour outlines holding flat color areas together, warm and cool colors
+    in direct high-contrast juxtaposition, simplified flattened forms with
+    minimal shading, centered square composition, no text, no watermark
 inspirations:
 - project: ruler-hooked
   target_repo: silasfelinus/kind_robots
