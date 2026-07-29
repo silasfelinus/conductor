@@ -3011,3 +3011,47 @@ tasks:
       unaffected. Keep the fix scoped to this one script -- no changes needed to
       claim_task.py or set_task_field.py, which don't carry this same "task
       permanently exits rotation" risk.
+  - id: t-094
+    milestone: m2
+    title: "Fix basename-collision bug in the project-art staging/lookup path (save_result / build_lookup)"
+    status: done
+    owner: worker
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-29T00:00:00Z'
+    note: >
+      Kaizen from the 2026-07-29 TALKBACK finding (root TALKBACK.md, "Found and partially
+      fixed two structural bugs in the missing-image art pipeline"): every kind_robots-target
+      project hero request uses the identical relative image_path convention
+      public/images/projects/{slug}/hero.webp -- same basename ("hero.webp") for every
+      project, with the slug living only in the parent directory. consume_art_queue_core.py's
+      save_result() staged renders under Path(image_path).name (bare basename) and
+      distribute_images.py's build_lookup() keyed its lookup dict the same way, so two such
+      requests processed in the same or even a later run silently overwrote each other --
+      worse, kind_robots-target files are RETAINED indefinitely in projects/process/ (never
+      moved out, per distribute()'s own kind_robots branch), so the collision persists across
+      runs, not just within one batch. This had already lost voice-lab's and humboldt-scoop's
+      first hero renders (recovered live from their ArtImage records) and was blocking the
+      remaining 7 kind_robots hero entries (ruler-hooked, newsfeed, packmaker, challenge-center,
+      davinci, media-watchlist, coat-dance) from being safely batch-generated in one run.
+
+      Fixed by adding consume_art_queue_core.staged_filename(entry): when an entry carries
+      explicit project_slug/variant metadata (missing-image project-art requests) and its
+      basename doesn't already encode the slug, stage under {slug}-{variant}{suffix} instead
+      -- the exact same naming convention distribute_images.py already uses for every other
+      project icon/card/hero file, so no other matching/fallback heuristic in that file needed
+      to change. save_result() now uses this helper; distribute_images.py's build_lookup()
+      imports the same function and applies it to the requests: loop (the one loop whose
+      entries can carry project_slug/variant) so the two stay in sync. Entries without that
+      metadata, or whose basename already encodes the slug (every other pipeline: art-prompts
+      images:/inspirations:, art-generate.yaml batch), are unaffected -- staged_filename() is a
+      no-op for them, confirmed by the full existing test suite passing unchanged (49/49 in
+      tests/test_consume_art_queue.py + test_distribute_images.py + test_consume_art_requests.py).
+      Added 4 new regression tests: staged_filename disambiguates a shared basename via
+      project_slug, is a no-op without that metadata, save_result actually lands two
+      colliding entries at distinct paths, and build_lookup keys two colliding requests:
+      entries distinctly. Full local pytest suite green (753 passed, 1 skipped) after also
+      fixing an unrelated, trivial LEARNING.yaml schema gap discovered while running the full
+      suite (the concurrent model-builder/t-029 close-out's ledger record was missing
+      failure_category: null, the one field every other `done` record carries -- one-line fix,
+      confirmed pre-existing via git stash before touching anything else).

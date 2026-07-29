@@ -87,6 +87,34 @@ def test_write_collections_index_precedence(tmp_path, monkeypatch):
     assert "dreams" not in index
 
 
+def test_build_lookup_disambiguates_requests_sharing_a_basename():
+    # Every kind_robots hero request uses the identical basename "hero.webp"
+    # (slug only in the parent directory) -- build_lookup's key must match
+    # consume_art_queue_core.save_result()'s staged_filename() exactly, or
+    # one project's request silently overwrites the other's lookup entry
+    # (conductor TALKBACK 2026-07-29).
+    prompts_data = {
+        "requests": [
+            {
+                "image_path": "public/images/projects/ruler-hooked/hero.webp",
+                "project_slug": "ruler-hooked",
+                "variant": "hero",
+                "target_repo": "silasfelinus/kind_robots",
+            },
+            {
+                "image_path": "public/images/projects/newsfeed/hero.webp",
+                "project_slug": "newsfeed",
+                "variant": "hero",
+                "target_repo": "silasfelinus/kind_robots",
+            },
+        ]
+    }
+    lookup = di.build_lookup({}, prompts_data)
+    assert len(lookup) == 2
+    assert lookup["ruler-hooked-hero.webp"]["image_path"] == "public/images/projects/ruler-hooked/hero.webp"
+    assert lookup["newsfeed-hero.webp"]["image_path"] == "public/images/projects/newsfeed/hero.webp"
+
+
 def test_kind_robots_target_retained_not_pruned(tmp_path, monkeypatch):
     """A kind_robots-targeted request must never be copied into a local
     checkout or pruned from art-prompts.yaml, even when a kind_robots checkout

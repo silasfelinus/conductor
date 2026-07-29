@@ -665,11 +665,43 @@ def mark_generate_done(image_paths):
     return changed
 
 
+def staged_filename(entry):
+    """Collision-safe filename for landing an entry's render in projects/process/.
+
+    Plain Path(image_path).name is not always unique across entries: several
+    project-art requests can share an identical basename with the
+    disambiguating project slug living only in the parent directory (e.g.
+    every kind_robots hero request uses image_path
+    public/images/projects/{slug}/hero.webp -- basename "hero.webp" for
+    every project). Two such entries landing in the same run silently
+    overwrite each other in projects/process/, and kind_robots-target files
+    are RETAINED there indefinitely (never moved out by distribute_images.py
+    -- see its distribute() kind_robots branch), so the collision persists
+    across runs too, not just within one batch.
+
+    When an entry carries explicit project_slug/variant metadata (missing-
+    image project-art requests, see consume_art_requests.py's
+    project_art_sync_payload) and its basename doesn't already encode the
+    slug, stage under {slug}-{variant}{suffix} instead -- the same naming
+    convention distribute_images.py already uses for every other project
+    icon/card/hero file, so no other matching logic needs to change.
+    distribute_images.py's build_lookup() must derive this identical key so
+    the two stay in sync.
+    """
+    name = Path(entry["image_path"]).name
+    slug = str(entry.get("project_slug") or "").strip()
+    variant = str(entry.get("variant") or "").strip().lower()
+    if slug and variant and not name.lower().startswith(f"{slug.lower()}-"):
+        name = f"{slug}-{variant}{Path(name).suffix}"
+    return name
+
+
 def save_result(entry, image_b64):
-    """Write the finished image into projects/process/ under the entry's
-    basename — converted to webp when Pillow is available, else as .png."""
+    """Write the finished image into projects/process/ under a collision-safe
+    staging name (see staged_filename) — converted to webp when Pillow is
+    available, else as .png."""
     PROCESS_DIR.mkdir(parents=True, exist_ok=True)
-    target_name = Path(entry["image_path"]).name
+    target_name = staged_filename(entry)
     png_bytes = base64.b64decode(image_b64)
 
     if target_name.lower().endswith(".webp"):

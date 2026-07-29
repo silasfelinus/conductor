@@ -298,6 +298,82 @@ def test_save_result_non_webp_passthrough(tmp_path, monkeypatch):
     assert warning is None
 
 
+def test_staged_filename_disambiguates_shared_basename_via_project_slug():
+    # Every kind_robots hero request uses the identical basename "hero.webp"
+    # with the slug living only in the parent directory -- staged_filename
+    # must fold project_slug/variant into the name so two projects' renders
+    # never collide in projects/process/ (conductor TALKBACK 2026-07-29:
+    # voice-lab's and humboldt-scoop's first hero renders were lost this way).
+    a = {
+        "image_path": "public/images/projects/ruler-hooked/hero.webp",
+        "project_slug": "ruler-hooked",
+        "variant": "hero",
+    }
+    b = {
+        "image_path": "public/images/projects/newsfeed/hero.webp",
+        "project_slug": "newsfeed",
+        "variant": "hero",
+    }
+    name_a = consumer.staged_filename(a)
+    name_b = consumer.staged_filename(b)
+    assert name_a != name_b
+    assert name_a == "ruler-hooked-hero.webp"
+    assert name_b == "newsfeed-hero.webp"
+
+
+def test_staged_filename_noop_without_project_metadata():
+    # No project_slug/variant on the entry (or a basename that already
+    # encodes the slug) -- behave exactly like the old Path(image_path).name.
+    assert (
+        consumer.staged_filename({"image_path": "projects/images/alpha-icon.webp"})
+        == "alpha-icon.webp"
+    )
+    assert (
+        consumer.staged_filename(
+            {
+                "image_path": "projects/images/coat-dance-hero.webp",
+                "project_slug": "coat-dance",
+                "variant": "hero",
+            }
+        )
+        == "coat-dance-hero.webp"
+    )
+
+
+def test_save_result_uses_staged_filename_for_collision_prone_entries(tmp_path, monkeypatch):
+    # Pillow's webp encoder needs real image bytes; sidestep that by simulating
+    # Pillow being unavailable (same trick as test_save_result_falls_back_to_png_without_pillow)
+    # -- this test is about the staging filename, not image encoding.
+    import builtins
+
+    real_import = builtins.__import__
+
+    def no_pil(name, *args, **kwargs):
+        if name == "PIL" or name.startswith("PIL."):
+            raise ImportError("no PIL in this test")
+        return real_import(name, *args, **kwargs)
+
+    monkeypatch.setattr(builtins, "__import__", no_pil)
+    monkeypatch.setattr(consumer, "PROCESS_DIR", tmp_path / "process")
+    entry_a = {
+        "image_path": "public/images/projects/ruler-hooked/hero.webp",
+        "project_slug": "ruler-hooked",
+        "variant": "hero",
+    }
+    entry_b = {
+        "image_path": "public/images/projects/newsfeed/hero.webp",
+        "project_slug": "newsfeed",
+        "variant": "hero",
+    }
+    payload = base64.b64encode(b"fake-png-bytes").decode()
+    out_a, _ = consumer.save_result(entry_a, payload)
+    out_b, _ = consumer.save_result(entry_b, payload)
+    assert out_a != out_b
+    assert out_a.name == "ruler-hooked-hero.png"
+    assert out_b.name == "newsfeed-hero.png"
+    assert out_a.exists() and out_b.exists()
+
+
 def test_dry_run_makes_no_network_calls(tmp_path, monkeypatch, capsys):
     art_file = tmp_path / "art-generate.yaml"
     art_file.write_text(
