@@ -49,7 +49,7 @@ MEDIA_ROOT_ENV_HINT = {
 }
 IMAGE_EXTENSIONS = {".webp", ".png", ".jpg", ".jpeg", ".gif", ".svg"}
 GENERATED_IMAGE_EXTENSIONS = {".webp", ".png", ".jpg", ".jpeg", ".gif"}
-VIDEO_EXTENSIONS = {".mp4", ".webm", ".mov", ".mkv"}
+VIDEO_EXTENSIONS = {".mp4", ".webm", ".mov", ".mkv", ".webp"}
 COMFY_PROMPT_TIMEOUT = float(os.environ.get("COMFY_PROMPT_TIMEOUT", "180"))
 COMFY_RECOVERY_SECONDS = float(os.environ.get("COMFY_RECOVERY_SECONDS", "45"))
 ORIGINAL_PROCESS = relay.process

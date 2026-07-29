@@ -28,3 +28,9 @@ Last synced from kind_robots branch `claude/lora-organization-catalog-coyhav`
 The batch import endpoint ignores unknown fields, so a newer scanner is safe to
 run against an older API — the extra ids are simply dropped until the API + DB
 support them.
+
+Re-synced 2026-07-29 (`scan_loras.py` only) for `.gguf` recognition — GGUF
+checkpoints/unets were being silently dropped at the directory-walk step
+because `LORA_EXTENSIONS` didn't include `.gguf`, so they never reached
+hashing or the `/api/resources/batch` POST regardless of resourceType or
+folder placement. See kind_robots PR #1168.
