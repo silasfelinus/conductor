@@ -5043,3 +5043,21 @@ records:
     than re-scanning the same layer for a smaller variant of the same bug shape.
 
     '
+- date: '2026-07-29'
+  project: media-watchlist
+  task: t-006
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'This recurring polish task''s own note pointed at a stale kaizen (Month/Season filters) that
+    t-012 and t-016 had already closed two cycles earlier -- re-implementing it blind would have been a
+    pure no-op. Re-diffing BROWSE-UX.md against the live components before picking a slice caught the
+    drift and surfaced a different, still-open gap (Entry Detail''s "Related entries" section, §3) that
+    the note never flagged. Kaizen: on a recurring task with a multi-cycle PROGRESS history, treat the
+    latest PROGRESS note''s "not done yet" list as a hypothesis to verify against current main, not a
+    ready-made todo -- prior cycles closing kaizens out-of-band (via their own follow-on tasks) can leave
+    the recurring task''s own note pointing at already-finished work.
+
+    '

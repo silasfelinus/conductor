@@ -154,7 +154,7 @@ tasks:
 - id: t-006
   milestone: m3
   title: Polish and upgrade Media Watchlist front-end surface
-  status: claimed
+  status: ready
   owner: worker
   passes: 0
   stakes: reversible
@@ -167,8 +167,10 @@ tasks:
 
     PROGRESS 2026-07-27 (conductor burst-mode rotation, claude-conductor-burst-20260727T141647Z-mw-t006): step (4) advanced further -- wired the Year filter (BROWSE-UX.md §2) and two more Stats-view tiles (comics read, TV seasons; BROWSE-UX.md §4) into watchlist-browse.vue. The backend already computed/accepted all of this (stats.get.ts''s groupBy''s, index.get.ts''s ?year param); only the UI was missing it, so this was pure front-end wiring plus one small addition (stats.get.ts now returns a `years` list; export.get.ts now accepts `year` so CSV export matches the on-screen filter). kind_robots PR #1051 merged squash 8033fe9 after all 5 checks green (TypeScript, Contract verifiers, verify, facet-catalog, GitGuardian). Verified: eslint clean, prettier clean, full-project vue-tsc --noEmit exit 0. Not done yet -- Month/Season filters from BROWSE-UX.md §2 are still API-ready but UI-missing (see kaizen), and steps (1)/(3) remain the same open items as every prior cycle (art-generation relay backlog; liveUrl/channelKey/tabKey admin-only Placements click). Releasing the claim; kept at status: ready, same recurring-task convention as every other project''s "Polish and upgrade" task.
 
+    PROGRESS 2026-07-29 (conductor burst-mode rotation, burst-20260729T0712Z-mw-t006): re-audited BROWSE-UX.md against the live components before picking a slice, since t-012 and t-016 (both merged since the last PROGRESS entry above) had already closed the Month/Season-filter gap this note used to point at -- confirmed nothing of that kaizen remains open. Found a different, still-open gap instead: Entry Detail (BROWSE-UX.md §3) specs a "Related entries -- same title, other years or formats" section that was never built. Added `GET /api/media-entries/:id/related` (admin-gated, same-title lookup excluding the current entry, newest first, capped at 10) and wired it into watchlist-entry-detail.vue as a small read-only list between the Review editor and External links. kind_robots PR #1140 merged squash c85f7d5 after all 12 checks green. Verified: eslint clean, prettier clean, full-project vue-tsc --noEmit exit 0. Steps (1) and (3) remain the same open items as every prior cycle (art-generation relay backlog; liveUrl/channelKey/tabKey admin-only Placements click); BROWSE-UX.md''s "Year-over-year comparison" (§4) is also still unbuilt and is a reasonable next slice for a future cycle. Releasing the claim; kept at status: ready, same recurring-task convention as every other project''s "Polish and upgrade" task.
+
     '
-  claimed_by: burst-20260729T0712Z-mw-t006
+  claimed_by: null
   claimed_at: '2026-07-29T07:15:18Z'
 - id: t-008
   milestone: m3
