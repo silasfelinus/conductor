@@ -154,11 +154,11 @@ tasks:
 - id: t-006
   milestone: m3
   title: Polish and upgrade Media Watchlist front-end surface
-  status: ready
+  status: claimed
   owner: worker
   passes: 0
   stakes: reversible
-  updated: '2026-07-29T07:15:18Z'
+  updated: '2026-07-29T14:10:12Z'
   note: 'UI polish + upgrade for the media-watchlist front end now that the scaffold page is live at /watchlist. Steps: (1) generate final dashboard-tab art at public/images/dashboard-tabs/wonder/watchlist.webp and tutorial art at public/images/tutorials/wonder/watchlist.webp; (2) add a matching section for ''watchlist'' under tutorialChannels.wonder.sections in kind_robots/stores/helpers/tutorialCards.ts; (3) verify the PROJECT Dream liveUrl points at /watchlist (admin can run the Conductor ''Placements'' button to backfill channelKey/tabKey/liveUrl); (4) evolve the placeholder scaffold page into the full interactive experience for this project.
 
     PROGRESS 2026-07-20 (conductor agent session claude-conductor-agent-20260720T1412Z, kind_robots PR #649 merged squash 5af699e): step (2) confirmed already done -- a ''watchlist'' section already existed under tutorialChannels.wonder.sections in stores/helpers/tutorialCards.ts, no action needed. Step (4) advanced within polish-pass scope: added real headline `stats` (2,440 entries logged, 12 years tracked, 60 starred favorites) to watchlist-page.vue''s fallback config, sourced from the validated media_list.md import (t-007, data/import-report.md), and corrected the `deliverables` list, which previously claimed a nonexistent "Watchlist data model and API" -- verified no MediaEntry Prisma model or server route exists in kind_robots yet. A full interactive browse/filter UI is NOT built: that needs the actual MediaEntry schema + API (SCHEMA-PROPOSAL.md/BROWSE-UX.md already spec it), which is materially larger than a polish pass -- same judgment call storymaker/t-010 and davinci/t-014 made for their own live-data gaps. Remaining and kept ready: step (1) dashboard-tab + tutorial .webp art (already queued in art-prompts.yaml as kind-robots-watchlist-image-607fccd0, blocked on the art-generation relay -- confirmed still down this session, consistent with every other project that checked it today) and step (3) the liveUrl/channelKey/tabKey backfill (admin Placements click, not an agent action). Verified before merge: eslint clean, prettier clean, full-project vue-tsc --noEmit exit 0. All 3 kind_robots PR checks green (TypeScript, Contract verifiers, GitGuardian).
@@ -170,8 +170,8 @@ tasks:
     PROGRESS 2026-07-29 (conductor burst-mode rotation, burst-20260729T0712Z-mw-t006): re-audited BROWSE-UX.md against the live components before picking a slice, since t-012 and t-016 (both merged since the last PROGRESS entry above) had already closed the Month/Season-filter gap this note used to point at -- confirmed nothing of that kaizen remains open. Found a different, still-open gap instead: Entry Detail (BROWSE-UX.md §3) specs a "Related entries -- same title, other years or formats" section that was never built. Added `GET /api/media-entries/:id/related` (admin-gated, same-title lookup excluding the current entry, newest first, capped at 10) and wired it into watchlist-entry-detail.vue as a small read-only list between the Review editor and External links. kind_robots PR #1140 merged squash c85f7d5 after all 12 checks green. Verified: eslint clean, prettier clean, full-project vue-tsc --noEmit exit 0. Steps (1) and (3) remain the same open items as every prior cycle (art-generation relay backlog; liveUrl/channelKey/tabKey admin-only Placements click); BROWSE-UX.md''s "Year-over-year comparison" (§4) is also still unbuilt and is a reasonable next slice for a future cycle. Releasing the claim; kept at status: ready, same recurring-task convention as every other project''s "Polish and upgrade" task.
 
     '
-  claimed_by: null
-  claimed_at: '2026-07-29T07:15:18Z'
+  claimed_by: claude-conductor-burst-20260729T141009Z-mw-t006
+  claimed_at: '2026-07-29T14:10:12Z'
 - id: t-008
   milestone: m3
   title: Spec the MediaEntry Prisma model and minimal browse API from SCHEMA-PROPOSAL.md/BROWSE-UX.md
