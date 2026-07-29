@@ -2983,10 +2983,10 @@ tasks:
   - id: t-093
     milestone: m2
     title: "close_task.py should refuse/warn when closing a recurring: true task as status=done instead of ready"
-    status: ready
+    status: done
     passes: 0
     stakes: reversible
-    owner: null
+    owner: worker
     note: |
       KAIZEN (from model-builder/t-029 close-out review, 2026-07-29, see
       projects/model-builder/TALKBACK.md this date): conductor PR #1388 closed
@@ -3011,6 +3011,26 @@ tasks:
       unaffected. Keep the fix scoped to this one script -- no changes needed to
       claim_task.py or set_task_field.py, which don't carry this same "task
       permanently exits rotation" risk.
+
+      PROGRESS 2026-07-29 (conductor scheduled Agent run, claude-conductor-agentrun-20260729T0404Z-t093):
+      chose option (a) -- refuse, don't silently coerce. `close()` now raises `CloseError`
+      before the existing already-at-status check when the task has `recurring: true` and
+      the caller passed `status=done` without `--force`, telling the caller to pass `ready`
+      instead (or `--force` to intentionally retire a recurring task for good). `--force`
+      bypasses the guard, matching how it already bypasses the neighboring "already at target
+      status" refusal. Added 4 regression tests to tests/test_close_task.py: refused without
+      --force (and confirms no branch was pushed), allowed as ready, allowed as done with
+      --force, and confirms the existing non-recurring REVIEW_ROADMAP close-to-done path is
+      unaffected. Verified: `python -m py_compile` clean on both changed files; `ruff check`
+      clean; full local `pytest` suite green (757 passed, 1 skipped, up from 753/1 -- the 4
+      new tests); `black --check` reports drift on both files but confirmed pre-existing via
+      `git stash` before touching either (CI's `pytest-suite` job is the only gate on this
+      repo's Python, per `.github/workflows/ci.yml` -- no black/ruff CI job exists to satisfy
+      or break). Scoped to close_task.py + its tests only, per the task's own note --
+      claim_task.py and set_task_field.py untouched.
+    claimed_by: claude-conductor-agentrun-20260729T0404Z-t093
+    claimed_at: '2026-07-29T04:05:57Z'
+    updated: '2026-07-29T04:17:13Z'
   - id: t-094
     milestone: m2
     title: "Fix basename-collision bug in the project-art staging/lookup path (save_result / build_lookup)"

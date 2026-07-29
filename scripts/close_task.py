@@ -31,9 +31,12 @@ What it does:
     1. Fetches `origin/main` and reads the task straight out of that ref's
        roadmap.yaml -- never the local working tree, which may be stale relative to
        a claim/close commit another script or session already pushed this run.
-    2. Refuses (exit 1) if the task does not exist, or (unless --force) if it is
-       already at the requested `status` -- a no-op close is almost always a sign
-       the caller is working from stale state, not a real transition to make.
+    2. Refuses (exit 1) if the task does not exist, if it has `recurring: true` and
+       the caller passed `done` (unless --force -- recurring tasks never reach done
+       per AGENTS.md's "Recurring tasks" rule, they go back to `ready` so they
+       re-arm), or (unless --force) if it is already at the requested `status` -- a
+       no-op close is almost always a sign the caller is working from stale state,
+       not a real transition to make.
     3. Applies `status: <status>`, `updated: now`, and any `--set field=value` pairs
        (repeatable) via `set_task_field.py`'s line-oriented editor -- never
        `yaml.safe_dump`, so comments, multiline notes, and field ordering survive.
@@ -148,6 +151,14 @@ def close(
     ref = f"refs/heads/{branch}"
 
     _, task = load_task_at_ref("origin/main", project, task_id)
+    if not force and task.get("recurring") and status == "done":
+        raise CloseError(
+            f"ERROR: {project}/{task_id} has recurring: true -- recurring tasks never reach "
+            "status=done (AGENTS.md's \"Recurring tasks\" rule: they go back to ready after "
+            "each cycle so they re-arm). Pass status=ready instead, or --force if you are "
+            "intentionally retiring this recurring task for good.",
+            code=1,
+        )
     if not force and task.get("status") == status:
         raise CloseError(
             f"ERROR: {project}/{task_id} is already status={status!r} on origin/main -- "
