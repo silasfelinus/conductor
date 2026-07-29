@@ -98,7 +98,8 @@ tasks:
   - id: t-002
     milestone: m1
     title: "Research video beat transcription and shot-slicing tools"
-    status: ready
+    status: needs-human
+    soft_gate: true
     owner: null
     passes: 0
     stakes: reversible
@@ -109,6 +110,33 @@ tasks:
       movement beats, shot changes, audio events, and pose/action changes. Compare
       options such as ffmpeg scene detection, optical-flow/pose analysis, transcript
       notes, manual beat sheets, and any Comfy/LAX/Wan-friendly preprocessing.
+
+      FOR SILAS: Tool-survey draft at
+      projects/coat-dance/RESEARCH-t002-beat-transcription-tools.md (2026-07-29).
+      Contains: (1) a shot/scene-detection pick (ffmpeg scdet as a cheap first
+      pass; PySceneDetect kept in reserve only if the edit later adds cutaways,
+      since the source is one continuous take), (2) an audio beat/onset pick
+      (librosa by default, madmom as a fallback if the 2006 live-performance
+      room audio proves too irregular for librosa's beat tracker), and (3) a
+      movement-detection recommendation to layer MediaPipe Pose (performer) with
+      dense optical flow (the coat itself, which has no skeleton to track) since
+      no single tool covers both duet partners -- plus a suggested t-003
+      pipeline order for turning these into one merged beat-map table.
+      TO APPROVE: read the doc; if the tool picks look right, set
+      status: ready on t-003 (Create source-video beat map template) yourself,
+      or leave a note here if you want a different tool swapped in first. Also
+      note the doc's caveat: this sandbox has neither ffmpeg nor a Python
+      audio/video stack, so nothing ran against the real file -- it's a
+      selection, not a produced beat map. It re-confirms BRIEF.md's open Q3
+      (tool inventory in the real render environment) as the actual blocker
+      before t-003's template can be exercised for real, so that's worth
+      resolving alongside/before unblocking t-003.
+      What unblocks: t-003 (currently `blocked` on this task) once you flip it
+      to `ready` -- see BRIEF.md's suggested-folder plan for where its output
+      (source/beatmap.md) should land.
+    claimed_by: null
+    claimed_at: null
+    updated: '2026-07-29T00:15:00Z'
 
   - id: t-003
     milestone: m1

@@ -1,13 +1,13 @@
 # Roadmap Audit
 
-Generated: `2026-07-28T23:22:15.464271+00:00`
+Generated: `2026-07-29T00:14:49.386998+00:00`
 
 This is a conservative structural audit. It reports suspicious state; it does not automatically change task status or remove human gates.
 
 ## Portfolio snapshot
 
 - **43** roadmaps, **23** active projects, **748** tasks
-- **30 ready**, **49 waiting**, **27 needs-human**, **3 claimed/review**, **628 done**
+- **29 ready**, **49 waiting**, **28 needs-human**, **2 claimed/review**, **629 done**
 - Findings: **0 errors**, **4 warnings**, **59 informational**
 
 ## Project inventory
@@ -33,13 +33,13 @@ This is a conservative structural audit. It reports suspicious state; it does no
 | 17 | `animation-manager` | active | software | 2 | 0 | 0 | 0 | 14 / 16 |
 | 18 | `animation-studio` | retired | software | 3 | 4 | 0 | 0 | 1 / 8 |
 | 19 | `ecosystem-map` | finished | software | 0 | 0 | 0 | 0 | 8 / 8 |
-| 20 | `conductor` | active | software | 0 | 0 | 3 | 1 | 88 / 92 |
+| 20 | `conductor` | active | software | 0 | 0 | 3 | 0 | 89 / 92 |
 | 21 | `serendipity` | active | software | 1 | 0 | 0 | 0 | 11 / 12 |
 | 22 | `storymaker` | active | software | 1 | 0 | 0 | 0 | 9 / 10 |
 | 23 | `davinci` | finished | software | 0 | 0 | 0 | 0 | 15 / 15 |
 | 24 | `art-generator-connect` | finished | software | 0 | 0 | 0 | 0 | 22 / 22 |
 | 25 | `mural-design` | active | content | 1 | 3 | 0 | 0 | 3 / 7 |
-| 26 | `coat-dance` | active | content | 2 | 0 | 0 | 0 | 1 / 10 |
+| 26 | `coat-dance` | active | content | 1 | 0 | 1 | 0 | 1 / 10 |
 | 27 | `career-transition` | retired | content | 0 | 4 | 3 | 0 | 1 / 8 |
 | 28 | `alexa-integration` | active | software | 1 | 0 | 1 | 0 | 16 / 18 |
 | 29 | `conductor-app` | active | software | 2 | 0 | 0 | 0 | 12 / 14 |
