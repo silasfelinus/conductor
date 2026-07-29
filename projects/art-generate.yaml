@@ -3,4 +3,56 @@ mode: dry-run
 description: Concrete project image requests ready for generation; active retries are preserved until
   the consumer marks them complete.
 batch:
-  entries: []
+  entries:
+  - project: taskmaster
+    variant: icon
+    target_repo: silasfelinus/conductor
+    image_path: projects/images/taskmaster-icon.webp
+    size: 256x256
+    status: done
+    prompt: A gleaming gear fused with a small unfurling quest scroll, a faint adventurous spark of light
+      at the join, confident clean app-icon silhouette on a warm neutral ground, premium product icon
+      polish, no text, no collage.
+    engine: krea2
+  - project: taskmaster
+    variant: card
+    target_repo: silasfelinus/conductor
+    image_path: projects/images/taskmaster-card.webp
+    size: 512x768
+    status: done
+    prompt: A quest scroll unrolling into interlocking gears and glowing checklist waypoints, a friendly
+      small robot companion pointing toward a luminous objective marker on the horizon, warm adventurous
+      lighting, professional portrait key art, no text, no collage.
+    engine: krea2
+  - project: taskmaster
+    variant: hero
+    target_repo: silasfelinus/conductor
+    image_path: projects/images/taskmaster-hero.webp
+    size: 1280x720
+    status: done
+    prompt: A wide adventurer's path built from interlocking gears and stepping-stone checklist tiles
+      leading toward a glowing objective banner on the horizon, a small robot companion guiding the way,
+      cinematic golden-hour lighting, rich tactile environmental detail, no text, no collage.
+    engine: krea2
+  - project: taskmaster
+    variant: dashboard-tab
+    target_repo: silasfelinus/kind_robots
+    image_path: public/images/dashboard-tabs/scenario/taskmaster.webp
+    size: 512x512
+    status: done
+    prompt: A single gleaming gear fused with a small unfurling quest scroll, a
+      faint adventurous spark of light at the join, clean readable tab-icon
+      silhouette on a warm neutral ground, premium product icon polish, no
+      text, no collage.
+    engine: krea2
+  - project: taskmaster
+    variant: tutorial
+    target_repo: silasfelinus/kind_robots
+    image_path: public/images/tutorials/scenario/taskmaster.webp
+    size: 800x600
+    status: done
+    prompt: A friendly small robot companion pointing toward a glowing
+      objective marker while gears and checklist waypoints form a path
+      through a cozy workshop, warm inviting lighting, clear approachable
+      illustration suited to a tutorial card, no text, no collage.
+    engine: krea2
