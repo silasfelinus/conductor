@@ -5180,3 +5180,20 @@ records:
     reading/diffing the roadmap -- verify the move with a byte-identical diff check
     before trimming the original, and add a run_log: pointer field rather than just
     prose, so a script can find the log mechanically later.'
+- date: 2026-07-29
+  project: model-builder
+  task: t-029
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'Extended the review-gate-bypass bug class (already fixed for canApproveAssets,
+    batchDraftField/batchSetField, and previewCommit) to the single-item draftText()
+    path: the Approve button for PITCH/FIELDS_AND_PROMPTS has no isDrafting gate,
+    so a stage can be approved while its own AI draft is still resolving, and the
+    draft would silently overwrite the approved content with no re-review. This
+    task''s note (67+ PROGRESS/REVIEWED entries) is now the same note-bloat shape
+    the immediately preceding LEARNING.yaml entry describes for coloring-book/t-037
+    -- worth the same run-log.md extraction next cycle, before it slows down
+    reading/diffing the roadmap further.'
