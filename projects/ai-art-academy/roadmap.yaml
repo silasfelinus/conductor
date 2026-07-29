@@ -502,11 +502,11 @@ tasks:
   - id: t-010
     milestone: m6
     title: Academy continuous improvement pass
-    status: review
+    status: ready
     recurring: true
     passes: 0
     stakes: reversible
-    updated: '2026-07-29T08:04:43Z'
+    updated: '2026-07-29T09:07:51Z'
     note: |-
       Standing never-idle task (re-arms to ready after every completion, per the recurring-task rule). Each cycle pick ONE: (a) front-end style/polish pass on Academy or art-styler surfaces, (b) roadmap upgrade — refine tasks, detail the next milestone, prune stale notes, (c) generate more art inspirations or style preview thumbnails, (d) expand the curriculum with a new movement/artist entry (respecting PUBLIC-DOMAIN-POLICY.md). Note which option ran in the PR. This task never reaches done and does not count toward milestone progress. See `run_log` for cycle history — do not re-accumulate RAN entries here.
 
@@ -519,15 +519,17 @@ tasks:
       RAN 2026-07-29T06:10:00Z (conductor scheduled cycle): option (c), inspiration/preview assets. Root-caused the actual reason the fauvism thumbnail never landed: `build_workspace.py`'s `request_is_complete()` was pruning a kind_robots-target `art-prompts.yaml` request the instant `status` read `done`, without checking whether delivery to the media host had actually happened — so the retained-but-undelivered `fauvism.webp` request got silently dropped on the very next `distribute_images.py` run (pinned to commit `97f90d8`), and the still-undelivered file itself got swept into `projects/process/unmatched/` on the run after that (`a84595c`) with no yaml record left to re-match it against. Fixed `request_is_complete()` to require the staged local file to be gone (not just `status: done`) for kind_robots-target requests; added `tests/test_build_workspace.py`. Restored `fauvism.webp` from `unmatched/` to `projects/process/` and re-added its request entry; dropped the stray already-delivered `italian-futurism.webp` duplicate found alongside it in `unmatched/` (confirmed live at the media host, safe to discard). `media.acrocatranch.com/.../fauvism.webp` is still 404 — the render itself needs relay delivery still, out of scope for this fix (no in-repo mechanism retries delivery-only for an already-staged file). Full detail in `run_log`. ROTATION COLLISION NOTE: on rebase before opening this PR, found `origin/main` had a `claim: ai-art-academy/t-010` commit from a concurrent session (`claude-conductor-burst-20260729T0604Z-aa-t010-lane3-fauvism`, claimed 06:07:55Z, same lane-3/fauvism intent) pushed while this session was mid-investigation without having claimed first. No PR existed yet from that session at rebase time (`list_pull_requests` empty on both repos), so rebased cleanly and rearmed to `ready` here; if that session's own PR appears separately, its author should re-check `media.acrocatranch.com/.../fauvism.webp` and this task's `run_log` before repeating the same investigation, since the underlying pipeline bug is now fixed.
 
       RAN 2026-07-29T07:07:29Z (conductor scheduled cycle, session claude-conductor-scheduled-20260729T070728-aa-t010-lane4-tonalism): option (d), curriculum depth. Added Tonalism as curriculum-outline.md §39 (v1.19) — a second American landscape entry deliberately contrasted with the Hudson River School (§32): muted single-tone palette, blurred near-silhouette forms, dawn/dusk/mist light, vs. that entry's panoramic scale and crisp detail. Sole verified generation-style anchor is George Inness (d. 1894); verified three of his works (*Evening at Medfield, Massachusetts* 1875, *Autumn Oaks* c. 1878, *Sunrise* 1887, all Met accessions) as CC0 via their Wikimedia Commons file pages (Met Open Access Policy). Dwight Tryon, Ralph Albert Blakelock, and J. Francis Murphy are named for historical context only — all clear PUBLIC-DOMAIN-POLICY.md §1.3's death-date prong easily but no specific work by any of them was rights-verified this cycle. Also checked the only unpromoted file in `docs/curriculum-candidates/` (harlem-renaissance.md) before picking a fresh movement to research: it's correctly held at ai-art-academy/t-043 (needs-human, soft gate) pending Silas's call on using non-participant Winold Reiss portraits as the generation anchor, so it was left alone rather than re-litigated. Research detail in `docs/curriculum-candidates/tonalism.md`. Not yet synced into kind_robots' `stores/seeds/academyStyles.ts` — separate follow-up, same pattern as every prior addition since §31. Full detail in `run_log`.
+
+      RAN 2026-07-29T08:04:43Z (conductor scheduled cycle, session claude-conductor-scheduled-20260729T080443-aa-t010-lane1-polish; merge confirmed by reviewer session claude-reviewer-burst-20260729T090540 at 09:06 UTC): option (a), front-end style/polish pass. Fixed a real bug: Remix Studio's read-only style-detail sidebar (`academy-remix.vue`) was calling `academy-style-detail.vue` without `allow-mark-viewed="false"`, so incidental style-preview clicks while remixing silently counted toward the Timeline/Gallery "explored" progress bar and lesson-count badges — a metric meant to reflect deliberate lesson-reading, not browsing. Merged as kind_robots PR #1143 (`allow-mark-viewed="false"` on the Remix Studio call site only; the other two callers — timeline, styles-browser — keep the default). Verification: eslint + prettier clean on both changed files, `vue-tsc --noEmit` exit 0, caller-list contract script still confirms 3 callers unchanged.
     continuous_improvement:
-      last_lane: 4  # 1=front-end polish, 2=roadmap accuracy, 3=inspiration assets, 4=curriculum depth
-      next_lane: 1
-      last_run: '2026-07-29T07:07:29Z'
-      last_pr: 'conductor PR (pending): promoted Tonalism to curriculum-outline.md §39 (v1.19), 3 verified George Inness example works'
+      last_lane: 1  # 1=front-end polish, 2=roadmap accuracy, 3=inspiration assets, 4=curriculum depth
+      next_lane: 2
+      last_run: '2026-07-29T08:04:43Z'
+      last_pr: 'kind_robots PR #1143 (merged): allow-mark-viewed=false on Remix Studio style-detail sidebar'
     run_log: projects/ai-art-academy/docs/continuous-improvement-run-log.md
     owner: reviewer
-    claimed_by: claude-conductor-scheduled-20260729T080443-aa-t010-lane1-polish
-    claimed_at: '2026-07-29T08:04:43Z'
+    claimed_by: null
+    claimed_at: null
 
   - id: t-015
     milestone: m4
@@ -1633,3 +1635,27 @@ tasks:
       entries) is unaffected either way. kind_robots PR #1133.
     claimed_by: claude-conductor-burst-20260729-aa-t010-check
     claimed_at: '2026-07-29T04:20:00Z'
+
+  - id: t-054
+    milestone: m6
+    title: 'Migrate t-010''s accumulated RAN entries out of roadmap.yaml note into continuous-improvement-run-log.md'
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-29T09:10:00Z'
+    note: >
+      Kaizen from Reviewer merge of kind_robots PR #1143 (2026-07-29, session
+      claude-reviewer-burst-20260729T090540). t-010's own note field says "See `run_log` for
+      cycle history -- do not re-accumulate RAN entries here," but the note has kept
+      accumulating inline RAN/STRANDED-STATE-CORRECTION paragraphs every cycle since that
+      line was written (5 entries as of this task's filing, one cycle away from needing this
+      same cleanup again). `run_log` already points at
+      `projects/ai-art-academy/docs/continuous-improvement-run-log.md`, which holds the
+      older historical entries -- so the pattern exists, it's just not being followed by
+      each cycle's close-out. Move every RAN/STRANDED-STATE-CORRECTION paragraph currently
+      in t-010's `note` (everything between the standing-instructions line and the
+      `continuous_improvement:` block) to the end of the run-log doc, leaving only the
+      standing-instructions paragraph in the roadmap note. Do this without disturbing
+      `continuous_improvement:` (lane tracking) or `claimed_by`/`claimed_at`. A future cycle
+      should append new RAN entries directly to the run-log doc, not to the roadmap note.
