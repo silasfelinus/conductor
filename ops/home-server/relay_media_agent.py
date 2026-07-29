@@ -22,11 +22,13 @@ import base64
 import io
 import json
 import os
+import threading
 import time
 import urllib.parse
 from pathlib import Path, PurePosixPath
 
 import relay_agent as relay
+import lora_import_agent as lora
 
 KIND_ROBOTS_REPO = "silasfelinus/kind_robots"
 MEDIA_ROOT_VALUE = (
@@ -385,5 +387,23 @@ relay.run_comfy = run_comfy_with_recovery
 relay.process = process_with_media
 
 
+def start_lora_watcher():
+    """Start the LoRA auto-import watcher on a daemon thread inside this process.
+
+    Folding it into kr-relay keeps deployment to a single pm2 app / token / log.
+    A separate thread (not the relay's render loop) means a long import batch —
+    a bulk drop can take minutes of hashing + Civitai lookups + moves — never
+    stalls art-job claiming/rendering, and a watcher crash can't take the relay
+    down. If the LoRA env isn't configured, we log why and skip it, so kr-relay
+    still runs as a pure render relay."""
+    missing = lora.missing_config()
+    if missing:
+        relay.log(f"lora-import watcher disabled (missing {', '.join(missing)})")
+        return
+    relay.log("lora-import watcher starting (embedded thread in kr-relay)")
+    threading.Thread(target=lora.watch_loop, name="lora-import", daemon=True).start()
+
+
 if __name__ == "__main__":
+    start_lora_watcher()
     relay.main()

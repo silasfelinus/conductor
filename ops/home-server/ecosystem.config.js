@@ -86,13 +86,33 @@ module.exports = {
     // writes Kind Robots-targeted jobs to their exact self-hosted media path
     // before reporting the job successful.
     //
+    // It ALSO runs the LoRA auto-import watcher on a daemon thread in the same
+    // process (relay_media_agent.start_lora_watcher). Files dropped in
+    // <LORA_ROOT>/import are auto-detected (base model, SFW/NSFW, triggers,
+    // preview image), sorted into <Base>/<SFW|NSFW>/, and upserted as
+    // kind_robots Resources with the localPath the enqueue path
+    // (server/utils/artLoraResource.ts) needs — reusing scan_loras.py +
+    // import_catalog.py. One process, one token, one log; the watcher thread
+    // can't stall the render loop and vice versa. The array host (alexandria)
+    // is a locked-down NAS that doesn't run ad-hoc daemons, so this render box
+    // is the permanent home. The tree is reached over SMB (Z:), which is
+    // case-insensitive — with the folders already merged to single casing
+    // (case_merge.py), Windows moves are safe and prevent fresh case-dupes.
+    // If the LoRA env vars are unset the watcher just logs "disabled" and
+    // kr-relay runs as a pure render relay.
+    //
     // One-time, in PowerShell (keeps secrets out of git):
     //   setx KR_RELAY_TOKEN "your-admin-apikey"
     //   setx KR_RELAY_USER_ID "1"
+    //   setx CIVITAI_TOKEN "your-civitai-token"      # for LoRA detection
     //   py -3.12 -m pip install Pillow
     //
     // The canonical media destination is Z:/kindrobots/image. Override
     // KR_MEDIA_IMAGES_DIR only when intentionally moving the mounted image root.
+    // The scan/import tools run from LOCAL disk — vendored copies in
+    // ops/home-server/lora-catalog/ (the agent defaults to them). Only the LoRA
+    // files are remote (LORA_ROOT=Z:). Re-sync those two scripts from kind_robots
+    // when its lora-catalog tools change (see lora-catalog/PROVENANCE.md).
     // Open a NEW shell after setx, then:
     //   pm2 start ecosystem.config.js --only kr-relay
     //   pm2 save
@@ -115,51 +135,21 @@ module.exports = {
         KR_LOCAL_IMAGES_DIR: process.env.KR_LOCAL_IMAGES_DIR || '',
         COMFY_PROMPT_TIMEOUT: process.env.COMFY_PROMPT_TIMEOUT || '180',
         COMFY_RECOVERY_SECONDS: process.env.COMFY_RECOVERY_SECONDS || '45',
-        GEN_TIMEOUT: process.env.GEN_TIMEOUT || '1800'
-      },
-      out_file: `${LOG_DIR}/kr-relay.out.log`,
-      error_file: `${LOG_DIR}/kr-relay.err.log`,
-      merge_logs: true
-    },
-    {
-      // LoRA auto-import watcher. Files dropped in <LORA_ROOT>/import are
-      // auto-detected (base model, SFW/NSFW, triggers, preview image), sorted
-      // into <Base>/<SFW|NSFW>/, and upserted as kind_robots Resources with the
-      // localPath the enqueue path (server/utils/artLoraResource.ts) needs.
-      // Reuses the kind_robots scan_loras.py + import_catalog.py tools.
-      //
-      // RECOMMENDED: run this on the Linux array host (alexandria) instead of
-      // here, so the file moves happen on the case-sensitive local filesystem
-      // (avoids the Windows/SMB case-folding issues). On alexandria, set the
-      // same env vars and run it under the unRAID User Scripts plugin or
-      // `nohup python3 lora_import_agent.py &`. This pm2 block is the Windows
-      // fallback; paths below are the Z: mount + the kind_robots checkout.
-      name: 'kr-lora-import',
-      cwd: __dirname,
-      script: 'C:/Python312/python.exe',
-      args: 'lora_import_agent.py',
-      interpreter: 'none',
-      windowsHide: true,
-      autorestart: true,
-      restart_delay: 10000,
-      env: {
-        KR_RELAY_TOKEN: process.env.KR_RELAY_TOKEN || '',
-        KR_BASE_URL: 'https://kind-robots.vercel.app',
+        GEN_TIMEOUT: process.env.GEN_TIMEOUT || '1800',
+        // LoRA auto-import watcher (embedded thread). Unset LORA_ROOT to disable.
         LORA_ROOT: process.env.LORA_ROOT || 'Z:/ai/models/Lora',
         LORA_IMPORT_DIR:
           process.env.LORA_IMPORT_DIR || 'Z:/ai/models/Lora/import',
         CIVITAI_TOKEN: process.env.CIVITAI_TOKEN || '',
-        POLL_SECONDS: process.env.POLL_SECONDS || '20',
-        PYTHON: 'C:/Python312/python.exe',
-        SCAN_SCRIPT:
-          process.env.SCAN_SCRIPT ||
-          'D:/code/kind_robots/scripts/lora-catalog/scan_loras.py',
-        IMPORT_SCRIPT:
-          process.env.IMPORT_SCRIPT ||
-          'D:/code/kind_robots/scripts/lora-catalog/import_catalog.py'
+        LORA_POLL_SECONDS: process.env.LORA_POLL_SECONDS || '20',
+        // SCAN_SCRIPT/IMPORT_SCRIPT are intentionally NOT set here: the agent
+        // defaults to the vendored copies in ops/home-server/lora-catalog/,
+        // which run from LOCAL disk in this checkout — never over the Z: mount.
+        // Keep the scanner's sqlite cache on LOCAL disk, not the SMB share.
+        CACHE_DB: process.env.CACHE_DB || `${LOG_DIR}/.lora-cache.sqlite`
       },
-      out_file: `${LOG_DIR}/kr-lora-import.out.log`,
-      error_file: `${LOG_DIR}/kr-lora-import.err.log`,
+      out_file: `${LOG_DIR}/kr-relay.out.log`,
+      error_file: `${LOG_DIR}/kr-relay.err.log`,
       merge_logs: true
     }
   ]
