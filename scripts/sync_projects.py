@@ -1,12 +1,11 @@
 #!/usr/bin/env python3
 """
-sync_projects.py — Upsert conductor projects as first-class Projects in kind_robots.
+sync_projects.py — Upsert tracked Conductor projects as first-class Projects in kind_robots.
 
-For each active project in project-overrides.yaml, reads its roadmap.yaml and
-calls the kind_robots /api/projects endpoints to create or update a Project,
-using conductorSlug as the canonical join key. (Replaces the retired
-sync_projects_to_dreams.py: Dreams no longer carry project state — the Dream
-model split into Dream / Project / Facet in July 2026.)
+For every recognized lifecycle entry in project-overrides.yaml, read its roadmap.yaml and
+call the kind_robots /api/projects endpoints using conductorSlug as the canonical join key.
+This includes active, paused, finished, and retired projects: lifecycle changes are part of
+the sync contract, not a reason to skip synchronization.
 
 Run at the END of every Worker cycle, after task work is complete.
 
@@ -17,7 +16,7 @@ Status mapping:
   conductor active   → kind_robots ACTIVE
   conductor paused   → kind_robots PAUSED
   conductor finished → kind_robots DONE
-  conductor retired  → kind_robots ARCHIVED
+  conductor retired  → kind_robots ARCHIVED (isActive=false)
 
 Priority mapping (project-overrides.yaml):
   low → LOW, normal → NORMAL, high/urgent → HIGH
@@ -32,6 +31,7 @@ import sys
 import time
 import urllib.error
 import urllib.request
+from collections import Counter
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -46,12 +46,6 @@ OVERRIDES_FILE = REPO_ROOT / "project-overrides.yaml"
 PROJECTS_DIR = REPO_ROOT / "projects"
 KR_API_BASE = "https://kind-robots.vercel.app/api"
 TRANSIENT_HTTP_CODES = {429, 500, 502, 503, 504}
-# The kind_robots API sometimes surfaces a raw DB-driver connection error
-# (ProxySQL dropping a stale socket under load) wrapped in an HTTP 400
-# instead of a 5xx, so status-code-only retry logic misses it. Sniff the
-# body for these markers too. (Root cause matches the 2026-07-14 02:00
-# TALKBACK entry — "Cannot execute new commands: connection closed" —
-# recurring here via sync_projects.py's own requests.)
 TRANSIENT_BODY_MARKERS = (
     "connection closed",
     "econnreset",
@@ -59,12 +53,6 @@ TRANSIENT_BODY_MARKERS = (
     "connect timeout",
 )
 MAX_REQUEST_ATTEMPTS = 4
-
-
-def _looks_transient(body):
-    text = body.decode(errors="replace").lower()
-    return any(marker in text for marker in TRANSIENT_BODY_MARKERS)
-
 
 CONDUCTOR_TO_KR_STATUS = {
     "active": "ACTIVE",
@@ -79,6 +67,11 @@ CONDUCTOR_TO_KR_PRIORITY = {
     "high": "HIGH",
     "urgent": "HIGH",
 }
+
+
+def _looks_transient(body):
+    text = body.decode(errors="replace").lower()
+    return any(marker in text for marker in TRANSIENT_BODY_MARKERS)
 
 
 def kr_request(method, path, token, payload=None):
@@ -103,12 +96,6 @@ def kr_request(method, path, token, payload=None):
             body = error.read()
             transient = error.code in TRANSIENT_HTTP_CODES or _looks_transient(body)
             if not transient or attempt == MAX_REQUEST_ATTEMPTS:
-                # .read() above drained the underlying stream, and HTTPError
-                # caches attribute lookups on first access (it delegates via
-                # tempfile._TemporaryFileWrapper.__getattr__), so reassigning
-                # .fp doesn't affect a later .read() call. Rebind .read
-                # directly so callers that read the body (e.g. sync_project's
-                # error-message logging) still see it.
                 error.read = lambda body=body: body
                 raise
         except (urllib.error.URLError, TimeoutError):
@@ -131,8 +118,8 @@ def find_project_by_slug(slug, token):
     try:
         body = kr_request("GET", f"/projects/{slug}", token)
         return body.get("data")
-    except urllib.error.HTTPError as e:
-        if e.code == 404:
+    except urllib.error.HTTPError as error:
+        if error.code == 404:
             return None
         raise
 
@@ -141,17 +128,28 @@ def load_overrides():
     if not OVERRIDES_FILE.exists():
         print(f"❌ {OVERRIDES_FILE} not found", file=sys.stderr)
         sys.exit(1)
-    with open(OVERRIDES_FILE) as f:
-        doc = yaml.safe_load(f)
+    with open(OVERRIDES_FILE, encoding="utf-8") as handle:
+        doc = yaml.safe_load(handle) or {}
     return doc.get("overrides", [])
+
+
+def synced_overrides(overrides):
+    """Return every lifecycle entry the Kind Robots Project schema understands."""
+    return [
+        override
+        for override in overrides
+        if override.get("slug")
+        and str(override.get("status", "active")).lower()
+        in CONDUCTOR_TO_KR_STATUS
+    ]
 
 
 def load_roadmap(slug):
     path = PROJECTS_DIR / slug / "roadmap.yaml"
     if not path.exists():
         return None
-    with open(path) as f:
-        return yaml.safe_load(f)
+    with open(path, encoding="utf-8") as handle:
+        return yaml.safe_load(handle)
 
 
 def first_paragraph(text):
@@ -166,7 +164,7 @@ def build_project_payload(slug, override, roadmap):
     notes = roadmap.get("notes_from_silas", "") if roadmap else ""
     description = first_paragraph(notes) or f"Conductor project: {slug}"
 
-    conductor_status = override.get("status", "active")
+    conductor_status = str(override.get("status", "active")).lower()
     kr_status = CONDUCTOR_TO_KR_STATUS.get(conductor_status, "ACTIVE")
     conductor_priority = str(override.get("priority", "normal")).lower()
     kr_priority = CONDUCTOR_TO_KR_PRIORITY.get(conductor_priority, "NORMAL")
@@ -177,21 +175,14 @@ def build_project_payload(slug, override, roadmap):
         "conductorSlug": slug,
         "status": kr_status,
         "priority": kr_priority,
+        "isActive": kr_status != "ARCHIVED",
         "lastSyncedAt": datetime.now(timezone.utc).isoformat(),
     }
 
-    # goal is optional roadmap top-matter. Only send it when the roadmap
-    # actually defines it, so projects without one are never cleared. Project
-    # progress is tracked by milestones, not a separate waypoints field.
     goal = roadmap.get("goal") if roadmap else None
     if isinstance(goal, str) and goal.strip():
         payload["goal"] = goal.strip()
 
-    # Frontend placement: liveUrl (route/app URL), channelKey (dashboard
-    # channel), tabKey (dashboard tab). These stitch a project into a front-end
-    # surface. Previously nothing synced them, so a project could have a page in
-    # the app but no DB registration. Read from the override first, falling back
-    # to roadmap top-matter. Only send defined values so we never null them out.
     for field in ("liveUrl", "channelKey", "tabKey", "repoUrl"):
         value = override.get(field)
         if value is None and roadmap:
@@ -217,11 +208,11 @@ def sync_project(slug, override, token):
 
     try:
         existing = find_project_by_slug(slug, token)
-    except urllib.error.HTTPError as e:
-        print(f"  {slug}: ERROR {e.code} checking existence — {e}")
+    except urllib.error.HTTPError as error:
+        print(f"  {slug}: ERROR {error.code} checking existence — {error}")
         return False
-    except Exception as e:
-        print(f"  {slug}: ERROR checking existence — {e}")
+    except Exception as error:
+        print(f"  {slug}: ERROR checking existence — {error}")
         return False
 
     try:
@@ -236,24 +227,22 @@ def sync_project(slug, override, token):
             fields = ", ".join(changed_fields)
             print(f"  {slug}: UPDATED (id={project_id}; fields={fields})")
         else:
-            # slug only on create: the KR-side slug stays user-editable after
-            # that; conductorSlug remains the stable join key.
             result = kr_request("POST", "/projects", token, {**payload, "slug": slug})
             new_id = result.get("data", {}).get("id", "?")
             print(f"  {slug}: CREATED (id={new_id})")
         return True
-    except urllib.error.HTTPError as e:
-        body = e.read().decode(errors="replace")
-        print(f"  {slug}: ERROR {e.code} — {body[:200]}")
-        if e.code == 401:
+    except urllib.error.HTTPError as error:
+        body = error.read().decode(errors="replace")
+        print(f"  {slug}: ERROR {error.code} — {body[:200]}")
+        if error.code == 401:
             print(
                 "  ^ 401 from kind_robots: KR_API_TOKEN is invalid or expired. "
                 "Mint a fresh JWT and update the secret.",
                 file=sys.stderr,
             )
         return False
-    except Exception as e:
-        print(f"  {slug}: ERROR — {e}")
+    except Exception as error:
+        print(f"  {slug}: ERROR — {error}")
         return False
 
 
@@ -264,23 +253,24 @@ def main():
         print("Set KR_API_TOKEN to a valid kind_robots JWT and re-run.")
         return
 
-    overrides = load_overrides()
-    active = [o for o in overrides if o.get("status") == "active"]
+    overrides = synced_overrides(load_overrides())
+    lifecycle_counts = Counter(
+        str(override.get("status", "active")).lower() for override in overrides
+    )
+    summary = ", ".join(
+        f"{status}={lifecycle_counts.get(status, 0)}"
+        for status in CONDUCTOR_TO_KR_STATUS
+    )
+    print(f"sync_projects: syncing {len(overrides)} tracked projects ({summary})")
 
-    print(f"sync_projects: syncing {len(active)} active projects")
     failures = 0
-    for override in active:
+    for override in overrides:
         slug = override.get("slug")
-        if not slug:
-            continue
         if not sync_project(slug, override, token):
             failures += 1
 
     if failures:
-        # Exit nonzero so CI goes red instead of masking a broken bridge —
-        # the pre-cutover sync failed green for weeks because errors were
-        # only visible in per-line output.
-        print(f"done with {failures}/{len(active)} failures.")
+        print(f"done with {failures}/{len(overrides)} failures.")
         sys.exit(1)
     print("done.")
 
