@@ -5134,3 +5134,18 @@ records:
     external system (here: the target repo''s real folder layout) before trusting "tests
     pass" as sufficient verification, especially when correcting or building on another
     agent''s recent, already-merged work.'
+- date: 2026-07-29
+  project: coloring-book
+  task: t-037
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'Note-bloat extraction (moving a recurring task''s accumulated RAN/incident
+    history out of the roadmap note: field into a dedicated run-log.md, per the
+    ai-art-academy/t-010 precedent) is now a proven, repeatable pattern for any
+    long-running recurring task whose note has grown large enough to slow down
+    reading/diffing the roadmap -- verify the move with a byte-identical diff check
+    before trimming the original, and add a run_log: pointer field rather than just
+    prose, so a script can find the log mechanically later.'
