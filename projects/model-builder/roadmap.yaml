@@ -575,7 +575,7 @@ tasks:
   - id: t-029
     milestone: m6
     title: "Polish and upgrade Model Builder front-end surface"
-    status: ready
+    status: claimed
     recurring: true
     passes: 0
     stakes: reversible
@@ -646,10 +646,10 @@ tasks:
       REVIEWED 2026-07-29T11:03Z (conductor scheduled agent run, claude-reviewer-2026-07-29T110331-sweep): posted a review-claim marker on kind_robots PR #1146 and conductor PR #1412 before starting (no rival claim found). Re-read the commitItem() diff directly against stores/modelBuilderStore.ts on the PR branch: confirms runId is captured from state.run before the await, and cancelledRunIds.has(runId) is checked immediately after the commit POST resolves in both the success and catch branches, mirroring generateItemAsset/pollAsyncArtJob's existing pattern exactly. All 13 kind_robots CI checks green (TypeScript, Contract verifiers, facet-catalog, etc.), no review comments, mergeable_state clean. Merged kind_robots #1146 (squash 96583c90), then conductor #1412 (squash 50e79aa3). kind_robots PR #1149 (unrelated missing-art-suggestion-context change, also open this cycle) was merged directly by Silas moments after the review-claim marker was posted -- no reviewer action needed there. Rearmed to `ready` per the recurring-task rule; claim fields cleared below.
 
       REVIEWED 2026-07-29T18:41Z (conductor scheduled agent run, claude-conductor-scheduled-20260729T180500Z-review-1161): this cycle's own claim, claude-conductor-scheduled-20260729T181200Z-mb-t029, opened kind_robots PR #1161 -- fixed the exact kaizen suggestion flagged in this note's 2026-07-29T10:06Z entry, extending draftText()'s existing liveValue-changed-while-drafting guard to also check isStageEditable(item, stageForDraftField(field)) after the /api/suggest response resolves, since the Approve button for PITCH/FIELDS_AND_PROMPTS has no isDrafting gate of its own and could approve a stage while its own draft was still in flight, silently overwriting the approved content. Posted a review-claim marker first (no rival claim found); re-read the diff directly (stores/modelBuilderStore.ts, extracted stageForDraftField() shared by draftText/batchDraftField, plus verifyModelBuilderDraftApprovalGuard.ts + self-test following the established narrow-textual-checker convention). All 13 kind_robots CI checks green (TypeScript, Contract verifiers, facet-catalog, facet-alias-smoke, GitGuardian, etc.), no review comments. Merged kind_robots #1161 (squash 97e768d). Step (1) (dashboard-tab + tutorial .webp art) remains the sole outstanding original deliverable, still blocked on the external art-generation relay in this sandbox. Rearmed to `ready` per the recurring-task rule; claim fields cleared below.
-    updated: '2026-07-29T18:41:00Z'
-    owner: null
-    claimed_by: null
-    claimed_at: null
+    updated: '2026-07-29T21:12:02Z'
+    owner: worker
+    claimed_by: claude-conductor-scheduled-20260729T2140Z-mb-t029
+    claimed_at: '2026-07-29T21:12:02Z'
 
   - id: t-030
     milestone: m6
