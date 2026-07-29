@@ -1,17 +1,17 @@
 {
-  "generated_at": "2026-07-29T00:14:49.386998+00:00",
+  "generated_at": "2026-07-29T05:04:23.801856+00:00",
   "summary": {
     "roadmaps": 43,
     "active_projects": 23,
-    "tasks": 748,
+    "tasks": 751,
     "ready": 29,
-    "waiting": 49,
+    "waiting": 47,
     "needs_human": 28,
-    "in_progress": 2,
-    "done": 629,
+    "in_progress": 3,
+    "done": 633,
     "errors": 0,
-    "warnings": 4,
-    "info": 59
+    "warnings": 6,
+    "info": 58
   },
   "projects": [
     {
@@ -38,20 +38,20 @@
       "override_status": "active",
       "priority_index": 2,
       "autonomous": true,
-      "task_count": 52,
+      "task_count": 53,
       "counts": {
-        "done": 48,
+        "done": 49,
         "needs-human": 2,
-        "review": 1,
+        "ready": 1,
         "waiting": 1
       },
       "open_count": 4,
       "human_attention": 2,
-      "ready": 0,
+      "ready": 1,
       "waiting": 1,
       "claimed": 0,
-      "review": 1,
-      "done": 48
+      "review": 0,
+      "done": 49
     },
     {
       "slug": "coloring-book",
@@ -382,9 +382,9 @@
       "override_status": "active",
       "priority_index": 20,
       "autonomous": false,
-      "task_count": 92,
+      "task_count": 94,
       "counts": {
-        "done": 89,
+        "done": 91,
         "needs-human": 3
       },
       "open_count": 3,
@@ -393,7 +393,7 @@
       "waiting": 0,
       "claimed": 0,
       "review": 0,
-      "done": 89
+      "done": 91
     },
     {
       "slug": "serendipity",
@@ -823,19 +823,17 @@
       "autonomous": false,
       "task_count": 6,
       "counts": {
-        "done": 1,
+        "done": 2,
         "needs-human": 1,
-        "ready": 1,
-        "review": 1,
-        "waiting": 2
+        "review": 3
       },
-      "open_count": 5,
+      "open_count": 4,
       "human_attention": 1,
-      "ready": 1,
-      "waiting": 2,
+      "ready": 0,
+      "waiting": 0,
       "claimed": 0,
-      "review": 1,
-      "done": 1
+      "review": 3,
+      "done": 2
     }
   ],
   "findings": [
@@ -850,7 +848,21 @@
       "severity": "warning",
       "code": "IN_PROGRESS_WITHOUT_TIMESTAMP",
       "project": "lora-ingestion",
-      "task": "t-002",
+      "task": "t-004",
+      "message": "Claimed/review task has no parseable updated timestamp."
+    },
+    {
+      "severity": "warning",
+      "code": "IN_PROGRESS_WITHOUT_TIMESTAMP",
+      "project": "lora-ingestion",
+      "task": "t-005",
+      "message": "Claimed/review task has no parseable updated timestamp."
+    },
+    {
+      "severity": "warning",
+      "code": "IN_PROGRESS_WITHOUT_TIMESTAMP",
+      "project": "lora-ingestion",
+      "task": "t-006",
       "message": "Claimed/review task has no parseable updated timestamp."
     },
     {
@@ -1118,13 +1130,6 @@
       "project": "kindrobots-unraid",
       "task": "t-002",
       "message": "approved_by_human is set on a task that is not human-gated."
-    },
-    {
-      "severity": "info",
-      "code": "INACTIVE_PROJECT_HAS_READY_TASKS",
-      "project": "lora-ingestion",
-      "task": null,
-      "message": "Inactive project retains 1 ready task(s); harmless but misleading in generated status."
     },
     {
       "severity": "info",
