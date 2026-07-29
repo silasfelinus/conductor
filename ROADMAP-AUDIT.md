@@ -1,13 +1,13 @@
 # Roadmap Audit
 
-Generated: `2026-07-29T11:12:00.739904+00:00`
+Generated: `2026-07-29T14:21:38.272585+00:00`
 
 This is a conservative structural audit. It reports suspicious state; it does not automatically change task status or remove human gates.
 
 ## Portfolio snapshot
 
-- **43** roadmaps, **23** active projects, **753** tasks
-- **28 ready**, **47 waiting**, **28 needs-human**, **4 claimed/review**, **635 done**
+- **43** roadmaps, **23** active projects, **755** tasks
+- **29 ready**, **47 waiting**, **28 needs-human**, **4 claimed/review**, **636 done**
 - Findings: **0 errors**, **6 warnings**, **58 informational**
 
 ## Project inventory
@@ -16,7 +16,7 @@ This is a conservative structural audit. It reports suspicious state; it does no
 |---:|---|---|---|---:|---:|---:|---:|---:|
 | 1 | `challenge-center` | finished | software | 0 | 0 | 0 | 0 | 20 / 20 |
 | 2 | `ai-art-academy` | active | software | 1 | 1 | 2 | 0 | 50 / 54 |
-| 3 | `coloring-book` | active | software | 0 | 9 | 1 | 1 | 25 / 36 |
+| 3 | `coloring-book` | active | software | 2 | 9 | 1 | 0 | 25 / 37 |
 | 4 | `humboldt-scoop` | finished | software | 0 | 0 | 0 | 0 | 8 / 8 |
 | 5 | `humboldt-scoop-cms` | active | software | 0 | 0 | 1 | 0 | 11 / 12 |
 | 6 | `digital-storefront` | active | software | 0 | 0 | 1 | 0 | 31 / 32 |
@@ -44,7 +44,7 @@ This is a conservative structural audit. It reports suspicious state; it does no
 | 28 | `alexa-integration` | active | software | 1 | 0 | 1 | 0 | 16 / 18 |
 | 29 | `conductor-app` | active | software | 2 | 0 | 0 | 0 | 12 / 14 |
 | 30 | `appmaker` | active | software | 2 | 0 | 0 | 0 | 10 / 12 |
-| 31 | `media-watchlist` | active | software | 1 | 0 | 0 | 0 | 15 / 16 |
+| 31 | `media-watchlist` | active | software | 0 | 0 | 0 | 1 | 15 / 16 |
 | 32 | `sketchy` | finished | software | 0 | 0 | 0 | 0 | 8 / 8 |
 | 33 | `pinball-hero` | retired | content | 0 | 2 | 2 | 0 | 2 / 6 |
 | 34 | `recipe-box` | retired | software | 0 | 2 | 1 | 0 | 0 / 3 |
@@ -53,7 +53,7 @@ This is a conservative structural audit. It reports suspicious state; it does no
 | 37 | `engagement` | finished | software | 0 | 0 | 0 | 0 | 3 / 3 |
 | 38 | `ruler-hooked` | active | software | 1 | 0 | 0 | 0 | 11 / 12 |
 | 39 | `music-mentor` | active | software | 1 | 0 | 0 | 0 | 8 / 9 |
-| 40 | `dream-cycle` | active | software | 3 | 0 | 0 | 0 | 16 / 20 |
+| 40 | `dream-cycle` | active | software | 3 | 0 | 0 | 0 | 17 / 21 |
 | — | `approval-portal` | retired | software | 0 | 0 | 0 | 0 | 3 / 5 |
 | — | `humboldt-impropriety-calendar` | retired | brainstorm | 0 | 5 | 0 | 0 | 0 / 6 |
 | — | `lora-ingestion` | missing | infrastructure | 0 | 0 | 1 | 3 | 2 / 6 |
