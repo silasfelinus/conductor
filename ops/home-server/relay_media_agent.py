@@ -4,12 +4,16 @@
 Kind Robots-targeted jobs that carry both:
 
 - targetRepo: silasfelinus/kind_robots
-- imagePath: public/images/<path>
+- imagePath: public/images/<path> or public/rewards/<path>
 
-are written beneath KR_MEDIA_IMAGES_DIR before the ArtJob is marked successful.
-Historical ``images/...`` and reward-path forms are normalized to the single
-canonical ``public/images/...`` contract before validation. If the filesystem
-write or manifest update fails, the job is reported FAILED and remains retryable
+are written beneath KR_MEDIA_IMAGES_DIR (images) or KR_MEDIA_REWARDS_DIR
+(rewards) before the ArtJob is marked successful. ``public/rewards/...`` is a
+real top-level directory in the kind_robots repo, a sibling of
+``public/images/...`` -- not nested under it -- so it gets its own root
+config instead of being folded into the images root. Historical
+``images/...`` and ``rewards/...`` forms are normalized to their canonical
+``public/...`` spelling before validation. If the filesystem write or
+manifest update fails, the job is reported FAILED and remains retryable
 instead of silently completing with a missing public file.
 
 All other jobs use relay_agent.py unchanged, except that Comfy prompt submission
@@ -35,6 +39,14 @@ MEDIA_ROOT_VALUE = (
     os.environ.get("KR_MEDIA_IMAGES_DIR", "").strip()
     or os.environ.get("KR_LOCAL_IMAGES_DIR", "").strip()
 )
+REWARDS_ROOT_VALUE = (
+    os.environ.get("KR_MEDIA_REWARDS_DIR", "").strip()
+    or os.environ.get("KR_LOCAL_REWARDS_DIR", "").strip()
+)
+MEDIA_ROOT_ENV_HINT = {
+    "images": "KR_MEDIA_IMAGES_DIR (or KR_LOCAL_IMAGES_DIR)",
+    "rewards": "KR_MEDIA_REWARDS_DIR (or KR_LOCAL_REWARDS_DIR)",
+}
 IMAGE_EXTENSIONS = {".webp", ".png", ".jpg", ".jpeg", ".gif", ".svg"}
 GENERATED_IMAGE_EXTENSIONS = {".webp", ".png", ".jpg", ".jpeg", ".gif"}
 VIDEO_EXTENSIONS = {".mp4", ".webm", ".mov", ".mkv"}
@@ -53,13 +65,14 @@ def job_payload(job):
 
 
 def normalize_kindrobots_image_path(value):
-    """Normalize historical frontend/media paths to ``public/images/...``.
+    """Normalize historical frontend/media paths to their canonical ``public/...`` root.
 
     Jobs created before the direct-media contract used several equivalent forms:
     ``/images/...``, ``images/...``, ``/public/images/...``, Windows separators,
-    full media URLs, and a separate ``public/rewards/...`` logical root. The
-    relay accepts those historical spellings only long enough to canonicalize
-    them. Unrelated paths remain unchanged and fail the safety validation below.
+    full media URLs, and the separate ``rewards/...``/``public/rewards/...``
+    logical root. The relay accepts those historical spellings only long enough
+    to canonicalize them to ``public/images/...`` or ``public/rewards/...``.
+    Unrelated paths remain unchanged and fail the safety validation below.
     """
 
     image_path = str(value or "").strip().replace("\\", "/")
@@ -85,9 +98,9 @@ def normalize_kindrobots_image_path(value):
     if image_path.startswith("images/"):
         return f"public/{image_path}"
     if image_path.startswith("public/rewards/"):
-        return f"public/images/{image_path[len('public/'):]}"
+        return image_path
     if image_path.startswith("rewards/"):
-        return f"public/images/{image_path}"
+        return f"public/{image_path}"
     return image_path
 
 
@@ -101,16 +114,17 @@ def direct_media_target(job):
 
     logical = PurePosixPath(image_path)
     parts = logical.parts
-    if len(parts) < 3 or parts[0] != "public" or parts[1] != "images":
+    if len(parts) < 3 or parts[0] != "public" or parts[1] not in MEDIA_ROOT_ENV_HINT:
         raise ValueError(
-            "Kind Robots media job imagePath must begin with public/images/"
+            "Kind Robots media job imagePath must begin with public/images/ "
+            "or public/rewards/"
         )
 
     relative_parts = parts[2:]
     if any(part in ("", ".", "..") for part in relative_parts):
         raise ValueError(f"Unsafe media imagePath: {image_path}")
 
-    return "images", Path(*relative_parts)
+    return parts[1], Path(*relative_parts)
 
 
 def direct_media_relative(job):
@@ -118,12 +132,16 @@ def direct_media_relative(job):
     return target[1] if target is not None else None
 
 
-def media_root():
-    if not MEDIA_ROOT_VALUE:
+def media_root(kind="images"):
+    if kind not in MEDIA_ROOT_ENV_HINT:
+        raise ValueError(f"Unknown media root kind: {kind}")
+    value = REWARDS_ROOT_VALUE if kind == "rewards" else MEDIA_ROOT_VALUE
+    if not value:
         raise RuntimeError(
-            "KR_MEDIA_IMAGES_DIR is required for direct Kind Robots media jobs"
+            f"{MEDIA_ROOT_ENV_HINT[kind]} is required for direct Kind Robots "
+            f"{kind} media jobs"
         )
-    root = Path(MEDIA_ROOT_VALUE).expanduser().resolve()
+    root = Path(value).expanduser().resolve()
     root.mkdir(parents=True, exist_ok=True)
     return root
 
@@ -202,7 +220,7 @@ def write_direct_media(job, media):
         return None
 
     media_kind, relative = target
-    root = media_root()
+    root = media_root(media_kind)
     destination = (root / relative).resolve()
     if destination != root and root not in destination.parents:
         raise ValueError(f"Media destination escaped root: {destination}")
