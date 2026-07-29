@@ -575,7 +575,7 @@ tasks:
   - id: t-029
     milestone: m6
     title: "Polish and upgrade Model Builder front-end surface"
-    status: review
+    status: done
     recurring: true
     passes: 0
     stakes: reversible
@@ -638,7 +638,7 @@ tasks:
       PROGRESS 2026-07-29 (conductor scheduled Agent run, conductor-scheduled-20260729T010536Z-mb-t029): step (4) follow-on -- coloring-book/t-022 (top-priority active ready task) re-confirmed still genuinely blocked via `coloring_queue_status.py --book monster-recast` (credential_gate_error_count 18, recommended_action recover-existing-jobs, but recovery itself also needs ANTHROPIC_API_KEY which this sandbox still doesn't have -- identical state to the 07-28 checks, nothing new to act on). Claimed this task instead. Dispatched a general-purpose subagent to read the full store, all model-builder components, server routes, and existing regression-guard scripts against the complete exclusion list of every bug class fixed by prior cycles. Found a real, previously-unfixed race in the *async* generation path: `pollAsyncArtJob` clears `item.artJobId` as part of normal terminal-status handling *before* awaiting `artStore.finalizeQueuedArtImage()` (a real network round-trip). If the user cancels the run while that await is in flight, `cancelRun()`'s own `item.artJobId` clearing is a no-op (already cleared) -- only `cancelledRunIds` could still distinguish "cancelled" from "completing normally", but `pollAsyncArtJob` never checked it, unlike its synchronous sibling `generateItemAsset` (fixed on both its success and catch paths back on 2026-07-28). So a cancelled run's async render could still get its candidate persisted, an artifact PATCHed/POSTed onto the item, and a misleading success toast popped -- directly contradicting `cancelRun()`'s own doc comment. Fixed by threading `runId` through to `pollAsyncArtJob` and checking `cancelledRunIds.has(runId)` immediately after `finalizeQueuedArtImage` resolves, before any persistence or toast. Added `utils/scripts/verifyModelBuilderCancelledRunGuard.ts` + `.test.ts` (matches the existing static-regression-guard convention) plus two `package.json` script entries. Verified independently: `npx eslint stores/modelBuilderStore.ts` shows only the 2 pre-existing `no-empty` errors at lines 203/210 (confirmed via `git stash` before/after); `npx eslint` on both new files clean; full-project `npx vue-tsc --noEmit` exit 0; `npx prettier --check` drift on the store file confirmed pre-existing via the same stash comparison, new files clean; `git status --porcelain` showed only the 4 intended files touched; the new checker fails against the pre-fix store and passes after (confirmed via git stash), its own self-test passes standalone. kind_robots PR #1128 (branch `claude/confident-bardeen-w454ml`): merged (silasfelinus, 2026-07-29T01:30:17Z), 4 files changed (+295). Step (1) (dashboard-tab + tutorial .webp art) remains the sole outstanding original deliverable, still blocked on the external art-generation relay. Rearmed to `ready`; claim fields cleared below.
     claimed_by: claude-conductor-burst-20260729T0203Z-modelbuilder-t029
     claimed_at: '2026-07-29T02:04:58Z'
-    updated: '2026-07-29T02:04:58Z'
+    updated: '2026-07-29T03:02:15Z'
     owner: worker
 
   - id: t-030
