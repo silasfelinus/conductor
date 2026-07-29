@@ -49,6 +49,9 @@ from pathlib import Path
 
 import yaml
 
+sys.path.insert(0, str(Path(__file__).parent))
+from consume_art_queue_core import staged_filename  # noqa: E402
+
 REPO_ROOT = Path(__file__).parent.parent
 PROCESS_DIR = REPO_ROOT / "projects" / "process"
 UNMATCHED_DIR = PROCESS_DIR / "unmatched"
@@ -107,7 +110,14 @@ def build_lookup(gen_data, prompts_data):
             continue
         path = entry.get("image_path", "")
         if path:
-            lookup[Path(path).name] = {
+            # staged_filename(), not Path(path).name: missing-image project-art
+            # requests can share an identical basename across projects (e.g.
+            # every kind_robots hero request is public/images/projects/{slug}/
+            # hero.webp -- basename "hero.webp" for every project) with the
+            # slug living only in project_slug/the parent directory. Must match
+            # consume_art_queue_core.save_result()'s staging name exactly, or
+            # this lookup never finds the file distribute() actually wrote.
+            lookup[staged_filename(entry)] = {
                 "image_path": path,
                 "target_repo": entry.get("target_repo", "silasfelinus/kind_robots"),
             }
