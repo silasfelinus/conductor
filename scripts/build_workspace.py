@@ -6,9 +6,13 @@ Run from repo root: python scripts/build_workspace.py
 """
 
 import re
+import sys
 import yaml
 from datetime import datetime, timezone
 from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).parent))
+from consume_art_queue_core import staged_filename  # noqa: E402
 
 REPO_ROOT = Path(__file__).parent.parent
 PROJECTS_DIR = REPO_ROOT / "projects"
@@ -16,7 +20,9 @@ PITCHES_DIR = REPO_ROOT / "pitches"
 WORKSPACE_FILE = REPO_ROOT / "workspace.html"
 ART_PROMPTS_FILE = REPO_ROOT / "projects" / "art-prompts.yaml"
 IMAGES_DIR = REPO_ROOT / "projects" / "images"
+PROCESS_DIR = REPO_ROOT / "projects" / "process"
 KIND_ROBOTS_ROOT = REPO_ROOT.parent / "kind_robots"
+KIND_ROBOTS_TARGET_REPO = "silasfelinus/kind_robots"
 
 ART_VARIANTS = ("icon", "card", "hero")
 ALLOWED_IMAGE_EXTS = (".webp", ".png", ".jpg", ".jpeg")
@@ -205,11 +211,29 @@ def pending_art_prompt_entries(data):
 
 def request_is_complete(request):
     status = str(request.get("status") or "pending").strip().lower()
-    if status == "done":
-        return True
-
     target_repo = str(request.get("target_repo") or request.get("repo") or "").strip()
     image_path = str(request.get("image_path") or "").strip()
+
+    if status == "done":
+        if target_repo == KIND_ROBOTS_TARGET_REPO and image_path:
+            # "done" here only means consume_art_requests.py finished
+            # generating the render -- delivery to the kind_robots media
+            # host is a separate step (the home relay writes directly, or
+            # distribute_images.py RETAINs a local fallback copy in
+            # projects/process/ for later delivery; see that script's
+            # kind_robots branch). Pruning the request the moment status
+            # flips to done -- before delivery is confirmed -- silently
+            # loses the only record that a retained file still needs
+            # delivering the next time anything else in the same
+            # distribute_images.py run happens to move (ai-art-academy/
+            # t-010, 2026-07-29: this dropped the fauvism style-preview
+            # request while its render was still sitting undelivered in
+            # projects/process/, and the file was later swept into
+            # projects/process/unmatched/ with no yaml entry left to
+            # re-match it against). Treat it as complete only once the
+            # locally staged copy is gone.
+            return not (PROCESS_DIR / staged_filename(request)).exists()
+        return True
 
     if image_path and target_repo in ("", "silasfelinus/conductor"):
         return (REPO_ROOT / image_path).exists()
