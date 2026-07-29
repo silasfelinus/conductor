@@ -849,10 +849,10 @@ tasks:
 - id: t-037
   milestone: m4
   title: Migrate t-022's accumulated RAN/incident note history into a dedicated run-log doc
-  status: ready
+  status: claimed
   passes: 0
   stakes: reversible
-  owner: null
+  owner: worker
   note: >
     Kaizen from PR #1416 review (2026-07-29): t-022's `note:` field has grown to
     ~28k characters of accumulated RAN/incident paragraphs across many recurring
@@ -862,3 +862,6 @@ tasks:
     (or similar), trim the roadmap note down to the current standing instruction
     plus a pointer to the log, and add a line to the note telling future cycles
     to append new RAN entries to the log doc instead of the roadmap note.
+  claimed_by: claude-conductor-scheduled-20260729T160500Z-cb-t037
+  claimed_at: '2026-07-29T16:10:10Z'
+  updated: '2026-07-29T16:10:10Z'
