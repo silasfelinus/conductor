@@ -450,6 +450,16 @@ def enqueue(entry: dict[str, Any]) -> tuple[int, bool]:
 JOB_ID_PATTERN = re.compile(r"\bjob\s+#?(\d+)\b", re.IGNORECASE)
 
 
+class RecoveryAbandoned(RuntimeError):
+    """Raised by recover_timed_out_job() only when it has positively determined
+    the referenced ArtJob will never produce a usable render (failed, cancelled,
+    or belongs to a different concept) -- as opposed to any other failure while
+    checking/fetching/verifying it, where the job may still be perfectly good.
+    The caller uses this distinction to decide whether to keep the "job N"
+    reference for a future recovery pass or give up and let the next pass
+    submit a fresh ArtJob."""
+
+
 def referenced_job_id(entry: dict[str, Any]) -> int | None:
     """A prior run's timeout error names the ArtJob it was waiting on. Extract
     it so a later run can check whether that job actually finished instead of
@@ -465,9 +475,13 @@ def recover_timed_out_job(entry: dict[str, Any], job_id: int) -> tuple[bool, dic
     reusing the one already in flight -- this recovers the original instead.
 
     Returns None if the job is still queued/running (leave it for next cycle).
-    Raises if the job failed/was cancelled, or if it belongs to a different
-    concept than expected (caller records that as a fresh semantic_gate_error,
-    same as any other failure).
+    Raises RecoveryAbandoned if the job failed/was cancelled, or if it belongs
+    to a different concept than expected -- these are the only outcomes where
+    giving up on job_id and letting the next pass submit fresh is correct.
+    Any other exception (network error checking status, missing local
+    dependency while saving/verifying the fetched image, semantic-gate
+    credential wall, etc.) means job_id's own fate is still unknown and must
+    not be treated the same way -- see the caller in main().
     """
     status, response = consumer.http_json("GET", f"{consumer.KR_BASE_URL}/api/art/queue/{job_id}")
     if status != 200 or not response or not response.get("success"):
@@ -476,15 +490,15 @@ def recover_timed_out_job(entry: dict[str, Any], job_id: int) -> tuple[bool, dic
     if job.get("status") in ("PENDING", "RUNNING"):
         return None
     if job.get("status") != "DONE":
-        raise RuntimeError(f"job {job_id} {job.get('status')}: {job.get('error')}")
+        raise RecoveryAbandoned(f"job {job_id} {job.get('status')}: {job.get('error')}")
 
     art_image_id = job.get("artImageId")
     if not art_image_id:
-        raise RuntimeError(f"job {job_id} DONE with no artImageId")
+        raise RecoveryAbandoned(f"job {job_id} DONE with no artImageId")
 
     attempt = (job.get("payload") or {}).get("attempt") or {}
     if attempt.get("conceptId") and str(attempt["conceptId"]) != str(entry["concept_id"]):
-        raise RuntimeError(
+        raise RecoveryAbandoned(
             f"job {job_id} belongs to concept {attempt.get('conceptId')!r}, "
             f"expected {entry['concept_id']!r}"
         )
@@ -640,6 +654,14 @@ def main() -> int:
                 f"{destination.relative_to(ROOT)} "
                 f"(ArtImage {entry.get('art_image_id') or 'existing'}, semantic={semantic.get('score')})"
             )
+        except RecoveryAbandoned as error:
+            # recover_timed_out_job() positively determined job {stuck_job_id}
+            # will never produce a usable render (failed/cancelled/wrong
+            # concept) -- safe (and correct) to drop the reference so the next
+            # pass submits fresh instead of retrying a dead job forever.
+            failures += 1
+            record_semantic_gate_error(entry, error, job_id=stuck_job_id)
+            print(f"  FAILED {entry['set']}/{entry['concept_id']}: {error}", file=sys.stderr)
         except Exception as error:  # noqa: BLE001
             failures += 1
             if destination.exists():
@@ -648,19 +670,24 @@ def main() -> int:
                     print(f"    unverified candidate moved to {rejected.relative_to(ROOT)}", file=sys.stderr)
                 except Exception:  # noqa: BLE001
                     pass
-            if stuck_job_id is not None and "ANTHROPIC_API_KEY" in str(error):
-                # Recovery already reconciled a completed ArtJob (no duplicate was
-                # submitted) -- the only thing that failed is verification, because
-                # this pass has no semantic-gate credential. Overwriting
-                # semantic_gate_error here would destroy the "job N timed out"
-                # text a future recovery pass parses via referenced_job_id(), and
-                # that future pass would then have no choice but to submit a
-                # genuine duplicate ArtJob for the same already-completed render.
-                # Leave the entry's recoverable reference untouched instead.
+            if stuck_job_id is not None:
+                # Anything other than RecoveryAbandoned during a recovery
+                # attempt (network error checking/fetching job {stuck_job_id},
+                # a missing local dependency like Pillow while saving the
+                # fetched image, a semantic-gate credential wall, ...) means
+                # job {stuck_job_id}'s own fate is still unknown -- it may well
+                # be a completed, valid render. Overwriting semantic_gate_error
+                # here would destroy the "job N" text a future recovery pass
+                # parses via referenced_job_id(), forcing that future pass into
+                # a genuine duplicate ArtJob submission for a render that may
+                # already exist (see ai-art-academy/t-010's fauvism incident
+                # and this task's own 2026-07-29 duplicate-submission incident
+                # for what happens when that reference is lost). Leave the
+                # entry's recoverable reference untouched instead.
                 print(
                     f"  RECOVERY UNVERIFIED {entry['set']}/{entry['concept_id']}: {error} -- "
-                    f"job {stuck_job_id} reference left intact for a future pass with "
-                    "semantic-gate credentials, no duplicate submitted",
+                    f"job {stuck_job_id} reference left intact for a future pass, "
+                    "no duplicate submitted",
                     file=sys.stderr,
                 )
             else:

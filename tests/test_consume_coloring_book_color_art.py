@@ -421,3 +421,162 @@ def test_live_recovery_blocked_by_missing_semantic_credential_preserves_job_refe
 
     _queue, entries = mod.build_entries("monster-recast")
     assert entries[0]["semantic_gate_error"] == "job 2751 timed out after 600s (still queued/running)"
+
+
+def _recovery_queue_file(tmp_path, queue_id="mr-016"):
+    queue_file = tmp_path / "color-art-jobs.yaml"
+    queue_file.write_text(
+        yaml.safe_dump(
+            {
+                "defaults": {},
+                "books": [
+                    {
+                        "slug": "monster-recast",
+                        "entries": [
+                            {
+                                "id": queue_id,
+                                "status": "pending",
+                                "title": "Recovery Candidate",
+                                "prompt": "A werewolf family portrait",
+                                "image_path": f"projects/coloring-book/sets/monster-recast/generated/{queue_id}.webp",
+                                "semantic_gate_error": "job 2751 timed out after 600s (still queued/running)",
+                                "semantic_gate_error_at": "2026-07-28T10:58:59Z",
+                            }
+                        ],
+                    }
+                ],
+            }
+        ),
+        encoding="utf-8",
+    )
+    return queue_file
+
+
+def test_live_recovery_blocked_by_missing_local_dependency_preserves_job_reference(monkeypatch, tmp_path, capsys):
+    # Regression (found running t-022 live 2026-07-29): the sandbox that ran a
+    # recovery pass had no Pillow installed, so save_result() raised while
+    # converting the already-fetched, already-completed render to WebP -- a
+    # local-environment problem, not evidence the ArtJob itself is bad. The old
+    # except-block guard only preserved the job reference for messages
+    # containing "ANTHROPIC_API_KEY", so this failure mode overwrote
+    # semantic_gate_error with a bare "Pillow is required..." string carrying no
+    # job id. The very next pass (once Pillow was installed) then found nothing
+    # to recover and submitted a genuine duplicate ArtJob against the render
+    # backend for an image that had already rendered successfully.
+    queue_file = _recovery_queue_file(tmp_path)
+    monkeypatch.setattr(mod, "QUEUE_FILE", queue_file)
+    monkeypatch.setattr(mod, "target_path", lambda entry: tmp_path / "candidate.webp")
+    monkeypatch.setattr(mod.consumer, "KR_API_TOKEN", "token")
+    monkeypatch.setattr(
+        mod.consumer,
+        "http_json",
+        lambda method, url: (
+            200,
+            {
+                "success": True,
+                "data": {
+                    "job": {
+                        "status": "DONE",
+                        "artImageId": 555,
+                        "payload": {"attempt": {"conceptId": "mr-016", "seed": 840016}},
+                    }
+                },
+            },
+        ),
+    )
+    monkeypatch.setattr(mod.consumer, "fetch_image_b64", lambda art_image_id: "aGVsbG8=")
+
+    def fake_save_result(entry, image_b64):
+        raise RuntimeError("Pillow is required for WebP output.")
+
+    monkeypatch.setattr(mod, "save_result", fake_save_result)
+
+    def fail_enqueue(entry):
+        raise AssertionError("must not submit a duplicate ArtJob")
+
+    monkeypatch.setattr(mod, "enqueue", fail_enqueue)
+    monkeypatch.setattr(
+        "sys.argv", ["consume_coloring_book_color_art.py", "--live", "--book", "monster-recast", "--ids", "mr-016"]
+    )
+
+    exit_code = mod.main()
+
+    assert exit_code == 1
+    stderr = capsys.readouterr().err
+    assert "RECOVERY UNVERIFIED" in stderr
+
+    _queue, entries = mod.build_entries("monster-recast")
+    assert entries[0]["semantic_gate_error"] == "job 2751 timed out after 600s (still queued/running)"
+
+
+def test_live_recovery_blocked_by_network_error_checking_status_preserves_job_reference(
+    monkeypatch, tmp_path, capsys
+):
+    # Regression (found running t-022 live 2026-07-29, same session as the
+    # Pillow case above): the GET that checks a stuck job's live status can
+    # itself hit a transient network error (observed:
+    # "<urlopen error [Errno 104] Connection reset by peer>") before recovery
+    # ever learns whether the job succeeded. This must not be treated as
+    # evidence the job is dead either -- only RecoveryAbandoned (a job the
+    # backend has positively reported as FAILED/CANCELLED/mismatched) should
+    # clear the reference.
+    queue_file = _recovery_queue_file(tmp_path)
+    monkeypatch.setattr(mod, "QUEUE_FILE", queue_file)
+    monkeypatch.setattr(mod, "target_path", lambda entry: tmp_path / "candidate.webp")
+    monkeypatch.setattr(mod.consumer, "KR_API_TOKEN", "token")
+
+    def flaky_http_json(method, url):
+        raise OSError("[Errno 104] Connection reset by peer")
+
+    monkeypatch.setattr(mod.consumer, "http_json", flaky_http_json)
+
+    def fail_enqueue(entry):
+        raise AssertionError("must not submit a duplicate ArtJob")
+
+    monkeypatch.setattr(mod, "enqueue", fail_enqueue)
+    monkeypatch.setattr(
+        "sys.argv", ["consume_coloring_book_color_art.py", "--live", "--book", "monster-recast", "--ids", "mr-016"]
+    )
+
+    exit_code = mod.main()
+
+    assert exit_code == 1
+    stderr = capsys.readouterr().err
+    assert "RECOVERY UNVERIFIED" in stderr
+
+    _queue, entries = mod.build_entries("monster-recast")
+    assert entries[0]["semantic_gate_error"] == "job 2751 timed out after 600s (still queued/running)"
+
+
+def test_live_recovery_of_genuinely_failed_job_still_clears_reference(monkeypatch, tmp_path, capsys):
+    # The flip side of the two regressions above: when recover_timed_out_job()
+    # positively determines the job failed on the backend (RecoveryAbandoned),
+    # the reference SHOULD be cleared so the next pass submits fresh instead of
+    # retrying a job that will never succeed.
+    queue_file = _recovery_queue_file(tmp_path)
+    monkeypatch.setattr(mod, "QUEUE_FILE", queue_file)
+    monkeypatch.setattr(mod, "target_path", lambda entry: tmp_path / "candidate.webp")
+    monkeypatch.setattr(mod.consumer, "KR_API_TOKEN", "token")
+    monkeypatch.setattr(
+        mod.consumer,
+        "http_json",
+        lambda method, url: (200, {"success": True, "data": {"job": {"status": "FAILED", "error": "boom"}}}),
+    )
+
+    def fail_enqueue(entry):
+        raise AssertionError("must not submit a duplicate ArtJob")
+
+    monkeypatch.setattr(mod, "enqueue", fail_enqueue)
+    monkeypatch.setattr(
+        "sys.argv", ["consume_coloring_book_color_art.py", "--live", "--book", "monster-recast", "--ids", "mr-016"]
+    )
+
+    exit_code = mod.main()
+
+    assert exit_code == 1
+    stderr = capsys.readouterr().err
+    assert "FAILED" in stderr
+    assert "RECOVERY UNVERIFIED" not in stderr
+
+    _queue, entries = mod.build_entries("monster-recast")
+    assert entries[0]["semantic_gate_error"] == "job 2751 FAILED: boom"
