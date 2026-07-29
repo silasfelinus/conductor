@@ -3079,23 +3079,14 @@ tasks:
   - id: t-095
     milestone: m2
     title: "consume_art_requests.py --live: confirm submitted ArtJobs are durably recorded (id + non-zero exit on failure)"
-    status: claimed
+    status: review
     owner: reviewer
     passes: 0
     stakes: reversible
     note: >
-      Kaizen from Reviewer merge of PR #1394 (2026-07-29, ai-art-academy/t-010 stranded-state
-      correction). That cycle found the 2026-07-28 lane-3 RAN note's claimed fauvism
-      style-preview generation (ArtJob 2775, ArtImage 13125 per the note) never actually
-      landed: the media URL 404s and projects/art-prompts.yaml has no fauvism entry, with
-      no trace of either id anywhere in the repo. Not enough evidence to say whether
-      consume_art_requests.py --live silently exited after submission without recording
-      the ArtJob id anywhere durable, or the generation itself failed upstream with the
-      calling session not noticing a non-zero exit. Check both: (a) does --live record the
-      submitted ArtJob id to a durable log/manifest before returning, and (b) does a
-      submission failure propagate as a non-zero exit code the calling session would
-      actually see. Fix whichever gap is real so a repeat of this pattern is caught at the
-      source instead of discovered later as a stranded roadmap task.
+      Kaizen from Reviewer merge of PR #1394 (2026-07-29, ai-art-academy/t-010 stranded-state correction). That cycle found the 2026-07-28 lane-3 RAN note's claimed fauvism style-preview generation (ArtJob 2775, ArtImage 13125 per the note) never actually landed: the media URL 404s and projects/art-prompts.yaml has no fauvism entry, with no trace of either id anywhere in the repo. Not enough evidence to say whether consume_art_requests.py --live silently exited after submission without recording the ArtJob id anywhere durable, or the generation itself failed upstream with the calling session not noticing a non-zero exit. Check both: (a) does --live record the submitted ArtJob id to a durable log/manifest before returning, and (b) does a submission failure propagate as a non-zero exit code the calling session would actually see. Fix whichever gap is real so a repeat of this pattern is caught at the source instead of discovered later as a stranded roadmap task.
+
+      INVESTIGATED 2026-07-29 (conductor-burst session, claude-conductor-burst-20260729T0806Z-t095): read consume_art_queue_core.py's enqueue()/wait_for_job() and consume_art_requests.py's --live loop directly. Found (a) was a real gap: enqueue() returns job_id, which was only ever printed to stdout -- never written anywhere durable -- before wait_for_job() blocks. A timeout, FAILED/CANCELLED job, or a killed process during the wait left no trace in art-prompts.yaml of which ArtJob had actually been submitted for that request, exactly matching the fauvism incident (an id known only from a session's own prose, unrecoverable once out of context). Fixed by adding record_submitted_job(), called immediately after enqueue() succeeds and before wait_for_job(): writes a last_art_job_id field onto the request's own art-prompts.yaml entry via a new set_request_field() surgical line-editor (generalized from set_request_status(), sharing a new find_request_block() helper for block boundaries). (b) was NOT a real gap: main()'s per-request try/except already counts wait_for_job/enqueue failures and returns 1 via `sys.exit(main())` when any occur -- verified with a new regression test that simulates an enqueue-then-timeout and asserts both the non-zero exit code and the durably-recorded last_art_job_id survive. Added 6 new tests (find/set_request_field, record_submitted_job, and the end-to-end timeout-survives case); full local suite green (767 tests, 1 pre-existing skip).
     claimed_by: claude-conductor-burst-20260729T0806Z-t095
     claimed_at: '2026-07-29T08:06:44Z'
     updated: '2026-07-29T08:06:44Z'
