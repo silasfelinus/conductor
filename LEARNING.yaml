@@ -4963,3 +4963,26 @@ records:
     opened -- resolved per the existing hard-rule-9 convention (merge main in,
     take main's copy for the auto-generated files, keep the PR branch's real
     diff) rather than waiting for a human to notice the conflict.
+- date: 2026-07-29
+  project: model-builder
+  task: t-029
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  lesson: 'Manual read-through of an async completion handler found a real, previously-unfixed race: pollAsyncArtJob
+    cleared item.artJobId (the item panel''s only "still working" signal, via isQueued) before its own
+    finalizeQueuedArtImage network round-trip. On a regenerate, this let canApproveAssets briefly evaluate
+    true using the item''s stale prior artImageId, so a premature "Keep this asset" click could lock the
+    stage to ''approved'' moments before the finishing render silently overwrote artImageId/imagePath
+    underneath it -- a fourth instance of this file''s recurring "review gate silently bypassed" bug class
+    (after canApproveAssets'' original isGenerating/isQueued gap, the batch-editor stage-approval gate,
+    and the cancelled-run guard). Fixed with a narrow status===''approved'' check before the image write,
+    plus a new textual regression checker (verifyModelBuilderApprovedAssetGuard.ts) mirroring the existing
+    cancelled-run-guard/completion-gate checkers. Kaizen: this bug class keeps recurring in modelBuilderStore.ts''s
+    async completion paths -- a future cycle should consider whether verifyModelBuilderCompletionGate.ts''s
+    static ungated-write scan can be generalized from item.stages.KEY writes to cover item.artImageId/item.imagePath
+    too, so the next instance is caught automatically instead of needing another manual read-through to
+    find.
+
+    '
