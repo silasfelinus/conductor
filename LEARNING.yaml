@@ -5096,3 +5096,23 @@ records:
     id at submission time, not at completion time, so a timeout or crash mid-wait still leaves a recoverable
     trail. Separately confirmed via a new regression test that the non-zero-exit half of this kaizen was
     already correct; not every suspected two-part gap turns out to have two real parts.'
+- date: 2026-07-29
+  project: coloring-book
+  task: t-022
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'recover_timed_out_job()''s except-block guard in consume_coloring_book_color_art.py
+    only preserved a stuck job''s "job N" reference when the failure text literally contained
+    "ANTHROPIC_API_KEY" -- any other exception during a recovery attempt (missing local
+    dependency, transient network error checking job status) silently destroyed the reference,
+    forcing the next pass into a genuine duplicate ArtJob submission for an already-completed
+    render. Same failure shape as the ai-art-academy/t-010 fauvism incident: "status implies
+    delivered/dead" reasoning is too eager whenever a script decides to discard a recovery
+    pointer. Fixed with a narrow RecoveryAbandoned exception marking only the backend-confirmed-dead
+    cases; every other exception now preserves the reference unconditionally. General lesson:
+    a recovery/reconciliation guard should default to "preserve the pointer," and require an
+    explicit, backend-confirmed signal to discard it -- never infer "safe to discard" from
+    matching one specific known error string.'

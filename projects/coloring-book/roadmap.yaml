@@ -175,7 +175,7 @@ tasks:
 - id: t-022
   milestone: m4
   title: Monster Recast book 1 production pass — 36 final color/BW pairs
-  status: review
+  status: ready
   passes: 0
   stakes: reversible
   updated: '2026-07-29T11:09:31Z'
@@ -845,3 +845,20 @@ tasks:
   note: 'Added --require-no-semantic-gate-error to scripts/coloring_queue_status.py: a new credential_gate_errors/credential_gate_error_count summary field (matching the ANTHROPIC_API_KEY-is-required message, distinct from recoverable timeout / transient enqueue semantic_gate_error entries) plus the CLI guard flag. Verified against the live projects/coloring-book/color-art-jobs.yaml queue: correctly reports credential_gate_error_count 18 and exits non-zero, matching the 18 Monster Recast slots already flagged stuck on the missing ANTHROPIC_API_KEY GitHub Actions secret (see TALKBACK.md 2026-07-28 security-flag entry -- still unresolved, needs Silas to check the repo secret). Two new regression tests added; full suite green (707 passed, 1 pre-existing skip).'
   claimed_by: claude-conductor-scheduled-20260728T1930Z-cb-t036
   claimed_at: '2026-07-28T19:05:56Z'
+
+- id: t-037
+  milestone: m4
+  title: Migrate t-022's accumulated RAN/incident note history into a dedicated run-log doc
+  status: ready
+  passes: 0
+  stakes: reversible
+  owner: null
+  note: >
+    Kaizen from PR #1416 review (2026-07-29): t-022's `note:` field has grown to
+    ~28k characters of accumulated RAN/incident paragraphs across many recurring
+    cycles, the same note-bloat pattern already identified and fixed for
+    ai-art-academy/t-010 (see that project's t-054, filed 2026-07-29): migrate
+    the accumulated history into a new `projects/coloring-book/t-022-run-log.md`
+    (or similar), trim the roadmap note down to the current standing instruction
+    plus a pointer to the log, and add a line to the note telling future cycles
+    to append new RAN entries to the log doc instead of the roadmap note.
