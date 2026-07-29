@@ -43,8 +43,6 @@ def test_retries_5xx_status_code():
 
 
 def test_retries_400_with_transient_body_marker():
-    # kind_robots occasionally wraps a raw DB-driver connection drop in an
-    # HTTP 400 instead of a 5xx — status-code-only retry logic misses this.
     calls = {"n": 0}
 
     def fake_urlopen(req, timeout=15):
@@ -68,9 +66,9 @@ def test_does_not_retry_genuine_400():
         try:
             sp.kr_request("POST", "/projects", "tok", {"title": ""})
             assert False, "expected HTTPError"
-        except urllib.error.HTTPError as e:
-            assert e.code == 400
-            assert b"Validation failed" in e.read()
+        except urllib.error.HTTPError as error:
+            assert error.code == 400
+            assert b"Validation failed" in error.read()
     sleep.assert_not_called()
 
 
@@ -82,8 +80,8 @@ def test_does_not_retry_401():
         try:
             sp.kr_request("GET", "/projects/foo", "tok")
             assert False, "expected HTTPError"
-        except urllib.error.HTTPError as e:
-            assert e.code == 401
+        except urllib.error.HTTPError as error:
+            assert error.code == 401
     sleep.assert_not_called()
 
 
@@ -96,9 +94,108 @@ def test_body_still_readable_after_exhausting_retries():
         try:
             sp.kr_request("GET", "/projects/animation-manager", "tok")
             assert False, "expected HTTPError"
-        except urllib.error.HTTPError as e:
-            assert e.code == 400
-            # Body must be readable more than once — sync_project() reads it
-            # for its ERROR log line after kr_request re-raises.
-            assert b"connection closed" in e.read()
-            assert b"connection closed" in e.read()
+        except urllib.error.HTTPError as error:
+            assert error.code == 400
+            assert b"connection closed" in error.read()
+            assert b"connection closed" in error.read()
+
+
+# ---------------------------------------------------------------------------
+# Project lifecycle synchronization
+# ---------------------------------------------------------------------------
+
+def test_synced_overrides_keeps_every_recognized_lifecycle():
+    overrides = [
+        {"slug": "a", "status": "active"},
+        {"slug": "b", "status": "paused"},
+        {"slug": "c", "status": "finished"},
+        {"slug": "d", "status": "retired"},
+        {"slug": "e", "status": "unknown"},
+        {"status": "active"},
+    ]
+
+    assert [entry["slug"] for entry in sp.synced_overrides(overrides)] == [
+        "a",
+        "b",
+        "c",
+        "d",
+    ]
+
+
+def test_build_project_payload_maps_status_priority_and_active_state():
+    cases = [
+        ("active", "ACTIVE", True),
+        ("paused", "PAUSED", True),
+        ("finished", "DONE", True),
+        ("retired", "ARCHIVED", False),
+    ]
+
+    for conductor_status, expected_status, expected_active in cases:
+        payload = sp.build_project_payload(
+            "sample-project",
+            {
+                "status": conductor_status,
+                "priority": "urgent",
+                "liveUrl": "/sample",
+            },
+            {
+                "project": "Sample Project",
+                "goal": "Ship it.",
+                "notes_from_silas": "Useful project description.",
+            },
+        )
+        assert payload["status"] == expected_status
+        assert payload["priority"] == "HIGH"
+        assert payload["isActive"] is expected_active
+        assert payload["liveUrl"] == "/sample"
+        assert payload["goal"] == "Ship it."
+
+
+def test_project_changed_fields_detects_archival_state():
+    existing = {
+        "status": "ACTIVE",
+        "priority": "NORMAL",
+        "isActive": True,
+    }
+    payload = {
+        "status": "ARCHIVED",
+        "priority": "NORMAL",
+        "isActive": False,
+        "lastSyncedAt": "ignored",
+    }
+
+    assert sp.project_changed_fields(existing, payload) == ["status", "isActive"]
+
+
+def test_main_syncs_all_lifecycle_entries(monkeypatch, capsys):
+    overrides = [
+        {"slug": "active-one", "status": "active"},
+        {"slug": "paused-one", "status": "paused"},
+        {"slug": "done-one", "status": "finished"},
+        {"slug": "retired-one", "status": "retired"},
+        {"slug": "ignored-one", "status": "unknown"},
+    ]
+    synced = []
+
+    monkeypatch.setenv("KR_API_TOKEN", "token")
+    monkeypatch.setattr(sp, "load_overrides", lambda: overrides)
+    monkeypatch.setattr(
+        sp,
+        "sync_project",
+        lambda slug, override, token: synced.append((slug, override["status"], token)) or True,
+    )
+
+    sp.main()
+
+    assert synced == [
+        ("active-one", "active", "token"),
+        ("paused-one", "paused", "token"),
+        ("done-one", "finished", "token"),
+        ("retired-one", "retired", "token"),
+    ]
+    output = capsys.readouterr().out
+    assert "syncing 4 tracked projects" in output
+    assert "active=1" in output
+    assert "paused=1" in output
+    assert "finished=1" in output
+    assert "retired=1" in output
