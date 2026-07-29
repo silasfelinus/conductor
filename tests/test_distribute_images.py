@@ -164,6 +164,71 @@ def test_kind_robots_target_retained_not_pruned(tmp_path, monkeypatch):
     assert "kind-robots-academy-style-preview-test-style" in art_prompts.read_text()
 
 
+def test_kind_robots_target_survives_prune_when_other_files_move(tmp_path, monkeypatch):
+    """Regression for the fauvism incident (ai-art-academy/t-010, 2026-07-29):
+    prune_art_prompts() only runs when distribute() actually moved at least
+    one file this run. The single-file version of this test
+    (test_kind_robots_target_retained_not_pruned) never exercises that branch,
+    so it couldn't catch normalize_art_requests()'s request_is_complete()
+    unconditionally treating any status: done request as prunable regardless
+    of target_repo -- which silently dropped a kind_robots RETAIN entry (and
+    orphaned its still-undelivered file to be misclassified as unmatched on
+    the next run) the moment an unrelated conductor-target file in the same
+    batch actually got moved. This test puts a genuinely-moved conductor
+    request alongside the kind_robots one so prune_art_prompts() actually
+    runs, and asserts the kind_robots record still survives it."""
+    process_dir = tmp_path / "conductor" / "projects" / "process"
+    process_dir.mkdir(parents=True)
+    (process_dir / "test-style.webp").write_bytes(b"fake-image-bytes")
+    (process_dir / "coat-dance-icon.webp").write_bytes(b"fake-icon-bytes")
+
+    art_prompts = tmp_path / "conductor" / "projects" / "art-prompts.yaml"
+    art_prompts.write_text(
+        "images: []\n"
+        "requests:\n"
+        "- id: kind-robots-academy-style-preview-test-style\n"
+        "  source: ai-art-academy-style-preview\n"
+        "  status: done\n"
+        "  target_repo: silasfelinus/kind_robots\n"
+        "  image_path: public/images/academy/styles/test-style.webp\n"
+        "  variant: image\n"
+        "  size: 256x256\n"
+        "  label: 'Academy style preview: Test Style'\n"
+        "  prompt: 'a test style preview prompt'\n"
+        "- id: conductor-coat-dance-icon\n"
+        "  source: kind-robots-missing-image\n"
+        "  status: pending\n"
+        "  target_repo: silasfelinus/conductor\n"
+        "  image_path: projects/images/coat-dance-icon.webp\n"
+        "  variant: icon\n"
+        "  label: coat-dance\n"
+        "  prompt: 'a friendly coat mid-dance, studio lighting'\n"
+    )
+
+    kr = tmp_path / "kind_robots"
+    (kr / "public" / "images").mkdir(parents=True)
+
+    monkeypatch.setattr(di, "REPO_ROOT", tmp_path / "conductor")
+    monkeypatch.setattr(di, "PROCESS_DIR", process_dir)
+    monkeypatch.setattr(di, "UNMATCHED_DIR", process_dir / "unmatched")
+    monkeypatch.setattr(di, "ART_GENERATE_FILE", tmp_path / "conductor" / "projects" / "art-generate.yaml")
+    monkeypatch.setattr(di, "ART_PROMPTS_FILE", art_prompts)
+    monkeypatch.setattr(di, "PROJECT_ART_MANIFEST", tmp_path / "conductor" / "projects" / "images" / "manifest.json")
+    monkeypatch.setattr(di, "KIND_ROBOTS_ROOT", kr)
+    monkeypatch.setattr(di, "DRY_RUN", False)
+
+    di.distribute()
+
+    # The conductor-target file genuinely moved, which is what triggers
+    # prune_art_prompts() to run at all.
+    assert (tmp_path / "conductor" / "projects" / "images" / "coat-dance-icon.webp").exists()
+
+    # The kind_robots RETAIN file and its request record must both survive
+    # that prune pass even though its status was already "done".
+    assert (process_dir / "test-style.webp").exists()
+    assert "kind-robots-academy-style-preview-test-style" in art_prompts.read_text()
+
+
 def test_record_project_art_provenance_writes_manifest(tmp_path, monkeypatch):
     manifest_path = tmp_path / "conductor" / "projects" / "images" / "manifest.json"
     monkeypatch.setattr(di, "REPO_ROOT", tmp_path / "conductor")

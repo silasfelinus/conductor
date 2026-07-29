@@ -205,10 +205,27 @@ def pending_art_prompt_entries(data):
 
 def request_is_complete(request):
     status = str(request.get("status") or "pending").strip().lower()
+    target_repo = str(request.get("target_repo") or request.get("repo") or "").strip()
+
+    if target_repo == "silasfelinus/kind_robots":
+        # kind_robots targets ship via the home relay's direct media path, not
+        # git -- distribute_images.py's RETAIN branch deliberately never adds
+        # these to moved_filenames, keeping the file in projects/process/
+        # until real delivery is confirmed. A bare status: done here only
+        # means generation succeeded, not that delivery has caught up yet, so
+        # treating it as "complete" here prunes the request record (and
+        # strands the retained file to be misclassified as unmatched on the
+        # next run) before delivery actually happens. Only the explicit
+        # moved_filenames check in distribute_images.py's prune_art_prompts()
+        # may retire a kind_robots-target request now -- and that check
+        # already excludes RETAIN files by design, so these persist until a
+        # human/agent confirms delivery and removes the entry by hand. See
+        # ai-art-academy/t-010, 2026-07-29 (fauvism incident).
+        return False
+
     if status == "done":
         return True
 
-    target_repo = str(request.get("target_repo") or request.get("repo") or "").strip()
     image_path = str(request.get("image_path") or "").strip()
 
     if image_path and target_repo in ("", "silasfelinus/conductor"):
