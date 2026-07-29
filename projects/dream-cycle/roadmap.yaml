@@ -551,7 +551,7 @@ tasks:
   - id: t-019
     milestone: m4
     title: 'relay_media_agent.py rejects the legitimate public/rewards/... path, permanently failing daily-dream reward-art jobs'
-    status: review
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -690,3 +690,24 @@ tasks:
       change implied — decide only whether the daily-dream front-end is worth
       rebuilding properly later (Silas's call) or the pipeline should stay
       backend-only (art + PitchSheets, no dedicated page) going forward.
+
+  - id: t-021
+    milestone: m4
+    title: Log configured/missing media roots at relay_media_agent.py startup
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-07-29T12:40:00Z'
+    note: >
+      Kaizen from t-019's close-out (conductor PR #1419). relay_media_agent.py
+      now has two independent, silently-optional media roots (`images` via
+      KR_MEDIA_IMAGES_DIR/KR_LOCAL_IMAGES_DIR, `rewards` via
+      KR_MEDIA_REWARDS_DIR/KR_LOCAL_REWARDS_DIR) — a job only discovers a
+      missing root when it fails, hours after the box was actually
+      misconfigured. Add a one-time log line at process startup (alongside
+      `start_lora_watcher()`'s pattern of logging why a subsystem is
+      enabled/disabled) listing each recognized media kind and whether its
+      root env var is set, so a misconfigured box is visible in the relay's
+      own logs immediately rather than only surfacing as a retried FAILED
+      ArtJob later.

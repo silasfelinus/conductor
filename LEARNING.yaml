@@ -5116,3 +5116,21 @@ records:
     a recovery/reconciliation guard should default to "preserve the pointer," and require an
     explicit, backend-confirmed signal to discard it -- never infer "safe to discard" from
     matching one specific known error string.'
+- date: 2026-07-29
+  project: dream-cycle
+  task: t-019
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'An unrelated-looking PR (#1399) had already landed both a fix and its matching
+    tests for public/rewards/... path handling in relay_media_agent.py, all green -- but
+    the tests locked in the same wrong assumption as the code (folding the reward-asset
+    root into the images root instead of treating it as a real sibling directory), including
+    a test explicitly named to assert away the correct sibling-root design. A passing,
+    internally-consistent test suite is not proof a fix matches reality when the tests were
+    written by the same reasoning that produced the bug -- cross-check against the actual
+    external system (here: the target repo''s real folder layout) before trusting "tests
+    pass" as sufficient verification, especially when correcting or building on another
+    agent''s recent, already-merged work.'
