@@ -1,0 +1,88 @@
+project: taskmaster
+kind: software
+
+goal: >
+  Taskmaster uses stories to finish tasks: it wraps real objectives (conductor
+  HONEYDO/needs-human items, Project selection) in a second-person, choice-driven
+  narrative, keeping the actual objective visible alongside the fiction, with
+  every real write-back an explicit, user-confirmed Apply action.
+
+notes_from_silas: |
+  Retroactive onboarding note (2026-07-29): this project is NOT new work. It is
+  conductor tracking catching up to an already-shipped kind_robots product.
+
+  Taskmaster is the permanent rename of what this repo used to track as the
+  `serendipity` project (see projects/serendipity/roadmap.yaml, now retired --
+  its m1-m5 milestones and t-001..t-011 are the real build history of this
+  product, just under the old name). kind_robots
+  docs/products/storymaker-taskmaster-boundary.md documents the rename as
+  intentional and permanent: "The former task-story product is renamed
+  completely to Taskmaster, leaving the Serendipity name and route free for
+  the voice-led experience." The file-level cutover was kind_robots commit
+  5509ac4 ("Complete permanent Taskmaster cutover and narrative art
+  profiles"): serendipity-page.vue -> taskmaster-page.vue,
+  serendipityStore.ts -> taskmasterStore.ts, /serendipity route/content
+  deleted. /serendipity was separately reclaimed the same morning (commit
+  36a86bf) for the unrelated Alexa voice-led surface, already tracked under
+  conductor's alexa-integration project.
+
+  Product boundary (from the boundary doc, permanent): Taskmaster owns direct
+  objective entry, project and HONEYDO selection, practical checkpoints,
+  narrative framing, blocked/deferred outcomes, explicit progress review, and
+  confirmed write-back. It is a sibling of Storymaker (which creates stories
+  for their own sake) and must not inherit Storymaker's persistent-narrative-state
+  concerns, and Storymaker must not inherit Taskmaster's task/write-back
+  concerns -- separate Pinia stores, separate state machines, on purpose.
+
+  Verified via code inspection (2026-07-29): components/pages/taskmaster-page.vue
+  (724 lines) and stores/taskmasterStore.ts (999 lines) in kind_robots are a
+  mature, complete implementation, not a placeholder scaffold. Canonical
+  placement already exists in kind_robots utils/projectPlacements.ts
+  (`taskmaster: { channelKey: 'play', tabKey: 'taskmaster', route: '/taskmaster' }`)
+  and in the dashboard/tutorial-card systems (stores/helpers/dashboardHelper.ts,
+  stores/helpers/tutorialCards.ts under the 'scenario' section, alongside
+  Storymaker).
+
+milestones:
+  - id: m1
+    title: "Story-weaving engine (inherited from serendipity/m1-m4, done under the old name)"
+    weight: 60
+    status: done
+
+  - id: m2
+    title: "Serendipity -> Taskmaster rename and route cutover"
+    weight: 15
+    status: done
+
+  - id: m3
+    title: "Audit, polish, and dedicated art for the Taskmaster surface"
+    weight: 25
+    status: not-started
+
+tasks:
+  - id: t-001
+    milestone: m3
+    title: "Audit the Taskmaster surface and groom a real task list"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      This is the first task filed under the new project name, and it is deliberately
+      an audit rather than a claim that everything is understood. Read
+      components/pages/taskmaster-page.vue and stores/taskmasterStore.ts in full
+      (999 + 724 lines) plus docs/products/storymaker-taskmaster-boundary.md, then:
+      (1) confirm which of the old serendipity/t-001..t-011 capabilities (theme
+      picker, story weaving loop, HONEYDO/needs-human task weaving, write-back,
+      session recap, AGENT todo badging) are present and working in the renamed
+      Taskmaster surface today vs. dropped/changed during the rename; (2) check
+      whether Taskmaster has a dedicated dashboard-tab/tutorial .webp yet --
+      kind_robots stores/helpers/dashboardHelper.ts currently comments the
+      Taskmaster dashboard tab image as "Shared temporarily until the dedicated
+      Taskmaster art set lands" (still borrowing Storymaker's art as of
+      2026-07-29), which is exactly the same "Polish and upgrade X front-end
+      surface" pattern already tracked for every other scaffolded project in this
+      repo -- file that as its own ready task once confirmed; (3) replace this
+      task's milestone m3 status and file concrete follow-up tasks for whatever
+      gaps are found, rather than continuing to accumulate audit notes on this one
+      task.

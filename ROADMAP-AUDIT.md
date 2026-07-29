@@ -1,14 +1,14 @@
 # Roadmap Audit
 
-Generated: `2026-07-29T15:12:40.536496+00:00`
+Generated: `2026-07-29T15:28:44.300776+00:00`
 
 This is a conservative structural audit. It reports suspicious state; it does not automatically change task status or remove human gates.
 
 ## Portfolio snapshot
 
-- **43** roadmaps, **23** active projects, **755** tasks
-- **30 ready**, **47 waiting**, **28 needs-human**, **3 claimed/review**, **636 done**
-- Findings: **0 errors**, **6 warnings**, **58 informational**
+- **44** roadmaps, **23** active projects, **756** tasks
+- **31 ready**, **47 waiting**, **28 needs-human**, **3 claimed/review**, **636 done**
+- Findings: **0 errors**, **6 warnings**, **59 informational**
 
 ## Project inventory
 
@@ -34,26 +34,27 @@ This is a conservative structural audit. It reports suspicious state; it does no
 | 18 | `animation-studio` | retired | software | 3 | 4 | 0 | 0 | 1 / 8 |
 | 19 | `ecosystem-map` | finished | software | 0 | 0 | 0 | 0 | 8 / 8 |
 | 20 | `conductor` | active | software | 0 | 0 | 3 | 0 | 92 / 95 |
-| 21 | `serendipity` | active | software | 1 | 0 | 0 | 0 | 11 / 12 |
-| 22 | `storymaker` | active | software | 1 | 0 | 0 | 0 | 9 / 10 |
-| 23 | `davinci` | finished | software | 0 | 0 | 0 | 0 | 15 / 15 |
-| 24 | `art-generator-connect` | finished | software | 0 | 0 | 0 | 0 | 22 / 22 |
-| 25 | `mural-design` | active | content | 1 | 3 | 0 | 0 | 3 / 7 |
-| 26 | `coat-dance` | active | content | 1 | 0 | 1 | 0 | 1 / 10 |
-| 27 | `career-transition` | retired | content | 0 | 4 | 3 | 0 | 1 / 8 |
-| 28 | `alexa-integration` | active | software | 1 | 0 | 1 | 0 | 16 / 18 |
-| 29 | `conductor-app` | active | software | 2 | 0 | 0 | 0 | 12 / 14 |
-| 30 | `appmaker` | active | software | 2 | 0 | 0 | 0 | 10 / 12 |
-| 31 | `media-watchlist` | active | software | 1 | 0 | 0 | 0 | 15 / 16 |
-| 32 | `sketchy` | finished | software | 0 | 0 | 0 | 0 | 8 / 8 |
-| 33 | `pinball-hero` | retired | content | 0 | 2 | 2 | 0 | 2 / 6 |
-| 34 | `recipe-box` | retired | software | 0 | 2 | 1 | 0 | 0 / 3 |
-| 35 | `brainstorm` | active | proposal | 1 | 0 | 0 | 0 | 0 / 1 |
-| 36 | `wishmaster` | active | software | 1 | 0 | 0 | 0 | 2 / 3 |
-| 37 | `engagement` | finished | software | 0 | 0 | 0 | 0 | 3 / 3 |
-| 38 | `ruler-hooked` | active | software | 1 | 0 | 0 | 0 | 11 / 12 |
-| 39 | `music-mentor` | active | software | 1 | 0 | 0 | 0 | 8 / 9 |
-| 40 | `dream-cycle` | active | software | 3 | 0 | 0 | 0 | 17 / 21 |
+| 21 | `serendipity` | retired | software | 1 | 0 | 0 | 0 | 11 / 12 |
+| 22 | `taskmaster` | active | software | 1 | 0 | 0 | 0 | 0 / 1 |
+| 23 | `storymaker` | active | software | 1 | 0 | 0 | 0 | 9 / 10 |
+| 24 | `davinci` | finished | software | 0 | 0 | 0 | 0 | 15 / 15 |
+| 25 | `art-generator-connect` | finished | software | 0 | 0 | 0 | 0 | 22 / 22 |
+| 26 | `mural-design` | active | content | 1 | 3 | 0 | 0 | 3 / 7 |
+| 27 | `coat-dance` | active | content | 1 | 0 | 1 | 0 | 1 / 10 |
+| 28 | `career-transition` | retired | content | 0 | 4 | 3 | 0 | 1 / 8 |
+| 29 | `alexa-integration` | active | software | 1 | 0 | 1 | 0 | 16 / 18 |
+| 30 | `conductor-app` | active | software | 2 | 0 | 0 | 0 | 12 / 14 |
+| 31 | `appmaker` | active | software | 2 | 0 | 0 | 0 | 10 / 12 |
+| 32 | `media-watchlist` | active | software | 1 | 0 | 0 | 0 | 15 / 16 |
+| 33 | `sketchy` | finished | software | 0 | 0 | 0 | 0 | 8 / 8 |
+| 34 | `pinball-hero` | retired | content | 0 | 2 | 2 | 0 | 2 / 6 |
+| 35 | `recipe-box` | retired | software | 0 | 2 | 1 | 0 | 0 / 3 |
+| 36 | `brainstorm` | active | proposal | 1 | 0 | 0 | 0 | 0 / 1 |
+| 37 | `wishmaster` | active | software | 1 | 0 | 0 | 0 | 2 / 3 |
+| 38 | `engagement` | finished | software | 0 | 0 | 0 | 0 | 3 / 3 |
+| 39 | `ruler-hooked` | active | software | 1 | 0 | 0 | 0 | 11 / 12 |
+| 40 | `music-mentor` | active | software | 1 | 0 | 0 | 0 | 8 / 9 |
+| 41 | `dream-cycle` | active | software | 3 | 0 | 0 | 0 | 17 / 21 |
 | — | `approval-portal` | retired | software | 0 | 0 | 0 | 0 | 3 / 5 |
 | — | `humboldt-impropriety-calendar` | retired | brainstorm | 0 | 5 | 0 | 0 | 0 / 6 |
 | — | `lora-ingestion` | missing | infrastructure | 0 | 0 | 1 | 3 | 2 / 6 |
@@ -73,7 +74,7 @@ _None._
 - **ACTIVE_PROJECT_ALL_DONE** — `newsfeed`: All tasks are done but project override remains active.
 - **ACTIVE_PROJECT_NO_OPEN_TASKS** — `newsfeed`: Active project has no open tasks; mark finished/paused or add an intentional recurring task.
 
-### Info (58)
+### Info (59)
 
 - **APPROVAL_WITHOUT_GATE** — `ai-art-academy` / `t-002`: approved_by_human is set on a task that is not human-gated.
 - **APPROVAL_WITHOUT_GATE** — `ai-art-academy` / `t-011`: approved_by_human is set on a task that is not human-gated.
@@ -125,6 +126,7 @@ _None._
 - **MISSING_GOAL** — `pinball-hero`: Roadmap has no friendly goal/definition of done.
 - **MISSING_GOAL** — `recipe-box`: Roadmap has no friendly goal/definition of done.
 - **APPROVAL_WITHOUT_GATE** — `ruler-hooked` / `t-002`: approved_by_human is set on a task that is not human-gated.
+- **INACTIVE_PROJECT_HAS_READY_TASKS** — `serendipity`: Inactive project retains 1 ready task(s); harmless but misleading in generated status.
 - **MISSING_GOAL** — `serendipity`: Roadmap has no friendly goal/definition of done.
 - **MISSING_GOAL** — `sketchy`: Roadmap has no friendly goal/definition of done.
 - **MISSING_GOAL** — `storymaker`: Roadmap has no friendly goal/definition of done.
