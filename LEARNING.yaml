@@ -5151,3 +5151,17 @@ records:
     consumer of the old string shape, not just the producer -- an audit task that reads
     the producer in isolation would have reported this capability as "present and
     working" when it was actually broken for every row created after the rename.'
+- date: '2026-07-29'
+  project: taskmaster
+  task: t-002
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'kind_robots PR #1157 merged clean on first pass, all 11 checks green including
+    the project-specific "Taskmaster checkpoint contract" -- confirming in advance that
+    the contract verifiers only assert against stores/taskmasterStore.ts and
+    components/pages/taskmaster-page.vue content (not stores/todoStore.ts, the actual
+    file touched) avoided a wasted CI round trip on a fix that was never going to
+    trip those specific checks.'

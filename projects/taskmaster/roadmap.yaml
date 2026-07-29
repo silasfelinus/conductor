@@ -102,8 +102,8 @@ tasks:
   - id: t-002
     milestone: m3
     title: "Fix Taskmaster AGENT-todo badging broken by the Serendipity rename"
-    status: review
-    owner: worker
+    status: done
+    owner: null
     passes: 0
     stakes: reversible
     note: >
@@ -113,7 +113,8 @@ tasks:
       was silently miscategorized (see t-001's note for the full diagnosis). Fixed
       by widening the matcher to recognize both the pre- and post-rename shapes
       (backward compatible with any already-created rows). kind_robots PR #1157,
-      awaiting CI/review. Flip to done once merged.
+      merged (squash 0102dddb5822912468e178a98f5ed671dc44d694), all 11 checks green
+      including the Taskmaster checkpoint contract.
     claimed_by: claude-conductor-scheduled-20260729T170000Z-tm-t001
     claimed_at: '2026-07-29T17:04:44Z'
     updated: '2026-07-29T17:04:44Z'
