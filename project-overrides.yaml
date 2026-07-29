@@ -328,20 +328,41 @@ overrides:
     kind: software
 
   - slug: serendipity
-    status: active
+    status: retired # retired 2026-07-29 (conductor burst-mode cycle) -- this project's
+    # actual kind_robots product (the story-weaving task engine described by this
+    # project's own roadmap.yaml m1-m5) was permanently renamed to Taskmaster
+    # (kind_robots docs/products/storymaker-taskmaster-boundary.md: "The former
+    # task-story product is renamed completely to Taskmaster, leaving the Serendipity
+    # name and route free for the voice-led experience"; commit 5509ac4 "Complete
+    # permanent Taskmaster cutover" did the file-level rename, serendipity-page.vue ->
+    # taskmaster-page.vue, serendipityStore.ts -> taskmasterStore.ts). The freed
+    # /serendipity route and name were then reclaimed this same morning (kind_robots
+    # commit 36a86bf, "refactor: make Serendipity the canonical voice route") for the
+    # Alexa voice-led surface previously at /serendipity-voice -- which is a different
+    # product, already correctly tracked end-to-end under conductor's own
+    # alexa-integration project (see its notes_from_silas: "Build the Alexa work as the
+    # Serendipity voice surface..."). See the new `taskmaster` entry below for the
+    # renamed narrative product's tracking. roadmap.yaml kept as historical record, not
+    # deleted, same convention as animation-studio's retirement.
+    priority: low
+    kind: software
+
+  - slug: taskmaster
+    status: active # onboarded 2026-07-29 (conductor burst-mode cycle) -- retroactive
+    # tracking for an already-shipped kind_robots product: the story-weaving task
+    # engine formerly tracked here as `serendipity` (see that entry's retirement note
+    # above), permanently renamed per kind_robots docs/products/storymaker-taskmaster-boundary.md.
+    # Verified via code inspection: components/pages/taskmaster-page.vue (724 lines)
+    # and stores/taskmasterStore.ts (999 lines) are a mature, complete implementation,
+    # not a scaffold.
     priority: normal
     kind: software
-    # Frontend placement — synced to the kind_robots Project row by
-    # sync_projects.py, same mechanism as art-generator-connect. Values match the
-    # canonical PROJECT_PLACEMENTS entry for 'serendipity' in kind_robots
-    # utils/projectPlacements.ts (channelKey: 'play', tabKey: 'serendipity',
-    # route: '/serendipity') — NOT tutorialChannels.scenario, which is a
-    # different, unrelated grouping used only by the tutorial-card system
-    # (conductor/serendipity t-012; corrected same session after initially
-    # writing channelKey: scenario by mistake).
-    liveUrl: /serendipity
+    # Frontend placement — synced to the kind_robots Project row by sync_projects.py.
+    # Values match the canonical PROJECT_PLACEMENTS['taskmaster'] entry in kind_robots
+    # utils/projectPlacements.ts (channelKey: 'play', tabKey: 'taskmaster', route: '/taskmaster').
+    liveUrl: /taskmaster
     channelKey: play
-    tabKey: serendipity
+    tabKey: taskmaster
 
   - slug: appmaker
     status: active
