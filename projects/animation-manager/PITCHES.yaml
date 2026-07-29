@@ -294,7 +294,7 @@ pitches:
 
   - id: celestial-mobile
     title: Celestial Mobile
-    status: pitched
+    status: candidate
     priority: 11
     surprise: A hanging mobile of moons, robots, keys, and tiny planets physically balances itself as pieces drift into new configurations.
     passive_loop: Arms rotate with believable inertia while weights slowly migrate and rebalance the sculpture.
@@ -306,6 +306,19 @@ pitches:
     acceptance:
       - motion reads as connected mechanics
       - system returns to stable balance after perturbation
+    builds:
+      - version: 1
+        status: candidate
+        component: components/screenfx/celestial-mobile.vue
+        pull_request: silasfelinus/kind_robots#1130
+        commit: b21309273c84c2b497a392dd9f44a2d9f6db636e
+        verification:
+          - eslint
+          - prettier
+          - vue-tsc (full project)
+          - test:animation-catalog
+          - test:animation-component-attempts
+          - check_animation_novelty.py --strict
 
   - id: tiny-weather-front
     title: Tiny Weather Front
