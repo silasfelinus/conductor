@@ -530,3 +530,27 @@ tasks:
     updated: '2026-07-28T13:11:42Z'
     claimed_by: 2026-07-28T12-25-00Z-am-t016-placeholder-icon
     claimed_at: '2026-07-28T12:27:06Z'
+
+  - id: t-017
+    milestone: m6
+    title: "Document the sandbox pytest/pyyaml gap so future sessions don't rediscover it"
+    status: ready
+    passes: 0
+    stakes: reversible
+    owner: null
+    claimed_by: null
+    claimed_at: null
+    updated: '2026-07-29T19:30:00Z'
+    note: >
+      Kaizen from t-006 (Reviewer, conductor PR #1449, 2026-07-29): the session's
+      isolated `pytest` tool (installed via `uv tool install`) had no `yaml`
+      dependency, so `pytest` failed to collect any test touching PyYAML-based
+      scripts (consume_animation_pitches, check_animation_novelty) even though the
+      system `python3` interpreter the scripts themselves use has yaml installed
+      fine. Fixed locally that cycle via `uv tool install pytest --with pyyaml
+      --force`, but nothing records this for the next session that hits the same
+      unexplained `ModuleNotFoundError: yaml` under plain `pytest` (distinct from
+      `python3 -m pytest`'s own separate "no pytest module" failure). Add a short
+      note to AGENTS.md's cross-repo/tooling section (or a scripts/README) so
+      future sessions recognize the symptom and apply the fix immediately instead
+      of re-deriving it.
