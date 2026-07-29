@@ -115,3 +115,6 @@ queueDepth: DONE=2061, FAILED=7, CANCELLED=774 (all-time). oldestPending: none. 
 
 ## 2026-07-29T16:08:45Z | healthy
 queueDepth: RUNNING=1, DONE=2062, FAILED=7, CANCELLED=774 (all-time). oldestPending: none. windowThroughput (24h): RUNNING=1, DONE=68, FAILED=1. recentFailed (last 7): 5/7 = ComfyUI POST /prompt failed at http://127.0.0.1:8188 (ComfyUI /prompt returned HTTP 400 at http://127.0.0.1:8188: {'61':; 2/7 = ComfyUI POST /prompt failed at http://127.0.0.1:8188 (ComfyUI /prompt returned HTTP 400 at http://127.0.0.1:8188: {'318'.
+
+## 2026-07-29T21:04:48Z | draining
+queueDepth: PENDING=6, RUNNING=1, DONE=2073, CANCELLED=774 (all-time). oldestPending: id=2621, age=226356s (~62.9h), engine=COMFY. windowThroughput (24h): PENDING=1, DONE=61. recentFailed: none.
