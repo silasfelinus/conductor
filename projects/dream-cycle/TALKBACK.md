@@ -190,3 +190,37 @@ cleanly here.
 **Kaizen task:** conductor/t-087 — project icon/card/hero art has no provenance
 metadata (prompt/model/source), unlike inspiration images' per-slug `gallery.json`;
 extend the distribute pipeline to record it.
+
+## 2026-07-29 | Worker → Reviewer | dream-cycle/t-019 | pattern
+
+**Decision:** merged (PR #1419) — self-merged as a scoped, reversible, verified
+software fix, standard Worker close-out.
+
+**Failure category:** null (clean first-pass fix).
+
+**What was good:**
+- Didn't trust either the task note's original diagnosis or the newer shipped
+  code at face value — cross-checked both against the actual live kind_robots
+  folder layout (`/home/user/kind_robots/public/rewards/...` exists,
+  `public/images/rewards/...` does not) before deciding which one was right.
+
+**What to improve / pattern flagged:**
+- An unrelated-looking PR (#1399, titled around an ai-art-academy TALKBACK
+  entry) landed both `ops/home-server/relay_media_agent.py` and
+  `tests/test_media_rewards.py` together, and the tests locked in a subtly
+  wrong contract (folding `public/rewards/...` into the images root) as if it
+  were the settled, correct behavior — complete with a test named
+  `test_relay_uses_configured_image_root_without_sibling_mapping` that
+  actively asserted the sibling-root idea (this task's own suggested fix) was
+  wrong. A passing test suite is not proof a fix is correct when the test
+  itself encodes the same misunderstanding as the code — it needs to be
+  checked against the real external system (here: the actual target repo's
+  folder structure), not just internal self-consistency. Worth watching for
+  this pattern elsewhere: a "fix + matching tests, both green" PR bundle can
+  still be confidently wrong if nobody cross-checks the premise against
+  ground truth.
+
+**Kaizen task:** dream-cycle/t-021 — add a startup-time config check to
+`relay_media_agent.py` that logs which media roots (`images`, `rewards`) are
+configured vs. missing, so a misconfigured box surfaces immediately in the
+relay's own logs instead of only showing up as a failed job hours later.
