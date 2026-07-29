@@ -120,6 +120,43 @@ module.exports = {
       out_file: `${LOG_DIR}/kr-relay.out.log`,
       error_file: `${LOG_DIR}/kr-relay.err.log`,
       merge_logs: true
+    },
+
+    // kr-download — pull-based model download agent. The companion to kr-relay:
+    // it claims queued LoRA/checkpoint downloads (from the Discover browser) via
+    // /api/lora/download/claim, fetches the file onto the engine's model dir
+    // (loras vs Stable-diffusion, chosen by the row's resourceType), catalogs it
+    // as a Resource, and reports the outcome. Reuses relay_agent's token + HTTP.
+    //
+    // Reuses KR_RELAY_TOKEN (already set for kr-relay). Optionally, for gated
+    // Civitai downloads, set a Civitai API token:
+    //   setx KR_CIVITAI_TOKEN "your-civitai-token"
+    // Override the model dirs only if the engine loads from non-default paths.
+    // Open a NEW shell after setx, then:
+    //   pm2 start ecosystem.config.js --only kr-download
+    //   pm2 save
+    // NEVER paste the real token into this file — it is committed to git.
+    {
+      name: 'kr-download',
+      cwd: __dirname,
+      script: 'C:/Python312/python.exe',
+      args: 'relay_download_agent.py',
+      interpreter: 'none',
+      windowsHide: true,
+      autorestart: true,
+      restart_delay: 10000,
+      env: {
+        KR_RELAY_TOKEN: process.env.KR_RELAY_TOKEN || '',
+        KR_BASE_URL: 'https://kind-robots.vercel.app',
+        KR_LORA_DIR: process.env.KR_LORA_DIR || 'Z:/ai/models/Lora',
+        KR_CHECKPOINT_DIR:
+          process.env.KR_CHECKPOINT_DIR || 'Z:/ai/models/Stable-diffusion',
+        KR_DOWNLOAD_POLL_SECONDS: process.env.KR_DOWNLOAD_POLL_SECONDS || '30',
+        KR_CIVITAI_TOKEN: process.env.KR_CIVITAI_TOKEN || ''
+      },
+      out_file: `${LOG_DIR}/kr-download.out.log`,
+      error_file: `${LOG_DIR}/kr-download.err.log`,
+      merge_logs: true
     }
   ]
 }
