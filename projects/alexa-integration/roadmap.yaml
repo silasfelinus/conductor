@@ -302,9 +302,9 @@ tasks:
 - id: t-015
   milestone: m4
   title: Polish and upgrade Voice Lab front-end surface
-  status: review
-  owner: worker
-  updated: '2026-07-29T01:14:41Z'
+  status: ready
+  owner: null
+  updated: '2026-07-29T01:30:12Z'
   passes: 0
   stakes: reversible
   note: 'UI polish + upgrade for the alexa-integration front end now that the scaffold page is live at
@@ -327,7 +327,23 @@ tasks:
     several other projects'' cycles today); step (3) -- liveUrl/channelKey/tabKey backfill needs an admin
     Placements click, not independently verifiable from this session. Verified before merge: eslint clean,
     prettier clean, full-project npm run test (vue-tsc --noEmit) exit 0. All 3 kind_robots PR checks green
-    (TypeScript, Contract verifiers, GitGuardian).'
+    (TypeScript, Contract verifiers, GitGuardian).
+
+    PROGRESS 2026-07-29 (conductor burst-mode cycle, claude-conductor-burst-20260729T010702-alexa-t015):
+    step (4) follow-on -- dispatched an Explore subagent to re-read the interactive experience in full
+    (voice-lab-page.vue + serendipityVoiceStore.ts). Found a real, previously-unfixed re-entrancy race:
+    pollOnce() had no guard against overlap between the setInterval-driven poll and the poll triggered
+    from sendVoiceText() (the "Try it" button). Two concurrent pollOnce() calls read the same
+    commandCursor/messageCursor, both receive the same command/message batch, and both apply it -- a
+    toggle animation command applied twice silently self-cancels (effect flickers on then off), and
+    duplicate message objects get pushed into the feed with colliding :key values. Fixed with a
+    pollInFlight guard in pollOnce() and a sending state around sendVoiceText() that disables the
+    voice-lab "Try it" input/button while a request is in flight. Verified: eslint clean, prettier
+    clean, full-project npm run test (vue-tsc --noEmit) exit 0. kind_robots PR #1127 -- all 12 CI
+    checks green (TypeScript, Contract verifiers, verify, facet-catalog, GitGuardian, and the narrative
+    contract suite) -- MERGED. Steps (1) and (3) remain genuinely blocked as documented above; not
+    touched this cycle. Rearmed to `ready` -- those two steps are still outstanding, same pattern as
+    other "Polish and upgrade X" tasks with a genuinely blocked substep.'
   claimed_by: claude-conductor-burst-20260729T010702-alexa-t015
   claimed_at: '2026-07-29T01:07:03Z'
 - id: t-016
