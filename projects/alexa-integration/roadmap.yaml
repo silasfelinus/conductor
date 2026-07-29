@@ -302,9 +302,9 @@ tasks:
 - id: t-015
   milestone: m4
   title: Polish and upgrade Voice Lab front-end surface
-  status: ready
-  owner: null
-  updated: '2026-07-20T11:30:00Z'
+  status: claimed
+  owner: worker
+  updated: '2026-07-29T01:07:03Z'
   passes: 0
   stakes: reversible
   note: 'UI polish + upgrade for the alexa-integration front end now that the scaffold page is live at
@@ -328,6 +328,8 @@ tasks:
     Placements click, not independently verifiable from this session. Verified before merge: eslint clean,
     prettier clean, full-project npm run test (vue-tsc --noEmit) exit 0. All 3 kind_robots PR checks green
     (TypeScript, Contract verifiers, GitGuardian).'
+  claimed_by: claude-conductor-burst-20260729T010702-alexa-t015
+  claimed_at: '2026-07-29T01:07:03Z'
 - id: t-016
   milestone: m4
   title: Fix control-adapter theme-domain over-claiming any utterance containing the word "theme"
