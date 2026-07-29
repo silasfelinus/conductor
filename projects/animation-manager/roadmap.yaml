@@ -188,7 +188,7 @@ tasks:
   - id: t-006
     milestone: m5
     title: "Research and pitch one genuinely new passive animation"
-    status: ready
+    status: claimed
     owner: worker
     passes: 0
     stakes: reversible
@@ -211,9 +211,9 @@ tasks:
       RAN 2026-07-27 (~19:20 UTC, conductor burst-mode rotation, claude-conductor-burst-20260727T1920Z-am-t006): new Pacific calendar day (last actual pitch addition was 2026-07-25's kintsugi-weather; the 2026-07-27T10:14 UTC session only consolidated that backlog and explicitly deferred its own pitch slot) and the buildable (status: pitched) queue was at 9 (not above twelve), so neither no-op condition applied. Added `tapestry-loom` (a hand loom weaving a deterministic motif row-by-row via a moving shuttle, then fully unraveling top-down onto a bobbin before rewatching a new palette/motif), checked against all 17 existing pitches. Distinct from clockwork-greenhouse (organic growth state machine, no weaving), marble-run-contraption (fixed physical track, no fabric or full-reset lifecycle), and kintsugi-weather (repairs existing damage rather than progressively constructing and fully unraveling a pattern) -- no existing pitch or shipped effect uses a textile/loom motif. Queued as a dated artifact (`projects/animation-manager/pitches/2026-07-27T19-20-00Z-tapestry-loom.yaml`) and drained it with `scripts/consume_animation_pitches.py --live` rather than hand-editing PITCHES.yaml's folded-scalar formatting -- assigned priority 18, `check_animation_novelty.py --strict` reported no collisions at or above the 0.2 threshold across all 18 pitches, and the artifact was deleted on consolidation. Brings the buildable queue to 10. No kind_robots code touched (pitch-only) -- re-arming to ready per the recurring-task convention.
       RAN 2026-07-28 (~21:09 UTC, conductor agent run): new Pacific calendar day (last run was 2026-07-27T19:20 UTC / 2026-07-27T12:20 -07:00) and the buildable queue was at 8 (below twelve), so neither no-op condition applied. Added `hourglass-cascade` (a glass hourglass with grains streaming through the neck and piling into a self-leveling cone via a folded height-map with occasional angle-of-repose slumps, then flipping a half-turn to reverse once the source bulb empties), checked against all 18 existing pitches. Distinct from magnetic-sand-garden (continuous flow-field combing of a static, never-emptied sand bed), ant-farm-excavation (agent-driven tunnel digging, not gravity-fed accumulation), marble-run-contraption (discrete objects on a fixed track, no pile state), and tapestry-loom (additive-then-unraveled weaving, not gravity accumulation with a flip) -- no existing pitch uses falling-grain accumulation or a physical flip-to-reverse mechanic. Queued as a dated artifact (`projects/animation-manager/pitches/2026-07-28T21-09-38Z-hourglass-cascade.yaml`) and drained it with `scripts/consume_animation_pitches.py --live` -- assigned priority 19, `check_animation_novelty.py --strict` reported no collisions at or above the 0.2 threshold across all 19 pitches, and the artifact was deleted on consolidation. Brings the buildable queue to 9. No kind_robots code touched (pitch-only) -- re-arming to ready per the recurring-task convention.
       NO-OP 2026-07-28 (~23:12 UTC, conductor scheduled Agent run): same Pacific calendar day as the 21:09 UTC run above, which already added today's one pitch (hourglass-cascade). Per this task's own daily cap ("Produce at most one new pitch per Pacific calendar day and no-op/re-arm if one already exists for the day"), skipped adding a second pitch to avoid the exact daily-cap collision the root TALKBACK.md 2026-07-28 "four-way rotation collision" entry already flagged as a live risk today. No files changed. Re-arming to ready per the recurring-task convention.
-    claimed_by: null
-    claimed_at: null
-    updated: '2026-07-28T23:12:04Z'
+    claimed_by: claude-conductor-scheduled-20260729T190600Z-am-t006
+    claimed_at: '2026-07-29T19:06:01Z'
+    updated: '2026-07-29T19:06:01Z'
 
   - id: t-007
     milestone: m5
