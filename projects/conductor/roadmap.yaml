@@ -2860,6 +2860,23 @@ tasks:
       What unblocks: once resolved, "Python test suite" goes green again on `main` and on every
       open/future PR that rebases past this point. No task currently depends on this via
       `depends_on`.
+
+      UPDATE 2026-07-29 (conductor scheduled cycle, session
+      claude-conductor-scheduled-20260729T080443-aa-t010-lane1-polish): re-checked this on
+      current `main` (commit `095951c`) while working an unrelated task. The record at
+      `date: 2026-07-28, project: ai-art-academy, task: t-044` already reads
+      `failure_category: actionable` -- exactly option (a) above -- not `verification-access`.
+      `python3 -m pytest tests/test_backfill_learning.py -v` passes all 15 tests, including
+      `test_committed_ledger_schema_conformance`. `git log -S"verification-access" --
+      LEARNING.yaml` finds no matching commit in current history, and `git log -L` on the
+      record's lines traces back to a fresh append already carrying `actionable` -- so
+      whatever landed the corrected value did so before/without a standalone commit message
+      calling it out (possibly folded into a rebase/squash, or fixed directly by Silas outside
+      a session this repo's git history captures). Leaving `status: needs-human` rather than
+      flipping to `done` myself, since `gate_human: true` reserves that action for Silas per
+      AGENTS.md -- but there is nothing left to approve or decide; this is now just waiting on
+      confirmation. TO APPROVE: if this matches your recollection (or you're fine trusting the
+      test result), set `status: done`. Nothing else depends on this.
     claimed_by: null
     claimed_at: null
 
