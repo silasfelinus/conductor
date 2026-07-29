@@ -1,5 +1,26 @@
 records:
 - date: 2026-07-29
+  project: animation-manager
+  task: t-006
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    Routine daily-pitch cycle (geode-bloom, priority 20) using the established
+    dated-artifact + consume_animation_pitches.py --live flow, no incident. One
+    real gap found and fixed along the way: this sandbox's isolated pytest tool
+    (installed via `uv tool install`) had no `yaml` dependency, so `pytest` failed
+    to collect any test touching PyYAML-based scripts (consume_animation_pitches,
+    check_animation_novelty) even though the system `python3` interpreter used by
+    the scripts themselves has yaml installed fine -- `uv tool install pytest
+    --with pyyaml --force` fixed it for this session. Worth a standing note for
+    future burst-mode sessions that hit an unexplained `ModuleNotFoundError: yaml`
+    under `pytest` specifically (not under `python3 -m pytest`, which has its own
+    separate "no pytest module" failure): the two interpreters are not the same
+    environment.
+- date: 2026-07-29
   project: conductor
   task: t-095
   kind: software
