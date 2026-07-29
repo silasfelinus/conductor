@@ -1,4 +1,21 @@
 records:
+- date: 2026-07-29
+  project: conductor
+  task: t-093
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    close_task.py had no special-casing for recurring: true tasks, so it silently
+    accepted status=done and permanently removed the task from ready-task rotation
+    (hit for real by model-builder/t-029 via conductor PR #1388, hand-corrected on
+    main). Fixed by refusing done on a recurring task unless --force is passed,
+    directing the caller to ready instead -- the same "fail closed on a dangerous
+    default" shape as the coloring-book credential preflight (PR #1357). A close-out
+    tool for a recurring-task system should always validate against the recurring
+    flag before accepting a terminal status.
 - date: 2026-07-16
   project: kind-robots
   task: t-027
