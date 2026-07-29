@@ -551,7 +551,7 @@ tasks:
   - id: t-019
     milestone: m4
     title: 'relay_media_agent.py rejects the legitimate public/rewards/... path, permanently failing daily-dream reward-art jobs'
-    status: claimed
+    status: review
     owner: worker
     passes: 0
     stakes: reversible
@@ -609,6 +609,55 @@ tasks:
       check generally). Needs Silas's read on his box's actual folder layout
       before landing, since a wrong guess fails silently (job succeeds, file
       lands in the wrong place) rather than loudly.
+
+      FIXED 2026-07-29 (conductor burst-mode cycle,
+      claude-conductor-burst-20260729T121718Z-dc-t019): landed the second-root
+      fix this note called for, and found the situation had actually gotten
+      worse since filing — a since-merged, unrelated PR (#1399, 2026-07-28) had
+      added `ops/home-server/relay_media_agent.py`'s `normalize_kindrobots_image_path()`
+      with a `public/rewards/...` → `public/images/rewards/...` rewrite, plus a
+      matching `tests/test_media_rewards.py` that locked that behavior in as
+      correct (test named `test_relay_uses_configured_image_root_without_sibling_mapping`).
+      That "fix" silenced the `ValueError` but is still wrong: it writes reward
+      art physically under the images root instead of the real sibling
+      `public/rewards/` directory, so the job now reports success while the art
+      lands somewhere the app never reads from — a silent-wrong-location failure,
+      strictly worse than the original loud rejection this task documented.
+      Re-confirmed against the live `/home/user/kind_robots` checkout before
+      touching anything: `public/rewards/favor/playground-guy.webp` and 9 other
+      real files exist there; `public/images/rewards/` does not exist at all.
+      Implemented the actual fix: added `KR_MEDIA_REWARDS_DIR`/`KR_LOCAL_REWARDS_DIR`
+      as a second, independent root (mirroring the existing images env-var
+      pattern); `normalize_kindrobots_image_path()` now canonicalizes
+      `rewards/...`/`public/rewards/...` to `public/rewards/...` (not folded into
+      images); `direct_media_target()` accepts either `public/images/...` or
+      `public/rewards/...` and returns the matching kind; `media_root(kind)` is
+      parametrized and raises a clear `RuntimeError` naming the missing env var
+      per kind instead of guessing a path. This does not require knowing Silas's
+      box layout in advance — it needs no guess at all, since a reward job now
+      fails loudly and stays retryable until `KR_MEDIA_REWARDS_DIR` is set on the
+      home-server box, instead of silently succeeding into the wrong folder.
+      Corrected `tests/test_media_rewards.py`'s now-provably-wrong assertions
+      (renamed the misleading "without_sibling_mapping" test) and added coverage
+      for: the true sibling-root canonicalization/write path, the distinct
+      literal-`public/images/rewards/...` case staying under the images root
+      unchanged, and the loud-failure-when-unconfigured behavior. Verified via
+      `pytest tests/test_media_rewards.py tests/test_media_direct.py
+      tests/test_relay_completion_provenance.py` (43 passed) and
+      `python3 -m py_compile` on both changed files. No kind_robots-repo changes
+      needed — this is entirely a conductor-side relay fix; Silas still needs to
+      set `KR_MEDIA_REWARDS_DIR` on the home-server box for reward jobs to
+      actually complete, but the code itself is correct and complete. Kept
+      `stakes: reversible` (pure config/validation change, no destructive path).
+
+      FOR SILAS: on the home-server relay box, set `KR_MEDIA_REWARDS_DIR` (or
+      `KR_LOCAL_REWARDS_DIR`) to the local folder that backs kind_robots'
+      `public/rewards/` directory — the same way `KR_MEDIA_IMAGES_DIR` already
+      points at the folder backing `public/images/`. It's a sibling folder, not
+      a subfolder of the images one. Until it's set, reward-art jobs fail
+      loudly and retry instead of silently writing to the wrong place (the
+      prior, worse behavior) — no urgency, just needed once for reward jobs to
+      actually land.
     claimed_by: claude-conductor-burst-20260729T121718Z-dc-t019
     claimed_at: '2026-07-29T12:17:19Z'
 
