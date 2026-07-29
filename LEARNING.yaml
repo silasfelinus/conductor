@@ -5134,3 +5134,19 @@ records:
     external system (here: the target repo''s real folder layout) before trusting "tests
     pass" as sufficient verification, especially when correcting or building on another
     agent''s recent, already-merged work.'
+- date: 2026-07-29
+  project: coloring-book
+  task: t-037
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'A recurring production task''s roadmap note can grow unbounded (t-022 hit
+    ~28k characters across many cycles) faster than any one session notices, because
+    each cycle only reads the note it is about to append to, not its cumulative size.
+    Mirrors the identical pattern already fixed for ai-art-academy/t-010 (t-054): a
+    recurring task''s standing instructions should explicitly say "history lives in
+    <run_log file>, do not accumulate RAN entries in this note" from the start, and a
+    project-level lint (or periodic roadmap-accuracy pass) should flag any note above a
+    size threshold before it needs a dedicated cleanup task to fix.'
