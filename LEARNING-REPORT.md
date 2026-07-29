@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-07-29T22:54:51Z
+Generated: 2026-07-29T23:19:32Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **431**
-- Outcomes: blocked: 13, cancelled: 1, done: 417
+- Closed tasks recorded: **432**
+- Outcomes: blocked: 13, cancelled: 1, done: 418
 - Success rate: **97%**
 - Average passes on successful tasks: **0.0**
 
@@ -39,7 +39,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | kindrobots-unraid | 4 | 100% |
 | media-watchlist | 10 | 100% |
 | mermaids-of-venice | 3 | 100% |
-| model-builder | 42 | 100% |
+| model-builder | 43 | 100% |
 | mona-salai | 1 | 100% |
 | mural-design | 1 | 100% |
 | music-mentor | 1 | 100% |
@@ -58,7 +58,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 15 | 40% |
-| software | 416 | 99% |
+| software | 417 | 99% |
 
 ## Failure categories
 
@@ -78,6 +78,8 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-07-29 `model-builder/t-029` — Checking a prior cycle's specific unticketed lead first (this time, batchApproveStage's possible isStageEditable gap) before starting a broad re-read is an efficient variant of the exclusion-list pattern: it closed the lead out cleanly (confirmed already-safe) and freed the rest of the cycle to find a genuinely new bug (autoBuildItem() approving PITCH/FIELDS_AND_PROMPTS with empty content when draftText() fails). Separately, this cycle nearly reverted its own claim_task.py claim: set_task_field.py was run against a stale local roadmap checkout immediately after claim_task.py's direct-to- origin/main push, which would have silently clobbered the claim if committed blind -- caught by diffing against origin/main before pushing, per this file's own repeated "fetch before you push" guidance. A session that calls claim_task.py (or any direct-to-main script) should fetch/rebase locally before its next roadmap edit in the same cycle, not just before the final close-out push.
+
 - 2026-07-29 `model-builder/t-029` — Extended the review-gate-bypass bug class (already fixed for canApproveAssets, batchDraftField/batchSetField, and previewCommit) to the single-item draftText() path: the Approve button for PITCH/FIELDS_AND_PROMPTS has no isDrafting gate, so a stage can be approved while its own AI draft is still resolving, and the draft would silently overwrite the approved content with no re-review. This task's note (67+ PROGRESS/REVIEWED entries) is now the same note-bloat shape the immediately preceding LEARNING.yaml entry describes for coloring-book/t-037 -- worth the same run-log.md extraction next cycle, before it slows down reading/diffing the roadmap further.
 - 2026-07-29 `coloring-book/t-037` — Note-bloat extraction (moving a recurring task's accumulated RAN/incident history out of the roadmap note: field into a dedicated run-log.md, per the ai-art-academy/t-010 precedent) is now a proven, repeatable pattern for any long-running recurring task whose note has grown large enough to slow down reading/diffing the roadmap -- verify the move with a byte-identical diff check before trimming the original, and add a run_log: pointer field rather than just prose, so a script can find the log mechanically later.
 - 2026-07-29 `taskmaster/t-002` — kind_robots PR #1157 merged clean on first pass, all 11 checks green including the project-specific "Taskmaster checkpoint contract" -- confirming in advance that the contract verifiers only assert against stores/taskmasterStore.ts and components/pages/taskmaster-page.vue content (not stores/todoStore.ts, the actual file touched) avoided a wasted CI round trip on a fix that was never going to trip those specific checks.
@@ -89,8 +91,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 - 2026-07-29 `model-builder/t-029` — After ~20 cycles finding only client-side store races (singleton-ownership guards, watch-clobber bugs, cancelled-run checks), this cycle found a genuinely different bug class: the server-side commit route (server/api/model-builder/items/[id]/commit.post.ts) never checked item.stageStatuses before executing the durable write, so the entire PITCH->FIELDS_AND_PROMPTS->GENERATE_ASSETS->COMMIT human-approval gate was enforced only client-side and could be bypassed by a direct POST. Kaizen: when a recurring bug-hunt task has exhausted one layer of a feature (here, the Pinia store's in-memory races), the next productive lens is the layer below it (the server route trusting client-enforced invariants) rather than re-scanning the same layer for a smaller variant of the same bug shape.
 
-- 2026-07-29 `appmaker/t-012` — This "polish and upgrade front-end" task type had been repeatedly re-picked across cycles with steps (1) art and (3) admin-Placements backfill blocked, and step (4) already marked "fully covered" by an earlier cycle -- risking each new pickup being a pure no-op. Dispatching a fresh Explore pass specifically hunting for bugs (not re-checking the same three blocked steps) found two real, previously-unfixed issues: a missing request-sequencing guard in appmaker-page.vue's refresh() (concurrent onMounted/button/post-create calls could let a stale response overwrite fresh state) and a conductorStore.fetchProjects(force=true) call that silently no-op'd whenever any other fetch was already in flight, defeating every one of its five call sites that pass force:true expecting a real refresh. Kaizen: for any "polish" task whose obvious steps are all blocked/done, a targeted bug-hunt Explore pass over the actual shipped code is a reliable way to find genuine, safe, reversible work instead of re-confirming the same blocker note again.
-
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-07-29T22:54:51Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-07-29T23:19:32Z_
