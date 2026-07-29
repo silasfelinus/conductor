@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-07-28T23:14:35Z
+Generated: 2026-07-28T23:39:40Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **415**
-- Outcomes: blocked: 13, cancelled: 1, done: 401
+- Closed tasks recorded: **416**
+- Outcomes: blocked: 13, cancelled: 1, done: 402
 - Success rate: **97%**
 - Average passes on successful tasks: **0.0**
 
@@ -25,7 +25,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | challenge-center | 16 | 100% |
 | coat-dance | 8 | 0% |
 | coloring-book | 21 | 100% |
-| conductor | 55 | 100% |
+| conductor | 56 | 100% |
 | conductor-app | 2 | 100% |
 | davinci | 1 | 100% |
 | digital-storefront | 24 | 100% |
@@ -57,7 +57,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 15 | 40% |
-| software | 400 | 99% |
+| software | 401 | 99% |
 
 ## Failure categories
 
@@ -77,6 +77,8 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-07-28 `conductor/t-092` — Direct api.github.com calls 403 from this sandbox even with a valid GITHUB_TOKEN and Authorization header (confirmed independently while building this task, matching select_role.py's existing finding) -- any new tool that needs live GitHub state from this environment should either go through the GitHub MCP tools or be written transport-agnostic (pure decision logic separated from the network call) rather than assuming urllib/requests against api.github.com will work.
+
 - 2026-07-28 `model-builder/t-036` — Running a newly-written static checker against the real file BEFORE writing any fix (rather than writing the checker to match a known-clean state) is worth doing by default -- it immediately found a genuine, previously-unfixed instance of the exact bug class it was built to catch (an unconditional COMMIT-stage write in commitItem(), same shape as the GENERATE_ASSETS bug t-029 fixed ad hoc), which a code-review-only pass over commitItem() had not caught in three prior cycles of this file. Also reconfirmed: mirror the reference checker exactly on the main()-guard idiom (`if (process.argv[1] && import.meta.url === ...) main()`) whenever the new checker will be imported from its own self-test file -- an unconditional module-level main() call (fine for a checker with no test importer, like verifyModelBuilderLinkCoverage.ts) fires as a side effect on import and pollutes/masks the self-test's own output.
 - 2026-07-28 `media-watchlist/t-016` — Confirms the t-015 lesson: select_role.py reported candidate_reviewable_pr_count: 0 and github_api_unreachable: true, but mcp__github__list_pull_requests/pull_request_read found this claude/* PR (and its kind_robots counterpart) fully green and ready to merge. A prior session did the implementation and left status: review with a clear PROGRESS note; this session only needed to verify CI and merge both PRs in order (implementation repo first, then the conductor tracking PR), matching the "Notes for reviewer" instructions left in the PR body.
 - 2026-07-28 `media-watchlist/t-015` — select_role.py's direct api.github.com calls keep 403ing in this sandbox (recurred 3+ times same day); always cross-check with mcp__github__list_pull_requests directly before trusting a "0 reviewable PRs" result. Also confirmed: GET /api/media-entries already supported an unfiltered take/sort call for free (every filter param is optional and simply omitted when unset) -- worth checking existing route flexibility before assuming a backend change is needed for a "fixed global view" spec.
@@ -87,7 +89,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-07-28 `coloring-book/t-035` — Clean first-pass fix, same shape as t-032's recovery-path fix but for the fresh-submission branch of the same loop: record_semantic_gate_error() now stamps the newly enqueued ArtJob's id onto the stored error whenever the message does not already carry a "job N" reference, so a missing-credential verification failure after a successful render stays recoverable instead of forcing a duplicate resubmission. Mirrors t-032's own regression test shape closely enough that reusing that test as a template for the new fresh-submission case caught the right edge cases (double-stamp avoidance, enqueue()-failure leaving the field unstamped) on the first attempt.
 - 2026-07-28 `ai-art-academy/t-052` — Closed without a separate diff -- its content (PUBLIC-DOMAIN-POLICY.md §1.3 vs §2 distinction) shipped in the same continuous-improvement-checklist.md edit as t-051 (PR #1344). See t-051's record for the reusable lesson about combining same-paragraph kaizen tasks.
 - 2026-07-28 `ai-art-academy/t-051` — Small kaizen-generated checklist tasks (t-051, t-052) that land in the same rotation-instructions paragraph are cheaper to merge as one edit than as two sequential PRs -- worth checking a freshly filed kaizen task against other open kaizen tasks for the same project before implementing, in case they share a landing spot.
-- 2026-07-28 `ai-art-academy/t-050` — Passing PUBLIC-DOMAIN-POLICY.md paragraph 1.3 (artist died 70+ years ago AND work predates the US cutoff year) does not guarantee an institution has released an accepted-license image under paragraph 2 -- these are separate checks. A prior cycle added Fauvism to academyStyles.ts reasoning only from paragraph 1.3 (Matisse/Derain/Dufy all clear the death-date threshold, core works 1904-1908 well before 1930), which is fully valid for that entry's actual use (prompt-only style reference under paragraph 4 rule 1, no displayed artwork image) but does not by itself clear the stricter bar this curriculum doc's "Example works" require. Direct Met/AIC API queries this cycle found a verified public-domain Matisse work (Still Life with Geranium, 1906, AIC object 87045) but zero for Derain or Dufy despite both clearing paragraph 1.3 with equal margin -- every institution-held Fauvist-period Derain/Dufy work checked came back isPublicDomain/is_public_domain: false. Lesson: always run the per-work museum-API check before treating a death-date-cleared artist as curriculum-ready, and ship with fewer verified example works rather than assume prong-1 clearance implies image availability.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-07-28T23:14:35Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-07-28T23:39:40Z_
