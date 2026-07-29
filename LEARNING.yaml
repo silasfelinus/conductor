@@ -5218,3 +5218,26 @@ records:
     the immediately preceding LEARNING.yaml entry describes for coloring-book/t-037
     -- worth the same run-log.md extraction next cycle, before it slows down
     reading/diffing the roadmap further.'
+- date: 2026-07-29
+  project: model-builder
+  task: t-029
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    Checking a prior cycle's specific unticketed lead first (this time,
+    batchApproveStage's possible isStageEditable gap) before starting a broad
+    re-read is an efficient variant of the exclusion-list pattern: it closed the
+    lead out cleanly (confirmed already-safe) and freed the rest of the cycle to
+    find a genuinely new bug (autoBuildItem() approving PITCH/FIELDS_AND_PROMPTS
+    with empty content when draftText() fails). Separately, this cycle nearly
+    reverted its own claim_task.py claim: set_task_field.py was run against a
+    stale local roadmap checkout immediately after claim_task.py's direct-to-
+    origin/main push, which would have silently clobbered the claim if committed
+    blind -- caught by diffing against origin/main before pushing, per this
+    file's own repeated "fetch before you push" guidance. A session that calls
+    claim_task.py (or any direct-to-main script) should fetch/rebase locally
+    before its next roadmap edit in the same cycle, not just before the final
+    close-out push.
