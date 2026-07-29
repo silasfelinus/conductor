@@ -43,7 +43,13 @@ RELAY_VERSION = os.environ.get(
 ).strip()
 RELAY_COMMIT = os.environ.get("KR_RELAY_COMMIT", "").strip()
 
-VIDEO_EXTENSIONS = (".mp4", ".webm", ".mov", ".mkv", ".gif")
+# .webp covers animated-clip jobs saved via ComfyUI's native SaveAnimatedWEBP
+# node (kind_robots' video generator defaults to it: smaller/better quality
+# than gif, no custom node needed). Without it here, find_output_file()'s
+# is_video_filename() check rejects the SaveAnimatedWEBP output for a
+# want_video=True job and the relay reports "no output found" even though
+# ComfyUI succeeded.
+VIDEO_EXTENSIONS = (".mp4", ".webm", ".mov", ".mkv", ".gif", ".webp")
 
 
 def log(message):
