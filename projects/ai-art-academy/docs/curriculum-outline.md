@@ -114,6 +114,20 @@ gives the curriculum its first entry defined purely by liberating color from
 observed reality, taught directly alongside Impressionism/Post-Impressionism
 as the next step past color-from-light toward color-as-pure-expression.
 
+Section 39 is the 2026-07-29 v1.19 addition (t-010 cycle, lane 4): Tonalism
+(`tonalism`) — a second American landscape entry alongside the Hudson River
+School (§32), deliberately contrasted with it: where that entry's panoramic
+scale and crisp detail make land feel sublime and vast, Tonalism's muted
+single-tone palette, blurred near-silhouette forms, and dawn/dusk/mist light
+make the same landscape tradition feel intimate, remembered, and quietly
+spiritual. Its sole verified generation-style anchor is George Inness
+(1825-1894); three of his works were confirmed CC0 this cycle via the
+Metropolitan Museum of Art's Open Access program (Wikimedia Commons file
+pages). Dwight Tryon, Ralph Albert Blakelock, and J. Francis Murphy all
+clear PUBLIC-DOMAIN-POLICY.md §1.3's death-date prong easily but were not
+individually rights-verified this cycle — historical-context-only for now,
+the same treatment given to Precisionism's (§33) unverified figures.
+
 They are appended (rather than renumbered into place) but belong
 chronologically among the earlier movements — read the `era` field in the
 machine-readable skeleton for true ordering; the front-end seed (t-020, t-031)
@@ -445,6 +459,12 @@ movements:
     artist_slugs: [henri-matisse, andre-derain, raoul-dufy]
     example_count: 1
     remix_hint: "Recompose this image as an early Fauvist painting: unmixed, high-key non-naturalistic color applied in loose visible brushstrokes with no attempt at local color accuracy, bold dark contour outlines holding flat color areas together, warm and cool colors in direct high-contrast juxtaposition, and preserve the source composition and subject"
+  - slug: tonalism
+    name: Tonalism
+    era: "c. 1880-1915 (United States)"
+    artist_slugs: [george-inness, dwight-tryon, ralph-albert-blakelock, j-francis-murphy]
+    example_count: 3
+    remix_hint: "Repaint this image as an American Tonalist landscape: a muted, close-value palette unified by a single dominant tone (soft gray, brown, or blue-green), soft diffused atmospheric light at dawn or dusk, simplified near-silhouette forms with blurred edges, thin translucent glazes of color, and a quiet, contemplative, melancholic mood. Preserve the source composition and subject; avoid imitating any single named artwork."
 ```
 
 ---
@@ -2650,6 +2670,81 @@ to keep this document and the shipped entry in sync).
 
 ---
 
+## 39. Tonalism (`tonalism`)
+
+**Era:** c. 1880-1915 (United States)
+
+**Key ideas.** Tonalism gives the curriculum a second American landscape
+movement alongside the Hudson River School (§32), deliberately its
+counterpoint. Where Hudson River School painters used panoramic scale, fine
+botanical and geological detail, and theatrical light to make American land
+feel sublime and vast, Tonalist painters unified a scene under a single
+muted tone, blurred its edges toward near-silhouette, and set it at dawn,
+dusk, or in mist — making the same landscape tradition feel intimate,
+remembered, and quietly spiritual rather than spectacular. Many Tonalists,
+including George Inness, were influenced by Emanuel Swedenborg's mystical
+writings, treating a glowing dusk sky or a softened tree line as a visible
+trace of spiritual order beneath the physical landscape. The movement
+overlaps in time with American Impressionism but pushes in the opposite
+direction: away from broken, optically accurate color and toward thin,
+translucent glazes built up to a single dominant harmony.
+
+**Recognition cues:**
+- a muted, close-value palette dominated by a single unifying tone (soft
+  gray, brown, blue, or green)
+- soft, blurred edges and diffused atmospheric light rather than crisp
+  detail
+- twilight, dawn, dusk, or misty/overcast conditions as the default light
+- simplified, near-silhouette forms — trees, fences, and distant farmhouses
+  reduced to dark shapes against a glowing sky
+- thin, translucent glazes of color built up in layers rather than opaque
+  local color
+- a quiet, contemplative, often melancholic mood; the landscape feels
+  remembered rather than directly observed
+- minimal or no figures; when present, they are small and incidental, never
+  the subject
+
+**Notable artists:**
+- **George Inness** (1825-1894) — the movement's central figure; this
+  entry's sole verified generation-style anchor (see "Example works" below).
+
+Dwight Tryon (1849-1925), Ralph Albert Blakelock (1847-1919), and J. Francis
+Murphy (1853-1921) are also commonly cited Tonalists and all clear
+PUBLIC-DOMAIN-POLICY.md §1.3's death-date prong with a wide margin, but no
+specific work by any of them was rights-verified this cycle. Per §5's
+default-deny under ambiguity, they are named here for historical context
+only — the same treatment Precisionism (§33) gives Sheeler, Crawford, and
+O'Keeffe — rather than included as example works on the strength of an old
+death date alone.
+
+**Example works:**
+- *Evening at Medfield, Massachusetts*, George Inness, 1875 — Metropolitan
+  Museum of Art, accession 10.64.6. VERIFIED CC0 this cycle via its
+  Wikimedia Commons file page (Met Open Access Policy):
+  https://commons.wikimedia.org/wiki/File:Evening_at_Medfield,_Massachusetts_MET_DT11918.jpg
+- *Autumn Oaks*, George Inness, c. 1878 — Metropolitan Museum of Art,
+  accession 87.8.8. VERIFIED CC0 this cycle via its Wikimedia Commons file
+  page (Met Open Access Policy):
+  https://commons.wikimedia.org/wiki/File:Autumn_Oaks_MET_ap87.8.8.jpg
+- *Sunrise*, George Inness, 1887 — Metropolitan Museum of Art, accession
+  54.156. VERIFIED CC0 this cycle via its Wikimedia Commons file page (Met
+  Open Access Policy):
+  https://commons.wikimedia.org/wiki/File:Sunrise_MET_DP232470.jpg
+
+All three example works are by George Inness alone. Do not add a Tryon,
+Blakelock, or Murphy example without first verifying that specific work's
+rights status directly (museum API or Wikimedia Commons file page), the same
+standard applied above.
+
+**remix_hint:** "Repaint this image as an American Tonalist landscape: a
+muted, close-value palette unified by a single dominant tone (soft gray,
+brown, or blue-green), soft diffused atmospheric light at dawn or dusk,
+simplified near-silhouette forms with blurred edges, thin translucent glazes
+of color, and a quiet, contemplative, melancholic mood. Preserve the source
+composition and subject; avoid imitating any single named artwork."
+
+---
+
 ## Lesson-only vs remixable
 
 Every movement above maps to a remix config (mode `prompt` to start; t-003/t-004
@@ -3208,3 +3303,20 @@ called for. That addition is independently policy-compliant under §4 rule 1
 (prompt-only style reference, no displayed artwork image), so no correction
 to shipped code is needed — only this document's own entry required the
 narrower, verified-per-work treatment above.
+
+**v1.19 addition (2026-07-29) re-check.** Section 39 (Tonalism) returns to
+three fully verified example works after §38's one-artist gap, all by George
+Inness (d. 1894), clearing PUBLIC-DOMAIN-POLICY.md §1.3 (both prongs) with
+the widest margin of any artist added this batch. This cycle verified all
+three directly against their Wikimedia Commons file pages (CC0 1.0 Universal
+via the Metropolitan Museum of Art's Open Access Policy, the same
+verification method used for §32's Hudson River School entries), rather than
+inferring reusability from the death date alone. Dwight Tryon, Ralph Albert
+Blakelock, and J. Francis Murphy are named in the artist prose as
+historical-context figures only, per §5's default-deny under ambiguity —
+each clears §1.3's death-date prong easily (1925, 1919, 1921) but no
+specific work by any of them was checked against a museum or Commons record
+this cycle. A future session should verify one work per artist before
+naming any of the three in the "Example works" list. Not yet synced into
+kind_robots' `stores/seeds/academyStyles.ts` — a separate follow-up, the
+same pattern as every other curriculum-outline.md addition since §31.
