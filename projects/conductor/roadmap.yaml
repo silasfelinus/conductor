@@ -2979,3 +2979,35 @@ tasks:
     claimed_by: reviewer/claude-conductor-agentrun-20260728T2320Z-c-t092
     claimed_at: '2026-07-28T23:13:49Z'
     updated: '2026-07-28T23:24:35Z'
+
+  - id: t-093
+    milestone: m2
+    title: "close_task.py should refuse/warn when closing a recurring: true task as status=done instead of ready"
+    status: ready
+    passes: 0
+    stakes: reversible
+    owner: null
+    note: |
+      KAIZEN (from model-builder/t-029 close-out review, 2026-07-29, see
+      projects/model-builder/TALKBACK.md this date): conductor PR #1388 closed
+      model-builder/t-029 (recurring: true) with `close_task.py model-builder t-029
+      done`, setting status: done and leaving claimed_by/claimed_at/owner: worker in
+      place -- even though the PR's own note text said "Rearmed to `ready`; claim
+      fields cleared below." AGENTS.md's "Recurring tasks" section is explicit that
+      recurring tasks never reach done; they go back to ready after each cycle so
+      they re-arm. `close_task.py` currently has no special-casing for
+      `recurring: true` and will happily accept `done`, silently taking the task out
+      of the ready-task rotation forever (it stops showing up in
+      `next_ready_task.py`/`select_role.py` scans). The Reviewer caught this after
+      already merging the PR and corrected the roadmap directly on main
+      (status -> ready, stale claim fields removed) rather than leaving a broken
+      recurring task sitting at done.
+
+      Fix `scripts/close_task.py`: when the target task has `recurring: true` and
+      the caller passes `done` as the new status, either (a) refuse with a clear
+      error telling the caller to pass `ready` instead, or (b) coerce it to `ready`
+      automatically and log that it did so. Add a regression test covering both the
+      refuse/coerce behavior and confirm existing non-recurring close-outs are
+      unaffected. Keep the fix scoped to this one script -- no changes needed to
+      claim_task.py or set_task_field.py, which don't carry this same "task
+      permanently exits rotation" risk.
