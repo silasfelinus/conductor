@@ -502,7 +502,7 @@ tasks:
   - id: t-010
     milestone: m6
     title: Academy continuous improvement pass
-    status: claimed
+    status: ready
     recurring: true
     passes: 0
     stakes: reversible
@@ -510,13 +510,13 @@ tasks:
     note: |-
       Standing never-idle task (re-arms to ready after every completion, per the recurring-task rule). Each cycle pick ONE: (a) front-end style/polish pass on Academy or art-styler surfaces, (b) roadmap upgrade — refine tasks, detail the next milestone, prune stale notes, (c) generate more art inspirations or style preview thumbnails, (d) expand the curriculum with a new movement/artist entry (respecting PUBLIC-DOMAIN-POLICY.md). Note which option ran in the PR. This task never reaches done and does not count toward milestone progress. See `run_log` for cycle history — do not re-accumulate RAN entries here.
     continuous_improvement:
-      last_lane: 3  # 1=front-end polish, 2=roadmap accuracy, 3=inspiration assets, 4=curriculum depth
-      next_lane: 4
-      last_run: '2026-07-29T16:03:49Z'
-      last_pr: 'conductor (this PR): queued + generated tonalism and barbizon-school Academy style-preview thumbnails (art-prompts.yaml), retained in projects/process/ pending relay delivery'
+      last_lane: 4  # 1=front-end polish, 2=roadmap accuracy, 3=inspiration assets, 4=curriculum depth
+      next_lane: 1
+      last_run: '2026-07-29T18:00:59Z'
+      last_pr: 'kind_robots#1158: synced tonalism and barbizon-school into stores/seeds/academyStyles.ts (deferred seed-sync from the 2026-07-29T16:03:49Z lane-3 cycle)'
     run_log: projects/ai-art-academy/docs/continuous-improvement-run-log.md
-    owner: worker
-    claimed_by: claude-conductor-scheduled-20260729T170000Z-aaa-t010
+    owner: null
+    claimed_by: null
     claimed_at: '2026-07-29T17:51:59Z'
 
   - id: t-015
