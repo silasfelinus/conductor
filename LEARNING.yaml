@@ -5061,3 +5061,21 @@ records:
     the recurring task''s own note pointing at already-finished work.
 
     '
+- date: '2026-07-29'
+  project: conductor
+  task: t-095
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'consume_art_requests.py''s enqueue()->wait_for_job() gap: a submitted ArtJob''s id was only
+    ever printed to stdout, never persisted, before the (up to 600s) wait for completion -- so a timeout,
+    FAILED/CANCELLED job, or killed process left no durable trace of which ArtJob had actually been submitted
+    for a given request, exactly the shape of the ai-art-academy/t-010 fauvism incident (an id known only
+    from a session''s own prose, unrecoverable once out of context). Fixed by recording the id onto the
+    request''s own entry immediately after submission succeeds, before the blocking wait -- the general
+    lesson: any script that submits an async job and then blocks waiting on it should persist the job
+    id at submission time, not at completion time, so a timeout or crash mid-wait still leaves a recoverable
+    trail. Separately confirmed via a new regression test that the non-zero-exit half of this kaizen was
+    already correct; not every suspected two-part gap turns out to have two real parts.'
