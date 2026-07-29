@@ -335,7 +335,14 @@ requests:
     Fixed request_is_complete() to keep a kind_robots-target "done" request until its staged
     local copy is actually gone (see scripts/build_workspace.py); moved fauvism.webp back
     out of unmatched/ into projects/process/ and restored this entry so a future cycle with
-    render-backend/relay access can confirm delivery.'
+    render-backend/relay access can confirm delivery. CONFIRMED LIVE 2026-07-29T11:10Z (ai-art-academy/t-010,
+    conductor scheduled cycle): direct HEAD-equivalent GET https://media.acrocatranch.com/images/academy/styles/fauvism.webp
+    returns HTTP 200 -- delivery confirmed via the relay''s own out-of-band media path (not
+    distribute_images.py, which deliberately never delivers kind_robots-target files itself,
+    see its RETAIN comment). All 33 Academy style-preview thumbnails are now confirmed generated
+    and live; this was the last one still marked unconfirmed. The staged projects/process/fauvism.webp
+    copy is expected to remain in place indefinitely per distribute_images.py''s RETAIN convention
+    for kind_robots targets -- this is not a bug, no cleanup needed.'
   prompt: 'A museum-quality example of an early-twentieth-century Fauvist oil painting: an
     everyday outdoor scene rendered in unmixed, high-key, non-naturalistic color straight
     from the tube, loose visibly brushy patches of paint, bold dark contour outlines holding

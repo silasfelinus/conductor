@@ -502,24 +502,22 @@ tasks:
   - id: t-010
     milestone: m6
     title: Academy continuous improvement pass
-    status: claimed
+    status: ready
     recurring: true
     passes: 0
     stakes: reversible
-    updated: '2026-07-29T11:07:06Z'
+    updated: '2026-07-29T11:10:00Z'
     note: |-
       Standing never-idle task (re-arms to ready after every completion, per the recurring-task rule). Each cycle pick ONE: (a) front-end style/polish pass on Academy or art-styler surfaces, (b) roadmap upgrade — refine tasks, detail the next milestone, prune stale notes, (c) generate more art inspirations or style preview thumbnails, (d) expand the curriculum with a new movement/artist entry (respecting PUBLIC-DOMAIN-POLICY.md). Note which option ran in the PR. This task never reaches done and does not count toward milestone progress. See `run_log` for cycle history — do not re-accumulate RAN entries here.
-
-      RAN 2026-07-29T10:06:22Z (conductor scheduled cycle, session claude-conductor-scheduled-20260729T100614Z-aa-t010-lane2): option (b), roadmap accuracy. Closed ai-art-academy/t-054 (kaizen from the prior cycle's reviewer merge): moved every RAN/STRANDED-STATE-CORRECTION paragraph that had accumulated in this task's own note out to the end of `run_log`, leaving only the standing-instructions paragraph here — the actual bug behind t-054's filing was that each cycle's "condense the note" step had been appending its own new entry to `run_log` without also removing the corresponding (and, for three of the six paragraphs, already-duplicated) content from this note, so the note kept growing anyway. Full detail in `run_log`.
     continuous_improvement:
-      last_lane: 2  # 1=front-end polish, 2=roadmap accuracy, 3=inspiration assets, 4=curriculum depth
-      next_lane: 3
-      last_run: '2026-07-29T10:06:22Z'
-      last_pr: 'conductor PR (pending): closed t-054, condensed t-010 note into run_log'
+      last_lane: 3  # 1=front-end polish, 2=roadmap accuracy, 3=inspiration assets, 4=curriculum depth
+      next_lane: 4
+      last_run: '2026-07-29T11:10:00Z'
+      last_pr: 'conductor-only change: art-prompts.yaml fauvism delivery confirmation'
     run_log: projects/ai-art-academy/docs/continuous-improvement-run-log.md
-    owner: worker
-    claimed_by: claude-agentrun-20260729T110705Z-aa-t010
-    claimed_at: '2026-07-29T11:07:06Z'
+    owner: null
+    claimed_by: null
+    claimed_at: null
 
   - id: t-015
     milestone: m4
