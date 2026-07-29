@@ -388,6 +388,21 @@ When a cross-repo task is selected:
 This keeps blocked cross-repo work visible and reviewable without bypassing branch, repo,
 secret, deploy, or human-gate boundaries.
 
+### Sandbox `pytest` is missing PyYAML
+
+The session sandbox's isolated `pytest` tool (installed via `uv tool install pytest`) does
+not carry PyYAML, so plain `pytest` fails to even *collect* any test that imports `yaml` —
+`ModuleNotFoundError: No module named 'yaml'` — even though the system `python3` interpreter
+the repo's own scripts (`consume_animation_pitches.py`, `check_animation_novelty.py`,
+`claim_task.py`, etc.) run under has PyYAML installed fine. This is distinct from `python3 -m
+pytest` failing with "no module named pytest" (a different, unrelated absence). If you hit
+`ModuleNotFoundError: yaml` under a bare `pytest` invocation, don't re-derive the cause —
+reinstall the tool with the extra baked in:
+
+```
+uv tool install pytest --with pyyaml --force
+```
+
 ### Finish on clean main — no leftover branches
 
 The goal of every run is an updated `main` with the run's safe work merged and **no branch
