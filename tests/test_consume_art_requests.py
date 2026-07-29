@@ -1,3 +1,4 @@
+import sys
 import textwrap
 from pathlib import Path
 
@@ -250,6 +251,79 @@ def test_sync_project_art_posts_completion(monkeypatch):
     assert calls[0][0] == "POST"
     assert calls[0][1].endswith("/api/conductor/project-art-complete")
     assert calls[0][2]["artImageId"] == 780
+
+
+def test_set_request_field_inserts_when_absent():
+    output, changed = cr.set_request_field(
+        SAMPLE, "conductor-davinci-card-2e72bbc9", "last_art_job_id", 2775
+    )
+    assert changed is True
+    davinci_block = output.split("- id: conductor-davinci-card-2e72bbc9")[1].split("- id:")[0]
+    assert "last_art_job_id: 2775" in davinci_block
+    fox_block = output.split('- id: "kind-robots-fox-image-abc123"')[1]
+    assert "last_art_job_id" not in fox_block
+    assert "header comment that must survive" in output
+
+
+def test_set_request_field_updates_existing_value():
+    once, _ = cr.set_request_field(SAMPLE, "conductor-davinci-card-2e72bbc9", "last_art_job_id", 2775)
+    twice, changed = cr.set_request_field(once, "conductor-davinci-card-2e72bbc9", "last_art_job_id", 2999)
+    assert changed is True
+    davinci_block = twice.split("- id: conductor-davinci-card-2e72bbc9")[1].split("- id:")[0]
+    assert davinci_block.count("last_art_job_id:") == 1
+    assert "last_art_job_id: 2999" in davinci_block
+
+
+def test_set_request_field_missing_id_is_noop():
+    output, changed = cr.set_request_field(SAMPLE, "nope-not-here", "last_art_job_id", 2775)
+    assert changed is False
+    assert output == SAMPLE
+
+
+def test_record_submitted_job_writes_durable_field(tmp_path, monkeypatch):
+    file = tmp_path / "art-prompts.yaml"
+    file.write_text(SAMPLE)
+    monkeypatch.setattr(cr, "ART_PROMPTS_FILE", file)
+    assert cr.record_submitted_job("conductor-davinci-card-2e72bbc9", 2775) is True
+    text = file.read_text()
+    davinci_block = text.split("- id: conductor-davinci-card-2e72bbc9")[1].split("- id:")[0]
+    assert "last_art_job_id: 2775" in davinci_block
+    assert "status: pending" in davinci_block  # untouched by the durable-record write
+
+
+def test_record_submitted_job_missing_req_id_is_noop(tmp_path, monkeypatch):
+    file = tmp_path / "art-prompts.yaml"
+    file.write_text(SAMPLE)
+    monkeypatch.setattr(cr, "ART_PROMPTS_FILE", file)
+    assert cr.record_submitted_job(None, 2775) is False
+    assert file.read_text() == SAMPLE
+
+
+def test_live_run_records_job_id_before_wait_and_survives_timeout(tmp_path, monkeypatch):
+    """The exact conductor/t-095 gap: enqueue succeeds, wait_for_job then times
+    out (or the process crashes) before the request is marked done. The ArtJob
+    id must already be durably recorded on the request entry, and main() must
+    exit non-zero so the calling session actually notices the failure."""
+    file = tmp_path / "art-prompts.yaml"
+    file.write_text(SAMPLE)
+    monkeypatch.setattr(cr, "ART_PROMPTS_FILE", file)
+    monkeypatch.setattr(cr, "already_satisfied", lambda entry: False)
+    monkeypatch.setattr(cr.consumer, "KR_API_TOKEN", "test-token")
+    monkeypatch.setattr(cr.consumer, "enqueue", lambda job_body: 2775)
+
+    def fake_wait_for_job(job_id, timeout):
+        raise RuntimeError(f"job {job_id} timed out after {timeout}s (still queued/running)")
+
+    monkeypatch.setattr(cr.consumer, "wait_for_job", fake_wait_for_job)
+    monkeypatch.setattr(sys, "argv", ["consume_art_requests.py", "--live", "--id-prefix", "conductor-davinci"])
+
+    exit_code = cr.main()
+
+    assert exit_code == 1
+    text = file.read_text()
+    davinci_block = text.split("- id: conductor-davinci-card-2e72bbc9")[1].split("- id:")[0]
+    assert "last_art_job_id: 2775" in davinci_block
+    assert "status: pending" in davinci_block
 
 
 def test_enqueue_accepts_deduplicated_done_job(monkeypatch):

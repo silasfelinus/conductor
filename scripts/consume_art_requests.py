@@ -157,16 +157,15 @@ def apply_default_steps(entries, steps):
     return entries
 
 
-def set_request_status(text, req_id, new_status):
-    """Flip the status line of the requests: entry whose id == req_id.
+def find_request_block(lines, req_id):
+    """Locate the requests: list item whose id == req_id.
 
-    Surgical, comment-preserving line edit (pyyaml round-trip would drop the
-    file's curated header + images: prompts). Returns (new_text, changed).
+    Returns (start_index, end_index_exclusive, indent) for the "- id: ..." line
+    through the last line owned by that item, or None if req_id isn't present.
+    Shared by set_request_status and set_request_field so both edit the exact
+    same block boundaries.
     """
-    lines = text.splitlines(keepends=True)
     id_pat = re.compile(r'^(\s*)-\s+id:\s*["\']?' + re.escape(str(req_id)) + r'["\']?\s*$')
-    status_pat = re.compile(r'^(\s*)status:\s*["\']?[A-Za-z0-9_-]+["\']?\s*(#.*)?$')
-
     start = None
     indent = ""
     for idx, line in enumerate(lines):
@@ -176,23 +175,86 @@ def set_request_status(text, req_id, new_status):
             indent = match.group(1)
             break
     if start is None:
-        return text, False
+        return None
 
-    index = start + 1
-    while index < len(lines):
-        line = lines[index]
+    end = start + 1
+    while end < len(lines):
+        line = lines[end]
         if line.strip():
             current_indent = len(line) - len(line.lstrip())
             if re.match(r"^" + re.escape(indent) + r"-\s", line):
                 break
             if current_indent <= len(indent):
                 break
-        status_match = status_pat.match(line)
+        end += 1
+    return start, end, indent
+
+
+def set_request_status(text, req_id, new_status):
+    """Flip the status line of the requests: entry whose id == req_id.
+
+    Surgical, comment-preserving line edit (pyyaml round-trip would drop the
+    file's curated header + images: prompts). Returns (new_text, changed).
+    """
+    lines = text.splitlines(keepends=True)
+    status_pat = re.compile(r'^(\s*)status:\s*["\']?[A-Za-z0-9_-]+["\']?\s*(#.*)?$')
+
+    block = find_request_block(lines, req_id)
+    if block is None:
+        return text, False
+    start, end, _indent = block
+
+    for index in range(start + 1, end):
+        status_match = status_pat.match(lines[index])
         if status_match:
             lines[index] = f"{status_match.group(1)}status: {new_status}\n"
             return "".join(lines), True
-        index += 1
     return text, False
+
+
+def set_request_field(text, req_id, field_name, value):
+    """Set (or insert) a scalar field on the requests: entry whose id == req_id.
+
+    Same surgical, comment-preserving approach as set_request_status: replaces
+    the field's line in place if present, otherwise inserts a new line right
+    after the id line at the sibling fields' indent. Returns (new_text, changed).
+    """
+    lines = text.splitlines(keepends=True)
+    field_pat = re.compile(r"^(\s*)" + re.escape(field_name) + r':\s*.*$')
+
+    block = find_request_block(lines, req_id)
+    if block is None:
+        return text, False
+    start, end, indent = block
+
+    for index in range(start + 1, end):
+        field_match = field_pat.match(lines[index])
+        if field_match:
+            lines[index] = f"{field_match.group(1)}{field_name}: {value}\n"
+            return "".join(lines), True
+
+    lines.insert(start + 1, f"{indent}  {field_name}: {value}\n")
+    return "".join(lines), True
+
+
+def record_submitted_job(req_id, job_id):
+    """Durably record a submitted ArtJob id on its request entry before waiting.
+
+    Called immediately after enqueue() succeeds, before wait_for_job() -- so a
+    later crash, Ctrl-C, or local poll timeout still leaves a durable trail in
+    art-prompts.yaml of which ArtJob was submitted for this request, instead of
+    the id existing only in that run's stdout. This closes the gap behind
+    conductor/t-095: a submitted ArtJob known only from a session's own prose
+    notes (unrecoverable once out of context) rather than from the request file
+    itself. Returns False (no-op) if req_id is missing or unknown.
+    """
+    if not req_id:
+        return False
+    text = ART_PROMPTS_FILE.read_text()
+    new_text, changed = set_request_field(text, req_id, "last_art_job_id", job_id)
+    if changed:
+        ART_PROMPTS_FILE.write_text(new_text)
+    return changed
 
 
 def mark_done(req_ids):
@@ -358,6 +420,7 @@ def main():
         name = request["image_path"]
         try:
             job_id = consumer.enqueue(consumer.entry_to_job(request))
+            record_submitted_job(request.get("id"), job_id)
             print(f"  queued job {job_id} for {name} - waiting...")
             job = consumer.wait_for_job(job_id, args.timeout)
             image_b64 = consumer.fetch_image_b64(job["artImageId"])
