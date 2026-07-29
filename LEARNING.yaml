@@ -5004,3 +5004,24 @@ records:
     find.
 
     '
+- date: 2026-07-29
+  project: appmaker
+  task: t-012
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'This "polish and upgrade front-end" task type had been repeatedly re-picked across cycles with
+    steps (1) art and (3) admin-Placements backfill blocked, and step (4) already marked "fully covered"
+    by an earlier cycle -- risking each new pickup being a pure no-op. Dispatching a fresh Explore pass
+    specifically hunting for bugs (not re-checking the same three blocked steps) found two real, previously-unfixed
+    issues: a missing request-sequencing guard in appmaker-page.vue''s refresh() (concurrent onMounted/button/post-create
+    calls could let a stale response overwrite fresh state) and a conductorStore.fetchProjects(force=true)
+    call that silently no-op''d whenever any other fetch was already in flight, defeating every one of
+    its five call sites that pass force:true expecting a real refresh. Kaizen: for any "polish" task whose
+    obvious steps are all blocked/done, a targeted bug-hunt Explore pass over the actual shipped code
+    is a reliable way to find genuine, safe, reversible work instead of re-confirming the same blocker
+    note again.
+
+    '
