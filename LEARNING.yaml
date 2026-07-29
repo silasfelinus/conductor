@@ -1,6 +1,23 @@
 records:
 - date: 2026-07-29
   project: conductor
+  task: t-095
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    Kaizen from the fauvism ArtJob incident (ai-art-academy/t-010): consume_art_requests.py
+    --live printed a submitted ArtJob's id to stdout only, never durably, before blocking on
+    wait_for_job() -- a timeout, failed job, or killed process left no trace of which job had
+    been submitted for a request, discoverable only from a session's own (unrecoverable) prose.
+    Fixed by writing the id onto the request's own art-prompts.yaml entry (record_submitted_job)
+    immediately after enqueue() succeeds and before the wait. The non-zero-exit half of the
+    original kaizen was already correct and needed no fix -- worth checking both stated gaps
+    independently rather than assuming a two-part kaizen implies two real bugs.
+- date: 2026-07-29
+  project: conductor
   task: t-093
   kind: software
   stakes: reversible
