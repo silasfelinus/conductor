@@ -57,35 +57,87 @@ milestones:
   - id: m3
     title: "Audit, polish, and dedicated art for the Taskmaster surface"
     weight: 25
-    status: not-started
+    status: in-progress
 
 tasks:
   - id: t-001
     milestone: m3
     title: "Audit the Taskmaster surface and groom a real task list"
-    status: claimed
+    status: done
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      AUDIT RESULT (2026-07-29): read components/pages/taskmaster-page.vue (724 lines),
+      stores/taskmasterStore.ts (999 lines), and docs/products/storymaker-taskmaster-boundary.md
+      in kind_robots. (1) Capability check against old serendipity/t-001..t-011: theme
+      picker (NarrativeIngredientPicker for location/genre), story weaving loop
+      (beats/checkpoints), HONEYDO/needs-human task weaving, write-back
+      (applyWriteBack/pendingWriteBacks), and session recap are all present and intact
+      under the new name. The `taskmaster-session` localStorage key correctly follows
+      the boundary doc's persistence-key invariant (no leftover `serendipity-session`
+      key). One capability was found BROKEN, not just renamed: AGENT-todo
+      badging/filtering (old t-011). kind_robots stores/todoStore.ts's
+      `isSerendipityAgentTodo()` still matched only the pre-rename shapes (icon
+      kind-icon:sparkles, title "story decision on ...", description "captured by
+      serendipity for conductor task ..."), but taskmasterStore.ts's
+      `answerCurrentBeat()` write-back has created todos with a different shape since
+      the rename (icon kind-icon:gearhammer, title "Taskmaster decision on ...",
+      description "Captured by Taskmaster for conductor task ..."). Every
+      Taskmaster-created needs-human todo since the rename was silently falling into
+      the generic AGENT bucket instead of the Todos surface's "Story" tab -- fixed
+      directly this cycle rather than just filed, see t-002. (2) Confirmed Taskmaster
+      still borrows Storymaker's art: both stores/helpers/dashboardHelper.ts and
+      stores/helpers/tutorialCards.ts have explicit "Shared temporarily until the
+      dedicated Taskmaster art set lands" comments pointing at
+      tabImage('scenario','storymaker') / tutorialImage('scenario','storymaker'); no
+      projects/images/taskmaster-{icon,card,hero}.webp exist in this repo either, and
+      taskmaster has no entry yet in root ART-PROMPTS.md. Filed as t-003, the standard
+      "Polish and upgrade X front-end surface" pattern used by every other project
+      here. (3) Milestone m3 moved to in-progress (audit done, t-002/t-003 open).
+    claimed_by: claude-conductor-scheduled-20260729T170000Z-tm-t001
+    claimed_at: '2026-07-29T17:04:44Z'
+    updated: '2026-07-29T17:04:44Z'
+
+  - id: t-002
+    milestone: m3
+    title: "Fix Taskmaster AGENT-todo badging broken by the Serendipity rename"
+    status: review
     owner: worker
     passes: 0
     stakes: reversible
     note: >
-      This is the first task filed under the new project name, and it is deliberately
-      an audit rather than a claim that everything is understood. Read
-      components/pages/taskmaster-page.vue and stores/taskmasterStore.ts in full
-      (999 + 724 lines) plus docs/products/storymaker-taskmaster-boundary.md, then:
-      (1) confirm which of the old serendipity/t-001..t-011 capabilities (theme
-      picker, story weaving loop, HONEYDO/needs-human task weaving, write-back,
-      session recap, AGENT todo badging) are present and working in the renamed
-      Taskmaster surface today vs. dropped/changed during the rename; (2) check
-      whether Taskmaster has a dedicated dashboard-tab/tutorial .webp yet --
-      kind_robots stores/helpers/dashboardHelper.ts currently comments the
-      Taskmaster dashboard tab image as "Shared temporarily until the dedicated
-      Taskmaster art set lands" (still borrowing Storymaker's art as of
-      2026-07-29), which is exactly the same "Polish and upgrade X front-end
-      surface" pattern already tracked for every other scaffolded project in this
-      repo -- file that as its own ready task once confirmed; (3) replace this
-      task's milestone m3 status and file concrete follow-up tasks for whatever
-      gaps are found, rather than continuing to accumulate audit notes on this one
-      task.
+      Found during t-001's audit: kind_robots stores/todoStore.ts's
+      isSerendipityAgentTodo() only matched the pre-rename icon/title/description
+      shapes, so every Taskmaster-created needs-human AGENT todo since the rename
+      was silently miscategorized (see t-001's note for the full diagnosis). Fixed
+      by widening the matcher to recognize both the pre- and post-rename shapes
+      (backward compatible with any already-created rows). kind_robots PR #1157,
+      awaiting CI/review. Flip to done once merged.
     claimed_by: claude-conductor-scheduled-20260729T170000Z-tm-t001
     claimed_at: '2026-07-29T17:04:44Z'
     updated: '2026-07-29T17:04:44Z'
+
+  - id: t-003
+    milestone: m3
+    title: "Polish and upgrade Taskmaster front-end surface"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      UI polish + dedicated art for Taskmaster now that the scaffold-vs-real question
+      is settled (t-001's audit: taskmaster-page.vue/taskmasterStore.ts are a mature,
+      complete implementation, not a scaffold -- this is pure art/polish, not feature
+      work). Steps: (1) generate dedicated dashboard-tab art at
+      public/images/dashboard-tabs/scenario/taskmaster.webp and tutorial art at
+      public/images/tutorials/scenario/taskmaster.webp (kind_robots); (2) point
+      stores/helpers/dashboardHelper.ts's and stores/helpers/tutorialCards.ts's
+      taskmaster entries at the new art instead of tabImage('scenario','storymaker')
+      / tutorialImage('scenario','storymaker'), and remove the "Shared temporarily"
+      comments; (3) add the three standard project-art request entries (icon/card/hero)
+      to root ART-PROMPTS.md and generate projects/images/taskmaster-{icon,card,hero}.webp
+      in this repo, following the template already in that file; (4) verify the
+      taskmaster PROJECT Dream's liveUrl/channelKey/tabKey match
+      project-overrides.yaml's taskmaster entry (route: /taskmaster, channelKey: play,
+      tabKey: taskmaster) via the Conductor "Placements" button if needed.
