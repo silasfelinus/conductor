@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-07-29T07:23:17Z
+Generated: 2026-07-29T07:29:54Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **421**
-- Outcomes: blocked: 13, cancelled: 1, done: 407
+- Closed tasks recorded: **422**
+- Outcomes: blocked: 13, cancelled: 1, done: 408
 - Success rate: **97%**
 - Average passes on successful tasks: **0.0**
 
@@ -37,7 +37,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | humboldt-scoop-cms | 4 | 100% |
 | kind-robots | 39 | 97% |
 | kindrobots-unraid | 4 | 100% |
-| media-watchlist | 9 | 100% |
+| media-watchlist | 10 | 100% |
 | mermaids-of-venice | 3 | 100% |
 | model-builder | 41 | 100% |
 | mona-salai | 1 | 100% |
@@ -57,7 +57,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 15 | 40% |
-| software | 406 | 99% |
+| software | 407 | 99% |
 
 ## Failure categories
 
@@ -77,6 +77,8 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-07-29 `media-watchlist/t-006` — This recurring polish task's own note pointed at a stale kaizen (Month/Season filters) that t-012 and t-016 had already closed two cycles earlier -- re-implementing it blind would have been a pure no-op. Re-diffing BROWSE-UX.md against the live components before picking a slice caught the drift and surfaced a different, still-open gap (Entry Detail's "Related entries" section, §3) that the note never flagged. Kaizen: on a recurring task with a multi-cycle PROGRESS history, treat the latest PROGRESS note's "not done yet" list as a hypothesis to verify against current main, not a ready-made todo -- prior cycles closing kaizens out-of-band (via their own follow-on tasks) can leave the recurring task's own note pointing at already-finished work.
+
 - 2026-07-29 `model-builder/t-029` — After ~20 cycles finding only client-side store races (singleton-ownership guards, watch-clobber bugs, cancelled-run checks), this cycle found a genuinely different bug class: the server-side commit route (server/api/model-builder/items/[id]/commit.post.ts) never checked item.stageStatuses before executing the durable write, so the entire PITCH->FIELDS_AND_PROMPTS->GENERATE_ASSETS->COMMIT human-approval gate was enforced only client-side and could be bypassed by a direct POST. Kaizen: when a recurring bug-hunt task has exhausted one layer of a feature (here, the Pinia store's in-memory races), the next productive lens is the layer below it (the server route trusting client-enforced invariants) rather than re-scanning the same layer for a smaller variant of the same bug shape.
 
 - 2026-07-29 `appmaker/t-012` — This "polish and upgrade front-end" task type had been repeatedly re-picked across cycles with steps (1) art and (3) admin-Placements backfill blocked, and step (4) already marked "fully covered" by an earlier cycle -- risking each new pickup being a pure no-op. Dispatching a fresh Explore pass specifically hunting for bugs (not re-checking the same three blocked steps) found two real, previously-unfixed issues: a missing request-sequencing guard in appmaker-page.vue's refresh() (concurrent onMounted/button/post-create calls could let a stale response overwrite fresh state) and a conductorStore.fetchProjects(force=true) call that silently no-op'd whenever any other fetch was already in flight, defeating every one of its five call sites that pass force:true expecting a real refresh. Kaizen: for any "polish" task whose obvious steps are all blocked/done, a targeted bug-hunt Explore pass over the actual shipped code is a reliable way to find genuine, safe, reversible work instead of re-confirming the same blocker note again.
@@ -91,8 +93,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-07-28 `media-watchlist/t-016` — Confirms the t-015 lesson: select_role.py reported candidate_reviewable_pr_count: 0 and github_api_unreachable: true, but mcp__github__list_pull_requests/pull_request_read found this claude/* PR (and its kind_robots counterpart) fully green and ready to merge. A prior session did the implementation and left status: review with a clear PROGRESS note; this session only needed to verify CI and merge both PRs in order (implementation repo first, then the conductor tracking PR), matching the "Notes for reviewer" instructions left in the PR body.
 - 2026-07-28 `media-watchlist/t-015` — select_role.py's direct api.github.com calls keep 403ing in this sandbox (recurred 3+ times same day); always cross-check with mcp__github__list_pull_requests directly before trusting a "0 reviewable PRs" result. Also confirmed: GET /api/media-entries already supported an unfiltered take/sort call for free (every filter param is optional and simply omitted when unset) -- worth checking existing route flexibility before assuming a backend change is needed for a "fixed global view" spec.
 - 2026-07-28 `model-builder/t-029` — Before dispatching a fresh explore-and-fix pass, actually run any regression guard a prior cycle's kaizen suggestion produced (e.g. verifyModelBuilderLinkCoverage.ts) rather than trusting the roadmap note's "unconfirmed" framing -- it may already be closed by an intervening task chain. Also: singleton-ownership-race fixes (guarding concurrent in-flight state) and stage-approval-gate fixes (guarding against overwriting already-reviewed/settled state) are distinct bug classes in this store -- batchDraftField/ batchSetField needed the latter, not another instance of the former.
-- 2026-07-28 `coloring-book/t-036` — Distinguishing a credential-wall semantic_gate_error (ANTHROPIC_API_KEY is required) from a recoverable job-timeout or transient-enqueue one by message content -- rather than lumping all semantic_gate_error entries into one retry_safe check -- lets automation short-circuit "don't bother retrying, it's the same infra gate" instead of a human/agent re-deriving it from raw queue state each cycle.
-
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-07-29T07:23:17Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-07-29T07:29:54Z_
