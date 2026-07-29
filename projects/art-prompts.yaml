@@ -315,72 +315,33 @@ requests:
     '
 - id: kind-robots-academy-style-preview-fauvism
   source: ai-art-academy-style-preview
-  status: done
+  status: pending
   target_repo: silasfelinus/kind_robots
   image_path: public/images/academy/styles/fauvism.webp
   variant: image
   size: 256x256
   label: 'Academy style preview: Fauvism'
-  note: >-
-    Generated 2026-07-28 (ArtJob 2775, ArtImage 13125) via
-    consume_art_requests.py --live, confirming the render relay is healthy
-    (recheck_render_queue.py read oldestPending: none this cycle). File
-    retained in projects/process/fauvism.webp pending relay/media-path
-    delivery to kind_robots (public/images/** is git-ignored there, same
-    convention as the italian-futurism/greek-vase-painting entries above) --
-    not yet confirmed live at media.acrocatranch.com. academyStyles.ts's
-    fauvism entry already sets previewImageSrc pointing at this path (added
-    by the immediately-prior lane-4 cycle, ahead of this generation).
-    RESTORED 2026-07-29 (ai-art-academy/t-010, conductor scheduled cycle):
-    build_workspace.py's request_is_complete() was pruning this entry the
-    moment status flipped to done, before delivery was confirmed -- the file
-    was still sitting undelivered in projects/process/ when the entry was
-    dropped, then swept into projects/process/unmatched/ on the next
-    distribute_images.py run with no yaml record left to re-match it
-    against. Fixed request_is_complete() to keep a kind_robots-target "done"
-    request until its staged local copy is actually gone (see
-    scripts/build_workspace.py); moved fauvism.webp back out of unmatched/
-    into projects/process/ and restored this entry so a future cycle with
-    render-backend/relay access can confirm delivery.
-  prompt: >-
-    A museum-quality example of an early-twentieth-century Fauvist oil
-    painting: an everyday outdoor scene rendered in unmixed, high-key,
-    non-naturalistic color straight from the tube, loose visibly brushy
-    patches of paint, bold dark contour outlines holding flat color areas
-    together, warm and cool colors in direct high-contrast juxtaposition,
-    simplified flattened forms with minimal shading, centered square
-    composition, no text, no watermark
-- id: "conductor-mona-salai-icon-cdd0128e-ms5u2toj"
-  source: "kind-robots-missing-image"
-  status: "pending"
-  target_repo: "silasfelinus/conductor"
-  image_path: "projects/images/mona-salai-icon.webp"
-  source_url: "https://raw.githubusercontent.com/silasfelinus/conductor/main/projects/images/mona-salai-icon.webp"
-  page_url: "https://kind-robots.vercel.app/conductor"
-  variant: "icon"
-  size: "256x256"
-  label: "Mona Salai"
-  project_id: 1725
-  project_slug: "mona-salai"
-  project_field: "imagePath"
-  prompt: >
-    Create artwork for Mona Salai. Visible subject and scene context: Project progress, pitch voting, task gates, roadmap state, and Portos setup.. HIGH Animation Manager Create surprising and new opening desktop wallpapers. Every animation must work as a passive experience with no interaction required. Optional interactions are encouraged when they deepen the surprise without blocking the page: bubbles can be popped, a cursor may leave a wake, and clicks may create harmless flourishe…. square premium app-icon composition with one bold, instantly readable silhouette detailed mature western animation with multidimensional worldbuilding, expressive anatomy and faces, confident ink-like linework, dimensional shapes, rich controlled color, cinematic lighting, tactile environments, and clear readable silhouettes; cast characters naturally across many species, ages, body sizes, body shapes, gende…
-- id: "conductor-mona-salai-card-3f928834-ms5u2toh"
-  source: "kind-robots-missing-image"
-  status: "pending"
-  target_repo: "silasfelinus/conductor"
-  image_path: "projects/images/mona-salai-card.webp"
-  source_url: "https://raw.githubusercontent.com/silasfelinus/conductor/main/projects/images/mona-salai-card.webp"
-  page_url: "https://kind-robots.vercel.app/conductor"
-  variant: "card"
-  size: "512x768"
-  label: "Mona Salai"
-  project_id: 1725
-  project_slug: "mona-salai"
-  project_field: "cardPath"
-  prompt: >
-    Create artwork for Mona Salai. Visible subject and scene context: Project progress, pitch voting, task gates, roadmap state, and Portos setup.. HIGH Animation Manager Create surprising and new opening desktop wallpapers. Every animation must work as a passive experience with no interaction required. Optional interactions are encouraged when they deepen the surprise without blocking the page: bubbles can be popped, a cursor may leave a wake, and clicks may create harmless flourishe…. 2:3 portrait key-art composition with a clear foreground subject and layered depth detailed mature western animation with multidimensional worldbuilding, expressive anatomy and faces, confident ink-like linework, dimensional shapes, rich controlled color, cinematic lighting, tactile environments, and clear readable silhouettes; cast characters naturally across many species, ages, body sizes, body shapes, gen…
-
+  note: 'Generated 2026-07-28 (ArtJob 2775, ArtImage 13125) via consume_art_requests.py --live,
+    confirming the render relay is healthy (recheck_render_queue.py read oldestPending: none
+    this cycle). File retained in projects/process/fauvism.webp pending relay/media-path delivery
+    to kind_robots (public/images/** is git-ignored there, same convention as the italian-futurism/greek-vase-painting
+    entries above) -- not yet confirmed live at media.acrocatranch.com. academyStyles.ts''s
+    fauvism entry already sets previewImageSrc pointing at this path (added by the immediately-prior
+    lane-4 cycle, ahead of this generation). RESTORED 2026-07-29 (ai-art-academy/t-010, conductor
+    scheduled cycle): build_workspace.py''s request_is_complete() was pruning this entry the
+    moment status flipped to done, before delivery was confirmed -- the file was still sitting
+    undelivered in projects/process/ when the entry was dropped, then swept into projects/process/unmatched/
+    on the next distribute_images.py run with no yaml record left to re-match it against.
+    Fixed request_is_complete() to keep a kind_robots-target "done" request until its staged
+    local copy is actually gone (see scripts/build_workspace.py); moved fauvism.webp back
+    out of unmatched/ into projects/process/ and restored this entry so a future cycle with
+    render-backend/relay access can confirm delivery.'
+  prompt: 'A museum-quality example of an early-twentieth-century Fauvist oil painting: an
+    everyday outdoor scene rendered in unmixed, high-key, non-naturalistic color straight
+    from the tube, loose visibly brushy patches of paint, bold dark contour outlines holding
+    flat color areas together, warm and cool colors in direct high-contrast juxtaposition,
+    simplified flattened forms with minimal shading, centered square composition, no text,
+    no watermark'
 inspirations:
 - project: ruler-hooked
   target_repo: silasfelinus/kind_robots
