@@ -189,7 +189,9 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description="Build projects/art-generate.yaml from missing project icon/card/hero assets."
     )
-    parser.add_argument("--limit", type=int, default=10, help="Maximum total queued images to write.")
+    parser.add_argument(
+        "--limit", type=int, default=10, help="Maximum total queued images to write."
+    )
     parser.add_argument(
         "--output",
         type=Path,
@@ -204,7 +206,10 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--check",
         action="store_true",
-        help="Do not write; print the number of missing project assets and return non-zero if any exist.",
+        help=(
+            "Do not write; print the number of missing project assets and return non-zero "
+            "if any exist."
+        ),
     )
     return parser.parse_args()
 
@@ -227,12 +232,19 @@ def main() -> int:
     queued = merge_queue_entries(active, missing, args.limit)
     write_queue(queued, args.output)
 
-    preserved = len(queued) - min(len(missing), max(0, args.limit - len(active)))
+    preserved_identities = {
+        queue_identity(entry) for entry in active if queue_identity(entry)[1]
+    }
+    preserved_count = sum(
+        1 for entry in queued if queue_identity(entry) in preserved_identities
+    )
+    added_count = len(queued) - preserved_count
     print(
         f"Queued {len(queued)} project assets in {args.output.relative_to(ROOT)} "
-        f"({len(active)} active preserved, {len(missing)} currently missing)."
+        f"({preserved_count} active preserved, {added_count} newly added, "
+        f"{len(missing)} currently missing)."
     )
-    if preserved > args.limit:
+    if preserved_count > args.limit:
         print("Active retries exceeded --limit and were preserved rather than silently dropped.")
     return 0
 
