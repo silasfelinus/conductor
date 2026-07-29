@@ -4963,21 +4963,3 @@ records:
     opened -- resolved per the existing hard-rule-9 convention (merge main in,
     take main's copy for the auto-generated files, keep the PR branch's real
     diff) rather than waiting for a human to notice the conflict.
-- date: '2026-07-29'
-  project: coat-dance
-  task: t-002
-  kind: content
-  stakes: reversible
-  passes: 0
-  outcome: needs-human
-  failure_category: null
-  lesson: >
-    A tool-survey research task with no code changes and no external
-    dependencies beyond WebSearch is cheap to complete fully in one pass even
-    for a project otherwise gated behind several open Silas questions
-    (BRIEF.md) -- the gate blocks *production* (t-004 onward touching the
-    source video), not this kind of desk research, so it was worth doing now
-    rather than leaving t-002 sitting at `ready` untouched. Content-kind tasks
-    still stop at needs-human per AGENTS.md regardless of how confident the
-    draft is -- resist the urge to also flip t-003 to ready on Silas's behalf
-    even when the next step seems obvious from the research.
