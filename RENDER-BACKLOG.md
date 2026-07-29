@@ -109,3 +109,9 @@ queueDepth: DONE=1991, FAILED=9, CANCELLED=773 (all-time). oldestPending: none. 
 
 ## 2026-07-29T06:05:43Z | healthy
 queueDepth: DONE=2042, FAILED=7, CANCELLED=774 (all-time). oldestPending: none. windowThroughput (24h): DONE=83, FAILED=5, CANCELLED=2. recentFailed (last 7): 5/7 = ComfyUI POST /prompt failed at http://127.0.0.1:8188 (ComfyUI /prompt returned HTTP 400 at http://127.0.0.1:8188: {'61':; 2/7 = ComfyUI POST /prompt failed at http://127.0.0.1:8188 (ComfyUI /prompt returned HTTP 400 at http://127.0.0.1:8188: {'318'.
+
+## 2026-07-29T16:05:30Z | healthy
+queueDepth: DONE=2061, FAILED=7, CANCELLED=774 (all-time). oldestPending: none. windowThroughput (24h): DONE=67, FAILED=1. recentFailed (last 7): 5/7 = ComfyUI POST /prompt failed at http://127.0.0.1:8188 (ComfyUI /prompt returned HTTP 400 at http://127.0.0.1:8188: {'61':; 2/7 = ComfyUI POST /prompt failed at http://127.0.0.1:8188 (ComfyUI /prompt returned HTTP 400 at http://127.0.0.1:8188: {'318'.
+
+## 2026-07-29T16:08:45Z | healthy
+queueDepth: RUNNING=1, DONE=2062, FAILED=7, CANCELLED=774 (all-time). oldestPending: none. windowThroughput (24h): RUNNING=1, DONE=68, FAILED=1. recentFailed (last 7): 5/7 = ComfyUI POST /prompt failed at http://127.0.0.1:8188 (ComfyUI /prompt returned HTTP 400 at http://127.0.0.1:8188: {'61':; 2/7 = ComfyUI POST /prompt failed at http://127.0.0.1:8188 (ComfyUI /prompt returned HTTP 400 at http://127.0.0.1:8188: {'318'.
