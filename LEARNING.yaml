@@ -5025,3 +5025,21 @@ records:
     note again.
 
     '
+- date: 2026-07-29
+  project: model-builder
+  task: t-029
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'After ~20 cycles finding only client-side store races (singleton-ownership guards, watch-clobber
+    bugs, cancelled-run checks), this cycle found a genuinely different bug class: the server-side commit
+    route (server/api/model-builder/items/[id]/commit.post.ts) never checked item.stageStatuses before
+    executing the durable write, so the entire PITCH->FIELDS_AND_PROMPTS->GENERATE_ASSETS->COMMIT human-approval
+    gate was enforced only client-side and could be bypassed by a direct POST. Kaizen: when a recurring
+    bug-hunt task has exhausted one layer of a feature (here, the Pinia store''s in-memory races), the
+    next productive lens is the layer below it (the server route trusting client-enforced invariants) rather
+    than re-scanning the same layer for a smaller variant of the same bug shape.
+
+    '
