@@ -502,11 +502,11 @@ tasks:
   - id: t-010
     milestone: m6
     title: Academy continuous improvement pass
-    status: ready
+    status: claimed
     recurring: true
     passes: 0
     stakes: reversible
-    updated: '2026-07-29T19:34:45Z'
+    updated: '2026-07-29T21:04:45Z'
     note: |-
       Standing never-idle task (re-arms to ready after every completion, per the recurring-task rule). Each cycle pick ONE: (a) front-end style/polish pass on Academy or art-styler surfaces, (b) roadmap upgrade — refine tasks, detail the next milestone, prune stale notes, (c) generate more art inspirations or style preview thumbnails, (d) expand the curriculum with a new movement/artist entry (respecting PUBLIC-DOMAIN-POLICY.md). Note which option ran in the PR. This task never reaches done and does not count toward milestone progress. See `run_log` for cycle history — do not re-accumulate RAN entries here.
     continuous_improvement:
@@ -515,9 +515,9 @@ tasks:
       last_run: '2026-07-29T19:35:00Z'
       last_pr: 'no kind_robots PR -- roadmap accuracy pass, no-op (54/54 unique task ids, milestone statuses match live task state, curriculum-candidates 9/10 promoted with harlem-renaissance correctly held at t-043, audit_roadmaps.py 0 errors)'
     run_log: projects/ai-art-academy/docs/continuous-improvement-run-log.md
-    owner: null
-    claimed_by: null
-    claimed_at: null
+    owner: worker
+    claimed_by: claude-conductor-scheduled-20260729T211500Z-aa-t010-lane3
+    claimed_at: '2026-07-29T21:04:45Z'
 
   - id: t-015
     milestone: m4
