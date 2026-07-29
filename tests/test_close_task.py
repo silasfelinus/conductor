@@ -190,6 +190,91 @@ def test_extra_set_fields_are_applied_alongside_status(demo_repo):
     assert task["soft_gate"] is True
 
 
+RECURRING_ROADMAP = """\
+project: demo
+kind: software
+tasks:
+- id: t-001
+  title: Demo recurring task
+  status: review
+  recurring: true
+  owner: worker
+"""
+
+
+def test_recurring_task_closed_as_done_is_refused_without_force(tmp_path, monkeypatch):
+    clone = make_remote_and_clone(tmp_path, RECURRING_ROADMAP)
+    monkeypatch.setattr(ct, "ROOT", clone)
+    monkeypatch.setattr(ct, "PROJECTS_DIR", clone / "projects")
+
+    with pytest.raises(ct.CloseError) as excinfo:
+        ct.close("demo", "t-001", "done", "session-b", None, {}, dry_run=False)
+    assert excinfo.value.code == 1
+    assert "recurring: true" in str(excinfo.value)
+
+    run(["git", "fetch", "-q", "origin"], cwd=clone)
+    branches = run(["git", "branch", "-r"], cwd=clone)
+    assert "origin/close/demo-t-001-session-b" not in branches
+
+
+def test_recurring_task_closed_as_ready_is_allowed(tmp_path, monkeypatch):
+    clone = make_remote_and_clone(tmp_path, RECURRING_ROADMAP)
+    monkeypatch.setattr(ct, "ROOT", clone)
+    monkeypatch.setattr(ct, "PROJECTS_DIR", clone / "projects")
+
+    ct.close("demo", "t-001", "ready", "session-b", "close/demo-t-001-session-b", {}, dry_run=False)
+
+    run(["git", "fetch", "-q", "origin"], cwd=clone)
+    doc = yaml.safe_load(
+        run(
+            ["git", "show", "origin/close/demo-t-001-session-b:projects/demo/roadmap.yaml"],
+            cwd=clone,
+        )
+    )
+    assert doc["tasks"][0]["status"] == "ready"
+
+
+def test_recurring_task_closed_as_done_with_force_is_allowed(tmp_path, monkeypatch):
+    clone = make_remote_and_clone(tmp_path, RECURRING_ROADMAP)
+    monkeypatch.setattr(ct, "ROOT", clone)
+    monkeypatch.setattr(ct, "PROJECTS_DIR", clone / "projects")
+
+    ct.close(
+        "demo",
+        "t-001",
+        "done",
+        "session-b",
+        "close/demo-t-001-session-b",
+        {},
+        dry_run=False,
+        force=True,
+    )
+
+    run(["git", "fetch", "-q", "origin"], cwd=clone)
+    doc = yaml.safe_load(
+        run(
+            ["git", "show", "origin/close/demo-t-001-session-b:projects/demo/roadmap.yaml"],
+            cwd=clone,
+        )
+    )
+    assert doc["tasks"][0]["status"] == "done"
+
+
+def test_non_recurring_task_closed_as_done_is_unaffected(demo_repo):
+    """REVIEW_ROADMAP's t-001 has no `recurring` field -- confirms the new guard
+    doesn't interfere with the ordinary non-recurring close-to-done path."""
+    ct.close("demo", "t-001", "done", "session-b", "close/demo-t-001-session-b", {}, dry_run=False)
+
+    run(["git", "fetch", "-q", "origin"], cwd=demo_repo)
+    doc = yaml.safe_load(
+        run(
+            ["git", "show", "origin/close/demo-t-001-session-b:projects/demo/roadmap.yaml"],
+            cwd=demo_repo,
+        )
+    )
+    assert doc["tasks"][0]["status"] == "done"
+
+
 TWO_TASK_ROADMAP = """\
 project: demo
 kind: software
