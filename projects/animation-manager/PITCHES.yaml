@@ -322,7 +322,7 @@ pitches:
 
   - id: tiny-weather-front
     title: Tiny Weather Front
-    status: pitched
+    status: candidate
     priority: 12
     surprise: >
       Miniature localized weather cells cross the screen independently — rain beneath one
@@ -336,6 +336,18 @@ pitches:
     acceptance:
       - multiple weather types coexist without visual clutter
       - effect remains passive and transparent
+    builds:
+      - version: 1
+        status: candidate
+        component: components/screenfx/tiny-weather-front.vue
+        pull_request: silasfelinus/kind_robots#1154
+        verification:
+          - eslint
+          - prettier
+          - vue-tsc (full project)
+          - test:animation-catalog
+          - test:animation-component-attempts
+          - check_animation_novelty.py --strict
 
   - id: ant-farm-excavation
     title: Ant Farm Excavation
