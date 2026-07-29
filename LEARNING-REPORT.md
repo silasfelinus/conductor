@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-07-29T00:12:15Z
+Generated: 2026-07-29T00:22:19Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **416**
-- Outcomes: blocked: 13, cancelled: 1, done: 402
+- Closed tasks recorded: **417**
+- Outcomes: blocked: 13, cancelled: 1, done: 403
 - Success rate: **97%**
 - Average passes on successful tasks: **0.0**
 
@@ -39,7 +39,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | kindrobots-unraid | 4 | 100% |
 | media-watchlist | 9 | 100% |
 | mermaids-of-venice | 3 | 100% |
-| model-builder | 38 | 100% |
+| model-builder | 39 | 100% |
 | mona-salai | 1 | 100% |
 | mural-design | 1 | 100% |
 | music-mentor | 1 | 100% |
@@ -57,7 +57,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 15 | 40% |
-| software | 401 | 99% |
+| software | 402 | 99% |
 
 ## Failure categories
 
@@ -77,6 +77,8 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-07-29 `model-builder/t-029` — select_role.py's own api.github.com 403 (same known sandbox limitation as the t-092 entry above) made it report role=worker with zero open PRs visible, while GitHub-MCP-direct listing found one real open PR (#1377) waiting for review -- confirms AGENTS.md's existing guidance to cross-check GitHub MCP tools whenever select_role.py's github_api_unreachable flag is set, rather than trusting its worker/idle fallback at face value. Separately: the PR had gone stale (mergeable_state: dirty) against two STATUS.md/ROADMAP-AUDIT.* auto-gen commits that landed on main after it opened -- resolved per the existing hard-rule-9 convention (merge main in, take main's copy for the auto-generated files, keep the PR branch's real diff) rather than waiting for a human to notice the conflict.
+
 - 2026-07-28 `conductor/t-092` — Direct api.github.com calls 403 from this sandbox even with a valid GITHUB_TOKEN and Authorization header (confirmed independently while building this task, matching select_role.py's existing finding) -- any new tool that needs live GitHub state from this environment should either go through the GitHub MCP tools or be written transport-agnostic (pure decision logic separated from the network call) rather than assuming urllib/requests against api.github.com will work.
 
 - 2026-07-28 `model-builder/t-036` — Running a newly-written static checker against the real file BEFORE writing any fix (rather than writing the checker to match a known-clean state) is worth doing by default -- it immediately found a genuine, previously-unfixed instance of the exact bug class it was built to catch (an unconditional COMMIT-stage write in commitItem(), same shape as the GENERATE_ASSETS bug t-029 fixed ad hoc), which a code-review-only pass over commitItem() had not caught in three prior cycles of this file. Also reconfirmed: mirror the reference checker exactly on the main()-guard idiom (`if (process.argv[1] && import.meta.url === ...) main()`) whenever the new checker will be imported from its own self-test file -- an unconditional module-level main() call (fine for a checker with no test importer, like verifyModelBuilderLinkCoverage.ts) fires as a side effect on import and pollutes/masks the self-test's own output.
@@ -88,7 +90,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-07-28 `model-builder/t-035` — Extending an existing schema-relation-vs-config-eligibility guard for a second failure direction (join-table-only relation claimed as CREATE-linkable) is clean on the first functional pass, but a naive "any model referencing both types" join-table heuristic false-positives on broad hub models (ArtImage) -- require the actual structural signature real join tables use in this schema (@@id([...]) composite key) before accepting a match. Separately: a green vue-tsc run does not guarantee a green CI, since this repo also runs a heuristic (non-type-checking) capture-group-guard linter that only recognizes specific guard shapes textually -- read that linter's own source for its recognized shapes rather than guessing when it flags new code TypeScript itself accepted.
 - 2026-07-28 `coloring-book/t-035` — Clean first-pass fix, same shape as t-032's recovery-path fix but for the fresh-submission branch of the same loop: record_semantic_gate_error() now stamps the newly enqueued ArtJob's id onto the stored error whenever the message does not already carry a "job N" reference, so a missing-credential verification failure after a successful render stays recoverable instead of forcing a duplicate resubmission. Mirrors t-032's own regression test shape closely enough that reusing that test as a template for the new fresh-submission case caught the right edge cases (double-stamp avoidance, enqueue()-failure leaving the field unstamped) on the first attempt.
 - 2026-07-28 `ai-art-academy/t-052` — Closed without a separate diff -- its content (PUBLIC-DOMAIN-POLICY.md §1.3 vs §2 distinction) shipped in the same continuous-improvement-checklist.md edit as t-051 (PR #1344). See t-051's record for the reusable lesson about combining same-paragraph kaizen tasks.
-- 2026-07-28 `ai-art-academy/t-051` — Small kaizen-generated checklist tasks (t-051, t-052) that land in the same rotation-instructions paragraph are cheaper to merge as one edit than as two sequential PRs -- worth checking a freshly filed kaizen task against other open kaizen tasks for the same project before implementing, in case they share a landing spot.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-07-29T00:12:15Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-07-29T00:22:19Z_
