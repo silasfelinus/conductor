@@ -150,6 +150,25 @@ of the Barbizon circle for historical context; Millet is not re-added as a
 second generation-style anchor here since he already anchors Realism (§9),
 and Díaz was not individually rights-verified this cycle.
 
+Section 41 is the 2026-07-30 v1.21 addition (t-010 cycle, lane 4): American
+Luminism (`american-luminism`) — a fresh addition with no source candidate
+file in `docs/curriculum-candidates/` (Harlem Renaissance remains the one
+candidate correctly held at ai-art-academy/t-043; researched and written
+this cycle instead). It gives the curriculum a third distinct lens on
+19th-century American landscape painting alongside the Hudson River School
+(§32) and Tonalism (§39): where those two entries are already deliberately
+contrasted (panoramic drama vs. muted blur), Luminism adds a third pole —
+glassy-smooth, almost invisible brushwork and precise, scientific light
+study — rather than restating either. Three generation-style anchors —
+Fitz Henry Lane (1804-1865), Martin Johnson Heade (1819-1904), and John
+Frederick Kensett (1816-1872) — were verified this cycle directly against
+the Met Collection API's `isPublicDomain` field (this session's egress could
+reach `collectionapi.metmuseum.org` directly, unlike the proxied session
+that wrote the original v1 verification-method note below), the same direct
+rights-status-field method used for §28, §35, §36, and §37. All three works
+(1862, 1859, 1869) predate the 1930 cutoff by a wide margin and do not move
+the curriculum's most-recent-example-work record (still 1930, §24).
+
 They are appended (rather than renumbered into place) but belong
 chronologically among the earlier movements — read the `era` field in the
 machine-readable skeleton for true ordering; the front-end seed (t-020, t-031)
@@ -493,6 +512,13 @@ movements:
     artist_slugs: [theodore-rousseau, camille-corot, charles-francois-daubigny]
     example_count: 3
     remix_hint: "Repaint this image as a Barbizon School landscape: a muted, earthy palette of greens, browns, and greys, loose but controlled brushwork, soft overcast or late-day atmospheric light, direct unidealized observation of a specific rural landscape, and a quiet, humble mood with no academic or mythological staging. Preserve the source composition and subject."
+
+  - slug: american-luminism
+    name: American Luminism
+    era: "c. 1850-1875 (United States)"
+    artist_slugs: [fitz-henry-lane, martin-johnson-heade, john-frederick-kensett]
+    example_count: 3
+    remix_hint: "Repaint this image in the American Luminist style: extremely smooth, near-invisible brushwork, a perfectly calm glassy body of water or sky reflecting a precise gradation of still natural light (dawn haze, quiet midday, or pre-storm low sun), a hushed and motionless mood, and minimal incidental human presence. Preserve the source composition and subject."
 ```
 
 ---
@@ -2858,6 +2884,91 @@ mythological staging. Preserve the source composition and subject."
 
 ---
 
+## 41. American Luminism (`american-luminism`)
+
+**Era:** c. 1850-1875 (United States)
+
+**Key ideas.** American Luminism gives the curriculum a third lens on the
+same 19th-century American landscape tradition already taught through the
+Hudson River School (§32) and Tonalism (§39), and is deliberately distinct
+from both. Where Hudson River School painters build panoramic, geologically
+detailed drama and Tonalism dissolves the scene into a single muted, blurred
+tone, Luminist painters do the opposite of both: they render an exceptionally
+calm, glassy stretch of water or sky in crisp, almost invisible brushwork, so
+smooth the paint surface itself seems to disappear, and study the precise,
+still gradation of natural light at a specific moment — dawn haze, a
+becalmed noon, or the last low sun before a storm — with near-scientific
+clarity rather than blur or theatrical intensity. Many Luminist canvases
+(Heade's marsh and thunderstorm scenes especially) hold a hushed, almost
+eerie stillness, often with a single sailboat or salt-marsh haystack as the
+only mark of human presence in an otherwise silent, mirror-flat expanse. The
+movement was not named or grouped by its own painters — "Luminism" is a
+mid-20th-century art-historical label applied retroactively to a shared
+sensibility among painters working independently along the American coast
+and inland waterways.
+
+**Recognition cues:**
+- smooth, meticulously blended brushwork with the paint surface itself
+  nearly invisible — the opposite of Impressionist or Barbizon visible touch
+- a perfectly calm, mirror-flat or glassy body of water or sky, often
+  reflecting the sky's exact gradation
+- precise, almost scientific rendering of a specific quality of light (dawn
+  haze, still midday heat, or pre-storm low sun) rather than dramatic
+  theatrical illumination
+- a hushed, motionless, sometimes eerie stillness; time itself feels
+  suspended
+- minimal, incidental human presence — a single small sailboat, a distant
+  figure, or a salt-marsh haystack, never the focus
+- coastal, marsh, or inland-waterway subject matter far more often than
+  mountain or forest interior scenes
+
+**Notable artists:**
+- **Fitz Henry Lane** (1804-1865) — a Gloucester, Massachusetts marine
+  painter and this lesson's clearest generation-style anchor; his harbor and
+  coastal scenes define the glassy-water, still-light Luminist signature.
+- **Martin Johnson Heade** (1819-1904) — known for salt-marsh haystack
+  scenes and pre-storm coastal light studies with an unusually hushed,
+  still-air quality even at the edge of a storm.
+- **John Frederick Kensett** (1816-1872) — painted calm inland lake and
+  shoreline scenes (Lake George, Newport) with the same smooth,
+  light-precise handling.
+
+All three named artists died well over a century before this policy's 1956
+cutoff, clearing PUBLIC-DOMAIN-POLICY.md §1.3's death-date prong with the
+widest margin of any artist trio added to this document since Barbizon
+School (§40).
+
+**Example works:**
+- *Stage Fort across Gloucester Harbor*, Fitz Henry Lane, 1862 — Metropolitan
+  Museum of Art, accession 1978.203. VERIFIED this cycle directly against the
+  Met Collection API (`collectionapi.metmuseum.org`, object 11396), which
+  returns `isPublicDomain: true`:
+  https://www.metmuseum.org/art/collection/search/11396
+- *Approaching Thunder Storm*, Martin Johnson Heade, 1859 — Metropolitan
+  Museum of Art, accession 1975.160. VERIFIED this cycle directly against the
+  Met Collection API (object 11050), which returns `isPublicDomain: true`:
+  https://www.metmuseum.org/art/collection/search/11050
+- *Lake George*, John Frederick Kensett, 1869 — Metropolitan Museum of Art,
+  accession 15.30.61. VERIFIED this cycle directly against the Met
+  Collection API (object 11311), which returns `isPublicDomain: true`:
+  https://www.metmuseum.org/art/collection/search/11311
+
+All three works predate the 1930 US-publication cutoff by a wide margin
+(1862, 1859, 1869 respectively) and do not move the curriculum's
+most-recent-example-work record, which stays at 1930 (*American Gothic* /
+*Stone City, Iowa*, §24). This is the same direct Met-API rights-status-field
+verification method used for §28 (Fayum Mummy Portraits), §35 (Arts and
+Crafts), §36 (Italian Futurism), and §37 (Ancient Egyptian Painting).
+
+**remix_hint:** "Repaint this image in the American Luminist style:
+extremely smooth, near-invisible brushwork, a perfectly calm glassy body of
+water or sky reflecting a precise gradation of still natural light (dawn
+haze, quiet midday, or pre-storm low sun), a hushed and motionless mood, and
+minimal incidental human presence. Preserve the source composition and
+subject."
+
+---
+
 ## Lesson-only vs remixable
 
 Every movement above maps to a remix config (mode `prompt` to start; t-003/t-004
@@ -3430,9 +3541,11 @@ historical-context figures only, per §5's default-deny under ambiguity —
 each clears §1.3's death-date prong easily (1925, 1919, 1921) but no
 specific work by any of them was checked against a museum or Commons record
 this cycle. A future session should verify one work per artist before
-naming any of the three in the "Example works" list. Not yet synced into
-kind_robots' `stores/seeds/academyStyles.ts` — a separate follow-up, the
-same pattern as every other curriculum-outline.md addition since §31.
+naming any of the three in the "Example works" list. Synced into
+kind_robots' `stores/seeds/academyStyles.ts` via PR #1158 (2026-07-29,
+`ai-art-academy/t-010: sync tonalism + barbizon-school into
+academyStyles.ts`), closing the follow-up noted here at the time of
+writing.
 
 **v1.20 addition (2026-07-29) re-check.** Section 40 (Barbizon School) clears
 PUBLIC-DOMAIN-POLICY.md §1.3's both-prongs rule for all three generation-style
@@ -3450,6 +3563,6 @@ already Realism's §9 anchor) and Narcisse Díaz de la Peña (d. 1876) are named
 in the entry's prose as founding Barbizon-circle members for historical
 context only; Díaz was not individually rights-verified this cycle and no
 work of his is listed as an example work, per §5's default-deny under
-ambiguity. Not yet synced into kind_robots' `stores/seeds/academyStyles.ts` —
-a separate follow-up, the same pattern as every other curriculum-outline.md
-addition since §31.
+ambiguity. Synced into kind_robots' `stores/seeds/academyStyles.ts` via
+PR #1158 (2026-07-29, alongside Tonalism above), closing the follow-up
+noted here at the time of writing.
