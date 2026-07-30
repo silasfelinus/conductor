@@ -130,6 +130,8 @@ module.exports = {
         KR_RELAY_TOKEN: process.env.KR_RELAY_TOKEN || '',
         KR_RELAY_USER_ID: process.env.KR_RELAY_USER_ID || '',
         KR_BASE_URL: 'https://kind-robots.vercel.app',
+        // Fast enough to feel immediate without changing the relay's pull-only model.
+        POLL_SECONDS: process.env.POLL_SECONDS || '2',
         KR_MEDIA_IMAGES_DIR:
           process.env.KR_MEDIA_IMAGES_DIR || KR_MEDIA_IMAGES_DIR,
         KR_LOCAL_IMAGES_DIR: process.env.KR_LOCAL_IMAGES_DIR || '',
