@@ -502,7 +502,7 @@ tasks:
   - id: t-010
     milestone: m6
     title: Academy continuous improvement pass
-    status: claimed
+    status: review
     recurring: true
     passes: 0
     stakes: reversible
@@ -510,10 +510,10 @@ tasks:
     note: |-
       Standing never-idle task (re-arms to ready after every completion, per the recurring-task rule). Each cycle pick ONE: (a) front-end style/polish pass on Academy or art-styler surfaces, (b) roadmap upgrade — refine tasks, detail the next milestone, prune stale notes, (c) generate more art inspirations or style preview thumbnails, (d) expand the curriculum with a new movement/artist entry (respecting PUBLIC-DOMAIN-POLICY.md). Note which option ran in the PR. This task never reaches done and does not count toward milestone progress. See `run_log` for cycle history — do not re-accumulate RAN entries here.
     continuous_improvement:
-      last_lane: 3  # 1=front-end polish, 2=roadmap accuracy, 3=inspiration assets, 4=curriculum depth
-      next_lane: 4
-      last_run: '2026-07-29T21:20:00Z'
-      last_pr: 'conductor-only, no kind_robots PR -- new inspiration-set doc docs/inspiration-sets/farmland-four-movements.md (Romanticism/Hudson River School/Barbizon School/Realism, all 4 unused in any prior set); also re-verified render queue draining (PENDING 132->6) and both still-open style-preview deliveries (tonalism, barbizon-school) confirmed HTTP 200 live + previewImageSrc already wired'
+      last_lane: 4  # 1=front-end polish, 2=roadmap accuracy, 3=inspiration assets, 4=curriculum depth
+      next_lane: 1
+      last_run: '2026-07-30T16:06:40Z'
+      last_pr: 'kind_robots PR #1189 (academyStyles.ts sync, american-luminism) + this conductor PR (curriculum-outline.md §41 American Luminism + stale sync-note fix on §39/§40); see run_log for full detail'
     run_log: projects/ai-art-academy/docs/continuous-improvement-run-log.md
     owner: worker
     claimed_by: claude-conductor-scheduled-20260730T160640Z-aa-t010
