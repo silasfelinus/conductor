@@ -1,18 +1,12 @@
 project: lora-ingestion
 kind: infrastructure
-notes_from_silas: 'Auto-import LoRAs: drop a file into Lora/import on the home box
-
-and have it detected, sorted into <Base>/<SFW|NSFW>/, and registered as a
-
-kind_robots Resource with no manual input. Then a front-end browser (My Library
-
-+ Discover tabs) to browse/manage owned LoRAs and download new ones from
-
-Civitai/CivArchive, with maturity + base-model filters, hide-owned, and
-
-update-to-new-version. Builds on the completed lora-catalog sort/import work.
-
-'
+notes_from_silas: |
+  Auto-import LoRAs: drop a file into Lora/import on the home box
+  and have it detected, sorted into <Base>/<SFW|NSFW>/, and registered as a
+  kind_robots Resource with no manual input. Then a front-end browser (My Library
+  + Discover tabs) to browse/manage owned LoRAs and download new ones from
+  Civitai/CivArchive, with maturity + base-model filters, hide-owned, and
+  update-to-new-version. Builds on the completed lora-catalog sort/import work.
 milestones:
 - id: m1
   title: ArtJob LoRA path resolution (loraResourceId/name -> localPath)
