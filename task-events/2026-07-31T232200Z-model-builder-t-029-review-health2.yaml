@@ -1,0 +1,9 @@
+version: 1
+project: model-builder
+task: t-029
+operation: review
+owner: worker
+session: 2026-07-31T231300Z-model-builder-t029-health2
+updated: '2026-07-31T23:22:00Z'
+note: >-
+  Fixed same-item auto-build reentrancy in kind_robots: autoBuildItem now rejects a second concurrent call for an item already being auto-built, preventing overlap between item, batch, and run-level entry points. Extended the existing auto-build regression guard with an isolated reentrancy fixture.
