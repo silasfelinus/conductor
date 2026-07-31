@@ -5273,3 +5273,23 @@ records:
     CLAUDE.md documents this bug for the human sweep; the automated builder had it
     independently. Fixing it removed 15 phantom needs-human gates. Worth auditing
     every glob("projects/*/roadmap.yaml") caller rather than waiting for a fourth.
+- date: 2026-07-31
+  project: model-builder
+  task: t-029
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    Extended the isGenerating/isQueued gate class (PR #900) with a subtler variant:
+    isQueued read item.artJobId, but the async regenerate path sets item.queueState
+    synchronously and item.artJobId only after two awaited network round-trips
+    resolve, leaving a real window where the gate read false during a genuine
+    in-flight regenerate. When a store documents two fields for the same async
+    operation (an immediate synchronous progress flag vs. a value only available
+    after I/O resolves), a UI gate checking the wrong one is easy to miss because
+    both fields end up true/set for most of the operation's lifetime -- only the
+    initial network-latency window exposes the gap. Worth grepping for this pattern
+    (a gate reading a post-await field when a pre-await field exists for the same
+    purpose) across other async store actions with a similar two-field shape.
