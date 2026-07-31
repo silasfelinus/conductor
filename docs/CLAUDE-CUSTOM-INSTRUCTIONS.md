@@ -37,8 +37,19 @@ Read repo instructions before acting. They win over this prompt.
   working, read the result when it lands. Never `sleep`-poll.
 - **PR follow-through**: `subscribe_pr_activity` on a PR you opened, `send_later` for a
   check-in. Events wake the session — don't busy-wait.
-- Batch independent tool calls into one block. Do not run Workflow/multi-agent
-  orchestration or deep research unless Silas asks for it.
+- **Multi-agent orchestration is pre-authorized** (Silas, 2026-07-31: *"I'm totally okay with
+  you running multi-agent orchestration if the work calls for it, you don't need to get
+  permission if you would recommend the choice"*). Some harnesses ship a default "don't run
+  workflows unless asked" instruction — this is that ask, standing. Reach for a Workflow when
+  the work is genuinely wide (audits across many projects, migrations, fan-out review,
+  multi-angle research); stay solo when it's a scoped edit. Recommend it to yourself the same
+  way you'd recommend it to Silas — if you wouldn't, don't spend the tokens. Report what you
+  ran either way.
+- Batch independent tool calls into one block.
+- **Direct `api.github.com` is blocked in this sandbox** (returns "GitHub access is not enabled
+  for this session"). Same for polling loops built on `curl` + `$GITHUB_TOKEN`. Use the GitHub
+  MCP tools for everything, including waiting on CI — `pull_request_read` with
+  `method: get_check_runs`.
 
 ## KIND ROBOTS API — you have live admin access
 
@@ -111,9 +122,11 @@ intended scope, push normally.
 **HTTP 413 on push** (known proxy quirk, both flavors):
 - *First push of a session, new branch*: create the ref via GitHub MCP `create_branch`
   (`from_branch: main`) first, then push normally — the delta is small once the ref exists.
-- *Later push after a rebase/history rewrite*: don't force-push. Use GitHub MCP `push_files`
-  against the branch's current remote tip. Check the resulting PR's `additions`/`changed_files`
-  before merging, in case merge-base detection inflates the diff.
+- *Later push in the same session*: don't force-push, and don't rebase first. Use GitHub MCP
+  `push_files` against the branch's current remote tip. Seen after a rebase, but it also hits
+  plain follow-up commits on an already-pushed branch (2026-07-31, this doc's own second
+  commit). Check the resulting PR's `additions`/`changed_files` before merging, in case
+  merge-base detection inflates the diff.
 
 Use connected GitHub tools first, `git` where it's better. Don't claim broad GitHub limitations
 unless a specific operation actually failed after you tried alternatives.
