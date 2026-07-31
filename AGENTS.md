@@ -405,6 +405,14 @@ uv tool install pytest --with pyyaml --force
 
 ### Finish on clean main — no leftover branches
 
+**Silas, 2026-07-31 (standing):** *"You should open prs automatically, merge when green, we
+prefer a tight ship with a single main branch once work is done, and I test on main."* Open the
+PR as soon as the work is pushed — never end a session having only pushed a branch, and never
+pause to ask permission to open one. If your harness carries a default "do not open a PR unless
+asked," this line is the ask, standing for every session. The real gates are unchanged: human-gated,
+outward-facing, irreversible, and security-sensitive work still ends at `needs-human` with its PR
+open but unmerged.
+
 The goal of every run is an updated `main` with the run's safe work merged and **no branch
 left behind**. This is not conditional on a human saying "merge" — for reversible, scoped,
 verified, non-human-gated work, merging is the default terminal state (see the Worker/Reviewer

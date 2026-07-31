@@ -219,3 +219,46 @@ The per-choice effect clamp (`[-2, 2]`) and the "offer end-run after chapter
 spec — flag if either should be tuned once real playtesting data exists
 (this doc's defaults are meant to be revisited after the first build slice
 plays a few live runs, not treated as final).
+
+---
+
+## Implementation status (added 2026-07-31, davinci/t-016)
+
+**Built.** kind_robots commit `fa7db9c` implements the "First build slice"
+section above: `server/utils/davinciNarration.ts`, `POST /api/davinci/runs/:id/narrate`,
+and the run-screen wiring in `components/conductor/davinci-page.vue`. Contract
+coverage lives in `utils/scripts/verifyDaVinciNarration.ts`
+(`npm run test:davinci-narration`, 35 checks, wired into `contract-tests.yml`).
+
+Two deliberate deviations from this document, both forced by OpenAI strict mode
+rather than by preference:
+
+1. **`effects` is not an optional-key map.** Strict mode forbids optional
+   properties, so all ten dimensions are declared `required` and typed
+   `["integer", "null"]`. Null means "this choice does not move that dimension"
+   and is dropped during validation, which preserves this spec's rule that a
+   choice may be pure flavor with zero mechanical effect.
+2. **Bounds are enforced server-side only.** `minimum`/`maximum`/`minItems`/
+   `maxItems` are omitted from the schema — strict-mode support for them is
+   uneven — and the `[-2, 2]` clamp and 2–4 choice band are enforced in
+   `validateNarrationPayload` instead. This spec already required that
+   re-validation, so nothing is weakened; the schema just stops carrying
+   bounds it cannot be relied on to apply.
+
+One deviation of convenience: narrator selection reads the Bot/Character rows
+through prisma directly rather than calling `GET /api/narrators/[type]/[slug]`
+over HTTP from inside a server util. Same two-branch `botId → characterId →
+default bot 433` order, same columns, same normalized shape — just no self-HTTP
+hop.
+
+**The open question above is still open.** The `[-2, 2]` clamp and the
+"offer end-run after chapter 3" gate shipped as specced, both still design
+defaults awaiting real playtesting. They are now single constants
+(`NARRATION_EFFECT_MIN`/`MAX` in `davinciNarration.ts`,
+`MIN_CHAPTERS_BEFORE_ENDING` in `davinci-page.vue`), so tuning them is a
+one-line change plus a contract-test update.
+
+Still deferred, unchanged: freeform choice input, the `milestoneCandidate`
+UI treatment beyond a one-line hint, `LifeRunArt` generation from the proposed
+`artPrompt` (the narrator returns the string; nothing consumes it yet), and the
+shared Storymaker narration utility.

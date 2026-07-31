@@ -160,13 +160,42 @@ def fetch_repo(owner: str, name: str, token: str | None) -> dict:
     }
 
 
+def inactive_project_slugs() -> set[str]:
+    """Slugs whose project-overrides.yaml status is anything but `active`.
+
+    roadmap.yaml has no lifecycle field, so a scan that reads it directly
+    resurfaces tasks from paused/retired/finished projects forever — their
+    roadmaps are deliberately kept as historical records, blocked and
+    needs-human entries included. This is the same bug CLAUDE.md documents for
+    the session-startup sweep; the summary builder had it too, which is why
+    retired `approval-portal` tasks (t-004, t-005) kept appearing under
+    ACTION NEEDED months after the project was closed.
+    """
+    try:
+        with open("project-overrides.yaml", encoding="utf-8") as handle:
+            doc = yaml.safe_load(handle) or {}
+    except FileNotFoundError:
+        return set()
+    return {
+        override["slug"]
+        for override in doc.get("overrides", [])
+        if override.get("slug")
+        and str(override.get("status", "active")).lower() != "active"
+    }
+
+
 def fetch_roadmaps() -> dict:
-    """Scan all local project roadmaps for health signals."""
+    """Scan active project roadmaps for health signals."""
     blocked, needs_human, stale_claimed = [], [], []
     ready = waiting = in_review = 0
+    inactive = inactive_project_slugs()
 
     for path in sorted(glob.glob("projects/*/roadmap.yaml")):
         if "_template" in path:
+            continue
+        # The directory name is the canonical slug — it is what
+        # project-overrides.yaml and sync_projects.py both key on.
+        if os.path.basename(os.path.dirname(path)) in inactive:
             continue
         rm = yaml.safe_load(open(path)) or {}
         project = rm.get("project", "?")
