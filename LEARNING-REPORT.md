@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-07-31T20:39:41Z
+Generated: 2026-07-31T20:51:45Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **433**
-- Outcomes: blocked: 13, cancelled: 1, done: 419
+- Closed tasks recorded: **434**
+- Outcomes: blocked: 13, cancelled: 1, done: 420
 - Success rate: **97%**
 - Average passes on successful tasks: **0.0**
 
@@ -39,7 +39,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | kindrobots-unraid | 4 | 100% |
 | media-watchlist | 10 | 100% |
 | mermaids-of-venice | 3 | 100% |
-| model-builder | 43 | 100% |
+| model-builder | 44 | 100% |
 | mona-salai | 1 | 100% |
 | mural-design | 1 | 100% |
 | music-mentor | 1 | 100% |
@@ -58,7 +58,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 15 | 40% |
-| software | 418 | 99% |
+| software | 419 | 99% |
 
 ## Failure categories
 
@@ -78,6 +78,8 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-07-31 `model-builder/t-029` — Extended the isGenerating/isQueued gate class (PR #900) with a subtler variant: isQueued read item.artJobId, but the async regenerate path sets item.queueState synchronously and item.artJobId only after two awaited network round-trips resolve, leaving a real window where the gate read false during a genuine in-flight regenerate. When a store documents two fields for the same async operation (an immediate synchronous progress flag vs. a value only available after I/O resolves), a UI gate checking the wrong one is easy to miss because both fields end up true/set for most of the operation's lifetime -- only the initial network-latency window exposes the gap. Worth grepping for this pattern (a gate reading a post-await field when a pre-await field exists for the same purpose) across other async store actions with a similar two-field shape.
+
 - 2026-07-31 `davinci/t-016` — Two source-of-truth divergences found in one sweep, both invisible to status counts. (1) The kind_robots Projects board computed progress from milestone status alone while conductor's build_status.py falls back to the task ratio; since agents close tasks but rarely flip milestones, 16 of 43 projects showed 0% against real values up to 100%. The board looked plausible rather than broken, which is why it survived -- the 27 correct rows made the 16 wrong ones read as genuinely-unstarted work. Lesson: when the same number is computed in two repos, the parity check belongs in CI from the start; a transcription of the other side's formula asserted against fixtures is cheap and catches drift that no amount of reading either implementation alone would surface. (2) davinci was flipped `finished` while its central gap sat unfiled, because the task whose output was a spec deliberately deferred filing the build task it specced. "All tasks done" and "project done" diverge exactly at spec-only closures. A spec task that defers its own implementation should file the follow-up before going done, even as a stub -- otherwise the deferral exists only in prose inside a note field, where every lifecycle check is structurally blind to it. Also confirmed a third instance of the roadmap-scan-without-lifecycle-join bug class, this time in build_conductor_summary.py's fetch_roadmaps(): it was surfacing retired approval-portal tasks under ACTION NEEDED every cycle. CLAUDE.md documents this bug for the human sweep; the automated builder had it independently. Fixing it removed 15 phantom needs-human gates. Worth auditing every glob("projects/*/roadmap.yaml") caller rather than waiting for a fourth.
 
 - 2026-07-29 `model-builder/t-029` — Checking a prior cycle's specific unticketed lead first (this time, batchApproveStage's possible isStageEditable gap) before starting a broad re-read is an efficient variant of the exclusion-list pattern: it closed the lead out cleanly (confirmed already-safe) and freed the rest of the cycle to find a genuinely new bug (autoBuildItem() approving PITCH/FIELDS_AND_PROMPTS with empty content when draftText() fails). Separately, this cycle nearly reverted its own claim_task.py claim: set_task_field.py was run against a stale local roadmap checkout immediately after claim_task.py's direct-to- origin/main push, which would have silently clobbered the claim if committed blind -- caught by diffing against origin/main before pushing, per this file's own repeated "fetch before you push" guidance. A session that calls claim_task.py (or any direct-to-main script) should fetch/rebase locally before its next roadmap edit in the same cycle, not just before the final close-out push.
@@ -89,8 +91,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-07-29 `dream-cycle/t-019` — An unrelated-looking PR (#1399) had already landed both a fix and its matching tests for public/rewards/... path handling in relay_media_agent.py, all green -- but the tests locked in the same wrong assumption as the code (folding the reward-asset root into the images root instead of treating it as a real sibling directory), including a test explicitly named to assert away the correct sibling-root design. A passing, internally-consistent test suite is not proof a fix matches reality when the tests were written by the same reasoning that produced the bug -- cross-check against the actual external system (here: the target repo's real folder layout) before trusting "tests pass" as sufficient verification, especially when correcting or building on another agent's recent, already-merged work.
 - 2026-07-29 `coloring-book/t-022` — recover_timed_out_job()'s except-block guard in consume_coloring_book_color_art.py only preserved a stuck job's "job N" reference when the failure text literally contained "ANTHROPIC_API_KEY" -- any other exception during a recovery attempt (missing local dependency, transient network error checking job status) silently destroyed the reference, forcing the next pass into a genuine duplicate ArtJob submission for an already-completed render. Same failure shape as the ai-art-academy/t-010 fauvism incident: "status implies delivered/dead" reasoning is too eager whenever a script decides to discard a recovery pointer. Fixed with a narrow RecoveryAbandoned exception marking only the backend-confirmed-dead cases; every other exception now preserves the reference unconditionally. General lesson: a recovery/reconciliation guard should default to "preserve the pointer," and require an explicit, backend-confirmed signal to discard it -- never infer "safe to discard" from matching one specific known error string.
 - 2026-07-29 `conductor/t-095` — consume_art_requests.py's enqueue()->wait_for_job() gap: a submitted ArtJob's id was only ever printed to stdout, never persisted, before the (up to 600s) wait for completion -- so a timeout, FAILED/CANCELLED job, or killed process left no durable trace of which ArtJob had actually been submitted for a given request, exactly the shape of the ai-art-academy/t-010 fauvism incident (an id known only from a session's own prose, unrecoverable once out of context). Fixed by recording the id onto the request's own entry immediately after submission succeeds, before the blocking wait -- the general lesson: any script that submits an async job and then blocks waiting on it should persist the job id at submission time, not at completion time, so a timeout or crash mid-wait still leaves a recoverable trail. Separately confirmed via a new regression test that the non-zero-exit half of this kaizen was already correct; not every suspected two-part gap turns out to have two real parts.
-- 2026-07-29 `media-watchlist/t-006` — This recurring polish task's own note pointed at a stale kaizen (Month/Season filters) that t-012 and t-016 had already closed two cycles earlier -- re-implementing it blind would have been a pure no-op. Re-diffing BROWSE-UX.md against the live components before picking a slice caught the drift and surfaced a different, still-open gap (Entry Detail's "Related entries" section, §3) that the note never flagged. Kaizen: on a recurring task with a multi-cycle PROGRESS history, treat the latest PROGRESS note's "not done yet" list as a hypothesis to verify against current main, not a ready-made todo -- prior cycles closing kaizens out-of-band (via their own follow-on tasks) can leave the recurring task's own note pointing at already-finished work.
-
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-07-31T20:39:41Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-07-31T20:51:45Z_
