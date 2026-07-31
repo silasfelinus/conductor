@@ -7,22 +7,22 @@ milestones:
   - id: m1
     title: "SHAPE — endpoint framework and design brief"
     weight: 25
-    status: not-started
+    status: done
 
   - id: m2
     title: "BUILD — life run, choice, and ending engine"
     weight: 35
-    status: not-started
+    status: done
 
   - id: m3
     title: "INTEGRATE — milestones, Dreams, characters, Chat, and art collections"
     weight: 25
-    status: not-started
+    status: done
 
   - id: m4
     title: "POLISH — ending reveal, achievement gallery, and Storymaker alignment"
     weight: 15
-    status: not-started
+    status: done
 
 tasks:
   - id: t-001
@@ -353,3 +353,71 @@ tasks:
       task for the actual narrate endpoint + minimal run-screen UI (not filed
       yet -- left for Silas/next cycle to scope as its own task rather than
       bundling a large implementation into this spec-only pass).
+
+  - id: t-016
+    milestone: m2
+    title: "Build the Da Vinci AI-narration layer (narrate endpoint + run-screen wiring)"
+    status: done
+    owner: worker
+    updated: '2026-07-31T20:10:00Z'
+    passes: 0
+    stakes: reversible
+    depends_on:
+      - t-013
+      - t-015
+    note: >
+      The build task t-015 specced but deliberately left unfiled. t-013 landed the
+      play loop (create run / record choice / resolve) and t-008 seeded all 1024
+      endings, but nothing generated the chapter prose, choice text, or effect
+      deltas a player actually reads -- the project was flipped `finished` on
+      2026-07-26 with that gap still open.
+
+      DONE 2026-07-31 (Silas-directed session claude/conductor-davinci-sync-0kyzzf,
+      kind_robots commit fa7db9c). Implements projects/davinci/docs/narration-layer-spec.md
+      as written:
+
+      (1) server/utils/davinciNarration.ts -- strict json_schema request against the
+      requestOpenAiReview/validateGeneratedPayload pattern already live in
+      wonderLabReviewDraftGenerator.ts, AbortController with a 20s budget (tighter
+      than WonderLab's 30s because the player is waiting on this call, per the
+      spec), one retry on a parse/validation failure, then a visible error rather
+      than a synthetic chapter. validateNarrationPayload enforces every app-owned
+      bound the model could violate: the DAVINCI_DIMENSIONS allowlist (an invented
+      eleventh stat is rejected, not passed through -- recordLifeChoice accepts
+      arbitrary stat keys by design, so this is the only thing standing between
+      narrator output and a junk LifeStat row), the [-2,2] per-choice clamp, the
+      2-4 choice band, and prose word bounds. Deviation from the spec worth noting:
+      the effects map is expressed as all ten dimensions typed nullable-integer and
+      all required, rather than as optional keys -- OpenAI strict mode forbids
+      optional properties, and nulls are dropped during validation, which preserves
+      the spec's "an option can be flavor with zero mechanical effect" rule. Range
+      and item-count bounds are enforced server-side rather than via
+      minimum/maximum/minItems/maxItems, whose strict-mode support is uneven.
+
+      (2) POST /api/davinci/runs/:id/narrate -- a thin route that writes nothing.
+      Owner-only, 409 on a non-ACTIVE run (matching the choices guard). The client
+      still posts the chosen option's validated effects to /choices as a separate
+      step, so LifeChoice/LifeStat writes and all outcome math stay in
+      server/utils/davinci.ts. Narrator selection is the spec's two-branch
+      botId -> characterId -> default-bot-433 lookup, read from prisma directly
+      instead of via a self-HTTP hop to /api/narrators/[type]/[slug]; same columns,
+      same normalized shape.
+
+      (3) components/conductor/davinci-page.vue plays narrated chapters, with the
+      end-the-run action gated on chapter >= 3 per the spec. The curated 8-chapter
+      pool from t-014 is kept but is no longer the default -- it is offered as an
+      explicit, labelled choice after a narration failure, so a player always knows
+      which mode they are in.
+
+      Verified: vue-tsc --noEmit 0 errors, eslint clean on every changed file, and a
+      new 35-check contract suite (npm run test:davinci-narration, wired into
+      .github/workflows/contract-tests.yml) covering the dimension allowlist, the
+      clamp, the choice band, null/zero-delta dropping, schema strict-mode shape,
+      and request assembly. No live model call was made from this sandbox, so the
+      first real end-to-end narration happens on the preview deploy -- the failure
+      path is a visible retry, not a broken run, so this is safe to land unproven.
+
+      Explicitly still deferred (unchanged from the spec): freeform choice input,
+      the milestoneCandidate "heading toward..." UI treatment beyond the small hint
+      line, LifeRunArt generation from artPrompt (the narrator proposes the string;
+      nothing consumes it yet), and the shared Storymaker narration utility.

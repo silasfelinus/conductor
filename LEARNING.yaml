@@ -5241,3 +5241,35 @@ records:
     claim_task.py (or any direct-to-main script) should fetch/rebase locally
     before its next roadmap edit in the same cycle, not just before the final
     close-out push.
+- date: 2026-07-31
+  project: davinci
+  task: t-016
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    Two source-of-truth divergences found in one sweep, both invisible to status
+    counts. (1) The kind_robots Projects board computed progress from milestone
+    status alone while conductor's build_status.py falls back to the task ratio;
+    since agents close tasks but rarely flip milestones, 16 of 43 projects showed
+    0% against real values up to 100%. The board looked plausible rather than
+    broken, which is why it survived -- the 27 correct rows made the 16 wrong ones
+    read as genuinely-unstarted work. Lesson: when the same number is computed in
+    two repos, the parity check belongs in CI from the start; a transcription of
+    the other side's formula asserted against fixtures is cheap and catches drift
+    that no amount of reading either implementation alone would surface.
+    (2) davinci was flipped `finished` while its central gap sat unfiled, because
+    the task whose output was a spec deliberately deferred filing the build task it
+    specced. "All tasks done" and "project done" diverge exactly at spec-only
+    closures. A spec task that defers its own implementation should file the
+    follow-up before going done, even as a stub -- otherwise the deferral exists
+    only in prose inside a note field, where every lifecycle check is structurally
+    blind to it.
+    Also confirmed a third instance of the roadmap-scan-without-lifecycle-join bug
+    class, this time in build_conductor_summary.py's fetch_roadmaps(): it was
+    surfacing retired approval-portal tasks under ACTION NEEDED every cycle.
+    CLAUDE.md documents this bug for the human sweep; the automated builder had it
+    independently. Fixing it removed 15 phantom needs-human gates. Worth auditing
+    every glob("projects/*/roadmap.yaml") caller rather than waiting for a fourth.

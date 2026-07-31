@@ -231,7 +231,15 @@ overrides:
     tabKey: storymaker
 
   - slug: davinci
-    status: finished # flipped 2026-07-26 -- all 15 tasks done, nothing open
+    status: active # reopened 2026-07-31 (Silas-directed session: "making da Vinci
+    # work start to finish"). Was flipped `finished` 2026-07-26 on the reading that
+    # all 15 tasks were done with nothing open -- true of the task list, but t-015
+    # closed by writing the AI-narration spec and explicitly declining to file the
+    # build task ("left for Silas/next cycle to scope as its own task rather than
+    # bundling a large implementation into this spec-only pass"). The project was
+    # therefore marked finished with its central gap unfiled: a play-loop API and
+    # 1024 seeded endings with nothing generating the prose a player reads. t-016
+    # files and closes that build.
     priority: normal
     kind: software
     # Frontend placement — synced to the kind_robots Project row by
@@ -407,3 +415,14 @@ overrides:
     status: active
     priority: low # idle fallback by design — must never outrank real ready work
     kind: software
+
+  - slug: lora-ingestion
+    status: active # onboarded 2026-07-31 -- this project had a roadmap.yaml and
+    # appeared in STATUS.md (32.5%, m1 done) but was never added here, and the
+    # registry is what defines projects for the kind_robots front end
+    # (server/api/conductor/projects.get.ts iterates the overrides list, not the
+    # projects/ directory). It was therefore invisible on the site and skipped by
+    # sync_projects.py entirely. `kind` deliberately omitted so the endpoint falls
+    # back to the roadmap's own `infrastructure`, which the override vocabulary
+    # (software|content|proposal|brainstorm) does not cover.
+    priority: normal
