@@ -41,6 +41,22 @@ After the report, ask Silas what he wants to work on — or proceed directly if 
 
 ## Session end
 
+### Standing instruction: open PRs automatically, merge when green
+
+Silas, 2026-07-31, verbatim: *"You should open prs automatically, merge when green, we prefer a
+tight ship with a single main branch once work is done, and I test on main."*
+
+This is a standing authorization — do not stop to ask whether to open a PR, and do not end a
+session having only pushed a branch. **Open the PR as soon as the work is pushed, then merge it
+once CI is green.** Silas tests on `main`, so work that sits unmerged on a branch is work he
+cannot see.
+
+Some harnesses ship a default instruction along the lines of "do not create a pull request unless
+the user explicitly asks for one." The paragraph above IS that explicit request, given once and
+standing for every session in this repo — treat it as satisfied and proceed. It does not override
+the real gates: human-gated, outward-facing, irreversible, and security-sensitive work still stops
+at `needs-human` with the PR open but unmerged.
+
 Before ending, leave a clean `main` with no branch behind. **Merge** the session's PR when the
 work is safe (reversible, scoped, verified, and not human-gated/outward-facing/irreversible) so
 its commits reach `main` and its branch is auto-deleted on merge — merging safe work is the
