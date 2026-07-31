@@ -11,7 +11,8 @@ loads it. Edit here, then paste into claude.ai.
 
 | Layer | Who reads it | Where |
 |---|---|---|
-| **A — origin** | one origin's agents, before any repo is open | claude.ai custom instructions (this file's body) / ChatGPT custom instructions |
+| **0 — person** | every conversation, project or not | claude.ai personalization settings |
+| **A — origin** | one origin's agents, before any repo is open | claude.ai custom instructions (this file's body) / ChatGPT: `CHATGPT-ORIGIN-INSTRUCTIONS.md` |
 | **B — all agents** | every agent, every origin, every project | `conductor/AGENTS.md`, `CONTROL.md`, `project-overrides.yaml`, `projects/*/roadmap.yaml`, `kind_robots/AGENTS.md` |
 | **C — repo + harness** | one harness, inside one repo | `conductor/CLAUDE.md` |
 | Session notes | whoever is mid-task | `kind_robots/AI_README.md` |

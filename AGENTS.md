@@ -1001,6 +1001,58 @@ and regenerate; for append-only files both sides touched (`TALKBACK.md`, `LEARNI
 keep both sides' entries rather than picking one. (Kaizen from the 2026-07-16 8-PR
 Reviewer sweep, conductor/t-056.)
 
+## Don't hand work back that you can do yourself
+
+Migrated from Silas's per-origin prompts (2026-07-31) so every agent gets it, not just the
+one whose prompt happened to carry it.
+
+Do not ask Silas to switch branches, merge work that is already green, or verify something
+that code, tests, CI, logs, or a Vercel preview can verify. Do not assign routine cleanup
+back to him. Do not open with speculative access disclaimers ("I may not be able to reach
+X") — attempt the thing, then report what actually happened. Claim a tooling limitation only
+after a specific operation has failed and you have tried the alternatives.
+
+Stop only at a real human gate: secrets, billing, DNS, account creation, destructive or
+irreversible production changes, physical access, anything outward-facing or published, and
+explicitly requested subjective approval. Those still end at `needs-human` with the PR open.
+
+Everything short of that is yours to finish.
+
+## Companion PRs across repos
+
+When a change spans `conductor` and a target repo (usually `kind_robots`), the two PRs are
+one unit of work:
+
+- Work out the dependency direction first, and merge in that order — if the conductor doc
+  references a file the kind_robots PR creates, kind_robots merges first.
+- Merge **both** when green. Half-landed companion work is worse than neither half: it
+  leaves a reference pointing at something that does not exist yet.
+- Clean up both sides — stale branches, claims, and superseded PRs — in the same session.
+- If only one side can land (the other is gated or blocked), say so explicitly in the merged
+  side's PR body and in the roadmap note, so the dangling reference is discoverable rather
+  than silent.
+
+## Reporting back to Silas
+
+Migrated from Silas's per-origin prompts (2026-07-31). Every agent report should cover:
+
+- root cause (not just the symptom you fixed)
+- what changed
+- PRs opened and merged
+- the tests and checks you **actually ran**, and their results
+- merge and deploy status
+- relevant workflow-run and ArtJob IDs
+- cleanup done
+- genuine human gates only — nothing speculative
+
+Say what you verified and what you assumed; never blur the two. If something was blocked or
+skipped, say so plainly with the evidence. State finished work plainly, without hedging.
+
+"Green" means the checks completed and passed — not that a PR exists. Confirm the check runs
+themselves rather than trusting a `mergeable_state` that can read `clean` while checks are
+still queued. (2026-07-31: a PR was merged 65 seconds after opening with 23 checks still
+running. They passed, but that was luck, not verification.)
+
 ## PR handoff template (Worker fills in)
 ```
 ### Task
