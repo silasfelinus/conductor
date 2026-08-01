@@ -572,25 +572,15 @@ tasks:
   - id: t-011
     milestone: m2
     title: 'Make the review system consistent across all seven object types'
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
     depends_on: t-007
-    note: >
-      Phase 4.2. There is no Review model; Reaction is the universal row (17 nullable
-      FKs, rating, comment, ReactionType, 17 categories). The good news is that
-      components/wonderlab/reactable-card.vue is already the shared reaction affordance
-      and 12 card types wrap it. The gaps: components/art/art-reactions.vue (264 lines,
-      5-star + reaction type + comment — the most complete rating widget in the repo) is
-      IMPORTED BY NOTHING, and its header comment still claims a stale path; and
-      allowReviews exists only on Dream and Project and is read by no gallery at all.
-      Revive art-reactions.vue as the canonical review panel, surface it through
-      reactable-card so all seven objects get identical review UI, and make allowReviews
-      actually gate it (t-007 adds the field to the other five).
+    note: 'DONE 2026-08-01: kind_robots PR #1271 (merged, squash 2ee1e32). Gated reactable-card''s review button on allowReviews for Bot/Character/Reward/Scenario (the four of the seven allowReviews-bearing models that already had a reactable-card integration) -- new allowReviews prop on reactable-card.vue (default true, no behavior change unless a caller passes an explicit entity value), wired via :allow-reviews from bot/character/reward/scenario-card.vue. Deleted components/art/art-reactions.vue instead of reviving it -- zero imports anywhere, and reaction-card.vue already is the generic canonical review panel the note asked art-reactions.vue to become (already wired through reactable-card for 12+ card types). Split remainder into t-031 (Dream/Project/Facet review UI -- Dream card layout is incompatible with reactable-card''s wrapper, Project/Facet have no gallery card at all) and t-032 (owner-facing allowReviews toggle -- the field defaults false with zero UI to flip it outside the admin conductor-page.vue Project toggle, so the newly-gated button is technically correct but currently unreachable for the other four types). Verified: npm run test (vue-tsc) clean, eslint clean on changed files, prettier clean after --write fixed pre-existing drift in bot-card.vue/character-card.vue (confirmed content-only via git diff --ignore-all-space), all 12 kind_robots CI checks green. Could not visually verify (no local DATABASE_URL) -- recommend a Vercel-preview spot check.'
     claimed_by: 2026-08-01T2026-conductor-run-t011
     claimed_at: '2026-08-01T20:27:26Z'
-    updated: '2026-08-01T20:27:26Z'
+    updated: '2026-08-01T20:40:09Z'
 
   - id: t-012
     milestone: m2
