@@ -649,23 +649,100 @@ tasks:
   - id: t-013
     milestone: m2
     title: 'Un-nest the dashboards-inside-dashboards'
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
     depends_on: t-004
     note: >
-      Phase 5.2. components/pages/conductor-page.vue is the largest file in the repo at
-      2022 template lines and depth 15, and stacks SIX navigation affordances under the
-      global header: the app header, channel-select, conductor-manager's decorative
-      chrome, its own cockpit bar, and two more tabs-boxed strips at L801-802 and L861.
-      Reduce to: global header -> ONE tab strip -> content. Same treatment for
-      components/art/art-manager.vue (a dashboard whose tabs are themselves dashboards —
-      stylist, coloring, artjob each fan out further) and for user-manager -> user-dashboard,
-      which is a dashboard-tab named dashboard inside a dashboard named dashboard.
+      DONE 2026-08-01: kind_robots PR #1283 (merged). Investigated all three named
+      targets before touching any of them (this project's established discipline —
+      see t-008/t-009/t-011/t-012's TALKBACK entries).
+      conductor-page.vue: conductor-manager.vue (its sole mount point) intercepts
+      workspaceCardKey === 'overview' (-> ConductorProjectGalleryPage) and
+      === 'brainstorm' (-> ConductorPitchManager) BEFORE ConductorPage ever mounts,
+      so ConductorPage's own 'overview'/'brainstorm' viewMode branches, plus the
+      cockpit-bar admin overview stats, the backfill button, and the New Project
+      button (all gated on viewMode === 'overview'), were structurally dead code —
+      the admin New Project flow has been completely unreachable, not a working
+      feature with bad UX. Deleted all six dead ranges plus every script
+      declaration that became orphaned as a result (verified iteratively via
+      eslint, two passes, 32 total). File: 3019 -> 2199 lines, zero behavior
+      change for any reachable state. Verified: eslint clean, prettier clean,
+      full-repo vue-tsc clean, test:layout-contract shows no new violations.
+      Did NOT attempt the actual "six affordances -> global header + ONE tab
+      strip" redesign (conductor-manager's decorative chrome, the cockpit bar,
+      and the Tasks view's two tabs-boxed strips all still exist) — that's a real
+      aesthetic/product decision, and this project's own notes_from_silas scope
+      decision #2 says "build mockups first; Silas picks by eye." Split to t-037.
+      art-manager.vue: this task's premise does NOT hold on inspection — no
+      internal tabs-boxed/role="tablist" anywhere in art-manager.vue,
+      stylist-manager.vue, coloring-book-manager.vue, artjob-queue-browser.vue,
+      or artjob-feedback-manager.vue. It's a single-level 8-way tab switch with no
+      wrapping decorative chrome (content/art.md mounts :art-manager directly
+      under the header). No follow-up task filed against a premise that's stale.
+      user-manager/user-dashboard: premise DOES hold — user-manager.vue has a tab
+      literally named 'dashboard' that mounts a component literally named
+      user-dashboard.vue, which itself renders a duplicate <h1>User Dashboard</h1>
+      profile-card header (not a bare duplicate title like t-004's other finds —
+      it's a whole icon+title+subtitle card, so not a blind tag-swap). Split to
+      t-038 rather than guessing at a fix.
     claimed_by: claude-agentrun-2026-08-01T232635-t013
     claimed_at: '2026-08-01T23:26:36Z'
     updated: '2026-08-01T23:26:36Z'
+
+  - id: t-037
+    milestone: m2
+    title: 'Fold conductor-manager.vue chrome + conductor-page.vue cockpit bar into the one-header/one-tab-strip contract'
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-013
+    note: >
+      Split from t-013 (2026-08-01, kind_robots PR #1283). t-013's pass removed
+      everything in conductor-page.vue that was structurally dead code; this task
+      is the real remaining redesign. Current stack under the global header for
+      /conductor: channel-select -> conductor-manager.vue's decorative wrapper
+      (rounded-3xl gradient border + two blurred decorative circles, p-1.5/2.5
+      padding) -> conductor-page.vue's own cockpit bar (breadcrumb/back button,
+      non-admin project count, error/loading indicators, missing-projects-sync
+      button, gallery-mode toggle, admin refresh button — all still genuinely
+      live, unlike what t-013 removed) -> the Tasks view's two adjacent
+      tabs-boxed strips (category filter: Agent/Story/Kaizen/HoneyDo, and status
+      filter: Open/Done/Archived). Target per Silas: global header -> ONE tab
+      strip -> content. This needs real product decisions (does the cockpit bar's
+      live content move into the header, become one kr-toolbar line, or get cut;
+      do the two tab strips merge into one row or does one become a dropdown;
+      does conductor-manager's decorative chrome get replaced by .kr-surface per
+      t-004) — per this project's own notes_from_silas scope decision #2, "build
+      mockups first; Silas picks by eye, not from description." Build 2-3 mockups
+      via Vercel preview rather than guessing at the final shape blind.
+  - id: t-038
+    milestone: m2
+    title: 'Un-nest user-manager -> user-dashboard and fix its duplicate profile-card header'
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-013
+    note: >
+      Split from t-013 (2026-08-01, kind_robots PR #1283). Two confirmed issues in
+      components/user/user-manager.vue + components/user/user-dashboard.vue:
+      (1) user-manager.vue's tab list (dashboard/avatars/friends/achievements/
+      themes/chats) includes a tab literally named 'dashboard' whose only job is
+      to mount <user-dashboard>, i.e. a dashboard-tab named dashboard inside a
+      dashboard named dashboard, exactly as this project's notes_from_silas
+      described. Decide whether 'dashboard' should even be a selectable tab (vs.
+      always-shown default content with the other five as the actual tab strip)
+      and collapse the indirection. (2) user-dashboard.vue (line ~16) renders its
+      own icon+<h1>User Dashboard</h1>+subtitle profile-card header, duplicating
+      the global header per t-004's Header Rule — but unlike the bare <h1>
+      swaps t-004 already did elsewhere, this is a whole styled card (avatar-style
+      icon, title, subtitle), not a trivial tag-swap, and t-004 explicitly
+      deferred exactly this class of "known offender" rather than guess. Needs a
+      look at whether the icon+subtitle content is worth keeping as a slim
+      kr-toolbar line or should just go, per the same mockup-first rule as t-037.
 
   - id: t-014
     milestone: m2
@@ -1210,3 +1287,23 @@ tasks:
       the existing stat-grid/card-grid UI shape; this is a data-source swap plus real
       validation, not a rebuild. navManifest.ts is already isomorphic (no node:fs) so it
       is safe to import client-side as-is.
+
+  - id: t-039
+    milestone: m2
+    title: 'Clean up debug stdout noise in verifyEntityArtManager.ts'
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: null
+    note: >
+      Kaizen from t-013 (2026-08-01, kind_robots PR #1283). Running
+      `npx tsx utils/scripts/verifyEntityArtManager.ts` prints a large
+      base64-looking `ENTITY_ART_SOURCE_000`..`ENTITY_ART_SOURCE_NNN` blob dump
+      (plus an `ENTITY_ART_SOURCE_CHUNKS` count) to stdout before its final
+      "Entity art manager contract verified." line. Looks like leftover debug
+      output (e.g. an accidental console.log of a chunked/base64-encoded source
+      read) rather than deliberate contract output, and makes CI logs for this
+      check needlessly noisy. Find the source of the dump and gate it behind a
+      --verbose flag or remove it outright; verify the script's actual pass/fail
+      signal (its final verified line / exit code) is unaffected.
