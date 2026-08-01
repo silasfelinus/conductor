@@ -159,9 +159,12 @@ def build_payload(digest: dict[str, Any]) -> dict[str, Any]:
             + "".join(proposal_section("Built bundle", proposal) for proposal in additional)
         )
         divider = '<hr style="margin:22px 0;border:none;border-top:2px solid #eee">'
-        payload["htmlContent"] = payload["htmlContent"].replace(
-            divider, recent_html + divider, 1
-        )
+        if divider in payload["htmlContent"]:
+            payload["htmlContent"] = payload["htmlContent"].replace(
+                divider, recent_html + divider, 1
+            )
+        else:
+            payload["htmlContent"] += recent_html
 
     status = str(digest.get("daily_dream_output_status") or "")
     if status and not digest.get("yesterday_output"):
