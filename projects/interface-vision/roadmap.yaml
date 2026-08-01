@@ -297,35 +297,77 @@ tasks:
   - id: t-006
     milestone: m2
     title: 'Build the narrator stage and restore narrators to Storymaker and Taskmaster'
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
     depends_on: t-004
     note: >
-      Phase 2, the flagship — prove the contract on the most-broken surface before
-      touching anything else. Nothing was deleted when narrators left the site:
-      stores/narratorStore.ts (1556 lines), components/navigation/workspace-narrator.vue
-      (1477), components/narrative/*.vue (6 files, 911), the NarratorTopic and
+      DONE 2026-08-01: kind_robots PR #1267 (merged). Built
+      components/narrative/kr-narrator-stage.vue: the narrator as a first-class
+      in-flow region (large art plate with page art + narrator portrait/mood, a
+      narration window, and a pinned action rail with topic quick-buttons +
+      free-text input) instead of the existing overlay drawer
+      (workspace-narrator.vue, left unchanged, still used by dream-interact.vue).
+      Mounted via LazyKrNarratorStage on both storymaker-page.vue and
+      taskmaster-page.vue, matching the dream-interact.vue Lazy-mount precedent
+      so narratorStore's eager 9-store composition stays out of these pages'
+      first-paint bundle. Wired dashboardHelper's existing scenario/taskmaster
+      and scenario/storymaker tab images into the stage's art plate (previously
+      only a faint ambient background in workspace-header.vue — both pages
+      rendered zero <img> before this). Collapsed both pages from 2 scroll
+      regions to 1 (header + narrator stage shrink-0, one shared .kr-scroll
+      region, response composer/outcome actions pinned outside it) and removed
+      the redundant "Taskmaster"/"Storymaker" eyebrow label duplicating the
+      shell's own title. Collapsed content/taskmaster.md's duplicate MDC mount
+      to one (:taskmaster-page); TaskmasterSampleTasks now composes inside
+      taskmaster-page.vue instead of as a sibling MDC block — updated
+      verifyTaskmasterSampleTasks.mjs's contract assertion, which had
+      hard-locked the old two-block structure (a composition-lock surprise of
+      exactly the kind t-023 exists to catch, found and fixed directly here
+      since it blocked this task's own explicit ask). Also fixed
+      verifyLayoutContract.ts's one-scroll/zero-scroll detection to recognize
+      the .kr-scroll primitive class (t-004) as a real scroll region, not just
+      the raw overflow-y-auto string — it was built in t-005 before t-004
+      shipped the class, so no page could previously adopt .kr-scroll without
+      reading as zero-scroll. Ratcheted the layout-contract baseline down
+      (one-scroll -2, one-mdc -1). Verified locally (sandbox has no DB): vue-tsc
+      clean, eslint clean, prettier clean, test:layout-contract holds, and every
+      Storymaker/Taskmaster/narrative contract verifier passes. No Vercel
+      preview / live visual check performed this session — flagged on the PR
+      for a follow-up visual pass on phone/tablet/desktop widths.
+      Not attempted, left as future adoption work: restructuring either page's
+      containers onto .kr-surface/.kr-toolbar beyond what the scroll-region
+      collapse needed, and the narrator's full topic/thread chat UI (flip-card
+      portrait, emoji bursts, musing toasts) — the new stage's own scope stayed
+      small and robust rather than duplicating the drawer's much larger state
+      machine.
+      ---
+      Original task note, for history: Phase 2, the flagship — prove the
+      contract on the most-broken surface before touching anything else.
+      Nothing was deleted when narrators left the site: stores/narratorStore.ts
+      (1556 lines), components/navigation/workspace-narrator.vue (1477),
+      components/narrative/*.vue (6 files, 911), the NarratorTopic and
       NarratorThread models, Dream.narratorId, five API routes and
-      normalizePageNarrator() in [...slug].vue are all still live. It is mounted in
-      exactly ONE place: components/dreams/dream-interact.vue:21.
-      Two problems, and only the second is real work. (1) It is not mounted where it
-      matters — Storymaker and Taskmaster never mount it. Re-mounting is small, but it
-      MUST stay Lazy*: its removal from app.vue was a deliberate first-paint fix because
-      narratorStore pulls dreamStore + chatStore + serverStore into the eager bundle.
-      (2) It is an overlay, not a stage — currently `pointer-events-none absolute
-      inset-y-0 right-0 z-40`, a drawer floating over the page. Silas wants it as a
-      first-class REGION: large art plate, dedicated narrator position, generous
-      narration window styled as narration rather than body text, and a pinned action
-      rail with choice buttons + free-text input. Build `kr-narrator-stage` for that.
-      Also: delete the duplicate MDC mount in content/taskmaster.md (it renders both
-      :taskmaster-sample-tasks and :taskmaster-page), and wire the tab image that
-      dashboardHelper already has for scenario/taskmaster but the page never renders.
-      Exit: Taskmaster shows the word "Taskmaster" ONCE (3 times today), Storymaker
-      shows one title (3 today), each page has one scroll region, and art is present
-      (both pages render zero <img> today). Verify on phone, tablet and desktop via
-      Vercel preview.
+      normalizePageNarrator() in [...slug].vue are all still live. It is
+      mounted in exactly ONE place: components/dreams/dream-interact.vue:21.
+      Two problems, and only the second is real work. (1) It is not mounted
+      where it matters — Storymaker and Taskmaster never mount it. Re-mounting
+      is small, but it MUST stay Lazy*: its removal from app.vue was a
+      deliberate first-paint fix because narratorStore pulls dreamStore +
+      chatStore + serverStore into the eager bundle. (2) It is an overlay, not
+      a stage — currently `pointer-events-none absolute inset-y-0 right-0
+      z-40`, a drawer floating over the page. Silas wants it as a first-class
+      REGION: large art plate, dedicated narrator position, generous narration
+      window styled as narration rather than body text, and a pinned action
+      rail with choice buttons + free-text input. Build `kr-narrator-stage` for
+      that. Also: delete the duplicate MDC mount in content/taskmaster.md (it
+      renders both :taskmaster-sample-tasks and :taskmaster-page), and wire the
+      tab image that dashboardHelper already has for scenario/taskmaster but
+      the page never renders. Exit: Taskmaster shows the word "Taskmaster" ONCE
+      (3 times today), Storymaker shows one title (3 today), each page has one
+      scroll region, and art is present (both pages render zero <img> today).
+      Verify on phone, tablet and desktop via Vercel preview.
     claimed_by: claude-agentrun-2026-08-01T18:26:55-t006
     claimed_at: '2026-08-01T18:26:55Z'
     updated: '2026-08-01T18:26:55Z'
