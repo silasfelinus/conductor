@@ -2009,3 +2009,54 @@ tasks:
     updated: '2026-07-26T11:14:12Z'
     claimed_by: claude-conductor-scheduled-20260726T111500Z-kr-t050
     claimed_at: '2026-07-26T11:14:12Z'
+  - id: t-051
+    milestone: m1
+    title: 'Unblock production deploys: facet reseed fails and any migration triggers it'
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      PRODUCTION HAS NOT DEPLOYED SINCE PR #1253 (3732a63, 2026-08-01 13:15 UTC).
+      Nine consecutive merges have built, applied their migrations, then died at
+      the facet-catalog reseed: #1252, #1254, #1255, #1256, #1257, #1258, #1259.
+      The live site still serves #1253 and is healthy -- this blocks SHIPPING, not
+      serving -- but nothing merged today is visible, including the
+      interface-vision mockups at /storymaker-mockups.
+      TWO SEPARATE PROBLEMS, both need addressing.
+      (1) THE TRIGGER IS TOO BROAD. scripts/lib/facetCatalogSeedPolicy.mjs:49 ends
+      isFacetCatalogSourcePath() with `return
+      normalized.startsWith('prisma/migrations/')`, and prisma/schema.prisma is in
+      FACET_CATALOG_SOURCE_FILES too. So ANY migration forces a full production
+      catalog reseed. The two interface-vision migrations
+      (20260801220000_entity_card_hero_icon_art, 20260801233000_entity_icon_path)
+      only add art columns to Bot/Character/Reward/Scenario, yet they are named in
+      every failure message as the reason the reseed ran. Until this is narrowed,
+      a schema change in ANY domain can block shipping for the whole site.
+      (2) THE RESEED ITSELF IS UNRELIABLE. Before #1259 it was P2002
+      unique-constraint races in seedFacetCatalog.ts (runWithConcurrency +
+      Promise.all). #1259 serialized it behind a MySQL named lock and the lock
+      works, but the failure moved: the lock-holding mariadb connection is killed
+      mid-run (ER_CMD_CONNECTION_CLOSED, errno 45013, sqlState 08S01). The
+      keepalive ping at run_facet_catalog_maintenance.ts:189 fails ("Lost the
+      database session holding the catalog lock"), releaseLock at :154 then fails,
+      and the child exits 1. Suspected ProxySQL closing a long-lived connection
+      the run outlives -- that run spanned 14:15 to 14:59.
+      MIGRATIONS ARE FINE. prisma migrate deploy runs early in vercel-build.mjs and
+      succeeded every time; #1258's log at 14:15:32 confirms "All migrations have
+      been successfully applied." The production DB has the new columns and only
+      the app code is stale. Additive columns unused by old code is a SAFE state --
+      do NOT roll the migrations back.
+      SUGGESTED FIXES, in order: (a) make the lock-holder reconnect and reacquire on
+      ER_CMD_CONNECTION_CLOSED rather than aborting, or ping faster than ProxySQL's
+      timeout; (b) narrow isFacetCatalogSourcePath so prisma/migrations/** only
+      counts when a migration actually touches facet tables -- this is the durable
+      fix for the design issue; (c) decide whether catalog maintenance should be
+      fatal to the build at all. (c) is a product judgement about trading a hard
+      failure for silent catalog drift and belongs to Silas, not an agent.
+      decideFacetCatalogSeed() is a pure function with an existing checker
+      (utils/scripts/verifyFacetCatalogSeedPolicy.mjs), so (b) is testable with no
+      database. (a) is NOT testable from a sandbox -- direct MySQL on :5544 is
+      unreachable there, only the HTTPS API works.
+      Diagnosed 2026-08-01 by the interface-vision session; see the root TALKBACK
+      entry of the same date for the full evidence trail.
