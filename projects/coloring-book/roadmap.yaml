@@ -175,10 +175,10 @@ tasks:
 - id: t-022
   milestone: m4
   title: Monster Recast book 1 production pass — 36 final color/BW pairs
-  status: ready
+  status: claimed
   passes: 0
   stakes: reversible
-  updated: '2026-08-01T04:38:59Z'
+  updated: '2026-08-01T07:34:09Z'
   depends_on: t-021
   note: |-
     CURRENT COLOR-FIRST DIRECTION (2026-07-17): use the canonical color-art-jobs.yaml
@@ -213,9 +213,9 @@ tasks:
     CURRENT STATE (2026-08-01): the credential wall is gone -- the 04:14Z hourly run recovered/re-judged all 16 remaining ids, promoting 3 (mr-007, mr-010, mr-020) and genuinely semantic-rejecting the other 13 on real quality grounds. Fixed a real bug where `record_semantic_rejection()` never cleared the stale "job N: ANTHROPIC_API_KEY ..." breadcrumb once a recovered image got a real verdict, which would have kept `referenced_job_id()` pointing every future pass at the same dead job and re-judging the identical rejected image forever instead of trying a fresh render. Also cleared the now-stale breadcrumb directly on the 13 affected entries. `coloring_queue_status.py --book monster-recast` now reports `recommended_action=submit-next-batch` (18 actionable). See run_log for full detail.
   run_log: projects/coloring-book/t-022-run-log.md
   recurring: true
-  owner: null
-  claimed_by: null
-  claimed_at: null
+  owner: worker
+  claimed_by: claude-scheduled-20260801T073408Z-cb-t022
+  claimed_at: '2026-08-01T07:34:09Z'
 - id: t-025
   milestone: m6
   title: Package and register Monster Recast book 1
