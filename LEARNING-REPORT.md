@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-01T18:27:26Z
+Generated: 2026-08-01T19:02:46Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **449**
-- Outcomes: blocked: 13, cancelled: 1, done: 435
+- Closed tasks recorded: **450**
+- Outcomes: blocked: 13, cancelled: 1, done: 436
 - Success rate: **97%**
 - Average passes on successful tasks: **0.0**
 
@@ -35,7 +35,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | humboldt-impropriety-calendar | 1 | 0% |
 | humboldt-scoop | 1 | 100% |
 | humboldt-scoop-cms | 4 | 100% |
-| interface-vision | 8 | 100% |
+| interface-vision | 9 | 100% |
 | kind-robots | 39 | 97% |
 | kindrobots-unraid | 4 | 100% |
 | media-watchlist | 10 | 100% |
@@ -59,7 +59,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 15 | 40% |
-| software | 434 | 99% |
+| software | 435 | 99% |
 
 ## Failure categories
 
@@ -80,6 +80,8 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-08-01 `interface-vision/t-006` — Clean first pass (kind_robots PR #1267), but the close-out step surfaced a real tooling gap this session had to work around by hand: claim_task.py pushed its claim commit straight to origin/main, and this session's local checkout was never re-fetched before set_task_field.py edited the roadmap to status: review -- set_task_field.py operates on whatever is in the local tree with no fetch of its own (its own docstring names this exact gotcha, conductor/t-077/davinci/t-014), so the resulting commit briefly clobbered the claim commit's owner/claimed_by/claimed_at fields on this session's branch. Caught before it reached main only because rebasing onto origin/main before opening this task's own conductor PR produced a merge conflict on the exact block claim_task.py had written -- resolved by keeping origin/main's claim metadata and folding in the intended status transition. Standing takeaway: after any claim_task.py call (or any other script documented to push straight to origin/main), fetch and fast-forward the local checkout before running set_task_field.py against the same file in the same session, not just before the final close-out push.
+
 - 2026-08-01 `interface-vision/t-008` — A roadmap task assumed 7 differently-purposed Vue components (5 CRUD picker widgets with dashboard/row/dropdown variants, 1 taxonomy-search view, 1 content-collection list) were all "near-duplicates" of one passive browse gallery, based on line-count and surface description alone. Reading each target file's actual prop signature before writing any migration code caught the mismatch before implementation, not after -- a 5-minute grep for variant/mode props (`grep -n "variant\|GalleryVariant\|isDropdownMode"`) across the named files would let a task author flag this in the roadmap task itself instead of a Worker discovering it mid-implementation. Scope was shrunk to the one genuine match plus one confirmed-dead deletion; the remaining 6 objects moved to a new task (t-023) for honest per-object re-assessment rather than forced onto the same shell.
 
 - 2026-08-01 `interface-vision/t-004` — CI caught a real conflict a general layout-contract sweep can't see: verifySerendipityRouteCutover.mjs hard-locks one page's exact <h1> markup as a route-cutover migration contract, unrelated to the one-header rule this task was adopting elsewhere. First push broke it, fixed in a follow-up commit. Filed t-023 (composition-lock audit) so t-017's later sweep can grep for hard-coded-markup contract tests across the remaining allow-list files up front instead of discovering them one CI failure at a time. General principle: a shrink-only CI ratchet only protects against violating ITS OWN rule -- it says nothing about whether some other, unrelated contract test depends on the exact markup being changed. Scope discipline (only fix what's asked, skip files another task/system explicitly owns) also paid off here -- deliberately left 8 of 29 files unfixed (admin routes, two "known offender" files t-017 already owns, one orphaned file, and this locked-contract file) rather than attempting a blind full sweep.
@@ -98,8 +100,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 - 2026-08-01 `model-builder/t-039` — A recurring task (t-029) with a long streak of same-day merges hits diminishing returns fast on its own open-ended "read everything, find one new bug" pattern -- checking sibling ready tasks in the same project for an already-scoped, concrete kaizen (here, a deferred regression-guard task from two prior cycles) is a better use of a cycle than an Nth micro-race-condition hunt once N is already large for the day.
 
-- 2026-08-01 `coloring-book/t-022` — When a recurring art-production task is blocked on a missing local credential (no ANTHROPIC_API_KEY here), the semantic gate's own rejection reasons are structured enough to drive real prompt revision work without live generation access -- mining "what specifically was missing" text into the next prompt attempt is a better use of a credential-blocked cycle than a no-op re-arm to ready. Separately: a full yaml.safe_dump round-trip on a hand-formatted queue file rewraps every folded scalar in the whole file, not just the touched entries -- a targeted line-level edit is the safe way to make a small status change without a large unrelated reformatting diff.
-
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-01T18:27:26Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-01T19:02:46Z_
