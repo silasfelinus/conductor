@@ -180,37 +180,42 @@ tasks:
     stakes: reversible
     depends_on: t-003
     note: >
-      DONE 2026-08-01: kind_robots PR #1261 (merged). app.vue's NuxtPage wrapper flips
-      to overflow-hidden; pages/[...slug].vue's content-host is now the sole scroll
-      owner for MDC-routed pages; 10 components/pages/*.vue plus login-page.vue and
-      welcome-page.vue backfilled with their own scroll region; added a `zero-scroll`
-      layout-contract rule per this task's own kaizen note. A review pass (different
-      session, marker expired before this close-out picked it back up) caught a real
-      composition bug in the first push — several MDC page components had also been
-      given their own overflow-y-auto, creating nested scroll regions inside
-      content-host — fixed in the same PR (confirmed via the merged diff: those files
-      now carry zero scroll classes of their own and are correctly in the
-      `zero-scroll` allow-list). Kaizen: check whether kind-prompts.vue, rebel-button.vue,
-      click-leaderboard.vue, match-leaderboard.vue are genuinely orphaned dead code
-      (no route/content mount found for any of them) and prune if so.
+      DONE, 2026-08-01: kind_robots PR #1261 (merged as f4c33d6) flips app.vue's
+      NuxtPage wrapper to overflow-hidden. pages/[...slug].vue's
+      content-host is now the scroll owner for every MDC-routed page (the single
+      highest-leverage fix — about/giving/privacy/sponsor/mermaids/register etc. all
+      render through it). Backfilled scroll ownership on ~15 standalone routes/components
+      that render outside content-host: appmaker-page, click/match-leaderboard,
+      super-form, the WonderLab admin pages, play/challenges pages, coloring-page,
+      music-mentor, build-bench. Also fixed two latent bugs found along the way:
+      login-page.vue and welcome-page.vue each already declared overflow-y-auto but on
+      an unbounded min-h-full/min-h-screen container, so it never actually engaged --
+      bounded both to h-full min-h-0 so the existing scroll region works. Added a
+      `zero-scroll` rule to utils/scripts/verifyLayoutContract.ts (the kaizen suggestion
+      from PR #1255) so a page losing its only scroll container fails CI; its ratchet
+      baseline records the deliberate exemptions (ProjectFrontPage-wrapped conductor
+      pages, the conductor-manager router, a couple of orphaned/unreferenced components
+      left unfixed rather than guessed at -- see PR body for the full list).
+      REVIEW CATCH (kr-hourly session): the first push also added per-component scroll
+      classes to about-page/giving-page/mermaids-page/privacy-page/sponsor-page/
+      registration-page -- each of those renders *inside* content-host via MDC, so that
+      created nested double-scroll regions, exactly the composition bug this task exists
+      to remove. The layout-contract verifier didn't catch it (file-by-file, not
+      composition-aware). Reverted in a follow-up commit on the same PR; reviewer's
+      suggestion to add a composition-aware regression check or an explicit MDC-page
+      allow/deny list is a good follow-up, deliberately left out of this PR's scope.
+      Deleting the t-001 mockup routes remains NOT done (t-002/Silas's pick is still
+      open) -- unrelated to this task, tracked separately.
       ---
-      Split out of t-003 (2026-08-01, kind_robots PR #1255) because it's the genuinely
-      risky half: app.vue currently wraps NuxtPage in overflow-y-auto, meaning the shell
-      scrolls the whole page today. Flipping to overflow-hidden makes each page
-      responsible for its own scroll region — but 18 of 30 components/pages/*.vue (plus
-      likely more outside that directory — check components/conductor/*, pages/admin/*,
-      pages/plan/*, pages/play/*, pages/users/* against the layout-contract baseline's
-      one-header list, which overlaps heavily) have no overflow-y-auto of their own
-      today. Before flipping: for each such component, either add
-      `min-h-0 flex-1 overflow-y-auto overscroll-contain` to its actual scrollable
-      region (not just the root, if the root already contains chrome that shouldn't
-      scroll), or confirm via Vercel preview at phone/tablet/desktop widths that its
-      content never exceeds the viewport so no scroll container is needed yet. Natural
-      to pair with t-004 (kr-* primitives, one-header rule) since it touches the same
-      files — consider doing both in the same pass per page rather than two separate
-      sweeps. Once flipped, add a `zero-scroll` check to
-      utils/scripts/verifyLayoutContract.ts (kaizen suggestion from PR #1255) so a page
-      losing its only scroll container fails CI instead of silently clipping content.
+      Original task note: split out of t-003 (2026-08-01, kind_robots PR #1255) because
+      it's the genuinely risky half: app.vue currently wraps NuxtPage in overflow-y-auto,
+      meaning the shell scrolls the whole page today. Flipping to overflow-hidden makes
+      each page responsible for its own scroll region — but 18 of 30
+      components/pages/*.vue (plus likely more outside that directory — check
+      components/conductor/*, pages/admin/*, pages/plan/*, pages/play/*, pages/users/*
+      against the layout-contract baseline's one-header list, which overlaps heavily)
+      have no overflow-y-auto of their own today. Natural to pair with t-004 (kr-*
+      primitives, one-header rule) since it touches the same files.
     claimed_by: claude-agentrun-2026-08-01T15:30:00Z-t003b
     claimed_at: '2026-08-01T15:27:43Z'
     updated: '2026-08-01T15:27:43Z'
@@ -650,3 +655,30 @@ tasks:
       repo-wide grep across content/, pages/, and every .vue/.ts file, then delete
       whichever are genuinely dead code (folds into t-018's cleanup scope if still
       open, otherwise stands alone).
+
+  - id: t-022
+    milestone: m2
+    title: 'Add a composition-aware regression check for MDC page scroll ownership'
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Kaizen from t-003b (2026-08-01, kind_robots PR #1261). t-003b's first push added
+      per-component overflow-y-auto/h-full/min-h-0 to six components/pages/*.vue files
+      that are actually mounted *inside* pages/[...slug].vue's content-host via MDC
+      (about-page, giving-page, mermaids-page, privacy-page, sponsor-page,
+      components/user/registration-page.vue) — content-host already owns scroll for
+      every MDC route, so this created nested double-scroll regions, the exact
+      composition bug the task existed to remove. Caught only by a same-PR human/agent
+      review, not CI: utils/scripts/verifyLayoutContract.ts's `zero-scroll` rule (and
+      every other rule in that file) scores each .vue file in isolation and has no
+      parent/child composition awareness, so it can't see "this file's ANCESTOR already
+      declares overflow-y-auto." Add a check (or extend `one-scroll`) that, for any file
+      matched by an MDC content directive (`grep -rn ":<component-name>" content/`),
+      walks up to confirm the mounting page-level ancestor doesn't already own scroll —
+      or, simpler and more maintainable, build an explicit allow-list mapping known
+      MDC-mounted page components to their owning host (content-host, in practice
+      the only one today) and fail CI if a listed component also declares its own
+      overflow-y-auto/overflow-auto. See kind_robots PR #1261's review thread for the
+      original catch and reasoning.
