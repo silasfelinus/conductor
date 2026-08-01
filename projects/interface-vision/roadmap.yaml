@@ -140,27 +140,63 @@ tasks:
   - id: t-003
     milestone: m2
     title: 'Resolve the app.vue / [...slug].vue scroll contradiction and collapse shell nesting'
-    status: claimed
+    status: review
     owner: worker
     passes: 0
     stakes: reversible
     note: >
-      Phase 1.1. THE root cause of "containers fighting each other". app.vue L104-106
-      wraps NuxtPage in `overflow-y-auto` (the page scrolls) while pages/[...slug].vue
-      `.content-host` is `h-full min-h-0 flex-col` with `:deep(*) { flex: 1 1 0%;
-      min-height: 0 }` (children fill the viewport exactly). These are contradictory,
-      and every page resolves it differently — which is why some scroll the shell, some
-      clip below the fold, and Storymaker/Taskmaster collapse to a sliver.
-      Pick ONE owner; recommended is "the page owns its scroll": change app.vue's
-      NuxtPage wrapper to overflow-hidden, and replace content-host's blanket
-      `:deep(*)` rule with an explicit single-child rule (the blanket rule is also why a
-      content file with two MDC blocks silently splits the viewport 50/50 — four pages
-      do this today). Then collapse `main.kr-main` -> `div.rounded-2xl` -> `div.overflow`,
-      which is three wrappers doing one job. Target <=5 wrappers before page content
-      (currently 9-10). Delete the t-001 mockup routes as part of this task.
+      PARTIAL, 2026-08-01: kind_robots PR #1255 (open, CI pending) landed the low-risk
+      half only. Done: merged main.kr-main + div.rounded-2xl into one wrapper (one fewer
+      layer, fx-region's absolute positioning unaffected since its relative ancestor is
+      unchanged); scoped content-host's blanket `:deep(*)` rule to `:deep(:first-child)`
+      so a second top-level MDC block no longer gets free 50/50 layout.
+      NOT done, split out as t-003b: flipping app.vue's NuxtPage wrapper from
+      overflow-y-auto to overflow-hidden ("the page owns its scroll"). 18 of 30
+      components/pages/*.vue have no scroll container of their own today and rely on
+      that ancestor scrolling — flipping it blind would make their content completely
+      unreachable (worse than the current "some pages clip" bug). Needs per-page
+      audit/backfill first, verified via Vercel preview since the sandbox has no DB.
+      Also NOT done: deleting the t-001 mockup routes, since t-002 (Silas's pick) is
+      still open and those routes are the only way to compare the three options.
+      Original note, for the parts not yet done: >
+        THE root cause of "containers fighting each other". app.vue L104-106 wraps
+        NuxtPage in `overflow-y-auto` (the page scrolls) while pages/[...slug].vue
+        `.content-host` is `h-full min-h-0 flex-col` with `:deep(*) { flex: 1 1 0%;
+        min-height: 0 }` (children fill the viewport exactly). These are contradictory,
+        and every page resolves it differently — which is why some scroll the shell,
+        some clip below the fold, and Storymaker/Taskmaster collapse to a sliver.
+        Pick ONE owner; recommended is "the page owns its scroll". Target <=5 wrappers
+        before page content (currently 9-10, now 8-9 after this PR's one-wrapper merge).
     claimed_by: 2026-08-01T13:35:00Z-t003
     claimed_at: '2026-08-01T13:32:24Z'
     updated: '2026-08-01T13:32:24Z'
+
+  - id: t-003b
+    milestone: m2
+    title: 'Flip app.vue NuxtPage wrapper to overflow-hidden; audit/backfill per-page scroll ownership'
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-003
+    note: >
+      Split out of t-003 (2026-08-01, kind_robots PR #1255) because it's the genuinely
+      risky half: app.vue currently wraps NuxtPage in overflow-y-auto, meaning the shell
+      scrolls the whole page today. Flipping to overflow-hidden makes each page
+      responsible for its own scroll region — but 18 of 30 components/pages/*.vue (plus
+      likely more outside that directory — check components/conductor/*, pages/admin/*,
+      pages/plan/*, pages/play/*, pages/users/* against the layout-contract baseline's
+      one-header list, which overlaps heavily) have no overflow-y-auto of their own
+      today. Before flipping: for each such component, either add
+      `min-h-0 flex-1 overflow-y-auto overscroll-contain` to its actual scrollable
+      region (not just the root, if the root already contains chrome that shouldn't
+      scroll), or confirm via Vercel preview at phone/tablet/desktop widths that its
+      content never exceeds the viewport so no scroll container is needed yet. Natural
+      to pair with t-004 (kr-* primitives, one-header rule) since it touches the same
+      files — consider doing both in the same pass per page rather than two separate
+      sweeps. Once flipped, add a `zero-scroll` check to
+      utils/scripts/verifyLayoutContract.ts (kaizen suggestion from PR #1255) so a page
+      losing its only scroll container fails CI instead of silently clipping content.
 
   - id: t-004
     milestone: m2
