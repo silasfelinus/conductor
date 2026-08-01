@@ -924,34 +924,19 @@ tasks:
   - id: t-027
     milestone: m2
     title: 'Consolidate Facet''s two art backends (YAML->GitHub vs ArtJob/DB)'
-    status: claimed
+    status: review
     owner: worker
     passes: 0
     stakes: reversible
     depends_on: t-009
-    note: >
-      Split out of t-009 (2026-08-01, kind_robots PR #1269). Confirmed both
-      backends are live: facet-manager.vue mounts BOTH a "Request primary
-      artwork" button (stores/facetArtRequestStore.ts ->
-      server/api/conductor/art-request.post.ts, the YAML->GitHub pipeline,
-      shown only when a facet has zero art yet) AND the full
-      <EntityArtManager entity-type="facet"> generate/upload/history flow in
-      its edit-mode block. facet-gallery.vue only has the YAML path.
-      server/api/conductor/art-request.post.ts is also called by
-      plugins/missing-image-reporter.client.ts (the broken-image reporter),
-      which is a genuinely different job (reporting arbitrary broken image
-      URLs across the site, not just Facet's own art) and should keep using
-      it regardless of what Facet itself does. This is a product decision, not
-      just a refactor: does Facet still want a zero-DB-friction path for
-      facets with literally no art yet (the YAML button's actual value), or
-      does EntityArtManager's queue-based flow cover that case well enough to
-      remove the YAML button from facet-manager.vue and facet-gallery.vue
-      entirely? Silas should decide before this is implemented; t-009's
-      original note recommended keeping ArtJob/DB as the one Facet backend and
-      restricting YAML to the broken-image reporter only.
+    note: |-
+      Split out of t-009 (2026-08-01, kind_robots PR #1269). Confirmed both backends are live: facet-manager.vue mounts BOTH a "Request primary artwork" button (stores/facetArtRequestStore.ts -> server/api/conductor/art-request.post.ts, the YAML->GitHub pipeline, shown only when a facet has zero art yet) AND the full <EntityArtManager entity-type="facet"> generate/upload/history flow in its edit-mode block. facet-gallery.vue only has the YAML path. server/api/conductor/art-request.post.ts is also called by plugins/missing-image-reporter.client.ts (the broken-image reporter), which is a genuinely different job (reporting arbitrary broken image URLs across the site, not just Facet's own art) and should keep using it regardless of what Facet itself does. This is a product decision, not just a refactor: does Facet still want a zero-DB-friction path for facets with literally no art yet (the YAML button's actual value), or does EntityArtManager's queue-based flow cover that case well enough to remove the YAML button from facet-manager.vue and facet-gallery.vue entirely? Silas should decide before this is implemented; t-009's original note recommended keeping ArtJob/DB as the one Facet backend and restricting YAML to the broken-image reporter only.
+
+
+      Added the missing Facet iconPath contract, standardized Facet variants, consolidated Facet generation onto ArtJobs, and expanded the quality-gated sweep to queue each missing variant independently.
     claimed_by: 2026-08-01T200100Z-interface-vision-t-027-facet-art-4up
     claimed_at: '2026-08-01T20:01:00Z'
-    updated: '2026-08-01T20:01:00Z'
+    updated: '2026-08-01T20:20:00Z'
 
   - id: t-028
     milestone: m2
