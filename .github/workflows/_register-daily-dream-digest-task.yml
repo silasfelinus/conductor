@@ -1,0 +1,34 @@
+name: Register daily dream digest task
+
+on:
+  push:
+    branches:
+      - worker/dream-cycle-task-register-20260731
+
+permissions:
+  contents: write
+
+jobs:
+  register:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: worker/dream-cycle-task-register-20260731
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install pyyaml
+      - name: Register task and remove bootstrap files
+        run: |
+          python scripts/_register_daily_dream_digest_task.py
+          python scripts/validate_roadmaps.py
+      - name: Commit generated registration
+        run: |
+          git config user.name 'conductor-task-bootstrap[bot]'
+          git config user.email 'conductor-task-bootstrap[bot]@users.noreply.github.com'
+          git add projects/dream-cycle/roadmap.yaml scripts/_register_daily_dream_digest_task.py .github/workflows/_register-daily-dream-digest-task.yml
+          git commit -m 'dream-cycle: register daily digest overhaul task'
+          git push origin HEAD:worker/dream-cycle-task-register-20260731
