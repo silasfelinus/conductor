@@ -95,11 +95,18 @@ tasks:
   - id: t-001
     milestone: m1
     title: 'Write DESIGN-BRIEF.md and build three Storymaker aesthetic mockups'
-    status: ready
+    status: done
     owner: null
     passes: 0
     stakes: reversible
     note: >
+      DONE 2026-08-01: kind_robots PR #1252 (merged) built the three mockups at
+      /storymaker-mockups (components/storymaker/storymaker-mockups.vue), all fixture
+      data, no store/DB wiring, all six required elements present in each of A/B/C.
+      Mockup routes are intentionally still live — t-003 says to delete them, but t-002
+      (Silas's pick) is still open, so deletion is deferred until he has actually seen
+      them; see t-003's note. DESIGN-BRIEF.md exists in this project folder but does not
+      yet record a pick (that's t-002's job once Silas responds).
       Phase 0. Silas judges reliably by eye and unreliably from description, so nothing
       else on this project is decided until he has seen options. Build three static
       mockups of THE SAME Storymaker screen, fixture data only, no store wiring, no DB
@@ -133,27 +140,63 @@ tasks:
   - id: t-003
     milestone: m2
     title: 'Resolve the app.vue / [...slug].vue scroll contradiction and collapse shell nesting'
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
     note: >
-      Phase 1.1. THE root cause of "containers fighting each other". app.vue L104-106
-      wraps NuxtPage in `overflow-y-auto` (the page scrolls) while pages/[...slug].vue
-      `.content-host` is `h-full min-h-0 flex-col` with `:deep(*) { flex: 1 1 0%;
-      min-height: 0 }` (children fill the viewport exactly). These are contradictory,
-      and every page resolves it differently — which is why some scroll the shell, some
-      clip below the fold, and Storymaker/Taskmaster collapse to a sliver.
-      Pick ONE owner; recommended is "the page owns its scroll": change app.vue's
-      NuxtPage wrapper to overflow-hidden, and replace content-host's blanket
-      `:deep(*)` rule with an explicit single-child rule (the blanket rule is also why a
-      content file with two MDC blocks silently splits the viewport 50/50 — four pages
-      do this today). Then collapse `main.kr-main` -> `div.rounded-2xl` -> `div.overflow`,
-      which is three wrappers doing one job. Target <=5 wrappers before page content
-      (currently 9-10). Delete the t-001 mockup routes as part of this task.
+      PARTIAL, 2026-08-01: kind_robots PR #1255 (open, CI pending) landed the low-risk
+      half only. Done: merged main.kr-main + div.rounded-2xl into one wrapper (one fewer
+      layer, fx-region's absolute positioning unaffected since its relative ancestor is
+      unchanged); scoped content-host's blanket `:deep(*)` rule to `:deep(:first-child)`
+      so a second top-level MDC block no longer gets free 50/50 layout.
+      NOT done, split out as t-003b: flipping app.vue's NuxtPage wrapper from
+      overflow-y-auto to overflow-hidden ("the page owns its scroll"). 18 of 30
+      components/pages/*.vue have no scroll container of their own today and rely on
+      that ancestor scrolling — flipping it blind would make their content completely
+      unreachable (worse than the current "some pages clip" bug). Needs per-page
+      audit/backfill first, verified via Vercel preview since the sandbox has no DB.
+      Also NOT done: deleting the t-001 mockup routes, since t-002 (Silas's pick) is
+      still open and those routes are the only way to compare the three options.
+      Original note, for the parts not yet done: >
+        THE root cause of "containers fighting each other". app.vue L104-106 wraps
+        NuxtPage in `overflow-y-auto` (the page scrolls) while pages/[...slug].vue
+        `.content-host` is `h-full min-h-0 flex-col` with `:deep(*) { flex: 1 1 0%;
+        min-height: 0 }` (children fill the viewport exactly). These are contradictory,
+        and every page resolves it differently — which is why some scroll the shell,
+        some clip below the fold, and Storymaker/Taskmaster collapse to a sliver.
+        Pick ONE owner; recommended is "the page owns its scroll". Target <=5 wrappers
+        before page content (currently 9-10, now 8-9 after this PR's one-wrapper merge).
     claimed_by: 2026-08-01T13:35:00Z-t003
     claimed_at: '2026-08-01T13:32:24Z'
     updated: '2026-08-01T13:32:24Z'
+
+  - id: t-003b
+    milestone: m2
+    title: 'Flip app.vue NuxtPage wrapper to overflow-hidden; audit/backfill per-page scroll ownership'
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-003
+    note: >
+      Split out of t-003 (2026-08-01, kind_robots PR #1255) because it's the genuinely
+      risky half: app.vue currently wraps NuxtPage in overflow-y-auto, meaning the shell
+      scrolls the whole page today. Flipping to overflow-hidden makes each page
+      responsible for its own scroll region — but 18 of 30 components/pages/*.vue (plus
+      likely more outside that directory — check components/conductor/*, pages/admin/*,
+      pages/plan/*, pages/play/*, pages/users/* against the layout-contract baseline's
+      one-header list, which overlaps heavily) have no overflow-y-auto of their own
+      today. Before flipping: for each such component, either add
+      `min-h-0 flex-1 overflow-y-auto overscroll-contain` to its actual scrollable
+      region (not just the root, if the root already contains chrome that shouldn't
+      scroll), or confirm via Vercel preview at phone/tablet/desktop widths that its
+      content never exceeds the viewport so no scroll container is needed yet. Natural
+      to pair with t-004 (kr-* primitives, one-header rule) since it touches the same
+      files — consider doing both in the same pass per page rather than two separate
+      sweeps. Once flipped, add a `zero-scroll` check to
+      utils/scripts/verifyLayoutContract.ts (kaizen suggestion from PR #1255) so a page
+      losing its only scroll container fails CI instead of silently clipping content.
 
   - id: t-004
     milestone: m2
@@ -180,25 +223,28 @@ tasks:
   - id: t-005
     milestone: m2
     title: 'Add verifyLayoutContract CI script with a shrink-only allow-list'
-    status: ready
+    status: done
     owner: null
     passes: 0
     stakes: reversible
     depends_on: t-004
     note: >
-      Phase 1.5. THIS IS THE TASK THAT KEEPS THIS PROJECT FROM REPEATING global-ui.
-      Add utils/scripts/verifyLayoutContract.ts beside the existing test:* verifier
-      family (~12 already exist, so the pattern is established) and wire it into CI as
-      `npm run test:layout-contract`. It fails on: a components/pages/* component
-      rendering <h1>; more than one overflow-y-auto in a single component; h-screen /
-      min-h-screen / 100vh outside components/screenfx/; a components/pages/* root that
-      is not .kr-surface; a content .md rendering more than one MDC block; and a
-      :show-header passed to a component that never declared the prop (13 such call
-      sites silently do nothing today). Seed it with a baseline allow-list of current
-      violations. THE ALLOW-LIST ONLY EVER SHRINKS — a PR that grows it fails CI.
-      Baseline counters to record in the note when this lands: <h1> in page components
-      57, files with their own overflow-y-auto 94, viewport-height hacks ~45,
-      multi-MDC content files 4, files using any kr-* class 29 of ~421.
+      DONE 2026-08-01: kind_robots PR #1252 (merged) shipped ahead of its declared
+      dependency (t-004, kr-* primitives, is still ready/not started) — flagging this
+      ordering deviation in TALKBACK rather than unwinding it, since the script and CI
+      wiring are real and correct on their own. Added utils/scripts/verifyLayoutContract.ts,
+      .github/workflows/layout-contract.yml (runs `npm run test:layout-contract` on every
+      PR/push to main), and utils/scripts/layout-contract-baseline.json as a shrink-only
+      ratchet (--update refuses to record a larger count). Checks: one-header (<h1> in
+      components/pages/*), one-scroll (>1 overflow-y-auto per component), no-viewport
+      (h-screen/min-h-screen/100vh outside components/screenfx/), one-mdc (>1 MDC block
+      per content file), ghost-prop (:show-header passed to a component without the
+      prop declared). RECORDED BASELINE (2026-08-01, lower than this task's original
+      estimate — the verifier's heuristics are narrower than the rough grep counts that
+      seeded the estimate): one-header 29, one-scroll 36, no-viewport 9, one-mdc 4,
+      ghost-prop 7. The `.kr-surface` root check from the original spec was not
+      implemented (no kr-* primitives exist yet, t-004 not started) — worth adding once
+      t-004 lands so the ratchet also covers root-class conformance.
 
   - id: t-006
     milestone: m2
@@ -236,11 +282,24 @@ tasks:
   - id: t-007
     milestone: m2
     title: 'Additive schema migration: card/hero/icon art fields for Bot, Character, Reward, Scenario'
-    status: ready
+    status: done
     owner: null
     passes: 0
     stakes: reversible
     note: >
+      DONE 2026-08-01: kind_robots PR #1252 (merged), migration
+      prisma/migrations/20260801220000_entity_card_hero_icon_art. Audited migration.sql
+      line by line before it merged: 18 ADD COLUMN statements only (allowReviews/
+      cardPath/heroPath/icon on Bot/Character/Reward/Scenario as applicable, artPrompt
+      on Project, allowReviews on Facet), zero DROP, zero MODIFY, every new column
+      nullable-or-defaulted — additive and reversible per the migration's own header,
+      which cites this task and states Silas authorized it directly. ENTITY_FIELDS in
+      server/utils/entityArt.ts extended with the new card/hero slots (server/api
+      mutation routes for characters/rewards/scenarios/bots updated to accept the new
+      fields). `dream` was NOT added to EntityArtType in this PR — that part of the task
+      note is still outstanding; worth a small follow-up if it matters, noted here so
+      it isn't silently dropped.
+      Original note: >
       Phase 3.1, and the single most load-bearing insight of the audit: the other
       galleries are DATA-STARVED, not merely badly styled. The Project gallery can offer
       four image-rich view modes because Project has imagePath + cardPath + heroPath +

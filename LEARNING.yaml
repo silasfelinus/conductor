@@ -5417,3 +5417,66 @@ records:
     for an already-scoped, concrete kaizen (here, a deferred regression-guard
     task from two prior cycles) is a better use of a cycle than an Nth
     micro-race-condition hunt once N is already large for the day.
+- date: 2026-08-01
+  project: interface-vision
+  task: t-001
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    Storymaker aesthetic mockups (kind_robots PR #1252) landed correctly, but
+    the roadmap task sat at status:ready with an open PR for hours -- a
+    session picking up interface-vision should check open kind_robots PRs
+    against roadmap task titles before claiming, since select_role.py's
+    local script currently can't reach the GitHub API in this sandbox
+    (403s), so a manual GitHub MCP check is the only way to catch this.
+- date: 2026-08-01
+  project: interface-vision
+  task: t-005
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    verifyLayoutContract CI ratchet shipped inside the same PR as t-001,
+    ahead of its declared depends_on (t-004) -- the dependency was
+    aesthetic-neutral tooling work, not a hard blocker, so building it early
+    was fine, but it means depends_on isn't a reliable signal for "has this
+    actually not started yet" when a Worker judges a prerequisite doesn't
+    really gate the dependent task's content.
+- date: 2026-08-01
+  project: interface-vision
+  task: t-007
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    Migration was audited line-by-line only after merge, not before --
+    caught the scope mismatch by luck (checking the migration for the audit
+    rule) rather than by process (diffing file list against PR body before
+    merging). Next time: pull_request_read get_files before merge_pull_request,
+    every time, not just when the PR body itself flags a migration.
+- date: 2026-08-01
+  project: interface-vision
+  task: t-003
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: scope
+  lesson: >
+    Task note prescribed a single risky change (flip app.vue's scroll
+    ownership) with no mention of the 18-of-30 components/pages/*.vue
+    files that would silently lose all scroll capability if flipped
+    without per-page backfill first. Landed the safe structural half,
+    split the audit-and-flip half into t-003b rather than attempting it
+    blind in a sandbox with no local dev/DB to verify against -- treat
+    "recommended fix" in a task note as a starting hypothesis to verify
+    against the actual codebase, not a checklist to execute literally,
+    especially for anything touching a shared ancestor every page
+    depends on.
