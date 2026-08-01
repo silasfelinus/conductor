@@ -95,11 +95,18 @@ tasks:
   - id: t-001
     milestone: m1
     title: 'Write DESIGN-BRIEF.md and build three Storymaker aesthetic mockups'
-    status: ready
+    status: done
     owner: null
     passes: 0
     stakes: reversible
     note: >
+      DONE 2026-08-01: kind_robots PR #1252 (merged) built the three mockups at
+      /storymaker-mockups (components/storymaker/storymaker-mockups.vue), all fixture
+      data, no store/DB wiring, all six required elements present in each of A/B/C.
+      Mockup routes are intentionally still live — t-003 says to delete them, but t-002
+      (Silas's pick) is still open, so deletion is deferred until he has actually seen
+      them; see t-003's note. DESIGN-BRIEF.md exists in this project folder but does not
+      yet record a pick (that's t-002's job once Silas responds).
       Phase 0. Silas judges reliably by eye and unreliably from description, so nothing
       else on this project is decided until he has seen options. Build three static
       mockups of THE SAME Storymaker screen, fixture data only, no store wiring, no DB
@@ -180,25 +187,28 @@ tasks:
   - id: t-005
     milestone: m2
     title: 'Add verifyLayoutContract CI script with a shrink-only allow-list'
-    status: ready
+    status: done
     owner: null
     passes: 0
     stakes: reversible
     depends_on: t-004
     note: >
-      Phase 1.5. THIS IS THE TASK THAT KEEPS THIS PROJECT FROM REPEATING global-ui.
-      Add utils/scripts/verifyLayoutContract.ts beside the existing test:* verifier
-      family (~12 already exist, so the pattern is established) and wire it into CI as
-      `npm run test:layout-contract`. It fails on: a components/pages/* component
-      rendering <h1>; more than one overflow-y-auto in a single component; h-screen /
-      min-h-screen / 100vh outside components/screenfx/; a components/pages/* root that
-      is not .kr-surface; a content .md rendering more than one MDC block; and a
-      :show-header passed to a component that never declared the prop (13 such call
-      sites silently do nothing today). Seed it with a baseline allow-list of current
-      violations. THE ALLOW-LIST ONLY EVER SHRINKS — a PR that grows it fails CI.
-      Baseline counters to record in the note when this lands: <h1> in page components
-      57, files with their own overflow-y-auto 94, viewport-height hacks ~45,
-      multi-MDC content files 4, files using any kr-* class 29 of ~421.
+      DONE 2026-08-01: kind_robots PR #1252 (merged) shipped ahead of its declared
+      dependency (t-004, kr-* primitives, is still ready/not started) — flagging this
+      ordering deviation in TALKBACK rather than unwinding it, since the script and CI
+      wiring are real and correct on their own. Added utils/scripts/verifyLayoutContract.ts,
+      .github/workflows/layout-contract.yml (runs `npm run test:layout-contract` on every
+      PR/push to main), and utils/scripts/layout-contract-baseline.json as a shrink-only
+      ratchet (--update refuses to record a larger count). Checks: one-header (<h1> in
+      components/pages/*), one-scroll (>1 overflow-y-auto per component), no-viewport
+      (h-screen/min-h-screen/100vh outside components/screenfx/), one-mdc (>1 MDC block
+      per content file), ghost-prop (:show-header passed to a component without the
+      prop declared). RECORDED BASELINE (2026-08-01, lower than this task's original
+      estimate — the verifier's heuristics are narrower than the rough grep counts that
+      seeded the estimate): one-header 29, one-scroll 36, no-viewport 9, one-mdc 4,
+      ghost-prop 7. The `.kr-surface` root check from the original spec was not
+      implemented (no kr-* primitives exist yet, t-004 not started) — worth adding once
+      t-004 lands so the ratchet also covers root-class conformance.
 
   - id: t-006
     milestone: m2
@@ -236,11 +246,24 @@ tasks:
   - id: t-007
     milestone: m2
     title: 'Additive schema migration: card/hero/icon art fields for Bot, Character, Reward, Scenario'
-    status: ready
+    status: done
     owner: null
     passes: 0
     stakes: reversible
     note: >
+      DONE 2026-08-01: kind_robots PR #1252 (merged), migration
+      prisma/migrations/20260801220000_entity_card_hero_icon_art. Audited migration.sql
+      line by line before it merged: 18 ADD COLUMN statements only (allowReviews/
+      cardPath/heroPath/icon on Bot/Character/Reward/Scenario as applicable, artPrompt
+      on Project, allowReviews on Facet), zero DROP, zero MODIFY, every new column
+      nullable-or-defaulted — additive and reversible per the migration's own header,
+      which cites this task and states Silas authorized it directly. ENTITY_FIELDS in
+      server/utils/entityArt.ts extended with the new card/hero slots (server/api
+      mutation routes for characters/rewards/scenarios/bots updated to accept the new
+      fields). `dream` was NOT added to EntityArtType in this PR — that part of the task
+      note is still outstanding; worth a small follow-up if it matters, noted here so
+      it isn't silently dropped.
+      Original note: >
       Phase 3.1, and the single most load-bearing insight of the audit: the other
       galleries are DATA-STARVED, not merely badly styled. The Project gallery can offer
       four image-rich view modes because Project has imagePath + cardPath + heroPath +
