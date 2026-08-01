@@ -311,3 +311,45 @@ sandbox (still no local ANTHROPIC_API_KEY here) -- the fix only removes the
 code-level blocker so the next hourly GitHub Actions run (which does have
 the credential) can actually process the remaining 16-id recovery batch.
 Re-armed to ready per the recurring-task rule.
+
+RAN 2026-08-01T04:26Z (conductor scheduled agent run, session
+claude-scheduled-20260801T042657Z-cb-t022): the 04:14:28Z hourly workflow run
+(after PR #1485) actually recovered/re-judged all 16 remaining ids: 3
+promoted to done (mr-007, mr-010, mr-020 -- ArtImage 13142/13145/13168), 13
+genuinely semantic-rejected on real quality grounds (wrong subject / missing
+required elements, not a credential wall). Queue now: 5 done, 3 approved, 28
+pending.
+
+FOUND AND FIXED A REAL BUG (root cause): `record_semantic_rejection()` never
+cleared the stale `semantic_gate_error`/`semantic_gate_error_at` breadcrumb
+once a recovered job's image received a genuine semantic verdict. Confirmed
+live in the 04:14Z run's own logs: mr-001/mr-005/mr-006 were re-judged
+against the *same* `art_image_id` (13139/13140/13141) they had already
+failed on once before (attempt 1 at 00:46-00:50Z, attempt 2 at 04:15Z) --
+`referenced_job_id()` kept parsing the old "job N: ANTHROPIC_API_KEY ..."
+text and pointing every pass at the same dead job, so `recover_timed_out_job()`
+would keep re-fetching the identical already-rejected image and re-running
+the (non-deterministic) semantic gate on it forever, never letting a fresh,
+differently-seeded attempt through. `record_semantic_rejection()` now clears
+both fields once a real verdict lands. Added
+`test_live_recovery_of_semantically_rejected_job_clears_stale_job_reference`
+covering the gap; full local suite green (798 tests, same 2 pre-existing
+unrelated `test_build_digest_email_v2.py` failures as the 2026-08-01T03:31Z
+entry above -- Python 3.11 f-string/backslash syntax incompatibility, out of
+scope for t-022) before opening the PR.
+
+Also cleared the now-stale `semantic_gate_error`/`semantic_gate_error_at`
+fields directly on the 13 affected entries (mr-001, mr-005, mr-006, mr-008,
+mr-011-015, mr-017-019, mr-021) via the same `load_yaml`/`write_queue`
+helpers the consumer script uses, so the very next hourly run submits
+genuine fresh ArtJobs for them instead of wasting one more cycle
+re-recovering and re-judging the same dead images. No ArtJobs were
+submitted, retried, or mutated -- this is a queue-metadata-only change.
+`coloring_queue_status.py --book monster-recast` now reports
+`recommended_action=submit-next-batch` (18 actionable) instead of the stale
+`recover-existing-jobs`.
+
+Not completed this cycle: still no local ANTHROPIC_API_KEY in this sandbox,
+so no ArtJobs were generated here -- the next hourly GitHub Actions run
+picks up the 18-entry fresh-submission batch. Re-armed to ready per the
+recurring-task rule.

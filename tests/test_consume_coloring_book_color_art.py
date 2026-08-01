@@ -580,3 +580,70 @@ def test_live_recovery_of_genuinely_failed_job_still_clears_reference(monkeypatc
 
     _queue, entries = mod.build_entries("monster-recast")
     assert entries[0]["semantic_gate_error"] == "job 2751 FAILED: boom"
+
+
+def test_live_recovery_of_semantically_rejected_job_clears_stale_job_reference(monkeypatch, tmp_path, capsys):
+    # Regression (found live 2026-08-01, t-022): recover_timed_out_job() can
+    # succeed (job DONE, image fetched) and then genuinely semantic-reject the
+    # recovered image on quality grounds -- a definitive verdict, not an
+    # unknown-fate failure. record_semantic_rejection() used to leave the old
+    # "job N timed out" breadcrumb in semantic_gate_error untouched, so
+    # referenced_job_id() kept pointing every subsequent pass at the same dead
+    # job: recover_timed_out_job() would keep re-fetching the identical
+    # already-rejected image and re-running the semantic gate on it forever,
+    # never letting the next pass submit a fresh, differently-seeded attempt.
+    # Once a real verdict lands, the stale job reference must be cleared.
+    queue_file = _recovery_queue_file(tmp_path)
+    monkeypatch.setattr(mod, "QUEUE_FILE", queue_file)
+    monkeypatch.setattr(mod, "target_path", lambda entry: tmp_path / "candidate.webp")
+    monkeypatch.setattr(mod.consumer, "KR_API_TOKEN", "token")
+    monkeypatch.setattr(
+        mod.consumer,
+        "http_json",
+        lambda method, url: (
+            200,
+            {
+                "success": True,
+                "data": {
+                    "job": {
+                        "status": "DONE",
+                        "artImageId": 555,
+                        "payload": {"attempt": {"conceptId": "mr-016", "seed": 840016}},
+                    }
+                },
+            },
+        ),
+    )
+    monkeypatch.setattr(mod.consumer, "fetch_image_b64", lambda art_image_id: "aGVsbG8=")
+
+    def fake_save_result(entry, image_b64):
+        destination = tmp_path / "candidate.webp"
+        destination.write_bytes(b"stub")
+        return destination
+
+    monkeypatch.setattr(mod, "save_result", fake_save_result)
+    monkeypatch.setattr(
+        mod,
+        "validate_candidate",
+        lambda entry, destination: (False, {"score": 30, "verdict": "reject", "reasons": ["wrong subject"]}),
+    )
+    monkeypatch.setattr(mod, "rejection_destination", lambda destination, entry, category: mod.ROOT / "stub-rejected.webp")
+
+    def fail_enqueue(entry):
+        raise AssertionError("must not submit a duplicate ArtJob")
+
+    monkeypatch.setattr(mod, "enqueue", fail_enqueue)
+    monkeypatch.setattr(
+        "sys.argv", ["consume_coloring_book_color_art.py", "--live", "--book", "monster-recast", "--ids", "mr-016"]
+    )
+
+    exit_code = mod.main()
+
+    assert exit_code == 1
+    stderr = capsys.readouterr().err
+    assert "SEMANTIC-REJECT" in stderr
+
+    _queue, entries = mod.build_entries("monster-recast")
+    assert entries[0].get("semantic_gate_error") is None
+    assert entries[0].get("semantic_gate_error_at") is None
+    assert mod.referenced_job_id(entries[0]) is None
