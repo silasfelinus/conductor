@@ -5383,3 +5383,22 @@ records:
     pre-click advisory with zero logic duplication and zero risk of the two
     copies drifting out of sync with the runtime guard inside autoBuildItem()
     itself.
+- date: 2026-08-01
+  project: coloring-book
+  task: t-022
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    When a recurring art-production task is blocked on a missing local
+    credential (no ANTHROPIC_API_KEY here), the semantic gate's own
+    rejection reasons are structured enough to drive real prompt revision
+    work without live generation access -- mining "what specifically was
+    missing" text into the next prompt attempt is a better use of a
+    credential-blocked cycle than a no-op re-arm to ready. Separately: a
+    full yaml.safe_dump round-trip on a hand-formatted queue file rewraps
+    every folded scalar in the whole file, not just the touched entries --
+    a targeted line-level edit is the safe way to make a small status
+    change without a large unrelated reformatting diff.
