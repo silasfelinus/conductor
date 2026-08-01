@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-01T13:50:11Z
+Generated: 2026-08-01T16:57:53Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **445**
-- Outcomes: blocked: 13, cancelled: 1, done: 431
+- Closed tasks recorded: **446**
+- Outcomes: blocked: 13, cancelled: 1, done: 432
 - Success rate: **97%**
 - Average passes on successful tasks: **0.0**
 
@@ -35,7 +35,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | humboldt-impropriety-calendar | 1 | 0% |
 | humboldt-scoop | 1 | 100% |
 | humboldt-scoop-cms | 4 | 100% |
-| interface-vision | 4 | 100% |
+| interface-vision | 5 | 100% |
 | kind-robots | 39 | 97% |
 | kindrobots-unraid | 4 | 100% |
 | media-watchlist | 10 | 100% |
@@ -59,7 +59,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 15 | 40% |
-| software | 430 | 99% |
+| software | 431 | 99% |
 
 ## Failure categories
 
@@ -80,6 +80,8 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-08-01 `interface-vision/t-010` — Clean first-pass except for one CI miss caught by the pipeline itself: a new content/*.md page needs a matching content/channels/<channel>/ <tab>.md registration or verifyChannelContent.ts fails with "references unknown tab" -- worth checking for that registration file up front whenever adding a new channelKey/tabKey pair, not just when CI catches it. Also: when a task note bundles a well-scoped bug fix with a vaguer "and show X on cards" ask that has no existing data model to support it, splitting the vague half into its own ready task (rather than guessing at scope) kept this PR small and reviewable.
+
 - 2026-08-01 `interface-vision/t-003` — Task note prescribed a single risky change (flip app.vue's scroll ownership) with no mention of the 18-of-30 components/pages/*.vue files that would silently lose all scroll capability if flipped without per-page backfill first. Landed the safe structural half, split the audit-and-flip half into t-003b rather than attempting it blind in a sandbox with no local dev/DB to verify against -- treat "recommended fix" in a task note as a starting hypothesis to verify against the actual codebase, not a checklist to execute literally, especially for anything touching a shared ancestor every page depends on.
 
 - 2026-08-01 `interface-vision/t-007` — Migration was audited line-by-line only after merge, not before -- caught the scope mismatch by luck (checking the migration for the audit rule) rather than by process (diffing file list against PR body before merging). Next time: pull_request_read get_files before merge_pull_request, every time, not just when the PR body itself flags a migration.
@@ -97,8 +99,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-08-01 `coloring-book/t-022` — A "recover instead of resubmit" mechanism that keys off a single stored error-message breadcrumb (semantic_gate_error / referenced_job_id()) must clear that breadcrumb the moment a real, definitive outcome supersedes it -- not just when the outcome is success (mark_done already popped it) or positively-dead (RecoveryAbandoned already popped it). The missed case was the middle one: recovery succeeds, the recovered image is then genuinely semantic-rejected on quality grounds. Because record_semantic_rejection() left the old "job N: ..." text in place, referenced_job_id() kept pointing every future pass at the same already-rejected job, so the recovery path kept re-fetching and re-judging the identical dead image indefinitely instead of ever falling through to a fresh, differently-seeded submission. When auditing a stateful recovery/retry mechanism, enumerate all outcomes of the operation being recovered (not just success/failure) and confirm each one's bookkeeping is handled, rather than assuming the two outcomes already covered are exhaustive.
 
 - 2026-07-31 `dream-cycle/t-022` — Keep operational CLI commands and agent startup instructions under regression tests when a generator contract is rewritten.
-- 2026-08-01 `model-builder/t-037` — When a guard clause and a genuine failure path share one return value (autoBuildItem's `false` covered both "another action already owns this item" and "a stage actually failed"), any caller that tallies outcomes across many calls (batchAutoBuild/autoBuildRun's "N/total committed" summary) loses the distinction and reports a busy-but-fine item the same as a broken one. Widening the return type to name each outcome explicitly (here, a three-way 'committed' | 'skipped' | 'failed' instead of a boolean) fixes it at the source instead of adding a second out-of-band flag the caller has to remember to check.
-
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-01T13:50:11Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-01T16:57:53Z_
