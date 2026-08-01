@@ -637,9 +637,19 @@ def complete_job(job_id, success, art_image_id=None, error=None, provenance=None
     return (response.get("data") or {}).get("job") or {}
 
 
+def resolve_job_engine(job):
+    """Use Comfy for unlabeled jobs while preserving explicit A1111 support."""
+    engine = str(job.get("engine") or "COMFY").strip().upper()
+    if engine not in ("COMFY", "A1111"):
+        raise ValueError(
+            f"unsupported ArtJob engine {engine!r}; expected COMFY or A1111"
+        )
+    return engine
+
+
 def process(job):
     job_id = job["id"]
-    engine = (job.get("engine") or "A1111").upper()
+    engine = resolve_job_engine(job)
     payload = job.get("payload") or {}
     if isinstance(payload, str):
         payload = json.loads(payload)
@@ -648,7 +658,7 @@ def process(job):
     if engine == "COMFY":
         media = run_comfy(payload)
         provenance = completion_provenance(payload, media)
-    else:
+    else:  # explicit A1111 jobs remain supported for Kind Robots users
         media = {
             "data_b64": run_a1111(payload),
             "file_type": "png",
