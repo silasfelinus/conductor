@@ -223,27 +223,50 @@ tasks:
   - id: t-004
     milestone: m2
     title: 'Add the missing kr-* layout primitives and adopt the one-header rule'
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
     depends_on: t-003
     note: >
-      Phase 1.2/1.3. `.kr-page` is `flex min-h-0 w-full flex-col gap-6 p-4 sm:p-6` — no
-      height, no scroll ownership, which is why it cannot resolve anything. Add, modeled
-      directly on the proven shape of components/pages/conductor-project-gallery-page.vue:
-      `.kr-surface` (flex h-full min-h-0 w-full flex-col gap-3 overflow-hidden),
-      `.kr-toolbar` (shrink-0 single control row), `.kr-scroll` (min-h-0 flex-1
-      overflow-y-auto overscroll-contain — exactly one per page), `.kr-stage`.
-      THE HEADER RULE, which Silas called the biggest single win available:
-      workspace-header.vue already renders icon, hero image, room label and title on
-      every page from content frontmatter. Therefore the shell owns the page title and
-      a page component NEVER renders one. A page needing controls gets ONE .kr-toolbar
-      line, never a stacked title block. 57 component files render their own <h1> today;
-      each is deleted as a duplicate or demoted into one toolbar.
+      DONE 2026-08-01: kind_robots PR #1264 (merged). Added .kr-surface, .kr-toolbar,
+      .kr-scroll, .kr-stage to assets/css/tailwind.css (modeled on
+      conductor-project-gallery-page.vue as directed) and documented THE HEADER RULE +
+      all four classes in the live /ui style guide. Adopted the header rule on 21 of the
+      29 baseline one-header files (tag swap <h1> -> <p>, identical classes, zero visual
+      change) -- baseline now 8, not 0: deliberately left admin routes (Silas: lowest
+      priority, and t-017 already owns "daily-drivers first, admin last"),
+      project-front-page.vue and video-generator.vue (t-017's own note names both as
+      "known offenders" with real bugs beyond a duplicate <h1>), registration-form.vue
+      (confirmed orphaned, left for t-021's prune pass), and serendipity-page.vue (CI
+      caught a real conflict -- verifySerendipityRouteCutover.mjs hard-locks that exact
+      <h1> markup as a route-cutover contract unrelated to this task; reverted rather
+      than touching another migration's lock). Also caught and fixed, unrelated to this
+      task's own diff: components/pages/wallet-page.vue (added in t-010, merged before
+      t-003b's zero-scroll rule landed) was a real undetected zero-scroll gap on main --
+      added to the baseline as the correct exemption (delegates to content-host).
+      Did NOT restructure any page's containers into the new primitives -- that needs
+      live Vercel-preview verification this sandbox can't do, so it's left as future
+      adoption work, not attempted blind. Kaizen: t-023 filed for a composition-lock
+      audit (grep every remaining one-header/zero-scroll file for a hard-coded-markup
+      contract test before t-017 sweeps them, so the Serendipity surprise doesn't repeat).
+      ---
+      Original task note: Phase 1.2/1.3. `.kr-page` is `flex min-h-0 w-full flex-col
+      gap-6 p-4 sm:p-6` — no height, no scroll ownership, which is why it cannot resolve
+      anything. Add, modeled directly on the proven shape of
+      components/pages/conductor-project-gallery-page.vue: `.kr-surface` (flex h-full
+      min-h-0 w-full flex-col gap-3 overflow-hidden), `.kr-toolbar` (shrink-0 single
+      control row), `.kr-scroll` (min-h-0 flex-1 overflow-y-auto overscroll-contain —
+      exactly one per page), `.kr-stage`. THE HEADER RULE, which Silas called the
+      biggest single win available: workspace-header.vue already renders icon, hero
+      image, room label and title on every page from content frontmatter. Therefore the
+      shell owns the page title and a page component NEVER renders one. A page needing
+      controls gets ONE .kr-toolbar line, never a stacked title block. 57 component
+      files render their own <h1> today; each is deleted as a duplicate or demoted into
+      one toolbar.
     claimed_by: claude-agentrun-2026-08-01T17:13:42Z-t004
     claimed_at: '2026-08-01T17:13:43Z'
-    updated: '2026-08-01T17:13:43Z'
+    updated: '2026-08-01T17:34:20Z'
 
   - id: t-005
     milestone: m2
@@ -688,3 +711,25 @@ tasks:
       the only one today) and fail CI if a listed component also declares its own
       overflow-y-auto/overflow-auto. See kind_robots PR #1261's review thread for the
       original catch and reasoning.
+
+  - id: t-023
+    milestone: m3
+    title: 'Composition-lock audit before t-017 sweeps the layout-contract allow-list'
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-005
+    note: >
+      Kaizen from t-004 (2026-08-01, kind_robots PR #1264): fixing serendipity-page.vue's
+      one-header violation broke utils/scripts/verifySerendipityRouteCutover.mjs, which
+      hard-asserts the exact markup `<h1 class="text-2xl font-black
+      tracking-tight">Serendipity</h1>` as a route-cutover migration lock, unrelated to
+      the general layout contract. CI caught it, but t-017's planned sweep of the
+      remaining allow-list files should not rely on CI catching every such surprise one
+      file at a time. Before t-017 starts: grep .github/workflows/*.yml and
+      utils/scripts/verify*.ts|mjs for any hard-coded markup string (h1/scroll-class/etc)
+      matching a file still in the layout-contract-baseline.json allow-list, and list
+      which of the remaining one-header/one-scroll/zero-scroll files have a locked
+      contract test elsewhere in the repo so t-017 knows up front which files need a
+      companion contract update, not just a markup change.
