@@ -69,26 +69,28 @@ jobs:
       - name: Check semantic-gate credentials
         id: queue_preflight
         shell: bash
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
         run: |
+          if [ -z "$ANTHROPIC_API_KEY" ]; then
+            echo "process=false" >> "$GITHUB_OUTPUT"
+            echo "::warning::Skipping Coloring Book Studio submission because ANTHROPIC_API_KEY is not configured for this workflow run."
+            exit 0
+          fi
+
           set +e
           python scripts/coloring_queue_status.py \
             --book monster-recast \
-            --require-no-semantic-gate-error \
             > /tmp/coloring-queue-status.json
           status=$?
           set -e
 
           cat /tmp/coloring-queue-status.json
-          if [ "$status" -eq 0 ]; then
-            echo "process=true" >> "$GITHUB_OUTPUT"
-            exit 0
+          if [ "$status" -ne 0 ]; then
+            exit "$status"
           fi
-          if [ "$status" -eq 1 ]; then
-            echo "process=false" >> "$GITHUB_OUTPUT"
-            echo "::warning::Skipping Coloring Book Studio submission while pending entries are blocked by the ANTHROPIC_API_KEY credential gate."
-            exit 0
-          fi
-          exit "$status"
+
+          echo "process=true" >> "$GITHUB_OUTPUT"
 
       - name: Process one targeted event
         id: consume
