@@ -649,8 +649,8 @@ tasks:
   - id: t-013
     milestone: m2
     title: 'Un-nest the dashboards-inside-dashboards'
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     depends_on: t-004
@@ -663,6 +663,9 @@ tasks:
       components/art/art-manager.vue (a dashboard whose tabs are themselves dashboards —
       stylist, coloring, artjob each fan out further) and for user-manager -> user-dashboard,
       which is a dashboard-tab named dashboard inside a dashboard named dashboard.
+    claimed_by: claude-agentrun-2026-08-01T232635-t013
+    claimed_at: '2026-08-01T23:26:36Z'
+    updated: '2026-08-01T23:26:36Z'
 
   - id: t-014
     milestone: m2
