@@ -942,10 +942,10 @@ tasks:
   - id: t-038
     milestone: m6
     title: "Pre-run 'N items busy' advisory for batchAutoBuild/autoBuildRun before starting"
-    status: ready
+    status: claimed
     passes: 0
     stakes: reversible
-    owner: null
+    owner: worker
     note: >
       Kaizen from t-037 (kind_robots PR #1225, 2026-08-01): autoBuildItem() now
       distinguishes 'skipped' (manual action in flight for this item) from 'failed'
@@ -963,3 +963,6 @@ tasks:
       have a manual action in flight, computed the same way
       isManualActionInFlight already is per-item. Front-end/store-only change;
       no schema change expected.
+    claimed_by: claude-scheduled-20260801T042657Z-mb-t038
+    claimed_at: '2026-08-01T04:47:09Z'
+    updated: '2026-08-01T04:47:09Z'
