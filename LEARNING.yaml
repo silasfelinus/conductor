@@ -5365,3 +5365,21 @@ records:
     of the operation being recovered (not just success/failure) and confirm
     each one's bookkeeping is handled, rather than assuming the two outcomes
     already covered are exhaustive.
+- date: '2026-08-01'
+  project: model-builder
+  task: t-038
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    A per-item "is this busy" check that already exists as a component-local
+    computed (isManualActionInFlight in model-builder-item-panel.vue) is worth
+    promoting into the shared store the moment a second UI surface needs the
+    same signal, rather than re-deriving it locally in each new component.
+    Doing so here (isItemManualActionInFlight(itemId)) let two independent
+    trigger buttons (batch editor, progress matrix) show an identical
+    pre-click advisory with zero logic duplication and zero risk of the two
+    copies drifting out of sync with the runtime guard inside autoBuildItem()
+    itself.
