@@ -1,4 +1,28 @@
 records:
+- date: 2026-08-01
+  project: interface-vision
+  task: t-012
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    PR #1518 landed the roadmap side of this task (status: review, t-033..t-036
+    split out) while its companion kind_robots PR #1272 was still open, on the
+    explicit plan to close t-012 to done once #1272 merged -- but the closing
+    session ended without doing so, leaving the PR open and t-033..t-036 stuck
+    at status: waiting for a full day. Meanwhile a concurrent direct push
+    completed interface-vision/t-027 on main, so PR #1518's stale branch
+    snapshot (which still carried t-027 at status: review) would have reverted
+    that completion if merged as-is -- caught by diffing origin/main before
+    merging and resolved with `git merge origin/main` (keeping main's t-027,
+    keeping the branch's t-012/t-033..t-036 additions) rather than force-pushing
+    over it. A companion-PR task with a stated "I'll close this once X merges"
+    plan is a real, easy-to-drop loose end if the closing step isn't done in
+    the same session that opens the PR -- a later Reviewer sweep should check
+    for exactly this shape (review-status task + already-merged companion PR)
+    rather than assuming an open PR's own body is still accurate.
 - date: 2026-07-29
   project: animation-manager
   task: t-006
