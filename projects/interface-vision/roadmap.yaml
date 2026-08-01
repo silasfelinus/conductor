@@ -572,8 +572,8 @@ tasks:
   - id: t-011
     milestone: m2
     title: 'Make the review system consistent across all seven object types'
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     depends_on: t-007
@@ -588,6 +588,9 @@ tasks:
       Revive art-reactions.vue as the canonical review panel, surface it through
       reactable-card so all seven objects get identical review UI, and make allowReviews
       actually gate it (t-007 adds the field to the other five).
+    claimed_by: 2026-08-01T2026-conductor-run-t011
+    claimed_at: '2026-08-01T20:27:26Z'
+    updated: '2026-08-01T20:27:26Z'
 
   - id: t-012
     milestone: m2
