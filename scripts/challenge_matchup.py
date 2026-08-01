@@ -63,7 +63,8 @@ DEFAULT_OPENAI_MODEL = os.environ.get(
 ).strip()
 TEXT_TYPES = {"TEXT", "REASONING"}
 ART_GENERATORS = {
-    "art-sd": "a1111",
+    # Historical contender name; Conductor's art lane is Comfy-only.
+    "art-sd": "krea2",
     "comfy-flux": "flux",
     "comfy-sdxl": "comfy",
     "comfy-krea2": "krea2",
