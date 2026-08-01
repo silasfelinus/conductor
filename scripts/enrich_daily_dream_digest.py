@@ -35,6 +35,18 @@ def slugify(value: str) -> str:
     return re.sub(r"[^a-z0-9]+", "-", str(value).lower()).strip("-")
 
 
+def builder_slugify(value: str) -> str:
+    """Mirror build_dream_records.slugify so digest joins survive article cleanup."""
+    slug = slugify(value)
+    for article in ("the-", "a-", "an-"):
+        if slug.startswith(article):
+            rest = slug[len(article):]
+            if rest and "-" in rest:
+                slug = rest
+            break
+    return slug
+
+
 def _frontmatter(text: str) -> dict[str, Any]:
     if not text.startswith("---\n"):
         return {}
@@ -107,6 +119,15 @@ def _asset_rows(proposal: dict[str, Any], *, probe_images: bool = True) -> list[
         for item in art_entries if isinstance(item, dict) and item.get("element")
     }
 
+    def art_for(key: str, title: str, element_slug: str) -> dict[str, Any]:
+        candidates = [element_slug, builder_slugify(title), slugify(title)]
+        if key == "scenario":
+            candidates = [f"{candidate}-scenario" for candidate in candidates] + candidates
+        for candidate in candidates:
+            if candidate and candidate in art_by_element:
+                return art_by_element[candidate]
+        return {}
+
     locations = data.get("locations") if isinstance(data.get("locations"), list) else []
     characters = data.get("characters") if isinstance(data.get("characters"), list) else []
     rewards = data.get("rewards") if isinstance(data.get("rewards"), list) else []
@@ -120,17 +141,17 @@ def _asset_rows(proposal: dict[str, Any], *, probe_images: bool = True) -> list[
 
     specs = [
         ("vibe", "Dream vibe", vibe.get("title") or data.get("title"), vibe.get("line") or data.get("idea"), data.get("slug")),
-        ("location", "Dream location", location.get("title"), location.get("known_for"), slugify(location.get("title") or "")),
-        ("character", "Character", character.get("name"), character.get("role_drive"), slugify(character.get("name") or "")),
-        ("reward_item", "Reward item", item.get("name"), item.get("grants"), slugify(item.get("name") or "")),
-        ("reward_skill", "Reward skill", skill.get("name"), skill.get("grants"), slugify(skill.get("name") or "")),
-        ("scenario", "Scenario", scenario.get("title"), scenario.get("setup"), slugify(scenario.get("title") or "")),
+        ("location", "Dream location", location.get("title"), location.get("known_for"), builder_slugify(location.get("title") or "")),
+        ("character", "Character", character.get("name"), character.get("role_drive"), builder_slugify(character.get("name") or "")),
+        ("reward_item", "Reward item", item.get("name"), item.get("grants"), builder_slugify(item.get("name") or "")),
+        ("reward_skill", "Reward skill", skill.get("name"), skill.get("grants"), builder_slugify(skill.get("name") or "")),
+        ("scenario", "Scenario", scenario.get("title"), scenario.get("setup"), builder_slugify(scenario.get("title") or "")),
     ]
     rows: list[dict[str, Any]] = []
     for key, label, title, summary, element_slug in specs:
         if not title:
             continue
-        art = art_by_element.get(str(element_slug)) or {}
+        art = art_for(key, str(title or ""), str(element_slug))
         public_path = str(art.get("public_path") or "")
         image_url = _public_url(public_path) if public_path else ""
         available = bool(art.get("attached"))
@@ -146,7 +167,7 @@ def _asset_rows(proposal: dict[str, Any], *, probe_images: bool = True) -> list[
             "facet_objects": facets,
             "image_url": image_url if available else "",
             "image_path": public_path,
-            "art_status": "ready" if available else ("queued" if art else "not queued"),
+            "art_status": "ready" if available else ("queued" if art else ("awaiting build" if not built else "queue metadata missing")),
             "request_id": art.get("request_id"),
         })
     return rows
@@ -225,20 +246,28 @@ def enrich_digest(
     current = by_date.get(today_key)
     output["tomorrow_proposal"] = proposal_payload(current, probe_images=probe_images) if current else None
 
-    exact_yesterday = by_date.get(yesterday_key)
-    if exact_yesterday and exact_yesterday.get("built"):
-        output["yesterday_output"] = proposal_payload(exact_yesterday, probe_images=probe_images)
-        output["yesterday_output"]["calendar_label"] = f"Created from the {yesterday_key} proposal"
+    built_yesterday = [
+        proposal for proposal in proposals
+        if proposal.get("built") and _built_date(proposal) == today - timedelta(days=1)
+    ]
+    built_yesterday.sort(
+        key=lambda proposal: str((proposal.get("built") or {}).get("built_at") or "")
+    )
+    if built_yesterday:
+        chosen = built_yesterday[-1]
+        output["yesterday_output"] = proposal_payload(chosen, probe_images=probe_images)
+        output["yesterday_output"]["calendar_label"] = (
+            f"Built on {yesterday_key} from the {chosen['proposal_date']} proposal"
+        )
         output["daily_dream_output_status"] = "ready"
     else:
         output["yesterday_output"] = None
-        reason = "proposal missing" if not exact_yesterday else "proposal exists but has not built"
-        output["daily_dream_output_status"] = f"No {yesterday_key} output: {reason}."
+        output["daily_dream_output_status"] = f"No objects were built on {yesterday_key}."
 
     recent: list[dict[str, Any]] = []
     wanted_dates = {today, today - timedelta(days=1)}
     for proposal in proposals:
-        if proposal.get("built") and (_built_date(proposal) in wanted_dates or proposal["proposal_date"] in {today_key, yesterday_key}):
+        if proposal.get("built") and _built_date(proposal) in wanted_dates:
             recent.append(proposal_payload(proposal, probe_images=probe_images))
     recent.sort(key=lambda row: (str(row.get("built_at") or ""), str(row.get("proposal_date") or "")), reverse=True)
     output["recent_dream_outputs"] = recent
