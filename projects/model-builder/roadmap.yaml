@@ -962,10 +962,10 @@ tasks:
   - id: t-039
     milestone: m6
     title: "Add a verifyModelBuilderRunWritableGuard.ts regression guard for the new assertRunWritable() server-side cancelled-run check"
-    status: claimed
+    status: done
     passes: 0
     stakes: reversible
-    owner: worker
+    owner: null
     note: >-
       Kaizen from t-029 (kind_robots PR #1239, 2026-08-01): assertRunWritable(run) was
       added in server/api/model-builder/runs/index.ts and is called from all four
@@ -982,6 +982,6 @@ tasks:
       assertRunAccess(...) and before its first write -- and wire it into
       package.json + .github/workflows/contract-tests.yml alongside the other Model
       Builder guard steps.
-    claimed_by: claude-quirky-curie-20260801T122845-mb-t039
-    claimed_at: '2026-08-01T12:28:46Z'
-    updated: '2026-08-01T12:28:46Z'
+    claimed_by: null
+    claimed_at: null
+    updated: '2026-08-01T12:40:33Z'

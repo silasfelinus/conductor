@@ -5402,3 +5402,18 @@ records:
     every folded scalar in the whole file, not just the touched entries --
     a targeted line-level edit is the safe way to make a small status
     change without a large unrelated reformatting diff.
+- date: 2026-08-01
+  project: model-builder
+  task: t-039
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    A recurring task (t-029) with a long streak of same-day merges hits
+    diminishing returns fast on its own open-ended "read everything, find
+    one new bug" pattern -- checking sibling ready tasks in the same project
+    for an already-scoped, concrete kaizen (here, a deferred regression-guard
+    task from two prior cycles) is a better use of a cycle than an Nth
+    micro-race-condition hunt once N is already large for the day.
