@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-01T04:39:08Z
+Generated: 2026-08-01T04:45:47Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **437**
-- Outcomes: blocked: 13, cancelled: 1, done: 423
+- Closed tasks recorded: **438**
+- Outcomes: blocked: 13, cancelled: 1, done: 424
 - Success rate: **97%**
 - Average passes on successful tasks: **0.0**
 
@@ -24,7 +24,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | art-generator-connect | 3 | 100% |
 | challenge-center | 16 | 100% |
 | coat-dance | 8 | 0% |
-| coloring-book | 23 | 100% |
+| coloring-book | 24 | 100% |
 | conductor | 59 | 100% |
 | conductor-app | 2 | 100% |
 | davinci | 2 | 100% |
@@ -58,14 +58,14 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 15 | 40% |
-| software | 422 | 99% |
+| software | 423 | 99% |
 
 ## Failure categories
 
 | Category | Count |
 |---|---|
 | actionable | 9 |
-| quality | 7 |
+| quality | 8 |
 | transient | 6 |
 
 ## Kaizen targets
@@ -73,10 +73,12 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - project `coat-dance` — 0% success over 8 closed tasks; aim the next kaizen task here
 - kind `content` — 40% success over 15 closed tasks; aim the next kaizen task here
 - failure category `actionable` — 9 occurrences; look for the shared cause across its records
-- failure category `quality` — 7 occurrences; look for the shared cause across its records
+- failure category `quality` — 8 occurrences; look for the shared cause across its records
 - failure category `transient` — 6 occurrences; look for the shared cause across its records
 
 ## Recent lessons
+
+- 2026-08-01 `coloring-book/t-022` — A "recover instead of resubmit" mechanism that keys off a single stored error-message breadcrumb (semantic_gate_error / referenced_job_id()) must clear that breadcrumb the moment a real, definitive outcome supersedes it -- not just when the outcome is success (mark_done already popped it) or positively-dead (RecoveryAbandoned already popped it). The missed case was the middle one: recovery succeeds, the recovered image is then genuinely semantic-rejected on quality grounds. Because record_semantic_rejection() left the old "job N: ..." text in place, referenced_job_id() kept pointing every future pass at the same already-rejected job, so the recovery path kept re-fetching and re-judging the identical dead image indefinitely instead of ever falling through to a fresh, differently-seeded submission. When auditing a stateful recovery/retry mechanism, enumerate all outcomes of the operation being recovered (not just success/failure) and confirm each one's bookkeeping is handled, rather than assuming the two outcomes already covered are exhaustive.
 
 - 2026-07-31 `dream-cycle/t-022` — Keep operational CLI commands and agent startup instructions under regression tests when a generator contract is rewritten.
 - 2026-08-01 `model-builder/t-037` — When a guard clause and a genuine failure path share one return value (autoBuildItem's `false` covered both "another action already owns this item" and "a stage actually failed"), any caller that tallies outcomes across many calls (batchAutoBuild/autoBuildRun's "N/total committed" summary) loses the distinction and reports a busy-but-fine item the same as a broken one. Widening the return type to name each outcome explicitly (here, a three-way 'committed' | 'skipped' | 'failed' instead of a boolean) fixes it at the source instead of adding a second out-of-band flag the caller has to remember to check.
@@ -92,7 +94,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-07-29 `model-builder/t-029` — Extended the review-gate-bypass bug class (already fixed for canApproveAssets, batchDraftField/batchSetField, and previewCommit) to the single-item draftText() path: the Approve button for PITCH/FIELDS_AND_PROMPTS has no isDrafting gate, so a stage can be approved while its own AI draft is still resolving, and the draft would silently overwrite the approved content with no re-review. This task's note (67+ PROGRESS/REVIEWED entries) is now the same note-bloat shape the immediately preceding LEARNING.yaml entry describes for coloring-book/t-037 -- worth the same run-log.md extraction next cycle, before it slows down reading/diffing the roadmap further.
 - 2026-07-29 `coloring-book/t-037` — Note-bloat extraction (moving a recurring task's accumulated RAN/incident history out of the roadmap note: field into a dedicated run-log.md, per the ai-art-academy/t-010 precedent) is now a proven, repeatable pattern for any long-running recurring task whose note has grown large enough to slow down reading/diffing the roadmap -- verify the move with a byte-identical diff check before trimming the original, and add a run_log: pointer field rather than just prose, so a script can find the log mechanically later.
 - 2026-07-29 `taskmaster/t-002` — kind_robots PR #1157 merged clean on first pass, all 11 checks green including the project-specific "Taskmaster checkpoint contract" -- confirming in advance that the contract verifiers only assert against stores/taskmasterStore.ts and components/pages/taskmaster-page.vue content (not stores/todoStore.ts, the actual file touched) avoided a wasted CI round trip on a fix that was never going to trip those specific checks.
-- 2026-07-29 `taskmaster/t-001` — The audit surfaced a real, silent regression rather than a documentation gap: a Serendipity->Taskmaster rename left stores/todoStore.ts's AGENT-todo badging heuristic matching the pre-rename icon/title/description shapes only, so every Taskmaster-created needs-human todo since the rename silently miscategorized with no error. Renames that touch generated-content shape (icons, title/description prefixes used elsewhere as string-matched classifiers) need a grep for every consumer of the old string shape, not just the producer -- an audit task that reads the producer in isolation would have reported this capability as "present and working" when it was actually broken for every row created after the rename.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-01T04:39:08Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-01T04:45:47Z_
