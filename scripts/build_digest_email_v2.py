@@ -112,6 +112,11 @@ def proposal_section(heading: str, proposal: dict[str, Any] | None, cta: bool = 
     if target_page:
         buttons += legacy._button(target_page, "🌙 View the Daily Dream page", color="#1d4ed8")
     buttons = f"<p>{buttons}</p>" if buttons else ""
+    calendar_label = str(proposal.get("calendar_label") or "")
+    calendar_line = (
+        f'<p style="color:#475569;font-size:12px;margin:3px 0 8px">{esc(calendar_label)}</p>'
+        if calendar_label else ""
+    )
     ready = sum(asset.get("art_status") == "ready" for asset in assets)
     art_line = (
         f'<p style="color:#334155;background:#f8fafc;border-left:4px solid #64748b;'
@@ -130,7 +135,7 @@ def proposal_section(heading: str, proposal: dict[str, Any] | None, cta: bool = 
         f'<h2 style="margin-bottom:2px">{esc(heading)}</h2>'
         f'<p style="font-size:1.15em;color:#2e1065;margin:2px 0"><strong>{title}</strong></p>'
         f'<p style="color:#444;line-height:1.5;margin-top:4px;max-width:660px">{idea}</p>'
-        f'{art_line}{facet_line}{buttons}{asset_grid(assets)}'
+        f'{calendar_line}{art_line}{facet_line}{buttons}{asset_grid(assets)}'
     )
 
 
@@ -139,6 +144,25 @@ def build_payload(digest: dict[str, Any]) -> dict[str, Any]:
     # one function upgrades both tomorrow and yesterday without copying the rest.
     legacy.proposal_section = proposal_section
     payload = legacy.build_payload(digest)
+
+    shown_slugs = {
+        str((digest.get("tomorrow_proposal") or {}).get("slug") or ""),
+        str((digest.get("yesterday_output") or {}).get("slug") or ""),
+    }
+    additional = [
+        proposal for proposal in digest.get("recent_dream_outputs", [])
+        if isinstance(proposal, dict) and str(proposal.get("slug") or "") not in shown_slugs
+    ]
+    if additional:
+        recent_html = (
+            '<h2 style="margin-bottom:2px">📅 Other objects built today or yesterday</h2>'
+            + "".join(proposal_section("Built bundle", proposal) for proposal in additional)
+        )
+        divider = '<hr style="margin:22px 0;border:none;border-top:2px solid #eee">'
+        payload["htmlContent"] = payload["htmlContent"].replace(
+            divider, recent_html + divider, 1
+        )
+
     status = str(digest.get("daily_dream_output_status") or "")
     if status and not digest.get("yesterday_output"):
         marker = '<h2 style="margin-bottom:2px">🖼️ Yesterday\'s output</h2>'
