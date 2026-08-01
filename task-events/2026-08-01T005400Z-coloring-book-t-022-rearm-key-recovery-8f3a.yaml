@@ -1,9 +1,0 @@
-version: 1
-project: coloring-book
-task: t-022
-operation: rearm
-owner: worker
-session: 2026-08-01T004100Z-coloring-book-t-022-key-restored-8f3a
-updated: '2026-08-01T00:54:00Z'
-note: >-
-  Merged PR #1476 fixing the stale credential preflight. Silas restored ANTHROPIC_API_KEY and one non-forced 18-slot recovery event is queued for the preserved ArtJobs 2776-2793. Do not create a duplicate recovery event while that file remains present; the next cycle should inspect the queue/event result first.
