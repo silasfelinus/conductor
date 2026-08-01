@@ -133,8 +133,8 @@ tasks:
   - id: t-003
     milestone: m2
     title: 'Resolve the app.vue / [...slug].vue scroll contradiction and collapse shell nesting'
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     note: >
@@ -151,6 +151,9 @@ tasks:
       do this today). Then collapse `main.kr-main` -> `div.rounded-2xl` -> `div.overflow`,
       which is three wrappers doing one job. Target <=5 wrappers before page content
       (currently 9-10). Delete the t-001 mockup routes as part of this task.
+    claimed_by: 2026-08-01T13:35:00Z-t003
+    claimed_at: '2026-08-01T13:32:24Z'
+    updated: '2026-08-01T13:32:24Z'
 
   - id: t-004
     milestone: m2
