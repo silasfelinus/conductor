@@ -5341,3 +5341,27 @@ records:
   failure_category: null
   lesson: Keep operational CLI commands and agent startup instructions under regression tests when a generator
     contract is rewritten.
+- date: '2026-08-01'
+  project: coloring-book
+  task: t-022
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: quality
+  lesson: >
+    A "recover instead of resubmit" mechanism that keys off a single stored
+    error-message breadcrumb (semantic_gate_error / referenced_job_id()) must
+    clear that breadcrumb the moment a real, definitive outcome supersedes it
+    -- not just when the outcome is success (mark_done already popped it) or
+    positively-dead (RecoveryAbandoned already popped it). The missed case was
+    the middle one: recovery succeeds, the recovered image is then genuinely
+    semantic-rejected on quality grounds. Because record_semantic_rejection()
+    left the old "job N: ..." text in place, referenced_job_id() kept pointing
+    every future pass at the same already-rejected job, so the recovery path
+    kept re-fetching and re-judging the identical dead image indefinitely
+    instead of ever falling through to a fresh, differently-seeded submission.
+    When auditing a stateful recovery/retry mechanism, enumerate all outcomes
+    of the operation being recovered (not just success/failure) and confirm
+    each one's bookkeeping is handled, rather than assuming the two outcomes
+    already covered are exhaustive.
