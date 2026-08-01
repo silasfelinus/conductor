@@ -575,7 +575,7 @@ tasks:
   - id: t-029
     milestone: m6
     title: "Polish and upgrade Model Builder front-end surface"
-    status: ready
+    status: claimed
     recurring: true
     passes: 0
     stakes: reversible
@@ -656,8 +656,10 @@ tasks:
       Fixed same-item auto-build reentrancy in kind_robots: autoBuildItem now rejects a second concurrent call for an item already being auto-built, preventing overlap between item, batch, and run-level entry points. Extended the existing auto-build regression guard with an isolated reentrancy fixture.
 
       REVIEWED 2026-07-31T23:28Z (conductor Agent run, session claude-quirky-curie-20260731T2328Z-mb-t029-review): reviewed kind_robots PR #1223. Confirmed the diff matches the note's description -- `autoBuildItem()` now returns false immediately when `state.autoBuildingItemId === item.id`, before claiming the singleton, closing the reentrancy gap deferred from PR #1221. `verifyModelBuilderAutoBuildDraftGate.ts`'s self-test was extended with an isolated fixture proving the checker flags the guard's absence and clears once present. All 12 CI checks green (TypeScript, Contract verifiers, facet-catalog, Storymaker/Narrative/Taskmaster contracts, verify, GitGuardian), mergeable_state clean, no review comments beyond the review-claim marker. Merged kind_robots #1223 (squash 2da5de5a). Step (1) (dashboard-tab + tutorial .webp art) remains the sole outstanding original deliverable, still blocked on the external art-generation relay. No new kaizen task: this cycle's PR explicitly closed the one deferred kaizen from #1221 rather than raising a new one, and the prior createOwnedSingleton() kaizen already landed in PR #1049. Rearmed to `ready` per the recurring-task rule; claim fields cleared below.
-    updated: '2026-07-31T23:28:14Z'
-    owner: null
+    updated: '2026-08-01T00:28:22Z'
+    owner: worker
+    claimed_by: claude-quirky-curie-20260801T002819Z-mb-t029
+    claimed_at: '2026-08-01T00:28:22Z'
 
   - id: t-030
     milestone: m6
