@@ -27,7 +27,7 @@ books:
     id: mr-001
     slug: perfect-woman
     title: The Perfect Woman
-    status: pending
+    status: needs_review
     seed: 840001
     image_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-001-perfect-woman.webp
     source_ref: projects/coloring-book/sets/monster-recast/art-modeler-request.yaml#mr-001
@@ -66,7 +66,7 @@ books:
       verdict: reject
       subject_match: false
       on_brief: false
-      reasons: &id001
+      reasons:
       - semantic score 32 is below minimum 75
       - render is off the requested visual brief
       - requested subjects or scene are absent
@@ -82,9 +82,36 @@ books:
       rejected_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/rejected/semantic/rejected/mr-001-perfect-woman-attempt-2-seed-309486434.webp
       reviewed_at: '2026-08-01T04:15:09Z'
       model: claude-opus-4-8
-    semantic_attempts: 2
-    last_rejected_art_image_id: 13139
-    last_render_seed: 309486434
+    - attempt: 3
+      seed: 2024601399
+      engine: krea2
+      art_image_id: 13671
+      prompt_fingerprint: 849fa69da79063105f5e10afc35baac19e0328365fd920180ed188574268a1d6
+      score: 32
+      verdict: reject
+      subject_match: false
+      on_brief: false
+      reasons: &id001
+      - semantic score 32 is below minimum 75
+      - render is off the requested visual brief
+      - requested subjects or scene are absent
+      - The creation reads explicitly as a slim Bride-of-Frankenstein figure (streaked bun hair, draped gown, slender
+        build) which directly contradicts the brief's requirement of a monumental, Amazonian, heavily muscled, broad-shouldered
+        original-style monster that is 'never a bride'.
+      - No visible heavy musculature, stitching/scarring, or bending/straining against the steel restraint frame
+        — the required dramatic action of rising hard enough to bend the frame is absent.
+      - The assistant is depicted as a standing, upright bearded man with no hunchback, failing the 'devoted hunchbacked
+        assistant' descriptor.
+      - The switch he holds is a small handheld device, not the 'absurdly oversized switch' being wrestled.
+      - Composition is a flat frontal mid view, not the specified low wide view from the foot of the slab.
+      - Camp and horror qualities are present and anatomy is clean, but core named-subject attributes are wrong,
+        making this a subject mismatch rather than a repairable flaw.
+      rejected_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/rejected/semantic/rejected/mr-001-perfect-woman-attempt-3-seed-2024601399.webp
+      reviewed_at: '2026-08-01T04:43:55Z'
+      model: claude-opus-4-8
+    semantic_attempts: 3
+    last_rejected_art_image_id: 13671
+    last_render_seed: 2024601399
     last_semantic_score: 32
     last_semantic_reasons: *id001
   - slot: 2
@@ -115,7 +142,7 @@ books:
     id: mr-005
     slug: moon-torn
     title: Moon-Torn
-    status: pending
+    status: needs_review
     seed: 840005
     image_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-005-moon-torn.webp
     source_ref: projects/coloring-book/sets/monster-recast/art-modeler-request.yaml#mr-005
@@ -154,7 +181,7 @@ books:
       verdict: reject
       subject_match: false
       on_brief: true
-      reasons: &id002
+      reasons:
       - semantic score 45 is below minimum 75
       - requested subjects or scene are absent
       - 'Core scene elements present: a wolf howling on a rooftop with a chimney and an enormous full moon filling
@@ -169,16 +196,40 @@ books:
       rejected_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/rejected/semantic/rejected/mr-005-moon-torn-attempt-2-seed-635610156.webp
       reviewed_at: '2026-08-01T04:15:30Z'
       model: claude-opus-4-8
-    semantic_attempts: 2
-    last_rejected_art_image_id: 13140
-    last_render_seed: 635610156
-    last_semantic_score: 45
+    - attempt: 3
+      seed: 1609196991
+      engine: krea2
+      art_image_id: 13672
+      prompt_fingerprint: fb298bc2b5d7e7c1e92fa4a61ab96b2d1b50aedc4bdf5ef2d2f415bdc417cf7d
+      score: 34
+      verdict: reject
+      subject_match: false
+      on_brief: false
+      reasons: &id002
+      - semantic score 34 is below minimum 75
+      - render is off the requested visual brief
+      - requested subjects or scene are absent
+      - The candidate depicts an ordinary, naturally-proportioned wolf howling, not the colossal she-wolf with enormous
+        thighs and shoulders demanded by the brief.
+      - 'Key transformation elements are absent: no shredded clothes/broad tatters, no crescent mane, no saliva,
+        and no long claws breaking the frame.'
+      - The concept of a feral female transformed being is not communicated; this reads as a generic animal wolf
+        portrait.
+      - The moon and low-angle rooftop framing are present and coherent, but too many named required features are
+        missing for subject match.
+      rejected_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/rejected/semantic/rejected/mr-005-moon-torn-attempt-3-seed-1609196991.webp
+      reviewed_at: '2026-08-01T04:46:35Z'
+      model: claude-opus-4-8
+    semantic_attempts: 3
+    last_rejected_art_image_id: 13672
+    last_render_seed: 1609196991
+    last_semantic_score: 34
     last_semantic_reasons: *id002
   - slot: 6
     id: mr-006
     slug: screwhead
     title: Screwhead
-    status: pending
+    status: needs_review
     seed: 840006
     image_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-006-screwhead.webp
     source_ref: projects/coloring-book/sets/monster-recast/art-modeler-request.yaml#mr-006
@@ -217,7 +268,7 @@ books:
       verdict: reject
       subject_match: false
       on_brief: false
-      reasons: &id003
+      reasons:
       - semantic score 28 is below minimum 75
       - render is off the requested visual brief
       - requested subjects or scene are absent
@@ -231,10 +282,35 @@ books:
       rejected_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/rejected/semantic/rejected/mr-006-screwhead-attempt-2-seed-2103694764.webp
       reviewed_at: '2026-08-01T04:15:42Z'
       model: claude-opus-4-8
-    semantic_attempts: 2
-    last_rejected_art_image_id: 13141
-    last_render_seed: 2103694764
-    last_semantic_score: 28
+    - attempt: 3
+      seed: 440998094
+      engine: krea2
+      art_image_id: 13673
+      prompt_fingerprint: 44e599087f7d5e2317577b087cb9beaa0b8983f9999e1f7ab67cdb4d849468f5
+      score: 22
+      verdict: reject
+      subject_match: false
+      on_brief: false
+      reasons: &id003
+      - semantic score 22 is below minimum 75
+      - render is off the requested visual brief
+      - requested subjects or scene are absent
+      - The defining element — hundreds of varied screws entering scarred flesh across face, scalp, neck, shoulders
+        and body in geometric patterns — is entirely absent; the skin is smooth and unmarked.
+      - No scarring or body horror is present at all, so the requested 'elegant body horror' quality was requested
+        but not delivered.
+      - The ceremonial leather is decorative but does not expose any scar designs as specified.
+      - The presented sphere opening into nested metal petals is roughly present, but it cannot carry the concept
+        alone without the screw motif that it is meant to echo.
+      - Anatomy and composition are clean and finished, but the core subject mismatch makes this a hard failure
+        rather than a repairable revision.
+      rejected_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/rejected/semantic/rejected/mr-006-screwhead-attempt-3-seed-440998094.webp
+      reviewed_at: '2026-08-01T04:49:05Z'
+      model: claude-opus-4-8
+    semantic_attempts: 3
+    last_rejected_art_image_id: 13673
+    last_render_seed: 440998094
+    last_semantic_score: 22
     last_semantic_reasons: *id003
   - slot: 7
     id: mr-007
@@ -289,7 +365,7 @@ books:
     id: mr-008
     slug: game-mistress
     title: The Little Game Mistress
-    status: pending
+    status: needs_review
     seed: 840008
     image_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-008-game-mistress.webp
     source_ref: projects/coloring-book/sets/monster-recast/art-modeler-request.yaml#mr-008
@@ -326,7 +402,7 @@ books:
       verdict: reject
       subject_match: false
       on_brief: false
-      reasons: &id005
+      reasons:
       - semantic score 32 is below minimum 75
       - render is off the requested visual brief
       - requested subjects or scene are absent
@@ -341,10 +417,34 @@ books:
       rejected_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/rejected/semantic/rejected/mr-008-game-mistress-attempt-2-seed-2079833562.webp
       reviewed_at: '2026-08-01T04:16:13Z'
       model: claude-opus-4-8
-    semantic_attempts: 2
-    last_rejected_art_image_id: 13143
-    last_render_seed: 2079833562
-    last_semantic_score: 32
+    - attempt: 3
+      seed: 391198449
+      engine: krea2
+      art_image_id: 13674
+      prompt_fingerprint: af8ebc675df84111c316921ff2f3c23c2d18ea610ff2fd1ea422c1e2f04c2cda
+      score: 28
+      verdict: reject
+      subject_match: false
+      on_brief: false
+      reasons: &id005
+      - semantic score 28 is below minimum 75
+      - render is off the requested visual brief
+      - requested subjects or scene are absent
+      - The figure is rendered as a realistic human woman with a natural face and expression, not the required carved
+        game-host mechanical doll with stiff articulated joints and mischievous puppet grin.
+      - No visible articulation joints, painted/carved features, or raised painted eyebrow indicating a puppet/doll
+        subject.
+      - The action is a gentle walk beside a static tiny pedal car rather than braking and turning sharply toward
+        the viewer, and the vehicle is not staged as a dramatic sports car.
+      - Composition and setting are coherent hallway scene, but the core subject substitution (human instead of
+        carved doll) is a hard mismatch.
+      rejected_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/rejected/semantic/rejected/mr-008-game-mistress-attempt-3-seed-391198449.webp
+      reviewed_at: '2026-08-01T04:51:35Z'
+      model: claude-opus-4-8
+    semantic_attempts: 3
+    last_rejected_art_image_id: 13674
+    last_render_seed: 391198449
+    last_semantic_score: 28
     last_semantic_reasons: *id005
   - slot: 9
     id: mr-009
@@ -422,7 +522,7 @@ books:
     id: mr-011
     slug: alien-king
     title: The Alien King
-    status: pending
+    status: needs_review
     seed: 840011
     image_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-011-alien-king.webp
     source_ref: projects/coloring-book/sets/monster-recast/art-modeler-request.yaml#mr-011
@@ -461,7 +561,7 @@ books:
       verdict: revise
       subject_match: true
       on_brief: false
-      reasons: &id007
+      reasons:
       - semantic score 54 is below minimum 75
       - render is off the requested visual brief
       - 'The masculinized hive king reads well: broad upper carriage, narrow armored waist, long limbs, mineral-black
@@ -477,16 +577,41 @@ books:
       rejected_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/rejected/semantic/rejected/mr-011-alien-king-attempt-2-seed-490599938.webp
       reviewed_at: '2026-08-01T04:16:45Z'
       model: claude-opus-4-8
-    semantic_attempts: 2
-    last_rejected_art_image_id: 13146
-    last_render_seed: 490599938
-    last_semantic_score: 54
+    - attempt: 3
+      seed: 1009119606
+      engine: krea2
+      art_image_id: 13675
+      prompt_fingerprint: 54857a580d1e76f8471808d819a9e9bc088904b977f8a0273bcd9533f19eac46
+      score: 62
+      verdict: revise
+      subject_match: true
+      on_brief: true
+      reasons: &id007
+      - semantic score 62 is below minimum 75
+      - 'Delivers the core concept: masculine hive-king on a throne, mineral-black exoskeleton, broad upper carriage
+        narrowing to an armored waist, long limbs, and a ceremonial radial crest reading like a crown against an
+        egg-shaped red chamber backdrop.'
+      - 'Violates explicit negative constraints: a prominent exposed ribbed torso is clearly present and the pale
+        face reads as a familiar skull, both of which the brief forbids.'
+      - Lantern throat is not clearly conveyed; the throat/chest area reads as biomechanical ribbing instead.
+      - Composition is clean, centered, and full-frame with strong contrast; suitable for line-art conversion.
+      - Anatomy is coherent with proper limb count and contact points; camp/horror qualities are appropriate to
+        the severe-monarchy tone.
+      - 'Repairable: remove the ribbed body and revise the skull face toward a less-familiar alien head, and emphasize
+        a glowing lantern throat.'
+      rejected_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/rejected/semantic/rejected/mr-011-alien-king-attempt-3-seed-1009119606.webp
+      reviewed_at: '2026-08-01T04:54:07Z'
+      model: claude-opus-4-8
+    semantic_attempts: 3
+    last_rejected_art_image_id: 13675
+    last_render_seed: 1009119606
+    last_semantic_score: 62
     last_semantic_reasons: *id007
   - slot: 12
     id: mr-012
     slug: hush-dummy
     title: Hush, Darling
-    status: pending
+    status: needs_review
     seed: 840012
     image_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-012-hush-dummy.webp
     source_ref: projects/coloring-book/sets/monster-recast/art-modeler-request.yaml#mr-012
@@ -525,7 +650,7 @@ books:
       verdict: revise
       subject_match: false
       on_brief: true
-      reasons: &id008
+      reasons:
       - semantic score 52 is below minimum 75
       - requested subjects or scene are absent
       - The face-and-shush framing is correct and the raised finger is convincingly carved wood with distinct grain,
@@ -540,16 +665,42 @@ books:
       rejected_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/rejected/semantic/rejected/mr-012-hush-dummy-attempt-2-seed-1198038974.webp
       reviewed_at: '2026-08-01T04:17:00Z'
       model: claude-opus-4-8
-    semantic_attempts: 2
-    last_rejected_art_image_id: 13157
-    last_render_seed: 1198038974
-    last_semantic_score: 52
+    - attempt: 3
+      seed: 1626021057
+      engine: krea2
+      art_image_id: 13676
+      prompt_fingerprint: 38d2296b2e5d090b850e0808f0cf9a4469568b5f3a6234b4a695cb76c67e4ad4
+      score: 58
+      verdict: revise
+      subject_match: false
+      on_brief: true
+      reasons: &id008
+      - semantic score 58 is below minimum 75
+      - requested subjects or scene are absent
+      - The face-and-shush framing is correctly executed as a full-frame close-up composition suitable for line-art
+        conversion.
+      - The raised wooden finger and wooden hand read clearly as carved wood, and the finger does appear to have
+        a distinct grain versus the hand, supporting the self-assembly hint.
+      - 'Key subject requirement is weak: the face reads as a mostly human woman rather than a ventriloquist dummy.
+        Missing the required lacquer cracks / crack map, the beginning-to-open jaw seam, and the glossy doll-eye
+        quality.'
+      - Old-fashioned coiffure and white collar are present and on-brief.
+      - Anatomy and contact points are clean; no extra limbs.
+      - Eerie tone reads adequately; camp not requested. To promote, add visible lacquer cracks, a hinged jaw seam,
+        and glossier doll eyes so the subject unmistakably reads as a dummy rather than a human.
+      rejected_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/rejected/semantic/rejected/mr-012-hush-dummy-attempt-3-seed-1626021057.webp
+      reviewed_at: '2026-08-01T04:56:40Z'
+      model: claude-opus-4-8
+    semantic_attempts: 3
+    last_rejected_art_image_id: 13676
+    last_render_seed: 1626021057
+    last_semantic_score: 58
     last_semantic_reasons: *id008
   - slot: 13
     id: mr-013
     slug: ansel-bell
     title: Ansel Bell
-    status: pending
+    status: needs_review
     seed: 840013
     image_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-013-ansel-bell.webp
     source_ref: projects/coloring-book/sets/monster-recast/art-modeler-request.yaml#mr-013
@@ -589,7 +740,7 @@ books:
       verdict: revise
       subject_match: false
       on_brief: true
-      reasons: &id009
+      reasons:
       - semantic score 52 is below minimum 75
       - requested subjects or scene are absent
       - The centered child figure reads as a live toddler rather than a porcelain antique boy doll; porcelain skin,
@@ -603,16 +754,39 @@ books:
       rejected_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/rejected/semantic/rejected/mr-013-ansel-bell-attempt-2-seed-499183092.webp
       reviewed_at: '2026-08-01T04:17:21Z'
       model: claude-opus-4-8
-    semantic_attempts: 2
-    last_rejected_art_image_id: 13158
-    last_render_seed: 499183092
-    last_semantic_score: 52
+    - attempt: 3
+      seed: 1360594110
+      engine: krea2
+      art_image_id: 13684
+      prompt_fingerprint: b7d4034a6751a7504526e301c0a251529b5fb6956cf8a6d568e1bd8870262af6
+      score: 38
+      verdict: reject
+      subject_match: false
+      on_brief: true
+      reasons: &id009
+      - semantic score 38 is below minimum 75
+      - requested subjects or scene are absent
+      - Subject reads as a realistic living toddler, not an antique porcelain boy doll with porcelain skin and glass
+        eyes as required
+      - Missing pageboy hairstyle and asymmetric glass eyes called for in the concept
+      - 'Critical required feature absent: his head should face away while his eyes still meet the camera, but here
+        he faces fully forward'
+      - Toys facing the viewer element is present, and the nursery setting is coherent full-frame, but the core
+        subject mismatch is a hard failure
+      - Requested uncanny/horror unease is only weakly present since the defining creepy pose was not delivered
+      rejected_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/rejected/semantic/rejected/mr-013-ansel-bell-attempt-3-seed-1360594110.webp
+      reviewed_at: '2026-08-01T04:59:11Z'
+      model: claude-opus-4-8
+    semantic_attempts: 3
+    last_rejected_art_image_id: 13684
+    last_render_seed: 1360594110
+    last_semantic_score: 38
     last_semantic_reasons: *id009
   - slot: 14
     id: mr-014
     slug: bathtub-shave
     title: Ghostface Gets Ready
-    status: pending
+    status: needs_review
     seed: 840014
     image_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-014-bathtub-shave.webp
     source_ref: projects/coloring-book/sets/monster-recast/art-modeler-request.yaml#mr-014
@@ -652,7 +826,7 @@ books:
       verdict: reject
       subject_match: false
       on_brief: false
-      reasons: &id010
+      reasons:
       - semantic score 28 is below minimum 75
       - render is off the requested visual brief
       - requested subjects or scene are absent
@@ -667,16 +841,39 @@ books:
       rejected_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/rejected/semantic/rejected/mr-014-bathtub-shave-attempt-2-seed-1894371183.webp
       reviewed_at: '2026-08-01T04:17:34Z'
       model: claude-opus-4-8
-    semantic_attempts: 2
-    last_rejected_art_image_id: 13160
-    last_render_seed: 1894371183
-    last_semantic_score: 28
+    - attempt: 3
+      seed: 563062200
+      engine: krea2
+      art_image_id: 13688
+      prompt_fingerprint: d29019bc13a34398e5841454b286cd8fd74f5cacfd061f4cd40cd7a006a89c63
+      score: 47
+      verdict: revise
+      subject_match: false
+      on_brief: true
+      reasons: &id010
+      - semantic score 47 is below minimum 75
+      - requested subjects or scene are absent
+      - The scene, masked slasher, soaked black hooded robe, bubbles, phone off the hook, and open door into darkness
+        are all present and coherent.
+      - 'However the central required element is missing: the gleaming knife used as a razor with one smooth strip
+        left on a stubbled leg. No knife is visible anywhere and no shaving action reads.'
+      - Because the signature self-care joke (knife-as-razor) is absent, subject_match fails despite the correct
+        setting and mood.
+      - Anatomy is clean and framing is tasteful pinup as requested; adding the knife-shaving gag would make this
+        promotable.
+      rejected_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/rejected/semantic/rejected/mr-014-bathtub-shave-attempt-3-seed-563062200.webp
+      reviewed_at: '2026-08-01T05:01:43Z'
+      model: claude-opus-4-8
+    semantic_attempts: 3
+    last_rejected_art_image_id: 13688
+    last_render_seed: 563062200
+    last_semantic_score: 47
     last_semantic_reasons: *id010
   - slot: 15
     id: mr-015
     slug: red-carpet-mummy
     title: Unraveled on the Red Carpet
-    status: pending
+    status: needs_review
     seed: 840015
     image_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-015-red-carpet-mummy.webp
     source_ref: projects/coloring-book/sets/monster-recast/art-modeler-request.yaml#mr-015
@@ -713,7 +910,7 @@ books:
       verdict: reject
       subject_match: false
       on_brief: false
-      reasons: &id011
+      reasons:
       - semantic score 22 is below minimum 75
       - render is off the requested visual brief
       - requested subjects or scene are absent
@@ -730,10 +927,36 @@ books:
       rejected_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/rejected/semantic/rejected/mr-015-red-carpet-mummy-attempt-2-seed-1533971315.webp
       reviewed_at: '2026-08-01T04:17:48Z'
       model: claude-opus-4-8
-    semantic_attempts: 2
-    last_rejected_art_image_id: 13163
-    last_render_seed: 1533971315
-    last_semantic_score: 22
+    - attempt: 3
+      seed: 1045838403
+      engine: krea2
+      art_image_id: 13690
+      prompt_fingerprint: 30e6adf7f9f034ee8e4fd05b5f503c2e746c157329ef9e4e569fe119de9f22af
+      score: 28
+      verdict: reject
+      subject_match: false
+      on_brief: false
+      reasons: &id011
+      - semantic score 28 is below minimum 75
+      - render is off the requested visual brief
+      - requested subjects or scene are absent
+      - The central subject is a living-looking glamorous woman in Egyptian-styled attire, not a mummy with an ancient
+        dead face and skeletal/desiccated hands as required.
+      - 'No unraveling bandage catastrophe: the wraps are an intact draped gown, not layered mummy bandages coming
+        loose from someone stepping on them.'
+      - The 'living bandage snaking through the paparazzi' is entirely absent.
+      - No photographers are turning to stone; the petrification action is missing.
+      - The tasteful-blockage gag (exposure hidden by trophy/handbag/photographers/ribbons) is moot because there
+        is no unraveling reveal to block.
+      - Setting (red carpet, paparazzi wall, trophy, handbag) reads correctly, but core named actions and undead
+        features are not delivered, so this is a hard subject mismatch.
+      rejected_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/rejected/semantic/rejected/mr-015-red-carpet-mummy-attempt-3-seed-1045838403.webp
+      reviewed_at: '2026-08-01T05:04:22Z'
+      model: claude-opus-4-8
+    semantic_attempts: 3
+    last_rejected_art_image_id: 13690
+    last_render_seed: 1045838403
+    last_semantic_score: 28
     last_semantic_reasons: *id011
   - slot: 16
     id: mr-016
@@ -759,7 +982,7 @@ books:
     id: mr-017
     slug: trophy-queen
     title: Trophy Queen
-    status: pending
+    status: needs_review
     seed: 840017
     image_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-017-trophy-queen.webp
     source_ref: projects/coloring-book/sets/monster-recast/art-modeler-request.yaml#mr-017
@@ -795,7 +1018,7 @@ books:
       verdict: reject
       subject_match: false
       on_brief: false
-      reasons: &id012
+      reasons:
       - semantic score 32 is below minimum 75
       - render is off the requested visual brief
       - requested subjects or scene are absent
@@ -811,16 +1034,40 @@ books:
       rejected_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/rejected/semantic/rejected/mr-017-trophy-queen-attempt-2-seed-1761780166.webp
       reviewed_at: '2026-08-01T04:18:00Z'
       model: claude-opus-4-8
-    semantic_attempts: 2
-    last_rejected_art_image_id: 13165
-    last_render_seed: 1761780166
-    last_semantic_score: 32
+    - attempt: 3
+      seed: 1075762585
+      engine: krea2
+      art_image_id: 13691
+      prompt_fingerprint: de66a97e10cc55496f4bb5f25bdb1fa34ff8807f643f9ac4e7c6184e6e3a2016
+      score: 22
+      verdict: reject
+      subject_match: false
+      on_brief: false
+      reasons: &id012
+      - semantic score 22 is below minimum 75
+      - render is off the requested visual brief
+      - requested subjects or scene are absent
+      - The brief explicitly requires a nonhuman alien hunter face with full mandibles, complex teeth, and alien
+        eyes, never softened into a pretty human; the candidate shows a conventionally attractive human woman's
+        face with no mandibles or alien features whatsoever.
+      - 'horror_reads fails: the requested frightening/lethal nonhuman face was not delivered.'
+      - She is holding a human-style camo helmet rather than lifting an original helmet to reveal a terrifying alien
+        visage.
+      - While armor, camouflage, exposed midriff, and braided cords are present, the central required subject (the
+        alien face) is missing, making this a hard subject mismatch.
+      rejected_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/rejected/semantic/rejected/mr-017-trophy-queen-attempt-3-seed-1075762585.webp
+      reviewed_at: '2026-08-01T05:06:51Z'
+      model: claude-opus-4-8
+    semantic_attempts: 3
+    last_rejected_art_image_id: 13691
+    last_render_seed: 1075762585
+    last_semantic_score: 22
     last_semantic_reasons: *id012
   - slot: 18
     id: mr-018
     slug: doctor-feast
     title: Doctor Feast
-    status: pending
+    status: needs_review
     seed: 840018
     image_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-018-doctor-feast.webp
     source_ref: projects/coloring-book/sets/monster-recast/art-modeler-request.yaml#mr-018
@@ -859,7 +1106,7 @@ books:
       verdict: reject
       subject_match: false
       on_brief: false
-      reasons: &id013
+      reasons:
       - semantic score 32 is below minimum 75
       - render is off the requested visual brief
       - requested subjects or scene are absent
@@ -873,16 +1120,40 @@ books:
       rejected_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/rejected/semantic/rejected/mr-018-doctor-feast-attempt-2-seed-164879718.webp
       reviewed_at: '2026-08-01T04:18:17Z'
       model: claude-opus-4-8
-    semantic_attempts: 2
-    last_rejected_art_image_id: 13166
-    last_render_seed: 164879718
-    last_semantic_score: 32
+    - attempt: 3
+      seed: 394390798
+      engine: krea2
+      art_image_id: 13694
+      prompt_fingerprint: f6cbed58afa5e65ac782206305ab261edab15a2fd4717194a4bdfbebe10ad275
+      score: 48
+      verdict: revise
+      subject_match: false
+      on_brief: true
+      reasons: &id013
+      - semantic score 48 is below minimum 75
+      - requested subjects or scene are absent
+      - 'The core scene is correct: a mature graying-haired woman on a gurney viewed through symmetrical cage bars,
+        dignified and coherent, full-frame and suitable for line-art conversion.'
+      - 'Critical named elements are missing: the required severe restraint mask is entirely absent, and there are
+        no visible restraint straps (''absurd straps''), which are central to the concept.'
+      - She reads as calmly seated rather than upright-restrained, weakening the intended terrifying/restrained
+        tension.
+      - Anatomy and contact points are clean; composition is intentional and finished.
+      - Because the mask and restraints are core subject requirements, subject_match fails, but the setting and
+        figure are right enough to repair rather than reject.
+      rejected_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/rejected/semantic/rejected/mr-018-doctor-feast-attempt-3-seed-394390798.webp
+      reviewed_at: '2026-08-01T05:09:28Z'
+      model: claude-opus-4-8
+    semantic_attempts: 3
+    last_rejected_art_image_id: 13694
+    last_render_seed: 394390798
+    last_semantic_score: 48
     last_semantic_reasons: *id013
   - slot: 19
     id: mr-019
     slug: countess-vermin
     title: Countess Vermin
-    status: pending
+    status: needs_review
     seed: 840019
     image_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-019-countess-vermin.webp
     source_ref: projects/coloring-book/sets/monster-recast/art-modeler-request.yaml#mr-019
@@ -920,7 +1191,7 @@ books:
       verdict: revise
       subject_match: true
       on_brief: true
-      reasons: &id014
+      reasons:
       - semantic score 58 is below minimum 75
       - 'Core subject present: gaunt pale elderly female vampire, single jewel pendant, and huge clawed shadow climbing
         the wall in a side-lit window portrait.'
@@ -934,10 +1205,36 @@ books:
       rejected_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/rejected/semantic/rejected/mr-019-countess-vermin-attempt-2-seed-1416786715.webp
       reviewed_at: '2026-08-01T04:18:32Z'
       model: claude-opus-4-8
-    semantic_attempts: 2
-    last_rejected_art_image_id: 13167
-    last_render_seed: 1416786715
-    last_semantic_score: 58
+    - attempt: 3
+      seed: 279808181
+      engine: krea2
+      art_image_id: 13695
+      prompt_fingerprint: 50f096a40bc3cb98c79bfc54ab7516bfdd6183e929f00e1a7ac18362f959d3de
+      score: 46
+      verdict: revise
+      subject_match: false
+      on_brief: true
+      reasons: &id014
+      - semantic score 46 is below minimum 75
+      - requested subjects or scene are absent
+      - 'The core subject is only partially delivered: the figure reads as a wrinkled elderly woman rather than
+        an ''absolutely ugly, gaunt, skeletal, ratlike, repulsive'' vampire. She has full pulled-back hair (not
+        bald/sparse), no corpse skin, and no visible rodent teeth or long claws.'
+      - 'The single signature twist of the brief is missing: the huge claw shadow is a hunched, clawed, gaunt silhouette
+        that echoes her body rather than the requested voluptuous, glamorous contrasting shape.'
+      - 'On-brief elements that ARE present: expressionist side-lit window framing, the single exquisite jewel/brooch
+        with grand-duchess vanity, stooped posture, and a dramatic clawed wall shadow.'
+      - Composition is coherent, full-frame, and clean enough for faithful line-art conversion; anatomy and contact
+        points are fine.
+      - Because the intended repulsive vampire identity and the crucial glamorous-shadow inversion are not realized,
+        subject_match fails and the piece needs revision rather than promotion.
+      rejected_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/rejected/semantic/rejected/mr-019-countess-vermin-attempt-3-seed-279808181.webp
+      reviewed_at: '2026-08-01T05:12:04Z'
+      model: claude-opus-4-8
+    semantic_attempts: 3
+    last_rejected_art_image_id: 13695
+    last_render_seed: 279808181
+    last_semantic_score: 46
     last_semantic_reasons: *id014
   - slot: 20
     id: mr-020
@@ -991,7 +1288,7 @@ books:
     id: mr-021
     slug: invisible-flasher
     title: The Invisible Exhibitionist
-    status: pending
+    status: needs_review
     seed: 840021
     image_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-021-invisible-flasher.webp
     source_ref: projects/coloring-book/sets/monster-recast/art-modeler-request.yaml#mr-021
@@ -1030,7 +1327,7 @@ books:
       verdict: reject
       subject_match: false
       on_brief: false
-      reasons: &id016
+      reasons:
       - semantic score 34 is below minimum 75
       - render is off the requested visual brief
       - requested subjects or scene are absent
@@ -1047,10 +1344,36 @@ books:
       rejected_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/rejected/semantic/rejected/mr-021-invisible-flasher-attempt-2-seed-2080319774.webp
       reviewed_at: '2026-08-01T04:19:01Z'
       model: claude-opus-4-8
-    semantic_attempts: 2
-    last_rejected_art_image_id: 13169
-    last_render_seed: 2080319774
-    last_semantic_score: 34
+    - attempt: 3
+      seed: 1383872500
+      engine: krea2
+      art_image_id: 13696
+      prompt_fingerprint: e03e9cbe9a70ae101cb6545d6179474006e5656508f2f1b3205040202a9e2397
+      score: 28
+      verdict: reject
+      subject_match: false
+      on_brief: false
+      reasons: &id016
+      - semantic score 28 is below minimum 75
+      - render is off the requested visual brief
+      - requested subjects or scene are absent
+      - The concept requires an invisible woman whose absent body is defined only by negative space, lingerie edges,
+        stockings, garters, heels, gloves and jewelry; instead the candidate shows a solid black silhouette with
+        visible hair and a fully filled dress/belt, which contradicts the invisibility gag entirely.
+      - No floating lipstick smile is present, a specifically required element to prove she occupies the space.
+      - No lingerie glamour details (stockings, garters, heels, gloves, jewelry) are visible; the interior of the
+        coat reveals a mundane belted dress rather than the intended suggestive negative-space reveal.
+      - Footprints approaching behind her are present, but this alone does not satisfy the core subject requirements.
+      - Warped wallpaper distortion is not clearly rendered.
+      - Overall the illustration reads as a clothed silhouetted figure opening a coat, not the intended impossible-optics
+        invisible flasher concept, so subject_match and on_brief both fail.
+      rejected_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/rejected/semantic/rejected/mr-021-invisible-flasher-attempt-3-seed-1383872500.webp
+      reviewed_at: '2026-08-01T05:14:44Z'
+      model: claude-opus-4-8
+    semantic_attempts: 3
+    last_rejected_art_image_id: 13696
+    last_render_seed: 1383872500
+    last_semantic_score: 28
     last_semantic_reasons: *id016
   - slot: 22
     id: mr-022
@@ -1060,6 +1383,35 @@ books:
     seed: 840022
     image_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-022-prom-king.webp
     source_ref: projects/coloring-book/sets/monster-recast/art-modeler-request.yaml#mr-022
+    semantic_rejections:
+    - attempt: 1
+      seed: 1605884185
+      engine: krea2
+      art_image_id: 13697
+      prompt_fingerprint: b22239e256ebe29970b85de903f9869fbe9364c3b06a049748c27283d3aab911
+      score: 63
+      verdict: revise
+      subject_match: true
+      on_brief: true
+      reasons: &id017
+      - semantic score 63 is below minimum 75
+      - 'Core subject present: late-teen boy as prom king in masculine formalwear with crown, standing still amid
+        a ruined gym with collapsed bleachers, smoke, sparks/fires, and floating debris.'
+      - Banner correctly reads only KING, matching the 'only KING remains' beat, and the composition is coherent
+        and full-frame with good line-art potential.
+      - Missing the specified dark non-graphic ceremonial fluid drenching the figure; he appears completely clean,
+        which undercuts the central humiliation/aftermath concept.
+      - The required anonymous hand under distant rubble is not visible.
+      - Crown reads as ornate gold metal rather than the specified cheap plastic crown; minor but worth fixing for
+        tone.
+      rejected_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/rejected/semantic/rejected/mr-022-prom-king-attempt-1-seed-1605884185.webp
+      reviewed_at: '2026-08-01T05:17:30Z'
+      model: claude-opus-4-8
+    semantic_attempts: 1
+    last_rejected_art_image_id: 13697
+    last_render_seed: 1605884185
+    last_semantic_score: 63
+    last_semantic_reasons: *id017
   - slot: 23
     id: mr-023
     slug: babs-blob
@@ -1068,6 +1420,37 @@ books:
     seed: 840023
     image_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-023-babs-blob.webp
     source_ref: projects/coloring-book/sets/monster-recast/art-modeler-request.yaml#mr-023
+    semantic_rejections:
+    - attempt: 1
+      seed: 55748575
+      engine: krea2
+      art_image_id: 13698
+      prompt_fingerprint: 89046c587d7a67c715592e5e755cae491f3cd71e6a8fe241448a25884f2485e6
+      score: 12
+      verdict: reject
+      subject_match: false
+      on_brief: false
+      reasons: &id018
+      - semantic score 12 is below minimum 75
+      - render is off the requested visual brief
+      - requested subjects or scene are absent
+      - Concept requires Babs O'Blob as a huge translucent raspberry protoplasmic mass simultaneously forming performer,
+        curtain, carpet and train, with hands/faces emerging from the goo. Candidate shows an ordinary plus-size
+        woman in a red gown surrounded by separate cheering figures.
+      - 'This is exactly the failure the brief warns against: a woman wearing a blob-colored dress rather than an
+        amorphous sentient volume.'
+      - No translucent protoplasm, no floating jewelry/shoes/props embedded inside, no absorbed faces, and no engulfed
+        orchestra pit.
+      - Required horror element (absorbed faces) is absent; requested horror was not delivered.
+      - Coherent full-frame stage image and clean line-art potential, but wrong subject entirely.
+      rejected_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/rejected/semantic/rejected/mr-023-babs-blob-attempt-1-seed-55748575.webp
+      reviewed_at: '2026-08-01T05:20:08Z'
+      model: claude-opus-4-8
+    semantic_attempts: 1
+    last_rejected_art_image_id: 13698
+    last_render_seed: 55748575
+    last_semantic_score: 12
+    last_semantic_reasons: *id018
   - slot: 24
     id: mr-024
     slug: madame-phantasm
@@ -1076,14 +1459,54 @@ books:
     seed: 840024
     image_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-024-madame-phantasm.webp
     source_ref: projects/coloring-book/sets/monster-recast/art-modeler-request.yaml#mr-024
+    semantic_rejections:
+    - attempt: 1
+      seed: 913443467
+      engine: krea2
+      art_image_id: 13699
+      prompt_fingerprint: d1f7454a7860bf6f64ddcfba4d9f5f34c615a170b5b544e5ddb82486f77d6e52
+      score: 62
+      verdict: revise
+      subject_match: false
+      on_brief: true
+      reasons: &id019
+      - semantic score 62 is below minimum 75
+      - requested subjects or scene are absent
+      - Grand opera-house staircase descent, organ-pipe conductor gown, orbiting emotion masks, and tuning-fork
+        batons are all clearly present and coherent.
+      - 'Key required element missing: the visibly disfigured cheek / actual facial difference is not shown — her
+        face reads as smooth and conventional.'
+      - Masks are original theatrical designs, not a plain white half-mask, and no famous chandelier scene is copied
+        — good compliance.
+      - Anatomy and contact points are clean; full-color composition would convert faithfully to line art.
+      - Revise to add the partly revealed facial disfigurement to satisfy the core concept.
+      rejected_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/rejected/semantic/rejected/mr-024-madame-phantasm-attempt-1-seed-913443467.webp
+      reviewed_at: '2026-08-01T05:22:47Z'
+      model: claude-opus-4-8
+    semantic_attempts: 1
+    last_rejected_art_image_id: 13699
+    last_render_seed: 913443467
+    last_semantic_score: 62
+    last_semantic_reasons: *id019
   - slot: 25
     id: mr-025
     slug: little-miss-omen
     title: Little Miss Omen
-    status: pending
+    status: done
     seed: 840025
     image_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-025-little-miss-omen.webp
     source_ref: projects/coloring-book/sets/monster-recast/art-modeler-request.yaml#mr-025
+    rendered_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-025-little-miss-omen.webp
+    art_image_id: 13700
+    render_seed: 604431883
+    render_engine: krea2
+    completed_at: '2026-08-01T05:27:56Z'
+    prompt_fingerprint: 2b6f56dd4a54532875965ad68e78fb502e66f0156df9e41aa0ae7f2b7da587bb
+    semantic_verdict: promote
+    semantic_score: 88
+    subject_match: true
+    on_brief: true
+    semantic_model: claude-opus-4-8
   - slot: 26
     id: mr-026
     slug: madam-satan
@@ -1092,6 +1515,35 @@ books:
     seed: 840026
     image_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-026-madam-satan.webp
     source_ref: projects/coloring-book/sets/monster-recast/art-modeler-request.yaml#mr-026
+    semantic_rejections:
+    - attempt: 1
+      seed: 1839628936
+      engine: krea2
+      art_image_id: 13701
+      prompt_fingerprint: 743766b5dacfffa0ff454bd56a0417cf76b853f53a7dd10ffe38dea3e3cc3ed7
+      score: 62
+      verdict: revise
+      subject_match: true
+      on_brief: true
+      reasons: &id020
+      - semantic score 62 is below minimum 75
+      - 'The core scene reads: a long banquet table viewed down its length, a severely tailored adult woman presiding
+        at the far end, and rows of formally dressed guests on both sides — coherent and full-frame.'
+      - 'Key conceptual element is underdelivered: the enormous shadow is meant to contain every traditional Satan
+        shape (horns, tail, etc.), but both shadows here are plain human silhouettes with no devil forms, so the
+        central visual payoff is missing.'
+      - The foreground silhouette at the bottom edge is ambiguous and floats oddly, slightly muddying the composition.
+      - No overt red lingerie, goat body, or branded occult symbols — restrictions respected.
+      - Anatomy and contact points are acceptable; suitable for line-art conversion.
+      - Revise to embed the traditional Satan iconography into the cast shadow and clarify the foreground shadow.
+      rejected_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/rejected/semantic/rejected/mr-026-madam-satan-attempt-1-seed-1839628936.webp
+      reviewed_at: '2026-08-01T05:27:56Z'
+      model: claude-opus-4-8
+    semantic_attempts: 1
+    last_rejected_art_image_id: 13701
+    last_render_seed: 1839628936
+    last_semantic_score: 62
+    last_semantic_reasons: *id020
   - slot: 27
     id: mr-027
     slug: half-possessed
