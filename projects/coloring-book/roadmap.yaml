@@ -175,10 +175,10 @@ tasks:
 - id: t-022
   milestone: m4
   title: Monster Recast book 1 production pass — 36 final color/BW pairs
-  status: ready
+  status: claimed
   passes: 0
   stakes: reversible
-  updated: '2026-08-01T04:15:00Z'
+  updated: '2026-08-01T04:31:32Z'
   depends_on: t-021
   note: |-
     CURRENT COLOR-FIRST DIRECTION (2026-07-17): use the canonical color-art-jobs.yaml
@@ -211,6 +211,9 @@ tasks:
     Merged PR #1485 after all Worker CI, Security Audit, Roadmap Audit, task-event processing, and coloring approved preflight checks passed. The recovery event now skips already-resolved ids and carries the remaining 16 Monster Recast proposals; inspect the existing event result before creating any new batch.
   run_log: projects/coloring-book/t-022-run-log.md
   recurring: true
+  owner: worker
+  claimed_by: claude-scheduled-20260801T042657Z-cb-t022
+  claimed_at: '2026-08-01T04:31:32Z'
 - id: t-025
   milestone: m6
   title: Package and register Monster Recast book 1
