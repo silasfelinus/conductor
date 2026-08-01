@@ -5461,3 +5461,22 @@ records:
     rule) rather than by process (diffing file list against PR body before
     merging). Next time: pull_request_read get_files before merge_pull_request,
     every time, not just when the PR body itself flags a migration.
+- date: 2026-08-01
+  project: interface-vision
+  task: t-003
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: scope
+  lesson: >
+    Task note prescribed a single risky change (flip app.vue's scroll
+    ownership) with no mention of the 18-of-30 components/pages/*.vue
+    files that would silently lose all scroll capability if flipped
+    without per-page backfill first. Landed the safe structural half,
+    split the audit-and-flip half into t-003b rather than attempting it
+    blind in a sandbox with no local dev/DB to verify against -- treat
+    "recommended fix" in a task note as a starting hypothesis to verify
+    against the actual codebase, not a checklist to execute literally,
+    especially for anything touching a shared ancestor every page
+    depends on.
