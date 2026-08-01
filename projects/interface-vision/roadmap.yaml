@@ -585,7 +585,7 @@ tasks:
   - id: t-012
     milestone: m2
     title: 'Collapse four navigation taxonomies into one manifest'
-    status: claimed
+    status: review
     owner: worker
     passes: 0
     stakes: reversible
@@ -605,6 +605,39 @@ tasks:
       manifest route resolves and every content page's channelKey/dashboardKey pair is
       consistent; components/navigation/navigation-health.vue already exists as an audit
       surface, so wire it to the manifest rather than building a new one.
+
+      IN REVIEW 2026-08-01: kind_robots PR #1272 (open). Investigated all four systems
+      via Explore agent first (dashboardHelper.ts has 15 direct importers; the card-deck
+      system has 3 different runtime resolution paths, one of which -- getModelCards() --
+      is dead code, never called anywhere; no PortOS checkout reachable in this sandbox,
+      but utils/dataSurfaceManifest.ts already mirrors its pattern in-repo and was used as
+      the template instead). Landed the safe, self-contained core rather than the full
+      inversion: utils/navManifest.ts (shared isomorphic guard layer, client+server safe)
+      + utils/scripts/verifyNavManifest.ts (CI contract, npm run test:nav-manifest) that
+      cross-checks content/channels' dashboardKey/dashboardTab/cards frontmatter against
+      the real dashboardConfigs and modelCards.ts vocabularies. Building the guard found
+      MORE than the task named: content/channels/build/art.md had the same dead-cards bug
+      as the two named typos (cards: art, fixed to builderCards), and
+      content/channels/sanctuary/privacy.md + content/channels/home/navigation.md both had
+      dashboardKey: admin -- a real channelKey but not a real dashboardConfigs key, so
+      navStore.ts's resolveDashboardKey() was silently falling back to 'user' for both;
+      corrected the frontmatter to say what actually happens. Deleted stores/linkStore.ts
+      and its one (also-dead, confirmed via repo-wide grep, never mounted) consumer
+      components/icons/kind-icons.vue. The guard also surfaced 9 tabs whose dashboardTab
+      doesn't match any real tab in its dashboard -- reported as non-fatal warnings
+      (navStore.ts's own setDashboardShellFromContent() already treats this as an
+      intentional "no tab hint" case for channel-landing pages), tracked by new task t-034
+      rather than guessed at blindly. Split the actual "derive the others from it"
+      inversion -- which touches dashboardHelper.ts's 15 importers and the 3-path card
+      resolution system -- into t-033 (channel/tab derivation + verifyChannelContent.ts
+      integration), t-034 (dashboardHelper.ts/navStore.ts derivation + the 9 dashboardTab
+      warnings), t-035 (card-deck derivation, including wiring getModelCards() for real),
+      and t-036 (wire navigation-health.vue to the manifest). Same scope-discipline
+      pattern as t-008/t-009/t-011 on this project (see TALKBACK.md). Verified: npm run
+      test:nav-manifest (0 errors, 9 tracked warnings), test:channel-content,
+      test:channel-resolver, test:data-surface-manifest all pass; vue-tsc --noEmit clean;
+      eslint clean; prettier clean. Could not visually verify (no local DATABASE_URL) --
+      flagged for a Vercel-preview spot check on /privacy and /navigation in the PR.
     claimed_by: conductor-run-2026-08-01T212713-t012
     claimed_at: '2026-08-01T21:27:13Z'
     updated: '2026-08-01T21:27:13Z'
@@ -1082,3 +1115,90 @@ tasks:
       of them turned up in this session's grep for "allowReviews" outside
       conductor-page.vue) so owners can actually reach the review feature
       t-011 just gated.
+
+  - id: t-033
+    milestone: m2
+    title: 'Extend verifyChannelContent.ts to validate against navManifest.ts'
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-012
+    note: >
+      Split from t-012 (2026-08-01, kind_robots PR #1272). navManifest.ts (t-012) is a
+      separate CI script (verifyNavManifest.ts) from the existing, older
+      verifyChannelContent.ts content contract -- two scripts doing related but distinct
+      checks on the same content/channels tree. Fold verifyNavManifest.ts's
+      dashboardKey/dashboardTab/cards cross-checks into verifyChannelContent.ts (or vice
+      versa) so there is one content contract, not two, and content/channels remains the
+      single authored source every other system is validated against. Low risk: this is
+      consolidating two already-passing, already-CI-wired scripts, not changing behavior.
+
+  - id: t-034
+    milestone: m2
+    title: 'Reconcile dashboardHelper.ts/navStore.ts with navManifest.ts; resolve the 9 dashboardTab warnings'
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-012
+    note: >
+      Split from t-012 (2026-08-01, kind_robots PR #1272). The highest-risk remaining
+      piece: stores/helpers/dashboardHelper.ts (1440 lines, 17 dashboards, 87 tabs) has 15
+      direct importers (navStore.ts's dashboard-shell fallback logic, labCards.ts,
+      navCards.ts, conductorTabs.ts, builderCards.ts, tutorialCards.ts, and several
+      *-manager.vue components) -- deriving it from navManifest.ts instead of maintaining
+      it by hand needs care across all of them, not a rename. Also resolve the 9
+      dashboardTab warnings verifyNavManifest.ts reports today (home/account.md,
+      home/messages.md, play/facets.md, play/music-mentor.md, play/video-generator.md,
+      sanctuary/about.md, sanctuary/butterflies.md, sanctuary/giving.md,
+      sanctuary/subscriptions.md -- each names a dashboardTab that doesn't exist in its
+      declared dashboard's tabs array) by deciding, per page, whether it needs a real new
+      dashboard tab or should just drop the stale hint. Verify with
+      `npm run test:nav-manifest` (warning count should drop to 0) plus Vercel-preview
+      checks on any page whose dashboard-shell behavior actually changes.
+
+  - id: t-035
+    milestone: m2
+    title: 'Wire getModelCards() for real; derive card decks from navManifest.ts'
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-012
+    note: >
+      Split from t-012 (2026-08-01, kind_robots PR #1272). stores/helpers/modelCards.ts's
+      getModelCards() is defined but never called anywhere -- pageStore.ts's `cards`
+      computed only accepts an already-resolved array (isBuilderCardArray /
+      isNavigationCardArray), never looks up the raw `cards:` frontmatter string against
+      the registry. So today every `cards:` value except the literal 'builderCards'
+      sentinel (workspace-hand.vue / workspace-sheet.vue's special case deferring to
+      builderStore.cards) is decorative and has zero runtime effect. Wire getModelCards()
+      into pageStore.cards for real, fold conductorCards.ts's CONDUCTOR_CARDS into the
+      registry (it already exists and is used elsewhere, just never registered), and
+      decide whether content/characters.md's gallery deserves its own CHARACTER_CARDS (a
+      genuine content-authoring task, the same shape as BOT_CARDS/DREAM_CARDS/etc. --
+      t-012 deliberately left it pointed at the generic navCards fallback rather than
+      fabricate wizard content). Verify with `npm run test:nav-manifest` plus a
+      Vercel-preview check that card decks actually render per tab.
+
+  - id: t-036
+    milestone: m2
+    title: 'Wire navigation-health.vue to navManifest.ts'
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-012
+    note: >
+      Split from t-012 (2026-08-01, kind_robots PR #1272). components/navigation/
+      navigation-health.vue currently audits only the channel/tab system (channel count,
+      tab count, shared routes, a raw "legacy adapters" count of tabs with a non-empty
+      dashboardKey, broken-artwork detection) via useChannelContentStore() -- it doesn't
+      cross-check dashboardKey/dashboardTab/cards resolution at all. Swap in (or add
+      alongside) navManifest.ts's validateNavManifest() so the "legacy adapters" stat
+      becomes a real pass/fail count instead of a raw tally, surfacing the same
+      errors/warnings verifyNavManifest.ts reports in CI, live in the admin UI. Preserve
+      the existing stat-grid/card-grid UI shape; this is a data-source swap plus real
+      validation, not a rebuild. navManifest.ts is already isomorphic (no node:fs) so it
+      is safe to import client-side as-is.
