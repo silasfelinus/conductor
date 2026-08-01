@@ -377,11 +377,24 @@ tasks:
   - id: t-010
     milestone: m2
     title: 'Fix the two karma data-integrity bugs, then make karma and mana visible'
-    status: review
+    status: done
     owner: reviewer
     passes: 0
     stakes: reversible
     note: >
+      DONE 2026-08-01: kind_robots PR #1262 (merged). Both karma bugs fixed
+      (updateKarmaAndMana() no longer overwrites karma; computed default is now ?? 0).
+      Added GET /api/karma/[id], karmaStore.ts, karma-widget.vue (wired into
+      workspace-header.vue next to mana-widget.vue), and wallet-page.vue +
+      content/wallet.md (fixes the mana-widget /wallet 404). The last bullet ("show
+      earned/spent on object cards") was split into t-019 — no object has a per-item
+      earned-karma/mana aggregate field yet, so it needed its own design pass rather
+      than folding into this bug-fix PR. Deliberately left mana's own client-side
+      overwrite in updateKarmaAndMana() untouched — only karma was a named bug.
+      Verified: test:layout-contract (0 new violations), vue-tsc, eslint, prettier all
+      clean; test:channel-content (a first push broke this — content/wallet.md needs a
+      matching content/channels/home/wallet.md tab registration — fixed same PR).
+      ---
       Phase 4.3. FIX THE BUGS FIRST — these are data-integrity issues, not UI polish.
       (1) stores/userStore.ts:821 updateKarmaAndMana() overwrites karma with
       achievementCount * 1000, bypassing KarmaTransaction entirely and contradicting the
@@ -399,7 +412,7 @@ tasks:
       loop is actually visible to users. Mana stays read-only to the UI per BOUNDARY.md.
     claimed_by: claude-agentrun-2026-08-01T16:28:58Z-t010
     claimed_at: '2026-08-01T16:28:59Z'
-    updated: '2026-08-01T16:28:59Z'
+    updated: '2026-08-01T16:48:51Z'
 
   - id: t-011
     milestone: m2
@@ -588,3 +601,22 @@ tasks:
       counter kept in sync on award), and wire the number into
       components/wonderlab/reactable-card.vue (the shared card wrapper 12 card types
       already use, per t-011's note) rather than each card type individually.
+
+  - id: t-020
+    milestone: m2
+    title: 'Wire achievement confirmation into the real karma/mana ledgers'
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Kaizen from t-010 (2026-08-01, kind_robots PR #1262): confirming an achievement
+      calls stores/userStore.ts's updateKarmaAndMana(), but now that its client-side
+      achievementCount * 1000 overwrite is gone (t-010 deleted it as a data-integrity
+      bug — it bypassed the ledger), achievements grant ZERO ledger-tracked karma or
+      mana. server/utils/karma.ts's KarmaReason enum has no ACHIEVEMENT_CONFIRMED (or
+      similar) value, and no server/api/achievements/* route calls awardKarma() or
+      applyMana(). Add the missing KarmaReason value (additive schema migration), pick
+      award amounts (Silas tunes the numbers per karma.ts's own convention), and call
+      awardKarma()/applyMana() from the achievement-confirm endpoint server-side —
+      not from the client, to avoid recreating the exact bug t-010 just fixed.

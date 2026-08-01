@@ -5480,3 +5480,21 @@ records:
     against the actual codebase, not a checklist to execute literally,
     especially for anything touching a shared ancestor every page
     depends on.
+- date: 2026-08-01
+  project: interface-vision
+  task: t-010
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    Clean first-pass except for one CI miss caught by the pipeline itself:
+    a new content/*.md page needs a matching content/channels/<channel>/
+    <tab>.md registration or verifyChannelContent.ts fails with "references
+    unknown tab" -- worth checking for that registration file up front
+    whenever adding a new channelKey/tabKey pair, not just when CI catches
+    it. Also: when a task note bundles a well-scoped bug fix with a vaguer
+    "and show X on cards" ask that has no existing data model to support
+    it, splitting the vague half into its own ready task (rather than
+    guessing at scope) kept this PR small and reviewable.
