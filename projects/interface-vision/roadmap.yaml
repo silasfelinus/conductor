@@ -585,8 +585,8 @@ tasks:
   - id: t-012
     milestone: m2
     title: 'Collapse four navigation taxonomies into one manifest'
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     note: >
@@ -605,6 +605,9 @@ tasks:
       manifest route resolves and every content page's channelKey/dashboardKey pair is
       consistent; components/navigation/navigation-health.vue already exists as an audit
       surface, so wire it to the manifest rather than building a new one.
+    claimed_by: conductor-run-2026-08-01T212713-t012
+    claimed_at: '2026-08-01T21:27:13Z'
+    updated: '2026-08-01T21:27:13Z'
 
   - id: t-013
     milestone: m2
