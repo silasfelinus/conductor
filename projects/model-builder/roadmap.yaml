@@ -942,27 +942,11 @@ tasks:
   - id: t-038
     milestone: m6
     title: "Pre-run 'N items busy' advisory for batchAutoBuild/autoBuildRun before starting"
-    status: review
+    status: done
     passes: 0
     stakes: reversible
     owner: worker
-    note: >
-      Kaizen from t-037 (kind_robots PR #1225, 2026-08-01): autoBuildItem() now
-      distinguishes 'skipped' (manual action in flight for this item) from 'failed'
-      in its outcome, and batchAutoBuild/autoBuildRun report a skipped count
-      after the run finishes. But the single-item Auto button in
-      model-builder-item-panel.vue is the only one with a pre-click signal
-      (isManualActionInFlight disables it before the user even tries). The
-      batch editor's "Auto-build group" button and the progress matrix's
-      "Auto-build all" button have no equivalent: a user can start a batch/run
-      auto-build while several items in it are mid-manual-action and only find
-      out afterward, from the skipped count in the final status message.
-      Investigate a lightweight pre-run advisory (not a hard block, since a
-      manual action can resolve mid-run) -- e.g. a count or tooltip on the
-      trigger button itself showing how many items in the group/run currently
-      have a manual action in flight, computed the same way
-      isManualActionInFlight already is per-item. Front-end/store-only change;
-      no schema change expected.
+    note: 'Merged kind_robots PR #1226: promoted the per-item manual-action check (model-builder-item-panel.vue''s isManualActionInFlight) into modelBuilderStore.ts as isItemManualActionInFlight(itemId), and added a busyCount badge + tooltip to the batch editor''s ''Auto-build group'' and the progress matrix''s ''Auto-build all'' buttons. Advisory only, no hard block. Verified vue-tsc + eslint + prettier clean on all touched lines.'
     claimed_by: claude-scheduled-20260801T042657Z-mb-t038
     claimed_at: '2026-08-01T04:47:09Z'
-    updated: '2026-08-01T04:58:40Z'
+    updated: '2026-08-01T05:04:33Z'
