@@ -343,8 +343,8 @@ tasks:
   - id: t-008
     milestone: m2
     title: 'Extract kr-gallery from the project gallery, migrate all 7 objects, delete the duplicates'
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     depends_on: t-007
@@ -370,6 +370,9 @@ tasks:
       modes), and abandonware composition-gallery.vue. Migrate first, delete second, in
       the same PR series but not the same commit — deleting ~4900 lines will surface
       hidden coupling.
+    claimed_by: claude-agentrun-2026-08-01T17:26Z-t008
+    claimed_at: '2026-08-01T17:27:06Z'
+    updated: '2026-08-01T17:27:06Z'
 
   - id: t-009
     milestone: m2
