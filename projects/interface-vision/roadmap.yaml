@@ -585,7 +585,7 @@ tasks:
   - id: t-012
     milestone: m2
     title: 'Collapse four navigation taxonomies into one manifest'
-    status: review
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -638,6 +638,10 @@ tasks:
       test:channel-resolver, test:data-surface-manifest all pass; vue-tsc --noEmit clean;
       eslint clean; prettier clean. Could not visually verify (no local DATABASE_URL) --
       flagged for a Vercel-preview spot check on /privacy and /navigation in the PR.
+
+      DONE 2026-08-01: kind_robots PR #1272 merged (confirmed via GitHub MCP). Closing
+      per this PR's own stated intent; t-033..t-036 depend_on t-012 and are unblocked by
+      resolve_deps.py in this same close-out.
     claimed_by: conductor-run-2026-08-01T212713-t012
     claimed_at: '2026-08-01T21:27:13Z'
     updated: '2026-08-01T21:27:13Z'
@@ -1120,7 +1124,7 @@ tasks:
   - id: t-033
     milestone: m2
     title: 'Extend verifyChannelContent.ts to validate against navManifest.ts'
-    status: waiting
+    status: ready
     owner: null
     passes: 0
     stakes: reversible
@@ -1138,7 +1142,7 @@ tasks:
   - id: t-034
     milestone: m2
     title: 'Reconcile dashboardHelper.ts/navStore.ts with navManifest.ts; resolve the 9 dashboardTab warnings'
-    status: waiting
+    status: ready
     owner: null
     passes: 0
     stakes: reversible
@@ -1162,7 +1166,7 @@ tasks:
   - id: t-035
     milestone: m2
     title: 'Wire getModelCards() for real; derive card decks from navManifest.ts'
-    status: waiting
+    status: ready
     owner: null
     passes: 0
     stakes: reversible
@@ -1186,7 +1190,7 @@ tasks:
   - id: t-036
     milestone: m2
     title: 'Wire navigation-health.vue to navManifest.ts'
-    status: waiting
+    status: ready
     owner: null
     passes: 0
     stakes: reversible
