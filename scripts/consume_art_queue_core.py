@@ -70,8 +70,9 @@ POLL_SECONDS = 5
 # as a COMFY job carrying the full Krea 2 workflow graph below, which the home
 # relay's run_comfy drives on ComfyUI. Flux (dev) stays available per-entry
 # (`engine: flux`) for anything that genuinely needs it, and Kontext for edits;
-# set `engine: a1111` to fall back to the A1111 txt2img path (raw KR-style keys
-# the relay consumes directly) — useful when ComfyUI is down or for SD-only tests.
+# legacy `engine: a1111` entries are migrated to Krea 2 so Conductor never
+# creates A1111 work. The shared Kind Robots relay still supports explicitly
+# labeled A1111 jobs created by users outside Conductor.
 DEFAULT_ENGINE = "krea2"
 DEFAULT_STEPS = 30
 DEFAULT_CFG = 7
@@ -146,6 +147,11 @@ FLUX2_KLEIN_SCHEDULER = "simple"
 # Engine name normalization. Every alias resolves to a canonical engine so a
 # queue entry (or a defaults block) can say "krea", "klein", "flux2", etc.
 ENGINE_ALIASES = {
+    # Conductor is Comfy-only. Preserve old queue/config compatibility by
+    # migrating legacy A1111 labels to the default Krea 2 workflow.
+    "a1111": "krea2",
+    "sd": "krea2",
+    "stable-diffusion": "krea2",
     "krea": "krea2",
     "krea2-turbo": "krea2",
     "krea-2": "krea2",
@@ -155,9 +161,9 @@ ENGINE_ALIASES = {
     "flux-2": "flux2-klein",
 }
 
-# Engines that emit a full ComfyUI graph (relay engine "COMFY"). Everything
-# else (a1111, sdxl, plain "comfy") stays on the raw-txt2img/passthrough path
-# so existing behavior is preserved.
+# Engines that emit a full ComfyUI graph (relay engine "COMFY"). Conductor
+# normalizes its legacy A1111 labels into this set rather than creating raw
+# txt2img jobs.
 COMFY_WORKFLOW_ENGINES = ("flux", "krea2", "flux2-klein")
 
 # Per-engine native step counts, used when an entry/defaults block does not
@@ -489,8 +495,8 @@ def entry_to_job(entry):
     Default engine is Krea 2 (krea2): the entry becomes a COMFY job whose payload
     carries the full Krea 2 workflow graph (native 8-step cadence, Qwen lineage).
     `engine: flux` selects the Flux graph (native 1MP, beta scheduler, guidance
-    3.5) for entries that specifically want it; `engine: a1111` instead emits
-    KR-style txt2img keys the relay's run_a1111 consumes directly.
+    3.5) for entries that specifically want it; legacy `engine: a1111` entries
+    are migrated to the default Krea 2 COMFY workflow.
 
     Quality knobs (steps, cfg, negative prompt, sampler, seed) default to the
     module constants and may be overridden per entry. Optional knobs (sampler,
@@ -538,7 +544,7 @@ def entry_to_job(entry):
     # engines we resolve it here (random when the entry omits it or passes -1),
     # bake that exact value into the workflow, AND report it on the job so the
     # caller can record "the real seed used" and reproduce an accepted render
-    # later. For the raw/a1111/passthrough path the backend assigns the seed, so
+    # later. For any non-workflow passthrough path the backend assigns the seed, so
     # we can only echo whatever the entry supplied (may be None).
     resolved_seed = entry.get("seed")
 
