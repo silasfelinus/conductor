@@ -84,7 +84,20 @@ def queue_sources(queue: dict[str, Any], book_slug: str) -> dict[str, dict[str, 
     raise RuntimeError(f"Book not found in canonical color queue: {book_slug}")
 
 
-def prepare_requested_entries(book_slug: str, proposal_ids: list[str], force: bool) -> None:
+def prepare_requested_entries(
+    book_slug: str, proposal_ids: list[str], force: bool
+) -> list[tuple[str, str]]:
+    """Reset any requested proposal that needs a fresh render back to pending.
+
+    Returns the subset of `proposal_ids` (as `(id, status)` pairs) that were
+    already resolved (status other than "pending") and, since `force` was not
+    given, were left alone rather than reset. A caller-supplied id list is
+    often a static snapshot (e.g. a preserved recovery event) that can go
+    stale between retries as some of its entries complete on their own --
+    skipping those rather than raising lets the remaining still-pending ids
+    in the same request proceed instead of the whole batch being blocked by a
+    subset that already finished (coloring-book/t-022, 2026-08-01).
+    """
     queue = coloring.load_yaml(coloring.QUEUE_FILE)
     sources = queue_sources(queue, book_slug)
     missing = [proposal_id for proposal_id in proposal_ids if proposal_id not in sources]
@@ -92,7 +105,7 @@ def prepare_requested_entries(book_slug: str, proposal_ids: list[str], force: bo
         raise RuntimeError(f"Unknown proposal id(s) for {book_slug}: {', '.join(missing)}")
 
     changed = False
-    blocked: list[str] = []
+    already_resolved: list[tuple[str, str]] = []
 
     for proposal_id in proposal_ids:
         source = sources[proposal_id]
@@ -100,7 +113,7 @@ def prepare_requested_entries(book_slug: str, proposal_ids: list[str], force: bo
         if status == "pending":
             continue
         if not force:
-            blocked.append(f"{proposal_id} ({status})")
+            already_resolved.append((proposal_id, status))
             continue
 
         history = source.get("studio_revision_history")
@@ -125,13 +138,9 @@ def prepare_requested_entries(book_slug: str, proposal_ids: list[str], force: bo
             source.pop(field, None)
         changed = True
 
-    if blocked:
-        raise RuntimeError(
-            "Proposal(s) are not pending; use --force to request a new revision: "
-            + ", ".join(blocked)
-        )
     if changed:
         coloring.write_queue(queue)
+    return already_resolved
 
 
 def selected_entries(book_slug: str, proposal_ids: list[str]) -> list[dict[str, Any]]:
@@ -268,8 +277,20 @@ def main() -> int:
         parser.error("--timeout must be between 30 and 900")
 
     try:
-        prepare_requested_entries(args.book, proposal_ids, args.force)
-        entries = selected_entries(args.book, proposal_ids)
+        already_resolved = prepare_requested_entries(args.book, proposal_ids, args.force)
+        skipped_ids = {pid for pid, _status in already_resolved}
+        remaining_ids = [pid for pid in proposal_ids if pid not in skipped_ids]
+        if already_resolved:
+            summary = ", ".join(f"{pid} ({status})" for pid, status in already_resolved)
+            print(
+                "Skipping already-resolved proposal(s) (use --force to request a "
+                f"new revision instead): {summary}",
+                file=sys.stderr,
+            )
+        if not remaining_ids:
+            print("All requested proposal(s) are already resolved; nothing to do.")
+            return 0
+        entries = selected_entries(args.book, remaining_ids)
         return run_entries(entries, live=args.live, timeout=args.timeout)
     except Exception as error:  # noqa: BLE001
         print(f"Studio request failed: {error}", file=sys.stderr)
