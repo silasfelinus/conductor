@@ -1,0 +1,502 @@
+project: interface-vision
+kind: software
+
+notes_from_silas: |
+  From Silas, 2026-08-01, in his own words:
+
+  "My big weakness is front end. I was trained as a theater director and performer,
+  with a focus on physical theater. I can look at something and say if it works or
+  not, but when it comes to my website, I get lost in the weeds. I know the essence
+  of what I want: a clean, focused interface. Large images, friendly buttons, clean
+  design. Preferably single screen interfaces that scroll within containers that know
+  where they need to stay rather than fighting each other, and a straightforward
+  interface that is modular and open, but has a clear vision.
+
+  Instead we've been developing countless tools with ai, and there are tons of nested
+  containers when one would suffice, components fighting for space because there isn't
+  a clear vision. I have pages that have three different nested container divs before
+  we get anything. I have dashboards nested inside dashboards, and tools like
+  Storymaker and Taskmaster that might work but the navigable interface is a thin
+  sliver blocked by nested dashboards that can't decide where to keep their stuff.
+
+  A seriously strong example of the opposite is our taskmaster and storyteller
+  endpoints. Massive duplicated headers (plural) — should be a single line if we need
+  an extra header beyond our normal dashboard. This is perhaps the biggest rule that
+  could change a lot of front end issues. Zero real images, even when we have
+  extensive image based facet choices. And really, we lack VISION.
+
+  Narrators are supposed to be front and center interactibles for our dreams and
+  storytelling (and taskmaster). Large spaces for images, but also friendly text
+  windows. As is, our images are nonexistent and fighting each other, and our text
+  looks just like regular text, rather than a special narrative based storytelling
+  experience.
+
+  A great interface is the Project gallery — it lets the user choose between multiple
+  views, all with friendly large images when applicable, working across devices. A lot
+  of our other galleries are stingy with art and filled with noise, awkward padding and
+  poor vision.
+
+  Admin based routes are last on priority. My most used pages currently are: artjob
+  queue, video-gen, newsfeeds, and the various galleries, especially project.
+
+  This is the biggest thing holding us back from releasing the site and moving into
+  beta."
+
+  Scope decisions Silas made when this project was planned (2026-08-01):
+  1. Sequencing — thin foundation, then flagship, then sweep.
+  2. Aesthetic — build mockups first; Silas picks by eye, not from description.
+  3. Duplicates — one canonical implementation, migrate callers, then DELETE the losers.
+  4. Beta scope — all four tracks: narrative surfaces, galleries, daily-driver tools,
+     onboarding + user dashboard.
+
+  WHY THIS IS A NEW PROJECT AND NOT A REOPENED global-ui:
+  global-ui is marked `finished`, 25/25 tasks done — but the design system it shipped
+  has ~7% adoption (29 of ~421 component files use any `kr-*` class, while the
+  hand-rolled equivalent string appears 366 times across 145 files). Its t-012
+  ("migrate components onto .kr-*") closed by delegating to t-023, which closed after
+  four passes over a subset. Nobody ever measured total adoption, so "all tasks done"
+  read as "goal achieved." Root TALKBACK named this exact pattern on 2026-07-31.
+
+  THEREFORE: every task here carries a NUMERIC exit criterion enforced by a CI script
+  whose allow-list only ever shrinks. Do not close a task on this project because the
+  work "feels done" — close it when the counter says so. If a counter cannot move for
+  a good reason, say so in the note and leave the task open.
+
+  Constraints inherited from global-ui t-012/t-023 — do not relearn these the hard way:
+  - Do NOT force bespoke surfaces onto .kr-panel. The workspace header (translucent +
+    backdrop-blur), the login page (glassmorphism), and dashed-border empty states are
+    intentionally bespoke. This project targets the LAYOUT/SCROLL/HEADER contract,
+    which is a different axis from surface skin.
+  - The sandbox has NO DATABASE. `nuxt dev` 500s and data-heavy pages cannot be
+    verified locally. Visual verification goes through Vercel MCP preview deployments
+    (conductor/AGENTS.md ~L338-366).
+  - The UI never writes to conductor roadmap.yaml (global-ui TASK-SURFACE-SPEC.md §6).
+  - Mana is read-only to the UI (kind-robots BOUNDARY.md). Mutation only via applyMana
+    + ManaTransaction.
+  - Never `prisma migrate reset`. All schema work here is additive.
+
+milestones:
+  - id: m1
+    title: 'SHAPE — design brief, aesthetic direction, mockups'
+    weight: 15
+    status: not-started
+
+  - id: m2
+    title: 'BUILD — layout contract, narrator stage, one gallery, one art system'
+    weight: 60
+    status: not-started
+
+  - id: m3
+    title: 'POLISH & SHIP — builder gaps, sweep to zero, beta-ready'
+    weight: 25
+    status: not-started
+
+tasks:
+  - id: t-001
+    milestone: m1
+    title: 'Write DESIGN-BRIEF.md and build three Storymaker aesthetic mockups'
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Phase 0. Silas judges reliably by eye and unreliably from description, so nothing
+      else on this project is decided until he has seen options. Build three static
+      mockups of THE SAME Storymaker screen, fixture data only, no store wiring, no DB
+      reads (the sandbox has no DB): (A) theater / lit stage — dark receding surround,
+      bright lit panel holding narrator + art, chrome dims while a story runs;
+      (B) storybook — warm paper tones, generous margins, large rounded image plates,
+      display serif for narration vs clean sans for UI; (C) bright playground —
+      saturated daisyUI brights, chunky friendly buttons, bold cards, playful motion.
+      Each must show the same six elements so comparison is fair: narrator with
+      expression, generated-art plate, narration text window, choice buttons, free-text
+      input, one piece of persistent chrome. Review via Vercel preview deployment at
+      phone, tablet and desktop widths. Mockup routes are deleted in t-003.
+
+  - id: t-002
+    milestone: m1
+    title: 'Pick the aesthetic direction'
+    status: needs-human
+    owner: null
+    passes: 0
+    stakes: reversible
+    soft_gate: true
+    depends_on: t-001
+    note: >
+      FOR SILAS: soft checkpoint. Look at the three mockup routes from t-001 on your
+      phone and on desktop, and pick one (or say which parts of which). Everything
+      after this inherits the choice, so it is worth ten minutes. Development of the
+      layout contract (t-003) does NOT wait on this — the contract is about scroll
+      ownership and header rules, which are aesthetic-neutral. Record the pick in
+      DESIGN-BRIEF.md with the tokens it implies.
+
+  - id: t-003
+    milestone: m2
+    title: 'Resolve the app.vue / [...slug].vue scroll contradiction and collapse shell nesting'
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Phase 1.1. THE root cause of "containers fighting each other". app.vue L104-106
+      wraps NuxtPage in `overflow-y-auto` (the page scrolls) while pages/[...slug].vue
+      `.content-host` is `h-full min-h-0 flex-col` with `:deep(*) { flex: 1 1 0%;
+      min-height: 0 }` (children fill the viewport exactly). These are contradictory,
+      and every page resolves it differently — which is why some scroll the shell, some
+      clip below the fold, and Storymaker/Taskmaster collapse to a sliver.
+      Pick ONE owner; recommended is "the page owns its scroll": change app.vue's
+      NuxtPage wrapper to overflow-hidden, and replace content-host's blanket
+      `:deep(*)` rule with an explicit single-child rule (the blanket rule is also why a
+      content file with two MDC blocks silently splits the viewport 50/50 — four pages
+      do this today). Then collapse `main.kr-main` -> `div.rounded-2xl` -> `div.overflow`,
+      which is three wrappers doing one job. Target <=5 wrappers before page content
+      (currently 9-10). Delete the t-001 mockup routes as part of this task.
+
+  - id: t-004
+    milestone: m2
+    title: 'Add the missing kr-* layout primitives and adopt the one-header rule'
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-003
+    note: >
+      Phase 1.2/1.3. `.kr-page` is `flex min-h-0 w-full flex-col gap-6 p-4 sm:p-6` — no
+      height, no scroll ownership, which is why it cannot resolve anything. Add, modeled
+      directly on the proven shape of components/pages/conductor-project-gallery-page.vue:
+      `.kr-surface` (flex h-full min-h-0 w-full flex-col gap-3 overflow-hidden),
+      `.kr-toolbar` (shrink-0 single control row), `.kr-scroll` (min-h-0 flex-1
+      overflow-y-auto overscroll-contain — exactly one per page), `.kr-stage`.
+      THE HEADER RULE, which Silas called the biggest single win available:
+      workspace-header.vue already renders icon, hero image, room label and title on
+      every page from content frontmatter. Therefore the shell owns the page title and
+      a page component NEVER renders one. A page needing controls gets ONE .kr-toolbar
+      line, never a stacked title block. 57 component files render their own <h1> today;
+      each is deleted as a duplicate or demoted into one toolbar.
+
+  - id: t-005
+    milestone: m2
+    title: 'Add verifyLayoutContract CI script with a shrink-only allow-list'
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-004
+    note: >
+      Phase 1.5. THIS IS THE TASK THAT KEEPS THIS PROJECT FROM REPEATING global-ui.
+      Add utils/scripts/verifyLayoutContract.ts beside the existing test:* verifier
+      family (~12 already exist, so the pattern is established) and wire it into CI as
+      `npm run test:layout-contract`. It fails on: a components/pages/* component
+      rendering <h1>; more than one overflow-y-auto in a single component; h-screen /
+      min-h-screen / 100vh outside components/screenfx/; a components/pages/* root that
+      is not .kr-surface; a content .md rendering more than one MDC block; and a
+      :show-header passed to a component that never declared the prop (13 such call
+      sites silently do nothing today). Seed it with a baseline allow-list of current
+      violations. THE ALLOW-LIST ONLY EVER SHRINKS — a PR that grows it fails CI.
+      Baseline counters to record in the note when this lands: <h1> in page components
+      57, files with their own overflow-y-auto 94, viewport-height hacks ~45,
+      multi-MDC content files 4, files using any kr-* class 29 of ~421.
+
+  - id: t-006
+    milestone: m2
+    title: 'Build the narrator stage and restore narrators to Storymaker and Taskmaster'
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-004
+    note: >
+      Phase 2, the flagship — prove the contract on the most-broken surface before
+      touching anything else. Nothing was deleted when narrators left the site:
+      stores/narratorStore.ts (1556 lines), components/navigation/workspace-narrator.vue
+      (1477), components/narrative/*.vue (6 files, 911), the NarratorTopic and
+      NarratorThread models, Dream.narratorId, five API routes and
+      normalizePageNarrator() in [...slug].vue are all still live. It is mounted in
+      exactly ONE place: components/dreams/dream-interact.vue:21.
+      Two problems, and only the second is real work. (1) It is not mounted where it
+      matters — Storymaker and Taskmaster never mount it. Re-mounting is small, but it
+      MUST stay Lazy*: its removal from app.vue was a deliberate first-paint fix because
+      narratorStore pulls dreamStore + chatStore + serverStore into the eager bundle.
+      (2) It is an overlay, not a stage — currently `pointer-events-none absolute
+      inset-y-0 right-0 z-40`, a drawer floating over the page. Silas wants it as a
+      first-class REGION: large art plate, dedicated narrator position, generous
+      narration window styled as narration rather than body text, and a pinned action
+      rail with choice buttons + free-text input. Build `kr-narrator-stage` for that.
+      Also: delete the duplicate MDC mount in content/taskmaster.md (it renders both
+      :taskmaster-sample-tasks and :taskmaster-page), and wire the tab image that
+      dashboardHelper already has for scenario/taskmaster but the page never renders.
+      Exit: Taskmaster shows the word "Taskmaster" ONCE (3 times today), Storymaker
+      shows one title (3 today), each page has one scroll region, and art is present
+      (both pages render zero <img> today). Verify on phone, tablet and desktop via
+      Vercel preview.
+
+  - id: t-007
+    milestone: m2
+    title: 'Additive schema migration: card/hero/icon art fields for Bot, Character, Reward, Scenario'
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Phase 3.1, and the single most load-bearing insight of the audit: the other
+      galleries are DATA-STARVED, not merely badly styled. The Project gallery can offer
+      four image-rich view modes because Project has imagePath + cardPath + heroPath +
+      icon. Bot, Character, Reward and Scenario have exactly ONE image field each, so
+      "stingy with art" is a schema gap and no amount of CSS fixes it.
+      Additive migration only — never `prisma migrate reset`, and audit migration.sql
+      line by line before merge. Add cardPath, heroPath, icon to Bot, Character, Reward,
+      Scenario. Add artPrompt to Project (the only main object lacking it; its prompts
+      are currently synthesized server-side in server/utils/conductorArtPrompt.ts). Add
+      allowReviews to the five objects lacking it so review gating is uniform (only
+      Dream and Project have it today). Then extend ENTITY_FIELDS in
+      server/utils/entityArt.ts with the new card/hero slots, and add `dream` to
+      EntityArtType — Dream has the richest art fields in the schema and is entirely
+      absent from the entity-art system.
+
+  - id: t-008
+    milestone: m2
+    title: 'Extract kr-gallery from the project gallery, migrate all 7 objects, delete the duplicates'
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-007
+    note: >
+      Phase 3.2/3.3. components/pages/conductor-project-gallery-page.vue is 185 lines and
+      is the gallery Silas likes; the five object galleries are 3689 lines of
+      near-duplicate doing less. Extract the recipe: (1) one scroll owner at the right
+      level — root flex h-full min-h-0 flex-col overflow-hidden, chrome shrink-0, only
+      <main> scrolls; (2) a single header line; (3) three guaranteed image variants with
+      a local->canonical->remote->GitHub fallback chain (L139-145) so an image is NEVER
+      missing — this is why it feels image-generous; (4) four view modes from three
+      computed class strings (L166-169), where the mode picks both the grid AND which
+      image variant is fetched; (5) aspect-locked art with object-cover, gradient scrim,
+      hover-scale; (6) skeleton/error/empty states, which most siblings lack.
+      Fix on extraction: it touches localStorage directly (L174-177), which kind_robots
+      AGENTS.md forbids — move to a store. Cards keep using
+      components/wonderlab/reactable-card.vue, the one genuinely shared piece in the
+      codebase (12 card types already wrap it).
+      Migrate bots, dreams, rewards, characters, scenarios, facets, projects. THEN
+      DELETE: conductor-overview-gallery-page.vue (1102 lines, a dead unreferenced clone
+      of the 185-line one, sharing colliding localStorage keys), the five object
+      galleries, plan-projects-grid.vue and project-gallery-strip.vue (fold into view
+      modes), and abandonware composition-gallery.vue. Migrate first, delete second, in
+      the same PR series but not the same commit — deleting ~4900 lines will surface
+      hidden coupling.
+
+  - id: t-009
+    milestone: m2
+    title: 'Collapse three art-request pipelines into one'
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Phase 4.1. Three pipelines exist. (1) EntityArtManager — server/utils/entityArt.ts
+      + components/art/entity-art-manager.vue, used by bot/character/scenario/reward/facet.
+      This is the real one. (2) Project's bespoke clone — components/pages/
+      conductor-art-gallery.vue (859 lines) reimplements the whole generate/poll/upload
+      loop and adds a second replace endpoint. (3) YAML->GitHub —
+      server/api/conductor/art-request.post.ts, used by the broken-image reporter plugin
+      AND by facet-gallery.vue, so Facet has two art backends with different outcomes.
+      Work: migrate Project onto entity-art-manager.vue and delete the duplicate loop and
+      the redundant /api/projects/[id]/art/replace endpoint; delete
+      server/api/projects/[id]/art/prepare-generation.post.ts (already flagged obsolete
+      by utils/scripts/verifyEntityArtManager.ts); pick ONE Facet backend (recommend the
+      ArtJob/DB path, keeping YAML only for the broken-image reporter, which is a
+      genuinely different job); unify art history on one convention (ProjectArtImage-style
+      join rows) and retire the ArtImage.path prefix-string scheme, wiring the
+      declared-but-unused FacetArtImage table; and give Achievement art a UI, since its
+      server side is already complete and has zero UI.
+
+  - id: t-010
+    milestone: m2
+    title: 'Fix the two karma data-integrity bugs, then make karma and mana visible'
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Phase 4.3. FIX THE BUGS FIRST — these are data-integrity issues, not UI polish.
+      (1) stores/userStore.ts:821 updateKarmaAndMana() overwrites karma with
+      achievementCount * 1000, bypassing KarmaTransaction entirely and contradicting the
+      server ledger; it is called from achievementStore.ts:406. Delete the overwrite.
+      (2) stores/userStore.ts:104 has `karma = computed(() => user.value?.karma ?? 1000)`
+      but the schema default is 0, so an unloaded user shows a fabricated 1000 balance.
+      Change to ?? 0.
+      Then the UI. The server ledger has been live since 2026-07-04 (server/utils/karma.ts,
+      KARMA_AMOUNTS, KarmaTransaction) and there is NO karma UI anywhere — no balance
+      display, no widget, no /api/karma endpoint. Mana by contrast is fully built both
+      sides. Add GET /api/karma mirroring the mana route; build karma-widget.vue as a
+      sibling to components/navigation/mana-widget.vue in the header; create
+      content/wallet.md, because mana-widget already links to /wallet and it 404s. Show
+      earned/spent on object cards so the "you earn mana when people use what you made"
+      loop is actually visible to users. Mana stays read-only to the UI per BOUNDARY.md.
+
+  - id: t-011
+    milestone: m2
+    title: 'Make the review system consistent across all seven object types'
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-007
+    note: >
+      Phase 4.2. There is no Review model; Reaction is the universal row (17 nullable
+      FKs, rating, comment, ReactionType, 17 categories). The good news is that
+      components/wonderlab/reactable-card.vue is already the shared reaction affordance
+      and 12 card types wrap it. The gaps: components/art/art-reactions.vue (264 lines,
+      5-star + reaction type + comment — the most complete rating widget in the repo) is
+      IMPORTED BY NOTHING, and its header comment still claims a stale path; and
+      allowReviews exists only on Dream and Project and is read by no gallery at all.
+      Revive art-reactions.vue as the canonical review panel, surface it through
+      reactable-card so all seven objects get identical review UI, and make allowReviews
+      actually gate it (t-007 adds the field to the other five).
+
+  - id: t-012
+    milestone: m2
+    title: 'Collapse four navigation taxonomies into one manifest'
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Phase 5.1. Silas says navigation feels dispersed; it literally is, across four
+      systems that duplicate route strings and contradict each other. (1) channels+tabs
+      in content/channels/** frontmatter — 6 channels, 62 tabs. (2) dashboards+tabs in
+      stores/helpers/dashboardHelper.ts — 1440 lines, 17 dashboards, 87 tabs.
+      (3) card decks via `cards:` frontmatter + 14 *Cards.ts helpers — 12 deck names, 2
+      of them typos that match no exported helper. (4) stores/linkStore.ts, vestigial,
+      hardcoding a link to /story which does not exist. Concrete contradiction:
+      content/plan/newsfeed.md is channelKey: plan but dashboardKey: wonder.
+      Build utils/navManifest.ts as the single source of truth and derive the others from
+      it. PortOS solved exactly this problem the same way — read its
+      server/lib/navManifest.js for the entry shape and the fail-fast load-time guards.
+      Delete linkStore.ts and fix the two typo deck names. Add a CI guard that every
+      manifest route resolves and every content page's channelKey/dashboardKey pair is
+      consistent; components/navigation/navigation-health.vue already exists as an audit
+      surface, so wire it to the manifest rather than building a new one.
+
+  - id: t-013
+    milestone: m2
+    title: 'Un-nest the dashboards-inside-dashboards'
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-004
+    note: >
+      Phase 5.2. components/pages/conductor-page.vue is the largest file in the repo at
+      2022 template lines and depth 15, and stacks SIX navigation affordances under the
+      global header: the app header, channel-select, conductor-manager's decorative
+      chrome, its own cockpit bar, and two more tabs-boxed strips at L801-802 and L861.
+      Reduce to: global header -> ONE tab strip -> content. Same treatment for
+      components/art/art-manager.vue (a dashboard whose tabs are themselves dashboards —
+      stylist, coloring, artjob each fan out further) and for user-manager -> user-dashboard,
+      which is a dashboard-tab named dashboard inside a dashboard named dashboard.
+
+  - id: t-014
+    milestone: m2
+    title: 'Build the first-launch intro and the user dashboard'
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-010
+    note: >
+      Phase 5.3/5.4, and the last thing needed before beta. First-launch intro: a
+      dismissible, re-openable walkthrough covering what Kind Robots is, what karma and
+      mana are and how they differ, what the seven object types are, and where to start.
+      Persist dismissal on the User record rather than localStorage so it follows the
+      account across devices; make it re-openable from the user dashboard.
+      User dashboard: one page exposing karma balance + history, mana balance + cap +
+      refill countdown, achievements, owned/created objects, theme, maturity and server
+      preferences. Build it on kr-surface + kr-toolbar + kr-scroll as the reference
+      implementation of the layout contract — if the contract cannot produce a clean
+      user dashboard, the contract is wrong and should be fixed here.
+
+  - id: t-015
+    milestone: m3
+    title: 'Close the Builder gaps and the orphaned facet expansions'
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Phase 6.1 — the "big black hole in our Builder system" Silas named.
+      stores/registerBuilderStore.ts registers builders for art, account, designer,
+      settings, user, bot, dream, character, reward and scenario — missing PROJECT and
+      FACET, which are exactly the two objects the art and gallery systems treat as
+      first-class. Register both.
+      Facet expansions to the main objects are half-wired: Dream, Scenario, ArtImage and
+      Reward have schema + API + store + UI; CHARACTER is complete server-side (table,
+      get/put endpoints, characterFacetSync util) with ZERO client consumption; BOT has a
+      no-FK table and a read endpoint nobody calls but no .put; PROJECT has no facet
+      table at all. Add a ProjectFacet table, a client store and UI for Character, and the
+      missing .put for Bot. Also normalize the two join conventions — DreamFacet and
+      ScenarioFacet have real relations with onDelete: Cascade, while CharacterFacet,
+      BotFacet and RewardFacet in facet-catalog.prisma declare no Prisma relations at all.
+
+  - id: t-016
+    milestone: m3
+    title: 'Decide FacetKind vs FacetTaxonomy'
+    status: needs-human
+    owner: null
+    passes: 0
+    stakes: reversible
+    soft_gate: true
+    note: >
+      FOR SILAS: a product-vocabulary call, not a refactor, so an agent should not merge
+      these blind. There are two parallel taxonomies for one concept: `FacetKind` in
+      prisma/schema.prisma:2183 has 10 values, and `FacetTaxonomy` in
+      prisma/facet-catalog.prisma has 24. They overlap but are not a superset/subset
+      relationship you can mechanically collapse. Decide which is canonical (or what the
+      merged vocabulary should be) and t-015 will normalize onto it. Nothing else is
+      blocked on this — t-015 can land its Project/Character/Bot facet work first.
+
+  - id: t-017
+    milestone: m3
+    title: 'Sweep the layout-contract allow-list to zero, daily-drivers first, admin last'
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-005
+    note: >
+      Phase 6.2. Work the verifyLayoutContract allow-list from its seeded baseline down
+      to zero, in the priority order Silas gave: first the daily-driver tools he actually
+      uses (artjob queue, video-gen, newsfeeds), then the remaining play surfaces, then
+      build surfaces, and ADMIN LAST — he was explicit that admin routes are lowest
+      priority and that several will eventually become user-facing pages anyway.
+      Specific known offenders: pages/play/video-generator.vue ignores the system
+      entirely (ad-hoc `mx-auto max-w-5xl space-y-6 p-6` root with no h-full/min-h-0, an
+      emoji <h1>, and raw btn-accent instead of the house idiom) and is ALSO declared as
+      a channel tab, so its title renders twice; components/art/artjob-queue-browser.vue
+      is 614 template lines at depth 12 with min-h-[720px]/[560px] magic numbers that
+      force ~1280px of height inside an already-nested scroller; and the newsfeed project
+      page shows four stacked headers via project-front-page.vue's hero.
+      Also remove the six :has() global overrides in assets/css/tailwind.css:37-90 as the
+      pages they patch get fixed — they match on Tailwind class SUBSTRINGS and break the
+      moment a class string changes.
+
+  - id: t-018
+    milestone: m3
+    title: 'Delete the confirmed orphans and the dead layout machinery'
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-017
+    note: >
+      Cleanup, once nothing depends on them. Confirmed orphaned by the 2026-08-01 audit:
+      components/navigation/narrator-chat.vue (325 lines, no importers, reachable only
+      via wonderlab preview fixtures); Reaction.butterflyId (indexed, no relation);
+      /api/bots/[id]/facets.get once t-015 supersedes it; the abandonware/ directory
+      (13 dead .vue files already excluded from auto-import); and stores/displayStore.ts
+      (627 lines modelling a header/sidebar/footer state machine for a shell that no
+      longer exists — app.vue does not use it and only 6 components do).
+      Dead layout machinery: `.kr-boot-curtain { display: none !important }` at
+      assets/css/tailwind.css:33-35 disables a curtain that app.vue still renders and
+      manages with two timers — remove both sides. And pick ONE type scale: today `body`
+      is text-sm md:text-base lg:text-lg xl:text-xl AND there are six text-smart-* ramps
+      competing with it. Keep text-smart-*, drop the body ramp.
