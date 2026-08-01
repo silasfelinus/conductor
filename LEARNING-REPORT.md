@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-01T13:33:03Z
+Generated: 2026-08-01T13:50:11Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **441**
-- Outcomes: blocked: 13, cancelled: 1, done: 427
+- Closed tasks recorded: **445**
+- Outcomes: blocked: 13, cancelled: 1, done: 431
 - Success rate: **97%**
 - Average passes on successful tasks: **0.0**
 
@@ -35,6 +35,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | humboldt-impropriety-calendar | 1 | 0% |
 | humboldt-scoop | 1 | 100% |
 | humboldt-scoop-cms | 4 | 100% |
+| interface-vision | 4 | 100% |
 | kind-robots | 39 | 97% |
 | kindrobots-unraid | 4 | 100% |
 | media-watchlist | 10 | 100% |
@@ -58,7 +59,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 15 | 40% |
-| software | 426 | 99% |
+| software | 430 | 99% |
 
 ## Failure categories
 
@@ -67,6 +68,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | actionable | 9 |
 | quality | 8 |
 | transient | 6 |
+| scope | 1 |
 
 ## Kaizen targets
 
@@ -77,6 +79,14 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - failure category `transient` — 6 occurrences; look for the shared cause across its records
 
 ## Recent lessons
+
+- 2026-08-01 `interface-vision/t-003` — Task note prescribed a single risky change (flip app.vue's scroll ownership) with no mention of the 18-of-30 components/pages/*.vue files that would silently lose all scroll capability if flipped without per-page backfill first. Landed the safe structural half, split the audit-and-flip half into t-003b rather than attempting it blind in a sandbox with no local dev/DB to verify against -- treat "recommended fix" in a task note as a starting hypothesis to verify against the actual codebase, not a checklist to execute literally, especially for anything touching a shared ancestor every page depends on.
+
+- 2026-08-01 `interface-vision/t-007` — Migration was audited line-by-line only after merge, not before -- caught the scope mismatch by luck (checking the migration for the audit rule) rather than by process (diffing file list against PR body before merging). Next time: pull_request_read get_files before merge_pull_request, every time, not just when the PR body itself flags a migration.
+
+- 2026-08-01 `interface-vision/t-005` — verifyLayoutContract CI ratchet shipped inside the same PR as t-001, ahead of its declared depends_on (t-004) -- the dependency was aesthetic-neutral tooling work, not a hard blocker, so building it early was fine, but it means depends_on isn't a reliable signal for "has this actually not started yet" when a Worker judges a prerequisite doesn't really gate the dependent task's content.
+
+- 2026-08-01 `interface-vision/t-001` — Storymaker aesthetic mockups (kind_robots PR #1252) landed correctly, but the roadmap task sat at status:ready with an open PR for hours -- a session picking up interface-vision should check open kind_robots PRs against roadmap task titles before claiming, since select_role.py's local script currently can't reach the GitHub API in this sandbox (403s), so a manual GitHub MCP check is the only way to catch this.
 
 - 2026-08-01 `model-builder/t-039` — A recurring task (t-029) with a long streak of same-day merges hits diminishing returns fast on its own open-ended "read everything, find one new bug" pattern -- checking sibling ready tasks in the same project for an already-scoped, concrete kaizen (here, a deferred regression-guard task from two prior cycles) is a better use of a cycle than an Nth micro-race-condition hunt once N is already large for the day.
 
@@ -89,14 +99,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-07-31 `dream-cycle/t-022` — Keep operational CLI commands and agent startup instructions under regression tests when a generator contract is rewritten.
 - 2026-08-01 `model-builder/t-037` — When a guard clause and a genuine failure path share one return value (autoBuildItem's `false` covered both "another action already owns this item" and "a stage actually failed"), any caller that tallies outcomes across many calls (batchAutoBuild/autoBuildRun's "N/total committed" summary) loses the distinction and reports a busy-but-fine item the same as a broken one. Widening the return type to name each outcome explicitly (here, a three-way 'committed' | 'skipped' | 'failed' instead of a boolean) fixes it at the source instead of adding a second out-of-band flag the caller has to remember to check.
 
-- 2026-08-01 `model-builder/t-029` — A same-item reentrancy guard (autoBuildItem vs itself, PR #1223) is only half the concurrency picture when a "do everything" action (Auto) and several "do one thing" manual actions (Generate candidate/Draft with AI/Execute commit) can both reach the same underlying operation for the same item. Guarding the automatic path against itself doesn't guard it against a manual path already in flight -- the automatic path just sees the stage as "not yet approved" and proceeds, firing a second concurrent request. When a store has both a batch/auto entry point and matching manual single-stage entry points into the same underlying calls, check for a cross-guard (auto vs. manual in-flight state) in addition to the obvious self-vs-self guard.
-
-- 2026-07-31 `model-builder/t-029` — Extended the isGenerating/isQueued gate class (PR #900) with a subtler variant: isQueued read item.artJobId, but the async regenerate path sets item.queueState synchronously and item.artJobId only after two awaited network round-trips resolve, leaving a real window where the gate read false during a genuine in-flight regenerate. When a store documents two fields for the same async operation (an immediate synchronous progress flag vs. a value only available after I/O resolves), a UI gate checking the wrong one is easy to miss because both fields end up true/set for most of the operation's lifetime -- only the initial network-latency window exposes the gap. Worth grepping for this pattern (a gate reading a post-await field when a pre-await field exists for the same purpose) across other async store actions with a similar two-field shape.
-
-- 2026-07-31 `davinci/t-016` — Two source-of-truth divergences found in one sweep, both invisible to status counts. (1) The kind_robots Projects board computed progress from milestone status alone while conductor's build_status.py falls back to the task ratio; since agents close tasks but rarely flip milestones, 16 of 43 projects showed 0% against real values up to 100%. The board looked plausible rather than broken, which is why it survived -- the 27 correct rows made the 16 wrong ones read as genuinely-unstarted work. Lesson: when the same number is computed in two repos, the parity check belongs in CI from the start; a transcription of the other side's formula asserted against fixtures is cheap and catches drift that no amount of reading either implementation alone would surface. (2) davinci was flipped `finished` while its central gap sat unfiled, because the task whose output was a spec deliberately deferred filing the build task it specced. "All tasks done" and "project done" diverge exactly at spec-only closures. A spec task that defers its own implementation should file the follow-up before going done, even as a stub -- otherwise the deferral exists only in prose inside a note field, where every lifecycle check is structurally blind to it. Also confirmed a third instance of the roadmap-scan-without-lifecycle-join bug class, this time in build_conductor_summary.py's fetch_roadmaps(): it was surfacing retired approval-portal tasks under ACTION NEEDED every cycle. CLAUDE.md documents this bug for the human sweep; the automated builder had it independently. Fixing it removed 15 phantom needs-human gates. Worth auditing every glob("projects/*/roadmap.yaml") caller rather than waiting for a fourth.
-
-- 2026-07-29 `model-builder/t-029` — Checking a prior cycle's specific unticketed lead first (this time, batchApproveStage's possible isStageEditable gap) before starting a broad re-read is an efficient variant of the exclusion-list pattern: it closed the lead out cleanly (confirmed already-safe) and freed the rest of the cycle to find a genuinely new bug (autoBuildItem() approving PITCH/FIELDS_AND_PROMPTS with empty content when draftText() fails). Separately, this cycle nearly reverted its own claim_task.py claim: set_task_field.py was run against a stale local roadmap checkout immediately after claim_task.py's direct-to- origin/main push, which would have silently clobbered the claim if committed blind -- caught by diffing against origin/main before pushing, per this file's own repeated "fetch before you push" guidance. A session that calls claim_task.py (or any direct-to-main script) should fetch/rebase locally before its next roadmap edit in the same cycle, not just before the final close-out push.
-
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-01T13:33:03Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-01T13:50:11Z_
