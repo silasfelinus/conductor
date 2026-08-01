@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-01T17:43:39Z
+Generated: 2026-08-01T18:03:31Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **448**
-- Outcomes: blocked: 13, cancelled: 1, done: 434
+- Closed tasks recorded: **449**
+- Outcomes: blocked: 13, cancelled: 1, done: 435
 - Success rate: **97%**
 - Average passes on successful tasks: **0.0**
 
@@ -35,7 +35,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | humboldt-impropriety-calendar | 1 | 0% |
 | humboldt-scoop | 1 | 100% |
 | humboldt-scoop-cms | 4 | 100% |
-| interface-vision | 7 | 100% |
+| interface-vision | 8 | 100% |
 | kind-robots | 39 | 97% |
 | kindrobots-unraid | 4 | 100% |
 | media-watchlist | 10 | 100% |
@@ -59,7 +59,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 15 | 40% |
-| software | 433 | 99% |
+| software | 434 | 99% |
 
 ## Failure categories
 
@@ -80,6 +80,8 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-08-01 `interface-vision/t-008` — A roadmap task assumed 7 differently-purposed Vue components (5 CRUD picker widgets with dashboard/row/dropdown variants, 1 taxonomy-search view, 1 content-collection list) were all "near-duplicates" of one passive browse gallery, based on line-count and surface description alone. Reading each target file's actual prop signature before writing any migration code caught the mismatch before implementation, not after -- a 5-minute grep for variant/mode props (`grep -n "variant\|GalleryVariant\|isDropdownMode"`) across the named files would let a task author flag this in the roadmap task itself instead of a Worker discovering it mid-implementation. Scope was shrunk to the one genuine match plus one confirmed-dead deletion; the remaining 6 objects moved to a new task (t-023) for honest per-object re-assessment rather than forced onto the same shell.
+
 - 2026-08-01 `interface-vision/t-004` — CI caught a real conflict a general layout-contract sweep can't see: verifySerendipityRouteCutover.mjs hard-locks one page's exact <h1> markup as a route-cutover migration contract, unrelated to the one-header rule this task was adopting elsewhere. First push broke it, fixed in a follow-up commit. Filed t-023 (composition-lock audit) so t-017's later sweep can grep for hard-coded-markup contract tests across the remaining allow-list files up front instead of discovering them one CI failure at a time. General principle: a shrink-only CI ratchet only protects against violating ITS OWN rule -- it says nothing about whether some other, unrelated contract test depends on the exact markup being changed. Scope discipline (only fix what's asked, skip files another task/system explicitly owns) also paid off here -- deliberately left 8 of 29 files unfixed (admin routes, two "known offender" files t-017 already owns, one orphaned file, and this locked-contract file) rather than attempting a blind full sweep.
 
 - 2026-08-01 `interface-vision/t-003b` — Flipping app.vue's shared shell from overflow-y-auto to overflow-hidden required auditing which of ~60 candidate page-level components actually needed their own scroll container vs. inherited one from an ancestor (pages/[...slug].vue's content-host for MDC routes, the shared ProjectFrontPage wrapper for conductor pages). A same-PR review catch (kr-hourly session) found the first push added scroll classes to six components that are mounted *inside* content-host, creating nested double-scroll regions -- the exact composition bug the task existed to fix. The file-by-file layout-contract verifier couldn't catch this because it has no parent/child composition awareness; grepping content/*.md for each candidate file's actual mount point before adding a scroll class (not just checking whether the file itself lacks one) would have caught it on the first pass. Fixed same-session via a follow-up commit once flagged. When a shared ancestor already owns scroll, verify a component is actually reachable outside that ancestor before adding its own overflow region -- otherwise ask "does this file's *rendering context* already scroll" before "does this file declare its own overflow."
@@ -98,8 +100,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 - 2026-08-01 `coloring-book/t-022` — When a recurring art-production task is blocked on a missing local credential (no ANTHROPIC_API_KEY here), the semantic gate's own rejection reasons are structured enough to drive real prompt revision work without live generation access -- mining "what specifically was missing" text into the next prompt attempt is a better use of a credential-blocked cycle than a no-op re-arm to ready. Separately: a full yaml.safe_dump round-trip on a hand-formatted queue file rewraps every folded scalar in the whole file, not just the touched entries -- a targeted line-level edit is the safe way to make a small status change without a large unrelated reformatting diff.
 
-- 2026-08-01 `model-builder/t-038` — A per-item "is this busy" check that already exists as a component-local computed (isManualActionInFlight in model-builder-item-panel.vue) is worth promoting into the shared store the moment a second UI surface needs the same signal, rather than re-deriving it locally in each new component. Doing so here (isItemManualActionInFlight(itemId)) let two independent trigger buttons (batch editor, progress matrix) show an identical pre-click advisory with zero logic duplication and zero risk of the two copies drifting out of sync with the runtime guard inside autoBuildItem() itself.
-
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-01T17:43:39Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-01T18:03:31Z_
