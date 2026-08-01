@@ -11,8 +11,3 @@ note: >-
   launched the one-shot production maintenance sweep after a successful Vercel
   deployment; PR #1275 removed the temporary trigger and restored normal weekly/manual
   scheduling. All required implementation and cleanup checks passed.
-learning: >-
-  Push-triggered maintenance runs are not returned by the connector's commit workflow
-  query because it currently filters to pull-request events; production sweeps should
-  publish a durable summary artifact or status endpoint so queued counts and identifiers
-  can be verified without privileged database access.
