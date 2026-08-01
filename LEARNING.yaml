@@ -5670,3 +5670,25 @@ records:
     "no canonical panel exists") and document the deviation explicitly
     rather than either blindly following a stale instruction or silently
     reinterpreting it.
+- date: 2026-08-01
+  project: interface-vision
+  task: t-013
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    Before touching a large "un-nest this component" task, trace the actual
+    mount path first -- conductor-page.vue's own 'overview' and 'brainstorm'
+    viewMode branches, plus a chunk of its cockpit bar, were structurally
+    unreachable because conductor-manager.vue (its sole importer) intercepts
+    those workspaceCardKey values and renders a different component before
+    ConductorPage ever mounts. A component can look nested/cluttered while
+    actually being half dead code wearing live-code's clothes; grep for the
+    component's importers and read the routing logic one level up before
+    assuming every rendered-looking branch is reachable. Separately: when a
+    task names multiple target files, verify each one's claim independently
+    rather than assuming a shared premise -- art-manager.vue's "tabs are
+    themselves dashboards" claim didn't hold on inspection even though the
+    conductor-page.vue and user-manager.vue claims in the same task note did.
