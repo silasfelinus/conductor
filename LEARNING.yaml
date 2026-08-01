@@ -5331,3 +5331,13 @@ records:
     (here, a three-way 'committed' | 'skipped' | 'failed' instead of a
     boolean) fixes it at the source instead of adding a second out-of-band
     flag the caller has to remember to check.
+- date: '2026-07-31'
+  project: dream-cycle
+  task: t-022
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: Keep operational CLI commands and agent startup instructions under regression tests when a generator
+    contract is rewritten.
