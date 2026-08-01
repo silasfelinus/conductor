@@ -174,12 +174,26 @@ tasks:
   - id: t-003b
     milestone: m2
     title: 'Flip app.vue NuxtPage wrapper to overflow-hidden; audit/backfill per-page scroll ownership'
-    status: review
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
     depends_on: t-003
     note: >
+      DONE 2026-08-01: kind_robots PR #1261 (merged). app.vue's NuxtPage wrapper flips
+      to overflow-hidden; pages/[...slug].vue's content-host is now the sole scroll
+      owner for MDC-routed pages; 10 components/pages/*.vue plus login-page.vue and
+      welcome-page.vue backfilled with their own scroll region; added a `zero-scroll`
+      layout-contract rule per this task's own kaizen note. A review pass (different
+      session, marker expired before this close-out picked it back up) caught a real
+      composition bug in the first push — several MDC page components had also been
+      given their own overflow-y-auto, creating nested scroll regions inside
+      content-host — fixed in the same PR (confirmed via the merged diff: those files
+      now carry zero scroll classes of their own and are correctly in the
+      `zero-scroll` allow-list). Kaizen: check whether kind-prompts.vue, rebel-button.vue,
+      click-leaderboard.vue, match-leaderboard.vue are genuinely orphaned dead code
+      (no route/content mount found for any of them) and prune if so.
+      ---
       Split out of t-003 (2026-08-01, kind_robots PR #1255) because it's the genuinely
       risky half: app.vue currently wraps NuxtPage in overflow-y-auto, meaning the shell
       scrolls the whole page today. Flipping to overflow-hidden makes each page
@@ -620,3 +634,19 @@ tasks:
       award amounts (Silas tunes the numbers per karma.ts's own convention), and call
       awardKarma()/applyMana() from the achievement-confirm endpoint server-side —
       not from the client, to avoid recreating the exact bug t-010 just fixed.
+
+  - id: t-021
+    milestone: m3
+    title: 'Confirm and prune orphaned layout-contract components'
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Kaizen from t-003b (2026-08-01, kind_robots PR #1261): kind-prompts.vue,
+      rebel-button.vue, click-leaderboard.vue, and match-leaderboard.vue appear to be
+      orphaned/unreachable (no route or content-file mount found for any of them during
+      t-003b's audit) but were flagged rather than deleted blind. Confirm via a
+      repo-wide grep across content/, pages/, and every .vue/.ts file, then delete
+      whichever are genuinely dead code (folds into t-018's cleanup scope if still
+      open, otherwise stands alone).

@@ -5498,3 +5498,21 @@ records:
     "and show X on cards" ask that has no existing data model to support
     it, splitting the vague half into its own ready task (rather than
     guessing at scope) kept this PR small and reviewable.
+- date: 2026-08-01
+  project: interface-vision
+  task: t-003b
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    A different session's review pass on kind_robots PR #1261 caught a real
+    composition bug the layout-contract verifier's own heuristics cannot see:
+    it counts scroll regions per-file, so giving several MDC page components
+    their own overflow-y-auto passed CI cleanly even though content-host (the
+    shared ancestor) already owned scroll for all of them, producing nested
+    scroll regions in practice. File-level CI checks miss parent/child
+    composition bugs by construction -- worth a human or Vercel-preview pass
+    for anything touching a shared-ancestor scroll contract, not just a
+    green ratchet.
