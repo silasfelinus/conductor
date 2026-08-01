@@ -957,8 +957,7 @@ tasks:
   - id: t-027
     milestone: m2
     title: 'Consolidate Facet''s two art backends (YAML->GitHub vs ArtJob/DB)'
-    status: review
-    owner: worker
+    status: done
     passes: 0
     stakes: reversible
     depends_on: t-009
@@ -967,9 +966,11 @@ tasks:
 
 
       Added the missing Facet iconPath contract, standardized Facet variants, consolidated Facet generation onto ArtJobs, and expanded the quality-gated sweep to queue each missing variant independently.
+
+      Merged Kind Robots PR #1273 adding Facet iconPath, unified primary/icon/card/hero ArtJob handling, standardized variant dimensions, art-preserving curation updates, and an independently deduplicated four-variant quality-gated sweep. PR #1274 launched the one-shot production maintenance sweep after a successful Vercel deployment; PR #1275 removed the temporary trigger and restored normal weekly/manual scheduling. All required implementation and cleanup checks passed.
     claimed_by: 2026-08-01T200100Z-interface-vision-t-027-facet-art-4up
     claimed_at: '2026-08-01T20:01:00Z'
-    updated: '2026-08-01T20:20:00Z'
+    updated: '2026-08-01T22:00:36Z'
 
   - id: t-028
     milestone: m2
