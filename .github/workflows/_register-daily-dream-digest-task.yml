@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - worker/dream-cycle-task-register-20260731
+  pull_request:
+    types: [opened, synchronize, reopened]
+    branches: [main]
 
 permissions:
   contents: write
