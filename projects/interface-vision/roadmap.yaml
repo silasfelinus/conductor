@@ -1034,3 +1034,60 @@ tasks:
       actual comparison (if a golden hash was the intent) or delete the
       gzip/print block entirely (if it's dead) — either way it's currently
       pure CI log noise on every PR touching these files.
+
+  - id: t-031
+    milestone: m2
+    title: 'Extend allowReviews-gated review UI to Dream, and give Project/Facet a first gallery card'
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Split off t-011 (2026-08-01, kind_robots PR #1271) because it's a
+      materially bigger lift than the other four allowReviews-bearing types.
+      t-011 gated reactable-card's review button on allowReviews for
+      Bot/Character/Reward/Scenario -- the four types that already had both
+      the schema field (from t-007) and an existing reactable-card
+      integration. Dream, Project, and Facet are the other three of the seven
+      allowReviews-bearing models but have no reactable-card integration to
+      gate:
+      - Dream: components/dreams/dream-card.vue exists but uses its own
+        bespoke <article> wrapper/click-handling/selected-state styling, not
+        reactable-card -- wrapping it will require reconciling its layout
+        with reactable-card's own base classes (flex-col vs flex, bg-base-200
+        vs bg-base-100, no h-full/min-h-0) without a visual regression. The
+        reactionStore/reactionCategories already fully support 'dream'/DREAM
+        end-to-end (targetIdKeyMap has dreamId), so no store work needed.
+      - Project: no gallery card component exists at all -- the only
+        allowReviews UI today is an admin toggle in conductor-page.vue. Needs
+        a real project-card.vue (or equivalent) before review UI has anywhere
+        to attach.
+      - Facet: no gallery card component exists at all either.
+      This sandbox can't run `nuxt dev` (DATABASE_URL unreachable), so any of
+      this needs Vercel-preview visual verification per AGENTS.md's
+      "Cross-repo tasks" section, especially for the Dream layout
+      reconciliation.
+
+  - id: t-032
+    milestone: m2
+    title: 'Add an owner-facing allowReviews toggle for Bot/Character/Reward/Scenario'
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Kaizen from t-011 (2026-08-01, kind_robots PR #1271). allowReviews
+      defaults to false in the DB for all seven bearing models, and after
+      t-011's gating, the reactable-card review button now stays hidden until
+      something sets allowReviews: true. Today the *only* place any human can
+      flip it is the admin conductor-page.vue toggle, and that only covers
+      Project ("Reviews On"/"Reviews Off" button bound to
+      patchProject({ allowReviews: !linkedProject.allowReviews })). Bot's
+      PATCH /api/bots/[id], Character's/Reward's/Scenario's mutation.ts all
+      already accept allowReviews in their body schema -- the API side is
+      done, there's just no UI. Extract conductor-page.vue's toggle button
+      into a small reusable component and wire it into each of the four
+      types' own edit surface (find/confirm where each currently lives; none
+      of them turned up in this session's grep for "allowReviews" outside
+      conductor-page.vue) so owners can actually reach the review feature
+      t-011 just gated.

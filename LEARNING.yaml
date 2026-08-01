@@ -5624,3 +5624,25 @@ records:
     worth a quick repo-side confirmation pass before scoping work against a
     claim like "X is unused" or "Y already exists," especially when the note
     is old enough that the codebase could have moved under it.
+- date: 2026-08-01
+  project: interface-vision
+  task: t-011
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    A roadmap task note's factual claims about the codebase ("X is the most
+    complete widget", "Y is imported by nothing") are a snapshot from
+    planning time, not a live fact -- t-007 and t-009 both merged the same
+    day this task's note was written, and by the time t-011 was picked up
+    the note's premise (revive art-reactions.vue as canonical) was already
+    stale: reaction-card.vue had already superseded it as the generic,
+    actively-wired review panel. Read the current state of every file a
+    note names before trusting its characterization, and when the literal
+    instruction conflicts with what the code now shows, do the thing that
+    closes the real gap (here: allowReviews was read by no gallery, not
+    "no canonical panel exists") and document the deviation explicitly
+    rather than either blindly following a stale instruction or silently
+    reinterpreting it.

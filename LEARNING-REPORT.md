@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-01T20:28:00Z
+Generated: 2026-08-01T20:41:14Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **451**
-- Outcomes: blocked: 13, cancelled: 1, done: 437
+- Closed tasks recorded: **452**
+- Outcomes: blocked: 13, cancelled: 1, done: 438
 - Success rate: **97%**
 - Average passes on successful tasks: **0.0**
 
@@ -35,7 +35,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | humboldt-impropriety-calendar | 1 | 0% |
 | humboldt-scoop | 1 | 100% |
 | humboldt-scoop-cms | 4 | 100% |
-| interface-vision | 10 | 100% |
+| interface-vision | 11 | 100% |
 | kind-robots | 39 | 97% |
 | kindrobots-unraid | 4 | 100% |
 | media-watchlist | 10 | 100% |
@@ -59,7 +59,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 15 | 40% |
-| software | 436 | 99% |
+| software | 437 | 99% |
 
 ## Failure categories
 
@@ -80,6 +80,8 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-08-01 `interface-vision/t-011` — A roadmap task note's factual claims about the codebase ("X is the most complete widget", "Y is imported by nothing") are a snapshot from planning time, not a live fact -- t-007 and t-009 both merged the same day this task's note was written, and by the time t-011 was picked up the note's premise (revive art-reactions.vue as canonical) was already stale: reaction-card.vue had already superseded it as the generic, actively-wired review panel. Read the current state of every file a note names before trusting its characterization, and when the literal instruction conflicts with what the code now shows, do the thing that closes the real gap (here: allowReviews was read by no gallery, not "no canonical panel exists") and document the deviation explicitly rather than either blindly following a stale instruction or silently reinterpreting it.
+
 - 2026-08-01 `interface-vision/t-009` — Clean first pass (kind_robots PR #1269, all 14 CI checks green), but the task as originally scoped ("collapse three art-request pipelines into one") bundled a small, well-verified mechanical slice (repoint Project's art-replace onto the already-existing generic entity-art endpoint, delete two confirmed-dead routes, widen one component's type union) together with four genuinely separate decisions (a UX choice on Project's carousel UI, a product choice on Facet's dual art backends, a multi-entity schema migration, and a from-scratch admin UI) that each need their own PR and, in two cases, Silas's input before implementation. Investigating the actual code before implementing (rather than trusting the task note's characterization) also surfaced that one of the note's own technical claims was wrong: FacetArtImage was described as "declared-but-unused" but is live code serving a different purpose (ArtImage-to-Facet tagging, not a Facet art-history join) -- corrected in the split-out follow-up task (t-028) rather than propagated blind. Standing takeaway: a roadmap task note's own technical claims are a starting hypothesis, not verified fact, even when written carefully -- worth a quick repo-side confirmation pass before scoping work against a claim like "X is unused" or "Y already exists," especially when the note is old enough that the codebase could have moved under it.
 
 - 2026-08-01 `interface-vision/t-006` — Clean first pass (kind_robots PR #1267), but the close-out step surfaced a real tooling gap this session had to work around by hand: claim_task.py pushed its claim commit straight to origin/main, and this session's local checkout was never re-fetched before set_task_field.py edited the roadmap to status: review -- set_task_field.py operates on whatever is in the local tree with no fetch of its own (its own docstring names this exact gotcha, conductor/t-077/davinci/t-014), so the resulting commit briefly clobbered the claim commit's owner/claimed_by/claimed_at fields on this session's branch. Caught before it reached main only because rebasing onto origin/main before opening this task's own conductor PR produced a merge conflict on the exact block claim_task.py had written -- resolved by keeping origin/main's claim metadata and folding in the intended status transition. Standing takeaway: after any claim_task.py call (or any other script documented to push straight to origin/main), fetch and fast-forward the local checkout before running set_task_field.py against the same file in the same session, not just before the final close-out push.
@@ -98,8 +100,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 - 2026-08-01 `interface-vision/t-005` — verifyLayoutContract CI ratchet shipped inside the same PR as t-001, ahead of its declared depends_on (t-004) -- the dependency was aesthetic-neutral tooling work, not a hard blocker, so building it early was fine, but it means depends_on isn't a reliable signal for "has this actually not started yet" when a Worker judges a prerequisite doesn't really gate the dependent task's content.
 
-- 2026-08-01 `interface-vision/t-001` — Storymaker aesthetic mockups (kind_robots PR #1252) landed correctly, but the roadmap task sat at status:ready with an open PR for hours -- a session picking up interface-vision should check open kind_robots PRs against roadmap task titles before claiming, since select_role.py's local script currently can't reach the GitHub API in this sandbox (403s), so a manual GitHub MCP check is the only way to catch this.
-
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-01T20:28:00Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-01T20:41:14Z_
