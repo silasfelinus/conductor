@@ -175,10 +175,10 @@ tasks:
 - id: t-022
   milestone: m4
   title: Monster Recast book 1 production pass — 36 final color/BW pairs
-  status: claimed
+  status: review
   passes: 0
   stakes: reversible
-  updated: '2026-08-01T03:31:37Z'
+  updated: '2026-08-01T03:32:04Z'
   depends_on: t-021
   note: |-
     CURRENT COLOR-FIRST DIRECTION (2026-07-17): use the canonical color-art-jobs.yaml
@@ -206,7 +206,7 @@ tasks:
 
     Fixes the Coloring Book Studio credential preflight so a restored ANTHROPIC_API_KEY is checked from the current workflow environment instead of being blocked forever by stale queue errors. Adds regression coverage for restored-key recovery.
 
-    Merged PR #1476 fixing the stale credential preflight. Silas restored ANTHROPIC_API_KEY and one non-forced 18-slot recovery event is queued for the preserved ArtJobs 2776-2793. Do not create a duplicate recovery event while that file remains present; the next cycle should inspect the queue/event result first.
+    Merged PR #1476 fixing the stale credential preflight. Silas restored ANTHROPIC_API_KEY and one non-forced recovery event is queued for the preserved ArtJobs. mr-009/mr-016 already completed from it (2026-08-01); the event was blocking on those 2 completed ids for every subsequent hourly run until this cycle's fix (see run_log 2026-08-01 entry) made `consume_coloring_book_studio_request.py` skip already-resolved ids instead of failing the whole batch. Event now carries the remaining 16 ids (mr-001, mr-005-008, mr-010-015, mr-017-021) and should clear on its own via the hourly workflow. Do not create a duplicate recovery event while that file remains present; the next cycle should inspect the queue/event result first.
   run_log: projects/coloring-book/t-022-run-log.md
   recurring: true
   owner: worker

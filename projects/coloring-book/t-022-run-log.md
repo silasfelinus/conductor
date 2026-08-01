@@ -267,3 +267,47 @@ FOUND AND FIXED A REAL BUG, triggered live by this session's own sandbox gaps: t
 Root-caused and fixed in scripts/consume_coloring_book_color_art.py: recover_timed_out_job() now raises a new RecoveryAbandoned exception (subclass of RuntimeError, so existing pytest.raises(RuntimeError, ...) tests are unaffected) only for the three cases where the backend has positively confirmed the job will never produce a usable render (FAILED/CANCELLED, DONE with no artImageId, or belongs to a different concept) -- the only cases where clearing the reference and letting the next pass submit fresh is correct. main()'s except block now branches on exception type instead of matching "ANTHROPIC_API_KEY" in the message text: RecoveryAbandoned clears the reference as before; every other exception during a recovery attempt (missing local dependency, network error checking/fetching the job, semantic-gate credential wall, or anything else not yet anticipated) now preserves the "job N" reference unconditionally, matching the actual invariant this mechanism needs (job N's fate is unknown, not confirmed-dead). Added three regression tests reproducing both triggering failure modes (missing-dependency and network-error during status-check) plus one confirming RecoveryAbandoned still correctly clears the reference for a genuinely FAILED job. Full local suite green (773 tests) before opening the PR.
 
 Not completed this cycle: none of the 18 pending entries actually advanced to `done` -- this sandbox has KR_API_TOKEN but no ANTHROPIC_API_KEY, so validate_candidate()'s semantic gate can't run here regardless of the fix; the fix only prevents this specific credential/dependency/network gap from destroying recovery state for a future pass that does have the credential. Re-armed to ready per the recurring-task rule; the 18-entry recovery batch (job ids 2776-2793) is unchanged and ready for a future pass with ANTHROPIC_API_KEY to actually recover.
+
+RAN 2026-08-01T03:31Z (conductor scheduled agent run, session
+claude-scheduled-20260801T033136Z-cb-t022): Silas restored ANTHROPIC_API_KEY
+(GitHub Actions secret) since the last cycle; the preserved
+`color-art-events/20260801T005000Z-monster-recast-key-restored-recovery.yaml`
+event (18 ids: mr-001/005-021) had already started working -- the hourly
+`Process Coloring Book Studio events` workflow successfully recovered mr-009
+and mr-016 (both now `status: done`, ArtImage 13144/13164, completed
+2026-08-01T00:50:48Z) on an earlier run this same morning. Every run since
+then (checked via GitHub Actions `get_job_logs`) has failed outright at
+01:01:22Z and is still failing as of this session, because the event's
+`proposal_ids` list is a static 18-id snapshot and
+`consume_coloring_book_studio_request.py`'s `prepare_requested_entries()`
+raised `RuntimeError("Proposal(s) are not pending; use --force ...")` and
+aborted the *entire* batch the moment even one requested id was no longer
+`pending` -- blocking the other 16 genuinely-still-pending recovery ids too,
+not just the 2 that finished.
+
+FOUND AND FIXED A REAL BUG (root cause, not just this event's occurrence):
+`prepare_requested_entries()` now skips already-resolved ids (logs them,
+does not touch their queue entries) instead of raising when `--force` is not
+given, and `main()` proceeds with whatever ids remain pending -- an
+already-fully-resolved request now exits 0 as a no-op rather than failing.
+`--force`'s existing behavior (reset an already-resolved proposal back to
+`pending` for a genuine revision request) is unchanged. This generalizes
+beyond this one event: any studio/recovery request naming a fixed batch of
+proposal ids will hit the same failure the moment any subset of that batch
+completes before the request is (re)processed. Added
+`tests/test_consume_coloring_book_studio_request.py` (5 tests) covering the
+skip-and-continue path, the all-already-resolved no-op path, and unchanged
+`--force` behavior. Also trimmed mr-009/mr-016 out of the preserved event
+file directly (belt-and-suspenders with the code fix) so the next hourly run
+picks up the remaining 16 (mr-001, mr-005-008, mr-010-015, mr-017-021)
+cleanly. Full local suite green (784 tests, 2 pre-existing unrelated
+failures in test_build_digest_email_v2.py -- confirmed via `git stash` that
+they fail identically on main before this change; Python 3.11 sandbox
+f-string/backslash syntax incompatibility in `build_digest_email_v2.py`, out
+of scope for t-022) before opening the PR.
+
+Not completed this cycle: no ArtJobs were generated or recovered from this
+sandbox (still no local ANTHROPIC_API_KEY here) -- the fix only removes the
+code-level blocker so the next hourly GitHub Actions run (which does have
+the credential) can actually process the remaining 16-id recovery batch.
+Re-armed to ready per the recurring-task rule.
