@@ -5549,3 +5549,24 @@ records:
     here -- deliberately left 8 of 29 files unfixed (admin routes, two
     "known offender" files t-017 already owns, one orphaned file, and
     this locked-contract file) rather than attempting a blind full sweep.
+- date: 2026-08-01
+  project: interface-vision
+  task: t-008
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    A roadmap task assumed 7 differently-purposed Vue components (5 CRUD picker
+    widgets with dashboard/row/dropdown variants, 1 taxonomy-search view, 1
+    content-collection list) were all "near-duplicates" of one passive browse
+    gallery, based on line-count and surface description alone. Reading each
+    target file's actual prop signature before writing any migration code
+    caught the mismatch before implementation, not after -- a 5-minute grep for
+    variant/mode props (`grep -n "variant\|GalleryVariant\|isDropdownMode"`)
+    across the named files would let a task author flag this in the roadmap
+    task itself instead of a Worker discovering it mid-implementation. Scope
+    was shrunk to the one genuine match plus one confirmed-dead deletion; the
+    remaining 6 objects moved to a new task (t-023) for honest per-object
+    re-assessment rather than forced onto the same shell.

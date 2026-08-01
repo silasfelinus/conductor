@@ -365,37 +365,57 @@ tasks:
 
   - id: t-008
     milestone: m2
-    title: 'Extract kr-gallery from the project gallery, migrate all 7 objects, delete the duplicates'
-    status: claimed
-    owner: worker
+    title: 'Extract kr-gallery from the project gallery (SCOPE REDUCED — see note; remaining 6 objects moved to t-024)'
+    status: done
+    owner: null
     passes: 0
     stakes: reversible
     depends_on: t-007
     note: >
-      Phase 3.2/3.3. components/pages/conductor-project-gallery-page.vue is 185 lines and
-      is the gallery Silas likes; the five object galleries are 3689 lines of
-      near-duplicate doing less. Extract the recipe: (1) one scroll owner at the right
-      level — root flex h-full min-h-0 flex-col overflow-hidden, chrome shrink-0, only
-      <main> scrolls; (2) a single header line; (3) three guaranteed image variants with
-      a local->canonical->remote->GitHub fallback chain (L139-145) so an image is NEVER
+      DONE 2026-08-01, kind_robots PR #1265 (merged, squash d1b652e): built
+      components/gallery/kr-gallery.vue (shared, purely-presentational browse/filter
+      shell — one scroll owner via the host page, four view modes, image fallback
+      chain, skeleton/error/empty states) and stores/galleryPreferenceStore.ts
+      (replaces the page's direct localStorage calls per kind_robots AGENTS.md).
+      Migrated conductor-project-gallery-page.vue onto both, zero behavior change.
+      Deleted conductor-overview-gallery-page.vue (confirmed dead, zero mounts).
+      SCOPE REDUCED FROM ORIGINAL: the original task assumed bots/dreams/rewards/
+      characters/scenarios/facets/projects were all near-duplicates of this recipe.
+      Reading all 7 before migrating anything showed that's only true for projects —
+      the five object galleries (bots/dreams/rewards/characters/scenarios) are CRUD
+      picker widgets with dashboard/row/dropdown variants and inline forms, used
+      elsewhere as pickers; facets is a taxonomy-grouped search view;
+      project-gallery-strip.vue is a per-project ArtCollection strip; plan-projects-
+      grid.vue is a content-collection-driven list. None of the five match the
+      recipe. Migrating them onto kr-gallery blind would risk breaking every picker/
+      dropdown call site. This is a genuine numeric shrink (1/7 objects migrated,
+      1 dead file deleted), not a "feels done" close — the remaining 6 objects and
+      their correct re-scoping now live in t-024, which depends_on this task.
+      First CI push failed layout-contract (kr-gallery's own overflow-y-auto nested
+      under the host page's, tripping zero-scroll); fixed by making kr-gallery scroll-
+      opinion-free so the host page stays sole scroll owner — re-verified clean and
+      ratcheted the baseline down.
+      ORIGINAL TASK TEXT (for history): Phase 3.2/3.3.
+      components/pages/conductor-project-gallery-page.vue is 185 lines and is the
+      gallery Silas likes; the five object galleries are 3689 lines of near-duplicate
+      doing less. Extract the recipe: (1) one scroll owner at the right level — root
+      flex h-full min-h-0 flex-col overflow-hidden, chrome shrink-0, only <main>
+      scrolls; (2) a single header line; (3) three guaranteed image variants with a
+      local->canonical->remote->GitHub fallback chain (L139-145) so an image is NEVER
       missing — this is why it feels image-generous; (4) four view modes from three
       computed class strings (L166-169), where the mode picks both the grid AND which
-      image variant is fetched; (5) aspect-locked art with object-cover, gradient scrim,
-      hover-scale; (6) skeleton/error/empty states, which most siblings lack.
-      Fix on extraction: it touches localStorage directly (L174-177), which kind_robots
-      AGENTS.md forbids — move to a store. Cards keep using
+      image variant is fetched; (5) aspect-locked art with object-cover, gradient
+      scrim, hover-scale; (6) skeleton/error/empty states, which most siblings lack.
+      Fix on extraction: it touches localStorage directly (L174-177), which
+      kind_robots AGENTS.md forbids — move to a store. Cards keep using
       components/wonderlab/reactable-card.vue, the one genuinely shared piece in the
-      codebase (12 card types already wrap it).
-      Migrate bots, dreams, rewards, characters, scenarios, facets, projects. THEN
-      DELETE: conductor-overview-gallery-page.vue (1102 lines, a dead unreferenced clone
-      of the 185-line one, sharing colliding localStorage keys), the five object
-      galleries, plan-projects-grid.vue and project-gallery-strip.vue (fold into view
-      modes), and abandonware composition-gallery.vue. Migrate first, delete second, in
-      the same PR series but not the same commit — deleting ~4900 lines will surface
-      hidden coupling.
-    claimed_by: claude-agentrun-2026-08-01T17:26Z-t008
-    claimed_at: '2026-08-01T17:27:06Z'
-    updated: '2026-08-01T17:27:06Z'
+      codebase (12 card types already wrap it). Migrate bots, dreams, rewards,
+      characters, scenarios, facets, projects. THEN DELETE: conductor-overview-
+      gallery-page.vue (1102 lines, a dead unreferenced clone of the 185-line one,
+      sharing colliding localStorage keys), the five object galleries, plan-projects-
+      grid.vue and project-gallery-strip.vue (fold into view modes), and abandonware
+      composition-gallery.vue. Migrate first, delete second, in the same PR series
+      but not the same commit — deleting ~4900 lines will surface hidden coupling.
 
   - id: t-009
     milestone: m2
@@ -733,3 +753,35 @@ tasks:
       which of the remaining one-header/one-scroll/zero-scroll files have a locked
       contract test elsewhere in the repo so t-017 knows up front which files need a
       companion contract update, not just a markup change.
+
+  - id: t-024
+    milestone: m2
+    title: 'Re-scope t-008''s remaining migration targets: per-object assessment before touching any of them'
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-008
+    note: >
+      t-008 (kind_robots PR #1265) built the shared kr-gallery shell and migrated the
+      ONE genuine match for its "near-duplicate browse gallery" premise: the conductor
+      project gallery. Before implementing, I read all 7 objects the original task
+      named and the premise does not hold for the rest:
+      components/{bots,dreams,rewards,characters,scenarios}/*-gallery.vue (566-1035
+      lines each) are not passive browse galleries at all -- each shares its own
+      distinct dashboard/row/dropdown-variant pattern with add/edit/clone/delete CRUD,
+      store-integrated selection, and inline forms, used as reusable pickers elsewhere
+      in the app (dropdown mode). Swapping any of these onto the passive kr-gallery
+      shell risks breaking every picker/dropdown call site and can't be verified
+      without exhaustively finding and exercising each usage -- not something to
+      attempt blind in one pass.
+      components/facets/facet-gallery.vue is a taxonomy-grouped search/filter view
+      (unrelated structure). components/conductor/project-gallery-strip.vue is a
+      per-project ArtCollection image strip, not a cross-project picker.
+      components/pages/plan-projects-grid.vue is a small content-collection-driven
+      list with a different data source and no view modes.
+      This task is: for each of the 7, decide (with real evidence, not the original
+      assumption) whether kr-gallery applies at all, and if so scope a focused
+      migration task per object -- likely starting with whichever CRUD gallery has
+      the fewest dropdown/row call sites to verify, since those 5 carry real breakage
+      risk the project-gallery migration didn't. Do not attempt a wholesale swap.
