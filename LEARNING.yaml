@@ -5595,3 +5595,32 @@ records:
     script documented to push straight to origin/main), fetch and fast-forward
     the local checkout before running set_task_field.py against the same file
     in the same session, not just before the final close-out push.
+- date: 2026-08-01
+  project: interface-vision
+  task: t-009
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    Clean first pass (kind_robots PR #1269, all 14 CI checks green), but the
+    task as originally scoped ("collapse three art-request pipelines into
+    one") bundled a small, well-verified mechanical slice (repoint Project's
+    art-replace onto the already-existing generic entity-art endpoint, delete
+    two confirmed-dead routes, widen one component's type union) together
+    with four genuinely separate decisions (a UX choice on Project's carousel
+    UI, a product choice on Facet's dual art backends, a multi-entity schema
+    migration, and a from-scratch admin UI) that each need their own PR and,
+    in two cases, Silas's input before implementation. Investigating the
+    actual code before implementing (rather than trusting the task note's
+    characterization) also surfaced that one of the note's own technical
+    claims was wrong: FacetArtImage was described as
+    "declared-but-unused" but is live code serving a different purpose
+    (ArtImage-to-Facet tagging, not a Facet art-history join) -- corrected in
+    the split-out follow-up task (t-028) rather than propagated blind.
+    Standing takeaway: a roadmap task note's own technical claims are a
+    starting hypothesis, not verified fact, even when written carefully --
+    worth a quick repo-side confirmation pass before scoping work against a
+    claim like "X is unused" or "Y already exists," especially when the note
+    is old enough that the codebase could have moved under it.
