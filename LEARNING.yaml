@@ -5570,3 +5570,28 @@ records:
     was shrunk to the one genuine match plus one confirmed-dead deletion; the
     remaining 6 objects moved to a new task (t-023) for honest per-object
     re-assessment rather than forced onto the same shell.
+- date: 2026-08-01
+  project: interface-vision
+  task: t-006
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >
+    Clean first pass (kind_robots PR #1267), but the close-out step surfaced a
+    real tooling gap this session had to work around by hand: claim_task.py
+    pushed its claim commit straight to origin/main, and this session's local
+    checkout was never re-fetched before set_task_field.py edited the roadmap
+    to status: review -- set_task_field.py operates on whatever is in the local
+    tree with no fetch of its own (its own docstring names this exact gotcha,
+    conductor/t-077/davinci/t-014), so the resulting commit briefly clobbered
+    the claim commit's owner/claimed_by/claimed_at fields on this session's
+    branch. Caught before it reached main only because rebasing onto
+    origin/main before opening this task's own conductor PR produced a merge
+    conflict on the exact block claim_task.py had written -- resolved by
+    keeping origin/main's claim metadata and folding in the intended status
+    transition. Standing takeaway: after any claim_task.py call (or any other
+    script documented to push straight to origin/main), fetch and fast-forward
+    the local checkout before running set_task_field.py against the same file
+    in the same session, not just before the final close-out push.

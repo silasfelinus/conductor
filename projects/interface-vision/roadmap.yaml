@@ -830,3 +830,24 @@ tasks:
       migration task per object -- likely starting with whichever CRUD gallery has
       the fewest dropdown/row call sites to verify, since those 5 carry real breakage
       risk the project-gallery migration didn't. Do not attempt a wholesale swap.
+
+  - id: t-025
+    milestone: m2
+    title: 'Add a .kr-surface root-class conformance check to verifyLayoutContract.ts'
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Kaizen from t-006 (2026-08-01, kind_robots PR #1267). t-005's own note
+      flagged that the `.kr-surface` root-class check from its original spec
+      was never implemented, since t-004 (the kr-* primitives) hadn't shipped
+      yet when the verifier was built. t-006 is now the second real .kr-scroll
+      consumer beyond t-004 itself (after fixing verifyLayoutContract.ts's
+      one-scroll/zero-scroll detection to recognize the class at all — it only
+      matched the raw overflow-y-auto string before), so there is now real
+      usage to validate a root-class rule against instead of continuing to
+      defer it. Add a rule (or extend an existing one) that a page component
+      claiming layout-contract compliance actually uses `.kr-surface` (or
+      `.kr-stage`) as its root wrapper class, following the same shrink-only
+      ratchet convention as the other rules.
