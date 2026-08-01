@@ -168,7 +168,6 @@ def scan_pitches():
 REPO = "silasfelinus/conductor"
 DEFAULT_BRANCH = "main"
 BACKLOG_DIR = "projects/dream-cycle/backlog"
-DAILY_DIR = "projects/curation/daily"
 SHIPPED_PATH = "projects/dream-cycle/SHIPPED.md"
 CONDUCTOR_RAW = f"https://raw.githubusercontent.com/{REPO}/{DEFAULT_BRANCH}"
 KR_BASE_URL = "https://kind-robots.vercel.app"
@@ -262,33 +261,18 @@ def match_images_for(slug):
     return out
 
 
-def latest_daily_report():
-    reports = sorted(glob.glob(f"{DAILY_DIR}/*.yaml"))
-    if not reports:
-        return None
-    try:
-        return yaml.safe_load(open(reports[-1], encoding="utf-8")) or {}
-    except yaml.YAMLError:
-        return None
-
-
 def art_highlights(top_n=6):
-    """Top-scored renders of the day, from the style-assessor daily report."""
-    report = latest_daily_report()
-    if not report:
-        return []
-    scored = [r for r in report.get("results", []) if isinstance(r.get("score"), int)]
-    scored.sort(key=lambda r: r.get("score", 0), reverse=True)
-    return [
-        {
-            "url": r.get("public_url", _public_url(r.get("image", ""))),
-            "score": r.get("score"),
-            "caption": r.get("one_liner", ""),
-            "verdict": r.get("verdict", ""),
-        }
-        for r in scored[:top_n]
-    ]
+    """Retired: the digest no longer ranks art.
 
+    This gallery was fed by `curate_art.py --daily`, a vision-model pass that
+    scored every render against AESTHETIC-GUIDELINES.md. Judging art is a human
+    job, so that pass is gone and this returns nothing -- `gallery_section()`
+    omits the section entirely on an empty list. The key stays in the payload
+    because validate_digest.py requires it.
+    """
+
+    del top_n
+    return []
 
 def new_creations(limit=5):
     """Recent shipped creations, newest first, from the dream-cycle ledger."""

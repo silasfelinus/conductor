@@ -270,24 +270,9 @@ def process_event(event: ColorArtEvent, *, live: bool) -> int:
         )
         return 1
 
-    semantic_operations = {
-        "generate-color-proposals",
-        "generate-bw",
-        "finalize-pair",
-        "generate-cover",
-        "accept-cover",
-        "finalize-cover",
-    }
-    if event.operation in semantic_operations or (
-        event.operation == "accept-bw" and event.source_path
-    ):
-        if not os.environ.get("ANTHROPIC_API_KEY"):
-            print(
-                "ANTHROPIC_API_KEY is required for semantic coloring review.",
-                file=sys.stderr,
-            )
-            return 1
-
+    # No operation here needs a model credential any more. Renders are gated
+    # only by the free structural check in art_quality.py; whether a render is
+    # any *good* is decided by a human in the ArtJob trainer panel.
     result = subprocess.run(command, cwd=ROOT, check=False)
     if result.returncode == 0:
         event.path.unlink()

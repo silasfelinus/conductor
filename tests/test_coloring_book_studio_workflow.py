@@ -11,18 +11,17 @@ WORKFLOW = (
 
 
 class ColoringBookStudioWorkflowTests(unittest.TestCase):
-    def test_missing_semantic_credentials_skip_live_submission(self) -> None:
+    def test_preflight_needs_no_model_credential(self) -> None:
+        """Art review is a human job -- this workflow must not want an API key."""
         self.assertIn("id: queue_preflight", WORKFLOW)
-        self.assertIn("ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}", WORKFLOW)
-        self.assertIn('if [ -z "$ANTHROPIC_API_KEY" ]; then', WORKFLOW)
-        self.assertIn('echo "process=false" >> "$GITHUB_OUTPUT"', WORKFLOW)
+        self.assertNotIn("ANTHROPIC_API_KEY", WORKFLOW)
         self.assertIn(
             "if: ${{ steps.queue_preflight.outputs.process == 'true' }}",
             WORKFLOW,
         )
 
     def test_stale_queue_credential_errors_do_not_block_a_restored_key(self) -> None:
-        self.assertNotIn("--require-no-semantic-gate-error", WORKFLOW)
+        self.assertNotIn("--require-no-render-gate-error", WORKFLOW)
         self.assertIn("python scripts/coloring_queue_status.py", WORKFLOW)
         self.assertIn('echo "process=true" >> "$GITHUB_OUTPUT"', WORKFLOW)
 

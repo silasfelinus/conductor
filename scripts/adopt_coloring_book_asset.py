@@ -125,8 +125,8 @@ def adopt_bw(book_slug: str, proposal_id: str, source_path: str) -> bool:
     mechanical_ok, reasons, info = assess_existing(absolute, "bw")
     if not mechanical_ok:
         queue_entry["bw_status"] = "needs_review"
-        queue_entry["bw_semantic_verdict"] = "mechanical-reject"
-        queue_entry["bw_semantic_reasons"] = reasons
+        queue_entry["bw_render_verdict"] = "mechanical-reject"
+        queue_entry["bw_render_reasons"] = reasons
         queue_entry["bw_mechanical_info"] = info
         production.write_yaml(production.QUEUE_FILE, queue)
         print(
@@ -135,30 +135,18 @@ def adopt_bw(book_slug: str, proposal_id: str, source_path: str) -> bool:
         )
         return False
 
-    pair_ok, semantic = production.pair_vision(color, absolute)
-    queue_entry["bw_semantic_model"] = semantic.get("model")
-    queue_entry["bw_semantic_score"] = semantic.get("score")
-    queue_entry["bw_semantic_verdict"] = semantic.get("verdict")
-    queue_entry["bw_semantic_reasons"] = semantic.get("reasons")
+    # Adoption is an explicit human act: someone picked this file and ran this
+    # command. The structural gate above is the only automated check that gets a
+    # veto -- nothing re-litigates the choice itself.
+    queue_entry["bw_render_verdict"] = "adopted"
+    queue_entry["bw_render_reasons"] = []
     queue_entry.pop("bw_mechanical_info", None)
-
-    if not pair_ok:
-        queue_entry["bw_status"] = "needs_review"
-        queue_entry["pair_status"] = "needs_review"
-        queue_entry["pair_semantic_score"] = semantic.get("score")
-        queue_entry["pair_semantic_reasons"] = semantic.get("reasons")
-        production.write_yaml(production.QUEUE_FILE, queue)
-        print(
-            f"  ADOPTION-REVIEW {book_slug}/{proposal_id}: "
-            + "; ".join(semantic.get("reasons") or [])
-        )
-        return False
 
     accepted["bw"] = relative
     queue_entry["bw_status"] = "approved"
     queue_entry["bw_approved_at"] = production.now_iso()
     queue_entry.pop("pair_status", None)
-    queue_entry.pop("pair_semantic_reasons", None)
+    queue_entry.pop("pair_render_reasons", None)
     production.replace_ledger_pair_value(
         book_slug,
         proposal_id,

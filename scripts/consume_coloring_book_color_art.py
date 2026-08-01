@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
 """Submit, validate, and retrieve canonical coloring-book COLOR ArtJobs.
 
-A render is accepted only after both the local mechanical gate and the shared
-vision-based semantic gate pass. Semantic failures are preserved under
-rejected/semantic/, recorded in the queue, and retried with bounded explicit
-lineage, a changed seed, and compact literal subject guidance.
+A render is accepted once the local mechanical gate passes -- it is a real,
+structurally valid image. Quality is NOT judged here: a landed render is parked
+for human review in the ArtJob trainer panel. Structural failures (blank frame,
+wrong aspect, unreadable file) are preserved under rejected/render/, recorded in
+the queue, and re-rolled with a changed seed up to a bounded number of attempts.
 """
 
 from __future__ import annotations
@@ -25,7 +26,7 @@ import yaml
 sys.path.insert(0, str(Path(__file__).parent))
 import art_quality  # noqa: E402
 import consume_art_queue as consumer  # noqa: E402
-import semantic_art_quality  # noqa: E402
+import render_retry  # noqa: E402
 
 ROOT = consumer.ROOT
 QUEUE_FILE = ROOT / "projects" / "coloring-book" / "color-art-jobs.yaml"
@@ -143,13 +144,14 @@ def build_entries(book_filter: str | None = None) -> tuple[dict[str, Any], list[
             if not scene_prompt:
                 raise RuntimeError(f"{book_slug}/{source.get('id')}: missing color prompt")
 
-            semantic_attempts = max(0, int(source.get("semantic_attempts") or 0))
+            render_attempts = max(0, int(source.get("render_attempts") or 0))
             attempted_prompt = scene_prompt
-            if semantic_attempts:
-                attempted_prompt = semantic_art_quality.literal_retry_prompt(
+            if render_attempts:
+                attempted_prompt = render_retry.retry_prompt(
                     scene_prompt,
                     title,
-                    semantic_attempts,
+                    render_attempts,
+                    note=clean(source.get("reviewer_note")) or None,
                 )
 
             suffix = LOGO_SUFFIX if source.get("allow_logo_emblem") else COLOR_SUFFIX
@@ -187,10 +189,10 @@ def build_entries(book_filter: str | None = None) -> tuple[dict[str, Any], list[
                 "guidance": float(source.get("guidance") or defaults.get("guidance", 3.5)),
                 "seed": seed,
                 "lock_seed": locked,
-                "semantic_attempts": semantic_attempts,
+                "render_attempts": render_attempts,
                 "source_ref": source.get("source_ref"),
                 "reference_images": source.get("reference_images") or [],
-                "semantic_gate_error": source.get("semantic_gate_error"),
+                "render_gate_error": source.get("render_gate_error"),
             }
             # Steps: only pin when defaults/source ask for it, otherwise let each
             # engine run at its native cadence (Krea2 8, Klein 4, Flux-dev 30/36).
@@ -290,12 +292,8 @@ def mark_done(completed: list[dict[str, Any]]) -> int:
         source["render_engine"] = done.get("engine")
         source["completed_at"] = now_iso()
         source["prompt_fingerprint"] = str(done["prompt_fingerprint"])
-        source["semantic_verdict"] = done.get("semantic_verdict")
-        source["semantic_score"] = done.get("semantic_score")
-        source["subject_match"] = done.get("subject_match") is True
-        source["on_brief"] = done.get("on_brief") is True
-        source["semantic_model"] = done.get("semantic_model")
-        source.pop("semantic_gate_error", None)
+        source.pop("render_gate_error", None)
+        source.pop("render_gate_error_at", None)
         changed += 1
 
     if changed:
@@ -308,12 +306,12 @@ def rejection_destination(
     entry: dict[str, Any],
     category: str,
 ) -> Path:
-    attempt = int(entry.get("semantic_attempts") or 0) + 1
+    attempt = int(entry.get("render_attempts") or 0) + 1
     seed = entry.get("resolved_seed")
     if seed is None:
         seed = entry.get("seed") or 0
     filename = f"{destination.stem}-attempt-{attempt}-seed-{seed}{destination.suffix}"
-    rejected = destination.parent / "rejected" / "semantic" / category / filename
+    rejected = destination.parent / "rejected" / "render" / category / filename
     rejected.parent.mkdir(parents=True, exist_ok=True)
     if rejected.exists():
         rejected.unlink()
@@ -321,20 +319,28 @@ def rejection_destination(
     return rejected
 
 
-def record_semantic_rejection(
+def record_render_rejection(
     entry: dict[str, Any],
-    semantic: dict[str, Any],
+    mechanical: dict[str, Any],
     rejected: Path,
 ) -> str:
-    next_attempt = int(entry.get("semantic_attempts") or 0) + 1
-    max_attempts = max(1, semantic_art_quality.DEFAULT_MAX_ATTEMPTS)
+    """Record a *structural* render failure and decide whether to re-roll.
+
+    Only the mechanical gate can land here — a blank frame, a wrong aspect
+    ratio, an unreadable file. These are objective defects with no judgement in
+    them, so a bounded automatic re-render is appropriate. Anything that is a
+    real image goes to a human instead and never reaches this function.
+    """
+
+    next_attempt = int(entry.get("render_attempts") or 0) + 1
+    max_attempts = max(1, render_retry.MAX_RENDER_ATTEMPTS)
     next_status = "pending" if next_attempt < max_attempts else "needs_review"
 
     used_seed = entry.get("resolved_seed")
 
     def mutate(source: dict[str, Any]) -> None:
         seed_for_history = used_seed if used_seed is not None else source.get("seed")
-        history = source.get("semantic_rejections")
+        history = source.get("render_failures")
         if not isinstance(history, list):
             history = []
         history.append(
@@ -344,62 +350,57 @@ def record_semantic_rejection(
                 "engine": entry.get("engine"),
                 "art_image_id": entry.get("art_image_id"),
                 "prompt_fingerprint": entry.get("prompt_fingerprint"),
-                "score": semantic.get("score"),
-                "verdict": semantic.get("verdict"),
-                "subject_match": semantic.get("subject_match") is True,
-                "on_brief": semantic.get("on_brief") is True,
-                "reasons": semantic.get("reasons") or [],
+                "gate": "mechanical",
+                "reasons": mechanical.get("reasons") or [],
                 "rejected_path": str(rejected.relative_to(ROOT)),
-                "reviewed_at": now_iso(),
-                "model": semantic.get("model"),
+                "checked_at": now_iso(),
             }
         )
-        source["semantic_rejections"] = history
-        source["semantic_attempts"] = next_attempt
+        source["render_failures"] = history
+        source["render_attempts"] = next_attempt
         source["last_rejected_art_image_id"] = entry.get("art_image_id")
         source["last_render_seed"] = seed_for_history
-        source["last_semantic_score"] = semantic.get("score")
-        source["last_semantic_reasons"] = semantic.get("reasons") or []
+        source["last_render_reasons"] = mechanical.get("reasons") or []
         source["status"] = next_status
         source.pop("art_image_id", None)
         source.pop("completed_at", None)
-        # A definitive semantic verdict just landed (whether from a fresh
+        # A definitive structural verdict just landed (whether from a fresh
         # submission or a recovered job) -- any stale "job N ..." breadcrumb
-        # from a prior timeout/credential-wall failure no longer describes
-        # this entry's state and must not survive into the next pass.
-        # Leaving it would make referenced_job_id() keep pointing the next
-        # pass at the same already-rejected job forever: recover_timed_out_job()
-        # would keep "recovering" (re-fetching) the identical rejected image
-        # and re-running the semantic gate on it, never submitting a fresh,
-        # differently-seeded attempt (see t-022 2026-08-01: mr-001/005/006 were
-        # stuck re-judging the same rejected image across multiple hourly runs).
-        source.pop("semantic_gate_error", None)
-        source.pop("semantic_gate_error_at", None)
+        # from a prior timeout no longer describes this entry's state and must
+        # not survive into the next pass. Leaving it would make
+        # referenced_job_id() keep pointing the next pass at the same
+        # already-rejected job forever: recover_timed_out_job() would keep
+        # "recovering" (re-fetching) the identical rejected image and re-running
+        # the gate on it, never submitting a fresh, differently-seeded attempt
+        # (see t-022 2026-08-01: mr-001/005/006 were stuck re-judging the same
+        # rejected image across multiple hourly runs).
+        source.pop("render_gate_error", None)
+        source.pop("render_gate_error_at", None)
         if next_status == "pending" and bool(source.get("lock_seed")):
             # Locked concept: keep the deterministic seed rotation so a
             # reproducible render can still explore a few variants on retry.
             base = int(source.get("seed") or seed_for_history or 0)
             source["previous_seed"] = base
-            source["seed"] = semantic_art_quality.next_retry_seed(base, next_attempt)
+            source["seed"] = render_retry.next_retry_seed(base, next_attempt)
         # Unlocked concepts leave `seed` unset so the next attempt randomizes.
 
     mutate_queue_entry(entry, mutate)
     return next_status
 
 
-def record_semantic_gate_error(entry: dict[str, Any], error: Exception, job_id: int | None = None) -> None:
+def record_render_gate_error(entry: dict[str, Any], error: Exception, job_id: int | None = None) -> None:
     def mutate(source: dict[str, Any]) -> None:
         message = str(error)[:1000]
         # A fresh submission's ArtJob completed and rendered (job_id is set) but
-        # validate_candidate() then failed -- e.g. no ANTHROPIC_API_KEY. Without a
-        # "job N" reference in the stored error, referenced_job_id() can never find
-        # it and every future pass, credentialed or not, is forced into a genuine
-        # duplicate resubmission for an image that already rendered. Stamp the id in
-        # (only if the message doesn't already carry one, e.g. from a recovery path).
+        # validate_candidate() then failed -- e.g. PIL missing on the runner.
+        # Without a "job N" reference in the stored error, referenced_job_id()
+        # can never find it and every future pass is forced into a genuine
+        # duplicate resubmission for an image that already rendered. Stamp the id
+        # in (only if the message doesn't already carry one, e.g. from recovery).
         if job_id is not None and JOB_ID_PATTERN.search(message) is None:
             message = f"job {job_id}: {message}"[:1000]
-        source["semantic_gate_error"] = message
-        source["semantic_gate_error_at"] = now_iso()
+        source["render_gate_error"] = message
+        source["render_gate_error_at"] = now_iso()
         source["status"] = "pending"
 
     mutate_queue_entry(entry, mutate)
@@ -420,7 +421,7 @@ def stable_job_body(entry: dict[str, Any]) -> dict[str, Any]:
         "project": "coloring-book",
         "set": entry.get("set"),
         "conceptId": entry.get("concept_id"),
-        "semanticAttempt": int(entry.get("semantic_attempts") or 0),
+        "renderAttempt": int(entry.get("render_attempts") or 0),
         "seed": resolved_seed,
         "engine": entry.get("engine"),
         "promptFingerprint": entry.get("prompt_fingerprint"),
@@ -432,7 +433,7 @@ def stable_job_body(entry: dict[str, Any]) -> dict[str, Any]:
     key_material = {
         "set": entry.get("set"),
         "concept": entry.get("concept_id"),
-        "semanticAttempt": int(entry.get("semantic_attempts") or 0),
+        "renderAttempt": int(entry.get("render_attempts") or 0),
         "seed": resolved_seed,
         "engine": entry.get("engine"),
         "promptFingerprint": entry.get("prompt_fingerprint"),
@@ -476,7 +477,7 @@ def referenced_job_id(entry: dict[str, Any]) -> int | None:
     """A prior run's timeout error names the ArtJob it was waiting on. Extract
     it so a later run can check whether that job actually finished instead of
     submitting a fresh (differently-seeded) duplicate."""
-    match = JOB_ID_PATTERN.search(str(entry.get("semantic_gate_error") or ""))
+    match = JOB_ID_PATTERN.search(str(entry.get("render_gate_error") or ""))
     return int(match.group(1)) if match else None
 
 
@@ -491,9 +492,9 @@ def recover_timed_out_job(entry: dict[str, Any], job_id: int) -> tuple[bool, dic
     to a different concept than expected -- these are the only outcomes where
     giving up on job_id and letting the next pass submit fresh is correct.
     Any other exception (network error checking status, missing local
-    dependency while saving/verifying the fetched image, semantic-gate
-    credential wall, etc.) means job_id's own fate is still unknown and must
-    not be treated the same way -- see the caller in main().
+    dependency while saving/verifying the fetched image, etc.) means job_id's
+    own fate is still unknown and must not be treated the same way -- see the
+    caller in main().
     """
     status, response = consumer.http_json("GET", f"{consumer.KR_BASE_URL}/api/art/queue/{job_id}")
     if status != 200 or not response or not response.get("success"):
@@ -525,23 +526,24 @@ def recover_timed_out_job(entry: dict[str, Any], job_id: int) -> tuple[bool, dic
 
 
 def validate_candidate(entry: dict[str, Any], destination: Path) -> tuple[bool, dict[str, Any]]:
-    ok, reasons, _info = art_quality.assess_file(destination, "color")
-    if ok is False:
-        return False, {
-            "model": "mechanical",
-            "score": 0,
-            "verdict": "reject",
-            "subject_match": False,
-            "on_brief": False,
-            "reasons": reasons,
-        }
+    """Structural check only — is this a usable image file at all?
+
+    This gate answers objective questions (blank frame? wrong aspect? not line
+    art when line art was asked for?) using PIL, for free, with no credential.
+    It deliberately does NOT judge likeness, composition, camp, or whether the
+    render is any good: that is the reviewer's call, made in the ArtJob trainer
+    panel, and a render that passes here goes straight to a human however rough
+    it looks.
+    """
+
+    ok, reasons, info = art_quality.assess_file(destination, "color")
     if ok is None:
         raise RuntimeError(reasons[0] if reasons else "mechanical image gate unavailable")
-
-    return semantic_art_quality.assess_semantic_file(
-        destination,
-        str(entry["scene_prompt"]),
-    )
+    return bool(ok), {
+        "gate": "mechanical",
+        "reasons": [str(reason) for reason in reasons],
+        "stats": info,
+    }
 
 
 def main() -> int:
@@ -594,7 +596,7 @@ def main() -> int:
             print(
                 f"  {entry['set']}/{entry['concept_id']} -> {entry['image_path']} "
                 f"[{job['payload']['width']}x{job['payload']['height']}] engine={entry.get('engine')} "
-                f"seed={seed_label} semantic_attempt={entry['semantic_attempts']}{refs}"
+                f"seed={seed_label} render_attempt={entry['render_attempts']}{refs}"
             )
         return 0
 
@@ -642,29 +644,24 @@ def main() -> int:
                 image_b64 = consumer.fetch_image_b64(job["artImageId"])
                 destination = save_result(entry, image_b64)
 
-            accepted, semantic = recovered if recovered is not None else validate_candidate(entry, destination)
+            accepted, mechanical = recovered if recovered is not None else validate_candidate(entry, destination)
             if not accepted:
                 rejected = rejection_destination(destination, entry, "rejected")
-                next_status = record_semantic_rejection(entry, semantic, rejected)
+                next_status = record_render_rejection(entry, mechanical, rejected)
                 failures += 1
                 print(
-                    f"  SEMANTIC-REJECT {entry['set']}/{entry['concept_id']}: "
-                    f"{' ; '.join(semantic.get('reasons') or [])} -> "
+                    f"  RENDER-REJECT {entry['set']}/{entry['concept_id']}: "
+                    f"{' ; '.join(mechanical.get('reasons') or [])} -> "
                     f"{rejected.relative_to(ROOT)} ({next_status})",
                     file=sys.stderr,
                 )
                 continue
 
-            entry["semantic_verdict"] = semantic.get("verdict")
-            entry["semantic_score"] = semantic.get("score")
-            entry["subject_match"] = semantic.get("subject_match") is True
-            entry["on_brief"] = semantic.get("on_brief") is True
-            entry["semantic_model"] = semantic.get("model")
             completed.append(entry)
             print(
-                f"  DONE {entry['set']}/{entry['concept_id']} -> "
+                f"  LANDED {entry['set']}/{entry['concept_id']} -> "
                 f"{destination.relative_to(ROOT)} "
-                f"(ArtImage {entry.get('art_image_id') or 'existing'}, semantic={semantic.get('score')})"
+                f"(ArtImage {entry.get('art_image_id') or 'existing'}) - awaiting human review"
             )
         except RecoveryAbandoned as error:
             # recover_timed_out_job() positively determined job {stuck_job_id}
@@ -672,7 +669,7 @@ def main() -> int:
             # concept) -- safe (and correct) to drop the reference so the next
             # pass submits fresh instead of retrying a dead job forever.
             failures += 1
-            record_semantic_gate_error(entry, error, job_id=stuck_job_id)
+            record_render_gate_error(entry, error, job_id=stuck_job_id)
             print(f"  FAILED {entry['set']}/{entry['concept_id']}: {error}", file=sys.stderr)
         except Exception as error:  # noqa: BLE001
             failures += 1
@@ -686,9 +683,9 @@ def main() -> int:
                 # Anything other than RecoveryAbandoned during a recovery
                 # attempt (network error checking/fetching job {stuck_job_id},
                 # a missing local dependency like Pillow while saving the
-                # fetched image, a semantic-gate credential wall, ...) means
+                # fetched image, ...) means
                 # job {stuck_job_id}'s own fate is still unknown -- it may well
-                # be a completed, valid render. Overwriting semantic_gate_error
+                # be a completed, valid render. Overwriting render_gate_error
                 # here would destroy the "job N" text a future recovery pass
                 # parses via referenced_job_id(), forcing that future pass into
                 # a genuine duplicate ArtJob submission for a render that may
@@ -703,7 +700,7 @@ def main() -> int:
                     file=sys.stderr,
                 )
             else:
-                record_semantic_gate_error(entry, error, job_id=submitted_job_id)
+                record_render_gate_error(entry, error, job_id=submitted_job_id)
                 print(f"  FAILED {entry['set']}/{entry['concept_id']}: {error}", file=sys.stderr)
 
     marked = mark_done(completed)
