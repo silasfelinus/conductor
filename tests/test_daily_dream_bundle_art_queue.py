@@ -58,7 +58,7 @@ def test_complete_bundle_queues_six_art_requests(tmp_path, monkeypatch):
         "dream-cycle-six-art-dream-one-hero",
         "dream-cycle-six-art-dream-one-item",
         "dream-cycle-six-art-dream-one-skill",
-        "dream-cycle-six-art-dream-one-scenario",
+        "dream-cycle-six-art-dream-one-scenario-scenario",
     }
     assert all(request["status"] == "pending" for request in requests)
     assert all(request["target_repo"] == "silasfelinus/kind_robots" for request in requests)
