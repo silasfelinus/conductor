@@ -297,8 +297,8 @@ tasks:
   - id: t-006
     milestone: m2
     title: 'Build the narrator stage and restore narrators to Storymaker and Taskmaster'
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     depends_on: t-004
@@ -326,6 +326,9 @@ tasks:
       shows one title (3 today), each page has one scroll region, and art is present
       (both pages render zero <img> today). Verify on phone, tablet and desktop via
       Vercel preview.
+    claimed_by: claude-agentrun-2026-08-01T18:26:55-t006
+    claimed_at: '2026-08-01T18:26:55Z'
+    updated: '2026-08-01T18:26:55Z'
 
   - id: t-007
     milestone: m2
