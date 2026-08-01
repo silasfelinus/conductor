@@ -568,3 +568,23 @@ tasks:
       manages with two timers — remove both sides. And pick ONE type scale: today `body`
       is text-sm md:text-base lg:text-lg xl:text-xl AND there are six text-smart-* ramps
       competing with it. Keep text-smart-*, drop the body ramp.
+
+  - id: t-019
+    milestone: m2
+    title: 'Show earned karma/mana on object cards'
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Split out of t-010 (2026-08-01, kind_robots PR #1262): t-010's note asked to "show
+      earned/spent on object cards so the 'you earn mana when people use what you made'
+      loop is actually visible to users," but no object (ArtImage, Dream, Character,
+      Reward, Scenario, Project, Bot) currently carries a per-item earned-karma/mana
+      aggregate — KarmaTransaction/ManaTransaction only have a loose, unindexed `refId`
+      string, not a typed back-reference. This needs its own design pass: decide the
+      refId convention (or add a typed join) so transactions can be aggregated per
+      object, pick the aggregation query (live per-card fetch vs. a denormalized
+      counter kept in sync on award), and wire the number into
+      components/wonderlab/reactable-card.vue (the shared card wrapper 12 card types
+      already use, per t-011's note) rather than each card type individually.
