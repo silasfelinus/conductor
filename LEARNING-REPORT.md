@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-08-01T02:27:47Z
+Generated: 2026-08-01T03:38:54Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **436**
-- Outcomes: blocked: 13, cancelled: 1, done: 422
+- Closed tasks recorded: **437**
+- Outcomes: blocked: 13, cancelled: 1, done: 423
 - Success rate: **97%**
 - Average passes on successful tasks: **0.0**
 
@@ -29,7 +29,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | conductor-app | 2 | 100% |
 | davinci | 2 | 100% |
 | digital-storefront | 24 | 100% |
-| dream-cycle | 17 | 100% |
+| dream-cycle | 18 | 100% |
 | ecosystem-map | 5 | 100% |
 | global-ui | 13 | 100% |
 | humboldt-impropriety-calendar | 1 | 0% |
@@ -58,7 +58,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 15 | 40% |
-| software | 421 | 99% |
+| software | 422 | 99% |
 
 ## Failure categories
 
@@ -78,6 +78,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-07-31 `dream-cycle/t-022` — Keep operational CLI commands and agent startup instructions under regression tests when a generator contract is rewritten.
 - 2026-08-01 `model-builder/t-037` — When a guard clause and a genuine failure path share one return value (autoBuildItem's `false` covered both "another action already owns this item" and "a stage actually failed"), any caller that tallies outcomes across many calls (batchAutoBuild/autoBuildRun's "N/total committed" summary) loses the distinction and reports a busy-but-fine item the same as a broken one. Widening the return type to name each outcome explicitly (here, a three-way 'committed' | 'skipped' | 'failed' instead of a boolean) fixes it at the source instead of adding a second out-of-band flag the caller has to remember to check.
 
 - 2026-08-01 `model-builder/t-029` — A same-item reentrancy guard (autoBuildItem vs itself, PR #1223) is only half the concurrency picture when a "do everything" action (Auto) and several "do one thing" manual actions (Generate candidate/Draft with AI/Execute commit) can both reach the same underlying operation for the same item. Guarding the automatic path against itself doesn't guard it against a manual path already in flight -- the automatic path just sees the stage as "not yet approved" and proceeds, firing a second concurrent request. When a store has both a batch/auto entry point and matching manual single-stage entry points into the same underlying calls, check for a cross-guard (auto vs. manual in-flight state) in addition to the obvious self-vs-self guard.
@@ -92,7 +93,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-07-29 `coloring-book/t-037` — Note-bloat extraction (moving a recurring task's accumulated RAN/incident history out of the roadmap note: field into a dedicated run-log.md, per the ai-art-academy/t-010 precedent) is now a proven, repeatable pattern for any long-running recurring task whose note has grown large enough to slow down reading/diffing the roadmap -- verify the move with a byte-identical diff check before trimming the original, and add a run_log: pointer field rather than just prose, so a script can find the log mechanically later.
 - 2026-07-29 `taskmaster/t-002` — kind_robots PR #1157 merged clean on first pass, all 11 checks green including the project-specific "Taskmaster checkpoint contract" -- confirming in advance that the contract verifiers only assert against stores/taskmasterStore.ts and components/pages/taskmaster-page.vue content (not stores/todoStore.ts, the actual file touched) avoided a wasted CI round trip on a fix that was never going to trip those specific checks.
 - 2026-07-29 `taskmaster/t-001` — The audit surfaced a real, silent regression rather than a documentation gap: a Serendipity->Taskmaster rename left stores/todoStore.ts's AGENT-todo badging heuristic matching the pre-rename icon/title/description shapes only, so every Taskmaster-created needs-human todo since the rename silently miscategorized with no error. Renames that touch generated-content shape (icons, title/description prefixes used elsewhere as string-matched classifiers) need a grep for every consumer of the old string shape, not just the producer -- an audit task that reads the producer in isolation would have reported this capability as "present and working" when it was actually broken for every row created after the rename.
-- 2026-07-29 `dream-cycle/t-019` — An unrelated-looking PR (#1399) had already landed both a fix and its matching tests for public/rewards/... path handling in relay_media_agent.py, all green -- but the tests locked in the same wrong assumption as the code (folding the reward-asset root into the images root instead of treating it as a real sibling directory), including a test explicitly named to assert away the correct sibling-root design. A passing, internally-consistent test suite is not proof a fix matches reality when the tests were written by the same reasoning that produced the bug -- cross-check against the actual external system (here: the target repo's real folder layout) before trusting "tests pass" as sufficient verification, especially when correcting or building on another agent's recent, already-merged work.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-01T02:27:47Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-08-01T03:38:54Z_
